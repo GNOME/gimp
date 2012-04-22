@@ -141,9 +141,6 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   gdouble              opacity;
   gdouble              rate;
 
-  if (gimp_drawable_is_indexed (drawable))
-    return;
-
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   opacity_output = gimp_dynamics_get_output (dynamics,

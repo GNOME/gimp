@@ -26,6 +26,7 @@
 
 #include "gimp-gegl-types.h"
 
+#include "gimp-babl.h"
 #include "gimp-gegl-loops.h"
 
 
@@ -48,17 +49,34 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
   gint                src_bpp;
   gint                dest_bpp;
 
-  src_format  = gegl_buffer_get_format (src_buffer);
+  src_format = gegl_buffer_get_format (src_buffer);
+
+  if (babl_format_is_palette (src_format))
+    src_format = gimp_babl_format (GIMP_RGB, GIMP_PRECISION_U8,
+                                   babl_format_has_alpha (src_format));
+  else
+    src_format = gimp_babl_format (gimp_babl_format_get_base_type (src_format),
+                                   GIMP_PRECISION_U8,
+                                   babl_format_has_alpha (src_format));
+
   dest_format = gegl_buffer_get_format (dest_buffer);
+
+  if (babl_format_is_palette (dest_format))
+    dest_format = gimp_babl_format (GIMP_RGB, GIMP_PRECISION_U8,
+                                    babl_format_has_alpha (dest_format));
+  else
+    dest_format = gimp_babl_format (gimp_babl_format_get_base_type (dest_format),
+                                    GIMP_PRECISION_U8,
+                                    babl_format_has_alpha (dest_format));
 
   src_bpp  = babl_format_get_bytes_per_pixel (src_format);
   dest_bpp = babl_format_get_bytes_per_pixel (dest_format);
 
-  iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0, NULL,
+  iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0, src_format,
                                    GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
   src_roi = &iter->roi[0];
 
-  gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0, NULL,
+  gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0, dest_format,
                             GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
   dest_roi = &iter->roi[1];
 
