@@ -98,7 +98,7 @@ gimp_image_new_from_template (Gimp         *gimp,
                              gimp_template_get_width (template),
                              gimp_template_get_height (template),
                              gimp_template_get_base_type (template),
-                             GIMP_PRECISION_U8, /* XXX add to template */
+                             gimp_template_get_precision (template),
                              FALSE);
 
   gimp_image_undo_disable (image);

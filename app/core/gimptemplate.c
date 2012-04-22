@@ -50,6 +50,7 @@ enum
   PROP_YRESOLUTION,
   PROP_RESOLUTION_UNIT,
   PROP_BASE_TYPE,
+  PROP_PRECISION,
   PROP_FILL_TYPE,
   PROP_COMMENT,
   PROP_FILENAME
@@ -69,6 +70,7 @@ struct _GimpTemplatePrivate
   GimpUnit           resolution_unit;
 
   GimpImageBaseType  base_type;
+  GimpPrecision      precision;
 
   GimpFillType       fill_type;
 
@@ -155,6 +157,12 @@ gimp_template_class_init (GimpTemplateClass *klass)
                                  NULL,
                                  GIMP_TYPE_IMAGE_BASE_TYPE, GIMP_RGB,
                                  GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PRECISION,
+                                 "precision",
+                                 NULL,
+                                 GIMP_TYPE_PRECISION, GIMP_PRECISION_U8,
+                                 GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FILL_TYPE,
                                  "fill-type",
                                  NULL,
@@ -232,6 +240,9 @@ gimp_template_set_property (GObject      *object,
     case PROP_BASE_TYPE:
       private->base_type = g_value_get_enum (value);
       break;
+    case PROP_PRECISION:
+      private->precision = g_value_get_enum (value);
+      break;
     case PROP_FILL_TYPE:
       private->fill_type = g_value_get_enum (value);
       break;
@@ -282,6 +293,9 @@ gimp_template_get_property (GObject    *object,
     case PROP_BASE_TYPE:
       g_value_set_enum (value, private->base_type);
       break;
+    case PROP_PRECISION:
+      g_value_set_enum (value, private->precision);
+      break;
     case PROP_FILL_TYPE:
       g_value_set_enum (value, private->fill_type);
       break;
@@ -307,11 +321,13 @@ gimp_template_notify (GObject    *object,
   if (G_OBJECT_CLASS (parent_class)->notify)
     G_OBJECT_CLASS (parent_class)->notify (object, pspec);
 
-  channels = ((private->base_type == GIMP_RGB ? 3 : 1)     /* color      */ +
+  channels = ((private->base_type == GIMP_RGB ? 3 : 1)      /* color      */ +
               (private->fill_type == GIMP_TRANSPARENT_FILL) /* alpha      */ +
               1                                             /* selection  */);
 
-  private->initial_size = ((guint64) channels        *
+  /* XXX todo honor precision */
+
+  private->initial_size = ((guint64) channels       *
                            (guint64) private->width *
                            (guint64) private->height);
 
@@ -368,6 +384,7 @@ gimp_template_set_from_image (GimpTemplate *template,
                 "yresolution",     yresolution,
                 "resolution-unit", gimp_image_get_unit (image),
                 "image-type",      base_type,
+                "precision",       gimp_image_get_precision (image),
                 "comment",         comment,
                 NULL);
 
@@ -429,6 +446,14 @@ gimp_template_get_base_type (GimpTemplate *template)
   g_return_val_if_fail (GIMP_IS_TEMPLATE (template), GIMP_RGB);
 
   return GET_PRIVATE (template)->base_type;
+}
+
+GimpPrecision
+gimp_template_get_precision (GimpTemplate *template)
+{
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), GIMP_PRECISION_U8);
+
+  return GET_PRIVATE (template)->precision;
 }
 
 GimpFillType
