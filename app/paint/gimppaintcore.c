@@ -833,13 +833,12 @@ gimp_paint_core_replace (GimpPaintCore            *core,
   else
     {
       /* The mask is just the paint_mask */
-      pixel_region_init (&paint_maskPR,
-                         gimp_gegl_buffer_get_tiles (paint_mask),
-                         paint_mask_rect->x,
-                         paint_mask_rect->y,
-                         paint_mask_rect->width,
-                         paint_mask_rect->height,
-                         FALSE);
+      pixel_region_init_temp_buf (&paint_maskPR,
+                                  gimp_gegl_buffer_get_temp_buf (paint_mask),
+                                  paint_mask_rect->x,
+                                  paint_mask_rect->y,
+                                  paint_mask_rect->width,
+                                  paint_mask_rect->height);
     }
 
   /*  apply the paint area to the image  */
