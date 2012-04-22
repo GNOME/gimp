@@ -563,32 +563,37 @@ gradient_precalc_shapeburst (GimpImage    *image,
 
   /*  allocate the selection mask copy  */
   temp_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, PR->w, PR->h),
-                                      babl_format ("Y u8"));
+                                      gimp_image_get_mask_format (image));
 
   mask = gimp_image_get_mask (image);
 
   /*  If the image mask is not empty, use it as the shape burst source  */
   if (! gimp_channel_is_empty (mask))
     {
-      gint           x, y, width, height;
-      gint           off_x, off_y;
+      gint x, y, width, height;
+      gint off_x, off_y;
 
       gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
       gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
       /*  copy the mask to the temp mask  */
       gegl_buffer_copy (gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
-                        GEGL_RECTANGLE (x+off_x, y + off_y, width, height),
+                        GEGL_RECTANGLE (x + off_x, y + off_y, width, height),
                         temp_buffer,
-                        GEGL_RECTANGLE (0,0,0,0));
+                        GEGL_RECTANGLE (0, 0, 0, 0));
     }
   else
     {
       /*  If the intended drawable has an alpha channel, use that  */
       if (gimp_drawable_has_alpha (drawable))
         {
+          const Babl *component_format;
+
+          component_format =
+            gimp_image_get_component_format (image, GIMP_ALPHA_CHANNEL);
+
           /*  extract the aplha into the temp mask  */
-          gegl_buffer_set_format (temp_buffer, babl_format ("A u8"));
+          gegl_buffer_set_format (temp_buffer, component_format);
           gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
                             GEGL_RECTANGLE (PR->x, PR->y, PR->w, PR->h),
                             temp_buffer,
