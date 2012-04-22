@@ -30,8 +30,6 @@
 
 #include "display/display-types.h"
 
-#include "base/tile-manager.h"
-
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimp-transform-utils.h"
@@ -871,14 +869,12 @@ gimp_canvas_transform_preview_draw_tri_row (GimpDrawable    *texture,
                                             gint             y,
                                             guchar           opacity)
 {
-  TileManager  *tiles;     /* used to get the source texture colors   */
-  guchar       *pptr;      /* points into the pixels of a row of area */
-  gfloat        u, v;
-  gfloat        du, dv;
-  gint          dx;
-  guchar        pixel[4];
-  const guchar *cmap;
-  gint          offset;
+  GeglBuffer *buffer;
+  const Babl *format;
+  guchar     *pptr;      /* points into the pixels of a row of area */
+  gfloat      u, v;
+  gfloat      du, dv;
+  gint        dx;
 
   if (x2 == x1)
     return;
@@ -933,142 +929,31 @@ gimp_canvas_transform_preview_draw_tri_row (GimpDrawable    *texture,
           + (y - area_offy) * cairo_image_surface_get_stride (area)
           + (x1 - area_offx) * 4);
 
-  tiles = gimp_drawable_get_tiles (texture);
+  buffer = gimp_drawable_get_buffer (texture);
+  format = babl_format ("R'G'B'A u8");
 
-  switch (gimp_drawable_type (texture))
+  while (dx--)
     {
-    case GIMP_INDEXED_IMAGE:
-      cmap = gimp_drawable_get_colormap (texture);
+      guchar          pixel[4];
+      register gulong tmp;
+      guchar          alpha;
 
-      while (dx--)
-        {
-          tile_manager_read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+      gegl_buffer_sample (buffer, (gint) u, (gint) v, NULL, pixel,
+                          format,
+                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
-          offset = pixel[0] + pixel[0] + pixel[0];
+      alpha = INT_MULT (opacity, pixel[3], tmp);
 
-          GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
-                                       cmap[offset + 0],
-                                       cmap[offset + 1],
-                                       cmap[offset + 2],
-                                       opacity);
+      GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
+                                   pixel[0],
+                                   pixel[1],
+                                   pixel[2],
+                                   alpha);
 
-          pptr += 4;
+      pptr += 4;
 
-          u += du;
-          v += dv;
-        }
-      break;
-
-    case GIMP_INDEXEDA_IMAGE:
-      cmap = gimp_drawable_get_colormap (texture);
-
-      while (dx--)
-        {
-          register gulong tmp;
-          guchar          alpha;
-
-          tile_manager_read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-
-          offset = pixel[0] + pixel[0] + pixel[0];
-          alpha  = INT_MULT (opacity, pixel[1], tmp);
-
-          GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
-                                       cmap[offset + 0],
-                                       cmap[offset + 1],
-                                       cmap[offset + 2],
-                                       alpha);
-
-          pptr += 4;
-
-          u += du;
-          v += dv;
-        }
-      break;
-
-    case GIMP_GRAY_IMAGE:
-      while (dx--)
-        {
-          tile_manager_read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-
-          GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
-                                       pixel[0],
-                                       pixel[0],
-                                       pixel[0],
-                                       opacity);
-
-          pptr += 4;
-
-          u += du;
-          v += dv;
-        }
-      break;
-
-    case GIMP_GRAYA_IMAGE:
-      while (dx--)
-        {
-          register gulong tmp;
-          guchar          alpha;
-
-          tile_manager_read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-
-          alpha = INT_MULT (opacity, pixel[1], tmp);
-
-          GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
-                                       pixel[0],
-                                       pixel[0],
-                                       pixel[0],
-                                       alpha);
-
-          pptr += 4;
-
-          u += du;
-          v += dv;
-        }
-      break;
-
-    case GIMP_RGB_IMAGE:
-      while (dx--)
-        {
-          tile_manager_read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-
-          GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
-                                       pixel[0],
-                                       pixel[1],
-                                       pixel[2],
-                                       opacity);
-
-          pptr += 4;
-
-          u += du;
-          v += dv;
-        }
-      break;
-
-    case GIMP_RGBA_IMAGE:
-      while (dx--)
-        {
-          register gulong tmp;
-          guchar          alpha;
-
-          tile_manager_read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-
-          alpha = INT_MULT (opacity, pixel[3], tmp);
-
-          GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
-                                       pixel[0],
-                                       pixel[1],
-                                       pixel[2],
-                                       alpha);
-
-          pptr += 4;
-
-          u += du;
-          v += dv;
-        }
-      break;
-
-    default:
-      return;
+      u += du;
+      v += dv;
     }
 
   cairo_surface_mark_dirty (area);
@@ -1102,17 +987,15 @@ gimp_canvas_transform_preview_draw_tri_row_mask (GimpDrawable    *texture,
                                                  gint             y,
                                                  guchar           opacity)
 {
-
-  TileManager  *tiles, *masktiles; /* used to get the source texture colors */
-  guchar       *pptr;              /* points into the pixels of area        */
-  gfloat        u, v;
-  gfloat        mu, mv;
-  gfloat        du, dv;
-  gint          dx;
-  guchar        pixel[4];
-  guchar        maskval;
-  const guchar *cmap;
-  gint          offset;
+  GeglBuffer *buffer;
+  const Babl *format;
+  GeglBuffer *mask_buffer;
+  const Babl *mask_format;
+  guchar     *pptr;              /* points into the pixels of area        */
+  gfloat      u, v;
+  gfloat      mu, mv;
+  gfloat      du, dv;
+  gint        dx;
 
   if (x2 == x1)
     return;
@@ -1171,181 +1054,39 @@ gimp_canvas_transform_preview_draw_tri_row_mask (GimpDrawable    *texture,
           + (y - area_offy) * cairo_image_surface_get_stride (area)
           + (x1 - area_offx) * 4);
 
-  tiles     = gimp_drawable_get_tiles (texture);
-  masktiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (mask));
+  buffer      = gimp_drawable_get_buffer (texture);
+  mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+  format      = babl_format ("R'G'B'A u8");
+  mask_format = babl_format ("Y u8");
 
-  switch (gimp_drawable_type (texture))
+  while (dx--)
     {
-    case GIMP_INDEXED_IMAGE:
-      cmap = gimp_drawable_get_colormap (texture);
+      guchar          pixel[4];
+      guchar          maskval;
+      register gulong tmp;
+      guchar          alpha;
 
-      while (dx--)
-        {
-          register gulong tmp;
-          guchar          alpha;
+      gegl_buffer_sample (buffer, (gint) u, (gint) v, NULL, pixel,
+                          format,
+                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+      gegl_buffer_sample (mask_buffer, (gint) mu, (gint) mv, NULL, &maskval,
+                          mask_format,
+                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
-          tile_manager_read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-          tile_manager_read_pixel_data_1 (masktiles, (gint) mu, (gint) mv,
-                                          &maskval);
+      alpha = INT_MULT3 (opacity, maskval, pixel[3], tmp);
 
-          offset = pixel[0] + pixel[0] + pixel[0];
-          alpha  = INT_MULT (opacity, maskval, tmp);
+      GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
+                                   pixel[0],
+                                   pixel[1],
+                                   pixel[2],
+                                   alpha);
 
-          GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
-                                       cmap[offset + 0],
-                                       cmap[offset + 1],
-                                       cmap[offset + 2],
-                                       alpha);
+      pptr += 4;
 
-          pptr += 4;
-
-          u += du;
-          v += dv;
-          mu += du;
-          mv += dv;
-        }
-      break;
-
-    case GIMP_INDEXEDA_IMAGE:
-      cmap = gimp_drawable_get_colormap (texture);
-
-      while (dx--)
-        {
-          register gulong tmp;
-          guchar          alpha;
-
-          tile_manager_read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-          tile_manager_read_pixel_data_1 (masktiles, (gint) mu, (gint) mv,
-                                          &maskval);
-
-          offset = pixel[0] + pixel[0] + pixel[0];
-          alpha  = INT_MULT3 (opacity, maskval, pixel[1], tmp);
-
-          GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
-                                       cmap[offset + 0],
-                                       cmap[offset + 1],
-                                       cmap[offset + 2],
-                                       alpha);
-
-          pptr += 4;
-
-          u += du;
-          v += dv;
-          mu += du;
-          mv += dv;
-        }
-      break;
-
-    case GIMP_GRAY_IMAGE:
-      while (dx--)
-        {
-          register gulong tmp;
-          guchar          alpha;
-
-          tile_manager_read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-          tile_manager_read_pixel_data_1 (masktiles, (gint) mu, (gint) mv,
-                                          &maskval);
-
-          alpha = INT_MULT (opacity, maskval, tmp);
-
-          GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
-                                       pixel[0],
-                                       pixel[0],
-                                       pixel[0],
-                                       alpha);
-
-          pptr += 4;
-
-          u += du;
-          v += dv;
-          mu += du;
-          mv += dv;
-        }
-      break;
-
-    case GIMP_GRAYA_IMAGE:
-      while (dx--)
-        {
-          register gulong tmp;
-          guchar          alpha;
-
-          tile_manager_read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-          tile_manager_read_pixel_data_1 (masktiles, (gint) mu, (gint) mv,
-                                          &maskval);
-
-          alpha = INT_MULT3 (opacity, maskval, pixel[1], tmp);
-
-          GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
-                                       pixel[0],
-                                       pixel[0],
-                                       pixel[0],
-                                       alpha);
-
-          pptr += 4;
-
-          u += du;
-          v += dv;
-          mu += du;
-          mv += dv;
-        }
-      break;
-
-    case GIMP_RGB_IMAGE:
-      while (dx--)
-        {
-          register gulong tmp;
-          guchar          alpha;
-
-          tile_manager_read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-          tile_manager_read_pixel_data_1 (masktiles, (gint) mu, (gint) mv,
-                                          &maskval);
-
-          alpha = INT_MULT (opacity, maskval, tmp);
-
-          GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
-                                       pixel[0],
-                                       pixel[1],
-                                       pixel[2],
-                                       alpha);
-
-          pptr += 4;
-
-          u += du;
-          v += dv;
-          mu += du;
-          mv += dv;
-        }
-      break;
-
-    case GIMP_RGBA_IMAGE:
-      while (dx--)
-        {
-          register gulong tmp;
-          guchar          alpha;
-
-          tile_manager_read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-          tile_manager_read_pixel_data_1 (masktiles, (gint) mu, (gint) mv,
-                                          &maskval);
-
-          alpha = INT_MULT3 (opacity, maskval, pixel[3], tmp);
-
-          GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
-                                       pixel[0],
-                                       pixel[1],
-                                       pixel[2],
-                                       alpha);
-
-          pptr += 4;
-
-          u += du;
-          v += dv;
-          mu += du;
-          mv += dv;
-        }
-      break;
-
-    default:
-      return;
+      u += du;
+      v += dv;
+      mu += du;
+      mv += dv;
     }
 
   cairo_surface_mark_dirty (area);
