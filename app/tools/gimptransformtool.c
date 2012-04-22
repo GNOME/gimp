@@ -995,7 +995,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
        *  so they keep their size
        */
       if (GIMP_IS_CHANNEL (active_item) &&
-          gegl_buffer_get_format (orig_buffer) == babl_format ("Y u8"))
+          ! babl_format_has_alpha (gegl_buffer_get_format (orig_buffer)))
         clip = GIMP_TRANSFORM_RESIZE_CLIP;
 
       ret = gimp_drawable_transform_buffer_affine (GIMP_DRAWABLE (active_item),

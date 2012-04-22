@@ -118,7 +118,7 @@ gimp_drawable_transform_buffer_affine (GimpDrawable           *drawable,
 
   /*  Always clip unfloated buffers since they must keep their size  */
   if (G_TYPE_FROM_INSTANCE (drawable) == GIMP_TYPE_CHANNEL &&
-      gegl_buffer_get_format (orig_buffer) == babl_format ("Y u8"))
+      ! babl_format_has_alpha (gegl_buffer_get_format (orig_buffer)))
     clip_result = GIMP_TRANSFORM_RESIZE_CLIP;
 
   /*  Find the bounding coordinates of target */
@@ -669,7 +669,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
 
       /*  always clip unfloated buffers so they keep their size  */
       if (GIMP_IS_CHANNEL (drawable) &&
-          gegl_buffer_get_format (orig_buffer) == babl_format ("Y u8"))
+          ! babl_format_has_alpha (gegl_buffer_get_format (orig_buffer)))
         clip_result = GIMP_TRANSFORM_RESIZE_CLIP;
 
       /*  also transform the mask if we are transforming an entire layer  */
@@ -756,9 +756,9 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
       gint        new_offset_x;
       gint        new_offset_y;
 
-      /*  always clip unfloated tiles so they keep their size  */
+      /*  always clip unfloated buffers so they keep their size  */
       if (GIMP_IS_CHANNEL (drawable) &&
-          gegl_buffer_get_format (orig_buffer) == babl_format ("Y u8"))
+          ! babl_format_has_alpha (gegl_buffer_get_format (orig_buffer)))
         clip_result = TRUE;
 
       /*  also transform the mask if we are transforming an entire layer  */
@@ -842,9 +842,9 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
       gint        new_offset_x;
       gint        new_offset_y;
 
-      /*  always clip unfloated tiles so they keep their size  */
+      /*  always clip unfloated buffers so they keep their size  */
       if (GIMP_IS_CHANNEL (drawable) &&
-          gegl_buffer_get_format (orig_buffer) == babl_format ("Y u8"))
+          ! babl_format_has_alpha (gegl_buffer_get_format (orig_buffer)))
         clip_result = TRUE;
 
       /*  also transform the mask if we are transforming an entire layer  */
@@ -915,7 +915,7 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
       gint x, y, w, h;
 
       /* set the keep_indexed flag to FALSE here, since we use
-       * gimp_layer_new_from_tiles() later which assumes that the tiles
+       * gimp_layer_new_from_buffer() later which assumes that the buffer
        * are either RGB or GRAY.  Eeek!!!              (Sven)
        */
       if (gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &w, &h))
