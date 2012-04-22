@@ -1292,10 +1292,14 @@ gimp_layer_create_mask (const GimpLayer *layer,
       if (gimp_drawable_has_alpha (drawable))
         {
           GeglBuffer *dest_buffer;
+          const Babl *component_format;
 
           dest_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
-          gegl_buffer_set_format (dest_buffer, babl_format ("A u8"));
+          component_format =
+            gimp_image_get_component_format (image, GIMP_ALPHA_CHANNEL);
+
+          gegl_buffer_set_format (dest_buffer, component_format);
           gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                             dest_buffer, NULL);
           gegl_buffer_set_format (dest_buffer, NULL);
