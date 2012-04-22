@@ -80,7 +80,9 @@ babl_descriptions[] =
   { "R' u8",      N_("Red component") },
   { "G' u8",      N_("Green component") },
   { "B' u8",      N_("Blue component") },
-  { "A u8",       N_("Alpha component") }
+  { "A u8",       N_("Alpha component") },
+  { "A float",    N_("Alpha component") },
+  { "A double",   N_("Alpha component") }
 };
 
 static GHashTable *babl_description_hash = NULL;
