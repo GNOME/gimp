@@ -173,7 +173,6 @@ drawable_actions_update (GimpActionGroup *group,
   GimpImage    *image;
   GimpDrawable *drawable   = NULL;
   gboolean      is_rgb     = FALSE;
-  gboolean      is_indexed = FALSE;
   gboolean      visible    = FALSE;
   gboolean      linked     = FALSE;
   gboolean      locked     = FALSE;
@@ -191,8 +190,7 @@ drawable_actions_update (GimpActionGroup *group,
         {
           GimpItem *item;
 
-          is_rgb     = gimp_drawable_is_rgb (drawable);
-          is_indexed = gimp_drawable_is_indexed (drawable);
+          is_rgb = gimp_drawable_is_rgb (drawable);
 
           if (GIMP_IS_LAYER_MASK (drawable))
             item = GIMP_ITEM (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)));
@@ -215,10 +213,10 @@ drawable_actions_update (GimpActionGroup *group,
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("drawable-equalize",       writable && !children && !is_indexed);
+  SET_SENSITIVE ("drawable-equalize",       writable && !children);
   SET_SENSITIVE ("drawable-invert",         writable && !children);
   SET_SENSITIVE ("drawable-value-invert",   writable && !children);
-  SET_SENSITIVE ("drawable-levels-stretch", writable && !children &&  is_rgb);
+  SET_SENSITIVE ("drawable-levels-stretch", writable && !children && is_rgb);
   SET_SENSITIVE ("drawable-offset",         writable && !children);
 
   SET_SENSITIVE ("drawable-visible",      drawable);

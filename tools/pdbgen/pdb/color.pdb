@@ -75,8 +75,7 @@ high-level intensities. Lower gamma values result in more low-level
 intensities. The low/high output levels constrain the final intensity
 mapping--that is, no final intensity will be lower than the low output level
 and no final intensity will be higher than the high output level. This tool is
-only valid on RGB color and grayscale images. It will not operate on indexed
-drawables.
+only valid on RGB color and grayscale images.
 HELP
 
     &std_pdb_misc;
@@ -323,12 +322,12 @@ sub equalize {
     $blurb = 'Equalize the contents of the specified drawable.';
 
     $help = <<'HELP';
-This procedure equalizes the contents of the specified drawable. Each intensity
-channel is equalized independently. The equalized intensity is given as inten'
-= (255 - inten). Indexed color drawables are not valid for this operation. The
-'mask_only' option specifies whether to adjust only the area of the image
-within the selection bounds, or the entire image based on the histogram of the
-selected area. If there is no selection, the entire image is adjusted based on
+This procedure equalizes the contents of the specified drawable. Each
+intensity channel is equalized independently. The equalized intensity
+is given as inten' = (255 - inten). The 'mask_only' option specifies
+whether to adjust only the area of the image within the selection
+bounds, or the entire image based on the histogram of the selected
+area. If there is no selection, the entire image is adjusted based on
 the histogram for the entire image.
 HELP
 
@@ -346,8 +345,7 @@ HELP
 	code => <<'CODE'
 {
   if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
-      ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
-      gimp_drawable_is_indexed (drawable))
+      ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     success = FALSE;
 
   if (success)
@@ -363,7 +361,7 @@ sub invert {
     $help = <<'HELP';
 This procedure inverts the contents of the specified drawable. Each intensity
 channel is inverted independently. The inverted intensity is given as inten' =
-(255 - inten). Indexed color drawables are not valid for this operation.
+(255 - inten).
 HELP
 
     &std_pdb_misc;
@@ -377,8 +375,7 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-      ! gimp_drawable_is_indexed (drawable))
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
       gimp_drawable_apply_operation_by_name (drawable, progress,
                                              _("Invert"),

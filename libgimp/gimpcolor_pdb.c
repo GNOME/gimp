@@ -97,7 +97,7 @@ gimp_brightness_contrast (gint32 drawable_ID,
  * intensity mapping--that is, no final intensity will be lower than
  * the low output level and no final intensity will be higher than the
  * high output level. This tool is only valid on RGB color and
- * grayscale images. It will not operate on indexed drawables.
+ * grayscale images.
  *
  * Returns: TRUE on success.
  **/
@@ -299,8 +299,7 @@ gimp_desaturate_full (gint32             drawable_ID,
  *
  * This procedure equalizes the contents of the specified drawable.
  * Each intensity channel is equalized independently. The equalized
- * intensity is given as inten' = (255 - inten). Indexed color
- * drawables are not valid for this operation. The 'mask_only' option
+ * intensity is given as inten' = (255 - inten). The 'mask_only' option
  * specifies whether to adjust only the area of the image within the
  * selection bounds, or the entire image based on the histogram of the
  * selected area. If there is no selection, the entire image is
@@ -337,8 +336,7 @@ gimp_equalize (gint32   drawable_ID,
  *
  * This procedure inverts the contents of the specified drawable. Each
  * intensity channel is inverted independently. The inverted intensity
- * is given as inten' = (255 - inten). Indexed color drawables are not
- * valid for this operation.
+ * is given as inten' = (255 - inten).
  *
  * Returns: TRUE on success.
  **/

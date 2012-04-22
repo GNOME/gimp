@@ -51,17 +51,7 @@ drawable_equalize_cmd_callback (GtkAction *action,
 {
   GimpImage    *image;
   GimpDrawable *drawable;
-  GtkWidget    *widget;
   return_if_no_drawable (image, drawable, data);
-  return_if_no_widget (widget, data);
-
-  if (gimp_drawable_is_indexed (drawable))
-    {
-      gimp_message_literal (image->gimp,
-			    G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-			    _("Equalize does not operate on indexed layers."));
-      return;
-    }
 
   gimp_drawable_equalize (drawable, TRUE);
   gimp_image_flush (image);

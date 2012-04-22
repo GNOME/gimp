@@ -336,8 +336,7 @@ equalize_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
-          ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
-          gimp_drawable_is_indexed (drawable))
+          ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         success = FALSE;
 
       if (success)
@@ -364,8 +363,7 @@ invert_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-          ! gimp_drawable_is_indexed (drawable))
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           gimp_drawable_apply_operation_by_name (drawable, progress,
                                                  _("Invert"),
@@ -783,7 +781,7 @@ register_color_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-levels",
                                      "Modifies intensity levels in the specified drawable.",
-                                     "This tool allows intensity levels in the specified drawable to be remapped according to a set of parameters. The low/high input levels specify an initial mapping from the source intensities. The gamma value determines how intensities between the low and high input intensities are interpolated. A gamma value of 1.0 results in a linear interpolation. Higher gamma values result in more high-level intensities. Lower gamma values result in more low-level intensities. The low/high output levels constrain the final intensity mapping--that is, no final intensity will be lower than the low output level and no final intensity will be higher than the high output level. This tool is only valid on RGB color and grayscale images. It will not operate on indexed drawables.",
+                                     "This tool allows intensity levels in the specified drawable to be remapped according to a set of parameters. The low/high input levels specify an initial mapping from the source intensities. The gamma value determines how intensities between the low and high input intensities are interpolated. A gamma value of 1.0 results in a linear interpolation. Higher gamma values result in more high-level intensities. Lower gamma values result in more low-level intensities. The low/high output levels constrain the final intensity mapping--that is, no final intensity will be lower than the low output level and no final intensity will be higher than the high output level. This tool is only valid on RGB color and grayscale images.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -971,7 +969,7 @@ register_color_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-equalize",
                                      "Equalize the contents of the specified drawable.",
-                                     "This procedure equalizes the contents of the specified drawable. Each intensity channel is equalized independently. The equalized intensity is given as inten' = (255 - inten). Indexed color drawables are not valid for this operation. The 'mask_only' option specifies whether to adjust only the area of the image within the selection bounds, or the entire image based on the histogram of the selected area. If there is no selection, the entire image is adjusted based on the histogram for the entire image.",
+                                     "This procedure equalizes the contents of the specified drawable. Each intensity channel is equalized independently. The equalized intensity is given as inten' = (255 - inten). The 'mask_only' option specifies whether to adjust only the area of the image within the selection bounds, or the entire image based on the histogram of the selected area. If there is no selection, the entire image is adjusted based on the histogram for the entire image.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -1000,7 +998,7 @@ register_color_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-invert",
                                      "Invert the contents of the specified drawable.",
-                                     "This procedure inverts the contents of the specified drawable. Each intensity channel is inverted independently. The inverted intensity is given as inten' = (255 - inten). Indexed color drawables are not valid for this operation.",
+                                     "This procedure inverts the contents of the specified drawable. Each intensity channel is inverted independently. The inverted intensity is given as inten' = (255 - inten).",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
