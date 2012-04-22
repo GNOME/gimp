@@ -53,14 +53,29 @@ gimp_babl_init (void)
                    babl_component ("A"),
                    NULL);
 
+  babl_format_new ("name", "R float",
+                   babl_model ("RGBA"),
+                   babl_type ("float"),
+                   babl_component ("R"),
+                   NULL);
+  babl_format_new ("name", "G float",
+                   babl_model ("RGBA"),
+                   babl_type ("float"),
+                   babl_component ("G"),
+                   NULL);
+  babl_format_new ("name", "B float",
+                   babl_model ("RGBA"),
+                   babl_type ("float"),
+                   babl_component ("B"),
+                   NULL);
   babl_format_new ("name", "A float",
-                   babl_model ("R'G'B'A"),
+                   babl_model ("RGBA"),
                    babl_type ("float"),
                    babl_component ("A"),
                    NULL);
 
   babl_format_new ("name", "A double",
-                   babl_model ("R'G'B'A"),
+                   babl_model ("RGBA"),
                    babl_type ("double"),
                    babl_component ("A"),
                    NULL);
@@ -74,12 +89,26 @@ static const struct
 babl_descriptions[] =
 {
   { "R'G'B' u8",  N_("RGB") },
+  { "RGB float",  N_("RGB") },
+
   { "R'G'B'A u8", N_("RGB-alpha") },
+  { "RGBA float", N_("RGB-alpha") },
+
   { "Y' u8",      N_("Grayscale") },
+  { "Y float",    N_("Grayscale") },
+
   { "Y'A u8",     N_("Grayscale-alpha") },
+  { "YA float",   N_("Grayscale-alpha") },
+
   { "R' u8",      N_("Red component") },
+  { "R float",    N_("Red component") },
+
   { "G' u8",      N_("Green component") },
+  { "G float",    N_("Green component") },
+
   { "B' u8",      N_("Blue component") },
+  { "B float",    N_("Blue component") },
+
   { "A u8",       N_("Alpha component") },
   { "A float",    N_("Alpha component") },
   { "A double",   N_("Alpha component") }
@@ -130,14 +159,18 @@ gimp_babl_format_get_base_type (const Babl *format)
 {
   g_return_val_if_fail (format != NULL, -1);
 
-  if (format == babl_format ("Y u8")  ||
-      format == babl_format ("Y' u8") ||
-      format == babl_format ("Y'A u8"))
+  if (format == babl_format ("Y u8")    ||
+      format == babl_format ("Y' u8")   ||
+      format == babl_format ("Y float") ||
+      format == babl_format ("Y'A u8")  ||
+      format == babl_format ("YA float"))
     {
       return GIMP_GRAY;
     }
-  else if (format == babl_format ("R'G'B' u8") ||
-           format == babl_format ("R'G'B'A u8"))
+  else if (format == babl_format ("R'G'B' u8")  ||
+           format == babl_format ("RGB float")  ||
+           format == babl_format ("R'G'B'A u8") ||
+           format == babl_format ("RGBA float"))
     {
       return GIMP_RGB;
     }
@@ -160,6 +193,8 @@ gimp_babl_format_get_precision (const Babl *format)
 
   if (type == babl_type ("u8"))
     return GIMP_PRECISION_U8;
+  else if (type == babl_type ("float"))
+    return GIMP_PRECISION_FLOAT;
 
   g_return_val_if_reached (-1);
 }
@@ -180,6 +215,12 @@ gimp_babl_format (GimpImageBaseType  base_type,
           else
             return babl_format ("R'G'B' u8");
 
+        case GIMP_PRECISION_FLOAT:
+          if (with_alpha)
+            return babl_format ("RGBA float");
+          else
+            return babl_format ("RGB float");
+
         default:
           break;
         }
@@ -193,6 +234,12 @@ gimp_babl_format (GimpImageBaseType  base_type,
             return babl_format ("Y'A u8");
           else
             return babl_format ("Y' u8");
+
+        case GIMP_PRECISION_FLOAT:
+          if (with_alpha)
+            return babl_format ("YA float");
+          else
+            return babl_format ("Y float");
 
         default:
           break;
@@ -227,6 +274,19 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             default:
               break;
             }
+          break;
+
+        case GIMP_PRECISION_FLOAT:
+          switch (index)
+            {
+            case 0: return babl_format ("R float");
+            case 1: return babl_format ("G float");
+            case 2: return babl_format ("B float");
+            case 3: return babl_format ("A float");
+            default:
+              break;
+            }
+          break;
 
         default:
           break;
@@ -244,6 +304,17 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             default:
               break;
             }
+          break;
+
+        case GIMP_PRECISION_FLOAT:
+          switch (index)
+            {
+            case 0: return babl_format ("Y float");
+            case 1: return babl_format ("A float");
+            default:
+              break;
+            }
+          break;
 
         default:
           break;

@@ -37,15 +37,27 @@ gimp_babl_format_get_image_type (const Babl *format)
 {
   g_return_val_if_fail (format != NULL, -1);
 
-  if (format == babl_format ("Y u8") ||
-      format == babl_format ("Y' u8"))
-    return GIMP_GRAY_IMAGE;
-  else if (format == babl_format ("Y'A u8"))
-    return GIMP_GRAYA_IMAGE;
-  else if (format == babl_format ("R'G'B' u8"))
-    return GIMP_RGB_IMAGE;
-  else if (format == babl_format ("R'G'B'A u8"))
-    return GIMP_RGBA_IMAGE;
+  if (format == babl_format ("Y u8")  ||
+      format == babl_format ("Y' u8") ||
+      format == babl_format ("Y float"))
+    {
+      return GIMP_GRAY_IMAGE;
+    }
+  else if (format == babl_format ("Y'A u8") ||
+           format == babl_format ("YA float"))
+    {
+      return GIMP_GRAYA_IMAGE;
+    }
+  else if (format == babl_format ("R'G'B' u8") ||
+           format == babl_format ("RGB float"))
+    {
+      return GIMP_RGB_IMAGE;
+    }
+  else if (format == babl_format ("R'G'B'A u8") ||
+           format == babl_format ("RGBA float"))
+    {
+      return GIMP_RGBA_IMAGE;
+    }
   else if (babl_format_is_palette (format))
     {
       if (babl_format_has_alpha (format))

@@ -1553,7 +1553,8 @@ gimp_image_get_mask_format (const GimpImage *image)
 
   switch (gimp_image_get_precision (image))
     {
-    case GIMP_PRECISION_U8: return babl_format ("Y u8");
+    case GIMP_PRECISION_U8:    return babl_format ("Y u8");
+    case GIMP_PRECISION_FLOAT: return babl_format ("Y float");
     }
 
   g_return_val_if_reached (NULL);

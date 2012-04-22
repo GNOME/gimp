@@ -330,7 +330,8 @@ GType gimp_precision_get_type (void) G_GNUC_CONST;
 
 typedef enum /*< pdb-skip >*/
 {
-  GIMP_PRECISION_U8  /*< desc="8-Bit unsigned integer" >*/
+  GIMP_PRECISION_U8,    /*< desc="8-Bit unsigned integer" >*/
+  GIMP_PRECISION_FLOAT  /*< desc="32-Bit floating point"  >*/
 } GimpPrecision;
 
 
