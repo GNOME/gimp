@@ -137,6 +137,17 @@ gimp_display_shell_title_image_type (GimpImage *image)
   return name;
 }
 
+static const gchar *
+gimp_display_shell_title_image_precision (GimpImage *image)
+{
+  const gchar *name = "";
+
+  gimp_enum_get_value (GIMP_TYPE_PRECISION,
+                       gimp_image_get_precision (image), NULL, NULL, &name, NULL);
+
+  return name;
+}
+
 static gint print (gchar       *buf,
                    gint         len,
                    gint         start,
@@ -232,8 +243,9 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               break;
 
             case 't': /* image type */
-              i += print (title, title_len, i, "%s",
-                          gimp_display_shell_title_image_type (image));
+              i += print (title, title_len, i, "%s %s",
+                          gimp_display_shell_title_image_type (image),
+                          gimp_display_shell_title_image_precision (image));
               break;
 
             case 'T': /* drawable type */
