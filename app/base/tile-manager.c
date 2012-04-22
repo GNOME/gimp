@@ -98,7 +98,7 @@ tile_manager_new (gint width,
   TileManager *tm;
 
   g_return_val_if_fail (width > 0 && height > 0, NULL);
-  g_return_val_if_fail (bpp > 0 && bpp <= 4, NULL);
+  g_return_val_if_fail (bpp > 0, NULL);
 
   tm = g_slice_new0 (TileManager);
 
