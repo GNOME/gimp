@@ -120,6 +120,7 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
   g_return_if_fail (buffer_rect != NULL);
 
+  /* XXX need to analyze the real components here, this code assumes u8 */
   format = gegl_buffer_get_format (buffer);
   bpp    = babl_format_get_bytes_per_pixel (format);
 
