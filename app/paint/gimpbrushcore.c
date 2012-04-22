@@ -1349,7 +1349,7 @@ gimp_brush_core_solidify_mask (GimpBrushCore     *core,
 
   dest = gimp_temp_buf_new (brush_mask->width  + 2,
                             brush_mask->height + 2,
-                            babl_format ("Y u8"));
+                            brush_mask->format);
   gimp_temp_buf_data_clear (dest);
 
   core->solid_brushes[dest_offset_y][dest_offset_x] = dest;
