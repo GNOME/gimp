@@ -826,14 +826,16 @@ static const Babl *
 get_projection_format (GimpProjectable   *projectable,
                        GimpImageBaseType  base_type)
 {
+  GimpImage *image = gimp_item_get_image (GIMP_ITEM (projectable));
+
   switch (base_type)
     {
     case GIMP_RGB:
     case GIMP_INDEXED:
-      return babl_format ("R'G'B'A u8");
+      return gimp_image_get_format (image, GIMP_RGB, TRUE);
 
     case GIMP_GRAY:
-      return babl_format ("Y'A u8");
+      return gimp_image_get_format (image, GIMP_GRAY, TRUE);
     }
 
   g_assert_not_reached ();

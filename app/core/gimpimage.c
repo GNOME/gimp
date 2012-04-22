@@ -633,6 +633,7 @@ gimp_image_init (GimpImage *image)
   private->yresolution         = 1.0;
   private->resolution_unit     = GIMP_UNIT_INCH;
   private->base_type           = GIMP_RGB;
+  private->precision           = GIMP_PRECISION_U8;
 
   private->colormap            = NULL;
   private->n_colors            = 0;
@@ -1180,11 +1181,13 @@ gimp_image_real_colormap_changed (GimpImage *image,
   if (private->colormap)
     {
       babl_palette_set_palette (private->babl_palette_rgb,
-                                babl_format ("R'G'B' u8"),
+                                gimp_babl_format (GIMP_RGB,
+                                                  private->precision, FALSE),
                                 private->colormap,
                                 private->n_colors);
       babl_palette_set_palette (private->babl_palette_rgba,
-                                babl_format ("R'G'B' u8"),
+                                gimp_babl_format (GIMP_RGB,
+                                                  private->precision, FALSE),
                                 private->colormap,
                                 private->n_colors);
     }
@@ -1267,16 +1270,17 @@ gimp_image_get_image (GimpProjectable *projectable)
 static const Babl *
 gimp_image_get_proj_format (GimpProjectable *projectable)
 {
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (projectable);
+  GimpImage        *image   = GIMP_IMAGE (projectable);
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
 
   switch (private->base_type)
     {
     case GIMP_RGB:
     case GIMP_INDEXED:
-      return babl_format ("R'G'B'A u8");
+      return gimp_image_get_format (image, GIMP_RGB, TRUE);
 
     case GIMP_GRAY:
-      return babl_format ("Y'A u8");
+      return gimp_image_get_format (image, GIMP_GRAY, TRUE);
     }
 
   g_assert_not_reached ();
@@ -1467,6 +1471,14 @@ gimp_image_base_type (const GimpImage *image)
   return GIMP_IMAGE_GET_PRIVATE (image)->base_type;
 }
 
+GimpPrecision
+gimp_image_get_precision (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), -1);
+
+  return GIMP_IMAGE_GET_PRIVATE (image)->precision;
+}
+
 CombinationMode
 gimp_image_get_combination_mode (GimpImageType dest_type,
                                  gint          src_bytes)
@@ -1485,7 +1497,9 @@ gimp_image_get_format (const GimpImage   *image,
     {
     case GIMP_RGB:
     case GIMP_GRAY:
-      return gimp_babl_format (base_type, with_alpha);
+      return gimp_babl_format (base_type,
+                               gimp_image_get_precision (image),
+                               with_alpha);
 
     case GIMP_INDEXED:
       if (with_alpha)
@@ -1513,7 +1527,7 @@ gimp_image_get_channel_format (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return babl_format ("Y' u8");
+  return gimp_image_get_format (image, GIMP_GRAY, FALSE);
 }
 
 const Babl *

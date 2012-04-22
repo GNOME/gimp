@@ -26,6 +26,8 @@
 
 #include "widgets-types.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "core/gimpimage.h"
 
 #include "gimpcolorframe.h"
@@ -504,9 +506,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
   switch (frame->frame_mode)
     {
     case GIMP_COLOR_FRAME_MODE_PIXEL:
-      if (frame->sample_format == babl_format ("Y u8")  ||
-          frame->sample_format == babl_format ("Y' u8") ||
-          frame->sample_format == babl_format ("Y'A u8"))
+      if (gimp_babl_format_get_base_type (frame->sample_format) == GIMP_GRAY)
         {
           names[0]  = _("Value:");
 

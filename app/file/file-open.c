@@ -47,6 +47,8 @@
 
 #include "config/gimpcoreconfig.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdocumentlist.h"
@@ -323,19 +325,23 @@ file_open_thumbnail (Gimp           *gimp,
                   switch (value)
                     {
                     case GIMP_RGB_IMAGE:
-                      *format = babl_format ("R'G'B' u8");
+                      *format = gimp_babl_format (GIMP_RGB, GIMP_PRECISION_U8,
+                                                  FALSE);
                       break;
 
                     case GIMP_RGBA_IMAGE:
-                      *format = babl_format ("R'G'B'A u8");
+                      *format = gimp_babl_format (GIMP_RGB, GIMP_PRECISION_U8,
+                                                  TRUE);
                       break;
 
                     case GIMP_GRAY_IMAGE:
-                      *format = babl_format ("Y' u8");
+                      *format = gimp_babl_format (GIMP_GRAY, GIMP_PRECISION_U8,
+                                                  FALSE);
                       break;
 
                     case GIMP_GRAYA_IMAGE:
-                      *format = babl_format ("Y'A u8");
+                      *format = gimp_babl_format (GIMP_GRAY, GIMP_PRECISION_U8,
+                                                  TRUE);
                       break;
 
                     case GIMP_INDEXED_IMAGE:

@@ -1127,7 +1127,7 @@ gimp_brush_core_subsample_mask (GimpBrushCore     *core,
 
   dest = gimp_temp_buf_new (mask->width  + 2,
                             mask->height + 2,
-                            babl_format ("Y u8"));
+                            mask->format);
   gimp_temp_buf_data_clear (dest);
 
   /* Allocate and initialize the accum buffer */
@@ -1208,7 +1208,7 @@ gimp_brush_core_pressurize_mask (GimpBrushCore     *core,
 
   core->pressure_brush = gimp_temp_buf_new (brush_mask->width  + 2,
                                             brush_mask->height + 2,
-                                            babl_format ("Y u8"));
+                                            brush_mask->format);
   gimp_temp_buf_data_clear (core->pressure_brush);
 
 #ifdef FANCY_PRESSURE
@@ -1621,6 +1621,7 @@ gimp_brush_core_paint_line_pixmap_mask (GimpDrawable             *drawable,
                                         GimpBrushApplicationMode  mode)
 {
   GimpImageBaseType  pixmap_base_type;
+  GimpPrecision      pixmap_precision;
   gint               pixmap_bytes;
   guchar            *b;
 
@@ -1631,6 +1632,7 @@ gimp_brush_core_paint_line_pixmap_mask (GimpDrawable             *drawable,
     y += pixmap_mask->height;
 
   pixmap_base_type = gimp_babl_format_get_base_type (pixmap_mask->format);
+  pixmap_precision = gimp_babl_format_get_precision (pixmap_mask->format);
   pixmap_bytes     = babl_format_get_bytes_per_pixel (pixmap_mask->format);
 
   /* Point to the approriate scanline */
@@ -1646,7 +1648,8 @@ gimp_brush_core_paint_line_pixmap_mask (GimpDrawable             *drawable,
       guchar       *l        = line_buf;
       gint          i;
 
-      fish = babl_fish (gimp_babl_format (pixmap_base_type, TRUE),
+      fish = babl_fish (gimp_babl_format (pixmap_base_type, pixmap_precision,
+                                          TRUE),
                         gimp_drawable_get_format_with_alpha (drawable));
 
       /* put the source pixmap's pixels, plus the mask's alpha, into

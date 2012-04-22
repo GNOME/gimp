@@ -147,23 +147,55 @@ gimp_babl_format_get_base_type (const Babl *format)
   g_return_val_if_reached (-1);
 }
 
+GimpPrecision
+gimp_babl_format_get_precision (const Babl *format)
+{
+  const Babl *type;
+
+  g_return_val_if_fail (format != NULL, -1);
+
+  type = babl_format_get_type (format, 0);
+
+  if (type == babl_type ("u8"))
+    return GIMP_PRECISION_U8;
+
+  g_return_val_if_reached (-1);
+}
+
 const Babl *
 gimp_babl_format (GimpImageBaseType  base_type,
+                  GimpPrecision      precision,
                   gboolean           with_alpha)
 {
   switch (base_type)
     {
     case GIMP_RGB:
-      if (with_alpha)
-        return babl_format ("R'G'B'A u8");
-      else
-        return babl_format ("R'G'B' u8");
+      switch (precision)
+        {
+        case GIMP_PRECISION_U8:
+          if (with_alpha)
+            return babl_format ("R'G'B'A u8");
+          else
+            return babl_format ("R'G'B' u8");
+
+        default:
+          break;
+        }
+      break;
 
     case GIMP_GRAY:
-      if (with_alpha)
-        return babl_format ("Y'A u8");
-      else
-        return babl_format ("Y' u8");
+      switch (precision)
+        {
+        case GIMP_PRECISION_U8:
+          if (with_alpha)
+            return babl_format ("Y'A u8");
+          else
+            return babl_format ("Y' u8");
+
+        default:
+          break;
+        }
+      break;
 
     case GIMP_INDEXED:
       /* need to use the image's api for this */

@@ -46,6 +46,7 @@ struct _GimpImagePrivate
   gdouble            yresolution;           /*  image y-res, in dpi          */
   GimpUnit           resolution_unit;       /*  resolution unit              */
   GimpImageBaseType  base_type;             /*  base gimp_image type         */
+  GimpPrecision      precision;             /*  image's precision            */
 
   guchar            *colormap;              /*  colormap (for indexed)       */
   gint               n_colors;              /*  # of colors (for indexed)    */

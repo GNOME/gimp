@@ -324,6 +324,16 @@ typedef enum
 } GimpOrientationType;
 
 
+#define GIMP_PRECISION_GET_TYPE (gimp_precision_get_type ())
+
+GType gimp_precision_get_type (void) G_GNUC_CONST;
+
+typedef enum /*< pdb-skip >*/
+{
+  GIMP_PRECISION_U8  /*< desc="8-Bit unsigned integer" >*/
+} GimpPrecision;
+
+
 #define GIMP_TYPE_ITEM_SET (gimp_item_set_get_type ())
 
 GType gimp_item_set_get_type (void) G_GNUC_CONST;
