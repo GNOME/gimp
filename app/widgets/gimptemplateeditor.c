@@ -289,7 +289,7 @@ gimp_template_editor_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (private->expander), frame);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (5, 2, FALSE);
+  table = gtk_table_new (6, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
@@ -389,10 +389,17 @@ gimp_template_editor_constructed (GObject *object)
                              combo, 1, FALSE);
 
   combo = gimp_prop_enum_combo_box_new (G_OBJECT (template),
+                                        "precision",
+                                        -1, -1);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
+                             _("_Precision:"), 0.0, 0.5,
+                             combo, 1, FALSE);
+
+  combo = gimp_prop_enum_combo_box_new (G_OBJECT (template),
                                         "fill-type",
                                         GIMP_FOREGROUND_FILL,
                                         GIMP_PATTERN_FILL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
                              _("_Fill with:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
@@ -402,7 +409,7 @@ gimp_template_editor_constructed (GObject *object)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
                              _("Comme_nt:"), 0.0, 0.0,
                              scrolled_window, 1, FALSE);
 
