@@ -725,8 +725,8 @@ gimp_precision_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_PRECISION_U8, NC_("precision", "8-Bit unsigned integer"), NULL },
-    { GIMP_PRECISION_FLOAT, NC_("precision", "32-Bit floating point"), NULL },
+    { GIMP_PRECISION_U8, NC_("precision", "8-bit unsigned integer"), NULL },
+    { GIMP_PRECISION_FLOAT, NC_("precision", "32-bit floating point"), NULL },
     { 0, NULL, NULL }
   };
 
