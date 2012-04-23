@@ -22,6 +22,7 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp-utils.h"
@@ -195,15 +196,19 @@ gimp_buffer_get_new_preview (GimpViewable *viewable,
                              gint          height)
 {
   GimpBuffer  *buffer = GIMP_BUFFER (viewable);
+  const Babl  *format = gimp_buffer_get_format (buffer);
   GimpTempBuf *preview;
 
-  preview = gimp_temp_buf_new (width, height,
-                               gimp_buffer_get_format (buffer));
+  format = gimp_babl_format (gimp_babl_format_get_base_type (format),
+                             GIMP_PRECISION_U8,
+                             babl_format_has_alpha (format));
 
-  gegl_buffer_get (buffer->buffer, NULL,
+  preview = gimp_temp_buf_new (width, height, format);
+
+  gegl_buffer_get (buffer->buffer, GEGL_RECTANGLE (0, 0, width, height),
                    MIN ((gdouble) width  / (gdouble) gimp_buffer_get_width (buffer),
                         (gdouble) height / (gdouble) gimp_buffer_get_height (buffer)),
-                   NULL,
+                   format,
                    gimp_temp_buf_get_data (preview),
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
@@ -238,7 +243,7 @@ gimp_buffer_new (GeglBuffer    *buffer,
                               "name", name,
                               NULL);
 
-  if (TRUE /* FIXME copy_pixels */)
+  if (TRUE /* XXX FIXME copy_pixels */)
     gimp_buffer->buffer = gegl_buffer_dup (buffer);
   else
     gimp_buffer->buffer = g_object_ref (buffer);
