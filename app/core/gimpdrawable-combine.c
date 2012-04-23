@@ -24,10 +24,10 @@
 #include "core-types.h"
 
 #include "base/pixel-region.h"
-#include "base/tile-manager.h"
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
@@ -384,11 +384,11 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
                         dest_buffer,
                         GEGL_RECTANGLE (0, 0, 0, 0));
 
+      gimp_gegl_apply_mask (mask_buffer, mask_buffer_region,
+                            dest_buffer, GEGL_RECTANGLE (0, 0, width, height),
+                            1.0);
+
       g_object_unref (dest_buffer);
-
-      pixel_region_init_temp_buf (&tempPR, temp_buf, 0, 0, width, height);
-
-      apply_mask_to_region (&tempPR, &maskPR, OPAQUE_OPACITY);
 
       pixel_region_init_temp_buf (&tempPR, temp_buf, 0, 0, width, height);
 
