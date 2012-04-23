@@ -423,3 +423,50 @@ gimp_gegl_apply_mask (GeglBuffer          *mask_buffer,
         }
     }
 }
+
+void
+gimp_gegl_combine_mask (GeglBuffer          *mask_buffer,
+                        const GeglRectangle *mask_rect,
+                        GeglBuffer          *dest_buffer,
+                        const GeglRectangle *dest_rect,
+                        gdouble              opacity,
+                        gboolean             stipple)
+{
+  GeglBufferIterator *iter;
+
+  iter = gegl_buffer_iterator_new (mask_buffer, mask_rect, 0,
+                                   babl_format ("Y float"),
+                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+
+  gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
+                            babl_format ("Y float"),
+                            GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+
+  while (gegl_buffer_iterator_next (iter))
+    {
+      const gfloat *mask = iter->data[0];
+      gfloat       *dest = iter->data[1];
+
+      if (stipple)
+        {
+          while (iter->length--)
+            {
+              dest[0] += (1.0 - dest[0]) * *mask * opacity;
+
+              mask += 1;
+              dest += 1;
+            }
+        }
+      else
+        {
+          while (iter->length--)
+            {
+              if (opacity > dest[0])
+                dest[0] += (opacity - dest[0]) * *mask * opacity;
+
+              mask += 1;
+              dest += 1;
+            }
+        }
+    }
+}

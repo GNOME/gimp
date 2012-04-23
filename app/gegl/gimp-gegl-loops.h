@@ -57,5 +57,12 @@ void   gimp_gegl_apply_mask   (GeglBuffer          *mask_buffer,
                                const GeglRectangle *dest_rect,
                                gdouble              opacity);
 
+void   gimp_gegl_combine_mask (GeglBuffer          *mask_buffer,
+                               const GeglRectangle *mask_rect,
+                               GeglBuffer          *dest_buffer,
+                               const GeglRectangle *dest_rect,
+                               gdouble              opacity,
+                               gboolean             stipple);
+
 
 #endif /* __GIMP_GEGL_LOOPS_H__ */
