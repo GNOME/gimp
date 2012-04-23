@@ -19,16 +19,6 @@
 #define __GIMP_TEMP_BUF_H__
 
 
-struct _GimpTempBuf
-{
-  gint        ref_count;
-  const Babl *format;
-  gint        width;
-  gint        height;
-  guchar     *data;
-};
-
-
 GimpTempBuf * gimp_temp_buf_new             (gint               width,
                                              gint               height,
                                              const Babl        *fomat) G_GNUC_WARN_UNUSED_RESULT;
@@ -41,8 +31,16 @@ GimpTempBuf * gimp_temp_buf_scale           (const GimpTempBuf *buf,
                                              gint               width,
                                              gint               height) G_GNUC_WARN_UNUSED_RESULT;
 
+gint          gimp_temp_buf_get_width       (const GimpTempBuf *buf);
+gint          gimp_temp_buf_get_height      (const GimpTempBuf *buf);
+
+const Babl  * gimp_temp_buf_get_format      (const GimpTempBuf *buf);
+void          gimp_temp_buf_set_format      (GimpTempBuf       *buf,
+                                             const Babl        *format);
+
 guchar      * gimp_temp_buf_get_data        (const GimpTempBuf *buf);
 gsize         gimp_temp_buf_get_data_size   (const GimpTempBuf *buf);
+
 guchar      * gimp_temp_buf_data_clear      (GimpTempBuf       *buf);
 
 gsize         gimp_temp_buf_get_memsize     (const GimpTempBuf *buf);

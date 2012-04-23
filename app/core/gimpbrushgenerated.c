@@ -470,6 +470,7 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
   GimpVector2  x_axis;
   GimpVector2  y_axis;
   GimpTempBuf *mask;
+  gint         mask_width;
 
   gimp_brush_generated_get_half_size (brush,
                                       shape,
@@ -485,8 +486,10 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
                             half_height * 2 + 1,
                             babl_format ("Y u8"));
 
+  mask_width = gimp_temp_buf_get_width (mask);
+
   centerp = gimp_temp_buf_get_data (mask) +
-            half_height * mask->width + half_width;
+            half_height * mask_width + half_width;
 
   lookup = gimp_brush_generated_calc_lut (radius, hardness);
 
@@ -538,10 +541,10 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
           else
             a = 0;
 
-          centerp[y * mask->width + x] = a;
+          centerp[y * mask_width + x] = a;
 
           if (spikes % 2 == 0)
-            centerp[-1 * y * mask->width - x] = a;
+            centerp[-1 * y * mask_width - x] = a;
         }
     }
 

@@ -509,8 +509,9 @@ context_set_brush_default_size_invoker (GimpProcedure      *procedure,
 
       for (list = options; list; list = g_list_next (list))
         g_object_set (list->data,
-                      "brush-size", (gdouble) MAX (brush->mask->width,
-                                                   brush->mask->height),
+                      "brush-size",
+                      (gdouble) MAX (gimp_temp_buf_get_width  (brush->mask),
+                                     gimp_temp_buf_get_height (brush->mask)),
                       NULL);
 
       g_list_free (options);

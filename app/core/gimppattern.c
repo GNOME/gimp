@@ -131,8 +131,8 @@ gimp_pattern_get_size (GimpViewable *viewable,
 {
   GimpPattern *pattern = GIMP_PATTERN (viewable);
 
-  *width  = pattern->mask->width;
-  *height = pattern->mask->height;
+  *width  = gimp_temp_buf_get_width  (pattern->mask);
+  *height = gimp_temp_buf_get_height (pattern->mask);
 
   return TRUE;
 }
@@ -150,11 +150,11 @@ gimp_pattern_get_new_preview (GimpViewable *viewable,
   gint         copy_width;
   gint         copy_height;
 
-  copy_width  = MIN (width,  pattern->mask->width);
-  copy_height = MIN (height, pattern->mask->height);
+  copy_width  = MIN (width,  gimp_temp_buf_get_width  (pattern->mask));
+  copy_height = MIN (height, gimp_temp_buf_get_height (pattern->mask));
 
   temp_buf = gimp_temp_buf_new (copy_width, copy_height,
-                                pattern->mask->format);
+                                gimp_temp_buf_get_format (pattern->mask));
 
   src_buffer  = gimp_temp_buf_create_buffer (pattern->mask);
   dest_buffer = gimp_temp_buf_create_buffer (temp_buf);
@@ -176,8 +176,8 @@ gimp_pattern_get_description (GimpViewable  *viewable,
 
   return g_strdup_printf ("%s (%d × %d)",
                           gimp_object_get_name (pattern),
-                          pattern->mask->width,
-                          pattern->mask->height);
+                          gimp_temp_buf_get_width  (pattern->mask),
+                          gimp_temp_buf_get_height (pattern->mask));
 }
 
 static const gchar *
@@ -236,8 +236,8 @@ gimp_pattern_new (GimpContext *context,
 
   data = gimp_temp_buf_get_data (pattern->mask);
 
-  for (row = 0; row < pattern->mask->height; row++)
-    for (col = 0; col < pattern->mask->width; col++)
+  for (row = 0; row < gimp_temp_buf_get_height (pattern->mask); row++)
+    for (col = 0; col < gimp_temp_buf_get_width (pattern->mask); col++)
       {
         memset (data, (col % 2) && (row % 2) ? 255 : 0, 3);
         data += 3;

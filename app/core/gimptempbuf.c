@@ -28,6 +28,16 @@
 #include "gimptempbuf.h"
 
 
+struct _GimpTempBuf
+{
+  gint        ref_count;
+  gint        width;
+  gint        height;
+  const Babl *format;
+  guchar     *data;
+};
+
+
 GimpTempBuf *
 gimp_temp_buf_new (gint        width,
                    gint        height,
@@ -41,13 +51,12 @@ gimp_temp_buf_new (gint        width,
   temp = g_slice_new (GimpTempBuf);
 
   temp->ref_count = 1;
-  temp->format    = format;
   temp->width     = width;
   temp->height    = height;
-
-  temp->data = g_new (guchar,
-                      width * height *
-                      babl_format_get_bytes_per_pixel (format));
+  temp->format    = format;
+  temp->data      = g_new (guchar,
+                           width * height *
+                           babl_format_get_bytes_per_pixel (format));
 
   return temp;
 }
@@ -148,6 +157,34 @@ gimp_temp_buf_scale (const GimpTempBuf *src,
     }
 
   return dest;
+}
+
+gint
+gimp_temp_buf_get_width (const GimpTempBuf *buf)
+{
+  return buf->width;
+}
+
+gint
+gimp_temp_buf_get_height (const GimpTempBuf *buf)
+{
+  return buf->height;
+}
+
+const Babl *
+gimp_temp_buf_get_format (const GimpTempBuf *buf)
+{
+  return buf->format;
+}
+
+void
+gimp_temp_buf_set_format (GimpTempBuf *buf,
+                          const Babl  *format)
+{
+  g_return_if_fail (babl_format_get_bytes_per_pixel (buf->format) ==
+                    babl_format_get_bytes_per_pixel (format));
+
+  buf->format = format;
 }
 
 guchar *

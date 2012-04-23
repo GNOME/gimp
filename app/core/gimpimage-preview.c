@@ -101,9 +101,9 @@ gimp_image_get_preview (GimpViewable *viewable,
 {
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (viewable);
 
-  if (private->preview                  &&
-      private->preview->width  == width &&
-      private->preview->height == height)
+  if (private->preview                                     &&
+      gimp_temp_buf_get_width  (private->preview) == width &&
+      gimp_temp_buf_get_height (private->preview) == height)
     {
       /*  The easy way  */
       return private->preview;
@@ -148,13 +148,15 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 
   if (is_premult)
     {
-      if (buf->format == babl_format ("Y'A u8"))
+      const Babl *format = gimp_temp_buf_get_format (buf);
+
+      if (format == babl_format ("Y'A u8"))
         {
-          buf->format = babl_format ("Y'aA u8");
+          gimp_temp_buf_set_format (buf, babl_format ("Y'aA u8"));
         }
-      else if (buf->format == babl_format ("R'G'B'A u8"))
+      else if (format == babl_format ("R'G'B'A u8"))
         {
-          buf->format = babl_format ("R'aG'aB'aA u8");
+          gimp_temp_buf_set_format (buf, babl_format ("R'aG'aB'aA u8"));
         }
       else
         {

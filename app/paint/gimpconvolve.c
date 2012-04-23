@@ -173,8 +173,8 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
                                                  fade_point));
 
   gimp_convolve_calculate_matrix (convolve, options->type,
-                                  brush_core->brush->mask->width / 2,
-                                  brush_core->brush->mask->height / 2,
+                                  gimp_temp_buf_get_width  (brush_core->brush->mask) / 2,
+                                  gimp_temp_buf_get_height (brush_core->brush->mask) / 2,
                                   rate);
 
   convolve_temp = gimp_temp_buf_new (gegl_buffer_get_width  (paint_buffer),
@@ -193,8 +193,8 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
 
   gimp_gegl_convolve (convolve_buffer,
                       GEGL_RECTANGLE (0, 0,
-                                      convolve_temp->width,
-                                      convolve_temp->height),
+                                      gimp_temp_buf_get_width  (convolve_temp),
+                                      gimp_temp_buf_get_height (convolve_temp)),
                       paint_buffer,
                       GEGL_RECTANGLE (0, 0,
                                       gegl_buffer_get_width  (paint_buffer),

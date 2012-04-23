@@ -60,9 +60,9 @@ pattern_get_info_invoker (GimpProcedure      *procedure,
 
       if (pattern)
         {
-          width  = pattern->mask->width;
-          height = pattern->mask->height;
-          bpp    = babl_format_get_bytes_per_pixel (pattern->mask->format);
+          width  = gimp_temp_buf_get_width  (pattern->mask);
+          height = gimp_temp_buf_get_height (pattern->mask);
+          bpp    = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (pattern->mask));
         }
       else
         success = FALSE;
@@ -106,9 +106,9 @@ pattern_get_pixels_invoker (GimpProcedure      *procedure,
 
       if (pattern)
         {
-          width           = pattern->mask->width;
-          height          = pattern->mask->height;
-          bpp             = babl_format_get_bytes_per_pixel (pattern->mask->format);
+          width           = gimp_temp_buf_get_width  (pattern->mask);
+          height          = gimp_temp_buf_get_height (pattern->mask);
+          bpp             = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (pattern->mask));
           num_color_bytes = gimp_temp_buf_get_data_size (pattern->mask);
           color_bytes     = g_memdup (gimp_temp_buf_get_data (pattern->mask),
                                       num_color_bytes);

@@ -268,8 +268,8 @@ gimp_brush_get_size (GimpViewable *viewable,
 {
   GimpBrush *brush = GIMP_BRUSH (viewable);
 
-  *width  = brush->mask->width;
-  *height = brush->mask->height;
+  *width  = gimp_temp_buf_get_width  (brush->mask);
+  *height = gimp_temp_buf_get_height (brush->mask);
 
   return TRUE;
 }
@@ -294,8 +294,8 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
   mask_buf   = brush->mask;
   pixmap_buf = brush->pixmap;
 
-  mask_width  = mask_buf->width;
-  mask_height = mask_buf->height;
+  mask_width  = gimp_temp_buf_get_width  (mask_buf);
+  mask_height = gimp_temp_buf_get_height (mask_buf);
 
   if (mask_width > width || mask_height > height)
     {
@@ -324,8 +324,8 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
             pixmap_buf = gimp_brush_transform_pixmap (brush, scale,
                                                       0.0, 0.0, 1.0);
 
-          mask_width  = mask_buf->width;
-          mask_height = mask_buf->height;
+          mask_width  = gimp_temp_buf_get_width  (mask_buf);
+          mask_height = gimp_temp_buf_get_height (mask_buf);
 
           scaled = TRUE;
         }
@@ -385,8 +385,8 @@ gimp_brush_get_description (GimpViewable  *viewable,
 
   return g_strdup_printf ("%s (%d × %d)",
                           gimp_object_get_name (brush),
-                          brush->mask->width,
-                          brush->mask->height);
+                          gimp_temp_buf_get_width  (brush->mask),
+                          gimp_temp_buf_get_height (brush->mask));
 }
 
 static void
@@ -581,8 +581,8 @@ gimp_brush_transform_size (GimpBrush     *brush,
       aspect_ratio == 0.0 &&
       ((angle == 0.0) || (angle == 0.5) || (angle == 1.0)))
     {
-      *width  = brush->mask->width;
-      *height = brush->mask->height;
+      *width  = gimp_temp_buf_get_width  (brush->mask);
+      *height = gimp_temp_buf_get_height (brush->mask);;
 
       return;
     }

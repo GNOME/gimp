@@ -414,8 +414,9 @@ gimp_paint_options_gui_reset_size (GtkWidget        *button,
  if (brush)
    {
      g_object_set (paint_options,
-                   "brush-size", (gdouble) MAX (brush->mask->width,
-                                                brush->mask->height),
+                   "brush-size",
+                   (gdouble) MAX (gimp_temp_buf_get_width  (brush->mask),
+                                  gimp_temp_buf_get_height (brush->mask)),
                    NULL);
    }
 }

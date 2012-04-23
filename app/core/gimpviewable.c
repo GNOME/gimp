@@ -358,10 +358,10 @@ gimp_viewable_real_get_new_pixbuf (GimpViewable *viewable,
       GeglBuffer *dest_buffer;
 
       pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
-                               babl_format_has_alpha (temp_buf->format),
+                               babl_format_has_alpha (gimp_temp_buf_get_format (temp_buf)),
                                8,
-                               temp_buf->width,
-                               temp_buf->height);
+                               gimp_temp_buf_get_width  (temp_buf),
+                               gimp_temp_buf_get_height (temp_buf));
 
       src_buffer  = gimp_temp_buf_create_buffer (temp_buf);
       dest_buffer = gimp_pixbuf_create_buffer (pixbuf);
@@ -709,8 +709,8 @@ gimp_viewable_get_preview (GimpViewable *viewable,
 
   if (private->preview_temp_buf)
     {
-      if (private->preview_temp_buf->width  == width  &&
-          private->preview_temp_buf->height == height)
+      if (gimp_temp_buf_get_width  (private->preview_temp_buf) == width &&
+          gimp_temp_buf_get_height (private->preview_temp_buf) == height)
         {
           return private->preview_temp_buf;
         }

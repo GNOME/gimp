@@ -1470,11 +1470,9 @@ plot_pixels (GimpIscissorsTool *iscissors,
   gint       x, y;
   guint32    coords;
   gint       link;
-  gint       width;
+  gint       width = gimp_temp_buf_get_width (dp_buf);
   guint     *data;
   GPtrArray *list;
-
-  width = dp_buf->width;
 
   /*  Start the data pointer at the correct location  */
   data = (guint *) gimp_temp_buf_get_data (dp_buf) + (ye - y1) * width + (xe - x1);
@@ -1505,7 +1503,7 @@ plot_pixels (GimpIscissorsTool *iscissors,
 
 #define PACK(x, y) ((((y) & 0xff) << 8) | ((x) & 0xff))
 #define OFFSET(pixel) ((gint8)((pixel) & 0xff) + \
-  ((gint8)(((pixel) & 0xff00) >> 8)) * dp_buf->width)
+                       ((gint8)(((pixel) & 0xff00) >> 8)) * gimp_temp_buf_get_width (dp_buf))
 
 
 static void
@@ -1532,6 +1530,8 @@ find_optimal_path (TileManager *gradient_map,
   guint32  pixel[8];
   guint32 *data;
   guint32 *d;
+  gint     dp_buf_width  = gimp_temp_buf_get_width  (dp_buf);
+  gint     dp_buf_height = gimp_temp_buf_get_height (dp_buf);
 
   /*  initialize the dynamic programming buffer  */
   data = (guint32 *) gimp_temp_buf_data_clear (dp_buf);
@@ -1543,13 +1543,13 @@ find_optimal_path (TileManager *gradient_map,
 
   y = ys;
 
-  for (i = 0; i < dp_buf->height; i++)
+  for (i = 0; i < dp_buf_height; i++)
     {
       x = xs;
 
-      d = data + (y-y1) * dp_buf->width + (x-x1);
+      d = data + (y-y1) * dp_buf_width + (x-x1);
 
-      for (j = 0; j < dp_buf->width; j++)
+      for (j = 0; j < dp_buf_width; j++)
         {
           min_cost = G_MAXINT;
 
@@ -1575,7 +1575,7 @@ find_optimal_path (TileManager *gradient_map,
                 pixel[((diry == 1) ? (link + 4) : link)] = PACK(-dirx, -diry);
 
               link = (linkdir == 1) ? 2 : 3;
-              if (j != dp_buf->width - 1)
+              if (j != dp_buf_width - 1)
                 pixel[((diry == 1) ? (link + 4) : link)] = PACK (dirx, -diry);
             }
 

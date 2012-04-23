@@ -43,7 +43,8 @@ preview_cache_compare (gconstpointer  a,
   const GimpTempBuf *buf1 = a;
   const GimpTempBuf *buf2 = b;
 
-  if (buf1->width > buf2->width && buf1->height > buf2->height)
+  if (gimp_temp_buf_get_width  (buf1) > gimp_temp_buf_get_width  (buf2) &&
+      gimp_temp_buf_get_height (buf1) > gimp_temp_buf_get_height (buf2))
     return -1;
 
   return 1;
@@ -59,7 +60,8 @@ preview_cache_find_exact (gpointer data,
   if (nearest->buf)
     return;
 
-  if (buf->width == nearest->width && buf->height == nearest->height)
+  if (gimp_temp_buf_get_width  (buf) == nearest->width &&
+      gimp_temp_buf_get_height (buf) == nearest->height)
     {
       nearest->buf = buf;
       return;
@@ -73,15 +75,16 @@ preview_cache_find_biggest (gpointer data,
   GimpTempBuf    *buf     = data;
   PreviewNearest *nearest = udata;
 
-  if (buf->width >= nearest->width && buf->height >= nearest->height)
+  if (gimp_temp_buf_get_width  (buf) >= nearest->width &&
+      gimp_temp_buf_get_height (buf) >= nearest->height)
     {
       /* Ok we could make the preview out of this one...
        * If we already have it are these bigger dimensions?
        */
       if (nearest->buf)
         {
-          if (nearest->buf->width > buf->width &&
-              nearest->buf->height > buf->height)
+          if (gimp_temp_buf_get_width  (nearest->buf) > gimp_temp_buf_get_width  (buf) &&
+              gimp_temp_buf_get_height (nearest->buf) > gimp_temp_buf_get_height (buf))
             return;
         }
 
@@ -109,7 +112,8 @@ preview_cache_remove_smallest (GSList **plist)
         {
           GimpTempBuf *this = list->data;
 
-          if (smallest->height * smallest->width > this->height * this->width)
+          if (gimp_temp_buf_get_width (smallest) * gimp_temp_buf_get_height (smallest) >
+              gimp_temp_buf_get_width (this)     * gimp_temp_buf_get_height (this))
             {
               smallest = this;
             }
@@ -224,11 +228,12 @@ gimp_preview_cache_get (GSList **plist,
 #endif
 
       /* Make up new preview from the large one... */
-      pwidth  = pn.buf->width;
-      pheight = pn.buf->height;
+      pwidth  = gimp_temp_buf_get_width  (pn.buf);
+      pheight = gimp_temp_buf_get_height (pn.buf);
 
       /* Now get the real one and add to cache */
-      preview = gimp_temp_buf_new (width, height, pn.buf->format);
+      preview = gimp_temp_buf_new (width, height,
+                                   gimp_temp_buf_get_format (pn.buf));
 
       /* preview from nearest bigger one */
       if (width)
@@ -244,7 +249,7 @@ gimp_preview_cache_get (GSList **plist,
       src_data  = gimp_temp_buf_get_data (pn.buf);
       dest_data = gimp_temp_buf_get_data (preview);
 
-      bytes = babl_format_get_bytes_per_pixel (preview->format);
+      bytes = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (preview));
 
       for (loop1 = 0 ; loop1 < height ; loop1++)
         for (loop2 = 0 ; loop2 < width ; loop2++)

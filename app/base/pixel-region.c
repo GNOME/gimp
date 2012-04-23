@@ -96,8 +96,8 @@ pixel_region_init_temp_buf (PixelRegion *PR,
   PR->curtile       = NULL;
   PR->offx          = 0;
   PR->offy          = 0;
-  PR->bytes         = babl_format_get_bytes_per_pixel (temp_buf->format);
-  PR->rowstride     = temp_buf->width * PR->bytes;
+  PR->bytes         = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (temp_buf));
+  PR->rowstride     = gimp_temp_buf_get_width (temp_buf) * PR->bytes;
   PR->x             = x;
   PR->y             = y;
   PR->w             = w;

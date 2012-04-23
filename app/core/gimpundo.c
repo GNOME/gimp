@@ -288,10 +288,11 @@ gimp_undo_get_popup_size (GimpViewable *viewable,
   GimpUndo *undo = GIMP_UNDO (viewable);
 
   if (undo->preview &&
-      (undo->preview->width > width || undo->preview->height > height))
+      (gimp_temp_buf_get_width  (undo->preview) > width ||
+       gimp_temp_buf_get_height (undo->preview) > height))
     {
-      *popup_width  = undo->preview->width;
-      *popup_height = undo->preview->height;
+      *popup_width  = gimp_temp_buf_get_width  (undo->preview);
+      *popup_height = gimp_temp_buf_get_height (undo->preview);
 
       return TRUE;
     }
@@ -312,8 +313,8 @@ gimp_undo_get_new_preview (GimpViewable *viewable,
       gint preview_width;
       gint preview_height;
 
-      gimp_viewable_calc_preview_size (undo->preview->width,
-                                       undo->preview->height,
+      gimp_viewable_calc_preview_size (gimp_temp_buf_get_width  (undo->preview),
+                                       gimp_temp_buf_get_height (undo->preview),
                                        width,
                                        height,
                                        TRUE, 1.0, 1.0,
@@ -321,8 +322,8 @@ gimp_undo_get_new_preview (GimpViewable *viewable,
                                        &preview_height,
                                        NULL);
 
-      if (preview_width  < undo->preview->width &&
-          preview_height < undo->preview->height)
+      if (preview_width  < gimp_temp_buf_get_width  (undo->preview) &&
+          preview_height < gimp_temp_buf_get_height (undo->preview))
         {
           return gimp_temp_buf_scale (undo->preview,
                                       preview_width, preview_height);

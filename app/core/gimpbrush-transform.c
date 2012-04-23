@@ -67,7 +67,8 @@ gimp_brush_real_transform_size (GimpBrush *brush,
   GimpMatrix3 matrix;
   gint        x, y;
 
-  gimp_brush_transform_matrix (brush->mask->width, brush->mask->height,
+  gimp_brush_transform_matrix (gimp_temp_buf_get_width  (brush->mask),
+                               gimp_temp_buf_get_height (brush->mask),
                                scale, aspect_ratio, angle, &matrix);
 
   gimp_brush_transform_bounding_box (brush->mask, &matrix, &x, &y, width, height);
@@ -173,14 +174,15 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
 
   source = brush->mask;
 
-  gimp_brush_transform_matrix (source->height, source->width,
+  src_width  = gimp_temp_buf_get_width  (source);
+  src_height = gimp_temp_buf_get_height (source);
+
+  gimp_brush_transform_matrix (src_width, src_height,
                                scale, aspect_ratio, angle, &matrix);
 
   if (gimp_matrix3_is_identity (&matrix))
     return gimp_temp_buf_copy (source);
 
-  src_width  = source->width;
-  src_height = source->height;
   src_width_minus_one  = src_width  - 1;
   src_height_minus_one = src_height - 1;
 
@@ -190,7 +192,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   gimp_matrix3_invert (&matrix);
 
   result = gimp_temp_buf_new (dest_width, dest_height,
-                              brush->mask->format);
+                              gimp_temp_buf_get_format (brush->mask));
 
   dest = gimp_temp_buf_get_data (result);
   src  = gimp_temp_buf_get_data (source);
@@ -332,9 +334,9 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
       GeglBuffer  *src_buffer;
       GeglBuffer  *dest_buffer;
       gint         kernel_size =
-                     gimp_brush_transform_blur_kernel_size (result->height,
-                                                            result->width,
-                                                            hardness);
+        gimp_brush_transform_blur_kernel_size (gimp_temp_buf_get_height (result),
+                                               gimp_temp_buf_get_width  (result),
+                                               hardness);
       gint         kernel_len  = kernel_size * kernel_size;
       gfloat       blur_kernel[kernel_len];
 
@@ -349,12 +351,12 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
 
       gimp_gegl_convolve (src_buffer,
                           GEGL_RECTANGLE (0, 0,
-                                          blur_src->width,
-                                          blur_src->height),
+                                          gimp_temp_buf_get_width  (blur_src),
+                                          gimp_temp_buf_get_height (blur_src)),
                           dest_buffer,
                           GEGL_RECTANGLE (0, 0,
-                                          result->width,
-                                          result->height),
+                                          gimp_temp_buf_get_width  (result),
+                                          gimp_temp_buf_get_height (result)),
                           blur_kernel, kernel_size,
                           gimp_brush_transform_array_sum (blur_kernel,
                                                           kernel_len),
@@ -471,14 +473,15 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
 
   source = brush->pixmap;
 
-  gimp_brush_transform_matrix (source->height, source->width,
+  src_width  = gimp_temp_buf_get_width  (source);
+  src_height = gimp_temp_buf_get_height (source);
+
+  gimp_brush_transform_matrix (src_width, src_height,
                                scale, aspect_ratio, angle, &matrix);
 
   if (gimp_matrix3_is_identity (&matrix))
     return gimp_temp_buf_copy (source);
 
-  src_width  = source->width;
-  src_height = source->height;
   src_width_minus_one  = src_width  - 1;
   src_height_minus_one = src_height - 1;
 
@@ -488,7 +491,7 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   gimp_matrix3_invert (&matrix);
 
   result = gimp_temp_buf_new (dest_width, dest_height,
-                              brush->pixmap->format);
+                              gimp_temp_buf_get_format (brush->pixmap));
 
   dest = gimp_temp_buf_get_data (result);
   src  = gimp_temp_buf_get_data (source);
@@ -635,9 +638,9 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
       GeglBuffer  *src_buffer;
       GeglBuffer  *dest_buffer;
       gint         kernel_size =
-                     gimp_brush_transform_blur_kernel_size (result->height,
-                                                            result->width,
-                                                            hardness);
+        gimp_brush_transform_blur_kernel_size (gimp_temp_buf_get_height (result),
+                                               gimp_temp_buf_get_width  (result),
+                                               hardness);
       gint         kernel_len  = kernel_size * kernel_size;
       gfloat       blur_kernel[kernel_len];
 
@@ -652,12 +655,12 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
 
       gimp_gegl_convolve (src_buffer,
                           GEGL_RECTANGLE (0, 0,
-                                          blur_src->width,
-                                          blur_src->height),
+                                          gimp_temp_buf_get_width  (blur_src),
+                                          gimp_temp_buf_get_height (blur_src)),
                           dest_buffer,
                           GEGL_RECTANGLE (0, 0,
-                                          result->width,
-                                          result->height),
+                                          gimp_temp_buf_get_width  (result),
+                                          gimp_temp_buf_get_height (result)),
                           blur_kernel, kernel_size,
                           gimp_brush_transform_array_sum (blur_kernel,
                                                           kernel_len),
@@ -712,8 +715,8 @@ gimp_brush_transform_bounding_box (GimpTempBuf       *brush,
                                    gint              *width,
                                    gint              *height)
 {
-  const gdouble  w = brush->width;
-  const gdouble  h = brush->height;
+  const gdouble  w = gimp_temp_buf_get_width  (brush);
+  const gdouble  h = gimp_temp_buf_get_height (brush);
   gdouble        x1, x2, x3, x4;
   gdouble        y1, y2, y3, y4;
   gdouble        temp_x;

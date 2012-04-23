@@ -277,10 +277,10 @@ brush_get_info_invoker (GimpProcedure      *procedure,
 
       if (brush)
         {
-          width     = brush->mask->width;
-          height    = brush->mask->height;
-          mask_bpp  = babl_format_get_bytes_per_pixel (brush->mask->format);
-          color_bpp = brush->pixmap ? babl_format_get_bytes_per_pixel (brush->pixmap->format) : 0;
+          width     = gimp_temp_buf_get_width  (brush->mask);
+          height    = gimp_temp_buf_get_height (brush->mask);
+          mask_bpp  = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (brush->mask));
+          color_bpp = brush->pixmap ? babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (brush->pixmap)) : 0;
         }
       else
         success = FALSE;
@@ -328,17 +328,19 @@ brush_get_pixels_invoker (GimpProcedure      *procedure,
 
       if (brush)
         {
-          width          = brush->mask->width;
-          height         = brush->mask->height;
-          mask_bpp       = babl_format_get_bytes_per_pixel (brush->mask->format);
-          num_mask_bytes = brush->mask->height * brush->mask->width * mask_bpp;
+          width          = gimp_temp_buf_get_width  (brush->mask);
+          height         = gimp_temp_buf_get_height (brush->mask);
+          mask_bpp       = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (brush->mask));
+          num_mask_bytes = gimp_temp_buf_get_height (brush->mask) *
+                           gimp_temp_buf_get_width  (brush->mask) * mask_bpp;
           mask_bytes     = g_memdup (gimp_temp_buf_get_data (brush->mask),
                                      num_mask_bytes);
 
           if (brush->pixmap)
             {
-              color_bpp       = babl_format_get_bytes_per_pixel (brush->pixmap->format);
-              num_color_bytes = brush->pixmap->height * brush->pixmap->width *
+              color_bpp       = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (brush->pixmap));
+              num_color_bytes = gimp_temp_buf_get_height (brush->pixmap) *
+                                gimp_temp_buf_get_width  (brush->pixmap) *
                                 color_bpp;
               color_bytes     = g_memdup (gimp_temp_buf_get_data (brush->pixmap),
                                           num_color_bytes);

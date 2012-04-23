@@ -798,15 +798,20 @@ gimp_view_renderer_render_temp_buf_simple (GimpViewRenderer *renderer,
 {
   gint temp_buf_x = 0;
   gint temp_buf_y = 0;
+  gint temp_buf_width;
+  gint temp_buf_height;
 
   g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
   g_return_if_fail (temp_buf != NULL);
 
-  if (temp_buf->width < renderer->width)
-    temp_buf_x = (renderer->width - temp_buf->width)  / 2;
+  temp_buf_width  = gimp_temp_buf_get_width  (temp_buf);
+  temp_buf_height = gimp_temp_buf_get_height (temp_buf);
 
-  if (temp_buf->height < renderer->height)
-    temp_buf_y = (renderer->height - temp_buf->height) / 2;
+  if (temp_buf_width < renderer->width)
+    temp_buf_x = (renderer->width - temp_buf_width)  / 2;
+
+  if (temp_buf_height < renderer->height)
+    temp_buf_y = (renderer->height - temp_buf_height) / 2;
 
   gimp_view_renderer_render_temp_buf (renderer, temp_buf,
                                       temp_buf_x, temp_buf_y,
@@ -941,12 +946,19 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
                                       gint              surface_width,
                                       gint              surface_height)
 {
-  cairo_t *cr;
-  gint     x, y;
-  gint     width, height;
+  cairo_t    *cr;
+  gint        x, y;
+  gint        width, height;
+  const Babl *temp_buf_format;
+  gint        temp_buf_width;
+  gint        temp_buf_height;
 
   g_return_if_fail (temp_buf != NULL);
   g_return_if_fail (surface != NULL);
+
+  temp_buf_format = gimp_temp_buf_get_format (temp_buf);
+  temp_buf_width  = gimp_temp_buf_get_width  (temp_buf);
+  temp_buf_height = gimp_temp_buf_get_height (temp_buf);
 
   /*  Here are the different cases this functions handles correctly:
    *  1)  Offset temp_buf which does not necessarily cover full image area
@@ -988,7 +1000,7 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
   if (! gimp_rectangle_intersect (0, 0,
                                   surface_width, surface_height,
                                   temp_buf_x, temp_buf_y,
-                                  temp_buf->width, temp_buf->height,
+                                  temp_buf_width, temp_buf_height,
                                   &x, &y,
                                   &width, &height))
     {
@@ -997,7 +1009,7 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
     }
 
   if (inside_bg != outside_bg &&
-      babl_format_has_alpha (temp_buf->format) && channel == -1)
+      babl_format_has_alpha (temp_buf_format) && channel == -1)
     {
       cairo_rectangle (cr, x, y, width, height);
 
@@ -1015,7 +1027,7 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
       cairo_fill (cr);
     }
 
-  if (babl_format_has_alpha (temp_buf->format) && channel == -1)
+  if (babl_format_has_alpha (temp_buf_format) && channel == -1)
     {
       GeglBuffer      *src_buffer;
       GeglBuffer      *dest_buffer;
@@ -1080,8 +1092,8 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
 
       cairo_surface_flush (surface);
 
-      bytes     = babl_format_get_bytes_per_pixel (temp_buf->format);
-      rowstride = temp_buf->width * bytes;
+      bytes     = babl_format_get_bytes_per_pixel (temp_buf_format);
+      rowstride = temp_buf_width * bytes;
 
       src = gimp_temp_buf_get_data (temp_buf) + ((y - temp_buf_y) * rowstride +
                                                  (x - temp_buf_x) * bytes);
@@ -1091,7 +1103,7 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
 
       dest += y * dest_stride + x * 4;
 
-      fish = babl_fish (temp_buf->format,
+      fish = babl_fish (temp_buf_format,
                         babl_format ("cairo-RGB24"));
 
       for (i = y; i < (y + height); i++)

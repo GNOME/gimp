@@ -91,6 +91,8 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
   GimpTempBuf           *temp_buf;
   gint                   temp_buf_x = 0;
   gint                   temp_buf_y = 0;
+  gint                   temp_buf_width;
+  gint                   temp_buf_height;
 
   if (renderbrush->pipe_timeout_id)
     {
@@ -103,11 +105,14 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
                                             renderer->width,
                                             renderer->height);
 
-  if (temp_buf->width < renderer->width)
-    temp_buf_x = (renderer->width - temp_buf->width) / 2;
+  temp_buf_width  = gimp_temp_buf_get_width  (temp_buf);
+  temp_buf_height = gimp_temp_buf_get_height (temp_buf);
 
-  if (temp_buf->height < renderer->height)
-    temp_buf_y = (renderer->height - temp_buf->height) / 2;
+  if (temp_buf_width < renderer->width)
+    temp_buf_x = (renderer->width - temp_buf_width) / 2;
+
+  if (temp_buf_height < renderer->height)
+    temp_buf_y = (renderer->height - temp_buf_height) / 2;
 
   if (renderer->is_popup)
     {
@@ -149,6 +154,8 @@ gimp_view_renderer_brush_render_timeout (gpointer data)
   GimpTempBuf           *temp_buf;
   gint                   temp_buf_x = 0;
   gint                   temp_buf_y = 0;
+  gint                   temp_buf_width;
+  gint                   temp_buf_height;
 
   if (! renderer->viewable)
     {
@@ -173,11 +180,14 @@ gimp_view_renderer_brush_render_timeout (gpointer data)
                                             renderer->width,
                                             renderer->height);
 
-  if (temp_buf->width < renderer->width)
-    temp_buf_x = (renderer->width - temp_buf->width) / 2;
+  temp_buf_width  = gimp_temp_buf_get_width  (temp_buf);
+  temp_buf_height = gimp_temp_buf_get_height (temp_buf);
 
-  if (temp_buf->height < renderer->height)
-    temp_buf_y = (renderer->height - temp_buf->height) / 2;
+  if (temp_buf_width < renderer->width)
+    temp_buf_x = (renderer->width - temp_buf_width) / 2;
+
+  if (temp_buf_height < renderer->height)
+    temp_buf_y = (renderer->height - temp_buf_height) / 2;
 
   gimp_view_renderer_render_temp_buf (renderer, temp_buf,
                                       temp_buf_x, temp_buf_y,
