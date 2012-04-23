@@ -55,10 +55,10 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("base/base-utils.h") ],
+	headers => [ qw("core/gimp-utils.h") ],
 	code    => <<'CODE'
 {
-  pid = get_pid ();
+  pid = gimp_get_pid ();
 }
 CODE
     );

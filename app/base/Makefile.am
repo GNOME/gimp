@@ -21,8 +21,6 @@ libappbase_a_SOURCES = \
 	base.h			\
 	base-enums.h		\
 	base-types.h		\
-	base-utils.c		\
-	base-utils.h		\
 	pixel-processor.c	\
 	pixel-processor.h	\
 	pixel-region.c		\

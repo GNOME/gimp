@@ -213,6 +213,9 @@ void           gimp_message_literal      (Gimp                *gimp,
 void           gimp_image_opened         (Gimp                *gimp,
                                           const gchar         *uri);
 
+gchar        * gimp_get_temp_filename    (Gimp                *gimp,
+                                          const gchar         *extension);
+
 gboolean       gimp_use_gegl             (Gimp                *gimp);
 
 

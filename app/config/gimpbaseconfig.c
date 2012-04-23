@@ -24,18 +24,19 @@
 #include <unistd.h>
 #endif
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 
-#include "config-types.h"
+#include "core/core-types.h" /* eek */
 
-#include "base/base-utils.h"
 #include "base/pixel-processor.h"
 
 #include "gimprc-blurbs.h"
 #include "gimpbaseconfig.h"
+
+#include "core/gimp-utils.h"
 
 #include "gimp-debug.h"
 
@@ -125,7 +126,7 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
 
-  num_processors = get_number_of_processors ();
+  num_processors = gimp_get_number_of_processors ();
 
 #ifdef GIMP_UNSTABLE
   num_processors = num_processors * 2;

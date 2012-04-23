@@ -1294,6 +1294,37 @@ gimp_image_opened (Gimp        *gimp,
   g_signal_emit (gimp, gimp_signals[IMAGE_OPENED], 0, uri);
 }
 
+gchar *
+gimp_get_temp_filename (Gimp        *gimp,
+                        const gchar *extension)
+{
+  static gint  id = 0;
+  static gint  pid;
+  gchar       *filename;
+  gchar       *basename;
+  gchar       *path;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  if (id == 0)
+    pid = gimp_get_pid ();
+
+  if (extension)
+    basename = g_strdup_printf ("gimp-temp-%d%d.%s", pid, id++, extension);
+  else
+    basename = g_strdup_printf ("gimp-temp-%d%d", pid, id++);
+
+  path = gimp_config_path_expand (GIMP_BASE_CONFIG (gimp->config)->temp_path,
+                                  TRUE, NULL);
+
+  filename = g_build_filename (path, basename, NULL);
+
+  g_free (path);
+  g_free (basename);
+
+  return filename;
+}
+
 gboolean
 gimp_use_gegl (Gimp *gimp)
 {

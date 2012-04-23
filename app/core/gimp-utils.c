@@ -26,6 +26,25 @@
 #include <langinfo.h>
 #endif
 
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#include <glib.h>
+
+#ifdef G_OS_WIN32
+#define _WIN32_WINNT 0x0500
+#include <windows.h>
+#include <process.h>
+#endif
+
+#ifdef G_OS_UNIX
+/* For get_backtrace() */
+#include <stdlib.h>
+#include <string.h>
+#include <execinfo.h>
+#endif
+
 #include <cairo.h>
 #include <gegl.h>
 #include <gobject/gvaluecollector.h>
@@ -37,8 +56,6 @@
 
 #include "core-types.h"
 
-#include "base/base-utils.h"
-
 #include "config/gimpbaseconfig.h"
 
 #include "gimp.h"
@@ -46,6 +63,10 @@
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpparamspecs.h"
+
+
+#define NUM_PROCESSORS_DEFAULT 1
+#define MAX_FUNC               100
 
 
 gint64
@@ -304,6 +325,100 @@ gimp_parasite_get_memsize (GimpParasite *parasite,
 }
 
 
+gint
+gimp_get_pid (void)
+{
+  return (gint) getpid ();
+}
+
+gint
+gimp_get_number_of_processors (void)
+{
+  gint retval = NUM_PROCESSORS_DEFAULT;
+
+#ifdef G_OS_UNIX
+#if defined(HAVE_UNISTD_H) && defined(_SC_NPROCESSORS_ONLN)
+  retval = sysconf (_SC_NPROCESSORS_ONLN);
+#endif
+#endif
+#ifdef G_OS_WIN32
+  SYSTEM_INFO system_info;
+
+  GetSystemInfo (&system_info);
+
+  retval = system_info.dwNumberOfProcessors;
+#endif
+
+  return retval;
+}
+
+guint64
+gimp_get_physical_memory_size (void)
+{
+#ifdef G_OS_UNIX
+#if defined(HAVE_UNISTD_H) && defined(_SC_PHYS_PAGES) && defined (_SC_PAGE_SIZE)
+  return (guint64) sysconf (_SC_PHYS_PAGES) * sysconf (_SC_PAGE_SIZE);
+#endif
+#endif
+
+#ifdef G_OS_WIN32
+# if defined(_MSC_VER) && (_MSC_VER <= 1200)
+  MEMORYSTATUS memory_status;
+  memory_status.dwLength = sizeof (memory_status);
+
+  GlobalMemoryStatus (&memory_status);
+  return memory_status.dwTotalPhys;
+# else
+  /* requires w2k and newer SDK than provided with msvc6 */
+  MEMORYSTATUSEX memory_status;
+
+  memory_status.dwLength = sizeof (memory_status);
+
+  if (GlobalMemoryStatusEx (&memory_status))
+    return memory_status.ullTotalPhys;
+# endif
+#endif
+
+  return 0;
+}
+
+/**
+ * gimp_get_backtrace:
+ *
+ * Returns: The current stack trace. Free with g_free(). Mainly meant
+ * for debugging, for example storing the allocation stack traces for
+ * objects to hunt down leaks.
+ **/
+gchar *
+gimp_get_backtrace (void)
+{
+#ifdef G_OS_UNIX
+  void     *functions[MAX_FUNC];
+  char    **function_names;
+  int       n_functions;
+  int       i;
+  GString  *result;
+
+  /* Get symbols */
+  n_functions    = backtrace (functions, MAX_FUNC);
+  function_names = backtrace_symbols (functions, n_functions);
+
+  /* Construct stack trace */
+  result = g_string_new ("");
+  for (i = 0; i < n_functions; i++)
+    g_string_append_printf (result, "%s\n", function_names[i]);
+
+  /* We must not free the function names themselves, we only need to
+   * free the array that points to them
+   */
+  free (function_names);
+
+  return g_string_free (result, FALSE/*free_segment*/);
+#else
+  return g_strdup ("backtrace() only available with GNU libc\n");
+#endif
+}
+
 /*
  *  basically copied from gtk_get_default_language()
  */
@@ -483,37 +598,6 @@ gimp_value_array_truncate (GValueArray  *args,
 
   for (i = args->n_values; i > n_values; i--)
     g_value_array_remove (args, i - 1);
-}
-
-gchar *
-gimp_get_temp_filename (Gimp        *gimp,
-                        const gchar *extension)
-{
-  static gint  id = 0;
-  static gint  pid;
-  gchar       *filename;
-  gchar       *basename;
-  gchar       *path;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-
-  if (id == 0)
-    pid = get_pid ();
-
-  if (extension)
-    basename = g_strdup_printf ("gimp-temp-%d%d.%s", pid, id++, extension);
-  else
-    basename = g_strdup_printf ("gimp-temp-%d%d", pid, id++);
-
-  path = gimp_config_path_expand (GIMP_BASE_CONFIG (gimp->config)->temp_path,
-                                  TRUE, NULL);
-
-  filename = g_build_filename (path, basename, NULL);
-
-  g_free (path);
-  g_free (basename);
-
-  return filename;
 }
 
 /*  markup unescape code stolen and adapted from gmarkup.c

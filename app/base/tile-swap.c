@@ -25,7 +25,7 @@
 #include <unistd.h>
 #endif
 
-#include <glib-object.h>
+#include <gegl.h>
 #include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -36,7 +36,7 @@
 #include "libgimpbase/gimpwin32-io.h"
 #endif
 
-#include "base-types.h"
+#include "core/core-types.h" /* screw it */
 
 #ifndef _O_BINARY
 #define _O_BINARY 0
@@ -45,12 +45,13 @@
 #define _O_TEMPORARY 0
 #endif
 
-#include "base-utils.h"
 #include "tile.h"
 #include "tile-rowhints.h"
 #include "tile-swap.h"
 #include "tile-private.h"
 #include "tile-cache.h"
+
+#include "core/gimp-utils.h"
 
 #include "gimp-intl.h"
 
@@ -200,7 +201,7 @@ tile_swap_init (const gchar *path)
   g_return_if_fail (path != NULL);
 
   dirname  = gimp_config_path_expand (path, TRUE, NULL);
-  basename = g_strdup_printf ("gimpswap.%lu", (unsigned long) get_pid ());
+  basename = g_strdup_printf ("gimpswap.%lu", (unsigned long) gimp_get_pid ());
 
   /*  create the swap directory if it doesn't exist */
   if (! g_file_test (dirname, G_FILE_TEST_EXISTS))
