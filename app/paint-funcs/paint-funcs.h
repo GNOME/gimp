@@ -26,19 +26,6 @@ void  apply_mask_to_alpha_channel         (guchar       *src,
                                            guint         length,
                                            guint         bytes);
 
-/*  combine the mask data with the alpha channel of the pixel data  */
-void  combine_mask_and_alpha_channel_stipple (guchar       *src,
-                                              const guchar *mask,
-                                              guint         opacity,
-                                              guint         length,
-                                              guint         bytes);
-
-void  combine_mask_and_alpha_channel_stroke  (guchar       *src,
-                                              const guchar *mask,
-                                              guint         opacity,
-                                              guint         length,
-                                              guint         bytes);
-
 /*  copy gray pixels to intensity-alpha pixels.  This function
  *  essentially takes a source that is only a grayscale image and
  *  copies it to the destination, expanding to RGB if necessary and
@@ -251,12 +238,6 @@ void  dilate_region                       (PixelRegion *region);
 void  apply_mask_to_region                (PixelRegion *src,
                                            PixelRegion *mask,
                                            guint        opacity);
-
-/*  Combine a mask with an image's alpha channel  */
-void  combine_mask_and_region             (PixelRegion *src,
-                                           PixelRegion *mask,
-                                           guint        opacity,
-                                           gboolean     stipple);
 
 /*  Copy a gray image to an intensity-alpha region  */
 void  copy_gray_to_region                 (PixelRegion *src,

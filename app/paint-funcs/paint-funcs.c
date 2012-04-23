@@ -2013,62 +2013,6 @@ apply_mask_to_region (PixelRegion *src,
 }
 
 
-static void
-combine_mask_and_sub_region_stipple (gint        *opacityp,
-                                     PixelRegion *src,
-                                     PixelRegion *mask)
-{
-  guchar       *s       = src->data;
-  const guchar *m       = mask->data;
-  gint          h       = src->h;
-  guint         opacity = *opacityp;
-
-  while (h--)
-    {
-      combine_mask_and_alpha_channel_stipple (s, m, opacity,
-                                              src->w, src->bytes);
-      s += src->rowstride;
-      m += mask->rowstride;
-    }
-}
-
-
-static void
-combine_mask_and_sub_region_stroke (gint        *opacityp,
-                                    PixelRegion *src,
-                                    PixelRegion *mask)
-{
-  guchar       *s       = src->data;
-  const guchar *m       = mask->data;
-  gint          h       = src->h;
-  guint         opacity = *opacityp;
-
-  while (h--)
-    {
-      combine_mask_and_alpha_channel_stroke (s, m, opacity, src->w, src->bytes);
-      s += src->rowstride;
-      m += mask->rowstride;
-    }
-}
-
-
-void
-combine_mask_and_region (PixelRegion *src,
-                         PixelRegion *mask,
-                         guint        opacity,
-                         gboolean     stipple)
-{
-  if (stipple)
-    pixel_regions_process_parallel ((PixelProcessorFunc)
-                                    combine_mask_and_sub_region_stipple,
-                                    &opacity, 2, src, mask);
-  else
-    pixel_regions_process_parallel ((PixelProcessorFunc)
-                                    combine_mask_and_sub_region_stroke,
-                                    &opacity, 2, src, mask);
-}
-
-
 void
 copy_gray_to_region (PixelRegion *src,
                      PixelRegion *dest)
