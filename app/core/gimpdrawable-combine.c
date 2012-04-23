@@ -266,7 +266,6 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
   gint             x, y, width, height;
   gint             offset_x, offset_y;
   PixelRegion      src1PR, destPR;
-  CombinationMode  operation;
   gboolean         active_components[MAX_CHANNELS];
 
   temp_buf = gimp_gegl_buffer_get_temp_buf (buffer);
@@ -311,17 +310,6 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
 
   /*  configure the active channel array  */
   gimp_drawable_get_active_components (drawable, active_components);
-
-  /*  determine what sort of operation is being attempted and
-   *  if it's actually legal...
-   */
-  operation = gimp_image_get_combination_mode (gimp_drawable_type (drawable),
-                                               src2PR.bytes);
-  if (operation == -1)
-    {
-      g_warning ("%s: illegal parameters.", G_STRFUNC);
-      return;
-    }
 
   /*  get the layer offsets  */
   gimp_item_get_offset (item, &offset_x, &offset_y);
@@ -392,18 +380,16 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
 
       pixel_region_init_temp_buf (&tempPR, temp_buf, 0, 0, width, height);
 
-      combine_regions_replace (&src1PR, &src2PR, &destPR, &tempPR, NULL,
+      combine_regions_replace (&src1PR, &src2PR, &destPR, &tempPR,
                                opacity * 255.999,
-                               active_components,
-                               operation);
+                               active_components);
 
       gimp_temp_buf_unref (temp_buf);
     }
   else
     {
-      combine_regions_replace (&src1PR, &src2PR, &destPR, &maskPR, NULL,
+      combine_regions_replace (&src1PR, &src2PR, &destPR, &maskPR,
                                opacity * 255.999,
-                               active_components,
-                               operation);
+                               active_components);
     }
 }

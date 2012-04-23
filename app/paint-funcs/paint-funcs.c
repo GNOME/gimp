@@ -96,18 +96,6 @@ static const guchar  no_mask = OPAQUE_OPACITY;
 
 /*  Local function prototypes  */
 
-static void     apply_layer_mode_replace (const guchar   *src1,
-                                          const guchar   *src2,
-                                          guchar         *dest,
-                                          const guchar   *mask,
-                                          gint            x,
-                                          gint            y,
-                                          guint           opacity,
-                                          guint           length,
-                                          guint           bytes1,
-                                          guint           bytes2,
-                                          const gboolean *affect);
-
 static inline void rotate_pointers       (guchar        **p,
                                           guint32         n);
 
@@ -2608,10 +2596,8 @@ combine_regions_replace (PixelRegion     *src1,
                          PixelRegion     *src2,
                          PixelRegion     *dest,
                          PixelRegion     *mask,
-                         const guchar    *data,
                          guint            opacity,
-                         const gboolean  *affect,
-                         CombinationMode  type)
+                         const gboolean  *affect)
 {
   gpointer pr;
 
@@ -2627,10 +2613,8 @@ combine_regions_replace (PixelRegion     *src1,
 
       for (h = 0; h < src1->h; h++)
         {
-          /*  Now, apply the paint mode  */
-          apply_layer_mode_replace (s1, s2, d, m, src1->x, src1->y + h,
-                                    opacity, src1->w,
-                                    src1->bytes, src2->bytes, affect);
+          replace_pixels (s1, s2, d, m, src1->w,
+                          opacity, affect, src1->bytes, src2->bytes);
 
           s1 += src1->rowstride;
           s2 += src2->rowstride;
@@ -2638,21 +2622,4 @@ combine_regions_replace (PixelRegion     *src1,
           m += mask->rowstride;
         }
     }
-}
-
-static void
-apply_layer_mode_replace (const guchar   *src1,
-                          const guchar   *src2,
-                          guchar         *dest,
-                          const guchar   *mask,
-                          gint            x,
-                          gint            y,
-                          guint           opacity,
-                          guint           length,
-                          guint           bytes1,
-                          guint           bytes2,
-                          const gboolean *affect)
-{
-  replace_pixels (src1, src2, dest, mask, length,
-                  opacity, affect, bytes1, bytes2);
 }
