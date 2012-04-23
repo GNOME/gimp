@@ -29,9 +29,6 @@
 
 #include "core-types.h"
 
-#include "base/pixel-processor.h"
-#include "base/pixel-region.h"
-
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
@@ -125,21 +122,20 @@ static GeglBuffer * gradient_precalc_shapeburst (GimpImage           *image,
                                                  gdouble              dist,
                                                  GimpProgress        *progress);
 
-static void     gradient_render_pixel       (gdouble           x,
-                                             gdouble           y,
-                                             GimpRGB          *color,
-                                             gpointer          render_data);
-static void     gradient_put_pixel          (gint              x,
-                                             gint              y,
-                                             GimpRGB          *color,
-                                             gpointer          put_pixel_data);
+static void     gradient_render_pixel       (gdouble              x,
+                                             gdouble              y,
+                                             GimpRGB             *color,
+                                             gpointer             render_data);
+static void     gradient_put_pixel          (gint                 x,
+                                             gint                 y,
+                                             GimpRGB             *color,
+                                             gpointer             put_pixel_data);
 
 static void     gradient_fill_region        (GimpImage           *image,
                                              GimpDrawable        *drawable,
                                              GimpContext         *context,
                                              GeglBuffer          *buffer,
                                              const GeglRectangle *buffer_region,
-                                             PixelRegion         *PR,
                                              GimpBlendMode        blend_mode,
                                              GimpGradientType     gradient_type,
                                              gdouble              offset,
@@ -154,15 +150,6 @@ static void     gradient_fill_region        (GimpImage           *image,
                                              gdouble              ex,
                                              gdouble              ey,
                                              GimpProgress        *progress);
-
-static void     gradient_fill_single_region_rgb         (RenderBlendData *rbd,
-                                                         PixelRegion     *PR);
-static void     gradient_fill_single_region_rgb_dither  (RenderBlendData *rbd,
-                                                         PixelRegion     *PR);
-static void     gradient_fill_single_region_gray        (RenderBlendData *rbd,
-                                                         PixelRegion     *PR);
-static void     gradient_fill_single_region_gray_dither (RenderBlendData *rbd,
-                                                         PixelRegion     *PR);
 
 
 /*  public functions  */
@@ -189,7 +176,6 @@ gimp_drawable_blend (GimpDrawable         *drawable,
 {
   GimpImage   *image;
   GeglBuffer  *buffer;
-  PixelRegion  bufPR;
   gint         x, y, width, height;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
@@ -208,12 +194,8 @@ gimp_drawable_blend (GimpDrawable         *drawable,
   buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                                  gimp_drawable_get_format_with_alpha (drawable));
 
-  pixel_region_init (&bufPR, gimp_gegl_buffer_get_tiles (buffer),
-                     0, 0, width, height, TRUE);
-
   gradient_fill_region (image, drawable, context,
                         buffer, GEGL_RECTANGLE (0, 0, width, height),
-                        &bufPR,
                         blend_mode, gradient_type, offset, repeat, reverse,
                         supersample, max_depth, threshold, dither,
                         (startx - x), (starty - y),
@@ -823,7 +805,6 @@ gradient_fill_region (GimpImage           *image,
                       GimpContext         *context,
                       GeglBuffer          *buffer,
                       const GeglRectangle *buffer_region,
-                      PixelRegion         *PR,
                       GimpBlendMode        blend_mode,
                       GimpGradientType     gradient_type,
                       gdouble              offset,
@@ -965,140 +946,75 @@ gradient_fill_region (GimpImage           *image,
     }
   else
     {
-      PixelProcessorFunc          func;
-      PixelProcessorProgressFunc  progress_func = NULL;
+      GeglBufferIterator *iter;
+      GeglRectangle      *roi;
+      gint                total = buffer_region->width * buffer_region->height;
+      gint                done  = 0;
+
+      iter = gegl_buffer_iterator_new (buffer, buffer_region, 0,
+                                       babl_format ("R'G'B'A float"),
+                                       GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+      roi = &iter->roi[0];
 
       if (dither)
+        rbd.seed = g_rand_new ();
+
+      while (gegl_buffer_iterator_next (iter))
         {
-          rbd.seed = g_rand_new ();
+          gfloat *dest = iter->data[0];
+          gint    endx  = roi->x + roi->width;
+          gint    endy  = roi->y + roi->height;
+          gint    x, y;
 
-          if (PR->bytes >= 3)
-            func = (PixelProcessorFunc) gradient_fill_single_region_rgb_dither;
+          if (rbd.seed)
+            {
+              GRand *dither_rand = g_rand_new_with_seed (g_rand_int (rbd.seed));
+
+              for (y = roi->y; y < endy; y++)
+                for (x = roi->x; x < endx; x++)
+                  {
+                    GimpRGB  color;
+                    gint     i = g_rand_int (dither_rand);
+
+                    gradient_render_pixel (x, y, &color, &rbd);
+
+                    *dest++ = color.r + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
+                    *dest++ = color.g + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
+                    *dest++ = color.b + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
+                    *dest++ = color.a + (gdouble) (i & 0xff) / 256.0 / 256.0;
+                  }
+
+              g_rand_free (dither_rand);
+            }
           else
-            func = (PixelProcessorFunc) gradient_fill_single_region_gray_dither;
-        }
-      else
-        {
-          if (PR->bytes >= 3)
-            func = (PixelProcessorFunc) gradient_fill_single_region_rgb;
-          else
-            func = (PixelProcessorFunc) gradient_fill_single_region_gray;
-        }
+            {
+              for (y = roi->y; y < endy; y++)
+                for (x = roi->x; x < endx; x++)
+                  {
+                    GimpRGB  color;
 
-      if (progress)
-        progress_func = (PixelProcessorProgressFunc) gimp_progress_set_value;
+                    gradient_render_pixel (x, y, &color, &rbd);
 
-      pixel_regions_process_parallel_progress (func, &rbd,
-                                               progress_func, progress,
-                                               1, PR);
+                    *dest++ = color.r;
+                    *dest++ = color.g;
+                    *dest++ = color.b;
+                    *dest++ = color.a;
+                  }
+            }
+
+          done += roi->width * roi->height;
+
+          if (progress)
+            gimp_progress_set_value (progress,
+                                     (gdouble) done / (gdouble) total);
+        }
 
       if (dither)
         g_rand_free (rbd.seed);
-
-      gimp_gegl_buffer_refetch_tiles (buffer);
     }
 
   g_object_unref (rbd.gradient);
 
   if (rbd.dist_buffer)
     g_object_unref (rbd.dist_buffer);
-}
-
-static void
-gradient_fill_single_region_rgb (RenderBlendData *rbd,
-                                 PixelRegion     *PR)
-{
-  guchar *dest = PR->data;
-  gint    endx = PR->x + PR->w;
-  gint    endy = PR->y + PR->h;
-  gint    x, y;
-
-  for (y = PR->y; y < endy; y++)
-    for (x = PR->x; x < endx; x++)
-      {
-        GimpRGB  color;
-
-        gradient_render_pixel (x, y, &color, rbd);
-
-        *dest++ = ROUND (color.r * 255.0);
-        *dest++ = ROUND (color.g * 255.0);
-        *dest++ = ROUND (color.b * 255.0);
-        *dest++ = ROUND (color.a * 255.0);
-      }
-}
-
-static void
-gradient_fill_single_region_rgb_dither (RenderBlendData *rbd,
-                                        PixelRegion     *PR)
-{
-  GRand  *dither_rand = g_rand_new_with_seed (g_rand_int (rbd->seed));
-  guchar *dest        = PR->data;
-  gint    endx        = PR->x + PR->w;
-  gint    endy        = PR->y + PR->h;
-  gint    x, y;
-
-  for (y = PR->y; y < endy; y++)
-    for (x = PR->x; x < endx; x++)
-      {
-        GimpRGB  color;
-        gint     i = g_rand_int (dither_rand);
-
-        gradient_render_pixel (x, y, &color, rbd);
-
-        *dest++ = color.r * 255.0 + (gdouble) (i & 0xff) / 256.0; i >>= 8;
-        *dest++ = color.g * 255.0 + (gdouble) (i & 0xff) / 256.0; i >>= 8;
-        *dest++ = color.b * 255.0 + (gdouble) (i & 0xff) / 256.0; i >>= 8;
-        *dest++ = color.a * 255.0 + (gdouble) (i & 0xff) / 256.0;
-      }
-
-  g_rand_free (dither_rand);
-}
-
-static void
-gradient_fill_single_region_gray (RenderBlendData *rbd,
-                                  PixelRegion     *PR)
-{
-  guchar *dest = PR->data;
-  gint    endx = PR->x + PR->w;
-  gint    endy = PR->y + PR->h;
-  gint    x, y;
-
-  for (y = PR->y; y < endy; y++)
-    for (x = PR->x; x < endx; x++)
-      {
-        GimpRGB  color;
-
-        gradient_render_pixel (x, y, &color, rbd);
-
-        *dest++ = gimp_rgb_luminance_uchar (&color);
-        *dest++ = ROUND (color.a * 255.0);
-      }
-}
-
-static void
-gradient_fill_single_region_gray_dither (RenderBlendData *rbd,
-                                         PixelRegion     *PR)
-{
-  GRand  *dither_rand = g_rand_new_with_seed (g_rand_int (rbd->seed));
-  guchar *dest        = PR->data;
-  gint    endx        = PR->x + PR->w;
-  gint    endy        = PR->y + PR->h;
-  gint    x, y;
-
-  for (y = PR->y; y < endy; y++)
-    for (x = PR->x; x < endx; x++)
-      {
-        GimpRGB  color;
-        gdouble  gray;
-        gint     i = g_rand_int (dither_rand);
-
-        gradient_render_pixel (x, y, &color, rbd);
-
-        gray = gimp_rgb_luminance (&color);
-
-        *dest++ = gray    * 255.0 + (gdouble) (i & 0xff) / 256.0; i >>= 8;
-        *dest++ = color.a * 255.0 + (gdouble) (i & 0xff) / 256.0;
-      }
-
-  g_rand_free (dither_rand);
 }
