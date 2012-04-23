@@ -65,11 +65,10 @@ typedef struct
 
 typedef struct
 {
-  PixelRegion *PR;
-  guchar      *row_data;
-  gint         bytes;
-  gint         width;
-  GRand       *dither_rand;
+  GeglBuffer    *buffer;
+  gfloat        *row_data;
+  gint           width;
+  GRand         *dither_rand;
 } PutPixelData;
 
 
@@ -138,6 +137,7 @@ static void     gradient_put_pixel          (gint              x,
 static void     gradient_fill_region        (GimpImage        *image,
                                              GimpDrawable     *drawable,
                                              GimpContext      *context,
+                                             GeglBuffer       *buffer,
                                              PixelRegion      *PR,
                                              gint              width,
                                              gint              height,
@@ -213,14 +213,13 @@ gimp_drawable_blend (GimpDrawable         *drawable,
                      0, 0, width, height, TRUE);
 
   gradient_fill_region (image, drawable, context,
+                        buffer,
                         &bufPR, width, height,
                         blend_mode, gradient_type, offset, repeat, reverse,
                         supersample, max_depth, threshold, dither,
                         (startx - x), (starty - y),
                         (endx - x), (endy - y),
                         progress);
-
-  gimp_gegl_buffer_refetch_tiles (buffer);
 
   gimp_drawable_apply_buffer (drawable, buffer,
                               GEGL_RECTANGLE (0, 0, width, height),
@@ -788,57 +787,39 @@ gradient_put_pixel (gint      x,
                     GimpRGB  *color,
                     gpointer  put_pixel_data)
 {
-  PutPixelData  *ppd  = put_pixel_data;
-  guchar        *dest = ppd->row_data + ppd->bytes * x;
+  PutPixelData *ppd  = put_pixel_data;
+  gfloat       *dest = ppd->row_data + 4 * x;
 
-  if (ppd->bytes >= 3)
+  if (ppd->dither_rand)
     {
-      if (ppd->dither_rand)
-        {
-          gint i = g_rand_int (ppd->dither_rand);
+      gint i = g_rand_int (ppd->dither_rand);
 
-          *dest++ = color->r * 255.0 + (gdouble) (i & 0xff) / 256.0; i >>= 8;
-          *dest++ = color->g * 255.0 + (gdouble) (i & 0xff) / 256.0; i >>= 8;
-          *dest++ = color->b * 255.0 + (gdouble) (i & 0xff) / 256.0; i >>= 8;
-          *dest++ = color->a * 255.0 + (gdouble) (i & 0xff) / 256.0;
-        }
-      else
-        {
-          *dest++ = ROUND (color->r * 255.0);
-          *dest++ = ROUND (color->g * 255.0);
-          *dest++ = ROUND (color->b * 255.0);
-          *dest++ = ROUND (color->a * 255.0);
-        }
+      *dest++ = color->r + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
+      *dest++ = color->g + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
+      *dest++ = color->b + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
+      *dest++ = color->a + (gdouble) (i & 0xff) / 256.0 / 256.0;
     }
   else
     {
-      /* Convert to grayscale */
-      gdouble gray = gimp_rgb_luminance (color);
-
-      if (ppd->dither_rand)
-        {
-          gint i = g_rand_int (ppd->dither_rand);
-
-          *dest++ = gray     * 255.0 + (gdouble) (i & 0xff) / 256.0; i >>= 8;
-          *dest++ = color->a * 255.0 + (gdouble) (i & 0xff) / 256.0;
-        }
-      else
-        {
-          *dest++ = ROUND (gray     * 255.0);
-          *dest++ = ROUND (color->a * 255.0);
-        }
+      *dest++ = color->r;
+      *dest++ = color->g;
+      *dest++ = color->b;
+      *dest++ = color->a;
     }
 
   /* Paint whole row if we are on the rightmost pixel */
 
   if (x == (ppd->width - 1))
-    pixel_region_set_row (ppd->PR, 0, y, ppd->width, ppd->row_data);
+    gegl_buffer_set (ppd->buffer, GEGL_RECTANGLE (0, y, ppd->width, 1),
+                     0, babl_format ("R'G'B'A float"), ppd->row_data,
+                     GEGL_AUTO_ROWSTRIDE);
 }
 
 static void
 gradient_fill_region (GimpImage        *image,
                       GimpDrawable     *drawable,
                       GimpContext      *context,
+                      GeglBuffer       *buffer,
                       PixelRegion      *PR,
                       gint              width,
                       gint              height,
@@ -962,9 +943,8 @@ gradient_fill_region (GimpImage        *image,
     {
       PutPixelData  ppd;
 
-      ppd.PR          = PR;
-      ppd.row_data    = g_malloc (width * PR->bytes);
-      ppd.bytes       = PR->bytes;
+      ppd.buffer      = buffer;
+      ppd.row_data    = g_malloc (sizeof (float) * 4 * width);
       ppd.width       = width;
       ppd.dither_rand = g_rand_new ();
 
@@ -1010,6 +990,8 @@ gradient_fill_region (GimpImage        *image,
 
       if (dither)
         g_rand_free (rbd.seed);
+
+      gimp_gegl_buffer_refetch_tiles (buffer);
     }
 
   g_object_unref (rbd.gradient);
