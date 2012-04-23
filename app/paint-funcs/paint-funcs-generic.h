@@ -109,40 +109,6 @@ replace_pixels (const guchar   *src1,
 
 
 inline void
-apply_mask_to_alpha_channel (guchar       *src,
-                             const guchar *mask,
-                             guint         opacity,
-                             guint         length,
-                             guint         bytes)
-{
-  src += bytes - 1;
-
-  if (opacity == 255)
-    {
-      while (length --)
-        {
-          glong tmp;
-
-          *src = INT_MULT(*src, *mask, tmp);
-          mask++;
-          src += bytes;
-        }
-    }
-  else
-    {
-      while (length --)
-        {
-          glong tmp;
-
-          *src = INT_MULT3(*src, *mask, opacity, tmp);
-          mask++;
-          src += bytes;
-        }
-    }
-}
-
-
-inline void
 copy_gray_to_inten_a_pixels (const guchar *src,
                              guchar       *dest,
                              guint         length,

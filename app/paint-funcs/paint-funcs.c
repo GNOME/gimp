@@ -1982,37 +1982,6 @@ dilate_region (PixelRegion *region)
   g_free (out);
 }
 
-/* Computes whether pixels in `buf[1]' have neighbouring pixels that are
-   unselected. Put result in `transition'. */
-static void
-apply_mask_to_sub_region (gint        *opacityp,
-                          PixelRegion *src,
-                          PixelRegion *mask)
-{
-  guchar       *s       = src->data;
-  const guchar *m       = mask->data;
-  gint          h       = src->h;
-  guint         opacity = *opacityp;
-
-  while (h--)
-    {
-      apply_mask_to_alpha_channel (s, m, opacity, src->w, src->bytes);
-      s += src->rowstride;
-      m += mask->rowstride;
-    }
-}
-
-void
-apply_mask_to_region (PixelRegion *src,
-                      PixelRegion *mask,
-                      guint        opacity)
-{
-  pixel_regions_process_parallel ((PixelProcessorFunc)
-                                  apply_mask_to_sub_region,
-                                  &opacity, 2, src, mask);
-}
-
-
 void
 copy_gray_to_region (PixelRegion *src,
                      PixelRegion *dest)

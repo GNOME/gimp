@@ -19,13 +19,6 @@
 #define __PAINT_FUNCS_H__
 
 
-/*  apply the mask data to the alpha channel of the pixel data  */
-void  apply_mask_to_alpha_channel         (guchar       *src,
-                                           const guchar *mask,
-                                           guint         opacity,
-                                           guint         length,
-                                           guint         bytes);
-
 /*  copy gray pixels to intensity-alpha pixels.  This function
  *  essentially takes a source that is only a grayscale image and
  *  copies it to the destination, expanding to RGB if necessary and
@@ -233,11 +226,6 @@ void  smooth_region                       (PixelRegion *region);
 void  erode_region                        (PixelRegion *region);
 void  dilate_region                       (PixelRegion *region);
 
-
-/*  Apply a mask to an image's alpha channel  */
-void  apply_mask_to_region                (PixelRegion *src,
-                                           PixelRegion *mask,
-                                           guint        opacity);
 
 /*  Copy a gray image to an intensity-alpha region  */
 void  copy_gray_to_region                 (PixelRegion *src,
