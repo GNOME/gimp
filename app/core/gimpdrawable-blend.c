@@ -119,11 +119,11 @@ static gdouble  gradient_calc_shapeburst_dimpled_factor   (GeglBuffer *dist_buff
                                                            gdouble     x,
                                                            gdouble     y);
 
-static GeglBuffer * gradient_precalc_shapeburst (GimpImage        *image,
-                                                 GimpDrawable     *drawable,
-                                                 PixelRegion      *PR,
-                                                 gdouble           dist,
-                                                 GimpProgress     *progress);
+static GeglBuffer * gradient_precalc_shapeburst (GimpImage           *image,
+                                                 GimpDrawable        *drawable,
+                                                 const GeglRectangle *region,
+                                                 gdouble              dist,
+                                                 GimpProgress        *progress);
 
 static void     gradient_render_pixel       (gdouble           x,
                                              gdouble           y,
@@ -134,27 +134,26 @@ static void     gradient_put_pixel          (gint              x,
                                              GimpRGB          *color,
                                              gpointer          put_pixel_data);
 
-static void     gradient_fill_region        (GimpImage        *image,
-                                             GimpDrawable     *drawable,
-                                             GimpContext      *context,
-                                             GeglBuffer       *buffer,
-                                             PixelRegion      *PR,
-                                             gint              width,
-                                             gint              height,
-                                             GimpBlendMode     blend_mode,
-                                             GimpGradientType  gradient_type,
-                                             gdouble           offset,
-                                             GimpRepeatMode    repeat,
-                                             gboolean          reverse,
-                                             gboolean          supersample,
-                                             gint              max_depth,
-                                             gdouble           threshold,
-                                             gboolean          dither,
-                                             gdouble           sx,
-                                             gdouble           sy,
-                                             gdouble           ex,
-                                             gdouble           ey,
-                                             GimpProgress     *progress);
+static void     gradient_fill_region        (GimpImage           *image,
+                                             GimpDrawable        *drawable,
+                                             GimpContext         *context,
+                                             GeglBuffer          *buffer,
+                                             const GeglRectangle *buffer_region,
+                                             PixelRegion         *PR,
+                                             GimpBlendMode        blend_mode,
+                                             GimpGradientType     gradient_type,
+                                             gdouble              offset,
+                                             GimpRepeatMode       repeat,
+                                             gboolean             reverse,
+                                             gboolean             supersample,
+                                             gint                 max_depth,
+                                             gdouble              threshold,
+                                             gboolean             dither,
+                                             gdouble              sx,
+                                             gdouble              sy,
+                                             gdouble              ex,
+                                             gdouble              ey,
+                                             GimpProgress        *progress);
 
 static void     gradient_fill_single_region_rgb         (RenderBlendData *rbd,
                                                          PixelRegion     *PR);
@@ -213,8 +212,8 @@ gimp_drawable_blend (GimpDrawable         *drawable,
                      0, 0, width, height, TRUE);
 
   gradient_fill_region (image, drawable, context,
-                        buffer,
-                        &bufPR, width, height,
+                        buffer, GEGL_RECTANGLE (0, 0, width, height),
+                        &bufPR,
                         blend_mode, gradient_type, offset, repeat, reverse,
                         supersample, max_depth, threshold, dither,
                         (startx - x), (starty - y),
@@ -541,11 +540,11 @@ gradient_calc_shapeburst_dimpled_factor (GeglBuffer *dist_buffer,
 }
 
 static GeglBuffer *
-gradient_precalc_shapeburst (GimpImage    *image,
-                             GimpDrawable *drawable,
-                             PixelRegion  *PR,
-                             gdouble       dist,
-                             GimpProgress *progress)
+gradient_precalc_shapeburst (GimpImage           *image,
+                             GimpDrawable        *drawable,
+                             const GeglRectangle *region,
+                             gdouble              dist,
+                             GimpProgress        *progress)
 {
   GimpChannel *mask;
   GeglBuffer  *dist_buffer;
@@ -557,11 +556,13 @@ gradient_precalc_shapeburst (GimpImage    *image,
   gimp_progress_set_text (progress, _("Calculating distance map"));
 
   /*  allocate the distance map  */
-  dist_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, PR->w, PR->h),
+  dist_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                 region->width, region->height),
                                  babl_format ("Y float"));
 
   /*  allocate the selection mask copy  */
-  temp_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, PR->w, PR->h),
+  temp_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                      region->width, region->height),
                                       gimp_image_get_mask_format (image));
 
   mask = gimp_image_get_mask (image);
@@ -594,7 +595,8 @@ gradient_precalc_shapeburst (GimpImage    *image,
           /*  extract the aplha into the temp mask  */
           gegl_buffer_set_format (temp_buffer, component_format);
           gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                            GEGL_RECTANGLE (PR->x, PR->y, PR->w, PR->h),
+                            GEGL_RECTANGLE (region->x, region->y,
+                                            region->width, region->height),
                             temp_buffer,
                             GEGL_RECTANGLE (0, 0, 0, 0));
           gegl_buffer_set_format (temp_buffer, NULL);
@@ -816,27 +818,26 @@ gradient_put_pixel (gint      x,
 }
 
 static void
-gradient_fill_region (GimpImage        *image,
-                      GimpDrawable     *drawable,
-                      GimpContext      *context,
-                      GeglBuffer       *buffer,
-                      PixelRegion      *PR,
-                      gint              width,
-                      gint              height,
-                      GimpBlendMode     blend_mode,
-                      GimpGradientType  gradient_type,
-                      gdouble           offset,
-                      GimpRepeatMode    repeat,
-                      gboolean          reverse,
-                      gboolean          supersample,
-                      gint              max_depth,
-                      gdouble           threshold,
-                      gboolean          dither,
-                      gdouble           sx,
-                      gdouble           sy,
-                      gdouble           ex,
-                      gdouble           ey,
-                      GimpProgress     *progress)
+gradient_fill_region (GimpImage           *image,
+                      GimpDrawable        *drawable,
+                      GimpContext         *context,
+                      GeglBuffer          *buffer,
+                      const GeglRectangle *buffer_region,
+                      PixelRegion         *PR,
+                      GimpBlendMode        blend_mode,
+                      GimpGradientType     gradient_type,
+                      gdouble              offset,
+                      GimpRepeatMode       repeat,
+                      gboolean             reverse,
+                      gboolean             supersample,
+                      gint                 max_depth,
+                      gdouble              threshold,
+                      gboolean             dither,
+                      gdouble              sx,
+                      gdouble              sy,
+                      gdouble              ex,
+                      gdouble              ey,
+                      GimpProgress        *progress)
 {
   RenderBlendData rbd = { 0, };
 
@@ -919,7 +920,8 @@ gradient_fill_region (GimpImage        *image,
     case GIMP_GRADIENT_SHAPEBURST_DIMPLED:
       rbd.dist = sqrt (SQR (ex - sx) + SQR (ey - sy));
       rbd.dist_buffer = gradient_precalc_shapeburst (image, drawable,
-                                                     PR, rbd.dist, progress);
+                                                     buffer_region,
+                                                     rbd.dist, progress);
       gimp_progress_set_text (progress, _("Blending"));
       break;
 
@@ -944,11 +946,13 @@ gradient_fill_region (GimpImage        *image,
       PutPixelData  ppd;
 
       ppd.buffer      = buffer;
-      ppd.row_data    = g_malloc (sizeof (float) * 4 * width);
-      ppd.width       = width;
+      ppd.row_data    = g_malloc (sizeof (float) * 4 * buffer_region->width);
+      ppd.width       = buffer_region->width;
       ppd.dither_rand = g_rand_new ();
 
-      gimp_adaptive_supersample_area (0, 0, (width - 1), (height - 1),
+      gimp_adaptive_supersample_area (0, 0,
+                                      (buffer_region->width  - 1),
+                                      (buffer_region->height - 1),
                                       max_depth, threshold,
                                       gradient_render_pixel, &rbd,
                                       gradient_put_pixel, &ppd,
