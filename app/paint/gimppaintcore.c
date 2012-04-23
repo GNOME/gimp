@@ -30,9 +30,11 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
+#include "core/gimp-apply-operation.h"
 #include "core/gimp-utils.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -110,11 +112,11 @@ static void      paint_mask_to_canvas_buffer         (GimpPaintCore       *core,
                                                       GeglBuffer          *paint_mask,
                                                       const GeglRectangle *paint_mask_rect,
                                                       gdouble              paint_opacity);
-static void      paint_mask_to_paint_area            (GimpPaintCore       *core,
+static void      paint_mask_to_paint_buffer          (GimpPaintCore       *core,
                                                       GeglBuffer          *paint_mask,
                                                       const GeglRectangle *paint_mask_rect,
                                                       gdouble              paint_opacity);
-static void      canvas_buffer_to_paint_area         (GimpPaintCore       *core);
+static void      canvas_buffer_to_paint_buffer       (GimpPaintCore       *core);
 
 
 G_DEFINE_TYPE (GimpPaintCore, gimp_paint_core, GIMP_TYPE_OBJECT)
@@ -736,7 +738,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
                                        paint_opacity);
         }
 
-      canvas_buffer_to_paint_area (core);
+      canvas_buffer_to_paint_buffer (core);
 
       base_buffer = core->undo_buffer;
     }
@@ -745,8 +747,8 @@ gimp_paint_core_paste (GimpPaintCore            *core,
    */
   else
     {
-      paint_mask_to_paint_area (core, paint_mask, paint_mask_rect,
-                                paint_opacity);
+      paint_mask_to_paint_buffer (core, paint_mask, paint_mask_rect,
+                                  paint_opacity);
     }
 
   width  = gegl_buffer_get_width  (core->paint_buffer);
@@ -924,30 +926,19 @@ gimp_paint_core_smooth_coords (GimpPaintCore    *core,
 
 }
 
-
 static void
-canvas_buffer_to_paint_area (GimpPaintCore *core)
+canvas_buffer_to_paint_buffer (GimpPaintCore *core)
 {
-  PixelRegion srcPR;
-  PixelRegion maskPR;
-
-  /*  combine the canvas buffer and the paint area  */
-  pixel_region_init_temp_buf (&srcPR,
-                              gimp_gegl_buffer_get_temp_buf (core->paint_buffer),
-                              0, 0,
-                              gegl_buffer_get_width  (core->paint_buffer),
-                              gegl_buffer_get_height (core->paint_buffer));
-
-  pixel_region_init (&maskPR,
-                     gimp_gegl_buffer_get_tiles (core->canvas_buffer),
-                     core->paint_buffer_x,
-                     core->paint_buffer_y,
-                     gegl_buffer_get_width  (core->paint_buffer),
-                     gegl_buffer_get_height (core->paint_buffer),
-                     FALSE);
-
-  /*  apply the canvas buffer to the paint area  */
-  apply_mask_to_region (&srcPR, &maskPR, OPAQUE_OPACITY);
+  gimp_gegl_apply_mask (core->canvas_buffer,
+                        GEGL_RECTANGLE (core->paint_buffer_x,
+                                        core->paint_buffer_y,
+                                        gegl_buffer_get_width  (core->paint_buffer),
+                                        gegl_buffer_get_height (core->paint_buffer)),
+                        core->paint_buffer,
+                        GEGL_RECTANGLE (0, 0,
+                                        gegl_buffer_get_width  (core->paint_buffer),
+                                        gegl_buffer_get_height (core->paint_buffer)),
+                        1.0);
 }
 
 static void
@@ -991,44 +982,21 @@ paint_mask_to_canvas_buffer (GimpPaintCore       *core,
   /*  combine the mask to the canvas tiles  */
   combine_mask_and_region (&srcPR, &paint_maskPR,
                            paint_opacity * 255.999, GIMP_IS_AIRBRUSH (core));
+
+  /* temp EEK */
+  gimp_gegl_buffer_refetch_tiles (core->canvas_buffer);
 }
 
 static void
-paint_mask_to_paint_area (GimpPaintCore       *core,
-                          GeglBuffer          *paint_mask,
-                          const GeglRectangle *paint_mask_rect,
-                          gdouble              paint_opacity)
+paint_mask_to_paint_buffer (GimpPaintCore       *core,
+                            GeglBuffer          *paint_mask,
+                            const GeglRectangle *paint_mask_rect,
+                            gdouble              paint_opacity)
 {
-  PixelRegion srcPR;
-  PixelRegion paint_maskPR;
-
-  /*  combine the canvas buf and the paint mask to the canvas buf  */
-  pixel_region_init_temp_buf (&srcPR,
-                              gimp_gegl_buffer_get_temp_buf (core->paint_buffer),
-                              0, 0,
-                              gegl_buffer_get_width  (core->paint_buffer),
-                              gegl_buffer_get_height (core->paint_buffer));
-
-  if (gimp_gegl_buffer_get_temp_buf (paint_mask))
-    {
-      pixel_region_init_temp_buf (&paint_maskPR,
-                                  gimp_gegl_buffer_get_temp_buf (paint_mask),
-                                  paint_mask_rect->x,
-                                  paint_mask_rect->y,
-                                  paint_mask_rect->width,
-                                  paint_mask_rect->height);
-    }
-  else
-    {
-      pixel_region_init (&paint_maskPR,
-                         gimp_gegl_buffer_get_tiles (paint_mask),
-                         paint_mask_rect->x,
-                         paint_mask_rect->y,
-                         paint_mask_rect->width,
-                         paint_mask_rect->height,
-                         FALSE);
-    }
-
-  /*  apply the mask  */
-  apply_mask_to_region (&srcPR, &paint_maskPR, paint_opacity * 255.999);
+  gimp_gegl_apply_mask (paint_mask, paint_mask_rect,
+                        core->paint_buffer,
+                        GEGL_RECTANGLE (0, 0,
+                                        gegl_buffer_get_width  (core->paint_buffer),
+                                        gegl_buffer_get_height (core->paint_buffer)),
+                        paint_opacity);
 }
