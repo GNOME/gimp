@@ -96,11 +96,6 @@ static const guchar  no_mask = OPAQUE_OPACITY;
 
 /*  Local function prototypes  */
 
-static gdouble  cubic                    (gdouble         dx,
-                                          gint            jm1,
-                                          gint            j,
-                                          gint            jp1,
-                                          gint            jp2);
 static void     apply_layer_mode_replace (const guchar   *src1,
                                           const guchar   *src2,
                                           guchar         *dest,
@@ -154,20 +149,6 @@ run_length_encode (const guchar *src,
       *dest++ = (i - j);
       *dest++ = last;
     }
-}
-
-/* Note: cubic function no longer clips result */
-static inline gdouble
-cubic (gdouble dx,
-       gint    jm1,
-       gint    j,
-       gint    jp1,
-       gint    jp2)
-{
-  /* Catmull-Rom - not bad */
-  return (gdouble) ((( ( - jm1 + 3 * j - 3 * jp1 + jp2 ) * dx +
-                       ( 2 * jm1 - 5 * j + 4 * jp1 - jp2 ) ) * dx +
-                     ( - jm1 + jp1 ) ) * dx + (j + j) ) / 2.0;
 }
 
 
