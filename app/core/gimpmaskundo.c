@@ -85,7 +85,7 @@ gimp_mask_undo_constructed (GObject *object)
 
       mask_undo->buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                            x2 - x1, y2 - y1),
-                                           babl_format ("Y float"));
+                                           gimp_drawable_get_format (drawable));
 
       gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
                         GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),
@@ -128,7 +128,7 @@ gimp_mask_undo_pop (GimpUndo            *undo,
   if (gimp_channel_bounds (channel, &x1, &y1, &x2, &y2))
     {
       new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, x2 - x1, y2 - y1),
-                                    babl_format ("Y float"));
+                                    gimp_drawable_get_format (drawable));
 
       gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
                         GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),
