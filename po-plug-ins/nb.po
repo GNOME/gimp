@@ -12099,7 +12099,7 @@ msgstr "Bruk aktiv gradient på endelig bilde"
 
 #: ../plug-ins/lighting/lighting-main.c:197
 msgid "_Lighting Effects..."
-msgstr "_Lyneffekter..."
+msgstr "_Lyseffekter..."
 
 #. General options
 #: ../plug-ins/lighting/lighting-ui.c:295
