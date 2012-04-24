@@ -37,7 +37,7 @@ struct _GimpOperationReplaceMode
 {
   GeglOperationPointComposer3 parent_instance;
 
-  gfloat   opacity;
+  gdouble  opacity;
   gboolean premultiplied;
 };
 

@@ -35,6 +35,7 @@ enum
   PROP_OPACITY
 };
 
+
 static void     gimp_operation_replace_mode_set_property (GObject             *object,
                                                           guint                property_id,
                                                           const GValue        *value,
@@ -86,13 +87,14 @@ gimp_operation_replace_mode_class_init (GimpOperationReplaceModeClass *klass)
                                                          TRUE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
+
   g_object_class_install_property (object_class, PROP_OPACITY,
-                                   g_param_spec_float ("opacity",
-                                                       NULL, NULL,
-                                                       0.0, 1.0,
-                                                       1.0,
-                                                       GIMP_PARAM_READWRITE |
-                                                       G_PARAM_CONSTRUCT));
+                                   g_param_spec_double ("opacity",
+                                                        NULL, NULL,
+                                                        0.0, 1.0,
+                                                        1.0,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -114,7 +116,7 @@ gimp_operation_replace_mode_set_property (GObject      *object,
       self->premultiplied = g_value_get_boolean (value);
       break;
     case PROP_OPACITY:
-      self->opacity = g_value_get_float (value);
+      self->opacity = g_value_get_double (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -136,7 +138,7 @@ gimp_operation_replace_mode_get_property (GObject      *object,
       g_value_set_boolean (value, self->premultiplied);
       break;
     case PROP_OPACITY:
-      g_value_set_float (value, self->opacity);
+      g_value_set_double (value, self->opacity);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
