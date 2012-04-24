@@ -177,10 +177,20 @@ gimp_operation_replace_mode_process (GeglOperation       *operation,
 
   while (samples--)
     {
-      gint b;
-      gfloat new_alpha = (layer[ALPHA] - in[ALPHA]) * (*mask) * opacity + in[ALPHA];
-      gfloat ratio = *mask * opacity;
-      ratio = ratio / layer[ALPHA] / new_alpha;
+      gint   b;
+      gfloat new_alpha;
+      gfloat ratio;
+
+      if (mask)
+        {
+          new_alpha = (layer[ALPHA] - in[ALPHA]) * (*mask) * opacity + in[ALPHA];
+          ratio = *mask * opacity / layer[ALPHA] / new_alpha;
+        }
+      else
+        {
+          new_alpha = (layer[ALPHA] - in[ALPHA]) * opacity + in[ALPHA];
+          ratio = opacity / layer[ALPHA] / new_alpha;
+        }
 
       for (b = RED; b < ALPHA; b++)
         {
@@ -202,8 +212,10 @@ gimp_operation_replace_mode_process (GeglOperation       *operation,
 
       in    += 4;
       layer += 4;
-      mask  += 1;
       out   += 4;
+
+      if (mask)
+        mask += 1;
     }
 
   return TRUE;
