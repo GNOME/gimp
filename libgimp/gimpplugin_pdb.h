@@ -46,6 +46,8 @@ G_GNUC_INTERNAL gboolean _gimp_plugin_icon_register        (const gchar         
                                                             const guint8        *icon_data);
 gboolean                 gimp_plugin_set_pdb_error_handler (GimpPDBErrorHandler  handler);
 GimpPDBErrorHandler      gimp_plugin_get_pdb_error_handler (void);
+gboolean                 gimp_plugin_enable_precision      (void);
+gboolean                 gimp_plugin_precision_enabled     (void);
 
 
 G_END_DECLS

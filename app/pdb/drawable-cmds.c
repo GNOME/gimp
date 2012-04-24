@@ -33,6 +33,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimptempbuf.h"
+#include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-utils.h"
 #include "plug-in/gimpplugin-cleanup.h"
 #include "plug-in/gimpplugin.h"
@@ -45,6 +46,35 @@
 
 #include "gimp-intl.h"
 
+
+static GValueArray *
+drawable_get_format_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GValueArray  *args,
+                             GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpDrawable *drawable;
+  gchar *format = NULL;
+
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+
+  if (success)
+    {
+      format = g_strdup (babl_get_name (gimp_drawable_get_format (drawable)));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_string (&return_vals->values[1], format);
+
+  return return_vals;
+}
 
 static GValueArray *
 drawable_type_invoker (GimpProcedure      *procedure,
@@ -239,7 +269,18 @@ drawable_bpp_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      bpp = gimp_drawable_bytes (drawable);
+      const Babl *format = gimp_drawable_get_format (drawable);
+
+      if (! gimp->plug_in_manager->current_plug_in ||
+          ! gimp_plug_in_precision_enabled (gimp->plug_in_manager->current_plug_in))
+        {
+          if (! gimp_drawable_is_indexed (drawable) /* XXX fixme */)
+            format = gimp_babl_format (gimp_babl_format_get_base_type (format),
+                                       GIMP_PRECISION_U8,
+                                       babl_format_has_alpha (format));
+        }
+
+      bpp = babl_format_get_bytes_per_pixel (format);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -889,6 +930,36 @@ register_drawable_procs (GimpPDB *pdb)
   GimpProcedure *procedure;
 
   /*
+   * gimp-drawable-get-format
+   */
+  procedure = gimp_procedure_new (drawable_get_format_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-get-format");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-drawable-get-format",
+                                     "Returns the drawable's Babl format",
+                                     "This procedure returns the drawable's Babl format.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("format",
+                                                           "format",
+                                                           "The drawable's Babl format",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
    * gimp-drawable-type
    */
   procedure = gimp_procedure_new (drawable_type_invoker);
@@ -1079,7 +1150,7 @@ register_drawable_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-bpp",
                                      "Returns the bytes per pixel.",
-                                     "This procedure returns the number of bytes per pixel (or the number of channels) for the specified drawable.",
+                                     "This procedure returns the number of bytes per pixel, which corresponds to the number of components unless 'gimp-plugin-enable-precision' was called.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",

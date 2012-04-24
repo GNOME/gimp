@@ -40,6 +40,38 @@
 
 
 /**
+ * _gimp_drawable_get_format:
+ * @drawable_ID: The drawable.
+ *
+ * Returns the drawable's Babl format
+ *
+ * This procedure returns the drawable's Babl format.
+ *
+ * Returns: The drawable's Babl format.
+ *
+ * Since: GIMP 2.10
+ **/
+gchar *
+_gimp_drawable_get_format (gint32 drawable_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *format = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-drawable-get-format",
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    format = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return format;
+}
+
+/**
  * gimp_drawable_type:
  * @drawable_ID: The drawable.
  *
@@ -233,8 +265,9 @@ gimp_drawable_is_indexed (gint32 drawable_ID)
  *
  * Returns the bytes per pixel.
  *
- * This procedure returns the number of bytes per pixel (or the number
- * of channels) for the specified drawable.
+ * This procedure returns the number of bytes per pixel, which
+ * corresponds to the number of components unless
+ * gimp_plugin_enable_precision() was called.
  *
  * Returns: Bytes per pixel.
  **/

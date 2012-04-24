@@ -340,6 +340,62 @@ plugin_get_pdb_error_handler_invoker (GimpProcedure      *procedure,
   return return_vals;
 }
 
+static GValueArray *
+plugin_enable_precision_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GValueArray  *args,
+                                 GError            **error)
+{
+  gboolean success = TRUE;
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in)
+    {
+      gimp_plug_in_enable_precision (plug_in);
+    }
+  else
+    {
+      success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+plugin_precision_enabled_invoker (GimpProcedure      *procedure,
+                                  Gimp               *gimp,
+                                  GimpContext        *context,
+                                  GimpProgress       *progress,
+                                  const GValueArray  *args,
+                                  GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  gboolean enabled = FALSE;
+
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in)
+    {
+      enabled = gimp_plug_in_precision_enabled (plug_in);
+    }
+  else
+    {
+      success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_boolean (&return_vals->values[1], enabled);
+
+  return return_vals;
+}
+
 void
 register_plug_in_procs (GimpPDB *pdb)
 {
@@ -646,6 +702,46 @@ register_plug_in_procs (GimpPDB *pdb)
                                                       GIMP_TYPE_PDB_ERROR_HANDLER,
                                                       GIMP_PDB_ERROR_HANDLER_INTERNAL,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plugin-enable-precision
+   */
+  procedure = gimp_procedure_new (plugin_enable_precision_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-plugin-enable-precision");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-plugin-enable-precision",
+                                     "Switches this plug-in to using the real bit depth of drawables.",
+                                     "Switches this plug-in to using the real bit depth of drawables. This setting can only be enabled, and not disabled again during the lifetime of the plug-in. Using 'gimp-drawable-get-buffer', 'gimp-drawable-get-shadow-buffer' or 'gimp-drawable-get-format' will automatically call this function.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2012",
+                                     NULL);
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plugin-precision-enabled
+   */
+  procedure = gimp_procedure_new (plugin_precision_enabled_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-plugin-precision-enabled");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-plugin-precision-enabled",
+                                     "Whether this plug-in is using the real bit depth of drawables.",
+                                     "Returns whether this plug-in is using the real bit depth of drawables, which can be more than 8 bits per channel.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("enabled",
+                                                         "enabled",
+                                                         "Whether precision is enabled",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

@@ -315,7 +315,6 @@ void           gimp_destroy_paramdefs   (GimpParamDef    *paramdefs,
  */
 const gchar  * gimp_get_pdb_error       (void);
 
-
 /* Return various constants given by the GIMP core at plug-in config time.
  */
 guint          gimp_tile_width          (void) G_GNUC_CONST;

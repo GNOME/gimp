@@ -264,6 +264,31 @@ CODE
     );
 }
 
+sub drawable_get_format {
+    $blurb = "Returns the drawable's Babl format";
+    $help  = "This procedure returns the drawable's Babl format.";
+
+    &mitch_pdb_misc('2012', '2.10');
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
+
+    @outargs = (
+	{ name => 'format', type => 'string', wrap => 1,
+	  desc => "The drawable's Babl format" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  format = g_strdup (babl_get_name (gimp_drawable_get_format (drawable)));
+}
+CODE
+    );
+}
+
 sub drawable_type {
     $blurb = "Returns the drawable's type.";
     $help  = "This procedure returns the drawable's type.";
@@ -446,8 +471,8 @@ sub drawable_bpp {
     $blurb = 'Returns the bytes per pixel.';
 
     $help = <<'HELP';
-This procedure returns the number of bytes per pixel (or the number of
-channels) for the specified drawable.
+This procedure returns the number of bytes per pixel, which corresponds to
+the number of components unless gimp_plugin_enable_precision() was called.
 HELP
 
     &std_pdb_misc;
@@ -465,7 +490,18 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  bpp = gimp_drawable_bytes (drawable);
+  const Babl *format = gimp_drawable_get_format (drawable);
+
+  if (! gimp->plug_in_manager->current_plug_in ||
+      ! gimp_plug_in_precision_enabled (gimp->plug_in_manager->current_plug_in))
+    {
+      if (! gimp_drawable_is_indexed (drawable) /* XXX fixme */)
+        format = gimp_babl_format (gimp_babl_format_get_base_type (format),
+                                   GIMP_PRECISION_U8,
+                                   babl_format_has_alpha (format));
+    }
+
+  bpp = babl_format_get_bytes_per_pixel (format);
 }
 CODE
     );
@@ -907,6 +943,7 @@ CODE
 
 
 @headers = qw("config/gimpcoreconfig.h"
+              "gegl/gimp-babl.h"
               "gegl/gimp-gegl-utils.h"
               "core/gimp.h"
               "core/gimpdrawable-offset.h"
@@ -914,7 +951,8 @@ CODE
               "gimppdb-utils.h"
               "gimp-intl.h");
 
-@procs = qw(drawable_type
+@procs = qw(drawable_get_format
+            drawable_type
             drawable_type_with_alpha
             drawable_has_alpha
             drawable_is_rgb

@@ -353,6 +353,70 @@ CODE
     );
 }
 
+sub plugin_enable_precision {
+    $blurb = "Switches this plug-in to using the real bit depth of drawables.";
+
+    $help = <<HELP;
+Switches this plug-in to using the real bit depth of drawables. This
+setting can only be enabled, and not disabled again during the
+lifetime of the plug-in. Using gimp_drawable_get_buffer(),
+gimp_drawable_get_shadow_buffer() or gimp_drawable_get_format() will
+automatically call this function.
+HELP
+
+    &mitch_pdb_misc('2012', '2.10');
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in)
+    {
+      gimp_plug_in_enable_precision (plug_in);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+sub plugin_precision_enabled {
+    $blurb = "Whether this plug-in is using the real bit depth of drawables.";
+
+    $help = <<HELP;
+Returns whether this plug-in is using the real bit depth of drawables,
+which can be more than 8 bits per channel.
+HELP
+
+    &mitch_pdb_misc('2012', '2.10');
+
+    @outargs = (
+	{ name => 'enabled', type => 'boolean',
+	  desc => "Whether precision is enabled" }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in)
+    {
+      enabled = gimp_plug_in_precision_enabled (plug_in);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
 @headers = qw(<string.h>
               <stdlib.h>
               "libgimpbase/gimpbase.h"
@@ -371,9 +435,11 @@ CODE
             plugin_menu_branch_register
             plugin_icon_register
             plugin_set_pdb_error_handler
-            plugin_get_pdb_error_handler);
+            plugin_get_pdb_error_handler
+            plugin_enable_precision
+            plugin_precision_enabled);
 
-%exports = (app => [@procs], lib => [@procs[1,2,3,4,5,6,7]]);
+%exports = (app => [@procs], lib => [@procs[1,2,3,4,5,6,7,8,9]]);
 
 $desc = 'Plug-in';
 $doc_title = 'gimpplugin';

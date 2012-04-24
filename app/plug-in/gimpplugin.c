@@ -1032,3 +1032,19 @@ gimp_plug_in_remove_temp_proc (GimpPlugIn             *plug_in,
   gimp_plug_in_manager_remove_temp_proc (plug_in->manager, proc);
   g_object_unref (proc);
 }
+
+void
+gimp_plug_in_enable_precision (GimpPlugIn *plug_in)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+
+  plug_in->precision = TRUE;
+}
+
+gboolean
+gimp_plug_in_precision_enabled (GimpPlugIn *plug_in)
+{
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
+
+  return plug_in->precision;
+}

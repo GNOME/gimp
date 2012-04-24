@@ -668,6 +668,8 @@ gimp_drawable_get_buffer (gint32 drawable_ID)
 {
   GimpDrawable *drawable;
 
+  gimp_plugin_enable_precision ();
+
   drawable = gimp_drawable_get (drawable_ID);
 
   if (drawable)
@@ -705,6 +707,8 @@ gimp_drawable_get_shadow_buffer (gint32 drawable_ID)
 {
   GimpDrawable *drawable;
 
+  gimp_plugin_enable_precision ();
+
   drawable = gimp_drawable_get (drawable_ID);
 
   if (drawable)
@@ -735,38 +739,42 @@ gimp_drawable_get_shadow_buffer (gint32 drawable_ID)
 const Babl *
 gimp_drawable_get_format (gint32 drawable_ID)
 {
-  switch (gimp_drawable_type (drawable_ID))
+  const Babl *format     = NULL;
+  gchar      *format_str = _gimp_drawable_get_format (drawable_ID);
+
+  if (format_str)
     {
-    case GIMP_RGB_IMAGE:   return babl_format ("R'G'B' u8");
-    case GIMP_RGBA_IMAGE:  return babl_format ("R'G'B'A u8");
-    case GIMP_GRAY_IMAGE:  return babl_format ("Y' u8");
-    case GIMP_GRAYA_IMAGE: return babl_format ("Y'A u8");
-    case GIMP_INDEXED_IMAGE:
-    case GIMP_INDEXEDA_IMAGE:
-      {
-        gint32      image_ID = gimp_item_get_image (drawable_ID);
-        const Babl *pala;
-        const Babl *pal;
-        guchar     *cmap;
-        gint        n_cols;
+      gimp_plugin_enable_precision ();
 
-        cmap = gimp_image_get_colormap (image_ID, &n_cols);
+      if (gimp_drawable_is_indexed (drawable_ID))
+        {
+          gint32      image_ID = gimp_item_get_image (drawable_ID);
+          const Babl *palette;
+          const Babl *palette_alpha;
+          guchar     *colormap;
+          gint        n_colors;
 
-        babl_new_palette (NULL, &pal, &pala);
-        babl_palette_set_palette (pal, babl_format ("R'G'B' u8"),
-                                  cmap, n_cols);
+          colormap = gimp_image_get_colormap (image_ID, &n_colors);
 
-        g_free (cmap);
+          babl_new_palette (format_str, &palette, &palette_alpha);
+          babl_palette_set_palette (palette,
+                                    babl_format ("R'G'B' u8"),
+                                    colormap, n_colors);
 
-        if (gimp_drawable_type (drawable_ID) == GIMP_INDEXEDA_IMAGE)
-          return pala;
+          g_free (colormap);
 
-        return pal;
-      }
+          if (gimp_drawable_has_alpha (drawable_ID))
+            format = palette;
+          else
+            format = palette_alpha;
+        }
+      else
+        {
+          format = babl_format (format_str);
+        }
 
-    default:
-      g_warn_if_reached ();
+      g_free (format_str);
     }
 
-  return NULL;
+  return format;
 }

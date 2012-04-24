@@ -32,6 +32,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+G_GNUC_INTERNAL gchar*   _gimp_drawable_get_format        (gint32                      drawable_ID);
 GimpImageType            gimp_drawable_type               (gint32                      drawable_ID);
 GimpImageType            gimp_drawable_type_with_alpha    (gint32                      drawable_ID);
 gboolean                 gimp_drawable_has_alpha          (gint32                      drawable_ID);
