@@ -473,7 +473,7 @@ load_rsvg_pixbuf (const gchar  *filename,
   if (success)
     pixbuf = rsvg_handle_get_pixbuf (handle);
 
-  rsvg_handle_free (handle);
+  g_object_unref (handle);
 
   return pixbuf;
 }
@@ -559,7 +559,7 @@ load_rsvg_size (const gchar  *filename,
       }
 
   g_io_channel_unref (io);
-  rsvg_handle_free (handle);
+  g_object_unref (handle);
 
   if (vals->width  < 1)  vals->width  = 1;
   if (vals->height < 1)  vals->height = 1;
