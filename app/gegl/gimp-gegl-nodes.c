@@ -256,7 +256,6 @@ gimp_gegl_node_set_layer_mode (GeglNode             *node,
     case GIMP_VALUE_MODE:
     case GIMP_COLOR_ERASE_MODE:
     case GIMP_ERASE_MODE:
-    case GIMP_REPLACE_MODE:
     case GIMP_ANTI_ERASE_MODE:
       gegl_node_set (node,
                      "operation",     "gimp:point-layer-mode",

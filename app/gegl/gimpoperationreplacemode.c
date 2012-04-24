@@ -78,10 +78,26 @@ gimp_operation_replace_mode_process (GeglOperation       *operation,
 
   while (samples--)
     {
-      out[RED]   = in[RED];
-      out[GREEN] = in[GREEN];
-      out[BLUE]  = in[BLUE];
-      out[ALPHA] = in[ALPHA];
+      gint b;
+      gfloat ratio = 1 / layer[ALPHA] / layer[ALPHA];
+
+      for (b = RED; b < ALPHA; b++)
+        {
+          gfloat t;
+
+          if (layer[b] > in[b])
+            {
+              t = (layer[b] - in[b]) * ratio;
+              out[b] = in[b] + t;
+            }
+          else
+            {
+              t= (in[b] - layer[b]) * ratio;
+              out[b] = in[b] - t;
+            }
+        }
+
+      out[ALPHA] = layer[ALPHA];
 
       in    += 4;
       layer += 4;
