@@ -125,11 +125,11 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
 }
 
 static void
-gimp_channel_combine_span (guchar         *data,
+gimp_channel_combine_span (gfloat         *data,
                            GimpChannelOps  op,
                            gint            x1,
                            gint            x2,
-                           gint            value)
+                           gfloat          value)
 {
   if (x2 <= x1)
     return;
@@ -138,31 +138,33 @@ gimp_channel_combine_span (guchar         *data,
     {
     case GIMP_CHANNEL_OP_ADD:
     case GIMP_CHANNEL_OP_REPLACE:
-      if (value == 255)
+      if (value == 1.0)
         {
-          memset (data + x1, 255, x2 - x1);
+          while (x1 < x2)
+            data[x1++] = 1.0;
         }
       else
         {
           while (x1 < x2)
             {
-              const guint val = data[x1] + value;
-              data[x1++] = val > 255 ? 255 : val;
+              const gfloat val = data[x1] + value;
+              data[x1++] = val > 1.0 ? 1.0 : val;
             }
         }
       break;
 
     case GIMP_CHANNEL_OP_SUBTRACT:
-      if (value == 255)
+      if (value == 1.0)
         {
-          memset (data + x1, 0, x2 - x1);
+          while (x1 < x2)
+            data[x1++] = 0.0;
         }
       else
         {
           while (x1 < x2)
             {
-              const gint val = data[x1] - value;
-              data[x1++] = val > 0 ? val : 0;
+              const gfloat val = data[x1] - value;
+              data[x1++] = val > 0.0 ? val : 0.0;
             }
         }
       break;
@@ -207,7 +209,6 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
   GeglBuffer         *buffer;
   GeglBufferIterator *iter;
   GeglRectangle      *roi;
-  gint                bpp;
   gdouble             a_sqr;
   gdouble             b_sqr;
   gdouble             ellipse_center_x;
@@ -238,19 +239,18 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
 
   iter = gegl_buffer_iterator_new (buffer,
                                    GEGL_RECTANGLE (x0, y0, width, height), 0,
-                                   babl_format ("Y u8"), GEGL_BUFFER_READWRITE,
-                                   GEGL_ABYSS_NONE);
+                                   babl_format ("Y float"),
+                                   GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
   roi = &iter->roi[0];
-  bpp = 1;
 
   while (gegl_buffer_iterator_next (iter))
     {
-      guchar *data = iter->data[0];
+      gfloat *data = iter->data[0];
       gint    py;
 
       for (py = roi->y;
            py < roi->y + roi->height;
-           py++, data += roi->width * bpp)
+           py++, data += roi->width)
         {
           const gint px = roi->x;
           gdouble    ellipse_center_y;
@@ -258,7 +258,7 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
           if (py >= y + b && py < y + h - b)
             {
               /*  we are on a row without rounded corners  */
-              gimp_channel_combine_span (data, op, 0, roi->width, 255);
+              gimp_channel_combine_span (data, op, 0, roi->width, 1.0);
               continue;
             }
 
@@ -278,9 +278,9 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
            */
           if (! antialias)
             {
-              gdouble     half_ellipse_width_at_y;
-              gint        x_start;
-              gint        x_end;
+              gdouble half_ellipse_width_at_y;
+              gint    x_start;
+              gint    x_end;
 
               half_ellipse_width_at_y =
                 sqrt (a_sqr -
@@ -292,7 +292,7 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
 
               gimp_channel_combine_span (data, op,
                                          MAX (x_start - px, 0),
-                                         MIN (x_end   - px, roi->width), 255);
+                                         MIN (x_end   - px, roi->width), 1.0);
             }
           else  /* use antialiasing */
             {
@@ -305,7 +305,7 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
                * legs are the X and Y distances.  (WES)
                */
               const gfloat yi       = ABS (py + 0.5 - ellipse_center_y);
-              gint         last_val = -1;
+              gfloat       last_val = -1;
               gint         x_start  = px;
               gint         cur_x;
 
@@ -316,7 +316,7 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
                   gfloat  ydist;
                   gfloat  r;
                   gfloat  dist;
-                  gint    val;
+                  gfloat  val;
 
                   if (cur_x < x + w / 2)
                     {
@@ -342,7 +342,7 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
                   r = hypot (xdist, ydist);
 
                   if (r < 0.001)
-                    dist = 0.;
+                    dist = 0.0;
                   else
                     dist = xdist * ydist / r; /* trig formula for distance to
                                                * hypotenuse
@@ -352,11 +352,11 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
                     dist *= -1;
 
                   if (dist < -0.5)
-                    val = 255;
+                    val = 1.0;
                   else if (dist < 0.5)
-                    val = (gint) (255 * (1 - (dist + 0.5)));
+                    val = (1.0 - (dist + 0.5));
                   else
-                    val = 0;
+                    val = 0.0;
 
                   if (last_val != val)
                     {
@@ -382,7 +382,7 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
 
                       x_start = cur_x;
                       cur_x = x + w - a;
-                      last_val = val = 255;
+                      last_val = val = 1.0;
                     }
 
                   /* Time to change center? */
@@ -464,13 +464,15 @@ gimp_channel_combine_mask (GimpChannel    *mask,
   rect.width  = w;
   rect.height = h;
 
-  iter = gegl_buffer_iterator_new (mask_buffer, &rect, 0, babl_format ("Y u8"),
+  iter = gegl_buffer_iterator_new (mask_buffer, &rect, 0,
+                                   babl_format ("Y float"),
                                    GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
 
   rect.x -= off_x;
   rect.y -= off_y;
 
-  gegl_buffer_iterator_add (iter, add_on_buffer, &rect, 0, babl_format ("Y u8"),
+  gegl_buffer_iterator_add (iter, add_on_buffer, &rect, 0,
+                            babl_format ("Y float"),
                             GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
   switch (op)
@@ -479,15 +481,14 @@ gimp_channel_combine_mask (GimpChannel    *mask,
     case GIMP_CHANNEL_OP_REPLACE:
       while (gegl_buffer_iterator_next (iter))
         {
-          guchar *mask_data   = iter->data[0];
-          guchar *add_on_data = iter->data[1];
-          gint    length      = iter->length;
+          gfloat       *mask_data   = iter->data[0];
+          const gfloat *add_on_data = iter->data[1];
 
-          while (length--)
+          while (iter->length--)
             {
-              const guint val = *mask_data + *add_on_data;
+              const gfloat val = *mask_data + *add_on_data;
 
-              *mask_data = CLAMP (val, 0, 255);
+              *mask_data = CLAMP (val, 0.0, 1.0);
 
               add_on_data++;
               mask_data++;
@@ -498,14 +499,13 @@ gimp_channel_combine_mask (GimpChannel    *mask,
     case GIMP_CHANNEL_OP_SUBTRACT:
       while (gegl_buffer_iterator_next (iter))
         {
-          guchar *mask_data   = iter->data[0];
-          guchar *add_on_data = iter->data[1];
-          gint    length      = iter->length;
+          gfloat       *mask_data   = iter->data[0];
+          const gfloat *add_on_data = iter->data[1];
 
-          while (length--)
+          while (iter->length--)
             {
               if (*add_on_data > *mask_data)
-                *mask_data = 0;
+                *mask_data = 0.0;
               else
                 *mask_data -= *add_on_data;
 
@@ -518,11 +518,10 @@ gimp_channel_combine_mask (GimpChannel    *mask,
     case GIMP_CHANNEL_OP_INTERSECT:
       while (gegl_buffer_iterator_next (iter))
         {
-          guchar *mask_data   = iter->data[0];
-          guchar *add_on_data = iter->data[1];
-          gint    length      = iter->length;
+          gfloat       *mask_data   = iter->data[0];
+          const gfloat *add_on_data = iter->data[1];
 
-          while (length--)
+          while (iter->length--)
             {
               *mask_data = MIN (*mask_data, *add_on_data);
 
