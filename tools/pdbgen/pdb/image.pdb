@@ -1516,6 +1516,37 @@ CODE
     );
 }
 
+sub image_get_precision {
+    $blurb = 'Get the precision of the image.';
+
+    $help = <<'HELP';
+This procedure returns the image's precision.
+HELP
+
+    &mitch_pdb_misc('2012', '2.10');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' }
+    );
+
+    @outargs = (
+        { name => 'precision', type => 'enum GimpPrecision',
+          desc => "The image's precision" }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp->plug_in_manager->current_plug_in)
+    gimp_plug_in_enable_precision (gimp->plug_in_manager->current_plug_in);
+
+  precision = gimp_image_get_precision (image);
+}
+CODE
+    );
+}
+
 sub image_get_colormap {
     $blurb = "Returns the image's colormap";
 
@@ -2956,6 +2987,7 @@ CODE
             image_new image_new_with_precision
             image_duplicate image_delete
             image_base_type
+            image_get_precision
             image_width image_height
             image_free_shadow
             image_resize image_resize_to_layers
@@ -3011,7 +3043,7 @@ CODE
 # image_add_layer_mask and image_remove_layer_mask.
 # If adding or removing functions, make sure the range below is
 # updated correctly!
-%exports = (app => [@procs], lib => [@procs[0..43,46..84]]);
+%exports = (app => [@procs], lib => [@procs[0..44,47..85]]);
 
 $desc = 'Image';
 $doc_title = 'gimpimage';

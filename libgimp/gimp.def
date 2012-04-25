@@ -405,6 +405,7 @@ EXPORTS
 	gimp_image_get_name
 	gimp_image_get_parasite
 	gimp_image_get_parasite_list
+	gimp_image_get_precision
 	gimp_image_get_resolution
 	gimp_image_get_selection
 	gimp_image_get_tattoo_state

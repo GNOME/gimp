@@ -293,6 +293,38 @@ gimp_image_base_type (gint32 image_ID)
 }
 
 /**
+ * gimp_image_get_precision:
+ * @image_ID: The image.
+ *
+ * Get the precision of the image.
+ *
+ * This procedure returns the image's precision.
+ *
+ * Returns: The image's precision.
+ *
+ * Since: GIMP 2.10
+ **/
+GimpPrecision
+gimp_image_get_precision (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpPrecision precision = 0;
+
+  return_vals = gimp_run_procedure ("gimp-image-get-precision",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    precision = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return precision;
+}
+
+/**
  * gimp_image_width:
  * @image_ID: The image.
  *

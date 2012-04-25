@@ -44,6 +44,7 @@ gint32                   gimp_image_new_with_precision       (gint              
 gint32                   gimp_image_duplicate                (gint32                  image_ID);
 gboolean                 gimp_image_delete                   (gint32                  image_ID);
 GimpImageBaseType        gimp_image_base_type                (gint32                  image_ID);
+GimpPrecision            gimp_image_get_precision            (gint32                  image_ID);
 gint                     gimp_image_width                    (gint32                  image_ID);
 gint                     gimp_image_height                   (gint32                  image_ID);
 #ifndef GIMP_DISABLE_DEPRECATED
