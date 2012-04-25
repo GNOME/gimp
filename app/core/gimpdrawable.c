@@ -1159,7 +1159,10 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_IMAGE (dest_image));
-  g_return_if_fail (new_base_type != gimp_drawable_get_base_type (drawable));
+  g_return_if_fail (new_base_type !=
+                    gimp_drawable_get_base_type (drawable) ||
+                    gimp_image_get_precision (dest_image) !=
+                    gimp_drawable_get_precision (drawable));
 
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
     push_undo = FALSE;

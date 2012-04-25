@@ -609,11 +609,17 @@ gimp_layer_convert (GimpItem  *item,
   GimpDrawable      *drawable = GIMP_DRAWABLE (item);
   GimpImageBaseType  old_base_type;
   GimpImageBaseType  new_base_type;
+  GimpPrecision      old_precision;
+  GimpPrecision      new_precision;
 
   old_base_type = gimp_drawable_get_base_type (drawable);
   new_base_type = gimp_image_base_type (dest_image);
 
-  if (old_base_type != new_base_type)
+  old_precision = gimp_drawable_get_precision (drawable);
+  new_precision = gimp_image_get_precision (dest_image);
+
+  if (old_base_type != new_base_type ||
+      old_precision != new_precision)
     gimp_drawable_convert_type (drawable, dest_image, new_base_type, FALSE);
 
   if (layer->mask)
