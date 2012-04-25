@@ -32,11 +32,13 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "gegl/gimp-babl-compat.h"
+#include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "vectors/gimpvectors.h"
 
 #include "gimp.h"
+#include "gimp-apply-operation.h"
 #include "gimpcontext.h"
 #include "gimperror.h"
 #include "gimpgrouplayer.h"
@@ -422,8 +424,6 @@ gimp_image_merge_layers (GimpImage     *image,
   GList            *list;
   GSList           *reverse_list = NULL;
   GSList           *layers;
-  PixelRegion       src1PR, src2PR, maskPR;
-  PixelRegion      *mask;
   GimpLayer        *merge_layer;
   GimpLayer        *layer;
   GimpLayer        *bottom_layer;
@@ -594,32 +594,10 @@ gimp_image_merge_layers (GimpImage     *image,
 
   for (layers = reverse_list; layers; layers = g_slist_next (layers))
     {
-      CombinationMode      operation;
       GimpLayerModeEffects mode;
       gint                 x3, y3, x4, y4;
-      gboolean             active[MAX_CHANNELS] = { TRUE, TRUE, TRUE, TRUE };
 
       layer = layers->data;
-
-      /*  determine what sort of operation is being attempted and
-       *  if it's actually legal...
-       */
-      operation = gimp_image_merge_layers_get_operation (merge_layer, layer);
-
-      if (operation == -1)
-        {
-          gimp_layer_add_alpha (layer);
-
-          /*  try again ...  */
-          operation = gimp_image_merge_layers_get_operation (merge_layer,
-                                                             layer);
-        }
-
-      if (operation == -1)
-        {
-          g_warning ("%s: attempting to merge incompatible layers.", G_STRFUNC);
-          return NULL;
-        }
 
       gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
 
@@ -627,34 +605,6 @@ gimp_image_merge_layers (GimpImage     *image,
       y3 = CLAMP (off_y, y1, y2);
       x4 = CLAMP (off_x + gimp_item_get_width  (GIMP_ITEM (layer)), x1, x2);
       y4 = CLAMP (off_y + gimp_item_get_height (GIMP_ITEM (layer)), y1, y2);
-
-      /* configure the pixel regions  */
-      pixel_region_init (&src1PR,
-                         gimp_drawable_get_tiles (GIMP_DRAWABLE (merge_layer)),
-                         (x3 - x1), (y3 - y1), (x4 - x3), (y4 - y3),
-                         TRUE);
-      pixel_region_init (&src2PR,
-                         gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
-                         (x3 - off_x), (y3 - off_y),
-                         (x4 - x3), (y4 - y3),
-                         FALSE);
-
-      if (gimp_layer_get_mask (layer) &&
-          gimp_layer_get_apply_mask (layer))
-        {
-          TileManager *tiles;
-
-          tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (layer->mask));
-
-          pixel_region_init (&maskPR, tiles,
-                             (x3 - off_x), (y3 - off_y), (x4 - x3), (y4 - y3),
-                             FALSE);
-          mask = &maskPR;
-        }
-      else
-        {
-          mask = NULL;
-        }
 
       /* DISSOLVE_MODE is special since it is the only mode that does not
        *  work on the projection with the lower layer, but only locally on
@@ -664,11 +614,105 @@ gimp_image_merge_layers (GimpImage     *image,
       if (layer == bottom_layer && mode != GIMP_DISSOLVE_MODE)
         mode = GIMP_NORMAL_MODE;
 
-      combine_regions (&src1PR, &src2PR, &src1PR, mask, NULL,
-                       gimp_layer_get_opacity (layer) * 255.999,
-                       mode,
-                       active,
-                       operation);
+      if (gimp_use_gegl (image->gimp))
+        {
+          GeglBuffer *merge_buffer;
+          GeglBuffer *layer_buffer;
+          GeglBuffer *mask_buffer = NULL;
+          GeglNode   *apply;
+
+          merge_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (merge_layer));
+          layer_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+
+          if (gimp_layer_get_mask (layer) &&
+              gimp_layer_get_apply_mask (layer))
+            {
+              mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer->mask));
+            }
+
+          apply =
+            gimp_gegl_create_apply_buffer_node (layer_buffer,
+                                                - (x1 - off_x),
+                                                - (y1 - off_y),
+                                                0,
+                                                0,
+                                                0,
+                                                0,
+                                                mask_buffer,
+                                                - (x1 - off_x),
+                                                - (y1 - off_y),
+                                                gimp_layer_get_opacity (layer),
+                                                mode,
+                                                GIMP_COMPONENT_ALL);
+
+          gimp_apply_operation (merge_buffer, NULL, NULL,
+                                apply,
+                                merge_buffer, NULL);
+
+          g_object_unref (apply);
+        }
+      else
+        {
+          CombinationMode  operation;
+          gboolean         active[MAX_CHANNELS] = { TRUE, TRUE, TRUE, TRUE };
+          PixelRegion      src1PR, src2PR, maskPR;
+          PixelRegion     *mask;
+
+          /*  determine what sort of operation is being attempted and
+           *  if it's actually legal...
+           */
+          operation = gimp_image_merge_layers_get_operation (merge_layer, layer);
+
+          if (operation == -1)
+            {
+              gimp_layer_add_alpha (layer);
+
+              /*  try again ...  */
+              operation = gimp_image_merge_layers_get_operation (merge_layer,
+                                                                 layer);
+            }
+
+          if (operation == -1)
+            {
+              g_warning ("%s: attempting to merge incompatible layers.",
+                         G_STRFUNC);
+              return NULL;
+            }
+
+          /* configure the pixel regions  */
+          pixel_region_init (&src1PR,
+                             gimp_drawable_get_tiles (GIMP_DRAWABLE (merge_layer)),
+                             (x3 - x1), (y3 - y1), (x4 - x3), (y4 - y3),
+                             TRUE);
+          pixel_region_init (&src2PR,
+                             gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
+                             (x3 - off_x), (y3 - off_y),
+                             (x4 - x3), (y4 - y3),
+                             FALSE);
+
+          if (gimp_layer_get_mask (layer) &&
+              gimp_layer_get_apply_mask (layer))
+            {
+              TileManager *tiles;
+
+              tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (layer->mask));
+
+              pixel_region_init (&maskPR, tiles,
+                                 (x3 - off_x), (y3 - off_y), (x4 - x3), (y4 - y3),
+                                 FALSE);
+              mask = &maskPR;
+            }
+          else
+            {
+              mask = NULL;
+            }
+
+          combine_regions (&src1PR, &src2PR, &src1PR, mask, NULL,
+                           gimp_layer_get_opacity (layer) * 255.999,
+                           mode,
+                           active,
+                           operation);
+        }
 
       gimp_image_remove_layer (image, layer, TRUE, NULL);
     }
