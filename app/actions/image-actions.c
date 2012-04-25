@@ -168,8 +168,8 @@ static const GimpRadioActionEntry image_convert_precision_actions[] =
     GIMP_PRECISION_U16, GIMP_HELP_IMAGE_CONVERT_U16 },
 
   { "image-convert-float", NULL,
-    NC_("image-convert-action", "16 bit floating point"), NULL,
-    NC_("image-convert-action", "Convert the image to 16 bit floating point"),
+    NC_("image-convert-action", "32 bit floating point"), NULL,
+    NC_("image-convert-action", "Convert the image to 32 bit floating point"),
     GIMP_PRECISION_FLOAT, GIMP_HELP_IMAGE_CONVERT_FLOAT }
 };
 
