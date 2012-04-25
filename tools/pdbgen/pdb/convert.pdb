@@ -130,8 +130,8 @@ HELP
 {
   GimpPalette *pal = NULL;
 
-  if (gimp_pdb_image_is_not_base_type (image, GIMP_INDEXED, error)   &&
-      gimp_pdb_image_has_precision (image, GIMP_PRECISION_U8, error) &&
+  if (gimp_pdb_image_is_not_base_type (image, GIMP_INDEXED, error) &&
+      gimp_pdb_image_is_precision (image, GIMP_PRECISION_U8, error) &&
       gimp_item_stack_is_flat (GIMP_ITEM_STACK (gimp_image_get_layers (image))))
     {
       switch (palette_type)
@@ -219,6 +219,41 @@ CODE
     );
 }
 
+sub image_convert_precision {
+    $blurb = 'Convert the image to the specified precision';
+
+    $help = <<'HELP';
+This procedure converts the image to the specified precision. Note
+that indexed images cannot be converted and are always in
+GIMP_PRECISION_U8.
+HELP
+
+    &mitch_pdb_misc('2012', '2.10');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'precision', type => 'enum GimpPrecision',
+	  desc => 'The new precision' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_image_is_not_base_type (image, GIMP_INDEXED, error) &&
+      gimp_pdb_image_is_not_precision (image, precision, error))
+    {
+      gimp_image_convert_precision (image, precision, NULL);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
 @headers = qw("core/gimpimage.h"
               "core/gimpimage-convert.h"
               "core/gimpitemstack.h"
@@ -230,7 +265,8 @@ CODE
 @procs = qw(image_convert_rgb
             image_convert_grayscale
             image_convert_indexed
-            image_convert_set_dither_matrix);
+            image_convert_set_dither_matrix
+            image_convert_precision);
 
 %exports = (app => [@procs], lib => [@procs]);
 

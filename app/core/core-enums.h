@@ -328,7 +328,7 @@ typedef enum
 
 GType gimp_precision_get_type (void) G_GNUC_CONST;
 
-typedef enum /*< pdb-skip >*/
+typedef enum
 {
   GIMP_PRECISION_U8,    /*< desc="8-bit unsigned integer"  >*/
   GIMP_PRECISION_U16,   /*< desc="16-bit unsigned integer" >*/

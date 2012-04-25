@@ -45,6 +45,8 @@ gboolean gimp_image_convert_set_dither_matrix (gint                    width,
                                                gint                    height,
                                                gint                    matrix_length,
                                                const guint8           *matrix);
+gboolean gimp_image_convert_precision         (gint32                  image_ID,
+                                               GimpPrecision           precision);
 
 
 G_END_DECLS

@@ -618,7 +618,7 @@ gimp_pdb_image_is_not_base_type (GimpImage          *image,
     return TRUE;
 
   g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-               _("Image '%s' (%d) is already of type '%s'"),
+               _("Image '%s' (%d) must not be of type '%s'"),
                gimp_image_get_display_name (image),
                gimp_image_get_ID (image),
                gimp_pdb_enum_value_get_nick (GIMP_TYPE_IMAGE_BASE_TYPE, type));
@@ -627,9 +627,9 @@ gimp_pdb_image_is_not_base_type (GimpImage          *image,
 }
 
 gboolean
-gimp_pdb_image_has_precision (GimpImage      *image,
-                              GimpPrecision   precision,
-                              GError        **error)
+gimp_pdb_image_is_precision (GimpImage      *image,
+                             GimpPrecision   precision,
+                             GError        **error)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
@@ -644,6 +644,26 @@ gimp_pdb_image_has_precision (GimpImage      *image,
                gimp_image_get_ID (image),
                gimp_pdb_enum_value_get_nick (GIMP_TYPE_PRECISION,
                                              gimp_image_get_precision (image)),
+               gimp_pdb_enum_value_get_nick (GIMP_TYPE_PRECISION, precision));
+
+  return FALSE;
+}
+
+gboolean
+gimp_pdb_image_is_not_precision (GimpImage      *image,
+                                 GimpPrecision   precision,
+                                 GError        **error)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (gimp_image_get_precision (image) != precision)
+    return TRUE;
+
+  g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+               _("Image '%s' (%d) must not be of precision '%s'"),
+               gimp_image_get_display_name (image),
+               gimp_image_get_ID (image),
                gimp_pdb_enum_value_get_nick (GIMP_TYPE_PRECISION, precision));
 
   return FALSE;

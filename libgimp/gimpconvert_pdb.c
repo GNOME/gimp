@@ -196,3 +196,39 @@ gimp_image_convert_set_dither_matrix (gint          width,
 
   return success;
 }
+
+/**
+ * gimp_image_convert_precision:
+ * @image_ID: The image.
+ * @precision: The new precision.
+ *
+ * Convert the image to the specified precision
+ *
+ * This procedure converts the image to the specified precision. Note
+ * that indexed images cannot be converted and are always in
+ * GIMP_PRECISION_U8.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.10
+ **/
+gboolean
+gimp_image_convert_precision (gint32        image_ID,
+                              GimpPrecision precision)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-convert-precision",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_INT32, precision,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}

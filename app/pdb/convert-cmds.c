@@ -129,8 +129,8 @@ image_convert_indexed_invoker (GimpProcedure      *procedure,
     {
       GimpPalette *pal = NULL;
 
-      if (gimp_pdb_image_is_not_base_type (image, GIMP_INDEXED, error)   &&
-          gimp_pdb_image_has_precision (image, GIMP_PRECISION_U8, error) &&
+      if (gimp_pdb_image_is_not_base_type (image, GIMP_INDEXED, error) &&
+          gimp_pdb_image_is_precision (image, GIMP_PRECISION_U8, error) &&
           gimp_item_stack_is_flat (GIMP_ITEM_STACK (gimp_image_get_layers (image))))
         {
           switch (palette_type)
@@ -208,6 +208,38 @@ image_convert_set_dither_matrix_invoker (GimpProcedure      *procedure,
           g_set_error_literal (error, GIMP_PDB_ERROR,
                                GIMP_PDB_ERROR_INVALID_ARGUMENT,
                                "Dither matrix length must be width * height");
+          success = FALSE;
+        }
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+image_convert_precision_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GValueArray  *args,
+                                 GError            **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  gint32 precision;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  precision = g_value_get_enum (&args->values[1]);
+
+  if (success)
+    {
+      if (gimp_pdb_image_is_not_base_type (image, GIMP_INDEXED, error) &&
+          gimp_pdb_image_is_not_precision (image, precision, error))
+        {
+          gimp_image_convert_precision (image, precision, NULL);
+        }
+      else
+        {
           success = FALSE;
         }
     }
@@ -366,6 +398,36 @@ register_convert_procs (GimpPDB *pdb)
                                                            "matrix",
                                                            "The matrix -- all values must be >= 1",
                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-convert-precision
+   */
+  procedure = gimp_procedure_new (image_convert_precision_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-convert-precision");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-convert-precision",
+                                     "Convert the image to the specified precision",
+                                     "This procedure converts the image to the specified precision. Note that indexed images cannot be converted and are always in GIMP_PRECISION_U8.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("precision",
+                                                  "precision",
+                                                  "The new precision",
+                                                  GIMP_TYPE_PRECISION,
+                                                  GIMP_PRECISION_U8,
+                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

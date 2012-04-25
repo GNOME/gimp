@@ -88,7 +88,10 @@ gboolean        gimp_pdb_image_is_not_base_type (GimpImage          *image,
                                                  GimpImageBaseType   type,
                                                  GError            **error);
 
-gboolean        gimp_pdb_image_has_precision    (GimpImage          *image,
+gboolean        gimp_pdb_image_is_precision     (GimpImage          *image,
+                                                 GimpPrecision       precision,
+                                                 GError            **error);
+gboolean        gimp_pdb_image_is_not_precision (GimpImage          *image,
                                                  GimpPrecision       precision,
                                                  GError            **error);
 

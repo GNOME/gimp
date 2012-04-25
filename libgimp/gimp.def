@@ -366,6 +366,7 @@ EXPORTS
 	gimp_image_clean_all
 	gimp_image_convert_grayscale
 	gimp_image_convert_indexed
+	gimp_image_convert_precision
 	gimp_image_convert_rgb
 	gimp_image_convert_set_dither_matrix
 	gimp_image_crop
@@ -676,6 +677,7 @@ EXPORTS
 	gimp_plugin_precision_enabled
 	gimp_plugin_set_pdb_error_handler
 	gimp_posterize
+	gimp_precision_get_type
 	gimp_procedural_db_dump
 	gimp_procedural_db_get_data
 	gimp_procedural_db_get_data_size

@@ -537,6 +537,15 @@ package Gimp::CodeGen::enums;
 		       GIMP_ORIENTATION_VERTICAL => '1',
 		       GIMP_ORIENTATION_UNKNOWN => '2' }
 	},
+    GimpPrecision =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_PRECISION_U8 GIMP_PRECISION_U16
+			  GIMP_PRECISION_FLOAT) ],
+	  mapping => { GIMP_PRECISION_U8 => '0',
+		       GIMP_PRECISION_U16 => '1',
+		       GIMP_PRECISION_FLOAT => '2' }
+	},
     GimpRotationType =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
