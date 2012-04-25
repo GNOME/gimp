@@ -388,13 +388,11 @@ gimp_template_editor_constructed (GObject *object)
                              _("Color _space:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
-#if 0
   combo = gimp_prop_enum_combo_box_new (G_OBJECT (template),
                                         "precision", 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
                              _("_Precision:"), 0.0, 0.5,
                              combo, 1, FALSE);
-#endif
 
   combo = gimp_prop_enum_combo_box_new (G_OBJECT (template),
                                         "fill-type",
