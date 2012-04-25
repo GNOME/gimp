@@ -27,6 +27,8 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "gimphistogram.h"
 
 
@@ -114,19 +116,23 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
 {
   GeglBufferIterator *iter;
   const Babl         *format;
-  gint                bpp;
+  gint                n_components;
 
   g_return_if_fail (histogram != NULL);
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
   g_return_if_fail (buffer_rect != NULL);
 
-  /* XXX need to analyze the real components here, this code assumes u8 */
   format = gegl_buffer_get_format (buffer);
-  bpp    = babl_format_get_bytes_per_pixel (format);
 
-  gimp_histogram_alloc_values (histogram, bpp);
+  format = gimp_babl_format (gimp_babl_format_get_base_type (format),
+                             GIMP_PRECISION_U8,
+                             babl_format_has_alpha (format));
 
-  iter = gegl_buffer_iterator_new (buffer, buffer_rect, 0, NULL,
+  n_components = babl_format_get_n_components (format),
+
+  gimp_histogram_alloc_values (histogram, n_components);
+
+  iter = gegl_buffer_iterator_new (buffer, buffer_rect, 0, format,
                                    GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
   if (mask)
@@ -145,7 +151,7 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
         {
           const gfloat *mask_data = iter->data[1];
 
-          switch (bpp)
+          switch (n_components)
             {
             case 1:
               while (iter->length)
@@ -154,7 +160,7 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
 
                   VALUE (0, data[0]) += masked;
 
-                  data += bpp;
+                  data += n_components;
                   mask_data += 1;
                 }
               break;
@@ -168,7 +174,7 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
                   VALUE (0, data[0]) += weight * masked;
                   VALUE (1, data[1]) += masked;
 
-                  data += bpp;
+                  data += n_components;
                   mask_data += 1;
                 }
               break;
@@ -187,7 +193,7 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
 
                   VALUE (0, max) += masked;
 
-                  data += bpp;
+                  data += n_components;
                   mask_data += 1;
                 }
               break;
@@ -208,7 +214,7 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
 
                   VALUE (0, max) += weight * masked;
 
-                  data += bpp;
+                  data += n_components;
                   mask_data += 1;
                 }
               break;
@@ -216,14 +222,14 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
         }
       else /* no mask */
         {
-          switch (bpp)
+          switch (n_components)
             {
             case 1:
               while (iter->length--)
                 {
                   VALUE (0, data[0]) += 1.0;
 
-                  data += bpp;
+                  data += n_components;
                 }
               break;
 
@@ -235,7 +241,7 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
                   VALUE (0, data[0]) += weight;
                   VALUE (1, data[1]) += 1.0;
 
-                  data += bpp;
+                  data += n_components;
                 }
               break;
 
@@ -251,7 +257,7 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
 
                   VALUE (0, max) += 1.0;
 
-                  data += bpp;
+                  data += n_components;
                 }
               break;
 
@@ -270,7 +276,7 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
 
                   VALUE (0, max) += weight;
 
-                  data += bpp;
+                  data += n_components;
                 }
               break;
             }
