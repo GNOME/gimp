@@ -27,6 +27,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gegl/gimp-babl-compat.h"
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
@@ -179,7 +180,7 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
       /*  determine what sort of operation is being attempted and
        *  if it's actually legal...
        */
-      operation = gimp_image_get_combination_mode (gimp_drawable_type (drawable),
+      operation = gimp_image_get_combination_mode (gimp_babl_format_get_image_type (gimp_drawable_get_format (drawable)),
                                                    src2PR.bytes);
       if (operation == -1)
         {

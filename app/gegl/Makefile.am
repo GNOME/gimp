@@ -20,6 +20,8 @@ libappgegl_a_sources = \
 	gimp-gegl-types.h			\
 	gimp-babl.c				\
 	gimp-babl.h				\
+	gimp-babl-compat.c			\
+	gimp-babl-compat.h			\
 	gimp-gegl.c				\
 	gimp-gegl.h				\
 	gimp-gegl-config-proxy.c		\

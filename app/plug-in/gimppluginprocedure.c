@@ -28,7 +28,7 @@
 
 #include "plug-in-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/gimp-babl-compat.h"
 
 #include "core/gimp.h"
 #include "core/gimp-utils.h"

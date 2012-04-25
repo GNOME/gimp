@@ -30,7 +30,7 @@
 #include "core/gimpcontainer-filter.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpparamspecs.h"
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/gimp-babl-compat.h"
 
 #include "gimppdb.h"
 #include "gimppdb-utils.h"

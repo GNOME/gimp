@@ -235,7 +235,7 @@ CODE
 
 
 @headers = qw(<string.h>
-              "gegl/gimp-gegl-utils.h"
+              "gegl/gimp-babl-compat.h"
               "core/gimp.h"
               "core/gimpbuffer.h"
               "core/gimpcontainer.h"

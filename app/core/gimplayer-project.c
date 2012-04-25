@@ -28,6 +28,8 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gegl/gimp-babl-compat.h"
+
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplayer-project.h"
@@ -92,7 +94,7 @@ gimp_layer_project_region (GimpDrawable *drawable,
       /*  Based on the type of the layer, project the layer onto the
        *  projection image...
        */
-      switch (gimp_drawable_type (drawable))
+      switch (gimp_babl_format_get_image_type (gimp_drawable_get_format (drawable)))
         {
         case GIMP_RGB_IMAGE:
         case GIMP_GRAY_IMAGE:

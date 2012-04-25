@@ -1633,18 +1633,6 @@ gimp_drawable_has_alpha (const GimpDrawable *drawable)
   return babl_format_has_alpha (format);
 }
 
-GimpImageType
-gimp_drawable_type (const GimpDrawable *drawable)
-{
-  const Babl *format;
-
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
-
-  format = gegl_buffer_get_format (drawable->private->buffer);
-
-  return gimp_babl_format_get_image_type (format);
-}
-
 GimpImageBaseType
 gimp_drawable_get_base_type (const GimpDrawable *drawable)
 {

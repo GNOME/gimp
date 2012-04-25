@@ -31,6 +31,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gegl/gimp-babl-compat.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "vectors/gimpvectors.h"
@@ -404,7 +405,7 @@ static CombinationMode
 gimp_image_merge_layers_get_operation (GimpLayer *dest,
                                        GimpLayer *src)
 {
-  GimpImageType type  = gimp_drawable_type (GIMP_DRAWABLE (dest));
+  GimpImageType type  = gimp_babl_format_get_image_type (gimp_drawable_get_format (GIMP_DRAWABLE (dest)));
   gint          bytes = gimp_drawable_bytes (GIMP_DRAWABLE (src));
 
   return gimp_image_get_combination_mode (type, bytes);
@@ -517,7 +518,8 @@ gimp_image_merge_layers (GimpImage     *image,
   name = g_strdup (gimp_object_get_name (layer));
 
   if (merge_type == GIMP_FLATTEN_IMAGE ||
-      gimp_drawable_type (GIMP_DRAWABLE (layer)) == GIMP_INDEXED_IMAGE)
+      (gimp_drawable_is_indexed (GIMP_DRAWABLE (layer)) &&
+       ! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer))))
     {
       GeglColor *color;
       GimpRGB    bg;

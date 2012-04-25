@@ -28,8 +28,8 @@
 
 #include "core/core-types.h"
 
+#include "gegl/gimp-babl-compat.h"
 #include "gegl/gimp-gegl-tile-compat.h"
-#include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"

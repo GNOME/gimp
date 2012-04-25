@@ -25,8 +25,6 @@
 #include <gdk-pixbuf/gdk-pixbuf.h> /* temp hack */
 
 
-GimpImageType    gimp_babl_format_get_image_type (const Babl            *format);
-
 const gchar * gimp_interpolation_to_gegl_filter  (GimpInterpolationType  interpolation) G_GNUC_CONST;
 
 GeglBuffer  * gimp_gegl_buffer_new               (const GeglRectangle   *rect,
