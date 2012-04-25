@@ -233,7 +233,6 @@ GimpPrecision   gimp_drawable_get_precision      (const GimpDrawable *drawable);
 gboolean        gimp_drawable_is_rgb             (const GimpDrawable *drawable);
 gboolean        gimp_drawable_is_gray            (const GimpDrawable *drawable);
 gboolean        gimp_drawable_is_indexed         (const GimpDrawable *drawable);
-gint            gimp_drawable_bytes              (const GimpDrawable *drawable);
 
 const guchar  * gimp_drawable_get_colormap       (const GimpDrawable *drawable);
 

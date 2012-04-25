@@ -122,7 +122,7 @@ gimp_drawable_foreground_extract_siox (GimpDrawable       *mask,
   gint x2, y2;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (mask));
-  g_return_if_fail (gimp_drawable_bytes (mask) == 1);
+  g_return_if_fail (babl_format_get_bytes_per_pixel (gimp_drawable_get_format (mask)) == 1);
 
   g_return_if_fail (state != NULL);
 

@@ -687,7 +687,9 @@ gimp_drawable_real_estimate_memsize (const GimpDrawable *drawable,
                                      gint                width,
                                      gint                height)
 {
-  return (gint64) gimp_drawable_bytes (drawable) * width * height;
+  const Babl *format = gimp_drawable_get_format (drawable);
+
+  return (gint64) babl_format_get_bytes_per_pixel (format) * width * height;
 }
 
 static void
@@ -1679,18 +1681,6 @@ gimp_drawable_is_indexed (const GimpDrawable *drawable)
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
   return (gimp_drawable_get_base_type (drawable) == GIMP_INDEXED);
-}
-
-gint
-gimp_drawable_bytes (const GimpDrawable *drawable)
-{
-  const Babl *format;
-
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
-
-  format = gegl_buffer_get_format (drawable->private->buffer);
-
-  return babl_format_get_bytes_per_pixel (format);
 }
 
 const guchar *

@@ -405,8 +405,9 @@ static CombinationMode
 gimp_image_merge_layers_get_operation (GimpLayer *dest,
                                        GimpLayer *src)
 {
-  GimpImageType type  = gimp_babl_format_get_image_type (gimp_drawable_get_format (GIMP_DRAWABLE (dest)));
-  gint          bytes = gimp_drawable_bytes (GIMP_DRAWABLE (src));
+  const Babl    *format = gimp_drawable_get_format (GIMP_DRAWABLE (dest));
+  GimpImageType  type   = gimp_babl_format_get_image_type (format);
+  gint           bytes  = babl_format_get_bytes_per_pixel (format);
 
   return gimp_image_get_combination_mode (type, bytes);
 }

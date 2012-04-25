@@ -960,14 +960,15 @@ static void
 gimp_layer_get_active_components (const GimpDrawable *drawable,
                                   gboolean           *active)
 {
-  GimpLayer *layer = GIMP_LAYER (drawable);
-  GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpLayer  *layer  = GIMP_LAYER (drawable);
+  GimpImage  *image  = gimp_item_get_image (GIMP_ITEM (drawable));
+  const Babl *format = gimp_drawable_get_format (drawable);
 
   /*  first copy the image active channels  */
   gimp_image_get_active_array (image, active);
 
   if (gimp_drawable_has_alpha (drawable) && layer->lock_alpha)
-    active[gimp_drawable_bytes (drawable) - 1] = FALSE;
+    active[babl_format_get_n_components (format) - 1] = FALSE;
 }
 
 static gdouble
