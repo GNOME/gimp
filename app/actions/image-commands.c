@@ -149,9 +149,9 @@ image_convert_dialog_unset (GtkWidget *widget)
 }
 
 void
-image_convert_cmd_callback (GtkAction *action,
-                            GtkAction *current,
-                            gpointer   data)
+image_convert_base_type_cmd_callback (GtkAction *action,
+                                      GtkAction *current,
+                                      gpointer   data)
 {
   GimpImage         *image;
   GtkWidget         *widget;
@@ -208,6 +208,26 @@ image_convert_cmd_callback (GtkAction *action,
       break;
     }
 
+  gimp_image_flush (image);
+}
+
+void
+image_convert_precision_cmd_callback (GtkAction *action,
+                                      GtkAction *current,
+                                      gpointer   data)
+{
+  GimpImage     *image;
+  GimpDisplay   *display;
+  GimpPrecision  value;
+  return_if_no_image (image, data);
+  return_if_no_display (display, data);
+
+  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+
+  if (value == gimp_image_get_precision (image))
+    return;
+
+  gimp_image_convert_precision (image, value, GIMP_PROGRESS (display));
   gimp_image_flush (image);
 }
 

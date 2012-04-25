@@ -37,6 +37,7 @@ struct _GimpImageUndo
   GimpUndo           parent_instance;
 
   GimpImageBaseType  base_type;
+  GimpPrecision      precision;
   gint               width;
   gint               height;
   gint               previous_origin_x;

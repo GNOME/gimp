@@ -320,6 +320,12 @@
         <placeholder name="Color Profile" />
         <separator />
       </menu>
+      <menu action="image-precision-menu" name="Precision">
+        <menuitem action="image-convert-u8" />
+        <menuitem action="image-convert-u16" />
+        <menuitem action="image-convert-float" />
+        <separator />
+      </menu>
       <menu action="image-transform-menu" name="Transform">
         <placeholder name="Flip">
           <menuitem action="image-flip-horizontal" />

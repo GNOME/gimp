@@ -25,6 +25,7 @@
 struct _GimpUndoAccumulator
 {
   gboolean mode_changed;
+  gboolean precision_changed;
 
   gboolean size_changed;
   gint     previous_origin_x;

@@ -54,6 +54,7 @@ static const GimpActionEntry image_actions[] =
 
   { "image-menu",             NULL, NC_("image-action", "_Image")      },
   { "image-mode-menu",        NULL, NC_("image-action", "_Mode")       },
+  { "image-precision-menu",   NULL, NC_("image-action", "_Precision")  },
   { "image-transform-menu",   NULL, NC_("image-action", "_Transform")  },
   { "image-guides-menu",      NULL, NC_("image-action", "_Guides")     },
 
@@ -136,7 +137,7 @@ static const GimpActionEntry image_actions[] =
     GIMP_HELP_IMAGE_PROPERTIES }
 };
 
-static const GimpRadioActionEntry image_convert_actions[] =
+static const GimpRadioActionEntry image_convert_base_type_actions[] =
 {
   { "image-convert-rgb", GIMP_STOCK_CONVERT_RGB,
     NC_("image-convert-action", "_RGB"), NULL,
@@ -152,6 +153,24 @@ static const GimpRadioActionEntry image_convert_actions[] =
     NC_("image-convert-action", "_Indexed..."), NULL,
     NC_("image-convert-action", "Convert the image to indexed colors"),
     GIMP_INDEXED, GIMP_HELP_IMAGE_CONVERT_INDEXED }
+};
+
+static const GimpRadioActionEntry image_convert_precision_actions[] =
+{
+  { "image-convert-u8", NULL,
+    NC_("image-convert-action", "8 bit unsigned integer"), NULL,
+    NC_("image-convert-action", "Convert the image to 8 bit unsigned integer"),
+    GIMP_PRECISION_U8, GIMP_HELP_IMAGE_CONVERT_U8 },
+
+  { "image-convert-u16", NULL,
+    NC_("image-convert-action", "16 bit unsigned integer"), NULL,
+    NC_("image-convert-action", "Convert the image to 16 bit unsigned integer"),
+    GIMP_PRECISION_U16, GIMP_HELP_IMAGE_CONVERT_U16 },
+
+  { "image-convert-float", NULL,
+    NC_("image-convert-action", "16 bit floating point"), NULL,
+    NC_("image-convert-action", "Convert the image to 16 bit floating point"),
+    GIMP_PRECISION_FLOAT, GIMP_HELP_IMAGE_CONVERT_FLOAT }
 };
 
 static const GimpEnumActionEntry image_flip_actions[] =
@@ -199,10 +218,16 @@ image_actions_setup (GimpActionGroup *group)
                                  G_N_ELEMENTS (image_actions));
 
   gimp_action_group_add_radio_actions (group, "image-convert-action",
-                                       image_convert_actions,
-                                       G_N_ELEMENTS (image_convert_actions),
+                                       image_convert_base_type_actions,
+                                       G_N_ELEMENTS (image_convert_base_type_actions),
                                        NULL, 0,
-                                       G_CALLBACK (image_convert_cmd_callback));
+                                       G_CALLBACK (image_convert_base_type_cmd_callback));
+
+  gimp_action_group_add_radio_actions (group, "image-convert-action",
+                                       image_convert_precision_actions,
+                                       G_N_ELEMENTS (image_convert_precision_actions),
+                                       NULL, 0,
+                                       G_CALLBACK (image_convert_precision_cmd_callback));
 
   gimp_action_group_add_enum_actions (group, "image-action",
                                       image_flip_actions,
@@ -228,12 +253,13 @@ void
 image_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
-  GimpImage *image    = action_data_get_image (data);
-  gboolean   is_u8    = FALSE;
-  gboolean   aux      = FALSE;
-  gboolean   lp       = FALSE;
-  gboolean   sel      = FALSE;
-  gboolean   groups   = FALSE;
+  GimpImage *image      = action_data_get_image (data);
+  gboolean   is_indexed = FALSE;
+  gboolean   is_u8      = FALSE;
+  gboolean   aux        = FALSE;
+  gboolean   lp         = FALSE;
+  gboolean   sel        = FALSE;
+  gboolean   groups     = FALSE;
 
   if (image)
     {
@@ -242,25 +268,29 @@ image_actions_update (GimpActionGroup *group,
 
       switch (gimp_image_base_type (image))
         {
-        case GIMP_RGB:
-          action = "image-convert-rgb";
-          break;
-
-        case GIMP_GRAY:
-          action = "image-convert-grayscale";
-          break;
-
-        case GIMP_INDEXED:
-          action = "image-convert-indexed";
+        case GIMP_RGB:     action = "image-convert-rgb";       break;
+        case GIMP_GRAY:    action = "image-convert-grayscale"; break;
+        case GIMP_INDEXED: action = "image-convert-indexed";   break;
           break;
         }
 
       gimp_action_group_set_action_active (group, action, TRUE);
 
-      is_u8 = (gimp_image_get_precision (image) == GIMP_PRECISION_U8);
-      aux   = (gimp_image_get_active_channel (image) != NULL);
-      lp    = ! gimp_image_is_empty (image);
-      sel   = ! gimp_channel_is_empty (gimp_image_get_mask (image));
+      switch (gimp_image_get_precision (image))
+        {
+        case GIMP_PRECISION_U8:    action = "image-convert-u8";    break;
+        case GIMP_PRECISION_U16:   action = "image-convert-u16";   break;
+        case GIMP_PRECISION_FLOAT: action = "image-convert-float"; break;
+          break;
+        }
+
+      gimp_action_group_set_action_active (group, action, TRUE);
+
+      is_indexed = (gimp_image_base_type (image) == GIMP_INDEXED);
+      is_u8      = (gimp_image_get_precision (image) == GIMP_PRECISION_U8);
+      aux        = (gimp_image_get_active_channel (image) != NULL);
+      lp         = ! gimp_image_is_empty (image);
+      sel        = ! gimp_channel_is_empty (gimp_image_get_mask (image));
 
       layers = gimp_image_get_layers (image);
 
@@ -273,6 +303,10 @@ image_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("image-convert-rgb",       image);
   SET_SENSITIVE ("image-convert-grayscale", image);
   SET_SENSITIVE ("image-convert-indexed",   image && !groups && is_u8);
+
+  SET_SENSITIVE ("image-convert-u8",    image);
+  SET_SENSITIVE ("image-convert-u16",   image && !is_indexed);
+  SET_SENSITIVE ("image-convert-float", image && !is_indexed);
 
   SET_SENSITIVE ("image-flip-horizontal", image);
   SET_SENSITIVE ("image-flip-vertical",   image);

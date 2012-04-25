@@ -487,6 +487,7 @@ typedef enum /*< pdb-skip >*/
   /*  Undo types which actually do something  */
 
   GIMP_UNDO_IMAGE_TYPE,               /*< desc="Image type"                  >*/
+  GIMP_UNDO_IMAGE_PRECISION,          /*< desc="Image precision"             >*/
   GIMP_UNDO_IMAGE_SIZE,               /*< desc="Image size"                  >*/
   GIMP_UNDO_IMAGE_RESOLUTION,         /*< desc="Image resolution change"     >*/
   GIMP_UNDO_IMAGE_GRID,               /*< desc="Grid"                        >*/

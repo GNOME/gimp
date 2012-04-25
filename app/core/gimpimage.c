@@ -89,6 +89,7 @@
 enum
 {
   MODE_CHANGED,
+  PRECISION_CHANGED,
   ALPHA_CHANGED,
   FLOATING_SELECTION_CHANGED,
   ACTIVE_LAYER_CHANGED,
@@ -161,6 +162,7 @@ static gchar  * gimp_image_get_description       (GimpViewable      *viewable,
                                                   gchar            **tooltip);
 
 static void     gimp_image_real_mode_changed     (GimpImage         *image);
+static void     gimp_image_real_precision_changed(GimpImage         *image);
 static void     gimp_image_real_size_changed_detailed
                                                  (GimpImage         *image,
                                                   gint               previous_origin_x,
@@ -248,6 +250,15 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, mode_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  gimp_image_signals[PRECISION_CHANGED] =
+    g_signal_new ("precision-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, precision_changed),
                   NULL, NULL,
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
@@ -536,6 +547,7 @@ gimp_image_class_init (GimpImageClass *klass)
   viewable_class->get_description     = gimp_image_get_description;
 
   klass->mode_changed                 = gimp_image_real_mode_changed;
+  klass->precision_changed            = gimp_image_real_precision_changed;
   klass->alpha_changed                = NULL;
   klass->floating_selection_changed   = NULL;
   klass->active_layer_changed         = NULL;
@@ -1168,6 +1180,12 @@ gimp_image_get_description (GimpViewable  *viewable,
 
 static void
 gimp_image_real_mode_changed (GimpImage *image)
+{
+  gimp_projectable_structure_changed (GIMP_PROJECTABLE (image));
+}
+
+static void
+gimp_image_real_precision_changed (GimpImage *image)
 {
   gimp_projectable_structure_changed (GIMP_PROJECTABLE (image));
 }
@@ -2276,6 +2294,14 @@ gimp_image_mode_changed (GimpImage *image)
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
   g_signal_emit (image, gimp_image_signals[MODE_CHANGED], 0);
+}
+
+void
+gimp_image_precision_changed (GimpImage *image)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  g_signal_emit (image, gimp_image_signals[PRECISION_CHANGED], 0);
 }
 
 void

@@ -1085,6 +1085,79 @@ gimp_image_convert (GimpImage               *image,
   return TRUE;
 }
 
+void
+gimp_image_convert_precision (GimpImage     *image,
+                              GimpPrecision  precision,
+                              GimpProgress  *progress)
+{
+  GList       *all_drawables;
+  GList       *list;
+  const gchar *undo_desc = NULL;
+  gint         nth_drawable, n_drawables;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (precision != gimp_image_get_precision (image));
+  g_return_if_fail (precision == GIMP_PRECISION_U8 ||
+                    gimp_image_base_type (image) != GIMP_INDEXED);
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+
+  all_drawables = g_list_concat (gimp_image_get_layer_list (image),
+                                 gimp_image_get_channel_list (image));
+
+  n_drawables = g_list_length (all_drawables);
+
+  switch (precision)
+    {
+    case GIMP_PRECISION_U8:
+      undo_desc = C_("undo-type", "Convert Image to 8 bit unsigned integer");
+      break;
+
+    case GIMP_PRECISION_U16:
+      undo_desc = C_("undo-type", "Convert Image to 16 bit unsigned integer");
+      break;
+
+    case GIMP_PRECISION_FLOAT:
+      undo_desc = C_("undo-type", "Convert Image to 32 bit float");
+      break;
+    }
+
+  if (progress)
+    gimp_progress_start (progress, undo_desc, FALSE);
+
+  g_object_freeze_notify (G_OBJECT (image));
+
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CONVERT,
+                               undo_desc);
+
+  /*  Push the image type to the stack  */
+  gimp_image_undo_push_image_precision (image, NULL);
+
+  /*  Set the new precision  */
+  g_object_set (image, "precision", precision, NULL);
+
+  for (list = all_drawables, nth_drawable = 0;
+       list;
+       list = g_list_next (list), nth_drawable++)
+    {
+      GimpDrawable *drawable = list->data;
+
+      gimp_drawable_convert_type (drawable, image,
+                                  gimp_drawable_get_base_type (drawable),
+                                  precision, TRUE);
+
+      if (progress)
+        gimp_progress_set_value (progress,
+                                 (gdouble) nth_drawable / (gdouble) n_drawables);
+    }
+
+  gimp_image_undo_group_end (image);
+
+  gimp_image_precision_changed (image);
+  g_object_thaw_notify (G_OBJECT (image));
+
+  if (progress)
+    gimp_progress_end (progress);
+}
 
 /*
  *  Indexed color conversion machinery

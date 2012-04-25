@@ -23,6 +23,8 @@
 
 GimpUndo * gimp_image_undo_push_image_type          (GimpImage     *image,
                                                      const gchar   *undo_desc);
+GimpUndo * gimp_image_undo_push_image_precision     (GimpImage     *image,
+                                                     const gchar   *undo_desc);
 GimpUndo * gimp_image_undo_push_image_size          (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      gint           previous_origin_x,

@@ -48,6 +48,7 @@ struct _GimpImageClass
 
   /*  signals  */
   void (* mode_changed)                 (GimpImage            *image);
+  void (* precision_changed)            (GimpImage            *image);
   void (* alpha_changed)                (GimpImage            *image);
   void (* floating_selection_changed)   (GimpImage            *image);
   void (* active_layer_changed)         (GimpImage            *image);
@@ -214,6 +215,7 @@ void            gimp_image_get_visible_array     (const GimpImage    *image,
 /*  emitting image signals  */
 
 void            gimp_image_mode_changed          (GimpImage          *image);
+void            gimp_image_precision_changed     (GimpImage          *image);
 void            gimp_image_alpha_changed         (GimpImage          *image);
 void            gimp_image_invalidate            (GimpImage          *image,
                                                   gint                x,

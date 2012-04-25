@@ -22,19 +22,23 @@
 #define MAXNUMCOLORS 256
 
 
-gboolean   gimp_image_convert      (GimpImage               *image,
-                                    GimpImageBaseType        new_type,
-                                    /* The following params used only for
-                                     * new_type == GIMP_INDEXED
-                                     */
-                                    gint                     num_cols,
-                                    GimpConvertDitherType    dither,
-                                    gboolean                 alpha_dither,
-                                    gboolean                 remove_dups,
-                                    GimpConvertPaletteType   palette_type,
-                                    GimpPalette             *custom_palette,
-                                    GimpProgress            *progress,
-                                    GError                 **error);
+gboolean   gimp_image_convert           (GimpImage               *image,
+                                         GimpImageBaseType        new_type,
+                                         /* The following params used only for
+                                          * new_type == GIMP_INDEXED
+                                          */
+                                         gint                     num_cols,
+                                         GimpConvertDitherType    dither,
+                                         gboolean                 alpha_dither,
+                                         gboolean                 remove_dups,
+                                         GimpConvertPaletteType   palette_type,
+                                         GimpPalette             *custom_palette,
+                                         GimpProgress            *progress,
+                                         GError                 **error);
+
+void       gimp_image_convert_precision (GimpImage               *image,
+                                         GimpPrecision            precision,
+                                         GimpProgress            *progress);
 
 void  gimp_image_convert_set_dither_matrix (const guchar *matrix,
                                             gint          width,

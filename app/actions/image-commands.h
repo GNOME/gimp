@@ -22,7 +22,10 @@
 void   image_new_cmd_callback                 (GtkAction *action,
                                                gpointer   data);
 
-void   image_convert_cmd_callback             (GtkAction *action,
+void   image_convert_base_type_cmd_callback   (GtkAction *action,
+                                               GtkAction *current,
+                                               gpointer   data);
+void   image_convert_precision_cmd_callback   (GtkAction *action,
                                                GtkAction *current,
                                                gpointer   data);
 

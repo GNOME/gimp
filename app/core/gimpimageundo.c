@@ -160,6 +160,10 @@ gimp_image_undo_constructed (GObject *object)
       image_undo->base_type = gimp_image_base_type (image);
       break;
 
+    case GIMP_UNDO_IMAGE_PRECISION:
+      image_undo->precision = gimp_image_get_precision (image);
+      break;
+
     case GIMP_UNDO_IMAGE_SIZE:
       image_undo->width  = gimp_image_get_width  (image);
       image_undo->height = gimp_image_get_height (image);
@@ -314,6 +318,19 @@ gimp_image_undo_pop (GimpUndo            *undo,
 
         if (image_undo->base_type != gimp_image_base_type (image))
           accum->mode_changed = TRUE;
+      }
+      break;
+
+    case GIMP_UNDO_IMAGE_PRECISION:
+      {
+        GimpPrecision precision;
+
+        precision = image_undo->precision;
+        image_undo->precision = gimp_image_get_precision (image);
+        g_object_set (image, "precision", precision, NULL);
+
+        if (image_undo->precision != gimp_image_get_precision (image))
+          accum->precision_changed = TRUE;
       }
       break;
 
