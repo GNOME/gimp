@@ -444,6 +444,7 @@ EXPORTS
 	gimp_image_merge_down
 	gimp_image_merge_visible_layers
 	gimp_image_new
+	gimp_image_new_with_precision
 	gimp_image_parasite_attach
 	gimp_image_parasite_detach
 	gimp_image_parasite_find

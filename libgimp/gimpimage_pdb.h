@@ -37,6 +37,10 @@ gint*                    gimp_image_list                     (gint              
 gint32                   gimp_image_new                      (gint                    width,
                                                               gint                    height,
                                                               GimpImageBaseType       type);
+gint32                   gimp_image_new_with_precision       (gint                    width,
+                                                              gint                    height,
+                                                              GimpImageBaseType       type,
+                                                              GimpPrecision           precision);
 gint32                   gimp_image_duplicate                (gint32                  image_ID);
 gboolean                 gimp_image_delete                   (gint32                  image_ID);
 GimpImageBaseType        gimp_image_base_type                (gint32                  image_ID);

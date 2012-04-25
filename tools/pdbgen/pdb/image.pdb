@@ -123,6 +123,53 @@ CODE
     );
 }
 
+sub image_new_with_precision {
+    $blurb = 'Creates a new image with the specified width, height, type and precision.';
+
+    $help = <<'HELP';
+Creates a new image, undisplayed with the specified extents, type
+and precision. Indexed images can only be created at GIMP_PRECISION_U8
+precision. See gimp_image_new() for further details.
+HELP
+
+    &mitch_pdb_misc('2012', '2.10');
+
+    @inargs = (
+        { name => 'width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+          desc => 'The width of the image' },
+        { name => 'height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+          desc => 'The height of the image' },
+        { name => 'type', type => 'enum GimpImageBaseType',
+          desc => 'The type of image' },
+        { name => 'precision', type => 'enum GimpPrecision',
+          desc => 'The precision' }
+    );
+
+    @outargs = (
+        { name => 'image', type => 'image',
+          desc => 'The ID of the newly created image' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp->plug_in_manager->current_plug_in)
+    gimp_plug_in_enable_precision (gimp->plug_in_manager->current_plug_in);
+
+  if (type != GIMP_INDEXED || precision == GIMP_PRECISION_U8)
+    {
+      image = gimp_create_image (gimp, width, height, type,
+                                 precision, FALSE);
+      if (! image)
+        success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub image_duplicate {
     $blurb = 'Duplicate the specified image';
 
@@ -2897,6 +2944,8 @@ CODE
               "core/gimpprogress.h"
               "core/gimptempbuf.h"
               "core/gimpunit.h"
+              "plug-in/gimpplugin.h"
+              "plug-in/gimppluginmanager.h"
               "gimppdbcontext.h"
               "gimppdberror.h"
               "gimppdb-utils.h"
@@ -2904,7 +2953,8 @@ CODE
 
 @procs = qw(image_is_valid
             image_list
-            image_new image_duplicate image_delete
+            image_new image_new_with_precision
+            image_duplicate image_delete
             image_base_type
             image_width image_height
             image_free_shadow
@@ -2961,7 +3011,7 @@ CODE
 # image_add_layer_mask and image_remove_layer_mask.
 # If adding or removing functions, make sure the range below is
 # updated correctly!
-%exports = (app => [@procs], lib => [@procs[0..42,45..83]]);
+%exports = (app => [@procs], lib => [@procs[0..43,46..84]]);
 
 $desc = 'Image';
 $doc_title = 'gimpimage';

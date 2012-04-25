@@ -23,11 +23,14 @@
 
 #include "pdb-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpimage-convert.h"
 #include "core/gimpimage.h"
 #include "core/gimpitemstack.h"
 #include "core/gimppalette.h"
 #include "core/gimpparamspecs.h"
+#include "plug-in/gimpplugin.h"
+#include "plug-in/gimppluginmanager.h"
 
 #include "gimppdb.h"
 #include "gimppdberror.h"
@@ -233,6 +236,9 @@ image_convert_precision_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
+      if (gimp->plug_in_manager->current_plug_in)
+        gimp_plug_in_enable_precision (gimp->plug_in_manager->current_plug_in);
+
       if (gimp_pdb_image_is_not_base_type (image, GIMP_INDEXED, error) &&
           gimp_pdb_image_is_not_precision (image, precision, error))
         {

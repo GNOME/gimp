@@ -53,6 +53,8 @@
 #include "core/gimpselection.h"
 #include "core/gimptempbuf.h"
 #include "core/gimpunit.h"
+#include "plug-in/gimpplugin.h"
+#include "plug-in/gimppluginmanager.h"
 #include "vectors/gimpvectors.h"
 
 #include "gimppdb.h"
@@ -156,6 +158,52 @@ image_new_invoker (GimpProcedure      *procedure,
                                  GIMP_PRECISION_U8, FALSE);
 
       if (! image)
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    gimp_value_set_image (&return_vals->values[1], image);
+
+  return return_vals;
+}
+
+static GValueArray *
+image_new_with_precision_invoker (GimpProcedure      *procedure,
+                                  Gimp               *gimp,
+                                  GimpContext        *context,
+                                  GimpProgress       *progress,
+                                  const GValueArray  *args,
+                                  GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  gint32 width;
+  gint32 height;
+  gint32 type;
+  gint32 precision;
+  GimpImage *image = NULL;
+
+  width = g_value_get_int (&args->values[0]);
+  height = g_value_get_int (&args->values[1]);
+  type = g_value_get_enum (&args->values[2]);
+  precision = g_value_get_enum (&args->values[3]);
+
+  if (success)
+    {
+      if (gimp->plug_in_manager->current_plug_in)
+        gimp_plug_in_enable_precision (gimp->plug_in_manager->current_plug_in);
+
+      if (type != GIMP_INDEXED || precision == GIMP_PRECISION_U8)
+        {
+          image = gimp_create_image (gimp, width, height, type,
+                                     precision, FALSE);
+          if (! image)
+            success = FALSE;
+        }
+      else
         success = FALSE;
     }
 
@@ -2873,6 +2921,55 @@ register_image_procs (GimpPDB *pdb)
                                                   "The type of image",
                                                   GIMP_TYPE_IMAGE_BASE_TYPE,
                                                   GIMP_RGB,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_image_id ("image",
+                                                             "image",
+                                                             "The ID of the newly created image",
+                                                             pdb->gimp, FALSE,
+                                                             GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-new-with-precision
+   */
+  procedure = gimp_procedure_new (image_new_with_precision_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-new-with-precision");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-new-with-precision",
+                                     "Creates a new image with the specified width, height, type and precision.",
+                                     "Creates a new image, undisplayed with the specified extents, type and precision. Indexed images can only be created at GIMP_PRECISION_U8 precision. See 'gimp-image-new' for further details.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("width",
+                                                      "width",
+                                                      "The width of the image",
+                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("height",
+                                                      "height",
+                                                      "The height of the image",
+                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("type",
+                                                  "type",
+                                                  "The type of image",
+                                                  GIMP_TYPE_IMAGE_BASE_TYPE,
+                                                  GIMP_RGB,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("precision",
+                                                  "precision",
+                                                  "The precision",
+                                                  GIMP_TYPE_PRECISION,
+                                                  GIMP_PRECISION_U8,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_image_id ("image",

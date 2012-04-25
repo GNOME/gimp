@@ -744,8 +744,6 @@ gimp_drawable_get_format (gint32 drawable_ID)
 
   if (format_str)
     {
-      gimp_plugin_enable_precision ();
-
       if (gimp_drawable_is_indexed (drawable_ID))
         {
           gint32      image_ID = gimp_item_get_image (drawable_ID);

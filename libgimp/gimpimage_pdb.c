@@ -152,6 +152,51 @@ gimp_image_new (gint              width,
 }
 
 /**
+ * gimp_image_new_with_precision:
+ * @width: The width of the image.
+ * @height: The height of the image.
+ * @type: The type of image.
+ * @precision: The precision.
+ *
+ * Creates a new image with the specified width, height, type and
+ * precision.
+ *
+ * Creates a new image, undisplayed with the specified extents, type
+ * and precision. Indexed images can only be created at
+ * GIMP_PRECISION_U8 precision. See gimp_image_new() for further
+ * details.
+ *
+ * Returns: The ID of the newly created image.
+ *
+ * Since: GIMP 2.10
+ **/
+gint32
+gimp_image_new_with_precision (gint              width,
+                               gint              height,
+                               GimpImageBaseType type,
+                               GimpPrecision     precision)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 image_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp-image-new-with-precision",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, width,
+                                    GIMP_PDB_INT32, height,
+                                    GIMP_PDB_INT32, type,
+                                    GIMP_PDB_INT32, precision,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    image_ID = return_vals[1].data.d_image;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return image_ID;
+}
+
+/**
  * gimp_image_duplicate:
  * @image_ID: The image.
  *
