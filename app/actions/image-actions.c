@@ -228,11 +228,12 @@ void
 image_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
-  GimpImage *image  = action_data_get_image (data);
-  gboolean   aux    = FALSE;
-  gboolean   lp     = FALSE;
-  gboolean   sel    = FALSE;
-  gboolean   groups = FALSE;
+  GimpImage *image    = action_data_get_image (data);
+  gboolean   is_u8    = FALSE;
+  gboolean   aux      = FALSE;
+  gboolean   lp       = FALSE;
+  gboolean   sel      = FALSE;
+  gboolean   groups   = FALSE;
 
   if (image)
     {
@@ -256,9 +257,10 @@ image_actions_update (GimpActionGroup *group,
 
       gimp_action_group_set_action_active (group, action, TRUE);
 
-      aux = (gimp_image_get_active_channel (image) != NULL);
-      lp  = ! gimp_image_is_empty (image);
-      sel = ! gimp_channel_is_empty (gimp_image_get_mask (image));
+      is_u8 = (gimp_image_get_precision (image) == GIMP_PRECISION_U8);
+      aux   = (gimp_image_get_active_channel (image) != NULL);
+      lp    = ! gimp_image_is_empty (image);
+      sel   = ! gimp_channel_is_empty (gimp_image_get_mask (image));
 
       layers = gimp_image_get_layers (image);
 
@@ -270,7 +272,7 @@ image_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("image-convert-rgb",       image);
   SET_SENSITIVE ("image-convert-grayscale", image);
-  SET_SENSITIVE ("image-convert-indexed",   image && !groups);
+  SET_SENSITIVE ("image-convert-indexed",   image && !groups && is_u8);
 
   SET_SENSITIVE ("image-flip-horizontal", image);
   SET_SENSITIVE ("image-flip-vertical",   image);
