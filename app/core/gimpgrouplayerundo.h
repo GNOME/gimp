@@ -37,6 +37,7 @@ struct _GimpGroupLayerUndo
   GimpItemUndo       parent_instance;
 
   GimpImageBaseType  prev_type;
+  GimpPrecision      prev_precision;
 };
 
 struct _GimpGroupLayerUndoClass

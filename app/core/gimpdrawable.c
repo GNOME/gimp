@@ -134,6 +134,7 @@ static gint64  gimp_drawable_real_estimate_memsize (const GimpDrawable *drawable
 static void       gimp_drawable_real_convert_type  (GimpDrawable      *drawable,
                                                     GimpImage         *dest_image,
                                                     GimpImageBaseType  new_base_type,
+                                                    GimpPrecision      new_precision,
                                                     gboolean           push_undo);
 
 static GeglBuffer * gimp_drawable_real_get_buffer  (GimpDrawable      *drawable);
@@ -693,13 +694,15 @@ static void
 gimp_drawable_real_convert_type (GimpDrawable      *drawable,
                                  GimpImage         *dest_image,
                                  GimpImageBaseType  new_base_type,
+                                 GimpPrecision      new_precision,
                                  gboolean           push_undo)
 {
   GeglBuffer *dest_buffer;
   const Babl *format;
 
-  format = gimp_image_get_format (dest_image, new_base_type,
-                                  gimp_drawable_has_alpha (drawable));
+  format = gimp_babl_format (new_base_type,
+                             new_precision,
+                             gimp_drawable_has_alpha (drawable));
 
   dest_buffer =
     gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
@@ -1155,20 +1158,21 @@ void
 gimp_drawable_convert_type (GimpDrawable      *drawable,
                             GimpImage         *dest_image,
                             GimpImageBaseType  new_base_type,
+                            GimpPrecision      new_precision,
                             gboolean           push_undo)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_IMAGE (dest_image));
-  g_return_if_fail (new_base_type !=
-                    gimp_drawable_get_base_type (drawable) ||
-                    gimp_image_get_precision (dest_image) !=
-                    gimp_drawable_get_precision (drawable));
+  g_return_if_fail (new_base_type != gimp_drawable_get_base_type (drawable) ||
+                    new_precision != gimp_drawable_get_precision (drawable));
 
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
     push_undo = FALSE;
 
   GIMP_DRAWABLE_GET_CLASS (drawable)->convert_type (drawable, dest_image,
-                                                    new_base_type, push_undo);
+                                                    new_base_type,
+                                                    new_precision,
+                                                    push_undo);
 }
 
 void

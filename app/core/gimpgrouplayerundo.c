@@ -75,6 +75,7 @@ gimp_group_layer_undo_constructed (GObject *object)
 
     case GIMP_UNDO_GROUP_LAYER_CONVERT:
       group_layer_undo->prev_type = gimp_drawable_get_base_type (GIMP_DRAWABLE (group));
+      group_layer_undo->prev_precision = gimp_drawable_get_precision (GIMP_DRAWABLE (group));
       break;
 
     default:
@@ -118,12 +119,19 @@ gimp_group_layer_undo_pop (GimpUndo            *undo,
     case GIMP_UNDO_GROUP_LAYER_CONVERT:
       {
         GimpImageBaseType type;
+        GimpPrecision     precision;
 
-        type = gimp_drawable_get_base_type (GIMP_DRAWABLE (group));
+        type      = gimp_drawable_get_base_type (GIMP_DRAWABLE (group));
+        precision = gimp_drawable_get_precision (GIMP_DRAWABLE (group));
+
         gimp_drawable_convert_type (GIMP_DRAWABLE (group),
                                     gimp_item_get_image (GIMP_ITEM (group)),
-                                    group_layer_undo->prev_type, FALSE);
-        group_layer_undo->prev_type = type;
+                                    group_layer_undo->prev_type,
+                                    group_layer_undo->prev_precision,
+                                    FALSE);
+
+        group_layer_undo->prev_type      = type;
+        group_layer_undo->prev_precision = precision;
       }
       break;
 

@@ -62,6 +62,7 @@ struct _GimpDrawableClass
   void          (* convert_type)          (GimpDrawable         *drawable,
                                            GimpImage            *dest_image,
                                            GimpImageBaseType     new_base_type,
+                                           GimpPrecision         new_precision,
                                            gboolean              push_undo);
   void          (* apply_buffer)          (GimpDrawable         *drawable,
                                            GeglBuffer           *buffer,
@@ -143,6 +144,7 @@ void         gimp_drawable_get_active_components (const GimpDrawable *drawable,
 void            gimp_drawable_convert_type       (GimpDrawable       *drawable,
                                                   GimpImage          *dest_image,
                                                   GimpImageBaseType   new_base_type,
+                                                  GimpPrecision       new_precision,
                                                   gboolean            push_undo);
 
 void            gimp_drawable_apply_buffer       (GimpDrawable        *drawable,

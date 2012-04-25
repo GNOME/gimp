@@ -620,7 +620,11 @@ gimp_layer_convert (GimpItem  *item,
 
   if (old_base_type != new_base_type ||
       old_precision != new_precision)
-    gimp_drawable_convert_type (drawable, dest_image, new_base_type, FALSE);
+    {
+      gimp_drawable_convert_type (drawable, dest_image,
+                                  new_base_type, new_precision,
+                                  FALSE);
+    }
 
   if (layer->mask)
     gimp_item_set_image (GIMP_ITEM (layer->mask), dest_image);

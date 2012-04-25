@@ -971,6 +971,7 @@ gimp_image_convert (GimpImage               *image,
         case GIMP_RGB:
         case GIMP_GRAY:
           gimp_drawable_convert_type (GIMP_DRAWABLE (layer), image, new_type,
+                                      gimp_drawable_get_precision (GIMP_DRAWABLE (layer)),
                                       TRUE);
           break;
 

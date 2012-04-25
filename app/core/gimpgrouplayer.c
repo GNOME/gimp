@@ -136,6 +136,7 @@ static gint64      gimp_group_layer_estimate_memsize (const GimpDrawable *drawab
 static void            gimp_group_layer_convert_type (GimpDrawable      *drawable,
                                                       GimpImage         *dest_image,
                                                       GimpImageBaseType  new_base_type,
+                                                      GimpPrecision      new_precision,
                                                       gboolean           push_undo);
 
 static const Babl    * gimp_group_layer_get_format   (GimpProjectable *projectable);
@@ -847,6 +848,7 @@ static void
 gimp_group_layer_convert_type (GimpDrawable      *drawable,
                                GimpImage         *dest_image,
                                GimpImageBaseType  new_base_type,
+                               GimpPrecision      new_precision,
                                gboolean           push_undo)
 {
   GimpGroupLayer        *group   = GIMP_GROUP_LAYER (drawable);
