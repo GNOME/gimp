@@ -606,12 +606,22 @@ drawable_get_pixel_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
+      const Babl *format = gimp_drawable_get_format (drawable);
+
+      if (! gimp->plug_in_manager->current_plug_in ||
+          ! gimp_plug_in_precision_enabled (gimp->plug_in_manager->current_plug_in))
+        {
+          if (! gimp_drawable_is_indexed (drawable) /* XXX fixme */)
+            format = gimp_babl_format (gimp_babl_format_get_base_type (format),
+                                       GIMP_PRECISION_U8,
+                                       babl_format_has_alpha (format));
+        }
+
       if (x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
           y_coord < gimp_item_get_height (GIMP_ITEM (drawable)))
         {
           gegl_buffer_sample (gimp_drawable_get_buffer (drawable),
-                              x_coord, y_coord, NULL, pixel,
-                              gimp_drawable_get_format (drawable),
+                              x_coord, y_coord, NULL, pixel, format,
                               GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
         }
       else
@@ -653,16 +663,26 @@ drawable_set_pixel_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
+      const Babl *format = gimp_drawable_get_format (drawable);
+
+      if (! gimp->plug_in_manager->current_plug_in ||
+          ! gimp_plug_in_precision_enabled (gimp->plug_in_manager->current_plug_in))
+        {
+          if (! gimp_drawable_is_indexed (drawable) /* XXX fixme */)
+            format = gimp_babl_format (gimp_babl_format_get_base_type (format),
+                                       GIMP_PRECISION_U8,
+                                       babl_format_has_alpha (format));
+        }
+
       if (gimp_pdb_item_is_writable (GIMP_ITEM (drawable), error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
           x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
           y_coord < gimp_item_get_height (GIMP_ITEM (drawable)) &&
-          num_channels == gimp_drawable_bytes (drawable))
+          num_channels == babl_format_get_bytes_per_pixel (format))
         {
           gegl_buffer_set (gimp_drawable_get_buffer (drawable),
                            GEGL_RECTANGLE (x_coord, y_coord, 1, 1),
-                           1.0, gimp_drawable_get_format (drawable),
-                           pixel, GEGL_AUTO_ROWSTRIDE);
+                           1.0, format, pixel, GEGL_AUTO_ROWSTRIDE);
         }
       else
         success = FALSE;
