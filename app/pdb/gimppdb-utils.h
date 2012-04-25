@@ -88,6 +88,10 @@ gboolean        gimp_pdb_image_is_not_base_type (GimpImage          *image,
                                                  GimpImageBaseType   type,
                                                  GError            **error);
 
+gboolean        gimp_pdb_image_has_precision    (GimpImage          *image,
+                                                 GimpPrecision       precision,
+                                                 GError            **error);
+
 GimpStroke    * gimp_pdb_get_vectors_stroke     (GimpVectors        *vectors,
                                                  gint                stroke_ID,
                                                  gboolean            writable,

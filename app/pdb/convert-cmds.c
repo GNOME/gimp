@@ -129,7 +129,8 @@ image_convert_indexed_invoker (GimpProcedure      *procedure,
     {
       GimpPalette *pal = NULL;
 
-      if (gimp_pdb_image_is_not_base_type (image, GIMP_INDEXED, error) &&
+      if (gimp_pdb_image_is_not_base_type (image, GIMP_INDEXED, error)   &&
+          gimp_pdb_image_has_precision (image, GIMP_PRECISION_U8, error) &&
           gimp_item_stack_is_flat (GIMP_ITEM_STACK (gimp_image_get_layers (image))))
         {
           switch (palette_type)
