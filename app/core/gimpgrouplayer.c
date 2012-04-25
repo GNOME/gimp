@@ -853,6 +853,7 @@ gimp_group_layer_convert_type (GimpDrawable      *drawable,
 {
   GimpGroupLayer        *group   = GIMP_GROUP_LAYER (drawable);
   GimpGroupLayerPrivate *private = GET_PRIVATE (drawable);
+  GimpLayerMask         *mask;
   GeglBuffer            *buffer;
 
   if (push_undo)
@@ -880,6 +881,16 @@ gimp_group_layer_convert_type (GimpDrawable      *drawable,
 
   /*  reset, the actual format is right now  */
   private->convert_format = NULL;
+
+  mask = gimp_layer_get_mask (GIMP_LAYER (group));
+
+  if (mask &&
+      new_precision != gimp_drawable_get_precision (GIMP_DRAWABLE (mask)))
+    {
+      gimp_drawable_convert_type (GIMP_DRAWABLE (mask), dest_image,
+                                  GIMP_GRAY, new_precision, push_undo);
+    }
+
 }
 
 static const Babl *

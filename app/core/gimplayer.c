@@ -155,6 +155,11 @@ static GeglNode * gimp_layer_get_node           (GimpItem           *item);
 static gint64  gimp_layer_estimate_memsize      (const GimpDrawable *drawable,
                                                  gint                width,
                                                  gint                height);
+static void    gimp_layer_convert_type          (GimpDrawable       *drawable,
+                                                 GimpImage          *dest_image,
+                                                 GimpImageBaseType   new_base_type,
+                                                 GimpPrecision       new_precision,
+                                                 gboolean            push_undo);
 static void    gimp_layer_invalidate_boundary   (GimpDrawable       *drawable);
 static void    gimp_layer_get_active_components (const GimpDrawable *drawable,
                                                  gboolean           *active);
@@ -297,6 +302,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   item_class->lower_failed            = _("Layer cannot be lowered more.");
 
   drawable_class->estimate_memsize      = gimp_layer_estimate_memsize;
+  drawable_class->convert_type          = gimp_layer_convert_type;
   drawable_class->invalidate_boundary   = gimp_layer_invalidate_boundary;
   drawable_class->get_active_components = gimp_layer_get_active_components;
   drawable_class->project_region        = gimp_layer_project_region;
@@ -927,6 +933,28 @@ gimp_layer_estimate_memsize (const GimpDrawable *drawable,
   return memsize + GIMP_DRAWABLE_CLASS (parent_class)->estimate_memsize (drawable,
                                                                          width,
                                                                          height);
+}
+
+static void
+gimp_layer_convert_type (GimpDrawable      *drawable,
+                         GimpImage         *dest_image,
+                         GimpImageBaseType  new_base_type,
+                         GimpPrecision      new_precision,
+                         gboolean           push_undo)
+{
+  GimpLayer *layer = GIMP_LAYER (drawable);
+
+  if (layer->mask &&
+      new_precision != gimp_drawable_get_precision (GIMP_DRAWABLE (layer->mask)))
+    {
+      gimp_drawable_convert_type (GIMP_DRAWABLE (layer->mask), dest_image,
+                                  GIMP_GRAY, new_precision, push_undo);
+    }
+
+  GIMP_DRAWABLE_CLASS (parent_class)->convert_type (drawable, dest_image,
+                                                    new_base_type,
+                                                    new_precision,
+                                                    push_undo);
 }
 
 static void
