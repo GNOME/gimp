@@ -719,6 +719,7 @@ gimp_precision_get_type (void)
   static const GEnumValue values[] =
   {
     { GIMP_PRECISION_U8, "GIMP_PRECISION_U8", "u8" },
+    { GIMP_PRECISION_U16, "GIMP_PRECISION_U16", "u16" },
     { GIMP_PRECISION_FLOAT, "GIMP_PRECISION_FLOAT", "float" },
     { 0, NULL, NULL }
   };
@@ -726,6 +727,7 @@ gimp_precision_get_type (void)
   static const GimpEnumDesc descs[] =
   {
     { GIMP_PRECISION_U8, NC_("precision", "8-bit unsigned integer"), NULL },
+    { GIMP_PRECISION_U16, NC_("precision", "16-bit unsigned integer"), NULL },
     { GIMP_PRECISION_FLOAT, NC_("precision", "32-bit floating point"), NULL },
     { 0, NULL, NULL }
   };
