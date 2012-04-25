@@ -9,6 +9,41 @@
 
 /* enumerations from "./core-enums.h" */
 GType
+gimp_component_mask_get_type (void)
+{
+  static const GFlagsValue values[] =
+  {
+    { GIMP_COMPONENT_RED, "GIMP_COMPONENT_RED", "red" },
+    { GIMP_COMPONENT_GREEN, "GIMP_COMPONENT_GREEN", "green" },
+    { GIMP_COMPONENT_BLUE, "GIMP_COMPONENT_BLUE", "blue" },
+    { GIMP_COMPONENT_ALPHA, "GIMP_COMPONENT_ALPHA", "alpha" },
+    { GIMP_COMPONENT_ALL, "GIMP_COMPONENT_ALL", "all" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpFlagsDesc descs[] =
+  {
+    { GIMP_COMPONENT_RED, "GIMP_COMPONENT_RED", NULL },
+    { GIMP_COMPONENT_GREEN, "GIMP_COMPONENT_GREEN", NULL },
+    { GIMP_COMPONENT_BLUE, "GIMP_COMPONENT_BLUE", NULL },
+    { GIMP_COMPONENT_ALPHA, "GIMP_COMPONENT_ALPHA", NULL },
+    { GIMP_COMPONENT_ALL, "GIMP_COMPONENT_ALL", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_flags_register_static ("GimpComponentMask", values);
+      gimp_type_set_translation_context (type, "component-mask");
+      gimp_flags_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_container_policy_get_type (void)
 {
   static const GEnumValue values[] =

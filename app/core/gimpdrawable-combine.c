@@ -125,13 +125,16 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
 
   if (gimp_use_gegl (image->gimp) && ! dest_buffer)
     {
-      GeglBuffer *mask_buffer = NULL;
-      GeglNode   *apply;
+      GeglBuffer        *mask_buffer = NULL;
+      GeglNode          *apply;
+      GimpComponentMask  affect;
 
       if (mask)
         mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
       dest_buffer = gimp_drawable_get_buffer (drawable);
+
+      affect = gimp_drawable_get_active_mask (drawable);
 
       apply = gimp_gegl_create_apply_buffer_node (buffer,
                                                   base_x - buffer_region->x,
@@ -144,7 +147,8 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
                                                   -offset_x,
                                                   -offset_y,
                                                   opacity,
-                                                  mode);
+                                                  mode,
+                                                  affect);
 
       gimp_apply_operation (base_buffer, NULL, NULL,
                             apply,

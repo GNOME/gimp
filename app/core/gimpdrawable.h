@@ -59,6 +59,7 @@ struct _GimpDrawableClass
   void          (* invalidate_boundary)   (GimpDrawable         *drawable);
   void          (* get_active_components) (const GimpDrawable   *drawable,
                                            gboolean             *active);
+  GimpComponentMask (* get_active_mask)   (const GimpDrawable   *drawable);
   void          (* convert_type)          (GimpDrawable         *drawable,
                                            GimpImage            *dest_image,
                                            GimpImageBaseType     new_base_type,
@@ -140,6 +141,7 @@ void            gimp_drawable_alpha_changed      (GimpDrawable       *drawable);
 void           gimp_drawable_invalidate_boundary (GimpDrawable       *drawable);
 void         gimp_drawable_get_active_components (const GimpDrawable *drawable,
                                                   gboolean           *active);
+GimpComponentMask gimp_drawable_get_active_mask  (const GimpDrawable *drawable);
 
 void            gimp_drawable_convert_type       (GimpDrawable       *drawable,
                                                   GimpImage          *dest_image,

@@ -36,6 +36,24 @@
  */
 
 
+#define GIMP_TYPE_COMPONENT_MASK (gimp_component_mask_get_type ())
+
+GType gimp_component_mask_get_type (void) G_GNUC_CONST;
+
+typedef enum /*< pdb-skip >*/
+{
+  GIMP_COMPONENT_RED   = 1 << 0,
+  GIMP_COMPONENT_GREEN = 1 << 1,
+  GIMP_COMPONENT_BLUE  = 1 << 2,
+  GIMP_COMPONENT_ALPHA = 1 << 3,
+
+  GIMP_COMPONENT_ALL = (GIMP_COMPONENT_RED   |
+                        GIMP_COMPONENT_GREEN |
+                        GIMP_COMPONENT_BLUE  |
+                        GIMP_COMPONENT_ALPHA)
+} GimpComponentMask;
+
+
 #define GIMP_TYPE_CONTAINER_POLICY (gimp_container_policy_get_type ())
 
 GType gimp_container_policy_get_type (void) G_GNUC_CONST;

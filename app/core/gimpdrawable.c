@@ -234,6 +234,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   klass->estimate_memsize            = gimp_drawable_real_estimate_memsize;
   klass->invalidate_boundary         = NULL;
   klass->get_active_components       = NULL;
+  klass->get_active_mask             = NULL;
   klass->convert_type                = gimp_drawable_real_convert_type;
   klass->apply_buffer                = gimp_drawable_real_apply_buffer;
   klass->replace_buffer              = gimp_drawable_real_replace_buffer;
@@ -1154,6 +1155,21 @@ gimp_drawable_get_active_components (const GimpDrawable *drawable,
 
   if (drawable_class->get_active_components)
     drawable_class->get_active_components (drawable, active);
+}
+
+GimpComponentMask
+gimp_drawable_get_active_mask (const GimpDrawable *drawable)
+{
+  GimpDrawableClass *drawable_class;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), 0);
+
+  drawable_class = GIMP_DRAWABLE_GET_CLASS (drawable);
+
+  if (drawable_class->get_active_mask)
+    return drawable_class->get_active_mask (drawable);
+
+  return 0;
 }
 
 void

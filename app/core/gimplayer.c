@@ -163,6 +163,8 @@ static void    gimp_layer_convert_type          (GimpDrawable       *drawable,
 static void    gimp_layer_invalidate_boundary   (GimpDrawable       *drawable);
 static void    gimp_layer_get_active_components (const GimpDrawable *drawable,
                                                  gboolean           *active);
+static GimpComponentMask
+               gimp_layer_get_active_mask       (const GimpDrawable *drawable);
 
 static gdouble gimp_layer_get_opacity_at        (GimpPickable       *pickable,
                                                  gint                x,
@@ -305,6 +307,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   drawable_class->convert_type          = gimp_layer_convert_type;
   drawable_class->invalidate_boundary   = gimp_layer_invalidate_boundary;
   drawable_class->get_active_components = gimp_layer_get_active_components;
+  drawable_class->get_active_mask       = gimp_layer_get_active_mask;
   drawable_class->project_region        = gimp_layer_project_region;
 
   klass->opacity_changed              = NULL;
@@ -997,6 +1000,19 @@ gimp_layer_get_active_components (const GimpDrawable *drawable,
 
   if (gimp_drawable_has_alpha (drawable) && layer->lock_alpha)
     active[babl_format_get_n_components (format) - 1] = FALSE;
+}
+
+static GimpComponentMask
+gimp_layer_get_active_mask (const GimpDrawable *drawable)
+{
+  GimpLayer         *layer = GIMP_LAYER (drawable);
+  GimpImage         *image = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpComponentMask  mask  = gimp_image_get_active_mask (image);
+
+  if (gimp_drawable_has_alpha (drawable) && layer->lock_alpha)
+    mask &= ~GIMP_COMPONENT_ALPHA;
+
+  return mask;
 }
 
 static gdouble

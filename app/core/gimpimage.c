@@ -2224,6 +2224,37 @@ gimp_image_get_active_array (const GimpImage *image,
     components[i] = private->active[i];
 }
 
+GimpComponentMask
+gimp_image_get_active_mask (const GimpImage *image)
+{
+  GimpImagePrivate  *private;
+  GimpComponentMask  mask = 0;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  switch (gimp_image_base_type (image))
+    {
+    case GIMP_RGB:
+      mask |= (private->active[RED])   ? GIMP_COMPONENT_RED   : 0;
+      mask |= (private->active[GREEN]) ? GIMP_COMPONENT_GREEN : 0;
+      mask |= (private->active[BLUE])  ? GIMP_COMPONENT_BLUE  : 0;
+      mask |= (private->active[ALPHA]) ? GIMP_COMPONENT_ALPHA : 0;
+      break;
+
+    case GIMP_GRAY:
+    case GIMP_INDEXED:
+      mask |= (private->active[GRAY])  ? GIMP_COMPONENT_RED   : 0;
+      mask |= (private->active[GRAY])  ? GIMP_COMPONENT_GREEN : 0;
+      mask |= (private->active[GRAY])  ? GIMP_COMPONENT_BLUE  : 0;
+      mask |= (private->active[ALPHA]) ? GIMP_COMPONENT_ALPHA : 0;
+      break;
+    }
+
+  return mask;
+}
+
 void
 gimp_image_set_component_visible (GimpImage       *image,
                                   GimpChannelType  channel,

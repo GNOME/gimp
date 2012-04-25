@@ -70,6 +70,8 @@ libappgegl_a_sources = \
 	gimpoperationgrow.h			\
 	gimpoperationhistogramsink.c		\
 	gimpoperationhistogramsink.h		\
+	gimpoperationmaskcomponents.c		\
+	gimpoperationmaskcomponents.h		\
 	gimpoperationsetalpha.c			\
 	gimpoperationsetalpha.h			\
 	gimpoperationshapeburst.c		\

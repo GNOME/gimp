@@ -202,6 +202,7 @@ gboolean        gimp_image_get_component_active  (const GimpImage    *image,
                                                   GimpChannelType     type);
 void            gimp_image_get_active_array      (const GimpImage    *image,
                                                   gboolean           *components);
+GimpComponentMask gimp_image_get_active_mask     (const GimpImage    *image);
 
 void            gimp_image_set_component_visible (GimpImage          *image,
                                                   GimpChannelType     type,

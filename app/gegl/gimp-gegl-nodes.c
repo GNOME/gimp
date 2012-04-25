@@ -116,7 +116,8 @@ gimp_gegl_create_apply_buffer_node (GeglBuffer           *buffer,
                                     gint                  mask_offset_x,
                                     gint                  mask_offset_y,
                                     gdouble               opacity,
-                                    GimpLayerModeEffects  mode)
+                                    GimpLayerModeEffects  mode,
+                                    GimpComponentMask     affect)
 
 {
   GeglNode *node;
@@ -130,10 +131,6 @@ gimp_gegl_create_apply_buffer_node (GeglBuffer           *buffer,
   g_return_val_if_fail (mask == NULL || GEGL_IS_BUFFER (mask), NULL);
 
   node = gegl_node_new ();
-
-  buffer_source = gimp_gegl_add_buffer_source (node, buffer,
-                                               buffer_offset_x,
-                                               buffer_offset_y);
 
   input = gegl_node_get_input_proxy (node, "input");
 
@@ -168,6 +165,21 @@ gimp_gegl_create_apply_buffer_node (GeglBuffer           *buffer,
 
       output = translate;
     }
+
+  if (affect == 0)
+    {
+      /*  nothing to do, pass through  */
+
+      gegl_node_connect_to (input,  "output",
+                            output, "input");
+
+      return node;
+    }
+
+  buffer_source = gimp_gegl_add_buffer_source (node, buffer,
+                                               buffer_offset_x,
+                                               buffer_offset_y);
+
 
   if (mask)
     mask_source = gimp_gegl_add_buffer_source (node, mask,
@@ -235,8 +247,28 @@ gimp_gegl_create_apply_buffer_node (GeglBuffer           *buffer,
 
   gegl_node_connect_to (input,     "output",
                         mode_node, "input");
-  gegl_node_connect_to (mode_node, "output",
-                        output,    "input");
+
+  if (affect == GIMP_COMPONENT_ALL)
+    {
+      gegl_node_connect_to (mode_node, "output",
+                            output,    "input");
+    }
+  else
+    {
+      GeglNode *affect_node;
+
+      affect_node = gegl_node_new_child (node,
+                                         "operation", "gimp:mask-components",
+                                         "mask",      affect,
+                                         NULL);
+
+      gegl_node_connect_to (input,       "output",
+                            affect_node, "input");
+      gegl_node_connect_to (mode_node,   "output",
+                            affect_node, "aux");
+      gegl_node_connect_to (affect_node, "output",
+                            output,      "input");
+    }
 
   return node;
 }

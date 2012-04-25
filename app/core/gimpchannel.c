@@ -132,6 +132,8 @@ static void       gimp_channel_to_selection  (GimpItem          *item,
 static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
 static void gimp_channel_get_active_components (const GimpDrawable *drawable,
                                                 gboolean           *active);
+static GimpComponentMask
+                  gimp_channel_get_active_mask (const GimpDrawable *drawable);
 
 static void      gimp_channel_apply_buffer   (GimpDrawable        *drawable,
                                               GeglBuffer          *buffer,
@@ -284,6 +286,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
 
   drawable_class->invalidate_boundary   = gimp_channel_invalidate_boundary;
   drawable_class->get_active_components = gimp_channel_get_active_components;
+  drawable_class->get_active_mask       = gimp_channel_get_active_mask;
   drawable_class->apply_buffer          = gimp_channel_apply_buffer;
   drawable_class->replace_buffer        = gimp_channel_replace_buffer;
   drawable_class->project_region        = gimp_channel_project_region;
@@ -800,6 +803,13 @@ gimp_channel_get_active_components (const GimpDrawable *drawable,
   /*  Make sure that the alpha channel is not valid.  */
   active[GRAY]    = TRUE;
   active[ALPHA_G] = FALSE;
+}
+
+static GimpComponentMask
+gimp_channel_get_active_mask (const GimpDrawable *drawable)
+{
+  /*  Return all, because that skips the component mask op when painting  */
+  return GIMP_COMPONENT_ALL;
 }
 
 static void

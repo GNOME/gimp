@@ -38,7 +38,8 @@ GeglNode * gimp_gegl_create_apply_buffer_node  (GeglBuffer           *buffer,
                                                 gint                  mask_offset_x,
                                                 gint                  mask_offset_y,
                                                 gdouble               opacity,
-                                                GimpLayerModeEffects  mode);
+                                                GimpLayerModeEffects  mode,
+                                                GimpComponentMask     affect);
 
 GeglNode * gimp_gegl_add_buffer_source         (GeglNode             *parent,
                                                 GeglBuffer           *buffer,
