@@ -31,7 +31,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-17 17:16+0100\n"
-"PO-Revision-Date: 2012-04-26 08:34+0200\n"
+"PO-Revision-Date: 2012-04-26 08:36+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: \n"
@@ -10780,7 +10780,7 @@ msgstr "(pulito)"
 #: ../app/display/gimpdisplayshell-title.c:370
 #: ../app/widgets/gimpactiongroup.c:860
 msgid "(none)"
-msgstr "(nessuno)"
+msgstr "(nessuna)"
 
 #: ../app/display/gimpdisplayshell-title.c:499
 msgid " (exported)"
