@@ -48,7 +48,7 @@ struct _GimpTileBackendTileManagerPrivate
 
 static int gimp_gegl_tile_mul (void)
 {
-  static int mul = 8;
+  static int mul = 2;
   static gboolean inited = 0;
   if (G_LIKELY (inited))
     return mul;
