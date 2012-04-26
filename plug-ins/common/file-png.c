@@ -411,6 +411,8 @@ run (const gchar      *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
+  gegl_init (NULL, NULL);
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
@@ -621,9 +623,9 @@ run (const gchar      *name,
 
 struct read_error_data
 {
-  GimpPixelRgn *pixel_rgn;       /* Pixel region for layer */
   guchar       *pixel;           /* Pixel data */
-  GimpDrawable *drawable;        /* Drawable for layer */
+  GeglBuffer   *buffer;          /* GEGL buffer for layer */
+  const Babl   *file_format;
   guint32       width;           /* png_infop->width */
   guint32       height;          /* png_infop->height */
   gint          bpp;             /* Bytes per pixel */
@@ -645,9 +647,7 @@ on_read_error (png_structp png_ptr, png_const_charp error_msg)
 
   /* Flush the current half-read row of tiles */
 
-  gimp_pixel_rgn_set_rect (error_data->pixel_rgn, error_data->pixel, 0,
-                                error_data->begin, error_data->drawable->width,
-                                error_data->num);
+  gegl_buffer_set (error_data->buffer, GEGL_RECTANGLE (0, error_data->begin, gegl_buffer_get_width (error_data->buffer), error_data->num), 0, error_data->file_format, error_data->pixel, GEGL_AUTO_ROWSTRIDE);
 
   /* Fill the rest of the rows of tiles with 0s */
 
@@ -664,9 +664,7 @@ on_read_error (png_structp png_ptr, png_const_charp error_msg)
 
       num = end - begin;
 
-      gimp_pixel_rgn_set_rect (error_data->pixel_rgn, error_data->pixel, 0,
-                                begin,
-                                error_data->drawable->width, num);
+      gegl_buffer_set (error_data->buffer, GEGL_RECTANGLE (0, begin, gegl_buffer_get_width (error_data->buffer), num), 0, error_data->file_format, error_data->pixel, GEGL_AUTO_ROWSTRIDE);
     }
 
   longjmp (png_jmpbuf (png_ptr), 1);
@@ -696,6 +694,7 @@ load_image (const gchar  *filename,
   int i,                        /* Looping var */
     trns,                       /* Transparency present */
     bpp,                        /* Bytes per pixel */
+    have_u16 = 0,               /* 16bit values? */
     image_type,                 /* Type of image */
     layer_type,                 /* Type of drawable/layer */
     empty,                      /* Number of fully transparent indices */
@@ -708,8 +707,8 @@ load_image (const gchar  *filename,
   FILE *fp;                     /* File pointer */
   volatile gint32 image = -1;   /* Image -- preserved against setjmp() */
   gint32 layer;                 /* Layer */
-  GimpDrawable *drawable;       /* Drawable for layer */
-  GimpPixelRgn pixel_rgn;       /* Pixel region for layer */
+  GeglBuffer *buffer;           /* GEGL buffer for layer */
+  const Babl *file_format;      /* BABL format for layer */
   png_structp pp;               /* PNG read pointer */
   png_infop info;               /* PNG info pointers */
   guchar **pixels,              /* Pixel rows */
@@ -775,7 +774,8 @@ load_image (const gchar  *filename,
 
   if (png_get_bit_depth (pp, info) == 16)
     {
-      png_set_strip_16 (pp);
+      png_set_swap (pp);
+      have_u16 = 1;
     }
 
   if (png_get_color_type (pp, info) == PNG_COLOR_TYPE_GRAY &&
@@ -837,34 +837,41 @@ load_image (const gchar  *filename,
   switch (png_get_color_type (pp, info))
     {
     case PNG_COLOR_TYPE_RGB:           /* RGB */
-      bpp = 3;
       image_type = GIMP_RGB;
       layer_type = GIMP_RGB_IMAGE;
+      bpp = have_u16 ? 6 : 3;
+      file_format = babl_format (have_u16 ? "R'G'B' u16" : "R'G'B' u8");
       break;
 
     case PNG_COLOR_TYPE_RGB_ALPHA:     /* RGBA */
-      bpp = 4;
       image_type = GIMP_RGB;
       layer_type = GIMP_RGBA_IMAGE;
+      bpp = have_u16 ? 8 : 4;
+      file_format = babl_format (have_u16 ? "R'G'B'A u16" : "R'G'B'A u8");
       break;
 
     case PNG_COLOR_TYPE_GRAY:          /* Grayscale */
-      bpp = 1;
       image_type = GIMP_GRAY;
       layer_type = GIMP_GRAY_IMAGE;
+      bpp = have_u16 ? 2 : 1;
+      file_format = babl_format (have_u16 ? "Y' u16" : "Y' u8");
       break;
 
     case PNG_COLOR_TYPE_GRAY_ALPHA:    /* Grayscale + alpha */
-      bpp = 2;
       image_type = GIMP_GRAY;
       layer_type = GIMP_GRAYA_IMAGE;
+      bpp = have_u16 ? 4 : 2;
+      file_format = babl_format (have_u16 ? "Y'A u16" : "Y'A u8");
       break;
 
+#warning port PNG indexed format
+#if 0
     case PNG_COLOR_TYPE_PALETTE:       /* Indexed */
       bpp = 1;
       image_type = GIMP_INDEXED;
       layer_type = GIMP_INDEXED_IMAGE;
       break;
+#endif
 
     default:                           /* Aie! Unknown type */
       g_set_error (error, 0, 0,
@@ -873,9 +880,10 @@ load_image (const gchar  *filename,
       return -1;
     }
 
-  image = gimp_image_new (png_get_image_width (pp, info),
-                          png_get_image_height (pp, info),
-                          image_type);
+  image = gimp_image_new_with_precision (png_get_image_width (pp, info),
+                                         png_get_image_height (pp, info),
+                                         image_type,
+                                         have_u16 ? GIMP_PRECISION_U16 : GIMP_PRECISION_U8);
   if (image == -1)
     {
       g_set_error (error, 0, 0,
@@ -1010,14 +1018,7 @@ load_image (const gchar  *filename,
         }
     }
 
-  /*
-   * Get the drawable and set the pixel region for our load...
-   */
-
-  drawable = gimp_drawable_get (layer);
-
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,
-                       drawable->height, TRUE, FALSE);
+  buffer = gimp_drawable_get_buffer (layer);
 
   /*
    * Temporary buffer...
@@ -1028,17 +1029,16 @@ load_image (const gchar  *filename,
   pixels = g_new (guchar *, tile_height);
 
   for (i = 0; i < tile_height; i++)
-    pixels[i] = pixel + png_get_image_width (pp, info) *
-      png_get_channels (pp, info) * i;
+    pixels[i] = pixel + png_get_image_width (pp, info) * bpp * i;
 
   /* Install our own error handler to handle incomplete PNG files better */
-  error_data.drawable    = drawable;
+  error_data.buffer      = buffer;
   error_data.pixel       = pixel;
+  error_data.file_format = file_format;
   error_data.tile_height = tile_height;
   error_data.width       = png_get_image_width (pp, info);
   error_data.height      = png_get_image_height (pp, info);
   error_data.bpp         = bpp;
-  error_data.pixel_rgn   = &pixel_rgn;
 
   png_set_error_fn (pp, &error_data, on_read_error, NULL);
 
@@ -1058,8 +1058,7 @@ load_image (const gchar  *filename,
           num = end - begin;
 
           if (pass != 0)        /* to handle interlaced PiNGs */
-            gimp_pixel_rgn_get_rect (&pixel_rgn, pixel, 0, begin,
-                                     drawable->width, num);
+            gegl_buffer_get (buffer, GEGL_RECTANGLE (0, begin, png_get_image_width (pp, info), num), 1.0, file_format, pixel, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
           error_data.begin = begin;
           error_data.end   = end;
@@ -1067,11 +1066,7 @@ load_image (const gchar  *filename,
 
           png_read_rows (pp, pixels, NULL, num);
 
-          gimp_pixel_rgn_set_rect (&pixel_rgn, pixel, 0, begin,
-                                   drawable->width, num);
-
-          memset (pixel, 0,
-                  tile_height * png_get_image_width (pp, info) * bpp);
+          gegl_buffer_set (buffer, GEGL_RECTANGLE (0, begin, png_get_image_width (pp, info), num), 0, file_format, pixel, GEGL_AUTO_ROWSTRIDE);
 
           gimp_progress_update
             (((gdouble) pass +
@@ -1172,11 +1167,13 @@ load_image (const gchar  *filename,
 
   g_free (pixel);
   g_free (pixels);
+  g_object_unref (buffer);
   free (pp);
   free (info);
 
   fclose (fp);
 
+#if 0
   if (trns)
     {
       gimp_layer_add_alpha (layer);
@@ -1208,13 +1205,7 @@ load_image (const gchar  *filename,
 
       g_free (pixel);
     }
-
-  /*
-   * Update the display...
-   */
-
-  gimp_drawable_flush (drawable);
-  gimp_drawable_detach (drawable);
+#endif
 
   return image;
 }

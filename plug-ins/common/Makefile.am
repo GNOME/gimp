@@ -1330,6 +1330,7 @@ file_png_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(PNG_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
