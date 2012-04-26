@@ -31,7 +31,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-17 17:16+0100\n"
-"PO-Revision-Date: 2012-04-26 08:36+0200\n"
+"PO-Revision-Date: 2012-04-26 11:27+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: \n"
@@ -4583,12 +4583,12 @@ msgstr "Carica testo da file"
 #: ../app/actions/text-editor-actions.c:49
 msgctxt "text-editor-action"
 msgid "Clear"
-msgstr "Cancella"
+msgstr "Pulisci"
 
 #: ../app/actions/text-editor-actions.c:50
 msgctxt "text-editor-action"
 msgid "Clear all text"
-msgstr "Cancella tutto il testo"
+msgstr "Pulisci tutto il testo"
 
 #: ../app/actions/text-editor-actions.c:58
 msgctxt "text-editor-action"
@@ -4658,7 +4658,7 @@ msgstr "_Incolla"
 #: ../app/actions/text-tool-actions.c:73
 msgctxt "text-tool-action"
 msgid "_Delete"
-msgstr "_Cancella"
+msgstr "_Elimina"
 
 #: ../app/actions/text-tool-actions.c:78
 msgctxt "text-tool-action"
@@ -4668,12 +4668,12 @@ msgstr "Apri file di test_o..."
 #: ../app/actions/text-tool-actions.c:83
 msgctxt "text-tool-action"
 msgid "Cl_ear"
-msgstr "Canc_ella"
+msgstr "_Pulisci"
 
 #: ../app/actions/text-tool-actions.c:84
 msgctxt "text-tool-action"
 msgid "Clear all text"
-msgstr "Cancella tutto il testo"
+msgstr "Pulisci tutto il testo"
 
 #: ../app/actions/text-tool-actions.c:89
 msgctxt "text-tool-action"
