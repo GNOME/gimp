@@ -647,7 +647,14 @@ on_read_error (png_structp png_ptr, png_const_charp error_msg)
 
   /* Flush the current half-read row of tiles */
 
-  gegl_buffer_set (error_data->buffer, GEGL_RECTANGLE (0, error_data->begin, gegl_buffer_get_width (error_data->buffer), error_data->num), 0, error_data->file_format, error_data->pixel, GEGL_AUTO_ROWSTRIDE);
+  gegl_buffer_set (error_data->buffer,
+                   GEGL_RECTANGLE (0, error_data->begin,
+                                   gegl_buffer_get_width (error_data->buffer),
+                                   error_data->num),
+                   0,
+                   error_data->file_format,
+                   error_data->pixel,
+                   GEGL_AUTO_ROWSTRIDE);
 
   /* Fill the rest of the rows of tiles with 0s */
 
@@ -664,7 +671,14 @@ on_read_error (png_structp png_ptr, png_const_charp error_msg)
 
       num = end - begin;
 
-      gegl_buffer_set (error_data->buffer, GEGL_RECTANGLE (0, begin, gegl_buffer_get_width (error_data->buffer), num), 0, error_data->file_format, error_data->pixel, GEGL_AUTO_ROWSTRIDE);
+      gegl_buffer_set (error_data->buffer,
+                       GEGL_RECTANGLE (0, begin,
+                                       gegl_buffer_get_width (error_data->buffer),
+                                       num),
+                       0,
+                       error_data->file_format,
+                       error_data->pixel,
+                       GEGL_AUTO_ROWSTRIDE);
     }
 
   longjmp (png_jmpbuf (png_ptr), 1);
@@ -774,9 +788,11 @@ load_image (const gchar  *filename,
 
   if (png_get_bit_depth (pp, info) == 16)
     {
-      png_set_swap (pp);
       have_u16 = 1;
     }
+
+  if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
+    png_set_swap (pp);
 
   if (png_get_color_type (pp, info) == PNG_COLOR_TYPE_GRAY &&
       png_get_bit_depth (pp, info) < 8)
@@ -883,7 +899,9 @@ load_image (const gchar  *filename,
   image = gimp_image_new_with_precision (png_get_image_width (pp, info),
                                          png_get_image_height (pp, info),
                                          image_type,
-                                         have_u16 ? GIMP_PRECISION_U16 : GIMP_PRECISION_U8);
+                                         have_u16 ?
+                                           GIMP_PRECISION_U16 :
+                                           GIMP_PRECISION_U8);
   if (image == -1)
     {
       g_set_error (error, 0, 0,
@@ -1058,7 +1076,15 @@ load_image (const gchar  *filename,
           num = end - begin;
 
           if (pass != 0)        /* to handle interlaced PiNGs */
-            gegl_buffer_get (buffer, GEGL_RECTANGLE (0, begin, png_get_image_width (pp, info), num), 1.0, file_format, pixel, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+            gegl_buffer_get (buffer,
+                             GEGL_RECTANGLE (0, begin,
+                                             png_get_image_width (pp, info),
+                                             num),
+                             1.0,
+                             file_format,
+                             pixel,
+                             GEGL_AUTO_ROWSTRIDE,
+                             GEGL_ABYSS_NONE);
 
           error_data.begin = begin;
           error_data.end   = end;
@@ -1066,7 +1092,14 @@ load_image (const gchar  *filename,
 
           png_read_rows (pp, pixels, NULL, num);
 
-          gegl_buffer_set (buffer, GEGL_RECTANGLE (0, begin, png_get_image_width (pp, info), num), 0, file_format, pixel, GEGL_AUTO_ROWSTRIDE);
+          gegl_buffer_set (buffer,
+                           GEGL_RECTANGLE (0, begin,
+                                           png_get_image_width (pp, info),
+                                           num),
+                           0,
+                           file_format,
+                           pixel,
+                           GEGL_AUTO_ROWSTRIDE);
 
           gimp_progress_update
             (((gdouble) pass +
@@ -1289,14 +1322,17 @@ save_image (const gchar  *filename,
     bpp = 0,                    /* Bytes per pixel */
     type,                       /* Type of drawable/layer */
     num_passes,                 /* Number of interlace passes in file */
+    have_u16,                   /* save as 16 bit PNG */
     pass,                       /* Current pass in file */
     tile_height,                /* Height of tile in GIMP */
+    width,                      /* image width */
+    height,                     /* image height */
     begin,                      /* Beginning tile row */
     end,                        /* Ending tile row */
     num;                        /* Number of rows to load */
   FILE *fp;                     /* File pointer */
-  GimpDrawable *drawable;       /* Drawable for layer */
-  GimpPixelRgn pixel_rgn;       /* Pixel region for layer */
+  GeglBuffer *buffer;           /* GEGL buffer for layer */
+  const Babl *file_format;      /* BABL format of drawable */
   png_structp pp;               /* PNG read pointer */
   png_infop info;               /* PNG info pointer */
   gint offx, offy;              /* Drawable offsets from origin */
@@ -1315,6 +1351,8 @@ save_image (const gchar  *filename,
   guchar remap[256];            /* Re-mapping for the palette */
 
   png_textp  text = NULL;
+
+  have_u16 = (gimp_image_get_precision (image_ID) != GIMP_PRECISION_U8);
 
   pp = png_create_write_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
   if (!pp)
@@ -1357,11 +1395,16 @@ save_image (const gchar  *filename,
                              gimp_filename_to_utf8 (filename));
 
   /*
-   * Get the drawable for the current image...
+   * Get the buffer for the current image...
    */
 
-  drawable = gimp_drawable_get (drawable_ID);
+  buffer = gimp_drawable_get_buffer (drawable_ID);
+  width = gegl_buffer_get_width (buffer);
+  height = gegl_buffer_get_height (buffer);
   type = gimp_drawable_type (drawable_ID);
+
+  /* this is a stupid workaround for some caching issues in GEGL */
+  gegl_buffer_copy (buffer, NULL, buffer, NULL);
 
   /*
    * Initialise remap[]
@@ -1373,30 +1416,31 @@ save_image (const gchar  *filename,
    * Set color type and remember bytes per pixel count
    */
 
-  bit_depth = 8;
+  bit_depth = have_u16 ? 16 : 8;
 
   switch (type)
     {
     case GIMP_RGB_IMAGE:
       color_type = PNG_COLOR_TYPE_RGB;
-      bpp = 3;
+      file_format = babl_format (have_u16 ? "R'G'B' u16" : "R'G'B' u8");
       break;
 
     case GIMP_RGBA_IMAGE:
       color_type = PNG_COLOR_TYPE_RGB_ALPHA;
-      bpp = 4;
+      file_format = babl_format (have_u16 ? "R'G'B'A u16" : "R'G'B'A u8");
       break;
 
     case GIMP_GRAY_IMAGE:
       color_type = PNG_COLOR_TYPE_GRAY;
-      bpp = 1;
+      file_format = babl_format (have_u16 ? "Y' u16" : "Y' u8");
       break;
 
     case GIMP_GRAYA_IMAGE:
       color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
-      bpp = 2;
+      file_format = babl_format (have_u16 ? "Y'A u16" : "Y'A u8");
       break;
 
+#if 0   /* indexed missing */
     case GIMP_INDEXED_IMAGE:
       bpp = 1;
       color_type = PNG_COLOR_TYPE_PALETTE;
@@ -1412,17 +1456,18 @@ save_image (const gchar  *filename,
       /* fix up transparency */
       bit_depth = respin_cmap (pp, info, remap, image_ID, drawable);
       break;
+#endif
 
     default:
       g_set_error (error, 0, 0, "Image type can't be saved as PNG");
       return FALSE;
     }
 
+  bpp = babl_format_get_bytes_per_pixel (file_format);
+
   /* Note: png_set_IHDR() must be called before any other png_set_*()
      functions. */
-  png_set_IHDR (pp, info, drawable->width, drawable->height,
-                bit_depth,
-                color_type,
+  png_set_IHDR (pp, info, width, height, bit_depth, color_type,
                 pngvals.interlaced ? PNG_INTERLACE_ADAM7 : PNG_INTERLACE_NONE,
                 PNG_COMPRESSION_TYPE_BASE,
                 PNG_FILTER_TYPE_BASE);
@@ -1582,6 +1627,8 @@ save_image (const gchar  *filename,
     png_set_text (pp, info, text, 1);
 
   png_write_info (pp, info);
+  if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
+    png_set_swap (pp);
 
   /*
    * Turn on interlace handling...
@@ -1605,28 +1652,30 @@ save_image (const gchar  *filename,
    */
 
   tile_height = gimp_tile_height ();
-  pixel = g_new (guchar, tile_height * drawable->width * bpp);
+  pixel = g_new (guchar, tile_height * width * bpp);
   pixels = g_new (guchar *, tile_height);
 
   for (i = 0; i < tile_height; i++)
-    pixels[i] = pixel + drawable->width * bpp * i;
-
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,
-                       drawable->height, FALSE, FALSE);
+    pixels[i] = pixel + width * bpp * i;
 
   for (pass = 0; pass < num_passes; pass++)
     {
       /* This works if you are only writing one row at a time... */
       for (begin = 0, end = tile_height;
-           begin < drawable->height; begin += tile_height, end += tile_height)
+           begin < height; begin += tile_height, end += tile_height)
         {
-          if (end > drawable->height)
-            end = drawable->height;
+          if (end > height)
+            end = height;
 
           num = end - begin;
 
-          gimp_pixel_rgn_get_rect (&pixel_rgn, pixel, 0, begin,
-                                   drawable->width, num);
+          gegl_buffer_get (buffer,
+                           GEGL_RECTANGLE (0, begin, width, num),
+                           1.0,
+                           file_format,
+                           pixel,
+                           GEGL_AUTO_ROWSTRIDE,
+                           GEGL_ABYSS_NONE);
 
           /* If we are with a RGBA image and have to pre-multiply the
              alpha channel */
@@ -1635,7 +1684,7 @@ save_image (const gchar  *filename,
               for (i = 0; i < num; ++i)
                 {
                   fixed = pixels[i];
-                  for (k = 0; k < drawable->width; ++k)
+                  for (k = 0; k < width; ++k)
                     {
                       gint aux = k << 2;
 
@@ -1644,6 +1693,28 @@ save_image (const gchar  *filename,
                           fixed[aux + 0] = red;
                           fixed[aux + 1] = green;
                           fixed[aux + 2] = blue;
+                        }
+                    }
+                }
+            }
+
+          if (bpp == 8 && ! pngvals.save_transp_pixels)
+            {
+              for (i = 0; i < num; ++i)
+                {
+                  fixed = pixels[i];
+                  for (k = 0; k < width; ++k)
+                    {
+                      gint aux = k << 3;
+
+                      if (! fixed[aux + 6] && ! fixed[aux + 7])
+                        {
+                          fixed[aux + 0] = red;
+                          fixed[aux + 1] = red;
+                          fixed[aux + 2] = green;
+                          fixed[aux + 3] = green;
+                          fixed[aux + 4] = blue;
+                          fixed[aux + 5] = blue;
                         }
                     }
                 }
@@ -1661,7 +1732,7 @@ save_image (const gchar  *filename,
               for (i = 0; i < num; ++i)
                 {
                   fixed = pixels[i];
-                  for (k = 0; k < drawable->width; ++k)
+                  for (k = 0; k < width; ++k)
                     {
                       fixed[k] = (fixed[k*2+1] > 127) ?
                                  inverse_remap[ fixed[k*2] ] :
@@ -1678,7 +1749,7 @@ save_image (const gchar  *filename,
               for (i = 0; i < num; ++i)
                 {
                   fixed = pixels[i];
-                  for (k = 0; k < drawable->width; ++k)
+                  for (k = 0; k < width; ++k)
                     {
                       fixed[k] = fixed[k * 2];
                     }
@@ -1688,7 +1759,7 @@ save_image (const gchar  *filename,
           png_write_rows (pp, pixels, num);
 
           gimp_progress_update (((double) pass + (double) end /
-                                 (double) drawable->height) /
+                                 (double) height) /
                                 (double) num_passes);
         }
     }
