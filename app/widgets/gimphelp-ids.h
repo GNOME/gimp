@@ -118,6 +118,7 @@
 #define GIMP_HELP_IMAGE_CONVERT_INDEXED           "gimp-image-convert-indexed"
 #define GIMP_HELP_IMAGE_CONVERT_U8                "gimp-image-convert-u8"
 #define GIMP_HELP_IMAGE_CONVERT_U16               "gimp-image-convert-u16"
+#define GIMP_HELP_IMAGE_CONVERT_HALF              "gimp-image-convert-half"
 #define GIMP_HELP_IMAGE_CONVERT_FLOAT             "gimp-image-convert-float"
 #define GIMP_HELP_IMAGE_FLIP_HORIZONTAL           "gimp-image-flip-horizontal"
 #define GIMP_HELP_IMAGE_FLIP_VERTICAL             "gimp-image-flip-vertical"

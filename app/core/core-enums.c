@@ -755,6 +755,7 @@ gimp_precision_get_type (void)
   {
     { GIMP_PRECISION_U8, "GIMP_PRECISION_U8", "u8" },
     { GIMP_PRECISION_U16, "GIMP_PRECISION_U16", "u16" },
+    { GIMP_PRECISION_HALF, "GIMP_PRECISION_HALF", "half" },
     { GIMP_PRECISION_FLOAT, "GIMP_PRECISION_FLOAT", "float" },
     { 0, NULL, NULL }
   };
@@ -763,6 +764,7 @@ gimp_precision_get_type (void)
   {
     { GIMP_PRECISION_U8, NC_("precision", "8-bit unsigned integer"), NULL },
     { GIMP_PRECISION_U16, NC_("precision", "16-bit unsigned integer"), NULL },
+    { GIMP_PRECISION_HALF, NC_("precision", "16-bit floating point"), NULL },
     { GIMP_PRECISION_FLOAT, NC_("precision", "32-bit floating point"), NULL },
     { 0, NULL, NULL }
   };

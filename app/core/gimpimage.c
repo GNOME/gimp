@@ -1585,6 +1585,7 @@ gimp_image_get_mask_format (const GimpImage *image)
     {
     case GIMP_PRECISION_U8:    return babl_format ("Y u8");
     case GIMP_PRECISION_U16:   return babl_format ("Y u16");
+    case GIMP_PRECISION_HALF:  return babl_format ("Y half");
     case GIMP_PRECISION_FLOAT: return babl_format ("Y float");
     }
 
