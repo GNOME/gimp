@@ -30,6 +30,7 @@
 #include "plug-in-types.h"
 
 #include "gegl/gimp-babl.h"
+#include "gegl/gimp-babl-compat.h"
 #include "gegl/gimp-gegl-tile-compat.h"
 
 #include "core/gimp.h"
@@ -313,12 +314,9 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
 
   format = gegl_buffer_get_format (buffer);
 
-  if (! gimp_plug_in_precision_enabled (plug_in) &&
-      ! gimp_drawable_is_indexed (drawable) /* XXX fixme */)
+  if (! gimp_plug_in_precision_enabled (plug_in))
     {
-      format = gimp_babl_format (gimp_babl_format_get_base_type (format),
-                                 GIMP_PRECISION_U8,
-                                 babl_format_has_alpha (format));
+      format = gimp_babl_compat_u8_format (format);
     }
 
   if (tile_data.use_shm)
@@ -412,12 +410,9 @@ gimp_plug_in_handle_tile_get (GimpPlugIn *plug_in,
 
   format = gegl_buffer_get_format (buffer);
 
-  if (! gimp_plug_in_precision_enabled (plug_in) &&
-      ! gimp_drawable_is_indexed (drawable) /* XXX fixme */)
+  if (! gimp_plug_in_precision_enabled (plug_in))
     {
-      format = gimp_babl_format (gimp_babl_format_get_base_type (format),
-                                 GIMP_PRECISION_U8,
-                                 babl_format_has_alpha (format));
+      format = gimp_babl_compat_u8_format (format);
     }
 
   tile_size = (babl_format_get_bytes_per_pixel (format) *

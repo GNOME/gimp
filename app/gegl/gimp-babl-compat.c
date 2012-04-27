@@ -24,6 +24,7 @@
 
 #include "gimp-gegl-types.h"
 
+#include "gimp-babl.h"
 #include "gimp-babl-compat.h"
 
 
@@ -65,4 +66,18 @@ gimp_babl_format_get_image_type (const Babl *format)
     }
 
   g_return_val_if_reached (-1);
+}
+
+const Babl *
+gimp_babl_compat_u8_format (const Babl *format)
+{
+  g_return_val_if_fail (format != NULL, NULL);
+
+  /*  indexed images only exist in u8, return the same format  */
+  if (babl_format_is_palette (format))
+    return format;
+
+  return gimp_babl_format (gimp_babl_format_get_base_type (format),
+                           GIMP_PRECISION_U8,
+                           babl_format_has_alpha (format));
 }

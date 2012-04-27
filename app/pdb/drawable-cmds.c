@@ -277,10 +277,7 @@ drawable_bpp_invoker (GimpProcedure      *procedure,
       if (! gimp->plug_in_manager->current_plug_in ||
           ! gimp_plug_in_precision_enabled (gimp->plug_in_manager->current_plug_in))
         {
-          if (! gimp_drawable_is_indexed (drawable) /* XXX fixme */)
-            format = gimp_babl_format (gimp_babl_format_get_base_type (format),
-                                       GIMP_PRECISION_U8,
-                                       babl_format_has_alpha (format));
+          format = gimp_babl_compat_u8_format (format);
         }
 
       bpp = babl_format_get_bytes_per_pixel (format);
@@ -614,10 +611,7 @@ drawable_get_pixel_invoker (GimpProcedure      *procedure,
       if (! gimp->plug_in_manager->current_plug_in ||
           ! gimp_plug_in_precision_enabled (gimp->plug_in_manager->current_plug_in))
         {
-          if (! gimp_drawable_is_indexed (drawable) /* XXX fixme */)
-            format = gimp_babl_format (gimp_babl_format_get_base_type (format),
-                                       GIMP_PRECISION_U8,
-                                       babl_format_has_alpha (format));
+          format = gimp_babl_compat_u8_format (format);
         }
 
       if (x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
@@ -671,10 +665,7 @@ drawable_set_pixel_invoker (GimpProcedure      *procedure,
       if (! gimp->plug_in_manager->current_plug_in ||
           ! gimp_plug_in_precision_enabled (gimp->plug_in_manager->current_plug_in))
         {
-          if (! gimp_drawable_is_indexed (drawable) /* XXX fixme */)
-            format = gimp_babl_format (gimp_babl_format_get_base_type (format),
-                                       GIMP_PRECISION_U8,
-                                       babl_format_has_alpha (format));
+          format = gimp_babl_compat_u8_format (format);
         }
 
       if (gimp_pdb_item_is_writable (GIMP_ITEM (drawable), error) &&
