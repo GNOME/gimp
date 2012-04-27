@@ -1116,6 +1116,10 @@ gimp_image_convert_precision (GimpImage     *image,
       undo_desc = C_("undo-type", "Convert Image to 16 bit unsigned integer");
       break;
 
+    case GIMP_PRECISION_U32:
+      undo_desc = C_("undo-type", "Convert Image to 32 bit unsigned integer");
+      break;
+
     case GIMP_PRECISION_HALF:
       undo_desc = C_("undo-type", "Convert Image to 16 bit float");
       break;

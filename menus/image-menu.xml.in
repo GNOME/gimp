@@ -323,6 +323,7 @@
       <menu action="image-precision-menu" name="Precision">
         <menuitem action="image-convert-u8" />
         <menuitem action="image-convert-u16" />
+        <menuitem action="image-convert-u32" />
         <menuitem action="image-convert-half" />
         <menuitem action="image-convert-float" />
         <separator />

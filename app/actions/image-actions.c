@@ -167,6 +167,11 @@ static const GimpRadioActionEntry image_convert_precision_actions[] =
     NC_("image-convert-action", "Convert the image to 16 bit unsigned integer"),
     GIMP_PRECISION_U16, GIMP_HELP_IMAGE_CONVERT_U16 },
 
+  { "image-convert-u32", NULL,
+    NC_("image-convert-action", "32 bit unsigned integer"), NULL,
+    NC_("image-convert-action", "Convert the image to 32 bit unsigned integer"),
+    GIMP_PRECISION_U32, GIMP_HELP_IMAGE_CONVERT_U32 },
+
   { "image-convert-half", NULL,
     NC_("image-convert-action", "16 bit floating point"), NULL,
     NC_("image-convert-action", "Convert the image to 16 bit floating point"),
@@ -285,6 +290,7 @@ image_actions_update (GimpActionGroup *group,
         {
         case GIMP_PRECISION_U8:    action = "image-convert-u8";    break;
         case GIMP_PRECISION_U16:   action = "image-convert-u16";   break;
+        case GIMP_PRECISION_U32:   action = "image-convert-u32";   break;
         case GIMP_PRECISION_HALF:  action = "image-convert-half";  break;
         case GIMP_PRECISION_FLOAT: action = "image-convert-float"; break;
           break;
@@ -312,6 +318,7 @@ image_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("image-convert-u8",    image);
   SET_SENSITIVE ("image-convert-u16",   image && !is_indexed);
+  SET_SENSITIVE ("image-convert-u32",   image && !is_indexed);
   SET_SENSITIVE ("image-convert-half",  image && !is_indexed);
   SET_SENSITIVE ("image-convert-float", image && !is_indexed);
 

@@ -74,6 +74,27 @@ gimp_babl_init (void)
                    babl_component ("A"),
                    NULL);
 
+  babl_format_new ("name", "R u32",
+                   babl_model ("RGBA"),
+                   babl_type ("u32"),
+                   babl_component ("R"),
+                   NULL);
+  babl_format_new ("name", "G u32",
+                   babl_model ("RGBA"),
+                   babl_type ("u32"),
+                   babl_component ("G"),
+                   NULL);
+  babl_format_new ("name", "B u32",
+                   babl_model ("RGBA"),
+                   babl_type ("u32"),
+                   babl_component ("B"),
+                   NULL);
+  babl_format_new ("name", "A u32",
+                   babl_model ("RGBA"),
+                   babl_type ("u32"),
+                   babl_component ("A"),
+                   NULL);
+
   babl_format_new ("name", "R half",
                    babl_model ("RGBA"),
                    babl_type ("half"),
@@ -132,42 +153,50 @@ babl_descriptions[] =
 {
   { "R'G'B' u8",  N_("RGB") },
   { "RGB u16",    N_("RGB") },
+  { "RGB u32",    N_("RGB") },
   { "RGB half",   N_("RGB") },
   { "RGB float",  N_("RGB") },
 
   { "R'G'B'A u8", N_("RGB-alpha") },
   { "RGBA u16",   N_("RGB-alpha") },
+  { "RGBA u32",   N_("RGB-alpha") },
   { "RGBA half",  N_("RGB-alpha") },
   { "RGBA float", N_("RGB-alpha") },
 
   { "Y' u8",      N_("Grayscale") },
   { "Y u8",       N_("Grayscale") },
   { "Y u16",      N_("Grayscale") },
+  { "Y u32",      N_("Grayscale") },
   { "Y half",     N_("Grayscale") },
   { "Y float",    N_("Grayscale") },
 
   { "Y'A u8",     N_("Grayscale-alpha") },
   { "YA u16",     N_("Grayscale-alpha") },
+  { "YA u32",     N_("Grayscale-alpha") },
   { "YA half",    N_("Grayscale-alpha") },
   { "YA float",   N_("Grayscale-alpha") },
 
   { "R' u8",      N_("Red component") },
   { "R u16",      N_("Red component") },
+  { "R u32",      N_("Red component") },
   { "R half",     N_("Red component") },
   { "R float",    N_("Red component") },
 
   { "G' u8",      N_("Green component") },
   { "G u16",      N_("Green component") },
+  { "G u32",      N_("Green component") },
   { "G half",     N_("Green component") },
   { "G float",    N_("Green component") },
 
   { "B' u8",      N_("Blue component") },
   { "B u16",      N_("Blue component") },
+  { "B u32",      N_("Blue component") },
   { "B half",     N_("Blue component") },
   { "B float",    N_("Blue component") },
 
   { "A u8",       N_("Alpha component") },
   { "A u16",      N_("Alpha component") },
+  { "A u32",      N_("Alpha component") },
   { "A half",     N_("Alpha component") },
   { "A float",    N_("Alpha component") },
   { "A double",   N_("Alpha component") }
@@ -257,6 +286,8 @@ gimp_babl_format_get_precision (const Babl *format)
     return GIMP_PRECISION_U8;
   else if (type == babl_type ("u16"))
     return GIMP_PRECISION_U16;
+  else if (type == babl_type ("u32"))
+    return GIMP_PRECISION_U32;
   else if (type == babl_type ("half"))
     return GIMP_PRECISION_HALF;
   else if (type == babl_type ("float"))
@@ -286,6 +317,12 @@ gimp_babl_format (GimpImageBaseType  base_type,
             return babl_format ("RGBA u16");
           else
             return babl_format ("RGB u16");
+
+        case GIMP_PRECISION_U32:
+          if (with_alpha)
+            return babl_format ("RGBA u32");
+          else
+            return babl_format ("RGB u32");
 
         case GIMP_PRECISION_HALF:
           if (with_alpha)
@@ -318,6 +355,12 @@ gimp_babl_format (GimpImageBaseType  base_type,
             return babl_format ("YA u16");
           else
             return babl_format ("Y u16");
+
+        case GIMP_PRECISION_U32:
+          if (with_alpha)
+            return babl_format ("YA u32");
+          else
+            return babl_format ("Y u32");
 
         case GIMP_PRECISION_HALF:
           if (with_alpha)
@@ -378,6 +421,18 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
+        case GIMP_PRECISION_U32:
+          switch (index)
+            {
+            case 0: return babl_format ("R u32");
+            case 1: return babl_format ("G u32");
+            case 2: return babl_format ("B u32");
+            case 3: return babl_format ("A u32");
+            default:
+              break;
+            }
+          break;
+
         case GIMP_PRECISION_HALF:
           switch (index)
             {
@@ -425,6 +480,16 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             {
             case 0: return babl_format ("Y u16");
             case 1: return babl_format ("A u16");
+            default:
+              break;
+            }
+          break;
+
+        case GIMP_PRECISION_U32:
+          switch (index)
+            {
+            case 0: return babl_format ("Y u32");
+            case 1: return babl_format ("A u32");
             default:
               break;
             }
