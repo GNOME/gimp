@@ -117,7 +117,7 @@ gimp_fuzzy_select_tool_get_mask (GimpRegionSelectTool *region_select,
   return gimp_image_contiguous_region_by_seed (image, drawable,
                                                options->sample_merged,
                                                sel_options->antialias,
-                                               options->threshold,
+                                               options->threshold / 255.0,
                                                options->select_transparent,
                                                options->select_criterion,
                                                x, y);

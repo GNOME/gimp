@@ -215,7 +215,7 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
                                            gimp_context_get_opacity (context),
                                            options->fill_transparent,
                                            options->fill_criterion,
-                                           options->threshold,
+                                           options->threshold / 255.0,
                                            options->sample_merged,
                                            x, y, &error))
             {
