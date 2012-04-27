@@ -142,6 +142,7 @@ xcf_load_image (Gimp     *gimp,
   gint                width;
   gint                height;
   gint                image_type;
+  gint                precision = GIMP_PRECISION_U8;
   gint                num_successful_elements = 0;
 
   /* read in the image width, height and type */
@@ -149,8 +150,10 @@ xcf_load_image (Gimp     *gimp,
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &image_type, 1);
 
-  image = gimp_create_image (gimp, width, height, image_type,
-                             GIMP_PRECISION_U8,
+  if (info->file_version >= 4)
+    info->cp += xcf_read_int32 (info->fp, (guint32 *) &precision, 1);
+
+  image = gimp_create_image (gimp, width, height, image_type, precision,
                              FALSE);
 
   gimp_image_undo_disable (image);
@@ -1403,7 +1406,6 @@ xcf_load_level (XcfInfo    *info,
   gint        i;
   gint        fail;
 
-  /* XXX use an appropriate format here */
   format = gegl_buffer_get_format (buffer);
 
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);

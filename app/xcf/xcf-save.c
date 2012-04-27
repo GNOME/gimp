@@ -214,6 +214,9 @@ xcf_save_choose_format (XcfInfo   *info,
         save_version = MAX (3, save_version);
     }
 
+  if (gimp_image_get_precision (image) != GIMP_PRECISION_U8)
+    save_version = MAX (4, save_version);
+
   info->file_version = save_version;
 }
 
@@ -257,6 +260,12 @@ xcf_save_image (XcfInfo    *info,
 
   value = gimp_image_base_type (image);
   xcf_write_int32_check_error (info, &value, 1);
+
+  if (info->file_version >= 4)
+    {
+      value = gimp_image_get_precision (image);
+      xcf_write_int32_check_error (info, &value, 1);
+    }
 
   /* determine the number of layers and channels in the image */
   all_layers   = gimp_image_get_layer_list (image);
@@ -1317,7 +1326,6 @@ xcf_save_buffer (XcfInfo     *info,
   gint        tmp1, tmp2;
   GError     *tmp_error = NULL;
 
-  /* XXX use an appropriate format here */
   format = gegl_buffer_get_format (buffer);
 
   width  = gegl_buffer_get_width (buffer);
