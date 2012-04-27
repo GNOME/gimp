@@ -180,7 +180,7 @@ gimp_pickable_get_color_at (GimpPickable *pickable,
                             gint          y,
                             GimpRGB      *color)
 {
-  guchar pixel[4];
+  guchar pixel[32];
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), FALSE);
   g_return_val_if_fail (color != NULL, FALSE);
