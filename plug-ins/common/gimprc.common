@@ -108,7 +108,6 @@ oilify_RC = oilify.rc.o
 photocopy_RC = photocopy.rc.o
 plasma_RC = plasma.rc.o
 plugin_browser_RC = plugin-browser.rc.o
-polar_coords_RC = polar-coords.rc.o
 procedure_browser_RC = procedure-browser.rc.o
 qbist_RC = qbist.rc.o
 red_eye_removal_RC = red-eye-removal.rc.o

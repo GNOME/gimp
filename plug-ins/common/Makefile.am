@@ -154,7 +154,6 @@ libexec_PROGRAMS = \
 	photocopy \
 	plasma \
 	plugin-browser \
-	polar-coords \
 	procedure-browser \
 	qbist \
 	red-eye-removal \
@@ -2093,23 +2092,6 @@ plugin_browser_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(plugin_browser_RC)
-
-polar_coords_SOURCES = \
-	polar-coords.c
-
-polar_coords_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(polar_coords_RC)
 
 procedure_browser_SOURCES = \
 	procedure-browser.c

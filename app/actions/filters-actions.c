@@ -45,17 +45,23 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:color-to-alpha",
     NULL /* FIXME GIMP_HELP_FILTER_PIXELIZE */ },
 
+  { "filters-gaussian-blur", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Gaussian Blur..."), NULL,
+    NC_("filters-action", "Apply a gaussian blur"),
+    "gegl:gaussian-blur",
+    NULL /* FIXME GIMP_HELP_FILTER_GAUSSIAN_BLUR */ },
+
   { "filters-pixelize", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Pixelize..."), NULL,
     NC_("filters-action", "Simplify image into an array of solid-colored squares"),
     "gegl:pixelize",
     NULL /* FIXME GIMP_HELP_FILTER_PIXELIZE */ },
 
-  { "filters-gaussian-blur", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Gaussian Blur..."), NULL,
-    NC_("filters-action", "Apply a gaussian blur"),
-    "gegl:gaussian-blur",
-    NULL /* FIXME GIMP_HELP_FILTER_GAUSSIAN_BLUR */ },
+  { "filters-polar-coordinates", GIMP_STOCK_GEGL,
+    NC_("filters-action", "P_olar Coordinates..."), NULL,
+    NC_("filters-action", "Convert image to or from polar coordinates"),
+    "gegl:polar-coordinates",
+    NULL /* FIXME GIMP_HELP_FILTER_POLAR_COORDINATES */ },
 };
 
 void
@@ -105,9 +111,10 @@ filters_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("filters-color-to-alpha", writable && !gray && alpha);
-  SET_SENSITIVE ("filters-pixelize",       writable);
-  SET_SENSITIVE ("filters-gaussian-blur",  writable);
+  SET_SENSITIVE ("filters-color-to-alpha",    writable && !gray && alpha);
+  SET_SENSITIVE ("filters-gaussian-blur",     writable);
+  SET_SENSITIVE ("filters-pixelize",          writable);
+  SET_SENSITIVE ("filters-polar-coordinates", writable);
 
 #undef SET_SENSITIVE
 }

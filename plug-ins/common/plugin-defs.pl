@@ -109,7 +109,6 @@
     'photocopy' => { ui => 1 },
     'plasma' => { ui => 1 },
     'plugin-browser' => { ui => 1 },
-    'polar-coords' => { ui => 1 },
     'procedure-browser' => { ui => 1 },
     'qbist' => { ui => 1 },
     'red-eye-removal' => { ui => 1 },

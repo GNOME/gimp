@@ -124,7 +124,10 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:colorize", /* in gimp */
     "gegl:color-to-alpha", /* in gimp */
     "gegl:invert", /* in gimp */
+    "gegl:gaussian-blur", /* in gimp */
     "gegl:grey", /* in gimp */
+    "gegl:pixelize", /* in gimp */
+    "gegl:polar-coordinates", /* in gimp */
     "gegl:posterize", /* in gimp */
     "gegl:scale", /* in gimp */
     "gegl:translate", /* pointless */

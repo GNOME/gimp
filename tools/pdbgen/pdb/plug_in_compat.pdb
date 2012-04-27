@@ -165,6 +165,65 @@ CODE
     );
 }
 
+sub plug_in_polar_coords {
+    $blurb = 'Convert image to or from polar coordinates';
+
+    $help = <<'HELP';
+Remaps and image from rectangular coordinates to polar coordinates or
+vice versa.
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'circle', type => '0.0 <= float <= 100.0',
+	  desc => 'Circle depth in %' },
+	{ name => 'angle', type => '0.0 <= float < 360.0',
+	  desc => 'Offset angle' },
+	{ name => 'backwards', type => 'boolean',
+	  desc => 'Map backwards' },
+	{ name => 'inverse', type => 'boolean',
+	  desc => 'Map from top' },
+	{ name => 'polrec', type => 'boolean',
+	  desc => 'Polar to rectangular' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node =
+        gegl_node_new_child (NULL,
+                             "operation", "gegl:polar-coords",
+                             "depth",     circle,
+                             "angle",     angle,
+                             "bw",        backwards, /* XXX name */
+                             "top",       inverse,
+                             "polar",     polrec,
+                             NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Polar Coordinates"),
+                                     node);
+
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_vinvert {
     $blurb = 'Invert the brightness of each pixel';
 
@@ -223,6 +282,7 @@ CODE
 @procs = qw(plug_in_colortoalpha
             plug_in_pixelize
             plug_in_pixelize2
+            plug_in_polar_coords
             plug_in_vinvert);
 
 %exports = (app => [@procs], lib => []);

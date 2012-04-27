@@ -170,6 +170,58 @@ plug_in_pixelize2_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
+plug_in_polar_coords_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GValueArray  *args,
+                              GError            **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble circle;
+  gdouble angle;
+  gboolean backwards;
+  gboolean inverse;
+  gboolean polrec;
+
+  drawable = gimp_value_get_drawable (&args->values[2], gimp);
+  circle = g_value_get_double (&args->values[3]);
+  angle = g_value_get_double (&args->values[4]);
+  backwards = g_value_get_boolean (&args->values[5]);
+  inverse = g_value_get_boolean (&args->values[6]);
+  polrec = g_value_get_boolean (&args->values[7]);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node =
+            gegl_node_new_child (NULL,
+                                 "operation", "gegl:polar-coords",
+                                 "depth",     circle,
+                                 "angle",     angle,
+                                 "bw",        backwards, /* XXX name */
+                                 "top",       inverse,
+                                 "polar",     polrec,
+                                 NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Polar Coordinates"),
+                                         node);
+
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
 plug_in_vinvert_invoker (GimpProcedure      *procedure,
                          Gimp               *gimp,
                          GimpContext        *context,
@@ -341,6 +393,72 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                       "Pixel height (the decrease in vertical resolution)",
                                                       1, GIMP_MAX_IMAGE_SIZE, 1,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-polar-coords
+   */
+  procedure = gimp_procedure_new (plug_in_polar_coords_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-polar-coords");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-polar-coords",
+                                     "Convert image to or from polar coordinates",
+                                     "Remaps and image from rectangular coordinates to polar coordinates or vice versa.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1997",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("circle",
+                                                    "circle",
+                                                    "Circle depth in %",
+                                                    0.0, 100.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("angle",
+                                                    "angle",
+                                                    "Offset angle",
+                                                    0.0, 360.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("backwards",
+                                                     "backwards",
+                                                     "Map backwards",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("inverse",
+                                                     "inverse",
+                                                     "Map from top",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("polrec",
+                                                     "polrec",
+                                                     "Polar to rectangular",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
