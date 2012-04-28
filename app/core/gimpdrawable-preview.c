@@ -67,13 +67,12 @@ gimp_drawable_get_preview (GimpViewable *viewable,
                            gint          width,
                            gint          height)
 {
-  GimpDrawable *drawable;
-  GimpImage    *image;
+  GimpDrawable *drawable = GIMP_DRAWABLE (viewable);
+  GimpImage    *image    = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  drawable = GIMP_DRAWABLE (viewable);
-  image    = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  if (! image->gimp->config->layer_previews)
+  if (! image->gimp->config->layer_previews ||
+      /* XXX fixme enable drawable previews for > u8 */
+      gimp_drawable_get_precision (drawable) != GIMP_PRECISION_U8)
     return NULL;
 
   /* Ok prime the cache with a large preview if the cache is invalid */
@@ -149,7 +148,9 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
 
   image = gimp_item_get_image (item);
 
-  if (! image->gimp->config->layer_previews)
+  if (! image->gimp->config->layer_previews ||
+      /* XXX fixme enable drawable previews for > u8 */
+      gimp_drawable_get_precision (drawable) != GIMP_PRECISION_U8)
     return NULL;
 
   if (gimp_drawable_is_indexed (drawable))
@@ -172,7 +173,7 @@ gimp_drawable_preview_private (GimpDrawable *drawable,
                                gint          width,
                                gint          height)
 {
-  GimpTempBuf *ret_buf;
+  GimpTempBuf *ret_buf = NULL;
 
   if (! drawable->private->preview_valid ||
       ! (ret_buf = gimp_preview_cache_get (&drawable->private->preview_cache,
