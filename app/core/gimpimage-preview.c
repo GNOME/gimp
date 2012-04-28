@@ -23,6 +23,8 @@
 
 #include "base/tile-manager-preview.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "gimpimage.h"
 #include "gimpimage-preview.h"
 #include "gimpimage-private.h"
@@ -129,6 +131,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 {
   GimpImage      *image      = GIMP_IMAGE (viewable);
   GimpProjection *projection = gimp_image_get_projection (image);
+  const Babl     *format;
   GimpTempBuf    *buf;
   TileManager    *tiles;
   gdouble         scale_x;
@@ -142,14 +145,16 @@ gimp_image_get_new_preview (GimpViewable *viewable,
   level = gimp_projection_get_level (projection, scale_x, scale_y);
   tiles = gimp_projection_get_tiles_at_level (projection, level, &is_premult);
 
-  buf = tile_manager_get_preview (tiles,
-                                  gimp_projectable_get_format (GIMP_PROJECTABLE (image)),
-                                  width, height);
+  format = gimp_projectable_get_format (GIMP_PROJECTABLE (image));
+
+  format = gimp_babl_format (gimp_babl_format_get_base_type (format),
+                             GIMP_PRECISION_U8,
+                             babl_format_has_alpha (format));
+
+  buf = tile_manager_get_preview (tiles, format, width, height);
 
   if (is_premult)
     {
-      const Babl *format = gimp_temp_buf_get_format (buf);
-
       if (format == babl_format ("Y'A u8"))
         {
           gimp_temp_buf_set_format (buf, babl_format ("Y'aA u8"));
