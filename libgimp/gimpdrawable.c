@@ -762,9 +762,9 @@ gimp_drawable_get_format (gint32 drawable_ID)
           g_free (colormap);
 
           if (gimp_drawable_has_alpha (drawable_ID))
-            format = palette;
-          else
             format = palette_alpha;
+          else
+            format = palette;
         }
       else
         {
