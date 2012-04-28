@@ -76,7 +76,6 @@ gimp_operation_divide_mode_prepare (GeglOperation *operation)
   gegl_operation_set_format (operation, "output", format);
 }
 
-
 static gboolean
 gimp_operation_divide_mode_process (GeglOperation       *operation,
                                     void                *in_buf,
@@ -93,16 +92,16 @@ gimp_operation_divide_mode_process (GeglOperation       *operation,
   while (samples--)
     {
       gint b;
-      gfloat comp_alpha = in[ALPHA] * layer[ALPHA];
+      gfloat comp_alpha = MIN (in[ALPHA], layer[ALPHA]);
       gfloat new_alpha  = in[ALPHA] + (1 - in[ALPHA]) * comp_alpha;
       gfloat ratio      = comp_alpha / new_alpha;
 
       for (b = RED; b < ALPHA; b++)
         {
-          gfloat comp = in[b] / layer[b];
+          gfloat comp = (256 / 255.0 * in[b]) / (1 / 255.0 + layer[b]);
           comp = MIN (comp, 1);
 
-          out[b] = comp * ratio + in[b] * (1 - ratio);
+          out[b] = comp * ratio + in[b] * (1 - ratio) + 0.0001;
         }
 
       out[ALPHA] = in[ALPHA];

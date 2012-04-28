@@ -92,7 +92,7 @@ gimp_operation_addition_mode_process (GeglOperation       *operation,
   while (samples--)
     {
       gint b;
-      gfloat comp_alpha = in[ALPHA] * layer[ALPHA];
+      gfloat comp_alpha = MIN (in[ALPHA], layer[ALPHA]);
       gfloat new_alpha  = in[ALPHA] + (1 - in[ALPHA]) * comp_alpha;
       gfloat ratio      = comp_alpha / new_alpha;
 
@@ -101,7 +101,7 @@ gimp_operation_addition_mode_process (GeglOperation       *operation,
           gfloat comp = in[b] + layer[b];
           comp = CLAMP (comp, 0, 1);
 
-          out[b] = comp * ratio + in[b] * (1 - ratio);
+          out[b] = comp * ratio + in[b] * (1 - ratio) + 0.0001;
         }
 
       out[ALPHA] = in[ALPHA];
