@@ -28,16 +28,31 @@
 #include "gimpmaskundo.h"
 
 
-static void     gimp_mask_undo_constructed (GObject             *object);
+enum
+{
+  PROP_0,
+  PROP_CONVERT_PRECISION
+};
 
-static gint64   gimp_mask_undo_get_memsize (GimpObject          *object,
-                                            gint64              *gui_size);
 
-static void     gimp_mask_undo_pop         (GimpUndo            *undo,
-                                            GimpUndoMode         undo_mode,
-                                            GimpUndoAccumulator *accum);
-static void     gimp_mask_undo_free        (GimpUndo            *undo,
-                                            GimpUndoMode         undo_mode);
+static void     gimp_mask_undo_constructed  (GObject             *object);
+static void     gimp_mask_undo_set_property (GObject             *object,
+                                             guint                property_id,
+                                             const GValue        *value,
+                                             GParamSpec          *pspec);
+static void     gimp_mask_undo_get_property (GObject             *object,
+                                             guint                property_id,
+                                             GValue              *value,
+                                             GParamSpec          *pspec);
+
+static gint64   gimp_mask_undo_get_memsize  (GimpObject          *object,
+                                             gint64              *gui_size);
+
+static void     gimp_mask_undo_pop          (GimpUndo            *undo,
+                                             GimpUndoMode         undo_mode,
+                                             GimpUndoAccumulator *accum);
+static void     gimp_mask_undo_free         (GimpUndo            *undo,
+                                             GimpUndoMode         undo_mode);
 
 
 G_DEFINE_TYPE (GimpMaskUndo, gimp_mask_undo, GIMP_TYPE_ITEM_UNDO)
@@ -53,11 +68,20 @@ gimp_mask_undo_class_init (GimpMaskUndoClass *klass)
   GimpUndoClass   *undo_class        = GIMP_UNDO_CLASS (klass);
 
   object_class->constructed      = gimp_mask_undo_constructed;
+  object_class->set_property     = gimp_mask_undo_set_property;
+  object_class->get_property     = gimp_mask_undo_get_property;
 
   gimp_object_class->get_memsize = gimp_mask_undo_get_memsize;
 
   undo_class->pop                = gimp_mask_undo_pop;
   undo_class->free               = gimp_mask_undo_free;
+
+  g_object_class_install_property (object_class, PROP_CONVERT_PRECISION,
+                                   g_param_spec_boolean ("convert-precision",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -70,6 +94,7 @@ gimp_mask_undo_constructed (GObject *object)
 {
   GimpMaskUndo *mask_undo = GIMP_MASK_UNDO (object);
   GimpChannel  *channel;
+  GimpDrawable *drawable;
   gint          x1, y1, x2, y2;
 
   if (G_OBJECT_CLASS (parent_class)->constructed)
@@ -77,12 +102,11 @@ gimp_mask_undo_constructed (GObject *object)
 
   g_assert (GIMP_IS_CHANNEL (GIMP_ITEM_UNDO (object)->item));
 
-  channel = GIMP_CHANNEL (GIMP_ITEM_UNDO (object)->item);
+  channel  = GIMP_CHANNEL (GIMP_ITEM_UNDO (object)->item);
+  drawable = GIMP_DRAWABLE (channel);
 
   if (gimp_channel_bounds (channel, &x1, &y1, &x2, &y2))
     {
-      GimpDrawable *drawable = GIMP_DRAWABLE (channel);
-
       mask_undo->buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                            x2 - x1, y2 - y1),
                                            gimp_drawable_get_format (drawable));
@@ -94,6 +118,48 @@ gimp_mask_undo_constructed (GObject *object)
 
       mask_undo->x = x1;
       mask_undo->y = y1;
+    }
+
+  mask_undo->format = gimp_drawable_get_format (drawable);
+}
+
+static void
+gimp_mask_undo_set_property (GObject      *object,
+                             guint         property_id,
+                             const GValue *value,
+                             GParamSpec   *pspec)
+{
+  GimpMaskUndo *mask_undo = GIMP_MASK_UNDO (object);
+
+  switch (property_id)
+    {
+    case PROP_CONVERT_PRECISION:
+      mask_undo->convert_precision = g_value_get_boolean (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_mask_undo_get_property (GObject    *object,
+                             guint       property_id,
+                             GValue     *value,
+                             GParamSpec *pspec)
+{
+  GimpMaskUndo *mask_undo = GIMP_MASK_UNDO (object);
+
+  switch (property_id)
+    {
+    case PROP_CONVERT_PRECISION:
+      g_value_set_boolean (value, mask_undo->convert_precision);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
     }
 }
 
@@ -119,6 +185,7 @@ gimp_mask_undo_pop (GimpUndo            *undo,
   GimpChannel  *channel   = GIMP_CHANNEL (GIMP_ITEM_UNDO (undo)->item);
   GimpDrawable *drawable  = GIMP_DRAWABLE (channel);
   GeglBuffer   *new_buffer;
+  const Babl   *format;
   gint          x1, y1, x2, y2;
   gint          width  = 0;
   gint          height = 0;
@@ -141,6 +208,22 @@ gimp_mask_undo_pop (GimpUndo            *undo,
   else
     {
       new_buffer = NULL;
+    }
+
+  format = gimp_drawable_get_format (drawable);
+
+  if (mask_undo->convert_precision)
+    {
+      GeglBuffer *buffer;
+      gint        width  = gimp_item_get_width  (GIMP_ITEM (channel));
+      gint        height = gimp_item_get_height (GIMP_ITEM (channel));
+
+      buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+                                     mask_undo->format);
+      gegl_buffer_clear (buffer, NULL);
+
+      gimp_drawable_set_buffer (drawable, FALSE, NULL, buffer);
+      g_object_unref (buffer);
     }
 
   if (mask_undo->buffer)
@@ -183,6 +266,7 @@ gimp_mask_undo_pop (GimpUndo            *undo,
   mask_undo->buffer = new_buffer;
   mask_undo->x      = x1;
   mask_undo->y      = y1;
+  mask_undo->format = format;
 
   gimp_drawable_update (GIMP_DRAWABLE (channel),
                         0, 0,

@@ -264,9 +264,9 @@ gimp_image_undo_push_drawable_mod (GimpImage    *image,
 }
 
 
-/***************/
-/*  Mask Undo  */
-/***************/
+/****************/
+/*  Mask Undos  */
+/****************/
 
 GimpUndo *
 gimp_image_undo_push_mask (GimpImage   *image,
@@ -283,6 +283,25 @@ gimp_image_undo_push_mask (GimpImage   *image,
                                GIMP_DIRTY_SELECTION :
                                GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
                                "item", mask,
+                               NULL);
+}
+
+GimpUndo *
+gimp_image_undo_push_mask_precision (GimpImage   *image,
+                                     const gchar *undo_desc,
+                                     GimpChannel *mask)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_CHANNEL (mask), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (mask)), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_MASK_UNDO,
+                               GIMP_UNDO_MASK, undo_desc,
+                               GIMP_IS_SELECTION (mask) ?
+                               GIMP_DIRTY_SELECTION :
+                               GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
+                               "item",              mask,
+                               "convert-precision", TRUE,
                                NULL);
 }
 

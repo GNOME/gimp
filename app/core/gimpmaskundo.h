@@ -36,9 +36,12 @@ struct _GimpMaskUndo
 {
   GimpItemUndo  parent_instance;
 
+  gboolean      convert_precision;
+
   GeglBuffer   *buffer;
   gint          x;
   gint          y;
+  const Babl   *format;
 };
 
 struct _GimpMaskUndoClass

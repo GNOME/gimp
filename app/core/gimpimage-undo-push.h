@@ -70,9 +70,12 @@ GimpUndo * gimp_image_undo_push_drawable_mod        (GimpImage     *image,
                                                      gboolean       copy_buffer);
 
 
-/*  mask undo  */
+/*  mask undos  */
 
 GimpUndo * gimp_image_undo_push_mask                (GimpImage     *image,
+                                                     const gchar   *undo_desc,
+                                                     GimpChannel   *mask);
+GimpUndo * gimp_image_undo_push_mask_precision      (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpChannel   *mask);
 
