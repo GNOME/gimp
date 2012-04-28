@@ -44,11 +44,6 @@
 #include "gimp-intl.h"
 
 
-static gboolean     gimp_perspective_clone_start      (GimpPaintCore    *paint_core,
-                                                       GimpDrawable     *drawable,
-                                                       GimpPaintOptions *paint_options,
-                                                       const GimpCoords *coords,
-                                                       GError          **error);
 static void         gimp_perspective_clone_paint      (GimpPaintCore    *paint_core,
                                                        GimpDrawable     *drawable,
                                                        GimpPaintOptions *paint_options,
@@ -99,7 +94,6 @@ gimp_perspective_clone_class_init (GimpPerspectiveCloneClass *klass)
   GimpPaintCoreClass  *paint_core_class  = GIMP_PAINT_CORE_CLASS (klass);
   GimpSourceCoreClass *source_core_class = GIMP_SOURCE_CORE_CLASS (klass);
 
-  paint_core_class->start       = gimp_perspective_clone_start;
   paint_core_class->paint       = gimp_perspective_clone_paint;
 
   source_core_class->get_source = gimp_perspective_clone_get_source;
@@ -116,33 +110,6 @@ gimp_perspective_clone_init (GimpPerspectiveClone *clone)
 
   gimp_matrix3_identity (&clone->transform);
   gimp_matrix3_identity (&clone->transform_inv);
-}
-
-static gboolean
-gimp_perspective_clone_start (GimpPaintCore     *paint_core,
-                              GimpDrawable      *drawable,
-                              GimpPaintOptions  *paint_options,
-                              const GimpCoords  *coords,
-                              GError           **error)
-{
-  GimpSourceCore *source_core = GIMP_SOURCE_CORE (paint_core);
-
-  if (! GIMP_PAINT_CORE_CLASS (parent_class)->start (paint_core, drawable,
-                                                     paint_options, coords,
-                                                     error))
-    {
-      return FALSE;
-    }
-
-  if (! source_core->set_source && gimp_drawable_is_indexed (drawable))
-    {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Perspective Clone does not operate on "
-			     "indexed layers."));
-      return FALSE;
-    }
-
-  return TRUE;
 }
 
 static void
