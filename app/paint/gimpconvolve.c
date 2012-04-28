@@ -28,7 +28,6 @@
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
-#include "core/gimpdynamicsoutput.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
 #include "core/gimptempbuf.h"
@@ -129,8 +128,6 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   GimpConvolveOptions *options    = GIMP_CONVOLVE_OPTIONS (paint_options);
   GimpContext         *context    = GIMP_CONTEXT (paint_options);
   GimpDynamics        *dynamics   = GIMP_BRUSH_CORE (paint_core)->dynamics;
-  GimpDynamicsOutput  *opacity_output;
-  GimpDynamicsOutput  *rate_output;
   GimpImage           *image;
   GeglBuffer          *paint_buffer;
   gint                 paint_buffer_x;
@@ -143,16 +140,14 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  opacity_output = gimp_dynamics_get_output (dynamics,
-                                             GIMP_DYNAMICS_OUTPUT_OPACITY);
-
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
-  opacity = gimp_dynamics_output_get_linear_value (opacity_output,
-                                                   coords,
-                                                   paint_options,
-                                                   fade_point);
+  opacity = gimp_dynamics_get_linear_value (dynamics,
+                                            GIMP_DYNAMICS_OUTPUT_OPACITY,
+                                            coords,
+                                            paint_options,
+                                            fade_point);
   if (opacity == 0.0)
     return;
 
@@ -163,14 +158,12 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   if (! paint_buffer)
     return;
 
-  rate_output = gimp_dynamics_get_output (dynamics,
-                                          GIMP_DYNAMICS_OUTPUT_RATE);
-
   rate = (options->rate *
-          gimp_dynamics_output_get_linear_value (rate_output,
-                                                 coords,
-                                                 paint_options,
-                                                 fade_point));
+          gimp_dynamics_get_linear_value (dynamics,
+                                          GIMP_DYNAMICS_OUTPUT_RATE,
+                                          coords,
+                                          paint_options,
+                                          fade_point));
 
   gimp_convolve_calculate_matrix (convolve, options->type,
                                   gimp_temp_buf_get_width  (brush_core->brush->mask) / 2,

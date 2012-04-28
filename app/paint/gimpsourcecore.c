@@ -28,7 +28,6 @@
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
-#include "core/gimpdynamicsoutput.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
@@ -346,36 +345,33 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
                          const GimpCoords *coords)
 
 {
-  GimpPaintCore      *paint_core   = GIMP_PAINT_CORE (source_core);
-  GimpSourceOptions  *options      = GIMP_SOURCE_OPTIONS (paint_options);
-  GimpDynamics       *dynamics     = GIMP_BRUSH_CORE (paint_core)->dynamics;
-  GimpDynamicsOutput *opacity_output;
-  GimpImage          *image        = gimp_item_get_image (GIMP_ITEM (drawable));
-  GimpPickable       *src_pickable = NULL;
-  GeglBuffer         *src_buffer   = NULL;
-  GeglRectangle       src_rect;
-  gint                src_offset_x;
-  gint                src_offset_y;
-  GeglBuffer         *paint_buffer;
-  gint                paint_buffer_x;
-  gint                paint_buffer_y;
-  gint                paint_area_offset_x;
-  gint                paint_area_offset_y;
-  gint                paint_area_width;
-  gint                paint_area_height;
-  gdouble             fade_point;
-  gdouble             opacity;
-
-  opacity_output = gimp_dynamics_get_output (dynamics,
-                                             GIMP_DYNAMICS_OUTPUT_OPACITY);
+  GimpPaintCore     *paint_core   = GIMP_PAINT_CORE (source_core);
+  GimpSourceOptions *options      = GIMP_SOURCE_OPTIONS (paint_options);
+  GimpDynamics      *dynamics     = GIMP_BRUSH_CORE (paint_core)->dynamics;
+  GimpImage         *image        = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpPickable      *src_pickable = NULL;
+  GeglBuffer        *src_buffer   = NULL;
+  GeglRectangle      src_rect;
+  gint               src_offset_x;
+  gint               src_offset_y;
+  GeglBuffer        *paint_buffer;
+  gint               paint_buffer_x;
+  gint               paint_buffer_y;
+  gint               paint_area_offset_x;
+  gint               paint_area_offset_y;
+  gint               paint_area_width;
+  gint               paint_area_height;
+  gdouble            fade_point;
+  gdouble            opacity;
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
-  opacity = gimp_dynamics_output_get_linear_value (opacity_output,
-                                                   coords,
-                                                   paint_options,
-                                                   fade_point);
+  opacity = gimp_dynamics_get_linear_value (dynamics,
+                                            GIMP_DYNAMICS_OUTPUT_OPACITY,
+                                            coords,
+                                            paint_options,
+                                            fade_point);
   if (opacity == 0.0)
     return;
 

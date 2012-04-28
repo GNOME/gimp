@@ -26,7 +26,6 @@
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
-#include "core/gimpdynamicsoutput.h"
 #include "core/gimpimage.h"
 
 #include "gimperaser.h"
@@ -103,31 +102,27 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
                     GimpPaintOptions *paint_options,
                     const GimpCoords *coords)
 {
-  GimpEraserOptions  *options  = GIMP_ERASER_OPTIONS (paint_options);
-  GimpContext        *context  = GIMP_CONTEXT (paint_options);
-  GimpDynamics       *dynamics = GIMP_BRUSH_CORE (paint_core)->dynamics;
-  GimpDynamicsOutput *opacity_output;
-  GimpDynamicsOutput *force_output;
-  gdouble             fade_point;
-  gdouble             opacity;
-  GeglBuffer         *paint_buffer;
-  gint                paint_buffer_x;
-  gint                paint_buffer_y;
-  GimpRGB             background;
-  GeglColor          *color;
-  gdouble             force;
+  GimpEraserOptions *options  = GIMP_ERASER_OPTIONS (paint_options);
+  GimpContext       *context  = GIMP_CONTEXT (paint_options);
+  GimpDynamics      *dynamics = GIMP_BRUSH_CORE (paint_core)->dynamics;
+  GimpImage         *image    = gimp_item_get_image (GIMP_ITEM (drawable));
+  gdouble            fade_point;
+  gdouble            opacity;
+  GeglBuffer        *paint_buffer;
+  gint               paint_buffer_x;
+  gint               paint_buffer_y;
+  GimpRGB            background;
+  GeglColor         *color;
+  gdouble            force;
 
-  opacity_output = gimp_dynamics_get_output (dynamics,
-                                             GIMP_DYNAMICS_OUTPUT_OPACITY);
-
-  fade_point = gimp_paint_options_get_fade (paint_options,
-                                            gimp_item_get_image (GIMP_ITEM (drawable)),
+  fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
-  opacity = gimp_dynamics_output_get_linear_value (opacity_output,
-                                                   coords,
-                                                   paint_options,
-                                                   fade_point);
+  opacity = gimp_dynamics_get_linear_value (dynamics,
+                                            GIMP_DYNAMICS_OUTPUT_OPACITY,
+                                            coords,
+                                            paint_options,
+                                            fade_point);
   if (opacity == 0.0)
     return;
 
@@ -144,13 +139,11 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   gegl_buffer_set_color (paint_buffer, NULL, color);
   g_object_unref (color);
 
-  force_output = gimp_dynamics_get_output (dynamics,
-                                           GIMP_DYNAMICS_OUTPUT_FORCE);
-
-  force = gimp_dynamics_output_get_linear_value (force_output,
-                                                 coords,
-                                                 paint_options,
-                                                 fade_point);
+  force = gimp_dynamics_get_linear_value (dynamics,
+                                          GIMP_DYNAMICS_OUTPUT_FORCE,
+                                          coords,
+                                          paint_options,
+                                          fade_point);
 
   gimp_brush_core_paste_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
                                 coords,

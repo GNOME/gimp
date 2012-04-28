@@ -32,7 +32,6 @@
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
-#include "core/gimpdynamicsoutput.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
 #include "core/gimptempbuf.h"
@@ -112,9 +111,6 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   GimpBrushCore            *brush_core = GIMP_BRUSH_CORE (paint_core);
   GimpContext              *context    = GIMP_CONTEXT (paint_options);
   GimpDynamics             *dynamics   = brush_core->dynamics;
-  GimpDynamicsOutput       *opacity_output;
-  GimpDynamicsOutput       *color_output;
-  GimpDynamicsOutput       *force_output;
   GimpImage                *image;
   GimpRGB                   gradient_color;
   GeglBuffer               *paint_buffer;
@@ -127,16 +123,14 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  opacity_output = gimp_dynamics_get_output (dynamics,
-                                             GIMP_DYNAMICS_OUTPUT_OPACITY);
-
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
-  opacity *= gimp_dynamics_output_get_linear_value (opacity_output,
-                                                    coords,
-                                                    paint_options,
-                                                    fade_point);
+  opacity *= gimp_dynamics_get_linear_value (dynamics,
+                                             GIMP_DYNAMICS_OUTPUT_OPACITY,
+                                             coords,
+                                             paint_options,
+                                             fade_point);
   if (opacity == 0.0)
     return;
 
@@ -149,13 +143,11 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
 
   paint_appl_mode = paint_options->application_mode;
 
-  color_output = gimp_dynamics_get_output (dynamics,
-                                           GIMP_DYNAMICS_OUTPUT_COLOR);
-
-  grad_point = gimp_dynamics_output_get_linear_value (color_output,
-                                                      coords,
-                                                      paint_options,
-                                                      fade_point);
+  grad_point = gimp_dynamics_get_linear_value (dynamics,
+                                               GIMP_DYNAMICS_OUTPUT_COLOR,
+                                               coords,
+                                               paint_options,
+                                               fade_point);
 
   if (gimp_paint_options_get_gradient_color (paint_options, image,
                                              grad_point,
@@ -204,13 +196,11 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
       g_object_unref (color);
     }
 
-  force_output = gimp_dynamics_get_output (dynamics,
-                                           GIMP_DYNAMICS_OUTPUT_FORCE);
-
-  force = gimp_dynamics_output_get_linear_value (force_output,
-                                                 coords,
-                                                 paint_options,
-                                                 fade_point);
+  force = gimp_dynamics_get_linear_value (dynamics,
+                                          GIMP_DYNAMICS_OUTPUT_FORCE,
+                                          coords,
+                                          paint_options,
+                                          fade_point);
 
   /* finally, let the brush core paste the colored area on the canvas */
   gimp_brush_core_paste_canvas (brush_core, drawable,

@@ -52,5 +52,23 @@ GimpData           * gimp_dynamics_get_standard (GimpContext            *context
 GimpDynamicsOutput * gimp_dynamics_get_output   (GimpDynamics           *dynamics,
                                                  GimpDynamicsOutputType  type);
 
+gdouble         gimp_dynamics_get_linear_value  (GimpDynamics           *dynamics,
+                                                 GimpDynamicsOutputType  type,
+                                                 const GimpCoords       *coords,
+                                                 GimpPaintOptions       *options,
+                                                 gdouble                 fade_point);
+
+gdouble         gimp_dynamics_get_angular_value (GimpDynamics           *dynamics,
+                                                 GimpDynamicsOutputType  type,
+                                                 const GimpCoords       *coords,
+                                                 GimpPaintOptions       *options,
+                                                 gdouble                 fade_point);
+
+gdouble         gimp_dynamics_get_aspect_value  (GimpDynamics           *dynamics,
+                                                 GimpDynamicsOutputType  type,
+                                                 const GimpCoords       *coords,
+                                                 GimpPaintOptions       *options,
+                                                 gdouble                 fade_point);
+
 
 #endif  /*  __GIMP_DYNAMICS_H__  */

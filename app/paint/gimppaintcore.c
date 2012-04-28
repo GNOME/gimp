@@ -911,7 +911,8 @@ gimp_paint_core_smooth_coords (GimpPaintCore    *core,
             {
               /* We use gaussian function with velocity as a window function */
               velocity_sum += next_coords->velocity * 100;
-              rate = gaussian_weight * exp (-velocity_sum*velocity_sum / (2 * gaussian_weight2));
+              rate = gaussian_weight * exp (-velocity_sum * velocity_sum /
+                                            (2 * gaussian_weight2));
             }
 
           scale_sum += rate;
@@ -924,7 +925,5 @@ gimp_paint_core_smooth_coords (GimpPaintCore    *core,
           coords->x /= scale_sum;
           coords->y /= scale_sum;
         }
-
     }
-
 }

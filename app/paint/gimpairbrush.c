@@ -28,7 +28,6 @@
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
-#include "core/gimpdynamicsoutput.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
 
@@ -139,11 +138,10 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
 
       if ((options->rate != 0.0) && (!options->motion_only))
         {
-          GimpImage          *image = gimp_item_get_image (GIMP_ITEM (drawable));
-          GimpDynamicsOutput *rate_output;
-          gdouble             fade_point;
-          gdouble             dynamic_rate;
-          gint                timeout;
+          GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          gdouble    fade_point;
+          gdouble    dynamic_rate;
+          gint       timeout;
 
           fade_point = gimp_paint_options_get_fade (paint_options, image,
                                                     paint_core->pixel_dist);
@@ -151,13 +149,11 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
           airbrush->drawable      = drawable;
           airbrush->paint_options = paint_options;
 
-          rate_output = gimp_dynamics_get_output (dynamics,
-                                                  GIMP_DYNAMICS_OUTPUT_RATE);
-
-          dynamic_rate = gimp_dynamics_output_get_linear_value (rate_output,
-                                                                coords,
-                                                                paint_options,
-                                                                fade_point);
+          dynamic_rate = gimp_dynamics_get_linear_value (dynamics,
+                                                         GIMP_DYNAMICS_OUTPUT_RATE,
+                                                         coords,
+                                                         paint_options,
+                                                         fade_point);
 
           timeout = 10000 / (options->rate * dynamic_rate);
 
@@ -189,23 +185,21 @@ gimp_airbrush_motion (GimpPaintCore    *paint_core,
                       const GimpCoords *coords)
 
 {
-  GimpAirbrushOptions *options = GIMP_AIRBRUSH_OPTIONS (paint_options);
-  GimpImage           *image   = gimp_item_get_image (GIMP_ITEM (drawable));
-  GimpDynamicsOutput  *flow_output;
+  GimpAirbrushOptions *options  = GIMP_AIRBRUSH_OPTIONS (paint_options);
+  GimpDynamics        *dynamics = GIMP_BRUSH_CORE (paint_core)->dynamics;
+  GimpImage           *image    = gimp_item_get_image (GIMP_ITEM (drawable));
   gdouble              opacity;
   gdouble              fade_point;
-
-  flow_output = gimp_dynamics_get_output (GIMP_BRUSH_CORE (paint_core)->dynamics,
-                                          GIMP_DYNAMICS_OUTPUT_FLOW);
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
   opacity = (options->flow / 100.0 *
-             gimp_dynamics_output_get_linear_value (flow_output,
-                                                    coords,
-                                                    paint_options,
-                                                    fade_point));
+             gimp_dynamics_get_linear_value (dynamics,
+                                             GIMP_DYNAMICS_OUTPUT_FLOW,
+                                             coords,
+                                             paint_options,
+                                             fade_point));
 
   _gimp_paintbrush_motion (paint_core, drawable, paint_options, coords, opacity);
 }

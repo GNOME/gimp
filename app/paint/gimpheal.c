@@ -31,7 +31,6 @@
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
-#include "core/gimpdynamicsoutput.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
@@ -475,27 +474,24 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                   gint              paint_area_width,
                   gint              paint_area_height)
 {
-  GimpPaintCore      *paint_core = GIMP_PAINT_CORE (source_core);
-  GimpContext        *context    = GIMP_CONTEXT (paint_options);
-  GimpDynamics       *dynamics   = GIMP_BRUSH_CORE (paint_core)->dynamics;
-  GimpDynamicsOutput *hardness_output;
-  GimpImage          *image      = gimp_item_get_image (GIMP_ITEM (drawable));
-  GeglBuffer         *src_copy;
-  GeglBuffer         *mask_buffer;
-  const GimpTempBuf  *mask_buf;
-  gdouble             fade_point;
-  gdouble             hardness;
-
-  hardness_output = gimp_dynamics_get_output (dynamics,
-                                              GIMP_DYNAMICS_OUTPUT_HARDNESS);
+  GimpPaintCore     *paint_core = GIMP_PAINT_CORE (source_core);
+  GimpContext       *context    = GIMP_CONTEXT (paint_options);
+  GimpDynamics      *dynamics   = GIMP_BRUSH_CORE (paint_core)->dynamics;
+  GimpImage         *image      = gimp_item_get_image (GIMP_ITEM (drawable));
+  GeglBuffer        *src_copy;
+  GeglBuffer        *mask_buffer;
+  const GimpTempBuf *mask_buf;
+  gdouble            fade_point;
+  gdouble            hardness;
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
-  hardness = gimp_dynamics_output_get_linear_value (hardness_output,
-                                                    coords,
-                                                    paint_options,
-                                                    fade_point);
+  hardness = gimp_dynamics_get_linear_value (dynamics,
+                                             GIMP_DYNAMICS_OUTPUT_HARDNESS,
+                                             coords,
+                                             paint_options,
+                                             fade_point);
 
   mask_buf = gimp_brush_core_get_brush_mask (GIMP_BRUSH_CORE (source_core),
                                              coords,

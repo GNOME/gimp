@@ -30,7 +30,6 @@
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
-#include "core/gimpdynamicsoutput.h"
 #include "core/gimpimage.h"
 
 #include "gimpdodgeburn.h"
@@ -115,9 +114,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   GimpDodgeBurnOptions *options   = GIMP_DODGE_BURN_OPTIONS (paint_options);
   GimpContext          *context   = GIMP_CONTEXT (paint_options);
   GimpDynamics         *dynamics  = GIMP_BRUSH_CORE (paint_core)->dynamics;
-  GimpDynamicsOutput   *opacity_output;
-  GimpDynamicsOutput   *hardness_output;
-  GimpImage            *image;
+  GimpImage            *image     = gimp_item_get_image (GIMP_ITEM (drawable));
   GeglBuffer           *paint_buffer;
   gint                  paint_buffer_x;
   gint                  paint_buffer_y;
@@ -125,18 +122,14 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   gdouble               opacity;
   gdouble               hardness;
 
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  opacity_output = gimp_dynamics_get_output (dynamics,
-                                             GIMP_DYNAMICS_OUTPUT_OPACITY);
-
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
-  opacity = gimp_dynamics_output_get_linear_value (opacity_output,
-                                                   coords,
-                                                   paint_options,
-                                                   fade_point);
+  opacity = gimp_dynamics_get_linear_value (dynamics,
+                                            GIMP_DYNAMICS_OUTPUT_OPACITY,
+                                            coords,
+                                            paint_options,
+                                            fade_point);
   if (opacity == 0.0)
     return;
 
@@ -159,13 +152,11 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
                        options->type,
                        options->mode);
 
-  hardness_output = gimp_dynamics_get_output (dynamics,
-                                              GIMP_DYNAMICS_OUTPUT_HARDNESS);
-
-  hardness = gimp_dynamics_output_get_linear_value (hardness_output,
-                                                    coords,
-                                                    paint_options,
-                                                    fade_point);
+  hardness = gimp_dynamics_get_linear_value (dynamics,
+                                             GIMP_DYNAMICS_OUTPUT_HARDNESS,
+                                             coords,
+                                             paint_options,
+                                             fade_point);
 
   /* Replace the newly dodgedburned area (paint_area) to the image */
   gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,

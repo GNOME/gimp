@@ -553,6 +553,57 @@ gimp_dynamics_get_output (GimpDynamics           *dynamics,
     }
 }
 
+gdouble
+gimp_dynamics_get_linear_value (GimpDynamics           *dynamics,
+                                GimpDynamicsOutputType  type,
+                                const GimpCoords       *coords,
+                                GimpPaintOptions       *options,
+                                gdouble                 fade_point)
+{
+  GimpDynamicsOutput *output;
+
+  g_return_val_if_fail (GIMP_IS_DYNAMICS (dynamics), 0.0);
+
+  output = gimp_dynamics_get_output (dynamics, type);
+
+  return gimp_dynamics_output_get_linear_value (output, coords,
+                                                options, fade_point);
+}
+
+gdouble
+gimp_dynamics_get_angular_value (GimpDynamics           *dynamics,
+                                 GimpDynamicsOutputType  type,
+                                 const GimpCoords       *coords,
+                                 GimpPaintOptions       *options,
+                                 gdouble                 fade_point)
+{
+  GimpDynamicsOutput *output;
+
+  g_return_val_if_fail (GIMP_IS_DYNAMICS (dynamics), 0.0);
+
+  output = gimp_dynamics_get_output (dynamics, type);
+
+  return gimp_dynamics_output_get_angular_value (output, coords,
+                                                 options, fade_point);
+}
+
+gdouble
+gimp_dynamics_get_aspect_value (GimpDynamics           *dynamics,
+                                GimpDynamicsOutputType  type,
+                                const GimpCoords       *coords,
+                                GimpPaintOptions       *options,
+                                gdouble                 fade_point)
+{
+  GimpDynamicsOutput *output;
+
+  g_return_val_if_fail (GIMP_IS_DYNAMICS (dynamics), 0.0);
+
+  output = gimp_dynamics_get_output (dynamics, type);
+
+  return gimp_dynamics_output_get_aspect_value (output, coords,
+                                                options, fade_point);
+}
+
 
 /*  private functions  */
 

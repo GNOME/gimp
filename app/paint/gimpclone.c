@@ -31,7 +31,6 @@
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
-#include "core/gimpdynamicsoutput.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimppattern.h"
@@ -149,14 +148,13 @@ gimp_clone_motion (GimpSourceCore   *source_core,
                    gint              paint_area_width,
                    gint              paint_area_height)
 {
-  GimpPaintCore      *paint_core     = GIMP_PAINT_CORE (source_core);
-  GimpCloneOptions   *options        = GIMP_CLONE_OPTIONS (paint_options);
-  GimpSourceOptions  *source_options = GIMP_SOURCE_OPTIONS (paint_options);
-  GimpContext        *context        = GIMP_CONTEXT (paint_options);
-  GimpImage          *image          = gimp_item_get_image (GIMP_ITEM (drawable));
-  GimpDynamicsOutput *force_output;
-  gdouble             fade_point;
-  gdouble             force;
+  GimpPaintCore     *paint_core     = GIMP_PAINT_CORE (source_core);
+  GimpCloneOptions  *options        = GIMP_CLONE_OPTIONS (paint_options);
+  GimpSourceOptions *source_options = GIMP_SOURCE_OPTIONS (paint_options);
+  GimpContext       *context        = GIMP_CONTEXT (paint_options);
+  GimpImage         *image          = gimp_item_get_image (GIMP_ITEM (drawable));
+  gdouble            fade_point;
+  gdouble            force;
 
   switch (options->clone_type)
     {
@@ -195,16 +193,14 @@ gimp_clone_motion (GimpSourceCore   *source_core,
       break;
     }
 
-  force_output = gimp_dynamics_get_output (GIMP_BRUSH_CORE (paint_core)->dynamics,
-                                           GIMP_DYNAMICS_OUTPUT_FORCE);
-
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
-  force = gimp_dynamics_output_get_linear_value (force_output,
-                                                 coords,
-                                                 paint_options,
-                                                 fade_point);
+  force = gimp_dynamics_get_linear_value (GIMP_BRUSH_CORE (paint_core)->dynamics,
+                                          GIMP_DYNAMICS_OUTPUT_FORCE,
+                                          coords,
+                                          paint_options,
+                                          fade_point);
 
   gimp_brush_core_paste_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
                                 coords,

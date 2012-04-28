@@ -228,7 +228,6 @@ gimp_brush_core_init (GimpBrushCore *core)
           core->subsample_brushes[i][j] = NULL;
         }
     }
-
 }
 
 static void
@@ -323,21 +322,17 @@ gimp_brush_core_pre_paint (GimpPaintCore    *paint_core,
 
           if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_dynamic_transforming_brush)
             {
-              GimpDynamicsOutput *size_output;
-
-              size_output = gimp_dynamics_get_output (core->dynamics,
-                                                      GIMP_DYNAMICS_OUTPUT_SIZE);
-
               fade_point = gimp_paint_options_get_fade (paint_options, image,
                                                         paint_core->pixel_dist);
 
               scale = paint_options->brush_size /
                       MAX (gimp_temp_buf_get_width  (core->main_brush->mask),
                            gimp_temp_buf_get_height (core->main_brush->mask)) *
-                      gimp_dynamics_output_get_linear_value (size_output,
-                                                             &current_coords,
-                                                             paint_options,
-                                                             fade_point);
+                      gimp_dynamics_get_linear_value (core->dynamics,
+                                                      GIMP_DYNAMICS_OUTPUT_SIZE,
+                                                      &current_coords,
+                                                      paint_options,
+                                                      fade_point);
 
               if (scale < 0.0000001)
                 return FALSE;
@@ -735,19 +730,16 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
 
       if (core->jitter > 0.0)
         {
-          GimpDynamicsOutput *jitter_output;
-          gdouble             dyn_jitter;
-          gdouble             jitter_dist;
-          gint32              jitter_angle;
-
-          jitter_output = gimp_dynamics_get_output (core->dynamics,
-                                                    GIMP_DYNAMICS_OUTPUT_JITTER);
+          gdouble dyn_jitter;
+          gdouble jitter_dist;
+          gint32  jitter_angle;
 
           dyn_jitter = (core->jitter *
-                        gimp_dynamics_output_get_linear_value (jitter_output,
-                                                               &current_coords,
-                                                               paint_options,
-                                                               fade_point));
+                        gimp_dynamics_get_linear_value (core->dynamics,
+                                                        GIMP_DYNAMICS_OUTPUT_JITTER,
+                                                        &current_coords,
+                                                        paint_options,
+                                                        fade_point));
 
           jitter_dist  = g_rand_double_range (core->rand, 0, dyn_jitter);
           jitter_angle = g_rand_int_range (core->rand,
@@ -769,7 +761,6 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
 
       gimp_paint_core_paint (paint_core, drawable, paint_options,
                              GIMP_PAINT_STATE_MOTION, time);
-
     }
 
   current_coords.x        = last_coords.x        + delta_vec.x;
@@ -1319,7 +1310,6 @@ gimp_brush_core_solidify_mask (GimpBrushCore     *core,
   gint          dest_offset_y     = 0;
   gint          brush_mask_width  = gimp_temp_buf_get_width  (brush_mask);
   gint          brush_mask_height = gimp_temp_buf_get_height (brush_mask);
-
   gint          i, j;
 
   if ((brush_mask_width % 2) == 0)
@@ -1504,26 +1494,23 @@ gimp_brush_core_eval_transform_dynamics (GimpBrushCore     *core,
                                                     paint_core->pixel_dist);
         }
 
-      output = gimp_dynamics_get_output (core->dynamics,
-                                         GIMP_DYNAMICS_OUTPUT_SIZE);
-      core->scale *= gimp_dynamics_output_get_linear_value (output,
-                                                            coords,
-                                                            paint_options,
-                                                            fade_point);
+      core->scale *= gimp_dynamics_get_linear_value (core->dynamics,
+                                                     GIMP_DYNAMICS_OUTPUT_SIZE,
+                                                     coords,
+                                                     paint_options,
+                                                     fade_point);
 
-      output = gimp_dynamics_get_output (core->dynamics,
-                                         GIMP_DYNAMICS_OUTPUT_ANGLE);
-      core->angle += gimp_dynamics_output_get_angular_value (output,
-                                                             coords,
-                                                             paint_options,
-                                                             fade_point);
+      core->angle += gimp_dynamics_get_angular_value (core->dynamics,
+                                                      GIMP_DYNAMICS_OUTPUT_ANGLE,
+                                                      coords,
+                                                      paint_options,
+                                                      fade_point);
 
-      output = gimp_dynamics_get_output (core->dynamics,
-                                         GIMP_DYNAMICS_OUTPUT_HARDNESS);
-      core->hardness = gimp_dynamics_output_get_linear_value (output,
-                                                              coords,
-                                                              paint_options,
-                                                              fade_point);
+      core->hardness = gimp_dynamics_get_linear_value (core->dynamics,
+                                                       GIMP_DYNAMICS_OUTPUT_HARDNESS,
+                                                       coords,
+                                                       paint_options,
+                                                       fade_point);
 
       output = gimp_dynamics_get_output (core->dynamics,
                                          GIMP_DYNAMICS_OUTPUT_ASPECT_RATIO);
@@ -1699,7 +1686,7 @@ gimp_brush_core_paint_line_pixmap_mask (GimpDrawable             *drawable,
       fish = babl_fish (pixmap_format,
                         gimp_drawable_get_format_with_alpha (drawable));
 
-      /* put the source pixmap's pixels, into one line, so we can use
+      /* put the source pixmap's pixels into one line, so we can use
        * one single call to babl_process() to convert the entire line
        */
       for (i = 0; i < width; i++)
