@@ -1195,7 +1195,6 @@ load_image (const gchar  *filename,
 
   if (trns)
     {
-#warning this crashes horribly.
       gimp_layer_add_alpha (layer);
       file_format = gimp_drawable_get_format (layer);
       buffer = gimp_drawable_get_buffer (layer);
