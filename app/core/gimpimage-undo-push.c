@@ -300,8 +300,8 @@ gimp_image_undo_push_mask_precision (GimpImage   *image,
                                GIMP_IS_SELECTION (mask) ?
                                GIMP_DIRTY_SELECTION :
                                GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
-                               "item",              mask,
-                               "convert-precision", TRUE,
+                               "item",           mask,
+                               "convert-format", TRUE,
                                NULL);
 }
 

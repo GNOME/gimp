@@ -36,7 +36,7 @@ struct _GimpMaskUndo
 {
   GimpItemUndo  parent_instance;
 
-  gboolean      convert_precision;
+  gboolean      convert_format;
 
   GeglBuffer   *buffer;
   gint          x;

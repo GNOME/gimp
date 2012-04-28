@@ -31,7 +31,7 @@
 enum
 {
   PROP_0,
-  PROP_CONVERT_PRECISION
+  PROP_CONVERT_FORMAT
 };
 
 
@@ -76,8 +76,8 @@ gimp_mask_undo_class_init (GimpMaskUndoClass *klass)
   undo_class->pop                = gimp_mask_undo_pop;
   undo_class->free               = gimp_mask_undo_free;
 
-  g_object_class_install_property (object_class, PROP_CONVERT_PRECISION,
-                                   g_param_spec_boolean ("convert-precision",
+  g_object_class_install_property (object_class, PROP_CONVERT_FORMAT,
+                                   g_param_spec_boolean ("convert-format",
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE |
@@ -133,8 +133,8 @@ gimp_mask_undo_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_CONVERT_PRECISION:
-      mask_undo->convert_precision = g_value_get_boolean (value);
+    case PROP_CONVERT_FORMAT:
+      mask_undo->convert_format = g_value_get_boolean (value);
       break;
 
     default:
@@ -153,8 +153,8 @@ gimp_mask_undo_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_CONVERT_PRECISION:
-      g_value_set_boolean (value, mask_undo->convert_precision);
+    case PROP_CONVERT_FORMAT:
+      g_value_set_boolean (value, mask_undo->convert_format);
       break;
 
     default:
@@ -212,7 +212,7 @@ gimp_mask_undo_pop (GimpUndo            *undo,
 
   format = gimp_drawable_get_format (drawable);
 
-  if (mask_undo->convert_precision)
+  if (mask_undo->convert_format)
     {
       GeglBuffer *buffer;
       gint        width  = gimp_item_get_width  (GIMP_ITEM (channel));
