@@ -111,7 +111,7 @@ gimp_image_prop_view_init (GimpImagePropView *view)
   GtkTable *table = GTK_TABLE (view);
   gint      row = 0;
 
-  gtk_table_resize (table, 14, 2);
+  gtk_table_resize (table, 15, 2);
 
   gtk_table_set_col_spacings (table, 6);
   gtk_table_set_row_spacings (table, 3);
@@ -126,7 +126,10 @@ gimp_image_prop_view_init (GimpImagePropView *view)
     gimp_image_prop_view_add_label (table, row++, _("Resolution:"));
 
   view->colorspace_label =
-    gimp_image_prop_view_add_label (table, row, _("Color space:"));
+    gimp_image_prop_view_add_label (table, row++, _("Color space:"));
+
+  view->precision_label =
+    gimp_image_prop_view_add_label (table, row, _("Precision:"));
 
   gtk_table_set_row_spacing (GTK_TABLE (view), row++, 12);
 
@@ -426,6 +429,7 @@ gimp_image_prop_view_update (GimpImagePropView *view)
 {
   GimpImage         *image = view->image;
   GimpImageBaseType  type;
+  GimpPrecision      precision;
   GimpUnit           unit;
   gdouble            unit_factor;
   gint               unit_digits;
@@ -490,6 +494,14 @@ gimp_image_prop_view_update (GimpImagePropView *view)
     }
 
   gtk_label_set_text (GTK_LABEL (view->colorspace_label), buf);
+
+  /*  precision  */
+  precision = gimp_image_get_precision (image);
+
+  gimp_enum_get_value (GIMP_TYPE_PRECISION, precision,
+                       NULL, NULL, &desc, NULL);
+
+  gtk_label_set_text (GTK_LABEL (view->precision_label), desc);
 
   /*  size in memory  */
   gimp_image_prop_view_label_set_memsize (view->memsize_label,
