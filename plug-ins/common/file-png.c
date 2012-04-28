@@ -143,7 +143,7 @@ static int       respin_cmap               (png_structp       pp,
                                             png_infop         info,
                                             guchar           *remap,
                                             gint32            image_ID,
-                                            GimpDrawable     *drawable);
+                                            gint32            drawable_ID);
 
 static gboolean  save_dialog               (gint32            image_ID,
                                             gboolean          alpha);
@@ -841,40 +841,42 @@ load_image (const gchar  *filename,
 
   png_read_update_info (pp, info);
 
+  file_format = NULL;
+
   switch (png_get_color_type (pp, info))
     {
     case PNG_COLOR_TYPE_RGB:           /* RGB */
+      // file_format = gimp_babl_format (GIMP_RGB, have_u16 ? GIMP_PRECISION_U16 : GIMP_PRECISION_U8, FALSE);
       image_type = GIMP_RGB;
       layer_type = GIMP_RGB_IMAGE;
       file_format_nick = have_u16 ? "R'G'B' u16" : "R'G'B' u8";
       break;
 
     case PNG_COLOR_TYPE_RGB_ALPHA:     /* RGBA */
+      // file_format = gimp_babl_format (GIMP_RGB, have_u16 ? GIMP_PRECISION_U16 : GIMP_PRECISION_U8, TRUE);
       image_type = GIMP_RGB;
       layer_type = GIMP_RGBA_IMAGE;
       file_format_nick = have_u16 ? "R'G'B'A u16" : "R'G'B'A u8";
       break;
 
     case PNG_COLOR_TYPE_GRAY:          /* Grayscale */
+      // file_format = gimp_babl_format (GIMP_GRAY, have_u16 ? GIMP_PRECISION_U16 : GIMP_PRECISION_U8, FALSE);
       image_type = GIMP_GRAY;
       layer_type = GIMP_GRAY_IMAGE;
       file_format_nick = have_u16 ? "Y' u16" : "Y' u8";
       break;
 
     case PNG_COLOR_TYPE_GRAY_ALPHA:    /* Grayscale + alpha */
+      // file_format = gimp_babl_format (GIMP_GRAY, have_u16 ? GIMP_PRECISION_U16 : GIMP_PRECISION_U8, TRUE);
       image_type = GIMP_GRAY;
       layer_type = GIMP_GRAYA_IMAGE;
       file_format_nick = have_u16 ? "Y'A u16" : "Y'A u8";
       break;
 
-#warning port PNG indexed format
-#if 0
     case PNG_COLOR_TYPE_PALETTE:       /* Indexed */
-      bpp = 1;
       image_type = GIMP_INDEXED;
       layer_type = GIMP_INDEXED_IMAGE;
       break;
-#endif
 
     default:                           /* Aie! Unknown type */
       g_set_error (error, 0, 0,
@@ -883,8 +885,6 @@ load_image (const gchar  *filename,
       return -1;
     }
 
-  file_format = babl_format (file_format_nick);
-  bpp = babl_format_get_bytes_per_pixel (file_format);
   width = png_get_image_width (pp, info);
   height = png_get_image_height (pp, info);
 
@@ -1022,6 +1022,14 @@ load_image (const gchar  *filename,
                                    num_palette);
         }
     }
+
+  if (layer_type == GIMP_INDEXED_IMAGE)
+#warning gimp_drawable_get_format() seems to fail when no colormap set
+    file_format = gimp_drawable_get_format (layer);
+
+  if (!file_format)
+    file_format = babl_format (file_format_nick);
+  bpp = babl_format_get_bytes_per_pixel (file_format);
 
   buffer = gimp_drawable_get_buffer (layer);
 
@@ -1185,39 +1193,47 @@ load_image (const gchar  *filename,
 
   fclose (fp);
 
-#if 0
   if (trns)
     {
+#warning this crashes horribly.
+      g_printerr ("pre-add-alpha: %s\n", babl_get_name (gimp_drawable_get_format (layer)));
       gimp_layer_add_alpha (layer);
-      drawable = gimp_drawable_get (layer);
-      gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,
-                           drawable->height, TRUE, FALSE);
+      g_printerr ("post-add-alpha: %s\n", babl_get_name (gimp_drawable_get_format (layer)));
+      file_format = gimp_drawable_get_format (layer);
+      buffer = gimp_drawable_get_buffer (layer);
 
-      pixel = g_new (guchar, tile_height * drawable->width * 2); /* bpp == 1 */
+      pixel = g_new (guchar, tile_height * width * 2); /* bpp == 2 */
 
-      for (begin = 0, end = tile_height;
-           begin < drawable->height; begin += tile_height, end += tile_height)
+      for (begin = 0; begin < height; begin += tile_height)
         {
-          if (end > drawable->height)
-            end = drawable->height;
+          end = MIN (begin + tile_height, height);
           num = end - begin;
 
-          gimp_pixel_rgn_get_rect (&pixel_rgn, pixel, 0, begin,
-                                   drawable->width, num);
+          gegl_buffer_get (buffer,
+                           GEGL_RECTANGLE (0, begin, width, num),
+                           1.0,
+                           file_format,
+                           pixel,
+                           GEGL_AUTO_ROWSTRIDE,
+                           GEGL_ABYSS_NONE);
 
-          for (i = 0; i < tile_height * drawable->width; ++i)
+          for (i = 0; i < tile_height * width; ++i)
             {
               pixel[i * 2 + 1] = alpha[pixel[i * 2]];
               pixel[i * 2] -= empty;
             }
 
-          gimp_pixel_rgn_set_rect (&pixel_rgn, pixel, 0, begin,
-                                   drawable->width, num);
+          gegl_buffer_set (buffer,
+                           GEGL_RECTANGLE (0, begin, width, num),
+                           0,
+                           file_format,
+                           pixel,
+                           GEGL_AUTO_ROWSTRIDE);
         }
 
       g_free (pixel);
+      g_object_unref (buffer);
     }
-#endif
 
   return image;
 }
@@ -1398,32 +1414,38 @@ save_image (const gchar  *filename,
 
   bit_depth = have_u16 ? 16 : 8;
 
+  file_format = NULL;
+
   switch (type)
     {
     case GIMP_RGB_IMAGE:
+      // file_format = gimp_babl_format (GIMP_RGB, have_u16 ? GIMP_PRECISION_U16 : GIMP_PRECISION_U8, FALSE);
       color_type = PNG_COLOR_TYPE_RGB;
       file_format_nick = have_u16 ? "R'G'B' u16" : "R'G'B' u8";
       break;
 
     case GIMP_RGBA_IMAGE:
+      // file_format = gimp_babl_format (GIMP_RGB, have_u16 ? GIMP_PRECISION_U16 : GIMP_PRECISION_U8, TRUE);
       color_type = PNG_COLOR_TYPE_RGB_ALPHA;
       file_format_nick = have_u16 ? "R'G'B'A u16" : "R'G'B'A u8";
       break;
 
     case GIMP_GRAY_IMAGE:
+      // file_format = gimp_babl_format (GIMP_GRAY, have_u16 ? GIMP_PRECISION_U16 : GIMP_PRECISION_U8, FALSE);
       color_type = PNG_COLOR_TYPE_GRAY;
       file_format_nick = have_u16 ? "Y' u16" : "Y' u8";
       break;
 
     case GIMP_GRAYA_IMAGE:
+      // file_format = gimp_babl_format (GIMP_GRAY, have_u16 ? GIMP_PRECISION_U16 : GIMP_PRECISION_U8, TRUE);
+      color_type = PNG_COLOR_TYPE_GRAY;
       color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
       file_format_nick = have_u16 ? "Y'A u16" : "Y'A u8";
       break;
 
-#if 0   /* indexed missing */
     case GIMP_INDEXED_IMAGE:
-      bpp = 1;
       color_type = PNG_COLOR_TYPE_PALETTE;
+      file_format = gimp_drawable_get_format (drawable_ID);
       pngg.has_plte = TRUE;
       pngg.palette = (png_colorp) gimp_image_get_colormap (image_ID,
                                                            &pngg.num_palette);
@@ -1431,19 +1453,20 @@ save_image (const gchar  *filename,
       break;
 
     case GIMP_INDEXEDA_IMAGE:
-      bpp = 2;
       color_type = PNG_COLOR_TYPE_PALETTE;
+      file_format = gimp_drawable_get_format (drawable_ID);
       /* fix up transparency */
-      bit_depth = respin_cmap (pp, info, remap, image_ID, drawable);
+      bit_depth = respin_cmap (pp, info, remap, image_ID, drawable_ID);
       break;
-#endif
 
     default:
       g_set_error (error, 0, 0, "Image type can't be saved as PNG");
       return FALSE;
     }
 
-  file_format = babl_format (file_format_nick);
+  if (!file_format)
+    file_format = babl_format (file_format_nick);
+
   bpp = babl_format_get_bytes_per_pixel (file_format);
 
   /* Note: png_set_IHDR() must be called before any other png_set_*()
@@ -1861,14 +1884,16 @@ respin_cmap (png_structp   pp,
              png_infop     info,
              guchar       *remap,
              gint32        image_ID,
-             GimpDrawable *drawable)
+             gint32        drawable_ID)
 {
   static guchar trans[] = { 0 };
+  GimpDrawable *drawable;
 
   gint          colors;
   guchar       *before;
 
   before = gimp_image_get_colormap (image_ID, &colors);
+  drawable = gimp_drawable_get (drawable_ID);
 
   /*
    * Make sure there is something in the colormap.
@@ -1942,6 +1967,8 @@ respin_cmap (png_structp   pp,
       pngg.palette = (png_colorp) before;
       pngg.num_palette = colors;
     }
+
+  gimp_drawable_detach (drawable);
 
   return get_bit_depth_for_palette (colors);
 }
