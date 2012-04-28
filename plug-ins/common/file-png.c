@@ -1196,9 +1196,7 @@ load_image (const gchar  *filename,
   if (trns)
     {
 #warning this crashes horribly.
-      g_printerr ("pre-add-alpha: %s\n", babl_get_name (gimp_drawable_get_format (layer)));
       gimp_layer_add_alpha (layer);
-      g_printerr ("post-add-alpha: %s\n", babl_get_name (gimp_drawable_get_format (layer)));
       file_format = gimp_drawable_get_format (layer);
       buffer = gimp_drawable_get_buffer (layer);
 

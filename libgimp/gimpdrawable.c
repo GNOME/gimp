@@ -739,6 +739,7 @@ gimp_drawable_get_shadow_buffer (gint32 drawable_ID)
 const Babl *
 gimp_drawable_get_format (gint32 drawable_ID)
 {
+  static GHashTable *palette_formats = NULL;
   const Babl *format     = NULL;
   gchar      *format_str = _gimp_drawable_get_format (drawable_ID);
 
@@ -747,24 +748,41 @@ gimp_drawable_get_format (gint32 drawable_ID)
       if (gimp_drawable_is_indexed (drawable_ID))
         {
           gint32      image_ID = gimp_item_get_image (drawable_ID);
-          const Babl *palette;
-          const Babl *palette_alpha;
           guchar     *colormap;
           gint        n_colors;
 
           colormap = gimp_image_get_colormap (image_ID, &n_colors);
 
-          babl_new_palette (format_str, &palette, &palette_alpha);
-          babl_palette_set_palette (palette,
+          if (!palette_formats)
+            palette_formats = g_hash_table_new (g_str_hash, g_str_equal);
+
+          format = g_hash_table_lookup (palette_formats, format_str);
+
+          if (!format)
+            {
+              const Babl *palette;
+              const Babl *palette_alpha;
+
+              babl_new_palette (format_str, &palette, &palette_alpha);
+              g_hash_table_insert (palette_formats,
+                                   (gpointer) babl_get_name (palette),
+                                   (gpointer) palette);
+              g_hash_table_insert (palette_formats,
+                                   (gpointer) babl_get_name (palette_alpha),
+                                   (gpointer) palette_alpha);
+
+              if (gimp_drawable_has_alpha (drawable_ID))
+                format = palette_alpha;
+              else
+                format = palette;
+            }
+
+          babl_palette_set_palette (format,
                                     babl_format ("R'G'B' u8"),
                                     colormap, n_colors);
 
           g_free (colormap);
 
-          if (gimp_drawable_has_alpha (drawable_ID))
-            format = palette_alpha;
-          else
-            format = palette;
         }
       else
         {
