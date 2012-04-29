@@ -31,7 +31,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-17 17:16+0100\n"
-"PO-Revision-Date: 2012-04-29 16:27+0200\n"
+"PO-Revision-Date: 2012-04-29 17:58+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: \n"
@@ -6721,7 +6721,7 @@ msgstr "Tondo"
 #: ../app/core/core-enums.c:378
 msgctxt "cap-style"
 msgid "Square"
-msgstr "Quadro"
+msgstr "Quadrato"
 
 #: ../app/core/core-enums.c:415
 msgctxt "dash-preset"
@@ -6786,12 +6786,12 @@ msgstr "Cerchio"
 #: ../app/core/core-enums.c:455
 msgctxt "brush-generated-shape"
 msgid "Square"
-msgstr "Quadro"
+msgstr "Quadrato"
 
 #: ../app/core/core-enums.c:456
 msgctxt "brush-generated-shape"
 msgid "Diamond"
-msgstr "Diamante"
+msgstr "Rombo"
 
 #: ../app/core/core-enums.c:485
 msgctxt "orientation-type"
