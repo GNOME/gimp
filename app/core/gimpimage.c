@@ -2126,7 +2126,8 @@ gimp_image_get_component_format (const GimpImage *image,
                                          GRAY);
 
     case GIMP_INDEXED_CHANNEL:
-      return babl_format ("Y' u8"); /* XXX: seems wrong */
+      return babl_format ("Y u8"); /* will extract grayscale, the best
+                                    * we can do here */
     }
 
   return NULL;
