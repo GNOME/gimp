@@ -500,7 +500,7 @@ msgstr "Швидкість відтворення:"
 
 #: ../plug-ins/common/animation-play.c:831
 msgid "Tried to display an invalid layer."
-msgstr "Була здійснена спроба відобразити некоректний шар."
+msgstr "Була здійснена спроба показати некоректний шар."
 
 #: ../plug-ins/common/animation-play.c:1351
 #, c-format
@@ -5422,7 +5422,7 @@ msgstr "Змінити колір зображення, використовую
 
 #: ../plug-ins/common/gradient-map.c:97
 msgid "_Gradient Map"
-msgstr "_Відобразити градієнт"
+msgstr "_Карта градієнта"
 
 #: ../plug-ins/common/gradient-map.c:106
 msgid "Recolor the image using colors from the active palette"
@@ -5430,7 +5430,7 @@ msgstr "Змінити колір зображення, використовую
 
 #: ../plug-ins/common/gradient-map.c:119
 msgid "_Palette Map"
-msgstr "В_ідобразити палітру:"
+msgstr "К_арта палітри:"
 
 #: ../plug-ins/common/gradient-map.c:162
 msgid "Gradient Map"
@@ -6609,7 +6609,7 @@ msgstr "_Турбулентність:"
 
 #: ../plug-ins/common/plugin-browser.c:134
 msgid "Display information about plug-ins"
-msgstr "Відобразити інформацію про розширення"
+msgstr "Показати інформацію про розширення"
 
 #: ../plug-ins/common/plugin-browser.c:144
 msgid "_Plug-In Browser"
@@ -6712,7 +6712,7 @@ msgstr ""
 
 #: ../plug-ins/common/polar-coords.c:676
 msgid "Map from _top"
-msgstr "Відобразити з_верху"
+msgstr "Відбиття з_верху"
 
 #: ../plug-ins/common/polar-coords.c:682
 msgid ""
@@ -6731,7 +6731,7 @@ msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
 msgstr ""
-"Якщо не відмічено, то зображення буде відображене у прямокутник. Якщо "
+"Якщо не відмічено, то зображення буде відбито у прямокутник. Якщо "
 "відмічено - тоді у коло."
 
 #: ../plug-ins/common/procedure-browser.c:83
@@ -7984,11 +7984,11 @@ msgstr "_Більш прозорий"
 
 #: ../plug-ins/common/value-propagate.c:233
 msgid "Propagate certain colors to neighboring pixels"
-msgstr "Розповсюджувати яскравість вказаного кольору на сусідні точки"
+msgstr "Поширювати яскравість вказаного кольору на сусідні точки"
 
 #: ../plug-ins/common/value-propagate.c:238
 msgid "_Value Propagate..."
-msgstr "_Розповсюдження яскравості..."
+msgstr "_Поширення яскравості…"
 
 #: ../plug-ins/common/value-propagate.c:245
 msgid "Shrink lighter areas of the image"
@@ -8009,12 +8009,12 @@ msgstr "_Дилатація"
 #: ../plug-ins/common/value-propagate.c:476
 #: ../plug-ins/common/value-propagate.c:1086
 msgid "Value Propagate"
-msgstr "Розповсюдження яскравості"
+msgstr "Поширення яскравості"
 
 #. Parameter settings
 #: ../plug-ins/common/value-propagate.c:1153
 msgid "Propagate"
-msgstr "Розповсюдження"
+msgstr "Поширення"
 
 #: ../plug-ins/common/value-propagate.c:1166
 msgid "Lower t_hreshold:"
@@ -8026,7 +8026,7 @@ msgstr "_Верхній поріг:"
 
 #: ../plug-ins/common/value-propagate.c:1190
 msgid "_Propagating rate:"
-msgstr "_Швидкість розповсюдження:"
+msgstr "_Швидкість поширення:"
 
 #: ../plug-ins/common/value-propagate.c:1201
 msgid "To l_eft"
@@ -8046,11 +8046,11 @@ msgstr "В_низ"
 
 #: ../plug-ins/common/value-propagate.c:1219
 msgid "Propagating _alpha channel"
-msgstr "Розповсюдження _альфа-каналу"
+msgstr "Поширення _альфа-каналу"
 
 #: ../plug-ins/common/value-propagate.c:1230
 msgid "Propagating value channel"
-msgstr "Розповсюдження каналу _яскравості"
+msgstr "Поширення каналу _яскравості"
 
 #: ../plug-ins/common/van-gogh-lic.c:569 ../plug-ins/common/van-gogh-lic.c:644
 msgid "Van Gogh (LIC)"
@@ -8672,7 +8672,7 @@ msgstr "Помилка при відкриванні файлу FITS"
 
 #: ../plug-ins/file-fits/fits.c:374
 msgid "FITS file keeps no displayable images"
-msgstr "Файл FITS не містить зображень, які можна відобразити"
+msgstr "Файл FITS не містить зображень, які можна показати"
 
 #: ../plug-ins/file-fits/fits.c:455
 msgid "FITS save cannot handle images with alpha channels"
@@ -9630,7 +9630,7 @@ msgstr "Кількість кольорів:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:925
 msgid "Change the number of colors in the mapping"
-msgstr "Змінити кількість кольорів у відображенні"
+msgstr "Змінити кількість кольорів у відбитті"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:932
 msgid "Use loglog smoothing"
@@ -11896,7 +11896,7 @@ msgstr "Мас_штаб"
 
 #: ../plug-ins/imagemap/imap_menu.c:186
 msgid "_Mapping"
-msgstr "В_ідображення"
+msgstr "В_ідбиття"
 
 #: ../plug-ins/imagemap/imap_menu.c:187
 msgid "Edit Map Info..."

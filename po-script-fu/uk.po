@@ -33,7 +33,7 @@ msgstr "Інтерактивне середовище розробки на Sche
 
 #: ../plug-ins/script-fu/script-fu-console.c:235
 msgid "_Browse..."
-msgstr "О_гляд..."
+msgstr "О_гляд…"
 
 #: ../plug-ins/script-fu/script-fu-console.c:293
 msgid "Save Script-Fu Console Output"
@@ -150,7 +150,7 @@ msgstr "Сервер для віддаленого виконання Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:145
 msgid "_Start Server..."
-msgstr "_Запустити сервер..."
+msgstr "_Запустити сервер…"
 
 #: ../plug-ins/script-fu/script-fu.c:301
 msgid "_GIMP Online"
@@ -189,8 +189,8 @@ msgid "_Alien Glow"
 msgstr "Чуже _сяйво"
 
 #: ../plug-ins/script-fu/script-fu.c:321
-msgid "_Beveled Pattern"
-msgstr "_Піднесені об'єкти"
+msgid "_Beved Patternle"
+msgstr "_Скісні об'єкти"
 
 #: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Classic.Gimp.Org"
@@ -218,7 +218,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
-msgstr "Об'ємний _контур..."
+msgstr "Об'ємний _контур…"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:2
 msgid "Bumpmap (alpha layer) blur radius"
@@ -383,7 +383,7 @@ msgstr "Текст"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:1
 msgid "3_D Truchet..."
-msgstr "_Об'ємний трюше..."
+msgstr "_Об'ємний трюше…"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:2
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
@@ -454,7 +454,7 @@ msgstr "Товщина"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:1
 msgid "Add B_evel..."
-msgstr "Додати _фаску..."
+msgstr "Додати _фаску…"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:2
 msgid "Add a beveled border to an image"
@@ -486,7 +486,7 @@ msgstr "Працювати з копією"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:1
 msgid "Add _Border..."
-msgstr "Додати _рамку..."
+msgstr "Додати _рамку…"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:2
 msgid "Add a border around an image"
@@ -592,7 +592,7 @@ msgstr "Вгору"
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:14
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:11
 msgid "_Arrow..."
-msgstr "_Стрілка"
+msgstr "_Стрілка…"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
 msgid "Bar"
@@ -613,7 +613,7 @@ msgstr "Створити горизонтальну лінію із лихові
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:10
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:7
 msgid "_Hrule..."
-msgstr "_Лінійка..."
+msgstr "_Лінійка…"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
 #: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
@@ -633,12 +633,12 @@ msgstr "Радіус"
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:9
 #: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:7
 msgid "_Bullet..."
-msgstr "_Маркер..."
+msgstr "_Маркер…"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "B_utton..."
-msgstr "_Кнопка..."
+msgstr "_Кнопка…"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
 msgid "Button"
@@ -680,7 +680,7 @@ msgstr "Додати моторошне світіння навколо виді
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
 msgid "Alien _Glow..."
-msgstr "Чуже _сяйво..."
+msgstr "Чуже _сяйво…"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
 msgid "Create a logo with an alien glow around the text"
@@ -696,7 +696,7 @@ msgstr "Додати виділену психоделічні контури"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
 msgid "Alien _Neon..."
-msgstr "Чужий _неон..."
+msgstr "Чужий _неон…"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
 msgid "Create a logo with psychedelic outlines around the text"
@@ -734,7 +734,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:8
 msgid "_Basic I..."
-msgstr "_Основний I..."
+msgstr "_Основна I…"
 
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:1
 msgid "Add a shadow and a highlight to the selected region (or alpha)"
@@ -742,7 +742,7 @@ msgstr "Додати тінь та підсвічення до виделено�
 
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:2
 msgid "B_asic II..."
-msgstr "Ос_нова I..."
+msgstr "Ос_нова II…"
 
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:4
 msgid "Create a simple logo with a shadow and a highlight"
@@ -781,7 +781,7 @@ msgstr "Натиснута"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:10
 msgid "Simple _Beveled Button..."
-msgstr "Проста _об'ємна кнопка..."
+msgstr "Проста _об'ємна кнопка…"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:13
 msgid "Upper-left color"
@@ -815,7 +815,7 @@ msgstr "Створити рельєфний текстурний заголов�
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
 msgid "H_eading..."
-msgstr "_Заголовок..."
+msgstr "_Заголовок…"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 msgid "Create a beveled pattern hrule for webpages"
@@ -869,7 +869,7 @@ msgstr "Максимальний радіус розмивання"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:7
 msgid "_Blend..."
-msgstr "_Плавний перехід..."
+msgstr "_Плавний перехід…"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:1
 msgid ""
@@ -881,7 +881,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
 msgid "Blen_ded..."
-msgstr "_Градієнтна..."
+msgstr "_Градієнтна…"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:4
 msgid "Blend mode"
@@ -931,7 +931,7 @@ msgstr "Колір тла"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
 msgid "Bo_vination..."
-msgstr "_Плямиста корова..."
+msgstr "_Плямиста корова…"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
 msgid "Create a logo with text in the style of 'cow spots'"
@@ -955,7 +955,7 @@ msgstr "Післясяйво"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 msgid "B_urn-In..."
-msgstr "_Випалювання..."
+msgstr "_Випалювання…"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid "Corona width"
@@ -1026,7 +1026,7 @@ msgstr "Згладити"
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:9
 msgid "_Camouflage..."
-msgstr "_Камуфляж..."
+msgstr "_Камуфляж…"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:1
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
@@ -1063,7 +1063,7 @@ msgstr "Вставити"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:8
 msgid "Stencil C_arve..."
-msgstr "_Вирізати за трафаретом..."
+msgstr "_Вирізати за трафаретом…"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:1
 msgid "Background Image"
@@ -1075,7 +1075,7 @@ msgstr "Вирізати піднятий текст"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:6
 msgid "Carved..."
-msgstr "Вигравірувана..."
+msgstr "Вигравірувана…"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:8
 msgid ""
@@ -1103,7 +1103,7 @@ msgstr "Створити емблему, стилізовану під малю�
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:8
 msgid "_Chalk..."
-msgstr "К_рейда.."
+msgstr "К_рейда…"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:1
 msgid "Add a chipped woodcarving effect to the selected region (or alpha)"
@@ -1116,7 +1116,7 @@ msgstr "Округлість рельєфу"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:3
 msgid "Chip Awa_y..."
-msgstr "Р_ізьблена..."
+msgstr "Р_ізьблена…"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:4
 msgid "Chip amount"
@@ -1187,7 +1187,7 @@ msgstr "Кинути тінь"
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
 msgid "Environment map"
-msgstr "Мапа оточення"
+msgstr "Карта оточення"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:11
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:7
@@ -1213,7 +1213,7 @@ msgstr "Шар 3"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:16
 msgid "Stencil C_hrome..."
-msgstr "_Хромувати за трафаретом..."
+msgstr "_Хромувати за трафаретом…"
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
 msgid "Add a simple chrome effect to the selected region (or alpha)"
@@ -1221,7 +1221,7 @@ msgstr "«Хромувати» виділену область чи альфа-�
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
 msgid "C_hrome..."
-msgstr "_Хромування..."
+msgstr "_Хромування…"
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:5
 msgid "Create a simplistic, but cool, chromed logo"
@@ -1268,7 +1268,7 @@ msgstr "Відділити шар"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:8
 msgid "_Circuit..."
-msgstr "_Друкована плата..."
+msgstr "_Друкована плата…"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:1
 msgid "Add a cloth-like texture to the selected region (or alpha)"
@@ -1299,7 +1299,7 @@ msgstr "Підвищення"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:7
 msgid "_Clothify..."
-msgstr "_Полотнина..."
+msgstr "_Полотнина…"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:1
 msgid "Add realistic looking coffee stains to the image"
@@ -1319,7 +1319,7 @@ msgstr "Кількість плям"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:5
 msgid "_Coffee Stain..."
-msgstr "_Кавові плями..."
+msgstr "_Кавові плями…"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:1
 msgid ""
@@ -1331,7 +1331,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
 msgid "Comic Boo_k..."
-msgstr "_Комікс..."
+msgstr "_Комікс…"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
 msgid "Create a comic-book style logo by outlining and filling with a gradient"
@@ -1356,7 +1356,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
 msgid "Cool _Metal..."
-msgstr "Холодний _метал..."
+msgstr "Холодний _метал…"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
 msgid "Create a metallic logo with reflections and perspective shadows"
@@ -1380,11 +1380,11 @@ msgstr "Створити логотип з ефектом кришталю/ге�
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 msgid "Crystal..."
-msgstr "Кришталь..."
+msgstr "Кришталь…"
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:1
 msgid "Difference Clouds..."
-msgstr "Різні плями..."
+msgstr "Різні плями…"
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
 msgid "Solid noise applied with Difference layer mode"
@@ -1416,7 +1416,7 @@ msgstr "Поріг (більше 1<-->254 менше)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:8
 msgid "_Distort..."
-msgstr "В_икривити..."
+msgstr "В_икривити…"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
 msgid "Add a drop shadow to the selected region (or alpha)"
@@ -1457,7 +1457,7 @@ msgstr "Непрозорість"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:8
 msgid "_Drop Shadow..."
-msgstr "_Тінь..."
+msgstr "_Тінь…"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:1
 msgid "Columns"
@@ -1469,7 +1469,7 @@ msgstr "Очистити"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:3
 msgid "Erase every other row or column"
-msgstr "Очистити кожен другий рядок чи стовпчик..."
+msgstr "Очистити кожен другий рядок чи стовпчик"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:4
 msgid "Erase/fill"
@@ -1501,7 +1501,7 @@ msgstr "Рядки/Стовпчики"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:11
 msgid "_Erase Every Other Row..."
-msgstr "О_чистити кожен другий рядок..."
+msgstr "О_чистити кожен другий рядок…"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:1
 msgid "Create an image filled with a Land Pattern"
@@ -1539,7 +1539,7 @@ msgstr "Масштаб Y"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:8
 msgid "_Flatland..."
-msgstr "_Мапа висот..."
+msgstr "_Карта висот…"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:1
 msgid "Active colors"
@@ -1562,7 +1562,7 @@ msgstr "Розмір _шрифту (точки)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:5
 msgid "Render _Font Map..."
-msgstr "Створити мапу _шрифтів..."
+msgstr "Створити карту _шрифтів…"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:6
 msgid "Use font _name as text"
@@ -1602,7 +1602,7 @@ msgstr "Створити заморожену емблему з тінню"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:8
 msgid "_Frosty..."
-msgstr "_Крига..."
+msgstr "_Крига…"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
 msgid "Add a jagged, fuzzy border to an image"
@@ -1632,11 +1632,11 @@ msgstr "Розмір тіні (%)"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:11
 msgid "_Fuzzy Border..."
-msgstr "_Нечітка рамка..."
+msgstr "_Нечітка рамка…"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:1
 msgid "Bookmark to the GIMP web site"
-msgstr "посилання на веб-сайт GIMP"
+msgstr "Закладка на сайт GIMP"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:2
 msgid "Bookmark to the user manual"
@@ -1644,11 +1644,11 @@ msgstr "Посилання на посібник користувача"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:3
 msgid "Create and Use _Selections"
-msgstr "Зберегти та використати _виділення"
+msgstr "Зберегти та використати _вибране"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:4
 msgid "Create, Open and Save _Files"
-msgstr "Створити, відкривати та з_берігати файли"
+msgstr "Створення, відкривання та зберігання _файлів"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:5
 msgid "Drawing _Simple Objects"
@@ -1688,14 +1688,14 @@ msgstr "_Сайт з посібником користувача"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:14
 msgid "_Working with Digital Camera Photos"
-msgstr "Робота з цифровим _фото"
+msgstr "Робота з цифровими _фотографіями"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid ""
 "Add gradients, patterns, shadows, and bump maps to the selected region (or "
 "alpha)"
 msgstr ""
-"Додати градієнти, текстури, тіні та рельєфи до виділеної області (чи альфа-"
+"Додати градієнти, текстури, тіні та рельєфи до вибраної ділянки (чи альфа-"
 "каналу)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:3
@@ -1712,7 +1712,7 @@ msgstr "Створити логотип з градієнтами, тексту�
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:9
 msgid "Glo_ssy..."
-msgstr "Г_лянцевий..."
+msgstr "Г_лянцева…"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:10
 msgid "Outline gradient reverse"
@@ -1762,7 +1762,7 @@ msgstr "Створити емблему, що виглядає як сяючий
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:7
 msgid "Glo_wing Hot..."
-msgstr "Г_аряче сяйво..."
+msgstr "Г_аряче сяйво…"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
 msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
@@ -1784,7 +1784,7 @@ msgstr "Створити сяючу емблему з фаскою"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
 msgid "Gradient Beve_l..."
-msgstr "Гр_адієнтний з фаскою..."
+msgstr "Гр_адієнтний з фаскою…"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:1
 msgid "Create an image filled with an example of the current gradient"
@@ -1792,7 +1792,7 @@ msgstr "Створити зображення, залите поточним г�
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:2
 msgid "Custom _Gradient..."
-msgstr "Користувацький _градієнт..."
+msgstr "Користувацький _градієнт…"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:1
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
@@ -1811,7 +1811,7 @@ msgstr "Вертикалі"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:4
 msgid "_Grid..."
-msgstr "С_ітка..."
+msgstr "С_ітка…"
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
 msgid "New Guides from _Selection"
@@ -1834,7 +1834,7 @@ msgstr "Горизонталь"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:4
 msgid "New Guide (by _Percent)..."
-msgstr "_Напрямна (за відсотком)..."
+msgstr "_Напрямна (за відсотком)…"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
 #, no-c-format
@@ -1852,7 +1852,7 @@ msgstr "Додати напрямну до розташування, вказа�
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
 msgid "New _Guide..."
-msgstr "Створити _напрямну..."
+msgstr "Створити _напрямну…"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:5
 msgid "Position"
@@ -1860,11 +1860,11 @@ msgstr "Позиція"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "Remove all horizontal and vertical guides"
-msgstr "Видалити всі горизонтальні та вертикальні напрямні"
+msgstr "Вилучити всі горизонтальні та вертикальні напрямні"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:2
 msgid "_Remove all Guides"
-msgstr "В_идалити напрямні"
+msgstr "В_илучити всі напрямні"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "Create a logo in a two-color, scribbled text style"
@@ -1880,11 +1880,11 @@ msgstr "Розмір обрамлення"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
 msgid "Imigre-_26..."
-msgstr "Imigre-_26..."
+msgstr "Imigre-_26…"
 
 #: ../plug-ins/script-fu/scripts/land.scm.h:1
 msgid "Create an image filled with a topographic map pattern"
-msgstr "Створити зображення, заповнене текстурою топографічної мапи"
+msgstr "Створити зображення, заповнене текстурою топографічної карти"
 
 #: ../plug-ins/script-fu/scripts/land.scm.h:6
 msgid "Land height"
@@ -1896,7 +1896,7 @@ msgstr "Морська глибина"
 
 #: ../plug-ins/script-fu/scripts/land.scm.h:11
 msgid "_Land..."
-msgstr "_Земля..."
+msgstr "_Земля…"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:1
 msgid "Fill the current selection with lava"
@@ -1917,7 +1917,7 @@ msgstr "Використовувати поточний градієнт"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:9
 msgid "_Lava..."
-msgstr "_Лава"
+msgstr "_Лава…"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
 msgid ""
@@ -1929,7 +1929,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Line _Nova..."
-msgstr "Лінійна _наднова..."
+msgstr "Лінійна _наднова…"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:3
 msgid "Number of lines"
@@ -1965,7 +1965,7 @@ msgstr "Створити еліптичний пензель з розмитим
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:5
 msgid "Elli_ptical, Feathered..."
-msgstr "Е_ліптичний, з розмиванням.."
+msgstr "Е_ліптичний, з розмиванням…"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:6
 msgid "Feathering"
@@ -1977,7 +1977,7 @@ msgstr "Назва"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:9
 msgid "Re_ctangular, Feathered..."
-msgstr "Пр_ямокутний, з розмиванням..."
+msgstr "Пр_ямокутний, з розмиванням…"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:10
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:5
@@ -1987,11 +1987,11 @@ msgstr "Інтервал"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:12
 msgid "_Elliptical..."
-msgstr "_Еліптичний..."
+msgstr "_Еліптичний…"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:13
 msgid "_Rectangular..."
-msgstr "_Прямокутний..."
+msgstr "_Прямокутний…"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:2
 msgid "Convert the selected region (or alpha) into a neon-sign like object"
@@ -2007,7 +2007,7 @@ msgstr "Створити тінь"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:9
 msgid "N_eon..."
-msgstr "_Неон..."
+msgstr "_Неон…"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:3
 msgid "Cell size (pixels)"
@@ -2025,7 +2025,7 @@ msgstr "Щільність (%)"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:9
 msgid "Newsprint Te_xt..."
-msgstr "Газетний _текст..."
+msgstr "Газетний _текст…"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:2
 msgid "Defocus"
@@ -2045,7 +2045,7 @@ msgstr "Сепія"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:7
 msgid "_Old Photo..."
-msgstr "Старе ф_ото..."
+msgstr "Стара ф_отографія…"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm.h:1
 msgid ""
@@ -2112,7 +2112,7 @@ msgstr "Назва файлу"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:3
 msgid "New _Brush..."
-msgstr "Новий _пензель..."
+msgstr "Новий _пензель…"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:4
 msgid "Paste the clipboard contents into a new brush"
@@ -2125,7 +2125,7 @@ msgstr "В буфері обміну немає зображення для вс
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
 msgid "New _Pattern..."
-msgstr "Нова _текстура..."
+msgstr "Нова _текстура…"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:3
 msgid "Paste the clipboard contents into a new pattern"
@@ -2158,7 +2158,7 @@ msgstr "Відносна довжина тіні"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:10
 msgid "_Perspective..."
-msgstr "_Перспектива..."
+msgstr "_Перспектива…"
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:1
 msgid "Add a 'Predator' effect to the selected region (or alpha)"
@@ -2178,7 +2178,7 @@ msgstr "Пікселізація"
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:7
 msgid "_Predator..."
-msgstr "_Хижак..."
+msgstr "_Хижак…"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:2
 msgid "Create images, each containing an oval button graphic"
@@ -2226,7 +2226,7 @@ msgstr "Верхній колір (активний)"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:18
 msgid "_Round Button..."
-msgstr "_Кругла кнопка..."
+msgstr "_Кругла кнопка…"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:1
 msgid "Behavior"
@@ -2234,7 +2234,7 @@ msgstr "Поведінка"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:2
 msgid "Create an image filled with an Earth-like map pattern"
-msgstr "Створити зображення, заповнене текстурою у вигляді мапи Землі"
+msgstr "Створити зображення, заповнене текстурою у вигляді карти Землі"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:3
 msgid "Detail in Middle"
@@ -2242,7 +2242,7 @@ msgstr "Дрібні деталі в середині"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:8
 msgid "Render _Map..."
-msgstr "Візуалізація _мапи..."
+msgstr "Відтворення _карти…"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:9
 msgid "Tile"
@@ -2288,7 +2288,7 @@ msgstr "Переносити"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:8
 msgid "_Rippling..."
-msgstr "_Брижі..."
+msgstr "_Брижі…"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:1
 msgid "Add background"
@@ -2309,11 +2309,11 @@ msgstr "Закруглити кути та, за бажанням, додати 
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:9
 msgid "_Round Corners..."
-msgstr "_Закруглені кути..."
+msgstr "_Закруглені кути…"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
 msgid "Change the colormap of an image to the colors in a specified palette."
-msgstr "Адаптувати кольорову схему зображення до кольорів заданої палітри."
+msgstr "Адаптувати карту кольорів зображення до кольорів заданої палітри."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
 msgid "Palette"
@@ -2321,7 +2321,7 @@ msgstr "Палітра"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
 msgid "Se_t Colormap..."
-msgstr "_Змінити кольорову мапу..."
+msgstr "_Змінити карту кольорів…"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Convert a selection to a brush"
@@ -2329,7 +2329,7 @@ msgstr "Перетворити виділення у пензель"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:5
 msgid "To _Brush..."
-msgstr "У _пензель..."
+msgstr "У _пензель…"
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "Convert a selection to an image"
@@ -2345,7 +2345,7 @@ msgstr "Перетворити виділення на текстуру"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
 msgid "To _Pattern..."
-msgstr "У _текстуру..."
+msgstr "У _текстуру…"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:1
 msgid "Concave"
@@ -2362,7 +2362,7 @@ msgstr "Закруглити кути активного виділення"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
 msgid "Rounded R_ectangle..."
-msgstr "Закру_глений прямокутник..."
+msgstr "Закру_глений прямокутник…"
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:1
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
@@ -2378,7 +2378,7 @@ msgstr "Номер"
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:7
 msgid "_Slide..."
-msgstr "_Слайд..."
+msgstr "_Слайд…"
 
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
 msgid "Create a State Of The Art chromed logo"
@@ -2386,7 +2386,7 @@ msgstr "Створити сучасну хромовану емблему"
 
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
 msgid "SOTA Chrome..."
-msgstr "SOTA хром..."
+msgstr "SOTA хром…"
 
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:2
 msgid "Create a logo with a speedy text effect"
@@ -2394,7 +2394,7 @@ msgstr "Створити емблему з ефектом швидкісного
 
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:7
 msgid "Speed Text..."
-msgstr "Швидкісний текст..."
+msgstr "Швидкісний текст…"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 msgid "Create an animation by mapping the current image onto a spinning sphere"
@@ -2415,7 +2415,7 @@ msgstr "Обертати зліва направо"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:7
 msgid "_Spinning Globe..."
-msgstr "_Куля, що обертається..."
+msgstr "_Куля, що обертається…"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
 msgid ""
@@ -2537,7 +2537,7 @@ msgstr "Тип"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:33
 msgid "_Spyrogimp..."
-msgstr "_Спірограф..."
+msgstr "_Спірограф…"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
 msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
@@ -2545,7 +2545,7 @@ msgstr "Створити емблему, використовуючи камен
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
 msgid "Sta_rscape..."
-msgstr "_Зоряне тло..."
+msgstr "_Зоряне тло…"
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:4
 msgid "Create an image filled with a swirled tile effect"
@@ -2553,7 +2553,7 @@ msgstr "Створити зображення, заповнене розмнож
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:9
 msgid "Swirl-_Tile..."
-msgstr "_Розмножені вихорі..."
+msgstr "_Розмножені вихори…"
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:10
 msgid "Whirl amount"
@@ -2577,7 +2577,7 @@ msgstr "Кут вихрю"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:5
 msgid "_Swirly..."
-msgstr "_Вихор..."
+msgstr "_Вихор…"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
 msgid "Add a Trace of Particles effect to the selected region (or alpha)"
@@ -2606,7 +2606,7 @@ msgstr "Швидкість потраплянь"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:12
 msgid "_Particle Trace..."
-msgstr "Слід _частинки..."
+msgstr "Слід _частинки…"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:1
 msgid "Antialias"
@@ -2623,7 +2623,7 @@ msgstr "Заповнити кут"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:9
 msgid "Text C_ircle..."
-msgstr "Текст за _колом..."
+msgstr "Текст за _колом…"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:3
 msgid ""
@@ -2668,7 +2668,7 @@ msgstr "Текстура тексту"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:16
 msgid "_Textured..."
-msgstr "_Текстура..."
+msgstr "_Текстура…"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:1
 msgid "Blur horizontally"
@@ -2696,7 +2696,7 @@ msgstr "RLE"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:8
 msgid "_Tileable Blur..."
-msgstr "Розмивання _кромки..."
+msgstr "Розмивання _кромки…"
 
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:1
 msgid "Create a decorative web title header"
@@ -2704,7 +2704,7 @@ msgstr "Створити декоративний заголовок для ве
 
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:6
 msgid "Web Title Header..."
-msgstr "Заголовок веб-сторінки..."
+msgstr "Заголовок веб-сторінки…"
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:3
 msgid "Create an image filled with a Truchet pattern"
@@ -2716,7 +2716,7 @@ msgstr "Колір переднього плану"
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:7
 msgid "T_ruchet..."
-msgstr "Т_руше..."
+msgstr "Т_руше…"
 
 #: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
 msgid "Mask opacity"
@@ -2748,7 +2748,7 @@ msgstr "Довжина хвилі"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:6
 msgid "_Waves..."
-msgstr "Х_вилі..."
+msgstr "Х_вилі…"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:1
 msgid ""
@@ -2788,7 +2788,7 @@ msgstr "Довжина нитки"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:9
 msgid "_Weave..."
-msgstr "_Хвилі..."
+msgstr "_Хвилі…"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
@@ -2833,7 +2833,7 @@ msgstr "Непрозорість відблисків"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:14
 msgid "_Xach-Effect..."
-msgstr "_Xach-ефект..."
+msgstr "_Xach-ефект…"
 
 #~ msgid "Autocrop"
 #~ msgstr "Автокадрування"

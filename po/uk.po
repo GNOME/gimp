@@ -413,7 +413,7 @@ msgstr "Зразкові точки"
 
 #: ../app/actions/actions.c:211
 msgid "Select"
-msgstr "Виділене"
+msgstr "Вибране"
 
 #. initialize the template list
 #: ../app/actions/actions.c:214 ../app/core/gimp.c:989
@@ -561,7 +561,7 @@ msgstr "Вста_вити буфер"
 #: ../app/actions/buffers-actions.c:46
 msgctxt "buffers-action"
 msgid "Paste the selected buffer"
-msgstr "Перемістити виділений буфер"
+msgstr "Перемістити вибраний буфер"
 
 #: ../app/actions/buffers-actions.c:51
 msgctxt "buffers-action"
@@ -571,7 +571,7 @@ msgstr "Вставити буфер _у"
 #: ../app/actions/buffers-actions.c:52
 msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection"
-msgstr "Вставити виділений буфер у виділення"
+msgstr "Вставити вибраний буфер у вибране"
 
 #: ../app/actions/buffers-actions.c:57
 msgctxt "buffers-action"
@@ -581,7 +581,7 @@ msgstr "Вставити буфер як _нове зображення"
 #: ../app/actions/buffers-actions.c:58
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new image"
-msgstr "Вставити виділений буфер як нове зображення"
+msgstr "Вставити вибраний буфер як нове зображення"
 
 #: ../app/actions/buffers-actions.c:63
 msgctxt "buffers-action"
@@ -696,17 +696,17 @@ msgstr "Канал -> Виді_лення"
 #: ../app/actions/channels-actions.c:109
 msgctxt "channels-action"
 msgid "Replace the selection with this channel"
-msgstr "Створити з каналу виділену область"
+msgstr "Створити з каналу вибрану ділянку"
 
 #: ../app/actions/channels-actions.c:114
 msgctxt "channels-action"
 msgid "_Add to Selection"
-msgstr "_Додати до виділення"
+msgstr "_Додати до вибраного"
 
 #: ../app/actions/channels-actions.c:115
 msgctxt "channels-action"
 msgid "Add this channel to the current selection"
-msgstr "Додати цей канал до виділеної області"
+msgstr "Додати цей канал до вибраної ділянки"
 
 #: ../app/actions/channels-actions.c:120
 msgctxt "channels-action"
@@ -716,17 +716,17 @@ msgstr "_Відняти від виділення"
 #: ../app/actions/channels-actions.c:121
 msgctxt "channels-action"
 msgid "Subtract this channel from the current selection"
-msgstr "Відняти цей канал з виділеної області"
+msgstr "Відняти цей канал з вибраної ділянки"
 
 #: ../app/actions/channels-actions.c:126
 msgctxt "channels-action"
 msgid "_Intersect with Selection"
-msgstr "_Перетнути з виділенням"
+msgstr "_Перетнути з вибраним"
 
 #: ../app/actions/channels-actions.c:127
 msgctxt "channels-action"
 msgid "Intersect this channel with the current selection"
-msgstr "Перетнути цей канал з поточним виділенням"
+msgstr "Перетнути цей канал з поточним вибраним"
 
 #: ../app/actions/channels-commands.c:85
 #: ../app/actions/channels-commands.c:402
@@ -960,7 +960,7 @@ msgstr "_Об'єднувати за зразком"
 #: ../app/actions/cursor-info-actions.c:48
 msgctxt "cursor-info-action"
 msgid "Use the composite color of all visible layers"
-msgstr "Використовувати всі видимі шари при виділенні_області"
+msgstr "Використовувати суміш кольорів усіх видимих шарів"
 
 #: ../app/actions/data-commands.c:89 ../app/actions/documents-commands.c:344
 #: ../app/actions/file-commands.c:194 ../app/dialogs/file-open-dialog.c:232
@@ -1067,12 +1067,12 @@ msgstr "Відкрити діалог гістограми"
 #: ../app/actions/dialogs-actions.c:97
 msgctxt "dialogs-action"
 msgid "_Selection Editor"
-msgstr "Зміна виділеної діл_янки"
+msgstr "Редактор вибраної діл_янки"
 
 #: ../app/actions/dialogs-actions.c:98
 msgctxt "dialogs-action"
 msgid "Open the selection editor"
-msgstr "Відкрити діалог правки виділеної ділянки"
+msgstr "Відкрити редактор вибраної ділянки"
 
 #: ../app/actions/dialogs-actions.c:103
 msgctxt "dialogs-action"
@@ -1930,7 +1930,7 @@ msgstr "_Вирізати"
 #: ../app/actions/edit-actions.c:111
 msgctxt "edit-action"
 msgid "Move the selected pixels to the clipboard"
-msgstr "Перемістити виділені точки у буфер обміну"
+msgstr "Перемістити вибрані точки у буфер обміну"
 
 #: ../app/actions/edit-actions.c:116
 msgctxt "edit-action"
@@ -1940,7 +1940,7 @@ msgstr "_Копіювати"
 #: ../app/actions/edit-actions.c:117
 msgctxt "edit-action"
 msgid "Copy the selected pixels to the clipboard"
-msgstr "Перемістити виділені точки у буфер обміну"
+msgstr "Перемістити вибрані точки у буфер обміну"
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:122
@@ -1951,7 +1951,7 @@ msgstr "Копіювати ви_диме"
 #: ../app/actions/edit-actions.c:123
 msgctxt "edit-action"
 msgid "Copy what is visible in the selected region"
-msgstr "Скопіювати все, що є видимим у виділеній області"
+msgstr "Скопіювати все, що є видимим у вибраній ділянці"
 
 #: ../app/actions/edit-actions.c:128
 msgctxt "edit-action"
@@ -1961,7 +1961,7 @@ msgstr "Вст_авити"
 #: ../app/actions/edit-actions.c:129
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard"
-msgstr "Вставити зміст буферу обміну"
+msgstr "Вставити вміст буферу обміну"
 
 #: ../app/actions/edit-actions.c:134
 msgctxt "edit-action"
@@ -1971,7 +1971,7 @@ msgstr "Вставити _у"
 #: ../app/actions/edit-actions.c:136
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard into the current selection"
-msgstr "Вставити зміст буферу обміну у виділену область"
+msgstr "Вставити вміст буферу обміну у вибрану ділянку"
 
 #: ../app/actions/edit-actions.c:141
 msgctxt "edit-action"
@@ -2006,33 +2006,33 @@ msgstr "_Вирізати у буфер з назвою..."
 #: ../app/actions/edit-actions.c:160
 msgctxt "edit-action"
 msgid "Move the selected pixels to a named buffer"
-msgstr "Перемістити виділені точки у іменований буфер обміну"
+msgstr "Перемістити вибрані точки у названий буфер обміну"
 
 #: ../app/actions/edit-actions.c:165
 msgctxt "edit-action"
 msgid "_Copy Named..."
-msgstr "_Копіювати з буфера з назвою..."
+msgstr "_Копіювати до буфера з назвою…"
 
 #: ../app/actions/edit-actions.c:166
 msgctxt "edit-action"
 msgid "Copy the selected pixels to a named buffer"
-msgstr "Копіювати виділені точки у іменований буфер обміну"
+msgstr "Копіювати вибрані точки у названий буфер обміну"
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:171
 msgctxt "edit-action"
 msgid "Copy _Visible Named..."
-msgstr "Копіювати ви_диме з назвою..."
+msgstr "Копіювати ви_диме з назвою…"
 
 #: ../app/actions/edit-actions.c:173
 msgctxt "edit-action"
 msgid "Copy what is visible in the selected region to a named buffer"
-msgstr "Скопіювати все, що є видимим у виділеній області"
+msgstr "Скопіювати все, що є видимим у вибраній ділянці"
 
 #: ../app/actions/edit-actions.c:178
 msgctxt "edit-action"
 msgid "_Paste Named..."
-msgstr "Вст_авити з буфера з назвою..."
+msgstr "Вст_авити з буфера з назвою…"
 
 #: ../app/actions/edit-actions.c:179
 msgctxt "edit-action"
@@ -2047,7 +2047,7 @@ msgstr "О_чистити"
 #: ../app/actions/edit-actions.c:185
 msgctxt "edit-action"
 msgid "Clear the selected pixels"
-msgstr "Вилучити виділені точки"
+msgstr "Вилучити вибрані точки"
 
 #: ../app/actions/edit-actions.c:193
 msgctxt "edit-action"
@@ -2057,7 +2057,7 @@ msgstr "Заповнення кольором _переднього плану"
 #: ../app/actions/edit-actions.c:194
 msgctxt "edit-action"
 msgid "Fill the selection using the foreground color"
-msgstr "Заповнити виділену область кольором переднього плану"
+msgstr "Заповнити вибрану ділянку кольором переднього плану"
 
 #: ../app/actions/edit-actions.c:199
 msgctxt "edit-action"
@@ -2067,7 +2067,7 @@ msgstr "Заповнення кольором _тла"
 #: ../app/actions/edit-actions.c:200
 msgctxt "edit-action"
 msgid "Fill the selection using the background color"
-msgstr "Заповнити виділену область кольором тла"
+msgstr "Заповнити вибрану ділянку кольором тла"
 
 #: ../app/actions/edit-actions.c:205
 msgctxt "edit-action"
@@ -2077,7 +2077,7 @@ msgstr "Заповнення _текстурою"
 #: ../app/actions/edit-actions.c:206
 msgctxt "edit-action"
 msgid "Fill the selection using the active pattern"
-msgstr "Заповнити виділену область активною текстурою"
+msgstr "Заповнити вибрану ділянку активною текстурою"
 
 #: ../app/actions/edit-actions.c:304
 #, c-format
@@ -2092,7 +2092,7 @@ msgstr "Повт_орити \"%s\""
 #: ../app/actions/edit-actions.c:326
 #, c-format
 msgid "_Fade %s..."
-msgstr "П_ослабити %s..."
+msgstr "П_ослабити %s…"
 
 #: ../app/actions/edit-actions.c:338
 msgid "_Undo"
@@ -2104,7 +2104,7 @@ msgstr "Повт_орити"
 
 #: ../app/actions/edit-actions.c:340
 msgid "_Fade..."
-msgstr "П_ослабити..."
+msgstr "П_ослабити…"
 
 #: ../app/actions/edit-commands.c:137
 msgid "Clear Undo History"
@@ -2190,12 +2190,12 @@ msgstr "Виді_лити все"
 #: ../app/actions/error-console-actions.c:50
 msgctxt "error-console-action"
 msgid "Select all error messages"
-msgstr "Виділити всі повідомлення про помилки"
+msgstr "Вибрати всі повідомлення про помилки"
 
 #: ../app/actions/error-console-actions.c:58
 msgctxt "error-console-action"
 msgid "_Save Error Log to File..."
-msgstr "З_берегти журнал помилок у файлі..."
+msgstr "З_берегти журнал помилок у файлі…"
 
 #: ../app/actions/error-console-actions.c:59
 msgctxt "error-console-action"
@@ -2205,16 +2205,16 @@ msgstr "Записати всі повідомлення про помилки �
 #: ../app/actions/error-console-actions.c:64
 msgctxt "error-console-action"
 msgid "Save S_election to File..."
-msgstr "Зберегти в_иділення у файл..."
+msgstr "Зберегти в_ибране у файл…"
 
 #: ../app/actions/error-console-actions.c:65
 msgctxt "error-console-action"
 msgid "Write the selected error messages to a file"
-msgstr "Записати виділені повідомлення про помилки у файл"
+msgstr "Записати вибрані повідомлення про помилки у файл"
 
 #: ../app/actions/error-console-commands.c:84
 msgid "Cannot save. Nothing is selected."
-msgstr "Зберегти неможливо. Нічого не виділено."
+msgstr "Зберегти неможливо. Нічого не вибрано."
 
 #: ../app/actions/error-console-commands.c:95
 msgid "Save Error Log to File"
@@ -2519,12 +2519,12 @@ msgstr "Зб_ерегти колір правої точки у"
 #: ../app/actions/gradient-editor-actions.c:66
 msgctxt "gradient-editor-action"
 msgid "L_eft Endpoint's Color..."
-msgstr "Колір крайньої _лівої точки..."
+msgstr "Колір крайньої _лівої точки…"
 
 #: ../app/actions/gradient-editor-actions.c:71
 msgctxt "gradient-editor-action"
 msgid "R_ight Endpoint's Color..."
-msgstr "Колір крайньої _правої точки..."
+msgstr "Колір крайньої _правої точки…"
 
 #: ../app/actions/gradient-editor-actions.c:111
 msgctxt "gradient-editor-action"
@@ -2694,7 +2694,7 @@ msgstr "_Віддзеркалити сегмент"
 
 #: ../app/actions/gradient-editor-actions.c:783
 msgid "_Replicate Segment..."
-msgstr "_Розмножити сегмент..."
+msgstr "_Розмножити сегмент…"
 
 #: ../app/actions/gradient-editor-actions.c:785
 msgid "Split Segment at _Midpoint"
@@ -2702,7 +2702,7 @@ msgstr "Розділити сегмент по _центру"
 
 #: ../app/actions/gradient-editor-actions.c:787
 msgid "Split Segment _Uniformly..."
-msgstr "Розділити сегмент на _рівні частини..."
+msgstr "Розділити сегмент на _рівні частини…"
 
 #: ../app/actions/gradient-editor-actions.c:789
 msgid "_Delete Segment"
@@ -2718,19 +2718,19 @@ msgstr "Перерозподілити _напрямні в сегменті"
 
 #: ../app/actions/gradient-editor-actions.c:798
 msgid "_Blending Function for Selection"
-msgstr "Функція _змішування для виділеної ділянки"
+msgstr "Функція _змішування для вибраної ділянки"
 
 #: ../app/actions/gradient-editor-actions.c:800
 msgid "Coloring _Type for Selection"
-msgstr "_Тип фарбування виділеної ділянки"
+msgstr "_Тип фарбування вибраної ділянки"
 
 #: ../app/actions/gradient-editor-actions.c:803
 msgid "_Flip Selection"
-msgstr "_Віддзеркалити виділене"
+msgstr "_Віддзеркалити вибране"
 
 #: ../app/actions/gradient-editor-actions.c:805
 msgid "_Replicate Selection..."
-msgstr "_Розмножити виділене..."
+msgstr "_Розмножити вибране…"
 
 #: ../app/actions/gradient-editor-actions.c:807
 msgid "Split Segments at _Midpoints"
@@ -2738,7 +2738,7 @@ msgstr "Розділити сегменти по _центрах"
 
 #: ../app/actions/gradient-editor-actions.c:809
 msgid "Split Segments _Uniformly..."
-msgstr "Розділити сегменти на _рівні частини..."
+msgstr "Розділити сегменти на _рівні частини…"
 
 #: ../app/actions/gradient-editor-actions.c:811
 msgid "_Delete Selection"
@@ -2746,11 +2746,11 @@ msgstr "В_илучити вибране"
 
 #: ../app/actions/gradient-editor-actions.c:813
 msgid "Re-_center Midpoints in Selection"
-msgstr "Від_центрувати середні точки виділеного"
+msgstr "Від_центрувати середні точки вибраного"
 
 #: ../app/actions/gradient-editor-actions.c:815
 msgid "Re-distribute _Handles in Selection"
-msgstr "Перерозподілити _напрямні у виділеному"
+msgstr "Перерозподілити _напрямні у вибране"
 
 #: ../app/actions/gradient-editor-commands.c:84
 msgid "Left Endpoint Color"
@@ -2778,11 +2778,11 @@ msgstr "Створення копії сегмента градієнта"
 
 #: ../app/actions/gradient-editor-commands.c:456
 msgid "Replicate Selection"
-msgstr "Розмноження виділеного"
+msgstr "Розмноження вибраного"
 
 #: ../app/actions/gradient-editor-commands.c:457
 msgid "Replicate Gradient Selection"
-msgstr "Створення копії виділеної ділянки градієнта"
+msgstr "Створення копії вибраної ділянки градієнта"
 
 #: ../app/actions/gradient-editor-commands.c:470
 msgid "Replicate"
@@ -2794,7 +2794,7 @@ msgid ""
 "to replicate the selected segment."
 msgstr ""
 "Виберіть кількість створюваних\n"
-"копій виділеного сегмента."
+"копій вибраного сегмента."
 
 #: ../app/actions/gradient-editor-commands.c:494
 msgid ""
@@ -2802,7 +2802,7 @@ msgid ""
 "to replicate the selection."
 msgstr ""
 "Виберіть кількість створюваних\n"
-"копій виділеної ділянки."
+"копій вибраної ділянки."
 
 #: ../app/actions/gradient-editor-commands.c:553
 msgid "Split Segment Uniformly"
@@ -2878,7 +2878,7 @@ msgstr "Копіювати розташування градієнту у буф
 #: ../app/actions/gradients-actions.c:65
 msgctxt "gradients-action"
 msgid "Save as _POV-Ray..."
-msgstr "Зберегти як _POV-Ray..."
+msgstr "Зберегти як _POV-Ray…"
 
 #: ../app/actions/gradients-actions.c:66
 msgctxt "gradients-action"
@@ -2948,7 +2948,7 @@ msgstr "Меню зображення"
 #: ../app/actions/image-actions.c:55
 msgctxt "image-action"
 msgid "_Image"
-msgstr "_Зображення"
+msgstr "_Образ"
 
 #: ../app/actions/image-actions.c:56
 msgctxt "image-action"
@@ -2993,7 +2993,7 @@ msgstr "С_кладові"
 #: ../app/actions/image-actions.c:67
 msgctxt "image-action"
 msgid "_New..."
-msgstr "_Створити..."
+msgstr "_Створити…"
 
 #: ../app/actions/image-actions.c:68
 msgctxt "image-action"
@@ -3003,7 +3003,7 @@ msgstr "Створення нового зображення"
 #: ../app/actions/image-actions.c:73
 msgctxt "image-action"
 msgid "Can_vas Size..."
-msgstr "Розмір п_олотна..."
+msgstr "Розмір п_олотна…"
 
 #: ../app/actions/image-actions.c:74
 msgctxt "image-action"
@@ -3023,27 +3023,27 @@ msgstr "Змінити розмір зображення, щоб помісти�
 #: ../app/actions/image-actions.c:85
 msgctxt "image-action"
 msgid "F_it Canvas to Selection"
-msgstr "_Полотно у виділення"
+msgstr "_Полотно у вибране"
 
 #: ../app/actions/image-actions.c:86
 msgctxt "image-action"
 msgid "Resize the image to the extents of the selection"
-msgstr "Зміна розміру зображення, щоб умістилось виділення"
+msgstr "Зміна розміру зображення, щоб умістилось вибране"
 
 #: ../app/actions/image-actions.c:91
 msgctxt "image-action"
 msgid "_Print Size..."
-msgstr "Розмір при д_рукуванні..."
+msgstr "Розмір д_рукування…"
 
 #: ../app/actions/image-actions.c:92
 msgctxt "image-action"
 msgid "Adjust the print resolution"
-msgstr "Коригування роздільної здатності при друкуванні"
+msgstr "Коригування роздільності друкування"
 
 #: ../app/actions/image-actions.c:97
 msgctxt "image-action"
 msgid "_Scale Image..."
-msgstr "Ро_змір зображення..."
+msgstr "Ро_змір зображення…"
 
 #: ../app/actions/image-actions.c:98
 msgctxt "image-action"
@@ -3053,12 +3053,12 @@ msgstr "Зміна розміру змісту зображення"
 #: ../app/actions/image-actions.c:103
 msgctxt "image-action"
 msgid "_Crop to Selection"
-msgstr "_Кадрувати у виділене"
+msgstr "_Кадрувати у вибране"
 
 #: ../app/actions/image-actions.c:104
 msgctxt "image-action"
 msgid "Crop the image to the extents of the selection"
-msgstr "Кадрувати зображення до розмірів виділення"
+msgstr "Кадрувати зображення до розмірів вибране"
 
 #: ../app/actions/image-actions.c:109
 msgctxt "image-action"
@@ -3073,7 +3073,7 @@ msgstr "Створити копію цього зображення"
 #: ../app/actions/image-actions.c:115
 msgctxt "image-action"
 msgid "Merge Visible _Layers..."
-msgstr "О_б'єднати видимі шари..."
+msgstr "О_б'єднати видимі шари…"
 
 #: ../app/actions/image-actions.c:116
 msgctxt "image-action"
@@ -3088,12 +3088,12 @@ msgstr "_Звести зображення"
 #: ../app/actions/image-actions.c:122
 msgctxt "image-action"
 msgid "Merge all layers into one and remove transparency"
-msgstr "Зводить всі шари до одного та вилучити прозорість"
+msgstr "Зводить всі шари до одного та вилучає прозорість"
 
 #: ../app/actions/image-actions.c:127
 msgctxt "image-action"
 msgid "Configure G_rid..."
-msgstr "Налаштувати с_ітку..."
+msgstr "Налаштувати с_ітку…"
 
 #: ../app/actions/image-actions.c:128
 msgctxt "image-action"
@@ -3133,7 +3133,7 @@ msgstr "Перетворення зображення у відтінки сір
 #: ../app/actions/image-actions.c:152
 msgctxt "image-convert-action"
 msgid "_Indexed..."
-msgstr "_Індексоване..."
+msgstr "_Індексоване…"
 
 #: ../app/actions/image-actions.c:153
 msgctxt "image-convert-action"
@@ -3197,18 +3197,18 @@ msgstr "Встановлення розміру полотна"
 #: ../app/actions/image-commands.c:266 ../app/actions/image-commands.c:290
 #: ../app/actions/image-commands.c:583
 msgid "Resizing"
-msgstr "Зміна розміру..."
+msgstr "Зміна розміру"
 
 #: ../app/actions/image-commands.c:317
 msgid "Set Image Print Resolution"
-msgstr "Зміна роздільної здатності"
+msgstr "Зміна роздільності"
 
 #: ../app/actions/image-commands.c:379
 #: ../app/pdb/drawable-transform-cmds.c:159
 #: ../app/pdb/drawable-transform-cmds.c:247
 #: ../app/pdb/item-transform-cmds.c:162
 msgid "Flipping"
-msgstr "Віддзеркалення..."
+msgstr "Віддзеркалення"
 
 #: ../app/actions/image-commands.c:403
 #: ../app/pdb/drawable-transform-cmds.c:602
@@ -3216,11 +3216,11 @@ msgstr "Віддзеркалення..."
 #: ../app/pdb/item-transform-cmds.c:433 ../app/pdb/transform-tools-cmds.c:245
 #: ../app/tools/gimprotatetool.c:125
 msgid "Rotating"
-msgstr "Обертання..."
+msgstr "Обертання"
 
 #: ../app/actions/image-commands.c:429 ../app/actions/layers-commands.c:691
 msgid "Cannot crop because the current selection is empty."
-msgstr "Не вдалось кадрувати, тому що виділена ділянка порожня."
+msgstr "Не вдалось кадрувати, бо вибрана ділянка порожня."
 
 #: ../app/actions/image-commands.c:630
 msgid "Change Print Size"
@@ -3289,7 +3289,7 @@ msgstr "_Шар"
 #: ../app/actions/layers-actions.c:55
 msgctxt "layers-action"
 msgid "Stac_k"
-msgstr "Стопка _шарів"
+msgstr "С_тіг"
 
 #: ../app/actions/layers-actions.c:57
 msgctxt "layers-action"
@@ -3374,7 +3374,7 @@ msgstr "Створити новий шар з усіх видимих даних
 #: ../app/actions/layers-actions.c:101
 msgctxt "layers-action"
 msgid "New Layer _Group..."
-msgstr "Створити _групу шарів..."
+msgstr "Створити _групу шарів…"
 
 #: ../app/actions/layers-actions.c:102
 msgctxt "layers-action"
@@ -3474,7 +3474,7 @@ msgstr "Об'єднати шари групи шарів у один велик�
 #: ../app/actions/layers-actions.c:162
 msgctxt "layers-action"
 msgid "Merge _Visible Layers..."
-msgstr "О_б'єднати видимі шари..."
+msgstr "О_б'єднати видимі шари…"
 
 #: ../app/actions/layers-actions.c:163
 msgctxt "layers-action"
@@ -3494,7 +3494,7 @@ msgstr "Зводить всі шари до одного та вилучає п�
 #: ../app/actions/layers-actions.c:174
 msgctxt "layers-action"
 msgid "_Discard Text Information"
-msgstr "Ви_далити текстову інформацію"
+msgstr "Ви_лучити текстову інформацію"
 
 #: ../app/actions/layers-actions.c:175
 msgctxt "layers-action"
@@ -3524,7 +3524,7 @@ msgstr "Направити текст цього шару по поточном�
 #: ../app/actions/layers-actions.c:192
 msgctxt "layers-action"
 msgid "Layer B_oundary Size..."
-msgstr "_Межі шару..."
+msgstr "_Межі шару…"
 
 #: ../app/actions/layers-actions.c:193
 msgctxt "layers-action"
@@ -3544,7 +3544,7 @@ msgstr "Зробити розмір шару рівним розміру зоб�
 #: ../app/actions/layers-actions.c:204
 msgctxt "layers-action"
 msgid "_Scale Layer..."
-msgstr "Р_озмір шару..."
+msgstr "Р_озмір шару…"
 
 #: ../app/actions/layers-actions.c:205
 msgctxt "layers-action"
@@ -3554,17 +3554,17 @@ msgstr "Зміна розміру змісту шару"
 #: ../app/actions/layers-actions.c:210
 msgctxt "layers-action"
 msgid "_Crop to Selection"
-msgstr "_Кадрувати у виділене"
+msgstr "_Кадрувати у вибране"
 
 #: ../app/actions/layers-actions.c:211
 msgctxt "layers-action"
 msgid "Crop the layer to the extents of the selection"
-msgstr "Кадрувати шар до розмірів виділення"
+msgstr "Кадрувати шар до розмірів вибраного"
 
 #: ../app/actions/layers-actions.c:216
 msgctxt "layers-action"
 msgid "Add La_yer Mask..."
-msgstr "Додати маску ша_ру..."
+msgstr "Додати маску ша_ру…"
 
 #: ../app/actions/layers-actions.c:218
 msgctxt "layers-action"
@@ -3649,72 +3649,72 @@ msgstr "Вилучити маску шару та її ефект"
 #: ../app/actions/layers-actions.c:284
 msgctxt "layers-action"
 msgid "_Mask to Selection"
-msgstr "Маска -> Виді_лена область"
+msgstr "Маска -> Вибрана ділянка"
 
 #: ../app/actions/layers-actions.c:285
 msgctxt "layers-action"
 msgid "Replace the selection with the layer mask"
-msgstr "Перетворює маску на виділену область"
+msgstr "Перетворює маску на вибрану ділянку"
 
 #: ../app/actions/layers-actions.c:290
 msgctxt "layers-action"
 msgid "_Add to Selection"
-msgstr "_Додати до виділення"
+msgstr "_Додати до вибраного"
 
 #: ../app/actions/layers-actions.c:291
 msgctxt "layers-action"
 msgid "Add the layer mask to the current selection"
-msgstr "Додати маску шару до поточного виділення"
+msgstr "Додати маску шару до поточного вибраного"
 
 #: ../app/actions/layers-actions.c:296 ../app/actions/layers-actions.c:325
 msgctxt "layers-action"
 msgid "_Subtract from Selection"
-msgstr "_Відняти від виділення"
+msgstr "_Відняти від вибраного"
 
 #: ../app/actions/layers-actions.c:297
 msgctxt "layers-action"
 msgid "Subtract the layer mask from the current selection"
-msgstr "Відняти маску шару від поточного виділення"
+msgstr "Відняти маску шару від поточного вибраного"
 
 #: ../app/actions/layers-actions.c:302 ../app/actions/layers-actions.c:332
 msgctxt "layers-action"
 msgid "_Intersect with Selection"
-msgstr "_Перетнути з виділенням"
+msgstr "_Перетнути з вибраним"
 
 #: ../app/actions/layers-actions.c:303
 msgctxt "layers-action"
 msgid "Intersect the layer mask with the current selection"
-msgstr "Перетнути маску шару з поточним виділенням"
+msgstr "Перетнути маску шару з поточним вибраним"
 
 #: ../app/actions/layers-actions.c:311
 msgctxt "layers-action"
 msgid "Al_pha to Selection"
-msgstr "_Альфа-канал -> Виділена область"
+msgstr "_Альфа-канал -> Вибрана ділянка"
 
 #: ../app/actions/layers-actions.c:313
 msgctxt "layers-action"
 msgid "Replace the selection with the layer's alpha channel"
-msgstr "Перетворити альфа-канал на виділення"
+msgstr "Перетворити альфа-канал на вибране"
 
 #: ../app/actions/layers-actions.c:318
 msgctxt "layers-action"
 msgid "A_dd to Selection"
-msgstr "_Додати до виділення"
+msgstr "_Додати до вибраного"
 
 #: ../app/actions/layers-actions.c:320
 msgctxt "layers-action"
 msgid "Add the layer's alpha channel to the current selection"
-msgstr "Додати альфа-канал до виділення"
+msgstr "Додати альфа-канал до вибраного"
 
 #: ../app/actions/layers-actions.c:327
 msgctxt "layers-action"
 msgid "Subtract the layer's alpha channel from the current selection"
-msgstr "Відняти альфа-канал від виділення"
+msgstr "Відняти альфа-канал від вибраного"
 
 #: ../app/actions/layers-actions.c:334
 msgctxt "layers-action"
 msgid "Intersect the layer's alpha channel with the current selection"
-msgstr "Перетнути альфа-канал з виділенням"
+msgstr "Перетнути альфа-канал з вибраним"
 
 #: ../app/actions/layers-actions.c:342
 msgctxt "layers-action"
@@ -3910,7 +3910,7 @@ msgstr "Створити нову палітру кольорів"
 #: ../app/actions/palettes-actions.c:53
 msgctxt "palettes-action"
 msgid "_Import Palette..."
-msgstr "_Імпортувати палітру..."
+msgstr "_Імпортувати палітру…"
 
 #: ../app/actions/palettes-actions.c:54
 msgctxt "palettes-action"
@@ -3930,7 +3930,7 @@ msgstr "Створити копію цієї палітри"
 #: ../app/actions/palettes-actions.c:65
 msgctxt "palettes-action"
 msgid "_Merge Palettes..."
-msgstr "Об'_єднати палітри..."
+msgstr "Об'_єднати палітри…"
 
 #: ../app/actions/palettes-actions.c:66
 msgctxt "palettes-action"
@@ -4083,7 +4083,7 @@ msgstr "_Шум"
 #: ../app/actions/plug-in-actions.c:93
 msgctxt "plug-in-action"
 msgid "Edge-De_tect"
-msgstr "Виділення ме_ж"
+msgstr "Виявлення ме_ж"
 
 #: ../app/actions/plug-in-actions.c:95
 msgctxt "plug-in-action"
@@ -4221,7 +4221,7 @@ msgstr "Меню швидкої маски"
 #: ../app/actions/quick-mask-actions.c:47
 msgctxt "quick-mask-action"
 msgid "_Configure Color and Opacity..."
-msgstr "Н_алаштувати колір та прозорість..."
+msgstr "Н_алаштувати колір та прозорість…"
 
 #: ../app/actions/quick-mask-actions.c:55
 msgctxt "quick-mask-action"
@@ -4236,12 +4236,12 @@ msgstr "Перемикнути швидку маску"
 #: ../app/actions/quick-mask-actions.c:65
 msgctxt "quick-mask-action"
 msgid "Mask _Selected Areas"
-msgstr "Накладати маску на виді_лені ділянки"
+msgstr "Накладати маску на _вибрані ділянки"
 
 #: ../app/actions/quick-mask-actions.c:70
 msgctxt "quick-mask-action"
 msgid "Mask _Unselected Areas"
-msgstr "Накладати маску на _невиділені ділянки"
+msgstr "Накладати маску на _невибрані ділянки"
 
 #: ../app/actions/quick-mask-commands.c:105
 msgid "Quick Mask Attributes"
@@ -4272,12 +4272,12 @@ msgstr "_Звести шари"
 #: ../app/actions/sample-points-actions.c:48
 msgctxt "sample-points-action"
 msgid "Use the composite color of all visible layers"
-msgstr "Використовувати всі видимі шари при виділенні_області"
+msgstr "Використовувати колір суміші всіх видимих шарів"
 
 #: ../app/actions/select-actions.c:44
 msgctxt "select-action"
 msgid "Selection Editor Menu"
-msgstr "Меню редактора виділення"
+msgstr "Меню редактора вибраного"
 
 #: ../app/actions/select-actions.c:47
 msgctxt "select-action"
@@ -4292,17 +4292,17 @@ msgstr "_Всього"
 #: ../app/actions/select-actions.c:51
 msgctxt "select-action"
 msgid "Select everything"
-msgstr "Виділити всі зображення"
+msgstr "Вибрати все"
 
 #: ../app/actions/select-actions.c:56
 msgctxt "select-action"
 msgid "_None"
-msgstr "_Зняти виділення"
+msgstr "_Зняти"
 
 #: ../app/actions/select-actions.c:57
 msgctxt "select-action"
 msgid "Dismiss the selection"
-msgstr "Зняти виділення"
+msgstr "Відкинути вибране"
 
 #: ../app/actions/select-actions.c:62
 msgctxt "select-action"
@@ -4312,7 +4312,7 @@ msgstr "_Інвертувати"
 #: ../app/actions/select-actions.c:63
 msgctxt "select-action"
 msgid "Invert the selection"
-msgstr "Інвертувати виділення"
+msgstr "Перевернути вибране"
 
 #: ../app/actions/select-actions.c:68
 msgctxt "select-action"
@@ -4322,18 +4322,18 @@ msgstr "_Розрухати"
 #: ../app/actions/select-actions.c:69
 msgctxt "select-action"
 msgid "Create a floating selection"
-msgstr "Створити рухоме виділення"
+msgstr "Створити рухоме вибирання"
 
 #: ../app/actions/select-actions.c:74
 msgctxt "select-action"
 msgid "Fea_ther..."
-msgstr "_Розмиття..."
+msgstr "_Розмиття…"
 
 #: ../app/actions/select-actions.c:76
 msgctxt "select-action"
 msgid "Blur the selection border so that it fades out smoothly"
 msgstr ""
-"Розмити межу виділення, щоб перехід між виділеним та не виділеним був "
+"Розмити межу вибирання, щоб перехід між вибраним та не вибраним був "
 "поступовий"
 
 #: ../app/actions/select-actions.c:81
@@ -4349,32 +4349,32 @@ msgstr "Вилучити розмитості з вибраного"
 #: ../app/actions/select-actions.c:87
 msgctxt "select-action"
 msgid "S_hrink..."
-msgstr "З_меншити..."
+msgstr "З_меншити…"
 
 #: ../app/actions/select-actions.c:88
 msgctxt "select-action"
 msgid "Contract the selection"
-msgstr "Зменшити виділення"
+msgstr "Зменшити вибране"
 
 #: ../app/actions/select-actions.c:93
 msgctxt "select-action"
 msgid "_Grow..."
-msgstr "З_більшити..."
+msgstr "З_більшити…"
 
 #: ../app/actions/select-actions.c:94
 msgctxt "select-action"
 msgid "Enlarge the selection"
-msgstr "Збільшити виділення"
+msgstr "Збільшити вибране"
 
 #: ../app/actions/select-actions.c:99
 msgctxt "select-action"
 msgid "Bo_rder..."
-msgstr "Ме_жа..."
+msgstr "Ме_жа…"
 
 #: ../app/actions/select-actions.c:100
 msgctxt "select-action"
 msgid "Replace the selection by its border"
-msgstr "Замістити виділення його межею вказаної ширини"
+msgstr "Замістити вибране його межею вказаної ширини"
 
 #: ../app/actions/select-actions.c:105
 msgctxt "select-action"
@@ -4384,43 +4384,43 @@ msgstr "Зберегти в к_аналі"
 #: ../app/actions/select-actions.c:106
 msgctxt "select-action"
 msgid "Save the selection to a channel"
-msgstr "Зберегти виділене в каналі"
+msgstr "Зберегти вибране в каналі"
 
 #: ../app/actions/select-actions.c:111
 msgctxt "select-action"
 msgid "_Stroke Selection..."
-msgstr "Обве_сти виділену ділянку..."
+msgstr "Обве_сти вибрану ділянку…"
 
 #: ../app/actions/select-actions.c:112
 msgctxt "select-action"
 msgid "Paint along the selection outline"
-msgstr "Обвести виділення вказаним типом лінії"
+msgstr "Обвести вибране вказаним типом лінії"
 
 #: ../app/actions/select-actions.c:117
 msgctxt "select-action"
 msgid "_Stroke Selection"
-msgstr "_Обвести виділену ділянку"
+msgstr "_Обвести вибрану ділянку"
 
 #: ../app/actions/select-actions.c:118
 msgctxt "select-action"
 msgid "Stroke the selection with last used values"
-msgstr "Обвести виділене з останніми значеннями"
+msgstr "Обвести вибране з останніми значеннями"
 
 #: ../app/actions/select-commands.c:156
 msgid "Feather Selection"
-msgstr "Розмивання виділеної ділянки"
+msgstr "Розмивання вибраної ділянки"
 
 #: ../app/actions/select-commands.c:160
 msgid "Feather selection by"
-msgstr "Розмити межу виділеного на"
+msgstr "Розмити межу вибраного на"
 
 #: ../app/actions/select-commands.c:197
 msgid "Shrink Selection"
-msgstr "Скорочення виділеного"
+msgstr "Скорочення вибраного"
 
 #: ../app/actions/select-commands.c:201
 msgid "Shrink selection by"
-msgstr "Скоротити виділене на"
+msgstr "Скоротити вибране на"
 
 #: ../app/actions/select-commands.c:209
 msgid "_Shrink from image border"
@@ -4432,11 +4432,11 @@ msgstr "Збільшення виділеного"
 
 #: ../app/actions/select-commands.c:241
 msgid "Grow selection by"
-msgstr "Збільшити виділене на"
+msgstr "Збільшити вибране на"
 
 #: ../app/actions/select-commands.c:267
 msgid "Border Selection"
-msgstr "Межа виділення"
+msgstr "Межа вибраного"
 
 #: ../app/actions/select-commands.c:271
 msgid "Border selection by"
@@ -4450,7 +4450,7 @@ msgstr "_Розмивати межі"
 #. Edge lock button
 #: ../app/actions/select-commands.c:293
 msgid "_Lock selection to image edges"
-msgstr "_Прикріпляти виділення до меж зображення"
+msgstr "_Прикріпляти вибране до меж зображення"
 
 #: ../app/actions/select-commands.c:345 ../app/actions/select-commands.c:378
 #: ../app/actions/vectors-commands.c:386 ../app/actions/vectors-commands.c:420
@@ -4460,7 +4460,7 @@ msgstr "Немає активного шару чи каналу для обве
 
 #: ../app/actions/select-commands.c:351
 msgid "Stroke Selection"
-msgstr "Обведення виділеної ділянки"
+msgstr "Обведення вибраної ділянки"
 
 #: ../app/actions/templates-actions.c:41
 msgctxt "templates-action"
@@ -4480,7 +4480,7 @@ msgstr "Створити нове зображення з шаблону"
 #: ../app/actions/templates-actions.c:51
 msgctxt "templates-action"
 msgid "_New Template..."
-msgstr "_Створити шаблон..."
+msgstr "_Створити шаблон…"
 
 #: ../app/actions/templates-actions.c:52
 msgctxt "templates-action"
@@ -4490,7 +4490,7 @@ msgstr "Створити новий шаблон"
 #: ../app/actions/templates-actions.c:57
 msgctxt "templates-action"
 msgid "D_uplicate Template..."
-msgstr "Д_ублювати шаблон..."
+msgstr "Д_ублювати шаблон…"
 
 #: ../app/actions/templates-actions.c:58
 msgctxt "templates-action"
@@ -4633,7 +4633,7 @@ msgstr "В_илучити"
 #: ../app/actions/text-tool-actions.c:78
 msgctxt "text-tool-action"
 msgid "_Open text file..."
-msgstr "Відкрити _текстовий файл..."
+msgstr "Відкрити _текстовий файл…"
 
 #: ../app/actions/text-tool-actions.c:83
 msgctxt "text-tool-action"
@@ -4816,7 +4816,7 @@ msgstr "_Засоби"
 #: ../app/actions/tools-actions.c:46
 msgctxt "tools-action"
 msgid "_Selection Tools"
-msgstr "Ви_ділення"
+msgstr "Ви_бирання"
 
 #: ../app/actions/tools-actions.c:47
 msgctxt "tools-action"
@@ -4841,12 +4841,12 @@ msgstr "За к_ольором"
 #: ../app/actions/tools-actions.c:56
 msgctxt "tools-action"
 msgid "Select regions with similar colors"
-msgstr "Виділення областей з заливкою подібного кольору"
+msgstr "Вибрати ділянки з заливкою подібного кольору"
 
 #: ../app/actions/tools-actions.c:61
 msgctxt "tools-action"
 msgid "_Arbitrary Rotation..."
-msgstr "_Довільне обертання..."
+msgstr "_Довільне обертання…"
 
 #: ../app/actions/tools-actions.c:62
 msgctxt "tools-action"
@@ -4961,7 +4961,7 @@ msgstr "Опускання контуру додолу"
 #: ../app/actions/vectors-actions.c:112
 msgctxt "vectors-action"
 msgid "Stro_ke Path..."
-msgstr "Обвести за конту_ром..."
+msgstr "Обвести за конту_ром…"
 
 #: ../app/actions/vectors-actions.c:113
 msgctxt "vectors-action"
@@ -4991,12 +4991,12 @@ msgstr "Вст_авити контур"
 #: ../app/actions/vectors-actions.c:134
 msgctxt "vectors-action"
 msgid "E_xport Path..."
-msgstr "_Експорт контуру..."
+msgstr "_Експорт контуру…"
 
 #: ../app/actions/vectors-actions.c:139
 msgctxt "vectors-action"
 msgid "I_mport Path..."
-msgstr "_Імпорт контуру..."
+msgstr "_Імпорт контуру…"
 
 #: ../app/actions/vectors-actions.c:147
 msgctxt "vectors-action"
@@ -5022,7 +5022,7 @@ msgstr "Контур -> Виді_лена область"
 #: ../app/actions/vectors-actions.c:169
 msgctxt "vectors-action"
 msgid "Path to selection"
-msgstr "Контур -> Виділена область"
+msgstr "Контур -> Вибрана ділянка"
 
 #: ../app/actions/vectors-actions.c:174
 msgctxt "vectors-action"
@@ -5032,47 +5032,47 @@ msgstr "З конт_уру"
 #: ../app/actions/vectors-actions.c:175
 msgctxt "vectors-action"
 msgid "Replace selection with path"
-msgstr "Створити з каналу виділену область"
+msgstr "Створити з каналу вибрану ділянку"
 
 #: ../app/actions/vectors-actions.c:180
 msgctxt "vectors-action"
 msgid "_Add to Selection"
-msgstr "_Додати до виділення"
+msgstr "_Додати до вибраного"
 
 #: ../app/actions/vectors-actions.c:181
 msgctxt "vectors-action"
 msgid "Add path to selection"
-msgstr "Контур -> Виділена область"
+msgstr "Контур -> Вибрана ділянка"
 
 #: ../app/actions/vectors-actions.c:186
 msgctxt "vectors-action"
 msgid "_Subtract from Selection"
-msgstr "_Відняти від виділення"
+msgstr "_Відняти від вибраного"
 
 #: ../app/actions/vectors-actions.c:187
 msgctxt "vectors-action"
 msgid "Subtract path from selection"
-msgstr "_Відняти від виділення"
+msgstr "_Відняти від вибраного"
 
 #: ../app/actions/vectors-actions.c:192
 msgctxt "vectors-action"
 msgid "_Intersect with Selection"
-msgstr "_Перетнути з виділенням"
+msgstr "_Перетнути з вибраним"
 
 #: ../app/actions/vectors-actions.c:193
 msgctxt "vectors-action"
 msgid "Intersect path with selection"
-msgstr "Перетнути контур з виділенням"
+msgstr "Перетнути контур з вибраним"
 
 #: ../app/actions/vectors-actions.c:201
 msgctxt "vectors-action"
 msgid "Selecti_on to Path"
-msgstr "Виділена область -> Кон_тур"
+msgstr "Вибрана ділянка -> Кон_тур"
 
 #: ../app/actions/vectors-actions.c:202 ../app/actions/vectors-actions.c:208
 msgctxt "vectors-action"
 msgid "Selection to path"
-msgstr "Перетворити виділену область на контур"
+msgstr "Перетворити вибрану ділянку на контур"
 
 #: ../app/actions/vectors-actions.c:207
 msgctxt "vectors-action"
@@ -5082,7 +5082,7 @@ msgstr "У _контур"
 #: ../app/actions/vectors-actions.c:213
 msgctxt "vectors-action"
 msgid "Selection to Path (_Advanced)"
-msgstr "Виділення до контуру (_розширені параметри)"
+msgstr "Вибиране до контуру (_розширені параметри)"
 
 #: ../app/actions/vectors-actions.c:214
 msgctxt "vectors-action"
@@ -5200,7 +5200,7 @@ msgstr "Показати вікно перегляду для зображенн
 #: ../app/actions/view-actions.c:112
 msgctxt "view-action"
 msgid "Display _Filters..."
-msgstr "Екранні _фільтри..."
+msgstr "Екранні _фільтри…"
 
 #: ../app/actions/view-actions.c:113
 msgctxt "view-action"
@@ -5210,7 +5210,7 @@ msgstr "Налаштовування екранних фільтрів"
 #: ../app/actions/view-actions.c:118
 msgctxt "view-action"
 msgid "Shrink _Wrap"
-msgstr "С_коротити вікно по зображенню"
+msgstr "С_коротити обгортку"
 
 #: ../app/actions/view-actions.c:119
 msgctxt "view-action"
@@ -5220,7 +5220,7 @@ msgstr "Зменшує вікно до розміру зображення"
 #: ../app/actions/view-actions.c:124
 msgctxt "view-action"
 msgid "_Open Display..."
-msgstr "Відкрити  _екран..."
+msgstr "Відкрити  _екран…"
 
 #: ../app/actions/view-actions.c:125
 msgctxt "view-action"
@@ -5240,12 +5240,12 @@ msgstr "Точка на екрані дорівнює точці зображе�
 #: ../app/actions/view-actions.c:140
 msgctxt "view-action"
 msgid "Show _Selection"
-msgstr "Показувати ви_ділення"
+msgstr "Показувати ви_бране"
 
 #: ../app/actions/view-actions.c:141
 msgctxt "view-action"
 msgid "Display the selection outline"
-msgstr "Показати межу виділення"
+msgstr "Показати межу вибраного"
 
 #: ../app/actions/view-actions.c:147
 msgctxt "view-action"
@@ -5290,7 +5290,7 @@ msgstr "Показувати кольорові зразкові точки зо
 #: ../app/actions/view-actions.c:175
 msgctxt "view-action"
 msgid "Sn_ap to Guides"
-msgstr "П_рив'язка до напрямних"
+msgstr "П_рилипання до напрямних"
 
 #: ../app/actions/view-actions.c:176
 msgctxt "view-action"
@@ -5300,7 +5300,7 @@ msgstr "При роботі курсор активного інструмент
 #: ../app/actions/view-actions.c:182
 msgctxt "view-action"
 msgid "Sna_p to Grid"
-msgstr "Прив'_язка до сітки"
+msgstr "При_липання до сітки"
 
 #: ../app/actions/view-actions.c:183
 msgctxt "view-action"
@@ -5510,7 +5510,7 @@ msgstr "Масштаб 1:16"
 #: ../app/actions/view-actions.c:384
 msgctxt "view-zoom-action"
 msgid "Othe_r..."
-msgstr "_Інший..."
+msgstr "_Інший…"
 
 #: ../app/actions/view-actions.c:385
 msgctxt "view-zoom-action"
@@ -5550,7 +5550,7 @@ msgstr "Використовувати темний колір тла"
 #: ../app/actions/view-actions.c:411
 msgctxt "view-padding-color"
 msgid "Select _Custom Color..."
-msgstr "Вибрати інший _колір..."
+msgstr "Вибрати інший _колір…"
 
 #: ../app/actions/view-actions.c:412
 msgctxt "view-padding-color"
@@ -5579,7 +5579,7 @@ msgstr "_Вернути масштаб"
 #: ../app/actions/view-actions.c:761
 #, c-format
 msgid "Othe_r (%s)..."
-msgstr "_Інший (%s) ..."
+msgstr "_Інший (%s) …"
 
 #: ../app/actions/view-actions.c:770
 #, c-format
@@ -5612,7 +5612,7 @@ msgstr "Вік_на"
 #: ../app/actions/windows-actions.c:97
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
-msgstr "_Нещодавні прикріплені діалоги"
+msgstr "_Нещодавно закриті панелі"
 
 #: ../app/actions/windows-actions.c:99
 msgctxt "windows-action"
@@ -5654,7 +5654,7 @@ msgstr ""
 #: ../app/actions/windows-actions.c:124
 msgctxt "windows-action"
 msgid "Single-Window Mode"
-msgstr "Одно-віконний режим"
+msgstr "Одновіконний режим"
 
 #: ../app/actions/windows-actions.c:125
 msgctxt "windows-action"
@@ -6049,7 +6049,7 @@ msgstr "Якщо ввімкнено, кожна точка зображення 
 #: ../app/config/gimprc-blurbs.h:96
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
 msgstr ""
-"Відстань у точках, при наближенні на яку відбувається прив'язування до "
+"Відстань у точках, при наближенні на яку відбувається прилипання до "
 "напрямних чи сітки."
 
 #: ../app/config/gimprc-blurbs.h:112
@@ -6060,7 +6060,7 @@ msgid ""
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
 msgstr ""
-"Такі інструменти як \"Заповнення\" та \"Вільне виділення\" при роботі "
+"Такі інструменти як \"Заповнення\" та \"Вільне вибирання\" при роботі "
 "користуються алгоритмом зернового заповнення. Заповнення починається з "
 "вибраної початкової точки та продовжується доти, поки різниця інтенсивності "
 "між початковою точкою та поточною не перевищить певної межі. Тут вказано "
@@ -6133,7 +6133,7 @@ msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
 msgstr ""
-"Швидкість мурашиної доріжки навколо виділеної ділянки. Значення вказується у "
+"Швидкість мурашиної доріжки навколо вибраної ділянки. Значення вказується у "
 "мілісекундах (менші значення означають більшу швидкість доріжки)."
 
 #: ../app/config/gimprc-blurbs.h:221
@@ -6150,7 +6150,7 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
-"Встановлює горизонтальну роздільну здатність монітора в точках на дюйм. При "
+"Встановлює горизонтальну роздільність  монітора в точках на дюйм. При "
 "нульовому значенні, беруться як вертикальне так і горизонтальне значення від "
 "X сервера."
 
@@ -6160,7 +6160,7 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
-"Встановлює вертикальну роздільну здатність монітора в точках на дюйм. При "
+"Встановлює вертикальну роздільність монітора в точках на дюйм. При "
 "нульовому значенні, беруться як вертикальне так і горизонтальне значення від "
 "X сервера."
 
@@ -6315,8 +6315,8 @@ msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
 msgstr ""
-"Якщо ввімкнено, ввімкнено показ виділеної ділянки. Це також можна зробити "
-"командою \"Перегляд->Показувати виділені ділянки\"."
+"Якщо ввімкнено, ввімкнено показ вибраної ділянки. Це також можна зробити "
+"командою \"Перегляд->Показувати вибраної ділянки\"."
 
 #: ../app/config/gimprc-blurbs.h:351
 msgid ""
@@ -6375,7 +6375,7 @@ msgid ""
 "file is created on a folder that is mounted over NFS.  For these reasons, it "
 "may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
-"Вказує адресу файла свопінгу. GIMP використовує мозаїчну схему виділення "
+"Вказує адресу файла свопінгу. GIMP використовує мозаїчну схему вибирання "
 "пам'яті. Файл свопінгу використовується для швидкої та простої свопінгу "
 "блоків з диску. Зауважте, файл свопінгу може швидко досягнути великого "
 "розміру, якщо GIMP обробляє великі зображення. Крім того, робота значно "
@@ -6557,7 +6557,7 @@ msgstr "Зображення"
 #: ../app/core/core-enums.c:218
 msgctxt "align-reference-type"
 msgid "Selection"
-msgstr "Виділення"
+msgstr "Вибір"
 
 #: ../app/core/core-enums.c:219
 msgctxt "align-reference-type"
@@ -6918,7 +6918,7 @@ msgstr "Зміна шару/каналу"
 #: ../app/core/core-enums.c:849 ../app/core/core-enums.c:880
 msgctxt "undo-type"
 msgid "Selection mask"
-msgstr "Маска виділеної ділянки"
+msgstr "Маска вибраної ділянки"
 
 #: ../app/core/core-enums.c:850 ../app/core/core-enums.c:884
 msgctxt "undo-type"
@@ -7039,7 +7039,7 @@ msgstr "Розмір зображення"
 #: ../app/core/core-enums.c:873
 msgctxt "undo-type"
 msgid "Image resolution change"
-msgstr "Зміна роздільної здатності зображення"
+msgstr "Зміна роздільності зображення"
 
 #: ../app/core/core-enums.c:875
 msgctxt "undo-type"
@@ -7747,7 +7747,7 @@ msgstr "Встановити непрозорість каналу"
 
 #: ../app/core/gimpchannel.c:1932 ../app/core/gimpselection.c:154
 msgid "Selection Mask"
-msgstr "Маска виділеної ділянки"
+msgstr "Маска вибраної ділянки"
 
 #: ../app/core/gimpcontext.c:639 ../app/tools/gimppaintoptions-gui.c:111
 #: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:284
@@ -8119,7 +8119,7 @@ msgstr "Перетворення у індексовані кольори (2 е�
 
 #: ../app/core/gimpimage-convert.c:941
 msgid "Converting to indexed colors (stage 3)"
-msgstr "Триває перетворення у індексовані кольори (3 етап)..."
+msgstr "Триває перетворення у індексовані кольори (3 етап)"
 
 #: ../app/core/gimpimage-crop.c:129
 msgctxt "undo-type"
@@ -8710,15 +8710,15 @@ msgstr "Скоротити вибране"
 
 #: ../app/core/gimpselection.c:286
 msgid "There is no selection to stroke."
-msgstr "Немає виділеної ділянки для обведення."
+msgstr "Немає вибраної ділянки для обведення."
 
 #: ../app/core/gimpselection.c:670
 msgid "Unable to cut or copy because the selected region is empty."
-msgstr "Не вдалось вирізати/скопіювати, тому що виділена ділянка порожня."
+msgstr "Не вдалось вирізати/скопіювати, бо вибрана ділянка порожня."
 
 #: ../app/core/gimpselection.c:847
 msgid "Cannot float selection because the selected region is empty."
-msgstr "Не вдалось вирізати/скопіювати, тому що виділена ділянка порожня."
+msgstr "Не вдалось вирізати/скопіювати, бо вибрана ділянка порожня."
 
 #: ../app/core/gimpselection.c:854
 msgctxt "undo-type"
@@ -8744,11 +8744,11 @@ msgstr "Використовується, якщо вимкнено режим \
 
 #: ../app/core/gimptemplate.c:136
 msgid "The horizontal image resolution."
-msgstr "Горизонтальна роздільна здатність."
+msgstr "Горизонтальна роздільність."
 
 #: ../app/core/gimptemplate.c:142
 msgid "The vertical image resolution."
-msgstr "Вертикальна роздільна здатність."
+msgstr "Вертикальна роздільність."
 
 #: ../app/core/gimpunit.c:60
 msgctxt "unit-singular"
@@ -8841,7 +8841,7 @@ msgstr "_Назва каналу:"
 
 #: ../app/dialogs/channel-options-dialog.c:175
 msgid "Initialize from _selection"
-msgstr "Створити з _виділення"
+msgstr "Створити з _вибраного"
 
 #: ../app/dialogs/convert-dialog.c:125
 msgid "Indexed Color Conversion"
@@ -8934,11 +8934,11 @@ msgstr "Гістограма"
 
 #: ../app/dialogs/dialogs.c:362
 msgid "Selection"
-msgstr "Виділення"
+msgstr "Вибір"
 
 #: ../app/dialogs/dialogs.c:362
 msgid "Selection Editor"
-msgstr "Редактор виділеної ділянки"
+msgstr "Редактор вибраної ділянки"
 
 #: ../app/dialogs/dialogs.c:366
 msgid "Undo"
@@ -9093,15 +9093,15 @@ msgstr "Об'єднаний шар має бути:"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:100
 msgid "Expanded as necessary"
-msgstr "Розширений при необхідності"
+msgstr "Розширений за потреби"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:103
 msgid "Clipped to image"
-msgstr "Відсічений по зображенню"
+msgstr "Обрізаний по зображенню"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:106
 msgid "Clipped to bottom layer"
-msgstr "Відсічений по нижньому шару"
+msgstr "Обрізаний по нижньому шару"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:114
 msgid "Merge within active _group only"
@@ -9150,7 +9150,7 @@ msgstr "Властивості"
 
 #: ../app/dialogs/image-properties-dialog.c:89
 msgid "Color Profile"
-msgstr "Кольоровий профіль"
+msgstr "Профіль коьлорів"
 
 #: ../app/dialogs/image-properties-dialog.c:94
 msgid "Comment"
@@ -9360,7 +9360,7 @@ msgstr "_Об'єднання за зразком"
 
 #: ../app/dialogs/palette-import-dialog.c:251
 msgid "_Selected Pixels only"
-msgstr "_Лише виділені точки"
+msgstr "_Лише вибрані точки"
 
 #: ../app/dialogs/palette-import-dialog.c:263
 msgid "Palette _file"
@@ -9475,7 +9475,7 @@ msgstr "Показувати рядок ст_ану"
 
 #: ../app/dialogs/preferences-dialog.c:1284
 msgid "Show s_election"
-msgstr "Показувати _виділення"
+msgstr "Показувати _вибирання"
 
 #: ../app/dialogs/preferences-dialog.c:1287
 msgid "Show _layer boundary"
@@ -9600,7 +9600,7 @@ msgstr "Використовувати _динамічні комбінації 
 
 #: ../app/dialogs/preferences-dialog.c:1628
 msgid "Configure _Keyboard Shortcuts..."
-msgstr "Налаштувати _комбінації клавіш..."
+msgstr "Налаштувати _комбінації клавіш…"
 
 #: ../app/dialogs/preferences-dialog.c:1635
 msgid "_Save keyboard shortcuts on exit"
@@ -9913,7 +9913,7 @@ msgstr "_Розмір клітин:"
 
 #: ../app/dialogs/preferences-dialog.c:2324
 msgid "Monitor Resolution"
-msgstr "Роздільна здатність монітора"
+msgstr "Роздільність монітора"
 
 #. Pixels
 #: ../app/dialogs/preferences-dialog.c:2328
@@ -10023,7 +10023,7 @@ msgstr "Додаткові пристрої вводу"
 
 #: ../app/dialogs/preferences-dialog.c:2571
 msgid "Configure E_xtended Input Devices..."
-msgstr "Налаштувати _додаткові пристрої вводу..."
+msgstr "Налаштувати _додаткові пристрої вводу…"
 
 #: ../app/dialogs/preferences-dialog.c:2578
 msgid "_Save input device settings on exit"
@@ -10237,12 +10237,12 @@ msgstr "_Висота:"
 #: ../app/dialogs/print-size-dialog.c:222 ../app/widgets/gimpsizebox.c:255
 #: ../app/widgets/gimptemplateeditor.c:309
 msgid "_X resolution:"
-msgstr "Роздільна здатність вздовж _X:"
+msgstr "Роздільність уздовж _X:"
 
 #: ../app/dialogs/print-size-dialog.c:229 ../app/widgets/gimpsizebox.c:258
 #: ../app/widgets/gimptemplateeditor.c:316
 msgid "_Y resolution:"
-msgstr "Роздільна здатність вздовж _Y:"
+msgstr "Роздільність уздовж _Y:"
 
 #: ../app/dialogs/print-size-dialog.c:240 ../app/widgets/gimpsizebox.c:251
 #, c-format
@@ -10291,11 +10291,11 @@ msgstr "Змінити розмір _шарів:"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:69
 msgid "Calibrate Monitor Resolution"
-msgstr "Калібрування роздільної здатності монітора"
+msgstr "Калібрування роздільності монітора"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:128
 msgid "Measure the rulers and enter their lengths:"
-msgstr "Вимірте лінійки та введіть значення їх довжини:"
+msgstr "Вимірте лінійки та введіть значення їхньої довжини:"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:153
 msgid "_Horizontal:"
@@ -10511,7 +10511,7 @@ msgstr "Одиниці"
 #. Selection Bounding Box
 #: ../app/display/gimpcursorview.c:256
 msgid "Selection Bounding Box"
-msgstr "Область (BB) виділення"
+msgstr "Ділянка (BB) вибирання"
 
 #. Width
 #: ../app/display/gimpcursorview.c:292
@@ -10660,7 +10660,7 @@ msgstr "Зображення експортовано у '%s'"
 
 #: ../app/display/gimpdisplayshell-layer-select.c:122
 msgid "Layer Select"
-msgstr "Виділення шару"
+msgstr "Вибір шару"
 
 #: ../app/display/gimpdisplayshell-scale-dialog.c:114
 msgid "Zoom Ratio"
@@ -11034,17 +11034,17 @@ msgstr "Заливання"
 
 #: ../app/pdb/floating-sel-cmds.c:65
 msgid "Cannot remove this layer because it is not a floating selection."
-msgstr "Не вдалось вилучити цей шар, бо це не рухоме виділення."
+msgstr "Не вдалось вилучити цей шар, бо це не рухоме вибирання."
 
 #: ../app/pdb/floating-sel-cmds.c:98
 msgid "Cannot anchor this layer because it is not a floating selection."
-msgstr "Не вдалось прикріпити цей шар, тому що це не рухоме виділення."
+msgstr "Не вдалось прикріпити цей шар, тому що це не рухоме вибирання."
 
 #: ../app/pdb/floating-sel-cmds.c:131
 msgid ""
 "Cannot convert this layer to a normal layer because it is not a floating "
 "selection."
-msgstr "Не вдалось перетворити цей шар, тому що це не рухоме виділення."
+msgstr "Не вдалось перетворити цей шар, тому що це не рухоме вибирання."
 
 #: ../app/pdb/gimppdb-query.c:299 ../app/pdb/gimppdb.c:305
 #: ../app/pdb/gimppdb.c:375
@@ -11329,13 +11329,13 @@ msgstr ""
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
-"Роздільна здатність зображення поза допустимими межами, використовується "
+"Роздільність зображення поза допустимими межами, використовується "
 "типове значення."
 
 #: ../app/pdb/image-select-cmds.c:297 ../app/pdb/selection-tools-cmds.c:219
 #: ../app/tools/gimpfreeselecttool.c:196
 msgid "Free Select"
-msgstr "Вильне виділення"
+msgstr "Вільне вибирання"
 
 #: ../app/pdb/layer-cmds.c:478 ../app/pdb/layer-cmds.c:516
 msgid "Move Layer"
@@ -11885,7 +11885,7 @@ msgstr "Область застосування  (%s)"
 
 #: ../app/tools/gimpbucketfilloptions.c:248
 msgid "Fill whole selection"
-msgstr "Заповнити все виділене"
+msgstr "Заповнити все вибране"
 
 #: ../app/tools/gimpbucketfilloptions.c:249
 msgid "Fill similar colors"
@@ -11924,25 +11924,25 @@ msgstr "_Заповнення"
 
 #: ../app/tools/gimpbycolorselecttool.c:67
 msgid "Select by Color"
-msgstr "Виділення за кольором"
+msgstr "Вибір за кольором"
 
 #: ../app/tools/gimpbycolorselecttool.c:68
 msgid "Select by Color Tool: Select regions with similar colors"
 msgstr ""
-"Виділення за кольором: виділення областей із заповненням схожим кольором"
+"Вибір за кольором: вибирання ділянок із заповненням схожим кольором"
 
 #: ../app/tools/gimpbycolorselecttool.c:69
 msgid "_By Color Select"
-msgstr "Виділення за _кольором"
+msgstr "Вибір за _кольором"
 
 #: ../app/tools/gimpbycolorselecttool.c:82
 msgctxt "command"
 msgid "Select by Color"
-msgstr "Виділення за кольором"
+msgstr "Вибір за кольором"
 
 #: ../app/tools/gimpcagetool.c:152 ../app/tools/gimpcagetool.c:1154
 msgid "Cage Transform"
-msgstr "Перетворення клітки"
+msgstr "Перетворення кліткою"
 
 #: ../app/tools/gimpcagetool.c:153
 msgid "Cage Transform: Deform a selection with a cage"
@@ -12007,7 +12007,7 @@ msgstr "Кольоровий баланс: корекція розподілу �
 
 #: ../app/tools/gimpcolorbalancetool.c:96
 msgid "Color _Balance..."
-msgstr "_Баланс кольорів..."
+msgstr "_Баланс кольорів…"
 
 #: ../app/tools/gimpcolorbalancetool.c:113
 msgid "Adjust Color Balance"
@@ -12309,7 +12309,7 @@ msgstr "Криві: корекція кольорових кривих"
 
 #: ../app/tools/gimpcurvestool.c:152
 msgid "_Curves..."
-msgstr "_Криві..."
+msgstr "_Криві…"
 
 #: ../app/tools/gimpcurvestool.c:178
 msgid "Adjust Color Curves"
@@ -12368,7 +12368,7 @@ msgstr "Знебарвлення: перетворення кольорів гр
 
 #: ../app/tools/gimpdesaturatetool.c:79
 msgid "_Desaturate..."
-msgstr "_Знебарвити..."
+msgstr "_Знебарвити…"
 
 #: ../app/tools/gimpdesaturatetool.c:93
 msgid "Desaturate (Remove Colors)"
@@ -12451,15 +12451,15 @@ msgstr "Переміщення: "
 
 #: ../app/tools/gimpellipseselecttool.c:66
 msgid "Ellipse Select"
-msgstr "Виділення еліпсом"
+msgstr "Вибір еліпсом"
 
 #: ../app/tools/gimpellipseselecttool.c:67
 msgid "Ellipse Select Tool: Select an elliptical region"
-msgstr "Виділення еліпсу: виділення еліптичних областей"
+msgstr "Вибір еліпсом: вибирання еліптичних ділянок"
 
 #: ../app/tools/gimpellipseselecttool.c:68
 msgid "_Ellipse Select"
-msgstr "Виділення _еліпсом"
+msgstr "Вибір _еліпсом"
 
 #: ../app/tools/gimperasertool.c:66
 msgid "Eraser Tool: Erase to background or transparency using a brush"
@@ -12510,8 +12510,8 @@ msgstr "Дзеркало"
 msgid ""
 "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
 msgstr ""
-"Дзеркало: горизонтальне чи вертикальне віддзеркалення шару, виділення чи "
-"контуру"
+"Дзеркало: горизонтальне чи вертикальне віддзеркалення шару, вибиране або "
+"контур"
 
 #: ../app/tools/gimpfliptool.c:87
 msgid "_Flip"
@@ -12537,7 +12537,7 @@ msgstr "Відзеркалити"
 
 #: ../app/tools/gimpforegroundselectoptions.c:85
 msgid "Select a single contiguous area"
-msgstr "Виділіть одну суміжну ділянку"
+msgstr "Виберіть одну суміжну ділянку"
 
 #: ../app/tools/gimpforegroundselectoptions.c:91
 msgid ""
@@ -12549,15 +12549,15 @@ msgstr ""
 
 #: ../app/tools/gimpforegroundselectoptions.c:98
 msgid "Size of the brush used for refinements"
-msgstr "Розмір пензля для виділення"
+msgstr "Розмір пензля для вибирання"
 
 #: ../app/tools/gimpforegroundselectoptions.c:104
 msgid ""
 "Smaller values give a more accurate selection border but may introduce holes "
 "in the selection"
 msgstr ""
-"При менших значеннях межа виділення буде більш охайною, проте у самому "
-"виділенні можуть з'явитися «дірки»."
+"При менших значеннях межа вибирання буде охайнішою, проте у самому "
+"вибиранні можуть з'явитися «дірки»."
 
 #: ../app/tools/gimpforegroundselectoptions.c:112
 msgid "Color of selection preview mask"
@@ -12617,17 +12617,17 @@ msgstr "Чутливість до кольору"
 
 #: ../app/tools/gimpforegroundselecttool.c:144
 msgid "Foreground Select"
-msgstr "Виділення переднього плану"
+msgstr "Вибір переднього плану"
 
 #: ../app/tools/gimpforegroundselecttool.c:145
 msgid "Foreground Select Tool: Select a region containing foreground objects"
 msgstr ""
-"Виділення переднього плану: виділення області, що містить об'єкти на "
+"Вибір переднього плану: вибирання ділянки, що містить об'єкти на "
 "передньому плані"
 
 #: ../app/tools/gimpforegroundselecttool.c:146
 msgid "F_oreground Select"
-msgstr "Виділення _переднього плану"
+msgstr "Вибір _переднього плану"
 
 #: ../app/tools/gimpforegroundselecttool.c:302
 msgid "Add more strokes or press Enter to accept the selection"
@@ -12635,7 +12635,7 @@ msgstr "Продовжуйте штрихування або натисніть 
 
 #: ../app/tools/gimpforegroundselecttool.c:304
 msgid "Mark foreground by painting on the object to extract"
-msgstr "Заштрихуйте об'єкт, що виділяється"
+msgstr "Заштрихуйте об'єкт, що вибирається"
 
 #: ../app/tools/gimpforegroundselecttool.c:309
 msgid "Roughly outline the object to extract"
@@ -12644,20 +12644,20 @@ msgstr "Обведіть об'єкт що витягується на швидк
 #: ../app/tools/gimpforegroundselecttool.c:751
 msgctxt "command"
 msgid "Foreground Select"
-msgstr "Виділення переднього плану"
+msgstr "Вибір переднього плану"
 
 #: ../app/tools/gimpfreeselecttool.c:197
 msgid ""
 "Free Select Tool: Select a hand-drawn region with free and polygonal segments"
-msgstr "Вільне виділення: виділення довільної області лініями та відрізками"
+msgstr "Вільне вибирання: вибирання довільної ділянки лініями та відрізками"
 
 #: ../app/tools/gimpfreeselecttool.c:198
 msgid "_Free Select"
-msgstr "_Вільне виділення"
+msgstr "_Вільне вибирання"
 
 #: ../app/tools/gimpfreeselecttool.c:1030
 msgid "Click to complete selection"
-msgstr "Натисніть для завершення виділення"
+msgstr "Натисніть для завершення вибирання"
 
 #: ../app/tools/gimpfreeselecttool.c:1034
 msgid "Click-Drag to move segment vertex"
@@ -12666,7 +12666,7 @@ msgstr "Натисніть та перетягніть, щоб переміст�
 #: ../app/tools/gimpfreeselecttool.c:1039
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr ""
-"Ввід завершує виділення, Escape скасовує його, Backspace прибирає останній "
+"Ввід завершує вибирання, Escape скасовує його, Backspace прибирає останній "
 "сегмент"
 
 #: ../app/tools/gimpfreeselecttool.c:1043
@@ -12677,24 +12677,24 @@ msgstr ""
 #: ../app/tools/gimpfreeselecttool.c:1562
 msgctxt "command"
 msgid "Free Select"
-msgstr "Вильне виділення"
+msgstr "Вільне вибирання"
 
 #: ../app/tools/gimpfuzzyselecttool.c:65
 msgid "Fuzzy Select"
-msgstr "Виділення зв'язаної області"
+msgstr "Вибір зв'язаної ділянки"
 
 #: ../app/tools/gimpfuzzyselecttool.c:66
 msgid "Fuzzy Select Tool: Select a contiguous region on the basis of color"
-msgstr "Виділення пов'язаної області: виділення області за кольором"
+msgstr "Вибір пов'язаної ділянки: вибирання ділянки за кольором"
 
 #: ../app/tools/gimpfuzzyselecttool.c:67
 msgid "Fu_zzy Select"
-msgstr "Виді_лення зв'язаної області"
+msgstr "Ви_бір зв'язаної ділянки"
 
 #: ../app/tools/gimpfuzzyselecttool.c:80
 msgctxt "command"
 msgid "Fuzzy Select"
-msgstr "Виділення зв'язаної області"
+msgstr "Вибір зв'язаної ділянки"
 
 #: ../app/tools/gimpgegltool.c:93 ../app/tools/gimpgegltool.c:112
 msgid "GEGL Operation"
@@ -12706,7 +12706,7 @@ msgstr "Інструмент GEGL: виконання довільної опе�
 
 #: ../app/tools/gimpgegltool.c:95
 msgid "_GEGL Operation..."
-msgstr "Опера_ція GEGL..."
+msgstr "Опера_ція GEGL…"
 
 #: ../app/tools/gimpgegltool.c:160
 msgid "GEGL operations do not operate on indexed layers."
@@ -12895,7 +12895,7 @@ msgstr "Ножиці"
 
 #: ../app/tools/gimpiscissorstool.c:276
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
-msgstr "Розумні ножиці: виділення фігур за допомогою розпізнавання країв"
+msgstr "Розумні ножиці: вибирання фігур за допомогою розпізнавання країв"
 
 #: ../app/tools/gimpiscissorstool.c:277
 msgid "Intelligent _Scissors"
@@ -12920,11 +12920,11 @@ msgstr "Натисніть для додавання вузла до сегме�
 
 #: ../app/tools/gimpiscissorstool.c:939
 msgid "Click or press Enter to convert to a selection"
-msgstr "Натисніть та натисніть Enter для перетворення на виділення"
+msgstr "Натисніть та натисніть Enter для перетворення на вибиране"
 
 #: ../app/tools/gimpiscissorstool.c:949
 msgid "Press Enter to convert to a selection"
-msgstr "Натисніть Enter для перетворення на виділення"
+msgstr "Натисніть Enter для перетворення на вибране"
 
 #: ../app/tools/gimpiscissorstool.c:964
 msgid "Click or Click-Drag to add a point"
@@ -12936,7 +12936,7 @@ msgstr "Рівні: коригування рівнів кольорів"
 
 #: ../app/tools/gimplevelstool.c:152
 msgid "_Levels..."
-msgstr "_Рівні..."
+msgstr "_Рівні…"
 
 #: ../app/tools/gimplevelstool.c:174
 msgid "Import Levels"
@@ -13104,7 +13104,7 @@ msgstr "Перемістити активний шар"
 
 #: ../app/tools/gimpmoveoptions.c:144
 msgid "Move selection"
-msgstr "Переміщення виділеного"
+msgstr "Переміщення вибраного"
 
 #: ../app/tools/gimpmoveoptions.c:148
 msgid "Pick a path"
@@ -13131,7 +13131,7 @@ msgstr "Переміщення"
 
 #: ../app/tools/gimpmovetool.c:128
 msgid "Move Tool: Move layers, selections, and other objects"
-msgstr "Переміщення: переміщення шарів, виділення та інших об'єктів"
+msgstr "Переміщення: переміщення шарів, вибраного та інших об'єктів"
 
 #: ../app/tools/gimpmovetool.c:129
 msgid "_Move"
@@ -13280,7 +13280,7 @@ msgstr "Натисніть Ctrl для отримання джерела шта�
 
 #: ../app/tools/gimpperspectivetool.c:83
 msgid "Perspective Tool: Change perspective of the layer, selection or path"
-msgstr "Перспектива: зміна перспективи шару, виділення чи контуру"
+msgstr "Перспектива: зміна перспективи шару, вибраного або контуру"
 
 #: ../app/tools/gimpperspectivetool.c:85
 msgid "_Perspective"
@@ -13305,7 +13305,7 @@ msgstr "Постеризація: зменшення кількості коль
 
 #: ../app/tools/gimpposterizetool.c:86
 msgid "_Posterize..."
-msgstr "По_стеризація..."
+msgstr "По_стеризація…"
 
 #: ../app/tools/gimpposterizetool.c:103
 msgid "Posterize (Reduce Number of Colors)"
@@ -13325,7 +13325,7 @@ msgstr "Автоматично стискати до найближчої пря
 
 #: ../app/tools/gimprectangleoptions.c:113
 msgid "Use all visible layers when shrinking the selection"
-msgstr "Використовувати усі виділені шари при скороченні виділення"
+msgstr "Використовувати усі вибрані шари при скороченні вибраного"
 
 #: ../app/tools/gimprectangleoptions.c:122
 #: ../app/tools/gimptransformoptions.c:127
@@ -13403,7 +13403,7 @@ msgstr "Розмір:"
 
 #: ../app/tools/gimprectangleoptions.c:1028
 msgid "Highlight"
-msgstr "Затемнити невиділене"
+msgstr "Затемнити невибране"
 
 #. Auto Shrink
 #: ../app/tools/gimprectangleoptions.c:1040
@@ -13428,15 +13428,15 @@ msgstr "Закруглені кути"
 
 #: ../app/tools/gimprectangleselecttool.c:168
 msgid "Rectangle Select"
-msgstr "Прямокутне виділення"
+msgstr "Прямокутне вибирання"
 
 #: ../app/tools/gimprectangleselecttool.c:169
 msgid "Rectangle Select Tool: Select a rectangular region"
-msgstr "Прямокутне виділення: виділення прямокутної області"
+msgstr "Прямокутне вибирання: вибирання прямокутної ділянки"
 
 #: ../app/tools/gimprectangleselecttool.c:170
 msgid "_Rectangle Select"
-msgstr "Пр_ямокутне виділення"
+msgstr "Пр_ямокутне вибирання"
 
 #: ../app/tools/gimprectangletool.c:1146 ../app/tools/gimprectangletool.c:2016
 msgid "Rectangle: "
@@ -13444,7 +13444,7 @@ msgstr "Прямокутник: "
 
 #: ../app/tools/gimpregionselectoptions.c:82
 msgid "Allow completely transparent regions to be selected"
-msgstr "Дозволити виділення абсолютно прозорих ділянок"
+msgstr "Дозволити вибирання абсолютно прозорих ділянок"
 
 #: ../app/tools/gimpregionselectoptions.c:89
 msgid "Base selection on all visible layers"
@@ -13456,7 +13456,7 @@ msgstr "Критерій вибору"
 
 #: ../app/tools/gimpregionselectoptions.c:204
 msgid "Select transparent areas"
-msgstr "Виділяти прозорі ділянки"
+msgstr "Вибрати прозорі ділянки"
 
 #: ../app/tools/gimpregionselectoptions.c:226
 msgid "Select by:"
@@ -13472,7 +13472,7 @@ msgstr "Обертання"
 
 #: ../app/tools/gimprotatetool.c:94
 msgid "Rotate Tool: Rotate the layer, selection or path"
-msgstr "Обертання: обертання шарів, виділених ділянок чи контурів"
+msgstr "Обертання: обертання шарів, вибраних ділянок чи контурів"
 
 #: ../app/tools/gimprotatetool.c:95
 msgid "_Rotate"
@@ -13502,7 +13502,7 @@ msgstr "Масштаб"
 
 #: ../app/tools/gimpscaletool.c:90
 msgid "Scale Tool: Scale the layer, selection or path"
-msgstr "Масштаб: Масштабування шару, виділеної ділянки чи контуру"
+msgstr "Масштаб: Масштабування шару, вибраної ділянки чи контуру"
 
 #: ../app/tools/gimpscaletool.c:91
 msgid "_Scale"
@@ -13532,39 +13532,39 @@ msgstr "Розмивати межі"
 
 #: ../app/tools/gimpselectiontool.c:250
 msgid "Click-Drag to replace the current selection"
-msgstr "Натисніть та перетягніть для заміни поточне виділення"
+msgstr "Натисніть та перетягніть для заміни поточне вибране"
 
 #: ../app/tools/gimpselectiontool.c:258
 msgid "Click-Drag to create a new selection"
-msgstr "Натисніть та перетягніть для створення нового виділення"
+msgstr "Натисніть та перетягніть для створення нового вибраного"
 
 #: ../app/tools/gimpselectiontool.c:263
 msgid "Click-Drag to add to the current selection"
-msgstr "Натисніть та перетягніть для додавання до поточного виділення"
+msgstr "Натисніть та перетягніть для додавання до поточного вибраного"
 
 #: ../app/tools/gimpselectiontool.c:272
 msgid "Click-Drag to subtract from the current selection"
-msgstr "Натисніть та перетягніть для віднімання від поточного виділення"
+msgstr "Натисніть та перетягніть для віднімання від поточного вибраного"
 
 #: ../app/tools/gimpselectiontool.c:281
 msgid "Click-Drag to intersect with the current selection"
-msgstr "Натисніть та перетягніть для перетинання з поточним виділенням"
+msgstr "Натисніть та перетягніть для перетинання з поточним вибраним"
 
 #: ../app/tools/gimpselectiontool.c:291
 msgid "Click-Drag to move the selection mask"
-msgstr "Натисніть та перетягніть для зсуву маски виділення"
+msgstr "Натисніть та перетягніть для зсуву маски вибраного"
 
 #: ../app/tools/gimpselectiontool.c:299
 msgid "Click-Drag to move the selected pixels"
-msgstr "Натисніть та перетягніть для зсуву виділених точок"
+msgstr "Натисніть та перетягніть для зсуву вибраних точок"
 
 #: ../app/tools/gimpselectiontool.c:303
 msgid "Click-Drag to move a copy of the selected pixels"
-msgstr "Натисніть та перетягніть для зсуву копії виділених точок"
+msgstr "Натисніть та перетягніть для зсуву копії вибраних точок"
 
 #: ../app/tools/gimpselectiontool.c:307
 msgid "Click to anchor the floating selection"
-msgstr "Натисніть, щоб причепити рухоме виділення"
+msgstr "Натисніть, щоб причепити рухоме вибирання"
 
 #: ../app/tools/gimpsheartool.c:83
 msgid "Shear"
@@ -13572,7 +13572,7 @@ msgstr "Викривлення"
 
 #: ../app/tools/gimpsheartool.c:84
 msgid "Shear Tool: Shear the layer, selection or path"
-msgstr "Викривлення: викривлення шарів, виділених ділянок та контурів"
+msgstr "Викривлення: викривлення шарів, вибраних ділянок та контурів"
 
 #: ../app/tools/gimpsheartool.c:85
 msgid "S_hear"
@@ -13749,7 +13749,7 @@ msgstr "Поріг: перетворення зображення у двоко�
 
 #: ../app/tools/gimpthresholdtool.c:92
 msgid "_Threshold..."
-msgstr "_Поріг..."
+msgstr "_Поріг…"
 
 #: ../app/tools/gimpthresholdtool.c:109
 msgid "Apply Threshold"
@@ -13886,7 +13886,7 @@ msgid ""
 "%s  Subtract\n"
 "%s  Intersect"
 msgstr ""
-"Контур у виділення\n"
+"Контур у вибирання\n"
 "%s   додати\n"
 "%s   відняти\n"
 "%s   перетнути"
@@ -13894,7 +13894,7 @@ msgstr ""
 #. Create a selection from the current path
 #: ../app/tools/gimpvectoroptions.c:189
 msgid "Selection from Path"
-msgstr "Виділена з тексту"
+msgstr "Вибір з текстур"
 
 #: ../app/tools/gimpvectortool.c:161
 msgid "Paths Tool: Create and edit paths"
@@ -14060,7 +14060,7 @@ msgstr "Розмір"
 #: ../app/tools/tools-enums.c:182
 msgctxt "rect-select-mode"
 msgid "Free select"
-msgstr "Вильне виділення"
+msgstr "Вільне вибирання"
 
 #: ../app/tools/tools-enums.c:183
 msgctxt "rect-select-mode"
@@ -14292,7 +14292,7 @@ msgstr "Відношення сторін"
 #: ../app/widgets/gimpbrushfactoryview.c:80
 #: ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
-msgstr "Клітини"
+msgstr "Проміжок"
 
 #: ../app/widgets/gimpbrusheditor.c:215
 #: ../app/widgets/gimpbrushfactoryview.c:84
@@ -14905,7 +14905,7 @@ msgstr "Замкнути точки растру від змін"
 
 #: ../app/widgets/gimpdynamicseditor.c:135
 msgid "Mapping matrix"
-msgstr "Матриця прив'язки"
+msgstr "Матриця прилипання"
 
 #: ../app/widgets/gimpdynamicseditor.c:142
 #: ../app/widgets/gimpdynamicsoutputeditor.c:70
@@ -15036,12 +15036,12 @@ msgstr "%s-Натиснути: розширений вибір"
 #: ../app/widgets/gimpgradienteditor.c:1252
 #: ../app/widgets/gimpgradienteditor.c:1265
 msgid "Click: select"
-msgstr "Клацання: виділення"
+msgstr "Клацання: вибирання"
 
 #: ../app/widgets/gimpgradienteditor.c:1278
 #: ../app/widgets/gimpgradienteditor.c:1300
 msgid "Click: select    Drag: move"
-msgstr "Клацання: виділення   Перетягування: переміщення"
+msgstr "Клацання: вибирання   Перетягування: переміщення"
 
 #: ../app/widgets/gimpgradienteditor.c:1515
 #: ../app/widgets/gimpgradienteditor.c:1523
@@ -15185,7 +15185,7 @@ msgstr "Розмір при друкуванні:"
 
 #: ../app/widgets/gimpimagepropview.c:126
 msgid "Resolution:"
-msgstr "Роздільна здатність:"
+msgstr "Роздільність:"
 
 #: ../app/widgets/gimpimagepropview.c:129
 msgid "Color space:"
@@ -15469,11 +15469,11 @@ msgstr "Змінити розмір вибраного тексту"
 
 #: ../app/widgets/gimptextstyleeditor.c:217
 msgid "Change size of selected text"
-msgstr "Зміна розміру виділеного тексту"
+msgstr "Зміна розміру вибраного тексту"
 
 #: ../app/widgets/gimptextstyleeditor.c:236
 msgid "Clear style of selected text"
-msgstr "Зміна стилю виділеного тексту"
+msgstr "Зміна стилю вибраного тексту"
 
 #: ../app/widgets/gimptextstyleeditor.c:247
 #: ../app/widgets/gimptextstyleeditor.c:256
@@ -15519,7 +15519,7 @@ msgstr "_Попередній перегляд"
 
 #: ../app/widgets/gimpthumbbox.c:404 ../app/widgets/gimpthumbbox.c:468
 msgid "No selection"
-msgstr "Нічого не виділено"
+msgstr "Нічого не вибрано"
 
 #: ../app/widgets/gimpthumbbox.c:596 ../app/widgets/gimpthumbbox.c:617
 #, c-format
@@ -15528,7 +15528,7 @@ msgstr "Мініатюра %d з %d"
 
 #: ../app/widgets/gimpthumbbox.c:730 ../app/widgets/gimpthumbbox.c:740
 msgid "Creating preview..."
-msgstr "Створення попереднього перегляду..."
+msgstr "Створення попереднього перегляду…"
 
 #: ../app/widgets/gimptoolbox-color-area.c:79
 msgid ""
