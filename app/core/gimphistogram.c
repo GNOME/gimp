@@ -128,7 +128,7 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
                              GIMP_PRECISION_U8,
                              babl_format_has_alpha (format));
 
-  n_components = babl_format_get_n_components (format),
+  n_components = babl_format_get_n_components (format);
 
   gimp_histogram_alloc_values (histogram, n_components);
 
