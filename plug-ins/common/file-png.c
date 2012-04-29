@@ -155,9 +155,9 @@ static void      save_dialog_response      (GtkWidget        *widget,
 static gboolean  offsets_dialog            (gint              offset_x,
                                             gint              offset_y);
 
-static gboolean  ia_has_transparent_pixels (GimpDrawable     *drawable);
+static gboolean  ia_has_transparent_pixels (GeglBuffer       *buffer);
 
-static gint      find_unused_ia_color      (GimpDrawable     *drawable,
+static gint      find_unused_ia_color      (GeglBuffer       *buffer,
                                             gint             *colors);
 
 static void      load_defaults             (void);
@@ -1195,40 +1195,31 @@ load_image (const gchar  *filename,
 
   if (trns)
     {
+      GeglBufferIterator *iter;
+      gint                n_components;
+
       gimp_layer_add_alpha (layer);
-      file_format = gimp_drawable_get_format (layer);
       buffer = gimp_drawable_get_buffer (layer);
+      file_format = gegl_buffer_get_format (buffer);
 
-      pixel = g_new (guchar, tile_height * width * 2); /* bpp == 2 */
+      iter = gegl_buffer_iterator_new (buffer, NULL, 0, file_format,
+                                       GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+      n_components = babl_format_get_n_components (file_format);
+      g_warn_if_fail (n_components == 2);
 
-      for (begin = 0; begin < height; begin += tile_height)
+      while (gegl_buffer_iterator_next (iter))
         {
-          end = MIN (begin + tile_height, height);
-          num = end - begin;
+          guchar *data = iter->data[0];
 
-          gegl_buffer_get (buffer,
-                           GEGL_RECTANGLE (0, begin, width, num),
-                           1.0,
-                           file_format,
-                           pixel,
-                           GEGL_AUTO_ROWSTRIDE,
-                           GEGL_ABYSS_NONE);
-
-          for (i = 0; i < tile_height * width; ++i)
+          while (iter->length--)
             {
-              pixel[i * 2 + 1] = alpha[pixel[i * 2]];
-              pixel[i * 2] -= empty;
-            }
+              data[i * 2 + 1] = alpha[data[i * 2]];
+              data[i * 2] -= empty;
 
-          gegl_buffer_set (buffer,
-                           GEGL_RECTANGLE (0, begin, width, num),
-                           0,
-                           file_format,
-                           pixel,
-                           GEGL_AUTO_ROWSTRIDE);
+              data += n_components;
+            }
         }
 
-      g_free (pixel);
       g_object_unref (buffer);
     }
 
@@ -1776,32 +1767,31 @@ save_image (const gchar  *filename,
 }
 
 static gboolean
-ia_has_transparent_pixels (GimpDrawable *drawable)
+ia_has_transparent_pixels (GeglBuffer *buffer)
 {
-  GimpPixelRgn  pixel_rgn;
-  gpointer      pr;
-  guchar       *pixel_row;
-  gint          row, col;
-  guchar       *pixel;
+  GeglBufferIterator *iter;
+  const Babl         *format;
+  gint                n_components;
 
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
-                       drawable->width, drawable->height, FALSE, FALSE);
+  format = gegl_buffer_get_format (buffer);
+  iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
+                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+  n_components = babl_format_get_n_components (format);
+  g_return_val_if_fail (n_components == 2, FALSE);
 
-  for (pr = gimp_pixel_rgns_register (1, &pixel_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
+  while (gegl_buffer_iterator_next (iter))
     {
-      pixel_row = pixel_rgn.data;
-      for (row = 0; row < pixel_rgn.h; row++)
+      const guchar *data = iter->data[0];
+
+      while (iter->length--)
         {
-          pixel = pixel_row;
-          for (col = 0; col < pixel_rgn.w; col++)
+          if (data[1] <= 127)
             {
-              if (pixel[1] <= 127)
-                return TRUE;
-              pixel += 2;
+              gegl_buffer_iterator_stop (iter);
+              return TRUE;
             }
-          pixel_row += pixel_rgn.rowstride;
+
+          data += n_components;
         }
     }
 
@@ -1812,43 +1802,37 @@ ia_has_transparent_pixels (GimpDrawable *drawable)
  * used in the image, so that we can use it as the transparency
  * index. Taken from gif.c */
 static gint
-find_unused_ia_color (GimpDrawable *drawable,
-                      gint         *colors)
+find_unused_ia_color (GeglBuffer *buffer,
+                      gint       *colors)
 {
-  gboolean      ix_used[256];
-  gboolean      trans_used = FALSE;
-  GimpPixelRgn  pixel_rgn;
-  gpointer      pr;
-  gint          row, col;
-  gint          i;
+  GeglBufferIterator *iter;
+  const Babl         *format;
+  gint                n_components;
+  gboolean            ix_used[256];
+  gboolean            trans_used = FALSE;
+  gint                i;
 
   for (i = 0; i < *colors; i++)
     ix_used[i] = FALSE;
 
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
-                       drawable->width, drawable->height, FALSE, FALSE);
+  format = gegl_buffer_get_format (buffer);
+  iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
+                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+  n_components = babl_format_get_n_components (format);
+  g_return_val_if_fail (n_components == 2, FALSE);
 
-  for (pr = gimp_pixel_rgns_register (1, &pixel_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
+  while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *pixel_row = pixel_rgn.data;
+      const guchar *data = iter->data[0];
 
-      for (row = 0; row < pixel_rgn.h; row++)
+      while (iter->length--)
         {
-          const guchar *pixel = pixel_row;
+          if (data[1] > 127)
+            ix_used[data[0]] = TRUE;
+          else
+            trans_used = TRUE;
 
-          for (col = 0; col < pixel_rgn.w; col++)
-            {
-              if (pixel[1] > 127)
-                ix_used[ pixel[0] ] = TRUE;
-              else
-                trans_used = TRUE;
-
-              pixel += 2;
-            }
-
-          pixel_row += pixel_rgn.rowstride;
+          data += n_components;
         }
     }
 
@@ -1884,13 +1868,13 @@ respin_cmap (png_structp   pp,
              gint32        drawable_ID)
 {
   static guchar trans[] = { 0 };
-  GimpDrawable *drawable;
+  GeglBuffer *buffer;
 
   gint          colors;
   guchar       *before;
 
   before = gimp_image_get_colormap (image_ID, &colors);
-  drawable = gimp_drawable_get (drawable_ID);
+  buffer = gimp_drawable_get_buffer (drawable_ID);
 
   /*
    * Make sure there is something in the colormap.
@@ -1904,9 +1888,9 @@ respin_cmap (png_structp   pp,
   /* Try to find an entry which isn't actually used in the
      image, for a transparency index. */
 
-  if (ia_has_transparent_pixels (drawable))
+  if (ia_has_transparent_pixels (buffer))
     {
-      gint transparent = find_unused_ia_color (drawable, &colors);
+      gint transparent = find_unused_ia_color (buffer, &colors);
 
       if (transparent != -1)        /* we have a winner for a transparent
                                      * index - do like gif2png and swap
@@ -1965,7 +1949,7 @@ respin_cmap (png_structp   pp,
       pngg.num_palette = colors;
     }
 
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
 
   return get_bit_depth_for_palette (colors);
 }
