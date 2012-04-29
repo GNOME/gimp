@@ -24,6 +24,7 @@
 #include "pdb-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpimage-convert-precision.h"
 #include "core/gimpimage-convert.h"
 #include "core/gimpimage.h"
 #include "core/gimpitemstack.h"

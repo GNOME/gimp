@@ -36,10 +36,6 @@ gboolean   gimp_image_convert           (GimpImage               *image,
                                          GimpProgress            *progress,
                                          GError                 **error);
 
-void       gimp_image_convert_precision (GimpImage               *image,
-                                         GimpPrecision            precision,
-                                         GimpProgress            *progress);
-
 void  gimp_image_convert_set_dither_matrix (const guchar *matrix,
                                             gint          width,
                                             gint          height);

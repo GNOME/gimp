@@ -260,6 +260,7 @@ CODE
 @headers = qw("core/gimp.h"
               "core/gimpimage.h"
               "core/gimpimage-convert.h"
+              "core/gimpimage-convert-precision.h"
               "core/gimpitemstack.h"
               "core/gimppalette.h"
               "plug-in/gimpplugin.h"

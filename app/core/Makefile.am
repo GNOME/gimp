@@ -203,6 +203,8 @@ libappcore_a_sources = \
 	gimpimage-convert.h			\
 	gimpimage-convert-fsdither.h		\
 	gimpimage-convert-data.h		\
+	gimpimage-convert-precision.c		\
+	gimpimage-convert-precision.h		\
 	gimpimage-crop.c			\
 	gimpimage-crop.h			\
 	gimpimage-duplicate.c			\

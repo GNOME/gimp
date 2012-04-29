@@ -32,6 +32,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-convert.h"
+#include "core/gimpimage-convert-precision.h"
 #include "core/gimpimage-crop.h"
 #include "core/gimpimage-duplicate.h"
 #include "core/gimpimage-flip.h"
