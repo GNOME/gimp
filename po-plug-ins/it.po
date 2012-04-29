@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-22 13:14+0100\n"
-"PO-Revision-Date: 2012-02-22 13:16+0100\n"
+"POT-Creation-Date: 2012-04-29 03:03+0200\n"
+"PO-Revision-Date: 2012-04-29 03:09+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: \n"
@@ -589,12 +589,12 @@ msgid "Orientation"
 msgstr "Orientamento"
 
 #: ../plug-ins/common/blinds.c:262 ../plug-ins/common/ripple.c:561
-#: ../plug-ins/common/tile-small.c:434 ../plug-ins/pagecurl/pagecurl.c:535
+#: ../plug-ins/common/tile-small.c:434 ../plug-ins/pagecurl/pagecurl.c:537
 msgid "_Horizontal"
 msgstr "_Orizzontale"
 
 #: ../plug-ins/common/blinds.c:265 ../plug-ins/common/ripple.c:564
-#: ../plug-ins/common/tile-small.c:444 ../plug-ins/pagecurl/pagecurl.c:534
+#: ../plug-ins/common/tile-small.c:444 ../plug-ins/pagecurl/pagecurl.c:536
 msgid "_Vertical"
 msgstr "_Verticale"
 
@@ -1039,7 +1039,7 @@ msgstr "Carica le impostazioni del mixer dei canali"
 #: ../plug-ins/file-xjt/xjt.c:2529 ../plug-ins/file-xjt/xjt.c:2537
 #: ../plug-ins/flame/flame.c:411
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1865
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:926
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:923
 #: ../plug-ins/gfig/gfig.c:433 ../plug-ins/help/gimphelplocale.c:222
 #: ../plug-ins/help/gimphelplocale.c:238
 #: ../plug-ins/lighting/lighting-ui.c:1367
@@ -1317,7 +1317,7 @@ msgstr "Saturazione"
 #: ../plug-ins/common/cml-explorer.c:302 ../plug-ins/common/cml-explorer.c:310
 #: ../plug-ins/common/decompose.c:190
 #: ../plug-ins/gimpressionist/orientation.c:155
-#: ../plug-ins/gimpressionist/size.c:158
+#: ../plug-ins/gimpressionist/size.c:158 ../plug-ins/metadata/interface.c:144
 msgid "Value"
 msgstr "Valore"
 
@@ -2888,7 +2888,7 @@ msgstr "Sobel _verticale"
 msgid "_Keep sign of result (one direction only)"
 msgstr "_Tieni conto dei risultati (solo una direzione)"
 
-#: ../plug-ins/common/edge-sobel.c:371
+#: ../plug-ins/common/edge-sobel.c:372
 msgid "Sobel edge detecting"
 msgstr "Rilevamento contorni Sobel"
 
@@ -3625,7 +3625,7 @@ msgstr "Interlaccia"
 msgid "Save background color"
 msgstr "Salva colore di sfondo"
 
-#: ../plug-ins/common/file-mng.c:1371 ../plug-ins/ui/plug-in-file-png.ui.h:9
+#: ../plug-ins/common/file-mng.c:1371 ../plug-ins/ui/plug-in-file-png.ui.h:3
 msgid "Save gamma"
 msgstr "Salva la gamma"
 
@@ -3682,7 +3682,7 @@ msgstr "Disposizione predefinita fotogrammi:"
 msgid "PNG compression level:"
 msgstr "Livello di compressione PNG:"
 
-#: ../plug-ins/common/file-mng.c:1465 ../plug-ins/ui/plug-in-file-png.ui.h:1
+#: ../plug-ins/common/file-mng.c:1465 ../plug-ins/ui/plug-in-file-png.ui.h:10
 msgid "Choose a high compression level for small file size"
 msgstr "Scegliere una compressione alta per ottenere file piccoli"
 
@@ -3706,7 +3706,7 @@ msgstr "Ciclico"
 msgid "Default frame delay:"
 msgstr "Ritardo predefinito fotogrammi:"
 
-#: ../plug-ins/common/file-mng.c:1542 ../plug-ins/ui/plug-in-file-gif.ui.h:11
+#: ../plug-ins/common/file-mng.c:1542 ../plug-ins/ui/plug-in-file-gif.ui.h:7
 msgid "milliseconds"
 msgstr "millisecondi"
 
@@ -3983,7 +3983,9 @@ msgstr "Applica lo spostamento PNG al livello"
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
 "to apply this offset to the layer?"
-msgstr "L'immagine PNG che si sta importando specifica uno spostamento di %d, %d. Applicare questo spostamento al livello?"
+msgstr ""
+"L'immagine PNG che si sta importando specifica uno spostamento di %d, %d. "
+"Applicare questo spostamento al livello?"
 
 #: ../plug-ins/common/file-png.c:1335
 #, c-format
@@ -6359,24 +6361,24 @@ msgstr "_Prelievo..."
 msgid "_Slur..."
 msgstr "_Macchia..."
 
-#: ../plug-ins/common/noise-randomize.c:769
+#: ../plug-ins/common/noise-randomize.c:767
 #: ../plug-ins/common/noise-solid.c:603
 msgid "_Random seed:"
 msgstr "_Seme casuale:"
 
-#: ../plug-ins/common/noise-randomize.c:778
+#: ../plug-ins/common/noise-randomize.c:776
 msgid "R_andomization (%):"
 msgstr "Cas_ualità (%):"
 
-#: ../plug-ins/common/noise-randomize.c:781
+#: ../plug-ins/common/noise-randomize.c:779
 msgid "Percentage of pixels to be filtered"
 msgstr "Percentuale di pixel da filtrare"
 
-#: ../plug-ins/common/noise-randomize.c:793
+#: ../plug-ins/common/noise-randomize.c:791
 msgid "R_epeat:"
 msgstr "Rip_etizioni:"
 
-#: ../plug-ins/common/noise-randomize.c:796
+#: ../plug-ins/common/noise-randomize.c:794
 msgid "Number of times to apply filter"
 msgstr "Numero di applicazioni del filtro"
 
@@ -8972,7 +8974,7 @@ msgid "Comment"
 msgstr "Commento"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1189
-#: ../plug-ins/ui/plug-in-file-png.ui.h:12
+#: ../plug-ins/ui/plug-in-file-png.ui.h:11
 msgid "_Load Defaults"
 msgstr "Carica i va_lori predefiniti"
 
@@ -9805,34 +9807,34 @@ msgstr "'%s' non è un file FractalExplorer"
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "Il file '%s' è corrotto. Sezione opzione non corretta alla linea %d"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:238
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:236
 msgid "Render fractal art"
 msgstr "Render di arte frattale"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:243
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:241
 msgid "_Fractal Explorer..."
 msgstr "Esploratore _frattali..."
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:371
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:368
 msgid "Rendering fractal"
 msgstr "Rendering frattale"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:754
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:751
 #: ../plug-ins/gradient-flare/gradient-flare.c:3201
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Siete sicuri di voler cancellare \"%s\" dalla lista e dal disco?"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:758
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:755
 msgid "Delete Fractal"
 msgstr "Elimina frattale"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:947
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:944
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "Il File '%s' non è un file di FractalExplorer"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:957
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:954
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
@@ -9841,27 +9843,27 @@ msgstr ""
 "File '%s' è corrotto.\n"
 "Sezione opzione non corretta alla linea %d"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1002
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:999
 msgid "My first fractal"
 msgstr "Primo frattale"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1066
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1063
 msgid "Select folder and rescan collection"
 msgstr "Seleziona la cartella e ripeti la scansione della collezione"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1078
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1075
 msgid "Apply currently selected fractal"
 msgstr "Applica il frattale attualmente selezionato"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1090
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1087
 msgid "Delete currently selected fractal"
 msgstr "Cancella il frattale attualmente selezionato"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1113
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1110
 msgid "Rescan for Fractals"
 msgstr "Ripeti scansione frattali"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1132
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1129
 msgid "Add FractalExplorer Path"
 msgstr "Aggiungi percorso di FractalExplorer"
 
@@ -10866,80 +10868,80 @@ msgstr ""
 "dato abbia influenza"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:1
-msgid "Animated GIF Options"
-msgstr "Opzioni GIF animata"
-
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:2
-msgid "As _animation"
-msgstr "Come _animazione"
-
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:3
-msgid "GIF Options"
-msgstr "Opzioni GIF"
-
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:4
 msgid "I_nterlace"
 msgstr "I_nterlaccia"
 
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:2
+msgid "_GIF comment:"
+msgstr "Commento _GIF:"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:3
+msgid "As _animation"
+msgstr "Come _animazione"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:4
+msgid "GIF Options"
+msgstr "Opzioni GIF"
+
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:5
-msgid "U_se disposal entered above for all frames"
-msgstr "U_sa le disposizioni inserite sopra per tutti i quadri"
+msgid "_Loop forever"
+msgstr "Cic_lo perenne"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:6
 msgid "_Delay between frames where unspecified:"
 msgstr "Ritar_do tra quadri ove non specificato:"
 
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:7
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:8
 msgid "_Frame disposal where unspecified:"
 msgstr "Disposizioni quadri ove non speci_ficato:"
 
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:8
-msgid "_GIF comment:"
-msgstr "Commento _GIF:"
-
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:9
-msgid "_Loop forever"
-msgstr "Cic_lo perenne"
-
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:10
 msgid "_Use delay entered above for all frames"
 msgstr "_Usa il ritardo inserito sopra per tutti i quadri"
 
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:10
+msgid "U_se disposal entered above for all frames"
+msgstr "U_sa le disposizioni inserite sopra per tutti i quadri"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:11
+msgid "Animated GIF Options"
+msgstr "Opzioni GIF animata"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:1
+msgid "_Interlacing (Adam7)"
+msgstr "_Interlacciamento (Adam7)"
+
 #: ../plug-ins/ui/plug-in-file-png.ui.h:2
-msgid "Co_mpression level:"
-msgstr "Livello di co_mpressione:"
-
-#: ../plug-ins/ui/plug-in-file-png.ui.h:3
-msgid "S_ave Defaults"
-msgstr "S_alva i valori predefiniti"
-
-#: ../plug-ins/ui/plug-in-file-png.ui.h:4
 msgid "Save _background color"
 msgstr "Salva colore di s_fondo"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:4
+msgid "Save layer o_ffset"
+msgstr "Salva lo spostamento _livello"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:5
 msgid "Save _resolution"
 msgstr "Salva la _risoluzione"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:6
-msgid "Save color _values from transparent pixels"
-msgstr "Salva _valori colore dai punti trasparenti"
+msgid "Save creation _time"
+msgstr "Salva la da_ta di creazione"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:7
 msgid "Save comme_nt"
 msgstr "Salva il comme_nto"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:8
-msgid "Save creation _time"
-msgstr "Salva la da_ta di creazione"
+msgid "Save color _values from transparent pixels"
+msgstr "Salva _valori colore dai punti trasparenti"
 
-#: ../plug-ins/ui/plug-in-file-png.ui.h:10
-msgid "Save layer o_ffset"
-msgstr "Salva lo spostamento _livello"
+#: ../plug-ins/ui/plug-in-file-png.ui.h:9
+msgid "Co_mpression level:"
+msgstr "Livello di co_mpressione:"
 
-#: ../plug-ins/ui/plug-in-file-png.ui.h:11
-msgid "_Interlacing (Adam7)"
-msgstr "_Interlacciamento (Adam7)"
+#: ../plug-ins/ui/plug-in-file-png.ui.h:12
+msgid "S_ave Defaults"
+msgstr "S_alva i valori predefiniti"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:552
 msgid "Addition"
@@ -11491,11 +11493,14 @@ msgid "Transformation %s"
 msgstr "Trasformazione %s"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:2413
+#: ../plug-ins/metadata/interface.c:507 ../plug-ins/metadata/interface.c:517
 msgid "Save failed"
 msgstr "Salvataggio fallito"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:2496
 #: ../plug-ins/ifs-compose/ifs-compose.c:2509
+#: ../plug-ins/metadata/interface.c:413 ../plug-ins/metadata/interface.c:423
+#: ../plug-ins/metadata/interface.c:497
 msgid "Open failed"
 msgstr "Apertura fallita"
 
@@ -12245,6 +12250,7 @@ msgid "Default _URL:"
 msgstr "_URL predefinito:"
 
 #: ../plug-ins/imagemap/imap_settings.c:107
+#: ../plug-ins/metadata/interface.c:247
 msgid "_Description:"
 msgstr "_Descrizione:"
 
@@ -12876,9 +12882,95 @@ msgstr "Disegna un labirinto"
 msgid "_Maze..."
 msgstr "_Labirinto..."
 
-#: ../plug-ins/maze/maze.c:425
+#: ../plug-ins/maze/maze.c:427
 msgid "Drawing maze"
 msgstr "Disegno labirinto"
+
+#: ../plug-ins/metadata/interface.c:110
+msgid "Property"
+msgstr "Proprietà"
+
+#: ../plug-ins/metadata/interface.c:204 ../plug-ins/metadata/interface.c:206
+msgid "Description"
+msgstr "Descrizione"
+
+#: ../plug-ins/metadata/interface.c:222
+msgid "Image _title:"
+msgstr "_Titolo immagine:"
+
+#: ../plug-ins/metadata/interface.c:231
+msgid "_Author:"
+msgstr "_Autore:"
+
+#: ../plug-ins/metadata/interface.c:256
+msgid "Description _writer:"
+msgstr "A_utore descrizione:"
+
+#: ../plug-ins/metadata/interface.c:272
+msgid "_Keywords:"
+msgstr "_Parolechiave:"
+
+#. FIXME: add entries, cross-link with XMP model
+#: ../plug-ins/metadata/interface.c:284 ../plug-ins/metadata/interface.c:296
+#: ../plug-ins/metadata/interface.c:308 ../plug-ins/metadata/interface.c:320
+msgid "Empty"
+msgstr "Vuoto"
+
+#: ../plug-ins/metadata/interface.c:286
+msgid "Copyright"
+msgstr "Copyright"
+
+#: ../plug-ins/metadata/interface.c:298
+msgid "Origin"
+msgstr "Origine"
+
+#: ../plug-ins/metadata/interface.c:310
+msgid "Camera 1"
+msgstr "Camera 1"
+
+#: ../plug-ins/metadata/interface.c:322
+msgid "Camera 2"
+msgstr "Camera 2"
+
+#: ../plug-ins/metadata/interface.c:337
+msgid "Thumbnail"
+msgstr "Miniatura"
+
+#: ../plug-ins/metadata/interface.c:356
+msgid "Advanced"
+msgstr "Avanzate"
+
+#: ../plug-ins/metadata/interface.c:447
+msgid "Import XMP from File"
+msgstr "Importa XMP da file"
+
+#: ../plug-ins/metadata/interface.c:498
+msgid "Cannot create file"
+msgstr "Impossibile creare un nuovo file"
+
+#: ../plug-ins/metadata/interface.c:508
+msgid "Some error occurred while saving"
+msgstr "Stesso errore verificatosi durante il salvataggio"
+
+#: ../plug-ins/metadata/interface.c:518
+msgid "Could not close the file"
+msgstr "Impossibile chiudere il file"
+
+#: ../plug-ins/metadata/interface.c:540
+msgid "Export XMP to File"
+msgstr "Esporta XMP su file"
+
+#: ../plug-ins/metadata/interface.c:607
+msgid "Image Properties"
+msgstr "Proprietà immagine"
+
+#: ../plug-ins/metadata/interface.c:611
+msgid "_Import XMP..."
+msgstr "_Importa XMP..."
+
+#: ../plug-ins/metadata/interface.c:612
+msgid "_Export XMP..."
+msgstr "_Esporta XMP..."
 
 #: ../plug-ins/metadata/metadata.c:185
 msgid "View and edit metadata (EXIF, IPTC, XMP)"
@@ -12958,59 +13050,59 @@ msgstr "Piega uno degli angoli dell'immagine"
 msgid "_Pagecurl..."
 msgstr "_Pagina arricciata..."
 
-#: ../plug-ins/pagecurl/pagecurl.c:440
+#: ../plug-ins/pagecurl/pagecurl.c:442
 msgid "Pagecurl Effect"
 msgstr "Effetto pagina arricciata"
 
-#: ../plug-ins/pagecurl/pagecurl.c:462
+#: ../plug-ins/pagecurl/pagecurl.c:464
 msgid "Curl Location"
 msgstr "Posizione del ricciolo"
 
-#: ../plug-ins/pagecurl/pagecurl.c:481
+#: ../plug-ins/pagecurl/pagecurl.c:483
 msgid "Lower right"
 msgstr "Basso a destra"
 
-#: ../plug-ins/pagecurl/pagecurl.c:482
+#: ../plug-ins/pagecurl/pagecurl.c:484
 msgid "Lower left"
 msgstr "Basso a sinistra"
 
-#: ../plug-ins/pagecurl/pagecurl.c:483
+#: ../plug-ins/pagecurl/pagecurl.c:485
 msgid "Upper left"
 msgstr "Alto a sinistra"
 
-#: ../plug-ins/pagecurl/pagecurl.c:484
+#: ../plug-ins/pagecurl/pagecurl.c:486
 msgid "Upper right"
 msgstr "Alto a destra"
 
-#: ../plug-ins/pagecurl/pagecurl.c:524
+#: ../plug-ins/pagecurl/pagecurl.c:526
 msgid "Curl Orientation"
 msgstr "Orientamento del ricciolo"
 
-#: ../plug-ins/pagecurl/pagecurl.c:569
+#: ../plug-ins/pagecurl/pagecurl.c:571
 msgid "_Shade under curl"
 msgstr "Ombra _sotto il ricciolo"
 
-#: ../plug-ins/pagecurl/pagecurl.c:582
+#: ../plug-ins/pagecurl/pagecurl.c:584
 msgid "Current gradient (reversed)"
 msgstr "Gradiente attuale (inverso)"
 
-#: ../plug-ins/pagecurl/pagecurl.c:587
+#: ../plug-ins/pagecurl/pagecurl.c:589
 msgid "Current gradient"
 msgstr "Gradiente corrente"
 
-#: ../plug-ins/pagecurl/pagecurl.c:592
+#: ../plug-ins/pagecurl/pagecurl.c:594
 msgid "Foreground / background colors"
 msgstr "Colori di primo piano e sfondo"
 
-#: ../plug-ins/pagecurl/pagecurl.c:612
+#: ../plug-ins/pagecurl/pagecurl.c:614
 msgid "_Opacity:"
 msgstr "_Opacità:"
 
-#: ../plug-ins/pagecurl/pagecurl.c:735
+#: ../plug-ins/pagecurl/pagecurl.c:730
 msgid "Curl Layer"
 msgstr "Livello ricciolo"
 
-#: ../plug-ins/pagecurl/pagecurl.c:1026
+#: ../plug-ins/pagecurl/pagecurl.c:1022
 msgid "Page Curl"
 msgstr "Pagina arricciata"
 
