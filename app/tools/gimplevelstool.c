@@ -30,6 +30,7 @@
 
 #include "tools-types.h"
 
+#include "gegl/gimp-babl.h"
 #include "gegl/gimplevelsconfig.h"
 #include "gegl/gimpoperationlevels.h"
 
@@ -1170,8 +1171,7 @@ gimp_levels_tool_color_picked (GimpColorTool      *color_tool,
                                                "pick-value"));
 
   if (value & PICK_ALL_CHANNELS &&
-      (sample_format == babl_format ("R'G'B' u8") ||
-       sample_format == babl_format ("R'G'B'A u8")))
+      gimp_babl_format_get_base_type (sample_format) == GIMP_RGB)
     {
       GimpHistogramChannel  channel;
 
