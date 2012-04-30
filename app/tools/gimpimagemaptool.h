@@ -52,6 +52,7 @@ struct _GimpImageMapTool
   GtkWidget             *main_vbox;
   GtkWidget             *settings_box;
   GtkSizeGroup          *label_group;
+  GtkWidget             *active_picker;
 };
 
 struct _GimpImageMapToolClass
@@ -87,6 +88,11 @@ struct _GimpImageMapToolClass
   gboolean    (* settings_export) (GimpImageMapTool  *image_map_tool,
                                    const gchar       *filename,
                                    GError           **error);
+
+  void        (* color_picked)    (GimpImageMapTool  *image_map_tool,
+                                   gpointer           identifier,
+                                   const Babl        *sample_format,
+                                   const GimpRGB     *color);
 };
 
 
@@ -104,6 +110,11 @@ void    gimp_image_map_tool_edit_as    (GimpImageMapTool *image_map_tool,
 /* accessors for derived classes */
 GtkWidget    * gimp_image_map_tool_dialog_get_vbox        (GimpImageMapTool *tool);
 GtkSizeGroup * gimp_image_map_tool_dialog_get_label_group (GimpImageMapTool *tool);
+
+GtkWidget    * gimp_image_map_tool_add_color_picker       (GimpImageMapTool *tool,
+                                                           gpointer          identifier,
+                                                           const gchar      *stock_id,
+                                                           const gchar      *help_id);
 
 
 #endif  /*  __GIMP_IMAGE_MAP_TOOL_H__  */

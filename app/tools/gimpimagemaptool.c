@@ -99,8 +99,16 @@ static gboolean  gimp_image_map_tool_pick_color     (GimpColorTool    *color_too
                                                      const Babl      **sample_format,
                                                      GimpRGB          *color,
                                                      gint             *color_index);
+static void      gimp_image_map_tool_color_picked   (GimpColorTool    *color_tool,
+                                                     GimpColorPickState pick_state,
+                                                     const Babl       *sample_format,
+                                                     const GimpRGB    *color,
+                                                     gint              color_index);
+
 static void      gimp_image_map_tool_map            (GimpImageMapTool *im_tool);
 static void      gimp_image_map_tool_dialog         (GimpImageMapTool *im_tool);
+static void      gimp_image_map_tool_dialog_unmap   (GtkWidget        *dialog,
+                                                     GimpImageMapTool *im_tool);
 static void      gimp_image_map_tool_reset          (GimpImageMapTool *im_tool);
 
 static void      gimp_image_map_tool_flush          (GimpImageMap     *image_map,
@@ -168,6 +176,7 @@ gimp_image_map_tool_class_init (GimpImageMapToolClass *klass)
   tool_class->options_notify = gimp_image_map_tool_options_notify;
 
   color_tool_class->pick     = gimp_image_map_tool_pick_color;
+  color_tool_class->picked   = gimp_image_map_tool_color_picked;
 
   klass->dialog_desc         = NULL;
   klass->settings_name       = NULL;
@@ -287,6 +296,11 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
 			   _("The active layer's pixels are locked."));
       return FALSE;
     }
+
+  if (image_map_tool->active_picker)
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (image_map_tool->active_picker),
+                                  FALSE);
+
 
   /*  set display so the dialog can be hidden on display destruction  */
   tool->display = display;
@@ -558,6 +572,25 @@ gimp_image_map_tool_pick_color (GimpColorTool  *color_tool,
 }
 
 static void
+gimp_image_map_tool_color_picked (GimpColorTool      *color_tool,
+                                  GimpColorPickState  pick_state,
+                                  const Babl         *sample_format,
+                                  const GimpRGB      *color,
+                                  gint                color_index)
+{
+  GimpImageMapTool *tool = GIMP_IMAGE_MAP_TOOL (color_tool);
+  gpointer          identifier;
+
+  identifier = g_object_get_data (G_OBJECT (tool->active_picker),
+                                  "picker-identifier");
+
+  GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->color_picked (tool,
+                                                      identifier,
+                                                      sample_format,
+                                                      color);
+}
+
+static void
 gimp_image_map_tool_map (GimpImageMapTool *tool)
 {
   GimpDisplayShell *shell = gimp_display_get_shell (GIMP_TOOL (tool)->display);
@@ -594,6 +627,19 @@ static void
 gimp_image_map_tool_dialog (GimpImageMapTool *tool)
 {
   GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->dialog (tool);
+
+  g_signal_connect (tool->dialog, "unmap",
+                    G_CALLBACK (gimp_image_map_tool_dialog_unmap),
+                    tool);
+}
+
+static void
+gimp_image_map_tool_dialog_unmap (GtkWidget        *dialog,
+                                  GimpImageMapTool *tool)
+{
+  if (tool->active_picker)
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tool->active_picker),
+                                  FALSE);
 }
 
 static void
@@ -815,7 +861,6 @@ gimp_image_map_tool_dialog_get_vbox (GimpImageMapTool *tool)
   return tool->main_vbox;
 }
 
-
 GtkSizeGroup *
 gimp_image_map_tool_dialog_get_label_group (GimpImageMapTool *tool)
 {
@@ -825,4 +870,62 @@ gimp_image_map_tool_dialog_get_label_group (GimpImageMapTool *tool)
     tool->label_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   return tool->label_group;
+}
+
+static void
+gimp_image_map_tool_color_picker_toggled (GtkWidget        *widget,
+                                          GimpImageMapTool *tool)
+{
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
+    {
+      if (tool->active_picker == widget)
+        return;
+
+      if (tool->active_picker)
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tool->active_picker),
+                                      FALSE);
+
+      tool->active_picker = widget;
+
+      gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
+                              GIMP_COLOR_TOOL_GET_OPTIONS (tool));
+    }
+  else if (tool->active_picker == widget)
+    {
+      tool->active_picker = NULL;
+      gimp_color_tool_disable (GIMP_COLOR_TOOL (tool));
+    }
+}
+
+GtkWidget *
+gimp_image_map_tool_add_color_picker (GimpImageMapTool *tool,
+                                      gpointer          identifier,
+                                      const gchar      *stock_id,
+                                      const gchar      *help_id)
+{
+  GtkWidget *button;
+  GtkWidget *image;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE_MAP_TOOL (tool), NULL);
+  g_return_val_if_fail (stock_id != NULL, NULL);
+
+  button = g_object_new (GTK_TYPE_TOGGLE_BUTTON,
+                         "draw-indicator", FALSE,
+                         NULL);
+
+  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+  gtk_misc_set_padding (GTK_MISC (image), 2, 2);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
+
+  if (help_id)
+    gimp_help_set_help_data (button, help_id, NULL);
+
+  g_object_set_data (G_OBJECT (button), "picker-identifier", identifier);
+
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (gimp_image_map_tool_color_picker_toggled),
+                    tool);
+
+  return button;
 }

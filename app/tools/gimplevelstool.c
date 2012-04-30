@@ -72,17 +72,9 @@ static gboolean   gimp_levels_tool_initialize     (GimpTool          *tool,
                                                    GimpDisplay       *display,
                                                    GError           **error);
 
-static void       gimp_levels_tool_color_picked   (GimpColorTool     *color_tool,
-                                                   GimpColorPickState pick_state,
-                                                   const Babl        *sample_format,
-                                                   const GimpRGB     *color,
-                                                   gint               color_index);
-
 static GeglNode * gimp_levels_tool_get_operation  (GimpImageMapTool  *im_tool,
                                                    GObject          **config);
 static void       gimp_levels_tool_dialog         (GimpImageMapTool  *im_tool);
-static void       gimp_levels_tool_dialog_unmap   (GtkWidget         *dialog,
-                                                   GimpLevelsTool    *tool);
 static void       gimp_levels_tool_reset          (GimpImageMapTool  *im_tool);
 static gboolean   gimp_levels_tool_settings_import(GimpImageMapTool  *im_tool,
                                                    const gchar       *filename,
@@ -90,11 +82,15 @@ static gboolean   gimp_levels_tool_settings_import(GimpImageMapTool  *im_tool,
 static gboolean   gimp_levels_tool_settings_export(GimpImageMapTool  *im_tool,
                                                    const gchar       *filename,
                                                    GError           **error);
+static void       gimp_levels_tool_color_picked   (GimpImageMapTool  *im_tool,
+                                                   gpointer           identifier,
+                                                   const Babl        *sample_format,
+                                                   const GimpRGB     *color);
 
-static void       gimp_levels_tool_export_setup   (GimpSettingsBox      *settings_box,
+static void       gimp_levels_tool_export_setup   (GimpSettingsBox   *settings_box,
                                                    GtkFileChooserDialog *dialog,
-                                                   gboolean              export,
-                                                   GimpLevelsTool       *tool);
+                                                   gboolean           export,
+                                                   GimpLevelsTool    *tool);
 static void       gimp_levels_tool_config_notify  (GObject           *object,
                                                    GParamSpec        *pspec,
                                                    GimpLevelsTool    *tool);
@@ -122,8 +118,6 @@ static void       levels_high_input_changed       (GtkAdjustment     *adjustment
 static void       levels_low_output_changed       (GtkAdjustment     *adjustment,
                                                    GimpLevelsTool    *tool);
 static void       levels_high_output_changed      (GtkAdjustment     *adjustment,
-                                                   GimpLevelsTool    *tool);
-static void       levels_input_picker_toggled     (GtkWidget         *widget,
                                                    GimpLevelsTool    *tool);
 
 static void       levels_to_curves_callback       (GtkWidget         *widget,
@@ -155,16 +149,13 @@ gimp_levels_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
 {
-  GObjectClass          *object_class     = G_OBJECT_CLASS (klass);
-  GimpToolClass         *tool_class       = GIMP_TOOL_CLASS (klass);
-  GimpColorToolClass    *color_tool_class = GIMP_COLOR_TOOL_CLASS (klass);
-  GimpImageMapToolClass *im_tool_class    = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
+  GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
+  GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
+  GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
   object_class->finalize             = gimp_levels_tool_finalize;
 
   tool_class->initialize             = gimp_levels_tool_initialize;
-
-  color_tool_class->picked           = gimp_levels_tool_color_picked;
 
   im_tool_class->dialog_desc         = _("Adjust Color Levels");
   im_tool_class->settings_name       = "levels";
@@ -176,6 +167,7 @@ gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
   im_tool_class->reset               = gimp_levels_tool_reset;
   im_tool_class->settings_import     = gimp_levels_tool_settings_import;
   im_tool_class->settings_export     = gimp_levels_tool_settings_export;
+  im_tool_class->color_picked        = gimp_levels_tool_color_picked;
 }
 
 static void
@@ -211,10 +203,6 @@ gimp_levels_tool_initialize (GimpTool     *tool,
     return FALSE;
 
   gimp_config_reset (GIMP_CONFIG (l_tool->config));
-
-  if (l_tool->active_picker)
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (l_tool->active_picker),
-                                  FALSE);
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
@@ -266,8 +254,6 @@ static GtkWidget *
 gimp_levels_tool_color_picker_new (GimpLevelsTool *tool,
                                    guint           value)
 {
-  GtkWidget   *button;
-  GtkWidget   *image;
   const gchar *stock_id;
   const gchar *help;
 
@@ -289,24 +275,10 @@ gimp_levels_tool_color_picker_new (GimpLevelsTool *tool,
       return NULL;
     }
 
-  button = g_object_new (GTK_TYPE_TOGGLE_BUTTON,
-                         "draw-indicator", FALSE,
-                         NULL);
-
-  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
-  gtk_misc_set_padding (GTK_MISC (image), 2, 2);
-  gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
-
-  gimp_help_set_help_data (button, help, NULL);
-
-  g_object_set_data (G_OBJECT (button),
-                     "pick-value", GUINT_TO_POINTER (value));
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (levels_input_picker_toggled),
-                    tool);
-
-  return button;
+  return gimp_image_map_tool_add_color_picker (GIMP_IMAGE_MAP_TOOL (tool),
+                                               GUINT_TO_POINTER (value),
+                                               stock_id,
+                                               help);
 }
 
 static void
@@ -642,10 +614,6 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (image_map_tool->dialog, "unmap",
-                    G_CALLBACK (gimp_levels_tool_dialog_unmap),
-                    tool);
-
   button = gimp_stock_button_new (GIMP_STOCK_TOOL_CURVES,
                                   _("Edit these Settings as Curves"));
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
@@ -657,15 +625,6 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (tool->channel_menu),
                                  config->channel);
-}
-
-static void
-gimp_levels_tool_dialog_unmap (GtkWidget      *dialog,
-                               GimpLevelsTool *tool)
-{
-  if (tool->active_picker)
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tool->active_picker),
-                                  FALSE);
 }
 
 static void
@@ -1111,31 +1070,6 @@ levels_high_output_changed (GtkAdjustment  *adjustment,
 }
 
 static void
-levels_input_picker_toggled (GtkWidget      *widget,
-                             GimpLevelsTool *tool)
-{
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
-    {
-      if (tool->active_picker == widget)
-        return;
-
-      if (tool->active_picker)
-        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tool->active_picker),
-                                      FALSE);
-
-      tool->active_picker = widget;
-
-      gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
-                              GIMP_COLOR_TOOL_GET_OPTIONS (tool));
-    }
-  else if (tool->active_picker == widget)
-    {
-      tool->active_picker = NULL;
-      gimp_color_tool_disable (GIMP_COLOR_TOOL (tool));
-    }
-}
-
-static void
 levels_input_adjust_by_color (GimpLevelsConfig     *config,
                               guint                 value,
                               GimpHistogramChannel  channel,
@@ -1158,17 +1092,13 @@ levels_input_adjust_by_color (GimpLevelsConfig     *config,
 }
 
 static void
-gimp_levels_tool_color_picked (GimpColorTool      *color_tool,
-                               GimpColorPickState  pick_state,
-                               const Babl         *sample_format,
-                               const GimpRGB      *color,
-                               gint                color_index)
+gimp_levels_tool_color_picked (GimpImageMapTool *color_tool,
+                               gpointer          identifier,
+                               const Babl       *sample_format,
+                               const GimpRGB    *color)
 {
-  GimpLevelsTool *tool = GIMP_LEVELS_TOOL (color_tool);
-  guint           value;
-
-  value = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (tool->active_picker),
-                                               "pick-value"));
+  GimpLevelsTool *tool  = GIMP_LEVELS_TOOL (color_tool);
+  guint           value = GPOINTER_TO_UINT (identifier);
 
   if (value & PICK_ALL_CHANNELS &&
       gimp_babl_format_get_base_type (sample_format) == GIMP_RGB)

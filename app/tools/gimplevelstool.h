@@ -58,8 +58,6 @@ struct _GimpLevelsTool
   GtkAdjustment        *low_output;
   GtkAdjustment        *high_output;
 
-  GtkWidget            *active_picker;
-
   /* export dialog */
   gboolean              export_old_format;
 };
