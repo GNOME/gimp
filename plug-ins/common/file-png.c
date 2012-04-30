@@ -694,8 +694,8 @@ load_image (const gchar  *filename,
   int i,                        /* Looping var */
     trns,                       /* Transparency present */
     bpp,                        /* Bytes per pixel */
-    have_u16 = 0,               /* 16bit values? */
     image_type,                 /* Type of image */
+    image_precision,            /* Precision of image */
     layer_type,                 /* Type of drawable/layer */
     width,                      /* image width */
     height,                     /* image height */
@@ -710,7 +710,6 @@ load_image (const gchar  *filename,
   volatile gint32 image = -1;   /* Image -- preserved against setjmp() */
   gint32 layer;                 /* Layer */
   GeglBuffer *buffer;           /* GEGL buffer for layer */
-  const char *file_format_nick; /* BABL nick for file format */
   const Babl *file_format;      /* BABL format for layer */
   png_structp pp;               /* PNG read pointer */
   png_infop info;               /* PNG info pointers */
@@ -776,25 +775,20 @@ load_image (const gchar  *filename,
    */
 
   if (png_get_bit_depth (pp, info) == 16)
-    {
-      have_u16 = 1;
-    }
+    image_precision = GIMP_PRECISION_U16;
+  else
+    image_precision = GIMP_PRECISION_U8;
 
   if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
-    {
-      png_set_swap (pp);
-    }
+    png_set_swap (pp);
 
-  if (png_get_color_type (pp, info) == PNG_COLOR_TYPE_GRAY &&
-      png_get_bit_depth (pp, info) < 8)
+  if (png_get_bit_depth (pp, info) < 8)
     {
-      png_set_expand (pp);
-    }
+      if (png_get_color_type (pp, info) == PNG_COLOR_TYPE_GRAY)
+        png_set_expand (pp);
 
-  if (png_get_color_type (pp, info) == PNG_COLOR_TYPE_PALETTE &&
-      png_get_bit_depth (pp, info) < 8)
-    {
-      png_set_packing (pp);
+      if (png_get_color_type (pp, info) == PNG_COLOR_TYPE_PALETTE)
+        png_set_packing (pp);
     }
 
   /*
@@ -803,9 +797,7 @@ load_image (const gchar  *filename,
 
   if (png_get_color_type (pp, info) != PNG_COLOR_TYPE_PALETTE &&
       png_get_valid (pp, info, PNG_INFO_tRNS))
-    {
-      png_set_expand (pp);
-    }
+    png_set_expand (pp);
 
   /*
    * Turn on interlace handling... libpng returns just 1 (ie single pass)
@@ -846,36 +838,45 @@ load_image (const gchar  *filename,
   switch (png_get_color_type (pp, info))
     {
     case PNG_COLOR_TYPE_RGB:           /* RGB */
-      // file_format = gimp_babl_format (GIMP_RGB, have_u16 ? GIMP_PRECISION_U16 : GIMP_PRECISION_U8, FALSE);
       image_type = GIMP_RGB;
       layer_type = GIMP_RGB_IMAGE;
-      file_format_nick = have_u16 ? "R'G'B' u16" : "R'G'B' u8";
+      if (image_precision == GIMP_PRECISION_U8)
+        file_format = babl_format ("R'G'B' u8");
+      else
+        file_format = babl_format ("R'G'B' u16");
       break;
 
     case PNG_COLOR_TYPE_RGB_ALPHA:     /* RGBA */
-      // file_format = gimp_babl_format (GIMP_RGB, have_u16 ? GIMP_PRECISION_U16 : GIMP_PRECISION_U8, TRUE);
       image_type = GIMP_RGB;
       layer_type = GIMP_RGBA_IMAGE;
-      file_format_nick = have_u16 ? "R'G'B'A u16" : "R'G'B'A u8";
+      if (image_precision == GIMP_PRECISION_U8)
+        file_format = babl_format ("R'G'B'A u8");
+      else
+        file_format = babl_format ("R'G'B'A u16");
       break;
 
     case PNG_COLOR_TYPE_GRAY:          /* Grayscale */
-      // file_format = gimp_babl_format (GIMP_GRAY, have_u16 ? GIMP_PRECISION_U16 : GIMP_PRECISION_U8, FALSE);
       image_type = GIMP_GRAY;
       layer_type = GIMP_GRAY_IMAGE;
-      file_format_nick = have_u16 ? "Y' u16" : "Y' u8";
+      if (image_precision == GIMP_PRECISION_U8)
+        file_format = babl_format ("Y' u8");
+      else
+        file_format = babl_format ("Y' u16");
       break;
 
     case PNG_COLOR_TYPE_GRAY_ALPHA:    /* Grayscale + alpha */
-      // file_format = gimp_babl_format (GIMP_GRAY, have_u16 ? GIMP_PRECISION_U16 : GIMP_PRECISION_U8, TRUE);
       image_type = GIMP_GRAY;
       layer_type = GIMP_GRAYA_IMAGE;
-      file_format_nick = have_u16 ? "Y'A u16" : "Y'A u8";
+      if (image_precision == GIMP_PRECISION_U8)
+        file_format = babl_format ("Y'A u8");
+      else
+        file_format = babl_format ("Y'A u16");
       break;
 
     case PNG_COLOR_TYPE_PALETTE:       /* Indexed */
       image_type = GIMP_INDEXED;
       layer_type = GIMP_INDEXED_IMAGE;
+      /* we can get the format only after creating the layer */
       break;
 
     default:                           /* Aie! Unknown type */
@@ -888,9 +889,8 @@ load_image (const gchar  *filename,
   width = png_get_image_width (pp, info);
   height = png_get_image_height (pp, info);
 
-  image = gimp_image_new_with_precision (width, height, image_type,
-                                         have_u16 ? GIMP_PRECISION_U16 :
-                                                    GIMP_PRECISION_U8);
+  image = gimp_image_new_with_precision (width, height,
+                                         image_type, image_precision);
   if (image == -1)
     {
       g_set_error (error, 0, 0,
@@ -906,6 +906,9 @@ load_image (const gchar  *filename,
   layer = gimp_layer_new (image, _("Background"), width, height,
                           layer_type, 100, GIMP_NORMAL_MODE);
   gimp_image_insert_layer (image, layer, -1, 0);
+
+  if (layer_type == GIMP_INDEXED_IMAGE)
+    file_format = gimp_drawable_get_format (layer);
 
   /*
    * Find out everything we can about the image resolution
@@ -1023,12 +1026,6 @@ load_image (const gchar  *filename,
         }
     }
 
-  if (layer_type == GIMP_INDEXED_IMAGE)
-#warning gimp_drawable_get_format() seems to fail when no colormap set
-    file_format = gimp_drawable_get_format (layer);
-
-  if (!file_format)
-    file_format = babl_format (file_format_nick);
   bpp = babl_format_get_bytes_per_pixel (file_format);
 
   buffer = gimp_drawable_get_buffer (layer);
@@ -1305,7 +1302,6 @@ save_image (const gchar  *filename,
     bpp = 0,                    /* Bytes per pixel */
     type,                       /* Type of drawable/layer */
     num_passes,                 /* Number of interlace passes in file */
-    have_u16,                   /* save as 16 bit PNG */
     pass,                       /* Current pass in file */
     tile_height,                /* Height of tile in GIMP */
     width,                      /* image width */
@@ -1315,7 +1311,6 @@ save_image (const gchar  *filename,
     num;                        /* Number of rows to load */
   FILE *fp;                     /* File pointer */
   GeglBuffer *buffer;           /* GEGL buffer for layer */
-  const char *file_format_nick; /* BABL format nick for file */
   const Babl *file_format;      /* BABL format of file */
   png_structp pp;               /* PNG read pointer */
   png_infop info;               /* PNG info pointer */
@@ -1335,7 +1330,10 @@ save_image (const gchar  *filename,
 
   png_textp  text = NULL;
 
-  have_u16 = (gimp_image_get_precision (image_ID) != GIMP_PRECISION_U8);
+  if (gimp_image_get_precision (image_ID) == GIMP_PRECISION_U8)
+    bit_depth = 8;
+  else
+    bit_depth = 16;
 
   pp = png_create_write_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
   if (!pp)
@@ -1400,35 +1398,38 @@ save_image (const gchar  *filename,
    * Set color type and remember bytes per pixel count
    */
 
-  bit_depth = have_u16 ? 16 : 8;
-
-  file_format = NULL;
-
   switch (type)
     {
     case GIMP_RGB_IMAGE:
-      // file_format = gimp_babl_format (GIMP_RGB, have_u16 ? GIMP_PRECISION_U16 : GIMP_PRECISION_U8, FALSE);
       color_type = PNG_COLOR_TYPE_RGB;
-      file_format_nick = have_u16 ? "R'G'B' u16" : "R'G'B' u8";
+      if (bit_depth == 8)
+        file_format = babl_format ("R'G'B' u8");
+      else
+        file_format = babl_format ("R'G'B' u16");
       break;
 
     case GIMP_RGBA_IMAGE:
-      // file_format = gimp_babl_format (GIMP_RGB, have_u16 ? GIMP_PRECISION_U16 : GIMP_PRECISION_U8, TRUE);
       color_type = PNG_COLOR_TYPE_RGB_ALPHA;
-      file_format_nick = have_u16 ? "R'G'B'A u16" : "R'G'B'A u8";
+      if (bit_depth == 8)
+        file_format = babl_format ("R'G'B'A u8");
+      else
+        file_format = babl_format ("R'G'B'A u16");
       break;
 
     case GIMP_GRAY_IMAGE:
-      // file_format = gimp_babl_format (GIMP_GRAY, have_u16 ? GIMP_PRECISION_U16 : GIMP_PRECISION_U8, FALSE);
       color_type = PNG_COLOR_TYPE_GRAY;
-      file_format_nick = have_u16 ? "Y' u16" : "Y' u8";
+      if (bit_depth == 8)
+        file_format = babl_format ("Y' u8");
+      else
+        file_format = babl_format ("Y' u16");
       break;
 
     case GIMP_GRAYA_IMAGE:
-      // file_format = gimp_babl_format (GIMP_GRAY, have_u16 ? GIMP_PRECISION_U16 : GIMP_PRECISION_U8, TRUE);
-      color_type = PNG_COLOR_TYPE_GRAY;
       color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
-      file_format_nick = have_u16 ? "Y'A u16" : "Y'A u8";
+      if (bit_depth == 8)
+        file_format = babl_format ("Y'A u8");
+      else
+        file_format = babl_format ("Y'A u16");
       break;
 
     case GIMP_INDEXED_IMAGE:
@@ -1452,9 +1453,6 @@ save_image (const gchar  *filename,
       return FALSE;
     }
 
-  if (!file_format)
-    file_format = babl_format (file_format_nick);
-
   bpp = babl_format_get_bytes_per_pixel (file_format);
 
   /* Note: png_set_IHDR() must be called before any other png_set_*()
@@ -1465,14 +1463,10 @@ save_image (const gchar  *filename,
                 PNG_FILTER_TYPE_BASE);
 
   if (pngg.has_trns)
-    {
-      png_set_tRNS (pp, info, pngg.trans, pngg.num_trans, NULL);
-    }
+    png_set_tRNS (pp, info, pngg.trans, pngg.num_trans, NULL);
 
   if (pngg.has_plte)
-    {
-      png_set_PLTE (pp, info, pngg.palette, pngg.num_palette);
-    }
+    png_set_PLTE (pp, info, pngg.palette, pngg.num_palette);
 
   /* Set the compression level */
 
@@ -1516,9 +1510,7 @@ save_image (const gchar  *filename,
     {
       gimp_drawable_offsets (drawable_ID, &offx, &offy);
       if (offx != 0 || offy != 0)
-        {
-          png_set_oFFs (pp, info, offx, offy, PNG_OFFSET_PIXEL);
-        }
+        png_set_oFFs (pp, info, offx, offy, PNG_OFFSET_PIXEL);
     }
 
   if (pngvals.phys)
