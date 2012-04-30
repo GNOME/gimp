@@ -777,12 +777,13 @@ gimp_drawable_get_format (gint32 drawable_ID)
                 format = palette;
             }
 
-          babl_palette_set_palette (format,
-                                    babl_format ("R'G'B' u8"),
-                                    colormap, n_colors);
-
-          g_free (colormap);
-
+          if (colormap)
+            {
+              babl_palette_set_palette (format,
+                                        babl_format ("R'G'B' u8"),
+                                        colormap, n_colors);
+              g_free (colormap);
+            }
         }
       else
         {
