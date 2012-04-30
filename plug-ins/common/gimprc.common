@@ -50,6 +50,7 @@ file_csource_RC = file-csource.rc.o
 file_desktop_link_RC = file-desktop-link.rc.o
 file_dicom_RC = file-dicom.rc.o
 file_gbr_RC = file-gbr.rc.o
+file_gegl_RC = file-gegl.rc.o
 file_gif_load_RC = file-gif-load.rc.o
 file_gif_save_RC = file-gif-save.rc.o
 file_gih_RC = file-gih.rc.o

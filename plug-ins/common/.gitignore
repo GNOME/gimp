@@ -106,6 +106,8 @@
 /file-dicom.exe
 /file-gbr
 /file-gbr.exe
+/file-gegl
+/file-gegl.exe
 /file-gif-load
 /file-gif-load.exe
 /file-gif-save

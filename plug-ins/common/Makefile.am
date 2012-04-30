@@ -96,6 +96,7 @@ libexec_PROGRAMS = \
 	file-desktop-link \
 	file-dicom \
 	file-gbr \
+	file-gegl \
 	file-gif-load \
 	file-gif-save \
 	file-gih \
@@ -1087,6 +1088,22 @@ file_gbr_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_gbr_RC)
+
+file_gegl_SOURCES = \
+	file-gegl.c
+
+file_gegl_LDADD = \
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(CAIRO_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
+	$(GEGL_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)		\
+	$(file_gegl_RC)
 
 file_gif_load_SOURCES = \
 	file-gif-load.c

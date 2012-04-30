@@ -51,6 +51,7 @@
     'file-desktop-link' => {},
     'file-dicom' => { ui => 1, cflags => '-fno-strict-aliasing' },
     'file-gbr' => { ui => 1 },
+    'file-gegl' => { gegl => 1 },
     'file-gif-load' => {},
     'file-gif-save' => { ui => 1 },
     'file-gih' => { ui => 1 },
