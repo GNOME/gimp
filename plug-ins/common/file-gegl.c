@@ -30,7 +30,9 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#define LOAD_PROC "file-gegl-load"
+#define LOAD_PROC      "file-gegl-load"
+#define SAVE_PROC      "file-gegl-save"
+#define PLUG_IN_BINARY "file-gegl"
 
 
 static void     query             (void);
@@ -40,6 +42,10 @@ static void     run               (const gchar      *name,
                                    gint             *nreturn_vals,
                                    GimpParam       **return_vals);
 static gint32   load_image        (const gchar      *filename,
+                                   GError          **error);
+static gboolean save_image        (const gchar      *filename,
+                                   gint32            image_ID,
+                                   gint32            drawable_ID,
                                    GError          **error);
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -68,6 +74,15 @@ query (void)
     { GIMP_PDB_IMAGE,  "image",        "Output image" }
   };
 
+  static const GimpParamDef save_args[] =
+  {
+    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" }
+  };
+
   gimp_install_procedure (LOAD_PROC,
                           "Loads images using GEGL.",
                           "The GEGL image loader.",
@@ -82,12 +97,23 @@ query (void)
                           load_args, load_return_vals);
 
 #warning need some EXR magic here.
-  gimp_register_magic_load_handler (LOAD_PROC,
-                                    "exr,hdr",
-                                    "",
-                                    "");
-
   gimp_register_file_handler_mime (LOAD_PROC, "image/x-exr");
+  gimp_register_magic_load_handler (LOAD_PROC, "exr,hdr", "", "");
+
+  gimp_install_procedure (SAVE_PROC,
+                          "Saves images using GEGL.",
+                          "The GEGL image saver",
+                          "Simon Budig",
+                          "Simon Budig",
+                          "2012",
+                          N_("image via GEGL"),
+                          "RGB*, GRAY*, INDEXED*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (save_args), 0,
+                          save_args, NULL);
+
+  gimp_register_save_handler (SAVE_PROC, "exr,hdr", "");
+
 }
 
 static void
@@ -99,8 +125,12 @@ run (const gchar      *name,
 {
   static GimpParam   values[2];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpRunMode        run_mode;
   gint               image_ID;
+  gint               drawable_ID;
   GError            *error = NULL;
+
+  run_mode = param[0].data.d_int32;
 
   INIT_I18N ();
 
@@ -127,6 +157,44 @@ run (const gchar      *name,
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
+  else if (strcmp (name, SAVE_PROC) == 0)
+   {
+     GimpExportReturn export = GIMP_EXPORT_CANCEL;
+     image_ID    = param[1].data.d_int32;
+     drawable_ID = param[2].data.d_int32;
+
+     /*  eventually export the image */
+     switch (run_mode)
+       {
+       case GIMP_RUN_INTERACTIVE:
+       case GIMP_RUN_WITH_LAST_VALS:
+         gimp_ui_init (PLUG_IN_BINARY, FALSE);
+         export = gimp_export_image (&image_ID, &drawable_ID, NULL,
+                                     (GIMP_EXPORT_CAN_HANDLE_RGB |
+                                      GIMP_EXPORT_CAN_HANDLE_GRAY |
+                                      GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                      GIMP_EXPORT_CAN_HANDLE_ALPHA));
+
+         if (export == GIMP_EXPORT_CANCEL)
+           {
+             *nreturn_vals = 1;
+             values[0].data.d_status = GIMP_PDB_CANCEL;
+             return;
+           }
+         break;
+
+       default:
+         break;
+       }
+
+     if (! save_image (param[3].data.d_string, image_ID, drawable_ID, &error))
+       {
+         status = GIMP_PDB_EXECUTION_ERROR;
+       }
+
+     if (export == GIMP_EXPORT_EXPORT)
+       gimp_image_delete (image_ID);
+   }
   else
     {
       status = GIMP_PDB_CALLING_ERROR;
@@ -140,6 +208,8 @@ run (const gchar      *name,
     }
 
   values[0].data.d_status = status;
+
+  gegl_exit ();
 }
 
 static gint32
@@ -254,3 +324,33 @@ load_image (const gchar  *filename,
   return image_ID;
 }
 
+static gboolean
+save_image (const gchar  *filename,
+            gint32        image_ID,
+            gint32        drawable_ID,
+            GError      **error)
+{
+  GeglNode  *graph, *sink, *source;
+  GeglBuffer *src_buf;
+
+  src_buf = gimp_drawable_get_buffer (drawable_ID);
+
+  graph = gegl_node_new ();
+  source = gegl_node_new_child (graph,
+                                "operation", "gegl:buffer-source",
+                                "buffer", src_buf,
+                                NULL);
+  sink = gegl_node_new_child (graph,
+                              "operation", "gegl:save",
+                              "path", filename,
+                              NULL);
+
+  gegl_node_connect_to (source, "output",
+                        sink,   "input");
+
+  gegl_node_process (sink);
+  g_object_unref (graph);
+  g_object_unref (src_buf);
+
+  return TRUE;
+}
