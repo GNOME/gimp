@@ -304,6 +304,9 @@ ColorFreq* HIST_LIN(ColorFreq *hist_ptr,
 #define BRAT (1.0F)
 #endif
 
+static const Babl *rgb_to_lab_fish = NULL;
+static const Babl *lab_to_rgb_fish = NULL;
+
 static inline
 void rgb_to_unshifted_lin(const unsigned char r,
                           const unsigned char g,
@@ -314,9 +317,7 @@ void rgb_to_unshifted_lin(const unsigned char r,
   float rgb[3] = {r/255.0, g/255.0, b/255.0};
   float lab[3];
 
-  babl_process (babl_fish (babl_format ("R'G'B' float"),
-                           babl_format ("CIE Lab float")),
-                rgb, lab, 1);
+  babl_process (rgb_to_lab_fish, rgb, lab, 1);
 
   /* fprintf(stderr, " %d-%d-%d -> %0.3f,%0.3f,%0.3f ", r, g, b, sL, sa, sb);*/
 
@@ -435,9 +436,7 @@ void lin_to_rgb(const double hr, const double hg, const double hb,
   lab[1] = ig;
   lab[2] = ib;
 
-  babl_process (babl_fish (babl_format ("CIE Lab float"),
-                           babl_format ("R'G'B' float")),
-                lab, rgb, 1);
+  babl_process (lab_to_rgb_fish, lab, rgb, 1);
 
   *r = RINT(CLAMP(rgb[0]*255, 0.0F, 255.0F));
   *g = RINT(CLAMP(rgb[1]*255, 0.0F, 255.0F));
@@ -815,6 +814,11 @@ gimp_image_convert (GimpImage               *image,
   if (new_type == GIMP_INDEXED)
     {
       gint i;
+
+      rgb_to_lab_fish = babl_fish (babl_format ("R'G'B' float"),
+                                   babl_format ("CIE Lab float"));
+      lab_to_rgb_fish = babl_fish (babl_format ("CIE Lab float"),
+                                   babl_format ("R'G'B' float"));
 
       /* fprintf(stderr, " TO INDEXED(%d) ", num_cols); */
 
