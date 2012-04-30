@@ -45,8 +45,8 @@
 
 #include "display/gimpdisplay.h"
 
+#include "gimpcoloroptions.h"
 #include "gimpoperationtool.h"
-#include "gimpimagemapoptions.h"
 
 #include "gimp-intl.h"
 
@@ -72,6 +72,10 @@ static GtkWidget * gimp_operation_tool_get_settings_ui (GimpImageMapTool  *image
                                                         const gchar       *file_dialog_help_id,
                                                         const gchar       *default_folder,
                                                         GtkWidget        **settings_box);
+static void        gimp_operation_tool_color_picked    (GimpImageMapTool  *im_tool,
+                                                        gpointer           identifier,
+                                                        const Babl        *sample_format,
+                                                        const GimpRGB     *color);
 
 static void        gimp_operation_tool_config_notify   (GObject           *object,
                                                         GParamSpec        *pspec,
@@ -89,7 +93,8 @@ gimp_operation_tool_register (GimpToolRegisterCallback  callback,
                               gpointer                  data)
 {
   (* callback) (GIMP_TYPE_OPERATION_TOOL,
-                GIMP_TYPE_IMAGE_MAP_OPTIONS, NULL,
+                GIMP_TYPE_COLOR_OPTIONS,
+                gimp_color_options_gui,
                 0,
                 "gimp-operation-tool",
                 _("GEGL Operation"),
@@ -118,6 +123,7 @@ gimp_operation_tool_class_init (GimpOperationToolClass *klass)
   im_tool_class->dialog          = gimp_operation_tool_dialog;
   im_tool_class->reset           = gimp_operation_tool_reset;
   im_tool_class->get_settings_ui = gimp_operation_tool_get_settings_ui;
+  im_tool_class->color_picked    = gimp_operation_tool_color_picked;
 }
 
 static void
@@ -269,6 +275,19 @@ gimp_operation_tool_get_settings_ui (GimpImageMapTool  *image_map_tool,
 }
 
 static void
+gimp_operation_tool_color_picked (GimpImageMapTool  *im_tool,
+                                  gpointer           identifier,
+                                  const Babl        *sample_format,
+                                  const GimpRGB     *color)
+{
+  GimpOperationTool *tool = GIMP_OPERATION_TOOL (im_tool);
+
+  g_object_set (tool->config,
+                identifier, color,
+                NULL);
+}
+
+static void
 gimp_operation_tool_config_notify (GObject           *object,
                                    GParamSpec        *pspec,
                                    GimpOperationTool *tool)
@@ -340,7 +359,9 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
       tool->options_table =
         gimp_prop_table_new (G_OBJECT (tool->config),
                              G_TYPE_FROM_INSTANCE (tool->config),
-                             GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (tool)));
+                             GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (tool)),
+                             (GimpCreatePickerFunc) gimp_image_map_tool_add_color_picker,
+                             tool);
 
       if (tool->options_box)
         {

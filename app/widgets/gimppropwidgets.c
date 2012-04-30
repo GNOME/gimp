@@ -1415,9 +1415,11 @@ gimp_prop_icon_picker_notify (GObject    *config,
 /***********/
 
 GtkWidget *
-gimp_prop_table_new (GObject     *config,
-                     GType        owner_type,
-                     GimpContext *context)
+gimp_prop_table_new (GObject              *config,
+                     GType                 owner_type,
+                     GimpContext          *context,
+                     GimpCreatePickerFunc  create_picker_func,
+                     gpointer              picker_creator)
 {
   GtkWidget     *table;
   GtkSizeGroup  *size_group;
@@ -1507,12 +1509,26 @@ gimp_prop_table_new (GObject     *config,
         }
       else if (GIMP_IS_PARAM_SPEC_RGB (pspec))
         {
-          widget = gimp_prop_color_button_new (config, pspec->name,
+          GtkWidget *button;
+
+          widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
+
+          button = gimp_prop_color_button_new (config, pspec->name,
                                                g_param_spec_get_nick (pspec),
                                                128, 24,
                                                GIMP_COLOR_AREA_SMALL_CHECKS);
-          gimp_color_button_set_update (GIMP_COLOR_BUTTON (widget), TRUE);
-          gimp_color_panel_set_context (GIMP_COLOR_PANEL (widget), context);
+          gimp_color_button_set_update (GIMP_COLOR_BUTTON (button), TRUE);
+          gimp_color_panel_set_context (GIMP_COLOR_PANEL (button), context);
+          gtk_box_pack_start (GTK_BOX (widget), button, TRUE, TRUE, 0);
+          gtk_widget_show (button);
+
+          button = create_picker_func (picker_creator,
+                                       pspec->name,
+                                       GIMP_STOCK_COLOR_PICKER_GRAY,
+                                       _("Pick color from image"));
+          gtk_box_pack_start (GTK_BOX (widget), button, FALSE, FALSE, 0);
+          gtk_widget_show (button);
+
           label = g_param_spec_get_nick (pspec);
         }
       else

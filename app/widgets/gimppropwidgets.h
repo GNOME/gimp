@@ -101,9 +101,16 @@ GtkWidget * gimp_prop_icon_picker_new        (GObject     *config,
 
 /*  A view on all of an object's properties  */
 
-GtkWidget * gimp_prop_table_new           (GObject     *config,
-                                           GType        owner_type,
-                                           GimpContext *context);
+typedef GtkWidget * (* GimpCreatePickerFunc) (gpointer     creator,
+                                              const gchar *property_name,
+                                              const gchar *stock_id,
+                                              const gchar *help_id);
+
+GtkWidget * gimp_prop_table_new (GObject              *config,
+                                 GType                 owner_type,
+                                 GimpContext          *context,
+                                 GimpCreatePickerFunc  create_picker_fnc,
+                                 gpointer              picker_creator);
 
 
 #endif /* __GIMP_APP_PROP_WIDGETS_H__ */
