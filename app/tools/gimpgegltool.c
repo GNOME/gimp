@@ -110,33 +110,35 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
   };
   static const gchar * const name_blacklist[] =
   {
-    "gegl:convert-format",
-    "gegl:introspect",
-    "gegl:path",
-    "gegl:text",
-    "gegl:layer",
-    "gegl:contrast-curve",
-    "gegl:fill-path",
-    "gegl:vector-stroke",
-    "gegl:lens-correct",
-    "gegl:hstack",
-    "gegl:display",
-    "gegl:opacity", /* pointless */
-    "gegl:colorize", /* in gimp */
+    "gegl:color", /* pointless */
+    "gegl:color-temperature", /* in gimp */
     "gegl:color-to-alpha", /* in gimp */
-    "gegl:invert", /* in gimp */
+    "gegl:colorize", /* in gimp */
+    "gegl:contrast-curve",
+    "gegl:convert-format",
+    "gegl:display",
+    "gegl:fill-path",
     "gegl:gaussian-blur", /* in gimp */
     "gegl:grey", /* in gimp */
+    "gegl:hstack",
+    "gegl:introspect",
+    "gegl:invert", /* in gimp */
+    "gegl:layer",
+    "gegl:lens-correct",
+    "gegl:opacity", /* pointless */
+    "gegl:path",
     "gegl:pixelize", /* in gimp */
     "gegl:polar-coordinates", /* in gimp */
     "gegl:posterize", /* in gimp */
-    "gegl:scale", /* in gimp */
-    "gegl:translate", /* pointless */
-    "gegl:shear", /* in gimp */
     "gegl:rotate", /* in gimp */
-    "gegl:transform", /* in gimp */
-    "gegl:value-invert", /* in gimp */
+    "gegl:scale", /* in gimp */
+    "gegl:shear", /* in gimp */
+    "gegl:text",
     "gegl:threshold", /* in gimp */
+    "gegl:transform", /* in gimp */
+    "gegl:translate", /* pointless */
+    "gegl:value-invert", /* in gimp */
+    "gegl:vector-stroke",
     "gimp-",
     "gimp:"
   };
