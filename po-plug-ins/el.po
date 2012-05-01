@@ -1,19 +1,16 @@
 # translation of el.po to
 # Greek translation for gimp-plugins.
 # Copyright (C) 2001, 2002 Free Software Foundation.
-# Simos initial translation 221 translated messages
-# Nikos 18Aug2003 updated translation 355 translated messages
-# Nikos 22Oct2004 updated translation 330 translated messages
 # Simos Xenitellis <simos@hellug.gr>, 2001, 2002.
 # Nikos Charonitakis <charosn@her.forthnet.gr>, 2003, 2004.
-# Dimitris Spingos (Δημήτρης  Σπίγγος) <dmtrs32@gmail.com>, 2012.
+# Dimitris Spingos (Δημήτρης  Σπίγγος) <dmtrs32@gmail.com>, 2011, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
 "eywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2012-02-24 13:24+0000\n"
-"PO-Revision-Date: 2012-03-01 00:24+0300\n"
+"PO-Revision-Date: 2012-04-16 23:04+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης  Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@gnome.gr\n"
 "Language: el\n"
@@ -32,7 +29,7 @@ msgstr "Αρχικό"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:136
 msgid "Rotated"
-msgstr "Περιεστραμμένο"
+msgstr "Περιστραμμένο"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:154
 msgid "Continuous update"
@@ -159,7 +156,7 @@ msgstr "Δεξιόστροφη εναλλαγή"
 
 #: ../plug-ins/color-rotate/color-rotate-stock.c:36
 msgid "Switch to C/Clockwise"
-msgstr "Αριστερόστοφη εναλλαγή"
+msgstr "Αριστερόστροφη εναλλαγή"
 
 #: ../plug-ins/color-rotate/color-rotate-stock.c:38
 msgid "Change Order of Arrows"
@@ -200,7 +197,7 @@ msgstr "Τρο_ποποίηση καναλιού κορεσμού"
 
 #: ../plug-ins/common/alien-map.c:142
 msgid "Mod_ify blue channel"
-msgstr "Τροποποίηση μπλε καναλ_ιού"
+msgstr "Τροποποίηση γαλάζιου καναλ_ιού"
 
 #: ../plug-ins/common/alien-map.c:142
 msgid "Mod_ify luminosity channel"
@@ -229,7 +226,7 @@ msgstr "Συχ_νότητα κορεσμού:"
 # sysdeps/names/proctime.c:48
 #: ../plug-ins/common/alien-map.c:149
 msgid "Blue freq_uency:"
-msgstr "Συχνό_τητα μπλε:"
+msgstr "Συχνό_τητα γαλάζιου:"
 
 # sysdeps/names/proctime.c:48
 #: ../plug-ins/common/alien-map.c:149
@@ -249,7 +246,7 @@ msgstr "Μετατό_πιση φάσης απόχρωσης:"
 #
 #: ../plug-ins/common/alien-map.c:152
 msgid "Green ph_aseshift:"
-msgstr "Μετ_ατόπιση φάσης πράσινου:"
+msgstr "Μετ_ατόπιση πράσινης φάσης:"
 
 #
 #: ../plug-ins/common/alien-map.c:152
@@ -259,7 +256,7 @@ msgstr "Μετ_ατόπιση φάσης κορεσμού:"
 #
 #: ../plug-ins/common/alien-map.c:153
 msgid "Blue pha_seshift:"
-msgstr "Μετατόπι_ση φάσης μπλε:"
+msgstr "Μετατόπι_ση γαλάζιας φάσης:"
 
 #: ../plug-ins/common/alien-map.c:153
 msgid "Luminosity pha_seshift:"
@@ -271,15 +268,15 @@ msgstr "Μεταβολή χρωμάτων σε ποικίλους ψυχεδελ
 
 #: ../plug-ins/common/alien-map.c:188
 msgid "_Alien Map..."
-msgstr "Απεικόνιση _ξένου..."
+msgstr "Χάρτης παρά_ξένου..."
 
 #: ../plug-ins/common/alien-map.c:320
 msgid "Alien Map: Transforming"
-msgstr "Απεικόνιση ξένου: μετασχηματισμός"
+msgstr "Χάρτης παράξενου: μετασχηματισμός"
 
 #: ../plug-ins/common/alien-map.c:393
 msgid "Alien Map"
-msgstr "Απεικόνιση ξένου"
+msgstr "Χάρτης παράξενου"
 
 #: ../plug-ins/common/alien-map.c:442 ../plug-ins/common/alien-map.c:466
 #: ../plug-ins/common/alien-map.c:490
@@ -308,26 +305,26 @@ msgstr "Χρωματικό πρότυπο _HSL"
 
 #: ../plug-ins/common/align-layers.c:128
 msgid "Align all visible layers of the image"
-msgstr "Ευθυγράμμιση όλων των ορατών στρώσεων της εικόνας"
+msgstr "Στοίχιση όλων των ορατών στρώσεων της εικόνας"
 
 #: ../plug-ins/common/align-layers.c:133
 msgid "Align Visi_ble Layers..."
-msgstr "Ευθυγράμμιση ο_ρατών στρώσεων..."
+msgstr "Στοίχιση ο_ρατών στρώσεων..."
 
 #: ../plug-ins/common/align-layers.c:173
 msgid "There are not enough layers to align."
-msgstr "Δεν υπάρχουν αρκετές στρώσεις για ευθυγράμμιση."
+msgstr "Δεν υπάρχουν αρκετές στρώσεις για στοίχιση."
 
 #: ../plug-ins/common/align-layers.c:400
 msgid "Align Visible Layers"
-msgstr "Ευθυγράμμιση ορατών στρώσεων"
+msgstr "Στοίχιση ορατών στρώσεων"
 
 #
 #: ../plug-ins/common/align-layers.c:424 ../plug-ins/common/align-layers.c:455
 #| msgid "None"
 msgctxt "align-style"
 msgid "None"
-msgstr "Κανένα"
+msgstr "Καμία"
 
 #
 #: ../plug-ins/common/align-layers.c:425 ../plug-ins/common/align-layers.c:456
@@ -398,11 +395,11 @@ msgstr "Μέ_γεθος πλέγματος:"
 
 #: ../plug-ins/common/align-layers.c:495
 msgid "_Ignore the bottom layer even if visible"
-msgstr "Αγνόη_ση της χαμηλότερης στρώσης ακόμα κι αν είναι ορατή"
+msgstr "Αγνόη_ση της κατώτατης στρώσης ακόμα κι αν είναι ορατή"
 
 #: ../plug-ins/common/align-layers.c:505
 msgid "_Use the (invisible) bottom layer as the base"
-msgstr "_Χρήση της (αόρατης) χαμηλότερης στρώσης ως βάσης"
+msgstr "_Χρήση της (αόρατης) κατώτατης στρώσης ως βάσης"
 
 #: ../plug-ins/common/animation-optimize.c:132
 msgid "Modify image to reduce size when saved as GIF animation"
@@ -520,7 +517,7 @@ msgstr "Αναπαραγωγή κίνησης:"
 #: ../plug-ins/common/animation-play.c:663
 #, c-format
 msgid "%d fps"
-msgstr "%d fps (εικόνες ανά δευτερόλεπτο)"
+msgstr "%d πλαίσια ανά δευτερόλεπτο"
 
 #: ../plug-ins/common/animation-play.c:674
 msgid "Default framerate"
@@ -610,7 +607,7 @@ msgstr "Βά_θος:"
 
 #: ../plug-ins/common/blinds.c:113
 msgid "Simulate an image painted on window blinds"
-msgstr "Προσομοίωση μιας βαμμένης εικόνας σε blinds παράθυρ"
+msgstr "Προσομοίωση βαμμένης εικόνας σε περσίδες παραθύρου"
 
 #: ../plug-ins/common/blinds.c:118
 msgid "_Blinds..."
@@ -632,12 +629,12 @@ msgstr "Προσανατολισμός"
 #: ../plug-ins/common/blinds.c:262 ../plug-ins/common/ripple.c:561
 #: ../plug-ins/common/tile-small.c:434 ../plug-ins/pagecurl/pagecurl.c:535
 msgid "_Horizontal"
-msgstr "_Οριζόντιο"
+msgstr "_Οριζόντιος"
 
 #: ../plug-ins/common/blinds.c:265 ../plug-ins/common/ripple.c:564
 #: ../plug-ins/common/tile-small.c:444 ../plug-ins/pagecurl/pagecurl.c:534
 msgid "_Vertical"
-msgstr "Κά_θετο"
+msgstr "Κά_θετος"
 
 #
 #.
@@ -664,7 +661,7 @@ msgstr "Κά_θετο"
 #: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1162
 msgid "Background"
-msgstr "Φόντο"
+msgstr "Παρασκήνιο"
 
 #: ../plug-ins/common/blinds.c:283 ../plug-ins/common/fractal-trace.c:739
 #: ../plug-ins/common/tile-paper.c:385
@@ -686,12 +683,12 @@ msgstr ""
 
 #: ../plug-ins/common/blur-gauss-selective.c:115
 msgid "_Selective Gaussian Blur..."
-msgstr "Επι_λεκτική θόλωση Gauss..."
+msgstr "Επι_λεκτική θόλωση Γκάους..."
 
 #: ../plug-ins/common/blur-gauss-selective.c:195
 #: ../plug-ins/common/blur-gauss-selective.c:232
 msgid "Selective Gaussian Blur"
-msgstr "Επιλεκτική θόλωση Gauss"
+msgstr "Επιλεκτική θόλωση Γκάους"
 
 #: ../plug-ins/common/blur-gauss-selective.c:211
 #: ../plug-ins/common/blur-gauss.c:448 ../plug-ins/common/cartoon.c:232
@@ -718,16 +715,16 @@ msgstr "Απλούστατος, πιο κοινά χρησιμοποιούμεν
 
 #: ../plug-ins/common/blur-gauss.c:172
 msgid "_Gaussian Blur..."
-msgstr "Θόλωση _Gauss..."
+msgstr "Θόλωση _Γκάους..."
 
 #: ../plug-ins/common/blur-gauss.c:179 ../plug-ins/common/blur-gauss.c:199
 #: ../plug-ins/common/blur-gauss.c:219 ../plug-ins/common/blur-gauss.c:239
 msgid "Apply a gaussian blur"
-msgstr "Εφαρμογή θόλωσης gauss"
+msgstr "Εφαρμογή θόλωσης Γκάους"
 
 #: ../plug-ins/common/blur-gauss.c:428 ../plug-ins/common/blur-gauss.c:478
 msgid "Gaussian Blur"
-msgstr "Θόλωση Gauss"
+msgstr "Θόλωση Γκάους"
 
 #
 #. parameter settings
@@ -780,12 +777,12 @@ msgstr "Τύπος θόλωσης"
 #: ../plug-ins/common/blur-motion.c:1050
 msgctxt "blur-type"
 msgid "_Linear"
-msgstr "_Γραμμικό"
+msgstr "_Γραμμική"
 
 #: ../plug-ins/common/blur-motion.c:1051
 msgctxt "blur-type"
 msgid "_Radial"
-msgstr "Α_κτινικό"
+msgstr "Α_κτινική"
 
 #: ../plug-ins/common/blur-motion.c:1052
 msgctxt "blur-type"
@@ -881,43 +878,43 @@ msgstr "Μέ_γεθος κουβά:"
 
 #: ../plug-ins/common/bump-map.c:257
 msgid "Create an embossing effect using a bump map"
-msgstr "Δημιουργία ενός εφέ χάραξης χρησιμοποιώντας μια απεικόνιση ανάγλυφου"
+msgstr "Δημιουργία ενός εφέ χάραξης χρησιμοποιώντας χάρτη ανάγλυφου"
 
 #: ../plug-ins/common/bump-map.c:267
 msgid "_Bump Map..."
-msgstr "Απ_εικόνιση ανάγλυφου..."
+msgstr "Χάρτης ανά_γλυφου..."
 
 #: ../plug-ins/common/bump-map.c:419
 msgid "Bump-mapping"
-msgstr "Απεικόνιση ανάγλυφου"
+msgstr "Χάρτης ανάγλυφου"
 
 #: ../plug-ins/common/bump-map.c:771
 msgid "Bump Map"
-msgstr "Απεικόνιση ανάγλυφου"
+msgstr "Χάρτης ανάγλυφου"
 
 #: ../plug-ins/common/bump-map.c:838
 msgid "_Bump map:"
-msgstr "Απ_εικόνιση ανάγλυφου:"
+msgstr "Χάρτης ανά_γλυφου:"
 
 #. Map type menu
 #: ../plug-ins/common/bump-map.c:841 ../plug-ins/flame/flame.c:747
 #: ../plug-ins/lighting/lighting-ui.c:845
 msgid "Linear"
-msgstr "Γραμμικό"
+msgstr "Γραμμικός"
 
 #: ../plug-ins/common/bump-map.c:842 ../plug-ins/flame/flame.c:749
 #: ../plug-ins/lighting/lighting-ui.c:848
 msgid "Spherical"
-msgstr "Σφαιρικό"
+msgstr "Σφαιρικός"
 
 #: ../plug-ins/common/bump-map.c:843 ../plug-ins/flame/flame.c:748
 #: ../plug-ins/lighting/lighting-ui.c:847
 msgid "Sinusoidal"
-msgstr "Ημιτονοειδές"
+msgstr "Ημιτονοειδής"
 
 #: ../plug-ins/common/bump-map.c:850
 msgid "_Map type:"
-msgstr "Τύ_πος απεικόνισης:"
+msgstr "Τύ_πος χάρτη:"
 
 #. Compensate darkening
 #: ../plug-ins/common/bump-map.c:855
@@ -927,7 +924,7 @@ msgstr "Αντιστάθ_μηση σκοτεινιάσματος"
 #. Invert bumpmap
 #: ../plug-ins/common/bump-map.c:869
 msgid "I_nvert bumpmap"
-msgstr "Α_ντιστροφή απεικόνισης ανάγλυφου"
+msgstr "Α_ντιστροφή χάρτη ανάγλυφου"
 
 #
 #. Tile bumpmap
@@ -1025,7 +1022,7 @@ msgstr "Πράσινο"
 #: ../plug-ins/common/channel-mixer.c:549 ../plug-ins/common/decompose.c:176
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1075
 msgid "Blue"
-msgstr "Μπλε"
+msgstr "Γαλάζιο"
 
 #
 #: ../plug-ins/common/channel-mixer.c:584
@@ -1052,7 +1049,7 @@ msgstr "_Πράσινο:"
 #: ../plug-ins/common/diffraction.c:562 ../plug-ins/common/diffraction.c:600
 #: ../plug-ins/common/noise-rgb.c:535 ../plug-ins/common/noise-rgb.c:542
 msgid "_Blue:"
-msgstr "_Μπλε:"
+msgstr "_Γαλάζιο:"
 
 #: ../plug-ins/common/channel-mixer.c:637
 msgid "_Monochrome"
@@ -1162,7 +1159,7 @@ msgstr "_Μέγεθος:"
 
 #: ../plug-ins/common/checkerboard.c:422
 msgid "_Psychobilly"
-msgstr "_Psychobilly"
+msgstr "_Ψυχεδέλεια"
 
 #: ../plug-ins/common/cml-explorer.c:129
 msgid "Keep image's values"
@@ -1222,7 +1219,7 @@ msgstr "sin^p, κλιμακωμένη"
 #| msgid "None"
 msgctxt "cml-composition"
 msgid "None"
-msgstr "Κανένα"
+msgstr "Καμία"
 
 #: ../plug-ins/common/cml-explorer.c:167
 msgid "Max (x, -)"
@@ -1352,15 +1349,15 @@ msgstr "Τυχαίο, ανεξάρτητο καναλιού"
 #
 #: ../plug-ins/common/cml-explorer.c:230
 msgid "Random shared"
-msgstr "Τυχαίος διαμοιρασμός"
+msgstr "Τυχαίος μερισμός"
 
 #: ../plug-ins/common/cml-explorer.c:231
 msgid "Randoms from seed"
-msgstr "Τυχαία από τον αρχικό αριθμό"
+msgstr "Τυχαία από σπόρο"
 
 #: ../plug-ins/common/cml-explorer.c:232
 msgid "Randoms from seed (shared)"
-msgstr "Τυχαία από τον αρχικό αριθμό (κοινός)"
+msgstr "Τυχαία από σπόρο (κοινό)"
 
 #
 #: ../plug-ins/common/cml-explorer.c:300 ../plug-ins/common/cml-explorer.c:308
@@ -1393,27 +1390,27 @@ msgstr "Δημιουργία περίληψης μοτίβων πλέγματο�
 
 #: ../plug-ins/common/cml-explorer.c:471
 msgid "CML _Explorer..."
-msgstr "_Εξερευνητής CML..."
+msgstr "_Περιηγητής CML..."
 
 #: ../plug-ins/common/cml-explorer.c:761
 msgid "CML Explorer: evoluting"
-msgstr "Εξερευνητής CML: εξέλιξη"
+msgstr "Περιηγητής CML: εξέλιξη"
 
 #: ../plug-ins/common/cml-explorer.c:1182
 msgid "Coupled-Map-Lattice Explorer"
-msgstr "Εξερευνητής πλέγματος συζευγμένης απεικόνισης"
+msgstr "Περιηγητής πλέγματος συζευγμένης απεικόνισης"
 
 #: ../plug-ins/common/cml-explorer.c:1229
 msgid "New Seed"
-msgstr "Νέος αριθμός"
+msgstr "Νέος σπόρος"
 
 #: ../plug-ins/common/cml-explorer.c:1240
 msgid "Fix Seed"
-msgstr "Καθορισμός αριθμού"
+msgstr "Καθορισμός σπόρου"
 
 #: ../plug-ins/common/cml-explorer.c:1251
 msgid "Random Seed"
-msgstr "Τυχαίος αριθμός"
+msgstr "Τυχαίος σπόρος"
 
 #
 #: ../plug-ins/common/cml-explorer.c:1293 ../plug-ins/common/filter-pack.c:702
@@ -1433,7 +1430,7 @@ msgstr "_Τιμή"
 #
 #: ../plug-ins/common/cml-explorer.c:1305
 msgid "_Advanced"
-msgstr "Προχ_ωρημένο"
+msgstr "Προχ_ωρημένα"
 
 #: ../plug-ins/common/cml-explorer.c:1320
 msgid "Channel Independent Parameters"
@@ -1449,19 +1446,19 @@ msgstr "Κλιμάκωση εστίασης:"
 
 #: ../plug-ins/common/cml-explorer.c:1357
 msgid "Start offset:"
-msgstr "Μετατόπιση έναρξης:"
+msgstr "Αντιστάθμιση έναρξης:"
 
 #: ../plug-ins/common/cml-explorer.c:1366
 msgid "Seed of Random (only for \"From Seed\" Modes)"
-msgstr "Τυχαίος αριθμός (μόνο για καταστάσεις \"Από αριθμό\")"
+msgstr "Τυχαίος σπόρος (μόνο για καταστάσεις \"Από σπόρο\")"
 
 #: ../plug-ins/common/cml-explorer.c:1377 ../plug-ins/maze/maze-dialog.c:251
 msgid "Seed:"
-msgstr "Νέος αριθμός:"
+msgstr "Σπόρος:"
 
 #: ../plug-ins/common/cml-explorer.c:1390
 msgid "Switch to \"From seed\" With the Last Seed"
-msgstr "Μετάβαση στο \"από αριθμό\" με τον τελευταίο αριθμό"
+msgstr "Μετάβαση στο \"από σπόρο\" με τον τελευταίο σπόρο"
 
 #: ../plug-ins/common/cml-explorer.c:1402
 msgid ""
@@ -1470,10 +1467,10 @@ msgid ""
 "(this is the reason why image on drawable is different from preview), and "
 "(2) all mutation rates equal to zero."
 msgstr ""
-"Το κουμπί \"ρύθμιση αριθμού\" κάνει το ίδιο.\n"
+"Το κουμπί \"ρύθμιση σπόρου\" κάνει το ίδιο.\n"
 "Ο ίδιος αριθμός παράγει την ίδια εικόνα, εάν (1) τα πλάτη των εικόνων είναι "
 "τα ίδια (αυτή είναι η αιτία που η εικόνα στην σχεδίαση είναι διαφορετική από "
-"την προεπισκόπηση) και (2) όλοι οι λόγοι αλλαγής είναι μηδέν."
+"την προεπισκόπηση) και (2) όλοι οι λόγοι μετάλλαξης είναι μηδέν."
 
 #
 #: ../plug-ins/common/cml-explorer.c:1410
@@ -1519,7 +1516,7 @@ msgstr "Σύνθεση:"
 
 #: ../plug-ins/common/cml-explorer.c:1602
 msgid "Misc arrange:"
-msgstr "Ποικίλες τακτοποιήσεις:"
+msgstr "Διάφορες διευθετήσεις:"
 
 #: ../plug-ins/common/cml-explorer.c:1606
 msgid "Use cyclic range"
@@ -1535,7 +1532,7 @@ msgstr "Ευαισθησία περιβάλλοντος:"
 
 #: ../plug-ins/common/cml-explorer.c:1634
 msgid "Diffusion dist.:"
-msgstr "Απόσταση αρπαγής:"
+msgstr "Απόσταση διάχυσης:"
 
 #: ../plug-ins/common/cml-explorer.c:1643
 msgid "# of subranges:"
@@ -1567,11 +1564,11 @@ msgstr "Ευαισθησία καναλιών:"
 
 #: ../plug-ins/common/cml-explorer.c:1746
 msgid "Mutation rate:"
-msgstr "Λόγος μεταβολής:"
+msgstr "Λόγος αλλαγής:"
 
 #: ../plug-ins/common/cml-explorer.c:1756
 msgid "Mutation dist.:"
-msgstr "Απόσταση μεταβολής:"
+msgstr "Απόσταση αλλαγής:"
 
 #: ../plug-ins/common/cml-explorer.c:1849
 msgid "Graph of the Current Settings"
@@ -1615,12 +1612,12 @@ msgstr "Ανάλυση του συνόλου των χρωμάτων της ει
 
 #: ../plug-ins/common/color-cube-analyze.c:112
 msgid "Colorcube A_nalysis..."
-msgstr "Α_νάλυση χρωματικού χώρου..."
+msgstr "Α_νάλυση χρωματικού κύβου..."
 
 #: ../plug-ins/common/color-cube-analyze.c:200
 #: ../plug-ins/common/color-cube-analyze.c:356
 msgid "Colorcube Analysis"
-msgstr "Ανάλυση Colorcube"
+msgstr "Ανάλυση χρωματικού κύβου"
 
 #. output results
 #: ../plug-ins/common/color-cube-analyze.c:384
@@ -1649,12 +1646,12 @@ msgstr "Επέκταση χρωματικού κορεσμού για κάλυψ
 #
 #: ../plug-ins/common/color-enhance.c:80
 msgid "_Color Enhance"
-msgstr "Βε_λτιστοποίηση χρώματος"
+msgstr "Βε_λτίωση χρώματος"
 
 #
 #: ../plug-ins/common/color-enhance.c:114
 msgid "Color Enhance"
-msgstr "Βελτιστοποίηση χρώματος"
+msgstr "Βελτίωση χρώματος"
 
 #: ../plug-ins/common/color-exchange.c:122
 msgid "Swap one color with another"
@@ -1737,8 +1734,7 @@ msgstr "σε άλφα"
 
 #: ../plug-ins/common/colorify.c:102
 msgid "Replace all colors with shades of a specified color"
-msgstr ""
-"Αντικατάσταση όλων των χρωμάτων με αποχρώσεις του καθορισμένου χρώματος"
+msgstr "Αντικατάσταση όλων των χρωμάτων με αποχρώσεις του καθορισμένου χρώματος"
 
 #: ../plug-ins/common/colorify.c:108
 msgid "Colorif_y..."
@@ -1763,15 +1759,15 @@ msgstr "Χρωματισμός με προσαρμοσμένο χρώμα"
 
 #: ../plug-ins/common/colormap-remap.c:97
 msgid "Rearrange the colormap"
-msgstr "Αναδιάταξη του πίνακα χρωμάτων"
+msgstr "Αναδιάταξη του χρωματολογίου"
 
 #: ../plug-ins/common/colormap-remap.c:104
 msgid "R_earrange Colormap..."
-msgstr "_Αναδιάταξη του πίνακα χρωμάτων..."
+msgstr "_Αναδιάταξη του χρωματολογίου..."
 
 #: ../plug-ins/common/colormap-remap.c:116
 msgid "Swap two colors in the colormap"
-msgstr "Ανταλλαγή δύο χρωμάτων στον πίνακα χρωμάτων"
+msgstr "Ανταλλαγή δύο χρωμάτων στο χρωματολόγιο"
 
 #
 #: ../plug-ins/common/colormap-remap.c:123
@@ -1782,11 +1778,11 @@ msgstr "Αν_ταλλαγή χρωμάτων"
 #: ../plug-ins/common/colormap-remap.c:297
 #: ../plug-ins/common/colormap-remap.c:308
 msgid "Invalid remap array was passed to remap function"
-msgstr "Άκυρος πίνακας επαναπεικόνισης πέρασε στη συνάρτηση αναδιάταξης"
+msgstr "Άκυρος πίνακας επαναπεικόνισης πέρασε στη συνάρτηση επαναπεικόνισης"
 
 #: ../plug-ins/common/colormap-remap.c:332
 msgid "Rearranging the colormap"
-msgstr "Αναδιάταξη του πίνακα χρωμάτων"
+msgstr "Αναδιάταξη του χρωματολογίου"
 
 #: ../plug-ins/common/colormap-remap.c:481
 msgid "Sort on Hue"
@@ -1810,14 +1806,14 @@ msgstr "Επαναφορά διάταξης"
 
 #: ../plug-ins/common/colormap-remap.c:596
 msgid "Rearrange Colormap"
-msgstr "Αναδιάταξη του πίνακα χρωμάτων"
+msgstr "Αναδιάταξη του χρωματολογίου"
 
 #: ../plug-ins/common/colormap-remap.c:700
 msgid ""
 "Drag and drop colors to rearrange the colormap.  The numbers shown are the "
 "original indices.  Right-click for a menu with sort options."
 msgstr ""
-"Σύρσιμο και απόθεση χρωμάτων για αναδιάταξη του πίνακα χρωμάτων. Οι αριθμοί "
+"Σύρσιμο και απόθεση χρωμάτων για αναδιάταξη του χρωματολογίου. Οι αριθμοί "
 "που εμφανίζονται είναι οι αρχικοί δείκτες. Δεξί κλικ για ένα μενού με "
 "ταξινομημένες επιλογές."
 
@@ -1897,7 +1893,7 @@ msgstr "_Φωτεινότητα y470:"
 
 #: ../plug-ins/common/compose.c:253
 msgid "_Blueness cb470:"
-msgstr "Κ_υανό cb470:"
+msgstr "Γαλά_ζιο cb470:"
 
 #: ../plug-ins/common/compose.c:254
 msgid "_Redness cr470:"
@@ -1909,7 +1905,7 @@ msgstr "_Φωτεινότητα y709:"
 
 #: ../plug-ins/common/compose.c:261
 msgid "_Blueness cb709:"
-msgstr "Κ_υανό cb709:"
+msgstr "Γαλά_ζιο cb709:"
 
 #: ../plug-ins/common/compose.c:262
 msgid "_Redness cr709:"
@@ -1921,7 +1917,7 @@ msgstr "_Φωτεινότητα y470f:"
 
 #: ../plug-ins/common/compose.c:269
 msgid "_Blueness cb470f:"
-msgstr "Κ_υανό cb470f:"
+msgstr "Γαλά_ζιο cb470f:"
 
 #: ../plug-ins/common/compose.c:270
 msgid "_Redness cr470f:"
@@ -1933,7 +1929,7 @@ msgstr "_Φωτεινότητα y709f:"
 
 #: ../plug-ins/common/compose.c:277
 msgid "_Blueness cb709f:"
-msgstr "Κ_υανό cb709f:"
+msgstr "Γαλά_ζιο cb709f:"
 
 #: ../plug-ins/common/compose.c:278
 msgid "_Redness cr709f:"
@@ -1963,14 +1959,13 @@ msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
 msgstr ""
-"Μπορείτε να τρέξετε 'ανασύνθεση' εάν η ενεργή εικόνα παρήχθη αρχικά από "
+"Μπορείτε να τρέξετε 'ανασύνθεση' εάν η ενεργή εικόνα παράχθηκε αρχικά από "
 "'αποσύνθεση'."
 
 #: ../plug-ins/common/compose.c:512
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
 msgstr ""
-"Σφάλμα σάρωσης παρασίτου 'αποσύνθεση δεδομένων': εύρεση υπερβολικά λίγων "
-"στρώσεων"
+"Σφάλμα σάρωσης παρασίτου 'αποσύνθεση δεδομένων': εύρεση πολύ λίγων στρώσεων"
 
 #: ../plug-ins/common/compose.c:545
 #, c-format
@@ -2053,7 +2048,7 @@ msgstr "Κανονικοποίηση"
 
 #: ../plug-ins/common/contrast-retinex.c:156
 msgid "Enhance contrast using the Retinex method"
-msgstr "Βελτιστοποίηση αντίθεσης χρησιμοποιώντας τη μέθοδο ματόμυαλο"
+msgstr "Βελτίωση αντίθεσης χρησιμοποιώντας τη μέθοδο ματόμυαλου"
 
 #: ../plug-ins/common/contrast-retinex.c:166
 msgid "Retine_x..."
@@ -2065,7 +2060,7 @@ msgstr "Ματόμυαλο"
 
 #: ../plug-ins/common/contrast-retinex.c:285
 msgid "Retinex Image Enhancement"
-msgstr "Βελτιστοποίηση εικόνας ματόμυαλου"
+msgstr "Βελτίωση εικόνας ματόμυαλου"
 
 #: ../plug-ins/common/contrast-retinex.c:321
 msgid "Uniform"
@@ -2106,11 +2101,11 @@ msgstr "Επέκταση αντίθεσης εικόνας για κάλυψη �
 
 #: ../plug-ins/common/contrast-stretch-hsv.c:80
 msgid "Stretch _HSV"
-msgstr "Επιμήκυνση _HSV"
+msgstr "Επέκταση _HSV"
 
 #: ../plug-ins/common/contrast-stretch-hsv.c:115
 msgid "Auto-Stretching HSV"
-msgstr "Αυτόματη επιμήκυνση HSV"
+msgstr "Αυτόματη επέκταση HSV"
 
 #: ../plug-ins/common/contrast-stretch-hsv.c:191
 msgid "autostretch_hsv: cmap was NULL!  Quitting...\n"
@@ -2118,15 +2113,15 @@ msgstr "autostretch_hsv: cmap ήταν NULL!  Έξοδος...\n"
 
 #: ../plug-ins/common/contrast-stretch.c:67
 msgid "Stretch contrast to cover the maximum possible range"
-msgstr "Επέκταση αντίθεσης εικόνας για κάλυψη της μέγιστης δυνατής περιοχής"
+msgstr "Επέκταση αντίθεσης για κάλυψη της μέγιστης δυνατής περιοχής"
 
 #: ../plug-ins/common/contrast-stretch.c:78
 msgid "_Stretch Contrast"
-msgstr "Αντίθεση επιμήκυν_σης"
+msgstr "Επέκτα_ση αντίθεσης"
 
 #: ../plug-ins/common/contrast-stretch.c:112
 msgid "Auto-stretching contrast"
-msgstr "Αντίθεση αυτόματης επιμήκυνσης"
+msgstr "Αντίθεση αυτόματης επέκτασης"
 
 #: ../plug-ins/common/contrast-stretch.c:151
 msgid "c_astretch: cmap was NULL!  Quitting...\n"
@@ -2250,11 +2245,11 @@ msgstr "Αυτόματη περικοπή αχρησιμοποίητου χώρ�
 
 #: ../plug-ins/common/crop-zealous.c:89
 msgid "_Zealous Crop"
-msgstr "Έ_ξυπνη αποκοπή"
+msgstr "Έ_ξυπνη περικοπή"
 
 #: ../plug-ins/common/crop-zealous.c:137
 msgid "Zealous cropping"
-msgstr "Έξυπνη αποκοπή"
+msgstr "Έξυπνη περικοπή"
 
 #: ../plug-ins/common/crop-zealous.c:238
 msgid "Nothing to crop."
@@ -2262,7 +2257,7 @@ msgstr "Τίποτα για περικοπή."
 
 #: ../plug-ins/common/cubism.c:150
 msgid "Convert the image into randomly rotated square blobs"
-msgstr "Μετατροπή της εικόνας σε τυχαία περιστρεφόμενα τετράγωνες σταγόνες"
+msgstr "Μετατροπή της εικόνας σε τυχαία περιστρεφόμενες τετράγωνες σταγόνες"
 
 # Translation of "custom" sucks!  ("kata paraggelia"???  nah!)
 #: ../plug-ins/common/cubism.c:155
@@ -2276,12 +2271,12 @@ msgstr "Κυβισμός"
 
 #: ../plug-ins/common/cubism.c:306
 msgid "_Tile size:"
-msgstr "Μέ_γεθος πλακιδίου:"
+msgstr "Μέ_γεθος παράθεσης:"
 
 #
 #: ../plug-ins/common/cubism.c:319
 msgid "T_ile saturation:"
-msgstr "Κορεσμός πλακ_ιδίου:"
+msgstr "Κορεσμός παρά_θεσης:"
 
 #: ../plug-ins/common/cubism.c:330
 msgid "_Use background color"
@@ -2366,7 +2361,7 @@ msgstr "Ε_ξομάλυνση"
 #: ../plug-ins/common/curve-bend.c:1353 ../plug-ins/common/mosaic.c:729
 #: ../plug-ins/common/qbist.c:858 ../plug-ins/common/ripple.c:532
 msgid "_Antialiasing"
-msgstr "Εξ_ομάλυνση"
+msgstr "Εξ_ομάλυνση ακμών"
 
 #. The work_on_copy toggle
 #: ../plug-ins/common/curve-bend.c:1363
@@ -2380,16 +2375,16 @@ msgstr "Τροποποίηση καμπυλών"
 
 #: ../plug-ins/common/curve-bend.c:1401
 msgid "Curve for Border"
-msgstr "Καμπύλη για περίγραμμα"
+msgstr "Όριο καμπύλης"
 
 #
 #: ../plug-ins/common/curve-bend.c:1405
 msgid "_Upper"
-msgstr "_Ανώτερο"
+msgstr "_Πάνω"
 
 #: ../plug-ins/common/curve-bend.c:1406
 msgid "_Lower"
-msgstr "Κα_τώτερο"
+msgstr "_Κατω"
 
 #: ../plug-ins/common/curve-bend.c:1416
 msgid "Curve Type"
@@ -2397,12 +2392,12 @@ msgstr "Τύπος καμπύλης"
 
 #: ../plug-ins/common/curve-bend.c:1420
 msgid "Smoot_h"
-msgstr "Ο_μαλό"
+msgstr "Ο_μαλή"
 
 #
 #: ../plug-ins/common/curve-bend.c:1421
 msgid "_Free"
-msgstr "_Ελεύθερο"
+msgstr "_Ελεύθερη"
 
 #
 #. The Copy button
@@ -2422,7 +2417,7 @@ msgstr "_Καθρέπτης"
 
 #: ../plug-ins/common/curve-bend.c:1453
 msgid "Mirror the active curve to the other border"
-msgstr "Κατοπτρισμός της ενεργής καμπύλης σε άλλο περίγραμμα"
+msgstr "Κατοπτρισμός της ενεργής καμπύλης σε άλλο όριο"
 
 #. The Swap button
 #: ../plug-ins/common/curve-bend.c:1461
@@ -2468,7 +2463,7 @@ msgstr "πράσινο"
 #: ../plug-ins/common/decompose.c:172 ../plug-ins/common/decompose.c:176
 #: ../plug-ins/common/decompose.c:180
 msgid "blue"
-msgstr "μπλε"
+msgstr "γαλάζιο"
 
 #: ../plug-ins/common/decompose.c:181 ../plug-ins/common/decompose.c:221
 msgid "alpha"
@@ -2517,7 +2512,7 @@ msgstr "κυανό"
 
 #: ../plug-ins/common/decompose.c:203 ../plug-ins/common/decompose.c:207
 msgid "magenta"
-msgstr "μωβ"
+msgstr "ματζέντα"
 
 #: ../plug-ins/common/decompose.c:204 ../plug-ins/common/decompose.c:208
 msgid "yellow"
@@ -2529,7 +2524,7 @@ msgstr "Κυανό"
 
 #: ../plug-ins/common/decompose.c:207
 msgid "Magenta"
-msgstr "Μωβ"
+msgstr "Ματζέντα"
 
 #: ../plug-ins/common/decompose.c:208
 msgid "Yellow"
@@ -2557,7 +2552,7 @@ msgstr "Κυανό_K"
 
 #: ../plug-ins/common/decompose.c:217
 msgid "Magenta_K"
-msgstr "ματζέντα_K"
+msgstr "Ματζέντα_K"
 
 #: ../plug-ins/common/decompose.c:218
 msgid "Yellow_K"
@@ -2569,51 +2564,51 @@ msgstr "Άλφα"
 
 #: ../plug-ins/common/decompose.c:229
 msgid "luma-y470"
-msgstr "Φωτεινότητα-y470"
+msgstr "φωτεινότητα-y470"
 
 #: ../plug-ins/common/decompose.c:230
 msgid "blueness-cb470"
-msgstr "Κυανό-cb470"
+msgstr "γαλάζιο-cb470"
 
 #: ../plug-ins/common/decompose.c:231
 msgid "redness-cr470"
-msgstr "Ερυθρότητα-cr470"
+msgstr "ερυθρότητα-cr470"
 
 #: ../plug-ins/common/decompose.c:233
 msgid "luma-y709"
-msgstr "Φωτεινότητα-y709"
+msgstr "φωτεινότητα-y709"
 
 #: ../plug-ins/common/decompose.c:234
 msgid "blueness-cb709"
-msgstr "Κυανό-cb709"
+msgstr "γαλάζιο-cb709"
 
 #: ../plug-ins/common/decompose.c:235
 msgid "redness-cr709"
-msgstr "Ερυθρότητα-cr709"
+msgstr "ερυθρότητα-cr709"
 
 #: ../plug-ins/common/decompose.c:237
 msgid "luma-y470f"
-msgstr "Φωτεινότητα-y470f"
+msgstr "φωτεινότητα-y470f"
 
 #: ../plug-ins/common/decompose.c:238
 msgid "blueness-cb470f"
-msgstr "Κυανό-cb470f"
+msgstr "γαλάζιο-cb470f"
 
 #: ../plug-ins/common/decompose.c:239
 msgid "redness-cr470f"
-msgstr "Ερυθρότητα-cr470f"
+msgstr "ερυθρότητα-cr470f"
 
 #: ../plug-ins/common/decompose.c:241
 msgid "luma-y709f"
-msgstr "Φωτεινότητα-y709f"
+msgstr "φωτεινότητα-y709f"
 
 #: ../plug-ins/common/decompose.c:242
 msgid "blueness-cb709f"
-msgstr "Κυανό-cb709f"
+msgstr "γαλάζιο-cb709f"
 
 #: ../plug-ins/common/decompose.c:243
 msgid "redness-cr709f"
-msgstr "Ερυθρότητα-cr709f"
+msgstr "ερυθρότητα-cr709f"
 
 #: ../plug-ins/common/decompose.c:312 ../plug-ins/common/decompose.c:326
 msgid "Decompose an image into separate colorspace components"
@@ -2842,7 +2837,7 @@ msgstr "Άλλες επιλογές"
 
 #: ../plug-ins/common/displace.c:142
 msgid "_X displacement"
-msgstr "Μετατόπιση  _Χ"
+msgstr "Μετατόπιση _Χ"
 
 #: ../plug-ins/common/displace.c:142
 msgid "_Pinch"
@@ -2878,7 +2873,7 @@ msgstr "Μετατόπιση"
 #. X options
 #: ../plug-ins/common/displace.c:363
 msgid "_X displacement:"
-msgstr "Μετατόπιση  _Χ:"
+msgstr "Μετατόπιση _Χ:"
 
 #. Y Options
 #: ../plug-ins/common/displace.c:412
@@ -2917,7 +2912,7 @@ msgstr "Ανίχνευση άκρης με έλεγχο πάχους άκρης"
 
 #: ../plug-ins/common/edge-dog.c:142
 msgid "_Difference of Gaussians..."
-msgstr "_Διαφορά Gauss..."
+msgstr "_Διαφορά Γκάους..."
 
 #: ../plug-ins/common/edge-dog.c:245 ../plug-ins/common/edge-dog.c:302
 msgid "DoG Edge Detect"
@@ -2959,7 +2954,7 @@ msgstr "Καθαρισμός"
 
 #: ../plug-ins/common/edge-neon.c:134
 msgid "Simulate the glowing boundary of a neon light"
-msgstr "Προσομοίωση του λαμπερού ορίου του φωτός νέου"
+msgstr "Προσομοίωση του ορίου λάμψης του φωτός νέου"
 
 #: ../plug-ins/common/edge-neon.c:139
 msgid "_Neon..."
@@ -3072,7 +3067,7 @@ msgstr "Συνάρτηση"
 #
 #: ../plug-ins/common/emboss.c:480
 msgid "_Bumpmap"
-msgstr "Απεικόνιση ανάγλ_υφου"
+msgstr "Χάρτης ανά_γλυφου"
 
 #: ../plug-ins/common/emboss.c:481
 msgid "_Emboss"
@@ -3683,7 +3678,8 @@ msgstr "Αδυναμία αποκωδικοποίησης '%s'."
 #, c-format
 msgid "The image '%s' is in grayscale but does not contain any gray component."
 msgstr ""
-"Η εικόνα '%s' είναι σε γκρι κλίμακα, αλλά δεν περιέχει κανένα γκρι συστατικό."
+"Η εικόνα '%s' είναι σε γκρι κλίμακα, αλλά δεν περιέχει κανένα γκρι "
+"συστατικό."
 
 #: ../plug-ins/common/file-jp2-load.c:261
 #, c-format
@@ -3848,7 +3844,7 @@ msgstr "Επιλογές κινούμενου MNG"
 
 #: ../plug-ins/common/file-mng.c:1512
 msgid "Loop"
-msgstr "Βρόχος"
+msgstr "Βρόγχος"
 
 #: ../plug-ins/common/file-mng.c:1526
 msgid "Default frame delay:"
@@ -4570,7 +4566,7 @@ msgstr "Αδυναμία ανάγνωσης εισόδων χρωμάτων απ
 
 #: ../plug-ins/common/file-sunras.c:450
 msgid "Type of colormap not supported"
-msgstr "Ο τύπος του πίνακα χρωμάτων δεν υποστηρίζεται"
+msgstr "Ο τύπος του χρωματολογίου δεν υποστηρίζεται"
 
 #: ../plug-ins/common/file-sunras.c:457 ../plug-ins/common/file-xbm.c:827
 #: ../plug-ins/common/file-xwd.c:489
@@ -5335,7 +5331,7 @@ msgstr "Σύνθεση εικόνων"
 #: ../plug-ins/common/film.c:423 ../plug-ins/common/guillotine.c:215
 #: ../plug-ins/help-browser/dialog.c:1132
 msgid "Untitled"
-msgstr "Χωρίς τίτλο"
+msgstr "Άτιτλο"
 
 #: ../plug-ins/common/film.c:878
 msgid "Available images:"
@@ -5460,7 +5456,7 @@ msgstr "Πράσινο:"
 #: ../plug-ins/common/filter-pack.c:222
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:975
 msgid "Blue:"
-msgstr "Μπλε:"
+msgstr "Γαλάζιο:"
 
 #: ../plug-ins/common/filter-pack.c:223
 msgid "Cyan:"
@@ -5472,11 +5468,11 @@ msgstr "Κίτρινο:"
 
 #: ../plug-ins/common/filter-pack.c:225
 msgid "Magenta:"
-msgstr "Μωβ:"
+msgstr "Ματζέντα:"
 
 #: ../plug-ins/common/filter-pack.c:227
 msgid "Darker:"
-msgstr "Πιο σκούρο:"
+msgstr "Πιο σκοτεινό:"
 
 #: ../plug-ins/common/filter-pack.c:228
 msgid "Lighter:"
@@ -5763,7 +5759,7 @@ msgstr "Λαιμητόμος"
 
 #: ../plug-ins/common/hot.c:207
 msgid "Find and fix pixels that may be unsafely bright"
-msgstr "Εύρεση και καθορισμός εικονοστοιχείων που ίσως είναι επισφαλώς λαμπρά"
+msgstr "Εύρεση και καθορισμός εικονοστοιχείων που ίσως είναι επισφαλώς φωτεινά"
 
 #
 #: ../plug-ins/common/hot.c:217
@@ -5879,7 +5875,7 @@ msgstr "_Μετακίνηση"
 
 #: ../plug-ins/common/iwarp.c:1117
 msgid "_Grow"
-msgstr "Αύ_ξηση"
+msgstr "Ε_πέκταση"
 
 #: ../plug-ins/common/iwarp.c:1118
 msgid "S_wirl CCW"
@@ -5892,7 +5888,7 @@ msgstr "Α_φαίρεση"
 
 #: ../plug-ins/common/iwarp.c:1120
 msgid "S_hrink"
-msgstr "Σμίκρυνσ_η"
+msgstr "Συρρίκνωσ_η"
 
 #: ../plug-ins/common/iwarp.c:1121
 msgid "Sw_irl CW"
@@ -5905,7 +5901,7 @@ msgstr "Ακτί_να παραμόρφωσης:"
 
 #: ../plug-ins/common/iwarp.c:1160
 msgid "D_eform amount:"
-msgstr "Πο_σό παραμόρφωσης:"
+msgstr "Πο_σότητα παραμόρφωσης:"
 
 #: ../plug-ins/common/iwarp.c:1169
 msgid "_Bilinear"
@@ -5961,7 +5957,7 @@ msgstr "Οδοντωτό"
 
 #: ../plug-ins/common/jigsaw.c:2423
 msgid "Number of Tiles"
-msgstr "Αριθμός πλακιδίων"
+msgstr "Αριθμός παραθέσεων"
 
 #: ../plug-ins/common/jigsaw.c:2438
 msgid "Number of pieces going across"
@@ -6048,7 +6044,7 @@ msgstr "Πληροφορίες χρωματικής κατατομής"
 #: ../plug-ins/common/lcms.c:572
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
-msgstr "Χρωματική κατατομή '%s' δεν είναι για το χρωματικό χώρο RGB."
+msgstr "Η χρωματική κατατομή '%s' δεν είναι για το χρωματικό χώρο RGB."
 
 #: ../plug-ins/common/lcms.c:679
 msgid "Default RGB working space"
@@ -6211,7 +6207,7 @@ msgstr "Παραμόρφωση φακών"
 
 #: ../plug-ins/common/lens-distortion.c:518
 msgid "_Main:"
-msgstr "_Κύριο:"
+msgstr "_Κύρια:"
 
 #: ../plug-ins/common/lens-distortion.c:532
 msgid "_Edge:"
@@ -6223,7 +6219,7 @@ msgstr "Εστία_ση:"
 
 #: ../plug-ins/common/lens-distortion.c:560
 msgid "_Brighten:"
-msgstr "_Λαμπρότητα:"
+msgstr "_Φωτεινότητα:"
 
 #: ../plug-ins/common/lens-distortion.c:574
 msgid "_X shift:"
@@ -6306,7 +6302,7 @@ msgstr "Αδυναμία εκκίνησης αποστολής μηνύματο�
 
 #: ../plug-ins/common/max-rgb.c:90
 msgid "Reduce image to pure red, green, and blue"
-msgstr "Αναγωγή εικόνας σε καθαρό κόκκινο, πράσινο και μπλε"
+msgstr "Αναγωγή εικόνας σε καθαρό κόκκινο, πράσινο και γαλάζιο"
 
 #: ../plug-ins/common/max-rgb.c:95
 msgid "Maxim_um RGB..."
@@ -6348,7 +6344,7 @@ msgstr "Εύρεση άκρων"
 #. Progress bar for rendering tiles
 #: ../plug-ins/common/mosaic.c:557
 msgid "Rendering tiles"
-msgstr "Απόδοση πλακιδίων"
+msgstr "Απόδοση παραθέσεων"
 
 #: ../plug-ins/common/mosaic.c:590
 msgid "Mosaic"
@@ -6376,19 +6372,19 @@ msgstr "Παράθεση αρχέ_τυπων:"
 
 #: ../plug-ins/common/mosaic.c:650
 msgid "Tile _size:"
-msgstr "Μέγε_θος πλακιδίου:"
+msgstr "Μέγε_θος παράθεσης:"
 
 #: ../plug-ins/common/mosaic.c:662 ../plug-ins/common/tile-glass.c:304
 msgid "Tile _height:"
-msgstr "Ύ_ψος πλακιδίου:"
+msgstr "Ύ_ψος παράθεσης:"
 
 #: ../plug-ins/common/mosaic.c:675
 msgid "Til_e spacing:"
-msgstr "Διάκ_ενο πλακιδίου:"
+msgstr "Διάκ_ενο παράθεσης:"
 
 #: ../plug-ins/common/mosaic.c:687
 msgid "Tile _neatness:"
-msgstr "Τά_ξη πλακιδίων:"
+msgstr "Τά_ξη παράθεσης:"
 
 #: ../plug-ins/common/mosaic.c:700
 msgid "Light _direction:"
@@ -6408,7 +6404,7 @@ msgstr "Ά_δεια διαίρεσης παράθεσης"
 
 #: ../plug-ins/common/mosaic.c:767
 msgid "_Pitted surfaces"
-msgstr "Βα_θουλωμένες επιφάνειες"
+msgstr "Κοί_λες επιφάνειες"
 
 #: ../plug-ins/common/mosaic.c:780
 msgid "_FG/BG lighting"
@@ -6565,7 +6561,7 @@ msgstr "Βέλ_τιστη εκτίμηση"
 
 #: ../plug-ins/common/nl-filter.c:1054
 msgid "_Edge enhancement"
-msgstr "Β_ελτιστοποίηση άκρης"
+msgstr "Β_ελτίωση άκρης"
 
 #: ../plug-ins/common/nl-filter.c:1079
 msgid "A_lpha:"
@@ -6573,7 +6569,7 @@ msgstr "Ά_λφα:"
 
 #: ../plug-ins/common/noise-hsv.c:103
 msgid "Randomize hue/saturation/value independently"
-msgstr "Ανεξάρτητη τυχαιοποίηση απόχρωσης/κορεσμού/τιμής"
+msgstr "Ανεξάρτητη τυχαία σειρά απόχρωσης/κορεσμού/τιμής"
 
 #
 #: ../plug-ins/common/noise-hsv.c:108
@@ -6595,7 +6591,7 @@ msgstr "Από_χρωση:"
 
 #: ../plug-ins/common/noise-randomize.c:102
 msgid "Random Hurl"
-msgstr "Τυχαία εκπομπή"
+msgstr "Τυχαία ρίψη"
 
 #: ../plug-ins/common/noise-randomize.c:103
 msgid "Random Pick"
@@ -6603,11 +6599,11 @@ msgstr "Τυχαία επιλογή"
 
 #: ../plug-ins/common/noise-randomize.c:104
 msgid "Random Slur"
-msgstr "Τυχαία ανάμειξη"
+msgstr "Τυχαία σύντηξη"
 
 #: ../plug-ins/common/noise-randomize.c:202
 msgid "Completely randomize a fraction of pixels"
-msgstr "Πλήρης τυχαιοποίηση ενός κλάσματος εικονοστοιχείων"
+msgstr "Πλήρης τυχαία σειρά ενός κλάσματος εικονοστοιχείων"
 
 #: ../plug-ins/common/noise-randomize.c:204
 msgid "Randomly interchange some pixels with neighbors"
@@ -6621,7 +6617,7 @@ msgstr ""
 
 #: ../plug-ins/common/noise-randomize.c:233
 msgid "_Hurl..."
-msgstr "Εκπ_ομπή..."
+msgstr "_Ρίψη..."
 
 #: ../plug-ins/common/noise-randomize.c:245
 msgid "_Pick..."
@@ -6630,16 +6626,16 @@ msgstr "Ε_πιλογή..."
 #
 #: ../plug-ins/common/noise-randomize.c:257
 msgid "_Slur..."
-msgstr "Ανάμει_ξη..."
+msgstr "_Σύντηξη..."
 
 #: ../plug-ins/common/noise-randomize.c:769
 #: ../plug-ins/common/noise-solid.c:603
 msgid "_Random seed:"
-msgstr "Τυχαίος α_ριθμός:"
+msgstr "Τυχαίος σπό_ρος:"
 
 #: ../plug-ins/common/noise-randomize.c:778
 msgid "R_andomization (%):"
-msgstr "Τυχ_αιοποίηση (%):"
+msgstr "Τυχ_αιότητα (%):"
 
 #: ../plug-ins/common/noise-randomize.c:781
 msgid "Percentage of pixels to be filtered"
@@ -6695,13 +6691,13 @@ msgstr "Δημιουργία μιας τυχαίας συννεφώδους υφ
 #
 #: ../plug-ins/common/noise-solid.c:182
 msgid "_Solid Noise..."
-msgstr "_Στέρεος θόρυβος..."
+msgstr "_Συμπαγής θόρυβος..."
 
 #
 #. Dialog initialization
 #: ../plug-ins/common/noise-solid.c:315 ../plug-ins/common/noise-solid.c:563
 msgid "Solid Noise"
-msgstr "Στέρεος θόρυβος"
+msgstr "Συμπαγής θόρυβος"
 
 #: ../plug-ins/common/noise-solid.c:616
 msgid "_Detail:"
@@ -6743,7 +6739,7 @@ msgstr "Διασπορά"
 
 #: ../plug-ins/common/noise-spread.c:370
 msgid "Spread Amount"
-msgstr "Ποσό διασποράς"
+msgstr "Ποσότητα διασποράς"
 
 #: ../plug-ins/common/nova.c:163
 msgid "Add a starburst to the image"
@@ -6775,7 +6771,7 @@ msgstr "Τυχ_αία απόχρωση:"
 
 #: ../plug-ins/common/nova.c:437
 msgid "Center of Nova"
-msgstr "Κέντρο του υπερκαινοφανούς"
+msgstr "Κέντρο του καινοφανούς"
 
 #: ../plug-ins/common/oilify.c:119 ../plug-ins/common/oilify.c:134
 msgid "Smear colors to simulate an oil painting"
@@ -6855,7 +6851,7 @@ msgstr "Απλοποίηση εικόνας σε έναν πίνακα τετρ�
 
 #: ../plug-ins/common/pixelize.c:171
 msgid "_Pixelize..."
-msgstr "Εικονοστοιχείο_ποίηση..."
+msgstr "Εικονοστοιχεί_ωση..."
 
 #: ../plug-ins/common/pixelize.c:273
 msgid "Pixelizing"
@@ -6864,7 +6860,7 @@ msgstr "Εικονοστοιχειοποίηση"
 #
 #: ../plug-ins/common/pixelize.c:316
 msgid "Pixelize"
-msgstr "Εικονοστοιχειοποίηση"
+msgstr "Εικονοστοιχείωση"
 
 #
 #: ../plug-ins/common/pixelize.c:353
@@ -6889,7 +6885,7 @@ msgstr "Πλάσμα"
 
 #: ../plug-ins/common/plasma.c:338
 msgid "Random _seed:"
-msgstr "Τυχ_αίος αριθμός:"
+msgstr "Τυχ_αίος σπόρος:"
 
 #: ../plug-ins/common/plasma.c:349
 msgid "T_urbulence:"
@@ -6933,7 +6929,7 @@ msgstr "Χωρίς ταυτοποίηση"
 #
 #: ../plug-ins/common/plugin-browser.c:546
 msgid "Plug-In Browser"
-msgstr "Εξερευνητής πρόσθετου"
+msgstr "Περιηγητής πρόσθετου"
 
 #
 #: ../plug-ins/common/plugin-browser.c:589
@@ -6990,7 +6986,7 @@ msgstr "Γωνί_α μετατόπισης:"
 
 #: ../plug-ins/common/polar-coords.c:659
 msgid "_Map backwards"
-msgstr "Χά_ρτης προς τα πίσω"
+msgstr "Απεικό_νιση προς τα πίσω"
 
 #: ../plug-ins/common/polar-coords.c:665
 msgid ""
@@ -7002,7 +6998,7 @@ msgstr ""
 
 #: ../plug-ins/common/polar-coords.c:676
 msgid "Map from _top"
-msgstr "Χάρ_της από την κορυφή"
+msgstr "Απεικόνι_ση από πάνω"
 
 #: ../plug-ins/common/polar-coords.c:682
 msgid ""
@@ -7128,7 +7124,7 @@ msgstr "Τύπος κύματος"
 
 #: ../plug-ins/common/ripple.c:614
 msgid "Saw_tooth"
-msgstr "Δόν_τι πριονιού"
+msgstr "Πριονω_τό"
 
 #: ../plug-ins/common/ripple.c:615
 msgid "S_ine"
@@ -7434,7 +7430,7 @@ msgstr "Ρυθμίσεις υπολογισμού"
 
 #: ../plug-ins/common/sinus.c:742
 msgid "R_andom seed:"
-msgstr "Τυχαίος _αριθμός:"
+msgstr "Τυχαίος _σπόρος:"
 
 #
 #: ../plug-ins/common/sinus.c:751
@@ -7518,7 +7514,7 @@ msgstr "_Ημιτονοειδές"
 #
 #: ../plug-ins/common/sinus.c:933
 msgid "_Blend"
-msgstr "_Ανάμιξη"
+msgstr "_Ανάμειξη"
 
 #
 #: ../plug-ins/common/sinus.c:1050
@@ -7547,16 +7543,16 @@ msgstr "Βά_θος αναζήτησης:"
 
 #: ../plug-ins/common/softglow.c:134
 msgid "Simulate glow by making highlights intense and fuzzy"
-msgstr "Προσομοίωση πυράκτωσης τονίζοντας ένταση και ασάφεια"
+msgstr "Προσομοίωση λάμψης τονίζοντας ένταση και ασάφεια"
 
 #
 #: ../plug-ins/common/softglow.c:139
 msgid "_Softglow..."
-msgstr "Ή_πια λάμψη..."
+msgstr "Α_παλή λάμψη..."
 
 #: ../plug-ins/common/softglow.c:633
 msgid "Softglow"
-msgstr "Ήπια πυράκτωση"
+msgstr "Απαλή λάμψη"
 
 #
 #: ../plug-ins/common/softglow.c:671
@@ -7565,7 +7561,7 @@ msgstr "Α_κτίνα λάμψης:"
 
 #: ../plug-ins/common/sparkle.c:178
 msgid "Turn bright spots into starry sparkles"
-msgstr "Μετατροπή λαμπερών σημείων σε έναστρους σπινθηρισμούς"
+msgstr "Μετατροπή φωτεινών σημείων σε έναστρους σπινθηρισμούς"
 
 #: ../plug-ins/common/sparkle.c:186
 msgid "_Sparkle..."
@@ -7594,11 +7590,11 @@ msgstr "Ρύθμιση κατωφλίου φωτεινότητας"
 
 #: ../plug-ins/common/sparkle.c:387
 msgid "F_lare intensity:"
-msgstr "Ένταση _λάμψης:"
+msgstr "Ένταση ανα_λαμπής:"
 
 #: ../plug-ins/common/sparkle.c:390
 msgid "Adjust the flare intensity"
-msgstr "Ρύθμιση της έντασης λάμψης"
+msgstr "Ρύθμιση της έντασης αναλαμπής"
 
 #: ../plug-ins/common/sparkle.c:400
 msgid "_Spike length:"
@@ -7751,7 +7747,7 @@ msgstr "Υφή"
 #
 #: ../plug-ins/common/sphere-designer.c:1751
 msgid "Bumpmap"
-msgstr "Απεικόνιση ανάγλυφου"
+msgstr "Χάρτης ανάγλυφου"
 
 #: ../plug-ins/common/sphere-designer.c:1753
 #: ../plug-ins/common/sphere-designer.c:2707
@@ -7913,25 +7909,26 @@ msgstr "Κατώφλι:"
 
 #: ../plug-ins/common/tile-glass.c:124
 msgid "Simulate distortion caused by square glass tiles"
-msgstr "Προσομοίωση παραμόρφωσης που προκλήθηκε από τετράγωνα γυάλινα πλακίδια"
+msgstr ""
+"Προσομοίωση παραμόρφωσης που προκλήθηκε από τετράγωνες γυάλινες παραθέσεις"
 
 #: ../plug-ins/common/tile-glass.c:130
 msgid "_Glass Tile..."
-msgstr "Πλακίδιο _γυαλιού..."
+msgstr "Παράθεση _γυαλιού..."
 
 #
 #: ../plug-ins/common/tile-glass.c:210 ../plug-ins/common/tile-glass.c:250
 msgid "Glass Tile"
-msgstr "Πλακίδιο γυαλιού"
+msgstr "Παράθεση γυαλιού"
 
 #
 #: ../plug-ins/common/tile-glass.c:290
 msgid "Tile _width:"
-msgstr "_Πλάτος πλακιδίου:"
+msgstr "_Πλάτος παράθεσης:"
 
 #: ../plug-ins/common/tile-paper.c:243 ../plug-ins/common/tile-paper.c:557
 msgid "Paper Tile"
-msgstr "Πλακίδιο χαρτιού"
+msgstr "Παράθεση χαρτιού"
 
 #: ../plug-ins/common/tile-paper.c:270
 msgid "Division"
@@ -7999,7 +7996,7 @@ msgstr "_Επιλογή εδώ:"
 
 #: ../plug-ins/common/tile-paper.c:402
 msgid "Background Color"
-msgstr "Χρώμα Φόντου"
+msgstr "Χρώμα παρασκηνίου"
 
 #: ../plug-ins/common/tile-paper.c:848
 msgid "Cut image into paper tiles, and slide them"
@@ -8011,7 +8008,7 @@ msgstr "31 Σεπτεμβρίου 1999"
 
 #: ../plug-ins/common/tile-paper.c:854
 msgid "_Paper Tile..."
-msgstr "_Πλακίδιο χαρτιού..."
+msgstr "_Παράθεση χαρτιού..."
 
 #: ../plug-ins/common/tile-seamless.c:66
 msgid "Alters edges to make the image seamlessly tileable"
@@ -8027,11 +8024,11 @@ msgstr "Παράθεση"
 
 #: ../plug-ins/common/tile-small.c:222
 msgid "Tile image into smaller versions of the original"
-msgstr "Παράθεση εικόνα σε πιο μικρές εκδόσεις της αρχικής"
+msgstr "Παράθεση εικόνας σε πιο μικρές εκδόσεις της αρχικής"
 
 #: ../plug-ins/common/tile-small.c:227
 msgid "_Small Tiles..."
-msgstr "Μι_κρά πλακίδια..."
+msgstr "Μι_κρές παραθέσεις..."
 
 #: ../plug-ins/common/tile-small.c:270
 msgid "Region selected for filter is empty."
@@ -8040,12 +8037,12 @@ msgstr "Η επιλεγμένη περιοχή για φίλτρο είναι κ
 #. Set the tile cache size
 #: ../plug-ins/common/tile-small.c:328 ../plug-ins/common/tile.c:185
 msgid "Tiling"
-msgstr "Πλακίδια"
+msgstr "Παραθέσεις"
 
 #. Get the preview image
 #: ../plug-ins/common/tile-small.c:371
 msgid "Small Tiles"
-msgstr "Μικρά πλακίδια"
+msgstr "Μικρές παραθέσεις"
 
 #. Area for buttons etc
 #. Flip
@@ -8056,12 +8053,12 @@ msgstr "Αναστροφή"
 
 #: ../plug-ins/common/tile-small.c:470
 msgid "A_ll tiles"
-msgstr "Ό_λα τα πλακίδια"
+msgstr "Ό_λες οι παραθέσεις"
 
 #
 #: ../plug-ins/common/tile-small.c:484
 msgid "Al_ternate tiles"
-msgstr "Εναλλακ_τικά πλακίδια"
+msgstr "Εναλλακ_τικές παραθέσεις"
 
 #: ../plug-ins/common/tile-small.c:498
 msgid "_Explicit tile"
@@ -8091,7 +8088,7 @@ msgstr "Δημιουργία ενός πίνακα αντιγράφων της �
 
 #: ../plug-ins/common/tile.c:111
 msgid "_Tile..."
-msgstr "_Πλακίδιο..."
+msgstr "_Παράθεση..."
 
 #: ../plug-ins/common/tile.c:397
 msgid "Tile"
@@ -8259,7 +8256,7 @@ msgstr "Η πιο πλατιά χρήσιμη μέθοδος για όξυνση
 
 #: ../plug-ins/common/unsharp-mask.c:141
 msgid "_Unsharp Mask..."
-msgstr "Από_ξυνση μάσκας..."
+msgstr "Μάσκα από_ξυνσης..."
 
 #: ../plug-ins/common/unsharp-mask.c:684
 msgid "Merging"
@@ -8267,12 +8264,12 @@ msgstr "Συγχώνευση"
 
 #: ../plug-ins/common/unsharp-mask.c:828
 msgid "Unsharp Mask"
-msgstr "Απόξυνση μάσκας"
+msgstr "Μάσκα απόξυνσης"
 
 #
 #: ../plug-ins/common/value-invert.c:89
 msgid "Invert the brightness of each pixel"
-msgstr "Αντιστροφή της λαμπρότητας κάθε εικονοστοιχείου"
+msgstr "Αντιστροφή της φωτεινότητας κάθε εικονοστοιχείου"
 
 #: ../plug-ins/common/value-invert.c:103
 msgid "_Value Invert"
@@ -8392,7 +8389,7 @@ msgstr "Διάδοση καναλιού τιμής"
 
 #: ../plug-ins/common/van-gogh-lic.c:569 ../plug-ins/common/van-gogh-lic.c:644
 msgid "Van Gogh (LIC)"
-msgstr "Van Gogh (LIC)"
+msgstr "Βαν Γκογκ (LIC)"
 
 #: ../plug-ins/common/van-gogh-lic.c:670
 msgid "Effect Channel"
@@ -8400,7 +8397,7 @@ msgstr "Εφέ καναλιού"
 
 #: ../plug-ins/common/van-gogh-lic.c:677
 msgid "_Brightness"
-msgstr "_Λαμπρότητα"
+msgstr "_Φωτεινότητα"
 
 #: ../plug-ins/common/van-gogh-lic.c:683
 msgid "Effect Operator"
@@ -8457,7 +8454,7 @@ msgstr "Ειδικά εφέ που δεν καταλαβαίνει κανένα�
 
 #: ../plug-ins/common/van-gogh-lic.c:818
 msgid "_Van Gogh (LIC)..."
-msgstr "_Van Gogh (LIC)..."
+msgstr "_Βαν Γκογκ (LIC)..."
 
 #
 #: ../plug-ins/common/video.c:42
@@ -8478,7 +8475,7 @@ msgstr "Πλατιά ραβδ_ωτό"
 
 #: ../plug-ins/common/video.c:46
 msgid "Lo_ng-staggered"
-msgstr "Μακρύ τρε_μούλιασμα"
+msgstr "Μακρύ τρε_μούλο"
 
 #: ../plug-ins/common/video.c:47
 msgid "_3x3"
@@ -8587,7 +8584,7 @@ msgstr "Προχωρημένες επιλογές"
 
 #: ../plug-ins/common/warp.c:553
 msgid "Dither size:"
-msgstr "Μέγεθος πρόσμιξης:"
+msgstr "Μέγεθος πρόσμειξης:"
 
 #: ../plug-ins/common/warp.c:566
 msgid "Rotation angle:"
@@ -8859,7 +8856,7 @@ msgstr "Ά_νεμος..."
 #
 #: ../plug-ins/common/wind.c:314
 msgid "Rendering blast"
-msgstr "Απόδοση έκρηξης"
+msgstr "Απόδοση ριπής"
 
 #
 #: ../plug-ins/common/wind.c:444
@@ -8883,7 +8880,7 @@ msgstr "Ά_νεμος"
 
 #: ../plug-ins/common/wind.c:924
 msgid "_Blast"
-msgstr "Φύ_σημα"
+msgstr "_Ριπή"
 
 #
 #: ../plug-ins/common/wind.c:947
@@ -8929,7 +8926,7 @@ msgstr "Υψηλότερες τιμές αυξάνουν το μέγεθος τ�
 
 #: ../plug-ins/file-bmp/bmp-read.c:85
 msgid "Bad colormap"
-msgstr "Λαθεμένος πίνακας χρωμάτων"
+msgstr "Λαθεμένο χρωματολόγιο"
 
 #: ../plug-ins/file-bmp/bmp-read.c:169 ../plug-ins/file-bmp/bmp-read.c:180
 #: ../plug-ins/file-bmp/bmp-read.c:187 ../plug-ins/file-bmp/bmp-read.c:196
@@ -9191,7 +9188,7 @@ msgstr "Σύμφωνα με τα δεδομένα EXIF, αυτή η εικόνα
 
 #: ../plug-ins/file-jpeg/jpeg-exif.c:426
 msgid "Would you like GIMP to rotate it into the standard orientation?"
-msgstr "Θα θέλατε το GIMP να το περιστρέψει σε κανονικό προσανατιλισμό;"
+msgstr "Θα θέλατε το GIMP να το περιστρέψει σε κανονικό προσανατολισμό;"
 
 #
 #: ../plug-ins/file-jpeg/jpeg-load.c:247
@@ -9727,7 +9724,7 @@ msgstr "_Ταχύτητα:"
 
 #: ../plug-ins/flame/flame.c:735
 msgid "_Randomize"
-msgstr "_Τυχαιοποίηση"
+msgstr "_Τυχαία σειρά"
 
 #: ../plug-ins/flame/flame.c:745
 msgid "Same"
@@ -9832,7 +9829,7 @@ msgstr "Θολό"
 
 #: ../plug-ins/flame/flame.c:775
 msgid "Gaussian"
-msgstr "Gauss"
+msgstr "Γκάους"
 
 #
 #: ../plug-ins/flame/flame.c:788
@@ -9905,7 +9902,7 @@ msgstr ""
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 msgid "Fractal Explorer"
-msgstr "Κλαστικός εξερευνητής"
+msgstr "Περιηγητής κλαστικού"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:637
 msgid "Realtime preview"
@@ -9969,7 +9966,7 @@ msgstr ""
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:782
 msgid "CX:"
-msgstr "ΚΧ:"
+msgstr "Οριζόντια:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:785
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:795
@@ -9978,7 +9975,7 @@ msgstr "Αλλαγή όψης κλαστικών"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:792
 msgid "CY:"
-msgstr "ΚΨ:"
+msgstr "Κάθετα:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:811
 msgid "Load a fractal from file"
@@ -10041,7 +10038,7 @@ msgstr "Αλλαγή του αριθμού χρωμάτων στην απεικ�
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:932
 msgid "Use loglog smoothing"
-msgstr "Χρήση εξομάλυνσης loglog"
+msgstr "Χρήση λογαριθμικής εξομάλυνσης"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:939
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
@@ -10062,7 +10059,7 @@ msgstr "Αλλαγή της έντασης του πράσινου καναλι�
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:978
 msgid "Change the intensity of the blue channel"
-msgstr "Αλλαγή της έντασης του μπλε καναλιού"
+msgstr "Αλλαγή της έντασης του γαλάζιου καναλιού"
 
 #
 #. Color Function frame
@@ -10155,7 +10152,7 @@ msgstr ""
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1170
 msgid "FractalExplorer Gradient"
-msgstr "Διαβάθμιση FractalExplorer"
+msgstr "Διαβάθμιση περιηγητή κλαστικού"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1200
 msgid "_Fractals"
@@ -10177,7 +10174,7 @@ msgstr "Αποθήκευση παραμέτρων κλαστικών"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1873
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
-msgstr "Το '%s' δεν είναι αρχείο FractalExplorer"
+msgstr "Το '%s' δεν είναι αρχείο περιηγητή κλαστικού"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1880
 #, c-format
@@ -10211,7 +10208,7 @@ msgstr "Διαγραφή κλαστικού"
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:947
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
-msgstr "Το αρχείο '%s' δεν είναι αρχείο FractalExplorer"
+msgstr "Το αρχείο '%s' δεν είναι αρχείο περιηγητή κλαστικού"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:957
 #, c-format
@@ -10334,15 +10331,15 @@ msgstr "Εμφάνιση πλέγματος"
 
 #: ../plug-ins/gfig/gfig-dialog.c:635
 msgid "Load Gfig Object Collection"
-msgstr "Φόρτωση συλλογής αντικειμένων Gfig"
+msgstr "Φόρτωση συλλογής αντικειμένων γεωμετρικών σχημάτων"
 
 #: ../plug-ins/gfig/gfig-dialog.c:684
 msgid "Save Gfig Drawing"
-msgstr "Αποθήκευση σχεδίου Gfig"
+msgstr "Αποθήκευση σχεδίου γεωμετρικών σχημάτων"
 
 #: ../plug-ins/gfig/gfig-dialog.c:848
 msgid "First Gfig"
-msgstr "Πρώτα Gfig"
+msgstr "Πρώτα γεωμετρικά σχήματα"
 
 #
 #: ../plug-ins/gfig/gfig-dialog.c:886
@@ -10497,7 +10494,7 @@ msgstr "Παρασκήνιο:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1342
 msgid "Feather"
-msgstr "Απάλυνση"
+msgstr "Άμβλυνση"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1365
 msgid "Radius:"
@@ -10544,7 +10541,7 @@ msgstr "Σκοτεινότερο"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1501
 msgid "Lighter"
-msgstr "Πιο ανοικτό"
+msgstr "Φωτεινότερο"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1502
 msgid "Very dark"
@@ -10618,7 +10615,7 @@ msgstr "Δημιουργία γεωμετρικών σχημάτων"
 
 #: ../plug-ins/gfig/gfig.c:133
 msgid "_Gfig..."
-msgstr "_Gfig..."
+msgstr "_Γεωμετρικά σχήματα..."
 
 #: ../plug-ins/gfig/gfig.c:734
 msgid ""
@@ -10653,7 +10650,7 @@ msgstr "Γάμα:"
 #
 #: ../plug-ins/gimpressionist/brush.c:558
 msgid "Changes the gamma (brightness) of the selected brush"
-msgstr "Αλλαγή του γάμα (λαμπρότητας) του επιλεγμένου πινέλου"
+msgstr "Αλλαγή του γάμα (φωτεινότητας) του επιλεγμένου πινέλου"
 
 #
 #: ../plug-ins/gimpressionist/brush.c:566
@@ -10860,7 +10857,7 @@ msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
 msgstr ""
-"Προσδιορισμός από την τιμή (λαμπρότητα) της περιοχής της κατεύθυνσης της "
+"Προσδιορισμός από την τιμή (φωτεινότητα) της περιοχής της κατεύθυνσης της "
 "πινελιάς"
 
 #: ../plug-ins/gimpressionist/orientation.c:159
@@ -10946,7 +10943,7 @@ msgstr ""
 #: ../plug-ins/gimpressionist/orientmap.c:588
 #: ../plug-ins/gimpressionist/sizemap.c:457
 msgid "Adjust the preview's brightness"
-msgstr "Ρύθμιση της λαμπρότητας προεπισκόπησης"
+msgstr "Ρύθμιση της φωτεινότητας προεπισκόπησης"
 
 #: ../plug-ins/gimpressionist/orientmap.c:611
 msgid "Select previous vector"
@@ -11125,7 +11122,7 @@ msgstr "Προεπιλογές ιμπρεσιονιστή Gimp"
 #
 #: ../plug-ins/gimpressionist/presets.c:1015
 msgid "_Presets"
-msgstr "_Προκαθορισμένα"
+msgstr "_Προρρυθμίσεις"
 
 #
 #: ../plug-ins/gimpressionist/presets.c:1030
@@ -11138,11 +11135,11 @@ msgstr "Αποθήκευση των τρεχουσών ρυθμίσεων για
 
 #: ../plug-ins/gimpressionist/presets.c:1066
 msgid "Reads the selected Preset into memory"
-msgstr "Ανάγνωση της επιλεγμένης προεπιλογής στη μνήμη"
+msgstr "Ανάγνωση της επιλεγμένης προρρύθμισης στη μνήμη"
 
 #: ../plug-ins/gimpressionist/presets.c:1072
 msgid "Deletes the selected Preset"
-msgstr "Διαγραφή της επιλεγμένης προεπιλογής"
+msgstr "Διαγραφή της επιλεγμένης προρρύθμισης"
 
 #: ../plug-ins/gimpressionist/presets.c:1078
 msgid "Reread the folder of Presets"
@@ -11200,7 +11197,7 @@ msgstr "Το μέγεθος εξαρτάται από:"
 #: ../plug-ins/gimpressionist/size.c:159
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
-msgstr "Η τιμή (λαμπρότητα) της περιοχής καθορίζει το μέγεθος της πινελιάς"
+msgstr "Η τιμή (φωτεινότητα) της περιοχής καθορίζει το μέγεθος της πινελιάς"
 
 #: ../plug-ins/gimpressionist/size.c:163
 msgid ""
@@ -11544,7 +11541,7 @@ msgstr "Νέο σάρωμα διαβαθμίσεων"
 #. Glow
 #: ../plug-ins/gradient-flare/gradient-flare.c:3447
 msgid "Glow Paint Options"
-msgstr "Επιλογές βαφής πυράκτωσης"
+msgstr "Επιλογές βαφής λάμψης"
 
 #
 #: ../plug-ins/gradient-flare/gradient-flare.c:3458
@@ -11614,7 +11611,7 @@ msgstr "Περιστροφή απόχρωσης:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3633
 msgid "G_low"
-msgstr "Π_υράκτωση"
+msgstr "Λ_άμψη"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3737
 msgid "# of Spikes:"
@@ -11655,7 +11652,7 @@ msgstr "Πολύγωνο"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3938
 msgid "Random seed:"
-msgstr "Τυχαίος αριθμός:"
+msgstr "Τυχαίος σπόρος:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3952
 msgid "_Second Flares"
@@ -11852,7 +11849,7 @@ msgstr "Κλαστικό IFS: πράσινο"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:711
 msgid "IFS Fractal: Blue"
-msgstr "Κλαστικό IFS: μπλε"
+msgstr "Κλαστικό IFS: γαλάζιο"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:719
 msgid "IFS Fractal: Black"
@@ -11907,7 +11904,7 @@ msgstr "Περιστροφή/κλιμάκωση"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1076
 msgid "Stretch"
-msgstr "Τέντωμα"
+msgstr "Επέκταση"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1174
 msgid "IFS Fractal Render Options"
@@ -12363,7 +12360,7 @@ msgstr "Χάρτης ε_ικόνας..."
 #: ../plug-ins/imagemap/imap_main.c:490
 #: ../plug-ins/imagemap/imap_settings.c:170
 msgid "<Untitled>"
-msgstr "<Ανώνυμο>"
+msgstr "<Άτιτλο>"
 
 #: ../plug-ins/imagemap/imap_main.c:632
 msgid "Some data has been changed!"
@@ -12990,7 +12987,7 @@ msgstr "Ε_νεργοποίηση χάρτη ανάγλυφου"
 
 #: ../plug-ins/lighting/lighting-ui.c:819
 msgid "Enable/disable bump-mapping (image depth)"
-msgstr "Ενεργοποίηση/απενεργοποίηση απεικόνισης ανάγλυφου (βάθος εικόνας)"
+msgstr "Ενεργοποίηση/απενεργοποίηση χάρτη ανάγλυφου (βάθος εικόνας)"
 
 #
 #: ../plug-ins/lighting/lighting-ui.c:842
@@ -13100,7 +13097,8 @@ msgstr "Απεικόνιση σε κύλινδρο"
 #: ../plug-ins/map-object/map-object-main.c:188
 msgid "Map the image to an object (plane, sphere, box or cylinder)"
 msgstr ""
-"Απεικόνιση της εικόνας σε ένα αντικείμενο (επίπεδο, σφαίρα, κουτί ή κύλινδρο)"
+"Απεικόνιση της εικόνας σε ένα αντικείμενο (επίπεδο, σφαίρα, κουτί ή "
+"κύλινδρο)"
 
 #: ../plug-ins/map-object/map-object-main.c:193
 msgid "Map _Object..."

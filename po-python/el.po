@@ -1,33 +1,34 @@
 # Greek translation for gimp-python.
 # Copyright (C) 2001, 2002 Free Software Foundation.
-#
-#
 # Simos Xenitellis <simos@hellug.gr>, 2001, 2002, 2009.
+# Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2011, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python 1.0\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-08-13 21:07+0000\n"
-"PO-Revision-Date: 2011-08-13 10:31+0200\n"
-"Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs 32@gmail.com>\n"
-"Language-Team: Greek <team@gnome.gr>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
+"eywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2012-02-24 13:26+0000\n"
+"PO-Revision-Date: 2012-04-10 07:42+0300\n"
+"Last-Translator: Dimitris Spingos (Δημήτρης  Σπίγγος) <dmtrs32@gmail.com>\n"
+"Language-Team: team@gnome.gr\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 0.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Virtaal 0.7.0\n"
 "X-Poedit-Language: Greek\n"
 "X-Poedit-Country: GREECE\n"
+"X-Project-Style: gnome\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:394
 msgid "Missing exception information"
-msgstr "Έλλειψη πληροφορίας εξαίρεσης "
+msgstr "Έλλειψη πληροφορίας εξαίρεσης"
 
 #: ../plug-ins/pygimp/gimpfu.py:403
 #, python-format
 msgid "An error occurred running %s"
-msgstr "Ένα σφάλμα τρέχοντας το %s"
+msgstr "Σφάλμα εκτέλεσης στο %s"
 
 #: ../plug-ins/pygimp/gimpfu.py:414
 msgid "_More Information"
@@ -61,11 +62,11 @@ msgstr "Επιλογή χρώματος Python-Fu"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
 msgid "Saving as colored XHTML"
-msgstr "Αποθήκευση ως έγχρωμο XHTML"
+msgstr "Αποθήκευση ως έγχρωμου XHTML"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
 msgid "Save as colored XHTML"
-msgstr "Αποθήκευση ως έγχρωμο XHTML"
+msgstr "Αποθήκευση ως έγχρωμου XHTML"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
 msgid "Colored XHTML"
@@ -188,7 +189,7 @@ msgstr "Πράσινο ή κορεσμός"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
 msgid "Blue or Value"
-msgstr "Μπλέ ή τιμή"
+msgstr "Γαλάζιο ή τιμή"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
 msgid "_Ascending"
@@ -210,22 +211,22 @@ msgstr "Δημιουργία μιας διαβάθμισης με χρήση χ�
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
 msgid "Palette to _Gradient"
-msgstr "Παλέτα στη _διαβάθμιση"
+msgstr "Παλέτα σε _διαβάθμιση"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:59
 msgid "Slice"
-msgstr "Φέτα"
+msgstr "Τεμαχισμός"
 
 #. table snippet means a small piece of HTML code here
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:420
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr ""
-"Κοπή εικόνας κατά μήκος των οδηγών της, δημιουργία εικόνων και ένα απόσπασμα "
-"πίνακα HTML"
+"Κοπή εικόνας κατά μήκος των οδηγών της, δημιουργία εικόνων και ενός "
+"αποσπάσματος πίνακα HTML"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:431
 msgid "_Slice..."
-msgstr "_Φέτα..."
+msgstr "_Τεμαχισμός..."
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Path for HTML export"
@@ -280,12 +281,12 @@ msgstr "Περιηγητής διαδικασίας Python"
 #: ../plug-ins/pygimp/plug-ins/python-console.py:167
 #, python-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Αδυναμία άνοιγματος του '%s' για εγγραφή: %s"
+msgstr "Αδυναμία ανοίγματος του '%s' για εγγραφή: %s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:182
 #, python-format
 msgid "Could not write to '%s': %s"
-msgstr "Αδύνατη η εγγραφή στο '%s': %s"
+msgstr "Αδυναμία εγγραφής στο '%s': %s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:190
 msgid "Save Python-Fu Console Output"
@@ -293,7 +294,7 @@ msgstr "Αποθήκευση εξόδου κονσόλας Python-Fu"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:216
 msgid "Interactive GIMP Python interpreter"
-msgstr "Διερμηνέας Python διαδραστικού GIMP"
+msgstr "Διερμηνέας διαδραστικού GIMP Python"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:221
 msgid "_Console"
@@ -305,7 +306,7 @@ msgstr "Προσθήκη πίπτουσας σκιάς στη στρώση κα�
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
 msgid "_Drop Shadow and Bevel..."
-msgstr "_Δημιουργία σκιάς και λοξότμηση..."
+msgstr "_Πίπτουσα σκιά και λοξότμηση..."
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
 msgid "_Shadow blur"
@@ -317,15 +318,15 @@ msgstr "_Λοξότμηση"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
 msgid "_Drop shadow"
-msgstr "_Ρίψη σκιάς"
+msgstr "_Πίπτουσα σκιά"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 msgid "Drop shadow _X displacement"
-msgstr "Μετατόπιση _Χ πίπτουσας σκιάς "
+msgstr "Μετατόπιση _Χ πίπτουσας σκιάς"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
-msgstr "Μετατόπιση _Y πίπτουσας σκιάς "
+msgstr "Μετατόπιση _Y πίπτουσας σκιάς"
 
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:75
 msgid "Create a new brush with characters from a text sequence"
