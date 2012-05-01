@@ -348,11 +348,11 @@ GType gimp_precision_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_PRECISION_U8,    /*< desc="8-bit unsigned integer"  >*/
-  GIMP_PRECISION_U16,   /*< desc="16-bit unsigned integer" >*/
-  GIMP_PRECISION_U32,   /*< desc="32-bit unsigned integer" >*/
-  GIMP_PRECISION_HALF,  /*< desc="16-bit floating point"   >*/
-  GIMP_PRECISION_FLOAT  /*< desc="32-bit floating point"   >*/
+  GIMP_PRECISION_U8,    /*< desc="8-bit integer"         >*/
+  GIMP_PRECISION_U16,   /*< desc="16-bit integer"        >*/
+  GIMP_PRECISION_U32,   /*< desc="32-bit integer"        >*/
+  GIMP_PRECISION_HALF,  /*< desc="16-bit floating point" >*/
+  GIMP_PRECISION_FLOAT  /*< desc="32-bit floating point" >*/
 } GimpPrecision;
 
 

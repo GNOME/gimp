@@ -158,18 +158,18 @@ static const GimpRadioActionEntry image_convert_base_type_actions[] =
 static const GimpRadioActionEntry image_convert_precision_actions[] =
 {
   { "image-convert-u8", NULL,
-    NC_("image-convert-action", "8 bit unsigned integer"), NULL,
-    NC_("image-convert-action", "Convert the image to 8 bit unsigned integer"),
+    NC_("image-convert-action", "8 bit integer"), NULL,
+    NC_("image-convert-action", "Convert the image to 8 bit integer"),
     GIMP_PRECISION_U8, GIMP_HELP_IMAGE_CONVERT_U8 },
 
   { "image-convert-u16", NULL,
-    NC_("image-convert-action", "16 bit unsigned integer"), NULL,
-    NC_("image-convert-action", "Convert the image to 16 bit unsigned integer"),
+    NC_("image-convert-action", "16 bit integer"), NULL,
+    NC_("image-convert-action", "Convert the image to 16 bit integer"),
     GIMP_PRECISION_U16, GIMP_HELP_IMAGE_CONVERT_U16 },
 
   { "image-convert-u32", NULL,
-    NC_("image-convert-action", "32 bit unsigned integer"), NULL,
-    NC_("image-convert-action", "Convert the image to 32 bit unsigned integer"),
+    NC_("image-convert-action", "32 bit integer"), NULL,
+    NC_("image-convert-action", "Convert the image to 32 bit integer"),
     GIMP_PRECISION_U32, GIMP_HELP_IMAGE_CONVERT_U32 },
 
   { "image-convert-half", NULL,

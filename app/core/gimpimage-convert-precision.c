@@ -60,23 +60,23 @@ gimp_image_convert_precision (GimpImage     *image,
   switch (precision)
     {
     case GIMP_PRECISION_U8:
-      undo_desc = C_("undo-type", "Convert Image to 8 bit unsigned integer");
+      undo_desc = C_("undo-type", "Convert Image to 8 bit integer");
       break;
 
     case GIMP_PRECISION_U16:
-      undo_desc = C_("undo-type", "Convert Image to 16 bit unsigned integer");
+      undo_desc = C_("undo-type", "Convert Image to 16 bit integer");
       break;
 
     case GIMP_PRECISION_U32:
-      undo_desc = C_("undo-type", "Convert Image to 32 bit unsigned integer");
+      undo_desc = C_("undo-type", "Convert Image to 32 bit integer");
       break;
 
     case GIMP_PRECISION_HALF:
-      undo_desc = C_("undo-type", "Convert Image to 16 bit float");
+      undo_desc = C_("undo-type", "Convert Image to 16 bit floating point");
       break;
 
     case GIMP_PRECISION_FLOAT:
-      undo_desc = C_("undo-type", "Convert Image to 32 bit float");
+      undo_desc = C_("undo-type", "Convert Image to 32 bit floating point");
       break;
     }
 
