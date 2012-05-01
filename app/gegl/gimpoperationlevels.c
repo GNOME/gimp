@@ -179,12 +179,8 @@ gimp_operation_levels_map_input (GimpLevelsConfig     *config,
   else
     value = (value - config->low_input[channel]);
 
-  value = CLAMP (value, 0.0, 1.0);
-
   if (config->gamma[channel] != 0.0)
-    {
-      value = pow (value, 1.0 / config->gamma[channel]);
-    }
+    value = pow (value, 1.0 / config->gamma[channel]);
 
   return value;
 }
