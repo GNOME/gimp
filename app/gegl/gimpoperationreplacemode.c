@@ -174,38 +174,45 @@ gimp_operation_replace_mode_process (GeglOperation       *operation,
   gfloat *mask                   = aux2_buf;
   gfloat *out                    = out_buf;
 
-
   while (samples--)
     {
       gint   b;
       gfloat new_alpha;
-      gfloat ratio;
 
       if (mask)
+        new_alpha = (layer[ALPHA] - in[ALPHA]) * (*mask) * opacity + in[ALPHA];
+      else
+        new_alpha = (layer[ALPHA] - in[ALPHA]) * opacity + in[ALPHA];
+
+      if (new_alpha)
         {
-          new_alpha = (layer[ALPHA] - in[ALPHA]) * (*mask) * opacity + in[ALPHA];
-          ratio = *mask * opacity / layer[ALPHA] / new_alpha;
+          gfloat ratio;
+
+          if (mask)
+            ratio = *mask * opacity * layer[ALPHA] / new_alpha;
+          else
+            ratio = opacity * layer[ALPHA] / new_alpha;
+
+          for (b = RED; b < ALPHA; b++)
+            {
+              gfloat t;
+
+              if (layer[b] > in[b])
+                {
+                  t = (layer[b] - in[b]) * ratio;
+                  out[b] = in[b] + t;
+                }
+              else
+                {
+                  t = (in[b] - layer[b]) * ratio;
+                  out[b] = in[b] - t;
+                }
+            }
         }
       else
         {
-          new_alpha = (layer[ALPHA] - in[ALPHA]) * opacity + in[ALPHA];
-          ratio = opacity / layer[ALPHA] / new_alpha;
-        }
-
-      for (b = RED; b < ALPHA; b++)
-        {
-          gfloat t;
-
-          if (layer[b] > in[b])
-            {
-              t = (layer[b] - in[b]) * ratio;
-              out[b] = in[b] + t;
-            }
-          else
-            {
-              t = (in[b] - layer[b]) * ratio;
-              out[b] = in[b] - t;
-            }
+          for (b = RED; b < ALPHA; b++)
+            out[b] = in[b];
         }
 
       out[ALPHA] = new_alpha;
