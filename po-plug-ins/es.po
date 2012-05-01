@@ -20,8 +20,8 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-02-13 11:11+0000\n"
-"PO-Revision-Date: 2012-02-21 17:12+0100\n"
+"POT-Creation-Date: 2012-04-28 22:37+0000\n"
+"PO-Revision-Date: 2012-05-01 12:22+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -603,12 +603,12 @@ msgid "Orientation"
 msgstr "Orientación"
 
 #: ../plug-ins/common/blinds.c:262 ../plug-ins/common/ripple.c:561
-#: ../plug-ins/common/tile-small.c:434 ../plug-ins/pagecurl/pagecurl.c:535
+#: ../plug-ins/common/tile-small.c:434 ../plug-ins/pagecurl/pagecurl.c:537
 msgid "_Horizontal"
 msgstr "_Horizontal"
 
 #: ../plug-ins/common/blinds.c:265 ../plug-ins/common/ripple.c:564
-#: ../plug-ins/common/tile-small.c:444 ../plug-ins/pagecurl/pagecurl.c:534
+#: ../plug-ins/common/tile-small.c:444 ../plug-ins/pagecurl/pagecurl.c:536
 msgid "_Vertical"
 msgstr "_Vertical"
 
@@ -631,7 +631,7 @@ msgstr "_Vertical"
 #: ../plug-ins/file-jpeg/jpeg-load.c:255 ../plug-ins/file-jpeg/jpeg-load.c:819
 #: ../plug-ins/file-psd/psd-image-res-load.c:1001
 #: ../plug-ins/file-psd/psd-load.c:1637 ../plug-ins/file-sgi/sgi.c:407
-#: ../plug-ins/gfig/gfig-dialog.c:1306
+#: ../plug-ins/gfig/gfig-dialog.c:1321
 #: ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1162
@@ -1055,8 +1055,8 @@ msgstr "Cargar la configuración del mezclador de canales"
 #: ../plug-ins/file-xjt/xjt.c:2529 ../plug-ins/file-xjt/xjt.c:2537
 #: ../plug-ins/flame/flame.c:411
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1865
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:926
-#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/help/gimphelplocale.c:222
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:923
+#: ../plug-ins/gfig/gfig.c:433 ../plug-ins/help/gimphelplocale.c:222
 #: ../plug-ins/help/gimphelplocale.c:238
 #: ../plug-ins/lighting/lighting-ui.c:1367
 #, c-format
@@ -1088,7 +1088,7 @@ msgstr "Guardar la configuración del mezclador de canales"
 #: ../plug-ins/file-xjt/xjt.c:1276 ../plug-ins/file-xjt/xjt.c:1715
 #: ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
-#: ../plug-ins/gfig/gfig.c:798 ../plug-ins/ifs-compose/ifs-compose.c:2408
+#: ../plug-ins/gfig/gfig.c:797 ../plug-ins/ifs-compose/ifs-compose.c:2408
 #: ../plug-ins/lighting/lighting-ui.c:1223
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -1335,7 +1335,7 @@ msgstr "Saturación"
 #: ../plug-ins/common/cml-explorer.c:302 ../plug-ins/common/cml-explorer.c:310
 #: ../plug-ins/common/decompose.c:190
 #: ../plug-ins/gimpressionist/orientation.c:155
-#: ../plug-ins/gimpressionist/size.c:158
+#: ../plug-ins/gimpressionist/size.c:158 ../plug-ins/metadata/interface.c:144
 msgid "Value"
 msgstr "Valor"
 
@@ -2279,7 +2279,7 @@ msgstr "_Vista previa automática"
 #. Options area, bottom of column
 #. Options section
 #: ../plug-ins/common/curve-bend.c:1310 ../plug-ins/common/ripple.c:523
-#: ../plug-ins/gfig/gfig-dialog.c:1228
+#: ../plug-ins/gfig/gfig-dialog.c:1243
 msgid "Options"
 msgstr "Opciones"
 
@@ -2916,7 +2916,7 @@ msgstr "Sobel _verticalmente"
 msgid "_Keep sign of result (one direction only)"
 msgstr "Man_tener el signo del resultado (sólo una dirección)"
 
-#: ../plug-ins/common/edge-sobel.c:371
+#: ../plug-ins/common/edge-sobel.c:372
 msgid "Sobel edge detecting"
 msgstr "Detección de bordes Sobel"
 
@@ -3623,7 +3623,8 @@ msgstr ""
 #, c-format
 msgid "Image component %d of image '%s' does not have both a hstep and vstep."
 msgstr ""
-"El componente de imagen %d de la imagen «%s» no tiene un «hstep» y un «vstep»."
+"El componente de imagen %d de la imagen «%s» no tiene un «hstep» y un "
+"«vstep»."
 
 #: ../plug-ins/common/file-jp2-load.c:343
 #, c-format
@@ -5494,7 +5495,7 @@ msgstr "_Rejilla…"
 msgid "Drawing grid"
 msgstr "Rejilla de dibujo"
 
-#: ../plug-ins/common/grid.c:636 ../plug-ins/gfig/gfig-dialog.c:1376
+#: ../plug-ins/common/grid.c:636 ../plug-ins/gfig/gfig-dialog.c:1391
 #: ../plug-ins/imagemap/imap_menu.c:208
 msgid "Grid"
 msgstr "Rejilla"
@@ -6298,7 +6299,7 @@ msgid "_Factory Defaults"
 msgstr "Configuración de _fábrica"
 
 #. anti-alias control
-#: ../plug-ins/common/newsprint.c:1434 ../plug-ins/gfig/gfig-dialog.c:1278
+#: ../plug-ins/common/newsprint.c:1434 ../plug-ins/gfig/gfig-dialog.c:1293
 msgid "Antialiasing"
 msgstr "Antialias"
 
@@ -6400,24 +6401,24 @@ msgstr "_Escoger…"
 msgid "_Slur..."
 msgstr "_Manchar…"
 
-#: ../plug-ins/common/noise-randomize.c:769
+#: ../plug-ins/common/noise-randomize.c:767
 #: ../plug-ins/common/noise-solid.c:603
 msgid "_Random seed:"
 msgstr "_Semilla aleatoria:"
 
-#: ../plug-ins/common/noise-randomize.c:778
+#: ../plug-ins/common/noise-randomize.c:776
 msgid "R_andomization (%):"
 msgstr "_Aleatorización (%):"
 
-#: ../plug-ins/common/noise-randomize.c:781
+#: ../plug-ins/common/noise-randomize.c:779
 msgid "Percentage of pixels to be filtered"
 msgstr "Porcentaje de píxeles a filtrar"
 
-#: ../plug-ins/common/noise-randomize.c:793
+#: ../plug-ins/common/noise-randomize.c:791
 msgid "R_epeat:"
 msgstr "R_epetir:"
 
-#: ../plug-ins/common/noise-randomize.c:796
+#: ../plug-ins/common/noise-randomize.c:794
 msgid "Number of times to apply filter"
 msgstr "Número de veces a aplicar filtro"
 
@@ -8283,7 +8284,7 @@ msgid "Smear"
 msgstr "Manchar"
 
 #: ../plug-ins/common/warp.c:502 ../plug-ins/file-fits/fits.c:1020
-#: ../plug-ins/flame/flame.c:1174 ../plug-ins/gfig/gfig-dialog.c:1482
+#: ../plug-ins/flame/flame.c:1174 ../plug-ins/gfig/gfig-dialog.c:1497
 msgid "Black"
 msgstr "Negro"
 
@@ -8762,8 +8763,8 @@ msgstr "Cargar archivos FITS"
 msgid "Replacement for undefined pixels"
 msgstr "Reemplazo para los píxeles no definidos"
 
-#: ../plug-ins/file-fits/fits.c:1021 ../plug-ins/gfig/gfig-dialog.c:1308
-#: ../plug-ins/gfig/gfig-dialog.c:1483
+#: ../plug-ins/file-fits/fits.c:1021 ../plug-ins/gfig/gfig-dialog.c:1323
+#: ../plug-ins/gfig/gfig-dialog.c:1498
 msgid "White"
 msgstr "Blanco"
 
@@ -9133,8 +9134,8 @@ msgid ""
 "Unable to save layer with mode '%s'.  Either the PSD file format or the save "
 "plug-in does not support that, using normal mode instead."
 msgstr ""
-"No se puede guardar la capa con el modo «%s». Bien el formato del archivo PSD "
-"o bien el complemento de guardado no lo soportan, se utilizará el modo "
+"No se puede guardar la capa con el modo «%s». Bien el formato del archivo "
+"PSD o bien el complemento de guardado no lo soportan, se utilizará el modo "
 "normal en su lugar."
 
 #: ../plug-ins/file-psd/psd-save.c:634
@@ -9259,8 +9260,8 @@ msgstr "Descargando «%s» de datos de imagen"
 #, c-format
 msgid "Opening '%s' for reading resulted in %s response code: %ld"
 msgstr ""
-"La apertura de «%s» para lectura ha producido el código de respuesta de %s: %"
-"ld"
+"La apertura de «%s» para lectura ha producido el código de respuesta de %s: "
+"%ld"
 
 #: ../plug-ins/file-uri/uri-backend-wget.c:162
 #: ../plug-ins/file-uri/uri-backend-wget.c:182
@@ -9430,7 +9431,7 @@ msgstr "Remolino"
 msgid "Horseshoe"
 msgstr "Herradura"
 
-#: ../plug-ins/flame/flame.c:752 ../plug-ins/gfig/gfig-dialog.c:1464
+#: ../plug-ins/flame/flame.c:752 ../plug-ins/gfig/gfig-dialog.c:1479
 msgid "Polar"
 msgstr "Polar"
 
@@ -9567,7 +9568,7 @@ msgid "C_amera"
 msgstr "Cámar_a"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:546
-#: ../plug-ins/gfig/gfig-dialog.c:277 ../plug-ins/gimpressionist/utils.c:142
+#: ../plug-ins/gfig/gfig-dialog.c:275 ../plug-ins/gimpressionist/utils.c:142
 #: ../plug-ins/gradient-flare/gradient-flare.c:881
 #, c-format
 msgid ""
@@ -9851,34 +9852,34 @@ msgstr "«%s» no es un archivo del examinador de fractales"
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "«%s» está dañado. La línea %d en la sección «Option» es incorrecta"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:238
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:236
 msgid "Render fractal art"
 msgstr "Renderizando fractal"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:243
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:241
 msgid "_Fractal Explorer..."
 msgstr "Examinador de _fractales…"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:371
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:368
 msgid "Rendering fractal"
 msgstr "Renderizando fractal"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:754
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:751
 #: ../plug-ins/gradient-flare/gradient-flare.c:3201
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "¿Seguro que quiere borrar «%s» de la lista y del disco?"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:758
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:755
 msgid "Delete Fractal"
 msgstr "Borrar fractal"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:947
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:944
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "El archivo «%s» no es un archivo del examinador de fractales"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:957
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:954
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
@@ -9887,250 +9888,250 @@ msgstr ""
 "El archivo «%s» está dañado.\n"
 "La línea %d en la sección «Option» es incorrecta"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1002
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:999
 msgid "My first fractal"
 msgstr "Mi primer fractal"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1066
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1063
 msgid "Select folder and rescan collection"
 msgstr "Seleccionar carpeta y refrescar la colección"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1078
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1075
 msgid "Apply currently selected fractal"
 msgstr "Aplicar el fractal seleccionado actualmente"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1090
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1087
 msgid "Delete currently selected fractal"
 msgstr "Borrar el fractal seleccionado actualmente"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1113
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1110
 msgid "Rescan for Fractals"
 msgstr "Volver a buscar fractales"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1132
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1129
 msgid "Add FractalExplorer Path"
 msgstr "Añadir ruta al examinador de fractales"
 
-#: ../plug-ins/gfig/gfig-bezier.c:442
+#: ../plug-ins/gfig/gfig-bezier.c:401
 msgid "Closed"
 msgstr "Cerrada"
 
-#: ../plug-ins/gfig/gfig-bezier.c:447
+#: ../plug-ins/gfig/gfig-bezier.c:406
 msgid "Close curve on completion"
 msgstr "Cerrar la curva al terminar"
 
 # //R :-?
-#: ../plug-ins/gfig/gfig-bezier.c:452
+#: ../plug-ins/gfig/gfig-bezier.c:411
 msgid "Show Line Frame"
 msgstr "Mostrar el marco de la línea"
 
-#: ../plug-ins/gfig/gfig-bezier.c:457
+#: ../plug-ins/gfig/gfig-bezier.c:416
 msgid "Draws lines between the control points. Only during curve creation"
 msgstr ""
 "Dibuja líneas entre los puntos de control. Sólo durante la creación de la "
 "curva"
 
 #. Start building the dialog up
-#: ../plug-ins/gfig/gfig-dialog.c:289
+#: ../plug-ins/gfig/gfig-dialog.c:287
 msgid "Gfig"
 msgstr "Gfig"
 
 #. Tool options notebook
-#: ../plug-ins/gfig/gfig-dialog.c:337
+#: ../plug-ins/gfig/gfig-dialog.c:335
 msgid "Tool Options"
 msgstr "Opciones de herramienta"
 
-#: ../plug-ins/gfig/gfig-dialog.c:354
+#: ../plug-ins/gfig/gfig-dialog.c:352
 msgid "_Stroke"
 msgstr "_Trazar"
 
 #. Fill frame on right side
-#: ../plug-ins/gfig/gfig-dialog.c:401
+#: ../plug-ins/gfig/gfig-dialog.c:399
 msgid "Fill"
 msgstr "Relleno"
 
-#: ../plug-ins/gfig/gfig-dialog.c:415
+#: ../plug-ins/gfig/gfig-dialog.c:413
 msgid "No fill"
 msgstr "Sin relleno"
 
-#: ../plug-ins/gfig/gfig-dialog.c:416
+#: ../plug-ins/gfig/gfig-dialog.c:414
 msgid "Color fill"
 msgstr "Relleno con color"
 
-#: ../plug-ins/gfig/gfig-dialog.c:417
+#: ../plug-ins/gfig/gfig-dialog.c:415
 msgid "Pattern fill"
 msgstr "Relleno con patrón"
 
-#: ../plug-ins/gfig/gfig-dialog.c:418
+#: ../plug-ins/gfig/gfig-dialog.c:416
 msgid "Shape gradient"
 msgstr "Forma del degradado"
 
-#: ../plug-ins/gfig/gfig-dialog.c:419
+#: ../plug-ins/gfig/gfig-dialog.c:417
 msgid "Vertical gradient"
 msgstr "Degradado vertical"
 
-#: ../plug-ins/gfig/gfig-dialog.c:420
+#: ../plug-ins/gfig/gfig-dialog.c:418
 msgid "Horizontal gradient"
 msgstr "Degradado horizontal"
 
 #. "show image" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:480
+#: ../plug-ins/gfig/gfig-dialog.c:478
 msgid "Show image"
 msgstr "Mostrar imagen"
 
 #. "snap to grid" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:493
+#: ../plug-ins/gfig/gfig-dialog.c:491
 msgctxt "checkbutton"
 msgid "Snap to grid"
 msgstr "Ajustar a la rejilla"
 
 #. "show grid" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:502
+#: ../plug-ins/gfig/gfig-dialog.c:500
 msgid "Show grid"
 msgstr "Mostrar la rejilla"
 
-#: ../plug-ins/gfig/gfig-dialog.c:639
+#: ../plug-ins/gfig/gfig-dialog.c:635
 msgid "Load Gfig Object Collection"
 msgstr "Cargar la colección de objetos Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:688
+#: ../plug-ins/gfig/gfig-dialog.c:684
 msgid "Save Gfig Drawing"
 msgstr "Guardar el dibujo Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:833
+#: ../plug-ins/gfig/gfig-dialog.c:848
 msgid "First Gfig"
 msgstr "Primer Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:871
+#: ../plug-ins/gfig/gfig-dialog.c:886
 msgid "_Undo"
 msgstr "_Deshacer"
 
-#: ../plug-ins/gfig/gfig-dialog.c:875
+#: ../plug-ins/gfig/gfig-dialog.c:890
 msgid "_Clear"
 msgstr "_Limpiar"
 
-#: ../plug-ins/gfig/gfig-dialog.c:879 ../plug-ins/imagemap/imap_menu.c:208
+#: ../plug-ins/gfig/gfig-dialog.c:894 ../plug-ins/imagemap/imap_menu.c:208
 msgid "_Grid"
 msgstr "_Rejilla"
 
-#: ../plug-ins/gfig/gfig-dialog.c:887
+#: ../plug-ins/gfig/gfig-dialog.c:902
 msgid "Raise selected object"
 msgstr "Elevar el objetos seleccionado"
 
-#: ../plug-ins/gfig/gfig-dialog.c:891
+#: ../plug-ins/gfig/gfig-dialog.c:906
 msgid "Lower selected object"
 msgstr "Bajar el objeto seleccionado"
 
-#: ../plug-ins/gfig/gfig-dialog.c:895
+#: ../plug-ins/gfig/gfig-dialog.c:910
 msgid "Raise selected object to top"
 msgstr "Elevar el objeto seleccionado hasta la cima"
 
-#: ../plug-ins/gfig/gfig-dialog.c:899
+#: ../plug-ins/gfig/gfig-dialog.c:914
 msgid "Lower selected object to bottom"
 msgstr "Bajar el objeto seleccionado hasta el fondo"
 
-#: ../plug-ins/gfig/gfig-dialog.c:903
+#: ../plug-ins/gfig/gfig-dialog.c:918
 msgid "Show previous object"
 msgstr "Mostrar el objeto anterior"
 
-#: ../plug-ins/gfig/gfig-dialog.c:907
+#: ../plug-ins/gfig/gfig-dialog.c:922
 msgid "Show next object"
 msgstr "Copiar el siguiente objeto"
 
-#: ../plug-ins/gfig/gfig-dialog.c:911 ../plug-ins/gfig/gfig-stock.c:52
+#: ../plug-ins/gfig/gfig-dialog.c:926 ../plug-ins/gfig/gfig-stock.c:52
 msgid "Show all objects"
 msgstr "Mostrar todos los objetos"
 
-#: ../plug-ins/gfig/gfig-dialog.c:917 ../plug-ins/gfig/gfig-stock.c:46
+#: ../plug-ins/gfig/gfig-dialog.c:932 ../plug-ins/gfig/gfig-stock.c:46
 msgid "Create line"
 msgstr "Crear línea"
 
-#: ../plug-ins/gfig/gfig-dialog.c:920 ../plug-ins/gfig/gfig-stock.c:50
+#: ../plug-ins/gfig/gfig-dialog.c:935 ../plug-ins/gfig/gfig-stock.c:50
 msgid "Create rectangle"
 msgstr "Crear un rectángulo"
 
-#: ../plug-ins/gfig/gfig-dialog.c:923 ../plug-ins/gfig/gfig-stock.c:41
+#: ../plug-ins/gfig/gfig-dialog.c:938 ../plug-ins/gfig/gfig-stock.c:41
 msgid "Create circle"
 msgstr "Crear un círculo"
 
-#: ../plug-ins/gfig/gfig-dialog.c:926 ../plug-ins/gfig/gfig-stock.c:45
+#: ../plug-ins/gfig/gfig-dialog.c:941 ../plug-ins/gfig/gfig-stock.c:45
 msgid "Create ellipse"
 msgstr "Crear una elipse"
 
-#: ../plug-ins/gfig/gfig-dialog.c:929 ../plug-ins/gfig/gfig-stock.c:43
+#: ../plug-ins/gfig/gfig-dialog.c:944 ../plug-ins/gfig/gfig-stock.c:43
 msgid "Create arc"
 msgstr "Crear un arco"
 
-#: ../plug-ins/gfig/gfig-dialog.c:932 ../plug-ins/gfig/gfig-stock.c:49
+#: ../plug-ins/gfig/gfig-dialog.c:947 ../plug-ins/gfig/gfig-stock.c:49
 msgid "Create reg polygon"
 msgstr "Crear un polígono regular"
 
-#: ../plug-ins/gfig/gfig-dialog.c:935 ../plug-ins/gfig/gfig-stock.c:54
+#: ../plug-ins/gfig/gfig-dialog.c:950 ../plug-ins/gfig/gfig-stock.c:54
 msgid "Create star"
 msgstr "Crear una estrella"
 
-#: ../plug-ins/gfig/gfig-dialog.c:938 ../plug-ins/gfig/gfig-stock.c:53
+#: ../plug-ins/gfig/gfig-dialog.c:953 ../plug-ins/gfig/gfig-stock.c:53
 msgid "Create spiral"
 msgstr "Crear una espiral"
 
-#: ../plug-ins/gfig/gfig-dialog.c:941
+#: ../plug-ins/gfig/gfig-dialog.c:956
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr ""
 "Crear una curva de Bezier. Mayús. + botón termina la creación del objeto."
 
-#: ../plug-ins/gfig/gfig-dialog.c:945 ../plug-ins/gfig/gfig-stock.c:47
+#: ../plug-ins/gfig/gfig-dialog.c:960 ../plug-ins/gfig/gfig-stock.c:47
 msgid "Move an object"
 msgstr "Mover un objeto"
 
-#: ../plug-ins/gfig/gfig-dialog.c:948 ../plug-ins/gfig/gfig-stock.c:48
+#: ../plug-ins/gfig/gfig-dialog.c:963 ../plug-ins/gfig/gfig-stock.c:48
 msgid "Move a single point"
 msgstr "Mover sólo un punto"
 
-#: ../plug-ins/gfig/gfig-dialog.c:951 ../plug-ins/gfig/gfig-stock.c:42
+#: ../plug-ins/gfig/gfig-dialog.c:966 ../plug-ins/gfig/gfig-stock.c:42
 msgid "Copy an object"
 msgstr "Copiar un objeto"
 
-#: ../plug-ins/gfig/gfig-dialog.c:954 ../plug-ins/gfig/gfig-stock.c:44
+#: ../plug-ins/gfig/gfig-dialog.c:969 ../plug-ins/gfig/gfig-stock.c:44
 msgid "Delete an object"
 msgstr "Borrar un objeto"
 
-#: ../plug-ins/gfig/gfig-dialog.c:957 ../plug-ins/gfig/gfig-stock.c:51
+#: ../plug-ins/gfig/gfig-dialog.c:972 ../plug-ins/gfig/gfig-stock.c:51
 msgid "Select an object"
 msgstr "Seleccionar un objeto"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1039
+#: ../plug-ins/gfig/gfig-dialog.c:1054
 msgid "This tool has no options"
 msgstr "Esta herramienta no tiene opciones"
 
 #. Put buttons in
-#: ../plug-ins/gfig/gfig-dialog.c:1250
+#: ../plug-ins/gfig/gfig-dialog.c:1265
 msgid "Show position"
 msgstr "Mostrar posición"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1262
+#: ../plug-ins/gfig/gfig-dialog.c:1277
 msgid "Show control points"
 msgstr "Mostrar los puntos de control"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1296
+#: ../plug-ins/gfig/gfig-dialog.c:1311
 msgid "Max undo:"
 msgstr "Máx. deshacer:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1305
+#: ../plug-ins/gfig/gfig-dialog.c:1320
 #: ../plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
 msgstr "Transparente"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1307
+#: ../plug-ins/gfig/gfig-dialog.c:1322
 msgid "Foreground"
 msgstr "Frente"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1309 ../plug-ins/imagemap/imap_cmd_copy.c:53
+#: ../plug-ins/gfig/gfig-dialog.c:1324 ../plug-ins/imagemap/imap_cmd_copy.c:53
 #: ../plug-ins/imagemap/imap_cmd_copy_object.c:54
 #: ../plug-ins/imagemap/imap_menu.c:159
 msgid "Copy"
 msgstr "Copiar"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1318
+#: ../plug-ins/gfig/gfig-dialog.c:1333
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
@@ -10138,114 +10139,114 @@ msgstr ""
 "Tipo de fondo de capa. «Copia» hace que se copie la capa previa antes de "
 "realizar el dibujo."
 
-#: ../plug-ins/gfig/gfig-dialog.c:1324
+#: ../plug-ins/gfig/gfig-dialog.c:1339
 msgid "Background:"
 msgstr "Fondo:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1327
+#: ../plug-ins/gfig/gfig-dialog.c:1342
 msgid "Feather"
 msgstr "Difuminar"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1350
+#: ../plug-ins/gfig/gfig-dialog.c:1365
 msgid "Radius:"
 msgstr "Radio:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1408
+#: ../plug-ins/gfig/gfig-dialog.c:1423
 msgid "Grid spacing:"
 msgstr "Espaciado de la rejilla:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1425
+#: ../plug-ins/gfig/gfig-dialog.c:1440
 msgid "Polar grid sectors desired:"
 msgstr "Sectores de la rejilla polar deseados:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1447
+#: ../plug-ins/gfig/gfig-dialog.c:1462
 msgid "Polar grid radius interval:"
 msgstr "Intervalo del radio de la rejilla polar:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1463 ../plug-ins/imagemap/imap_menu.c:219
+#: ../plug-ins/gfig/gfig-dialog.c:1478 ../plug-ins/imagemap/imap_menu.c:219
 msgid "Rectangle"
 msgstr "Rectángulo"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1465
+#: ../plug-ins/gfig/gfig-dialog.c:1480
 msgid "Isometric"
 msgstr "Isométrica"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1474
+#: ../plug-ins/gfig/gfig-dialog.c:1489
 msgid "Grid type:"
 msgstr "Tipo de rejilla:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1481
+#: ../plug-ins/gfig/gfig-dialog.c:1496
 #: ../plug-ins/gradient-flare/gradient-flare.c:551
 msgid "Normal"
 msgstr "Normal"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1484
+#: ../plug-ins/gfig/gfig-dialog.c:1499
 msgid "Grey"
 msgstr "Gris"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1485
+#: ../plug-ins/gfig/gfig-dialog.c:1500
 msgid "Darker"
 msgstr "Más oscura"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1486
+#: ../plug-ins/gfig/gfig-dialog.c:1501
 msgid "Lighter"
 msgstr "Más clara"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1487
+#: ../plug-ins/gfig/gfig-dialog.c:1502
 msgid "Very dark"
 msgstr "Muy oscura"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1496
+#: ../plug-ins/gfig/gfig-dialog.c:1511
 msgid "Grid color:"
 msgstr "Color de la rejilla:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1717
+#: ../plug-ins/gfig/gfig-dialog.c:1732
 msgid "Sides:"
 msgstr "Lados:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1727
+#: ../plug-ins/gfig/gfig-dialog.c:1742
 msgid "Right"
 msgstr "Derecha"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1728
+#: ../plug-ins/gfig/gfig-dialog.c:1743
 msgid "Left"
 msgstr "Izquierda"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1738
+#: ../plug-ins/gfig/gfig-dialog.c:1753
 #: ../plug-ins/gimpressionist/orientation.c:147
 msgid "Orientation:"
 msgstr "Orientación:"
 
-#: ../plug-ins/gfig/gfig-dobject.c:584
+#: ../plug-ins/gfig/gfig-dobject.c:580
 msgid "Hey where has the object gone ?"
 msgstr "¿A dónde se ha ido el objeto?"
 
-#: ../plug-ins/gfig/gfig-dobject.c:953
+#: ../plug-ins/gfig/gfig-dobject.c:922
 msgid "Error reading file"
 msgstr "Error al leer el archivo"
 
-#: ../plug-ins/gfig/gfig-dobject.c:1042
+#: ../plug-ins/gfig/gfig-dobject.c:1011
 msgid "Editing read-only object - you will not be able to save it"
 msgstr "Editando objeto sólo lectura (no podrá guardarlo)"
 
-#: ../plug-ins/gfig/gfig-poly.c:50
+#: ../plug-ins/gfig/gfig-poly.c:51
 msgid "Regular Polygon Number of Sides"
 msgstr "Nº de caras del polígono regular"
 
-#: ../plug-ins/gfig/gfig-preview.c:328
+#: ../plug-ins/gfig/gfig-preview.c:337
 msgid "Object Details"
 msgstr "Detalles de objeto"
 
 #. Position labels
-#: ../plug-ins/gfig/gfig-preview.c:379
+#: ../plug-ins/gfig/gfig-preview.c:388
 msgid "XY position:"
 msgstr "Posición XY:"
 
-#: ../plug-ins/gfig/gfig-spiral.c:54
+#: ../plug-ins/gfig/gfig-spiral.c:55
 msgid "Spiral Number of Turns"
 msgstr "Nº de vueltas de la espiral"
 
-#: ../plug-ins/gfig/gfig-star.c:51
+#: ../plug-ins/gfig/gfig-star.c:52
 msgid "Star Number of Points"
 msgstr "Nº de puntos de la estrella"
 
@@ -10253,27 +10254,27 @@ msgstr "Nº de puntos de la estrella"
 msgid "Create bezier curve"
 msgstr "Crear una curva bezier"
 
-#: ../plug-ins/gfig/gfig.c:123
+#: ../plug-ins/gfig/gfig.c:122
 msgid "Create geometric shapes"
 msgstr "Crea formas geométricas"
 
-#: ../plug-ins/gfig/gfig.c:134
+#: ../plug-ins/gfig/gfig.c:133
 msgid "_Gfig..."
 msgstr "_Gfig…"
 
-#: ../plug-ins/gfig/gfig.c:735
+#: ../plug-ins/gfig/gfig.c:734
 msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
 "Se produjo un error al intentar guardar la figura como un parásito: no se "
 "puede adjuntar un parásito a un dibujable."
 
-#: ../plug-ins/gfig/gfig.c:762
+#: ../plug-ins/gfig/gfig.c:761
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr ""
-"Erro al intentar abrir el archivo temporal «%s» para la carga de parásitos: «%"
-"s»"
+"Erro al intentar abrir el archivo temporal «%s» para la carga de parásitos: "
+"«%s»"
 
 # //R ¿Drawables?
 #: ../plug-ins/gimpressionist/brush.c:243
@@ -10394,7 +10395,8 @@ msgstr "Convertible en mosaico"
 
 #: ../plug-ins/gimpressionist/general.c:216
 msgid "Selects if the resulting image should be seamlessly tileable"
-msgstr "Selecciona si la imagen resultante debería ser enlosable «sin costuras»"
+msgstr ""
+"Selecciona si la imagen resultante debería ser enlosable «sin costuras»"
 
 #: ../plug-ins/gimpressionist/general.c:221
 msgid "Drop shadow"
@@ -11547,11 +11549,14 @@ msgid "Transformation %s"
 msgstr "Transformación %s"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:2413
+#: ../plug-ins/metadata/interface.c:507 ../plug-ins/metadata/interface.c:517
 msgid "Save failed"
 msgstr "El guardado ha fallado"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:2496
 #: ../plug-ins/ifs-compose/ifs-compose.c:2509
+#: ../plug-ins/metadata/interface.c:413 ../plug-ins/metadata/interface.c:423
+#: ../plug-ins/metadata/interface.c:497
 msgid "Open failed"
 msgstr "Ha fallado la apertura"
 
@@ -12302,6 +12307,7 @@ msgid "Default _URL:"
 msgstr "_URL predeterminada:"
 
 #: ../plug-ins/imagemap/imap_settings.c:107
+#: ../plug-ins/metadata/interface.c:247
 msgid "_Description:"
 msgstr "_Descripción:"
 
@@ -12935,9 +12941,114 @@ msgstr "Dibujar un laberinto"
 msgid "_Maze..."
 msgstr "_Laberinto…"
 
-#: ../plug-ins/maze/maze.c:425
+#: ../plug-ins/maze/maze.c:427
 msgid "Drawing maze"
 msgstr "Dibujando laberinto"
+
+#: ../plug-ins/metadata/interface.c:110
+#| msgid "Properties"
+msgid "Property"
+msgstr "Propiedad"
+
+#: ../plug-ins/metadata/interface.c:204 ../plug-ins/metadata/interface.c:206
+#| msgid "Description:"
+msgid "Description"
+msgstr "Descripción"
+
+#: ../plug-ins/metadata/interface.c:222
+#| msgid "Image _height:"
+msgid "Image _title:"
+msgstr "_Título de la imagen:"
+
+#: ../plug-ins/metadata/interface.c:231
+#| msgid "Aut_hor:"
+msgid "_Author:"
+msgstr "_Autor:"
+
+#: ../plug-ins/metadata/interface.c:256
+#| msgid "Description:"
+msgid "Description _writer:"
+msgstr "_Descripción:"
+
+#: ../plug-ins/metadata/interface.c:272
+msgid "_Keywords:"
+msgstr "Palabras c_lave:"
+
+#. FIXME: add entries, cross-link with XMP model
+#: ../plug-ins/metadata/interface.c:284 ../plug-ins/metadata/interface.c:296
+#: ../plug-ins/metadata/interface.c:308 ../plug-ins/metadata/interface.c:320
+msgid "Empty"
+msgstr "Vacío"
+
+#: ../plug-ins/metadata/interface.c:286
+#| msgid "_Copyright:"
+msgid "Copyright"
+msgstr "Copyright"
+
+#: ../plug-ins/metadata/interface.c:298
+#| msgid "Original"
+msgid "Origin"
+msgstr "Origen"
+
+#: ../plug-ins/metadata/interface.c:310
+#| msgid "C_amera"
+msgid "Camera 1"
+msgstr "Cámara 1"
+
+#: ../plug-ins/metadata/interface.c:322
+#| msgid "C_amera"
+msgid "Camera 2"
+msgstr "Cámara 2"
+
+#: ../plug-ins/metadata/interface.c:337
+#| msgid "Save _thumbnail"
+msgid "Thumbnail"
+msgstr "Miniatura"
+
+#: ../plug-ins/metadata/interface.c:356
+#| msgid "_Advanced"
+msgid "Advanced"
+msgstr "Avanzada"
+
+#: ../plug-ins/metadata/interface.c:447
+#| msgid "Import from PDF"
+msgid "Import XMP from File"
+msgstr "Importar XMP desde un archivo"
+
+#: ../plug-ins/metadata/interface.c:498
+#| msgid "Can't create a new image"
+msgid "Cannot create file"
+msgstr "No se pudo crear el archivo"
+
+#: ../plug-ins/metadata/interface.c:508
+#| msgid "An error occurred while trying to print:"
+msgid "Some error occurred while saving"
+msgstr "Ocurrió un error al guardar"
+
+#: ../plug-ins/metadata/interface.c:518
+#| msgid "Couldn't save file:"
+msgid "Could not close the file"
+msgstr "No se pudo cerrar el archivo"
+
+#: ../plug-ins/metadata/interface.c:540
+#| msgid "Export Preview"
+msgid "Export XMP to File"
+msgstr "Exportar XMP a un archivo"
+
+#: ../plug-ins/metadata/interface.c:607
+#| msgid "Properties"
+msgid "Image Properties"
+msgstr "Propiedades de la imagen"
+
+#: ../plug-ins/metadata/interface.c:611
+#| msgid "_Import"
+msgid "_Import XMP..."
+msgstr "_Importar XMP…"
+
+#: ../plug-ins/metadata/interface.c:612
+#| msgid "CML _Explorer..."
+msgid "_Export XMP..."
+msgstr "_Exportar XMP…"
 
 #: ../plug-ins/metadata/metadata.c:185
 msgid "View and edit metadata (EXIF, IPTC, XMP)"
@@ -13018,59 +13129,59 @@ msgstr "Doblar hacia arriba una de las esquinas de la imagen"
 msgid "_Pagecurl..."
 msgstr "_Página doblada…"
 
-#: ../plug-ins/pagecurl/pagecurl.c:440
+#: ../plug-ins/pagecurl/pagecurl.c:442
 msgid "Pagecurl Effect"
 msgstr "Efecto de doblar página"
 
-#: ../plug-ins/pagecurl/pagecurl.c:462
+#: ../plug-ins/pagecurl/pagecurl.c:464
 msgid "Curl Location"
 msgstr "Localización del doblado"
 
-#: ../plug-ins/pagecurl/pagecurl.c:481
+#: ../plug-ins/pagecurl/pagecurl.c:483
 msgid "Lower right"
 msgstr "Inferior derecha"
 
-#: ../plug-ins/pagecurl/pagecurl.c:482
+#: ../plug-ins/pagecurl/pagecurl.c:484
 msgid "Lower left"
 msgstr "Inferior izquierda"
 
-#: ../plug-ins/pagecurl/pagecurl.c:483
+#: ../plug-ins/pagecurl/pagecurl.c:485
 msgid "Upper left"
 msgstr "Superior izquierda"
 
-#: ../plug-ins/pagecurl/pagecurl.c:484
+#: ../plug-ins/pagecurl/pagecurl.c:486
 msgid "Upper right"
 msgstr "Superior derecha"
 
-#: ../plug-ins/pagecurl/pagecurl.c:524
+#: ../plug-ins/pagecurl/pagecurl.c:526
 msgid "Curl Orientation"
 msgstr "Orientación del doblado"
 
-#: ../plug-ins/pagecurl/pagecurl.c:569
+#: ../plug-ins/pagecurl/pagecurl.c:571
 msgid "_Shade under curl"
 msgstr "_Sombra bajo el doblez"
 
-#: ../plug-ins/pagecurl/pagecurl.c:582
+#: ../plug-ins/pagecurl/pagecurl.c:584
 msgid "Current gradient (reversed)"
 msgstr "Degradado actual (invertido)"
 
-#: ../plug-ins/pagecurl/pagecurl.c:587
+#: ../plug-ins/pagecurl/pagecurl.c:589
 msgid "Current gradient"
 msgstr "Degradado actual"
 
-#: ../plug-ins/pagecurl/pagecurl.c:592
+#: ../plug-ins/pagecurl/pagecurl.c:594
 msgid "Foreground / background colors"
 msgstr "Colores de frente y fondo"
 
-#: ../plug-ins/pagecurl/pagecurl.c:612
+#: ../plug-ins/pagecurl/pagecurl.c:614
 msgid "_Opacity:"
 msgstr "_Opacidad:"
 
-#: ../plug-ins/pagecurl/pagecurl.c:735
+#: ../plug-ins/pagecurl/pagecurl.c:730
 msgid "Curl Layer"
 msgstr "Capa del enrollamiento"
 
-#: ../plug-ins/pagecurl/pagecurl.c:1026
+#: ../plug-ins/pagecurl/pagecurl.c:1022
 msgid "Page Curl"
 msgstr "Página enrollada"
 
