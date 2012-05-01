@@ -354,6 +354,7 @@ debug_show_image_graph (GimpImage *source_image)
                                  gegl_buffer_get_width (buffer),
                                  gegl_buffer_get_height (buffer),
                                  GIMP_RGB,
+                                 GIMP_PRECISION_U8,
                                  FALSE);
   gimp_image_set_uri (new_image, new_name);
   layer = gimp_layer_new_from_buffer (buffer,
