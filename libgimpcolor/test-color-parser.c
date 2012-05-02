@@ -5,6 +5,8 @@
 
 #include <stdlib.h>
 
+#include <gegl.h>
+
 #include <glib-object.h>
 #include <cairo.h>
 

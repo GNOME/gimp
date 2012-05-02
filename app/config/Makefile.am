@@ -76,14 +76,15 @@ test_config_DEPENDENCIES = $(gimpconfig_libs)
 # We need this due to circular dependencies, see more detailed
 # comments about it in app/Makefile.am
 test_config_LDFLAGS = \
-	-u $(SYMPREFIX)xcf_init				\
-	-u $(SYMPREFIX)gimp_pdb_new			\
-	-u $(SYMPREFIX)internal_procs_init		\
-	-u $(SYMPREFIX)gimp_plug_in_manager_restore	\
-	-u $(SYMPREFIX)plug_in_icc_profile_apply_rgb	\
-	-u $(SYMPREFIX)gimp_vectors_undo_get_type	\
-	-u $(SYMPREFIX)gimp_vectors_mod_undo_get_type	\
-	-u $(SYMPREFIX)gimp_vectors_prop_undo_get_type	\
+	-u $(SYMPREFIX)gimp_cairo_image_surface_create_buffer	\
+	-u $(SYMPREFIX)xcf_init					\
+	-u $(SYMPREFIX)gimp_pdb_new				\
+	-u $(SYMPREFIX)internal_procs_init			\
+	-u $(SYMPREFIX)gimp_plug_in_manager_restore		\
+	-u $(SYMPREFIX)plug_in_icc_profile_apply_rgb		\
+	-u $(SYMPREFIX)gimp_vectors_undo_get_type		\
+	-u $(SYMPREFIX)gimp_vectors_mod_undo_get_type		\
+	-u $(SYMPREFIX)gimp_vectors_prop_undo_get_type		\
 	-u $(SYMPREFIX)gimp_image_map_config_get_type
 
 test_config_LDADD = \

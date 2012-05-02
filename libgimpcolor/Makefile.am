@@ -52,7 +52,7 @@ AM_CPPFLAGS = \
 
 INCLUDES = \
 	-I$(top_srcdir)	\
-	$(BABL_CFLAGS)	\
+	$(GEGL_CFLAGS)	\
 	$(CAIRO_CFLAGS)	\
 	$(GLIB_CFLAGS)	\
 	-I$(includedir)

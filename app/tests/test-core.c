@@ -79,7 +79,8 @@ gimp_test_image_setup (GimpTestFixture *fixture,
   fixture->image = gimp_image_new (gimp,
                                    GIMP_TEST_IMAGE_SIZE,
                                    GIMP_TEST_IMAGE_SIZE,
-                                   GIMP_RGB);
+                                   GIMP_RGB,
+                                   GIMP_PRECISION_FLOAT);
 }
 
 /**

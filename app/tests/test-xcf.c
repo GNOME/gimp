@@ -62,6 +62,7 @@
 #define GIMP_MAINIMAGE_WIDTH            100
 #define GIMP_MAINIMAGE_HEIGHT           90
 #define GIMP_MAINIMAGE_TYPE             GIMP_RGB
+#define GIMP_MAINIMAGE_PRECISION        GIMP_PRECISION_FLOAT
 
 #define GIMP_MAINIMAGE_LAYER1_NAME      "layer1"
 #define GIMP_MAINIMAGE_LAYER1_WIDTH     50
@@ -362,7 +363,8 @@ gimp_create_mainimage (Gimp     *gimp,
   image = gimp_image_new (gimp,
                           GIMP_MAINIMAGE_WIDTH,
                           GIMP_MAINIMAGE_HEIGHT,
-                          GIMP_MAINIMAGE_TYPE);
+                          GIMP_MAINIMAGE_TYPE,
+                          GIMP_MAINIMAGE_PRECISION);
 
   /* Layers */
   layer = gimp_layer_new (image,
