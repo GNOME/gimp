@@ -1540,7 +1540,7 @@ gimp_parasite_attach (const GimpParasite *parasite)
 gboolean
 gimp_parasite_detach (const gchar *name)
 {
-  return gimp_parasite_detach (name);
+  return gimp_detach_parasite (name);
 }
 
 /**
@@ -1587,7 +1587,7 @@ gimp_attach_new_parasite (const gchar   *name,
   GimpParasite *parasite = gimp_parasite_new (name, flags, size, data);
   gboolean      success;
 
-  success = gimp_parasite_attach (parasite);
+  success = gimp_attach_parasite (parasite);
 
   gimp_parasite_free (parasite);
 
