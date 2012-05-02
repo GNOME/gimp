@@ -48,6 +48,7 @@ GTKDOC_CFLAGS = \
 	@CFLAGS@		\
 	-I$(top_srcdir) 	\
 	-I$(top_builddir) 	\
+	$(GEGL_CFLAGS)		\
 	@GTK_CFLAGS@		\
 	-UGTK_DISABLE_SINGLE_INCLUDES
 

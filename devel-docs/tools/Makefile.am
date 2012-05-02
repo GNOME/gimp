@@ -10,7 +10,9 @@ libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSIO
 
 AM_CPPFLAGS = $(GTK_CFLAGS) -DTOP_SRCDIR=\"$(top_srcdir)\"
 
-INCLUDES = -I$(top_srcdir)
+INCLUDES = \
+	-I$(top_srcdir)	\
+	$(GEGL_CFLAGS)
 
 
 if ENABLE_GTK_DOC

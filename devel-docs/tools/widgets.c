@@ -1,6 +1,8 @@
 
 #include "config.h"
 
+#include <gegl.h>
+
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 
