@@ -4,20 +4,20 @@
 # Valek Filippov <frob@df.ru>, 1999-2002.
 # Anatoly A. Yakushin <jaa@altlinux.ru>, 2003, 2004.
 # Roxana Kolosova <mavka@justos.org>, 2003-2006.
-# Александр Прокудин <alexandre.prokoudine@gmail.com>, 2005, 2006, 2007, 2009, 2010, 2011.
+# Александр Прокудин <alexandre.prokoudine@gmail.com>, 2005, 2006, 2007, 2009, 2010, 2011, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-01-20 04:27+0400\n"
-"PO-Revision-Date: 2012-01-20 07:54+0400\n"
+"PO-Revision-Date: 2012-05-02 18:16+0400\n"
 "Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
-"Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
+"Language-Team: русский <gnome-cyr@lists.gnome.org>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2); 10<=4 && (n%100<10 || n"
 "%100>=20) ? 1 : 2);\n"
@@ -5396,7 +5396,7 @@ msgstr "Использовать GEGL"
 #: ../app/actions/view-actions.c:239
 msgctxt "view-action"
 msgid "Use GEGL to create this window's projection"
-msgstr ""
+msgstr "Использовать GEGL для создания проекции этого окна"
 
 #: ../app/actions/view-actions.c:263
 msgctxt "view-zoom-action"
@@ -10812,7 +10812,7 @@ msgstr "Залить цветом _фона"
 #: ../app/gegl/gimpoperationcagetransform.c:126
 #: ../app/tools/gimpcageoptions.c:144
 msgid "Fill the original position of the cage with a plain color"
-msgstr ""
+msgstr "Заливать исходную позицию рамки цветом"
 
 #. initialize the document history
 #: ../app/gui/gui.c:421
@@ -13257,9 +13257,8 @@ msgid "Smooth stroke"
 msgstr "Сглаженные штрихи"
 
 #: ../app/tools/gimppaintoptions-gui.c:392
-#, fuzzy
 msgid "Weight"
-msgstr "Высота"
+msgstr "Вес"
 
 #: ../app/tools/gimppainttool.c:138
 msgid "Click to paint"
@@ -13692,7 +13691,6 @@ msgid ""
 msgstr ""
 
 #: ../app/tools/gimptextoptions.c:196
-#, fuzzy
 msgid "Use an external editor window for text entry"
 msgstr ""
 "Использовать окно с редактором текста вместо редактирования текста прямо на "
@@ -14308,9 +14306,8 @@ msgid "Removing shortcut failed."
 msgstr "Не удалось удалить клавиши быстрого доступа."
 
 #: ../app/widgets/gimpbrusheditor.c:166
-#, fuzzy
 msgid "Spikes"
-msgstr "Лучи:"
+msgstr "Лучи"
 
 #: ../app/widgets/gimpbrusheditor.c:177
 msgid "Hardness"
