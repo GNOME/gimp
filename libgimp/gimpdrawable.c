@@ -622,7 +622,7 @@ gimp_drawable_parasite_list (gint32    drawable_ID,
  * Convenience function that creates a parasite and attaches it
  * to GIMP.
  *
- * Deprecated: use gimp_image_parasite_attach() instead.
+ * Deprecated: use gimp_item_attach_parasite() instead.
  *
  * Return value: TRUE on successful creation and attachment of
  * the new parasite.
