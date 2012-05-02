@@ -107,7 +107,7 @@ gimp_vectors_set_name (gint32       vectors_ID,
 gboolean
 gimp_vectors_get_visible (gint32 vectors_ID)
 {
-  return gimp_vectors_get_visible (vectors_ID);
+  return gimp_item_get_visible (vectors_ID);
 }
 
 /**
@@ -193,7 +193,7 @@ gboolean
 gimp_vectors_set_tattoo (gint32 vectors_ID,
                          gint   tattoo)
 {
-  return gimp_vectors_set_tattoo (vectors_ID, tattoo);
+  return gimp_item_set_tattoo (vectors_ID, tattoo);
 }
 
 /**
