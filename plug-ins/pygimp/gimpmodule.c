@@ -1401,7 +1401,7 @@ pygimp_user_directory(PyObject *self, PyObject *args, PyObject *kwargs)
     if (pyg_enum_get_value(GIMP_TYPE_USER_DIRECTORY, py_type, (gpointer)&type))
         return NULL;
 
-    user_dir = gimp_user_directory(type);
+    user_dir = g_get_user_special_dir(type);
 
     if (user_dir) {
         ret = PyString_FromString(user_dir);
