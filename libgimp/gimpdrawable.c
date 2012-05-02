@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#define GIMP_DISABLE_DEPRECATION_WARNINGS
+
 #include "gimp.h"
 
 #include "gimptilebackendplugin.h"

@@ -47,19 +47,25 @@ typedef enum
 typedef struct _GimpPixelFetcher GimpPixelFetcher;
 
 
+GIMP_DEPRECATED
 GimpPixelFetcher * gimp_pixel_fetcher_new       (GimpDrawable     *drawable,
                                                  gboolean          shadow);
+GIMP_DEPRECATED
 void               gimp_pixel_fetcher_destroy   (GimpPixelFetcher *pf);
 
+GIMP_DEPRECATED
 void   gimp_pixel_fetcher_set_edge_mode (GimpPixelFetcher         *pf,
                                          GimpPixelFetcherEdgeMode  mode);
+GIMP_DEPRECATED
 void   gimp_pixel_fetcher_set_bg_color  (GimpPixelFetcher         *pf,
                                          const GimpRGB            *color);
 
+GIMP_DEPRECATED
 void   gimp_pixel_fetcher_get_pixel     (GimpPixelFetcher         *pf,
                                          gint                      x,
                                          gint                      y,
                                          guchar                   *pixel);
+GIMP_DEPRECATED
 void   gimp_pixel_fetcher_put_pixel     (GimpPixelFetcher         *pf,
                                          gint                      x,
                                          gint                      y,

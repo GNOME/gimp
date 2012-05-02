@@ -59,25 +59,32 @@ typedef void   (* GimpRgnFuncSrcDest) (gint          x,
                                        gint          bpp,
                                        gpointer      data);
 
+GIMP_DEPRECATED_FOR(GeglBufferIterator)
 GimpRgnIterator * gimp_rgn_iterator_new      (GimpDrawable      *drawable,
                                               GimpRunMode        unused);
+GIMP_DEPRECATED_FOR(GeglBufferIterator)
 void              gimp_rgn_iterator_free     (GimpRgnIterator   *iter);
+GIMP_DEPRECATED_FOR(GeglBufferIterator)
 void              gimp_rgn_iterator_src      (GimpRgnIterator   *iter,
                                               GimpRgnFuncSrc     func,
                                               gpointer           data);
+GIMP_DEPRECATED_FOR(GeglBufferIterator)
 void              gimp_rgn_iterator_dest     (GimpRgnIterator   *iter,
                                               GimpRgnFuncDest    func,
                                               gpointer           data);
+GIMP_DEPRECATED_FOR(GeglBufferIterator)
 void              gimp_rgn_iterator_src_dest (GimpRgnIterator   *iter,
                                               GimpRgnFuncSrcDest func,
                                               gpointer           data);
 
 
+GIMP_DEPRECATED_FOR(GeglBufferIterator)
 void              gimp_rgn_iterate1          (GimpDrawable      *drawable,
                                               GimpRunMode        unused,
                                               GimpRgnFunc1       func,
                                               gpointer           data);
 
+GIMP_DEPRECATED_FOR(GeglBufferIterator)
 void              gimp_rgn_iterate2          (GimpDrawable      *drawable,
                                               GimpRunMode        unused,
                                               GimpRgnFunc2       func,

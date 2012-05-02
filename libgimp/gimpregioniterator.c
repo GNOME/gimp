@@ -22,6 +22,8 @@
 
 #include <glib.h>
 
+#define GIMP_DISABLE_DEPRECATION_WARNINGS
+
 #include "gimp.h"
 #include "gimpregioniterator.h"
 

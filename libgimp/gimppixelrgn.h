@@ -44,6 +44,7 @@ struct _GimpPixelRgn
 };
 
 
+GIMP_DEPRECATED_FOR(gimp_drawable_get_buffer)
 void      gimp_pixel_rgn_init       (GimpPixelRgn  *pr,
                                      GimpDrawable  *drawable,
                                      gint           x,
@@ -52,55 +53,67 @@ void      gimp_pixel_rgn_init       (GimpPixelRgn  *pr,
                                      gint           height,
                                      gint           dirty,
                                      gint           shadow);
+GIMP_DEPRECATED
 void      gimp_pixel_rgn_resize     (GimpPixelRgn  *pr,
                                      gint           x,
                                      gint           y,
                                      gint           width,
                                      gint           height);
+GIMP_DEPRECATED_FOR(gegl_buffer_sample)
 void      gimp_pixel_rgn_get_pixel  (GimpPixelRgn  *pr,
                                      guchar        *buf,
                                      gint           x,
                                      gint           y);
+GIMP_DEPRECATED_FOR(gegl_buffer_get)
 void      gimp_pixel_rgn_get_row    (GimpPixelRgn  *pr,
                                      guchar        *buf,
                                      gint           x,
                                      gint           y,
                                      gint           width);
+GIMP_DEPRECATED_FOR(gegl_buffer_get)
 void      gimp_pixel_rgn_get_col    (GimpPixelRgn  *pr,
                                      guchar        *buf,
                                      gint           x,
                                      gint           y,
                                      gint           height);
+GIMP_DEPRECATED_FOR(gegl_buffer_get)
 void      gimp_pixel_rgn_get_rect   (GimpPixelRgn  *pr,
                                      guchar        *buf,
                                      gint           x,
                                      gint           y,
                                      gint           width,
                                      gint           height);
+GIMP_DEPRECATED_FOR(gegl_buffer_set)
 void      gimp_pixel_rgn_set_pixel  (GimpPixelRgn  *pr,
                                      const guchar  *buf,
                                      gint           x,
                                      gint           y);
+GIMP_DEPRECATED_FOR(gegl_buffer_set)
 void      gimp_pixel_rgn_set_row    (GimpPixelRgn  *pr,
                                      const guchar  *buf,
                                      gint           x,
                                      gint           y,
                                      gint           width);
+GIMP_DEPRECATED_FOR(gegl_buffer_set)
 void      gimp_pixel_rgn_set_col    (GimpPixelRgn  *pr,
                                      const guchar  *buf,
                                      gint           x,
                                      gint           y,
                                      gint           height);
+GIMP_DEPRECATED_FOR(gegl_buffer_set)
 void      gimp_pixel_rgn_set_rect   (GimpPixelRgn  *pr,
                                      const guchar  *buf,
                                      gint           x,
                                      gint           y,
                                      gint           width,
                                      gint           height);
+GIMP_DEPRECATED_FOR(gegl_buffer_iterator_new)
 gpointer  gimp_pixel_rgns_register  (gint           nrgns,
                                      ...);
+GIMP_DEPRECATED_FOR(gegl_buffer_iterator_new)
 gpointer  gimp_pixel_rgns_register2 (gint           nrgns,
                                      GimpPixelRgn **prs);
+GIMP_DEPRECATED_FOR(gegl_buffer_iterator_next)
 gpointer  gimp_pixel_rgns_process   (gpointer       pri_ptr);
 
 

@@ -24,6 +24,8 @@
 
 #include <glib-object.h>
 
+#define GIMP_DISABLE_DEPRECATION_WARNINGS
+
 #include "libgimpbase/gimpbase.h"
 #include "libgimpbase/gimpprotocol.h"
 #include "libgimpbase/gimpwire.h"
