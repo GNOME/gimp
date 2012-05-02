@@ -837,6 +837,8 @@ levels_update_input_bar (GimpLevelsTool *tool)
 
   switch (config->channel)
     {
+      gdouble value;
+
     case GIMP_HISTOGRAM_VALUE:
     case GIMP_HISTOGRAM_ALPHA:
     case GIMP_HISTOGRAM_RGB:
@@ -846,9 +848,10 @@ levels_update_input_bar (GimpLevelsTool *tool)
 
         for (i = 0; i < 256; i++)
           {
-            v[i] = gimp_operation_levels_map_input (config,
-                                                    config->channel,
-                                                    i / 255.0) * 255.999;
+            value = gimp_operation_levels_map_input (config,
+                                                     config->channel,
+                                                     i / 255.0);
+            v[i] = CLAMP (value, 0.0, 1.0) * 255.999;
           }
 
         gimp_color_bar_set_buffers (GIMP_COLOR_BAR (tool->input_bar),
@@ -867,15 +870,20 @@ levels_update_input_bar (GimpLevelsTool *tool)
 
         for (i = 0; i < 256; i++)
           {
-            r[i] = gimp_operation_levels_map_input (config,
-                                                    GIMP_HISTOGRAM_RED,
-                                                    i / 255.0) * 255.999;
-            g[i] = gimp_operation_levels_map_input (config,
-                                                    GIMP_HISTOGRAM_GREEN,
-                                                    i / 255.0) * 255.999;
-            b[i] = gimp_operation_levels_map_input (config,
-                                                    GIMP_HISTOGRAM_BLUE,
-                                                    i / 255.0) * 255.999;
+            value = gimp_operation_levels_map_input (config,
+                                                     GIMP_HISTOGRAM_RED,
+                                                     i / 255.0);
+            r[i] = CLAMP (value, 0.0, 1.0) * 255.999;
+
+            value = gimp_operation_levels_map_input (config,
+                                                     GIMP_HISTOGRAM_GREEN,
+                                                     i / 255.0);
+            g[i] = CLAMP (value, 0.0, 1.0) * 255.999;
+
+            value = gimp_operation_levels_map_input (config,
+                                                     GIMP_HISTOGRAM_BLUE,
+                                                     i / 255.0);
+            b[i] = CLAMP (value, 0.0, 1.0) * 255.999;
           }
 
         gimp_color_bar_set_buffers (GIMP_COLOR_BAR (tool->input_bar),
