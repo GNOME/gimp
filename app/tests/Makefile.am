@@ -104,11 +104,11 @@ LDADD = \
 	$(top_builddir)/app/text/libapptext.a			\
 	$(top_builddir)/app/paint/libapppaint.a			\
 	$(top_builddir)/app/composite/libappcomposite.a		\
-	$(top_builddir)/app/gegl/libappgegl.a			\
 	$(top_builddir)/app/config/libappconfig.a		\
 	$(top_builddir)/app/paint-funcs/libapppaint-funcs.a	\
 	$(top_builddir)/app/base/libappbase.a			\
 	$(top_builddir)/app/libapp.a				\
+	$(top_builddir)/app/gegl/libappgegl.a			\
 	libgimpapptestutils.a					\
 	$(libgimpwidgets)					\
 	$(libgimpconfig)					\

@@ -19,6 +19,7 @@
 
 #include <stdlib.h>
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "gui/gui-types.h"
@@ -37,6 +38,8 @@
 
 #include "core/gimp.h"
 #include "core/gimp-contexts.h"
+
+#include "gegl/gimp-gegl.h"
 
 #include "gimp-log.h"
 #include "tests.h"
@@ -70,6 +73,8 @@ gimp_init_for_testing (void)
 
   gimp_load_config (gimp, NULL, NULL);
 
+  gegl_init(NULL, NULL);
+  gimp_gegl_init (gimp);
   base_init (GIMP_BASE_CONFIG (gimp->config),
              FALSE /*be_verbose*/,
              FALSE /*use_cpu_accel*/);
@@ -107,6 +112,8 @@ gimp_init_for_gui_testing_internal (gboolean     show_gui,
   base_init (GIMP_BASE_CONFIG (gimp->config),
              FALSE /*be_verbose*/,
              FALSE /*use_cpu_accel*/);
+  gegl_init(NULL, NULL);
+  gimp_gegl_init (gimp);
   gui_init (gimp, TRUE);
   gimp_initialize (gimp, gimp_status_func_dummy);
   gimp_restore (gimp, gimp_status_func_dummy);
