@@ -35,13 +35,13 @@ G_BEGIN_DECLS
 gboolean gimp_palettes_refresh           (void);
 gchar**  gimp_palettes_get_list          (const gchar *filter,
                                           gint        *num_palettes);
-#ifndef GIMP_DISABLE_DEPRECATED
+GIMP_DEPRECATED_FOR(gimp_context_get_palette)
 gchar*   gimp_palettes_get_palette       (gint        *num_colors);
+GIMP_DEPRECATED_FOR(gimp_palette_entry_get_color)
 gchar*   gimp_palettes_get_palette_entry (const gchar *name,
                                           gint         entry_num,
                                           gint        *num_colors,
                                           GimpRGB     *color);
-#endif /* GIMP_DISABLE_DEPRECATED */
 
 
 G_END_DECLS

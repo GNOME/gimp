@@ -60,15 +60,14 @@ gboolean               gimp_selection_grow        (gint32          image_ID,
                                                    gint            steps);
 gboolean               gimp_selection_shrink      (gint32          image_ID,
                                                    gint            steps);
-#ifndef GIMP_DISABLE_DEPRECATED
+GIMP_DEPRECATED_FOR(gimp_image_select_item)
 gboolean               gimp_selection_layer_alpha (gint32          layer_ID);
+GIMP_DEPRECATED_FOR(gimp_image_select_item)
 gboolean               gimp_selection_load        (gint32          channel_ID);
-#endif /* GIMP_DISABLE_DEPRECATED */
 gint32                 gimp_selection_save        (gint32          image_ID);
-#ifndef GIMP_DISABLE_DEPRECATED
+GIMP_DEPRECATED_FOR(gimp_image_select_item)
 gboolean               gimp_selection_combine     (gint32          channel_ID,
                                                    GimpChannelOps  operation);
-#endif /* GIMP_DISABLE_DEPRECATED */
 
 
 G_END_DECLS

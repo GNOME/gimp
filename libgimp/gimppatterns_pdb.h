@@ -35,16 +35,16 @@ G_BEGIN_DECLS
 gboolean gimp_patterns_refresh          (void);
 gchar**  gimp_patterns_get_list         (const gchar  *filter,
                                          gint         *num_patterns);
-#ifndef GIMP_DISABLE_DEPRECATED
+GIMP_DEPRECATED_FOR(gimp_context_get_pattern)
 gchar*   gimp_patterns_get_pattern      (gint         *width,
                                          gint         *height);
+GIMP_DEPRECATED_FOR(gimp_pattern_get_pixels)
 gchar*   gimp_patterns_get_pattern_data (const gchar  *name,
                                          gint         *width,
                                          gint         *height,
                                          gint         *mask_bpp,
                                          gint         *length,
                                          guint8      **mask_data);
-#endif /* GIMP_DISABLE_DEPRECATED */
 
 
 G_END_DECLS

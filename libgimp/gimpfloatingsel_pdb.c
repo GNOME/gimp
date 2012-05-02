@@ -23,9 +23,6 @@
 #include "config.h"
 
 #include "gimp.h"
-#undef GIMP_DISABLE_DEPRECATED
-#undef __GIMP_FLOATING_SEL_PDB_H__
-#include "gimpfloatingsel_pdb.h"
 
 
 /**

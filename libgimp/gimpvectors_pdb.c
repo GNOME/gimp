@@ -25,9 +25,6 @@
 #include <string.h>
 
 #include "gimp.h"
-#undef GIMP_DISABLE_DEPRECATED
-#undef __GIMP_VECTORS_PDB_H__
-#include "gimpvectors_pdb.h"
 
 
 /**

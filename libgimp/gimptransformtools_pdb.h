@@ -32,9 +32,10 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#ifndef GIMP_DISABLE_DEPRECATED
+GIMP_DEPRECATED_FOR(gimp_item_transform_flip_simple)
 gint32 gimp_flip         (gint32              drawable_ID,
                           GimpOrientationType flip_type);
+GIMP_DEPRECATED_FOR(gimp_item_transform_perspective)
 gint32 gimp_perspective  (gint32              drawable_ID,
                           gboolean            interpolation,
                           gdouble             x0,
@@ -45,19 +46,23 @@ gint32 gimp_perspective  (gint32              drawable_ID,
                           gdouble             y2,
                           gdouble             x3,
                           gdouble             y3);
+GIMP_DEPRECATED_FOR(gimp_item_transform_rotate)
 gint32 gimp_rotate       (gint32              drawable_ID,
                           gboolean            interpolation,
                           gdouble             angle);
+GIMP_DEPRECATED_FOR(gimp_item_transform_scale)
 gint32 gimp_scale        (gint32              drawable_ID,
                           gboolean            interpolation,
                           gdouble             x0,
                           gdouble             y0,
                           gdouble             x1,
                           gdouble             y1);
+GIMP_DEPRECATED_FOR(gimp_item_transform_shear)
 gint32 gimp_shear        (gint32              drawable_ID,
                           gboolean            interpolation,
                           GimpOrientationType shear_type,
                           gdouble             magnitude);
+GIMP_DEPRECATED_FOR(gimp_item_transform_2d)
 gint32 gimp_transform_2d (gint32              drawable_ID,
                           gboolean            interpolation,
                           gdouble             source_x,
@@ -67,7 +72,6 @@ gint32 gimp_transform_2d (gint32              drawable_ID,
                           gdouble             angle,
                           gdouble             dest_x,
                           gdouble             dest_y);
-#endif /* GIMP_DISABLE_DEPRECATED */
 
 
 G_END_DECLS

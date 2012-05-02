@@ -42,9 +42,8 @@ gboolean gimp_levels              (gint32                drawable_ID,
                                    gdouble               gamma,
                                    gint                  low_output,
                                    gint                  high_output);
-#ifndef GIMP_DISABLE_DEPRECATED
+GIMP_DEPRECATED_FOR(gimp_levels_stretch)
 gboolean gimp_levels_auto         (gint32                drawable_ID);
-#endif /* GIMP_DISABLE_DEPRECATED */
 gboolean gimp_levels_stretch      (gint32                drawable_ID);
 gboolean gimp_posterize           (gint32                drawable_ID,
                                    gint                  levels);

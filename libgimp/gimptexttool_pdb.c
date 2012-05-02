@@ -23,9 +23,6 @@
 #include "config.h"
 
 #include "gimp.h"
-#undef GIMP_DISABLE_DEPRECATED
-#undef __GIMP_TEXT_TOOL_PDB_H__
-#include "gimptexttool_pdb.h"
 
 
 /**

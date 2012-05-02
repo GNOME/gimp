@@ -83,13 +83,13 @@ gboolean              gimp_text_layer_set_letter_spacing (gint32                
 gboolean              gimp_text_layer_resize             (gint32                 layer_ID,
                                                           gdouble                width,
                                                           gdouble                height);
-#ifndef GIMP_DISABLE_DEPRECATED
+GIMP_DEPRECATED_FOR(gimp_text_layer_get_hint_style)
 gboolean              gimp_text_layer_get_hinting        (gint32                 layer_ID,
                                                           gboolean              *autohint);
+GIMP_DEPRECATED_FOR(gimp_text_layer_set_hint_style)
 gboolean              gimp_text_layer_set_hinting        (gint32                 layer_ID,
                                                           gboolean               hinting,
                                                           gboolean               autohint);
-#endif /* GIMP_DISABLE_DEPRECATED */
 
 
 G_END_DECLS

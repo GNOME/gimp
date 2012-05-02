@@ -85,14 +85,16 @@ sub generate {
 	my %usednames;
 	my $retdesc = "";
 
-	if ($proc->{deprecated} && !$out->{deprecated}) {
-	    push @{$out->{protos}}, "#ifndef GIMP_DISABLE_DEPRECATED\n";
-	    $out->{deprecated} = 1;
-	    $out->{seen_deprecated} = 1;
-	}
-	elsif (!$proc->{deprecated} && $out->{deprecated}) {
-	    push @{$out->{protos}}, "#endif /* GIMP_DISABLE_DEPRECATED */\n";
-	    $out->{deprecated} = 0;
+	if ($proc->{deprecated}) {
+	    if ($proc->{deprecated} eq 'NONE') {
+		push @{$out->{protos}}, "GIMP_DEPRECATED\n";
+	    }
+	    else {
+		my $underscores = $proc->{deprecated};
+		$underscores =~ s/-/_/g;
+
+		push @{$out->{protos}}, "GIMP_DEPRECATED_FOR($underscores)\n";
+	    }
 	}
 
 	# Find the return argument (defaults to the first arg if not
@@ -474,11 +476,6 @@ $wrapped$funcname ($clist)
 CODE
     }
 
-    if ($out->{deprecated}) {
-        push @{$out->{protos}}, "#endif /* GIMP_DISABLE_DEPRECATED */\n";
-	$out->{deprecated} = 0;
-    }
-
     my $lgpl_top = <<'LGPL';
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
@@ -547,7 +544,7 @@ LGPL
 	foreach (@{$out->{protos}}) {
 	    my $arglist;
 
-	    if (!/^#/) {
+	    if (!/^GIMP_DEPRECATED/) {
 		my $len;
 
 		$arglist = [ split(' ', $_, 3) ];
@@ -660,11 +657,6 @@ HEADER
         print CFILE qq/#include "config.h"\n\n/;
 	print CFILE $out->{headers}, "\n" if exists $out->{headers};
 	print CFILE qq/#include "gimp.h"\n/;
-	if ($out->{seen_deprecated}) {
-	    print CFILE "#undef GIMP_DISABLE_DEPRECATED\n";
-	    print CFILE "#undef __GIMP_\U$group\E_PDB_H__\n";
-	    print CFILE qq/#include "${hname}"\n/;
-	}
 	$long_desc = &desc_wrap($main::grp{$group}->{doc_long_desc});
 	print CFILE <<SECTION_DOCS;
 

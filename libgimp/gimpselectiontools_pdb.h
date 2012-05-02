@@ -32,7 +32,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#ifndef GIMP_DISABLE_DEPRECATED
+GIMP_DEPRECATED_FOR(gimp_image_select_color)
 gboolean gimp_by_color_select      (gint32               drawable_ID,
                                     const GimpRGB       *color,
                                     gint                 threshold,
@@ -41,6 +41,7 @@ gboolean gimp_by_color_select      (gint32               drawable_ID,
                                     gboolean             feather,
                                     gdouble              feather_radius,
                                     gboolean             sample_merged);
+GIMP_DEPRECATED_FOR(gimp_image_select_color)
 gboolean gimp_by_color_select_full (gint32               drawable_ID,
                                     const GimpRGB       *color,
                                     gint                 threshold,
@@ -52,6 +53,7 @@ gboolean gimp_by_color_select_full (gint32               drawable_ID,
                                     gboolean             sample_merged,
                                     gboolean             select_transparent,
                                     GimpSelectCriterion  select_criterion);
+GIMP_DEPRECATED_FOR(gimp_image_select_ellipse)
 gboolean gimp_ellipse_select       (gint32               image_ID,
                                     gdouble              x,
                                     gdouble              y,
@@ -61,6 +63,7 @@ gboolean gimp_ellipse_select       (gint32               image_ID,
                                     gboolean             antialias,
                                     gboolean             feather,
                                     gdouble              feather_radius);
+GIMP_DEPRECATED_FOR(gimp_image_select_polygon)
 gboolean gimp_free_select          (gint32               image_ID,
                                     gint                 num_segs,
                                     const gdouble       *segs,
@@ -68,6 +71,7 @@ gboolean gimp_free_select          (gint32               image_ID,
                                     gboolean             antialias,
                                     gboolean             feather,
                                     gdouble              feather_radius);
+GIMP_DEPRECATED_FOR(gimp_image_select_contiguous_color)
 gboolean gimp_fuzzy_select         (gint32               drawable_ID,
                                     gdouble              x,
                                     gdouble              y,
@@ -77,6 +81,7 @@ gboolean gimp_fuzzy_select         (gint32               drawable_ID,
                                     gboolean             feather,
                                     gdouble              feather_radius,
                                     gboolean             sample_merged);
+GIMP_DEPRECATED_FOR(gimp_image_select_contiguous_color)
 gboolean gimp_fuzzy_select_full    (gint32               drawable_ID,
                                     gdouble              x,
                                     gdouble              y,
@@ -89,6 +94,7 @@ gboolean gimp_fuzzy_select_full    (gint32               drawable_ID,
                                     gboolean             sample_merged,
                                     gboolean             select_transparent,
                                     GimpSelectCriterion  select_criterion);
+GIMP_DEPRECATED_FOR(gimp_image_select_rectangle)
 gboolean gimp_rect_select          (gint32               image_ID,
                                     gdouble              x,
                                     gdouble              y,
@@ -97,6 +103,7 @@ gboolean gimp_rect_select          (gint32               image_ID,
                                     GimpChannelOps       operation,
                                     gboolean             feather,
                                     gdouble              feather_radius);
+GIMP_DEPRECATED_FOR(gimp_image_select_round_rectangle)
 gboolean gimp_round_rect_select    (gint32               image_ID,
                                     gdouble              x,
                                     gdouble              y,
@@ -109,7 +116,6 @@ gboolean gimp_round_rect_select    (gint32               image_ID,
                                     gboolean             feather,
                                     gdouble              feather_radius_x,
                                     gdouble              feather_radius_y);
-#endif /* GIMP_DISABLE_DEPRECATED */
 
 
 G_END_DECLS
