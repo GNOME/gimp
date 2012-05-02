@@ -1384,10 +1384,6 @@ save_image (const gchar  *filename,
   height = gegl_buffer_get_height (buffer);
   type = gimp_drawable_type (drawable_ID);
 
-  /* this is a stupid workaround for some caching issues in GEGL */
-#warning remove this when gegl is fixed
-  gegl_buffer_copy (buffer, NULL, buffer, NULL);
-
   /*
    * Initialise remap[]
    */
