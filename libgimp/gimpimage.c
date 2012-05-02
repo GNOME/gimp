@@ -437,7 +437,7 @@ gimp_image_parasite_list (gint32    image_ID,
  * Convenience function that creates a parasite and attaches it
  * to GIMP.
  *
- * Deprecated: Use gimp_image_parasite_attach() instead.
+ * Deprecated: Use gimp_image_attach_parasite() instead.
  *
  * Return value: TRUE on successful creation and attachment of
  * the new parasite.
@@ -454,7 +454,7 @@ gimp_image_attach_new_parasite (gint32         image_ID,
   GimpParasite *parasite = gimp_parasite_new (name, flags, size, data);
   gboolean      success;
 
-  success = gimp_image_parasite_attach (image_ID, parasite);
+  success = gimp_image_attach_parasite (image_ID, parasite);
 
   gimp_parasite_free (parasite);
 
