@@ -21,6 +21,7 @@
 #include <babl/babl.h>
 #include <glib-object.h>
 
+#define GIMP_DISABLE_DEPRECATION_WARNINGS /*  for GIMP_RGB_INTENSITY()  */
 #include "libgimpmath/gimpmath.h"
 
 #include "gimpcolortypes.h"

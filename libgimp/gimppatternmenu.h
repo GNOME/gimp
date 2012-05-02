@@ -29,23 +29,21 @@
  *  written code.
  */
 
-#ifndef GIMP_DISABLE_DEPRECATED
-
 G_BEGIN_DECLS
 
-
+GIMP_DEPRECATED_FOR(gimp_pattern_select_button_new)
 GtkWidget * gimp_pattern_select_widget_new   (const gchar      *title,
                                               const gchar      *pattern_name,
                                               GimpRunPatternCallback  callback,
                                               gpointer          data);
 
+GIMP_DEPRECATED_FOR(gimp_select_button_close_popup)
 void        gimp_pattern_select_widget_close (GtkWidget        *widget);
+GIMP_DEPRECATED_FOR(gimp_pattern_select_button_set_brush)
 void        gimp_pattern_select_widget_set   (GtkWidget        *widget,
                                               const gchar      *pattern_name);
 
 
 G_END_DECLS
-
-#endif /*  GIMP_DISABLE_DEPRECATED  */
 
 #endif /* __GIMP_PATTERN_MENU_H__ */

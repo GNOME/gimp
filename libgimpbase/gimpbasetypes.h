@@ -32,6 +32,19 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+/* XXX FIXME move these to a separate file */
+
+#ifdef GIMP_DISABLE_DEPRECATION_WARNINGS
+#define GIMP_DEPRECATED
+#define GIMP_DEPRECATED_FOR(f)
+#define GIMP_UNAVAILABLE(maj,min)
+#else
+#define GIMP_DEPRECATED G_DEPRECATED
+#define GIMP_DEPRECATED_FOR(f) G_DEPRECATED_FOR(f)
+#define GIMP_UNAVAILABLE(maj,min) G_UNAVAILABLE(maj,min)
+#endif
+
+
 typedef struct _GimpParasite     GimpParasite;
 typedef struct _GimpDatafileData GimpDatafileData;
 typedef struct _GimpEnumDesc     GimpEnumDesc;

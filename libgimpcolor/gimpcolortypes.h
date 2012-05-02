@@ -19,6 +19,10 @@
 #ifndef __GIMP_COLOR_TYPES_H__
 #define __GIMP_COLOR_TYPES_H__
 
+
+#include <libgimpbase/gimpbasetypes.h>
+
+
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */

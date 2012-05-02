@@ -26,10 +26,8 @@
 #include "gimp.h"
 
 #include "gimpuitypes.h"
-#include "gimpgradientselectbutton.h"
-
-#undef GIMP_DISABLE_DEPRECATED
 #include "gimpgradientmenu.h"
+#include "gimpgradientselectbutton.h"
 
 
 /**

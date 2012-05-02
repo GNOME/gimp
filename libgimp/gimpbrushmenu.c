@@ -26,10 +26,8 @@
 #include "gimp.h"
 
 #include "gimpuitypes.h"
-#include "gimpbrushselectbutton.h"
-
-#undef GIMP_DISABLE_DEPRECATED
 #include "gimpbrushmenu.h"
+#include "gimpbrushselectbutton.h"
 
 
 /**

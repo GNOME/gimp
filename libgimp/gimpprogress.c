@@ -22,6 +22,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #undef GIMP_DISABLE_DEPRECATED
 #include "gimpprogress.h"
 #define GIMP_DISABLE_DEPRECATED

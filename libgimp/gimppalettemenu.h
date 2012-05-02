@@ -29,23 +29,21 @@
  *  written code.
  */
 
-#ifndef GIMP_DISABLE_DEPRECATED
-
 G_BEGIN_DECLS
 
-
+GIMP_DEPRECATED_FOR(gimp_gradient_select_button_new)
 GtkWidget * gimp_palette_select_widget_new   (const gchar            *title,
                                               const gchar            *palette_name,
                                               GimpRunPaletteCallback  callback,
                                               gpointer                data);
 
+GIMP_DEPRECATED_FOR(gimp_select_button_close_popup)
 void        gimp_palette_select_widget_close (GtkWidget              *widget);
+GIMP_DEPRECATED_FOR(gimp_gradient_select_button_set_gradient)
 void        gimp_palette_select_widget_set   (GtkWidget              *widget,
                                               const gchar            *palette_name);
 
 
 G_END_DECLS
-
-#endif /*  GIMP_DISABLE_DEPRECATED  */
 
 #endif /* __GIMP_PALETTE_MENU_H__ */

@@ -28,10 +28,10 @@
 #include <gdk/gdkx.h>
 #endif
 
-#include "libgimpmodule/gimpmodule.h"
-
 #include "gimp.h"
 #include "gimpui.h"
+
+#include "libgimpmodule/gimpmodule.h"
 
 #include "libgimpwidgets/gimpwidgets.h"
 #include "libgimpwidgets/gimpwidgets-private.h"

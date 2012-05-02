@@ -97,7 +97,6 @@
 #include "libgimpbase/gimpprotocol.h"
 #include "libgimpbase/gimpwire.h"
 
-#undef GIMP_DISABLE_DEPRECATED
 #include "gimp.h"
 #include "gimpunitcache.h"
 

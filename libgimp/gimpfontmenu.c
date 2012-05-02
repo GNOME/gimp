@@ -26,10 +26,8 @@
 #include "gimp.h"
 
 #include "gimpuitypes.h"
-#include "gimpfontselectbutton.h"
-
-#undef GIMP_DISABLE_DEPRECATED
 #include "gimpfontmenu.h"
+#include "gimpfontselectbutton.h"
 
 
 /**

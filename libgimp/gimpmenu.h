@@ -29,11 +29,9 @@
  *  written code.
  */
 
-#ifndef GIMP_DISABLE_DEPRECATED
-
-
 G_BEGIN_DECLS
 
+#ifndef GIMP_DISABLE_DEPRECATED
 
 typedef gboolean (* GimpConstraintFunc) (gint32   image_id,
                                          gint32   drawable_id,
@@ -42,27 +40,29 @@ typedef void     (* GimpMenuCallback)   (gint32   any_id,
                                          gpointer data);
 
 
+GIMP_DEPRECATED_FOR(gimp_image_combo_box_new)
 GtkWidget * gimp_image_menu_new    (GimpConstraintFunc constraint,
                                     GimpMenuCallback   callback,
                                     gpointer           data,
                                     gint32             active_image);
+GIMP_DEPRECATED_FOR(gimp_layer_combo_box_new)
 GtkWidget * gimp_layer_menu_new    (GimpConstraintFunc constraint,
                                     GimpMenuCallback   callback,
                                     gpointer           data,
                                     gint32             active_layer);
+GIMP_DEPRECATED_FOR(gimp_channel_combo_box_new)
 GtkWidget * gimp_channel_menu_new  (GimpConstraintFunc constraint,
                                     GimpMenuCallback   callback,
                                     gpointer           data,
                                     gint32             active_channel);
+GIMP_DEPRECATED_FOR(gimp_drawable_combo_box_new)
 GtkWidget * gimp_drawable_menu_new (GimpConstraintFunc constraint,
                                     GimpMenuCallback   callback,
                                     gpointer           data,
                                     gint32             active_drawable);
 
+#endif /*  GIMP_DISABLE_DEPRECATED  */
 
 G_END_DECLS
-
-
-#endif /*  GIMP_DISABLE_DEPRECATED  */
 
 #endif /* __GIMP_MENU_H__ */

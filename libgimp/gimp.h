@@ -334,20 +334,25 @@ guint32        gimp_user_time           (void) G_GNUC_CONST;
 
 const gchar  * gimp_get_progname        (void) G_GNUC_CONST;
 
-#ifndef GIMP_DISABLE_DEPRECATED
+GIMP_DEPRECATED
 gboolean       gimp_install_cmap        (void) G_GNUC_CONST;
+GIMP_DEPRECATED
 gint           gimp_min_colors          (void) G_GNUC_CONST;
 
+GIMP_DEPRECATED_FOR(gimp_get_parasite)
 GimpParasite * gimp_parasite_find       (const gchar        *name);
+GIMP_DEPRECATED_FOR(gimp_parasite_attach)
 gboolean       gimp_parasite_attach     (const GimpParasite *parasite);
+GIMP_DEPRECATED_FOR(gimp_parasite_detach)
 gboolean       gimp_parasite_detach     (const gchar        *name);
+GIMP_DEPRECATED_FOR(gimp_get_parasite_list)
 gboolean       gimp_parasite_list       (gint               *num_parasites,
                                          gchar            ***parasites);
+GIMP_DEPRECATED_FOR(gimp_parasite_attach)
 gboolean       gimp_attach_new_parasite (const gchar        *name,
                                          gint                flags,
                                          gint                size,
                                          gconstpointer       data);
-#endif /* GIMP_DISABLE_DEPRECATED */
 
 
 G_END_DECLS

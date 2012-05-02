@@ -54,6 +54,7 @@ const gchar * gimp_sysconf_directory          (void) G_GNUC_CONST;
 const gchar * gimp_plug_in_directory          (void) G_GNUC_CONST;
 
 #ifndef GIMP_DISABLE_DEPRECATED
+GIMP_DEPRECATED_FOR(g_get_user_special_dir)
 const gchar * gimp_user_directory             (GimpUserDirectory   type) G_GNUC_CONST;
 #endif /* !GIMP_DISABLE_DEPRECATED */
 

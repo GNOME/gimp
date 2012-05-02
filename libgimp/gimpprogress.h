@@ -80,7 +80,7 @@ typedef void (* GimpProgressTextCallback)  (const gchar *message,
 typedef void (* GimpProgressValueCallback) (gdouble      percentage,
                                             gpointer     user_data);
 
-
+GIMP_DEPRECATED_FOR(gimp_progress_install_vtable)
 const gchar * gimp_progress_install       (GimpProgressStartCallback  start_callback,
                                            GimpProgressEndCallback    end_callback,
                                            GimpProgressTextCallback   text_callback,

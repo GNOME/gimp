@@ -22,7 +22,8 @@
 
 #include <glib-object.h>
 
-#undef GIMP_DISABLE_DEPRECATED
+#include "gimpbasetypes.h"
+
 #include "gimpmemsize.h"
 
 #include "libgimp/libgimp-intl.h"

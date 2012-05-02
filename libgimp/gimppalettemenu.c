@@ -26,10 +26,8 @@
 #include "gimp.h"
 
 #include "gimpuitypes.h"
-#include "gimppaletteselectbutton.h"
-
-#undef GIMP_DISABLE_DEPRECATED
 #include "gimppalettemenu.h"
+#include "gimppaletteselectbutton.h"
 
 
 /**

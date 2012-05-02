@@ -20,7 +20,6 @@
 
 #include "config.h"
 
-#undef GIMP_DISABLE_DEPRECATED
 #include "gimp.h"
 
 #include "gimptilebackendplugin.h"

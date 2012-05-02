@@ -29,17 +29,18 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
-#ifndef GIMP_DISABLE_DEPRECATED
-
+GIMP_DEPRECATED_FOR(gimp_context_get_foreground)
 gboolean gimp_palette_get_foreground     (GimpRGB       *foreground);
+GIMP_DEPRECATED_FOR(gimp_context_get_background)
 gboolean gimp_palette_get_background     (GimpRGB       *background);
+GIMP_DEPRECATED_FOR(gimp_context_set_foreground)
 gboolean gimp_palette_set_foreground     (const GimpRGB *foreground);
+GIMP_DEPRECATED_FOR(gimp_context_set_background)
 gboolean gimp_palette_set_background     (const GimpRGB *background);
+GIMP_DEPRECATED_FOR(gimp_context_set_default_colors)
 gboolean gimp_palette_set_default_colors (void);
+GIMP_DEPRECATED_FOR(gimp_context_swap_colors)
 gboolean gimp_palette_swap_colors        (void);
-
-#endif /* GIMP_DISABLE_DEPRECATED */
-
 
 G_END_DECLS
 
