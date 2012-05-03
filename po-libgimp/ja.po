@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-02-04 19:01+0000\n"
-"PO-Revision-Date: 2011-12-29 22:01+0900\n"
+"POT-Creation-Date: 2012-05-02 22:56+0000\n"
+"PO-Revision-Date: 2011-05-01 00:25+0900\n"
 "Last-Translator: Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -23,22 +23,22 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1077
+#: ../libgimp/gimp.c:1076
 msgid "success"
 msgstr "成功"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1081
+#: ../libgimp/gimp.c:1080
 msgid "execution error"
 msgstr "実行時エラー"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1085
+#: ../libgimp/gimp.c:1084
 msgid "calling error"
 msgstr "呼出時エラー"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1089
+#: ../libgimp/gimp.c:1088
 msgid "cancelled"
 msgstr "取消"
 
@@ -724,8 +724,8 @@ msgstr "キュービック"
 
 #: ../libgimpbase/gimpbaseenums.c:582
 msgctxt "interpolation-type"
-msgid "Sinc (Lanczos3)"
-msgstr "Sinc (Lanczos3)"
+msgid "LoHalo"
+msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:611
 msgctxt "paint-application-mode"
@@ -893,9 +893,9 @@ msgid "Filled"
 msgstr "両端揃え"
 
 #: ../libgimpbase/gimputils.c:178 ../libgimpbase/gimputils.c:183
-#: ../modules/color-selector-cmyk-lcms.c:424
-#: ../modules/color-selector-cmyk-lcms.c:430
-#: ../modules/display-filter-lcms.c:178
+#: ../modules/color-selector-cmyk-lcms.c:425
+#: ../modules/color-selector-cmyk-lcms.c:431
+#: ../modules/display-filter-lcms.c:179
 msgid "(invalid UTF-8 string)"
 msgstr "(不正な UTF-8 文字列)"
 
@@ -906,15 +906,15 @@ msgstr "(不正な UTF-8 文字列)"
 #. *
 #. * Color management settings.
 #. *
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: ../libgimpconfig/gimpcolorconfig.c:53
 msgid "Mode of operation for color management."
 msgstr "画面表示にあたり、どのようなカラーマネジメント操作を行うか選択します"
 
-#: ../libgimpconfig/gimpcolorconfig.c:54
+#: ../libgimpconfig/gimpcolorconfig.c:55
 msgid "The color profile of your (primary) monitor."
 msgstr "(メイン) モニターのプロファイルを指定します"
 
-#: ../libgimpconfig/gimpcolorconfig.c:56
+#: ../libgimpconfig/gimpcolorconfig.c:57
 msgid ""
 "When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
@@ -923,25 +923,25 @@ msgstr ""
 "この設定がオンの場合は、ウィンドウシステムのディスプレイカラープロファイルの"
 "使用を優先し、それが使えない場合に指定のモニタープロファイルを使用します。"
 
-#: ../libgimpconfig/gimpcolorconfig.c:60
+#: ../libgimpconfig/gimpcolorconfig.c:61
 msgid "The default RGB working space color profile."
 msgstr "RGB 作業用スペースのプロファイルを指定します"
 
-#: ../libgimpconfig/gimpcolorconfig.c:62
+#: ../libgimpconfig/gimpcolorconfig.c:63
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "RGB 作業用スペースと CMYK の変換に使用するプロファイルを指定します"
 
-#: ../libgimpconfig/gimpcolorconfig.c:64
+#: ../libgimpconfig/gimpcolorconfig.c:65
 msgid "The color profile used for simulating a printed version (softproof)."
 msgstr "シミュレーション対象デバイスのプロファイルを指定します"
 
-#: ../libgimpconfig/gimpcolorconfig.c:66
+#: ../libgimpconfig/gimpcolorconfig.c:67
 msgid "Sets how colors are mapped for your display."
 msgstr ""
 "RGB 作業用スペースからモニターのカラースペースへの変換をプロファイルを用いて"
 "どのように処理するか設定します"
 
-#: ../libgimpconfig/gimpcolorconfig.c:68
+#: ../libgimpconfig/gimpcolorconfig.c:69
 msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
@@ -949,7 +949,7 @@ msgstr ""
 "RGB 作業用スペースから対象デバイスのカラースペースへの変換をプロファイルを用"
 "いてどのように処理するか設定します"
 
-#: ../libgimpconfig/gimpcolorconfig.c:71
+#: ../libgimpconfig/gimpcolorconfig.c:72
 msgid ""
 "When enabled, the print simulation will mark colors which can not be "
 "represented in the target color space."
@@ -957,7 +957,7 @@ msgstr ""
 "この設定がオンのときは、シミュレーション対象のデバイスで再現できない色を指定"
 "色でマーキングします"
 
-#: ../libgimpconfig/gimpcolorconfig.c:74
+#: ../libgimpconfig/gimpcolorconfig.c:75
 msgid "The color to use for marking colors which are out of gamut."
 msgstr ""
 "色域外の色はこの色でマーキングされます。\n"
@@ -998,37 +998,37 @@ msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "絶対的な色域を維持"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:106
+#: ../libgimpconfig/gimpconfig-deserialize.c:107
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "トークン %s の値は適切な UTF-8 文字列ではありません"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:444
+#: ../libgimpconfig/gimpconfig-deserialize.c:445
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "トークン %s はブール値 ('yes' または 'no') が要求されるにもかかわらず、'%s' "
 "でした"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:518
+#: ../libgimpconfig/gimpconfig-deserialize.c:519
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "トークン %2$s の値 '%1$s' は不適切です"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:533
+#: ../libgimpconfig/gimpconfig-deserialize.c:534
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "トークン %2$s の値 '%1$ld' は不適切です"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:602
+#: ../libgimpconfig/gimpconfig-deserialize.c:603
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "トークン '%s' の解析中: %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:482
-#: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:559
-#: ../libgimpconfig/gimpscanner.c:641
+#: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:560
+#: ../libgimpconfig/gimpscanner.c:642
 #: ../libgimpwidgets/gimpcolorprofilestore.c:656
 msgid "fatal parse error"
 msgstr "致命的な解析エラー"
@@ -1095,27 +1095,27 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../libgimpconfig/gimpscanner.c:268
+#: ../libgimpconfig/gimpscanner.c:269
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "無効な UTF-8 文字列"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpscanner.c:431
+#: ../libgimpconfig/gimpscanner.c:432
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "ブール値 ('yes' または 'no') が要求されるにもかかわらず、'%s' でした"
 
-#: ../libgimpconfig/gimpscanner.c:668
+#: ../libgimpconfig/gimpscanner.c:669
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr ""
 "'%s'(%d 行目のデータ) の解析中にエラーが発生しました。\n"
 "%s"
 
-#: ../libgimpmodule/gimpmodule.c:163 ../libgimpmodule/gimpmodule.c:181
-#: ../libgimpmodule/gimpmodule.c:290 ../libgimpmodule/gimpmodule.c:317
-#: ../libgimpmodule/gimpmodule.c:443
+#: ../libgimpmodule/gimpmodule.c:162 ../libgimpmodule/gimpmodule.c:180
+#: ../libgimpmodule/gimpmodule.c:289 ../libgimpmodule/gimpmodule.c:316
+#: ../libgimpmodule/gimpmodule.c:442
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr ""
@@ -1123,19 +1123,19 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../libgimpmodule/gimpmodule.c:385
+#: ../libgimpmodule/gimpmodule.c:384
 msgid "Module error"
 msgstr "モジュールエラー"
 
-#: ../libgimpmodule/gimpmodule.c:386
+#: ../libgimpmodule/gimpmodule.c:385
 msgid "Loaded"
 msgstr "読み込み済み"
 
-#: ../libgimpmodule/gimpmodule.c:387
+#: ../libgimpmodule/gimpmodule.c:386
 msgid "Load failed"
 msgstr "読み込み失敗"
 
-#: ../libgimpmodule/gimpmodule.c:388
+#: ../libgimpmodule/gimpmodule.c:387
 msgid "Not loaded"
 msgstr "未読み込み"
 
@@ -1167,19 +1167,19 @@ msgstr "%s のサムネイル生成に失敗しました。 %s"
 msgid "_Search:"
 msgstr "検索(_S):"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:135
+#: ../libgimpwidgets/gimpcolorbutton.c:136
 msgid "_Foreground Color"
 msgstr "描画色(_F)"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:139
+#: ../libgimpwidgets/gimpcolorbutton.c:140
 msgid "_Background Color"
 msgstr "背景色(_B)"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:143
+#: ../libgimpwidgets/gimpcolorbutton.c:144
 msgid "Blac_k"
 msgstr "黒(_K)"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:147
+#: ../libgimpwidgets/gimpcolorbutton.c:148
 msgid "_White"
 msgstr "白(_W)"
 
@@ -1192,19 +1192,19 @@ msgctxt "profile"
 msgid "None"
 msgstr "使用しない"
 
-#: ../libgimpwidgets/gimpcolorscales.c:108
+#: ../libgimpwidgets/gimpcolorscales.c:109
 msgid "Scales"
 msgstr "スケール"
 
-#: ../libgimpwidgets/gimpcolorselection.c:220
+#: ../libgimpwidgets/gimpcolorselection.c:221
 msgid "Current:"
 msgstr "現在:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:229
+#: ../libgimpwidgets/gimpcolorselection.c:230
 msgid "Old:"
 msgstr "以前:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:314
+#: ../libgimpwidgets/gimpcolorselection.c:315
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -1212,7 +1212,7 @@ msgstr ""
 "HTML と CSS で使われる色の 16 進表記を入力します。CSS で使われる色名の入力も"
 "可能です"
 
-#: ../libgimpwidgets/gimpcolorselection.c:320
+#: ../libgimpwidgets/gimpcolorselection.c:321
 msgid "HTML _notation:"
 msgstr "HTML 表記(_N):"
 
@@ -1296,7 +1296,7 @@ msgid "Folder"
 msgstr "フォルダー"
 
 # スポイト・ツールとは別物なので、「マウスポインターでスクリーン上をクリック…」とした。
-#: ../libgimpwidgets/gimppickbutton.c:127
+#: ../libgimpwidgets/gimppickbutton.c:128
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -1317,7 +1317,7 @@ msgstr "市松模様のサイズ"
 msgid "Check Style"
 msgstr "市松模様のスタイル"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1878
+#: ../libgimpwidgets/gimppropwidgets.c:1879
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -1361,7 +1361,7 @@ msgstr "可視"
 
 #: ../libgimpwidgets/gimpstock.c:171 ../libgimpwidgets/gimpstock.c:175
 msgid "_Stroke"
-msgstr "ストローク(_S)"
+msgstr "描画(_S)"
 
 #: ../libgimpwidgets/gimpstock.c:187
 msgid "L_etter Spacing"
@@ -1411,7 +1411,7 @@ msgstr "単位"
 msgid "Factor"
 msgstr "倍率"
 
-#: ../libgimpwidgets/gimpwidgets.c:516
+#: ../libgimpwidgets/gimpwidgets.c:517
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -1419,15 +1419,15 @@ msgstr ""
 "ここに入力した値を乱数の種として利用します。この値から得られる乱数は常に同じ"
 "結果になります。"
 
-#: ../libgimpwidgets/gimpwidgets.c:520
+#: ../libgimpwidgets/gimpwidgets.c:521
 msgid "_New Seed"
 msgstr "新しい種(_N)"
 
-#: ../libgimpwidgets/gimpwidgets.c:533
+#: ../libgimpwidgets/gimpwidgets.c:534
 msgid "Seed random number generator with a generated random number"
 msgstr "乱数を生成して、それを乱数の新しい種にします"
 
-#: ../libgimpwidgets/gimpwidgets.c:537
+#: ../libgimpwidgets/gimpwidgets.c:538
 msgid "_Randomize"
 msgstr "乱数化(_R)"
 
@@ -1544,97 +1544,97 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "縮小"
 
-#: ../modules/color-selector-cmyk-lcms.c:86
+#: ../modules/color-selector-cmyk-lcms.c:87
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK カラーセレクター (カラープロファイル使用)"
 
-#: ../modules/color-selector-cmyk-lcms.c:149
-#: ../modules/color-selector-cmyk.c:101
+#: ../modules/color-selector-cmyk-lcms.c:150
+#: ../modules/color-selector-cmyk.c:102
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/color-selector-cmyk-lcms.c:168
-#: ../modules/color-selector-cmyk.c:124
+#: ../modules/color-selector-cmyk-lcms.c:169
+#: ../modules/color-selector-cmyk.c:125
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/color-selector-cmyk-lcms.c:170
-#: ../modules/color-selector-cmyk.c:126
+#: ../modules/color-selector-cmyk-lcms.c:171
+#: ../modules/color-selector-cmyk.c:127
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/color-selector-cmyk-lcms.c:172
-#: ../modules/color-selector-cmyk.c:128
+#: ../modules/color-selector-cmyk-lcms.c:173
+#: ../modules/color-selector-cmyk.c:129
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/color-selector-cmyk-lcms.c:174
-#: ../modules/color-selector-cmyk.c:130
+#: ../modules/color-selector-cmyk-lcms.c:175
+#: ../modules/color-selector-cmyk.c:131
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/color-selector-cmyk-lcms.c:178
-#: ../modules/color-selector-cmyk.c:134
+#: ../modules/color-selector-cmyk-lcms.c:179
+#: ../modules/color-selector-cmyk.c:135
 msgid "Cyan"
 msgstr "シアン"
 
-#: ../modules/color-selector-cmyk-lcms.c:179
-#: ../modules/color-selector-cmyk.c:135
+#: ../modules/color-selector-cmyk-lcms.c:180
+#: ../modules/color-selector-cmyk.c:136
 msgid "Magenta"
 msgstr "マゼンタ"
 
-#: ../modules/color-selector-cmyk-lcms.c:180
-#: ../modules/color-selector-cmyk.c:136
+#: ../modules/color-selector-cmyk-lcms.c:181
+#: ../modules/color-selector-cmyk.c:137
 msgid "Yellow"
 msgstr "イエロー"
 
-#: ../modules/color-selector-cmyk-lcms.c:181
-#: ../modules/color-selector-cmyk.c:137
+#: ../modules/color-selector-cmyk-lcms.c:182
+#: ../modules/color-selector-cmyk.c:138
 msgid "Black"
 msgstr "ブラック"
 
-#: ../modules/color-selector-cmyk-lcms.c:412
+#: ../modules/color-selector-cmyk-lcms.c:413
 msgid "Profile: (none)"
 msgstr "プロファイル: (使用していません)"
 
-#: ../modules/color-selector-cmyk-lcms.c:433
+#: ../modules/color-selector-cmyk-lcms.c:434
 #, c-format
 msgid "Profile: %s"
 msgstr "プロファイル: %s"
 
-#: ../modules/color-selector-cmyk.c:70
+#: ../modules/color-selector-cmyk.c:71
 msgid "CMYK color selector"
 msgstr "CMYK カラーセレクター"
 
-#: ../modules/color-selector-cmyk.c:171
+#: ../modules/color-selector-cmyk.c:172
 msgid "Black _pullout:"
 msgstr "黒の割合(_P):"
 
-#: ../modules/color-selector-cmyk.c:188
+#: ../modules/color-selector-cmyk.c:189
 msgid "The percentage of black to pull out of the colored inks."
 msgstr "有色インクを減量するために置き換える黒の割合"
 
-#: ../modules/color-selector-water.c:81
+#: ../modules/color-selector-water.c:82
 msgid "Watercolor style color selector"
 msgstr "水彩色形式の色選択"
 
-#: ../modules/color-selector-water.c:117
+#: ../modules/color-selector-water.c:118
 msgid "Watercolor"
 msgstr "水彩色"
 
-#: ../modules/color-selector-water.c:185
+#: ../modules/color-selector-water.c:186
 msgid "Pressure"
 msgstr "圧力"
 
-#: ../modules/color-selector-wheel.c:71
+#: ../modules/color-selector-wheel.c:72
 msgid "HSV color wheel"
 msgstr "HSV 色相環"
 
-#: ../modules/color-selector-wheel.c:102
+#: ../modules/color-selector-wheel.c:103
 msgid "Wheel"
 msgstr "色相環"
 
@@ -1984,122 +1984,126 @@ msgstr "GIMP"
 msgid "GIMP MIDI Input Controller"
 msgstr "GIMP MIDI 入力コントローラー"
 
-#: ../modules/display-filter-color-blind.c:67
+#: ../modules/display-filter-color-blind.c:68
 msgid "Protanopia (insensitivity to red)"
 msgstr "第一色覚障害 (赤に無感覚)"
 
-#: ../modules/display-filter-color-blind.c:69
+#: ../modules/display-filter-color-blind.c:70
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "第二色覚障害 (緑に無感覚)"
 
-#: ../modules/display-filter-color-blind.c:71
+#: ../modules/display-filter-color-blind.c:72
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "第三色覚障害 (青に無感覚)"
 
-#: ../modules/display-filter-color-blind.c:194
+#: ../modules/display-filter-color-blind.c:195
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr ""
 "色覚障害シミュレーションフィルター (Brettel-Vienot-Mollon アルゴリズム)"
 
-#: ../modules/display-filter-color-blind.c:257
+#: ../modules/display-filter-color-blind.c:258
 msgid "Color Deficient Vision"
 msgstr "色覚障害の視覚"
 
-#: ../modules/display-filter-color-blind.c:486
+#: ../modules/display-filter-color-blind.c:487
 msgid "Color _deficiency type:"
 msgstr "色覚障害のタイプ(_D):"
 
-#: ../modules/display-filter-gamma.c:86
+#: ../modules/display-filter-gamma.c:87
 msgid "Gamma color display filter"
 msgstr "ガンマ値 色表示フィルター"
 
-#: ../modules/display-filter-gamma.c:125
+#: ../modules/display-filter-gamma.c:126
 msgid "Gamma"
 msgstr "ガンマ値"
 
-#: ../modules/display-filter-gamma.c:237
+#: ../modules/display-filter-gamma.c:238
 msgid "_Gamma:"
 msgstr "ガンマ値(_G):"
 
-#: ../modules/display-filter-high-contrast.c:86
+#: ../modules/display-filter-high-contrast.c:87
 msgid "High Contrast color display filter"
 msgstr "ハイコントラスト カラー表示フィルター"
 
-#: ../modules/display-filter-high-contrast.c:125
+#: ../modules/display-filter-high-contrast.c:126
 msgid "Contrast"
 msgstr "コントラスト"
 
-#: ../modules/display-filter-high-contrast.c:237
+#: ../modules/display-filter-high-contrast.c:238
 msgid "Contrast c_ycles:"
 msgstr "コントラストサイクル(_Y):"
 
-#: ../modules/display-filter-lcms.c:97
+#: ../modules/display-filter-lcms.c:98
 msgid "Color management display filter using ICC color profiles"
 msgstr ""
 "ICCカラープロファイルを用いたカラーマネジメント・ディスプレイフィルター"
 
-#: ../modules/display-filter-lcms.c:129
+#: ../modules/display-filter-lcms.c:130
 msgid "Color Management"
 msgstr "カラーマネジメント"
 
-#: ../modules/display-filter-lcms.c:186
+#: ../modules/display-filter-lcms.c:187
 msgid "None"
 msgstr "なし"
 
-#: ../modules/display-filter-lcms.c:207
+#: ../modules/display-filter-lcms.c:208
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr "設定ダイアログの [カラーマネジメント] セクションの設定を適用します。"
 
-#: ../modules/display-filter-lcms.c:221
+#: ../modules/display-filter-lcms.c:222
 msgid "Mode of operation:"
 msgstr "操作モード:"
 
 # 環境設定 [カラーマネジメント] では "RGB プロファイル" となっているため
-#: ../modules/display-filter-lcms.c:228
+#: ../modules/display-filter-lcms.c:229
 msgid "Image profile:"
 msgstr "RGB プロファイル:"
 
-#: ../modules/display-filter-lcms.c:236
+#: ../modules/display-filter-lcms.c:237
 msgid "Monitor profile:"
 msgstr "モニタープロファイル:"
 
-#: ../modules/display-filter-lcms.c:244
+#: ../modules/display-filter-lcms.c:245
 msgid "Print simulation profile:"
 msgstr "シミュレーション対象のプロファイル:"
 
-#: ../modules/display-filter-proof.c:93
+#: ../modules/display-filter-proof.c:94
 msgid "Color proof filter using ICC color profile"
 msgstr "ICCカラープロファイルを用いた色校正"
 
-#: ../modules/display-filter-proof.c:141
+#: ../modules/display-filter-proof.c:142
 msgid "Color Proof"
 msgstr "色校正"
 
-#: ../modules/display-filter-proof.c:338
+#: ../modules/display-filter-proof.c:339
 msgid "Choose an ICC Color Profile"
 msgstr "ICCカラープロファイルの選択"
 
-#: ../modules/display-filter-proof.c:365
+#: ../modules/display-filter-proof.c:366
 msgid "All files (*.*)"
 msgstr "すべてのファイル (*.*)"
 
-#: ../modules/display-filter-proof.c:370
+#: ../modules/display-filter-proof.c:371
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC カラープロファイル (*.icc, *.icm)"
 
-#: ../modules/display-filter-proof.c:428
+#: ../modules/display-filter-proof.c:429
 msgid "_Profile:"
 msgstr "プロファイル(_P):"
 
-#: ../modules/display-filter-proof.c:434
+#: ../modules/display-filter-proof.c:435
 msgid "_Intent:"
 msgstr "レンダリングインテント(_I):"
 
-#: ../modules/display-filter-proof.c:439
+#: ../modules/display-filter-proof.c:440
 msgid "_Black Point Compensation"
 msgstr "黒点を補正する(_B)"
+
+#~ msgctxt "interpolation-type"
+#~ msgid "Sinc (Lanczos3)"
+#~ msgstr "Sinc (Lanczos3)"
 
 #~ msgid "gradient|Linear"
 #~ msgstr "線形"
