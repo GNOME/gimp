@@ -352,9 +352,6 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (! g_thread_supported ())
-    g_thread_init (NULL);
-
   if (strcmp (name, LOAD_PROC) == 0)
     {
       PdfSelectedPages pages = { 0, NULL };

@@ -122,8 +122,6 @@ run (const gchar      *name,
   *nreturn_vals = 1;
   *return_vals  = values;
 
-  g_thread_init (NULL);
-
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 

@@ -322,8 +322,6 @@ main (int    argc,
 #endif
 #endif
 
-  g_thread_init (NULL);
-
 #ifdef GIMP_UNSTABLE
   gimp_open_console_window ();
 #endif

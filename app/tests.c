@@ -95,7 +95,6 @@ gimp_init_for_gui_testing_internal (gboolean     show_gui,
   Gimp                 *gimp;
 
   /* from main() */
-  g_thread_init(NULL);
   g_type_init();
   gimp_log_init ();
 
