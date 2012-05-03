@@ -21,6 +21,8 @@
 
 #include <gegl.h>
 
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
 #include "libgimpmath/gimpmath.h"
 
 #include "pdb-types.h"

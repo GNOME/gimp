@@ -23,6 +23,7 @@
 
 #include <cairo.h>
 #include <gegl-plugin.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpcolor/gimpcolor.h"
 

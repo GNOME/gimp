@@ -30,7 +30,7 @@
 
 #include <fcntl.h>
 
-#include <gegl.h>
+#include <glib.h>
 #include <glib/gstdio.h>
 
 #ifdef G_OS_WIN32
@@ -41,13 +41,14 @@
 #define _O_BINARY 0
 #endif
 
+#include <cairo.h>
 #include <gegl.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
-
-#include "gegl/gimp-gegl-utils.h"
 
 #include "gimppattern.h"
 #include "gimppattern-header.h"

@@ -48,6 +48,7 @@
 #include <cairo.h>
 #include <gegl.h>
 #include <gobject/gvaluecollector.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"

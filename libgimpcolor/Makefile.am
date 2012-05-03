@@ -51,10 +51,10 @@ AM_CPPFLAGS = \
 	-DGIMP_COLOR_COMPILATION
 
 INCLUDES = \
-	-I$(top_srcdir)	\
-	$(GEGL_CFLAGS)	\
-	$(CAIRO_CFLAGS)	\
-	$(GLIB_CFLAGS)	\
+	-I$(top_srcdir)		\
+	$(GEGL_CFLAGS)		\
+	$(CAIRO_CFLAGS)		\
+	$(GDK_PIXBUF_CFLAGS)	\
 	-I$(includedir)
 
 EXTRA_DIST = \
@@ -81,6 +81,8 @@ libgimpcolor_2_0_la_SOURCES = \
 	gimphsl.h			\
 	gimphsv.c			\
 	gimphsv.h			\
+	gimppixbuf.c			\
+	gimppixbuf.h			\
 	gimprgb.c			\
 	gimprgb.h			\
 	gimprgb-parse.c
@@ -96,6 +98,7 @@ libgimpcolorinclude_HEADERS = \
 	gimpcolorspace.h		\
 	gimphsl.h			\
 	gimphsv.h			\
+	gimppixbuf.h			\
 	gimprgb.h
 
 libgimpcolor_2_0_la_LDFLAGS = \
@@ -108,9 +111,9 @@ libgimpcolor_2_0_la_DEPENDENCIES = \
 	$(libgimpbase)
 
 libgimpcolor_2_0_la_LIBADD = \
-	$(BABL_LIBS)	\
-	$(CAIRO_LIBS)	\
-	$(GLIB_LIBS)	\
+	$(GEGL_LIBS)		\
+	$(CAIRO_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
 	$(libm)
 
 

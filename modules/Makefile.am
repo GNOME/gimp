@@ -14,7 +14,7 @@ libdir = $(gimpplugindir)/modules
 
 INCLUDES = \
         -I$(top_srcdir)	\
-	$(BABL_CFLAGS)	\
+	$(GEGL_CFLAGS)	\
         $(GTK_CFLAGS)	\
         -I$(includedir)
 

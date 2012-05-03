@@ -23,7 +23,6 @@
 #include <cairo.h>
 #include <gegl.h>
 
-#include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "gimp-gegl-types.h"

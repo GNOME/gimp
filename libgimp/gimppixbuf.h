@@ -23,8 +23,8 @@
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
 
-#ifndef __GIMP_PIXBUF_H__
-#define __GIMP_PIXBUF_H__
+#ifndef __LIBGIMP_GIMP_PIXBUF_H__
+#define __LIBGIMP_GIMP_PIXBUF_H__
 
 G_BEGIN_DECLS
 
@@ -58,4 +58,4 @@ GdkPixbuf * gimp_drawable_get_sub_thumbnail (gint32                  drawable_ID
 
 G_END_DECLS
 
-#endif /* __GIMP_PIXBUF_H__ */
+#endif /* __LIBGIMP_GIMP_PIXBUF_H__ */

@@ -48,10 +48,10 @@ AM_CPPFLAGS = \
 	-DGIMP_CONFIG_COMPILATION
 
 INCLUDES = \
-	-I$(top_srcdir)	\
-	$(BABL_CFLAGS)	\
-	$(CAIRO_CFLAGS)	\
-	$(GLIB_CFLAGS)	\
+	-I$(top_srcdir)		\
+	$(GEGL_CFLAGS)		\
+	$(CAIRO_CFLAGS)		\
+	$(GDK_PIXBUF_CFLAGS)	\
 	-I$(includedir)
 
 EXTRA_DIST = \
@@ -117,9 +117,9 @@ libgimpconfig_2_0_la_LIBADD = \
 	$(libgimpbase)	\
 	$(libgimpcolor)	\
 	$(libgimpmath)	\
-	$(BABL_LIBS)	\
+	$(GEGL_LIBS)	\
 	$(CAIRO_LIBS)	\
-	$(GLIB_LIBS)
+	$(GDK_PIXBUF_LIBS)
 
 
 install-data-local: install-ms-lib install-libtool-import-lib

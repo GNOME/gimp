@@ -772,6 +772,7 @@ GPL
 		$sys = 1;
 		$headers .= "\n" if $seen;
 		$headers .= "#include <gegl.h>\n\n";
+		$headers .= "#include <gdk-pixbuf/gdk-pixbuf.h>\n\n";
 	    }
 
 	    $seen = 0 if !/^</;

@@ -17,13 +17,15 @@
 
 #include "config.h"
 
+#include <cairo.h>
 #include <gegl.h>
-#include <glib-object.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
+#include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
 
 #include "gegl/gimp-babl.h"
-#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp-utils.h"
 #include "gimpbuffer.h"

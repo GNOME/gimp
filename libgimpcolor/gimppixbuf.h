@@ -1,5 +1,8 @@
 /* LIBGIMP - The GIMP Library
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
+ * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
+ *
+ * gimppixbuf.h
+ * Copyright (C) 2012  Michael Natterer <mitch@gimp.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -16,24 +19,22 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_H__
-#define __GIMP_COLOR_H__
+#if !defined (__GIMP_COLOR_H_INSIDE__) && !defined (GIMP_COLOR_COMPILATION)
+#error "Only <libgimpcolor/gimpcolor.h> can be included directly."
+#endif
 
-#define __GIMP_COLOR_H_INSIDE__
+#ifndef __GIMP_PIXBUF_H__
+#define __GIMP_PIXBUF_H__
 
-#include <libgimpcolor/gimpcolortypes.h>
+G_BEGIN_DECLS
 
-#include <libgimpcolor/gimpadaptivesupersample.h>
-#include <libgimpcolor/gimpbilinear.h>
-#include <libgimpcolor/gimpcairocolor.h>
-#include <libgimpcolor/gimpcolormanaged.h>
-#include <libgimpcolor/gimpcolorspace.h>
-#include <libgimpcolor/gimpcmyk.h>
-#include <libgimpcolor/gimphsl.h>
-#include <libgimpcolor/gimphsv.h>
-#include <libgimpcolor/gimppixbuf.h>
-#include <libgimpcolor/gimprgb.h>
+/* For information look into the C source or the html documentation */
 
-#undef __GIMP_COLOR_H_INSIDE__
 
-#endif  /* __GIMP_COLOR_H__ */
+const Babl * gimp_pixbuf_get_format    (GdkPixbuf *pixbuf);
+GeglBuffer * gimp_pixbuf_create_buffer (GdkPixbuf *pixbuf);
+
+
+G_END_DECLS
+
+#endif  /* __GIMP_PIXBUF_H__ */

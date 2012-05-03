@@ -54,7 +54,7 @@ AM_CPPFLAGS = \
 
 INCLUDES = \
 	-I$(top_srcdir)	\
-	$(BABL_CFLAGS)	\
+	$(GEGL_CFLAGS)	\
 	$(GTK_CFLAGS)	\
 	-I$(includedir)
 
@@ -262,7 +262,7 @@ libgimpwidgets_2_0_la_LIBADD = \
 	$(libgimpcolor)		\
 	$(libgimpconfig)	\
 	$(libgimpbase)		\
-	$(BABL_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(GTK_LIBS)		\
 	$(libm)
 

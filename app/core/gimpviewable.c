@@ -22,14 +22,15 @@
 
 #include <string.h>
 
+#include <cairo.h>
 #include <gegl.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
-
-#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp-utils.h"
 #include "gimpcontext.h"

@@ -21,9 +21,9 @@
 
 #include "config.h"
 
-#include <babl/babl.h>
 #include <cairo.h>
-#include <glib-object.h>
+#include <gegl.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"

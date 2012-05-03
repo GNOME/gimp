@@ -20,8 +20,9 @@
 
 #include "config.h"
 
-#include <gegl.h>
 #include <cairo.h>
+#include <gegl.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"

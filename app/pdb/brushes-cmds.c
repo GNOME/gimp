@@ -23,6 +23,8 @@
 
 #include <gegl.h>
 
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
 #include "pdb-types.h"
 
 #include "core/gimp.h"

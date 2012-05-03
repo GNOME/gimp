@@ -23,6 +23,8 @@
 
 #include <gegl.h>
 
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
 #include "libgimpbase/gimpbaseenums.h"
 #include "libgimpcolor/gimpcolor.h"
 

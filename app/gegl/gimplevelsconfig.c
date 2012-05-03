@@ -25,6 +25,7 @@
 
 #include <cairo.h>
 #include <gegl.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <glib/gstdio.h>
 
 #include "libgimpcolor/gimpcolor.h"

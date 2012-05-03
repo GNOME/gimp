@@ -17,10 +17,7 @@
 
 #include "config.h"
 
-#include <cairo.h>
 #include <gegl.h>
-
-#include "libgimpcolor/gimpcolor.h"
 
 #include "paint-types.h"
 
