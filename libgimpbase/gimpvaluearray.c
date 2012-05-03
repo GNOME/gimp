@@ -340,3 +340,252 @@ gimp_value_array_truncate (GimpValueArray *value_array,
   for (i = value_array->n_values; i > n_values; i--)
     gimp_value_array_remove (value_array, i - 1);
 }
+
+
+/*
+ * GIMP_TYPE_PARAM_VALUE_ARRAY
+ */
+
+static void       gimp_param_value_array_class_init  (GParamSpecClass *klass);
+static void       gimp_param_value_array_init        (GParamSpec      *pspec);
+static void       gimp_param_value_array_finalize    (GParamSpec      *pspec);
+static void       gimp_param_value_array_set_default (GParamSpec      *pspec,
+                                                      GValue          *value);
+static gboolean   gimp_param_value_array_validate    (GParamSpec      *pspec,
+                                                      GValue          *value);
+static gint       gimp_param_value_array_values_cmp  (GParamSpec      *pspec,
+                                                      const GValue    *value1,
+                                                      const GValue    *value2);
+
+GType
+gimp_param_value_array_get_type (void)
+{
+  static GType type = 0;
+
+  if (! type)
+    {
+      const GTypeInfo info =
+      {
+        sizeof (GParamSpecClass),
+        NULL, NULL,
+        (GClassInitFunc) gimp_param_value_array_class_init,
+        NULL, NULL,
+        sizeof (GimpParamSpecValueArray),
+        0,
+        (GInstanceInitFunc) gimp_param_value_array_init
+      };
+
+      type = g_type_register_static (G_TYPE_PARAM_BOXED,
+                                     "GimpParamValueArray", &info, 0);
+    }
+
+  return type;
+}
+
+
+static void
+gimp_param_value_array_class_init (GParamSpecClass *klass)
+{
+  klass->value_type        = GIMP_TYPE_VALUE_ARRAY;
+  klass->finalize          = gimp_param_value_array_finalize;
+  klass->value_set_default = gimp_param_value_array_set_default;
+  klass->value_validate    = gimp_param_value_array_validate;
+  klass->values_cmp        = gimp_param_value_array_values_cmp;
+}
+
+static void
+gimp_param_value_array_init (GParamSpec *pspec)
+{
+  GimpParamSpecValueArray *aspec = GIMP_PARAM_SPEC_VALUE_ARRAY (pspec);
+
+  aspec->element_spec = NULL;
+  aspec->fixed_n_elements = 0; /* disable */
+}
+
+static inline guint
+gimp_value_array_ensure_size (GimpValueArray *value_array,
+                              guint           fixed_n_elements)
+{
+  guint changed = 0;
+
+  if (fixed_n_elements)
+    {
+      while (gimp_value_array_length (value_array) < fixed_n_elements)
+        {
+          gimp_value_array_append (value_array, NULL);
+          changed++;
+        }
+
+      while (gimp_value_array_length (value_array) > fixed_n_elements)
+        {
+          gimp_value_array_remove (value_array,
+                                   gimp_value_array_length (value_array) - 1);
+          changed++;
+        }
+    }
+
+  return changed;
+}
+
+static void
+gimp_param_value_array_finalize (GParamSpec *pspec)
+{
+  GimpParamSpecValueArray *aspec = GIMP_PARAM_SPEC_VALUE_ARRAY (pspec);
+  GParamSpecClass *parent_class = g_type_class_peek (g_type_parent (GIMP_TYPE_PARAM_VALUE_ARRAY));
+
+  if (aspec->element_spec)
+    {
+      g_param_spec_unref (aspec->element_spec);
+      aspec->element_spec = NULL;
+    }
+
+  parent_class->finalize (pspec);
+}
+
+static void
+gimp_param_value_array_set_default (GParamSpec *pspec,
+                                    GValue     *value)
+{
+  GimpParamSpecValueArray *aspec = GIMP_PARAM_SPEC_VALUE_ARRAY (pspec);
+
+  if (!value->data[0].v_pointer && aspec->fixed_n_elements)
+    value->data[0].v_pointer = gimp_value_array_new (aspec->fixed_n_elements);
+
+  if (value->data[0].v_pointer)
+    {
+      /* g_value_reset (value);  already done */
+      gimp_value_array_ensure_size (value->data[0].v_pointer,
+                                    aspec->fixed_n_elements);
+    }
+}
+
+static gboolean
+gimp_param_value_array_validate (GParamSpec *pspec,
+                                 GValue     *value)
+{
+  GimpParamSpecValueArray *aspec = GIMP_PARAM_SPEC_VALUE_ARRAY (pspec);
+  GimpValueArray *value_array = value->data[0].v_pointer;
+  guint changed = 0;
+
+  if (!value->data[0].v_pointer && aspec->fixed_n_elements)
+    value->data[0].v_pointer = gimp_value_array_new (aspec->fixed_n_elements);
+
+  if (value->data[0].v_pointer)
+    {
+      /* ensure array size validity */
+      changed += gimp_value_array_ensure_size (value_array,
+                                               aspec->fixed_n_elements);
+
+      /* ensure array values validity against a present element spec */
+      if (aspec->element_spec)
+        {
+          GParamSpec *element_spec = aspec->element_spec;
+          gint        length       = gimp_value_array_length (value_array);
+          gint        i;
+
+          for (i = 0; i < length; i++)
+            {
+              GValue *element = gimp_value_array_index (value_array, i);
+
+              /* need to fixup value type, or ensure that the array
+               * value is initialized at all
+               */
+              if (! g_value_type_compatible (G_VALUE_TYPE (element),
+                                             G_PARAM_SPEC_VALUE_TYPE (element_spec)))
+                {
+                  if (G_VALUE_TYPE (element) != 0)
+                    g_value_unset (element);
+
+                  g_value_init (element, G_PARAM_SPEC_VALUE_TYPE (element_spec));
+                  g_param_value_set_default (element_spec, element);
+                  changed++;
+                }
+
+              /* validate array value against element_spec */
+              changed += g_param_value_validate (element_spec, element);
+            }
+        }
+    }
+
+  return changed;
+}
+
+static gint
+gimp_param_value_array_values_cmp (GParamSpec   *pspec,
+                                   const GValue *value1,
+                                   const GValue *value2)
+{
+  GimpParamSpecValueArray *aspec        = GIMP_PARAM_SPEC_VALUE_ARRAY (pspec);
+  GimpValueArray          *value_array1 = value1->data[0].v_pointer;
+  GimpValueArray          *value_array2 = value2->data[0].v_pointer;
+  gint                     length1;
+  gint                     length2;
+
+  if (!value_array1 || !value_array2)
+    return value_array2 ? -1 : value_array1 != value_array2;
+
+  length1 = gimp_value_array_length (value_array1);
+  length2 = gimp_value_array_length (value_array2);
+
+  if (length1 != length2)
+    {
+      return length1 < length2 ? -1 : 1;
+    }
+  else if (! aspec->element_spec)
+    {
+      /* we need an element specification for comparisons, so there's
+       * not much to compare here, try to at least provide stable
+       * lesser/greater result
+       */
+      return length1 < length2 ? -1 : length1 > length2;
+    }
+  else /* length1 == length2 */
+    {
+      guint i;
+
+      for (i = 0; i < length1; i++)
+        {
+          GValue *element1 = gimp_value_array_index (value_array1, i);
+          GValue *element2 = gimp_value_array_index (value_array2, i);
+          gint    cmp;
+
+          /* need corresponding element types, provide stable result
+           * otherwise
+           */
+          if (G_VALUE_TYPE (element1) != G_VALUE_TYPE (element2))
+            return G_VALUE_TYPE (element1) < G_VALUE_TYPE (element2) ? -1 : 1;
+
+          cmp = g_param_values_cmp (aspec->element_spec, element1, element2);
+          if (cmp)
+            return cmp;
+        }
+
+      return 0;
+    }
+}
+
+GParamSpec *
+gimp_param_spec_value_array (const gchar *name,
+                             const gchar *nick,
+                             const gchar *blurb,
+                             GParamSpec  *element_spec,
+                             GParamFlags  flags)
+{
+  GimpParamSpecValueArray *aspec;
+
+  if (element_spec)
+    g_return_val_if_fail (G_IS_PARAM_SPEC (element_spec), NULL);
+
+  aspec = g_param_spec_internal (GIMP_TYPE_PARAM_VALUE_ARRAY,
+                                 name,
+                                 nick,
+                                 blurb,
+                                 flags);
+  if (element_spec)
+    {
+      aspec->element_spec = g_param_spec_ref (element_spec);
+      g_param_spec_sink (element_spec);
+    }
+
+  return G_PARAM_SPEC (aspec);
+}

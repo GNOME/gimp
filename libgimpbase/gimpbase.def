@@ -57,7 +57,9 @@ EXPORTS
 	gimp_param_spec_memsize
 	gimp_param_spec_parasite
 	gimp_param_spec_unit
+	gimp_param_spec_value_array
 	gimp_param_unit_get_type
+	gimp_param_value_array_get_type
 	gimp_parasite_compare
 	gimp_parasite_copy
 	gimp_parasite_data

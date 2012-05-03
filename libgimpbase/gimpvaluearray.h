@@ -64,6 +64,32 @@ void             gimp_value_array_truncate (GimpValueArray       *value_array,
                                             gint                  n_values);
 
 
+/*
+ * GIMP_TYPE_PARAM_VALUE_ARRAY
+ */
+
+#define GIMP_TYPE_PARAM_VALUE_ARRAY           (gimp_param_value_array_get_type ())
+#define GIMP_IS_PARAM_SPEC_VALUE_ARRAY(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_VALUE_ARRAY))
+#define GIMP_PARAM_SPEC_VALUE_ARRAY(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_VALUE_ARRAY, GimpParamSpecValueArray))
+
+typedef struct _GimpParamSpecValueArray GimpParamSpecValueArray;
+
+struct _GimpParamSpecValueArray
+{
+  GParamSpec  parent_instance;
+  GParamSpec *element_spec;
+  gint        fixed_n_elements;
+};
+
+GType        gimp_param_value_array_get_type (void) G_GNUC_CONST;
+
+GParamSpec * gimp_param_spec_value_array     (const gchar    *name,
+                                              const gchar    *nick,
+                                              const gchar    *blurb,
+                                              GParamSpec     *element_spec,
+                                              GParamFlags     flags);
+
+
 G_END_DECLS
 
 #endif /* __GIMP_VALUE_ARRAY_H__ */
