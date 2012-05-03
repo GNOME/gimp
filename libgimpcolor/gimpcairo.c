@@ -150,11 +150,8 @@ gimp_cairo_surface_get_format (cairo_surface_t *surface)
 
   switch (cairo_image_surface_get_format (surface))
     {
-    case CAIRO_FORMAT_RGB24:
-      return babl_format ("cairo-ARGB32");
-
-    case CAIRO_FORMAT_ARGB32:
-      return babl_format ("cairo-RGB24");
+    case CAIRO_FORMAT_RGB24:  return babl_format ("cairo-RGB24");
+    case CAIRO_FORMAT_ARGB32: return babl_format ("cairo-ARGB32");
 
     default:
       break;
@@ -174,9 +171,9 @@ gimp_cairo_surface_create_buffer (cairo_surface_t *surface)
   g_return_val_if_fail (cairo_surface_get_type (surface) ==
                         CAIRO_SURFACE_TYPE_IMAGE, NULL);
 
+  format = gimp_cairo_surface_get_format  (surface);
   width  = cairo_image_surface_get_width  (surface);
   height = cairo_image_surface_get_height (surface);
-  format = gimp_cairo_surface_get_format  (surface);
 
   return
     gegl_buffer_linear_new_from_data (cairo_image_surface_get_data (surface),
