@@ -21,8 +21,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CAIRO_H__
-#define __GIMP_CAIRO_H__
+#ifndef __APP_GIMP_CAIRO_H__
+#define __APP_GIMP_CAIRO_H__
 
 
 GeglBuffer      * gimp_cairo_image_surface_create_buffer (cairo_surface_t *surface);
@@ -42,4 +42,4 @@ void              gimp_cairo_add_segments                (cairo_t         *cr,
                                                           gint             n_segs);
 
 
-#endif /* __GIMP_CAIRO_H__ */
+#endif /* __APP_GIMP_CAIRO_H__ */

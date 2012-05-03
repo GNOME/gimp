@@ -1,9 +1,9 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcairocolor.h
- * Copyright (C) 2007 Sven Neumann <sven@gimp.org>
- *               2010 Michael Natterer <mitch@gimp.org>
+ * gimpcairo.h
+ * Copyright (C) 2007      Sven Neumann <sven@gimp.org>
+ *               2010-2012 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,8 +20,8 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CAIRO_COLOR_H__
-#define __GIMP_CAIRO_COLOR_H__
+#ifndef __GIMP_CAIRO_H__
+#define __GIMP_CAIRO_H__
 
 
 void              gimp_cairo_set_source_rgb      (cairo_t       *cr,
@@ -153,4 +153,4 @@ cairo_pattern_t * gimp_cairo_checkerboard_create (cairo_t       *cr,
 #endif
 
 
-#endif /* __GIMP_CAIRO_COLOR_H__ */
+#endif /* __GIMP_CAIRO_H__ */

@@ -1,9 +1,9 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcairocolor.c
- * Copyright (C) 2007 Sven Neumann <sven@gimp.org>
- *               2010 Michael Natterer <mitch@gimp.org>
+ * gimpcairo.c
+ * Copyright (C) 2007      Sven Neumann <sven@gimp.org>
+ *               2010-2012 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -29,12 +29,12 @@
 
 #include "gimpcolortypes.h"
 
-#include "gimpcairocolor.h"
+#include "gimpcairo.h"
 
 
 /**
- * SECTION: gimpcairocolor
- * @title: GimpCairoColor
+ * SECTION: gimpcairo
+ * @title: GimpCairo
  * @short_description: Color utility functions for cairo
  *
  * Utility functions that make cairo easier to use with GIMP color

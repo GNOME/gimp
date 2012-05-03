@@ -69,8 +69,8 @@ libgimpcolor_2_0_la_SOURCES = \
 	gimpadaptivesupersample.h	\
 	gimpbilinear.c			\
 	gimpbilinear.h			\
-	gimpcairocolor.c		\
-	gimpcairocolor.h		\
+	gimpcairo.c			\
+	gimpcairo.h			\
 	gimpcmyk.c			\
 	gimpcmyk.h			\
 	gimpcolormanaged.c		\
@@ -92,7 +92,7 @@ libgimpcolorinclude_HEADERS = \
 	gimpcolortypes.h		\
 	gimpadaptivesupersample.h	\
 	gimpbilinear.h			\
-	gimpcairocolor.h		\
+	gimpcairo.h			\
 	gimpcmyk.h			\
 	gimpcolormanaged.h		\
 	gimpcolorspace.h		\
