@@ -9,9 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.master.el.po\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
-"eywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-02-24 13:23+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-05-03 12:08+0300\n"
 "PO-Revision-Date: 2012-04-16 20:29+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης  Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@gnome.gr\n"
@@ -27,22 +26,22 @@ msgstr ""
 "X-Poedit-Country: Greece\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1077
+#: ../libgimp/gimp.c:1076
 msgid "success"
 msgstr "επιτυχία"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1081
+#: ../libgimp/gimp.c:1080
 msgid "execution error"
 msgstr "σφάλμα εκτέλεσης"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1085
+#: ../libgimp/gimp.c:1084
 msgid "calling error"
 msgstr "σφάλμα κλήσης"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1089
+#: ../libgimp/gimp.c:1088
 msgid "cancelled"
 msgstr "ακυρώθηκε"
 
@@ -56,37 +55,32 @@ msgstr "Επιλογή πινέλου"
 msgid "_Browse..."
 msgstr "_Περιήγηση..."
 
-#: ../libgimp/gimpexport.c:243
-#: ../libgimp/gimpexport.c:279
+#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:279
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "Το πρόσθετο %s δεν υποστηρίζει στρώσεις"
 
-#: ../libgimp/gimpexport.c:244
-#: ../libgimp/gimpexport.c:253
-#: ../libgimp/gimpexport.c:262
-#: ../libgimp/gimpexport.c:280
+#: ../libgimp/gimpexport.c:244 ../libgimp/gimpexport.c:253
+#: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:280
 msgid "Merge Visible Layers"
 msgstr "Συγχώνευση ορατών στρώσεων"
 
 #: ../libgimp/gimpexport.c:252
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
-msgstr "Το πρόσθετο %s δεν υποστηρίζει μετατοπίσεις στρώσεων, διαστάσεις ή αδιαφάνεια"
+msgstr ""
+"Το πρόσθετο %s δεν υποστηρίζει μετατοπίσεις στρώσεων, διαστάσεις ή αδιαφάνεια"
 
-#: ../libgimp/gimpexport.c:261
-#: ../libgimp/gimpexport.c:270
+#: ../libgimp/gimpexport.c:261 ../libgimp/gimpexport.c:270
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "Το πρόσθετο %s υποστηρίζει στρώσεις μόνο ως πλαίσια κινούμενων σχεδίων"
 
-#: ../libgimp/gimpexport.c:262
-#: ../libgimp/gimpexport.c:271
+#: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:271
 msgid "Save as Animation"
 msgstr "Αποθήκευση ως κινούμενα σχέδια"
 
-#: ../libgimp/gimpexport.c:271
-#: ../libgimp/gimpexport.c:280
+#: ../libgimp/gimpexport.c:271 ../libgimp/gimpexport.c:280
 #: ../libgimp/gimpexport.c:289
 msgid "Flatten Image"
 msgstr "Ισοπέδωση εικόνας"
@@ -110,8 +104,7 @@ msgstr "Εφαρμογή μασκών στρώσεων"
 msgid "%s plug-in can only handle RGB images"
 msgstr "Το πρόσθετο %s υποστηρίζει μόνο εικόνες RGB"
 
-#: ../libgimp/gimpexport.c:307
-#: ../libgimp/gimpexport.c:345
+#: ../libgimp/gimpexport.c:307 ../libgimp/gimpexport.c:345
 #: ../libgimp/gimpexport.c:354
 msgid "Convert to RGB"
 msgstr "Μετατροπή σε RGB"
@@ -122,8 +115,7 @@ msgid "%s plug-in can only handle grayscale images"
 msgstr "Το πρόσθετο %s υποστηρίζει μόνο εικόνες σε κλίμακα του γκρι"
 
 #
-#: ../libgimp/gimpexport.c:316
-#: ../libgimp/gimpexport.c:345
+#: ../libgimp/gimpexport.c:316 ../libgimp/gimpexport.c:345
 #: ../libgimp/gimpexport.c:366
 msgid "Convert to Grayscale"
 msgstr "Μετατροπή σε κλίμακα του γκρι"
@@ -133,8 +125,7 @@ msgstr "Μετατροπή σε κλίμακα του γκρι"
 msgid "%s plug-in can only handle indexed images"
 msgstr "Το πρόσθετο %s υποστηρίζει μόνο εικόνες από ευρετήριο"
 
-#: ../libgimp/gimpexport.c:325
-#: ../libgimp/gimpexport.c:354
+#: ../libgimp/gimpexport.c:325 ../libgimp/gimpexport.c:354
 #: ../libgimp/gimpexport.c:364
 msgid ""
 "Convert to Indexed using default settings\n"
@@ -146,14 +137,17 @@ msgstr ""
 #: ../libgimp/gimpexport.c:334
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr "Το πρόσθετο %s υποστηρίζει μόνο εικόνες ψηφιογραφίας από ευρετήριο (δύο χρωμάτων)"
+msgstr ""
+"Το πρόσθετο %s υποστηρίζει μόνο εικόνες ψηφιογραφίας από ευρετήριο (δύο "
+"χρωμάτων)"
 
 #: ../libgimp/gimpexport.c:335
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Μετατροπή σε εικόνα από ευρετήριο με χρήση των προεπιλεγμένων ρυθμίσεων ψηφιογραφίας\n"
+"Μετατροπή σε εικόνα από ευρετήριο με χρήση των προεπιλεγμένων ρυθμίσεων "
+"ψηφιογραφίας\n"
 "(Κάντε τη μετατροπή με το χέρι για να τελειοποιήσετε το αποτέλεσμα)"
 
 #: ../libgimp/gimpexport.c:344
@@ -199,16 +193,19 @@ msgid "_Ignore"
 msgstr "_Παράβλεψη"
 
 #
-#: ../libgimp/gimpexport.c:518
-#: ../libgimp/gimpexport.c:988
+#: ../libgimp/gimpexport.c:518 ../libgimp/gimpexport.c:988
 msgid "_Export"
 msgstr "_Εξαγωγή"
 
 #. the headline
 #: ../libgimp/gimpexport.c:548
 #, c-format
-msgid "Your image should be exported before it can be saved as %s for the following reasons:"
-msgstr "Η εικόνα σας πρέπει να εξαχθεί πριν αποθηκευτεί ως %s για τους παρακάτω λόγους:"
+msgid ""
+"Your image should be exported before it can be saved as %s for the following "
+"reasons:"
+msgstr ""
+"Η εικόνα σας πρέπει να εξαχθεί πριν αποθηκευτεί ως %s για τους παρακάτω "
+"λόγους:"
 
 #. the footline
 #: ../libgimp/gimpexport.c:622
@@ -254,8 +251,7 @@ msgstr "Επιλογή διαβάθμισης"
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
 #.
-#: ../libgimp/gimpmenu.c:461
-#: ../libgimpwidgets/gimpintstore.c:241
+#: ../libgimp/gimpmenu.c:461 ../libgimpwidgets/gimpintstore.c:241
 msgid "(Empty)"
 msgstr "(Κενό)"
 
@@ -299,8 +295,7 @@ msgstr "κατά τύπο"
 
 #. count label
 #: ../libgimp/gimpprocbrowserdialog.c:394
-#: ../libgimp/gimpprocbrowserdialog.c:545
-#: ../libgimpwidgets/gimpbrowser.c:139
+#: ../libgimp/gimpprocbrowserdialog.c:545 ../libgimpwidgets/gimpbrowser.c:139
 msgid "No matches"
 msgstr "Χωρίς αποτελέσματα"
 
@@ -749,8 +744,8 @@ msgstr "Κυβική"
 
 #: ../libgimpbase/gimpbaseenums.c:582
 msgctxt "interpolation-type"
-msgid "Sinc (Lanczos3)"
-msgstr "Sinc (Lanczos3)"
+msgid "LoHalo"
+msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:611
 msgctxt "paint-application-mode"
@@ -918,11 +913,10 @@ msgctxt "text-justification"
 msgid "Filled"
 msgstr "Πλήρης στοίχιση"
 
-#: ../libgimpbase/gimputils.c:178
-#: ../libgimpbase/gimputils.c:183
-#: ../modules/color-selector-cmyk-lcms.c:424
-#: ../modules/color-selector-cmyk-lcms.c:430
-#: ../modules/display-filter-lcms.c:178
+#: ../libgimpbase/gimputils.c:178 ../libgimpbase/gimputils.c:183
+#: ../modules/color-selector-cmyk-lcms.c:425
+#: ../modules/color-selector-cmyk-lcms.c:431
+#: ../modules/display-filter-lcms.c:179
 msgid "(invalid UTF-8 string)"
 msgstr "(άκυροι χαρακτήρες UTF-8)"
 
@@ -933,45 +927,60 @@ msgstr "(άκυροι χαρακτήρες UTF-8)"
 #. *
 #. * Color management settings.
 #. *
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: ../libgimpconfig/gimpcolorconfig.c:53
 msgid "Mode of operation for color management."
 msgstr "Κατάσταση λειτουργίας για τη διαχείριση χρωμάτων."
 
-#: ../libgimpconfig/gimpcolorconfig.c:54
+#: ../libgimpconfig/gimpcolorconfig.c:55
 msgid "The color profile of your (primary) monitor."
 msgstr "Η κατατομή χρωμάτων της (πρωτεύουσας) οθόνης σας."
 
-#: ../libgimpconfig/gimpcolorconfig.c:56
-msgid "When enabled, GIMP will try to use the display color profile from the windowing system.  The configured monitor profile is then only used as a fallback."
-msgstr "Εάν ενεργοποιηθεί, το GIMP θα προσπαθήσει να χρησιμοποιήσει τη χρωματική κατατομή του συστήματος παραθύρων. Το ρυθμισμένη κατατομή της οθόνης χρησιμοποιείται μόνο ως εφεδρική λύση."
+#: ../libgimpconfig/gimpcolorconfig.c:57
+msgid ""
+"When enabled, GIMP will try to use the display color profile from the "
+"windowing system.  The configured monitor profile is then only used as a "
+"fallback."
+msgstr ""
+"Εάν ενεργοποιηθεί, το GIMP θα προσπαθήσει να χρησιμοποιήσει τη χρωματική "
+"κατατομή του συστήματος παραθύρων. Το ρυθμισμένη κατατομή της οθόνης "
+"χρησιμοποιείται μόνο ως εφεδρική λύση."
 
-#: ../libgimpconfig/gimpcolorconfig.c:60
+#: ../libgimpconfig/gimpcolorconfig.c:61
 msgid "The default RGB working space color profile."
 msgstr "Η προεπιλεγμένη χρωματική κατατομή χώρου εργασίας RGB."
 
-#: ../libgimpconfig/gimpcolorconfig.c:62
+#: ../libgimpconfig/gimpcolorconfig.c:63
 msgid "The CMYK color profile used to convert between RGB and CMYK."
-msgstr "Η χρησιμοποιούμενη χρωματική κατατομή CMYK για μετατροπή μεταξύ RGB και CMYK."
+msgstr ""
+"Η χρησιμοποιούμενη χρωματική κατατομή CMYK για μετατροπή μεταξύ RGB και CMYK."
 
-#: ../libgimpconfig/gimpcolorconfig.c:64
+#: ../libgimpconfig/gimpcolorconfig.c:65
 msgid "The color profile used for simulating a printed version (softproof)."
 msgstr ""
 "Η χρησιμοποιούμενη χρωματική κατατομή για την προσομοίωση εκτυπωμένης "
 "έκδοσης (softproof)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:66
+#: ../libgimpconfig/gimpcolorconfig.c:67
 msgid "Sets how colors are mapped for your display."
 msgstr "Ορίζει πώς απεικονίζονται τα χρώματα στην οθόνη σας."
 
-#: ../libgimpconfig/gimpcolorconfig.c:68
-msgid "Sets how colors are converted from RGB working space to the print simulation device."
-msgstr "Ορίζει πώς μετατρέπονται τα χρώματα από το χώρο εργασίας RGB στη συσκευή προσομοίωσης εκτύπωσης."
+#: ../libgimpconfig/gimpcolorconfig.c:69
+msgid ""
+"Sets how colors are converted from RGB working space to the print simulation "
+"device."
+msgstr ""
+"Ορίζει πώς μετατρέπονται τα χρώματα από το χώρο εργασίας RGB στη συσκευή "
+"προσομοίωσης εκτύπωσης."
 
-#: ../libgimpconfig/gimpcolorconfig.c:71
-msgid "When enabled, the print simulation will mark colors which can not be represented in the target color space."
-msgstr "Όταν ενεργοποιηθεί, η προσομοίωση εκτύπωσης θα σημειώσει τα χρώματα που δεν αντιπροσωπεύονται στο στοχευόμενο χρωματικό χώρο."
+#: ../libgimpconfig/gimpcolorconfig.c:72
+msgid ""
+"When enabled, the print simulation will mark colors which can not be "
+"represented in the target color space."
+msgstr ""
+"Όταν ενεργοποιηθεί, η προσομοίωση εκτύπωσης θα σημειώσει τα χρώματα που δεν "
+"αντιπροσωπεύονται στο στοχευόμενο χρωματικό χώρο."
 
-#: ../libgimpconfig/gimpcolorconfig.c:74
+#: ../libgimpconfig/gimpcolorconfig.c:75
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Το χρώμα με το οποίο σημειώνονται χρώματα εκτός φάσματος."
 
@@ -1010,36 +1019,35 @@ msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "Απόλυτη χρωματομετρία"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:106
+#: ../libgimpconfig/gimpconfig-deserialize.c:107
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "η τιμή για κουπόνι %s δεν είναι έγκυρη συμβολοσειρά UTF-8"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:444
+#: ../libgimpconfig/gimpconfig-deserialize.c:445
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "ενώ αναμενόταν 'yes' ή 'no' για το κουπόνι Μπουλ %s, ελήφθη '%s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:518
+#: ../libgimpconfig/gimpconfig-deserialize.c:519
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "άκυρη τιμή '%s' για το κουπόνι %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:533
+#: ../libgimpconfig/gimpconfig-deserialize.c:534
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "άκυρη τιμή '%ld' για το κουπόνι %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:602
+#: ../libgimpconfig/gimpconfig-deserialize.c:603
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "κατά την ανάλυση του κουπονιού '%s': %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:482
-#: ../libgimpconfig/gimpconfig-iface.c:495
-#: ../libgimpconfig/gimpscanner.c:559
-#: ../libgimpconfig/gimpscanner.c:641
+#: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:560
+#: ../libgimpconfig/gimpscanner.c:642
 #: ../libgimpwidgets/gimpcolorprofilestore.c:656
 msgid "fatal parse error"
 msgstr "μοιραίο σφάλμα ανάλυσης"
@@ -1092,45 +1100,42 @@ msgid "Could not create '%s': %s"
 msgstr "Αδυναμία δημιουργίας του '%s': %s"
 
 #
-#: ../libgimpconfig/gimpscanner.c:268
+#: ../libgimpconfig/gimpscanner.c:269
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "άκυροι χαρακτήρες UTF-8"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpscanner.c:431
+#: ../libgimpconfig/gimpscanner.c:432
 #, c-format
-#| msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "ενώ αναμενόταν 'yes' ή 'no' για κουπόνι Μπουλ, ελήφθη '%s'"
 
-#: ../libgimpconfig/gimpscanner.c:668
+#: ../libgimpconfig/gimpscanner.c:669
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Σφάλμα ανάλυσης του '%s' στη γραμμή %d: %s"
 
-#: ../libgimpmodule/gimpmodule.c:163
-#: ../libgimpmodule/gimpmodule.c:181
-#: ../libgimpmodule/gimpmodule.c:290
-#: ../libgimpmodule/gimpmodule.c:317
-#: ../libgimpmodule/gimpmodule.c:443
+#: ../libgimpmodule/gimpmodule.c:162 ../libgimpmodule/gimpmodule.c:180
+#: ../libgimpmodule/gimpmodule.c:289 ../libgimpmodule/gimpmodule.c:316
+#: ../libgimpmodule/gimpmodule.c:442
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Σφάλμα φόρτωσης του αρθρώματος '%s': %s"
 
-#: ../libgimpmodule/gimpmodule.c:385
+#: ../libgimpmodule/gimpmodule.c:384
 msgid "Module error"
 msgstr "Σφάλμα αρθρώματος"
 
-#: ../libgimpmodule/gimpmodule.c:386
+#: ../libgimpmodule/gimpmodule.c:385
 msgid "Loaded"
 msgstr "Φορτώθηκε"
 
-#: ../libgimpmodule/gimpmodule.c:387
+#: ../libgimpmodule/gimpmodule.c:386
 msgid "Load failed"
 msgstr "Αποτυχία φόρτωσης"
 
-#: ../libgimpmodule/gimpmodule.c:388
+#: ../libgimpmodule/gimpmodule.c:387
 msgid "Not loaded"
 msgstr "Δε φορτώθηκε"
 
@@ -1141,10 +1146,10 @@ msgid ""
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
 "Αδυναμία προσδιορισμού έγκυρου προσωπικού καταλόγου.\n"
-"Αντ' αυτού, οι μικρογραφίες θα αποθηκευτούν στο φάκελο προσωρινών αρχείων (%s)."
+"Αντ' αυτού, οι μικρογραφίες θα αποθηκευτούν στο φάκελο προσωρινών αρχείων "
+"(%s)."
 
-#: ../libgimpthumb/gimpthumb-utils.c:255
-#: ../libgimpthumb/gimpthumb-utils.c:323
+#: ../libgimpthumb/gimpthumb-utils.c:255 ../libgimpthumb/gimpthumb-utils.c:323
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Αποτυχία δημιουργίας του φακέλου μικρογραφιών '%s'."
@@ -1163,19 +1168,19 @@ msgstr "Αδυναμία δημιουργίας μικρογραφίας του 
 msgid "_Search:"
 msgstr "_Αναζήτηση:"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:135
+#: ../libgimpwidgets/gimpcolorbutton.c:136
 msgid "_Foreground Color"
 msgstr "_Χρώμα προσκηνίου"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:139
+#: ../libgimpwidgets/gimpcolorbutton.c:140
 msgid "_Background Color"
 msgstr "_Χρώμα παρασκηνίου"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:143
+#: ../libgimpwidgets/gimpcolorbutton.c:144
 msgid "Blac_k"
 msgstr "_Μαύρο"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:147
+#: ../libgimpwidgets/gimpcolorbutton.c:148
 msgid "_White"
 msgstr "_Λευκό"
 
@@ -1188,23 +1193,27 @@ msgctxt "profile"
 msgid "None"
 msgstr "Χωρίς"
 
-#: ../libgimpwidgets/gimpcolorscales.c:108
+#: ../libgimpwidgets/gimpcolorscales.c:109
 msgid "Scales"
 msgstr "Κλίμακες"
 
-#: ../libgimpwidgets/gimpcolorselection.c:220
+#: ../libgimpwidgets/gimpcolorselection.c:221
 msgid "Current:"
 msgstr "Τρέχον:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:229
+#: ../libgimpwidgets/gimpcolorselection.c:230
 msgid "Old:"
 msgstr "Παλαιό:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:314
-msgid "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts CSS color names."
-msgstr "Δεκαεξαδική σημειογραφία χρωμάτων όπως χρησιμοποιείται σε HTML και CSS. Επιτρέπονται επίσης ονόματα χρωμάτων CSS."
+#: ../libgimpwidgets/gimpcolorselection.c:315
+msgid ""
+"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
+"CSS color names."
+msgstr ""
+"Δεκαεξαδική σημειογραφία χρωμάτων όπως χρησιμοποιείται σε HTML και CSS. "
+"Επιτρέπονται επίσης ονόματα χρωμάτων CSS."
 
-#: ../libgimpwidgets/gimpcolorselection.c:320
+#: ../libgimpwidgets/gimpcolorselection.c:321
 msgid "HTML _notation:"
 msgstr "_Σημειογραφία HTML:"
 
@@ -1293,9 +1302,13 @@ msgstr "Εγγράψιμος"
 msgid "Folder"
 msgstr "Φάκελος"
 
-#: ../libgimpwidgets/gimppickbutton.c:127
-msgid "Click the eyedropper, then click a color anywhere on your screen to select that color."
-msgstr "Κλικ στο σταγονόμετρο και μετά κλικ σε ένα χρώμα οπουδήποτε στην οθόνη σας για να επιλέξετε αυτό το χρώμα."
+#: ../libgimpwidgets/gimppickbutton.c:128
+msgid ""
+"Click the eyedropper, then click a color anywhere on your screen to select "
+"that color."
+msgstr ""
+"Κλικ στο σταγονόμετρο και μετά κλικ σε ένα χρώμα οπουδήποτε στην οθόνη σας "
+"για να επιλέξετε αυτό το χρώμα."
 
 #. toggle button to (de)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:290
@@ -1310,7 +1323,7 @@ msgstr "Μέγεθος σκακιέρας"
 msgid "Check Style"
 msgstr "Τεχνοτροπία σκακιέρας"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1878
+#: ../libgimpwidgets/gimppropwidgets.c:1879
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -1353,8 +1366,7 @@ msgstr "_Επαναφορά"
 msgid "Visible"
 msgstr "Ορατό"
 
-#: ../libgimpwidgets/gimpstock.c:171
-#: ../libgimpwidgets/gimpstock.c:175
+#: ../libgimpwidgets/gimpstock.c:171 ../libgimpwidgets/gimpstock.c:175
 msgid "_Stroke"
 msgstr "_Περίγραμμα"
 
@@ -1370,8 +1382,7 @@ msgstr "Διάκενο _γραμμών"
 msgid "_Resize"
 msgstr "_Αλλαγή διαστάσεων"
 
-#: ../libgimpwidgets/gimpstock.c:205
-#: ../libgimpwidgets/gimpstock.c:340
+#: ../libgimpwidgets/gimpstock.c:205 ../libgimpwidgets/gimpstock.c:340
 msgid "_Scale"
 msgstr "Κ_λιμάκωση"
 
@@ -1410,19 +1421,24 @@ msgstr "Μονάδα"
 msgid "Factor"
 msgstr "Συντελεστής"
 
-#: ../libgimpwidgets/gimpwidgets.c:516
-msgid "Use this value for random number generator seed - this allows you to repeat a given \"random\" operation"
-msgstr "Χρήση αυτής της τιμής για σπόρο γεννήτριας τυχαίου αριθμού - αυτό επιτρέπει την επανάληψη μιας δεδομένης \"τυχαίας\" λειτουργίας"
+#: ../libgimpwidgets/gimpwidgets.c:517
+msgid ""
+"Use this value for random number generator seed - this allows you to repeat "
+"a given \"random\" operation"
+msgstr ""
+"Χρήση αυτής της τιμής για σπόρο γεννήτριας τυχαίου αριθμού - αυτό επιτρέπει "
+"την επανάληψη μιας δεδομένης \"τυχαίας\" λειτουργίας"
 
-#: ../libgimpwidgets/gimpwidgets.c:520
+#: ../libgimpwidgets/gimpwidgets.c:521
 msgid "_New Seed"
 msgstr "_Νέος σπόρος"
 
-#: ../libgimpwidgets/gimpwidgets.c:533
+#: ../libgimpwidgets/gimpwidgets.c:534
 msgid "Seed random number generator with a generated random number"
-msgstr "Σπορά γεννήτριας τυχαίων αριθμών με ένα δημιουργημένο τυχαίο αριθμό εκκίνησης"
+msgstr ""
+"Σπορά γεννήτριας τυχαίων αριθμών με ένα δημιουργημένο τυχαίο αριθμό εκκίνησης"
 
-#: ../libgimpwidgets/gimpwidgets.c:537
+#: ../libgimpwidgets/gimpwidgets.c:538
 msgid "_Randomize"
 msgstr "_Τυχαίο"
 
@@ -1542,97 +1558,97 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Σμίκρυνση"
 
-#: ../modules/color-selector-cmyk-lcms.c:86
+#: ../modules/color-selector-cmyk-lcms.c:87
 msgid "CMYK color selector (using color profile)"
 msgstr "Επιλογέας χρωμάτων CMYK (χρήση χρωματικής κατατομής)"
 
-#: ../modules/color-selector-cmyk-lcms.c:149
-#: ../modules/color-selector-cmyk.c:101
+#: ../modules/color-selector-cmyk-lcms.c:150
+#: ../modules/color-selector-cmyk.c:102
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/color-selector-cmyk-lcms.c:168
-#: ../modules/color-selector-cmyk.c:124
+#: ../modules/color-selector-cmyk-lcms.c:169
+#: ../modules/color-selector-cmyk.c:125
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/color-selector-cmyk-lcms.c:170
-#: ../modules/color-selector-cmyk.c:126
+#: ../modules/color-selector-cmyk-lcms.c:171
+#: ../modules/color-selector-cmyk.c:127
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/color-selector-cmyk-lcms.c:172
-#: ../modules/color-selector-cmyk.c:128
+#: ../modules/color-selector-cmyk-lcms.c:173
+#: ../modules/color-selector-cmyk.c:129
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/color-selector-cmyk-lcms.c:174
-#: ../modules/color-selector-cmyk.c:130
+#: ../modules/color-selector-cmyk-lcms.c:175
+#: ../modules/color-selector-cmyk.c:131
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/color-selector-cmyk-lcms.c:178
-#: ../modules/color-selector-cmyk.c:134
+#: ../modules/color-selector-cmyk-lcms.c:179
+#: ../modules/color-selector-cmyk.c:135
 msgid "Cyan"
 msgstr "Κυανό"
 
-#: ../modules/color-selector-cmyk-lcms.c:179
-#: ../modules/color-selector-cmyk.c:135
+#: ../modules/color-selector-cmyk-lcms.c:180
+#: ../modules/color-selector-cmyk.c:136
 msgid "Magenta"
 msgstr "Ματζέντα"
 
-#: ../modules/color-selector-cmyk-lcms.c:180
-#: ../modules/color-selector-cmyk.c:136
+#: ../modules/color-selector-cmyk-lcms.c:181
+#: ../modules/color-selector-cmyk.c:137
 msgid "Yellow"
 msgstr "Κίτρινο"
 
-#: ../modules/color-selector-cmyk-lcms.c:181
-#: ../modules/color-selector-cmyk.c:137
+#: ../modules/color-selector-cmyk-lcms.c:182
+#: ../modules/color-selector-cmyk.c:138
 msgid "Black"
 msgstr "Μαύρο"
 
-#: ../modules/color-selector-cmyk-lcms.c:412
+#: ../modules/color-selector-cmyk-lcms.c:413
 msgid "Profile: (none)"
 msgstr "Κατατομή: (χωρίς)"
 
-#: ../modules/color-selector-cmyk-lcms.c:433
+#: ../modules/color-selector-cmyk-lcms.c:434
 #, c-format
 msgid "Profile: %s"
 msgstr "Κατατομή: %s"
 
-#: ../modules/color-selector-cmyk.c:70
+#: ../modules/color-selector-cmyk.c:71
 msgid "CMYK color selector"
 msgstr "Επιλογέας χρωμάτων CMYK"
 
-#: ../modules/color-selector-cmyk.c:171
+#: ../modules/color-selector-cmyk.c:172
 msgid "Black _pullout:"
 msgstr "_Απόσπαση μαύρου:"
 
-#: ../modules/color-selector-cmyk.c:188
+#: ../modules/color-selector-cmyk.c:189
 msgid "The percentage of black to pull out of the colored inks."
 msgstr "Το ποσοστό μαύρου που εξάγεται από τα έγχρωμα μελάνια."
 
-#: ../modules/color-selector-water.c:81
+#: ../modules/color-selector-water.c:82
 msgid "Watercolor style color selector"
 msgstr "Επιλογέας χρωματικής τεχνοτροπίας υδατοχρώματος"
 
-#: ../modules/color-selector-water.c:117
+#: ../modules/color-selector-water.c:118
 msgid "Watercolor"
 msgstr "Υδατόχρωμα"
 
-#: ../modules/color-selector-water.c:185
+#: ../modules/color-selector-water.c:186
 msgid "Pressure"
 msgstr "Πίεση"
 
-#: ../modules/color-selector-wheel.c:71
+#: ../modules/color-selector-wheel.c:72
 msgid "HSV color wheel"
 msgstr "Τροχός χρωμάτων HSV"
 
-#: ../modules/color-selector-wheel.c:102
+#: ../modules/color-selector-wheel.c:103
 msgid "Wheel"
 msgstr "Τροχός"
 
@@ -1641,8 +1657,7 @@ msgid "DirectX DirectInput event controller"
 msgstr "Ελεγκτής συμβάντος DirectX DirectInput"
 
 #: ../modules/controller-dx-dinput.c:195
-#: ../modules/controller-linux-input.c:217
-#: ../modules/controller-midi.c:211
+#: ../modules/controller-linux-input.c:217 ../modules/controller-midi.c:211
 msgid "Device:"
 msgstr "Συσκευή:"
 
@@ -1755,8 +1770,7 @@ msgid "DirectInput Events"
 msgstr "Συμβάντα DirectInput"
 
 #: ../modules/controller-dx-dinput.c:1092
-#: ../modules/controller-linux-input.c:524
-#: ../modules/controller-midi.c:504
+#: ../modules/controller-linux-input.c:524 ../modules/controller-midi.c:504
 msgid "No device configured"
 msgstr "Χωρίς ρύθμιση συσκευής"
 
@@ -1909,24 +1923,20 @@ msgstr "Είσοδος Linux"
 msgid "Linux Input Events"
 msgstr "Συμβάντα εισόδου Linux"
 
-#: ../modules/controller-linux-input.c:550
-#: ../modules/controller-midi.c:453
+#: ../modules/controller-linux-input.c:550 ../modules/controller-midi.c:453
 #: ../modules/controller-midi.c:479
 #, c-format
 msgid "Reading from %s"
 msgstr "Ανάγνωση από %s"
 
 #: ../modules/controller-linux-input.c:568
-#: ../modules/controller-linux-input.c:622
-#: ../modules/controller-midi.c:435
-#: ../modules/controller-midi.c:496
-#: ../modules/controller-midi.c:567
+#: ../modules/controller-linux-input.c:622 ../modules/controller-midi.c:435
+#: ../modules/controller-midi.c:496 ../modules/controller-midi.c:567
 #, c-format
 msgid "Device not available: %s"
 msgstr "Η συσκευή δεν είναι διαθέσιμη: %s"
 
-#: ../modules/controller-linux-input.c:631
-#: ../modules/controller-midi.c:576
+#: ../modules/controller-linux-input.c:631 ../modules/controller-midi.c:576
 msgid "End of file"
 msgstr "Τέλος αρχείου"
 
@@ -1947,8 +1957,12 @@ msgid "Channel:"
 msgstr "Κανάλι:"
 
 #: ../modules/controller-midi.c:221
-msgid "The MIDI channel to read events from. Set to -1 for reading from all MIDI channels."
-msgstr "Το κανάλι MIDI για την ανάγνωση γεγονότων. Επιλέξτε -1 για ανάγνωση από όλα τα κανάλια MIDI."
+msgid ""
+"The MIDI channel to read events from. Set to -1 for reading from all MIDI "
+"channels."
+msgstr ""
+"Το κανάλι MIDI για την ανάγνωση γεγονότων. Επιλέξτε -1 για ανάγνωση από όλα "
+"τα κανάλια MIDI."
 
 #: ../modules/controller-midi.c:225
 msgid "MIDI"
@@ -1981,117 +1995,125 @@ msgstr "GIMP"
 msgid "GIMP MIDI Input Controller"
 msgstr "Ελεγκτής εισαγωγής GIMP MIDI"
 
-#: ../modules/display-filter-color-blind.c:67
+#: ../modules/display-filter-color-blind.c:68
 msgid "Protanopia (insensitivity to red)"
 msgstr "Πρωτανωπία (μη διάκριση του κόκκινου)"
 
-#: ../modules/display-filter-color-blind.c:69
+#: ../modules/display-filter-color-blind.c:70
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Δευτερανωπία (μη διάκριση του πράσινου)"
 
-#: ../modules/display-filter-color-blind.c:71
+#: ../modules/display-filter-color-blind.c:72
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Τριτανωπία (μη διάκριση του γαλάζιου)"
 
-#: ../modules/display-filter-color-blind.c:194
+#: ../modules/display-filter-color-blind.c:195
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Φίλτρο προσομοίωσης αχρωματοψίας (αλγόριθμος Brettel-Vienot-Mollon)"
 
-#: ../modules/display-filter-color-blind.c:257
+#: ../modules/display-filter-color-blind.c:258
 msgid "Color Deficient Vision"
 msgstr "Αχρωματοψία"
 
-#: ../modules/display-filter-color-blind.c:486
+#: ../modules/display-filter-color-blind.c:487
 msgid "Color _deficiency type:"
 msgstr "Τύπος αχρωματο_ψίας:"
 
-#: ../modules/display-filter-gamma.c:86
+#: ../modules/display-filter-gamma.c:87
 msgid "Gamma color display filter"
 msgstr "Φίλτρο γάμμα χρωμάτων οθόνης"
 
-#: ../modules/display-filter-gamma.c:125
+#: ../modules/display-filter-gamma.c:126
 msgid "Gamma"
 msgstr "Γάμμα"
 
-#: ../modules/display-filter-gamma.c:237
+#: ../modules/display-filter-gamma.c:238
 msgid "_Gamma:"
 msgstr "_Γάμμα:"
 
-#: ../modules/display-filter-high-contrast.c:86
+#: ../modules/display-filter-high-contrast.c:87
 msgid "High Contrast color display filter"
 msgstr "Φίλτρο υψηλής αντίθεσης χρωμάτων οθόνης"
 
-#: ../modules/display-filter-high-contrast.c:125
+#: ../modules/display-filter-high-contrast.c:126
 msgid "Contrast"
 msgstr "Αντίθεση"
 
-#: ../modules/display-filter-high-contrast.c:237
+#: ../modules/display-filter-high-contrast.c:238
 msgid "Contrast c_ycles:"
 msgstr "Κύκλοι _αντίθεσης:"
 
-#: ../modules/display-filter-lcms.c:97
+#: ../modules/display-filter-lcms.c:98
 msgid "Color management display filter using ICC color profiles"
 msgstr "Φίλτρο διαχείρισης χρωμάτων της οθόνης με χρήση κατατομής χρωμάτων ICC"
 
-#: ../modules/display-filter-lcms.c:129
+#: ../modules/display-filter-lcms.c:130
 msgid "Color Management"
 msgstr "Διαχείριση χρωμάτων"
 
-#: ../modules/display-filter-lcms.c:186
+#: ../modules/display-filter-lcms.c:187
 msgid "None"
 msgstr "Χωρίς"
 
-#: ../modules/display-filter-lcms.c:207
-msgid "This filter takes its configuration from the Color Management section in the Preferences dialog."
-msgstr "Οι ρυθμίσεις αυτού του φίλτρου βρίσκονται στην ενότητα διαχείριση χρωμάτων του διαλόγου προτιμήσεις."
+#: ../modules/display-filter-lcms.c:208
+msgid ""
+"This filter takes its configuration from the Color Management section in the "
+"Preferences dialog."
+msgstr ""
+"Οι ρυθμίσεις αυτού του φίλτρου βρίσκονται στην ενότητα διαχείριση χρωμάτων "
+"του διαλόγου προτιμήσεις."
 
-#: ../modules/display-filter-lcms.c:221
+#: ../modules/display-filter-lcms.c:222
 msgid "Mode of operation:"
 msgstr "Κατάσταση λειτουργίας:"
 
-#: ../modules/display-filter-lcms.c:228
+#: ../modules/display-filter-lcms.c:229
 msgid "Image profile:"
 msgstr "Κατατομή εικόνας:"
 
-#: ../modules/display-filter-lcms.c:236
+#: ../modules/display-filter-lcms.c:237
 msgid "Monitor profile:"
 msgstr "Κατατομή οθόνης:"
 
-#: ../modules/display-filter-lcms.c:244
+#: ../modules/display-filter-lcms.c:245
 msgid "Print simulation profile:"
 msgstr "Κατατομή προσομοίωσης εκτύπωσης:"
 
-#: ../modules/display-filter-proof.c:93
+#: ../modules/display-filter-proof.c:94
 msgid "Color proof filter using ICC color profile"
 msgstr "Φίλτρο δοκιμασίας χρωμάτων με χρήση κατατομής χρωμάτων ICC"
 
-#: ../modules/display-filter-proof.c:141
+#: ../modules/display-filter-proof.c:142
 msgid "Color Proof"
 msgstr "Δοκιμασία χρωμάτων"
 
-#: ../modules/display-filter-proof.c:338
+#: ../modules/display-filter-proof.c:339
 msgid "Choose an ICC Color Profile"
 msgstr "Επιλογή κατατομής χρωμάτων ICC"
 
-#: ../modules/display-filter-proof.c:365
+#: ../modules/display-filter-proof.c:366
 msgid "All files (*.*)"
 msgstr "Όλα τα αρχεία (*.*)"
 
-#: ../modules/display-filter-proof.c:370
+#: ../modules/display-filter-proof.c:371
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Κατατομή χρωμάτων ICC (*.icc, *.icm)"
 
-#: ../modules/display-filter-proof.c:428
+#: ../modules/display-filter-proof.c:429
 msgid "_Profile:"
 msgstr "_Κατατομή:"
 
-#: ../modules/display-filter-proof.c:434
+#: ../modules/display-filter-proof.c:435
 msgid "_Intent:"
 msgstr "_Στόχος:"
 
-#: ../modules/display-filter-proof.c:439
+#: ../modules/display-filter-proof.c:440
 msgid "_Black Point Compensation"
 msgstr "_Αντιστάθμιση μαύρου σημείου"
+
+#~ msgctxt "interpolation-type"
+#~ msgid "Sinc (Lanczos3)"
+#~ msgstr "Sinc (Lanczos3)"
 
 #~ msgid "gradient|Linear"
 #~ msgstr "διαβάθμιση|Γραμμική"
