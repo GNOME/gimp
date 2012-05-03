@@ -132,6 +132,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:posterize", /* in gimp */
     "gegl:rotate", /* in gimp */
     "gegl:scale", /* in gimp */
+    "gegl:sdl-display", /* useless */
     "gegl:shear", /* in gimp */
     "gegl:text",
     "gegl:threshold", /* in gimp */
