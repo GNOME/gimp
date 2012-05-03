@@ -20,8 +20,11 @@
 
 #include "config.h"
 
+#include <cairo.h>
 #include <gegl.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "gimp-gegl-types.h"
@@ -141,4 +144,48 @@ gimp_colorize_config_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+
+/*  public functions  */
+
+void
+gimp_colorize_config_get_color (GimpColorizeConfig *config,
+                                GimpRGB            *color)
+{
+  GimpHSL hsl;
+
+  g_return_if_fail (GIMP_IS_COLORIZE_CONFIG (config));
+  g_return_if_fail (color != NULL);
+
+  gimp_hsl_set (&hsl,
+                config->hue,
+                config->saturation,
+                (config->lightness + 1.0) / 2.0);
+  gimp_hsl_to_rgb (&hsl, color);
+  gimp_rgb_set_alpha (color, 1.0);
+}
+
+void
+gimp_colorize_config_set_color (GimpColorizeConfig *config,
+                                const GimpRGB      *color)
+{
+  GimpHSL hsl;
+
+  g_return_if_fail (GIMP_IS_COLORIZE_CONFIG (config));
+  g_return_if_fail (color != NULL);
+
+  gimp_rgb_to_hsl (color, &hsl);
+
+  if (hsl.h == -1)
+    hsl.h = config->hue;
+
+  if (hsl.l == 0.0 || hsl.l == 1.0)
+    hsl.s = config->saturation;
+
+  g_object_set (config,
+                "hue",        hsl.h,
+                "saturation", hsl.s,
+                "lightness",  hsl.l * 2.0 - 1.0,
+                NULL);
 }

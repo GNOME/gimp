@@ -50,7 +50,12 @@ struct _GimpColorizeConfigClass
 };
 
 
-GType   gimp_colorize_config_get_type (void) G_GNUC_CONST;
+GType   gimp_colorize_config_get_type  (void) G_GNUC_CONST;
+
+void    gimp_colorize_config_get_color (GimpColorizeConfig *config,
+                                        GimpRGB            *color);
+void    gimp_colorize_config_set_color (GimpColorizeConfig *config,
+                                        const GimpRGB      *color);
 
 
 #endif /* __GIMP_COLORIZE_CONFIG_H__ */

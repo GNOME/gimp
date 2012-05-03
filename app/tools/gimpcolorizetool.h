@@ -43,6 +43,7 @@ struct _GimpColorizeTool
   GtkAdjustment      *hue_data;
   GtkAdjustment      *saturation_data;
   GtkAdjustment      *lightness_data;
+  GtkWidget          *color_button;
 };
 
 struct _GimpColorizeToolClass
