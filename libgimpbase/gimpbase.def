@@ -124,6 +124,17 @@ EXPORTS
 	gimp_user_directory
 	gimp_user_directory_get_type
 	gimp_utf8_strtrim
+	gimp_value_array_append
+	gimp_value_array_get_type
+	gimp_value_array_index
+	gimp_value_array_insert
+	gimp_value_array_length
+	gimp_value_array_new
+	gimp_value_array_prepend
+	gimp_value_array_ref
+	gimp_value_array_remove
+	gimp_value_array_truncate
+	gimp_value_array_unref
 	gimp_vectors_stroke_type_get_type
 	gimp_wire_clear_error
 	gimp_wire_destroy

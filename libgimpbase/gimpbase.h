@@ -34,6 +34,7 @@
 #include <libgimpbase/gimpunit.h>
 #include <libgimpbase/gimputils.h>
 #include <libgimpbase/gimpversion.h>
+#include <libgimpbase/gimpvaluearray.h>
 
 #ifndef G_OS_WIN32
 #include <libgimpbase/gimpsignal.h>

@@ -112,6 +112,8 @@ libgimpbase_sources = \
 	gimpunit.h		\
 	gimputils.c            	\
 	gimputils.h            	\
+	gimpvaluearray.c	\
+	gimpvaluearray.h	\
 	gimpwin32-io.h		\
 	gimpwire.c		\
 	gimpwire.h
@@ -140,7 +142,8 @@ libgimpbaseinclude_HEADERS = \
 	gimprectangle.h		\
 	gimpsignal.h		\
 	gimpunit.h		\
-	gimputils.h
+	gimputils.h		\
+	gimpvaluearray.h
 
 
 libgimpbase_2_0_la_LDFLAGS = \

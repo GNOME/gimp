@@ -49,6 +49,7 @@ typedef struct _GimpParasite     GimpParasite;
 typedef struct _GimpDatafileData GimpDatafileData;
 typedef struct _GimpEnumDesc     GimpEnumDesc;
 typedef struct _GimpFlagsDesc    GimpFlagsDesc;
+typedef struct _GimpValueArray   GimpValueArray;
 
 
 typedef void (* GimpDatafileLoaderFunc) (const GimpDatafileData *file_data,
