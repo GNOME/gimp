@@ -5,7 +5,9 @@
 
 #include <stdlib.h>
 
+#include <babl/babl.h>
 #include <gegl.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include <glib-object.h>
 #include <cairo.h>
