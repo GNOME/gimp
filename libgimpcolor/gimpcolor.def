@@ -10,6 +10,8 @@ EXPORTS
 	gimp_cairo_checkerboard_create
 	gimp_cairo_set_source_rgb
 	gimp_cairo_set_source_rgba
+	gimp_cairo_surface_create_buffer
+	gimp_cairo_surface_get_format
 	gimp_cmyk_get_type
 	gimp_cmyk_get_uchar
 	gimp_cmyk_set

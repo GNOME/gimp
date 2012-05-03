@@ -22,8 +22,8 @@
 
 #include "config.h"
 
-#include <glib-object.h>
 #include <cairo.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 
@@ -139,4 +139,50 @@ gimp_cairo_checkerboard_create (cairo_t       *cr,
   cairo_surface_destroy (surface);
 
   return pattern;
+}
+
+const Babl *
+gimp_cairo_surface_get_format (cairo_surface_t *surface)
+{
+  g_return_val_if_fail (surface != NULL, NULL);
+  g_return_val_if_fail (cairo_surface_get_type (surface) ==
+                        CAIRO_SURFACE_TYPE_IMAGE, NULL);
+
+  switch (cairo_image_surface_get_format (surface))
+    {
+    case CAIRO_FORMAT_RGB24:
+      return babl_format ("cairo-ARGB32");
+
+    case CAIRO_FORMAT_ARGB32:
+      return babl_format ("cairo-RGB24");
+
+    default:
+      break;
+    }
+
+  g_return_val_if_reached (NULL);
+}
+
+GeglBuffer *
+gimp_cairo_surface_create_buffer (cairo_surface_t *surface)
+{
+  const Babl *format;
+  gint        width;
+  gint        height;
+
+  g_return_val_if_fail (surface != NULL, NULL);
+  g_return_val_if_fail (cairo_surface_get_type (surface) ==
+                        CAIRO_SURFACE_TYPE_IMAGE, NULL);
+
+  width  = cairo_image_surface_get_width  (surface);
+  height = cairo_image_surface_get_height (surface);
+  format = gimp_cairo_surface_get_format  (surface);
+
+  return
+    gegl_buffer_linear_new_from_data (cairo_image_surface_get_data (surface),
+                                      format,
+                                      GEGL_RECTANGLE (0, 0, width, height),
+                                      cairo_image_surface_get_stride (surface),
+                                      (GDestroyNotify) cairo_surface_destroy,
+                                      cairo_surface_reference (surface));
 }

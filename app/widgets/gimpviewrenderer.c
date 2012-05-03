@@ -33,7 +33,6 @@
 
 #include "widgets-types.h"
 
-#include "core/gimp-cairo.h"
 #include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
 #include "core/gimptempbuf.h"
@@ -1037,7 +1036,7 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
                                                   width, height);
 
       src_buffer  = gimp_temp_buf_create_buffer (temp_buf);
-      dest_buffer = gimp_cairo_image_surface_create_buffer (alpha_surface);
+      dest_buffer = gimp_cairo_surface_create_buffer (alpha_surface);
 
       gegl_buffer_copy (src_buffer,
                         GEGL_RECTANGLE (x - temp_buf_x,
@@ -1066,7 +1065,7 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
       cairo_surface_flush (surface);
 
       src_buffer  = gimp_temp_buf_create_buffer (temp_buf);
-      dest_buffer = gimp_cairo_image_surface_create_buffer (surface);
+      dest_buffer = gimp_cairo_surface_create_buffer (surface);
 
       gegl_buffer_copy (src_buffer,
                         GEGL_RECTANGLE (x - temp_buf_x,
