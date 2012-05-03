@@ -23,6 +23,8 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb-types.h"
 
 #include "core/gimp.h"
@@ -34,22 +36,22 @@
 #include "internal-procs.h"
 
 
-static GValueArray *
+static GimpValueArray *
 palettes_popup_invoker (GimpProcedure      *procedure,
-                        Gimp               *gimp,
-                        GimpContext        *context,
-                        GimpProgress       *progress,
-                        const GValueArray  *args,
-                        GError            **error)
+                        Gimp                  *gimp,
+                        GimpContext           *context,
+                        GimpProgress          *progress,
+                        const GimpValueArray  *args,
+                        GError               **error)
 {
   gboolean success = TRUE;
   const gchar *palette_callback;
   const gchar *popup_title;
   const gchar *initial_palette;
 
-  palette_callback = g_value_get_string (&args->values[0]);
-  popup_title = g_value_get_string (&args->values[1]);
-  initial_palette = g_value_get_string (&args->values[2]);
+  palette_callback = g_value_get_string (gimp_value_array_index (args, 0));
+  popup_title = g_value_get_string (gimp_value_array_index (args, 1));
+  initial_palette = g_value_get_string (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -66,18 +68,18 @@ palettes_popup_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 palettes_close_popup_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GValueArray  *args,
-                              GError            **error)
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
 {
   gboolean success = TRUE;
   const gchar *palette_callback;
 
-  palette_callback = g_value_get_string (&args->values[0]);
+  palette_callback = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -92,20 +94,20 @@ palettes_close_popup_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 palettes_set_popup_invoker (GimpProcedure      *procedure,
-                            Gimp               *gimp,
-                            GimpContext        *context,
-                            GimpProgress       *progress,
-                            const GValueArray  *args,
-                            GError            **error)
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
 {
   gboolean success = TRUE;
   const gchar *palette_callback;
   const gchar *palette_name;
 
-  palette_callback = g_value_get_string (&args->values[0]);
-  palette_name = g_value_get_string (&args->values[1]);
+  palette_callback = g_value_get_string (gimp_value_array_index (args, 0));
+  palette_name = g_value_get_string (gimp_value_array_index (args, 1));
 
   if (success)
     {

@@ -36,6 +36,7 @@
 #include "gimpdashpattern.h"
 #include "gimpmarshal.h"
 #include "gimppaintinfo.h"
+#include "gimpparamspecs.h"
 #include "gimpstrokeoptions.h"
 
 #include "paint/gimppaintoptions.h"
@@ -193,11 +194,11 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
   array_spec = g_param_spec_double ("dash-length", NULL, NULL,
                                     0.0, 2000.0, 1.0, GIMP_PARAM_READWRITE);
   g_object_class_install_property (object_class, PROP_DASH_INFO,
-                                   g_param_spec_value_array ("dash-info",
-                                                             NULL, NULL,
-                                                             array_spec,
-                                                             GIMP_PARAM_STATIC_STRINGS |
-                                                             GIMP_CONFIG_PARAM_FLAGS));
+                                   gimp_param_spec_value_array ("dash-info",
+                                                                NULL, NULL,
+                                                                array_spec,
+                                                                GIMP_PARAM_STATIC_STRINGS |
+                                                                GIMP_CONFIG_PARAM_FLAGS));
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_PAINT_OPTIONS,
                                    "paint-options", NULL,
@@ -286,8 +287,8 @@ gimp_stroke_options_set_property (GObject      *object,
       break;
     case PROP_DASH_INFO:
       {
-        GValueArray *value_array = g_value_get_boxed (value);
-        GArray      *pattern;
+        GimpValueArray *value_array = g_value_get_boxed (value);
+        GArray         *pattern;
 
         pattern = gimp_dash_pattern_from_value_array (value_array);
         gimp_stroke_options_take_dash_pattern (options, GIMP_DASH_CUSTOM,
@@ -344,7 +345,7 @@ gimp_stroke_options_get_property (GObject    *object,
       break;
     case PROP_DASH_INFO:
       {
-        GValueArray *value_array;
+        GimpValueArray *value_array;
 
         value_array = gimp_dash_pattern_to_value_array (private->dash_info);
         g_value_take_boxed (value, value_array);

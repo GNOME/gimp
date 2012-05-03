@@ -42,31 +42,31 @@
 #include "gimp-intl.h"
 
 
-static void          gimp_procedure_finalize      (GObject        *object);
+static void             gimp_procedure_finalize      (GObject         *object);
 
-static gint64        gimp_procedure_get_memsize   (GimpObject     *object,
-                                                   gint64         *gui_size);
+static gint64           gimp_procedure_get_memsize   (GimpObject      *object,
+                                                      gint64          *gui_size);
 
-static GValueArray * gimp_procedure_real_execute  (GimpProcedure  *procedure,
-                                                   Gimp           *gimp,
-                                                   GimpContext    *context,
-                                                   GimpProgress   *progress,
-                                                   GValueArray    *args,
-                                                   GError        **error);
-static void    gimp_procedure_real_execute_async  (GimpProcedure  *procedure,
-                                                   Gimp           *gimp,
-                                                   GimpContext    *context,
-                                                   GimpProgress   *progress,
-                                                   GValueArray    *args,
-                                                   GimpObject     *display);
+static GimpValueArray * gimp_procedure_real_execute  (GimpProcedure   *procedure,
+                                                      Gimp            *gimp,
+                                                      GimpContext     *context,
+                                                      GimpProgress    *progress,
+                                                      GimpValueArray  *args,
+                                                      GError         **error);
+static void       gimp_procedure_real_execute_async  (GimpProcedure   *procedure,
+                                                      Gimp            *gimp,
+                                                      GimpContext     *context,
+                                                      GimpProgress    *progress,
+                                                      GimpValueArray  *args,
+                                                      GimpObject      *display);
 
-static void          gimp_procedure_free_strings  (GimpProcedure  *procedure);
-static gboolean      gimp_procedure_validate_args (GimpProcedure  *procedure,
-                                                   GParamSpec    **param_specs,
-                                                   gint            n_param_specs,
-                                                   GValueArray    *args,
-                                                   gboolean        return_vals,
-                                                   GError        **error);
+static void             gimp_procedure_free_strings  (GimpProcedure   *procedure);
+static gboolean         gimp_procedure_validate_args (GimpProcedure   *procedure,
+                                                      GParamSpec     **param_specs,
+                                                      gint             n_param_specs,
+                                                      GimpValueArray  *args,
+                                                      gboolean         return_vals,
+                                                      GError         **error);
 
 
 G_DEFINE_TYPE (GimpProcedure, gimp_procedure, GIMP_TYPE_OBJECT)
@@ -156,15 +156,16 @@ gimp_procedure_get_memsize (GimpObject *object,
                                                                   gui_size);
 }
 
-static GValueArray *
-gimp_procedure_real_execute (GimpProcedure  *procedure,
-                             Gimp           *gimp,
-                             GimpContext    *context,
-                             GimpProgress   *progress,
-                             GValueArray    *args,
-                             GError        **error)
+static GimpValueArray *
+gimp_procedure_real_execute (GimpProcedure   *procedure,
+                             Gimp            *gimp,
+                             GimpContext     *context,
+                             GimpProgress    *progress,
+                             GimpValueArray  *args,
+                             GError         **error)
 {
-  g_return_val_if_fail (args->n_values >= procedure->num_args, NULL);
+  g_return_val_if_fail (gimp_value_array_length (args) >=
+                        procedure->num_args, NULL);
 
   return procedure->marshal_func (procedure, gimp,
                                   context, progress,
@@ -176,13 +177,13 @@ gimp_procedure_real_execute_async (GimpProcedure  *procedure,
                                    Gimp           *gimp,
                                    GimpContext    *context,
                                    GimpProgress   *progress,
-                                   GValueArray    *args,
+                                   GimpValueArray *args,
                                    GimpObject     *display)
 {
-  GValueArray *return_vals;
-  GError      *error = NULL;
+  GimpValueArray *return_vals;
+  GError         *error = NULL;
 
-  g_return_if_fail (args->n_values >= procedure->num_args);
+  g_return_if_fail (gimp_value_array_length (args) >= procedure->num_args);
 
   return_vals = GIMP_PROCEDURE_GET_CLASS (procedure)->execute (procedure,
                                                                gimp,
@@ -191,7 +192,7 @@ gimp_procedure_real_execute_async (GimpProcedure  *procedure,
                                                                args,
                                                                &error);
 
-  g_value_array_free (return_vals);
+  gimp_value_array_unref (return_vals);
 
   if (error)
     {
@@ -293,16 +294,16 @@ gimp_procedure_take_strings (GimpProcedure *procedure,
   procedure->static_strings = FALSE;
 }
 
-GValueArray *
-gimp_procedure_execute (GimpProcedure  *procedure,
-                        Gimp           *gimp,
-                        GimpContext    *context,
-                        GimpProgress   *progress,
-                        GValueArray    *args,
-                        GError        **error)
+GimpValueArray *
+gimp_procedure_execute (GimpProcedure   *procedure,
+                        Gimp            *gimp,
+                        GimpContext     *context,
+                        GimpProgress    *progress,
+                        GimpValueArray  *args,
+                        GError         **error)
 {
-  GValueArray *return_vals;
-  GError      *pdb_error = NULL;
+  GimpValueArray *return_vals;
+  GError         *pdb_error = NULL;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -339,7 +340,7 @@ gimp_procedure_execute (GimpProcedure  *procedure,
 
   if (return_vals)
     {
-      switch (g_value_get_enum (&return_vals->values[0]))
+      switch (g_value_get_enum (gimp_value_array_index (return_vals, 0)))
         {
         case GIMP_PDB_CALLING_ERROR:
         case GIMP_PDB_EXECUTION_ERROR:
@@ -349,12 +350,14 @@ gimp_procedure_execute (GimpProcedure  *procedure,
            */
           if (error && *error == NULL)
             {
-              if (return_vals->n_values > 1 &&
-                  G_VALUE_HOLDS_STRING (&return_vals->values[1]))
+              if (gimp_value_array_length (return_vals) > 1 &&
+                  G_VALUE_HOLDS_STRING (gimp_value_array_index (return_vals, 1)))
                 {
+                  GValue *value = gimp_value_array_index (return_vals, 1);
+
                   g_set_error_literal (error, GIMP_PDB_ERROR,
                                        GIMP_PDB_ERROR_FAILED,
-				       g_value_get_string (&return_vals->values[1]));
+				       g_value_get_string (value));
                 }
             }
           break;
@@ -389,7 +392,7 @@ gimp_procedure_execute_async (GimpProcedure  *procedure,
                               Gimp           *gimp,
                               GimpContext    *context,
                               GimpProgress   *progress,
-                              GValueArray    *args,
+                              GimpValueArray *args,
                               GimpObject     *display,
                               GError        **error)
 {
@@ -418,58 +421,58 @@ gimp_procedure_execute_async (GimpProcedure  *procedure,
     }
 }
 
-GValueArray *
+GimpValueArray *
 gimp_procedure_get_arguments (GimpProcedure *procedure)
 {
-  GValueArray *args;
-  GValue       value = { 0, };
-  gint         i;
+  GimpValueArray *args;
+  GValue          value = { 0, };
+  gint            i;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
-  args = g_value_array_new (procedure->num_args);
+  args = gimp_value_array_new (procedure->num_args);
 
   for (i = 0; i < procedure->num_args; i++)
     {
       g_value_init (&value, G_PARAM_SPEC_VALUE_TYPE (procedure->args[i]));
-      g_value_array_append (args, &value);
+      gimp_value_array_append (args, &value);
       g_value_unset (&value);
     }
 
   return args;
 }
 
-GValueArray *
+GimpValueArray *
 gimp_procedure_get_return_values (GimpProcedure *procedure,
                                   gboolean       success,
                                   const GError  *error)
 {
-  GValueArray *args;
-  GValue       value = { 0, };
-  gint         i;
+  GimpValueArray *args;
+  GValue          value = { 0, };
+  gint            i;
 
   g_return_val_if_fail (success == FALSE || GIMP_IS_PROCEDURE (procedure),
                         NULL);
 
   if (success)
     {
-      args = g_value_array_new (procedure->num_values + 1);
+      args = gimp_value_array_new (procedure->num_values + 1);
 
       g_value_init (&value, GIMP_TYPE_PDB_STATUS_TYPE);
       g_value_set_enum (&value, GIMP_PDB_SUCCESS);
-      g_value_array_append (args, &value);
+      gimp_value_array_append (args, &value);
       g_value_unset (&value);
 
       for (i = 0; i < procedure->num_values; i++)
         {
           g_value_init (&value, G_PARAM_SPEC_VALUE_TYPE (procedure->values[i]));
-          g_value_array_append (args, &value);
+          gimp_value_array_append (args, &value);
           g_value_unset (&value);
         }
     }
   else
     {
-      args = g_value_array_new ((error && error->message) ? 2 : 1);
+      args = gimp_value_array_new ((error && error->message) ? 2 : 1);
 
       g_value_init (&value, GIMP_TYPE_PDB_STATUS_TYPE);
 
@@ -499,14 +502,14 @@ gimp_procedure_get_return_values (GimpProcedure *procedure,
           g_value_set_enum (&value, GIMP_PDB_EXECUTION_ERROR);
         }
 
-      g_value_array_append (args, &value);
+      gimp_value_array_append (args, &value);
       g_value_unset (&value);
 
       if (error && error->message)
         {
           g_value_init (&value, G_TYPE_STRING);
           g_value_set_string (&value, error->message);
-          g_value_array_append (args, &value);
+          gimp_value_array_append (args, &value);
           g_value_unset (&value);
         }
     }
@@ -620,15 +623,15 @@ static gboolean
 gimp_procedure_validate_args (GimpProcedure  *procedure,
                               GParamSpec    **param_specs,
                               gint            n_param_specs,
-                              GValueArray    *args,
+                              GimpValueArray *args,
                               gboolean        return_vals,
                               GError        **error)
 {
   gint i;
 
-  for (i = 0; i < MIN (args->n_values, n_param_specs); i++)
+  for (i = 0; i < MIN (gimp_value_array_length (args), n_param_specs); i++)
     {
-      GValue     *arg       = &args->values[i];
+      GValue     *arg       = gimp_value_array_index (args, i);
       GParamSpec *pspec     = param_specs[i];
       GType       arg_type  = G_VALUE_TYPE (arg);
       GType       spec_type = G_PARAM_SPEC_VALUE_TYPE (pspec);

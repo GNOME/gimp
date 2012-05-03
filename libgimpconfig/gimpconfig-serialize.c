@@ -453,24 +453,25 @@ gimp_config_serialize_value (const GValue *value,
       return TRUE;
     }
 
-  if (G_VALUE_TYPE (value) == G_TYPE_VALUE_ARRAY)
+  if (G_VALUE_TYPE (value) == GIMP_TYPE_VALUE_ARRAY)
     {
-      GValueArray *array;
+      GimpValueArray *array;
 
       array = g_value_get_boxed (value);
 
       if (array)
         {
+          gint length = gimp_value_array_length (array);
           gint i;
 
-          g_string_append_printf (str, "%d", array->n_values);
+          g_string_append_printf (str, "%d", length);
 
-          for (i = 0; i < array->n_values; i++)
+          for (i = 0; i < length; i++)
             {
               g_string_append (str, " ");
 
-              if (! gimp_config_serialize_value (g_value_array_get_nth (array,
-                                                                        i),
+              if (! gimp_config_serialize_value (gimp_value_array_index (array,
+                                                                         i),
                                                  str, TRUE))
                 return FALSE;
             }

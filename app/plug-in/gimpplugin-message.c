@@ -511,8 +511,8 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
   gchar               *canonical;
   const gchar         *proc_name   = NULL;
   GimpProcedure       *procedure;
-  GValueArray         *args        = NULL;
-  GValueArray         *return_vals = NULL;
+  GimpValueArray      *args        = NULL;
+  GimpValueArray      *return_vals = NULL;
   GError              *error       = NULL;
 
   g_return_if_fail (proc_run != NULL);
@@ -596,7 +596,7 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
                                                          args);
   gimp_plug_in_manager_plug_in_pop (plug_in->manager);
 
-  g_value_array_free (args);
+  gimp_value_array_unref (args);
 
   if (error)
     {
@@ -619,7 +619,7 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
        *  and canonical may be different too.
        */
       proc_return.name    = proc_run->name;
-      proc_return.nparams = return_vals->n_values;
+      proc_return.nparams = gimp_value_array_length (return_vals);
       proc_return.params  = plug_in_args_to_params (return_vals, FALSE);
 
       if (! gp_proc_return_write (plug_in->my_write, &proc_return, plug_in))
@@ -632,7 +632,7 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
       g_free (proc_return.params);
     }
 
-  g_value_array_free (return_vals);
+  gimp_value_array_unref (return_vals);
 }
 
 static void

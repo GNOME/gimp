@@ -22,12 +22,12 @@
 #include "core/gimpobject.h"
 
 
-typedef GValueArray * (* GimpMarshalFunc) (GimpProcedure      *procedure,
-                                           Gimp               *gimp,
-                                           GimpContext        *context,
-                                           GimpProgress       *progress,
-                                           const GValueArray  *args,
-                                           GError            **error);
+typedef GimpValueArray * (* GimpMarshalFunc) (GimpProcedure         *procedure,
+                                              Gimp                  *gimp,
+                                              GimpContext           *context,
+                                              GimpProgress          *progress,
+                                              const GimpValueArray  *args,
+                                              GError               **error);
 
 
 #define GIMP_TYPE_PROCEDURE            (gimp_procedure_get_type ())
@@ -69,79 +69,79 @@ struct _GimpProcedureClass
 {
   GimpObjectClass parent_class;
 
-  GValueArray * (* execute)       (GimpProcedure  *procedure,
-                                   Gimp           *gimp,
-                                   GimpContext    *context,
-                                   GimpProgress   *progress,
-                                   GValueArray    *args,
-                                   GError        **error);
-  void          (* execute_async) (GimpProcedure  *procedure,
-                                   Gimp           *gimp,
-                                   GimpContext    *context,
-                                   GimpProgress   *progress,
-                                   GValueArray    *args,
-                                   GimpObject     *display);
+  GimpValueArray * (* execute)       (GimpProcedure   *procedure,
+                                      Gimp            *gimp,
+                                      GimpContext     *context,
+                                      GimpProgress    *progress,
+                                      GimpValueArray  *args,
+                                      GError         **error);
+  void             (* execute_async) (GimpProcedure   *procedure,
+                                      Gimp            *gimp,
+                                      GimpContext     *context,
+                                      GimpProgress    *progress,
+                                      GimpValueArray  *args,
+                                      GimpObject      *display);
 };
 
 
-GType           gimp_procedure_get_type           (void) G_GNUC_CONST;
+GType            gimp_procedure_get_type           (void) G_GNUC_CONST;
 
-GimpProcedure * gimp_procedure_new                (GimpMarshalFunc   marshal_func);
+GimpProcedure  * gimp_procedure_new                (GimpMarshalFunc   marshal_func);
 
-void            gimp_procedure_set_strings        (GimpProcedure    *procedure,
-                                                   const gchar      *original_name,
-                                                   const gchar      *blurb,
-                                                   const gchar      *help,
-                                                   const gchar      *author,
-                                                   const gchar      *copyright,
-                                                   const gchar      *date,
-                                                   const gchar      *deprecated);
-void            gimp_procedure_set_static_strings (GimpProcedure    *procedure,
-                                                   const gchar      *original_name,
-                                                   const gchar      *blurb,
-                                                   const gchar      *help,
-                                                   const gchar      *author,
-                                                   const gchar      *copyright,
-                                                   const gchar      *date,
-                                                   const gchar      *deprecated);
-void            gimp_procedure_take_strings       (GimpProcedure    *procedure,
-                                                   gchar            *original_name,
-                                                   gchar            *blurb,
-                                                   gchar            *help,
-                                                   gchar            *author,
-                                                   gchar            *copyright,
-                                                   gchar            *date,
-                                                   gchar            *deprecated);
+void             gimp_procedure_set_strings        (GimpProcedure    *procedure,
+                                                    const gchar      *original_name,
+                                                    const gchar      *blurb,
+                                                    const gchar      *help,
+                                                    const gchar      *author,
+                                                    const gchar      *copyright,
+                                                    const gchar      *date,
+                                                    const gchar      *deprecated);
+void             gimp_procedure_set_static_strings (GimpProcedure    *procedure,
+                                                    const gchar      *original_name,
+                                                    const gchar      *blurb,
+                                                    const gchar      *help,
+                                                    const gchar      *author,
+                                                    const gchar      *copyright,
+                                                    const gchar      *date,
+                                                    const gchar      *deprecated);
+void             gimp_procedure_take_strings       (GimpProcedure    *procedure,
+                                                    gchar            *original_name,
+                                                    gchar            *blurb,
+                                                    gchar            *help,
+                                                    gchar            *author,
+                                                    gchar            *copyright,
+                                                    gchar            *date,
+                                                    gchar            *deprecated);
 
-void            gimp_procedure_add_argument       (GimpProcedure    *procedure,
-                                                   GParamSpec       *pspec);
-void            gimp_procedure_add_return_value   (GimpProcedure    *procedure,
-                                                   GParamSpec       *pspec);
+void             gimp_procedure_add_argument       (GimpProcedure    *procedure,
+                                                    GParamSpec       *pspec);
+void             gimp_procedure_add_return_value   (GimpProcedure    *procedure,
+                                                    GParamSpec       *pspec);
 
-GValueArray   * gimp_procedure_get_arguments      (GimpProcedure    *procedure);
-GValueArray   * gimp_procedure_get_return_values  (GimpProcedure    *procedure,
-                                                   gboolean          success,
-                                                   const GError     *error);
+GimpValueArray * gimp_procedure_get_arguments      (GimpProcedure    *procedure);
+GimpValueArray * gimp_procedure_get_return_values  (GimpProcedure    *procedure,
+                                                    gboolean          success,
+                                                    const GError     *error);
 
-GimpProcedure * gimp_procedure_create_override    (GimpProcedure    *procedure,
-                                                   GimpMarshalFunc   new_marshal_func);
+GimpProcedure  * gimp_procedure_create_override    (GimpProcedure    *procedure,
+                                                    GimpMarshalFunc   new_marshal_func);
 
-GValueArray   * gimp_procedure_execute            (GimpProcedure    *procedure,
-                                                   Gimp             *gimp,
-                                                   GimpContext      *context,
-                                                   GimpProgress     *progress,
-                                                   GValueArray      *args,
-                                                   GError          **error);
-void            gimp_procedure_execute_async      (GimpProcedure    *procedure,
-                                                   Gimp             *gimp,
-                                                   GimpContext      *context,
-                                                   GimpProgress     *progress,
-                                                   GValueArray      *args,
-                                                   GimpObject       *display,
-                                                   GError          **error);
+GimpValueArray * gimp_procedure_execute            (GimpProcedure    *procedure,
+                                                    Gimp             *gimp,
+                                                    GimpContext      *context,
+                                                    GimpProgress     *progress,
+                                                    GimpValueArray   *args,
+                                                    GError          **error);
+void             gimp_procedure_execute_async      (GimpProcedure    *procedure,
+                                                    Gimp             *gimp,
+                                                    GimpContext      *context,
+                                                    GimpProgress     *progress,
+                                                    GimpValueArray   *args,
+                                                    GimpObject       *display,
+                                                    GError          **error);
 
-gint            gimp_procedure_name_compare       (GimpProcedure    *proc1,
-                                                   GimpProcedure    *proc2);
+gint             gimp_procedure_name_compare       (GimpProcedure    *proc1,
+                                                    GimpProcedure    *proc2);
 
 
 

@@ -40,6 +40,8 @@
 #define W_OK 2
 #endif
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core/core-types.h"
 
 #include "config/gimpcoreconfig.h"
@@ -78,7 +80,7 @@ file_save (Gimp                *gimp,
            GError             **error)
 {
   GimpDrawable      *drawable;
-  GValueArray       *return_vals;
+  GimpValueArray    *return_vals;
   GimpPDBStatusType  status;
   gchar             *filename;
   gint32             image_ID;
@@ -146,9 +148,9 @@ file_save (Gimp                *gimp,
                                         G_TYPE_STRING,         uri,
                                         G_TYPE_NONE);
 
-  status = g_value_get_enum (&return_vals->values[0]);
+  status = g_value_get_enum (gimp_value_array_index (return_vals, 0));
 
-  g_value_array_free (return_vals);
+  gimp_value_array_unref (return_vals);
 
   if (status == GIMP_PDB_SUCCESS)
     {

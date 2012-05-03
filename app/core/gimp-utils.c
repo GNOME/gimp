@@ -588,19 +588,6 @@ gimp_parameters_free (GParameter *params,
     }
 }
 
-void
-gimp_value_array_truncate (GValueArray  *args,
-                           gint          n_values)
-{
-  gint i;
-
-  g_return_if_fail (args != NULL);
-  g_return_if_fail (n_values > 0 && n_values <= args->n_values);
-
-  for (i = args->n_values; i > n_values; i--)
-    g_value_array_remove (args, i - 1);
-}
-
 /*  markup unescape code stolen and adapted from gmarkup.c
  */
 static gchar *

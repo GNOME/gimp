@@ -25,6 +25,8 @@
 
 #include "libgimpmath/gimpmath.h"
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb-types.h"
 
 #include "core/gimp-transform-utils.h"
@@ -45,25 +47,25 @@
 #include "gimp-intl.h"
 
 
-static GValueArray *
+static GimpValueArray *
 item_transform_flip_simple_invoker (GimpProcedure      *procedure,
-                                    Gimp               *gimp,
-                                    GimpContext        *context,
-                                    GimpProgress       *progress,
-                                    const GValueArray  *args,
-                                    GError            **error)
+                                    Gimp                  *gimp,
+                                    GimpContext           *context,
+                                    GimpProgress          *progress,
+                                    const GimpValueArray  *args,
+                                    GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   GimpItem *item;
   gint32 flip_type;
   gboolean auto_center;
   gdouble axis;
 
-  item = gimp_value_get_item (&args->values[0], gimp);
-  flip_type = g_value_get_enum (&args->values[1]);
-  auto_center = g_value_get_boolean (&args->values[2]);
-  axis = g_value_get_double (&args->values[3]);
+  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+  flip_type = g_value_get_enum (gimp_value_array_index (args, 1));
+  auto_center = g_value_get_boolean (gimp_value_array_index (args, 2));
+  axis = g_value_get_double (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -112,32 +114,32 @@ item_transform_flip_simple_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_item (&return_vals->values[1], item);
+    gimp_value_set_item (gimp_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 item_transform_flip_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GValueArray  *args,
-                             GError            **error)
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   GimpItem *item;
   gdouble x0;
   gdouble y0;
   gdouble x1;
   gdouble y1;
 
-  item = gimp_value_get_item (&args->values[0], gimp);
-  x0 = g_value_get_double (&args->values[1]);
-  y0 = g_value_get_double (&args->values[2]);
-  x1 = g_value_get_double (&args->values[3]);
-  y1 = g_value_get_double (&args->values[4]);
+  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+  x0 = g_value_get_double (gimp_value_array_index (args, 1));
+  y0 = g_value_get_double (gimp_value_array_index (args, 2));
+  x1 = g_value_get_double (gimp_value_array_index (args, 3));
+  y1 = g_value_get_double (gimp_value_array_index (args, 4));
 
   if (success)
     {
@@ -201,21 +203,21 @@ item_transform_flip_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_item (&return_vals->values[1], item);
+    gimp_value_set_item (gimp_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 item_transform_perspective_invoker (GimpProcedure      *procedure,
-                                    Gimp               *gimp,
-                                    GimpContext        *context,
-                                    GimpProgress       *progress,
-                                    const GValueArray  *args,
-                                    GError            **error)
+                                    Gimp                  *gimp,
+                                    GimpContext           *context,
+                                    GimpProgress          *progress,
+                                    const GimpValueArray  *args,
+                                    GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   GimpItem *item;
   gdouble x0;
   gdouble y0;
@@ -226,15 +228,15 @@ item_transform_perspective_invoker (GimpProcedure      *procedure,
   gdouble x3;
   gdouble y3;
 
-  item = gimp_value_get_item (&args->values[0], gimp);
-  x0 = g_value_get_double (&args->values[1]);
-  y0 = g_value_get_double (&args->values[2]);
-  x1 = g_value_get_double (&args->values[3]);
-  y1 = g_value_get_double (&args->values[4]);
-  x2 = g_value_get_double (&args->values[5]);
-  y2 = g_value_get_double (&args->values[6]);
-  x3 = g_value_get_double (&args->values[7]);
-  y3 = g_value_get_double (&args->values[8]);
+  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+  x0 = g_value_get_double (gimp_value_array_index (args, 1));
+  y0 = g_value_get_double (gimp_value_array_index (args, 2));
+  x1 = g_value_get_double (gimp_value_array_index (args, 3));
+  y1 = g_value_get_double (gimp_value_array_index (args, 4));
+  x2 = g_value_get_double (gimp_value_array_index (args, 5));
+  y2 = g_value_get_double (gimp_value_array_index (args, 6));
+  x3 = g_value_get_double (gimp_value_array_index (args, 7));
+  y3 = g_value_get_double (gimp_value_array_index (args, 8));
 
   if (success)
     {
@@ -301,32 +303,32 @@ item_transform_perspective_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_item (&return_vals->values[1], item);
+    gimp_value_set_item (gimp_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 item_transform_rotate_simple_invoker (GimpProcedure      *procedure,
-                                      Gimp               *gimp,
-                                      GimpContext        *context,
-                                      GimpProgress       *progress,
-                                      const GValueArray  *args,
-                                      GError            **error)
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   GimpItem *item;
   gint32 rotate_type;
   gboolean auto_center;
   gdouble center_x;
   gdouble center_y;
 
-  item = gimp_value_get_item (&args->values[0], gimp);
-  rotate_type = g_value_get_enum (&args->values[1]);
-  auto_center = g_value_get_boolean (&args->values[2]);
-  center_x = g_value_get_double (&args->values[3]);
-  center_y = g_value_get_double (&args->values[4]);
+  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+  rotate_type = g_value_get_enum (gimp_value_array_index (args, 1));
+  auto_center = g_value_get_boolean (gimp_value_array_index (args, 2));
+  center_x = g_value_get_double (gimp_value_array_index (args, 3));
+  center_y = g_value_get_double (gimp_value_array_index (args, 4));
 
   if (success)
     {
@@ -378,32 +380,32 @@ item_transform_rotate_simple_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_item (&return_vals->values[1], item);
+    gimp_value_set_item (gimp_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 item_transform_rotate_invoker (GimpProcedure      *procedure,
-                               Gimp               *gimp,
-                               GimpContext        *context,
-                               GimpProgress       *progress,
-                               const GValueArray  *args,
-                               GError            **error)
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   GimpItem *item;
   gdouble angle;
   gboolean auto_center;
   gdouble center_x;
   gdouble center_y;
 
-  item = gimp_value_get_item (&args->values[0], gimp);
-  angle = g_value_get_double (&args->values[1]);
-  auto_center = g_value_get_boolean (&args->values[2]);
-  center_x = g_value_get_double (&args->values[3]);
-  center_y = g_value_get_double (&args->values[4]);
+  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+  angle = g_value_get_double (gimp_value_array_index (args, 1));
+  auto_center = g_value_get_boolean (gimp_value_array_index (args, 2));
+  center_x = g_value_get_double (gimp_value_array_index (args, 3));
+  center_y = g_value_get_double (gimp_value_array_index (args, 4));
 
   if (success)
     {
@@ -472,32 +474,32 @@ item_transform_rotate_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_item (&return_vals->values[1], item);
+    gimp_value_set_item (gimp_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 item_transform_scale_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GValueArray  *args,
-                              GError            **error)
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   GimpItem *item;
   gdouble x0;
   gdouble y0;
   gdouble x1;
   gdouble y1;
 
-  item = gimp_value_get_item (&args->values[0], gimp);
-  x0 = g_value_get_double (&args->values[1]);
-  y0 = g_value_get_double (&args->values[2]);
-  x1 = g_value_get_double (&args->values[3]);
-  y1 = g_value_get_double (&args->values[4]);
+  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+  x0 = g_value_get_double (gimp_value_array_index (args, 1));
+  y0 = g_value_get_double (gimp_value_array_index (args, 2));
+  x1 = g_value_get_double (gimp_value_array_index (args, 3));
+  y1 = g_value_get_double (gimp_value_array_index (args, 4));
 
   if (success)
     {
@@ -563,28 +565,28 @@ item_transform_scale_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_item (&return_vals->values[1], item);
+    gimp_value_set_item (gimp_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 item_transform_shear_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GValueArray  *args,
-                              GError            **error)
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   GimpItem *item;
   gint32 shear_type;
   gdouble magnitude;
 
-  item = gimp_value_get_item (&args->values[0], gimp);
-  shear_type = g_value_get_enum (&args->values[1]);
-  magnitude = g_value_get_double (&args->values[2]);
+  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+  shear_type = g_value_get_enum (gimp_value_array_index (args, 1));
+  magnitude = g_value_get_double (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -650,21 +652,21 @@ item_transform_shear_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_item (&return_vals->values[1], item);
+    gimp_value_set_item (gimp_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 item_transform_2d_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GValueArray  *args,
-                           GError            **error)
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   GimpItem *item;
   gdouble source_x;
   gdouble source_y;
@@ -674,14 +676,14 @@ item_transform_2d_invoker (GimpProcedure      *procedure,
   gdouble dest_x;
   gdouble dest_y;
 
-  item = gimp_value_get_item (&args->values[0], gimp);
-  source_x = g_value_get_double (&args->values[1]);
-  source_y = g_value_get_double (&args->values[2]);
-  scale_x = g_value_get_double (&args->values[3]);
-  scale_y = g_value_get_double (&args->values[4]);
-  angle = g_value_get_double (&args->values[5]);
-  dest_x = g_value_get_double (&args->values[6]);
-  dest_y = g_value_get_double (&args->values[7]);
+  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+  source_x = g_value_get_double (gimp_value_array_index (args, 1));
+  source_y = g_value_get_double (gimp_value_array_index (args, 2));
+  scale_x = g_value_get_double (gimp_value_array_index (args, 3));
+  scale_y = g_value_get_double (gimp_value_array_index (args, 4));
+  angle = g_value_get_double (gimp_value_array_index (args, 5));
+  dest_x = g_value_get_double (gimp_value_array_index (args, 6));
+  dest_y = g_value_get_double (gimp_value_array_index (args, 7));
 
   if (success)
     {
@@ -748,21 +750,21 @@ item_transform_2d_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_item (&return_vals->values[1], item);
+    gimp_value_set_item (gimp_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 item_transform_matrix_invoker (GimpProcedure      *procedure,
-                               Gimp               *gimp,
-                               GimpContext        *context,
-                               GimpProgress       *progress,
-                               const GValueArray  *args,
-                               GError            **error)
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   GimpItem *item;
   gdouble coeff_0_0;
   gdouble coeff_0_1;
@@ -774,16 +776,16 @@ item_transform_matrix_invoker (GimpProcedure      *procedure,
   gdouble coeff_2_1;
   gdouble coeff_2_2;
 
-  item = gimp_value_get_item (&args->values[0], gimp);
-  coeff_0_0 = g_value_get_double (&args->values[1]);
-  coeff_0_1 = g_value_get_double (&args->values[2]);
-  coeff_0_2 = g_value_get_double (&args->values[3]);
-  coeff_1_0 = g_value_get_double (&args->values[4]);
-  coeff_1_1 = g_value_get_double (&args->values[5]);
-  coeff_1_2 = g_value_get_double (&args->values[6]);
-  coeff_2_0 = g_value_get_double (&args->values[7]);
-  coeff_2_1 = g_value_get_double (&args->values[8]);
-  coeff_2_2 = g_value_get_double (&args->values[9]);
+  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+  coeff_0_0 = g_value_get_double (gimp_value_array_index (args, 1));
+  coeff_0_1 = g_value_get_double (gimp_value_array_index (args, 2));
+  coeff_0_2 = g_value_get_double (gimp_value_array_index (args, 3));
+  coeff_1_0 = g_value_get_double (gimp_value_array_index (args, 4));
+  coeff_1_1 = g_value_get_double (gimp_value_array_index (args, 5));
+  coeff_1_2 = g_value_get_double (gimp_value_array_index (args, 6));
+  coeff_2_0 = g_value_get_double (gimp_value_array_index (args, 7));
+  coeff_2_1 = g_value_get_double (gimp_value_array_index (args, 8));
+  coeff_2_2 = g_value_get_double (gimp_value_array_index (args, 9));
 
   if (success)
     {
@@ -854,7 +856,7 @@ item_transform_matrix_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_item (&return_vals->values[1], item);
+    gimp_value_set_item (gimp_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }

@@ -65,10 +65,10 @@ struct _GimpPdbDialogClass
 
   GList           *dialogs;
 
-  GValueArray * (* run_callback) (GimpPdbDialog  *dialog,
-                                  GimpObject     *object,
-                                  gboolean        closing,
-                                  GError        **error);
+  GimpValueArray * (* run_callback) (GimpPdbDialog  *dialog,
+                                     GimpObject     *object,
+                                     gboolean        closing,
+                                     GError        **error);
 };
 
 

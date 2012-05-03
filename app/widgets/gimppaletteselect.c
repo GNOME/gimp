@@ -23,6 +23,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -39,12 +40,12 @@
 #include "gimppaletteselect.h"
 
 
-static void          gimp_palette_select_constructed  (GObject        *object);
+static void             gimp_palette_select_constructed  (GObject        *object);
 
-static GValueArray * gimp_palette_select_run_callback (GimpPdbDialog  *dialog,
-                                                       GimpObject     *object,
-                                                       gboolean        closing,
-                                                       GError        **error);
+static GimpValueArray * gimp_palette_select_run_callback (GimpPdbDialog  *dialog,
+                                                          GimpObject     *object,
+                                                          gboolean        closing,
+                                                          GError        **error);
 
 
 G_DEFINE_TYPE (GimpPaletteSelect, gimp_palette_select, GIMP_TYPE_PDB_DIALOG)
@@ -97,7 +98,7 @@ gimp_palette_select_constructed (GObject *object)
   gtk_widget_show (dialog->view);
 }
 
-static GValueArray *
+static GimpValueArray *
 gimp_palette_select_run_callback (GimpPdbDialog  *dialog,
                                   GimpObject     *object,
                                   gboolean        closing,

@@ -23,6 +23,8 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb-types.h"
 
 #include "core/gimp.h"
@@ -36,34 +38,34 @@
 #include "internal-procs.h"
 
 
-static GValueArray *
+static GimpValueArray *
 dynamics_refresh_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GValueArray  *args,
-                          GError            **error)
+                          Gimp                  *gimp,
+                          GimpContext           *context,
+                          GimpProgress          *progress,
+                          const GimpValueArray  *args,
+                          GError               **error)
 {
   gimp_data_factory_data_refresh (gimp->dynamics_factory, context);
 
   return gimp_procedure_get_return_values (procedure, TRUE, NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 dynamics_get_list_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GValueArray  *args,
-                           GError            **error)
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *filter;
   gint32 num_dynamics = 0;
   gchar **dynamics_list = NULL;
 
-  filter = g_value_get_string (&args->values[0]);
+  filter = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -76,8 +78,8 @@ dynamics_get_list_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      g_value_set_int (&return_vals->values[1], num_dynamics);
-      gimp_value_take_stringarray (&return_vals->values[2], dynamics_list, num_dynamics);
+      g_value_set_int (gimp_value_array_index (return_vals, 1), num_dynamics);
+      gimp_value_take_stringarray (gimp_value_array_index (return_vals, 2), dynamics_list, num_dynamics);
     }
 
   return return_vals;

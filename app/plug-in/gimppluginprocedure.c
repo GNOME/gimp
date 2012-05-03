@@ -53,25 +53,25 @@ enum
 };
 
 
-static void          gimp_plug_in_procedure_finalize    (GObject        *object);
+static void             gimp_plug_in_procedure_finalize    (GObject        *object);
 
-static gint64        gimp_plug_in_procedure_get_memsize (GimpObject     *object,
-                                                         gint64         *gui_size);
+static gint64           gimp_plug_in_procedure_get_memsize (GimpObject     *object,
+                                                            gint64         *gui_size);
 
-static GValueArray * gimp_plug_in_procedure_execute     (GimpProcedure  *procedure,
-                                                         Gimp           *gimp,
-                                                         GimpContext    *context,
-                                                         GimpProgress   *progress,
-                                                         GValueArray    *args,
-                                                         GError        **error);
-static void       gimp_plug_in_procedure_execute_async  (GimpProcedure  *procedure,
-                                                         Gimp           *gimp,
-                                                         GimpContext    *context,
-                                                         GimpProgress   *progress,
-                                                         GValueArray    *args,
-                                                         GimpObject     *display);
+static GimpValueArray * gimp_plug_in_procedure_execute     (GimpProcedure  *procedure,
+                                                            Gimp           *gimp,
+                                                            GimpContext    *context,
+                                                            GimpProgress   *progress,
+                                                            GimpValueArray *args,
+                                                            GError        **error);
+static void          gimp_plug_in_procedure_execute_async  (GimpProcedure  *procedure,
+                                                            Gimp           *gimp,
+                                                            GimpContext    *context,
+                                                            GimpProgress   *progress,
+                                                            GimpValueArray *args,
+                                                            GimpObject     *display);
 
-const gchar  * gimp_plug_in_procedure_real_get_progname (const GimpPlugInProcedure *procedure);
+const gchar     * gimp_plug_in_procedure_real_get_progname (const GimpPlugInProcedure *procedure);
 
 
 G_DEFINE_TYPE (GimpPlugInProcedure, gimp_plug_in_procedure,
@@ -194,12 +194,12 @@ gimp_plug_in_procedure_get_memsize (GimpObject *object,
                                                                   gui_size);
 }
 
-static GValueArray *
+static GimpValueArray *
 gimp_plug_in_procedure_execute (GimpProcedure  *procedure,
                                 Gimp           *gimp,
                                 GimpContext    *context,
                                 GimpProgress   *progress,
-                                GValueArray    *args,
+                                GimpValueArray *args,
                                 GError        **error)
 {
   if (procedure->proc_type == GIMP_INTERNAL)
@@ -214,15 +214,15 @@ gimp_plug_in_procedure_execute (GimpProcedure  *procedure,
 }
 
 static void
-gimp_plug_in_procedure_execute_async (GimpProcedure *procedure,
-                                      Gimp          *gimp,
-                                      GimpContext   *context,
-                                      GimpProgress  *progress,
-                                      GValueArray   *args,
-                                      GimpObject    *display)
+gimp_plug_in_procedure_execute_async (GimpProcedure  *procedure,
+                                      Gimp           *gimp,
+                                      GimpContext    *context,
+                                      GimpProgress   *progress,
+                                      GimpValueArray *args,
+                                      GimpObject     *display)
 {
   GimpPlugInProcedure *plug_in_procedure = GIMP_PLUG_IN_PROCEDURE (procedure);
-  GValueArray         *return_vals;
+  GimpValueArray      *return_vals;
 
   return_vals = gimp_plug_in_manager_call_run (gimp->plug_in_manager,
                                                context, progress,
@@ -234,7 +234,7 @@ gimp_plug_in_procedure_execute_async (GimpProcedure *procedure,
       gimp_plug_in_procedure_handle_return_values (plug_in_procedure,
                                                    gimp, progress,
                                                    return_vals);
-      g_value_array_free (return_vals);
+      gimp_value_array_unref (return_vals);
     }
 }
 
@@ -962,43 +962,44 @@ void
 gimp_plug_in_procedure_handle_return_values (GimpPlugInProcedure *proc,
                                              Gimp                *gimp,
                                              GimpProgress        *progress,
-                                             GValueArray         *return_vals)
+                                             GimpValueArray      *return_vals)
 {
   g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
   g_return_if_fail (return_vals != NULL);
 
-  if (! return_vals->n_values > 0 ||
-      G_VALUE_TYPE (&return_vals->values[0]) != GIMP_TYPE_PDB_STATUS_TYPE)
+  if (! gimp_value_array_length (return_vals) > 0 ||
+      G_VALUE_TYPE (gimp_value_array_index (return_vals, 0)) !=
+      GIMP_TYPE_PDB_STATUS_TYPE)
     {
       return;
     }
 
-  switch (g_value_get_enum (&return_vals->values[0]))
+  switch (g_value_get_enum (gimp_value_array_index (return_vals, 0)))
     {
     case GIMP_PDB_SUCCESS:
       break;
 
     case GIMP_PDB_CALLING_ERROR:
-      if (return_vals->n_values > 1 &&
-          G_VALUE_HOLDS_STRING (&return_vals->values[1]))
+      if (gimp_value_array_length (return_vals) > 1 &&
+          G_VALUE_HOLDS_STRING (gimp_value_array_index (return_vals, 1)))
         {
           gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
                         _("Calling error for '%s':\n"
                           "%s"),
                         gimp_plug_in_procedure_get_label (proc),
-                        g_value_get_string (&return_vals->values[1]));
+                        g_value_get_string (gimp_value_array_index (return_vals, 1)));
         }
       break;
 
     case GIMP_PDB_EXECUTION_ERROR:
-      if (return_vals->n_values > 1 &&
-          G_VALUE_HOLDS_STRING (&return_vals->values[1]))
+      if (gimp_value_array_length (return_vals) > 1 &&
+          G_VALUE_HOLDS_STRING (gimp_value_array_index (return_vals, 1)))
         {
           gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
                         _("Execution error for '%s':\n"
                           "%s"),
                         gimp_plug_in_procedure_get_label (proc),
-                        g_value_get_string (&return_vals->values[1]));
+                        g_value_get_string (gimp_value_array_index (return_vals, 1)));
         }
       break;
     }

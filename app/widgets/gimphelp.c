@@ -279,11 +279,11 @@ gimp_help_browser (Gimp         *gimp,
 
   if (! procedure)
     {
-      GValueArray *args          = NULL;
-      gint          n_domains    = 0;
-      gchar       **help_domains = NULL;
-      gchar       **help_uris    = NULL;
-      GError       *error        = NULL;
+      GimpValueArray *args         = NULL;
+      gint            n_domains    = 0;
+      gchar         **help_domains = NULL;
+      gchar         **help_uris    = NULL;
+      GError         *error        = NULL;
 
       procedure = gimp_pdb_lookup_procedure (gimp->pdb,
                                              "extension-gimp-help-browser");
@@ -307,17 +307,22 @@ gimp_help_browser (Gimp         *gimp,
       args = gimp_procedure_get_arguments (procedure);
       gimp_value_array_truncate (args, 5);
 
-      g_value_set_int             (&args->values[0], GIMP_RUN_INTERACTIVE);
-      g_value_set_int             (&args->values[1], n_domains);
-      gimp_value_take_stringarray (&args->values[2], help_domains, n_domains);
-      g_value_set_int             (&args->values[3], n_domains);
-      gimp_value_take_stringarray (&args->values[4], help_uris, n_domains);
+      g_value_set_int             (gimp_value_array_index (args, 0),
+                                   GIMP_RUN_INTERACTIVE);
+      g_value_set_int             (gimp_value_array_index (args, 1),
+                                   n_domains);
+      gimp_value_take_stringarray (gimp_value_array_index (args, 2),
+                                   help_domains, n_domains);
+      g_value_set_int             (gimp_value_array_index (args, 3),
+                                   n_domains);
+      gimp_value_take_stringarray (gimp_value_array_index (args, 4),
+                                   help_uris, n_domains);
 
       gimp_procedure_execute_async (procedure, gimp,
                                     gimp_get_user_context (gimp),
                                     NULL, args, NULL, &error);
 
-      g_value_array_free (args);
+      gimp_value_array_unref (args);
 
       if (error)
         {
@@ -406,8 +411,8 @@ gimp_help_call (Gimp         *gimp,
   /*  Special case the help browser  */
   if (! strcmp (procedure_name, "extension-gimp-help-browser-temp"))
     {
-      GValueArray *return_vals;
-      GError      *error = NULL;
+      GimpValueArray *return_vals;
+      GError         *error = NULL;
 
       GIMP_LOG (HELP, "Calling help via %s: %s %s %s",
                 procedure_name,
@@ -425,7 +430,7 @@ gimp_help_call (Gimp         *gimp,
                                             G_TYPE_STRING, help_id,
                                             G_TYPE_NONE);
 
-      g_value_array_free (return_vals);
+      gimp_value_array_unref (return_vals);
 
       if (error)
         {
@@ -441,11 +446,11 @@ gimp_help_call (Gimp         *gimp,
 
   if (! procedure)
     {
-      GValueArray  *args         = NULL;
-      gint          n_domains    = 0;
-      gchar       **help_domains = NULL;
-      gchar       **help_uris    = NULL;
-      GError       *error        = NULL;
+      GimpValueArray  *args         = NULL;
+      gint             n_domains    = 0;
+      gchar          **help_domains = NULL;
+      gchar          **help_uris    = NULL;
+      GError          *error        = NULL;
 
       procedure = gimp_pdb_lookup_procedure (gimp->pdb, "extension-gimp-help");
 
@@ -458,16 +463,20 @@ gimp_help_call (Gimp         *gimp,
       args = gimp_procedure_get_arguments (procedure);
       gimp_value_array_truncate (args, 4);
 
-      g_value_set_int             (&args->values[0], n_domains);
-      gimp_value_take_stringarray (&args->values[1], help_domains, n_domains);
-      g_value_set_int             (&args->values[2], n_domains);
-      gimp_value_take_stringarray (&args->values[3], help_uris, n_domains);
+      g_value_set_int             (gimp_value_array_index (args, 0),
+                                   n_domains);
+      gimp_value_take_stringarray (gimp_value_array_index (args, 1),
+                                   help_domains, n_domains);
+      g_value_set_int             (gimp_value_array_index (args, 2),
+                                   n_domains);
+      gimp_value_take_stringarray (gimp_value_array_index (args, 3),
+                                   help_uris, n_domains);
 
       gimp_procedure_execute_async (procedure, gimp,
                                     gimp_get_user_context (gimp), progress,
                                     args, NULL, &error);
 
-      g_value_array_free (args);
+      gimp_value_array_unref (args);
 
       if (error)
         {
@@ -481,8 +490,8 @@ gimp_help_call (Gimp         *gimp,
 
   if (procedure)
     {
-      GValueArray *return_vals;
-      GError      *error = NULL;
+      GimpValueArray *return_vals;
+      GError         *error = NULL;
 
       GIMP_LOG (HELP, "Calling help via %s: %s %s %s",
                 procedure_name,
@@ -501,7 +510,7 @@ gimp_help_call (Gimp         *gimp,
                                             G_TYPE_STRING, help_id,
                                             G_TYPE_NONE);
 
-      g_value_array_free (return_vals);
+      gimp_value_array_unref (return_vals);
 
       if (error)
         {

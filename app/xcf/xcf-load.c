@@ -1921,10 +1921,10 @@ xcf_load_vector (XcfInfo   *info,
       GimpStroke  *stroke;
       gint         j;
 
-      GValueArray *control_points;
-      GValue       value = { 0, };
-      GimpAnchor   anchor = { { 0, } };
-      GType        stroke_type;
+      GimpValueArray *control_points;
+      GValue          value = { 0, };
+      GimpAnchor      anchor = { { 0, } };
+      GType           stroke_type;
 
       g_value_init (&value, GIMP_TYPE_ANCHOR);
 
@@ -1958,7 +1958,7 @@ xcf_load_vector (XcfInfo   *info,
           return FALSE;
         }
 
-      control_points = g_value_array_new (num_control_points);
+      control_points = gimp_value_array_new (num_control_points);
 
       anchor.selected = FALSE;
 
@@ -1976,7 +1976,7 @@ xcf_load_vector (XcfInfo   *info,
           anchor.position.wheel    = coords[5];
 
           g_value_set_boxed (&value, &anchor);
-          g_value_array_append (control_points, &value);
+          gimp_value_array_append (control_points, &value);
 
 #ifdef GIMP_XCF_PATH_DEBUG
           g_printerr ("Anchor: %d, (%f, %f, %f, %f, %f, %f)\n", type,
@@ -1995,7 +1995,7 @@ xcf_load_vector (XcfInfo   *info,
       gimp_vectors_stroke_add (vectors, stroke);
 
       g_object_unref (stroke);
-      g_value_array_free (control_points);
+      gimp_value_array_unref (control_points);
     }
 
   gimp_image_add_vectors (image, vectors,

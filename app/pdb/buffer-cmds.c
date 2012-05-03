@@ -25,6 +25,8 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb-types.h"
 
 #include "core/gimp.h"
@@ -40,21 +42,21 @@
 #include "internal-procs.h"
 
 
-static GValueArray *
+static GimpValueArray *
 buffers_get_list_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GValueArray  *args,
-                          GError            **error)
+                          Gimp                  *gimp,
+                          GimpContext           *context,
+                          GimpProgress          *progress,
+                          const GimpValueArray  *args,
+                          GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *filter;
   gint32 num_buffers = 0;
   gchar **buffer_list = NULL;
 
-  filter = g_value_get_string (&args->values[0]);
+  filter = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -67,29 +69,29 @@ buffers_get_list_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      g_value_set_int (&return_vals->values[1], num_buffers);
-      gimp_value_take_stringarray (&return_vals->values[2], buffer_list, num_buffers);
+      g_value_set_int (gimp_value_array_index (return_vals, 1), num_buffers);
+      gimp_value_take_stringarray (gimp_value_array_index (return_vals, 2), buffer_list, num_buffers);
     }
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 buffer_rename_invoker (GimpProcedure      *procedure,
-                       Gimp               *gimp,
-                       GimpContext        *context,
-                       GimpProgress       *progress,
-                       const GValueArray  *args,
-                       GError            **error)
+                       Gimp                  *gimp,
+                       GimpContext           *context,
+                       GimpProgress          *progress,
+                       const GimpValueArray  *args,
+                       GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *buffer_name;
   const gchar *new_name;
   gchar *real_name = NULL;
 
-  buffer_name = g_value_get_string (&args->values[0]);
-  new_name = g_value_get_string (&args->values[1]);
+  buffer_name = g_value_get_string (gimp_value_array_index (args, 0));
+  new_name = g_value_get_string (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -108,23 +110,23 @@ buffer_rename_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (&return_vals->values[1], real_name);
+    g_value_take_string (gimp_value_array_index (return_vals, 1), real_name);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 buffer_delete_invoker (GimpProcedure      *procedure,
-                       Gimp               *gimp,
-                       GimpContext        *context,
-                       GimpProgress       *progress,
-                       const GValueArray  *args,
-                       GError            **error)
+                       Gimp                  *gimp,
+                       GimpContext           *context,
+                       GimpProgress          *progress,
+                       const GimpValueArray  *args,
+                       GError               **error)
 {
   gboolean success = TRUE;
   const gchar *buffer_name;
 
-  buffer_name = g_value_get_string (&args->values[0]);
+  buffer_name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -140,20 +142,20 @@ buffer_delete_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 buffer_get_width_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GValueArray  *args,
-                          GError            **error)
+                          Gimp                  *gimp,
+                          GimpContext           *context,
+                          GimpProgress          *progress,
+                          const GimpValueArray  *args,
+                          GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *buffer_name;
   gint32 width = 0;
 
-  buffer_name = g_value_get_string (&args->values[0]);
+  buffer_name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -169,25 +171,25 @@ buffer_get_width_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_int (&return_vals->values[1], width);
+    g_value_set_int (gimp_value_array_index (return_vals, 1), width);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 buffer_get_height_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GValueArray  *args,
-                           GError            **error)
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *buffer_name;
   gint32 height = 0;
 
-  buffer_name = g_value_get_string (&args->values[0]);
+  buffer_name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -203,25 +205,25 @@ buffer_get_height_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_int (&return_vals->values[1], height);
+    g_value_set_int (gimp_value_array_index (return_vals, 1), height);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 buffer_get_bytes_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GValueArray  *args,
-                          GError            **error)
+                          Gimp                  *gimp,
+                          GimpContext           *context,
+                          GimpProgress          *progress,
+                          const GimpValueArray  *args,
+                          GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *buffer_name;
   gint32 bytes = 0;
 
-  buffer_name = g_value_get_string (&args->values[0]);
+  buffer_name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -241,25 +243,25 @@ buffer_get_bytes_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_int (&return_vals->values[1], bytes);
+    g_value_set_int (gimp_value_array_index (return_vals, 1), bytes);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 buffer_get_image_type_invoker (GimpProcedure      *procedure,
-                               Gimp               *gimp,
-                               GimpContext        *context,
-                               GimpProgress       *progress,
-                               const GValueArray  *args,
-                               GError            **error)
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *buffer_name;
   gint32 image_type = 0;
 
-  buffer_name = g_value_get_string (&args->values[0]);
+  buffer_name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -275,7 +277,7 @@ buffer_get_image_type_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_enum (&return_vals->values[1], image_type);
+    g_value_set_enum (gimp_value_array_index (return_vals, 1), image_type);
 
   return return_vals;
 }

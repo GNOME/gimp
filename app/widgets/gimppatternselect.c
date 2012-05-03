@@ -23,6 +23,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -40,12 +41,12 @@
 #include "gimppatternselect.h"
 
 
-static void          gimp_pattern_select_constructed  (GObject        *object);
+static void             gimp_pattern_select_constructed  (GObject        *object);
 
-static GValueArray * gimp_pattern_select_run_callback (GimpPdbDialog  *dialog,
-                                                       GimpObject     *object,
-                                                       gboolean        closing,
-                                                       GError        **error);
+static GimpValueArray * gimp_pattern_select_run_callback (GimpPdbDialog  *dialog,
+                                                          GimpObject     *object,
+                                                          gboolean        closing,
+                                                          GError        **error);
 
 
 G_DEFINE_TYPE (GimpPatternSelect, gimp_pattern_select, GIMP_TYPE_PDB_DIALOG)
@@ -96,15 +97,15 @@ gimp_pattern_select_constructed (GObject *object)
   gtk_widget_show (dialog->view);
 }
 
-static GValueArray *
+static GimpValueArray *
 gimp_pattern_select_run_callback (GimpPdbDialog  *dialog,
                                   GimpObject     *object,
                                   gboolean        closing,
                                   GError        **error)
 {
-  GimpPattern *pattern = GIMP_PATTERN (object);
-  GimpArray   *array;
-  GValueArray *return_vals;
+  GimpPattern    *pattern = GIMP_PATTERN (object);
+  GimpArray      *array;
+  GimpValueArray *return_vals;
 
   array = gimp_array_new (gimp_temp_buf_get_data (pattern->mask),
                           gimp_temp_buf_get_data_size (pattern->mask),

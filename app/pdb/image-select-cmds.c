@@ -28,6 +28,8 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb-types.h"
 
 #include "core/gimpchannel-select.h"
@@ -45,13 +47,13 @@
 #include "gimp-intl.h"
 
 
-static GValueArray *
+static GimpValueArray *
 image_select_color_invoker (GimpProcedure      *procedure,
-                            Gimp               *gimp,
-                            GimpContext        *context,
-                            GimpProgress       *progress,
-                            const GValueArray  *args,
-                            GError            **error)
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -59,10 +61,10 @@ image_select_color_invoker (GimpProcedure      *procedure,
   GimpDrawable *drawable;
   GimpRGB color;
 
-  image = gimp_value_get_image (&args->values[0], gimp);
-  operation = g_value_get_enum (&args->values[1]);
-  drawable = gimp_value_get_drawable (&args->values[2], gimp);
-  gimp_value_get_rgb (&args->values[3], &color);
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  operation = g_value_get_enum (gimp_value_array_index (args, 1));
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  gimp_value_get_rgb (gimp_value_array_index (args, 3), &color);
 
   if (success)
     {
@@ -91,13 +93,13 @@ image_select_color_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 image_select_contiguous_color_invoker (GimpProcedure      *procedure,
-                                       Gimp               *gimp,
-                                       GimpContext        *context,
-                                       GimpProgress       *progress,
-                                       const GValueArray  *args,
-                                       GError            **error)
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -106,11 +108,11 @@ image_select_contiguous_color_invoker (GimpProcedure      *procedure,
   gdouble x;
   gdouble y;
 
-  image = gimp_value_get_image (&args->values[0], gimp);
-  operation = g_value_get_enum (&args->values[1]);
-  drawable = gimp_value_get_drawable (&args->values[2], gimp);
-  x = g_value_get_double (&args->values[3]);
-  y = g_value_get_double (&args->values[4]);
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  operation = g_value_get_enum (gimp_value_array_index (args, 1));
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  x = g_value_get_double (gimp_value_array_index (args, 3));
+  y = g_value_get_double (gimp_value_array_index (args, 4));
 
   if (success)
     {
@@ -141,13 +143,13 @@ image_select_contiguous_color_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 image_select_rectangle_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GValueArray  *args,
-                                GError            **error)
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -157,12 +159,12 @@ image_select_rectangle_invoker (GimpProcedure      *procedure,
   gdouble width;
   gdouble height;
 
-  image = gimp_value_get_image (&args->values[0], gimp);
-  operation = g_value_get_enum (&args->values[1]);
-  x = g_value_get_double (&args->values[2]);
-  y = g_value_get_double (&args->values[3]);
-  width = g_value_get_double (&args->values[4]);
-  height = g_value_get_double (&args->values[5]);
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  operation = g_value_get_enum (gimp_value_array_index (args, 1));
+  x = g_value_get_double (gimp_value_array_index (args, 2));
+  y = g_value_get_double (gimp_value_array_index (args, 3));
+  width = g_value_get_double (gimp_value_array_index (args, 4));
+  height = g_value_get_double (gimp_value_array_index (args, 5));
 
   if (success)
     {
@@ -182,13 +184,13 @@ image_select_rectangle_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 image_select_round_rectangle_invoker (GimpProcedure      *procedure,
-                                      Gimp               *gimp,
-                                      GimpContext        *context,
-                                      GimpProgress       *progress,
-                                      const GValueArray  *args,
-                                      GError            **error)
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -200,14 +202,14 @@ image_select_round_rectangle_invoker (GimpProcedure      *procedure,
   gdouble corner_radius_x;
   gdouble corner_radius_y;
 
-  image = gimp_value_get_image (&args->values[0], gimp);
-  operation = g_value_get_enum (&args->values[1]);
-  x = g_value_get_double (&args->values[2]);
-  y = g_value_get_double (&args->values[3]);
-  width = g_value_get_double (&args->values[4]);
-  height = g_value_get_double (&args->values[5]);
-  corner_radius_x = g_value_get_double (&args->values[6]);
-  corner_radius_y = g_value_get_double (&args->values[7]);
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  operation = g_value_get_enum (gimp_value_array_index (args, 1));
+  x = g_value_get_double (gimp_value_array_index (args, 2));
+  y = g_value_get_double (gimp_value_array_index (args, 3));
+  width = g_value_get_double (gimp_value_array_index (args, 4));
+  height = g_value_get_double (gimp_value_array_index (args, 5));
+  corner_radius_x = g_value_get_double (gimp_value_array_index (args, 6));
+  corner_radius_y = g_value_get_double (gimp_value_array_index (args, 7));
 
   if (success)
     {
@@ -230,13 +232,13 @@ image_select_round_rectangle_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 image_select_ellipse_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GValueArray  *args,
-                              GError            **error)
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -246,12 +248,12 @@ image_select_ellipse_invoker (GimpProcedure      *procedure,
   gdouble width;
   gdouble height;
 
-  image = gimp_value_get_image (&args->values[0], gimp);
-  operation = g_value_get_enum (&args->values[1]);
-  x = g_value_get_double (&args->values[2]);
-  y = g_value_get_double (&args->values[3]);
-  width = g_value_get_double (&args->values[4]);
-  height = g_value_get_double (&args->values[5]);
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  operation = g_value_get_enum (gimp_value_array_index (args, 1));
+  x = g_value_get_double (gimp_value_array_index (args, 2));
+  y = g_value_get_double (gimp_value_array_index (args, 3));
+  width = g_value_get_double (gimp_value_array_index (args, 4));
+  height = g_value_get_double (gimp_value_array_index (args, 5));
 
   if (success)
     {
@@ -272,13 +274,13 @@ image_select_ellipse_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 image_select_polygon_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GValueArray  *args,
-                              GError            **error)
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -286,10 +288,10 @@ image_select_polygon_invoker (GimpProcedure      *procedure,
   gint32 num_segs;
   const gdouble *segs;
 
-  image = gimp_value_get_image (&args->values[0], gimp);
-  operation = g_value_get_enum (&args->values[1]);
-  num_segs = g_value_get_int (&args->values[2]);
-  segs = gimp_value_get_floatarray (&args->values[3]);
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  operation = g_value_get_enum (gimp_value_array_index (args, 1));
+  num_segs = g_value_get_int (gimp_value_array_index (args, 2));
+  segs = gimp_value_get_floatarray (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -311,22 +313,22 @@ image_select_polygon_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 image_select_item_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GValueArray  *args,
-                           GError            **error)
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
   gint32 operation;
   GimpItem *item;
 
-  image = gimp_value_get_image (&args->values[0], gimp);
-  operation = g_value_get_enum (&args->values[1]);
-  item = gimp_value_get_item (&args->values[2], gimp);
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  operation = g_value_get_enum (gimp_value_array_index (args, 1));
+  item = gimp_value_get_item (gimp_value_array_index (args, 2), gimp);
 
   if (success)
     {

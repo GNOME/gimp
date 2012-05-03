@@ -25,6 +25,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -320,12 +321,13 @@ gimp_pdb_dialog_run_callback (GimpPdbDialog *dialog,
 
       if (gimp_pdb_lookup_procedure (dialog->pdb, dialog->callback_name))
         {
-          GValueArray *return_vals;
-          GError      *error = NULL;
+          GimpValueArray *return_vals;
+          GError         *error = NULL;
 
           return_vals = klass->run_callback (dialog, object, closing, &error);
 
-          if (g_value_get_enum (&return_vals->values[0]) != GIMP_PDB_SUCCESS)
+          if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) !=
+              GIMP_PDB_SUCCESS)
             {
               gimp_message (dialog->context->gimp, G_OBJECT (dialog),
                             GIMP_MESSAGE_ERROR,
@@ -342,7 +344,7 @@ gimp_pdb_dialog_run_callback (GimpPdbDialog *dialog,
               g_error_free (error);
             }
 
-          g_value_array_free (return_vals);
+          gimp_value_array_unref (return_vals);
         }
 
       dialog->callback_busy = FALSE;

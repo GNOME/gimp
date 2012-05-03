@@ -29,6 +29,8 @@
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpmodule/gimpmodule.h"
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb-types.h"
 
 #include "config/gimprc.h"
@@ -42,20 +44,20 @@
 #include "internal-procs.h"
 
 
-static GValueArray *
+static GimpValueArray *
 gimprc_query_invoker (GimpProcedure      *procedure,
-                      Gimp               *gimp,
-                      GimpContext        *context,
-                      GimpProgress       *progress,
-                      const GValueArray  *args,
-                      GError            **error)
+                      Gimp                  *gimp,
+                      GimpContext           *context,
+                      GimpProgress          *progress,
+                      const GimpValueArray  *args,
+                      GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *token;
   gchar *value = NULL;
 
-  token = g_value_get_string (&args->values[0]);
+  token = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -75,25 +77,25 @@ gimprc_query_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (&return_vals->values[1], value);
+    g_value_take_string (gimp_value_array_index (return_vals, 1), value);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 gimprc_set_invoker (GimpProcedure      *procedure,
-                    Gimp               *gimp,
-                    GimpContext        *context,
-                    GimpProgress       *progress,
-                    const GValueArray  *args,
-                    GError            **error)
+                    Gimp                  *gimp,
+                    GimpContext           *context,
+                    GimpProgress          *progress,
+                    const GimpValueArray  *args,
+                    GError               **error)
 {
   gboolean success = TRUE;
   const gchar *token;
   const gchar *value;
 
-  token = g_value_get_string (&args->values[0]);
-  value = g_value_get_string (&args->values[1]);
+  token = g_value_get_string (gimp_value_array_index (args, 0));
+  value = g_value_get_string (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -110,53 +112,53 @@ gimprc_set_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 get_default_comment_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GValueArray  *args,
-                             GError            **error)
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gchar *comment = NULL;
 
   comment = g_strdup (gimp_template_get_comment (gimp->config->default_image));
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_take_string (&return_vals->values[1], comment);
+  g_value_take_string (gimp_value_array_index (return_vals, 1), comment);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 get_default_unit_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GValueArray  *args,
-                          GError            **error)
+                          Gimp                  *gimp,
+                          GimpContext           *context,
+                          GimpProgress          *progress,
+                          const GimpValueArray  *args,
+                          GError               **error)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   GimpUnit unit_id = 0;
 
   unit_id = gimp_get_default_unit ();
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_int (&return_vals->values[1], unit_id);
+  g_value_set_int (gimp_value_array_index (return_vals, 1), unit_id);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 get_monitor_resolution_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GValueArray  *args,
-                                GError            **error)
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gdouble xres = 0.0;
   gdouble yres = 0.0;
 
@@ -165,65 +167,65 @@ get_monitor_resolution_invoker (GimpProcedure      *procedure,
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
 
-  g_value_set_double (&return_vals->values[1], xres);
-  g_value_set_double (&return_vals->values[2], yres);
+  g_value_set_double (gimp_value_array_index (return_vals, 1), xres);
+  g_value_set_double (gimp_value_array_index (return_vals, 2), yres);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 get_theme_dir_invoker (GimpProcedure      *procedure,
-                       Gimp               *gimp,
-                       GimpContext        *context,
-                       GimpProgress       *progress,
-                       const GValueArray  *args,
-                       GError            **error)
+                       Gimp                  *gimp,
+                       GimpContext           *context,
+                       GimpProgress          *progress,
+                       const GimpValueArray  *args,
+                       GError               **error)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gchar *theme_dir = NULL;
 
   theme_dir = g_strdup (gimp_get_theme_dir (gimp));
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_take_string (&return_vals->values[1], theme_dir);
+  g_value_take_string (gimp_value_array_index (return_vals, 1), theme_dir);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 get_color_configuration_invoker (GimpProcedure      *procedure,
-                                 Gimp               *gimp,
-                                 GimpContext        *context,
-                                 GimpProgress       *progress,
-                                 const GValueArray  *args,
-                                 GError            **error)
+                                 Gimp                  *gimp,
+                                 GimpContext           *context,
+                                 GimpProgress          *progress,
+                                 const GimpValueArray  *args,
+                                 GError               **error)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gchar *config = NULL;
 
   config = gimp_config_serialize_to_string (GIMP_CONFIG (gimp->config->color_management), NULL);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_take_string (&return_vals->values[1], config);
+  g_value_take_string (gimp_value_array_index (return_vals, 1), config);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 get_module_load_inhibit_invoker (GimpProcedure      *procedure,
-                                 Gimp               *gimp,
-                                 GimpContext        *context,
-                                 GimpProgress       *progress,
-                                 const GValueArray  *args,
-                                 GError            **error)
+                                 Gimp                  *gimp,
+                                 GimpContext           *context,
+                                 GimpProgress          *progress,
+                                 const GimpValueArray  *args,
+                                 GError               **error)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gchar *load_inhibit = NULL;
 
   load_inhibit = g_strdup (gimp_module_db_get_load_inhibit (gimp->module_db));
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_take_string (&return_vals->values[1], load_inhibit);
+  g_value_take_string (gimp_value_array_index (return_vals, 1), load_inhibit);
 
   return return_vals;
 }

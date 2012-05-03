@@ -28,6 +28,8 @@
 
 #include "libgimpcolor/gimpcolor.h"
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb-types.h"
 
 #include "core/gimp.h"
@@ -91,20 +93,20 @@ gradient_get_range (Gimp                 *gimp,
   return gradient;
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_new_invoker (GimpProcedure      *procedure,
-                      Gimp               *gimp,
-                      GimpContext        *context,
-                      GimpProgress       *progress,
-                      const GValueArray  *args,
-                      GError            **error)
+                      Gimp                  *gimp,
+                      GimpContext           *context,
+                      GimpProgress          *progress,
+                      const GimpValueArray  *args,
+                      GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gchar *actual_name = NULL;
 
-  name = g_value_get_string (&args->values[0]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -121,25 +123,25 @@ gradient_new_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (&return_vals->values[1], actual_name);
+    g_value_take_string (gimp_value_array_index (return_vals, 1), actual_name);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_duplicate_invoker (GimpProcedure      *procedure,
-                            Gimp               *gimp,
-                            GimpContext        *context,
-                            GimpProgress       *progress,
-                            const GValueArray  *args,
-                            GError            **error)
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gchar *copy_name = NULL;
 
-  name = g_value_get_string (&args->values[0]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -164,25 +166,25 @@ gradient_duplicate_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (&return_vals->values[1], copy_name);
+    g_value_take_string (gimp_value_array_index (return_vals, 1), copy_name);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_is_editable_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GValueArray  *args,
-                              GError            **error)
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gboolean editable = FALSE;
 
-  name = g_value_get_string (&args->values[0]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -198,27 +200,27 @@ gradient_is_editable_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_boolean (&return_vals->values[1], editable);
+    g_value_set_boolean (gimp_value_array_index (return_vals, 1), editable);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_rename_invoker (GimpProcedure      *procedure,
-                         Gimp               *gimp,
-                         GimpContext        *context,
-                         GimpProgress       *progress,
-                         const GValueArray  *args,
-                         GError            **error)
+                         Gimp                  *gimp,
+                         GimpContext           *context,
+                         GimpProgress          *progress,
+                         const GimpValueArray  *args,
+                         GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   const gchar *new_name;
   gchar *actual_name = NULL;
 
-  name = g_value_get_string (&args->values[0]);
-  new_name = g_value_get_string (&args->values[1]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  new_name = g_value_get_string (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -237,23 +239,23 @@ gradient_rename_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (&return_vals->values[1], actual_name);
+    g_value_take_string (gimp_value_array_index (return_vals, 1), actual_name);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_delete_invoker (GimpProcedure      *procedure,
-                         Gimp               *gimp,
-                         GimpContext        *context,
-                         GimpProgress       *progress,
-                         const GValueArray  *args,
-                         GError            **error)
+                         Gimp                  *gimp,
+                         GimpContext           *context,
+                         GimpProgress          *progress,
+                         const GimpValueArray  *args,
+                         GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (&args->values[0]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -271,20 +273,20 @@ gradient_delete_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_get_number_of_segments_invoker (GimpProcedure      *procedure,
-                                         Gimp               *gimp,
-                                         GimpContext        *context,
-                                         GimpProgress       *progress,
-                                         const GValueArray  *args,
-                                         GError            **error)
+                                         Gimp                  *gimp,
+                                         GimpContext           *context,
+                                         GimpProgress          *progress,
+                                         const GimpValueArray  *args,
+                                         GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gint32 num_segments = 0;
 
-  name = g_value_get_string (&args->values[0]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -306,30 +308,30 @@ gradient_get_number_of_segments_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_int (&return_vals->values[1], num_segments);
+    g_value_set_int (gimp_value_array_index (return_vals, 1), num_segments);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_get_uniform_samples_invoker (GimpProcedure      *procedure,
-                                      Gimp               *gimp,
-                                      GimpContext        *context,
-                                      GimpProgress       *progress,
-                                      const GValueArray  *args,
-                                      GError            **error)
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gint32 num_samples;
   gboolean reverse;
   gint32 num_color_samples = 0;
   gdouble *color_samples = NULL;
 
-  name = g_value_get_string (&args->values[0]);
-  num_samples = g_value_get_int (&args->values[1]);
-  reverse = g_value_get_boolean (&args->values[2]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  num_samples = g_value_get_int (gimp_value_array_index (args, 1));
+  reverse = g_value_get_boolean (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -370,23 +372,23 @@ gradient_get_uniform_samples_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      g_value_set_int (&return_vals->values[1], num_color_samples);
-      gimp_value_take_floatarray (&return_vals->values[2], color_samples, num_color_samples);
+      g_value_set_int (gimp_value_array_index (return_vals, 1), num_color_samples);
+      gimp_value_take_floatarray (gimp_value_array_index (return_vals, 2), color_samples, num_color_samples);
     }
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_get_custom_samples_invoker (GimpProcedure      *procedure,
-                                     Gimp               *gimp,
-                                     GimpContext        *context,
-                                     GimpProgress       *progress,
-                                     const GValueArray  *args,
-                                     GError            **error)
+                                     Gimp                  *gimp,
+                                     GimpContext           *context,
+                                     GimpProgress          *progress,
+                                     const GimpValueArray  *args,
+                                     GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gint32 num_samples;
   const gdouble *positions;
@@ -394,10 +396,10 @@ gradient_get_custom_samples_invoker (GimpProcedure      *procedure,
   gint32 num_color_samples = 0;
   gdouble *color_samples = NULL;
 
-  name = g_value_get_string (&args->values[0]);
-  num_samples = g_value_get_int (&args->values[1]);
-  positions = gimp_value_get_floatarray (&args->values[2]);
-  reverse = g_value_get_boolean (&args->values[3]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  num_samples = g_value_get_int (gimp_value_array_index (args, 1));
+  positions = gimp_value_get_floatarray (gimp_value_array_index (args, 2));
+  reverse = g_value_get_boolean (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -437,30 +439,30 @@ gradient_get_custom_samples_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      g_value_set_int (&return_vals->values[1], num_color_samples);
-      gimp_value_take_floatarray (&return_vals->values[2], color_samples, num_color_samples);
+      g_value_set_int (gimp_value_array_index (return_vals, 1), num_color_samples);
+      gimp_value_take_floatarray (gimp_value_array_index (return_vals, 2), color_samples, num_color_samples);
     }
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_segment_get_left_color_invoker (GimpProcedure      *procedure,
-                                         Gimp               *gimp,
-                                         GimpContext        *context,
-                                         GimpProgress       *progress,
-                                         const GValueArray  *args,
-                                         GError            **error)
+                                         Gimp                  *gimp,
+                                         GimpContext           *context,
+                                         GimpProgress          *progress,
+                                         const GimpValueArray  *args,
+                                         GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gint32 segment;
   GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
   gdouble opacity = 0.0;
 
-  name = g_value_get_string (&args->values[0]);
-  segment = g_value_get_int (&args->values[1]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  segment = g_value_get_int (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -483,20 +485,20 @@ gradient_segment_get_left_color_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_value_set_rgb (&return_vals->values[1], &color);
-      g_value_set_double (&return_vals->values[2], opacity);
+      gimp_value_set_rgb (gimp_value_array_index (return_vals, 1), &color);
+      g_value_set_double (gimp_value_array_index (return_vals, 2), opacity);
     }
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_segment_set_left_color_invoker (GimpProcedure      *procedure,
-                                         Gimp               *gimp,
-                                         GimpContext        *context,
-                                         GimpProgress       *progress,
-                                         const GValueArray  *args,
-                                         GError            **error)
+                                         Gimp                  *gimp,
+                                         GimpContext           *context,
+                                         GimpProgress          *progress,
+                                         const GimpValueArray  *args,
+                                         GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
@@ -504,10 +506,10 @@ gradient_segment_set_left_color_invoker (GimpProcedure      *procedure,
   GimpRGB color;
   gdouble opacity;
 
-  name = g_value_get_string (&args->values[0]);
-  segment = g_value_get_int (&args->values[1]);
-  gimp_value_get_rgb (&args->values[2], &color);
-  opacity = g_value_get_double (&args->values[3]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  segment = g_value_get_int (gimp_value_array_index (args, 1));
+  gimp_value_get_rgb (gimp_value_array_index (args, 2), &color);
+  opacity = g_value_get_double (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -529,23 +531,23 @@ gradient_segment_set_left_color_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_segment_get_right_color_invoker (GimpProcedure      *procedure,
-                                          Gimp               *gimp,
-                                          GimpContext        *context,
-                                          GimpProgress       *progress,
-                                          const GValueArray  *args,
-                                          GError            **error)
+                                          Gimp                  *gimp,
+                                          GimpContext           *context,
+                                          GimpProgress          *progress,
+                                          const GimpValueArray  *args,
+                                          GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gint32 segment;
   GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
   gdouble opacity = 0.0;
 
-  name = g_value_get_string (&args->values[0]);
-  segment = g_value_get_int (&args->values[1]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  segment = g_value_get_int (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -568,20 +570,20 @@ gradient_segment_get_right_color_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_value_set_rgb (&return_vals->values[1], &color);
-      g_value_set_double (&return_vals->values[2], opacity);
+      gimp_value_set_rgb (gimp_value_array_index (return_vals, 1), &color);
+      g_value_set_double (gimp_value_array_index (return_vals, 2), opacity);
     }
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_segment_set_right_color_invoker (GimpProcedure      *procedure,
-                                          Gimp               *gimp,
-                                          GimpContext        *context,
-                                          GimpProgress       *progress,
-                                          const GValueArray  *args,
-                                          GError            **error)
+                                          Gimp                  *gimp,
+                                          GimpContext           *context,
+                                          GimpProgress          *progress,
+                                          const GimpValueArray  *args,
+                                          GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
@@ -589,10 +591,10 @@ gradient_segment_set_right_color_invoker (GimpProcedure      *procedure,
   GimpRGB color;
   gdouble opacity;
 
-  name = g_value_get_string (&args->values[0]);
-  segment = g_value_get_int (&args->values[1]);
-  gimp_value_get_rgb (&args->values[2], &color);
-  opacity = g_value_get_double (&args->values[3]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  segment = g_value_get_int (gimp_value_array_index (args, 1));
+  gimp_value_get_rgb (gimp_value_array_index (args, 2), &color);
+  opacity = g_value_get_double (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -614,22 +616,22 @@ gradient_segment_set_right_color_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_segment_get_left_pos_invoker (GimpProcedure      *procedure,
-                                       Gimp               *gimp,
-                                       GimpContext        *context,
-                                       GimpProgress       *progress,
-                                       const GValueArray  *args,
-                                       GError            **error)
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gint32 segment;
   gdouble pos = 0.0;
 
-  name = g_value_get_string (&args->values[0]);
-  segment = g_value_get_int (&args->values[1]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  segment = g_value_get_int (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -650,29 +652,29 @@ gradient_segment_get_left_pos_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (&return_vals->values[1], pos);
+    g_value_set_double (gimp_value_array_index (return_vals, 1), pos);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_segment_set_left_pos_invoker (GimpProcedure      *procedure,
-                                       Gimp               *gimp,
-                                       GimpContext        *context,
-                                       GimpProgress       *progress,
-                                       const GValueArray  *args,
-                                       GError            **error)
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gint32 segment;
   gdouble pos;
   gdouble final_pos = 0.0;
 
-  name = g_value_get_string (&args->values[0]);
-  segment = g_value_get_int (&args->values[1]);
-  pos = g_value_get_double (&args->values[2]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  segment = g_value_get_int (gimp_value_array_index (args, 1));
+  pos = g_value_get_double (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -693,27 +695,27 @@ gradient_segment_set_left_pos_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (&return_vals->values[1], final_pos);
+    g_value_set_double (gimp_value_array_index (return_vals, 1), final_pos);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_segment_get_middle_pos_invoker (GimpProcedure      *procedure,
-                                         Gimp               *gimp,
-                                         GimpContext        *context,
-                                         GimpProgress       *progress,
-                                         const GValueArray  *args,
-                                         GError            **error)
+                                         Gimp                  *gimp,
+                                         GimpContext           *context,
+                                         GimpProgress          *progress,
+                                         const GimpValueArray  *args,
+                                         GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gint32 segment;
   gdouble pos = 0.0;
 
-  name = g_value_get_string (&args->values[0]);
-  segment = g_value_get_int (&args->values[1]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  segment = g_value_get_int (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -734,29 +736,29 @@ gradient_segment_get_middle_pos_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (&return_vals->values[1], pos);
+    g_value_set_double (gimp_value_array_index (return_vals, 1), pos);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_segment_set_middle_pos_invoker (GimpProcedure      *procedure,
-                                         Gimp               *gimp,
-                                         GimpContext        *context,
-                                         GimpProgress       *progress,
-                                         const GValueArray  *args,
-                                         GError            **error)
+                                         Gimp                  *gimp,
+                                         GimpContext           *context,
+                                         GimpProgress          *progress,
+                                         const GimpValueArray  *args,
+                                         GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gint32 segment;
   gdouble pos;
   gdouble final_pos = 0.0;
 
-  name = g_value_get_string (&args->values[0]);
-  segment = g_value_get_int (&args->values[1]);
-  pos = g_value_get_double (&args->values[2]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  segment = g_value_get_int (gimp_value_array_index (args, 1));
+  pos = g_value_get_double (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -778,27 +780,27 @@ gradient_segment_set_middle_pos_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (&return_vals->values[1], final_pos);
+    g_value_set_double (gimp_value_array_index (return_vals, 1), final_pos);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_segment_get_right_pos_invoker (GimpProcedure      *procedure,
-                                        Gimp               *gimp,
-                                        GimpContext        *context,
-                                        GimpProgress       *progress,
-                                        const GValueArray  *args,
-                                        GError            **error)
+                                        Gimp                  *gimp,
+                                        GimpContext           *context,
+                                        GimpProgress          *progress,
+                                        const GimpValueArray  *args,
+                                        GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gint32 segment;
   gdouble pos = 0.0;
 
-  name = g_value_get_string (&args->values[0]);
-  segment = g_value_get_int (&args->values[1]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  segment = g_value_get_int (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -819,29 +821,29 @@ gradient_segment_get_right_pos_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (&return_vals->values[1], pos);
+    g_value_set_double (gimp_value_array_index (return_vals, 1), pos);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_segment_set_right_pos_invoker (GimpProcedure      *procedure,
-                                        Gimp               *gimp,
-                                        GimpContext        *context,
-                                        GimpProgress       *progress,
-                                        const GValueArray  *args,
-                                        GError            **error)
+                                        Gimp                  *gimp,
+                                        GimpContext           *context,
+                                        GimpProgress          *progress,
+                                        const GimpValueArray  *args,
+                                        GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gint32 segment;
   gdouble pos;
   gdouble final_pos = 0.0;
 
-  name = g_value_get_string (&args->values[0]);
-  segment = g_value_get_int (&args->values[1]);
-  pos = g_value_get_double (&args->values[2]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  segment = g_value_get_int (gimp_value_array_index (args, 1));
+  pos = g_value_get_double (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -863,27 +865,27 @@ gradient_segment_set_right_pos_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (&return_vals->values[1], final_pos);
+    g_value_set_double (gimp_value_array_index (return_vals, 1), final_pos);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_segment_get_blending_function_invoker (GimpProcedure      *procedure,
-                                                Gimp               *gimp,
-                                                GimpContext        *context,
-                                                GimpProgress       *progress,
-                                                const GValueArray  *args,
-                                                GError            **error)
+                                                Gimp                  *gimp,
+                                                GimpContext           *context,
+                                                GimpProgress          *progress,
+                                                const GimpValueArray  *args,
+                                                GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gint32 segment;
   gint32 blend_func = 0;
 
-  name = g_value_get_string (&args->values[0]);
-  segment = g_value_get_int (&args->values[1]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  segment = g_value_get_int (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -904,27 +906,27 @@ gradient_segment_get_blending_function_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_enum (&return_vals->values[1], blend_func);
+    g_value_set_enum (gimp_value_array_index (return_vals, 1), blend_func);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_segment_get_coloring_type_invoker (GimpProcedure      *procedure,
-                                            Gimp               *gimp,
-                                            GimpContext        *context,
-                                            GimpProgress       *progress,
-                                            const GValueArray  *args,
-                                            GError            **error)
+                                            Gimp                  *gimp,
+                                            GimpContext           *context,
+                                            GimpProgress          *progress,
+                                            const GimpValueArray  *args,
+                                            GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gint32 segment;
   gint32 coloring_type = 0;
 
-  name = g_value_get_string (&args->values[0]);
-  segment = g_value_get_int (&args->values[1]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  segment = g_value_get_int (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -945,18 +947,18 @@ gradient_segment_get_coloring_type_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_enum (&return_vals->values[1], coloring_type);
+    g_value_set_enum (gimp_value_array_index (return_vals, 1), coloring_type);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_segment_range_set_blending_function_invoker (GimpProcedure      *procedure,
-                                                      Gimp               *gimp,
-                                                      GimpContext        *context,
-                                                      GimpProgress       *progress,
-                                                      const GValueArray  *args,
-                                                      GError            **error)
+                                                      Gimp                  *gimp,
+                                                      GimpContext           *context,
+                                                      GimpProgress          *progress,
+                                                      const GimpValueArray  *args,
+                                                      GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
@@ -964,10 +966,10 @@ gradient_segment_range_set_blending_function_invoker (GimpProcedure      *proced
   gint32 end_segment;
   gint32 blending_function;
 
-  name = g_value_get_string (&args->values[0]);
-  start_segment = g_value_get_int (&args->values[1]);
-  end_segment = g_value_get_int (&args->values[2]);
-  blending_function = g_value_get_enum (&args->values[3]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  start_segment = g_value_get_int (gimp_value_array_index (args, 1));
+  end_segment = g_value_get_int (gimp_value_array_index (args, 2));
+  blending_function = g_value_get_enum (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -992,13 +994,13 @@ gradient_segment_range_set_blending_function_invoker (GimpProcedure      *proced
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_segment_range_set_coloring_type_invoker (GimpProcedure      *procedure,
-                                                  Gimp               *gimp,
-                                                  GimpContext        *context,
-                                                  GimpProgress       *progress,
-                                                  const GValueArray  *args,
-                                                  GError            **error)
+                                                  Gimp                  *gimp,
+                                                  GimpContext           *context,
+                                                  GimpProgress          *progress,
+                                                  const GimpValueArray  *args,
+                                                  GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
@@ -1006,10 +1008,10 @@ gradient_segment_range_set_coloring_type_invoker (GimpProcedure      *procedure,
   gint32 end_segment;
   gint32 coloring_type;
 
-  name = g_value_get_string (&args->values[0]);
-  start_segment = g_value_get_int (&args->values[1]);
-  end_segment = g_value_get_int (&args->values[2]);
-  coloring_type = g_value_get_enum (&args->values[3]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  start_segment = g_value_get_int (gimp_value_array_index (args, 1));
+  end_segment = g_value_get_int (gimp_value_array_index (args, 2));
+  coloring_type = g_value_get_enum (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -1034,22 +1036,22 @@ gradient_segment_range_set_coloring_type_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_segment_range_flip_invoker (GimpProcedure      *procedure,
-                                     Gimp               *gimp,
-                                     GimpContext        *context,
-                                     GimpProgress       *progress,
-                                     const GValueArray  *args,
-                                     GError            **error)
+                                     Gimp                  *gimp,
+                                     GimpContext           *context,
+                                     GimpProgress          *progress,
+                                     const GimpValueArray  *args,
+                                     GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
   gint32 start_segment;
   gint32 end_segment;
 
-  name = g_value_get_string (&args->values[0]);
-  start_segment = g_value_get_int (&args->values[1]);
-  end_segment = g_value_get_int (&args->values[2]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  start_segment = g_value_get_int (gimp_value_array_index (args, 1));
+  end_segment = g_value_get_int (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -1074,13 +1076,13 @@ gradient_segment_range_flip_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_segment_range_replicate_invoker (GimpProcedure      *procedure,
-                                          Gimp               *gimp,
-                                          GimpContext        *context,
-                                          GimpProgress       *progress,
-                                          const GValueArray  *args,
-                                          GError            **error)
+                                          Gimp                  *gimp,
+                                          GimpContext           *context,
+                                          GimpProgress          *progress,
+                                          const GimpValueArray  *args,
+                                          GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
@@ -1088,10 +1090,10 @@ gradient_segment_range_replicate_invoker (GimpProcedure      *procedure,
   gint32 end_segment;
   gint32 replicate_times;
 
-  name = g_value_get_string (&args->values[0]);
-  start_segment = g_value_get_int (&args->values[1]);
-  end_segment = g_value_get_int (&args->values[2]);
-  replicate_times = g_value_get_int (&args->values[3]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  start_segment = g_value_get_int (gimp_value_array_index (args, 1));
+  end_segment = g_value_get_int (gimp_value_array_index (args, 2));
+  replicate_times = g_value_get_int (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -1117,22 +1119,22 @@ gradient_segment_range_replicate_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_segment_range_split_midpoint_invoker (GimpProcedure      *procedure,
-                                               Gimp               *gimp,
-                                               GimpContext        *context,
-                                               GimpProgress       *progress,
-                                               const GValueArray  *args,
-                                               GError            **error)
+                                               Gimp                  *gimp,
+                                               GimpContext           *context,
+                                               GimpProgress          *progress,
+                                               const GimpValueArray  *args,
+                                               GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
   gint32 start_segment;
   gint32 end_segment;
 
-  name = g_value_get_string (&args->values[0]);
-  start_segment = g_value_get_int (&args->values[1]);
-  end_segment = g_value_get_int (&args->values[2]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  start_segment = g_value_get_int (gimp_value_array_index (args, 1));
+  end_segment = g_value_get_int (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -1157,13 +1159,13 @@ gradient_segment_range_split_midpoint_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_segment_range_split_uniform_invoker (GimpProcedure      *procedure,
-                                              Gimp               *gimp,
-                                              GimpContext        *context,
-                                              GimpProgress       *progress,
-                                              const GValueArray  *args,
-                                              GError            **error)
+                                              Gimp                  *gimp,
+                                              GimpContext           *context,
+                                              GimpProgress          *progress,
+                                              const GimpValueArray  *args,
+                                              GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
@@ -1171,10 +1173,10 @@ gradient_segment_range_split_uniform_invoker (GimpProcedure      *procedure,
   gint32 end_segment;
   gint32 split_parts;
 
-  name = g_value_get_string (&args->values[0]);
-  start_segment = g_value_get_int (&args->values[1]);
-  end_segment = g_value_get_int (&args->values[2]);
-  split_parts = g_value_get_int (&args->values[3]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  start_segment = g_value_get_int (gimp_value_array_index (args, 1));
+  end_segment = g_value_get_int (gimp_value_array_index (args, 2));
+  split_parts = g_value_get_int (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -1200,22 +1202,22 @@ gradient_segment_range_split_uniform_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_segment_range_delete_invoker (GimpProcedure      *procedure,
-                                       Gimp               *gimp,
-                                       GimpContext        *context,
-                                       GimpProgress       *progress,
-                                       const GValueArray  *args,
-                                       GError            **error)
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
   gint32 start_segment;
   gint32 end_segment;
 
-  name = g_value_get_string (&args->values[0]);
-  start_segment = g_value_get_int (&args->values[1]);
-  end_segment = g_value_get_int (&args->values[2]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  start_segment = g_value_get_int (gimp_value_array_index (args, 1));
+  end_segment = g_value_get_int (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -1240,22 +1242,22 @@ gradient_segment_range_delete_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_segment_range_redistribute_handles_invoker (GimpProcedure      *procedure,
-                                                     Gimp               *gimp,
-                                                     GimpContext        *context,
-                                                     GimpProgress       *progress,
-                                                     const GValueArray  *args,
-                                                     GError            **error)
+                                                     Gimp                  *gimp,
+                                                     GimpContext           *context,
+                                                     GimpProgress          *progress,
+                                                     const GimpValueArray  *args,
+                                                     GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
   gint32 start_segment;
   gint32 end_segment;
 
-  name = g_value_get_string (&args->values[0]);
-  start_segment = g_value_get_int (&args->values[1]);
-  end_segment = g_value_get_int (&args->values[2]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  start_segment = g_value_get_int (gimp_value_array_index (args, 1));
+  end_segment = g_value_get_int (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -1279,22 +1281,22 @@ gradient_segment_range_redistribute_handles_invoker (GimpProcedure      *procedu
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_segment_range_blend_colors_invoker (GimpProcedure      *procedure,
-                                             Gimp               *gimp,
-                                             GimpContext        *context,
-                                             GimpProgress       *progress,
-                                             const GValueArray  *args,
-                                             GError            **error)
+                                             Gimp                  *gimp,
+                                             GimpContext           *context,
+                                             GimpProgress          *progress,
+                                             const GimpValueArray  *args,
+                                             GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
   gint32 start_segment;
   gint32 end_segment;
 
-  name = g_value_get_string (&args->values[0]);
-  start_segment = g_value_get_int (&args->values[1]);
-  end_segment = g_value_get_int (&args->values[2]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  start_segment = g_value_get_int (gimp_value_array_index (args, 1));
+  end_segment = g_value_get_int (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -1324,22 +1326,22 @@ gradient_segment_range_blend_colors_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_segment_range_blend_opacity_invoker (GimpProcedure      *procedure,
-                                              Gimp               *gimp,
-                                              GimpContext        *context,
-                                              GimpProgress       *progress,
-                                              const GValueArray  *args,
-                                              GError            **error)
+                                              Gimp                  *gimp,
+                                              GimpContext           *context,
+                                              GimpProgress          *progress,
+                                              const GimpValueArray  *args,
+                                              GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
   gint32 start_segment;
   gint32 end_segment;
 
-  name = g_value_get_string (&args->values[0]);
-  start_segment = g_value_get_int (&args->values[1]);
-  end_segment = g_value_get_int (&args->values[2]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  start_segment = g_value_get_int (gimp_value_array_index (args, 1));
+  end_segment = g_value_get_int (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -1369,16 +1371,16 @@ gradient_segment_range_blend_opacity_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 gradient_segment_range_move_invoker (GimpProcedure      *procedure,
-                                     Gimp               *gimp,
-                                     GimpContext        *context,
-                                     GimpProgress       *progress,
-                                     const GValueArray  *args,
-                                     GError            **error)
+                                     Gimp                  *gimp,
+                                     GimpContext           *context,
+                                     GimpProgress          *progress,
+                                     const GimpValueArray  *args,
+                                     GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gint32 start_segment;
   gint32 end_segment;
@@ -1386,11 +1388,11 @@ gradient_segment_range_move_invoker (GimpProcedure      *procedure,
   gboolean control_compress;
   gdouble final_delta = 0.0;
 
-  name = g_value_get_string (&args->values[0]);
-  start_segment = g_value_get_int (&args->values[1]);
-  end_segment = g_value_get_int (&args->values[2]);
-  delta = g_value_get_double (&args->values[3]);
-  control_compress = g_value_get_boolean (&args->values[4]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  start_segment = g_value_get_int (gimp_value_array_index (args, 1));
+  end_segment = g_value_get_int (gimp_value_array_index (args, 2));
+  delta = g_value_get_double (gimp_value_array_index (args, 3));
+  control_compress = g_value_get_boolean (gimp_value_array_index (args, 4));
 
   if (success)
     {
@@ -1416,7 +1418,7 @@ gradient_segment_range_move_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (&return_vals->values[1], final_delta);
+    g_value_set_double (gimp_value_array_index (return_vals, 1), final_delta);
 
   return return_vals;
 }

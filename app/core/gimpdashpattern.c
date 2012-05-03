@@ -23,6 +23,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
 #include "gimpdashpattern.h"
@@ -214,23 +216,25 @@ gimp_dash_pattern_fill_segments (GArray   *pattern,
 }
 
 GArray *
-gimp_dash_pattern_from_value_array (GValueArray *value_array)
+gimp_dash_pattern_from_value_array (GimpValueArray *value_array)
 {
-  if (value_array == NULL || value_array->n_values == 0)
+  if (value_array == NULL || gimp_value_array_length (value_array) == 0)
     {
       return NULL;
     }
   else
     {
       GArray *pattern;
+      gint    length;
       gint    i;
 
-      pattern = g_array_sized_new (FALSE, FALSE,
-                                   sizeof (gdouble), value_array->n_values);
+      length = gimp_value_array_length (value_array);
 
-      for (i = 0; i < value_array->n_values; i++)
+      pattern = g_array_sized_new (FALSE, FALSE, sizeof (gdouble), length);
+
+      for (i = 0; i < length; i++)
         {
-          GValue *item = g_value_array_get_nth (value_array, i);
+          GValue *item = gimp_value_array_index (value_array, i);
           gdouble val;
 
           g_return_val_if_fail (G_VALUE_HOLDS_DOUBLE (item), NULL);
@@ -244,7 +248,7 @@ gimp_dash_pattern_from_value_array (GValueArray *value_array)
     }
 }
 
-GValueArray *
+GimpValueArray *
 gimp_dash_pattern_to_value_array (GArray *pattern)
 {
   if (pattern == NULL || pattern->len == 0)
@@ -253,16 +257,16 @@ gimp_dash_pattern_to_value_array (GArray *pattern)
     }
   else
     {
-      GValueArray *value_array = g_value_array_new (pattern->len);
-      GValue       item        = { 0, };
-      gint         i;
+      GimpValueArray *value_array = gimp_value_array_new (pattern->len);
+      GValue          item        = { 0, };
+      gint            i;
 
       g_value_init (&item, G_TYPE_DOUBLE);
 
       for (i = 0; i < pattern->len; i++)
         {
           g_value_set_double (&item, g_array_index (pattern, gdouble, i));
-          g_value_array_append (value_array, &item);
+          gimp_value_array_append (value_array, &item);
         }
 
       g_value_unset (&item);

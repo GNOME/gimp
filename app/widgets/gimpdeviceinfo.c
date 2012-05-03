@@ -24,6 +24,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -35,6 +36,7 @@
 #include "core/gimpcurve-map.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpmarshal.h"
+#include "core/gimpparamspecs.h"
 
 #include "gimpdeviceinfo.h"
 
@@ -133,22 +135,22 @@ gimp_device_info_class_init (GimpDeviceInfoClass *klass)
                                   GDK_AXIS_IGNORE,
                                   GIMP_PARAM_READWRITE);
   g_object_class_install_property (object_class, PROP_AXES,
-                                   g_param_spec_value_array ("axes",
-                                                             NULL, NULL,
-                                                             param_spec,
-                                                             GIMP_PARAM_STATIC_STRINGS |
-                                                             GIMP_CONFIG_PARAM_FLAGS));
+                                   gimp_param_spec_value_array ("axes",
+                                                                NULL, NULL,
+                                                                param_spec,
+                                                                GIMP_PARAM_STATIC_STRINGS |
+                                                                GIMP_CONFIG_PARAM_FLAGS));
 
   param_spec = g_param_spec_string ("key",
                                     NULL, NULL,
                                     NULL,
                                     GIMP_PARAM_READWRITE);
   g_object_class_install_property (object_class, PROP_KEYS,
-                                   g_param_spec_value_array ("keys",
-                                                             NULL, NULL,
-                                                             param_spec,
-                                                             GIMP_PARAM_STATIC_STRINGS |
-                                                             GIMP_CONFIG_PARAM_FLAGS));
+                                   gimp_param_spec_value_array ("keys",
+                                                                NULL, NULL,
+                                                                param_spec,
+                                                                GIMP_PARAM_STATIC_STRINGS |
+                                                                GIMP_CONFIG_PARAM_FLAGS));
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_PRESSURE_CURVE,
                                    "pressure-curve", NULL,
@@ -286,7 +288,7 @@ gimp_device_info_set_property (GObject      *object,
 
     case PROP_AXES:
       {
-        GValueArray *array = g_value_get_boxed (value);
+        GimpValueArray *array = g_value_get_boxed (value);
 
         if (array)
           {
@@ -295,11 +297,12 @@ gimp_device_info_set_property (GObject      *object,
 
             if (device)
               {
-                n_device_values = MIN (array->n_values, device->num_axes);
+                n_device_values = MIN (gimp_value_array_length (array),
+                                       device->num_axes);
               }
             else
               {
-                n_device_values = array->n_values;
+                n_device_values = gimp_value_array_length (array);
 
                 info->n_axes = n_device_values;
                 info->axes   = g_renew (GdkAxisUse, info->axes, info->n_axes);
@@ -310,7 +313,7 @@ gimp_device_info_set_property (GObject      *object,
               {
                 GdkAxisUse axis_use;
 
-                axis_use = g_value_get_enum (g_value_array_get_nth (array, i));
+                axis_use = g_value_get_enum (gimp_value_array_index (array, i));
 
                 gimp_device_info_set_axis_use (info, i, axis_use);
               }
@@ -320,7 +323,7 @@ gimp_device_info_set_property (GObject      *object,
 
     case PROP_KEYS:
       {
-        GValueArray *array = g_value_get_boxed (value);
+        GimpValueArray *array = g_value_get_boxed (value);
 
         if (array)
           {
@@ -329,11 +332,12 @@ gimp_device_info_set_property (GObject      *object,
 
             if (device)
               {
-                n_device_values = MIN (array->n_values, device->num_keys);
+                n_device_values = MIN (gimp_value_array_length (array),
+                                       device->num_keys);
               }
             else
               {
-                n_device_values = array->n_values;
+                n_device_values = gimp_value_array_length (array);
 
                 info->n_keys = n_device_values;
                 info->keys   = g_renew (GdkDeviceKey, info->keys, info->n_keys);
@@ -346,7 +350,7 @@ gimp_device_info_set_property (GObject      *object,
                 guint            keyval;
                 GdkModifierType  modifiers;
 
-                accel = g_value_get_string (g_value_array_get_nth (array, i));
+                accel = g_value_get_string (gimp_value_array_index (array, i));
 
                 gtk_accelerator_parse (accel, &keyval, &modifiers);
 
@@ -398,12 +402,12 @@ gimp_device_info_get_property (GObject    *object,
 
     case PROP_AXES:
       {
-        GValueArray *array;
-        GValue       enum_value = { 0, };
-        gint         n_axes;
-        gint         i;
+        GimpValueArray *array;
+        GValue          enum_value = { 0, };
+        gint            n_axes;
+        gint            i;
 
-        array = g_value_array_new (6);
+        array = gimp_value_array_new (6);
         g_value_init (&enum_value, GDK_TYPE_AXIS_USE);
 
         n_axes = gimp_device_info_get_n_axes (info);
@@ -413,7 +417,7 @@ gimp_device_info_get_property (GObject    *object,
             g_value_set_enum (&enum_value,
                               gimp_device_info_get_axis_use (info, i));
 
-            g_value_array_append (array, &enum_value);
+            gimp_value_array_append (array, &enum_value);
           }
 
         g_value_unset (&enum_value);
@@ -424,12 +428,12 @@ gimp_device_info_get_property (GObject    *object,
 
     case PROP_KEYS:
       {
-        GValueArray *array;
-        GValue       string_value = { 0, };
-        gint         n_keys;
-        gint         i;
+        GimpValueArray *array;
+        GValue          string_value = { 0, };
+        gint            n_keys;
+        gint            i;
 
-        array = g_value_array_new (32);
+        array = gimp_value_array_new (32);
         g_value_init (&string_value, G_TYPE_STRING);
 
         n_keys = gimp_device_info_get_n_keys (info);
@@ -458,7 +462,7 @@ gimp_device_info_get_property (GObject    *object,
                 g_value_set_string (&string_value, "");
               }
 
-            g_value_array_append (array, &string_value);
+            gimp_value_array_append (array, &string_value);
           }
 
         g_value_unset (&string_value);

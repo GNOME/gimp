@@ -50,15 +50,15 @@ HELP
         no_marshalling => 1,
         code => <<'CODE'
 {
-  GValueArray         *new_args;
-  GValueArray         *return_vals;
+  GimpValueArray      *new_args;
+  GimpValueArray      *return_vals;
   GimpPlugInProcedure *file_proc;
   GimpProcedure       *proc;
   gchar               *uri;
   gint                 i;
 
   uri = file_utils_filename_to_uri (gimp,
-                                    g_value_get_string (&args->values[1]),
+                                    g_value_get_string (gimp_value_array_index (args, 1)),
                                     error);
 
   if (! uri)
@@ -79,11 +79,12 @@ HELP
   new_args = gimp_procedure_get_arguments (proc);
 
   for (i = 0; i < 3; i++)
-    g_value_transform (&args->values[i], &new_args->values[i]);
+    g_value_transform (gimp_value_array_index (args, i),
+                       gimp_value_array_index (new_args, i));
 
   for (i = 3; i < proc->num_args; i++)
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
-      g_value_set_static_string (&new_args->values[i], "");
+      g_value_set_static_string (gimp_value_array_index (new_args, i), "");
 
   return_vals =
     gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
@@ -91,15 +92,17 @@ HELP
                                              gimp_object_get_name (proc),
                                              new_args);
 
-  g_value_array_free (new_args);
+  gimp_value_array_unref (new_args);
 
-  if (g_value_get_enum (return_vals->values) == GIMP_PDB_SUCCESS)
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) ==
+      GIMP_PDB_SUCCESS)
     {
-      if (return_vals->n_values > 1 &&
-          GIMP_VALUE_HOLDS_IMAGE_ID (return_vals->values + 1))
+      if (gimp_value_array_length (return_vals) > 1 &&
+          GIMP_VALUE_HOLDS_IMAGE_ID (gimp_value_array_index (return_vals, 1)))
         {
-          GimpImage *image = gimp_value_get_image (return_vals->values + 1,
-                                                   gimp);
+          GimpImage *image =
+            gimp_value_get_image (gimp_value_array_index (return_vals, 1),
+                                  gimp);
           gimp_image_set_load_proc (image, file_proc);
         }
     }
@@ -265,15 +268,15 @@ HELP
         no_marshalling => 1,
         code => <<'CODE'
 {
-  GValueArray         *new_args;
-  GValueArray         *return_vals;
+  GimpValueArray      *new_args;
+  GimpValueArray      *return_vals;
   GimpPlugInProcedure *file_proc;
   GimpProcedure       *proc;
   gchar               *uri;
   gint                 i;
 
   uri = file_utils_filename_to_uri (gimp,
-                                    g_value_get_string (&args->values[3]),
+                                    g_value_get_string (gimp_value_array_index (args, 3)),
                                     error);
 
   if (! uri)
@@ -297,11 +300,12 @@ HELP
   new_args = gimp_procedure_get_arguments (proc);
 
   for (i = 0; i < 5; i++)
-    g_value_transform (&args->values[i], &new_args->values[i]);
+    g_value_transform (gimp_value_array_index (args, i),
+                       gimp_value_array_index (new_args, i));
 
   for (i = 5; i < proc->num_args; i++)
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
-      g_value_set_static_string (&new_args->values[i], "");
+      g_value_set_static_string (gimp_value_array_index (new_args, i), "");
 
   return_vals =
     gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
@@ -309,7 +313,7 @@ HELP
                                              gimp_object_get_name (proc),
                                              new_args);
 
-  g_value_array_free (new_args);
+  gimp_value_array_unref (new_args);
 
   return return_vals;
 }

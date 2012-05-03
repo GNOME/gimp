@@ -20,14 +20,18 @@
 
 #include "config.h"
 
+#include <cairo.h>
 #include <gegl.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
+#include "libgimpbase/gimpbase.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "vectors-types.h"
 
-#include "libgimpmath/gimpmath.h"
-
 #include "core/gimp-utils.h"
 #include "core/gimpcoords.h"
+#include "core/gimpparamspecs.h"
 #include "core/gimp-transform-utils.h"
 
 #include "gimpanchor.h"
@@ -236,15 +240,15 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
                                    GIMP_PARAM_WRITABLE |
                                    G_PARAM_CONSTRUCT_ONLY);
   g_object_class_install_property (object_class, PROP_CONTROL_POINTS,
-                                   g_param_spec_value_array ("control-points",
-                                                             "Control Points",
-                                                             "This is an ValueArray "
-                                                             "with the initial "
-                                                             "control points of "
-                                                             "the new Stroke",
-                                                             param_spec,
-                                                             GIMP_PARAM_WRITABLE |
-                                                             G_PARAM_CONSTRUCT_ONLY));
+                                   gimp_param_spec_value_array ("control-points",
+                                                                "Control Points",
+                                                                "This is an ValueArray "
+                                                                "with the initial "
+                                                                "control points of "
+                                                                "the new Stroke",
+                                                                param_spec,
+                                                                GIMP_PARAM_WRITABLE |
+                                                                G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_CLOSED,
                                    g_param_spec_boolean ("closed",
@@ -271,16 +275,17 @@ gimp_stroke_set_property (GObject      *object,
                           const GValue *value,
                           GParamSpec   *pspec)
 {
-  GimpStroke  *stroke = GIMP_STROKE (object);
-  GValueArray *val_array;
-  GValue      *item;
-  gint         i;
+  GimpStroke     *stroke = GIMP_STROKE (object);
+  GimpValueArray *val_array;
+  gint            length;
+  gint            i;
 
   switch (property_id)
     {
     case PROP_CLOSED:
       stroke->closed = g_value_get_boolean (value);
       break;
+
     case PROP_CONTROL_POINTS:
       g_return_if_fail (stroke->anchors == NULL);
       g_return_if_fail (value != NULL);
@@ -290,9 +295,11 @@ gimp_stroke_set_property (GObject      *object,
       if (val_array == NULL)
         return;
 
-      for (i = 0; i < val_array->n_values; i++)
+      length = gimp_value_array_length (val_array);
+
+      for (i = 0; i < length; i++)
         {
-          item = g_value_array_get_nth (val_array, i);
+          GValue *item = gimp_value_array_index (val_array, i);
 
           g_return_if_fail (G_VALUE_HOLDS (item, GIMP_TYPE_ANCHOR));
           stroke->anchors = g_list_append (stroke->anchors,
@@ -300,6 +307,7 @@ gimp_stroke_set_property (GObject      *object,
         }
 
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -319,6 +327,7 @@ gimp_stroke_get_property (GObject    *object,
     case PROP_CLOSED:
       g_value_set_boolean (value, stroke->closed);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;

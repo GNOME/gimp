@@ -25,6 +25,8 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb-types.h"
 
 #include "core/gimp.h"
@@ -41,34 +43,34 @@
 #include "internal-procs.h"
 
 
-static GValueArray *
+static GimpValueArray *
 brushes_refresh_invoker (GimpProcedure      *procedure,
-                         Gimp               *gimp,
-                         GimpContext        *context,
-                         GimpProgress       *progress,
-                         const GValueArray  *args,
-                         GError            **error)
+                         Gimp                  *gimp,
+                         GimpContext           *context,
+                         GimpProgress          *progress,
+                         const GimpValueArray  *args,
+                         GError               **error)
 {
   gimp_data_factory_data_refresh (gimp->brush_factory, context);
 
   return gimp_procedure_get_return_values (procedure, TRUE, NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 brushes_get_list_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GValueArray  *args,
-                          GError            **error)
+                          Gimp                  *gimp,
+                          GimpContext           *context,
+                          GimpProgress          *progress,
+                          const GimpValueArray  *args,
+                          GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *filter;
   gint32 num_brushes = 0;
   gchar **brush_list = NULL;
 
-  filter = g_value_get_string (&args->values[0]);
+  filter = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -81,23 +83,23 @@ brushes_get_list_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      g_value_set_int (&return_vals->values[1], num_brushes);
-      gimp_value_take_stringarray (&return_vals->values[2], brush_list, num_brushes);
+      g_value_set_int (gimp_value_array_index (return_vals, 1), num_brushes);
+      gimp_value_take_stringarray (gimp_value_array_index (return_vals, 2), brush_list, num_brushes);
     }
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 brushes_get_brush_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GValueArray  *args,
-                           GError            **error)
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gchar *name = NULL;
   gint32 width = 0;
   gint32 height = 0;
@@ -120,25 +122,25 @@ brushes_get_brush_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      g_value_take_string (&return_vals->values[1], name);
-      g_value_set_int (&return_vals->values[2], width);
-      g_value_set_int (&return_vals->values[3], height);
-      g_value_set_int (&return_vals->values[4], spacing);
+      g_value_take_string (gimp_value_array_index (return_vals, 1), name);
+      g_value_set_int (gimp_value_array_index (return_vals, 2), width);
+      g_value_set_int (gimp_value_array_index (return_vals, 3), height);
+      g_value_set_int (gimp_value_array_index (return_vals, 4), spacing);
     }
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 brushes_get_spacing_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GValueArray  *args,
-                             GError            **error)
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gint32 spacing = 0;
 
   GimpBrush *brush = gimp_context_get_brush (context);
@@ -152,23 +154,23 @@ brushes_get_spacing_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_int (&return_vals->values[1], spacing);
+    g_value_set_int (gimp_value_array_index (return_vals, 1), spacing);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 brushes_set_spacing_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GValueArray  *args,
-                             GError            **error)
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
   gboolean success = TRUE;
   gint32 spacing;
 
-  spacing = g_value_get_int (&args->values[0]);
+  spacing = g_value_get_int (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -179,16 +181,16 @@ brushes_set_spacing_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 brushes_get_brush_data_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GValueArray  *args,
-                                GError            **error)
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gchar *actual_name = NULL;
   gdouble opacity = 0.0;
@@ -199,7 +201,7 @@ brushes_get_brush_data_invoker (GimpProcedure      *procedure,
   gint32 length = 0;
   guint8 *mask_data = NULL;
 
-  name = g_value_get_string (&args->values[0]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -230,14 +232,14 @@ brushes_get_brush_data_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      g_value_take_string (&return_vals->values[1], actual_name);
-      g_value_set_double (&return_vals->values[2], opacity);
-      g_value_set_int (&return_vals->values[3], spacing);
-      g_value_set_enum (&return_vals->values[4], paint_mode);
-      g_value_set_int (&return_vals->values[5], width);
-      g_value_set_int (&return_vals->values[6], height);
-      g_value_set_int (&return_vals->values[7], length);
-      gimp_value_take_int8array (&return_vals->values[8], mask_data, length);
+      g_value_take_string (gimp_value_array_index (return_vals, 1), actual_name);
+      g_value_set_double (gimp_value_array_index (return_vals, 2), opacity);
+      g_value_set_int (gimp_value_array_index (return_vals, 3), spacing);
+      g_value_set_enum (gimp_value_array_index (return_vals, 4), paint_mode);
+      g_value_set_int (gimp_value_array_index (return_vals, 5), width);
+      g_value_set_int (gimp_value_array_index (return_vals, 6), height);
+      g_value_set_int (gimp_value_array_index (return_vals, 7), length);
+      gimp_value_take_int8array (gimp_value_array_index (return_vals, 8), mask_data, length);
     }
 
   return return_vals;

@@ -19,7 +19,9 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
+
+#include "libgimpbase/gimpbase.h"
 
 #include "plug-in-types.h"
 
@@ -33,22 +35,22 @@
 #include "gimp-intl.h"
 
 
-static void          gimp_temporary_procedure_finalize (GObject        *object);
+static void             gimp_temporary_procedure_finalize (GObject        *object);
 
-static GValueArray * gimp_temporary_procedure_execute  (GimpProcedure  *procedure,
-                                                        Gimp           *gimp,
-                                                        GimpContext    *context,
-                                                        GimpProgress   *progress,
-                                                        GValueArray    *args,
-                                                        GError        **error);
-static void     gimp_temporary_procedure_execute_async (GimpProcedure  *procedure,
-                                                        Gimp           *gimp,
-                                                        GimpContext    *context,
-                                                        GimpProgress   *progress,
-                                                        GValueArray    *args,
-                                                        GimpObject     *display);
+static GimpValueArray * gimp_temporary_procedure_execute  (GimpProcedure  *procedure,
+                                                           Gimp           *gimp,
+                                                           GimpContext    *context,
+                                                           GimpProgress   *progress,
+                                                           GimpValueArray *args,
+                                                           GError        **error);
+static void        gimp_temporary_procedure_execute_async (GimpProcedure  *procedure,
+                                                           Gimp           *gimp,
+                                                           GimpContext    *context,
+                                                           GimpProgress   *progress,
+                                                           GimpValueArray *args,
+                                                           GimpObject     *display);
 
-const gchar    * gimp_temporary_procedure_get_progname (const GimpPlugInProcedure *procedure);
+const gchar       * gimp_temporary_procedure_get_progname (const GimpPlugInProcedure *procedure);
 
 
 G_DEFINE_TYPE (GimpTemporaryProcedure, gimp_temporary_procedure,
@@ -86,13 +88,13 @@ gimp_temporary_procedure_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static GValueArray *
-gimp_temporary_procedure_execute (GimpProcedure  *procedure,
-                                  Gimp           *gimp,
-                                  GimpContext    *context,
-                                  GimpProgress   *progress,
-                                  GValueArray    *args,
-                                  GError        **error)
+static GimpValueArray *
+gimp_temporary_procedure_execute (GimpProcedure   *procedure,
+                                  Gimp            *gimp,
+                                  GimpContext     *context,
+                                  GimpProgress    *progress,
+                                  GimpValueArray  *args,
+                                  GError         **error)
 {
   return gimp_plug_in_manager_call_run_temp (gimp->plug_in_manager,
                                              context, progress,
@@ -101,15 +103,15 @@ gimp_temporary_procedure_execute (GimpProcedure  *procedure,
 }
 
 static void
-gimp_temporary_procedure_execute_async (GimpProcedure *procedure,
-                                        Gimp          *gimp,
-                                        GimpContext   *context,
-                                        GimpProgress  *progress,
-                                        GValueArray   *args,
-                                        GimpObject    *display)
+gimp_temporary_procedure_execute_async (GimpProcedure  *procedure,
+                                        Gimp           *gimp,
+                                        GimpContext    *context,
+                                        GimpProgress   *progress,
+                                        GimpValueArray *args,
+                                        GimpObject     *display)
 {
   GimpTemporaryProcedure *temp_procedure = GIMP_TEMPORARY_PROCEDURE (procedure);
-  GValueArray            *return_vals;
+  GimpValueArray         *return_vals;
 
   return_vals = gimp_plug_in_manager_call_run_temp (gimp->plug_in_manager,
                                                     context, progress,
@@ -123,7 +125,7 @@ gimp_temporary_procedure_execute_async (GimpProcedure *procedure,
       gimp_plug_in_procedure_handle_return_values (proc,
                                                    gimp, progress,
                                                    return_vals);
-      g_value_array_free (return_vals);
+      gimp_value_array_unref (return_vals);
     }
 }
 

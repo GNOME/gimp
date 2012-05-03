@@ -25,6 +25,8 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb-types.h"
 
 #include "core/gimp.h"
@@ -39,18 +41,18 @@
 #include "gimp-intl.h"
 
 
-static GValueArray *
+static GimpValueArray *
 message_invoker (GimpProcedure      *procedure,
-                 Gimp               *gimp,
-                 GimpContext        *context,
-                 GimpProgress       *progress,
-                 const GValueArray  *args,
-                 GError            **error)
+                 Gimp                  *gimp,
+                 GimpContext           *context,
+                 GimpProgress          *progress,
+                 const GimpValueArray  *args,
+                 GError               **error)
 {
   gboolean success = TRUE;
   const gchar *message;
 
-  message = g_value_get_string (&args->values[0]);
+  message = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -66,37 +68,37 @@ message_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 message_get_handler_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GValueArray  *args,
-                             GError            **error)
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gint32 handler = 0;
 
   handler = gimp->message_handler;
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_enum (&return_vals->values[1], handler);
+  g_value_set_enum (gimp_value_array_index (return_vals, 1), handler);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 message_set_handler_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GValueArray  *args,
-                             GError            **error)
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
   gboolean success = TRUE;
   gint32 handler;
 
-  handler = g_value_get_enum (&args->values[0]);
+  handler = g_value_get_enum (gimp_value_array_index (args, 0));
 
   if (success)
     {

@@ -28,6 +28,8 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb-types.h"
 
 #include "core/gimpchannel-select.h"
@@ -42,13 +44,13 @@
 #include "gimp-intl.h"
 
 
-static GValueArray *
+static GimpValueArray *
 by_color_select_invoker (GimpProcedure      *procedure,
-                         Gimp               *gimp,
-                         GimpContext        *context,
-                         GimpProgress       *progress,
-                         const GValueArray  *args,
-                         GError            **error)
+                         Gimp                  *gimp,
+                         GimpContext           *context,
+                         GimpProgress          *progress,
+                         const GimpValueArray  *args,
+                         GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -60,14 +62,14 @@ by_color_select_invoker (GimpProcedure      *procedure,
   gdouble feather_radius;
   gboolean sample_merged;
 
-  drawable = gimp_value_get_drawable (&args->values[0], gimp);
-  gimp_value_get_rgb (&args->values[1], &color);
-  threshold = g_value_get_int (&args->values[2]);
-  operation = g_value_get_enum (&args->values[3]);
-  antialias = g_value_get_boolean (&args->values[4]);
-  feather = g_value_get_boolean (&args->values[5]);
-  feather_radius = g_value_get_double (&args->values[6]);
-  sample_merged = g_value_get_boolean (&args->values[7]);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  gimp_value_get_rgb (gimp_value_array_index (args, 1), &color);
+  threshold = g_value_get_int (gimp_value_array_index (args, 2));
+  operation = g_value_get_enum (gimp_value_array_index (args, 3));
+  antialias = g_value_get_boolean (gimp_value_array_index (args, 4));
+  feather = g_value_get_boolean (gimp_value_array_index (args, 5));
+  feather_radius = g_value_get_double (gimp_value_array_index (args, 6));
+  sample_merged = g_value_get_boolean (gimp_value_array_index (args, 7));
 
   if (success)
     {
@@ -90,13 +92,13 @@ by_color_select_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 by_color_select_full_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GValueArray  *args,
-                              GError            **error)
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -111,17 +113,17 @@ by_color_select_full_invoker (GimpProcedure      *procedure,
   gboolean select_transparent;
   gint32 select_criterion;
 
-  drawable = gimp_value_get_drawable (&args->values[0], gimp);
-  gimp_value_get_rgb (&args->values[1], &color);
-  threshold = g_value_get_int (&args->values[2]);
-  operation = g_value_get_enum (&args->values[3]);
-  antialias = g_value_get_boolean (&args->values[4]);
-  feather = g_value_get_boolean (&args->values[5]);
-  feather_radius_x = g_value_get_double (&args->values[6]);
-  feather_radius_y = g_value_get_double (&args->values[7]);
-  sample_merged = g_value_get_boolean (&args->values[8]);
-  select_transparent = g_value_get_boolean (&args->values[9]);
-  select_criterion = g_value_get_enum (&args->values[10]);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  gimp_value_get_rgb (gimp_value_array_index (args, 1), &color);
+  threshold = g_value_get_int (gimp_value_array_index (args, 2));
+  operation = g_value_get_enum (gimp_value_array_index (args, 3));
+  antialias = g_value_get_boolean (gimp_value_array_index (args, 4));
+  feather = g_value_get_boolean (gimp_value_array_index (args, 5));
+  feather_radius_x = g_value_get_double (gimp_value_array_index (args, 6));
+  feather_radius_y = g_value_get_double (gimp_value_array_index (args, 7));
+  sample_merged = g_value_get_boolean (gimp_value_array_index (args, 8));
+  select_transparent = g_value_get_boolean (gimp_value_array_index (args, 9));
+  select_criterion = g_value_get_enum (gimp_value_array_index (args, 10));
 
   if (success)
     {
@@ -144,13 +146,13 @@ by_color_select_full_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 ellipse_select_invoker (GimpProcedure      *procedure,
-                        Gimp               *gimp,
-                        GimpContext        *context,
-                        GimpProgress       *progress,
-                        const GValueArray  *args,
-                        GError            **error)
+                        Gimp                  *gimp,
+                        GimpContext           *context,
+                        GimpProgress          *progress,
+                        const GimpValueArray  *args,
+                        GError               **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -163,15 +165,15 @@ ellipse_select_invoker (GimpProcedure      *procedure,
   gboolean feather;
   gdouble feather_radius;
 
-  image = gimp_value_get_image (&args->values[0], gimp);
-  x = g_value_get_double (&args->values[1]);
-  y = g_value_get_double (&args->values[2]);
-  width = g_value_get_double (&args->values[3]);
-  height = g_value_get_double (&args->values[4]);
-  operation = g_value_get_enum (&args->values[5]);
-  antialias = g_value_get_boolean (&args->values[6]);
-  feather = g_value_get_boolean (&args->values[7]);
-  feather_radius = g_value_get_double (&args->values[8]);
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  x = g_value_get_double (gimp_value_array_index (args, 1));
+  y = g_value_get_double (gimp_value_array_index (args, 2));
+  width = g_value_get_double (gimp_value_array_index (args, 3));
+  height = g_value_get_double (gimp_value_array_index (args, 4));
+  operation = g_value_get_enum (gimp_value_array_index (args, 5));
+  antialias = g_value_get_boolean (gimp_value_array_index (args, 6));
+  feather = g_value_get_boolean (gimp_value_array_index (args, 7));
+  feather_radius = g_value_get_double (gimp_value_array_index (args, 8));
 
   if (success)
     {
@@ -190,13 +192,13 @@ ellipse_select_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 free_select_invoker (GimpProcedure      *procedure,
-                     Gimp               *gimp,
-                     GimpContext        *context,
-                     GimpProgress       *progress,
-                     const GValueArray  *args,
-                     GError            **error)
+                     Gimp                  *gimp,
+                     GimpContext           *context,
+                     GimpProgress          *progress,
+                     const GimpValueArray  *args,
+                     GError               **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -207,13 +209,13 @@ free_select_invoker (GimpProcedure      *procedure,
   gboolean feather;
   gdouble feather_radius;
 
-  image = gimp_value_get_image (&args->values[0], gimp);
-  num_segs = g_value_get_int (&args->values[1]);
-  segs = gimp_value_get_floatarray (&args->values[2]);
-  operation = g_value_get_enum (&args->values[3]);
-  antialias = g_value_get_boolean (&args->values[4]);
-  feather = g_value_get_boolean (&args->values[5]);
-  feather_radius = g_value_get_double (&args->values[6]);
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  num_segs = g_value_get_int (gimp_value_array_index (args, 1));
+  segs = gimp_value_get_floatarray (gimp_value_array_index (args, 2));
+  operation = g_value_get_enum (gimp_value_array_index (args, 3));
+  antialias = g_value_get_boolean (gimp_value_array_index (args, 4));
+  feather = g_value_get_boolean (gimp_value_array_index (args, 5));
+  feather_radius = g_value_get_double (gimp_value_array_index (args, 6));
 
   if (success)
     {
@@ -233,13 +235,13 @@ free_select_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 fuzzy_select_invoker (GimpProcedure      *procedure,
-                      Gimp               *gimp,
-                      GimpContext        *context,
-                      GimpProgress       *progress,
-                      const GValueArray  *args,
-                      GError            **error)
+                      Gimp                  *gimp,
+                      GimpContext           *context,
+                      GimpProgress          *progress,
+                      const GimpValueArray  *args,
+                      GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -252,15 +254,15 @@ fuzzy_select_invoker (GimpProcedure      *procedure,
   gdouble feather_radius;
   gboolean sample_merged;
 
-  drawable = gimp_value_get_drawable (&args->values[0], gimp);
-  x = g_value_get_double (&args->values[1]);
-  y = g_value_get_double (&args->values[2]);
-  threshold = g_value_get_int (&args->values[3]);
-  operation = g_value_get_enum (&args->values[4]);
-  antialias = g_value_get_boolean (&args->values[5]);
-  feather = g_value_get_boolean (&args->values[6]);
-  feather_radius = g_value_get_double (&args->values[7]);
-  sample_merged = g_value_get_boolean (&args->values[8]);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  x = g_value_get_double (gimp_value_array_index (args, 1));
+  y = g_value_get_double (gimp_value_array_index (args, 2));
+  threshold = g_value_get_int (gimp_value_array_index (args, 3));
+  operation = g_value_get_enum (gimp_value_array_index (args, 4));
+  antialias = g_value_get_boolean (gimp_value_array_index (args, 5));
+  feather = g_value_get_boolean (gimp_value_array_index (args, 6));
+  feather_radius = g_value_get_double (gimp_value_array_index (args, 7));
+  sample_merged = g_value_get_boolean (gimp_value_array_index (args, 8));
 
   if (success)
     {
@@ -284,13 +286,13 @@ fuzzy_select_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 fuzzy_select_full_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GValueArray  *args,
-                           GError            **error)
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -306,18 +308,18 @@ fuzzy_select_full_invoker (GimpProcedure      *procedure,
   gboolean select_transparent;
   gint32 select_criterion;
 
-  drawable = gimp_value_get_drawable (&args->values[0], gimp);
-  x = g_value_get_double (&args->values[1]);
-  y = g_value_get_double (&args->values[2]);
-  threshold = g_value_get_int (&args->values[3]);
-  operation = g_value_get_enum (&args->values[4]);
-  antialias = g_value_get_boolean (&args->values[5]);
-  feather = g_value_get_boolean (&args->values[6]);
-  feather_radius_x = g_value_get_double (&args->values[7]);
-  feather_radius_y = g_value_get_double (&args->values[8]);
-  sample_merged = g_value_get_boolean (&args->values[9]);
-  select_transparent = g_value_get_boolean (&args->values[10]);
-  select_criterion = g_value_get_enum (&args->values[11]);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  x = g_value_get_double (gimp_value_array_index (args, 1));
+  y = g_value_get_double (gimp_value_array_index (args, 2));
+  threshold = g_value_get_int (gimp_value_array_index (args, 3));
+  operation = g_value_get_enum (gimp_value_array_index (args, 4));
+  antialias = g_value_get_boolean (gimp_value_array_index (args, 5));
+  feather = g_value_get_boolean (gimp_value_array_index (args, 6));
+  feather_radius_x = g_value_get_double (gimp_value_array_index (args, 7));
+  feather_radius_y = g_value_get_double (gimp_value_array_index (args, 8));
+  sample_merged = g_value_get_boolean (gimp_value_array_index (args, 9));
+  select_transparent = g_value_get_boolean (gimp_value_array_index (args, 10));
+  select_criterion = g_value_get_enum (gimp_value_array_index (args, 11));
 
   if (success)
     {
@@ -341,13 +343,13 @@ fuzzy_select_full_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 rect_select_invoker (GimpProcedure      *procedure,
-                     Gimp               *gimp,
-                     GimpContext        *context,
-                     GimpProgress       *progress,
-                     const GValueArray  *args,
-                     GError            **error)
+                     Gimp                  *gimp,
+                     GimpContext           *context,
+                     GimpProgress          *progress,
+                     const GimpValueArray  *args,
+                     GError               **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -359,14 +361,14 @@ rect_select_invoker (GimpProcedure      *procedure,
   gboolean feather;
   gdouble feather_radius;
 
-  image = gimp_value_get_image (&args->values[0], gimp);
-  x = g_value_get_double (&args->values[1]);
-  y = g_value_get_double (&args->values[2]);
-  width = g_value_get_double (&args->values[3]);
-  height = g_value_get_double (&args->values[4]);
-  operation = g_value_get_enum (&args->values[5]);
-  feather = g_value_get_boolean (&args->values[6]);
-  feather_radius = g_value_get_double (&args->values[7]);
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  x = g_value_get_double (gimp_value_array_index (args, 1));
+  y = g_value_get_double (gimp_value_array_index (args, 2));
+  width = g_value_get_double (gimp_value_array_index (args, 3));
+  height = g_value_get_double (gimp_value_array_index (args, 4));
+  operation = g_value_get_enum (gimp_value_array_index (args, 5));
+  feather = g_value_get_boolean (gimp_value_array_index (args, 6));
+  feather_radius = g_value_get_double (gimp_value_array_index (args, 7));
 
   if (success)
     {
@@ -384,13 +386,13 @@ rect_select_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 round_rect_select_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GValueArray  *args,
-                           GError            **error)
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -406,18 +408,18 @@ round_rect_select_invoker (GimpProcedure      *procedure,
   gdouble feather_radius_x;
   gdouble feather_radius_y;
 
-  image = gimp_value_get_image (&args->values[0], gimp);
-  x = g_value_get_double (&args->values[1]);
-  y = g_value_get_double (&args->values[2]);
-  width = g_value_get_double (&args->values[3]);
-  height = g_value_get_double (&args->values[4]);
-  corner_radius_x = g_value_get_double (&args->values[5]);
-  corner_radius_y = g_value_get_double (&args->values[6]);
-  operation = g_value_get_enum (&args->values[7]);
-  antialias = g_value_get_boolean (&args->values[8]);
-  feather = g_value_get_boolean (&args->values[9]);
-  feather_radius_x = g_value_get_double (&args->values[10]);
-  feather_radius_y = g_value_get_double (&args->values[11]);
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  x = g_value_get_double (gimp_value_array_index (args, 1));
+  y = g_value_get_double (gimp_value_array_index (args, 2));
+  width = g_value_get_double (gimp_value_array_index (args, 3));
+  height = g_value_get_double (gimp_value_array_index (args, 4));
+  corner_radius_x = g_value_get_double (gimp_value_array_index (args, 5));
+  corner_radius_y = g_value_get_double (gimp_value_array_index (args, 6));
+  operation = g_value_get_enum (gimp_value_array_index (args, 7));
+  antialias = g_value_get_boolean (gimp_value_array_index (args, 8));
+  feather = g_value_get_boolean (gimp_value_array_index (args, 9));
+  feather_radius_x = g_value_get_double (gimp_value_array_index (args, 10));
+  feather_radius_y = g_value_get_double (gimp_value_array_index (args, 11));
 
   if (success)
     {

@@ -23,6 +23,8 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb-types.h"
 
 #include "core/gimpdrawable-equalize.h"
@@ -50,22 +52,22 @@
 #include "gimp-intl.h"
 
 
-static GValueArray *
+static GimpValueArray *
 brightness_contrast_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GValueArray  *args,
-                             GError            **error)
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gint32 brightness;
   gint32 contrast;
 
-  drawable = gimp_value_get_drawable (&args->values[0], gimp);
-  brightness = g_value_get_int (&args->values[1]);
-  contrast = g_value_get_int (&args->values[2]);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  brightness = g_value_get_int (gimp_value_array_index (args, 1));
+  contrast = g_value_get_int (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -91,13 +93,13 @@ brightness_contrast_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 levels_invoker (GimpProcedure      *procedure,
-                Gimp               *gimp,
-                GimpContext        *context,
-                GimpProgress       *progress,
-                const GValueArray  *args,
-                GError            **error)
+                Gimp                  *gimp,
+                GimpContext           *context,
+                GimpProgress          *progress,
+                const GimpValueArray  *args,
+                GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -108,13 +110,13 @@ levels_invoker (GimpProcedure      *procedure,
   gint32 low_output;
   gint32 high_output;
 
-  drawable = gimp_value_get_drawable (&args->values[0], gimp);
-  channel = g_value_get_enum (&args->values[1]);
-  low_input = g_value_get_int (&args->values[2]);
-  high_input = g_value_get_int (&args->values[3]);
-  gamma = g_value_get_double (&args->values[4]);
-  low_output = g_value_get_int (&args->values[5]);
-  high_output = g_value_get_int (&args->values[6]);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  channel = g_value_get_enum (gimp_value_array_index (args, 1));
+  low_input = g_value_get_int (gimp_value_array_index (args, 2));
+  high_input = g_value_get_int (gimp_value_array_index (args, 3));
+  gamma = g_value_get_double (gimp_value_array_index (args, 4));
+  low_output = g_value_get_int (gimp_value_array_index (args, 5));
+  high_output = g_value_get_int (gimp_value_array_index (args, 6));
 
   if (success)
     {
@@ -150,18 +152,18 @@ levels_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 levels_auto_invoker (GimpProcedure      *procedure,
-                     Gimp               *gimp,
-                     GimpContext        *context,
-                     GimpProgress       *progress,
-                     const GValueArray  *args,
-                     GError            **error)
+                     Gimp                  *gimp,
+                     GimpContext           *context,
+                     GimpProgress          *progress,
+                     const GimpValueArray  *args,
+                     GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
 
   if (success)
     {
@@ -178,18 +180,18 @@ levels_auto_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 levels_stretch_invoker (GimpProcedure      *procedure,
-                        Gimp               *gimp,
-                        GimpContext        *context,
-                        GimpProgress       *progress,
-                        const GValueArray  *args,
-                        GError            **error)
+                        Gimp                  *gimp,
+                        GimpContext           *context,
+                        GimpProgress          *progress,
+                        const GimpValueArray  *args,
+                        GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
 
   if (success)
     {
@@ -206,20 +208,20 @@ levels_stretch_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 posterize_invoker (GimpProcedure      *procedure,
-                   Gimp               *gimp,
-                   GimpContext        *context,
-                   GimpProgress       *progress,
-                   const GValueArray  *args,
-                   GError            **error)
+                   Gimp                  *gimp,
+                   GimpContext           *context,
+                   GimpProgress          *progress,
+                   const GimpValueArray  *args,
+                   GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gint32 levels;
 
-  drawable = gimp_value_get_drawable (&args->values[0], gimp);
-  levels = g_value_get_int (&args->values[1]);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  levels = g_value_get_int (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -244,18 +246,18 @@ posterize_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 desaturate_invoker (GimpProcedure      *procedure,
-                    Gimp               *gimp,
-                    GimpContext        *context,
-                    GimpProgress       *progress,
-                    const GValueArray  *args,
-                    GError            **error)
+                    Gimp                  *gimp,
+                    GimpContext           *context,
+                    GimpProgress          *progress,
+                    const GimpValueArray  *args,
+                    GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
 
   if (success)
     {
@@ -281,20 +283,20 @@ desaturate_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 desaturate_full_invoker (GimpProcedure      *procedure,
-                         Gimp               *gimp,
-                         GimpContext        *context,
-                         GimpProgress       *progress,
-                         const GValueArray  *args,
-                         GError            **error)
+                         Gimp                  *gimp,
+                         GimpContext           *context,
+                         GimpProgress          *progress,
+                         const GimpValueArray  *args,
+                         GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gint32 desaturate_mode;
 
-  drawable = gimp_value_get_drawable (&args->values[0], gimp);
-  desaturate_mode = g_value_get_enum (&args->values[1]);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  desaturate_mode = g_value_get_enum (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -320,20 +322,20 @@ desaturate_full_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 equalize_invoker (GimpProcedure      *procedure,
-                  Gimp               *gimp,
-                  GimpContext        *context,
-                  GimpProgress       *progress,
-                  const GValueArray  *args,
-                  GError            **error)
+                  Gimp                  *gimp,
+                  GimpContext           *context,
+                  GimpProgress          *progress,
+                  const GimpValueArray  *args,
+                  GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gboolean mask_only;
 
-  drawable = gimp_value_get_drawable (&args->values[0], gimp);
-  mask_only = g_value_get_boolean (&args->values[1]);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  mask_only = g_value_get_boolean (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -349,18 +351,18 @@ equalize_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 invert_invoker (GimpProcedure      *procedure,
-                Gimp               *gimp,
-                GimpContext        *context,
-                GimpProgress       *progress,
-                const GValueArray  *args,
-                GError            **error)
+                Gimp                  *gimp,
+                GimpContext           *context,
+                GimpProgress          *progress,
+                const GimpValueArray  *args,
+                GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
 
   if (success)
     {
@@ -380,13 +382,13 @@ invert_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 curves_spline_invoker (GimpProcedure      *procedure,
-                       Gimp               *gimp,
-                       GimpContext        *context,
-                       GimpProgress       *progress,
-                       const GValueArray  *args,
-                       GError            **error)
+                       Gimp                  *gimp,
+                       GimpContext           *context,
+                       GimpProgress          *progress,
+                       const GimpValueArray  *args,
+                       GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -394,10 +396,10 @@ curves_spline_invoker (GimpProcedure      *procedure,
   gint32 num_points;
   const guint8 *control_pts;
 
-  drawable = gimp_value_get_drawable (&args->values[0], gimp);
-  channel = g_value_get_enum (&args->values[1]);
-  num_points = g_value_get_int (&args->values[2]);
-  control_pts = gimp_value_get_int8array (&args->values[3]);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  channel = g_value_get_enum (gimp_value_array_index (args, 1));
+  num_points = g_value_get_int (gimp_value_array_index (args, 2));
+  control_pts = gimp_value_get_int8array (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -426,13 +428,13 @@ curves_spline_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 curves_explicit_invoker (GimpProcedure      *procedure,
-                         Gimp               *gimp,
-                         GimpContext        *context,
-                         GimpProgress       *progress,
-                         const GValueArray  *args,
-                         GError            **error)
+                         Gimp                  *gimp,
+                         GimpContext           *context,
+                         GimpProgress          *progress,
+                         const GimpValueArray  *args,
+                         GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -440,10 +442,10 @@ curves_explicit_invoker (GimpProcedure      *procedure,
   gint32 num_bytes;
   const guint8 *curve;
 
-  drawable = gimp_value_get_drawable (&args->values[0], gimp);
-  channel = g_value_get_enum (&args->values[1]);
-  num_bytes = g_value_get_int (&args->values[2]);
-  curve = gimp_value_get_int8array (&args->values[3]);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  channel = g_value_get_enum (gimp_value_array_index (args, 1));
+  num_bytes = g_value_get_int (gimp_value_array_index (args, 2));
+  curve = gimp_value_get_int8array (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -472,13 +474,13 @@ curves_explicit_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 color_balance_invoker (GimpProcedure      *procedure,
-                       Gimp               *gimp,
-                       GimpContext        *context,
-                       GimpProgress       *progress,
-                       const GValueArray  *args,
-                       GError            **error)
+                       Gimp                  *gimp,
+                       GimpContext           *context,
+                       GimpProgress          *progress,
+                       const GimpValueArray  *args,
+                       GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -488,12 +490,12 @@ color_balance_invoker (GimpProcedure      *procedure,
   gdouble magenta_green;
   gdouble yellow_blue;
 
-  drawable = gimp_value_get_drawable (&args->values[0], gimp);
-  transfer_mode = g_value_get_enum (&args->values[1]);
-  preserve_lum = g_value_get_boolean (&args->values[2]);
-  cyan_red = g_value_get_double (&args->values[3]);
-  magenta_green = g_value_get_double (&args->values[4]);
-  yellow_blue = g_value_get_double (&args->values[5]);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  transfer_mode = g_value_get_enum (gimp_value_array_index (args, 1));
+  preserve_lum = g_value_get_boolean (gimp_value_array_index (args, 2));
+  cyan_red = g_value_get_double (gimp_value_array_index (args, 3));
+  magenta_green = g_value_get_double (gimp_value_array_index (args, 4));
+  yellow_blue = g_value_get_double (gimp_value_array_index (args, 5));
 
   if (success)
     {
@@ -525,13 +527,13 @@ color_balance_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 colorize_invoker (GimpProcedure      *procedure,
-                  Gimp               *gimp,
-                  GimpContext        *context,
-                  GimpProgress       *progress,
-                  const GValueArray  *args,
-                  GError            **error)
+                  Gimp                  *gimp,
+                  GimpContext           *context,
+                  GimpProgress          *progress,
+                  const GimpValueArray  *args,
+                  GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -539,10 +541,10 @@ colorize_invoker (GimpProcedure      *procedure,
   gdouble saturation;
   gdouble lightness;
 
-  drawable = gimp_value_get_drawable (&args->values[0], gimp);
-  hue = g_value_get_double (&args->values[1]);
-  saturation = g_value_get_double (&args->values[2]);
-  lightness = g_value_get_double (&args->values[3]);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  hue = g_value_get_double (gimp_value_array_index (args, 1));
+  saturation = g_value_get_double (gimp_value_array_index (args, 2));
+  lightness = g_value_get_double (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -570,16 +572,16 @@ colorize_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 histogram_invoker (GimpProcedure      *procedure,
-                   Gimp               *gimp,
-                   GimpContext        *context,
-                   GimpProgress       *progress,
-                   const GValueArray  *args,
-                   GError            **error)
+                   Gimp                  *gimp,
+                   GimpContext           *context,
+                   GimpProgress          *progress,
+                   const GimpValueArray  *args,
+                   GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   GimpDrawable *drawable;
   gint32 channel;
   gint32 start_range;
@@ -591,10 +593,10 @@ histogram_invoker (GimpProcedure      *procedure,
   gdouble count = 0.0;
   gdouble percentile = 0.0;
 
-  drawable = gimp_value_get_drawable (&args->values[0], gimp);
-  channel = g_value_get_enum (&args->values[1]);
-  start_range = g_value_get_int (&args->values[2]);
-  end_range = g_value_get_int (&args->values[3]);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  channel = g_value_get_enum (gimp_value_array_index (args, 1));
+  start_range = g_value_get_int (gimp_value_array_index (args, 2));
+  end_range = g_value_get_int (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -632,24 +634,24 @@ histogram_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      g_value_set_double (&return_vals->values[1], mean);
-      g_value_set_double (&return_vals->values[2], std_dev);
-      g_value_set_double (&return_vals->values[3], median);
-      g_value_set_double (&return_vals->values[4], pixels);
-      g_value_set_double (&return_vals->values[5], count);
-      g_value_set_double (&return_vals->values[6], percentile);
+      g_value_set_double (gimp_value_array_index (return_vals, 1), mean);
+      g_value_set_double (gimp_value_array_index (return_vals, 2), std_dev);
+      g_value_set_double (gimp_value_array_index (return_vals, 3), median);
+      g_value_set_double (gimp_value_array_index (return_vals, 4), pixels);
+      g_value_set_double (gimp_value_array_index (return_vals, 5), count);
+      g_value_set_double (gimp_value_array_index (return_vals, 6), percentile);
     }
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 hue_saturation_invoker (GimpProcedure      *procedure,
-                        Gimp               *gimp,
-                        GimpContext        *context,
-                        GimpProgress       *progress,
-                        const GValueArray  *args,
-                        GError            **error)
+                        Gimp                  *gimp,
+                        GimpContext           *context,
+                        GimpProgress          *progress,
+                        const GimpValueArray  *args,
+                        GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -658,11 +660,11 @@ hue_saturation_invoker (GimpProcedure      *procedure,
   gdouble lightness;
   gdouble saturation;
 
-  drawable = gimp_value_get_drawable (&args->values[0], gimp);
-  hue_range = g_value_get_enum (&args->values[1]);
-  hue_offset = g_value_get_double (&args->values[2]);
-  lightness = g_value_get_double (&args->values[3]);
-  saturation = g_value_get_double (&args->values[4]);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  hue_range = g_value_get_enum (gimp_value_array_index (args, 1));
+  hue_offset = g_value_get_double (gimp_value_array_index (args, 2));
+  lightness = g_value_get_double (gimp_value_array_index (args, 3));
+  saturation = g_value_get_double (gimp_value_array_index (args, 4));
 
   if (success)
     {
@@ -693,22 +695,22 @@ hue_saturation_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 threshold_invoker (GimpProcedure      *procedure,
-                   Gimp               *gimp,
-                   GimpContext        *context,
-                   GimpProgress       *progress,
-                   const GValueArray  *args,
-                   GError            **error)
+                   Gimp                  *gimp,
+                   GimpContext           *context,
+                   GimpProgress          *progress,
+                   const GimpValueArray  *args,
+                   GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gint32 low_threshold;
   gint32 high_threshold;
 
-  drawable = gimp_value_get_drawable (&args->values[0], gimp);
-  low_threshold = g_value_get_int (&args->values[1]);
-  high_threshold = g_value_get_int (&args->values[2]);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  low_threshold = g_value_get_int (gimp_value_array_index (args, 1));
+  high_threshold = g_value_get_int (gimp_value_array_index (args, 2));
 
   if (success)
     {

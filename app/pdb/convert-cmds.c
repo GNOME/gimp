@@ -23,6 +23,8 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb-types.h"
 
 #include "core/gimp.h"
@@ -44,18 +46,18 @@
 #include "gimp-intl.h"
 
 
-static GValueArray *
+static GimpValueArray *
 image_convert_rgb_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GValueArray  *args,
-                           GError            **error)
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_value_get_image (&args->values[0], gimp);
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
 
   if (success)
     {
@@ -75,18 +77,18 @@ image_convert_rgb_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 image_convert_grayscale_invoker (GimpProcedure      *procedure,
-                                 Gimp               *gimp,
-                                 GimpContext        *context,
-                                 GimpProgress       *progress,
-                                 const GValueArray  *args,
-                                 GError            **error)
+                                 Gimp                  *gimp,
+                                 GimpContext           *context,
+                                 GimpProgress          *progress,
+                                 const GimpValueArray  *args,
+                                 GError               **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_value_get_image (&args->values[0], gimp);
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
 
   if (success)
     {
@@ -106,13 +108,13 @@ image_convert_grayscale_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 image_convert_indexed_invoker (GimpProcedure      *procedure,
-                               Gimp               *gimp,
-                               GimpContext        *context,
-                               GimpProgress       *progress,
-                               const GValueArray  *args,
-                               GError            **error)
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -123,13 +125,13 @@ image_convert_indexed_invoker (GimpProcedure      *procedure,
   gboolean remove_unused;
   const gchar *palette;
 
-  image = gimp_value_get_image (&args->values[0], gimp);
-  dither_type = g_value_get_enum (&args->values[1]);
-  palette_type = g_value_get_enum (&args->values[2]);
-  num_cols = g_value_get_int (&args->values[3]);
-  alpha_dither = g_value_get_boolean (&args->values[4]);
-  remove_unused = g_value_get_boolean (&args->values[5]);
-  palette = g_value_get_string (&args->values[6]);
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  dither_type = g_value_get_enum (gimp_value_array_index (args, 1));
+  palette_type = g_value_get_enum (gimp_value_array_index (args, 2));
+  num_cols = g_value_get_int (gimp_value_array_index (args, 3));
+  alpha_dither = g_value_get_boolean (gimp_value_array_index (args, 4));
+  remove_unused = g_value_get_boolean (gimp_value_array_index (args, 5));
+  palette = g_value_get_string (gimp_value_array_index (args, 6));
 
   if (success)
     {
@@ -184,13 +186,13 @@ image_convert_indexed_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 image_convert_set_dither_matrix_invoker (GimpProcedure      *procedure,
-                                         Gimp               *gimp,
-                                         GimpContext        *context,
-                                         GimpProgress       *progress,
-                                         const GValueArray  *args,
-                                         GError            **error)
+                                         Gimp                  *gimp,
+                                         GimpContext           *context,
+                                         GimpProgress          *progress,
+                                         const GimpValueArray  *args,
+                                         GError               **error)
 {
   gboolean success = TRUE;
   gint32 width;
@@ -198,10 +200,10 @@ image_convert_set_dither_matrix_invoker (GimpProcedure      *procedure,
   gint32 matrix_length;
   const guint8 *matrix;
 
-  width = g_value_get_int (&args->values[0]);
-  height = g_value_get_int (&args->values[1]);
-  matrix_length = g_value_get_int (&args->values[2]);
-  matrix = gimp_value_get_int8array (&args->values[3]);
+  width = g_value_get_int (gimp_value_array_index (args, 0));
+  height = g_value_get_int (gimp_value_array_index (args, 1));
+  matrix_length = g_value_get_int (gimp_value_array_index (args, 2));
+  matrix = gimp_value_get_int8array (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -222,20 +224,20 @@ image_convert_set_dither_matrix_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 image_convert_precision_invoker (GimpProcedure      *procedure,
-                                 Gimp               *gimp,
-                                 GimpContext        *context,
-                                 GimpProgress       *progress,
-                                 const GValueArray  *args,
-                                 GError            **error)
+                                 Gimp                  *gimp,
+                                 GimpContext           *context,
+                                 GimpProgress          *progress,
+                                 const GimpValueArray  *args,
+                                 GError               **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
   gint32 precision;
 
-  image = gimp_value_get_image (&args->values[0], gimp);
-  precision = g_value_get_enum (&args->values[1]);
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  precision = g_value_get_enum (gimp_value_array_index (args, 1));
 
   if (success)
     {

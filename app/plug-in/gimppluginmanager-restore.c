@@ -444,7 +444,7 @@ gimp_plug_in_manager_run_extensions (GimpPlugInManager  *manager,
       for (list = extensions, nth = 0; list; list = g_list_next (list), nth++)
         {
           GimpPlugInProcedure *proc = list->data;
-          GValueArray         *args;
+          GimpValueArray      *args;
           GError              *error = NULL;
 
           if (gimp->be_verbose)
@@ -453,13 +453,13 @@ gimp_plug_in_manager_run_extensions (GimpPlugInManager  *manager,
           status_callback (NULL, gimp_object_get_name (proc),
                            (gdouble) nth / (gdouble) n_extensions);
 
-          args = g_value_array_new (0);
+          args = gimp_value_array_new (0);
 
           gimp_procedure_execute_async (GIMP_PROCEDURE (proc),
                                         gimp, context, NULL,
                                         args, NULL, &error);
 
-          g_value_array_free (args);
+          gimp_value_array_unref (args);
 
           if (error)
             {
@@ -681,8 +681,8 @@ gimp_plug_in_manager_add_to_db (GimpPlugInManager   *manager,
 
   if (proc->file_proc)
     {
-      GValueArray *return_vals;
-      GError      *error = NULL;
+      GimpValueArray *return_vals;
+      GError         *error = NULL;
 
       if (proc->image_types)
         {
@@ -708,7 +708,7 @@ gimp_plug_in_manager_add_to_db (GimpPlugInManager   *manager,
                                                 G_TYPE_NONE);
         }
 
-      g_value_array_free (return_vals);
+      gimp_value_array_unref (return_vals);
 
       if (error)
         {

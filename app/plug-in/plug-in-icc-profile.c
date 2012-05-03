@@ -22,6 +22,8 @@
 
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core/core-types.h"
 
 #include "core/gimp.h"
@@ -45,10 +47,10 @@
 
 
 static void
-plug_in_icc_profile_info_return (GValueArray  *return_vals,
-                                 gchar       **name,
-                                 gchar       **desc,
-                                 gchar       **info);
+plug_in_icc_profile_info_return (GimpValueArray  *return_vals,
+                                 gchar          **name,
+                                 gchar          **desc,
+                                 gchar          **info);
 
 
 gboolean
@@ -78,7 +80,7 @@ plug_in_icc_profile_apply_rgb (GimpImage     *image,
       GIMP_IS_PARAM_SPEC_INT32 (procedure->args[0]) &&
       GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->args[1]))
     {
-      GValueArray            *return_vals;
+      GimpValueArray         *return_vals;
       GimpPDBStatusType       status;
       GimpColorProfilePolicy  policy = GIMP_COLOR_PROFILE_POLICY_ASK;
       gboolean                success;
@@ -91,7 +93,7 @@ plug_in_icc_profile_apply_rgb (GimpImage     *image,
                                             gimp_image_get_ID (image),
                                             G_TYPE_NONE);
 
-      status = g_value_get_enum (return_vals->values);
+      status = g_value_get_enum (gimp_value_array_index (return_vals, 0));
 
       switch (status)
         {
@@ -114,9 +116,9 @@ plug_in_icc_profile_apply_rgb (GimpImage     *image,
           break;
         }
 
-      if (success && return_vals->n_values > 1)
+      if (success && gimp_value_array_length (return_vals) > 1)
         {
-          GValue *value = g_value_array_get_nth (return_vals, 1);
+          GValue *value = gimp_value_array_index (return_vals, 1);
 
           if (GIMP_VALUE_HOLDS_INT32 (value) && g_value_get_int (value))
             {
@@ -126,7 +128,7 @@ plug_in_icc_profile_apply_rgb (GimpImage     *image,
             }
         }
 
-      g_value_array_free (return_vals);
+      gimp_value_array_unref (return_vals);
 
       return success;
     }
@@ -163,7 +165,7 @@ plug_in_icc_profile_info (GimpImage     *image,
       procedure->num_args >= 1 &&
       GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->args[0]))
     {
-      GValueArray       *return_vals;
+      GimpValueArray    *return_vals;
       GimpPDBStatusType  status;
 
       return_vals =
@@ -173,7 +175,7 @@ plug_in_icc_profile_info (GimpImage     *image,
                                             gimp_image_get_ID (image),
                                             G_TYPE_NONE);
 
-      status = g_value_get_enum (return_vals->values);
+      status = g_value_get_enum (gimp_value_array_index (return_vals, 0));
 
       switch (status)
         {
@@ -188,7 +190,7 @@ plug_in_icc_profile_info (GimpImage     *image,
           break;
         }
 
-      g_value_array_free (return_vals);
+      gimp_value_array_unref (return_vals);
 
       return (status == GIMP_PDB_SUCCESS);
     }
@@ -223,7 +225,7 @@ plug_in_icc_profile_file_info (Gimp          *gimp,
       procedure->num_args >= 1 &&
       GIMP_IS_PARAM_SPEC_STRING (procedure->args[0]))
     {
-      GValueArray       *return_vals;
+      GimpValueArray    *return_vals;
       GimpPDBStatusType  status;
 
       return_vals =
@@ -232,7 +234,7 @@ plug_in_icc_profile_file_info (Gimp          *gimp,
                                             G_TYPE_STRING, filename,
                                             G_TYPE_NONE);
 
-      status = g_value_get_enum (return_vals->values);
+      status = g_value_get_enum (gimp_value_array_index (return_vals, 0));
 
       switch (status)
         {
@@ -247,7 +249,7 @@ plug_in_icc_profile_file_info (Gimp          *gimp,
           break;
         }
 
-      g_value_array_free (return_vals);
+      gimp_value_array_unref (return_vals);
 
       return (status == GIMP_PDB_SUCCESS);
     }
@@ -259,28 +261,28 @@ plug_in_icc_profile_file_info (Gimp          *gimp,
 }
 
 static void
-plug_in_icc_profile_info_return (GValueArray  *return_vals,
-                                 gchar       **name,
-                                 gchar       **desc,
-                                 gchar       **info)
+plug_in_icc_profile_info_return (GimpValueArray  *return_vals,
+                                 gchar          **name,
+                                 gchar          **desc,
+                                 gchar          **info)
 {
   if (name)
     {
-      GValue *value = g_value_array_get_nth (return_vals, 1);
+      GValue *value = gimp_value_array_index (return_vals, 1);
 
       *name = G_VALUE_HOLDS_STRING (value) ? g_value_dup_string (value) : NULL;
     }
 
   if (desc)
     {
-      GValue *value = g_value_array_get_nth (return_vals, 2);
+      GValue *value = gimp_value_array_index (return_vals, 2);
 
       *desc = G_VALUE_HOLDS_STRING (value) ? g_value_dup_string (value) : NULL;
     }
 
   if (info)
     {
-      GValue *value = g_value_array_get_nth (return_vals, 3);
+      GValue *value = gimp_value_array_index (return_vals, 3);
 
       *info = G_VALUE_HOLDS_STRING (value) ? g_value_dup_string (value) : NULL;
     }

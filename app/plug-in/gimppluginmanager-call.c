@@ -132,17 +132,17 @@ gimp_plug_in_manager_call_init (GimpPlugInManager *manager,
     }
 }
 
-GValueArray *
+GimpValueArray *
 gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
                                GimpContext         *context,
                                GimpProgress        *progress,
                                GimpPlugInProcedure *procedure,
-                               GValueArray         *args,
+                               GimpValueArray      *args,
                                gboolean             synchronous,
                                GimpObject          *display)
 {
-  GValueArray *return_vals = NULL;
-  GimpPlugIn  *plug_in;
+  GimpValueArray *return_vals = NULL;
+  GimpPlugIn     *plug_in;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
   g_return_val_if_fail (GIMP_IS_PDB_CONTEXT (context), NULL);
@@ -208,7 +208,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       config.timestamp        = gimp_get_user_time (manager->gimp);
 
       proc_run.name    = GIMP_PROCEDURE (procedure)->original_name;
-      proc_run.nparams = args->n_values;
+      proc_run.nparams = gimp_value_array_length (args);
       proc_run.params  = plug_in_args_to_params (args, FALSE);
 
       if (! gp_config_write (plug_in->my_write, &config, plug_in)     ||
@@ -280,15 +280,15 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
   return return_vals;
 }
 
-GValueArray *
+GimpValueArray *
 gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
                                     GimpContext            *context,
                                     GimpProgress           *progress,
                                     GimpTemporaryProcedure *procedure,
-                                    GValueArray            *args)
+                                    GimpValueArray         *args)
 {
-  GValueArray *return_vals = NULL;
-  GimpPlugIn  *plug_in;
+  GimpValueArray *return_vals = NULL;
+  GimpPlugIn     *plug_in;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
   g_return_val_if_fail (GIMP_IS_PDB_CONTEXT (context), NULL);
@@ -307,7 +307,7 @@ gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
                                                  procedure);
 
       proc_run.name    = GIMP_PROCEDURE (procedure)->original_name;
-      proc_run.nparams = args->n_values;
+      proc_run.nparams = gimp_value_array_length (args);
       proc_run.params  = plug_in_args_to_params (args, FALSE);
 
       if (! gp_temp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||

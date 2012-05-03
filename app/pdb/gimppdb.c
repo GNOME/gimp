@@ -279,16 +279,16 @@ gimp_pdb_lookup_compat_proc_name (GimpPDB     *pdb,
   return g_hash_table_lookup (pdb->compat_proc_names, old_name);
 }
 
-GValueArray *
-gimp_pdb_execute_procedure_by_name_args (GimpPDB       *pdb,
-                                         GimpContext   *context,
-                                         GimpProgress  *progress,
-                                         GError       **error,
-                                         const gchar   *name,
-                                         GValueArray   *args)
+GimpValueArray *
+gimp_pdb_execute_procedure_by_name_args (GimpPDB         *pdb,
+                                         GimpContext     *context,
+                                         GimpProgress    *progress,
+                                         GError         **error,
+                                         const gchar     *name,
+                                         GimpValueArray  *args)
 {
-  GValueArray *return_vals = NULL;
-  GList       *list;
+  GimpValueArray *return_vals = NULL;
+  GList          *list;
 
   g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -322,7 +322,8 @@ gimp_pdb_execute_procedure_by_name_args (GimpPDB       *pdb,
                                             pdb->gimp, context, progress,
                                             args, error);
 
-      if (g_value_get_enum (&return_vals->values[0]) == GIMP_PDB_PASS_THROUGH)
+      if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) ==
+          GIMP_PDB_PASS_THROUGH)
         {
           /*  If the return value is GIMP_PDB_PASS_THROUGH and there is
            *  a next procedure in the list, destroy the return values
@@ -330,7 +331,7 @@ gimp_pdb_execute_procedure_by_name_args (GimpPDB       *pdb,
            */
           if (g_list_next (list))
             {
-              g_value_array_free (return_vals);
+              gimp_value_array_unref (return_vals);
               g_clear_error (error);
             }
         }
@@ -346,7 +347,7 @@ gimp_pdb_execute_procedure_by_name_args (GimpPDB       *pdb,
   return return_vals;
 }
 
-GValueArray *
+GimpValueArray *
 gimp_pdb_execute_procedure_by_name (GimpPDB       *pdb,
                                     GimpContext   *context,
                                     GimpProgress  *progress,
@@ -354,11 +355,11 @@ gimp_pdb_execute_procedure_by_name (GimpPDB       *pdb,
                                     const gchar   *name,
                                     ...)
 {
-  GimpProcedure *procedure;
-  GValueArray   *args;
-  GValueArray   *return_vals;
-  va_list        va_args;
-  gint           i;
+  GimpProcedure  *procedure;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  va_list         va_args;
+  gint            i;
 
   g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -395,7 +396,7 @@ gimp_pdb_execute_procedure_by_name (GimpPDB       *pdb,
       if (arg_type == G_TYPE_NONE)
         break;
 
-      value = &args->values[i];
+      value = gimp_value_array_index (args, i);
 
       if (arg_type != G_VALUE_TYPE (value))
         {
@@ -403,7 +404,7 @@ gimp_pdb_execute_procedure_by_name (GimpPDB       *pdb,
           const gchar *expected = g_type_name (G_VALUE_TYPE (value));
           const gchar *got      = g_type_name (arg_type);
 
-          g_value_array_free (args);
+          gimp_value_array_unref (args);
 
           pdb_error = g_error_new (GIMP_PDB_ERROR,
                                    GIMP_PDB_ERROR_INVALID_ARGUMENT,
@@ -432,7 +433,7 @@ gimp_pdb_execute_procedure_by_name (GimpPDB       *pdb,
           g_warning ("%s: %s", G_STRFUNC, error_msg);
           g_free (error_msg);
 
-          g_value_array_free (args);
+          gimp_value_array_unref (args);
 
           return_vals = gimp_procedure_get_return_values (procedure,
                                                           FALSE, pdb_error);
@@ -450,7 +451,7 @@ gimp_pdb_execute_procedure_by_name (GimpPDB       *pdb,
                                                          progress, error,
                                                          name, args);
 
-  g_value_array_free (args);
+  gimp_value_array_unref (args);
 
   return return_vals;
 }

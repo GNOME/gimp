@@ -22,6 +22,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
@@ -317,12 +318,12 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
                                            gint       value,
                                            gpointer   data)
 {
-  GimpImage     *image;
-  GtkWidget     *widget;
-  GimpProcedure *procedure;
-  GValueArray   *args;
-  GimpDisplay   *display;
-  GError        *error = NULL;
+  GimpImage      *image;
+  GtkWidget      *widget;
+  GimpProcedure  *procedure;
+  GimpValueArray *args;
+  GimpDisplay    *display;
+  GError         *error = NULL;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
@@ -346,15 +347,17 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
   args = gimp_procedure_get_arguments (procedure);
   gimp_value_array_truncate (args, 2);
 
-  g_value_set_int      (&args->values[0], GIMP_RUN_INTERACTIVE);
-  gimp_value_set_image (&args->values[1], image);
+  g_value_set_int      (gimp_value_array_index (args, 0),
+                        GIMP_RUN_INTERACTIVE);
+  gimp_value_set_image (gimp_value_array_index (args, 1),
+                        image);
 
   gimp_procedure_execute_async (procedure, image->gimp,
                                 action_data_get_context (data),
                                 GIMP_PROGRESS (display), args,
                                 GIMP_OBJECT (display), &error);
 
-  g_value_array_free (args);
+  gimp_value_array_unref (args);
 
   if (error)
     {

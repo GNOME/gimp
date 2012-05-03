@@ -24,6 +24,8 @@
 
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
 #include "core/gimpcontext.h"
@@ -259,7 +261,7 @@ gimp_pdb_progress_run_callback (GimpPdbProgress     *progress,
 
   if (progress->callback_name && ! progress->callback_busy)
     {
-      GValueArray *return_vals;
+      GimpValueArray *return_vals;
 
       progress->callback_busy = TRUE;
 
@@ -273,20 +275,21 @@ gimp_pdb_progress_run_callback (GimpPdbProgress     *progress,
                                             G_TYPE_DOUBLE,   value,
                                             G_TYPE_NONE);
 
-      if (g_value_get_enum (&return_vals->values[0]) != GIMP_PDB_SUCCESS)
+      if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) !=
+          GIMP_PDB_SUCCESS)
         {
           gimp_message (progress->context->gimp, NULL, GIMP_MESSAGE_ERROR,
                         _("Unable to run %s callback. "
                           "The corresponding plug-in may have crashed."),
                         g_type_name (G_TYPE_FROM_INSTANCE (progress)));
         }
-      else if (return_vals->n_values >= 2 &&
-               G_VALUE_HOLDS_DOUBLE (&return_vals->values[1]))
+      else if (gimp_value_array_length (return_vals) >= 2 &&
+               G_VALUE_HOLDS_DOUBLE (gimp_value_array_index (return_vals, 1)))
         {
-          retval = g_value_get_double (&return_vals->values[1]);
+          retval = g_value_get_double (gimp_value_array_index (return_vals, 1));
         }
 
-      g_value_array_free (return_vals);
+      gimp_value_array_unref (return_vals);
 
       progress->callback_busy = FALSE;
     }

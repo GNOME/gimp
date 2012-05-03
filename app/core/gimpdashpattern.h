@@ -27,22 +27,22 @@
 #define GIMP_VALUE_HOLDS_DASH_PATTERN(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_DASH_PATTERN))
 
 
-GType         gimp_dash_pattern_get_type          (void) G_GNUC_CONST;
+GType            gimp_dash_pattern_get_type          (void) G_GNUC_CONST;
 
-GArray      * gimp_dash_pattern_new_from_preset   (GimpDashPreset  preset);
-GArray      * gimp_dash_pattern_new_from_segments (const gboolean *segments,
-                                                   gint            n_segments,
-                                                   gdouble         dash_length);
+GArray         * gimp_dash_pattern_new_from_preset   (GimpDashPreset  preset);
+GArray         * gimp_dash_pattern_new_from_segments (const gboolean *segments,
+                                                      gint            n_segments,
+                                                      gdouble         dash_length);
 
-void          gimp_dash_pattern_fill_segments     (GArray         *pattern,
-                                                   gboolean       *segments,
-                                                   gint            n_segments);
+void             gimp_dash_pattern_fill_segments     (GArray         *pattern,
+                                                      gboolean       *segments,
+                                                      gint            n_segments);
 
-GArray      * gimp_dash_pattern_from_value_array  (GValueArray    *value_array);
-GValueArray * gimp_dash_pattern_to_value_array    (GArray         *pattern);
+GArray         * gimp_dash_pattern_from_value_array  (GimpValueArray *value_array);
+GimpValueArray * gimp_dash_pattern_to_value_array    (GArray         *pattern);
 
-GArray      * gimp_dash_pattern_copy              (GArray         *pattern);
-void          gimp_dash_pattern_free              (GArray         *pattern);
+GArray         * gimp_dash_pattern_copy              (GArray         *pattern);
+void             gimp_dash_pattern_free              (GArray         *pattern);
 
 
 #endif  /*  __GIMP_DASH_PATTERN_H__  */

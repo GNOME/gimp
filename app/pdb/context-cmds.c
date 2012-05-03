@@ -28,6 +28,8 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb-types.h"
 
 #include "core/gimp.h"
@@ -47,13 +49,13 @@
 #include "internal-procs.h"
 
 
-static GValueArray *
+static GimpValueArray *
 context_push_invoker (GimpProcedure      *procedure,
-                      Gimp               *gimp,
-                      GimpContext        *context,
-                      GimpProgress       *progress,
-                      const GValueArray  *args,
-                      GError            **error)
+                      Gimp                  *gimp,
+                      GimpContext           *context,
+                      GimpProgress          *progress,
+                      const GimpValueArray  *args,
+                      GError               **error)
 {
   gboolean success = TRUE;
   GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
@@ -67,13 +69,13 @@ context_push_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_pop_invoker (GimpProcedure      *procedure,
-                     Gimp               *gimp,
-                     GimpContext        *context,
-                     GimpProgress       *progress,
-                     const GValueArray  *args,
-                     GError            **error)
+                     Gimp                  *gimp,
+                     GimpContext           *context,
+                     GimpProgress          *progress,
+                     const GimpValueArray  *args,
+                     GError               **error)
 {
   gboolean success = TRUE;
   GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
@@ -87,28 +89,28 @@ context_pop_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_defaults_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GValueArray  *args,
-                              GError            **error)
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
 {
     gimp_config_reset (GIMP_CONFIG (context));
 
   return gimp_procedure_get_return_values (procedure, TRUE, NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_list_paint_methods_invoker (GimpProcedure      *procedure,
-                                    Gimp               *gimp,
-                                    GimpContext        *context,
-                                    GimpProgress       *progress,
-                                    const GValueArray  *args,
-                                    GError            **error)
+                                    Gimp                  *gimp,
+                                    GimpContext           *context,
+                                    GimpProgress          *progress,
+                                    const GimpValueArray  *args,
+                                    GError               **error)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gint32 num_paint_methods = 0;
   gchar **paint_methods = NULL;
 
@@ -117,22 +119,22 @@ context_list_paint_methods_invoker (GimpProcedure      *procedure,
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
 
-  g_value_set_int (&return_vals->values[1], num_paint_methods);
-  gimp_value_take_stringarray (&return_vals->values[2], paint_methods, num_paint_methods);
+  g_value_set_int (gimp_value_array_index (return_vals, 1), num_paint_methods);
+  gimp_value_take_stringarray (gimp_value_array_index (return_vals, 2), paint_methods, num_paint_methods);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_paint_method_invoker (GimpProcedure      *procedure,
-                                  Gimp               *gimp,
-                                  GimpContext        *context,
-                                  GimpProgress       *progress,
-                                  const GValueArray  *args,
-                                  GError            **error)
+                                  Gimp                  *gimp,
+                                  GimpContext           *context,
+                                  GimpProgress          *progress,
+                                  const GimpValueArray  *args,
+                                  GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gchar *name = NULL;
 
   GimpPaintInfo *paint_info = gimp_context_get_paint_info (context);
@@ -146,23 +148,23 @@ context_get_paint_method_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (&return_vals->values[1], name);
+    g_value_take_string (gimp_value_array_index (return_vals, 1), name);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_paint_method_invoker (GimpProcedure      *procedure,
-                                  Gimp               *gimp,
-                                  GimpContext        *context,
-                                  GimpProgress       *progress,
-                                  const GValueArray  *args,
-                                  GError            **error)
+                                  Gimp                  *gimp,
+                                  GimpContext           *context,
+                                  GimpProgress          *progress,
+                                  const GimpValueArray  *args,
+                                  GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (&args->values[0]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -178,38 +180,38 @@ context_set_paint_method_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_foreground_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GValueArray  *args,
-                                GError            **error)
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   GimpRGB foreground = { 0.0, 0.0, 0.0, 1.0 };
 
   gimp_context_get_foreground (context, &foreground);
   gimp_rgb_set_alpha (&foreground, 1.0);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  gimp_value_set_rgb (&return_vals->values[1], &foreground);
+  gimp_value_set_rgb (gimp_value_array_index (return_vals, 1), &foreground);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_foreground_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GValueArray  *args,
-                                GError            **error)
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
 {
   gboolean success = TRUE;
   GimpRGB foreground;
 
-  gimp_value_get_rgb (&args->values[0], &foreground);
+  gimp_value_get_rgb (gimp_value_array_index (args, 0), &foreground);
 
   if (success)
     {
@@ -221,38 +223,38 @@ context_set_foreground_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_background_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GValueArray  *args,
-                                GError            **error)
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   GimpRGB background = { 0.0, 0.0, 0.0, 1.0 };
 
   gimp_context_get_background (context, &background);
   gimp_rgb_set_alpha (&background, 1.0);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  gimp_value_set_rgb (&return_vals->values[1], &background);
+  gimp_value_set_rgb (gimp_value_array_index (return_vals, 1), &background);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_background_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GValueArray  *args,
-                                GError            **error)
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
 {
   gboolean success = TRUE;
   GimpRGB background;
 
-  gimp_value_get_rgb (&args->values[0], &background);
+  gimp_value_get_rgb (gimp_value_array_index (args, 0), &background);
 
   if (success)
     {
@@ -264,63 +266,63 @@ context_set_background_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_default_colors_invoker (GimpProcedure      *procedure,
-                                    Gimp               *gimp,
-                                    GimpContext        *context,
-                                    GimpProgress       *progress,
-                                    const GValueArray  *args,
-                                    GError            **error)
+                                    Gimp                  *gimp,
+                                    GimpContext           *context,
+                                    GimpProgress          *progress,
+                                    const GimpValueArray  *args,
+                                    GError               **error)
 {
   gimp_context_set_default_colors (context);
 
   return gimp_procedure_get_return_values (procedure, TRUE, NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_swap_colors_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GValueArray  *args,
-                             GError            **error)
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
   gimp_context_swap_colors (context);
 
   return gimp_procedure_get_return_values (procedure, TRUE, NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_opacity_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GValueArray  *args,
-                             GError            **error)
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gdouble opacity = 0.0;
 
   opacity = gimp_context_get_opacity (context) * 100.0;
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_double (&return_vals->values[1], opacity);
+  g_value_set_double (gimp_value_array_index (return_vals, 1), opacity);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_opacity_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GValueArray  *args,
-                             GError            **error)
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
   gboolean success = TRUE;
   gdouble opacity;
 
-  opacity = g_value_get_double (&args->values[0]);
+  opacity = g_value_get_double (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -331,37 +333,37 @@ context_set_opacity_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_paint_mode_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GValueArray  *args,
-                                GError            **error)
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gint32 paint_mode = 0;
 
   paint_mode = gimp_context_get_paint_mode (context);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_enum (&return_vals->values[1], paint_mode);
+  g_value_set_enum (gimp_value_array_index (return_vals, 1), paint_mode);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_paint_mode_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GValueArray  *args,
-                                GError            **error)
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
 {
   gboolean success = TRUE;
   gint32 paint_mode;
 
-  paint_mode = g_value_get_enum (&args->values[0]);
+  paint_mode = g_value_get_enum (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -372,16 +374,16 @@ context_set_paint_mode_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_brush_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GValueArray  *args,
-                           GError            **error)
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gchar *name = NULL;
 
   GimpBrush *brush = gimp_context_get_brush (context);
@@ -395,23 +397,23 @@ context_get_brush_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (&return_vals->values[1], name);
+    g_value_take_string (gimp_value_array_index (return_vals, 1), name);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_brush_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GValueArray  *args,
-                           GError            **error)
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (&args->values[0]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -427,18 +429,18 @@ context_set_brush_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_brush_size_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GValueArray  *args,
-                                GError            **error)
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
 {
   gboolean success = TRUE;
   gdouble size;
 
-  size = g_value_get_double (&args->values[0]);
+  size = g_value_get_double (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -459,18 +461,18 @@ context_get_brush_size_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_brush_size_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GValueArray  *args,
-                                GError            **error)
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
 {
   gboolean success = TRUE;
   gdouble size;
 
-  size = g_value_get_double (&args->values[0]);
+  size = g_value_get_double (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -491,13 +493,13 @@ context_set_brush_size_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_brush_default_size_invoker (GimpProcedure      *procedure,
-                                        Gimp               *gimp,
-                                        GimpContext        *context,
-                                        GimpProgress       *progress,
-                                        const GValueArray  *args,
-                                        GError            **error)
+                                        Gimp                  *gimp,
+                                        GimpContext           *context,
+                                        GimpProgress          *progress,
+                                        const GimpValueArray  *args,
+                                        GError               **error)
 {
   gboolean success = TRUE;
   GimpBrush *brush = gimp_context_get_brush (context);
@@ -527,18 +529,18 @@ context_set_brush_default_size_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_brush_aspect_ratio_invoker (GimpProcedure      *procedure,
-                                        Gimp               *gimp,
-                                        GimpContext        *context,
-                                        GimpProgress       *progress,
-                                        const GValueArray  *args,
-                                        GError            **error)
+                                        Gimp                  *gimp,
+                                        GimpContext           *context,
+                                        GimpProgress          *progress,
+                                        const GimpValueArray  *args,
+                                        GError               **error)
 {
   gboolean success = TRUE;
   gdouble aspect;
 
-  aspect = g_value_get_double (&args->values[0]);
+  aspect = g_value_get_double (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -559,18 +561,18 @@ context_get_brush_aspect_ratio_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_brush_aspect_ratio_invoker (GimpProcedure      *procedure,
-                                        Gimp               *gimp,
-                                        GimpContext        *context,
-                                        GimpProgress       *progress,
-                                        const GValueArray  *args,
-                                        GError            **error)
+                                        Gimp                  *gimp,
+                                        GimpContext           *context,
+                                        GimpProgress          *progress,
+                                        const GimpValueArray  *args,
+                                        GError               **error)
 {
   gboolean success = TRUE;
   gdouble aspect;
 
-  aspect = g_value_get_double (&args->values[0]);
+  aspect = g_value_get_double (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -591,18 +593,18 @@ context_set_brush_aspect_ratio_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_brush_angle_invoker (GimpProcedure      *procedure,
-                                 Gimp               *gimp,
-                                 GimpContext        *context,
-                                 GimpProgress       *progress,
-                                 const GValueArray  *args,
-                                 GError            **error)
+                                 Gimp                  *gimp,
+                                 GimpContext           *context,
+                                 GimpProgress          *progress,
+                                 const GimpValueArray  *args,
+                                 GError               **error)
 {
   gboolean success = TRUE;
   gdouble angle;
 
-  angle = g_value_get_double (&args->values[0]);
+  angle = g_value_get_double (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -623,18 +625,18 @@ context_get_brush_angle_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_brush_angle_invoker (GimpProcedure      *procedure,
-                                 Gimp               *gimp,
-                                 GimpContext        *context,
-                                 GimpProgress       *progress,
-                                 const GValueArray  *args,
-                                 GError            **error)
+                                 Gimp                  *gimp,
+                                 GimpContext           *context,
+                                 GimpProgress          *progress,
+                                 const GimpValueArray  *args,
+                                 GError               **error)
 {
   gboolean success = TRUE;
   gdouble angle;
 
-  angle = g_value_get_double (&args->values[0]);
+  angle = g_value_get_double (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -655,16 +657,16 @@ context_set_brush_angle_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_dynamics_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GValueArray  *args,
-                              GError            **error)
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gchar *name = NULL;
 
   GimpDynamics *dynamics = gimp_context_get_dynamics (context);
@@ -678,23 +680,23 @@ context_get_dynamics_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (&return_vals->values[1], name);
+    g_value_take_string (gimp_value_array_index (return_vals, 1), name);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_dynamics_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GValueArray  *args,
-                              GError            **error)
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (&args->values[0]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -710,16 +712,16 @@ context_set_dynamics_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_pattern_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GValueArray  *args,
-                             GError            **error)
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gchar *name = NULL;
 
   GimpPattern *pattern = gimp_context_get_pattern (context);
@@ -733,23 +735,23 @@ context_get_pattern_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (&return_vals->values[1], name);
+    g_value_take_string (gimp_value_array_index (return_vals, 1), name);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_pattern_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GValueArray  *args,
-                             GError            **error)
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (&args->values[0]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -765,16 +767,16 @@ context_set_pattern_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_gradient_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GValueArray  *args,
-                              GError            **error)
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gchar *name = NULL;
 
   GimpGradient *gradient = gimp_context_get_gradient (context);
@@ -788,23 +790,23 @@ context_get_gradient_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (&return_vals->values[1], name);
+    g_value_take_string (gimp_value_array_index (return_vals, 1), name);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_gradient_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GValueArray  *args,
-                              GError            **error)
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (&args->values[0]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -820,16 +822,16 @@ context_set_gradient_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_palette_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GValueArray  *args,
-                             GError            **error)
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gchar *name = NULL;
 
   GimpPalette *palette = gimp_context_get_palette (context);
@@ -843,23 +845,23 @@ context_get_palette_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (&return_vals->values[1], name);
+    g_value_take_string (gimp_value_array_index (return_vals, 1), name);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_palette_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GValueArray  *args,
-                             GError            **error)
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (&args->values[0]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -875,16 +877,16 @@ context_set_palette_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_font_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GValueArray  *args,
-                          GError            **error)
+                          Gimp                  *gimp,
+                          GimpContext           *context,
+                          GimpProgress          *progress,
+                          const GimpValueArray  *args,
+                          GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gchar *name = NULL;
 
   GimpFont *font = gimp_context_get_font (context);
@@ -898,23 +900,23 @@ context_get_font_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (&return_vals->values[1], name);
+    g_value_take_string (gimp_value_array_index (return_vals, 1), name);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_font_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GValueArray  *args,
-                          GError            **error)
+                          Gimp                  *gimp,
+                          GimpContext           *context,
+                          GimpProgress          *progress,
+                          const GimpValueArray  *args,
+                          GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (&args->values[0]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -930,15 +932,15 @@ context_set_font_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_antialias_invoker (GimpProcedure      *procedure,
-                               Gimp               *gimp,
-                               GimpContext        *context,
-                               GimpProgress       *progress,
-                               const GValueArray  *args,
-                               GError            **error)
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gboolean antialias = FALSE;
 
   g_object_get (context,
@@ -946,23 +948,23 @@ context_get_antialias_invoker (GimpProcedure      *procedure,
                 NULL);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_boolean (&return_vals->values[1], antialias);
+  g_value_set_boolean (gimp_value_array_index (return_vals, 1), antialias);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_antialias_invoker (GimpProcedure      *procedure,
-                               Gimp               *gimp,
-                               GimpContext        *context,
-                               GimpProgress       *progress,
-                               const GValueArray  *args,
-                               GError            **error)
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
 {
   gboolean success = TRUE;
   gboolean antialias;
 
-  antialias = g_value_get_boolean (&args->values[0]);
+  antialias = g_value_get_boolean (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -975,15 +977,15 @@ context_set_antialias_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_feather_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GValueArray  *args,
-                             GError            **error)
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gboolean feather = FALSE;
 
   g_object_get (context,
@@ -991,23 +993,23 @@ context_get_feather_invoker (GimpProcedure      *procedure,
                 NULL);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_boolean (&return_vals->values[1], feather);
+  g_value_set_boolean (gimp_value_array_index (return_vals, 1), feather);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_feather_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GValueArray  *args,
-                             GError            **error)
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
   gboolean success = TRUE;
   gboolean feather;
 
-  feather = g_value_get_boolean (&args->values[0]);
+  feather = g_value_get_boolean (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -1020,15 +1022,15 @@ context_set_feather_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_feather_radius_invoker (GimpProcedure      *procedure,
-                                    Gimp               *gimp,
-                                    GimpContext        *context,
-                                    GimpProgress       *progress,
-                                    const GValueArray  *args,
-                                    GError            **error)
+                                    Gimp                  *gimp,
+                                    GimpContext           *context,
+                                    GimpProgress          *progress,
+                                    const GimpValueArray  *args,
+                                    GError               **error)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gdouble feather_radius_x = 0.0;
   gdouble feather_radius_y = 0.0;
 
@@ -1039,26 +1041,26 @@ context_get_feather_radius_invoker (GimpProcedure      *procedure,
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
 
-  g_value_set_double (&return_vals->values[1], feather_radius_x);
-  g_value_set_double (&return_vals->values[2], feather_radius_y);
+  g_value_set_double (gimp_value_array_index (return_vals, 1), feather_radius_x);
+  g_value_set_double (gimp_value_array_index (return_vals, 2), feather_radius_y);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_feather_radius_invoker (GimpProcedure      *procedure,
-                                    Gimp               *gimp,
-                                    GimpContext        *context,
-                                    GimpProgress       *progress,
-                                    const GValueArray  *args,
-                                    GError            **error)
+                                    Gimp                  *gimp,
+                                    GimpContext           *context,
+                                    GimpProgress          *progress,
+                                    const GimpValueArray  *args,
+                                    GError               **error)
 {
   gboolean success = TRUE;
   gdouble feather_radius_x;
   gdouble feather_radius_y;
 
-  feather_radius_x = g_value_get_double (&args->values[0]);
-  feather_radius_y = g_value_get_double (&args->values[1]);
+  feather_radius_x = g_value_get_double (gimp_value_array_index (args, 0));
+  feather_radius_y = g_value_get_double (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -1072,15 +1074,15 @@ context_set_feather_radius_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_sample_merged_invoker (GimpProcedure      *procedure,
-                                   Gimp               *gimp,
-                                   GimpContext        *context,
-                                   GimpProgress       *progress,
-                                   const GValueArray  *args,
-                                   GError            **error)
+                                   Gimp                  *gimp,
+                                   GimpContext           *context,
+                                   GimpProgress          *progress,
+                                   const GimpValueArray  *args,
+                                   GError               **error)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gboolean sample_merged = FALSE;
 
   g_object_get (context,
@@ -1088,23 +1090,23 @@ context_get_sample_merged_invoker (GimpProcedure      *procedure,
                 NULL);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_boolean (&return_vals->values[1], sample_merged);
+  g_value_set_boolean (gimp_value_array_index (return_vals, 1), sample_merged);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_sample_merged_invoker (GimpProcedure      *procedure,
-                                   Gimp               *gimp,
-                                   GimpContext        *context,
-                                   GimpProgress       *progress,
-                                   const GValueArray  *args,
-                                   GError            **error)
+                                   Gimp                  *gimp,
+                                   GimpContext           *context,
+                                   GimpProgress          *progress,
+                                   const GimpValueArray  *args,
+                                   GError               **error)
 {
   gboolean success = TRUE;
   gboolean sample_merged;
 
-  sample_merged = g_value_get_boolean (&args->values[0]);
+  sample_merged = g_value_get_boolean (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -1117,15 +1119,15 @@ context_set_sample_merged_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_sample_criterion_invoker (GimpProcedure      *procedure,
-                                      Gimp               *gimp,
-                                      GimpContext        *context,
-                                      GimpProgress       *progress,
-                                      const GValueArray  *args,
-                                      GError            **error)
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gint32 sample_criterion = 0;
 
   g_object_get (context,
@@ -1133,23 +1135,23 @@ context_get_sample_criterion_invoker (GimpProcedure      *procedure,
                 NULL);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_enum (&return_vals->values[1], sample_criterion);
+  g_value_set_enum (gimp_value_array_index (return_vals, 1), sample_criterion);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_sample_criterion_invoker (GimpProcedure      *procedure,
-                                      Gimp               *gimp,
-                                      GimpContext        *context,
-                                      GimpProgress       *progress,
-                                      const GValueArray  *args,
-                                      GError            **error)
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
 {
   gboolean success = TRUE;
   gint32 sample_criterion;
 
-  sample_criterion = g_value_get_enum (&args->values[0]);
+  sample_criterion = g_value_get_enum (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -1162,15 +1164,15 @@ context_set_sample_criterion_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_sample_threshold_invoker (GimpProcedure      *procedure,
-                                      Gimp               *gimp,
-                                      GimpContext        *context,
-                                      GimpProgress       *progress,
-                                      const GValueArray  *args,
-                                      GError            **error)
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gdouble sample_threshold = 0.0;
 
   g_object_get (context,
@@ -1178,23 +1180,23 @@ context_get_sample_threshold_invoker (GimpProcedure      *procedure,
                 NULL);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_double (&return_vals->values[1], sample_threshold);
+  g_value_set_double (gimp_value_array_index (return_vals, 1), sample_threshold);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_sample_threshold_invoker (GimpProcedure      *procedure,
-                                      Gimp               *gimp,
-                                      GimpContext        *context,
-                                      GimpProgress       *progress,
-                                      const GValueArray  *args,
-                                      GError            **error)
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
 {
   gboolean success = TRUE;
   gdouble sample_threshold;
 
-  sample_threshold = g_value_get_double (&args->values[0]);
+  sample_threshold = g_value_get_double (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -1207,15 +1209,15 @@ context_set_sample_threshold_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_sample_threshold_int_invoker (GimpProcedure      *procedure,
-                                          Gimp               *gimp,
-                                          GimpContext        *context,
-                                          GimpProgress       *progress,
-                                          const GValueArray  *args,
-                                          GError            **error)
+                                          Gimp                  *gimp,
+                                          GimpContext           *context,
+                                          GimpProgress          *progress,
+                                          const GimpValueArray  *args,
+                                          GError               **error)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gint32 sample_threshold = 0;
 
   gdouble threshold;
@@ -1227,23 +1229,23 @@ context_get_sample_threshold_int_invoker (GimpProcedure      *procedure,
   sample_threshold = (gint) (threshold * 255.99);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_int (&return_vals->values[1], sample_threshold);
+  g_value_set_int (gimp_value_array_index (return_vals, 1), sample_threshold);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_sample_threshold_int_invoker (GimpProcedure      *procedure,
-                                          Gimp               *gimp,
-                                          GimpContext        *context,
-                                          GimpProgress       *progress,
-                                          const GValueArray  *args,
-                                          GError            **error)
+                                          Gimp                  *gimp,
+                                          GimpContext           *context,
+                                          GimpProgress          *progress,
+                                          const GimpValueArray  *args,
+                                          GError               **error)
 {
   gboolean success = TRUE;
   gint32 sample_threshold;
 
-  sample_threshold = g_value_get_int (&args->values[0]);
+  sample_threshold = g_value_get_int (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -1256,15 +1258,15 @@ context_set_sample_threshold_int_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_sample_transparent_invoker (GimpProcedure      *procedure,
-                                        Gimp               *gimp,
-                                        GimpContext        *context,
-                                        GimpProgress       *progress,
-                                        const GValueArray  *args,
-                                        GError            **error)
+                                        Gimp                  *gimp,
+                                        GimpContext           *context,
+                                        GimpProgress          *progress,
+                                        const GimpValueArray  *args,
+                                        GError               **error)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gboolean sample_transparent = FALSE;
 
   g_object_get (context,
@@ -1272,23 +1274,23 @@ context_get_sample_transparent_invoker (GimpProcedure      *procedure,
                 NULL);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_boolean (&return_vals->values[1], sample_transparent);
+  g_value_set_boolean (gimp_value_array_index (return_vals, 1), sample_transparent);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_sample_transparent_invoker (GimpProcedure      *procedure,
-                                        Gimp               *gimp,
-                                        GimpContext        *context,
-                                        GimpProgress       *progress,
-                                        const GValueArray  *args,
-                                        GError            **error)
+                                        Gimp                  *gimp,
+                                        GimpContext           *context,
+                                        GimpProgress          *progress,
+                                        const GimpValueArray  *args,
+                                        GError               **error)
 {
   gboolean success = TRUE;
   gboolean sample_transparent;
 
-  sample_transparent = g_value_get_boolean (&args->values[0]);
+  sample_transparent = g_value_get_boolean (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -1301,15 +1303,15 @@ context_set_sample_transparent_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_interpolation_invoker (GimpProcedure      *procedure,
-                                   Gimp               *gimp,
-                                   GimpContext        *context,
-                                   GimpProgress       *progress,
-                                   const GValueArray  *args,
-                                   GError            **error)
+                                   Gimp                  *gimp,
+                                   GimpContext           *context,
+                                   GimpProgress          *progress,
+                                   const GimpValueArray  *args,
+                                   GError               **error)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gint32 interpolation = 0;
 
   g_object_get (context,
@@ -1317,23 +1319,23 @@ context_get_interpolation_invoker (GimpProcedure      *procedure,
                 NULL);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_enum (&return_vals->values[1], interpolation);
+  g_value_set_enum (gimp_value_array_index (return_vals, 1), interpolation);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_interpolation_invoker (GimpProcedure      *procedure,
-                                   Gimp               *gimp,
-                                   GimpContext        *context,
-                                   GimpProgress       *progress,
-                                   const GValueArray  *args,
-                                   GError            **error)
+                                   Gimp                  *gimp,
+                                   GimpContext           *context,
+                                   GimpProgress          *progress,
+                                   const GimpValueArray  *args,
+                                   GError               **error)
 {
   gboolean success = TRUE;
   gint32 interpolation;
 
-  interpolation = g_value_get_enum (&args->values[0]);
+  interpolation = g_value_get_enum (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -1346,15 +1348,15 @@ context_set_interpolation_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_transform_direction_invoker (GimpProcedure      *procedure,
-                                         Gimp               *gimp,
-                                         GimpContext        *context,
-                                         GimpProgress       *progress,
-                                         const GValueArray  *args,
-                                         GError            **error)
+                                         Gimp                  *gimp,
+                                         GimpContext           *context,
+                                         GimpProgress          *progress,
+                                         const GimpValueArray  *args,
+                                         GError               **error)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gint32 transform_direction = 0;
 
   g_object_get (context,
@@ -1362,23 +1364,23 @@ context_get_transform_direction_invoker (GimpProcedure      *procedure,
                 NULL);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_enum (&return_vals->values[1], transform_direction);
+  g_value_set_enum (gimp_value_array_index (return_vals, 1), transform_direction);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_transform_direction_invoker (GimpProcedure      *procedure,
-                                         Gimp               *gimp,
-                                         GimpContext        *context,
-                                         GimpProgress       *progress,
-                                         const GValueArray  *args,
-                                         GError            **error)
+                                         Gimp                  *gimp,
+                                         GimpContext           *context,
+                                         GimpProgress          *progress,
+                                         const GimpValueArray  *args,
+                                         GError               **error)
 {
   gboolean success = TRUE;
   gint32 transform_direction;
 
-  transform_direction = g_value_get_enum (&args->values[0]);
+  transform_direction = g_value_get_enum (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -1391,15 +1393,15 @@ context_set_transform_direction_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_transform_resize_invoker (GimpProcedure      *procedure,
-                                      Gimp               *gimp,
-                                      GimpContext        *context,
-                                      GimpProgress       *progress,
-                                      const GValueArray  *args,
-                                      GError            **error)
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gint32 transform_resize = 0;
 
   g_object_get (context,
@@ -1407,23 +1409,23 @@ context_get_transform_resize_invoker (GimpProcedure      *procedure,
                 NULL);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_enum (&return_vals->values[1], transform_resize);
+  g_value_set_enum (gimp_value_array_index (return_vals, 1), transform_resize);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_transform_resize_invoker (GimpProcedure      *procedure,
-                                      Gimp               *gimp,
-                                      GimpContext        *context,
-                                      GimpProgress       *progress,
-                                      const GValueArray  *args,
-                                      GError            **error)
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
 {
   gboolean success = TRUE;
   gint32 transform_resize;
 
-  transform_resize = g_value_get_enum (&args->values[0]);
+  transform_resize = g_value_get_enum (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -1436,15 +1438,15 @@ context_set_transform_resize_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_transform_recursion_invoker (GimpProcedure      *procedure,
-                                         Gimp               *gimp,
-                                         GimpContext        *context,
-                                         GimpProgress       *progress,
-                                         const GValueArray  *args,
-                                         GError            **error)
+                                         Gimp                  *gimp,
+                                         GimpContext           *context,
+                                         GimpProgress          *progress,
+                                         const GimpValueArray  *args,
+                                         GError               **error)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gint32 transform_recursion = 0;
 
   g_object_get (context,
@@ -1452,23 +1454,23 @@ context_get_transform_recursion_invoker (GimpProcedure      *procedure,
                 NULL);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_int (&return_vals->values[1], transform_recursion);
+  g_value_set_int (gimp_value_array_index (return_vals, 1), transform_recursion);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_transform_recursion_invoker (GimpProcedure      *procedure,
-                                         Gimp               *gimp,
-                                         GimpContext        *context,
-                                         GimpProgress       *progress,
-                                         const GValueArray  *args,
-                                         GError            **error)
+                                         Gimp                  *gimp,
+                                         GimpContext           *context,
+                                         GimpProgress          *progress,
+                                         const GimpValueArray  *args,
+                                         GError               **error)
 {
   gboolean success = TRUE;
   gint32 transform_recursion;
 
-  transform_recursion = g_value_get_int (&args->values[0]);
+  transform_recursion = g_value_get_int (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -1481,16 +1483,16 @@ context_set_transform_recursion_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_ink_size_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GValueArray  *args,
-                              GError            **error)
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gdouble size = 0.0;
 
   GimpPaintOptions *options =
@@ -1508,23 +1510,23 @@ context_get_ink_size_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (&return_vals->values[1], size);
+    g_value_set_double (gimp_value_array_index (return_vals, 1), size);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_ink_size_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GValueArray  *args,
-                              GError            **error)
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
 {
   gboolean success = TRUE;
   gdouble size;
 
-  size = g_value_get_double (&args->values[0]);
+  size = g_value_get_double (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -1544,16 +1546,16 @@ context_set_ink_size_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_ink_angle_invoker (GimpProcedure      *procedure,
-                               Gimp               *gimp,
-                               GimpContext        *context,
-                               GimpProgress       *progress,
-                               const GValueArray  *args,
-                               GError            **error)
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gdouble angle = 0.0;
 
   GimpPaintOptions *options =
@@ -1571,23 +1573,23 @@ context_get_ink_angle_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (&return_vals->values[1], angle);
+    g_value_set_double (gimp_value_array_index (return_vals, 1), angle);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_ink_angle_invoker (GimpProcedure      *procedure,
-                               Gimp               *gimp,
-                               GimpContext        *context,
-                               GimpProgress       *progress,
-                               const GValueArray  *args,
-                               GError            **error)
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
 {
   gboolean success = TRUE;
   gdouble angle;
 
-  angle = g_value_get_double (&args->values[0]);
+  angle = g_value_get_double (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -1607,16 +1609,16 @@ context_set_ink_angle_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_ink_size_sensitivity_invoker (GimpProcedure      *procedure,
-                                          Gimp               *gimp,
-                                          GimpContext        *context,
-                                          GimpProgress       *progress,
-                                          const GValueArray  *args,
-                                          GError            **error)
+                                          Gimp                  *gimp,
+                                          GimpContext           *context,
+                                          GimpProgress          *progress,
+                                          const GimpValueArray  *args,
+                                          GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gdouble size = 0.0;
 
   GimpPaintOptions *options =
@@ -1634,23 +1636,23 @@ context_get_ink_size_sensitivity_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (&return_vals->values[1], size);
+    g_value_set_double (gimp_value_array_index (return_vals, 1), size);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_ink_size_sensitivity_invoker (GimpProcedure      *procedure,
-                                          Gimp               *gimp,
-                                          GimpContext        *context,
-                                          GimpProgress       *progress,
-                                          const GValueArray  *args,
-                                          GError            **error)
+                                          Gimp                  *gimp,
+                                          GimpContext           *context,
+                                          GimpProgress          *progress,
+                                          const GimpValueArray  *args,
+                                          GError               **error)
 {
   gboolean success = TRUE;
   gdouble size;
 
-  size = g_value_get_double (&args->values[0]);
+  size = g_value_get_double (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -1670,16 +1672,16 @@ context_set_ink_size_sensitivity_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_ink_tilt_sensitivity_invoker (GimpProcedure      *procedure,
-                                          Gimp               *gimp,
-                                          GimpContext        *context,
-                                          GimpProgress       *progress,
-                                          const GValueArray  *args,
-                                          GError            **error)
+                                          Gimp                  *gimp,
+                                          GimpContext           *context,
+                                          GimpProgress          *progress,
+                                          const GimpValueArray  *args,
+                                          GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gdouble tilt = 0.0;
 
   GimpPaintOptions *options =
@@ -1697,23 +1699,23 @@ context_get_ink_tilt_sensitivity_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (&return_vals->values[1], tilt);
+    g_value_set_double (gimp_value_array_index (return_vals, 1), tilt);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_ink_tilt_sensitivity_invoker (GimpProcedure      *procedure,
-                                          Gimp               *gimp,
-                                          GimpContext        *context,
-                                          GimpProgress       *progress,
-                                          const GValueArray  *args,
-                                          GError            **error)
+                                          Gimp                  *gimp,
+                                          GimpContext           *context,
+                                          GimpProgress          *progress,
+                                          const GimpValueArray  *args,
+                                          GError               **error)
 {
   gboolean success = TRUE;
   gdouble tilt;
 
-  tilt = g_value_get_double (&args->values[0]);
+  tilt = g_value_get_double (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -1733,16 +1735,16 @@ context_set_ink_tilt_sensitivity_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_ink_speed_sensitivity_invoker (GimpProcedure      *procedure,
-                                           Gimp               *gimp,
-                                           GimpContext        *context,
-                                           GimpProgress       *progress,
-                                           const GValueArray  *args,
-                                           GError            **error)
+                                           Gimp                  *gimp,
+                                           GimpContext           *context,
+                                           GimpProgress          *progress,
+                                           const GimpValueArray  *args,
+                                           GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gdouble speed = 0.0;
 
   GimpPaintOptions *options =
@@ -1760,23 +1762,23 @@ context_get_ink_speed_sensitivity_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (&return_vals->values[1], speed);
+    g_value_set_double (gimp_value_array_index (return_vals, 1), speed);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_ink_speed_sensitivity_invoker (GimpProcedure      *procedure,
-                                           Gimp               *gimp,
-                                           GimpContext        *context,
-                                           GimpProgress       *progress,
-                                           const GValueArray  *args,
-                                           GError            **error)
+                                           Gimp                  *gimp,
+                                           GimpContext           *context,
+                                           GimpProgress          *progress,
+                                           const GimpValueArray  *args,
+                                           GError               **error)
 {
   gboolean success = TRUE;
   gdouble speed;
 
-  speed = g_value_get_double (&args->values[0]);
+  speed = g_value_get_double (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -1796,16 +1798,16 @@ context_set_ink_speed_sensitivity_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_ink_blob_type_invoker (GimpProcedure      *procedure,
-                                   Gimp               *gimp,
-                                   GimpContext        *context,
-                                   GimpProgress       *progress,
-                                   const GValueArray  *args,
-                                   GError            **error)
+                                   Gimp                  *gimp,
+                                   GimpContext           *context,
+                                   GimpProgress          *progress,
+                                   const GimpValueArray  *args,
+                                   GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gint32 type = 0;
 
   GimpPaintOptions *options =
@@ -1823,23 +1825,23 @@ context_get_ink_blob_type_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_enum (&return_vals->values[1], type);
+    g_value_set_enum (gimp_value_array_index (return_vals, 1), type);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_ink_blob_type_invoker (GimpProcedure      *procedure,
-                                   Gimp               *gimp,
-                                   GimpContext        *context,
-                                   GimpProgress       *progress,
-                                   const GValueArray  *args,
-                                   GError            **error)
+                                   Gimp                  *gimp,
+                                   GimpContext           *context,
+                                   GimpProgress          *progress,
+                                   const GimpValueArray  *args,
+                                   GError               **error)
 {
   gboolean success = TRUE;
   gint32 type;
 
-  type = g_value_get_enum (&args->values[0]);
+  type = g_value_get_enum (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -1859,16 +1861,16 @@ context_set_ink_blob_type_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_ink_blob_aspect_ratio_invoker (GimpProcedure      *procedure,
-                                           Gimp               *gimp,
-                                           GimpContext        *context,
-                                           GimpProgress       *progress,
-                                           const GValueArray  *args,
-                                           GError            **error)
+                                           Gimp                  *gimp,
+                                           GimpContext           *context,
+                                           GimpProgress          *progress,
+                                           const GimpValueArray  *args,
+                                           GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gdouble aspect = 0.0;
 
   GimpPaintOptions *options =
@@ -1886,23 +1888,23 @@ context_get_ink_blob_aspect_ratio_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (&return_vals->values[1], aspect);
+    g_value_set_double (gimp_value_array_index (return_vals, 1), aspect);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_ink_blob_aspect_ratio_invoker (GimpProcedure      *procedure,
-                                           Gimp               *gimp,
-                                           GimpContext        *context,
-                                           GimpProgress       *progress,
-                                           const GValueArray  *args,
-                                           GError            **error)
+                                           Gimp                  *gimp,
+                                           GimpContext           *context,
+                                           GimpProgress          *progress,
+                                           const GimpValueArray  *args,
+                                           GError               **error)
 {
   gboolean success = TRUE;
   gdouble aspect;
 
-  aspect = g_value_get_double (&args->values[0]);
+  aspect = g_value_get_double (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -1922,16 +1924,16 @@ context_set_ink_blob_aspect_ratio_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 context_get_ink_blob_angle_invoker (GimpProcedure      *procedure,
-                                    Gimp               *gimp,
-                                    GimpContext        *context,
-                                    GimpProgress       *progress,
-                                    const GValueArray  *args,
-                                    GError            **error)
+                                    Gimp                  *gimp,
+                                    GimpContext           *context,
+                                    GimpProgress          *progress,
+                                    const GimpValueArray  *args,
+                                    GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   gdouble angle = 0.0;
 
   GimpPaintOptions *options =
@@ -1952,23 +1954,23 @@ context_get_ink_blob_angle_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (&return_vals->values[1], angle);
+    g_value_set_double (gimp_value_array_index (return_vals, 1), angle);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 context_set_ink_blob_angle_invoker (GimpProcedure      *procedure,
-                                    Gimp               *gimp,
-                                    GimpContext        *context,
-                                    GimpProgress       *progress,
-                                    const GValueArray  *args,
-                                    GError            **error)
+                                    Gimp                  *gimp,
+                                    GimpContext           *context,
+                                    GimpProgress          *progress,
+                                    const GimpValueArray  *args,
+                                    GError               **error)
 {
   gboolean success = TRUE;
   gdouble angle;
 
-  angle = g_value_get_double (&args->values[0]);
+  angle = g_value_get_double (gimp_value_array_index (args, 0));
 
   if (success)
     {

@@ -53,38 +53,38 @@ struct _GimpPDBClass
 };
 
 
-GType           gimp_pdb_get_type                       (void) G_GNUC_CONST;
+GType            gimp_pdb_get_type                       (void) G_GNUC_CONST;
 
-GimpPDB       * gimp_pdb_new                            (Gimp          *gimp);
+GimpPDB        * gimp_pdb_new                            (Gimp           *gimp);
 
-void            gimp_pdb_register_procedure             (GimpPDB       *pdb,
-                                                         GimpProcedure *procedure);
-void            gimp_pdb_unregister_procedure           (GimpPDB       *pdb,
-                                                         GimpProcedure *procedure);
+void             gimp_pdb_register_procedure             (GimpPDB        *pdb,
+                                                          GimpProcedure  *procedure);
+void             gimp_pdb_unregister_procedure           (GimpPDB        *pdb,
+                                                          GimpProcedure  *procedure);
 
-GimpProcedure * gimp_pdb_lookup_procedure               (GimpPDB       *pdb,
-                                                         const gchar   *name);
+GimpProcedure  * gimp_pdb_lookup_procedure               (GimpPDB        *pdb,
+                                                          const gchar    *name);
 
-void            gimp_pdb_register_compat_proc_name      (GimpPDB       *pdb,
-                                                         const gchar   *old_name,
-                                                         const gchar   *new_name);
-const gchar   * gimp_pdb_lookup_compat_proc_name        (GimpPDB       *pdb,
-                                                         const gchar   *old_name);
+void             gimp_pdb_register_compat_proc_name      (GimpPDB        *pdb,
+                                                          const gchar    *old_name,
+                                                          const gchar    *new_name);
+const gchar    * gimp_pdb_lookup_compat_proc_name        (GimpPDB        *pdb,
+                                                          const gchar    *old_name);
 
-GValueArray   * gimp_pdb_execute_procedure_by_name_args (GimpPDB       *pdb,
-                                                         GimpContext   *context,
-                                                         GimpProgress  *progress,
-                                                         GError       **error,
-                                                         const gchar   *name,
-                                                         GValueArray   *args);
-GValueArray   * gimp_pdb_execute_procedure_by_name      (GimpPDB       *pdb,
-                                                         GimpContext   *context,
-                                                         GimpProgress  *progress,
-                                                         GError       **error,
-                                                         const gchar   *name,
-                                                         ...);
+GimpValueArray * gimp_pdb_execute_procedure_by_name_args (GimpPDB        *pdb,
+                                                          GimpContext    *context,
+                                                          GimpProgress   *progress,
+                                                          GError        **error,
+                                                          const gchar    *name,
+                                                          GimpValueArray *args);
+GimpValueArray * gimp_pdb_execute_procedure_by_name      (GimpPDB        *pdb,
+                                                          GimpContext    *context,
+                                                          GimpProgress   *progress,
+                                                          GError        **error,
+                                                          const gchar    *name,
+                                                          ...);
 
-GList         * gimp_pdb_get_deprecated_procedures      (GimpPDB       *pdb);
+GList          * gimp_pdb_get_deprecated_procedures      (GimpPDB        *pdb);
 
 
 #endif  /*  __GIMP_PDB_H__  */

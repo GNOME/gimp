@@ -23,6 +23,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -53,30 +54,30 @@ enum
 };
 
 
-static void          gimp_brush_select_constructed  (GObject         *object);
-static void          gimp_brush_select_set_property (GObject         *object,
-                                                     guint            property_id,
-                                                     const GValue    *value,
-                                                     GParamSpec      *pspec);
+static void             gimp_brush_select_constructed  (GObject         *object);
+static void             gimp_brush_select_set_property (GObject         *object,
+                                                        guint            property_id,
+                                                        const GValue    *value,
+                                                        GParamSpec      *pspec);
 
-static GValueArray * gimp_brush_select_run_callback (GimpPdbDialog   *dialog,
-                                                     GimpObject      *object,
-                                                     gboolean         closing,
-                                                     GError         **error);
+static GimpValueArray * gimp_brush_select_run_callback (GimpPdbDialog   *dialog,
+                                                        GimpObject      *object,
+                                                        gboolean         closing,
+                                                        GError         **error);
 
-static void       gimp_brush_select_opacity_changed (GimpContext     *context,
-                                                     gdouble          opacity,
-                                                     GimpBrushSelect *select);
-static void       gimp_brush_select_mode_changed    (GimpContext     *context,
-                                                     GimpLayerModeEffects  paint_mode,
-                                                     GimpBrushSelect *select);
+static void          gimp_brush_select_opacity_changed (GimpContext     *context,
+                                                        gdouble          opacity,
+                                                        GimpBrushSelect *select);
+static void          gimp_brush_select_mode_changed    (GimpContext     *context,
+                                                        GimpLayerModeEffects  paint_mode,
+                                                        GimpBrushSelect *select);
 
-static void       gimp_brush_select_opacity_update  (GtkAdjustment   *adj,
-                                                     GimpBrushSelect *select);
-static void       gimp_brush_select_mode_update     (GtkWidget       *widget,
-                                                     GimpBrushSelect *select);
-static void       gimp_brush_select_spacing_update  (GtkAdjustment   *adj,
-                                                     GimpBrushSelect *select);
+static void          gimp_brush_select_opacity_update  (GtkAdjustment   *adj,
+                                                        GimpBrushSelect *select);
+static void          gimp_brush_select_mode_update     (GtkWidget       *widget,
+                                                        GimpBrushSelect *select);
+static void          gimp_brush_select_spacing_update  (GtkAdjustment   *adj,
+                                                        GimpBrushSelect *select);
 
 
 G_DEFINE_TYPE (GimpBrushSelect, gimp_brush_select, GIMP_TYPE_PDB_DIALOG)
@@ -252,15 +253,15 @@ gimp_brush_select_set_property (GObject      *object,
     }
 }
 
-static GValueArray *
+static GimpValueArray *
 gimp_brush_select_run_callback (GimpPdbDialog  *dialog,
                                 GimpObject     *object,
                                 gboolean        closing,
                                 GError        **error)
 {
-  GimpBrush   *brush = GIMP_BRUSH (object);
-  GimpArray   *array;
-  GValueArray *return_vals;
+  GimpBrush      *brush = GIMP_BRUSH (object);
+  GimpArray      *array;
+  GimpValueArray *return_vals;
 
   array = gimp_array_new (gimp_temp_buf_get_data (brush->mask),
                           gimp_temp_buf_get_data_size (brush->mask),

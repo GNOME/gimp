@@ -23,6 +23,8 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb-types.h"
 
 #include "core/gimp.h"
@@ -36,20 +38,20 @@
 #include "internal-procs.h"
 
 
-static GValueArray *
+static GimpValueArray *
 help_invoker (GimpProcedure      *procedure,
-              Gimp               *gimp,
-              GimpContext        *context,
-              GimpProgress       *progress,
-              const GValueArray  *args,
-              GError            **error)
+              Gimp                  *gimp,
+              GimpContext           *context,
+              GimpProgress          *progress,
+              const GimpValueArray  *args,
+              GError               **error)
 {
   gboolean success = TRUE;
   const gchar *help_domain;
   const gchar *help_id;
 
-  help_domain = g_value_get_string (&args->values[0]);
-  help_id = g_value_get_string (&args->values[1]);
+  help_domain = g_value_get_string (gimp_value_array_index (args, 0));
+  help_id = g_value_get_string (gimp_value_array_index (args, 1));
 
   if (success)
     {

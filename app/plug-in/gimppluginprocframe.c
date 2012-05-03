@@ -23,6 +23,8 @@
 
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "plug-in-types.h"
 
 #include "core/gimpprogress.h"
@@ -119,7 +121,7 @@ gimp_plug_in_proc_frame_dispose (GimpPlugInProcFrame *proc_frame,
 
   if (proc_frame->return_vals)
     {
-      g_value_array_free (proc_frame->return_vals);
+      gimp_value_array_unref (proc_frame->return_vals);
       proc_frame->return_vals = NULL;
     }
 
@@ -165,16 +167,16 @@ gimp_plug_in_proc_frame_unref (GimpPlugInProcFrame *proc_frame,
     }
 }
 
-GValueArray *
+GimpValueArray *
 gimp_plug_in_proc_frame_get_return_values (GimpPlugInProcFrame *proc_frame)
 {
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
 
   g_return_val_if_fail (proc_frame != NULL, NULL);
 
   if (proc_frame->return_vals)
     {
-      if (proc_frame->return_vals->n_values >=
+      if (gimp_value_array_length (proc_frame->return_vals) >=
           proc_frame->procedure->num_values + 1)
         {
           return_vals = proc_frame->return_vals;
@@ -186,14 +188,16 @@ gimp_plug_in_proc_frame_get_return_values (GimpPlugInProcFrame *proc_frame)
                                                           TRUE, NULL);
 
           /* Copy all of the arguments we can. */
-          memcpy (return_vals->values, proc_frame->return_vals->values,
-                  sizeof (GValue) * proc_frame->return_vals->n_values);
+          memcpy (gimp_value_array_index (return_vals, 0),
+                  gimp_value_array_index (proc_frame->return_vals, 0),
+                  sizeof (GValue) *
+                  gimp_value_array_length (proc_frame->return_vals));
 
           /* Free the old arguments. */
-          g_free (proc_frame->return_vals->values);
-          proc_frame->return_vals->values = NULL;
-          proc_frame->return_vals->n_values = 0;
-          g_value_array_free (proc_frame->return_vals);
+          memset (gimp_value_array_index (proc_frame->return_vals, 0), 0,
+                  sizeof (GValue) *
+                  gimp_value_array_length (proc_frame->return_vals));
+          gimp_value_array_unref (proc_frame->return_vals);
         }
 
       /* We have consumed any saved values, so clear them. */

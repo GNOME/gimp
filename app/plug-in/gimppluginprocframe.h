@@ -31,7 +31,7 @@ struct _GimpPlugInProcFrame
   GimpProcedure       *procedure;
   GMainLoop           *main_loop;
 
-  GValueArray         *return_vals;
+  GimpValueArray      *return_vals;
 
   GimpProgress        *progress;
   gboolean             progress_created;
@@ -60,7 +60,7 @@ GimpPlugInProcFrame * gimp_plug_in_proc_frame_ref     (GimpPlugInProcFrame *proc
 void                  gimp_plug_in_proc_frame_unref   (GimpPlugInProcFrame *proc_frame,
                                                        GimpPlugIn          *plug_in);
 
-GValueArray         * gimp_plug_in_proc_frame_get_return_values
+GimpValueArray      * gimp_plug_in_proc_frame_get_return_values
                                                       (GimpPlugInProcFrame *proc_frame);
 
 

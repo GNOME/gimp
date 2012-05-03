@@ -28,6 +28,8 @@
 
 #include "libgimpcolor/gimpcolor.h"
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb-types.h"
 
 #include "core/gimp.h"
@@ -42,20 +44,20 @@
 #include "internal-procs.h"
 
 
-static GValueArray *
+static GimpValueArray *
 palette_new_invoker (GimpProcedure      *procedure,
-                     Gimp               *gimp,
-                     GimpContext        *context,
-                     GimpProgress       *progress,
-                     const GValueArray  *args,
-                     GError            **error)
+                     Gimp                  *gimp,
+                     GimpContext           *context,
+                     GimpProgress          *progress,
+                     const GimpValueArray  *args,
+                     GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gchar *actual_name = NULL;
 
-  name = g_value_get_string (&args->values[0]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -72,25 +74,25 @@ palette_new_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (&return_vals->values[1], actual_name);
+    g_value_take_string (gimp_value_array_index (return_vals, 1), actual_name);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 palette_duplicate_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GValueArray  *args,
-                           GError            **error)
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gchar *copy_name = NULL;
 
-  name = g_value_get_string (&args->values[0]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -115,27 +117,27 @@ palette_duplicate_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (&return_vals->values[1], copy_name);
+    g_value_take_string (gimp_value_array_index (return_vals, 1), copy_name);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 palette_rename_invoker (GimpProcedure      *procedure,
-                        Gimp               *gimp,
-                        GimpContext        *context,
-                        GimpProgress       *progress,
-                        const GValueArray  *args,
-                        GError            **error)
+                        Gimp                  *gimp,
+                        GimpContext           *context,
+                        GimpProgress          *progress,
+                        const GimpValueArray  *args,
+                        GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   const gchar *new_name;
   gchar *actual_name = NULL;
 
-  name = g_value_get_string (&args->values[0]);
-  new_name = g_value_get_string (&args->values[1]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  new_name = g_value_get_string (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -154,23 +156,23 @@ palette_rename_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (&return_vals->values[1], actual_name);
+    g_value_take_string (gimp_value_array_index (return_vals, 1), actual_name);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 palette_delete_invoker (GimpProcedure      *procedure,
-                        Gimp               *gimp,
-                        GimpContext        *context,
-                        GimpProgress       *progress,
-                        const GValueArray  *args,
-                        GError            **error)
+                        Gimp                  *gimp,
+                        GimpContext           *context,
+                        GimpProgress          *progress,
+                        const GimpValueArray  *args,
+                        GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (&args->values[0]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -188,20 +190,20 @@ palette_delete_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 palette_is_editable_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GValueArray  *args,
-                             GError            **error)
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gboolean editable = FALSE;
 
-  name = g_value_get_string (&args->values[0]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -217,25 +219,25 @@ palette_is_editable_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_boolean (&return_vals->values[1], editable);
+    g_value_set_boolean (gimp_value_array_index (return_vals, 1), editable);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 palette_get_info_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GValueArray  *args,
-                          GError            **error)
+                          Gimp                  *gimp,
+                          GimpContext           *context,
+                          GimpProgress          *progress,
+                          const GimpValueArray  *args,
+                          GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gint32 num_colors = 0;
 
-  name = g_value_get_string (&args->values[0]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -251,26 +253,26 @@ palette_get_info_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_int (&return_vals->values[1], num_colors);
+    g_value_set_int (gimp_value_array_index (return_vals, 1), num_colors);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 palette_get_colors_invoker (GimpProcedure      *procedure,
-                            Gimp               *gimp,
-                            GimpContext        *context,
-                            GimpProgress       *progress,
-                            const GValueArray  *args,
-                            GError            **error)
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gint32 num_colors = 0;
   GimpRGB *colors = NULL;
 
-  name = g_value_get_string (&args->values[0]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -300,27 +302,27 @@ palette_get_colors_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      g_value_set_int (&return_vals->values[1], num_colors);
-      gimp_value_take_colorarray (&return_vals->values[2], colors, num_colors);
+      g_value_set_int (gimp_value_array_index (return_vals, 1), num_colors);
+      gimp_value_take_colorarray (gimp_value_array_index (return_vals, 2), colors, num_colors);
     }
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 palette_get_columns_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GValueArray  *args,
-                             GError            **error)
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gint32 num_columns = 0;
 
-  name = g_value_get_string (&args->values[0]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -336,25 +338,25 @@ palette_get_columns_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_int (&return_vals->values[1], num_columns);
+    g_value_set_int (gimp_value_array_index (return_vals, 1), num_columns);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 palette_set_columns_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GValueArray  *args,
-                             GError            **error)
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
   gint32 columns;
 
-  name = g_value_get_string (&args->values[0]);
-  columns = g_value_get_int (&args->values[1]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  columns = g_value_get_int (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -370,24 +372,24 @@ palette_set_columns_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 palette_add_entry_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GValueArray  *args,
-                           GError            **error)
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   const gchar *entry_name;
   GimpRGB color;
   gint32 entry_num = 0;
 
-  name = g_value_get_string (&args->values[0]);
-  entry_name = g_value_get_string (&args->values[1]);
-  gimp_value_get_rgb (&args->values[2], &color);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  entry_name = g_value_get_string (gimp_value_array_index (args, 1));
+  gimp_value_get_rgb (gimp_value_array_index (args, 2), &color);
 
   if (success)
     {
@@ -408,25 +410,25 @@ palette_add_entry_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_int (&return_vals->values[1], entry_num);
+    g_value_set_int (gimp_value_array_index (return_vals, 1), entry_num);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 palette_delete_entry_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GValueArray  *args,
-                              GError            **error)
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
   gint32 entry_num;
 
-  name = g_value_get_string (&args->values[0]);
-  entry_num = g_value_get_int (&args->values[1]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  entry_num = g_value_get_int (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -449,22 +451,22 @@ palette_delete_entry_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 palette_entry_get_color_invoker (GimpProcedure      *procedure,
-                                 Gimp               *gimp,
-                                 GimpContext        *context,
-                                 GimpProgress       *progress,
-                                 const GValueArray  *args,
-                                 GError            **error)
+                                 Gimp                  *gimp,
+                                 GimpContext           *context,
+                                 GimpProgress          *progress,
+                                 const GimpValueArray  *args,
+                                 GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gint32 entry_num;
   GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
 
-  name = g_value_get_string (&args->values[0]);
-  entry_num = g_value_get_int (&args->values[1]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  entry_num = g_value_get_int (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -487,27 +489,27 @@ palette_entry_get_color_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_rgb (&return_vals->values[1], &color);
+    gimp_value_set_rgb (gimp_value_array_index (return_vals, 1), &color);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 palette_entry_set_color_invoker (GimpProcedure      *procedure,
-                                 Gimp               *gimp,
-                                 GimpContext        *context,
-                                 GimpProgress       *progress,
-                                 const GValueArray  *args,
-                                 GError            **error)
+                                 Gimp                  *gimp,
+                                 GimpContext           *context,
+                                 GimpProgress          *progress,
+                                 const GimpValueArray  *args,
+                                 GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
   gint32 entry_num;
   GimpRGB color;
 
-  name = g_value_get_string (&args->values[0]);
-  entry_num = g_value_get_int (&args->values[1]);
-  gimp_value_get_rgb (&args->values[2], &color);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  entry_num = g_value_get_int (gimp_value_array_index (args, 1));
+  gimp_value_get_rgb (gimp_value_array_index (args, 2), &color);
 
   if (success)
     {
@@ -523,22 +525,22 @@ palette_entry_set_color_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 palette_entry_get_name_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GValueArray  *args,
-                                GError            **error)
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
 {
   gboolean success = TRUE;
-  GValueArray *return_vals;
+  GimpValueArray *return_vals;
   const gchar *name;
   gint32 entry_num;
   gchar *entry_name = NULL;
 
-  name = g_value_get_string (&args->values[0]);
-  entry_num = g_value_get_int (&args->values[1]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  entry_num = g_value_get_int (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -561,27 +563,27 @@ palette_entry_get_name_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (&return_vals->values[1], entry_name);
+    g_value_take_string (gimp_value_array_index (return_vals, 1), entry_name);
 
   return return_vals;
 }
 
-static GValueArray *
+static GimpValueArray *
 palette_entry_set_name_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GValueArray  *args,
-                                GError            **error)
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
   gint32 entry_num;
   const gchar *entry_name;
 
-  name = g_value_get_string (&args->values[0]);
-  entry_num = g_value_get_int (&args->values[1]);
-  entry_name = g_value_get_string (&args->values[2]);
+  name = g_value_get_string (gimp_value_array_index (args, 0));
+  entry_num = g_value_get_int (gimp_value_array_index (args, 1));
+  entry_name = g_value_get_string (gimp_value_array_index (args, 2));
 
   if (success)
     {

@@ -23,6 +23,8 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb-types.h"
 
 #include "core/gimpdrawable.h"
@@ -40,18 +42,18 @@
 #include "gimp-intl.h"
 
 
-static GValueArray *
+static GimpValueArray *
 floating_sel_remove_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GValueArray  *args,
-                             GError            **error)
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
 
-  floating_sel = gimp_value_get_layer (&args->values[0], gimp);
+  floating_sel = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
 
   if (success)
     {
@@ -74,18 +76,18 @@ floating_sel_remove_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 floating_sel_anchor_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GValueArray  *args,
-                             GError            **error)
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
 
-  floating_sel = gimp_value_get_layer (&args->values[0], gimp);
+  floating_sel = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
 
   if (success)
     {
@@ -107,18 +109,18 @@ floating_sel_anchor_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 floating_sel_to_layer_invoker (GimpProcedure      *procedure,
-                               Gimp               *gimp,
-                               GimpContext        *context,
-                               GimpProgress       *progress,
-                               const GValueArray  *args,
-                               GError            **error)
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
 
-  floating_sel = gimp_value_get_layer (&args->values[0], gimp);
+  floating_sel = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
 
   if (success)
     {
@@ -140,20 +142,20 @@ floating_sel_to_layer_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 floating_sel_attach_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GValueArray  *args,
-                             GError            **error)
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
   GimpDrawable *drawable;
 
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-  drawable = gimp_value_get_drawable (&args->values[1], gimp);
+  layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 1), gimp);
 
   if (success)
     {
@@ -168,13 +170,13 @@ floating_sel_attach_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 floating_sel_rigor_invoker (GimpProcedure      *procedure,
-                            Gimp               *gimp,
-                            GimpContext        *context,
-                            GimpProgress       *progress,
-                            const GValueArray  *args,
-                            GError            **error)
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
 {
   gboolean success = TRUE;
   if (success)
@@ -184,13 +186,13 @@ floating_sel_rigor_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 floating_sel_relax_invoker (GimpProcedure      *procedure,
-                            Gimp               *gimp,
-                            GimpContext        *context,
-                            GimpProgress       *progress,
-                            const GValueArray  *args,
-                            GError            **error)
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
 {
   gboolean success = TRUE;
   if (success)

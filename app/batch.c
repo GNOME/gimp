@@ -22,6 +22,8 @@
 
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core/core-types.h"
 
 #include "base/tile-swap.h"
@@ -144,18 +146,20 @@ batch_run_cmd (Gimp          *gimp,
                GimpRunMode    run_mode,
                const gchar   *cmd)
 {
-  GValueArray *args;
-  GValueArray *return_vals;
-  GError      *error = NULL;
-  gint         i     = 0;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GError         *error = NULL;
+  gint            i     = 0;
 
   args = gimp_procedure_get_arguments (procedure);
 
-  if (procedure->num_args > i && GIMP_IS_PARAM_SPEC_INT32 (procedure->args[i]))
-    g_value_set_int (&args->values[i++], run_mode);
+  if (procedure->num_args > i &&
+      GIMP_IS_PARAM_SPEC_INT32 (procedure->args[i]))
+    g_value_set_int (gimp_value_array_index (args, i++), run_mode);
 
-  if (procedure->num_args > i && GIMP_IS_PARAM_SPEC_STRING (procedure->args[i]))
-    g_value_set_static_string (&args->values[i++], cmd);
+  if (procedure->num_args > i &&
+      GIMP_IS_PARAM_SPEC_STRING (procedure->args[i]))
+    g_value_set_static_string (gimp_value_array_index (args, i++), cmd);
 
   return_vals =
     gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
@@ -163,7 +167,7 @@ batch_run_cmd (Gimp          *gimp,
                                              NULL, &error,
                                              proc_name, args);
 
-  switch (g_value_get_enum (&return_vals->values[0]))
+  switch (g_value_get_enum (gimp_value_array_index (return_vals, 0)))
     {
     case GIMP_PDB_EXECUTION_ERROR:
       if (error)
@@ -194,8 +198,8 @@ batch_run_cmd (Gimp          *gimp,
       break;
     }
 
-  g_value_array_free (return_vals);
-  g_value_array_free (args);
+  gimp_value_array_unref (return_vals);
+  gimp_value_array_unref (args);
 
   if (error)
     g_error_free (error);

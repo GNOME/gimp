@@ -50,18 +50,18 @@ typedef GimpImage * GimpXcfLoaderFunc (Gimp     *gimp,
                                        GError  **error);
 
 
-static GValueArray * xcf_load_invoker (GimpProcedure      *procedure,
-                                       Gimp               *gimp,
-                                       GimpContext        *context,
-                                       GimpProgress       *progress,
-                                       const GValueArray  *args,
-                                       GError            **error);
-static GValueArray * xcf_save_invoker (GimpProcedure      *procedure,
-                                       Gimp               *gimp,
-                                       GimpContext        *context,
-                                       GimpProgress       *progress,
-                                       const GValueArray  *args,
-                                       GError            **error);
+static GimpValueArray * xcf_load_invoker (GimpProcedure         *procedure,
+                                          Gimp                  *gimp,
+                                          GimpContext           *context,
+                                          GimpProgress          *progress,
+                                          const GimpValueArray  *args,
+                                          GError               **error);
+static GimpValueArray * xcf_save_invoker (GimpProcedure         *procedure,
+                                          Gimp                  *gimp,
+                                          GimpContext           *context,
+                                          GimpProgress          *progress,
+                                          const GimpValueArray  *args,
+                                          GError               **error);
 
 
 static GimpXcfLoaderFunc * const xcf_loaders[] =
@@ -229,24 +229,24 @@ xcf_exit (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 }
 
-static GValueArray *
-xcf_load_invoker (GimpProcedure      *procedure,
-                  Gimp               *gimp,
-                  GimpContext        *context,
-                  GimpProgress       *progress,
-                  const GValueArray  *args,
-                  GError            **error)
+static GimpValueArray *
+xcf_load_invoker (GimpProcedure         *procedure,
+                  Gimp                  *gimp,
+                  GimpContext           *context,
+                  GimpProgress          *progress,
+                  const GimpValueArray  *args,
+                  GError               **error)
 {
-  XcfInfo      info;
-  GValueArray *return_vals;
-  GimpImage   *image   = NULL;
-  const gchar *filename;
-  gboolean     success = FALSE;
-  gchar        id[14];
+  XcfInfo         info;
+  GimpValueArray *return_vals;
+  GimpImage      *image   = NULL;
+  const gchar    *filename;
+  gboolean        success = FALSE;
+  gchar           id[14];
 
   gimp_set_busy (gimp);
 
-  filename = g_value_get_string (&args->values[1]);
+  filename = g_value_get_string (gimp_value_array_index (args, 1));
 
   info.fp = g_fopen (filename, "rb");
 
@@ -335,31 +335,31 @@ xcf_load_invoker (GimpProcedure      *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_image (&return_vals->values[1], image);
+    gimp_value_set_image (gimp_value_array_index (return_vals, 1), image);
 
   gimp_unset_busy (gimp);
 
   return return_vals;
 }
 
-static GValueArray *
-xcf_save_invoker (GimpProcedure      *procedure,
-                  Gimp               *gimp,
-                  GimpContext        *context,
-                  GimpProgress       *progress,
-                  const GValueArray  *args,
-                  GError            **error)
+static GimpValueArray *
+xcf_save_invoker (GimpProcedure         *procedure,
+                  Gimp                  *gimp,
+                  GimpContext           *context,
+                  GimpProgress          *progress,
+                  const GimpValueArray  *args,
+                  GError               **error)
 {
-  XcfInfo      info;
-  GValueArray *return_vals;
-  GimpImage   *image;
-  const gchar *filename;
-  gboolean     success = FALSE;
+  XcfInfo         info;
+  GimpValueArray *return_vals;
+  GimpImage      *image;
+  const gchar    *filename;
+  gboolean        success = FALSE;
 
   gimp_set_busy (gimp);
 
-  image    = gimp_value_get_image (&args->values[1], gimp);
-  filename = g_value_get_string (&args->values[3]);
+  image    = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
+  filename = g_value_get_string (gimp_value_array_index (args, 3));
 
   info.fp = g_fopen (filename, "wb");
 

@@ -28,6 +28,8 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb-types.h"
 
 #include "core/gimpdrawable-operation.h"
@@ -43,20 +45,20 @@
 #include "gimp-intl.h"
 
 
-static GValueArray *
+static GimpValueArray *
 plug_in_colortoalpha_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GValueArray  *args,
-                              GError            **error)
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
   GimpRGB color;
 
-  drawable = gimp_value_get_drawable (&args->values[2], gimp);
-  gimp_value_get_rgb (&args->values[3], &color);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  gimp_value_get_rgb (gimp_value_array_index (args, 3), &color);
 
   if (success)
     {
@@ -87,20 +89,20 @@ plug_in_colortoalpha_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 plug_in_pixelize_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GValueArray  *args,
-                          GError            **error)
+                          Gimp                  *gimp,
+                          GimpContext           *context,
+                          GimpProgress          *progress,
+                          const GimpValueArray  *args,
+                          GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gint32 pixel_width;
 
-  drawable = gimp_value_get_drawable (&args->values[2], gimp);
-  pixel_width = g_value_get_int (&args->values[3]);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  pixel_width = g_value_get_int (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -128,22 +130,22 @@ plug_in_pixelize_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 plug_in_pixelize2_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GValueArray  *args,
-                           GError            **error)
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gint32 pixel_width;
   gint32 pixel_height;
 
-  drawable = gimp_value_get_drawable (&args->values[2], gimp);
-  pixel_width = g_value_get_int (&args->values[3]);
-  pixel_height = g_value_get_int (&args->values[4]);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  pixel_width = g_value_get_int (gimp_value_array_index (args, 3));
+  pixel_height = g_value_get_int (gimp_value_array_index (args, 4));
 
   if (success)
     {
@@ -171,13 +173,13 @@ plug_in_pixelize2_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 plug_in_polar_coords_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GValueArray  *args,
-                              GError            **error)
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -187,12 +189,12 @@ plug_in_polar_coords_invoker (GimpProcedure      *procedure,
   gboolean inverse;
   gboolean polrec;
 
-  drawable = gimp_value_get_drawable (&args->values[2], gimp);
-  circle = g_value_get_double (&args->values[3]);
-  angle = g_value_get_double (&args->values[4]);
-  backwards = g_value_get_boolean (&args->values[5]);
-  inverse = g_value_get_boolean (&args->values[6]);
-  polrec = g_value_get_boolean (&args->values[7]);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  circle = g_value_get_double (gimp_value_array_index (args, 3));
+  angle = g_value_get_double (gimp_value_array_index (args, 4));
+  backwards = g_value_get_boolean (gimp_value_array_index (args, 5));
+  inverse = g_value_get_boolean (gimp_value_array_index (args, 6));
+  polrec = g_value_get_boolean (gimp_value_array_index (args, 7));
 
   if (success)
     {
@@ -223,18 +225,18 @@ plug_in_polar_coords_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
+static GimpValueArray *
 plug_in_vinvert_invoker (GimpProcedure      *procedure,
-                         Gimp               *gimp,
-                         GimpContext        *context,
-                         GimpProgress       *progress,
-                         const GValueArray  *args,
-                         GError            **error)
+                         Gimp                  *gimp,
+                         GimpContext           *context,
+                         GimpProgress          *progress,
+                         const GimpValueArray  *args,
+                         GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = gimp_value_get_drawable (&args->values[2], gimp);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
 
   if (success)
     {

@@ -321,11 +321,11 @@ gimp_plug_in_progress_cancel (GimpPlugIn  *plug_in,
 
 /*  private functions  */
 
-static GValueArray *
+static GimpValueArray *
 get_cancel_return_values (GimpProcedure *procedure)
 {
-  GValueArray *return_vals;
-  GError      *error;
+  GimpValueArray *return_vals;
+  GError         *error;
 
   error = g_error_new_literal (GIMP_PDB_ERROR, GIMP_PDB_ERROR_CANCELLED,
                                _("Cancelled"));

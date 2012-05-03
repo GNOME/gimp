@@ -23,6 +23,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -46,16 +47,16 @@ enum
 };
 
 
-static void          gimp_gradient_select_constructed  (GObject        *object);
-static void          gimp_gradient_select_set_property (GObject        *object,
-                                                        guint           property_id,
-                                                        const GValue   *value,
-                                                        GParamSpec     *pspec);
+static void             gimp_gradient_select_constructed  (GObject        *object);
+static void             gimp_gradient_select_set_property (GObject        *object,
+                                                           guint           property_id,
+                                                           const GValue   *value,
+                                                           GParamSpec     *pspec);
 
-static GValueArray * gimp_gradient_select_run_callback (GimpPdbDialog  *dialog,
-                                                        GimpObject     *object,
-                                                        gboolean        closing,
-                                                        GError        **error);
+static GimpValueArray * gimp_gradient_select_run_callback (GimpPdbDialog  *dialog,
+                                                           GimpObject     *object,
+                                                           gboolean        closing,
+                                                           GError        **error);
 
 
 G_DEFINE_TYPE (GimpGradientSelect, gimp_gradient_select,
@@ -135,7 +136,7 @@ gimp_gradient_select_set_property (GObject      *object,
     }
 }
 
-static GValueArray *
+static GimpValueArray *
 gimp_gradient_select_run_callback (GimpPdbDialog  *dialog,
                                    GimpObject     *object,
                                    gboolean        closing,
@@ -148,7 +149,7 @@ gimp_gradient_select_run_callback (GimpPdbDialog  *dialog,
   GimpRGB              color;
   gint                 i;
   GimpArray           *array;
-  GValueArray         *return_vals;
+  GimpValueArray      *return_vals;
 
   i      = GIMP_GRADIENT_SELECT (dialog)->sample_size;
   pos    = 0.0;

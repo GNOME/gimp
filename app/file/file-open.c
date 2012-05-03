@@ -105,9 +105,9 @@ file_open_image (Gimp                *gimp,
                  const gchar        **mime_type,
                  GError             **error)
 {
-  GValueArray *return_vals;
-  gchar       *filename;
-  GimpImage   *image = NULL;
+  GimpValueArray *return_vals;
+  gchar          *filename;
+  GimpImage      *image = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -164,11 +164,12 @@ file_open_image (Gimp                *gimp,
 
   g_free (filename);
 
-  *status = g_value_get_enum (&return_vals->values[0]);
+  *status = g_value_get_enum (gimp_value_array_index (return_vals, 0));
 
   if (*status == GIMP_PDB_SUCCESS)
     {
-      image = gimp_value_get_image (&return_vals->values[1], gimp);
+      image = gimp_value_get_image (gimp_value_array_index (return_vals, 1),
+                                    gimp);
 
       if (image)
         {
@@ -202,7 +203,7 @@ file_open_image (Gimp                *gimp,
                      gimp_plug_in_procedure_get_label (file_proc));
     }
 
-  g_value_array_free (return_vals);
+  gimp_value_array_unref (return_vals);
 
   if (image)
     {
@@ -282,7 +283,7 @@ file_open_thumbnail (Gimp           *gimp,
   if (procedure && procedure->num_args >= 2 && procedure->num_values >= 1)
     {
       GimpPDBStatusType  status;
-      GValueArray       *return_vals;
+      GimpValueArray    *return_vals;
       gchar             *filename;
       GimpImage         *image = NULL;
 
@@ -301,26 +302,28 @@ file_open_thumbnail (Gimp           *gimp,
 
       g_free (filename);
 
-      status = g_value_get_enum (&return_vals->values[0]);
+      status = g_value_get_enum (gimp_value_array_index (return_vals, 0));
 
       if (status == GIMP_PDB_SUCCESS &&
-          GIMP_VALUE_HOLDS_IMAGE_ID (&return_vals->values[1]))
+          GIMP_VALUE_HOLDS_IMAGE_ID (gimp_value_array_index (return_vals, 1)))
         {
-          image = gimp_value_get_image (&return_vals->values[1], gimp);
+          image = gimp_value_get_image (gimp_value_array_index (return_vals, 1),
+                                        gimp);
 
-          if (return_vals->n_values >= 3 &&
-              G_VALUE_HOLDS_INT (&return_vals->values[2]) &&
-              G_VALUE_HOLDS_INT (&return_vals->values[3]))
+          if (gimp_value_array_length (return_vals) >= 3 &&
+              G_VALUE_HOLDS_INT (gimp_value_array_index (return_vals, 2)) &&
+              G_VALUE_HOLDS_INT (gimp_value_array_index (return_vals, 3)))
             {
-              *image_width  = MAX (0,
-                                   g_value_get_int (&return_vals->values[2]));
-              *image_height = MAX (0,
-                                   g_value_get_int (&return_vals->values[3]));
+              *image_width =
+                MAX (0, g_value_get_int (gimp_value_array_index (return_vals, 2)));
 
-              if (return_vals->n_values >= 5 &&
-                  G_VALUE_HOLDS_INT (&return_vals->values[4]))
+              *image_height =
+                MAX (0, g_value_get_int (gimp_value_array_index (return_vals, 3)));
+
+              if (gimp_value_array_length (return_vals) >= 5 &&
+                  G_VALUE_HOLDS_INT (gimp_value_array_index (return_vals, 4)))
                 {
-                  gint value = g_value_get_int (&return_vals->values[4]);
+                  gint value = g_value_get_int (gimp_value_array_index (return_vals, 4));
 
                   switch (value)
                     {
@@ -365,11 +368,11 @@ file_open_thumbnail (Gimp           *gimp,
                     }
                 }
 
-              if (return_vals->n_values >= 6 &&
-                  G_VALUE_HOLDS_INT (&return_vals->values[5]))
+              if (gimp_value_array_length (return_vals) >= 6 &&
+                  G_VALUE_HOLDS_INT (gimp_value_array_index (return_vals, 5)))
                 {
-                  *num_layers = MAX (0,
-                                     g_value_get_int (&return_vals->values[5]));
+                  *num_layers =
+                    MAX (0, g_value_get_int (gimp_value_array_index (return_vals, 5)));
                 }
             }
 
@@ -387,7 +390,7 @@ file_open_thumbnail (Gimp           *gimp,
             }
         }
 
-      g_value_array_free (return_vals);
+      gimp_value_array_unref (return_vals);
 
       return image;
     }

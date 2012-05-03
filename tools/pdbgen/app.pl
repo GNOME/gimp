@@ -112,7 +112,7 @@ sub marshal_inargs {
 	my $var = $_->{name};
 	my $value;
 
-	$value = "&args->values[$argc]";
+	$value = "gimp_value_array_index (args, $argc)";
 	if (!exists $_->{dead}) {
 	    $result .= eval qq/"  $arg->{get_value_func};\n"/;
 	}
@@ -157,7 +157,7 @@ CODE
 
 	    $argc++;
 
-	    $value = "&return_vals->values[$argc]";
+	    $value = "gimp_value_array_index (return_vals, $argc)";
 
 	    if (exists $_->{array}) {
 		my $arrayarg = $_->{array};
@@ -660,13 +660,13 @@ CODE
 	    }
 	}
 
-	$out->{code} .= "\nstatic GValueArray *\n";
+	$out->{code} .= "\nstatic GimpValueArray *\n";
 	$out->{code} .= "${name}_invoker (GimpProcedure      *procedure,\n";
-	$out->{code} .=  ' ' x length($name) . "          Gimp               *gimp,\n";
-	$out->{code} .=  ' ' x length($name) . "          GimpContext        *context,\n";
-	$out->{code} .=  ' ' x length($name) . "          GimpProgress       *progress,\n";
-	$out->{code} .=  ' ' x length($name) . "          const GValueArray  *args,\n";
-	$out->{code} .=  ' ' x length($name) . "          GError            **error)\n{\n";
+	$out->{code} .=  ' ' x length($name) . "          Gimp                  *gimp,\n";
+	$out->{code} .=  ' ' x length($name) . "          GimpContext           *context,\n";
+	$out->{code} .=  ' ' x length($name) . "          GimpProgress          *progress,\n";
+	$out->{code} .=  ' ' x length($name) . "          const GimpValueArray  *args,\n";
+	$out->{code} .=  ' ' x length($name) . "          GError               **error)\n{\n";
 
 	my $code = "";
 
@@ -676,7 +676,7 @@ CODE
 	else {
 	    my $invoker = "";
 	
-	    $invoker .= ' ' x 2 . "GValueArray *return_vals;\n" if scalar @outargs;
+	    $invoker .= ' ' x 2 . "GimpValueArray *return_vals;\n" if scalar @outargs;
 	    $invoker .= &declare_args($proc, $out, 0, qw(inargs));
 	    $invoker .= &declare_args($proc, $out, 1, qw(outargs));
 
@@ -786,6 +786,7 @@ GPL
 
 		if ($sys == 1 && $base == 0) {
 		    $base = 1;
+		    $headers .= "#include \"libgimpbase/gimpbase.h\"\n\n";
 		    $headers .= "#include \"pdb-types.h\"\n\n";
 		}
 	    }
