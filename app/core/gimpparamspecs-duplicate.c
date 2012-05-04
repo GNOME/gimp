@@ -188,6 +188,24 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
                                 pspec->flags |
                                 GIMP_CONFIG_PARAM_SERIALIZE);
     }
+  else if (GIMP_IS_PARAM_SPEC_RGB (pspec))
+    {
+      GValue  value = G_VALUE_INIT;
+      GimpRGB color;
+
+      g_value_init (&value, GIMP_TYPE_RGB);
+      g_param_value_set_default (pspec, &value);
+      gimp_value_get_rgb (&value, &color);
+      g_value_unset (&value);
+
+      return gimp_param_spec_rgb (pspec->name,
+                                  g_param_spec_get_nick (pspec),
+                                  g_param_spec_get_blurb (pspec),
+                                  gimp_param_spec_rgb_has_alpha (pspec),
+                                  &color,
+                                  pspec->flags |
+                                  GIMP_CONFIG_PARAM_SERIALIZE);
+    }
   else if (GEGL_IS_PARAM_SPEC_COLOR (pspec))
     {
       GeglColor *gegl_color;

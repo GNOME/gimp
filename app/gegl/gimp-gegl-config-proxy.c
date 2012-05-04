@@ -278,7 +278,7 @@ gimp_gegl_config_proxy_sync (GimpObject  *proxy,
           g_object_get_property (G_OBJECT (proxy), gimp_pspec->name,
                                  &value);
 
-          if (GIMP_IS_PARAM_SPEC_RGB (gimp_pspec))
+          if (GEGL_IS_PARAM_SPEC_COLOR (gegl_pspec))
             {
               GimpRGB    gimp_color;
               GeglColor *gegl_color;
