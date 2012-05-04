@@ -162,7 +162,6 @@ libexec_PROGRAMS = \
 	rotate \
 	sample-colorize \
 	$(SCREENSHOT) \
-	semi-flatten \
 	sharpen \
 	shift \
 	sinus \
@@ -2230,21 +2229,6 @@ screenshot_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(screenshot_RC)
-
-semi_flatten_SOURCES = \
-	semi-flatten.c
-
-semi_flatten_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(CAIRO_LIBS)		\
-	$(GDK_PIXBUF_LIBS)	\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(semi_flatten_RC)
 
 sharpen_SOURCES = \
 	sharpen.c

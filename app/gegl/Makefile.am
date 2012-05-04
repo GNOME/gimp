@@ -72,6 +72,8 @@ libappgegl_a_sources = \
 	gimpoperationhistogramsink.h		\
 	gimpoperationmaskcomponents.c		\
 	gimpoperationmaskcomponents.h		\
+	gimpoperationsemiflatten.c		\
+	gimpoperationsemiflatten.h		\
 	gimpoperationsetalpha.c			\
 	gimpoperationsetalpha.h			\
 	gimpoperationshapeburst.c		\

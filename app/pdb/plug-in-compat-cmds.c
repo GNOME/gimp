@@ -32,6 +32,7 @@
 
 #include "pdb-types.h"
 
+#include "core/gimpcontext.h"
 #include "core/gimpdrawable-operation.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpparamspecs.h"
@@ -213,6 +214,50 @@ plug_in_polar_coords_invoker (GimpProcedure      *procedure,
 
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Polar Coordinates"),
+                                         node);
+
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_semiflatten_invoker (GimpProcedure      *procedure,
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+          gimp_drawable_has_alpha (drawable))
+        {
+          GeglNode *node;
+          GimpRGB   color;
+
+          gimp_context_get_background (context, &color);
+
+          node =
+            gegl_node_new_child (NULL,
+                                 "operation", "gimp:semi-flatten",
+                                 "color",     &color,
+                                 NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Semi-Flatten"),
                                          node);
 
           g_object_unref (node);
@@ -504,6 +549,42 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                      "Polar to rectangular",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-semiflatten
+   */
+  procedure = gimp_procedure_new (plug_in_semiflatten_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-semiflatten");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-semiflatten",
+                                     "Replace partial transparency with the current background color",
+                                     "This plugin flattens pixels in an RGBA image that aren't completely transparent against the current GIMP background color.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1997",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

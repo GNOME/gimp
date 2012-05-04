@@ -117,7 +117,6 @@
     'rotate' => {},
     'sample-colorize' => { ui => 1 },
     'screenshot' => { ui => 1, optional => 1, libs => 'SCREENSHOT_LIBS', cflags => 'XFIXES_CFLAGS' },
-    'semi-flatten' => {},
     'sharpen' => { ui => 1 },
     'shift' => { ui => 1 },
     'sinus' => { ui => 1 },

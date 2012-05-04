@@ -224,6 +224,57 @@ CODE
     );
 }
 
+sub plug_in_semiflatten {
+    $blurb = 'Replace partial transparency with the current background color';
+
+    $help = <<'HELP';
+This plugin flattens pixels in an RGBA image that aren't completely
+transparent against the current GIMP background color.
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+      gimp_drawable_has_alpha (drawable))
+    {
+      GeglNode *node;
+      GimpRGB   color;
+
+      gimp_context_get_background (context, &color);
+
+      node =
+        gegl_node_new_child (NULL,
+                             "operation", "gimp:semi-flatten",
+                             "color",     &color,
+                             NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Semi-Flatten"),
+                                     node);
+
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_threshold_alpha {
     $blurb = 'Make transparency all-or-nothing';
 
@@ -321,6 +372,7 @@ CODE
 
 @headers = qw("libgimpbase/gimpbase.h"
               "gegl/gimp-gegl-utils.h"
+              "core/gimpcontext.h"
               "core/gimpdrawable.h"
               "core/gimpdrawable-operation.h"
               "gimppdb-utils.h"
@@ -330,6 +382,7 @@ CODE
             plug_in_pixelize
             plug_in_pixelize2
             plug_in_polar_coords
+            plug_in_semiflatten
 	    plug_in_threshold_alpha
             plug_in_vinvert);
 

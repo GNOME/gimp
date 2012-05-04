@@ -69,6 +69,12 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:polar-coordinates",
     NULL /* FIXME GIMP_HELP_FILTER_POLAR_COORDINATES */ },
 
+  { "filters-semi-flatten", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Semi-Flatten..."), NULL,
+    NC_("filters-action", "Replace partial transparency with a color"),
+    "gimp:semi-flatten",
+    NULL /* FIXME GIMP_HELP_FILTER_POLAR_COORDINATES */ },
+
   { "filters-threshold-alpha", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Threshold Alpha..."), NULL,
     NC_("filters-action", "Make transparency all-or-nothing"),

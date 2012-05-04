@@ -40,6 +40,7 @@
 #include "gimpoperationgrow.h"
 #include "gimpoperationhistogramsink.h"
 #include "gimpoperationmaskcomponents.h"
+#include "gimpoperationsemiflatten.h"
 #include "gimpoperationsetalpha.h"
 #include "gimpoperationshapeburst.h"
 #include "gimpoperationshrink.h"
@@ -123,6 +124,7 @@ gimp_gegl_init (Gimp *gimp)
   g_type_class_ref (GIMP_TYPE_OPERATION_GROW);
   g_type_class_ref (GIMP_TYPE_OPERATION_HISTOGRAM_SINK);
   g_type_class_ref (GIMP_TYPE_OPERATION_MASK_COMPONENTS);
+  g_type_class_ref (GIMP_TYPE_OPERATION_SEMI_FLATTEN);
   g_type_class_ref (GIMP_TYPE_OPERATION_SET_ALPHA);
   g_type_class_ref (GIMP_TYPE_OPERATION_SHAPEBURST);
   g_type_class_ref (GIMP_TYPE_OPERATION_SHRINK);

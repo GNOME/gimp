@@ -116,7 +116,6 @@ ripple_RC = ripple.rc.o
 rotate_RC = rotate.rc.o
 sample_colorize_RC = sample-colorize.rc.o
 screenshot_RC = screenshot.rc.o
-semi_flatten_RC = semi-flatten.rc.o
 sharpen_RC = sharpen.rc.o
 shift_RC = shift.rc.o
 sinus_RC = sinus.rc.o

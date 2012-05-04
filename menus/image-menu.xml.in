@@ -431,6 +431,7 @@
           <menuitem action="layers-alpha-add" />
           <menuitem action="layers-alpha-remove" />
           <menuitem action="filters-color-to-alpha" />
+          <menuitem action="filters-semi-flatten" />
           <menuitem action="filters-threshold-alpha" />
         </placeholder>
         <separator />
@@ -627,7 +628,9 @@
         <menu action="plug-in-render-pattern-menu" name="Pattern" />
         <separator />
       </menu>
-      <menu action="plug-in-web-menu" name="Web" />
+      <menu action="plug-in-web-menu" name="Web">
+        <menuitem action="filters-semi-flatten" />
+      </menu>
       <menu action="plug-in-animation-menu" name="Animation" >
         <placeholder name="Animators" />
         <separator />
