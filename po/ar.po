@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-01 01:21+0200\n"
-"PO-Revision-Date: 2012-04-01 01:21+0200\n"
+"POT-Creation-Date: 2012-05-04 18:19+0200\n"
+"PO-Revision-Date: 2012-05-04 18:19+0200\n"
 "Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
 "Language: ar\n"
@@ -5379,7 +5379,6 @@ msgid "Zoom _Out"
 msgstr "ب_عّد"
 
 #: ../app/actions/view-actions.c:264 ../app/actions/view-actions.c:276
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom out"
 msgstr "بعّد"
@@ -5390,7 +5389,6 @@ msgid "Zoom _In"
 msgstr "_قرّب"
 
 #: ../app/actions/view-actions.c:270 ../app/actions/view-actions.c:282
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom in"
 msgstr "قرّب"
@@ -5644,10 +5642,9 @@ msgid "Single-Window Mode"
 msgstr "نمط النافذة الواحدة"
 
 #: ../app/actions/windows-actions.c:125
-#, fuzzy
 msgctxt "windows-action"
 msgid "When enabled GIMP is in a single-window mode."
-msgstr "استخدم جمب في نمط النافذة المفردة."
+msgstr "عند تفعيلها سيعمل جمب في نمط النافذة المفردة."
 
 #: ../app/base/base-enums.c:23
 msgctxt "curve-type"
@@ -6166,7 +6163,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:287
 msgid "Sets the default quick mask color."
-msgstr ""
+msgstr "حدد اللون المبدئي للقناع السريع."
 
 #: ../app/config/gimprc-blurbs.h:290
 msgid ""
@@ -9657,14 +9654,12 @@ msgid "Default Image"
 msgstr "الصورة المبدئية"
 
 #: ../app/dialogs/preferences-dialog.c:2028
-#, fuzzy
 msgid "Set the default Quick Mask color"
-msgstr "حرّر لون القناع السريع"
+msgstr "حدد اللون المبدئي للقناع السريع"
 
 #: ../app/dialogs/preferences-dialog.c:2034
-#, fuzzy
 msgid "Quick Mask color:"
-msgstr "حرّر لون القناع السريع"
+msgstr "لون القناع السريع:"
 
 #: ../app/dialogs/preferences-dialog.c:2044
 msgid "Default Image Grid"
@@ -10515,7 +10510,7 @@ msgstr "تعذّر تعديل بكسلات مجموعات الطبقات."
 #: ../app/display/gimpdisplayshell-dnd.c:457 ../app/tools/gimpblendtool.c:180
 #: ../app/tools/gimpbucketfilltool.c:143 ../app/tools/gimpcroptool.c:325
 #: ../app/tools/gimpimagemaptool.c:286 ../app/tools/gimppainttool.c:266
-#: ../app/tools/gimptransformtool.c:246 ../app/tools/gimptransformtool.c:1062
+#: ../app/tools/gimptransformtool.c:246 ../app/tools/gimptransformtool.c:1066
 msgid "The active layer's pixels are locked."
 msgstr "بكسلات الطبقة النشطة موصدة"
 
@@ -10656,15 +10651,15 @@ msgctxt "cage-mode"
 msgid "Deform the cage to deform the image"
 msgstr "شوّه القفص لتشويه الصورة"
 
-#: ../app/gegl/gimpcurvesconfig.c:385
+#: ../app/gegl/gimpcurvesconfig.c:388
 msgid "not a GIMP Curves file"
 msgstr "ليس ملف منحنيات جمب"
 
-#: ../app/gegl/gimpcurvesconfig.c:400 ../app/gegl/gimplevelsconfig.c:786
+#: ../app/gegl/gimpcurvesconfig.c:403 ../app/gegl/gimplevelsconfig.c:789
 msgid "parse error"
 msgstr "خطأ تحليل"
 
-#: ../app/gegl/gimplevelsconfig.c:739
+#: ../app/gegl/gimplevelsconfig.c:742
 msgid "not a GIMP Levels file"
 msgstr "ليس ملف مستويات جمب"
 
@@ -12861,7 +12856,6 @@ msgid "Zoom Tool: Adjust the zoom level"
 msgstr "أداة التقريب: اضبط مستوى التقريب"
 
 #: ../app/tools/gimpmagnifytool.c:93
-#, fuzzy
 msgid "_Zoom"
 msgstr "_قرّب"
 
@@ -13684,15 +13678,15 @@ msgstr "أبق على نسبة الارتفاع الأصلية"
 msgid "Transforming"
 msgstr "التحويل"
 
-#: ../app/tools/gimptransformtool.c:1061
+#: ../app/tools/gimptransformtool.c:1065
 msgid "There is no layer to transform."
 msgstr "لا يوجد طبقة لتحويلها."
 
-#: ../app/tools/gimptransformtool.c:1074
+#: ../app/tools/gimptransformtool.c:1078
 msgid "There is no path to transform."
 msgstr "لا يوجد مسار لتحويله."
 
-#: ../app/tools/gimptransformtool.c:1075
+#: ../app/tools/gimptransformtool.c:1079
 msgid "The active path's strokes are locked."
 msgstr "بكسلات المسار النشط موصدة."
 
@@ -15134,19 +15128,19 @@ msgstr "_صدّر الإعدادات إلى ملف..."
 msgid "_Manage Settings..."
 msgstr "أدِر الإ_عدادت..."
 
-#: ../app/widgets/gimpsettingsbox.c:625
+#: ../app/widgets/gimpsettingsbox.c:636
 msgid "Add Settings to Favorites"
 msgstr "أضِف الإعدادات للمفضلة"
 
-#: ../app/widgets/gimpsettingsbox.c:628
+#: ../app/widgets/gimpsettingsbox.c:639
 msgid "Enter a name for the settings"
 msgstr "أدخل اسما للإعدادات"
 
-#: ../app/widgets/gimpsettingsbox.c:629
+#: ../app/widgets/gimpsettingsbox.c:640
 msgid "Saved Settings"
 msgstr "الإعدادات المحفوظة"
 
-#: ../app/widgets/gimpsettingsbox.c:670
+#: ../app/widgets/gimpsettingsbox.c:681
 msgid "Manage Saved Settings"
 msgstr "أدِر الإعدادات المحفوظة"
 
