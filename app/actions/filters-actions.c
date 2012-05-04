@@ -134,6 +134,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-gaussian-blur",     writable);
   SET_SENSITIVE ("filters-pixelize",          writable);
   SET_SENSITIVE ("filters-polar-coordinates", writable);
+  SET_SENSITIVE ("filters-semi-flatten",      writable && alpha);
   SET_SENSITIVE ("filters-threshold-alpha",   writable && alpha);
 
 #undef SET_SENSITIVE
