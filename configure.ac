@@ -1154,7 +1154,7 @@ AC_SUBST(Z_LIBS)
 # Check for libbzip2
 ####################
 
-AC_ARG_WITH(gs,  [  --without-bzip2         build without bzip2 support])
+AC_ARG_WITH(bzip2,  [  --without-bzip2         build without bzip2 support])
 
 have_libbzip2=no
 if test "x$with_bzip2" != xno; then
