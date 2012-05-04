@@ -72,18 +72,17 @@ void
 gimp_cairo_draw_toolbox_wilber (GtkWidget *widget,
                                 cairo_t   *cr)
 {
-  GtkStyle     *style;
-  GtkStateType  state;
-  GtkAllocation allocation;
-  gdouble       wilber_width;
-  gdouble       wilber_height;
-  gdouble       factor;
+  GtkStyleContext *context;
+  GtkAllocation    allocation;
+  GdkRGBA          color;
+  gdouble          wilber_width;
+  gdouble          wilber_height;
+  gdouble          factor;
 
   g_return_if_fail (GTK_IS_WIDGET (widget));
   g_return_if_fail (cr != NULL);
 
-  style = gtk_widget_get_style (widget);
-  state = gtk_widget_get_state (widget);
+  context = gtk_widget_get_style_context (widget);
 
   gtk_widget_get_allocation (widget, &allocation);
 
@@ -101,11 +100,11 @@ gimp_cairo_draw_toolbox_wilber (GtkWidget *widget,
                               (allocation.height / factor - wilber_height) / 2.0,
                               factor, 30.0 * G_PI / 180.0);
 
-  cairo_set_source_rgba (cr,
-                         style->fg[state].red   / 65535.0,
-                         style->fg[state].green / 65535.0,
-                         style->fg[state].blue  / 65535.0,
-                         0.10);
+  gtk_style_context_get_color (context, gtk_widget_get_state_flags (widget),
+                               &color);
+  color.alpha = 0.1;
+  gdk_cairo_set_source_rgba (cr, &color);
+
   cairo_fill (cr);
 }
 
@@ -114,21 +113,20 @@ gimp_cairo_draw_drop_wilber (GtkWidget *widget,
                              cairo_t   *cr,
                              gboolean   blink)
 {
-  GtkStyle     *style;
-  GtkStateType  state;
-  GtkAllocation allocation;
-  gdouble       wilber_width;
-  gdouble       wilber_height;
-  gdouble       width;
-  gdouble       height;
-  gdouble       side;
-  gdouble       factor;
+  GtkStyleContext *context;
+  GtkAllocation    allocation;
+  GdkRGBA          color;
+  gdouble          wilber_width;
+  gdouble          wilber_height;
+  gdouble          width;
+  gdouble          height;
+  gdouble          side;
+  gdouble          factor;
 
   g_return_if_fail (GTK_IS_WIDGET (widget));
   g_return_if_fail (cr != NULL);
 
-  style  = gtk_widget_get_style (widget);
-  state  = gtk_widget_get_state (widget);
+  context = gtk_widget_get_style_context (widget);
 
   gtk_widget_get_allocation (widget, &allocation);
 
@@ -157,11 +155,12 @@ gimp_cairo_draw_drop_wilber (GtkWidget *widget,
                               allocation.height / factor - wilber_height * 1.1,
                               factor, 50.0 * G_PI / 180.0);
 
-  cairo_set_source_rgba (cr,
-                         style->fg[state].red   / 65535.0,
-                         style->fg[state].green / 65535.0,
-                         style->fg[state].blue  / 65535.0,
-                         0.15);
+  gtk_style_context_get_color (context, gtk_widget_get_state_flags (widget),
+                               &color);
+  color.alpha = 0.15;
+
+  gdk_cairo_set_source_rgba (cr, &color);
+
   cairo_fill (cr);
 
   if (blink)
@@ -172,7 +171,7 @@ gimp_cairo_draw_drop_wilber (GtkWidget *widget,
                        factor, 50.0 * G_PI / 180.0);
 
       cairo_set_source_rgba (cr,
-                             style->fg[state].red   / 65535.0,
+                             color.red,
                              0,
                              0,
                              1.0);
