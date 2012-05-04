@@ -68,6 +68,12 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "Convert image to or from polar coordinates"),
     "gegl:polar-coordinates",
     NULL /* FIXME GIMP_HELP_FILTER_POLAR_COORDINATES */ },
+
+  { "filters-threshold-alpha", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Threshold Alpha..."), NULL,
+    NC_("filters-action", "Make transparency all-or-nothing"),
+    "gimp:threshold-alpha",
+    NULL /* FIXME GIMP_HELP_FILTER_POLAR_COORDINATES */ },
 };
 
 void
@@ -122,6 +128,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-gaussian-blur",     writable);
   SET_SENSITIVE ("filters-pixelize",          writable);
   SET_SENSITIVE ("filters-polar-coordinates", writable);
+  SET_SENSITIVE ("filters-threshold-alpha",   writable && alpha);
 
 #undef SET_SENSITIVE
 }

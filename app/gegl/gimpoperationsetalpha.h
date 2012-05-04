@@ -23,7 +23,6 @@
 
 
 #include <gegl-plugin.h>
-#include <operation/gegl-operation-point-filter.h>
 
 
 #define GIMP_TYPE_OPERATION_SET_ALPHA            (gimp_operation_set_alpha_get_type ())
@@ -41,7 +40,7 @@ struct _GimpOperationSetAlpha
 {
   GeglOperationPointComposer  parent_instance;
 
-  gdouble                   value;
+  gdouble                     value;
 };
 
 struct _GimpOperationSetAlphaClass

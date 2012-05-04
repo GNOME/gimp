@@ -43,6 +43,7 @@
 #include "gimpoperationsetalpha.h"
 #include "gimpoperationshapeburst.h"
 #include "gimpoperationshrink.h"
+#include "gimpoperationthresholdalpha.h"
 
 #include "gimpoperationbrightnesscontrast.h"
 #include "gimpoperationcolorbalance.h"
@@ -125,6 +126,7 @@ gimp_gegl_init (Gimp *gimp)
   g_type_class_ref (GIMP_TYPE_OPERATION_SET_ALPHA);
   g_type_class_ref (GIMP_TYPE_OPERATION_SHAPEBURST);
   g_type_class_ref (GIMP_TYPE_OPERATION_SHRINK);
+  g_type_class_ref (GIMP_TYPE_OPERATION_THRESHOLD_ALPHA);
 
   g_type_class_ref (GIMP_TYPE_OPERATION_BRIGHTNESS_CONTRAST);
   g_type_class_ref (GIMP_TYPE_OPERATION_COLOR_BALANCE);

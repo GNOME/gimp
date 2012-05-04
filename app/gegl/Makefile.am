@@ -78,6 +78,8 @@ libappgegl_a_sources = \
 	gimpoperationshapeburst.h		\
 	gimpoperationshrink.c			\
 	gimpoperationshrink.h			\
+	gimpoperationthresholdalpha.c		\
+	gimpoperationthresholdalpha.h		\
 	\
 	gimpoperationpointfilter.c		\
 	gimpoperationpointfilter.h		\

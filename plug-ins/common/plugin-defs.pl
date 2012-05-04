@@ -125,7 +125,6 @@
     'softglow' => { ui => 1 },
     'sparkle' => { ui => 1 },
     'sphere-designer' => { ui => 1 },
-    'threshold-alpha' => { ui => 1 },
     'tile' => { ui => 1 },
     'tile-glass' => { ui => 1 },
     'tile-paper' => { ui => 1 },

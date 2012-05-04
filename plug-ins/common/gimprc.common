@@ -124,7 +124,6 @@ smooth_palette_RC = smooth-palette.rc.o
 softglow_RC = softglow.rc.o
 sparkle_RC = sparkle.rc.o
 sphere_designer_RC = sphere-designer.rc.o
-threshold_alpha_RC = threshold-alpha.rc.o
 tile_RC = tile.rc.o
 tile_glass_RC = tile-glass.rc.o
 tile_paper_RC = tile-paper.rc.o

@@ -170,7 +170,6 @@ libexec_PROGRAMS = \
 	softglow \
 	sparkle \
 	sphere-designer \
-	threshold-alpha \
 	tile \
 	tile-glass \
 	tile-paper \
@@ -2365,23 +2364,6 @@ sphere_designer_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(sphere_designer_RC)
-
-threshold_alpha_SOURCES = \
-	threshold-alpha.c
-
-threshold_alpha_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(threshold_alpha_RC)
 
 tile_SOURCES = \
 	tile.c
