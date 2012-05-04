@@ -19,7 +19,7 @@ msgstr ""
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2012-05-03 13:05+0000\n"
 "PO-Revision-Date: 2012-05-04 14:35+0200\n"
-"Last-Translator: Miroslav Šulc <fordfrog@fordfrog.name>\n"
+"Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -9967,7 +9967,7 @@ msgstr "Nastavit výchozí barvu rychlé masky"
 #: ../app/dialogs/preferences-dialog.c:2035
 #| msgid "Edit Quick Mask Color"
 msgid "Quick Mask color:"
-msgstr "Barvu rychlé masky:"
+msgstr "Barva rychlé masky:"
 
 #: ../app/dialogs/preferences-dialog.c:2045
 msgid "Default Image Grid"
