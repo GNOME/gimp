@@ -58,9 +58,9 @@ INCLUDES = \
 	$(GTK_CFLAGS)	\
 	-I$(includedir)
 
-lib_LTLIBRARIES = libgimpwidgets-2.0.la
+lib_LTLIBRARIES = libgimpwidgets-@GIMP_API_VERSION@.la
 
-libgimpwidgets_2_0_la_sources = \
+libgimpwidgets_sources = \
 	gimpbrowser.c			\
 	gimpbrowser.h			\
 	gimpbutton.c			\
@@ -181,17 +181,17 @@ libgimpwidgets_2_0_la_sources = \
 	gimp3migration.c		\
 	gimp3migration.h
 
-libgimpwidgets_2_0_la_built_sources = \
+libgimpwidgets_built_sources = \
 	gimp-wilber-pixbufs.h	\
 	gimpwidgetsenums.c	\
 	gimpwidgetsmarshal.c	\
 	gimpwidgetsmarshal.h
 
-libgimpwidgets_2_0_la_extra_sources = gimpwidgetsmarshal.list
+libgimpwidgets_extra_sources = gimpwidgetsmarshal.list
 
-libgimpwidgets_2_0_la_SOURCES = \
-	$(libgimpwidgets_2_0_la_built_sources)	\
-	$(libgimpwidgets_2_0_la_sources)
+libgimpwidgets_@GIMP_API_VERSION@_la_SOURCES = \
+	$(libgimpwidgets_built_sources)	\
+	$(libgimpwidgets_sources)
 
 libgimpwidgetsinclude_HEADERS = \
 	gimpbrowser.h			\
@@ -253,12 +253,12 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpzoommodel.h			\
 	gimp3migration.h
 
-libgimpwidgets_2_0_la_LDFLAGS = \
+libgimpwidgets_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)\
 	$(no_undefined) 		\
 	$(libgimpwidgets_export_symbols)
 
-libgimpwidgets_2_0_la_LIBADD = \
+libgimpwidgets_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimpcolor)		\
 	$(libgimpconfig)	\
 	$(libgimpbase)		\
@@ -266,7 +266,7 @@ libgimpwidgets_2_0_la_LIBADD = \
 	$(GTK_LIBS)		\
 	$(libm)
 
-libgimpwidgets_2_0_la_DEPENDENCIES = $(gimpwidgets_def)
+libgimpwidgets_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpwidgets_def)
 
 
 ## Wilber icons for the window managaer, compiled in
@@ -285,8 +285,8 @@ WILBER_VARIABLES = \
 
 
 EXTRA_DIST = \
-	gimpwidgets.def				\
-	$(libgimpwidgets_2_0_la_extra_sources)	\
+	gimpwidgets.def			\
+	$(libgimpwidgets_extra_sources)	\
 	$(WILBER_IMAGES)
 
 

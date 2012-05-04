@@ -52,9 +52,9 @@ INCLUDES = \
 EXTRA_DIST = \
 	gimpthumb.def
 
-lib_LTLIBRARIES = libgimpthumb-2.0.la
+lib_LTLIBRARIES = libgimpthumb-@GIMP_API_VERSION@.la
 
-libgimpthumb_2_0_la_SOURCES = \
+libgimpthumb_@GIMP_API_VERSION@_la_SOURCES = \
 	gimpthumb.h		\
 	gimpthumb-enums.c	\
 	gimpthumb-enums.h	\
@@ -74,12 +74,14 @@ libgimpthumbinclude_HEADERS = \
 	gimpthumb-utils.h	\
 	gimpthumbnail.h
 
-libgimpthumb_2_0_la_LDFLAGS = \
+libgimpthumb_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined)				\
 	$(libgimpthumb_export_symbols)
 
-libgimpthumb_2_0_la_LIBADD = $(GDK_PIXBUF_LIBS) $(GLIB_LIBS) 
+libgimpthumb_@GIMP_API_VERSION@_la_LIBADD = \
+	$(GDK_PIXBUF_LIBS)	\
+	$(GLIB_LIBS) 
 
 
 noinst_PROGRAMS = gimp-thumbnail-list

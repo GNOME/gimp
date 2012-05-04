@@ -67,7 +67,7 @@ INCLUDES = \
 EXTRA_DIST = \
 	gimpbase.def
 
-lib_LTLIBRARIES = libgimpbase-2.0.la
+lib_LTLIBRARIES = libgimpbase-@GIMP_API_VERSION@.la
 
 # help `make' along by giving another name for the file, which it knows
 # how to build
@@ -121,7 +121,9 @@ libgimpbase_sources = \
 libgimpbase_built_sources = \
 	gimpbaseenums.c
 
-libgimpbase_2_0_la_SOURCES = $(libgimpbase_sources) $(libgimpbase_built_sources)
+libgimpbase_@GIMP_API_VERSION@_la_SOURCES = \
+	$(libgimpbase_sources)	\
+	$(libgimpbase_built_sources)
 
 
 libgimpbaseinclude_HEADERS = \
@@ -146,15 +148,17 @@ libgimpbaseinclude_HEADERS = \
 	gimpvaluearray.h
 
 
-libgimpbase_2_0_la_LDFLAGS = \
+libgimpbase_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined) 			\
 	$(libgimpbase_export_symbols)		\
 	$(CARBON_LDFLAGS)
 
-libgimpbase_2_0_la_DEPENDENCIES = $(gimpbase_def)
+libgimpbase_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpbase_def)
 
-libgimpbase_2_0_la_LIBADD = $(GLIB_LIBS) $(ole32_lib)
+libgimpbase_@GIMP_API_VERSION@_la_LIBADD = \
+	$(GLIB_LIBS)	\
+	$(ole32_lib)
 
 
 install-data-local: install-ms-lib install-libtool-import-lib

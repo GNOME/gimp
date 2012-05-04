@@ -67,7 +67,7 @@ INCLUDES = \
 	$(GEGL_CFLAGS)    \
 	-I$(includedir)
 
-lib_LTLIBRARIES = libgimp-2.0.la libgimpui-2.0.la
+lib_LTLIBRARIES = libgimp-@GIMP_API_VERSION@.la libgimpui-@GIMP_API_VERSION@.la
 
 PDB_WRAPPERS_C = \
 	gimp_pdb.c			\
@@ -174,7 +174,7 @@ PDB_WRAPPERS_H = \
 	gimpunit_pdb.h			\
 	gimpvectors_pdb.h
 
-libgimp_2_0_la_sources = \
+libgimp_sources = \
 	gimp.c			\
 	gimp.h			\
 	gimpcompat.h		\
@@ -239,16 +239,16 @@ libgimp_2_0_la_sources = \
 	stdplugins-intl.h	\
 	libgimp-intl.h
 
-libgimp_2_0_la_built_sources = \
+libgimp_built_sources = \
 	gimpenums.c
 
-libgimp_2_0_la_extra_sources = gimpenums.c.tail
+libgimp_extra_sources = gimpenums.c.tail
 
-libgimp_2_0_la_SOURCES = \
-	$(libgimp_2_0_la_built_sources)	\
-	$(libgimp_2_0_la_sources)
+libgimp_@GIMP_API_VERSION@_la_SOURCES = \
+	$(libgimp_built_sources)	\
+	$(libgimp_sources)
 
-libgimpui_2_0_la_sources = \
+libgimpui_sources = \
 	gimpui.c			\
 	gimpui.h			\
 	gimpuitypes.h			\
@@ -295,15 +295,15 @@ libgimpui_2_0_la_sources = \
 	gimpzoompreview.c		\
 	gimpzoompreview.h
 
-libgimpui_2_0_la_built_sources = \
+libgimpui_built_sources = \
 	gimpuimarshal.c			\
 	gimpuimarshal.h
 
-libgimpui_2_0_la_extra_sources = gimpuimarshal.list
+libgimpui_extra_sources = gimpuimarshal.list
 
-libgimpui_2_0_la_SOURCES = \
-	$(libgimpui_2_0_la_built_sources)	\
-	$(libgimpui_2_0_la_sources)
+libgimpui_@GIMP_API_VERSION@_la_SOURCES = \
+	$(libgimpui_built_sources)	\
+	$(libgimpui_sources)
 
 gimpinclude_HEADERS = \
 	gimp.h				\
@@ -361,12 +361,12 @@ gimpinclude_HEADERS = \
 	gimpselectbutton.h		\
 	gimpzoompreview.h
 
-libgimp_2_0_la_LDFLAGS = \
+libgimp_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined)				\
 	$(libgimp_export_symbols)
 
-libgimp_2_0_la_LIBADD = \
+libgimp_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
@@ -375,18 +375,18 @@ libgimp_2_0_la_LIBADD = \
 	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)
 
-libgimp_2_0_la_DEPENDENCIES = \
+libgimp_@GIMP_API_VERSION@_la_DEPENDENCIES = \
 	$(gimp_def)		\
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)
 
-libgimpui_2_0_la_LDFLAGS = \
+libgimpui_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined)				\
 	$(libgimpui_export_symbols)
 
-libgimpui_2_0_la_LIBADD = \
+libgimpui_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimp)		\
 	$(libgimpwidgets)	\
 	$(libgimpcolor)		\
@@ -395,7 +395,7 @@ libgimpui_2_0_la_LIBADD = \
 	$(GTK_LIBS)		\
 	$(RT_LIBS)
 
-libgimpui_2_0_la_DEPENDENCIES = \
+libgimpui_@GIMP_API_VERSION@_la_DEPENDENCIES = \
 	$(gimpui_def)		\
 	$(libgimp)		\
 	$(libgimpwidgets)	\
@@ -405,8 +405,8 @@ EXTRA_DIST = \
 	COPYING				\
 	gimp.def			\
 	gimpui.def			\
-	$(libgimp_2_0_la_extra_sources)	\
-	$(libgimpui_2_0_la_extra_sources)
+	$(libgimp_extra_sources)	\
+	$(libgimpui_extra_sources)
 
 install-data-local: install-ms-lib install-libtool-import-lib
 

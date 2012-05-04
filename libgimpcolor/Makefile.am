@@ -60,9 +60,9 @@ INCLUDES = \
 EXTRA_DIST = \
 	gimpcolor.def
 
-lib_LTLIBRARIES = libgimpcolor-2.0.la
+lib_LTLIBRARIES = libgimpcolor-@GIMP_API_VERSION@.la
 
-libgimpcolor_2_0_la_SOURCES = \
+libgimpcolor_@GIMP_API_VERSION@_la_SOURCES = \
 	gimpcolor.h			\
 	gimpcolortypes.h		\
 	gimpadaptivesupersample.c	\
@@ -101,16 +101,16 @@ libgimpcolorinclude_HEADERS = \
 	gimppixbuf.h			\
 	gimprgb.h
 
-libgimpcolor_2_0_la_LDFLAGS = \
+libgimpcolor_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined) 			\
 	$(libgimpcolor_export_symbols)
 
-libgimpcolor_2_0_la_DEPENDENCIES = \
+libgimpcolor_@GIMP_API_VERSION@_la_DEPENDENCIES = \
 	$(gimpcolor_def)	\
 	$(libgimpbase)
 
-libgimpcolor_2_0_la_LIBADD = \
+libgimpcolor_@GIMP_API_VERSION@_la_LIBADD = \
 	$(GEGL_LIBS)		\
 	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\

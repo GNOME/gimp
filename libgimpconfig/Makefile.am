@@ -57,7 +57,7 @@ INCLUDES = \
 EXTRA_DIST = \
 	gimpconfig.def
 
-lib_LTLIBRARIES = libgimpconfig-2.0.la
+lib_LTLIBRARIES = libgimpconfig-@GIMP_API_VERSION@.la
 
 libgimpconfig_sources = 		\
 	gimpconfig.h			\
@@ -86,8 +86,9 @@ libgimpconfig_sources = 		\
 libgimpconfig_built_sources = \
 	gimpcolorconfig-enums.c
 
-libgimpconfig_2_0_la_SOURCES = \
-	$(libgimpconfig_sources) $(libgimpconfig_built_sources)
+libgimpconfig_@GIMP_API_VERSION@_la_SOURCES = \
+	$(libgimpconfig_sources)	\
+	$(libgimpconfig_built_sources)
 
 
 libgimpconfiginclude_HEADERS = \
@@ -106,14 +107,14 @@ libgimpconfiginclude_HEADERS = \
 	gimpcolorconfig-enums.h
 
 
-libgimpconfig_2_0_la_LDFLAGS = \
+libgimpconfig_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined) 			\
 	$(libgimpconfig_export_symbols)
 
-libgimpconfig_2_0_la_DEPENDENCIES = $(gimpconfig_def)
+libgimpconfig_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpconfig_def)
 
-libgimpconfig_2_0_la_LIBADD = \
+libgimpconfig_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimpbase)	\
 	$(libgimpcolor)	\
 	$(libgimpmath)	\

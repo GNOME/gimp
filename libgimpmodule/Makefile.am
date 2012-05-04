@@ -54,9 +54,9 @@ INCLUDES = \
 EXTRA_DIST = \
 	gimpmodule.def
 
-lib_LTLIBRARIES = libgimpmodule-2.0.la
+lib_LTLIBRARIES = libgimpmodule-@GIMP_API_VERSION@.la
 
-libgimpmodule_2_0_la_SOURCES = \
+libgimpmodule_@GIMP_API_VERSION@_la_SOURCES = \
 	gimpmoduletypes.h	\
 	gimpmodule.c		\
 	gimpmodule.h		\
@@ -68,14 +68,14 @@ libgimpmoduleinclude_HEADERS = \
 	gimpmodule.h		\
 	gimpmoduledb.h
 
-libgimpmodule_2_0_la_LDFLAGS = \
+libgimpmodule_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined) 			\
 	$(libgimpmodule_export_symbols)
 
-libgimpmodule_2_0_la_DEPENDENCIES = $(gimpmodule_def)
+libgimpmodule_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpmodule_def)
 
-libgimpmodule_2_0_la_LIBADD = \
+libgimpmodule_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimpbase)			\
 	$(GMODULE_NO_EXPORT_LIBS) 	\
 	$(GLIB_LIBS)

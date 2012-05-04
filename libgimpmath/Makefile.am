@@ -58,9 +58,9 @@ INCLUDES = \
 EXTRA_DIST = \
 	gimpmath.def
 
-lib_LTLIBRARIES = libgimpmath-2.0.la
+lib_LTLIBRARIES = libgimpmath-@GIMP_API_VERSION@.la
 
-libgimpmath_2_0_la_SOURCES = \
+libgimpmath_@GIMP_API_VERSION@_la_SOURCES = \
 	gimpmath.h	\
 	gimpmathtypes.h	\
 	gimpmatrix.c	\
@@ -77,14 +77,18 @@ libgimpmathinclude_HEADERS = \
 	gimpmd5.h	\
 	gimpvector.h
 
-libgimpmath_2_0_la_LDFLAGS = \
+libgimpmath_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined)				\
 	$(libgimpmath_export_symbols)
 
-libgimpmath_2_0_la_DEPENDENCIES = $(gimpmath_def) $(libgimpbase)
+libgimpmath_@GIMP_API_VERSION@_la_DEPENDENCIES = \
+	$(gimpmath_def)	\
+	$(libgimpbase)
 
-libgimpmath_2_0_la_LIBADD = $(GLIB_LIBS) $(libm)
+libgimpmath_@GIMP_API_VERSION@_la_LIBADD = \
+	$(GLIB_LIBS)	\
+	$(libm)
 
 
 install-data-local: install-ms-lib install-libtool-import-lib
