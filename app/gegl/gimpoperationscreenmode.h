@@ -34,6 +34,7 @@
 #define GIMP_OPERATION_SCREEN_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_SCREEN_MODE, GimpOperationScreenModeClass))
 
 
+typedef struct _GimpOperationScreenMode      GimpOperationScreenMode;
 typedef struct _GimpOperationScreenModeClass GimpOperationScreenModeClass;
 
 struct _GimpOperationScreenMode

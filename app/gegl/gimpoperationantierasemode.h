@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationanti_erasemode.h
+ * gimpoperationantierasemode.h
  * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -34,6 +34,7 @@
 #define GIMP_OPERATION_ANTI_ERASE_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_ANTI_ERASE_MODE, GimpOperationAntiEraseModeClass))
 
 
+typedef struct _GimpOperationAntiEraseMode      GimpOperationAntiEraseMode;
 typedef struct _GimpOperationAntiEraseModeClass GimpOperationAntiEraseModeClass;
 
 struct _GimpOperationAntiEraseMode

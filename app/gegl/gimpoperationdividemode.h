@@ -34,6 +34,7 @@
 #define GIMP_OPERATION_DIVIDE_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_DIVIDE_MODE, GimpOperationDivideModeClass))
 
 
+typedef struct _GimpOperationDivideMode      GimpOperationDivideMode;
 typedef struct _GimpOperationDivideModeClass GimpOperationDivideModeClass;
 
 struct _GimpOperationDivideMode

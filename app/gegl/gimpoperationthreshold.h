@@ -33,6 +33,7 @@
 #define GIMP_OPERATION_THRESHOLD_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_THRESHOLD, GimpOperationThresholdClass))
 
 
+typedef struct _GimpOperationThreshold      GimpOperationThreshold;
 typedef struct _GimpOperationThresholdClass GimpOperationThresholdClass;
 
 struct _GimpOperationThreshold

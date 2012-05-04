@@ -33,6 +33,7 @@
 #define GIMP_OPERATION_SHRINK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_SHRINK, GimpOperationShrinkClass))
 
 
+typedef struct _GimpOperationShrink      GimpOperationShrink;
 typedef struct _GimpOperationShrinkClass GimpOperationShrinkClass;
 
 struct _GimpOperationShrink

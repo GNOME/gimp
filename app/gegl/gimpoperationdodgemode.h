@@ -34,6 +34,7 @@
 #define GIMP_OPERATION_DODGE_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_DODGE_MODE, GimpOperationDodgeModeClass))
 
 
+typedef struct _GimpOperationDodgeMode      GimpOperationDodgeMode;
 typedef struct _GimpOperationDodgeModeClass GimpOperationDodgeModeClass;
 
 struct _GimpOperationDodgeMode

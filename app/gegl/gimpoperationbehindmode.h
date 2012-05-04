@@ -34,6 +34,7 @@
 #define GIMP_OPERATION_BEHIND_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_BEHIND_MODE, GimpOperationBehindModeClass))
 
 
+typedef struct _GimpOperationBehindMode      GimpOperationBehindMode;
 typedef struct _GimpOperationBehindModeClass GimpOperationBehindModeClass;
 
 struct _GimpOperationBehindMode

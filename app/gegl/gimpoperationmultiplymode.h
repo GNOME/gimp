@@ -34,6 +34,7 @@
 #define GIMP_OPERATION_MULTIPLY_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_MULTIPLY_MODE, GimpOperationMultiplyModeClass))
 
 
+typedef struct _GimpOperationMultiplyMode      GimpOperationMultiplyMode;
 typedef struct _GimpOperationMultiplyModeClass GimpOperationMultiplyModeClass;
 
 struct _GimpOperationMultiplyMode

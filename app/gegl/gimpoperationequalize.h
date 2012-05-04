@@ -33,6 +33,7 @@
 #define GIMP_OPERATION_EQUALIZE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_EQUALIZE, GimpOperationEqualizeClass))
 
 
+typedef struct _GimpOperationEqualize      GimpOperationEqualize;
 typedef struct _GimpOperationEqualizeClass GimpOperationEqualizeClass;
 
 struct _GimpOperationEqualize

@@ -34,6 +34,7 @@
 #define GIMP_OPERATION_LIGHTEN_ONLY_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_LIGHTEN_ONLY_MODE, GimpOperationLightenOnlyModeClass))
 
 
+typedef struct _GimpOperationLightenOnlyMode      GimpOperationLightenOnlyMode;
 typedef struct _GimpOperationLightenOnlyModeClass GimpOperationLightenOnlyModeClass;
 
 struct _GimpOperationLightenOnlyMode

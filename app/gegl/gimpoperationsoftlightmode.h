@@ -34,6 +34,7 @@
 #define GIMP_OPERATION_SOFTLIGHT_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_SOFTLIGHT_MODE, GimpOperationSoftlightModeClass))
 
 
+typedef struct _GimpOperationSoftlightMode      GimpOperationSoftlightMode;
 typedef struct _GimpOperationSoftlightModeClass GimpOperationSoftlightModeClass;
 
 struct _GimpOperationSoftlightMode

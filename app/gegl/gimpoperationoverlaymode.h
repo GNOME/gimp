@@ -34,6 +34,7 @@
 #define GIMP_OPERATION_OVERLAY_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_OVERLAY_MODE, GimpOperationOverlayModeClass))
 
 
+typedef struct _GimpOperationOverlayMode      GimpOperationOverlayMode;
 typedef struct _GimpOperationOverlayModeClass GimpOperationOverlayModeClass;
 
 struct _GimpOperationOverlayMode

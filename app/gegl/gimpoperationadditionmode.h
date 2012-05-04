@@ -34,6 +34,7 @@
 #define GIMP_OPERATION_ADDITION_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_ADDITION_MODE, GimpOperationAdditionModeClass))
 
 
+typedef struct _GimpOperationAdditionMode      GimpOperationAdditionMode;
 typedef struct _GimpOperationAdditionModeClass GimpOperationAdditionModeClass;
 
 struct _GimpOperationAdditionMode

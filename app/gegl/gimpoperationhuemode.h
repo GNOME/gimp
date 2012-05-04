@@ -34,6 +34,7 @@
 #define GIMP_OPERATION_HUE_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_HUE_MODE, GimpOperationHueModeClass))
 
 
+typedef struct _GimpOperationHueMode      GimpOperationHueMode;
 typedef struct _GimpOperationHueModeClass GimpOperationHueModeClass;
 
 struct _GimpOperationHueMode

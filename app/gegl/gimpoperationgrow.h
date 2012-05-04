@@ -33,6 +33,7 @@
 #define GIMP_OPERATION_GROW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_GROW, GimpOperationGrowClass))
 
 
+typedef struct _GimpOperationGrow      GimpOperationGrow;
 typedef struct _GimpOperationGrowClass GimpOperationGrowClass;
 
 struct _GimpOperationGrow

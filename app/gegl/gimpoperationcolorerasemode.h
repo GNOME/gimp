@@ -34,6 +34,7 @@
 #define GIMP_OPERATION_COLOR_ERASE_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_COLOR_ERASE_MODE, GimpOperationColorEraseModeClass))
 
 
+typedef struct _GimpOperationColorEraseMode      GimpOperationColorEraseMode;
 typedef struct _GimpOperationColorEraseModeClass GimpOperationColorEraseModeClass;
 
 struct _GimpOperationColorEraseMode

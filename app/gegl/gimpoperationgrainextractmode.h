@@ -34,6 +34,7 @@
 #define GIMP_OPERATION_GRAIN_EXTRACT_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_GRAIN_EXTRACT_MODE, GimpOperationGrainExtractModeClass))
 
 
+typedef struct _GimpOperationGrainExtractMode      GimpOperationGrainExtractMode;
 typedef struct _GimpOperationGrainExtractModeClass GimpOperationGrainExtractModeClass;
 
 struct _GimpOperationGrainExtractMode

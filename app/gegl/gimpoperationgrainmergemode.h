@@ -34,6 +34,7 @@
 #define GIMP_OPERATION_GRAIN_MERGE_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_GRAIN_MERGE_MODE, GimpOperationGrainMergeModeClass))
 
 
+typedef struct _GimpOperationGrainMergeMode      GimpOperationGrainMergeMode;
 typedef struct _GimpOperationGrainMergeModeClass GimpOperationGrainMergeModeClass;
 
 struct _GimpOperationGrainMergeMode

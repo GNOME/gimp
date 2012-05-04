@@ -33,6 +33,7 @@
 #define GIMP_OPERATION_LEVELS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_LEVELS, GimpOperationLevelsClass))
 
 
+typedef struct _GimpOperationLevels      GimpOperationLevels;
 typedef struct _GimpOperationLevelsClass GimpOperationLevelsClass;
 
 struct _GimpOperationLevels

@@ -34,6 +34,7 @@
 #define GIMP_OPERATION_SUBTRACT_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_SUBTRACT_MODE, GimpOperationSubtractModeClass))
 
 
+typedef struct _GimpOperationSubtractMode      GimpOperationSubtractMode;
 typedef struct _GimpOperationSubtractModeClass GimpOperationSubtractModeClass;
 
 struct _GimpOperationSubtractMode

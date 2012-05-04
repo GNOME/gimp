@@ -32,6 +32,7 @@
 #define GIMP_OPERATION_MASK_COMPONENTS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_MASK_COMPONENTS, GimpOperationMaskComponentsClass))
 
 
+typedef struct _GimpOperationMaskComponents      GimpOperationMaskComponents;
 typedef struct _GimpOperationMaskComponentsClass GimpOperationMaskComponentsClass;
 
 struct _GimpOperationMaskComponents

@@ -31,6 +31,7 @@
 #define GIMP_OPERATION_REPLACE_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_REPLACE_MODE, GimpOperationReplaceModeClass))
 
 
+typedef struct _GimpOperationReplaceMode      GimpOperationReplaceMode;
 typedef struct _GimpOperationReplaceModeClass GimpOperationReplaceModeClass;
 
 struct _GimpOperationReplaceMode

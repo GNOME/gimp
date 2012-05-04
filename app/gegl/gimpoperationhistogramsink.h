@@ -34,6 +34,7 @@
 #define GIMP_OPERATION_HISTOGRAM_SINK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_HISTOGRAM_SINK, GimpOperationHistogramSinkClass))
 
 
+typedef struct _GimpOperationHistogramSink      GimpOperationHistogramSink;
 typedef struct _GimpOperationHistogramSinkClass GimpOperationHistogramSinkClass;
 
 struct _GimpOperationHistogramSink

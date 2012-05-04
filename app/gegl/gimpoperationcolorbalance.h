@@ -33,6 +33,7 @@
 #define GIMP_OPERATION_COLOR_BALANCE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_COLOR_BALANCE, GimpOperationColorBalanceClass))
 
 
+typedef struct _GimpOperationColorBalance      GimpOperationColorBalance;
 typedef struct _GimpOperationColorBalanceClass GimpOperationColorBalanceClass;
 
 struct _GimpOperationColorBalance

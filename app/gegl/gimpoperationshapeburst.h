@@ -33,6 +33,7 @@
 #define GIMP_OPERATION_SHAPEBURST_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_SHAPEBURST, GimpOperationShapeburstClass))
 
 
+typedef struct _GimpOperationShapeburst      GimpOperationShapeburst;
 typedef struct _GimpOperationShapeburstClass GimpOperationShapeburstClass;
 
 struct _GimpOperationShapeburst

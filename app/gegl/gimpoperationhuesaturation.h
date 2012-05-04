@@ -33,6 +33,7 @@
 #define GIMP_OPERATION_HUE_SATURATION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_HUE_SATURATION, GimpOperationHueSaturationClass))
 
 
+typedef struct _GimpOperationHueSaturation      GimpOperationHueSaturation;
 typedef struct _GimpOperationHueSaturationClass GimpOperationHueSaturationClass;
 
 struct _GimpOperationHueSaturation

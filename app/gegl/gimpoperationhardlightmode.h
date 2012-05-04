@@ -34,6 +34,7 @@
 #define GIMP_OPERATION_HARDLIGHT_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_HARDLIGHT_MODE, GimpOperationHardlightModeClass))
 
 
+typedef struct _GimpOperationHardlightMode      GimpOperationHardlightMode;
 typedef struct _GimpOperationHardlightModeClass GimpOperationHardlightModeClass;
 
 struct _GimpOperationHardlightMode

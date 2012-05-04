@@ -34,6 +34,7 @@
 #define GIMP_OPERATION_VALUE_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_VALUE_MODE, GimpOperationValueModeClass))
 
 
+typedef struct _GimpOperationValueMode      GimpOperationValueMode;
 typedef struct _GimpOperationValueModeClass GimpOperationValueModeClass;
 
 struct _GimpOperationValueMode

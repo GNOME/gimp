@@ -34,6 +34,7 @@
 #define GIMP_OPERATION_COLOR_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_COLOR_MODE, GimpOperationColorModeClass))
 
 
+typedef struct _GimpOperationColorMode      GimpOperationColorMode;
 typedef struct _GimpOperationColorModeClass GimpOperationColorModeClass;
 
 struct _GimpOperationColorMode

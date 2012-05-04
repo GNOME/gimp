@@ -34,6 +34,7 @@
 #define GIMP_OPERATION_NORMAL_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_NORMAL_MODE, GimpOperationNormalModeClass))
 
 
+typedef struct _GimpOperationNormalMode      GimpOperationNormalMode;
 typedef struct _GimpOperationNormalModeClass GimpOperationNormalModeClass;
 
 struct _GimpOperationNormalMode

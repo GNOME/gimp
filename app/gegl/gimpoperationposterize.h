@@ -33,6 +33,7 @@
 #define GIMP_OPERATION_POSTERIZE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_POSTERIZE, GimpOperationPosterizeClass))
 
 
+typedef struct _GimpOperationPosterize      GimpOperationPosterize;
 typedef struct _GimpOperationPosterizeClass GimpOperationPosterizeClass;
 
 struct _GimpOperationPosterize

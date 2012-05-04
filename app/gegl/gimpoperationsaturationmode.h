@@ -34,6 +34,7 @@
 #define GIMP_OPERATION_SATURATION_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_SATURATION_MODE, GimpOperationSaturationModeClass))
 
 
+typedef struct _GimpOperationSaturationMode      GimpOperationSaturationMode;
 typedef struct _GimpOperationSaturationModeClass GimpOperationSaturationModeClass;
 
 struct _GimpOperationSaturationMode

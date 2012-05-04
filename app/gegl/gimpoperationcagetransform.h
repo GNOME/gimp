@@ -33,6 +33,7 @@
 #define GIMP_OPERATION_CAGE_TRANSFORM_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_CAGE_TRANSFORM, GimpOperationCageTransformClass))
 
 
+typedef struct _GimpOperationCageTransform      GimpOperationCageTransform;
 typedef struct _GimpOperationCageTransformClass GimpOperationCageTransformClass;
 
 struct _GimpOperationCageTransform

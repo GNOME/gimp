@@ -34,6 +34,7 @@
 #define GIMP_OPERATION_BURN_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_BURN_MODE, GimpOperationBurnModeClass))
 
 
+typedef struct _GimpOperationBurnMode      GimpOperationBurnMode;
 typedef struct _GimpOperationBurnModeClass GimpOperationBurnModeClass;
 
 struct _GimpOperationBurnMode
