@@ -1,21 +1,20 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.7\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-05-03 22:52+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-05-06 03:27+0200\n"
 "PO-Revision-Date: 2012-05-04 12:06+0300\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
+"Language: be\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: be\n"
 "X-Poedit-Language: Belarusian\n"
 "X-Poedit-Country: BELARUS\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%"
-"10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Poedit-Basepath: /tmp/gimp-2.7.3/po\n"
 
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -342,8 +341,6 @@ msgstr "Файл"
 
 #: ../app/actions/actions.c:167
 #, fuzzy
-#| msgctxt "plug-in-action"
-#| msgid "Filte_rs"
 msgid "Filters"
 msgstr "_Фільтры"
 
@@ -1665,8 +1662,6 @@ msgstr "Інвэртаваць колеры"
 
 #: ../app/actions/drawable-actions.c:57
 #, fuzzy
-#| msgctxt "select-action"
-#| msgid "_Invert"
 msgctxt "drawable-action"
 msgid "_Value Invert"
 msgstr "_Інвэртаваць"
@@ -2490,23 +2485,18 @@ msgstr ""
 
 #: ../app/actions/filters-actions.c:43
 #, fuzzy
-#| msgctxt "file-action"
-#| msgid "Create Template..."
 msgctxt "filters-action"
 msgid "Color T_emperature..."
 msgstr "Стварыць шаблён…"
 
 #: ../app/actions/filters-actions.c:44
 #, fuzzy
-#| msgctxt "image-action"
-#| msgid "Change the size of the image content"
 msgctxt "filters-action"
 msgid "Change the color temperature of the image"
 msgstr "Зьмяніць памер зьмесьціва відарыса"
 
 #: ../app/actions/filters-actions.c:49
 #, fuzzy
-#| msgid "Color _Balance..."
 msgctxt "filters-action"
 msgid "Color to _Alpha..."
 msgstr "_Вага колераў…"
@@ -2528,7 +2518,6 @@ msgstr ""
 
 #: ../app/actions/filters-actions.c:61
 #, fuzzy
-#| msgid "_Posterize..."
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "_Пастэлізаваць…"
@@ -2545,11 +2534,32 @@ msgstr ""
 
 #: ../app/actions/filters-actions.c:68
 #, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Convert Image to Grayscale"
 msgctxt "filters-action"
 msgid "Convert image to or from polar coordinates"
 msgstr "Ператварыць відарыс у шэрыя колеры"
+
+#: ../app/actions/filters-actions.c:73
+#, fuzzy
+msgctxt "filters-action"
+msgid "_Semi-Flatten..."
+msgstr "П_равіць узор…"
+
+#: ../app/actions/filters-actions.c:74
+msgctxt "filters-action"
+msgid "Replace partial transparency with a color"
+msgstr ""
+
+#: ../app/actions/filters-actions.c:79
+#, fuzzy
+msgctxt "filters-action"
+msgid "_Threshold Alpha..."
+msgstr "_Парог…"
+
+#: ../app/actions/filters-actions.c:80
+#, fuzzy
+msgctxt "filters-action"
+msgid "Make transparency all-or-nothing"
+msgstr "_Зрабіць празрыстым"
 
 #: ../app/actions/fonts-actions.c:44
 msgctxt "fonts-action"
@@ -3042,7 +3052,6 @@ msgstr "_Рэжым"
 
 #: ../app/actions/image-actions.c:57
 #, fuzzy
-#| msgid "Direction"
 msgctxt "image-action"
 msgid "_Precision"
 msgstr "Напрамак"
@@ -3239,8 +3248,6 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:162
 #, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 8 bit integer"
 msgstr "Ператварыць відарыс у індэксаваныя колеры"
@@ -3252,8 +3259,6 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:167
 #, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit integer"
 msgstr "Ператварыць відарыс у індэксаваныя колеры"
@@ -3265,8 +3270,6 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:172
 #, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit integer"
 msgstr "Ператварыць відарыс у індэксаваныя колеры"
@@ -3278,8 +3281,6 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:177
 #, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit floating point"
 msgstr "Ператварыць відарыс у індэксаваныя колеры"
@@ -3291,8 +3292,6 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:182
 #, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit floating point"
 msgstr "Ператварыць відарыс у індэксаваныя колеры"
@@ -6326,8 +6325,8 @@ msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
 msgstr ""
-"Калі задзейнічана, то бачная сетка. Можа быць пераключана праз «Від→Паказваць "
-"сетку»."
+"Калі задзейнічана, то бачная сетка. Можа быць пераключана праз "
+"«Від→Паказваць сетку»."
 
 #: ../app/config/gimprc-blurbs.h:363
 msgid ""
@@ -6367,7 +6366,8 @@ msgstr ""
 "відарыса між памяцьцю й дыскам. Ведай, што файл абмену можа стаць вельмі "
 "вялікім, калі GIMP выкарыстоўваецца зь вельмі вялікімі відарысамі. Таксама, "
 "праца становіцца жахліва павольнай, калі файл абмену створаны ў каталёґу, "
-"падлучаным па NFS. Дзеля гэтых прычын пажадана зьмяшчаць файл абмену ў «/tmp»."
+"падлучаным па NFS. Дзеля гэтых прычын пажадана зьмяшчаць файл абмену ў «/"
+"tmp»."
 
 #: ../app/config/gimprc-blurbs.h:388
 msgid "When enabled, menus can be torn off."
@@ -7218,7 +7218,6 @@ msgstr "Тып відарыса"
 
 #: ../app/core/core-enums.c:1156
 #, fuzzy
-#| msgid "Image Properties"
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr "Уласьцівасьці відарыса"
@@ -7600,8 +7599,8 @@ msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
-"Фатальная памылка падчас аналізу файла з пэндзлем «%s»: глыбіня пэндзля %d не "
-"падтрымліваецца.\n"
+"Фатальная памылка падчас аналізу файла з пэндзлем «%s»: глыбіня пэндзля %d "
+"не падтрымліваецца.\n"
 "Пэндзлі GIMP мусяць быць ШЭРЫМІ або RGBA."
 
 #: ../app/core/gimpbrush-load.c:452
@@ -8061,7 +8060,8 @@ msgstr "Недапушчальны радок UTF-8 у файле з ґрады�
 #, c-format
 msgid "Fatal parse error in gradient file '%s': File is corrupt in line %d."
 msgstr ""
-"Фатальная памылка аналізу файла з ґрадыентам «%s»: файл пашкожжаны ў радку %d."
+"Фатальная памылка аналізу файла з ґрадыентам «%s»: файл пашкожжаны ў радку "
+"%d."
 
 #: ../app/core/gimpgradient-load.c:220 ../app/core/gimpgradient-load.c:231
 #, c-format
@@ -8283,24 +8283,18 @@ msgstr "Ператварэньне ў індэксаваныя колеры (э�
 
 #: ../app/core/gimpimage-convert-precision.c:63
 #, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Convert Image to Indexed"
 msgctxt "undo-type"
 msgid "Convert Image to 8 bit integer"
 msgstr "Ператварыць відарыс у індэксаваныя колеры"
 
 #: ../app/core/gimpimage-convert-precision.c:67
 #, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Convert Image to Indexed"
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit integer"
 msgstr "Ператварыць відарыс у індэксаваныя колеры"
 
 #: ../app/core/gimpimage-convert-precision.c:71
 #, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Convert Image to Indexed"
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit integer"
 msgstr "Ператварыць відарыс у індэксаваныя колеры"
@@ -8729,13 +8723,14 @@ msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 msgstr ""
-"Чытаньне файла з палітрай «%s»: недапушчальная колькасьць слупкоў у радку %d. "
-"Ужыта прадвызначанае значэньне."
+"Чытаньне файла з палітрай «%s»: недапушчальная колькасьць слупкоў у радку "
+"%d. Ужыта прадвызначанае значэньне."
 
 #: ../app/core/gimppalette-load.c:186
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
-msgstr "Чытаньне файла з палітрай «%s»: адсутнічае ЧЫРВОНЫ складнік у радку %d."
+msgstr ""
+"Чытаньне файла з палітрай «%s»: адсутнічае ЧЫРВОНЫ складнік у радку %d."
 
 #: ../app/core/gimppalette-load.c:194
 #, c-format
@@ -8769,7 +8764,8 @@ msgstr "Фатальная памылка падчас аналізу файла
 #, c-format
 msgid "Fatal parse error in pattern file '%s': File appears truncated."
 msgstr ""
-"Фатальная памылка падчас аналізу файла з узорам «%s»: файл, здаецца, абрэзаны."
+"Фатальная памылка падчас аналізу файла з узорам «%s»: файл, здаецца, "
+"абрэзаны."
 
 #: ../app/core/gimppattern-load.c:109
 #, c-format
@@ -8975,8 +8971,8 @@ msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
 "settings to '%s'."
 msgstr ""
-"Пэўна, GIMP «%s» выкарыстоўваўся раней. GIMP зараз перанясе твае настаўленьні "
-"ў «%s»."
+"Пэўна, GIMP «%s» выкарыстоўваўся раней. GIMP зараз перанясе твае "
+"настаўленьні ў «%s»."
 
 #: ../app/core/gimp-user-install.c:165
 #, c-format
@@ -9362,8 +9358,8 @@ msgid ""
 "is configured as \"Maximum Image Size\" in the Preferences dialog (currently "
 "%s)."
 msgstr ""
-"Памер відарыса па зьмяненьні перавысіць «Найбольшы памер відарыса», выбраны ў "
-"«Настаўленьнях» (цяпер %s)."
+"Памер відарыса па зьмяненьні перавысіць «Найбольшы памер відарыса», выбраны "
+"ў «Настаўленьнях» (цяпер %s)."
 
 #: ../app/dialogs/image-scale-dialog.c:260
 msgid ""
@@ -9430,6 +9426,52 @@ msgstr "Тып запаўненьня пласта"
 #: ../app/dialogs/layer-options-dialog.c:217
 msgid "Set name from _text"
 msgstr "_Назву паводле тэксту"
+
+#: ../app/dialogs/lebl-dialog.c:123
+#, c-format
+msgid "<b>GAME OVER</b> at level %d!"
+msgstr ""
+
+#. Translators: the first and third strings are similar to a
+#. * title, and the second string is a small information text.
+#. * The spaces are there only to separate all the strings, so
+#. try to keep them as is.
+#: ../app/dialogs/lebl-dialog.c:130
+#, c-format
+msgid "%1$s   %2$s   %3$s"
+msgstr ""
+
+#: ../app/dialogs/lebl-dialog.c:131
+msgid "Press 'q' to quit"
+msgstr ""
+
+#: ../app/dialogs/lebl-dialog.c:136
+msgid "Paused"
+msgstr ""
+
+#. Translators: the first string is a title and the second
+#. * string is a small information text.
+#: ../app/dialogs/lebl-dialog.c:139 ../app/dialogs/lebl-dialog.c:150
+#, c-format
+msgid "%1$s\t%2$s"
+msgstr ""
+
+#: ../app/dialogs/lebl-dialog.c:140
+msgid "Press 'p' to unpause"
+msgstr ""
+
+#: ../app/dialogs/lebl-dialog.c:146
+#, c-format
+msgid "Level: %s,  Lives: %s"
+msgstr ""
+
+#: ../app/dialogs/lebl-dialog.c:151
+msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
+msgstr ""
+
+#: ../app/dialogs/lebl-dialog.c:800
+msgid "Killer GEGLs from Outer Space"
+msgstr ""
 
 #: ../app/dialogs/module-dialog.c:126
 msgid "Module Manager"
@@ -10832,7 +10874,6 @@ msgstr "Піксэлі актыўнага пласта замкнутыя."
 #: ../app/widgets/gimpdrawabletreeview.c:241
 #: ../app/widgets/gimpdrawabletreeview.c:329
 #, fuzzy
-#| msgid "Drop New Layer"
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Адкінуць новы пласт"
@@ -10841,7 +10882,6 @@ msgstr "Адкінуць новы пласт"
 #: ../app/widgets/gimpdrawabletreeview.c:265
 #: ../app/widgets/gimpdrawabletreeview.c:330
 #, fuzzy
-#| msgid "Drop layers"
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Адкінуць пласты"
@@ -10979,8 +11019,6 @@ msgstr "Недапушчальная пасьлядоўнасьць знакаў
 #: ../app/gegl/gimp-babl.c:156 ../app/gegl/gimp-babl.c:157
 #: ../app/gegl/gimp-babl.c:158
 #, fuzzy
-#| msgctxt "histogram-channel"
-#| msgid "RGB"
 msgid "RGB"
 msgstr "RGB"
 
@@ -10994,8 +11032,6 @@ msgstr ""
 #: ../app/gegl/gimp-babl.c:168 ../app/gegl/gimp-babl.c:169
 #: ../app/gegl/gimp-babl.c:170 ../app/gegl/gimp-babl.c:171
 #, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "_Grayscale"
 msgid "Grayscale"
 msgstr "_Адценьні шэрага"
 
@@ -11003,8 +11039,6 @@ msgstr "_Адценьні шэрага"
 #: ../app/gegl/gimp-babl.c:175 ../app/gegl/gimp-babl.c:176
 #: ../app/gegl/gimp-babl.c:177
 #, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "_Grayscale"
 msgid "Grayscale-alpha"
 msgstr "_Адценьні шэрага"
 
@@ -11012,8 +11046,6 @@ msgstr "_Адценьні шэрага"
 #: ../app/gegl/gimp-babl.c:181 ../app/gegl/gimp-babl.c:182
 #: ../app/gegl/gimp-babl.c:183
 #, fuzzy
-#| msgctxt "image-action"
-#| msgid "C_omponents"
 msgid "Red component"
 msgstr "_Складнікі"
 
@@ -11021,8 +11053,6 @@ msgstr "_Складнікі"
 #: ../app/gegl/gimp-babl.c:187 ../app/gegl/gimp-babl.c:188
 #: ../app/gegl/gimp-babl.c:189
 #, fuzzy
-#| msgctxt "image-action"
-#| msgid "C_omponents"
 msgid "Green component"
 msgstr "_Складнікі"
 
@@ -11030,8 +11060,6 @@ msgstr "_Складнікі"
 #: ../app/gegl/gimp-babl.c:193 ../app/gegl/gimp-babl.c:194
 #: ../app/gegl/gimp-babl.c:195
 #, fuzzy
-#| msgctxt "image-action"
-#| msgid "C_omponents"
 msgid "Blue component"
 msgstr "_Складнікі"
 
@@ -11039,8 +11067,6 @@ msgstr "_Складнікі"
 #: ../app/gegl/gimp-babl.c:199 ../app/gegl/gimp-babl.c:200
 #: ../app/gegl/gimp-babl.c:201 ../app/gegl/gimp-babl.c:202
 #, fuzzy
-#| msgctxt "image-action"
-#| msgid "C_omponents"
 msgid "Alpha component"
 msgstr "_Складнікі"
 
@@ -11050,7 +11076,6 @@ msgstr ""
 
 #: ../app/gegl/gimp-babl.c:232
 #, fuzzy
-#| msgid "Index %d"
 msgid "Indexed"
 msgstr "Пералік %d"
 
@@ -11296,7 +11321,6 @@ msgstr "Яркасьць і кантраст"
 
 #: ../app/pdb/color-cmds.c:142
 #, fuzzy
-#| msgid "Levels"
 msgctxt "undo-type"
 msgid "Levels"
 msgstr "Роўні"
@@ -11393,11 +11417,11 @@ msgstr "Працэдура «%s» ня знойдзеная"
 #: ../app/pdb/gimppdb.c:411
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong type for argument #%d. Expected %"
-"s, got %s."
+"Procedure '%s' has been called with a wrong type for argument #%d. Expected "
+"%s, got %s."
 msgstr ""
-"Працэдура «%s» была выкліканая з няправільным тыпам парамэтра #%d. Чакаўся %"
-"s, атрыманы %s."
+"Працэдура «%s» была выкліканая з няправільным тыпам парамэтра #%d. Чакаўся "
+"%s, атрыманы %s."
 
 #: ../app/pdb/gimppdbcontext.c:89
 #: ../app/tools/gimpforegroundselectoptions.c:80
@@ -11527,8 +11551,8 @@ msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
 "the same item tree"
 msgstr ""
-"Элемэнты «%s» (%d) і «%s» (%d) нельга ужываць, бо яны не зьяўляюцца элемэнтамі "
-"аднаго дрэва элемэнтаў"
+"Элемэнты «%s» (%d) і «%s» (%d) нельга ужываць, бо яны не зьяўляюцца "
+"элемэнтамі аднаго дрэва элемэнтаў"
 
 #: ../app/pdb/gimppdb-utils.c:445
 #, c-format
@@ -11572,14 +11596,11 @@ msgstr "Відарыс «%s» (%d) мае тып «%s», але чакаўся �
 
 #: ../app/pdb/gimppdb-utils.c:621
 #, fuzzy, c-format
-#| msgid "Image '%s' (%d) is already of type '%s'"
 msgid "Image '%s' (%d) must not be of type '%s'"
 msgstr "Відарыс «%s» (%d) ужо мае тып «%s»"
 
 #: ../app/pdb/gimppdb-utils.c:641
 #, fuzzy, c-format
-#| msgid ""
-#| "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgid ""
 "Image '%s' (%d) has precision '%s', but an image of precision '%s' is "
 "expected"
@@ -11587,7 +11608,6 @@ msgstr "Відарыс «%s» (%d) мае тып «%s», але чакаўся �
 
 #: ../app/pdb/gimppdb-utils.c:664
 #, fuzzy, c-format
-#| msgid "Image '%s' (%d) is already of type '%s'"
 msgid "Image '%s' (%d) must not be of precision '%s'"
 msgstr "Відарыс «%s» (%d) ужо мае тып «%s»"
 
@@ -11613,8 +11633,8 @@ msgstr ""
 #: ../app/pdb/gimpprocedure.c:657
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#%"
-"d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
 "Працэдура «%s» была выкліканая з няправільным тыпам парамэтра «%s» (#%d). "
 "Чакаўся %s, атрыманы %s."
@@ -11667,11 +11687,11 @@ msgstr ""
 #: ../app/pdb/gimpprocedure.c:768
 #, c-format
 msgid ""
-"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
-"s). This value is out of range."
+"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
+"%s). This value is out of range."
 msgstr ""
-"Працэдура «%s» была выкліканая з значэньнем «%s» парамэтра «%s» (#%d, тып %s). "
-"Гэтае значэньне выходзіць за межы дыяпазона."
+"Працэдура «%s» была выкліканая з значэньнем «%s» парамэтра «%s» (#%d, тып "
+"%s). Гэтае значэньне выходзіць за межы дыяпазона."
 
 #: ../app/pdb/image-cmds.c:2445
 msgid ""
@@ -11687,30 +11707,36 @@ msgstr "Свабодны вылучальнік"
 msgid "Move Layer"
 msgstr "Пасунуць пласт"
 
-#: ../app/pdb/plug-in-compat-cmds.c:79
+#: ../app/pdb/plug-in-compat-cmds.c:80
 #, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Add Color to Colormap"
 msgctxt "undo-type"
 msgid "Color to Alpha"
 msgstr "Дадаць колер да мапы"
 
-#: ../app/pdb/plug-in-compat-cmds.c:120 ../app/pdb/plug-in-compat-cmds.c:163
+#: ../app/pdb/plug-in-compat-cmds.c:121 ../app/pdb/plug-in-compat-cmds.c:164
 #, fuzzy
-#| msgctxt "color-frame-mode"
-#| msgid "Pixel"
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Піксэль"
 
-#: ../app/pdb/plug-in-compat-cmds.c:215
+#: ../app/pdb/plug-in-compat-cmds.c:216
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:252
+#: ../app/pdb/plug-in-compat-cmds.c:260
+msgctxt "undo-type"
+msgid "Semi-Flatten"
+msgstr ""
+
+#: ../app/pdb/plug-in-compat-cmds.c:301
 #, fuzzy
-#| msgid "Invert"
+msgctxt "undo-type"
+msgid "Threshold Alpha"
+msgstr "Парог"
+
+#: ../app/pdb/plug-in-compat-cmds.c:338
+#, fuzzy
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Інвэртаваць"
@@ -12452,7 +12478,6 @@ msgstr "Экспарт наладак танаваньня"
 
 #: ../app/tools/gimpcolorizetool.c:139
 #, fuzzy
-#| msgid "Posterize does not operate on indexed layers."
 msgid "Colorize does not operate on grayscale layers."
 msgstr "Пастэлізаваньне не працуе на індэксаваных пластах."
 
@@ -12477,13 +12502,11 @@ msgstr "_Сьветласьць:"
 
 #: ../app/tools/gimpcolorizetool.c:262
 #, fuzzy
-#| msgid "Colorize"
 msgid "Colorize Color"
 msgstr "Танаваць"
 
 #: ../app/tools/gimpcolorizetool.c:280 ../app/widgets/gimppropwidgets.c:1528
 #, fuzzy
-#| msgid "Color Picker Tool: Set colors from image pixels"
 msgid "Pick color from image"
 msgstr "Піпетка: атрымоўвае колеры зь відарыса"
 
@@ -13075,7 +13098,7 @@ msgstr "GEGL: выконвае адвольнае дзеяньне GEGL"
 msgid "_GEGL Operation..."
 msgstr "_Дзеяньне GEGL…"
 
-#: ../app/tools/gimpgegltool.c:318
+#: ../app/tools/gimpgegltool.c:319
 msgid "Select an operation from the list above"
 msgstr "Выберы дзеяньне са сьпісу ўверсе"
 
@@ -13505,7 +13528,6 @@ msgstr "Дадаць накіроўную:"
 
 #: ../app/tools/gimpoperationtool.c:101
 #, fuzzy
-#| msgid "GEGL Tool: Use an arbitrary GEGL operation"
 msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr "GEGL: выконвае адвольнае дзеяньне GEGL"
 
@@ -15546,7 +15568,6 @@ msgstr "Прастора колераў:"
 
 #: ../app/widgets/gimpimagepropview.c:132
 #, fuzzy
-#| msgid "Version:"
 msgid "Precision:"
 msgstr "Вэрсія:"
 
@@ -15761,7 +15782,7 @@ msgstr "увядзі меткі"
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
 #. * http://unicode.org/review/pr-23.html
 #.
-#: ../app/widgets/gimptagentry.c:1735
+#: ../app/widgets/gimptagentry.c:1733
 msgid ","
 msgstr ","
 
@@ -15780,7 +15801,6 @@ msgstr "_Прастора колераў:"
 
 #: ../app/widgets/gimptemplateeditor.c:394
 #, fuzzy
-#| msgid "_X resolution:"
 msgid "_Precision:"
 msgstr "Разрозьненьне па _X:"
 

@@ -15,16 +15,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-05-03 13:05+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-05-06 03:27+0200\n"
 "PO-Revision-Date: 2012-05-04 14:35+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -92,12 +91,12 @@ msgstr ""
 "Abyste předešli ztrátě dat, zkontrolujte prosím umístění a oprávnění "
 "odkládacího složky definované v Předvolbách (aktuálně „%s“)."
 
-#: ../app/batch.c:75
+#: ../app/batch.c:77
 #, c-format
 msgid "No batch interpreter specified, using the default '%s'.\n"
 msgstr "Nebyl specifikován dávkový interpretr, použije se výchozí „%s“.\n"
 
-#: ../app/batch.c:93 ../app/batch.c:111
+#: ../app/batch.c:95 ../app/batch.c:113
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr "Dávkový interpretr „%s“ není k dispozici. Dávkový režim je zakázán."
@@ -350,8 +349,6 @@ msgid "File"
 msgstr "Soubor"
 
 #: ../app/actions/actions.c:167
-#| msgctxt "plug-in-action"
-#| msgid "Filte_rs"
 msgid "Filters"
 msgstr "Filtry"
 
@@ -1672,8 +1669,6 @@ msgid "Invert the colors"
 msgstr "Invertovat barvy"
 
 #: ../app/actions/drawable-actions.c:57
-#| msgctxt "select-action"
-#| msgid "_Invert"
 msgctxt "drawable-action"
 msgid "_Value Invert"
 msgstr "_Invertovat hodnotu"
@@ -1785,7 +1780,7 @@ msgid "Rotate 90 degrees to the left"
 msgstr "Otočit o 90 stupňů doleva"
 
 #: ../app/actions/drawable-commands.c:71 ../app/actions/drawable-commands.c:87
-#: ../app/pdb/color-cmds.c:371
+#: ../app/pdb/color-cmds.c:373
 msgid "Invert"
 msgstr "Invertovat"
 
@@ -2500,21 +2495,16 @@ msgstr ""
 "%s"
 
 #: ../app/actions/filters-actions.c:43
-#| msgctxt "file-action"
-#| msgid "Create Template..."
 msgctxt "filters-action"
 msgid "Color T_emperature..."
 msgstr "T_eplota barev…"
 
 #: ../app/actions/filters-actions.c:44
-#| msgctxt "image-action"
-#| msgid "Change the size of the image content"
 msgctxt "filters-action"
 msgid "Change the color temperature of the image"
 msgstr "Změnit teplotu barev tohoto obrázku"
 
 #: ../app/actions/filters-actions.c:49
-#| msgid "Color _Balance..."
 msgctxt "filters-action"
 msgid "Color to _Alpha..."
 msgstr "B_arva do průhlednosti…"
@@ -2535,7 +2525,6 @@ msgid "Apply a gaussian blur"
 msgstr "Použít Gaussovské rozostření"
 
 #: ../app/actions/filters-actions.c:61
-#| msgid "_Posterize..."
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "_Pixelizovat…"
@@ -2551,11 +2540,32 @@ msgid "P_olar Coordinates..."
 msgstr "P_olární souřadnice"
 
 #: ../app/actions/filters-actions.c:68
-#| msgctxt "undo-type"
-#| msgid "Convert Image to Grayscale"
 msgctxt "filters-action"
 msgid "Convert image to or from polar coordinates"
 msgstr "Převést obrázek do nebo z polárních souřadnic"
+
+#: ../app/actions/filters-actions.c:73
+#, fuzzy
+msgctxt "filters-action"
+msgid "_Semi-Flatten..."
+msgstr "_Upravit vzorek…"
+
+#: ../app/actions/filters-actions.c:74
+msgctxt "filters-action"
+msgid "Replace partial transparency with a color"
+msgstr ""
+
+#: ../app/actions/filters-actions.c:79
+#, fuzzy
+msgctxt "filters-action"
+msgid "_Threshold Alpha..."
+msgstr "Prá_h…"
+
+#: ../app/actions/filters-actions.c:80
+#, fuzzy
+msgctxt "filters-action"
+msgid "Make transparency all-or-nothing"
+msgstr "Z_průhlednit"
 
 #: ../app/actions/fonts-actions.c:44
 msgctxt "fonts-action"
@@ -3047,7 +3057,6 @@ msgid "_Mode"
 msgstr "_Režim"
 
 #: ../app/actions/image-actions.c:57
-#| msgid "Direction"
 msgctxt "image-action"
 msgid "_Precision"
 msgstr "_Hloubka"
@@ -3243,8 +3252,6 @@ msgid "8 bit integer"
 msgstr "8 bitů (celé číslo)"
 
 #: ../app/actions/image-actions.c:162
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 8 bit integer"
 msgstr "Převést obrázek na barevnou hloubku v 8bitových celých číslech"
@@ -3255,8 +3262,6 @@ msgid "16 bit integer"
 msgstr "16 bitů (celé číslo)"
 
 #: ../app/actions/image-actions.c:167
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit integer"
 msgstr "Převést obrázek na barevnou hloubku v 16bitových celých číslech"
@@ -3267,8 +3272,6 @@ msgid "32 bit integer"
 msgstr "32 bitů (celé číslo)"
 
 #: ../app/actions/image-actions.c:172
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit integer"
 msgstr "Převést obrázek na barevnou hloubku v 32bitových celých číslech"
@@ -3279,8 +3282,6 @@ msgid "16 bit floating point"
 msgstr "16 bitů (desetinné číslo)"
 
 #: ../app/actions/image-actions.c:177
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit floating point"
 msgstr "Převést obrázek na barevnou hloubku v 16bitových desetinných číslech"
@@ -3291,8 +3292,6 @@ msgid "32 bit floating point"
 msgstr "32 bitů (desetinné číslo)"
 
 #: ../app/actions/image-actions.c:182
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit floating point"
 msgstr "Převést obrázek na barevnou hloubku v 32bitových desetinných číslech"
@@ -3361,16 +3360,16 @@ msgid "Set Image Print Resolution"
 msgstr "Nastavit tiskové rozlišení obrázku"
 
 #: ../app/actions/image-commands.c:400
-#: ../app/pdb/drawable-transform-cmds.c:161
-#: ../app/pdb/drawable-transform-cmds.c:249
-#: ../app/pdb/item-transform-cmds.c:164
+#: ../app/pdb/drawable-transform-cmds.c:163
+#: ../app/pdb/drawable-transform-cmds.c:251
+#: ../app/pdb/item-transform-cmds.c:166
 msgid "Flipping"
 msgstr "Překlápí se"
 
 #: ../app/actions/image-commands.c:424
-#: ../app/pdb/drawable-transform-cmds.c:604
-#: ../app/pdb/drawable-transform-cmds.c:696 ../app/pdb/image-cmds.c:616
-#: ../app/pdb/item-transform-cmds.c:435 ../app/pdb/transform-tools-cmds.c:247
+#: ../app/pdb/drawable-transform-cmds.c:606
+#: ../app/pdb/drawable-transform-cmds.c:698 ../app/pdb/image-cmds.c:618
+#: ../app/pdb/item-transform-cmds.c:437 ../app/pdb/transform-tools-cmds.c:249
 #: ../app/tools/gimprotatetool.c:125
 msgid "Rotating"
 msgstr "Otáčí se"
@@ -3390,11 +3389,11 @@ msgstr "Škálovat obrázek"
 #. Scaling
 #: ../app/actions/image-commands.c:703 ../app/actions/layers-commands.c:1145
 #: ../app/dialogs/preferences-dialog.c:1900
-#: ../app/pdb/drawable-transform-cmds.c:785
-#: ../app/pdb/drawable-transform-cmds.c:874 ../app/pdb/image-cmds.c:488
-#: ../app/pdb/image-cmds.c:524 ../app/pdb/item-transform-cmds.c:526
-#: ../app/pdb/layer-cmds.c:341 ../app/pdb/layer-cmds.c:386
-#: ../app/pdb/transform-tools-cmds.c:336 ../app/tools/gimpscaletool.c:118
+#: ../app/pdb/drawable-transform-cmds.c:787
+#: ../app/pdb/drawable-transform-cmds.c:876 ../app/pdb/image-cmds.c:490
+#: ../app/pdb/image-cmds.c:526 ../app/pdb/item-transform-cmds.c:528
+#: ../app/pdb/layer-cmds.c:343 ../app/pdb/layer-cmds.c:388
+#: ../app/pdb/transform-tools-cmds.c:338 ../app/tools/gimpscaletool.c:118
 msgid "Scaling"
 msgstr "Škáluje se"
 
@@ -4360,11 +4359,11 @@ msgstr "Zopakovat poslední"
 msgid "Re-Show Last"
 msgstr "Znovu zobrazit poslední"
 
-#: ../app/actions/plug-in-commands.c:262
+#: ../app/actions/plug-in-commands.c:264
 msgid "Reset all Filters"
 msgstr "Resetování všech filtrů"
 
-#: ../app/actions/plug-in-commands.c:281
+#: ../app/actions/plug-in-commands.c:283
 msgid "Do you really want to reset all filters to default values?"
 msgstr "Opravdu chcete přenastavit všechny filtry na výchozí hodnoty?"
 
@@ -4606,7 +4605,7 @@ msgid "_Lock selection to image edges"
 msgstr "_Uzamknout výběr k okrajům obrázku"
 
 #: ../app/actions/select-commands.c:345 ../app/actions/select-commands.c:378
-#: ../app/actions/vectors-commands.c:386 ../app/actions/vectors-commands.c:420
+#: ../app/actions/vectors-commands.c:389 ../app/actions/vectors-commands.c:423
 #: ../app/dialogs/stroke-dialog.c:281
 msgid "There is no active layer or channel to stroke to."
 msgstr ""
@@ -5242,28 +5241,28 @@ msgctxt "vectors-action"
 msgid "Advanced options"
 msgstr "Pokročilé volby"
 
-#: ../app/actions/vectors-commands.c:137
+#: ../app/actions/vectors-commands.c:138
 msgid "Path Attributes"
 msgstr "Vlastnosti cesty"
 
-#: ../app/actions/vectors-commands.c:140
+#: ../app/actions/vectors-commands.c:141
 msgid "Edit Path Attributes"
 msgstr "Upravit vlastnosti cesty"
 
-#: ../app/actions/vectors-commands.c:164 ../app/vectors/gimpvectors.c:208
+#: ../app/actions/vectors-commands.c:165 ../app/vectors/gimpvectors.c:208
 #: ../app/widgets/gimpvectorstreeview.c:250
 msgid "Path"
 msgstr "Cesta"
 
-#: ../app/actions/vectors-commands.c:165
+#: ../app/actions/vectors-commands.c:166
 msgid "New Path"
 msgstr "Nová cesta"
 
-#: ../app/actions/vectors-commands.c:168
+#: ../app/actions/vectors-commands.c:169
 msgid "New Path Options"
 msgstr "Volby nové cesty"
 
-#: ../app/actions/vectors-commands.c:392 ../app/tools/gimpvectoroptions.c:200
+#: ../app/actions/vectors-commands.c:395 ../app/tools/gimpvectoroptions.c:200
 #: ../app/tools/gimpvectortool.c:1975
 msgid "Stroke Path"
 msgstr "Vykreslit cestu"
@@ -5544,7 +5543,6 @@ msgid "Zoom _Out"
 msgstr "_Oddálit"
 
 #: ../app/actions/view-actions.c:264 ../app/actions/view-actions.c:276
-#| msgid "Zoom out"
 msgctxt "view-zoom-action"
 msgid "Zoom out"
 msgstr "Oddálit"
@@ -5555,7 +5553,6 @@ msgid "Zoom _In"
 msgstr "Přiblíž_it"
 
 #: ../app/actions/view-actions.c:270 ../app/actions/view-actions.c:282
-#| msgid "Zoom in"
 msgctxt "view-zoom-action"
 msgid "Zoom in"
 msgstr "Přiblížit"
@@ -5811,7 +5808,6 @@ msgid "Single-Window Mode"
 msgstr "Režim s jedním oknem"
 
 #: ../app/actions/windows-actions.c:125
-#| msgid "Use GIMP in a single-window mode."
 msgctxt "windows-action"
 msgid "When enabled GIMP is in a single-window mode."
 msgstr "Když je zapnuto, běží GIMP v režimu s jedním oknem."
@@ -7228,7 +7224,6 @@ msgid "Image type"
 msgstr "Typ obrázku"
 
 #: ../app/core/core-enums.c:1156
-#| msgid "Image Properties"
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr "Hloubka obrázku"
@@ -7844,7 +7839,7 @@ msgid "Select by Color"
 msgstr "Vybrat podle barvy"
 
 #: ../app/core/gimpcontext.c:640 ../app/tools/gimppaintoptions-gui.c:111
-#: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:284
+#: ../app/widgets/gimpbrushselect.c:178 ../app/widgets/gimplayertreeview.c:284
 msgid "Opacity"
 msgstr "Krytí"
 
@@ -7933,7 +7928,7 @@ msgstr "Mísit"
 msgid "Calculating distance map"
 msgstr "Vypočítává se mapa vzdáleností"
 
-#: ../app/core/gimpdrawable-blend.c:907 ../app/pdb/edit-cmds.c:756
+#: ../app/core/gimpdrawable-blend.c:907 ../app/pdb/edit-cmds.c:758
 #: ../app/tools/gimpblendtool.c:242
 msgid "Blending"
 msgstr "Mísení"
@@ -8290,22 +8285,16 @@ msgid "Converting to indexed colors (stage 3)"
 msgstr "Převádí se do indexovaných barev (krok 3)"
 
 #: ../app/core/gimpimage-convert-precision.c:63
-#| msgctxt "undo-type"
-#| msgid "Convert Image to Indexed"
 msgctxt "undo-type"
 msgid "Convert Image to 8 bit integer"
 msgstr "Převést obrázek na 8 bitů (celé číslo)"
 
 #: ../app/core/gimpimage-convert-precision.c:67
-#| msgctxt "undo-type"
-#| msgid "Convert Image to Indexed"
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit integer"
 msgstr "Převést obrázek na 16 bitů (celé číslo)"
 
 #: ../app/core/gimpimage-convert-precision.c:71
-#| msgctxt "undo-type"
-#| msgid "Convert Image to Indexed"
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit integer"
 msgstr "Převést obrázek na 32 bitů (celé číslo)"
@@ -8794,7 +8783,7 @@ msgstr ""
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Neplatný řetězec v kódování UTF-8 v souboru se vzorkem „%s“."
 
-#: ../app/core/gimppdbprogress.c:279 ../app/widgets/gimppdbdialog.c:332
+#: ../app/core/gimppdbprogress.c:282 ../app/widgets/gimppdbdialog.c:334
 #, c-format
 msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgstr ""
@@ -8875,7 +8864,7 @@ msgstr "Plovoucí výběr"
 msgid "Floated Layer"
 msgstr "Plovoucí vrstva"
 
-#: ../app/core/gimpstrokeoptions.c:181
+#: ../app/core/gimpstrokeoptions.c:182
 msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
@@ -9073,7 +9062,7 @@ msgstr "Povolit rozp_tyl průhlednosti"
 msgid "Converting to indexed colors"
 msgstr "Převádí se do indexovaných barev"
 
-#: ../app/dialogs/convert-dialog.c:416 ../app/pdb/convert-cmds.c:160
+#: ../app/dialogs/convert-dialog.c:416 ../app/pdb/convert-cmds.c:162
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "Nelze převést do palety s více než 256 barvami."
 
@@ -9435,6 +9424,52 @@ msgstr "Typ vyplňování vrstvy"
 #: ../app/dialogs/layer-options-dialog.c:217
 msgid "Set name from _text"
 msgstr "Nastavit název z _textu"
+
+#: ../app/dialogs/lebl-dialog.c:123
+#, c-format
+msgid "<b>GAME OVER</b> at level %d!"
+msgstr ""
+
+#. Translators: the first and third strings are similar to a
+#. * title, and the second string is a small information text.
+#. * The spaces are there only to separate all the strings, so
+#. try to keep them as is.
+#: ../app/dialogs/lebl-dialog.c:130
+#, c-format
+msgid "%1$s   %2$s   %3$s"
+msgstr ""
+
+#: ../app/dialogs/lebl-dialog.c:131
+msgid "Press 'q' to quit"
+msgstr ""
+
+#: ../app/dialogs/lebl-dialog.c:136
+msgid "Paused"
+msgstr ""
+
+#. Translators: the first string is a title and the second
+#. * string is a small information text.
+#: ../app/dialogs/lebl-dialog.c:139 ../app/dialogs/lebl-dialog.c:150
+#, c-format
+msgid "%1$s\t%2$s"
+msgstr ""
+
+#: ../app/dialogs/lebl-dialog.c:140
+msgid "Press 'p' to unpause"
+msgstr ""
+
+#: ../app/dialogs/lebl-dialog.c:146
+#, c-format
+msgid "Level: %s,  Lives: %s"
+msgstr ""
+
+#: ../app/dialogs/lebl-dialog.c:151
+msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
+msgstr ""
+
+#: ../app/dialogs/lebl-dialog.c:800
+msgid "Killer GEGLs from Outer Space"
+msgstr ""
 
 #: ../app/dialogs/module-dialog.c:126
 msgid "Module Manager"
@@ -9960,12 +9995,10 @@ msgid "Default Image"
 msgstr "Výchozí obrázek"
 
 #: ../app/dialogs/preferences-dialog.c:2029
-#| msgid "Edit Quick Mask Color"
 msgid "Set the default Quick Mask color"
 msgstr "Nastavit výchozí barvu rychlé masky"
 
 #: ../app/dialogs/preferences-dialog.c:2035
-#| msgid "Edit Quick Mask Color"
 msgid "Quick Mask color:"
 msgstr "Barva rychlé masky:"
 
@@ -10838,7 +10871,6 @@ msgstr "Pixely aktivní vrstvy jsou uzamčené."
 #: ../app/display/gimpdisplayshell-dnd.c:373
 #: ../app/widgets/gimpdrawabletreeview.c:241
 #: ../app/widgets/gimpdrawabletreeview.c:329
-#| msgid "Drop New Layer"
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Upustit vzorek do vrstvy"
@@ -10846,7 +10878,6 @@ msgstr "Upustit vzorek do vrstvy"
 #: ../app/display/gimpdisplayshell-dnd.c:374
 #: ../app/widgets/gimpdrawabletreeview.c:265
 #: ../app/widgets/gimpdrawabletreeview.c:330
-#| msgid "Drop layers"
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Upustit barvu do vrstvy"
@@ -10931,30 +10962,30 @@ msgstr "(naimportován)"
 msgid "Cancel <i>%s</i>"
 msgstr "Zrušit <i>%s</i>"
 
-#: ../app/file/file-open.c:138 ../app/file/file-save.c:112
+#: ../app/file/file-open.c:138 ../app/file/file-save.c:114
 msgid "Not a regular file"
 msgstr "Není běžný soubor"
 
-#: ../app/file/file-open.c:190
+#: ../app/file/file-open.c:191
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr "Zásuvný modul %s vrátil stav ÚSPĚCH, ale nevrátil žádný obrázek"
 
-#: ../app/file/file-open.c:201
+#: ../app/file/file-open.c:202
 #, c-format
 msgid "%s plug-In could not open image"
 msgstr "Zásuvný modul %s nemohl otevřít obrázek"
 
-#: ../app/file/file-open.c:564
+#: ../app/file/file-open.c:567
 msgid "Image doesn't contain any layers"
 msgstr "Obrázek neobsahuje žádné vrstvy"
 
-#: ../app/file/file-open.c:617
+#: ../app/file/file-open.c:620
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Otevírání „%s“ selhalo: %s"
 
-#: ../app/file/file-open.c:724
+#: ../app/file/file-open.c:727
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -10965,7 +10996,7 @@ msgstr ""
 msgid "Unknown file type"
 msgstr "Neznámý typ souboru"
 
-#: ../app/file/file-save.c:208
+#: ../app/file/file-save.c:210
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "Zásuvný modul %s nemohl uložit obrázek"
@@ -10982,8 +11013,6 @@ msgstr "Neplatná posloupnost znaků v URI"
 #: ../app/gegl/gimp-babl.c:154 ../app/gegl/gimp-babl.c:155
 #: ../app/gegl/gimp-babl.c:156 ../app/gegl/gimp-babl.c:157
 #: ../app/gegl/gimp-babl.c:158
-#| msgctxt "histogram-channel"
-#| msgid "RGB"
 msgid "RGB"
 msgstr "RGB"
 
@@ -10996,48 +11025,36 @@ msgstr "RGB-průhlednost"
 #: ../app/gegl/gimp-babl.c:166 ../app/gegl/gimp-babl.c:167
 #: ../app/gegl/gimp-babl.c:168 ../app/gegl/gimp-babl.c:169
 #: ../app/gegl/gimp-babl.c:170 ../app/gegl/gimp-babl.c:171
-#| msgctxt "image-convert-action"
-#| msgid "_Grayscale"
 msgid "Grayscale"
 msgstr "Odstíny šedi"
 
 #: ../app/gegl/gimp-babl.c:173 ../app/gegl/gimp-babl.c:174
 #: ../app/gegl/gimp-babl.c:175 ../app/gegl/gimp-babl.c:176
 #: ../app/gegl/gimp-babl.c:177
-#| msgctxt "image-convert-action"
-#| msgid "_Grayscale"
 msgid "Grayscale-alpha"
 msgstr "Odstíny šedi-průhlednost"
 
 #: ../app/gegl/gimp-babl.c:179 ../app/gegl/gimp-babl.c:180
 #: ../app/gegl/gimp-babl.c:181 ../app/gegl/gimp-babl.c:182
 #: ../app/gegl/gimp-babl.c:183
-#| msgctxt "image-action"
-#| msgid "C_omponents"
 msgid "Red component"
 msgstr "Červená složka"
 
 #: ../app/gegl/gimp-babl.c:185 ../app/gegl/gimp-babl.c:186
 #: ../app/gegl/gimp-babl.c:187 ../app/gegl/gimp-babl.c:188
 #: ../app/gegl/gimp-babl.c:189
-#| msgctxt "image-action"
-#| msgid "C_omponents"
 msgid "Green component"
 msgstr "Zelená složka"
 
 #: ../app/gegl/gimp-babl.c:191 ../app/gegl/gimp-babl.c:192
 #: ../app/gegl/gimp-babl.c:193 ../app/gegl/gimp-babl.c:194
 #: ../app/gegl/gimp-babl.c:195
-#| msgctxt "image-action"
-#| msgid "C_omponents"
 msgid "Blue component"
 msgstr "Modrá složka"
 
 #: ../app/gegl/gimp-babl.c:197 ../app/gegl/gimp-babl.c:198
 #: ../app/gegl/gimp-babl.c:199 ../app/gegl/gimp-babl.c:200
 #: ../app/gegl/gimp-babl.c:201 ../app/gegl/gimp-babl.c:202
-#| msgctxt "image-action"
-#| msgid "C_omponents"
 msgid "Alpha component"
 msgstr "Průhledná složka"
 
@@ -11046,7 +11063,6 @@ msgid "Indexed-alpha"
 msgstr "Indexované-průhlednost"
 
 #: ../app/gegl/gimp-babl.c:232
-#| msgid "Index %d"
 msgid "Indexed"
 msgstr "Indexované"
 
@@ -11282,95 +11298,94 @@ msgctxt "ink-blob-type"
 msgid "Diamond"
 msgstr "Kosočtverec"
 
-#: ../app/pdb/channel-cmds.c:186
+#: ../app/pdb/channel-cmds.c:188
 msgid "Combine Masks"
 msgstr "Kombinovat masky"
 
-#: ../app/pdb/color-cmds.c:81
+#: ../app/pdb/color-cmds.c:83
 msgctxt "undo-type"
 msgid "Brightness-Contrast"
 msgstr "Jas-kontrast"
 
-#: ../app/pdb/color-cmds.c:140
-#| msgid "Levels"
+#: ../app/pdb/color-cmds.c:142
 msgctxt "undo-type"
 msgid "Levels"
 msgstr "Úrovně"
 
-#: ../app/pdb/color-cmds.c:234 ../app/tools/gimpposterizetool.c:78
+#: ../app/pdb/color-cmds.c:236 ../app/tools/gimpposterizetool.c:78
 msgid "Posterize"
 msgstr "Posterizovat"
 
-#: ../app/pdb/color-cmds.c:271 ../app/pdb/color-cmds.c:310
+#: ../app/pdb/color-cmds.c:273 ../app/pdb/color-cmds.c:312
 #: ../app/tools/gimpdesaturatetool.c:74
 msgid "Desaturate"
 msgstr "Odbarvit"
 
-#: ../app/pdb/color-cmds.c:416 ../app/pdb/color-cmds.c:462
+#: ../app/pdb/color-cmds.c:418 ../app/pdb/color-cmds.c:464
 msgctxt "undo-type"
 msgid "Curves"
 msgstr "Křivky"
 
-#: ../app/pdb/color-cmds.c:515
+#: ../app/pdb/color-cmds.c:517
 msgctxt "undo-type"
 msgid "Color Balance"
 msgstr "Vyvážení barev"
 
-#: ../app/pdb/color-cmds.c:560
+#: ../app/pdb/color-cmds.c:562
 msgctxt "undo-type"
 msgid "Colorize"
 msgstr "Obarvit"
 
-#: ../app/pdb/color-cmds.c:683 ../app/tools/gimphuesaturationtool.c:97
+#: ../app/pdb/color-cmds.c:685 ../app/tools/gimphuesaturationtool.c:97
 msgid "Hue-Saturation"
 msgstr "Odstín-sytost"
 
-#: ../app/pdb/color-cmds.c:724 ../app/tools/gimpblendoptions.c:276
+#: ../app/pdb/color-cmds.c:726 ../app/tools/gimpblendoptions.c:276
 #: ../app/tools/gimpbucketfilloptions.c:286
 #: ../app/tools/gimpregionselectoptions.c:217
 #: ../app/tools/gimpthresholdtool.c:87
 msgid "Threshold"
 msgstr "Práh"
 
-#: ../app/pdb/drawable-cmds.c:518
+#: ../app/pdb/drawable-cmds.c:520
 msgid "Plug-In"
 msgstr "Zásuvný modul"
 
-#: ../app/pdb/drawable-transform-cmds.c:347
-#: ../app/pdb/drawable-transform-cmds.c:445
-#: ../app/pdb/item-transform-cmds.c:264 ../app/pdb/transform-tools-cmds.c:165
+#: ../app/pdb/drawable-transform-cmds.c:349
+#: ../app/pdb/drawable-transform-cmds.c:447
+#: ../app/pdb/item-transform-cmds.c:266 ../app/pdb/transform-tools-cmds.c:167
 #: ../app/tools/gimpperspectivetool.c:82
 msgid "Perspective"
 msgstr "Perspektiva"
 
-#: ../app/pdb/drawable-transform-cmds.c:959
-#: ../app/pdb/drawable-transform-cmds.c:1044
-#: ../app/pdb/item-transform-cmds.c:613 ../app/pdb/transform-tools-cmds.c:420
+#: ../app/pdb/drawable-transform-cmds.c:961
+#: ../app/pdb/drawable-transform-cmds.c:1046
+#: ../app/pdb/item-transform-cmds.c:615 ../app/pdb/transform-tools-cmds.c:422
 #: ../app/tools/gimpsheartool.c:113
 msgid "Shearing"
 msgstr "Naklánění"
 
-#: ../app/pdb/drawable-transform-cmds.c:1140
-#: ../app/pdb/item-transform-cmds.c:711 ../app/pdb/transform-tools-cmds.c:509
+#: ../app/pdb/drawable-transform-cmds.c:1142
+#: ../app/pdb/item-transform-cmds.c:713 ../app/pdb/transform-tools-cmds.c:511
 msgid "2D Transform"
 msgstr "Transformace 2D"
 
-#: ../app/pdb/drawable-transform-cmds.c:1236
-#: ../app/pdb/drawable-transform-cmds.c:1340
-#: ../app/pdb/drawable-transform-cmds.c:1444
-#: ../app/pdb/item-transform-cmds.c:817
+#: ../app/pdb/drawable-transform-cmds.c:1238
+#: ../app/pdb/drawable-transform-cmds.c:1342
+#: ../app/pdb/drawable-transform-cmds.c:1446
+#: ../app/pdb/item-transform-cmds.c:819
 msgid "2D Transforming"
 msgstr "Transformace 2D"
 
-#: ../app/pdb/floating-sel-cmds.c:67
+#: ../app/pdb/floating-sel-cmds.c:69
 msgid "Cannot remove this layer because it is not a floating selection."
 msgstr "Tuto vrstvu nelze odstranit, protože se nejedná o plovoucí výběr."
 
-#: ../app/pdb/floating-sel-cmds.c:100
+#: ../app/pdb/floating-sel-cmds.c:102
 msgid "Cannot anchor this layer because it is not a floating selection."
 msgstr "Tuto vrstvu nelze ukotvit, protože se nejedná o plovoucí výběr."
 
-#: ../app/pdb/floating-sel-cmds.c:133
+#: ../app/pdb/floating-sel-cmds.c:135
 msgid ""
 "Cannot convert this layer to a normal layer because it is not a floating "
 "selection."
@@ -11378,13 +11393,13 @@ msgstr ""
 "Tuto vrstvu nelze převést na normální vrstvu, protože se nejedná o plovoucí "
 "výběr."
 
-#: ../app/pdb/gimppdb.c:305 ../app/pdb/gimppdb.c:375
+#: ../app/pdb/gimppdb.c:305 ../app/pdb/gimppdb.c:376
 #: ../app/pdb/gimppdb-query.c:299
 #, c-format
 msgid "Procedure '%s' not found"
 msgstr "Procedura „%s“ nebyla nalezena"
 
-#: ../app/pdb/gimppdb.c:410
+#: ../app/pdb/gimppdb.c:411
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong type for argument #%d. Expected "
@@ -11568,14 +11583,11 @@ msgstr "Obrázek „%s“ (%d) je typu „%s“, ale je očekáván obrázek typ
 
 #: ../app/pdb/gimppdb-utils.c:621
 #, c-format
-#| msgid "Image '%s' (%d) is already of type '%s'"
 msgid "Image '%s' (%d) must not be of type '%s'"
 msgstr "Obrázek „%s“ (%d) nesmí být typu „%s“"
 
 #: ../app/pdb/gimppdb-utils.c:641
 #, c-format
-#| msgid ""
-#| "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgid ""
 "Image '%s' (%d) has precision '%s', but an image of precision '%s' is "
 "expected"
@@ -11584,7 +11596,6 @@ msgstr ""
 
 #: ../app/pdb/gimppdb-utils.c:664
 #, c-format
-#| msgid "Image '%s' (%d) is already of type '%s'"
 msgid "Image '%s' (%d) must not be of precision '%s'"
 msgstr "Obrázek „%s“ (%d) nesmí mít hloubku „%s“"
 
@@ -11593,12 +11604,12 @@ msgstr "Obrázek „%s“ (%d) nesmí mít hloubku „%s“"
 msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr "Objekt vektorů %d neobsahuje vykreslení s ID %d"
 
-#: ../app/pdb/gimpprocedure.c:372 ../app/plug-in/gimppluginprocframe.c:208
+#: ../app/pdb/gimpprocedure.c:375 ../app/plug-in/gimppluginprocframe.c:212
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Procedura „%s“ nevrátila návratovou hodnotu"
 
-#: ../app/pdb/gimpprocedure.c:642
+#: ../app/pdb/gimpprocedure.c:645
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -11607,7 +11618,7 @@ msgstr ""
 "Procedura „%s“ vrátila nesprávný typ hodnoty pro návratovou hodnotu „%s“ (č. "
 "%d). Očekáváno %s, obdrženo %s."
 
-#: ../app/pdb/gimpprocedure.c:654
+#: ../app/pdb/gimpprocedure.c:657
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#"
@@ -11616,7 +11627,7 @@ msgstr ""
 "Procedura „%s“ byla zavolána s nesprávným typem hodnoty pro argument "
 "„%s“ (č. %d). Očekáváno %s, obdrženo %s."
 
-#: ../app/pdb/gimpprocedure.c:687
+#: ../app/pdb/gimpprocedure.c:690
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -11625,7 +11636,7 @@ msgstr ""
 "Procedura „%s“ vrátila neplatné ID pro argument „%s“. Zásuvný modul se "
 "pravděpodobně snaží pracovat s vrstvou, která již neexistuje."
 
-#: ../app/pdb/gimpprocedure.c:700
+#: ../app/pdb/gimpprocedure.c:703
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -11634,7 +11645,7 @@ msgstr ""
 "Procedura „%s“ byla zavolána s neplatným ID pro argument „%s“. Zásuvný modul "
 "se pravděpodobně snaží pracovat s vrstvou, která již neexistuje."
 
-#: ../app/pdb/gimpprocedure.c:717
+#: ../app/pdb/gimpprocedure.c:720
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -11643,7 +11654,7 @@ msgstr ""
 "Procedura „%s“ vrátila neplatné ID pro argument „%s“. Zásuvný modul se "
 "pravděpodobně snaží pracovat s obrázkem, který již neexistuje."
 
-#: ../app/pdb/gimpprocedure.c:730
+#: ../app/pdb/gimpprocedure.c:733
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -11652,7 +11663,7 @@ msgstr ""
 "Procedura „%s“ byla zavolána s neplatným ID pro argument „%s“. Zásuvný modul "
 "se pravděpodobně snaží pracovat s obrázkem, který již neexistuje."
 
-#: ../app/pdb/gimpprocedure.c:751
+#: ../app/pdb/gimpprocedure.c:754
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -11661,7 +11672,7 @@ msgstr ""
 "Procedura „%s“ vrátila „%s“ jako návratovou hodnotu „%s“ (č. %d, typ %s). "
 "Tato hodnota je mimo rozsah."
 
-#: ../app/pdb/gimpprocedure.c:765
+#: ../app/pdb/gimpprocedure.c:768
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -11670,93 +11681,99 @@ msgstr ""
 "Procedura „%s“ byla zavolána s hodnotou „%s“ pro argument „%s“ (č. %d, typ "
 "%s). Tato hodnota je mimo rozsah."
 
-#: ../app/pdb/image-cmds.c:2443
+#: ../app/pdb/image-cmds.c:2445
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
 "Rozlišení obrázku je mimo rozsah, místo něj se použije výchozí rozlišení."
 
-#: ../app/pdb/image-select-cmds.c:299 ../app/pdb/selection-tools-cmds.c:221
+#: ../app/pdb/image-select-cmds.c:301 ../app/pdb/selection-tools-cmds.c:223
 #: ../app/tools/gimpfreeselecttool.c:196
 msgid "Free Select"
 msgstr "Volný výběr"
 
-#: ../app/pdb/layer-cmds.c:486 ../app/pdb/layer-cmds.c:524
+#: ../app/pdb/layer-cmds.c:488 ../app/pdb/layer-cmds.c:526
 msgid "Move Layer"
 msgstr "Přesunout vrstvu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:77
-#| msgctxt "undo-type"
-#| msgid "Add Color to Colormap"
+#: ../app/pdb/plug-in-compat-cmds.c:80
 msgctxt "undo-type"
 msgid "Color to Alpha"
 msgstr "Barva do průhlednosti"
 
-#: ../app/pdb/plug-in-compat-cmds.c:118 ../app/pdb/plug-in-compat-cmds.c:161
-#| msgctxt "color-frame-mode"
-#| msgid "Pixel"
+#: ../app/pdb/plug-in-compat-cmds.c:121 ../app/pdb/plug-in-compat-cmds.c:164
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Pixelizovat"
 
-#: ../app/pdb/plug-in-compat-cmds.c:213
+#: ../app/pdb/plug-in-compat-cmds.c:216
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Polární souřadnice"
 
-#: ../app/pdb/plug-in-compat-cmds.c:250
-#| msgid "Invert"
+#: ../app/pdb/plug-in-compat-cmds.c:260
+msgctxt "undo-type"
+msgid "Semi-Flatten"
+msgstr ""
+
+#: ../app/pdb/plug-in-compat-cmds.c:301
+#, fuzzy
+msgctxt "undo-type"
+msgid "Threshold Alpha"
+msgstr "Práh"
+
+#: ../app/pdb/plug-in-compat-cmds.c:338
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Invertovat hodnotu"
 
-#: ../app/pdb/text-layer-cmds.c:93
+#: ../app/pdb/text-layer-cmds.c:95
 #, c-format
 msgid "Failed to create text layer"
 msgstr "Vytvoření textové vrstvy selhalo"
 
-#: ../app/pdb/text-layer-cmds.c:166 ../app/pdb/text-layer-cmds.c:276
-#: ../app/pdb/text-layer-cmds.c:355 ../app/pdb/text-layer-cmds.c:428
-#: ../app/pdb/text-layer-cmds.c:500 ../app/pdb/text-layer-cmds.c:572
-#: ../app/pdb/text-layer-cmds.c:644 ../app/pdb/text-layer-cmds.c:716
-#: ../app/pdb/text-layer-cmds.c:788 ../app/pdb/text-layer-cmds.c:858
-#: ../app/pdb/text-layer-cmds.c:930 ../app/pdb/text-layer-cmds.c:1002
-#: ../app/pdb/text-layer-cmds.c:1074 ../app/pdb/text-layer-cmds.c:1116
-#: ../app/pdb/text-layer-cmds.c:1198
+#: ../app/pdb/text-layer-cmds.c:168 ../app/pdb/text-layer-cmds.c:278
+#: ../app/pdb/text-layer-cmds.c:357 ../app/pdb/text-layer-cmds.c:430
+#: ../app/pdb/text-layer-cmds.c:502 ../app/pdb/text-layer-cmds.c:574
+#: ../app/pdb/text-layer-cmds.c:646 ../app/pdb/text-layer-cmds.c:718
+#: ../app/pdb/text-layer-cmds.c:790 ../app/pdb/text-layer-cmds.c:860
+#: ../app/pdb/text-layer-cmds.c:932 ../app/pdb/text-layer-cmds.c:1004
+#: ../app/pdb/text-layer-cmds.c:1076 ../app/pdb/text-layer-cmds.c:1118
+#: ../app/pdb/text-layer-cmds.c:1200
 msgid "Set text layer attribute"
 msgstr "Nastavit vlastnosti textové vrstvy"
 
-#: ../app/pdb/vectors-cmds.c:325
+#: ../app/pdb/vectors-cmds.c:327
 msgid "Remove path stroke"
 msgstr "Odstranit vykreslení cesty"
 
-#: ../app/pdb/vectors-cmds.c:361
+#: ../app/pdb/vectors-cmds.c:363
 msgid "Close path stroke"
 msgstr "Spojit vykreslení cesty"
 
-#: ../app/pdb/vectors-cmds.c:401
+#: ../app/pdb/vectors-cmds.c:403
 msgid "Translate path stroke"
 msgstr "Přesunout vykreslení cesty"
 
-#: ../app/pdb/vectors-cmds.c:441
+#: ../app/pdb/vectors-cmds.c:443
 msgid "Scale path stroke"
 msgstr "Škálovat vykreslení cesty"
 
-#: ../app/pdb/vectors-cmds.c:483
+#: ../app/pdb/vectors-cmds.c:485
 msgid "Rotate path stroke"
 msgstr "Otočit vykreslení cesty"
 
-#: ../app/pdb/vectors-cmds.c:523 ../app/pdb/vectors-cmds.c:567
+#: ../app/pdb/vectors-cmds.c:525 ../app/pdb/vectors-cmds.c:569
 msgid "Flip path stroke"
 msgstr "Překlopit vykreslení cesty"
 
-#: ../app/pdb/vectors-cmds.c:696 ../app/pdb/vectors-cmds.c:819
-#: ../app/pdb/vectors-cmds.c:1039
+#: ../app/pdb/vectors-cmds.c:698 ../app/pdb/vectors-cmds.c:821
+#: ../app/pdb/vectors-cmds.c:1041
 msgid "Add path stroke"
 msgstr "Přidat vykreslení cesty"
 
-#: ../app/pdb/vectors-cmds.c:872 ../app/pdb/vectors-cmds.c:925
-#: ../app/pdb/vectors-cmds.c:986
+#: ../app/pdb/vectors-cmds.c:874 ../app/pdb/vectors-cmds.c:927
+#: ../app/pdb/vectors-cmds.c:988
 msgid "Extend path stroke"
 msgstr "Rozšířit vykreslení cesty"
 
@@ -11848,7 +11865,7 @@ msgstr ""
 "Chyba provádění procedury „%s“:\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:986
+#: ../app/plug-in/gimppluginprocedure.c:987
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -11857,7 +11874,7 @@ msgstr ""
 "Chyba volání zásuvného modulu „%s“:\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:998
+#: ../app/plug-in/gimppluginprocedure.c:999
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -11870,16 +11887,16 @@ msgstr ""
 msgid "Cancelled"
 msgstr "Zrušeno"
 
-#: ../app/plug-in/plug-in-icc-profile.c:112
-#: ../app/plug-in/plug-in-icc-profile.c:187
-#: ../app/plug-in/plug-in-icc-profile.c:246
+#: ../app/plug-in/plug-in-icc-profile.c:114
+#: ../app/plug-in/plug-in-icc-profile.c:189
+#: ../app/plug-in/plug-in-icc-profile.c:248
 #, c-format
 msgid "Error running '%s'"
 msgstr "Chyba běhu zásuvného modulu „%s“"
 
-#: ../app/plug-in/plug-in-icc-profile.c:136
-#: ../app/plug-in/plug-in-icc-profile.c:197
-#: ../app/plug-in/plug-in-icc-profile.c:256
+#: ../app/plug-in/plug-in-icc-profile.c:138
+#: ../app/plug-in/plug-in-icc-profile.c:199
+#: ../app/plug-in/plug-in-icc-profile.c:258
 #, c-format
 msgid "Plug-In missing (%s)"
 msgstr "Chybí zásuvný modul (%s)"
@@ -12447,7 +12464,6 @@ msgid "Export Colorize Settings"
 msgstr "Exportovat nastavení obarvení"
 
 #: ../app/tools/gimpcolorizetool.c:139
-#| msgid "Posterize does not operate on indexed layers."
 msgid "Colorize does not operate on grayscale layers."
 msgstr "Obarvení nefunguje na vrstvách v odstínech šedi."
 
@@ -12471,12 +12487,10 @@ msgid "_Lightness:"
 msgstr "Svět_lost:"
 
 #: ../app/tools/gimpcolorizetool.c:262
-#| msgid "Colorize"
 msgid "Colorize Color"
 msgstr "Obarvit barvu"
 
 #: ../app/tools/gimpcolorizetool.c:280 ../app/widgets/gimppropwidgets.c:1528
-#| msgid "Color Picker Tool: Set colors from image pixels"
 msgid "Pick color from image"
 msgstr "Vzít barvu z obrázku"
 
@@ -13057,7 +13071,7 @@ msgstr "GEGL: použít libovolnou operaci GEGL"
 msgid "_GEGL Operation..."
 msgstr "Operace _GEGL…"
 
-#: ../app/tools/gimpgegltool.c:317
+#: ../app/tools/gimpgegltool.c:319
 msgid "Select an operation from the list above"
 msgstr "Vyberte operaci ze seznamu výše"
 
@@ -13356,8 +13370,6 @@ msgid "Zoom Tool: Adjust the zoom level"
 msgstr "Přiblížení: změnit úroveň přiblížení"
 
 #: ../app/tools/gimpmagnifytool.c:93
-#| msgctxt "view-action"
-#| msgid "_Zoom"
 msgid "_Zoom"
 msgstr "Při_blížení"
 
@@ -13488,7 +13500,6 @@ msgid "Add Guide: "
 msgstr "Přidat vodítko: "
 
 #: ../app/tools/gimpoperationtool.c:101
-#| msgid "GEGL Tool: Use an arbitrary GEGL operation"
 msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr "Operační nástroj: použít libovolnou operaci GEGL"
 
@@ -13502,7 +13513,7 @@ msgstr "Štěte_c"
 
 #: ../app/tools/gimppaintoptions-gui.c:92
 #: ../app/tools/gimpselectionoptions.c:218
-#: ../app/widgets/gimpbrushselect.c:190 ../app/widgets/gimplayertreeview.c:268
+#: ../app/widgets/gimpbrushselect.c:191 ../app/widgets/gimplayertreeview.c:268
 msgid "Mode:"
 msgstr "Režim:"
 
@@ -15433,31 +15444,31 @@ msgstr ""
 "Zásuvný modul prohlížeče nápovědy GIMP zřejmě ve vaší instalaci chybí. "
 "Můžete však k pročítání nápovědy využít webový prohlížeč."
 
-#: ../app/widgets/gimphelp.c:337
+#: ../app/widgets/gimphelp.c:342
 msgid "Help browser doesn't start"
 msgstr "Prohlížeč nápovědy se nespouští"
 
-#: ../app/widgets/gimphelp.c:338
+#: ../app/widgets/gimphelp.c:343
 msgid "Could not start the GIMP help browser plug-in."
 msgstr "Nelze spustit zásuvný modul prohlížeče nápovědy GIMP."
 
-#: ../app/widgets/gimphelp.c:365
+#: ../app/widgets/gimphelp.c:370
 msgid "Use _Web Browser"
 msgstr "Použít _webový prohlížeč"
 
-#: ../app/widgets/gimphelp.c:611
+#: ../app/widgets/gimphelp.c:620
 msgid "GIMP user manual is missing"
 msgstr "Uživatelská příručka aplikace GIMP schází"
 
-#: ../app/widgets/gimphelp.c:618
+#: ../app/widgets/gimphelp.c:627
 msgid "_Read Online"
 msgstr "Čís_t on-line"
 
-#: ../app/widgets/gimphelp.c:642
+#: ../app/widgets/gimphelp.c:651
 msgid "The GIMP user manual is not installed on your computer."
 msgstr "Uživatelská příručka GIMP není na vašem počítači nainstalována."
 
-#: ../app/widgets/gimphelp.c:645
+#: ../app/widgets/gimphelp.c:654
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
@@ -15527,7 +15538,6 @@ msgid "Color space:"
 msgstr "Prostor barev:"
 
 #: ../app/widgets/gimpimagepropview.c:132
-#| msgid "Version:"
 msgid "Precision:"
 msgstr "Hloubka:"
 
@@ -15741,7 +15751,7 @@ msgstr "zadejte štítky"
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
 #. * http://unicode.org/review/pr-23.html
 #.
-#: ../app/widgets/gimptagentry.c:1735
+#: ../app/widgets/gimptagentry.c:1733
 msgid ","
 msgstr ","
 
@@ -15759,7 +15769,6 @@ msgid "Color _space:"
 msgstr "_Prostor barev:"
 
 #: ../app/widgets/gimptemplateeditor.c:394
-#| msgid "_X resolution:"
 msgid "_Precision:"
 msgstr "_Hloubka:"
 

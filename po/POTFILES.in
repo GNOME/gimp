@@ -188,6 +188,7 @@ app/dialogs/input-devices-dialog.c
 app/dialogs/keyboard-shortcuts-dialog.c
 app/dialogs/layer-add-mask-dialog.c
 app/dialogs/layer-options-dialog.c
+app/dialogs/lebl-dialog.c
 app/dialogs/module-dialog.c
 app/dialogs/offset-dialog.c
 app/dialogs/palette-import-dialog.c

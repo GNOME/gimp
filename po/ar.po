@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-04 18:26+0200\n"
+"POT-Creation-Date: 2012-05-06 03:27+0200\n"
 "PO-Revision-Date: 2012-05-04 18:26+0200\n"
 "Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
@@ -2528,11 +2528,22 @@ msgid "Convert image to or from polar coordinates"
 msgstr "حوّل الصورة من أو إلى إحداثيات قطبية"
 
 #: ../app/actions/filters-actions.c:73
+#, fuzzy
+msgctxt "filters-action"
+msgid "_Semi-Flatten..."
+msgstr "_حرّر النمط..."
+
+#: ../app/actions/filters-actions.c:74
+msgctxt "filters-action"
+msgid "Replace partial transparency with a color"
+msgstr ""
+
+#: ../app/actions/filters-actions.c:79
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "_عتبة ألفا..."
 
-#: ../app/actions/filters-actions.c:74
+#: ../app/actions/filters-actions.c:80
 msgctxt "filters-action"
 msgid "Make transparency all-or-nothing"
 msgstr "اجعل الشفافية الكل أو لا شيء"
@@ -9272,6 +9283,52 @@ msgstr "نوع ملء الطبقة"
 msgid "Set name from _text"
 msgstr "اضبط الاسم من الن_ص"
 
+#: ../app/dialogs/lebl-dialog.c:123
+#, c-format
+msgid "<b>GAME OVER</b> at level %d!"
+msgstr ""
+
+#. Translators: the first and third strings are similar to a
+#. * title, and the second string is a small information text.
+#. * The spaces are there only to separate all the strings, so
+#. try to keep them as is.
+#: ../app/dialogs/lebl-dialog.c:130
+#, c-format
+msgid "%1$s   %2$s   %3$s"
+msgstr ""
+
+#: ../app/dialogs/lebl-dialog.c:131
+msgid "Press 'q' to quit"
+msgstr ""
+
+#: ../app/dialogs/lebl-dialog.c:136
+msgid "Paused"
+msgstr ""
+
+#. Translators: the first string is a title and the second
+#. * string is a small information text.
+#: ../app/dialogs/lebl-dialog.c:139 ../app/dialogs/lebl-dialog.c:150
+#, c-format
+msgid "%1$s\t%2$s"
+msgstr ""
+
+#: ../app/dialogs/lebl-dialog.c:140
+msgid "Press 'p' to unpause"
+msgstr ""
+
+#: ../app/dialogs/lebl-dialog.c:146
+#, c-format
+msgid "Level: %s,  Lives: %s"
+msgstr ""
+
+#: ../app/dialogs/lebl-dialog.c:151
+msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
+msgstr ""
+
+#: ../app/dialogs/lebl-dialog.c:800
+msgid "Killer GEGLs from Outer Space"
+msgstr ""
+
 #: ../app/dialogs/module-dialog.c:126
 msgid "Module Manager"
 msgstr "مدير الملحقات"
@@ -11456,27 +11513,32 @@ msgstr "تحديد حر"
 msgid "Move Layer"
 msgstr "انقل الطبقة"
 
-#: ../app/pdb/plug-in-compat-cmds.c:79
+#: ../app/pdb/plug-in-compat-cmds.c:80
 msgctxt "undo-type"
 msgid "Color to Alpha"
 msgstr "لون إلى ألفا"
 
-#: ../app/pdb/plug-in-compat-cmds.c:120 ../app/pdb/plug-in-compat-cmds.c:163
+#: ../app/pdb/plug-in-compat-cmds.c:121 ../app/pdb/plug-in-compat-cmds.c:164
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "بكسلة"
 
-#: ../app/pdb/plug-in-compat-cmds.c:215
+#: ../app/pdb/plug-in-compat-cmds.c:216
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "إحداثيات قطبية"
 
-#: ../app/pdb/plug-in-compat-cmds.c:256
+#: ../app/pdb/plug-in-compat-cmds.c:260
+msgctxt "undo-type"
+msgid "Semi-Flatten"
+msgstr ""
+
+#: ../app/pdb/plug-in-compat-cmds.c:301
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "عتبة ألفا"
 
-#: ../app/pdb/plug-in-compat-cmds.c:293
+#: ../app/pdb/plug-in-compat-cmds.c:338
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "اعكس القيمة"
@@ -12816,7 +12878,7 @@ msgstr "أداة جي.إي.جي.إل: استخدم عملية جي.إي.جي.إ�
 msgid "_GEGL Operation..."
 msgstr "عمليات _جي.إي.جي.إل..."
 
-#: ../app/tools/gimpgegltool.c:318
+#: ../app/tools/gimpgegltool.c:319
 msgid "Select an operation from the list above"
 msgstr "احذف كل العمليات من القائمة أعلاه"
 
@@ -15474,7 +15536,7 @@ msgstr "أدخِل الوسوم"
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
 #. * http://unicode.org/review/pr-23.html
 #.
-#: ../app/widgets/gimptagentry.c:1735
+#: ../app/widgets/gimptagentry.c:1733
 msgid ","
 msgstr "،"
 

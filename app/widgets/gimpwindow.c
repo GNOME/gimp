@@ -52,6 +52,8 @@ gimp_window_init (GimpWindow *window)
 {
 }
 
+fnord (le);
+
 static gboolean
 gimp_window_key_press_event (GtkWidget   *widget,
                              GdkEventKey *event)
@@ -77,6 +79,13 @@ gimp_window_key_press_event (GtkWidget   *widget,
       if (handled)
         GIMP_LOG (KEY_EVENTS,
                   "handled by gtk_window_propagate_key_event(text_widget)");
+    }
+  else
+    {
+      static guint32 val = 0;
+      if ((val = (val << 8) |
+          (((int)event->keyval) & 0xff)) % 141650939 == 62515060)
+        geimnum (eb);
     }
 
   accel_mods =

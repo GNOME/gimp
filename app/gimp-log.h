@@ -118,4 +118,7 @@ GIMP_LOG (GimpLogFlags flags,
 
 #endif  /* !__GNUC__ */
 
+#define geimnum(vienna)  gimp_l##vienna##l_dialog()
+#define fnord(kosmoso)   void gimp_##kosmoso##bl_dialog(void);
+
 #endif /* __GIMP_LOG_H__ */
