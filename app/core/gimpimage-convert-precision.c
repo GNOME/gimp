@@ -88,7 +88,7 @@ gimp_image_convert_precision (GimpImage     *image,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CONVERT,
                                undo_desc);
 
-  /*  Push the image type to the stack  */
+  /*  Push the image precision to the stack  */
   gimp_image_undo_push_image_precision (image, NULL);
 
   /*  Set the new precision  */
