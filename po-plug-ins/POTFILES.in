@@ -124,7 +124,6 @@ plug-ins/common/ripple.c
 plug-ins/common/rotate.c
 plug-ins/common/sample-colorize.c
 plug-ins/common/screenshot.c
-plug-ins/common/semi-flatten.c
 plug-ins/common/sharpen.c
 plug-ins/common/shift.c
 plug-ins/common/sinus.c
