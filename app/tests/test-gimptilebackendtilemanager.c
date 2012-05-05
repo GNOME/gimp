@@ -25,7 +25,6 @@
 #include "widgets/widgets-types.h"
 
 #include "base/tile-manager.h"
-#include "base/pixel-region.h"
 #include "base/tile-cache.h"
 
 #include "gegl/gimptilebackendtilemanager.h"
@@ -55,7 +54,6 @@ basic_usage (void)
   guint16        opaque_magenta16[4] = { 0xffff, 0, 0xffff, 0xffff };
   GeglColor     *magenta             = gegl_color_new (NULL);
 
-  PixelRegion      pr;
   TileManager     *tm;
   GeglTileBackend *backend;
   GeglBuffer      *buffer;
@@ -64,12 +62,12 @@ basic_usage (void)
 
   /* Write some pixels to the tile manager */
   tm = tile_manager_new (rect.width, rect.height, 4);
-  pixel_region_init (&pr, tm, rect.x, rect.y, rect.width, rect.height, TRUE);
 
   buffer = gimp_tile_manager_create_buffer (tm, format);
   gegl_color_set_rgba (magenta, 1.0, 0.0, 1.0, 1.0);
   gegl_buffer_set_color (buffer, NULL, magenta);
   g_object_unref (magenta);
+  g_object_unref (buffer);
 
   /* Make sure we can read them through the GeglBuffer using the
    * TileManager backend. Use u16 to complicate code paths, decreasing
