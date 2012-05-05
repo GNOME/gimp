@@ -342,7 +342,9 @@ gimp_color_display_stack_convert (GimpColorDisplayStack *stack,
     {
       GimpColorDisplay *display = list->data;
 
+      G_GNUC_BEGIN_IGNORE_DEPRECATIONS
       gimp_color_display_convert (display, buf, width, height, bpp, bpl);
+      G_GNUC_END_IGNORE_DEPRECATIONS
     }
 }
 

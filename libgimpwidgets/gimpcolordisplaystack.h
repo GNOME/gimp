@@ -87,14 +87,13 @@ void   gimp_color_display_stack_reorder_down    (GimpColorDisplayStack *stack,
                                                  GimpColorDisplay      *display);
 void   gimp_color_display_stack_convert_surface (GimpColorDisplayStack *stack,
                                                  cairo_surface_t       *surface);
-#ifndef GIMP_DISABLE_DEPRECATED
+GIMP_DEPRECATED_FOR(gimp_color_display_stack_convert_surface)
 void   gimp_color_display_stack_convert         (GimpColorDisplayStack *stack,
                                                  guchar                *buf,
                                                  gint                   width,
                                                  gint                   height,
                                                  gint                   bpp,
                                                  gint                   bpl);
-#endif
 
 G_END_DECLS
 

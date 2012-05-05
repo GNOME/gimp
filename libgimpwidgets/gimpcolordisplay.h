@@ -96,22 +96,19 @@ struct _GimpColorDisplayClass
 
 GType              gimp_color_display_get_type    (void) G_GNUC_CONST;
 
-#ifndef GIMP_DISABLE_DEPRECATED
+GIMP_DEPRECATED_FOR(g_object_new)
 GimpColorDisplay * gimp_color_display_new         (GType             display_type);
-#endif
-
 GimpColorDisplay * gimp_color_display_clone       (GimpColorDisplay *display);
 
 void           gimp_color_display_convert_surface (GimpColorDisplay *display,
                                                    cairo_surface_t  *surface);
-#ifndef GIMP_DISABLE_DEPRECATED
+GIMP_DEPRECATED_FOR(gimp_color_display_convert_surface)
 void           gimp_color_display_convert         (GimpColorDisplay *display,
                                                    guchar           *buf,
                                                    gint              width,
                                                    gint              height,
                                                    gint              bpp,
                                                    gint              bpl);
-#endif
 void           gimp_color_display_load_state      (GimpColorDisplay *display,
                                                    GimpParasite     *state);
 GimpParasite * gimp_color_display_save_state      (GimpColorDisplay *display);

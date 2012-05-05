@@ -208,11 +208,10 @@ GtkWidget     * gimp_prop_color_area_new          (GObject       *config,
 
 GtkWidget     * gimp_prop_unit_combo_box_new      (GObject       *config,
                                                    const gchar   *property_name);
-#ifndef GIMP_DISABLE_DEPRECATED
+GIMP_DEPRECATED_FOR(gimp_prop_unit_combo_box_new)
 GtkWidget     * gimp_prop_unit_menu_new           (GObject       *config,
                                                    const gchar   *property_name,
                                                    const gchar   *unit_format);
-#endif /* GIMP_DISABLE_DEPRECATED */
 
 
 /*  GParamString (stock_id)  */
