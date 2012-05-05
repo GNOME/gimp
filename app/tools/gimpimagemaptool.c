@@ -460,6 +460,8 @@ gimp_image_map_tool_control (GimpTool       *tool,
 
       if (image_map_tool->image_map)
         {
+          GimpImage *image;
+
           gimp_tool_control_set_preserve (tool->control, TRUE);
 
           gimp_image_map_abort (image_map_tool->image_map);
@@ -468,7 +470,19 @@ gimp_image_map_tool_control (GimpTool       *tool,
 
           gimp_tool_control_set_preserve (tool->control, FALSE);
 
-          gimp_image_flush (gimp_display_get_image (tool->display));
+          /* don't call gimp_image_flush() here, because the tool
+           * might be cancelled from some other place opening an undo
+           * group, so flushing the image would update menus and
+           * whatnot while that other operation is running, with
+           * unforeseeable side effects. Also, flusing the image here
+           * is not needed because we didn't change anything in the
+           * image. Instead, make sure manually that the display is
+           * updated correctly after restoring GimpImageMapTool's
+           * temporary editing.
+           */
+          image = gimp_display_get_image (tool->display);
+          gimp_projection_flush_now (gimp_image_get_projection (image));
+          gimp_display_flush_now (tool->display);
         }
 
       tool->drawable = NULL;
