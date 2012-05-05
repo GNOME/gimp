@@ -137,21 +137,6 @@ gimp_pickable_get_buffer (GimpPickable *pickable)
   return NULL;
 }
 
-TileManager *
-gimp_pickable_get_tiles (GimpPickable *pickable)
-{
-  GimpPickableInterface *pickable_iface;
-
-  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
-
-  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
-
-  if (pickable_iface->get_tiles)
-    return pickable_iface->get_tiles (pickable);
-
-  return NULL;
-}
-
 gboolean
 gimp_pickable_get_pixel_at (GimpPickable *pickable,
                             gint          x,

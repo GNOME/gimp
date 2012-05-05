@@ -153,6 +153,7 @@ gimp_projection_construct_legacy (GimpProjection *proj,
   for (list = reverse_list; list; list = g_list_next (list))
     {
       GimpItem    *item = list->data;
+      GeglBuffer  *proj_buffer;
       PixelRegion  projPR;
       gint         x1, y1;
       gint         x2, y2;
@@ -173,8 +174,10 @@ gimp_projection_construct_legacy (GimpProjection *proj,
       x2 = CLAMP (off_x + gimp_item_get_width  (item), x, x + w);
       y2 = CLAMP (off_y + gimp_item_get_height (item), y, y + h);
 
+      proj_buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (proj));
+
       pixel_region_init (&projPR,
-                         gimp_pickable_get_tiles (GIMP_PICKABLE (proj)),
+                         gimp_gegl_buffer_get_tiles (proj_buffer),
                          x1, y1, x2 - x1, y2 - y1,
                          TRUE);
 
@@ -261,7 +264,8 @@ gimp_projection_initialize (GimpProjection *proj,
         }
       else
         {
-          TileManager *tiles  = gimp_pickable_get_tiles (GIMP_PICKABLE (proj));
+          GeglBuffer  *buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (proj));
+          TileManager *tiles  = gimp_gegl_buffer_get_tiles (buffer);
           const Babl  *format = gimp_pickable_get_format (GIMP_PICKABLE (proj));
 
           buffer = gimp_tile_manager_create_buffer (tiles, format);

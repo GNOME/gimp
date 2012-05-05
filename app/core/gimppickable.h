@@ -40,7 +40,6 @@ struct _GimpPickableInterface
   const Babl    * (* get_format)            (GimpPickable *pickable);
   const Babl    * (* get_format_with_alpha) (GimpPickable *pickable);
   GeglBuffer    * (* get_buffer)            (GimpPickable *pickable);
-  TileManager   * (* get_tiles)             (GimpPickable *pickable);
   gboolean        (* get_pixel_at)          (GimpPickable *pickable,
                                              gint          x,
                                              gint          y,
@@ -59,7 +58,6 @@ GimpImage     * gimp_pickable_get_image             (GimpPickable *pickable);
 const Babl    * gimp_pickable_get_format            (GimpPickable *pickable);
 const Babl    * gimp_pickable_get_format_with_alpha (GimpPickable *pickable);
 GeglBuffer    * gimp_pickable_get_buffer            (GimpPickable *pickable);
-TileManager   * gimp_pickable_get_tiles             (GimpPickable *pickable);
 gboolean        gimp_pickable_get_pixel_at          (GimpPickable *pickable,
                                                      gint          x,
                                                      gint          y,

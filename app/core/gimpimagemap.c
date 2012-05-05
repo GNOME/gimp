@@ -92,7 +92,6 @@ static const Babl    * gimp_image_map_get_format      (GimpPickable        *pick
 static const Babl    * gimp_image_map_get_format_with_alpha
                                                       (GimpPickable        *pickable);
 static GeglBuffer    * gimp_image_map_get_buffer      (GimpPickable        *pickable);
-static TileManager   * gimp_image_map_get_tiles       (GimpPickable        *pickable);
 static gboolean        gimp_image_map_get_pixel_at    (GimpPickable        *pickable,
                                                        gint                 x,
                                                        gint                 y,
@@ -143,7 +142,6 @@ gimp_image_map_pickable_iface_init (GimpPickableInterface *iface)
   iface->get_format            = gimp_image_map_get_format;
   iface->get_format_with_alpha = gimp_image_map_get_format_with_alpha;
   iface->get_buffer            = gimp_image_map_get_buffer;
-  iface->get_tiles             = gimp_image_map_get_tiles;
   iface->get_pixel_at          = gimp_image_map_get_pixel_at;
 }
 
@@ -266,17 +264,6 @@ gimp_image_map_get_buffer (GimpPickable *pickable)
   return gimp_pickable_get_buffer (GIMP_PICKABLE (image_map->drawable));
 }
 
-static TileManager *
-gimp_image_map_get_tiles (GimpPickable *pickable)
-{
-  GimpImageMap *image_map = GIMP_IMAGE_MAP (pickable);
-
-  if (image_map->undo_buffer)
-    return gimp_gegl_buffer_get_tiles (image_map->undo_buffer);
-
-  return gimp_pickable_get_tiles (GIMP_PICKABLE (image_map->drawable));
-}
-
 static gboolean
 gimp_image_map_get_pixel_at (GimpPickable *pickable,
                              gint          x,
@@ -365,7 +352,7 @@ gimp_image_map_apply (GimpImageMap        *image_map,
                                   &rect.width, &rect.height))
     return;
 
-  /*  If undo tiles don't exist, or change size, (re)allocate  */
+  /*  If undo buffer don't exist, or change size, (re)allocate  */
   gimp_image_map_update_undo_buffer (image_map, &rect);
 
   input_buffer  = image_map->undo_buffer;
@@ -589,18 +576,16 @@ gimp_image_map_update_undo_buffer (GimpImageMap        *image_map,
       undo_width    != rect->width ||
       undo_height   != rect->height)
     {
-      /* If either the extents changed or the tiles don't exist,
+      /* If either the extents changed or the buffer don't exist,
        * allocate new
        */
       if (! image_map->undo_buffer   ||
           undo_width  != rect->width ||
           undo_height != rect->height)
         {
-          /*  Destroy old tiles  */
           if (image_map->undo_buffer)
             g_object_unref (image_map->undo_buffer);
 
-          /*  Allocate new tiles  */
           image_map->undo_buffer =
             gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                   rect->width, rect->height),

@@ -62,6 +62,8 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "core/gimpchannel.h"
 #include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
@@ -1651,6 +1653,7 @@ gradmap_tile_validate (TileManager *tm,
 
   GimpPickable *pickable;
   const Babl   *pickable_format;
+  GeglBuffer   *src_buffer;
   Tile         *srctile;
   PixelRegion   srcPR;
   PixelRegion   destPR;
@@ -1686,7 +1689,8 @@ gradmap_tile_validate (TileManager *tm,
   gimp_pickable_flush (pickable);
 
   /* get corresponding tile in the image */
-  srctile = tile_manager_get_tile (gimp_pickable_get_tiles (pickable),
+  src_buffer = gimp_pickable_get_buffer (pickable);
+  srctile = tile_manager_get_tile (gimp_gegl_buffer_get_tiles (src_buffer),
                                    x, y, TRUE, FALSE);
   if (! srctile)
     return;

@@ -291,6 +291,7 @@ static gboolean
 debug_benchmark_projection (GimpImage *image)
 {
   GimpProjection *projection = gimp_image_get_projection (image);
+  GeglBuffer     *buffer;
   TileManager    *tiles;
   gint            x, y;
 
@@ -300,7 +301,8 @@ debug_benchmark_projection (GimpImage *image)
                          gimp_image_get_height (image));
   gimp_projection_flush_now (projection);
 
-  tiles = gimp_pickable_get_tiles (GIMP_PICKABLE (projection));
+  buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (projection));
+  tiles = gimp_gegl_buffer_get_tiles (buffer);
 
   GIMP_TIMER_START ();
 
