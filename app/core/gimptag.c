@@ -246,7 +246,7 @@ gimp_tag_compare_func (const void *p1,
 /**
  * gimp_tag_compare_with_string:
  * @tag:        a #GimpTag object.
- * @tag_string: pointer to right-hand #GimpTag object.
+ * @tag_string: the string to compare to.
  *
  * Compares tag and a string according to tag comparison rules. Similar to
  * gimp_tag_compare_func(), but can be used without creating temporary tag
@@ -274,6 +274,42 @@ gimp_tag_compare_with_string (GimpTag     *tag,
   g_free (case_folded);
 
   return result;
+}
+
+/**
+ * gimp_tag_has_prefix:
+ * @tag:           a #GimpTag object.
+ * @prefix_string: the prefix to compare to.
+ *
+ * Compares tag and a prefix according to tag comparison rules. Similar to
+ * gimp_tag_compare_with_string(), but does not work on the collate key
+ * because that can't be matched partially.
+ *
+ * Return value: wheher #tag starts with @prefix_string.
+ **/
+gboolean
+gimp_tag_has_prefix (GimpTag     *tag,
+                     const gchar *prefix_string)
+{
+  gchar    *case_folded1;
+  gchar    *case_folded2;
+  gboolean  has_prefix;
+
+  g_return_val_if_fail (GIMP_IS_TAG (tag), FALSE);
+  g_return_val_if_fail (prefix_string != NULL, FALSE);
+
+  case_folded1 = g_utf8_casefold (g_quark_to_string (tag->tag), -1);
+  case_folded2 = g_utf8_casefold (prefix_string, -1);
+
+  has_prefix = g_str_has_prefix (case_folded1, case_folded2);
+
+  g_free (case_folded1);
+  g_free (case_folded2);
+
+  g_printerr ("'%s' has prefix '%s': %d\n",
+              g_quark_to_string (tag->tag), prefix_string, has_prefix);
+
+  return has_prefix;
 }
 
 /**

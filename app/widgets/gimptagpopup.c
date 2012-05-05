@@ -209,12 +209,10 @@ gimp_tag_popup_constructed (GObject *object)
   GList               *tag_list;
   GList               *tag_iterator;
   gint                 i;
-  gint                 j;
   gint                 max_height;
   gint                 screen_height;
   gchar              **current_tags;
   gint                 current_count;
-  const gchar         *list_tag;
   GdkRectangle         popup_rects[2]; /* variants of popup placement */
   GdkRectangle         popup_rect; /* best popup rect in screen coordinates */
 
@@ -254,15 +252,14 @@ gimp_tag_popup_constructed (GObject *object)
        i++, tag_iterator = g_list_next (tag_iterator))
     {
       PopupTagData *tag_data = &popup->tag_data[i];
+      gint          j;
 
       tag_data->tag   = tag_iterator->data;
       tag_data->state = GTK_STATE_NORMAL;
 
-      list_tag = gimp_tag_get_name (tag_data->tag);
-
       for (j = 0; j < current_count; j++)
         {
-          if (! strcmp (current_tags[j], list_tag))
+          if (! gimp_tag_compare_with_string (tag_data->tag, current_tags[j]))
             {
               tag_data->state = GTK_STATE_SELECTED;
               break;
@@ -965,12 +962,11 @@ static void
 gimp_tag_popup_toggle_tag (GimpTagPopup *popup,
                            PopupTagData *tag_data)
 {
-  gchar       **current_tags;
-  GString      *tag_str;
-  const gchar  *tag;
-  gint          length;
-  gint          i;
-  gboolean      tag_toggled_off = FALSE;
+  gchar    **current_tags;
+  GString   *tag_str;
+  gint       length;
+  gint       i;
+  gboolean   tag_toggled_off = FALSE;
 
   if (tag_data->state == GTK_STATE_NORMAL)
     {
@@ -985,13 +981,12 @@ gimp_tag_popup_toggle_tag (GimpTagPopup *popup,
       return;
     }
 
-  tag = gimp_tag_get_name (tag_data->tag);
   current_tags = gimp_tag_entry_parse_tags (GIMP_TAG_ENTRY (popup->combo_entry));
   tag_str = g_string_new ("");
   length = g_strv_length (current_tags);
   for (i = 0; i < length; i++)
     {
-      if (! strcmp (current_tags[i], tag))
+      if (! gimp_tag_compare_with_string (tag_data->tag, current_tags[i]))
         {
           tag_toggled_off = TRUE;
         }
@@ -1017,7 +1012,7 @@ gimp_tag_popup_toggle_tag (GimpTagPopup *popup,
           g_string_append_c (tag_str, ' ');
         }
 
-      g_string_append (tag_str, tag);
+      g_string_append (tag_str, gimp_tag_get_name (tag_data->tag));
     }
 
   gimp_tag_entry_set_tag_string (GIMP_TAG_ENTRY (popup->combo_entry),

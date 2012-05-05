@@ -1043,13 +1043,11 @@ gimp_tag_entry_get_completion_candidates (GimpTagEntry  *tag_entry,
                                           gchar        **used_tags,
                                           gchar         *src_prefix)
 {
-  GList       *candidates = NULL;
-  GList       *all_tags;
-  GList       *list;
-  const gchar *tag_name;
-  gint         i;
-  gint         length;
-  gchar       *prefix;
+  GList *candidates = NULL;
+  GList *all_tags;
+  GList *list;
+  gint   length;
+  gchar *prefix;
 
   if (! src_prefix || strlen (src_prefix) < 1)
     return NULL;
@@ -1065,10 +1063,10 @@ gimp_tag_entry_get_completion_candidates (GimpTagEntry  *tag_entry,
     {
       GimpTag *tag = list->data;
 
-      tag_name = gimp_tag_get_name (tag);
-
-      if (g_str_has_prefix (tag_name, prefix))
+      if (gimp_tag_has_prefix (tag, prefix))
         {
+          gint i;
+
           /* check if tag is not already entered */
           for (i = 0; i < length; i++)
             {

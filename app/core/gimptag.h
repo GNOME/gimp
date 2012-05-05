@@ -68,6 +68,8 @@ gint          gimp_tag_compare_func        (const void     *p1,
                                             const void     *p2);
 gint          gimp_tag_compare_with_string (GimpTag        *tag,
                                             const gchar    *tag_string);
+gboolean      gimp_tag_has_prefix          (GimpTag        *tag,
+                                            const gchar    *prefix_string);
 gchar       * gimp_tag_string_make_valid   (const gchar    *tag_string);
 gboolean      gimp_tag_is_tag_separator    (gunichar        c);
 
