@@ -139,9 +139,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:transform", /* in gimp */
     "gegl:translate", /* pointless */
     "gegl:value-invert", /* in gimp */
-    "gegl:vector-stroke",
-    "gimp-",
-    "gimp:"
+    "gegl:vector-stroke"
   };
 
   gchar **categories;
@@ -151,9 +149,12 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
   if (! name)
     return TRUE;
 
+  if (g_str_has_prefix (name, "gimp"))
+    return TRUE;
+
   for (i = 0; i < G_N_ELEMENTS (name_blacklist); i++)
     {
-      if (g_str_has_prefix (name, name_blacklist[i]))
+      if (! strcmp (name, name_blacklist[i]))
         return TRUE;
     }
 
