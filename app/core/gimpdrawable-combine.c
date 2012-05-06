@@ -268,49 +268,9 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
   GimpImage       *image = gimp_item_get_image (item);
   GimpChannel     *mask  = gimp_image_get_mask (image);
   GeglBuffer      *drawable_buffer;
-  GimpTempBuf     *temp_buf;
-  PixelRegion      src2PR;
-  PixelRegion      maskPR;
   gint             x, y, width, height;
   gint             offset_x, offset_y;
-  PixelRegion      src1PR, destPR;
   gboolean         active_components[MAX_CHANNELS];
-
-  temp_buf = gimp_gegl_buffer_get_temp_buf (buffer);
-
-  if (temp_buf)
-    {
-      pixel_region_init_temp_buf (&src2PR, temp_buf,
-                                  buffer_region->x, buffer_region->y,
-                                  buffer_region->width, buffer_region->height);
-    }
-  else
-    {
-      pixel_region_init (&src2PR, gimp_gegl_buffer_get_tiles (buffer),
-                         buffer_region->x, buffer_region->y,
-                         buffer_region->width, buffer_region->height,
-                         FALSE);
-    }
-
-  temp_buf = gimp_gegl_buffer_get_temp_buf (mask_buffer);
-
-  if (temp_buf)
-    {
-      pixel_region_init_temp_buf (&maskPR, temp_buf,
-                                  mask_buffer_region->x,
-                                  mask_buffer_region->y,
-                                  mask_buffer_region->width,
-                                  mask_buffer_region->height);
-    }
-  else
-    {
-      pixel_region_init (&maskPR, gimp_gegl_buffer_get_tiles (mask_buffer),
-                         mask_buffer_region->x,
-                         mask_buffer_region->y,
-                         mask_buffer_region->width,
-                         mask_buffer_region->height,
-                         FALSE);
-    }
 
   /*  don't apply the mask to itself and don't apply an empty mask  */
   if (GIMP_DRAWABLE (mask) == drawable || gimp_channel_is_empty (mask))
@@ -323,7 +283,8 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
   gimp_item_get_offset (item, &offset_x, &offset_y);
 
   /*  make sure the image application coordinates are within drawable bounds  */
-  gimp_rectangle_intersect (dest_x, dest_y, src2PR.w, src2PR.h,
+  gimp_rectangle_intersect (dest_x, dest_y,
+                            buffer_region->width, buffer_region->height,
                             0, 0,
                             gimp_item_get_width  (item),
                             gimp_item_get_height (item),
@@ -351,20 +312,8 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
 
   drawable_buffer = gimp_drawable_get_buffer (drawable);
 
-  /* configure the pixel regions */
-  pixel_region_init (&src1PR, gimp_gegl_buffer_get_tiles (drawable_buffer),
-                     x, y, width, height,
-                     FALSE);
-  pixel_region_init (&destPR, gimp_gegl_buffer_get_tiles (drawable_buffer),
-                     x, y, width, height,
-                     TRUE);
-  pixel_region_resize (&src2PR,
-                       src2PR.x + (x - dest_x), src2PR.y + (y - dest_y),
-                       width, height);
-
   if (mask)
     {
-      PixelRegion  tempPR;
       GimpTempBuf *temp_buf;
       GeglBuffer  *src_buffer;
       GeglBuffer  *dest_buffer;
@@ -386,20 +335,31 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
                             dest_buffer, GEGL_RECTANGLE (0, 0, width, height),
                             1.0);
 
+      gimp_gegl_replace (buffer,
+                         buffer_region,
+                         drawable_buffer,
+                         GEGL_RECTANGLE (x, y, width, height),
+                         dest_buffer,
+                         GEGL_RECTANGLE (0, 0, width, height),
+                         drawable_buffer,
+                         GEGL_RECTANGLE (x, y, width, height),
+                         opacity * 255.999,
+                         active_components);
+
       g_object_unref (dest_buffer);
-
-      pixel_region_init_temp_buf (&tempPR, temp_buf, 0, 0, width, height);
-
-      combine_regions_replace (&src1PR, &src2PR, &destPR, &tempPR,
-                               opacity * 255.999,
-                               active_components);
-
       gimp_temp_buf_unref (temp_buf);
     }
   else
     {
-      combine_regions_replace (&src1PR, &src2PR, &destPR, &maskPR,
-                               opacity * 255.999,
-                               active_components);
+      gimp_gegl_replace (buffer,
+                         buffer_region,
+                         drawable_buffer,
+                         GEGL_RECTANGLE (x, y, width, height),
+                         mask_buffer,
+                         mask_buffer_region,
+                         drawable_buffer,
+                         GEGL_RECTANGLE (x, y, width, height),
+                         opacity * 255.999,
+                         active_components);
     }
 }

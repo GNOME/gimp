@@ -470,3 +470,108 @@ gimp_gegl_combine_mask (GeglBuffer          *mask_buffer,
         }
     }
 }
+
+void
+gimp_gegl_replace (GeglBuffer          *top_buffer,
+                   const GeglRectangle *top_rect,
+                   GeglBuffer          *bottom_buffer,
+                   const GeglRectangle *bottom_rect,
+                   GeglBuffer          *mask_buffer,
+                   const GeglRectangle *mask_rect,
+                   GeglBuffer          *dest_buffer,
+                   const GeglRectangle *dest_rect,
+                   guchar               opacity,
+                   const gboolean      *affect)
+{
+  GeglBufferIterator *iter;
+  const gint          alpha        = 4 - 1;
+  const gdouble       norm_opacity = opacity * (1.0 / 65536.0);
+
+  iter = gegl_buffer_iterator_new (top_buffer, top_rect, 0,
+                                   babl_format ("R'G'B'A u8"),
+                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+
+  gegl_buffer_iterator_add (iter, bottom_buffer, bottom_rect, 0,
+                            babl_format ("R'G'B'A u8"),
+                            GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+
+  gegl_buffer_iterator_add (iter, mask_buffer, mask_rect, 0,
+                            babl_format ("Y u8"),
+                            GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+
+  gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
+                            babl_format ("R'G'B'A u8"),
+                            GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+
+  while (gegl_buffer_iterator_next (iter))
+    {
+      const guchar *top    = iter->data[0];
+      const guchar *bottom = iter->data[1];
+      const guchar *mask   = iter->data[2];
+      guchar       *dest   = iter->data[3];
+
+      while (iter->length--)
+        {
+          guint    b;
+          gdouble  mask_val = mask[0] * norm_opacity;
+
+          /* calculate new alpha first. */
+          gint     s1_a  = bottom[alpha];
+          gint     s2_a  = top[alpha];
+          gdouble  a_val = s1_a + mask_val * (s2_a - s1_a);
+
+          if (a_val == 0)
+            {
+              /* In any case, write out versions of the blending
+               * function that result when combinations of s1_a, s2_a,
+               * and mask_val --> 0 (or mask_val -->1)
+               */
+
+              /* 1: s1_a, s2_a, AND mask_val all approach 0+: */
+              /* 2: s1_a AND s2_a both approach 0+, regardless of mask_val: */
+              if (s1_a + s2_a == 0.0)
+                {
+                  for (b = 0; b < alpha; b++)
+                    {
+                      gint new_val = 0.5 + (gdouble) bottom[b] +
+                        mask_val * ((gdouble) top[b] - (gdouble) bottom[b]);
+
+                      dest[b] = affect[b] ? MIN (new_val, 255) : bottom[b];
+                    }
+                }
+
+              /* 3: mask_val AND s1_a both approach 0+, regardless of s2_a  */
+              else if (s1_a + mask_val == 0.0)
+                {
+                  for (b = 0; b < alpha; b++)
+                    dest[b] = bottom[b];
+                }
+
+              /* 4: mask_val -->1 AND s2_a -->0, regardless of s1_a */
+              else if (1.0 - mask_val + s2_a == 0.0)
+                {
+                  for (b = 0; b < alpha; b++)
+                    dest[b] = affect[b] ? top[b] : bottom[b];
+                }
+            }
+          else
+            {
+              gdouble a_recip = 1.0 / a_val;
+              /* possible optimization: fold a_recip into s1_a and s2_a */
+              for (b = 0; b < alpha; b++)
+                {
+                  gint new_val = 0.5 + a_recip * (bottom[b] * s1_a + mask_val *
+                                                  (top[b] * s2_a - bottom[b] * s1_a));
+                  dest[b] = affect[b] ? MIN (new_val, 255) : bottom[b];
+                }
+            }
+
+          dest[alpha] = affect[alpha] ? a_val + 0.5 : s1_a;
+
+          top    += 4;
+          bottom += 4;
+          mask   += 1;
+          dest   += 4;
+        }
+    }
+}
