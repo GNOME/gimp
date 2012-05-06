@@ -314,16 +314,13 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
 
   if (mask)
     {
-      GimpTempBuf *temp_buf;
-      GeglBuffer  *src_buffer;
-      GeglBuffer  *dest_buffer;
+      GeglBuffer *src_buffer;
+      GeglBuffer *dest_buffer;
 
       src_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
-      temp_buf = gimp_temp_buf_new (width, height,
-                                    gegl_buffer_get_format (src_buffer));
-
-      dest_buffer = gimp_temp_buf_create_buffer (temp_buf);
+      dest_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+                                     gegl_buffer_get_format (src_buffer));
 
       gegl_buffer_copy (src_buffer,
                         GEGL_RECTANGLE (x + offset_x, y + offset_y,
@@ -335,30 +332,21 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
                               dest_buffer, GEGL_RECTANGLE (0, 0, width, height),
                               1.0);
 
-      gimp_gegl_replace (buffer,
-                         buffer_region,
-                         drawable_buffer,
-                         GEGL_RECTANGLE (x, y, width, height),
-                         dest_buffer,
-                         GEGL_RECTANGLE (0, 0, width, height),
-                         drawable_buffer,
-                         GEGL_RECTANGLE (x, y, width, height),
+      gimp_gegl_replace (buffer,          buffer_region,
+                         drawable_buffer, GEGL_RECTANGLE (x, y, width, height),
+                         dest_buffer,     GEGL_RECTANGLE (0, 0, width, height),
+                         drawable_buffer, GEGL_RECTANGLE (x, y, width, height),
                          opacity * 255.999,
                          active_components);
 
       g_object_unref (dest_buffer);
-      gimp_temp_buf_unref (temp_buf);
     }
   else
     {
-      gimp_gegl_replace (buffer,
-                         buffer_region,
-                         drawable_buffer,
-                         GEGL_RECTANGLE (x, y, width, height),
-                         mask_buffer,
-                         mask_buffer_region,
-                         drawable_buffer,
-                         GEGL_RECTANGLE (x, y, width, height),
+      gimp_gegl_replace (buffer,          buffer_region,
+                         drawable_buffer, GEGL_RECTANGLE (x, y, width, height),
+                         mask_buffer,     mask_buffer_region,
+                         drawable_buffer, GEGL_RECTANGLE (x, y, width, height),
                          opacity * 255.999,
                          active_components);
     }
