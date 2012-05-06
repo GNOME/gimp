@@ -331,9 +331,9 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
                         dest_buffer,
                         GEGL_RECTANGLE (0, 0, 0, 0));
 
-      gimp_gegl_apply_mask (mask_buffer, mask_buffer_region,
-                            dest_buffer, GEGL_RECTANGLE (0, 0, width, height),
-                            1.0);
+      gimp_gegl_combine_mask (mask_buffer, mask_buffer_region,
+                              dest_buffer, GEGL_RECTANGLE (0, 0, width, height),
+                              1.0);
 
       gimp_gegl_replace (buffer,
                          buffer_region,
