@@ -722,13 +722,13 @@ gimp_paint_core_paste (GimpPaintCore            *core,
        */
       if (paint_mask != core->canvas_buffer)
         {
-          gimp_gegl_combine_mask (paint_mask, paint_mask_rect,
-                                  core->canvas_buffer,
-                                  GEGL_RECTANGLE (core->paint_buffer_x,
-                                                  core->paint_buffer_y,
-                                                  width, height),
-                                  paint_opacity,
-                                  GIMP_IS_AIRBRUSH (core));
+          gimp_gegl_combine_mask_weird (paint_mask, paint_mask_rect,
+                                        core->canvas_buffer,
+                                        GEGL_RECTANGLE (core->paint_buffer_x,
+                                                        core->paint_buffer_y,
+                                                        width, height),
+                                        paint_opacity,
+                                        GIMP_IS_AIRBRUSH (core));
         }
 
       gimp_gegl_apply_mask (core->canvas_buffer,
@@ -819,13 +819,13 @@ gimp_paint_core_replace (GimpPaintCore            *core,
       paint_mask != core->canvas_buffer)
     {
       /* combine the paint mask and the canvas buffer */
-      gimp_gegl_combine_mask (paint_mask, paint_mask_rect,
-                              core->canvas_buffer,
-                              GEGL_RECTANGLE (core->paint_buffer_x,
-                                              core->paint_buffer_y,
-                                              width, height),
-                              paint_opacity,
-                              GIMP_IS_AIRBRUSH (core));
+      gimp_gegl_combine_mask_weird (paint_mask, paint_mask_rect,
+                                    core->canvas_buffer,
+                                    GEGL_RECTANGLE (core->paint_buffer_x,
+                                                    core->paint_buffer_y,
+                                                    width, height),
+                                    paint_opacity,
+                                    GIMP_IS_AIRBRUSH (core));
 
       /* initialize the maskPR from the canvas buffer */
       paint_mask = core->canvas_buffer;

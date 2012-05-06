@@ -25,55 +25,55 @@
 /*  this is a pretty stupid port of concolve_region() that only works
  *  on a linear source buffer
  */
-void   gimp_gegl_convolve     (GeglBuffer          *src_buffer,
-                               const GeglRectangle *src_rect,
-                               GeglBuffer          *dest_buffer,
-                               const GeglRectangle *dest_rect,
-                               const gfloat        *kernel,
-                               gint                 kernel_size,
-                               gdouble              divisor,
-                               GimpConvolutionType  mode,
-                               gboolean             alpha_weighting);
+void   gimp_gegl_convolve           (GeglBuffer          *src_buffer,
+                                     const GeglRectangle *src_rect,
+                                     GeglBuffer          *dest_buffer,
+                                     const GeglRectangle *dest_rect,
+                                     const gfloat        *kernel,
+                                     gint                 kernel_size,
+                                     gdouble              divisor,
+                                     GimpConvolutionType  mode,
+                                     gboolean             alpha_weighting);
 
-void   gimp_gegl_dodgeburn    (GeglBuffer          *src_buffer,
-                               const GeglRectangle *src_rect,
-                               GeglBuffer          *dest_buffer,
-                               const GeglRectangle *dest_rect,
-                               gdouble              exposure,
-                               GimpDodgeBurnType    type,
-                               GimpTransferMode     mode);
+void   gimp_gegl_dodgeburn          (GeglBuffer          *src_buffer,
+                                     const GeglRectangle *src_rect,
+                                     GeglBuffer          *dest_buffer,
+                                     const GeglRectangle *dest_rect,
+                                     gdouble              exposure,
+                                     GimpDodgeBurnType    type,
+                                     GimpTransferMode     mode);
 
-void   gimp_gegl_smudge_blend (GeglBuffer          *top_buffer,
-                               const GeglRectangle *top_rect,
-                               GeglBuffer          *bottom_buffer,
-                               const GeglRectangle *bottom_rect,
-                               GeglBuffer          *dest_buffer,
-                               const GeglRectangle *dest_rect,
-                               guchar               blend);
+void   gimp_gegl_smudge_blend       (GeglBuffer          *top_buffer,
+                                     const GeglRectangle *top_rect,
+                                     GeglBuffer          *bottom_buffer,
+                                     const GeglRectangle *bottom_rect,
+                                     GeglBuffer          *dest_buffer,
+                                     const GeglRectangle *dest_rect,
+                                     guchar               blend);
 
-void   gimp_gegl_apply_mask   (GeglBuffer          *mask_buffer,
-                               const GeglRectangle *mask_rect,
-                               GeglBuffer          *dest_buffer,
-                               const GeglRectangle *dest_rect,
-                               gdouble              opacity);
+void   gimp_gegl_apply_mask         (GeglBuffer          *mask_buffer,
+                                     const GeglRectangle *mask_rect,
+                                     GeglBuffer          *dest_buffer,
+                                     const GeglRectangle *dest_rect,
+                                     gdouble              opacity);
 
-void   gimp_gegl_combine_mask (GeglBuffer          *mask_buffer,
-                               const GeglRectangle *mask_rect,
-                               GeglBuffer          *dest_buffer,
-                               const GeglRectangle *dest_rect,
-                               gdouble              opacity,
-                               gboolean             stipple);
+void   gimp_gegl_combine_mask_weird (GeglBuffer          *mask_buffer,
+                                     const GeglRectangle *mask_rect,
+                                     GeglBuffer          *dest_buffer,
+                                     const GeglRectangle *dest_rect,
+                                     gdouble              opacity,
+                                     gboolean             stipple);
 
-void   gimp_gegl_replace      (GeglBuffer          *top_buffer,
-                               const GeglRectangle *top_rect,
-                               GeglBuffer          *bottom_buffer,
-                               const GeglRectangle *bottom_rect,
-                               GeglBuffer          *mask_buffer,
-                               const GeglRectangle *mask_rect,
-                               GeglBuffer          *dest_buffer,
-                               const GeglRectangle *dest_rect,
-                               guchar               opacity,
-                               const gboolean      *affect);
+void   gimp_gegl_replace            (GeglBuffer          *top_buffer,
+                                     const GeglRectangle *top_rect,
+                                     GeglBuffer          *bottom_buffer,
+                                     const GeglRectangle *bottom_rect,
+                                     GeglBuffer          *mask_buffer,
+                                     const GeglRectangle *mask_rect,
+                                     GeglBuffer          *dest_buffer,
+                                     const GeglRectangle *dest_rect,
+                                     guchar               opacity,
+                                     const gboolean      *affect);
 
 
 #endif /* __GIMP_GEGL_LOOPS_H__ */

@@ -425,12 +425,12 @@ gimp_gegl_apply_mask (GeglBuffer          *mask_buffer,
 }
 
 void
-gimp_gegl_combine_mask (GeglBuffer          *mask_buffer,
-                        const GeglRectangle *mask_rect,
-                        GeglBuffer          *dest_buffer,
-                        const GeglRectangle *dest_rect,
-                        gdouble              opacity,
-                        gboolean             stipple)
+gimp_gegl_combine_mask_weird (GeglBuffer          *mask_buffer,
+                              const GeglRectangle *mask_rect,
+                              GeglBuffer          *dest_buffer,
+                              const GeglRectangle *dest_rect,
+                              gdouble              opacity,
+                              gboolean             stipple)
 {
   GeglBufferIterator *iter;
 
