@@ -59,10 +59,10 @@ extern gint          tile_exist_count;
 
 #ifdef ENABLE_MP
 
-static GMutex       *tile_cache_mutex = NULL;
+static GMutex        tile_cache_mutex;
 
-#define TILE_CACHE_LOCK    g_mutex_lock (tile_cache_mutex)
-#define TILE_CACHE_UNLOCK  g_mutex_unlock (tile_cache_mutex)
+#define TILE_CACHE_LOCK    g_mutex_lock (&tile_cache_mutex)
+#define TILE_CACHE_UNLOCK  g_mutex_unlock (&tile_cache_mutex)
 
 #else
 
@@ -86,9 +86,7 @@ void
 tile_cache_init (guint64 tile_cache_size)
 {
 #ifdef ENABLE_MP
-  g_return_if_fail (tile_cache_mutex == NULL);
-
-  tile_cache_mutex = g_mutex_new ();
+  g_mutex_init (&tile_cache_mutex);
 #endif
 
   tile_list.first = tile_list.last = NULL;
@@ -111,11 +109,6 @@ tile_cache_exit (void)
                cur_cache_size);
 
   tile_cache_set_size (0);
-
-#ifdef ENABLE_MP
-  g_mutex_free (tile_cache_mutex);
-  tile_cache_mutex = NULL;
-#endif
 }
 
 void
