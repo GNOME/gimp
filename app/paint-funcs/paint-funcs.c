@@ -2591,36 +2591,3 @@ combine_regions (PixelRegion          *src1,
   pixel_regions_process_parallel ((PixelProcessorFunc) combine_sub_region,
                                   &st, 4, src1, src2, dest, mask);
 }
-
-void
-combine_regions_replace (PixelRegion     *src1,
-                         PixelRegion     *src2,
-                         PixelRegion     *dest,
-                         PixelRegion     *mask,
-                         guint            opacity,
-                         const gboolean  *affect)
-{
-  gpointer pr;
-
-  for (pr = pixel_regions_register (4, src1, src2, dest, mask);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      const guchar  *s1 = src1->data;
-      const guchar  *s2 = src2->data;
-      guchar        *d  = dest->data;
-      const guchar  *m  = mask->data;
-      guint          h;
-
-      for (h = 0; h < src1->h; h++)
-        {
-          replace_pixels (s1, s2, d, m, src1->w,
-                          opacity, affect, src1->bytes, src2->bytes);
-
-          s1 += src1->rowstride;
-          s2 += src2->rowstride;
-          d += dest->rowstride;
-          m += mask->rowstride;
-        }
-    }
-}

@@ -250,12 +250,5 @@ void  combine_regions                     (PixelRegion    *src1,
                                            const gboolean *affect,
                                            CombinationMode type);
 
-void  combine_regions_replace             (PixelRegion    *src1,
-                                           PixelRegion    *src2,
-                                           PixelRegion    *dest,
-                                           PixelRegion    *mask,
-                                           guint           opacity,
-                                           const gboolean *affect);
-
 
 #endif  /*  __PAINT_FUNCS_H__  */
