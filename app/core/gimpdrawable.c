@@ -1277,7 +1277,8 @@ gimp_drawable_init_src_region (GimpDrawable  *drawable,
                                gint           height,
                                GeglBuffer   **temp_buffer)
 {
-  GimpLayer *fs;
+  GeglBuffer *buffer;
+  GimpLayer  *fs;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
@@ -1362,7 +1363,9 @@ gimp_drawable_init_src_region (GimpDrawable  *drawable,
        }
     }
 
-  pixel_region_init (srcPR, gimp_drawable_get_tiles (drawable),
+  buffer = gimp_drawable_get_buffer (drawable);
+
+  pixel_region_init (srcPR, gimp_gegl_buffer_get_tiles (buffer),
                      x, y, width, height,
                      FALSE);
   *temp_buffer = NULL;
@@ -1374,18 +1377,6 @@ gimp_drawable_get_buffer (GimpDrawable *drawable)
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
   return GIMP_DRAWABLE_GET_CLASS (drawable)->get_buffer (drawable);
-}
-
-TileManager *
-gimp_drawable_get_tiles (GimpDrawable *drawable)
-{
-  GeglBuffer *buffer;
-
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-
-  buffer = gimp_drawable_get_buffer (drawable);
-
-  return gimp_gegl_buffer_get_tiles (buffer);
 }
 
 void

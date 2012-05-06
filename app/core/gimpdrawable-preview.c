@@ -130,8 +130,9 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
                                gint          dest_width,
                                gint          dest_height)
 {
-  GimpItem    *item;
-  GimpImage   *image;
+  GimpItem   *item;
+  GimpImage  *image;
+  GeglBuffer *buffer;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (src_x >= 0, NULL);
@@ -159,7 +160,9 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
                                           src_x, src_y, src_width, src_height,
                                           dest_width, dest_height);
 
-  return tile_manager_get_sub_preview (gimp_drawable_get_tiles (drawable),
+  buffer = gimp_drawable_get_buffer (drawable);
+
+  return tile_manager_get_sub_preview (gimp_gegl_buffer_get_tiles (buffer),
                                        gimp_drawable_get_preview_format (drawable),
                                        src_x, src_y, src_width, src_height,
                                        dest_width, dest_height);
@@ -209,6 +212,7 @@ gimp_drawable_indexed_preview (GimpDrawable *drawable,
                                gint          dest_width,
                                gint          dest_height)
 {
+  GeglBuffer  *buffer;
   GimpTempBuf *preview_buf;
   PixelRegion  srcPR;
   PixelRegion  destPR;
@@ -219,7 +223,9 @@ gimp_drawable_indexed_preview (GimpDrawable *drawable,
          (dest_height * (subsample + 1) * 2 < src_width))
     subsample += 1;
 
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
+  buffer = gimp_drawable_get_buffer (drawable);
+
+  pixel_region_init (&srcPR, gimp_gegl_buffer_get_tiles (buffer),
                      src_x, src_y, src_width, src_height,
                      FALSE);
 

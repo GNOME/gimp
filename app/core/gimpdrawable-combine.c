@@ -57,9 +57,10 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
                                  gint                  dest_x,
                                  gint                  dest_y)
 {
-  GimpItem    *item  = GIMP_ITEM (drawable);
-  GimpImage   *image = gimp_item_get_image (item);
-  GimpChannel *mask  = gimp_image_get_mask (image);
+  GimpItem    *item        = GIMP_ITEM (drawable);
+  GimpImage   *image       = gimp_item_get_image (item);
+  GimpChannel *mask        = gimp_image_get_mask (image);
+  GeglBuffer  *mask_buffer = NULL;
   gint         x, y, width, height;
   gint         offset_x, offset_y;
 
@@ -123,14 +124,13 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
         }
     }
 
+  if (mask)
+    mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+
   if (gimp_use_gegl (image->gimp) && ! dest_buffer)
     {
-      GeglBuffer        *mask_buffer = NULL;
       GeglNode          *apply;
       GimpComponentMask  affect;
-
-      if (mask)
-        mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
       dest_buffer = gimp_drawable_get_buffer (drawable);
 
@@ -211,17 +211,19 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
         }
       else
         {
-          pixel_region_init (&destPR, gimp_drawable_get_tiles (drawable),
+          dest_buffer = gimp_drawable_get_buffer (drawable);
+
+          pixel_region_init (&destPR, gimp_gegl_buffer_get_tiles (dest_buffer),
                              x, y, width, height,
                              TRUE);
         }
 
-      if (mask)
+      if (mask_buffer)
         {
           PixelRegion maskPR;
 
           pixel_region_init (&maskPR,
-                             gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
+                             gimp_gegl_buffer_get_tiles (mask_buffer),
                              x + offset_x,
                              y + offset_y,
                              width, height,
@@ -265,6 +267,7 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
   GimpItem        *item  = GIMP_ITEM (drawable);
   GimpImage       *image = gimp_item_get_image (item);
   GimpChannel     *mask  = gimp_image_get_mask (image);
+  GeglBuffer      *drawable_buffer;
   GimpTempBuf     *temp_buf;
   PixelRegion      src2PR;
   PixelRegion      maskPR;
@@ -346,11 +349,13 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
     gimp_drawable_push_undo (drawable, undo_desc,
                              NULL, x, y, width, height);
 
+  drawable_buffer = gimp_drawable_get_buffer (drawable);
+
   /* configure the pixel regions */
-  pixel_region_init (&src1PR, gimp_drawable_get_tiles (drawable),
+  pixel_region_init (&src1PR, gimp_gegl_buffer_get_tiles (drawable_buffer),
                      x, y, width, height,
                      FALSE);
-  pixel_region_init (&destPR, gimp_drawable_get_tiles (drawable),
+  pixel_region_init (&destPR, gimp_gegl_buffer_get_tiles (drawable_buffer),
                      x, y, width, height,
                      TRUE);
   pixel_region_resize (&src2PR,

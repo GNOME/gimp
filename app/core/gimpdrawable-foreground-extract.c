@@ -26,6 +26,8 @@
 #include "base/siox.h"
 #include "base/tile-manager.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "gimpchannel.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-foreground-extract.h"
@@ -77,6 +79,7 @@ gimp_drawable_foreground_extract_siox_init (GimpDrawable *drawable,
                                             gint          width,
                                             gint          height)
 {
+  GeglBuffer   *buffer;
   const guchar *colormap = NULL;
   gboolean      intersect;
   gint          offset_x;
@@ -104,7 +107,9 @@ gimp_drawable_foreground_extract_siox_init (GimpDrawable *drawable,
   if (! intersect)
     return NULL;
 
-  return siox_init (gimp_drawable_get_tiles (drawable), colormap,
+  buffer = gimp_drawable_get_buffer (drawable);
+
+  return siox_init (gimp_gegl_buffer_get_tiles (buffer), colormap,
                     offset_x, offset_y,
                     x, y, width, height);
 }
@@ -118,8 +123,9 @@ gimp_drawable_foreground_extract_siox (GimpDrawable       *mask,
                                        gboolean            multiblob,
                                        GimpProgress       *progress)
 {
-  gint x1, y1;
-  gint x2, y2;
+  GeglBuffer *buffer;
+  gint        x1, y1;
+  gint        x2, y2;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (mask));
   g_return_if_fail (babl_format_get_bytes_per_pixel (gimp_drawable_get_format (mask)) == 1);
@@ -143,8 +149,11 @@ gimp_drawable_foreground_extract_siox (GimpDrawable       *mask,
       y2 = gimp_item_get_height (GIMP_ITEM (mask));
     }
 
+  buffer = gimp_drawable_get_buffer (mask);
+
   siox_foreground_extract (state, refinement,
-                           gimp_drawable_get_tiles (mask), x1, y1, x2, y2,
+                           gimp_gegl_buffer_get_tiles (buffer),
+                           x1, y1, x2, y2,
                            smoothness, sensitivity, multiblob,
                            (SioxProgressFunc) gimp_progress_set_value,
                            progress);

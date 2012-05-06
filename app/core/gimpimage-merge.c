@@ -595,8 +595,10 @@ gimp_image_merge_layers (GimpImage     *image,
 
   for (layers = reverse_list; layers; layers = g_slist_next (layers))
     {
-      GimpLayerModeEffects mode;
-      gint                 x3, y3, x4, y4;
+      GeglBuffer           *merge_buffer;
+      GeglBuffer           *layer_buffer;
+      GimpLayerModeEffects  mode;
+      gint                  x3, y3, x4, y4;
 
       layer = layers->data;
 
@@ -615,15 +617,13 @@ gimp_image_merge_layers (GimpImage     *image,
       if (layer == bottom_layer && mode != GIMP_DISSOLVE_MODE)
         mode = GIMP_NORMAL_MODE;
 
+      merge_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (merge_layer));
+      layer_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+
       if (gimp_use_gegl (image->gimp))
         {
-          GeglBuffer *merge_buffer;
-          GeglBuffer *layer_buffer;
           GeglBuffer *mask_buffer = NULL;
           GeglNode   *apply;
-
-          merge_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (merge_layer));
-          layer_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
           if (gimp_layer_get_mask (layer) &&
               gimp_layer_get_apply_mask (layer))
@@ -682,11 +682,11 @@ gimp_image_merge_layers (GimpImage     *image,
 
           /* configure the pixel regions  */
           pixel_region_init (&src1PR,
-                             gimp_drawable_get_tiles (GIMP_DRAWABLE (merge_layer)),
+                             gimp_gegl_buffer_get_tiles (merge_buffer),
                              (x3 - x1), (y3 - y1), (x4 - x3), (y4 - y3),
                              TRUE);
           pixel_region_init (&src2PR,
-                             gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
+                             gimp_gegl_buffer_get_tiles (layer_buffer),
                              (x3 - off_x), (y3 - off_y),
                              (x4 - x3), (y4 - y3),
                              FALSE);
@@ -694,9 +694,11 @@ gimp_image_merge_layers (GimpImage     *image,
           if (gimp_layer_get_mask (layer) &&
               gimp_layer_get_apply_mask (layer))
             {
+              GeglBuffer  *buffer;
               TileManager *tiles;
 
-              tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (layer->mask));
+              buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer->mask));
+              tiles = gimp_gegl_buffer_get_tiles (buffer);
 
               pixel_region_init (&maskPR, tiles,
                                  (x3 - off_x), (y3 - off_y), (x4 - x3), (y4 - y3),

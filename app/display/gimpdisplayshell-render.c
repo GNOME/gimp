@@ -30,6 +30,8 @@
 
 #include "config/gimpdisplayconfig.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
@@ -183,6 +185,8 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
   if (shell->mask)
     {
+      GeglBuffer *buffer;
+
       if (! shell->mask_surface)
         {
           shell->mask_surface =
@@ -191,7 +195,8 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                                         GIMP_DISPLAY_RENDER_BUF_HEIGHT);
         }
 
-      tiles = gimp_drawable_get_tiles (shell->mask);
+      buffer = gimp_drawable_get_buffer (shell->mask);
+      tiles = gimp_gegl_buffer_get_tiles (buffer);
 
       /* The mask does not (yet) have an image pyramid, use 0 as level, */
       gimp_display_shell_render_info_init (&info,
