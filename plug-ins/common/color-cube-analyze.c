@@ -114,8 +114,6 @@ query (void)
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), G_N_ELEMENTS (return_vals),
                           args, return_vals);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Colors/Info");
 }
 
 /* main function */
