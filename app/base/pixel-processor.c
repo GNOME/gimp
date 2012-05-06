@@ -41,7 +41,7 @@
 
 static GThreadPool *pool       = NULL;
 static GMutex       pool_mutex;
-static GCond       *pool_cond  = NULL;
+static GCond        pool_cond;
 
 
 typedef void  (* p1_func) (gpointer      data,
@@ -172,7 +172,7 @@ do_parallel_regions (PixelProcessor *processor)
       g_mutex_unlock (&processor->mutex);
 
       g_mutex_lock (&pool_mutex);
-      g_cond_signal  (pool_cond);
+      g_cond_signal (&pool_cond);
       g_mutex_unlock (&pool_mutex);
     }
   else
@@ -311,7 +311,7 @@ pixel_regions_do_parallel (PixelProcessor             *processor,
               g_get_current_time (&timeout);
               g_time_val_add (&timeout, PROGRESS_TIMEOUT * 1024);
 
-              g_cond_timed_wait (pool_cond, &pool_mutex, &timeout);
+              g_cond_timed_wait (&pool_cond, &pool_mutex, &timeout);
 
               g_mutex_lock (&processor->mutex);
               progress = processor->progress;
@@ -324,7 +324,7 @@ pixel_regions_do_parallel (PixelProcessor             *processor,
       else
         {
           while (processor->threads != 0)
-            g_cond_wait (pool_cond, &pool_mutex);
+            g_cond_wait (&pool_cond, &pool_mutex);
         }
 
       g_mutex_unlock (&pool_mutex);
@@ -423,9 +423,6 @@ pixel_processor_set_num_threads (gint num_threads)
         {
           g_thread_pool_free (pool, TRUE, TRUE);
           pool = NULL;
-
-          g_cond_free (pool_cond);
-          pool_cond = NULL;
         }
     }
   else
@@ -442,7 +439,7 @@ pixel_processor_set_num_threads (gint num_threads)
                                     num_threads, TRUE, &error);
 
           g_mutex_init (&pool_mutex);
-          pool_cond  = g_cond_new ();
+          g_cond_init (&pool_cond);
         }
 
       if (G_UNLIKELY (error))
