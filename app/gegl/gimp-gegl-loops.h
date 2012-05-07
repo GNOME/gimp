@@ -78,7 +78,7 @@ void   gimp_gegl_replace            (GeglBuffer          *top_buffer,
                                      const GeglRectangle *mask_rect,
                                      GeglBuffer          *dest_buffer,
                                      const GeglRectangle *dest_rect,
-                                     guchar               opacity,
+                                     gdouble              opacity,
                                      const gboolean      *affect);
 
 

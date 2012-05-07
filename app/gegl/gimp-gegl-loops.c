@@ -512,47 +512,45 @@ gimp_gegl_replace (GeglBuffer          *top_buffer,
                    const GeglRectangle *mask_rect,
                    GeglBuffer          *dest_buffer,
                    const GeglRectangle *dest_rect,
-                   guchar               opacity,
+                   gdouble              opacity,
                    const gboolean      *affect)
 {
   GeglBufferIterator *iter;
-  const gint          alpha        = 4 - 1;
-  const gdouble       norm_opacity = opacity * (1.0 / 65536.0);
 
   iter = gegl_buffer_iterator_new (top_buffer, top_rect, 0,
-                                   babl_format ("R'G'B'A u8"),
+                                   babl_format ("RGBA float"),
                                    GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, bottom_buffer, bottom_rect, 0,
-                            babl_format ("R'G'B'A u8"),
+                            babl_format ("RGBA float"),
                             GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, mask_buffer, mask_rect, 0,
-                            babl_format ("Y u8"),
+                            babl_format ("Y float"),
                             GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
-                            babl_format ("R'G'B'A u8"),
+                            babl_format ("RGBA float"),
                             GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *top    = iter->data[0];
-      const guchar *bottom = iter->data[1];
-      const guchar *mask   = iter->data[2];
-      guchar       *dest   = iter->data[3];
+      const gfloat *top    = iter->data[0];
+      const gfloat *bottom = iter->data[1];
+      const gfloat *mask   = iter->data[2];
+      gfloat       *dest   = iter->data[3];
 
       while (iter->length--)
         {
-          guint    b;
-          gdouble  mask_val = mask[0] * norm_opacity;
+          gint    b;
+          gdouble mask_val = *mask * opacity;
 
           /* calculate new alpha first. */
-          gint     s1_a  = bottom[alpha];
-          gint     s2_a  = top[alpha];
+          gfloat   s1_a  = bottom[3];
+          gfloat   s2_a  = top[3];
           gdouble  a_val = s1_a + mask_val * (s2_a - s1_a);
 
-          if (a_val == 0)
+          if (a_val == 0.0)
             {
               /* In any case, write out versions of the blending
                * function that result when combinations of s1_a, s2_a,
@@ -563,42 +561,44 @@ gimp_gegl_replace (GeglBuffer          *top_buffer,
               /* 2: s1_a AND s2_a both approach 0+, regardless of mask_val: */
               if (s1_a + s2_a == 0.0)
                 {
-                  for (b = 0; b < alpha; b++)
+                  for (b = 0; b < 3; b++)
                     {
-                      gint new_val = 0.5 + (gdouble) bottom[b] +
-                        mask_val * ((gdouble) top[b] - (gdouble) bottom[b]);
+                      gfloat new_val;
 
-                      dest[b] = affect[b] ? MIN (new_val, 255) : bottom[b];
+                      new_val = bottom[b] + mask_val * (top[b] - bottom[b]);
+
+                      dest[b] = affect[b] ? MIN (new_val, 1.0) : bottom[b];
                     }
                 }
 
               /* 3: mask_val AND s1_a both approach 0+, regardless of s2_a  */
               else if (s1_a + mask_val == 0.0)
                 {
-                  for (b = 0; b < alpha; b++)
+                  for (b = 0; b < 3; b++)
                     dest[b] = bottom[b];
                 }
 
               /* 4: mask_val -->1 AND s2_a -->0, regardless of s1_a */
               else if (1.0 - mask_val + s2_a == 0.0)
                 {
-                  for (b = 0; b < alpha; b++)
+                  for (b = 0; b < 3; b++)
                     dest[b] = affect[b] ? top[b] : bottom[b];
                 }
             }
           else
             {
               gdouble a_recip = 1.0 / a_val;
+
               /* possible optimization: fold a_recip into s1_a and s2_a */
-              for (b = 0; b < alpha; b++)
+              for (b = 0; b < 3; b++)
                 {
-                  gint new_val = 0.5 + a_recip * (bottom[b] * s1_a + mask_val *
-                                                  (top[b] * s2_a - bottom[b] * s1_a));
-                  dest[b] = affect[b] ? MIN (new_val, 255) : bottom[b];
+                  gfloat new_val = a_recip * (bottom[b] * s1_a + mask_val *
+                                              (top[b] * s2_a - bottom[b] * s1_a));
+                  dest[b] = affect[b] ? MIN (new_val, 1.0) : bottom[b];
                 }
             }
 
-          dest[alpha] = affect[alpha] ? a_val + 0.5 : s1_a;
+          dest[3] = affect[3] ? a_val : s1_a;
 
           top    += 4;
           bottom += 4;
