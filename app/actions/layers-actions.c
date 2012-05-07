@@ -539,7 +539,7 @@ layers_actions_update (GimpActionGroup *group,
       fs      = (gimp_image_get_floating_selection (image) != NULL);
       ac      = (gimp_image_get_active_channel (image) != NULL);
       sel     = ! gimp_channel_is_empty (gimp_image_get_mask (image));
-      indexed = (gimp_image_base_type (image) == GIMP_INDEXED);
+      indexed = (gimp_image_get_base_type (image) == GIMP_INDEXED);
 
       layer = gimp_image_get_active_layer (image);
 

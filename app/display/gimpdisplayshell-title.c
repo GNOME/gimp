@@ -132,7 +132,7 @@ gimp_display_shell_title_image_type (GimpImage *image)
   const gchar *name = "";
 
   gimp_enum_get_value (GIMP_TYPE_IMAGE_BASE_TYPE,
-                       gimp_image_base_type (image), NULL, NULL, &name, NULL);
+                       gimp_image_get_base_type (image), NULL, NULL, &name, NULL);
 
   return name;
 }

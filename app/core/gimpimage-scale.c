@@ -303,12 +303,12 @@ gimp_image_scale_check (const GimpImage *image,
   g_list_free (drawables);
 
   scalable_size +=
-    gimp_projection_estimate_memsize (gimp_image_base_type (image),
+    gimp_projection_estimate_memsize (gimp_image_get_base_type (image),
                                       gimp_image_get_width (image),
                                       gimp_image_get_height (image));
 
   scaled_size +=
-    gimp_projection_estimate_memsize (gimp_image_base_type (image),
+    gimp_projection_estimate_memsize (gimp_image_get_base_type (image),
                                       new_width, new_height);
 
   GIMP_LOG (IMAGE_SCALE,

@@ -90,7 +90,7 @@ gimp_image_duplicate (GimpImage *image)
   new_image = gimp_create_image (image->gimp,
                                  gimp_image_get_width  (image),
                                  gimp_image_get_height (image),
-                                 gimp_image_base_type (image),
+                                 gimp_image_get_base_type (image),
                                  gimp_image_get_precision (image),
                                  FALSE);
   gimp_image_undo_disable (new_image);
@@ -178,7 +178,7 @@ static void
 gimp_image_duplicate_colormap (GimpImage *image,
                                GimpImage *new_image)
 {
-  if (gimp_image_base_type (new_image) == GIMP_INDEXED)
+  if (gimp_image_get_base_type (new_image) == GIMP_INDEXED)
     gimp_image_set_colormap (new_image,
                              gimp_image_get_colormap (image),
                              gimp_image_get_colormap_size (image),

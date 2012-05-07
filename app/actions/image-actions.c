@@ -276,7 +276,7 @@ image_actions_update (GimpActionGroup *group,
       GimpContainer *layers;
       const gchar   *action = NULL;
 
-      switch (gimp_image_base_type (image))
+      switch (gimp_image_get_base_type (image))
         {
         case GIMP_RGB:     action = "image-convert-rgb";       break;
         case GIMP_GRAY:    action = "image-convert-grayscale"; break;
@@ -298,7 +298,7 @@ image_actions_update (GimpActionGroup *group,
 
       gimp_action_group_set_action_active (group, action, TRUE);
 
-      is_indexed = (gimp_image_base_type (image) == GIMP_INDEXED);
+      is_indexed = (gimp_image_get_base_type (image) == GIMP_INDEXED);
       is_u8      = (gimp_image_get_precision (image) == GIMP_PRECISION_U8);
       aux        = (gimp_image_get_active_channel (image) != NULL);
       lp         = ! gimp_image_is_empty (image);

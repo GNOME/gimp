@@ -752,7 +752,7 @@ gimp_image_convert (GimpImage               *image,
   gint               nth_layer, n_layers;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (new_type != gimp_image_base_type (image), FALSE);
+  g_return_val_if_fail (new_type != gimp_image_get_base_type (image), FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
@@ -807,7 +807,7 @@ gimp_image_convert (GimpImage               *image,
   gimp_image_undo_push_image_type (image, NULL);
 
   /*  Set the new base type  */
-  old_type = gimp_image_base_type (image);
+  old_type = gimp_image_get_base_type (image);
 
   g_object_set (image, "base-type", new_type, NULL);
 

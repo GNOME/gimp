@@ -165,7 +165,7 @@ image_convert_base_type_cmd_callback (GtkAction *action,
 
   value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
-  if (value == gimp_image_base_type (image))
+  if (value == gimp_image_get_base_type (image))
     return;
 
   switch (value)

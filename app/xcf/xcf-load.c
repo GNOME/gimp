@@ -466,7 +466,7 @@ xcf_load_image_props (XcfInfo   *info,
              * just sanity checking to make sure gimp doesn't end up
              * with an image state that is impossible.
              */
-            if (gimp_image_base_type (image) == GIMP_INDEXED)
+            if (gimp_image_get_base_type (image) == GIMP_INDEXED)
               gimp_image_set_colormap (image, cmap, n_colors, FALSE);
           }
           break;

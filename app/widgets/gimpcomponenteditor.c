@@ -338,7 +338,7 @@ gimp_component_editor_create_components (GimpComponentEditor *editor)
   GEnumClass      *enum_class;
   gint             i;
 
-  switch (gimp_image_base_type (image))
+  switch (gimp_image_get_base_type (image))
     {
     case GIMP_RGB:
       n_components  = 3;

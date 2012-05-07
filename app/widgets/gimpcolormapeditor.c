@@ -51,7 +51,7 @@
 
 #define HAVE_COLORMAP(image) \
         (image != NULL && \
-         gimp_image_base_type (image) == GIMP_INDEXED && \
+         gimp_image_get_base_type (image) == GIMP_INDEXED && \
          gimp_image_get_colormap (image) != NULL)
 
 
@@ -494,7 +494,7 @@ gimp_colormap_preview_expose (GtkWidget          *widget,
   gint             y;
 
   if (image_editor->image == NULL ||
-      gimp_image_base_type (image_editor->image) == GIMP_INDEXED)
+      gimp_image_get_base_type (image_editor->image) == GIMP_INDEXED)
     return FALSE;
 
   cr = gdk_cairo_create (event->window);

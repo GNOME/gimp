@@ -411,7 +411,7 @@ gimp_palette_import_from_indexed_image (GimpImage   *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (gimp_image_base_type (image) == GIMP_INDEXED, NULL);
+  g_return_val_if_fail (gimp_image_get_base_type (image) == GIMP_INDEXED, NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
 
   palette = GIMP_PALETTE (gimp_palette_new (context, palette_name));

@@ -158,7 +158,7 @@ gimp_image_undo_constructed (GObject *object)
   switch (GIMP_UNDO (object)->undo_type)
     {
     case GIMP_UNDO_IMAGE_TYPE:
-      image_undo->base_type = gimp_image_base_type (image);
+      image_undo->base_type = gimp_image_get_base_type (image);
       break;
 
     case GIMP_UNDO_IMAGE_PRECISION:
@@ -312,12 +312,12 @@ gimp_image_undo_pop (GimpUndo            *undo,
         GimpImageBaseType base_type;
 
         base_type = image_undo->base_type;
-        image_undo->base_type = gimp_image_base_type (image);
+        image_undo->base_type = gimp_image_get_base_type (image);
         g_object_set (image, "base-type", base_type, NULL);
 
         gimp_image_colormap_changed (image, -1);
 
-        if (image_undo->base_type != gimp_image_base_type (image))
+        if (image_undo->base_type != gimp_image_get_base_type (image))
           accum->mode_changed = TRUE;
       }
       break;

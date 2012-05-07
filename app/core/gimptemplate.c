@@ -367,7 +367,7 @@ gimp_template_set_from_image (GimpTemplate *template,
 
   gimp_image_get_resolution (image, &xresolution, &yresolution);
 
-  base_type = gimp_image_base_type (image);
+  base_type = gimp_image_get_base_type (image);
 
   if (base_type == GIMP_INDEXED)
     base_type = GIMP_RGB;

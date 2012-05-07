@@ -623,7 +623,7 @@ gimp_layer_convert (GimpItem  *item,
   GimpPrecision      new_precision;
 
   old_base_type = gimp_drawable_get_base_type (drawable);
-  new_base_type = gimp_image_base_type (dest_image);
+  new_base_type = gimp_image_get_base_type (dest_image);
 
   old_precision = gimp_drawable_get_precision (drawable);
   new_precision = gimp_image_get_precision (dest_image);

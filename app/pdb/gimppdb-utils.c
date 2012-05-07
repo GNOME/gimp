@@ -591,7 +591,7 @@ gimp_pdb_image_is_base_type (GimpImage          *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (gimp_image_base_type (image) == type)
+  if (gimp_image_get_base_type (image) == type)
     return TRUE;
 
   g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
@@ -600,7 +600,7 @@ gimp_pdb_image_is_base_type (GimpImage          *image,
                gimp_image_get_display_name (image),
                gimp_image_get_ID (image),
                gimp_pdb_enum_value_get_nick (GIMP_TYPE_IMAGE_BASE_TYPE,
-                                             gimp_image_base_type (image)),
+                                             gimp_image_get_base_type (image)),
                gimp_pdb_enum_value_get_nick (GIMP_TYPE_IMAGE_BASE_TYPE, type));
 
   return FALSE;
@@ -614,7 +614,7 @@ gimp_pdb_image_is_not_base_type (GimpImage          *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (gimp_image_base_type (image) != type)
+  if (gimp_image_get_base_type (image) != type)
     return TRUE;
 
   g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,

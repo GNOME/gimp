@@ -259,7 +259,7 @@ xcf_save_image (XcfInfo    *info,
   value = gimp_image_get_height (image);
   xcf_write_int32_check_error (info, (guint32 *) &value, 1);
 
-  value = gimp_image_base_type (image);
+  value = gimp_image_get_base_type (image);
   xcf_write_int32_check_error (info, &value, 1);
 
   if (info->file_version >= 4)

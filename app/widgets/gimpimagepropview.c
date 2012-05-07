@@ -475,7 +475,7 @@ gimp_image_prop_view_update (GimpImagePropView *view)
   gtk_label_set_text (GTK_LABEL (view->resolution_label), buf);
 
   /*  color type  */
-  type = gimp_image_base_type (image);
+  type = gimp_image_get_base_type (image);
 
   gimp_enum_get_value (GIMP_TYPE_IMAGE_BASE_TYPE, type,
                        NULL, NULL, &desc, NULL);

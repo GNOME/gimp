@@ -199,7 +199,7 @@ scale_dialog_new (GimpViewable          *viewable,
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (private->combo),
                                  private->interpolation);
 
-  if (gimp_image_base_type (image) == GIMP_INDEXED)
+  if (gimp_image_get_base_type (image) == GIMP_INDEXED)
     {
       GtkWidget *box = gimp_message_box_new (GIMP_STOCK_INFO);
 

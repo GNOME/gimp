@@ -1225,7 +1225,7 @@ gimp_image_real_colormap_changed (GimpImage *image,
                                 private->n_colors);
     }
 
-  if (gimp_image_base_type (image) == GIMP_INDEXED)
+  if (gimp_image_get_base_type (image) == GIMP_INDEXED)
     {
       /* A colormap alteration affects the whole image */
       gimp_image_invalidate (image,
@@ -1511,7 +1511,7 @@ gimp_image_new (Gimp              *gimp,
 }
 
 GimpImageBaseType
-gimp_image_base_type (const GimpImage *image)
+gimp_image_get_base_type (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), -1);
 
@@ -1567,7 +1567,7 @@ gimp_image_get_layer_format (const GimpImage *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   return gimp_image_get_format (image,
-                                gimp_image_base_type (image),
+                                gimp_image_get_base_type (image),
                                 gimp_image_get_precision (image),
                                 with_alpha);
 }
@@ -2153,7 +2153,7 @@ gimp_image_get_component_index (const GimpImage *image,
     case GIMP_GRAY_CHANNEL:    return GRAY;
     case GIMP_INDEXED_CHANNEL: return INDEXED;
     case GIMP_ALPHA_CHANNEL:
-      switch (gimp_image_base_type (image))
+      switch (gimp_image_get_base_type (image))
         {
         case GIMP_RGB:     return ALPHA;
         case GIMP_GRAY:    return ALPHA_G;
@@ -2243,7 +2243,7 @@ gimp_image_get_active_mask (const GimpImage *image)
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  switch (gimp_image_base_type (image))
+  switch (gimp_image_get_base_type (image))
     {
     case GIMP_RGB:
       mask |= (private->active[RED])   ? GIMP_COMPONENT_RED   : 0;

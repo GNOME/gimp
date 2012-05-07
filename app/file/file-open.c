@@ -710,7 +710,7 @@ file_open_profile_apply_rgb (GimpImage    *image,
   GimpColorConfig *config = image->gimp->config->color_management;
   GError          *error  = NULL;
 
-  if (gimp_image_base_type (image) == GIMP_GRAY)
+  if (gimp_image_get_base_type (image) == GIMP_GRAY)
     return;
 
   if (config->mode == GIMP_COLOR_MANAGEMENT_OFF)

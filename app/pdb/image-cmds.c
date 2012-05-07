@@ -294,7 +294,7 @@ image_base_type_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      base_type = gimp_image_base_type (image);
+      base_type = gimp_image_get_base_type (image);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

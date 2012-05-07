@@ -110,7 +110,7 @@ GimpImage     * gimp_image_new                   (Gimp               *gimp,
                                                   GimpImageBaseType   base_type,
                                                   GimpPrecision       precision);
 
-GimpImageBaseType  gimp_image_base_type            (const GimpImage  *image);
+GimpImageBaseType  gimp_image_get_base_type        (const GimpImage  *image);
 GimpPrecision      gimp_image_get_precision        (const GimpImage  *image);
 CombinationMode    gimp_image_get_combination_mode (GimpImageType     dest_type,
                                                     gint              src_bytes);
