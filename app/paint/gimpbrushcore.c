@@ -999,6 +999,8 @@ gimp_brush_core_replace_canvas (GimpBrushCore            *core,
                                brush_opacity,
                                image_opacity,
                                mode);
+
+      g_object_unref (paint_mask);
     }
 }
 
