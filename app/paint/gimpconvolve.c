@@ -128,17 +128,14 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   GimpConvolveOptions *options    = GIMP_CONVOLVE_OPTIONS (paint_options);
   GimpContext         *context    = GIMP_CONTEXT (paint_options);
   GimpDynamics        *dynamics   = GIMP_BRUSH_CORE (paint_core)->dynamics;
-  GimpImage           *image;
+  GimpImage           *image      = gimp_item_get_image (GIMP_ITEM (drawable));
   GeglBuffer          *paint_buffer;
   gint                 paint_buffer_x;
   gint                 paint_buffer_y;
-  GimpTempBuf         *convolve_temp;
   GeglBuffer          *convolve_buffer;
   gdouble              fade_point;
   gdouble              opacity;
   gdouble              rate;
-
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
@@ -170,11 +167,11 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
                                   gimp_temp_buf_get_height (brush_core->brush->mask) / 2,
                                   rate);
 
-  convolve_temp = gimp_temp_buf_new (gegl_buffer_get_width  (paint_buffer),
-                                     gegl_buffer_get_height (paint_buffer),
-                                     gegl_buffer_get_format (paint_buffer));
-  convolve_buffer = gimp_temp_buf_create_buffer (convolve_temp);
-  gimp_temp_buf_unref (convolve_temp);
+  convolve_buffer =
+    gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                     gegl_buffer_get_width  (paint_buffer),
+                                     gegl_buffer_get_height (paint_buffer)),
+                     gegl_buffer_get_format (paint_buffer));
 
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
                     GEGL_RECTANGLE (paint_buffer_x,
@@ -186,14 +183,16 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
 
   gimp_gegl_convolve (convolve_buffer,
                       GEGL_RECTANGLE (0, 0,
-                                      gimp_temp_buf_get_width  (convolve_temp),
-                                      gimp_temp_buf_get_height (convolve_temp)),
+                                      gegl_buffer_get_width  (convolve_buffer),
+                                      gegl_buffer_get_height (convolve_buffer)),
                       paint_buffer,
                       GEGL_RECTANGLE (0, 0,
                                       gegl_buffer_get_width  (paint_buffer),
                                       gegl_buffer_get_height (paint_buffer)),
                       convolve->matrix, 3, convolve->matrix_divisor,
                       GIMP_NORMAL_CONVOL, TRUE);
+
+  g_object_unref (convolve_buffer);
 
   gimp_brush_core_replace_canvas (brush_core, drawable,
                                   coords,
