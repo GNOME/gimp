@@ -117,6 +117,7 @@ CombinationMode    gimp_image_get_combination_mode (GimpImageType     dest_type,
 
 const Babl    * gimp_image_get_format            (const GimpImage    *image,
                                                   GimpImageBaseType   base_type,
+                                                  GimpPrecision       precision,
                                                   gboolean            with_alpha);
 const Babl    * gimp_image_get_layer_format      (const GimpImage    *image,
                                                   gboolean            with_alpha);

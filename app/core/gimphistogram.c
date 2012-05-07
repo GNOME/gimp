@@ -124,9 +124,13 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
 
   format = gegl_buffer_get_format (buffer);
 
-  format = gimp_babl_format (gimp_babl_format_get_base_type (format),
-                             GIMP_PRECISION_U8,
-                             babl_format_has_alpha (format));
+  if (babl_format_is_palette (format))
+    format = gimp_babl_format (GIMP_RGB, GIMP_PRECISION_U8,
+                               babl_format_has_alpha (format));
+  else
+    format = gimp_babl_format (gimp_babl_format_get_base_type (format),
+                               GIMP_PRECISION_U8,
+                               babl_format_has_alpha (format));
 
   n_components = babl_format_get_n_components (format);
 

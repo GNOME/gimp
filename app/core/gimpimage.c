@@ -1312,7 +1312,7 @@ gimp_image_get_proj_format (GimpProjectable *projectable)
     case GIMP_INDEXED:
 #if 0
       /* XXX use real format once the legacy projection is gone */
-      return gimp_image_get_format (image, GIMP_RGB, TRUE);
+      return gimp_image_get_format (image, GIMP_RGB, GIMP_PRECISION_U8, TRUE);
 #else
       return babl_format ("R'G'B'A u8");
 #endif
@@ -1320,7 +1320,7 @@ gimp_image_get_proj_format (GimpProjectable *projectable)
     case GIMP_GRAY:
 #if 0
       /* XXX use real format once the legacy projection is gone */
-      return gimp_image_get_format (image, GIMP_GRAY, TRUE);
+      return gimp_image_get_format (image, GIMP_GRAY, GIMP_PRECISION_U8, TRUE);
 #else
       return babl_format ("Y'A u8");
 #endif
@@ -1536,6 +1536,7 @@ gimp_image_get_combination_mode (GimpImageType dest_type,
 const Babl *
 gimp_image_get_format (const GimpImage   *image,
                        GimpImageBaseType  base_type,
+                       GimpPrecision      precision,
                        gboolean           with_alpha)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
@@ -1544,15 +1545,16 @@ gimp_image_get_format (const GimpImage   *image,
     {
     case GIMP_RGB:
     case GIMP_GRAY:
-      return gimp_babl_format (base_type,
-                               gimp_image_get_precision (image),
-                               with_alpha);
+      return gimp_babl_format (base_type, precision, with_alpha);
 
     case GIMP_INDEXED:
-      if (with_alpha)
-        return gimp_image_colormap_get_rgba_format (image);
-      else
-        return gimp_image_colormap_get_rgb_format (image);
+      if (precision == GIMP_PRECISION_U8)
+        {
+          if (with_alpha)
+            return gimp_image_colormap_get_rgba_format (image);
+          else
+            return gimp_image_colormap_get_rgb_format (image);
+        }
     }
 
   g_return_val_if_reached (NULL);
@@ -1565,7 +1567,8 @@ gimp_image_get_layer_format (const GimpImage *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   return gimp_image_get_format (image,
-                                GIMP_IMAGE_GET_PRIVATE (image)->base_type,
+                                gimp_image_base_type (image),
+                                gimp_image_get_precision (image),
                                 with_alpha);
 }
 
@@ -1574,7 +1577,9 @@ gimp_image_get_channel_format (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return gimp_image_get_format (image, GIMP_GRAY, FALSE);
+  return gimp_image_get_format (image, GIMP_GRAY,
+                                gimp_image_get_precision (image),
+                                FALSE);
 }
 
 const Babl *

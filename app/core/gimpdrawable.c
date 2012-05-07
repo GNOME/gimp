@@ -703,9 +703,10 @@ gimp_drawable_real_convert_type (GimpDrawable      *drawable,
   GeglBuffer *dest_buffer;
   const Babl *format;
 
-  format = gimp_babl_format (new_base_type,
-                             new_precision,
-                             gimp_drawable_has_alpha (drawable));
+  format = gimp_image_get_format (dest_image,
+                                  new_base_type,
+                                  new_precision,
+                                  gimp_drawable_has_alpha (drawable));
 
   dest_buffer =
     gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
@@ -1617,6 +1618,7 @@ gimp_drawable_get_format_with_alpha (const GimpDrawable *drawable)
 
   return gimp_image_get_format (gimp_item_get_image (GIMP_ITEM (drawable)),
                                 gimp_drawable_get_base_type (drawable),
+                                gimp_drawable_get_precision (drawable),
                                 TRUE);
 }
 
@@ -1627,6 +1629,7 @@ gimp_drawable_get_format_without_alpha (const GimpDrawable *drawable)
 
   return gimp_image_get_format (gimp_item_get_image (GIMP_ITEM (drawable)),
                                 gimp_drawable_get_base_type (drawable),
+                                gimp_drawable_get_precision (drawable),
                                 FALSE);
 }
 

@@ -1445,6 +1445,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
           {
             const Babl *copy_format =
               gimp_image_get_format (image, GIMP_GRAY,
+                                     gimp_drawable_get_precision (drawable),
                                      gimp_drawable_has_alpha (drawable));
 
             src_buffer =

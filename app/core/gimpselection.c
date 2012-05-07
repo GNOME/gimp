@@ -674,6 +674,7 @@ gimp_selection_extract (GimpSelection *selection,
   if (babl_format_is_palette (src_format) && ! keep_indexed)
     {
       dest_format = gimp_image_get_format (image, GIMP_RGB,
+                                           gimp_image_get_precision (image),
                                            add_alpha ||
                                            babl_format_has_alpha (src_format));
     }
