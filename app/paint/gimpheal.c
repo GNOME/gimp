@@ -483,6 +483,8 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   const GimpTempBuf *mask_buf;
   gdouble            fade_point;
   gdouble            hardness;
+  gint               mask_off_x;
+  gint               mask_off_y;
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
@@ -534,6 +536,15 @@ gimp_heal_motion (GimpSourceCore   *source_core,
 
   mask_buffer = gimp_temp_buf_create_buffer ((GimpTempBuf *) mask_buf);
 
+  /* find the offset of the brush mask's rect */
+  {
+    gint x = (gint) floor (coords->x) - (gegl_buffer_get_width  (mask_buffer) >> 1);
+    gint y = (gint) floor (coords->y) - (gegl_buffer_get_height (mask_buffer) >> 1);
+
+    mask_off_x = (x < 0) ? -x : 0;
+    mask_off_y = (y < 0) ? -y : 0;
+  }
+
   gimp_heal (src_copy,
              GEGL_RECTANGLE (0, 0,
                              gegl_buffer_get_width  (src_copy),
@@ -544,9 +555,9 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                              paint_area_width,
                              paint_area_height),
              mask_buffer,
-             GEGL_RECTANGLE (0, 0,
-                             gegl_buffer_get_width  (mask_buffer),
-                             gegl_buffer_get_height (mask_buffer)));
+             GEGL_RECTANGLE (mask_off_x, mask_off_y,
+                             paint_area_width,
+                             paint_area_height));
 
   g_object_unref (src_copy);
   g_object_unref (mask_buffer);
