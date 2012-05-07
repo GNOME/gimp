@@ -285,6 +285,8 @@ run (const gchar      *name,
 
   INIT_I18N ();
 
+  gegl_init (NULL, NULL);
+
   /* how are we running today? */
   switch (run_mode)
     {
@@ -843,12 +845,12 @@ add_cursor_image (gint32      image,
                   GdkDisplay *display)
 {
 #ifdef HAVE_XFIXES
-  XFixesCursorImage *cursor;
-  GimpDrawable      *drawable;
-  GimpPixelRgn       rgn;
-  gpointer           pr;
-  gint32             layer;
-  gint32             active;
+  XFixesCursorImage  *cursor;
+  GeglBuffer         *buffer;
+  GeglBufferIterator *iter;
+  GeglRectangle      *roi;
+  gint32              layer;
+  gint32              active;
 
   cursor = XFixesGetCursorImage (GDK_DISPLAY_XDISPLAY (display));
 
@@ -861,25 +863,28 @@ add_cursor_image (gint32      image,
                           cursor->width, cursor->height,
                           GIMP_RGBA_IMAGE, 100.0, GIMP_NORMAL_MODE);
 
-  drawable = gimp_drawable_get (layer);
+  buffer = gimp_drawable_get_buffer (layer);
 
-  gimp_pixel_rgn_init (&rgn, drawable,
-                       0, 0, drawable->width, drawable->height, TRUE, FALSE);
+  iter = gegl_buffer_iterator_new (buffer,
+                                   GEGL_RECTANGLE (0, 0,
+                                                   gimp_drawable_width  (layer),
+                                                   gimp_drawable_height (layer)),
+                                   0, babl_format ("R'G'B'A u8"),
+                                   GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+  roi = &iter->roi[0];
 
-  for (pr = gimp_pixel_rgns_register (1, &rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
+  while (gegl_buffer_iterator_next (iter))
     {
-      const gulong *src  = cursor->pixels + rgn.y * cursor->width + rgn.x;
-      guchar       *dest = rgn.data;
+      const gulong *src  = cursor->pixels + roi->y * cursor->width + roi->x;
+      guchar       *dest = iter->data[0];
       gint          x, y;
 
-      for (y = 0; y < rgn.h; y++)
+      for (y = 0; y < roi->height; y++)
         {
           const gulong *s = src;
           guchar       *d = dest;
 
-          for (x = 0; x < rgn.w; x++)
+          for (x = 0; x < roi->width; x++)
             {
               /*  the cursor pixels are pre-multiplied ARGB  */
               guint a = (*s >> 24) & 0xff;
@@ -897,11 +902,11 @@ add_cursor_image (gint32      image,
             }
 
           src  += cursor->width;
-          dest += rgn.rowstride;
+          dest += 4 * roi->width;
         }
     }
 
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
 
   gimp_image_insert_layer (image, layer, -1, -1);
   gimp_layer_set_offsets (layer,

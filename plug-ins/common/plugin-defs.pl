@@ -116,7 +116,7 @@
     'ripple' => { ui => 1 },
     'rotate' => {},
     'sample-colorize' => { ui => 1 },
-    'screenshot' => { ui => 1, optional => 1, libs => 'SCREENSHOT_LIBS', cflags => 'XFIXES_CFLAGS' },
+    'screenshot' => { ui => 1, optional => 1, libs => 'SCREENSHOT_LIBS', cflags => 'XFIXES_CFLAGS', gegl => 1 },
     'sharpen' => { ui => 1 },
     'shift' => { ui => 1 },
     'sinus' => { ui => 1 },

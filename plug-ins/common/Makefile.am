@@ -2225,6 +2225,7 @@ screenshot_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(SCREENSHOT_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
