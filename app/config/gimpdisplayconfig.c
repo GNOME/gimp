@@ -267,7 +267,8 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONFIRM_ON_CLOSE,
                                     "confirm-on-close", NULL,
                                     TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+                                    GIMP_PARAM_STATIC_STRINGS |
+                                    GIMP_CONFIG_PARAM_IGNORE);
   GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_XOR_COLOR,
                                 "xor-color", NULL,
                                 FALSE, &color,
