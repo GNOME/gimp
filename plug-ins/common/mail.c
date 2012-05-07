@@ -196,10 +196,6 @@ query (void)
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/File/Send");
-  gimp_plugin_icon_register (PLUG_IN_PROC, GIMP_ICON_TYPE_INLINE_PIXBUF,
-                             mail_icon);
 }
 
 static void
