@@ -365,6 +365,13 @@ run (const gchar      *name,
           gimp_set_data (PLUG_IN_PROC, &shootvals, sizeof (ScreenshotValues));
 
           gimp_display_new (image_ID);
+
+          /* Give some sort of feedback that the shot is done */
+          if (shootvals.select_delay > 0)
+            {
+              gdk_display_beep (gdk_screen_get_display (screen));
+              gdk_flush (); /* flush so the beep makes it to the server */
+            }
         }
 
       /* set return values */
