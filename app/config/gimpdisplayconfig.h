@@ -56,7 +56,6 @@ struct _GimpDisplayConfig
   gboolean            show_paint_tool_cursor;
   gchar              *image_title_format;
   gchar              *image_status_format;
-  gboolean            confirm_on_close;
   gdouble             monitor_xres;
   gdouble             monitor_yres;
   gboolean            monitor_res_from_gdk;
