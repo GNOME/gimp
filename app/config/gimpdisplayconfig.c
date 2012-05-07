@@ -60,7 +60,6 @@ enum
   PROP_SHOW_PAINT_TOOL_CURSOR,
   PROP_IMAGE_TITLE_FORMAT,
   PROP_IMAGE_STATUS_FORMAT,
-  PROP_CONFIRM_ON_CLOSE,
   PROP_MONITOR_XRESOLUTION,
   PROP_MONITOR_YRESOLUTION,
   PROP_MONITOR_RES_FROM_GDK,
@@ -77,6 +76,7 @@ enum
   PROP_USE_EVENT_HISTORY,
 
   /* ignored, only for backward compatibility: */
+  PROP_CONFIRM_ON_CLOSE,
   PROP_XOR_COLOR
 };
 
@@ -186,10 +186,6 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                    IMAGE_STATUS_FORMAT_BLURB,
                                    GIMP_CONFIG_DEFAULT_IMAGE_STATUS_FORMAT,
                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONFIRM_ON_CLOSE,
-                                    "confirm-on-close", CONFIRM_ON_CLOSE_BLURB,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_RESOLUTION (object_class, PROP_MONITOR_XRESOLUTION,
                                        "monitor-xresolution",
                                        MONITOR_XRESOLUTION_BLURB,
@@ -268,6 +264,10 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                     GIMP_PARAM_STATIC_STRINGS);
 
   /*  only for backward compatibility:  */
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONFIRM_ON_CLOSE,
+                                    "confirm-on-close", NULL,
+                                    TRUE,
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_XOR_COLOR,
                                 "xor-color", NULL,
                                 FALSE, &color,
@@ -367,9 +367,6 @@ gimp_display_config_set_property (GObject      *object,
       g_free (display_config->image_status_format);
       display_config->image_status_format = g_value_dup_string (value);
       break;
-    case PROP_CONFIRM_ON_CLOSE:
-      display_config->confirm_on_close = g_value_get_boolean (value);
-      break;
     case PROP_MONITOR_XRESOLUTION:
       display_config->monitor_xres = g_value_get_double (value);
       break;
@@ -417,6 +414,8 @@ gimp_display_config_set_property (GObject      *object,
     case PROP_USE_EVENT_HISTORY:
       display_config->use_event_history = g_value_get_boolean (value);
       break;
+
+    case PROP_CONFIRM_ON_CLOSE:
     case PROP_XOR_COLOR:
       /* ignored */
       break;
@@ -482,9 +481,6 @@ gimp_display_config_get_property (GObject    *object,
     case PROP_IMAGE_STATUS_FORMAT:
       g_value_set_string (value, display_config->image_status_format);
       break;
-    case PROP_CONFIRM_ON_CLOSE:
-      g_value_set_boolean (value, display_config->confirm_on_close);
-      break;
     case PROP_MONITOR_XRESOLUTION:
       g_value_set_double (value, display_config->monitor_xres);
       break;
@@ -527,6 +523,8 @@ gimp_display_config_get_property (GObject    *object,
     case PROP_USE_EVENT_HISTORY:
       g_value_set_boolean (value, display_config->use_event_history);
       break;
+
+    case PROP_CONFIRM_ON_CLOSE:
     case PROP_XOR_COLOR:
       /* ignored */
       break;

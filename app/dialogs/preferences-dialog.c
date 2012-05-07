@@ -1560,13 +1560,6 @@ prefs_dialog_new (Gimp       *gimp,
                            _("Maximum _filesize for thumbnailing:"),
                            GTK_TABLE (table), 1, size_group);
 
-  /*  File Saving  */
-  vbox2 = prefs_frame_new (_("Saving Images"), GTK_CONTAINER (vbox), FALSE);
-
-  prefs_check_button_add (object, "confirm-on-close",
-                          _("Confirm closing of unsa_ved images"),
-                          GTK_BOX (vbox2));
-
   g_object_unref (size_group);
   size_group = NULL;
 

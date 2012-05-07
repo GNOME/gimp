@@ -42,9 +42,6 @@ N_("Specifies how the area around the image should be drawn.")
 #define COLOR_PROFILE_POLICY_BLURB \
 N_("How to handle embedded color profiles when opening a file.")
 
-#define CONFIRM_ON_CLOSE_BLURB \
-N_("Ask for confirmation before closing an image without saving.")
-
 #define CURSOR_FORMAT_BLURB \
 N_("Sets the pixel format to use for mouse pointers.")
 
