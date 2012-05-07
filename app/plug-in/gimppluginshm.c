@@ -44,7 +44,7 @@
 
 #endif /* USE_POSIX_SHM */
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
 
@@ -62,6 +62,8 @@
 #endif /* G_OS_WIN32 || G_WITH_CYGWIN */
 
 #include "plug-in-types.h"
+
+#include "core/gimp-utils.h"
 
 #include "gimppluginshm.h"
 
@@ -179,7 +181,7 @@ gimp_plug_in_shm_new (void)
     gint  shm_fd;
 
     /* Our shared memory id will be our process ID */
-    pid = get_pid ();
+    pid = gimp_get_pid ();
 
     /* From the id, derive the file map name */
     g_snprintf (shm_handle, sizeof (shm_handle), "/gimp-shm-%d", pid);
