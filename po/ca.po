@@ -7452,7 +7452,7 @@ msgstr "Fes transparent el color de primer pla"
 #.
 #: ../app/core/gimp-tags.c:88
 msgid "tags-locale:C"
-msgstr "tips-locale:ca"
+msgstr "tags-locale:ca"
 
 #: ../app/core/gimp-user-install.c:159
 #, c-format
