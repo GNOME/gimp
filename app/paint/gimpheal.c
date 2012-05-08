@@ -83,18 +83,21 @@ static gdouble      gimp_heal_laplace_iteration  (gdouble          *matrix,
                                                   gint              depth,
                                                   gint              width,
                                                   gdouble          *solution,
-                                                  guchar           *mask);
+                                                  guchar           *mask,
+                                                  gint              mask_stride,
+                                                  gint              mask_offx,
+                                                  gint              mask_offy);
 
 static void         gimp_heal_laplace_loop       (gdouble          *matrix,
                                                   gint              height,
                                                   gint              depth,
                                                   gint              width,
                                                   gdouble          *solution,
-                                                  guchar           *mask);
+                                                  PixelRegion      *maskPR);
 
 static PixelRegion *gimp_heal_region             (PixelRegion      *tempPR,
                                                   PixelRegion      *srcPR,
-                                                  const TempBuf    *mask_buf);
+                                                  PixelRegion      *maskPR);
 
 static void         gimp_heal_motion             (GimpSourceCore   *source_core,
                                                   GimpDrawable     *drawable,
@@ -269,7 +272,10 @@ gimp_heal_laplace_iteration (gdouble *matrix,
                              gint     depth,
                              gint     width,
                              gdouble *solution,
-                             guchar  *mask)
+                             guchar  *mask,
+                             gint     mask_stride,
+                             gint     mask_offx,
+                             gint     mask_offy)
 {
   const gint    rowstride = width * depth;
   gint          i, j, k, off, offm, offm0, off0;
@@ -283,12 +289,12 @@ gimp_heal_laplace_iteration (gdouble *matrix,
   for (i = 0; i < height; i++)
     {
       off0  = i * rowstride;
-      offm0 = i * width;
+      offm0 = (i + mask_offy) * mask_stride;
 
       for (j = i % 2; j < width; j += 2)
         {
           off  = off0 + j * depth;
-          offm = offm0 + j;
+          offm = offm0 + j + mask_offx;
 
           if ((0 == mask[offm]) ||
               (i == 0) || (i == (height - 1)) ||
@@ -330,13 +336,13 @@ gimp_heal_laplace_iteration (gdouble *matrix,
    */
   for (i = 0; i < height; i++)
     {
-      off0 =  i * rowstride;
-      offm0 = i * width;
+      off0  = i * rowstride;
+      offm0 = (i + mask_offy) * mask_stride;
 
       for (j = (i % 2) ? 0 : 1; j < width; j += 2)
         {
           off = off0 + j * depth;
-          offm = offm0 + j;
+          offm = offm0 + j + mask_offx;
 
           if ((0 == mask[offm]) ||
               (i == 0) || (i == (height - 1)) ||
@@ -375,12 +381,12 @@ gimp_heal_laplace_iteration (gdouble *matrix,
 /* Solve the laplace equation for matrix and store the result in solution.
  */
 static void
-gimp_heal_laplace_loop (gdouble *matrix,
-                        gint     height,
-                        gint     depth,
-                        gint     width,
-                        gdouble *solution,
-                        guchar  *mask)
+gimp_heal_laplace_loop (gdouble     *matrix,
+                        gint         height,
+                        gint         depth,
+                        gint         width,
+                        gdouble     *solution,
+                        PixelRegion *maskPR)
 {
 #define EPSILON   0.001
 #define MAX_ITER  500
@@ -393,7 +399,8 @@ gimp_heal_laplace_loop (gdouble *matrix,
 
       /* do one iteration and store the amount of error */
       sqr_err = gimp_heal_laplace_iteration (matrix, height, depth, width,
-                                             solution, mask);
+                                             solution, maskPR->data, maskPR->rowstride,
+                                             maskPR->x, maskPR->y);
 
       /* copy solution to matrix */
       memcpy (matrix, solution, width * height * depth * sizeof (double));
@@ -411,17 +418,16 @@ gimp_heal_laplace_loop (gdouble *matrix,
 static PixelRegion *
 gimp_heal_region (PixelRegion   *tempPR,
                   PixelRegion   *srcPR,
-                  const TempBuf *mask_buf)
+                  PixelRegion   *maskPR)
 {
   gdouble *i_1  = g_new (gdouble, tempPR->h * tempPR->bytes * tempPR->w);
   gdouble *i_2  = g_new (gdouble, tempPR->h * tempPR->bytes * tempPR->w);
-  guchar  *mask = temp_buf_get_data (mask_buf);
 
   /* substract pattern to image and store the result as a double in i_1 */
   gimp_heal_sub (tempPR, srcPR, i_1);
 
   /* FIXME: is a faster implementation needed? */
-  gimp_heal_laplace_loop (i_1, tempPR->h, tempPR->bytes, tempPR->w, i_2, mask);
+  gimp_heal_laplace_loop (i_1, tempPR->h, tempPR->bytes, tempPR->w, i_2, maskPR);
 
   /* add solution to original image and store in tempPR */
   gimp_heal_add (i_2, srcPR, tempPR);
@@ -459,6 +465,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   PixelRegion         origPR;
   PixelRegion         tempPR;
   PixelRegion         destPR;
+  PixelRegion         maskPR;
   GimpImageType       src_type;
   const TempBuf      *mask_buf;
   gdouble             fade_point;
@@ -569,8 +576,20 @@ gimp_heal_motion (GimpSourceCore   *source_core,
       return;
     }
 
+  /* find the offset of the brush mask's rect */
+  {
+    gint x = (gint) floor (coords->x) - (mask_buf->width  >> 1);
+    gint y = (gint) floor (coords->y) - (mask_buf->height >> 1);
+
+    gint off_x = (x < 0) ? -x : 0;
+    gint off_y = (y < 0) ? -y : 0;
+
+    pixel_region_init_temp_buf (&maskPR, mask_buf, off_x, off_y,
+                                paint_area_width, paint_area_height);
+  }
+
   /* heal tempPR using srcPR */
-  gimp_heal_region (&tempPR, srcPR, mask_buf);
+  gimp_heal_region (&tempPR, srcPR, &maskPR);
 
   temp_buf_free (src);
 
