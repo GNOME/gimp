@@ -657,7 +657,14 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
     }
 
   if (present && GTK_IS_WINDOW (toplevel))
-    gtk_window_present (GTK_WINDOW (toplevel));
+    {
+      /*  Work around focus-stealing protection, or whatever makes the
+       *  dock appear below the one where we clicked a button to open
+       *  it. See bug #630173.
+       */
+      gtk_widget_show_now (toplevel);
+      gdk_window_raise (gtk_widget_get_window (toplevel));
+    }
 
   return dialog;
 }
