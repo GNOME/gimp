@@ -477,6 +477,10 @@ gimp_container_popup_show (GimpContainerPopup *popup,
   if (y + requisition.height > rect.y + rect.height)
     y = orig_y - requisition.height;
 
+  gtk_window_set_screen (GTK_WINDOW (popup), screen);
+  gtk_window_set_transient_for (GTK_WINDOW (popup),
+                                GTK_WINDOW (gtk_widget_get_toplevel (widget)));
+
   gtk_window_move (GTK_WINDOW (popup), x, y);
   gtk_widget_show (GTK_WIDGET (popup));
 }
