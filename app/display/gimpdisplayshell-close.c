@@ -54,6 +54,9 @@ static void      gimp_display_shell_close_dialog       (GimpDisplayShell *shell,
                                                         GimpImage        *image);
 static void      gimp_display_shell_close_name_changed (GimpImage        *image,
                                                         GimpMessageBox   *box);
+static void      gimp_display_shell_close_exported     (GimpImage        *image,
+                                                        const gchar      *uri,
+                                                        GimpMessageBox   *box);
 static gboolean  gimp_display_shell_close_time_changed (GimpMessageBox   *box);
 static void      gimp_display_shell_close_response     (GtkWidget        *widget,
                                                         gboolean          close,
@@ -189,6 +192,9 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
   g_signal_connect_object (image, "name-changed",
                            G_CALLBACK (gimp_display_shell_close_name_changed),
                            box, 0);
+  g_signal_connect_object (image, "exported",
+                           G_CALLBACK (gimp_display_shell_close_exported),
+                           box, 0);
 
   gimp_display_shell_close_name_changed (image, box);
 
@@ -233,12 +239,21 @@ gimp_display_shell_close_name_changed (GimpImage      *image,
                                      gimp_image_get_display_name (image));
 }
 
+static void
+gimp_display_shell_close_exported (GimpImage      *image,
+                                   const gchar    *uri,
+                                   GimpMessageBox *box)
+{
+  gimp_display_shell_close_time_changed (box);
+}
 
 static gboolean
 gimp_display_shell_close_time_changed (GimpMessageBox *box)
 {
-  GimpImage *image      = g_object_get_data (G_OBJECT (box), "gimp-image");
-  gint       dirty_time = gimp_image_get_dirty_time (image);
+  GimpImage   *image       = g_object_get_data (G_OBJECT (box), "gimp-image");
+  gint         dirty_time  = gimp_image_get_dirty_time (image);
+  gchar       *time_text   = NULL;
+  gchar       *export_text = NULL;
 
   if (dirty_time)
     {
@@ -250,41 +265,55 @@ gimp_display_shell_close_time_changed (GimpMessageBox *box)
       if (hours > 0)
         {
           if (hours > 1 || minutes == 0)
-            gimp_message_box_set_text (box,
-                                       ngettext ("If you don't save the image, "
-                                                 "changes from the last hour "
-                                                 "will be lost.",
-                                                 "If you don't save the image, "
-                                                 "changes from the last %d "
-                                                 "hours will be lost.",
-                                                 hours), hours);
-
+            {
+              time_text =
+                g_strdup_printf (ngettext ("If you don't save the image, "
+                                           "changes from the last hour "
+                                           "will be lost.",
+                                           "If you don't save the image, "
+                                           "changes from the last %d "
+                                           "hours will be lost.",
+                                           hours), hours);
+            }
           else
-            gimp_message_box_set_text (box,
-                                       ngettext ("If you don't save the image, "
-                                                 "changes from the last hour "
-                                                 "and %d minute will be lost.",
-                                                 "If you don't save the image, "
-                                                 "changes from the last hour "
-                                                 "and %d minutes will be lost.",
-                                                 minutes), minutes);
+            {
+              time_text =
+                g_strdup_printf (ngettext ("If you don't save the image, "
+                                           "changes from the last hour "
+                                           "and %d minute will be lost.",
+                                           "If you don't save the image, "
+                                           "changes from the last hour "
+                                           "and %d minutes will be lost.",
+                                           minutes), minutes);
+            }
         }
       else
         {
-          gimp_message_box_set_text (box,
-                                     ngettext ("If you don't save the image, "
-                                               "changes from the last minute "
-                                               "will be lost.",
-                                               "If you don't save the image, "
-                                               "changes from the last %d "
-                                               "minutes will be lost.",
-                                               minutes), minutes);
+          time_text =
+            g_strdup_printf (ngettext ("If you don't save the image, "
+                                       "changes from the last minute "
+                                       "will be lost.",
+                                       "If you don't save the image, "
+                                       "changes from the last %d "
+                                       "minutes will be lost.",
+                                       minutes), minutes);
         }
     }
+
+  if (! gimp_image_is_export_dirty (image))
+    export_text =
+      g_strdup_printf (_("The image has been exported to '%s'."),
+                       gimp_image_get_exported_uri (image));
+
+  if (time_text && export_text)
+    gimp_message_box_set_text (box, "%s\n\n%s", time_text, export_text);
+  else if (time_text || export_text)
+    gimp_message_box_set_text (box, "%s", time_text ? time_text : export_text);
   else
-    {
-      gimp_message_box_set_text (box, NULL);
-    }
+    gimp_message_box_set_text (box, "%s", time_text);
+
+  g_free (time_text);
+  g_free (export_text);
 
   return TRUE;
 }
