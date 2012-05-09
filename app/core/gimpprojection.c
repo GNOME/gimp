@@ -312,12 +312,8 @@ gimp_projection_get_buffer (GimpPickable *pickable)
 
       if (proj->sink_node)
         {
-          GeglBuffer *buffer;
-
-          buffer = gimp_projection_get_buffer (GIMP_PICKABLE (proj));
-
           gegl_node_set (proj->sink_node,
-                         "buffer", buffer,
+                         "buffer", proj->buffer,
                          NULL);
         }
     }

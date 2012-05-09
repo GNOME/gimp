@@ -254,7 +254,7 @@ gimp_projection_initialize (GimpProjection *proj,
 
   if (! coverage)
     {
-      GeglBuffer    *buffer;
+      GeglBuffer *buffer;
 
       if (proj->use_gegl)
         {
@@ -264,11 +264,8 @@ gimp_projection_initialize (GimpProjection *proj,
         }
       else
         {
-          GeglBuffer  *buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (proj));
-          TileManager *tiles  = gimp_gegl_buffer_get_tiles (buffer);
-          const Babl  *format = gimp_pickable_get_format (GIMP_PICKABLE (proj));
-
-          buffer = gimp_tile_manager_create_buffer (tiles, format);
+          buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (proj));
+          g_object_ref (buffer);
         }
 
       gegl_buffer_clear (buffer, GEGL_RECTANGLE (x, y, w, h));
