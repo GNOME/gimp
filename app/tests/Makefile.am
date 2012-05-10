@@ -50,6 +50,7 @@ libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
 libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).la
 libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
+libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir)		\
@@ -79,7 +80,9 @@ AM_LDFLAGS = \
 	-u $(SYMPREFIX)menus_save			\
 	-u $(SYMPREFIX)gimp_tools_save			\
 	-u $(SYMPREFIX)gimp_curve_map_pixels		\
-	-u $(SYMPREFIX)gimp_param_spec_duplicate
+	-u $(SYMPREFIX)gimp_image_base_type		\
+	-u $(SYMPREFIX)gimp_param_spec_duplicate	\
+	-u $(SYMPREFIX)gimp_lebl_dialog
 
 # Note that we have some duplicate entries here too to work around
 # circular dependencies and systems on the same architectural layer as
@@ -109,7 +112,9 @@ LDADD = \
 	$(top_builddir)/app/base/libappbase.a			\
 	$(top_builddir)/app/libapp.a				\
 	$(top_builddir)/app/gegl/libappgegl.a			\
+	$(top_builddir)/app/operations/libappoperations.a	\
 	libgimpapptestutils.a					\
+	$(libgimp)						\
 	$(libgimpwidgets)					\
 	$(libgimpconfig)					\
 	$(libgimpmath)						\

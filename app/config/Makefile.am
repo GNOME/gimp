@@ -99,6 +99,7 @@ test_config_LDADD = \
 	../paint/libapppaint.a			\
 	../composite/libappcomposite.a		\
 	../gegl/libappgegl.a			\
+	../operations/libappoperations.a	\
 	libappconfig.a				\
 	../paint-funcs/libapppaint-funcs.a	\
 	../base/libappbase.a			\
