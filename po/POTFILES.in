@@ -229,11 +229,12 @@ app/file/file-save.c
 app/file/file-utils.c
 
 app/gegl/gimp-babl.c
-app/gegl/gimpcurvesconfig.c
 app/gegl/gimp-gegl-enums.c
-app/gegl/gimplevelsconfig.c
-app/gegl/gimpoperationcagecoefcalc.c
-app/gegl/gimpoperationcagetransform.c
+
+app/operations/gimpcurvesconfig.c
+app/operations/gimplevelsconfig.c
+app/operations/gimpoperationcagecoefcalc.c
+app/operations/gimpoperationcagetransform.c
 
 app/gui/gui.c
 app/gui/gui-message.c

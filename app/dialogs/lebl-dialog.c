@@ -7,8 +7,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "lebl-dialog.h"
-#define _(a) (a)
+#include "gimp-intl.h"
 
 static const guint8 goatpb2[];
 static const guint8 goatpb[];
@@ -765,6 +764,8 @@ inv_expose (GtkWidget *widget, GdkEventExpose *event)
 	inv_draw_idle = 0;
 	return TRUE;
 }
+
+gboolean gimp_lebl_dialog (void);
 
 gboolean
 gimp_lebl_dialog (void)
