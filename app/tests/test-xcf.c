@@ -727,7 +727,7 @@ gimp_assert_mainimage (GimpImage *image,
   g_assert_cmpint (gimp_image_get_height (image),
                    ==,
                    GIMP_MAINIMAGE_HEIGHT);
-  g_assert_cmpint (gimp_image_base_type (image),
+  g_assert_cmpint (gimp_image_get_base_type (image),
                    ==,
                    GIMP_MAINIMAGE_TYPE);
 

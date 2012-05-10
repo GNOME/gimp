@@ -50,7 +50,6 @@ libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
 libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).la
 libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
-libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir)		\
@@ -114,7 +113,6 @@ LDADD = \
 	$(top_builddir)/app/gegl/libappgegl.a			\
 	$(top_builddir)/app/operations/libappoperations.a	\
 	libgimpapptestutils.a					\
-	$(libgimp)						\
 	$(libgimpwidgets)					\
 	$(libgimpconfig)					\
 	$(libgimpmath)						\
