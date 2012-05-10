@@ -206,6 +206,8 @@ gimp_view_popup_timeout (GimpViewPopup *popup)
   gtk_window_set_resizable (GTK_WINDOW (window), FALSE);
 
   gtk_window_set_screen (GTK_WINDOW (window), screen);
+  gtk_window_set_transient_for (GTK_WINDOW (window),
+                                GTK_WINDOW (gtk_widget_get_toplevel (popup->widget)));
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
