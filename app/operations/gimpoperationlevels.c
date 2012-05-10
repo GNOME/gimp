@@ -86,16 +86,13 @@ gimp_operation_levels_map (gdouble value,
                            gdouble low_output,
                            gdouble high_output)
 {
-  /* clamp to guard pow() against negative input */
-  value = MAX (value, low_input);
-
   /*  determine input intensity  */
   if (high_input != low_input)
     value = (value - low_input) / (high_input - low_input);
   else
     value = (value - low_input);
 
-  if (inv_gamma != 1.0)
+  if (inv_gamma != 1.0 && value > 0)
     value =  pow (value, inv_gamma);
 
   /*  determine the output intensity  */
