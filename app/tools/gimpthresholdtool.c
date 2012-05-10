@@ -25,7 +25,7 @@
 
 #include "tools-types.h"
 
-#include "gegl/gimpthresholdconfig.h"
+#include "operations/gimpthresholdconfig.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"

@@ -26,7 +26,7 @@
 
 #include "tools-types.h"
 
-#include "gegl/gimpposterizeconfig.h"
+#include "operations/gimpposterizeconfig.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimperror.h"

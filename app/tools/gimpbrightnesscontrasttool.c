@@ -27,7 +27,7 @@
 
 #include "tools-types.h"
 
-#include "gegl/gimpbrightnesscontrastconfig.h"
+#include "operations/gimpbrightnesscontrastconfig.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimperror.h"

@@ -32,6 +32,10 @@
 
 #include "tools-types.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
+#include "operations/gimpcageconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable-shadow.h"
@@ -40,9 +44,6 @@
 #include "core/gimplayer.h"
 #include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
-
-#include "gegl/gimp-gegl-utils.h"
-#include "gegl/gimpcageconfig.h"
 
 #include "widgets/gimphelp-ids.h"
 

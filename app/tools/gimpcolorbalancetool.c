@@ -27,7 +27,7 @@
 
 #include "tools-types.h"
 
-#include "gegl/gimpcolorbalanceconfig.h"
+#include "operations/gimpcolorbalanceconfig.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimperror.h"

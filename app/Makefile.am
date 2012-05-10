@@ -17,6 +17,7 @@ SUBDIRS = \
 	config		\
 	composite	\
 	core		\
+	operations	\
 	gegl		\
 	text		\
 	vectors		\
@@ -139,7 +140,8 @@ calm_down_linker = \
 	-u $(SYMPREFIX)gimp_vectors_mod_undo_get_type		\
 	-u $(SYMPREFIX)gimp_vectors_prop_undo_get_type		\
 	-u $(SYMPREFIX)gimp_curve_map_pixels			\
-	-u $(SYMPREFIX)gimp_param_spec_duplicate
+	-u $(SYMPREFIX)gimp_param_spec_duplicate		\
+	-u $(SYNPREFIX)gimp_operations_init
 
 AM_LDFLAGS = \
 	$(munix)					\
@@ -161,6 +163,7 @@ gimpconsoleldadd = \
 	text/libapptext.a		\
 	paint/libapppaint.a		\
 	composite/libappcomposite.a	\
+	operations/libappoperations.a	\
 	gegl/libappgegl.a		\
 	config/libappconfig.a		\
 	paint-funcs/libapppaint-funcs.a	\

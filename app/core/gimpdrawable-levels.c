@@ -21,7 +21,7 @@
 
 #include "core-types.h"
 
-#include "gegl/gimplevelsconfig.h"
+#include "operations/gimplevelsconfig.h"
 
 #include "gimpdrawable.h"
 #include "gimpdrawable-histogram.h"

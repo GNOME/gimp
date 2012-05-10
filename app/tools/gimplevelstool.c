@@ -31,8 +31,9 @@
 #include "tools-types.h"
 
 #include "gegl/gimp-babl.h"
-#include "gegl/gimplevelsconfig.h"
-#include "gegl/gimpoperationlevels.h"
+
+#include "operations/gimplevelsconfig.h"
+#include "operations/gimpoperationlevels.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"

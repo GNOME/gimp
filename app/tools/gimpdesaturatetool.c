@@ -26,7 +26,7 @@
 
 #include "tools-types.h"
 
-#include "gegl/gimpdesaturateconfig.h"
+#include "operations/gimpdesaturateconfig.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimperror.h"

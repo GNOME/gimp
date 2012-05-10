@@ -38,7 +38,7 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("gegl/gimpbrightnesscontrastconfig.h") ],
+        headers => [ qw("operations/gimpbrightnesscontrastconfig.h") ],
 	code => <<'CODE'
 {
   if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
@@ -98,7 +98,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("gegl/gimplevelsconfig.h") ],
+	headers => [ qw("operations/gimplevelsconfig.h") ],
 	code => <<'CODE'
 {
   if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
@@ -208,7 +208,7 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("gegl/gimpposterizeconfig.h") ],
+        headers => [ qw("operations/gimpposterizeconfig.h") ],
 	code => <<'CODE'
 {
   if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
@@ -247,7 +247,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("gegl/gimpdesaturateconfig.h") ],
+	headers => [ qw("operations/gimpdesaturateconfig.h") ],
 	code => <<'CODE'
 {
   if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
@@ -294,7 +294,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("gegl/gimpdesaturateconfig.h") ],
+	headers => [ qw("operations/gimpdesaturateconfig.h") ],
 	code => <<'CODE'
 {
   if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
@@ -417,7 +417,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("gegl/gimpcurvesconfig.h") ],
+	headers => [ qw("operations/gimpcurvesconfig.h") ],
 	code => <<'CODE'
 {
   if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
@@ -471,7 +471,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("gegl/gimpcurvesconfig.h") ],
+	headers => [ qw("operations/gimpcurvesconfig.h") ],
 	code => <<'CODE'
 {
   if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
@@ -530,7 +530,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("gegl/gimpcolorbalanceconfig.h") ],
+	headers => [ qw("operations/gimpcolorbalanceconfig.h") ],
 	code => <<'CODE'
 {
   if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error)  &&
@@ -582,7 +582,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("gegl/gimpcolorizeconfig.h") ],
+	headers => [ qw("operations/gimpcolorizeconfig.h") ],
 	code => <<'CODE'
 {
   if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
@@ -720,7 +720,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("gegl/gimphuesaturationconfig.h") ],
+	headers => [ qw("operations/gimphuesaturationconfig.h") ],
 	code => <<'CODE'
 {
   if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
@@ -771,7 +771,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("gegl/gimpthresholdconfig.h") ],
+	headers => [ qw("operations/gimpthresholdconfig.h") ],
 	code => <<'CODE'
 {
   if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&

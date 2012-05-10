@@ -27,8 +27,8 @@
 
 #include "tools-types.h"
 
-#include "gegl/gimphuesaturationconfig.h"
-#include "gegl/gimpoperationhuesaturation.h"
+#include "operations/gimphuesaturationconfig.h"
+#include "operations/gimpoperationhuesaturation.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimperror.h"

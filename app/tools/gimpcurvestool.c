@@ -30,8 +30,8 @@
 
 #include "tools-types.h"
 
-#include "gegl/gimpcurvesconfig.h"
-#include "gegl/gimpoperationcurves.h"
+#include "operations/gimpcurvesconfig.h"
+#include "operations/gimpoperationcurves.h"
 
 #include "core/gimp.h"
 #include "core/gimpcurve.h"
