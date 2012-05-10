@@ -3,6 +3,7 @@
  *
  * gimpoperationhuemode.c
  * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ *               2012 Ville Sokk <ville.sokk@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,13 +22,18 @@
 
 #include "config.h"
 
+#include <cairo.h>
 #include <gegl-plugin.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
+#include "libgimpcolor/gimpcolor.h"
 
 #include "gimp-gegl-types.h"
 
 #include "gimpoperationhuemode.h"
 
 
+static void     gimp_operation_hue_mode_prepare (GeglOperation       *operation);
 static gboolean gimp_operation_hue_mode_process (GeglOperation       *operation,
                                                  void                *in_buf,
                                                  void                *aux_buf,
@@ -55,12 +61,23 @@ gimp_operation_hue_mode_class_init (GimpOperationHueModeClass *klass)
                                  "description", "GIMP hue mode operation",
                                  NULL);
 
-  point_class->process         = gimp_operation_hue_mode_process;
+  operation_class->prepare = gimp_operation_hue_mode_prepare;
+  point_class->process     = gimp_operation_hue_mode_process;
 }
 
 static void
 gimp_operation_hue_mode_init (GimpOperationHueMode *self)
 {
+}
+
+static void
+gimp_operation_hue_mode_prepare (GeglOperation *operation)
+{
+  const Babl *format = babl_format ("R'G'B'A float");
+
+  gegl_operation_set_format (operation, "input",  format);
+  gegl_operation_set_format (operation, "aux",    format);
+  gegl_operation_set_format (operation, "output", format);
 }
 
 static gboolean
@@ -78,10 +95,32 @@ gimp_operation_hue_mode_process (GeglOperation       *operation,
 
   while (samples--)
     {
-      out[RED]   = in[RED];
-      out[GREEN] = in[GREEN];
-      out[BLUE]  = in[BLUE];
-      out[ALPHA] = in[ALPHA];
+      gint    b;
+      GimpHSV layer_hsv, out_hsv;
+      GimpRGB layer_rgb  = {layer[0], layer[1], layer[2]};
+      GimpRGB out_rgb    = {in[0], in[1], in[2]};
+      gfloat  comp_alpha = MIN (in[ALPHA], layer[ALPHA]);
+      gfloat  new_alpha  = in[ALPHA] + (1 - in[ALPHA]) * comp_alpha;
+      gfloat  ratio      = comp_alpha / new_alpha;
+
+      gimp_rgb_to_hsv (&layer_rgb, &layer_hsv);
+      gimp_rgb_to_hsv (&out_rgb, &out_hsv);
+
+      /*  Composition should have no effect if saturation is zero.
+       *  otherwise, black would be painted red (see bug #123296).
+       */
+      if (layer_hsv.s)
+        out_hsv.h = layer_hsv.h;
+      gimp_hsv_to_rgb (&out_hsv, &out_rgb);
+
+      out[0] = (gfloat) out_rgb.r;
+      out[1] = (gfloat) out_rgb.g;
+      out[2] = (gfloat) out_rgb.b;
+
+      for (b = RED; b < ALPHA; b++)
+        out[b] = out[b] * ratio + in[b] * (1 - ratio) + 0.0001;
+
+      out[3] = in[3];
 
       in    += 4;
       layer += 4;
