@@ -20,39 +20,17 @@
 #ifndef __GIMP_GEGL_TYPES_H__
 #define __GIMP_GEGL_TYPES_H__
 
+
 #include "core/core-types.h"
 
 #include "gegl/gimp-gegl-enums.h"
 
-
-/*  operations  */
-
-typedef struct _GimpOperationPointFilter        GimpOperationPointFilter;
-typedef struct _GimpOperationPointLayerMode     GimpOperationPointLayerMode;
-
-
-/*  operation config objects  */
-
-typedef struct _GimpBrightnessContrastConfig    GimpBrightnessContrastConfig;
-typedef struct _GimpCageConfig                  GimpCageConfig;
-typedef struct _GimpColorBalanceConfig          GimpColorBalanceConfig;
-typedef struct _GimpColorizeConfig              GimpColorizeConfig;
-typedef struct _GimpCurvesConfig                GimpCurvesConfig;
-typedef struct _GimpDesaturateConfig            GimpDesaturateConfig;
-typedef struct _GimpHueSaturationConfig         GimpHueSaturationConfig;
-typedef struct _GimpLevelsConfig                GimpLevelsConfig;
-typedef struct _GimpPosterizeConfig             GimpPosterizeConfig;
-typedef struct _GimpThresholdConfig             GimpThresholdConfig;
+#include "operations/operations-types.h"
 
 
 /*  temporary stuff  */
 
-typedef struct _GimpTileBackendTileManager      GimpTileBackendTileManager;
-
-
-/*  non-object types  */
-
-typedef struct _GimpCagePoint                 GimpCagePoint;
+typedef struct _GimpTileBackendTileManager GimpTileBackendTileManager;
 
 
 #endif /* __GIMP_GEGL_TYPES_H__ */
