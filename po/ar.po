@@ -7271,7 +7271,7 @@ msgstr "الخلفية إلى شفاف"
 #.
 #: ../app/core/gimp-tags.c:88
 msgid "tags-locale:C"
-msgstr "tips-locale:ar"
+msgstr "tags-locale:ar"
 
 #: ../app/core/gimp-user-install.c:159
 #, c-format
