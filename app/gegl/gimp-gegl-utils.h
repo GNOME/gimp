@@ -22,9 +22,6 @@
 #define __GIMP_GEGL_UTILS_H__
 
 
-#include <gdk-pixbuf/gdk-pixbuf.h> /* temp hack */
-
-
 const gchar * gimp_interpolation_to_gegl_filter  (GimpInterpolationType  interpolation) G_GNUC_CONST;
 
 GeglBuffer  * gimp_gegl_buffer_new               (const GeglRectangle   *rect,

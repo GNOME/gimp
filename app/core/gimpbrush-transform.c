@@ -26,7 +26,6 @@
 #include "core-types.h"
 
 #include "gegl/gimp-gegl-loops.h"
-#include "gegl/gimp-gegl-utils.h"
 
 #include "gimpbrush.h"
 #include "gimpbrush-transform.h"

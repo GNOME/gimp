@@ -23,8 +23,6 @@
 
 #include "core-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
-
 #include "gimpboundary.h"
 #include "gimperror.h"
 #include "gimpimage.h"

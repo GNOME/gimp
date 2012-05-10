@@ -29,8 +29,6 @@
 
 #include "core-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
-
 #include "gimpgrouplayer.h"
 #include "gimpimage.h"
 #include "gimpimage-undo-push.h"

@@ -25,8 +25,6 @@
 
 #include "core-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
-
 #include "gimppattern.h"
 #include "gimppattern-load.h"
 #include "gimptagged.h"

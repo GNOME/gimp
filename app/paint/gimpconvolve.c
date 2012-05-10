@@ -22,7 +22,6 @@
 #include "paint-types.h"
 
 #include "gegl/gimp-gegl-loops.h"
-#include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
 #include "core/gimpbrush.h"

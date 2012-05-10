@@ -26,8 +26,6 @@
 
 #include "paint-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
-
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"

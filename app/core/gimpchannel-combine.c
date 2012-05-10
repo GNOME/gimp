@@ -26,8 +26,6 @@
 
 #include "core-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
-
 #include "gimpchannel.h"
 #include "gimpchannel-combine.h"
 
