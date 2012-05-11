@@ -19,7 +19,6 @@ noinst_LIBRARIES = libappbase.a
 libappbase_a_SOURCES = \
 	base.c			\
 	base.h			\
-	base-enums.h		\
 	base-types.h		\
 	pixel-processor.c	\
 	pixel-processor.h	\
