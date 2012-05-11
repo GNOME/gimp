@@ -32,7 +32,6 @@
 
 /*#define DEBUG_CAGE */
 
-#define N_ITEMS_PER_ALLOC 10
 /* This DELTA is aimed to not have handle on exact pixel during computation,
  * to avoid particular case. It shouldn't be so usefull, but it's a double
  * safety. */
