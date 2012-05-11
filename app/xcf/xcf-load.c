@@ -1083,23 +1083,25 @@ xcf_load_layer (XcfInfo    *info,
                 GimpImage  *image,
                 GList     **item_path)
 {
-  GimpLayer     *layer;
-  GimpLayerMask *layer_mask;
-  guint32        hierarchy_offset;
-  guint32        layer_mask_offset;
-  gboolean       apply_mask = TRUE;
-  gboolean       edit_mask  = FALSE;
-  gboolean       show_mask  = FALSE;
-  gboolean       active;
-  gboolean       floating;
-  guint32        group_layer_flags = 0;
-  guint32        text_layer_flags = 0;
-  gint           width;
-  gint           height;
-  gint           type;
-  gboolean       has_alpha;
-  gboolean       is_fs_drawable;
-  gchar         *name;
+  GimpLayer         *layer;
+  GimpLayerMask     *layer_mask;
+  guint32            hierarchy_offset;
+  guint32            layer_mask_offset;
+  gboolean           apply_mask = TRUE;
+  gboolean           edit_mask  = FALSE;
+  gboolean           show_mask  = FALSE;
+  gboolean           active;
+  gboolean           floating;
+  guint32            group_layer_flags = 0;
+  guint32            text_layer_flags = 0;
+  gint               width;
+  gint               height;
+  gint               type;
+  GimpImageBaseType  base_type;
+  gboolean           has_alpha;
+  const Babl        *format;
+  gboolean           is_fs_drawable;
+  gchar             *name;
 
   /* check and see if this is the drawable the floating selection
    *  is attached to. if it is then we'll do the attachment in our caller.
@@ -1112,14 +1114,52 @@ xcf_load_layer (XcfInfo    *info,
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &type, 1);
   info->cp += xcf_read_string (info->fp, &name, 1);
 
-  has_alpha = (type == GIMP_RGBA_IMAGE ||
-               type == GIMP_GRAYA_IMAGE ||
-               type == GIMP_INDEXEDA_IMAGE);
+  switch (type)
+    {
+    case GIMP_RGB_IMAGE:
+      base_type = GIMP_RGB;
+      has_alpha = FALSE;
+      break;
+
+    case GIMP_RGBA_IMAGE:
+      base_type = GIMP_RGB;
+      has_alpha = TRUE;
+      break;
+
+    case GIMP_GRAY_IMAGE:
+      base_type = GIMP_GRAY;
+      has_alpha = FALSE;
+      break;
+
+    case GIMP_GRAYA_IMAGE:
+      base_type = GIMP_GRAY;
+      has_alpha = TRUE;
+      break;
+
+    case GIMP_INDEXED_IMAGE:
+      base_type = GIMP_INDEXED;
+      has_alpha = FALSE;
+      break;
+
+    case GIMP_INDEXEDA_IMAGE:
+      base_type = GIMP_INDEXED;
+      has_alpha = TRUE;
+      break;
+
+    default:
+      return NULL;
+    }
+
+  /* do not use gimp_image_get_layer_format() because it might
+   * be the floating selection of a channel or mask
+   */
+  format = gimp_image_get_format (image, base_type,
+                                  gimp_image_get_precision (image),
+                                  has_alpha);
 
   /* create a new layer */
   layer = gimp_layer_new (image, width, height,
-                          gimp_image_get_layer_format (image, has_alpha),
-                          name, 255, GIMP_NORMAL_MODE);
+                          format, name, 255, GIMP_NORMAL_MODE);
   g_free (name);
   if (! layer)
     return NULL;
