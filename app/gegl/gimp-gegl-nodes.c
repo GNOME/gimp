@@ -319,7 +319,6 @@ gimp_gegl_node_set_layer_mode (GeglNode             *node,
   switch (mode)
     {
     case GIMP_BEHIND_MODE:
-    case GIMP_SATURATION_MODE:
     case GIMP_COLOR_MODE:
     case GIMP_VALUE_MODE:
     case GIMP_COLOR_ERASE_MODE:

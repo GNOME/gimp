@@ -113,14 +113,13 @@ gimp_operation_hue_mode_process (GeglOperation       *operation,
         out_hsv.h = layer_hsv.h;
       gimp_hsv_to_rgb (&out_hsv, &out_rgb);
 
-      out[0] = (gfloat) out_rgb.r;
-      out[1] = (gfloat) out_rgb.g;
-      out[2] = (gfloat) out_rgb.b;
+      out[0] = out_rgb.r;
+      out[1] = out_rgb.g;
+      out[2] = out_rgb.b;
+      out[3] = in[3];
 
       for (b = RED; b < ALPHA; b++)
         out[b] = out[b] * ratio + in[b] * (1 - ratio) + 0.0001;
-
-      out[3] = in[3];
 
       in    += 4;
       layer += 4;
