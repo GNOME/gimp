@@ -34,6 +34,7 @@ G_BEGIN_DECLS
 #define GIMP_TILE_BACKEND_TILE_MANAGER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_TILE_BACKEND_TILE_MANAGER, GimpTileBackendTileManagerClass))
 
 
+typedef struct _GimpTileBackendTileManager        GimpTileBackendTileManager;
 typedef struct _GimpTileBackendTileManagerClass   GimpTileBackendTileManagerClass;
 typedef struct _GimpTileBackendTileManagerPrivate GimpTileBackendTileManagerPrivate;
 

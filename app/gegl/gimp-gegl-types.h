@@ -28,9 +28,4 @@
 #include "operations/operations-types.h"
 
 
-/*  temporary stuff  */
-
-typedef struct _GimpTileBackendTileManager GimpTileBackendTileManager;
-
-
 #endif /* __GIMP_GEGL_TYPES_H__ */
