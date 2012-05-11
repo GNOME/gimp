@@ -55,13 +55,52 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gboolean has_alpha =  (type == GIMP_RGBA_IMAGE ||
-                         type == GIMP_GRAYA_IMAGE ||
-                         type == GIMP_INDEXEDA_IMAGE);
+  GimpImageBaseType  base_type = GIMP_RGB;
+  gboolean           has_alpha = FALSE;
+  const Babl        *format;
+
+  switch (type)
+    {
+    case GIMP_RGB_IMAGE:
+      base_type = GIMP_RGB;
+      has_alpha = FALSE;
+      break;
+
+    case GIMP_RGBA_IMAGE:
+      base_type = GIMP_RGB;
+      has_alpha = TRUE;
+      break;
+
+    case GIMP_GRAY_IMAGE:
+      base_type = GIMP_GRAY;
+      has_alpha = FALSE;
+      break;
+
+    case GIMP_GRAYA_IMAGE:
+      base_type = GIMP_GRAY;
+      has_alpha = TRUE;
+      break;
+
+    case GIMP_INDEXED_IMAGE:
+      base_type = GIMP_INDEXED;
+      has_alpha = FALSE;
+      break;
+
+    case GIMP_INDEXEDA_IMAGE:
+      base_type = GIMP_INDEXED;
+      has_alpha = TRUE;
+      break;
+    }
+
+  /* do not use gimp_image_get_layer_format() because it might
+   * be the floating selection of a channel or mask
+   */
+  format = gimp_image_get_format (image, base_type,
+                                  gimp_image_get_precision (image),
+                                  has_alpha);
 
   layer = gimp_layer_new (image, width, height,
-                          gimp_image_get_layer_format (image, has_alpha),
-                          name, opacity / 100.0, mode);
+                          format, name, opacity / 100.0, mode);
 
   if (! layer)
     success = FALSE;
