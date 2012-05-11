@@ -3,6 +3,7 @@
  *
  * gimpoperationbehindmode.c
  * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ *               2012 Ville Sokk <ville.sokk@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,20 +73,43 @@ gimp_operation_behind_mode_process (GeglOperation       *operation,
                                     const GeglRectangle *roi,
                                     gint                 level)
 {
-  gfloat *in    = in_buf;
-  gfloat *layer = aux_buf;
-  gfloat *out   = out_buf;
+  GimpOperationPointLayerMode *point  = GIMP_OPERATION_POINT_LAYER_MODE (operation);
+  gfloat                      *in    = in_buf;
+  gfloat                      *layer = aux_buf;
+  gfloat                      *out   = out_buf;
 
-  while (samples--)
+  if (point->premultiplied)
     {
-      out[RED]   = in[RED];
-      out[GREEN] = in[GREEN];
-      out[BLUE]  = in[BLUE];
-      out[ALPHA] = in[ALPHA];
+      while (samples--)
+        {
+          gint b;
 
-      in    += 4;
-      layer += 4;
-      out   += 4;
+          for (b = RED; b <= ALPHA; b++)
+            {
+              out[b] = in[b] + layer[b] * (1 - in[ALPHA]);
+            }
+
+          in    += 4;
+          layer += 4;
+          out   += 4;
+        }
+    }
+  else
+    {
+      while (samples--)
+        {
+          gint b;
+
+          out[ALPHA] = in[ALPHA] + (1 - in[ALPHA]) * layer[ALPHA];
+          for (b = RED; b < ALPHA; b++)
+            {
+              out[b] = (in[b] * in[ALPHA] + layer[b] * layer[ALPHA] * (1 - in[ALPHA])) / out[ALPHA];
+            }
+
+          in    += 4;
+          layer += 4;
+          out   += 4;
+        }
     }
 
   return TRUE;
