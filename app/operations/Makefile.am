@@ -16,6 +16,7 @@ INCLUDES = \
 noinst_LIBRARIES = libappoperations.a
 
 libappoperations_a_sources = \
+	operations-types.h			\
 	gimp-operations.c			\
 	gimp-operations.h			\
 	\
