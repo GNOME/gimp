@@ -418,7 +418,7 @@ gimp_cage_tool_key_press (GimpTool    *tool,
     case GDK_KEY_Return:
     case GDK_KEY_KP_Enter:
     case GDK_KEY_ISO_Enter:
-      if (! ct->cage_complete)
+      if (ct->cage_complete == FALSE && gimp_cage_config_get_n_points (ct->config) > 2)
         {
           g_object_set (gimp_tool_get_options (tool),
                         "cage-mode", GIMP_CAGE_MODE_DEFORM,
