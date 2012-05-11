@@ -3,6 +3,7 @@
  *
  * gimpoperationcolormode.c
  * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ *               2012 Ville Sokk <ville.sokk@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,12 +23,17 @@
 #include "config.h"
 
 #include <gegl-plugin.h>
+#include <cairo.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
+#include "libgimpcolor/gimpcolor.h"
 
 #include "operations-types.h"
 
 #include "gimpoperationcolormode.h"
 
 
+static void     gimp_operation_color_mode_prepare (GeglOperation       *operation);
 static gboolean gimp_operation_color_mode_process (GeglOperation       *operation,
                                                    void                *in_buf,
                                                    void                *aux_buf,
@@ -55,12 +61,23 @@ gimp_operation_color_mode_class_init (GimpOperationColorModeClass *klass)
                                  "description", "GIMP color mode operation",
                                  NULL);
 
-  point_class->process         = gimp_operation_color_mode_process;
+  operation_class->prepare = gimp_operation_color_mode_prepare;
+  point_class->process     = gimp_operation_color_mode_process;
 }
 
 static void
 gimp_operation_color_mode_init (GimpOperationColorMode *self)
 {
+}
+
+static void
+gimp_operation_color_mode_prepare (GeglOperation *operation)
+{
+  const Babl *format = babl_format ("R'G'B'A float");
+
+  gegl_operation_set_format (operation, "input",  format);
+  gegl_operation_set_format (operation, "aux",    format);
+  gegl_operation_set_format (operation, "output", format);
 }
 
 static gboolean
@@ -78,10 +95,28 @@ gimp_operation_color_mode_process (GeglOperation       *operation,
 
   while (samples--)
     {
-      out[RED]   = in[RED];
-      out[GREEN] = in[GREEN];
-      out[BLUE]  = in[BLUE];
-      out[ALPHA] = in[ALPHA];
+      gint    b;
+      GimpHSL layer_hsl, out_hsl;
+      GimpRGB layer_rgb  = {layer[0], layer[1], layer[2]};
+      GimpRGB out_rgb    = {in[0], in[1], in[2]};
+      gfloat  comp_alpha = MIN (in[ALPHA], layer[ALPHA]);
+      gfloat  new_alpha  = in[ALPHA] + (1 - in[ALPHA]) * comp_alpha;
+      gfloat  ratio      = comp_alpha / new_alpha;
+
+      gimp_rgb_to_hsl (&layer_rgb, &layer_hsl);
+      gimp_rgb_to_hsl (&out_rgb, &out_hsl);
+
+      out_hsl.h = layer_hsl.h;
+      out_hsl.s = layer_hsl.s;
+      gimp_hsl_to_rgb (&out_hsl, &out_rgb);
+
+      out[0] = out_rgb.r;
+      out[1] = out_rgb.g;
+      out[2] = out_rgb.b;
+      out[3] = in[3];
+
+      for (b = RED; b < ALPHA; b++)
+        out[b] = out[b] * ratio + in[b] * (1 - ratio) + 0.0001;
 
       in    += 4;
       layer += 4;
