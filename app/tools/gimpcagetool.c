@@ -565,7 +565,7 @@ gimp_cage_tool_button_press (GimpTool            *tool,
       case CAGE_STATE_WAIT:
         if (ct->cage_complete == FALSE)
           {
-            if (handle == -1 && edge == -1)
+            if (handle == -1 && edge <= 0)
               {
                 /* User clicked on the background, we add a new handle
                  * and move it
@@ -608,7 +608,7 @@ gimp_cage_tool_button_press (GimpTool            *tool,
 
                 ct->tool_state = CAGE_STATE_MOVE_HANDLE;
               }
-            else if (edge >= 0)
+            else if (edge > 0)
               {
                 /* User clicked on an edge, we add a new handle here and select it */
 
