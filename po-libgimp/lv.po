@@ -4,20 +4,20 @@
 #
 # Gatis Kalnins <gatis.kalnins@metatrons.org>, 2004, 2005.
 # Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>, 2010.
-# Rudolfs <rudolfs.mazurs@gmail.com>, 2011.
+# Rudolfs <rudolfs.mazurs@gmail.com>, 2011, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD.lv\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-11-18 02:53+0000\n"
-"PO-Revision-Date: 2011-12-17 22:54+0200\n"
-"Last-Translator: Rūdofls Mazurs <rudolfs.mazurs@gmail.com>\n"
+"POT-Creation-Date: 2012-05-04 13:53+0000\n"
+"PO-Revision-Date: 2012-05-11 23:13+0300\n"
+"Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.2\n"
+"X-Generator: Lokalize 1.4\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
 "Language: lv\n"
@@ -125,7 +125,7 @@ msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Pārveidot par indeksēto, izmantojot noklusētos iestatījumus\n"
+"Pārveidot par indeksēto, izmantojot noklusējuma iestatījumus\n"
 "(Rezultātu var koriģēt manuāli)"
 
 #: ../libgimp/gimpexport.c:334
@@ -139,7 +139,7 @@ msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Pārveidot par indeksēto, izmantojot bitkartes noklusētos iestatījumus\n"
+"Pārveidot par indeksēto, izmantojot bitkartes noklusējuma iestatījumus\n"
 "(Rezultātu var koriģēt manuāli)"
 
 #: ../libgimp/gimpexport.c:344
@@ -550,7 +550,7 @@ msgstr "Gaišums"
 #: ../libgimpbase/gimpbaseenums.c:303
 msgctxt "desaturate-mode"
 msgid "Luminosity"
-msgstr "Spīdums"
+msgstr "Spožums"
 
 #: ../libgimpbase/gimpbaseenums.c:304
 msgctxt "desaturate-mode"
@@ -710,22 +710,22 @@ msgstr "Indeksēts-alfa"
 #: ../libgimpbase/gimpbaseenums.c:579
 msgctxt "interpolation-type"
 msgid "None"
-msgstr "Nav"
+msgstr "nav"
 
 #: ../libgimpbase/gimpbaseenums.c:580
 msgctxt "interpolation-type"
 msgid "Linear"
-msgstr "Lineārs"
+msgstr "lineāra"
 
 #: ../libgimpbase/gimpbaseenums.c:581
 msgctxt "interpolation-type"
 msgid "Cubic"
-msgstr "Kubisks"
+msgstr "kubiska"
 
 #: ../libgimpbase/gimpbaseenums.c:582
 msgctxt "interpolation-type"
 msgid "Sinc (Lanczos3)"
-msgstr "Sinc (Lanczos3)"
+msgstr "sinc (Lanczos3)"
 
 #: ../libgimpbase/gimpbaseenums.c:611
 msgctxt "paint-application-mode"
@@ -790,7 +790,7 @@ msgstr "Pustoņi"
 #: ../libgimpbase/gimpbaseenums.c:738
 msgctxt "transfer-mode"
 msgid "Highlights"
-msgstr "Izgaismojumi"
+msgstr "Gaišās vietas"
 
 #: ../libgimpbase/gimpbaseenums.c:767
 msgctxt "transform-direction"
@@ -805,12 +805,12 @@ msgstr "Labojošs (atpakaļ)"
 #: ../libgimpbase/gimpbaseenums.c:799
 msgctxt "transform-resize"
 msgid "Adjust"
-msgstr "Pieskaņot"
+msgstr "Mainīt"
 
 #: ../libgimpbase/gimpbaseenums.c:800
 msgctxt "transform-resize"
 msgid "Clip"
-msgstr "Apgriezt"
+msgstr "Apcirst"
 
 #: ../libgimpbase/gimpbaseenums.c:801
 msgctxt "transform-resize"
@@ -925,7 +925,7 @@ msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:60
 msgid "The default RGB working space color profile."
-msgstr "Darbavietas noklusētais RGB krāsu profils."
+msgstr "Darbavietas noklusējuma RGB krāsu profils."
 
 #: ../libgimpconfig/gimpcolorconfig.c:62
 msgid "The CMYK color profile used to convert between RGB and CMYK."
@@ -988,7 +988,7 @@ msgstr "Relatīvi kolorimetrisks"
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59
 msgctxt "color-rendering-intent"
 msgid "Saturation"
-msgstr "Piesātinātība"
+msgstr "Piesātinājumam"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:60
 msgctxt "color-rendering-intent"
@@ -1019,7 +1019,7 @@ msgstr "nepareiza vērtība '%ld' zīmei %s"
 #: ../libgimpconfig/gimpconfig-deserialize.c:602
 #, c-format
 msgid "while parsing token '%s': %s"
-msgstr "notiek sintaktiskā analīze '%s': %s"
+msgstr "notiek sintaktiskā analīze '%s' — %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:482
 #: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:559
@@ -1037,17 +1037,17 @@ msgstr "Nevar izvērst ${%s}"
 #: ../libgimpconfig/gimpconfigwriter.c:728
 #, c-format
 msgid "Error writing to '%s': %s"
-msgstr "Kļūda ierakstot '%s':%s"
+msgstr "Kļūda ierakstot '%s' — %s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:145
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
-msgstr "Neizdevās izveidot pagaidu failu priekš '%s': %s"
+msgstr "Neizdevās izveidot pagaidu failu priekš '%s' — %s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:158
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Nevar atvērt '%s' ierakstīšanai: %s"
+msgstr "Nevar atvērt '%s' ierakstīšanai — %s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:689
 #: ../libgimpconfig/gimpconfigwriter.c:709
@@ -1056,7 +1056,7 @@ msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "The original file has not been touched."
 msgstr ""
-"Kļūme ierakstot pagaidu failā '%s': %s\n"
+"Kļūme ierakstot pagaidu failā '%s' — %s\n"
 "Oriģinālais fails nav aiztikts."
 
 #: ../libgimpconfig/gimpconfigwriter.c:717
@@ -1065,13 +1065,13 @@ msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "No file has been created."
 msgstr ""
-"Kļūda ierakstot pagaidu failā '%s': %s\n"
+"Kļūda ierakstot pagaidu failā '%s' — %s\n"
 "Fails nav izveidots."
 
 #: ../libgimpconfig/gimpconfigwriter.c:741
 #, c-format
 msgid "Could not create '%s': %s"
-msgstr "Neizdevās izveidot '%s': %s"
+msgstr "Neizdevās izveidot '%s' — %s"
 
 #: ../libgimpconfig/gimpscanner.c:268
 #, c-format
@@ -1081,21 +1081,20 @@ msgstr "nekorekta UTF-8 rinda"
 #. please don't translate 'yes' and 'no'
 #: ../libgimpconfig/gimpscanner.c:431
 #, c-format
-#| msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "gaidāmā būla vērtība 'yes' vai 'no', iegūta '%s'"
 
 #: ../libgimpconfig/gimpscanner.c:668
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
-msgstr "Sintakses kļūda '%s' rindā %d: %s"
+msgstr "Sintakses kļūda '%s' rindā %d — %s"
 
 #: ../libgimpmodule/gimpmodule.c:163 ../libgimpmodule/gimpmodule.c:181
 #: ../libgimpmodule/gimpmodule.c:290 ../libgimpmodule/gimpmodule.c:317
 #: ../libgimpmodule/gimpmodule.c:443
 #, c-format
 msgid "Module '%s' load error: %s"
-msgstr "Moduļa '%s' ielādes kļūda: %s"
+msgstr "Moduļa '%s' ielādes kļūda — %s"
 
 #: ../libgimpmodule/gimpmodule.c:385
 msgid "Module error"
@@ -1120,22 +1119,22 @@ msgid ""
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
 "Nevar noteikt korektu mājas mapi.\n"
-"Sīkattēli tiks izvietoti pagaidu failu mapē (%s)."
+"Sīktēli tiks izvietoti pagaidu failu mapē (%s)."
 
 #: ../libgimpthumb/gimpthumb-utils.c:255 ../libgimpthumb/gimpthumb-utils.c:323
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr "Neizdevās izveidot sīkattēlu mapi '%s'."
+msgstr "Neizdevās izveidot sīktēlu mapi '%s'."
 
 #: ../libgimpthumb/gimpthumbnail.c:508
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
-msgstr "Sīkattēls nesatur Thumb::URI birku"
+msgstr "Sīktēls nesatur Thumb::URI birku"
 
 #: ../libgimpthumb/gimpthumbnail.c:904
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
-msgstr "Neizdevās izveidot sīkattēlu priekš '%s': %s"
+msgstr "Neizdevās izveidot sīktēlu priekš '%s' — %s"
 
 #: ../libgimpwidgets/gimpbrowser.c:112
 msgid "_Search:"
@@ -1276,7 +1275,8 @@ msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
-"Izvēlieties pipeti un brīvi norādiet krāsu uz ekrāna, lai to izvēlētos."
+"Lai izvēlētos krāsu, spiediet uz pipetes un tad uz vēlamās krāsas laukuma "
+"jebkurā ekrāna vietā."
 
 #. toggle button to (de)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:290
@@ -1393,7 +1393,7 @@ msgid ""
 "a given \"random\" operation"
 msgstr ""
 "Izmantojiet šo vērtību gadījumskaitļu ģeneratora inicializēšanai - tas ļaus "
-"jums atkārtot izvēlēto \"gadījuma\" operāciju"
+"jums atkārtot izvēlēto \"gadījuma\" darbību"
 
 #: ../libgimpwidgets/gimpwidgets.c:520
 msgid "_New Seed"
@@ -1453,7 +1453,7 @@ msgstr "_P"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "Saturation"
-msgstr "Piesātinātība"
+msgstr "Piesātinājums"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:128
 msgctxt "color-selector-channel"
@@ -1959,15 +1959,15 @@ msgstr "GIMP MIDI ievades kontrolieris"
 
 #: ../modules/display-filter-color-blind.c:67
 msgid "Protanopia (insensitivity to red)"
-msgstr "Protanopija (nejūtīgums uz sarkano)"
+msgstr "Protanopija (nejutīgums uz sarkano)"
 
 #: ../modules/display-filter-color-blind.c:69
 msgid "Deuteranopia (insensitivity to green)"
-msgstr "Deuteranopija (nejūtīgums uz zaļo)"
+msgstr "Deuteranopija (nejutīgums uz zaļo)"
 
 #: ../modules/display-filter-color-blind.c:71
 msgid "Tritanopia (insensitivity to blue)"
-msgstr "Tritanopija (nejūtīgums uz zilo)"
+msgstr "Tritanopija (nejutīgums uz zilo)"
 
 #: ../modules/display-filter-color-blind.c:194
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
