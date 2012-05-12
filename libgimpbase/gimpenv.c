@@ -330,6 +330,7 @@ gimp_toplevel_directory (void)
     return toplevel;
 
 #ifdef G_OS_WIN32
+
   {
     /* Figure it out from the location of this DLL */
     gchar *filename;
@@ -363,8 +364,65 @@ gimp_toplevel_directory (void)
 
     toplevel = filename;
   }
+
+#elif PLATFORM_OSX
+
+  {
+    NSAutoreleasePool *pool;
+    NSString          *resource_path;
+    gchar             *basename;
+    gchar             *dirname;
+
+    pool = [[NSAutoreleasePool alloc] init];
+
+    resource_path = [[NSBundle mainBundle] resourcePath];
+
+    basename = g_path_get_basename ([resource_path UTF8String]);
+    dirname  = g_path_get_dirname ([resource_path UTF8String]);
+
+    if (! strcmp (basename, ".libs"))
+      {
+        /*  we are running from the source dir, do normal unix things  */
+
+        toplevel = _gimp_reloc_find_prefix (PREFIX);
+      }
+    else if (! strcmp (basename, "bin"))
+      {
+        /*  we are running the main app, but not from a bundle, the resource
+         *  path is the directory which contains the executable
+         */
+
+        toplevel = g_strdup (dirname);
+      }
+    else if (! strcmp (basename, "plug-ins"))
+      {
+        /*  same for plug-ins, go three levels up from prefix/lib/gimp/x.y  */
+
+        gchar *tmp  = g_path_get_dirname (dirname);
+        gchar *tmp2 = g_path_get_dirname (tmp);
+
+        toplevel = g_path_get_dirname (tmp2);
+
+        g_free (tmp);
+        g_free (tmp2);
+      }
+    else
+      {
+        /*  if none of the above match, we assume that we are really in a bundle  */
+
+        toplevel = g_strdup ([resource_path UTF8String]);
+      }
+
+    g_free (basename);
+    g_free (dirname);
+
+    [pool drain];
+  }
+
 #else
+
   toplevel = _gimp_reloc_find_prefix (PREFIX);
+
 #endif
 
   return toplevel;
