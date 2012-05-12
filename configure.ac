@@ -1841,16 +1841,20 @@ AC_SUBST(SCREENSHOT)
 # Check for Mac OS X
 ####################
 
+platform_osx=no
 AC_MSG_CHECKING([if compiling for Mac OS X])
 case "$target_or_host" in
   *-*-darwin*)
      AC_MSG_RESULT(yes)
      AC_DEFINE(PLATFORM_OSX, 1, [define to 1 if compiling for Mac OS X])
+     platform_osx=yes
      ;;
   *)
      AC_MSG_RESULT(no)
      ;;
 esac
+
+AM_CONDITIONAL(PLATFORM_OSX, test "x$platform_osx" = xyes)
 
 
 ####################################
