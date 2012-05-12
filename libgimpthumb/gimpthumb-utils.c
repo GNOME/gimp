@@ -32,6 +32,10 @@
 #include <unistd.h>
 #endif
 
+#ifdef PLATFORM_OSX
+#include <AppKit/AppKit.h>
+#endif
+
 #include <glib-object.h>
 #include <glib/gstdio.h>
 
@@ -118,13 +122,35 @@ gimp_thumb_init (const gchar *creator,
     }
   else
     {
+#ifdef PLATFORM_OSX
+
+      NSAutoreleasePool *pool;
+      NSArray           *path;
+      NSString          *cache_dir;
+
+      pool = [[NSAutoreleasePool alloc] init];
+
+      path = NSSearchPathForDirectoriesInDomains (NSCachesDirectory,
+                                                  NSUserDomainMask, YES);
+      cache_dir = [path objectAtIndex:0];
+
+      thumb_dir = g_build_filename ([cache_dir UTF8String], "org.freedesktop.thumbnails",
+                                    NULL);
+
+      [pool drain];
+
+#else
+
       const gchar *home_dir = g_get_home_dir ();
 
       if (home_dir && g_file_test (home_dir, G_FILE_TEST_IS_DIR))
         {
           thumb_dir = g_build_filename (home_dir, ".thumbnails", NULL);
         }
-      else
+
+#endif
+
+      if (! thumb_dir)
         {
           gchar *name = g_filename_display_name (g_get_tmp_dir ());
 
@@ -239,12 +265,12 @@ gimp_thumb_ensure_thumb_dir (GimpThumbSize   size,
     return TRUE;
 
   if (g_file_test (thumb_dir, G_FILE_TEST_IS_DIR) ||
-      (g_mkdir (thumb_dir, S_IRUSR | S_IWUSR | S_IXUSR) == 0))
+      (g_mkdir_with_parents (thumb_dir, S_IRUSR | S_IWUSR | S_IXUSR) == 0))
     {
       if (size == 0)
-        g_mkdir (thumb_fail_subdir, S_IRUSR | S_IWUSR | S_IXUSR);
+        g_mkdir_with_parents (thumb_fail_subdir, S_IRUSR | S_IWUSR | S_IXUSR);
 
-      g_mkdir (thumb_subdirs[size], S_IRUSR | S_IWUSR | S_IXUSR);
+      g_mkdir_with_parents (thumb_subdirs[size], S_IRUSR | S_IWUSR | S_IXUSR);
     }
 
   if (g_file_test (thumb_subdirs[size], G_FILE_TEST_IS_DIR))

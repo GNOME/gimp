@@ -142,7 +142,6 @@ calm_down_linker = \
 
 AM_LDFLAGS = \
 	$(munix)					\
-	$(CARBON_LDFLAGS)				\
 	$(calm_down_linker)				\
 	$(workaround_that_core_depends_on_xcf)		\
 	$(workaround_that_core_depends_on_pdb)		\

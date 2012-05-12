@@ -109,7 +109,8 @@ gimp_user_install_items[] =
 };
 
 
-static gboolean  gimp_user_install_detect_old    (GimpUserInstall  *install);
+static gboolean  gimp_user_install_detect_old    (GimpUserInstall  *install,
+                                                  const gchar      *gimp_dir);
 static void      user_install_log                (GimpUserInstall  *install,
                                                   const gchar      *format,
                                                   ...) G_GNUC_PRINTF (2, 3);
@@ -140,7 +141,20 @@ gimp_user_install_new (gboolean verbose)
 
   install->verbose = verbose;
 
-  gimp_user_install_detect_old (install);
+  gimp_user_install_detect_old (install, gimp_directory ());
+
+#ifdef PLATFORM_OSX
+  if (! install->old_dir)
+    {
+      /*  if the default old gimpdir was not found, try the "classic" one
+       *  in the home folder
+       */
+      gchar *dir = g_strdup_printf ("%s/.gimp-%s",
+                                    g_get_home_dir (), GIMP_APP_VERSION);
+      gimp_user_install_detect_old (install, dir);
+      g_free (dir);
+    }
+#endif
 
   return install;
 }
@@ -205,13 +219,12 @@ gimp_user_install_set_log_handler (GimpUserInstall        *install,
 /*  Local functions  */
 
 static gboolean
-gimp_user_install_detect_old (GimpUserInstall *install)
+gimp_user_install_detect_old (GimpUserInstall *install,
+                              const gchar     *gimp_dir)
 {
-  gchar    *dir;
+  gchar    *dir     = g_strdup (gimp_dir);
   gchar    *version;
   gboolean  migrate = FALSE;
-
-  dir = g_strdup (gimp_directory ());
 
   version = strstr (dir, GIMP_APP_VERSION);
 

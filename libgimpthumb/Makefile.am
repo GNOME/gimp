@@ -4,6 +4,11 @@ if PLATFORM_WIN32
 no_undefined = -no-undefined
 endif
 
+if PLATFORM_OSX
+xobjective_c = "-xobjective-c"
+framework_cocoa = -framework Cocoa
+endif
+
 if OS_WIN32
 gimpthumb_def = gimpthumb.def
 libgimpthumb_export_symbols = -export-symbols gimpthumb.def
@@ -47,7 +52,8 @@ INCLUDES = \
 	-I$(top_srcdir)		\
 	$(GDK_PIXBUF_CFLAGS)	\
 	$(GLIB_CFLAGS)		\
-	-I$(includedir)
+	-I$(includedir)		\
+	$(xobjective_c)
 
 EXTRA_DIST = \
 	gimpthumb.def
@@ -77,7 +83,8 @@ libgimpthumbinclude_HEADERS = \
 libgimpthumb_2_0_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined)				\
-	$(libgimpthumb_export_symbols)
+	$(libgimpthumb_export_symbols)		\
+	$(framework_cocoa)
 
 libgimpthumb_2_0_la_LIBADD = $(GDK_PIXBUF_LIBS) $(GLIB_LIBS) 
 

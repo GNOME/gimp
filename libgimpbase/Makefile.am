@@ -4,6 +4,11 @@ if PLATFORM_WIN32
 no_undefined = -no-undefined
 endif
 
+if PLATFORM_OSX
+xobjective_c = "-xobjective-c"
+framework_cocoa = -framework Cocoa
+endif
+
 if OS_WIN32
 ole32_lib = -lole32
 gimpbase_def = gimpbase.def
@@ -41,14 +46,15 @@ endif
 libgimpbaseincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimpbase
 
 AM_CPPFLAGS = \
-	-DPREFIX=\""$(prefix)"\"		\
-	-DGIMPDIR=\""$(gimpdir)"\"		\
-	-DDATADIR=\""$(gimpdatadir)"\"		\
-	-DLOCALEDIR=\""$(gimplocaledir)"\"	\
-	-DPLUGINDIR=\""$(gimpplugindir)"\"	\
-	-DSYSCONFDIR=\""$(gimpsysconfdir)"\"	\
-	-DGIMP_PACKAGE=\""@PACKAGE@"\"		\
+	-DPREFIX=\""$(prefix)"\"				\
+	-DGIMPDIR=\""$(gimpdir)"\"				\
+	-DDATADIR=\""$(gimpdatadir)"\"				\
+	-DLOCALEDIR=\""$(gimplocaledir)"\"			\
+	-DPLUGINDIR=\""$(gimpplugindir)"\"			\
+	-DSYSCONFDIR=\""$(gimpsysconfdir)"\"			\
+	-DGIMP_PACKAGE=\""@PACKAGE@"\"				\
 	-DGIMP_DATA_VERSION=\"$(GIMP_DATA_VERSION)\"		\
+	-DGIMP_USER_VERSION=\"$(GIMP_USER_VERSION)\"		\
 	-DGIMP_SYSCONF_VERSION=\"$(GIMP_SYSCONF_VERSION)\"	\
 	-DGIMP_PLUGIN_VERSION=\"$(GIMP_PLUGIN_VERSION)\"	\
 	-DG_LOG_DOMAIN=\"LibGimpBase\"				\
@@ -62,7 +68,8 @@ INCLUDES = \
 	-I$(top_srcdir)		\
 	$(GLIB_CFLAGS)		\
 	$(BINRELOC_CFLAGS)	\
-	-I$(includedir)
+	-I$(includedir)		\
+	$(xobjective_c)
 
 EXTRA_DIST = \
 	gimpbase.def
@@ -147,7 +154,7 @@ libgimpbase_2_0_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined) 			\
 	$(libgimpbase_export_symbols)		\
-	$(CARBON_LDFLAGS)
+	$(framework_cocoa)
 
 libgimpbase_2_0_la_DEPENDENCIES = $(gimpbase_def)
 

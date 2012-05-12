@@ -28,6 +28,10 @@
 #include <unistd.h>
 #endif
 
+#ifdef PLATFORM_OSX
+#include <AppKit/AppKit.h>
+#endif
+
 #include <glib-object.h>
 #include <glib/gstdio.h>
 
@@ -226,6 +230,25 @@ gimp_directory (void)
     }
   else
     {
+#ifdef PLATFORM_OSX
+
+      NSAutoreleasePool *pool;
+      NSArray           *path;
+      NSString          *library_dir;
+
+      pool = [[NSAutoreleasePool alloc] init];
+
+      path = NSSearchPathForDirectoriesInDomains (NSLibraryDirectory,
+                                                  NSUserDomainMask, YES);
+      library_dir = [path objectAtIndex:0];
+
+      gimp_dir = g_build_filename ([library_dir UTF8String], "Gimp", GIMP_USER_VERSION,
+                                   NULL);
+
+      [pool drain];
+
+#else /* ! PLATFORM_OSX */
+
       if (home_dir)
         {
           gimp_dir = g_build_filename (home_dir, GIMPDIR, NULL);
@@ -262,6 +285,8 @@ gimp_directory (void)
           g_free (user_name);
           g_free (subdir_name);
         }
+
+#endif /* PLATFORM_OSX */
     }
 
   return gimp_dir;
