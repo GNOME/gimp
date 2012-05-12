@@ -242,7 +242,8 @@ gimp_directory (void)
                                                   NSUserDomainMask, YES);
       library_dir = [path objectAtIndex:0];
 
-      gimp_dir = g_build_filename ([library_dir UTF8String], "Gimp", GIMP_USER_VERSION,
+      gimp_dir = g_build_filename ([library_dir UTF8String],
+                                   "GIMP", GIMP_USER_VERSION,
                                    NULL);
 
       [pool drain];
