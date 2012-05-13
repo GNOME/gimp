@@ -51,11 +51,29 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:color-to-alpha",
     NULL /* FIXME GIMP_HELP_FILTER_COLOR_TO_ALPHA */ },
 
+  { "filters-difference-of-gaussians", GIMP_STOCK_GEGL,
+    NC_("filters-action", "Difference of Gaussians..."), NULL,
+    NC_("filters-action", "Edge detection with control of edge thickness"),
+    "gegl:difference-of-gaussians",
+    NULL /* FIXME GIMP_HELP_FILTER_DIFFERENCE_OF_GAUSSIANS */ },
+
   { "filters-gaussian-blur", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Gaussian Blur..."), NULL,
     NC_("filters-action", "Apply a gaussian blur"),
     "gegl:gaussian-blur",
     NULL /* FIXME GIMP_HELP_FILTER_GAUSSIAN_BLUR */ },
+
+  { "filters-laplace", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Laplace"), NULL,
+    NC_("filters-action", "High-resolution edge detection"),
+    "gegl:edge-laplace",
+    NULL /* FIXME GIMP_HELP_FILTER_LAPLACE */ },
+
+  { "filters-lens-distortion", GIMP_STOCK_GEGL,
+    NC_("filters-action", "Lens Distortion..."), NULL,
+    NC_("filters-action", "Corrects lens distortion"),
+    "gegl:lens-distortion",
+    NULL /* FIXME GIMP_HELP_FILTER_LENS_DISTORTION */ },
 
   { "filters-pixelize", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Pixelize..."), NULL,
@@ -69,41 +87,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:polar-coordinates",
     NULL /* FIXME GIMP_HELP_FILTER_POLAR_COORDINATES */ },
 
-  { "filters-unsharp-mask", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Unsharp Mask..."), NULL,
-    NC_("filters-action", "The most widely used method for sharpening an image"),
-    "gegl:unsharp-mask",
-    NULL /* FIXME GIMP_HELP_FILTER_UNSHARP_MASK */ },
-
   { "filters-ripple", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Ripple..."), NULL,
     NC_("filters-action", "Displace pixels in a ripple pattern"),
     "gegl:ripple",
     NULL /* FIXME GIMP_HELP_FILTER_RIPPLE */ },
-
-  { "filters-lens-distortion", GIMP_STOCK_GEGL,
-    NC_("filters-action", "Lens Distortion..."), NULL,
-    NC_("filters-action", "Corrects lens distortion"),
-    "gegl:lens-distortion",
-    NULL /* FIXME GIMP_HELP_FILTER_LENS_DISTORTION */ },
-
-  { "filters-difference-of-gaussians", GIMP_STOCK_GEGL,
-    NC_("filters-action", "Difference of Gaussians..."), NULL,
-    NC_("filters-action", "Edge detection with control of edge thickness"),
-    "gegl:difference-of-gaussians",
-    NULL /* FIXME GIMP_HELP_FILTER_DIFFERENCE_OF_GAUSSIANS */ },
-
-  { "filters-laplace", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Laplace"), NULL,
-    NC_("filters-action", "High-resolution edge detection"),
-    "gegl:edge-laplace",
-    NULL /* FIXME GIMP_HELP_FILTER_LAPLACE */ },
-
-  { "filters-sobel", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Sobel..."), NULL,
-    NC_("filters-action", "Specialized direction-dependent edge-detection"),
-    "gegl:edge-sobel",
-    NULL /* FIXME GIMP_HELP_FILTER_SOBEL */ },
 
   { "filters-semi-flatten", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Semi-Flatten..."), NULL,
@@ -111,11 +99,23 @@ static const GimpStringActionEntry filters_actions[] =
     "gimp:semi-flatten",
     NULL /* FIXME GIMP_HELP_FILTER_POLAR_COORDINATES */ },
 
+  { "filters-sobel", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Sobel..."), NULL,
+    NC_("filters-action", "Specialized direction-dependent edge-detection"),
+    "gegl:edge-sobel",
+    NULL /* FIXME GIMP_HELP_FILTER_SOBEL */ },
+
   { "filters-threshold-alpha", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Threshold Alpha..."), NULL,
     NC_("filters-action", "Make transparency all-or-nothing"),
     "gimp:threshold-alpha",
     NULL /* FIXME GIMP_HELP_FILTER_POLAR_COORDINATES */ },
+
+  { "filters-unsharp-mask", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Unsharp Mask..."), NULL,
+    NC_("filters-action", "The most widely used method for sharpening an image"),
+    "gegl:unsharp-mask",
+    NULL /* FIXME GIMP_HELP_FILTER_UNSHARP_MASK */ },
 };
 
 void
@@ -167,11 +167,17 @@ filters_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("filters-color-temperature", writable && !gray);
   SET_SENSITIVE ("filters-color-to-alpha",    writable && !gray && alpha);
+  SET_SENSITIVE ("filters-difference-of-gaussians",          writable);
   SET_SENSITIVE ("filters-gaussian-blur",     writable);
+  SET_SENSITIVE ("filters-laplace",           writable);
+  SET_SENSITIVE ("filters-lens-distortion",   writable);
   SET_SENSITIVE ("filters-pixelize",          writable);
   SET_SENSITIVE ("filters-polar-coordinates", writable);
+  SET_SENSITIVE ("filters-ripple",            writable);
+  SET_SENSITIVE ("filters-sobel",             writable);
   SET_SENSITIVE ("filters-semi-flatten",      writable && alpha);
   SET_SENSITIVE ("filters-threshold-alpha",   writable && alpha);
+  SET_SENSITIVE ("filters-unsharp-mask",      writable);
 
 #undef SET_SENSITIVE
 }
