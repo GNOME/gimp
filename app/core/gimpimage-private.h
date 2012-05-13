@@ -112,5 +112,8 @@ struct _GimpImagePrivate
                                      GIMP_TYPE_IMAGE, \
                                      GimpImagePrivate)
 
+void   gimp_image_take_mask (GimpImage   *image,
+                             GimpChannel *mask);
+
 
 #endif  /* __GIMP_IMAGE_PRIVATE_H__ */
