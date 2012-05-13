@@ -31,6 +31,7 @@
 #include "config-types.h"
 
 #include "core/core-types.h"
+#include "core/gimp-utils.h"
 #include "core/gimpgrid.h"
 #include "core/gimptemplate.h"
 
@@ -141,6 +142,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   gchar        *path;
   GimpRGB       red          = { 1.0, 0, 0, 0.5 };
+  guint64       undo_size;
 
   object_class->finalize     = gimp_core_config_finalize;
   object_class->set_property = gimp_core_config_set_property;
@@ -376,9 +378,17 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                 0, 1 << 20, 5,
                                 GIMP_PARAM_STATIC_STRINGS |
                                 GIMP_CONFIG_PARAM_CONFIRM);
+
+  undo_size = gimp_get_physical_memory_size ();
+
+  if (undo_size > 0)
+    undo_size = undo_size / 8; /* 1/8th of the memory */
+  else
+    undo_size = 1 << 26; /* 64GB */
+
   GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_UNDO_SIZE,
                                     "undo-size", UNDO_SIZE_BLURB,
-                                    0, GIMP_MAX_MEMSIZE, 1 << 26, /* 64MB */
+                                    0, GIMP_MAX_MEMSIZE, undo_size,
                                     GIMP_PARAM_STATIC_STRINGS |
                                     GIMP_CONFIG_PARAM_CONFIRM);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_UNDO_PREVIEW_SIZE,
