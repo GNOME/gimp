@@ -916,16 +916,13 @@ xcf_load_channel_props (XcfInfo      *info,
 
         case PROP_SELECTION:
           {
-            GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
-            GimpChannel      *mask;
+            GimpChannel *mask;
 
-            g_object_unref (gimp_image_get_mask (image));
-
-            mask = private->selection_mask =
+            mask =
               gimp_selection_new (image,
                                   gimp_item_get_width  (GIMP_ITEM (*channel)),
                                   gimp_item_get_height (GIMP_ITEM (*channel)));
-            g_object_ref_sink (mask);
+            gimp_image_take_mask (image, mask);
 
             tile_manager_unref (GIMP_DRAWABLE (mask)->private->tiles);
             GIMP_DRAWABLE (mask)->private->tiles =

@@ -251,6 +251,9 @@ gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
         }
 
       g_signal_handlers_disconnect_by_func (image_editor->image,
+                                            gimp_histogram_editor_update,
+                                            editor);
+      g_signal_handlers_disconnect_by_func (image_editor->image,
                                             gimp_histogram_editor_layer_changed,
                                             editor);
       g_signal_handlers_disconnect_by_func (image_editor->image,

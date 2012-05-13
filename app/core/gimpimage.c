@@ -740,6 +740,7 @@ gimp_image_constructed (GObject *object)
 {
   GimpImage        *image   = GIMP_IMAGE (object);
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  GimpChannel      *selection;
   GimpCoreConfig   *config;
   GimpTemplate     *template;
 
@@ -765,15 +766,10 @@ gimp_image_constructed (GObject *object)
   if (private->base_type == GIMP_INDEXED)
     gimp_image_colormap_init (image);
 
-  /* create the selection mask */
-  private->selection_mask = gimp_selection_new (image,
-                                                gimp_image_get_width  (image),
-                                                gimp_image_get_height (image));
-  g_object_ref_sink (private->selection_mask);
-
-  g_signal_connect (private->selection_mask, "update",
-                    G_CALLBACK (gimp_image_mask_update),
-                    image);
+  selection = gimp_selection_new (image,
+                                  gimp_image_get_width  (image),
+                                  gimp_image_get_height (image));
+  gimp_image_take_mask (image, selection);
 
   g_signal_connect_object (config, "notify::transparency-type",
                            G_CALLBACK (gimp_item_stack_invalidate_previews),
@@ -1969,6 +1965,27 @@ gimp_image_mask_changed (GimpImage *image)
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
   g_signal_emit (image, gimp_image_signals[MASK_CHANGED], 0);
+}
+
+void
+gimp_image_take_mask (GimpImage   *image,
+                      GimpChannel *mask)
+{
+  GimpImagePrivate *private;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (GIMP_IS_SELECTION (mask));
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (private->selection_mask)
+    g_object_unref (private->selection_mask);
+
+  private->selection_mask = g_object_ref_sink (mask);
+
+  g_signal_connect (private->selection_mask, "update",
+                    G_CALLBACK (gimp_image_mask_update),
+                    image);
 }
 
 
