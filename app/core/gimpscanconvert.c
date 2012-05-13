@@ -485,10 +485,10 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      guchar     *data  = iter->data[0];
+      guchar     *data    = iter->data[0];
       guchar     *tmp_buf = NULL;
-      const gint  stride   = cairo_format_stride_for_width (CAIRO_FORMAT_A8,
-                                                            roi->width);
+      const gint  stride  = cairo_format_stride_for_width (CAIRO_FORMAT_A8,
+                                                           roi->width);
 
       /*  cairo rowstrides are always multiples of 4, whereas
        *  maskPR.rowstride can be anything, so to be able to create an
@@ -500,7 +500,7 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
           const guchar *src = data;
           guchar       *dest;
 
-          dest = tmp_buf = g_alloca (roi->width * roi->height * bpp);
+          dest = tmp_buf = g_alloca (stride * roi->height);
 
           if (! replace)
             {
