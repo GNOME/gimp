@@ -69,6 +69,12 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:polar-coordinates",
     NULL /* FIXME GIMP_HELP_FILTER_POLAR_COORDINATES */ },
 
+  { "filters-unsharp-mask", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Unsharp Mask..."), NULL,
+    NC_("filters-action", "The most widely used method for sharpening an image"),
+    "gegl:unsharp-mask",
+    NULL /* FIXME GIMP_HELP_FILTER_UNSHARP_MASK */ },
+
   { "filters-semi-flatten", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Semi-Flatten..."), NULL,
     NC_("filters-action", "Replace partial transparency with a color"),

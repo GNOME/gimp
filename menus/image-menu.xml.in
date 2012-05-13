@@ -601,12 +601,14 @@
       <menuitem action="plug-in-reset-all" />
       <separator />
       <menu action="plug-in-blur-menu" name="Blur">
-	<menuitem action="filters-gaussian-blur" />
-	<menuitem action="filters-pixelize" />
+      	<menuitem action="filters-gaussian-blur" />
+      	<menuitem action="filters-pixelize" />
       </menu>
-      <menu action="plug-in-enhance-menu" name="Enhance" />
+      <menu action="plug-in-enhance-menu" name="Enhance">
+        <menuitem action="filters-unsharp-mask" />
+      </menu>
       <menu action="plug-in-distorts-menu" name="Distorts">
-	<menuitem action="filters-polar-coordinates" />
+      	<menuitem action="filters-polar-coordinates" />
       </menu>
       <menu action="plug-in-light-shadow-menu" name="Light and Shadow">
         <placeholder name="Light" />
