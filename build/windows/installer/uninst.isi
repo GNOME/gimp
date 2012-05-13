@@ -1,0 +1,269 @@
+#if 0
+[Code]
+#endif
+
+function SplitRegParams(const pInf: String; var oRootKey: Integer; var oKey,oValue: String): Boolean;
+var	sRootKey: String;
+	d: Integer;
+begin
+	Result := False;
+
+	d := Pos('/',pInf);
+	if d = 0 then
+	begin
+		DebugMsg('SplitRegParams','Error: malformed line (no /)');
+		exit;
+	end;
+
+	sRootKey := Copy(pInf,1,d - 1);
+	oKey := Copy(pInf,d + 1,Length(pInf));
+
+	if oValue <> 'nil' then
+	begin
+		d := RevPos('\',oKey);
+		if d = 0 then
+		begin
+			DebugMsg('SplitRegParams','Error: malformed line (no \)');
+			exit;
+		end;
+
+		oValue := Decode(Copy(oKey,d+1,Length(oKey)));
+		oKey := Copy(oKey,1,d-1);
+	end;
+
+	DebugMsg('SplitRegParams','Root: '+sRootKey+', Key:'+oKey + ', Value:'+oValue);
+
+	case sRootKey of
+	'HKCR': oRootKey := HKCR;
+	'HKLM': oRootKey := HKLM;
+	'HKU': oRootKey := HKU;
+	'HKCU': oRootKey := HKCU;
+	else
+		begin
+			DebugMsg('SplitRegParams','Unrecognised root key: ' + sRootKey);
+			exit;
+		end;
+	end;
+
+	Result := True;
+end;
+
+
+procedure UninstInfRegKey(const pInf: String; const pIfEmpty: Boolean);
+var	sKey,sVal: String;
+	iRootKey: Integer;
+begin
+	sVal := 'nil';
+	if not SplitRegParams(pInf,iRootKey,sKey,sVal) then
+		exit;
+
+	if pIfEmpty then
+	begin
+		if not RegDeleteKeyIfEmpty(iRootKey,sKey) then
+			DebugMsg('UninstInfRegKey','RegDeleteKeyIfEmpty failed');
+	end
+	else
+	begin
+		if not RegDeleteKeyIncludingSubkeys(iRootKey,sKey) then
+			DebugMsg('UninstInfRegKey','RegDeleteKeyIncludingSubkeys failed');
+	end;
+end;
+
+
+procedure UninstInfRegVal(const pInf: String);
+var	sKey,sVal: String;
+	iRootKey: Integer;
+begin
+	if not SplitRegParams(pInf,iRootKey,sKey,sVal) then
+		exit;
+
+	if not RegDeleteValue(iRootKey,sKey,sVal) then
+		DebugMsg('UninstInfREG','RegDeleteKeyIncludingSubkeys failed');
+end;
+
+
+procedure UninstInfFile(const pFile: String);
+begin
+	DebugMsg('UninstInfFile','File: '+pFile);
+
+	if not DeleteFile(pFile) then
+		DebugMsg('UninstInfFile','DeleteFile failed');
+end;
+
+
+procedure UninstInfDir(const pDir: String);
+begin
+	DebugMsg('UninstInfDir','Dir: '+pDir);
+
+	if not RemoveDir(pDir) then
+		DebugMsg('UninstInfDir','RemoveDir failed');
+end;
+
+
+procedure CreateMessageForm(var frmMessage: TForm; const pMessage: String);
+var lblMessage: TNewStaticText;
+begin
+	frmMessage := CreateCustomForm();
+	with frmMessage do
+	begin
+		BorderStyle := bsDialog;
+
+		ClientWidth := ScaleX(300);
+		ClientHeight := ScaleY(48);
+
+		Caption := CustomMessage('UninstallingAddOnCaption');
+
+		Position := poScreenCenter;
+
+		BorderIcons := [];
+	end;
+
+	lblMessage := TNewStaticText.Create(frmMessage);
+	with lblMessage do
+	begin
+		Parent := frmMessage;
+		AutoSize := True;
+		Caption := pMessage;
+		Top := (frmMessage.ClientHeight - Height) div 2;
+		Left := (frmMessage.ClientWidth - Width) div 2;
+		Visible := True;
+	end;
+	
+	frmMessage.Show();
+
+    frmMessage.Refresh();
+end;
+
+
+procedure UninstInfRun(const pInf: String);
+var Description,Prog,Params: String;
+	Split, ResultCode, Ctr: Integer;
+	frmMessage: TForm;	
+begin
+	DebugMsg('UninstInfRun',pInf);
+
+	Split := Pos('/',pInf);
+	if Split <> 0 then
+	begin
+		Description := Copy(pInf, 1, Split - 1);
+		Prog := Copy(pInf, Split + 1, Length(pInf));
+	end else
+	begin
+		Prog := pInf;
+		Description := '';
+	end;
+
+	Split := Pos('/',Prog);
+	if Split <> 0 then
+	begin
+		Params := Copy(Prog, Split + 1, Length(Prog));
+		Prog := Copy(Prog, 1, Split - 1);
+	end else
+	begin
+		Params := '';
+	end;
+
+	if not UninstallSilent then //can't manipulate uninstaller messages, so create a form instead
+		CreateMessageForm(frmMessage,Description);
+
+	DebugMsg('UninstInfRun','Running: ' + Prog + '; Params: ' + Params);
+
+	if Exec(Prog,Params,'',SW_SHOW,ewWaitUntilTerminated,ResultCode) then
+	begin
+		DebugMsg('UninstInfRun','Exec result: ' + IntToStr(ResultCode));
+		
+		Ctr := 0;
+		while FileExists(Prog) do //wait a few seconds for the uninstaller to be deleted - since this is done by a program
+		begin                     //running from a temporary directory, the uninstaller we ran above will exit some time before
+			Sleep(UNINSTALL_CHECK_TIME);           //it's removed from disk
+			Inc(Ctr);
+			if Ctr = (UNINSTALL_MAX_WAIT_TIME/UNINSTALL_CHECK_TIME) then //don't wait more than 5 seconds
+				break;
+		end;
+
+	end else
+		DebugMsg('UninstInfRun','Exec failed: ' + IntToStr(ResultCode) + ' (' + SysErrorMessage(ResultCode) + ')');
+
+	if not UninstallSilent then
+		frmMessage.Free();
+end;
+
+(*
+uninst.inf documentation:
+
+- Delete Registry keys (with all subkeys):
+  RegKey:<RootKey>/<SubKey>
+    RootKey = HKCR, HKLM, HKCU, HKU
+    SubKey = subkey to delete (warning: this will delete all keys under subkey, so be very careful with it)
+
+- Delete empty registry keys:
+  RegKeyEmpty:<RootKey>/<SubKey>
+    RootKey = HKCR, HKLM, HKCU, HKU
+    SubKey = subkey to delete if empty
+
+- Delete values from registry:
+  RegVal:<RootKey>/<SubKey>/Value
+    RootKey = HKCR, HKLM, HKCU, HKU
+    SubKey = subkey to delete Value from
+    Value = value to delete; \ and % must be escaped as %5c and %25
+
+- Delete files:
+  File:<Path>
+    Path = full path to file
+
+- Delete empty directories:
+  Dir:<Path>
+
+- Run program with parameters:
+  Run:<description>/<path>/<params>
+
+Directives are parsed from the end of the file backwards as the first step of uninstall.
+
+*)
+procedure ParseUninstInf();
+var i,d: Integer;
+	sWhat: String;
+begin
+	for i := GetArrayLength(asUninstInf) - 1 downto 0 do
+	begin
+
+		DebugMsg('ParseUninstInf',asUninstInf[i]);
+
+		if (Length(asUninstInf[i]) = 0) or (asUninstInf[i][1] = '#') then //skip comments and empty lines
+			continue;
+
+		d := Pos(':',asUninstInf[i]);
+		if d = 0 then
+		begin
+			DebugMsg('ParseUninstInf','Malformed line: ' + asUninstInf[i]);
+			continue;
+		end;
+
+		sWhat := Copy(asUninstInf[i],d+1,Length(asUninstInf[i]));
+
+		case Copy(asUninstInf[i],1,d) of
+		'RegKey:': UninstInfRegKey(sWhat,False);
+		'RegKeyEmpty:': UninstInfRegKey(sWhat,True);
+		'RegVal:': UninstInfRegVal(sWhat);
+		'File:': UninstInfFile(sWhat);
+		'Dir:': UninstInfDir(sWhat);
+		'Run:': UninstInfRun(sWhat);
+		end;
+
+	end;
+
+end;
+
+procedure CurUninstallStepChanged(CurStep: TUninstallStep);
+begin
+	DebugMsg('CurUninstallStepChanged','');
+	case CurStep of
+	usUninstall:
+	begin
+		LoadStringsFromFile(ExpandConstant('{app}\uninst\uninst.inf'),asUninstInf);
+		ParseUninstInf();
+	end;
+	//usPostUninstall:
+	end;
+end;
+

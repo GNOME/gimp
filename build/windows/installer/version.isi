@@ -1,0 +1,28 @@
+//set the version string
+
+#define public
+
+#if !Defined(VERSION)
+  #error "VERSION must be defined"
+#endif
+
+#define GTK_VER=GetFileVersion(AddBackslash(DEPS_DIR64) + "bin\libgtk-win32-2.0-0.dll")
+
+#define public
+//used in the component list
+#define GTK_VERSION=Copy(GTK_VER,1,RPos(".",GTK_VER)-1)
+
+#define MAJOR=Copy(VERSION,1,Pos(".",VERSION)-1)
+#define MINOR=Copy(VERSION,Pos(".",VERSION)+1)
+#define MICRO=Copy(MINOR,Pos(".",MINOR)+1)
+#expr MINOR=Copy(MINOR,1,Pos(".",MINOR)-1)
+
+#if Int(MINOR) % 2 == 1
+ #define DEVEL="-dev"
+ //used for setting up file associations
+ #define ASSOC_VERSION=MAJOR + "." + MINOR
+#else
+ #define DEVEL=""
+ //new setup is incompatible with GIMP 2.6 and older installers
+ #define ASSOC_VERSION=MAJOR + ".8"
+#endif
