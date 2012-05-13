@@ -75,6 +75,18 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:unsharp-mask",
     NULL /* FIXME GIMP_HELP_FILTER_UNSHARP_MASK */ },
 
+  { "filters-ripple", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Ripple..."), NULL,
+    NC_("filters-action", "Displace pixels in a ripple pattern"),
+    "gegl:ripple",
+    NULL /* FIXME GIMP_HELP_FILTER_RIPPLE */ },
+
+  { "filters-lens-distortion", GIMP_STOCK_GEGL,
+    NC_("filters-action", "Lens Distortion..."), NULL,
+    NC_("filters-action", "Corrects lens distortion"),
+    "gegl:lens-distortion",
+    NULL /* FIXME GIMP_HELP_FILTER_RIPPLE */ },
+
   { "filters-semi-flatten", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Semi-Flatten..."), NULL,
     NC_("filters-action", "Replace partial transparency with a color"),

@@ -609,6 +609,8 @@
       </menu>
       <menu action="plug-in-distorts-menu" name="Distorts">
       	<menuitem action="filters-polar-coordinates" />
+        <menuitem action="filters-ripple" />
+        <menuitem action="filters-lens-distortion" />
       </menu>
       <menu action="plug-in-light-shadow-menu" name="Light and Shadow">
         <placeholder name="Light" />

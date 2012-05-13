@@ -125,11 +125,13 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:invert", /* in gimp */
     "gegl:layer",
     "gegl:lens-correct",
+    "gegl:lens-distortion", /* in gimp */
     "gegl:opacity", /* pointless */
     "gegl:path",
     "gegl:pixelize", /* in gimp */
     "gegl:polar-coordinates", /* in gimp */
     "gegl:posterize", /* in gimp */
+    "gegl:ripple", /* in gimp */
     "gegl:rotate", /* in gimp */
     "gegl:scale", /* in gimp */
     "gegl:sdl-display", /* useless */
