@@ -345,7 +345,7 @@ gimp_scan_convert_render (GimpScanConvert *sc,
                           gboolean         antialias)
 {
   gimp_scan_convert_render_full (sc, buffer, off_x, off_y,
-                                 TRUE, antialias, 255);
+                                 TRUE, antialias, 1.0);
 }
 
 /**
@@ -368,7 +368,7 @@ gimp_scan_convert_render_value (GimpScanConvert *sc,
                                 GeglBuffer      *buffer,
                                 gint             off_x,
                                 gint             off_y,
-                                guchar           value)
+                                gdouble          value)
 {
   gimp_scan_convert_render_full (sc, buffer, off_x, off_y,
                                  TRUE, FALSE, value);
@@ -393,7 +393,7 @@ gimp_scan_convert_compose (GimpScanConvert *sc,
                            gint             off_y)
 {
   gimp_scan_convert_render_full (sc, buffer, off_x, off_y,
-                                 FALSE, FALSE, 255);
+                                 FALSE, FALSE, 1.0);
 }
 
 /**
@@ -415,7 +415,7 @@ gimp_scan_convert_compose_value (GimpScanConvert *sc,
                                  GeglBuffer      *buffer,
                                  gint             off_x,
                                  gint             off_y,
-                                 gint             value)
+                                 gdouble          value)
 {
   gimp_scan_convert_render_full (sc, buffer, off_x, off_y,
                                  FALSE, FALSE, value);
@@ -446,7 +446,7 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
                                gint             off_y,
                                gboolean         replace,
                                gboolean         antialias,
-                               guchar           value)
+                               gdouble          value)
 {
   const Babl         *format;
   GeglBufferIterator *iter;
@@ -534,7 +534,7 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
           cairo_paint (cr);
         }
 
-      cairo_set_source_rgba (cr, 0, 0, 0, value / 255.0);
+      cairo_set_source_rgba (cr, 0, 0, 0, value);
       cairo_append_path (cr, &path);
 
       cairo_set_antialias (cr, antialias ?

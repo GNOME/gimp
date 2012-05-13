@@ -48,7 +48,7 @@ void      gimp_scan_convert_render_full        (GimpScanConvert   *sc,
                                                 gint               off_y,
                                                 gboolean           replace,
                                                 gboolean           antialias,
-                                                guchar             value);
+                                                gdouble            value);
 
 void      gimp_scan_convert_render             (GimpScanConvert   *sc,
                                                 GeglBuffer        *buffer,
@@ -59,7 +59,7 @@ void      gimp_scan_convert_render_value       (GimpScanConvert   *sc,
                                                 GeglBuffer        *buffer,
                                                 gint               off_x,
                                                 gint               off_y,
-                                                guchar             value);
+                                                gdouble            value);
 void      gimp_scan_convert_compose            (GimpScanConvert   *sc,
                                                 GeglBuffer        *buffer,
                                                 gint               off_x,
@@ -68,7 +68,7 @@ void      gimp_scan_convert_compose_value      (GimpScanConvert   *sc,
                                                 GeglBuffer        *buffer,
                                                 gint               off_x,
                                                 gint               off_y,
-                                                gint               value);
+                                                gdouble            value);
 
 
 #endif /* __GIMP_SCAN_CONVERT_H__ */
