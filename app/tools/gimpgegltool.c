@@ -116,7 +116,10 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:colorize", /* in gimp */
     "gegl:contrast-curve",
     "gegl:convert-format",
+    "gegl:difference-of-gaussians", /* in gimp */
     "gegl:display",
+    "gegl:edge-laplace", /* in gimp */
+    "gegl:edge-sobel", /* in gimp */
     "gegl:fill-path",
     "gegl:gaussian-blur", /* in gimp */
     "gegl:grey", /* in gimp */

@@ -85,7 +85,25 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "Lens Distortion..."), NULL,
     NC_("filters-action", "Corrects lens distortion"),
     "gegl:lens-distortion",
-    NULL /* FIXME GIMP_HELP_FILTER_RIPPLE */ },
+    NULL /* FIXME GIMP_HELP_FILTER_LENS_DISTORTION */ },
+
+  { "filters-difference-of-gaussians", GIMP_STOCK_GEGL,
+    NC_("filters-action", "Difference of Gaussians..."), NULL,
+    NC_("filters-action", "Edge detection with control of edge thickness"),
+    "gegl:difference-of-gaussians",
+    NULL /* FIXME GIMP_HELP_FILTER_DIFFERENCE_OF_GAUSSIANS */ },
+
+  { "filters-laplace", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Laplace"), NULL,
+    NC_("filters-action", "High-resolution edge detection"),
+    "gegl:edge-laplace",
+    NULL /* FIXME GIMP_HELP_FILTER_LAPLACE */ },
+
+  { "filters-sobel", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Sobel..."), NULL,
+    NC_("filters-action", "Specialized direction-dependent edge-detection"),
+    "gegl:edge-sobel",
+    NULL /* FIXME GIMP_HELP_FILTER_SOBEL */ },
 
   { "filters-semi-flatten", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Semi-Flatten..."), NULL,
