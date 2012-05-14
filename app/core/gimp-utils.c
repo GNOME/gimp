@@ -57,8 +57,6 @@
 
 #include "core-types.h"
 
-#include "config/gimpbaseconfig.h"
-
 #include "gimp.h"
 #include "gimp-utils.h"
 #include "gimpcontainer.h"

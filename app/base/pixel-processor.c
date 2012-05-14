@@ -27,7 +27,7 @@
 
 #include "core/core-types.h" /* eek, but this file will die anyway */
 
-#include "config/gimpbaseconfig.h"
+#include "config/gimpgeglconfig.h"
 
 #include "pixel-processor.h"
 #include "pixel-region.h"

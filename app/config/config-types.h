@@ -31,7 +31,7 @@
 #define GIMP_OPACITY_OPAQUE           1.0
 
 
-typedef struct _GimpBaseConfig       GimpBaseConfig;
+typedef struct _GimpGeglConfig       GimpGeglConfig;
 typedef struct _GimpCoreConfig       GimpCoreConfig;
 typedef struct _GimpDisplayConfig    GimpDisplayConfig;
 typedef struct _GimpGuiConfig        GimpGuiConfig;

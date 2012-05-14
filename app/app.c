@@ -147,7 +147,7 @@ app_run (const gchar         *full_prog_name,
 {
   GimpInitStatusFunc  update_status_func = NULL;
   Gimp               *gimp;
-  GimpBaseConfig     *config;
+  GimpGeglConfig     *config;
   GMainLoop          *loop;
   gboolean            swap_is_ok;
 
@@ -189,7 +189,7 @@ app_run (const gchar         *full_prog_name,
 
   gimp_load_config (gimp, alternate_system_gimprc, alternate_gimprc);
 
-  config = GIMP_BASE_CONFIG (gimp->config);
+  config = GIMP_GEGL_CONFIG (gimp->config);
 
   /*  change the locale if a language if specified  */
   language_init (gimp->config->language);

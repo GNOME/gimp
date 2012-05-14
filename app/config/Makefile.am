@@ -32,14 +32,14 @@ libappconfig_a_sources = \
 	gimpconfig-file.h		\
 	gimpconfig-utils.c		\
 	gimpconfig-utils.h		\
-	gimpbaseconfig.c		\
-	gimpbaseconfig.h		\
 	gimpcoreconfig.c		\
 	gimpcoreconfig.h		\
 	gimpdisplayconfig.c		\
 	gimpdisplayconfig.h		\
 	gimpdisplayoptions.c		\
 	gimpdisplayoptions.h		\
+	gimpgeglconfig.c		\
+	gimpgeglconfig.h		\
 	gimpguiconfig.c			\
 	gimpguiconfig.h			\
 	gimppluginconfig.c		\

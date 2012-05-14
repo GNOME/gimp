@@ -32,7 +32,7 @@
 
 #include "base-types.h"
 
-#include "config/gimpbaseconfig.h"
+#include "config/gimpgeglconfig.h"
 
 #include "composite/gimp-composite.h"
 
@@ -53,20 +53,20 @@ static void   base_num_processors_notify  (GObject     *config,
                                            gpointer     data);
 
 
-static GimpBaseConfig *base_config = NULL;
+static GimpGeglConfig *base_config = NULL;
 
 
 /*  public functions  */
 
 gboolean
-base_init (GimpBaseConfig *config,
+base_init (GimpGeglConfig *config,
            gboolean        be_verbose,
            gboolean        use_cpu_accel)
 {
   gboolean  swap_is_ok;
   gchar    *temp_dir;
 
-  g_return_val_if_fail (GIMP_IS_BASE_CONFIG (config), FALSE);
+  g_return_val_if_fail (GIMP_IS_GEGL_CONFIG (config), FALSE);
   g_return_val_if_fail (base_config == NULL, FALSE);
 
   base_config = g_object_ref (config);
@@ -192,7 +192,7 @@ base_tile_cache_size_notify (GObject    *config,
                              GParamSpec *param_spec,
                              gpointer    data)
 {
-  tile_cache_set_size (GIMP_BASE_CONFIG (config)->tile_cache_size);
+  tile_cache_set_size (GIMP_GEGL_CONFIG (config)->tile_cache_size);
 }
 
 static void
@@ -200,5 +200,5 @@ base_num_processors_notify (GObject    *config,
                             GParamSpec *param_spec,
                             gpointer    data)
 {
-  pixel_processor_set_num_threads (GIMP_BASE_CONFIG (config)->num_processors);
+  pixel_processor_set_num_threads (GIMP_GEGL_CONFIG (config)->num_processors);
 }

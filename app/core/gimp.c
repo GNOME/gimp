@@ -1314,7 +1314,7 @@ gimp_get_temp_filename (Gimp        *gimp,
   else
     basename = g_strdup_printf ("gimp-temp-%d%d", pid, id++);
 
-  path = gimp_config_path_expand (GIMP_BASE_CONFIG (gimp->config)->temp_path,
+  path = gimp_config_path_expand (GIMP_GEGL_CONFIG (gimp->config)->temp_path,
                                   TRUE, NULL);
 
   filename = g_build_filename (path, basename, NULL);

@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpBaseConfig class
+ * GimpGeglConfig class
  * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,20 +18,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BASE_CONFIG_H__
-#define __GIMP_BASE_CONFIG_H__
+#ifndef __GIMP_GEGL_CONFIG_H__
+#define __GIMP_GEGL_CONFIG_H__
 
 
-#define GIMP_TYPE_BASE_CONFIG            (gimp_base_config_get_type ())
-#define GIMP_BASE_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BASE_CONFIG, GimpBaseConfig))
-#define GIMP_BASE_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BASE_CONFIG, GimpBaseConfigClass))
-#define GIMP_IS_BASE_CONFIG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BASE_CONFIG))
-#define GIMP_IS_BASE_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BASE_CONFIG))
+#define GIMP_TYPE_GEGL_CONFIG            (gimp_gegl_config_get_type ())
+#define GIMP_GEGL_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_GEGL_CONFIG, GimpGeglConfig))
+#define GIMP_GEGL_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_GEGL_CONFIG, GimpGeglConfigClass))
+#define GIMP_IS_GEGL_CONFIG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_GEGL_CONFIG))
+#define GIMP_IS_GEGL_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_GEGL_CONFIG))
 
 
-typedef struct _GimpBaseConfigClass GimpBaseConfigClass;
+typedef struct _GimpGeglConfigClass GimpGeglConfigClass;
 
-struct _GimpBaseConfig
+struct _GimpGeglConfig
 {
   GObject   parent_instance;
 
@@ -41,13 +41,13 @@ struct _GimpBaseConfig
   guint64   tile_cache_size;
 };
 
-struct _GimpBaseConfigClass
+struct _GimpGeglConfigClass
 {
   GObjectClass           parent_class;
 };
 
 
-GType  gimp_base_config_get_type (void) G_GNUC_CONST;
+GType  gimp_gegl_config_get_type (void) G_GNUC_CONST;
 
 
-#endif /* GIMP_BASE_CONFIG_H__ */
+#endif /* GIMP_GEGL_CONFIG_H__ */

@@ -23,7 +23,7 @@
 
 #include "core/core-enums.h"
 
-#include "config/gimpbaseconfig.h"
+#include "config/gimpgeglconfig.h"
 
 
 #define GIMP_TYPE_CORE_CONFIG            (gimp_core_config_get_type ())
@@ -37,7 +37,7 @@ typedef struct _GimpCoreConfigClass GimpCoreConfigClass;
 
 struct _GimpCoreConfig
 {
-  GimpBaseConfig          parent_instance;
+  GimpGeglConfig          parent_instance;
 
   gchar                  *language;
   GimpInterpolationType   interpolation_type;
@@ -93,7 +93,7 @@ struct _GimpCoreConfig
 
 struct _GimpCoreConfigClass
 {
-  GimpBaseConfigClass  parent_class;
+  GimpGeglConfigClass  parent_class;
 };
 
 

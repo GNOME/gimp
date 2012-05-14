@@ -18,7 +18,7 @@
 #ifndef __BASE_H__
 #define __BASE_H__
 
-gboolean base_init (GimpBaseConfig *config,
+gboolean base_init (GimpGeglConfig *config,
                     gboolean        be_verbose,
                     gboolean        use_cpu_accel);
 void     base_exit (void);

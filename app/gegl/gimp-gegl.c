@@ -26,7 +26,7 @@
 
 #include "base/tile.h"
 
-#include "config/gimpbaseconfig.h"
+#include "config/gimpgeglconfig.h"
 
 #include "operations/gimp-operations.h"
 
@@ -36,17 +36,17 @@
 #include "gimp-gegl.h"
 
 
-static void  gimp_gegl_notify_tile_cache_size (GimpBaseConfig *config);
+static void  gimp_gegl_notify_tile_cache_size (GimpGeglConfig *config);
 
 
 void
 gimp_gegl_init (Gimp *gimp)
 {
-  GimpBaseConfig *config;
+  GimpGeglConfig *config;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  config = GIMP_BASE_CONFIG (gimp->config);
+  config = GIMP_GEGL_CONFIG (gimp->config);
 
   g_object_set (gegl_config (),
                 "tile-width",  TILE_WIDTH,
@@ -72,7 +72,7 @@ gimp_gegl_init (Gimp *gimp)
 }
 
 static void
-gimp_gegl_notify_tile_cache_size (GimpBaseConfig *config)
+gimp_gegl_notify_tile_cache_size (GimpGeglConfig *config)
 {
   g_object_set (gegl_config (),
                 "cache-size", (gint) MIN (config->tile_cache_size, G_MAXINT),

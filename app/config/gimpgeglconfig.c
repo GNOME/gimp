@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpBaseConfig class
+ * GimpGeglConfig class
  * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -34,7 +34,7 @@
 #include "base/pixel-processor.h"
 
 #include "gimprc-blurbs.h"
-#include "gimpbaseconfig.h"
+#include "gimpgeglconfig.h"
 
 #include "core/gimp-utils.h"
 
@@ -56,15 +56,15 @@ enum
 };
 
 
-static void   gimp_base_config_class_init   (GimpBaseConfigClass *klass);
-static void   gimp_base_config_init         (GimpBaseConfig      *config,
-                                             GimpBaseConfigClass *klass);
-static void   gimp_base_config_finalize     (GObject             *object);
-static void   gimp_base_config_set_property (GObject             *object,
+static void   gimp_gegl_config_class_init   (GimpGeglConfigClass *klass);
+static void   gimp_gegl_config_init         (GimpGeglConfig      *config,
+                                             GimpGeglConfigClass *klass);
+static void   gimp_gegl_config_finalize     (GObject             *object);
+static void   gimp_gegl_config_set_property (GObject             *object,
                                              guint                property_id,
                                              const GValue        *value,
                                              GParamSpec          *pspec);
-static void   gimp_base_config_get_property (GObject             *object,
+static void   gimp_gegl_config_get_property (GObject             *object,
                                              guint                property_id,
                                              GValue              *value,
                                              GParamSpec          *pspec);
@@ -74,7 +74,7 @@ static GObjectClass *parent_class = NULL;
 
 
 GType
-gimp_base_config_get_type (void)
+gimp_gegl_config_get_type (void)
 {
   static GType config_type = 0;
 
@@ -82,19 +82,19 @@ gimp_base_config_get_type (void)
     {
       const GTypeInfo config_info =
       {
-        sizeof (GimpBaseConfigClass),
+        sizeof (GimpGeglConfigClass),
         (GBaseInitFunc) NULL,
         (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_base_config_class_init,
+        (GClassInitFunc) gimp_gegl_config_class_init,
         NULL,           /* class_finalize */
         NULL,           /* class_data     */
-        sizeof (GimpBaseConfig),
+        sizeof (GimpGeglConfig),
         0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_base_config_init,
+        (GInstanceInitFunc) gimp_gegl_config_init,
       };
 
       config_type = g_type_register_static (G_TYPE_OBJECT,
-                                            "GimpBaseConfig",
+                                            "GimpGeglConfig",
                                             &config_info, 0);
     }
 
@@ -102,7 +102,7 @@ gimp_base_config_get_type (void)
 }
 
 static void
-gimp_base_config_class_init (GimpBaseConfigClass *klass)
+gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   gint          num_processors;
@@ -110,9 +110,9 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize     = gimp_base_config_finalize;
-  object_class->set_property = gimp_base_config_set_property;
-  object_class->get_property = gimp_base_config_get_property;
+  object_class->finalize     = gimp_gegl_config_finalize;
+  object_class->set_property = gimp_gegl_config_set_property;
+  object_class->get_property = gimp_gegl_config_get_property;
 
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_TEMP_PATH,
                                  "temp-path", TEMP_PATH_BLURB,
@@ -162,19 +162,19 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
 }
 
 static void
-gimp_base_config_init (GimpBaseConfig      *config,
-                       GimpBaseConfigClass *klass)
+gimp_gegl_config_init (GimpGeglConfig      *config,
+                       GimpGeglConfigClass *klass)
 {
   gimp_debug_add_instance (G_OBJECT (config), G_OBJECT_CLASS (klass));
 }
 
 static void
-gimp_base_config_finalize (GObject *object)
+gimp_gegl_config_finalize (GObject *object)
 {
-  GimpBaseConfig *base_config = GIMP_BASE_CONFIG (object);
+  GimpGeglConfig *gegl_config = GIMP_GEGL_CONFIG (object);
 
-  g_free (base_config->temp_path);
-  g_free (base_config->swap_path);
+  g_free (gegl_config->temp_path);
+  g_free (gegl_config->swap_path);
 
   gimp_debug_remove_instance (object);
 
@@ -182,28 +182,28 @@ gimp_base_config_finalize (GObject *object)
 }
 
 static void
-gimp_base_config_set_property (GObject      *object,
+gimp_gegl_config_set_property (GObject      *object,
                                guint         property_id,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpBaseConfig *base_config = GIMP_BASE_CONFIG (object);
+  GimpGeglConfig *gegl_config = GIMP_GEGL_CONFIG (object);
 
   switch (property_id)
     {
     case PROP_TEMP_PATH:
-      g_free (base_config->temp_path);
-      base_config->temp_path = g_value_dup_string (value);
+      g_free (gegl_config->temp_path);
+      gegl_config->temp_path = g_value_dup_string (value);
       break;
     case PROP_SWAP_PATH:
-      g_free (base_config->swap_path);
-      base_config->swap_path = g_value_dup_string (value);
+      g_free (gegl_config->swap_path);
+      gegl_config->swap_path = g_value_dup_string (value);
       break;
     case PROP_NUM_PROCESSORS:
-      base_config->num_processors = g_value_get_uint (value);
+      gegl_config->num_processors = g_value_get_uint (value);
       break;
     case PROP_TILE_CACHE_SIZE:
-      base_config->tile_cache_size = g_value_get_uint64 (value);
+      gegl_config->tile_cache_size = g_value_get_uint64 (value);
       break;
 
     case PROP_STINGY_MEMORY_USE:
@@ -217,26 +217,26 @@ gimp_base_config_set_property (GObject      *object,
 }
 
 static void
-gimp_base_config_get_property (GObject    *object,
+gimp_gegl_config_get_property (GObject    *object,
                                guint       property_id,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpBaseConfig *base_config = GIMP_BASE_CONFIG (object);
+  GimpGeglConfig *gegl_config = GIMP_GEGL_CONFIG (object);
 
   switch (property_id)
     {
     case PROP_TEMP_PATH:
-      g_value_set_string (value, base_config->temp_path);
+      g_value_set_string (value, gegl_config->temp_path);
       break;
     case PROP_SWAP_PATH:
-      g_value_set_string (value, base_config->swap_path);
+      g_value_set_string (value, gegl_config->swap_path);
       break;
     case PROP_NUM_PROCESSORS:
-      g_value_set_uint (value, base_config->num_processors);
+      g_value_set_uint (value, gegl_config->num_processors);
       break;
     case PROP_TILE_CACHE_SIZE:
-      g_value_set_uint64 (value, base_config->tile_cache_size);
+      g_value_set_uint64 (value, gegl_config->tile_cache_size);
       break;
 
     case PROP_STINGY_MEMORY_USE:

@@ -131,7 +131,7 @@ static void gimp_core_config_color_management_notify (GObject      *object,
                                                       gpointer      data);
 
 
-G_DEFINE_TYPE (GimpCoreConfig, gimp_core_config, GIMP_TYPE_BASE_CONFIG)
+G_DEFINE_TYPE (GimpCoreConfig, gimp_core_config, GIMP_TYPE_GEGL_CONFIG)
 
 #define parent_class gimp_core_config_parent_class
 
