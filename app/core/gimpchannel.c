@@ -1762,7 +1762,7 @@ gimp_channel_set_color (GimpChannel   *channel,
 
       channel->color = *color;
 
-      if (channel->color_node)
+      if (gimp_item_peek_node (GIMP_ITEM (channel)))
         {
           GeglColor *gegl_color = gimp_gegl_color_new (&channel->color);
 
@@ -1821,7 +1821,7 @@ gimp_channel_set_opacity (GimpChannel *channel,
 
       channel->color.a = opacity;
 
-      if (channel->color_node)
+      if (gimp_item_peek_node (GIMP_ITEM (channel)))
         {
           GeglColor *gegl_color = gimp_gegl_color_new (&channel->color);
 

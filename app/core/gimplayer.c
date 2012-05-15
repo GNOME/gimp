@@ -1251,7 +1251,7 @@ gimp_layer_add_mask (GimpLayer      *layer,
 
   gimp_layer_mask_set_layer (mask, layer);
 
-  if (layer->opacity_node)
+  if (gimp_item_peek_node (GIMP_ITEM (layer)))
     {
       GeglNode *mask;
 
@@ -1584,7 +1584,7 @@ gimp_layer_apply_mask (GimpLayer         *layer,
   if (push_undo)
     gimp_image_undo_group_end (image);
 
-  if (layer->opacity_node)
+  if (gimp_item_peek_node (item))
     {
       if (layer->show_mask)
         {
@@ -1640,7 +1640,8 @@ gimp_layer_set_apply_mask (GimpLayer *layer,
 
       layer->apply_mask = apply ? TRUE : FALSE;
 
-      if (layer->opacity_node && ! gimp_layer_get_show_mask (layer))
+      if (gimp_item_peek_node (GIMP_ITEM (layer)) &&
+          ! gimp_layer_get_show_mask (layer))
         {
           GeglNode *mask;
 
@@ -1718,7 +1719,7 @@ gimp_layer_set_show_mask (GimpLayer *layer,
 
       layer->show_mask = show ? TRUE : FALSE;
 
-      if (layer->opacity_node)
+      if (gimp_item_peek_node (GIMP_ITEM (layer)))
         {
           GeglNode *mask;
 
@@ -1923,10 +1924,12 @@ gimp_layer_set_opacity (GimpLayer *layer,
       g_signal_emit (layer, layer_signals[OPACITY_CHANGED], 0);
       g_object_notify (G_OBJECT (layer), "opacity");
 
-      if (layer->opacity_node)
-        gegl_node_set (layer->opacity_node,
-                       "value", layer->opacity,
-                       NULL);
+      if (gimp_item_peek_node (GIMP_ITEM (layer)))
+        {
+          gegl_node_set (layer->opacity_node,
+                         "value", layer->opacity,
+                         NULL);
+        }
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
                             0, 0,
@@ -1964,7 +1967,7 @@ gimp_layer_set_mode (GimpLayer            *layer,
       g_signal_emit (layer, layer_signals[MODE_CHANGED], 0);
       g_object_notify (G_OBJECT (layer), "mode");
 
-      if (layer->opacity_node)
+      if (gimp_item_peek_node (GIMP_ITEM (layer)))
         {
           GeglNode *mode_node;
 
