@@ -25,9 +25,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-16 00:05+0200\n"
-"PO-Revision-Date: 2008-11-01 11:54+0100\n"
-"Last-Translator: Filip Vervloesem <filip.vervloesem@member.fsf.org>\n"
+"POT-Creation-Date: 2012-05-16 00:30+0200\n"
+"PO-Revision-Date: 2012-05-16 00:37+0200\n"
+"Last-Translator: Wouter Bolsterlee <wbolster@gnome.org>\n"
 "Language-Team: Dutch <nl@vrijschrift.org>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -666,7 +666,7 @@ msgstr "_Nieuw kanaal"
 #: ../app/actions/channels-actions.c:61
 msgctxt "channels-action"
 msgid "Create a new channel with last used values"
-msgstr "Een nieuw kanaal aanmaken met laatstgebruikte waardes"
+msgstr "Een nieuw kanaal aanmaken met laatstgebruikte waarden"
 
 #: ../app/actions/channels-actions.c:66
 msgctxt "channels-action"
@@ -1743,7 +1743,7 @@ msgstr "_Zichtbaar"
 #: ../app/actions/drawable-actions.c:80
 msgctxt "drawable-action"
 msgid "Toggle visibility"
-msgstr "Zichtbaarheid in- en uitschakelen"
+msgstr "Zichtbaarheid aan- en uitschakelen"
 
 #: ../app/actions/drawable-actions.c:86
 msgctxt "drawable-action"
@@ -2156,7 +2156,7 @@ msgstr "%s op_nieuw uitvoeren"
 #: ../app/actions/edit-actions.c:326
 #, c-format
 msgid "_Fade %s..."
-msgstr "%s _uitvloeien..."
+msgstr "%s _uitvloeien…"
 
 #: ../app/actions/edit-actions.c:338
 msgid "_Undo"
@@ -2168,7 +2168,7 @@ msgstr "Op_nieuw uitvoeren"
 
 #: ../app/actions/edit-actions.c:340
 msgid "_Fade..."
-msgstr "_Uitvloeien..."
+msgstr "_Uitvloeien…"
 
 #: ../app/actions/edit-commands.c:137
 msgid "Clear Undo History"
@@ -2344,12 +2344,12 @@ msgstr "Een afbeeldingsbestand van een bepaalde locatie openen"
 #: ../app/actions/file-actions.c:94
 msgctxt "file-action"
 msgid "Create Template..."
-msgstr "Nieuw sjabloon aanmaken…"
+msgstr "Nieuwe sjabloon aanmaken…"
 
 #: ../app/actions/file-actions.c:95
 msgctxt "file-action"
 msgid "Create a new template from this image"
-msgstr "Een nieuw sjabloon maken van deze afbeelding"
+msgstr "Een nieuwe sjabloon maken van deze afbeelding"
 
 #: ../app/actions/file-actions.c:100
 msgctxt "file-action"
@@ -2545,21 +2545,19 @@ msgid "Color T_emperature..."
 msgstr "Kleur_temperatuur…"
 
 #: ../app/actions/filters-actions.c:44
-#, fuzzy
 msgctxt "filters-action"
 msgid "Change the color temperature of the image"
-msgstr "De afmetingen van de afbeeldingsinhoud aanpassen"
+msgstr "De kleurtemperatuur van de afbeelding aanpassen"
 
 #: ../app/actions/filters-actions.c:49
-#, fuzzy
 msgctxt "filters-action"
 msgid "Color to _Alpha..."
-msgstr "Kleur_balans..."
+msgstr "Kleur naar alfa…"
 
 #: ../app/actions/filters-actions.c:50
 msgctxt "filters-action"
 msgid "Convert a specified color to transparency"
-msgstr ""
+msgstr "Een opgegeven kleur naar transparantie converteren"
 
 #: ../app/actions/filters-actions.c:55
 msgctxt "filters-action"
@@ -2569,23 +2567,22 @@ msgstr ""
 #: ../app/actions/filters-actions.c:56
 msgctxt "filters-action"
 msgid "Edge detection with control of edge thickness"
-msgstr ""
+msgstr "Randdetectie met controle over de randdikte"
 
 #: ../app/actions/filters-actions.c:61
 msgctxt "filters-action"
 msgid "_Gaussian Blur..."
-msgstr ""
+msgstr "_Gaussische vervaging…"
 
 #: ../app/actions/filters-actions.c:62
 msgctxt "filters-action"
 msgid "Apply a gaussian blur"
-msgstr ""
+msgstr "Een Gaussische vervaging uitvoeren"
 
 #: ../app/actions/filters-actions.c:67
-#, fuzzy
 msgctxt "filters-action"
 msgid "_Laplace"
-msgstr "_Vervangen"
+msgstr "_Laplace"
 
 #: ../app/actions/filters-actions.c:68
 msgctxt "filters-action"
@@ -2593,43 +2590,39 @@ msgid "High-resolution edge detection"
 msgstr ""
 
 #: ../app/actions/filters-actions.c:73
-#, fuzzy
 msgctxt "filters-action"
 msgid "Lens Distortion..."
-msgstr "_Locatie openen..."
+msgstr "Lensvervorming…"
 
 #: ../app/actions/filters-actions.c:74
 msgctxt "filters-action"
 msgid "Corrects lens distortion"
-msgstr ""
+msgstr "Lensvervorming corrigeren"
 
 #: ../app/actions/filters-actions.c:79
-#, fuzzy
 msgctxt "filters-action"
 msgid "_Pixelize..."
-msgstr "_Posterkleuren..."
+msgstr "_Pixeliseren…"
 
 #: ../app/actions/filters-actions.c:80
 msgctxt "filters-action"
 msgid "Simplify image into an array of solid-colored squares"
-msgstr ""
+msgstr "Afbeelding versimpelen naar een reeks effen gekleurde vierkanten"
 
 #: ../app/actions/filters-actions.c:85
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
-msgstr ""
+msgstr "P_oolcoördinaten…"
 
 #: ../app/actions/filters-actions.c:86
-#, fuzzy
 msgctxt "filters-action"
 msgid "Convert image to or from polar coordinates"
-msgstr "Afbeelding naar Grijswaarden omzetten"
+msgstr "Afbeelding van of naar poolcoördinaten omzetten"
 
 #: ../app/actions/filters-actions.c:91
-#, fuzzy
 msgctxt "filters-action"
 msgid "_Ripple..."
-msgstr "_Posterkleuren..."
+msgstr ""
 
 #: ../app/actions/filters-actions.c:92
 msgctxt "filters-action"
@@ -2637,10 +2630,9 @@ msgid "Displace pixels in a ripple pattern"
 msgstr ""
 
 #: ../app/actions/filters-actions.c:97
-#, fuzzy
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
-msgstr "Patroon be_werken..."
+msgstr ""
 
 #: ../app/actions/filters-actions.c:98
 msgctxt "filters-action"
@@ -2658,16 +2650,14 @@ msgid "Specialized direction-dependent edge-detection"
 msgstr ""
 
 #: ../app/actions/filters-actions.c:109
-#, fuzzy
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
-msgstr "_Drempelwaarde..."
+msgstr "_Drempelwaarde alfa…"
 
 #: ../app/actions/filters-actions.c:110
-#, fuzzy
 msgctxt "filters-action"
 msgid "Make transparency all-or-nothing"
-msgstr "_Transparant maken"
+msgstr "Transparantie alles-of-niets maken"
 
 #: ../app/actions/filters-actions.c:115
 msgctxt "filters-action"
@@ -2680,13 +2670,11 @@ msgid "The most widely used method for sharpening an image"
 msgstr ""
 
 #: ../app/actions/fonts-actions.c:44
-#, fuzzy
 msgctxt "fonts-action"
 msgid "Fonts Menu"
-msgstr "Lettertypesmenu"
+msgstr "Lettertypemenu"
 
 #: ../app/actions/fonts-actions.c:48
-#, fuzzy
 msgctxt "fonts-action"
 msgid "_Rescan Font List"
 msgstr "_Lettertypelijst opnieuw inlezen"
@@ -2694,212 +2682,179 @@ msgstr "_Lettertypelijst opnieuw inlezen"
 #: ../app/actions/fonts-actions.c:49
 msgctxt "fonts-action"
 msgid "Rescan the installed fonts"
-msgstr ""
+msgstr "Geïnstalleerde lettertypen opnieuw inlezen"
 
 #: ../app/actions/gradient-editor-actions.c:46
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Gradient Editor Menu"
 msgstr "Menu Kleurverloopbewerker"
 
 #: ../app/actions/gradient-editor-actions.c:50
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Left Color Type"
 msgstr "Linkerkleurtype"
 
 #: ../app/actions/gradient-editor-actions.c:52
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Load Left Color From"
 msgstr "_Linkerkleur laden uit"
 
 #: ../app/actions/gradient-editor-actions.c:54
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Save Left Color To"
 msgstr "Linkerkleur op_slaan naar"
 
 #: ../app/actions/gradient-editor-actions.c:57
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Right Color Type"
 msgstr "Rechterkleurtype"
 
 #: ../app/actions/gradient-editor-actions.c:59
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Load Right Color Fr_om"
 msgstr "_Rechterkleur laden uit"
 
 #: ../app/actions/gradient-editor-actions.c:61
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Sa_ve Right Color To"
 msgstr "Rechterkleur opsl_aan naar"
 
 #: ../app/actions/gradient-editor-actions.c:67
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "L_eft Endpoint's Color..."
-msgstr "_Kleur van linkereindpunt..."
+msgstr "_Kleur van linkereindpunt…"
 
 #: ../app/actions/gradient-editor-actions.c:72
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "R_ight Endpoint's Color..."
-msgstr "Kl_eur van rechtereindpunt..."
+msgstr "Kl_eur van rechtereindpunt…"
 
 #: ../app/actions/gradient-editor-actions.c:112
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Ble_nd Endpoints' Colors"
 msgstr "Kleuren van eindpunten _mengen"
 
 #: ../app/actions/gradient-editor-actions.c:117
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Blend Endpoints' Opacit_y"
 msgstr "_Dekking van eindpunten mengen"
 
 #: ../app/actions/gradient-editor-actions.c:125
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Edit Active Gradient"
-msgstr "Actieve kleurverloop bewerken"
+msgstr "Actief kleurverloop bewerken"
 
 #: ../app/actions/gradient-editor-actions.c:156
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Left Neighbor's Right Endpoint"
 msgstr "_Rechtereindpunt van linkerbuur"
 
 #: ../app/actions/gradient-editor-actions.c:161
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Right Endpoint"
 msgstr "_Rechter eindpunt"
 
 #: ../app/actions/gradient-editor-actions.c:166
 #: ../app/actions/gradient-editor-actions.c:214
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Foreground Color"
 msgstr "_Voorgrondkleur"
 
 #: ../app/actions/gradient-editor-actions.c:171
 #: ../app/actions/gradient-editor-actions.c:219
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Background Color"
 msgstr "_Achtergrondkleur"
 
 #: ../app/actions/gradient-editor-actions.c:204
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Right Neighbor's Left Endpoint"
 msgstr "_Linkereindpunt van rechterbuur"
 
 #: ../app/actions/gradient-editor-actions.c:209
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Left Endpoint"
 msgstr "_Linker eindpunt"
 
 #: ../app/actions/gradient-editor-actions.c:258
 #: ../app/actions/gradient-editor-actions.c:288
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "_Fixed"
 msgstr "_Vast"
 
 #: ../app/actions/gradient-editor-actions.c:263
 #: ../app/actions/gradient-editor-actions.c:293
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "F_oreground Color"
 msgstr "V_oorgrondkleur"
 
 #: ../app/actions/gradient-editor-actions.c:269
 #: ../app/actions/gradient-editor-actions.c:299
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "Fo_reground Color (Transparent)"
 msgstr "Voo_rgrondkleur (transparant)"
 
 #: ../app/actions/gradient-editor-actions.c:274
 #: ../app/actions/gradient-editor-actions.c:304
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "_Background Color"
 msgstr "_Achtergrondkleur"
 
 #: ../app/actions/gradient-editor-actions.c:280
 #: ../app/actions/gradient-editor-actions.c:310
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "B_ackground Color (Transparent)"
 msgstr "A_chtergrondkleur (transparant)"
 
 #: ../app/actions/gradient-editor-actions.c:318
-#, fuzzy
 msgctxt "gradient-editor-blending"
 msgid "_Linear"
 msgstr "_Lineair"
 
 # Krom/Rond
 #: ../app/actions/gradient-editor-actions.c:323
-#, fuzzy
 msgctxt "gradient-editor-blending"
 msgid "_Curved"
 msgstr "_Gebogen"
 
 #: ../app/actions/gradient-editor-actions.c:328
-#, fuzzy
 msgctxt "gradient-editor-blending"
 msgid "_Sinusoidal"
 msgstr "_Sinusvormig"
 
 #: ../app/actions/gradient-editor-actions.c:333
-#, fuzzy
 msgctxt "gradient-editor-blending"
 msgid "Spherical (i_ncreasing)"
-msgstr "Sferisch (_toenemend)"
+msgstr "Cirkelvormig (_toenemend)"
 
 #: ../app/actions/gradient-editor-actions.c:338
-#, fuzzy
 msgctxt "gradient-editor-blending"
 msgid "Spherical (_decreasing)"
-msgstr "Sferisch (_afnemend)"
+msgstr "Cirkelvormig (_afnemend)"
 
 # wisselend/gevarieerd/
 #: ../app/actions/gradient-editor-actions.c:343
-#, fuzzy
 msgctxt "gradient-editor-blending"
 msgid "(Varies)"
 msgstr "(Varieert)"
 
 #: ../app/actions/gradient-editor-actions.c:351
-#, fuzzy
 msgctxt "gradient-editor-coloring"
 msgid "_RGB"
 msgstr "_RGB"
 
 #: ../app/actions/gradient-editor-actions.c:356
-#, fuzzy
 msgctxt "gradient-editor-coloring"
 msgid "HSV (_counter-clockwise hue)"
-msgstr "TVH (_tint tegen de klok in)"
+msgstr "HSV (_tint tegen de klok in)"
 
 #: ../app/actions/gradient-editor-actions.c:361
-#, fuzzy
 msgctxt "gradient-editor-coloring"
 msgid "HSV (clockwise _hue)"
-msgstr "TVH (t_int met de klok mee)"
+msgstr "HSV (t_int met de klok mee)"
 
 # wisselend/gevarieerd/
 #: ../app/actions/gradient-editor-actions.c:366
-#, fuzzy
 msgctxt "gradient-editor-coloring"
 msgid "(Varies)"
 msgstr "(Varieert)"
@@ -2947,7 +2902,7 @@ msgstr "Segment spiegelen"
 
 #: ../app/actions/gradient-editor-actions.c:784
 msgid "_Replicate Segment..."
-msgstr "Segment kopiëren..."
+msgstr "Segment kopiëren…"
 
 #: ../app/actions/gradient-editor-actions.c:786
 msgid "Split Segment at _Midpoint"
@@ -2955,7 +2910,7 @@ msgstr "Segment op middelpunt splitsen"
 
 #: ../app/actions/gradient-editor-actions.c:788
 msgid "Split Segment _Uniformly..."
-msgstr "Segment gelijkmatig splitsen..."
+msgstr "Segment gelijkmatig splitsen…"
 
 #: ../app/actions/gradient-editor-actions.c:790
 msgid "_Delete Segment"
@@ -2983,7 +2938,7 @@ msgstr "Selectie spiegelen"
 
 #: ../app/actions/gradient-editor-actions.c:806
 msgid "_Replicate Selection..."
-msgstr "Selectie kopiëren..."
+msgstr "Selectie kopiëren…"
 
 #: ../app/actions/gradient-editor-actions.c:808
 msgid "Split Segments at _Midpoints"
@@ -2991,7 +2946,7 @@ msgstr "Segmenten op middelpunten splitsen"
 
 #: ../app/actions/gradient-editor-actions.c:810
 msgid "Split Segments _Uniformly..."
-msgstr "Segmenten gelijkmatig splitsen..."
+msgstr "Segmenten gelijkmatig splitsen…"
 
 #: ../app/actions/gradient-editor-actions.c:812
 msgid "_Delete Selection"
@@ -3095,91 +3050,76 @@ msgstr ""
 "geselecteerde segmenten moeten worden opgesplitst."
 
 #: ../app/actions/gradients-actions.c:44
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Gradients Menu"
 msgstr "Menu Kleurverlopen"
 
 #: ../app/actions/gradients-actions.c:48
-#, fuzzy
 msgctxt "gradients-action"
 msgid "_New Gradient"
 msgstr "_Nieuw kleurverloop"
 
 #: ../app/actions/gradients-actions.c:49
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Create a new gradient"
-msgstr "Een nieuwe afbeelding aanmaken"
+msgstr "Een nieuw kleurverloop maken"
 
 #: ../app/actions/gradients-actions.c:54
-#, fuzzy
 msgctxt "gradients-action"
 msgid "D_uplicate Gradient"
 msgstr "Kleurverloop d_upliceren"
 
 #: ../app/actions/gradients-actions.c:55
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Duplicate this gradient"
 msgstr "Kleurverloop dupliceren"
 
 #: ../app/actions/gradients-actions.c:60
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Copy Gradient _Location"
 msgstr "_Locatie kleurverloop kopiëren"
 
 #: ../app/actions/gradients-actions.c:61
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Copy gradient file location to clipboard"
 msgstr "Locatie van het kleurverloopbestand kopiëren naar klembord"
 
 #: ../app/actions/gradients-actions.c:66
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Save as _POV-Ray..."
-msgstr "Als _POV-Ray opslaan..."
+msgstr "Als _POV-Ray opslaan…"
 
 #: ../app/actions/gradients-actions.c:67
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Save gradient as POV-Ray"
 msgstr "Kleurverloop opslaan als POV-Ray"
 
 #: ../app/actions/gradients-actions.c:72
-#, fuzzy
 msgctxt "gradients-action"
 msgid "_Delete Gradient"
-msgstr "Kleur_verloop verwijderen... "
+msgstr "Kleur_verloop verwijderen"
 
 #: ../app/actions/gradients-actions.c:73
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Delete this gradient"
 msgstr "Kleurverloop verwijderen"
 
 #: ../app/actions/gradients-actions.c:78
-#, fuzzy
 msgctxt "gradients-action"
 msgid "_Refresh Gradients"
 msgstr "Kleurverlopen ve_rnieuwen"
 
 #: ../app/actions/gradients-actions.c:79
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Refresh gradients"
 msgstr "Kleurverlopen vernieuwen"
 
 #: ../app/actions/gradients-actions.c:87
-#, fuzzy
 msgctxt "gradients-action"
 msgid "_Edit Gradient..."
-msgstr "Kleurverloop be_werken..."
+msgstr "Kleurverloop be_werken…"
 
 #: ../app/actions/gradients-actions.c:88
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Edit gradient"
 msgstr "Kleurverloop bewerken"
@@ -3190,272 +3130,227 @@ msgid "Save '%s' as POV-Ray"
 msgstr "'%s' opslaan als POV-Ray"
 
 #: ../app/actions/help-actions.c:37 ../app/actions/help-actions.c:40
-#, fuzzy
 msgctxt "help-action"
 msgid "_Help"
 msgstr "_Hulp"
 
 #: ../app/actions/help-actions.c:41
-#, fuzzy
 msgctxt "help-action"
 msgid "Open the GIMP user manual"
-msgstr "De GIMP gebruikershandleiding openen"
+msgstr "De GIMP-gebruikershandleiding openen"
 
 #: ../app/actions/help-actions.c:46
-#, fuzzy
 msgctxt "help-action"
 msgid "_Context Help"
 msgstr "_Contexthulp"
 
 #: ../app/actions/help-actions.c:47
-#, fuzzy
 msgctxt "help-action"
 msgid "Show the help for a specific user interface item"
 msgstr "Hulp tonen voor een bepaalde element van de gebruikersinterface"
 
 #: ../app/actions/image-actions.c:48 ../app/actions/image-actions.c:52
-#, fuzzy
 msgctxt "image-action"
 msgid "Image Menu"
 msgstr "Menu Afbeelding"
 
 #: ../app/actions/image-actions.c:55
-#, fuzzy
 msgctxt "image-action"
 msgid "_Image"
 msgstr "_Afbeelding"
 
 #: ../app/actions/image-actions.c:56
-#, fuzzy
 msgctxt "image-action"
 msgid "_Mode"
 msgstr "_Modus"
 
 #: ../app/actions/image-actions.c:57
-#, fuzzy
 msgctxt "image-action"
 msgid "_Precision"
-msgstr "Vo_rige tip"
+msgstr "_Precisie"
 
 #: ../app/actions/image-actions.c:58
-#, fuzzy
 msgctxt "image-action"
 msgid "_Transform"
 msgstr "_Transformeren"
 
 #: ../app/actions/image-actions.c:59
-#, fuzzy
 msgctxt "image-action"
 msgid "_Guides"
 msgstr "_Hulplijnen"
 
 #: ../app/actions/image-actions.c:61
-#, fuzzy
 msgctxt "image-action"
 msgid "_Colors"
 msgstr "_Kleuren"
 
 #: ../app/actions/image-actions.c:62
-#, fuzzy
 msgctxt "image-action"
 msgid "I_nfo"
 msgstr "I_nfo"
 
 #: ../app/actions/image-actions.c:63
-#, fuzzy
 msgctxt "image-action"
 msgid "_Auto"
 msgstr "_Automatisch"
 
 #: ../app/actions/image-actions.c:64
-#, fuzzy
 msgctxt "image-action"
 msgid "_Map"
-msgstr "Pro_jecties"
+msgstr ""
 
 # frame for Comment
 #: ../app/actions/image-actions.c:65
-#, fuzzy
 msgctxt "image-action"
 msgid "C_omponents"
 msgstr "_Componenten"
 
 #: ../app/actions/image-actions.c:68
-#, fuzzy
 msgctxt "image-action"
 msgid "_New..."
-msgstr "_Nieuw..."
+msgstr "_Nieuw…"
 
 #: ../app/actions/image-actions.c:69
-#, fuzzy
 msgctxt "image-action"
 msgid "Create a new image"
-msgstr "Een nieuwe afbeelding aanmaken"
+msgstr "Een nieuwe afbeelding maken"
 
 #: ../app/actions/image-actions.c:74
-#, fuzzy
 msgctxt "image-action"
 msgid "Can_vas Size..."
-msgstr "Can_vasgrootte"
+msgstr "Can_vasgrootte…"
 
 #: ../app/actions/image-actions.c:75
-#, fuzzy
 msgctxt "image-action"
 msgid "Adjust the image dimensions"
-msgstr "De afbeeldingsafmetingen aanpassen"
+msgstr "Afbeeldingsafmetingen aanpassen"
 
 #: ../app/actions/image-actions.c:80
-#, fuzzy
 msgctxt "image-action"
 msgid "Fit Canvas to L_ayers"
 msgstr "Canvas laten passen op _lagen"
 
 #: ../app/actions/image-actions.c:81
-#, fuzzy
 msgctxt "image-action"
 msgid "Resize the image to enclose all layers"
 msgstr "De afbeelding schalen om alle lagen te omvatten"
 
 #: ../app/actions/image-actions.c:86
-#, fuzzy
 msgctxt "image-action"
 msgid "F_it Canvas to Selection"
 msgstr "Canvas laten passen op _selectie"
 
 #: ../app/actions/image-actions.c:87
-#, fuzzy
 msgctxt "image-action"
 msgid "Resize the image to the extents of the selection"
 msgstr "De afbeelding schalen tot de randen van de selectie"
 
 #: ../app/actions/image-actions.c:92
-#, fuzzy
 msgctxt "image-action"
 msgid "_Print Size..."
-msgstr "A_fdrukgrootte..."
+msgstr "A_fdrukgrootte…"
 
 #: ../app/actions/image-actions.c:93
-#, fuzzy
 msgctxt "image-action"
 msgid "Adjust the print resolution"
 msgstr "De afdrukresolutie aanpassen"
 
 #: ../app/actions/image-actions.c:98
-#, fuzzy
 msgctxt "image-action"
 msgid "_Scale Image..."
-msgstr "Afbeelding _schalen..."
+msgstr "Afbeelding _schalen…"
 
 #: ../app/actions/image-actions.c:99
-#, fuzzy
 msgctxt "image-action"
 msgid "Change the size of the image content"
 msgstr "De afmetingen van de afbeeldingsinhoud aanpassen"
 
 #: ../app/actions/image-actions.c:104
-#, fuzzy
 msgctxt "image-action"
 msgid "_Crop to Selection"
 msgstr "_Bijsnijden tot selectie"
 
 #: ../app/actions/image-actions.c:105
-#, fuzzy
 msgctxt "image-action"
 msgid "Crop the image to the extents of the selection"
 msgstr "De afbeelding bijsnijden tot de randen van de selectie"
 
 #: ../app/actions/image-actions.c:110
-#, fuzzy
 msgctxt "image-action"
 msgid "_Duplicate"
 msgstr "_Dupliceren"
 
 #: ../app/actions/image-actions.c:111
-#, fuzzy
 msgctxt "image-action"
 msgid "Create a duplicate of this image"
 msgstr "Deze afbeelding dupliceren"
 
 #: ../app/actions/image-actions.c:116
-#, fuzzy
 msgctxt "image-action"
 msgid "Merge Visible _Layers..."
-msgstr "_Zichtbare lagen samenvoegen..."
+msgstr "_Zichtbare lagen samenvoegen…"
 
 #: ../app/actions/image-actions.c:117
-#, fuzzy
 msgctxt "image-action"
 msgid "Merge all visible layers into one layer"
 msgstr "Alle zichtbare lagen samenvoegen tot één laag"
 
 #: ../app/actions/image-actions.c:122
-#, fuzzy
 msgctxt "image-action"
 msgid "_Flatten Image"
 msgstr "_Alle lagen samenvoegen"
 
 #: ../app/actions/image-actions.c:123
-#, fuzzy
 msgctxt "image-action"
 msgid "Merge all layers into one and remove transparency"
 msgstr "Alle lagen samenvoegen tot één laag en transparantie verwijderen"
 
 #: ../app/actions/image-actions.c:128
-#, fuzzy
 msgctxt "image-action"
 msgid "Configure G_rid..."
-msgstr "_Raster instellen..."
+msgstr "_Raster instellen…"
 
 #: ../app/actions/image-actions.c:129
-#, fuzzy
 msgctxt "image-action"
 msgid "Configure the grid for this image"
 msgstr "Het raster voor deze afbeelding instellen"
 
 #: ../app/actions/image-actions.c:134
-#, fuzzy
 msgctxt "image-action"
 msgid "Image Pr_operties"
 msgstr "Afbeeldings_eigenschappen"
 
 #: ../app/actions/image-actions.c:135
-#, fuzzy
 msgctxt "image-action"
 msgid "Display information about this image"
 msgstr "Informatie over deze afbeelding tonen"
 
 #: ../app/actions/image-actions.c:143
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "_RGB"
 msgstr "_RGB"
 
 #: ../app/actions/image-actions.c:144
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to the RGB colorspace"
 msgstr "Afbeelding naar RGB-kleurenruimte omzetten"
 
 #: ../app/actions/image-actions.c:148
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "_Grayscale"
 msgstr "_Grijswaarden"
 
 #: ../app/actions/image-actions.c:149
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to grayscale"
 msgstr "Afbeelding naar grijswaarden omzetten"
 
 #: ../app/actions/image-actions.c:153
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "_Indexed..."
-msgstr "Geï_ndexeerd"
+msgstr "Geï_ndexeerd…"
 
 #: ../app/actions/image-actions.c:154
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to indexed colors"
 msgstr "Afbeelding naar geïndexeerde kleuren omzetten"
@@ -3463,114 +3358,99 @@ msgstr "Afbeelding naar geïndexeerde kleuren omzetten"
 #: ../app/actions/image-actions.c:161
 msgctxt "image-convert-action"
 msgid "8 bit integer"
-msgstr ""
+msgstr "8 bit integer"
 
 #: ../app/actions/image-actions.c:162
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to 8 bit integer"
-msgstr "Afbeelding naar geïndexeerde kleuren omzetten"
+msgstr "Afbeelding naar 8 bit integer omzetten"
 
 #: ../app/actions/image-actions.c:166
 msgctxt "image-convert-action"
 msgid "16 bit integer"
-msgstr ""
+msgstr "16 bit integer"
 
 #: ../app/actions/image-actions.c:167
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit integer"
-msgstr "Afbeelding naar geïndexeerde kleuren omzetten"
+msgstr "Afbeelding naar 16 bit integer omzetten"
 
 #: ../app/actions/image-actions.c:171
 msgctxt "image-convert-action"
 msgid "32 bit integer"
-msgstr ""
+msgstr "32 bit integer"
 
 #: ../app/actions/image-actions.c:172
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit integer"
-msgstr "Afbeelding naar geïndexeerde kleuren omzetten"
+msgstr "Afbeelding naar 32 bit integer omzetten"
 
 #: ../app/actions/image-actions.c:176
 msgctxt "image-convert-action"
 msgid "16 bit floating point"
-msgstr ""
+msgstr "16 bit floating point"
 
 #: ../app/actions/image-actions.c:177
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit floating point"
-msgstr "Afbeelding naar geïndexeerde kleuren omzetten"
+msgstr "Afbeelding naar 16 bit floating point omzetten"
 
 #: ../app/actions/image-actions.c:181
 msgctxt "image-convert-action"
 msgid "32 bit floating point"
-msgstr ""
+msgstr "32 bit floating point"
 
 #: ../app/actions/image-actions.c:182
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit floating point"
-msgstr "Afbeelding naar geïndexeerde kleuren omzetten"
+msgstr "Afbeelding naar 32 bit floating point omzetten"
 
 #: ../app/actions/image-actions.c:189
-#, fuzzy
 msgctxt "image-action"
 msgid "Flip _Horizontally"
 msgstr "_Horizontaal spiegelen"
 
 #: ../app/actions/image-actions.c:190
-#, fuzzy
 msgctxt "image-action"
 msgid "Flip image horizontally"
 msgstr "Afbeelding horizontaal spiegelen"
 
 #: ../app/actions/image-actions.c:195
-#, fuzzy
 msgctxt "image-action"
 msgid "Flip _Vertically"
 msgstr "_Verticaal spiegelen"
 
 #: ../app/actions/image-actions.c:196
-#, fuzzy
 msgctxt "image-action"
 msgid "Flip image vertically"
 msgstr "Afbeelding verticaal spiegelen"
 
 #: ../app/actions/image-actions.c:204
-#, fuzzy
 msgctxt "image-action"
 msgid "Rotate 90° _clockwise"
 msgstr "90° met de _klok mee draaien"
 
 #: ../app/actions/image-actions.c:205
-#, fuzzy
 msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the right"
 msgstr "De afbeelding 90° naar rechts draaien"
 
 #: ../app/actions/image-actions.c:210
-#, fuzzy
 msgctxt "image-action"
 msgid "Rotate _180°"
 msgstr "_180° draaien"
 
 #: ../app/actions/image-actions.c:211
-#, fuzzy
 msgctxt "image-action"
 msgid "Turn the image upside-down"
-msgstr "De afbeelding ondersteboven keren"
+msgstr "De afbeelding ondersteboven draaien"
 
 #: ../app/actions/image-actions.c:216
-#, fuzzy
 msgctxt "image-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "90° _tegen de klok in draaien"
 
 #: ../app/actions/image-actions.c:217
-#, fuzzy
 msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the left"
 msgstr "De afbeelding 90 graden naar links draaien"
@@ -3630,101 +3510,85 @@ msgid "Scaling"
 msgstr "Schalen"
 
 #: ../app/actions/images-actions.c:43
-#, fuzzy
 msgctxt "images-action"
 msgid "Images Menu"
 msgstr "Menu Afbeeldingen"
 
 # bovenop/omhoog
 #: ../app/actions/images-actions.c:47
-#, fuzzy
 msgctxt "images-action"
 msgid "_Raise Views"
 msgstr "_Weergaven omhoog"
 
 # bovenop/omhoog
 #: ../app/actions/images-actions.c:48
-#, fuzzy
 msgctxt "images-action"
 msgid "Raise this image's displays"
-msgstr "De weergaven van deze afbeelding omhoog"
+msgstr "De weergaven van deze afbeelding omhoog brengen"
 
 #: ../app/actions/images-actions.c:53
-#, fuzzy
 msgctxt "images-action"
 msgid "_New View"
-msgstr "_Nieuw beeld"
+msgstr "_Nieuwe weergave"
 
 #: ../app/actions/images-actions.c:54
-#, fuzzy
 msgctxt "images-action"
 msgid "Create a new display for this image"
-msgstr "Maak een nieuwe weergave voor deze afbeelding aan"
+msgstr "Een nieuwe weergave voor deze afbeelding maken"
 
 #: ../app/actions/images-actions.c:59
-#, fuzzy
 msgctxt "images-action"
 msgid "_Delete Image"
 msgstr "Afbeelding _verwijderen"
 
 #: ../app/actions/images-actions.c:60
-#, fuzzy
 msgctxt "images-action"
 msgid "Delete this image"
-msgstr "Verwijder deze afbeelding"
+msgstr "Deze afbeelding verwijderen"
 
 #: ../app/actions/layers-actions.c:49
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layers Menu"
 msgstr "Menu Lagen"
 
 # BUG: meervoud is hier beter: Lagen ipv Laag
 #: ../app/actions/layers-actions.c:53
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Layer"
 msgstr "_Laag"
 
 #: ../app/actions/layers-actions.c:55
-#, fuzzy
 msgctxt "layers-action"
 msgid "Stac_k"
 msgstr "_Stapel"
 
 # maskeren
 #: ../app/actions/layers-actions.c:57
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Mask"
 msgstr "_Masker"
 
 #: ../app/actions/layers-actions.c:59
-#, fuzzy
 msgctxt "layers-action"
 msgid "Tr_ansparency"
 msgstr "Tr_ansparantie"
 
 #: ../app/actions/layers-actions.c:61
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Transform"
 msgstr "_Transformeren"
 
 #: ../app/actions/layers-actions.c:63
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Properties"
 msgstr "_Eigenschappen"
 
 #: ../app/actions/layers-actions.c:65
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Opacity"
 msgstr "_Dekking"
 
 #: ../app/actions/layers-actions.c:67
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer _Mode"
 msgstr "Laag_modus"
@@ -3732,529 +3596,441 @@ msgstr "Laag_modus"
 # Attention! Singular in Dutch!
 # Tool niet meevertaald
 #: ../app/actions/layers-actions.c:70
-#, fuzzy
 msgctxt "layers-action"
 msgid "Te_xt Tool"
-msgstr "_Tekst"
+msgstr "_Tekstgereedschap"
 
 #: ../app/actions/layers-actions.c:71
-#, fuzzy
 msgctxt "layers-action"
 msgid "Activate the text tool on this text layer"
 msgstr "Het tekstgereedschap activeren op deze tekstlaag"
 
 #: ../app/actions/layers-actions.c:76
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Edit Layer Attributes..."
-msgstr "Laagattributen be_werken..."
+msgstr "Laagattributen be_werken…"
 
 #: ../app/actions/layers-actions.c:77
-#, fuzzy
 msgctxt "layers-action"
 msgid "Edit the layer's name"
-msgstr "De laagnaam bewerken"
+msgstr "De naam van de laag bewerken"
 
 #: ../app/actions/layers-actions.c:82 ../app/actions/layers-actions.c:610
-#, fuzzy
 msgctxt "layers-action"
 msgid "_New Layer..."
-msgstr "_Nieuwe laag..."
+msgstr "_Nieuwe laag…"
 
 #: ../app/actions/layers-actions.c:83
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
-msgstr "Een nieuwe laag aanmaken en toevoegen aan de afbeelding"
+msgstr "Een nieuwe laag maken en aan de afbeelding toevoegen"
 
 #: ../app/actions/layers-actions.c:88 ../app/actions/layers-actions.c:611
-#, fuzzy
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "_Nieuwe laag"
 
 #: ../app/actions/layers-actions.c:89
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create a new layer with last used values"
-msgstr "Een nieuwe laag aanmaken met de laatst gebruikte waardes"
+msgstr "Een nieuwe laag met de laatst gebruikte waarden aanmaken"
 
 #: ../app/actions/layers-actions.c:94
-#, fuzzy
 msgctxt "layers-action"
 msgid "New from _Visible"
 msgstr "Nieuw van _zichtbaar"
 
 #: ../app/actions/layers-actions.c:96
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create a new layer from what is visible in this image"
-msgstr "Een nieuwe laag aanmaken met wat zichtbaar is in deze afbeelding"
+msgstr "Een nieuwe laag maken van wat zichtbaar is in deze afbeelding"
 
 #: ../app/actions/layers-actions.c:101
-#, fuzzy
 msgctxt "layers-action"
 msgid "New Layer _Group..."
-msgstr "_Nieuwe laag..."
+msgstr "Nieuwe laag_groep…"
 
 #: ../app/actions/layers-actions.c:102
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create a new layer group and add it to the image"
-msgstr "Een nieuwe laag aanmaken en toevoegen aan de afbeelding"
+msgstr "Een nieuwe laaggroep maken en aan de afbeelding toevoegen"
 
 #: ../app/actions/layers-actions.c:107
-#, fuzzy
 msgctxt "layers-action"
 msgid "D_uplicate Layer"
 msgstr "Laag d_upliceren"
 
 #: ../app/actions/layers-actions.c:109
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create a duplicate of the layer and add it to the image"
-msgstr "De laag dupliceren en toevoegen aan de afbeelding"
+msgstr "De laag dupliceren en aan de afbeelding toevoegen"
 
 #: ../app/actions/layers-actions.c:114
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Delete Layer"
 msgstr "Laag _verwijderen"
 
 #: ../app/actions/layers-actions.c:115
-#, fuzzy
 msgctxt "layers-action"
 msgid "Delete this layer"
 msgstr "Deze laag verwijderen"
 
 #: ../app/actions/layers-actions.c:120
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Raise Layer"
 msgstr "Laag om_hoog"
 
 #: ../app/actions/layers-actions.c:121
-#, fuzzy
 msgctxt "layers-action"
 msgid "Raise this layer one step in the layer stack"
 msgstr "Deze laag één plaats hoger zetten in de lagenstapel"
 
 #: ../app/actions/layers-actions.c:126
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer to _Top"
 msgstr "Laag _bovenaan"
 
 #: ../app/actions/layers-actions.c:127
-#, fuzzy
 msgctxt "layers-action"
 msgid "Move this layer to the top of the layer stack"
 msgstr "Deze laag helemaal bovenaan zetten"
 
 #: ../app/actions/layers-actions.c:132
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Lower Layer"
 msgstr "Laag om_laag"
 
 #: ../app/actions/layers-actions.c:133
-#, fuzzy
 msgctxt "layers-action"
 msgid "Lower this layer one step in the layer stack"
 msgstr "Deze laag één plaats lager zetten in de lagenstapel"
 
 #: ../app/actions/layers-actions.c:138
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer to _Bottom"
 msgstr "Laag _onderaan"
 
 #: ../app/actions/layers-actions.c:139
-#, fuzzy
 msgctxt "layers-action"
 msgid "Move this layer to the bottom of the layer stack"
 msgstr "Deze laag helemaal onderaan zetten"
 
 #: ../app/actions/layers-actions.c:144
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Anchor Layer"
 msgstr "Laag ver_ankeren"
 
 #: ../app/actions/layers-actions.c:145
-#, fuzzy
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
-msgstr "De drijvende laag verankeren"
+msgstr "De zwevende laag verankeren"
 
 # de N wordt gebruikt voor Nieuwe laag
 #: ../app/actions/layers-actions.c:150
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge Do_wn"
 msgstr "N_eerwaarts samenvoegen"
 
 #: ../app/actions/layers-actions.c:151
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge this layer with the first visible layer below it"
-msgstr "Deze laag samenvoegen met de laag eronder"
+msgstr "Deze laag samenvoegen met de eerste zichtbare laag daaronder"
 
 #: ../app/actions/layers-actions.c:156
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge Layer Group"
-msgstr "Lagen samenvoegen"
+msgstr "Laaggroep samenvoegen"
 
 #: ../app/actions/layers-actions.c:157
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge the layer group's layers into one normal layer"
-msgstr "Alle zichtbare lagen samenvoegen tot één laag"
+msgstr "Alle zichtbare lagen in de groep tot één laag samenvoegen"
 
 #: ../app/actions/layers-actions.c:162
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge _Visible Layers..."
-msgstr "_Zichtbare lagen samenvoegen..."
+msgstr "_Zichtbare lagen samenvoegen…"
 
 #: ../app/actions/layers-actions.c:163
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge all visible layers into one layer"
-msgstr "Alle zichtbare lagen samenvoegen tot één laag"
+msgstr "Alle zichtbare lagen tot één laag samenvoegen"
 
 #: ../app/actions/layers-actions.c:168
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Flatten Image"
 msgstr "_Alle lagen samenvoegen"
 
 #: ../app/actions/layers-actions.c:169
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge all layers into one and remove transparency"
-msgstr "Alle lagen samenvoegen tot één laag en transparantie verwijderen"
+msgstr "Alle lagen tot één laag samenvoegen en transparantie verwijderen"
 
 #: ../app/actions/layers-actions.c:174
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Discard Text Information"
-msgstr "Tekstinformatie weggooien"
+msgstr "Tekstinformatie _weggooien"
 
 #: ../app/actions/layers-actions.c:175
-#, fuzzy
 msgctxt "layers-action"
 msgid "Turn this text layer into a normal layer"
 msgstr "Deze tekstlaag omzetten in een normale laag"
 
 #: ../app/actions/layers-actions.c:180
-#, fuzzy
 msgctxt "layers-action"
 msgid "Text to _Path"
 msgstr "Tekst naar _pad"
 
 #: ../app/actions/layers-actions.c:181
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create a path from this text layer"
 msgstr "Een pad van deze tekstlaag maken"
 
 #: ../app/actions/layers-actions.c:186
-#, fuzzy
 msgctxt "layers-action"
 msgid "Text alon_g Path"
 msgstr "Tekst lan_gs pad"
 
 #: ../app/actions/layers-actions.c:187
-#, fuzzy
 msgctxt "layers-action"
 msgid "Warp this layer's text along the current path"
 msgstr "De tekst van deze laag langs het huidige pad plaatsen"
 
 # begrenzing/grens
 #: ../app/actions/layers-actions.c:192
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer B_oundary Size..."
-msgstr "Laag _grensgrootte..."
+msgstr "_Grensgrootte laag…"
 
 #: ../app/actions/layers-actions.c:193
-#, fuzzy
 msgctxt "layers-action"
 msgid "Adjust the layer dimensions"
 msgstr "De laagafmetingen aanpassen"
 
 #: ../app/actions/layers-actions.c:198
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer to _Image Size"
 msgstr "Laag naar _afbeeldingsgrootte"
 
 #: ../app/actions/layers-actions.c:199
-#, fuzzy
 msgctxt "layers-action"
 msgid "Resize the layer to the size of the image"
 msgstr "De laag schalen tot de grootte van de afbeelding"
 
 #: ../app/actions/layers-actions.c:204
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Scale Layer..."
-msgstr "Laag _schalen..."
+msgstr "Laag _schalen…"
 
 #: ../app/actions/layers-actions.c:205
-#, fuzzy
 msgctxt "layers-action"
 msgid "Change the size of the layer content"
-msgstr "De afmetingen van de laaginhoud aanpassen"
+msgstr "De afmetingen van de inhoud van de laag aanpassen"
 
 #: ../app/actions/layers-actions.c:210
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Crop to Selection"
 msgstr "_Bijsnijden tot selectie"
 
 #: ../app/actions/layers-actions.c:211
-#, fuzzy
 msgctxt "layers-action"
 msgid "Crop the layer to the extents of the selection"
 msgstr "De laag bijsnijden tot de randen van de selectie"
 
 #: ../app/actions/layers-actions.c:216
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add La_yer Mask..."
-msgstr "Laagmasker _toevoegen..."
+msgstr "Laagmasker _toevoegen…"
 
 #: ../app/actions/layers-actions.c:218
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add a mask that allows non-destructive editing of transparency"
 msgstr ""
-"Een masker toevoegen dat niet-destructieve bewerking van transparantie "
-"toelaat"
+"Een masker voor niet-destructieve bewerking van transparantie toevoegen"
 
 #: ../app/actions/layers-actions.c:223
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add Alpha C_hannel"
 msgstr "Al_fakanaal toevoegen"
 
 #: ../app/actions/layers-actions.c:224
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add transparency information to the layer"
-msgstr "Transparantie-informatie toevoegen aan de laag"
+msgstr "Transparantie-informatie aan de laag toevoegen"
 
 #: ../app/actions/layers-actions.c:229
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Remove Alpha Channel"
 msgstr "_Alfakanaal verwijderen"
 
 #: ../app/actions/layers-actions.c:230
-#, fuzzy
 msgctxt "layers-action"
 msgid "Remove transparency information from the layer"
 msgstr "Transparantie-informatie van de laag verwijderen"
 
 #: ../app/actions/layers-actions.c:238
-#, fuzzy
 msgctxt "layers-action"
 msgid "Lock Alph_a Channel"
 msgstr "Al_phakanaal vergrendelen"
 
 #: ../app/actions/layers-actions.c:240
-#, fuzzy
 msgctxt "layers-action"
 msgid "Keep transparency information on this layer from being modified"
 msgstr "Verhinderen dat transparantie-informatie van deze laag aangepast wordt"
 
 #: ../app/actions/layers-actions.c:246
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Edit Layer Mask"
 msgstr "Laagmasker be_werken"
 
 #: ../app/actions/layers-actions.c:247
-#, fuzzy
 msgctxt "layers-action"
 msgid "Work on the layer mask"
 msgstr "Op het laagmasker werken"
 
 #: ../app/actions/layers-actions.c:253
-#, fuzzy
 msgctxt "layers-action"
 msgid "S_how Layer Mask"
 msgstr "_Laagmasker tonen"
 
 #: ../app/actions/layers-actions.c:259
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Disable Layer Mask"
-msgstr "Laagmasker _uitzetten"
+msgstr "Laagmasker _uitschakelen"
 
 #: ../app/actions/layers-actions.c:260
-#, fuzzy
 msgctxt "layers-action"
 msgid "Dismiss the effect of the layer mask"
 msgstr "Het effect van het laagmasker annuleren"
 
 #: ../app/actions/layers-actions.c:269
-#, fuzzy
 msgctxt "layers-action"
 msgid "Apply Layer _Mask"
 msgstr "Laag_masker toepassen"
 
 #: ../app/actions/layers-actions.c:270
-#, fuzzy
 msgctxt "layers-action"
 msgid "Apply the effect of the layer mask and remove it"
 msgstr "Het effect van het laagmasker toepassen en het masker verwijderen"
 
 #: ../app/actions/layers-actions.c:275
-#, fuzzy
 msgctxt "layers-action"
 msgid "Delete Layer Mas_k"
 msgstr "Laagmasker _verwijderen"
 
 #: ../app/actions/layers-actions.c:276
-#, fuzzy
 msgctxt "layers-action"
 msgid "Remove the layer mask and its effect"
 msgstr "Het laagmasker en het effect ervan verwijderen"
 
 #: ../app/actions/layers-actions.c:284
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Mask to Selection"
 msgstr "_Masker naar selectie"
 
 #: ../app/actions/layers-actions.c:285
-#, fuzzy
 msgctxt "layers-action"
 msgid "Replace the selection with the layer mask"
 msgstr "De selectie vervangen door het laagmasker"
 
 #: ../app/actions/layers-actions.c:290
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Add to Selection"
 msgstr "_Aan selectie toevoegen"
 
 #: ../app/actions/layers-actions.c:291
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add the layer mask to the current selection"
 msgstr "Het laagmasker toevoegen aan de huidige selectie"
 
 # afhalen
 #: ../app/actions/layers-actions.c:296 ../app/actions/layers-actions.c:325
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Subtract from Selection"
 msgstr "_Van selectie aftrekken"
 
 #: ../app/actions/layers-actions.c:297
-#, fuzzy
 msgctxt "layers-action"
 msgid "Subtract the layer mask from the current selection"
 msgstr "Het laagmasker aftrekken van de huidige selectie"
 
 #: ../app/actions/layers-actions.c:302 ../app/actions/layers-actions.c:332
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Intersect with Selection"
 msgstr "Door_snede met selectie"
 
 #: ../app/actions/layers-actions.c:303
-#, fuzzy
 msgctxt "layers-action"
 msgid "Intersect the layer mask with the current selection"
 msgstr "Doorsnede van het laagmasker en de huidige selectie"
 
 #: ../app/actions/layers-actions.c:311
-#, fuzzy
 msgctxt "layers-action"
 msgid "Al_pha to Selection"
 msgstr "Al_pha naar selectie"
 
 #: ../app/actions/layers-actions.c:313
-#, fuzzy
 msgctxt "layers-action"
 msgid "Replace the selection with the layer's alpha channel"
 msgstr "De selectie vervangen door het alfakanaal van de laag"
 
 # Bij selectie optellen/toevoegen aan selectie
 #: ../app/actions/layers-actions.c:318
-#, fuzzy
 msgctxt "layers-action"
 msgid "A_dd to Selection"
 msgstr "_Toevoegen aan selectie"
 
 #: ../app/actions/layers-actions.c:320
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add the layer's alpha channel to the current selection"
 msgstr "Het alfakanaal van de laag toevoegen aan de huidige selectie"
 
 #: ../app/actions/layers-actions.c:327
-#, fuzzy
 msgctxt "layers-action"
 msgid "Subtract the layer's alpha channel from the current selection"
 msgstr "Het alfakanaal van de laag aftrekken van de huidige selectie"
 
 #: ../app/actions/layers-actions.c:334
-#, fuzzy
 msgctxt "layers-action"
 msgid "Intersect the layer's alpha channel with the current selection"
 msgstr "Doorsnede van het alfakanaal van de laag met de huidige selectie"
 
 #: ../app/actions/layers-actions.c:342
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select _Top Layer"
 msgstr "_Bovenste laag selecteren"
 
 #: ../app/actions/layers-actions.c:343
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select the topmost layer"
 msgstr "De bovenste laag selecteren"
 
 #: ../app/actions/layers-actions.c:348
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select _Bottom Layer"
 msgstr "O_nderste laag selecteren"
 
 #: ../app/actions/layers-actions.c:349
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select the bottommost layer"
 msgstr "De onderste laag selecteren"
 
 #: ../app/actions/layers-actions.c:354
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select _Previous Layer"
 msgstr "_Vorige laag selecteren"
 
 #: ../app/actions/layers-actions.c:355
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select the layer above the current layer"
 msgstr "De laag boven de huidige laag selecteren"
 
 #: ../app/actions/layers-actions.c:360
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select _Next Layer"
 msgstr "V_olgende laag selecteren"
 
 #: ../app/actions/layers-actions.c:361
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select the layer below the current layer"
 msgstr "De laag onder de huidige laag selecteren"
@@ -4263,9 +4039,8 @@ msgstr "De laag onder de huidige laag selecteren"
 #. on thumbnail"
 #.
 #: ../app/actions/layers-actions.c:442
-#, fuzzy
 msgid "Shortcut: "
-msgstr "Sneltoets"
+msgstr "Sneltoets: "
 
 #. Will be prepended with a modifier key
 #. string, e.g. "Shift"
@@ -4275,7 +4050,6 @@ msgid "-Click on thumbnail in Layers dockable"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:605 ../app/actions/layers-actions.c:606
-#, fuzzy
 msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "_Nieuwe laag"
@@ -4328,61 +4102,51 @@ msgid "Add Layer Mask"
 msgstr "Laagmaskter toevoegen"
 
 #: ../app/actions/palette-editor-actions.c:44
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "Palette Editor Menu"
 msgstr "Menu Paletbewerker"
 
 #: ../app/actions/palette-editor-actions.c:48
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "_Edit Color..."
 msgstr "Kleur be_werken…"
 
 #: ../app/actions/palette-editor-actions.c:49
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "Edit this entry"
-msgstr "Kleurverloop bewerken"
+msgstr "Dit item bewerken"
 
 #: ../app/actions/palette-editor-actions.c:54
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "_Delete Color"
 msgstr "Kleur verwij_deren"
 
 #: ../app/actions/palette-editor-actions.c:55
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "Delete this entry"
-msgstr "Deze laag verwijderen"
+msgstr "Dit item verwijderen"
 
 #: ../app/actions/palette-editor-actions.c:63
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "Edit Active Palette"
-msgstr "Actieve palet bewerken"
+msgstr "Actief palet bewerken"
 
 #: ../app/actions/palette-editor-actions.c:72
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "New Color from _FG"
-msgstr "Nieuwe kleur uit _VG"
+msgstr "Nieuwe kleur van _VG"
 
 #: ../app/actions/palette-editor-actions.c:74
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "Create a new entry from the foreground color"
 msgstr "Nieuwe kleur van voorgrondkleur"
 
 #: ../app/actions/palette-editor-actions.c:79
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "New Color from _BG"
-msgstr "Nieuwe kleur uit _AG"
+msgstr "Nieuwe kleur van _AG"
 
 #: ../app/actions/palette-editor-actions.c:81
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "Create a new entry from the background color"
 msgstr "Nieuwe kleur van achtergrondkleur"
@@ -4409,106 +4173,89 @@ msgid "Edit Color Palette Entry"
 msgstr "Kleur paletingang bewerken"
 
 #: ../app/actions/palettes-actions.c:44
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Palettes Menu"
 msgstr "Menu Paletten"
 
 #: ../app/actions/palettes-actions.c:48
-#, fuzzy
 msgctxt "palettes-action"
 msgid "_New Palette"
 msgstr "_Nieuw palet"
 
 #: ../app/actions/palettes-actions.c:49
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Create a new palette"
 msgstr "Nieuwe sjabloon aanmaken"
 
 #: ../app/actions/palettes-actions.c:54
-#, fuzzy
 msgctxt "palettes-action"
 msgid "_Import Palette..."
-msgstr "Palet _importeren..."
+msgstr "Palet _importeren…"
 
 #: ../app/actions/palettes-actions.c:55
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Import palette"
 msgstr "Palet importeren"
 
 #: ../app/actions/palettes-actions.c:60
-#, fuzzy
 msgctxt "palettes-action"
 msgid "D_uplicate Palette"
 msgstr "Palet d_upliceren"
 
 #: ../app/actions/palettes-actions.c:61
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Duplicate this palette"
 msgstr "Palet dupliceren"
 
 #: ../app/actions/palettes-actions.c:66
-#, fuzzy
 msgctxt "palettes-action"
 msgid "_Merge Palettes..."
-msgstr "Paletten _samenvoegen..."
+msgstr "Paletten _samenvoegen…"
 
 #: ../app/actions/palettes-actions.c:67
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Merge palettes"
 msgstr "Paletten samenvoegen"
 
 #: ../app/actions/palettes-actions.c:72
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Copy Palette _Location"
 msgstr "_Paletlocatie kopiëren"
 
 #: ../app/actions/palettes-actions.c:73
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Copy palette file location to clipboard"
 msgstr "Locatie van het paletbestand kopiëren naar klembord"
 
 #: ../app/actions/palettes-actions.c:78
-#, fuzzy
 msgctxt "palettes-action"
 msgid "_Delete Palette"
 msgstr "Palet verwij_deren"
 
 #: ../app/actions/palettes-actions.c:79
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Delete this palette"
 msgstr "Palet verwijderen"
 
 #: ../app/actions/palettes-actions.c:84
-#, fuzzy
 msgctxt "palettes-action"
 msgid "_Refresh Palettes"
 msgstr "Paletten ver_nieuwen"
 
 #: ../app/actions/palettes-actions.c:85
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Refresh palettes"
 msgstr "Paletten vernieuwen"
 
 #: ../app/actions/palettes-actions.c:93
-#, fuzzy
 msgctxt "palettes-action"
 msgid "_Edit Palette..."
-msgstr "Palet be_werken..."
+msgstr "Palet be_werken…"
 
 #: ../app/actions/palettes-actions.c:94
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Edit palette"
-msgstr "Palet bewerken..."
+msgstr "Palet bewerken…"
 
 #: ../app/actions/palettes-commands.c:73
 msgid "Merge Palette"
@@ -4519,245 +4266,205 @@ msgid "Enter a name for the merged palette"
 msgstr "Geef een naam op voor samengevoegd palet"
 
 #: ../app/actions/patterns-actions.c:43
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Patterns Menu"
 msgstr "Menu Patronen"
 
 #: ../app/actions/patterns-actions.c:47
-#, fuzzy
 msgctxt "patterns-action"
 msgid "_Open Pattern as Image"
 msgstr "Patroon _openen als afbeelding"
 
 #: ../app/actions/patterns-actions.c:48
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Open this pattern as an image"
 msgstr "Patroon openen als afbeelding"
 
 #: ../app/actions/patterns-actions.c:53
-#, fuzzy
 msgctxt "patterns-action"
 msgid "_New Pattern"
 msgstr "_Nieuw patroon"
 
 #: ../app/actions/patterns-actions.c:54
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Create a new pattern"
-msgstr "Nieuwe sjabloon aanmaken"
+msgstr "Nieuw patroon aanmaken"
 
 #: ../app/actions/patterns-actions.c:59
-#, fuzzy
 msgctxt "patterns-action"
 msgid "D_uplicate Pattern"
 msgstr "Patroon d_upliceren"
 
 #: ../app/actions/patterns-actions.c:60
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Duplicate this pattern"
 msgstr "Patroon dupliceren"
 
 #: ../app/actions/patterns-actions.c:65
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Copy Pattern _Location"
 msgstr "_Patroonlocatie kopiëren"
 
 #: ../app/actions/patterns-actions.c:66
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Copy pattern file location to clipboard"
 msgstr "Locatie van het patroonbestand kopiëren naar klembord"
 
 #: ../app/actions/patterns-actions.c:71
-#, fuzzy
 msgctxt "patterns-action"
 msgid "_Delete Pattern"
 msgstr "Patroon verwij_deren"
 
 #: ../app/actions/patterns-actions.c:72
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Delete this pattern"
-msgstr "Patroon verwijderen..."
+msgstr "Patroon verwijderen…"
 
 #: ../app/actions/patterns-actions.c:77
-#, fuzzy
 msgctxt "patterns-action"
 msgid "_Refresh Patterns"
 msgstr "Patronen _vernieuwen"
 
 #: ../app/actions/patterns-actions.c:78
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Refresh patterns"
 msgstr "Patronen vernieuwen"
 
 #: ../app/actions/patterns-actions.c:86
-#, fuzzy
 msgctxt "patterns-action"
 msgid "_Edit Pattern..."
-msgstr "Patroon be_werken..."
+msgstr "Patroon be_werken…"
 
 #: ../app/actions/patterns-actions.c:87
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Edit pattern"
-msgstr "Patroon bewerken..."
+msgstr "Patroon bewerken…"
 
 # de F was nog ongebruikt
 #: ../app/actions/plug-in-actions.c:85
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Filte_rs"
 msgstr "_Filters"
 
 #: ../app/actions/plug-in-actions.c:87
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Recently Used"
 msgstr "Onlangs gebruikt"
 
 #: ../app/actions/plug-in-actions.c:89
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Blur"
 msgstr "Verva_gen"
 
 #: ../app/actions/plug-in-actions.c:91
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Noise"
 msgstr "R_uis"
 
 #: ../app/actions/plug-in-actions.c:93
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Edge-De_tect"
 msgstr "R_anden"
 
 # verbeteren/versterken/verscherpen
 #: ../app/actions/plug-in-actions.c:95
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "En_hance"
 msgstr "Ver_sterken"
 
 #: ../app/actions/plug-in-actions.c:97
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "C_ombine"
 msgstr "_Combineren"
 
 #: ../app/actions/plug-in-actions.c:99
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Generic"
 msgstr "_Algemeen"
 
 #: ../app/actions/plug-in-actions.c:101
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Light and Shadow"
 msgstr "_Licht en schaduw"
 
 #: ../app/actions/plug-in-actions.c:103
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Distorts"
 msgstr "_Vervormingen"
 
 #: ../app/actions/plug-in-actions.c:105
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Artistic"
 msgstr "Ar_tistiek"
 
 #: ../app/actions/plug-in-actions.c:107
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Decor"
 msgstr "_Decor"
 
 #: ../app/actions/plug-in-actions.c:109
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Map"
 msgstr "Pro_jecties"
 
 # betere vertaling?
 #: ../app/actions/plug-in-actions.c:111
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Render"
 msgstr "_Renderen"
 
 #: ../app/actions/plug-in-actions.c:113
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Clouds"
 msgstr "W_olken"
 
 #: ../app/actions/plug-in-actions.c:115
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Nature"
 msgstr "_Natuur"
 
 #: ../app/actions/plug-in-actions.c:117
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Pattern"
 msgstr "_Patroon"
 
 #: ../app/actions/plug-in-actions.c:119
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Web"
 msgstr "_Web"
 
 #: ../app/actions/plug-in-actions.c:121
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "An_imation"
 msgstr "Ani_matie"
 
 #: ../app/actions/plug-in-actions.c:124
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Reset all _Filters"
 msgstr "Alle _filters herstellen"
 
 #: ../app/actions/plug-in-actions.c:125
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Reset all plug-ins to their default settings"
 msgstr "Alle plug-ins herstellen naar standaardinstellingen"
 
 #: ../app/actions/plug-in-actions.c:133
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Re_peat Last"
 msgstr "L_aatste herhalen"
 
 #: ../app/actions/plug-in-actions.c:135
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Rerun the last used plug-in using the same settings"
 msgstr ""
 "De laatst gebruikte plug-in opnieuw uitvoeren met dezelfde instellingen"
 
 #: ../app/actions/plug-in-actions.c:140
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "R_e-Show Last"
 msgstr "Laatste _opnieuw tonen"
 
 #: ../app/actions/plug-in-actions.c:141
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Show the last used plug-in dialog again"
 msgstr "Het dialoogvenster van de laatst gebruikte plug-in opnieuw tonen"
@@ -4765,12 +4472,12 @@ msgstr "Het dialoogvenster van de laatst gebruikte plug-in opnieuw tonen"
 #: ../app/actions/plug-in-actions.c:551
 #, c-format
 msgid "Re_peat \"%s\""
-msgstr "\"%s\" _herhalen"
+msgstr "‘%s’ _herhalen"
 
 #: ../app/actions/plug-in-actions.c:552
 #, c-format
 msgid "R_e-Show \"%s\""
-msgstr "\"%s\" opnieu_w tonen"
+msgstr "‘%s’ opnieu_w tonen"
 
 #: ../app/actions/plug-in-actions.c:568
 msgid "Repeat Last"
@@ -4789,37 +4496,31 @@ msgid "Do you really want to reset all filters to default values?"
 msgstr "Wilt u echt alle filters herstellen naar hun standaardwaarden?"
 
 #: ../app/actions/quick-mask-actions.c:43
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "Quick Mask Menu"
 msgstr "Menu Snelmasker"
 
 #: ../app/actions/quick-mask-actions.c:47
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "_Configure Color and Opacity..."
-msgstr "Kleur en dekking _configureren..."
+msgstr "Kleur en dekking _configureren…"
 
 #: ../app/actions/quick-mask-actions.c:55
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "Toggle _Quick Mask"
 msgstr "_Snelmasker aan/uit"
 
 #: ../app/actions/quick-mask-actions.c:56
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "Toggle Quick Mask on/off"
-msgstr "Snelmasker aan/uit"
+msgstr "Snelmasker aan- en uitschakelen"
 
 #: ../app/actions/quick-mask-actions.c:65
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "Mask _Selected Areas"
 msgstr "Geselecteerde _gebieden maskeren"
 
 #: ../app/actions/quick-mask-actions.c:70
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "Mask _Unselected Areas"
 msgstr "_Niet-geselecteerde gebieden maskeren"
@@ -4842,91 +4543,77 @@ msgstr "_Maskerdekking:"
 
 # Monsterpuntmenu
 #: ../app/actions/sample-points-actions.c:39
-#, fuzzy
 msgctxt "sample-points-action"
 msgid "Sample Point Menu"
 msgstr "Menu Monsterpunten"
 
 #: ../app/actions/sample-points-actions.c:46
-#, fuzzy
 msgctxt "sample-points-action"
 msgid "_Sample Merged"
 msgstr "_Samengevoegd monsteren"
 
 #: ../app/actions/sample-points-actions.c:48
-#, fuzzy
 msgctxt "sample-points-action"
 msgid "Use the composite color of all visible layers"
 msgstr "Gebieds_selectie baseren op alle zichtbare lagen"
 
 #: ../app/actions/select-actions.c:44
-#, fuzzy
 msgctxt "select-action"
 msgid "Selection Editor Menu"
 msgstr "Menu Selectiebewerker"
 
 #: ../app/actions/select-actions.c:47
-#, fuzzy
 msgctxt "select-action"
 msgid "_Select"
 msgstr "_Selecteren"
 
 # overeenkomstig de overige vormen van 'zoom all' (bijv. Zoom all)
 #: ../app/actions/select-actions.c:50
-#, fuzzy
 msgctxt "select-action"
 msgid "_All"
 msgstr "_Alles tonen"
 
 #: ../app/actions/select-actions.c:51
-#, fuzzy
 msgctxt "select-action"
 msgid "Select everything"
 msgstr "Alles selecteren"
 
 #: ../app/actions/select-actions.c:56
-#, fuzzy
 msgctxt "select-action"
 msgid "_None"
-msgstr "Geen"
+msgstr "_Geen"
 
 #: ../app/actions/select-actions.c:57
-#, fuzzy
 msgctxt "select-action"
 msgid "Dismiss the selection"
 msgstr "De selectie annuleren"
 
 #: ../app/actions/select-actions.c:62
-#, fuzzy
 msgctxt "select-action"
 msgid "_Invert"
 msgstr "_Inverteren"
 
 #: ../app/actions/select-actions.c:63
-#, fuzzy
 msgctxt "select-action"
 msgid "Invert the selection"
 msgstr "De selectie omkeren"
 
 # drijvend/zwevend/los/losgemaakt/
 #: ../app/actions/select-actions.c:68
-#, fuzzy
 msgctxt "select-action"
 msgid "_Float"
 msgstr "_Zwevend"
 
 #: ../app/actions/select-actions.c:69
-#, fuzzy
 msgctxt "select-action"
 msgid "Create a floating selection"
 msgstr "Een drijvende selectie aanmaken"
 
 # gevederd/zacht/
 #: ../app/actions/select-actions.c:74
-#, fuzzy
 msgctxt "select-action"
 msgid "Fea_ther..."
-msgstr "_Verzachten..."
+msgstr "_Verzachten…"
 
 #: ../app/actions/select-actions.c:76
 #, fuzzy
@@ -4950,7 +4637,7 @@ msgstr "Zachte randen van selectie verwijderen"
 #, fuzzy
 msgctxt "select-action"
 msgid "S_hrink..."
-msgstr "_Krimpen..."
+msgstr "_Krimpen…"
 
 #: ../app/actions/select-actions.c:88
 #, fuzzy
@@ -4962,7 +4649,7 @@ msgstr "De selectie verkleinen"
 #, fuzzy
 msgctxt "select-action"
 msgid "_Grow..."
-msgstr "_Uitdijen..."
+msgstr "_Uitdijen…"
 
 #: ../app/actions/select-actions.c:94
 #, fuzzy
@@ -4974,7 +4661,7 @@ msgstr "De selectie vergroten"
 #, fuzzy
 msgctxt "select-action"
 msgid "Bo_rder..."
-msgstr "_Rand..."
+msgstr "_Rand…"
 
 #: ../app/actions/select-actions.c:100
 #, fuzzy
@@ -4998,7 +4685,7 @@ msgstr "De selectie opslaan in een kanaal"
 #, fuzzy
 msgctxt "select-action"
 msgid "_Stroke Selection..."
-msgstr "_Lijn tekenen op selectie..."
+msgstr "_Lijn tekenen op selectie…"
 
 #: ../app/actions/select-actions.c:112
 #, fuzzy
@@ -5016,7 +4703,7 @@ msgstr "_Lijn tekenen op selectie"
 #, fuzzy
 msgctxt "select-action"
 msgid "Stroke the selection with last used values"
-msgstr "Lijn tekenen op selectie met laatst gebruikte waardes"
+msgstr "Lijn tekenen op selectie met laatst gebruikte waarden"
 
 #: ../app/actions/select-commands.c:156
 msgid "Feather Selection"
@@ -5097,10 +4784,9 @@ msgstr "Nieuwe afbeelding aanmaken op basis van de geselecteerde sjabloon"
 #, fuzzy
 msgctxt "templates-action"
 msgid "_New Template..."
-msgstr "_Nieuw sjabloon..."
+msgstr "_Nieuwe sjabloon…"
 
 #: ../app/actions/templates-actions.c:53
-#, fuzzy
 msgctxt "templates-action"
 msgid "Create a new template"
 msgstr "Nieuwe sjabloon aanmaken"
@@ -5109,7 +4795,7 @@ msgstr "Nieuwe sjabloon aanmaken"
 #, fuzzy
 msgctxt "templates-action"
 msgid "D_uplicate Template..."
-msgstr "Sjabloon d_upliceren..."
+msgstr "Sjabloon d_upliceren…"
 
 #: ../app/actions/templates-actions.c:59
 #, fuzzy
@@ -5121,7 +4807,7 @@ msgstr "Geselecteerde sjabloon dupliceren"
 #, fuzzy
 msgctxt "templates-action"
 msgid "_Edit Template..."
-msgstr "Sjabloon be_werken..."
+msgstr "Sjabloon be_werken…"
 
 #: ../app/actions/templates-actions.c:65
 #, fuzzy
@@ -5547,7 +5233,7 @@ msgstr "Gebieden met gelijkaardige kleuren selecteren"
 #, fuzzy
 msgctxt "tools-action"
 msgid "_Arbitrary Rotation..."
-msgstr "_Willekeurige draaiing..."
+msgstr "_Willekeurige draaiing…"
 
 #: ../app/actions/tools-actions.c:63
 #, fuzzy
@@ -5572,7 +5258,7 @@ msgstr "_Pad"
 #, fuzzy
 msgctxt "vectors-action"
 msgid "_Edit Path Attributes..."
-msgstr "Padattributen be_werken..."
+msgstr "Padattributen be_werken…"
 
 #: ../app/actions/vectors-actions.c:54
 #, fuzzy
@@ -5584,7 +5270,7 @@ msgstr "Padattributen bewerken"
 #, fuzzy
 msgctxt "vectors-action"
 msgid "_New Path..."
-msgstr "_Nieuw pad..."
+msgstr "_Nieuw pad…"
 
 #: ../app/actions/vectors-actions.c:60
 #, fuzzy
@@ -5596,13 +5282,13 @@ msgstr "Nieuwe sjabloon aanmaken"
 #, fuzzy
 msgctxt "vectors-action"
 msgid "_New Path with last values"
-msgstr "Nieuw pad met laatste waardes"
+msgstr "Nieuw pad met laatste waarden"
 
 #: ../app/actions/vectors-actions.c:66
 #, fuzzy
 msgctxt "vectors-action"
 msgid "Create a new path with last used values"
-msgstr "Een nieuwe laag aanmaken met de laatst gebruikte waardes"
+msgstr "Een nieuwe laag aanmaken met de laatst gebruikte waarden"
 
 #: ../app/actions/vectors-actions.c:71
 #, fuzzy
@@ -5688,7 +5374,7 @@ msgstr "Pad naar bodem"
 #, fuzzy
 msgctxt "vectors-action"
 msgid "Stro_ke Path..."
-msgstr "_Lijn tekenen op pad..."
+msgstr "_Lijn tekenen op pad…"
 
 #: ../app/actions/vectors-actions.c:113
 #, fuzzy
@@ -5706,7 +5392,7 @@ msgstr "Lijn tekenen op pad"
 #, fuzzy
 msgctxt "vectors-action"
 msgid "Paint along the path with last values"
-msgstr "Lijn tekenen op pad met laatst gebruikte waardes"
+msgstr "Lijn tekenen op pad met laatst gebruikte waarden"
 
 #: ../app/actions/vectors-actions.c:124
 #, fuzzy
@@ -5724,13 +5410,13 @@ msgstr "Pad _plakken"
 #, fuzzy
 msgctxt "vectors-action"
 msgid "E_xport Path..."
-msgstr "Pad e_xporteren..."
+msgstr "Pad e_xporteren…"
 
 #: ../app/actions/vectors-actions.c:139
 #, fuzzy
 msgctxt "vectors-action"
 msgid "I_mport Path..."
-msgstr "Pad i_mporteren..."
+msgstr "Pad i_mporteren…"
 
 #: ../app/actions/vectors-actions.c:147
 #, fuzzy
@@ -5970,7 +5656,7 @@ msgstr "Een overzichtsvenster tonen voor deze afbeelding"
 #, fuzzy
 msgctxt "view-action"
 msgid "Display _Filters..."
-msgstr "_Weergavefilters..."
+msgstr "_Weergavefilters…"
 
 #: ../app/actions/view-actions.c:113
 #, fuzzy
@@ -6346,7 +6032,7 @@ msgstr "Zoom 1:16"
 #, fuzzy
 msgctxt "view-zoom-action"
 msgid "Othe_r..."
-msgstr "_Anders..."
+msgstr "_Anders…"
 
 #: ../app/actions/view-actions.c:385
 #, fuzzy
@@ -6397,7 +6083,7 @@ msgstr "Donkere vakjes gebruiken"
 #, fuzzy
 msgctxt "view-padding-color"
 msgid "Select _Custom Color..."
-msgstr "_Eigen kleur selecteren..."
+msgstr "_Eigen kleur selecteren…"
 
 #: ../app/actions/view-actions.c:412
 #, fuzzy
@@ -6429,7 +6115,7 @@ msgstr "Zoomniveau hers_tellen"
 #: ../app/actions/view-actions.c:761
 #, c-format
 msgid "Othe_r (%s)..."
-msgstr "_Aangepast (%s) ..."
+msgstr "_Aangepast (%s) …"
 
 #: ../app/actions/view-actions.c:770
 #, c-format
@@ -6606,7 +6292,7 @@ msgstr "Wisselen naar verplaatsgereedschap"
 #: ../app/config/config-enums.c:118
 msgctxt "zoom-quality"
 msgid "Low"
-msgstr ""
+msgstr "Laag"
 
 #: ../app/config/config-enums.c:119
 #, fuzzy
@@ -6661,12 +6347,12 @@ msgstr "Chique"
 #: ../app/config/config-enums.c:236
 msgctxt "handedness"
 msgid "Left-handed"
-msgstr ""
+msgstr "Linkshandig"
 
 #: ../app/config/config-enums.c:237
 msgctxt "handedness"
 msgid "Right-handed"
-msgstr ""
+msgstr "Rechtshandig"
 
 #: ../app/config/gimpconfig-file.c:67 ../app/core/gimpbrushgenerated-save.c:60
 #: ../app/core/gimpcurve-save.c:52 ../app/core/gimpgradient-save.c:50
@@ -6716,7 +6402,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:23 ../app/config/gimprc-blurbs.h:28
 msgid "Sets the dynamics search path."
-msgstr ""
+msgstr "Zoekpad voor penseeldynamieken instellen."
 
 #: ../app/config/gimprc-blurbs.h:33
 msgid ""
@@ -8603,7 +8289,7 @@ msgstr "Interne procedures"
 #. initialize  the global parasite table
 #: ../app/core/gimp.c:947
 msgid "Looking for data files"
-msgstr "Gegevensbestanden worden gezocht..."
+msgstr "Gegevensbestanden worden gezocht…"
 
 #: ../app/core/gimp.c:947
 msgid "Parasites"
@@ -8871,11 +8557,11 @@ msgstr ""
 "%s"
 
 #: ../app/core/gimpdatafactory.c:537 ../app/core/gimpdatafactory.c:540
-#: ../app/core/gimpitem.c:493 ../app/core/gimpitem.c:496
+#: ../app/core/gimpitem.c:497 ../app/core/gimpitem.c:500
 msgid "copy"
 msgstr "kopiëren"
 
-#: ../app/core/gimpdatafactory.c:549 ../app/core/gimpitem.c:505
+#: ../app/core/gimpdatafactory.c:549 ../app/core/gimpitem.c:509
 #, c-format
 msgid "%s copy"
 msgstr "%s kopiëren"
@@ -9116,7 +8802,7 @@ msgstr "VG naar AG (KVW tegen de klok in)"
 
 #: ../app/core/gimp-gradients.c:95
 msgid "FG to BG (HSV clockwise hue)"
-msgstr "VG naar AG (TVH met de klok mee)"
+msgstr "VG naar AG (HSV met de klok mee)"
 
 #: ../app/core/gimp-gradients.c:103
 msgid "FG to Transparent"
@@ -9298,7 +8984,7 @@ msgstr "Kleur van kleurenkaart wijzigen."
 #, fuzzy
 msgctxt "undo-type"
 msgid "Add Color to Colormap"
-msgstr "Kleur toevoegen aan kleurenkaart"
+msgstr "Kleur aan kleurenkaart toevoegen"
 
 #: ../app/core/gimpimage-convert.c:773
 msgid "Cannot convert image: palette is empty."
@@ -9324,11 +9010,11 @@ msgstr "Afbeelding naar Geïndexeerd omzetten"
 
 #: ../app/core/gimpimage-convert.c:878
 msgid "Converting to indexed colors (stage 2)"
-msgstr "Naar geïndexeerde kleuren omzetten (stap 2)..."
+msgstr "Naar geïndexeerde kleuren omzetten (stap 2)…"
 
 #: ../app/core/gimpimage-convert.c:923
 msgid "Converting to indexed colors (stage 3)"
-msgstr "Naar geïndexeerde kleuren omzetten (stap 3)..."
+msgstr "Naar geïndexeerde kleuren omzetten (stap 3)…"
 
 #: ../app/core/gimpimage-convert-precision.c:63
 #, fuzzy
@@ -9390,7 +9076,7 @@ msgstr "Klik om een voorbeeld aan te maken"
 
 #: ../app/core/gimpimagefile.c:746
 msgid "Loading preview..."
-msgstr "Voorbeeld wordt geladen..."
+msgstr "Voorbeeld wordt geladen…"
 
 #: ../app/core/gimpimagefile.c:752
 msgid "Preview is out of date"
@@ -9569,19 +9255,19 @@ msgstr "Afbeelding schalen"
 msgid "Can't undo %s"
 msgstr "Kan %s niet ongedaan maken"
 
-#: ../app/core/gimpitem.c:1815
+#: ../app/core/gimpitem.c:1831
 #, fuzzy
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "Parasiet aanhangen"
 
-#: ../app/core/gimpitem.c:1825
+#: ../app/core/gimpitem.c:1841
 #, fuzzy
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Parasiet aan item koppelen"
 
-#: ../app/core/gimpitem.c:1876 ../app/core/gimpitem.c:1883
+#: ../app/core/gimpitem.c:1892 ../app/core/gimpitem.c:1899
 #, fuzzy
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
@@ -9667,7 +9353,7 @@ msgstr "Laag kan niet verder naar boven"
 msgid "Layer cannot be lowered more."
 msgstr "Laag kan niet verder naar beneden"
 
-#: ../app/core/gimplayer.c:480 ../app/core/gimplayer.c:1316
+#: ../app/core/gimplayer.c:480 ../app/core/gimplayer.c:1319
 #: ../app/core/gimplayermask.c:183
 #, c-format
 msgid "%s mask"
@@ -9690,71 +9376,71 @@ msgstr ""
 "Kan geen nieuwe laag maken van de drijvende selectie, omdat hij toebehoort "
 "aan een laagmasker of kanaal."
 
-#: ../app/core/gimplayer.c:1227
+#: ../app/core/gimplayer.c:1230
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Kan geen laagmasker toevoegen, omdat de laag er al een heeft."
 
-#: ../app/core/gimplayer.c:1238
+#: ../app/core/gimplayer.c:1241
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Kan geen laagmasker toevoegen met andere afmetingen dan de gespecificeerde "
 "laag"
 
-#: ../app/core/gimplayer.c:1244
+#: ../app/core/gimplayer.c:1247
 #, fuzzy
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Laagmaskter toevoegen"
 
-#: ../app/core/gimplayer.c:1368
+#: ../app/core/gimplayer.c:1371
 #, fuzzy
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Alfa naar masker verplaatsen"
 
-#: ../app/core/gimplayer.c:1528
+#: ../app/core/gimplayer.c:1531
 #, fuzzy
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Laagmasker toepassen"
 
-#: ../app/core/gimplayer.c:1529
+#: ../app/core/gimplayer.c:1532
 #, fuzzy
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Laagmasker verwijderen"
 
-#: ../app/core/gimplayer.c:1637
+#: ../app/core/gimplayer.c:1640
 #, fuzzy
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
-msgstr "Laagmasker _uitzetten"
+msgstr "Laagmasker _uitschakelen"
 
-#: ../app/core/gimplayer.c:1638
+#: ../app/core/gimplayer.c:1641
 #, fuzzy
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
-msgstr "Laagmasker _uitzetten"
+msgstr "Laagmasker _uitschakelen"
 
-#: ../app/core/gimplayer.c:1717
+#: ../app/core/gimplayer.c:1720
 #, fuzzy
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Laagmasker tonen"
 
-#: ../app/core/gimplayer.c:1796
+#: ../app/core/gimplayer.c:1799
 #, fuzzy
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Alfakanaal toevoegen"
 
-#: ../app/core/gimplayer.c:1831
+#: ../app/core/gimplayer.c:1834
 #, fuzzy
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Alfakanaal verwijderen"
 
-#: ../app/core/gimplayer.c:1851
+#: ../app/core/gimplayer.c:1854
 #, fuzzy
 msgctxt "undo-type"
 msgid "Layer to Image Size"
@@ -10121,12 +9807,12 @@ msgstr ""
 #: ../app/core/gimp-user-install.c:330
 #, c-format
 msgid "Copying file '%s' from '%s'..."
-msgstr "Bestand '%s' wordt gekopieerd uit '%s'..."
+msgstr "Bestand '%s' wordt gekopieerd uit '%s'…"
 
 #: ../app/core/gimp-user-install.c:345 ../app/core/gimp-user-install.c:371
 #, c-format
 msgid "Creating folder '%s'..."
-msgstr "Map '%s' wordt aangemaakt..."
+msgstr "Map '%s' wordt aangemaakt…"
 
 #: ../app/core/gimp-user-install.c:356 ../app/core/gimp-user-install.c:382
 #, c-format
@@ -10991,7 +10677,7 @@ msgstr "_Dynamische sneltoetsen gebruiken"
 
 #: ../app/dialogs/preferences-dialog.c:1622
 msgid "Configure _Keyboard Shortcuts..."
-msgstr "S_neltoetsen configureren..."
+msgstr "S_neltoetsen configureren…"
 
 #: ../app/dialogs/preferences-dialog.c:1629
 msgid "_Save keyboard shortcuts on exit"
@@ -11358,7 +11044,7 @@ msgstr "Voer _handmatig in"
 
 #: ../app/dialogs/preferences-dialog.c:2393
 msgid "C_alibrate..."
-msgstr "_Kalibreren..."
+msgstr "_Kalibreren…"
 
 #: ../app/dialogs/preferences-dialog.c:2421
 msgid "Color Management"
@@ -11446,7 +11132,7 @@ msgstr "Uitgebreide invoerapparaten"
 
 #: ../app/dialogs/preferences-dialog.c:2565
 msgid "Configure E_xtended Input Devices..."
-msgstr "_Uitgebreide invoerapparaten configureren..."
+msgstr "_Uitgebreide invoerapparaten configureren…"
 
 #: ../app/dialogs/preferences-dialog.c:2572
 msgid "_Save input device settings on exit"
@@ -12863,7 +12549,7 @@ msgstr "Het vectorobject %d bevat geen lijn met ID %d"
 #: ../app/pdb/gimpprocedure.c:375 ../app/plug-in/gimppluginprocframe.c:212
 #, c-format
 msgid "Procedure '%s' returned no return values"
-msgstr "Procedure '%s' gaf geen return-waardes terug"
+msgstr "Procedure ‘%s’ gaf geen antwoordwaarden terug"
 
 #: ../app/pdb/gimpprocedure.c:645
 #, c-format
@@ -12959,7 +12645,7 @@ msgstr "Laag verplaatsen"
 #, fuzzy
 msgctxt "undo-type"
 msgid "Color to Alpha"
-msgstr "Kleur toevoegen aan kleurenkaart"
+msgstr "Kleur naar alfa"
 
 #: ../app/pdb/plug-in-compat-cmds.c:121 ../app/pdb/plug-in-compat-cmds.c:164
 #, fuzzy
@@ -13109,15 +12795,15 @@ msgstr "Bronconfiguratie"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:320
 msgid "Querying new Plug-ins"
-msgstr "Nieuwe plug-ins worden opgevraagd..."
+msgstr "Nieuwe plug-ins worden opgevraagd…"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:370
 msgid "Initializing Plug-ins"
-msgstr "Plug-ins worden geïnitialiseerd..."
+msgstr "Plug-ins worden geïnitialiseerd…"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:442
 msgid "Starting Extensions"
-msgstr "Extensies worden opgestart..."
+msgstr "Extensies worden opgestart…"
 
 #: ../app/plug-in/gimpplugin-message.c:485
 #, c-format
@@ -13666,7 +13352,7 @@ msgstr "Kleurbalans: kleurverdeling aanpassen"
 
 #: ../app/tools/gimpcolorbalancetool.c:91
 msgid "Color _Balance..."
-msgstr "Kleur_balans..."
+msgstr "Kleur_balans…"
 
 #: ../app/tools/gimpcolorbalancetool.c:105
 msgid "Adjust Color Balance"
@@ -13741,7 +13427,7 @@ msgstr "Verkleuren: de afbeelding verkleuren"
 
 #: ../app/tools/gimpcolorizetool.c:95
 msgid "Colori_ze..."
-msgstr "_Verkleuren..."
+msgstr "_Verkleuren…"
 
 #: ../app/tools/gimpcolorizetool.c:109
 msgid "Colorize the Image"
@@ -13980,7 +13666,7 @@ msgstr "Curves: kleurcurves aanpassen"
 
 #: ../app/tools/gimpcurvestool.c:146
 msgid "_Curves..."
-msgstr "_Curves..."
+msgstr "_Curves…"
 
 #: ../app/tools/gimpcurvestool.c:169
 msgid "Adjust Color Curves"
@@ -14230,7 +13916,7 @@ msgid ""
 "Smaller values give a more accurate selection border but may introduce holes "
 "in the selection"
 msgstr ""
-"Kleinere waardes geven een meer accurate selectierand maar kon zorgen voor "
+"Kleinere waarden geven een meer accurate selectierand maar kon zorgen voor "
 "gaten in de selectie."
 
 #: ../app/tools/gimpforegroundselectoptions.c:113
@@ -14394,7 +14080,7 @@ msgstr "GEGL-gereedschap: een willekeurige GEGL-bewerking uitvoeren"
 
 #: ../app/tools/gimpgegltool.c:74 ../app/tools/gimpoperationtool.c:102
 msgid "_GEGL Operation..."
-msgstr "_GEGL-bewerking..."
+msgstr "_GEGL-bewerking…"
 
 #: ../app/tools/gimpgegltool.c:325
 #, fuzzy
@@ -14433,7 +14119,7 @@ msgstr "Tint / verzadiging: tint, verzadiging en helderheid aanpassen."
 
 #: ../app/tools/gimphuesaturationtool.c:99
 msgid "Hue-_Saturation..."
-msgstr "_Tint / verzadiging..."
+msgstr "_Tint / verzadiging…"
 
 #: ../app/tools/gimphuesaturationtool.c:113
 msgid "Adjust Hue / Lightness / Saturation"
@@ -14620,7 +14306,7 @@ msgstr "Niveaus: kleurniveaus aanpassen"
 
 #: ../app/tools/gimplevelstool.c:144
 msgid "_Levels..."
-msgstr "_Niveaus..."
+msgstr "_Niveaus…"
 
 #: ../app/tools/gimplevelstool.c:163
 msgid "Import Levels"
@@ -15007,7 +14693,7 @@ msgstr "Posterkleuren: verminder kleuren tot een beperkt aantal"
 
 #: ../app/tools/gimpposterizetool.c:80
 msgid "_Posterize..."
-msgstr "_Posterkleuren..."
+msgstr "_Posterkleuren…"
 
 #: ../app/tools/gimpposterizetool.c:94
 msgid "Posterize (Reduce Number of Colors)"
@@ -15466,7 +15152,7 @@ msgstr ""
 
 #: ../app/tools/gimpthresholdtool.c:89
 msgid "_Threshold..."
-msgstr "_Drempelwaarde..."
+msgstr "_Drempelwaarde…"
 
 #: ../app/tools/gimpthresholdtool.c:106
 msgid "Apply Threshold"
@@ -16966,7 +16652,7 @@ msgstr ""
 
 #: ../app/widgets/gimpimageprofileview.c:200
 msgid "Querying..."
-msgstr "Opvragen..."
+msgstr "Opvragen…"
 
 #: ../app/widgets/gimpimagepropview.c:120
 #, fuzzy
@@ -17113,15 +16799,15 @@ msgstr "Instellingen toevoegen aan favorieten"
 # lezen/laden
 #: ../app/widgets/gimpsettingsbox.c:319
 msgid "_Import Settings from File..."
-msgstr "Instellingen _importeren uit bestand..."
+msgstr "Instellingen _importeren uit bestand…"
 
 #: ../app/widgets/gimpsettingsbox.c:325
 msgid "_Export Settings to File..."
-msgstr "Instellingen _exporteren naar bestand..."
+msgstr "Instellingen _exporteren naar bestand…"
 
 #: ../app/widgets/gimpsettingsbox.c:332
 msgid "_Manage Settings..."
-msgstr "Instellingen _beheren..."
+msgstr "Instellingen _beheren…"
 
 #: ../app/widgets/gimpsettingsbox.c:636
 msgid "Add Settings to Favorites"
@@ -17343,7 +17029,7 @@ msgstr "Miniatuur %d van %d"
 
 #: ../app/widgets/gimpthumbbox.c:731 ../app/widgets/gimpthumbbox.c:741
 msgid "Creating preview..."
-msgstr "Voorbeeld wordt aangemaakt..."
+msgstr "Voorbeeld wordt aangemaakt…"
 
 # klik om de kleurkiezer te openen
 #: ../app/widgets/gimptoolbox-color-area.c:80
@@ -17806,7 +17492,7 @@ msgstr ""
 #, fuzzy
 #~ msgctxt "tool-options-action"
 #~ msgid "_New Entry..."
-#~ msgstr "_Nieuwe invoer..."
+#~ msgstr "_Nieuwe invoer…"
 
 #~ msgid "Save Tool Options"
 #~ msgstr "Gereedschapsopties opslaan"
@@ -17986,13 +17672,13 @@ msgstr ""
 #~ msgstr "Bericht %d maal herhaald"
 
 #~ msgid "Save options to..."
-#~ msgstr "Opties opslaan naar..."
+#~ msgstr "Opties opslaan naar…"
 
 #~ msgid "Restore options from..."
-#~ msgstr "Opties herstellen uit..."
+#~ msgstr "Opties herstellen uit…"
 
 #~ msgid "Delete saved options..."
-#~ msgstr "Opgeslagen opties verwijderen..."
+#~ msgstr "Opgeslagen opties verwijderen…"
 
 #~ msgid "Error saving tool options presets: %s"
 #~ msgstr "Fout bij opslaan voorinstelling gereedschapsopties: %s"
@@ -18054,7 +17740,7 @@ msgstr ""
 #~ msgstr "Selectie opslaan"
 
 #~ msgid "Save as _Template..."
-#~ msgstr "Opslaan als s_jabloon..."
+#~ msgstr "Opslaan als s_jabloon…"
 
 #~ msgid "Save this image with a different name, but keep its current name"
 #~ msgstr ""
@@ -18132,7 +17818,7 @@ msgstr ""
 #~ msgstr "_Tonen in de gereedschapskist"
 
 #~ msgid "New path..."
-#~ msgstr "Nieuw pad..."
+#~ msgstr "Nieuw pad…"
 
 #~ msgid "_New Path"
 #~ msgstr "_Nieuw pad"
