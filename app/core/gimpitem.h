@@ -254,8 +254,11 @@ void            gimp_item_to_selection       (GimpItem           *item,
 
 GeglNode      * gimp_item_get_node           (GimpItem           *item);
 GeglNode      * gimp_item_peek_node          (GimpItem           *item);
-GeglNode      * gimp_item_get_offset_node    (GimpItem           *item);
 
+void            gimp_item_add_offset_node    (GimpItem           *item,
+                                              GeglNode           *node);
+void            gimp_item_remove_offset_node (GimpItem           *item,
+                                              GeglNode           *node);
 
 gint            gimp_item_get_ID             (GimpItem           *item);
 GimpItem      * gimp_item_get_by_ID          (Gimp               *gimp,

@@ -46,6 +46,7 @@ struct _GimpLayer
   gboolean              show_mask;        /*  show mask or layer?        */
 
   GeglNode             *opacity_node;
+  GeglNode             *offset_node;
 
   /*  Floating selections  */
   struct

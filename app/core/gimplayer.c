@@ -854,7 +854,6 @@ gimp_layer_get_node (GimpItem *item)
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
   GimpLayer    *layer    = GIMP_LAYER (item);
   GeglNode     *node;
-  GeglNode     *offset_node;
   GeglNode     *source;
   GeglNode     *mode_node;
   gboolean      source_node_hijacked = FALSE;
@@ -874,6 +873,7 @@ gimp_layer_get_node (GimpItem *item)
     gegl_node_add_child (node, source);
 
   g_warn_if_fail (layer->opacity_node == NULL);
+  g_warn_if_fail (layer->offset_node == NULL);
 
   layer->opacity_node = gegl_node_new_child (node,
                                              "operation", "gegl:opacity",
@@ -905,10 +905,13 @@ gimp_layer_get_node (GimpItem *item)
         }
     }
 
-  offset_node = gimp_item_get_offset_node (GIMP_ITEM (layer));
+  layer->offset_node = gegl_node_new_child (node,
+                                            "operation", "gegl:translate",
+                                            NULL);
+  gimp_item_add_offset_node (GIMP_ITEM (layer), layer->offset_node);
 
   gegl_node_connect_to (layer->opacity_node, "output",
-                        offset_node,         "input");
+                        layer->offset_node,  "input");
 
   mode_node = gimp_drawable_get_mode_node (drawable);
 
@@ -916,8 +919,8 @@ gimp_layer_get_node (GimpItem *item)
                                  layer->mode,
                                  TRUE);
 
-  gegl_node_connect_to (offset_node, "output",
-                        mode_node,   "aux");
+  gegl_node_connect_to (layer->offset_node, "output",
+                        mode_node,          "aux");
 
   return node;
 }

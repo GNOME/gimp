@@ -92,7 +92,7 @@ struct _GimpItemPrivate
 
   GeglNode         *node;               /*  the GEGL node to plug
                                             into the graph           */
-  GeglNode         *offset_node;        /*  the offset as a node     */
+  GList            *offset_nodes;       /*  offset nodes to manage   */
 };
 
 #define GET_PRIVATE(item) G_TYPE_INSTANCE_GET_PRIVATE (item, \
@@ -145,7 +145,6 @@ static void       gimp_item_real_resize             (GimpItem       *item,
                                                      gint            offset_x,
                                                      gint            offset_y);
 static GeglNode * gimp_item_real_get_node           (GimpItem       *item);
-static void       gimp_item_sync_offset_node        (GimpItem       *item);
 
 
 G_DEFINE_TYPE (GimpItem, gimp_item, GIMP_TYPE_VIEWABLE)
@@ -309,8 +308,6 @@ gimp_item_init (GimpItem *item)
   private->linked       = FALSE;
   private->lock_content = FALSE;
   private->removed      = FALSE;
-  private->node         = NULL;
-  private->offset_node  = NULL;
 }
 
 static void
@@ -334,6 +331,13 @@ gimp_item_finalize (GObject *object)
     {
       g_object_unref (private->node);
       private->node = NULL;
+    }
+
+  if (private->offset_nodes)
+    {
+      g_list_free_full (private->offset_nodes,
+                        (GDestroyNotify) g_object_unref);
+      private->offset_nodes = NULL;
     }
 
   if (private->image && private->image->gimp)
@@ -623,18 +627,6 @@ gimp_item_real_get_node (GimpItem *item)
   private->node = gegl_node_new ();
 
   return private->node;
-}
-
-static void
-gimp_item_sync_offset_node (GimpItem *item)
-{
-  GimpItemPrivate *private = GET_PRIVATE (item);
-
-  if (private->offset_node)
-    gegl_node_set (private->offset_node,
-                   "x", (gdouble) private->offset_x,
-                   "y", (gdouble) private->offset_y,
-                   NULL);
 }
 
 
@@ -1050,6 +1042,7 @@ gimp_item_set_offset (GimpItem *item,
                       gint      offset_y)
 {
   GimpItemPrivate *private;
+  GList           *list;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
 
@@ -1069,7 +1062,15 @@ gimp_item_set_offset (GimpItem *item,
       g_object_notify (G_OBJECT (item), "offset-y");
     }
 
-  gimp_item_sync_offset_node (item);
+  for (list = private->offset_nodes; list; list = g_list_next (list))
+    {
+      GeglNode *node = list->data;
+
+      gegl_node_set (node,
+                     "x", (gdouble) private->offset_x,
+                     "y", (gdouble) private->offset_y,
+                     NULL);
+    }
 
   g_object_thaw_notify (G_OBJECT (item));
 }
@@ -1559,28 +1560,43 @@ gimp_item_peek_node (GimpItem *item)
   return GET_PRIVATE (item)->node;
 }
 
-GeglNode *
-gimp_item_get_offset_node (GimpItem *item)
+void
+gimp_item_add_offset_node (GimpItem *item,
+                           GeglNode *node)
 {
   GimpItemPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+  g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (GEGL_IS_NODE (node));
 
   private = GET_PRIVATE (item);
 
-  if (! private->offset_node)
-    {
-      GeglNode *node = gimp_item_get_node (item);
+  g_return_if_fail (g_list_find (private->offset_nodes, node) == NULL);
 
-      private->offset_node =
-        gegl_node_new_child (node,
-                             "operation", "gegl:translate",
-                             "x",         (gdouble) private->offset_x,
-                             "y",         (gdouble) private->offset_y,
-                             NULL);
-    }
+  gegl_node_set (node,
+                 "x", (gdouble) private->offset_x,
+                 "y", (gdouble) private->offset_y,
+                 NULL);
 
-  return private->offset_node;
+  private->offset_nodes = g_list_append (private->offset_nodes,
+                                         g_object_ref (node));
+}
+
+void
+gimp_item_remove_offset_node (GimpItem *item,
+                              GeglNode *node)
+{
+  GimpItemPrivate *private;
+
+  g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (GEGL_IS_NODE (node));
+
+  private = GET_PRIVATE (item);
+
+  g_return_if_fail (g_list_find (private->offset_nodes, node) != NULL);
+
+  private->offset_nodes = g_list_append (private->offset_nodes, node);
+  g_object_unref (node);
 }
 
 gint
