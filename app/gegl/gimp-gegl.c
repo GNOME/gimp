@@ -48,6 +48,10 @@ gimp_gegl_init (Gimp *gimp)
 
   config = GIMP_GEGL_CONFIG (gimp->config);
 
+#ifdef __GNUC__
+#warning limiting tile cache size to G_MAXINT
+#endif
+
   g_object_set (gegl_config (),
                 "tile-width",  TILE_WIDTH,
                 "tile-height", TILE_HEIGHT,
