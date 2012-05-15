@@ -1026,7 +1026,7 @@ gimp_layer_get_opacity_at (GimpPickable *pickable,
 
   if (x >= 0 && x < gimp_item_get_width  (GIMP_ITEM (layer)) &&
       y >= 0 && y < gimp_item_get_height (GIMP_ITEM (layer)) &&
-      gimp_item_get_visible (GIMP_ITEM (layer)))
+      gimp_item_is_visible (GIMP_ITEM (layer)))
     {
       if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
         {
