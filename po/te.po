@@ -1,24 +1,29 @@
 # Gimp Telugu Translation
 # Copyright (C) 1998-2011 Free Software Foundation, Inc.
 # This file is distributed under the same license as the Gimp package.
-# Praveen Illa <mail2ipn@gmail.com>, 2010, 2011, 2012.
 # Suravara Translation Team <support@suravara.com>, 2012.
+# Praveen Illa <mail2ipn@gmail.com>, 2010, 2011, 2012.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-03-13 14:03+0000\n"
-"PO-Revision-Date: 2012-04-14 14:58+0530\n"
-"Last-Translator: Kiran Kumar Chava <chavakiran@suravara.com>\n"
-"Language-Team: సురవర <>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2012-05-13 23:58+0000\n"
+"PO-Revision-Date: 2012-05-15 11:34+0530\n"
+"Last-Translator: Praveen Illa <mail2ipn@gmail.com>\n"
+"Language-Team: Telugu <indlinux-telugu@lists.sourceforge.net>\n"
 "Language: te\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Generator: Virtaal 0.7.0\n"
 "X-Project-Style: gnome\n"
 "X-Poedit-Bookmarks: 2757,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
+"X-Poedit-Language: Telugu\n"
+"X-Poedit-Country: INDIA\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -427,7 +432,7 @@ msgstr "పాఠ్య కూర్పకం"
 #: ../app/actions/actions.c:223 ../app/dialogs/dialogs.c:298
 #: ../app/dialogs/preferences-dialog.c:1854 ../app/gui/gui.c:424
 msgid "Tool Options"
-msgstr "పనిముట్ల ఎంచుకొన్న దానిలు"
+msgstr "పనిముట్ల ఐచ్ఛికాలు"
 
 #: ../app/actions/actions.c:226 ../app/widgets/gimptoolpalette.c:388
 msgid "Tools"
@@ -566,7 +571,7 @@ msgstr "బఫర్ని ఇందులో అతికించు (_I)"
 #: ../app/actions/buffers-actions.c:52
 msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection"
-msgstr "ఎంచుకొన్న దానిచేసిన బఫర్ని ఎంచుకొన్న దానిలో అతికించు"
+msgstr "ఎంచుకున్న బఫర్ని ఎంపికలోకి అతికించు"
 
 #: ../app/actions/buffers-actions.c:57
 msgctxt "buffers-action"
@@ -686,42 +691,42 @@ msgstr "ఈ వాహికను వాహికల దొంతిలో అ�
 #: ../app/actions/channels-actions.c:108
 msgctxt "channels-action"
 msgid "Channel to Sele_ction"
-msgstr "ఎంచుకొన్న దానికు వాహిక (_c)"
+msgstr "వాహిక నుండి ఎంపిక (_c)"
 
 #: ../app/actions/channels-actions.c:109
 msgctxt "channels-action"
 msgid "Replace the selection with this channel"
-msgstr "ఎంచుకొన్న దానిను ఈ వాహికతో ప్రతిస్థాపించు"
+msgstr "ఎంపికను ఈ వాహికతో ప్రతిస్థాపించు"
 
 #: ../app/actions/channels-actions.c:114
 msgctxt "channels-action"
 msgid "_Add to Selection"
-msgstr "ఎంచుకొన్న దానికు జతచేయి (_A)"
+msgstr "ఎంపికకు జతచేయి (_A)"
 
 #: ../app/actions/channels-actions.c:115
 msgctxt "channels-action"
 msgid "Add this channel to the current selection"
-msgstr "ఈ వాహికను ప్రస్తుత ఎంచుకొన్న దానికు జతచేయి"
+msgstr "ఈ వాహికను ప్రస్తుత ఎంపికకు జతచేయి"
 
 #: ../app/actions/channels-actions.c:120
 msgctxt "channels-action"
 msgid "_Subtract from Selection"
-msgstr "ఎంచుకొన్న దాని నుండి తీసివేయి (_S)"
+msgstr "ఎంపిక నుండి తీసివేయి (_S)"
 
 #: ../app/actions/channels-actions.c:121
 msgctxt "channels-action"
 msgid "Subtract this channel from the current selection"
-msgstr "ప్రస్తుత ఎంచుకొన్న దాని నుండి ఈ వాహికను తీసివేయి"
+msgstr "ప్రస్తుత ఎంపిక నుండి ఈ వాహికను తీసివేయి"
 
 #: ../app/actions/channels-actions.c:126
 msgctxt "channels-action"
 msgid "_Intersect with Selection"
-msgstr "ఎంచుకొన్న దానితో ఖండించు (_I)"
+msgstr "ఎంపికతో ఖండించు (_I)"
 
 #: ../app/actions/channels-actions.c:127
 msgctxt "channels-action"
 msgid "Intersect this channel with the current selection"
-msgstr "ప్రస్తుత ఎంచుకొన్న దానితో ఈ వాహికను ఖండించు"
+msgstr "ప్రస్తుత ఎంపికతో ఈ వాహికను ఖండించు"
 
 #: ../app/actions/channels-commands.c:85
 #: ../app/actions/channels-commands.c:402
@@ -754,7 +759,7 @@ msgstr "కొత్త వాహిక"
 
 #: ../app/actions/channels-commands.c:120
 msgid "New Channel Options"
-msgstr "కొత్త వాహిక ఎంచుకొన్న దానిలు"
+msgstr "కొత్త వాహిక ఐచ్ఛికాలు"
 
 #: ../app/actions/channels-commands.c:122
 msgid "New Channel Color"
@@ -977,7 +982,7 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:118
 #: ../app/actions/tool-options-commands.c:72
-#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1523
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1519
 #: ../app/core/gimppalette-import.c:211 ../app/core/gimppalette-load.c:224
 #: ../app/core/gimppalette.c:399 ../app/dialogs/palette-import-dialog.c:771
 #: ../app/widgets/gimpdnd-xds.c:94
@@ -992,12 +997,12 @@ msgstr "పనిముట్ల పెట్టె (_b)"
 #: ../app/actions/dialogs-actions.c:55
 msgctxt "dialogs-action"
 msgid "Tool _Options"
-msgstr "పనిముట్ల ఎంచుకొన్న దానిలు (_O)"
+msgstr "పనిముట్ల ఐచ్ఛికాలు (_O)"
 
 #: ../app/actions/dialogs-actions.c:56
 msgctxt "dialogs-action"
 msgid "Open the tool options dialog"
-msgstr "పనిముట్ల ఎంచుకొన్న దానిల సంవాదాన్ని తెరువు"
+msgstr "పనిముట్ల ఐల సంవాదాన్ని తెరువు"
 
 #: ../app/actions/dialogs-actions.c:61
 msgctxt "dialogs-action"
@@ -1062,12 +1067,12 @@ msgstr "సోపానచిత్రపు సంవాదాన్ని త�
 #: ../app/actions/dialogs-actions.c:97
 msgctxt "dialogs-action"
 msgid "_Selection Editor"
-msgstr "ఎంచుకొన్న దాని కూర్పకం (_S)"
+msgstr "ఎంపిక కూర్పకం (_S)"
 
 #: ../app/actions/dialogs-actions.c:98
 msgctxt "dialogs-action"
 msgid "Open the selection editor"
-msgstr "ఎంచుకొన్న దాని కూర్పకాన్ని తెరువు"
+msgstr "ఎంపిక కూర్పకాన్ని తెరువు"
 
 #: ../app/actions/dialogs-actions.c:103
 msgctxt "dialogs-action"
@@ -1379,7 +1384,7 @@ msgstr "వేరొక తెరకు అనుసంధానించు"
 #: ../app/actions/dock-actions.c:63
 msgctxt "dock-action"
 msgid "_Show Image Selection"
-msgstr "బొమ్మ ఎంచుకొన్న దానిను చూపించు (_S)"
+msgstr "బొమ్మ ఎంపికను చూపించు (_S)"
 
 #: ../app/actions/dock-actions.c:69
 msgctxt "dock-action"
@@ -1942,7 +1947,7 @@ msgstr "కనిపించేదాన్ని నకలుచేయి(_V)"
 #: ../app/actions/edit-actions.c:123
 msgctxt "edit-action"
 msgid "Copy what is visible in the selected region"
-msgstr "ఎంచుకొన్న ప్రాంతంలో కనింపించేదాన్ని నకలుతీయి"
+msgstr "ఎంచుకున్న ప్రాంతంలో కనిపించేదాన్ని నకలించు"
 
 #: ../app/actions/edit-actions.c:128
 msgctxt "edit-action"
@@ -1962,7 +1967,7 @@ msgstr "ఇందులో అతికించు (_I)"
 #: ../app/actions/edit-actions.c:136
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard into the current selection"
-msgstr "క్లిప్‌బోర్డు విషయాన్ని ప్రస్తుత ఎంచుకొన్న దానిలోకి అతికించు"
+msgstr "క్లిప్‌బోర్డు విషయాన్ని ప్రస్తుత ఎంపికలోకి అతికించు"
 
 #: ../app/actions/edit-actions.c:141
 msgctxt "edit-action"
@@ -1997,7 +2002,7 @@ msgstr "పేరు కత్తిరింపు"
 #: ../app/actions/edit-actions.c:160
 msgctxt "edit-action"
 msgid "Move the selected pixels to a named buffer"
-msgstr "ఎంచుకొన్న చిణువులను పేర్కొన్న బఫర్‌లోకి తరలించు"
+msgstr "ఎంచుకున్న చిణువులను పేర్కొన్న బఫర్‌లోకి తరలించు"
 
 #: ../app/actions/edit-actions.c:165
 msgctxt "edit-action"
@@ -2176,12 +2181,12 @@ msgstr "దోష కన్సోల్‌ను చెరిపివేయి"
 #: ../app/actions/error-console-actions.c:49
 msgctxt "error-console-action"
 msgid "Select _All"
-msgstr "అన్నింటిని ఎంచుకో (_A)"
+msgstr "అన్నీ ఎంపికచేయి (_A)"
 
 #: ../app/actions/error-console-actions.c:50
 msgctxt "error-console-action"
 msgid "Select all error messages"
-msgstr "దోష సందేశాలన్నీ ఎంచుకో"
+msgstr "దోష సందేశాలన్నీ ఎంచుకొను"
 
 #: ../app/actions/error-console-actions.c:58
 msgctxt "error-console-action"
@@ -2196,7 +2201,7 @@ msgstr "దోష సందేశాలన్నీ దస్త్రంలో�
 #: ../app/actions/error-console-actions.c:64
 msgctxt "error-console-action"
 msgid "Save S_election to File..."
-msgstr "ఎంపికను దస్త్రంకు దాచు(_e)..."
+msgstr "ఎంపికను దస్త్రానికి భద్రపరుచు...(_e)"
 
 #: ../app/actions/error-console-actions.c:65
 msgctxt "error-console-action"
@@ -2243,7 +2248,7 @@ msgstr "తెరువు...(_O)"
 #: ../app/actions/file-actions.c:77
 msgctxt "file-action"
 msgid "Open an image file"
-msgstr "బొమ్మ దస్త్రంను తెరువు"
+msgstr "బొమ్మ దస్త్రాన్ని తెరువు"
 
 #: ../app/actions/file-actions.c:82
 msgctxt "file-action"
@@ -2253,7 +2258,7 @@ msgstr "పొరలు వలె తెరువు...(_e)"
 #: ../app/actions/file-actions.c:83
 msgctxt "file-action"
 msgid "Open an image file as layers"
-msgstr "బొమ్మ దస్త్రంను పొరలుగా తెరువు"
+msgstr "బొమ్మ దస్త్రాన్ని పొరలుగా తెరువు"
 
 #: ../app/actions/file-actions.c:88
 msgctxt "file-action"
@@ -2283,7 +2288,7 @@ msgstr "మార్పురద్దుచేయి(_v)"
 #: ../app/actions/file-actions.c:101
 msgctxt "file-action"
 msgid "Reload the image file from disk"
-msgstr "బొమ్మ దస్త్రంను డిస్క్‍నుండి మరలా నింపు"
+msgstr "బొమ్మ దస్త్రాన్ని డిస్క్ నుండి మరలా నింపు"
 
 #: ../app/actions/file-actions.c:106
 msgctxt "file-action"
@@ -2303,7 +2308,7 @@ msgstr "నిష్క్రమించు (_Q)"
 #: ../app/actions/file-actions.c:113
 msgctxt "file-action"
 msgid "Quit the GNU Image Manipulation Program"
-msgstr "గ్నూ ఇమేజ్ మానిప్యులేషన్ ప్రోగ్రామునుండి నిష్క్రమించు"
+msgstr "గ్నూ ఇమేజ్ మానిప్యులేషన్ ప్రోగ్రాము నుండి నిష్క్రమించు"
 
 #: ../app/actions/file-actions.c:121
 msgctxt "file-action"
@@ -2662,12 +2667,12 @@ msgstr "అవరూపించు"
 
 #: ../app/actions/gradient-editor-actions.c:385
 msgid "Zoom All"
-msgstr "అన్నింటినీ అతిరూపించు"
+msgstr "అన్నీ అతిరూపించు"
 
 #: ../app/actions/gradient-editor-actions.c:386
 #: ../app/actions/palette-editor-actions.c:101
 msgid "Zoom all"
-msgstr "అన్నింటినీ అతిరూపించు"
+msgstr "అన్నీ అతిరూపించు"
 
 #: ../app/actions/gradient-editor-actions.c:776
 msgid "_Blending Function for Segment"
@@ -2771,7 +2776,7 @@ msgstr "ఎంపికను నకలించు"
 
 #: ../app/actions/gradient-editor-commands.c:457
 msgid "Replicate Gradient Selection"
-msgstr "ఎంచుకొన్న రంగురీతిని నకలించు"
+msgstr "ఎంపిక రంగురీతిని నకలించు"
 
 #: ../app/actions/gradient-editor-commands.c:470
 msgid "Replicate"
@@ -2982,7 +2987,7 @@ msgstr "అంతర్భాగాలు (_o)"
 #: ../app/actions/image-actions.c:67
 msgctxt "image-action"
 msgid "_New..."
-msgstr "కొత్త...(_N)"
+msgstr "కొత్తది...(_N)"
 
 #: ../app/actions/image-actions.c:68
 msgctxt "image-action"
@@ -3097,7 +3102,7 @@ msgstr "బొమ్మ లక్షణాలు (_o)"
 #: ../app/actions/image-actions.c:134
 msgctxt "image-action"
 msgid "Display information about this image"
-msgstr "ఈబొమ్మ గురించిన సమాచారాన్ని చూపించు"
+msgstr "ఈ బొమ్మ గురించిన సమాచారాన్ని చూపించు"
 
 #: ../app/actions/image-actions.c:142
 msgctxt "image-convert-action"
@@ -3122,7 +3127,7 @@ msgstr "బొమ్మను కృష్ణమానానికి మార�
 #: ../app/actions/image-actions.c:152
 msgctxt "image-convert-action"
 msgid "_Indexed..."
-msgstr "సూచితం(_I)..."
+msgstr "సూచితం...(_I)"
 
 #: ../app/actions/image-actions.c:153
 msgctxt "image-convert-action"
@@ -3162,7 +3167,7 @@ msgstr "బొమ్మను కుడివైపుకి 90 డిగ్ర�
 #: ../app/actions/image-actions.c:181
 msgctxt "image-action"
 msgid "Rotate _180°"
-msgstr "_180° డిగ్రీలు తిప్పు "
+msgstr "180° డిగ్రీలు తిప్పు "
 
 #: ../app/actions/image-actions.c:182
 msgctxt "image-action"
@@ -3205,7 +3210,7 @@ msgstr "తిరగబడుతోంది"
 #: ../app/pdb/item-transform-cmds.c:433 ../app/pdb/transform-tools-cmds.c:245
 #: ../app/tools/gimprotatetool.c:125
 msgid "Rotating"
-msgstr "తిరుగుతోంది"
+msgstr "తిప్పుతోంది"
 
 #: ../app/actions/image-commands.c:429 ../app/actions/layers-commands.c:691
 msgid "Cannot crop because the current selection is empty."
@@ -3513,7 +3518,7 @@ msgstr "ఈ పొర పాఠ్యాన్ని ప్రస్తుత �
 #: ../app/actions/layers-actions.c:192
 msgctxt "layers-action"
 msgid "Layer B_oundary Size..."
-msgstr "పొర సరిహద్దు పరిమాణం.."
+msgstr "పొర సరిహద్దు పరిమాణం..."
 
 #: ../app/actions/layers-actions.c:193
 msgctxt "layers-action"
@@ -3708,42 +3713,42 @@ msgstr "పొర ఆల్ఫా వాహికను ప్రస్తుత
 #: ../app/actions/layers-actions.c:342
 msgctxt "layers-action"
 msgid "Select _Top Layer"
-msgstr "పై పొరను ఎంచుకో(_T)"
+msgstr "పై పొరను ఎంచుకొను (_T)"
 
 #: ../app/actions/layers-actions.c:343
 msgctxt "layers-action"
 msgid "Select the topmost layer"
-msgstr "అన్నింటి కన్నా పైపొరను ఎంచుకో"
+msgstr "అన్నింటి కన్నా పైపొరను ఎంచుకొను"
 
 #: ../app/actions/layers-actions.c:348
 msgctxt "layers-action"
 msgid "Select _Bottom Layer"
-msgstr "అట్టడుగు పొరను ఎంచుకో(_B)"
+msgstr "అట్టడుగు పొరను ఎంచుకొను (_B)"
 
 #: ../app/actions/layers-actions.c:349
 msgctxt "layers-action"
 msgid "Select the bottommost layer"
-msgstr "అట్టడుగు పొరను ఎంచుకో"
+msgstr "అట్టడుగు పొరను ఎంచుకొను"
 
 #: ../app/actions/layers-actions.c:354
 msgctxt "layers-action"
 msgid "Select _Previous Layer"
-msgstr "క్రితం పొరను ఎంచుకో(_P)"
+msgstr "క్రితం పొరను ఎంచుకొను (_P)"
 
 #: ../app/actions/layers-actions.c:355
 msgctxt "layers-action"
 msgid "Select the layer above the current layer"
-msgstr "ప్రస్తుత పొరకు పైనున్న పొరను ఎంచుకో"
+msgstr "ప్రస్తుత పొరకు పైనున్న పొరను ఎంచుకొను"
 
 #: ../app/actions/layers-actions.c:360
 msgctxt "layers-action"
 msgid "Select _Next Layer"
-msgstr "తర్వాతి పొరను ఎంచుకో(_N)"
+msgstr "తర్వాతి పొరను ఎంచుకొను (_N)"
 
 #: ../app/actions/layers-actions.c:361
 msgctxt "layers-action"
 msgid "Select the layer below the current layer"
-msgstr "ప్రస్తుత పొరకు క్రింద ఉన్న పొరను ఎంచుకో"
+msgstr "ప్రస్తుత పొరకు క్రింద ఉన్న పొరను ఎంచుకొను"
 
 #. Will be followed with e.g. "Shift-Click
 #. on thumbnail"
@@ -3997,7 +4002,7 @@ msgstr "కొత్త సరళి (_N)"
 #: ../app/actions/patterns-actions.c:53
 msgctxt "patterns-action"
 msgid "Create a new pattern"
-msgstr "ఒక కొత్త సరళిను సృష్టించు"
+msgstr "ఒక కొత్త సరళిని సృష్టించు"
 
 #: ../app/actions/patterns-actions.c:58
 msgctxt "patterns-action"
@@ -4007,7 +4012,7 @@ msgstr "సరళిను నకలించు (_u)"
 #: ../app/actions/patterns-actions.c:59
 msgctxt "patterns-action"
 msgid "Duplicate this pattern"
-msgstr "ఈ సరళిను నకిలు చేయి."
+msgstr "ఈ సరళిని నకిలీచేయి"
 
 #: ../app/actions/patterns-actions.c:64
 msgctxt "patterns-action"
@@ -4022,12 +4027,12 @@ msgstr "సరళి దస్ర స్థానాన్ని క్లిప
 #: ../app/actions/patterns-actions.c:70
 msgctxt "patterns-action"
 msgid "_Delete Pattern"
-msgstr "సరళిను తొలగించు...(_D)"
+msgstr "సరళిని తొలగించు...(_D)"
 
 #: ../app/actions/patterns-actions.c:71
 msgctxt "patterns-action"
 msgid "Delete this pattern"
-msgstr "ఈ సరళిను తొలగించు"
+msgstr "ఈ సరళిని తొలగించు"
 
 #: ../app/actions/patterns-actions.c:76
 msgctxt "patterns-action"
@@ -4052,7 +4057,7 @@ msgstr "సరళిని సవరించు"
 #: ../app/actions/plug-in-actions.c:85
 msgctxt "plug-in-action"
 msgid "Filte_rs"
-msgstr "వడబోతలు (_r)"
+msgstr "వడబోతకాలు (_r)"
 
 #: ../app/actions/plug-in-actions.c:87
 msgctxt "plug-in-action"
@@ -4269,7 +4274,7 @@ msgstr "ఎంపిక కూర్పరి మెనూ"
 #: ../app/actions/select-actions.c:47
 msgctxt "select-action"
 msgid "_Select"
-msgstr "ఎంచుకో (_S)"
+msgstr "ఎంచు (_S)"
 
 #: ../app/actions/select-actions.c:50
 msgctxt "select-action"
@@ -4821,7 +4826,7 @@ msgstr "రంగు పనిముట్లు (_C)"
 #: ../app/actions/tools-actions.c:55
 msgctxt "tools-action"
 msgid "_By Color"
-msgstr "రంగుచే(_B)"
+msgstr "రంగు ద్వారా (_B)"
 
 #: ../app/actions/tools-actions.c:56
 msgctxt "tools-action"
@@ -5067,7 +5072,7 @@ msgstr "బాటకు(_P)"
 #: ../app/actions/vectors-actions.c:213
 msgctxt "vectors-action"
 msgid "Selection to Path (_Advanced)"
-msgstr "ఎంపిక నుండి బాట (పురోగత _A)"
+msgstr "ఎంపిక నుండి బాట (ఉన్నతం) (_A)"
 
 #: ../app/actions/vectors-actions.c:214
 msgctxt "vectors-action"
@@ -5103,12 +5108,12 @@ msgstr "బాటకు రంగువేయి"
 #: ../app/actions/view-actions.c:68
 msgctxt "view-action"
 msgid "_View"
-msgstr "వీక్షణ (_V)"
+msgstr "వీక్షణం (_V)"
 
 #: ../app/actions/view-actions.c:69
 msgctxt "view-action"
 msgid "_Zoom"
-msgstr "అతిరూపు (_Z)"
+msgstr "జూమ్ (_Z)"
 
 #: ../app/actions/view-actions.c:70
 msgctxt "view-action"
@@ -5133,7 +5138,7 @@ msgstr "ఈ బొమ్మపై మరొక వీక్షణాన్ని
 #: ../app/actions/view-actions.c:82
 msgctxt "view-action"
 msgid "_Close"
-msgstr "మూయి (_C)"
+msgstr "మూసివేయి (_C)"
 
 #: ../app/actions/view-actions.c:83
 msgctxt "view-action"
@@ -5363,12 +5368,12 @@ msgstr "నిండుతెర వీక్షణాన్ని అటుఇ�
 #: ../app/actions/view-actions.c:238
 msgctxt "view-action"
 msgid "Use GEGL"
-msgstr "జిఇజిల్‌ను వాడు"
+msgstr "GEGL వాడు"
 
 #: ../app/actions/view-actions.c:239
 msgctxt "view-action"
 msgid "Use GEGL to create this window's projection"
-msgstr "ఈ కిటికీస్ యొక్కఆరోపణం సృష్టించడానికి జిఇజిల్‌ను వాడు"
+msgstr "ఈ విండోస్ యొక్క ఆరోపణం సృష్టించడానికి GEGL వాడు"
 
 #: ../app/actions/view-actions.c:263
 msgctxt "view-zoom-action"
@@ -5376,10 +5381,9 @@ msgid "Zoom _Out"
 msgstr "అవరూపించు (_O)"
 
 #: ../app/actions/view-actions.c:264 ../app/actions/view-actions.c:276
-#| msgid "Zoom out"
 msgctxt "view-zoom-action"
 msgid "Zoom out"
-msgstr "అవరూపించు (దూరంగా చూపి, చిన్నగా చూపు)"
+msgstr "అవరూపించు"
 
 #: ../app/actions/view-actions.c:269
 msgctxt "view-zoom-action"
@@ -5387,10 +5391,9 @@ msgid "Zoom _In"
 msgstr "అతిరూపించు (_I)"
 
 #: ../app/actions/view-actions.c:270 ../app/actions/view-actions.c:282
-#| msgid "Zoom in"
 msgctxt "view-zoom-action"
 msgid "Zoom in"
-msgstr "అతిరూపించు(దగ్గరగా చూపి పెద్దది చేయి)"
+msgstr "అతిరూపించు"
 
 #: ../app/actions/view-actions.c:275
 msgctxt "view-zoom-action"
@@ -5410,7 +5413,7 @@ msgstr "1_6:1  (1600%)"
 #: ../app/actions/view-actions.c:301 ../app/actions/view-actions.c:307
 msgctxt "view-zoom-action"
 msgid "Zoom 16:1"
-msgstr "అవరూపణ 16:1"
+msgstr "జూమ్ 16:1"
 
 #: ../app/actions/view-actions.c:312 ../app/actions/view-actions.c:318
 msgctxt "view-zoom-action"
@@ -5420,7 +5423,7 @@ msgstr "_8:1  (800%)"
 #: ../app/actions/view-actions.c:313 ../app/actions/view-actions.c:319
 msgctxt "view-zoom-action"
 msgid "Zoom 8:1"
-msgstr "అవరూపణ 8:1"
+msgstr "జూమ్ 8:1"
 
 #: ../app/actions/view-actions.c:324 ../app/actions/view-actions.c:330
 msgctxt "view-zoom-action"
@@ -5430,7 +5433,7 @@ msgstr "_4:1  (400%)"
 #: ../app/actions/view-actions.c:325 ../app/actions/view-actions.c:331
 msgctxt "view-zoom-action"
 msgid "Zoom 4:1"
-msgstr "అవరూపణ 4:1"
+msgstr "జూమ్ 4:1"
 
 #: ../app/actions/view-actions.c:336 ../app/actions/view-actions.c:342
 msgctxt "view-zoom-action"
@@ -5440,7 +5443,7 @@ msgstr "_2:1  (200%)"
 #: ../app/actions/view-actions.c:337 ../app/actions/view-actions.c:343
 msgctxt "view-zoom-action"
 msgid "Zoom 2:1"
-msgstr "అవరూపణ 2:1"
+msgstr "జూమ్ 2:1"
 
 #: ../app/actions/view-actions.c:348 ../app/actions/view-actions.c:354
 msgctxt "view-zoom-action"
@@ -5450,7 +5453,7 @@ msgstr "_1:1  (100%)"
 #: ../app/actions/view-actions.c:349 ../app/actions/view-actions.c:355
 msgctxt "view-zoom-action"
 msgid "Zoom 1:1"
-msgstr "అవరూపణ 1:1"
+msgstr "జూమ్ 1:1"
 
 #: ../app/actions/view-actions.c:360
 msgctxt "view-zoom-action"
@@ -5460,7 +5463,7 @@ msgstr "1:_2  (50%)"
 #: ../app/actions/view-actions.c:361
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2"
-msgstr "అవరూపణ1:2"
+msgstr "జూమ్1:2"
 
 #: ../app/actions/view-actions.c:366
 msgctxt "view-zoom-action"
@@ -5470,7 +5473,7 @@ msgstr "1:_4  (25%)"
 #: ../app/actions/view-actions.c:367
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4"
-msgstr "అవరూపణ 1:4"
+msgstr "జూమ్ 1:4"
 
 #: ../app/actions/view-actions.c:372
 msgctxt "view-zoom-action"
@@ -5480,7 +5483,7 @@ msgstr "1:_8  (12.5%)"
 #: ../app/actions/view-actions.c:373
 msgctxt "view-zoom-action"
 msgid "Zoom 1:8"
-msgstr "అవరూపణ 1:8"
+msgstr "జూమ్ 1:8"
 
 #: ../app/actions/view-actions.c:378
 msgctxt "view-zoom-action"
@@ -5490,7 +5493,7 @@ msgstr "1:1_6  (6.25%)"
 #: ../app/actions/view-actions.c:379
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16"
-msgstr "అవరూపణ 1:16"
+msgstr "జూమ్ 1:16"
 
 #: ../app/actions/view-actions.c:384
 msgctxt "view-zoom-action"
@@ -5535,7 +5538,7 @@ msgstr "ముదురుపాటి రంగు వాడు"
 #: ../app/actions/view-actions.c:411
 msgctxt "view-padding-color"
 msgid "Select _Custom Color..."
-msgstr "అనురూపిత రంగును ఎంచుకో(_C)..."
+msgstr "అనురూపిత రంగును ఎంచుకొను (_C)..."
 
 #: ../app/actions/view-actions.c:412
 msgctxt "view-padding-color"
@@ -5587,7 +5590,7 @@ msgstr "తెర %s"
 #: ../app/actions/window-actions.c:172
 #, c-format
 msgid "Move this window to screen %s"
-msgstr "ఈ కిటికీని తెరకు కదిలించు %s"
+msgstr "ఈ కిటికీని %s తెరకు తరలించు"
 
 #: ../app/actions/windows-actions.c:95
 msgctxt "windows-action"
@@ -5597,7 +5600,7 @@ msgstr "కిటికీలు (_W)"
 #: ../app/actions/windows-actions.c:97
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
-msgstr "ఇటీవలిమూసివేసిన రేవులు(_R)"
+msgstr "ఇటీవలి మూసివేసిన రేవులు(_R)"
 
 #: ../app/actions/windows-actions.c:99
 msgctxt "windows-action"
@@ -5841,7 +5844,7 @@ msgstr "పనిముట్టు ప్రతీక"
 #: ../app/config/config-enums.c:25
 msgctxt "cursor-mode"
 msgid "Tool icon with crosshair"
-msgstr "గురిగుర్తుతో పనిముట్టు ప్రతిమ"
+msgstr "గురిగుర్తుతో పనిముట్టు ప్రతీక"
 
 #: ../app/config/config-enums.c:26
 msgctxt "cursor-mode"
@@ -5982,7 +5985,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:23 ../app/config/gimprc-blurbs.h:28
 msgid "Sets the dynamics search path."
-msgstr "గతిక శోధన మార్గాన్ని అమర్చును"
+msgstr "గతిక శోధన పథాన్ని అమర్చును"
 
 #: ../app/config/gimprc-blurbs.h:33
 msgid ""
@@ -6451,7 +6454,7 @@ msgid "When enabled, pressing F1 will open the help browser."
 msgstr "చేతనం చేసినప్పుడు యఫ్1 నొక్కి సహాయ విహారిణి తెరవవచ్చు."
 
 #: ../app/config/gimprc-deserialize.c:135 ../app/core/gimp-modules.c:133
-#: ../app/core/gimp-units.c:167 ../app/gui/session.c:279
+#: ../app/core/gimp-units.c:167 ../app/gui/session.c:286
 #: ../app/plug-in/plug-in-rc.c:212
 msgid "fatal parse error"
 msgstr "తీవ్రతర ముదింపు దోషం"
@@ -7239,7 +7242,7 @@ msgid "Jitter"
 msgstr "వణుకు"
 
 #: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:375
-#: ../app/gui/session.c:392 ../app/menus/menus.c:464
+#: ../app/gui/session.c:399 ../app/menus/menus.c:464
 #: ../app/widgets/gimpdevices.c:206
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
@@ -7313,14 +7316,14 @@ msgstr "మునుతలం నుండి పారదర్శకం"
 msgid "tags-locale:C"
 msgstr "tags-locale:te"
 
-#: ../app/core/gimp-user-install.c:159
+#: ../app/core/gimp-user-install.c:173
 #, c-format
 msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
 "settings to '%s'."
 msgstr "మీరు %s గింపు గతంలో వాడినట్టున్నారు. ఇప్పుడు గింపు మీ ఐచ్చికాలను %s కు వలసపంపుతుంది."
 
-#: ../app/core/gimp-user-install.c:164
+#: ../app/core/gimp-user-install.c:178
 #, c-format
 msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
@@ -7329,17 +7332,17 @@ msgstr ""
 "మీరు గింపు మొదటిసారి వాడుతున్నట్టున్నారు. గింపు ఇప్పుడు %s పేరుతో ఒక సంచయాన్ని సృష్టించి కొన్ని "
 "దస్త్రాలను అక్కడకు నకలు చేస్తుంది."
 
-#: ../app/core/gimp-user-install.c:316
+#: ../app/core/gimp-user-install.c:329
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "%s దస్త్రాన్ని %sకు  నకలు చేస్తోంది..."
 
-#: ../app/core/gimp-user-install.c:331 ../app/core/gimp-user-install.c:357
+#: ../app/core/gimp-user-install.c:344 ../app/core/gimp-user-install.c:370
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "'%s' సంచయాన్ని సృష్టిస్తోంది..."
 
-#: ../app/core/gimp-user-install.c:342 ../app/core/gimp-user-install.c:368
+#: ../app/core/gimp-user-install.c:355 ../app/core/gimp-user-install.c:381
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "'%s' సంచయాన్ని సృష్టించుట వీలుకాలేదు: %s"
@@ -7376,7 +7379,7 @@ msgstr "ఖతులు (సమయం పట్టవచ్చు)"
 #. initialize the module list
 #: ../app/core/gimp.c:993 ../app/dialogs/preferences-dialog.c:2775
 msgid "Modules"
-msgstr "దినుసులు"
+msgstr "పర్వికాలు"
 
 #. update tag cache
 #: ../app/core/gimp.c:997
@@ -8068,7 +8071,7 @@ msgstr "బొమ్మ పరిమాణం మార్చు"
 #: ../app/core/gimpimage-guides.c:52
 msgctxt "undo-type"
 msgid "Add Horizontal Guide"
-msgstr "అడ్డు మార్గదర్శకాన్ని జతచేయి"
+msgstr "అడ్డ మార్గదర్శకాన్ని జతచేయి"
 
 #: ../app/core/gimpimage-guides.c:76
 msgctxt "undo-type"
@@ -8185,57 +8188,57 @@ msgstr "బొమ్మను పరిమాణించు"
 msgid "Can't undo %s"
 msgstr "%s రద్దుచేయలేము"
 
-#: ../app/core/gimpimage.c:1808
+#: ../app/core/gimpimage.c:1804
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "బొమ్మ విభాజకతను మార్చు"
 
-#: ../app/core/gimpimage.c:1860
+#: ../app/core/gimpimage.c:1856
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "బొమ్మ విభాగమును మార్చు"
 
-#: ../app/core/gimpimage.c:2852
+#: ../app/core/gimpimage.c:2869
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "బొమ్మకు పరాన్నమును జోడించు"
 
-#: ../app/core/gimpimage.c:2893
+#: ../app/core/gimpimage.c:2910
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "బొమ్మ నుండి పరాన్నమును తొలగించు"
 
-#: ../app/core/gimpimage.c:3602
+#: ../app/core/gimpimage.c:3619
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "పొర చేర్చు"
 
-#: ../app/core/gimpimage.c:3652 ../app/core/gimpimage.c:3672
+#: ../app/core/gimpimage.c:3669 ../app/core/gimpimage.c:3689
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "పొర తొలగించు"
 
-#: ../app/core/gimpimage.c:3666
+#: ../app/core/gimpimage.c:3683
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "చలన ఎంపికను తొలగించు"
 
-#: ../app/core/gimpimage.c:3834
+#: ../app/core/gimpimage.c:3851
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "వాహిక చేర్చు"
 
-#: ../app/core/gimpimage.c:3872 ../app/core/gimpimage.c:3885
+#: ../app/core/gimpimage.c:3889 ../app/core/gimpimage.c:3902
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "వాహిక తొలగించు"
 
-#: ../app/core/gimpimage.c:3939
+#: ../app/core/gimpimage.c:3956
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "బాట చేర్చు"
 
-#: ../app/core/gimpimage.c:3970
+#: ../app/core/gimpimage.c:3987
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "బొట తొలగించు"
@@ -8960,11 +8963,11 @@ msgstr ""
 
 #: ../app/dialogs/file-save-dialog.c:585
 msgid "Extension Mismatch"
-msgstr "పొడిగింపు సరిపోలలేదు"
+msgstr "పొడిగింత సరిపోలలేదు"
 
 #: ../app/dialogs/file-save-dialog.c:601
 msgid "The given file extension does not match the chosen file type."
-msgstr "ఇచ్చిన దస్రపు పొడిగింపు ఎంచుకొన్న దస్త్ర రకానికి సరిపోవడం లేదు."
+msgstr "ఇచ్చిన దస్రపు పొడిగింత ఎంచుకొన్న దస్త్ర రకానికి సరిపోవడం లేదు."
 
 #: ../app/dialogs/file-save-dialog.c:605
 msgid "Do you want to save the image using this name anyway?"
@@ -9163,7 +9166,7 @@ msgstr "పాఠ్యం నుండి పేరును అమర్చు
 
 #: ../app/dialogs/module-dialog.c:126
 msgid "Module Manager"
-msgstr "దినుసు నిర్వాహకుడు"
+msgstr "పర్విక నిర్వాహకం"
 
 #: ../app/dialogs/module-dialog.c:150
 msgid "You will have to restart GIMP for the changes to take effect."
@@ -9171,7 +9174,7 @@ msgstr "మార్పులు ప్రభావితం అవ్వటా�
 
 #: ../app/dialogs/module-dialog.c:191
 msgid "Module"
-msgstr "దినుసు"
+msgstr "పర్విక"
 
 #: ../app/dialogs/module-dialog.c:465
 msgid "Only in memory"
@@ -9574,7 +9577,7 @@ msgstr "జాల సంపుటిని వాడు"
 
 #: ../app/dialogs/preferences-dialog.c:1802
 msgid "Use a locally installed copy"
-msgstr "స్థానిక ప్రతిష్టిత నకలును వాడు"
+msgstr "స్థానికంగా స్థాపించిన నకలును వాడు"
 
 #: ../app/dialogs/preferences-dialog.c:1803
 msgid "User manual:"
@@ -9681,12 +9684,10 @@ msgid "Default Image"
 msgstr "అప్రమేయ బొమ్మ"
 
 #: ../app/dialogs/preferences-dialog.c:2028
-#| msgid "Edit Quick Mask Color"
 msgid "Set the default Quick Mask color"
 msgstr "అప్రమేయ త్వరిత ముసుగు రంగుని అమర్చు"
 
 #: ../app/dialogs/preferences-dialog.c:2034
-#| msgid "Edit Quick Mask Color"
 msgid "Quick Mask color:"
 msgstr "త్వరిత ముసుగు రంగు:"
 
@@ -9861,7 +9862,7 @@ msgstr "స్వతహాగా గుర్తించు(ప్రస్త�
 
 #: ../app/dialogs/preferences-dialog.c:2384
 msgid "_Enter manually"
-msgstr "చేత్తో ప్రవేశపెట్టు (_E)"
+msgstr "మానవీయంగా ప్రవేశపెట్టు (_E)"
 
 #: ../app/dialogs/preferences-dialog.c:2399
 msgid "C_alibrate..."
@@ -9893,7 +9894,7 @@ msgstr "తెర ప్రవర (_M):"
 
 #: ../app/dialogs/preferences-dialog.c:2452
 msgid "Select Monitor Color Profile"
-msgstr "తెర రంగు ప్రవరను ఎంచుకో"
+msgstr "తెర రంగు ప్రవరను ఎంచుకొను"
 
 #: ../app/dialogs/preferences-dialog.c:2453
 msgid "_Print simulation profile:"
@@ -9901,7 +9902,7 @@ msgstr "అనుకరణ ప్రవరను ముద్రించు(_P)
 
 #: ../app/dialogs/preferences-dialog.c:2454
 msgid "Select Printer Color Profile"
-msgstr "ప్రింటరు రంగు ప్రవరను ఎంచుకో"
+msgstr "ముద్రకం రంగు ప్రవరను ఎంచుకొను"
 
 #: ../app/dialogs/preferences-dialog.c:2465
 msgid "_Mode of operation:"
@@ -9929,7 +9930,7 @@ msgstr "హెచ్చరిక రంగుని ఎంచుకొను"
 
 #: ../app/dialogs/preferences-dialog.c:2545
 msgid "File Open behaviour:"
-msgstr "దస్త్రంను తెరుచు ప్రవర్తన:"
+msgstr "దస్త్రాన్ని తెరుచు ప్రవర్తన:"
 
 #: ../app/dialogs/preferences-dialog.c:2557
 msgid "Input Devices"
@@ -10099,11 +10100,11 @@ msgstr "లిపి-ఫు సంచయాలను ఎంచుకో"
 
 #: ../app/dialogs/preferences-dialog.c:2775
 msgid "Module Folders"
-msgstr "దినుసు సంచయాలు"
+msgstr "పర్విక సంచయాలు"
 
 #: ../app/dialogs/preferences-dialog.c:2777
 msgid "Select Module Folders"
-msgstr "దినుసు సంచయాలను ఎంచుకో"
+msgstr "పర్విక సంచయాలను ఎంచుకొను"
 
 #: ../app/dialogs/preferences-dialog.c:2779
 msgid "Interpreters"
@@ -10461,22 +10462,22 @@ msgstr "బొమ్మ ప్రదర్శనను యానంచేయి"
 msgid "Drop image files here to open them"
 msgstr "బొమ్మ దస్రాలను తెరచడానికి ఇక్కడ వదిలేయి "
 
-#: ../app/display/gimpdisplayshell-close.c:153
-#: ../app/display/gimpdisplayshell-close.c:223
+#: ../app/display/gimpdisplayshell-close.c:156
+#: ../app/display/gimpdisplayshell-close.c:229
 #, c-format
 msgid "Close %s"
 msgstr "%s మూసివేయి"
 
-#: ../app/display/gimpdisplayshell-close.c:164
+#: ../app/display/gimpdisplayshell-close.c:167
 msgid "Close _without Saving"
 msgstr "భద్రపరుచకుండానే మూసివేయి (_w)"
 
-#: ../app/display/gimpdisplayshell-close.c:231
+#: ../app/display/gimpdisplayshell-close.c:237
 #, c-format
 msgid "Save the changes to image '%s' before closing?"
 msgstr "'%s' మూసే ముందు బొమ్మకి చేసిన మార్పులని భద్రపరుచాలనుకుంటన్నారా?"
 
-#: ../app/display/gimpdisplayshell-close.c:254
+#: ../app/display/gimpdisplayshell-close.c:270
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
 msgid_plural ""
@@ -10484,7 +10485,7 @@ msgid_plural ""
 msgstr[0] "మీరు బొమ్మను భద్రపరచకపోతే, గత గంటలో చేసిన మార్పులు కోల్పాతారు"
 msgstr[1] "'%d' మూసే ముందు బొమ్మకి చేసిన మార్పులని భద్రపరుచాలనుకుంటన్నారా?"
 
-#: ../app/display/gimpdisplayshell-close.c:264
+#: ../app/display/gimpdisplayshell-close.c:281
 #, c-format
 msgid ""
 "If you don't save the image, changes from the last hour and %d minute will "
@@ -10495,13 +10496,18 @@ msgid_plural ""
 msgstr[0] "మీరు ఈ బొమ్మను దాచకపోతే గత గంటలో %d నిమిషాల్లో చేసిన మార్పులన్నీ కోల్పోతారు."
 msgstr[1] "మీరు దాచకపోతే, గత గంట మరియు %d నిముషాల నుండి చేసిన మార్పులు పూర్తిగా పోతాయి"
 
-#: ../app/display/gimpdisplayshell-close.c:275
+#: ../app/display/gimpdisplayshell-close.c:293
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d minutes will be lost."
 msgstr[0] "మీరు బొమ్మను భద్రపరచకపోతే, గత నిమిషంలో చేసిన మార్పులన్నీ కోల్పోతారు."
 msgstr[1] "మీరు భద్రపరుచకపోతే, గడిచిన %d నిముషాల నుండి చేసిన మార్పులు పూర్తిగా పోతాయి"
+
+#: ../app/display/gimpdisplayshell-close.c:305
+#, c-format
+msgid "The image has been exported to '%s'."
+msgstr "'%s'కి బొమ్మ ఎగుమతించాము."
 
 #: ../app/display/gimpdisplayshell-dnd.c:232
 #: ../app/display/gimpdisplayshell-dnd.c:635
@@ -10523,7 +10529,7 @@ msgstr "పొరల గుంపుల చిణువులను మార్
 #: ../app/display/gimpdisplayshell-dnd.c:457 ../app/tools/gimpblendtool.c:180
 #: ../app/tools/gimpbucketfilltool.c:143 ../app/tools/gimpcroptool.c:325
 #: ../app/tools/gimpimagemaptool.c:286 ../app/tools/gimppainttool.c:266
-#: ../app/tools/gimptransformtool.c:246 ../app/tools/gimptransformtool.c:1062
+#: ../app/tools/gimptransformtool.c:246 ../app/tools/gimptransformtool.c:1066
 msgid "The active layer's pixels are locked."
 msgstr "క్రియాశీల పొర యొక్క చిణువులు తాళం వేయబడి ఉన్నవి."
 
@@ -10664,33 +10670,33 @@ msgctxt "cage-mode"
 msgid "Deform the cage to deform the image"
 msgstr "బొమ్మను వికారించడానికి పంజరాన్ని వికారించి"
 
-#: ../app/gegl/gimpcurvesconfig.c:385
+#: ../app/gegl/gimpcurvesconfig.c:388
 msgid "not a GIMP Curves file"
 msgstr "గింప్ వక్రరేఖల దస్త్రం కాదు"
 
-#: ../app/gegl/gimpcurvesconfig.c:400 ../app/gegl/gimplevelsconfig.c:786
+#: ../app/gegl/gimpcurvesconfig.c:403 ../app/gegl/gimplevelsconfig.c:789
 msgid "parse error"
 msgstr "ముదింపు దోషం"
 
-#: ../app/gegl/gimplevelsconfig.c:739
+#: ../app/gegl/gimplevelsconfig.c:742
 msgid "not a GIMP Levels file"
 msgstr "గింపు స్థాయిల దస్త్రం కాదు"
 
-#: ../app/gegl/gimpoperationcagecoefcalc.c:65
+#: ../app/gegl/gimpoperationcagecoefcalc.c:67
 msgid "Compute a set of coefficient buffer for the GIMP cage tool"
 msgstr "గింపు పంజర పనిముట్టు కోసం బఫరు గుణకాల సమితిని లెక్కించు"
 
-#: ../app/gegl/gimpoperationcagetransform.c:104
+#: ../app/gegl/gimpoperationcagetransform.c:106
 msgid ""
 "Convert a set of coefficient buffer to a coordinate buffer for the GIMP cage "
 "tool"
 msgstr "గింపు పంజర పనిముట్టు కోసం బఫరు గుణక సమితిని అక్షముల బఫరుకు మార్చు"
 
-#: ../app/gegl/gimpoperationcagetransform.c:125
+#: ../app/gegl/gimpoperationcagetransform.c:128
 msgid "Fill with plain color"
 msgstr "పొడి రంగుతో నింపు"
 
-#: ../app/gegl/gimpoperationcagetransform.c:126
+#: ../app/gegl/gimpoperationcagetransform.c:129
 #: ../app/tools/gimpcageoptions.c:144
 msgid "Fill the original position of the cage with a plain color"
 msgstr "పంజరం యొక్క అసలు స్థానంను పొడి రంగుతో నింపు"
@@ -10736,11 +10742,11 @@ msgstr "లేతపరుచు/ముదురించు"
 msgid "Eraser"
 msgstr "రబ్బరు"
 
-#: ../app/paint/gimpheal.c:128 ../app/tools/gimphealtool.c:52
+#: ../app/paint/gimpheal.c:131 ../app/tools/gimphealtool.c:52
 msgid "Heal"
 msgstr "స్వస్థపరుచు"
 
-#: ../app/paint/gimpheal.c:167
+#: ../app/paint/gimpheal.c:170
 msgid "Healing does not operate on indexed layers."
 msgstr "సూచించిన పొరల మీద స్వస్థపరుచుట నిర్వహింపబడదు"
 
@@ -10874,22 +10880,16 @@ msgid "Sharpen"
 msgstr "పదునైన"
 
 #: ../app/paint/paint-enums.c:144
-#| msgctxt "brush-generated-shape"
-#| msgid "Circle"
 msgctxt "ink-blob-type"
 msgid "Circle"
 msgstr "వృత్తం"
 
 #: ../app/paint/paint-enums.c:145
-#| msgctxt "cap-style"
-#| msgid "Square"
 msgctxt "ink-blob-type"
 msgid "Square"
 msgstr "చతురస్రం"
 
 #: ../app/paint/paint-enums.c:146
-#| msgctxt "brush-generated-shape"
-#| msgid "Diamond"
 msgctxt "ink-blob-type"
 msgid "Diamond"
 msgstr "వజ్రం"
@@ -11117,7 +11117,7 @@ msgstr "'%s' (%d) బొమ్మ '%s' రకము,కానీ బొమ్మ
 #: ../app/pdb/gimppdb-utils.c:621
 #, c-format
 msgid "Image '%s' (%d) is already of type '%s'"
-msgstr "'%s' (%d) బొమ్మ ముందుగానే '%s' రకము"
+msgstr "'%s' (%d) బొమ్మ ఇంతకుముందే '%s' రకము"
 
 #: ../app/pdb/gimppdb-utils.c:649
 #, c-format
@@ -11357,7 +11357,7 @@ msgstr "చొప్పింతలను ప్రారంభిస్తు�
 
 #: ../app/plug-in/gimppluginmanager-restore.c:442
 msgid "Starting Extensions"
-msgstr "పొడిగింపులు ప్రారంభం అవుతున్నాయి"
+msgstr "పొడిగింతలు ప్రారంభమవుతున్నాయి"
 
 #: ../app/plug-in/gimppluginmanager.c:296
 msgid "Plug-In Interpreters"
@@ -11632,19 +11632,19 @@ msgstr "ఈ మార్గదర్శకాన్ని జాబితాక�
 
 #: ../app/tools/gimpaligntool.c:579
 msgid "Click to pick this path as first item"
-msgstr "ఈ మార్గాన్ని మొదటి అంశం వలె ఎంచుకొనుటకు నొక్కు"
+msgstr "ఈ బాటను మొదటి అంశం వలె ఎంచుకొనుటకు నొక్కు"
 
 #: ../app/tools/gimpaligntool.c:586
 msgid "Click to add this path to the list"
-msgstr "ఈ మార్గాన్ని జాబితాకు జతచేయుటకు నొక్కు"
+msgstr "ఈ బాటను జాబితాకు జతచేయుటకు నొక్కు"
 
 #: ../app/tools/gimpblendoptions.c:211 ../app/tools/gimppaintoptions-gui.c:346
 msgid "Gradient"
-msgstr "వాలు"
+msgstr "రంగురీతి"
 
 #: ../app/tools/gimpblendoptions.c:231 ../app/widgets/gimpbrusheditor.c:139
 msgid "Shape:"
-msgstr "రూపం:"
+msgstr "ఆకారం:"
 
 #: ../app/tools/gimpblendoptions.c:238 ../app/tools/gimppaintoptions-gui.c:325
 msgid "Repeat:"
@@ -11798,7 +11798,7 @@ msgstr "బకెట్ నింపు"
 
 #: ../app/tools/gimpbucketfilltool.c:87
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
-msgstr "బొక్కెన నింపు పనిముట్టు: ఎంచుకొన్న ప్రదేశాన్ని రంగుతో లేదా సరళితో నింపు"
+msgstr "బకెట్ నింపు పనిముట్టు: ఎంచుకొన్న ప్రదేశాన్ని రంగుతో లేదా సరళితో నింపు"
 
 #: ../app/tools/gimpbucketfilltool.c:88
 msgid "_Bucket Fill"
@@ -12573,16 +12573,16 @@ msgstr "GEGL పరిక్రియ...(_G)"
 msgid "GEGL operations do not operate on indexed layers."
 msgstr "GEGL ప్రక్రియలను సూచించిన పొరలమీద నిర్వహించవద్దు"
 
-#: ../app/tools/gimpgegltool.c:377
+#: ../app/tools/gimpgegltool.c:378
 msgid "_Operation:"
 msgstr "పరిక్రియ (_O):"
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:436
+#: ../app/tools/gimpgegltool.c:437
 msgid "Operation Settings"
 msgstr "పరిక్రియ అమరికలు"
 
-#: ../app/tools/gimpgegltool.c:441
+#: ../app/tools/gimpgegltool.c:442
 msgid "Select an operation from the list above"
 msgstr "పై జాబితా నుండి ప్రక్రియను ఎంచుకో"
 
@@ -12670,7 +12670,7 @@ msgstr "_M"
 
 #: ../app/tools/gimphuesaturationtool.c:258
 msgid "Select Primary Color to Adjust"
-msgstr "సరిచేయిటకు ప్రధానమైన రంగును ఎంచుకొన్న దానిచేయి"
+msgstr "సరిచేయిటకు ప్రాథమిక రంగును ఎంచుకొను"
 
 #: ../app/tools/gimphuesaturationtool.c:348
 msgid "_Overlap:"
@@ -12678,7 +12678,7 @@ msgstr "అతివ్యాప్తి(_O):"
 
 #: ../app/tools/gimphuesaturationtool.c:364
 msgid "Adjust Selected Color"
-msgstr "ఎంచుకొన్న దాని చేసిన రంగుని సరిచేయి"
+msgstr "ఎంచుకొన్న రంగుని సరిచేయి"
 
 #: ../app/tools/gimphuesaturationtool.c:431
 msgid "R_eset Color"
@@ -12884,8 +12884,6 @@ msgid "Zoom Tool: Adjust the zoom level"
 msgstr "అవరూప పనిముట్టు: అవరూప స్థాయిని సరిచేయి"
 
 #: ../app/tools/gimpmagnifytool.c:93
-#| msgctxt "view-action"
-#| msgid "_Zoom"
 msgid "_Zoom"
 msgstr "అవరూపం (_Z)"
 
@@ -13079,15 +13077,15 @@ msgstr "రంగు ఐచ్ఛికాలు"
 
 #: ../app/tools/gimppaintoptions-gui.c:367
 msgid "Amount"
-msgstr "వెరశి"
+msgstr "మొత్తం"
 
 #: ../app/tools/gimppaintoptions-gui.c:371
 msgid "Apply Jitter"
-msgstr "వణుకును అన్వయించు"
+msgstr "వణుకును అనువర్తించు"
 
 #: ../app/tools/gimppaintoptions-gui.c:389
 msgid "Smooth stroke"
-msgstr "నునుపైన అంఘాతం"
+msgstr "నునుపైన అఘాతం"
 
 #: ../app/tools/gimppaintoptions-gui.c:399
 msgid "Weight"
@@ -13139,7 +13137,7 @@ msgstr "క్లోన్ మూలంను అమర్చుటకు ctrl-�
 
 #: ../app/tools/gimpperspectivetool.c:83
 msgid "Perspective Tool: Change perspective of the layer, selection or path"
-msgstr "దర్శనం పనిముట్టు: పొర,ఎంచుకొన్న దాని లేదా మార్గపు దృష్టిని మార్చు"
+msgstr "దర్శనం పనిముట్టు: పొర,ఎంపిక లేదా బాట దృష్టిని మార్చు"
 
 #: ../app/tools/gimpperspectivetool.c:85
 msgid "_Perspective"
@@ -13172,7 +13170,7 @@ msgstr "ప్రకటనచిత్రము (రంగుల సంఖ్య
 
 #: ../app/tools/gimpposterizetool.c:152
 msgid "Posterize does not operate on indexed layers."
-msgstr "సూచకంలోని పొరలమీద ప్రకటనచిత్రముగాచేయు పనిచేయదు."
+msgstr "ప్రకటనచిత్రముగా చేయుట సూచిక పొరలను నిర్వహించలేదు."
 
 #: ../app/tools/gimpposterizetool.c:229
 msgid "Posterize _levels:"
@@ -13237,7 +13235,7 @@ msgstr "స్థిర ఎత్తు, వెడల్పు లేదా ప�
 
 #: ../app/tools/gimprectangleoptions.c:317
 msgid "Expand selection from center outwards"
-msgstr "కేంద్రం బైటివైపు నుండి ఎంచుకొన్న దానిను పొడిగింపు"
+msgstr "కేంద్రం బైటివైపు నుండి ఎంచుకను విస్తరించు"
 
 #. Current, as in what is currently in use.
 #: ../app/tools/gimprectangleoptions.c:761
@@ -13375,7 +13373,7 @@ msgstr "%d x %dకు పరిమాణం పెంచు"
 
 #: ../app/tools/gimpselectionoptions.c:84
 msgid "Enable feathering of selection edges"
-msgstr "అతిసన్నని అంచుల ఎంచుకొన్న దానిను క్రియాత్మకం చేయి"
+msgstr "అతిసన్నని అంచుల ఎంపికను క్రియాత్మకం చేయి"
 
 #: ../app/tools/gimpselectionoptions.c:90
 msgid "Radius of feathering"
@@ -13391,7 +13389,7 @@ msgstr "ఈక అంచులు"
 
 #: ../app/tools/gimpselectiontool.c:250
 msgid "Click-Drag to replace the current selection"
-msgstr "ప్రస్తుత ఎంచుకొన్న దాని పునఃస్థాపించుటకు నొక్కు-లాగు"
+msgstr "ప్రస్తుత ఎంపికను పునఃస్థాపించుటకు నొక్కి-లాగు"
 
 #: ../app/tools/gimpselectiontool.c:258
 msgid "Click-Drag to create a new selection"
@@ -13707,15 +13705,15 @@ msgstr "అసలు రూప నిష్పత్తిని ఉంచు"
 msgid "Transforming"
 msgstr "బదిలీ జరుగుతుంది"
 
-#: ../app/tools/gimptransformtool.c:1061
+#: ../app/tools/gimptransformtool.c:1065
 msgid "There is no layer to transform."
 msgstr "బదిలీ చేయడానికి ఏపొరా లేదు"
 
-#: ../app/tools/gimptransformtool.c:1074
+#: ../app/tools/gimptransformtool.c:1078
 msgid "There is no path to transform."
 msgstr "బదిలీకి ఏ బాటా లేదు"
 
-#: ../app/tools/gimptransformtool.c:1075
+#: ../app/tools/gimptransformtool.c:1079
 msgid "The active path's strokes are locked."
 msgstr "క్రియాశీల బాట అఘాతాలుకు తాళమ వేయబడింది"
 
@@ -13739,7 +13737,7 @@ msgid ""
 "%s  Subtract\n"
 "%s  Intersect"
 msgstr ""
-"ఎంపికకు మార్గం\n"
+"బాట నుండి ఎంపికకు \n"
 "%s  చేర్చు\n"
 "%s  తీసివేయి\n"
 "%s  ఖండించు"
@@ -14270,11 +14268,11 @@ msgstr "సూచిత బొమ్మలు మాత్రమే రంగు
 msgid "Palette"
 msgstr "వర్ణఫలకం"
 
-#: ../app/widgets/gimpcontainerpopup.c:591
+#: ../app/widgets/gimpcontainerpopup.c:595
 msgid "Smaller Previews"
 msgstr "చిన్న మునుజూపులు"
 
-#: ../app/widgets/gimpcontainerpopup.c:596
+#: ../app/widgets/gimpcontainerpopup.c:600
 msgid "Larger Previews"
 msgstr "పెద్ద మునుజూపులు"
 
@@ -14693,7 +14691,7 @@ msgstr "నేపధ్యము: %d, %d, %d"
 
 #: ../app/widgets/gimpdnd-xds.c:203
 msgid "The given filename does not have any known file extension."
-msgstr "ఇచ్చిన దస్రనామం ఏతెలిసిన దస్రపు పొడిగింపు కలిగిలేదు"
+msgstr "ఇచ్చిన దస్రనామం ఏతెలిసిన దస్రపు పొడిగింత కలిగిలేదు"
 
 #: ../app/widgets/gimpdnd-xds.c:221
 msgid "File Exists"
@@ -14890,7 +14888,7 @@ msgstr "క్లిక్: ఎంపిక"
 #: ../app/widgets/gimpgradienteditor.c:1278
 #: ../app/widgets/gimpgradienteditor.c:1300
 msgid "Click: select    Drag: move"
-msgstr "క్లిక్: ఎంచుకొన్న దానిచేయి  లాగు: కదుపు"
+msgstr "క్లిక్: ఎంచుకొను లాగు: కదుపు"
 
 #: ../app/widgets/gimpgradienteditor.c:1515
 #: ../app/widgets/gimpgradienteditor.c:1523
@@ -15168,19 +15166,19 @@ msgstr "దస్రానికి అమరికలను ఎగుమతి 
 msgid "_Manage Settings..."
 msgstr "అమరికలను నిర్వహించు...(_M)"
 
-#: ../app/widgets/gimpsettingsbox.c:625
+#: ../app/widgets/gimpsettingsbox.c:636
 msgid "Add Settings to Favorites"
 msgstr "అమరికలను ఇష్టాంశాలకు జతచేయి"
 
-#: ../app/widgets/gimpsettingsbox.c:628
+#: ../app/widgets/gimpsettingsbox.c:639
 msgid "Enter a name for the settings"
 msgstr "అమరికల కొరకు పేరును ప్రవేశపెట్టు"
 
-#: ../app/widgets/gimpsettingsbox.c:629
+#: ../app/widgets/gimpsettingsbox.c:640
 msgid "Saved Settings"
 msgstr "భద్రపరుచబడిన అమరికలు"
 
-#: ../app/widgets/gimpsettingsbox.c:670
+#: ../app/widgets/gimpsettingsbox.c:681
 msgid "Manage Saved Settings"
 msgstr "భద్రపరుచబడిన అమరికలను నిర్వహించు"
 
@@ -15194,7 +15192,7 @@ msgstr "ఎంచుకొన్న అమరికలను దస్రాన�
 
 #: ../app/widgets/gimpsettingseditor.c:212
 msgid "Delete the selected settings"
-msgstr "ఎంచుకొన్న దానిచేసిన అమరికలను తొలగించు"
+msgstr "ఎంచుకొన్న అమరికలను తొలగించు"
 
 #: ../app/widgets/gimpsizebox.c:453
 #, c-format
@@ -15246,7 +15244,7 @@ msgstr "కొసలు ఇవ్వండి"
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
 #. * http://unicode.org/review/pr-23.html
 #.
-#: ../app/widgets/gimptagentry.c:1734
+#: ../app/widgets/gimptagentry.c:1732
 msgid ","
 msgstr ","
 
@@ -15302,7 +15300,7 @@ msgstr "పాఠ్యములోని బాహ్యపు కణం ఖచ
 #: ../app/widgets/gimptextbuffer.c:1454
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
-msgstr "'%s'ఫైల్లో చెల్లని UTF-8 డాటా ఉన్నది."
+msgstr "'%s' దస్త్రంలో చెల్లని UTF-8 డాటా ఉన్నది."
 
 #: ../app/widgets/gimptexteditor.c:222
 msgid "_Use selected font"
@@ -15743,7 +15741,8 @@ msgstr "XCF దస్త్రమును భద్రపరుచుటలో 
 msgid "round"
 msgstr "గుండ్రని"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:2
+#. fuzzy as in a feathered, blurred, unfocused, soft brush
+#: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "అస్పస్ట"
 
@@ -15754,6 +15753,202 @@ msgstr "బొమ్మ కూర్పకము"
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Create images and edit photographs"
 msgstr "బొమ్మలను సృష్టించు మరియు చిత్రాలను సవరించు"
+
+#~ msgid "Filters"
+#~ msgstr "వడబోతకాలు"
+
+#, fuzzy
+#~ msgctxt "drawable-action"
+#~ msgid "_Value Invert"
+#~ msgstr "తారుమారు(_I)"
+
+#, fuzzy
+#~ msgctxt "filters-action"
+#~ msgid "Color T_emperature..."
+#~ msgstr "మూసని సృష్టించు..."
+
+#, fuzzy
+#~ msgctxt "filters-action"
+#~ msgid "Change the color temperature of the image"
+#~ msgstr "బొమ్మ విషయపు పరిమాణాన్ని మార్చు"
+
+#, fuzzy
+#~ msgctxt "filters-action"
+#~ msgid "Color to _Alpha..."
+#~ msgstr "రంగు సమతుల్యం...(_B)"
+
+#, fuzzy
+#~ msgctxt "filters-action"
+#~ msgid "_Pixelize..."
+#~ msgstr "ప్రకటనచిత్రముగాచేయి...(_P)"
+
+#, fuzzy
+#~ msgctxt "filters-action"
+#~ msgid "Convert image to or from polar coordinates"
+#~ msgstr "నలుపుతెలుపుగా బొమ్మను మార్చు"
+
+#, fuzzy
+#~ msgctxt "filters-action"
+#~ msgid "_Semi-Flatten..."
+#~ msgstr "సరళిని సవరించు...(_E)"
+
+#, fuzzy
+#~ msgctxt "filters-action"
+#~ msgid "_Threshold Alpha..."
+#~ msgstr "గడప ...(_T)"
+
+#, fuzzy
+#~ msgctxt "filters-action"
+#~ msgid "Make transparency all-or-nothing"
+#~ msgstr "పారదర్శకంగా చేయండి (_t)"
+
+#, fuzzy
+#~ msgctxt "image-action"
+#~ msgid "_Precision"
+#~ msgstr "మునుపటి చిట్కా (_P)"
+
+#, fuzzy
+#~ msgctxt "image-convert-action"
+#~ msgid "Convert the image to 8 bit integer"
+#~ msgstr "బొమ్మను సూచిత రంగులకు మార్చు"
+
+#, fuzzy
+#~ msgctxt "image-convert-action"
+#~ msgid "Convert the image to 16 bit integer"
+#~ msgstr "బొమ్మను సూచిత రంగులకు మార్చు"
+
+#, fuzzy
+#~ msgctxt "image-convert-action"
+#~ msgid "Convert the image to 32 bit integer"
+#~ msgstr "బొమ్మను సూచిత రంగులకు మార్చు"
+
+#, fuzzy
+#~ msgctxt "image-convert-action"
+#~ msgid "Convert the image to 16 bit floating point"
+#~ msgstr "బొమ్మను సూచిత రంగులకు మార్చు"
+
+#, fuzzy
+#~ msgctxt "image-convert-action"
+#~ msgid "Convert the image to 32 bit floating point"
+#~ msgstr "బొమ్మను సూచిత రంగులకు మార్చు"
+
+#, fuzzy
+#~ msgctxt "undo-type"
+#~ msgid "Image precision"
+#~ msgstr "బొమ్మ లక్షణాలు"
+
+#, fuzzy
+#~ msgctxt "undo-type"
+#~ msgid "Convert Image to 8 bit integer"
+#~ msgstr "బొమ్మను సూచకంగా మార్చు"
+
+#, fuzzy
+#~ msgctxt "undo-type"
+#~ msgid "Convert Image to 16 bit integer"
+#~ msgstr "బొమ్మను సూచకంగా మార్చు"
+
+#, fuzzy
+#~ msgctxt "undo-type"
+#~ msgid "Convert Image to 32 bit integer"
+#~ msgstr "బొమ్మను సూచకంగా మార్చు"
+
+#, fuzzy
+#~ msgctxt "undo-type"
+#~ msgid "Drop pattern to layer"
+#~ msgstr "కొత్త పొరని వదిలివేయి"
+
+#, fuzzy
+#~ msgctxt "undo-type"
+#~ msgid "Drop color to layer"
+#~ msgstr "పొరలను వదిలేయి"
+
+#~ msgid "RGB"
+#~ msgstr "ఆర్‌జిబి"
+
+#~ msgid "Grayscale"
+#~ msgstr " కృష్ణమానం"
+
+#, fuzzy
+#~ msgid "Grayscale-alpha"
+#~ msgstr " కృష్ణమానం(_G)"
+
+#, fuzzy
+#~ msgid "Red component"
+#~ msgstr "అంతర్భాగాలు (_o)"
+
+#, fuzzy
+#~ msgid "Green component"
+#~ msgstr "అంతర్భాగాలు (_o)"
+
+#, fuzzy
+#~ msgid "Blue component"
+#~ msgstr "అంతర్భాగాలు (_o)"
+
+#, fuzzy
+#~ msgid "Alpha component"
+#~ msgstr "అంతర్భాగాలు (_o)"
+
+#, fuzzy
+#~ msgid "Indexed"
+#~ msgstr "సూచకం %d"
+
+#~ msgctxt "undo-type"
+#~ msgid "Levels"
+#~ msgstr "స్థాయిలు"
+
+#, fuzzy
+#~ msgid ""
+#~ "Image '%s' (%d) has precision '%s', but an image of precision '%s' is "
+#~ "expected"
+#~ msgstr "'%s' (%d) బొమ్మ '%s' రకము,కానీ బొమ్మ యొక్క రకము '%s' ఆశిస్తున్నాము"
+
+#, fuzzy
+#~ msgid "Image '%s' (%d) must not be of precision '%s'"
+#~ msgstr "'%s' (%d) బొమ్మ ముందుగానే '%s' రకము"
+
+#, fuzzy
+#~ msgctxt "undo-type"
+#~ msgid "Color to Alpha"
+#~ msgstr "వర్ణపటానికి రంగును కలుపు"
+
+#, fuzzy
+#~ msgctxt "undo-type"
+#~ msgid "Pixelize"
+#~ msgstr "చిణువు"
+
+#, fuzzy
+#~ msgctxt "undo-type"
+#~ msgid "Threshold Alpha"
+#~ msgstr "గ్రాహకస్థాయి"
+
+#, fuzzy
+#~ msgctxt "undo-type"
+#~ msgid "Value Invert"
+#~ msgstr "బోర్లించు"
+
+#, fuzzy
+#~ msgid "Colorize does not operate on grayscale layers."
+#~ msgstr "సూచకంలోని పొరలమీద ప్రకటనచిత్రముగాచేయు పనిచేయదు."
+
+#, fuzzy
+#~ msgid "Colorize Color"
+#~ msgstr "రంగువేయి"
+
+#, fuzzy
+#~ msgid "Pick color from image"
+#~ msgstr "రంగు ఎంపికరి పనిముట్టు: బొమ్మ చిణువుల నుండి రంగులను అమర్చు"
+
+#, fuzzy
+#~ msgid "Operation Tool: Use an arbitrary GEGL operation"
+#~ msgstr "GEGL పనిముట్టు: స్వేచ్ఛమైన GEGL ప్రక్రియను వాడు"
+
+#, fuzzy
+#~ msgid "Precision:"
+#~ msgstr "సంచిక:"
+
+#, fuzzy
+#~ msgid "_Precision:"
+#~ msgstr "_X విభాజకత:"
 
 #~ msgctxt "view-action"
 #~ msgid "Zoom out"
