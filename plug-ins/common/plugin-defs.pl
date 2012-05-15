@@ -73,7 +73,7 @@
     'file-sunras' => { ui => 1 },
     'file-svg' => { ui => 1, optional => 1, libs => 'SVG_LIBS', cflags => 'SVG_CFLAGS' },
     'file-tga' => { ui => 1 },
-    'file-tiff-load' => { ui => 1, optional => 1, libs => 'TIFF_LIBS' },
+    'file-tiff-load' => { ui => 1, gegl => 1, optional => 1, libs => 'TIFF_LIBS' },
     'file-tiff-save' => { ui => 1, optional => 1, libs => 'TIFF_LIBS' },
     'file-wmf' => { ui => 1, optional => 1, libs => 'WMF_LIBS', cflags => 'WMF_CFLAGS' },
     'file-xbm' => { ui => 1 },

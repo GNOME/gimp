@@ -1489,6 +1489,7 @@ file_tiff_load_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(TIFF_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
