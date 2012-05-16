@@ -887,9 +887,9 @@ gimp_drawable_sync_source_node (GimpDrawable *drawable,
           fs_source = gimp_drawable_get_source_node (GIMP_DRAWABLE (fs));
 
           /* rip the fs' source node out of its graph */
-          if (fs->opacity_node)
+          if (fs->layer_offset_node)
             {
-              gegl_node_disconnect (fs->opacity_node, "input");
+              gegl_node_disconnect (fs->layer_offset_node, "input");
               gegl_node_remove_child (gimp_item_get_node (GIMP_ITEM (fs)),
                                       fs_source);
             }
@@ -977,12 +977,12 @@ gimp_drawable_sync_source_node (GimpDrawable *drawable,
                                   fs_source);
 
           /* plug the fs' source node back into its graph */
-          if (fs->opacity_node)
+          if (fs->layer_offset_node)
             {
               gegl_node_add_child (gimp_item_get_node (GIMP_ITEM (fs)),
                                    fs_source);
-              gegl_node_connect_to (fs_source,        "output",
-                                    fs->opacity_node, "input");
+              gegl_node_connect_to (fs_source,             "output",
+                                    fs->layer_offset_node, "input");
             }
 
           gegl_node_remove_child (drawable->private->source_node,
