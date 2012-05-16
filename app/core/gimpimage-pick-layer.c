@@ -78,7 +78,7 @@ gimp_image_pick_layer_by_bounds (const GimpImage *image,
     {
       GimpLayer *layer = list->data;
 
-      if (gimp_item_get_visible (GIMP_ITEM (layer)))
+      if (gimp_item_is_visible (GIMP_ITEM (layer)))
         {
           gint off_x, off_y;
           gint width, height;
@@ -127,7 +127,8 @@ gimp_image_pick_text_layer (const GimpImage *image,
           x >= off_x &&
           y >= off_y &&
           x <  off_x + gimp_item_get_width  (GIMP_ITEM (layer)) &&
-          y <  off_y + gimp_item_get_height (GIMP_ITEM (layer)))
+          y <  off_y + gimp_item_get_height (GIMP_ITEM (layer)) &&
+          gimp_item_is_visible (GIMP_ITEM (layer)))
         {
           g_list_free (all_layers);
 
