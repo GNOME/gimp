@@ -23,6 +23,11 @@
 #include <windows.h>
 #endif
 
+#ifdef GDK_WINDOWING_QUARTZ
+#include <Carbon/Carbon.h>
+#include <sys/param.h>
+#endif
+
 #if HAVE_DBUS_GLIB
 #define DBUS_API_SUBJECT_TO_CHANGE
 #include <dbus/dbus-glib.h>
@@ -36,6 +41,8 @@
 
 #include "display/gimpdisplay.h"
 
+#include "file/file-open.h"
+
 #include "gimpdbusservice.h"
 #include "gui-unique.h"
 
@@ -48,13 +55,19 @@ static DBusGConnection *dbus_connection  = NULL;
 #endif
 
 #ifdef G_OS_WIN32
-#include "file/file-open.h"
-
 static void  gui_unique_win32_init (Gimp *gimp);
 static void  gui_unique_win32_exit (void);
 
 static Gimp            *unique_gimp      = NULL;
 static HWND             proxy_window     = NULL;
+#endif
+
+#ifdef GDK_WINDOWING_QUARTZ
+static void  gui_unique_mac_init (Gimp *gimp);
+static void  gui_unique_mac_exit (void);
+
+static Gimp            *unique_gimp      = NULL;
+AEEventHandlerUPP       open_document_callback_proc;
 #endif
 
 
@@ -66,6 +79,10 @@ gui_unique_init (Gimp *gimp)
 #elif HAVE_DBUS_GLIB
   gui_dbus_service_init (gimp);
 #endif
+
+#ifdef GDK_WINDOWING_QUARTZ
+  gui_unique_mac_init (gimp);
+#endif
 }
 
 void
@@ -75,6 +92,10 @@ gui_unique_exit (void)
   gui_unique_win32_exit ();
 #elif HAVE_DBUS_GLIB
   gui_dbus_service_exit ();
+#endif
+
+#ifdef GDK_WINDOWING_QUARTZ
+  gui_unique_mac_exit ();
 #endif
 }
 
@@ -179,7 +200,6 @@ gui_unique_win32_idle_open (IdleOpenData *data)
   return FALSE;
 }
 
-
 static LRESULT CALLBACK
 gui_unique_win32_message_handler (HWND   hWnd,
                                   UINT   uMsg,
@@ -254,5 +274,108 @@ gui_unique_win32_exit (void)
   DestroyWindow (proxy_window);
 }
 
-
 #endif  /* G_OS_WIN32 */
+
+
+#ifdef GDK_WINDOWING_QUARTZ
+
+static gboolean
+gui_unique_mac_idle_open (gchar *data)
+{
+  /*  We want to be called again later in case that GIMP is not fully
+   *  started yet.
+   */
+  if (! gimp_is_restored (unique_gimp))
+    return TRUE;
+
+  if (data)
+    {
+      file_open_from_command_line (unique_gimp, data, FALSE);
+    }
+
+  return FALSE;
+}
+
+/* Handle the kAEOpenDocuments Apple events. This will register
+ * an idle source callback for each filename in the event.
+ */
+static pascal OSErr
+gui_unique_mac_open_documents (const AppleEvent *inAppleEvent,
+                               AppleEvent       *outAppleEvent,
+                               long              handlerRefcon)
+{
+  OSStatus    status;
+  AEDescList  documents;
+  gchar       path[MAXPATHLEN];
+
+  status = AEGetParamDesc (inAppleEvent,
+                           keyDirectObject, typeAEList,
+                           &documents);
+  if (status == noErr)
+    {
+      long count = 0;
+      int  i;
+
+      AECountItems (&documents, &count);
+
+      for (i = 0; i < count; i++)
+        {
+          FSRef    ref;
+          gchar    *callback_path;
+          GSource  *source;
+          GClosure *closure;
+
+          status = AEGetNthPtr (&documents, i + 1, typeFSRef,
+                                0, 0, &ref, sizeof (ref),
+                                0);
+          if (status != noErr)
+            continue;
+
+          FSRefMakePath (&ref, (UInt8 *) path, MAXPATHLEN);
+
+          callback_path = g_strdup (path);
+
+          closure = g_cclosure_new (G_CALLBACK (gui_unique_mac_idle_open),
+                                    (gpointer) callback_path,
+                                    (GClosureNotify) g_free);
+
+          g_object_watch_closure (G_OBJECT (unique_gimp), closure);
+
+          source = g_idle_source_new ();
+          g_source_set_priority (source, G_PRIORITY_LOW);
+          g_source_set_closure (source, closure);
+          g_source_attach (source, NULL);
+          g_source_unref (source);
+        }
+    }
+
+    return status;
+}
+
+static void
+gui_unique_mac_init (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (unique_gimp == NULL);
+
+  unique_gimp = gimp;
+
+  open_document_callback_proc = NewAEEventHandlerUPP(gui_unique_mac_open_documents);
+
+  AEInstallEventHandler (kCoreEventClass, kAEOpenDocuments,
+                         open_document_callback_proc,
+                         0L, TRUE);
+}
+
+static void
+gui_unique_mac_exit (void)
+{
+  unique_gimp = NULL;
+
+  AERemoveEventHandler (kCoreEventClass, kAEOpenDocuments,
+                        open_document_callback_proc, TRUE);
+
+  DisposeAEEventHandlerUPP(open_document_callback_proc);
+}
+
+#endif /* GDK_WINDOWING_QUARTZ */
