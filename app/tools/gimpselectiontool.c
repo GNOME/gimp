@@ -133,8 +133,13 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
            */
           button_op = selection_tool->saved_operation;
         }
-      else
+      else if (state & (extend_mask |
+                        modify_mask))
         {
+          /*  else get the operation from the modifier state, but only
+           *  if there is actually a modifier pressed, so we don't
+           *  override the "last modifier released" assignment above
+           */
           button_op = gimp_modifiers_to_channel_op (state);
         }
 
