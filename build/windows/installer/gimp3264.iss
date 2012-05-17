@@ -108,6 +108,7 @@ AppPublisher=The GIMP Team
 AppVersion={#VERSION}
 DisableProgramGroupPage=yes
 DisableWelcomePage=no
+DisableDirPage=auto
 
 #if Defined(DEVEL) && DEVEL != ""
 DefaultDirName={pf}\GIMP {#MAJOR}.{#MINOR}
