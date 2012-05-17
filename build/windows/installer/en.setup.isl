@@ -2,7 +2,7 @@
 ;InfoBefore page is used instead of license page because the GPL only concerns distribution, not use, and as such doesn't have to be accepted
 WizardInfoBefore=License Agreement
 AboutSetupNote=Setup built by Jernej Simonèiè, jernej-gimp@ena.si%n%nImage on opening page of Setup by Alexia_Death%nImage on closing page of Setup by Jakub Steiner
-WinVersionTooLowError=This version of GIMP requires Windows XP with Service Pack 2, or a newer version of Windows.
+WinVersionTooLowError=This version of GIMP requires Windows XP with Service Pack 3, or a newer version of Windows.
 
 [CustomMessages]
 ;shown before the wizard starts on development versions of GIMP

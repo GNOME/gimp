@@ -1,7 +1,7 @@
 [Messages]
 WizardInfoBefore=Licenèna pogodba
 AboutSetupNote=Namestitveni program je pripravil Jernej Simonèiè, jernej-gimp@ena.si%n%nSlika na prvi strani namestitvenega programa: Alexia_Death%nSlika na zadnji strani namestitvenega programa: Jakub Steiner
-WinVersionTooLowError=Ta razlièica programa GIMP potrebuje Windows XP s servisnim paketom 2, ali novejšo razlièico programa Windows.
+WinVersionTooLowError=Ta razlièica programa GIMP potrebuje Windows XP s servisnim paketom 3, ali novejšo razlièico programa Windows.
 
 [CustomMessages]
 DevelopmentWarningTitle=Razvojna razlièica
