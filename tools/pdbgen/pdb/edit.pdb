@@ -633,13 +633,21 @@ HELP
 
       if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
         {
-          GimpFillType fill_type;
+          GimpFillType fill_type = GIMP_FG_BUCKET_FILL;
 
           switch (fill_mode)
             {
-            case GIMP_FG_BUCKET_FILL:      fill_type = GIMP_FOREGROUND_FILL;
-            case GIMP_BG_BUCKET_FILL:      fill_type = GIMP_BACKGROUND_FILL;
-            case GIMP_PATTERN_BUCKET_FILL: fill_type = GIMP_PATTERN_FILL;
+            case GIMP_FG_BUCKET_FILL:
+              fill_type = GIMP_FOREGROUND_FILL;
+              break;
+
+            case GIMP_BG_BUCKET_FILL:
+              fill_type = GIMP_BACKGROUND_FILL;
+              break;
+
+            case GIMP_PATTERN_BUCKET_FILL:
+              fill_type = GIMP_PATTERN_FILL;
+              break;
             }
 
           success = gimp_edit_fill (image, drawable, context, fill_type,
