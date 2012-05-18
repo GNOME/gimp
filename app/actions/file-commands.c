@@ -252,7 +252,7 @@ file_save_cmd_callback (GtkAction *action,
                                                    gimp, image, uri,
                                                    save_proc,
                                                    GIMP_RUN_WITH_LAST_VALS,
-                                                   TRUE, FALSE, TRUE);
+                                                   TRUE, FALSE, FALSE, TRUE);
               break;
             }
 
@@ -288,8 +288,9 @@ file_save_cmd_callback (GtkAction *action,
       {
         const gchar         *uri = NULL;
         GimpPlugInProcedure *export_proc;
+        gboolean             overwrite;
 
-        if (save_mode == GIMP_SAVE_MODE_EXPORT_TO) 
+        if (save_mode == GIMP_SAVE_MODE_EXPORT_TO)
           {
             uri = gimp_image_get_exported_uri (image);
 
@@ -299,10 +300,14 @@ file_save_cmd_callback (GtkAction *action,
                 file_export_dialog_show (gimp, image, widget);
                 break;
               }
+
+            overwrite = FALSE;
           }
         else if (save_mode == GIMP_SAVE_MODE_OVERWRITE)
           {
             uri = gimp_image_get_imported_uri (image);
+
+            overwrite = TRUE;
           }
 
         if (uri)
@@ -327,7 +332,9 @@ file_save_cmd_callback (GtkAction *action,
                                                  gimp, image, uri_copy,
                                                  export_proc,
                                                  GIMP_RUN_WITH_LAST_VALS,
-                                                 FALSE, TRUE, TRUE);
+                                                 FALSE,
+                                                 overwrite, ! overwrite,
+                                                 TRUE);
             g_free (uri_copy);
           }
       }

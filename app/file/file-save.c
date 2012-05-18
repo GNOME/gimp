@@ -74,7 +74,8 @@ file_save (Gimp                *gimp,
            GimpPlugInProcedure *file_proc,
            GimpRunMode          run_mode,
            gboolean             change_saved_state,
-           gboolean             export,
+           gboolean             export_backward,
+           gboolean             export_forward,
            GError             **error)
 {
   GimpDrawable      *drawable;
@@ -90,6 +91,8 @@ file_save (Gimp                *gimp,
                         GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (uri != NULL, GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (file_proc),
+                        GIMP_PDB_CALLING_ERROR);
+  g_return_val_if_fail ((export_backward && export_forward) == FALSE,
                         GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (error == NULL || *error == NULL,
                         GIMP_PDB_CALLING_ERROR);
@@ -168,7 +171,15 @@ file_save (Gimp                *gimp,
 
           gimp_image_clean_all (image);
         }
-      else if (export)
+      else if (export_backward)
+        {
+          /* We exported the image back to its imported source,
+           * change nothing about export/import flags, only set
+           * the export state to clean
+           */
+          gimp_image_export_clean_all (image);
+        }
+      else if (export_forward)
         {
           /* Remeber the last entered Export URI for the image. We
            * only need to do this explicitly when exporting. It
@@ -186,7 +197,7 @@ file_save (Gimp                *gimp,
           gimp_image_export_clean_all (image);
         }
 
-      if (export)
+      if (export_backward || export_forward)
         gimp_image_exported (image, uri);
       else
         gimp_image_saved (image, uri);

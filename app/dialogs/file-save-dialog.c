@@ -191,6 +191,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
                                        save_proc,
                                        GIMP_RUN_INTERACTIVE,
                                        ! dialog->save_a_copy && ! dialog->export,
+                                       FALSE,
                                        dialog->export,
                                        FALSE))
         {
@@ -629,7 +630,8 @@ file_save_dialog_save_image (GimpProgress        *progress,
                              GimpPlugInProcedure *save_proc,
                              GimpRunMode          run_mode,
                              gboolean             change_saved_state,
-                             gboolean             export,
+                             gboolean             export_backward,
+                             gboolean             export_forward,
                              gboolean             verbose_cancel)
 {
   GimpPDBStatusType  status;
@@ -645,7 +647,9 @@ file_save_dialog_save_image (GimpProgress        *progress,
     }
 
   status = file_save (gimp, image, progress, uri,
-                      save_proc, run_mode, change_saved_state, export, &error);
+                      save_proc, run_mode,
+                      change_saved_state, export_backward, export_forward,
+                      &error);
 
   switch (status)
     {

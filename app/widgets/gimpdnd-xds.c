@@ -164,7 +164,8 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
         {
           if (file_save (image->gimp,
                          image, NULL,
-                         uri, proc, GIMP_RUN_INTERACTIVE, TRUE, export,
+                         uri, proc, GIMP_RUN_INTERACTIVE,
+                         ! export, FALSE, export,
                          &error) == GIMP_PDB_SUCCESS)
             {
               gtk_selection_data_set (selection,

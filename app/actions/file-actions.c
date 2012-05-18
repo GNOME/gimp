@@ -280,7 +280,7 @@ file_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("file-save-as",         drawable);
   SET_SENSITIVE ("file-save-a-copy",     drawable);
   SET_SENSITIVE ("file-revert",          image && (gimp_image_get_uri (image) || source));
-  SET_SENSITIVE ("file-export-to",       drawable && ! show_overwrite);
+  SET_SENSITIVE ("file-export-to",       drawable);
   SET_VISIBLE   ("file-export-to",       ! show_overwrite);
   SET_SENSITIVE ("file-overwrite",       show_overwrite);
   SET_VISIBLE   ("file-overwrite",       show_overwrite);
