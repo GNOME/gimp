@@ -189,61 +189,20 @@ gimp_gegl_create_apply_buffer_node (GeglBuffer           *buffer,
     mask_source = NULL;
 
   mode_node = gegl_node_new_child (node,
-                                   "operation", "gegl:over",
+                                   "operation", "gimp:normal-mode",
                                    NULL);
   gimp_gegl_node_set_layer_mode (mode_node, mode, FALSE);
 
-  if (mode == GIMP_REPLACE_MODE)
-    {
-      /*  modes that need access to the buffer's alpha channel are
-       *  implemented using GeglOperationPointComposer3 subclasses,
-       *  and have an "opacity" property, so they have access to all
-       *  sources of transparency independently
-       */
+  gegl_node_set (mode_node,
+                 "opacity", opacity,
+                 NULL);
 
-      gegl_node_set (mode_node,
-                     "opacity", opacity,
-                     NULL);
+  gegl_node_connect_to (buffer_source, "output",
+                        mode_node,     "aux");
 
-      gegl_node_connect_to (buffer_source, "output",
-                            mode_node,     "aux");
-
-      if (mask_source)
-        gegl_node_connect_to (mask_source, "output",
-                              mode_node,   "aux2");
-    }
-  else if (mask_source || opacity < 1.0)
-    {
-      /*  normal case: put the buffer through an opacity node that
-       *  applies mask and opacity before doing the actual mode
-       */
-
-      GeglNode *opacity_node;
-
-      opacity_node = gegl_node_new_child (node,
-                                          "operation", "gegl:opacity",
-                                          "value",     opacity,
-                                          NULL);
-
-      gegl_node_connect_to (buffer_source, "output",
-                            opacity_node,  "input");
-
-      if (mask_source)
-        gegl_node_connect_to (mask_source,   "output",
-                              opacity_node,  "aux");
-
-      gegl_node_connect_to (opacity_node, "output",
-                            mode_node,    "aux");
-    }
-  else
-    {
-      /*  shortcut for the case where the opacity node wouldn't do
-       *  anything
-       */
-
-      gegl_node_connect_to (buffer_source, "output",
-                            mode_node,     "aux");
-    }
+  if (mask_source)
+    gegl_node_connect_to (mask_source, "output",
+                          mode_node,   "aux2");
 
   gegl_node_connect_to (input,     "output",
                         mode_node, "input");
