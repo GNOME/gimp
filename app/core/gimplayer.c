@@ -1942,7 +1942,7 @@ gimp_layer_set_opacity (GimpLayer *layer,
       if (gimp_item_peek_node (GIMP_ITEM (layer)))
         {
           gegl_node_set (gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer)),
-                         "value", layer->opacity,
+                         "opacity", layer->opacity,
                          NULL);
         }
 

@@ -23,6 +23,9 @@
 #define __GIMP_OPERATION_REPLACE_MODE_H__
 
 
+#include "gimpoperationpointlayermode.h"
+
+
 #define GIMP_TYPE_OPERATION_REPLACE_MODE            (gimp_operation_replace_mode_get_type ())
 #define GIMP_OPERATION_REPLACE_MODE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_REPLACE_MODE, GimpOperationReplaceMode))
 #define GIMP_OPERATION_REPLACE_MODE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_REPLACE_MODE, GimpOperationReplaceModeClass))
@@ -36,7 +39,7 @@ typedef struct _GimpOperationReplaceModeClass GimpOperationReplaceModeClass;
 
 struct _GimpOperationReplaceMode
 {
-  GeglOperationPointComposer3 parent_instance;
+  GimpOperationPointLayerMode parent_instance;
 
   gdouble  opacity;
   gboolean premultiplied;
@@ -44,7 +47,7 @@ struct _GimpOperationReplaceMode
 
 struct _GimpOperationReplaceModeClass
 {
-  GeglOperationPointComposer3Class parent_class;
+  GimpOperationPointLayerModeClass parent_class;
 };
 
 

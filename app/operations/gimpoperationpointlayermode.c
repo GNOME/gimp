@@ -72,7 +72,8 @@ enum
 {
   PROP_0,
   PROP_BLEND_MODE,
-  PROP_PREMULTIPLIED
+  PROP_PREMULTIPLIED,
+  PROP_OPACITY
 };
 
 
@@ -89,6 +90,7 @@ static void     gimp_operation_point_layer_mode_prepare      (GeglOperation     
 static gboolean gimp_operation_point_layer_mode_process      (GeglOperation       *operation,
                                                               void                *in_buf,
                                                               void                *aux_buf,
+                                                              void                *aux2_buf,
                                                               void                *out_buf,
                                                               glong                samples,
                                                               const GeglRectangle *roi,
@@ -96,7 +98,7 @@ static gboolean gimp_operation_point_layer_mode_process      (GeglOperation     
 
 
 G_DEFINE_TYPE (GimpOperationPointLayerMode, gimp_operation_point_layer_mode,
-               GEGL_TYPE_OPERATION_POINT_COMPOSER)
+               GEGL_TYPE_OPERATION_POINT_COMPOSER3)
 
 
 static guint32 dissolve_lut[DISSOLVE_REPEAT_WIDTH * DISSOLVE_REPEAT_HEIGHT];
@@ -105,11 +107,11 @@ static guint32 dissolve_lut[DISSOLVE_REPEAT_WIDTH * DISSOLVE_REPEAT_HEIGHT];
 static void
 gimp_operation_point_layer_mode_class_init (GimpOperationPointLayerModeClass *klass)
 {
-  GObjectClass                    *object_class    = G_OBJECT_CLASS (klass);
-  GeglOperationClass              *operation_class = GEGL_OPERATION_CLASS (klass);
-  GeglOperationPointComposerClass *point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
-  GRand                           *rand            = g_rand_new_with_seed (DISSOLVE_SEED);
-  int                              i;
+  GObjectClass                     *object_class    = G_OBJECT_CLASS (klass);
+  GeglOperationClass               *operation_class = GEGL_OPERATION_CLASS (klass);
+  GeglOperationPointComposer3Class *point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
+  GRand                            *rand            = g_rand_new_with_seed (DISSOLVE_SEED);
+  int                               i;
 
   object_class->set_property   = gimp_operation_point_layer_mode_set_property;
   object_class->get_property   = gimp_operation_point_layer_mode_get_property;
@@ -137,6 +139,13 @@ gimp_operation_point_layer_mode_class_init (GimpOperationPointLayerModeClass *kl
                                                          TRUE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_OPACITY,
+                                   g_param_spec_double ("opacity",
+                                                        NULL, NULL,
+                                                        0.0, 1.0, 1.0,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
 
   for (i = 0; i < DISSOLVE_REPEAT_WIDTH * DISSOLVE_REPEAT_HEIGHT; i++)
     dissolve_lut[i] = g_rand_int (rand);
@@ -167,6 +176,10 @@ gimp_operation_point_layer_mode_set_property (GObject      *object,
       self->premultiplied = g_value_get_boolean (value);
       break;
 
+    case PROP_OPACITY:
+      self->opacity = g_value_get_double (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -191,6 +204,10 @@ gimp_operation_point_layer_mode_get_property (GObject    *object,
       g_value_set_boolean (value, self->premultiplied);
       break;
 
+    case PROP_OPACITY:
+      g_value_set_double (value, self->opacity);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -211,6 +228,7 @@ gimp_operation_point_layer_mode_prepare (GeglOperation *operation)
   gegl_operation_set_format (operation, "input",  format);
   gegl_operation_set_format (operation, "output", format);
   gegl_operation_set_format (operation, "aux",    format);
+  gegl_operation_set_format (operation, "aux2",   babl_format ("Y float"));
 }
 
 static void
@@ -294,6 +312,7 @@ static gboolean
 gimp_operation_point_layer_mode_process (GeglOperation       *operation,
                                          void                *in_buf,
                                          void                *aux_buf,
+                                         void                *aux2_buf,
                                          void                *out_buf,
                                          glong                samples,
                                          const GeglRectangle *roi,
@@ -301,9 +320,11 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
 {
   GimpOperationPointLayerMode *self       = GIMP_OPERATION_POINT_LAYER_MODE (operation);
   GimpLayerModeEffects         blend_mode = self->blend_mode;
+  gdouble                      opacity    = self->opacity;
 
   gfloat *in     = in_buf;     /* composite of layers below */
   gfloat *lay    = aux_buf;    /* layer */
+  gfloat *mask   = aux2_buf;   /* mask */
   gfloat *out    = out_buf;    /* resulting composite */
   glong   sample = samples;
   gint    c      = 0;
@@ -313,6 +334,11 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
 
   while (sample--)
     {
+      if (mask)
+          in[ALPHA] *= (*mask) * opacity;
+      else
+        in[ALPHA] *= opacity;
+
       /* XXX: having such a switch in an innerloop is a horrible idea */
       switch (blend_mode)
         {
@@ -584,6 +610,9 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
       in  += 4;
       lay += 4;
       out += 4;
+
+      if (mask)
+        mask += 4;
     }
 
   return TRUE;

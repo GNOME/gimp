@@ -31,6 +31,7 @@
 static gboolean gimp_operation_color_erase_mode_process (GeglOperation       *operation,
                                                          void                *in_buf,
                                                          void                *aux_buf,
+                                                         void                *aux2_buf,
                                                          void                *out_buf,
                                                          glong                samples,
                                                          const GeglRectangle *roi,
@@ -44,11 +45,11 @@ G_DEFINE_TYPE (GimpOperationColorEraseMode, gimp_operation_color_erase_mode,
 static void
 gimp_operation_color_erase_mode_class_init (GimpOperationColorEraseModeClass *klass)
 {
-  GeglOperationClass              *operation_class;
-  GeglOperationPointComposerClass *point_class;
+  GeglOperationClass               *operation_class;
+  GeglOperationPointComposer3Class *point_class;
 
   operation_class = GEGL_OPERATION_CLASS (klass);
-  point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
+  point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:color-erase-mode",
@@ -67,6 +68,7 @@ static gboolean
 gimp_operation_color_erase_mode_process (GeglOperation       *operation,
                                          void                *in_buf,
                                          void                *aux_buf,
+                                         void                *aux2_buf,
                                          void                *out_buf,
                                          glong                samples,
                                          const GeglRectangle *roi,

@@ -3,6 +3,7 @@
  *
  * gimpoperationantierasemode.c
  * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ *               2012 Ville Sokk <ville.sokk@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,9 +29,11 @@
 #include "gimpoperationantierasemode.h"
 
 
+static void     gimp_operation_anti_erase_mode_prepare (GeglOperation       *operation);
 static gboolean gimp_operation_anti_erase_mode_process (GeglOperation       *operation,
                                                         void                *in_buf,
                                                         void                *aux_buf,
+                                                        void                *aux2_buf,
                                                         void                *out_buf,
                                                         glong                samples,
                                                         const GeglRectangle *roi,
@@ -45,17 +48,18 @@ static void
 gimp_operation_anti_erase_mode_class_init (GimpOperationAntiEraseModeClass *klass)
 {
   GeglOperationClass              *operation_class;
-  GeglOperationPointComposerClass *point_class;
+  GeglOperationPointComposer3Class *point_class;
 
   operation_class = GEGL_OPERATION_CLASS (klass);
-  point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
+  point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:anti-erase-mode",
                                  "description", "GIMP anti erase mode operation",
                                  NULL);
 
-  point_class->process         = gimp_operation_anti_erase_mode_process;
+  operation_class->prepare = gimp_operation_anti_erase_mode_prepare;
+  point_class->process     = gimp_operation_anti_erase_mode_process;
 }
 
 static void
@@ -63,29 +67,70 @@ gimp_operation_anti_erase_mode_init (GimpOperationAntiEraseMode *self)
 {
 }
 
+static void
+gimp_operation_anti_erase_mode_prepare (GeglOperation *operation)
+{
+  const Babl *format = babl_format ("R'G'B'A float");
+
+  gegl_operation_set_format (operation, "input",  format);
+  gegl_operation_set_format (operation, "aux",    format);
+  gegl_operation_set_format (operation, "aux2",   babl_format ("Y float"));
+  gegl_operation_set_format (operation, "output", format);
+}
+
 static gboolean
 gimp_operation_anti_erase_mode_process (GeglOperation       *operation,
                                         void                *in_buf,
                                         void                *aux_buf,
+                                        void                *aux2_buf,
                                         void                *out_buf,
                                         glong                samples,
                                         const GeglRectangle *roi,
                                         gint                 level)
 {
-  gfloat *in    = in_buf;
-  gfloat *layer = aux_buf;
-  gfloat *out   = out_buf;
+  GimpOperationPointLayerMode *point   = GIMP_OPERATION_POINT_LAYER_MODE (operation);
+  gfloat                       opacity = point->opacity;
+  gfloat                      *in      = in_buf;
+  gfloat                      *layer   = aux_buf;
+  gfloat                      *mask    = aux2_buf;
+  gfloat                      *out     = out_buf;
 
-  while (samples--)
+  if (mask)
     {
-      out[RED]   = in[RED];
-      out[GREEN] = in[GREEN];
-      out[BLUE]  = in[BLUE];
-      out[ALPHA] = in[ALPHA];
+      while (samples--)
+        {
+          gint b;
 
-      in    += 4;
-      layer += 4;
-      out   += 4;
+          for (b = RED; b < ALPHA; b++)
+            {
+              out[b] = in[b];
+            }
+
+          out[ALPHA] = in[ALPHA] + (1 - in[ALPHA]) * layer[ALPHA] * opacity * (*mask);
+
+          in    += 4;
+          layer += 4;
+          mask  += 1;
+          out   += 4;
+        }
+    }
+  else
+    {
+      while (samples--)
+        {
+          gint b;
+
+          for (b = RED; b < ALPHA; b++)
+            {
+              out[b] = in[b];
+            }
+
+          out[ALPHA] = in[ALPHA] + (1 - in[ALPHA]) * layer[ALPHA] * opacity;
+
+          in    += 4;
+          layer += 4;
+          out   += 4;
+        }
     }
 
   return TRUE;

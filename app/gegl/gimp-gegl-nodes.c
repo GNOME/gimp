@@ -318,21 +318,6 @@ gimp_gegl_node_set_layer_mode (GeglNode             *node,
 
   switch (mode)
     {
-    case GIMP_COLOR_ERASE_MODE:
-    case GIMP_ANTI_ERASE_MODE:
-      gegl_node_set (node,
-                     "operation",     "gimp:point-layer-mode",
-                     "blend-mode",    mode,
-                     "premultiplied", premultiplied,
-                     NULL);
-      return;
-
-    default:
-      break;
-    }
-
-  switch (mode)
-    {
     case GIMP_NORMAL_MODE:        operation = "gimp:normal-mode"; break;
     case GIMP_DISSOLVE_MODE:      operation = "gimp:dissolve-mode"; break;
     case GIMP_BEHIND_MODE:        operation = "gimp:behind-mode"; break;

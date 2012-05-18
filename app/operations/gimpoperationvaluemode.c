@@ -37,6 +37,7 @@ static void     gimp_operation_value_mode_prepare (GeglOperation       *operatio
 static gboolean gimp_operation_value_mode_process (GeglOperation       *operation,
                                                    void                *in_buf,
                                                    void                *aux_buf,
+                                                   void                *aux2_buf,
                                                    void                *out_buf,
                                                    glong                samples,
                                                    const GeglRectangle *roi,
@@ -50,11 +51,11 @@ G_DEFINE_TYPE (GimpOperationValueMode, gimp_operation_value_mode,
 static void
 gimp_operation_value_mode_class_init (GimpOperationValueModeClass *klass)
 {
-  GeglOperationClass              *operation_class;
-  GeglOperationPointComposerClass *point_class;
+  GeglOperationClass               *operation_class;
+  GeglOperationPointComposer3Class *point_class;
 
   operation_class = GEGL_OPERATION_CLASS (klass);
-  point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
+  point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:value-mode",
@@ -77,6 +78,7 @@ gimp_operation_value_mode_prepare (GeglOperation *operation)
 
   gegl_operation_set_format (operation, "input",  format);
   gegl_operation_set_format (operation, "aux",    format);
+  gegl_operation_set_format (operation, "aux2",   babl_format ("Y float"));
   gegl_operation_set_format (operation, "output", format);
 }
 
@@ -84,14 +86,18 @@ static gboolean
 gimp_operation_value_mode_process (GeglOperation       *operation,
                                    void                *in_buf,
                                    void                *aux_buf,
+                                   void                *aux2_buf,
                                    void                *out_buf,
                                    glong                samples,
                                    const GeglRectangle *roi,
                                    gint                 level)
 {
-  gfloat *in    = in_buf;
-  gfloat *layer = aux_buf;
-  gfloat *out   = out_buf;
+  GimpOperationPointLayerMode *point   = GIMP_OPERATION_POINT_LAYER_MODE (operation);
+  gfloat                       opacity = point->opacity;
+  gfloat                      *in      = in_buf;
+  gfloat                      *layer   = aux_buf;
+  gfloat                      *mask    = aux2_buf;
+  gfloat                      *out     = out_buf;
 
   while (samples--)
     {
@@ -99,27 +105,46 @@ gimp_operation_value_mode_process (GeglOperation       *operation,
       GimpHSV layer_hsv, out_hsv;
       GimpRGB layer_rgb  = {layer[0], layer[1], layer[2]};
       GimpRGB out_rgb    = {in[0], in[1], in[2]};
-      gfloat  comp_alpha = MIN (in[ALPHA], layer[ALPHA]);
-      gfloat  new_alpha  = in[ALPHA] + (1 - in[ALPHA]) * comp_alpha;
-      gfloat  ratio      = comp_alpha / new_alpha;
+      gfloat comp_alpha, new_alpha, ratio;
 
-      gimp_rgb_to_hsv (&layer_rgb, &layer_hsv);
-      gimp_rgb_to_hsv (&out_rgb, &out_hsv);
+      comp_alpha = MIN (in[ALPHA], layer[ALPHA]) * opacity;
+      if (mask)
+        comp_alpha *= (*mask);
 
-      out_hsv.v = layer_hsv.v;
-      gimp_hsv_to_rgb (&out_hsv, &out_rgb);
+      new_alpha  = in[ALPHA] + (1 - in[ALPHA]) * comp_alpha;
 
-      out[0] = out_rgb.r;
-      out[1] = out_rgb.g;
-      out[2] = out_rgb.b;
-      out[3] = in[3];
+      if (comp_alpha && new_alpha)
+        {
+          ratio      = comp_alpha / new_alpha;
 
-      for (b = RED; b < ALPHA; b++)
-        out[b] = out[b] * ratio + in[b] * (1 - ratio) + 0.0001;
+          gimp_rgb_to_hsv (&layer_rgb, &layer_hsv);
+          gimp_rgb_to_hsv (&out_rgb, &out_hsv);
+
+          out_hsv.v = layer_hsv.v;
+          gimp_hsv_to_rgb (&out_hsv, &out_rgb);
+
+          out[0] = out_rgb.r;
+          out[1] = out_rgb.g;
+          out[2] = out_rgb.b;
+          out[3] = in[3];
+
+          for (b = RED; b < ALPHA; b++)
+            out[b] = out[b] * ratio + in[b] * (1 - ratio) + 0.0001;
+        }
+      else
+        {
+          for (b = RED; b <= ALPHA; b++)
+            {
+              out[b] = in[b];
+            }
+        }
 
       in    += 4;
       layer += 4;
       out   += 4;
+
+      if (mask)
+        mask += 1;
     }
 
   return TRUE;

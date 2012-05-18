@@ -33,6 +33,7 @@ static void     gimp_operation_burn_mode_prepare (GeglOperation       *operation
 static gboolean gimp_operation_burn_mode_process (GeglOperation       *operation,
                                                   void                *in_buf,
                                                   void                *aux_buf,
+                                                  void                *aux2_buf,
                                                   void                *out_buf,
                                                   glong                samples,
                                                   const GeglRectangle *roi,
@@ -46,11 +47,11 @@ G_DEFINE_TYPE (GimpOperationBurnMode, gimp_operation_burn_mode,
 static void
 gimp_operation_burn_mode_class_init (GimpOperationBurnModeClass *klass)
 {
-  GeglOperationClass              *operation_class;
-  GeglOperationPointComposerClass *point_class;
+  GeglOperationClass               *operation_class;
+  GeglOperationPointComposer3Class *point_class;
 
   operation_class = GEGL_OPERATION_CLASS (klass);
-  point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
+  point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:burn-mode",
@@ -73,6 +74,7 @@ gimp_operation_burn_mode_prepare (GeglOperation *operation)
 
   gegl_operation_set_format (operation, "input",  format);
   gegl_operation_set_format (operation, "aux",    format);
+  gegl_operation_set_format (operation, "aux2",   babl_format ("Y float"));
   gegl_operation_set_format (operation, "output", format);
 }
 
@@ -80,35 +82,58 @@ static gboolean
 gimp_operation_burn_mode_process (GeglOperation       *operation,
                                   void                *in_buf,
                                   void                *aux_buf,
+                                  void                *aux2_buf,
                                   void                *out_buf,
                                   glong                samples,
                                   const GeglRectangle *roi,
                                   gint                 level)
 {
-  gfloat *in    = in_buf;
-  gfloat *layer = aux_buf;
-  gfloat *out   = out_buf;
+  GimpOperationPointLayerMode *point   = GIMP_OPERATION_POINT_LAYER_MODE (operation);
+  gfloat                       opacity = point->opacity;
+  gfloat                      *in      = in_buf;
+  gfloat                      *layer   = aux_buf;
+  gfloat                      *mask    = aux2_buf;
+  gfloat                      *out     = out_buf;
 
   while (samples--)
     {
       gint b;
-      gfloat comp_alpha = MIN (in[ALPHA], layer[ALPHA]);
-      gfloat new_alpha  = in[ALPHA] + (1 - in[ALPHA]) * comp_alpha;
-      gfloat ratio      = comp_alpha / new_alpha;
+      gfloat comp_alpha, new_alpha, ratio;
 
-      for (b = RED; b < ALPHA; b++)
+      comp_alpha = MIN (in[ALPHA], layer[ALPHA]) * opacity;
+      if (mask)
+        comp_alpha *= (*mask);
+
+      new_alpha  = in[ALPHA] + (1 - in[ALPHA]) * comp_alpha;
+
+      if (comp_alpha && new_alpha)
         {
-          gfloat comp = (1 - in[b]) / layer[b];
-          comp = CLAMP (1 - comp, 0, 1);
+          ratio      = comp_alpha / new_alpha;
 
-          out[b] = comp * ratio + in[b] * (1 - ratio) + 0.0001;
+          for (b = RED; b < ALPHA; b++)
+            {
+              gfloat comp = (1 - in[b]) / layer[b];
+              comp = CLAMP (1 - comp, 0, 1);
+
+              out[b] = comp * ratio + in[b] * (1 - ratio) + 0.0001;
+            }
+
+          out[ALPHA] = in[ALPHA];
         }
-
-      out[ALPHA] = in[ALPHA];
+      else
+        {
+          for (b = RED; b <= ALPHA; b++)
+            {
+              out[b] = in[b];
+            }
+        }
 
       in    += 4;
       layer += 4;
       out   += 4;
+
+      if (mask)
+        mask += 1;
     }
 
   return TRUE;

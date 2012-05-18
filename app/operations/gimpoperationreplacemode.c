@@ -28,22 +28,6 @@
 #include "gimpoperationreplacemode.h"
 
 
-enum
-{
-  PROP_0,
-  PROP_PREMULTIPLIED,
-  PROP_OPACITY
-};
-
-
-static void     gimp_operation_replace_mode_set_property (GObject             *object,
-                                                          guint                property_id,
-                                                          const GValue        *value,
-                                                          GParamSpec          *pspec);
-static void     gimp_operation_replace_mode_get_property (GObject             *object,
-                                                          guint                property_id,
-                                                          GValue              *value,
-                                                          GParamSpec          *pspec);
 static void     gimp_operation_replace_mode_prepare      (GeglOperation       *operation);
 static gboolean gimp_operation_replace_mode_process      (GeglOperation       *operation,
                                                           void                *in_buf,
@@ -56,22 +40,17 @@ static gboolean gimp_operation_replace_mode_process      (GeglOperation       *o
 
 
 G_DEFINE_TYPE (GimpOperationReplaceMode, gimp_operation_replace_mode,
-               GEGL_TYPE_OPERATION_POINT_COMPOSER3)
+               GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
 
 static void
 gimp_operation_replace_mode_class_init (GimpOperationReplaceModeClass *klass)
 {
-  GObjectClass                     *object_class;
   GeglOperationClass               *operation_class;
   GeglOperationPointComposer3Class *point_class;
 
-  object_class    = G_OBJECT_CLASS (klass);
   operation_class = GEGL_OPERATION_CLASS (klass);
   point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
-
-  object_class->set_property = gimp_operation_replace_mode_set_property;
-  object_class->get_property = gimp_operation_replace_mode_get_property;
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:replace-mode",
@@ -80,70 +59,11 @@ gimp_operation_replace_mode_class_init (GimpOperationReplaceModeClass *klass)
 
   operation_class->prepare = gimp_operation_replace_mode_prepare;
   point_class->process     = gimp_operation_replace_mode_process;
-
-  g_object_class_install_property (object_class, PROP_PREMULTIPLIED,
-                                   g_param_spec_boolean ("premultiplied",
-                                                         NULL, NULL,
-                                                         TRUE,
-                                                         GIMP_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT));
-
-  g_object_class_install_property (object_class, PROP_OPACITY,
-                                   g_param_spec_double ("opacity",
-                                                        NULL, NULL,
-                                                        0.0, 1.0,
-                                                        1.0,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
 }
 
 static void
 gimp_operation_replace_mode_init (GimpOperationReplaceMode *self)
 {
-}
-
-static void
-gimp_operation_replace_mode_set_property (GObject      *object,
-                                          guint         property_id,
-                                          const GValue *value,
-                                          GParamSpec   *pspec)
-{
-  GimpOperationReplaceMode *self = GIMP_OPERATION_REPLACE_MODE (object);
-
-  switch (property_id)
-    {
-    case PROP_PREMULTIPLIED:
-      self->premultiplied = g_value_get_boolean (value);
-      break;
-    case PROP_OPACITY:
-      self->opacity = g_value_get_double (value);
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
-static void
-gimp_operation_replace_mode_get_property (GObject      *object,
-                                          guint         property_id,
-                                          GValue       *value,
-                                          GParamSpec   *pspec)
-{
-  GimpOperationReplaceMode *self = GIMP_OPERATION_REPLACE_MODE (object);
-
-  switch (property_id)
-    {
-    case PROP_PREMULTIPLIED:
-      g_value_set_boolean (value, self->premultiplied);
-      break;
-    case PROP_OPACITY:
-      g_value_set_double (value, self->opacity);
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
 }
 
 static void
@@ -167,12 +87,12 @@ gimp_operation_replace_mode_process (GeglOperation       *operation,
                                      const GeglRectangle *roi,
                                      gint                 level)
 {
-  GimpOperationReplaceMode *self = GIMP_OPERATION_REPLACE_MODE (operation);
-  gfloat opacity                 = self->opacity;
-  gfloat *in                     = in_buf;
-  gfloat *layer                  = aux_buf;
-  gfloat *mask                   = aux2_buf;
-  gfloat *out                    = out_buf;
+  GimpOperationPointLayerMode *point   = GIMP_OPERATION_POINT_LAYER_MODE (operation);
+  gfloat                       opacity = point->opacity;
+  gfloat                      *in      = in_buf;
+  gfloat                      *layer   = aux_buf;
+  gfloat                      *mask    = aux2_buf;
+  gfloat                      *out     = out_buf;
 
   while (samples--)
     {

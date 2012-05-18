@@ -32,6 +32,7 @@
 static gboolean gimp_operation_erase_mode_process (GeglOperation       *operation,
                                                    void                *in_buf,
                                                    void                *aux_buf,
+                                                   void                *aux2_buf,
                                                    void                *out_buf,
                                                    glong                samples,
                                                    const GeglRectangle *roi,
@@ -45,11 +46,11 @@ G_DEFINE_TYPE (GimpOperationEraseMode, gimp_operation_erase_mode,
 static void
 gimp_operation_erase_mode_class_init (GimpOperationEraseModeClass *klass)
 {
-  GeglOperationClass              *operation_class;
-  GeglOperationPointComposerClass *point_class;
+  GeglOperationClass               *operation_class;
+  GeglOperationPointComposer3Class *point_class;
 
   operation_class = GEGL_OPERATION_CLASS (klass);
-  point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
+  point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:erase-mode",
@@ -68,23 +69,29 @@ static gboolean
 gimp_operation_erase_mode_process (GeglOperation       *operation,
                                    void                *in_buf,
                                    void                *aux_buf,
+                                   void                *aux2_buf,
                                    void                *out_buf,
                                    glong                samples,
                                    const GeglRectangle *roi,
                                    gint                 level)
 {
-  GimpOperationPointLayerMode *point = GIMP_OPERATION_POINT_LAYER_MODE (operation);
-  gfloat                      *in    = in_buf;
-  gfloat                      *layer = aux_buf;
-  gfloat                      *out   = out_buf;
+  GimpOperationPointLayerMode *point   = GIMP_OPERATION_POINT_LAYER_MODE (operation);
+  gfloat                       opacity = point->opacity;
+  gfloat                      *in      = in_buf;
+  gfloat                      *layer   = aux_buf;
+  gfloat                      *mask    = aux2_buf;
+  gfloat                      *out     = out_buf;
 
   if (point->premultiplied)
     {
       while (samples--)
         {
           gint b;
+          gfloat value = opacity;
+          if (mask)
+            value *= (*mask);
 
-          out[ALPHA] = in[ALPHA] - in[ALPHA] * layer[ALPHA];
+          out[ALPHA] = in[ALPHA] - in[ALPHA] * layer[ALPHA] * value;
           for (b = RED; b < ALPHA; b++)
             {
               out[b] = in[b] / in[ALPHA] * out[ALPHA];
@@ -93,6 +100,9 @@ gimp_operation_erase_mode_process (GeglOperation       *operation,
           in    += 4;
           layer += 4;
           out   += 4;
+
+          if (mask)
+            mask += 1;
         }
     }
   else
@@ -100,16 +110,22 @@ gimp_operation_erase_mode_process (GeglOperation       *operation,
       while (samples--)
         {
           gint b;
+          gfloat value = opacity;
+          if (mask)
+            value *= (*mask);
 
           for (b = RED; b < ALPHA; b++)
             {
               out[b] = in[b];
             }
-          out[ALPHA] = in[ALPHA] - in[ALPHA] * layer[ALPHA];;
+          out[ALPHA] = in[ALPHA] - in[ALPHA] * layer[ALPHA] * value;
 
           in    += 4;
           layer += 4;
           out   += 4;
+
+          if (mask)
+            mask += 1;
         }
     }
 

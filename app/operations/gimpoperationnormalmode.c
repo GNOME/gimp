@@ -36,6 +36,7 @@ static gboolean gimp_operation_normal_parent_process (GeglOperation        *oper
 static gboolean gimp_operation_normal_mode_process   (GeglOperation        *operation,
                                                       void                 *in_buf,
                                                       void                 *aux_buf,
+                                                      void                 *aux2_buf,
                                                       void                 *out_buf,
                                                       glong                 samples,
                                                       const GeglRectangle  *roi,
@@ -51,11 +52,11 @@ G_DEFINE_TYPE (GimpOperationNormalMode, gimp_operation_normal_mode,
 static void
 gimp_operation_normal_mode_class_init (GimpOperationNormalModeClass *klass)
 {
-  GeglOperationClass              *operation_class;
-  GeglOperationPointComposerClass *point_class;
+  GeglOperationClass               *operation_class;
+  GeglOperationPointComposer3Class *point_class;
 
   operation_class = GEGL_OPERATION_CLASS (klass);
-  point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
+  point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:normal-mode",
@@ -124,42 +125,101 @@ static gboolean
 gimp_operation_normal_mode_process (GeglOperation       *operation,
                                     void                *in_buf,
                                     void                *aux_buf,
+                                    void                *aux2_buf,
                                     void                *out_buf,
                                     glong                samples,
                                     const GeglRectangle *roi,
                                     gint                 level)
 {
-  GimpOperationPointLayerMode *point = GIMP_OPERATION_POINT_LAYER_MODE (operation);
-  gfloat                      *in    = in_buf;
-  gfloat                      *aux   = aux_buf;
-  gfloat                      *out   = out_buf;
+  GimpOperationPointLayerMode *point   = GIMP_OPERATION_POINT_LAYER_MODE (operation);
+  gfloat                      *in      = in_buf;
+  gfloat                      *aux     = aux_buf;
+  gfloat                      *mask    = aux2_buf;
+  gfloat                      *out     = out_buf;
+  gdouble                      opacity = point->opacity;
 
   if (point->premultiplied)
     {
-      while (samples--)
+      if (mask)
         {
-          out[0] = aux[0] + in[0] * (1.0f - aux[3]);
-          out[1] = aux[1] + in[1] * (1.0f - aux[3]);
-          out[2] = aux[2] + in[2] * (1.0f - aux[3]);
-          out[3] = aux[3] + in[3] - aux[3] * in[3];
+          while (samples--)
+            {
+              gfloat value     = opacity * (*mask);
+              gfloat aux_alpha = aux[ALPHA] * value;
+              gint   b;
 
-          in  += 4;
-          aux += 4;
-          out += 4;
+              for (b = RED; b < ALPHA; b++)
+                {
+                  out[b] = aux[b] * value + in[b] * (1.0f - aux_alpha);
+                }
+
+              out[ALPHA] = aux_alpha + in[ALPHA] - aux_alpha * in[ALPHA];
+
+              in   += 4;
+              aux  += 4;
+              mask += 1;
+              out  += 4;
+            }
+        }
+      else
+        {
+          while (samples--)
+            {
+              gfloat aux_alpha = aux[ALPHA] * opacity;
+              gint   b;
+
+              for (b = RED; b < ALPHA; b++)
+                {
+                  out[b] = aux[b] * opacity + in[b] * (1.0f - aux_alpha);
+                }
+
+              out[ALPHA] = aux_alpha + in[ALPHA] - aux_alpha * in[ALPHA];
+
+              in   += 4;
+              aux  += 4;
+              out  += 4;
+            }
         }
     }
   else
     {
-      while (samples--)
+      if (mask)
         {
-          out[0] = aux[0] * aux[3] + in[0] * in[3] * (1.0 - aux[3]);
-          out[1] = aux[1] * aux[3] + in[1] * in[3] * (1.0 - aux[3]);
-          out[2] = aux[2] * aux[3] + in[2] * in[3] * (1.0 - aux[3]);
-          out[3] = aux[3] + in[3] - aux[3] * in[3];
+          while (samples--)
+            {
+              gfloat value     = opacity * (*mask);
+              gfloat aux_alpha = aux[ALPHA] * value;
+              gint   b;
 
-          in  += 4;
-          aux += 4;
-          out += 4;
+              out[ALPHA] = aux_alpha + in[ALPHA] - aux_alpha * in[ALPHA];
+              for (b = RED; b < ALPHA; b++)
+                {
+                  out[b] = (aux[b] * aux_alpha + in[b] * in[ALPHA] * (1.0 - aux_alpha)) / out[ALPHA];
+                }
+
+              in   += 4;
+              aux  += 4;
+              mask += 1;
+              out  += 4;
+            }
+        }
+      else
+        {
+          while (samples--)
+            {
+              gfloat aux_alpha = aux[ALPHA] * opacity;
+              gint   b;
+
+              out[ALPHA] = aux_alpha + in[ALPHA] - aux_alpha * in[ALPHA];
+              for (b = RED; b < ALPHA; b++)
+                {
+                  out[b] = (aux[b] * aux_alpha + in[b] * in[ALPHA] * (1.0 - aux_alpha)) / out[ALPHA];
+                }
+
+              in  += 4;
+              aux += 4;
+              out += 4;
+            }
         }
     }
 
