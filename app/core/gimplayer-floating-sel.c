@@ -337,9 +337,6 @@ floating_sel_composite (GimpLayer *layer)
                                   gimp_layer_get_mode (layer),
                                   NULL,
                                   combine_x - dr_off_x,
-                                  combine_y - dr_off_y,
-                                  NULL,
-                                  combine_x - dr_off_x,
                                   combine_y - dr_off_y);
 
       /*  restore lock alpha  */

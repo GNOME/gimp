@@ -501,7 +501,6 @@ gimp_edit_fill_full (GimpImage            *image,
                               GEGL_RECTANGLE (0, 0, width, height),
                               TRUE, undo_desc,
                               opacity, paint_mode,
-                              NULL, x, y,
                               NULL, x, y);
 
   g_object_unref (dest_buffer);
@@ -542,7 +541,6 @@ gimp_edit_fade (GimpImage   *image,
                                   gimp_object_get_name (undo),
                                   gimp_context_get_opacity (context),
                                   gimp_context_get_paint_mode (context),
-                                  NULL, undo->x, undo->y,
                                   NULL, undo->x, undo->y);
 
       g_object_unref (buffer);

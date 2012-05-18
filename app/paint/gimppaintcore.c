@@ -760,9 +760,6 @@ gimp_paint_core_paste (GimpPaintCore            *core,
                               image_opacity, paint_mode,
                               base_buffer, /*  specify an alternative src1  */
                               core->paint_buffer_x,
-                              core->paint_buffer_y,
-                              NULL,
-                              core->paint_buffer_x,
                               core->paint_buffer_y);
 
   /*  Update the undo extents  */

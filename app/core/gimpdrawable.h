@@ -74,10 +74,7 @@ struct _GimpDrawableClass
                                            GimpLayerModeEffects  mode,
                                            GeglBuffer           *base_buffer,
                                            gint                  base_x,
-                                           gint                  base_y,
-                                           GeglBuffer           *dest_buffer,
-                                           gint                  dest_x,
-                                           gint                  dest_y);
+                                           gint                  base_y);
   void          (* replace_buffer)        (GimpDrawable         *drawable,
                                            GeglBuffer           *buffer,
                                            const GeglRectangle  *buffer_region,
@@ -151,10 +148,7 @@ void            gimp_drawable_apply_buffer       (GimpDrawable        *drawable,
                                                   GimpLayerModeEffects mode,
                                                   GeglBuffer          *base_buffer,
                                                   gint                 base_x,
-                                                  gint                 base_y,
-                                                  GeglBuffer          *dest_buffer,
-                                                  gint                 dest_x,
-                                                  gint                 dest_y);
+                                                  gint                 base_y);
 void            gimp_drawable_replace_buffer     (GimpDrawable        *drawable,
                                                   GeglBuffer          *buffer,
                                                   const GeglRectangle *buffer_region,

@@ -144,10 +144,7 @@ static void      gimp_channel_apply_buffer   (GimpDrawable        *drawable,
                                               GimpLayerModeEffects  mode,
                                               GeglBuffer          *base_buffer,
                                               gint                 base_x,
-                                              gint                 base_y,
-                                              GeglBuffer          *dest_buffer,
-                                              gint                 dest_x,
-                                              gint                 dest_y);
+                                              gint                 base_y);
 static void      gimp_channel_replace_buffer (GimpDrawable        *drawable,
                                               GeglBuffer          *buffer,
                                               const GeglRectangle *buffer_region,
@@ -821,10 +818,7 @@ gimp_channel_apply_buffer (GimpDrawable         *drawable,
                            GimpLayerModeEffects  mode,
                            GeglBuffer           *base_buffer,
                            gint                  base_x,
-                           gint                  base_y,
-                           GeglBuffer           *dest_buffer,
-                           gint                  dest_x,
-                           gint                  dest_y)
+                           gint                  base_y)
 {
   gimp_drawable_invalidate_boundary (drawable);
 
@@ -833,9 +827,7 @@ gimp_channel_apply_buffer (GimpDrawable         *drawable,
                                                     push_undo, undo_desc,
                                                     opacity, mode,
                                                     base_buffer,
-                                                    base_x, base_y,
-                                                    dest_buffer,
-                                                    dest_x, dest_y);
+                                                    base_x, base_y);
 
   GIMP_CHANNEL (drawable)->bounds_known = FALSE;
 }

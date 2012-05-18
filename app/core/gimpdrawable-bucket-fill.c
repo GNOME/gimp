@@ -263,7 +263,6 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
                               GEGL_RECTANGLE (0, 0, x2 - x1, y2 - y1),
                               TRUE, C_("undo-type", "Bucket Fill"),
                               opacity, paint_mode,
-                              NULL, x1, y1,
                               NULL, x1, y1);
 
   g_object_unref (buffer);

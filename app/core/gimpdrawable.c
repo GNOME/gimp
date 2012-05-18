@@ -1188,26 +1188,20 @@ gimp_drawable_apply_buffer (GimpDrawable         *drawable,
                             GimpLayerModeEffects  mode,
                             GeglBuffer           *base_buffer,
                             gint                  base_x,
-                            gint                  base_y,
-                            GeglBuffer           *dest_buffer,
-                            gint                  dest_x,
-                            gint                  dest_y)
+                            gint                  base_y)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
   g_return_if_fail (buffer_region != NULL);
   g_return_if_fail (base_buffer == NULL || GEGL_IS_BUFFER (base_buffer));
-  g_return_if_fail (dest_buffer == NULL || GEGL_IS_BUFFER (dest_buffer));
 
   GIMP_DRAWABLE_GET_CLASS (drawable)->apply_buffer (drawable, buffer,
                                                     buffer_region,
                                                     push_undo, undo_desc,
                                                     opacity, mode,
                                                     base_buffer,
-                                                    base_x, base_y,
-                                                    dest_buffer,
-                                                    dest_x, dest_y);
+                                                    base_x, base_y);
 }
 
 void

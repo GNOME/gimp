@@ -207,7 +207,6 @@ gimp_drawable_blend (GimpDrawable         *drawable,
                               GEGL_RECTANGLE (0, 0, width, height),
                               TRUE, C_("undo-type", "Blend"),
                               opacity, paint_mode,
-                              NULL, x, y,
                               NULL, x, y);
 
   /*  update the image  */

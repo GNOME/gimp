@@ -23,10 +23,6 @@
 
 #include "core-types.h"
 
-#include "base/pixel-region.h"
-
-#include "paint-funcs/paint-funcs.h"
-
 #include "gegl/gimp-babl-compat.h"
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-nodes.h"
@@ -52,17 +48,16 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
                                  GimpLayerModeEffects  mode,
                                  GeglBuffer           *base_buffer,
                                  gint                  base_x,
-                                 gint                  base_y,
-                                 GeglBuffer           *dest_buffer,
-                                 gint                  dest_x,
-                                 gint                  dest_y)
+                                 gint                  base_y)
 {
-  GimpItem    *item        = GIMP_ITEM (drawable);
-  GimpImage   *image       = gimp_item_get_image (item);
-  GimpChannel *mask        = gimp_image_get_mask (image);
-  GeglBuffer  *mask_buffer = NULL;
-  gint         x, y, width, height;
-  gint         offset_x, offset_y;
+  GimpItem          *item        = GIMP_ITEM (drawable);
+  GimpImage         *image       = gimp_item_get_image (item);
+  GimpChannel       *mask        = gimp_image_get_mask (image);
+  GeglBuffer        *mask_buffer = NULL;
+  GeglNode          *apply;
+  GimpComponentMask  affect;
+  gint               x, y, width, height;
+  gint               offset_x, offset_y;
 
   /*  don't apply the mask to itself and don't apply an empty mask  */
   if (GIMP_DRAWABLE (mask) == drawable || gimp_channel_is_empty (mask))
@@ -127,123 +122,28 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
   if (mask)
     mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
-  if (gimp_use_gegl (image->gimp) && ! dest_buffer)
-    {
-      GeglNode          *apply;
-      GimpComponentMask  affect;
+  affect = gimp_drawable_get_active_mask (drawable);
 
-      dest_buffer = gimp_drawable_get_buffer (drawable);
+  apply = gimp_gegl_create_apply_buffer_node (buffer,
+                                              base_x - buffer_region->x,
+                                              base_y - buffer_region->y,
+                                              0,
+                                              0,
+                                              0,
+                                              0,
+                                              mask_buffer,
+                                              -offset_x,
+                                              -offset_y,
+                                              opacity,
+                                              mode,
+                                              affect);
 
-      affect = gimp_drawable_get_active_mask (drawable);
+  gimp_apply_operation (base_buffer, NULL, NULL,
+                        apply,
+                        gimp_drawable_get_buffer (drawable),
+                        GEGL_RECTANGLE (x, y, width, height));
 
-      apply = gimp_gegl_create_apply_buffer_node (buffer,
-                                                  base_x - buffer_region->x,
-                                                  base_y - buffer_region->y,
-                                                  0,
-                                                  0,
-                                                  0,
-                                                  0,
-                                                  mask_buffer,
-                                                  -offset_x,
-                                                  -offset_y,
-                                                  opacity,
-                                                  mode,
-                                                  affect);
-
-      gimp_apply_operation (base_buffer, NULL, NULL,
-                            apply,
-                            dest_buffer,
-                            GEGL_RECTANGLE (x, y, width, height));
-
-      g_object_unref (apply);
-    }
-  else
-    {
-      PixelRegion      src1PR, src2PR, destPR;
-      CombinationMode  operation;
-      gboolean         active_components[MAX_CHANNELS];
-
-      if (gimp_gegl_buffer_get_temp_buf (buffer))
-        {
-          pixel_region_init_temp_buf (&src2PR,
-                                      gimp_gegl_buffer_get_temp_buf (buffer),
-                                      buffer_region->x, buffer_region->y,
-                                      buffer_region->width, buffer_region->height);
-        }
-      else
-        {
-          pixel_region_init (&src2PR, gimp_gegl_buffer_get_tiles (buffer),
-                             buffer_region->x, buffer_region->y,
-                             buffer_region->width, buffer_region->height,
-                             FALSE);
-        }
-
-      /*  configure the active channel array  */
-      gimp_drawable_get_active_components (drawable, active_components);
-
-      /*  determine what sort of operation is being attempted and
-       *  if it's actually legal...
-       */
-      operation = gimp_image_get_combination_mode (gimp_babl_format_get_image_type (gimp_drawable_get_format (drawable)),
-                                                   src2PR.bytes);
-      if (operation == -1)
-        {
-          g_warning ("%s: illegal parameters.", G_STRFUNC);
-          return;
-        }
-
-      /* configure the pixel regions */
-
-      pixel_region_init (&src1PR, gimp_gegl_buffer_get_tiles (base_buffer),
-                         x, y, width, height,
-                         FALSE);
-
-      pixel_region_resize (&src2PR,
-                           src2PR.x + (x - base_x), src2PR.y + (y - base_y),
-                           width, height);
-
-      if (dest_buffer)
-        {
-          pixel_region_init (&destPR, gimp_gegl_buffer_get_tiles (dest_buffer),
-                             dest_x, dest_y,
-                             buffer_region->width, buffer_region->height,
-                             TRUE);
-        }
-      else
-        {
-          dest_buffer = gimp_drawable_get_buffer (drawable);
-
-          pixel_region_init (&destPR, gimp_gegl_buffer_get_tiles (dest_buffer),
-                             x, y, width, height,
-                             TRUE);
-        }
-
-      if (mask_buffer)
-        {
-          PixelRegion maskPR;
-
-          pixel_region_init (&maskPR,
-                             gimp_gegl_buffer_get_tiles (mask_buffer),
-                             x + offset_x,
-                             y + offset_y,
-                             width, height,
-                             FALSE);
-
-          combine_regions (&src1PR, &src2PR, &destPR, &maskPR, NULL,
-                           opacity * 255.999,
-                           mode,
-                           active_components,
-                           operation);
-        }
-      else
-        {
-          combine_regions (&src1PR, &src2PR, &destPR, NULL, NULL,
-                           opacity * 255.999,
-                           mode,
-                           active_components,
-                           operation);
-        }
-    }
+  g_object_unref (apply);
 }
 
 /*  Similar to gimp_drawable_apply_region but works in "replace" mode (i.e.
