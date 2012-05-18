@@ -29,7 +29,8 @@ gboolean    file_save_dialog_save_image (GimpProgress        *progress_and_handl
                                          GimpPlugInProcedure *write_proc,
                                          GimpRunMode          run_mode,
                                          gboolean             save_a_copy,
-                                         gboolean             export,
+                                         gboolean             export_backward,
+                                         gboolean             export_forward,
                                          gboolean             verbose_cancel);
 
 
