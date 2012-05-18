@@ -880,9 +880,7 @@ gimp_layer_get_node (GimpItem *item)
    */
   mode_node = gimp_drawable_get_mode_node (drawable);
 
-  gimp_gegl_node_set_layer_mode (mode_node,
-                                 layer->mode,
-                                 TRUE);
+  gimp_gegl_node_set_layer_mode (mode_node, layer->mode, FALSE);
   gegl_node_set (mode_node,
                  "opacity", layer->opacity,
                  NULL);
@@ -1988,7 +1986,7 @@ gimp_layer_set_mode (GimpLayer            *layer,
 
           mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
 
-          gimp_gegl_node_set_layer_mode (mode_node, layer->mode, TRUE);
+          gimp_gegl_node_set_layer_mode (mode_node, layer->mode, FALSE);
         }
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),

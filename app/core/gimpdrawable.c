@@ -783,9 +783,10 @@ gimp_drawable_get_node (GimpItem *item)
 
   g_warn_if_fail (drawable->private->mode_node == NULL);
 
-  drawable->private->mode_node = gegl_node_new_child (node,
-                                                      "operation", "gegl:over",
-                                                      NULL);
+  drawable->private->mode_node =
+    gegl_node_new_child (node,
+                         "operation", "gimp:normal-mode",
+                         NULL);
 
   input  = gegl_node_get_input_proxy  (node, "input");
   output = gegl_node_get_output_proxy (node, "output");
@@ -904,25 +905,17 @@ gimp_drawable_sync_source_node (GimpDrawable *drawable,
           gegl_node_connect_to (fs_source,                       "output",
                                 drawable->private->fs_crop_node, "input");
 
-          drawable->private->fs_opacity_node =
-            gegl_node_new_child (drawable->private->source_node,
-                                 "operation", "gegl:opacity",
-                                 NULL);
-
-          gegl_node_connect_to (drawable->private->fs_crop_node,    "output",
-                                drawable->private->fs_opacity_node, "input");
-
           drawable->private->fs_offset_node =
             gegl_node_new_child (drawable->private->source_node,
                                  "operation", "gegl:translate",
                                  NULL);
 
-          gegl_node_connect_to (drawable->private->fs_opacity_node, "output",
-                                drawable->private->fs_offset_node,  "input");
+          gegl_node_connect_to (drawable->private->fs_crop_node,   "output",
+                                drawable->private->fs_offset_node, "input");
 
           drawable->private->fs_mode_node =
             gegl_node_new_child (drawable->private->source_node,
-                                 "operation", "gegl:over",
+                                 "operation", "gimp:normal-mode",
                                  NULL);
 
           gegl_node_connect_to (drawable->private->buffer_source_node, "output",
@@ -937,10 +930,6 @@ gimp_drawable_sync_source_node (GimpDrawable *drawable,
                             G_CALLBACK (gimp_drawable_fs_notify),
                             drawable);
         }
-
-      gegl_node_set (drawable->private->fs_opacity_node,
-                     "value", gimp_layer_get_opacity (fs),
-                     NULL);
 
       gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
       gimp_item_get_offset (GIMP_ITEM (fs), &fs_off_x, &fs_off_y);
@@ -958,7 +947,11 @@ gimp_drawable_sync_source_node (GimpDrawable *drawable,
                      NULL);
 
       gimp_gegl_node_set_layer_mode (drawable->private->fs_mode_node,
-                                     gimp_layer_get_mode (fs), TRUE);
+                                     gimp_layer_get_mode (fs), FALSE);
+
+      gegl_node_set (drawable->private->fs_mode_node,
+                     "opacity", gimp_layer_get_opacity (fs),
+                     NULL);
     }
   else
     {
@@ -967,7 +960,6 @@ gimp_drawable_sync_source_node (GimpDrawable *drawable,
           GeglNode *fs_source;
 
           gegl_node_disconnect (drawable->private->fs_crop_node, "input");
-          gegl_node_disconnect (drawable->private->fs_opacity_node, "input");
           gegl_node_disconnect (drawable->private->fs_offset_node, "input");
           gegl_node_disconnect (drawable->private->fs_mode_node, "input");
           gegl_node_disconnect (drawable->private->fs_mode_node, "aux");
@@ -988,10 +980,6 @@ gimp_drawable_sync_source_node (GimpDrawable *drawable,
           gegl_node_remove_child (drawable->private->source_node,
                                   drawable->private->fs_crop_node);
           drawable->private->fs_crop_node = NULL;
-
-          gegl_node_remove_child (drawable->private->source_node,
-                                  drawable->private->fs_opacity_node);
-          drawable->private->fs_opacity_node = NULL;
 
           gegl_node_remove_child (drawable->private->source_node,
                                   drawable->private->fs_offset_node);

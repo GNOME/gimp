@@ -28,7 +28,6 @@ struct _GimpDrawablePrivate
 
   GimpLayer     *floating_selection;
   GeglNode      *fs_crop_node;
-  GeglNode      *fs_opacity_node;
   GeglNode      *fs_offset_node;
   GeglNode      *fs_mode_node;
 
