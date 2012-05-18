@@ -216,7 +216,5 @@ void           gimp_image_opened         (Gimp                *gimp,
 gchar        * gimp_get_temp_filename    (Gimp                *gimp,
                                           const gchar         *extension);
 
-gboolean       gimp_use_gegl             (Gimp                *gimp);
-
 
 #endif  /* __GIMP_H__ */

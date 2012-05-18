@@ -103,7 +103,6 @@ enum
   PROP_COLOR_PROFILE_POLICY,
   PROP_SAVE_DOCUMENT_HISTORY,
   PROP_QUICK_MASK_COLOR,
-  PROP_USE_GEGL,
 
   /* ignored, only for backward compatibility: */
   PROP_INSTALL_COLORMAP,
@@ -450,14 +449,6 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                 TRUE, &red,
                                 GIMP_PARAM_STATIC_STRINGS);
 
-  /*  not serialized  */
-  g_object_class_install_property (object_class, PROP_USE_GEGL,
-                                   g_param_spec_boolean ("use-gegl",
-                                                         "Use GEGL", NULL,
-                                                         TRUE,
-                                                         GIMP_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT));
-
   /*  only for backward compatibility:  */
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INSTALL_COLORMAP,
                                     "install-colormap", NULL,
@@ -730,9 +721,6 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_QUICK_MASK_COLOR:
       gimp_value_get_rgb (value, &core_config->quick_mask_color);
       break;
-    case PROP_USE_GEGL:
-      core_config->use_gegl = g_value_get_boolean (value);
-      break;
 
     case PROP_INSTALL_COLORMAP:
     case PROP_MIN_COLORS:
@@ -901,9 +889,6 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_QUICK_MASK_COLOR:
       gimp_value_set_rgb (value, &core_config->quick_mask_color);
-      break;
-    case PROP_USE_GEGL:
-      g_value_set_boolean (value, core_config->use_gegl);
       break;
 
     case PROP_INSTALL_COLORMAP:

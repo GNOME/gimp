@@ -512,8 +512,6 @@
         <menuitem action="drawable-value-invert" />
       </placeholder>
       <separator />
-      <menuitem action="config-use-gegl" />
-      <separator />
       <menu action="colors-auto-menu" name="Auto">
         <menuitem action="drawable-equalize" />
         <menuitem action="drawable-levels-stretch" />

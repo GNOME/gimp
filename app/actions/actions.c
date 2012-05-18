@@ -55,7 +55,6 @@
 #include "buffers-actions.h"
 #include "channels-actions.h"
 #include "colormap-actions.h"
-#include "config-actions.h"
 #include "context-actions.h"
 #include "cursor-info-actions.h"
 #include "debug-actions.h"
@@ -122,9 +121,6 @@ static const GimpActionFactoryEntry action_groups[] =
   { "colormap", N_("Colormap"), GIMP_STOCK_COLORMAP,
     colormap_actions_setup,
     colormap_actions_update },
-  { "config", N_("Configuration"), GTK_STOCK_PREFERENCES,
-    config_actions_setup,
-    config_actions_update },
   { "context", N_("Context"), GIMP_STOCK_TOOL_OPTIONS /* well... */,
     context_actions_setup,
     context_actions_update },

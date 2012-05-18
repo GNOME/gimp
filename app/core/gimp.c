@@ -1324,11 +1324,3 @@ gimp_get_temp_filename (Gimp        *gimp,
 
   return filename;
 }
-
-gboolean
-gimp_use_gegl (Gimp *gimp)
-{
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
-
-  return gimp->config->use_gegl;
-}
