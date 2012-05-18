@@ -45,7 +45,6 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpchannel.h"
-#include "gimpchannel-project.h"
 #include "gimpchannel-select.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-operation.h"
@@ -290,7 +289,6 @@ gimp_channel_class_init (GimpChannelClass *klass)
   drawable_class->get_active_mask       = gimp_channel_get_active_mask;
   drawable_class->apply_buffer          = gimp_channel_apply_buffer;
   drawable_class->replace_buffer        = gimp_channel_replace_buffer;
-  drawable_class->project_region        = gimp_channel_project_region;
   drawable_class->set_buffer            = gimp_channel_set_buffer;
   drawable_class->swap_pixels           = gimp_channel_swap_pixels;
 

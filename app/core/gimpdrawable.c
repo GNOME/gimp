@@ -27,8 +27,6 @@
 
 #include "core-types.h"
 
-#include "base/pixel-region.h"
-
 #include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
@@ -1235,127 +1233,6 @@ gimp_drawable_replace_buffer (GimpDrawable        *drawable,
                                                       opacity,
                                                       mask, mask_region,
                                                       x, y);
-}
-
-void
-gimp_drawable_project_region (GimpDrawable *drawable,
-                              gint          x,
-                              gint          y,
-                              gint          width,
-                              gint          height,
-                              PixelRegion  *projPR,
-                              gboolean      combine)
-{
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
-  g_return_if_fail (projPR != NULL);
-
-  GIMP_DRAWABLE_GET_CLASS (drawable)->project_region (drawable,
-                                                      x, y, width, height,
-                                                      projPR, combine);
-}
-
-void
-gimp_drawable_init_src_region (GimpDrawable  *drawable,
-                               PixelRegion   *srcPR,
-                               gint           x,
-                               gint           y,
-                               gint           width,
-                               gint           height,
-                               GeglBuffer   **temp_buffer)
-{
-  GeglBuffer *buffer;
-  GimpLayer  *fs;
-
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
-  g_return_if_fail (srcPR != NULL);
-  g_return_if_fail (temp_buffer != NULL);
-
-  fs = gimp_drawable_get_floating_sel (drawable);
-
-  if (fs)
-    {
-      gint off_x, off_y;
-      gint fs_off_x, fs_off_y;
-      gint combine_x, combine_y;
-      gint combine_width, combine_height;
-
-      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
-      gimp_item_get_offset (GIMP_ITEM (fs), &fs_off_x, &fs_off_y);
-
-      if (gimp_item_get_visible (GIMP_ITEM (fs)) &&
-          gimp_rectangle_intersect (x + off_x, y + off_y,
-                                    width, height,
-                                    fs_off_x, fs_off_y,
-                                    gimp_item_get_width  (GIMP_ITEM (fs)),
-                                    gimp_item_get_height (GIMP_ITEM (fs)),
-                                    &combine_x, &combine_y,
-                                    &combine_width, &combine_height))
-        {
-          gboolean lock_alpha = FALSE;
-
-          /*  a temporary buffer for the compisition of the drawable and
-           *  its floating selection
-           */
-          *temp_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                               width, height),
-                                               gimp_drawable_get_format (drawable));
-
-          gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                            GEGL_RECTANGLE (x, y, width, height),
-                            *temp_buffer,
-                            GEGL_RECTANGLE (0, 0, 0, 0));
-
-          /*  then, apply the floating selection onto the buffer just as
-           *  we apply it onto the drawable when anchoring the floating
-           *  selection
-           */
-
-          lock_alpha = (GIMP_IS_LAYER (drawable) &&
-                        gimp_layer_get_lock_alpha (GIMP_LAYER (drawable)));
-
-          if (lock_alpha)
-            gimp_layer_set_lock_alpha (GIMP_LAYER (drawable), FALSE, FALSE);
-
-          gimp_drawable_apply_buffer (drawable,
-                                      gimp_drawable_get_buffer (GIMP_DRAWABLE (fs)),
-                                      GEGL_RECTANGLE (combine_x - fs_off_x,
-                                                      combine_y - fs_off_y,
-                                                      combine_width,
-                                                      combine_height),
-                                      FALSE, NULL,
-                                      gimp_layer_get_opacity (fs),
-                                      gimp_layer_get_mode (fs),
-                                      NULL,
-                                      combine_x - off_x,
-                                      combine_y - off_y,
-                                      *temp_buffer,
-                                      combine_x - x - off_x,
-                                      combine_y - y - off_y);
-
-          gimp_gegl_buffer_refetch_tiles (*temp_buffer);
-
-          if (lock_alpha)
-            gimp_layer_set_lock_alpha (GIMP_LAYER (drawable), TRUE, FALSE);
-
-          /*  finally, return a PixelRegion on the composited buffer instead
-           *  of the drawable's tiles
-           */
-          pixel_region_init (srcPR, gimp_gegl_buffer_get_tiles (*temp_buffer),
-                             0, 0, width, height,
-                             FALSE);
-
-          return;
-       }
-    }
-
-  buffer = gimp_drawable_get_buffer (drawable);
-
-  pixel_region_init (srcPR, gimp_gegl_buffer_get_tiles (buffer),
-                     x, y, width, height,
-                     FALSE);
-  *temp_buffer = NULL;
 }
 
 GeglBuffer *

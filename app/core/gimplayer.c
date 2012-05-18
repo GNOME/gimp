@@ -45,7 +45,6 @@
 #include "gimpimage.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayer.h"
-#include "gimplayer-project.h"
 #include "gimplayermask.h"
 #include "gimpmarshal.h"
 #include "gimppickable.h"
@@ -309,7 +308,6 @@ gimp_layer_class_init (GimpLayerClass *klass)
   drawable_class->invalidate_boundary   = gimp_layer_invalidate_boundary;
   drawable_class->get_active_components = gimp_layer_get_active_components;
   drawable_class->get_active_mask       = gimp_layer_get_active_mask;
-  drawable_class->project_region        = gimp_layer_project_region;
 
   klass->opacity_changed              = NULL;
   klass->mode_changed                 = NULL;

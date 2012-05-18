@@ -86,8 +86,6 @@ libappcore_a_sources = \
 	gimpchannel.h				\
 	gimpchannel-combine.c			\
 	gimpchannel-combine.h			\
-	gimpchannel-project.c			\
-	gimpchannel-project.h			\
 	gimpchannel-select.c			\
 	gimpchannel-select.h			\
 	gimpchannelpropundo.c			\
@@ -272,8 +270,6 @@ libappcore_a_sources = \
 	gimplayer.h				\
 	gimplayer-floating-sel.c		\
 	gimplayer-floating-sel.h		\
-	gimplayer-project.c			\
-	gimplayer-project.h			\
 	gimplayermask.c				\
 	gimplayermask.h				\
 	gimplayermaskpropundo.c			\

@@ -32,7 +32,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpgrouplayer.h"
-#include "core/gimpprojection.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpcolordialog.h"
@@ -654,40 +653,6 @@ view_fullscreen_cmd_callback (GtkAction *action,
 
       gimp_image_window_set_fullscreen (window, active);
     }
-}
-
-void
-view_use_gegl_cmd_callback (GtkAction *action,
-                            gpointer   data)
-{
-  GimpImage        *image;
-  GimpDisplayShell *shell;
-  GList            *layers;
-  GList            *list;
-  gboolean          active;
-  return_if_no_image (image, data);
-  return_if_no_shell (shell, data);
-
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
-
-  gimp_image_get_projection (image)->use_gegl = active;
-
-  layers = gimp_image_get_layer_list (image);
-
-  for (list = layers; list; list = g_list_next (list))
-    {
-      GimpLayer *layer = list->data;
-
-      if (GIMP_IS_GROUP_LAYER (layer))
-        gimp_group_layer_get_projection (GIMP_GROUP_LAYER (layer))->use_gegl = active;
-    }
-
-  g_list_free (layers);
-
-  gimp_image_invalidate (image, 0, 0,
-                         gimp_image_get_width  (image),
-                         gimp_image_get_height (image));
-  gimp_image_flush (image);
 }
 
 

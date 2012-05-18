@@ -88,13 +88,6 @@ struct _GimpDrawableClass
                                            const GeglRectangle  *mask_region,
                                            gint                  x,
                                            gint                  y);
-  void           (* project_region)       (GimpDrawable         *drawable,
-                                           gint                  x,
-                                           gint                  y,
-                                           gint                  width,
-                                           gint                  height,
-                                           PixelRegion          *projPR,
-                                           gboolean              combine);
   GeglBuffer  * (* get_buffer)            (GimpDrawable         *drawable);
   void          (* set_buffer)            (GimpDrawable         *drawable,
                                            gboolean              push_undo,
@@ -172,20 +165,6 @@ void            gimp_drawable_replace_buffer     (GimpDrawable        *drawable,
                                                   const GeglRectangle *mask_region,
                                                   gint                 x,
                                                   gint                 y);
-void            gimp_drawable_project_region     (GimpDrawable       *drawable,
-                                                  gint                x,
-                                                  gint                y,
-                                                  gint                width,
-                                                  gint                height,
-                                                  PixelRegion        *projPR,
-                                                  gboolean            combine);
-void            gimp_drawable_init_src_region    (GimpDrawable       *drawable,
-                                                  PixelRegion        *srcPR,
-                                                  gint                x,
-                                                  gint                y,
-                                                  gint                width,
-                                                  gint                height,
-                                                  GeglBuffer        **temp_buffer);
 
 GeglBuffer    * gimp_drawable_get_buffer         (GimpDrawable       *drawable);
 void            gimp_drawable_set_buffer         (GimpDrawable       *drawable,

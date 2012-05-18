@@ -32,7 +32,6 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimpprojection.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimprender.h"
@@ -232,14 +231,7 @@ static const GimpToggleActionEntry view_toggle_actions[] =
     NC_("view-action", "Toggle fullscreen view"),
     G_CALLBACK (view_fullscreen_cmd_callback),
     FALSE,
-    GIMP_HELP_VIEW_FULLSCREEN },
-
-  { "view-use-gegl", GIMP_STOCK_GEGL,
-    NC_("view-action", "Use GEGL"), NULL,
-    NC_("view-action", "Use GEGL to create this window's projection"),
-    G_CALLBACK (view_use_gegl_cmd_callback),
-    FALSE,
-    NULL }
+    GIMP_HELP_VIEW_FULLSCREEN }
 };
 
 static const GimpEnumActionEntry view_zoom_actions[] =
@@ -576,7 +568,6 @@ view_actions_update (GimpActionGroup *group,
   gchar              *label          = NULL;
   gboolean            fullscreen     = FALSE;
   gboolean            revert_enabled = FALSE;   /* able to revert zoom? */
-  gboolean            use_gegl       = FALSE;
 
   if (display)
     {
@@ -594,9 +585,6 @@ view_actions_update (GimpActionGroup *group,
                  shell->no_image_options);
 
       revert_enabled = gimp_display_shell_scale_can_revert (shell);
-
-      if (image)
-        use_gegl = gimp_image_get_projection (image)->use_gegl;
     }
 
 #define SET_ACTIVE(action,condition) \
@@ -702,7 +690,6 @@ view_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("view-shrink-wrap", image);
   SET_ACTIVE    ("view-fullscreen",  display && fullscreen);
-  SET_ACTIVE    ("view-use-gegl",    use_gegl);
 
   if (GIMP_IS_IMAGE_WINDOW (group->user_data) ||
       GIMP_IS_GIMP (group->user_data))
