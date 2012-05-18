@@ -211,23 +211,6 @@ static void     gimp_image_active_vectors_notify (GimpItemTree      *tree,
                                                   GimpImage         *image);
 
 
-static const gint valid_combinations[][MAX_CHANNELS + 1] =
-{
-  /* GIMP_RGB_IMAGE */
-  { -1, -1, -1, COMBINE_INTEN_INTEN, COMBINE_INTEN_INTEN_A },
-  /* GIMP_RGBA_IMAGE */
-  { -1, -1, -1, COMBINE_INTEN_A_INTEN, COMBINE_INTEN_A_INTEN_A },
-  /* GIMP_GRAY_IMAGE */
-  { -1, COMBINE_INTEN_INTEN, COMBINE_INTEN_INTEN_A, -1, -1 },
-  /* GIMP_GRAYA_IMAGE */
-  { -1, COMBINE_INTEN_A_INTEN, COMBINE_INTEN_A_INTEN_A, -1, -1 },
-  /* GIMP_INDEXED_IMAGE */
-  { -1, COMBINE_INDEXED_INDEXED, COMBINE_INDEXED_INDEXED_A, -1, -1 },
-  /* GIMP_INDEXEDA_IMAGE */
-  { -1, -1, COMBINE_INDEXED_A_INDEXED_A, -1, -1 },
-};
-
-
 G_DEFINE_TYPE_WITH_CODE (GimpImage, gimp_image, GIMP_TYPE_VIEWABLE,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
                                                 gimp_color_managed_iface_init)
@@ -1520,13 +1503,6 @@ gimp_image_get_precision (const GimpImage *image)
   g_return_val_if_fail (GIMP_IS_IMAGE (image), -1);
 
   return GIMP_IMAGE_GET_PRIVATE (image)->precision;
-}
-
-CombinationMode
-gimp_image_get_combination_mode (GimpImageType dest_type,
-                                 gint          src_bytes)
-{
-  return valid_combinations[dest_type][src_bytes];
 }
 
 const Babl *

@@ -15,7 +15,6 @@ SUBDIRS = \
 	base		\
 	paint-funcs	\
 	config		\
-	composite	\
 	core		\
 	operations	\
 	gegl		\
@@ -162,7 +161,6 @@ gimpconsoleldadd = \
 	file/libappfile.a		\
 	text/libapptext.a		\
 	paint/libapppaint.a		\
-	composite/libappcomposite.a	\
 	operations/libappoperations.a	\
 	gegl/libappgegl.a		\
 	config/libappconfig.a		\

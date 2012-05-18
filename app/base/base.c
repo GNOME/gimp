@@ -34,8 +34,6 @@
 
 #include "config/gimpgeglconfig.h"
 
-#include "composite/gimp-composite.h"
-
 #include "base.h"
 #include "pixel-processor.h"
 #include "tile-cache.h"
@@ -103,8 +101,6 @@ base_init (GimpGeglConfig *config,
   g_signal_connect (config, "notify::num-processors",
                     G_CALLBACK (base_num_processors_notify),
                     NULL);
-
-  gimp_composite_init (be_verbose, use_cpu_accel);
 
   return swap_is_ok;
 }

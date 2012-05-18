@@ -23,8 +23,6 @@ noinst_LIBRARIES = libapppaint-funcs.a
 libapppaint_funcs_a_SOURCES = \
 	paint-funcs.c		\
 	paint-funcs.h		\
-	paint-funcs-generic.h	\
 	paint-funcs-types.h	\
-	paint-funcs-utils.h	\
 	subsample-region.c	\
 	subsample-region.h
