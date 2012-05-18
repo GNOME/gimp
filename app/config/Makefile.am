@@ -85,7 +85,8 @@ test_config_LDFLAGS = \
 	-u $(SYMPREFIX)gimp_vectors_undo_get_type		\
 	-u $(SYMPREFIX)gimp_vectors_mod_undo_get_type		\
 	-u $(SYMPREFIX)gimp_vectors_prop_undo_get_type		\
-	-u $(SYMPREFIX)gimp_image_map_config_get_type
+	-u $(SYMPREFIX)gimp_image_map_config_get_type		\
+	-u $(SYMPREFIX)erode_region
 
 test_config_LDADD = \
 	../xcf/libappxcf.a			\
@@ -97,7 +98,6 @@ test_config_LDADD = \
 	../file/libappfile.a			\
 	../text/libapptext.a			\
 	../paint/libapppaint.a			\
-	../composite/libappcomposite.a		\
 	../gegl/libappgegl.a			\
 	../operations/libappoperations.a	\
 	libappconfig.a				\
