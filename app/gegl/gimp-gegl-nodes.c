@@ -191,11 +191,7 @@ gimp_gegl_create_apply_buffer_node (GeglBuffer           *buffer,
   mode_node = gegl_node_new_child (node,
                                    "operation", "gimp:normal-mode",
                                    NULL);
-  gimp_gegl_node_set_layer_mode (mode_node, mode, FALSE);
-
-  gegl_node_set (mode_node,
-                 "opacity", opacity,
-                 NULL);
+  gimp_gegl_mode_node_set (mode_node, mode, opacity, FALSE);
 
   gegl_node_connect_to (buffer_source, "output",
                         mode_node,     "aux");
@@ -267,9 +263,10 @@ gimp_gegl_add_buffer_source (GeglNode   *parent,
 }
 
 void
-gimp_gegl_node_set_layer_mode (GeglNode             *node,
-                               GimpLayerModeEffects  mode,
-                               gboolean              premultiplied)
+gimp_gegl_mode_node_set (GeglNode             *node,
+                         GimpLayerModeEffects  mode,
+                         gdouble               opacity,
+                         gboolean              premultiplied)
 {
   const gchar *operation = "gimp:normal-mode";
 
@@ -309,6 +306,7 @@ gimp_gegl_node_set_layer_mode (GeglNode             *node,
 
   gegl_node_set (node,
                  "operation",     operation,
+                 "opacity",       opacity,
                  "premultiplied", premultiplied,
                  NULL);
 }

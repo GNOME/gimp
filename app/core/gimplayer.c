@@ -880,10 +880,7 @@ gimp_layer_get_node (GimpItem *item)
    */
   mode_node = gimp_drawable_get_mode_node (drawable);
 
-  gimp_gegl_node_set_layer_mode (mode_node, layer->mode, FALSE);
-  gegl_node_set (mode_node,
-                 "opacity", layer->opacity,
-                 NULL);
+  gimp_gegl_mode_node_set (mode_node, layer->mode, layer->opacity, FALSE);
 
   /* the layer's offset node */
   layer->layer_offset_node = gegl_node_new_child (node,
@@ -1939,9 +1936,12 @@ gimp_layer_set_opacity (GimpLayer *layer,
 
       if (gimp_item_peek_node (GIMP_ITEM (layer)))
         {
-          gegl_node_set (gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer)),
-                         "opacity", layer->opacity,
-                         NULL);
+          GeglNode *mode_node;
+
+          mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
+
+          gimp_gegl_mode_node_set (mode_node,
+                                   layer->mode, layer->opacity, FALSE);
         }
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
@@ -1986,7 +1986,8 @@ gimp_layer_set_mode (GimpLayer            *layer,
 
           mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
 
-          gimp_gegl_node_set_layer_mode (mode_node, layer->mode, FALSE);
+          gimp_gegl_mode_node_set (mode_node,
+                                   layer->mode, layer->opacity, FALSE);
         }
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),

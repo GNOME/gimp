@@ -946,12 +946,10 @@ gimp_drawable_sync_source_node (GimpDrawable *drawable,
                      "y", (gdouble) (fs_off_y - off_y),
                      NULL);
 
-      gimp_gegl_node_set_layer_mode (drawable->private->fs_mode_node,
-                                     gimp_layer_get_mode (fs), FALSE);
-
-      gegl_node_set (drawable->private->fs_mode_node,
-                     "opacity", gimp_layer_get_opacity (fs),
-                     NULL);
+      gimp_gegl_mode_node_set (drawable->private->fs_mode_node,
+                               gimp_layer_get_mode (fs),
+                               gimp_layer_get_opacity (fs),
+                               FALSE);
     }
   else
     {
