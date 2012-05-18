@@ -1298,7 +1298,7 @@ load_defaults (void)
 
   tmpvals.subsmp = subsampling;
 
-  if (num_fields == 12)
+  if (num_fields == 13)
     memcpy (&jsvals, &tmpvals, sizeof (tmpvals));
 
   g_free (def_str);
