@@ -35,7 +35,6 @@
 #include "config/gimpgeglconfig.h"
 
 #include "base.h"
-#include "pixel-processor.h"
 #include "tile-cache.h"
 #include "tile-manager.h"
 #include "tile-swap.h"
@@ -44,9 +43,6 @@
 static void   base_toast_old_swap_files   (const gchar *swap_path);
 
 static void   base_tile_cache_size_notify (GObject     *config,
-                                           GParamSpec  *param_spec,
-                                           gpointer     data);
-static void   base_num_processors_notify  (GObject     *config,
                                            GParamSpec  *param_spec,
                                            gpointer     data);
 
@@ -97,11 +93,6 @@ base_init (GimpGeglConfig *config,
 
   g_free (temp_dir);
 
-  pixel_processor_init (config->num_processors);
-  g_signal_connect (config, "notify::num-processors",
-                    G_CALLBACK (base_num_processors_notify),
-                    NULL);
-
   return swap_is_ok;
 }
 
@@ -114,7 +105,6 @@ base_exit (void)
   tile_manager_exit ();
 #endif
 
-  pixel_processor_exit ();
   tile_cache_exit ();
   tile_swap_exit ();
 
@@ -189,12 +179,4 @@ base_tile_cache_size_notify (GObject    *config,
                              gpointer    data)
 {
   tile_cache_set_size (GIMP_GEGL_CONFIG (config)->tile_cache_size);
-}
-
-static void
-base_num_processors_notify (GObject    *config,
-                            GParamSpec *param_spec,
-                            gpointer    data)
-{
-  pixel_processor_set_num_threads (GIMP_GEGL_CONFIG (config)->num_processors);
 }

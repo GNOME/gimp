@@ -31,8 +31,6 @@
 
 #include "core/core-types.h" /* eek */
 
-#include "base/pixel-processor.h"
-
 #include "gimprc-blurbs.h"
 #include "gimpgeglconfig.h"
 
@@ -42,6 +40,8 @@
 
 #include "gimp-intl.h"
 
+
+#define GIMP_MAX_NUM_THREADS 16
 
 enum
 {

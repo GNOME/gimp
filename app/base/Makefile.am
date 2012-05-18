@@ -20,8 +20,6 @@ libappbase_a_SOURCES = \
 	base.c			\
 	base.h			\
 	base-types.h		\
-	pixel-processor.c	\
-	pixel-processor.h	\
 	pixel-region.c		\
 	pixel-region.h		\
 	siox.c			\
