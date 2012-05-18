@@ -68,7 +68,7 @@ colormap_edit_color_cmd_callback (GtkAction *action,
                        colormap[editor->col_index * 3],
                        colormap[editor->col_index * 3 + 1],
                        colormap[editor->col_index * 3 + 2],
-                       OPAQUE_OPACITY);
+                       255);
 
   desc = g_strdup_printf (_("Edit colormap entry #%d"), editor->col_index);
 

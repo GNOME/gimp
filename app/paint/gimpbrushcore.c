@@ -1367,7 +1367,7 @@ gimp_brush_core_solidify_mask (GimpBrushCore     *core,
   for (i = 0; i < brush_mask_height; i++)
     {
       for (j = 0; j < brush_mask_width; j++)
-        *d++ = (*m++) ? OPAQUE_OPACITY : TRANSPARENT_OPACITY;
+        *d++ = (*m++) ? 255 : 0;
 
       d += 2;
     }

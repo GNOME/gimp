@@ -217,7 +217,7 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
         }
       else
         {
-          memset (gimp_temp_buf_get_data (brush->mask), OPAQUE_OPACITY,
+          memset (gimp_temp_buf_get_data (brush->mask), 255,
                   width * height);
         }
 

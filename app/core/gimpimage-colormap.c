@@ -253,7 +253,7 @@ gimp_image_get_colormap_entry (GimpImage *image,
                        private->colormap[color_index * 3],
                        private->colormap[color_index * 3 + 1],
                        private->colormap[color_index * 3 + 2],
-                       OPAQUE_OPACITY);
+                       255);
 }
 
 void

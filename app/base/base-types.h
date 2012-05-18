@@ -19,8 +19,6 @@
 #define __BASE_TYPES_H__
 
 
-#include "paint-funcs/paint-funcs-types.h"
-
 #include "core/core-types.h" /* screw include policy in base/ */
 
 
