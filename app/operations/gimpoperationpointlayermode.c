@@ -29,8 +29,6 @@
 
 #include "operations-types.h"
 
-#include "paint-funcs/paint-funcs.h"
-
 #include "gimpoperationpointlayermode.h"
 
 
