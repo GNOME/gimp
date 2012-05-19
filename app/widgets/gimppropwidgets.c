@@ -1414,6 +1414,35 @@ gimp_prop_icon_picker_notify (GObject    *config,
 /*  table  */
 /***********/
 
+static void
+gimp_prop_table_chain_toggled (GimpChainButton *chain,
+                               GtkAdjustment   *x_adj)
+{
+  GtkAdjustment *y_adj;
+
+  y_adj = g_object_get_data (G_OBJECT (x_adj), "y-adjustment");
+
+  if (gimp_chain_button_get_active (chain))
+    {
+      GBinding *binding;
+
+      binding = g_object_bind_property (x_adj, "value",
+                                        y_adj,   "value",
+                                        G_BINDING_BIDIRECTIONAL);
+
+      g_object_set_data (G_OBJECT (chain), "binding", binding);
+    }
+  else
+    {
+      GBinding *binding;
+
+      binding = g_object_get_data (G_OBJECT (chain), "binding");
+
+      g_object_unref (binding);
+      g_object_set_data (G_OBJECT (chain), "binding", NULL);
+    }
+}
+
 GtkWidget *
 gimp_prop_table_new (GObject              *config,
                      GType                 owner_type,
@@ -1427,6 +1456,8 @@ gimp_prop_table_new (GObject              *config,
   guint          n_param_specs;
   gint           i;
   gint           row = 0;
+  GtkAdjustment *last_x_adj = NULL;
+  gint           last_x_row = 0;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
@@ -1500,12 +1531,55 @@ gimp_prop_table_new (GObject              *config,
                G_IS_PARAM_SPEC_FLOAT (pspec) ||
                G_IS_PARAM_SPEC_DOUBLE (pspec))
         {
-          gint digits = (G_IS_PARAM_SPEC_FLOAT (pspec) ||
-                         G_IS_PARAM_SPEC_DOUBLE (pspec)) ? 2 : 0;
+          GtkAdjustment *adj;
+          gint           digits = (G_IS_PARAM_SPEC_FLOAT (pspec) ||
+                                   G_IS_PARAM_SPEC_DOUBLE (pspec)) ? 2 : 0;
 
           widget = gimp_prop_spin_scale_new (config, pspec->name,
                                              g_param_spec_get_nick (pspec),
                                              1.0, 1.0, digits);
+
+          adj = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (widget));
+
+          if (g_str_has_suffix (pspec->name, "x") ||
+              g_str_has_suffix (pspec->name, "width"))
+            {
+              last_x_adj = adj;
+              last_x_row = row;
+            }
+          else if ((g_str_has_suffix (pspec->name, "y") ||
+                    g_str_has_suffix (pspec->name, "height")) &&
+                   last_x_adj != NULL &&
+                   last_x_row == row - 1)
+            {
+              GtkWidget *chain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
+
+              gtk_table_attach (GTK_TABLE (table), chain,
+                                3, 4, last_x_row, row + 1,
+                                GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL,
+                                0, 0);
+              gtk_widget_show (chain);
+
+              if (gtk_adjustment_get_value (last_x_adj) ==
+                  gtk_adjustment_get_value (adj))
+                {
+                  GBinding *binding;
+
+                  gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain), TRUE);
+
+                  binding = g_object_bind_property (last_x_adj, "value",
+                                                    adj,        "value",
+                                                    G_BINDING_BIDIRECTIONAL);
+
+                  g_object_set_data (G_OBJECT (chain), "binding", binding);
+                }
+
+              g_signal_connect (chain, "toggled",
+                                G_CALLBACK (gimp_prop_table_chain_toggled),
+                                last_x_adj);
+
+              g_object_set_data (G_OBJECT (last_x_adj), "y-adjustment", adj);
+            }
         }
       else if (GIMP_IS_PARAM_SPEC_RGB (pspec))
         {
