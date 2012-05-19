@@ -37,6 +37,7 @@
 
 
 static void  gimp_gegl_notify_tile_cache_size (GimpGeglConfig *config);
+static void  gimp_gegl_notify_num_processors  (GimpGeglConfig *config);
 
 
 void
@@ -55,7 +56,8 @@ gimp_gegl_init (Gimp *gimp)
   g_object_set (gegl_config (),
                 "tile-width",  TILE_WIDTH,
                 "tile-height", TILE_HEIGHT,
-                "cache-size", (gint) MIN (config->tile_cache_size, G_MAXINT),
+                "cache-size",  (gint) MIN (config->tile_cache_size, G_MAXINT),
+                "threads",     config->num_processors,
                 NULL);
 
   /* turn down the precision of babl - permitting use of lookup tables for
@@ -69,6 +71,9 @@ gimp_gegl_init (Gimp *gimp)
   g_signal_connect (config, "notify::tile-cache-size",
                     G_CALLBACK (gimp_gegl_notify_tile_cache_size),
                     NULL);
+  g_signal_connect (config, "notify::num-processors",
+                    G_CALLBACK (gimp_gegl_notify_num_processors),
+                    NULL);
 
   gimp_babl_init ();
 
@@ -80,5 +85,13 @@ gimp_gegl_notify_tile_cache_size (GimpGeglConfig *config)
 {
   g_object_set (gegl_config (),
                 "cache-size", (gint) MIN (config->tile_cache_size, G_MAXINT),
+                NULL);
+}
+
+static void
+gimp_gegl_notify_num_processors (GimpGeglConfig *config)
+{
+  g_object_set (gegl_config (),
+                "threads", config->num_processors,
                 NULL);
 }
