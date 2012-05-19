@@ -2167,7 +2167,6 @@ app/gui/Makefile
 app/menus/Makefile
 app/paint/Makefile
 app/paint-funcs/Makefile
-app/composite/Makefile
 app/pdb/Makefile
 app/plug-in/Makefile
 app/text/Makefile
