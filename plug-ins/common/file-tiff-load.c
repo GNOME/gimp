@@ -141,44 +141,6 @@ static void      read_separate (const guchar *source,
                                 gboolean      alpha,
                                 gint          extra,
                                 gint          sample);
-static void      read_16bit    (const guchar *source,
-                                channel_data *channel,
-                                gushort       photomet,
-                                gint          startcol,
-                                gint          startrow,
-                                gint          rows,
-                                gint          cols,
-                                gboolean      alpha,
-                                gint          extra,
-                                gint          align);
-static void      read_8bit     (const guchar *source,
-                                channel_data *channel,
-                                gushort       photomet,
-                                gint          startcol,
-                                gint          startrow,
-                                gint          rows,
-                                gint          cols,
-                                gboolean      alpha,
-                                gint          extra,
-                                gint          align);
-static void      read_bw       (const guchar *source,
-                                channel_data *channel,
-                                gint          startcol,
-                                gint          startrow,
-                                gint          rows,
-                                gint          cols,
-                                gint          align);
-static void      read_default  (const guchar *source,
-                                channel_data *channel,
-                                gushort       bps,
-                                gushort       photomet,
-                                gint          startcol,
-                                gint          startrow,
-                                gint          rows,
-                                gint          cols,
-                                gboolean      alpha,
-                                gint          extra,
-                                gint          align);
 
 static void      fill_bit2byte (void);
 
@@ -1053,7 +1015,7 @@ load_image (const gchar        *filename,
 
       if (worst_case)
         {
-          // load_rgba (tif, channel);
+          load_rgba (tif, channel);
         }
       else if (TIFFIsTiled (tif))
         {
@@ -1182,7 +1144,6 @@ load_image (const gchar        *filename,
   return image;
 }
 
-#if 0
 static void
 load_rgba (TIFF         *tif,
            channel_data *channel)
@@ -1191,16 +1152,12 @@ load_rgba (TIFF         *tif,
   uint32  row;
   uint32 *buffer;
 
+  g_printerr ("%s\n", __func__);
+
   TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &imageWidth);
   TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &imageLength);
 
-  gimp_tile_cache_ntiles (1 + imageWidth / gimp_tile_width ());
-
-  gimp_pixel_rgn_init (&(channel[0].pixel_rgn), channel[0].drawable,
-                       0, 0, imageWidth, imageLength, TRUE, FALSE);
-
   buffer = g_new (uint32, imageWidth * imageLength);
-  channel[0].pixels = (guchar *) buffer;
 
   if (!TIFFReadRGBAImage (tif, imageWidth, imageLength, buffer, 0))
     g_message ("Unsupported layout, no RGBA loader");
@@ -1217,15 +1174,16 @@ load_rgba (TIFF         *tif,
         buffer[i] = GUINT32_TO_LE (buffer[i]);
 #endif
 
-      gimp_pixel_rgn_set_row (&(channel[0].pixel_rgn),
-                              channel[0].pixels + row * imageWidth * 4,
-                              0, imageLength -row -1, imageWidth);
+      gegl_buffer_set (channel[0].buffer,
+                       GEGL_RECTANGLE (0, imageLength - row - 1, imageWidth, 1),
+                       0, channel[0].format,
+                       ((guchar *) buffer) + row * imageWidth * 4,
+                       GEGL_AUTO_ROWSTRIDE);
 
       if ((row % 32) == 0)
         gimp_progress_update ((gdouble) row / (gdouble) imageLength);
     }
 }
-#endif
 
 static void
 load_paths (TIFF *tif, gint image)
@@ -1566,7 +1524,6 @@ load_lines (TIFF         *tif,
         {
           int offset;
 
-          g_printerr ("y: %d, th: %d, il: %d\n", y, tile_height, imageLength);
           gimp_progress_update ((gdouble) y / (gdouble) imageLength);
 
           rows = MIN (tile_height, imageLength - y);
@@ -1647,392 +1604,6 @@ load_lines (TIFF         *tif,
   g_free(buffer);
 }
 
-#if 0
-static void
-read_16bit (const guchar *source,
-            channel_data *channel,
-            gushort       photomet,
-            gint          startrow,
-            gint          startcol,
-            gint          rows,
-            gint          cols,
-            gboolean      alpha,
-            gint          extra,
-            gint          align)
-{
-  guchar *dest;
-  gint    gray_val, red_val, green_val, blue_val, alpha_val;
-  gint    col, row, i;
-
-  for (i = 0; i <= extra; ++i)
-    {
-      gimp_pixel_rgn_init (&(channel[i].pixel_rgn), channel[i].drawable,
-                           startcol, startrow, cols, rows, TRUE, FALSE);
-    }
-
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-  source++; /* offset source once, to look at the high byte */
-#endif
-
-  for (row = 0; row < rows; ++row)
-    {
-      dest = channel[0].pixels + row * cols * channel[0].drawable->bpp;
-
-      for (i = 1; i <= extra; ++i)
-        channel[i].pixel = channel[i].pixels + row * cols;
-
-      for (col = 0; col < cols; col++)
-        {
-          switch (photomet)
-            {
-            case PHOTOMETRIC_MINISBLACK:
-              if (alpha)
-                {
-                  if (tsvals.save_transp_pixels)
-                    {
-                      *dest++ = *source; source += 2;
-                      *dest++ = *source; source += 2;
-                    }
-                  else
-                    {
-                      gray_val  = *source; source += 2;
-                      alpha_val = *source; source += 2;
-                      gray_val  = MIN (gray_val, alpha_val);
-
-                      if (alpha_val)
-                        *dest++ = gray_val * 255 / alpha_val;
-                      else
-                        *dest++ = 0;
-
-                      *dest++ = alpha_val;
-                    }
-                }
-              else
-                {
-                  *dest++ = *source; source += 2;
-                }
-              break;
-
-            case PHOTOMETRIC_MINISWHITE:
-              if (alpha)
-                {
-                  if (tsvals.save_transp_pixels)
-                    {
-                      *dest++ = *source; source += 2;
-                      *dest++ = *source; source += 2;
-                    }
-                  else
-                    {
-                      gray_val  = *source; source += 2;
-                      alpha_val = *source; source += 2;
-                      gray_val  = MIN (gray_val, alpha_val);
-
-                      if (alpha_val)
-                        *dest++ = ((alpha_val - gray_val) * 255) / alpha_val;
-                      else
-                        *dest++ = 0;
-
-                      *dest++ = alpha_val;
-                    }
-                }
-              else
-                {
-                  *dest++ = ~(*source); source += 2;
-                }
-              break;
-
-            case PHOTOMETRIC_PALETTE:
-              *dest++= *source; source += 2;
-              if (alpha) *dest++= *source; source += 2;
-              break;
-
-            case PHOTOMETRIC_RGB:
-              if (alpha)
-                {
-                  if (tsvals.save_transp_pixels)
-                    {
-                      *dest++ = *source; source += 2;
-                      *dest++ = *source; source += 2;
-                      *dest++ = *source; source += 2;
-                      *dest++ = *source; source += 2;
-                    }
-                  else
-                    {
-                      red_val   = *source; source += 2;
-                      green_val = *source; source += 2;
-                      blue_val  = *source; source += 2;
-                      alpha_val = *source; source += 2;
-                      red_val   = MIN (red_val,   alpha_val);
-                      green_val = MIN (green_val, alpha_val);
-                      blue_val  = MIN (blue_val,  alpha_val);
-                      if (alpha_val)
-                        {
-                          *dest++ = (red_val   * 255) / alpha_val;
-                          *dest++ = (green_val * 255) / alpha_val;
-                          *dest++ = (blue_val  * 255) / alpha_val;
-                        }
-                      else
-                        {
-                          *dest++ = 0;
-                          *dest++ = 0;
-                          *dest++ = 0;
-                        }
-                      *dest++ = alpha_val;
-                    }
-                }
-              else
-                {
-                  *dest++ = *source; source += 2;
-                  *dest++ = *source; source += 2;
-                  *dest++ = *source; source += 2;
-                }
-              break;
-
-            default:
-              /* This case was handled earlier */
-              g_assert_not_reached();
-            }
-
-          for (i = 1; i <= extra; ++i)
-            {
-              *channel[i].pixel++ = *source; source += 2;
-            }
-        }
-
-      if (align)
-        {
-          switch (photomet)
-            {
-            case PHOTOMETRIC_MINISBLACK:
-            case PHOTOMETRIC_MINISWHITE:
-            case PHOTOMETRIC_PALETTE:
-              source += align * (1 + alpha + extra) * 2;
-              break;
-            case PHOTOMETRIC_RGB:
-              source += align * (3 + alpha + extra) * 2;
-              break;
-            }
-        }
-    }
-
-  for (i = 0; i <= extra; ++i)
-    gimp_pixel_rgn_set_rect (&(channel[i].pixel_rgn), channel[i].pixels,
-                             startcol, startrow, cols, rows);
-}
-#endif
-
-#if 0
-static void
-read_8bit (const guchar *source,
-           channel_data *channel,
-           gushort       photomet,
-           gint          startrow,
-           gint          startcol,
-           gint          rows,
-           gint          cols,
-           gboolean      alpha,
-           gint          extra,
-           gint          align)
-{
-  guchar *dest;
-  gint    gray_val, red_val, green_val, blue_val, alpha_val;
-  gint    col, row, i;
-
-  for (i = 0; i <= extra; ++i)
-    {
-      gimp_pixel_rgn_init (&(channel[i].pixel_rgn), channel[i].drawable,
-                           startcol, startrow, cols, rows, TRUE, FALSE);
-    }
-
-  for (row = 0; row < rows; ++row)
-    {
-      dest = channel[0].pixels + row * cols * channel[0].drawable->bpp;
-
-      for (i = 1; i <= extra; ++i)
-        channel[i].pixel = channel[i].pixels + row * cols;
-
-      for (col = 0; col < cols; col++)
-        {
-          switch (photomet)
-            {
-            case PHOTOMETRIC_MINISBLACK:
-              if (alpha)
-                {
-                  if (tsvals.save_transp_pixels)
-                    {
-                      *dest++ = *source; source++;
-                      *dest++ = *source; source++;
-                    }
-                  else
-                    {
-                      gray_val = *source++;
-                      alpha_val = *source++;
-                      gray_val = MIN(gray_val, alpha_val);
-                      if (alpha_val)
-                        *dest++ = gray_val * 255 / alpha_val;
-                      else
-                        *dest++ = 0;
-                      *dest++ = alpha_val;
-                    }
-                }
-              else
-                {
-                  *dest++ = *source++;
-                }
-              break;
-
-            case PHOTOMETRIC_MINISWHITE:
-              if (alpha)
-                {
-                  if (tsvals.save_transp_pixels)
-                    {
-                      *dest++ = *source; source++;
-                      *dest++ = *source; source++;
-                    }
-                  else
-                    {
-                      gray_val  = *source++;
-                      alpha_val = *source++;
-                      gray_val  = MIN (gray_val, alpha_val);
-
-                      if (alpha_val)
-                        *dest++ = ((alpha_val - gray_val) * 255) / alpha_val;
-                      else
-                        *dest++ = 0;
-                      *dest++ = alpha_val;
-                    }
-                }
-              else
-                {
-                  *dest++ = ~(*source++);
-                }
-              break;
-
-            case PHOTOMETRIC_PALETTE:
-              *dest++= *source++;
-              if (alpha)
-                *dest++= *source++;
-              break;
-
-            case PHOTOMETRIC_RGB:
-              if (alpha)
-                {
-                  if (tsvals.save_transp_pixels)
-                    {
-                      *dest++ = *source; source++;
-                      *dest++ = *source; source++;
-                      *dest++ = *source; source++;
-                      *dest++ = *source; source++;
-                    }
-                  else
-                    {
-                      red_val   = *source++;
-                      green_val = *source++;
-                      blue_val  = *source++;
-                      alpha_val = *source++;
-                      red_val   = MIN (red_val, alpha_val);
-                      blue_val  = MIN (blue_val, alpha_val);
-                      green_val = MIN (green_val, alpha_val);
-
-                      if (alpha_val)
-                        {
-                          *dest++ = (red_val   * 255) / alpha_val;
-                          *dest++ = (green_val * 255) / alpha_val;
-                          *dest++ = (blue_val  * 255) / alpha_val;
-                        }
-                      else
-                        {
-                          *dest++ = 0;
-                          *dest++ = 0;
-                          *dest++ = 0;
-                        }
-                      *dest++ = alpha_val;
-                    }
-                }
-              else
-                {
-                  *dest++ = *source++;
-                  *dest++ = *source++;
-                  *dest++ = *source++;
-                }
-              break;
-
-            default:
-              /* This case was handled earlier */
-              g_assert_not_reached();
-            }
-
-          for (i = 1; i <= extra; ++i)
-            *channel[i].pixel++ = *source++;
-        }
-
-      if (align)
-        {
-          switch (photomet)
-            {
-            case PHOTOMETRIC_MINISBLACK:
-            case PHOTOMETRIC_MINISWHITE:
-            case PHOTOMETRIC_PALETTE:
-              source += align * (1 + alpha + extra);
-              break;
-            case PHOTOMETRIC_RGB:
-              source += align * (3 + alpha + extra);
-              break;
-            }
-        }
-    }
-
-  for (i = 0; i <= extra; ++i)
-    gimp_pixel_rgn_set_rect(&(channel[i].pixel_rgn), channel[i].pixels,
-                            startcol, startrow, cols, rows);
-}
-#endif
-
-#if 0
-static void
-read_bw (const guchar *source,
-         channel_data *channel,
-         gint          startrow,
-         gint          startcol,
-         gint          rows,
-         gint          cols,
-         gint          align)
-{
-  guchar *dest;
-  gint    col, row;
-
-  gimp_pixel_rgn_init (&(channel[0].pixel_rgn), channel[0].drawable,
-                       startcol, startrow, cols, rows, TRUE, FALSE);
-
-  for (row = 0; row < rows; ++row)
-    {
-      dest = channel[0].pixels + row * cols * channel[0].drawable->bpp;
-
-      col = cols;
-
-      while (col >= 8)
-        {
-          memcpy (dest, bit2byte + *source * 8, 8);
-          dest += 8;
-          col -= 8;
-          source++;
-        }
-
-      if (col > 0)
-        {
-          memcpy (dest, bit2byte + *source * 8, col);
-          dest += col;
-          source++;
-        }
-
-      source += align;
-    }
-
-  gimp_pixel_rgn_set_rect(&(channel[0].pixel_rgn), channel[0].pixels,
-                          startcol, startrow, cols, rows);
-}
-#endif
-
 /* Step through all <= 8-bit samples in an image */
 
 #define NEXTSAMPLE(var)                       \
@@ -2045,188 +1616,6 @@ read_bw (const guchar *source,
       bitsleft -= bps;                        \
       var = ( *source >> bitsleft ) & maxval; \
   }
-
-#if 0
-static void
-read_default (const guchar *source,
-              channel_data *channel,
-              gushort       bps,
-              gushort       photomet,
-              gint          startrow,
-              gint          startcol,
-              gint          rows,
-              gint          cols,
-              gboolean      alpha,
-              gint          extra,
-              gint          align)
-{
-  guchar *dest;
-  gint    gray_val, red_val, green_val, blue_val, alpha_val;
-  gint    col, row, i;
-  gint    bitsleft = 8, maxval = (1 << bps) - 1;
-
-  for (i = 0; i <= extra; ++i)
-    {
-      gimp_pixel_rgn_init (&(channel[i].pixel_rgn), channel[i].drawable,
-                           startcol, startrow, cols, rows, TRUE, FALSE);
-    }
-
-  for (row = 0; row < rows; ++row)
-    {
-      dest = channel[0].pixels + row * cols * channel[0].drawable->bpp;
-
-      for (i = 1; i <= extra; ++i)
-        channel[i].pixel = channel[i].pixels + row * cols;
-
-      for (col = 0; col < cols; col++)
-        {
-          switch (photomet)
-            {
-            case PHOTOMETRIC_MINISBLACK:
-              NEXTSAMPLE (gray_val);
-              if (alpha)
-                {
-                  NEXTSAMPLE (alpha_val);
-                  if (tsvals.save_transp_pixels)
-                    {
-                      *dest++ = (gray_val * 255) / maxval;
-                      *dest++ = alpha_val;
-                    }
-                  else
-                    {
-                      gray_val = MIN (gray_val, alpha_val);
-
-                      if (alpha_val)
-                        *dest++ = (gray_val * 65025) / (alpha_val * maxval);
-                      else
-                        *dest++ = 0;
-
-                      *dest++ = alpha_val;
-                    }
-                }
-              else
-                {
-                  *dest++ = (gray_val * 255) / maxval;
-                }
-              break;
-
-            case PHOTOMETRIC_MINISWHITE:
-              NEXTSAMPLE (gray_val);
-              if (alpha)
-                {
-                  NEXTSAMPLE (alpha_val);
-                  if (tsvals.save_transp_pixels)
-                    {
-                      *dest++ = ((maxval - gray_val) * 255) / maxval;
-                      *dest++ = alpha_val;
-                    }
-                  else
-                    {
-                      gray_val = MIN (gray_val, alpha_val);
-
-                      if (alpha_val)
-                        *dest++ = ((maxval - gray_val) * 65025) /
-                                   (alpha_val * maxval);
-                      else
-                        *dest++ = 0;
-
-                      *dest++ = alpha_val;
-                    }
-
-                }
-              else
-                {
-                  *dest++ = ((maxval - gray_val) * 255) / maxval;
-                }
-              break;
-
-            case PHOTOMETRIC_PALETTE:
-              NEXTSAMPLE (*dest++);
-              if (alpha)
-                NEXTSAMPLE (*dest++);
-              break;
-
-            case PHOTOMETRIC_RGB:
-              NEXTSAMPLE (red_val);
-              NEXTSAMPLE (green_val);
-              NEXTSAMPLE (blue_val);
-              if (alpha)
-                {
-                  NEXTSAMPLE (alpha_val);
-                  if (tsvals.save_transp_pixels)
-                    {
-                      *dest++ = red_val;
-                      *dest++ = green_val;
-                      *dest++ = blue_val;
-                      *dest++ = alpha_val;
-                    }
-                  else
-                    {
-                      red_val   = MIN (red_val, alpha_val);
-                      blue_val  = MIN (blue_val, alpha_val);
-                      green_val = MIN (green_val, alpha_val);
-
-                      if (alpha_val)
-                        {
-                          *dest++ = (red_val   * 255) / alpha_val;
-                          *dest++ = (green_val * 255) / alpha_val;
-                          *dest++ = (blue_val  * 255) / alpha_val;
-                        }
-                      else
-                        {
-                          *dest++ = 0;
-                          *dest++ = 0;
-                          *dest++ = 0;
-                        }
-
-                      *dest++ = alpha_val;
-                    }
-                }
-              else
-                {
-                  *dest++ = red_val;
-                  *dest++ = green_val;
-                  *dest++ = blue_val;
-                }
-              break;
-
-            default:
-              /* This case was handled earlier */
-              g_assert_not_reached();
-            }
-
-          for (i = 1; i <= extra; ++i)
-            {
-              NEXTSAMPLE(alpha_val);
-              *channel[i].pixel++ = alpha_val;
-            }
-        }
-
-      if (align)
-        {
-          switch (photomet)
-            {
-            case PHOTOMETRIC_MINISBLACK:
-            case PHOTOMETRIC_MINISWHITE:
-            case PHOTOMETRIC_PALETTE:
-              for (i = 0; i < align * (1 + alpha + extra); ++i)
-                NEXTSAMPLE (alpha_val);
-              break;
-            case PHOTOMETRIC_RGB:
-              for (i = 0; i < align * (3 + alpha + extra); ++i)
-                NEXTSAMPLE (alpha_val);
-              break;
-            }
-        }
-
-      bitsleft = 0;
-    }
-
-  for (i = 0; i <= extra; ++i)
-    gimp_pixel_rgn_set_rect (&(channel[i].pixel_rgn), channel[i].pixels,
-                             startcol, startrow, cols, rows);
-}
-#endif
 
 #if 0
 static void
@@ -2283,6 +1672,7 @@ read_separate (const guchar *source,
 }
 #endif
 
+#if 0
 static void
 fill_bit2byte(void)
 {
@@ -2302,3 +1692,4 @@ fill_bit2byte(void)
 
   filled = TRUE;
 }
+#endif
