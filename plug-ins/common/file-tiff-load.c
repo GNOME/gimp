@@ -108,39 +108,34 @@ static void   run       (const gchar      *name,
                          gint             *nreturn_vals,
                          GimpParam       **return_vals);
 
-static gboolean  load_dialog   (TIFF               *tif,
-                                TiffSelectedPages  *pages);
+static gboolean  load_dialog      (TIFF               *tif,
+                                   TiffSelectedPages  *pages);
+                                
+static gint32    load_image       (const gchar        *filename,
+                                   TIFF               *tif,
+                                   TiffSelectedPages  *pages,
+                                   GError            **error);
 
-static gint32    load_image    (const gchar        *filename,
-                                TIFF               *tif,
-                                TiffSelectedPages  *pages,
-                                GError            **error);
+static void      load_rgba        (TIFF         *tif,
+                                   channel_data *channel);
+static void      load_interleaved (TIFF         *tif,
+                                   channel_data *channel,
+                                   gushort       bps,
+                                   gushort       spp,
+                                   gint          extra);
+static void      load_paths       (TIFF         *tif,
+                                   gint          image);
 
-static void      load_rgba     (TIFF         *tif,
-                                channel_data *channel);
-static void      load_lines    (TIFF         *tif,
-                                channel_data *channel,
-                                gushort       bps,
-                                gushort       spp,
-                                gint          extra);
-static void      load_tiles    (TIFF         *tif,
-                                channel_data *channel,
-                                gushort       bps,
-                                gushort       spp,
-                                gint          extra);
-static void      load_paths    (TIFF         *tif,
-                                gint          image);
-
-static void      read_separate (const guchar *source,
-                                channel_data *channel,
-                                gushort       bps,
-                                gint          startcol,
-                                gint          startrow,
-                                gint          rows,
-                                gint          cols,
-                                gboolean      alpha,
-                                gint          extra,
-                                gint          sample);
+static void      read_separate    (const guchar *source,
+                                   channel_data *channel,
+                                   gushort       bps,
+                                   gint          startcol,
+                                   gint          startrow,
+                                   gint          rows,
+                                   gint          cols,
+                                   gboolean      alpha,
+                                   gint          extra,
+                                   gint          sample);
 
 static void      fill_bit2byte (void);
 
@@ -1017,13 +1012,9 @@ load_image (const gchar        *filename,
         {
           load_rgba (tif, channel);
         }
-      else if (TIFFIsTiled (tif))
-        {
-          load_tiles (tif, channel, bps, spp, extra);
-        }
       else
-        { /* Load scanlines in tile_height chunks */
-          load_lines (tif, channel, bps, spp, extra);
+        {
+          load_interleaved (tif, channel, bps, spp, extra);
         }
 
       if (TIFFGetField (tif, TIFFTAG_ORIENTATION, &orientation))
@@ -1183,6 +1174,8 @@ load_rgba (TIFF         *tif,
       if ((row % 32) == 0)
         gimp_progress_update ((gdouble) row / (gdouble) imageLength);
     }
+
+  g_free (buffer);
 }
 
 static void
@@ -1375,11 +1368,11 @@ load_paths (TIFF *tif, gint image)
 
 
 static void
-load_tiles (TIFF         *tif,
-            channel_data *channel,
-            gushort       bps,
-            gushort       spp,
-            gint          extra)
+load_interleaved (TIFF         *tif,
+                  channel_data *channel,
+                  gushort       bps,
+                  gushort       spp,
+                  gint          extra)
 {
   uint16  planar = PLANARCONFIG_CONTIG;
   uint32  imageWidth, imageLength;
@@ -1398,13 +1391,25 @@ load_tiles (TIFF         *tif,
   TIFFGetField (tif, TIFFTAG_PLANARCONFIG, &planar);
   TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &imageWidth);
   TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &imageLength);
-  TIFFGetField (tif, TIFFTAG_TILEWIDTH, &tileWidth);
-  TIFFGetField (tif, TIFFTAG_TILELENGTH, &tileLength);
+
+  tileWidth = imageWidth;
+
+  if (TIFFIsTiled (tif))
+    {
+      TIFFGetField (tif, TIFFTAG_TILEWIDTH, &tileWidth);
+      TIFFGetField (tif, TIFFTAG_TILELENGTH, &tileLength);
+      buffer = g_malloc (TIFFTileSize (tif));
+    }
+  else
+    {
+      tileWidth = imageWidth;
+      tileLength = 1;
+      buffer = g_malloc (TIFFScanlineSize (tif));
+    }
 
   one_row = (gdouble) tileLength / (gdouble) imageLength;
-  buffer = g_malloc (TIFFTileSize (tif));
 
-  if (bps < 16)
+  if (bps <= 8)
     src_format = babl_format_n (babl_type ("u8"), spp);
   else
     src_format = babl_format_n (babl_type ("u16"), spp);
@@ -1426,183 +1431,83 @@ load_tiles (TIFF         *tif,
           gimp_progress_update (progress + one_row *
                                 ( (gdouble) x / (gdouble) imageWidth));
 
-          TIFFReadTile (tif, buffer, x, y, 0, 0);
+          if (TIFFIsTiled (tif))
+            TIFFReadTile (tif, buffer, x, y, 0, 0);
+          else
+            TIFFReadScanline (tif, buffer, y + i, 0);
 
           cols = MIN (imageWidth - x, tileWidth);
           rows = MIN (imageLength - y, tileLength);
 
-          src_buf = gegl_buffer_linear_new_from_data (buffer,
-                                                      src_format,
-                                                      GEGL_RECTANGLE (0, 0, cols, rows),
-                                                      GEGL_AUTO_ROWSTRIDE,
-                                                      NULL, NULL);
-
-          offset = 0;
-
-          for (i = 0; i <= extra; i++)
+          if (planar == PLANARCONFIG_CONTIG)
             {
-              int src_bpp, dest_bpp;
-
-              src_bpp = babl_format_get_bytes_per_pixel (src_format);
-              dest_bpp = babl_format_get_bytes_per_pixel (channel[i].format);
-
-              iter = gegl_buffer_iterator_new (src_buf, NULL, 0, NULL,
-                                               GEGL_BUFFER_READ,
-                                               GEGL_ABYSS_NONE);
-              gegl_buffer_iterator_add (iter, channel[i].buffer,
-                                        GEGL_RECTANGLE (x, y, cols, rows),
-                                        0, NULL,
-                                        GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
-
-              while (gegl_buffer_iterator_next (iter))
+              src_buf = gegl_buffer_linear_new_from_data (buffer,
+                                                          src_format,
+                                                          GEGL_RECTANGLE (0, 0, cols, rows),
+                                                          GEGL_AUTO_ROWSTRIDE,
+                                                          NULL, NULL);
+             
+              offset = 0;
+             
+              for (i = 0; i <= extra; i++)
                 {
-                  guchar *s = ((guchar *) iter->data[0]) + offset;
-                  guchar *d = iter->data[1];
-                  gint length = iter->length;
-
-                  while (length--)
+                  int src_bpp, dest_bpp;
+             
+                  src_bpp = babl_format_get_bytes_per_pixel (src_format);
+                  dest_bpp = babl_format_get_bytes_per_pixel (channel[i].format);
+             
+                  iter = gegl_buffer_iterator_new (src_buf,
+                                                   GEGL_RECTANGLE (0, 0, cols, rows),
+                                                   0, NULL,
+                                                   GEGL_BUFFER_READ,
+                                                   GEGL_ABYSS_NONE);
+                  gegl_buffer_iterator_add (iter, channel[i].buffer,
+                                            GEGL_RECTANGLE (x, y, cols, rows),
+                                            0, NULL,
+                                            GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+             
+                  while (gegl_buffer_iterator_next (iter))
                     {
-                      memcpy (d, s, dest_bpp);
-                      d += dest_bpp;
-                      s += src_bpp;
+                      guchar *s = ((guchar *) iter->data[0]) + offset;
+                      guchar *d = iter->data[1];
+                      gint length = iter->length;
+             
+                      while (length--)
+                        {
+                          memcpy (d, s, dest_bpp);
+                          d += dest_bpp;
+                          s += src_bpp;
+                        }
                     }
+             
+                  offset += dest_bpp;
                 }
 
-              offset += dest_bpp;
+              g_object_unref (src_buf);
             }
+          else  /* PLANARCONFIG_SEPARATE */
+            {
+              guchar *bufptr = buffer;
 
-          g_object_unref (src_buf);
+              /* this does not work - the image data is planar as well */
+
+              g_printerr ("GEGL_RECTANGLE (%d, %d, %d, %d)\n", x, y, cols, rows);
+              for (i = 0; i <= extra; i++)
+                {
+                  gegl_buffer_set (channel[i].buffer,
+                                   GEGL_RECTANGLE (x, y, cols, rows),
+                                   0, channel[i].format,
+                                   bufptr,
+                                   GEGL_AUTO_ROWSTRIDE);
+                  bufptr += babl_format_get_bytes_per_pixel (channel[i].format) * cols * rows;
+                }
+            }
         }
 
       progress += one_row;
     }
 }
 
-static void
-load_lines (TIFF         *tif,
-            channel_data *channel,
-            gushort       bps,
-            gushort       spp,
-            gint          extra)
-{
-  uint16  planar = PLANARCONFIG_CONTIG;
-  uint32  imageWidth, imageLength, lineSize, cols, rows;
-  int bytes_per_pixel;
-  GeglBuffer *src_buf;
-  const Babl *src_format;
-  GeglBufferIterator *iter;
-  guchar *buffer;
-  gint    i, y;
-  gint    tile_height = gimp_tile_height ();
-
-  g_printerr ("%s\n", __func__);
-
-  TIFFGetField (tif, TIFFTAG_PLANARCONFIG, &planar);
-  TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &imageWidth);
-  TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &imageLength);
-  TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &cols);
-
-  lineSize = TIFFScanlineSize (tif);
-  buffer = g_malloc (lineSize * tile_height);
-
-  if (bps < 16)
-    src_format = babl_format_n (babl_type ("u8"), spp);
-  else
-    src_format = babl_format_n (babl_type ("u16"), spp);
-
-  /* consistency check */
-  bytes_per_pixel = 0;
-  for (i = 0; i <= extra; i++)
-    bytes_per_pixel += babl_format_get_bytes_per_pixel (channel[i].format);
-
-  g_printerr ("bytes_per_pixel: %d, format: %d\n", bytes_per_pixel,
-              babl_format_get_bytes_per_pixel (src_format));
-
-  if (planar == PLANARCONFIG_CONTIG)
-    {
-      for (y = 0; y < imageLength; y += tile_height)
-        {
-          int offset;
-
-          gimp_progress_update ((gdouble) y / (gdouble) imageLength);
-
-          rows = MIN (tile_height, imageLength - y);
-
-          for (i = 0; i < rows; ++i)
-            TIFFReadScanline (tif, buffer + i * lineSize, y + i, 0);
-
-          src_buf = gegl_buffer_linear_new_from_data (buffer,
-                                                      src_format,
-                                                      GEGL_RECTANGLE (0, 0, imageWidth, rows),
-                                                      GEGL_AUTO_ROWSTRIDE,
-                                                      NULL, NULL);
-
-          offset = 0;
-
-          for (i = 0; i <= extra; i++)
-            {
-              int src_bpp, dest_bpp;
-
-              src_bpp = babl_format_get_bytes_per_pixel (src_format);
-              dest_bpp = babl_format_get_bytes_per_pixel (channel[i].format);
-
-              iter = gegl_buffer_iterator_new (src_buf, NULL, 0, NULL,
-                                               GEGL_BUFFER_READ,
-                                               GEGL_ABYSS_NONE);
-              gegl_buffer_iterator_add (iter, channel[i].buffer,
-                                        GEGL_RECTANGLE (0, y, imageWidth, rows),
-                                        0, NULL,
-                                        GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
-
-              while (gegl_buffer_iterator_next (iter))
-                {
-                  guchar *s = ((guchar *) iter->data[0]) + offset;
-                  guchar *d = iter->data[1];
-                  gint length = iter->length;
-
-                  while (length--)
-                    {
-                      memcpy (d, s, dest_bpp);
-                      d += dest_bpp;
-                      s += src_bpp;
-                    }
-                }
-
-              offset += dest_bpp;
-              gegl_buffer_flush (channel[i].buffer);
-            }
-
-          g_object_unref (src_buf);
-        }
-    }
-  else
-    { /* PLANARCONFIG_SEPARATE  -- Just say "No" */
-      uint16 s, samples;
-
-      TIFFGetField(tif, TIFFTAG_SAMPLESPERPIXEL, &samples);
-
-      g_printerr ("PLANARCONFIG_SEPARATE unsupported for now\n");
-
-#if 0
-      for (s = 0; s < samples; ++s)
-        {
-          for (y = 0; y < imageLength; y += tile_height )
-            {
-              gimp_progress_update ((gdouble) y / (gdouble) imageLength);
-
-              rows = MIN (tile_height, imageLength - y);
-              for (i = 0; i < rows; ++i)
-                TIFFReadScanline(tif, buffer + i * lineSize, y + i, s);
-
-              read_separate (buffer, channel, bps,
-                             y, 0, rows, cols, alpha, extra, s);
-            }
-        }
-#endif
-    }
-
-  g_free(buffer);
-}
 
 /* Step through all <= 8-bit samples in an image */
 
