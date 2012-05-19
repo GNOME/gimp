@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-29 22:34+0200\n"
-"PO-Revision-Date: 2012-04-28 22:35+0200\n"
+"POT-Creation-Date: 2012-05-19 17:57+0200\n"
+"PO-Revision-Date: 2012-05-19 18:00+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -5427,7 +5427,7 @@ msgstr "Ponownie koloruje obraz używając kolorów z aktywnego gradientu"
 
 #: ../plug-ins/common/gradient-map.c:97
 msgid "_Gradient Map"
-msgstr "Mapa g_radientu"
+msgstr "Odwzorowywanie g_radientu"
 
 #: ../plug-ins/common/gradient-map.c:106
 msgid "Recolor the image using colors from the active palette"
@@ -5435,15 +5435,15 @@ msgstr "Ponownie koloruje obraz używając kolorów z aktywnej palety"
 
 #: ../plug-ins/common/gradient-map.c:119
 msgid "_Palette Map"
-msgstr "Mapa p_alety"
+msgstr "Odwzorowywanie p_alety"
 
 #: ../plug-ins/common/gradient-map.c:162
 msgid "Gradient Map"
-msgstr "Mapa gradientu"
+msgstr "Odwzorowywanie gradientu"
 
 #: ../plug-ins/common/gradient-map.c:167
 msgid "Palette Map"
-msgstr "Mapa palety"
+msgstr "Odwzorowywanie palety"
 
 #: ../plug-ins/common/grid.c:142
 msgid "Draw a grid on the image"
@@ -9760,7 +9760,7 @@ msgstr "Zastosowuje aktywny gradient do obrazu"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1159
 msgid "Create a color-map using a gradient from the gradient editor"
-msgstr "Tworzy paletę kolorów używając gradienta z edytora gradientów"
+msgstr "Tworzy paletę kolorów używając gradientu z edytora gradientów"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1170
 msgid "FractalExplorer Gradient"
@@ -12472,7 +12472,7 @@ msgstr "Mapowanie _wypukłości"
 
 #: ../plug-ins/lighting/lighting-ui.c:819
 msgid "Enable/disable bump-mapping (image depth)"
-msgstr "Włącza/wyłacza mapowanie wypukłości (głębokość obrazu)"
+msgstr "Włącza/wyłącza mapowanie wypukłości (głębokość obrazu)"
 
 #: ../plug-ins/lighting/lighting-ui.c:842
 msgid "Bumpm_ap image:"
