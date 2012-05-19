@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-19 17:57+0200\n"
-"PO-Revision-Date: 2012-05-19 18:00+0200\n"
+"POT-Creation-Date: 2012-05-19 18:07+0200\n"
+"PO-Revision-Date: 2012-05-19 18:08+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -5427,7 +5427,7 @@ msgstr "Ponownie koloruje obraz używając kolorów z aktywnego gradientu"
 
 #: ../plug-ins/common/gradient-map.c:97
 msgid "_Gradient Map"
-msgstr "Odwzorowywanie g_radientu"
+msgstr "Odwzorowanie g_radientu"
 
 #: ../plug-ins/common/gradient-map.c:106
 msgid "Recolor the image using colors from the active palette"
@@ -5435,15 +5435,15 @@ msgstr "Ponownie koloruje obraz używając kolorów z aktywnej palety"
 
 #: ../plug-ins/common/gradient-map.c:119
 msgid "_Palette Map"
-msgstr "Odwzorowywanie p_alety"
+msgstr "Odwzorowanie p_alety"
 
 #: ../plug-ins/common/gradient-map.c:162
 msgid "Gradient Map"
-msgstr "Odwzorowywanie gradientu"
+msgstr "Odwzorowanie gradientu"
 
 #: ../plug-ins/common/gradient-map.c:167
 msgid "Palette Map"
-msgstr "Odwzorowywanie palety"
+msgstr "Odwzorowanie palety"
 
 #: ../plug-ins/common/grid.c:142
 msgid "Draw a grid on the image"
