@@ -64,7 +64,6 @@ struct _GimpProjection
   GSList                   *update_areas;
   GimpProjectionIdleRender  idle_render;
 
-  gboolean                  construct_flag;
   gboolean                  invalidate_preview;
 };
 

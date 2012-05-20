@@ -21,21 +21,8 @@
 
 #include "core-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
-
-#include "gimplayer.h"
-#include "gimpprojectable.h"
 #include "gimpprojection.h"
 #include "gimpprojection-construct.h"
-
-
-/*  local function prototypes  */
-
-static void   gimp_projection_initialize (GimpProjection *proj,
-                                          gint            x,
-                                          gint            y,
-                                          gint            w,
-                                          gint            h);
 
 
 /*  public functions  */
@@ -47,16 +34,16 @@ gimp_projection_construct (GimpProjection *proj,
                            gint            w,
                            gint            h)
 {
+  GeglBuffer    *buffer;
   GeglRectangle  rect = { x, y, w, h };
 
   g_return_if_fail (GIMP_IS_PROJECTION (proj));
 
-  /*  First, determine if the projection image needs to be
-   *  initialized--this is the case when there are no visible
-   *  layers that cover the entire canvas--either because layers
-   *  are offset or only a floating selection is visible
-   */
-  gimp_projection_initialize (proj, x, y, w, h);
+  /* GEGL should really do this for us... */
+  gegl_node_get (gimp_projection_get_sink_node (proj),
+                 "buffer", &buffer, NULL);
+  gegl_buffer_clear (buffer, &rect);
+  g_object_unref (buffer);
 
   if (! proj->processor)
     {
@@ -70,76 +57,4 @@ gimp_projection_construct (GimpProjection *proj,
     }
 
   while (gegl_processor_work (proj->processor, NULL));
-}
-
-/**
- * gimp_projection_initialize:
- * @proj: A #GimpProjection.
- * @x:
- * @y:
- * @w:
- * @h:
- *
- * This function determines whether a visible layer with combine mode
- * Normal provides complete coverage over the specified area.  If not,
- * the projection is initialized to transparent black.
- */
-static void
-gimp_projection_initialize (GimpProjection *proj,
-                            gint            x,
-                            gint            y,
-                            gint            w,
-                            gint            h)
-{
-  GList    *list;
-  gint      proj_off_x;
-  gint      proj_off_y;
-  gboolean  coverage = FALSE;
-
-  gimp_projectable_get_offset (proj->projectable, &proj_off_x, &proj_off_y);
-
-  for (list = gimp_projectable_get_layers (proj->projectable);
-       list;
-       list = g_list_next (list))
-    {
-      GimpLayer    *layer    = list->data;
-      GimpDrawable *drawable = GIMP_DRAWABLE (layer);
-      GimpItem     *item     = GIMP_ITEM (layer);
-      gint          off_x, off_y;
-
-      gimp_item_get_offset (item, &off_x, &off_y);
-
-      /*  subtract the projectable's offsets because the list of
-       *  update areas is in tile-pyramid coordinates, but our
-       *  external API is always in terms of image coordinates.
-       */
-      off_x -= proj_off_x;
-      off_y -= proj_off_y;
-
-      if (gimp_item_get_visible (item)                          &&
-          ! gimp_drawable_has_alpha (drawable)                  &&
-          ! gimp_layer_get_mask (layer)                         &&
-          gimp_layer_get_mode (layer) == GIMP_NORMAL_MODE       &&
-          gimp_layer_get_opacity (layer) == GIMP_OPACITY_OPAQUE &&
-          off_x <= x                                            &&
-          off_y <= y                                            &&
-          (off_x + gimp_item_get_width  (item)) >= (x + w)      &&
-          (off_y + gimp_item_get_height (item)) >= (y + h))
-        {
-          coverage = TRUE;
-          break;
-        }
-    }
-
-  if (! coverage)
-    {
-      GeglBuffer *buffer;
-
-      /* GEGL should really do this for us... */
-      gegl_node_get (gimp_projection_get_sink_node (proj),
-                     "buffer", &buffer, NULL);
-
-      gegl_buffer_clear (buffer, GEGL_RECTANGLE (x, y, w, h));
-      g_object_unref (buffer);
-    }
 }

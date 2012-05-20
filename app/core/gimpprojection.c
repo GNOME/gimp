@@ -153,7 +153,6 @@ gimp_projection_init (GimpProjection *proj)
   proj->update_areas             = NULL;
   proj->idle_render.idle_id      = 0;
   proj->idle_render.update_areas = NULL;
-  proj->construct_flag           = FALSE;
 }
 
 static void
