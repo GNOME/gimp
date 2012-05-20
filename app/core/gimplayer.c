@@ -1461,10 +1461,10 @@ gimp_layer_create_mask (const GimpLayer *layer,
                                      gimp_drawable_has_alpha (drawable));
 
             src_buffer =
-              gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                    gimp_item_get_width  (item),
-                                                    gimp_item_get_height (item)),
-                                    copy_format);
+              gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                               gimp_item_get_width  (item),
+                                               gimp_item_get_height (item)),
+                               copy_format);
 
             gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                               src_buffer, NULL);

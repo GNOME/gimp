@@ -360,7 +360,7 @@ gimp_paint_core_start (GimpPaintCore     *core,
   if (core->undo_buffer)
     g_object_unref (core->undo_buffer);
 
-  core->undo_buffer = gimp_gegl_buffer_dup (gimp_drawable_get_buffer (drawable));
+  core->undo_buffer = gegl_buffer_dup (gimp_drawable_get_buffer (drawable));
 
   /*  Allocate the saved proj structure  */
   if (core->saved_proj_buffer)
@@ -375,7 +375,7 @@ gimp_paint_core_start (GimpPaintCore     *core,
       GimpPickable *pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
       GeglBuffer   *buffer   = gimp_pickable_get_buffer (pickable);
 
-      core->saved_proj_buffer = gimp_gegl_buffer_dup (buffer);
+      core->saved_proj_buffer = gegl_buffer_dup (buffer);
     }
 
   /*  Allocate the canvas blocks structure  */
@@ -383,10 +383,10 @@ gimp_paint_core_start (GimpPaintCore     *core,
     g_object_unref (core->canvas_buffer);
 
   core->canvas_buffer =
-    gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                          gimp_item_get_width  (item),
-                                          gimp_item_get_height (item)),
-                          babl_format ("Y u8"));
+    gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                     gimp_item_get_width  (item),
+                                     gimp_item_get_height (item)),
+                     babl_format ("Y u8"));
 
   /*  Get the initial undo extents  */
 
@@ -447,8 +447,8 @@ gimp_paint_core_finish (GimpPaintCore *core,
 
       GIMP_PAINT_CORE_GET_CLASS (core)->push_undo (core, image, NULL);
 
-      buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
-                                     gimp_drawable_get_format (drawable));
+      buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+                                gimp_drawable_get_format (drawable));
 
       gegl_buffer_copy (core->undo_buffer,
                         GEGL_RECTANGLE (x, y, width, height),

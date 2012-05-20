@@ -816,8 +816,8 @@ gimp_drawable_real_push_undo (GimpDrawable *drawable,
 {
   if (! buffer)
     {
-      buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
-                                     gimp_drawable_get_format (drawable));
+      buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+                                gimp_drawable_get_format (drawable));
 
       gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
                         GEGL_RECTANGLE (x, y, width, height),
@@ -846,7 +846,7 @@ gimp_drawable_real_swap_pixels (GimpDrawable *drawable,
   gint        width  = gegl_buffer_get_width (buffer);
   gint        height = gegl_buffer_get_height (buffer);
 
-  tmp = gimp_gegl_buffer_dup (buffer);
+  tmp = gegl_buffer_dup (buffer);
 
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
                     GEGL_RECTANGLE (x, y, width, height),

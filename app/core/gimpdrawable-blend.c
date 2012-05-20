@@ -192,8 +192,8 @@ gimp_drawable_blend (GimpDrawable         *drawable,
   gimp_set_busy (image->gimp);
 
   /*  Always create an alpha temp buf (for generality) */
-  buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
-                                 gimp_drawable_get_format_with_alpha (drawable));
+  buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+                            gimp_drawable_get_format_with_alpha (drawable));
 
   gradient_fill_region (image, drawable, context,
                         buffer, GEGL_RECTANGLE (0, 0, width, height),
@@ -543,9 +543,9 @@ gradient_precalc_shapeburst (GimpImage           *image,
                                  babl_format ("Y float"));
 
   /*  allocate the selection mask copy  */
-  temp_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                      region->width, region->height),
-                                      gimp_image_get_mask_format (image));
+  temp_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                 region->width, region->height),
+                                 gimp_image_get_mask_format (image));
 
   mask = gimp_image_get_mask (image);
 

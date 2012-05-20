@@ -485,8 +485,8 @@ gimp_edit_fill_full (GimpImage            *image,
       format = gimp_drawable_get_format (drawable);
     }
 
-  dest_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
-                                      format);
+  dest_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+                                 format);
 
   if (pattern)
     {

@@ -107,8 +107,8 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
           undo->opacity    = opacity;
 
           undo->applied_buffer =
-            gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
-                                  gegl_buffer_get_format (buffer));
+            gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+                             gegl_buffer_get_format (buffer));
 
           gegl_buffer_copy (buffer,
                             GEGL_RECTANGLE (buffer_region->x + (x - base_x),

@@ -349,8 +349,8 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
                             x + off_x, y + off_y,
                             gimp_fill_options_get_antialias (options));
 
-  base_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, w, h),
-                                      gimp_drawable_get_format_with_alpha (drawable));
+  base_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, w, h),
+                                 gimp_drawable_get_format_with_alpha (drawable));
 
   switch (gimp_fill_options_get_style (options))
     {

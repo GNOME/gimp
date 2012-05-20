@@ -587,9 +587,9 @@ gimp_image_map_update_undo_buffer (GimpImageMap        *image_map,
             g_object_unref (image_map->undo_buffer);
 
           image_map->undo_buffer =
-            gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                  rect->width, rect->height),
-                                  gimp_drawable_get_format (image_map->drawable));
+            gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                             rect->width, rect->height),
+                             gimp_drawable_get_format (image_map->drawable));
         }
 
       /*  Copy from the image to the new tiles  */
