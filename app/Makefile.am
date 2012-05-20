@@ -116,32 +116,32 @@ INCLUDES = \
 
 # FIXME: core should not depend on xcf
 workaround_that_core_depends_on_xcf = \
-	-u $(SYMPREFIX)xcf_init
+	-Wl,-u,$(SYMPREFIX)xcf_init
 
 # FIXME: core should not depend on pdb
 workaround_that_core_depends_on_pdb = \
-	-u $(SYMPREFIX)internal_procs_init		\
-	-u $(SYMPREFIX)gimp_plug_in_manager_restore
+	-Wl,-u,$(SYMPREFIX)internal_procs_init		\
+	-Wl,-u,$(SYMPREFIX)gimp_plug_in_manager_restore
 
 # FIXME: plug-in should not depend on pdb
 workaround_that_plug_in_depends_on_pdb = \
-	-u $(SYMPREFIX)gimp_pdb_compat_param_spec
+	-Wl,-u,$(SYMPREFIX)gimp_pdb_compat_param_spec
 
 # FIXME: file should not depend on plug-in
 workaround_that_file_depends_on_plug_in = \
-	-u $(SYMPREFIX)plug_in_icc_profile_apply_rgb	\
-	-u $(SYMPREFIX)gimp_image_map_config_get_type
+	-Wl,-u,$(SYMPREFIX)plug_in_icc_profile_apply_rgb	\
+	-Wl,-u,$(SYMPREFIX)gimp_image_map_config_get_type
 
 # core, vectors and gegl are on the same architectural layer, prevent
 # the linker from panicing
 calm_down_linker = \
-	-u $(SYMPREFIX)gimp_vectors_undo_get_type		\
-	-u $(SYMPREFIX)gimp_vectors_mod_undo_get_type		\
-	-u $(SYMPREFIX)gimp_vectors_prop_undo_get_type		\
-	-u $(SYMPREFIX)gimp_curve_map_pixels			\
-	-u $(SYMPREFIX)gimp_param_spec_duplicate		\
-	-u $(SYMPREFIX)gimp_operations_init			\
-	-u $(SYMPREFIX)smooth_region
+	-Wl,-u,$(SYMPREFIX)gimp_vectors_undo_get_type		\
+	-Wl,-u,$(SYMPREFIX)gimp_vectors_mod_undo_get_type	\
+	-Wl,-u,$(SYMPREFIX)gimp_vectors_prop_undo_get_type	\
+	-Wl,-u,$(SYMPREFIX)gimp_curve_map_pixels		\
+	-Wl,-u,$(SYMPREFIX)gimp_param_spec_duplicate		\
+	-Wl,-u,$(SYMPREFIX)gimp_operations_init			\
+	-Wl,-u,$(SYMPREFIX)smooth_region
 
 AM_LDFLAGS = \
 	$(munix)					\
@@ -185,7 +185,7 @@ gimpconsoleldadd = \
 gimp_@GIMP_APP_VERSION@_LDFLAGS = \
 	$(AM_LDFLAGS)		\
 	$(win32_ldflags)	\
-	-u $(SYMPREFIX)gimp_lebl_dialog
+	-Wl,-u,$(SYMPREFIX)gimp_lebl_dialog
 
 gimp_@GIMP_APP_VERSION@_LDADD = \
 	gui/libappgui.a		\

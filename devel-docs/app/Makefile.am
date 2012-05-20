@@ -62,10 +62,10 @@ GTKDOC_CFLAGS = \
 	-UGTK_DISABLE_SINGLE_INCLUDES
 
 GTKDOC_LIBS = \
-	-u $(SYMPREFIX)xcf_init		   				     \
-	-u $(SYMPREFIX)internal_procs_init 				     \
-	-u $(SYMPREFIX)gimp_coords_mix	   				     \
-	-u $(SYMPREFIX)gimp_plug_in_manager_restore			     \
+	-Wl,-u,$(SYMPREFIX)xcf_init		   			     \
+	-Wl,-u,$(SYMPREFIX)internal_procs_init 				     \
+	-Wl,-u,$(SYMPREFIX)gimp_coords_mix	   			     \
+	-Wl,-u,$(SYMPREFIX)gimp_plug_in_manager_restore			     \
 	$(top_builddir)/app/app.o					     \
         $(top_builddir)/app/batch.o					     \
         $(top_builddir)/app/errors.o					     \
