@@ -53,11 +53,17 @@ gimp_gegl_init (Gimp *gimp)
 #warning limiting tile cache size to G_MAXINT
 #endif
 
+#ifdef __GNUC__
+#warning not setting GeglConfig:threads
+#endif
+
   g_object_set (gegl_config (),
                 "tile-width",  TILE_WIDTH,
                 "tile-height", TILE_HEIGHT,
                 "cache-size",  (gint) MIN (config->tile_cache_size, G_MAXINT),
+#if 0
                 "threads",     config->num_processors,
+#endif
                 NULL);
 
   /* turn down the precision of babl - permitting use of lookup tables for
@@ -91,7 +97,9 @@ gimp_gegl_notify_tile_cache_size (GimpGeglConfig *config)
 static void
 gimp_gegl_notify_num_processors (GimpGeglConfig *config)
 {
+#if 0
   g_object_set (gegl_config (),
                 "threads", config->num_processors,
                 NULL);
+#endif
 }
