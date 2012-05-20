@@ -42,13 +42,6 @@ static const GimpActionEntry debug_actions[] =
     G_CALLBACK (debug_mem_profile_cmd_callback),
     NULL },
 
-  { "debug-benchmark-projection", NULL,
-    "Benchmark _Projection", NULL,
-    "Invalidates the entire projection, measures the time it takes to "
-    "validate (render) it again, and print the result to stdout.",
-    G_CALLBACK (debug_benchmark_projection_cmd_callback),
-    NULL },
-
   { "debug-show-image-graph", NULL,
     "Show Image _Graph", NULL,
     "Creates a new image showing the GEGL graph of this image",

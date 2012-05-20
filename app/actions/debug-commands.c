@@ -27,9 +27,6 @@
 
 #include "actions-types.h"
 
-#include "base/tile-manager.h"
-#include "base/tile.h"
-
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
 #include "core/gimpcontext.h"
@@ -37,7 +34,6 @@
 #include "core/gimplayer.h"
 #include "core/gimppickable.h"
 #include "core/gimpprojectable.h"
-#include "core/gimpprojection.h"
 
 #include "file/file-utils.h"
 
@@ -61,7 +57,6 @@
 
 /*  local function prototypes  */
 
-static gboolean  debug_benchmark_projection    (GimpImage   *image);
 static gboolean  debug_show_image_graph        (GimpImage   *source_image);
 
 static void      debug_dump_menus_recurse_menu (GtkWidget   *menu,
@@ -93,16 +88,6 @@ debug_mem_profile_cmd_callback (GtkAction *action,
   gimp_object_get_memsize (GIMP_OBJECT (gimp), NULL);
 
   gimp_debug_memsize = FALSE;
-}
-
-void
-debug_benchmark_projection_cmd_callback (GtkAction *action,
-                                         gpointer   data)
-{
-  GimpImage *image;
-  return_if_no_image (image, data);
-
-  g_idle_add ((GSourceFunc) debug_benchmark_projection, g_object_ref (image));
 }
 
 void
@@ -286,42 +271,6 @@ debug_dump_attached_data_cmd_callback (GtkAction *action,
 
 
 /*  private functions  */
-
-static gboolean
-debug_benchmark_projection (GimpImage *image)
-{
-  GimpProjection *projection = gimp_image_get_projection (image);
-  GeglBuffer     *buffer;
-  TileManager    *tiles;
-  gint            x, y;
-
-  gimp_image_invalidate (image,
-                         0, 0,
-                         gimp_image_get_width  (image),
-                         gimp_image_get_height (image));
-  gimp_projection_flush_now (projection);
-
-  buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (projection));
-  tiles = gimp_gegl_buffer_get_tiles (buffer);
-
-  GIMP_TIMER_START ();
-
-  for (x = 0; x < tile_manager_width (tiles); x += TILE_WIDTH)
-    {
-      for (y = 0; y < tile_manager_height (tiles); y += TILE_HEIGHT)
-        {
-          Tile *tile = tile_manager_get_tile (tiles, x, y, TRUE, FALSE);
-
-          tile_release (tile, FALSE);
-        }
-    }
-
-  GIMP_TIMER_END ("Validation of the entire projection");
-
-  g_object_unref (image);
-
-  return FALSE;
-}
 
 static gboolean
 debug_show_image_graph (GimpImage *source_image)
