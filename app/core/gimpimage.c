@@ -616,8 +616,6 @@ gimp_projectable_iface_init (GimpProjectableInterface *iface)
   iface->get_size           = (void (*) (GimpProjectable*, gint*, gint*)) gimp_image_get_size;
   iface->get_graph          = gimp_image_get_graph;
   iface->invalidate_preview = (void (*) (GimpProjectable*)) gimp_viewable_invalidate_preview;
-  iface->get_layers         = (GList * (*) (GimpProjectable*)) gimp_image_get_layer_iter;
-  iface->get_channels       = (GList * (*) (GimpProjectable*)) gimp_image_get_channel_iter;
 }
 
 static void

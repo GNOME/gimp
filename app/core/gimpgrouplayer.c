@@ -139,7 +139,6 @@ static void            gimp_group_layer_convert_type (GimpDrawable      *drawabl
 
 static const Babl    * gimp_group_layer_get_format   (GimpProjectable *projectable);
 static GeglNode      * gimp_group_layer_get_graph    (GimpProjectable *projectable);
-static GList         * gimp_group_layer_get_layers   (GimpProjectable *projectable);
 static gdouble       gimp_group_layer_get_opacity_at (GimpPickable    *pickable,
                                                       gint             x,
                                                       gint             y);
@@ -239,8 +238,6 @@ gimp_projectable_iface_init (GimpProjectableInterface *iface)
   iface->get_size           = (void (*) (GimpProjectable*, gint*, gint*)) gimp_viewable_get_size;
   iface->get_graph          = gimp_group_layer_get_graph;
   iface->invalidate_preview = (void (*) (GimpProjectable*)) gimp_viewable_invalidate_preview;
-  iface->get_layers         = gimp_group_layer_get_layers;
-  iface->get_channels       = NULL;
 }
 
 static void
@@ -946,14 +943,6 @@ gimp_group_layer_get_graph (GimpProjectable *projectable)
                         output,               "input");
 
   return private->graph;
-}
-
-static GList *
-gimp_group_layer_get_layers (GimpProjectable *projectable)
-{
-  GimpGroupLayerPrivate *private = GET_PRIVATE (projectable);
-
-  return gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (private->children));
 }
 
 static gdouble

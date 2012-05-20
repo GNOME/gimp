@@ -35,58 +35,50 @@ struct _GimpProjectableInterface
   GTypeInterface base_iface;
 
   /*  signals  */
-  void            (* invalidate)         (GimpProjectable *projectable,
-                                          gint             x,
-                                          gint             y,
-                                          gint             width,
-                                          gint             height);
-  void            (* flush)              (GimpProjectable *projectable,
-                                          gboolean         invalidate_preview);
-  void            (* structure_changed)  (GimpProjectable *projectable);
+  void         (* invalidate)         (GimpProjectable *projectable,
+                                       gint             x,
+                                       gint             y,
+                                       gint             width,
+                                       gint             height);
+  void         (* flush)              (GimpProjectable *projectable,
+                                       gboolean         invalidate_preview);
+  void         (* structure_changed)  (GimpProjectable *projectable);
 
   /*  virtual functions  */
-  GimpImage     * (* get_image)          (GimpProjectable *projectable);
-  const Babl    * (* get_format)         (GimpProjectable *projectable);
-  void            (* get_offset)         (GimpProjectable *projectable,
-                                          gint            *x,
-                                          gint            *y);
-  void            (* get_size)           (GimpProjectable *projectable,
-                                          gint            *width,
-                                          gint            *height);
-  GeglNode      * (* get_graph)          (GimpProjectable *projectable);
-  void            (* invalidate_preview) (GimpProjectable *projectable);
-
-  /*  legacy API virtual functions  */
-  GList         * (* get_layers)         (GimpProjectable *projectable);
-  GList         * (* get_channels)       (GimpProjectable *projectable);
+  GimpImage  * (* get_image)          (GimpProjectable *projectable);
+  const Babl * (* get_format)         (GimpProjectable *projectable);
+  void         (* get_offset)         (GimpProjectable *projectable,
+                                       gint            *x,
+                                       gint            *y);
+  void         (* get_size)           (GimpProjectable *projectable,
+                                       gint            *width,
+                                       gint            *height);
+  GeglNode   * (* get_graph)          (GimpProjectable *projectable);
+  void         (* invalidate_preview) (GimpProjectable *projectable);
 };
 
 
-GType          gimp_projectable_interface_get_type (void) G_GNUC_CONST;
+GType        gimp_projectable_interface_get_type (void) G_GNUC_CONST;
 
-void           gimp_projectable_invalidate         (GimpProjectable *projectable,
-                                                    gint             x,
-                                                    gint             y,
-                                                    gint             width,
-                                                    gint             height);
-void           gimp_projectable_flush              (GimpProjectable *projectable,
-                                                    gboolean         preview_invalidated);
-void           gimp_projectable_structure_changed  (GimpProjectable *projectable);
+void         gimp_projectable_invalidate         (GimpProjectable *projectable,
+                                                  gint             x,
+                                                  gint             y,
+                                                  gint             width,
+                                                  gint             height);
+void         gimp_projectable_flush              (GimpProjectable *projectable,
+                                                  gboolean         preview_invalidated);
+void         gimp_projectable_structure_changed  (GimpProjectable *projectable);
 
-GimpImage    * gimp_projectable_get_image          (GimpProjectable *projectable);
-const Babl   * gimp_projectable_get_format         (GimpProjectable *projectable);
-void           gimp_projectable_get_offset         (GimpProjectable *projectable,
-                                                    gint            *x,
-                                                    gint            *y);
-void           gimp_projectable_get_size           (GimpProjectable *projectable,
-                                                    gint            *width,
-                                                    gint            *height);
-GeglNode     * gimp_projectable_get_graph          (GimpProjectable *projectable);
-void           gimp_projectable_invalidate_preview (GimpProjectable *projectable);
-
-/*  legacy API  */
-GList        * gimp_projectable_get_layers         (GimpProjectable *projectable);
-GList        * gimp_projectable_get_channels       (GimpProjectable *projectable);
+GimpImage  * gimp_projectable_get_image          (GimpProjectable *projectable);
+const Babl * gimp_projectable_get_format         (GimpProjectable *projectable);
+void         gimp_projectable_get_offset         (GimpProjectable *projectable,
+                                                  gint            *x,
+                                                  gint            *y);
+void         gimp_projectable_get_size           (GimpProjectable *projectable,
+                                                  gint            *width,
+                                                  gint            *height);
+GeglNode   * gimp_projectable_get_graph          (GimpProjectable *projectable);
+void         gimp_projectable_invalidate_preview (GimpProjectable *projectable);
 
 
 #endif  /* __GIMP_PROJECTABLE_H__ */

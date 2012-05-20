@@ -246,33 +246,3 @@ gimp_projectable_invalidate_preview (GimpProjectable *projectable)
   if (iface->invalidate_preview)
     iface->invalidate_preview (projectable);
 }
-
-GList *
-gimp_projectable_get_layers (GimpProjectable *projectable)
-{
-  GimpProjectableInterface *iface;
-
-  g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), NULL);
-
-  iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
-
-  if (iface->get_layers)
-    return iface->get_layers (projectable);
-
-  return NULL;
-}
-
-GList *
-gimp_projectable_get_channels (GimpProjectable *projectable)
-{
-  GimpProjectableInterface *iface;
-
-  g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), NULL);
-
-  iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
-
-  if (iface->get_channels)
-    return iface->get_channels (projectable);
-
-  return NULL;
-}
