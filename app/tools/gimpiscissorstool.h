@@ -15,6 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#if 0
+
 #ifndef __GIMP_ISCISSORS_TOOL_H__
 #define __GIMP_ISCISSORS_TOOL_H__
 
@@ -100,3 +102,5 @@ GType   gimp_iscissors_tool_get_type (void) G_GNUC_CONST;
 
 
 #endif  /*  __GIMP_ISCISSORS_TOOL_H__  */
+
+#endif

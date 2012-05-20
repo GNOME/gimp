@@ -42,6 +42,7 @@
 
 /* Livewire boundary implementation done by Laramie Leavitt */
 
+#if 0
 
 #include "config.h"
 
@@ -1876,3 +1877,5 @@ find_max_gradient (GimpIscissorsTool *iscissors,
         }
     }
 }
+
+#endif
