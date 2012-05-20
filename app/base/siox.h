@@ -41,6 +41,8 @@
 #define SIOX_DEFAULT_SENSITIVITY_A  1.28
 #define SIOX_DEFAULT_SENSITIVITY_B  2.56
 
+#if 0
+
 /*  FIXME: turn this into an enum  */
 #define SIOX_DRB_ADD                0
 #define SIOX_DRB_SUBTRACT           1
@@ -78,6 +80,8 @@ void        siox_drb                (SioxState          *state,
                                      gint                brush_radius,
                                      gint                brush_mode,
                                      gfloat              threshold);
+
+#endif
 
 
 #endif /* __SIOX_H__ */

@@ -23,8 +23,10 @@
 
 #include "core-types.h"
 
+#if 0
 #include "base/siox.h"
 #include "base/tile-manager.h"
+#endif
 
 #include "gegl/gimp-gegl-utils.h"
 
@@ -45,6 +47,7 @@ gimp_drawable_foreground_extract (GimpDrawable              *drawable,
                                   GimpDrawable              *mask,
                                   GimpProgress              *progress)
 {
+#if 0
   SioxState    *state;
   const gdouble sensitivity[3] = { SIOX_DEFAULT_SENSITIVITY_L,
                                    SIOX_DEFAULT_SENSITIVITY_A,
@@ -70,6 +73,7 @@ gimp_drawable_foreground_extract (GimpDrawable              *drawable,
 
       gimp_drawable_foreground_extract_siox_done (state);
     }
+#endif
 }
 
 SioxState *
@@ -79,6 +83,7 @@ gimp_drawable_foreground_extract_siox_init (GimpDrawable *drawable,
                                             gint          width,
                                             gint          height)
 {
+#if 0
   GeglBuffer   *buffer;
   const guchar *colormap = NULL;
   gboolean      intersect;
@@ -112,6 +117,9 @@ gimp_drawable_foreground_extract_siox_init (GimpDrawable *drawable,
   return siox_init (gimp_gegl_buffer_get_tiles (buffer), colormap,
                     offset_x, offset_y,
                     x, y, width, height);
+#endif
+
+  return NULL;
 }
 
 void
@@ -123,6 +131,7 @@ gimp_drawable_foreground_extract_siox (GimpDrawable       *mask,
                                        gboolean            multiblob,
                                        GimpProgress       *progress)
 {
+#if 0
   GeglBuffer *buffer;
   gint        x1, y1;
   gint        x2, y2;
@@ -162,12 +171,15 @@ gimp_drawable_foreground_extract_siox (GimpDrawable       *mask,
     gimp_progress_end (progress);
 
   gimp_drawable_update (mask, x1, y1, x2, y2);
+#endif
 }
 
 void
 gimp_drawable_foreground_extract_siox_done (SioxState *state)
 {
+#if 0
   g_return_if_fail (state != NULL);
 
   siox_done (state);
+#endif
 }

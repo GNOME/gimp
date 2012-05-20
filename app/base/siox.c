@@ -33,6 +33,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#if 0
+
 #include "config.h"
 
 #include <glib-object.h>
@@ -1415,3 +1417,5 @@ siox_done (SioxState *state)
   g_printerr ("siox.c: siox_done()\n");
 #endif
 }
+
+#endif
