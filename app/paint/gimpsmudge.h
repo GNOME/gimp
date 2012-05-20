@@ -19,8 +19,6 @@
 #define __GIMP_SMUDGE_H__
 
 
-#include "base/pixel-region.h"
-
 #include "gimpbrushcore.h"
 
 
