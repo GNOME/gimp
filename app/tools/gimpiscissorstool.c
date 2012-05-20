@@ -289,7 +289,8 @@ gimp_iscissors_tool_class_init (GimpIscissorsToolClass *klass)
   GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
-  gint               i;
+  gint               i, j;
+  gint               radius;
 
   object_class->finalize     = gimp_iscissors_tool_finalize;
 
@@ -320,6 +321,14 @@ gimp_iscissors_tool_class_init (GimpIscissorsToolClass *klass)
   direction_value[255][1] = 255;
   direction_value[255][2] = 255;
   direction_value[255][3] = 255;
+
+  /*  compute the distance weights  */
+  radius = GRADIENT_SEARCH >> 1;
+
+  for (i = 0; i < GRADIENT_SEARCH; i++)
+    for (j = 0; j < GRADIENT_SEARCH; j++)
+      distance_weights[i * GRADIENT_SEARCH + j] =
+        1.0 / (1 + sqrt (SQR (i - radius) + SQR (j - radius)));
 }
 
 static void
@@ -1649,8 +1658,6 @@ gradmap_tile_validate (TileManager *tm,
                        Tile        *tile,
                        GimpImage   *image)
 {
-  static gboolean first_gradient = TRUE;
-
   GimpPickable *pickable;
   const Babl   *pickable_format;
   GeglBuffer   *src_buffer;
@@ -1665,19 +1672,6 @@ gradmap_tile_validate (TileManager *tm,
   gfloat        gradient;
   guint8       *tiledata;
   guint8       *gradmap;
-
-  if (first_gradient)
-    {
-      gint radius = GRADIENT_SEARCH >> 1;
-
-      /*  compute the distance weights  */
-      for (i = 0; i < GRADIENT_SEARCH; i++)
-        for (j = 0; j < GRADIENT_SEARCH; j++)
-          distance_weights[i * GRADIENT_SEARCH + j] =
-            1.0 / (1 + sqrt (SQR (i - radius) + SQR (j - radius)));
-
-      first_gradient = FALSE;
-    }
 
   tile_manager_get_tile_coordinates (tm, tile, &x, &y);
 
