@@ -102,18 +102,19 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
                     GimpPaintOptions *paint_options,
                     const GimpCoords *coords)
 {
-  GimpEraserOptions *options  = GIMP_ERASER_OPTIONS (paint_options);
-  GimpContext       *context  = GIMP_CONTEXT (paint_options);
-  GimpDynamics      *dynamics = GIMP_BRUSH_CORE (paint_core)->dynamics;
-  GimpImage         *image    = gimp_item_get_image (GIMP_ITEM (drawable));
-  gdouble            fade_point;
-  gdouble            opacity;
-  GeglBuffer        *paint_buffer;
-  gint               paint_buffer_x;
-  gint               paint_buffer_y;
-  GimpRGB            background;
-  GeglColor         *color;
-  gdouble            force;
+  GimpEraserOptions    *options  = GIMP_ERASER_OPTIONS (paint_options);
+  GimpContext          *context  = GIMP_CONTEXT (paint_options);
+  GimpDynamics         *dynamics = GIMP_BRUSH_CORE (paint_core)->dynamics;
+  GimpImage            *image    = gimp_item_get_image (GIMP_ITEM (drawable));
+  gdouble               fade_point;
+  gdouble               opacity;
+  GimpLayerModeEffects  paint_mode;
+  GeglBuffer           *paint_buffer;
+  gint                  paint_buffer_x;
+  gint                  paint_buffer_y;
+  GimpRGB               background;
+  GeglColor            *color;
+  gdouble               force;
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
@@ -139,6 +140,13 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   gegl_buffer_set_color (paint_buffer, NULL, color);
   g_object_unref (color);
 
+  if (options->anti_erase)
+    paint_mode = GIMP_ANTI_ERASE_MODE;
+  else if (gimp_drawable_has_alpha (drawable))
+    paint_mode = GIMP_ERASE_MODE;
+  else
+    paint_mode = GIMP_NORMAL_MODE;
+
   force = gimp_dynamics_get_linear_value (dynamics,
                                           GIMP_DYNAMICS_OUTPUT_FORCE,
                                           coords,
@@ -149,8 +157,7 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
                                 coords,
                                 MIN (opacity, GIMP_OPACITY_OPAQUE),
                                 gimp_context_get_opacity (context),
-                                (options->anti_erase ?
-                                 GIMP_ANTI_ERASE_MODE : GIMP_ERASE_MODE),
+                                paint_mode,
                                 gimp_paint_options_get_brush_mode (paint_options),
                                 force,
                                 paint_options->application_mode);
