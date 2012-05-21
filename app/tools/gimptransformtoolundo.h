@@ -38,7 +38,9 @@ struct _GimpTransformToolUndo
 
   GimpTransformTool *transform_tool;
   TransInfo          trans_info;
+#if 0
   TileManager       *original;
+#endif
 };
 
 struct _GimpTransformToolUndoClass
