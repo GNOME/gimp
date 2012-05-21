@@ -30,6 +30,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#if 0
 
 #ifndef __SIOX_H__
 #define __SIOX_H__
@@ -41,12 +42,23 @@
 #define SIOX_DEFAULT_SENSITIVITY_A  1.28
 #define SIOX_DEFAULT_SENSITIVITY_B  2.56
 
-#if 0
-
 /*  FIXME: turn this into an enum  */
 #define SIOX_DRB_ADD                0
 #define SIOX_DRB_SUBTRACT           1
 
+
+typedef enum
+{
+  SIOX_REFINEMENT_NO_CHANGE          = 0,
+  SIOX_REFINEMENT_ADD_FOREGROUND     = (1 << 0),
+  SIOX_REFINEMENT_ADD_BACKGROUND     = (1 << 1),
+  SIOX_REFINEMENT_CHANGE_SENSITIVITY = (1 << 2),
+  SIOX_REFINEMENT_CHANGE_SMOOTHNESS  = (1 << 3),
+  SIOX_REFINEMENT_CHANGE_MULTIBLOB   = (1 << 4),
+  SIOX_REFINEMENT_RECALCULATE        = 0xFF
+} SioxRefinementType;
+
+typedef struct _SioxState           SioxState;
 
 typedef void (* SioxProgressFunc) (gpointer  progress_data,
                                    gdouble   fraction);
@@ -81,7 +93,7 @@ void        siox_drb                (SioxState          *state,
                                      gint                brush_mode,
                                      gfloat              threshold);
 
-#endif
-
 
 #endif /* __SIOX_H__ */
+
+#endif

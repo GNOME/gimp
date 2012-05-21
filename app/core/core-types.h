@@ -31,6 +31,22 @@
 #include "core/core-enums.h"
 
 
+/*  former base/ defines  */
+
+#define MAX_CHANNELS  4
+
+#define RED           0
+#define GREEN         1
+#define BLUE          2
+#define ALPHA         3
+
+#define GRAY          0
+#define ALPHA_G       1
+
+#define INDEXED       0
+#define ALPHA_I       1
+
+
 /*  defines  */
 
 #define GIMP_COORDS_MIN_PRESSURE      0.0
