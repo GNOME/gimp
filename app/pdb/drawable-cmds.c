@@ -932,10 +932,13 @@ drawable_foreground_extract_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
+    /*
       if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, FALSE, error))
         gimp_drawable_foreground_extract (drawable, mode, mask, progress);
       else
         success = FALSE;
+    */
+      success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,

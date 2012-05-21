@@ -15,6 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#if 0
+
 #ifndef  __GIMP_DRAWABLE_FOREGROUND_EXTRACT_H__
 #define  __GIMP_DRAWABLE_FOREGROUND_EXTRACT_H__
 
@@ -44,3 +46,5 @@ void        gimp_drawable_foreground_extract_siox_done (SioxState      *state);
 
 
 #endif  /*  __GIMP_DRAWABLE_FOREGROUND_EXTRACT_H__  */
+
+#endif

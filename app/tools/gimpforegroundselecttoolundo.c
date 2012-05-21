@@ -15,6 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#if 0
+
 #include "config.h"
 
 #include <gegl.h>
@@ -163,3 +165,5 @@ gimp_foreground_select_tool_undo_free (GimpUndo     *undo,
 
   GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }
+
+#endif

@@ -946,10 +946,13 @@ HELP
 	headers => [ qw("core/gimpdrawable-foreground-extract.h") ],
         code    => <<'CODE'
 {
+/*
   if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, FALSE, error))
     gimp_drawable_foreground_extract (drawable, mode, mask, progress);
   else
     success = FALSE;
+*/
+  success = FALSE;
 }
 CODE
     );

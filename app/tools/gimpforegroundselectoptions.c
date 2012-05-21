@@ -15,6 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#if 0
+
 #include "config.h"
 
 #include <gegl.h>
@@ -397,3 +399,5 @@ gimp_foreground_select_options_get_mask_color (GimpForegroundSelectOptions *opti
       break;
     }
 }
+
+#endif

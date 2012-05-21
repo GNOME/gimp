@@ -15,6 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#if 0
+
 #ifndef __GIMP_FOREGROUND_SELECT_TOOL_UNDO_H__
 #define __GIMP_FOREGROUND_SELECT_TOOL_UNDO_H__
 
@@ -49,3 +51,5 @@ GType   gimp_foreground_select_tool_undo_get_type (void) G_GNUC_CONST;
 
 
 #endif /* __GIMP_FOREGROUND_SELECT_TOOL_UNDO_H__ */
+
+#endif

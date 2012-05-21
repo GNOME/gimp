@@ -260,6 +260,7 @@ tools_fg_select_brush_size_cmd_callback (GtkAction *action,
 
   tool_info = gimp_context_get_tool (context);
 
+#if 0
   if (tool_info && GIMP_IS_FOREGROUND_SELECT_OPTIONS (tool_info->tool_options))
     {
       action_select_property ((GimpActionSelectType) value,
@@ -268,6 +269,7 @@ tools_fg_select_brush_size_cmd_callback (GtkAction *action,
                               "stroke-width",
                               1.0, 4.0, 16.0, 0.1, FALSE);
     }
+#endif
 }
 
 void
