@@ -22,8 +22,6 @@ libappbase_a_SOURCES = \
 	base-types.h		\
 	pixel-region.c		\
 	pixel-region.h		\
-	siox.c			\
-	siox.h			\
 	tile.c			\
 	tile.h			\
 	tile-private.h		\
