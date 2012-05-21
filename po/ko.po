@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-05-12 12:49+0000\n"
-"PO-Revision-Date: 2012-05-11 16:34+0900\n"
+"POT-Creation-Date: 2012-05-18 17:04+0000\n"
+"PO-Revision-Date: 2012-05-18 16:20+0900\n"
 "Last-Translator: 세벌 <sebuls@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -986,7 +986,7 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:118
 #: ../app/actions/tool-options-commands.c:72
-#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1523
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1519
 #: ../app/core/gimppalette-import.c:211 ../app/core/gimppalette-load.c:224
 #: ../app/core/gimppalette.c:399 ../app/dialogs/palette-import-dialog.c:771
 #: ../app/widgets/gimpdnd-xds.c:94
@@ -1634,7 +1634,7 @@ msgid ""
 "recent documents list."
 msgstr ""
 "문서 이력 지우기는 모든 프로그램의 최근 문서 목록에서 모든 항목을 영구적으로 "
-"제거."
+"없앰."
 
 #: ../app/actions/drawable-actions.c:45
 msgctxt "drawable-action"
@@ -1907,7 +1907,7 @@ msgstr "보이는 변화없이, 취소했던 마지막 동작 재실행"
 #: ../app/actions/edit-actions.c:97
 msgctxt "edit-action"
 msgid "_Clear Undo History"
-msgstr "실행취소 이력 삭제(_C)"
+msgstr "실행취소 이력 지우기(_C)"
 
 #: ../app/actions/edit-actions.c:98
 msgctxt "edit-action"
@@ -2044,12 +2044,12 @@ msgstr "이름있는 버퍼의 내용을 붙여넣기"
 #: ../app/actions/edit-actions.c:184
 msgctxt "edit-action"
 msgid "Cl_ear"
-msgstr "깨끗이(_E)"
+msgstr "지우기(_E)"
 
 #: ../app/actions/edit-actions.c:185
 msgctxt "edit-action"
 msgid "Clear the selected pixels"
-msgstr "선택한 픽셀 깨끗이"
+msgstr "선택한 픽셀 지우기"
 
 #: ../app/actions/edit-actions.c:193
 msgctxt "edit-action"
@@ -2110,11 +2110,11 @@ msgstr "점점 흐릿하게(_F)..."
 
 #: ../app/actions/edit-commands.c:137
 msgid "Clear Undo History"
-msgstr "실행 취소 이력 삭제"
+msgstr "실행 취소 이력 지우기"
 
 #: ../app/actions/edit-commands.c:163
 msgid "Really clear image's undo history?"
-msgstr "이미지의 실행 취소 이력을 삭제하시겠습니까?"
+msgstr "이미지의 실행 취소 이력을 지우시겠습니까?"
 
 #: ../app/actions/edit-commands.c:176
 #, c-format
@@ -2177,12 +2177,12 @@ msgstr "오류 콘솔 메뉴"
 #: ../app/actions/error-console-actions.c:43
 msgctxt "error-console-action"
 msgid "_Clear"
-msgstr "깨끗이(_C)"
+msgstr "지우기(_C)"
 
 #: ../app/actions/error-console-actions.c:44
 msgctxt "error-console-action"
 msgid "Clear error console"
-msgstr "오류 콘솔 깨끗이"
+msgstr "오류 콘솔 지우기"
 
 #: ../app/actions/error-console-actions.c:49
 msgctxt "error-console-action"
@@ -2404,7 +2404,7 @@ msgstr "%s 덮어쓰기(_W)"
 msgid "Export to"
 msgstr "내보내기"
 
-#: ../app/actions/file-commands.c:112 ../app/actions/file-commands.c:492
+#: ../app/actions/file-commands.c:112 ../app/actions/file-commands.c:499
 #: ../app/dialogs/file-open-dialog.c:77
 msgid "Open Image"
 msgstr "이미지 열기"
@@ -2425,28 +2425,28 @@ msgstr "이미지 저장"
 msgid "Save a Copy of the Image"
 msgstr "이미지의 사본을 저장"
 
-#: ../app/actions/file-commands.c:356
+#: ../app/actions/file-commands.c:363
 msgid "Create New Template"
 msgstr "새 서식 만들기"
 
-#: ../app/actions/file-commands.c:360
+#: ../app/actions/file-commands.c:367
 msgid "Enter a name for this template"
 msgstr "이 서식의 이름을 입력하십시오"
 
-#: ../app/actions/file-commands.c:394
+#: ../app/actions/file-commands.c:401
 msgid "Revert failed. No file name associated with this image."
 msgstr "원상 복구 실패. 이 이미지에 해당되는 파일이 없습니다."
 
-#: ../app/actions/file-commands.c:407
+#: ../app/actions/file-commands.c:414
 msgid "Revert Image"
 msgstr "이미지 원상 복구"
 
-#: ../app/actions/file-commands.c:438
+#: ../app/actions/file-commands.c:445
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "'%s'을(를) '%s'(으)로 되돌리겠습니까?"
 
-#: ../app/actions/file-commands.c:444
+#: ../app/actions/file-commands.c:451
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -2454,11 +2454,11 @@ msgstr ""
 "이미지를 디스크에 저장된 상태로 되돌릴 경우, 실행 취소 정보를 포함한 바꾼 내"
 "용 모두를 잃게 됩니다."
 
-#: ../app/actions/file-commands.c:655
+#: ../app/actions/file-commands.c:662
 msgid "(Unnamed Template)"
 msgstr "(이름없는 서식)"
 
-#: ../app/actions/file-commands.c:706
+#: ../app/actions/file-commands.c:713
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -4552,12 +4552,12 @@ msgstr "파일에서 텍스트 가져오기"
 #: ../app/actions/text-editor-actions.c:49
 msgctxt "text-editor-action"
 msgid "Clear"
-msgstr "깨끗이"
+msgstr "지우기"
 
 #: ../app/actions/text-editor-actions.c:50
 msgctxt "text-editor-action"
 msgid "Clear all text"
-msgstr "모든 텍스트 깨끗이"
+msgstr "모든 텍스트 지우기"
 
 #: ../app/actions/text-editor-actions.c:58
 msgctxt "text-editor-action"
@@ -4637,12 +4637,12 @@ msgstr "텍스트파일 열기(_O)..."
 #: ../app/actions/text-tool-actions.c:83
 msgctxt "text-tool-action"
 msgid "Cl_ear"
-msgstr "깨끗이(_E)"
+msgstr "지우기(_E)"
 
 #: ../app/actions/text-tool-actions.c:84
 msgctxt "text-tool-action"
 msgid "Clear all text"
-msgstr "모든 텍스트 깨끗이"
+msgstr "모든 텍스트 지우기"
 
 #: ../app/actions/text-tool-actions.c:89
 msgctxt "text-tool-action"
@@ -4677,7 +4677,7 @@ msgstr "오른쪽에서 왼쪽으로"
 #: ../app/actions/tool-options-actions.c:56
 msgctxt "tool-options-action"
 msgid "Tool Options Menu"
-msgstr "도구옵션 메뉴"
+msgstr "도구 옵션 메뉴"
 
 #: ../app/actions/tool-options-actions.c:60
 msgctxt "tool-options-action"
@@ -6668,7 +6668,7 @@ msgstr "조밀한 점들"
 #: ../app/core/core-enums.c:423
 msgctxt "dash-preset"
 msgid "Stipples"
-msgstr "단색무늬"
+msgstr "점묘법"
 
 #: ../app/core/core-enums.c:424
 msgctxt "dash-preset"
@@ -6783,12 +6783,12 @@ msgstr "아주거대한"
 #: ../app/core/core-enums.c:624
 msgctxt "view-type"
 msgid "View as list"
-msgstr "목록 보기"
+msgstr "목록으로 보기"
 
 #: ../app/core/core-enums.c:625
 msgctxt "view-type"
 msgid "View as grid"
-msgstr "격자 보기"
+msgstr "격자로 보기"
 
 #: ../app/core/core-enums.c:654
 msgctxt "thumbnail-size"
@@ -6894,12 +6894,12 @@ msgstr "선택 마스크"
 #: ../app/core/core-enums.c:850 ../app/core/core-enums.c:884
 msgctxt "undo-type"
 msgid "Item visibility"
-msgstr "항목표시 여부"
+msgstr "항목 가시성"
 
 #: ../app/core/core-enums.c:851 ../app/core/core-enums.c:885
 msgctxt "undo-type"
 msgid "Link/Unlink item"
-msgstr "링크/링크없앰 항목"
+msgstr "항목 링크/링크없앰"
 
 #: ../app/core/core-enums.c:852
 msgctxt "undo-type"
@@ -6914,12 +6914,12 @@ msgstr "항목 이동"
 #: ../app/core/core-enums.c:854
 msgctxt "undo-type"
 msgid "Scale item"
-msgstr "아이템 크기조정"
+msgstr "항목 크기조정"
 
 #: ../app/core/core-enums.c:855
 msgctxt "undo-type"
 msgid "Resize item"
-msgstr "아이템 크기조정"
+msgstr "항목 크기조정"
 
 #: ../app/core/core-enums.c:856
 msgctxt "undo-type"
@@ -7050,7 +7050,7 @@ msgstr "레이어 불투명도 지정"
 #: ../app/core/core-enums.c:890
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
-msgstr "알패채널 잠그기/풀기"
+msgstr "알패 채널 잠그기/풀기"
 
 #: ../app/core/core-enums.c:891
 msgctxt "undo-type"
@@ -7266,7 +7266,7 @@ msgstr "붙여 넣은 레이어"
 #: ../app/core/gimp-edit.c:388
 msgctxt "undo-type"
 msgid "Clear"
-msgstr "깨끗이"
+msgstr "지우기"
 
 #: ../app/core/gimp-edit.c:407
 msgctxt "undo-type"
@@ -7664,7 +7664,7 @@ msgstr "채널 또렷하게"
 #: ../app/core/gimpchannel.c:312
 msgctxt "undo-type"
 msgid "Clear Channel"
-msgstr "채널 깨끗이"
+msgstr "채널 지우기"
 
 #: ../app/core/gimpchannel.c:313
 msgctxt "undo-type"
@@ -8211,57 +8211,57 @@ msgstr "이미지 크기 조절"
 msgid "Can't undo %s"
 msgstr "%s을(를) 취소할 수 없습니다"
 
-#: ../app/core/gimpimage.c:1808
+#: ../app/core/gimpimage.c:1804
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "이미지 해상도 바꾸기"
 
-#: ../app/core/gimpimage.c:1860
+#: ../app/core/gimpimage.c:1856
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "이미지 단위 바꾸기"
 
-#: ../app/core/gimpimage.c:2852
+#: ../app/core/gimpimage.c:2869
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "이미지에 기생충 덧붙이기"
 
-#: ../app/core/gimpimage.c:2893
+#: ../app/core/gimpimage.c:2910
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "이미지에서 기생충 지우기"
 
-#: ../app/core/gimpimage.c:3602
+#: ../app/core/gimpimage.c:3619
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "레이어더하기"
 
-#: ../app/core/gimpimage.c:3652 ../app/core/gimpimage.c:3672
+#: ../app/core/gimpimage.c:3669 ../app/core/gimpimage.c:3689
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "레이어 없애기"
 
-#: ../app/core/gimpimage.c:3666
+#: ../app/core/gimpimage.c:3683
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "뜬 선택 제거"
 
-#: ../app/core/gimpimage.c:3834
+#: ../app/core/gimpimage.c:3851
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "채널 더하기"
 
-#: ../app/core/gimpimage.c:3872 ../app/core/gimpimage.c:3885
+#: ../app/core/gimpimage.c:3889 ../app/core/gimpimage.c:3902
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "채널 없애기"
 
-#: ../app/core/gimpimage.c:3939
+#: ../app/core/gimpimage.c:3956
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "경로 더하기"
 
-#: ../app/core/gimpimage.c:3970
+#: ../app/core/gimpimage.c:3987
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "경로 없애기"
@@ -8949,7 +8949,7 @@ msgstr "이미지 내보내기"
 msgid "_Export"
 msgstr "내보내기(_E)"
 
-#: ../app/dialogs/file-save-dialog.c:431
+#: ../app/dialogs/file-save-dialog.c:432
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -8958,7 +8958,7 @@ msgstr ""
 "원격 파일 저장은 파일 확장자를 통해 파일 형식을 결정해야 합니다. 선택한 파일"
 "의 형식에 맞는 파일 확장자를 입력하거나 아예 파일 확장자를 입력하지 마십시오."
 
-#: ../app/dialogs/file-save-dialog.c:558
+#: ../app/dialogs/file-save-dialog.c:559
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
@@ -8966,7 +8966,7 @@ msgstr ""
 "이 대화 상자를 이용하여 다양한 파일 형식으로 내보낼 수 있습니다. 이미지를 김"
 "프 XCF 형식으로 저장하려면 파일→저장 메뉴를 이용하십시오."
 
-#: ../app/dialogs/file-save-dialog.c:565
+#: ../app/dialogs/file-save-dialog.c:566
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
@@ -8974,7 +8974,7 @@ msgstr ""
 "이 대화 상자를 이용하여 김프 XCF 형식으로 저장할 수 있습니다. 다른 파일 형식"
 "으로 내보내려면 파일→다른 형식으로 내보내기 메뉴를 이용하십시오."
 
-#: ../app/dialogs/file-save-dialog.c:571
+#: ../app/dialogs/file-save-dialog.c:572
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -8982,23 +8982,23 @@ msgstr ""
 "확장자명이 빠졌습니다. 확장자명을 입력하거나 파일 형식 목록에서 파일 형식을 "
 "선택하십시오."
 
-#: ../app/dialogs/file-save-dialog.c:585
+#: ../app/dialogs/file-save-dialog.c:586
 msgid "Extension Mismatch"
 msgstr "잘못된 확장자"
 
-#: ../app/dialogs/file-save-dialog.c:601
+#: ../app/dialogs/file-save-dialog.c:602
 msgid "The given file extension does not match the chosen file type."
 msgstr "입력한 파일 확장자명은 선택된 파일의 형식과 일치하지 않습니다."
 
-#: ../app/dialogs/file-save-dialog.c:605
+#: ../app/dialogs/file-save-dialog.c:606
 msgid "Do you want to save the image using this name anyway?"
 msgstr "지금 파일로 이미지를 저장하시겠습니까?"
 
-#: ../app/dialogs/file-save-dialog.c:660
+#: ../app/dialogs/file-save-dialog.c:664
 msgid "Saving canceled"
 msgstr "저장 취소"
 
-#: ../app/dialogs/file-save-dialog.c:668 ../app/widgets/gimpdnd-xds.c:185
+#: ../app/dialogs/file-save-dialog.c:672 ../app/widgets/gimpdnd-xds.c:186
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -10633,7 +10633,7 @@ msgstr "(가져옴)"
 msgid "Cancel <i>%s</i>"
 msgstr "<i>%s</i> 취소"
 
-#: ../app/file/file-open.c:136 ../app/file/file-save.c:112
+#: ../app/file/file-open.c:136 ../app/file/file-save.c:115
 msgid "Not a regular file"
 msgstr "비정상적인 파일입니다"
 
@@ -10668,7 +10668,7 @@ msgstr ""
 msgid "Unknown file type"
 msgstr "알 수 없는 이미지 유형"
 
-#: ../app/file/file-save.c:208
+#: ../app/file/file-save.c:219
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "%s 플러그인을 이용해 이미지를 저장할 수 없습니다."
@@ -13431,39 +13431,39 @@ msgstr "부드럽게 하기"
 msgid "Feather edges"
 msgstr "가장자리 페더"
 
-#: ../app/tools/gimpselectiontool.c:250
+#: ../app/tools/gimpselectiontool.c:255
 msgid "Click-Drag to replace the current selection"
 msgstr "현재 선택을 바꾸려면 클릭 후 드래그하십시오."
 
-#: ../app/tools/gimpselectiontool.c:258
+#: ../app/tools/gimpselectiontool.c:263
 msgid "Click-Drag to create a new selection"
 msgstr "새 선택을 만들려면 클릭 후 드래그하십시오."
 
-#: ../app/tools/gimpselectiontool.c:263
+#: ../app/tools/gimpselectiontool.c:268
 msgid "Click-Drag to add to the current selection"
 msgstr "현재 선택에 더하려면 클릭후 드래그하십시오."
 
-#: ../app/tools/gimpselectiontool.c:272
+#: ../app/tools/gimpselectiontool.c:277
 msgid "Click-Drag to subtract from the current selection"
 msgstr "현재 선택에서 빼려면 클릭후 드래그하십시오."
 
-#: ../app/tools/gimpselectiontool.c:281
+#: ../app/tools/gimpselectiontool.c:286
 msgid "Click-Drag to intersect with the current selection"
 msgstr "현재 선택과 교차하는 부분만 남기려면 클릭후 드래그하십시오."
 
-#: ../app/tools/gimpselectiontool.c:291
+#: ../app/tools/gimpselectiontool.c:296
 msgid "Click-Drag to move the selection mask"
 msgstr "선택 마스크를 이동시키려면 클릭후 드래그하십시오."
 
-#: ../app/tools/gimpselectiontool.c:299
+#: ../app/tools/gimpselectiontool.c:304
 msgid "Click-Drag to move the selected pixels"
 msgstr "선택된 픽셀을 이동시키려면 클릭후 드래그하십시오."
 
-#: ../app/tools/gimpselectiontool.c:303
+#: ../app/tools/gimpselectiontool.c:308
 msgid "Click-Drag to move a copy of the selected pixels"
 msgstr "선택된 픽셀의 복사본을 이동시키려면 클릭후 드래그하십시오."
 
-#: ../app/tools/gimpselectiontool.c:307
+#: ../app/tools/gimpselectiontool.c:312
 msgid "Click to anchor the floating selection"
 msgstr "떠있는 선택을 고정하려면 클릭하십시오."
 
@@ -14735,24 +14735,24 @@ msgstr "전경: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "배경: %d, %d, %d"
 
-#: ../app/widgets/gimpdnd-xds.c:203
+#: ../app/widgets/gimpdnd-xds.c:204
 msgid "The given filename does not have any known file extension."
 msgstr "파일 확장자명이 올바르지 않습니다."
 
-#: ../app/widgets/gimpdnd-xds.c:221
+#: ../app/widgets/gimpdnd-xds.c:222
 msgid "File Exists"
 msgstr "파일이 존재합니다."
 
-#: ../app/widgets/gimpdnd-xds.c:226
+#: ../app/widgets/gimpdnd-xds.c:227
 msgid "_Replace"
 msgstr "교체(_R)"
 
-#: ../app/widgets/gimpdnd-xds.c:237
+#: ../app/widgets/gimpdnd-xds.c:238
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr "'%s' 파일 이름이 이미 존재합니다."
 
-#: ../app/widgets/gimpdnd-xds.c:242
+#: ../app/widgets/gimpdnd-xds.c:243
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "지금 저장하는 이미지로 파일을 대체하시겠습니까?"
 
@@ -14842,7 +14842,7 @@ msgstr "모든 파일"
 
 #: ../app/widgets/gimpfiledialog.c:798
 msgid "All images"
-msgstr "모든 이미지 파일"
+msgstr "모든 이미지"
 
 #: ../app/widgets/gimpfiledialog.c:974
 #, c-format
@@ -15168,7 +15168,7 @@ msgstr "열:"
 
 #: ../app/widgets/gimppanedbox.c:58
 msgid "You can drop dockable dialogs here"
-msgstr "도킹 가능한 대화상자를 여기에 끌어다 놓으십시오."
+msgstr "도킹 가능한 대화상자를 여기로 끌어 놓으십시오"
 
 #: ../app/widgets/gimpprofilechooserdialog.c:127
 msgid "ICC color profile (*.icc, *.icm)"
@@ -15207,7 +15207,7 @@ msgstr "파일로부터 설정 불러오기(_I)..."
 
 #: ../app/widgets/gimpsettingsbox.c:325
 msgid "_Export Settings to File..."
-msgstr "파일로 설정 내보내기(_E)..."
+msgstr "설정을 파일로 내보내기(_E)..."
 
 #: ../app/widgets/gimpsettingsbox.c:332
 msgid "_Manage Settings..."
@@ -15342,7 +15342,7 @@ msgstr "이 문맥의 <%s> 요소에 \"%s\" 속성은 올바르지 않습니다"
 #: ../app/widgets/gimptextbuffer-serialize.c:412
 #, c-format
 msgid "Outermost element in text must be <markup> not <%s>"
-msgstr "텍스트의 Outermost 요는 <%s>가 아닌 <markup>이어야 합니다."
+msgstr "텍스트의 가장 바깥 요소는 <%s>가 아닌 <markup>이어야 합니다."
 
 #: ../app/widgets/gimptextbuffer.c:1454
 #, c-format
@@ -15355,7 +15355,7 @@ msgstr "선택된 글꼴 사용(_U)"
 
 #: ../app/widgets/gimptextstyleeditor.c:206
 msgid "Change font of selected text"
-msgstr "선택된 텍스트의 폰트 바꾸기"
+msgstr "선택된 텍스트의 글꼴 바꾸기"
 
 #: ../app/widgets/gimptextstyleeditor.c:217
 msgid "Change size of selected text"
@@ -15428,9 +15428,9 @@ msgid ""
 "Click to open the color selection dialog."
 msgstr ""
 "전경색과 배경색.\n"
-"검정/흰 정사각형 모양은 전경색과 배경색을 기본값으로 초기화시킵니다.\n"
-"그리고 화살표는 전경색과 배경색을 서로 맞바꿉니다.\n"
-"각 색상이 있는 부분을 클릭하면, 색상 선택 대화상자가 호출됩니다."
+"검정/흰 정사각형은 전경색과 배경색을 기본값으로 초기화시킵니다.\n"
+"화살표는 전경색과 배경색을 서로 맞바꿉니다.\n"
+"각 색상이 있는 부분을 클릭하면, 색상 선택 대화상자가 열립니다."
 
 #: ../app/widgets/gimptoolbox-color-area.c:140
 msgid "Change Foreground Color"
@@ -15487,7 +15487,7 @@ msgstr "이 도구를 꼭대기로 올리기"
 
 #: ../app/widgets/gimptooleditor.c:302
 msgid "Lower this tool"
-msgstr "이 도구 내리기"
+msgstr "도구 내리기"
 
 #: ../app/widgets/gimptooleditor.c:303
 msgid "Lower this tool to the bottom"
@@ -15495,7 +15495,7 @@ msgstr "이 도구를 맨 아래로 내리기"
 
 #: ../app/widgets/gimptooleditor.c:310
 msgid "Reset tool order and visibility"
-msgstr "도구 순서 및 보임 여부 초기화"
+msgstr "도구 순서 및 가시성 초기화"
 
 #: ../app/widgets/gimptooloptionseditor.c:202
 msgid "Save Tool Preset..."
