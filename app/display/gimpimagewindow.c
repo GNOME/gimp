@@ -1606,6 +1606,9 @@ gimp_image_window_switch_page (GtkNotebook     *notebook,
                                     active_display,
                                     NULL /*new_entry_id*/);
 
+  gimp_context_set_display (gimp_get_user_context (private->gimp),
+                            active_display);
+
   gimp_ui_manager_update (private->menubar_manager, active_display);
 }
 
