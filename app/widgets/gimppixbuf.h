@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PIXBUF_H__
-#define __GIMP_PIXBUF_H__
+#ifndef __APP_GIMP_PIXBUF_H__
+#define __APP_GIMP_PIXBUF_H__
 
 
 GSList * gimp_pixbuf_get_formats (void);
@@ -30,4 +30,4 @@ void     gimp_pixbuf_targets_add    (GtkTargetList *target_list,
 void     gimp_pixbuf_targets_remove (GtkTargetList *target_list);
 
 
-#endif /* __GIMP_PIXBUF_H__ */
+#endif /* __APP_GIMP_PIXBUF_H__ */
