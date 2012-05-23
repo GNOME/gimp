@@ -1,0 +1,48 @@
+This are simple step-by-step instructions on how to build gimp on Mac OSX. This guide assumes that you are already somewhat familiar with jhbuild. Before you begin, it's best to remove all references to previous jhbuild, MacPorts, or HomeBrew install from your .profile. Simply renaming it would suffice.
+
+The dollar sign precedes terminal commands.
+
+These coomands will check for a .profile in your $HOME directory. If one exists, it will rename it.
+$ if [ -f $HOME/.profile ];
+$ then
+$ mv $HOME/.profile $HOME/.profile-backup
+$ fi
+
+For non-Lion users, you will need to install git in order to install jhbuild. You can download a Mac binary from:
+http://git-scm.com/
+
+Once you have git set up, you should download and install jhbuild:
+
+$ cd $HOME
+$ curl -O http://git.gnome.org/browse/gtk-osx/plain/gtk-osx-build-setup.sh
+$ sh gtk-osx-build-setup.sh
+
+Now add the jhbuild path to your shell and new .profile:
+
+$ export PATH=$HOME/.local/bin:$PATH
+$ echo 'export PATH=$HOME/.local/bin:$PATH' > $HOME/.profile
+
+In order to properly install gimp on osx you will need to use a preconfigured jhbuildrc provided by gimp:
+
+$ curl -o $HOME/.jhbuildrc-gimp http://git.gnome.org/browse/gimp/plain/build/osx/jhbuildrc-gimp?h=gimp-2-8
+
+Now you can download and install gimp, where 'gimp' is the directory prefix, and '10.6' is the minimum version you are building gimp for. As it stands, you should be able to leave the values as they are.
+
+$ JHB=gimp GIMP_SDK=10.6 jhbuild bootstrap --ignore-system
+$ JHB=gimp GIMP_SDK=10.6 jhbuild build meta-gimp
+
+In order to create a .app you'll need to download an install gtk-mac-bundler.
+This will install gtk-mac-bundler into ~/.local/bin.
+
+$ cd $HOME/Source/
+$ git clone https://github.com/jralls/gtk-mac-bundler.git
+$ cd gtk-mac-bundler/
+$ make install
+
+Now create the gimp.app.
+
+$ cd $HOME/gimp/10.6/source/gimp/build/osx
+$ gtk-mac-bundler gimp.bundle
+
+Please note that this is not a finished process, and there are a few issues that still need to be fixed. Please joing #gimp on irc.gimp.org if you have any questions.
+

@@ -19,7 +19,7 @@
          app. If you leave out the path, the current directory is
          used. Note the usage of an environment variable here again.
     -->
-    <destination overwrite="yes">${env:HOME}</destination>
+    <destination overwrite="yes">${project}</destination>
 
     <image>
       <!-- Not implemented yet (DMG image). -->
@@ -28,8 +28,7 @@
     <!-- Comment this out to keep the install names in binaries. -->
     <run-install-name-tool/>
     
-
-    <!-- Specify launcher script, not necessary -->
+    <!-- Specify launcher script -->
     <launcher-script>
       ${project}/launcher.sh
     </launcher-script>
@@ -41,7 +40,7 @@
   <!-- Copy in Info.plist -->
   <plist>${project}/Info.plist</plist>
 
-  <!-- Name of main gimp binary; something more dynamic should be used, like ${pkg:${gimp}:gimp_binary_version} -->
+  <!-- Name of main gimp binary; in future use ${pkg:${gimp}:gimp_binary_version} -->
   <main-binary>${prefix}/bin/gimp-2.8</main-binary>
 
   <!-- Copy in GTK+ modules -->
@@ -73,25 +72,16 @@
     ${prefix}/share/locale
   </translations>
 
-
-  <!-- Data to copy in -->
-  <!-- data>
-    ${prefix}/share/gtk-demo
-  </data -->
-
-  <!-- Missing dylibs otool -L not helpful enough? Doesn't happen all the time-->
-  <binary>${prefix}/lib/libgimpui-2.0.0.dylib</binary>
-  
-  <!-- Where plugin dylibs need to be explicitly defined -->
+  <!-- Liquid rescale library for the liquid rescal plugin -->
   <!-- <binary>${prefix}/lib/liblqr-1.0.dylib</binary> -->
+  <!-- libexif library for exif data -->
   <!-- <binary>${prefix}/lib/libexif.12.dylib</binary> -->
 
   <!-- GTK+2 data -->
   <data>${prefix}/etc/gtk-2.0/*</data>
 
-  <!-- Fontconfig data; requires clean up -->
+  <!-- Fontconfig data -->
   <data>${prefix}/etc/fonts/fonts.conf</data>
-  <data>${prefix}/etc/fonts/fonts.conf.bak</data>
   <data>${prefix}/etc/fonts/fonts.dtd</data>
   <data>${prefix}/etc/fonts/conf.avail/*</data>
   <data>${prefix}/etc/fonts/conf.d/*</data>
@@ -99,8 +89,10 @@
   <!-- Gimp data -->
   <data>${prefix}/etc/gimp/2.0/*</data>
   <data dest="${bundle}/Contents/Resources/share/gimp">${prefix}/share/gimp</data>
-  <data>${prefix}/lib/gimp/2.0/modules/*.so</data>
-  <data>${prefix}/lib/gimp/2.0/plug-ins/*</data>
+
+  <!-- Gimp modules and plug-ins -->
+  <binary>${prefix}/lib/gimp/2.0/modules/*.so</binary>
+  <binary>${prefix}/lib/gimp/2.0/plug-ins/*</binary>
 
   <!-- Pango data -->
   <data>${prefix}/etc/pango/pango.modules</data>
@@ -118,7 +110,7 @@
   <!-- GTK+ theme data -->
   <data>${prefix}/share/gtk-engines/*.xml</data>
 
-  <!-- mitch says this will change default theme, didn't work. -->
+  <!-- Change default theme -->
   <data dest="${bundle}/Contents/Resources/etc/${gtkdir}/gtkrc">
     ${project}/gtkrc
   </data>
