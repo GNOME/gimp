@@ -525,6 +525,7 @@
       </menu>
       <separator />
       <menuitem action="filters-color-to-alpha" />
+      <menuitem action="filters-color-reduction" />
       <menuitem action="filters-color-temperature" />
       <placeholder name="Modify" />
     </menu>

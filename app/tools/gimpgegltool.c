@@ -111,6 +111,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
   static const gchar * const name_blacklist[] =
   {
     "gegl:color", /* pointless */
+    "gegl:color-reduction", /* in gimp */
     "gegl:color-temperature", /* in gimp */
     "gegl:color-to-alpha", /* in gimp */
     "gegl:colorize", /* in gimp */

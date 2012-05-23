@@ -39,6 +39,12 @@
 
 static const GimpStringActionEntry filters_actions[] =
 {
+  { "filters-color-reduction", GIMP_STOCK_GEGL,
+    NC_("filters-action", "Color _Reduction..."), NULL,
+    NC_("filters-action", "Reduce the number of colors in the image, with optional dithering"),
+    "gegl:color-reduction",
+    NULL /* FIXME GIMP_HELP_FILTER_COLOR_TEMPERATURE */ },
+
   { "filters-color-temperature", GIMP_STOCK_GEGL,
     NC_("filters-action", "Color T_emperature..."), NULL,
     NC_("filters-action", "Change the color temperature of the image"),
@@ -165,19 +171,20 @@ filters_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("filters-color-temperature", writable && !gray);
-  SET_SENSITIVE ("filters-color-to-alpha",    writable && !gray && alpha);
-  SET_SENSITIVE ("filters-difference-of-gaussians",          writable);
-  SET_SENSITIVE ("filters-gaussian-blur",     writable);
-  SET_SENSITIVE ("filters-laplace",           writable);
-  SET_SENSITIVE ("filters-lens-distortion",   writable);
-  SET_SENSITIVE ("filters-pixelize",          writable);
-  SET_SENSITIVE ("filters-polar-coordinates", writable);
-  SET_SENSITIVE ("filters-ripple",            writable);
-  SET_SENSITIVE ("filters-sobel",             writable);
-  SET_SENSITIVE ("filters-semi-flatten",      writable && alpha);
-  SET_SENSITIVE ("filters-threshold-alpha",   writable && alpha);
-  SET_SENSITIVE ("filters-unsharp-mask",      writable);
+  SET_SENSITIVE ("filters-color-reduction",         writable);
+  SET_SENSITIVE ("filters-color-temperature",       writable && !gray);
+  SET_SENSITIVE ("filters-color-to-alpha",          writable && !gray && alpha);
+  SET_SENSITIVE ("filters-difference-of-gaussians", writable);
+  SET_SENSITIVE ("filters-gaussian-blur",           writable);
+  SET_SENSITIVE ("filters-laplace",                 writable);
+  SET_SENSITIVE ("filters-lens-distortion",         writable);
+  SET_SENSITIVE ("filters-pixelize",                writable);
+  SET_SENSITIVE ("filters-polar-coordinates",       writable);
+  SET_SENSITIVE ("filters-ripple",                  writable);
+  SET_SENSITIVE ("filters-sobel",                   writable);
+  SET_SENSITIVE ("filters-semi-flatten",            writable && alpha);
+  SET_SENSITIVE ("filters-threshold-alpha",         writable && alpha);
+  SET_SENSITIVE ("filters-unsharp-mask",            writable);
 
 #undef SET_SENSITIVE
 }
