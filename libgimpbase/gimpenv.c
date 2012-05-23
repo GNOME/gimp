@@ -321,8 +321,26 @@ DllMain (HINSTANCE hinstDLL,
 
 #endif
 
-static const gchar *
-gimp_toplevel_directory (void)
+/**
+ * gimp_installation_directory:
+ *
+ * Returns the top installation directory of GIMP. On Unix the
+ * compile-time defined installation prefix is used. On Windows, the
+ * installation directory as deduced from the executable's full
+ * filename is used. On OSX we ask [NSBundle mainBundle] for the
+ * resource path to check if GIMP is part of a relocatable bundle.
+ *
+ * The returned string is owned by GIMP and must not be modified or
+ * freed. The returned string is in the encoding used for filenames by
+ * GLib, which isn't necessarily UTF-8. (On Windows it always is
+ * UTF-8.)
+ *
+ * Since: GIMP 2.8
+ *
+ * Returns: The toplevel installation directory of GIMP.
+ **/
+const gchar *
+gimp_installation_directory (void)
 {
   static gchar *toplevel = NULL;
 
@@ -655,7 +673,7 @@ gimp_path_runtime_fix (gchar **path)
        * real one on this machine.
        */
       p = *path;
-      *path = g_strconcat (gimp_toplevel_directory (),
+      *path = g_strconcat (gimp_installation_directory (),
                            "\\",
                            *path + strlen (PREFIX "/"),
                            NULL);
@@ -674,7 +692,7 @@ gimp_path_runtime_fix (gchar **path)
   gchar *p = *path;
   if (!g_path_is_absolute (p))
     {
-      *path = g_build_filename (gimp_toplevel_directory (), *path, NULL);
+      *path = g_build_filename (gimp_installation_directory (), *path, NULL);
       g_free (p);
     }
 #else
@@ -687,7 +705,7 @@ gimp_path_runtime_fix (gchar **path)
        * real one on this machine.
        */
       p = *path;
-      *path = g_build_filename (gimp_toplevel_directory (),
+      *path = g_build_filename (gimp_installation_directory (),
                                 *path + strlen (PREFIX G_DIR_SEPARATOR_S),
                                 NULL);
       g_free (p);

@@ -48,6 +48,7 @@ GIMPVAR const guint gimp_micro_version;
 
 
 const gchar * gimp_directory                  (void) G_GNUC_CONST;
+const gchar * gimp_installation_directory     (void) G_GNUC_CONST;
 const gchar * gimp_data_directory             (void) G_GNUC_CONST;
 const gchar * gimp_locale_directory           (void) G_GNUC_CONST;
 const gchar * gimp_sysconf_directory          (void) G_GNUC_CONST;

@@ -41,6 +41,7 @@ EXPORTS
 	gimp_icon_type_get_type
 	gimp_image_base_type_get_type
 	gimp_image_type_get_type
+	gimp_installation_directory
 	gimp_interpolation_type_get_type
 	gimp_locale_directory
 	gimp_major_version
