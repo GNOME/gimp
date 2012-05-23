@@ -698,23 +698,31 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
               if (count > 0)
                 {
                   if (g_utf8_get_char (text + index) == word_joiner)
-                    pango_layout_move_cursor_visually (layout, TRUE, index, 0, 1,
+                    pango_layout_move_cursor_visually (layout, TRUE,
+                                                       index, 0, 1,
                                                        &new_index, &trailing);
                   else
                     new_index = index;
 
-                  pango_layout_move_cursor_visually (layout, TRUE, new_index, trailing, 1,
+                  pango_layout_move_cursor_visually (layout, TRUE,
+                                                     new_index, trailing, 1,
                                                      &new_index, &trailing);
                   count--;
                 }
               else
                 {
-                  pango_layout_move_cursor_visually (layout, TRUE, index, 0, -1,
+                  pango_layout_move_cursor_visually (layout, TRUE,
+                                                     index, 0, -1,
                                                      &new_index, &trailing);
 
-                  if (new_index != -1 && g_utf8_get_char (text + new_index) == word_joiner)
-                    pango_layout_move_cursor_visually (layout, TRUE, new_index, trailing, -1,
-                                                       &new_index, &trailing);
+                  if (new_index != -1 && new_index != G_MAXINT &&
+                      g_utf8_get_char (text + new_index) == word_joiner)
+                    {
+                      pango_layout_move_cursor_visually (layout, TRUE,
+                                                         new_index, trailing, -1,
+                                                         &new_index, &trailing);
+                    }
+
                   count++;
                 }
 
