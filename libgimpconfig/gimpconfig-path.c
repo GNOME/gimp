@@ -366,6 +366,8 @@ gimp_config_path_expand_only (const gchar  *path,
                 s = gimp_plug_in_directory ();
               else if (strcmp (token, "gimp_sysconf_dir") == 0)
                 s = gimp_sysconf_directory ();
+              else if (strcmp (token, "gimp_installation_dir") == 0)
+                s = gimp_installation_directory ();
 
               if (!s)
                 s = g_getenv (token);
