@@ -131,6 +131,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   GeglBuffer          *paint_buffer;
   gint                 paint_buffer_x;
   gint                 paint_buffer_y;
+  GimpTempBuf         *temp_buf;
   GeglBuffer          *convolve_buffer;
   gdouble              fade_point;
   gdouble              opacity;
@@ -166,11 +167,12 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
                                   gimp_temp_buf_get_height (brush_core->brush->mask) / 2,
                                   rate);
 
-  convolve_buffer =
-    gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                     gegl_buffer_get_width  (paint_buffer),
-                                     gegl_buffer_get_height (paint_buffer)),
-                     gegl_buffer_get_format (paint_buffer));
+  /*  need a linear buffer for gimp_gegl_convolve()  */
+  temp_buf = gimp_temp_buf_new (gegl_buffer_get_width  (paint_buffer),
+                                gegl_buffer_get_height (paint_buffer),
+                                gegl_buffer_get_format (paint_buffer));
+  convolve_buffer = gimp_temp_buf_create_buffer (temp_buf);
+  gimp_temp_buf_unref (temp_buf);
 
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
                     GEGL_RECTANGLE (paint_buffer_x,
