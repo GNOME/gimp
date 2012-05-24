@@ -516,7 +516,7 @@ box_filter_premult (const guint    left_weight,
 
           for (i = 0; i < ALPHA; i++)
             {
-              dest[i] = ((center_weight * (factors[0] * src[1][i] +
+              dest[i] =  (center_weight * (factors[0] * src[1][i] +
                                            factors[1] * src[4][i] +
                                            factors[2] * src[7][i]) +
 
@@ -526,7 +526,7 @@ box_filter_premult (const guint    left_weight,
 
                           left_weight   * (factors[6] * src[0][i] +
                                            factors[7] * src[3][i] +
-                                           factors[8] * src[6][i])) / sum) >> 8;
+                                           factors[8] * src[6][i]) + ((255 * sum) >> 1)) / (255 * sum);
             }
 
           dest[ALPHA] = (a + (sum >> 1)) / sum;
@@ -563,7 +563,7 @@ box_filter_premult (const guint    left_weight,
 
           for (i = 0; i < ALPHA; i++)
             {
-              dest[i] = ((center_weight * (factors[0] * src[1][i] +
+              dest[i] =  (center_weight * (factors[0] * src[1][i] +
                                            factors[1] * src[4][i] +
                                            factors[2] * src[7][i]) +
 
@@ -573,7 +573,7 @@ box_filter_premult (const guint    left_weight,
 
                           left_weight   * (factors[6] * src[0][i] +
                                            factors[7] * src[3][i] +
-                                           factors[8] * src[6][i])) / sum) >> 8;
+                                           factors[8] * src[6][i]) + ((255 * sum) >> 1)) / (sum * 255);
             }
 
           dest[ALPHA] = (a + (sum >> 1)) / sum;
