@@ -103,9 +103,6 @@ static void          gimp_container_tree_view_selection_changed (GtkTreeSelectio
 static gboolean      gimp_container_tree_view_button_press      (GtkWidget                   *widget,
                                                                  GdkEventButton              *bevent,
                                                                  GimpContainerTreeView       *tree_view);
-static gboolean      gimp_container_tree_view_button_release    (GtkWidget                   *widget,
-                                                                 GdkEventButton              *bevent,
-                                                                 GimpContainerTreeView       *tree_view);
 static gboolean      gimp_container_tree_view_tooltip           (GtkWidget                   *widget,
                                                                  gint                         x,
                                                                  gint                         y,
@@ -545,9 +542,6 @@ gimp_container_tree_view_set_container (GimpContainerView *view,
           g_signal_handlers_disconnect_by_func (tree_view->view,
                                                 gimp_container_tree_view_button_press,
                                                 tree_view);
-          g_signal_handlers_disconnect_by_func (tree_view->view,
-                                                gimp_container_tree_view_button_release,
-                                                tree_view);
         }
     }
   else if (container)
@@ -573,9 +567,6 @@ gimp_container_tree_view_set_container (GimpContainerView *view,
        */
       g_signal_connect (tree_view->view, "button-press-event",
                         G_CALLBACK (gimp_container_tree_view_button_press),
-                        tree_view);
-      g_signal_connect (tree_view->view, "button-release-event",
-                        G_CALLBACK (gimp_container_tree_view_button_release),
                         tree_view);
     }
 
@@ -1189,16 +1180,6 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
 
       return TRUE;
     }
-}
-
-static gboolean
-gimp_container_tree_view_button_release (GtkWidget             *widget,
-                                         GdkEventButton        *bevent,
-                                         GimpContainerTreeView *tree_view)
-{
-  tree_view->priv->dnd_renderer = NULL;
-
-  return FALSE;
 }
 
 static gboolean
