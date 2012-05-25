@@ -502,6 +502,13 @@ carbon_menu_item_connect (GtkWidget     *menu_item,
   return carbon_item;
 }
 
+static gboolean
+menu_event_activate_callback (GtkMenuItem *widget)
+{
+  gtk_menu_item_activate (GTK_MENU_ITEM  (widget));
+
+  return FALSE;
+}
 
 /*
  * carbon event handler
@@ -545,7 +552,20 @@ menu_event_handler_func (EventHandlerCallRef  event_handler_call_ref,
 					 sizeof (widget), 0, &widget);
 	      if (err == noErr && GTK_IS_WIDGET (widget))
 		{
-		  gtk_menu_item_activate (GTK_MENU_ITEM (widget));
+                  GSource  *source;
+                  GClosure *closure;
+
+                  closure = g_cclosure_new (G_CALLBACK (menu_event_activate_callback),
+                                            widget, NULL);
+
+                  g_object_watch_closure (G_OBJECT (widget), closure);
+
+                  source = g_idle_source_new ();
+                  g_source_set_priority (source, G_PRIORITY_HIGH);
+                  g_source_set_closure (source, closure);
+                  g_source_attach (source, NULL);
+                  g_source_unref (source);
+
 		  return noErr;
 		}
 	    }
