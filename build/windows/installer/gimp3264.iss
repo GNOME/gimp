@@ -257,6 +257,11 @@ Source: "{#DEPS_DIR}-compat\*.dll"; DestDir: "{app}"; Components: deps32\compat;
 #define PLATFORM 64
 #include "files.isi"
 
+;upgrade zlib1.dll in System32 if it's present there to avoid breaking plugins
+;sharedfile flag will ensure that the upgraded file is left behind on uninstall to avoid breaking other programs that use the file
+Source: "{#DEPS_DIR32}\bin\zlib1.dll"; DestDir: "{sys}"; Components: deps32 or deps64; Flags: restartreplace sharedfile 32bit; Check: BadSysDLL('zlib1.dll',32)
+Source: "{#DEPS_DIR64}\bin\zlib1.dll"; DestDir: "{sys}"; Components: deps64; Flags: restartreplace sharedfile; Check: BadSysDLL('zlib1.dll',64)
+
 ;python
 Source: "{#PY_DIR}\pythonw.exe"; DestDir: "{app}\Python"; Components: py or gimp32on64\py; Flags: restartreplace
 Source: "{#PY_DIR}\python.exe"; DestDir: "{app}\Python"; Components: py or gimp32on64\py; Flags: restartreplace
@@ -374,6 +379,46 @@ end;
 
 
 #include "utils.isi"
+
+
+//some programs inproperly install libraries to the System32 directory, which then causes problems with plugins
+//this function checks if such file exists in System32, and lets setup update the file when it exists
+function BadSysDLL(const pFile: String; const pPlatform: Integer): Boolean;
+var	OldRedir: Boolean;
+begin
+	Result := False;
+
+	if pPlatform = 64 then
+	begin
+		if Is64BitInstallMode() then //only check when installing in 64bit mode
+		begin
+			OldRedir := EnableFsRedirection(False);
+			DebugMsg('BadSysDLL','64: ' + ExpandConstant('{sys}\' + pFile));
+			Result := FileExists(ExpandConstant('{sys}\' + pFile));
+			EnableFsRedirection(OldRedir);
+		end;
+	end
+	else if pPlatform = 32 then
+	begin
+		if Is64BitInstallMode() then //check 32bit system directory on x64 windows
+		begin
+			DebugMsg('BadSysDLL','32on64: ' + ExpandConstant('{syswow64}\' + pFile));
+			Result := FileExists(ExpandConstant('{syswow64}\' + pFile));
+		end
+		else
+		begin
+			DebugMsg('BadSysDLL','32: ' + ExpandConstant('{sys}\' + pFile));
+			Result := FileExists(ExpandConstant('{sys}\' + pFile));
+		end;
+	end
+	else
+	begin
+		RaiseException('Unsupported platform');
+	end;
+
+	DebugMsg('BadSysDLL','Result: ' + BoolToStr(Result));
+end;
+
 
 #include "associations.isi"
 

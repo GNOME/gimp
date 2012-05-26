@@ -8,6 +8,15 @@ begin
 end;
 
 
+function BoolToStr(const b: Boolean): String;
+begin
+	if b then
+		Result := 'True'
+	else
+		Result := 'False';
+end;
+
+
 function RevPos(const SearchStr, Str: string): Integer;
 var i: Integer;
 begin
