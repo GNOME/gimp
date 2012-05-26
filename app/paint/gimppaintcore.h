@@ -64,6 +64,8 @@ struct _GimpPaintCore
   gint         paint_buffer_y;
 
   GArray      *stroke_buffer;
+
+  GimpApplicator *applicator;
 };
 
 struct _GimpPaintCoreClass

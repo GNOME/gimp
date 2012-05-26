@@ -28,4 +28,7 @@
 #include "operations/operations-types.h"
 
 
+typedef struct _GimpApplicator GimpApplicator;
+
+
 #endif /* __GIMP_GEGL_TYPES_H__ */

@@ -34,6 +34,8 @@ libappgegl_a_sources = \
 	gimp-gegl-tile-compat.h		\
 	gimp-gegl-utils.c		\
 	gimp-gegl-utils.h		\
+	gimpapplicator.c		\
+	gimpapplicator.h		\
 	gimptilebackendtilemanager.c	\
 	gimptilebackendtilemanager.h
 

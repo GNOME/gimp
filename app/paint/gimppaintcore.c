@@ -27,12 +27,14 @@
 #include "paint-types.h"
 
 #include "gegl/gimp-gegl-loops.h"
+#include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
+#include "gegl/gimpapplicator.h"
 
 #include "core/gimp.h"
 #include "core/gimp-apply-operation.h"
 #include "core/gimp-utils.h"
-#include "core/gimpdrawable.h"
+#include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimppickable.h"
@@ -396,6 +398,34 @@ gimp_paint_core_start (GimpPaintCore     *core,
   core->last_paint.x = -1e6;
   core->last_paint.y = -1e6;
 
+  {
+    GimpImage   *image;
+    GimpChannel *mask;
+    GeglBuffer  *mask_buffer = NULL;
+    gint         offset_x    = 0;
+    gint         offset_y    = 0;
+
+    image = gimp_item_get_image (item);
+    mask  = gimp_image_get_mask (image);
+
+    /*  don't apply the mask to itself and don't apply an empty mask  */
+    if (GIMP_DRAWABLE (mask) == drawable || gimp_channel_is_empty (mask))
+      mask = NULL;
+
+    if (mask)
+      {
+        mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+
+        gimp_item_get_offset (item, &offset_x, &offset_y);
+      }
+
+    core->applicator =
+      gimp_applicator_new (gimp_drawable_get_buffer (drawable),
+                           gimp_drawable_get_active_mask (drawable),
+                           mask_buffer,
+                           -offset_x, -offset_y);
+  }
+
   /*  Freeze the drawable preview so that it isn't constantly updated.  */
   gimp_viewable_preview_freeze (GIMP_VIEWABLE (drawable));
 
@@ -412,6 +442,12 @@ gimp_paint_core_finish (GimpPaintCore *core,
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
+
+  if (core->applicator)
+    {
+      g_object_unref (core->applicator);
+      core->applicator = NULL;
+    }
 
   if (core->stroke_buffer)
     {
@@ -750,17 +786,17 @@ gimp_paint_core_paste (GimpPaintCore            *core,
                             core->paint_buffer,
                             GEGL_RECTANGLE (0, 0, width, height),
                             paint_opacity);
+
+      base_buffer = gimp_drawable_get_buffer (drawable);
     }
 
   /*  apply the paint area to the image  */
-  gimp_drawable_apply_buffer (drawable,
-                              core->paint_buffer,
-                              GEGL_RECTANGLE (0, 0, width, height),
-                              FALSE, NULL,
-                              image_opacity, paint_mode,
-                              base_buffer, /*  specify an alternative src1  */
-                              core->paint_buffer_x,
-                              core->paint_buffer_y);
+  gimp_applicator_apply (core->applicator,
+                         base_buffer,
+                         core->paint_buffer,
+                         core->paint_buffer_x,
+                         core->paint_buffer_y,
+                         image_opacity, paint_mode);
 
   /*  Update the undo extents  */
   core->x1 = MIN (core->x1, core->paint_buffer_x);
