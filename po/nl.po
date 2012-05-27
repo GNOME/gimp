@@ -25,7 +25,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-27 14:31+0200\n"
+"POT-Creation-Date: 2012-05-27 14:43+0200\n"
 "PO-Revision-Date: 2012-05-27 14:17+0200\n"
 "Last-Translator: Wouter Bolsterlee <wbolster@gnome.org>\n"
 "Language-Team: Dutch <nl@vrijschrift.org>\n"
@@ -174,7 +174,7 @@ msgstr "De procedure waarmee batch-opdrachten worden verwerkt"
 
 #: ../app/main.c:228
 msgid "Send messages to console instead of using a dialog"
-msgstr "Waarschuwingen in console weergeven i.p.v. in een dialoogvenster"
+msgstr "Waarschuwingen in console tonen i.p.v. in een dialoogvenster"
 
 #. don't translate the mode names (off|on|warn)
 #: ../app/main.c:234
@@ -1549,12 +1549,12 @@ msgstr "_Knoppenbalk tonen"
 #: ../app/actions/dockable-actions.c:143
 msgctxt "dockable-action"
 msgid "View as _List"
-msgstr "Als _lijst weergeven"
+msgstr "Als _lijst tonen"
 
 #: ../app/actions/dockable-actions.c:148
 msgctxt "dockable-action"
 msgid "View as _Grid"
-msgstr "Als _raster weergeven"
+msgstr "Als _raster tonen"
 
 #: ../app/actions/documents-actions.c:41
 msgctxt "documents-action"
@@ -5278,43 +5278,36 @@ msgid "Fi_ll Window"
 msgstr "Venster vu_llen"
 
 #: ../app/actions/view-actions.c:95
-#, fuzzy
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the entire window is used"
 msgstr "Het zoomniveau aanpassen zodat het volledige venster gebruikt wordt"
 
 #: ../app/actions/view-actions.c:100
-#, fuzzy
 msgctxt "view-action"
 msgid "Re_vert Zoom"
 msgstr "Zoomniveau hers_tellen"
 
 #: ../app/actions/view-actions.c:101
-#, fuzzy
 msgctxt "view-action"
 msgid "Restore the previous zoom level"
 msgstr "Het vorige zoomniveau herstellen"
 
 #: ../app/actions/view-actions.c:106
-#, fuzzy
 msgctxt "view-action"
 msgid "Na_vigation Window"
 msgstr "_Navigatievenster"
 
 #: ../app/actions/view-actions.c:107
-#, fuzzy
 msgctxt "view-action"
 msgid "Show an overview window for this image"
 msgstr "Een overzichtsvenster tonen voor deze afbeelding"
 
 #: ../app/actions/view-actions.c:112
-#, fuzzy
 msgctxt "view-action"
 msgid "Display _Filters..."
 msgstr "_Weergavefilters…"
 
 #: ../app/actions/view-actions.c:113
-#, fuzzy
 msgctxt "view-action"
 msgid "Configure filters applied to this view"
 msgstr "Filters instellen die toegepast worden op deze weergave"
@@ -5322,208 +5315,172 @@ msgstr "Filters instellen die toegepast worden op deze weergave"
 # Shrink wrap is the phenomenon of fitting the image window to the image dimensions
 # 01/03/08: "venster" toegevoegd voor alle duidelijkheid
 #: ../app/actions/view-actions.c:118
-#, fuzzy
 msgctxt "view-action"
 msgid "Shrink _Wrap"
 msgstr "Venster naar _afbeeldingsgrootte"
 
 #: ../app/actions/view-actions.c:119
-#, fuzzy
 msgctxt "view-action"
 msgid "Reduce the image window to the size of the image display"
-msgstr ""
-"Het afbeeldingsvenster verkleinen tot de afmetingen van de "
-"afbeeldingsweergave"
+msgstr "Het venster verkleinen tot de afmetingen van de afbeeldingsweergave"
 
 #: ../app/actions/view-actions.c:124
-#, fuzzy
 msgctxt "view-action"
 msgid "_Open Display..."
-msgstr "Weergave _openen…"
+msgstr "Scherm _openen…"
 
 #: ../app/actions/view-actions.c:125
-#, fuzzy
 msgctxt "view-action"
 msgid "Connect to another display"
 msgstr "Met een ander beeldscherm verbinden"
 
 # wat betekent dit, wat doet dit in het programma?
 #: ../app/actions/view-actions.c:133
-#, fuzzy
 msgctxt "view-action"
 msgid "_Dot for Dot"
 msgstr "_Punt voor punt"
 
 #: ../app/actions/view-actions.c:134
-#, fuzzy
 msgctxt "view-action"
 msgid "A pixel on the screen represents an image pixel"
 msgstr "Eén beeldpunt op het scherm stelt één beeldpunt in de afbeelding voor"
 
 #: ../app/actions/view-actions.c:140
-#, fuzzy
 msgctxt "view-action"
 msgid "Show _Selection"
 msgstr "Selectie _tonen"
 
 #: ../app/actions/view-actions.c:141
-#, fuzzy
 msgctxt "view-action"
 msgid "Display the selection outline"
 msgstr "Selectie-omtrek tonen"
 
 #: ../app/actions/view-actions.c:147
-#, fuzzy
 msgctxt "view-action"
 msgid "Show _Layer Boundary"
-msgstr "Laaggrens tonen"
+msgstr "_Laaggrens tonen"
 
 #: ../app/actions/view-actions.c:148
-#, fuzzy
 msgctxt "view-action"
 msgid "Draw a border around the active layer"
 msgstr "Een rand tekenen rond de actieve laag"
 
 #: ../app/actions/view-actions.c:154
-#, fuzzy
 msgctxt "view-action"
 msgid "Show _Guides"
-msgstr "Hulplijnen tonen"
+msgstr "_Hulplijnen tonen"
 
 #: ../app/actions/view-actions.c:155
-#, fuzzy
 msgctxt "view-action"
 msgid "Display the image's guides"
-msgstr "De hulplijnen van de afbeelding weergeven"
+msgstr "De hulplijnen van de afbeelding tonen"
 
 #: ../app/actions/view-actions.c:161
-#, fuzzy
 msgctxt "view-action"
 msgid "S_how Grid"
 msgstr "_Raster tonen"
 
 #: ../app/actions/view-actions.c:162
-#, fuzzy
 msgctxt "view-action"
 msgid "Display the image's grid"
-msgstr "Het afbeeldingsraster weergeven"
+msgstr "Het afbeeldingsraster tonen"
 
 #: ../app/actions/view-actions.c:168
-#, fuzzy
 msgctxt "view-action"
 msgid "Show Sample Points"
 msgstr "Monsterpunten tonen"
 
 #: ../app/actions/view-actions.c:169
-#, fuzzy
 msgctxt "view-action"
 msgid "Display the image's color sample points"
-msgstr "De kleurenmonsterpunten van de afbeelding weergeven"
+msgstr "De kleurenmonsterpunten van de afbeelding tonen"
 
 #: ../app/actions/view-actions.c:175
-#, fuzzy
 msgctxt "view-action"
 msgid "Sn_ap to Guides"
 msgstr "_Hulplijnen magnetisch"
 
 #: ../app/actions/view-actions.c:176
-#, fuzzy
 msgctxt "view-action"
 msgid "Tool operations snap to guides"
 msgstr "Gereedschappen worden aangetrokken door hulplijnen"
 
 #: ../app/actions/view-actions.c:182
-#, fuzzy
 msgctxt "view-action"
 msgid "Sna_p to Grid"
 msgstr "_Raster magnetisch"
 
 #: ../app/actions/view-actions.c:183
-#, fuzzy
 msgctxt "view-action"
 msgid "Tool operations snap to the grid"
 msgstr "Gereedschappen worden aangetrokken door het raster"
 
 #: ../app/actions/view-actions.c:189
-#, fuzzy
 msgctxt "view-action"
 msgid "Snap to _Canvas Edges"
 msgstr "_Canvasranden magnetisch"
 
 #: ../app/actions/view-actions.c:190
-#, fuzzy
 msgctxt "view-action"
 msgid "Tool operations snap to the canvas edges"
 msgstr "Gereedschappen worden aangetrokken door de canvasranden"
 
 #: ../app/actions/view-actions.c:196
-#, fuzzy
 msgctxt "view-action"
 msgid "Snap t_o Active Path"
 msgstr "_Actieve pad magnetisch"
 
 #: ../app/actions/view-actions.c:197
-#, fuzzy
 msgctxt "view-action"
 msgid "Tool operations snap to the active path"
 msgstr "Gereedschappen worden aangetrokken door het actieve pad."
 
 #: ../app/actions/view-actions.c:203
-#, fuzzy
 msgctxt "view-action"
 msgid "Show _Menubar"
-msgstr "Menubalk tonen"
+msgstr "_Menubalk tonen"
 
 #: ../app/actions/view-actions.c:204
-#, fuzzy
 msgctxt "view-action"
 msgid "Show this window's menubar"
 msgstr "Menubalk van dit venster tonen"
 
 #: ../app/actions/view-actions.c:210
-#, fuzzy
 msgctxt "view-action"
 msgid "Show R_ulers"
 msgstr "_Linealen tonen"
 
 #: ../app/actions/view-actions.c:211
-#, fuzzy
 msgctxt "view-action"
 msgid "Show this window's rulers"
-msgstr "Hulplijnen van dit venster tonen"
+msgstr "Linealen van dit venster tonen"
 
 #: ../app/actions/view-actions.c:217
-#, fuzzy
 msgctxt "view-action"
 msgid "Show Scroll_bars"
 msgstr "Schuif_balken tonen"
 
 #: ../app/actions/view-actions.c:218
-#, fuzzy
 msgctxt "view-action"
 msgid "Show this window's scrollbars"
 msgstr "Schuifbalken van dit venster tonen"
 
 #: ../app/actions/view-actions.c:224
-#, fuzzy
 msgctxt "view-action"
 msgid "Show S_tatusbar"
-msgstr "Statusbalk tonen"
+msgstr "_Statusbalk tonen"
 
 #: ../app/actions/view-actions.c:225
-#, fuzzy
 msgctxt "view-action"
 msgid "Show this window's statusbar"
 msgstr "Statusbalk van dit venster tonen"
 
 #: ../app/actions/view-actions.c:231
-#, fuzzy
 msgctxt "view-action"
 msgid "Fullscr_een"
 msgstr "_Volledig scherm"
 
 #: ../app/actions/view-actions.c:232
-#, fuzzy
 msgctxt "view-action"
 msgid "Toggle fullscreen view"
 msgstr "Weergave op volledig scherm inschakelen"
@@ -5539,220 +5496,184 @@ msgid "Use GEGL to create this window's projection"
 msgstr "GEGL gebruiken voor de projectie van dit venster"
 
 #: ../app/actions/view-actions.c:263
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom _Out"
 msgstr "_Uitzoomen"
 
 #: ../app/actions/view-actions.c:264 ../app/actions/view-actions.c:276
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom out"
 msgstr "Uitzoomen"
 
 #: ../app/actions/view-actions.c:269
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom _In"
 msgstr "_Inzoomen"
 
 #: ../app/actions/view-actions.c:270 ../app/actions/view-actions.c:282
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom in"
 msgstr "Inzoomen"
 
 #: ../app/actions/view-actions.c:275
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom Out"
 msgstr "Uitzoomen"
 
 #: ../app/actions/view-actions.c:281
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom In"
 msgstr "Inzoomen"
 
 #: ../app/actions/view-actions.c:300 ../app/actions/view-actions.c:306
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "1_6:1  (1600%)"
 msgstr "1_6:1  (1600%)"
 
 #: ../app/actions/view-actions.c:301 ../app/actions/view-actions.c:307
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 16:1"
 msgstr "Zoom 16:1"
 
 #: ../app/actions/view-actions.c:312 ../app/actions/view-actions.c:318
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "_8:1  (800%)"
 msgstr "_8:1  (800%)"
 
 #: ../app/actions/view-actions.c:313 ../app/actions/view-actions.c:319
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 8:1"
 msgstr "Zoom 8:1"
 
 #: ../app/actions/view-actions.c:324 ../app/actions/view-actions.c:330
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "_4:1  (400%)"
 msgstr "_4:1  (400%)"
 
 #: ../app/actions/view-actions.c:325 ../app/actions/view-actions.c:331
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 4:1"
 msgstr "Zoom 4:1"
 
 #: ../app/actions/view-actions.c:336 ../app/actions/view-actions.c:342
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "_2:1  (200%)"
 msgstr "_2:1  (200%)"
 
 #: ../app/actions/view-actions.c:337 ../app/actions/view-actions.c:343
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 2:1"
 msgstr "Zoom 2:1"
 
 #: ../app/actions/view-actions.c:348 ../app/actions/view-actions.c:354
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "_1:1  (100%)"
 msgstr "_1:1  (100%)"
 
 #: ../app/actions/view-actions.c:349 ../app/actions/view-actions.c:355
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 1:1"
 msgstr "Zoom 1:1"
 
 #: ../app/actions/view-actions.c:360
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "1:_2  (50%)"
 msgstr "1:_2  (50%)"
 
 #: ../app/actions/view-actions.c:361
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2"
 msgstr "Zoom 1:2"
 
 #: ../app/actions/view-actions.c:366
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "1:_4  (25%)"
 msgstr "1:_4  (25%)"
 
 #: ../app/actions/view-actions.c:367
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4"
 msgstr "Zoom 1:4"
 
 #: ../app/actions/view-actions.c:372
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "1:_8  (12.5%)"
 msgstr "1:_8  (12.5%)"
 
 #: ../app/actions/view-actions.c:373
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 1:8"
 msgstr "Zoom 1:8"
 
 #: ../app/actions/view-actions.c:378
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "1:1_6  (6.25%)"
 msgstr "1:1_6  (6.25%)"
 
 #: ../app/actions/view-actions.c:379
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16"
 msgstr "Zoom 1:16"
 
 #: ../app/actions/view-actions.c:384
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Othe_r..."
 msgstr "_Anders…"
 
 #: ../app/actions/view-actions.c:385
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Set a custom zoom factor"
 msgstr "Een aangepast zoomniveau instellen"
 
 #: ../app/actions/view-actions.c:393
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "From _Theme"
 msgstr "Van _thema"
 
 #: ../app/actions/view-actions.c:394
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "Use the current theme's background color"
 msgstr "De achtergrondkleur van het huidige thema gebruiken"
 
 #: ../app/actions/view-actions.c:399
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "_Light Check Color"
 msgstr "_Lichte vakjes"
 
 # BUG? toont lichtgrijze kleur rond afbeelding, geen vakjes?
 #: ../app/actions/view-actions.c:400
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "Use the light check color"
 msgstr "Lichte vakjes gebruiken"
 
 #: ../app/actions/view-actions.c:405
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "_Dark Check Color"
 msgstr "_Donkere vakjes"
 
 # BUG? idem, egaal donkergrijs, geen vakjes?
 #: ../app/actions/view-actions.c:406
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "Use the dark check color"
 msgstr "Donkere vakjes gebruiken"
 
 # eigen/aangepaste
 #: ../app/actions/view-actions.c:411
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "Select _Custom Color..."
-msgstr "_Eigen kleur selecteren…"
+msgstr "_Aangepaste kleur selecteren…"
 
 #: ../app/actions/view-actions.c:412
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "Use an arbitrary color"
 msgstr "Een willekeurige kleur gebruiken"
 
 #: ../app/actions/view-actions.c:417
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "As in _Preferences"
 msgstr "Als in _voorkeuren"
 
 #: ../app/actions/view-actions.c:419
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "Reset padding color to what's configured in preferences"
 msgstr "Opvullingskleur herstellen tot wat in de voorkeuren staat ingesteld"
@@ -5795,276 +5716,234 @@ msgid "Move this window to screen %s"
 msgstr "Dit venster verplaatsen naar scherm %s"
 
 #: ../app/actions/windows-actions.c:95
-#, fuzzy
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "_Vensters"
 
 #: ../app/actions/windows-actions.c:97
-#, fuzzy
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "_Onlangs gesloten dokken"
 
 # Dokbaar/aanlegbaar/aankoppelbaar
 #: ../app/actions/windows-actions.c:99
-#, fuzzy
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "_Koppelbare dialoogvensters"
 
 #: ../app/actions/windows-actions.c:102
-#, fuzzy
 msgctxt "windows-action"
 msgid "Next Image"
-msgstr "_Nieuwe afbeelding"
+msgstr "Volgende afbeelding"
 
 #: ../app/actions/windows-actions.c:103
-#, fuzzy
 msgctxt "windows-action"
 msgid "Switch to the next image"
-msgstr "Wisselen naar verplaatsgereedschap"
+msgstr "Wisselen naar volgende afbeelding"
 
 #: ../app/actions/windows-actions.c:108
-#, fuzzy
 msgctxt "windows-action"
 msgid "Previous Image"
-msgstr "Vo_rige tip"
+msgstr "Vorige afbeelding"
 
 #: ../app/actions/windows-actions.c:109
-#, fuzzy
 msgctxt "windows-action"
 msgid "Switch to the previous image"
-msgstr "Het vorige zoomniveau herstellen"
+msgstr "Wisselen naar vorige afbeelding"
 
 #: ../app/actions/windows-actions.c:117
-#, fuzzy
 msgctxt "windows-action"
 msgid "Hide Docks"
-msgstr "Dok sluiten"
+msgstr "Dokken verbergen"
 
 #: ../app/actions/windows-actions.c:118
 msgctxt "windows-action"
 msgid ""
 "When enabled docks and other dialogs are hidden, leaving only image windows."
 msgstr ""
+"Of ingeschakelde dokken en andere vensters verborgen worden zodat alleen "
+"afbeeldingsvensters overblijven"
 
 #: ../app/actions/windows-actions.c:124
 msgctxt "windows-action"
 msgid "Single-Window Mode"
-msgstr ""
+msgstr "Enkel venster-modus"
 
 #: ../app/actions/windows-actions.c:125
-#, fuzzy
 msgctxt "windows-action"
 msgid "When enabled GIMP is in a single-window mode."
-msgstr ""
-"Indien ingeschakeld worden in de menus van de GIMP sneltoetsen gebruikt."
+msgstr "Of Gimp slechts een enkel venster gebruikt"
 
 # glad
 #: ../app/base/base-enums.c:23
-#, fuzzy
 msgctxt "curve-type"
 msgid "Smooth"
 msgstr "Geleidelijk"
 
 #: ../app/base/base-enums.c:24
-#, fuzzy
 msgctxt "curve-type"
 msgid "Freehand"
 msgstr "Vrij"
 
 #: ../app/base/base-enums.c:56
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Value"
 msgstr "Waarde"
 
 #: ../app/base/base-enums.c:57
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Red"
 msgstr "Rood"
 
 #: ../app/base/base-enums.c:58
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Green"
 msgstr "Groen"
 
 #: ../app/base/base-enums.c:59
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Blue"
 msgstr "Blauw"
 
 #: ../app/base/base-enums.c:60
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Alpha"
 msgstr "Alfa"
 
 #: ../app/base/base-enums.c:61
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "RGB"
 msgstr "RGB"
 
 #: ../app/base/base-enums.c:113
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Normal"
 msgstr "Normaal"
 
 #: ../app/base/base-enums.c:114
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Dissolve"
 msgstr "Oplossen"
 
 #: ../app/base/base-enums.c:115
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Behind"
 msgstr "Achter"
 
 #: ../app/base/base-enums.c:116
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Multiply"
 msgstr "Vermenigvuldigen"
 
 #: ../app/base/base-enums.c:117
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Screen"
 msgstr "Scherm"
 
 #: ../app/base/base-enums.c:118
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Overlay"
 msgstr "Overheen leggen"
 
 #: ../app/base/base-enums.c:119
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Difference"
 msgstr "Verschil"
 
 #: ../app/base/base-enums.c:120
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Addition"
-msgstr "Optelling"
+msgstr "Optellen"
 
 #: ../app/base/base-enums.c:121
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Subtract"
 msgstr "Aftrekken"
 
 #: ../app/base/base-enums.c:122
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Darken only"
 msgstr "Enkel donker maken"
 
 #: ../app/base/base-enums.c:123
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Lighten only"
 msgstr "Enkel lichter maken"
 
 #: ../app/base/base-enums.c:124
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Hue"
 msgstr "Tint"
 
 #: ../app/base/base-enums.c:125
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Saturation"
 msgstr "Verzadiging"
 
 #: ../app/base/base-enums.c:126
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Color"
 msgstr "Kleur"
 
 #: ../app/base/base-enums.c:127
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Value"
 msgstr "Waarde"
 
 #: ../app/base/base-enums.c:128
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Divide"
 msgstr "Delen"
 
 #: ../app/base/base-enums.c:129
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Dodge"
 msgstr "Doordrukken"
 
 #: ../app/base/base-enums.c:130
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Burn"
 msgstr "Tegenhouden"
 
 #: ../app/base/base-enums.c:131
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Hard light"
 msgstr "Hard licht"
 
 #: ../app/base/base-enums.c:132
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Soft light"
 msgstr "Zacht licht"
 
 # What does 'grain' refer to?
 #: ../app/base/base-enums.c:133
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Grain extract"
 msgstr "Korrel weghalen"
 
 # What does 'grain' refer to?
 #: ../app/base/base-enums.c:134
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Grain merge"
 msgstr "Korrel toevoegen"
 
 # What does this mean?
 #: ../app/base/base-enums.c:135
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Color erase"
 msgstr "Kleur wissen"
 
 #: ../app/base/base-enums.c:136
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Erase"
 msgstr "Gummen"
 
 #: ../app/base/base-enums.c:137
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Replace"
 msgstr "Vervangen"
 
 #: ../app/base/base-enums.c:138
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Anti erase"
 msgstr "Anti-gummen"
@@ -6089,64 +5968,53 @@ msgstr "Kon de grootte van het wisselbestand niet aanpassen: %s"
 
 # werkbalkpictogram
 #: ../app/config/config-enums.c:24
-#, fuzzy
 msgctxt "cursor-mode"
 msgid "Tool icon"
 msgstr "Gereedschapspictogram"
 
 #: ../app/config/config-enums.c:25
-#, fuzzy
 msgctxt "cursor-mode"
 msgid "Tool icon with crosshair"
 msgstr "Gereedschapspictogram met kruisdraad"
 
 #: ../app/config/config-enums.c:26
-#, fuzzy
 msgctxt "cursor-mode"
 msgid "Crosshair only"
 msgstr "Alleen kruisdraad"
 
-# dit mag een wat langere tekst zijn
 #: ../app/config/config-enums.c:56
-#, fuzzy
 msgctxt "canvas-padding-mode"
 msgid "From theme"
-msgstr "conform huidige thema"
+msgstr "Volgens thema"
 
 # BUG? toont lichtgrijze kleur rond afbeelding, geen vakjes?
 #: ../app/config/config-enums.c:57
-#, fuzzy
 msgctxt "canvas-padding-mode"
 msgid "Light check color"
 msgstr "Lichte vakjes"
 
 # BUG? idem, egaal donkergrijs, geen vakjes?
 #: ../app/config/config-enums.c:58
-#, fuzzy
 msgctxt "canvas-padding-mode"
 msgid "Dark check color"
 msgstr "Donkere vakjes"
 
 #: ../app/config/config-enums.c:59
-#, fuzzy
 msgctxt "canvas-padding-mode"
 msgid "Custom color"
 msgstr "Aangepaste kleur"
 
 #: ../app/config/config-enums.c:88
-#, fuzzy
 msgctxt "space-bar-action"
 msgid "No action"
 msgstr "Geen opdracht"
 
 #: ../app/config/config-enums.c:89
-#, fuzzy
 msgctxt "space-bar-action"
 msgid "Pan view"
 msgstr "Beeld verschuiven"
 
 #: ../app/config/config-enums.c:90
-#, fuzzy
 msgctxt "space-bar-action"
 msgid "Switch to Move tool"
 msgstr "Wisselen naar verplaatsgereedschap"
@@ -6157,51 +6025,43 @@ msgid "Low"
 msgstr "Laag"
 
 #: ../app/config/config-enums.c:119
-#, fuzzy
 msgctxt "zoom-quality"
 msgid "High"
-msgstr "Oplichten"
+msgstr "Hoog"
 
 #: ../app/config/config-enums.c:147
-#, fuzzy
 msgctxt "help-browser-type"
 msgid "GIMP help browser"
 msgstr "Hulpbrowser voor GIMP"
 
 #  Web Browser
 #: ../app/config/config-enums.c:148
-#, fuzzy
 msgctxt "help-browser-type"
 msgid "Web browser"
 msgstr "Webbrowser"
 
 #: ../app/config/config-enums.c:177
-#, fuzzy
 msgctxt "window-hint"
 msgid "Normal window"
 msgstr "Normaal venster"
 
 #: ../app/config/config-enums.c:178
-#, fuzzy
 msgctxt "window-hint"
 msgid "Utility window"
-msgstr "Werktuigvenster"
+msgstr "Hulpvenster"
 
 # zichtbaar houden/bovenaan houden
 #: ../app/config/config-enums.c:179
-#, fuzzy
 msgctxt "window-hint"
 msgid "Keep above"
 msgstr "Zichtbaar houden"
 
 #: ../app/config/config-enums.c:207
-#, fuzzy
 msgctxt "cursor-format"
 msgid "Black & white"
 msgstr "Zwartwit"
 
 #: ../app/config/config-enums.c:208
-#, fuzzy
 msgctxt "cursor-format"
 msgid "Fancy"
 msgstr "Chique"
@@ -6819,220 +6679,184 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "waarde voor token %s is geen geldige UTF-8-tekenreeks"
 
 #: ../app/core/core-enums.c:54
-#, fuzzy
 msgctxt "convert-dither-type"
 msgid "None"
 msgstr "Geen"
 
 # kleurbenadering
 #: ../app/core/core-enums.c:55
-#, fuzzy
 msgctxt "convert-dither-type"
 msgid "Floyd-Steinberg (normal)"
 msgstr "Floyd-Steinberg (normaal)"
 
 #: ../app/core/core-enums.c:56
-#, fuzzy
 msgctxt "convert-dither-type"
 msgid "Floyd-Steinberg (reduced color bleeding)"
 msgstr "Floyd-Steinberg (verminderde kleuruitloop)"
 
 #: ../app/core/core-enums.c:57
-#, fuzzy
 msgctxt "convert-dither-type"
 msgid "Positioned"
-msgstr "Met positie"
+msgstr "Gepositioneerd"
 
 #: ../app/core/core-enums.c:87
-#, fuzzy
 msgctxt "convert-palette-type"
 msgid "Generate optimum palette"
 msgstr "Optimaal palet genereren"
 
 #: ../app/core/core-enums.c:88
-#, fuzzy
 msgctxt "convert-palette-type"
 msgid "Use web-optimized palette"
 msgstr "Web-geoptimaliseerd palet gebruiken"
 
 #: ../app/core/core-enums.c:89
-#, fuzzy
 msgctxt "convert-palette-type"
 msgid "Use black and white (1-bit) palette"
 msgstr "Zwart/wit (1-bit) palet gebruiken"
 
 #: ../app/core/core-enums.c:90
-#, fuzzy
 msgctxt "convert-palette-type"
 msgid "Use custom palette"
 msgstr "Aangepast palet gebruiken"
 
 #: ../app/core/core-enums.c:216
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "First item"
-msgstr "Eerste object"
+msgstr "Eerste item"
 
 #: ../app/core/core-enums.c:217
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "Image"
 msgstr "Afbeelding"
 
 #: ../app/core/core-enums.c:218
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "Selection"
 msgstr "Selectie"
 
 #: ../app/core/core-enums.c:219
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "Active layer"
 msgstr "Actieve laag"
 
 #: ../app/core/core-enums.c:220
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "Active channel"
 msgstr "Actief kanaal"
 
 #: ../app/core/core-enums.c:221
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "Active path"
 msgstr "Actief pad"
 
 #: ../app/core/core-enums.c:253
-#, fuzzy
 msgctxt "fill-type"
 msgid "Foreground color"
 msgstr "Voorgrondkleur"
 
 #: ../app/core/core-enums.c:254
-#, fuzzy
 msgctxt "fill-type"
 msgid "Background color"
 msgstr "Achtergrondkleur"
 
 #: ../app/core/core-enums.c:255
-#, fuzzy
 msgctxt "fill-type"
 msgid "White"
 msgstr "Wit"
 
 #: ../app/core/core-enums.c:256
-#, fuzzy
 msgctxt "fill-type"
 msgid "Transparency"
 msgstr "Transparantie"
 
 #: ../app/core/core-enums.c:257
-#, fuzzy
 msgctxt "fill-type"
 msgid "Pattern"
 msgstr "Patroon"
 
 #: ../app/core/core-enums.c:258
-#, fuzzy
 msgctxt "fill-type"
 msgid "None"
 msgstr "Geen"
 
 #: ../app/core/core-enums.c:286
-#, fuzzy
 msgctxt "fill-style"
 msgid "Solid color"
 msgstr "Egale kleur"
 
 #: ../app/core/core-enums.c:287
-#, fuzzy
 msgctxt "fill-style"
 msgid "Pattern"
 msgstr "Patroon"
 
 #: ../app/core/core-enums.c:315
-#, fuzzy
 msgctxt "stroke-method"
 msgid "Stroke line"
 msgstr "Lijn op selectie tekenen"
 
 #: ../app/core/core-enums.c:316
-#, fuzzy
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
 msgstr "Lijn tekenen met tekengereedschap"
 
 #: ../app/core/core-enums.c:345
-#, fuzzy
 msgctxt "join-style"
 msgid "Miter"
 msgstr "Verstek"
 
 #: ../app/core/core-enums.c:346
-#, fuzzy
 msgctxt "join-style"
 msgid "Round"
 msgstr "Rond"
 
 # Connection style of a path
 #: ../app/core/core-enums.c:347
-#, fuzzy
 msgctxt "join-style"
 msgid "Bevel"
 msgstr "Afgeschuind"
 
 # Path end style
 #: ../app/core/core-enums.c:376
-#, fuzzy
 msgctxt "cap-style"
 msgid "Butt"
 msgstr "Stomp"
 
 #: ../app/core/core-enums.c:377
-#, fuzzy
 msgctxt "cap-style"
 msgid "Round"
 msgstr "Rond"
 
 #: ../app/core/core-enums.c:378
-#, fuzzy
 msgctxt "cap-style"
 msgid "Square"
 msgstr "Vierkant"
 
 #: ../app/core/core-enums.c:415
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Custom"
 msgstr "Aangepast"
 
 #: ../app/core/core-enums.c:416
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Line"
 msgstr "Lijn"
 
 #: ../app/core/core-enums.c:417
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Long dashes"
 msgstr "Lange streepjes"
 
 #: ../app/core/core-enums.c:418
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Medium dashes"
 msgstr "Medium streepjes"
 
 #: ../app/core/core-enums.c:419
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Short dashes"
 msgstr "Korte streepjes"
 
 #: ../app/core/core-enums.c:420
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Sparse dots"
 msgstr "Weinig stippen"
@@ -7192,13 +7016,13 @@ msgstr "Gigantisch"
 #, fuzzy
 msgctxt "view-type"
 msgid "View as list"
-msgstr "Als lijst weergeven"
+msgstr "Als lijst tonen"
 
 #: ../app/core/core-enums.c:625
 #, fuzzy
 msgctxt "view-type"
 msgid "View as grid"
-msgstr "Als raster weergeven"
+msgstr "Als raster tonen"
 
 #: ../app/core/core-enums.c:654
 #, fuzzy
@@ -10587,11 +10411,11 @@ msgstr "Standaardformaat"
 
 #: ../app/dialogs/preferences-dialog.c:2200
 msgid "Show zoom percentage"
-msgstr "Zoompercentage weergeven"
+msgstr "Zoompercentage tonen"
 
 #: ../app/dialogs/preferences-dialog.c:2201
 msgid "Show zoom ratio"
-msgstr "Zoomverhouding weergeven"
+msgstr "Zoomverhouding tonen"
 
 #: ../app/dialogs/preferences-dialog.c:2202
 msgid "Show image size"
@@ -17347,8 +17171,7 @@ msgstr "Afbeeldingen of foto's aanmaken en bewerken"
 #~ msgstr "Alleen controleren of GIMP loopt, daarna afsluiten"
 
 #~ msgid "Print X window ID of GIMP toolbox window, then quit"
-#~ msgstr ""
-#~ "X window ID van het GIMP gereedschapsvenster weergeven en dan afsluiten"
+#~ msgstr "X window ID van het GIMP gereedschapsvenster tonen en dan afsluiten"
 
 #~ msgid "Start GIMP without showing the startup window"
 #~ msgstr "GIMP opstarten zonder het opstartvenster te tonen"
