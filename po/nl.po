@@ -25,7 +25,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-27 15:17+0200\n"
+"POT-Creation-Date: 2012-05-27 16:12+0200\n"
 "PO-Revision-Date: 2012-05-27 15:17+0200\n"
 "Last-Translator: Wouter Bolsterlee <wbolster@gnome.org>\n"
 "Language-Team: Dutch <nl@vrijschrift.org>\n"
@@ -340,12 +340,12 @@ msgstr "Tekengebied"
 #. Some things do not have grids, so just list
 #: ../app/actions/actions.c:151 ../app/dialogs/dialogs.c:335
 msgid "Paint Dynamics"
-msgstr "Penseeldynamiek"
+msgstr "Penseelgedragingen"
 
 #: ../app/actions/actions.c:154 ../app/dialogs/dialogs.c:392
 #: ../app/widgets/gimpdynamicseditor.c:92
 msgid "Paint Dynamics Editor"
-msgstr "Editor penseeldynamiek"
+msgstr "Editor Penseelgedragingen"
 
 #: ../app/actions/actions.c:157
 msgid "Edit"
@@ -1179,22 +1179,22 @@ msgstr "De penseelbewerker openen"
 #: ../app/actions/dialogs-actions.c:145
 msgctxt "dialogs-action"
 msgid "Paint Dynamics"
-msgstr "Penseeldynamiek"
+msgstr "Penseelgedragingen"
 
 #: ../app/actions/dialogs-actions.c:146
 msgctxt "dialogs-action"
 msgid "Open paint dynamics dialog"
-msgstr "Het dialoogvenster Penseeldynamiek openen"
+msgstr "Het dialoogvenster Penseelgedragingen openen"
 
 #: ../app/actions/dialogs-actions.c:151
 msgctxt "dialogs-action"
 msgid "Paint Dynamics Editor"
-msgstr "Editor penseeldynamiek"
+msgstr "Editor penseelgedragingen"
 
 #: ../app/actions/dialogs-actions.c:152
 msgctxt "dialogs-action"
 msgid "Open the paint dynamics editor"
-msgstr "De editor voor penseeldynamiek openen"
+msgstr "De editor voor penseelgedragingen openen"
 
 #: ../app/actions/dialogs-actions.c:157
 msgctxt "dialogs-action"
@@ -1808,77 +1808,77 @@ msgstr "Witbalans werkt enkel op RGB-kleurenlagen."
 #: ../app/actions/dynamics-actions.c:42
 msgctxt "dynamics-action"
 msgid "Paint Dynamics Menu"
-msgstr "Menu penseeldynamiek"
+msgstr "Menu Penseelgedragingen"
 
 #: ../app/actions/dynamics-actions.c:46
 msgctxt "dynamics-action"
 msgid "_New Dynamics"
-msgstr "_Nieuwe penseeldynamiek"
+msgstr "_Nieuwe Penseelgedragingen"
 
 #: ../app/actions/dynamics-actions.c:47
 msgctxt "dynamics-action"
 msgid "Create a new dynamics"
-msgstr "Een nieuwe penseeldynamiek aanmaken"
+msgstr "Nieuwe penseelgedragingen aanmaken"
 
 #: ../app/actions/dynamics-actions.c:52
 msgctxt "dynamics-action"
 msgid "D_uplicate Dynamics"
-msgstr "Dynamiek d_upliceren"
+msgstr "Gedragingen d_upliceren"
 
 #: ../app/actions/dynamics-actions.c:53
 msgctxt "dynamics-action"
 msgid "Duplicate this dynamics"
-msgstr "Deze dynamiek dupliceren"
+msgstr "Deze gedragingen dupliceren"
 
 #: ../app/actions/dynamics-actions.c:58
 msgctxt "dynamics-action"
 msgid "Copy Dynamics _Location"
-msgstr "Dynamiek_locatie kopiëren"
+msgstr "_Locatie gedragingen kopiëren"
 
 #: ../app/actions/dynamics-actions.c:59
 msgctxt "dynamics-action"
 msgid "Copy dynamics file location to clipboard"
-msgstr "Locatie van dynamiekbestand kopiëren naar het klembord"
+msgstr "Locatie van gedragingenbestand kopiëren naar het klembord"
 
 #: ../app/actions/dynamics-actions.c:64
 msgctxt "dynamics-action"
 msgid "_Delete Dynamics"
-msgstr "Dynamiek ver_wijderen"
+msgstr "Gedragingen ver_wijderen"
 
 #: ../app/actions/dynamics-actions.c:65
 msgctxt "dynamics-action"
 msgid "Delete this dynamics"
-msgstr "Verwijder deze dynamiek"
+msgstr "Deze gedragingen verwijderen"
 
 #: ../app/actions/dynamics-actions.c:70
 msgctxt "dynamics-action"
 msgid "_Refresh Dynamics"
-msgstr "Penseeldynamiek ver_versen"
+msgstr "Gedragingen ver_versen"
 
 #: ../app/actions/dynamics-actions.c:71
 msgctxt "dynamics-action"
 msgid "Refresh dynamics"
-msgstr "Penseeldynamiek verversen"
+msgstr "Gedragingen verversen"
 
 #: ../app/actions/dynamics-actions.c:79
 msgctxt "dynamics-action"
 msgid "_Edit Dynamics..."
-msgstr "Dynamieken be_werken…"
+msgstr "Gedragingen be_werken…"
 
 #: ../app/actions/dynamics-actions.c:80
 msgctxt "dynamics-action"
 msgid "Edit dynamics"
-msgstr "Penseeldynamiek bewerken"
+msgstr "Gedragingen bewerken"
 
 #: ../app/actions/dynamics-editor-actions.c:42
 msgctxt "dynamics-editor-action"
 msgid "Paint Dynamics Editor Menu"
-msgstr "Menu editor Penseeldynamiek"
+msgstr "Menu editor Gedragingen"
 
 #: ../app/actions/dynamics-editor-actions.c:50
 msgctxt "dynamics-editor-action"
 msgid "Edit Active Dynamics"
-msgstr "Actieve penseeldynamiek bewerken"
+msgstr "Actieve penseelgedragingen bewerken"
 
 #  <Image>/Edit
 #: ../app/actions/edit-actions.c:63
@@ -6123,7 +6123,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:23 ../app/config/gimprc-blurbs.h:28
 msgid "Sets the dynamics search path."
-msgstr "Zoekpad voor penseeldynamieken instellen."
+msgstr "Zoekpad voor penseelgedragingen instellen."
 
 #: ../app/config/gimprc-blurbs.h:33
 msgid ""
@@ -6213,7 +6213,8 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:160
 msgid "When enabled, the selected dynamics will be used for all tools."
-msgstr "Indien ingeschakeld gebruiken alle gereedschappen dezelfde dynamiek."
+msgstr ""
+"Indien ingeschakeld gebruiken alle gereedschappen dezelfde gedragingen."
 
 #: ../app/config/gimprc-blurbs.h:166
 msgid "When enabled, the selected gradient will be used for all tools."
@@ -7584,7 +7585,7 @@ msgstr "Parasieten"
 #: ../app/core/gimp.c:956 ../app/dialogs/preferences-dialog.c:2743
 #: ../app/tools/gimppaintoptions-gui.c:203
 msgid "Dynamics"
-msgstr "Dynamiek"
+msgstr "Gedragingen"
 
 #. initialize the list of fonts
 #: ../app/core/gimp.c:976
@@ -7720,165 +7721,139 @@ msgid "Error while reading brush file '%s': %s"
 msgstr "Fout tijdens lezen penseelbestand '%s': %s"
 
 #: ../app/core/gimpbrushgenerated.c:129
-#, fuzzy
 msgid "Brush Shape"
-msgstr "Penselen"
+msgstr "Penseelvorm"
 
 #: ../app/core/gimpbrushgenerated.c:137
-#, fuzzy
 msgid "Brush Radius"
-msgstr "Penseeldynamiek"
+msgstr "Straal van penseel"
 
 #: ../app/core/gimpbrushgenerated.c:144
-#, fuzzy
 msgid "Brush Spikes"
-msgstr "Penselen"
+msgstr "Spaken van penseel"
 
 #: ../app/core/gimpbrushgenerated.c:151
-#, fuzzy
 msgid "Brush Hardness"
-msgstr "Hardheid"
+msgstr "Hardheid van penseel"
 
 #: ../app/core/gimpbrushgenerated.c:159 ../app/paint/gimppaintoptions.c:150
-#, fuzzy
 msgid "Brush Aspect Ratio"
-msgstr "Verhouding"
+msgstr "Verhouding van penseel"
 
 #: ../app/core/gimpbrushgenerated.c:166 ../app/paint/gimppaintoptions.c:154
-#, fuzzy
 msgid "Brush Angle"
-msgstr "Penseelmappen"
+msgstr "Hoek van penseel"
 
 #: ../app/core/gimpbrushpipe-load.c:113 ../app/core/gimpbrushpipe-load.c:133
 #: ../app/core/gimpbrushpipe-load.c:224
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
-msgstr "Fatale verwerkingsfout in penseelbestand '%s': bestand is beschadigd."
+msgstr "Fout bij verwerken van penseelbestand ‘%s’: bestand is ongeldig."
 
 #: ../app/core/gimpchannel-select.c:60
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rectangle Select"
 msgstr "Rechthoekige selectie"
 
 #: ../app/core/gimpchannel-select.c:111
-#, fuzzy
 msgctxt "undo-type"
 msgid "Ellipse Select"
 msgstr "Ovale selectie"
 
 #: ../app/core/gimpchannel-select.c:165
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
 msgstr "Afgeronde rechthoekige selectie"
 
 #: ../app/core/gimpchannel-select.c:407 ../app/core/gimplayer.c:275
-#, fuzzy
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Alfa naar selectie"
 
 #: ../app/core/gimpchannel-select.c:445
-#, fuzzy, c-format
+#, c-format
 msgctxt "undo-type"
 msgid "%s Channel to Selection"
-msgstr "%s kanaal naar selectie"
+msgstr "Kanaal ‘%s’ naar selectie"
 
 # 28/03/08: dit is het menu-item in het menu "Gereedschap" > "Selectie", dus moet er een shortcut zijn
 #: ../app/core/gimpchannel-select.c:493
-#, fuzzy
 msgctxt "undo-type"
 msgid "Fuzzy Select"
-msgstr "_Toverstaf"
+msgstr "Selectie met toverstaf"
 
 #: ../app/core/gimpchannel-select.c:540
-#, fuzzy
 msgctxt "undo-type"
 msgid "Select by Color"
 msgstr "Selecteren op kleur"
 
 #: ../app/core/gimpchannel.c:273
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rename Channel"
 msgstr "Kanaal hernoemen"
 
 #: ../app/core/gimpchannel.c:274
-#, fuzzy
 msgctxt "undo-type"
 msgid "Move Channel"
 msgstr "Kanaal verplaatsen"
 
 #: ../app/core/gimpchannel.c:275
-#, fuzzy
 msgctxt "undo-type"
 msgid "Scale Channel"
 msgstr "Kanaal schalen"
 
 #: ../app/core/gimpchannel.c:276
-#, fuzzy
 msgctxt "undo-type"
 msgid "Resize Channel"
 msgstr "Kanaal van grootte veranderen"
 
 #: ../app/core/gimpchannel.c:277
-#, fuzzy
 msgctxt "undo-type"
 msgid "Flip Channel"
 msgstr "Kanaal spiegelen"
 
 #: ../app/core/gimpchannel.c:278
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Kanaal draaien"
 
 #: ../app/core/gimpchannel.c:279 ../app/core/gimpdrawable-transform.c:904
-#, fuzzy
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Kanaal transformeren"
 
 #: ../app/core/gimpchannel.c:280
-#, fuzzy
 msgctxt "undo-type"
 msgid "Stroke Channel"
-msgstr "Kanaal naar pad"
+msgstr "Kanaal omlijnen"
 
 #: ../app/core/gimpchannel.c:281 ../app/core/gimpselection.c:582
-#, fuzzy
 msgctxt "undo-type"
 msgid "Channel to Selection"
 msgstr "Kanaal naar selectie"
 
 # What does this mean?
 #: ../app/core/gimpchannel.c:282
-#, fuzzy
 msgctxt "undo-type"
 msgid "Reorder Channel"
-msgstr "Herrangschik kanaal"
+msgstr "Kanaal opnieuw rangschikken"
 
 #: ../app/core/gimpchannel.c:283
-#, fuzzy
 msgctxt "undo-type"
 msgid "Raise Channel"
 msgstr "Kanaal verhogen"
 
 #: ../app/core/gimpchannel.c:284
-#, fuzzy
 msgctxt "undo-type"
 msgid "Raise Channel to Top"
 msgstr "Kanaal bovenaan"
 
 #: ../app/core/gimpchannel.c:285
-#, fuzzy
 msgctxt "undo-type"
 msgid "Lower Channel"
 msgstr "Kanaal verlagen"
 
 #: ../app/core/gimpchannel.c:286
-#, fuzzy
 msgctxt "undo-type"
 msgid "Lower Channel to Bottom"
 msgstr "Kanaal onderaan"
@@ -7893,65 +7868,55 @@ msgstr "Kanaal kan niet verder naar beneden"
 
 # Klopt dit?
 #: ../app/core/gimpchannel.c:310
-#, fuzzy
 msgctxt "undo-type"
 msgid "Feather Channel"
 msgstr "Kanaal verzachten"
 
 #: ../app/core/gimpchannel.c:311
-#, fuzzy
 msgctxt "undo-type"
 msgid "Sharpen Channel"
 msgstr "Kanaal verscherpen"
 
 #: ../app/core/gimpchannel.c:312
-#, fuzzy
 msgctxt "undo-type"
 msgid "Clear Channel"
 msgstr "Kanaal leegmaken"
 
 #: ../app/core/gimpchannel.c:313
-#, fuzzy
 msgctxt "undo-type"
 msgid "Fill Channel"
 msgstr "Kanaal vullen"
 
 #: ../app/core/gimpchannel.c:314
-#, fuzzy
 msgctxt "undo-type"
 msgid "Invert Channel"
 msgstr "Kanaal inverteren"
 
 #: ../app/core/gimpchannel.c:315
-#, fuzzy
 msgctxt "undo-type"
 msgid "Border Channel"
 msgstr "Kanaalrand"
 
 #: ../app/core/gimpchannel.c:316
-#, fuzzy
 msgctxt "undo-type"
 msgid "Grow Channel"
-msgstr "Kanaal groeien"
+msgstr "Kanaal vergroten"
 
 #: ../app/core/gimpchannel.c:317
-#, fuzzy
 msgctxt "undo-type"
 msgid "Shrink Channel"
-msgstr "Kanaal krimpen"
+msgstr "Kanaal verkleinen"
 
 #: ../app/core/gimpchannel.c:731
 msgid "Cannot stroke empty channel."
 msgstr "Kan geen lijn tekenen op leeg kanaal."
 
 #: ../app/core/gimpchannel.c:1758
-#, fuzzy
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Kanaalkleur instellen"
 
 #: ../app/core/gimpchannel.c:1824
-#, fuzzy
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Kanaaldekking instellen"
@@ -7966,9 +7931,8 @@ msgid "Opacity"
 msgstr "Dekking"
 
 #: ../app/core/gimpcontext.c:647
-#, fuzzy
 msgid "Paint Mode"
-msgstr "Teken_modus"
+msgstr "Tekenmodus"
 
 #: ../app/core/gimpdata.c:670
 #, c-format
@@ -8014,9 +7978,9 @@ msgid ""
 msgstr ""
 
 #: ../app/core/gimpdatafactory.c:773
-#, fuzzy, c-format
+#, c-format
 msgid "You don't have any writable data folder configured."
-msgstr "U heeft geen schrijfbare gegevensmap ingesteld."
+msgstr "Er is geen schrijfbare gegevensmap ingesteld."
 
 #: ../app/core/gimpdatafactory.c:937
 #, c-format
@@ -8030,14 +7994,12 @@ msgstr ""
 "%s"
 
 #: ../app/core/gimpdrawable-blend.c:245
-#, fuzzy
 msgctxt "undo-type"
 msgid "Blend"
-msgstr "Kleurverloop"
+msgstr "Verloop"
 
 #: ../app/core/gimpdrawable-brightness-contrast.c:70
 #: ../app/core/gimpdrawable-brightness-contrast.c:83
-#, fuzzy
 msgctxt "undo-type"
 msgid "Brightness-Contrast"
 msgstr "Helderheid / contrast"
@@ -8047,27 +8009,23 @@ msgid "No patterns available for this operation."
 msgstr "Geen patronen beschikbaar voor deze bewerking."
 
 #: ../app/core/gimpdrawable-bucket-fill.c:284
-#, fuzzy
 msgctxt "undo-type"
 msgid "Bucket Fill"
 msgstr "Emmer"
 
 #: ../app/core/gimpdrawable-color-balance.c:79
 #: ../app/core/gimpdrawable-color-balance.c:89
-#, fuzzy
 msgctxt "undo-type"
 msgid "Color Balance"
 msgstr "Kleurbalans"
 
 #: ../app/core/gimpdrawable-colorize.c:72
 #: ../app/core/gimpdrawable-colorize.c:84
-#, fuzzy
 msgctxt "undo-type"
 msgid "Colorize"
 msgstr "Verkleuren"
 
 #: ../app/core/gimpdrawable-curves.c:162 ../app/core/gimpdrawable-curves.c:179
-#, fuzzy
 msgctxt "undo-type"
 msgid "Curves"
 msgstr "Curves"
@@ -8079,7 +8037,6 @@ msgid "Desaturate"
 msgstr "Desatureren"
 
 #: ../app/core/gimpdrawable-equalize.c:52
-#, fuzzy
 msgctxt "undo-type"
 msgid "Equalize"
 msgstr "Gelijkmaken"
@@ -8108,7 +8065,6 @@ msgstr "Niveaus"
 
 #  push an undo
 #: ../app/core/gimpdrawable-offset.c:316
-#, fuzzy
 msgctxt "undo-type"
 msgid "Offset Drawable"
 msgstr "Verspringing tekengebied"
@@ -8121,14 +8077,13 @@ msgstr "Posterkleuren"
 #: ../app/core/gimpdrawable-stroke.c:272
 #: ../app/paint/gimppaintcore-stroke.c:333 ../app/vectors/gimpvectors.c:556
 msgid "Not enough points to stroke"
-msgstr ""
+msgstr "Niet genoeg punten om te omlijnen"
 
 #: ../app/core/gimpdrawable-stroke.c:273
 msgid "Not enough points to fill"
-msgstr ""
+msgstr "Niet genoeg punten om te vullen"
 
 #: ../app/core/gimpdrawable-stroke.c:404
-#, fuzzy
 msgctxt "undo-type"
 msgid "Render Stroke"
 msgstr "Lijn renderen"
@@ -8142,19 +8097,16 @@ msgid "Threshold"
 msgstr "Drempelwaarde"
 
 #: ../app/core/gimpdrawable-transform.c:677
-#, fuzzy
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Spiegelen"
 
 #: ../app/core/gimpdrawable-transform.c:762
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Draaien"
 
 #: ../app/core/gimpdrawable-transform.c:902 ../app/core/gimplayer.c:274
-#, fuzzy
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Laag transformeren"
@@ -8164,15 +8116,13 @@ msgid "Transformation"
 msgstr "Transformatie"
 
 #: ../app/core/gimpdrawable.c:494
-#, fuzzy
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Schalen"
 
 #: ../app/core/gimpdynamicsoutput.c:135
-#, fuzzy
 msgid "Output type"
-msgstr "Uitvoerniveaus"
+msgstr "Uitvoertype"
 
 #: ../app/core/gimpgradient-load.c:72 ../app/core/gimpgradient-load.c:97
 #: ../app/core/gimpgradient-load.c:118 ../app/core/gimpgradient-load.c:169
@@ -8261,54 +8211,45 @@ msgstr ""
 "zijn."
 
 #: ../app/core/gimpgrouplayer.c:219
-#, fuzzy
 msgid "Layer Group"
-msgstr "Laag _bovenaan"
+msgstr "Laaggroep"
 
 #: ../app/core/gimpgrouplayer.c:220
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rename Layer Group"
-msgstr "Laag hernoemen"
+msgstr "Laaggroep hernoemen"
 
 #: ../app/core/gimpgrouplayer.c:221
-#, fuzzy
 msgctxt "undo-type"
 msgid "Move Layer Group"
-msgstr "Laag verplaatsen"
+msgstr "Laaggroep verplaatsen"
 
 #: ../app/core/gimpgrouplayer.c:222
-#, fuzzy
 msgctxt "undo-type"
 msgid "Scale Layer Group"
-msgstr "Laag schalen"
+msgstr "Laaggroep schalen"
 
 #: ../app/core/gimpgrouplayer.c:223
-#, fuzzy
 msgctxt "undo-type"
 msgid "Resize Layer Group"
-msgstr "Laag van grootte veranderen"
+msgstr "Laaggroep van grootte veranderen"
 
 #: ../app/core/gimpgrouplayer.c:224
-#, fuzzy
 msgctxt "undo-type"
 msgid "Flip Layer Group"
-msgstr "Laag spiegelen"
+msgstr "Laaggroep spiegelen"
 
 #: ../app/core/gimpgrouplayer.c:225
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
-msgstr "Laag draaien"
+msgstr "Laaggroep draaien"
 
 #: ../app/core/gimpgrouplayer.c:226
-#, fuzzy
 msgctxt "undo-type"
 msgid "Transform Layer Group"
-msgstr "Laag transformeren"
+msgstr "Laaggroep transformeren"
 
 #: ../app/core/gimpimage-arrange.c:142
-#, fuzzy
 msgctxt "undo-type"
 msgid "Arrange Objects"
 msgstr "Objecten rangschikken"
@@ -8316,22 +8257,19 @@ msgstr "Objecten rangschikken"
 #: ../app/core/gimpimage-colormap.c:64
 #, c-format
 msgid "Colormap of Image #%d (%s)"
-msgstr ""
+msgstr "Kleurenkaart van afbeelding #%d (%s)"
 
 #: ../app/core/gimpimage-colormap.c:162
-#, fuzzy
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Kleurenkaart instellen"
 
 #: ../app/core/gimpimage-colormap.c:243
-#, fuzzy
 msgctxt "undo-type"
 msgid "Change Colormap entry"
-msgstr "Kleur van kleurenkaart wijzigen."
+msgstr "Item op kleurenkaart wijzigen."
 
 #: ../app/core/gimpimage-colormap.c:271
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Kleur aan kleurenkaart toevoegen"
@@ -8341,19 +8279,16 @@ msgid "Cannot convert image: palette is empty."
 msgstr "Kan afbeelding niet omzetten: palet is leeg."
 
 #: ../app/core/gimpimage-convert.c:809
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert Image to RGB"
 msgstr "Afbeelding naar RGB omzetten"
 
 #: ../app/core/gimpimage-convert.c:813
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert Image to Grayscale"
 msgstr "Afbeelding naar Grijswaarden omzetten"
 
 #: ../app/core/gimpimage-convert.c:817
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert Image to Indexed"
 msgstr "Afbeelding naar Geïndexeerd omzetten"
@@ -8367,37 +8302,31 @@ msgid "Converting to indexed colors (stage 3)"
 msgstr "Naar geïndexeerde kleuren omzetten (stap 3)…"
 
 #: ../app/core/gimpimage-crop.c:129
-#, fuzzy
 msgctxt "undo-type"
 msgid "Crop Image"
 msgstr "Afbeelding bijsnijden"
 
 #: ../app/core/gimpimage-crop.c:132 ../app/core/gimpimage-resize.c:86
-#, fuzzy
 msgctxt "undo-type"
 msgid "Resize Image"
 msgstr "Afbeelding van grootte veranderen"
 
 #: ../app/core/gimpimage-guides.c:52
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add Horizontal Guide"
 msgstr "Horizontale hulplijn toevoegen"
 
 #: ../app/core/gimpimage-guides.c:76
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add Vertical Guide"
 msgstr "Verticale hulplijn toevoegen"
 
 #: ../app/core/gimpimage-guides.c:117
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove Guide"
 msgstr "Hulplijn verwijderen"
 
 #: ../app/core/gimpimage-guides.c:144
-#, fuzzy
 msgctxt "undo-type"
 msgid "Move Guide"
 msgstr "Hulplijn verplaatsen"
@@ -8981,64 +8910,54 @@ msgid "Please wait"
 msgstr "Een ogenblik geduld"
 
 #: ../app/core/gimpselection.c:155
-#, fuzzy
 msgctxt "undo-type"
 msgid "Move Selection"
 msgstr "Selectie verplaatsen"
 
 #: ../app/core/gimpselection.c:156
-#, fuzzy
 msgctxt "undo-type"
 msgid "Stroke Selection"
 msgstr "Lijn op selectie tekenen"
 
 #: ../app/core/gimpselection.c:172
-#, fuzzy
 msgctxt "undo-type"
 msgid "Feather Selection"
 msgstr "Selectierand verzachten"
 
 #: ../app/core/gimpselection.c:173
-#, fuzzy
 msgctxt "undo-type"
 msgid "Sharpen Selection"
 msgstr "Selectie verscherpen"
 
 #: ../app/core/gimpselection.c:174
-#, fuzzy
 msgctxt "undo-type"
 msgid "Select None"
 msgstr "Niets selecteren"
 
 #: ../app/core/gimpselection.c:175
-#, fuzzy
 msgctxt "undo-type"
 msgid "Select All"
 msgstr "Alles selecteren"
 
 #: ../app/core/gimpselection.c:176
-#, fuzzy
 msgctxt "undo-type"
 msgid "Invert Selection"
 msgstr "Selectie omkeren"
 
 #: ../app/core/gimpselection.c:177
-#, fuzzy
 msgctxt "undo-type"
 msgid "Border Selection"
 msgstr "Randselectie"
 
 #: ../app/core/gimpselection.c:178
-#, fuzzy
 msgctxt "undo-type"
 msgid "Grow Selection"
-msgstr "Selectie groeien"
+msgstr "Selectie vergroten"
 
 #: ../app/core/gimpselection.c:179
-#, fuzzy
 msgctxt "undo-type"
 msgid "Shrink Selection"
-msgstr "Selectie krimpen"
+msgstr "Selectie verkleinen"
 
 #: ../app/core/gimpselection.c:286
 msgid "There is no selection to stroke."
@@ -9089,75 +9008,63 @@ msgstr "De verticale afbeeldingsresolutie."
 # beeldpunt? (tino)
 # 01/03/08: overal in de vertaling pixel door beeldpunt vervangen (zo ook bv. in gThumb)
 #: ../app/core/gimpunit.c:60
-#, fuzzy
 msgctxt "unit-singular"
 msgid "pixel"
 msgstr "beeldpunt"
 
 #: ../app/core/gimpunit.c:60
-#, fuzzy
 msgctxt "unit-plural"
 msgid "pixels"
 msgstr "beeldpunten"
 
 #  standard units
 #: ../app/core/gimpunit.c:64
-#, fuzzy
 msgctxt "unit-singular"
 msgid "inch"
 msgstr "duim"
 
 #: ../app/core/gimpunit.c:64
-#, fuzzy
 msgctxt "unit-plural"
 msgid "inches"
 msgstr "duimen"
 
 #: ../app/core/gimpunit.c:67
-#, fuzzy
 msgctxt "unit-singular"
 msgid "millimeter"
 msgstr "millimeter"
 
 #: ../app/core/gimpunit.c:67
-#, fuzzy
 msgctxt "unit-plural"
 msgid "millimeters"
 msgstr "millimeters"
 
 #  professional units
 #: ../app/core/gimpunit.c:71
-#, fuzzy
 msgctxt "unit-singular"
 msgid "point"
 msgstr "punt"
 
 #: ../app/core/gimpunit.c:71
-#, fuzzy
 msgctxt "unit-plural"
 msgid "points"
 msgstr "punten"
 
 #: ../app/core/gimpunit.c:74
-#, fuzzy
 msgctxt "unit-singular"
 msgid "pica"
 msgstr "pica"
 
 #: ../app/core/gimpunit.c:74
-#, fuzzy
 msgctxt "unit-plural"
 msgid "picas"
 msgstr "picas"
 
 #: ../app/core/gimpunit.c:82
-#, fuzzy
 msgctxt "singular"
 msgid "percent"
 msgstr "procent"
 
 #: ../app/core/gimpunit.c:82
-#, fuzzy
 msgctxt "plural"
 msgid "percent"
 msgstr "procent"
@@ -9357,14 +9264,12 @@ msgstr "Voer locatie in (URI):"
 
 # terughalen
 #: ../app/dialogs/file-save-dialog.c:105
-#, fuzzy
 msgid "Export Image"
-msgstr "Afbeelding terugzetten"
+msgstr "Afbeelding exporteren"
 
 #: ../app/dialogs/file-save-dialog.c:106
-#, fuzzy
 msgid "_Export"
-msgstr "_Importeren"
+msgstr "_Exporteren"
 
 #: ../app/dialogs/file-save-dialog.c:432
 msgid ""
@@ -9951,9 +9856,8 @@ msgid "Interface"
 msgstr "Bediening"
 
 #: ../app/dialogs/preferences-dialog.c:1598
-#, fuzzy
 msgid "Language"
-msgstr "_Taal:"
+msgstr "Taal"
 
 #. Previews
 #: ../app/dialogs/preferences-dialog.c:1604
@@ -10104,9 +10008,8 @@ msgid "_Brush"
 msgstr "Pe_nseel"
 
 #: ../app/dialogs/preferences-dialog.c:1917
-#, fuzzy
 msgid "_Dynamics"
-msgstr "Penseeldynamiek"
+msgstr "_Gedragingen"
 
 #: ../app/dialogs/preferences-dialog.c:1920
 msgid "_Pattern"
@@ -10758,7 +10661,7 @@ msgstr "Tekengereedschap:"
 
 #: ../app/dialogs/stroke-dialog.c:228
 msgid "_Emulate brush dynamics"
-msgstr "Penseeldynamiek _nabootsen"
+msgstr "Penseelgedragingen _nabootsen"
 
 #: ../app/dialogs/tips-dialog.c:88
 msgid "The GIMP tips file is empty!"
@@ -12077,13 +11980,11 @@ msgstr ""
 "als u de tekstlaag wilt bewerken."
 
 #: ../app/text/text-enums.c:23
-#, fuzzy
 msgctxt "text-box-mode"
 msgid "Dynamic"
-msgstr "Penseeldynamiek"
+msgstr "Dynamisch"
 
 #: ../app/text/text-enums.c:24
-#, fuzzy
 msgctxt "text-box-mode"
 msgid "Fixed"
 msgstr "Vast"
