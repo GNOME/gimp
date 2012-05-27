@@ -1015,11 +1015,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                     GimpController *keyboard = gimp_controllers_get_keyboard (gimp);
 
                     if (keyboard)
-                      gimp_controller_keyboard_key_press (GIMP_CONTROLLER_KEYBOARD (keyboard),
-                                                          kevent);
+                      return_val =
+                        gimp_controller_keyboard_key_press (GIMP_CONTROLLER_KEYBOARD (keyboard),
+                                                            kevent);
                   }
-
-                return_val = TRUE;
                 break;
 
               case GDK_KEY_space:
@@ -1048,7 +1047,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                   if (! gimp_image_is_empty (image))
                     tool_manager_modifier_state_active (gimp, state, display);
                 }
-
                 break;
               }
 
@@ -1135,7 +1133,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                   if (! gimp_image_is_empty (image))
                     tool_manager_modifier_state_active (gimp, state, display);
                 }
-
                 break;
               }
 
