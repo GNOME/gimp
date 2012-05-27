@@ -25,8 +25,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-16 00:39+0200\n"
-"PO-Revision-Date: 2012-05-16 00:37+0200\n"
+"POT-Creation-Date: 2012-05-27 14:31+0200\n"
+"PO-Revision-Date: 2012-05-27 14:17+0200\n"
 "Last-Translator: Wouter Bolsterlee <wbolster@gnome.org>\n"
 "Language-Team: Dutch <nl@vrijschrift.org>\n"
 "Language: nl\n"
@@ -2449,7 +2449,7 @@ msgstr "%s _overschrijven"
 msgid "Export to"
 msgstr "Exporteren"
 
-#: ../app/actions/file-commands.c:112 ../app/actions/file-commands.c:492
+#: ../app/actions/file-commands.c:112 ../app/actions/file-commands.c:499
 #: ../app/dialogs/file-open-dialog.c:77
 msgid "Open Image"
 msgstr "Afbeelding openen"
@@ -2470,32 +2470,32 @@ msgstr "Afbeelding opslaan"
 msgid "Save a Copy of the Image"
 msgstr "Kopie van de afbeelding opslaan"
 
-#: ../app/actions/file-commands.c:356
+#: ../app/actions/file-commands.c:363
 msgid "Create New Template"
 msgstr "Nieuwe sjabloon aanmaken"
 
-#: ../app/actions/file-commands.c:360
+#: ../app/actions/file-commands.c:367
 msgid "Enter a name for this template"
 msgstr "Geef een naam voor dit sjabloon"
 
-#: ../app/actions/file-commands.c:394
+#: ../app/actions/file-commands.c:401
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
 "Terughalen lukte niet. Geen bestandsnaam aan deze afbeelding verbonden."
 
 # terughalen
-#: ../app/actions/file-commands.c:407
+#: ../app/actions/file-commands.c:414
 msgid "Revert Image"
 msgstr "Afbeelding terugzetten"
 
 # terugdraaien/terugzetten
-#: ../app/actions/file-commands.c:438
+#: ../app/actions/file-commands.c:445
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "‘%s’ terugzetten naar ‘%s’?"
 
 # terugdraaien/terugzetten/herstellen
-#: ../app/actions/file-commands.c:444
+#: ../app/actions/file-commands.c:451
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -2504,11 +2504,11 @@ msgstr ""
 "opgeslagen zult u alle wijzigingen verliezen, inclusief alle informatie over "
 "ongedaan maken."
 
-#: ../app/actions/file-commands.c:655
+#: ../app/actions/file-commands.c:662
 msgid "(Unnamed Template)"
 msgstr "(Naamloze sjabloon)"
 
-#: ../app/actions/file-commands.c:706
+#: ../app/actions/file-commands.c:713
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -4411,91 +4411,76 @@ msgid "Fea_ther..."
 msgstr "_Verzachten…"
 
 #: ../app/actions/select-actions.c:76
-#, fuzzy
 msgctxt "select-action"
 msgid "Blur the selection border so that it fades out smoothly"
 msgstr "De selectierand vervagen zodat die geleidelijk uitvloeit"
 
 #: ../app/actions/select-actions.c:81
-#, fuzzy
 msgctxt "select-action"
 msgid "_Sharpen"
 msgstr "Ver_scherpen"
 
 #: ../app/actions/select-actions.c:82
-#, fuzzy
 msgctxt "select-action"
 msgid "Remove fuzziness from the selection"
 msgstr "Zachte randen van selectie verwijderen"
 
 #: ../app/actions/select-actions.c:87
-#, fuzzy
 msgctxt "select-action"
 msgid "S_hrink..."
 msgstr "_Krimpen…"
 
 #: ../app/actions/select-actions.c:88
-#, fuzzy
 msgctxt "select-action"
 msgid "Contract the selection"
 msgstr "De selectie verkleinen"
 
 #: ../app/actions/select-actions.c:93
-#, fuzzy
 msgctxt "select-action"
 msgid "_Grow..."
 msgstr "_Uitdijen…"
 
 #: ../app/actions/select-actions.c:94
-#, fuzzy
 msgctxt "select-action"
 msgid "Enlarge the selection"
 msgstr "De selectie vergroten"
 
 #: ../app/actions/select-actions.c:99
-#, fuzzy
 msgctxt "select-action"
 msgid "Bo_rder..."
 msgstr "_Rand…"
 
 #: ../app/actions/select-actions.c:100
-#, fuzzy
 msgctxt "select-action"
 msgid "Replace the selection by its border"
 msgstr "De selectie vervangen door de rand ervan"
 
 #: ../app/actions/select-actions.c:105
-#, fuzzy
 msgctxt "select-action"
 msgid "Save to _Channel"
 msgstr "Opslaan in _kanaal"
 
 #: ../app/actions/select-actions.c:106
-#, fuzzy
 msgctxt "select-action"
 msgid "Save the selection to a channel"
 msgstr "De selectie opslaan in een kanaal"
 
 #: ../app/actions/select-actions.c:111
-#, fuzzy
 msgctxt "select-action"
 msgid "_Stroke Selection..."
-msgstr "_Lijn tekenen op selectie…"
+msgstr "_Lijn tekenen langs selectie…"
 
 #: ../app/actions/select-actions.c:112
-#, fuzzy
 msgctxt "select-action"
 msgid "Paint along the selection outline"
 msgstr "Langs de selectie-omtrek tekenen"
 
 #: ../app/actions/select-actions.c:117
-#, fuzzy
 msgctxt "select-action"
 msgid "_Stroke Selection"
-msgstr "_Lijn tekenen op selectie"
+msgstr "_Lijn tekenen langs selectie"
 
 #: ../app/actions/select-actions.c:118
-#, fuzzy
 msgctxt "select-action"
 msgid "Stroke the selection with last used values"
 msgstr "Lijn tekenen op selectie met laatst gebruikte waarden"
@@ -4558,25 +4543,21 @@ msgid "Stroke Selection"
 msgstr "Lijn op selectie tekenen"
 
 #: ../app/actions/templates-actions.c:41
-#, fuzzy
 msgctxt "templates-action"
 msgid "Templates Menu"
 msgstr "Menu Sjablonen"
 
 #: ../app/actions/templates-actions.c:45
-#, fuzzy
 msgctxt "templates-action"
 msgid "_Create Image from Template"
 msgstr "_Afbeelding volgens sjabloon aanmaken"
 
 #: ../app/actions/templates-actions.c:46
-#, fuzzy
 msgctxt "templates-action"
 msgid "Create a new image from the selected template"
 msgstr "Nieuwe afbeelding aanmaken op basis van de geselecteerde sjabloon"
 
 #: ../app/actions/templates-actions.c:51
-#, fuzzy
 msgctxt "templates-action"
 msgid "_New Template..."
 msgstr "_Nieuwe sjabloon…"
@@ -4587,40 +4568,34 @@ msgid "Create a new template"
 msgstr "Nieuwe sjabloon aanmaken"
 
 #: ../app/actions/templates-actions.c:57
-#, fuzzy
 msgctxt "templates-action"
 msgid "D_uplicate Template..."
 msgstr "Sjabloon d_upliceren…"
 
 #: ../app/actions/templates-actions.c:58
-#, fuzzy
 msgctxt "templates-action"
 msgid "Duplicate this template"
-msgstr "Geselecteerde sjabloon dupliceren"
+msgstr "Deze sjabloon dupliceren"
 
 #: ../app/actions/templates-actions.c:63
-#, fuzzy
 msgctxt "templates-action"
 msgid "_Edit Template..."
 msgstr "Sjabloon be_werken…"
 
 #: ../app/actions/templates-actions.c:64
-#, fuzzy
 msgctxt "templates-action"
 msgid "Edit this template"
 msgstr "Sjabloon bewerken"
 
 #: ../app/actions/templates-actions.c:69
-#, fuzzy
 msgctxt "templates-action"
 msgid "_Delete Template"
 msgstr "Sjabloon _verwijderen"
 
 #: ../app/actions/templates-actions.c:70
-#, fuzzy
 msgctxt "templates-action"
 msgid "Delete this template"
-msgstr "Verwijder deze afbeelding"
+msgstr "Verwijder deze sjaboon"
 
 #: ../app/actions/templates-commands.c:110
 msgid "New Template"
@@ -4647,51 +4622,43 @@ msgstr ""
 "Bent u zeker dat u sjabloon '%s' van de lijst en van schijf wilt verwijderen?"
 
 #: ../app/actions/text-editor-actions.c:43
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "Open"
 msgstr "Openen"
 
 #: ../app/actions/text-editor-actions.c:44
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "Load text from file"
 msgstr "Tekst uit bestand laden"
 
 # wissen
 #: ../app/actions/text-editor-actions.c:49
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "Clear"
 msgstr "Leegmaken"
 
 #: ../app/actions/text-editor-actions.c:50
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "Clear all text"
 msgstr "Alle tekst wissen"
 
 # links naar rechts
 #: ../app/actions/text-editor-actions.c:58
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "LTR"
 msgstr "LNR"
 
 #: ../app/actions/text-editor-actions.c:59
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "From left to right"
 msgstr "Van links naar rechts"
 
 #: ../app/actions/text-editor-actions.c:64
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "RTL"
 msgstr "RNL"
 
 #: ../app/actions/text-editor-actions.c:65
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "From right to left"
 msgstr "Van rechts naar links"
@@ -4718,164 +4685,138 @@ msgstr "Kon '%s' niet openen om te lezen: %s"
 
 # Tool niet meevertaald
 #: ../app/actions/text-tool-actions.c:50
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Text Tool Menu"
 msgstr "Tekst"
 
 #: ../app/actions/text-tool-actions.c:54
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Input _Methods"
-msgstr "Invoerniveaus"
+msgstr "Invoer_methodes"
 
 #: ../app/actions/text-tool-actions.c:58
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Cu_t"
 msgstr "K_nippen"
 
 #: ../app/actions/text-tool-actions.c:63
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Copy"
 msgstr "_Kopiëren"
 
 #: ../app/actions/text-tool-actions.c:68
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Paste"
 msgstr "_Plakken"
 
 #: ../app/actions/text-tool-actions.c:73
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Delete"
-msgstr "Pad _verwijderen"
+msgstr "_Verwijderen"
 
 #: ../app/actions/text-tool-actions.c:78
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Open text file..."
-msgstr "Weergave _openen…"
+msgstr "Tekstbestand _openen…"
 
 # wissen
 #: ../app/actions/text-tool-actions.c:83
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Cl_ear"
 msgstr "_Wissen"
 
 #: ../app/actions/text-tool-actions.c:84
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Clear all text"
 msgstr "Alle tekst wissen"
 
 #: ../app/actions/text-tool-actions.c:89
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Path from Text"
-msgstr "St_atus en tekst"
+msgstr "_Pad van tekst"
 
 #: ../app/actions/text-tool-actions.c:91
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Create a path from the outlines of the current text"
-msgstr "Een pad van deze tekstlaag maken"
+msgstr "Een pad van deze tekst maken"
 
 #: ../app/actions/text-tool-actions.c:96
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Text _along Path"
 msgstr "Tekst lan_gs pad"
 
 #: ../app/actions/text-tool-actions.c:98
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Bend the text along the currently active path"
 msgstr "De tekst van deze laag langs het huidige pad plaatsen"
 
 #: ../app/actions/text-tool-actions.c:106
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "From left to right"
 msgstr "Van links naar rechts"
 
 #: ../app/actions/text-tool-actions.c:111
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "From right to left"
 msgstr "Van rechts naar links"
 
 #: ../app/actions/tool-options-actions.c:56
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "Tool Options Menu"
 msgstr "Menu Gereedschapsopties"
 
 #: ../app/actions/tool-options-actions.c:60
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "_Save Tool Preset"
-msgstr "Kleur verwij_deren"
+msgstr "Gereedschapsopties op_slaan"
 
 #: ../app/actions/tool-options-actions.c:64
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "_Restore Tool Preset"
-msgstr "_Penselen vernieuwen"
+msgstr "Gereedschapsopties _herstellen"
 
 #: ../app/actions/tool-options-actions.c:68
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "E_dit Tool Preset"
-msgstr "Kleur be_werken…"
+msgstr "Gereedschapsopties be_werken"
 
 #: ../app/actions/tool-options-actions.c:72
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "_Delete Tool Preset"
-msgstr "Kleur verwij_deren"
+msgstr "Gereedschapsopties ver_wijderen"
 
 #: ../app/actions/tool-options-actions.c:76
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "_New Tool Preset..."
-msgstr "Kleur be_werken…"
+msgstr "_Nieuwe gereedschapsopties…"
 
 # opnieuw instellen/herstellen
 #: ../app/actions/tool-options-actions.c:81
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "R_eset Tool Options"
 msgstr "Gereedschapsopties _herstellen"
 
 # beginwaarden/standaardwaarden
 #: ../app/actions/tool-options-actions.c:82
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "Reset to default values"
 msgstr "Terugzetten naar standaardwaarden"
 
 # herstellen/opnieuw instellen/resetten
 #: ../app/actions/tool-options-actions.c:87
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "Reset _all Tool Options"
 msgstr "_Alle gereedschapsopties resetten"
 
 #: ../app/actions/tool-options-actions.c:88
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "Reset all tool options"
 msgstr "Alle gereedschapsopties resetten"
 
 # herstellen/opnieuw instellen/resetten
 #: ../app/actions/tool-options-commands.c:186
-#, fuzzy
 msgid "Reset All Tool Options"
-msgstr "_Alle gereedschapsopties resetten"
+msgstr "Alle gereedschapsopties resetten"
 
 #: ../app/actions/tool-options-commands.c:209
 msgid "Do you really want to reset all tool options to default values?"
@@ -4884,98 +4825,82 @@ msgstr ""
 "terugbrengen?"
 
 #: ../app/actions/tool-presets-actions.c:44
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Tool Presets Menu"
-msgstr "Menu Gereedschap"
+msgstr "Menu Gereedschapsopties"
 
 #: ../app/actions/tool-presets-actions.c:48
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "_New Tool Preset"
-msgstr "Kleur verwij_deren"
+msgstr "_Nieuwe gereedschapsoptie"
 
 #: ../app/actions/tool-presets-actions.c:49
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Create a new tool preset"
-msgstr "Nieuwe sjabloon aanmaken"
+msgstr "Nieuwe gereedschapsopties maken"
 
 #: ../app/actions/tool-presets-actions.c:54
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "D_uplicate Tool Preset"
-msgstr "Pad d_upliceren"
+msgstr "Gereedschapopties d_upliceren"
 
 #: ../app/actions/tool-presets-actions.c:55
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Duplicate this tool preset"
-msgstr "Palet dupliceren"
+msgstr "Deze gereedschapopties dupliceren"
 
 #: ../app/actions/tool-presets-actions.c:60
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Copy Tool Preset _Location"
-msgstr "_Paletlocatie kopiëren"
+msgstr "_Locatie gereedschapopties kopiëren"
 
 #: ../app/actions/tool-presets-actions.c:61
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Copy tool preset file location to clipboard"
-msgstr "Locatie van het paletbestand kopiëren naar klembord"
+msgstr "Locatie van het gereedschapoptiesbestand kopiëren naar klembord"
 
 #: ../app/actions/tool-presets-actions.c:66
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "_Delete Tool Preset"
-msgstr "Kleur verwij_deren"
+msgstr "Gereedschapopties verwij_deren"
 
 #: ../app/actions/tool-presets-actions.c:67
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Delete this tool preset"
-msgstr "Deze laag verwijderen"
+msgstr "Deze gereedschapsopties verwijderen"
 
 #: ../app/actions/tool-presets-actions.c:72
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "_Refresh Tool Presets"
-msgstr "_Penselen vernieuwen"
+msgstr "Gereedschapsopties _vernieuwen"
 
 #: ../app/actions/tool-presets-actions.c:73
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Refresh tool presets"
-msgstr "Penselen vernieuwen"
+msgstr "Gereedschapsopties vernieuwen"
 
 #: ../app/actions/tool-presets-actions.c:81
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "_Edit Tool Preset..."
-msgstr "Kleur be_werken…"
+msgstr "Gereedschapsopties be_werken…"
 
 #: ../app/actions/tool-presets-actions.c:82
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Edit this tool preset"
-msgstr "Deze laag verwijderen"
+msgstr "Deze gereedschapsopties bewerken"
 
 #: ../app/actions/tool-preset-editor-actions.c:42
-#, fuzzy
 msgctxt "tool-preset-editor-action"
 msgid "Tool Preset Editor Menu"
-msgstr "Menu Paletbewerker"
+msgstr "Menu Gereedschapsopties"
 
 #: ../app/actions/tool-preset-editor-actions.c:50
-#, fuzzy
 msgctxt "tool-preset-editor-action"
 msgid "Edit Active Tool Preset"
-msgstr "Actieve palet bewerken"
+msgstr "Actieve gereedschapsopties bewerken"
 
 # Attention! Singular in Dutch!
 #: ../app/actions/tools-actions.c:45
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Tools"
 msgstr "_Gereedschap"
@@ -4983,7 +4908,6 @@ msgstr "_Gereedschap"
 # Selectiegereedschap
 # het is hier duidelijker om 'tools' niet mee te vertalen
 #: ../app/actions/tools-actions.c:46
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Selection Tools"
 msgstr "_Selectie"
@@ -4992,7 +4916,6 @@ msgstr "_Selectie"
 # schilderen en tekenen kan dus allebei.
 # tekenen vond ik net iets duidelijker
 #: ../app/actions/tools-actions.c:47
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Paint Tools"
 msgstr "T_ekenen"
@@ -5001,326 +4924,273 @@ msgstr "T_ekenen"
 # is niet consequent met 'tekenen' of 'schilderen'
 # maar het is hier mooier dan Transformeren
 #: ../app/actions/tools-actions.c:48
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Transform Tools"
 msgstr "_Transformatie"
 
 # kleur/kleuren
 #: ../app/actions/tools-actions.c:49
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Color Tools"
 msgstr "_Kleur"
 
 #: ../app/actions/tools-actions.c:55
-#, fuzzy
 msgctxt "tools-action"
 msgid "_By Color"
 msgstr "Op _kleur"
 
 #: ../app/actions/tools-actions.c:56
-#, fuzzy
 msgctxt "tools-action"
 msgid "Select regions with similar colors"
-msgstr "Gebieden met gelijkaardige kleuren selecteren"
+msgstr "Gebieden met gelijkende kleuren selecteren"
 
 #: ../app/actions/tools-actions.c:61
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Arbitrary Rotation..."
 msgstr "_Willekeurige draaiing…"
 
 #: ../app/actions/tools-actions.c:62
-#, fuzzy
 msgctxt "tools-action"
 msgid "Rotate by an arbitrary angle"
 msgstr "Met een willekeurige hoek draaien"
 
 #: ../app/actions/vectors-actions.c:44
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Paths Menu"
 msgstr "Menu Paden"
 
 # tool niet meevertaald
 #: ../app/actions/vectors-actions.c:48
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Path _Tool"
 msgstr "_Pad"
 
 #: ../app/actions/vectors-actions.c:53
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Edit Path Attributes..."
 msgstr "Padattributen be_werken…"
 
 #: ../app/actions/vectors-actions.c:54
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Edit path attributes"
 msgstr "Padattributen bewerken"
 
 #: ../app/actions/vectors-actions.c:59
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_New Path..."
 msgstr "_Nieuw pad…"
 
 #: ../app/actions/vectors-actions.c:60
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Create a new path..."
-msgstr "Nieuwe sjabloon aanmaken"
+msgstr "Nieuw pad aanmaken…"
 
 #: ../app/actions/vectors-actions.c:65
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_New Path with last values"
-msgstr "Nieuw pad met laatste waarden"
+msgstr "_Nieuw pad met laatste waarden"
 
 #: ../app/actions/vectors-actions.c:66
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Create a new path with last used values"
-msgstr "Een nieuwe laag aanmaken met de laatst gebruikte waarden"
+msgstr "Een nieuw pad aanmaken met de laatst gebruikte waarden"
 
 #: ../app/actions/vectors-actions.c:71
-#, fuzzy
 msgctxt "vectors-action"
 msgid "D_uplicate Path"
 msgstr "Pad d_upliceren"
 
 #: ../app/actions/vectors-actions.c:72
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Duplicate this path"
 msgstr "Pad dupliceren"
 
 #: ../app/actions/vectors-actions.c:77
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Delete Path"
 msgstr "Pad _verwijderen"
 
 #: ../app/actions/vectors-actions.c:78
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Delete this path"
 msgstr "Pad verwijderen"
 
 #: ../app/actions/vectors-actions.c:83
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Merge _Visible Paths"
 msgstr "Zichtbare paden samen_voegen"
 
 # verhogen
 #: ../app/actions/vectors-actions.c:88
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Raise Path"
 msgstr "Pad om_hoog"
 
 #: ../app/actions/vectors-actions.c:89
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Raise this path"
 msgstr "Pad omhoog"
 
 #: ../app/actions/vectors-actions.c:94
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Raise Path to _Top"
 msgstr "Pad naar _top"
 
 #: ../app/actions/vectors-actions.c:95
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Raise this path to the top"
 msgstr "Pad naar top"
 
 #: ../app/actions/vectors-actions.c:100
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Lower Path"
 msgstr "Pad om_laag"
 
 # verlagen
 #: ../app/actions/vectors-actions.c:101
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Lower this path"
 msgstr "Pad omlaag"
 
 #: ../app/actions/vectors-actions.c:106
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Lower Path to _Bottom"
 msgstr "Pad naar _bodem"
 
 #: ../app/actions/vectors-actions.c:107
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Lower this path to the bottom"
 msgstr "Pad naar bodem"
 
 #: ../app/actions/vectors-actions.c:112
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Stro_ke Path..."
-msgstr "_Lijn tekenen op pad…"
+msgstr "_Lijn tekenen langs pad…"
 
 #: ../app/actions/vectors-actions.c:113
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Paint along the path"
-msgstr "Lijn tekenen op pad"
+msgstr "Lijn tekenen langs pad"
 
 #: ../app/actions/vectors-actions.c:118
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Stro_ke Path"
-msgstr "Lijn tekenen op pad"
+msgstr "Lijn tekenen langs pad"
 
 #: ../app/actions/vectors-actions.c:119
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Paint along the path with last values"
-msgstr "Lijn tekenen op pad met laatst gebruikte waarden"
+msgstr "Lijn tekenen langs pad met laatst gebruikte waarden"
 
 #: ../app/actions/vectors-actions.c:124
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Co_py Path"
 msgstr "Pad _kopiëren"
 
 #: ../app/actions/vectors-actions.c:129
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Paste Pat_h"
 msgstr "Pad _plakken"
 
 #: ../app/actions/vectors-actions.c:134
-#, fuzzy
 msgctxt "vectors-action"
 msgid "E_xport Path..."
 msgstr "Pad e_xporteren…"
 
 #: ../app/actions/vectors-actions.c:139
-#, fuzzy
 msgctxt "vectors-action"
 msgid "I_mport Path..."
 msgstr "Pad i_mporteren…"
 
 #: ../app/actions/vectors-actions.c:147
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Visible"
 msgstr "_Zichtbaar"
 
 #: ../app/actions/vectors-actions.c:153
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Linked"
 msgstr "_Gekoppeld"
 
 #. GIMP_STOCK_LOCK
 #: ../app/actions/vectors-actions.c:159
-#, fuzzy
 msgctxt "vectors-action"
 msgid "L_ock strokes"
-msgstr "Lijnen verbinden"
+msgstr "Lijnen ver_grendelen"
 
 #: ../app/actions/vectors-actions.c:168
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Path to Sele_ction"
 msgstr "Pad naar sele_ctie"
 
 #: ../app/actions/vectors-actions.c:169
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Path to selection"
 msgstr "Pad naar selectie"
 
 #: ../app/actions/vectors-actions.c:174
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Fr_om Path"
 msgstr "_Uit pad"
 
 #: ../app/actions/vectors-actions.c:175
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Replace selection with path"
-msgstr "Selectie vervangen door dit kanaal"
+msgstr "Selectie vervangen door pad"
 
 #: ../app/actions/vectors-actions.c:180
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Add to Selection"
-msgstr "_Aan selectie toevoegen"
+msgstr "_Toevoegen aan selectie"
 
 #: ../app/actions/vectors-actions.c:181
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Add path to selection"
-msgstr "Pad naar selectie"
+msgstr "Pad aan selectie toevoegen"
 
 # afhalen
 #: ../app/actions/vectors-actions.c:186
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Subtract from Selection"
-msgstr "_Van selectie aftrekken"
+msgstr "_Aftrekken van selectie"
 
 # afhalen
 #: ../app/actions/vectors-actions.c:187
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Subtract path from selection"
-msgstr "_Van selectie aftrekken"
+msgstr "Pad van selectie aftrekken"
 
 #: ../app/actions/vectors-actions.c:192
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Intersect with Selection"
 msgstr "Door_snede met selectie"
 
 #: ../app/actions/vectors-actions.c:193
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Intersect path with selection"
 msgstr "Door_snede met selectie"
 
 #: ../app/actions/vectors-actions.c:201
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Selecti_on to Path"
 msgstr "Sele_ctie naar pad"
 
 #: ../app/actions/vectors-actions.c:202 ../app/actions/vectors-actions.c:208
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Selection to path"
 msgstr "Selectie naar pad"
 
 #: ../app/actions/vectors-actions.c:207
-#, fuzzy
 msgctxt "vectors-action"
 msgid "To _Path"
 msgstr "Naar _pad"
 
 #: ../app/actions/vectors-actions.c:213
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "Selectie naar pad (ge_avanceerd)"
 
 #: ../app/actions/vectors-actions.c:214
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Advanced options"
 msgstr "Geavanceerde opties"
@@ -5353,67 +5223,56 @@ msgstr "Pad naar lijn"
 
 # view-actions = menu: Beeld
 #: ../app/actions/view-actions.c:68
-#, fuzzy
 msgctxt "view-action"
 msgid "_View"
 msgstr "Beel_d"
 
 #: ../app/actions/view-actions.c:69
-#, fuzzy
 msgctxt "view-action"
 msgid "_Zoom"
 msgstr "_Zoomen"
 
 #: ../app/actions/view-actions.c:70
-#, fuzzy
 msgctxt "view-action"
 msgid "_Padding Color"
 msgstr "_Opvulkleur"
 
 #: ../app/actions/view-actions.c:72
-#, fuzzy
 msgctxt "view-action"
 msgid "Move to Screen"
 msgstr "Verplaatsen naar scherm"
 
 #: ../app/actions/view-actions.c:76
-#, fuzzy
 msgctxt "view-action"
 msgid "_New View"
-msgstr "_Nieuw beeld"
+msgstr "_Nieuwe weergave"
 
 #: ../app/actions/view-actions.c:77
-#, fuzzy
 msgctxt "view-action"
 msgid "Create another view on this image"
 msgstr "Een nieuwe weergave voor deze afbeelding aanmaken"
 
 #: ../app/actions/view-actions.c:82
-#, fuzzy
 msgctxt "view-action"
 msgid "_Close"
 msgstr "Sl_uiten"
 
 #: ../app/actions/view-actions.c:83
-#, fuzzy
 msgctxt "view-action"
 msgid "Close this image window"
 msgstr "Dit afbeeldingsvenster sluiten"
 
 #: ../app/actions/view-actions.c:88
-#, fuzzy
 msgctxt "view-action"
 msgid "_Fit Image in Window"
 msgstr "A_fbeelding in venster passen"
 
 #: ../app/actions/view-actions.c:89
-#, fuzzy
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the image becomes fully visible"
 msgstr "Het zoomniveau aanpassen zodat de volledige afbeelding zichtbaar wordt"
 
 #: ../app/actions/view-actions.c:94
-#, fuzzy
 msgctxt "view-action"
 msgid "Fi_ll Window"
 msgstr "Venster vu_llen"
@@ -5670,15 +5529,14 @@ msgid "Toggle fullscreen view"
 msgstr "Weergave op volledig scherm inschakelen"
 
 #: ../app/actions/view-actions.c:238
-#, fuzzy
 msgctxt "view-action"
 msgid "Use GEGL"
-msgstr "_GEGL gebruiken"
+msgstr "GEGL gebruiken"
 
 #: ../app/actions/view-actions.c:239
 msgctxt "view-action"
 msgid "Use GEGL to create this window's projection"
-msgstr ""
+msgstr "GEGL gebruiken voor de projectie van dit venster"
 
 #: ../app/actions/view-actions.c:263
 #, fuzzy
@@ -9817,7 +9675,7 @@ msgstr "Afbeelding terugzetten"
 msgid "_Export"
 msgstr "_Importeren"
 
-#: ../app/dialogs/file-save-dialog.c:431
+#: ../app/dialogs/file-save-dialog.c:432
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -9827,19 +9685,19 @@ msgstr ""
 "worden van de sextensie. Vul een extensie in die overeenkomt met het "
 "bestandsformaat of vul helemaal geen extensie in."
 
-#: ../app/dialogs/file-save-dialog.c:558
+#: ../app/dialogs/file-save-dialog.c:559
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
 msgstr ""
 
-#: ../app/dialogs/file-save-dialog.c:565
+#: ../app/dialogs/file-save-dialog.c:566
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
 msgstr ""
 
-#: ../app/dialogs/file-save-dialog.c:571
+#: ../app/dialogs/file-save-dialog.c:572
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -9847,24 +9705,24 @@ msgstr ""
 "De gegeven bestandsnaam heeft geen bekende bestandsextensie. Geef een "
 "bekende extensie of kies een bestandsformaat uit de bestandsformaatlijst."
 
-#: ../app/dialogs/file-save-dialog.c:585
+#: ../app/dialogs/file-save-dialog.c:586
 msgid "Extension Mismatch"
 msgstr "Extensies komen niet overeen"
 
-#: ../app/dialogs/file-save-dialog.c:601
+#: ../app/dialogs/file-save-dialog.c:602
 msgid "The given file extension does not match the chosen file type."
 msgstr ""
 "De opgegeven bestandsextensie komt niet overeen met het gekozen bestandstype."
 
-#: ../app/dialogs/file-save-dialog.c:605
+#: ../app/dialogs/file-save-dialog.c:606
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Wilt u de afbeelding toch onder deze naam opslaan?"
 
-#: ../app/dialogs/file-save-dialog.c:660
+#: ../app/dialogs/file-save-dialog.c:664
 msgid "Saving canceled"
 msgstr "Opslaan geannuleerd"
 
-#: ../app/dialogs/file-save-dialog.c:668 ../app/widgets/gimpdnd-xds.c:185
+#: ../app/dialogs/file-save-dialog.c:672 ../app/widgets/gimpdnd-xds.c:186
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -11596,7 +11454,7 @@ msgstr "Nieuw importeren"
 msgid "Cancel <i>%s</i>"
 msgstr "<i>%s</i> annuleren"
 
-#: ../app/file/file-open.c:136 ../app/file/file-save.c:112
+#: ../app/file/file-open.c:136 ../app/file/file-save.c:115
 msgid "Not a regular file"
 msgstr "Niet een standaard bestand"
 
@@ -11631,7 +11489,7 @@ msgstr ""
 msgid "Unknown file type"
 msgstr "Onbekend bestandstype"
 
-#: ../app/file/file-save.c:208
+#: ../app/file/file-save.c:219
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "Plug-in %s kon afbeeldingen niet opslaan"
@@ -12824,14 +12682,13 @@ msgstr "Betrokken gebied (%s)"
 msgid "Fill whole selection"
 msgstr "Hele selectie vullen"
 
-# gelijkende/gelijkaardige/gelijkwaardige/eendere
 #: ../app/tools/gimpbucketfilloptions.c:249
 msgid "Fill similar colors"
-msgstr "Gelijkaardige kleuren vullen"
+msgstr "Gelijkende kleuren vullen"
 
 #: ../app/tools/gimpbucketfilloptions.c:258
 msgid "Finding Similar Colors"
-msgstr "Gelijkaardige kleuren zoeken"
+msgstr "Gelijkende kleuren zoeken"
 
 #: ../app/tools/gimpbucketfilloptions.c:273
 msgid "Fill transparent areas"
@@ -12867,7 +12724,7 @@ msgstr "Selecteren op kleur"
 
 #: ../app/tools/gimpbycolorselecttool.c:68
 msgid "Select by Color Tool: Select regions with similar colors"
-msgstr "Selecteren op kleur: gebieden met gelijkaardige kleuren selecteren"
+msgstr "Selecteren op kleur: gebieden met gelijkende kleuren selecteren"
 
 #: ../app/tools/gimpbycolorselecttool.c:69
 msgid "_By Color Select"
@@ -14529,40 +14386,40 @@ msgstr "Anti-aliasing"
 msgid "Feather edges"
 msgstr "Zachte randen"
 
-#: ../app/tools/gimpselectiontool.c:250
+#: ../app/tools/gimpselectiontool.c:255
 msgid "Click-Drag to replace the current selection"
 msgstr "Klik en sleep om de huidige selectie vervangen"
 
-#: ../app/tools/gimpselectiontool.c:258
+#: ../app/tools/gimpselectiontool.c:263
 msgid "Click-Drag to create a new selection"
 msgstr "Klik en sleep om een nieuwe selectie aan te maken"
 
-#: ../app/tools/gimpselectiontool.c:263
+#: ../app/tools/gimpselectiontool.c:268
 msgid "Click-Drag to add to the current selection"
 msgstr "Klik en sleep om aan de huidige selectie toe te voegen"
 
-#: ../app/tools/gimpselectiontool.c:272
+#: ../app/tools/gimpselectiontool.c:277
 msgid "Click-Drag to subtract from the current selection"
 msgstr "Klik en sleep om van de huidige selectie af te trekken"
 
-#: ../app/tools/gimpselectiontool.c:281
+#: ../app/tools/gimpselectiontool.c:286
 msgid "Click-Drag to intersect with the current selection"
 msgstr "Klik en sleep voor een doorsnede met de huidige selectie"
 
-#: ../app/tools/gimpselectiontool.c:291
+#: ../app/tools/gimpselectiontool.c:296
 msgid "Click-Drag to move the selection mask"
 msgstr "Klik en sleep om het selectiekader te verplaatsen"
 
-#: ../app/tools/gimpselectiontool.c:299
+#: ../app/tools/gimpselectiontool.c:304
 msgid "Click-Drag to move the selected pixels"
 msgstr "Klik en sleep om de geselecteerde beeldpunten te verplaatsen"
 
-#: ../app/tools/gimpselectiontool.c:303
+#: ../app/tools/gimpselectiontool.c:308
 msgid "Click-Drag to move a copy of the selected pixels"
 msgstr ""
 "Klik en sleep om een kopie van de geselecteerde beeldpunten te verplaatsen"
 
-#: ../app/tools/gimpselectiontool.c:307
+#: ../app/tools/gimpselectiontool.c:312
 msgid "Click to anchor the floating selection"
 msgstr "Klik om de drijvende selectie te verankeren"
 
@@ -14746,7 +14603,7 @@ msgstr ""
 "U kunt de laag bewerken of een nieuwe tekstlaag maken uit zijn "
 "tekstattributen."
 
-#: ../app/tools/gimptexttool-editor.c:1172
+#: ../app/tools/gimptexttool-editor.c:1180
 msgid "GIMP Text Editor"
 msgstr "GIMP-tekstbewerker"
 
@@ -15912,24 +15769,24 @@ msgstr "Voorgrond: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Achtergrond: %d, %d, %d"
 
-#: ../app/widgets/gimpdnd-xds.c:203
+#: ../app/widgets/gimpdnd-xds.c:204
 msgid "The given filename does not have any known file extension."
 msgstr "De opgegeven bestandsnaam heeft geen bekende extensie."
 
-#: ../app/widgets/gimpdnd-xds.c:221
+#: ../app/widgets/gimpdnd-xds.c:222
 msgid "File Exists"
 msgstr "Bestand bestaat"
 
-#: ../app/widgets/gimpdnd-xds.c:226
+#: ../app/widgets/gimpdnd-xds.c:227
 msgid "_Replace"
 msgstr "_Vervangen"
 
-#: ../app/widgets/gimpdnd-xds.c:237
+#: ../app/widgets/gimpdnd-xds.c:238
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr "Een bestand genaamd '%s' bestaat al."
 
-#: ../app/widgets/gimpdnd-xds.c:242
+#: ../app/widgets/gimpdnd-xds.c:243
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "Wilt u het vervangen door de afbeelding die u aan het opslaan bent?"
 
