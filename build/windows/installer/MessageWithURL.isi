@@ -55,7 +55,7 @@ function DrawIcon(hdc: HBitmap; x,y: Integer; hIcon: Integer): Integer; external
 function DrawFocusRect(hDC: Integer; var lprc: TRect): BOOL; external 'DrawFocusRect@user32 stdcall';
 
 type
-	TArrayOfButton = Array of TButton;
+	TArrayOfButton = Array of TNewButton;
 
 const
 	//borders around message
@@ -343,7 +343,7 @@ begin
 	SetArrayLength(Button,GetArrayLength(ButtonText));
 	for i := 0 to GetArrayLength(Button) - 1 do
 	begin
-		Button[i] := TButton.Create(MessageForm);
+		Button[i] := TNewButton.Create(MessageForm);
 		with Button[i] do
 		begin
 			Parent := MessageForm;

@@ -262,13 +262,13 @@ begin
 	SelAll := CustomMessage('SelectAssociationsSelectAll')
 	UnselAll := CustomMessage('SelectAssociationsUnselectAll');
 
-	if TButton(Sender).Caption = SelAll then
+	if TNewButton(Sender).Caption = SelAll then
 	begin
 	
 		for i := 0 to GetArrayLength(Associations.Association) - 1 do
 			Associations.AssociationsPage.clbAssociations.Checked[i] := True;
 
-		TButton(Sender).Caption := UnselAll;
+		TNewButton(Sender).Caption := UnselAll;
 
 	end else
 	begin
@@ -277,7 +277,7 @@ begin
 			if Associations.Association[i].Associated = False then //don't uncheck associations that are already active
 				Associations.AssociationsPage.clbAssociations.Checked[i] := False;
 
-		TButton(Sender).Caption := SelAll;
+		TNewButton(Sender).Caption := SelAll;
 
 	end;
 

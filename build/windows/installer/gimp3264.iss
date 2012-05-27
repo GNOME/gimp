@@ -358,7 +358,7 @@ var
 	end;
 
 	//pgSimple: TWizardPage;
-	btnInstall, btnCustomize: TButton;
+	btnInstall, btnCustomize: TNewButton;
 
 	InstallMode: (imNone, imSimple, imCustom, imRebootContinue);
 
@@ -535,7 +535,7 @@ begin
 
 	CleanUpCustomWelcome();
 
-	WizardForm.NextButton.OnClick(TButton(Sender).Parent);
+	WizardForm.NextButton.OnClick(TNewButton(Sender).Parent);
 end;
 
 
@@ -546,13 +546,13 @@ begin
 	
 	CleanUpCustomWelcome();
 
-	WizardForm.NextButton.OnClick(TButton(Sender).Parent);
+	WizardForm.NextButton.OnClick(TNewButton(Sender).Parent);
 end;
 
 
 procedure InitCustomPages();
 var lblAssocInfo: TNewStaticText;
-	btnSelectAll,btnSelectUnused: TButton;
+	btnSelectAll,btnSelectUnused: TNewButton;
 	i: Integer;
 	//lblInfo: TNewStaticText;
 begin
@@ -608,7 +608,7 @@ begin
 
 	end;
 
-	btnSelectUnused := TButton.Create(Associations.AssociationsPage.Page);
+	btnSelectUnused := TNewButton.Create(Associations.AssociationsPage.Page);
 	with btnSelectUnused do
 	begin
 		Parent := Associations.AssociationsPage.Page.Surface;
@@ -620,7 +620,7 @@ begin
 		OnClick := @Associations_SelectUnused;
 	end;
 
-	btnSelectAll := TButton.Create(Associations.AssociationsPage.Page);
+	btnSelectAll := TNewButton.Create(Associations.AssociationsPage.Page);
 	with btnSelectAll do
 	begin
 		Parent := Associations.AssociationsPage.Page.Surface;
@@ -651,7 +651,7 @@ begin
 		Caption := CustomMessage('InstallOrCustomize');
 	end;*)
 
-	btnInstall := TButton.Create(WizardForm);
+	btnInstall := TNewButton.Create(WizardForm);
 	with btnInstall do
 	begin
 		Parent := WizardForm;
@@ -666,7 +666,7 @@ begin
 		OnClick := @InstallOnClick;
 	end;
 
-	btnCustomize := TButton.Create(WizardForm);
+	btnCustomize := TNewButton.Create(WizardForm);
 	with btnCustomize do
 	begin
 		Parent := WizardForm;
