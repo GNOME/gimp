@@ -25,8 +25,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-27 16:12+0200\n"
-"PO-Revision-Date: 2012-05-27 15:17+0200\n"
+"POT-Creation-Date: 2012-05-27 16:39+0200\n"
+"PO-Revision-Date: 2012-05-27 16:39+0200\n"
 "Last-Translator: Wouter Bolsterlee <wbolster@gnome.org>\n"
 "Language-Team: Dutch <nl@vrijschrift.org>\n"
 "Language: nl\n"
@@ -200,7 +200,7 @@ msgstr "Produceer een gimprc-bestand met standaard instellingen"
 
 #: ../app/main.c:271
 msgid "Output a sorted list of deprecated procedures in the PDB"
-msgstr ""
+msgstr "Gesorteerde lijst van verouderde procedures in the PDB tonen"
 
 #: ../app/main.c:389
 msgid "[FILE|URI...]"
@@ -481,13 +481,13 @@ msgstr "Vensters"
 #: ../app/actions/actions.c:584
 #, c-format
 msgid "%s: %.2f"
-msgstr ""
+msgstr "%s: %.2f"
 
 #. value description and new value shown in the status bar
 #: ../app/actions/actions.c:610
 #, c-format
 msgid "%s: %d"
-msgstr ""
+msgstr "%s: %d"
 
 #: ../app/actions/brush-editor-actions.c:42
 msgctxt "brush-editor-action"
@@ -2246,7 +2246,7 @@ msgstr "_Foutenlog in bestand opslaan…"
 #: ../app/actions/error-console-actions.c:59
 msgctxt "error-console-action"
 msgid "Write all error messages to a file"
-msgstr ""
+msgstr "Alle foutmeldingen in een bestand opslaan"
 
 #: ../app/actions/error-console-actions.c:64
 msgctxt "error-console-action"
@@ -2392,6 +2392,8 @@ msgid ""
 "Save a copy of this image, without affecting the source file (if any) or the "
 "current state of the image"
 msgstr ""
+"Een kopie van deze afbeelding opslaan, zonder aanpassingen aan het "
+"bronbestand of de huidige staat van de afbeelding te doen."
 
 #: ../app/actions/file-actions.c:140
 msgctxt "file-action"
@@ -2977,7 +2979,7 @@ msgstr "Kleurverloop bewerken"
 #: ../app/actions/gradients-commands.c:65
 #, c-format
 msgid "Save '%s' as POV-Ray"
-msgstr "'%s' opslaan als POV-Ray"
+msgstr "‘%s’ opslaan als POV-Ray"
 
 #: ../app/actions/help-actions.c:37 ../app/actions/help-actions.c:40
 msgctxt "help-action"
@@ -3042,7 +3044,7 @@ msgstr "_Automatisch"
 #: ../app/actions/image-actions.c:63
 msgctxt "image-action"
 msgid "_Map"
-msgstr ""
+msgstr "In _kaart brengen"
 
 # frame for Comment
 #: ../app/actions/image-actions.c:64
@@ -4680,7 +4682,7 @@ msgstr "Open tekstbestand (UTF-8)"
 #: ../app/xcf/xcf.c:329
 #, c-format
 msgid "Could not open '%s' for reading: %s"
-msgstr "Kon '%s' niet openen om te lezen: %s"
+msgstr "Kon ‘%s’ niet openen om te lezen: %s"
 
 # Tool niet meevertaald
 #: ../app/actions/text-tool-actions.c:50
@@ -6083,17 +6085,17 @@ msgstr "Rechtshandig"
 #: ../app/xcf/xcf.c:422
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Kon '%s' niet openen om te schrijven: %s"
+msgstr "Kon ‘%s’ niet openen om te schrijven: %s"
 
 #: ../app/config/gimpconfig-file.c:78 ../app/config/gimpconfig-file.c:101
 #, c-format
 msgid "Error writing '%s': %s"
-msgstr "Fout bij schrijven naar '%s': %s"
+msgstr "Fout bij schrijven naar ‘%s’: %s"
 
 #: ../app/config/gimpconfig-file.c:89
 #, c-format
 msgid "Error reading '%s': %s"
-msgstr "Fout tijdens lezen van '%s': %s"
+msgstr "Fout tijdens lezen van ‘%s’: %s"
 
 #: ../app/config/gimpconfig-file.c:131
 #, c-format
@@ -7019,7 +7021,7 @@ msgstr "Afbeelding schalen"
 #: ../app/core/core-enums.c:835
 msgctxt "undo-type"
 msgid "Resize image"
-msgstr "Afbeelding van grootte veranderen"
+msgstr "Grootte afbeelding wijzigen"
 
 #: ../app/core/core-enums.c:836
 msgctxt "undo-type"
@@ -7120,7 +7122,7 @@ msgstr "Item schalen"
 #: ../app/core/core-enums.c:855
 msgctxt "undo-type"
 msgid "Resize item"
-msgstr "Item van grootte veranderen"
+msgstr "Grootte item wijzigen"
 
 #: ../app/core/core-enums.c:856
 msgctxt "undo-type"
@@ -7551,17 +7553,17 @@ msgstr ""
 #: ../app/core/gimp-user-install.c:329
 #, c-format
 msgid "Copying file '%s' from '%s'..."
-msgstr "Bestand '%s' wordt gekopieerd uit '%s'…"
+msgstr "Bestand ‘%s’ wordt gekopieerd uit ‘%s’…"
 
 #: ../app/core/gimp-user-install.c:344 ../app/core/gimp-user-install.c:370
 #, c-format
 msgid "Creating folder '%s'..."
-msgstr "Map '%s' wordt aangemaakt…"
+msgstr "Map ‘%s’ wordt aangemaakt…"
 
 #: ../app/core/gimp-user-install.c:355 ../app/core/gimp-user-install.c:381
 #, c-format
 msgid "Cannot create folder '%s': %s"
-msgstr "Kan map '%s' niet aanmaken: %s"
+msgstr "Kan map ‘%s’ niet aanmaken: %s"
 
 #: ../app/core/gimp.c:595
 msgid "Initialization"
@@ -7612,27 +7614,27 @@ msgstr[1] "Kan %d bytes niet lezen uit ‘%s’: %s"
 #: ../app/core/gimpbrush-load.c:200
 #, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
-msgstr "Fatale verwerkingsfout in penseelbestand '%s': breedte = 0."
+msgstr "Fatale verwerkingsfout in penseelbestand ‘%s’: breedte = 0."
 
 #: ../app/core/gimpbrush-load.c:209
 #, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
-msgstr "Fatale verwerkingsfout in penseelbestand '%s': hoogte = 0."
+msgstr "Fatale verwerkingsfout in penseelbestand ‘%s’: hoogte = 0."
 
 #: ../app/core/gimpbrush-load.c:218
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
-msgstr "Fatale verwerkingsfout in penseelbestand '%s': bytes = 0."
+msgstr "Fatale verwerkingsfout in penseelbestand ‘%s’: bytes = 0."
 
 #: ../app/core/gimpbrush-load.c:242
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
-msgstr "Fatale verwerkingsfout in penseelbestand '%s': onbekende diepte %d."
+msgstr "Fatale verwerkingsfout in penseelbestand ‘%s’: onbekende diepte %d."
 
 #: ../app/core/gimpbrush-load.c:255
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
-msgstr "Fatale verwerkingsfout in penseelbestand '%s': onbekende versie %d."
+msgstr "Fatale verwerkingsfout in penseelbestand ‘%s’: onbekende versie %d."
 
 #: ../app/core/gimpbrush-load.c:271 ../app/core/gimpbrush-load.c:391
 #: ../app/core/gimpbrush-load.c:725
@@ -7646,7 +7648,7 @@ msgstr ""
 #: ../app/core/gimpbrushpipe-load.c:97
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "Ongeldige UTF-8-tekenreeks in penseelbestand '%s'."
+msgstr "Ongeldige UTF-8-tekenreeks in penseelbestand ‘%s’."
 
 #: ../app/core/gimpbrush-load.c:286 ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:83
@@ -7718,7 +7720,7 @@ msgstr "Bestand is afgekapt op regel %d"
 #: ../app/core/gimpbrushgenerated-load.c:231
 #, c-format
 msgid "Error while reading brush file '%s': %s"
-msgstr "Fout tijdens lezen penseelbestand '%s': %s"
+msgstr "Fout tijdens lezen penseelbestand ‘%s’: %s"
 
 #: ../app/core/gimpbrushgenerated.c:129
 msgid "Brush Shape"
@@ -7937,7 +7939,7 @@ msgstr "Tekenmodus"
 #: ../app/core/gimpdata.c:670
 #, c-format
 msgid "Could not delete '%s': %s"
-msgstr "Kon '%s' niet verwijderen: %s"
+msgstr "Kon ‘%s’ niet verwijderen: %s"
 
 #: ../app/core/gimpdatafactory.c:428 ../app/core/gimpdatafactory.c:457
 #: ../app/core/gimpdatafactory.c:623 ../app/core/gimpdatafactory.c:645
@@ -8141,7 +8143,7 @@ msgstr ""
 #: ../app/core/gimpgradient-load.c:110
 #, c-format
 msgid "Invalid UTF-8 string in gradient file '%s'."
-msgstr "Ongeldige UTF-8-tekenreeks in kleurverloopbestand '%s'."
+msgstr "Ongeldige UTF-8-tekenreeks in kleurverloopbestand ‘%s’."
 
 #: ../app/core/gimpgradient-load.c:137
 #, c-format
@@ -8167,12 +8169,12 @@ msgstr ""
 #: ../app/core/gimpgradient-load.c:336
 #, c-format
 msgid "No linear gradients found in '%s'"
-msgstr "Geen lineaire kleurverlopen gevonden in '%s'"
+msgstr "Geen lineaire kleurverlopen gevonden in ‘%s’"
 
 #: ../app/core/gimpgradient-load.c:346
 #, c-format
 msgid "Failed to import gradients from '%s': %s"
-msgstr "Kon kleurverlopen niet importeren uit '%s': %s"
+msgstr "Kon kleurverlopen niet importeren uit ‘%s’: %s"
 
 #: ../app/core/gimpgrid.c:84
 msgid "Line style used for the grid."
@@ -8332,69 +8334,58 @@ msgid "Move Guide"
 msgstr "Hulplijn verplaatsen"
 
 #: ../app/core/gimpimage-item-list.c:51
-#, fuzzy
 msgctxt "undo-type"
 msgid "Translate Items"
 msgstr "Objecten vertalen"
 
 #: ../app/core/gimpimage-item-list.c:78
-#, fuzzy
 msgctxt "undo-type"
 msgid "Flip Items"
 msgstr "Objecten spiegelen"
 
 #: ../app/core/gimpimage-item-list.c:105
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rotate Items"
 msgstr "Objecten draaien"
 
 #: ../app/core/gimpimage-item-list.c:135
-#, fuzzy
 msgctxt "undo-type"
 msgid "Transform Items"
 msgstr "Objecten transformeren"
 
 #: ../app/core/gimpimage-merge.c:132
-#, fuzzy
 msgctxt "undo-type"
 msgid "Merge Visible Layers"
 msgstr "Zichtbare lagen samenvoegen"
 
 #: ../app/core/gimpimage-merge.c:178
-#, fuzzy
 msgctxt "undo-type"
 msgid "Flatten Image"
 msgstr "Alle lagen samenvoegen"
 
 #: ../app/core/gimpimage-merge.c:248
-#, fuzzy
 msgid "Cannot merge down to a layer group."
-msgstr "Kan laagmaskers niet hernoemen"
+msgstr "Kan niet naar een laaggroep samenvoegen."
 
 #: ../app/core/gimpimage-merge.c:255
 msgid "The layer to merge down to is locked."
-msgstr ""
+msgstr "De samen te voegen laag is vergrendeld."
 
 #: ../app/core/gimpimage-merge.c:267
-#, fuzzy
 msgid "There is no visible layer to merge down to."
-msgstr "Er is geen laag om te transformeren."
+msgstr "Er is geen zichtbare laag om mee samen te voegen."
 
 #: ../app/core/gimpimage-merge.c:277
-#, fuzzy
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Neerwaarts samenvoegen"
 
 #: ../app/core/gimpimage-merge.c:305
-#, fuzzy
 msgctxt "undo-type"
 msgid "Merge Layer Group"
-msgstr "Lagen samenvoegen"
+msgstr "Laaggroep samenvoegen"
 
 #: ../app/core/gimpimage-merge.c:358
-#, fuzzy
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Zichtbare paden samenvoegen"
@@ -8410,37 +8401,31 @@ msgid "Background"
 msgstr "Achtergrond"
 
 #: ../app/core/gimpimage-quick-mask.c:86
-#, fuzzy
 msgctxt "undo-type"
 msgid "Enable Quick Mask"
 msgstr "Snelmasker inschakelen"
 
 #: ../app/core/gimpimage-quick-mask.c:136
-#, fuzzy
 msgctxt "undo-type"
 msgid "Disable Quick Mask"
 msgstr "Snelmasker uitschakelen"
 
 #: ../app/core/gimpimage-sample-points.c:53
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add Sample Point"
 msgstr "Monsterpunt toevoegen"
 
 #: ../app/core/gimpimage-sample-points.c:98
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove Sample Point"
 msgstr "Monsterpunt verwijderen"
 
 #: ../app/core/gimpimage-sample-points.c:126
-#, fuzzy
 msgctxt "undo-type"
 msgid "Move Sample Point"
 msgstr "Monsterpunt verplaatsen"
 
 #: ../app/core/gimpimage-scale.c:87
-#, fuzzy
 msgctxt "undo-type"
 msgid "Scale Image"
 msgstr "Afbeelding schalen"
@@ -8451,67 +8436,56 @@ msgid "Can't undo %s"
 msgstr "Kan %s niet ongedaan maken"
 
 #: ../app/core/gimpimage.c:1804
-#, fuzzy
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Afbeeldingsresolutie wijzigen"
 
 #: ../app/core/gimpimage.c:1856
-#, fuzzy
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Afbeeldingseenheid wijzigen"
 
 #: ../app/core/gimpimage.c:2869
-#, fuzzy
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Parasiet aan afbeelding koppelen"
 
 #: ../app/core/gimpimage.c:2910
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Parasiet uit afbeelding verwijderen"
 
 #: ../app/core/gimpimage.c:3619
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Laag toevoegen"
 
 #: ../app/core/gimpimage.c:3669 ../app/core/gimpimage.c:3689
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Laag verwijderen"
 
 #: ../app/core/gimpimage.c:3683
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Zwevende selectie verwijderen"
 
 #: ../app/core/gimpimage.c:3851
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Kanaal toevoegen"
 
 #: ../app/core/gimpimage.c:3889 ../app/core/gimpimage.c:3902
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Kanaal verwijderen"
 
 #: ../app/core/gimpimage.c:3956
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Pad toevoegen"
 
 #: ../app/core/gimpimage.c:3987
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Pad verwijderen"
@@ -8570,22 +8544,19 @@ msgstr[1] "%d lagen"
 #: ../app/core/gimpimagefile.c:845
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
-msgstr "Kon miniatuurbestand '%s' niet openen: %s"
+msgstr "Kon miniatuurbestand ‘%s’ niet openen: %s"
 
 #: ../app/core/gimpitem.c:1815
-#, fuzzy
 msgctxt "undo-type"
 msgid "Attach Parasite"
-msgstr "Parasiet aanhangen"
+msgstr "Parasiet aankoppelen"
 
 #: ../app/core/gimpitem.c:1825
-#, fuzzy
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Parasiet aan item koppelen"
 
 #: ../app/core/gimpitem.c:1876 ../app/core/gimpitem.c:1883
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Parasiet van item verwijderen"
@@ -8596,7 +8567,6 @@ msgid "Set Item Exclusive Visible"
 msgstr "Stel item in op exclusief zichtbaar"
 
 #: ../app/core/gimplayer-floating-sel.c:95
-#, fuzzy
 msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Zwevende selectie verankeren"
@@ -8610,74 +8580,62 @@ msgstr ""
 "aan een laagmasker of kanaal."
 
 #: ../app/core/gimplayer-floating-sel.c:133
-#, fuzzy
 msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Zwevende selectie naar laag"
 
 #: ../app/core/gimplayer.c:268
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "Laag hernoemen"
 
 #: ../app/core/gimplayer.c:269
-#, fuzzy
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "Laag verplaatsen"
 
 #: ../app/core/gimplayer.c:270
-#, fuzzy
 msgctxt "undo-type"
 msgid "Scale Layer"
 msgstr "Laag schalen"
 
 #: ../app/core/gimplayer.c:271
-#, fuzzy
 msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "Laag van grootte veranderen"
 
 #: ../app/core/gimplayer.c:272
-#, fuzzy
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "Laag spiegelen"
 
 #: ../app/core/gimplayer.c:273
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "Laag draaien"
 
 # What does this mean?
 #: ../app/core/gimplayer.c:276
-#, fuzzy
 msgctxt "undo-type"
 msgid "Reorder Layer"
 msgstr "Laag herschikken"
 
 #: ../app/core/gimplayer.c:277
-#, fuzzy
 msgctxt "undo-type"
 msgid "Raise Layer"
 msgstr "Laag omhoog"
 
 #: ../app/core/gimplayer.c:278
-#, fuzzy
 msgctxt "undo-type"
 msgid "Raise Layer to Top"
 msgstr "Laag bovenaan"
 
 #: ../app/core/gimplayer.c:279
-#, fuzzy
 msgctxt "undo-type"
 msgid "Lower Layer"
 msgstr "Laag naar beneden"
 
 #: ../app/core/gimplayer.c:280
-#, fuzzy
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
 msgstr "Laag naar bodem"
@@ -8716,55 +8674,46 @@ msgstr ""
 "laag"
 
 #: ../app/core/gimplayer.c:1465
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Laagmasker toevoegen"
 
 #: ../app/core/gimplayer.c:1583
-#, fuzzy
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Alfa naar masker verplaatsen"
 
 #: ../app/core/gimplayer.c:1753
-#, fuzzy
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Laagmasker toepassen"
 
 #: ../app/core/gimplayer.c:1754
-#, fuzzy
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Laagmasker verwijderen"
 
 #: ../app/core/gimplayer.c:1873
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Alfakanaal toevoegen"
 
 #: ../app/core/gimplayer.c:1927
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Alfakanaal verwijderen"
 
 #: ../app/core/gimplayer.c:1947
-#, fuzzy
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Laag naar afbeeldingsgrootte"
 
 #: ../app/core/gimplayermask.c:108
-#, fuzzy
 msgctxt "undo-type"
 msgid "Move Layer Mask"
 msgstr "Laagmasker verplaatsen"
 
 #: ../app/core/gimplayermask.c:109
-#, fuzzy
 msgctxt "undo-type"
 msgid "Layer Mask to Selection"
 msgstr "Laagmasker naar selectie"
@@ -8775,19 +8724,16 @@ msgid "Cannot rename layer masks."
 msgstr "Kan laagmaskers niet hernoemen"
 
 #: ../app/core/gimplayermask.c:264
-#, fuzzy
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
-msgstr "Laagmasker _uitschakelen"
+msgstr "Laagmasker inschakelen"
 
 #: ../app/core/gimplayermask.c:265
-#, fuzzy
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
-msgstr "Laagmasker _uitschakelen"
+msgstr "Laagmasker uitschakelen"
 
 #: ../app/core/gimplayermask.c:327
-#, fuzzy
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Laagmasker tonen"
@@ -8808,7 +8754,7 @@ msgstr "Onbekend type paletbestand: %s"
 #: ../app/core/gimppalette-load.c:238
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
-msgstr "Fatale verwerkingsfout in paletbestand '%s': leesfout op regel %d."
+msgstr "Fatale verwerkingsfout in paletbestand ‘%s’: leesfout op regel %d."
 
 #: ../app/core/gimppalette-load.c:96
 #, c-format
@@ -8820,7 +8766,7 @@ msgstr ""
 #: ../app/core/gimppalette-load.c:125
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
-msgstr "Ongeldige UTF-8-tekenreeks in paletbestand '%s'"
+msgstr "Ongeldige UTF-8-tekenreeks in paletbestand ‘%s’"
 
 #: ../app/core/gimppalette-load.c:149
 #, c-format
@@ -8856,16 +8802,14 @@ msgstr ""
 "Paletbestand '%s' wordt ingelezen: RGB-waarde buiten bereik op regel %d."
 
 #: ../app/core/gimppalette-load.c:478
-#, fuzzy, c-format
+#, c-format
 msgid "Could not read header from palette file '%s'"
-msgstr "Kon header van '%s' niet lezen: %s"
+msgstr "Kon header van paletbestand niet lezen: %s"
 
 #: ../app/core/gimppalette-load.c:501 ../app/core/gimppalette-load.c:589
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in palette file '%s'"
-msgstr ""
-"Fatale verwerkingsfout in paletbestand '%s': ontbrekende "
-"bestandstypeaanduiding."
+msgstr "Fatale verwerkingsfout in paletbestand %s"
 
 #: ../app/core/gimppattern-load.c:85 ../app/core/gimppattern-load.c:131
 #: ../app/core/gimppattern-load.c:162
@@ -8896,7 +8840,7 @@ msgstr ""
 #: ../app/core/gimppattern-load.c:139
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "Ongeldige UTF-8-tekenreeks in patroonbestand '%s'."
+msgstr "Ongeldige UTF-8-tekenreeks in patroonbestand ‘%s’."
 
 #: ../app/core/gimppdbprogress.c:279 ../app/widgets/gimppdbdialog.c:331
 #, c-format
@@ -9159,7 +9103,7 @@ msgstr "Object verwijderen"
 #: ../app/dialogs/data-delete-dialog.c:104
 #, c-format
 msgid "Delete '%s'?"
-msgstr "'%s' verwijderen?"
+msgstr "‘%s’ verwijderen?"
 
 #: ../app/dialogs/data-delete-dialog.c:107
 #, c-format
@@ -9286,12 +9230,18 @@ msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
 msgstr ""
+"Dit dialoogvensteer dient om afbeeldingen naar verschillende formaten te "
+"exporteren. Gebruik Bestand→Opslaan om afbeeldingen in het XCF-formaat van "
+"GIMP zelf op te slaan."
 
 #: ../app/dialogs/file-save-dialog.c:566
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
 msgstr ""
+"Dit dialoogvenster dient om afbeeldingen in het XCF-formaat van GIMP zelf op "
+"te slaan. Gebruik Bestand→Exporteren om naar andere bestandsformaten te "
+"exporteren."
 
 #: ../app/dialogs/file-save-dialog.c:572
 msgid ""
@@ -9371,7 +9321,7 @@ msgstr "Op onderste laag gesneden"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:114
 msgid "Merge within active _group only"
-msgstr ""
+msgstr "Alleen binnen actieve _groep samenvoegen"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:127
 msgid "_Discard invisible layers"
@@ -10047,9 +9997,8 @@ msgstr "_Actieve afbeelding tonen"
 
 #. Tool Editor
 #: ../app/dialogs/preferences-dialog.c:1976
-#, fuzzy
 msgid "Tools configuration"
-msgstr "Configuratie"
+msgstr "Gereedschapsinstellingen"
 
 # Nieuwe standaardafbeelding/Standaard nieuwe afbeelding
 #: ../app/dialogs/preferences-dialog.c:1991
@@ -10061,14 +10010,12 @@ msgid "Default Image"
 msgstr "Standaardafbeelding"
 
 #: ../app/dialogs/preferences-dialog.c:2028
-#, fuzzy
 msgid "Set the default Quick Mask color"
 msgstr "Snelmaskerkleur bewerken"
 
 #: ../app/dialogs/preferences-dialog.c:2034
-#, fuzzy
 msgid "Quick Mask color:"
-msgstr "Snelmaskerkleur bewerken"
+msgstr "Snelmaskerkleur:"
 
 # image niet meevertaald voor duidelijkheid
 #: ../app/dialogs/preferences-dialog.c:2044
@@ -10143,9 +10090,8 @@ msgid "Pointer re_ndering:"
 msgstr "Muisaanwijzer _tekenen:"
 
 #: ../app/dialogs/preferences-dialog.c:2140
-#, fuzzy
 msgid "Pointer _handedness:"
-msgstr "Muisaanwijzer _tekenen:"
+msgstr "Links- of rechtshandige _muisaanwijzer:"
 
 #: ../app/dialogs/preferences-dialog.c:2152
 msgid "Image Window Appearance"
@@ -10373,9 +10319,8 @@ msgid "Window Manager Hints"
 msgstr "Vensterbeheer hints"
 
 #: ../app/dialogs/preferences-dialog.c:2638
-#, fuzzy
 msgid "Hint for _docks and toolbox:"
-msgstr "_Venstertypehint voor het gereedschapvenster:"
+msgstr "_Venstertypehint voor gereedschapvensters:"
 
 #: ../app/dialogs/preferences-dialog.c:2641
 msgid "Focus"
@@ -10431,14 +10376,12 @@ msgid "Select Brush Folders"
 msgstr "Penseelmappen selecteren"
 
 #: ../app/dialogs/preferences-dialog.c:2743
-#, fuzzy
 msgid "Dynamics Folders"
-msgstr "Lettertypemappen"
+msgstr "Mappen voor gedragingen"
 
 #: ../app/dialogs/preferences-dialog.c:2745
-#, fuzzy
 msgid "Select Dynamics Folders"
-msgstr "Lettertypemappen selecteren"
+msgstr "Mappen voor gedragingen selecteren"
 
 #: ../app/dialogs/preferences-dialog.c:2747
 msgid "Pattern Folders"
@@ -10473,14 +10416,12 @@ msgid "Select Font Folders"
 msgstr "Lettertypemappen selecteren"
 
 #: ../app/dialogs/preferences-dialog.c:2763
-#, fuzzy
 msgid "Tool Preset Folders"
-msgstr "Voorin_stellingen:"
+msgstr "Mappen voor voorinstellingen gereedschap"
 
 #: ../app/dialogs/preferences-dialog.c:2765
-#, fuzzy
 msgid "Select Tool Preset Folders"
-msgstr "Themamappen selecteren"
+msgstr "Mappen voor voorinstellingen gereedschap selecteren"
 
 #: ../app/dialogs/preferences-dialog.c:2767
 msgid "Plug-In Folders"
@@ -10762,31 +10703,26 @@ msgid "Path name:"
 msgstr "Padnaam:"
 
 #: ../app/display/display-enums.c:60
-#, fuzzy
 msgctxt "guides-type"
 msgid "No guides"
 msgstr "Geen hulplijnen"
 
 #: ../app/display/display-enums.c:61
-#, fuzzy
 msgctxt "guides-type"
 msgid "Center lines"
-msgstr "Lijnen centreren"
+msgstr "Middellijnen"
 
 #: ../app/display/display-enums.c:62
-#, fuzzy
 msgctxt "guides-type"
 msgid "Rule of thirds"
 msgstr "Regel van derden"
 
 #: ../app/display/display-enums.c:63
-#, fuzzy
 msgctxt "guides-type"
 msgid "Rule of fifths"
-msgstr "Regel van derden"
+msgstr "Regel van vijfden"
 
 #: ../app/display/display-enums.c:64
-#, fuzzy
 msgctxt "guides-type"
 msgid "Golden sections"
 msgstr "Gulden snedes"
@@ -10794,20 +10730,18 @@ msgstr "Gulden snedes"
 #: ../app/display/display-enums.c:65
 msgctxt "guides-type"
 msgid "Diagonal lines"
-msgstr ""
+msgstr "Diagonale lijnen"
 
 #: ../app/display/display-enums.c:66
-#, fuzzy
 msgctxt "guides-type"
 msgid "Number of lines"
-msgstr "Aantal rasterlijnen"
+msgstr "Aantal lijnen"
 
 # rasterlijnafstand/spatiering
 #: ../app/display/display-enums.c:67
-#, fuzzy
 msgctxt "guides-type"
 msgid "Line spacing"
-msgstr "Rasterlijnafstand"
+msgstr "Lijnafstand"
 
 #: ../app/display/gimpcursorview.c:216 ../app/display/gimpcursorview.c:222
 #: ../app/display/gimpcursorview.c:241 ../app/display/gimpcursorview.c:247
@@ -10840,19 +10774,18 @@ msgstr "Eenheden"
 
 #. Selection Bounding Box
 #: ../app/display/gimpcursorview.c:256
-#, fuzzy
 msgid "Selection Bounding Box"
-msgstr "Selectiebewerker"
+msgstr "Omvattende box van selectie"
 
 #. Width
 #: ../app/display/gimpcursorview.c:292
 msgid "W"
-msgstr ""
+msgstr "B"
 
 #. Height
 #: ../app/display/gimpcursorview.c:299
 msgid "H"
-msgstr ""
+msgstr "H"
 
 #: ../app/display/gimpcursorview.c:328
 msgid "_Sample Merged"
@@ -10892,7 +10825,7 @@ msgstr ""
 #: ../app/display/gimpdisplayshell-close.c:237
 #, c-format
 msgid "Save the changes to image '%s' before closing?"
-msgstr "Wijzigingen aan afbeelding '%s' opslaan voor afsluiten?"
+msgstr "Wijzigingen aan afbeelding ‘%s’ opslaan voor afsluiten?"
 
 #: ../app/display/gimpdisplayshell-close.c:270
 #, c-format
@@ -10934,9 +10867,9 @@ msgstr[1] ""
 "minuten verloren gaan."
 
 #: ../app/display/gimpdisplayshell-close.c:305
-#, fuzzy, c-format
+#, c-format
 msgid "The image has been exported to '%s'."
-msgstr "Afbeelding opgeslagen in '%s'."
+msgstr "De afbeelding is geëxporteerd naar ‘%s’."
 
 # Drag and drop
 #: ../app/display/gimpdisplayshell-dnd.c:232
@@ -10986,12 +10919,12 @@ msgstr "Kleurweergavefilters instellen"
 #: ../app/display/gimpdisplayshell-handlers.c:796
 #, c-format
 msgid "Image saved to '%s'"
-msgstr "Afbeelding opgeslagen in '%s'."
+msgstr "Afbeelding opgeslagen als ‘%s’."
 
 #: ../app/display/gimpdisplayshell-handlers.c:810
-#, fuzzy, c-format
+#, c-format
 msgid "Image exported to '%s'"
-msgstr "Afbeelding opgeslagen in '%s'."
+msgstr "Afbeelding geëxporteerd naar ‘%s’."
 
 #: ../app/display/gimpdisplayshell-layer-select.c:122
 msgid "Layer Select"
@@ -11039,9 +10972,8 @@ msgid " (overwritten)"
 msgstr ""
 
 #: ../app/display/gimpdisplayshell-title.c:507
-#, fuzzy
 msgid " (imported)"
-msgstr "Nieuw importeren"
+msgstr " (geïmporteerd)"
 
 #: ../app/display/gimpstatusbar.c:356
 #, c-format
@@ -11069,7 +11001,7 @@ msgstr "Afbeelding bevat geen lagen"
 #: ../app/file/file-open.c:579
 #, c-format
 msgid "Opening '%s' failed: %s"
-msgstr "Openen van '%s' mislukte: %s"
+msgstr "Openen van ‘%s’ mislukte: %s"
 
 #: ../app/file/file-open.c:686
 msgid ""
@@ -11091,7 +11023,7 @@ msgstr "Plug-in %s kon afbeeldingen niet opslaan"
 #: ../app/file/file-utils.c:74
 #, c-format
 msgid "'%s:' is not a valid URI scheme"
-msgstr "'%s:' is geen geldig URI-schema"
+msgstr "‘%s:’ is geen geldig URI-schema"
 
 #: ../app/file/file-utils.c:90 ../app/file/file-utils.c:126
 msgid "Invalid character sequence in URI"
@@ -11132,9 +11064,8 @@ msgid ""
 msgstr ""
 
 #: ../app/gegl/gimpoperationcagetransform.c:128
-#, fuzzy
 msgid "Fill with plain color"
-msgstr "Vullen met _achtergrondkleur"
+msgstr "Vullen met egale kleur"
 
 #: ../app/gegl/gimpoperationcagetransform.c:129
 #: ../app/tools/gimpcageoptions.c:144
@@ -11159,9 +11090,8 @@ msgid "No brushes available for use with this tool."
 msgstr "Geen penselen beschikbaar voor dit gereedschap."
 
 #: ../app/paint/gimpbrushcore.c:394
-#, fuzzy
 msgid "No paint dynamics available for use with this tool."
-msgstr "Er zijn geen patronen beschikbaar voor dit gereedschap."
+msgstr "Er zijn geen gedragingen beschikbaar voor dit gereedschap."
 
 #: ../app/paint/gimpclone.c:102 ../app/tools/gimpclonetool.c:60
 msgid "Clone"
@@ -11197,16 +11127,15 @@ msgstr "Inktpot"
 
 #: ../app/paint/gimpinkoptions.c:72
 msgid "Ink Blob Size"
-msgstr ""
+msgstr "Grootte inktvlek"
 
 #: ../app/paint/gimpinkoptions.c:99
-#, fuzzy
 msgid "Ink Blob Aspect Ratio"
-msgstr "Verhouding"
+msgstr "Verhouding inktvlek"
 
 #: ../app/paint/gimpinkoptions.c:103
 msgid "Ink Blob Angle"
-msgstr ""
+msgstr "Hoek inktvlek"
 
 #: ../app/paint/gimppaintbrush.c:66 ../app/tools/gimppaintbrushtool.c:50
 msgid "Paintbrush"
@@ -11217,9 +11146,8 @@ msgid "Paint"
 msgstr "Tekenen"
 
 #: ../app/paint/gimppaintoptions.c:145
-#, fuzzy
 msgid "Brush Size"
-msgstr "Penselen"
+msgstr "Penseelgrootte"
 
 #: ../app/paint/gimppaintoptions.c:159
 msgid "Every stamp has its own opacity"
@@ -11227,7 +11155,7 @@ msgstr ""
 
 #: ../app/paint/gimppaintoptions.c:165
 msgid "Ignore fuzziness of the current brush"
-msgstr ""
+msgstr "Vervaging van huidige penseel negeren"
 
 #: ../app/paint/gimppaintoptions.c:170
 msgid "Scatter brush as you paint"
@@ -11250,17 +11178,16 @@ msgid "How fade is repeated as you paint"
 msgstr ""
 
 #: ../app/paint/gimppaintoptions.c:255
-#, fuzzy
 msgid "Paint smoother strokes"
-msgstr "V_enstertypehint voor de overige dokken:"
+msgstr "Zachtere randen tekenen"
 
 #: ../app/paint/gimppaintoptions.c:259
 msgid "Depth of smoothing"
-msgstr ""
+msgstr "Diepte van zachte randen"
 
 #: ../app/paint/gimppaintoptions.c:263
 msgid "Gravity of the pen"
-msgstr ""
+msgstr "Zwaarte van de pen"
 
 #: ../app/paint/gimppencil.c:41 ../app/tools/gimppenciltool.c:50
 msgid "Pencil"
@@ -11409,7 +11336,7 @@ msgstr ""
 #: ../app/pdb/gimppdb.c:375
 #, c-format
 msgid "Procedure '%s' not found"
-msgstr "Procedure '%s' is niet gevonden"
+msgstr "Procedure ‘%s’ is niet gevonden"
 
 #: ../app/pdb/gimppdb-utils.c:73
 msgid "Invalid empty brush name"
@@ -11418,17 +11345,17 @@ msgstr "Ongeldige lege penseelnaam"
 #: ../app/pdb/gimppdb-utils.c:82
 #, c-format
 msgid "Brush '%s' not found"
-msgstr "Penseel '%s' is niet gevonden"
+msgstr "Penseel ‘%s’ is niet gevonden"
 
 #: ../app/pdb/gimppdb-utils.c:87
 #, c-format
 msgid "Brush '%s' is not editable"
-msgstr "Penseel '%s' is niet bewerkbaar"
+msgstr "Penseel ‘%s’ is niet bewerkbaar"
 
 #: ../app/pdb/gimppdb-utils.c:113
 #, c-format
 msgid "Brush '%s' is not a generated brush"
-msgstr "Penseel '%s' is geen aangemaakt penseel"
+msgstr "Penseel ‘%s’ is geen aangemaakt penseel"
 
 #: ../app/pdb/gimppdb-utils.c:134
 #, fuzzy
@@ -11438,12 +11365,12 @@ msgstr "Ongeldige lege tekenmodusnaam"
 #: ../app/pdb/gimppdb-utils.c:143
 #, fuzzy, c-format
 msgid "Paint dynamics '%s' not found"
-msgstr "Patroon '%s' is niet gevonden"
+msgstr "Patroon ‘%s’ is niet gevonden"
 
 #: ../app/pdb/gimppdb-utils.c:148
 #, fuzzy, c-format
 msgid "Paint dynamics '%s' is not editable"
-msgstr "Kleurverloop '%s' is niet bewerkbaar"
+msgstr "Kleurverloop ‘%s’ is niet bewerkbaar"
 
 #: ../app/pdb/gimppdb-utils.c:168
 msgid "Invalid empty pattern name"
@@ -11452,7 +11379,7 @@ msgstr "Ongeldige lege patroonnaam"
 #: ../app/pdb/gimppdb-utils.c:177
 #, c-format
 msgid "Pattern '%s' not found"
-msgstr "Patroon '%s' is niet gevonden"
+msgstr "Patroon ‘%s’ is niet gevonden"
 
 #: ../app/pdb/gimppdb-utils.c:197
 msgid "Invalid empty gradient name"
@@ -11461,12 +11388,12 @@ msgstr "Ongeldige lege kleurverloopnaam"
 #: ../app/pdb/gimppdb-utils.c:206
 #, c-format
 msgid "Gradient '%s' not found"
-msgstr "Kleurverloop '%s' is niet gevonden"
+msgstr "Kleurverloop ‘%s’ is niet gevonden"
 
 #: ../app/pdb/gimppdb-utils.c:211
 #, c-format
 msgid "Gradient '%s' is not editable"
-msgstr "Kleurverloop '%s' is niet bewerkbaar"
+msgstr "Kleurverloop ‘%s’ is niet bewerkbaar"
 
 #: ../app/pdb/gimppdb-utils.c:232
 msgid "Invalid empty palette name"
@@ -11475,12 +11402,12 @@ msgstr "Ongeldige lege paletnaam"
 #: ../app/pdb/gimppdb-utils.c:241
 #, c-format
 msgid "Palette '%s' not found"
-msgstr "Palet '%s' is niet gevonden"
+msgstr "Palet ‘%s’ is niet gevonden"
 
 #: ../app/pdb/gimppdb-utils.c:246
 #, c-format
 msgid "Palette '%s' is not editable"
-msgstr "Palet '%s' is niet bewerkbaar"
+msgstr "Palet ‘%s’ is niet bewerkbaar"
 
 #: ../app/pdb/gimppdb-utils.c:266
 msgid "Invalid empty font name"
@@ -11489,7 +11416,7 @@ msgstr "Ongeldige lege lettertypenaam"
 #: ../app/pdb/gimppdb-utils.c:276
 #, c-format
 msgid "Font '%s' not found"
-msgstr "Lettertype '%s' is niet gevonden"
+msgstr "Lettertype ‘%s’ is niet gevonden"
 
 #: ../app/pdb/gimppdb-utils.c:295
 msgid "Invalid empty buffer name"
@@ -11498,7 +11425,7 @@ msgstr "Ongeldige lege buffernaam"
 #: ../app/pdb/gimppdb-utils.c:305
 #, c-format
 msgid "Named buffer '%s' not found"
-msgstr "Benoemde buffer '%s' is niet gevonden"
+msgstr "Benoemde buffer ‘%s’ is niet gevonden"
 
 #: ../app/pdb/gimppdb-utils.c:324
 msgid "Invalid empty paint method name"
@@ -11507,7 +11434,7 @@ msgstr "Ongeldige lege tekenmodusnaam"
 #: ../app/pdb/gimppdb-utils.c:334
 #, c-format
 msgid "Paint method '%s' does not exist"
-msgstr "Tekenmodus '%s' bestaat niet"
+msgstr "Tekenmodus ‘%s’ bestaat niet"
 
 #: ../app/pdb/gimppdb-utils.c:353
 #, fuzzy, c-format
@@ -11544,17 +11471,17 @@ msgstr ""
 #: ../app/pdb/gimppdb-utils.c:445
 #, c-format
 msgid "Item '%s' (%d) must not be an ancestor of '%s' (%d)"
-msgstr ""
+msgstr "Item ‘%s’ (%d) moet een voorouder van ‘%s’ (%d) zijn"
 
 #: ../app/pdb/gimppdb-utils.c:469
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
-msgstr "Object '%s' (%d) is reeds toegevoegd aan een afbeelding"
+msgstr "Object ‘%s’ (%d) is reeds toegevoegd aan een afbeelding"
 
 #: ../app/pdb/gimppdb-utils.c:477
 #, c-format
 msgid "Trying to add item '%s' (%d) to wrong image"
-msgstr "'%s' (%d)  wordt getracht toe te voegen aan een verkeerde afbeelding"
+msgstr "Proberen ‘%s’ (%d) toe te voegen aan verkeerde afbeelding"
 
 #: ../app/pdb/gimppdb-utils.c:496
 #, fuzzy, c-format
@@ -11566,7 +11493,7 @@ msgstr ""
 #: ../app/pdb/gimppdb-utils.c:516
 #, fuzzy, c-format
 msgid "Item '%s' (%d) cannot be used because it is not a group item"
-msgstr "Laag '%s' (%d) kan niet worden gebruikt omdat het geen tekstlaag is"
+msgstr "Laag ‘%s’ (%d) kan niet worden gebruikt omdat het geen tekstlaag is"
 
 #: ../app/pdb/gimppdb-utils.c:536
 #, fuzzy, c-format
@@ -11578,7 +11505,7 @@ msgstr ""
 #: ../app/pdb/gimppdb-utils.c:557
 #, fuzzy, c-format
 msgid "Layer '%s' (%d) cannot be used because it is not a text layer"
-msgstr "Laag '%s' (%d) kan niet worden gebruikt omdat het geen tekstlaag is"
+msgstr "Laag ‘%s’ (%d) kan niet worden gebruikt omdat het geen tekstlaag is"
 
 #: ../app/pdb/gimppdb-utils.c:598
 #, c-format
@@ -11590,7 +11517,7 @@ msgstr ""
 #: ../app/pdb/gimppdb-utils.c:621
 #, fuzzy, c-format
 msgid "Image '%s' (%d) is already of type '%s'"
-msgstr "Afbeelding '%s' (%d) is reeds van het type '%s'"
+msgstr "Afbeelding ‘%s’ (%d) is reeds van het type ‘%s’"
 
 #: ../app/pdb/gimppdb-utils.c:649
 #, c-format
@@ -11724,45 +11651,38 @@ msgid "Set text layer attribute"
 msgstr "Tekstlaagattributen instellen"
 
 #: ../app/pdb/vectors-cmds.c:323
-#, fuzzy
 msgid "Remove path stroke"
-msgstr "Parasiet verwijderen"
+msgstr "Padomlijning verwijderen"
 
 #: ../app/pdb/vectors-cmds.c:359
-#, fuzzy
 msgid "Close path stroke"
-msgstr "Lijnen verbinden"
+msgstr "Padomlijning verbinden"
 
 #: ../app/pdb/vectors-cmds.c:399
-#, fuzzy
 msgid "Translate path stroke"
-msgstr "Objecten vertalen"
+msgstr "Padomlijning verschuiven"
 
 #: ../app/pdb/vectors-cmds.c:439
-#, fuzzy
 msgid "Scale path stroke"
-msgstr "Pad schalen"
+msgstr "Padomlijning schalen"
 
 #: ../app/pdb/vectors-cmds.c:481
-#, fuzzy
 msgid "Rotate path stroke"
-msgstr "Pad draaien"
+msgstr "Padomlijning draaien"
 
 #: ../app/pdb/vectors-cmds.c:521 ../app/pdb/vectors-cmds.c:565
-#, fuzzy
 msgid "Flip path stroke"
-msgstr "Pad spiegelen"
+msgstr "Padomlijning spiegelen"
 
 #: ../app/pdb/vectors-cmds.c:694 ../app/pdb/vectors-cmds.c:817
 #: ../app/pdb/vectors-cmds.c:1037
-#, fuzzy
 msgid "Add path stroke"
-msgstr "Lijn toevoegen"
+msgstr "Padomlijning toevoegen"
 
 #: ../app/pdb/vectors-cmds.c:870 ../app/pdb/vectors-cmds.c:923
 #: ../app/pdb/vectors-cmds.c:984
 msgid "Extend path stroke"
-msgstr ""
+msgstr "Padomlijning uitbreiden"
 
 #: ../app/plug-in/gimpenvirontable.c:281
 #, c-format
@@ -11882,7 +11802,7 @@ msgstr ""
 #: ../app/plug-in/plug-in-icc-profile.c:246
 #, c-format
 msgid "Error running '%s'"
-msgstr "Fout bij uitvoeren '%s'"
+msgstr "Fout bij uitvoeren ‘%s’"
 
 #: ../app/plug-in/plug-in-icc-profile.c:136
 #: ../app/plug-in/plug-in-icc-profile.c:197
@@ -11894,17 +11814,17 @@ msgstr "Ontbrekende plug-in (%s)"
 #: ../app/plug-in/plug-in-rc.c:205
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
-msgstr "'%s' wordt overgeslagen: verkeerde GIMP-protocolversie."
+msgstr "‘%s’ wordt overgeslagen: verkeerde GIMP-protocolversie."
 
 #: ../app/plug-in/plug-in-rc.c:477
 #, c-format
 msgid "invalid value '%s' for icon type"
-msgstr "ongeldige waarde '%s' voor pictogramtype"
+msgstr "ongeldige waarde ‘%s’ voor pictogramtype"
 
 #: ../app/plug-in/plug-in-rc.c:492
 #, c-format
 msgid "invalid value '%ld' for icon type"
-msgstr "ongeldige waarde '%ld' voor pictogramtype"
+msgstr "ongeldige waarde ‘%ld’ voor pictogramtype"
 
 #. This is a so-called pangram; it's supposed to
 #. contain all characters found in the alphabet.
@@ -11938,7 +11858,7 @@ msgstr "Tekstlaag schalen"
 
 #: ../app/text/gimptextlayer.c:147
 msgid "Resize Text Layer"
-msgstr "Tekstlaag van grootte veranderen"
+msgstr "Grootte tekstlaag wijzigen"
 
 #: ../app/text/gimptextlayer.c:148
 msgid "Flip Text Layer"
@@ -12006,33 +11926,29 @@ msgid "_Airbrush"
 msgstr "_Verfspuit"
 
 #: ../app/tools/gimpairbrushtool.c:86
-#, fuzzy
 msgid "Motion only"
-msgstr "Enkel lichter maken"
+msgstr "Enkel beweging"
 
 #: ../app/tools/gimpairbrushtool.c:91 ../app/tools/gimpconvolvetool.c:228
 #: ../app/tools/gimpsmudgetool.c:91
-#, fuzzy
 msgid "Rate"
-msgstr "Mate"
+msgstr "Ratio"
 
 #: ../app/tools/gimpairbrushtool.c:97
-#, fuzzy
 msgid "Flow"
-msgstr "Geel:"
+msgstr ""
 
 #: ../app/tools/gimpalignoptions.c:91
 msgid "Reference image object a layer will be aligned on"
-msgstr ""
+msgstr "Referentieobject voor uitlijning van de laag"
 
 #: ../app/tools/gimpalignoptions.c:98
-#, fuzzy
 msgid "Horizontal offset for distribution"
-msgstr "Kleurbalans: kleurverdeling aanpassen"
+msgstr "Horizontale verschuiving voor distributie"
 
 #: ../app/tools/gimpalignoptions.c:104
 msgid "Vertical offset for distribution"
-msgstr ""
+msgstr "Verticale verschuiving voor distributie"
 
 #: ../app/tools/gimpalignoptions.c:272 ../app/tools/gimpaligntool.c:124
 msgid "Align"
@@ -12139,7 +12055,6 @@ msgid "Click to add this path to the list"
 msgstr "Klik om dit pad aan de lijst toe te voegen"
 
 #: ../app/tools/gimpblendoptions.c:211 ../app/tools/gimppaintoptions-gui.c:346
-#, fuzzy
 msgid "Gradient"
 msgstr "Kleurverlopen"
 
@@ -12157,9 +12072,8 @@ msgid "Adaptive supersampling"
 msgstr "Adaptieve overmonstering"
 
 #: ../app/tools/gimpblendoptions.c:268
-#, fuzzy
 msgid "Max depth"
-msgstr "Max. diepte:"
+msgstr "Maximumdiepte"
 
 #: ../app/tools/gimpblendtool.c:109
 msgid "Blend"
@@ -12178,9 +12092,8 @@ msgid "Blend does not operate on indexed layers."
 msgstr "Kleurverloop werkt niet op lagen met geïndexeerde kleuren."
 
 #: ../app/tools/gimpblendtool.c:187
-#, fuzzy
 msgid "No gradient available for use with this tool."
-msgstr "Er zijn geen patronen beschikbaar voor dit gereedschap."
+msgstr "Er zijn geen verlopen beschikbaar voor dit gereedschap."
 
 #: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:623
 #, c-format
@@ -12238,7 +12151,7 @@ msgstr "Deze instellingen als niveaus bewerken"
 
 #: ../app/tools/gimpbucketfilloptions.c:93
 msgid "Which area will be filled"
-msgstr ""
+msgstr "Welk gebied gevuld wordt"
 
 #: ../app/tools/gimpbucketfilloptions.c:98
 msgid "Allow completely transparent regions to be filled"
@@ -12255,7 +12168,7 @@ msgstr "Maximum kleurverschil"
 
 #: ../app/tools/gimpbucketfilloptions.c:115
 msgid "Criterion used for determining color similarity"
-msgstr ""
+msgstr "Welk criterium gebruikt wordt om kleurgelijkheid te bepalen"
 
 #. fill type
 #: ../app/tools/gimpbucketfilloptions.c:229
@@ -12648,17 +12561,18 @@ msgstr "Convolutietype (%s)"
 
 #: ../app/tools/gimpcropoptions.c:76
 #: ../app/tools/gimprectangleselectoptions.c:77
-#, fuzzy
 msgid "Dim everything outside selection"
-msgstr "De selectie omkeren"
+msgstr "Alles buiten de selectie dimmen"
 
 #: ../app/tools/gimpcropoptions.c:82
 msgid "Crop only currently selected layer"
-msgstr ""
+msgstr "Alleen de huidige laag bijsnijden"
 
 #: ../app/tools/gimpcropoptions.c:88
 msgid "Allow resizing canvas by dragging cropping frame beyond image boundary"
 msgstr ""
+"Aanpassingen aan canvasgrootte toestaan door bijsnijdframe buiten de "
+"afbeeldingsrand te slepen"
 
 # enkel huidige laag/alleen de huidige laag
 #: ../app/tools/gimpcropoptions.c:164
@@ -12686,9 +12600,8 @@ msgid "Click or press Enter to crop"
 msgstr "Klik of druk op enter om bij te snijden"
 
 #: ../app/tools/gimpcroptool.c:318
-#, fuzzy
 msgid "There is no active layer to crop."
-msgstr "Er is geen actieve laag of kanaal om van te knippen."
+msgstr "Er is geen actieve laag om bij te snijden."
 
 #: ../app/tools/gimpcurvestool.c:150
 msgid "Curves"
@@ -12746,7 +12659,7 @@ msgstr "Curve_type:"
 #: ../app/tools/gimpcurvestool.c:658 ../app/tools/gimplevelstool.c:756
 #, c-format
 msgid "Could not read header from '%s': %s"
-msgstr "Kon header van '%s' niet lezen: %s"
+msgstr "Kon header van ‘%s’ niet lezen: %s"
 
 #: ../app/tools/gimpcurvestool.c:731
 msgid "Use _old curves file format"
@@ -12766,7 +12679,6 @@ msgid "Desaturate (Remove Colors)"
 msgstr "Desatureren (kleuren verwijderen)"
 
 #: ../app/tools/gimpdesaturatetool.c:124
-#, fuzzy
 msgid "Desaturate only operates on RGB layers."
 msgstr "Desatureren werkt enkel op RGB-lagen."
 
@@ -12827,9 +12739,8 @@ msgid "Range"
 msgstr "Bereik"
 
 #: ../app/tools/gimpdodgeburntool.c:236
-#, fuzzy
 msgid "Exposure"
-msgstr "Belichting:"
+msgstr "Belichting"
 
 #: ../app/tools/gimpeditselectiontool.c:242
 msgid "Move Selection"
@@ -12885,9 +12796,8 @@ msgid "Anti erase  (%s)"
 msgstr "Anti-gum (%s)"
 
 #: ../app/tools/gimpflipoptions.c:66
-#, fuzzy
 msgid "Direction of flipping"
-msgstr "Richting"
+msgstr "Omklaprichting"
 
 #: ../app/tools/gimpflipoptions.c:133
 msgid "Affect:"
@@ -13245,7 +13155,7 @@ msgstr "Voorin_stellingen:"
 #: ../app/tools/gimpimagemaptool-settings.c:223
 #, c-format
 msgid "Settings saved to '%s'"
-msgstr "Instellingen opgeslagen in '%s'"
+msgstr "Instellingen opgeslagen in ‘%s’"
 
 #: ../app/tools/gimpimagemaptool.c:362
 msgid "_Preview"
@@ -14596,74 +14506,62 @@ msgid "Move Path"
 msgstr "Pad verplaatsen"
 
 #: ../app/vectors/gimpvectors.c:210
-#, fuzzy
 msgctxt "undo-type"
 msgid "Scale Path"
 msgstr "Pad schalen"
 
 #: ../app/vectors/gimpvectors.c:211
-#, fuzzy
 msgctxt "undo-type"
 msgid "Resize Path"
-msgstr "Pad van grootte veranderen"
+msgstr "Grootte van pad wijzigen"
 
 #: ../app/vectors/gimpvectors.c:212
-#, fuzzy
 msgctxt "undo-type"
 msgid "Flip Path"
 msgstr "Pad spiegelen"
 
 #: ../app/vectors/gimpvectors.c:213
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rotate Path"
 msgstr "Pad draaien"
 
 #: ../app/vectors/gimpvectors.c:214
-#, fuzzy
 msgctxt "undo-type"
 msgid "Transform Path"
 msgstr "Pad transformeren"
 
 #: ../app/vectors/gimpvectors.c:215
-#, fuzzy
 msgctxt "undo-type"
 msgid "Stroke Path"
-msgstr "Pad naar lijn"
+msgstr "Pad omlijnen"
 
 #: ../app/vectors/gimpvectors.c:216
-#, fuzzy
 msgctxt "undo-type"
 msgid "Path to Selection"
 msgstr "Pad naar selectie"
 
 # What does this mean?
 #: ../app/vectors/gimpvectors.c:217
-#, fuzzy
 msgctxt "undo-type"
 msgid "Reorder Path"
 msgstr "Pad herschikken"
 
 #: ../app/vectors/gimpvectors.c:218
-#, fuzzy
 msgctxt "undo-type"
 msgid "Raise Path"
 msgstr "Pad omhoog"
 
 #: ../app/vectors/gimpvectors.c:219
-#, fuzzy
 msgctxt "undo-type"
 msgid "Raise Path to Top"
 msgstr "Pad naar top"
 
 #: ../app/vectors/gimpvectors.c:220
-#, fuzzy
 msgctxt "undo-type"
 msgid "Lower Path"
 msgstr "Pad verlagen"
 
 #: ../app/vectors/gimpvectors.c:221
-#, fuzzy
 msgctxt "undo-type"
 msgid "Lower Path to Bottom"
 msgstr "Pad naar bodem"
@@ -14695,7 +14593,7 @@ msgstr "Pad transformeren"
 #: ../app/vectors/gimpvectors-export.c:95
 #, c-format
 msgid "Error while writing '%s': %s"
-msgstr "Fout tijdens schrijven van '%s': %s"
+msgstr "Fout tijdens schrijven van ‘%s’: %s"
 
 #: ../app/vectors/gimpvectors-import.c:330
 msgid "Import Paths"
@@ -14708,7 +14606,7 @@ msgstr "Geïmporteerd pad"
 #: ../app/vectors/gimpvectors-import.c:372
 #, c-format
 msgid "No paths found in '%s'"
-msgstr "Geen paden gevonden in '%s'"
+msgstr "Geen paden gevonden in ‘%s’"
 
 #: ../app/vectors/gimpvectors-import.c:376
 msgid "No paths found in the buffer"
@@ -14717,7 +14615,7 @@ msgstr "Geen paden gevonden in de buffer"
 #: ../app/vectors/gimpvectors-import.c:386
 #, c-format
 msgid "Failed to import paths from '%s': %s"
-msgstr "Kon paden niet importeren uit '%s': %s"
+msgstr "Kon paden niet importeren uit ‘%s’: %s"
 
 #: ../app/widgets/gimpactioneditor.c:69
 msgid "_Search:"
@@ -14832,12 +14730,12 @@ msgstr "Geselecteerd filter naar beginwaarden"
 #: ../app/widgets/gimpcolordisplayeditor.c:496
 #, c-format
 msgid "Add '%s' to the list of active filters"
-msgstr "'%s' toevoegen aan de lijst van actieve filters"
+msgstr "‘%s’ toevoegen aan de lijst van actieve filters"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:533
 #, c-format
 msgid "Remove '%s' from the list of active filters"
-msgstr "'%s' verwijderen uit de lijst van actieve filters"
+msgstr "‘%s’ verwijderen uit de lijst van actieve filters"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:564
 msgid "No filter selected"
@@ -14959,7 +14857,7 @@ msgstr "De volgende actie selecteren die van dit invoerapparaat binnenkomt"
 #: ../app/widgets/gimpcontrollereditor.c:525
 #, c-format
 msgid "Remove the action assigned to '%s'"
-msgstr "Opdracht toegewezen aan '%s' verwijderen"
+msgstr "Opdracht toegewezen aan ‘%s’ verwijderen"
 
 # action=opdracht event=actie
 #: ../app/widgets/gimpcontrollereditor.c:530
@@ -14970,7 +14868,7 @@ msgstr "Opdracht toewijzen aan %s"
 #: ../app/widgets/gimpcontrollereditor.c:651
 #, c-format
 msgid "Select Action for Event '%s'"
-msgstr "Selecteer opdracht voor actie '%s'"
+msgstr "Selecteer opdracht voor actie ‘%s’"
 
 #: ../app/widgets/gimpcontrollereditor.c:656
 msgid "Select Controller Event Action"
@@ -15058,12 +14956,12 @@ msgstr "Geselecteerde invoerapparaat naar beneden verplaatsen"
 #: ../app/widgets/gimpcontrollerlist.c:427
 #, c-format
 msgid "Add '%s' to the list of active controllers"
-msgstr "'%s' toevoegen aan de lijst van actieve invoerapparaten"
+msgstr "‘%s’ toevoegen aan de lijst van actieve invoerapparaten"
 
 #: ../app/widgets/gimpcontrollerlist.c:478
 #, c-format
 msgid "Remove '%s' from the list of active controllers"
-msgstr "'%s' verwijderen van de lijst van actieve invoerapparaten"
+msgstr "‘%s’ verwijderen van de lijst van actieve invoerapparaten"
 
 #: ../app/widgets/gimpcontrollerlist.c:512
 msgid ""
@@ -15112,7 +15010,7 @@ msgstr "Invoerapparaat verwijderen"
 #: ../app/widgets/gimpcontrollerlist.c:579
 #, c-format
 msgid "Remove Controller '%s'?"
-msgstr "Invoerapparaat '%s' verwijderen?"
+msgstr "Invoerapparaat ‘%s’ verwijderen?"
 
 #: ../app/widgets/gimpcontrollerlist.c:583
 msgid ""
@@ -15283,9 +15181,9 @@ msgid "Delete Device Settings"
 msgstr "De geselecteerde instellingen verwijderen"
 
 #: ../app/widgets/gimpdeviceeditor.c:523
-#, fuzzy, c-format
+#, c-format
 msgid "Delete \"%s\"?"
-msgstr "'%s' verwijderen?"
+msgstr "‘%s’ verwijderen?"
 
 #: ../app/widgets/gimpdeviceeditor.c:526
 msgid ""
@@ -15376,7 +15274,7 @@ msgstr "_Vervangen"
 #: ../app/widgets/gimpdnd-xds.c:238
 #, c-format
 msgid "A file named '%s' already exists."
-msgstr "Een bestand genaamd '%s' bestaat al."
+msgstr "Een bestand genaamd ‘%s’ bestaat al."
 
 #: ../app/widgets/gimpdnd-xds.c:243
 msgid "Do you want to replace it with the image you are saving?"
@@ -15993,7 +15891,7 @@ msgstr ""
 #: ../app/widgets/gimptextbuffer.c:1454
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
-msgstr "Ongeldige UTF-8-gegevens in bestand '%s'."
+msgstr "Ongeldige UTF-8-gegevens in bestand ‘%s’."
 
 #: ../app/widgets/gimptexteditor.c:222
 msgid "_Use selected font"
@@ -16462,7 +16360,7 @@ msgstr "GIMP XCF-afbeelding"
 #: ../app/xcf/xcf.c:271
 #, c-format
 msgid "Opening '%s'"
-msgstr "'%s' wordt geopend"
+msgstr "‘%s’ wordt geopend"
 
 #: ../app/xcf/xcf.c:313
 #, c-format
@@ -16472,7 +16370,7 @@ msgstr "XCF-fout: niet ondersteunde XCF-bestandsversie %d tegengekomen"
 #: ../app/xcf/xcf.c:383
 #, c-format
 msgid "Saving '%s'"
-msgstr "'%s' wordt opgeslagen"
+msgstr "‘%s’ wordt opgeslagen"
 
 #: ../app/xcf/xcf.c:403
 #, c-format
@@ -16703,7 +16601,7 @@ msgstr "Afbeeldingen of foto's aanmaken en bewerken"
 
 #, fuzzy
 #~ msgid "Image '%s' (%d) must not be of precision '%s'"
-#~ msgstr "Afbeelding '%s' (%d) is reeds van het type '%s'"
+#~ msgstr "Afbeelding ‘%s’ (%d) is reeds van het type ‘%s’"
 
 #, fuzzy
 #~ msgctxt "undo-type"
@@ -16951,7 +16849,7 @@ msgstr "Afbeeldingen of foto's aanmaken en bewerken"
 #~ msgstr "Controleer of de gereedschapkist zichtbaar is!"
 
 #~ msgid "Couldn't start '%s': %s"
-#~ msgstr "Kon '%s' niet opstarten: %s"
+#~ msgstr "Kon ‘%s’ niet opstarten: %s"
 
 #~ msgid "New brush"
 #~ msgstr "Nieuw penseel"
@@ -17229,7 +17127,7 @@ msgstr "Afbeeldingen of foto's aanmaken en bewerken"
 #~ "afbeelding."
 
 #~ msgid "Reading palette '%s': Missing GREEN component in line %d."
-#~ msgstr "Laden palet '%s': GROEN-component ontbreekt op regel %d."
+#~ msgstr "Laden palet ‘%s’: GROEN-component ontbreekt op regel %d."
 
 #~ msgid "Manage Loadable Modules"
 #~ msgstr "Laadbare modules beheren"
