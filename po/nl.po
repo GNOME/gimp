@@ -25,8 +25,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-27 14:43+0200\n"
-"PO-Revision-Date: 2012-05-27 14:17+0200\n"
+"POT-Creation-Date: 2012-05-27 15:17+0200\n"
+"PO-Revision-Date: 2012-05-27 15:17+0200\n"
 "Last-Translator: Wouter Bolsterlee <wbolster@gnome.org>\n"
 "Language-Team: Dutch <nl@vrijschrift.org>\n"
 "Language: nl\n"
@@ -1459,7 +1459,7 @@ msgstr "Tab _loskoppelen"
 #: ../app/actions/dockable-actions.c:84
 msgctxt "preview-size"
 msgid "_Tiny"
-msgstr "Minisc_uul"
+msgstr "Minusc_uul"
 
 #: ../app/actions/dockable-actions.c:86
 msgctxt "preview-size"
@@ -3894,7 +3894,7 @@ msgstr "Selecteer eerst een kanaal"
 #: ../app/actions/layers-commands.c:1088
 #: ../app/dialogs/layer-add-mask-dialog.c:82
 msgid "Add Layer Mask"
-msgstr "Laagmaskter toevoegen"
+msgstr "Laagmasker toevoegen"
 
 #: ../app/actions/palette-editor-actions.c:43
 msgctxt "palette-editor-action"
@@ -4393,7 +4393,6 @@ msgctxt "select-action"
 msgid "Invert the selection"
 msgstr "De selectie omkeren"
 
-# drijvend/zwevend/los/losgemaakt/
 #: ../app/actions/select-actions.c:68
 msgctxt "select-action"
 msgid "_Float"
@@ -4402,7 +4401,7 @@ msgstr "_Zwevend"
 #: ../app/actions/select-actions.c:69
 msgctxt "select-action"
 msgid "Create a floating selection"
-msgstr "Een drijvende selectie aanmaken"
+msgstr "Een zwevende selectie aanmaken"
 
 # gevederd/zacht/
 #: ../app/actions/select-actions.c:74
@@ -6198,14 +6197,13 @@ msgstr ""
 "standaarddrempelwaarde."
 
 #: ../app/config/gimprc-blurbs.h:125
-#, fuzzy
 msgid ""
 "The window type hint that is set on dock windows and the toolbox window. "
 "This may affect the way your window manager decorates and handles these "
 "windows."
 msgstr ""
-"De venstertypehint die op dokvensters is ingesteld. Dit kan beïnvloeden hoe "
-"uw venstermanager dokvensters weergeeft en ermee omgaat."
+"De venstertypehint die voor dokvensters wordt gebruikt. Dit is van invloed "
+"op hoe het vensterbeheer dokvensters toont en behandelt."
 
 #: ../app/config/gimprc-blurbs.h:157
 msgid "When enabled, the selected brush will be used for all tools."
@@ -6214,11 +6212,8 @@ msgstr ""
 "penseel."
 
 #: ../app/config/gimprc-blurbs.h:160
-#, fuzzy
 msgid "When enabled, the selected dynamics will be used for all tools."
-msgstr ""
-"Wanneer ingeschakeld, gebruiken alle gereedschappen het geselecteerde "
-"penseel."
+msgstr "Indien ingeschakeld gebruiken alle gereedschappen dezelfde dynamiek."
 
 #: ../app/config/gimprc-blurbs.h:166
 msgid "When enabled, the selected gradient will be used for all tools."
@@ -6259,9 +6254,8 @@ msgstr ""
 "Het niveau van interpolatie gebruikt voor schalen en andere transformaties."
 
 #: ../app/config/gimprc-blurbs.h:211
-#, fuzzy
 msgid "Specifies the language to use for the user interface."
-msgstr "Stelt het beeldpuntformaat in van de cursors die GIMP gebruikt."
+msgstr "Bepaalt de taal voor de gebruikersinterface"
 
 #: ../app/config/gimprc-blurbs.h:214
 msgid "How many recently opened image filenames to keep on the File menu."
@@ -6326,7 +6320,6 @@ msgstr ""
 "Stelt in hoeveel processoren GIMP tegelijkertijd moet proberen te gebruiken."
 
 #: ../app/config/gimprc-blurbs.h:262
-#, fuzzy
 msgid ""
 "When enabled, the X server is queried for the mouse's current position on "
 "each motion event, rather than relying on the position hint.  This means "
@@ -6863,680 +6856,569 @@ msgstr "Weinig stippen"
 
 # Normaal aantal (stippen weglaten?)
 #: ../app/core/core-enums.c:421
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Normal dots"
 msgstr "Normaal aantal stippen"
 
 #: ../app/core/core-enums.c:422
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Dense dots"
 msgstr "Veel stippen"
 
 #: ../app/core/core-enums.c:423
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Stipples"
 msgstr "Stippen"
 
 #: ../app/core/core-enums.c:424
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Dash, dot"
 msgstr "Streep, stip"
 
 #: ../app/core/core-enums.c:425
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Dash, dot, dot"
 msgstr "Streep, stip, stip"
 
 #: ../app/core/core-enums.c:454
-#, fuzzy
 msgctxt "brush-generated-shape"
 msgid "Circle"
 msgstr "Cirkel"
 
 #: ../app/core/core-enums.c:455
-#, fuzzy
 msgctxt "brush-generated-shape"
 msgid "Square"
 msgstr "Vierkant"
 
 #: ../app/core/core-enums.c:456
-#, fuzzy
 msgctxt "brush-generated-shape"
 msgid "Diamond"
-msgstr "Diamand"
+msgstr "Diamant"
 
 #: ../app/core/core-enums.c:485
-#, fuzzy
 msgctxt "orientation-type"
 msgid "Horizontal"
 msgstr "Horizontaal"
 
 #: ../app/core/core-enums.c:486
-#, fuzzy
 msgctxt "orientation-type"
 msgid "Vertical"
 msgstr "Verticaal"
 
 #: ../app/core/core-enums.c:487
-#, fuzzy
 msgctxt "orientation-type"
 msgid "Unknown"
 msgstr "Onbekend"
 
 #: ../app/core/core-enums.c:518
-#, fuzzy
 msgctxt "item-set"
 msgid "None"
 msgstr "Geen"
 
 #: ../app/core/core-enums.c:519
-#, fuzzy
 msgctxt "item-set"
 msgid "All layers"
 msgstr "Alle lagen"
 
 #: ../app/core/core-enums.c:520
-#, fuzzy
 msgctxt "item-set"
 msgid "Image-sized layers"
 msgstr "Lagen met afbeeldingsafmetingen"
 
 #: ../app/core/core-enums.c:521
-#, fuzzy
 msgctxt "item-set"
 msgid "All visible layers"
 msgstr "Alle zichtbare lagen"
 
 #: ../app/core/core-enums.c:522
-#, fuzzy
 msgctxt "item-set"
 msgid "All linked layers"
 msgstr "Alle gekoppelde lagen"
 
 #: ../app/core/core-enums.c:588
-#, fuzzy
 msgctxt "view-size"
 msgid "Tiny"
-msgstr "Miniscuul"
+msgstr "Minuscuul"
 
 #: ../app/core/core-enums.c:589
-#, fuzzy
 msgctxt "view-size"
 msgid "Very small"
 msgstr "Zeer klein"
 
 #: ../app/core/core-enums.c:590
-#, fuzzy
 msgctxt "view-size"
 msgid "Small"
 msgstr "Klein"
 
 #: ../app/core/core-enums.c:591
-#, fuzzy
 msgctxt "view-size"
 msgid "Medium"
 msgstr "Medium"
 
 #: ../app/core/core-enums.c:592
-#, fuzzy
 msgctxt "view-size"
 msgid "Large"
 msgstr "Groot"
 
 #: ../app/core/core-enums.c:593
-#, fuzzy
 msgctxt "view-size"
 msgid "Very large"
 msgstr "Zeer groot"
 
 #: ../app/core/core-enums.c:594
-#, fuzzy
 msgctxt "view-size"
 msgid "Huge"
 msgstr "Reusachtig"
 
 #: ../app/core/core-enums.c:595
-#, fuzzy
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "Enorm"
 
 #: ../app/core/core-enums.c:596
-#, fuzzy
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "Gigantisch"
 
 #: ../app/core/core-enums.c:624
-#, fuzzy
 msgctxt "view-type"
 msgid "View as list"
 msgstr "Als lijst tonen"
 
 #: ../app/core/core-enums.c:625
-#, fuzzy
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "Als raster tonen"
 
 #: ../app/core/core-enums.c:654
-#, fuzzy
 msgctxt "thumbnail-size"
 msgid "No thumbnails"
 msgstr "Geen miniaturen"
 
 #: ../app/core/core-enums.c:655
-#, fuzzy
 msgctxt "thumbnail-size"
 msgid "Normal (128x128)"
 msgstr "Normaal (128×128)"
 
 #: ../app/core/core-enums.c:656
-#, fuzzy
 msgctxt "thumbnail-size"
 msgid "Large (256x256)"
 msgstr "Groot (256×256)"
 
 #: ../app/core/core-enums.c:833
-#, fuzzy
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<ongeldig>>"
 
 #: ../app/core/core-enums.c:834
-#, fuzzy
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "Afbeelding schalen"
 
 #: ../app/core/core-enums.c:835
-#, fuzzy
 msgctxt "undo-type"
 msgid "Resize image"
-msgstr "Afbeelding herschalen"
+msgstr "Afbeelding van grootte veranderen"
 
 #: ../app/core/core-enums.c:836
-#, fuzzy
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "Afbeelding spiegelen"
 
 #: ../app/core/core-enums.c:837
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "Afbeelding draaien"
 
 #: ../app/core/core-enums.c:838
-#, fuzzy
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "Afbeelding bijsnijden"
 
 #: ../app/core/core-enums.c:839
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "Afbeelding omzetten"
 
 #: ../app/core/core-enums.c:840
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "Item verwijderen"
 
 #: ../app/core/core-enums.c:841
-#, fuzzy
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "Lagen samenvoegen"
 
 #: ../app/core/core-enums.c:842
-#, fuzzy
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "Paden samenvoegen"
 
 #: ../app/core/core-enums.c:843
-#, fuzzy
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "Snelmasker"
 
 #: ../app/core/core-enums.c:844 ../app/core/core-enums.c:874
 #: ../app/core/gimpimage-grid.c:63
-#, fuzzy
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Raster"
 
 #: ../app/core/core-enums.c:845 ../app/core/core-enums.c:876
-#, fuzzy
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Hulplijn"
 
 #: ../app/core/core-enums.c:846 ../app/core/core-enums.c:877
-#, fuzzy
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "Monsterpunt"
 
 #: ../app/core/core-enums.c:847 ../app/core/core-enums.c:878
-#, fuzzy
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "Laag/kanaal"
 
 #: ../app/core/core-enums.c:848 ../app/core/core-enums.c:879
-#, fuzzy
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "Aanpassing van laag/kanaal"
 
 #: ../app/core/core-enums.c:849 ../app/core/core-enums.c:880
-#, fuzzy
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "Selectiemasker"
 
 #: ../app/core/core-enums.c:850 ../app/core/core-enums.c:884
-#, fuzzy
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "Zichtbaarheid item"
 
 #: ../app/core/core-enums.c:851 ../app/core/core-enums.c:885
-#, fuzzy
 msgctxt "undo-type"
 msgid "Link/Unlink item"
 msgstr "Element koppelen/ontkoppelen"
 
 #: ../app/core/core-enums.c:852
-#, fuzzy
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "Eigenschappen item"
 
 #: ../app/core/core-enums.c:853 ../app/core/core-enums.c:883
-#, fuzzy
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "Item verplaatsen"
 
 #: ../app/core/core-enums.c:854
-#, fuzzy
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "Item schalen"
 
 #: ../app/core/core-enums.c:855
-#, fuzzy
 msgctxt "undo-type"
 msgid "Resize item"
-msgstr "Item herschalen"
+msgstr "Item van grootte veranderen"
 
 #: ../app/core/core-enums.c:856
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "Laag toevoegen"
 
 #: ../app/core/core-enums.c:857 ../app/core/core-enums.c:896
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add layer mask"
-msgstr "Laagmaskter toevoegen"
+msgstr "Laagmasker toevoegen"
 
 #: ../app/core/core-enums.c:858 ../app/core/core-enums.c:898
-#, fuzzy
 msgctxt "undo-type"
 msgid "Apply layer mask"
 msgstr "Laagmasker toepassen"
 
 #: ../app/core/core-enums.c:859 ../app/core/core-enums.c:906
-#, fuzzy
 msgctxt "undo-type"
 msgid "Floating selection to layer"
-msgstr "Drijvende selectie naar laag"
+msgstr "Zwevende selectie naar laag"
 
 #: ../app/core/core-enums.c:860
-#, fuzzy
 msgctxt "undo-type"
 msgid "Float selection"
-msgstr "Drijvende selectie"
+msgstr "Zwevende selectie"
 
 #: ../app/core/core-enums.c:861
-#, fuzzy
 msgctxt "undo-type"
 msgid "Anchor floating selection"
-msgstr "Drijvende selectie verankeren"
+msgstr "Zwevende selectie verankeren"
 
 #: ../app/core/core-enums.c:862 ../app/core/gimp-edit.c:261
-#, fuzzy
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Plakken"
 
 #: ../app/core/core-enums.c:863 ../app/core/gimp-edit.c:502
-#, fuzzy
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Knippen"
 
 #: ../app/core/core-enums.c:864
-#, fuzzy
 msgctxt "undo-type"
 msgid "Text"
 msgstr "Tekst"
 
 #: ../app/core/core-enums.c:865 ../app/core/core-enums.c:907
 #: ../app/core/gimpdrawable-transform.c:589
-#, fuzzy
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Transformeren"
 
 #: ../app/core/core-enums.c:866 ../app/core/core-enums.c:908
-#, fuzzy
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "Tekenen"
 
 # aanhangen/vastmaken/bijvoegen
 #: ../app/core/core-enums.c:867 ../app/core/core-enums.c:911
-#, fuzzy
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "Parasiet aanhangen"
 
 #: ../app/core/core-enums.c:868 ../app/core/core-enums.c:912
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "Parasiet verwijderen"
 
 #: ../app/core/core-enums.c:869
-#, fuzzy
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "Paden importeren"
 
 #: ../app/core/core-enums.c:870
-#, fuzzy
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "Plug-in"
 
 #: ../app/core/core-enums.c:871
-#, fuzzy
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "Afbeeldingstype"
 
 #: ../app/core/core-enums.c:872
-#, fuzzy
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "Afbeeldingsgrootte"
 
 #: ../app/core/core-enums.c:873
-#, fuzzy
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "Resolutiewijziging"
 
 #: ../app/core/core-enums.c:875
-#, fuzzy
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "Geïndexeerd palet wijzigen"
 
 #: ../app/core/core-enums.c:881
-#, fuzzy
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "Item verwijderen"
 
 #: ../app/core/core-enums.c:882
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "Item hernoemen"
 
 #: ../app/core/core-enums.c:886
-#, fuzzy
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "Nieuwe laag"
 
 #: ../app/core/core-enums.c:887
-#, fuzzy
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "Laag verwijderen"
 
 #: ../app/core/core-enums.c:888
-#, fuzzy
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "Laagmodus instellen"
 
 #: ../app/core/core-enums.c:889
-#, fuzzy
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "Laagdekking instellen"
 
 #: ../app/core/core-enums.c:890
-#, fuzzy
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
-msgstr "Alfakanaal vastzetten/losmaken"
+msgstr "Alfakanaal vergrendelen/ontgrendelen"
 
 #: ../app/core/core-enums.c:891
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
-msgstr ""
+msgstr "Laag schalen pauzeren"
 
 #: ../app/core/core-enums.c:892
 msgctxt "undo-type"
 msgid "Resume group layer resize"
-msgstr ""
+msgstr "Laag schalen hervatten"
 
 #: ../app/core/core-enums.c:893
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert group layer"
-msgstr "Rand omzetten"
+msgstr "Groeplaag converteren"
 
 #: ../app/core/core-enums.c:894
-#, fuzzy
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "Tekstlaag"
 
 #: ../app/core/core-enums.c:895
-#, fuzzy
 msgctxt "undo-type"
 msgid "Text layer modification"
-msgstr "Aanpassing van tekstlaag"
+msgstr "Aanpassing aan tekstlaag"
 
 #: ../app/core/core-enums.c:897
-#, fuzzy
 msgctxt "undo-type"
 msgid "Delete layer mask"
 msgstr "Laagmasker verwijderen"
 
 #: ../app/core/core-enums.c:899
-#, fuzzy
 msgctxt "undo-type"
 msgid "Show layer mask"
 msgstr "Laagmasker tonen"
 
 #: ../app/core/core-enums.c:900
-#, fuzzy
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "Nieuw kanaal"
 
 #: ../app/core/core-enums.c:901
-#, fuzzy
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "Kanaal verwijderen"
 
 #: ../app/core/core-enums.c:902
-#, fuzzy
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "Kanaalkleur"
 
 #: ../app/core/core-enums.c:903
-#, fuzzy
 msgctxt "undo-type"
 msgid "New path"
 msgstr "Nieuw pad"
 
 #: ../app/core/core-enums.c:904
-#, fuzzy
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "Pad verwijderen"
 
 #: ../app/core/core-enums.c:905
-#, fuzzy
 msgctxt "undo-type"
 msgid "Path modification"
-msgstr "Aanpassing van pad"
+msgstr "Aanpassing aan pad"
 
 #: ../app/core/core-enums.c:909
-#, fuzzy
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "Inktpot"
 
 #: ../app/core/core-enums.c:910
-#, fuzzy
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "Voorgrondkleur instellen"
 
 #: ../app/core/core-enums.c:913
-#, fuzzy
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Kan niet ongedaan gemaakt worden"
 
 #: ../app/core/core-enums.c:1185
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Composite"
 msgstr "Samengesteld"
 
 #: ../app/core/core-enums.c:1186
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Rood"
 
 #: ../app/core/core-enums.c:1187
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Groen"
 
 #: ../app/core/core-enums.c:1188
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Blauw"
 
 #: ../app/core/core-enums.c:1189
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Hue"
 msgstr "Tint"
 
 #: ../app/core/core-enums.c:1190
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Saturation"
 msgstr "Verzadiging"
 
 #: ../app/core/core-enums.c:1191
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Value"
 msgstr "Waarde"
 
 #: ../app/core/core-enums.c:1220
-#, fuzzy
 msgctxt "message-severity"
 msgid "Message"
 msgstr "Bericht"
 
 #: ../app/core/core-enums.c:1221
-#, fuzzy
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "Waarschuwing"
 
 #: ../app/core/core-enums.c:1222
-#, fuzzy
 msgctxt "message-severity"
 msgid "Error"
 msgstr "Fout"
 
 #: ../app/core/core-enums.c:1251
-#, fuzzy
 msgctxt "color-profile-policy"
 msgid "Ask what to do"
 msgstr "Vragen wat te doen"
 
 #: ../app/core/core-enums.c:1252
-#, fuzzy
 msgctxt "color-profile-policy"
 msgid "Keep embedded profile"
 msgstr "Ingebed profiel behouden"
 
 #: ../app/core/core-enums.c:1253
-#, fuzzy
 msgctxt "color-profile-policy"
 msgid "Convert to RGB workspace"
 msgstr "Naar RGB-werkruimte omzetten"
 
 #: ../app/core/core-enums.c:1290
-#, fuzzy
 msgctxt "dynamics-output-type"
 msgid "Opacity"
 msgstr "Dekking"
 
 #: ../app/core/core-enums.c:1291
-#, fuzzy
 msgctxt "dynamics-output-type"
 msgid "Size"
 msgstr "Grootte"
 
 #: ../app/core/core-enums.c:1292
-#, fuzzy
 msgctxt "dynamics-output-type"
 msgid "Angle"
-msgstr "Hoek:"
+msgstr "Hoek"
 
 #: ../app/core/core-enums.c:1293
-#, fuzzy
 msgctxt "dynamics-output-type"
 msgid "Color"
 msgstr "Kleur"
 
 #: ../app/core/core-enums.c:1294
-#, fuzzy
 msgctxt "dynamics-output-type"
 msgid "Hardness"
 msgstr "Hardheid"
@@ -7544,25 +7426,22 @@ msgstr "Hardheid"
 #: ../app/core/core-enums.c:1295
 msgctxt "dynamics-output-type"
 msgid "Force"
-msgstr ""
+msgstr "Kracht"
 
 #: ../app/core/core-enums.c:1296
-#, fuzzy
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
 msgstr "Verhouding"
 
 #: ../app/core/core-enums.c:1297
-#, fuzzy
 msgctxt "dynamics-output-type"
 msgid "Spacing"
 msgstr "Tussenruimte"
 
 #: ../app/core/core-enums.c:1298
-#, fuzzy
 msgctxt "dynamics-output-type"
 msgid "Rate"
-msgstr "Mate"
+msgstr "Ratio"
 
 #: ../app/core/core-enums.c:1299
 msgctxt "dynamics-output-type"
@@ -7570,17 +7449,16 @@ msgid "Flow"
 msgstr ""
 
 #: ../app/core/core-enums.c:1300
-#, fuzzy
 msgctxt "dynamics-output-type"
 msgid "Jitter"
-msgstr "Jitter toepassen"
+msgstr "Jitter"
 
 #: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:375
 #: ../app/gui/session.c:399 ../app/menus/menus.c:464
 #: ../app/widgets/gimpdevices.c:206
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
-msgstr "Verwijderen van '%s' mislukt: %s"
+msgstr "Verwijderen van ‘%s’ mislukt: %s"
 
 #: ../app/core/gimp-edit.c:189 ../app/core/gimpimage-new.c:309
 msgid "Pasted Layer"
@@ -7588,37 +7466,31 @@ msgstr "Geplakte laag"
 
 # wissen
 #: ../app/core/gimp-edit.c:388
-#, fuzzy
 msgctxt "undo-type"
 msgid "Clear"
 msgstr "Leegmaken"
 
 #: ../app/core/gimp-edit.c:407
-#, fuzzy
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "Vullen met voorgrondkleur"
 
 #: ../app/core/gimp-edit.c:411
-#, fuzzy
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "Vullen met achtergrondkleur"
 
 #: ../app/core/gimp-edit.c:415
-#, fuzzy
 msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "Met wit vullen"
 
 #: ../app/core/gimp-edit.c:419
-#, fuzzy
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr "Met transparantie vullen"
 
 #: ../app/core/gimp-edit.c:423
-#, fuzzy
 msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "Met patroon vullen"
@@ -7632,13 +7504,12 @@ msgid "FG to BG (RGB)"
 msgstr "VG naar AG (RGB)"
 
 #: ../app/core/gimp-gradients.c:70
-#, fuzzy
 msgid "FG to BG (Hardedge)"
 msgstr "VG naar AG (RGB)"
 
 #: ../app/core/gimp-gradients.c:87
 msgid "FG to BG (HSV counter-clockwise)"
-msgstr "VG naar AG (KVW tegen de klok in)"
+msgstr "VG naar AG (HSV tegen de klok in)"
 
 #: ../app/core/gimp-gradients.c:95
 msgid "FG to BG (HSV clockwise hue)"
@@ -7655,9 +7526,8 @@ msgstr "VG naar Transparant"
 #. * that would be "tags-locale:lt".
 #.
 #: ../app/core/gimp-tags.c:88
-#, fuzzy
 msgid "tags-locale:C"
-msgstr "tips-locale:nl"
+msgstr "tags-locale:nl"
 
 #: ../app/core/gimp-user-install.c:173
 #, c-format
@@ -7713,9 +7583,8 @@ msgstr "Parasieten"
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp.c:956 ../app/dialogs/preferences-dialog.c:2743
 #: ../app/tools/gimppaintoptions-gui.c:203
-#, fuzzy
 msgid "Dynamics"
-msgstr "Penseeldynamiek"
+msgstr "Dynamiek"
 
 #. initialize the list of fonts
 #: ../app/core/gimp.c:976
@@ -7730,14 +7599,14 @@ msgstr "Modules"
 #. update tag cache
 #: ../app/core/gimp.c:997
 msgid "Updating tag cache"
-msgstr ""
+msgstr "Tag-cache bijwerken"
 
 #: ../app/core/gimpbrush-load.c:178
-#, fuzzy, c-format
+#, c-format
 msgid "Could not read %d byte from '%s': %s"
 msgid_plural "Could not read %d bytes from '%s': %s"
-msgstr[0] "Kan %d bytes niet lezen uit '%s': %s"
-msgstr[1] "Kan %d bytes niet lezen uit '%s': %s"
+msgstr[0] "Kan %d byte niet lezen uit ‘%s’: %s"
+msgstr[1] "Kan %d bytes niet lezen uit ‘%s’: %s"
 
 #: ../app/core/gimpbrush-load.c:200
 #, c-format
@@ -7810,9 +7679,8 @@ msgstr ""
 "ondersteund."
 
 #: ../app/core/gimpbrush.c:148
-#, fuzzy
 msgid "Brush Spacing"
-msgstr "Tussenruimte"
+msgstr "Tussenruimte penseel"
 
 #: ../app/core/gimpbrushgenerated-load.c:87
 #, c-format
@@ -7952,7 +7820,7 @@ msgstr "Kanaal schalen"
 #, fuzzy
 msgctxt "undo-type"
 msgid "Resize Channel"
-msgstr "Kanaal herschalen"
+msgstr "Kanaal van grootte veranderen"
 
 #: ../app/core/gimpchannel.c:277
 #, fuzzy
@@ -8419,7 +8287,7 @@ msgstr "Laag schalen"
 #, fuzzy
 msgctxt "undo-type"
 msgid "Resize Layer Group"
-msgstr "Laag herschalen"
+msgstr "Laag van grootte veranderen"
 
 #: ../app/core/gimpgrouplayer.c:224
 #, fuzzy
@@ -8508,7 +8376,7 @@ msgstr "Afbeelding bijsnijden"
 #, fuzzy
 msgctxt "undo-type"
 msgid "Resize Image"
-msgstr "Afbeelding herschalen"
+msgstr "Afbeelding van grootte veranderen"
 
 #: ../app/core/gimpimage-guides.c:52
 #, fuzzy
@@ -8693,7 +8561,7 @@ msgstr "Laag verwijderen"
 #, fuzzy
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
-msgstr "Drijvende selectie verwijderen"
+msgstr "Zwevende selectie verwijderen"
 
 #: ../app/core/gimpimage.c:3851
 #, fuzzy
@@ -8802,21 +8670,21 @@ msgstr "Stel item in op exclusief zichtbaar"
 #, fuzzy
 msgctxt "undo-type"
 msgid "Anchor Floating Selection"
-msgstr "Drijvende selectie verankeren"
+msgstr "Zwevende selectie verankeren"
 
 #: ../app/core/gimplayer-floating-sel.c:126 ../app/core/gimplayer.c:620
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
 msgstr ""
-"Kan geen nieuwe laag maken van de drijvende selectie, omdat hij toebehoort "
+"Kan geen nieuwe laag maken van de zwevende selectie, omdat hij toebehoort "
 "aan een laagmasker of kanaal."
 
 #: ../app/core/gimplayer-floating-sel.c:133
 #, fuzzy
 msgctxt "undo-type"
 msgid "Floating Selection to Layer"
-msgstr "Drijvende selectie naar laag"
+msgstr "Zwevende selectie naar laag"
 
 #: ../app/core/gimplayer.c:268
 #, fuzzy
@@ -8840,7 +8708,7 @@ msgstr "Laag schalen"
 #, fuzzy
 msgctxt "undo-type"
 msgid "Resize Layer"
-msgstr "Laag herschalen"
+msgstr "Laag van grootte veranderen"
 
 #: ../app/core/gimplayer.c:272
 #, fuzzy
@@ -8905,7 +8773,7 @@ msgid ""
 "Floating Selection\n"
 "(%s)"
 msgstr ""
-"Drijvende Selectie<\n"
+"Zwevende Selectie<\n"
 "(%s)"
 
 #: ../app/core/gimplayer.c:1448
@@ -8922,7 +8790,7 @@ msgstr ""
 #, fuzzy
 msgctxt "undo-type"
 msgid "Add Layer Mask"
-msgstr "Laagmaskter toevoegen"
+msgstr "Laagmasker toevoegen"
 
 #: ../app/core/gimplayer.c:1583
 #, fuzzy
@@ -9187,14 +9055,13 @@ msgstr ""
 "Kan selectie niet laten drijven, omdat het geselecteerde gebied leeg is."
 
 #: ../app/core/gimpselection.c:854
-#, fuzzy
 msgctxt "undo-type"
 msgid "Float Selection"
-msgstr "Drijvende selectie"
+msgstr "Zwevende selectie"
 
 #: ../app/core/gimpselection.c:870
 msgid "Floated Layer"
-msgstr "Drijvende laag"
+msgstr "Zwevende laag"
 
 # 01/03/08: miter join = vierkante hoek in KDE's Karbon
 #: ../app/core/gimpstrokeoptions.c:181
@@ -10842,7 +10709,7 @@ msgstr "Laaggrootte"
 
 #: ../app/dialogs/resize-dialog.c:295
 msgid "Resize _layers:"
-msgstr "_Lagen herschalen:"
+msgstr "_Lagen schalen:"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:69
 msgid "Calibrate Monitor Resolution"
@@ -11577,7 +11444,7 @@ msgstr "Vierkant"
 #, fuzzy
 msgctxt "ink-blob-type"
 msgid "Diamond"
-msgstr "Diamand"
+msgstr "Diamant"
 
 #: ../app/pdb/channel-cmds.c:184
 msgid "Combine Masks"
@@ -11621,11 +11488,11 @@ msgstr "Kleurverloop"
 #: ../app/pdb/floating-sel-cmds.c:65
 msgid "Cannot remove this layer because it is not a floating selection."
 msgstr ""
-"Deze laag kan niet verwijderd worden, want het is geen drijvende selectie."
+"Deze laag kan niet verwijderd worden, want het is geen zwevende selectie."
 
 #: ../app/pdb/floating-sel-cmds.c:98
 msgid "Cannot anchor this layer because it is not a floating selection."
-msgstr "Kan deze laag niet verankeren, want het is geen drijvende selectie."
+msgstr "Kan deze laag niet verankeren, want het is geen zwevende selectie."
 
 #: ../app/pdb/floating-sel-cmds.c:131
 msgid ""
@@ -11633,7 +11500,7 @@ msgid ""
 "selection."
 msgstr ""
 "Deze laag kan niet omgezet worden naar een normale laag, want het is geen "
-"drijvende selectie."
+"zwevende selectie."
 
 #: ../app/pdb/gimppdb-query.c:299 ../app/pdb/gimppdb.c:305
 #: ../app/pdb/gimppdb.c:375
@@ -12168,7 +12035,7 @@ msgstr "Tekstlaag schalen"
 
 #: ../app/text/gimptextlayer.c:147
 msgid "Resize Text Layer"
-msgstr "Tekstlaag herschalen"
+msgstr "Tekstlaag van grootte veranderen"
 
 #: ../app/text/gimptextlayer.c:148
 msgid "Flip Text Layer"
@@ -13070,7 +12937,7 @@ msgstr "Selectie verplaatsen"
 #: ../app/tools/gimpeditselectiontool.c:246
 #: ../app/tools/gimpeditselectiontool.c:1241
 msgid "Move Floating Selection"
-msgstr "Drijvende selectie verplaatsen"
+msgstr "Zwevende selectie verplaatsen"
 
 #: ../app/tools/gimpeditselectiontool.c:455
 #: ../app/tools/gimpeditselectiontool.c:732
@@ -14245,7 +14112,7 @@ msgstr ""
 
 #: ../app/tools/gimpselectiontool.c:312
 msgid "Click to anchor the floating selection"
-msgstr "Klik om de drijvende selectie te verankeren"
+msgstr "Klik om de zwevende selectie te verankeren"
 
 #: ../app/tools/gimpsheartool.c:83
 msgid "Shear"
@@ -14837,7 +14704,7 @@ msgstr "Pad schalen"
 #, fuzzy
 msgctxt "undo-type"
 msgid "Resize Path"
-msgstr "Pad herschalen"
+msgstr "Pad van grootte veranderen"
 
 #: ../app/vectors/gimpvectors.c:212
 #, fuzzy
@@ -15755,7 +15622,7 @@ msgstr "RGB (%0.3f, %0.3f, %0.3f)"
 #: ../app/widgets/gimpgradienteditor.c:956
 #, c-format
 msgid "HSV (%0.1f, %0.1f, %0.1f)"
-msgstr "KVW (%0.1f, %0.1f, %0.1f)"
+msgstr "HSV (%0.1f, %0.1f, %0.1f)"
 
 #: ../app/widgets/gimpgradienteditor.c:958
 #, c-format
@@ -16546,10 +16413,9 @@ msgid "RGB"
 msgstr "RGB"
 
 #: ../app/widgets/widgets-enums.c:87
-#, fuzzy
 msgctxt "color-frame-mode"
 msgid "HSV"
-msgstr "KVW"
+msgstr "HSV"
 
 #: ../app/widgets/widgets-enums.c:88
 #, fuzzy
@@ -17342,7 +17208,7 @@ msgstr "Afbeeldingen of foto's aanmaken en bewerken"
 #~ "geplakt, met een spatie tussen de twee."
 
 #~ msgid "Remove floating selection"
-#~ msgstr "Drijvende selectie verwijderen"
+#~ msgstr "Zwevende selectie verwijderen"
 
 #~ msgid "Reposition layer"
 #~ msgstr "Laag herpositioneren"
@@ -17354,10 +17220,10 @@ msgstr "Afbeeldingen of foto's aanmaken en bewerken"
 #~ msgstr "Pad herpositioneren"
 
 #~ msgid "Rigor floating selection"
-#~ msgstr "Drijvende selectie verankeren"
+#~ msgstr "Zwevende selectie verankeren"
 
 #~ msgid "Relax floating selection"
-#~ msgstr "Drijvende selectie verwijderen"
+#~ msgstr "Zwevende selectie verwijderen"
 
 #~ msgctxt "command"
 #~ msgid "Rectangle Select"
@@ -17410,13 +17276,13 @@ msgstr "Afbeeldingen of foto's aanmaken en bewerken"
 
 #~ msgid "Cannot rigor this layer because it is not a floating selection."
 #~ msgstr ""
-#~ "Deze laag kan niet verankerd worden, want het is geen drijvende selectie."
+#~ "Deze laag kan niet verankerd worden, want het is geen zwevende selectie."
 
 # wat is relax?
 #~ msgid "Cannot relax this layer because it is not a floating selection."
 #~ msgstr ""
-#~ "Deze laag kan niet verankerd worden, want het is geen drijvende "
-#~ "selectie., want het is geen drijvende selectie."
+#~ "Deze laag kan niet verankerd worden, want het is geen zwevende selectie., "
+#~ "want het is geen zwevende selectie."
 
 #~ msgid "tool|_Zoom"
 #~ msgstr "_Vergrootglas"
