@@ -70,6 +70,7 @@
 #endif
 
 #include <sys/stat.h>
+#include <fcntl.h>
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -530,6 +531,7 @@ gzip_load (const char *infile,
            const char *outfile)
 {
   gboolean ret;
+  int fd;
   gzFile in;
   FILE *out;
   char buf[16384];
@@ -539,11 +541,18 @@ gzip_load (const char *infile,
   in = NULL;
   out = NULL;
 
-  in = gzopen (infile, "rb");
-  if (!in)
+  fd = g_open (infile, O_RDONLY, 0);
+  if (fd == -1)
     goto out;
 
-  out = fopen (outfile, "wb");
+  in = gzdopen (fd, "rb");
+  if (!in)
+    {
+      close (fd);
+      goto out;
+    }
+
+  out = g_fopen (outfile, "wb");
   if (!out)
     goto out;
 
@@ -564,6 +573,7 @@ gzip_load (const char *infile,
     }
 
  out:
+  /* There is no need to close(fd) as it is closed by gzclose(). */
   if (in)
     if (gzclose (in) != Z_OK)
       ret = FALSE;
@@ -580,6 +590,7 @@ gzip_save (const char *infile,
 {
   gboolean ret;
   FILE *in;
+  int fd;
   gzFile out;
   char buf[16384];
   int len;
@@ -588,13 +599,20 @@ gzip_save (const char *infile,
   in = NULL;
   out = NULL;
 
-  in = fopen (infile, "rb");
+  in = g_fopen (infile, "rb");
   if (!in)
     goto out;
 
-  out = gzopen (outfile, "wb");
-  if (!out)
+  fd = g_open (outfile, O_CREAT | O_WRONLY, 0664);
+  if (fd == -1)
     goto out;
+
+  out = gzdopen (fd, "wb");
+  if (!out)
+    {
+      close (fd);
+      goto out;
+    }
 
   while (TRUE)
     {
@@ -618,6 +636,7 @@ gzip_save (const char *infile,
   if (in)
     fclose (in);
 
+  /* There is no need to close(fd) as it is closed by gzclose(). */
   if (out)
     if (gzclose (out) != Z_OK)
       ret = FALSE;
@@ -630,6 +649,7 @@ bzip2_load (const char *infile,
             const char *outfile)
 {
   gboolean ret;
+  int fd;
   BZFILE *in;
   FILE *out;
   char buf[16384];
@@ -639,11 +659,18 @@ bzip2_load (const char *infile,
   in = NULL;
   out = NULL;
 
-  in = BZ2_bzopen (infile, "rb");
-  if (!in)
+  fd = g_open (infile, O_RDONLY, 0);
+  if (fd == -1)
     goto out;
 
-  out = fopen (outfile, "wb");
+  in = BZ2_bzdopen (fd, "rb");
+  if (!in)
+    {
+      close (fd);
+      goto out;
+    }
+
+  out = g_fopen (outfile, "wb");
   if (!out)
     goto out;
 
@@ -664,6 +691,8 @@ bzip2_load (const char *infile,
     }
 
  out:
+  /* TODO: Check this in the case of BZ2_bzclose(): */
+  /* There is no need to close(fd) as it is closed by BZ2_bzclose(). */
   if (in)
     BZ2_bzclose (in);
 
@@ -679,6 +708,7 @@ bzip2_save (const char *infile,
 {
   gboolean ret;
   FILE *in;
+  int fd;
   BZFILE *out;
   char buf[16384];
   int len;
@@ -687,13 +717,20 @@ bzip2_save (const char *infile,
   in = NULL;
   out = NULL;
 
-  in = fopen (infile, "rb");
+  in = g_fopen (infile, "rb");
   if (!in)
     goto out;
 
-  out = BZ2_bzopen (outfile, "wb");
-  if (!out)
+  fd = g_open (outfile, O_CREAT | O_WRONLY, 0664);
+  if (fd == -1)
     goto out;
+
+  out = BZ2_bzdopen (fd, "wb");
+  if (!out)
+    {
+      close (fd);
+      goto out;
+    }
 
   while (TRUE)
     {
@@ -717,6 +754,8 @@ bzip2_save (const char *infile,
   if (in)
     fclose (in);
 
+  /* TODO: Check this in the case of BZ2_bzclose(): */
+  /* There is no need to close(fd) as it is closed by BZ2_bzclose(). */
   if (out)
     BZ2_bzclose (out);
 
