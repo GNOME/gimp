@@ -52,7 +52,7 @@
 
 
 static GimpValueArray *
-vectors_new_invoker (GimpProcedure      *procedure,
+vectors_new_invoker (GimpProcedure         *procedure,
                      Gimp                  *gimp,
                      GimpContext           *context,
                      GimpProgress          *progress,
@@ -83,7 +83,7 @@ vectors_new_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_new_from_text_layer_invoker (GimpProcedure      *procedure,
+vectors_new_from_text_layer_invoker (GimpProcedure         *procedure,
                                      Gimp                  *gimp,
                                      GimpContext           *context,
                                      GimpProgress          *progress,
@@ -127,7 +127,7 @@ vectors_new_from_text_layer_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_copy_invoker (GimpProcedure      *procedure,
+vectors_copy_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
                       GimpProgress          *progress,
@@ -160,7 +160,7 @@ vectors_copy_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_get_strokes_invoker (GimpProcedure      *procedure,
+vectors_get_strokes_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -209,7 +209,7 @@ vectors_get_strokes_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_stroke_get_length_invoker (GimpProcedure      *procedure,
+vectors_stroke_get_length_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
                                    GimpProgress          *progress,
@@ -247,7 +247,7 @@ vectors_stroke_get_length_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_stroke_get_point_at_dist_invoker (GimpProcedure      *procedure,
+vectors_stroke_get_point_at_dist_invoker (GimpProcedure         *procedure,
                                           Gimp                  *gimp,
                                           GimpContext           *context,
                                           GimpProgress          *progress,
@@ -302,7 +302,7 @@ vectors_stroke_get_point_at_dist_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_remove_stroke_invoker (GimpProcedure      *procedure,
+vectors_remove_stroke_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -338,7 +338,7 @@ vectors_remove_stroke_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_stroke_close_invoker (GimpProcedure      *procedure,
+vectors_stroke_close_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -374,7 +374,7 @@ vectors_stroke_close_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_stroke_translate_invoker (GimpProcedure      *procedure,
+vectors_stroke_translate_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
                                   GimpProgress          *progress,
@@ -414,7 +414,7 @@ vectors_stroke_translate_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_stroke_scale_invoker (GimpProcedure      *procedure,
+vectors_stroke_scale_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -454,7 +454,7 @@ vectors_stroke_scale_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_stroke_rotate_invoker (GimpProcedure      *procedure,
+vectors_stroke_rotate_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -496,7 +496,7 @@ vectors_stroke_rotate_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_stroke_flip_invoker (GimpProcedure      *procedure,
+vectors_stroke_flip_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -536,7 +536,7 @@ vectors_stroke_flip_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_stroke_flip_free_invoker (GimpProcedure      *procedure,
+vectors_stroke_flip_free_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
                                   GimpProgress          *progress,
@@ -580,7 +580,7 @@ vectors_stroke_flip_free_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_stroke_get_points_invoker (GimpProcedure      *procedure,
+vectors_stroke_get_points_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
                                    GimpProgress          *progress,
@@ -648,7 +648,7 @@ vectors_stroke_get_points_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_stroke_new_from_points_invoker (GimpProcedure      *procedure,
+vectors_stroke_new_from_points_invoker (GimpProcedure         *procedure,
                                         Gimp                  *gimp,
                                         GimpContext           *context,
                                         GimpProgress          *progress,
@@ -720,7 +720,7 @@ vectors_stroke_new_from_points_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_stroke_interpolate_invoker (GimpProcedure      *procedure,
+vectors_stroke_interpolate_invoker (GimpProcedure         *procedure,
                                     Gimp                  *gimp,
                                     GimpContext           *context,
                                     GimpProgress          *progress,
@@ -785,7 +785,7 @@ vectors_stroke_interpolate_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_bezier_stroke_new_moveto_invoker (GimpProcedure      *procedure,
+vectors_bezier_stroke_new_moveto_invoker (GimpProcedure         *procedure,
                                           Gimp                  *gimp,
                                           GimpContext           *context,
                                           GimpProgress          *progress,
@@ -840,7 +840,7 @@ vectors_bezier_stroke_new_moveto_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_bezier_stroke_lineto_invoker (GimpProcedure      *procedure,
+vectors_bezier_stroke_lineto_invoker (GimpProcedure         *procedure,
                                       Gimp                  *gimp,
                                       GimpContext           *context,
                                       GimpProgress          *progress,
@@ -885,7 +885,7 @@ vectors_bezier_stroke_lineto_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_bezier_stroke_conicto_invoker (GimpProcedure      *procedure,
+vectors_bezier_stroke_conicto_invoker (GimpProcedure         *procedure,
                                        Gimp                  *gimp,
                                        GimpContext           *context,
                                        GimpProgress          *progress,
@@ -938,7 +938,7 @@ vectors_bezier_stroke_conicto_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_bezier_stroke_cubicto_invoker (GimpProcedure      *procedure,
+vectors_bezier_stroke_cubicto_invoker (GimpProcedure         *procedure,
                                        Gimp                  *gimp,
                                        GimpContext           *context,
                                        GimpProgress          *progress,
@@ -999,7 +999,7 @@ vectors_bezier_stroke_cubicto_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_bezier_stroke_new_ellipse_invoker (GimpProcedure      *procedure,
+vectors_bezier_stroke_new_ellipse_invoker (GimpProcedure         *procedure,
                                            Gimp                  *gimp,
                                            GimpContext           *context,
                                            GimpProgress          *progress,
@@ -1060,7 +1060,7 @@ vectors_bezier_stroke_new_ellipse_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_to_selection_invoker (GimpProcedure      *procedure,
+vectors_to_selection_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -1100,7 +1100,7 @@ vectors_to_selection_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_import_from_file_invoker (GimpProcedure      *procedure,
+vectors_import_from_file_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
                                   GimpProgress          *progress,
@@ -1162,7 +1162,7 @@ vectors_import_from_file_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_import_from_string_invoker (GimpProcedure      *procedure,
+vectors_import_from_string_invoker (GimpProcedure         *procedure,
                                     Gimp                  *gimp,
                                     GimpContext           *context,
                                     GimpProgress          *progress,
@@ -1226,7 +1226,7 @@ vectors_import_from_string_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_export_to_file_invoker (GimpProcedure      *procedure,
+vectors_export_to_file_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -1252,7 +1252,7 @@ vectors_export_to_file_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-vectors_export_to_string_invoker (GimpProcedure      *procedure,
+vectors_export_to_string_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
                                   GimpProgress          *progress,

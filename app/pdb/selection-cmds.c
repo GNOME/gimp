@@ -46,7 +46,7 @@
 
 
 static GimpValueArray *
-selection_bounds_invoker (GimpProcedure      *procedure,
+selection_bounds_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -86,7 +86,7 @@ selection_bounds_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-selection_value_invoker (GimpProcedure      *procedure,
+selection_value_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -124,7 +124,7 @@ selection_value_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-selection_is_empty_invoker (GimpProcedure      *procedure,
+selection_is_empty_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -153,7 +153,7 @@ selection_is_empty_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-selection_translate_invoker (GimpProcedure      *procedure,
+selection_translate_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -180,7 +180,7 @@ selection_translate_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-selection_float_invoker (GimpProcedure      *procedure,
+selection_float_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -225,7 +225,7 @@ selection_float_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-selection_invert_invoker (GimpProcedure      *procedure,
+selection_invert_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -247,7 +247,7 @@ selection_invert_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-selection_sharpen_invoker (GimpProcedure      *procedure,
+selection_sharpen_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -269,7 +269,7 @@ selection_sharpen_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-selection_all_invoker (GimpProcedure      *procedure,
+selection_all_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
                        GimpProgress          *progress,
@@ -291,7 +291,7 @@ selection_all_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-selection_none_invoker (GimpProcedure      *procedure,
+selection_none_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -313,7 +313,7 @@ selection_none_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-selection_feather_invoker (GimpProcedure      *procedure,
+selection_feather_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -338,7 +338,7 @@ selection_feather_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-selection_border_invoker (GimpProcedure      *procedure,
+selection_border_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -364,7 +364,7 @@ selection_border_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-selection_grow_invoker (GimpProcedure      *procedure,
+selection_grow_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -389,7 +389,7 @@ selection_grow_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-selection_shrink_invoker (GimpProcedure      *procedure,
+selection_shrink_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -414,7 +414,7 @@ selection_shrink_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-selection_layer_alpha_invoker (GimpProcedure      *procedure,
+selection_layer_alpha_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -441,7 +441,7 @@ selection_layer_alpha_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-selection_load_invoker (GimpProcedure      *procedure,
+selection_load_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -468,7 +468,7 @@ selection_load_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-selection_save_invoker (GimpProcedure      *procedure,
+selection_save_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -500,7 +500,7 @@ selection_save_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-selection_combine_invoker (GimpProcedure      *procedure,
+selection_combine_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,

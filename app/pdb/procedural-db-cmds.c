@@ -42,7 +42,7 @@
 
 
 static GimpValueArray *
-procedural_db_temp_name_invoker (GimpProcedure      *procedure,
+procedural_db_temp_name_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -63,7 +63,7 @@ procedural_db_temp_name_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-procedural_db_dump_invoker (GimpProcedure      *procedure,
+procedural_db_dump_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -85,7 +85,7 @@ procedural_db_dump_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-procedural_db_query_invoker (GimpProcedure      *procedure,
+procedural_db_query_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -134,7 +134,7 @@ procedural_db_query_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-procedural_db_proc_exists_invoker (GimpProcedure      *procedure,
+procedural_db_proc_exists_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
                                    GimpProgress          *progress,
@@ -180,7 +180,7 @@ procedural_db_proc_exists_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-procedural_db_proc_info_invoker (GimpProcedure      *procedure,
+procedural_db_proc_info_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -237,7 +237,7 @@ procedural_db_proc_info_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-procedural_db_proc_arg_invoker (GimpProcedure      *procedure,
+procedural_db_proc_arg_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -302,7 +302,7 @@ procedural_db_proc_arg_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-procedural_db_proc_val_invoker (GimpProcedure      *procedure,
+procedural_db_proc_val_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -367,7 +367,7 @@ procedural_db_proc_val_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-procedural_db_get_data_invoker (GimpProcedure      *procedure,
+procedural_db_get_data_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -411,7 +411,7 @@ procedural_db_get_data_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-procedural_db_get_data_size_invoker (GimpProcedure      *procedure,
+procedural_db_get_data_size_invoker (GimpProcedure         *procedure,
                                      Gimp                  *gimp,
                                      GimpContext           *context,
                                      GimpProgress          *progress,
@@ -446,7 +446,7 @@ procedural_db_get_data_size_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-procedural_db_set_data_invoker (GimpProcedure      *procedure,
+procedural_db_set_data_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,

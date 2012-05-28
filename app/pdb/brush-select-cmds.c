@@ -37,7 +37,7 @@
 
 
 static GimpValueArray *
-brushes_popup_invoker (GimpProcedure      *procedure,
+brushes_popup_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
                        GimpProgress          *progress,
@@ -78,7 +78,7 @@ brushes_popup_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brushes_close_popup_invoker (GimpProcedure      *procedure,
+brushes_close_popup_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -104,7 +104,7 @@ brushes_close_popup_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brushes_set_popup_invoker (GimpProcedure      *procedure,
+brushes_set_popup_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,

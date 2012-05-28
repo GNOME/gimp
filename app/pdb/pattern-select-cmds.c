@@ -37,7 +37,7 @@
 
 
 static GimpValueArray *
-patterns_popup_invoker (GimpProcedure      *procedure,
+patterns_popup_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -69,7 +69,7 @@ patterns_popup_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-patterns_close_popup_invoker (GimpProcedure      *procedure,
+patterns_close_popup_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -95,7 +95,7 @@ patterns_close_popup_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-patterns_set_popup_invoker (GimpProcedure      *procedure,
+patterns_set_popup_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,

@@ -50,7 +50,7 @@
 
 
 static GimpValueArray *
-context_push_invoker (GimpProcedure      *procedure,
+context_push_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
                       GimpProgress          *progress,
@@ -70,7 +70,7 @@ context_push_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_pop_invoker (GimpProcedure      *procedure,
+context_pop_invoker (GimpProcedure         *procedure,
                      Gimp                  *gimp,
                      GimpContext           *context,
                      GimpProgress          *progress,
@@ -90,7 +90,7 @@ context_pop_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_defaults_invoker (GimpProcedure      *procedure,
+context_set_defaults_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -103,7 +103,7 @@ context_set_defaults_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_list_paint_methods_invoker (GimpProcedure      *procedure,
+context_list_paint_methods_invoker (GimpProcedure         *procedure,
                                     Gimp                  *gimp,
                                     GimpContext           *context,
                                     GimpProgress          *progress,
@@ -126,7 +126,7 @@ context_list_paint_methods_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_paint_method_invoker (GimpProcedure      *procedure,
+context_get_paint_method_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
                                   GimpProgress          *progress,
@@ -154,7 +154,7 @@ context_get_paint_method_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_paint_method_invoker (GimpProcedure      *procedure,
+context_set_paint_method_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
                                   GimpProgress          *progress,
@@ -181,7 +181,7 @@ context_set_paint_method_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_foreground_invoker (GimpProcedure      *procedure,
+context_get_foreground_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -201,7 +201,7 @@ context_get_foreground_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_foreground_invoker (GimpProcedure      *procedure,
+context_set_foreground_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -224,7 +224,7 @@ context_set_foreground_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_background_invoker (GimpProcedure      *procedure,
+context_get_background_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -244,7 +244,7 @@ context_get_background_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_background_invoker (GimpProcedure      *procedure,
+context_set_background_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -267,7 +267,7 @@ context_set_background_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_default_colors_invoker (GimpProcedure      *procedure,
+context_set_default_colors_invoker (GimpProcedure         *procedure,
                                     Gimp                  *gimp,
                                     GimpContext           *context,
                                     GimpProgress          *progress,
@@ -280,7 +280,7 @@ context_set_default_colors_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_swap_colors_invoker (GimpProcedure      *procedure,
+context_swap_colors_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -293,7 +293,7 @@ context_swap_colors_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_opacity_invoker (GimpProcedure      *procedure,
+context_get_opacity_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -312,7 +312,7 @@ context_get_opacity_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_opacity_invoker (GimpProcedure      *procedure,
+context_set_opacity_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -334,7 +334,7 @@ context_set_opacity_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_paint_mode_invoker (GimpProcedure      *procedure,
+context_get_paint_mode_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -353,7 +353,7 @@ context_get_paint_mode_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_paint_mode_invoker (GimpProcedure      *procedure,
+context_set_paint_mode_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -375,7 +375,7 @@ context_set_paint_mode_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_brush_invoker (GimpProcedure      *procedure,
+context_get_brush_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -403,7 +403,7 @@ context_get_brush_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_brush_invoker (GimpProcedure      *procedure,
+context_set_brush_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -430,7 +430,7 @@ context_set_brush_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_brush_size_invoker (GimpProcedure      *procedure,
+context_get_brush_size_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -462,7 +462,7 @@ context_get_brush_size_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_brush_size_invoker (GimpProcedure      *procedure,
+context_set_brush_size_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -494,7 +494,7 @@ context_set_brush_size_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_brush_default_size_invoker (GimpProcedure      *procedure,
+context_set_brush_default_size_invoker (GimpProcedure         *procedure,
                                         Gimp                  *gimp,
                                         GimpContext           *context,
                                         GimpProgress          *progress,
@@ -530,7 +530,7 @@ context_set_brush_default_size_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_brush_aspect_ratio_invoker (GimpProcedure      *procedure,
+context_get_brush_aspect_ratio_invoker (GimpProcedure         *procedure,
                                         Gimp                  *gimp,
                                         GimpContext           *context,
                                         GimpProgress          *progress,
@@ -562,7 +562,7 @@ context_get_brush_aspect_ratio_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_brush_aspect_ratio_invoker (GimpProcedure      *procedure,
+context_set_brush_aspect_ratio_invoker (GimpProcedure         *procedure,
                                         Gimp                  *gimp,
                                         GimpContext           *context,
                                         GimpProgress          *progress,
@@ -594,7 +594,7 @@ context_set_brush_aspect_ratio_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_brush_angle_invoker (GimpProcedure      *procedure,
+context_get_brush_angle_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -626,7 +626,7 @@ context_get_brush_angle_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_brush_angle_invoker (GimpProcedure      *procedure,
+context_set_brush_angle_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -658,7 +658,7 @@ context_set_brush_angle_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_dynamics_invoker (GimpProcedure      *procedure,
+context_get_dynamics_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -686,7 +686,7 @@ context_get_dynamics_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_dynamics_invoker (GimpProcedure      *procedure,
+context_set_dynamics_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -713,7 +713,7 @@ context_set_dynamics_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_pattern_invoker (GimpProcedure      *procedure,
+context_get_pattern_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -741,7 +741,7 @@ context_get_pattern_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_pattern_invoker (GimpProcedure      *procedure,
+context_set_pattern_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -768,7 +768,7 @@ context_set_pattern_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_gradient_invoker (GimpProcedure      *procedure,
+context_get_gradient_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -796,7 +796,7 @@ context_get_gradient_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_gradient_invoker (GimpProcedure      *procedure,
+context_set_gradient_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -823,7 +823,7 @@ context_set_gradient_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_palette_invoker (GimpProcedure      *procedure,
+context_get_palette_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -851,7 +851,7 @@ context_get_palette_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_palette_invoker (GimpProcedure      *procedure,
+context_set_palette_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -878,7 +878,7 @@ context_set_palette_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_font_invoker (GimpProcedure      *procedure,
+context_get_font_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -906,7 +906,7 @@ context_get_font_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_font_invoker (GimpProcedure      *procedure,
+context_set_font_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -933,7 +933,7 @@ context_set_font_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_antialias_invoker (GimpProcedure      *procedure,
+context_get_antialias_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -954,7 +954,7 @@ context_get_antialias_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_antialias_invoker (GimpProcedure      *procedure,
+context_set_antialias_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -978,7 +978,7 @@ context_set_antialias_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_feather_invoker (GimpProcedure      *procedure,
+context_get_feather_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -999,7 +999,7 @@ context_get_feather_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_feather_invoker (GimpProcedure      *procedure,
+context_set_feather_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -1023,7 +1023,7 @@ context_set_feather_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_feather_radius_invoker (GimpProcedure      *procedure,
+context_get_feather_radius_invoker (GimpProcedure         *procedure,
                                     Gimp                  *gimp,
                                     GimpContext           *context,
                                     GimpProgress          *progress,
@@ -1048,7 +1048,7 @@ context_get_feather_radius_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_feather_radius_invoker (GimpProcedure      *procedure,
+context_set_feather_radius_invoker (GimpProcedure         *procedure,
                                     Gimp                  *gimp,
                                     GimpContext           *context,
                                     GimpProgress          *progress,
@@ -1075,7 +1075,7 @@ context_set_feather_radius_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_sample_merged_invoker (GimpProcedure      *procedure,
+context_get_sample_merged_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
                                    GimpProgress          *progress,
@@ -1096,7 +1096,7 @@ context_get_sample_merged_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_sample_merged_invoker (GimpProcedure      *procedure,
+context_set_sample_merged_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
                                    GimpProgress          *progress,
@@ -1120,7 +1120,7 @@ context_set_sample_merged_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_sample_criterion_invoker (GimpProcedure      *procedure,
+context_get_sample_criterion_invoker (GimpProcedure         *procedure,
                                       Gimp                  *gimp,
                                       GimpContext           *context,
                                       GimpProgress          *progress,
@@ -1141,7 +1141,7 @@ context_get_sample_criterion_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_sample_criterion_invoker (GimpProcedure      *procedure,
+context_set_sample_criterion_invoker (GimpProcedure         *procedure,
                                       Gimp                  *gimp,
                                       GimpContext           *context,
                                       GimpProgress          *progress,
@@ -1165,7 +1165,7 @@ context_set_sample_criterion_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_sample_threshold_invoker (GimpProcedure      *procedure,
+context_get_sample_threshold_invoker (GimpProcedure         *procedure,
                                       Gimp                  *gimp,
                                       GimpContext           *context,
                                       GimpProgress          *progress,
@@ -1186,7 +1186,7 @@ context_get_sample_threshold_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_sample_threshold_invoker (GimpProcedure      *procedure,
+context_set_sample_threshold_invoker (GimpProcedure         *procedure,
                                       Gimp                  *gimp,
                                       GimpContext           *context,
                                       GimpProgress          *progress,
@@ -1210,7 +1210,7 @@ context_set_sample_threshold_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_sample_threshold_int_invoker (GimpProcedure      *procedure,
+context_get_sample_threshold_int_invoker (GimpProcedure         *procedure,
                                           Gimp                  *gimp,
                                           GimpContext           *context,
                                           GimpProgress          *progress,
@@ -1235,7 +1235,7 @@ context_get_sample_threshold_int_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_sample_threshold_int_invoker (GimpProcedure      *procedure,
+context_set_sample_threshold_int_invoker (GimpProcedure         *procedure,
                                           Gimp                  *gimp,
                                           GimpContext           *context,
                                           GimpProgress          *progress,
@@ -1259,7 +1259,7 @@ context_set_sample_threshold_int_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_sample_transparent_invoker (GimpProcedure      *procedure,
+context_get_sample_transparent_invoker (GimpProcedure         *procedure,
                                         Gimp                  *gimp,
                                         GimpContext           *context,
                                         GimpProgress          *progress,
@@ -1280,7 +1280,7 @@ context_get_sample_transparent_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_sample_transparent_invoker (GimpProcedure      *procedure,
+context_set_sample_transparent_invoker (GimpProcedure         *procedure,
                                         Gimp                  *gimp,
                                         GimpContext           *context,
                                         GimpProgress          *progress,
@@ -1304,7 +1304,7 @@ context_set_sample_transparent_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_interpolation_invoker (GimpProcedure      *procedure,
+context_get_interpolation_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
                                    GimpProgress          *progress,
@@ -1325,7 +1325,7 @@ context_get_interpolation_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_interpolation_invoker (GimpProcedure      *procedure,
+context_set_interpolation_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
                                    GimpProgress          *progress,
@@ -1349,7 +1349,7 @@ context_set_interpolation_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_transform_direction_invoker (GimpProcedure      *procedure,
+context_get_transform_direction_invoker (GimpProcedure         *procedure,
                                          Gimp                  *gimp,
                                          GimpContext           *context,
                                          GimpProgress          *progress,
@@ -1370,7 +1370,7 @@ context_get_transform_direction_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_transform_direction_invoker (GimpProcedure      *procedure,
+context_set_transform_direction_invoker (GimpProcedure         *procedure,
                                          Gimp                  *gimp,
                                          GimpContext           *context,
                                          GimpProgress          *progress,
@@ -1394,7 +1394,7 @@ context_set_transform_direction_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_transform_resize_invoker (GimpProcedure      *procedure,
+context_get_transform_resize_invoker (GimpProcedure         *procedure,
                                       Gimp                  *gimp,
                                       GimpContext           *context,
                                       GimpProgress          *progress,
@@ -1415,7 +1415,7 @@ context_get_transform_resize_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_transform_resize_invoker (GimpProcedure      *procedure,
+context_set_transform_resize_invoker (GimpProcedure         *procedure,
                                       Gimp                  *gimp,
                                       GimpContext           *context,
                                       GimpProgress          *progress,
@@ -1439,7 +1439,7 @@ context_set_transform_resize_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_transform_recursion_invoker (GimpProcedure      *procedure,
+context_get_transform_recursion_invoker (GimpProcedure         *procedure,
                                          Gimp                  *gimp,
                                          GimpContext           *context,
                                          GimpProgress          *progress,
@@ -1460,7 +1460,7 @@ context_get_transform_recursion_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_transform_recursion_invoker (GimpProcedure      *procedure,
+context_set_transform_recursion_invoker (GimpProcedure         *procedure,
                                          Gimp                  *gimp,
                                          GimpContext           *context,
                                          GimpProgress          *progress,
@@ -1484,7 +1484,7 @@ context_set_transform_recursion_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_ink_size_invoker (GimpProcedure      *procedure,
+context_get_ink_size_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -1516,7 +1516,7 @@ context_get_ink_size_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_ink_size_invoker (GimpProcedure      *procedure,
+context_set_ink_size_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -1547,7 +1547,7 @@ context_set_ink_size_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_ink_angle_invoker (GimpProcedure      *procedure,
+context_get_ink_angle_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -1579,7 +1579,7 @@ context_get_ink_angle_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_ink_angle_invoker (GimpProcedure      *procedure,
+context_set_ink_angle_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -1610,7 +1610,7 @@ context_set_ink_angle_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_ink_size_sensitivity_invoker (GimpProcedure      *procedure,
+context_get_ink_size_sensitivity_invoker (GimpProcedure         *procedure,
                                           Gimp                  *gimp,
                                           GimpContext           *context,
                                           GimpProgress          *progress,
@@ -1642,7 +1642,7 @@ context_get_ink_size_sensitivity_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_ink_size_sensitivity_invoker (GimpProcedure      *procedure,
+context_set_ink_size_sensitivity_invoker (GimpProcedure         *procedure,
                                           Gimp                  *gimp,
                                           GimpContext           *context,
                                           GimpProgress          *progress,
@@ -1673,7 +1673,7 @@ context_set_ink_size_sensitivity_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_ink_tilt_sensitivity_invoker (GimpProcedure      *procedure,
+context_get_ink_tilt_sensitivity_invoker (GimpProcedure         *procedure,
                                           Gimp                  *gimp,
                                           GimpContext           *context,
                                           GimpProgress          *progress,
@@ -1705,7 +1705,7 @@ context_get_ink_tilt_sensitivity_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_ink_tilt_sensitivity_invoker (GimpProcedure      *procedure,
+context_set_ink_tilt_sensitivity_invoker (GimpProcedure         *procedure,
                                           Gimp                  *gimp,
                                           GimpContext           *context,
                                           GimpProgress          *progress,
@@ -1736,7 +1736,7 @@ context_set_ink_tilt_sensitivity_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_ink_speed_sensitivity_invoker (GimpProcedure      *procedure,
+context_get_ink_speed_sensitivity_invoker (GimpProcedure         *procedure,
                                            Gimp                  *gimp,
                                            GimpContext           *context,
                                            GimpProgress          *progress,
@@ -1768,7 +1768,7 @@ context_get_ink_speed_sensitivity_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_ink_speed_sensitivity_invoker (GimpProcedure      *procedure,
+context_set_ink_speed_sensitivity_invoker (GimpProcedure         *procedure,
                                            Gimp                  *gimp,
                                            GimpContext           *context,
                                            GimpProgress          *progress,
@@ -1799,7 +1799,7 @@ context_set_ink_speed_sensitivity_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_ink_blob_type_invoker (GimpProcedure      *procedure,
+context_get_ink_blob_type_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
                                    GimpProgress          *progress,
@@ -1831,7 +1831,7 @@ context_get_ink_blob_type_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_ink_blob_type_invoker (GimpProcedure      *procedure,
+context_set_ink_blob_type_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
                                    GimpProgress          *progress,
@@ -1862,7 +1862,7 @@ context_set_ink_blob_type_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_ink_blob_aspect_ratio_invoker (GimpProcedure      *procedure,
+context_get_ink_blob_aspect_ratio_invoker (GimpProcedure         *procedure,
                                            Gimp                  *gimp,
                                            GimpContext           *context,
                                            GimpProgress          *progress,
@@ -1894,7 +1894,7 @@ context_get_ink_blob_aspect_ratio_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_ink_blob_aspect_ratio_invoker (GimpProcedure      *procedure,
+context_set_ink_blob_aspect_ratio_invoker (GimpProcedure         *procedure,
                                            Gimp                  *gimp,
                                            GimpContext           *context,
                                            GimpProgress          *progress,
@@ -1925,7 +1925,7 @@ context_set_ink_blob_aspect_ratio_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_get_ink_blob_angle_invoker (GimpProcedure      *procedure,
+context_get_ink_blob_angle_invoker (GimpProcedure         *procedure,
                                     Gimp                  *gimp,
                                     GimpContext           *context,
                                     GimpProgress          *progress,
@@ -1960,7 +1960,7 @@ context_get_ink_blob_angle_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-context_set_ink_blob_angle_invoker (GimpProcedure      *procedure,
+context_set_ink_blob_angle_invoker (GimpProcedure         *procedure,
                                     Gimp                  *gimp,
                                     GimpContext           *context,
                                     GimpProgress          *progress,

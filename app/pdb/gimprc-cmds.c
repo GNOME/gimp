@@ -45,7 +45,7 @@
 
 
 static GimpValueArray *
-gimprc_query_invoker (GimpProcedure      *procedure,
+gimprc_query_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
                       GimpProgress          *progress,
@@ -83,7 +83,7 @@ gimprc_query_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gimprc_set_invoker (GimpProcedure      *procedure,
+gimprc_set_invoker (GimpProcedure         *procedure,
                     Gimp                  *gimp,
                     GimpContext           *context,
                     GimpProgress          *progress,
@@ -113,7 +113,7 @@ gimprc_set_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-get_default_comment_invoker (GimpProcedure      *procedure,
+get_default_comment_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -132,7 +132,7 @@ get_default_comment_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-get_default_unit_invoker (GimpProcedure      *procedure,
+get_default_unit_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -151,7 +151,7 @@ get_default_unit_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-get_monitor_resolution_invoker (GimpProcedure      *procedure,
+get_monitor_resolution_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -174,7 +174,7 @@ get_monitor_resolution_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-get_theme_dir_invoker (GimpProcedure      *procedure,
+get_theme_dir_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
                        GimpProgress          *progress,
@@ -193,7 +193,7 @@ get_theme_dir_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-get_color_configuration_invoker (GimpProcedure      *procedure,
+get_color_configuration_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -212,7 +212,7 @@ get_color_configuration_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-get_module_load_inhibit_invoker (GimpProcedure      *procedure,
+get_module_load_inhibit_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,

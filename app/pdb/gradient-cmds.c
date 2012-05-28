@@ -94,7 +94,7 @@ gradient_get_range (Gimp                 *gimp,
 }
 
 static GimpValueArray *
-gradient_new_invoker (GimpProcedure      *procedure,
+gradient_new_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
                       GimpProgress          *progress,
@@ -129,7 +129,7 @@ gradient_new_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_duplicate_invoker (GimpProcedure      *procedure,
+gradient_duplicate_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -172,7 +172,7 @@ gradient_duplicate_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_is_editable_invoker (GimpProcedure      *procedure,
+gradient_is_editable_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -206,7 +206,7 @@ gradient_is_editable_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_rename_invoker (GimpProcedure      *procedure,
+gradient_rename_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -245,7 +245,7 @@ gradient_rename_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_delete_invoker (GimpProcedure      *procedure,
+gradient_delete_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -274,7 +274,7 @@ gradient_delete_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_get_number_of_segments_invoker (GimpProcedure      *procedure,
+gradient_get_number_of_segments_invoker (GimpProcedure         *procedure,
                                          Gimp                  *gimp,
                                          GimpContext           *context,
                                          GimpProgress          *progress,
@@ -314,7 +314,7 @@ gradient_get_number_of_segments_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_get_uniform_samples_invoker (GimpProcedure      *procedure,
+gradient_get_uniform_samples_invoker (GimpProcedure         *procedure,
                                       Gimp                  *gimp,
                                       GimpContext           *context,
                                       GimpProgress          *progress,
@@ -380,7 +380,7 @@ gradient_get_uniform_samples_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_get_custom_samples_invoker (GimpProcedure      *procedure,
+gradient_get_custom_samples_invoker (GimpProcedure         *procedure,
                                      Gimp                  *gimp,
                                      GimpContext           *context,
                                      GimpProgress          *progress,
@@ -447,7 +447,7 @@ gradient_get_custom_samples_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_segment_get_left_color_invoker (GimpProcedure      *procedure,
+gradient_segment_get_left_color_invoker (GimpProcedure         *procedure,
                                          Gimp                  *gimp,
                                          GimpContext           *context,
                                          GimpProgress          *progress,
@@ -493,7 +493,7 @@ gradient_segment_get_left_color_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_segment_set_left_color_invoker (GimpProcedure      *procedure,
+gradient_segment_set_left_color_invoker (GimpProcedure         *procedure,
                                          Gimp                  *gimp,
                                          GimpContext           *context,
                                          GimpProgress          *progress,
@@ -532,7 +532,7 @@ gradient_segment_set_left_color_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_segment_get_right_color_invoker (GimpProcedure      *procedure,
+gradient_segment_get_right_color_invoker (GimpProcedure         *procedure,
                                           Gimp                  *gimp,
                                           GimpContext           *context,
                                           GimpProgress          *progress,
@@ -578,7 +578,7 @@ gradient_segment_get_right_color_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_segment_set_right_color_invoker (GimpProcedure      *procedure,
+gradient_segment_set_right_color_invoker (GimpProcedure         *procedure,
                                           Gimp                  *gimp,
                                           GimpContext           *context,
                                           GimpProgress          *progress,
@@ -617,7 +617,7 @@ gradient_segment_set_right_color_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_segment_get_left_pos_invoker (GimpProcedure      *procedure,
+gradient_segment_get_left_pos_invoker (GimpProcedure         *procedure,
                                        Gimp                  *gimp,
                                        GimpContext           *context,
                                        GimpProgress          *progress,
@@ -658,7 +658,7 @@ gradient_segment_get_left_pos_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_segment_set_left_pos_invoker (GimpProcedure      *procedure,
+gradient_segment_set_left_pos_invoker (GimpProcedure         *procedure,
                                        Gimp                  *gimp,
                                        GimpContext           *context,
                                        GimpProgress          *progress,
@@ -701,7 +701,7 @@ gradient_segment_set_left_pos_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_segment_get_middle_pos_invoker (GimpProcedure      *procedure,
+gradient_segment_get_middle_pos_invoker (GimpProcedure         *procedure,
                                          Gimp                  *gimp,
                                          GimpContext           *context,
                                          GimpProgress          *progress,
@@ -742,7 +742,7 @@ gradient_segment_get_middle_pos_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_segment_set_middle_pos_invoker (GimpProcedure      *procedure,
+gradient_segment_set_middle_pos_invoker (GimpProcedure         *procedure,
                                          Gimp                  *gimp,
                                          GimpContext           *context,
                                          GimpProgress          *progress,
@@ -786,7 +786,7 @@ gradient_segment_set_middle_pos_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_segment_get_right_pos_invoker (GimpProcedure      *procedure,
+gradient_segment_get_right_pos_invoker (GimpProcedure         *procedure,
                                         Gimp                  *gimp,
                                         GimpContext           *context,
                                         GimpProgress          *progress,
@@ -827,7 +827,7 @@ gradient_segment_get_right_pos_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_segment_set_right_pos_invoker (GimpProcedure      *procedure,
+gradient_segment_set_right_pos_invoker (GimpProcedure         *procedure,
                                         Gimp                  *gimp,
                                         GimpContext           *context,
                                         GimpProgress          *progress,
@@ -871,7 +871,7 @@ gradient_segment_set_right_pos_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_segment_get_blending_function_invoker (GimpProcedure      *procedure,
+gradient_segment_get_blending_function_invoker (GimpProcedure         *procedure,
                                                 Gimp                  *gimp,
                                                 GimpContext           *context,
                                                 GimpProgress          *progress,
@@ -912,7 +912,7 @@ gradient_segment_get_blending_function_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_segment_get_coloring_type_invoker (GimpProcedure      *procedure,
+gradient_segment_get_coloring_type_invoker (GimpProcedure         *procedure,
                                             Gimp                  *gimp,
                                             GimpContext           *context,
                                             GimpProgress          *progress,
@@ -953,7 +953,7 @@ gradient_segment_get_coloring_type_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_segment_range_set_blending_function_invoker (GimpProcedure      *procedure,
+gradient_segment_range_set_blending_function_invoker (GimpProcedure         *procedure,
                                                       Gimp                  *gimp,
                                                       GimpContext           *context,
                                                       GimpProgress          *progress,
@@ -995,7 +995,7 @@ gradient_segment_range_set_blending_function_invoker (GimpProcedure      *proced
 }
 
 static GimpValueArray *
-gradient_segment_range_set_coloring_type_invoker (GimpProcedure      *procedure,
+gradient_segment_range_set_coloring_type_invoker (GimpProcedure         *procedure,
                                                   Gimp                  *gimp,
                                                   GimpContext           *context,
                                                   GimpProgress          *progress,
@@ -1037,7 +1037,7 @@ gradient_segment_range_set_coloring_type_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_segment_range_flip_invoker (GimpProcedure      *procedure,
+gradient_segment_range_flip_invoker (GimpProcedure         *procedure,
                                      Gimp                  *gimp,
                                      GimpContext           *context,
                                      GimpProgress          *progress,
@@ -1077,7 +1077,7 @@ gradient_segment_range_flip_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_segment_range_replicate_invoker (GimpProcedure      *procedure,
+gradient_segment_range_replicate_invoker (GimpProcedure         *procedure,
                                           Gimp                  *gimp,
                                           GimpContext           *context,
                                           GimpProgress          *progress,
@@ -1120,7 +1120,7 @@ gradient_segment_range_replicate_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_segment_range_split_midpoint_invoker (GimpProcedure      *procedure,
+gradient_segment_range_split_midpoint_invoker (GimpProcedure         *procedure,
                                                Gimp                  *gimp,
                                                GimpContext           *context,
                                                GimpProgress          *progress,
@@ -1160,7 +1160,7 @@ gradient_segment_range_split_midpoint_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_segment_range_split_uniform_invoker (GimpProcedure      *procedure,
+gradient_segment_range_split_uniform_invoker (GimpProcedure         *procedure,
                                               Gimp                  *gimp,
                                               GimpContext           *context,
                                               GimpProgress          *progress,
@@ -1203,7 +1203,7 @@ gradient_segment_range_split_uniform_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_segment_range_delete_invoker (GimpProcedure      *procedure,
+gradient_segment_range_delete_invoker (GimpProcedure         *procedure,
                                        Gimp                  *gimp,
                                        GimpContext           *context,
                                        GimpProgress          *progress,
@@ -1243,7 +1243,7 @@ gradient_segment_range_delete_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_segment_range_redistribute_handles_invoker (GimpProcedure      *procedure,
+gradient_segment_range_redistribute_handles_invoker (GimpProcedure         *procedure,
                                                      Gimp                  *gimp,
                                                      GimpContext           *context,
                                                      GimpProgress          *progress,
@@ -1282,7 +1282,7 @@ gradient_segment_range_redistribute_handles_invoker (GimpProcedure      *procedu
 }
 
 static GimpValueArray *
-gradient_segment_range_blend_colors_invoker (GimpProcedure      *procedure,
+gradient_segment_range_blend_colors_invoker (GimpProcedure         *procedure,
                                              Gimp                  *gimp,
                                              GimpContext           *context,
                                              GimpProgress          *progress,
@@ -1327,7 +1327,7 @@ gradient_segment_range_blend_colors_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_segment_range_blend_opacity_invoker (GimpProcedure      *procedure,
+gradient_segment_range_blend_opacity_invoker (GimpProcedure         *procedure,
                                               Gimp                  *gimp,
                                               GimpContext           *context,
                                               GimpProgress          *progress,
@@ -1372,7 +1372,7 @@ gradient_segment_range_blend_opacity_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradient_segment_range_move_invoker (GimpProcedure      *procedure,
+gradient_segment_range_move_invoker (GimpProcedure         *procedure,
                                      Gimp                  *gimp,
                                      GimpContext           *context,
                                      GimpProgress          *progress,

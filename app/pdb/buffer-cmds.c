@@ -43,7 +43,7 @@
 
 
 static GimpValueArray *
-buffers_get_list_invoker (GimpProcedure      *procedure,
+buffers_get_list_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -77,7 +77,7 @@ buffers_get_list_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-buffer_rename_invoker (GimpProcedure      *procedure,
+buffer_rename_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
                        GimpProgress          *progress,
@@ -116,7 +116,7 @@ buffer_rename_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-buffer_delete_invoker (GimpProcedure      *procedure,
+buffer_delete_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
                        GimpProgress          *progress,
@@ -143,7 +143,7 @@ buffer_delete_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-buffer_get_width_invoker (GimpProcedure      *procedure,
+buffer_get_width_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -177,7 +177,7 @@ buffer_get_width_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-buffer_get_height_invoker (GimpProcedure      *procedure,
+buffer_get_height_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -211,7 +211,7 @@ buffer_get_height_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-buffer_get_bytes_invoker (GimpProcedure      *procedure,
+buffer_get_bytes_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -249,7 +249,7 @@ buffer_get_bytes_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-buffer_get_image_type_invoker (GimpProcedure      *procedure,
+buffer_get_image_type_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,

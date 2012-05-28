@@ -48,7 +48,7 @@
 
 
 static GimpValueArray *
-flip_invoker (GimpProcedure      *procedure,
+flip_invoker (GimpProcedure         *procedure,
               Gimp                  *gimp,
               GimpContext           *context,
               GimpProgress          *progress,
@@ -104,7 +104,7 @@ flip_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-perspective_invoker (GimpProcedure      *procedure,
+perspective_invoker (GimpProcedure         *procedure,
                      Gimp                  *gimp,
                      GimpContext           *context,
                      GimpProgress          *progress,
@@ -201,7 +201,7 @@ perspective_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-rotate_invoker (GimpProcedure      *procedure,
+rotate_invoker (GimpProcedure         *procedure,
                 Gimp                  *gimp,
                 GimpContext           *context,
                 GimpProgress          *progress,
@@ -283,7 +283,7 @@ rotate_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-scale_invoker (GimpProcedure      *procedure,
+scale_invoker (GimpProcedure         *procedure,
                Gimp                  *gimp,
                GimpContext           *context,
                GimpProgress          *progress,
@@ -372,7 +372,7 @@ scale_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-shear_invoker (GimpProcedure      *procedure,
+shear_invoker (GimpProcedure         *procedure,
                Gimp                  *gimp,
                GimpContext           *context,
                GimpProgress          *progress,
@@ -456,7 +456,7 @@ shear_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-transform_2d_invoker (GimpProcedure      *procedure,
+transform_2d_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
                       GimpProgress          *progress,

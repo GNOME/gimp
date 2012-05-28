@@ -42,7 +42,7 @@
 
 
 static GimpValueArray *
-pattern_get_info_invoker (GimpProcedure      *procedure,
+pattern_get_info_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -86,7 +86,7 @@ pattern_get_info_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-pattern_get_pixels_invoker (GimpProcedure      *procedure,
+pattern_get_pixels_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,

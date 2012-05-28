@@ -42,7 +42,7 @@
 
 
 static GimpValueArray *
-text_fontname_invoker (GimpProcedure      *procedure,
+text_fontname_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
                        GimpProgress          *progress,
@@ -101,7 +101,7 @@ text_fontname_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_get_extents_fontname_invoker (GimpProcedure      *procedure,
+text_get_extents_fontname_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
                                    GimpProgress          *progress,
@@ -148,7 +148,7 @@ text_get_extents_fontname_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_invoker (GimpProcedure      *procedure,
+text_invoker (GimpProcedure         *procedure,
               Gimp                  *gimp,
               GimpContext           *context,
               GimpProgress          *progress,
@@ -207,7 +207,7 @@ text_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_get_extents_invoker (GimpProcedure      *procedure,
+text_get_extents_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,

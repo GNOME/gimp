@@ -40,7 +40,7 @@
 
 
 static GimpValueArray *
-version_invoker (GimpProcedure      *procedure,
+version_invoker (GimpProcedure         *procedure,
                  Gimp                  *gimp,
                  GimpContext           *context,
                  GimpProgress          *progress,
@@ -59,7 +59,7 @@ version_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-getpid_invoker (GimpProcedure      *procedure,
+getpid_invoker (GimpProcedure         *procedure,
                 Gimp                  *gimp,
                 GimpContext           *context,
                 GimpProgress          *progress,
@@ -78,7 +78,7 @@ getpid_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-quit_invoker (GimpProcedure      *procedure,
+quit_invoker (GimpProcedure         *procedure,
               Gimp                  *gimp,
               GimpContext           *context,
               GimpProgress          *progress,
@@ -100,7 +100,7 @@ quit_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-attach_parasite_invoker (GimpProcedure      *procedure,
+attach_parasite_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -122,7 +122,7 @@ attach_parasite_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-detach_parasite_invoker (GimpProcedure      *procedure,
+detach_parasite_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -144,7 +144,7 @@ detach_parasite_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-get_parasite_invoker (GimpProcedure      *procedure,
+get_parasite_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
                       GimpProgress          *progress,
@@ -176,7 +176,7 @@ get_parasite_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-get_parasite_list_invoker (GimpProcedure      *procedure,
+get_parasite_list_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,

@@ -52,7 +52,7 @@
 
 
 static GimpValueArray *
-edit_cut_invoker (GimpProcedure      *procedure,
+edit_cut_invoker (GimpProcedure         *procedure,
                   Gimp                  *gimp,
                   GimpContext           *context,
                   GimpProgress          *progress,
@@ -98,7 +98,7 @@ edit_cut_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-edit_copy_invoker (GimpProcedure      *procedure,
+edit_copy_invoker (GimpProcedure         *procedure,
                    Gimp                  *gimp,
                    GimpContext           *context,
                    GimpProgress          *progress,
@@ -143,7 +143,7 @@ edit_copy_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-edit_copy_visible_invoker (GimpProcedure      *procedure,
+edit_copy_visible_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -182,7 +182,7 @@ edit_copy_visible_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-edit_paste_invoker (GimpProcedure      *procedure,
+edit_paste_invoker (GimpProcedure         *procedure,
                     Gimp                  *gimp,
                     GimpContext           *context,
                     GimpProgress          *progress,
@@ -225,7 +225,7 @@ edit_paste_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-edit_paste_as_new_invoker (GimpProcedure      *procedure,
+edit_paste_as_new_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -258,7 +258,7 @@ edit_paste_as_new_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-edit_named_cut_invoker (GimpProcedure      *procedure,
+edit_named_cut_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -311,7 +311,7 @@ edit_named_cut_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-edit_named_copy_invoker (GimpProcedure      *procedure,
+edit_named_copy_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -363,7 +363,7 @@ edit_named_copy_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-edit_named_copy_visible_invoker (GimpProcedure      *procedure,
+edit_named_copy_visible_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -409,7 +409,7 @@ edit_named_copy_visible_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-edit_named_paste_invoker (GimpProcedure      *procedure,
+edit_named_paste_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -455,7 +455,7 @@ edit_named_paste_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-edit_named_paste_as_new_invoker (GimpProcedure      *procedure,
+edit_named_paste_as_new_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -494,7 +494,7 @@ edit_named_paste_as_new_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-edit_clear_invoker (GimpProcedure      *procedure,
+edit_clear_invoker (GimpProcedure         *procedure,
                     Gimp                  *gimp,
                     GimpContext           *context,
                     GimpProgress          *progress,
@@ -524,7 +524,7 @@ edit_clear_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-edit_fill_invoker (GimpProcedure      *procedure,
+edit_fill_invoker (GimpProcedure         *procedure,
                    Gimp                  *gimp,
                    GimpContext           *context,
                    GimpProgress          *progress,
@@ -558,7 +558,7 @@ edit_fill_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-edit_bucket_fill_invoker (GimpProcedure      *procedure,
+edit_bucket_fill_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -633,7 +633,7 @@ edit_bucket_fill_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-edit_bucket_fill_full_invoker (GimpProcedure      *procedure,
+edit_bucket_fill_full_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -704,7 +704,7 @@ edit_bucket_fill_full_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-edit_blend_invoker (GimpProcedure      *procedure,
+edit_blend_invoker (GimpProcedure         *procedure,
                     Gimp                  *gimp,
                     GimpContext           *context,
                     GimpProgress          *progress,
@@ -787,7 +787,7 @@ edit_blend_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-edit_stroke_invoker (GimpProcedure      *procedure,
+edit_stroke_invoker (GimpProcedure         *procedure,
                      Gimp                  *gimp,
                      GimpContext           *context,
                      GimpProgress          *progress,
@@ -826,7 +826,7 @@ edit_stroke_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-edit_stroke_vectors_invoker (GimpProcedure      *procedure,
+edit_stroke_vectors_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,

@@ -39,7 +39,7 @@
 
 
 static GimpValueArray *
-dynamics_refresh_invoker (GimpProcedure      *procedure,
+dynamics_refresh_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -52,7 +52,7 @@ dynamics_refresh_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-dynamics_get_list_invoker (GimpProcedure      *procedure,
+dynamics_get_list_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,

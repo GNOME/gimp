@@ -47,7 +47,7 @@
 
 
 static GimpValueArray *
-image_convert_rgb_invoker (GimpProcedure      *procedure,
+image_convert_rgb_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -78,7 +78,7 @@ image_convert_rgb_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_convert_grayscale_invoker (GimpProcedure      *procedure,
+image_convert_grayscale_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -109,7 +109,7 @@ image_convert_grayscale_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_convert_indexed_invoker (GimpProcedure      *procedure,
+image_convert_indexed_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -187,7 +187,7 @@ image_convert_indexed_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_convert_set_dither_matrix_invoker (GimpProcedure      *procedure,
+image_convert_set_dither_matrix_invoker (GimpProcedure         *procedure,
                                          Gimp                  *gimp,
                                          GimpContext           *context,
                                          GimpProgress          *progress,
@@ -225,7 +225,7 @@ image_convert_set_dither_matrix_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_convert_precision_invoker (GimpProcedure      *procedure,
+image_convert_precision_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,

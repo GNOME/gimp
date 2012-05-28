@@ -47,7 +47,7 @@
 
 
 static GimpValueArray *
-plugins_query_invoker (GimpProcedure      *procedure,
+plugins_query_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
                        GimpProgress          *progress,
@@ -94,7 +94,7 @@ plugins_query_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-plugin_domain_register_invoker (GimpProcedure      *procedure,
+plugin_domain_register_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -128,7 +128,7 @@ plugin_domain_register_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-plugin_help_register_invoker (GimpProcedure      *procedure,
+plugin_help_register_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -162,7 +162,7 @@ plugin_help_register_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-plugin_menu_register_invoker (GimpProcedure      *procedure,
+plugin_menu_register_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -197,7 +197,7 @@ plugin_menu_register_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-plugin_menu_branch_register_invoker (GimpProcedure      *procedure,
+plugin_menu_branch_register_invoker (GimpProcedure         *procedure,
                                      Gimp                  *gimp,
                                      GimpContext           *context,
                                      GimpProgress          *progress,
@@ -231,7 +231,7 @@ plugin_menu_branch_register_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-plugin_icon_register_invoker (GimpProcedure      *procedure,
+plugin_icon_register_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -282,7 +282,7 @@ plugin_icon_register_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-plugin_set_pdb_error_handler_invoker (GimpProcedure      *procedure,
+plugin_set_pdb_error_handler_invoker (GimpProcedure         *procedure,
                                       Gimp                  *gimp,
                                       GimpContext           *context,
                                       GimpProgress          *progress,
@@ -313,7 +313,7 @@ plugin_set_pdb_error_handler_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-plugin_get_pdb_error_handler_invoker (GimpProcedure      *procedure,
+plugin_get_pdb_error_handler_invoker (GimpProcedure         *procedure,
                                       Gimp                  *gimp,
                                       GimpContext           *context,
                                       GimpProgress          *progress,
@@ -345,7 +345,7 @@ plugin_get_pdb_error_handler_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-plugin_enable_precision_invoker (GimpProcedure      *procedure,
+plugin_enable_precision_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -369,7 +369,7 @@ plugin_enable_precision_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-plugin_precision_enabled_invoker (GimpProcedure      *procedure,
+plugin_precision_enabled_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
                                   GimpProgress          *progress,

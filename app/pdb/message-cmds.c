@@ -42,7 +42,7 @@
 
 
 static GimpValueArray *
-message_invoker (GimpProcedure      *procedure,
+message_invoker (GimpProcedure         *procedure,
                  Gimp                  *gimp,
                  GimpContext           *context,
                  GimpProgress          *progress,
@@ -69,7 +69,7 @@ message_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-message_get_handler_invoker (GimpProcedure      *procedure,
+message_get_handler_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -88,7 +88,7 @@ message_get_handler_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-message_set_handler_invoker (GimpProcedure      *procedure,
+message_set_handler_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,

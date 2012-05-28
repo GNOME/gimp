@@ -38,7 +38,7 @@
 
 
 static GimpValueArray *
-gradients_popup_invoker (GimpProcedure      *procedure,
+gradients_popup_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -76,7 +76,7 @@ gradients_popup_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradients_close_popup_invoker (GimpProcedure      *procedure,
+gradients_close_popup_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -102,7 +102,7 @@ gradients_close_popup_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradients_set_popup_invoker (GimpProcedure      *procedure,
+gradients_set_popup_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,

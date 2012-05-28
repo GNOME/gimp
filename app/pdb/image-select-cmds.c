@@ -48,7 +48,7 @@
 
 
 static GimpValueArray *
-image_select_color_invoker (GimpProcedure      *procedure,
+image_select_color_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -94,7 +94,7 @@ image_select_color_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_select_contiguous_color_invoker (GimpProcedure      *procedure,
+image_select_contiguous_color_invoker (GimpProcedure         *procedure,
                                        Gimp                  *gimp,
                                        GimpContext           *context,
                                        GimpProgress          *progress,
@@ -144,7 +144,7 @@ image_select_contiguous_color_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_select_rectangle_invoker (GimpProcedure      *procedure,
+image_select_rectangle_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -185,7 +185,7 @@ image_select_rectangle_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_select_round_rectangle_invoker (GimpProcedure      *procedure,
+image_select_round_rectangle_invoker (GimpProcedure         *procedure,
                                       Gimp                  *gimp,
                                       GimpContext           *context,
                                       GimpProgress          *progress,
@@ -233,7 +233,7 @@ image_select_round_rectangle_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_select_ellipse_invoker (GimpProcedure      *procedure,
+image_select_ellipse_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -275,7 +275,7 @@ image_select_ellipse_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_select_polygon_invoker (GimpProcedure      *procedure,
+image_select_polygon_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -314,7 +314,7 @@ image_select_polygon_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_select_item_invoker (GimpProcedure      *procedure,
+image_select_item_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,

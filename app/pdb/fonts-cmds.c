@@ -39,7 +39,7 @@
 
 
 static GimpValueArray *
-fonts_refresh_invoker (GimpProcedure      *procedure,
+fonts_refresh_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
                        GimpProgress          *progress,
@@ -52,7 +52,7 @@ fonts_refresh_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-fonts_get_list_invoker (GimpProcedure      *procedure,
+fonts_get_list_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,

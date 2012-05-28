@@ -48,7 +48,7 @@
 
 
 static GimpValueArray *
-item_is_valid_invoker (GimpProcedure      *procedure,
+item_is_valid_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
                        GimpProgress          *progress,
@@ -71,7 +71,7 @@ item_is_valid_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_get_image_invoker (GimpProcedure      *procedure,
+item_get_image_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -100,7 +100,7 @@ item_get_image_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_delete_invoker (GimpProcedure      *procedure,
+item_delete_invoker (GimpProcedure         *procedure,
                      Gimp                  *gimp,
                      GimpContext           *context,
                      GimpProgress          *progress,
@@ -128,7 +128,7 @@ item_delete_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_is_drawable_invoker (GimpProcedure      *procedure,
+item_is_drawable_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -157,7 +157,7 @@ item_is_drawable_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_is_layer_invoker (GimpProcedure      *procedure,
+item_is_layer_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
                        GimpProgress          *progress,
@@ -186,7 +186,7 @@ item_is_layer_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_is_text_layer_invoker (GimpProcedure      *procedure,
+item_is_text_layer_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -215,7 +215,7 @@ item_is_text_layer_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_is_channel_invoker (GimpProcedure      *procedure,
+item_is_channel_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -244,7 +244,7 @@ item_is_channel_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_is_layer_mask_invoker (GimpProcedure      *procedure,
+item_is_layer_mask_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -273,7 +273,7 @@ item_is_layer_mask_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_is_selection_invoker (GimpProcedure      *procedure,
+item_is_selection_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -302,7 +302,7 @@ item_is_selection_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_is_vectors_invoker (GimpProcedure      *procedure,
+item_is_vectors_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -331,7 +331,7 @@ item_is_vectors_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_is_group_invoker (GimpProcedure      *procedure,
+item_is_group_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
                        GimpProgress          *progress,
@@ -360,7 +360,7 @@ item_is_group_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_get_parent_invoker (GimpProcedure      *procedure,
+item_get_parent_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -389,7 +389,7 @@ item_get_parent_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_get_children_invoker (GimpProcedure      *procedure,
+item_get_children_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -445,7 +445,7 @@ item_get_children_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_get_name_invoker (GimpProcedure      *procedure,
+item_get_name_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
                        GimpProgress          *progress,
@@ -474,7 +474,7 @@ item_get_name_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_set_name_invoker (GimpProcedure      *procedure,
+item_set_name_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
                        GimpProgress          *progress,
@@ -498,7 +498,7 @@ item_set_name_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_get_visible_invoker (GimpProcedure      *procedure,
+item_get_visible_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -527,7 +527,7 @@ item_get_visible_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_set_visible_invoker (GimpProcedure      *procedure,
+item_set_visible_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -551,7 +551,7 @@ item_set_visible_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_get_linked_invoker (GimpProcedure      *procedure,
+item_get_linked_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -580,7 +580,7 @@ item_get_linked_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_set_linked_invoker (GimpProcedure      *procedure,
+item_set_linked_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -604,7 +604,7 @@ item_set_linked_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_get_lock_content_invoker (GimpProcedure      *procedure,
+item_get_lock_content_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -633,7 +633,7 @@ item_get_lock_content_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_set_lock_content_invoker (GimpProcedure      *procedure,
+item_set_lock_content_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -660,7 +660,7 @@ item_set_lock_content_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_get_tattoo_invoker (GimpProcedure      *procedure,
+item_get_tattoo_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -689,7 +689,7 @@ item_get_tattoo_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_set_tattoo_invoker (GimpProcedure      *procedure,
+item_set_tattoo_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -713,7 +713,7 @@ item_set_tattoo_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_attach_parasite_invoker (GimpProcedure      *procedure,
+item_attach_parasite_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -737,7 +737,7 @@ item_attach_parasite_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_detach_parasite_invoker (GimpProcedure      *procedure,
+item_detach_parasite_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -761,7 +761,7 @@ item_detach_parasite_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_get_parasite_invoker (GimpProcedure      *procedure,
+item_get_parasite_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -795,7 +795,7 @@ item_get_parasite_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-item_get_parasite_list_invoker (GimpProcedure      *procedure,
+item_get_parasite_list_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,

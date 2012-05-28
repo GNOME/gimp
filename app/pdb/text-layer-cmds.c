@@ -49,7 +49,7 @@
 
 
 static GimpValueArray *
-text_layer_new_invoker (GimpProcedure      *procedure,
+text_layer_new_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -108,7 +108,7 @@ text_layer_new_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_get_text_invoker (GimpProcedure      *procedure,
+text_layer_get_text_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -146,7 +146,7 @@ text_layer_get_text_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_set_text_invoker (GimpProcedure      *procedure,
+text_layer_set_text_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -180,7 +180,7 @@ text_layer_set_text_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_get_markup_invoker (GimpProcedure      *procedure,
+text_layer_get_markup_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -218,7 +218,7 @@ text_layer_get_markup_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_get_font_invoker (GimpProcedure      *procedure,
+text_layer_get_font_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -256,7 +256,7 @@ text_layer_get_font_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_set_font_invoker (GimpProcedure      *procedure,
+text_layer_set_font_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -290,7 +290,7 @@ text_layer_set_font_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_get_font_size_invoker (GimpProcedure      *procedure,
+text_layer_get_font_size_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
                                   GimpProgress          *progress,
@@ -333,7 +333,7 @@ text_layer_get_font_size_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_set_font_size_invoker (GimpProcedure      *procedure,
+text_layer_set_font_size_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
                                   GimpProgress          *progress,
@@ -370,7 +370,7 @@ text_layer_set_font_size_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_get_antialias_invoker (GimpProcedure      *procedure,
+text_layer_get_antialias_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
                                   GimpProgress          *progress,
@@ -408,7 +408,7 @@ text_layer_get_antialias_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_set_antialias_invoker (GimpProcedure      *procedure,
+text_layer_set_antialias_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
                                   GimpProgress          *progress,
@@ -442,7 +442,7 @@ text_layer_set_antialias_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_get_hint_style_invoker (GimpProcedure      *procedure,
+text_layer_get_hint_style_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
                                    GimpProgress          *progress,
@@ -480,7 +480,7 @@ text_layer_get_hint_style_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_set_hint_style_invoker (GimpProcedure      *procedure,
+text_layer_set_hint_style_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
                                    GimpProgress          *progress,
@@ -514,7 +514,7 @@ text_layer_set_hint_style_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_get_kerning_invoker (GimpProcedure      *procedure,
+text_layer_get_kerning_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -552,7 +552,7 @@ text_layer_get_kerning_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_set_kerning_invoker (GimpProcedure      *procedure,
+text_layer_set_kerning_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -586,7 +586,7 @@ text_layer_set_kerning_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_get_language_invoker (GimpProcedure      *procedure,
+text_layer_get_language_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -624,7 +624,7 @@ text_layer_get_language_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_set_language_invoker (GimpProcedure      *procedure,
+text_layer_set_language_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -658,7 +658,7 @@ text_layer_set_language_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_get_base_direction_invoker (GimpProcedure      *procedure,
+text_layer_get_base_direction_invoker (GimpProcedure         *procedure,
                                        Gimp                  *gimp,
                                        GimpContext           *context,
                                        GimpProgress          *progress,
@@ -696,7 +696,7 @@ text_layer_get_base_direction_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_set_base_direction_invoker (GimpProcedure      *procedure,
+text_layer_set_base_direction_invoker (GimpProcedure         *procedure,
                                        Gimp                  *gimp,
                                        GimpContext           *context,
                                        GimpProgress          *progress,
@@ -730,7 +730,7 @@ text_layer_set_base_direction_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_get_justification_invoker (GimpProcedure      *procedure,
+text_layer_get_justification_invoker (GimpProcedure         *procedure,
                                       Gimp                  *gimp,
                                       GimpContext           *context,
                                       GimpProgress          *progress,
@@ -768,7 +768,7 @@ text_layer_get_justification_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_set_justification_invoker (GimpProcedure      *procedure,
+text_layer_set_justification_invoker (GimpProcedure         *procedure,
                                       Gimp                  *gimp,
                                       GimpContext           *context,
                                       GimpProgress          *progress,
@@ -802,7 +802,7 @@ text_layer_set_justification_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_get_color_invoker (GimpProcedure      *procedure,
+text_layer_get_color_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -838,7 +838,7 @@ text_layer_get_color_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_set_color_invoker (GimpProcedure      *procedure,
+text_layer_set_color_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -872,7 +872,7 @@ text_layer_set_color_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_get_indent_invoker (GimpProcedure      *procedure,
+text_layer_get_indent_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -910,7 +910,7 @@ text_layer_get_indent_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_set_indent_invoker (GimpProcedure      *procedure,
+text_layer_set_indent_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -944,7 +944,7 @@ text_layer_set_indent_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_get_line_spacing_invoker (GimpProcedure      *procedure,
+text_layer_get_line_spacing_invoker (GimpProcedure         *procedure,
                                      Gimp                  *gimp,
                                      GimpContext           *context,
                                      GimpProgress          *progress,
@@ -982,7 +982,7 @@ text_layer_get_line_spacing_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_set_line_spacing_invoker (GimpProcedure      *procedure,
+text_layer_set_line_spacing_invoker (GimpProcedure         *procedure,
                                      Gimp                  *gimp,
                                      GimpContext           *context,
                                      GimpProgress          *progress,
@@ -1016,7 +1016,7 @@ text_layer_set_line_spacing_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_get_letter_spacing_invoker (GimpProcedure      *procedure,
+text_layer_get_letter_spacing_invoker (GimpProcedure         *procedure,
                                        Gimp                  *gimp,
                                        GimpContext           *context,
                                        GimpProgress          *progress,
@@ -1054,7 +1054,7 @@ text_layer_get_letter_spacing_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_set_letter_spacing_invoker (GimpProcedure      *procedure,
+text_layer_set_letter_spacing_invoker (GimpProcedure         *procedure,
                                        Gimp                  *gimp,
                                        GimpContext           *context,
                                        GimpProgress          *progress,
@@ -1088,7 +1088,7 @@ text_layer_set_letter_spacing_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_resize_invoker (GimpProcedure      *procedure,
+text_layer_resize_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -1136,7 +1136,7 @@ text_layer_resize_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_get_hinting_invoker (GimpProcedure      *procedure,
+text_layer_get_hinting_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -1178,7 +1178,7 @@ text_layer_get_hinting_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-text_layer_set_hinting_invoker (GimpProcedure      *procedure,
+text_layer_set_hinting_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,

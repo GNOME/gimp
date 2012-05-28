@@ -43,7 +43,7 @@
 
 
 static GimpValueArray *
-gradients_refresh_invoker (GimpProcedure      *procedure,
+gradients_refresh_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -56,7 +56,7 @@ gradients_refresh_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradients_get_list_invoker (GimpProcedure      *procedure,
+gradients_get_list_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -90,7 +90,7 @@ gradients_get_list_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradients_sample_uniform_invoker (GimpProcedure      *procedure,
+gradients_sample_uniform_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
                                   GimpProgress          *progress,
@@ -151,7 +151,7 @@ gradients_sample_uniform_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradients_sample_custom_invoker (GimpProcedure      *procedure,
+gradients_sample_custom_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -210,7 +210,7 @@ gradients_sample_custom_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-gradients_get_gradient_data_invoker (GimpProcedure      *procedure,
+gradients_get_gradient_data_invoker (GimpProcedure         *procedure,
                                      Gimp                  *gimp,
                                      GimpContext           *context,
                                      GimpProgress          *progress,

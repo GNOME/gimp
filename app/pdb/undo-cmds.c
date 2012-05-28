@@ -41,7 +41,7 @@
 
 
 static GimpValueArray *
-image_undo_group_start_invoker (GimpProcedure      *procedure,
+image_undo_group_start_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -75,7 +75,7 @@ image_undo_group_start_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_undo_group_end_invoker (GimpProcedure      *procedure,
+image_undo_group_end_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -103,7 +103,7 @@ image_undo_group_end_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_undo_is_enabled_invoker (GimpProcedure      *procedure,
+image_undo_is_enabled_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -132,7 +132,7 @@ image_undo_is_enabled_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_undo_disable_invoker (GimpProcedure      *procedure,
+image_undo_disable_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -169,7 +169,7 @@ image_undo_disable_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_undo_enable_invoker (GimpProcedure      *procedure,
+image_undo_enable_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -206,7 +206,7 @@ image_undo_enable_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_undo_freeze_invoker (GimpProcedure      *procedure,
+image_undo_freeze_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -243,7 +243,7 @@ image_undo_freeze_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_undo_thaw_invoker (GimpProcedure      *procedure,
+image_undo_thaw_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,

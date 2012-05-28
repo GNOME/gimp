@@ -39,7 +39,7 @@
 
 
 static GimpValueArray *
-image_add_hguide_invoker (GimpProcedure      *procedure,
+image_add_hguide_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -78,7 +78,7 @@ image_add_hguide_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_add_vguide_invoker (GimpProcedure      *procedure,
+image_add_vguide_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -117,7 +117,7 @@ image_add_vguide_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_delete_guide_invoker (GimpProcedure      *procedure,
+image_delete_guide_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -146,7 +146,7 @@ image_delete_guide_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_find_next_guide_invoker (GimpProcedure      *procedure,
+image_find_next_guide_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -180,7 +180,7 @@ image_find_next_guide_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_guide_orientation_invoker (GimpProcedure      *procedure,
+image_get_guide_orientation_invoker (GimpProcedure         *procedure,
                                      Gimp                  *gimp,
                                      GimpContext           *context,
                                      GimpProgress          *progress,
@@ -216,7 +216,7 @@ image_get_guide_orientation_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_guide_position_invoker (GimpProcedure      *procedure,
+image_get_guide_position_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
                                   GimpProgress          *progress,

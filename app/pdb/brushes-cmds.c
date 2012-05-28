@@ -44,7 +44,7 @@
 
 
 static GimpValueArray *
-brushes_refresh_invoker (GimpProcedure      *procedure,
+brushes_refresh_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -57,7 +57,7 @@ brushes_refresh_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brushes_get_list_invoker (GimpProcedure      *procedure,
+brushes_get_list_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -91,7 +91,7 @@ brushes_get_list_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brushes_get_brush_invoker (GimpProcedure      *procedure,
+brushes_get_brush_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -132,7 +132,7 @@ brushes_get_brush_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brushes_get_spacing_invoker (GimpProcedure      *procedure,
+brushes_get_spacing_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -160,7 +160,7 @@ brushes_get_spacing_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brushes_set_spacing_invoker (GimpProcedure      *procedure,
+brushes_set_spacing_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -182,7 +182,7 @@ brushes_set_spacing_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brushes_get_brush_data_invoker (GimpProcedure      *procedure,
+brushes_get_brush_data_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,

@@ -46,7 +46,7 @@
 
 
 static GimpValueArray *
-palettes_refresh_invoker (GimpProcedure      *procedure,
+palettes_refresh_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -59,7 +59,7 @@ palettes_refresh_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-palettes_get_list_invoker (GimpProcedure      *procedure,
+palettes_get_list_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -93,7 +93,7 @@ palettes_get_list_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-palettes_get_palette_invoker (GimpProcedure      *procedure,
+palettes_get_palette_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -128,7 +128,7 @@ palettes_get_palette_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-palettes_get_palette_entry_invoker (GimpProcedure      *procedure,
+palettes_get_palette_entry_invoker (GimpProcedure         *procedure,
                                     Gimp                  *gimp,
                                     GimpContext           *context,
                                     GimpProgress          *progress,

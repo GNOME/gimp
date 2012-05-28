@@ -45,7 +45,7 @@
 
 
 static GimpValueArray *
-palette_new_invoker (GimpProcedure      *procedure,
+palette_new_invoker (GimpProcedure         *procedure,
                      Gimp                  *gimp,
                      GimpContext           *context,
                      GimpProgress          *progress,
@@ -80,7 +80,7 @@ palette_new_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-palette_duplicate_invoker (GimpProcedure      *procedure,
+palette_duplicate_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -123,7 +123,7 @@ palette_duplicate_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-palette_rename_invoker (GimpProcedure      *procedure,
+palette_rename_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -162,7 +162,7 @@ palette_rename_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-palette_delete_invoker (GimpProcedure      *procedure,
+palette_delete_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -191,7 +191,7 @@ palette_delete_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-palette_is_editable_invoker (GimpProcedure      *procedure,
+palette_is_editable_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -225,7 +225,7 @@ palette_is_editable_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-palette_get_info_invoker (GimpProcedure      *procedure,
+palette_get_info_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -259,7 +259,7 @@ palette_get_info_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-palette_get_colors_invoker (GimpProcedure      *procedure,
+palette_get_colors_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -310,7 +310,7 @@ palette_get_colors_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-palette_get_columns_invoker (GimpProcedure      *procedure,
+palette_get_columns_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -344,7 +344,7 @@ palette_get_columns_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-palette_set_columns_invoker (GimpProcedure      *procedure,
+palette_set_columns_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -373,7 +373,7 @@ palette_set_columns_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-palette_add_entry_invoker (GimpProcedure      *procedure,
+palette_add_entry_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -416,7 +416,7 @@ palette_add_entry_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-palette_delete_entry_invoker (GimpProcedure      *procedure,
+palette_delete_entry_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -452,7 +452,7 @@ palette_delete_entry_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-palette_entry_get_color_invoker (GimpProcedure      *procedure,
+palette_entry_get_color_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -495,7 +495,7 @@ palette_entry_get_color_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-palette_entry_set_color_invoker (GimpProcedure      *procedure,
+palette_entry_set_color_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -526,7 +526,7 @@ palette_entry_set_color_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-palette_entry_get_name_invoker (GimpProcedure      *procedure,
+palette_entry_get_name_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -569,7 +569,7 @@ palette_entry_get_name_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-palette_entry_set_name_invoker (GimpProcedure      *procedure,
+palette_entry_set_name_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,

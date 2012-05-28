@@ -50,7 +50,7 @@
 
 
 static GimpValueArray *
-path_list_invoker (GimpProcedure      *procedure,
+path_list_invoker (GimpProcedure         *procedure,
                    Gimp                  *gimp,
                    GimpContext           *context,
                    GimpProgress          *progress,
@@ -84,7 +84,7 @@ path_list_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-path_get_current_invoker (GimpProcedure      *procedure,
+path_get_current_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -118,7 +118,7 @@ path_get_current_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-path_set_current_invoker (GimpProcedure      *procedure,
+path_set_current_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -147,7 +147,7 @@ path_set_current_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-path_delete_invoker (GimpProcedure      *procedure,
+path_delete_invoker (GimpProcedure         *procedure,
                      Gimp                  *gimp,
                      GimpContext           *context,
                      GimpProgress          *progress,
@@ -176,7 +176,7 @@ path_delete_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-path_get_points_invoker (GimpProcedure      *procedure,
+path_get_points_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -251,7 +251,7 @@ path_get_points_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-path_set_points_invoker (GimpProcedure      *procedure,
+path_set_points_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -316,7 +316,7 @@ path_set_points_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-path_stroke_current_invoker (GimpProcedure      *procedure,
+path_stroke_current_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -358,7 +358,7 @@ path_stroke_current_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-path_get_point_at_dist_invoker (GimpProcedure      *procedure,
+path_get_point_at_dist_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -443,7 +443,7 @@ path_get_point_at_dist_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-path_get_tattoo_invoker (GimpProcedure      *procedure,
+path_get_tattoo_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -479,7 +479,7 @@ path_get_tattoo_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-path_set_tattoo_invoker (GimpProcedure      *procedure,
+path_set_tattoo_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -510,7 +510,7 @@ path_set_tattoo_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-get_path_by_tattoo_invoker (GimpProcedure      *procedure,
+get_path_by_tattoo_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -546,7 +546,7 @@ get_path_by_tattoo_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-path_get_locked_invoker (GimpProcedure      *procedure,
+path_get_locked_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -582,7 +582,7 @@ path_get_locked_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-path_set_locked_invoker (GimpProcedure      *procedure,
+path_set_locked_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -613,7 +613,7 @@ path_set_locked_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-path_to_selection_invoker (GimpProcedure      *procedure,
+path_to_selection_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -657,7 +657,7 @@ path_to_selection_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-path_import_invoker (GimpProcedure      *procedure,
+path_import_invoker (GimpProcedure         *procedure,
                      Gimp                  *gimp,
                      GimpContext           *context,
                      GimpProgress          *progress,

@@ -113,7 +113,7 @@ paint_tools_stroke (Gimp              *gimp,
 }
 
 static GimpValueArray *
-airbrush_invoker (GimpProcedure      *procedure,
+airbrush_invoker (GimpProcedure         *procedure,
                   Gimp                  *gimp,
                   GimpContext           *context,
                   GimpProgress          *progress,
@@ -161,7 +161,7 @@ airbrush_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-airbrush_default_invoker (GimpProcedure      *procedure,
+airbrush_default_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -203,7 +203,7 @@ airbrush_default_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-clone_invoker (GimpProcedure      *procedure,
+clone_invoker (GimpProcedure         *procedure,
                Gimp                  *gimp,
                GimpContext           *context,
                GimpProgress          *progress,
@@ -260,7 +260,7 @@ clone_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-clone_default_invoker (GimpProcedure      *procedure,
+clone_default_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
                        GimpProgress          *progress,
@@ -302,7 +302,7 @@ clone_default_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-convolve_invoker (GimpProcedure      *procedure,
+convolve_invoker (GimpProcedure         *procedure,
                   Gimp                  *gimp,
                   GimpContext           *context,
                   GimpProgress          *progress,
@@ -353,7 +353,7 @@ convolve_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-convolve_default_invoker (GimpProcedure      *procedure,
+convolve_default_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -395,7 +395,7 @@ convolve_default_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-dodgeburn_invoker (GimpProcedure      *procedure,
+dodgeburn_invoker (GimpProcedure         *procedure,
                    Gimp                  *gimp,
                    GimpContext           *context,
                    GimpProgress          *progress,
@@ -449,7 +449,7 @@ dodgeburn_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-dodgeburn_default_invoker (GimpProcedure      *procedure,
+dodgeburn_default_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -491,7 +491,7 @@ dodgeburn_default_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-eraser_invoker (GimpProcedure      *procedure,
+eraser_invoker (GimpProcedure         *procedure,
                 Gimp                  *gimp,
                 GimpContext           *context,
                 GimpProgress          *progress,
@@ -542,7 +542,7 @@ eraser_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-eraser_default_invoker (GimpProcedure      *procedure,
+eraser_default_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -584,7 +584,7 @@ eraser_default_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-heal_invoker (GimpProcedure      *procedure,
+heal_invoker (GimpProcedure         *procedure,
               Gimp                  *gimp,
               GimpContext           *context,
               GimpProgress          *progress,
@@ -635,7 +635,7 @@ heal_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-heal_default_invoker (GimpProcedure      *procedure,
+heal_default_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
                       GimpProgress          *progress,
@@ -677,7 +677,7 @@ heal_default_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-paintbrush_invoker (GimpProcedure      *procedure,
+paintbrush_invoker (GimpProcedure         *procedure,
                     Gimp                  *gimp,
                     GimpContext           *context,
                     GimpProgress          *progress,
@@ -761,7 +761,7 @@ paintbrush_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-paintbrush_default_invoker (GimpProcedure      *procedure,
+paintbrush_default_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -803,7 +803,7 @@ paintbrush_default_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-pencil_invoker (GimpProcedure      *procedure,
+pencil_invoker (GimpProcedure         *procedure,
                 Gimp                  *gimp,
                 GimpContext           *context,
                 GimpProgress          *progress,
@@ -845,7 +845,7 @@ pencil_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-smudge_invoker (GimpProcedure      *procedure,
+smudge_invoker (GimpProcedure         *procedure,
                 Gimp                  *gimp,
                 GimpContext           *context,
                 GimpProgress          *progress,
@@ -893,7 +893,7 @@ smudge_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-smudge_default_invoker (GimpProcedure      *procedure,
+smudge_default_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,

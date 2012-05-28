@@ -47,7 +47,7 @@
 
 
 static GimpValueArray *
-plug_in_colortoalpha_invoker (GimpProcedure      *procedure,
+plug_in_colortoalpha_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -91,7 +91,7 @@ plug_in_colortoalpha_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-plug_in_pixelize_invoker (GimpProcedure      *procedure,
+plug_in_pixelize_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -132,7 +132,7 @@ plug_in_pixelize_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-plug_in_pixelize2_invoker (GimpProcedure      *procedure,
+plug_in_pixelize2_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -175,7 +175,7 @@ plug_in_pixelize2_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-plug_in_polar_coords_invoker (GimpProcedure      *procedure,
+plug_in_polar_coords_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -227,7 +227,7 @@ plug_in_polar_coords_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-plug_in_semiflatten_invoker (GimpProcedure      *procedure,
+plug_in_semiflatten_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -271,7 +271,7 @@ plug_in_semiflatten_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-plug_in_threshold_alpha_invoker (GimpProcedure      *procedure,
+plug_in_threshold_alpha_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -312,7 +312,7 @@ plug_in_threshold_alpha_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-plug_in_vinvert_invoker (GimpProcedure      *procedure,
+plug_in_vinvert_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,

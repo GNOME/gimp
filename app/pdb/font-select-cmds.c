@@ -36,7 +36,7 @@
 
 
 static GimpValueArray *
-fonts_popup_invoker (GimpProcedure      *procedure,
+fonts_popup_invoker (GimpProcedure         *procedure,
                      Gimp                  *gimp,
                      GimpContext           *context,
                      GimpProgress          *progress,
@@ -67,7 +67,7 @@ fonts_popup_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-fonts_close_popup_invoker (GimpProcedure      *procedure,
+fonts_close_popup_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -92,7 +92,7 @@ fonts_close_popup_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-fonts_set_popup_invoker (GimpProcedure      *procedure,
+fonts_set_popup_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,

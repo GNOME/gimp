@@ -51,7 +51,7 @@
 
 
 static GimpValueArray *
-layer_new_invoker (GimpProcedure      *procedure,
+layer_new_invoker (GimpProcedure         *procedure,
                    Gimp                  *gimp,
                    GimpContext           *context,
                    GimpProgress          *progress,
@@ -140,7 +140,7 @@ layer_new_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_new_from_visible_invoker (GimpProcedure      *procedure,
+layer_new_from_visible_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -182,7 +182,7 @@ layer_new_from_visible_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_new_from_drawable_invoker (GimpProcedure      *procedure,
+layer_new_from_drawable_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -229,7 +229,7 @@ layer_new_from_drawable_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_group_new_invoker (GimpProcedure      *procedure,
+layer_group_new_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -261,7 +261,7 @@ layer_group_new_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_copy_invoker (GimpProcedure      *procedure,
+layer_copy_invoker (GimpProcedure         *procedure,
                     Gimp                  *gimp,
                     GimpContext           *context,
                     GimpProgress          *progress,
@@ -302,7 +302,7 @@ layer_copy_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_add_alpha_invoker (GimpProcedure      *procedure,
+layer_add_alpha_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -328,7 +328,7 @@ layer_add_alpha_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_flatten_invoker (GimpProcedure      *procedure,
+layer_flatten_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
                        GimpProgress          *progress,
@@ -354,7 +354,7 @@ layer_flatten_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_scale_invoker (GimpProcedure      *procedure,
+layer_scale_invoker (GimpProcedure         *procedure,
                      Gimp                  *gimp,
                      GimpContext           *context,
                      GimpProgress          *progress,
@@ -399,7 +399,7 @@ layer_scale_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_scale_full_invoker (GimpProcedure      *procedure,
+layer_scale_full_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -444,7 +444,7 @@ layer_scale_full_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_resize_invoker (GimpProcedure      *procedure,
+layer_resize_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
                       GimpProgress          *progress,
@@ -478,7 +478,7 @@ layer_resize_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_resize_to_image_size_invoker (GimpProcedure      *procedure,
+layer_resize_to_image_size_invoker (GimpProcedure         *procedure,
                                     Gimp                  *gimp,
                                     GimpContext           *context,
                                     GimpProgress          *progress,
@@ -503,7 +503,7 @@ layer_resize_to_image_size_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_translate_invoker (GimpProcedure      *procedure,
+layer_translate_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -539,7 +539,7 @@ layer_translate_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_set_offsets_invoker (GimpProcedure      *procedure,
+layer_set_offsets_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -581,7 +581,7 @@ layer_set_offsets_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_create_mask_invoker (GimpProcedure      *procedure,
+layer_create_mask_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -628,7 +628,7 @@ layer_create_mask_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_get_mask_invoker (GimpProcedure      *procedure,
+layer_get_mask_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -657,7 +657,7 @@ layer_get_mask_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_from_mask_invoker (GimpProcedure      *procedure,
+layer_from_mask_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -686,7 +686,7 @@ layer_from_mask_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_add_mask_invoker (GimpProcedure      *procedure,
+layer_add_mask_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -716,7 +716,7 @@ layer_add_mask_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_remove_mask_invoker (GimpProcedure      *procedure,
+layer_remove_mask_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -744,7 +744,7 @@ layer_remove_mask_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_is_floating_sel_invoker (GimpProcedure      *procedure,
+layer_is_floating_sel_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -773,7 +773,7 @@ layer_is_floating_sel_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_get_lock_alpha_invoker (GimpProcedure      *procedure,
+layer_get_lock_alpha_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -802,7 +802,7 @@ layer_get_lock_alpha_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_set_lock_alpha_invoker (GimpProcedure      *procedure,
+layer_set_lock_alpha_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -829,7 +829,7 @@ layer_set_lock_alpha_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_get_apply_mask_invoker (GimpProcedure      *procedure,
+layer_get_apply_mask_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -861,7 +861,7 @@ layer_get_apply_mask_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_set_apply_mask_invoker (GimpProcedure      *procedure,
+layer_set_apply_mask_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -888,7 +888,7 @@ layer_set_apply_mask_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_get_show_mask_invoker (GimpProcedure      *procedure,
+layer_get_show_mask_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -920,7 +920,7 @@ layer_get_show_mask_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_set_show_mask_invoker (GimpProcedure      *procedure,
+layer_set_show_mask_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -947,7 +947,7 @@ layer_set_show_mask_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_get_edit_mask_invoker (GimpProcedure      *procedure,
+layer_get_edit_mask_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -979,7 +979,7 @@ layer_get_edit_mask_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_set_edit_mask_invoker (GimpProcedure      *procedure,
+layer_set_edit_mask_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -1006,7 +1006,7 @@ layer_set_edit_mask_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_get_opacity_invoker (GimpProcedure      *procedure,
+layer_get_opacity_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -1035,7 +1035,7 @@ layer_get_opacity_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_set_opacity_invoker (GimpProcedure      *procedure,
+layer_set_opacity_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -1059,7 +1059,7 @@ layer_set_opacity_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_get_mode_invoker (GimpProcedure      *procedure,
+layer_get_mode_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -1088,7 +1088,7 @@ layer_get_mode_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-layer_set_mode_invoker (GimpProcedure      *procedure,
+layer_set_mode_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,

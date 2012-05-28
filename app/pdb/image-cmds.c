@@ -82,7 +82,7 @@
 #endif
 
 static GimpValueArray *
-image_is_valid_invoker (GimpProcedure      *procedure,
+image_is_valid_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -104,7 +104,7 @@ image_is_valid_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_list_invoker (GimpProcedure      *procedure,
+image_list_invoker (GimpProcedure         *procedure,
                     Gimp                  *gimp,
                     GimpContext           *context,
                     GimpProgress          *progress,
@@ -138,7 +138,7 @@ image_list_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_new_invoker (GimpProcedure      *procedure,
+image_new_invoker (GimpProcedure         *procedure,
                    Gimp                  *gimp,
                    GimpContext           *context,
                    GimpProgress          *progress,
@@ -175,7 +175,7 @@ image_new_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_new_with_precision_invoker (GimpProcedure      *procedure,
+image_new_with_precision_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
                                   GimpProgress          *progress,
@@ -221,7 +221,7 @@ image_new_with_precision_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_duplicate_invoker (GimpProcedure      *procedure,
+image_duplicate_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -253,7 +253,7 @@ image_duplicate_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_delete_invoker (GimpProcedure      *procedure,
+image_delete_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
                       GimpProgress          *progress,
@@ -278,7 +278,7 @@ image_delete_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_base_type_invoker (GimpProcedure      *procedure,
+image_base_type_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -307,7 +307,7 @@ image_base_type_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_precision_invoker (GimpProcedure      *procedure,
+image_get_precision_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -339,7 +339,7 @@ image_get_precision_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_width_invoker (GimpProcedure      *procedure,
+image_width_invoker (GimpProcedure         *procedure,
                      Gimp                  *gimp,
                      GimpContext           *context,
                      GimpProgress          *progress,
@@ -368,7 +368,7 @@ image_width_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_height_invoker (GimpProcedure      *procedure,
+image_height_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
                       GimpProgress          *progress,
@@ -397,7 +397,7 @@ image_height_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_free_shadow_invoker (GimpProcedure      *procedure,
+image_free_shadow_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -413,7 +413,7 @@ image_free_shadow_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_resize_invoker (GimpProcedure      *procedure,
+image_resize_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
                       GimpProgress          *progress,
@@ -444,7 +444,7 @@ image_resize_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_resize_to_layers_invoker (GimpProcedure      *procedure,
+image_resize_to_layers_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -466,7 +466,7 @@ image_resize_to_layers_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_scale_invoker (GimpProcedure      *procedure,
+image_scale_invoker (GimpProcedure         *procedure,
                      Gimp                  *gimp,
                      GimpContext           *context,
                      GimpProgress          *progress,
@@ -502,7 +502,7 @@ image_scale_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_scale_full_invoker (GimpProcedure      *procedure,
+image_scale_full_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -536,7 +536,7 @@ image_scale_full_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_crop_invoker (GimpProcedure      *procedure,
+image_crop_invoker (GimpProcedure         *procedure,
                     Gimp                  *gimp,
                     GimpContext           *context,
                     GimpProgress          *progress,
@@ -574,7 +574,7 @@ image_crop_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_flip_invoker (GimpProcedure      *procedure,
+image_flip_invoker (GimpProcedure         *procedure,
                     Gimp                  *gimp,
                     GimpContext           *context,
                     GimpProgress          *progress,
@@ -598,7 +598,7 @@ image_flip_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_rotate_invoker (GimpProcedure      *procedure,
+image_rotate_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
                       GimpProgress          *progress,
@@ -628,7 +628,7 @@ image_rotate_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_layers_invoker (GimpProcedure      *procedure,
+image_get_layers_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -673,7 +673,7 @@ image_get_layers_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_channels_invoker (GimpProcedure      *procedure,
+image_get_channels_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -718,7 +718,7 @@ image_get_channels_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_vectors_invoker (GimpProcedure      *procedure,
+image_get_vectors_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -763,7 +763,7 @@ image_get_vectors_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_active_drawable_invoker (GimpProcedure      *procedure,
+image_get_active_drawable_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
                                    GimpProgress          *progress,
@@ -792,7 +792,7 @@ image_get_active_drawable_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_unset_active_channel_invoker (GimpProcedure      *procedure,
+image_unset_active_channel_invoker (GimpProcedure         *procedure,
                                     Gimp                  *gimp,
                                     GimpContext           *context,
                                     GimpProgress          *progress,
@@ -814,7 +814,7 @@ image_unset_active_channel_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_floating_sel_invoker (GimpProcedure      *procedure,
+image_get_floating_sel_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -843,7 +843,7 @@ image_get_floating_sel_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_floating_sel_attached_to_invoker (GimpProcedure      *procedure,
+image_floating_sel_attached_to_invoker (GimpProcedure         *procedure,
                                         Gimp                  *gimp,
                                         GimpContext           *context,
                                         GimpProgress          *progress,
@@ -877,7 +877,7 @@ image_floating_sel_attached_to_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_pick_color_invoker (GimpProcedure      *procedure,
+image_pick_color_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -944,7 +944,7 @@ image_pick_color_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_pick_correlate_layer_invoker (GimpProcedure      *procedure,
+image_pick_correlate_layer_invoker (GimpProcedure         *procedure,
                                     Gimp                  *gimp,
                                     GimpContext           *context,
                                     GimpProgress          *progress,
@@ -977,7 +977,7 @@ image_pick_correlate_layer_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_add_layer_invoker (GimpProcedure      *procedure,
+image_add_layer_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -1014,7 +1014,7 @@ image_add_layer_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_insert_layer_invoker (GimpProcedure      *procedure,
+image_insert_layer_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -1059,7 +1059,7 @@ image_insert_layer_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_remove_layer_invoker (GimpProcedure      *procedure,
+image_remove_layer_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -1086,7 +1086,7 @@ image_remove_layer_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_add_channel_invoker (GimpProcedure      *procedure,
+image_add_channel_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -1120,7 +1120,7 @@ image_add_channel_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_insert_channel_invoker (GimpProcedure      *procedure,
+image_insert_channel_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -1162,7 +1162,7 @@ image_insert_channel_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_remove_channel_invoker (GimpProcedure      *procedure,
+image_remove_channel_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -1189,7 +1189,7 @@ image_remove_channel_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_add_vectors_invoker (GimpProcedure      *procedure,
+image_add_vectors_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -1223,7 +1223,7 @@ image_add_vectors_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_insert_vectors_invoker (GimpProcedure      *procedure,
+image_insert_vectors_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -1265,7 +1265,7 @@ image_insert_vectors_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_remove_vectors_invoker (GimpProcedure      *procedure,
+image_remove_vectors_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -1292,7 +1292,7 @@ image_remove_vectors_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_item_position_invoker (GimpProcedure      *procedure,
+image_get_item_position_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -1326,7 +1326,7 @@ image_get_item_position_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_raise_item_invoker (GimpProcedure      *procedure,
+image_raise_item_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -1353,7 +1353,7 @@ image_raise_item_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_lower_item_invoker (GimpProcedure      *procedure,
+image_lower_item_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -1380,7 +1380,7 @@ image_lower_item_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_raise_item_to_top_invoker (GimpProcedure      *procedure,
+image_raise_item_to_top_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -1407,7 +1407,7 @@ image_raise_item_to_top_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_lower_item_to_bottom_invoker (GimpProcedure      *procedure,
+image_lower_item_to_bottom_invoker (GimpProcedure         *procedure,
                                     Gimp                  *gimp,
                                     GimpContext           *context,
                                     GimpProgress          *progress,
@@ -1434,7 +1434,7 @@ image_lower_item_to_bottom_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_reorder_item_invoker (GimpProcedure      *procedure,
+image_reorder_item_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -1472,7 +1472,7 @@ image_reorder_item_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_flatten_invoker (GimpProcedure      *procedure,
+image_flatten_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
                        GimpProgress          *progress,
@@ -1504,7 +1504,7 @@ image_flatten_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_merge_visible_layers_invoker (GimpProcedure      *procedure,
+image_merge_visible_layers_invoker (GimpProcedure         *procedure,
                                     Gimp                  *gimp,
                                     GimpContext           *context,
                                     GimpProgress          *progress,
@@ -1539,7 +1539,7 @@ image_merge_visible_layers_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_merge_down_invoker (GimpProcedure      *procedure,
+image_merge_down_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -1581,7 +1581,7 @@ image_merge_down_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_add_layer_mask_invoker (GimpProcedure      *procedure,
+image_add_layer_mask_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -1611,7 +1611,7 @@ image_add_layer_mask_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_remove_layer_mask_invoker (GimpProcedure      *procedure,
+image_remove_layer_mask_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -1641,7 +1641,7 @@ image_remove_layer_mask_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_colormap_invoker (GimpProcedure      *procedure,
+image_get_colormap_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -1675,7 +1675,7 @@ image_get_colormap_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_set_colormap_invoker (GimpProcedure      *procedure,
+image_set_colormap_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -1701,7 +1701,7 @@ image_set_colormap_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_clean_all_invoker (GimpProcedure      *procedure,
+image_clean_all_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -1723,7 +1723,7 @@ image_clean_all_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_is_dirty_invoker (GimpProcedure      *procedure,
+image_is_dirty_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -1752,7 +1752,7 @@ image_is_dirty_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_thumbnail_invoker (GimpProcedure      *procedure,
+image_thumbnail_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -1826,7 +1826,7 @@ image_thumbnail_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_active_layer_invoker (GimpProcedure      *procedure,
+image_get_active_layer_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -1855,7 +1855,7 @@ image_get_active_layer_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_set_active_layer_invoker (GimpProcedure      *procedure,
+image_set_active_layer_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -1880,7 +1880,7 @@ image_set_active_layer_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_active_channel_invoker (GimpProcedure      *procedure,
+image_get_active_channel_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
                                   GimpProgress          *progress,
@@ -1909,7 +1909,7 @@ image_get_active_channel_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_set_active_channel_invoker (GimpProcedure      *procedure,
+image_set_active_channel_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
                                   GimpProgress          *progress,
@@ -1934,7 +1934,7 @@ image_set_active_channel_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_active_vectors_invoker (GimpProcedure      *procedure,
+image_get_active_vectors_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
                                   GimpProgress          *progress,
@@ -1963,7 +1963,7 @@ image_get_active_vectors_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_set_active_vectors_invoker (GimpProcedure      *procedure,
+image_set_active_vectors_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
                                   GimpProgress          *progress,
@@ -1988,7 +1988,7 @@ image_set_active_vectors_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_selection_invoker (GimpProcedure      *procedure,
+image_get_selection_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -2020,7 +2020,7 @@ image_get_selection_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_component_active_invoker (GimpProcedure      *procedure,
+image_get_component_active_invoker (GimpProcedure         *procedure,
                                     Gimp                  *gimp,
                                     GimpContext           *context,
                                     GimpProgress          *progress,
@@ -2059,7 +2059,7 @@ image_get_component_active_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_set_component_active_invoker (GimpProcedure      *procedure,
+image_set_component_active_invoker (GimpProcedure         *procedure,
                                     Gimp                  *gimp,
                                     GimpContext           *context,
                                     GimpProgress          *progress,
@@ -2093,7 +2093,7 @@ image_set_component_active_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_component_visible_invoker (GimpProcedure      *procedure,
+image_get_component_visible_invoker (GimpProcedure         *procedure,
                                      Gimp                  *gimp,
                                      GimpContext           *context,
                                      GimpProgress          *progress,
@@ -2132,7 +2132,7 @@ image_get_component_visible_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_set_component_visible_invoker (GimpProcedure      *procedure,
+image_set_component_visible_invoker (GimpProcedure         *procedure,
                                      Gimp                  *gimp,
                                      GimpContext           *context,
                                      GimpProgress          *progress,
@@ -2166,7 +2166,7 @@ image_set_component_visible_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_filename_invoker (GimpProcedure      *procedure,
+image_get_filename_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -2197,7 +2197,7 @@ image_get_filename_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_set_filename_invoker (GimpProcedure      *procedure,
+image_set_filename_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -2239,7 +2239,7 @@ image_set_filename_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_uri_invoker (GimpProcedure      *procedure,
+image_get_uri_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
                        GimpProgress          *progress,
@@ -2268,7 +2268,7 @@ image_get_uri_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_xcf_uri_invoker (GimpProcedure      *procedure,
+image_get_xcf_uri_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -2297,7 +2297,7 @@ image_get_xcf_uri_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_imported_uri_invoker (GimpProcedure      *procedure,
+image_get_imported_uri_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -2326,7 +2326,7 @@ image_get_imported_uri_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_exported_uri_invoker (GimpProcedure      *procedure,
+image_get_exported_uri_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -2355,7 +2355,7 @@ image_get_exported_uri_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_name_invoker (GimpProcedure      *procedure,
+image_get_name_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -2384,7 +2384,7 @@ image_get_name_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_resolution_invoker (GimpProcedure      *procedure,
+image_get_resolution_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -2417,7 +2417,7 @@ image_get_resolution_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_set_resolution_invoker (GimpProcedure      *procedure,
+image_set_resolution_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -2457,7 +2457,7 @@ image_set_resolution_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_unit_invoker (GimpProcedure      *procedure,
+image_get_unit_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -2486,7 +2486,7 @@ image_get_unit_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_set_unit_invoker (GimpProcedure      *procedure,
+image_set_unit_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -2510,7 +2510,7 @@ image_set_unit_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_tattoo_state_invoker (GimpProcedure      *procedure,
+image_get_tattoo_state_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -2539,7 +2539,7 @@ image_get_tattoo_state_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_set_tattoo_state_invoker (GimpProcedure      *procedure,
+image_set_tattoo_state_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -2563,7 +2563,7 @@ image_set_tattoo_state_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_layer_by_tattoo_invoker (GimpProcedure      *procedure,
+image_get_layer_by_tattoo_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
                                    GimpProgress          *progress,
@@ -2594,7 +2594,7 @@ image_get_layer_by_tattoo_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_channel_by_tattoo_invoker (GimpProcedure      *procedure,
+image_get_channel_by_tattoo_invoker (GimpProcedure         *procedure,
                                      Gimp                  *gimp,
                                      GimpContext           *context,
                                      GimpProgress          *progress,
@@ -2625,7 +2625,7 @@ image_get_channel_by_tattoo_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_vectors_by_tattoo_invoker (GimpProcedure      *procedure,
+image_get_vectors_by_tattoo_invoker (GimpProcedure         *procedure,
                                      Gimp                  *gimp,
                                      GimpContext           *context,
                                      GimpProgress          *progress,
@@ -2656,7 +2656,7 @@ image_get_vectors_by_tattoo_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_layer_by_name_invoker (GimpProcedure      *procedure,
+image_get_layer_by_name_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -2687,7 +2687,7 @@ image_get_layer_by_name_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_channel_by_name_invoker (GimpProcedure      *procedure,
+image_get_channel_by_name_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
                                    GimpProgress          *progress,
@@ -2718,7 +2718,7 @@ image_get_channel_by_name_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_vectors_by_name_invoker (GimpProcedure      *procedure,
+image_get_vectors_by_name_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
                                    GimpProgress          *progress,
@@ -2749,7 +2749,7 @@ image_get_vectors_by_name_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_attach_parasite_invoker (GimpProcedure      *procedure,
+image_attach_parasite_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -2773,7 +2773,7 @@ image_attach_parasite_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_detach_parasite_invoker (GimpProcedure      *procedure,
+image_detach_parasite_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -2797,7 +2797,7 @@ image_detach_parasite_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_parasite_invoker (GimpProcedure      *procedure,
+image_get_parasite_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -2831,7 +2831,7 @@ image_get_parasite_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_get_parasite_list_invoker (GimpProcedure      *procedure,
+image_get_parasite_list_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,

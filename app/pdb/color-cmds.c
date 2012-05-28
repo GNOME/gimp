@@ -53,7 +53,7 @@
 
 
 static GimpValueArray *
-brightness_contrast_invoker (GimpProcedure      *procedure,
+brightness_contrast_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -94,7 +94,7 @@ brightness_contrast_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-levels_invoker (GimpProcedure      *procedure,
+levels_invoker (GimpProcedure         *procedure,
                 Gimp                  *gimp,
                 GimpContext           *context,
                 GimpProgress          *progress,
@@ -153,7 +153,7 @@ levels_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-levels_auto_invoker (GimpProcedure      *procedure,
+levels_auto_invoker (GimpProcedure         *procedure,
                      Gimp                  *gimp,
                      GimpContext           *context,
                      GimpProgress          *progress,
@@ -181,7 +181,7 @@ levels_auto_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-levels_stretch_invoker (GimpProcedure      *procedure,
+levels_stretch_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -209,7 +209,7 @@ levels_stretch_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-posterize_invoker (GimpProcedure      *procedure,
+posterize_invoker (GimpProcedure         *procedure,
                    Gimp                  *gimp,
                    GimpContext           *context,
                    GimpProgress          *progress,
@@ -247,7 +247,7 @@ posterize_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-desaturate_invoker (GimpProcedure      *procedure,
+desaturate_invoker (GimpProcedure         *procedure,
                     Gimp                  *gimp,
                     GimpContext           *context,
                     GimpProgress          *progress,
@@ -284,7 +284,7 @@ desaturate_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-desaturate_full_invoker (GimpProcedure      *procedure,
+desaturate_full_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -323,7 +323,7 @@ desaturate_full_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-equalize_invoker (GimpProcedure      *procedure,
+equalize_invoker (GimpProcedure         *procedure,
                   Gimp                  *gimp,
                   GimpContext           *context,
                   GimpProgress          *progress,
@@ -352,7 +352,7 @@ equalize_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-invert_invoker (GimpProcedure      *procedure,
+invert_invoker (GimpProcedure         *procedure,
                 Gimp                  *gimp,
                 GimpContext           *context,
                 GimpProgress          *progress,
@@ -383,7 +383,7 @@ invert_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-curves_spline_invoker (GimpProcedure      *procedure,
+curves_spline_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
                        GimpProgress          *progress,
@@ -429,7 +429,7 @@ curves_spline_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-curves_explicit_invoker (GimpProcedure      *procedure,
+curves_explicit_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -475,7 +475,7 @@ curves_explicit_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-color_balance_invoker (GimpProcedure      *procedure,
+color_balance_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
                        GimpProgress          *progress,
@@ -528,7 +528,7 @@ color_balance_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-colorize_invoker (GimpProcedure      *procedure,
+colorize_invoker (GimpProcedure         *procedure,
                   Gimp                  *gimp,
                   GimpContext           *context,
                   GimpProgress          *progress,
@@ -573,7 +573,7 @@ colorize_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-histogram_invoker (GimpProcedure      *procedure,
+histogram_invoker (GimpProcedure         *procedure,
                    Gimp                  *gimp,
                    GimpContext           *context,
                    GimpProgress          *progress,
@@ -646,7 +646,7 @@ histogram_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-hue_saturation_invoker (GimpProcedure      *procedure,
+hue_saturation_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -696,7 +696,7 @@ hue_saturation_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-threshold_invoker (GimpProcedure      *procedure,
+threshold_invoker (GimpProcedure         *procedure,
                    Gimp                  *gimp,
                    GimpContext           *context,
                    GimpProgress          *progress,

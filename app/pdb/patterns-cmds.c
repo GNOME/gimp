@@ -44,7 +44,7 @@
 
 
 static GimpValueArray *
-patterns_refresh_invoker (GimpProcedure      *procedure,
+patterns_refresh_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -57,7 +57,7 @@ patterns_refresh_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-patterns_get_list_invoker (GimpProcedure      *procedure,
+patterns_get_list_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -91,7 +91,7 @@ patterns_get_list_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-patterns_get_pattern_invoker (GimpProcedure      *procedure,
+patterns_get_pattern_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -129,7 +129,7 @@ patterns_get_pattern_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-patterns_get_pattern_data_invoker (GimpProcedure      *procedure,
+patterns_get_pattern_data_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
                                    GimpProgress          *progress,

@@ -43,7 +43,7 @@
 
 
 static GimpValueArray *
-floating_sel_remove_invoker (GimpProcedure      *procedure,
+floating_sel_remove_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -77,7 +77,7 @@ floating_sel_remove_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-floating_sel_anchor_invoker (GimpProcedure      *procedure,
+floating_sel_anchor_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -110,7 +110,7 @@ floating_sel_anchor_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-floating_sel_to_layer_invoker (GimpProcedure      *procedure,
+floating_sel_to_layer_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -143,7 +143,7 @@ floating_sel_to_layer_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-floating_sel_attach_invoker (GimpProcedure      *procedure,
+floating_sel_attach_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -171,7 +171,7 @@ floating_sel_attach_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-floating_sel_rigor_invoker (GimpProcedure      *procedure,
+floating_sel_rigor_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -187,7 +187,7 @@ floating_sel_rigor_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-floating_sel_relax_invoker (GimpProcedure      *procedure,
+floating_sel_relax_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,

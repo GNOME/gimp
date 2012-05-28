@@ -661,7 +661,7 @@ CODE
 	}
 
 	$out->{code} .= "\nstatic GimpValueArray *\n";
-	$out->{code} .= "${name}_invoker (GimpProcedure      *procedure,\n";
+	$out->{code} .= "${name}_invoker (GimpProcedure         *procedure,\n";
 	$out->{code} .=  ' ' x length($name) . "          Gimp                  *gimp,\n";
 	$out->{code} .=  ' ' x length($name) . "          GimpContext           *context,\n";
 	$out->{code} .=  ' ' x length($name) . "          GimpProgress          *progress,\n";

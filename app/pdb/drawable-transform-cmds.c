@@ -48,7 +48,7 @@
 
 
 static GimpValueArray *
-drawable_transform_flip_simple_invoker (GimpProcedure      *procedure,
+drawable_transform_flip_simple_invoker (GimpProcedure         *procedure,
                                         Gimp                  *gimp,
                                         GimpContext           *context,
                                         GimpProgress          *progress,
@@ -108,7 +108,7 @@ drawable_transform_flip_simple_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_transform_flip_invoker (GimpProcedure      *procedure,
+drawable_transform_flip_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -196,7 +196,7 @@ drawable_transform_flip_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_transform_flip_default_invoker (GimpProcedure      *procedure,
+drawable_transform_flip_default_invoker (GimpProcedure         *procedure,
                                          Gimp                  *gimp,
                                          GimpContext           *context,
                                          GimpProgress          *progress,
@@ -284,7 +284,7 @@ drawable_transform_flip_default_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_transform_perspective_invoker (GimpProcedure      *procedure,
+drawable_transform_perspective_invoker (GimpProcedure         *procedure,
                                         Gimp                  *gimp,
                                         GimpContext           *context,
                                         GimpProgress          *progress,
@@ -382,7 +382,7 @@ drawable_transform_perspective_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_transform_perspective_default_invoker (GimpProcedure      *procedure,
+drawable_transform_perspective_default_invoker (GimpProcedure         *procedure,
                                                 Gimp                  *gimp,
                                                 GimpContext           *context,
                                                 GimpProgress          *progress,
@@ -480,7 +480,7 @@ drawable_transform_perspective_default_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_transform_rotate_simple_invoker (GimpProcedure      *procedure,
+drawable_transform_rotate_simple_invoker (GimpProcedure         *procedure,
                                           Gimp                  *gimp,
                                           GimpContext           *context,
                                           GimpProgress          *progress,
@@ -547,7 +547,7 @@ drawable_transform_rotate_simple_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_transform_rotate_invoker (GimpProcedure      *procedure,
+drawable_transform_rotate_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
                                    GimpProgress          *progress,
@@ -639,7 +639,7 @@ drawable_transform_rotate_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_transform_rotate_default_invoker (GimpProcedure      *procedure,
+drawable_transform_rotate_default_invoker (GimpProcedure         *procedure,
                                            Gimp                  *gimp,
                                            GimpContext           *context,
                                            GimpProgress          *progress,
@@ -731,7 +731,7 @@ drawable_transform_rotate_default_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_transform_scale_invoker (GimpProcedure      *procedure,
+drawable_transform_scale_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
                                   GimpProgress          *progress,
@@ -820,7 +820,7 @@ drawable_transform_scale_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_transform_scale_default_invoker (GimpProcedure      *procedure,
+drawable_transform_scale_default_invoker (GimpProcedure         *procedure,
                                           Gimp                  *gimp,
                                           GimpContext           *context,
                                           GimpProgress          *progress,
@@ -909,7 +909,7 @@ drawable_transform_scale_default_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_transform_shear_invoker (GimpProcedure      *procedure,
+drawable_transform_shear_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
                                   GimpProgress          *progress,
@@ -994,7 +994,7 @@ drawable_transform_shear_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_transform_shear_default_invoker (GimpProcedure      *procedure,
+drawable_transform_shear_default_invoker (GimpProcedure         *procedure,
                                           Gimp                  *gimp,
                                           GimpContext           *context,
                                           GimpProgress          *progress,
@@ -1079,7 +1079,7 @@ drawable_transform_shear_default_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_transform_2d_invoker (GimpProcedure      *procedure,
+drawable_transform_2d_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -1175,7 +1175,7 @@ drawable_transform_2d_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_transform_2d_default_invoker (GimpProcedure      *procedure,
+drawable_transform_2d_default_invoker (GimpProcedure         *procedure,
                                        Gimp                  *gimp,
                                        GimpContext           *context,
                                        GimpProgress          *progress,
@@ -1271,7 +1271,7 @@ drawable_transform_2d_default_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_transform_matrix_invoker (GimpProcedure      *procedure,
+drawable_transform_matrix_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
                                    GimpProgress          *progress,
@@ -1375,7 +1375,7 @@ drawable_transform_matrix_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_transform_matrix_default_invoker (GimpProcedure      *procedure,
+drawable_transform_matrix_default_invoker (GimpProcedure         *procedure,
                                            Gimp                  *gimp,
                                            GimpContext           *context,
                                            GimpProgress          *progress,

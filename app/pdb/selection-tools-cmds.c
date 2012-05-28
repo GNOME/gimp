@@ -45,7 +45,7 @@
 
 
 static GimpValueArray *
-by_color_select_invoker (GimpProcedure      *procedure,
+by_color_select_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -93,7 +93,7 @@ by_color_select_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-by_color_select_full_invoker (GimpProcedure      *procedure,
+by_color_select_full_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -147,7 +147,7 @@ by_color_select_full_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-ellipse_select_invoker (GimpProcedure      *procedure,
+ellipse_select_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -193,7 +193,7 @@ ellipse_select_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-free_select_invoker (GimpProcedure      *procedure,
+free_select_invoker (GimpProcedure         *procedure,
                      Gimp                  *gimp,
                      GimpContext           *context,
                      GimpProgress          *progress,
@@ -236,7 +236,7 @@ free_select_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-fuzzy_select_invoker (GimpProcedure      *procedure,
+fuzzy_select_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
                       GimpProgress          *progress,
@@ -287,7 +287,7 @@ fuzzy_select_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-fuzzy_select_full_invoker (GimpProcedure      *procedure,
+fuzzy_select_full_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -344,7 +344,7 @@ fuzzy_select_full_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-rect_select_invoker (GimpProcedure      *procedure,
+rect_select_invoker (GimpProcedure         *procedure,
                      Gimp                  *gimp,
                      GimpContext           *context,
                      GimpProgress          *progress,
@@ -387,7 +387,7 @@ rect_select_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-round_rect_select_invoker (GimpProcedure      *procedure,
+round_rect_select_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,

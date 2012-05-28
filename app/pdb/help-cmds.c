@@ -39,7 +39,7 @@
 
 
 static GimpValueArray *
-help_invoker (GimpProcedure      *procedure,
+help_invoker (GimpProcedure         *procedure,
               Gimp                  *gimp,
               GimpContext           *context,
               GimpProgress          *progress,

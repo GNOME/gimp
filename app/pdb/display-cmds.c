@@ -38,7 +38,7 @@
 
 
 static GimpValueArray *
-display_is_valid_invoker (GimpProcedure      *procedure,
+display_is_valid_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -60,7 +60,7 @@ display_is_valid_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-display_new_invoker (GimpProcedure      *procedure,
+display_new_invoker (GimpProcedure         *procedure,
                      Gimp                  *gimp,
                      GimpContext           *context,
                      GimpProgress          *progress,
@@ -102,7 +102,7 @@ display_new_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-display_delete_invoker (GimpProcedure      *procedure,
+display_delete_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -124,7 +124,7 @@ display_delete_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-display_get_window_handle_invoker (GimpProcedure      *procedure,
+display_get_window_handle_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
                                    GimpProgress          *progress,
@@ -153,7 +153,7 @@ display_get_window_handle_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-displays_flush_invoker (GimpProcedure      *procedure,
+displays_flush_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -166,7 +166,7 @@ displays_flush_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-displays_reconnect_invoker (GimpProcedure      *procedure,
+displays_reconnect_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,

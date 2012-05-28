@@ -43,7 +43,7 @@
 
 
 static GimpValueArray *
-image_grid_get_spacing_invoker (GimpProcedure      *procedure,
+image_grid_get_spacing_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -84,7 +84,7 @@ image_grid_get_spacing_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_grid_set_spacing_invoker (GimpProcedure      *procedure,
+image_grid_set_spacing_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -118,7 +118,7 @@ image_grid_set_spacing_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_grid_get_offset_invoker (GimpProcedure      *procedure,
+image_grid_get_offset_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -159,7 +159,7 @@ image_grid_get_offset_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_grid_set_offset_invoker (GimpProcedure      *procedure,
+image_grid_set_offset_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -193,7 +193,7 @@ image_grid_set_offset_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_grid_get_foreground_color_invoker (GimpProcedure      *procedure,
+image_grid_get_foreground_color_invoker (GimpProcedure         *procedure,
                                          Gimp                  *gimp,
                                          GimpContext           *context,
                                          GimpProgress          *progress,
@@ -227,7 +227,7 @@ image_grid_get_foreground_color_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_grid_set_foreground_color_invoker (GimpProcedure      *procedure,
+image_grid_set_foreground_color_invoker (GimpProcedure         *procedure,
                                          Gimp                  *gimp,
                                          GimpContext           *context,
                                          GimpProgress          *progress,
@@ -256,7 +256,7 @@ image_grid_set_foreground_color_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_grid_get_background_color_invoker (GimpProcedure      *procedure,
+image_grid_get_background_color_invoker (GimpProcedure         *procedure,
                                          Gimp                  *gimp,
                                          GimpContext           *context,
                                          GimpProgress          *progress,
@@ -290,7 +290,7 @@ image_grid_get_background_color_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_grid_set_background_color_invoker (GimpProcedure      *procedure,
+image_grid_set_background_color_invoker (GimpProcedure         *procedure,
                                          Gimp                  *gimp,
                                          GimpContext           *context,
                                          GimpProgress          *progress,
@@ -319,7 +319,7 @@ image_grid_set_background_color_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_grid_get_style_invoker (GimpProcedure      *procedure,
+image_grid_get_style_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -353,7 +353,7 @@ image_grid_get_style_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-image_grid_set_style_invoker (GimpProcedure      *procedure,
+image_grid_set_style_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,

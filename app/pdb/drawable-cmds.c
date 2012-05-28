@@ -52,7 +52,7 @@
 
 
 static GimpValueArray *
-drawable_get_format_invoker (GimpProcedure      *procedure,
+drawable_get_format_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -84,7 +84,7 @@ drawable_get_format_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_type_invoker (GimpProcedure      *procedure,
+drawable_type_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
                        GimpProgress          *progress,
@@ -113,7 +113,7 @@ drawable_type_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_type_with_alpha_invoker (GimpProcedure      *procedure,
+drawable_type_with_alpha_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
                                   GimpProgress          *progress,
@@ -144,7 +144,7 @@ drawable_type_with_alpha_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_has_alpha_invoker (GimpProcedure      *procedure,
+drawable_has_alpha_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -173,7 +173,7 @@ drawable_has_alpha_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_is_rgb_invoker (GimpProcedure      *procedure,
+drawable_is_rgb_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -202,7 +202,7 @@ drawable_is_rgb_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_is_gray_invoker (GimpProcedure      *procedure,
+drawable_is_gray_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -231,7 +231,7 @@ drawable_is_gray_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_is_indexed_invoker (GimpProcedure      *procedure,
+drawable_is_indexed_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -260,7 +260,7 @@ drawable_is_indexed_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_bpp_invoker (GimpProcedure      *procedure,
+drawable_bpp_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
                       GimpProgress          *progress,
@@ -297,7 +297,7 @@ drawable_bpp_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_width_invoker (GimpProcedure      *procedure,
+drawable_width_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -326,7 +326,7 @@ drawable_width_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_height_invoker (GimpProcedure      *procedure,
+drawable_height_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -355,7 +355,7 @@ drawable_height_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_offsets_invoker (GimpProcedure      *procedure,
+drawable_offsets_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -388,7 +388,7 @@ drawable_offsets_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_set_image_invoker (GimpProcedure      *procedure,
+drawable_set_image_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -413,7 +413,7 @@ drawable_set_image_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_mask_bounds_invoker (GimpProcedure      *procedure,
+drawable_mask_bounds_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -455,7 +455,7 @@ drawable_mask_bounds_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_mask_intersect_invoker (GimpProcedure      *procedure,
+drawable_mask_intersect_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -498,7 +498,7 @@ drawable_mask_intersect_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_merge_shadow_invoker (GimpProcedure      *procedure,
+drawable_merge_shadow_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -533,7 +533,7 @@ drawable_merge_shadow_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_free_shadow_invoker (GimpProcedure      *procedure,
+drawable_free_shadow_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
                               GimpProgress          *progress,
@@ -559,7 +559,7 @@ drawable_free_shadow_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_update_invoker (GimpProcedure      *procedure,
+drawable_update_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -589,7 +589,7 @@ drawable_update_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_get_pixel_invoker (GimpProcedure      *procedure,
+drawable_get_pixel_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -642,7 +642,7 @@ drawable_get_pixel_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_set_pixel_invoker (GimpProcedure      *procedure,
+drawable_set_pixel_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -691,7 +691,7 @@ drawable_set_pixel_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_fill_invoker (GimpProcedure      *procedure,
+drawable_fill_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
                        GimpProgress          *progress,
@@ -719,7 +719,7 @@ drawable_fill_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_offset_invoker (GimpProcedure      *procedure,
+drawable_offset_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -754,7 +754,7 @@ drawable_offset_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_thumbnail_invoker (GimpProcedure      *procedure,
+drawable_thumbnail_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -832,7 +832,7 @@ drawable_thumbnail_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_sub_thumbnail_invoker (GimpProcedure      *procedure,
+drawable_sub_thumbnail_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -914,7 +914,7 @@ drawable_sub_thumbnail_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-drawable_foreground_extract_invoker (GimpProcedure      *procedure,
+drawable_foreground_extract_invoker (GimpProcedure         *procedure,
                                      Gimp                  *gimp,
                                      GimpContext           *context,
                                      GimpProgress          *progress,

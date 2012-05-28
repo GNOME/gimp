@@ -45,7 +45,7 @@
 
 
 static GimpValueArray *
-channel_new_invoker (GimpProcedure      *procedure,
+channel_new_invoker (GimpProcedure         *procedure,
                      Gimp                  *gimp,
                      GimpContext           *context,
                      GimpProgress          *progress,
@@ -90,7 +90,7 @@ channel_new_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-channel_new_from_component_invoker (GimpProcedure      *procedure,
+channel_new_from_component_invoker (GimpProcedure         *procedure,
                                     Gimp                  *gimp,
                                     GimpContext           *context,
                                     GimpProgress          *progress,
@@ -130,7 +130,7 @@ channel_new_from_component_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-channel_copy_invoker (GimpProcedure      *procedure,
+channel_copy_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
                       GimpProgress          *progress,
@@ -163,7 +163,7 @@ channel_copy_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-channel_combine_masks_invoker (GimpProcedure      *procedure,
+channel_combine_masks_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -194,7 +194,7 @@ channel_combine_masks_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-channel_get_show_masked_invoker (GimpProcedure      *procedure,
+channel_get_show_masked_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -223,7 +223,7 @@ channel_get_show_masked_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-channel_set_show_masked_invoker (GimpProcedure      *procedure,
+channel_set_show_masked_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -247,7 +247,7 @@ channel_set_show_masked_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-channel_get_opacity_invoker (GimpProcedure      *procedure,
+channel_get_opacity_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -276,7 +276,7 @@ channel_get_opacity_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-channel_set_opacity_invoker (GimpProcedure      *procedure,
+channel_set_opacity_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -300,7 +300,7 @@ channel_set_opacity_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-channel_get_color_invoker (GimpProcedure      *procedure,
+channel_get_color_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -330,7 +330,7 @@ channel_get_color_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-channel_set_color_invoker (GimpProcedure      *procedure,
+channel_set_color_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,

@@ -38,7 +38,7 @@
 
 
 static GimpValueArray *
-unit_get_number_of_units_invoker (GimpProcedure      *procedure,
+unit_get_number_of_units_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
                                   GimpProgress          *progress,
@@ -57,7 +57,7 @@ unit_get_number_of_units_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-unit_get_number_of_built_in_units_invoker (GimpProcedure      *procedure,
+unit_get_number_of_built_in_units_invoker (GimpProcedure         *procedure,
                                            Gimp                  *gimp,
                                            GimpContext           *context,
                                            GimpProgress          *progress,
@@ -76,7 +76,7 @@ unit_get_number_of_built_in_units_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-unit_new_invoker (GimpProcedure      *procedure,
+unit_new_invoker (GimpProcedure         *procedure,
                   Gimp                  *gimp,
                   GimpContext           *context,
                   GimpProgress          *progress,
@@ -118,7 +118,7 @@ unit_new_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-unit_get_deletion_flag_invoker (GimpProcedure      *procedure,
+unit_get_deletion_flag_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -147,7 +147,7 @@ unit_get_deletion_flag_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-unit_set_deletion_flag_invoker (GimpProcedure      *procedure,
+unit_set_deletion_flag_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -171,7 +171,7 @@ unit_set_deletion_flag_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-unit_get_identifier_invoker (GimpProcedure      *procedure,
+unit_get_identifier_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -200,7 +200,7 @@ unit_get_identifier_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-unit_get_factor_invoker (GimpProcedure      *procedure,
+unit_get_factor_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -229,7 +229,7 @@ unit_get_factor_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-unit_get_digits_invoker (GimpProcedure      *procedure,
+unit_get_digits_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -258,7 +258,7 @@ unit_get_digits_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-unit_get_symbol_invoker (GimpProcedure      *procedure,
+unit_get_symbol_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -287,7 +287,7 @@ unit_get_symbol_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-unit_get_abbreviation_invoker (GimpProcedure      *procedure,
+unit_get_abbreviation_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -316,7 +316,7 @@ unit_get_abbreviation_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-unit_get_singular_invoker (GimpProcedure      *procedure,
+unit_get_singular_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -345,7 +345,7 @@ unit_get_singular_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-unit_get_plural_invoker (GimpProcedure      *procedure,
+unit_get_plural_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,

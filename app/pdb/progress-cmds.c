@@ -39,7 +39,7 @@
 
 
 static GimpValueArray *
-progress_init_invoker (GimpProcedure      *procedure,
+progress_init_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
                        GimpProgress          *progress,
@@ -71,7 +71,7 @@ progress_init_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-progress_update_invoker (GimpProcedure      *procedure,
+progress_update_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -101,7 +101,7 @@ progress_update_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-progress_pulse_invoker (GimpProcedure      *procedure,
+progress_pulse_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -124,7 +124,7 @@ progress_pulse_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-progress_set_text_invoker (GimpProcedure      *procedure,
+progress_set_text_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -154,7 +154,7 @@ progress_set_text_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-progress_end_invoker (GimpProcedure      *procedure,
+progress_end_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
                       GimpProgress          *progress,
@@ -178,7 +178,7 @@ progress_end_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-progress_get_window_handle_invoker (GimpProcedure      *procedure,
+progress_get_window_handle_invoker (GimpProcedure         *procedure,
                                     Gimp                  *gimp,
                                     GimpContext           *context,
                                     GimpProgress          *progress,
@@ -209,7 +209,7 @@ progress_get_window_handle_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-progress_install_invoker (GimpProcedure      *procedure,
+progress_install_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -236,7 +236,7 @@ progress_install_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-progress_uninstall_invoker (GimpProcedure      *procedure,
+progress_uninstall_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -263,7 +263,7 @@ progress_uninstall_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-progress_cancel_invoker (GimpProcedure      *procedure,
+progress_cancel_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,

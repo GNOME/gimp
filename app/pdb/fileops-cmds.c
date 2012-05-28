@@ -50,7 +50,7 @@
 
 
 static GimpValueArray *
-file_load_invoker (GimpProcedure      *procedure,
+file_load_invoker (GimpProcedure         *procedure,
                    Gimp                  *gimp,
                    GimpContext           *context,
                    GimpProgress          *progress,
@@ -118,7 +118,7 @@ file_load_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-file_load_layer_invoker (GimpProcedure      *procedure,
+file_load_layer_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -171,7 +171,7 @@ file_load_layer_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-file_load_layers_invoker (GimpProcedure      *procedure,
+file_load_layers_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -239,7 +239,7 @@ file_load_layers_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-file_save_invoker (GimpProcedure      *procedure,
+file_save_invoker (GimpProcedure         *procedure,
                    Gimp                  *gimp,
                    GimpContext           *context,
                    GimpProgress          *progress,
@@ -297,7 +297,7 @@ file_save_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-file_load_thumbnail_invoker (GimpProcedure      *procedure,
+file_load_thumbnail_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -347,7 +347,7 @@ file_load_thumbnail_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-file_save_thumbnail_invoker (GimpProcedure      *procedure,
+file_save_thumbnail_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -371,7 +371,7 @@ file_save_thumbnail_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-temp_name_invoker (GimpProcedure      *procedure,
+temp_name_invoker (GimpProcedure         *procedure,
                    Gimp                  *gimp,
                    GimpContext           *context,
                    GimpProgress          *progress,
@@ -400,7 +400,7 @@ temp_name_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-register_magic_load_handler_invoker (GimpProcedure      *procedure,
+register_magic_load_handler_invoker (GimpProcedure         *procedure,
                                      Gimp                  *gimp,
                                      GimpContext           *context,
                                      GimpProgress          *progress,
@@ -434,7 +434,7 @@ register_magic_load_handler_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-register_load_handler_invoker (GimpProcedure      *procedure,
+register_load_handler_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -466,7 +466,7 @@ register_load_handler_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-register_save_handler_invoker (GimpProcedure      *procedure,
+register_save_handler_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
                                GimpProgress          *progress,
@@ -498,7 +498,7 @@ register_save_handler_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-register_file_handler_mime_invoker (GimpProcedure      *procedure,
+register_file_handler_mime_invoker (GimpProcedure         *procedure,
                                     Gimp                  *gimp,
                                     GimpContext           *context,
                                     GimpProgress          *progress,
@@ -527,7 +527,7 @@ register_file_handler_mime_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-register_thumbnail_loader_invoker (GimpProcedure      *procedure,
+register_thumbnail_loader_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
                                    GimpProgress          *progress,

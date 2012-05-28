@@ -44,7 +44,7 @@
 
 
 static GimpValueArray *
-brush_new_invoker (GimpProcedure      *procedure,
+brush_new_invoker (GimpProcedure         *procedure,
                    Gimp                  *gimp,
                    GimpContext           *context,
                    GimpProgress          *progress,
@@ -79,7 +79,7 @@ brush_new_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brush_duplicate_invoker (GimpProcedure      *procedure,
+brush_duplicate_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -122,7 +122,7 @@ brush_duplicate_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brush_is_generated_invoker (GimpProcedure      *procedure,
+brush_is_generated_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -156,7 +156,7 @@ brush_is_generated_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brush_rename_invoker (GimpProcedure      *procedure,
+brush_rename_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
                       GimpProgress          *progress,
@@ -195,7 +195,7 @@ brush_rename_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brush_delete_invoker (GimpProcedure      *procedure,
+brush_delete_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
                       GimpProgress          *progress,
@@ -224,7 +224,7 @@ brush_delete_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brush_is_editable_invoker (GimpProcedure      *procedure,
+brush_is_editable_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -258,7 +258,7 @@ brush_is_editable_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brush_get_info_invoker (GimpProcedure      *procedure,
+brush_get_info_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
                         GimpProgress          *progress,
@@ -305,7 +305,7 @@ brush_get_info_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brush_get_pixels_invoker (GimpProcedure      *procedure,
+brush_get_pixels_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -373,7 +373,7 @@ brush_get_pixels_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brush_get_spacing_invoker (GimpProcedure      *procedure,
+brush_get_spacing_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -407,7 +407,7 @@ brush_get_spacing_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brush_set_spacing_invoker (GimpProcedure      *procedure,
+brush_set_spacing_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -436,7 +436,7 @@ brush_set_spacing_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brush_get_shape_invoker (GimpProcedure      *procedure,
+brush_get_shape_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -470,7 +470,7 @@ brush_get_shape_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brush_set_shape_invoker (GimpProcedure      *procedure,
+brush_set_shape_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -510,7 +510,7 @@ brush_set_shape_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brush_get_radius_invoker (GimpProcedure      *procedure,
+brush_get_radius_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -544,7 +544,7 @@ brush_get_radius_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brush_set_radius_invoker (GimpProcedure      *procedure,
+brush_set_radius_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -584,7 +584,7 @@ brush_set_radius_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brush_get_spikes_invoker (GimpProcedure      *procedure,
+brush_get_spikes_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -618,7 +618,7 @@ brush_get_spikes_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brush_set_spikes_invoker (GimpProcedure      *procedure,
+brush_set_spikes_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
                           GimpProgress          *progress,
@@ -658,7 +658,7 @@ brush_set_spikes_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brush_get_hardness_invoker (GimpProcedure      *procedure,
+brush_get_hardness_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -692,7 +692,7 @@ brush_get_hardness_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brush_set_hardness_invoker (GimpProcedure      *procedure,
+brush_set_hardness_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -732,7 +732,7 @@ brush_set_hardness_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brush_get_aspect_ratio_invoker (GimpProcedure      *procedure,
+brush_get_aspect_ratio_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -766,7 +766,7 @@ brush_get_aspect_ratio_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brush_set_aspect_ratio_invoker (GimpProcedure      *procedure,
+brush_set_aspect_ratio_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -806,7 +806,7 @@ brush_set_aspect_ratio_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brush_get_angle_invoker (GimpProcedure      *procedure,
+brush_get_angle_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
@@ -840,7 +840,7 @@ brush_get_angle_invoker (GimpProcedure      *procedure,
 }
 
 static GimpValueArray *
-brush_set_angle_invoker (GimpProcedure      *procedure,
+brush_set_angle_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
                          GimpProgress          *progress,
