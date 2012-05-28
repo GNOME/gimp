@@ -33,6 +33,7 @@
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
+#include "gimp-utils.h"
 #include "gimp-apply-operation.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
@@ -44,11 +45,18 @@
 #include "gimp-intl.h"
 
 
+//#define USE_GRADIENT_CACHE 1
+
+
 typedef struct
 {
   GimpGradient     *gradient;
   GimpContext      *context;
   gboolean          reverse;
+#ifdef USE_GRADIENT_CACHE
+  GimpRGB          *gradient_cache;
+  gint              gradient_cache_size;
+#endif
   gdouble           offset;
   gdouble           sx, sy;
   GimpBlendMode     blend_mode;
@@ -741,8 +749,12 @@ gradient_render_pixel (gdouble   x,
 
   if (rbd->blend_mode == GIMP_CUSTOM_MODE)
     {
+#ifdef USE_GRADIENT_CACHE
+      *color = rbd->gradient_cache[(gint) (factor * (rbd->gradient_cache_size - 1))];
+#else
       gimp_gradient_get_color_at (rbd->gradient, rbd->context, NULL,
                                   factor, rbd->reverse, color);
+#endif
     }
   else
     {
@@ -822,9 +834,29 @@ gradient_fill_region (GimpImage           *image,
 {
   RenderBlendData rbd = { 0, };
 
+  GIMP_TIMER_START();
+
   rbd.gradient = gimp_context_get_gradient (context);
   rbd.context  = context;
   rbd.reverse  = reverse;
+
+#ifdef USE_GRADIENT_CACHE
+  {
+    gint i;
+
+    rbd.gradient_cache_size = ceil (sqrt (SQR (sx - ex) + SQR (sy - ey)));
+    rbd.gradient_cache      = g_new0 (GimpRGB, rbd.gradient_cache_size);
+
+    for (i = 0; i < rbd.gradient_cache_size; i++)
+      {
+        gdouble factor = (gdouble) i / (gdouble) (rbd.gradient_cache_size - 1);
+
+        gimp_gradient_get_color_at (rbd.gradient, rbd.context, NULL,
+                                    factor, rbd.reverse,
+                                    rbd.gradient_cache + i);
+      }
+  }
+#endif
 
   if (gimp_gradient_has_fg_bg_segments (rbd.gradient))
     rbd.gradient = gimp_gradient_flatten (rbd.gradient, context);
@@ -1013,8 +1045,14 @@ gradient_fill_region (GimpImage           *image,
         g_rand_free (rbd.seed);
     }
 
+#ifdef USE_GRADIENT_CACHE
+  g_free (rbd.gradient_cache);
+#endif
+
   g_object_unref (rbd.gradient);
 
   if (rbd.dist_buffer)
     g_object_unref (rbd.dist_buffer);
+
+  GIMP_TIMER_END("gradient_fill_region");
 }
