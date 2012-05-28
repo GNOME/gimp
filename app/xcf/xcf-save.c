@@ -1410,7 +1410,6 @@ xcf_save_level (XcfInfo     *info,
   guchar     *rlebuf;
   GError     *tmp_error = NULL;
 
-  /* XXX use an appropriate format here */
   format = gegl_buffer_get_format (buffer);
 
   width  = gegl_buffer_get_width (buffer);
