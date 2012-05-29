@@ -525,7 +525,10 @@ class _Console(_ReadLine, code.InteractiveInterpreter):
         try:
             eval(code, self.locals)
         except SystemExit:
-            raise
+            if self.quit_func:
+                self.quit_func()
+            else:
+                raise
         except:
             self.showtraceback()
 
