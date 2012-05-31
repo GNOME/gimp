@@ -29,6 +29,7 @@
 #include "gimpoperationerasemode.h"
 
 
+static void prepare (GeglOperation *operation);
 static gboolean gimp_operation_erase_mode_process (GeglOperation       *operation,
                                                    void                *in_buf,
                                                    void                *aux_buf,
@@ -57,12 +58,24 @@ gimp_operation_erase_mode_class_init (GimpOperationEraseModeClass *klass)
                                  "description", "GIMP erase mode operation",
                                  NULL);
 
+  operation_class->prepare = prepare;
   point_class->process         = gimp_operation_erase_mode_process;
 }
 
 static void
 gimp_operation_erase_mode_init (GimpOperationEraseMode *self)
 {
+}
+
+static void
+prepare (GeglOperation *operation)
+{
+  const Babl *format = babl_format ("RGBA float");
+
+  gegl_operation_set_format (operation, "input",  format);
+  gegl_operation_set_format (operation, "aux",    format);
+  gegl_operation_set_format (operation, "aux2",   babl_format ("Y float"));
+  gegl_operation_set_format (operation, "output", format);
 }
 
 static gboolean
@@ -75,23 +88,26 @@ gimp_operation_erase_mode_process (GeglOperation       *operation,
                                    const GeglRectangle *roi,
                                    gint                 level)
 {
-  GimpOperationPointLayerMode *point   = GIMP_OPERATION_POINT_LAYER_MODE (operation);
-  gfloat                       opacity = point->opacity;
-  gfloat                      *in      = in_buf;
-  gfloat                      *layer   = aux_buf;
-  gfloat                      *mask    = aux2_buf;
-  gfloat                      *out     = out_buf;
+  GimpOperationPointLayerMode *point    = GIMP_OPERATION_POINT_LAYER_MODE (operation);
+  gdouble                      opacity  = point->opacity;
+  gfloat                      *in       = in_buf;
+  gfloat                      *layer    = aux_buf;
+  gfloat                      *mask     = aux2_buf;
+  gfloat                      *out      = out_buf;
+  const gboolean               has_mask = mask != NULL;
 
   if (point->premultiplied)
     {
       while (samples--)
         {
-          gint b;
-          gfloat value = opacity;
-          if (mask)
+          gint    b;
+          gdouble value = opacity;
+
+          if (has_mask)
             value *= (*mask);
 
           out[ALPHA] = in[ALPHA] - in[ALPHA] * layer[ALPHA] * value;
+
           for (b = RED; b < ALPHA; b++)
             {
               out[b] = in[b] / in[ALPHA] * out[ALPHA];
@@ -101,31 +117,33 @@ gimp_operation_erase_mode_process (GeglOperation       *operation,
           layer += 4;
           out   += 4;
 
-          if (mask)
-            mask += 1;
+          if (has_mask)
+            mask ++;
         }
     }
   else
     {
       while (samples--)
         {
-          gint b;
-          gfloat value = opacity;
-          if (mask)
+          gint    b;
+          gdouble value = opacity;
+
+          if (has_mask)
             value *= (*mask);
 
           for (b = RED; b < ALPHA; b++)
             {
               out[b] = in[b];
             }
+
           out[ALPHA] = in[ALPHA] - in[ALPHA] * layer[ALPHA] * value;
 
           in    += 4;
           layer += 4;
           out   += 4;
 
-          if (mask)
-            mask += 1;
+          if (has_mask)
+            mask ++;
         }
     }
 

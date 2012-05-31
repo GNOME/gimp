@@ -88,89 +88,54 @@ gimp_operation_addition_mode_process (GeglOperation       *operation,
                                       const GeglRectangle *roi,
                                       gint                 level)
 {
-  GimpOperationPointLayerMode *point   = GIMP_OPERATION_POINT_LAYER_MODE (operation);
-  gfloat                       opacity = point->opacity;
-  gfloat                      *in      = in_buf;
-  gfloat                      *layer   = aux_buf;
-  gfloat                      *mask    = aux2_buf;
-  gfloat                      *out     = out_buf;
+  gdouble        opacity  = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
+  gfloat        *in       = in_buf;
+  gfloat        *layer    = aux_buf;
+  gfloat        *mask     = aux2_buf;
+  gfloat        *out      = out_buf;
+  const gboolean has_mask = mask != NULL;
 
-  if (mask)
+  while (samples--)
     {
-      while (samples--)
+      gfloat comp_alpha, new_alpha;
+
+      comp_alpha = MIN (in[ALPHA], layer[ALPHA]) * opacity;
+      if (has_mask)
+        comp_alpha *= *mask;
+
+      new_alpha = in[ALPHA] + (1.0 - in[ALPHA]) * comp_alpha;
+
+      if (comp_alpha && new_alpha)
         {
-          gfloat comp_alpha = MIN (in[ALPHA], layer[ALPHA]) * opacity * (*mask);
-          gfloat new_alpha  = in[ALPHA] + (1 - in[ALPHA]) * comp_alpha;
+          gfloat ratio = comp_alpha / new_alpha;
+          gint   b;
 
-          if (comp_alpha && new_alpha)
+          for (b = RED; b < ALPHA; b++)
             {
-              gfloat ratio = comp_alpha / new_alpha;
-              gint   b;
+              gfloat comp = in[b] + layer[b];
+              comp = CLAMP (comp, 0.0, 1.0);
 
-              for (b = RED; b < ALPHA; b++)
-                {
-                  gfloat comp = in[b] + layer[b];
-                  comp = CLAMP (comp, 0, 1);
-
-                  out[b] = comp * ratio + in[b] * (1 - ratio) + 0.0001;
-                }
-
-              out[ALPHA] = in[ALPHA];
+              out[b] = comp * ratio + in[b] * (1.0 - ratio);
             }
-          else
-            {
-              gint b;
-
-              for (b = RED; b <= ALPHA; b++)
-                {
-                  out[b] = in[b];
-                }
-            }
-
-          in    += 4;
-          layer += 4;
-          mask  += 1;
-          out   += 4;
         }
-    }
-  else
-    {
-      while (samples--)
+      else
         {
-          gfloat comp_alpha = MIN (in[ALPHA], layer[ALPHA]) * opacity;
-          gfloat new_alpha  = in[ALPHA] + (1 - in[ALPHA]) * comp_alpha;
+          gint b;
 
-          if (comp_alpha && new_alpha)
+          for (b = RED; b < ALPHA; b++)
             {
-              gfloat ratio = comp_alpha / new_alpha;
-              gint   b;
-
-              for (b = RED; b < ALPHA; b++)
-                {
-                  gfloat comp = in[b] + layer[b];
-                  comp = CLAMP (comp, 0, 1);
-
-                  out[b] = comp * ratio + in[b] * (1 - ratio) + 0.0001;
-                }
-
-              out[ALPHA] = in[ALPHA];
+              out[b] = in[b];
             }
-          else
-            {
-              gint b;
-
-              for (b = RED; b <= ALPHA; b++)
-                {
-                  out[b] = in[b];
-                }
-            }
-
-          out[ALPHA] = in[ALPHA];
-
-          in    += 4;
-          layer += 4;
-          out   += 4;
         }
+
+      out[ALPHA] = in[ALPHA];
+
+      in    += 4;
+      layer += 4;
+      out   += 4;
+
+      if (has_mask)
+        mask++;
     }
 
   return TRUE;

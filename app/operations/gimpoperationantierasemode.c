@@ -47,7 +47,7 @@ G_DEFINE_TYPE (GimpOperationAntiEraseMode, gimp_operation_anti_erase_mode,
 static void
 gimp_operation_anti_erase_mode_class_init (GimpOperationAntiEraseModeClass *klass)
 {
-  GeglOperationClass              *operation_class;
+  GeglOperationClass               *operation_class;
   GeglOperationPointComposer3Class *point_class;
 
   operation_class = GEGL_OPERATION_CLASS (klass);
@@ -70,7 +70,7 @@ gimp_operation_anti_erase_mode_init (GimpOperationAntiEraseMode *self)
 static void
 gimp_operation_anti_erase_mode_prepare (GeglOperation *operation)
 {
-  const Babl *format = babl_format ("R'G'B'A float");
+  const Babl *format = babl_format ("RGBA float");
 
   gegl_operation_set_format (operation, "input",  format);
   gegl_operation_set_format (operation, "aux",    format);
@@ -88,49 +88,34 @@ gimp_operation_anti_erase_mode_process (GeglOperation       *operation,
                                         const GeglRectangle *roi,
                                         gint                 level)
 {
-  GimpOperationPointLayerMode *point   = GIMP_OPERATION_POINT_LAYER_MODE (operation);
-  gfloat                       opacity = point->opacity;
-  gfloat                      *in      = in_buf;
-  gfloat                      *layer   = aux_buf;
-  gfloat                      *mask    = aux2_buf;
-  gfloat                      *out     = out_buf;
+  gdouble         opacity  = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
+  gfloat         *in       = in_buf;
+  gfloat         *layer    = aux_buf;
+  gfloat         *mask     = aux2_buf;
+  gfloat         *out      = out_buf;
+  const gboolean  has_mask = mask != NULL;
 
-  if (mask)
+  while (samples--)
     {
-      while (samples--)
+      gdouble value = opacity;
+      gint    b;
+
+      if (has_mask)
+        value *= *mask;
+
+      out[ALPHA] = in[ALPHA] + (1.0 - in[ALPHA]) * layer[ALPHA] * value;
+
+      for (b = RED; b < ALPHA; b++)
         {
-          gint b;
-
-          for (b = RED; b < ALPHA; b++)
-            {
-              out[b] = in[b];
-            }
-
-          out[ALPHA] = in[ALPHA] + (1 - in[ALPHA]) * layer[ALPHA] * opacity * (*mask);
-
-          in    += 4;
-          layer += 4;
-          mask  += 1;
-          out   += 4;
+          out[b] = in[b];
         }
-    }
-  else
-    {
-      while (samples--)
-        {
-          gint b;
 
-          for (b = RED; b < ALPHA; b++)
-            {
-              out[b] = in[b];
-            }
+      in    += 4;
+      layer += 4;
+      out   += 4;
 
-          out[ALPHA] = in[ALPHA] + (1 - in[ALPHA]) * layer[ALPHA] * opacity;
-
-          in    += 4;
-          layer += 4;
-          out   += 4;
-        }
+      if (has_mask)
+        mask++;
     }
 
   return TRUE;

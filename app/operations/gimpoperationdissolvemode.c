@@ -103,83 +103,52 @@ gimp_operation_dissolve_mode_process (GeglOperation       *operation,
                                       const GeglRectangle *result,
                                       gint                 level)
 {
-  GimpOperationPointLayerMode *point   = GIMP_OPERATION_POINT_LAYER_MODE (operation);
-  gfloat                       opacity = point->opacity;
-  gfloat                      *in      = in_buf;
-  gfloat                      *out     = out_buf;
-  gfloat                      *aux     = aux_buf;
-  gfloat                      *mask    = aux2_buf;
-  gint                         x, y;
+  gdouble         opacity  = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
+  gfloat         *in       = in_buf;
+  gfloat         *out      = out_buf;
+  gfloat         *aux      = aux_buf;
+  gfloat         *mask     = aux2_buf;
+  const gboolean  has_mask = mask != NULL;
+  gint            x, y;
 
-  if (mask)
+  for (y = result->y; y < result->y + result->height; y++)
     {
-      for (y = result->y; y < result->y + result->height; y++)
+      GRand *gr = g_rand_new_with_seed (random_table[y % RANDOM_TABLE_SIZE]);
+
+      /* fast forward through the rows pseudo random sequence */
+      for (x = 0; x < result->x; x++)
+        g_rand_int (gr);
+
+      for (x = result->x; x < result->x + result->width; x++)
         {
-          GRand *gr = g_rand_new_with_seed (random_table[y % RANDOM_TABLE_SIZE]);
+          gfloat value = aux[ALPHA] * opacity * 255;
 
-          /* fast forward through the rows pseudo random sequence */
-          for (x = 0; x < result->x; x++)
-            g_rand_int (gr);
+          if (has_mask)
+            value *= *mask;
 
-          for (x = result->x; x < result->x + result->width; x++)
+          if (g_rand_int_range (gr, 0, 255) >= value)
             {
-              gfloat value = opacity * (*mask);
-
-              if (g_rand_int_range (gr, 0, 255) >= aux[3] * value * 255)
-                {
-                  out[0] = in[0];
-                  out[1] = in[1];
-                  out[2] = in[2];
-                  out[3] = in[3];
-                }
-              else
-                {
-                  out[0] = aux[0];
-                  out[1] = aux[1];
-                  out[2] = aux[2];
-                  out[3] = 1.0;
-                }
-
-              in   += 4;
-              out  += 4;
-              aux  += 4;
-              mask += 1;
+              out[0] = in[0];
+              out[1] = in[1];
+              out[2] = in[2];
+              out[3] = in[3];
             }
-          g_rand_free (gr);
-        }
-    }
-  else
-    {
-      for (y = result->y; y < result->y + result->height; y++)
-        {
-          GRand *gr = g_rand_new_with_seed (random_table[y % RANDOM_TABLE_SIZE]);
-
-          /* fast forward through the rows pseudo random sequence */
-          for (x = 0; x < result->x; x++)
-            g_rand_int (gr);
-
-          for (x = result->x; x < result->x + result->width; x++)
+          else
             {
-              if (g_rand_int_range (gr, 0, 255) >= aux[3] * opacity * 255)
-                {
-                  out[0] = in[0];
-                  out[1] = in[1];
-                  out[2] = in[2];
-                  out[3] = in[3];
-                }
-              else
-                {
-                  out[0] = aux[0];
-                  out[1] = aux[1];
-                  out[2] = aux[2];
-                  out[3] = 1.0;
-                }
-              in   += 4;
-              out  += 4;
-              aux  += 4;
+              out[0] = aux[0];
+              out[1] = aux[1];
+              out[2] = aux[2];
+              out[3] = 1.0;
             }
-          g_rand_free (gr);
+
+          in   += 4;
+          out  += 4;
+          aux  += 4;
+
+          if (has_mask)
+            mask ++;
         }
+      g_rand_free (gr);
     }
 
   return TRUE;

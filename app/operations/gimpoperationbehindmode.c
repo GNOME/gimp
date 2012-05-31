@@ -46,7 +46,7 @@ G_DEFINE_TYPE (GimpOperationBehindMode, gimp_operation_behind_mode,
 static void
 gimp_operation_behind_mode_class_init (GimpOperationBehindModeClass *klass)
 {
-  GeglOperationClass              *operation_class;
+  GeglOperationClass               *operation_class;
   GeglOperationPointComposer3Class *point_class;
 
   operation_class = GEGL_OPERATION_CLASS (klass);
@@ -57,7 +57,7 @@ gimp_operation_behind_mode_class_init (GimpOperationBehindModeClass *klass)
                                  "description", "GIMP behind mode operation",
                                  NULL);
 
-  point_class->process         = gimp_operation_behind_mode_process;
+  point_class->process = gimp_operation_behind_mode_process;
 }
 
 static void
@@ -75,107 +75,70 @@ gimp_operation_behind_mode_process (GeglOperation       *operation,
                                     const GeglRectangle *roi,
                                     gint                 level)
 {
-  GimpOperationPointLayerMode *point   = GIMP_OPERATION_POINT_LAYER_MODE (operation);
-  gfloat                       opacity = point->opacity;
-  gfloat                      *in      = in_buf;
-  gfloat                      *layer   = aux_buf;
-  gfloat                      *mask    = aux2_buf;
-  gfloat                      *out     = out_buf;
+  GimpOperationPointLayerMode *point    = GIMP_OPERATION_POINT_LAYER_MODE (operation);
+  gdouble                      opacity  = point->opacity;
+  gfloat                      *in       = in_buf;
+  gfloat                      *layer    = aux_buf;
+  gfloat                      *mask     = aux2_buf;
+  gfloat                      *out      = out_buf;
+  const gboolean               has_mask = mask != NULL;
 
   if (point->premultiplied)
     {
-      if (mask)
+      while (samples--)
         {
-          while (samples--)
+          gint    b;
+          gdouble value = opacity;
+
+          if (has_mask)
+            value *= *mask;
+
+          for (b = RED; b <= ALPHA; b++)
             {
-              gint b;
-              gfloat value = opacity * (*mask);
-
-              for (b = RED; b <= ALPHA; b++)
-                {
-                  out[b] = in[b] + layer[b] * value * (1 - in[ALPHA]);
-                }
-
-              in    += 4;
-              layer += 4;
-              mask  += 1;
-              out   += 4;
+              out[b] = in[b] + layer[b] * value * (1.0 - in[ALPHA]);
             }
-        }
-      else
-        {
-          while (samples--)
-            {
-              gint b;
 
-              for (b = RED; b <= ALPHA; b++)
-                {
-                  out[b] = in[b] + layer[b] * opacity * (1 - in[ALPHA]);
-                }
+          in    += 4;
+          layer += 4;
+          out   += 4;
 
-              in    += 4;
-              layer += 4;
-              out   += 4;
-            }
+          if (has_mask)
+            mask++;
         }
     }
   else
     {
-      if (mask)
+      while (samples--)
         {
-          while (samples--)
+          gint    b;
+          gdouble value = opacity;
+
+          if (has_mask)
+            value *= *mask;
+
+          out[ALPHA] = in[ALPHA] + (1.0 - in[ALPHA]) * layer[ALPHA] * value;
+
+          if (out[ALPHA])
             {
-              gint b;
-              gfloat value = opacity * (*mask);
-
-              out[ALPHA] = in[ALPHA] + (1 - in[ALPHA]) * layer[ALPHA] * value;
-              if (out[ALPHA])
+              for (b = RED; b < ALPHA; b++)
                 {
-                  for (b = RED; b < ALPHA; b++)
-                    {
-                      out[b] = (in[b] * in[ALPHA] + layer[b] * value * layer[ALPHA] * value * (1 - in[ALPHA])) / out[ALPHA];
-                    }
+                  out[b] = (in[b] * in[ALPHA] + layer[b] * value * layer[ALPHA] * value * (1.0 - in[ALPHA])) / out[ALPHA];
                 }
-              else
-                {
-                  for (b = RED; b <= ALPHA; b++)
-                    {
-                      out[b] = in[b];
-                    }
-                }
-
-              in    += 4;
-              layer += 4;
-              mask  += 1;
-              out   += 4;
             }
-        }
-      else
-        {
-          while (samples--)
+          else
             {
-              gint b;
-
-              out[ALPHA] = in[ALPHA] + (1 - in[ALPHA]) * layer[ALPHA] * opacity;
-              if (out[ALPHA])
+              for (b = RED; b <= ALPHA; b++)
                 {
-                  for (b = RED; b < ALPHA; b++)
-                    {
-                      out[b] = (in[b] * in[ALPHA] + layer[b] * opacity * layer[ALPHA] * opacity * (1 - in[ALPHA])) / out[ALPHA];
-                    }
+                  out[b] = in[b];
                 }
-              else
-                {
-                  for (b = RED; b <= ALPHA; b++)
-                    {
-                      out[b] = in[b];
-                    }
-                }
-
-              in    += 4;
-              layer += 4;
-              out   += 4;
             }
+
+          in    += 4;
+          layer += 4;
+          out   += 4;
+
+          if (has_mask)
+            mask++;
         }
     }
 

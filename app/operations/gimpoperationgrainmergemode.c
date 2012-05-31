@@ -89,52 +89,54 @@ gimp_operation_grain_merge_mode_process (GeglOperation       *operation,
                                          const GeglRectangle *roi,
                                          gint                 level)
 {
-  GimpOperationPointLayerMode *point   = GIMP_OPERATION_POINT_LAYER_MODE (operation);
-  gfloat                       opacity = point->opacity;
-  gfloat                      *in      = in_buf;
-  gfloat                      *layer   = aux_buf;
-  gfloat                      *mask    = aux2_buf;
-  gfloat                      *out     = out_buf;
+  gdouble         opacity  = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
+  gfloat         *in       = in_buf;
+  gfloat         *layer    = aux_buf;
+  gfloat         *mask     = aux2_buf;
+  gfloat         *out      = out_buf;
+  const gboolean  has_mask = mask != NULL;
 
   while (samples--)
     {
-      gint b;
-      gfloat comp_alpha, new_alpha, ratio;
+      gfloat comp_alpha, new_alpha;
 
       comp_alpha = MIN (in[ALPHA], layer[ALPHA]) * opacity;
-      if (mask)
-        comp_alpha *= (*mask);
+      if (has_mask)
+        comp_alpha *= *mask;
 
-      new_alpha  = in[ALPHA] + (1 - in[ALPHA]) * comp_alpha;
+      new_alpha = in[ALPHA] + (1.0 - in[ALPHA]) * comp_alpha;
 
       if (comp_alpha && new_alpha)
         {
-          ratio      = comp_alpha / new_alpha;
+          gfloat ratio = comp_alpha / new_alpha;
+          gint   b;
 
           for (b = RED; b < ALPHA; b++)
             {
               gfloat comp = in[b] + layer[b] - 0.5;
-              comp = CLAMP (comp, 0, 1);
+              comp = CLAMP (comp, 0.0, 1.0);
 
-              out[b] = comp * ratio + in[b] * (1 - ratio) + 0.0001;
+              out[b] = comp * ratio + in[b] * (1.0 - ratio);
             }
-
-          out[ALPHA] = in[ALPHA];
         }
       else
         {
-          for (b = RED; b <= ALPHA; b++)
+          gint b;
+
+          for (b = RED; b < ALPHA; b++)
             {
               out[b] = in[b];
             }
         }
 
+      out[ALPHA] = in[ALPHA];
+
       in    += 4;
       layer += 4;
       out   += 4;
 
-      if (mask)
-        mask += 1;
+      if (has_mask)
+        mask ++;
     }
 
   return TRUE;

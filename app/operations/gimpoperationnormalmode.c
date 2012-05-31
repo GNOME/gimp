@@ -63,7 +63,6 @@ gimp_operation_normal_mode_class_init (GimpOperationNormalModeClass *klass)
                                  "description", "GIMP normal mode operation",
                                  NULL);
 
-
   operation_class->process     = gimp_operation_normal_parent_process;
 
   point_class->process         = gimp_operation_normal_mode_process;
@@ -131,95 +130,79 @@ gimp_operation_normal_mode_process (GeglOperation       *operation,
                                     const GeglRectangle *roi,
                                     gint                 level)
 {
-  GimpOperationPointLayerMode *point   = GIMP_OPERATION_POINT_LAYER_MODE (operation);
-  gfloat                      *in      = in_buf;
-  gfloat                      *aux     = aux_buf;
-  gfloat                      *mask    = aux2_buf;
-  gfloat                      *out     = out_buf;
-  gdouble                      opacity = point->opacity;
+  GimpOperationPointLayerMode *point    = GIMP_OPERATION_POINT_LAYER_MODE (operation);
+  gdouble                      opacity  = point->opacity;
+  gfloat                      *in       = in_buf;
+  gfloat                      *aux      = aux_buf;
+  gfloat                      *mask     = aux2_buf;
+  gfloat                      *out      = out_buf;
+  const gboolean               has_mask = mask != NULL;
 
   if (point->premultiplied)
     {
-      if (mask)
+      while (samples--)
         {
-          while (samples--)
+          gdouble value;
+          gfloat  aux_alpha;
+          gint    b;
+
+          value = opacity;
+          if (has_mask)
+            value *= *mask;
+          aux_alpha = aux[ALPHA] * value;
+
+          for (b = RED; b < ALPHA; b++)
             {
-              gfloat value     = opacity * (*mask);
-              gfloat aux_alpha = aux[ALPHA] * value;
-              gint   b;
-
-              for (b = RED; b < ALPHA; b++)
-                {
-                  out[b] = aux[b] * value + in[b] * (1.0f - aux_alpha);
-                }
-
-              out[ALPHA] = aux_alpha + in[ALPHA] - aux_alpha * in[ALPHA];
-
-              in   += 4;
-              aux  += 4;
-              mask += 1;
-              out  += 4;
+              out[b] = aux[b] * value + in[b] * (1.0f - aux_alpha);
             }
-        }
-      else
-        {
-          while (samples--)
-            {
-              gfloat aux_alpha = aux[ALPHA] * opacity;
-              gint   b;
 
-              for (b = RED; b < ALPHA; b++)
-                {
-                  out[b] = aux[b] * opacity + in[b] * (1.0f - aux_alpha);
-                }
+          out[ALPHA] = aux_alpha + in[ALPHA] - aux_alpha * in[ALPHA];
 
-              out[ALPHA] = aux_alpha + in[ALPHA] - aux_alpha * in[ALPHA];
+          in   += 4;
+          aux  += 4;
+          out  += 4;
 
-              in   += 4;
-              aux  += 4;
-              out  += 4;
-            }
+          if (has_mask)
+            mask++;
         }
     }
   else
     {
-      if (mask)
+      while (samples--)
         {
-          while (samples--)
-            {
-              gfloat value     = opacity * (*mask);
-              gfloat aux_alpha = aux[ALPHA] * value;
-              gint   b;
+          gfloat aux_alpha;
 
-              out[ALPHA] = aux_alpha + in[ALPHA] - aux_alpha * in[ALPHA];
+          aux_alpha = aux[ALPHA] * opacity;
+          if (has_mask)
+            aux_alpha *= *mask;
+
+          out[ALPHA] = aux_alpha + in[ALPHA] - aux_alpha * in[ALPHA];
+
+          if (out[ALPHA])
+            {
+              gint b;
+
               for (b = RED; b < ALPHA; b++)
                 {
-                  out[b] = (aux[b] * aux_alpha + in[b] * in[ALPHA] * (1.0 - aux_alpha)) / out[ALPHA];
+                  out[b] = (aux[b] * aux_alpha + in[b] * in[ALPHA] * (1.0f - aux_alpha)) / out[ALPHA];
                 }
-
-              in   += 4;
-              aux  += 4;
-              mask += 1;
-              out  += 4;
             }
-        }
-      else
-        {
-          while (samples--)
+          else
             {
-              gfloat aux_alpha = aux[ALPHA] * opacity;
-              gint   b;
+              gint b;
 
-              out[ALPHA] = aux_alpha + in[ALPHA] - aux_alpha * in[ALPHA];
               for (b = RED; b < ALPHA; b++)
                 {
-                  out[b] = (aux[b] * aux_alpha + in[b] * in[ALPHA] * (1.0 - aux_alpha)) / out[ALPHA];
+                  out[b] = in[b];
                 }
-
-              in  += 4;
-              aux += 4;
-              out += 4;
             }
+
+          in   += 4;
+          aux  += 4;
+          out  += 4;
+
+          if (has_mask)
+            mask++;
         }
     }
 
