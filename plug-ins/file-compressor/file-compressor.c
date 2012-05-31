@@ -77,6 +77,9 @@
 #endif
 
 #include <glib/gstdio.h>
+#ifndef _O_BINARY
+#define _O_BINARY 0
+#endif
 
 #include <libgimp/gimp.h>
 
@@ -541,7 +544,7 @@ gzip_load (const char *infile,
   in = NULL;
   out = NULL;
 
-  fd = g_open (infile, O_RDONLY, 0);
+  fd = g_open (infile, O_RDONLY | _O_BINARY, 0);
   if (fd == -1)
     goto out;
 
@@ -603,7 +606,7 @@ gzip_save (const char *infile,
   if (!in)
     goto out;
 
-  fd = g_open (outfile, O_CREAT | O_WRONLY, 0664);
+  fd = g_open (outfile, O_CREAT | O_WRONLY | _O_BINARY, 0664);
   if (fd == -1)
     goto out;
 
@@ -659,7 +662,7 @@ bzip2_load (const char *infile,
   in = NULL;
   out = NULL;
 
-  fd = g_open (infile, O_RDONLY, 0);
+  fd = g_open (infile, O_RDONLY | _O_BINARY, 0);
   if (fd == -1)
     goto out;
 
@@ -721,7 +724,7 @@ bzip2_save (const char *infile,
   if (!in)
     goto out;
 
-  fd = g_open (outfile, O_CREAT | O_WRONLY, 0664);
+  fd = g_open (outfile, O_CREAT | O_WRONLY | _O_BINARY, 0664);
   if (fd == -1)
     goto out;
 
