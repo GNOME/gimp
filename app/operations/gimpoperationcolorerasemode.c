@@ -3,6 +3,7 @@
  *
  * gimpoperationcolorerasemode.c
  * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ *               2012 Ville Sokk <ville.sokk@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,13 +22,18 @@
 
 #include "config.h"
 
+#include <cairo.h>
 #include <gegl-plugin.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
+#include "libgimpcolor/gimpcolor.h"
 
 #include "operations-types.h"
 
 #include "gimpoperationcolorerasemode.h"
 
 
+static void     gimp_operation_color_erase_mode_prepare (GeglOperation       *operation);
 static gboolean gimp_operation_color_erase_mode_process (GeglOperation       *operation,
                                                          void                *in_buf,
                                                          void                *aux_buf,
@@ -56,12 +62,24 @@ gimp_operation_color_erase_mode_class_init (GimpOperationColorEraseModeClass *kl
                                  "description", "GIMP color erase mode operation",
                                  NULL);
 
-  point_class->process         = gimp_operation_color_erase_mode_process;
+  operation_class->prepare = gimp_operation_color_erase_mode_prepare;
+  point_class->process     = gimp_operation_color_erase_mode_process;
 }
 
 static void
 gimp_operation_color_erase_mode_init (GimpOperationColorEraseMode *self)
 {
+}
+
+static void
+gimp_operation_color_erase_mode_prepare (GeglOperation *operation)
+{
+  const Babl *format = babl_format ("R'G'B'A float");
+
+  gegl_operation_set_format (operation, "input",  format);
+  gegl_operation_set_format (operation, "aux",    format);
+  gegl_operation_set_format (operation, "aux2",   babl_format ("Y float"));
+  gegl_operation_set_format (operation, "output", format);
 }
 
 static gboolean
@@ -74,21 +92,97 @@ gimp_operation_color_erase_mode_process (GeglOperation       *operation,
                                          const GeglRectangle *roi,
                                          gint                 level)
 {
-  gfloat *in    = in_buf;
-  gfloat *layer = aux_buf;
-  gfloat *out   = out_buf;
+  gdouble         opacity  = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
+  gfloat         *in       = in_buf;
+  gfloat         *layer    = aux_buf;
+  gfloat         *mask     = aux2_buf;
+  gfloat         *out      = out_buf;
+  const gboolean  has_mask = mask != NULL;
 
   while (samples--)
     {
-      out[RED]   = in[RED];
-      out[GREEN] = in[GREEN];
-      out[BLUE]  = in[BLUE];
-      out[ALPHA] = in[ALPHA];
+      gfloat  layer_alpha;
+      GimpRGB bgcolor, color, alpha;
+
+      layer_alpha = layer[ALPHA] * opacity;
+      if (has_mask)
+        layer_alpha *= *mask;
+
+      gimp_rgba_set (&color, in[0], in[1], in[2], in[3]);
+      gimp_rgba_set (&bgcolor, layer[0], layer[1], layer[2], layer_alpha);
+
+      /* start of helper function copied from legacy 8-bit blending code */
+      alpha.a = color.a;
+
+      if (bgcolor.r < 0.0001)
+        alpha.r = color.r;
+      else if ( color.r > bgcolor.r )
+        alpha.r = (color.r - bgcolor.r) / (1.0 - bgcolor.r);
+      else if (color.r < bgcolor.r)
+        alpha.r = (bgcolor.r - color.r) / bgcolor.r;
+      else alpha.r = 0.0;
+
+      if (bgcolor.g < 0.0001)
+        alpha.g = color.g;
+      else if ( color.g > bgcolor.g )
+        alpha.g = (color.g - bgcolor.g) / (1.0 - bgcolor.g);
+      else if ( color.g < bgcolor.g )
+        alpha.g = (bgcolor.g - color.g) / (bgcolor.g);
+      else alpha.g = 0.0;
+
+      if (bgcolor.b < 0.0001)
+        alpha.b = color.b;
+      else if ( color.b > bgcolor.b )
+        alpha.b = (color.b - bgcolor.b) / (1.0 - bgcolor.b);
+      else if ( color.b < bgcolor.b )
+        alpha.b = (bgcolor.b - color.b) / (bgcolor.b);
+      else alpha.b = 0.0;
+
+      if ( alpha.r > alpha.g )
+        {
+          if ( alpha.r > alpha.b )
+            {
+              color.a = alpha.r;
+            }
+          else
+            {
+              color.a = alpha.b;
+            }
+        }
+      else if ( alpha.g > alpha.b )
+        {
+          color.a = alpha.g;
+        }
+      else
+        {
+          color.a = alpha.b;
+        }
+
+      color.a = (1.0 - bgcolor.a) + (color.a * bgcolor.a);
+
+      if (color.a > 0.0001)
+        {
+          color.r = (color.r - bgcolor.r) / color.a + bgcolor.r;
+          color.g = (color.g - bgcolor.g) / color.a + bgcolor.g;
+          color.b = (color.b - bgcolor.b) / color.a + bgcolor.b;
+
+          color.a *= alpha.a;
+        }
+      /* end of helper function */
+
+      out[0] = color.r;
+      out[1] = color.g;
+      out[2] = color.b;
+      out[3] = color.a;
 
       in    += 4;
       layer += 4;
       out   += 4;
+
+      if (has_mask)
+        mask++;
     }
 
   return TRUE;
 }
+
