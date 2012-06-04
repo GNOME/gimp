@@ -334,6 +334,13 @@ gimp_color_display_editor_dispose (GObject *object)
 {
   GimpColorDisplayEditor *editor = GIMP_COLOR_DISPLAY_EDITOR (object);
 
+  if (editor->selected)
+    {
+      g_object_remove_weak_pointer (G_OBJECT (editor->selected),
+                                    (gpointer) &editor->selected);
+      editor->selected = NULL;
+    }
+
   if (editor->stack)
     {
       g_object_unref (editor->stack);
