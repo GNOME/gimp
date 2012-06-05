@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_RECTANGLE_SELECT_TOOL_H__
-#define  __GIMP_RECTANGLE_SELECT_TOOL_H__
+#ifndef  __GIMP_APP_TEST_UTILS_H__
+#define  __GIMP_APP_TEST_UTILS_H__
 
 
 void            gimp_test_utils_set_env_to_subpath   (const gchar *root_env_var,
@@ -31,8 +31,8 @@ void            gimp_test_utils_create_image         (Gimp        *gimp,
 void            gimp_test_utils_synthesize_key_event (GtkWidget   *widget,
                                                       guint        keyval);
 GimpUIManager * gimp_test_utils_get_ui_manager       (Gimp        *gimp);
-GimpImage     * gimp_test_utils_create_image_from_dalog
+GimpImage     * gimp_test_utils_create_image_from_dialog
                                                      (Gimp        *gimp);
 
 
-#endif /* __GIMP_RECTANGLE_SELECT_TOOL_H__ */
+#endif /* __GIMP_APP_TEST_UTILS_H__ */

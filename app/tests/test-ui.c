@@ -227,7 +227,7 @@ create_new_image_via_dialog (gconstpointer data)
   GimpImage *image;
   GimpLayer *layer;
 
-  image = gimp_test_utils_create_image_from_dalog (gimp);
+  image = gimp_test_utils_create_image_from_dialog (gimp);
 
   /* Add a layer to the image to make it more useful in later tests */
   layer = gimp_layer_new (image,

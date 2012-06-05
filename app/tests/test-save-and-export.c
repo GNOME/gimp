@@ -84,7 +84,7 @@ static void
 new_file_has_no_uris (gconstpointer    data)
 {
   Gimp      *gimp  = GIMP (data);
-  GimpImage *image = gimp_test_utils_create_image_from_dalog (gimp);
+  GimpImage *image = gimp_test_utils_create_image_from_dialog (gimp);
 
   g_assert (gimp_image_get_uri (image) == NULL);
   g_assert (gimp_image_get_imported_uri (image) == NULL);
@@ -245,7 +245,7 @@ exported_file_uris (gconstpointer data)
   gchar               *save_filename;
   GimpPlugInProcedure *proc;
   Gimp                *gimp  = GIMP (data);
-  GimpImage           *image = gimp_test_utils_create_image_from_dalog (gimp);
+  GimpImage           *image = gimp_test_utils_create_image_from_dialog (gimp);
 
   save_filename = g_build_filename (g_get_tmp_dir (), "gimp-test.png", NULL);
   save_uri = g_filename_to_uri (save_filename, NULL, NULL);

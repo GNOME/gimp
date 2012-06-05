@@ -209,7 +209,7 @@ gimp_test_utils_get_ui_manager (Gimp *gimp)
  * Returns: The created #GimpImage.
  **/
 GimpImage *
-gimp_test_utils_create_image_from_dalog (Gimp *gimp)
+gimp_test_utils_create_image_from_dialog (Gimp *gimp)
 {
   GimpImage     *image            = NULL;
   GtkWidget     *new_image_dialog = NULL;
