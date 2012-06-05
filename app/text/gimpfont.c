@@ -638,6 +638,7 @@ gimp_font_get_sample_string (PangoContext         *context,
   g_return_val_if_fail (PANGO_IS_FC_FONT (font), "Aa");
 
   face = pango_fc_font_lock_face (PANGO_FC_FONT (font));
+  g_return_val_if_fail (face != NULL, "Aa");
   ot_info = pango_ot_info_get (face);
 
   /* First check what script(s), if any, the font has GSUB or GPOS
