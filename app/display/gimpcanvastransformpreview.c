@@ -871,10 +871,14 @@ gimp_canvas_transform_preview_draw_tri_row (GimpDrawable    *texture,
 {
   GeglBuffer *buffer;
   const Babl *format;
+  guchar     *buf;
+  guchar     *b;
   guchar     *pptr;      /* points into the pixels of a row of area */
+  gint        bpp;
   gfloat      u, v;
   gfloat      du, dv;
   gint        dx;
+  gint        samples;
 
   if (x2 == x1)
     return;
@@ -930,30 +934,56 @@ gimp_canvas_transform_preview_draw_tri_row (GimpDrawable    *texture,
           + (x1 - area_offx) * 4);
 
   buffer = gimp_drawable_get_buffer (texture);
-  format = babl_format ("R'G'B'A u8");
 
-  while (dx--)
+  format = gegl_buffer_get_format (buffer);
+  bpp    = babl_format_get_bytes_per_pixel (format);
+  buf    = g_alloca (bpp * dx);
+
+  samples = dx;
+  b       = buf;
+
+  while (samples--)
     {
-      guchar          pixel[4];
-      register gulong tmp;
-      guchar          alpha;
-
-      gegl_buffer_sample (buffer, (gint) u, (gint) v, NULL, pixel,
+      gegl_buffer_sample (buffer, (gint) u, (gint) v, NULL, b,
                           format,
                           GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
-      alpha = INT_MULT (opacity, pixel[3], tmp);
-
-      GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
-                                   pixel[0],
-                                   pixel[1],
-                                   pixel[2],
-                                   alpha);
-
-      pptr += 4;
+      b += bpp;
 
       u += du;
       v += dv;
+    }
+
+  if (opacity < 255)
+    {
+      guchar *u8_buffer = g_alloca (4 * dx);
+      guchar *u8_b;
+
+      babl_process (babl_fish (format,
+                               babl_format ("R'G'B'A u8")),
+                    buf, u8_buffer, dx);
+
+      samples = dx;
+      u8_b    = u8_buffer;
+
+      while (samples--)
+        {
+          register gulong tmp;
+
+          u8_b[3] = INT_MULT (opacity, u8_b[3], tmp);
+
+          u8_b += 4;
+        }
+
+      babl_process (babl_fish (babl_format ("R'G'B'A u8"),
+                               babl_format ("cairo-ARGB32")),
+                    u8_buffer, pptr, dx);
+    }
+  else
+    {
+      babl_process (babl_fish (format,
+                               babl_format ("cairo-ARGB32")),
+                    buf, pptr, dx);
     }
 
   cairo_surface_mark_dirty (area);
@@ -988,14 +1018,21 @@ gimp_canvas_transform_preview_draw_tri_row_mask (GimpDrawable    *texture,
                                                  guchar           opacity)
 {
   GeglBuffer *buffer;
-  const Babl *format;
   GeglBuffer *mask_buffer;
+  const Babl *format;
   const Babl *mask_format;
+  guchar     *buf;
+  guchar     *mask_buf;
+  guchar     *b;
+  guchar     *mask_b;
   guchar     *pptr;              /* points into the pixels of area        */
+  gint        bpp;
+  gint        mask_bpp;
   gfloat      u, v;
   gfloat      mu, mv;
   gfloat      du, dv;
   gint        dx;
+  gint        samples;
 
   if (x2 == x1)
     return;
@@ -1056,38 +1093,67 @@ gimp_canvas_transform_preview_draw_tri_row_mask (GimpDrawable    *texture,
 
   buffer      = gimp_drawable_get_buffer (texture);
   mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
-  format      = babl_format ("R'G'B'A u8");
-  mask_format = babl_format ("Y u8");
 
-  while (dx--)
+  format      = gegl_buffer_get_format (buffer);
+  mask_format = gegl_buffer_get_format (mask_buffer);
+  bpp         = babl_format_get_bytes_per_pixel (format);
+  mask_bpp    = babl_format_get_bytes_per_pixel (mask_format);
+  buf         = g_alloca (bpp * dx);
+  mask_buf    = g_alloca (mask_bpp * dx);
+
+  samples = dx;
+  b       = buf;
+  mask_b  = mask_buf;
+
+  while (samples--)
     {
-      guchar          pixel[4];
-      guchar          maskval;
-      register gulong tmp;
-      guchar          alpha;
-
-      gegl_buffer_sample (buffer, (gint) u, (gint) v, NULL, pixel,
+      gegl_buffer_sample (buffer, (gint) u, (gint) v, NULL, b,
                           format,
                           GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-      gegl_buffer_sample (mask_buffer, (gint) mu, (gint) mv, NULL, &maskval,
+      gegl_buffer_sample (mask_buffer, (gint) mu, (gint) mv, NULL, mask_b,
                           mask_format,
                           GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
-      alpha = INT_MULT3 (opacity, maskval, pixel[3], tmp);
-
-      GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
-                                   pixel[0],
-                                   pixel[1],
-                                   pixel[2],
-                                   alpha);
-
-      pptr += 4;
+      b      += bpp;
+      mask_b += mask_bpp;
 
       u += du;
       v += dv;
       mu += du;
       mv += dv;
     }
+
+  {
+    guchar *u8_buffer      = g_alloca (4 * dx);
+    guchar *u8_mask_buffer = g_alloca (dx);
+    guchar *u8_b;
+    guchar *u8_mask_b;
+
+    babl_process (babl_fish (format,
+                             babl_format ("R'G'B'A u8")),
+                  buf, u8_buffer, dx);
+    babl_process (babl_fish (mask_format,
+                             babl_format ("Y u8")),
+                  mask_buf, u8_mask_buffer, dx);
+
+    samples   = dx;
+    u8_b      = u8_buffer;
+    u8_mask_b = u8_mask_buffer;
+
+    while (samples--)
+      {
+        register gulong tmp;
+
+        u8_b[3] = INT_MULT3 (opacity, *u8_mask_b, u8_b[3], tmp);
+
+        u8_b      += 4;
+        u8_mask_b += 1;
+      }
+
+    babl_process (babl_fish (babl_format ("R'G'B'A u8"),
+                             babl_format ("cairo-ARGB32")),
+                  u8_buffer, pptr, dx);
+  }
 
   cairo_surface_mark_dirty (area);
 
