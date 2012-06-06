@@ -697,13 +697,13 @@ load_image (const gchar        *filename,
           image_type = GIMP_RGB;
           layer_type = (alpha) ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
           if (bps == 8 && alpha)
-            base_format = babl_format ("R'G'B'A u8");
+            base_format = babl_format ("RGBA u8");
           else if (bps == 8 && !alpha)
-            base_format = babl_format ("R'G'B' u8");
+            base_format = babl_format ("RGB u8");
           else if (bps == 16 && alpha)
-            base_format = babl_format ("R'G'B'A u16");
+            base_format = babl_format ("RGBA u16");
           else if (bps == 16 && !alpha)
-            base_format = babl_format ("R'G'B' u16");
+            base_format = babl_format ("RGB u16");
           break;
 
 #if 0
@@ -723,9 +723,9 @@ load_image (const gchar        *filename,
           image_type = GIMP_RGB;
           layer_type = GIMP_RGBA_IMAGE;
           if (bps == 8)
-            base_format = babl_format ("R'G'B'A u8");
+            base_format = babl_format ("RGBA u8");
           else if (bps == 16)
-            base_format = babl_format ("R'G'B'A u16");
+            base_format = babl_format ("RGBA u16");
         }
 
       if (target == GIMP_PAGE_SELECTOR_TARGET_LAYERS)
@@ -1468,10 +1468,12 @@ load_interleaved (TIFF         *tif,
              
                   while (gegl_buffer_iterator_next (iter))
                     {
-                      guchar *s = ((guchar *) iter->data[0]) + offset;
+                      guchar *s = iter->data[0];
                       guchar *d = iter->data[1];
                       gint length = iter->length;
              
+                      s += offset;
+
                       while (length--)
                         {
                           memcpy (d, s, dest_bpp);
