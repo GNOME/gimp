@@ -25,9 +25,10 @@ gettext.install("gimp20-python", gimp.locale_directory, unicode=True)
 def text_brush(font_name, font_size, text):
     pdb.gimp_context_push()
     pdb.gimp_context_set_default_colors()
-    
-    padding = font_size // 4
-    img = gimp.Image(font_size + padding, font_size + padding, GRAY)
+
+    font_size_int = int(font_size)
+    padding = font_size_int // 4
+    img = gimp.Image(font_size_int + padding, font_size_int + padding, GRAY)
     img.undo_freeze()
     
     text = text.decode("utf-8")
