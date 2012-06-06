@@ -83,7 +83,7 @@ gimp_gegl_init (Gimp *gimp)
 
   gimp_babl_init ();
 
-  gimp_operations_init (gimp);
+  gimp_operations_init ();
 }
 
 static void

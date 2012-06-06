@@ -80,10 +80,8 @@
 
 
 void
-gimp_operations_init (Gimp *gimp)
+gimp_operations_init (void)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
   g_type_class_ref (GIMP_TYPE_OPERATION_BORDER);
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_COEF_CALC);
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_TRANSFORM);
