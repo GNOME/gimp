@@ -1054,10 +1054,18 @@ static FITS_HDU_LIST *fits_decode_header (FITS_RECORD_LIST *hdr,
  hdulist->used.simple = (strncmp (hdr->data, "SIMPLE  ", 8) == 0);
  hdulist->used.xtension = (strncmp (hdr->data, "XTENSION", 8) == 0);
  if (hdulist->used.xtension)
- {
-   fdat = fits_decode_card (fits_search_card (hdr, "XTENSION"), typ_fstring);
-   strcpy (hdulist->xtension, fdat->fstring);
- }
+   {
+     fdat = fits_decode_card (fits_search_card (hdr, "XTENSION"), typ_fstring);
+     if (fdat != NULL)
+       {
+         strcpy (hdulist->xtension, fdat->fstring);
+       }
+     else
+       {
+         strcpy (errmsg, "No valid XTENSION header found.");
+         goto err_return;
+       }
+   }
 
  FITS_DECODE_CARD (hdr, "NAXIS", fdat, typ_flong);
  hdulist->naxis = fdat->flong;
