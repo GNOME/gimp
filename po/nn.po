@@ -1,12 +1,16 @@
+# Norwegian nynorsk translation of po.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Kolbjørn Stuestøl <kolbjoern@stuestoel.no> 2005.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 2.4\n"
+"Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2012-05-06 16:44+0000\n"
-"PO-Revision-Date: 2012-06-05 17:34+0100\n"
+"PO-Revision-Date: 2012-06-06 18:36+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
-"Language-Team:  <none>\n"
+"Language-Team: Norwegian nynorsk <i18n-no@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -7655,12 +7659,12 @@ msgstr "Kopi av «%s»"
 #: ../app/core/gimpdatafactory.c:742
 #, c-format
 msgid "You have a writable data folder configured (%s), but this folder does not exist. Please create the folder or fix your configuation in the Preferences dialog's 'Folders' section."
-msgstr ""
+msgstr "Du har sett opp ei datamappe (%s), men denne mappa finst ikkje. Opprett mappa eller forandre oppsettet i mappeseksjonen av brukaroppsettet."
 
 #: ../app/core/gimpdatafactory.c:763
 #, c-format
 msgid "You have a writable data folder configured, but this folder is not part of your data search path. You probably edited the gimprc file manually, please fix it in the Preferences dialog's 'Folders' section."
-msgstr ""
+msgstr "Du har sett opp ei datamappe, men denne mappa er ikkje i søkestigen. Du har kanskje redigert fila gimprc manuelt? Ordna dette  i mappeseksjonen av brukaroppsettet."
 
 #: ../app/core/gimpdatafactory.c:773
 #, c-format
@@ -10330,9 +10334,8 @@ msgstr "Einingar"
 
 #. Selection Bounding Box
 #: ../app/display/gimpcursorview.c:256
-#, fuzzy
 msgid "Selection Bounding Box"
-msgstr "Prøv BoundingBox"
+msgstr "Avgrensingsboks for utvalet"
 
 #. Width
 #: ../app/display/gimpcursorview.c:292
@@ -10886,9 +10889,8 @@ msgid "Brush '%s' is not a generated brush"
 msgstr "Penselen «%s» er ikkje ein generert pensel"
 
 #: ../app/pdb/gimppdb-utils.c:134
-#, fuzzy
 msgid "Invalid empty paint dynamics name"
-msgstr "Ugyldig namn på malemetode"
+msgstr "Ugyldig, tomt namn på dynamikk"
 
 #: ../app/pdb/gimppdb-utils.c:143
 #, c-format
@@ -11130,49 +11132,41 @@ msgid "Set text layer attribute"
 msgstr "Rediger attributta for tekstlaget"
 
 #: ../app/pdb/vectors-cmds.c:323
-#, fuzzy
 msgid "Remove path stroke"
-msgstr "Dialogen for <guilabel>Strek opp bane</guilabel>"
+msgstr "Fjern oppstrekinga av banen"
 
 #: ../app/pdb/vectors-cmds.c:359
-#, fuzzy
 msgid "Close path stroke"
-msgstr "Dialogen for <guilabel>Strek opp bane</guilabel>"
+msgstr "Lukk oppstrekinga av banen"
 
 #: ../app/pdb/vectors-cmds.c:399
-#, fuzzy
 msgid "Translate path stroke"
-msgstr "Dialogen for <guilabel>Strek opp bane</guilabel>"
+msgstr "Tilpass oppstrekinga av banen"
 
 #: ../app/pdb/vectors-cmds.c:439
-#, fuzzy
 msgid "Scale path stroke"
-msgstr "Dialogen for <guilabel>Strek opp bane</guilabel>"
+msgstr "Skaler oppstrekinga av banen"
 
 #: ../app/pdb/vectors-cmds.c:481
-#, fuzzy
 msgid "Rotate path stroke"
-msgstr "Dialogen for <guilabel>Strek opp bane</guilabel>"
+msgstr "Roter oppstrekinga av banen"
 
 #: ../app/pdb/vectors-cmds.c:521
 #: ../app/pdb/vectors-cmds.c:565
-#, fuzzy
 msgid "Flip path stroke"
-msgstr "Dialogen for <guilabel>Strek opp bane</guilabel>"
+msgstr "Spegelvend oppstrekinga av banen"
 
 #: ../app/pdb/vectors-cmds.c:694
 #: ../app/pdb/vectors-cmds.c:817
 #: ../app/pdb/vectors-cmds.c:1037
-#, fuzzy
 msgid "Add path stroke"
-msgstr "Legg til stig for fraktalutforskaren"
+msgstr "Legg til strok"
 
 #: ../app/pdb/vectors-cmds.c:870
 #: ../app/pdb/vectors-cmds.c:923
 #: ../app/pdb/vectors-cmds.c:984
-#, fuzzy
 msgid "Extend path stroke"
-msgstr "Dialogen for <guilabel>Strek opp bane</guilabel>"
+msgstr "Utvid oppstrekinga av banen"
 
 #: ../app/plug-in/gimpenvirontable.c:281
 #, c-format
@@ -11430,12 +11424,11 @@ msgstr "Kva biletobjekt som laget skal innrettast mot"
 
 #: ../app/tools/gimpalignoptions.c:98
 msgid "Horizontal offset for distribution"
-msgstr "Vassrett forskyving"
+msgstr "Vassrett forskyving for fordelinga"
 
 #: ../app/tools/gimpalignoptions.c:104
-#, fuzzy
 msgid "Vertical offset for distribution"
-msgstr "Vassrett forskyving"
+msgstr "Vassrett forskyving for fordelinga"
 
 #: ../app/tools/gimpalignoptions.c:272
 #: ../app/tools/gimpaligntool.c:124
@@ -12122,7 +12115,7 @@ msgstr "Klikk for å legge til kontrollpunkt i alle kanalane"
 
 #: ../app/tools/gimpcurvestool.c:350
 msgid "Click to locate on curve (try Shift, Ctrl)"
-msgstr ""
+msgstr "Klikk for å markere på kurva. (Prøv evt. saman med Shift og/eller Ctrl)"
 
 #: ../app/tools/gimpcurvestool.c:463
 #: ../app/tools/gimplevelstool.c:384
@@ -13630,9 +13623,8 @@ msgid "There is no path to transform."
 msgstr "Det er ingen bane å transformera"
 
 #: ../app/tools/gimptransformtool.c:1079
-#, fuzzy
 msgid "The active path's strokes are locked."
-msgstr "Pikslane i det aktive laget er låst."
+msgstr "Stroka i det aktive laget er låste."
 
 #: ../app/tools/gimpvectoroptions.c:76
 msgid "Restrict editing to polygons"
@@ -14519,14 +14511,12 @@ msgid "%s (read only)"
 msgstr "%s (bare for lesing)"
 
 #: ../app/widgets/gimpdeviceeditor.c:165
-#, fuzzy
 msgid "Delete the selected device"
-msgstr "Slett den valde malen"
+msgstr "Slett det valde utsyret"
 
 #: ../app/widgets/gimpdeviceeditor.c:502
-#, fuzzy
 msgid "Delete Device Settings"
-msgstr "Slett dei markerte innstillingane"
+msgstr "Slett innstillingane for utstyret"
 
 #: ../app/widgets/gimpdeviceeditor.c:523
 #, c-format
@@ -14537,7 +14527,7 @@ msgstr "Slette \"%s\"?"
 msgid ""
 "You are about to delete this device's stored settings.\n"
 "The next time this device is plugged, default settings will be used."
-msgstr ""
+msgstr "Du er i ferd med å slette innstillingane for dette utstyret.+nNeste gong det blir brukt, vil normalinnstillingane bli brukte."
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:140
 #: ../app/widgets/gimpdynamicseditor.c:141
@@ -15653,7 +15643,7 @@ msgstr "Rund"
 #. fuzzy as in a feathered, blurred, unfocused, soft brush
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
-msgstr "Uklare"
+msgstr "mjuke"
 
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "Image Editor"
@@ -15662,3 +15652,6 @@ msgstr "Bilethandterar"
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Create images and edit photographs"
 msgstr "Lag teikningar eller rediger foto"
+
+#~ msgid "The image has been exported to '%s'."
+#~ msgstr "Biletet er eksportert til «%s»."

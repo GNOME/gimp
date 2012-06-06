@@ -1,14 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
+# Norwegian nynorsk translation of po-plug-ins.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Kolbjørn Stuestøl <kolbjoern@stuestoel.no> 2005.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 2.6\n"
+"Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2012-05-06 16:48+0000\n"
-"PO-Revision-Date: 2012-06-05 17:34+0100\n"
+"PO-Revision-Date: 2012-06-06 18:44+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <i18n-no@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -8491,9 +8491,8 @@ msgid "The file name association is incomplete or invalid."
 msgstr "Filnamnet er ufullstendig eller ugyldig."
 
 #: ../plug-ins/common/web-browser.c:153
-#, fuzzy
 msgid "DDE transaction busy"
-msgstr "DDE-transaksjonen feila."
+msgstr "DDE-transaksjonen er opptatt."
 
 #: ../plug-ins/common/web-browser.c:156
 msgid "The DDE transaction failed."
@@ -8501,7 +8500,7 @@ msgstr "DDE-transaksjonen feila."
 
 #: ../plug-ins/common/web-browser.c:159
 msgid "The DDE transaction timed out."
-msgstr ""
+msgstr "DDE-transaksjonen fekk tidsavbrot."
 
 #: ../plug-ins/common/web-browser.c:162
 msgid "The specified DLL was not found."
@@ -8509,7 +8508,7 @@ msgstr "Fann ikkje den spesifiserte DLL-en."
 
 #: ../plug-ins/common/web-browser.c:165
 msgid "There is no application associated with the given file name extension."
-msgstr ""
+msgstr "Ingen program er assosiert med den oppgjevne filutvidinga"
 
 #: ../plug-ins/common/web-browser.c:168
 msgid "There was not enough memory to complete the operation."
@@ -10826,9 +10825,8 @@ msgid "_Size"
 msgstr "_Storleik"
 
 #: ../plug-ins/gimpressionist/size.c:108
-#, fuzzy
 msgid "Size variants:"
-msgstr "Storleik på førehandsvisinga"
+msgstr "Storleiksvariasjon:"
 
 #: ../plug-ins/gimpressionist/size.c:112
 msgid "The number of sizes of brushes to use"
@@ -12236,9 +12234,8 @@ msgid "Selected:"
 msgstr "Markert:"
 
 #: ../plug-ins/imagemap/imap_preferences.c:442
-#, fuzzy
 msgid "Interaction:"
-msgstr "Gjentakingar:"
+msgstr "Vekselverknader:"
 
 #: ../plug-ins/imagemap/imap_preferences.c:451
 msgid "Co_ntiguous Region"
@@ -12879,7 +12876,6 @@ msgid "Show _wireframe"
 msgstr "Vis bare _kantlinjer"
 
 #: ../plug-ins/map-object/map-object-ui.c:1384
-#, fuzzy
 msgid "Update preview _live"
 msgstr "Automatisk _førehandsvising"
 
@@ -12960,9 +12956,8 @@ msgid "_Author:"
 msgstr "_Forfattar:"
 
 #: ../plug-ins/metadata/interface.c:256
-#, fuzzy
 msgid "Description _writer:"
-msgstr "Beskriving: Hender"
+msgstr "_Beskriving:"
 
 #: ../plug-ins/metadata/interface.c:272
 msgid "_Keywords:"

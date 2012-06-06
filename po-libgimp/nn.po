@@ -1,13 +1,16 @@
-#  Kolbjørn Stuestøl <kol-stue@online.no>
+# Norwegian nynorsk translation of po-libgimp.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Kolbjørn Stuestøl <kolbjoern@stuestoel.no>, 2005
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 2.4\n"
+"Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2012-05-06 16:48+0000\n"
-"PO-Revision-Date: 2012-06-05 17:35+0100\n"
+"PO-Revision-Date: 2012-06-06 18:43+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
-"Language-Team: Kolbjørn Stuestøl <kol-stue@online.no>\n"
+"Language-Team: Norwegian nynorsk <i18n-no@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -42,7 +45,7 @@ msgstr "Penselval"
 #: ../libgimp/gimpbrushselectbutton.c:927
 #: ../libgimp/gimppatternselectbutton.c:725
 msgid "_Browse..."
-msgstr "_Bla gjennom"
+msgstr "_Bla gjennom …"
 
 #: ../libgimp/gimpexport.c:243
 #: ../libgimp/gimpexport.c:279
@@ -652,10 +655,9 @@ msgid "Stock ID"
 msgstr "Stock ID"
 
 #: ../libgimpbase/gimpbaseenums.c:477
-#, fuzzy
 msgctxt "icon-type"
 msgid "Inline pixbuf"
-msgstr "Pixbuf-objekt"
+msgstr "Innebygd pixbuf"
 
 #: ../libgimpbase/gimpbaseenums.c:478
 msgctxt "icon-type"
