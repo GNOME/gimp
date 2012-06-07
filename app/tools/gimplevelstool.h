@@ -46,8 +46,13 @@ struct _GimpLevelsTool
 
   GtkWidget            *histogram_view;
 
+  gdouble               ui_scale_factor;
   GtkWidget            *input_bar;
   GtkWidget            *input_sliders;
+  GtkWidget            *low_input_spinbutton;
+  GtkWidget            *high_input_spinbutton;
+  GtkWidget            *low_output_spinbutton;
+  GtkWidget            *high_output_spinbutton;
   GtkAdjustment        *low_input;
   GtkAdjustment        *gamma;
   GtkAdjustment        *gamma_linear;
