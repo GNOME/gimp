@@ -219,7 +219,7 @@
 
   <!-- Ah pango, the most painful dependency of them all -->
   <autotools id="pango"  autogen-sh="configure"
-             autogenargs="--without-x --with-included-modules"
+             autogenargs="--without-x --with-included-modules=basic-coretext"
              makeargs="-k -C modules; make">
     <!-- The last version that will build on Tiger is 1.24.5, but who gives a crap -->
     <branch version="1.30.0" module="pango/1.30/pango-1.30.0.tar.xz"
