@@ -328,28 +328,21 @@ gimp_handle_bar_set_adjustment (GimpHandleBar  *bar,
       bar->slider_adj[handle_no] = NULL;
     }
 
-    bar->slider_adj[handle_no] = adjustment;
+  bar->slider_adj[handle_no] = adjustment;
 
-    if (bar->slider_adj[handle_no])
-      {
-        g_object_ref (bar->slider_adj[handle_no]);
+  if (bar->slider_adj[handle_no])
+    {
+      g_object_ref (bar->slider_adj[handle_no]);
 
-        g_signal_connect (bar->slider_adj[handle_no], "value-changed",
-                          G_CALLBACK (gimp_handle_bar_adjustment_changed),
-                          bar);
-      }
+      g_signal_connect (bar->slider_adj[handle_no], "value-changed",
+                        G_CALLBACK (gimp_handle_bar_adjustment_changed),
+                        bar);
+      g_signal_connect (bar->slider_adj[handle_no], "changed",
+                        G_CALLBACK (gimp_handle_bar_adjustment_changed),
+                        bar);
+    }
 
-    if (bar->slider_adj[0])
-      bar->lower = gtk_adjustment_get_lower (bar->slider_adj[0]);
-    else
-      bar->lower = gtk_adjustment_get_lower (bar->slider_adj[handle_no]);
-
-    if (bar->slider_adj[2])
-      bar->upper = gtk_adjustment_get_upper (bar->slider_adj[2]);
-    else
-      bar->upper = gtk_adjustment_get_upper (bar->slider_adj[handle_no]);
-
-    gimp_handle_bar_adjustment_changed (bar->slider_adj[handle_no], bar);
+  gimp_handle_bar_adjustment_changed (bar->slider_adj[handle_no], bar);
 }
 
 
@@ -359,5 +352,11 @@ static void
 gimp_handle_bar_adjustment_changed (GtkAdjustment *adjustment,
                                     GimpHandleBar *bar)
 {
+  if (bar->slider_adj[0])
+    bar->lower = gtk_adjustment_get_lower (bar->slider_adj[0]);
+
+  if (bar->slider_adj[2])
+    bar->upper = gtk_adjustment_get_upper (bar->slider_adj[2]);
+
   gtk_widget_queue_draw (GTK_WIDGET (bar));
 }
