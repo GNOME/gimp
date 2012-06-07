@@ -131,19 +131,6 @@ static void      load_separate    (TIFF         *tif,
 static void      load_paths       (TIFF         *tif,
                                    gint          image);
 
-static void      read_separate    (const guchar *source,
-                                   channel_data *channel,
-                                   gushort       bps,
-                                   gint          startcol,
-                                   gint          startrow,
-                                   gint          rows,
-                                   gint          cols,
-                                   gboolean      alpha,
-                                   gint          extra,
-                                   gint          sample);
-
-static void      fill_bit2byte (void);
-
 static void      tiff_warning  (const gchar  *module,
                                 const gchar  *fmt,
                                 va_list       ap);
@@ -172,8 +159,6 @@ static TiffSaveVals tsvals =
 
 static GimpRunMode             run_mode      = GIMP_RUN_INTERACTIVE;
 static GimpPageSelectorTarget  target        = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
-
-static guchar       bit2byte[256 * 8];
 
 
 MAIN ()
@@ -1529,7 +1514,7 @@ load_separate (TIFF         *tif,
   GeglBufferIterator *iter;
   guchar *buffer;
   gdouble progress = 0.0, one_row;
-  gint    i;
+  gint    i, compindex;
 
   g_printerr ("%s\n", __func__);
 
@@ -1566,6 +1551,8 @@ load_separate (TIFF         *tif,
   g_printerr ("bytes_per_pixel: %d, format: %d\n", bytes_per_pixel,
               babl_format_get_bytes_per_pixel (src_format));
 
+  compindex = 0;
+
   for (i = 0; i <= extra; i++)
     {
       gint src_bpp, dest_bpp;
@@ -1579,21 +1566,17 @@ load_separate (TIFF         *tif,
              
       for (j = 0; j < n_comps; j++)
         {
-          g_printerr ("i: %d, j: %d\n", i, j);
-
           for (y = 0; y < imageLength; y += tileLength)
             {
               for (x = 0; x < imageWidth; x += tileWidth)
                 {
-     
                   gimp_progress_update (progress + one_row *
                                         ( (gdouble) x / (gdouble) imageWidth));
      
-                  /* that sample index is wrong */
                   if (TIFFIsTiled (tif))
-                    TIFFReadTile (tif, buffer, x, y, 0, i+j);
+                    TIFFReadTile (tif, buffer, x, y, 0, compindex);
                   else
-                    TIFFReadScanline (tif, buffer, y, i+j);
+                    TIFFReadScanline (tif, buffer, y, compindex);
      
                   cols = MIN (imageWidth - x, tileWidth);
                   rows = MIN (imageLength - y, tileLength);
@@ -1636,80 +1619,13 @@ load_separate (TIFF         *tif,
             }
 
           offset += src_bpp;
+          compindex ++;
         }
 
       progress += one_row;
     }
 }
 
-
-/* Step through all <= 8-bit samples in an image */
-
-#define NEXTSAMPLE(var)                       \
-  {                                           \
-      if (bitsleft == 0)                      \
-      {                                       \
-          source++;                           \
-          bitsleft = 8;                       \
-      }                                       \
-      bitsleft -= bps;                        \
-      var = ( *source >> bitsleft ) & maxval; \
-  }
-
-#if 0
-static void
-read_separate (const guchar *source,
-               channel_data *channel,
-               gushort       bps,
-               gint          startrow,
-               gint          startcol,
-               gint          rows,
-               gint          cols,
-               gboolean      alpha,
-               gint          extra,
-               gint          sample)
-{
-  guchar *dest;
-  gint    col, row, c;
-  gint    bitsleft = 8, maxval = (1 << bps) - 1;
-
-  if (bps > 8)
-    {
-      g_message ("Unsupported layout");
-      gimp_quit ();
-    }
-
-  if (sample < channel[0].drawable->bpp)
-    c = 0;
-  else
-    c = (sample - channel[0].drawable->bpp) + 4;
-
-  gimp_pixel_rgn_init (&(channel[c].pixel_rgn), channel[c].drawable,
-                         startcol, startrow, cols, rows, TRUE, FALSE);
-
-  gimp_pixel_rgn_get_rect (&(channel[c].pixel_rgn), channel[c].pixels,
-                           startcol, startrow, cols, rows);
-
-  for (row = 0; row < rows; ++row)
-    {
-      dest = channel[c].pixels + row * cols * channel[c].drawable->bpp;
-
-      if (c == 0)
-        {
-          for (col = 0; col < cols; ++col)
-            NEXTSAMPLE(dest[col * channel[0].drawable->bpp + sample]);
-        }
-      else
-        {
-          for (col = 0; col < cols; ++col)
-            NEXTSAMPLE(dest[col]);
-        }
-    }
-
-  gimp_pixel_rgn_set_rect (&(channel[c].pixel_rgn), channel[c].pixels,
-                           startcol, startrow, cols, rows);
-}
-#endif
 
 #if 0
 static void
