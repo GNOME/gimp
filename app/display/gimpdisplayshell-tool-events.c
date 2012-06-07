@@ -998,19 +998,25 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
             switch (kevent->keyval)
               {
+                gboolean arrow_key = FALSE;
+
+              case GDK_KEY_Left:
+              case GDK_KEY_Right:
+              case GDK_KEY_Up:
+              case GDK_KEY_Down:
+                arrow_key = TRUE;
+
               case GDK_KEY_Return:
               case GDK_KEY_KP_Enter:
               case GDK_KEY_ISO_Enter:
               case GDK_KEY_BackSpace:
               case GDK_KEY_Escape:
-              case GDK_KEY_Left:
-              case GDK_KEY_Right:
-              case GDK_KEY_Up:
-              case GDK_KEY_Down:
-                if (gimp_image_is_empty (image) ||
-                    ! tool_manager_key_press_active (gimp,
-                                                     kevent,
-                                                     display))
+                if (! gimp_image_is_empty (image))
+                  return_val = tool_manager_key_press_active (gimp,
+                                                              kevent,
+                                                              display);
+
+                if (! return_val)
                   {
                     GimpController *keyboard = gimp_controllers_get_keyboard (gimp);
 
@@ -1019,6 +1025,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                         gimp_controller_keyboard_key_press (GIMP_CONTROLLER_KEYBOARD (keyboard),
                                                             kevent);
                   }
+
+                /* always swallow arrow keys, we don't want focus keynav */
+                if (! return_val)
+                  return_val = arrow_key;
                 break;
 
               case GDK_KEY_space:
