@@ -7664,7 +7664,7 @@ msgstr "Du har sett opp ei datamappe (%s), men denne mappa finst ikkje. Opprett 
 #: ../app/core/gimpdatafactory.c:763
 #, c-format
 msgid "You have a writable data folder configured, but this folder is not part of your data search path. You probably edited the gimprc file manually, please fix it in the Preferences dialog's 'Folders' section."
-msgstr "Du har sett opp ei datamappe (%s), men denne mappa er ikkje i søkestigen. Du har kanskje redigert fila gimprc manuelt? Ordna dette  i mappeseksjonen av brukaroppsettet."
+msgstr "Du har sett opp ei datamappe, men denne mappa er ikkje i søkestigen. Du har kanskje redigert fila gimprc manuelt? Ordna dette  i mappeseksjonen av brukaroppsettet."
 
 #: ../app/core/gimpdatafactory.c:773
 #, c-format
@@ -15652,3 +15652,6 @@ msgstr "Bilethandterar"
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Create images and edit photographs"
 msgstr "Lag teikningar eller rediger foto"
+
+#~ msgid "The image has been exported to '%s'."
+#~ msgstr "Biletet er eksportert til «%s»."
