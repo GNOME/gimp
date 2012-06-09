@@ -129,6 +129,9 @@ static void      tiff_warning           (const gchar *module,
 static void      tiff_error             (const gchar *module,
                                          const gchar *fmt,
                                          va_list      ap);
+static TIFF     *tiff_open              (const gchar *filename,
+                                         const gchar *mode,
+                                         GError     **error);
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -413,6 +416,29 @@ tiff_error (const gchar *module,
   g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, ap);
 }
 
+static TIFF *
+tiff_open (const gchar  *filename,
+           const gchar  *mode,
+           GError      **error)
+{
+#ifdef G_OS_WIN32
+  gunichar2 *utf16_filename = g_utf8_to_utf16 (filename, -1, NULL, NULL, error);
+
+  if (utf16_filename)
+    {
+      TIFF *tif = TIFFOpenW (utf16_filename, mode);
+
+      g_free (utf16_filename);
+
+      return tif;
+    }
+
+  return NULL;
+#else
+  return TIFFOpen (filename, mode);
+#endif
+}
+
 static gboolean
 image_is_monochrome (gint32 image)
 {
@@ -657,7 +683,6 @@ save_image (const gchar  *filename,
   GimpPixelRgn   pixel_rgn;
   gint           tile_height;
   gint           y, yend;
-  gint           fd;
   gboolean       is_bw    = FALSE;
   gboolean       invert   = TRUE;
   const guchar   bw_map[] = { 0, 0, 0, 255, 255, 255 };
@@ -676,17 +701,16 @@ save_image (const gchar  *filename,
   tile_height = gimp_tile_height ();
   rowsperstrip = tile_height;
 
-  fd = g_open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0666);
+  tif = tiff_open (filename, "w", error);
 
-  if (fd == -1)
+  if (! tif)
     {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+      if (! error)
+        g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                     _("Could not open '%s' for writing: %s"),
+                     gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
-
-  tif = TIFFFdOpen (fd, filename, "w");
 
   TIFFSetWarningHandler (tiff_warning);
   TIFFSetErrorHandler (tiff_error);
@@ -1034,7 +1058,6 @@ save_image (const gchar  *filename,
 
   TIFFFlushData (tif);
   TIFFClose (tif);
-  close (fd);
 
   gimp_progress_update (1.0);
 
