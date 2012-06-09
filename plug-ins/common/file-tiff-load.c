@@ -192,6 +192,9 @@ static void      tiff_warning  (const gchar  *module,
 static void      tiff_error    (const gchar  *module,
                                 const gchar  *fmt,
                                 va_list       ap);
+static TIFF     *tiff_open     (const gchar  *filename,
+                                const gchar  *mode,
+                                GError      **error);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -280,23 +283,7 @@ run (const gchar      *name,
   if (strcmp (name, LOAD_PROC) == 0)
     {
       const gchar *filename = param[1].data.d_string;
-      TIFF        *tif      = NULL;
-      gint         fd;
-
-      fd = g_open (filename, O_RDONLY | _O_BINARY, 0);
-
-      if (fd == -1)
-        {
-          g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                       _("Could not open '%s' for reading: %s"),
-                       gimp_filename_to_utf8 (filename), g_strerror (errno));
-
-          status = GIMP_PDB_EXECUTION_ERROR;
-        }
-      else
-        {
-          tif = TIFFFdOpen (fd, filename, "r");
-        }
+      TIFF        *tif      = tiff_open (filename, "r", &error);
 
       if (tif)
         {
@@ -365,11 +352,9 @@ run (const gchar      *name,
             }
 
           TIFFClose (tif);
-          close (fd);
         }
       else
         {
-          close (fd);
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
@@ -445,6 +430,29 @@ tiff_error (const gchar *module,
     return;
 
   g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, ap);
+}
+
+static TIFF *
+tiff_open (const gchar  *filename,
+           const gchar  *mode,
+           GError      **error)
+{
+#ifdef G_OS_WIN32
+  gunichar2 *utf16_filename = g_utf8_to_utf16 (filename, -1, NULL, NULL, error);
+
+  if (utf16_filename)
+    {
+      TIFF *tif = TIFFOpenW (utf16_filename, mode);
+
+      g_free (utf16_filename);
+
+      return tif;
+    }
+
+  return NULL;
+#else
+  return TIFFOpen (filename, mode);
+#endif
 }
 
 /* returns a pointer into the TIFF */
