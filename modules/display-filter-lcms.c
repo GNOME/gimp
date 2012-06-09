@@ -469,53 +469,6 @@ cdisplay_lcms_get_screen (CdisplayLcms *lcms,
 }
 
 
-#ifdef GDK_WINDOWING_QUARTZ
-
-typedef struct
-{
-  guchar *data;
-  gsize   len;
-} ProfileTransfer;
-
-enum
-{
-  openReadSpool  = 1,  /* start read data process         */
-  openWriteSpool = 2,  /* start write data process        */
-  readSpool      = 3,  /* read specified number of bytes  */
-  writeSpool     = 4,  /* write specified number of bytes */
-  closeSpool     = 5   /* complete data transfer process  */
-};
-
-static OSErr
-lcms_cdisplay_lcms_flatten_profile (SInt32  command,
-                                    SInt32 *size,
-                                    void   *data,
-                                    void   *refCon)
-{
-  ProfileTransfer *transfer = refCon;
-
-  switch (command)
-    {
-    case openWriteSpool:
-      g_return_val_if_fail (transfer->data == NULL && transfer->len == 0, -1);
-      break;
-
-    case writeSpool:
-      transfer->data = g_realloc (transfer->data, transfer->len + *size);
-      memcpy (transfer->data + transfer->len, data, *size);
-      transfer->len += *size;
-      break;
-
-    default:
-      break;
-    }
-
-  return 0;
-}
-
-#endif /* GDK_WINDOWING_QUARTZ */
-
-
 static cmsHPROFILE
 cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
 {
@@ -567,18 +520,26 @@ cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
 
       if (prof)
         {
-          ProfileTransfer transfer = { NULL, 0 };
-          Boolean         foo;
+          CFDataRef data;
 
-          CMFlattenProfile (prof, 0,
-                            lcms_cdisplay_lcms_flatten_profile, &transfer,
-                            &foo);
+          data = CMProfileCopyICCData (NULL, prof);
           CMCloseProfile (prof);
 
-          if (transfer.data)
+          if (data)
             {
-              profile = cmsOpenProfileFromMem (transfer.data, transfer.len);
-              g_free (transfer.data);
+              UInt8 *buffer = g_malloc (CFDataGetLength (data));
+
+              /* We cannot use CFDataGetBytesPtr(), because that returns
+               * a const pointer where cmsOpenProfileFromMem wants a
+               * non-const pointer.
+               */
+              CFDataGetBytes (data, CFRangeMake (0, CFDataGetLength (data)),
+                              buffer);
+
+              profile = cmsOpenProfileFromMem (buffer, CFDataGetLength (data));
+
+              g_free (buffer);
+              CFRelease (data);
             }
         }
     }
