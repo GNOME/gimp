@@ -172,12 +172,24 @@ gimp_display_shell_render (GimpDisplayShell *shell,
       g_assert_not_reached ();
     }
 
-  cairo_surface_mark_dirty (shell->render_surface);
-
   /*  apply filters to the rendered projection  */
   if (shell->filter_stack)
-    gimp_color_display_stack_convert_surface (shell->filter_stack,
-                                              shell->render_surface);
+    {
+      cairo_surface_t *sub = shell->render_surface;
+
+      if (w != GIMP_DISPLAY_RENDER_BUF_WIDTH ||
+          h != GIMP_DISPLAY_RENDER_BUF_HEIGHT)
+        sub = cairo_image_surface_create_for_data (cairo_image_surface_get_data (sub),
+                                                   CAIRO_FORMAT_ARGB32, w, h,
+                                                   GIMP_DISPLAY_RENDER_BUF_WIDTH * 4);
+
+      gimp_color_display_stack_convert_surface (shell->filter_stack, sub);
+
+      if (sub != shell->render_surface)
+        cairo_surface_destroy (sub);
+    }
+
+  cairo_surface_mark_dirty_rectangle (shell->render_surface, 0, 0, w, h);
 
   if (shell->mask)
     {
