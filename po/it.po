@@ -31,7 +31,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-05-15 09:59+0200\n"
-"PO-Revision-Date: 2012-05-15 10:00+0200\n"
+"PO-Revision-Date: 2012-06-09 10:06+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: \n"
@@ -9194,7 +9194,7 @@ msgstr "Ritagliato al livello inferiore"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:114
 msgid "Merge within active _group only"
-msgstr "Fondi dentro solo il _gruppo attivo"
+msgstr "Fondi solo dentro il _gruppo attivo"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:127
 msgid "_Discard invisible layers"
