@@ -102,6 +102,7 @@
 
 #include "config.h"
 
+#include <glib/gstdio.h>
 #include <cairo-pdf.h>
 #include <pango/pangocairo.h>
 
@@ -314,6 +315,15 @@ query (void)
   gimp_register_save_handler (SAVE_PROC, "pdf", "");
 }
 
+static cairo_status_t
+write_func (void                *fp,
+            const unsigned char *data,
+            unsigned int         size)
+{
+  return fwrite (data, 1, size, fp) == size ? CAIRO_STATUS_SUCCESS
+                                            : CAIRO_STATUS_WRITE_ERROR;
+}
+
 static void
 run (const gchar      *name,
      gint              nparams,
@@ -358,6 +368,7 @@ run (const gchar      *name,
   gint32                  mask_id = -1;
   GimpDrawable           *mask = NULL;
   cairo_surface_t        *mask_image = NULL;
+  FILE                   *fp;
 
   INIT_I18N ();
 
@@ -403,7 +414,8 @@ run (const gchar      *name,
         }
     }
 
-  pdf_file = cairo_pdf_surface_create (file_name, 1, 1);
+  fp = g_fopen (file_name, "wb");
+  pdf_file = cairo_pdf_surface_create_for_stream (write_func, fp, 1, 1);
   if (cairo_surface_status (pdf_file) != CAIRO_STATUS_SUCCESS)
     {
       char *str = g_strdup_printf
@@ -546,6 +558,7 @@ run (const gchar      *name,
   cairo_surface_destroy (pdf_file);
   cairo_destroy (cr);
 
+  fclose (fp);
   /* Finally done, let's save the parameters */
   gimp_set_data (DATA_OPTIMIZE, &optimize, sizeof (optimize));
   if (!single_image)
