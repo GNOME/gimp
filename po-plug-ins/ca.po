@@ -14,15 +14,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-25 20:21+0200\n"
-"PO-Revision-Date: 2012-02-12 22:33+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2012-06-09 13:48+0000\n"
+"PO-Revision-Date: 2012-05-05 08:29+0100\n"
 "Last-Translator: Albert F. <lakonfrariadelavila@gmail.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
-"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: ca\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 1.2\n"
 
@@ -618,7 +619,7 @@ msgstr "_Vertical"
 #: ../plug-ins/common/file-pcx.c:431 ../plug-ins/common/file-pix.c:382
 #: ../plug-ins/common/file-png.c:891 ../plug-ins/common/file-pnm.c:583
 #: ../plug-ins/common/file-raw.c:763 ../plug-ins/common/file-sunras.c:977
-#: ../plug-ins/common/file-tga.c:1064 ../plug-ins/common/file-tiff-load.c:997
+#: ../plug-ins/common/file-tga.c:1064 ../plug-ins/common/file-tiff-load.c:1005
 #: ../plug-ins/common/file-xbm.c:897 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:257 ../plug-ins/common/tile.c:262
 #: ../plug-ins/file-bmp/bmp-read.c:380 ../plug-ins/file-bmp/bmp-read.c:647
@@ -1035,9 +1036,9 @@ msgstr "Carrega els paràmetres del mesclador de canal"
 #: ../plug-ins/common/file-raw.c:256 ../plug-ins/common/file-raw.c:711
 #: ../plug-ins/common/file-sunras.c:391 ../plug-ins/common/file-svg.c:333
 #: ../plug-ins/common/file-svg.c:713 ../plug-ins/common/file-tga.c:442
-#: ../plug-ins/common/file-tiff-load.c:291 ../plug-ins/common/file-xbm.c:737
-#: ../plug-ins/common/file-xmc.c:663 ../plug-ins/common/file-xmc.c:848
-#: ../plug-ins/common/file-xwd.c:433 ../plug-ins/common/sphere-designer.c:2010
+#: ../plug-ins/common/file-xbm.c:737 ../plug-ins/common/file-xmc.c:663
+#: ../plug-ins/common/file-xmc.c:848 ../plug-ins/common/file-xwd.c:433
+#: ../plug-ins/common/sphere-designer.c:2010
 #: ../plug-ins/file-bmp/bmp-read.c:153 ../plug-ins/file-faxg3/faxg3.c:229
 #: ../plug-ins/file-fits/fits.c:358 ../plug-ins/file-fli/fli-gimp.c:459
 #: ../plug-ins/file-fli/fli-gimp.c:496 ../plug-ins/file-ico/ico-load.c:651
@@ -1071,7 +1072,7 @@ msgstr "Desa els paràmetres del mesclador de canal"
 #: ../plug-ins/common/file-png.c:1358 ../plug-ins/common/file-pnm.c:1010
 #: ../plug-ins/common/file-ps.c:1190 ../plug-ins/common/file-raw.c:591
 #: ../plug-ins/common/file-raw.c:619 ../plug-ins/common/file-sunras.c:565
-#: ../plug-ins/common/file-tga.c:1171 ../plug-ins/common/file-tiff-save.c:684
+#: ../plug-ins/common/file-tga.c:1171 ../plug-ins/common/file-tiff-save.c:710
 #: ../plug-ins/common/file-xbm.c:1036 ../plug-ins/common/file-xmc.c:1455
 #: ../plug-ins/common/file-xwd.c:619 ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:306 ../plug-ins/file-fits/fits.c:476
@@ -1326,7 +1327,7 @@ msgstr "Saturació"
 #: ../plug-ins/common/cml-explorer.c:302 ../plug-ins/common/cml-explorer.c:310
 #: ../plug-ins/common/decompose.c:190
 #: ../plug-ins/gimpressionist/orientation.c:155
-#: ../plug-ins/gimpressionist/size.c:158
+#: ../plug-ins/gimpressionist/size.c:158 ../plug-ins/metadata/interface.c:144
 msgid "Value"
 msgstr "Valor"
 
@@ -1899,8 +1900,8 @@ msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
 msgstr ""
-"Només podeu executar «Torna a compondre» si la imatge activa s'ha generat "
-"amb la funció «Descompon»."
+"Només podeu executar «Torna a compondre» si la imatge activa s'ha generat amb "
+"la funció «Descompon»."
 
 #: ../plug-ins/common/compose.c:512
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
@@ -3043,7 +3044,7 @@ msgstr "Carrega la paleta KISS"
 #: ../plug-ins/common/file-png.c:763 ../plug-ins/common/file-pnm.c:499
 #: ../plug-ins/common/file-ps.c:1020 ../plug-ins/common/file-raw.c:716
 #: ../plug-ins/common/file-sunras.c:487 ../plug-ins/common/file-tga.c:447
-#: ../plug-ins/common/file-tiff-load.c:603 ../plug-ins/common/file-wmf.c:994
+#: ../plug-ins/common/file-tiff-load.c:611 ../plug-ins/common/file-wmf.c:994
 #: ../plug-ins/common/file-xbm.c:742 ../plug-ins/common/file-xmc.c:675
 #: ../plug-ins/common/file-xpm.c:352 ../plug-ins/common/file-xwd.c:524
 #: ../plug-ins/file-bmp/bmp-read.c:158 ../plug-ins/file-faxg3/faxg3.c:213
@@ -3074,7 +3075,7 @@ msgstr "No s'accepta aquesta profunditat de bits (%d)"
 #: ../plug-ins/common/file-pcx.c:644 ../plug-ins/common/file-pix.c:531
 #: ../plug-ins/common/file-png.c:1365 ../plug-ins/common/file-pnm.c:1015
 #: ../plug-ins/common/file-ps.c:1195 ../plug-ins/common/file-sunras.c:570
-#: ../plug-ins/common/file-tga.c:1176 ../plug-ins/common/file-tiff-save.c:694
+#: ../plug-ins/common/file-tga.c:1176 ../plug-ins/common/file-tiff-save.c:718
 #: ../plug-ins/common/file-xbm.c:1041 ../plug-ins/common/file-xmc.c:1460
 #: ../plug-ins/common/file-xpm.c:638 ../plug-ins/common/file-xwd.c:624
 #: ../plug-ins/file-bmp/bmp-write.c:317 ../plug-ins/file-fits/fits.c:481
@@ -3270,8 +3271,8 @@ msgid ""
 "Unable to save '%s'.  The GIF file format does not support images that are "
 "more than %d pixels wide or tall."
 msgstr ""
-"No s'ha pogut desar «%s». El format de fitxer GIF no permet imatges de més "
-"de %d píxels d'amplada o alçada."
+"No s'ha pogut desar «%s». El format de fitxer GIF no permet imatges de més de "
+"%d píxels d'amplada o alçada."
 
 #: ../plug-ins/common/file-gif-save.c:694
 msgid ""
@@ -3571,8 +3572,8 @@ msgid ""
 "The image '%s' is in the CIEXYZ color space, but there is no code in place "
 "to convert it to RGB."
 msgstr ""
-"La imatge «%s» està en un espai de color CIE XYZ, però no s'ha trobat el "
-"codi per a convertir-la al mode RGB."
+"La imatge «%s» està en un espai de color CIE XYZ, però no s'ha trobat el codi "
+"per a convertir-la al mode RGB."
 
 #: ../plug-ins/common/file-jp2-load.c:294
 #, c-format
@@ -3580,8 +3581,8 @@ msgid ""
 "The image '%s' is in the CIELAB color space, but there is no code in place "
 "to convert it to RGB."
 msgstr ""
-"La imatge «%s» està en un espai de color CIE Lab, però no s'ha trobat el "
-"codi per a convertir-la al mode RGB."
+"La imatge «%s» està en un espai de color CIE Lab, però no s'ha trobat el codi "
+"per a convertir-la al mode RGB."
 
 #: ../plug-ins/common/file-jp2-load.c:301
 #, c-format
@@ -3616,8 +3617,8 @@ msgstr "El component %d de la imatge «%s» no té ni «hstep» ni «vstep»."
 msgid ""
 "Image component %d of image '%s' is signed. This is currently not supported."
 msgstr ""
-"El component d'imatge %d de la imatge «%s» està signat. Això no és "
-"compatible actualment."
+"El component d'imatge %d de la imatge «%s» està signat. Això no és compatible "
+"actualment."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
@@ -3818,7 +3819,7 @@ msgid "Writing to file '%s' failed: %s"
 msgstr "No s'ha pogut escriure al fitxer «%s» : %s"
 
 #: ../plug-ins/common/file-pdf-load.c:300
-#: ../plug-ins/common/file-pdf-save.c:289
+#: ../plug-ins/common/file-pdf-save.c:290
 msgid "Portable Document Format"
 msgstr "Format de Document Portable"
 
@@ -3843,7 +3844,7 @@ msgid "Import from PDF"
 msgstr "Importa d'un PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1093 ../plug-ins/common/file-ps.c:2962
-#: ../plug-ins/common/file-tiff-load.c:483
+#: ../plug-ins/common/file-tiff-load.c:491
 msgid "_Import"
 msgstr "_Importa"
 
@@ -3865,7 +3866,6 @@ msgstr "_Resolució:"
 
 #. Antialiasing
 #: ../plug-ins/common/file-pdf-load.c:1182
-#, fuzzy
 msgid "Use _Anti-aliasing"
 msgstr "Su_avitza les vores"
 
@@ -3876,15 +3876,15 @@ msgstr "Su_avitza les vores"
 msgid "pixels/%a"
 msgstr "píxels/%a"
 
-#: ../plug-ins/common/file-pdf-save.c:304
+#: ../plug-ins/common/file-pdf-save.c:305
 msgid "_Create multipage PDF..."
 msgstr "Crea un PDF amb pàgines..."
 
-#: ../plug-ins/common/file-pdf-save.c:401
+#: ../plug-ins/common/file-pdf-save.c:412
 msgid "You must select a file to save!"
 msgstr "Heu de seleccionar un fitxer per desar."
 
-#: ../plug-ins/common/file-pdf-save.c:410
+#: ../plug-ins/common/file-pdf-save.c:422
 #, c-format
 msgid ""
 "An error occured while creating the PDF file:\n"
@@ -3897,47 +3897,47 @@ msgstr ""
 "Assegureu-vos que heu posat un nom de fitxer vàlid i que la ubicació no és "
 "de només lectura."
 
-#: ../plug-ins/common/file-pdf-save.c:733
-#: ../plug-ins/common/file-pdf-save.c:850
+#: ../plug-ins/common/file-pdf-save.c:746
+#: ../plug-ins/common/file-pdf-save.c:863
 msgid "Omit hidden layers and layers with zero opacity"
 msgstr "Omet les capes ocultes o les capes que tenen opacitat zero."
 
-#: ../plug-ins/common/file-pdf-save.c:737
-#: ../plug-ins/common/file-pdf-save.c:854
+#: ../plug-ins/common/file-pdf-save.c:750
+#: ../plug-ins/common/file-pdf-save.c:867
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "Converteix els mapes de bits en gràfics vectorials quan sigui possible"
 
-#: ../plug-ins/common/file-pdf-save.c:741
-#: ../plug-ins/common/file-pdf-save.c:858
+#: ../plug-ins/common/file-pdf-save.c:754
+#: ../plug-ins/common/file-pdf-save.c:871
 msgid "Apply layer masks before saving"
 msgstr "Aplica la màscara de la capa abans de desar"
 
-#: ../plug-ins/common/file-pdf-save.c:744
-#: ../plug-ins/common/file-pdf-save.c:861
+#: ../plug-ins/common/file-pdf-save.c:757
+#: ../plug-ins/common/file-pdf-save.c:874
 msgid "Keeping the masks will not change the output"
 msgstr "Si es conserven les màscares no afectarà la sortida"
 
-#: ../plug-ins/common/file-pdf-save.c:797
+#: ../plug-ins/common/file-pdf-save.c:810
 msgid "Save to:"
 msgstr "Desa-ho a:"
 
-#: ../plug-ins/common/file-pdf-save.c:801
+#: ../plug-ins/common/file-pdf-save.c:814
 msgid "Browse..."
 msgstr "Navega..."
 
-#: ../plug-ins/common/file-pdf-save.c:802
+#: ../plug-ins/common/file-pdf-save.c:815
 msgid "Multipage PDF export"
 msgstr "Exporta com a PDF amb pàgines"
 
-#: ../plug-ins/common/file-pdf-save.c:835
+#: ../plug-ins/common/file-pdf-save.c:848
 msgid "Remove the selected pages"
 msgstr "Suprimeix les pàgines seleccionades"
 
-#: ../plug-ins/common/file-pdf-save.c:845
+#: ../plug-ins/common/file-pdf-save.c:858
 msgid "Add this image"
 msgstr "Afegeix aquesta Imatge"
 
-#: ../plug-ins/common/file-pdf-save.c:958
+#: ../plug-ins/common/file-pdf-save.c:971
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Error: per tal de desar el fitxer, cal afegir com a mínim una imatge."
 
@@ -3987,16 +3987,15 @@ msgstr ""
 
 #: ../plug-ins/common/file-png.c:1238
 msgid "Apply PNG Offset"
-msgstr ""
+msgstr "Aplica el desplaçament PNG"
 
 #: ../plug-ins/common/file-png.c:1242
-#, fuzzy
 msgid "Ignore PNG offset"
-msgstr "Desplaçament del _forat:"
+msgstr "Ignora el desplaçament PNG"
 
 #: ../plug-ins/common/file-png.c:1243
 msgid "Apply PNG offset to layer"
-msgstr ""
+msgstr "Aplica el desplaçament PNG a la capa"
 
 #: ../plug-ins/common/file-png.c:1267
 #, c-format
@@ -4004,6 +4003,8 @@ msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
 "to apply this offset to the layer?"
 msgstr ""
+"La imatge PNG que esteu important té un desplaçament de %d, %d. Voleu "
+"aplicar aquest desplaçament a la capa?"
 
 #: ../plug-ins/common/file-png.c:1335
 #, c-format
@@ -4124,7 +4125,7 @@ msgid "PostScript save cannot handle images with alpha channels"
 msgstr ""
 "La funció de desar del PostScript no pot gestionar imatges amb canals alfa"
 
-#: ../plug-ins/common/file-ps.c:1804 ../plug-ins/common/file-tiff-load.c:999
+#: ../plug-ins/common/file-ps.c:1804 ../plug-ins/common/file-tiff-load.c:1007
 #, c-format
 msgid "Page %d"
 msgstr "Pàgina %d"
@@ -4595,31 +4596,31 @@ msgstr "Inferior esquerre"
 msgid "Top left"
 msgstr "Superior esquerre"
 
-#: ../plug-ins/common/file-tiff-load.c:240
-#: ../plug-ins/common/file-tiff-save.c:183
-#: ../plug-ins/common/file-tiff-save.c:200
+#: ../plug-ins/common/file-tiff-load.c:243
+#: ../plug-ins/common/file-tiff-save.c:186
+#: ../plug-ins/common/file-tiff-save.c:203
 msgid "TIFF image"
 msgstr "Imatge TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:310
+#: ../plug-ins/common/file-tiff-load.c:297
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "La imatge TIFF «%s» no conté cap directori"
 
-#: ../plug-ins/common/file-tiff-load.c:478
+#: ../plug-ins/common/file-tiff-load.c:486
 msgid "Import from TIFF"
 msgstr "Importa des d'un TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:780
+#: ../plug-ins/common/file-tiff-load.c:788
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-de-%d-pàgines"
 
-#: ../plug-ins/common/file-tiff-load.c:1015
+#: ../plug-ins/common/file-tiff-load.c:1023
 msgid "TIFF Channel"
 msgstr "Canal TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:1024
+#: ../plug-ins/common/file-tiff-load.c:1032
 #: ../plug-ins/file-psd/psd-load.c:333
 msgid ""
 "Warning:\n"
@@ -4632,7 +4633,7 @@ msgstr ""
 "gestionar-ne de 8 bits, per tant es convertirà automàticament. Es perdrà "
 "informació a causa d'aquesta conversió."
 
-#: ../plug-ins/common/file-tiff-save.c:888
+#: ../plug-ins/common/file-tiff-save.c:912
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -4640,48 +4641,48 @@ msgstr ""
 "El format TIFF només accepta comentaris en\n"
 "codificació ASCII de 7 bits. No es desarà cap comentari."
 
-#: ../plug-ins/common/file-tiff-save.c:1062
+#: ../plug-ins/common/file-tiff-save.c:1085
 msgid "TIFF"
 msgstr "TIFF"
 
 #. compression
-#: ../plug-ins/common/file-tiff-save.c:1070
+#: ../plug-ins/common/file-tiff-save.c:1093
 msgid "Compression"
 msgstr "Compressió"
 
-#: ../plug-ins/common/file-tiff-save.c:1074
+#: ../plug-ins/common/file-tiff-save.c:1097
 msgid "_None"
 msgstr "_Cap"
 
-#: ../plug-ins/common/file-tiff-save.c:1075
+#: ../plug-ins/common/file-tiff-save.c:1098
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/common/file-tiff-save.c:1076
+#: ../plug-ins/common/file-tiff-save.c:1099
 msgid "_Pack Bits"
 msgstr "_Paquet de bits"
 
-#: ../plug-ins/common/file-tiff-save.c:1077
+#: ../plug-ins/common/file-tiff-save.c:1100
 msgid "_Deflate"
 msgstr "_Desinfla"
 
-#: ../plug-ins/common/file-tiff-save.c:1078
+#: ../plug-ins/common/file-tiff-save.c:1101
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/common/file-tiff-save.c:1079
+#: ../plug-ins/common/file-tiff-save.c:1102
 msgid "CCITT Group _3 fax"
 msgstr "Fax CCITT grup _3"
 
-#: ../plug-ins/common/file-tiff-save.c:1080
+#: ../plug-ins/common/file-tiff-save.c:1103
 msgid "CCITT Group _4 fax"
 msgstr "Fax CCITT grup _4"
 
-#: ../plug-ins/common/file-tiff-save.c:1102
+#: ../plug-ins/common/file-tiff-save.c:1125
 msgid "Save _color values from transparent pixels"
 msgstr "Desa el valor dels _colors dels píxels transparents"
 
-#: ../plug-ins/common/file-tiff-save.c:1118 ../plug-ins/common/file-xbm.c:1235
+#: ../plug-ins/common/file-tiff-save.c:1141 ../plug-ins/common/file-xbm.c:1235
 msgid "Comment:"
 msgstr "Comentari:"
 
@@ -5034,9 +5035,9 @@ msgid ""
 msgstr ""
 "S'ha desat el cursor, però conté un o més fotogrames amb una mida nominal "
 "que no és compatible amb el gnome-appearance-properties.\n"
-"Podeu solucionar-ho comprovant que heu seleccionat l'opció «Reemplaça la "
-"mida de tots els fotogrames...» al diàleg de desar. Si no ho feu el cursor "
-"pot no aparèixer a gnome-appearance-properties."
+"Podeu solucionar-ho comprovant que heu seleccionat l'opció «Reemplaça la mida "
+"de tots els fotogrames...» al diàleg de desar. Si no ho feu el cursor pot no "
+"aparèixer a gnome-appearance-properties."
 
 #: ../plug-ins/common/file-xmc.c:1962
 #, c-format
@@ -7852,8 +7853,8 @@ msgid ""
 msgstr ""
 "Aquest camp és un suggeriment per a les entrades de camps numèrics. "
 "Especifica quants dígits decimals hauria de proveir el camp d'entrada per "
-"obtenir aproximadament la mateixa precisió que una entrada del camp "
-"«polzada» amb dos dígits decimals."
+"obtenir aproximadament la mateixa precisió que una entrada del camp «polzada» "
+"amb dos dígits decimals."
 
 #: ../plug-ins/common/unit-editor.c:104
 msgid "Symbol"
@@ -8620,8 +8621,7 @@ msgstr "«%s» no és un fitxer BMP vàlid"
 #: ../plug-ins/file-bmp/bmp-read.c:395
 #, c-format
 msgid "Error reading BMP file header from '%s'"
-msgstr ""
-"S'ha produït un error en llegir la capçalera del fitxer BMP des de «%s»"
+msgstr "S'ha produït un error en llegir la capçalera del fitxer BMP des de «%s»"
 
 #: ../plug-ins/file-bmp/bmp-read.c:588
 msgid "Unrecognized or invalid BMP compression format."
@@ -8691,19 +8691,19 @@ msgstr "32 bits"
 msgid "Windows BMP image"
 msgstr "Imatge BMP del Windows"
 
-#: ../plug-ins/file-compressor/file-compressor.c:162
+#: ../plug-ins/file-compressor/file-compressor.c:166
 msgid "gzip archive"
 msgstr "arxiu gzip"
 
-#: ../plug-ins/file-compressor/file-compressor.c:181
+#: ../plug-ins/file-compressor/file-compressor.c:185
 msgid "bzip archive"
 msgstr "arxiu bzip"
 
-#: ../plug-ins/file-compressor/file-compressor.c:388
+#: ../plug-ins/file-compressor/file-compressor.c:392
 msgid "No sensible file extension, saving as compressed XCF."
 msgstr "Es desconeix l'extensió del fitxer, es desarà com a XCF comprimit."
 
-#: ../plug-ins/file-compressor/file-compressor.c:444
+#: ../plug-ins/file-compressor/file-compressor.c:448
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr ""
 "Es desconeix l'extensió del fitxer, s'intentarà llegir el fitxer amb file "
@@ -9108,8 +9108,8 @@ msgid ""
 "Unable to save layer with mode '%s'.  Either the PSD file format or the save "
 "plug-in does not support that, using normal mode instead."
 msgstr ""
-"No s'ha pogut desar la capa amb mode «%s». O bé el format del fitxer PSD o "
-"bé el connector no ho permeten, haureu d'utilitzar el mode normal."
+"No s'ha pogut desar la capa amb mode «%s». O bé el format del fitxer PSD o bé "
+"el connector no ho permeten, haureu d'utilitzar el mode normal."
 
 #: ../plug-ins/file-psd/psd-save.c:634
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
@@ -11528,11 +11528,14 @@ msgid "Transformation %s"
 msgstr "Transformació %s"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:2413
+#: ../plug-ins/metadata/interface.c:507 ../plug-ins/metadata/interface.c:517
 msgid "Save failed"
 msgstr "No s'ha pogut desar"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:2496
 #: ../plug-ins/ifs-compose/ifs-compose.c:2509
+#: ../plug-ins/metadata/interface.c:413 ../plug-ins/metadata/interface.c:423
+#: ../plug-ins/metadata/interface.c:497
 msgid "Open failed"
 msgstr "No s'ha pogut obrir"
 
@@ -12281,6 +12284,7 @@ msgid "Default _URL:"
 msgstr "_URL per defecte:"
 
 #: ../plug-ins/imagemap/imap_settings.c:107
+#: ../plug-ins/metadata/interface.c:247
 msgid "_Description:"
 msgstr "_Descripció:"
 
@@ -12913,6 +12917,92 @@ msgstr "_Laberint..."
 msgid "Drawing maze"
 msgstr "S'està dibuixant el laberint"
 
+#: ../plug-ins/metadata/interface.c:110
+msgid "Property"
+msgstr "Propietats"
+
+#: ../plug-ins/metadata/interface.c:204 ../plug-ins/metadata/interface.c:206
+msgid "Description"
+msgstr "Descripció"
+
+#: ../plug-ins/metadata/interface.c:222
+msgid "Image _title:"
+msgstr "_Títol de la imatge:"
+
+#: ../plug-ins/metadata/interface.c:231
+msgid "_Author:"
+msgstr "_Autor:"
+
+#: ../plug-ins/metadata/interface.c:256
+msgid "Description _writer:"
+msgstr "Descripció de l'_autor:"
+
+#: ../plug-ins/metadata/interface.c:272
+msgid "_Keywords:"
+msgstr "_Paraules clau:"
+
+#. FIXME: add entries, cross-link with XMP model
+#: ../plug-ins/metadata/interface.c:284 ../plug-ins/metadata/interface.c:296
+#: ../plug-ins/metadata/interface.c:308 ../plug-ins/metadata/interface.c:320
+msgid "Empty"
+msgstr "Buit"
+
+#: ../plug-ins/metadata/interface.c:286
+msgid "Copyright"
+msgstr "Drets d'autor"
+
+#: ../plug-ins/metadata/interface.c:298
+msgid "Origin"
+msgstr "Original"
+
+#: ../plug-ins/metadata/interface.c:310
+msgid "Camera 1"
+msgstr "Càmera 1"
+
+#: ../plug-ins/metadata/interface.c:322
+msgid "Camera 2"
+msgstr "Càmera 2"
+
+#: ../plug-ins/metadata/interface.c:337
+msgid "Thumbnail"
+msgstr "Miniatura"
+
+#: ../plug-ins/metadata/interface.c:356
+msgid "Advanced"
+msgstr "Avançat"
+
+#: ../plug-ins/metadata/interface.c:447
+msgid "Import XMP from File"
+msgstr "Importa l'XMP des del fitxer"
+
+#: ../plug-ins/metadata/interface.c:498
+msgid "Cannot create file"
+msgstr "No es pot crear el fitxer"
+
+#: ../plug-ins/metadata/interface.c:508
+msgid "Some error occurred while saving"
+msgstr "S'ha produït un error en desar"
+
+#: ../plug-ins/metadata/interface.c:518
+msgid "Could not close the file"
+msgstr "No s'ha pogut tancar el fitxer"
+
+#: ../plug-ins/metadata/interface.c:540
+msgid "Export XMP to File"
+msgstr "Exporta l'XMP al fitxer"
+
+#: ../plug-ins/metadata/interface.c:607
+msgid "Image Properties"
+msgstr "Propietats de la imatge"
+
+#: ../plug-ins/metadata/interface.c:611
+msgid "_Import XMP..."
+msgstr "_Importa des de l'XMP..."
+
+#: ../plug-ins/metadata/interface.c:612
+msgid "_Export XMP..."
+msgstr "_Exporta l'XMP..."
+
 #: ../plug-ins/metadata/metadata.c:185
 msgid "View and edit metadata (EXIF, IPTC, XMP)"
 msgstr "Visualitza i edita les metadades (EXIF, IPTC, XMP)"
@@ -13176,6 +13266,19 @@ msgstr "Captura de _pantalla..."
 #: ../plug-ins/win-snap/winsnap.c:1149
 msgid "No data captured"
 msgstr "No s'ha capturat cap dada"
+
+#~ msgid "image via GEGL"
+#~ msgstr "Imatge per mitjà de GEGL"
+
+#~| msgid "Could not load '%s': %s"
+#~ msgid "Could not open '%s'"
+#~ msgstr "No s'ha pogut obrir «%s»"
+
+#~ msgid "Exercise a goat"
+#~ msgstr "Passeja la cabra"
+
+#~ msgid "Goat-exercise"
+#~ msgstr "Goat-exercise"
 
 #~ msgid ""
 #~ "Error starting Ghostscript. Make sure that Ghostscript is installed and - "
