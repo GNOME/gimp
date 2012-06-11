@@ -7,6 +7,8 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "gimp-intl.h"
 
 static const guint8 goatpb2[];
@@ -562,20 +564,20 @@ static gboolean
 inv_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data)
 {
 	switch (event->keyval) {
-	case GDK_Left:
-	case GDK_KP_Left:
-	case GDK_Pointer_Left:
+	case GDK_KEY_Left:
+	case GDK_KEY_KP_Left:
+	case GDK_KEY_Pointer_Left:
 		inv_left_pressed = TRUE;
 		inv_left_released = FALSE;
 		return TRUE;
-	case GDK_Right:
-	case GDK_KP_Right:
-	case GDK_Pointer_Right:
+	case GDK_KEY_Right:
+	case GDK_KEY_KP_Right:
+	case GDK_KEY_Pointer_Right:
 		inv_right_pressed = TRUE;
 		inv_right_released = FALSE;
 		return TRUE;
-	case GDK_space:
-	case GDK_KP_Space:
+	case GDK_KEY_space:
+	case GDK_KEY_KP_Space:
 		inv_fire_pressed = TRUE;
 		inv_fire_released = FALSE;
 		return TRUE;
@@ -589,26 +591,26 @@ static gboolean
 inv_key_release (GtkWidget *widget, GdkEventKey *event, gpointer data)
 {
 	switch (event->keyval) {
-	case GDK_Left:
-	case GDK_KP_Left:
-	case GDK_Pointer_Left:
+	case GDK_KEY_Left:
+	case GDK_KEY_KP_Left:
+	case GDK_KEY_Pointer_Left:
 		inv_left_released = TRUE;
 		return TRUE;
-	case GDK_Right:
-	case GDK_KP_Right:
-	case GDK_Pointer_Right:
+	case GDK_KEY_Right:
+	case GDK_KEY_KP_Right:
+	case GDK_KEY_Pointer_Right:
 		inv_right_released = TRUE;
 		return TRUE;
-	case GDK_space:
-	case GDK_KP_Space:
+	case GDK_KEY_space:
+	case GDK_KEY_KP_Space:
 		inv_fire_released = TRUE;
 		return TRUE;
-	case GDK_q:
-	case GDK_Q:
+	case GDK_KEY_q:
+	case GDK_KEY_Q:
 		gtk_widget_destroy (widget);
 		return TRUE;
-	case GDK_p:
-	case GDK_P:
+	case GDK_KEY_p:
+	case GDK_KEY_P:
 		inv_paused = ! inv_paused;
 		inv_show_status ();
 		return TRUE;
@@ -807,7 +809,7 @@ gimp_lebl_dialog (void)
 	geginv_canvas = gtk_drawing_area_new ();
 	gtk_widget_set_size_request (geginv_canvas, inv_width, inv_height);
 
-	vbox = gtk_vbox_new (FALSE, 0);
+	vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 	gtk_container_add (GTK_CONTAINER (geginv), vbox);
 	gtk_box_pack_start (GTK_BOX (vbox), geginv_canvas, TRUE, TRUE, 0);
 
@@ -837,7 +839,7 @@ gimp_lebl_dialog (void)
 			  G_CALLBACK (inv_key_press), NULL);
 	g_signal_connect (G_OBJECT (geginv), "key_release_event",
 			  G_CALLBACK (inv_key_release), NULL);
-	g_signal_connect (GTK_OBJECT (geginv_canvas), "expose_event",
+	g_signal_connect (G_OBJECT (geginv_canvas), "expose_event",
 			  G_CALLBACK (inv_expose), NULL);
 
 	g_slist_foreach (inv_shots, (GFunc)g_free, NULL);
