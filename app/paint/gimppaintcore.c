@@ -328,7 +328,8 @@ gimp_paint_core_start (GimpPaintCore     *core,
                        const GimpCoords  *coords,
                        GError           **error)
 {
-  GimpItem *item;
+  GimpImage *image;
+  GimpItem  *item;
 
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
@@ -337,7 +338,8 @@ gimp_paint_core_start (GimpPaintCore     *core,
   g_return_val_if_fail (coords != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  item = GIMP_ITEM (drawable);
+  item  = GIMP_ITEM (drawable);
+  image = gimp_item_get_image (item);
 
   if (core->stroke_buffer)
     {
@@ -373,7 +375,6 @@ gimp_paint_core_start (GimpPaintCore     *core,
 
   if (core->use_saved_proj)
     {
-      GimpImage    *image    = gimp_item_get_image (item);
       GimpPickable *pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
       GeglBuffer   *buffer   = gimp_pickable_get_buffer (pickable);
 
@@ -399,14 +400,10 @@ gimp_paint_core_start (GimpPaintCore     *core,
   core->last_paint.y = -1e6;
 
   {
-    GimpImage   *image;
-    GimpChannel *mask;
+    GimpChannel *mask        = gimp_image_get_mask (image);
     GeglBuffer  *mask_buffer = NULL;
     gint         offset_x    = 0;
     gint         offset_y    = 0;
-
-    image = gimp_item_get_image (item);
-    mask  = gimp_image_get_mask (image);
 
     /*  don't apply the mask to itself and don't apply an empty mask  */
     if (GIMP_DRAWABLE (mask) == drawable || gimp_channel_is_empty (mask))
