@@ -136,9 +136,9 @@ gimp_operation_set_alpha_set_property (GObject      *object,
 static void
 gimp_operation_set_alpha_prepare (GeglOperation *operation)
 {
-  gegl_operation_set_format (operation, "input",  babl_format ("R'G'B'A float"));
+  gegl_operation_set_format (operation, "input",  babl_format ("RGBA float"));
   gegl_operation_set_format (operation, "aux",    babl_format ("Y float"));
-  gegl_operation_set_format (operation, "output", babl_format ("R'G'B'A float"));
+  gegl_operation_set_format (operation, "output", babl_format ("RGBA float"));
 }
 
 static gboolean
@@ -162,9 +162,10 @@ gimp_operation_set_alpha_process (GeglOperation       *operation,
           dest[RED]   = src[RED];
           dest[GREEN] = src[GREEN];
           dest[BLUE]  = src[BLUE];
-          dest[ALPHA] = self->value * src[0];
+          dest[ALPHA] = self->value * *aux;
 
           src  += 4;
+          aux  += 1;
           dest += 4;
         }
     }
