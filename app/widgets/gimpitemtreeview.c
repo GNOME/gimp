@@ -1491,7 +1491,7 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
 
     case GIMP_UNDO_ITEM_LINKED:
       setter     = gimp_item_set_linked;
-      exclusive  = NULL;
+      exclusive  = gimp_item_toggle_exclusive_linked;
       break;
 
     default:
