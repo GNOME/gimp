@@ -305,11 +305,11 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
 
           GIMP_LOG (SAVE_DIALOG, "basename has no '.', trying to add extension");
 
-          if (! save_proc)
+          if (! save_proc && ! dialog->export)
             {
               ext = "xcf";
             }
-          else if (save_proc->extensions_list)
+          else if (save_proc && save_proc->extensions_list)
             {
               ext = save_proc->extensions_list->data;
             }
