@@ -469,6 +469,15 @@ gimp_unified_transform_tool_draw (GimpDrawTool *draw_tool)
                              tr_tool->tcx, tr_tool->tcy,
                              d, d,
                              GIMP_HANDLE_ANCHOR_CENTER);
+  /* draw an item at 40,80 in screen coordinates */
+  //gint x, y;
+  //gimp_display_shell_untransform_xy (gimp_display_get_shell (tool->display),
+  //                                 40, 80, &x, &y, TRUE);
+  //gimp_draw_tool_add_handle (draw_tool,
+  //                           GIMP_HANDLE_SQUARE,
+  //                           x, y,
+  //                           5, 5,
+  //                           GIMP_HANDLE_ANCHOR_CENTER);
 
   gimp_draw_tool_pop_group (draw_tool);
 
