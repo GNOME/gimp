@@ -17,8 +17,8 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-05-29 11:23+0000\n"
-"PO-Revision-Date: 2012-05-10 18:04+0200\n"
+"POT-Creation-Date: 2012-06-12 21:07+0000\n"
+"PO-Revision-Date: 2012-06-13 10:07+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -8487,6 +8487,11 @@ msgstr "Eliminar un parásito del elemento"
 msgid "Set Item Exclusive Visible"
 msgstr "Define al elemento como exclusivo visible"
 
+#: ../app/core/gimpitem-exclusive.c:172
+#| msgid "Set Item Exclusive Visible"
+msgid "Set Item Exclusive Linked"
+msgstr "Definir al elemento como exclusivo enlazado"
+
 #: ../app/core/gimplayer-floating-sel.c:95
 msgctxt "undo-type"
 msgid "Anchor Floating Selection"
@@ -14477,7 +14482,7 @@ msgid "Percentage of width of brush"
 msgstr "Porcentaje del ancho del pincel"
 
 #: ../app/widgets/gimpbufferview.c:179 ../app/widgets/gimpbufferview.c:264
-#: ../app/widgets/gimpeditor.c:748
+#: ../app/widgets/gimpeditor.c:747
 msgid "(None)"
 msgstr "(Ninguno)"
 
@@ -14505,17 +14510,17 @@ msgstr "Filtros activos"
 msgid "Reset the selected filter to default values"
 msgstr "Reiniciar el filtro seleccionado con los valores predeterminados"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:496
+#: ../app/widgets/gimpcolordisplayeditor.c:503
 #, c-format
 msgid "Add '%s' to the list of active filters"
 msgstr "Añadir «%s» a la lista de filtros activos"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:533
+#: ../app/widgets/gimpcolordisplayeditor.c:540
 #, c-format
 msgid "Remove '%s' from the list of active filters"
 msgstr "Quitar «%s» de la lista de filtros activos"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:564
+#: ../app/widgets/gimpcolordisplayeditor.c:571
 msgid "No filter selected"
 msgstr "No hay ningún filtro seleccionado"
 
