@@ -1064,7 +1064,7 @@ text_handler           (GMarkupParseContext  *markup_context,
 
     case STATE_INSIDE_ALT_LI_RSC_IMG:
       {
-        size_t  len, max_size;
+        size_t  max_size;
         guchar *decoded;
         gint    decoded_size;
         gint    state;
@@ -1073,8 +1073,7 @@ text_handler           (GMarkupParseContext  *markup_context,
 #ifdef DEBUG_XMP_PARSER
         /* g_print ("XMP: Pushing text:\n%s\n", text); */
 #endif
-        len = text_len - text_len;
-        max_size = (len / 4) * 3 + 3;
+        max_size = (text_len / 4) * 3 + 3;
         decoded = g_malloc (max_size);
 
         state = 0;
