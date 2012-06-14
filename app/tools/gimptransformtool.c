@@ -339,7 +339,7 @@ gimp_transform_tool_button_press (GimpTool            *tool,
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
   if (tr_tool->function == TRANSFORM_CREATING)
-    gimp_transform_tool_oper_update (tool, coords, state, TRUE, display);
+    GIMP_TOOL_GET_CLASS (tool)->oper_update (tool, coords, state, TRUE, display);
 
   tr_tool->lastx = tr_tool->mousex = coords->x;
   tr_tool->lasty = tr_tool->mousey = coords->y;

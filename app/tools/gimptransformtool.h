@@ -34,8 +34,8 @@ typedef enum
   TRANSFORM_HANDLE_S,  /* south      */
   TRANSFORM_HANDLE_E,  /* east       */
   TRANSFORM_HANDLE_W,  /* west       */
-  TRANSFORM_HANDLE_PIVOT,  /* pivot for rotation and scaling */
   TRANSFORM_HANDLE_CENTER, /* for moving */
+  TRANSFORM_HANDLE_PIVOT,  /* pivot for rotation and scaling */
   /* extra handles for unified tool */
   TRANSFORM_HANDLE_NW_P, /* perspective handles */
   TRANSFORM_HANDLE_NE_P,
