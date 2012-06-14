@@ -704,7 +704,7 @@ static inline gdouble calcangle (GimpVector2 a, GimpVector2 b) {
     b.y = -b.x;
     b.x = angle2;
     angle2 = acos (dotprod (a, b)/length);
-    return -((angle2 > G_PI/2.) ? 2*G_PI-angle : angle);
+    return ((angle2 > G_PI/2.) ? angle : 2*G_PI-angle);
 }
 
 static inline GimpVector2 rotate2d (GimpVector2 p, gdouble angle) {
@@ -723,6 +723,9 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
   gint i;
   gboolean horizontal = FALSE;
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (transform_tool);
+  gboolean constrain = options->constrain;
+  gboolean fromcenter = options->alternate;
+  TransformAction function = transform_tool->function;
 
   x[0] = &transform_tool->trans_info[X0];
   x[1] = &transform_tool->trans_info[X1];
@@ -745,12 +748,46 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
   pivot_x = &transform_tool->trans_info[PIVOT_X];
   pivot_y = &transform_tool->trans_info[PIVOT_Y];
 
+  if (function == TRANSFORM_HANDLE_CENTER)
+    {
+      gdouble dx = transform_tool->curx - transform_tool->mousex;
+      gdouble dy = transform_tool->cury - transform_tool->mousey;
+      if (constrain)
+        {
+          /* snap to 45 degree vectors from starting point */
+          gdouble angle = calcangle ((GimpVector2){1., 0.}, (GimpVector2){dx, dy}) / (2.*G_PI);
+          if (angle < 1./16 || angle > 15./16)
+            dy = 0;
+          else if (angle < 3./16)
+            dy = -(dx = sqrt (dx*dx+dy*dy)/sqrt (2));
+          else if (angle < 5./16)
+            dx = 0;
+          else if (angle < 7./16)
+            dx = dy = -sqrt (dx*dx+dy*dy)/sqrt (2);
+          else if (angle < 9./16)
+            dy = 0;
+          else if (angle < 11./16)
+            dx = -(dy = sqrt (dx*dx+dy*dy)/sqrt (2));
+          else if (angle < 13./16)
+            dx = 0;
+          else if (angle < 15./16)
+            dx = dy = sqrt (dx*dx+dy*dy)/sqrt (2);
+        }
+      for (i = 0; i < 4; i++)
+      {
+        *x[i] = px[i] + dx;
+        *y[i] = py[i] + dy;
+      }
+    }
+
+  /* old code below */
+#if 0
   if (options->alternate)
     {
       gdouble *x0, *x1, *y0, *y1;
       gboolean moveedge = FALSE;
 
-      switch (transform_tool->function)
+      switch (function)
         {
         case TRANSFORM_HANDLE_W:
           x0 = x[0]; y0 = y[0];
@@ -809,7 +846,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
         }
     }
 
-  switch (transform_tool->function)
+  switch (function)
     {
     case TRANSFORM_HANDLE_NW:
     case TRANSFORM_HANDLE_NE:
@@ -829,7 +866,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       return;
     }
     case TRANSFORM_HANDLE_CENTER:
-      if (options->constrain) {
+      if (constrain) {
         diff_y = diff_x;
       }
       *x[0] += diff_x;
@@ -852,7 +889,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       horizontal = TRUE;
     case TRANSFORM_HANDLE_N:
     case TRANSFORM_HANDLE_S:
-      if (! options->constrain)
+      if (!constrain)
         {
           for (i = 0; i < 4; i++)
             {
@@ -879,6 +916,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
     default:
       break;
     }
+#endif
 }
 
 static void
