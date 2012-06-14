@@ -48,6 +48,22 @@ G_DEFINE_TYPE (GimpOperationNormalMode, gimp_operation_normal_mode,
 
 #define parent_class gimp_operation_normal_mode_parent_class
 
+static const gchar* reference_xml = "<?xml version='1.0' encoding='UTF-8'?>"
+"<gegl>"
+"<node operation='gimp:normal-mode'>"
+"  <node operation='gegl:load'>"
+"    <params>"
+"      <param name='path'>blending-test-B.png</param>"
+"    </params>"
+"  </node>"
+"</node>"
+"<node operation='gegl:load'>"
+"  <params>"
+"    <param name='path'>blending-test-A.png</param>"
+"  </params>"
+"</node>"
+"</gegl>";
+
 
 static void
 gimp_operation_normal_mode_class_init (GimpOperationNormalModeClass *klass)
@@ -62,7 +78,7 @@ gimp_operation_normal_mode_class_init (GimpOperationNormalModeClass *klass)
                                  "name",                  "gimp:normal-mode",
                                  "description",           "GIMP normal mode operation",
                                  "reference-image",       "normal-mode.png",
-                                 "reference-composition", "normal-mode.xml",
+                                 "reference-composition", reference_xml,
                                  NULL);
 
   operation_class->process     = gimp_operation_normal_parent_process;

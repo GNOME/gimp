@@ -43,6 +43,22 @@ static gboolean gimp_operation_softlight_mode_process (GeglOperation       *oper
 G_DEFINE_TYPE (GimpOperationSoftlightMode, gimp_operation_softlight_mode,
                GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
+static const gchar* reference_xml = "<?xml version='1.0' encoding='UTF-8'?>"
+"<gegl>"
+"<node operation='gimp:softlight-mode'>"
+"  <node operation='gegl:load'>"
+"    <params>"
+"      <param name='path'>B.png</param>"
+"    </params>"
+"  </node>"
+"</node>"
+"<node operation='gegl:load'>"
+"  <params>"
+"    <param name='path'>A.png</param>"
+"  </params>"
+"</node>"
+"</gegl>";
+
 
 static void
 gimp_operation_softlight_mode_class_init (GimpOperationSoftlightModeClass *klass)
@@ -56,6 +72,8 @@ gimp_operation_softlight_mode_class_init (GimpOperationSoftlightModeClass *klass
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:softlight-mode",
                                  "description", "GIMP softlight mode operation",
+                                 "reference-image", "soft-light-mode.png",
+                                 "reference-composition", reference_xml,
                                  NULL);
 
   operation_class->prepare = gimp_operation_softlight_mode_prepare;

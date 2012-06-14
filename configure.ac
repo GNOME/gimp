@@ -2159,6 +2159,7 @@ app/base/Makefile
 app/config/Makefile
 app/core/Makefile
 app/operations/Makefile
+app/operations/tests/Makefile
 app/gegl/Makefile
 app/dialogs/Makefile
 app/display/Makefile

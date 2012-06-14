@@ -1,4 +1,5 @@
 ## Process this file with automake to produce Makefile.in
+SUBDIRS = tests
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Operations\"

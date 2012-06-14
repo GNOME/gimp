@@ -27,14 +27,109 @@
 
 #include "app/operations/gimp-operations.h"
 
-#define DATA_DIR "files"
-#define OUTPUT_DIR "operations-output"
+#define DATA_DIR "data"
+#define OUTPUT_DIR "output"
+#define PI M_PI
 
 
-static inline gfloat
-square (gfloat x)
+static inline gdouble
+square (gdouble x)
 {
   return x * x;
+}
+
+static gdouble
+cie76 (gfloat *src1,
+       gfloat *src2)
+{
+  return sqrt (square (src1[0] - src2[0]) +
+               square (src1[1] - src2[1]) +
+               square (src1[2] - src2[2]));
+}
+
+static gdouble
+cie94 (gfloat* src1,
+       gfloat* src2)
+{
+  gdouble L1, L2, a1, b1, a2, b2, C1, C2, dL, dC, dH, dE;
+
+  L1 = src1[0];
+  a1 = src1[1];
+  b1 = src1[2];
+  L2 = src2[0];
+  a2 = src2[1];
+  b2 = src2[2];
+  dL = L1 - L2;
+  C1 = sqrt (square (a1) + square (b1));
+  C2 = sqrt (square (a2) + square (b2));
+  dC = C1 - C2;
+  dH = sqrt (square (a1 - a2) + square (b1 - b2) - square (dC));
+  dE = sqrt (square (dL) + square (dC / (1 + 0.045 * C1)) + square (dH / (1 + 0.015 * C1)));
+
+  return dE;
+}
+
+/*
+ * CIE 2000 delta E colour comparison
+ */
+static gdouble
+delta_e (gfloat* src1,
+         gfloat* src2)
+{
+  gdouble L1, L2, a1, a2, b1, b2, La_, C1, C2, Ca, G, a1_, a2_, C1_,
+    C2_, Ca_, h1_, h2_, Ha_, T, dh_, dL_, dC_, dH_, Sl, Sc, Sh, dPhi,
+    Rc, Rt, dE, tmp;
+
+  L1 = src1[0];
+  L2 = src2[0];
+  a1 = src1[1];
+  a2 = src2[1];
+  b1 = src1[2];
+  b2 = src2[2];
+
+  La_ = (L1 + L2) / 2.0;
+  C1 = sqrt (square (a1) + square (b1));
+  C2 = sqrt (square (a2) + square (b2));
+  Ca = (C1 + C2) / 2.0;
+  tmp = pow (Ca, 7);
+  G = (1 - sqrt (tmp / (tmp + pow (25, 7)))) / 2.0;
+  a1_ = a1 * (1 + G);
+  a2_ = a2 * (1 + G);
+  C1_ = sqrt (square (a1_) + square (b1));
+  C2_ = sqrt (square (a2_) + square (b2));
+  Ca_ = (C1_ + C2_) / 2.0;
+  tmp = atan2 (b1, a1_) * 180 / PI;
+  h1_ = (tmp >= 0.0) ? tmp : tmp + 360;
+  tmp = atan2 (b2, a2_) * 180 / PI;
+  h2_ = (tmp >= 0) ? tmp: tmp + 360;
+  tmp = abs (h1_ - h2_);
+  Ha_ = (tmp > 180) ? (h1_ + h2_ + 360) / 2.0 : (h1_ + h2_) / 2.0;
+  T = 1 - 0.17 * cos ((Ha_ - 30) * PI / 180) +
+    0.24 * cos ((Ha_ * 2) * PI / 180) +
+    0.32 * cos ((Ha_ * 3 + 6) * PI / 180) -
+    0.2 * cos ((Ha_ * 4 - 63) * PI / 180);
+  if (tmp <= 180)
+    dh_ = h2_ - h1_;
+  else if (tmp > 180 && h2_ <= h1_)
+    dh_ = h2_ - h1_ + 360;
+  else
+    dh_ = h2_ - h1_ - 360;
+  dL_ = L2 - L1;
+  dC_ = C2_ - C1_;
+  dH_ = 2 * sqrt (C1_ * C2_) * sin (dh_ / 2.0 * PI / 180);
+  tmp = square (La_ - 50);
+  Sl = 1 + 0.015 * tmp / sqrt (20 + tmp);
+  Sc = 1 + 0.045 * Ca_;
+  Sh = 1 + 0.015 * Ca_ * T;
+  dPhi = 30 * exp (-square ((Ha_ - 275) / 25.0));
+  tmp = pow (Ca_, 7);
+  Rc = 2 * sqrt (tmp / (tmp + pow (25, 7)));
+  Rt = -Rc * sin (2 * dPhi * PI / 180);
+
+  dE = sqrt (square (dL_ / Sl) + square (dC_ / Sc) +
+             square (dH_ / Sh) + Rt * dC_ * dH_ / Sc / Sh);
+
+  return dE;
 }
 
 /*
@@ -109,13 +204,11 @@ image_compare (gchar *composition_path,
      b = bufB;
      d = debug;
 
-     for (i=0; i<pixels; i++)
+     for (i=0; i < pixels; i++)
        {
-         gdouble diff = sqrt (square (a[0]-b[0])+
-                              square (a[1]-b[1])+
-                              square (a[2]-b[2])
-                              /*+square (a[3]-b[3])*/);
-         if (diff >= 0.01)
+         gdouble diff = delta_e (a, b);
+
+         if (diff >= 0.1)
            {
              wrong_pixels++;
              diffsum += diff;
@@ -143,11 +236,9 @@ image_compare (gchar *composition_path,
      if (wrong_pixels)
        for (i = 0; i < pixels; i++)
          {
-           gdouble diff = sqrt (square (a[0]-b[0])+
-                                square (a[1]-b[1])+
-                                square (a[2]-b[2])
-                                /*+square (a[3]-b[3])*/);
-           if (diff >= 0.01)
+           gdouble diff = delta_e (a, b);
+
+           if (diff >= 0.1)
              {
                d[0] = (100-a[0])/100.0*64+32;
                d[1] = (diff/max_diff * 255);
@@ -168,8 +259,12 @@ image_compare (gchar *composition_path,
      gegl_buffer_linear_close (bufferB, bufB);
      gegl_buffer_linear_close (debug_buf, debug);
 
-     if (max_diff >= 0.1)
+     if (max_diff > 1.5)
        {
+         GeglNode *graph, *sink;
+         gchar    *debug_path;
+         gint      ext_length;
+
          g_print ("\nBuffers differ\n"
                   "  wrong pixels   : %i/%i (%2.2f%%)\n"
                   "  max Δe         : %2.3f\n"
@@ -179,24 +274,20 @@ image_compare (gchar *composition_path,
                   diffsum/wrong_pixels,
                   diffsum/pixels);
 
+         debug_path = g_malloc (strlen (composition_path)+16);
+         ext_length = strlen (strrchr (composition_path, '.'));
+
+         memcpy (debug_path, composition_path, strlen (composition_path)+1);
+         memcpy (debug_path + strlen(composition_path)-ext_length, "-diff.png", 11);
+         graph = gegl_graph (sink=gegl_node ("gegl:png-save",
+                                             "path", debug_path, NULL,
+                                             gegl_node ("gegl:buffer-source",
+                                                        "buffer", debug_buf, NULL)));
+         gegl_node_process (sink);
+         g_object_unref (graph);
+         g_object_unref (debug_buf);
+
          result = FALSE;
-
-         if (max_diff > 1.5)
-           {
-             GeglNode *graph, *sink;
-             gchar    *debug_path = g_malloc (strlen (composition_path)+16);
-             gint      ext_length = strlen (strrchr (composition_path, '.'));
-
-             memcpy (debug_path, composition_path, strlen (composition_path)+1);
-             memcpy (debug_path + strlen(composition_path)-ext_length, "-diff.png", 11);
-             graph = gegl_graph (sink=gegl_node ("gegl:png-save",
-                                                 "path", debug_path, NULL,
-                                                 gegl_node ("gegl:buffer-source",
-                                                            "buffer", debug_buf, NULL)));
-             gegl_node_process (sink);
-             g_object_unref (graph);
-             g_object_unref (debug_buf);
-           }
        }
   }
 
@@ -235,20 +326,14 @@ process_operations (GType type)
       if (image && xml)
         {
           gchar    *root        = g_get_current_dir ();
+          gchar    *xml_root    = g_build_path (G_DIR_SEPARATOR_S, root, DATA_DIR, NULL);
           gchar    *image_path  = g_build_path (G_DIR_SEPARATOR_S, root, DATA_DIR, image, NULL);
-          gchar    *xml_path    = g_build_path (G_DIR_SEPARATOR_S, root, DATA_DIR, xml, NULL);
           gchar    *output_path = g_build_path (G_DIR_SEPARATOR_S, root, OUTPUT_DIR, image, NULL);
           GeglNode *composition, *output;
 
           g_printf ("%s: ", gegl_operation_class_get_key (operation_class, "name"));
 
-          if (!g_file_test (xml_path, G_FILE_TEST_EXISTS))
-            {
-              g_printerr ("\nCan't locate %s\n", xml_path);
-              result = FALSE;
-            }
-
-          composition = gegl_node_new_from_file (xml_path);
+          composition = gegl_node_new_from_xml (xml, xml_root);
           if (!composition)
             {
               g_printerr ("\nComposition graph is flawed\n");
@@ -266,19 +351,19 @@ process_operations (GType type)
               if (image_compare (output_path, image_path))
                 {
                   g_printf ("PASS\n");
-                  result = TRUE;
+                  result = result && TRUE;
                 }
               else
                 {
                   g_printf ("FAIL\n");
-                  result = FALSE;
+                  result = result && FALSE;
                 }
             }
 
           g_object_unref (composition);
           g_free (root);
+          g_free (xml_root);
           g_free (image_path);
-          g_free (xml_path);
           g_free (output_path);
         }
 
@@ -290,12 +375,6 @@ process_operations (GType type)
   return result;
 }
 
-/**
- * test_operations:
- *
- * Test GIMP's GEGL operations that supply a reference image
- * and composition xml.
- **/
 static void
 test_operations (void)
 {
