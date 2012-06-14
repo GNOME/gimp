@@ -22,8 +22,6 @@
 #include "gimpdrawtool.h"
 
 
-#define TRANS_INFO_SIZE 10
-
 typedef enum
 {
   TRANSFORM_CREATING,
@@ -36,9 +34,25 @@ typedef enum
   TRANSFORM_HANDLE_S,  /* south      */
   TRANSFORM_HANDLE_E,  /* east       */
   TRANSFORM_HANDLE_W,  /* west       */
-  TRANSFORM_HANDLE_PIVOT, /* pivot for rotation and scaling */
-  TRANSFORM_HANDLE_CENTER /* for moving */
+  TRANSFORM_HANDLE_PIVOT,  /* pivot for rotation and scaling */
+  TRANSFORM_HANDLE_CENTER, /* for moving */
+  /* extra handles for unified tool */
+  TRANSFORM_HANDLE_NW_P, /* perspective handles */
+  TRANSFORM_HANDLE_NE_P,
+  TRANSFORM_HANDLE_SW_P,
+  TRANSFORM_HANDLE_SE_P,
+  TRANSFORM_HANDLE_N_S,  /* shearing handles */
+  TRANSFORM_HANDLE_S_S,
+  TRANSFORM_HANDLE_E_S,
+  TRANSFORM_HANDLE_W_S,
+  TRANSFORM_HANDLE_ROTATION, /* rotation handle */
+
+  TRANSFORM_HANDLE_NUM /* keep this last so *handles[] is the right size */
 } TransformAction;
+
+/* This is not the number of items in the enum above, but the max size of the
+ * enums at the top of each transformation tool, stored in trans_info and related */
+#define TRANS_INFO_SIZE 10
 
 typedef gdouble TransInfo[TRANS_INFO_SIZE];
 
@@ -74,7 +88,7 @@ struct _GimpTransformTool
   gint            x1, y1;          /*  upper left hand coordinate        */
   gint            x2, y2;          /*  lower right hand coords           */
   gdouble         cx, cy;          /*  center point (for moving)         */
-  gdouble         px, py;          /*  pivot point (for rotation)        */
+  gdouble         px, py;          /*  pivot point (for rotation/scaling)*/
   gdouble         aspect;          /*  original aspect ratio             */
 
   gdouble         tx1, ty1;        /*  transformed handle coords         */
@@ -102,7 +116,7 @@ struct _GimpTransformTool
   gboolean        use_mid_handles; /*  use handles at midpoints of edges */
   gboolean        use_pivot;       /*  use pivot point                   */
 
-  GimpCanvasItem *handles[TRANSFORM_HANDLE_CENTER + 1];
+  GimpCanvasItem *handles[TRANSFORM_HANDLE_NUM];
 
   const gchar    *progress_text;
 

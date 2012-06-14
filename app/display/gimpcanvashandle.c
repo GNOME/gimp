@@ -277,6 +277,8 @@ gimp_canvas_handle_transform (GimpCanvasItem   *item,
     case GIMP_HANDLE_CIRCLE:
     case GIMP_HANDLE_FILLED_CIRCLE:
     case GIMP_HANDLE_CROSS:
+    case GIMP_HANDLE_DIAMOND:
+    case GIMP_HANDLE_FILLED_DIAMOND:
       gimp_canvas_item_shift_to_center (private->anchor,
                                         *x, *y,
                                         private->width,
@@ -344,6 +346,20 @@ gimp_canvas_handle_draw (GimpCanvasItem   *item,
       _gimp_canvas_item_stroke (item, cr);
       break;
 
+    case GIMP_HANDLE_DIAMOND:
+    case GIMP_HANDLE_FILLED_DIAMOND:
+      cairo_move_to (cr, x, y - (gdouble) private->height / 2.0);
+      cairo_line_to (cr, x + (gdouble) private->width / 2.0, y);
+      cairo_line_to (cr, x, y + (gdouble) private->height / 2.0);
+      cairo_line_to (cr, x - (gdouble) private->width / 2.0, y);
+      cairo_line_to (cr, x, y - (gdouble) private->height / 2.0);
+
+      if (private->type == GIMP_HANDLE_DIAMOND)
+        _gimp_canvas_item_stroke (item, cr);
+      else
+        _gimp_canvas_item_fill (item, cr);
+      break;
+
     default:
       break;
     }
@@ -372,10 +388,12 @@ gimp_canvas_handle_get_extents (GimpCanvasItem   *item,
     case GIMP_HANDLE_CIRCLE:
     case GIMP_HANDLE_FILLED_CIRCLE:
     case GIMP_HANDLE_CROSS:
-      rectangle.x      = x - private->width  / 2 - 1.5;
-      rectangle.y      = y - private->height / 2 - 1.5;
-      rectangle.width  = private->width  + 3.0;
-      rectangle.height = private->height + 3.0;
+    case GIMP_HANDLE_DIAMOND:
+    case GIMP_HANDLE_FILLED_DIAMOND:
+      rectangle.x      = x - private->width  / 2 - 2.0;
+      rectangle.y      = y - private->height / 2 - 2.0;
+      rectangle.width  = private->width  + 4.0;
+      rectangle.height = private->height + 4.0;
       break;
 
     default:
@@ -421,6 +439,11 @@ gimp_canvas_handle_hit (GimpCanvasItem   *item,
 
         return ((SQR (handle_tx - tx) + SQR (handle_ty - ty)) < SQR (width));
       }
+
+    case GIMP_HANDLE_DIAMOND:
+    case GIMP_HANDLE_FILLED_DIAMOND:
+      return ((ABS (handle_tx - tx) + ABS (handle_ty - ty)) < ABS (private->width));
+      break;
 
     default:
       break;
