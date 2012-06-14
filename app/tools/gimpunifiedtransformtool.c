@@ -719,7 +719,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
 {
   gdouble diff_x = transform_tool->curx - transform_tool->lastx,
           diff_y = transform_tool->cury - transform_tool->lasty;
-  gdouble *x[4], *y[4], px[4], py[4], *pivot_x, *pivot_y;
+  gdouble *x[4], *y[4], px[5], py[5], *pivot_x, *pivot_y, ppivot_x, ppivot_y;
   gint i;
   gboolean horizontal = FALSE;
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (transform_tool);
@@ -735,7 +735,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
   y[1] = &transform_tool->trans_info[Y1];
   y[2] = &transform_tool->trans_info[Y2];
   y[3] = &transform_tool->trans_info[Y3];
-  
+
   px[0] = (*transform_tool->prev_trans_info)[X0];
   px[1] = (*transform_tool->prev_trans_info)[X1];
   px[2] = (*transform_tool->prev_trans_info)[X2];
@@ -745,8 +745,14 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
   py[2] = (*transform_tool->prev_trans_info)[Y2];
   py[3] = (*transform_tool->prev_trans_info)[Y3];
 
+  px[4] = (px[0] + px[1] + px[2] + px[3]) / 4.;
+  py[4] = (py[0] + py[1] + py[2] + py[3]) / 4.;
+  
   pivot_x = &transform_tool->trans_info[PIVOT_X];
   pivot_y = &transform_tool->trans_info[PIVOT_Y];
+
+  ppivot_x = (*transform_tool->prev_trans_info)[PIVOT_X];
+  ppivot_y = (*transform_tool->prev_trans_info)[PIVOT_Y];
 
   if (function == TRANSFORM_HANDLE_CENTER)
     {
@@ -799,6 +805,39 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
         *x[i] = m.x;
         *y[i] = m.y;
       }
+    }
+
+  if (function == TRANSFORM_HANDLE_PIVOT)
+    {
+      gdouble dx = transform_tool->curx - transform_tool->mousex;
+      gdouble dy = transform_tool->cury - transform_tool->mousey;
+
+      gint screenx, screeny;
+
+      if (constrain)
+        {
+          /* snap to corner points and center */
+          gint closest;
+          gdouble closest_dist = G_MAXDOUBLE, dist;
+          for (i = 0; i < 5; i++)
+            {
+              dist = norm (vectorsubtract ((GimpVector2){transform_tool->curx, transform_tool->cury}, (GimpVector2){px[i], py[i]}));
+              if (dist < closest_dist)
+                {
+                  closest_dist = dist;
+                  closest = i;
+                }
+            }
+          if (closest_dist * gimp_display_get_shell (GIMP_TOOL (transform_tool)->display)->scale_x < 50)
+            {
+              *pivot_x = px[closest];
+              *pivot_y = py[closest];
+
+              return;
+            }
+        }
+      *pivot_x = ppivot_x + dx;
+      *pivot_y = ppivot_y + dy;
     }
 
   /* old code below */
