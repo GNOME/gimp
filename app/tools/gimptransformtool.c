@@ -392,12 +392,6 @@ gimp_transform_tool_button_release (GimpTool              *tool,
 
   if (release_type != GIMP_BUTTON_RELEASE_CANCEL)
     {
-      /* Shift-clicking is another way to approve the transform  */
-      if ((state & GDK_SHIFT_MASK) || ! tr_tool->use_grid)
-        {
-          gimp_transform_tool_response (NULL, GTK_RESPONSE_OK, tr_tool);
-        }
-
       /* We're done with an interaction, save it on the undo list */
       gimp_transform_tool_push_internal_undo (tr_tool);
     }
