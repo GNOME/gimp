@@ -148,6 +148,7 @@ static void
 gimp_transform_tool_set_function (GimpTransformTool *tr_tool,
                                   TransformAction    function)
 {
+  GimpTool *tool = GIMP_TOOL (tr_tool);
   if (function != tr_tool->function)
     {
       if (tr_tool->handles[tr_tool->function] &&
@@ -155,6 +156,7 @@ gimp_transform_tool_set_function (GimpTransformTool *tr_tool,
         {
           gimp_canvas_item_set_highlight (tr_tool->handles[tr_tool->function],
                                           FALSE);
+          gimp_tool_pop_status (tool, tool->display);
         }
 
       tr_tool->function = function;
@@ -164,6 +166,7 @@ gimp_transform_tool_set_function (GimpTransformTool *tr_tool,
         {
           gimp_canvas_item_set_highlight (tr_tool->handles[tr_tool->function],
                                           TRUE);
+          gimp_tool_push_status (tool, tool->display, "%i", tr_tool->function);
         }
     }
 }
