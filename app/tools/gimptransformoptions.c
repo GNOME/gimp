@@ -368,17 +368,29 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
     }
   else if (tool_options->tool_info->tool_type == GIMP_TYPE_UNIFIED_TRANSFORM_TOOL)
     {
-      alternate = (_("Move points  (%s)"));
-      constrain_label = constrain_tip = (_("Keep aspect when scaling  (%s)"));
+      alternate = (_("From center  (%s)"));
+      constrain_label = constrain_tip = (_("Constrain/snap movement  (%s)"));
     }
 
+  /* The constrain behaviour is not what is in the spec, it would make the help labels essays */
+  /* spec:
+   * constrain move,rotate,perspective = ctrl
+   * keep aspect scale = shift
+   * from centre scale,shear = ctrl
+   * free shear = shift
+   * centre/corner rotate = ctrl
+   * real life:
+   * constrain move,rotate,perspective,scale(aspect),shear,rotation axis = ctrl
+   * from centre scale, shear = shift
+   */
+  /* TODO: should we just hardcode ctrl and shift here instead of using the not really applicably named functions? */
   if (alternate)
     {
       GtkWidget *button;
       gchar     *label;
 
       label = g_strdup_printf (alternate,
-                               gimp_get_mod_string (GDK_MOD1_MASK));
+                               gimp_get_mod_string (gimp_get_extend_selection_mask ()));
 
       button = gimp_prop_check_button_new (config, "alternate", label);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);

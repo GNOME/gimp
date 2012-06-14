@@ -500,7 +500,7 @@ gimp_transform_tool_modifier_key (GimpTool        *tool,
                   "constrain", ! options->constrain,
                   NULL);
 
-  if (key == GDK_MOD1_MASK)
+  if (key == gimp_get_extend_selection_mask ())
     g_object_set (options,
                   "alternate", ! options->alternate,
                   NULL);
