@@ -780,6 +780,27 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       }
     }
 
+  if (function == TRANSFORM_HANDLE_ROTATION)
+    {
+      GimpVector2 m = { .x = transform_tool->curx,   .y = transform_tool->cury };
+      GimpVector2 p = { .x = transform_tool->mousex, .y = transform_tool->mousey };
+      GimpVector2 c = { .x = ppivot_x,               .y = ppivot_y };
+      gdouble angle = calcangle (vectorsubtract (m, c), vectorsubtract (p, c));
+      if (constrain)
+        {
+          /* round to 15 degree multiple */
+          angle /= 2*G_PI/24.;
+          angle = round (angle);
+          angle *= 2*G_PI/24.;
+        }
+      for (i = 0; i < 4; i++) {
+        p.x = px[i]; p.y = py[i];
+        m = vectoradd (c, rotate2d (vectorsubtract (p, c), angle));
+        *x[i] = m.x;
+        *y[i] = m.y;
+      }
+    }
+
   /* old code below */
 #if 0
   if (options->alternate)
