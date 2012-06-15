@@ -721,8 +721,8 @@ static inline GimpVector2 rotate2d (GimpVector2 p, gdouble angle) {
 static void
 gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
 {
-  gdouble diff_x = transform_tool->curx - transform_tool->lastx,
-          diff_y = transform_tool->cury - transform_tool->lasty;
+  gdouble dx = transform_tool->curx - transform_tool->mousex;
+  gdouble dy = transform_tool->cury - transform_tool->mousey;
   gdouble *x[4], *y[4], px[5], py[5], *pivot_x, *pivot_y, ppivot_x, ppivot_y;
   gint i;
   gboolean horizontal = FALSE;
@@ -749,6 +749,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
   py[2] = (*transform_tool->prev_trans_info)[Y2];
   py[3] = (*transform_tool->prev_trans_info)[Y3];
 
+  /* put center point in this array too */
   px[4] = (px[0] + px[1] + px[2] + px[3]) / 4.;
   py[4] = (py[0] + py[1] + py[2] + py[3]) / 4.;
   
@@ -761,8 +762,6 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
   /* move */
   if (function == TRANSFORM_HANDLE_CENTER)
     {
-      gdouble dx = transform_tool->curx - transform_tool->mousex;
-      gdouble dy = transform_tool->cury - transform_tool->mousey;
       if (constrain)
         {
           /* snap to 45 degree vectors from starting point */
@@ -816,9 +815,6 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
   /* move rotation axis */
   if (function == TRANSFORM_HANDLE_PIVOT)
     {
-      gdouble dx = transform_tool->curx - transform_tool->mousex;
-      gdouble dy = transform_tool->cury - transform_tool->mousey;
-
       gint screenx, screeny;
 
       if (constrain)
@@ -877,8 +873,6 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       function == TRANSFORM_HANDLE_SE_P ||
       function == TRANSFORM_HANDLE_SW_P)
     {
-      gdouble dx = transform_tool->curx - transform_tool->mousex;
-      gdouble dy = transform_tool->cury - transform_tool->mousey;
       gint this, left, right, opposite;
 
       /* 0: northwest, 1: northeast, 2: southwest, 3: southeast */
@@ -937,108 +931,8 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
 
   /* old code below */
 #if 0
-  if (options->alternate)
-    {
-      gdouble *x0, *x1, *y0, *y1;
-      gboolean moveedge = FALSE;
-
-      switch (function)
-        {
-        case TRANSFORM_HANDLE_W:
-          x0 = x[0]; y0 = y[0];
-          x1 = x[2]; y1 = y[2];
-          moveedge = TRUE;
-          break;
-
-        case TRANSFORM_HANDLE_S:
-          x0 = x[2]; y0 = y[2];
-          x1 = x[3]; y1 = y[3];
-          moveedge = TRUE;
-          break;
-
-        case TRANSFORM_HANDLE_N:
-          x0 = x[0]; y0 = y[0];
-          x1 = x[1]; y1 = y[1];
-          moveedge = TRUE;
-          break;
-
-        case TRANSFORM_HANDLE_E:
-          x0 = x[1]; y0 = y[1];
-          x1 = x[3]; y1 = y[3];
-          moveedge = TRUE;
-          break;
-
-        case TRANSFORM_HANDLE_NW:
-          *x[0] += diff_x;
-          *y[0] += diff_y;
-          return;
-
-        case TRANSFORM_HANDLE_NE:
-          *x[1] += diff_x;
-          *y[1] += diff_y;
-          return;
-
-        case TRANSFORM_HANDLE_SW:
-          *x[2] += diff_x;
-          *y[2] += diff_y;
-          return;
-
-        case TRANSFORM_HANDLE_SE:
-          *x[3] += diff_x;
-          *y[3] += diff_y;
-          return;
-
-        default:
-          break;
-        }
-      if (moveedge)
-        {
-          *x0 += diff_x;
-          *x1 += diff_x;
-          *y0 += diff_y;
-          *y1 += diff_y;
-          return;
-        }
-    }
-
   switch (function)
     {
-    case TRANSFORM_HANDLE_NW:
-    case TRANSFORM_HANDLE_NE:
-    case TRANSFORM_HANDLE_SW:
-    case TRANSFORM_HANDLE_SE:
-    {
-      GimpVector2 m = { .x = transform_tool->curx,   .y = transform_tool->cury };
-      GimpVector2 p = { .x = transform_tool->mousex, .y = transform_tool->mousey };
-      GimpVector2 c = { .x = *pivot_x,               .y = *pivot_y };
-      gdouble angle = calcangle (vectorsubtract (m, c), vectorsubtract (p, c));
-      for (i = 0; i < 4; i++) {
-        p.x = px[i]; p.y = py[i];
-        m = vectoradd (c, rotate2d (vectorsubtract (p, c), angle));
-        *x[i] = m.x;
-        *y[i] = m.y;
-      }
-      return;
-    }
-    case TRANSFORM_HANDLE_CENTER:
-      if (constrain) {
-        diff_y = diff_x;
-      }
-      *x[0] += diff_x;
-      *y[0] += diff_y;
-      *x[1] += diff_x;
-      *y[1] += diff_y;
-      *x[2] += diff_x;
-      *y[2] += diff_y;
-      *x[3] += diff_x;
-      *y[3] += diff_y;
-      break;
-
-    case TRANSFORM_HANDLE_PIVOT:
-      *pivot_x += diff_x;
-      *pivot_y += diff_y;
-      break;
-
     case TRANSFORM_HANDLE_E:
     case TRANSFORM_HANDLE_W:
       horizontal = TRUE;
