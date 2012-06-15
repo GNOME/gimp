@@ -859,12 +859,43 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       //TODO: scale through side
     }
 
+  /* shear */
   if (function == TRANSFORM_HANDLE_N_S ||
       function == TRANSFORM_HANDLE_E_S ||
       function == TRANSFORM_HANDLE_S_S ||
       function == TRANSFORM_HANDLE_W_S)
     {
-      //TODO: shear
+      gint left, right;
+
+      if (function == TRANSFORM_HANDLE_N_S) {
+        left = 1; right = 0;
+      } else if (function == TRANSFORM_HANDLE_W_S) {
+        left = 0; right = 2;
+      } else if (function == TRANSFORM_HANDLE_S_S) {
+        left = 2; right = 3;
+      } else if (function == TRANSFORM_HANDLE_E_S) {
+        left = 3; right = 1;
+      } else g_assert_not_reached ();
+
+      if (constrain)
+        {
+          /* restrict to movement along the side */
+          GimpVector2 lp = { .x = px[left],  .y = py[left] },
+                      rp = { .x = px[right], .y = py[right] },
+                      p =  { .x = dx,        .y = dy },
+                      side = vectorsubtract (rp, lp);
+
+          p = vectorproject (p, side);
+
+          dx = p.x;
+          dy = p.y;
+        }
+
+      *x[left] = px[left] + dx;
+      *y[left] = py[left] + dy;
+
+      *x[right] = px[right] + dx;
+      *y[right] = py[right] + dy;
     }
 
   /* perspective transform */
