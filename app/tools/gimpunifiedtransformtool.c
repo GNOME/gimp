@@ -865,8 +865,11 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       function == TRANSFORM_HANDLE_S_S ||
       function == TRANSFORM_HANDLE_W_S)
     {
-      gint left, right;
+      /* o for the opposite edge, for fromcenter */
+      gint left, right, lefto, righto;
+      gdouble dxo, dyo;
 
+      /* set up indices for this edge and the opposite edge */
       if (function == TRANSFORM_HANDLE_N_S) {
         left = 1; right = 0;
       } else if (function == TRANSFORM_HANDLE_W_S) {
@@ -876,6 +879,19 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       } else if (function == TRANSFORM_HANDLE_E_S) {
         left = 3; right = 1;
       } else g_assert_not_reached ();
+
+      lefto  = 3 - left;
+      righto = 3 - right;
+
+      if (fromcenter)
+        {
+          dxo = -dx;
+          dyo = -dy;
+        }
+      else
+        {
+          dxo = dyo = 0;
+        }
 
       if (constrain)
         {
@@ -891,11 +907,33 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
           dy = p.y;
         }
 
+      if (constrain && fromcenter)
+        {
+          /* restrict to movement along the opposite side */
+          GimpVector2 lp = { .x = px[lefto],  .y = py[lefto] },
+                      rp = { .x = px[righto], .y = py[righto] },
+                      p =  { .x = dxo,        .y = dyo },
+                      side = vectorsubtract (rp, lp);
+
+          p = vectorproject (p, side);
+
+          dxo = p.x;
+          dyo = p.y;
+        }
+
       *x[left] = px[left] + dx;
       *y[left] = py[left] + dy;
 
       *x[right] = px[right] + dx;
       *y[right] = py[right] + dy;
+
+      /* We have to set these unconditionally, or the opposite edge will stay
+       * in place when you toggle the fromcenter constraint during an action */
+      *x[lefto] = px[lefto] + dxo;
+      *y[lefto] = py[lefto] + dyo;
+
+      *x[righto] = px[righto] + dxo;
+      *y[righto] = py[righto] + dyo;
     }
 
   /* perspective transform */
