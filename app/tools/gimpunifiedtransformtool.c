@@ -696,6 +696,10 @@ static inline GimpVector2 scalemult (GimpVector2 a, gdouble b) {
     return c;
 }
 
+static inline GimpVector2 vectorproject (GimpVector2 a, GimpVector2 b) {
+    return scalemult (b, dotprod (a, b)/dotprod (b, b));
+}
+
 /* finds the clockwise angle between the vectors given, 0-2π */
 static inline gdouble calcangle (GimpVector2 a, GimpVector2 b) {
     gdouble angle, angle2, length = norm (a) * norm (b);
@@ -754,6 +758,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
   ppivot_x = (*transform_tool->prev_trans_info)[PIVOT_X];
   ppivot_y = (*transform_tool->prev_trans_info)[PIVOT_Y];
 
+  /* move */
   if (function == TRANSFORM_HANDLE_CENTER)
     {
       gdouble dx = transform_tool->curx - transform_tool->mousex;
@@ -786,6 +791,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       }
     }
 
+  /* rotate */
   if (function == TRANSFORM_HANDLE_ROTATION)
     {
       GimpVector2 m = { .x = transform_tool->curx,   .y = transform_tool->cury };
@@ -807,6 +813,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       }
     }
 
+  /* move rotation axis */
   if (function == TRANSFORM_HANDLE_PIVOT)
     {
       gdouble dx = transform_tool->curx - transform_tool->mousex;
@@ -817,7 +824,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       if (constrain)
         {
           /* snap to corner points and center */
-          gint closest;
+          gint closest = 0;
           gdouble closest_dist = G_MAXDOUBLE, dist;
           for (i = 0; i < 5; i++)
             {
@@ -838,6 +845,94 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
         }
       *pivot_x = ppivot_x + dx;
       *pivot_y = ppivot_y + dy;
+    }
+
+  if (function == TRANSFORM_HANDLE_NW ||
+      function == TRANSFORM_HANDLE_NE ||
+      function == TRANSFORM_HANDLE_SE ||
+      function == TRANSFORM_HANDLE_SW)
+    {
+      //TODO: scale through corner
+    }
+
+  if (function == TRANSFORM_HANDLE_N ||
+      function == TRANSFORM_HANDLE_E ||
+      function == TRANSFORM_HANDLE_S ||
+      function == TRANSFORM_HANDLE_W)
+    {
+      //TODO: scale through side
+    }
+
+  if (function == TRANSFORM_HANDLE_N_S ||
+      function == TRANSFORM_HANDLE_E_S ||
+      function == TRANSFORM_HANDLE_S_S ||
+      function == TRANSFORM_HANDLE_W_S)
+    {
+      //TODO: shear
+    }
+
+  /* perspective transform */
+  if (function == TRANSFORM_HANDLE_NW_P ||
+      function == TRANSFORM_HANDLE_NE_P ||
+      function == TRANSFORM_HANDLE_SE_P ||
+      function == TRANSFORM_HANDLE_SW_P)
+    {
+      gdouble dx = transform_tool->curx - transform_tool->mousex;
+      gdouble dy = transform_tool->cury - transform_tool->mousey;
+      gint this, left, right, opposite;
+
+      /* 0: northwest, 1: northeast, 2: southwest, 3: southeast */
+      if (function == TRANSFORM_HANDLE_NW_P) {
+        this = 0; left = 1; right = 2; opposite = 3;
+      } else if (function == TRANSFORM_HANDLE_NE_P) {
+        this = 1; left = 3; right = 0; opposite = 2;
+      } else if (function == TRANSFORM_HANDLE_SW_P) {
+        this = 2; left = 0; right = 3; opposite = 1;
+      } else if (function == TRANSFORM_HANDLE_SE_P) {
+        this = 3; left = 2; right = 1; opposite = 0;
+      } else g_assert_not_reached ();
+
+      if (constrain)
+        { /* when the constrain transformation constraint is enabled, the
+             translation shall only be either along the side angles of the
+             two sides that run to this corner point, or along the
+             diagonal that runs trough this corner point. */
+
+          GimpVector2 l = { .x = px[left],     .y = py[left] };
+          GimpVector2 r = { .x = px[right],    .y = py[right] };
+          GimpVector2 o = { .x = px[opposite], .y = py[opposite] };
+          GimpVector2 t = { .x = px[this],     .y = py[this] };
+          GimpVector2 p = { .x = dx,           .y = dy };
+          GimpVector2 lp, rp, op;
+          gdouble rej_lp, rej_rp, rej_op;
+
+          /* get the vectors along the sides and the diagonal */
+          l = vectorsubtract (t, l);
+          r = vectorsubtract (t, r);
+          o = vectorsubtract (t, o);
+
+          /* project p on l, r and o and see which has the shortest rejection */
+          lp = vectorproject (p, l);
+          rp = vectorproject (p, r);
+          op = vectorproject (p, o);
+
+          rej_lp = norm (vectorsubtract (p, lp));
+          rej_rp = norm (vectorsubtract (p, rp));
+          rej_op = norm (vectorsubtract (p, op));
+
+          if (rej_lp < rej_rp && rej_lp < rej_op)
+            p = lp;
+          else if (rej_rp < rej_op)
+            p = rp;
+          else
+            p = op;
+
+          dx = p.x;
+          dy = p.y;
+        }
+
+      *x[this] = px[this] + dx;
+      *y[this] = py[this] + dy;
     }
 
   /* old code below */
