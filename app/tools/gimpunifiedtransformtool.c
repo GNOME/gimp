@@ -748,7 +748,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
   gboolean horizontal = FALSE;
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (transform_tool);
   gboolean constrain = options->constrain;
-  gboolean fromcenter = options->alternate;
+  gboolean frompivot = options->alternate;
   TransformAction function = transform_tool->function;
 
   x[0] = &transform_tool->trans_info[X0];
@@ -863,13 +863,13 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       *pivot_y = ppivot_y + dy;
     }
 
+  /* scaling via corner */
   if (function == TRANSFORM_HANDLE_NW ||
       function == TRANSFORM_HANDLE_NE ||
       function == TRANSFORM_HANDLE_SE ||
       function == TRANSFORM_HANDLE_SW)
     {
-      //TODO: scale through corner
-      /* Scaling through scale handles means translating one corner points,
+      /* Scaling through scale handles means translating one corner point,
        * with all sides at constant angles. */
 
       gint this, left, right, opposite;
@@ -885,11 +885,13 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
         this = 3; left = 2; right = 1; opposite = 0;
       } else g_assert_not_reached ();
 
-      GimpVector2 lp = { .x = px[left],     .y = py[left] },
-                  rp = { .x = px[right],    .y = py[right] },
-                  tp = { .x = px[this],     .y = py[this] },
-                  op = { .x = px[opposite], .y = py[opposite] },
-                  p =  { .x = dx,           .y = dy };
+      GimpVector2 lp    = { .x = px[left],     .y = py[left] },
+                  rp    = { .x = px[right],    .y = py[right] },
+                  tp    = { .x = px[this],     .y = py[this] },
+                  op    = { .x = px[opposite], .y = py[opposite] },
+                  p     = { .x = dx,           .y = dy },
+                  pivot = { .x = ppivot_x,     .y = ppivot_y },
+                  nt, nr, nl, no = op;
 
       /* when the keep aspect transformation constraint is enabled, the
        * translation shall only be along the diagonal that runs trough
@@ -909,57 +911,76 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
        * op----------/
        *
        */
-      tp = vectoradd (tp, p);
+      nt = vectoradd (tp, p);
+
+      /* in frompivot mode, the part of the frame over the pivot must stay
+       * in the same place during the operation */
+      if (frompivot)
+        {
+          //TODO: this is wrong, only works in the simple case where pivot point
+          //is in the center and the transform is affine
+          //Maybe it would work better to simply do this last by generating the
+          //transform matrix, applying it to the pivot point, the undoing that
+          //movement from everything?
+
+          /* Move the opposite point's x component and y component the same
+           * ratio away from the pivot point as this point */
+          GimpVector2 old = vectorsubtract (pivot, tp);
+          GimpVector2 new = vectorsubtract (pivot, nt);
+          no = vectorsubtract (no, pivot);
+          no.x *= new.x / old.x;
+          no.y *= new.y / old.y;
+          no = vectoradd (no, pivot);
+        }
 
       /* Where the corner to the right and left would go, need these to form
        * lines to intersect with the sides */
       /*    rp----------/
        *   /\          /\
-       *  /  nr       /  tp
+       *  /  nr       /  nt
        * op----------lp
        *              \
        *               nl
        */
 
-      GimpVector2 nr = vectoradd (rp, p);
-      GimpVector2 nl = vectoradd (lp, p);
+      nr = vectoradd (rp, p);
+      nl = vectoradd (lp, p);
 
-      /* Now we just need to find the intersection of op-rp and nr-tp */
+      /* Now we just need to find the intersection of op-rp and nr-nt.
+       * If frompivot mode is active, then op also moved,
+       * so we add no-op to rp */
       /*    rp----------/
        *   /           /
-       *  /  nr==========tp
+       *  /  nr==========nt
        * op----------/
        *
        */
-      nr = lineintersect (nr, tp, op, rp);
-      nl = lineintersect (nl, tp, op, lp);
+      nr = lineintersect (nr, nt, no, vectoradd (rp, vectorsubtract (no, op)));
+      nl = lineintersect (nl, nt, no, vectoradd (lp, vectorsubtract (no, op)));
       /*    /-----------/
        *   /           /
-       *  rp============tp
+       *  rp============nt
        * op----------/
        *
        */
 
-      *x[this] = tp.x;
-      *y[this] = tp.y;
+      *x[this] = nt.x;
+      *y[this] = nt.y;
 
       *x[right] = nr.x;
       *y[right] = nr.y;
 
       *x[left] = nl.x;
       *y[left] = nl.y;
+
+      *x[opposite] = no.x;
+      *y[opposite] = no.y;
       /*
        *
        *  /--------------/
        * /--------------/
        *
        */
-
-      /* when the from centre transformation constraint is enabled, the
-       * translation shall also translate the diagonally opposite corner
-       * points by the same distance, however with the angle of the
-       * vector 180 degrees rotated. */
-      if (fromcenter) {}
     }
 
   if (function == TRANSFORM_HANDLE_N ||
@@ -976,7 +997,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       function == TRANSFORM_HANDLE_S_S ||
       function == TRANSFORM_HANDLE_W_S)
     {
-      /* o for the opposite edge, for fromcenter */
+      /* o for the opposite edge, for frompivot */
       gint left, right, lefto, righto;
       gdouble dxo, dyo;
 
@@ -994,7 +1015,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       lefto  = 3 - left;
       righto = 3 - right;
 
-      if (fromcenter)
+      if (frompivot)
         {
           dxo = -dx;
           dyo = -dy;
@@ -1018,7 +1039,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
           dy = p.y;
         }
 
-      if (constrain && fromcenter)
+      if (constrain && frompivot)
         {
           /* restrict to movement along the opposite side */
           GimpVector2 lp = { .x = px[lefto],  .y = py[lefto] },
@@ -1039,7 +1060,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       *y[right] = py[right] + dy;
 
       /* We have to set these unconditionally, or the opposite edge will stay
-       * in place when you toggle the fromcenter constraint during an action */
+       * in place when you toggle the frompivot constraint during an action */
       *x[lefto] = px[lefto] + dxo;
       *y[lefto] = py[lefto] + dyo;
 
