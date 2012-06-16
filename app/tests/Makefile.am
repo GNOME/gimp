@@ -22,7 +22,6 @@ TESTS = \
 	test-core					\
 	test-gimpidtable				\
 	test-gimptilebackendtilemanager			\
-	test-operations \
 	test-save-and-export				\
 	test-session-2-6-compatibility			\
 	test-session-2-8-compatibility-multi-window	\
@@ -35,7 +34,7 @@ TESTS = \
 EXTRA_PROGRAMS = $(TESTS)
 CLEANFILES = $(EXTRA_PROGRAMS)
 
-$(TESTS): gimpdir-output operations-output
+$(TESTS): gimpdir-output
 
 noinst_LIBRARIES = libgimpapptestutils.a
 libgimpapptestutils_a_SOURCES = \
@@ -139,8 +138,5 @@ gimpdir-output:
 	mkdir -p gimpdir-output/patterns
 	mkdir -p gimpdir-output/gradients
 
-operations-output:
-	mkdir -p operations-output
-
 clean-local:
-	rm -rf gimpdir-output operations-output
+	rm -rf gimpdir-output
