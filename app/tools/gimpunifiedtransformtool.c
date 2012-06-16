@@ -718,6 +718,26 @@ static inline GimpVector2 rotate2d (GimpVector2 p, gdouble angle) {
     return ret;
 }
 
+static inline GimpVector2 lineintersect (GimpVector2 p1, GimpVector2 p2,
+                                         GimpVector2 q1, GimpVector2 q2) {
+    gdouble denom, u;
+    GimpVector2 p;
+
+    denom = (q2.y-q1.y) * (p2.x-p1.x) - (q2.x-q1.x) * (p2.y-p1.y);
+    if (denom == 0.0) {
+        p.x = (p1.x + p2.x + q1.x + q2.x) / 4;
+        p.y = (p1.y + p2.y + q1.y + q2.y) / 4;
+    } else {
+        u = (q2.x-q1.x) * (p1.y-q1.y) - (q2.y-q1.y) * (p1.x-q1.x);
+        u /= denom;
+
+        p.x = p1.x + u * (p2.x - p1.x);
+        p.y = p1.y + u * (p2.y - p1.y);
+    }
+
+    return p;
+}
+
 static void
 gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
 {
@@ -752,7 +772,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
   /* put center point in this array too */
   px[4] = (px[0] + px[1] + px[2] + px[3]) / 4.;
   py[4] = (py[0] + py[1] + py[2] + py[3]) / 4.;
-  
+
   pivot_x = &transform_tool->trans_info[PIVOT_X];
   pivot_y = &transform_tool->trans_info[PIVOT_Y];
 
@@ -849,6 +869,97 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       function == TRANSFORM_HANDLE_SW)
     {
       //TODO: scale through corner
+      /* Scaling through scale handles means translating one corner points,
+       * with all sides at constant angles. */
+
+      gint this, left, right, opposite;
+
+      /* 0: northwest, 1: northeast, 2: southwest, 3: southeast */
+      if (function == TRANSFORM_HANDLE_NW) {
+        this = 0; left = 1; right = 2; opposite = 3;
+      } else if (function == TRANSFORM_HANDLE_NE) {
+        this = 1; left = 3; right = 0; opposite = 2;
+      } else if (function == TRANSFORM_HANDLE_SW) {
+        this = 2; left = 0; right = 3; opposite = 1;
+      } else if (function == TRANSFORM_HANDLE_SE) {
+        this = 3; left = 2; right = 1; opposite = 0;
+      } else g_assert_not_reached ();
+
+      GimpVector2 lp = { .x = px[left],     .y = py[left] },
+                  rp = { .x = px[right],    .y = py[right] },
+                  tp = { .x = px[this],     .y = py[this] },
+                  op = { .x = px[opposite], .y = py[opposite] },
+                  p =  { .x = dx,           .y = dy };
+
+      /* when the keep aspect transformation constraint is enabled, the
+       * translation shall only be along the diagonal that runs trough
+       * this corner point. */
+      if (constrain)
+        {
+          /* restrict to movement along the diagonal */
+          GimpVector2 diag = vectorsubtract (tp, op);
+
+          p = vectorproject (p, diag);
+        }
+
+      /* Move the corner being interacted with */
+      /*    rp---------tp
+       *   /           /\ <- p, the interaction vector
+       *  /           /  tp
+       * op----------/
+       *
+       */
+      tp = vectoradd (tp, p);
+
+      /* Where the corner to the right and left would go, need these to form
+       * lines to intersect with the sides */
+      /*    rp----------/
+       *   /\          /\
+       *  /  nr       /  tp
+       * op----------lp
+       *              \
+       *               nl
+       */
+
+      GimpVector2 nr = vectoradd (rp, p);
+      GimpVector2 nl = vectoradd (lp, p);
+
+      /* Now we just need to find the intersection of op-rp and nr-tp */
+      /*    rp----------/
+       *   /           /
+       *  /  nr==========tp
+       * op----------/
+       *
+       */
+      nr = lineintersect (nr, tp, op, rp);
+      nl = lineintersect (nl, tp, op, lp);
+      /*    /-----------/
+       *   /           /
+       *  rp============tp
+       * op----------/
+       *
+       */
+
+      *x[this] = tp.x;
+      *y[this] = tp.y;
+
+      *x[right] = nr.x;
+      *y[right] = nr.y;
+
+      *x[left] = nl.x;
+      *y[left] = nl.y;
+      /*
+       *
+       *  /--------------/
+       * /--------------/
+       *
+       */
+
+      /* when the from centre transformation constraint is enabled, the
+       * translation shall also translate the diagonally opposite corner
+       * points by the same distance, however with the angle of the
+       * vector 180 degrees rotated. */
+      if (fromcenter) {}
     }
 
   if (function == TRANSFORM_HANDLE_N ||
