@@ -738,9 +738,14 @@ gimp_display_shell_constructed (GObject *object)
     }
   else
     {
+#if 0
+      /* Disabled because it sets GDK_POINTER_MOTION_HINT on
+       * shell->canvas. For info see Bug 677375
+       */
       gimp_help_set_help_data (shell->canvas,
                                _("Drop image files here to open them"),
                                NULL);
+#endif
 
       gimp_statusbar_empty (GIMP_STATUSBAR (shell->statusbar));
     }
@@ -1315,9 +1320,10 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
   gimp_display_shell_unset_cursor (shell);
 
   gimp_display_shell_appearance_update (shell);
-
+#if 0
   gimp_help_set_help_data (shell->canvas,
                            _("Drop image files here to open them"), NULL);
+#endif
 
   gimp_statusbar_empty (GIMP_STATUSBAR (shell->statusbar));
 
@@ -1366,8 +1372,9 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
   gimp_display_shell_sync_config (shell, shell->display->config);
 
   gimp_display_shell_appearance_update (shell);
-
+#if 0
   gimp_help_set_help_data (shell->canvas, NULL, NULL);
+#endif
 
   gimp_statusbar_fill (GIMP_STATUSBAR (shell->statusbar));
 
