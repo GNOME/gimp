@@ -772,6 +772,8 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
   px[4] = (px[0] + px[1] + px[2] + px[3]) / 4.;
   py[4] = (py[0] + py[1] + py[2] + py[3]) / 4.;
 
+  //TODO: pivot point must transform along with the frame in all
+  //transformations, not just move
   pivot_x = &transform_tool->trans_info[PIVOT_X];
   pivot_y = &transform_tool->trans_info[PIVOT_Y];
 
@@ -807,6 +809,8 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
         *x[i] = px[i] + dx;
         *y[i] = py[i] + dy;
       }
+      *pivot_x = ppivot_x + dx;
+      *pivot_y = ppivot_y + dy;
     }
 
   /* rotate */
@@ -1010,6 +1014,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
         }
     }
 
+  /* scaling via sides */
   if (function == TRANSFORM_HANDLE_N ||
       function == TRANSFORM_HANDLE_E ||
       function == TRANSFORM_HANDLE_S ||
