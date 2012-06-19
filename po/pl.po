@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-10 19:23+0200\n"
-"PO-Revision-Date: 2012-05-10 19:24+0200\n"
+"POT-Creation-Date: 2012-06-19 21:51+0200\n"
+"PO-Revision-Date: 2012-06-19 21:52+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -1012,7 +1012,7 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:118
 #: ../app/actions/tool-options-commands.c:72
-#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1523
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1519
 #: ../app/core/gimppalette-import.c:211 ../app/core/gimppalette-load.c:224
 #: ../app/core/gimppalette.c:399 ../app/dialogs/palette-import-dialog.c:771
 #: ../app/widgets/gimpdnd-xds.c:94
@@ -2431,7 +2431,7 @@ msgstr "_Zastąp %s"
 msgid "Export to"
 msgstr "Wyeksportuj do"
 
-#: ../app/actions/file-commands.c:112 ../app/actions/file-commands.c:492
+#: ../app/actions/file-commands.c:112 ../app/actions/file-commands.c:499
 #: ../app/dialogs/file-open-dialog.c:77
 msgid "Open Image"
 msgstr "Otwarcie obrazu"
@@ -2452,28 +2452,28 @@ msgstr "Zapis obrazu"
 msgid "Save a Copy of the Image"
 msgstr "Zapis kopii obrazu"
 
-#: ../app/actions/file-commands.c:356
+#: ../app/actions/file-commands.c:363
 msgid "Create New Template"
 msgstr "Utworzenie nowego szablonu"
 
-#: ../app/actions/file-commands.c:360
+#: ../app/actions/file-commands.c:367
 msgid "Enter a name for this template"
 msgstr "Proszę wprowadzić nazwę tego szablonu"
 
-#: ../app/actions/file-commands.c:394
+#: ../app/actions/file-commands.c:401
 msgid "Revert failed. No file name associated with this image."
 msgstr "Przywrócenie się nie powiodło. Obrazowi nie nadano nazwy."
 
-#: ../app/actions/file-commands.c:407
+#: ../app/actions/file-commands.c:414
 msgid "Revert Image"
 msgstr "Przywrócenie obrazu"
 
-#: ../app/actions/file-commands.c:438
+#: ../app/actions/file-commands.c:445
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Przywrócić \"%s\" do wersji \"%s\"?"
 
-#: ../app/actions/file-commands.c:444
+#: ../app/actions/file-commands.c:451
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -2481,11 +2481,11 @@ msgstr ""
 "Przywrócenie obrazu do stanu zapisanego w pliku spowoduje utratę wszystkich "
 "dokonanych w nim zmian, wraz z informacjami o historii działań."
 
-#: ../app/actions/file-commands.c:655
+#: ../app/actions/file-commands.c:662
 msgid "(Unnamed Template)"
 msgstr "(Szablon bez nazwy)"
 
-#: ../app/actions/file-commands.c:706
+#: ../app/actions/file-commands.c:713
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -7414,7 +7414,7 @@ msgstr "Kolor pierwszoplanowy na przezroczystość"
 msgid "tags-locale:C"
 msgstr "tags-locale:pl"
 
-#: ../app/core/gimp-user-install.c:159
+#: ../app/core/gimp-user-install.c:173
 #, c-format
 msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
@@ -7423,7 +7423,7 @@ msgstr ""
 "Prawdopodobnie używano wcześniej programu GIMP %s. Rozpocznie się teraz "
 "migracja ustawień użytkownika do wersji \"%s\"."
 
-#: ../app/core/gimp-user-install.c:164
+#: ../app/core/gimp-user-install.c:178
 #, c-format
 msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
@@ -7432,17 +7432,17 @@ msgstr ""
 "Uruchomiono program GIMP po raz pierwszy. Nastąpi teraz utworzenie katalogu "
 "\"%s\" i zostaną do niego skopiowane pliki."
 
-#: ../app/core/gimp-user-install.c:316
+#: ../app/core/gimp-user-install.c:329
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "Kopiowanie pliku \"%s\" z \"%s\"..."
 
-#: ../app/core/gimp-user-install.c:331 ../app/core/gimp-user-install.c:357
+#: ../app/core/gimp-user-install.c:344 ../app/core/gimp-user-install.c:370
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "Tworzenie katalogu \"%s\"..."
 
-#: ../app/core/gimp-user-install.c:342 ../app/core/gimp-user-install.c:368
+#: ../app/core/gimp-user-install.c:355 ../app/core/gimp-user-install.c:381
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "Nie można utworzyć katalogu \"%s\": %s"
@@ -8330,57 +8330,57 @@ msgstr "Skalowanie obrazu"
 msgid "Can't undo %s"
 msgstr "Nie można cofnąć działania %s"
 
-#: ../app/core/gimpimage.c:1808
+#: ../app/core/gimpimage.c:1804
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Zmiana rozdzielczości obrazu"
 
-#: ../app/core/gimpimage.c:1860
+#: ../app/core/gimpimage.c:1856
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Zmiana jednostki obrazu"
 
-#: ../app/core/gimpimage.c:2852
+#: ../app/core/gimpimage.c:2869
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Dołączenie do obrazu danych pasożytniczych"
 
-#: ../app/core/gimpimage.c:2893
+#: ../app/core/gimpimage.c:2910
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Usunięcie z obrazu danych pasożytniczych"
 
-#: ../app/core/gimpimage.c:3602
+#: ../app/core/gimpimage.c:3619
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Dodanie warstwy"
 
-#: ../app/core/gimpimage.c:3652 ../app/core/gimpimage.c:3672
+#: ../app/core/gimpimage.c:3669 ../app/core/gimpimage.c:3689
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Usunięcie warstwy"
 
-#: ../app/core/gimpimage.c:3666
+#: ../app/core/gimpimage.c:3683
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Usunięcie oderwanego zaznaczenia"
 
-#: ../app/core/gimpimage.c:3834
+#: ../app/core/gimpimage.c:3851
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Dodanie kanału"
 
-#: ../app/core/gimpimage.c:3872 ../app/core/gimpimage.c:3885
+#: ../app/core/gimpimage.c:3889 ../app/core/gimpimage.c:3902
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Usunięcie kanału"
 
-#: ../app/core/gimpimage.c:3939
+#: ../app/core/gimpimage.c:3956
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Dodanie ścieżki"
 
-#: ../app/core/gimpimage.c:3970
+#: ../app/core/gimpimage.c:3987
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Usunięcie ścieżki"
@@ -8458,6 +8458,10 @@ msgstr "Usunięcie z elementu danych pasożytniczych"
 #: ../app/core/gimpitem-exclusive.c:81
 msgid "Set Item Exclusive Visible"
 msgstr "Ustawienie wyłącznej widoczności elementu"
+
+#: ../app/core/gimpitem-exclusive.c:172
+msgid "Set Item Exclusive Linked"
+msgstr "Ustawienie wyłącznego dowiązania elementu"
 
 #: ../app/core/gimplayer-floating-sel.c:95
 msgctxt "undo-type"
@@ -9097,7 +9101,7 @@ msgstr "Eksport obrazu"
 msgid "_Export"
 msgstr "Wy_eksportuj"
 
-#: ../app/dialogs/file-save-dialog.c:431
+#: ../app/dialogs/file-save-dialog.c:432
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -9107,7 +9111,7 @@ msgstr ""
 "podstawie jego rozszerzenia. Proszę wpisać rozszerzenie pliku, które pasuje "
 "do podanego pliku lub nie wpisywać żadnego."
 
-#: ../app/dialogs/file-save-dialog.c:558
+#: ../app/dialogs/file-save-dialog.c:559
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
@@ -9116,7 +9120,7 @@ msgstr ""
 "Należy użyć polecenia \"Plik→Zapisz\", aby zapisać plik w formacie XCF "
 "programu GIMP."
 
-#: ../app/dialogs/file-save-dialog.c:565
+#: ../app/dialogs/file-save-dialog.c:566
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
@@ -9125,7 +9129,7 @@ msgstr ""
 "Należy użyć polecenia \"Plik→Wyeksportuj\", aby wyeksportować obraz do "
 "innych formatów."
 
-#: ../app/dialogs/file-save-dialog.c:571
+#: ../app/dialogs/file-save-dialog.c:572
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -9133,23 +9137,23 @@ msgstr ""
 "Podany plik nie ma żadnego znanego rozszerzenia. Proszę wpisać lub wybrać "
 "rozszerzenie z listy."
 
-#: ../app/dialogs/file-save-dialog.c:585
+#: ../app/dialogs/file-save-dialog.c:586
 msgid "Extension Mismatch"
 msgstr "Niezgodność rozszerzeń"
 
-#: ../app/dialogs/file-save-dialog.c:601
+#: ../app/dialogs/file-save-dialog.c:602
 msgid "The given file extension does not match the chosen file type."
 msgstr "Podane rozszerzenie nie pasuje do wybranego typu pliku."
 
-#: ../app/dialogs/file-save-dialog.c:605
+#: ../app/dialogs/file-save-dialog.c:606
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Zapisać obraz pod tą nazwą mimo to?"
 
-#: ../app/dialogs/file-save-dialog.c:660
+#: ../app/dialogs/file-save-dialog.c:664
 msgid "Saving canceled"
 msgstr "Anulowano zapisywanie"
 
-#: ../app/dialogs/file-save-dialog.c:668 ../app/widgets/gimpdnd-xds.c:185
+#: ../app/dialogs/file-save-dialog.c:672 ../app/widgets/gimpdnd-xds.c:186
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -10642,8 +10646,8 @@ msgstr "Przełącz szybką maskę"
 msgid "Navigate the image display"
 msgstr "Kontroluje wyświetlanie obrazu"
 
-#: ../app/display/gimpdisplayshell.c:742
-#: ../app/display/gimpdisplayshell.c:1320 ../app/widgets/gimptoolbox.c:256
+#: ../app/display/gimpdisplayshell.c:746
+#: ../app/display/gimpdisplayshell.c:1325 ../app/widgets/gimptoolbox.c:256
 msgid "Drop image files here to open them"
 msgstr "Upuszczenie plików obrazów w tym miejscu otworzy je"
 
@@ -10819,7 +10823,7 @@ msgstr " (zaimportowany)"
 msgid "Cancel <i>%s</i>"
 msgstr "Anuluj <i>%s</i>"
 
-#: ../app/file/file-open.c:136 ../app/file/file-save.c:112
+#: ../app/file/file-open.c:136 ../app/file/file-save.c:115
 msgid "Not a regular file"
 msgstr "To nie jest zwykły plik"
 
@@ -10854,7 +10858,7 @@ msgstr ""
 msgid "Unknown file type"
 msgstr "Nieznany typ pliku"
 
-#: ../app/file/file-save.c:208
+#: ../app/file/file-save.c:219
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "Wtyczka %s nie może zapisać obrazu"
@@ -10952,11 +10956,11 @@ msgstr "Rozjaśnianie/przyciemnianie"
 msgid "Eraser"
 msgstr "Gumka"
 
-#: ../app/paint/gimpheal.c:128 ../app/tools/gimphealtool.c:52
+#: ../app/paint/gimpheal.c:131 ../app/tools/gimphealtool.c:52
 msgid "Heal"
 msgstr "Łatka"
 
-#: ../app/paint/gimpheal.c:167
+#: ../app/paint/gimpheal.c:170
 msgid "Healing does not operate on indexed layers."
 msgstr "Łatanie nie jest możliwe na warstwach indeksowanych."
 
@@ -13655,39 +13659,39 @@ msgstr "Wygładzanie"
 msgid "Feather edges"
 msgstr "Zmiękczanie krawędzi"
 
-#: ../app/tools/gimpselectiontool.c:250
+#: ../app/tools/gimpselectiontool.c:255
 msgid "Click-Drag to replace the current selection"
 msgstr "Kliknięcie i przeciągnięcie zastąpi bieżące zaznaczenie"
 
-#: ../app/tools/gimpselectiontool.c:258
+#: ../app/tools/gimpselectiontool.c:263
 msgid "Click-Drag to create a new selection"
 msgstr "Kliknięcie i przeciągnięcie utworzy nowe zaznaczenie"
 
-#: ../app/tools/gimpselectiontool.c:263
+#: ../app/tools/gimpselectiontool.c:268
 msgid "Click-Drag to add to the current selection"
 msgstr "Kliknięcie i przeciągnięcie doda bieżące zaznaczenie"
 
-#: ../app/tools/gimpselectiontool.c:272
+#: ../app/tools/gimpselectiontool.c:277
 msgid "Click-Drag to subtract from the current selection"
 msgstr "Kliknięcie i przeciągnięcie odejmie od bieżącego zaznaczenia"
 
-#: ../app/tools/gimpselectiontool.c:281
+#: ../app/tools/gimpselectiontool.c:286
 msgid "Click-Drag to intersect with the current selection"
 msgstr "Kliknięcie i przeciągnięcie przetnie z bieżącym zaznaczeniem"
 
-#: ../app/tools/gimpselectiontool.c:291
+#: ../app/tools/gimpselectiontool.c:296
 msgid "Click-Drag to move the selection mask"
 msgstr "Kliknięcie i przeciągnięcie przesunie zaznaczoną maskę"
 
-#: ../app/tools/gimpselectiontool.c:299
+#: ../app/tools/gimpselectiontool.c:304
 msgid "Click-Drag to move the selected pixels"
 msgstr "Kliknięcie i przeciągnięcie przesunie zaznaczone piksele"
 
-#: ../app/tools/gimpselectiontool.c:303
+#: ../app/tools/gimpselectiontool.c:308
 msgid "Click-Drag to move a copy of the selected pixels"
 msgstr "Kliknięcie i przeciągnięcie przesunie kopię zaznaczonych pikseli"
 
-#: ../app/tools/gimpselectiontool.c:307
+#: ../app/tools/gimpselectiontool.c:312
 msgid "Click to anchor the floating selection"
 msgstr "Kliknięcie zakotwiczy oderwane zaznaczenie"
 
@@ -13864,7 +13868,7 @@ msgstr ""
 "Możliwe jest zmodyfikowanie warstwy lub utworzenie nowej warstwy tekstowej w "
 "oparciu o atrybuty obecnej."
 
-#: ../app/tools/gimptexttool-editor.c:1172
+#: ../app/tools/gimptexttool-editor.c:1180
 msgid "GIMP Text Editor"
 msgstr "Edytor tekstowy programu GIMP"
 
@@ -14430,7 +14434,7 @@ msgid "Percentage of width of brush"
 msgstr "Procent szerokości pędzla"
 
 #: ../app/widgets/gimpbufferview.c:179 ../app/widgets/gimpbufferview.c:264
-#: ../app/widgets/gimpeditor.c:748
+#: ../app/widgets/gimpeditor.c:747
 msgid "(None)"
 msgstr "(Brak)"
 
@@ -14458,17 +14462,17 @@ msgstr "Aktywne filtry"
 msgid "Reset the selected filter to default values"
 msgstr "Przywraca domyślne ustawienia zaznaczonego filtru"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:496
+#: ../app/widgets/gimpcolordisplayeditor.c:503
 #, c-format
 msgid "Add '%s' to the list of active filters"
 msgstr "Dodaje \"%s\" do listy aktywnych filtrów"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:533
+#: ../app/widgets/gimpcolordisplayeditor.c:540
 #, c-format
 msgid "Remove '%s' from the list of active filters"
 msgstr "Usuwa \"%s\" z listy aktywnych filtrów"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:564
+#: ../app/widgets/gimpcolordisplayeditor.c:571
 msgid "No filter selected"
 msgstr "Nie zaznaczono filtru"
 
@@ -14969,24 +14973,24 @@ msgstr "Kolor pierwszoplanowy: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Tło: %d, %d, %d"
 
-#: ../app/widgets/gimpdnd-xds.c:203
+#: ../app/widgets/gimpdnd-xds.c:204
 msgid "The given filename does not have any known file extension."
 msgstr "Podana nazwa pliku nie ma żadnego znanego rozszerzenia."
 
-#: ../app/widgets/gimpdnd-xds.c:221
+#: ../app/widgets/gimpdnd-xds.c:222
 msgid "File Exists"
 msgstr "Plik istnieje"
 
-#: ../app/widgets/gimpdnd-xds.c:226
+#: ../app/widgets/gimpdnd-xds.c:227
 msgid "_Replace"
 msgstr "_Zastąp"
 
-#: ../app/widgets/gimpdnd-xds.c:237
+#: ../app/widgets/gimpdnd-xds.c:238
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr "Plik o nazwie \"%s\" już istnieje."
 
-#: ../app/widgets/gimpdnd-xds.c:242
+#: ../app/widgets/gimpdnd-xds.c:243
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "Zastąpić istniejący plik zapisywanym obrazem?"
 
