@@ -15,6 +15,11 @@ DevelopmentButtonExit=Exit
 ;XPSP3Recommended=Warning: you are running an unsupported version of Windows. Please update to at least Windows XP with Service Pack 3 before reporting any problems.
 SSERequired=This version of GIMP requires a processor that supports SSE instructions.
 
+Require32BPPTitle=Display settings problem
+Require32BPP=Setup has detected that your Windows is not running in 32 bits-per-pixel display mode. This has been known to cause stability problems with GIMP, so it's recommended to change the display colour depth to 32BPP before continuing.
+Require32BPPContinue=&Continue
+Require32BPPExit=E&xit
+
 InstallOrCustomize=GIMP is now ready to be installed. Click the Install now button to install using the default settings, or click the Customize button if you'd like to have more control over what gets installed.
 Install=&Install
 Customize=&Customize

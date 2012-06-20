@@ -1,4 +1,4 @@
-﻿;.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,
+;.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,
 ;                                                                       ;
 ;Copyright (c) 2002-2010 Jernej Simončič                                ;
 ;                                                                       ;
@@ -213,7 +213,7 @@ Source: "{#GIMP_DIR32}\etc\*"; DestDir: "{app}\etc"; Components: gimp32 or gimp6
 Source: "{#GIMP_DIR32}\lib\gimp\2.0\environ\*"; DestDir: "{app}\lib\gimp\2.0\environ"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace
 Source: "{#GIMP_DIR32}\lib\gimp\2.0\interpreters\*"; DestDir: "{app}\lib\gimp\2.0\interpreters"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace
 Source: "{#GIMP_DIR32}\share\gimp\*"; DestDir: "{app}\share\gimp"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace
-;Source: "{#DEPS_DIR32}\share\enchant\*"; DestDir: "{app}\share\enchant"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace
+Source: "{#DEPS_DIR32}\share\enchant\*"; DestDir: "{app}\share\enchant"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace
 Source: "{#DEPS_DIR32}\share\libwmf\*"; DestDir: "{app}\share\libwmf"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace
 Source: "{#DEPS_DIR32}\share\themes\*"; DestDir: "{app}\share\themes"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace
 Source: "{#DEPS_DIR32}\share\xml\*"; DestDir: "{app}\share\xml"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace
@@ -289,8 +289,6 @@ Type: filesandordirs; Name: "{app}\Python\*"
 
 [Code]
 
-function SHAutoComplete(hWnd: Integer; dwFlags: DWORD): Integer; external 'SHAutoComplete@shlwapi.dll stdcall delayload';
-
 function WideCharToMultiByte(CodePage: Cardinal; dwFlags: DWORD; lpWideCharStr: String; cchWideCharStr: Integer;
                              lpMultiByteStr: PAnsiChar; cbMultiByte: Integer; lpDefaultChar: Integer;
                              lpUsedDefaultChar: Integer): Integer; external 'WideCharToMultiByte@Kernel32 stdcall';
@@ -305,6 +303,12 @@ function GetSysColor(nIndex: Integer): DWORD; external 'GetSysColor@user32.dll s
 
 function IsProcessorFeaturePresent(ProcessorFeature: DWORD): LongBool; external 'IsProcessorFeaturePresent@kernel32 stdcall';
 
+//functions needed to get BPP
+function GetDC(hWnd: Integer): Integer; external 'GetDC@User32 stdcall';
+function ReleaseDC(hWnd, hDC: Integer): Integer; external 'ReleaseDC@User32 stdcall';
+function GetDeviceCaps(hDC, nIndex: Integer): Integer; external 'GetDeviceCaps@GDI32 stdcall';
+
+
 procedure ComponentsListOnClick(pSender: TObject); forward;
 procedure SaveToUninstInf(const pText: AnsiString); forward;
 procedure CreateRunOnceEntry; forward;
@@ -314,13 +318,12 @@ const
 	CP_ACP = 0;
 	CP_UTF8 = 65001;
 
-	SHACF_FILESYSTEM = $1;
-	SHACF_FILESYS_ONLY = $10;
-	SHACF_FILESYS_DIRS = $20;
-
 	COLOR_HOTLIGHT = 26;
 
 	PF_XMMI_INSTRUCTIONS_AVAILABLE = 6;
+
+	BITSPIXEL = 12;
+	PLANES = 14;
 
 	GIMP_URL = 'http://www.gimp.org/';
 
@@ -1392,13 +1395,40 @@ begin
 	UpdateWizardImages();
 	InitCustomPages();
 
-	r := SHAutoComplete(WizardForm.DirEdit.Handle,SHACF_FILESYSTEM);
-
 	{if InstallMode = imRebootContinue then  //ReadyMemo form isn't skipped if the wizard isn't shown
 	begin
 		DebugMsg('InitializeWizard','Continuing after reboot - showing wizard form');
 		WizardForm.Show;
 	end;}
+end;
+
+
+function BPPTooLowWarning(): Boolean;
+var hDC, bpp, pl: Integer;
+	Message,Buttons: TArrayOfString;
+begin
+	hDC := GetDC(0);
+	pl := GetDeviceCaps(hDC, PLANES);
+	bpp := GetDeviceCaps(hDC, BITSPIXEL);
+	ReleaseDC(0,hDC);
+
+	bpp := pl * bpp;
+
+	if bpp < 32 then
+	begin
+		SetArrayLength(Message,1);
+		SetArrayLength(Buttons,2);
+		Message[0] := CustomMessage('Require32BPP');
+		Buttons[0] := CustomMessage('Require32BPPContinue');
+		Buttons[1] := CustomMessage('Require32BPPExit');		
+		if (not WizardSilent) and 
+		   (MessageWithURL(Message, CustomMessage('Require32BPPTitle'), Buttons, mbError, 2, 2) = 2) then
+			Result := False
+		else
+			Result := True;
+	end
+	else
+		Result := True;	
 end;
 
 
@@ -1417,6 +1447,9 @@ begin
 	end;
 
 	Result := RestartSetupAfterReboot(); //resume install after reboot - skip all setting pages, and install directly
+
+	if Result then
+		Result := BPPTooLowWarning();		
 
 	if not Result then //no need to do anything else
 		exit;

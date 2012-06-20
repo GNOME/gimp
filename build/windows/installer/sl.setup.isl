@@ -13,6 +13,11 @@ DevelopmentButtonExit=Prekini
 ;XPSP3Recommended=Opozorilo: uporabljate nepodprto razlièico sistema Windows. Prosimo, namestite servisni paket 3 za Windows XP ali novejšo razlièico sistema Windows preden nas obvešèate o kakršnih koli težavah.
 SSERequired=Ta razliŸica programa GIMP potrebuje procesor, ki ima podporo za SSE ukaze.
 
+Require32BPPTitle=Težava z zaslonskimi nastavitvami
+Require32BPP=Namestitveni program je zaznal, da Windows ne deluje v 32-bitnem barvnem naèinu. Takšne nastavitve lahko povzroèijo nestabilnost programa GIMP, zato je priporoèljivo da pred nadaljevanjem spremenite barvno globino zaslona na 32 bitov.
+Require32BPPContinue=&Nadaljuj
+Require32BPPExit=I&zhod
+
 InstallOrCustomize=GIMP je pripravljen na namestitev. Kliknite gumb Namesti za namestitev s privzetimi nastavitvami, ali pa kliknite gumb Po meri, èe bi radi imeli veè nadzora nad možnostmi namestitve.
 Install=Namest&i
 Customize=&Po meri
