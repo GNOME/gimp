@@ -83,8 +83,6 @@ app/actions/view-commands.c
 app/actions/window-actions.c
 app/actions/windows-actions.c
 
-app/base/tile-swap.c
-
 app/config/config-enums.c
 app/config/gimpconfig-file.c
 app/config/gimpdisplayoptions.c
