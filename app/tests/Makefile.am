@@ -21,7 +21,6 @@ endif
 TESTS = \
 	test-core					\
 	test-gimpidtable				\
-	test-gimptilebackendtilemanager			\
 	test-save-and-export				\
 	test-session-2-6-compatibility			\
 	test-session-2-8-compatibility-multi-window	\
@@ -64,7 +63,6 @@ AM_CPPFLAGS = \
 # comments about it in app/Makefile.am
 AM_LDFLAGS = \
 	-Wl,-u,$(SYMPREFIX)xcf_init				\
-	-Wl,-u,$(SYMPREFIX)base_init				\
 	-Wl,-u,$(SYMPREFIX)internal_procs_init			\
 	-Wl,-u,$(SYMPREFIX)gimp_plug_in_manager_restore		\
 	-Wl,-u,$(SYMPREFIX)gimp_pdb_compat_param_spec		\
@@ -106,8 +104,6 @@ LDADD = \
 	$(top_builddir)/app/text/libapptext.a			\
 	$(top_builddir)/app/paint/libapppaint.a			\
 	$(top_builddir)/app/config/libappconfig.a		\
-	$(top_builddir)/app/paint-funcs/libapppaint-funcs.a	\
-	$(top_builddir)/app/base/libappbase.a			\
 	$(top_builddir)/app/libapp.a				\
 	$(top_builddir)/app/gegl/libappgegl.a			\
 	$(top_builddir)/app/operations/libappoperations.a	\
