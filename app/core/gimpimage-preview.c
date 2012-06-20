@@ -21,13 +21,12 @@
 
 #include "core-types.h"
 
-#include "base/tile-manager-preview.h"
-
 #include "gegl/gimp-babl.h"
 
 #include "gimpimage.h"
 #include "gimpimage-preview.h"
 #include "gimpimage-private.h"
+#include "gimppickable.h"
 #include "gimpprojectable.h"
 #include "gimpprojection.h"
 #include "gimptempbuf.h"
@@ -133,41 +132,25 @@ gimp_image_get_new_preview (GimpViewable *viewable,
   GimpProjection *projection = gimp_image_get_projection (image);
   const Babl     *format;
   GimpTempBuf    *buf;
-  TileManager    *tiles;
   gdouble         scale_x;
   gdouble         scale_y;
-  gint            level;
-  gboolean        is_premult;
 
   scale_x = (gdouble) width  / (gdouble) gimp_image_get_width  (image);
   scale_y = (gdouble) height / (gdouble) gimp_image_get_height (image);
 
-  level = gimp_projection_get_level (projection, scale_x, scale_y);
-  tiles = gimp_projection_get_tiles_at_level (projection, level, &is_premult);
-
   format = gimp_projectable_get_format (GIMP_PROJECTABLE (image));
-
   format = gimp_babl_format (gimp_babl_format_get_base_type (format),
                              GIMP_PRECISION_U8,
                              babl_format_has_alpha (format));
 
-  buf = tile_manager_get_preview (tiles, format, width, height);
+  buf = gimp_temp_buf_new (width, height, format);
 
-  if (is_premult)
-    {
-      if (format == babl_format ("Y'A u8"))
-        {
-          gimp_temp_buf_set_format (buf, babl_format ("Y'aA u8"));
-        }
-      else if (format == babl_format ("R'G'B'A u8"))
-        {
-          gimp_temp_buf_set_format (buf, babl_format ("R'aG'aB'aA u8"));
-        }
-      else
-        {
-          g_warn_if_reached ();
-        }
-    }
+  gegl_buffer_get (gimp_pickable_get_buffer (GIMP_PICKABLE (projection)),
+                   GEGL_RECTANGLE (0, 0, width, height),
+                   MIN (scale_x, scale_y),
+                   gimp_temp_buf_get_format (buf),
+                   gimp_temp_buf_get_data (buf),
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
   return buf;
 }

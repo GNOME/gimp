@@ -44,9 +44,6 @@
 
 #include "config/gimprc.h"
 
-#include "base/base.h"
-#include "base/tile-swap.h"
-
 #include "gegl/gimp-gegl.h"
 
 #include "core/gimp.h"
@@ -147,9 +144,7 @@ app_run (const gchar         *full_prog_name,
 {
   GimpInitStatusFunc  update_status_func = NULL;
   Gimp               *gimp;
-  GimpGeglConfig     *config;
   GMainLoop          *loop;
-  gboolean            swap_is_ok;
 
   /*  Create an instance of the "Gimp" object which is the root of the
    *  core object system
@@ -189,14 +184,10 @@ app_run (const gchar         *full_prog_name,
 
   gimp_load_config (gimp, alternate_system_gimprc, alternate_gimprc);
 
-  config = GIMP_GEGL_CONFIG (gimp->config);
-
   /*  change the locale if a language if specified  */
   language_init (gimp->config->language);
 
   /*  initialize lowlevel stuff  */
-  swap_is_ok = base_init (config, be_verbose, use_cpu_accel);
-
   gimp_gegl_init (gimp);
 
 #ifndef GIMP_CONSOLE_COMPILATION
@@ -215,19 +206,6 @@ app_run (const gchar         *full_prog_name,
   /*  Load all data files
    */
   gimp_restore (gimp, update_status_func);
-
-  /* display a warning when no test swap file could be generated */
-  if (! swap_is_ok)
-    {
-      gchar *path = gimp_config_path_expand (config->swap_path, FALSE, NULL);
-
-      g_message (_("Unable to open a test swap file.\n\n"
-		   "To avoid data loss, please check the location "
-		   "and permissions of the swap directory defined in "
-		   "your Preferences (currently \"%s\")."), path);
-
-      g_free (path);
-    }
 
   /*  enable autosave late so we don't autosave when the
    *  monitor resolution is set in gui_init()
@@ -264,7 +242,6 @@ app_run (const gchar         *full_prog_name,
 
   errors_exit ();
   gegl_exit ();
-  base_exit ();
 }
 
 

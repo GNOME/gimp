@@ -32,8 +32,6 @@
 
 #include "widgets/gimpsessioninfo.h"
 
-#include "base/base.h"
-
 #include "config/gimpgeglconfig.h"
 
 #include "core/gimp.h"
@@ -75,9 +73,6 @@ gimp_init_for_testing (void)
 
   gegl_init(NULL, NULL);
   gimp_gegl_init (gimp);
-  base_init (GIMP_GEGL_CONFIG (gimp->config),
-             FALSE /*be_verbose*/,
-             FALSE /*use_cpu_accel*/);
   gimp_initialize (gimp, gimp_status_func_dummy);
   gimp_restore (gimp, gimp_status_func_dummy);
 
@@ -108,9 +103,6 @@ gimp_init_for_gui_testing_internal (gboolean     show_gui,
   gimp_set_show_gui (gimp, show_gui);
   units_init (gimp);
   gimp_load_config (gimp, gimprc, NULL);
-  base_init (GIMP_GEGL_CONFIG (gimp->config),
-             FALSE /*be_verbose*/,
-             FALSE /*use_cpu_accel*/);
   gegl_init(NULL, NULL);
   gimp_gegl_init (gimp);
   gui_init (gimp, TRUE);

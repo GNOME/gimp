@@ -32,9 +32,6 @@ struct _GimpDrawablePrivate
   GeglNode      *fs_mode_node;
 
   GeglNode      *mode_node;
-
-  GSList        *preview_cache; /* preview caches of the channel */
-  gboolean       preview_valid; /* is the preview valid?         */
 };
 
 #endif /* __GIMP_DRAWABLE_PRIVATE_H__ */

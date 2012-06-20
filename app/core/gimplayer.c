@@ -1790,11 +1790,10 @@ gimp_layer_add_alpha (GimpLayer *layer)
   item     = GIMP_ITEM (layer);
   drawable = GIMP_DRAWABLE (layer);
 
-  new_buffer =
-    gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                          gimp_item_get_width  (item),
-                                          gimp_item_get_height (item)),
-                          gimp_drawable_get_format_with_alpha (drawable));
+  new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                gimp_item_get_width  (item),
+                                                gimp_item_get_height (item)),
+                                gimp_drawable_get_format_with_alpha (drawable));
 
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                     new_buffer, NULL);
@@ -1821,10 +1820,10 @@ gimp_layer_flatten (GimpLayer   *layer,
     return;
 
   new_buffer =
-    gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                          gimp_item_get_width  (GIMP_ITEM (layer)),
-                                          gimp_item_get_height (GIMP_ITEM (layer))),
-                          gimp_drawable_get_format_without_alpha (GIMP_DRAWABLE (layer)));
+    gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                     gimp_item_get_width  (GIMP_ITEM (layer)),
+                                     gimp_item_get_height (GIMP_ITEM (layer))),
+                     gimp_drawable_get_format_without_alpha (GIMP_DRAWABLE (layer)));
 
   gimp_context_get_background (context, &background);
   flatten = gimp_gegl_create_flatten_node (&background);

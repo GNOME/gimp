@@ -21,22 +21,16 @@
 
 #include "core-types.h"
 
-#include "base/tile.h"
-#include "base/tile-rowhints.h" /* EEK */
-#include "base/tile-private.h"  /* EEK */
-#include "base/tile-manager.h"
-#include "base/tile-pyramid.h"
-
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
+#include "gimp-utils.h"
 #include "gimparea.h"
 #include "gimpimage.h"
 #include "gimpmarshal.h"
 #include "gimppickable.h"
 #include "gimpprojectable.h"
 #include "gimpprojection.h"
-#include "gimpprojection-construct.h"
 
 
 /*  halfway between G_PRIORITY_HIGH_IDLE and G_PRIORITY_DEFAULT_IDLE  */
@@ -93,9 +87,6 @@ static void        gimp_projection_invalidate            (GimpProjection  *proj,
                                                           guint            y,
                                                           guint            w,
                                                           guint            h);
-static void        gimp_projection_validate_tile         (TileManager     *tm,
-                                                          Tile            *tile,
-                                                          GimpProjection  *proj);
 
 static void        gimp_projection_projectable_invalidate(GimpProjectable *projectable,
                                                           gint             x,
@@ -148,7 +139,6 @@ static void
 gimp_projection_init (GimpProjection *proj)
 {
   proj->projectable              = NULL;
-  proj->pyramid                  = NULL;
   proj->buffer                   = NULL;
   proj->update_areas             = NULL;
   proj->idle_render.idle_id      = 0;
@@ -184,12 +174,6 @@ gimp_projection_finalize (GObject *object)
   gimp_area_list_free (proj->idle_render.update_areas);
   proj->idle_render.update_areas = NULL;
 
-  if (proj->pyramid)
-    {
-      tile_pyramid_destroy (proj->pyramid);
-      proj->pyramid = NULL;
-    }
-
   if (proj->buffer)
     {
       g_object_unref (proj->buffer);
@@ -219,8 +203,7 @@ gimp_projection_get_memsize (GimpObject *object,
   GimpProjection *projection = GIMP_PROJECTION (object);
   gint64          memsize    = 0;
 
-  if (projection->pyramid)
-    memsize = tile_pyramid_get_memsize (projection->pyramid);
+  memsize += gimp_gegl_buffer_get_memsize (projection->buffer);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -303,10 +286,15 @@ gimp_projection_get_buffer (GimpPickable *pickable)
 
   if (! proj->buffer)
     {
-      TileManager *tiles  = gimp_projection_get_tiles_at_level (proj, 0, NULL);
-      const Babl  *format = gimp_projection_get_format (pickable);
+      const Babl *format;
+      gint        width;
+      gint        height;
 
-      proj->buffer = gimp_tile_manager_create_buffer (tiles, format);
+      format = gimp_projection_get_format (GIMP_PICKABLE (proj));
+      gimp_projectable_get_size (proj->projectable, &width, &height);
+
+      proj->buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+                                      format);
 
       if (proj->sink_node)
         {
@@ -372,6 +360,7 @@ gimp_projection_new (GimpProjectable *projectable)
   return proj;
 }
 
+#ifdef USE_BUFFER
 GeglNode *
 gimp_projection_get_sink_node (GimpProjection *proj)
 {
@@ -385,9 +374,11 @@ gimp_projection_get_sink_node (GimpProjection *proj)
 
   proj->graph = gegl_node_new ();
 
+#if 0
   g_object_set (proj->graph,
                 "dont-cache", TRUE,
                 NULL);
+#endif
 
   graph = gimp_projectable_get_graph (proj->projectable);
   gegl_node_add_child (proj->graph, graph);
@@ -405,57 +396,7 @@ gimp_projection_get_sink_node (GimpProjection *proj)
 
   return proj->sink_node;
 }
-
-TileManager *
-gimp_projection_get_tiles_at_level (GimpProjection *proj,
-                                    gint            level,
-                                    gboolean       *is_premult)
-{
-  g_return_val_if_fail (GIMP_IS_PROJECTION (proj), NULL);
-
-  if (! proj->pyramid)
-    {
-      const Babl *format;
-      gint        bytes;
-      gint        width;
-      gint        height;
-
-      format = gimp_projection_get_format (GIMP_PICKABLE (proj));
-
-      bytes = babl_format_get_bytes_per_pixel (format);
-      gimp_projectable_get_size (proj->projectable, &width, &height);
-
-      proj->pyramid = tile_pyramid_new (bytes, width, height);
-
-      tile_pyramid_set_validate_proc (proj->pyramid,
-                                      (TileValidateProc) gimp_projection_validate_tile,
-                                      proj);
-    }
-
-  return tile_pyramid_get_tiles (proj->pyramid, level, is_premult);
-}
-
-/**
- * gimp_projection_get_level:
- * @proj:    pointer to a GimpProjection
- * @scale_x: horizontal scale factor
- * @scale_y: vertical scale factor
- *
- * This function returns the optimal pyramid level for a given scale factor.
- *
- * Return value: the pyramid level to use for a given display scale factor.
- **/
-gint
-gimp_projection_get_level (GimpProjection *proj,
-                           gdouble         scale_x,
-                           gdouble         scale_y)
-{
-  gint width, height;
-
-  gimp_projectable_get_size (proj->projectable, &width, &height);
-
-  return tile_pyramid_get_level (width, height, MAX (scale_x, scale_y));
-}
+#endif
 
 void
 gimp_projection_flush (GimpProjection *proj)
@@ -754,6 +695,36 @@ gimp_projection_paint_area (GimpProjection *proj,
                  y2 - y1);
 }
 
+#ifdef USE_BUFFER
+static void
+gimp_projection_construct (GimpProjection *proj,
+                           gint            x,
+                           gint            y,
+                           gint            w,
+                           gint            h)
+{
+  GeglRectangle rect = { x, y, w, h };
+
+  g_return_if_fail (GIMP_IS_PROJECTION (proj));
+
+  /* GEGL should really do this for us... */
+  gegl_buffer_clear (proj->buffer, &rect);
+
+  if (! proj->processor)
+    {
+      GeglNode *sink = gimp_projection_get_sink_node (proj);
+
+      proj->processor = gegl_node_new_processor (sink, &rect);
+    }
+  else
+    {
+      gegl_processor_set_rectangle (proj->processor, &rect);
+    }
+
+  while (gegl_processor_work (proj->processor, NULL));
+}
+#endif
+
 static void
 gimp_projection_invalidate (GimpProjection *proj,
                             guint           x,
@@ -761,82 +732,13 @@ gimp_projection_invalidate (GimpProjection *proj,
                             guint           w,
                             guint           h)
 {
-  if (proj->pyramid)
-    {
-      if (proj->sink_node)
-        {
-          GeglBuffer *buffer;
-
-          buffer = gimp_projection_get_buffer (GIMP_PICKABLE (proj));
-
-          /* makes the buffer drop all GimpTiles */
-          gimp_gegl_buffer_refetch_tiles (buffer);
-        }
-
-      tile_pyramid_invalidate_area (proj->pyramid, x, y, w, h);
-    }
+  /*  FIXME: this should happen as we actually *read* from the buffer
+   */
+#ifdef USE_BUFFER
+  gimp_projection_construct (proj, x, y, w, h);
+#endif
 }
 
-static void
-gimp_projection_validate_tile (TileManager    *tm,
-                               Tile           *tile,
-                               GimpProjection *proj)
-{
-  Tile *additional[7];
-  gint  n_additional = 0;
-  gint  x, y;
-  gint  width, height;
-  gint  tile_width, tile_height;
-  gint  col, row;
-  gint  i;
-
-  /*  Find the coordinates of this tile  */
-  tile_manager_get_tile_coordinates (tm, tile, &x, &y);
-
-  width  = tile_width  = tile_ewidth (tile);
-  height = tile_height = tile_eheight (tile);
-
-  tile_manager_get_tile_col_row (tm, tile, &col, &row);
-
-  /*  try to validate up to 8 invalid tiles in a row  */
-  while (tile_width == TILE_WIDTH && n_additional < 7)
-    {
-      Tile *t;
-
-      col++;
-
-      /*  get the next tile without any read or write access, so it
-       *  won't be locked (and validated)
-       */
-      t = tile_manager_get_at (tm, col, row, FALSE, FALSE);
-
-      /*  if we hit the right border, or a valid tile, bail out
-       */
-      if (! t || tile_is_valid (t))
-        break;
-
-      /*  HACK: mark the tile as valid, so locking it with r/w access
-       *  won't validate it
-       */
-      t->valid = TRUE;
-      t = tile_manager_get_at (tm, col, row, TRUE, TRUE);
-
-      /*  add the tile's width to the chunk to validate  */
-      tile_width = tile_ewidth (t);
-      width += tile_width;
-
-      additional[n_additional++] = t;
-    }
-
-  gimp_projection_construct (proj, x, y, width, height);
-
-  for (i = 0; i < n_additional; i++)
-    {
-      /*  HACK: mark the tile as valid, because we know it is  */
-      additional[i]->valid = TRUE;
-      tile_release (additional[i], TRUE);
-    }
-}
 
 /*  image callbacks  */
 
@@ -877,12 +779,6 @@ gimp_projection_projectable_changed (GimpProjectable *projectable,
 
   gimp_area_list_free (proj->update_areas);
   proj->update_areas = NULL;
-
-  if (proj->pyramid)
-    {
-      tile_pyramid_destroy (proj->pyramid);
-      proj->pyramid = NULL;
-    }
 
   if (proj->buffer)
     {

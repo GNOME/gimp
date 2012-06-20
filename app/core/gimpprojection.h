@@ -19,6 +19,9 @@
 #define __GIMP_PROJECTION_H__
 
 
+#define USE_BUFFER 1
+
+
 #include "gimpobject.h"
 
 
@@ -54,7 +57,6 @@ struct _GimpProjection
 
   GimpProjectable          *projectable;
 
-  TilePyramid              *pyramid;
   GeglBuffer               *buffer;
 
   GeglNode                 *graph;
@@ -82,25 +84,19 @@ struct _GimpProjectionClass
 
 GType            gimp_projection_get_type         (void) G_GNUC_CONST;
 
-GimpProjection * gimp_projection_new              (GimpProjectable      *projectable);
+GimpProjection * gimp_projection_new              (GimpProjectable   *projectable);
 
-GeglNode       * gimp_projection_get_sink_node    (GimpProjection       *proj);
+#if USE_BUFFER
+GeglNode       * gimp_projection_get_sink_node    (GimpProjection    *proj);
+#endif
 
-TileManager    * gimp_projection_get_tiles_at_level
-                                                  (GimpProjection       *proj,
-                                                   gint                  level,
-                                                   gboolean             *is_premult);
-gint             gimp_projection_get_level        (GimpProjection       *proj,
-                                                   gdouble               scale_x,
-                                                   gdouble               scale_y);
+void             gimp_projection_flush            (GimpProjection    *proj);
+void             gimp_projection_flush_now        (GimpProjection    *proj);
+void             gimp_projection_finish_draw      (GimpProjection    *proj);
 
-void             gimp_projection_flush            (GimpProjection       *proj);
-void             gimp_projection_flush_now        (GimpProjection       *proj);
-void             gimp_projection_finish_draw      (GimpProjection       *proj);
-
-gint64           gimp_projection_estimate_memsize (GimpImageBaseType     type,
-                                                   gint                  width,
-                                                   gint                  height);
+gint64           gimp_projection_estimate_memsize (GimpImageBaseType  type,
+                                                   gint               width,
+                                                   gint               height);
 
 
 #endif /*  __GIMP_PROJECTION_H__  */

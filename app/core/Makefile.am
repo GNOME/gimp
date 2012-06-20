@@ -315,16 +315,12 @@ libappcore_a_sources = \
 	gimppdbprogress.h			\
 	gimppickable.c				\
 	gimppickable.h				\
-	gimppreviewcache.c			\
-	gimppreviewcache.h			\
 	gimpprogress.c				\
 	gimpprogress.h				\
 	gimpprojectable.c			\
 	gimpprojectable.h			\
 	gimpprojection.c			\
 	gimpprojection.h			\
-	gimpprojection-construct.c		\
-	gimpprojection-construct.h		\
 	gimpsamplepoint.c			\
 	gimpsamplepoint.h			\
 	gimpsamplepointundo.c			\

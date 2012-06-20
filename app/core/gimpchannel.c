@@ -461,10 +461,10 @@ gimp_channel_convert (GimpItem  *item,
       format = gimp_drawable_get_format_without_alpha (drawable);
 
       new_buffer =
-        gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                              gimp_item_get_width (item),
-                                              gimp_item_get_height (item)),
-                              format);
+        gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                         gimp_item_get_width (item),
+                                         gimp_item_get_height (item)),
+                         format);
 
       gimp_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
       flatten = gimp_gegl_create_flatten_node (&background);
@@ -610,8 +610,8 @@ gimp_channel_scale (GimpItem              *item,
       GeglBuffer   *new_buffer;
 
       new_buffer =
-        gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, new_width, new_height),
-                              gimp_drawable_get_format (drawable));
+        gegl_buffer_new (GEGL_RECTANGLE (0, 0, new_width, new_height),
+                         gimp_drawable_get_format (drawable));
 
       gimp_drawable_set_buffer_full (drawable,
                                      gimp_item_is_attached (item), NULL,

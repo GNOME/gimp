@@ -86,8 +86,8 @@ gimp_drawable_offset (GimpDrawable   *drawable,
 
   src_buffer = gimp_drawable_get_buffer (drawable);
 
-  new_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
-                                     gimp_drawable_get_format (drawable));
+  new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+                                gimp_drawable_get_format (drawable));
 
   if (! wrap_around)
     {

@@ -24,12 +24,9 @@
 
 #include "gimp-gegl-types.h"
 
-#include "base/tile-manager.h"
-
 #include "core/gimpprogress.h"
 
 #include "gimp-gegl-utils.h"
-#include "gimptilebackendtilemanager.h"
 
 
 const gchar *
@@ -46,84 +43,6 @@ gimp_interpolation_to_gegl_filter (GimpInterpolationType interpolation)
     }
 
   return "nearest";
-}
-
-GeglBuffer *
-gimp_gegl_buffer_new (const GeglRectangle *rect,
-                      const Babl          *format)
-{
-  TileManager *tiles;
-  GeglBuffer  *buffer;
-
-  g_return_val_if_fail (rect != NULL, NULL);
-  g_return_val_if_fail (format != NULL, NULL);
-
-  tiles = tile_manager_new (rect->width, rect->height,
-                            babl_format_get_bytes_per_pixel (format));
-  buffer = gimp_tile_manager_create_buffer (tiles, format);
-  tile_manager_unref (tiles);
-
-  return buffer;
-}
-
-GeglBuffer *
-gimp_gegl_buffer_dup (GeglBuffer *buffer)
-{
-  const Babl  *format = gegl_buffer_get_format (buffer);
-  TileManager *tiles;
-  GeglBuffer  *dup;
-
-  tiles = tile_manager_new (gegl_buffer_get_width (buffer),
-                            gegl_buffer_get_height (buffer),
-                            babl_format_get_bytes_per_pixel (format));
-
-  dup = gimp_tile_manager_create_buffer (tiles, format);
-  tile_manager_unref (tiles);
-
-  gegl_buffer_copy (buffer, NULL, dup, NULL);
-
-  return dup;
-}
-
-GeglBuffer *
-gimp_tile_manager_create_buffer (TileManager *tm,
-                                 const Babl  *format)
-{
-  GeglTileBackend *backend;
-  GeglBuffer      *buffer;
-
-  backend = gimp_tile_backend_tile_manager_new (tm, format);
-  buffer = gegl_buffer_new_for_backend (NULL, backend);
-  g_object_unref (backend);
-
-  return buffer;
-}
-
-/* temp hack */
-GeglTileBackend * gegl_buffer_backend (GeglBuffer *buffer);
-
-TileManager *
-gimp_gegl_buffer_get_tiles (GeglBuffer *buffer)
-{
-  GeglTileBackend *backend;
-
-  g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
-
-  backend = gegl_buffer_backend (buffer);
-
-  g_return_val_if_fail (GIMP_IS_TILE_BACKEND_TILE_MANAGER (backend), NULL);
-
-  gegl_buffer_flush (buffer);
-
-  return gimp_tile_backend_tile_manager_get_tiles (backend);
-}
-
-void
-gimp_gegl_buffer_refetch_tiles (GeglBuffer *buffer)
-{
-  g_return_if_fail (GEGL_IS_BUFFER (buffer));
-
-  gegl_tile_source_reinit (GEGL_TILE_SOURCE (buffer));
 }
 
 GeglColor *

@@ -12,8 +12,6 @@ libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
 # so that when e.g. changing a header-file the subdirs are built in
 # the right order
 SUBDIRS = \
-	base		\
-	paint-funcs	\
 	config		\
 	core		\
 	operations	\
@@ -164,8 +162,6 @@ gimpconsoleldadd = \
 	operations/libappoperations.a	\
 	gegl/libappgegl.a		\
 	config/libappconfig.a		\
-	paint-funcs/libapppaint-funcs.a	\
-	base/libappbase.a		\
 	$(libgimpconfig)		\
 	$(libgimpmath)			\
 	$(libgimpthumb)			\

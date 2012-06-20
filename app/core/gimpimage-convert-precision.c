@@ -116,10 +116,10 @@ gimp_image_convert_precision (GimpImage     *image,
 
     gimp_image_undo_push_mask_precision (image, NULL, mask);
 
-    buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                   gimp_image_get_width  (image),
-                                                   gimp_image_get_height (image)),
-                                   gimp_image_get_mask_format (image));
+    buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                              gimp_image_get_width  (image),
+                                              gimp_image_get_height (image)),
+                              gimp_image_get_mask_format (image));
 
     gegl_buffer_copy (gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)), NULL,
                       buffer, NULL);

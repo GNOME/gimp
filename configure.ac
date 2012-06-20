@@ -2155,7 +2155,6 @@ libgimpthumb/Makefile
 libgimpwidgets/Makefile
 app/Makefile
 app/actions/Makefile
-app/base/Makefile
 app/config/Makefile
 app/core/Makefile
 app/operations/Makefile
@@ -2167,7 +2166,6 @@ app/file/Makefile
 app/gui/Makefile
 app/menus/Makefile
 app/paint/Makefile
-app/paint-funcs/Makefile
 app/pdb/Makefile
 app/plug-in/Makefile
 app/text/Makefile

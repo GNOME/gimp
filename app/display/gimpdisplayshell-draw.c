@@ -161,20 +161,12 @@ gimp_display_shell_draw_image (GimpDisplayShell *shell,
     {
       for (j = x; j < x2; j += GIMP_DISPLAY_RENDER_BUF_WIDTH)
         {
-          gint disp_xoffset, disp_yoffset;
           gint dx, dy;
 
           dx = MIN (x2 - j, GIMP_DISPLAY_RENDER_BUF_WIDTH);
           dy = MIN (y2 - i, GIMP_DISPLAY_RENDER_BUF_HEIGHT);
 
-          gimp_display_shell_scroll_get_disp_offset (shell,
-                                                     &disp_xoffset,
-                                                     &disp_yoffset);
-
-          gimp_display_shell_render (shell, cr,
-                                     j - disp_xoffset,
-                                     i - disp_yoffset,
-                                     dx, dy);
+          gimp_display_shell_render (shell, cr, j, i, dx, dy);
         }
     }
 }

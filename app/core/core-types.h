@@ -25,7 +25,6 @@
 #include "libgimpmodule/gimpmoduletypes.h"
 #include "libgimpthumb/gimpthumb-types.h"
 
-#include "base/base-types.h"
 #include "config/config-types.h"
 
 #include "core/core-enums.h"

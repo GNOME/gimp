@@ -22,7 +22,7 @@
 /*
  *  virtual function of GimpDrawable -- dont't call directly
  */
-GimpTempBuf * gimp_drawable_get_preview        (GimpViewable *viewable,
+GimpTempBuf * gimp_drawable_get_new_preview    (GimpViewable *viewable,
                                                 GimpContext  *context,
                                                 gint          width,
                                                 gint          height);

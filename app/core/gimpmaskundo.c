@@ -218,8 +218,8 @@ gimp_mask_undo_pop (GimpUndo            *undo,
       gint        width  = gimp_item_get_width  (GIMP_ITEM (channel));
       gint        height = gimp_item_get_height (GIMP_ITEM (channel));
 
-      buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
-                                     mask_undo->format);
+      buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+                                mask_undo->format);
       gegl_buffer_clear (buffer, NULL);
 
       gimp_drawable_set_buffer (drawable, FALSE, NULL, buffer);

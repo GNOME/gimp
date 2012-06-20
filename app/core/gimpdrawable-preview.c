@@ -25,14 +25,7 @@
 
 #include "core-types.h"
 
-#include "base/pixel-region.h"
-#include "base/tile-manager-preview.h"
-
-#include "paint-funcs/subsample-region.h"
-
 #include "config/gimpcoreconfig.h"
-
-#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
 #include "gimpchannel.h"
@@ -40,61 +33,29 @@
 #include "gimpdrawable-preview.h"
 #include "gimpdrawable-private.h"
 #include "gimplayer.h"
-#include "gimppreviewcache.h"
 #include "gimptempbuf.h"
-
-
-/*  local function prototypes  */
-
-static GimpTempBuf * gimp_drawable_preview_private (GimpDrawable *drawable,
-                                                    gint          width,
-                                                    gint          height);
-static GimpTempBuf * gimp_drawable_indexed_preview (GimpDrawable *drawable,
-                                                    const guchar *cmap,
-                                                    gint          src_x,
-                                                    gint          src_y,
-                                                    gint          src_width,
-                                                    gint          src_height,
-                                                    gint          dest_width,
-                                                    gint          dest_height);
 
 
 /*  public functions  */
 
 GimpTempBuf *
-gimp_drawable_get_preview (GimpViewable *viewable,
-                           GimpContext  *context,
-                           gint          width,
-                           gint          height)
+gimp_drawable_get_new_preview (GimpViewable *viewable,
+                               GimpContext  *context,
+                               gint          width,
+                               gint          height)
 {
-  GimpDrawable *drawable = GIMP_DRAWABLE (viewable);
-  GimpImage    *image    = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpItem  *item  = GIMP_ITEM (viewable);
+  GimpImage *image = gimp_item_get_image (item);
 
-  if (! image->gimp->config->layer_previews ||
-      /* XXX fixme enable drawable previews for > u8 */
-      gimp_drawable_get_precision (drawable) != GIMP_PRECISION_U8)
+  if (! image->gimp->config->layer_previews)
     return NULL;
 
-  /* Ok prime the cache with a large preview if the cache is invalid */
-  if (! drawable->private->preview_valid                        &&
-      width  <= PREVIEW_CACHE_PRIME_WIDTH                       &&
-      height <= PREVIEW_CACHE_PRIME_HEIGHT                      &&
-      image                                                     &&
-      gimp_image_get_width  (image) > PREVIEW_CACHE_PRIME_WIDTH &&
-      gimp_image_get_height (image) > PREVIEW_CACHE_PRIME_HEIGHT)
-    {
-      GimpTempBuf *tb = gimp_drawable_preview_private (drawable,
-                                                       PREVIEW_CACHE_PRIME_WIDTH,
-                                                       PREVIEW_CACHE_PRIME_HEIGHT);
-
-      /* Save the 2nd call */
-      if (width  == PREVIEW_CACHE_PRIME_WIDTH &&
-          height == PREVIEW_CACHE_PRIME_HEIGHT)
-        return tb;
-    }
-
-  /* Second call - should NOT visit the tile cache...*/
-  return gimp_drawable_preview_private (drawable, width, height);
+  return gimp_drawable_get_sub_preview (GIMP_DRAWABLE (viewable),
+                                        0, 0,
+                                        gimp_item_get_width  (item),
+                                        gimp_item_get_height (item),
+                                        width,
+                                        height);
 }
 
 const Babl *
@@ -130,9 +91,11 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
                                gint          dest_width,
                                gint          dest_height)
 {
-  GimpItem   *item;
-  GimpImage  *image;
-  GeglBuffer *buffer;
+  GimpItem    *item;
+  GimpImage   *image;
+  GeglBuffer  *buffer;
+  GimpTempBuf *preview;
+  gdouble      scale;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (src_x >= 0, NULL);
@@ -149,93 +112,23 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
 
   image = gimp_item_get_image (item);
 
-  if (! image->gimp->config->layer_previews ||
-      /* XXX fixme enable drawable previews for > u8 */
-      gimp_drawable_get_precision (drawable) != GIMP_PRECISION_U8)
+  if (! image->gimp->config->layer_previews)
     return NULL;
 
-  if (gimp_drawable_is_indexed (drawable))
-    return gimp_drawable_indexed_preview (drawable,
-                                          gimp_drawable_get_colormap (drawable),
-                                          src_x, src_y, src_width, src_height,
-                                          dest_width, dest_height);
-
   buffer = gimp_drawable_get_buffer (drawable);
 
-  return tile_manager_get_sub_preview (gimp_gegl_buffer_get_tiles (buffer),
-                                       gimp_drawable_get_preview_format (drawable),
-                                       src_x, src_y, src_width, src_height,
-                                       dest_width, dest_height);
-}
+  preview = gimp_temp_buf_new (dest_width, dest_height,
+                               gimp_drawable_get_preview_format (drawable));
 
+  scale = MIN ((gdouble) dest_width  / (gdouble) gegl_buffer_get_width  (buffer),
+               (gdouble) dest_height / (gdouble) gegl_buffer_get_height (buffer));
 
-/*  private functions  */
+  gegl_buffer_get (buffer,
+                   GEGL_RECTANGLE (src_x, src_y, dest_width, dest_height),
+                   scale,
+                   gimp_temp_buf_get_format (preview),
+                   gimp_temp_buf_get_data (preview),
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-static GimpTempBuf *
-gimp_drawable_preview_private (GimpDrawable *drawable,
-                               gint          width,
-                               gint          height)
-{
-  GimpTempBuf *ret_buf = NULL;
-
-  if (! drawable->private->preview_valid ||
-      ! (ret_buf = gimp_preview_cache_get (&drawable->private->preview_cache,
-                                           width, height)))
-    {
-      GimpItem *item = GIMP_ITEM (drawable);
-
-      ret_buf = gimp_drawable_get_sub_preview (drawable,
-                                               0, 0,
-                                               gimp_item_get_width (item),
-                                               gimp_item_get_height (item),
-                                               width,
-                                               height);
-
-      if (! drawable->private->preview_valid)
-        gimp_preview_cache_invalidate (&drawable->private->preview_cache);
-
-      drawable->private->preview_valid = TRUE;
-
-      gimp_preview_cache_add (&drawable->private->preview_cache, ret_buf);
-    }
-
-  return ret_buf;
-}
-
-static GimpTempBuf *
-gimp_drawable_indexed_preview (GimpDrawable *drawable,
-                               const guchar *cmap,
-                               gint          src_x,
-                               gint          src_y,
-                               gint          src_width,
-                               gint          src_height,
-                               gint          dest_width,
-                               gint          dest_height)
-{
-  GeglBuffer  *buffer;
-  GimpTempBuf *preview_buf;
-  PixelRegion  srcPR;
-  PixelRegion  destPR;
-  gint         subsample = 1;
-
-  /*  calculate 'acceptable' subsample  */
-  while ((dest_width  * (subsample + 1) * 2 < src_width) &&
-         (dest_height * (subsample + 1) * 2 < src_width))
-    subsample += 1;
-
-  buffer = gimp_drawable_get_buffer (drawable);
-
-  pixel_region_init (&srcPR, gimp_gegl_buffer_get_tiles (buffer),
-                     src_x, src_y, src_width, src_height,
-                     FALSE);
-
-  preview_buf = gimp_temp_buf_new (dest_width, dest_height,
-                                   gimp_drawable_get_preview_format (drawable));
-
-  pixel_region_init_temp_buf (&destPR, preview_buf,
-                              0, 0, dest_width, dest_height);
-
-  subsample_indexed_region (&srcPR, &destPR, cmap, subsample);
-
-  return preview_buf;
+  return preview;
 }

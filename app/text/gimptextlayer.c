@@ -587,8 +587,8 @@ gimp_text_layer_render (GimpTextLayer *layer)
     {
       GeglBuffer *new_buffer;
 
-      new_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
-                                         gimp_drawable_get_format (drawable));
+      new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+                                    gimp_drawable_get_format (drawable));
       gimp_drawable_set_buffer (drawable, FALSE, NULL, new_buffer);
       g_object_unref (new_buffer);
 

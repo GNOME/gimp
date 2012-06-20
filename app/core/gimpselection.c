@@ -320,8 +320,13 @@ gimp_selection_invalidate_boundary (GimpDrawable *drawable)
                           gimp_item_get_width  (GIMP_ITEM (layer)),
                           gimp_item_get_height (GIMP_ITEM (layer)));
 
+#ifdef __GNUC__
+#warning FIXME is this still needed?
+#endif
+#if 0
   /*  invalidate the preview  */
   drawable->private->preview_valid = FALSE;
+#endif
 }
 
 static gboolean
@@ -700,8 +705,8 @@ gimp_selection_extract (GimpSelection *selection,
   src_buffer = gimp_pickable_get_buffer (pickable);
 
   /*  Allocate the temp buffer  */
-  dest_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, x2 - x1, y2 - y1),
-                                      dest_format);
+  dest_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, x2 - x1, y2 - y1),
+                                 dest_format);
 
   /*  First, copy the pixels, possibly doing INDEXED->RGB and adding alpha  */
   gegl_buffer_copy (src_buffer, GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),

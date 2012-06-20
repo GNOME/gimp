@@ -26,8 +26,6 @@
 
 #include "core/core-types.h"
 
-#include "base/tile-swap.h"
-
 #include "core/gimp.h"
 #include "core/gimpparamspecs.h"
 
@@ -132,9 +130,6 @@ batch_exit_after_callback (Gimp *gimp)
     g_print ("EXIT: %s\n", G_STRFUNC);
 
   gegl_exit ();
-
-  /*  make sure that the swap files are removed before we quit */
-  tile_swap_exit ();
 
   exit (EXIT_SUCCESS);
 }

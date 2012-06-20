@@ -47,7 +47,6 @@
 #include "gimpmarshal.h"
 #include "gimppattern.h"
 #include "gimppickable.h"
-#include "gimppreviewcache.h"
 #include "gimpprogress.h"
 
 #include "gimp-log.h"
@@ -76,7 +75,6 @@ static gint64     gimp_drawable_get_memsize        (GimpObject        *object,
 static gboolean   gimp_drawable_get_size           (GimpViewable      *viewable,
                                                     gint              *width,
                                                     gint              *height);
-static void       gimp_drawable_invalidate_preview (GimpViewable      *viewable);
 
 static void       gimp_drawable_removed            (GimpItem          *item);
 static void       gimp_drawable_visibility_changed (GimpItem          *item);
@@ -215,8 +213,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   gimp_object_class->get_memsize     = gimp_drawable_get_memsize;
 
   viewable_class->get_size           = gimp_drawable_get_size;
-  viewable_class->invalidate_preview = gimp_drawable_invalidate_preview;
-  viewable_class->get_preview        = gimp_drawable_get_preview;
+  viewable_class->get_new_preview    = gimp_drawable_get_new_preview;
 
   item_class->removed                = gimp_drawable_removed;
   item_class->visibility_changed     = gimp_drawable_visibility_changed;
@@ -295,9 +292,6 @@ gimp_drawable_finalize (GObject *object)
       drawable->private->source_node = NULL;
     }
 
-  if (drawable->private->preview_cache)
-    gimp_preview_cache_invalidate (&drawable->private->preview_cache);
-
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -310,8 +304,6 @@ gimp_drawable_get_memsize (GimpObject *object,
 
   memsize += gimp_gegl_buffer_get_memsize (gimp_drawable_get_buffer (drawable));
   memsize += gimp_gegl_buffer_get_memsize (drawable->private->shadow);
-
-  *gui_size += gimp_preview_cache_get_memsize (drawable->private->preview_cache);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -328,19 +320,6 @@ gimp_drawable_get_size (GimpViewable *viewable,
   *height = gimp_item_get_height (item);
 
   return TRUE;
-}
-
-static void
-gimp_drawable_invalidate_preview (GimpViewable *viewable)
-{
-  GimpDrawable *drawable = GIMP_DRAWABLE (viewable);
-
-  GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview (viewable);
-
-  drawable->private->preview_valid = FALSE;
-
-  if (drawable->private->preview_cache)
-    gimp_preview_cache_invalidate (&drawable->private->preview_cache);
 }
 
 static void
@@ -411,7 +390,7 @@ gimp_drawable_duplicate (GimpItem *item,
         g_object_unref (new_drawable->private->buffer);
 
       new_drawable->private->buffer =
-        gimp_gegl_buffer_dup (gimp_drawable_get_buffer (drawable));
+        gegl_buffer_dup (gimp_drawable_get_buffer (drawable));
     }
 
   return new_item;
@@ -430,9 +409,9 @@ gimp_drawable_scale (GimpItem              *item,
   GeglBuffer   *new_buffer;
   GeglNode     *scale;
 
-  new_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                     new_width, new_height),
-                                     gimp_drawable_get_format (drawable));
+  new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                new_width, new_height),
+                                gimp_drawable_get_format (drawable));
 
   scale = g_object_new (GEGL_TYPE_NODE,
                         "operation", "gegl:scale",
@@ -498,9 +477,9 @@ gimp_drawable_resize (GimpItem    *item,
                             &copy_width,
                             &copy_height);
 
-  new_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                     new_width, new_height),
-                                     gimp_drawable_get_format (drawable));
+  new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                new_width, new_height),
+                                gimp_drawable_get_format (drawable));
 
   if (copy_width  != new_width ||
       copy_height != new_height)
@@ -707,10 +686,10 @@ gimp_drawable_real_convert_type (GimpDrawable      *drawable,
                                   gimp_drawable_has_alpha (drawable));
 
   dest_buffer =
-    gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                          gimp_item_get_width  (GIMP_ITEM (drawable)),
-                                          gimp_item_get_height (GIMP_ITEM (drawable))),
-                          format);
+    gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                     gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                     gimp_item_get_height (GIMP_ITEM (drawable))),
+                     format);
 
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                     dest_buffer, NULL);
@@ -722,8 +701,10 @@ gimp_drawable_real_convert_type (GimpDrawable      *drawable,
 static GeglBuffer *
 gimp_drawable_real_get_buffer (GimpDrawable *drawable)
 {
+#if 0
   gegl_buffer_flush (drawable->private->buffer);
   gimp_gegl_buffer_refetch_tiles (drawable->private->buffer);
+#endif
 
   return drawable->private->buffer;
 }
@@ -1069,9 +1050,9 @@ gimp_drawable_new (GType          type,
                                            offset_x, offset_y,
                                            width, height));
 
-  drawable->private->buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                                    width, height),
-                                                    format);
+  drawable->private->buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                               width, height),
+                                               format);
 
   return drawable;
 }
@@ -1095,12 +1076,6 @@ gimp_drawable_update (GimpDrawable *drawable,
                       gint          height)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-
-  if (drawable->private->buffer)
-    {
-      gegl_buffer_flush (drawable->private->buffer);
-      gimp_gegl_buffer_refetch_tiles (drawable->private->buffer);
-    }
 
   g_signal_emit (drawable, gimp_drawable_signals[UPDATE], 0,
                  x, y, width, height);

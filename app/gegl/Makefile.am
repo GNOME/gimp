@@ -35,9 +35,7 @@ libappgegl_a_sources = \
 	gimp-gegl-utils.c		\
 	gimp-gegl-utils.h		\
 	gimpapplicator.c		\
-	gimpapplicator.h		\
-	gimptilebackendtilemanager.c	\
-	gimptilebackendtilemanager.h
+	gimpapplicator.h
 
 libappgegl_a_built_sources = gimp-gegl-enums.c
 

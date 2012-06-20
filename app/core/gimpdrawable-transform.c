@@ -128,8 +128,8 @@ gimp_drawable_transform_buffer_affine (GimpDrawable           *drawable,
                                   &x1, &y1, &x2, &y2);
 
   /*  Get the new temporary buffer for the transformed result  */
-  new_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, x2 - x1, y2 - y1),
-                                     gegl_buffer_get_format (orig_buffer));
+  new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, x2 - x1, y2 - y1),
+                                gegl_buffer_get_format (orig_buffer));
 
   gimp_matrix3_identity (&gegl_matrix);
   gimp_matrix3_translate (&gegl_matrix, u1, v1);
@@ -209,9 +209,9 @@ gimp_drawable_transform_buffer_flip (GimpDrawable        *drawable,
       break;
     }
 
-  new_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                     new_width, new_height),
-                                     gegl_buffer_get_format (orig_buffer));
+  new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                new_width, new_height),
+                                gegl_buffer_get_format (orig_buffer));
 
   if (clip_result && (new_x != orig_x || new_y != orig_y))
     {
@@ -420,9 +420,9 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable     *drawable,
       gint       clip_x, clip_y;
       gint       clip_width, clip_height;
 
-      new_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                         orig_width, orig_height),
-                                         gegl_buffer_get_format (orig_buffer));
+      new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                    orig_width, orig_height),
+                                    gegl_buffer_get_format (orig_buffer));
 
       *new_offset_x = orig_x;
       *new_offset_y = orig_y;
@@ -497,9 +497,9 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable     *drawable,
     }
   else
     {
-      new_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                         new_width, new_height),
-                                         gegl_buffer_get_format (orig_buffer));
+      new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                    new_width, new_height),
+                                    gegl_buffer_get_format (orig_buffer));
 
       *new_offset_x = new_x;
       *new_offset_y = new_y;

@@ -108,7 +108,7 @@ gimp_drawable_mod_undo_constructed (GObject *object)
   if (drawable_mod_undo->copy_buffer)
     {
       drawable_mod_undo->buffer =
-        gimp_gegl_buffer_dup (gimp_drawable_get_buffer (drawable));
+        gegl_buffer_dup (gimp_drawable_get_buffer (drawable));
     }
   else
     {

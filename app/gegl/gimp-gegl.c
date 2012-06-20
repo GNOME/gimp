@@ -24,8 +24,6 @@
 
 #include "gimp-gegl-types.h"
 
-#include "base/tile.h"
-
 #include "config/gimpgeglconfig.h"
 
 #include "operations/gimp-operations.h"
@@ -58,8 +56,10 @@ gimp_gegl_init (Gimp *gimp)
 #endif
 
   g_object_set (gegl_config (),
+#if 0
                 "tile-width",  TILE_WIDTH,
                 "tile-height", TILE_HEIGHT,
+#endif
                 "cache-size",  (gint) MIN (config->tile_cache_size, G_MAXINT),
 #if 0
                 "threads",     config->num_processors,

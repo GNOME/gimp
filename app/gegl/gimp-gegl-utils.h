@@ -22,21 +22,13 @@
 #define __GIMP_GEGL_UTILS_H__
 
 
-const gchar * gimp_interpolation_to_gegl_filter  (GimpInterpolationType  interpolation) G_GNUC_CONST;
+const gchar * gimp_interpolation_to_gegl_filter (GimpInterpolationType  interpolation) G_GNUC_CONST;
 
-GeglBuffer  * gimp_gegl_buffer_new               (const GeglRectangle   *rect,
-                                                  const Babl            *format);
-GeglBuffer  * gimp_gegl_buffer_dup               (GeglBuffer            *buffer);
+GeglColor   * gimp_gegl_color_new               (const GimpRGB         *rgb);
 
-GeglBuffer  * gimp_tile_manager_create_buffer    (TileManager           *tm,
-                                                  const Babl            *format);
-TileManager * gimp_gegl_buffer_get_tiles         (GeglBuffer            *buffer);
-void          gimp_gegl_buffer_refetch_tiles     (GeglBuffer            *buffer);
+void          gimp_gegl_progress_connect        (GeglNode              *node,
+                                                 GimpProgress          *progress,
+                                                 const gchar           *text);
 
-GeglColor   * gimp_gegl_color_new                (const GimpRGB         *rgb);
-
-void          gimp_gegl_progress_connect         (GeglNode              *node,
-                                                  GimpProgress          *progress,
-                                                  const gchar           *text);
 
 #endif /* __GIMP_GEGL_UTILS_H__ */

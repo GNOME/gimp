@@ -988,11 +988,11 @@ gimp_image_convert (GimpImage               *image,
             has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
             new_buffer =
-              gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                    gimp_item_get_width  (GIMP_ITEM (layer)),
-                                                    gimp_item_get_height (GIMP_ITEM (layer))),
-                                    gimp_image_get_layer_format (image,
-                                                                 has_alpha));
+              gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                               gimp_item_get_width  (GIMP_ITEM (layer)),
+                                               gimp_item_get_height (GIMP_ITEM (layer))),
+                               gimp_image_get_layer_format (image,
+                                                            has_alpha));
 
             quantobj->nth_layer = nth_layer;
             quantobj->second_pass (quantobj, layer, new_buffer);
