@@ -213,7 +213,7 @@ Source: "{#GIMP_DIR32}\etc\*"; DestDir: "{app}\etc"; Components: gimp32 or gimp6
 Source: "{#GIMP_DIR32}\lib\gimp\2.0\environ\*"; DestDir: "{app}\lib\gimp\2.0\environ"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace
 Source: "{#GIMP_DIR32}\lib\gimp\2.0\interpreters\*"; DestDir: "{app}\lib\gimp\2.0\interpreters"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace
 Source: "{#GIMP_DIR32}\share\gimp\*"; DestDir: "{app}\share\gimp"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace
-Source: "{#DEPS_DIR32}\share\enchant\*"; DestDir: "{app}\share\enchant"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace
+;Source: "{#DEPS_DIR32}\share\enchant\*"; DestDir: "{app}\share\enchant"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace
 Source: "{#DEPS_DIR32}\share\libwmf\*"; DestDir: "{app}\share\libwmf"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace
 Source: "{#DEPS_DIR32}\share\themes\*"; DestDir: "{app}\share\themes"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace
 Source: "{#DEPS_DIR32}\share\xml\*"; DestDir: "{app}\share\xml"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace
@@ -261,6 +261,9 @@ Source: "{#DEPS_DIR}-compat\*.dll"; DestDir: "{app}"; Components: deps32\compat;
 ;sharedfile flag will ensure that the upgraded file is left behind on uninstall to avoid breaking other programs that use the file
 Source: "{#DEPS_DIR32}\bin\zlib1.dll"; DestDir: "{sys}"; Components: deps32 or deps64; Flags: restartreplace sharedfile 32bit; Check: BadSysDLL('zlib1.dll',32)
 Source: "{#DEPS_DIR64}\bin\zlib1.dll"; DestDir: "{sys}"; Components: deps64; Flags: restartreplace sharedfile; Check: BadSysDLL('zlib1.dll',64)
+
+;overridden configuration files
+#include "configoverride.isi"
 
 ;python
 Source: "{#PY_DIR}\pythonw.exe"; DestDir: "{app}\Python"; Components: py or gimp32on64\py; Flags: restartreplace
@@ -327,6 +330,8 @@ const
 
 	RunOnceName = 'Resume GIMP {#VERSION} install';
 
+	CONFIG_OVERRIDE_PARAM = 'configoverride';
+
 	UNINSTALL_MAX_WAIT_TIME = 10000;
 	UNINSTALL_CHECK_TIME    =   250;
 
@@ -361,6 +366,8 @@ var
 	btnInstall, btnCustomize: TNewButton;
 
 	InstallMode: (imNone, imSimple, imCustom, imRebootContinue);
+
+	ConfigOverride: (coUndefined, coOverride, coDontOverride);
 
 	asUninstInf: TArrayOfString; //uninst.inf contents (loaded at start of uninstall, exectued at the end)
 
@@ -417,6 +424,60 @@ begin
 	end;
 
 	DebugMsg('BadSysDLL','Result: ' + BoolToStr(Result));
+end;
+
+
+function DoConfigOverride: Boolean;
+var i: Integer;
+begin
+
+	if ConfigOverride = coUndefined then
+	begin
+
+		DebugMsg('DoConfigOverride', 'First call');
+		
+		Result := False;
+		ConfigOverride := coDontOverride;
+
+		for i := 0 to ParamCount() do //use ParamCount/ParamStr to allow specifying /configoverride without any parameters
+			if LowerCase(Copy(ParamStr(i),1,15)) = '/' + CONFIG_OVERRIDE_PARAM then
+			begin
+				Result := True;
+				ConfigOverride := coOverride;
+				break;
+			end;
+
+	end
+	else if ConfigOverride = coOverride then
+		Result := True
+	else
+		Result := False;
+
+	DebugMsg('DoConfigOverride', BoolToStr(Result));
+end;
+
+function GetExternalConfDir(Unused: String): String;
+begin
+	if ExpandConstant('{param:' + CONFIG_OVERRIDE_PARAM + '|<>}') = '<>' then
+		Result := ExpandConstant('{src}\')
+	else
+		Result := ExpandConstant('{param:' + CONFIG_OVERRIDE_PARAM + '|<>}\');
+	DebugMsg('GetExternalConfDir', Result);
+end;
+
+function CheckExternalConf(const pFile: String): Boolean;
+begin
+
+	if not DoConfigOverride then //no config override
+		Result := False
+	else
+	begin
+		if FileExists(GetExternalConfDir('') + pFile) then //config file override only applies when that file exists
+			Result := True
+		else
+			Result := False;
+	end;
+	DebugMsg('CheckExternalConf', pFile + ': ' + BoolToStr(Result));
 end;
 
 
@@ -1346,6 +1407,8 @@ function InitializeSetup(): Boolean;
 var Message,Buttons: TArrayOfString;
 #endif
 begin
+	ConfigOverride := coUndefined;
+
 	if not IsProcessorFeaturePresent(PF_XMMI_INSTRUCTIONS_AVAILABLE) then
 	begin
 		SuppressibleMsgBox(CustomMessage('SSERequired'), mbCriticalError, MB_OK, 0);

@@ -146,3 +146,12 @@ begin
 	WizardForm.FilenameLabel.Caption := Status2;
 	WizardForm.Refresh();
 end;
+
+
+function BoolToStr(const Value: Boolean): String;
+begin
+  if Value then
+    Result := 'true'
+  else
+    Result := 'false';
+end;
