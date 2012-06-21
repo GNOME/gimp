@@ -101,8 +101,6 @@ test_config_LDADD = \
 	../gegl/libappgegl.a			\
 	../operations/libappoperations.a	\
 	libappconfig.a				\
-	../paint-funcs/libapppaint-funcs.a	\
-	../base/libappbase.a			\
 	../gimp-debug.o				\
 	../gimp-log.o				\
 	$(libgimpmodule)			\
