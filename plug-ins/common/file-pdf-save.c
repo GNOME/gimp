@@ -1409,7 +1409,7 @@ drawText (GimpDrawable *text_layer,
           gdouble       y_res)
 {
   gint32                text_id = text_layer->drawable_id;
-  GimpImageBaseType     type = gimp_drawable_type (text_id);
+  GimpImageType         type = gimp_drawable_type (text_id);
 
   gchar                *text = gimp_text_layer_get_text (text_id);
   gchar                *markup = gimp_text_layer_get_markup (text_id);
@@ -1456,7 +1456,7 @@ drawText (GimpDrawable *text_layer,
   /* Color */
   /* When dealing with a gray/indexed image, the viewed color of the text layer
    * can be different than the one kept in the memory */
-  if (type == GIMP_RGB)
+  if (type == GIMP_RGBA_IMAGE)
     gimp_text_layer_get_color (text_id, &color);
   else
     gimp_image_pick_color (gimp_item_get_image (text_id), text_id, x, y, FALSE, FALSE, 0, &color);
@@ -1518,8 +1518,7 @@ drawText (GimpDrawable *text_layer,
 
   /* Font Size */
   size = gimp_text_layer_get_font_size (text_id, &unit);
-  if (! g_strcmp0 (gimp_unit_get_abbreviation (unit), "px") == 0)
-    size *= 1.0 / gimp_unit_get_factor (unit) * x_res / y_res;
+  size = gimp_units_to_pixels (size, unit, y_res);
   pango_font_description_set_absolute_size (font_description, size * PANGO_SCALE);
 
   pango_layout_set_font_description (layout, font_description);
