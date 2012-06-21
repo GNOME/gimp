@@ -745,7 +745,6 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
   gdouble dy = transform_tool->cury - transform_tool->mousey;
   gdouble *x[4], *y[4], px[5], py[5], *pivot_x, *pivot_y, ppivot_x, ppivot_y;
   gint i;
-  gboolean horizontal = FALSE;
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (transform_tool);
   gboolean constrain = options->constrain;
   gboolean frompivot = options->alternate;
@@ -1017,6 +1016,42 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       function == TRANSFORM_HANDLE_W)
     {
       //TODO: scale through side
+      gint this_l, this_r, opp_l, opp_r;
+
+      /* 0: northwest, 1: northeast, 2: southwest, 3: southeast */
+      if (function == TRANSFORM_HANDLE_N) {
+        this_l = 1; this_r = 0;
+      } else if (function == TRANSFORM_HANDLE_E) {
+        this_l = 3; this_r = 1;
+      } else if (function == TRANSFORM_HANDLE_S) {
+        this_l = 2; this_r = 3;
+      } else if (function == TRANSFORM_HANDLE_W) {
+        this_l = 0; this_r = 2;
+      } else g_assert_not_reached ();
+
+      opp_l = 3 - this_r; opp_r = 3 - this_l;
+
+      GimpVector2 tl    = { .x = px[this_l], .y = py[this_l] },
+                  tr    = { .x = px[this_r], .y = py[this_r] },
+                  ol    = { .x = px[opp_l],  .y = py[opp_l] },
+                  or    = { .x = px[opp_r],  .y = py[opp_r] },
+                  p     = { .x = dx,         .y = dy },
+                  pivot = { .x = ppivot_x,   .y = ppivot_y },
+                  side_l = vectorsubtract (ol, tl),
+                  side_r = vectorsubtract (or, tr),
+                  midline = vectoradd (side_l, side_r);
+
+      /* restrict to movement along the midline */
+      p = vectorproject (p, midline);
+
+      tl = vectoradd (tl, p);
+      tr = vectoradd (tr, p);
+
+      *x[this_l] = tl.x;
+      *y[this_l] = tl.y;
+
+      *x[this_r] = tr.x;
+      *y[this_r] = tr.y;
     }
 
   /* shear */
@@ -1157,44 +1192,6 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       *x[this] = px[this] + dx;
       *y[this] = py[this] + dy;
     }
-
-  /* old code below */
-#if 0
-  switch (function)
-    {
-    case TRANSFORM_HANDLE_E:
-    case TRANSFORM_HANDLE_W:
-      horizontal = TRUE;
-    case TRANSFORM_HANDLE_N:
-    case TRANSFORM_HANDLE_S:
-      if (!constrain)
-        {
-          for (i = 0; i < 4; i++)
-            {
-              if (horizontal)
-                *x[i] = *pivot_x + (*pivot_x-transform_tool->curx)/(*pivot_x-transform_tool->mousex)*(px[i]-*pivot_x);
-              else
-                *y[i] = *pivot_y + (*pivot_y-transform_tool->cury)/(*pivot_y-transform_tool->mousey)*(py[i]-*pivot_y);
-            }
-        } else {
-          GimpVector2 m = { .x = transform_tool->curx,   .y = transform_tool->cury };
-          GimpVector2 p = { .x = transform_tool->mousex, .y = transform_tool->mousey };
-          GimpVector2 c = { .x = *pivot_x,               .y = *pivot_y };
-          gdouble onorm = 1./norm (vectorsubtract (c, p));
-          gdouble distance = norm (vectorsubtract (c, m)) * onorm;
-          for (i = 0; i < 4; i++) {
-            p.x = px[i]; p.y = py[i];
-            m = vectoradd (c, scalemult (vectorsubtract (p, c), distance));
-            *x[i] = m.x;
-            *y[i] = m.y;
-          }
-        }
-      break;
-
-    default:
-      break;
-    }
-#endif
 }
 
 static void
