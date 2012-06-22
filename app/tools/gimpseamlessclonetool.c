@@ -33,7 +33,7 @@
 
 #include "tools-types.h"
 
-#include "base/tile-manager.h"
+//#include "base/tile-manager.h"
 
 #include "core/gimp.h"
 #include "core/gimpbuffer.h"
@@ -325,70 +325,14 @@ paste_to_gegl_buf (GimpTool *tool)
    * |   paste          abstract_cache      |
    * +--------------------------------------+
    */
-  GimpSeamlessCloneTool *sc = GIMP_SEAMLESS_CLONE_TOOL (tool);
-  GeglNode      *gegl, *input, *output, *prepare;
-  GeglProcessor *processor;
-
   GimpContext   *context = & gimp_tool_get_options (tool) -> parent_instance;
   GimpBuffer    *buffer = gimp_clipboard_get_buffer (context->gimp);
-  TileManager   *tiles;
-  gdouble        value;
   GeglBuffer    *result = NULL;
 
   if (buffer)
     {
-      gegl = gegl_node_new ();
- 
-      input = gegl_node_new_child (gegl,
-                                   "operation", "gimp:tilemanager-source",
-                                   "tile-manager", tiles = gimp_buffer_get_tiles (buffer),
-                                   NULL);
-    
-      output = gegl_node_new_child (gegl,
-                                    "operation", "gegl:buffer-sink",
-                                    "buffer",    &result,
-                                    NULL);
+       result = gegl_buffer_dup (gimp_buffer_get_buffer (buffer));
 
-      prepare = gegl_node_new_child (gegl,
-                                     "operation", "gegl:seamless-clone-prepare",
-                                     "result",    &sc->abstract_cache,
-                                     NULL);
-
-      gegl_node_connect_to (input,  "output",
-                            output, "input");
-
-      gegl_node_connect_to (input,   "output",
-                            prepare, "input");
-
-      /* Convert the paste into a GeglBuffer */
-      processor = gegl_node_new_processor (output, NULL);
-
-       while (gegl_processor_work (processor, &value))
-         {
-         }
-     
-       gegl_processor_destroy (processor);
-
-       /* gimp_buffer_get_tiles does not ref the tile manager before
-        * returning it, so unreffing it here will cause trouble. This
-        * should probably be fixed, carefully after finding all usages
-        * of that function
-        * TODO: Fixme
-        */
-       /* tile_manager_unref (tiles); */
-
-      /* Do the preprocessing */
-      processor = gegl_node_new_processor (prepare, NULL);
-
-       while (gegl_processor_work (processor, &value))
-         {
-         }
-     
-       gegl_processor_destroy (processor);
-
-       /* Finally, unref stuff */
-       g_object_unref (gegl);
-       
        g_object_unref (buffer);
     }
 
@@ -482,7 +426,7 @@ gimp_seamless_clone_tool_stop (GimpSeamlessCloneTool *sc,
 
       if (sc->paste)
         {
-          gegl_buffer_destroy (sc->paste);
+          g_object_unref (sc->paste);
           sc->paste = NULL;
         }
 
@@ -871,9 +815,7 @@ gimp_seamless_clone_tool_create_image_map (GimpSeamlessCloneTool *sc,
 
   sc->image_map = gimp_image_map_new (drawable,
                                       _("Seamless Clone"),
-                                      sc->render_node,
-                                      NULL,
-                                      NULL);
+                                      sc->render_node);
 
   g_signal_connect (sc->image_map, "flush",
                     G_CALLBACK (gimp_seamless_clone_tool_image_map_flush),
