@@ -757,8 +757,6 @@ gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc)
 
   op = gegl_node_new_child (node,
                             "operation", "gegl:seamless-clone",
-                            "xoff",      (gint) sc->xoff,
-                            "yoff",      (gint) sc->yoff,
                             NULL);
 
   overlay = gegl_node_new_child (node,
@@ -782,15 +780,25 @@ gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc)
 
   sc->render_node = node;
   sc->sc_node = op;
+
+  gimp_seamless_clone_tool_render_node_update (sc);
 }
 
 static void
 gimp_seamless_clone_tool_render_node_update (GimpSeamlessCloneTool *sc)
 {
+  GimpDrawable *bg = GIMP_TOOL (sc)->drawable;
+  gint xoff, yoff;
+
+  /* Now we should also take into consideration the fact that
+   * we should work with coordinates relative to the background
+   * buffer */
+  gimp_item_get_offset (GIMP_ITEM (bg), &xoff, &yoff);
+
   /* The only thing to update right now, is the location of the paste */
   gegl_node_set (sc->sc_node,
-                 "xoff", (gint) sc->xoff,
-                 "yoff", (gint) sc->yoff,
+                 "xoff", (gint) sc->xoff - xoff,
+                 "yoff", (gint) sc->yoff - yoff,
                  NULL);
 }
 
