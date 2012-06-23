@@ -250,8 +250,6 @@ gimp_seamless_clone_tool_init (GimpSeamlessCloneTool *self)
 
   self->paste           = NULL;
   
-  self->abstract_cache  = NULL;
-  
   self->render_node     = NULL;
   self->sc_node  = NULL;
 
@@ -437,11 +435,6 @@ gimp_seamless_clone_tool_stop (GimpSeamlessCloneTool *sc,
           g_object_unref (sc->render_node);
           sc->render_node = NULL;
           sc->sc_node  = NULL;
-        }
-        
-      /* TODO: free the abstract_cache object */
-      if (sc->abstract_cache)
-        {
         }
     }
 
@@ -763,10 +756,9 @@ gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc)
                                    NULL);
 
   op = gegl_node_new_child (node,
-                            "operation", "gegl:seamless-clone-render",
-                            "x",         (gint) sc->xoff,
-                            "y",         (gint) sc->yoff,
-                            "prepare",   sc->abstract_cache,
+                            "operation", "gegl:seamless-clone",
+                            "xoff",      (gint) sc->xoff,
+                            "yoff",      (gint) sc->yoff,
                             NULL);
 
   overlay = gegl_node_new_child (node,
@@ -797,8 +789,8 @@ gimp_seamless_clone_tool_render_node_update (GimpSeamlessCloneTool *sc)
 {
   /* The only thing to update right now, is the location of the paste */
   gegl_node_set (sc->sc_node,
-                 "x", (gint) sc->xoff,
-                 "y", (gint) sc->yoff,
+                 "xoff", (gint) sc->xoff,
+                 "yoff", (gint) sc->yoff,
                  NULL);
 }
 

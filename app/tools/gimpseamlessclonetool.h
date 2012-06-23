@@ -45,8 +45,6 @@ struct _GimpSeamlessCloneTool
                                   * paste that will be used in the
                                   * rendering process */
 
-  gpointer        abstract_cache;
-
   GeglNode       *render_node;    /* The parent of the Gegl graph that
                                    * renders the seamless cloning */
                                    
