@@ -944,6 +944,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               }
           }
 
+        if (compressed_motion)
+          gdk_event_free (compressed_motion);
+
         return_val = TRUE;
       }
       break;
@@ -1793,6 +1796,17 @@ gimp_display_shell_compress_motion (GimpDisplayShell *shell)
             gdk_event_free (last_motion);
 
           last_motion = event;
+        }
+      else if ((gtk_get_event_widget (event) == shell->canvas) &&
+               (event->any.type == GDK_BUTTON_RELEASE))
+        {
+          requeued_events = g_list_prepend (requeued_events, event);
+
+          while (gdk_events_pending ())
+            if ((event = gdk_event_get ()))
+              requeued_events = g_list_prepend (requeued_events, event);
+
+          break;
         }
       else
         {
