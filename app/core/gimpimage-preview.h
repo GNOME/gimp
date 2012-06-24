@@ -35,10 +35,6 @@ gboolean      gimp_image_get_popup_size   (GimpViewable *viewable,
                                            gboolean      dot_for_dot,
                                            gint         *popup_width,
                                            gint         *popup_height);
-GimpTempBuf * gimp_image_get_preview      (GimpViewable *viewable,
-                                           GimpContext  *context,
-                                           gint          width,
-                                           gint          height);
 GimpTempBuf * gimp_image_get_new_preview  (GimpViewable *viewable,
                                            GimpContext  *context,
                                            gint          width,

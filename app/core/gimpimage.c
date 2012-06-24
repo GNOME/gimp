@@ -157,7 +157,6 @@ static gint64   gimp_image_get_memsize           (GimpObject        *object,
 static gboolean gimp_image_get_size              (GimpViewable      *viewable,
                                                   gint              *width,
                                                   gint              *height);
-static void     gimp_image_invalidate_preview    (GimpViewable      *viewable);
 static void     gimp_image_size_changed          (GimpViewable      *viewable);
 static gchar  * gimp_image_get_description       (GimpViewable      *viewable,
                                                   gchar            **tooltip);
@@ -522,11 +521,9 @@ gimp_image_class_init (GimpImageClass *klass)
 
   viewable_class->default_stock_id    = "gimp-image";
   viewable_class->get_size            = gimp_image_get_size;
-  viewable_class->invalidate_preview  = gimp_image_invalidate_preview;
   viewable_class->size_changed        = gimp_image_size_changed;
   viewable_class->get_preview_size    = gimp_image_get_preview_size;
   viewable_class->get_popup_size      = gimp_image_get_popup_size;
-  viewable_class->get_preview         = gimp_image_get_preview;
   viewable_class->get_new_preview     = gimp_image_get_new_preview;
   viewable_class->get_description     = gimp_image_get_description;
 
@@ -727,8 +724,6 @@ gimp_image_init (GimpImage *image)
   private->redo_stack          = gimp_undo_stack_new (image);
   private->group_count         = 0;
   private->pushing_undo_group  = GIMP_UNDO_GROUP_NONE;
-
-  private->preview             = NULL;
 
   private->flush_accum.alpha_changed              = FALSE;
   private->flush_accum.mask_changed               = FALSE;
@@ -947,12 +942,6 @@ gimp_image_finalize (GObject *object)
       private->selection_mask = NULL;
     }
 
-  if (private->preview)
-    {
-      gimp_temp_buf_unref (private->preview);
-      private->preview = NULL;
-    }
-
   if (private->parasites)
     {
       g_object_unref (private->parasites);
@@ -1074,8 +1063,6 @@ gimp_image_get_memsize (GimpObject *object,
   memsize += gimp_object_get_memsize (GIMP_OBJECT (private->redo_stack),
                                       gui_size);
 
-  *gui_size += gimp_temp_buf_get_memsize (private->preview);
-
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
@@ -1091,20 +1078,6 @@ gimp_image_get_size (GimpViewable *viewable,
   *height = gimp_image_get_height (image);
 
   return TRUE;
-}
-
-static void
-gimp_image_invalidate_preview (GimpViewable *viewable)
-{
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (viewable);
-
-  GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview (viewable);
-
-  if (private->preview)
-    {
-      gimp_temp_buf_unref (private->preview);
-      private->preview = NULL;
-    }
 }
 
 static void

@@ -95,34 +95,6 @@ gimp_image_get_popup_size (GimpViewable *viewable,
 }
 
 GimpTempBuf *
-gimp_image_get_preview (GimpViewable *viewable,
-                        GimpContext  *context,
-                        gint          width,
-                        gint          height)
-{
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (viewable);
-
-  if (private->preview                                     &&
-      gimp_temp_buf_get_width  (private->preview) == width &&
-      gimp_temp_buf_get_height (private->preview) == height)
-    {
-      /*  The easy way  */
-      return private->preview;
-    }
-  else
-    {
-      /*  The hard way  */
-      if (private->preview)
-        gimp_temp_buf_unref (private->preview);
-
-      private->preview = gimp_image_get_new_preview (viewable, context,
-                                                     width, height);
-
-      return private->preview;
-    }
-}
-
-GimpTempBuf *
 gimp_image_get_new_preview (GimpViewable *viewable,
                             GimpContext  *context,
                             gint          width,

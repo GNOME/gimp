@@ -100,9 +100,6 @@ struct _GimpImagePrivate
   gint               group_count;           /*  nested undo groups           */
   GimpUndoType       pushing_undo_group;    /*  undo group status flag       */
 
-  /*  Preview  */
-  GimpTempBuf       *preview;               /*  the projection preview       */
-
   /*  Signal emmision accumulator  */
   GimpImageFlushAccumulator  flush_accum;
 };
