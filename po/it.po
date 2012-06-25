@@ -30,8 +30,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-09 20:48+0200\n"
-"PO-Revision-Date: 2012-06-09 20:50+0200\n"
+"POT-Creation-Date: 2012-06-25 17:50+0200\n"
+"PO-Revision-Date: 2012-06-25 17:51+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: \n"
@@ -93,129 +93,116 @@ msgstr ""
 "Dovresti aver ricevuto una copia della GNU General Public License con GIMP. "
 "Se così non fosse, vedere <http://www.gnu.org/licenses/>."
 
-#: ../app/app.c:224
-#, c-format
-msgid ""
-"Unable to open a test swap file.\n"
-"\n"
-"To avoid data loss, please check the location and permissions of the swap "
-"directory defined in your Preferences (currently \"%s\")."
-msgstr ""
-"Impossibile aprire un file di scambio di prova.\n"
-"\n"
-"Per evitare di perdere dati controllare la posizione ed i permessi della "
-"cartella di scambio nelle preferenze (attualmente è \"%s\")."
-
-#: ../app/batch.c:77
+#: ../app/batch.c:75
 #, c-format
 msgid "No batch interpreter specified, using the default '%s'.\n"
 msgstr "Nessun interprete batch specificato, uso il predefinito \"%s\".\n"
 
-#: ../app/batch.c:95 ../app/batch.c:113
+#: ../app/batch.c:93 ../app/batch.c:111
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
 "L'interprete batch \"%s\" non è disponibile. Modalità batch disabilitata."
 
-#: ../app/main.c:148
+#: ../app/main.c:146
 msgid "Show version information and exit"
 msgstr "Mostra le informazioni sulla versione e esce"
 
-#: ../app/main.c:153
+#: ../app/main.c:151
 msgid "Show license information and exit"
 msgstr "Mostra le informazioni sulla licenza e esce"
 
-#: ../app/main.c:158
+#: ../app/main.c:156
 msgid "Be more verbose"
 msgstr "Sii più prolisso"
 
-#: ../app/main.c:163
+#: ../app/main.c:161
 msgid "Start a new GIMP instance"
 msgstr "Esegui una nuova istanza di GIMP"
 
-#: ../app/main.c:168
+#: ../app/main.c:166
 msgid "Open images as new"
 msgstr "Apri le immagini come nuove"
 
-#: ../app/main.c:173
+#: ../app/main.c:171
 msgid "Run without a user interface"
 msgstr "Esegui senza interfaccia utente"
 
-#: ../app/main.c:178
+#: ../app/main.c:176
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Non caricare pennelli, gradienti, motivi, ..."
 
-#: ../app/main.c:183
+#: ../app/main.c:181
 msgid "Do not load any fonts"
 msgstr "Non caricare nessun carattere"
 
-#: ../app/main.c:188
+#: ../app/main.c:186
 msgid "Do not show a splash screen"
 msgstr "Non mostrare la schermata iniziale"
 
-#: ../app/main.c:193
+#: ../app/main.c:191
 msgid "Do not use shared memory between GIMP and plugins"
 msgstr "Non utilizzare la memoria condivisa tra GIMP e i plugin"
 
-#: ../app/main.c:198
+#: ../app/main.c:196
 msgid "Do not use special CPU acceleration functions"
 msgstr "Non utilizzare le speciali accelerazioni CPU"
 
-#: ../app/main.c:203
+#: ../app/main.c:201
 msgid "Use an alternate sessionrc file"
 msgstr "Usa un file sessionrc alternativo"
 
-#: ../app/main.c:208
+#: ../app/main.c:206
 msgid "Use an alternate user gimprc file"
 msgstr "Usa un file gimprc utente alternativo"
 
-#: ../app/main.c:213
+#: ../app/main.c:211
 msgid "Use an alternate system gimprc file"
 msgstr "Usa un file gimprc di sistema alternativo"
 
-#: ../app/main.c:218
+#: ../app/main.c:216
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Comando batch da eseguire (può essere usato più di una volta)"
 
-#: ../app/main.c:223
+#: ../app/main.c:221
 msgid "The procedure to process batch commands with"
 msgstr "La procedura per elaborare i comandi batch"
 
-#: ../app/main.c:228
+#: ../app/main.c:226
 msgid "Send messages to console instead of using a dialog"
 msgstr "Mostra messaggi sulla console invece che in una finestra di dialogo"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:234
+#: ../app/main.c:232
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "Modalità compatibile PDB (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:240
+#: ../app/main.c:238
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Esegui il debug nel caso di un blocco (never|query|always)"
 
-#: ../app/main.c:245
+#: ../app/main.c:243
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Abilita debugging dei segnali non fatali"
 
-#: ../app/main.c:250
+#: ../app/main.c:248
 msgid "Make all warnings fatal"
 msgstr "Fai in modo che tutti gli avvertimenti (warning) siano fatali"
 
-#: ../app/main.c:255
+#: ../app/main.c:253
 msgid "Output a gimprc file with default settings"
 msgstr "Genera un file gimprc con valori predefiniti"
 
-#: ../app/main.c:271
+#: ../app/main.c:269
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "Genera un elenco ordinato delle procedure sconsigliate nel PDB"
 
-#: ../app/main.c:387
+#: ../app/main.c:385
 msgid "[FILE|URI...]"
 msgstr "[FILE|URI...]"
 
-#: ../app/main.c:405
+#: ../app/main.c:403
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -223,21 +210,21 @@ msgstr ""
 "GIMP non può inizializzare l'interfaccia grafica.\n"
 "Controllare la corretta esistenza dell'impostazione dell'ambiente grafico."
 
-#: ../app/main.c:424
+#: ../app/main.c:422
 msgid "Another GIMP instance is already running."
 msgstr "Un'altra istanza di GIMP è già in esecuzione."
 
-#: ../app/main.c:494
+#: ../app/main.c:492
 msgid "GIMP output. Type any character to close this window."
 msgstr ""
 "Messaggi di GIMP. Premere un tasto qualsiasi per chiudere questa finestra."
 
-#: ../app/main.c:495
+#: ../app/main.c:493
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(premere un tasto qualsiasi per chiudere questa finestra)\n"
 
-#: ../app/main.c:512
+#: ../app/main.c:510
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
 "Messaggi di GIMP. È possibile ridurre a icona questa finestra ma non "
@@ -1003,7 +990,7 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:119
 #: ../app/actions/tool-options-commands.c:73
-#: ../app/core/gimpbrushgenerated-load.c:123 ../app/core/gimpimage.c:1617
+#: ../app/core/gimpbrushgenerated-load.c:123 ../app/core/gimpimage.c:1590
 #: ../app/core/gimppalette.c:399 ../app/core/gimppalette-import.c:210
 #: ../app/core/gimppalette-load.c:225
 #: ../app/dialogs/palette-import-dialog.c:771 ../app/widgets/gimpdnd-xds.c:94
@@ -2508,7 +2495,8 @@ msgstr "_Riduzione colore.."
 #: ../app/actions/filters-actions.c:44
 msgctxt "filters-action"
 msgid "Reduce the number of colors in the image, with optional dithering"
-msgstr "Riduce il numero di colori nell'immagine, opzionalmente tramite dithering"
+msgstr ""
+"Riduce il numero di colori nell'immagine, opzionalmente tramite dithering"
 
 #: ../app/actions/filters-actions.c:49
 msgctxt "filters-action"
@@ -5881,24 +5869,6 @@ msgctxt "windows-action"
 msgid "When enabled GIMP is in a single-window mode."
 msgstr "Se abilitata GIMP funzionerà in modalità a finestra singola."
 
-#: ../app/base/tile-swap.c:711
-msgid ""
-"Unable to open swap file. GIMP has run out of memory and cannot use the swap "
-"file. Some parts of your images may be corrupted. Try to save your work "
-"using different filenames, restart GIMP and check the location of the swap "
-"directory in your Preferences."
-msgstr ""
-"Impossibile aprire il file di scambio. GIMP ha esaurito la memoria "
-"disponibile e non può usare il file di scambio. Alcune parti dell'immagine "
-"potrebbero essere rovinate. Provare a salvare il lavoro usando un nome "
-"differente, quindi riavviare GIMP e controllare la posizione della cartella "
-"del file di scambio nelle preferenze."
-
-#: ../app/base/tile-swap.c:726
-#, c-format
-msgid "Failed to resize swap file: %s"
-msgstr "Impossibile ridimensionare il file di scambio: %s"
-
 #: ../app/config/config-enums.c:24
 msgctxt "cursor-mode"
 msgid "Tool icon"
@@ -7794,7 +7764,7 @@ msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr "Delinea canale"
 
-#: ../app/core/gimpchannel.c:275 ../app/core/gimpselection.c:579
+#: ../app/core/gimpchannel.c:275 ../app/core/gimpselection.c:584
 msgctxt "undo-type"
 msgid "Channel to Selection"
 msgstr "Canale a selezione"
@@ -8031,7 +8001,7 @@ msgctxt "undo-type"
 msgid "Bucket Fill"
 msgstr "Riempimento colore"
 
-#: ../app/core/gimpdrawable.c:453
+#: ../app/core/gimpdrawable.c:432
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Scala"
@@ -8279,57 +8249,57 @@ msgctxt "undo-type"
 msgid "Arrange Objects"
 msgstr "Disponi oggetti"
 
-#: ../app/core/gimpimage.c:1902
+#: ../app/core/gimpimage.c:1875
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Cambia risoluzione immagine"
 
-#: ../app/core/gimpimage.c:1954
+#: ../app/core/gimpimage.c:1927
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Cambia unità immagine"
 
-#: ../app/core/gimpimage.c:2788
+#: ../app/core/gimpimage.c:2761
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Allega parassita all'immagine"
 
-#: ../app/core/gimpimage.c:2829
+#: ../app/core/gimpimage.c:2802
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Rimuovi parassita dall'immagine"
 
-#: ../app/core/gimpimage.c:3538
+#: ../app/core/gimpimage.c:3511
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Aggiungi livello"
 
-#: ../app/core/gimpimage.c:3588 ../app/core/gimpimage.c:3608
+#: ../app/core/gimpimage.c:3561 ../app/core/gimpimage.c:3581
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Rimuovi livello"
 
-#: ../app/core/gimpimage.c:3602
+#: ../app/core/gimpimage.c:3575
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Rimuovi selezione fluttuante"
 
-#: ../app/core/gimpimage.c:3770
+#: ../app/core/gimpimage.c:3743
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Aggiungi canale"
 
-#: ../app/core/gimpimage.c:3808 ../app/core/gimpimage.c:3821
+#: ../app/core/gimpimage.c:3781 ../app/core/gimpimage.c:3794
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Rimuovi canale"
 
-#: ../app/core/gimpimage.c:3875
+#: ../app/core/gimpimage.c:3848
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Aggiungi tracciato"
 
-#: ../app/core/gimpimage.c:3906
+#: ../app/core/gimpimage.c:3879
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Rimuovi tracciato"
@@ -8610,6 +8580,10 @@ msgstr "Rimuovi parassita dall'elemento"
 msgid "Set Item Exclusive Visible"
 msgstr "Imposta voce esclusiva visibile"
 
+#: ../app/core/gimpitem-exclusive.c:172
+msgid "Set Item Exclusive Linked"
+msgstr "Imposta voce esclusiva collegata"
+
 #: ../app/core/gimplayer.c:290
 msgctxt "undo-type"
 msgid "Rename Layer"
@@ -8743,17 +8717,17 @@ msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Mostra maschera di livello"
 
-#: ../app/core/gimplayer.c:1804
+#: ../app/core/gimplayer.c:1803
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Aggiungi canale alfa"
 
-#: ../app/core/gimplayer.c:1839
+#: ../app/core/gimplayer.c:1838
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Rimuovi canale alfa"
 
-#: ../app/core/gimplayer.c:1859
+#: ../app/core/gimplayer.c:1858
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Livello a dimensione immagine"
@@ -8948,22 +8922,22 @@ msgstr "Restringi la selezione"
 msgid "There is no selection to stroke."
 msgstr "Nessuna selezione da disegnare."
 
-#: ../app/core/gimpselection.c:660
+#: ../app/core/gimpselection.c:665
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr ""
 "Non è possibile a tagliare o copiare perché la regione selezionata è vuota."
 
-#: ../app/core/gimpselection.c:794
+#: ../app/core/gimpselection.c:799
 msgid "Cannot float selection because the selected region is empty."
 msgstr ""
 "Non è possibile la selezione fluttuante perché la regione selezionata è vuota"
 
-#: ../app/core/gimpselection.c:801
+#: ../app/core/gimpselection.c:806
 msgctxt "undo-type"
 msgid "Float Selection"
 msgstr "Selezione fluttuante"
 
-#: ../app/core/gimpselection.c:817
+#: ../app/core/gimpselection.c:822
 msgid "Floated Layer"
 msgstr "Livello fluttuante"
 
@@ -9526,7 +9500,7 @@ msgstr "Tipo di riempimento livello"
 msgid "Set name from _text"
 msgstr "Imposta il nome dal _testo"
 
-#: ../app/dialogs/lebl-dialog.c:122
+#: ../app/dialogs/lebl-dialog.c:124
 #, c-format
 msgid "<b>GAME OVER</b> at level %d!"
 msgstr "<b>GAME OVER</b> al livello %d!"
@@ -9535,42 +9509,42 @@ msgstr "<b>GAME OVER</b> al livello %d!"
 #. * title, and the second string is a small information text.
 #. * The spaces are there only to separate all the strings, so
 #. try to keep them as is.
-#: ../app/dialogs/lebl-dialog.c:129
+#: ../app/dialogs/lebl-dialog.c:131
 #, c-format
 msgid "%1$s   %2$s   %3$s"
 msgstr "%1$s   %2$s   %3$s"
 
-#: ../app/dialogs/lebl-dialog.c:130
+#: ../app/dialogs/lebl-dialog.c:132
 msgid "Press 'q' to quit"
 msgstr "Premere \"q\" per uscire"
 
-#: ../app/dialogs/lebl-dialog.c:135
+#: ../app/dialogs/lebl-dialog.c:137
 msgid "Paused"
 msgstr "In pausa"
 
 #. Translators: the first string is a title and the second
 #. * string is a small information text.
-#: ../app/dialogs/lebl-dialog.c:138 ../app/dialogs/lebl-dialog.c:149
+#: ../app/dialogs/lebl-dialog.c:140 ../app/dialogs/lebl-dialog.c:151
 #, c-format
 msgid "%1$s\t%2$s"
 msgstr "%1$s\t%2$s"
 
-#: ../app/dialogs/lebl-dialog.c:139
+#: ../app/dialogs/lebl-dialog.c:141
 msgid "Press 'p' to unpause"
 msgstr "Premere \"p\" per riprendere"
 
-#: ../app/dialogs/lebl-dialog.c:145
+#: ../app/dialogs/lebl-dialog.c:147
 #, c-format
 msgid "Level: %s,  Lives: %s"
 msgstr "Livello: %s,  Vite: %s"
 
-#: ../app/dialogs/lebl-dialog.c:150
+#: ../app/dialogs/lebl-dialog.c:152
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
 msgstr ""
 "Destra/Sinistra per spostarsi, Spazio per sparare, \"p\" per pausa, \"q\" "
 "per uscire"
 
-#: ../app/dialogs/lebl-dialog.c:801
+#: ../app/dialogs/lebl-dialog.c:803
 msgid "Killer GEGLs from Outer Space"
 msgstr "GEGL assassini dallo spazio profondo"
 
@@ -10868,8 +10842,8 @@ msgstr "Commuta maschera veloce"
 msgid "Navigate the image display"
 msgstr "Naviga nella finestra immagine"
 
-#: ../app/display/gimpdisplayshell.c:742
-#: ../app/display/gimpdisplayshell.c:1320 ../app/widgets/gimptoolbox.c:257
+#: ../app/display/gimpdisplayshell.c:746
+#: ../app/display/gimpdisplayshell.c:1325 ../app/widgets/gimptoolbox.c:257
 msgid "Drop image files here to open them"
 msgstr "Trascina e rilascia qui i file immagine per aprirli"
 
@@ -14793,7 +14767,7 @@ msgid "Percentage of width of brush"
 msgstr "Percentuale di larghezza del pennello"
 
 #: ../app/widgets/gimpbufferview.c:179 ../app/widgets/gimpbufferview.c:264
-#: ../app/widgets/gimpeditor.c:748
+#: ../app/widgets/gimpeditor.c:747
 msgid "(None)"
 msgstr "(Nessuno)"
 
