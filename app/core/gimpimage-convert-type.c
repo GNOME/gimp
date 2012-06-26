@@ -157,7 +157,7 @@
 
 #include "gimpimage-convert-fsdither.h"
 #include "gimpimage-convert-data.h"
-#include "gimpimage-convert.h"
+#include "gimpimage-convert-type.h"
 
 #include "gimp-intl.h"
 
@@ -731,18 +731,19 @@ color_quicksort (const void *c1,
 }
 
 gboolean
-gimp_image_convert (GimpImage               *image,
-                    GimpImageBaseType        new_type,
-                    /* The following are only used for new_type == GIMP_INDEXED
-                     */
-                    gint                     num_cols,
-                    GimpConvertDitherType    dither,
-                    gboolean                 alpha_dither,
-                    gboolean                 remove_dups,
-                    GimpConvertPaletteType   palette_type,
-                    GimpPalette             *custom_palette,
-                    GimpProgress            *progress,
-                    GError                 **error)
+gimp_image_convert_type (GimpImage               *image,
+                         GimpImageBaseType        new_type,
+                         /* The following are only used for
+                          * new_type == GIMP_INDEXED
+                          */
+                         gint                     num_cols,
+                         GimpConvertDitherType    dither,
+                         gboolean                 alpha_dither,
+                         gboolean                 remove_dups,
+                         GimpConvertPaletteType   palette_type,
+                         GimpPalette             *custom_palette,
+                         GimpProgress            *progress,
+                         GError                 **error)
 {
   QuantizeObj       *quantobj = NULL;
   GimpImageBaseType  old_type;
@@ -4280,9 +4281,9 @@ delete_median_cut (QuantizeObj *quantobj)
 
 
 void
-gimp_image_convert_set_dither_matrix (const guchar *matrix,
-                                      gint          width,
-                                      gint          height)
+gimp_image_convert_type_set_dither_matrix (const guchar *matrix,
+                                           gint          width,
+                                           gint          height)
 {
   gint x;
   gint y;

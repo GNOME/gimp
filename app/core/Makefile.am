@@ -197,12 +197,12 @@ libappcore_a_sources = \
 	gimpimage-colormap.h			\
 	gimpimage-contiguous-region.c		\
 	gimpimage-contiguous-region.h		\
-	gimpimage-convert.c			\
-	gimpimage-convert.h			\
 	gimpimage-convert-fsdither.h		\
 	gimpimage-convert-data.h		\
 	gimpimage-convert-precision.c		\
 	gimpimage-convert-precision.h		\
+	gimpimage-convert-type.c		\
+	gimpimage-convert-type.h		\
 	gimpimage-crop.c			\
 	gimpimage-crop.h			\
 	gimpimage-duplicate.c			\

@@ -29,7 +29,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage-convert-precision.h"
-#include "core/gimpimage-convert.h"
+#include "core/gimpimage-convert-type.h"
 #include "core/gimpimage.h"
 #include "core/gimpitemstack.h"
 #include "core/gimppalette.h"
@@ -63,9 +63,9 @@ image_convert_rgb_invoker (GimpProcedure         *procedure,
     {
       if (gimp_pdb_image_is_not_base_type (image, GIMP_RGB, error))
         {
-          success = gimp_image_convert (image, GIMP_RGB,
-                                        0, 0, FALSE, FALSE, 0, NULL,
-                                        NULL, error);
+          success = gimp_image_convert_type (image, GIMP_RGB,
+                                             0, 0, FALSE, FALSE, 0, NULL,
+                                             NULL, error);
         }
       else
         {
@@ -94,9 +94,9 @@ image_convert_grayscale_invoker (GimpProcedure         *procedure,
     {
       if (gimp_pdb_image_is_not_base_type (image, GIMP_GRAY, error))
         {
-          success = gimp_image_convert (image, GIMP_GRAY,
-                                        0, 0, FALSE, FALSE, 0, NULL,
-                                        NULL, error);
+          success = gimp_image_convert_type (image, GIMP_GRAY,
+                                             0, 0, FALSE, FALSE, 0, NULL,
+                                             NULL, error);
         }
       else
         {
@@ -175,11 +175,11 @@ image_convert_indexed_invoker (GimpProcedure         *procedure,
         }
 
       if (success)
-        success = gimp_image_convert (image, GIMP_INDEXED,
-                                      num_cols, dither_type,
-                                      alpha_dither, remove_unused,
-                                      palette_type, pal,
-                                      NULL, error);
+        success = gimp_image_convert_type (image, GIMP_INDEXED,
+                                           num_cols, dither_type,
+                                           alpha_dither, remove_unused,
+                                           palette_type, pal,
+                                           NULL, error);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -209,7 +209,7 @@ image_convert_set_dither_matrix_invoker (GimpProcedure         *procedure,
     {
       if (width == 0 || height == 0 || matrix_length == width * height)
         {
-          gimp_image_convert_set_dither_matrix (matrix, width, height);
+          gimp_image_convert_type_set_dither_matrix (matrix, width, height);
         }
       else
         {

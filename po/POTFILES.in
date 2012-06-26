@@ -128,8 +128,8 @@ app/core/gimp-gui.c
 app/core/gimpimage-arrange.c
 app/core/gimpimage.c
 app/core/gimpimage-colormap.c
-app/core/gimpimage-convert.c
 app/core/gimpimage-convert-precision.c
+app/core/gimpimage-convert-type.c
 app/core/gimpimage-crop.c
 app/core/gimpimagefile.c
 app/core/gimpimage-grid.c

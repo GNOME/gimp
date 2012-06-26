@@ -15,14 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_CONVERT_H__
-#define __GIMP_IMAGE_CONVERT_H__
+#ifndef __GIMP_IMAGE_CONVERT_TYPE_H__
+#define __GIMP_IMAGE_CONVERT_TYPE_H__
 
 
 #define MAXNUMCOLORS 256
 
 
-gboolean   gimp_image_convert           (GimpImage               *image,
+gboolean   gimp_image_convert_type      (GimpImage               *image,
                                          GimpImageBaseType        new_type,
                                          /* The following params used only for
                                           * new_type == GIMP_INDEXED
@@ -36,9 +36,9 @@ gboolean   gimp_image_convert           (GimpImage               *image,
                                          GimpProgress            *progress,
                                          GError                 **error);
 
-void  gimp_image_convert_set_dither_matrix (const guchar *matrix,
-                                            gint          width,
-                                            gint          height);
+void  gimp_image_convert_type_set_dither_matrix (const guchar *matrix,
+                                                 gint          width,
+                                                 gint          height);
 
 
-#endif  /*  __GIMP_IMAGE_CONVERT_H__  */
+#endif  /*  __GIMP_IMAGE_CONVERT_TYPE_H__  */

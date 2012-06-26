@@ -31,8 +31,8 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-convert.h"
 #include "core/gimpimage-convert-precision.h"
+#include "core/gimpimage-convert-type.h"
 #include "core/gimpimage-crop.h"
 #include "core/gimpimage-duplicate.h"
 #include "core/gimpimage-flip.h"
@@ -175,8 +175,9 @@ image_convert_base_type_cmd_callback (GtkAction *action,
     {
     case GIMP_RGB:
     case GIMP_GRAY:
-      if (! gimp_image_convert (image, value, 0, 0, FALSE, FALSE, 0, NULL,
-                                NULL, &error))
+      if (! gimp_image_convert_type (image, value,
+                                     0, 0, FALSE, FALSE, 0, NULL,
+                                     NULL, &error))
         {
           gimp_message_literal (image->gimp,
 				G_OBJECT (widget), GIMP_MESSAGE_WARNING,
