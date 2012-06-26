@@ -39,7 +39,7 @@
 #include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
-#include "convert-dialog.h"
+#include "convert-type-dialog.h"
 
 #include "gimp-intl.h"
 
@@ -87,10 +87,10 @@ static GimpPalette            *saved_palette      = NULL;
 /*  public functions  */
 
 GtkWidget *
-convert_dialog_new (GimpImage    *image,
-                    GimpContext  *context,
-                    GtkWidget    *parent,
-                    GimpProgress *progress)
+convert_type_dialog_new (GimpImage    *image,
+                         GimpContext  *context,
+                         GtkWidget    *parent,
+                         GimpProgress *progress)
 {
   IndexedDialog *dialog;
   GtkWidget     *button;

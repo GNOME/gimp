@@ -50,7 +50,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
-#include "dialogs/convert-dialog.h"
+#include "dialogs/convert-type-dialog.h"
 #include "dialogs/grid-dialog.h"
 #include "dialogs/image-merge-layers-dialog.h"
 #include "dialogs/image-new-dialog.h"
@@ -63,6 +63,9 @@
 #include "image-commands.h"
 
 #include "gimp-intl.h"
+
+
+#define IMAGE_CONVERT_TYPE_DIALOG_KEY "image-convert-type-dialog"
 
 
 typedef struct
@@ -146,7 +149,7 @@ image_new_cmd_callback (GtkAction *action,
 static void
 image_convert_dialog_unset (GtkWidget *widget)
 {
-  g_object_set_data (G_OBJECT (widget), "image-convert-dialog", NULL);
+  g_object_set_data (G_OBJECT (widget), IMAGE_CONVERT_TYPE_DIALOG_KEY, NULL);
 }
 
 void
@@ -187,17 +190,18 @@ image_convert_base_type_cmd_callback (GtkAction *action,
       {
         GtkWidget *dialog;
 
-        dialog = g_object_get_data (G_OBJECT (widget), "image-convert-dialog");
+        dialog = g_object_get_data (G_OBJECT (widget),
+                                    IMAGE_CONVERT_TYPE_DIALOG_KEY);
 
         if (! dialog)
           {
-            dialog = convert_dialog_new (image,
-                                         action_data_get_context (data),
-                                         widget,
-                                         GIMP_PROGRESS (display));
+            dialog = convert_type_dialog_new (image,
+                                              action_data_get_context (data),
+                                              widget,
+                                              GIMP_PROGRESS (display));
 
             g_object_set_data (G_OBJECT (widget),
-                               "image-convert-dialog", dialog);
+                               IMAGE_CONVERT_TYPE_DIALOG_KEY, dialog);
 
             g_signal_connect_object (dialog, "destroy",
                                      G_CALLBACK (image_convert_dialog_unset),

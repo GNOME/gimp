@@ -25,8 +25,8 @@ libappdialogs_a_sources = \
 	about-dialog.h			\
 	channel-options-dialog.c	\
 	channel-options-dialog.h	\
-	convert-dialog.c		\
-	convert-dialog.h		\
+	convert-type-dialog.c		\
+	convert-type-dialog.h		\
 	data-delete-dialog.c		\
 	data-delete-dialog.h		\
 	fade-dialog.c			\

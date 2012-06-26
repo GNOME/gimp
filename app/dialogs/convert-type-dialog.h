@@ -15,14 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __CONVERT_DIALOG_H__
-#define __CONVERT_DIALOG_H__
+#ifndef __CONVERT_TYPE_DIALOG_H__
+#define __CONVERT_TYPE_DIALOG_H__
 
 
-GtkWidget * convert_dialog_new (GimpImage    *image,
-                                GimpContext  *context,
-                                GtkWidget    *parent,
-                                GimpProgress *progress);
+GtkWidget * convert_type_dialog_new (GimpImage    *image,
+                                     GimpContext  *context,
+                                     GtkWidget    *parent,
+                                     GimpProgress *progress);
 
 
-#endif  /*  __CONVERT_DIALOG_H__  */
+#endif  /*  __CONVERT_TYPE_DIALOG_H__  */
