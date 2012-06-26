@@ -56,7 +56,7 @@ static gint64      gimp_projection_get_memsize           (GimpObject      *objec
 static void        gimp_projection_pickable_flush        (GimpPickable    *pickable);
 static GimpImage * gimp_projection_get_image             (GimpPickable    *pickable);
 static const Babl * gimp_projection_get_format           (GimpPickable    *pickable);
-static GeglBuffer  * gimp_projection_get_buffer          (GimpPickable    *pickable);
+static GeglBuffer * gimp_projection_get_buffer           (GimpPickable    *pickable);
 static gboolean    gimp_projection_get_pixel_at          (GimpPickable    *pickable,
                                                           gint             x,
                                                           gint             y,
@@ -708,7 +708,7 @@ gimp_projection_construct (GimpProjection *proj,
   g_return_if_fail (GIMP_IS_PROJECTION (proj));
 
   /* GEGL should really do this for us... */
-  gegl_buffer_clear (proj->buffer, &rect);
+  gegl_buffer_clear (gimp_projection_get_buffer (GIMP_PICKABLE (proj)), &rect);
 
   if (! proj->processor)
     {
