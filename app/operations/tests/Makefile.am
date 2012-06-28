@@ -1,4 +1,4 @@
-TESTS = test-operations
+#TESTS = test-operations
 
 EXTRA_PROGRAMS = $(TESTS)
 CLEANFILES = $(EXTRA_PROGRAMS)
