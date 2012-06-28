@@ -48,23 +48,32 @@ gimp_gegl_init (Gimp *gimp)
   config = GIMP_GEGL_CONFIG (gimp->config);
 
 #ifdef __GNUC__
-#warning limiting tile cache size to G_MAXINT
-#endif
-
-#ifdef __GNUC__
 #warning not setting GeglConfig:threads
 #endif
 
-  g_object_set (gegl_config (),
+  if (g_object_class_find_property (G_OBJECT_GET_CLASS (gegl_config ()),
+                                    "tile-cache-size"))
+    {
+      g_object_set (gegl_config (),
+                    "cache-size", (guint64) config->tile_cache_size,
 #if 0
-                "tile-width",  TILE_WIDTH,
-                "tile-height", TILE_HEIGHT,
+                    "threads",    config->num_processors,
 #endif
-                "cache-size",  (gint) MIN (config->tile_cache_size, G_MAXINT),
+                    NULL);
+    }
+  else
+    {
+#ifdef __GNUC__
+#warning limiting tile cache size to G_MAXINT
+#endif
+
+      g_object_set (gegl_config (),
+                    "cache-size", (gint) MIN (config->tile_cache_size, G_MAXINT),
 #if 0
-                "threads",     config->num_processors,
+                    "threads",    config->num_processors,
 #endif
-                NULL);
+                    NULL);
+    }
 
   /* turn down the precision of babl - permitting use of lookup tables for
    * gamma conversions, this precision is anyways high enough for both 8bit

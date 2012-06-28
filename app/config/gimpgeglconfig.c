@@ -147,18 +147,9 @@ gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
   else
     memory_size = 1 << 30; /* 1GB */
 
-#ifdef __GNUC__
-#warning limiting tile cache size to G_MAXINT
-#endif
-  memory_size = MIN (memory_size, G_MAXINT);
-
   GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_TILE_CACHE_SIZE,
                                     "tile-cache-size", TILE_CACHE_SIZE_BLURB,
-#if 0
                                     0, MIN (G_MAXSIZE, GIMP_MAX_MEMSIZE),
-#else
-                                    0, MIN (G_MAXINT, GIMP_MAX_MEMSIZE),
-#endif
                                     memory_size,
                                     GIMP_PARAM_STATIC_STRINGS |
                                     GIMP_CONFIG_PARAM_CONFIRM);
