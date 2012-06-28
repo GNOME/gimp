@@ -10,21 +10,23 @@
 # Alonso Lara <keko@khor-ha.net>, 2005.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2006, 2007, 2008, 2009, 2010, 2011.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2012.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.gimp-2-6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&component=general\n"
-"POT-Creation-Date: 2011-02-15 20:39+0000\n"
-"PO-Revision-Date: 2011-02-17 16:33+0100\n"
-"Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2012-05-29 06:51+0000\n"
+"PO-Revision-Date: 2012-06-28 13:14+0200\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 2.91.5\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:119
 msgid "Original"
@@ -604,9 +606,9 @@ msgstr "_Vertical"
 #: ../plug-ins/common/blinds.c:278 ../plug-ins/common/compose.c:935
 #: ../plug-ins/common/decompose.c:723 ../plug-ins/common/file-cel.c:362
 #: ../plug-ins/common/file-cel.c:365 ../plug-ins/common/file-dicom.c:557
-#: ../plug-ins/common/file-gif-load.c:911 ../plug-ins/common/file-pcx.c:419
+#: ../plug-ins/common/file-gif-load.c:914 ../plug-ins/common/file-pcx.c:419
 #: ../plug-ins/common/file-pcx.c:425 ../plug-ins/common/file-pix.c:382
-#: ../plug-ins/common/file-png.c:852 ../plug-ins/common/file-pnm.c:585
+#: ../plug-ins/common/file-png.c:887 ../plug-ins/common/file-pnm.c:585
 #: ../plug-ins/common/file-raw.c:714 ../plug-ins/common/file-sunras.c:975
 #: ../plug-ins/common/file-tga.c:1064 ../plug-ins/common/file-tiff-load.c:997
 #: ../plug-ins/common/file-xbm.c:896 ../plug-ins/common/film.c:746
@@ -1019,16 +1021,16 @@ msgstr "Cargar la configuración del mezclador de canales"
 #: ../plug-ins/common/file-compressor.c:666
 #: ../plug-ins/common/file-dicom.c:325 ../plug-ins/common/file-gbr.c:361
 #: ../plug-ins/common/file-gif-load.c:340 ../plug-ins/common/file-gih.c:662
-#: ../plug-ins/common/file-mng.c:1108 ../plug-ins/common/file-pat.c:330
-#: ../plug-ins/common/file-pcx.c:361 ../plug-ins/common/file-pdf.c:541
-#: ../plug-ins/common/file-pix.c:343 ../plug-ins/common/file-png.c:721
+#: ../plug-ins/common/file-mng.c:1156 ../plug-ins/common/file-pat.c:330
+#: ../plug-ins/common/file-pcx.c:361 ../plug-ins/common/file-pdf.c:552
+#: ../plug-ins/common/file-pix.c:343 ../plug-ins/common/file-png.c:752
 #: ../plug-ins/common/file-pnm.c:494 ../plug-ins/common/file-ps.c:1036
-#: ../plug-ins/common/file-ps.c:3050 ../plug-ins/common/file-psp.c:1751
+#: ../plug-ins/common/file-ps.c:3050 ../plug-ins/common/file-psp.c:1755
 #: ../plug-ins/common/file-raw.c:251 ../plug-ins/common/file-raw.c:668
 #: ../plug-ins/common/file-sunras.c:391 ../plug-ins/common/file-svg.c:333
 #: ../plug-ins/common/file-svg.c:731 ../plug-ins/common/file-tga.c:442
 #: ../plug-ins/common/file-tiff-load.c:291 ../plug-ins/common/file-xbm.c:736
-#: ../plug-ins/common/file-xwd.c:433 ../plug-ins/common/sphere-designer.c:2002
+#: ../plug-ins/common/file-xwd.c:433 ../plug-ins/common/sphere-designer.c:2003
 #: ../plug-ins/file-bmp/bmp-read.c:156 ../plug-ins/file-faxg3/faxg3.c:233
 #: ../plug-ins/file-fits/fits.c:358 ../plug-ins/file-fli/fli-gimp.c:460
 #: ../plug-ins/file-fli/fli-gimp.c:497 ../plug-ins/file-ico/ico-load.c:661
@@ -1043,7 +1045,7 @@ msgstr "Cargar la configuración del mezclador de canales"
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:929
 #: ../plug-ins/gfig/gfig.c:434 ../plug-ins/help/gimphelplocale.c:223
 #: ../plug-ins/help/gimphelplocale.c:239
-#: ../plug-ins/lighting/lighting-ui.c:1354
+#: ../plug-ins/lighting/lighting-ui.c:1355
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "No se ha podido abrir «%s» para lectura: %s"
@@ -1061,14 +1063,14 @@ msgstr "Guardar la configuración del mezclador de canales"
 #: ../plug-ins/common/file-csource.c:406 ../plug-ins/common/file-dicom.c:801
 #: ../plug-ins/common/file-gbr.c:647 ../plug-ins/common/file-gif-save.c:761
 #: ../plug-ins/common/file-gih.c:1275 ../plug-ins/common/file-html-table.c:236
-#: ../plug-ins/common/file-mng.c:610 ../plug-ins/common/file-mng.c:944
+#: ../plug-ins/common/file-mng.c:649 ../plug-ins/common/file-mng.c:984
 #: ../plug-ins/common/file-pat.c:476 ../plug-ins/common/file-pcx.c:673
-#: ../plug-ins/common/file-pix.c:524 ../plug-ins/common/file-png.c:1271
+#: ../plug-ins/common/file-pix.c:524 ../plug-ins/common/file-png.c:1285
 #: ../plug-ins/common/file-pnm.c:977 ../plug-ins/common/file-ps.c:1213
 #: ../plug-ins/common/file-raw.c:548 ../plug-ins/common/file-raw.c:576
 #: ../plug-ins/common/file-sunras.c:563 ../plug-ins/common/file-tga.c:1170
 #: ../plug-ins/common/file-tiff-save.c:683 ../plug-ins/common/file-xbm.c:1034
-#: ../plug-ins/common/file-xwd.c:614 ../plug-ins/common/sphere-designer.c:2111
+#: ../plug-ins/common/file-xwd.c:614 ../plug-ins/common/sphere-designer.c:2114
 #: ../plug-ins/file-bmp/bmp-write.c:296 ../plug-ins/file-fits/fits.c:476
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1008
 #: ../plug-ins/file-jpeg/jpeg-save.c:325 ../plug-ins/file-psd/psd-save.c:1635
@@ -1077,7 +1079,7 @@ msgstr "Guardar la configuración del mezclador de canales"
 #: ../plug-ins/file-xjt/xjt.c:1292 ../plug-ins/file-xjt/xjt.c:1729
 #: ../plug-ins/flame/flame.c:443
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1546
-#: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2374
+#: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2375
 #: ../plug-ins/lighting/lighting-ui.c:1211
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -3025,8 +3027,8 @@ msgstr "Cargar paleta KISS"
 #: ../plug-ins/common/file-cel.c:317 ../plug-ins/common/file-dicom.c:330
 #: ../plug-ins/common/file-gbr.c:366 ../plug-ins/common/file-gif-load.c:345
 #: ../plug-ins/common/file-gih.c:667 ../plug-ins/common/file-pat.c:335
-#: ../plug-ins/common/file-pcx.c:366 ../plug-ins/common/file-pdf.c:586
-#: ../plug-ins/common/file-pix.c:348 ../plug-ins/common/file-png.c:728
+#: ../plug-ins/common/file-pcx.c:366 ../plug-ins/common/file-pdf.c:826
+#: ../plug-ins/common/file-pix.c:348 ../plug-ins/common/file-png.c:759
 #: ../plug-ins/common/file-pnm.c:499 ../plug-ins/common/file-ps.c:1042
 #: ../plug-ins/common/file-raw.c:673 ../plug-ins/common/file-sunras.c:486
 #: ../plug-ins/common/file-tga.c:447 ../plug-ins/common/file-tiff-load.c:603
@@ -3055,7 +3057,7 @@ msgstr "¡Profundidad de bits no soportada (%d)!"
 #: ../plug-ins/common/file-gif-save.c:768 ../plug-ins/common/file-gih.c:1280
 #: ../plug-ins/common/file-html-table.c:256 ../plug-ins/common/file-pat.c:481
 #: ../plug-ins/common/file-pcx.c:634 ../plug-ins/common/file-pix.c:529
-#: ../plug-ins/common/file-png.c:1278 ../plug-ins/common/file-pnm.c:982
+#: ../plug-ins/common/file-png.c:1292 ../plug-ins/common/file-pnm.c:982
 #: ../plug-ins/common/file-ps.c:1218 ../plug-ins/common/file-sunras.c:568
 #: ../plug-ins/common/file-tga.c:1175 ../plug-ins/common/file-tiff-save.c:693
 #: ../plug-ins/common/file-xbm.c:1039 ../plug-ins/common/file-xpm.c:637
@@ -3230,28 +3232,28 @@ msgstr "No es un archivo de tipo GIF"
 msgid "Non-square pixels.  Image might look squashed."
 msgstr "Píxeles no cuadrados. La imagen se verá aplastada."
 
-#: ../plug-ins/common/file-gif-load.c:913
+#: ../plug-ins/common/file-gif-load.c:916
 #, c-format
 msgid "Background (%d%s)"
 msgstr "Fondo (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:936
+#: ../plug-ins/common/file-gif-load.c:939
 #, c-format
 msgid "Opening '%s' (frame %d)"
 msgstr "Abriendo «%s» (fotograma %d)"
 
-#: ../plug-ins/common/file-gif-load.c:965 ../plug-ins/common/iwarp.c:791
+#: ../plug-ins/common/file-gif-load.c:968 ../plug-ins/common/iwarp.c:791
 #: ../plug-ins/common/iwarp.c:826
 #, c-format
 msgid "Frame %d"
 msgstr "Cuadro %d"
 
-#: ../plug-ins/common/file-gif-load.c:967
+#: ../plug-ins/common/file-gif-load.c:970
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "Cuadro %d (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:998
+#: ../plug-ins/common/file-gif-load.c:1001
 #, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
@@ -3339,7 +3341,7 @@ msgstr "_Bucle infinito"
 msgid "_Delay between frames where unspecified:"
 msgstr "_Retardo entre cuadros cuando no se especifique:"
 
-#: ../plug-ins/common/file-gif-save.c:1144 ../plug-ins/common/file-mng.c:1507
+#: ../plug-ins/common/file-gif-save.c:1144 ../plug-ins/common/file-mng.c:1555
 msgid "milliseconds"
 msgstr "milisegundos"
 
@@ -3581,111 +3583,111 @@ msgstr "La cantidad de espaciado de celdas."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:498 ../plug-ins/common/file-png.c:1761
+#: ../plug-ins/common/file-mng.c:534 ../plug-ins/common/file-png.c:1831
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "No se ha podido guardar a pérdida la transparencia, guardando la opacidad en "
 "su lugar."
 
-#: ../plug-ins/common/file-mng.c:1287
+#: ../plug-ins/common/file-mng.c:1335
 msgid "Save as MNG"
 msgstr "Guardar como MNG"
 
-#: ../plug-ins/common/file-mng.c:1307
+#: ../plug-ins/common/file-mng.c:1355
 msgid "MNG Options"
 msgstr "Opciones de MNG"
 
-#: ../plug-ins/common/file-mng.c:1313
+#: ../plug-ins/common/file-mng.c:1361
 msgid "Interlace"
 msgstr "Entrelazar"
 
-#: ../plug-ins/common/file-mng.c:1325
+#: ../plug-ins/common/file-mng.c:1373
 msgid "Save background color"
 msgstr "Guardar el color de fondo"
 
-#: ../plug-ins/common/file-mng.c:1336
+#: ../plug-ins/common/file-mng.c:1384
 msgid "Save gamma"
 msgstr "Guardar gamma"
 
-#: ../plug-ins/common/file-mng.c:1346
+#: ../plug-ins/common/file-mng.c:1394
 msgid "Save resolution"
 msgstr "Guardar la resolución"
 
-#: ../plug-ins/common/file-mng.c:1357
+#: ../plug-ins/common/file-mng.c:1405
 msgid "Save creation time"
 msgstr "Guardar la hora de creación"
 
-#: ../plug-ins/common/file-mng.c:1376
+#: ../plug-ins/common/file-mng.c:1424
 msgid "PNG"
 msgstr "PNG"
 
-#: ../plug-ins/common/file-mng.c:1377
+#: ../plug-ins/common/file-mng.c:1425
 msgid "JNG"
 msgstr "JNG"
 
-#: ../plug-ins/common/file-mng.c:1380
+#: ../plug-ins/common/file-mng.c:1428
 msgid "PNG + delta PNG"
 msgstr "PNG + PNG Delta"
 
-#: ../plug-ins/common/file-mng.c:1381
+#: ../plug-ins/common/file-mng.c:1429
 msgid "JNG + delta PNG"
 msgstr "JNG + PNG Delta"
 
-#: ../plug-ins/common/file-mng.c:1382
+#: ../plug-ins/common/file-mng.c:1430
 msgid "All PNG"
 msgstr "Todo PNG"
 
-#: ../plug-ins/common/file-mng.c:1383
+#: ../plug-ins/common/file-mng.c:1431
 msgid "All JNG"
 msgstr "Todo JNG"
 
-#: ../plug-ins/common/file-mng.c:1395
+#: ../plug-ins/common/file-mng.c:1443
 msgid "Default chunks type:"
 msgstr "Tipo de bloques predeterminado:"
 
-#: ../plug-ins/common/file-mng.c:1398
+#: ../plug-ins/common/file-mng.c:1446
 msgid "Combine"
 msgstr "Combinar"
 
-#: ../plug-ins/common/file-mng.c:1399
+#: ../plug-ins/common/file-mng.c:1447
 msgid "Replace"
 msgstr "Reemplazar"
 
-#: ../plug-ins/common/file-mng.c:1410
+#: ../plug-ins/common/file-mng.c:1458
 msgid "Default frame disposal:"
 msgstr "Disposición predeterminada del cuadro:"
 
-#: ../plug-ins/common/file-mng.c:1422
+#: ../plug-ins/common/file-mng.c:1470
 msgid "PNG compression level:"
 msgstr "Nivel de compresión de PNG:"
 
-#: ../plug-ins/common/file-mng.c:1430 ../plug-ins/common/file-png.c:1909
+#: ../plug-ins/common/file-mng.c:1478 ../plug-ins/common/file-png.c:1987
 msgid "Choose a high compression level for small file size"
 msgstr ""
 "Seleccione un nivel de compresión alto para obtener un tamaño de archivo "
 "pequeño"
 
-#: ../plug-ins/common/file-mng.c:1444
+#: ../plug-ins/common/file-mng.c:1492
 msgid "JPEG compression quality:"
 msgstr "Calidad de la compresión de JPEG:"
 
-#: ../plug-ins/common/file-mng.c:1461
+#: ../plug-ins/common/file-mng.c:1509
 msgid "JPEG smoothing factor:"
 msgstr "Factor de suavizado de JPEG:"
 
-#: ../plug-ins/common/file-mng.c:1471
+#: ../plug-ins/common/file-mng.c:1519
 msgid "Animated MNG Options"
 msgstr "Opciones del MNG animado"
 
-#: ../plug-ins/common/file-mng.c:1477
+#: ../plug-ins/common/file-mng.c:1525
 msgid "Loop"
 msgstr "Bucle"
 
-#: ../plug-ins/common/file-mng.c:1491
+#: ../plug-ins/common/file-mng.c:1539
 msgid "Default frame delay:"
 msgstr "Retardo predeterminado del cuadro:"
 
-#: ../plug-ins/common/file-mng.c:1564
+#: ../plug-ins/common/file-mng.c:1612
 msgid "MNG animation"
 msgstr "Animación MNG"
 
@@ -3766,42 +3768,42 @@ msgstr "Borde inferior fuera de los límites (debe ser < %d): %d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "Ocurrió un error al escribir en el archivo «%s»: %s"
 
-#: ../plug-ins/common/file-pdf.c:288
+#: ../plug-ins/common/file-pdf.c:295
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
-#: ../plug-ins/common/file-pdf.c:620
+#: ../plug-ins/common/file-pdf.c:860
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf.c:622 ../plug-ins/common/file-ps.c:1125
+#: ../plug-ins/common/file-pdf.c:862 ../plug-ins/common/file-ps.c:1125
 #, c-format
 msgid "%s-pages"
 msgstr "%s-páginas"
 
-#: ../plug-ins/common/file-pdf.c:808
+#: ../plug-ins/common/file-pdf.c:1051
 msgid "Import from PDF"
 msgstr "Importar desde PDF"
 
-#: ../plug-ins/common/file-pdf.c:813 ../plug-ins/common/file-ps.c:3102
+#: ../plug-ins/common/file-pdf.c:1056 ../plug-ins/common/file-ps.c:3102
 #: ../plug-ins/common/file-tiff-load.c:483
 msgid "_Import"
 msgstr "_Importar"
 
-#: ../plug-ins/common/file-pdf.c:880
+#: ../plug-ins/common/file-pdf.c:1123
 msgid "_Width (pixels):"
 msgstr "_Anchura (píxeles):"
 
-#: ../plug-ins/common/file-pdf.c:881
+#: ../plug-ins/common/file-pdf.c:1124
 msgid "_Height (pixels):"
 msgstr "_Altura (píxeles):"
 
-#: ../plug-ins/common/file-pdf.c:883
+#: ../plug-ins/common/file-pdf.c:1126
 msgid "_Resolution:"
 msgstr "_Resolución:"
 
-#: ../plug-ins/common/file-pdf.c:1157
+#: ../plug-ins/common/file-pdf.c:1400
 #, c-format
 msgid "pixels/%s"
 msgstr "píxeles/%s"
@@ -3813,27 +3815,32 @@ msgstr "píxeles/%s"
 msgid "Alias Pix image"
 msgstr "Imagen Pix de Alias"
 
-#: ../plug-ins/common/file-png.c:263 ../plug-ins/common/file-png.c:284
-#: ../plug-ins/common/file-png.c:304 ../plug-ins/common/file-png.c:321
+#: ../plug-ins/common/file-png.c:275 ../plug-ins/common/file-png.c:296
+#: ../plug-ins/common/file-png.c:316 ../plug-ins/common/file-png.c:333
 msgid "PNG image"
 msgstr "Imagen PNG"
 
-#: ../plug-ins/common/file-png.c:628
+#: ../plug-ins/common/file-png.c:640
 #, c-format
 msgid "Error loading PNG file: %s"
 msgstr "Ocurrió un error al abrir el archivo PNG: %s"
 
-#: ../plug-ins/common/file-png.c:703
+#: ../plug-ins/common/file-png.c:728
+#, c-format
+msgid "Error creating PNG read struct while saving '%s'."
+msgstr "Error al crear la estructura de lectura PNG al guardar «%s»."
+
+#: ../plug-ins/common/file-png.c:738
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Ocurrió un error al leer el archivo «%s». ¿Está corrupto el archivo?"
 
-#: ../plug-ins/common/file-png.c:834
+#: ../plug-ins/common/file-png.c:867
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Modelo de color desconocido en el archivo PNG «%s»."
 
-#: ../plug-ins/common/file-png.c:889
+#: ../plug-ins/common/file-png.c:927
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3841,56 +3848,61 @@ msgstr ""
 "El archivo PNG especifica un desplazamiento que ha causado que la capa sea "
 "posicionada fuera de la imagen."
 
-#: ../plug-ins/common/file-png.c:1255
+#: ../plug-ins/common/file-png.c:1262
+#, c-format
+msgid "Error creating PNG write struct while saving '%s'."
+msgstr "Error al crear la estructura de escritura PNG al guardar «%s»."
+
+#: ../plug-ins/common/file-png.c:1272
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Ocurrió un error al guardar «%s». No se ha podido guardar la imagen."
 
-#: ../plug-ins/common/file-png.c:1786
+#: ../plug-ins/common/file-png.c:1864
 msgid "Save as PNG"
 msgstr "Guardar como PNG"
 
-#: ../plug-ins/common/file-png.c:1818
+#: ../plug-ins/common/file-png.c:1896
 msgid "_Interlacing (Adam7)"
 msgstr "_Entrelazado (Adam7)"
 
-#: ../plug-ins/common/file-png.c:1829
+#: ../plug-ins/common/file-png.c:1907
 msgid "Save _background color"
 msgstr "Guardar el color de _fondo"
 
-#: ../plug-ins/common/file-png.c:1837
+#: ../plug-ins/common/file-png.c:1915
 msgid "Save _gamma"
 msgstr "Guardar _gamma"
 
-#: ../plug-ins/common/file-png.c:1847
+#: ../plug-ins/common/file-png.c:1925
 msgid "Save layer o_ffset"
 msgstr "Guardar el desp_lazamiento de la capa"
 
-#: ../plug-ins/common/file-png.c:1856
+#: ../plug-ins/common/file-png.c:1934
 msgid "Save _resolution"
 msgstr "Guardar _resolución"
 
-#: ../plug-ins/common/file-png.c:1866
+#: ../plug-ins/common/file-png.c:1944
 msgid "Save creation _time"
 msgstr "Guardar la _hora de creación"
 
-#: ../plug-ins/common/file-png.c:1875
+#: ../plug-ins/common/file-png.c:1953
 msgid "Save comme_nt"
 msgstr "Guardar come_ntario"
 
-#: ../plug-ins/common/file-png.c:1891
+#: ../plug-ins/common/file-png.c:1969
 msgid "Save color _values from transparent pixels"
 msgstr "Guardar los valores de los _colores de los píxeles transparentes"
 
-#: ../plug-ins/common/file-png.c:1905
+#: ../plug-ins/common/file-png.c:1983
 msgid "Co_mpression level:"
 msgstr "Nivel de co_mpresión:"
 
-#: ../plug-ins/common/file-png.c:1923 ../plug-ins/file-jpeg/jpeg-save.c:1186
+#: ../plug-ins/common/file-png.c:2001 ../plug-ins/file-jpeg/jpeg-save.c:1186
 msgid "_Load Defaults"
 msgstr "_Cargar predet."
 
-#: ../plug-ins/common/file-png.c:1931
+#: ../plug-ins/common/file-png.c:2009
 msgid "S_ave Defaults"
 msgstr "_Guardar predet."
 
@@ -4039,7 +4051,7 @@ msgstr "Páginas:"
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Páginas a cargar (ej: 1-4 o 1,3,5-7)"
 
-#: ../plug-ins/common/file-ps.c:3206 ../plug-ins/common/sphere-designer.c:2643
+#: ../plug-ins/common/file-ps.c:3206 ../plug-ins/common/sphere-designer.c:2646
 msgid "Layers"
 msgstr "Capas"
 
@@ -7098,7 +7110,7 @@ msgid "Spots"
 msgstr "Lunares"
 
 #: ../plug-ins/common/sphere-designer.c:1742
-#: ../plug-ins/common/sphere-designer.c:2690
+#: ../plug-ins/common/sphere-designer.c:2693
 msgid "Texture"
 msgstr "Textura"
 
@@ -7107,127 +7119,127 @@ msgid "Bumpmap"
 msgstr "Mapa de relieve"
 
 #: ../plug-ins/common/sphere-designer.c:1746
-#: ../plug-ins/common/sphere-designer.c:2692
+#: ../plug-ins/common/sphere-designer.c:2695
 msgid "Light"
 msgstr "Luz"
 
-#: ../plug-ins/common/sphere-designer.c:2009
+#: ../plug-ins/common/sphere-designer.c:2010
 #, c-format
 msgid "File '%s' is not a valid save file."
 msgstr "El archivo «%s» no es válido."
 
-#: ../plug-ins/common/sphere-designer.c:2187
+#: ../plug-ins/common/sphere-designer.c:2190
 msgid "Open File"
 msgstr "Abrir archivo"
 
-#: ../plug-ins/common/sphere-designer.c:2187
+#: ../plug-ins/common/sphere-designer.c:2190
 msgid "Save File"
 msgstr "Guardar archivo"
 
-#: ../plug-ins/common/sphere-designer.c:2544
+#: ../plug-ins/common/sphere-designer.c:2547
 msgid "Sphere Designer"
 msgstr "Diseñador de esferas"
 
-#: ../plug-ins/common/sphere-designer.c:2675
+#: ../plug-ins/common/sphere-designer.c:2678
 msgid "Properties"
 msgstr "Propiedades"
 
-#: ../plug-ins/common/sphere-designer.c:2691
+#: ../plug-ins/common/sphere-designer.c:2694
 msgid "Bump"
 msgstr "Relieve"
 
 #. row labels
-#: ../plug-ins/common/sphere-designer.c:2699
+#: ../plug-ins/common/sphere-designer.c:2702
 #: ../plug-ins/lighting/lighting-ui.c:405
 msgid "Type:"
 msgstr "Tipo:"
 
-#: ../plug-ins/common/sphere-designer.c:2718
+#: ../plug-ins/common/sphere-designer.c:2721
 msgid "Texture:"
 msgstr "Textura:"
 
-#: ../plug-ins/common/sphere-designer.c:2723
+#: ../plug-ins/common/sphere-designer.c:2726
 msgid "Colors:"
 msgstr "Colores:"
 
-#: ../plug-ins/common/sphere-designer.c:2726
-#: ../plug-ins/common/sphere-designer.c:2737
+#: ../plug-ins/common/sphere-designer.c:2729
+#: ../plug-ins/common/sphere-designer.c:2740
 msgid "Color Selection Dialog"
 msgstr "Diálogo de selección de color"
 
 #. Scale
-#: ../plug-ins/common/sphere-designer.c:2748
+#: ../plug-ins/common/sphere-designer.c:2751
 #: ../plug-ins/gimpressionist/paper.c:194
 #: ../plug-ins/ifs-compose/ifs-compose.c:554
 msgid "Scale:"
 msgstr "Escala:"
 
-#: ../plug-ins/common/sphere-designer.c:2756
+#: ../plug-ins/common/sphere-designer.c:2759
 msgid "Turbulence:"
 msgstr "Turbulencia:"
 
-#: ../plug-ins/common/sphere-designer.c:2763
+#: ../plug-ins/common/sphere-designer.c:2766
 msgid "Amount:"
 msgstr "Cantidad:"
 
-#: ../plug-ins/common/sphere-designer.c:2770
+#: ../plug-ins/common/sphere-designer.c:2773
 msgid "Exp.:"
 msgstr "Exp.:"
 
-#: ../plug-ins/common/sphere-designer.c:2777
+#: ../plug-ins/common/sphere-designer.c:2780
 msgid "Transformations"
 msgstr "Transformaciones"
 
-#: ../plug-ins/common/sphere-designer.c:2793
+#: ../plug-ins/common/sphere-designer.c:2796
 #: ../plug-ins/map-object/map-object-ui.c:1143
 msgid "Scale X:"
 msgstr "Escala X:"
 
-#: ../plug-ins/common/sphere-designer.c:2800
+#: ../plug-ins/common/sphere-designer.c:2803
 msgid "Scale Y:"
 msgstr "Escala Y:"
 
-#: ../plug-ins/common/sphere-designer.c:2806
+#: ../plug-ins/common/sphere-designer.c:2809
 msgid "Scale Z:"
 msgstr "Escala Z:"
 
-#: ../plug-ins/common/sphere-designer.c:2813
+#: ../plug-ins/common/sphere-designer.c:2816
 msgid "Rotate X:"
 msgstr "Rotación X:"
 
-#: ../plug-ins/common/sphere-designer.c:2820
+#: ../plug-ins/common/sphere-designer.c:2823
 msgid "Rotate Y:"
 msgstr "Rotación Y:"
 
-#: ../plug-ins/common/sphere-designer.c:2827
+#: ../plug-ins/common/sphere-designer.c:2830
 msgid "Rotate Z:"
 msgstr "Rotación Z:"
 
-#: ../plug-ins/common/sphere-designer.c:2834
+#: ../plug-ins/common/sphere-designer.c:2837
 msgid "Position X:"
 msgstr "Posición X:"
 
-#: ../plug-ins/common/sphere-designer.c:2841
+#: ../plug-ins/common/sphere-designer.c:2844
 msgid "Position Y:"
 msgstr "Posición Y:"
 
-#: ../plug-ins/common/sphere-designer.c:2848
+#: ../plug-ins/common/sphere-designer.c:2851
 msgid "Position Z:"
 msgstr "Posición Z:"
 
-#: ../plug-ins/common/sphere-designer.c:2963
+#: ../plug-ins/common/sphere-designer.c:2966
 msgid "Rendering sphere"
 msgstr "Renderizando esfera"
 
-#: ../plug-ins/common/sphere-designer.c:3013
+#: ../plug-ins/common/sphere-designer.c:3016
 msgid "Create an image of a textured sphere"
 msgstr "Crea una imagen de una esfera texturizada"
 
-#: ../plug-ins/common/sphere-designer.c:3020
+#: ../plug-ins/common/sphere-designer.c:3023
 msgid "Sphere _Designer..."
 msgstr "_Diseñador de esferas…"
 
-#: ../plug-ins/common/sphere-designer.c:3080
+#: ../plug-ins/common/sphere-designer.c:3083
 msgid "Region selected for plug-in is empty"
 msgstr "La región seleccionada para el complemento está vacía"
 
@@ -8597,8 +8609,8 @@ msgid ""
 "Unable to save layer with mode '%s'.  Either the PSD file format or the save "
 "plug-in does not support that, using normal mode instead."
 msgstr ""
-"No se puede guardar la capa con el modo «%s». Bien el formato del archivo PSD "
-"o bien el complemento de guardado no lo soportan, se utilizará el modo "
+"No se puede guardar la capa con el modo «%s». Bien el formato del archivo "
+"PSD o bien el complemento de guardado no lo soportan, se utilizará el modo "
 "normal en su lugar."
 
 #: ../plug-ins/file-psd/psd-save.c:631
@@ -9776,8 +9788,8 @@ msgstr ""
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr ""
-"Erro al intentar abrir el archivo temporal «%s» para la carga de parásitos: «%"
-"s»"
+"Erro al intentar abrir el archivo temporal «%s» para la carga de parásitos: "
+"«%s»"
 
 # //R ¿Drawables?
 #: ../plug-ins/gimpressionist/brush.c:247
@@ -9898,7 +9910,8 @@ msgstr "Convertible en mosaico"
 
 #: ../plug-ins/gimpressionist/general.c:217
 msgid "Selects if the resulting image should be seamlessly tileable"
-msgstr "Selecciona si la imagen resultante debería ser enlosable «sin costuras»"
+msgstr ""
+"Selecciona si la imagen resultante debería ser enlosable «sin costuras»"
 
 #: ../plug-ins/gimpressionist/general.c:222
 msgid "Drop shadow"
@@ -10970,25 +10983,25 @@ msgstr "Renderizando IFS (%d/%d)"
 msgid "Transformation %s"
 msgstr "Transformación %s"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2379
+#: ../plug-ins/ifs-compose/ifs-compose.c:2380
 msgid "Save failed"
 msgstr "El guardado ha fallado"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2460
-#: ../plug-ins/ifs-compose/ifs-compose.c:2473
+#: ../plug-ins/ifs-compose/ifs-compose.c:2461
+#: ../plug-ins/ifs-compose/ifs-compose.c:2474
 msgid "Open failed"
 msgstr "Ha fallado la apertura"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2468
+#: ../plug-ins/ifs-compose/ifs-compose.c:2469
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "El archivo «%s» no parece ser un archivo fractal IFS."
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2508
+#: ../plug-ins/ifs-compose/ifs-compose.c:2509
 msgid "Save as IFS Fractal file"
 msgstr "Guardar como un archivo de fractal IFS"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2545
+#: ../plug-ins/ifs-compose/ifs-compose.c:2546
 msgid "Open IFS Fractal file"
 msgstr "Abrir archivo de fractal IFS"
 
