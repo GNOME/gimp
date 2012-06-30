@@ -53,10 +53,26 @@ static void   gimp_tool_dialog_shell_unmap (GimpDisplayShell *shell,
 
 G_DEFINE_TYPE (GimpToolDialog, gimp_tool_dialog, GIMP_TYPE_VIEWABLE_DIALOG)
 
+static void
+gimp_tool_dialog_dispose (GObject *object)
+{
+  GimpToolDialogPrivate *private = GET_PRIVATE (object);
+
+  if (private->shell)
+    {
+      g_object_remove_weak_pointer (G_OBJECT (private->shell),
+                                    (gpointer) &private->shell);
+      private->shell = NULL;
+    }
+
+  G_OBJECT_CLASS (gimp_tool_dialog_parent_class)->dispose (object);
+}
 
 static void
 gimp_tool_dialog_class_init (GimpToolDialogClass *klass)
 {
+  G_OBJECT_CLASS (klass)->dispose = gimp_tool_dialog_dispose;
+
   g_type_class_add_private (klass, sizeof (GimpToolDialogPrivate));
 }
 
@@ -137,6 +153,8 @@ gimp_tool_dialog_set_shell (GimpToolDialog   *tool_dialog,
 
   if (private->shell)
     {
+      g_object_remove_weak_pointer (G_OBJECT (private->shell),
+                                    (gpointer) &private->shell);
       g_signal_handlers_disconnect_by_func (private->shell,
                                             gimp_tool_dialog_shell_unmap,
                                             tool_dialog);
@@ -153,6 +171,8 @@ gimp_tool_dialog_set_shell (GimpToolDialog   *tool_dialog,
                                G_CALLBACK (gimp_tool_dialog_shell_unmap),
                                tool_dialog, 0);
 
+      g_object_add_weak_pointer (G_OBJECT (private->shell),
+                                 (gpointer) &private->shell);
       toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
 
       gtk_window_set_transient_for (GTK_WINDOW (tool_dialog),
