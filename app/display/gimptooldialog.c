@@ -48,11 +48,28 @@ struct _GimpToolDialogPrivate
                                                          GimpToolDialogPrivate)
 
 
+static void   gimp_tool_dialog_dispose     (GObject          *object);
+
 static void   gimp_tool_dialog_shell_unmap (GimpDisplayShell *shell,
                                             GimpToolDialog   *dialog);
 
 
 G_DEFINE_TYPE (GimpToolDialog, gimp_tool_dialog, GIMP_TYPE_VIEWABLE_DIALOG)
+
+static void
+gimp_tool_dialog_class_init (GimpToolDialogClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->dispose = gimp_tool_dialog_dispose;
+
+  g_type_class_add_private (klass, sizeof (GimpToolDialogPrivate));
+}
+
+static void
+gimp_tool_dialog_init (GimpToolDialog *dialog)
+{
+}
 
 static void
 gimp_tool_dialog_dispose (GObject *object)
@@ -67,19 +84,6 @@ gimp_tool_dialog_dispose (GObject *object)
     }
 
   G_OBJECT_CLASS (gimp_tool_dialog_parent_class)->dispose (object);
-}
-
-static void
-gimp_tool_dialog_class_init (GimpToolDialogClass *klass)
-{
-  G_OBJECT_CLASS (klass)->dispose = gimp_tool_dialog_dispose;
-
-  g_type_class_add_private (klass, sizeof (GimpToolDialogPrivate));
-}
-
-static void
-gimp_tool_dialog_init (GimpToolDialog *dialog)
-{
 }
 
 
