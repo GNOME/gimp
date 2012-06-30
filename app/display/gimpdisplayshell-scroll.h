@@ -52,12 +52,6 @@ void   gimp_display_shell_scroll_get_viewport               (const GimpDisplaySh
                                                              gdouble                *y,
                                                              gdouble                *w,
                                                              gdouble                *h);
-void   gimp_display_shell_scroll_get_disp_offset            (const GimpDisplayShell *shell,
-                                                             gint                   *disp_xoffset,
-                                                             gint                   *disp_yoffset);
-void   gimp_display_shell_scroll_get_render_start_offset    (const GimpDisplayShell *shell,
-                                                             gint                   *offset_x,
-                                                             gint                   *offset_y);
 void   gimp_display_shell_scroll_setup_hscrollbar           (GimpDisplayShell       *shell,
                                                              gdouble                 value);
 void   gimp_display_shell_scroll_setup_vscrollbar           (GimpDisplayShell       *shell,
