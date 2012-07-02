@@ -915,7 +915,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
 
       /* in frompivot mode, the part of the frame over the pivot must stay
        * in the same place during the operation */
-      if (frompivot)
+      if (0 && frompivot)
         {
           //TODO: this is wrong, only works in the simple case where pivot point
           //is in the center and the transform is affine
@@ -981,6 +981,34 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
        * /--------------/
        *
        */
+
+      if (frompivot)
+        {
+          //TODO this doesn't work exactly right yet, but better than the commented out version above
+          GimpMatrix3 transform;
+          gint i;
+          gimp_matrix3_identity (&transform);
+          gimp_transform_matrix_perspective (&transform,
+                                             transform_tool->x1,
+                                             transform_tool->y1,
+                                             transform_tool->x2 - transform_tool->x1,
+                                             transform_tool->y2 - transform_tool->y1,
+                                             *x[0], *y[0],
+                                             *x[1], *y[1],
+                                             *x[2], *y[2],
+                                             *x[3], *y[3]);
+          gdouble z = transform.coeff[2][0] + transform.coeff[2][1] + transform.coeff[2][2];
+          GimpVector2 pivot_compensate = {
+            .x = (transform.coeff[0][0] * pivot.x + transform.coeff[0][1] * pivot.y + transform.coeff[0][2]) / z,
+            .y = (transform.coeff[1][0] * pivot.x + transform.coeff[1][1] * pivot.y + transform.coeff[1][2]) / z};
+          *pivot_x = pivot_compensate.x;
+          *pivot_y = pivot_compensate.y;
+          if (0) for (i = 0; i < 4; i++)
+            {
+              *x[i] -= pivot_compensate.x - pivot.x;
+              *y[i] -= pivot_compensate.y - pivot.y;
+            }
+        }
     }
 
   if (function == TRANSFORM_HANDLE_N ||
