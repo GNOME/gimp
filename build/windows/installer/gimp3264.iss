@@ -163,6 +163,7 @@ SignedUninstallerDir=_Uninst
 [Languages]
 Name: "en"; MessagesFile: "compiler:Default.isl,en.setup.isl"
 Name: "sl"; MessagesFile: "compiler:Languages\Slovenian.isl,sl.setup.isl"
+Name: "de"; MessagesFile: "compiler:Languages\German.isl,de.setup.isl"
 ;Name: "ro"; MessagesFile: "Romanian.islu,ro.setup.islu"
 
 [Types]
@@ -614,10 +615,37 @@ begin
 end;
 
 
+function GetButtonWidth(const Texts: TArrayOfString; const Minimum: Integer): Integer;
+var MeasureLabel: TNewStaticText;
+	i: Integer;
+begin
+	MeasureLabel := TNewStaticText.Create(WizardForm);
+	with MeasureLabel do
+	begin
+		Parent := WizardForm;
+		Left := 0;
+		Top := 0;
+		AutoSize := True;
+	end;
+
+	Result := Minimum;
+
+	for i := 0 to GetArrayLength(Texts) - 1 do
+	begin
+		MeasureLabel.Caption := Texts[i];
+		if (MeasureLabel.Width + ScaleX(16)) > Result then
+			Result := (MeasureLabel.Width + ScaleX(16));
+	end;
+
+	MeasureLabel.Free;
+end;
+
+
 procedure InitCustomPages();
 var lblAssocInfo: TNewStaticText;
 	btnSelectAll,btnSelectUnused: TNewButton;
-	i: Integer;
+	i,ButtonWidth: Integer;
+	ButtonText: TArrayOfString;
 	//lblInfo: TNewStaticText;
 begin
 	DebugMsg('InitCustomPages','pgAssociations');
@@ -672,11 +700,17 @@ begin
 
 	end;
 
+	SetArrayLength(ButtonText, 3);
+	ButtonText[0] := CustomMessage('SelectAssociationsSelectUnused');
+	ButtonText[1] := CustomMessage('SelectAssociationsSelectAll');
+	ButtonText[2] := CustomMessage('SelectAssociationsUnselectAll');
+	ButtonWidth := GetButtonWidth(ButtonText, WizardForm.NextButton.Width);
+
 	btnSelectUnused := TNewButton.Create(Associations.AssociationsPage.Page);
 	with btnSelectUnused do
 	begin
 		Parent := Associations.AssociationsPage.Page.Surface;
-		Width := Round(WizardForm.NextButton.Width * 1.2);
+		Width := ButtonWidth;
 		Left := Associations.AssociationsPage.Page.SurfaceWidth - Width * 2;
 		Height := WizardForm.NextButton.Height;
 		Top := Associations.AssociationsPage.clbAssociations.Top + Associations.AssociationsPage.clbAssociations.Height + ScaleX(8);
@@ -688,7 +722,7 @@ begin
 	with btnSelectAll do
 	begin
 		Parent := Associations.AssociationsPage.Page.Surface;
-		Width := Round(WizardForm.NextButton.Width * 1.2);
+		Width := ButtonWidth;
 		Left := Associations.AssociationsPage.Page.SurfaceWidth - Width;
 		Height := WizardForm.NextButton.Height;
 		Top := Associations.AssociationsPage.clbAssociations.Top + Associations.AssociationsPage.clbAssociations.Height + ScaleX(8);
@@ -990,8 +1024,9 @@ begin
 	(* Prepare the text for new Ready Memo *)
 	
 	sText := RTFHeader;
-	sText := sText + ParseReadyMemoText(pSpace,pMemoDirInfo);
-	sText := sText + '\sb100' + ParseReadyMemoText(pSpace,pMemoTypeInfo);
+	if pMemoDirInfo <> '' then
+		sText := sText + ParseReadyMemoText(pSpace,pMemoDirInfo) + '\sb100';
+	sText := sText + ParseReadyMemoText(pSpace,pMemoTypeInfo);
 	sText := sText + '\sb100' + ParseReadyMemoText(pSpace,pMemoComponentsInfo);
 
 	for i := 0 to GetArrayLength(Associations.Association) - 1 do
