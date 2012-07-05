@@ -313,7 +313,7 @@ gimp_curves_tool_key_press (GimpTool    *tool,
 {
   GimpCurvesTool *c_tool = GIMP_CURVES_TOOL (tool);
 
-  if (gtk_widget_event (c_tool->graph, (GdkEvent *) kevent))
+  if (c_tool->graph && gtk_widget_event (c_tool->graph, (GdkEvent *) kevent))
     return TRUE;
 
   return GIMP_TOOL_CLASS (parent_class)->key_press (tool, kevent, display);
