@@ -17,11 +17,13 @@
 
 #include "config.h"
 
+#include <cairo.h>
 #include <gegl.h>
 
 #include "core-types.h"
 
 #include "gegl/gimp-gegl-utils.h"
+#include "gegl/gimptilehandlerprojection.h"
 
 #include "gimp.h"
 #include "gimp-utils.h"
@@ -66,6 +68,7 @@ static gdouble     gimp_projection_get_opacity_at        (GimpPickable    *picka
                                                           gint             x,
                                                           gint             y);
 
+static void        gimp_projection_free_buffer           (GimpProjection  *proj);
 static void        gimp_projection_add_update_area       (GimpProjection  *proj,
                                                           gint             x,
                                                           gint             y,
@@ -138,11 +141,6 @@ gimp_projection_class_init (GimpProjectionClass *klass)
 static void
 gimp_projection_init (GimpProjection *proj)
 {
-  proj->projectable              = NULL;
-  proj->buffer                   = NULL;
-  proj->update_areas             = NULL;
-  proj->idle_render.idle_id      = 0;
-  proj->idle_render.update_areas = NULL;
 }
 
 static void
@@ -174,24 +172,7 @@ gimp_projection_finalize (GObject *object)
   gimp_area_list_free (proj->idle_render.update_areas);
   proj->idle_render.update_areas = NULL;
 
-  if (proj->buffer)
-    {
-      g_object_unref (proj->buffer);
-      proj->buffer = NULL;
-    }
-
-  if (proj->graph)
-    {
-      g_object_unref (proj->graph);
-      proj->graph     = NULL;
-      proj->sink_node = NULL;
-    }
-
-  if (proj->processor)
-    {
-      g_object_unref (proj->processor);
-      proj->processor = NULL;
-    }
+  gimp_projection_free_buffer (proj);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -286,22 +267,22 @@ gimp_projection_get_buffer (GimpPickable *pickable)
 
   if (! proj->buffer)
     {
+      GeglNode   *graph;
       const Babl *format;
       gint        width;
       gint        height;
 
+      graph = gimp_projectable_get_graph (proj->projectable);
       format = gimp_projection_get_format (GIMP_PICKABLE (proj));
       gimp_projectable_get_size (proj->projectable, &width, &height);
 
       proj->buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                                       format);
 
-      if (proj->sink_node)
-        {
-          gegl_node_set (proj->sink_node,
-                         "buffer", proj->buffer,
-                         NULL);
-        }
+      proj->validate_handler = gimp_tile_handler_projection_new (graph);
+      gegl_buffer_add_handler (proj->buffer, proj->validate_handler);
+      gimp_tile_handler_projection_invalidate (proj->validate_handler,
+                                               0, 0, width, height);
     }
 
   return proj->buffer;
@@ -360,44 +341,6 @@ gimp_projection_new (GimpProjectable *projectable)
   return proj;
 }
 
-#ifdef USE_BUFFER
-GeglNode *
-gimp_projection_get_sink_node (GimpProjection *proj)
-{
-  GeglNode   *graph;
-  GeglBuffer *buffer;
-
-  g_return_val_if_fail (GIMP_IS_PROJECTION (proj), NULL);
-
-  if (proj->sink_node)
-    return proj->sink_node;
-
-  proj->graph = gegl_node_new ();
-
-#if 0
-  g_object_set (proj->graph,
-                "dont-cache", TRUE,
-                NULL);
-#endif
-
-  graph = gimp_projectable_get_graph (proj->projectable);
-  gegl_node_add_child (proj->graph, graph);
-
-  buffer = gimp_projection_get_buffer (GIMP_PICKABLE (proj));
-
-  proj->sink_node =
-    gegl_node_new_child (proj->graph,
-                         "operation", "gegl:write-buffer",
-                         "buffer",    buffer,
-                         NULL);
-
-  gegl_node_connect_to (graph,           "output",
-                        proj->sink_node, "input");
-
-  return proj->sink_node;
-}
-#endif
-
 void
 gimp_projection_flush (GimpProjection *proj)
 {
@@ -423,10 +366,6 @@ gimp_projection_finish_draw (GimpProjection *proj)
 
   if (proj->idle_render.idle_id)
     {
-#if 0
-      g_printerr ("%s: flushing idle render queue\n", G_STRFUNC);
-#endif
-
       g_source_remove (proj->idle_render.idle_id);
       proj->idle_render.idle_id = 0;
 
@@ -436,6 +375,25 @@ gimp_projection_finish_draw (GimpProjection *proj)
 
 
 /*  private functions  */
+
+static void
+gimp_projection_free_buffer (GimpProjection  *proj)
+{
+  if (proj->buffer)
+    {
+      if (proj->validate_handler)
+        gegl_buffer_remove_handler (proj->buffer, proj->validate_handler);
+
+      g_object_unref (proj->buffer);
+      proj->buffer = NULL;
+    }
+
+  if (proj->validate_handler)
+    {
+      g_object_unref (proj->validate_handler);
+      proj->validate_handler = NULL;
+    }
+}
 
 static void
 gimp_projection_add_update_area (GimpProjection *proj,
@@ -695,36 +653,6 @@ gimp_projection_paint_area (GimpProjection *proj,
                  y2 - y1);
 }
 
-#ifdef USE_BUFFER
-static void
-gimp_projection_construct (GimpProjection *proj,
-                           gint            x,
-                           gint            y,
-                           gint            w,
-                           gint            h)
-{
-  GeglRectangle rect = { x, y, w, h };
-
-  g_return_if_fail (GIMP_IS_PROJECTION (proj));
-
-  /* GEGL should really do this for us... */
-  gegl_buffer_clear (gimp_projection_get_buffer (GIMP_PICKABLE (proj)), &rect);
-
-  if (! proj->processor)
-    {
-      GeglNode *sink = gimp_projection_get_sink_node (proj);
-
-      proj->processor = gegl_node_new_processor (sink, &rect);
-    }
-  else
-    {
-      gegl_processor_set_rectangle (proj->processor, &rect);
-    }
-
-  while (gegl_processor_work (proj->processor, NULL));
-}
-#endif
-
 static void
 gimp_projection_invalidate (GimpProjection *proj,
                             guint           x,
@@ -732,11 +660,9 @@ gimp_projection_invalidate (GimpProjection *proj,
                             guint           w,
                             guint           h)
 {
-  /*  FIXME: this should happen as we actually *read* from the buffer
-   */
-#ifdef USE_BUFFER
-  gimp_projection_construct (proj, x, y, w, h);
-#endif
+  if (proj->validate_handler)
+    gimp_tile_handler_projection_invalidate (proj->validate_handler,
+                                             x, y, w, h);
 }
 
 
@@ -780,11 +706,7 @@ gimp_projection_projectable_changed (GimpProjectable *projectable,
   gimp_area_list_free (proj->update_areas);
   proj->update_areas = NULL;
 
-  if (proj->buffer)
-    {
-      g_object_unref (proj->buffer);
-      proj->buffer = NULL;
-    }
+  gimp_projection_free_buffer (proj);
 
   gimp_projectable_get_offset (proj->projectable, &off_x, &off_y);
   gimp_projectable_get_size (projectable, &width, &height);

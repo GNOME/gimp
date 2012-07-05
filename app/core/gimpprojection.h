@@ -19,9 +19,6 @@
 #define __GIMP_PROJECTION_H__
 
 
-#define USE_BUFFER 1
-
-
 #include "gimpobject.h"
 
 
@@ -58,10 +55,7 @@ struct _GimpProjection
   GimpProjectable          *projectable;
 
   GeglBuffer               *buffer;
-
-  GeglNode                 *graph;
-  GeglNode                 *sink_node;
-  GeglProcessor            *processor;
+  gpointer                  validate_handler;
 
   GSList                   *update_areas;
   GimpProjectionIdleRender  idle_render;
@@ -85,10 +79,6 @@ struct _GimpProjectionClass
 GType            gimp_projection_get_type         (void) G_GNUC_CONST;
 
 GimpProjection * gimp_projection_new              (GimpProjectable   *projectable);
-
-#if USE_BUFFER
-GeglNode       * gimp_projection_get_sink_node    (GimpProjection    *proj);
-#endif
 
 void             gimp_projection_flush            (GimpProjection    *proj);
 void             gimp_projection_flush_now        (GimpProjection    *proj);

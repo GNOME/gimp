@@ -1388,9 +1388,8 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
   /*  we double buffer image drawing manually  */
   gtk_widget_set_double_buffered (shell->canvas, FALSE);
 
-  shell->fill_idle_id = g_idle_add_full (G_PRIORITY_LOW,
-                                         (GSourceFunc) gimp_display_shell_fill_idle,
-                                         shell, NULL);
+  shell->fill_idle_id = g_idle_add ((GSourceFunc) gimp_display_shell_fill_idle,
+                                    shell);
 }
 
 /* We used to calculate the scale factor in the SCALEFACTOR_X() and

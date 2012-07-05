@@ -51,42 +51,37 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                            gint              w,
                            gint              h)
 {
-#ifdef USE_BUFFER
+  GimpImage      *image;
   GimpProjection *projection;
   GeglBuffer     *buffer;
-#endif
-  GimpImage      *image;
+  gint            viewport_offset_x;
+  gint            viewport_offset_y;
+  gint            viewport_width;
+  gint            viewport_height;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
   g_return_if_fail (w > 0 && h > 0);
 
-  image = gimp_display_get_image (shell->display);
-
-#ifdef USE_BUFFER
+  image      = gimp_display_get_image (shell->display);
   projection = gimp_image_get_projection (image);
-  buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (projection));
+  buffer     = gimp_pickable_get_buffer (GIMP_PICKABLE (projection));
+
+  gimp_display_shell_scroll_get_scaled_viewport (shell,
+                                                 &viewport_offset_x,
+                                                 &viewport_offset_y,
+                                                 &viewport_width,
+                                                 &viewport_height);
 
   gegl_buffer_get (buffer,
-                   GEGL_RECTANGLE (x + shell->offset_x,
-                                   y + shell->offset_y,
+                   GEGL_RECTANGLE (x + viewport_offset_x,
+                                   y + viewport_offset_y,
                                    w, h),
                    shell->scale_x,
                    babl_format ("cairo-ARGB32"),
                    cairo_image_surface_get_data (shell->render_surface),
                    cairo_image_surface_get_stride (shell->render_surface),
                    GEGL_ABYSS_NONE);
-#else
-  gegl_node_blit (gimp_projectable_get_graph (GIMP_PROJECTABLE (image)),
-                  shell->scale_x,
-                  GEGL_RECTANGLE (src_x * shell->scale_x,
-                                  src_y * shell->scale_y,
-                                  w, h),
-                  babl_format ("cairo-ARGB32"),
-                  cairo_image_surface_get_data (shell->render_surface),
-                  cairo_image_surface_get_stride (shell->render_surface),
-                  0);
-#endif
 
   /*  apply filters to the rendered projection  */
   if (shell->filter_stack)
@@ -136,24 +131,22 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 #endif
 
   /*  put it to the screen  */
-  {
-    cairo_save (cr);
+  cairo_save (cr);
 
-    cairo_rectangle (cr, x, y, w, h);
-    cairo_clip (cr);
+  cairo_rectangle (cr, x, y, w, h);
+  cairo_clip (cr);
 
-    cairo_set_source_surface (cr, shell->render_surface, x, y);
-    cairo_paint (cr);
+  cairo_set_source_surface (cr, shell->render_surface, x, y);
+  cairo_paint (cr);
 
 #if 0
-    if (shell->mask)
-      {
-        gimp_cairo_set_source_rgba (cr, &shell->mask_color);
-        cairo_mask_surface (cr, shell->mask_surface,
-                            x + disp_xoffset, y + disp_yoffset);
-      }
+  if (shell->mask)
+    {
+      gimp_cairo_set_source_rgba (cr, &shell->mask_color);
+      cairo_mask_surface (cr, shell->mask_surface,
+                          x + disp_xoffset, y + disp_yoffset);
+    }
 #endif
 
-    cairo_restore (cr);
-  }
+  cairo_restore (cr);
 }

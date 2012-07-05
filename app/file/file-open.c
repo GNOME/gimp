@@ -658,6 +658,9 @@ file_open_sanitize_image (GimpImage *image,
    */
   gimp_image_clean_all (image);
 
+#if 0
+  /* XXX this is not needed any longer, remove it when sure */
+
   /* make sure the entire projection is properly constructed, because
    * load plug-ins are not required to call gimp_drawable_update() or
    * anything.
@@ -670,6 +673,7 @@ file_open_sanitize_image (GimpImage *image,
 
   /* same for drawable previews */
   gimp_image_invalidate_previews (image);
+#endif
 }
 
 /* Converts items from one image to another */
