@@ -1015,7 +1015,6 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       function == TRANSFORM_HANDLE_S ||
       function == TRANSFORM_HANDLE_W)
     {
-      //TODO: scale through side
       gint this_l, this_r, opp_l, opp_r;
 
       /* 0: northwest, 1: northeast, 2: southwest, 3: southeast */
@@ -1044,14 +1043,56 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       /* restrict to movement along the midline */
       p = vectorproject (p, midline);
 
-      tl = vectoradd (tl, p);
-      tr = vectoradd (tr, p);
+      if (constrain)
+        //TODO this scales about the center, not the opposite edge
+        {
+          /* when the keep aspect transformation constraint is enabled, all
+           * four corners shall translate to keep all sides at constant angles. */
+          GimpVector2 mtl, mtr, tmpl, tmpr, ntl, ntr, nol, nor;
+          /* Where the two points on the moved side would move usually */
+          mtl = vectoradd (tl, p);
+          mtr = vectoradd (tr, p);
+          /* Intersect the line formed by mtl-mtr with the two diagonals in
+           * the pre-interaction transform, this is where these two corners
+           * will be */
+          ntl = lineintersect (mtl, mtr, or, tl);
+          ntr = lineintersect (mtl, mtr, ol, tr);
+          /* Extend two lines from the new position of our corners along the
+           * direction of the respective side (ol-tl and or-tr are the two sides
+           * going out perpendicular to the side being interacted with) */
+          tmpl = vectoradd (ntl, vectorsubtract (ol, tl));
+          tmpr = vectoradd (ntr, vectorsubtract (or, tr));
+          /* Now intersect the lines tmpl-ntl with one diagonal, and tmpr-ntr with
+           * the other diagonal, giving the points of the corners of the side opposite
+           * the one that was interacted with */
+          nol = lineintersect (tmpl, ntl, ol, tr);
+          nor = lineintersect (tmpr, ntr, or, tl);
+          /* We have all the new points, assign them to the real vars */
+          tl = ntl; tr = ntr; ol = nol; or = nor;
+        }
+      else
+        {
+          /* just move the side */
+          tl = vectoradd (tl, p);
+          tr = vectoradd (tr, p);
+        }
+
+      if (frompivot)
+        {
+          //TODO
+        }
 
       *x[this_l] = tl.x;
       *y[this_l] = tl.y;
 
       *x[this_r] = tr.x;
       *y[this_r] = tr.y;
+
+      *x[opp_l] = ol.x;
+      *y[opp_l] = ol.y;
+
+      *x[opp_r] = or.x;
+      *y[opp_r] = or.y;
     }
 
   /* shear */
