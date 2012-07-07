@@ -108,6 +108,7 @@ gimp_image_convert_precision (GimpImage     *image,
         gimp_progress_set_value (progress,
                                  (gdouble) nth_drawable / (gdouble) n_drawables);
     }
+  g_list_free (all_drawables);
 
   /*  convert the selection mask  */
   {
