@@ -1746,7 +1746,7 @@ gimp_layer_set_show_mask (GimpLayer *layer,
             }
           else
             {
-              gegl_node_connect_to (layer->layer_offset_node, "outout",
+              gegl_node_connect_to (layer->layer_offset_node, "output",
                                     mode_node,                "aux");
 
               if (gimp_layer_get_apply_mask (layer))
