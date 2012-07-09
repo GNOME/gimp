@@ -1904,6 +1904,7 @@ gimp_image_window_create_tab_label (GimpImageWindow  *window,
   view = gimp_view_new_by_types (gimp_get_user_context (shell->display->gimp),
                                  GIMP_TYPE_VIEW, GIMP_TYPE_IMAGE,
                                  GIMP_VIEW_SIZE_LARGE, 0, FALSE);
+  gtk_widget_set_size_request (view, GIMP_VIEW_SIZE_LARGE, -1);
   gtk_box_pack_start (GTK_BOX (hbox), view, FALSE, FALSE, 0);
   gtk_widget_show (view);
 
