@@ -1210,8 +1210,8 @@ load_image (const gchar  *filename,
 
           while (iter->length--)
             {
-              data[i * 2 + 1] = alpha[data[i * 2]];
-              data[i * 2] -= empty;
+              data[1] = alpha[data[0]];
+              data[0] -= empty;
 
               data += n_components;
             }
