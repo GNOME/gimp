@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP Plug-Ins 2.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-03 18:38+0400\n"
-"PO-Revision-Date: 2012-04-03 18:54+0400\n"
+"POT-Creation-Date: 2012-07-11 11:42+0400\n"
+"PO-Revision-Date: 2012-07-11 19:14+0400\n"
 "Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <gnome-cyr@lists.gnome.org>\n"
 "Language: ru\n"
@@ -189,7 +189,7 @@ msgstr "Из_менить канал насыщенности"
 
 #: ../plug-ins/common/alien-map.c:142
 msgid "Mod_ify blue channel"
-msgstr "Изменить _синий канал"
+msgstr "Изменить синий канал"
 
 #: ../plug-ins/common/alien-map.c:142
 msgid "Mod_ify luminosity channel"
@@ -213,7 +213,7 @@ msgstr "Частота _насыщенности:"
 
 #: ../plug-ins/common/alien-map.c:149
 msgid "Blue freq_uency:"
-msgstr "Частота -синего:"
+msgstr "Частота с_инего:"
 
 #: ../plug-ins/common/alien-map.c:149
 msgid "Luminosity freq_uency:"
@@ -615,7 +615,7 @@ msgstr "По _вертикали"
 #: ../plug-ins/common/file-pcx.c:431 ../plug-ins/common/file-pix.c:382
 #: ../plug-ins/common/file-png.c:891 ../plug-ins/common/file-pnm.c:583
 #: ../plug-ins/common/file-raw.c:763 ../plug-ins/common/file-sunras.c:977
-#: ../plug-ins/common/file-tga.c:1064 ../plug-ins/common/file-tiff-load.c:997
+#: ../plug-ins/common/file-tga.c:1064 ../plug-ins/common/file-tiff-load.c:1005
 #: ../plug-ins/common/file-xbm.c:897 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:257 ../plug-ins/common/tile.c:262
 #: ../plug-ins/file-bmp/bmp-read.c:380 ../plug-ins/file-bmp/bmp-read.c:647
@@ -1034,9 +1034,9 @@ msgstr "Загрузить установки микшера каналов"
 #: ../plug-ins/common/file-raw.c:256 ../plug-ins/common/file-raw.c:711
 #: ../plug-ins/common/file-sunras.c:391 ../plug-ins/common/file-svg.c:333
 #: ../plug-ins/common/file-svg.c:713 ../plug-ins/common/file-tga.c:442
-#: ../plug-ins/common/file-tiff-load.c:291 ../plug-ins/common/file-xbm.c:737
-#: ../plug-ins/common/file-xmc.c:663 ../plug-ins/common/file-xmc.c:848
-#: ../plug-ins/common/file-xwd.c:433 ../plug-ins/common/sphere-designer.c:2010
+#: ../plug-ins/common/file-xbm.c:737 ../plug-ins/common/file-xmc.c:663
+#: ../plug-ins/common/file-xmc.c:848 ../plug-ins/common/file-xwd.c:433
+#: ../plug-ins/common/sphere-designer.c:2010
 #: ../plug-ins/file-bmp/bmp-read.c:153 ../plug-ins/file-faxg3/faxg3.c:229
 #: ../plug-ins/file-fits/fits.c:358 ../plug-ins/file-fli/fli-gimp.c:459
 #: ../plug-ins/file-fli/fli-gimp.c:496 ../plug-ins/file-ico/ico-load.c:651
@@ -1070,7 +1070,7 @@ msgstr "Сохранить установки микшера каналов"
 #: ../plug-ins/common/file-png.c:1358 ../plug-ins/common/file-pnm.c:1010
 #: ../plug-ins/common/file-ps.c:1190 ../plug-ins/common/file-raw.c:591
 #: ../plug-ins/common/file-raw.c:619 ../plug-ins/common/file-sunras.c:565
-#: ../plug-ins/common/file-tga.c:1171 ../plug-ins/common/file-tiff-save.c:684
+#: ../plug-ins/common/file-tga.c:1171 ../plug-ins/common/file-tiff-save.c:710
 #: ../plug-ins/common/file-xbm.c:1036 ../plug-ins/common/file-xmc.c:1455
 #: ../plug-ins/common/file-xwd.c:619 ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:306 ../plug-ins/file-fits/fits.c:476
@@ -1326,7 +1326,7 @@ msgstr "Насыщенность"
 #: ../plug-ins/common/cml-explorer.c:302 ../plug-ins/common/cml-explorer.c:310
 #: ../plug-ins/common/decompose.c:190
 #: ../plug-ins/gimpressionist/orientation.c:155
-#: ../plug-ins/gimpressionist/size.c:158
+#: ../plug-ins/gimpressionist/size.c:158 ../plug-ins/metadata/interface.c:144
 msgid "Value"
 msgstr "Яркость"
 
@@ -3034,7 +3034,7 @@ msgstr "Загрузка палитры KISS"
 #: ../plug-ins/common/file-png.c:763 ../plug-ins/common/file-pnm.c:499
 #: ../plug-ins/common/file-ps.c:1020 ../plug-ins/common/file-raw.c:716
 #: ../plug-ins/common/file-sunras.c:487 ../plug-ins/common/file-tga.c:447
-#: ../plug-ins/common/file-tiff-load.c:603 ../plug-ins/common/file-wmf.c:994
+#: ../plug-ins/common/file-tiff-load.c:611 ../plug-ins/common/file-wmf.c:994
 #: ../plug-ins/common/file-xbm.c:742 ../plug-ins/common/file-xmc.c:675
 #: ../plug-ins/common/file-xpm.c:352 ../plug-ins/common/file-xwd.c:524
 #: ../plug-ins/file-bmp/bmp-read.c:158 ../plug-ins/file-faxg3/faxg3.c:213
@@ -3062,7 +3062,7 @@ msgstr "Неподдерживаемое число цветов (%d)!"
 #: ../plug-ins/common/file-pcx.c:644 ../plug-ins/common/file-pix.c:531
 #: ../plug-ins/common/file-png.c:1365 ../plug-ins/common/file-pnm.c:1015
 #: ../plug-ins/common/file-ps.c:1195 ../plug-ins/common/file-sunras.c:570
-#: ../plug-ins/common/file-tga.c:1176 ../plug-ins/common/file-tiff-save.c:694
+#: ../plug-ins/common/file-tga.c:1176 ../plug-ins/common/file-tiff-save.c:718
 #: ../plug-ins/common/file-xbm.c:1041 ../plug-ins/common/file-xmc.c:1460
 #: ../plug-ins/common/file-xpm.c:638 ../plug-ins/common/file-xwd.c:624
 #: ../plug-ins/file-bmp/bmp-write.c:317 ../plug-ins/file-fits/fits.c:481
@@ -3815,7 +3815,7 @@ msgid "Writing to file '%s' failed: %s"
 msgstr "Ошибка при записи файла '%s': %s"
 
 #: ../plug-ins/common/file-pdf-load.c:300
-#: ../plug-ins/common/file-pdf-save.c:289
+#: ../plug-ins/common/file-pdf-save.c:290
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
@@ -3840,7 +3840,7 @@ msgid "Import from PDF"
 msgstr "Импорт из PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1093 ../plug-ins/common/file-ps.c:2962
-#: ../plug-ins/common/file-tiff-load.c:483
+#: ../plug-ins/common/file-tiff-load.c:491
 msgid "_Import"
 msgstr "_Импортировать"
 
@@ -3872,15 +3872,15 @@ msgstr "_Использовать сглаживание"
 msgid "pixels/%a"
 msgstr "точек растра/%a"
 
-#: ../plug-ins/common/file-pdf-save.c:304
+#: ../plug-ins/common/file-pdf-save.c:305
 msgid "_Create multipage PDF..."
 msgstr "Создать _многостраничный PDF…"
 
-#: ../plug-ins/common/file-pdf-save.c:401
+#: ../plug-ins/common/file-pdf-save.c:412
 msgid "You must select a file to save!"
 msgstr "Необходимо указать имя файла для сохранения!"
 
-#: ../plug-ins/common/file-pdf-save.c:410
+#: ../plug-ins/common/file-pdf-save.c:422
 #, c-format
 msgid ""
 "An error occured while creating the PDF file:\n"
@@ -3889,47 +3889,47 @@ msgid ""
 "read only!"
 msgstr ""
 
-#: ../plug-ins/common/file-pdf-save.c:733
-#: ../plug-ins/common/file-pdf-save.c:850
+#: ../plug-ins/common/file-pdf-save.c:746
+#: ../plug-ins/common/file-pdf-save.c:863
 msgid "Omit hidden layers and layers with zero opacity"
 msgstr "Пропустить скрытые и полностью прозрачные слои"
 
-#: ../plug-ins/common/file-pdf-save.c:737
-#: ../plug-ins/common/file-pdf-save.c:854
+#: ../plug-ins/common/file-pdf-save.c:750
+#: ../plug-ins/common/file-pdf-save.c:867
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "При возможности конвертировать растр в векторные объекты"
 
-#: ../plug-ins/common/file-pdf-save.c:741
-#: ../plug-ins/common/file-pdf-save.c:858
+#: ../plug-ins/common/file-pdf-save.c:754
+#: ../plug-ins/common/file-pdf-save.c:871
 msgid "Apply layer masks before saving"
 msgstr "Применить маски слоёв перед сохранением"
 
-#: ../plug-ins/common/file-pdf-save.c:744
-#: ../plug-ins/common/file-pdf-save.c:861
+#: ../plug-ins/common/file-pdf-save.c:757
+#: ../plug-ins/common/file-pdf-save.c:874
 msgid "Keeping the masks will not change the output"
 msgstr "В случае сохранения масок вид документа не изменится"
 
-#: ../plug-ins/common/file-pdf-save.c:797
+#: ../plug-ins/common/file-pdf-save.c:810
 msgid "Save to:"
 msgstr "Сохранить в:"
 
-#: ../plug-ins/common/file-pdf-save.c:801
+#: ../plug-ins/common/file-pdf-save.c:814
 msgid "Browse..."
 msgstr "Просмотр…"
 
-#: ../plug-ins/common/file-pdf-save.c:802
+#: ../plug-ins/common/file-pdf-save.c:815
 msgid "Multipage PDF export"
 msgstr "Экспорт многостраничных документов PDF"
 
-#: ../plug-ins/common/file-pdf-save.c:835
+#: ../plug-ins/common/file-pdf-save.c:848
 msgid "Remove the selected pages"
 msgstr "Удалить выбранные страницы"
 
-#: ../plug-ins/common/file-pdf-save.c:845
+#: ../plug-ins/common/file-pdf-save.c:858
 msgid "Add this image"
 msgstr "Добавить это изображение"
 
-#: ../plug-ins/common/file-pdf-save.c:958
+#: ../plug-ins/common/file-pdf-save.c:971
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Для сохранения файла нужно добавить хотя бы одно изображение."
 
@@ -4112,7 +4112,7 @@ msgstr "Не удалось интерпретировать файл Postscript
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "Изображение с альфа-каналами невозможно сохранить как PostScript"
 
-#: ../plug-ins/common/file-ps.c:1804 ../plug-ins/common/file-tiff-load.c:999
+#: ../plug-ins/common/file-ps.c:1804 ../plug-ins/common/file-tiff-load.c:1007
 #, c-format
 msgid "Page %d"
 msgstr "Страница %d"
@@ -4585,31 +4585,31 @@ msgstr "Снизу слева"
 msgid "Top left"
 msgstr "Вверху слева"
 
-#: ../plug-ins/common/file-tiff-load.c:240
-#: ../plug-ins/common/file-tiff-save.c:183
-#: ../plug-ins/common/file-tiff-save.c:200
+#: ../plug-ins/common/file-tiff-load.c:243
+#: ../plug-ins/common/file-tiff-save.c:186
+#: ../plug-ins/common/file-tiff-save.c:203
 msgid "TIFF image"
 msgstr "Изображение TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:310
+#: ../plug-ins/common/file-tiff-load.c:297
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF '%s' не содержит каталоги"
 
-#: ../plug-ins/common/file-tiff-load.c:478
+#: ../plug-ins/common/file-tiff-load.c:486
 msgid "Import from TIFF"
 msgstr "Импорт TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:780
+#: ../plug-ins/common/file-tiff-load.c:788
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-из-%d-страниц"
 
-#: ../plug-ins/common/file-tiff-load.c:1015
+#: ../plug-ins/common/file-tiff-load.c:1023
 msgid "TIFF Channel"
 msgstr "Канал TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:1024
+#: ../plug-ins/common/file-tiff-load.c:1032
 #: ../plug-ins/file-psd/psd-load.c:333
 msgid ""
 "Warning:\n"
@@ -4624,7 +4624,7 @@ msgstr ""
 "так что изображение будет преобразовано. В процессе\n"
 "преобразования информация изображения будет утеряна."
 
-#: ../plug-ins/common/file-tiff-save.c:888
+#: ../plug-ins/common/file-tiff-save.c:912
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -4632,48 +4632,48 @@ msgstr ""
 "Формат TIFF поддерживает только 7-разрядные\n"
 "комментарии ASCII. Комментарий не сохранён."
 
-#: ../plug-ins/common/file-tiff-save.c:1062
+#: ../plug-ins/common/file-tiff-save.c:1085
 msgid "TIFF"
 msgstr "TIFF"
 
 #. compression
-#: ../plug-ins/common/file-tiff-save.c:1070
+#: ../plug-ins/common/file-tiff-save.c:1093
 msgid "Compression"
 msgstr "Cжатие"
 
-#: ../plug-ins/common/file-tiff-save.c:1074
+#: ../plug-ins/common/file-tiff-save.c:1097
 msgid "_None"
 msgstr "_Нет"
 
-#: ../plug-ins/common/file-tiff-save.c:1075
+#: ../plug-ins/common/file-tiff-save.c:1098
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/common/file-tiff-save.c:1076
+#: ../plug-ins/common/file-tiff-save.c:1099
 msgid "_Pack Bits"
 msgstr "_Упакованные биты"
 
-#: ../plug-ins/common/file-tiff-save.c:1077
+#: ../plug-ins/common/file-tiff-save.c:1100
 msgid "_Deflate"
 msgstr "У_меньшить"
 
-#: ../plug-ins/common/file-tiff-save.c:1078
+#: ../plug-ins/common/file-tiff-save.c:1101
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/common/file-tiff-save.c:1079
+#: ../plug-ins/common/file-tiff-save.c:1102
 msgid "CCITT Group _3 fax"
 msgstr "CCITT Group _3 fax"
 
-#: ../plug-ins/common/file-tiff-save.c:1080
+#: ../plug-ins/common/file-tiff-save.c:1103
 msgid "CCITT Group _4 fax"
 msgstr "CCITT Group _4 fax"
 
-#: ../plug-ins/common/file-tiff-save.c:1102
+#: ../plug-ins/common/file-tiff-save.c:1125
 msgid "Save _color values from transparent pixels"
 msgstr "Сохранить значения цвета _прозрачных точек"
 
-#: ../plug-ins/common/file-tiff-save.c:1118 ../plug-ins/common/file-xbm.c:1235
+#: ../plug-ins/common/file-tiff-save.c:1141 ../plug-ins/common/file-xbm.c:1235
 msgid "Comment:"
 msgstr "Комментарий:"
 
@@ -7223,11 +7223,11 @@ msgstr "_Плавная палитра..."
 
 #: ../plug-ins/common/smooth-palette.c:179
 msgid "Deriving smooth palette"
-msgstr "Извлечение гладкой палитры"
+msgstr "Извлечение плавной палитры"
 
 #: ../plug-ins/common/smooth-palette.c:413
 msgid "Smooth Palette"
-msgstr "Гладкая палитра"
+msgstr "Плавная палитра"
 
 #: ../plug-ins/common/smooth-palette.c:454
 msgid "_Search depth:"
@@ -8656,19 +8656,19 @@ msgstr "32 разряда"
 msgid "Windows BMP image"
 msgstr "Изображение Windows BMP"
 
-#: ../plug-ins/file-compressor/file-compressor.c:162
+#: ../plug-ins/file-compressor/file-compressor.c:166
 msgid "gzip archive"
 msgstr "Архив gzip"
 
-#: ../plug-ins/file-compressor/file-compressor.c:181
+#: ../plug-ins/file-compressor/file-compressor.c:185
 msgid "bzip archive"
 msgstr "Архив bzip"
 
-#: ../plug-ins/file-compressor/file-compressor.c:388
+#: ../plug-ins/file-compressor/file-compressor.c:392
 msgid "No sensible file extension, saving as compressed XCF."
 msgstr "Нет подходящего расширения, сохраняется как сжатый XCF."
 
-#: ../plug-ins/file-compressor/file-compressor.c:444
+#: ../plug-ins/file-compressor/file-compressor.c:448
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr "Нет значимого расширения, попытка определить тип по содержимому файла."
 
@@ -11473,11 +11473,14 @@ msgid "Transformation %s"
 msgstr "Преобразование %s"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:2413
+#: ../plug-ins/metadata/interface.c:507 ../plug-ins/metadata/interface.c:517
 msgid "Save failed"
 msgstr "Сохранить не удалось"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:2496
 #: ../plug-ins/ifs-compose/ifs-compose.c:2509
+#: ../plug-ins/metadata/interface.c:413 ../plug-ins/metadata/interface.c:423
+#: ../plug-ins/metadata/interface.c:497
 msgid "Open failed"
 msgstr "Не удалось открыть"
 
@@ -12229,6 +12232,7 @@ msgid "Default _URL:"
 msgstr "URL по у_молчанию:"
 
 #: ../plug-ins/imagemap/imap_settings.c:107
+#: ../plug-ins/metadata/interface.c:247
 msgid "_Description:"
 msgstr "_Описание:"
 
@@ -12325,7 +12329,7 @@ msgstr "Цвет:"
 #, fuzzy
 msgctxt "light-source"
 msgid "None"
-msgstr "Нет"
+msgstr "Отсутствует"
 
 #: ../plug-ins/lighting/lighting-ui.c:419
 msgid "Directional"
@@ -12866,6 +12870,92 @@ msgstr "_Лабиринт..."
 msgid "Drawing maze"
 msgstr "Рисование лабиринта"
 
+#: ../plug-ins/metadata/interface.c:110
+msgid "Property"
+msgstr "Свойство"
+
+#: ../plug-ins/metadata/interface.c:204 ../plug-ins/metadata/interface.c:206
+msgid "Description"
+msgstr "Описание"
+
+#: ../plug-ins/metadata/interface.c:222
+msgid "Image _title:"
+msgstr "_Название изображения:"
+
+#: ../plug-ins/metadata/interface.c:231
+msgid "_Author:"
+msgstr "_Автор:"
+
+#: ../plug-ins/metadata/interface.c:256
+msgid "Description _writer:"
+msgstr "А_втор описания:"
+
+#: ../plug-ins/metadata/interface.c:272
+msgid "_Keywords:"
+msgstr "_Ключевые слова:"
+
+#. FIXME: add entries, cross-link with XMP model
+#: ../plug-ins/metadata/interface.c:284 ../plug-ins/metadata/interface.c:296
+#: ../plug-ins/metadata/interface.c:308 ../plug-ins/metadata/interface.c:320
+msgid "Empty"
+msgstr ""
+
+#: ../plug-ins/metadata/interface.c:286
+msgid "Copyright"
+msgstr "Авторские права"
+
+#: ../plug-ins/metadata/interface.c:298
+msgid "Origin"
+msgstr "Происхождение"
+
+#: ../plug-ins/metadata/interface.c:310
+msgid "Camera 1"
+msgstr "Камера 1"
+
+#: ../plug-ins/metadata/interface.c:322
+msgid "Camera 2"
+msgstr "Камера 2"
+
+#: ../plug-ins/metadata/interface.c:337
+msgid "Thumbnail"
+msgstr "Миниатюра"
+
+#: ../plug-ins/metadata/interface.c:356
+msgid "Advanced"
+msgstr "Дополнительно"
+
+#: ../plug-ins/metadata/interface.c:447
+msgid "Import XMP from File"
+msgstr "Импортировать данные XMP из файла"
+
+#: ../plug-ins/metadata/interface.c:498
+msgid "Cannot create file"
+msgstr "Невозможно создать файл"
+
+#: ../plug-ins/metadata/interface.c:508
+msgid "Some error occurred while saving"
+msgstr "При сохранении произошла ошибка"
+
+#: ../plug-ins/metadata/interface.c:518
+msgid "Could not close the file"
+msgstr "Не удалось закрыть этот файл"
+
+#: ../plug-ins/metadata/interface.c:540
+msgid "Export XMP to File"
+msgstr "Экспортировать данные XMP в файл"
+
+#: ../plug-ins/metadata/interface.c:607
+msgid "Image Properties"
+msgstr "Свойства изображения"
+
+#: ../plug-ins/metadata/interface.c:611
+msgid "_Import XMP..."
+msgstr "_Импортировать XMP..."
+
+#: ../plug-ins/metadata/interface.c:612
+msgid "_Export XMP..."
+msgstr "_Экспортировать XMP..."
+
 #: ../plug-ins/metadata/metadata.c:185
 msgid "View and edit metadata (EXIF, IPTC, XMP)"
 msgstr "Просмотр и редактирование метаданных (EXIF, IPTC, XMP)"
@@ -12919,20 +13009,20 @@ msgstr "Вложенные элементы (<%s>) недопустимы в д�
 msgid "End of element <%s> not expected in this context"
 msgstr "Окончание тэга <%s> не допустимо в данном контексте"
 
-#: ../plug-ins/metadata/xmp-parse.c:1140
+#: ../plug-ins/metadata/xmp-parse.c:1139
 #, c-format
 msgid "The current element (<%s>) cannot contain text"
 msgstr "Текущий элемент (<%s>) не может содержать текст"
 
-#: ../plug-ins/metadata/xmp-parse.c:1165
+#: ../plug-ins/metadata/xmp-parse.c:1164
 msgid "XMP packets must start with <?xpacket begin=...?>"
 msgstr "Пакет XMP должен начитаться так: <?xpacket begin=...?>"
 
-#: ../plug-ins/metadata/xmp-parse.c:1179
+#: ../plug-ins/metadata/xmp-parse.c:1178
 msgid "XMP packets must end with <?xpacket end=...?>"
 msgstr "Пакеты XMP должны заканчиваться так: <?xpacket end=...?>"
 
-#: ../plug-ins/metadata/xmp-parse.c:1192
+#: ../plug-ins/metadata/xmp-parse.c:1191
 msgid "XMP cannot contain XML comments or processing instructions"
 msgstr "XMP не может содержать комментарии XML или инструкции по выполнению"
 
@@ -13031,10 +13121,9 @@ msgstr "Ц_ентр:"
 
 #. if and how to center the image on the page
 #: ../plug-ins/print/print-page-layout.c:477
-#, fuzzy
 msgctxt "center-mode"
 msgid "None"
-msgstr "Нет"
+msgstr "Не центрировать"
 
 #: ../plug-ins/print/print-page-layout.c:478
 msgid "Horizontally"
@@ -13330,9 +13419,6 @@ msgstr "Данные не захвачены"
 
 #~ msgid "_Domain:"
 #~ msgstr "_Домен:"
-
-#~ msgid "_Password:"
-#~ msgstr "_Пароль:"
 
 #~ msgid "_Forget password immediately"
 #~ msgstr "_Немедленно забыть пароль"
