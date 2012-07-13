@@ -556,7 +556,7 @@ load_image (const gchar  *file,
   if (bpp != 32)
     {
       /* Use palette from file or otherwise default grey palette */
-      palette = g_new (guchar, colours*3);
+      guchar palette[256*3];
 
       /* Open the file for reading if user picked one */
       if (palette_file == NULL)
@@ -593,10 +593,6 @@ load_image (const gchar  *file,
         }
 
       gimp_image_set_colormap (image, palette + 3, colours - 1);
-
-      /* Close palette file, give back allocated memory */
-
-      g_free (palette);
     }
 
   /* Now get everything redrawn and hand back the finished image */
