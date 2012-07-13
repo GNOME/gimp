@@ -317,11 +317,12 @@ load_image (const gchar  *file,
             GError      **error)
 {
   FILE      *fp;            /* Read file pointer */
-  guchar     header[32];    /* File header */
+  guchar     header[32],    /* File header */
+             file_mark,     /* KiSS file type */
+             bpp;           /* Bits per pixel */
   gint       height, width, /* Dimensions of image */
              offx, offy,    /* Layer offets */
-             colours,       /* Number of colours */
-             bpp;           /* Bits per pixel */
+             colours;       /* Number of colours */
 
   gint32     image,         /* Image */
              layer;         /* Layer */
@@ -380,15 +381,42 @@ load_image (const gchar  *file,
           return -1;
         }
 
+      file_mark = header[0];
+      if (file_mark != 0x20 && file_mark != 0x21)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("is not a CEL image file"));
+          return -1;
+        }
+
       bpp = header[1];
-      if (bpp == 24)
-        colours = -1;
-      else
-        colours = (1 << header[1]);
+      switch (bpp)
+        {
+        case 4:
+        case 8:
+        case 32:
+          colours = (1 << bpp);
+          break;
+        default:
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("illegal bpp value in image: %hhu"), bpp);
+          return -1;
+        }
+
       width = header[4] + (256 * header[5]);
       height = header[6] + (256 * header[7]);
       offx = header[8] + (256 * header[9]);
       offy = header[10] + (256 * header[11]);
+    }
+
+  if ((width == 0) || (height == 0) || (width + offx > GIMP_MAX_IMAGE_SIZE) ||
+      (height + offy > GIMP_MAX_IMAGE_SIZE))
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("illegal image dimensions: width: %d, horizontal offset: "
+                     "%d, height: %d, vertical offset: %d"),
+                   width, offx, height, offy);
+      return -1;
     }
 
   if (bpp == 32)
@@ -553,7 +581,7 @@ load_image (const gchar  *file,
         {
           colours = load_palette (palette_file, fp, palette, error);
           fclose (fp);
-          if (colours < 0)
+          if (colours < 0 || *error)
             return -1;
         }
       else
@@ -587,7 +615,8 @@ load_palette (const gchar *file,
 {
   guchar        header[32];     /* File header */
   guchar        buffer[2];
-  int           i, bpp, colours= 0;
+  guchar        file_mark, bpp;
+  gint          i, colours = 0;
   size_t        n_read;
 
   n_read = fread (header, 4, 1, fp);
@@ -612,10 +641,36 @@ load_palette (const gchar *file,
           return -1;
         }
 
-      bpp = header[5];
-      colours = header[8] + header[9] * 256;
-      if (bpp == 12)
+      file_mark = header[4];
+      if (file_mark != 0x10)
         {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("'%s': is not a KCF palette file"),
+                       gimp_filename_to_utf8 (file));
+          return -1;
+        }
+
+      bpp = header[5];
+      if (bpp != 12 && bpp != 24)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("'%s': illegal bpp value in palette: %hhu"),
+                       gimp_filename_to_utf8 (file), bpp);
+          return -1;
+        }
+
+      colours = header[8] + header[9] * 256;
+      if (colours != 16 && colours != 256)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("'%s': illegal number of colors: %u"),
+                       gimp_filename_to_utf8 (file), colours);
+          return -1;
+        }
+
+      switch (bpp)
+        {
+        case 12:
           for (i = 0; i < colours; ++i)
             {
               n_read = fread (buffer, 1, 2, fp);
@@ -633,9 +688,8 @@ load_palette (const gchar *file,
               palette[i*3+1]= (buffer[1] & 0x0f) * 16;
               palette[i*3+2]= (buffer[0] & 0x0f) * 16;
             }
-        }
-      else
-        {
+          break;
+        case 24:
           n_read = fread (palette, colours, 3, fp);
 
           if (n_read < 3)
@@ -645,6 +699,9 @@ load_palette (const gchar *file,
                            gimp_filename_to_utf8 (file));
               return -1;
             }
+          break;
+        default:
+          g_assert_not_reached ();
         }
     }
   else
