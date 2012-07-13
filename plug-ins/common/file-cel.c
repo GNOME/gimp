@@ -427,6 +427,7 @@ load_image (const gchar  *file,
   if (image == -1)
     {
       g_set_error (error, 0, 0, _("Can't create a new image"));
+      fclose (fp);
       return -1;
     }
 
