@@ -426,7 +426,7 @@ load_image (const gchar  *file,
 
   if (image == -1)
     {
-      g_message (_("Can't create a new image"));
+      g_set_error (error, 0, 0, _("Can't create a new image"));
       return -1;
     }
 
@@ -539,7 +539,8 @@ load_image (const gchar  *file,
           break;
 
         default:
-          g_message (_("Unsupported bit depth (%d)!"), bpp);
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Unsupported bit depth (%d)!"), bpp);
           return -1;
         }
 
