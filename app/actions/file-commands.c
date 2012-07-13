@@ -378,8 +378,7 @@ file_revert_cmd_callback (GtkAction *action,
   GimpDisplay *display;
   GimpImage   *image;
   GtkWidget   *dialog;
-  const gchar *uri    = NULL;
-  const gchar *source = NULL;
+  const gchar *uri;
   return_if_no_display (display, data);
 
   image = gimp_display_get_image (display);
@@ -387,14 +386,11 @@ file_revert_cmd_callback (GtkAction *action,
   uri = gimp_image_get_uri (image);
 
   if (! uri)
-    {
-      uri    = gimp_image_get_imported_uri (image);
-      source = uri;
-    }
+    uri = gimp_image_get_imported_uri (image);
 
   dialog = g_object_get_data (G_OBJECT (image), REVERT_DATA_KEY);
 
-  if (! uri && ! source)
+  if (! uri)
     {
       gimp_message_literal (image->gimp,
 			    G_OBJECT (display), GIMP_MESSAGE_ERROR,
@@ -434,11 +430,7 @@ file_revert_cmd_callback (GtkAction *action,
                         G_CALLBACK (file_revert_confirm_response),
                         display);
 
-      if (! source)
-        basename = file_utils_uri_display_basename (uri);
-      else
-        basename = g_strdup (gimp_image_get_uri_or_untitled (image));
-
+      basename = file_utils_uri_display_basename (uri);
       filename = file_utils_uri_display_name (uri);
 
       gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
