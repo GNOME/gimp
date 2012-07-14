@@ -1471,17 +1471,25 @@ end;
 
 procedure Check32bitOverride;
 var i: Integer;
+	old: String;
 begin
 	Force32bitInstall := False;
 
-	for i := 0 to ParamCount do //not a bug (in script anyway) - ParamCount returns the index of last ParamStr element, not the actual count
-		if ParamStr(i) = '/32' then
-		begin
-			Force32bitInstall := True;
-			break;
-		end;
+	old := LowerCase(GetPreviousData('32bitMode',''));
 
-	DebugMsg('Check32bitOverride',BoolToStr(Force32bitInstall));
+	if old = 'true' then //ignore command line if previous install is already present
+		Force32bitInstall := True
+	else if old = 'false' then
+		Force32bitInstall := False
+	else
+		for i := 0 to ParamCount do //not a bug (in script anyway) - ParamCount returns the index of last ParamStr element, not the actual count
+			if ParamStr(i) = '/32' then
+			begin
+				Force32bitInstall := True;
+				break;
+			end;
+
+	DebugMsg('Check32bitOverride',BoolToStr(Force32bitInstall) + '[' + old + ']');
 end;
 
 
@@ -1540,6 +1548,13 @@ begin
 	//if InstallMode <> imRebootContinue then
 	//	SuppressibleMsgBox(CustomMessage('UninstallWarning'),mbError,MB_OK,IDOK);
 
+end;
+
+
+procedure RegisterPreviousData(PreviousDataKey: Integer);
+begin
+	if Is64BitInstallMode() then
+		SetPreviousData(PreviousDataKey,'32BitMode',BoolToStr(Force32bitInstall));
 end;
 
 
