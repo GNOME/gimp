@@ -373,6 +373,8 @@ var
 
 	ConfigOverride: (coUndefined, coOverride, coDontOverride);
 
+	Force32bitInstall: Boolean;
+
 	asUninstInf: TArrayOfString; //uninst.inf contents (loaded at start of uninstall, exectued at the end)
 
 
@@ -381,9 +383,9 @@ var
 function Check3264(const pWhich: String): Boolean;
 begin
 	if pWhich = '64' then
-		Result := Is64BitInstallMode()
+		Result := Is64BitInstallMode() and (not Force32bitInstall)
 	else if pWhich = '32' then
-		Result := not Is64BitInstallMode()
+		Result := (not Is64BitInstallMode()) or Force32bitInstall
 	else
 		RaiseException('Unknown check');
 end;
@@ -1467,6 +1469,22 @@ begin
 end;
 
 
+procedure Check32bitOverride;
+var i: Integer;
+begin
+	Force32bitInstall := False;
+
+	for i := 0 to ParamCount do //not a bug (in script anyway) - ParamCount returns the index of last ParamStr element, not the actual count
+		if ParamStr(i) = '/32' then
+		begin
+			Force32bitInstall := True;
+			break;
+		end;
+
+	DebugMsg('Check32bitOverride',BoolToStr(Force32bitInstall));
+end;
+
+
 function InitializeSetup(): Boolean;
 #if (Defined(DEVEL) && DEVEL != "") || Defined(DEVEL_WARNING)
 var Message,Buttons: TArrayOfString;
@@ -1480,6 +1498,8 @@ begin
 		Result := false;
 		exit;
 	end;
+
+	Check32bitOverride;
 
 	Result := RestartSetupAfterReboot(); //resume install after reboot - skip all setting pages, and install directly
 
