@@ -42,6 +42,9 @@ begin
 	SetupRestartData := AddParam(SetupRestartData, 'TASKS', Quote(WizardSelectedTasks(False)));
 	SetupRestartData := AddParam(SetupRestartData, 'ASSOC', Quote(Associations_GetSelected()));
 
+	if Force32bitInstall then
+		SetupRestartData := AddSimpleParam(SetupRestartData, '32');
+
 	if ExpandConstant('{param:log|*}') <> '*' then
 	begin
 		SetupRestartData := AddParam(SetupRestartData, 'LOG', Quote(ExpandConstant('{param:log|*}')));
