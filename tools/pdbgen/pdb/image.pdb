@@ -2386,7 +2386,11 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  name = g_strdup (gimp_image_get_display_name (image));
+  /* XXX do we really want to return this, or the name as in the title? */
+
+  const gchar *uri = gimp_image_get_uri_or_untitled (image);
+
+  name = file_utils_uri_display_basename (uri);
 }
 CODE
     );
@@ -2977,6 +2981,7 @@ CODE
               "core/gimpunit.h"
               "plug-in/gimpplugin.h"
               "plug-in/gimppluginmanager.h"
+              "file/file-utils.h"
               "gimppdbcontext.h"
               "gimppdberror.h"
               "gimppdb-utils.h"

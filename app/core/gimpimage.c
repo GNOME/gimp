@@ -990,6 +990,12 @@ gimp_image_finalize (GObject *object)
       private->display_name = NULL;
     }
 
+  if (private->display_path)
+    {
+      g_free (private->display_path);
+      private->display_path = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -1007,6 +1013,12 @@ gimp_image_name_changed (GimpObject *object)
     {
       g_free (private->display_name);
       private->display_name = NULL;
+    }
+
+  if (private->display_path)
+    {
+      g_free (private->display_path);
+      private->display_path = NULL;
     }
 
   /* We never want the empty string as a name, so change empty strings
@@ -1120,9 +1132,7 @@ gimp_image_get_description (GimpViewable  *viewable,
   GimpImage *image = GIMP_IMAGE (viewable);
 
   if (tooltip)
-    {
-      *tooltip = file_utils_uri_display_name (gimp_image_get_uri_or_untitled (image));
-    }
+    *tooltip = g_strdup (gimp_image_get_display_path (image));
 
   return g_strdup_printf ("%s-%d",
 			  gimp_image_get_display_name (image),
@@ -1697,8 +1707,7 @@ gimp_image_get_save_a_copy_uri (const GimpImage *image)
  * @image: A #GimpImage.
  *
  * Returns: The XCF file URI, the imported file URI, or the exported
- * file URI, in that order of precedence. Only to help implement
- * backwards compatibility with GIMP 2.6 API.
+ * file URI, in that order of precedence.
  **/
 const gchar *
 gimp_image_get_any_uri (const GimpImage *image)
@@ -1738,6 +1747,8 @@ gimp_image_set_imported_uri (GimpImage   *image,
 
   g_object_set_data_full (G_OBJECT (image), GIMP_FILE_IMPORT_SOURCE_URI_KEY,
                           g_strdup (uri), (GDestroyNotify) g_free);
+
+  gimp_object_name_changed (GIMP_OBJECT (image));
 }
 
 /**
@@ -1760,6 +1771,8 @@ gimp_image_set_exported_uri (GimpImage   *image,
   g_object_set_data_full (G_OBJECT (image),
                           GIMP_FILE_EXPORT_URI_KEY,
                           g_strdup (uri), (GDestroyNotify) g_free);
+
+  gimp_object_name_changed (GIMP_OBJECT (image));
 }
 
 /**
@@ -1799,6 +1812,95 @@ gimp_image_get_filename (const GimpImage *image)
   return g_filename_from_uri (uri, NULL, NULL);
 }
 
+static gchar *
+gimp_image_format_display_uri (GimpImage *image,
+                               gboolean   basename)
+{
+  const gchar *uri_format    = NULL;
+  const gchar *export_status = NULL;
+  const gchar *uri;
+  const gchar *source;
+  const gchar *dest;
+  gboolean     is_imported;
+  gboolean     is_exported;
+  gchar       *display_uri   = NULL;
+  gchar       *format_string;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  uri    = gimp_image_get_uri (image);
+  source = gimp_image_get_imported_uri (image);
+  dest   = gimp_image_get_exported_uri (image);
+
+  is_imported = (source != NULL);
+  is_exported = (dest   != NULL);
+
+  if (uri)
+    {
+      display_uri = g_strdup (uri);
+      uri_format  = "%s";
+    }
+  else
+    {
+      if (is_imported)
+        display_uri = g_strdup (source);
+
+      /* Calculate filename suffix */
+      if (! gimp_image_is_export_dirty (image))
+        {
+          if (is_exported)
+            {
+              display_uri   = g_strdup (dest);
+              export_status = _(" (exported)");
+            }
+          else if (is_imported)
+            {
+              export_status = _(" (overwritten)");
+            }
+          else
+            {
+              g_warning ("Unexpected code path, Save+export implementation is buggy!");
+            }
+        }
+      else if (is_imported)
+        {
+          export_status = _(" (imported)");
+        }
+
+      if (display_uri)
+        {
+          gchar *tmp = file_utils_uri_with_new_ext (display_uri, NULL);
+          g_free (display_uri);
+          display_uri = tmp;
+        }
+
+      uri_format = "[%s]";
+    }
+
+  if (! display_uri)
+    {
+      display_uri = g_strdup (gimp_image_get_string_untitled ());
+    }
+  else if (basename)
+    {
+      gchar *tmp = file_utils_uri_display_basename (display_uri);
+      g_free (display_uri);
+      display_uri = tmp;
+    }
+  else
+    {
+      gchar *tmp = file_utils_uri_display_name (display_uri);
+      g_free (display_uri);
+      display_uri = tmp;
+    }
+
+  format_string = g_strconcat (uri_format, export_status, NULL);
+  display_uri = g_strdup_printf (format_string, display_uri);
+  g_free (format_string);
+
+  return display_uri;
+}
+
 const gchar *
 gimp_image_get_display_name (GimpImage *image)
 {
@@ -1809,13 +1911,24 @@ gimp_image_get_display_name (GimpImage *image)
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
   if (! private->display_name)
-    {
-      const gchar *uri = gimp_image_get_uri_or_untitled (image);
-
-      private->display_name = file_utils_uri_display_basename (uri);
-    }
+    private->display_name = gimp_image_format_display_uri (image, TRUE);
 
   return private->display_name;
+}
+
+const gchar *
+gimp_image_get_display_path (GimpImage *image)
+{
+  GimpImagePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (! private->display_path)
+    private->display_path = gimp_image_format_display_uri (image, FALSE);
+
+  return private->display_path;
 }
 
 void

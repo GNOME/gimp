@@ -35,8 +35,6 @@
 #include "core/gimppickable.h"
 #include "core/gimpprojectable.h"
 
-#include "file/file-utils.h"
-
 #include "gegl/gimp-gegl-utils.h"
 
 #include "display/gimpdisplay.h"
@@ -300,7 +298,7 @@ debug_show_image_graph (GimpImage *source_image)
 
   /* Create a new image of the result */
   new_name = g_strdup_printf ("%s GEGL graph",
-                              file_utils_uri_display_name (gimp_image_get_uri_or_untitled (source_image)));
+                              gimp_image_get_display_name (source_image));
   new_image = gimp_create_image (gimp,
                                  gegl_buffer_get_width (buffer),
                                  gegl_buffer_get_height (buffer),
