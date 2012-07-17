@@ -191,6 +191,7 @@ void            gimp_image_set_filename          (GimpImage          *image,
 gchar         * gimp_image_get_filename          (const GimpImage    *image);
 
 const gchar   * gimp_image_get_display_name      (GimpImage          *image);
+const gchar   * gimp_image_get_display_path      (GimpImage          *image);
 
 void            gimp_image_set_load_proc         (GimpImage          *image,
                                                   GimpPlugInProcedure *proc);

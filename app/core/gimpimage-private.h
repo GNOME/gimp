@@ -40,6 +40,7 @@ struct _GimpImagePrivate
   GimpPlugInProcedure *save_proc;           /*  last save procedure used     */
 
   gchar             *display_name;          /*  display basename             */
+  gchar             *display_path;          /*  display full path            */
   gint               width;                 /*  width in pixels              */
   gint               height;                /*  height in pixels             */
   gdouble            xresolution;           /*  image x-res, in dpi          */

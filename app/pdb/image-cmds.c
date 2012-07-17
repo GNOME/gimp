@@ -53,6 +53,7 @@
 #include "core/gimpprogress.h"
 #include "core/gimpselection.h"
 #include "core/gimpunit.h"
+#include "file/file-utils.h"
 #include "vectors/gimpvectors.h"
 
 #include "gimppdb.h"
@@ -2286,7 +2287,11 @@ image_get_name_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      name = g_strdup (gimp_image_get_display_name (image));
+      /* XXX do we really want to return this, or the name as in the title? */
+
+      const gchar *uri = gimp_image_get_uri_or_untitled (image);
+
+      name = file_utils_uri_display_basename (uri);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

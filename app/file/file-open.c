@@ -436,7 +436,7 @@ file_open_with_proc_and_display (Gimp                *gimp,
         {
           GimpDocumentList *documents = GIMP_DOCUMENT_LIST (gimp->documents);
           GimpImagefile    *imagefile;
-          const gchar      *opened_uri;
+          const gchar      *any_uri;
 
           imagefile = gimp_document_list_add_uri (documents, uri, mime_type);
 
@@ -444,9 +444,9 @@ file_open_with_proc_and_display (Gimp                *gimp,
            *  resulting image's uri match. Use any_uri() here so we
            *  create thumbnails for both XCF and imported images.
            */
-          opened_uri = gimp_image_get_any_uri (image);
+          any_uri = gimp_image_get_any_uri (image);
 
-          if (opened_uri && ! strcmp (uri, opened_uri))
+          if (any_uri && ! strcmp (uri, any_uri))
             {
               /*  no need to save a thumbnail if there's a good one already  */
               if (! gimp_imagefile_check_thumbnail (imagefile))

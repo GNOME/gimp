@@ -403,7 +403,6 @@ file_revert_cmd_callback (GtkAction *action,
     }
   else
     {
-      gchar *basename;
       gchar *filename;
 
       dialog =
@@ -430,14 +429,13 @@ file_revert_cmd_callback (GtkAction *action,
                         G_CALLBACK (file_revert_confirm_response),
                         display);
 
-      basename = file_utils_uri_display_basename (uri);
       filename = file_utils_uri_display_name (uri);
 
       gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                          _("Revert '%s' to '%s'?"),
-                                         basename, filename);
+                                         gimp_image_get_display_name (image),
+                                         filename);
       g_free (filename);
-      g_free (basename);
 
       gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                  _("By reverting the image to the state saved "

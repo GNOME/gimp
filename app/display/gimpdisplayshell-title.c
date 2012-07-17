@@ -36,9 +36,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
 
-#include "file/file-utils.h"
-#include "file/gimp-file.h"
-
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-title.h"
@@ -57,11 +54,6 @@ static gint     gimp_display_shell_format_title      (GimpDisplayShell *display,
                                                       gchar            *title,
                                                       gint              title_len,
                                                       const gchar      *format);
-static gint     gimp_display_shell_format_filename   (gchar            *buf,
-                                                      gint              len,
-                                                      gint              start,
-                                                      GimpImage        *image,
-                                                      const gchar      *filename);
 
 
 /*  public functions  */
@@ -211,24 +203,13 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               break;
 
             case 'f': /* base filename */
-              {
-                const gchar *name = gimp_image_get_display_name (image);
-
-                i += gimp_display_shell_format_filename (title, title_len, i, image, name);
-              }
+              i += print (title, title_len, i, "%s",
+                          gimp_image_get_display_name (image));
               break;
 
             case 'F': /* full filename */
-              {
-                gchar       *filename;
-                const gchar *uri = gimp_image_get_uri_or_untitled (image);
-
-                filename = file_utils_uri_display_name (uri);
-
-                i += gimp_display_shell_format_filename (title, title_len, i, image, filename);
-
-                g_free (filename);
-              }
+              i += print (title, title_len, i, "%s",
+                          gimp_image_get_display_path (image));
               break;
 
             case 'p': /* PDB id */
@@ -450,70 +431,4 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
   title[MIN (i, title_len - 1)] = '\0';
 
   return i;
-}
-
-static gint
-gimp_display_shell_format_filename (gchar       *buf,
-                                    gint         len,
-                                    gint         start,
-                                    GimpImage   *image,
-                                    const gchar *filename)
-{
-  const gchar *source        = NULL;
-  const gchar *name_format   = NULL;
-  const gchar *export_status = NULL;
-  gchar       *format_string = NULL;
-  gchar       *name          = NULL;
-  gboolean     is_imported   = FALSE;
-  gint         incr          = 0;
-
-  source = gimp_image_get_imported_uri (image);
-
-  /* Note that as soon as the image is saved, it is not considered
-   * imported any longer (gimp_image_set_imported_uri (image, NULL) is
-   * called)
-   */
-  is_imported = (source != NULL);
-
-  /* Calculate filename and format */
-  if (! is_imported)
-    {
-      name        = g_strdup (filename);
-      name_format = "%s";
-    }
-  else
-    {
-      gchar *source_no_ext = file_utils_uri_with_new_ext (source, NULL);
-      name = file_utils_uri_display_basename (source_no_ext);
-      g_free (source_no_ext);
-
-      name_format = "[%s]";
-    }
-
-  /* Calculate filename suffix */
-  if (! gimp_image_is_export_dirty (image))
-    {
-      gboolean is_exported;
-      is_exported = (gimp_image_get_exported_uri (image) != NULL);
-      if (is_exported)
-        export_status = _(" (exported)");
-      else if (is_imported)
-        export_status = _(" (overwritten)");
-      else
-        g_warning ("Unexpected code path, Save+export implementation is buggy!");
-    }
-  else if (is_imported)
-    {
-      export_status = _(" (imported)");
-    }
-
-  /* Merge strings and print the result */
-  format_string = g_strconcat (name_format, export_status, NULL);
-  incr = print (buf, len, start, format_string, name);
-  g_free (format_string);
-
-  /* Cleanup */
-  g_free (name);
-
-  return incr;
 }

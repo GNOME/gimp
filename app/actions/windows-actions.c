@@ -33,8 +33,6 @@
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
 
-#include "file/file-utils.h"
-
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
@@ -295,19 +293,12 @@ windows_actions_image_notify (GimpDisplay      *display,
         }
 
       {
-        const gchar *uri;
-        gchar       *filename;
-        gchar       *basename;
+        const gchar *display_name;
         gchar       *escaped;
         gchar       *title;
 
-        uri = gimp_image_get_uri_or_untitled (image);
-
-        filename = file_utils_uri_display_name (uri);
-        basename = file_utils_uri_display_basename (uri);
-
-        escaped = gimp_escape_uline (basename);
-        g_free (basename);
+        display_name = gimp_image_get_display_name (image);
+        escaped = gimp_escape_uline (display_name);
 
         title = g_strdup_printf ("%s-%d.%d", escaped,
                                  gimp_image_get_ID (image),
@@ -316,12 +307,11 @@ windows_actions_image_notify (GimpDisplay      *display,
 
         g_object_set (action,
                       "label",    title,
-                      "tooltip",  filename,
+                      "tooltip",  gimp_image_get_display_path (image),
                       "viewable", image,
                       "context",  gimp_get_user_context (group->gimp),
                       NULL);
 
-        g_free (filename);
         g_free (title);
       }
 
