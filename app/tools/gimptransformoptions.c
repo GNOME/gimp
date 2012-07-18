@@ -54,7 +54,10 @@ enum
   PROP_GRID_TYPE,
   PROP_GRID_SIZE,
   PROP_CONSTRAIN,
-  PROP_ALTERNATE,
+  PROP_KEEPASPECT,
+  PROP_FROMPIVOT,
+  PROP_FREESHEAR,
+  PROP_CORNERSNAP,
 };
 
 
@@ -141,10 +144,25 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
                                     NULL,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ALTERNATE,
-                                    "alternate",
-                                    N_("Use alternate set of controls"),
-                                    TRUE,
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_KEEPASPECT,
+                                    "keepaspect",
+                                    NULL,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FROMPIVOT,
+                                    "frompivot",
+                                    NULL,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FREESHEAR,
+                                    "freeshear",
+                                    NULL,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CORNERSNAP,
+                                    "cornersnap",
+                                    NULL,
+                                    FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 }
 
@@ -191,8 +209,17 @@ gimp_transform_options_set_property (GObject      *object,
     case PROP_CONSTRAIN:
       options->constrain = g_value_get_boolean (value);
       break;
-    case PROP_ALTERNATE:
-      options->alternate = g_value_get_boolean (value);
+    case PROP_KEEPASPECT:
+      options->keepaspect = g_value_get_boolean (value);
+      break;
+    case PROP_FROMPIVOT:
+      options->frompivot = g_value_get_boolean (value);
+      break;
+    case PROP_FREESHEAR:
+      options->freeshear = g_value_get_boolean (value);
+      break;
+    case PROP_CORNERSNAP:
+      options->cornersnap = g_value_get_boolean (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -237,8 +264,17 @@ gimp_transform_options_get_property (GObject    *object,
     case PROP_CONSTRAIN:
       g_value_set_boolean (value, options->constrain);
       break;
-    case PROP_ALTERNATE:
-      g_value_set_boolean (value, options->alternate);
+    case PROP_KEEPASPECT:
+      g_value_set_boolean (value, options->keepaspect);
+      break;
+    case PROP_FROMPIVOT:
+      g_value_set_boolean (value, options->frompivot);
+      break;
+    case PROP_FREESHEAR:
+      g_value_set_boolean (value, options->freeshear);
+      break;
+    case PROP_CORNERSNAP:
+      g_value_set_boolean (value, options->cornersnap);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -283,7 +319,6 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   GtkWidget   *grid_box;
   const gchar *constrain_label = NULL;
   const gchar *constrain_tip   = NULL;
-  const gchar *alternate = NULL;
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -366,37 +401,51 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
       constrain_label = _("Keep aspect  (%s)");
       constrain_tip   = _("Keep the original aspect ratio");
     }
-  else if (tool_options->tool_info->tool_type == GIMP_TYPE_UNIFIED_TRANSFORM_TOOL)
-    {
-      alternate = (_("From center  (%s)"));
-      constrain_label = constrain_tip = (_("Constrain/snap movement  (%s)"));
-    }
 
   /* The constrain behaviour is not what is in the spec, it would make the help labels essays */
   /* spec:
    * constrain move,rotate,perspective = ctrl
-   * keep aspect scale = shift
    * from centre scale,shear = ctrl
-   * free shear = shift
    * centre/corner rotate = ctrl
+   * keep aspect scale = shift
+   * free shear = shift
    * real life:
    * constrain move,rotate,perspective,scale(aspect),shear,rotation axis = ctrl
    * from centre scale, shear = shift
    */
-  /* TODO: should we just hardcode ctrl and shift here instead of using the not really applicably named functions? */
-  if (alternate)
+  //TODO: check that the selection tools use the gimp_get_*_mask() functions for constrain/etc or change to what they use
+  else if (tool_options->tool_info->tool_type == GIMP_TYPE_UNIFIED_TRANSFORM_TOOL)
     {
+      struct {
+        gboolean shift;
+        gchar *name;
+        gchar *desc;
+      } opt_list[] = {
+        { TRUE, "keepaspect", "Keep aspect (%s)" },
+        { TRUE, "freeshear", "Move edge freely in shearing (%s)" },
+        { FALSE, "frompivot", "Scale from pivot / Symmetric shearing (%s)" },
+        { FALSE, "cornersnap", "Snap pivot point to corners/center (%s)" },
+        { FALSE, "constrain", "Constrain movement (%s)" },
+      };
+
       GtkWidget *button;
       gchar     *label;
+      gint       i;
 
-      label = g_strdup_printf (alternate,
-                               gimp_get_mod_string (gimp_get_extend_selection_mask ()));
+      for (i = 0; i < 5; i++)
+        {
+          label = g_strdup_printf (opt_list[i].desc,
+                                   gimp_get_mod_string (
+                                     opt_list[i].shift
+                                       ? gimp_get_extend_selection_mask ()
+                                       : gimp_get_constrain_behavior_mask ()));
 
-      button = gimp_prop_check_button_new (config, "alternate", label);
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
+          button = gimp_prop_check_button_new (config, opt_list[i].name, label);
+          gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+          gtk_widget_show (button);
 
-      g_free (label);
+          g_free (label);
+        }
     }
 
   if (constrain_label)

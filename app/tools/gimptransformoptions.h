@@ -47,7 +47,10 @@ struct _GimpTransformOptions
   GimpGuidesType            grid_type;
   gint                      grid_size;
   gboolean                  constrain;
-  gboolean                  alternate;
+  gboolean                  keepaspect;
+  gboolean                  frompivot;
+  gboolean                  freeshear;
+  gboolean                  cornersnap;
 };
 
 

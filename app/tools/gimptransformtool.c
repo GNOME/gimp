@@ -490,14 +490,27 @@ gimp_transform_tool_modifier_key (GimpTool        *tool,
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
 
   if (key == gimp_get_constrain_behavior_mask ())
-    g_object_set (options,
-                  "constrain", ! options->constrain,
-                  NULL);
+    {
+      g_object_set (options,
+                    "frompivot", ! options->frompivot,
+                    NULL);
+      g_object_set (options,
+                    "cornersnap", ! options->cornersnap,
+                    NULL);
+      g_object_set (options,
+                    "constrain", ! options->constrain,
+                    NULL);
+    }
 
   if (key == gimp_get_extend_selection_mask ())
-    g_object_set (options,
-                  "alternate", ! options->alternate,
-                  NULL);
+    {
+      g_object_set (options,
+                    "keepaspect", ! options->keepaspect,
+                    NULL);
+      g_object_set (options,
+                    "freeshear", ! options->freeshear,
+                    NULL);
+    }
 }
 
 static void

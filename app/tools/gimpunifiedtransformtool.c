@@ -759,7 +759,11 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
   gint i;
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (transform_tool);
   gboolean constrain = options->constrain;
-  gboolean frompivot = options->alternate;
+  gboolean keepaspect = options->keepaspect;
+  gboolean frompivot = options->frompivot;
+  gboolean freeshear = options->freeshear;
+  gboolean cornersnap = options->cornersnap;
+
   TransformAction function = transform_tool->function;
 
   x[0] = &transform_tool->trans_info[X0];
@@ -852,7 +856,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
     {
       gint screenx, screeny;
 
-      if (constrain)
+      if (cornersnap)
         {
           /* snap to corner points and center */
           gint closest = 0;
@@ -911,7 +915,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       /* when the keep aspect transformation constraint is enabled, the
        * translation shall only be along the diagonal that runs trough
        * this corner point. */
-      if (constrain)
+      if (keepaspect)
         {
           /* restrict to movement along the diagonal */
           GimpVector2 diag = vectorsubtract (tp, op);
@@ -1060,7 +1064,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       /* restrict to movement along the midline */
       p = vectorproject (p, midline);
 
-      if (constrain)
+      if (keepaspect)
         //TODO this scales about the center, not the opposite edge
         {
           /* when the keep aspect transformation constraint is enabled, all
@@ -1146,7 +1150,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
           dxo = dyo = 0;
         }
 
-      if (constrain)
+      if (!freeshear)
         {
           /* restrict to movement along the side */
           GimpVector2 lp = { .x = px[left],  .y = py[left] },
@@ -1160,7 +1164,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
           dy = p.y;
         }
 
-      if (constrain && frompivot)
+      if (!freeshear && frompivot)
         {
           /* restrict to movement along the opposite side */
           GimpVector2 lp = { .x = px[lefto],  .y = py[lefto] },
