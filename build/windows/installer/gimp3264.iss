@@ -161,9 +161,9 @@ SignedUninstallerDir=_Uninst
 #endif //NOCOMPRESSION
 
 [Languages]
-Name: "en"; MessagesFile: "compiler:Default.isl,en.setup.isl"
-Name: "sl"; MessagesFile: "compiler:Languages\Slovenian.isl,sl.setup.isl"
-Name: "de"; MessagesFile: "compiler:Languages\German.isl,de.setup.isl"
+Name: "en"; MessagesFile: "compiler:Default.isl,lang\en.setup.isl"
+Name: "sl"; MessagesFile: "compiler:Languages\Slovenian.isl,lang\sl.setup.isl"
+Name: "de"; MessagesFile: "compiler:Languages\German.isl,lang\de.setup.isl"
 ;Name: "ro"; MessagesFile: "Romanian.islu,ro.setup.islu"
 
 [Types]
