@@ -127,11 +127,10 @@ themes_init (Gimp *gimp)
       g_list_free_full (path, (GDestroyNotify) g_object_unref);
     }
 
-#if 0
+
   g_object_set (gtk_settings_get_for_screen (gdk_screen_get_default ()),
                 "gtk-application-prefer-dark-theme", TRUE,
                 NULL);
-#endif
 
   themes_style_provider = GTK_STYLE_PROVIDER (gtk_css_provider_new ());
 
