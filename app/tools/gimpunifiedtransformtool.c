@@ -932,26 +932,6 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
        */
       nt = vectoradd (tp, p);
 
-      /* in frompivot mode, the part of the frame over the pivot must stay
-       * in the same place during the operation */
-      if (0 && frompivot)
-        {
-          //TODO: this is wrong, only works in the simple case where pivot point
-          //is in the center and the transform is affine
-          //Maybe it would work better to simply do this last by generating the
-          //transform matrix, applying it to the pivot point, the undoing that
-          //movement from everything?
-
-          /* Move the opposite point's x component and y component the same
-           * ratio away from the pivot point as this point */
-          GimpVector2 old = vectorsubtract (pivot, tp);
-          GimpVector2 new = vectorsubtract (pivot, nt);
-          no = vectorsubtract (no, pivot);
-          no.x *= new.x / old.x;
-          no.y *= new.y / old.y;
-          no = vectoradd (no, pivot);
-        }
-
       /* Where the corner to the right and left would go, need these to form
        * lines to intersect with the sides */
       /*    rp----------/
@@ -1003,11 +983,25 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
 
       if (frompivot)
         {
-          //TODO this doesn't work exactly right yet, but better than the commented out version above
-          GimpMatrix3 transform;
+          /* transform the pivot point before the interaction and after, and move everything by
+           * this difference */
+          //TODO don't fly off to hell when the transform is 'invalid'
+          //TODO the handle doesn't actually end up where the mouse cursor is
+          GimpMatrix3 transform_before, transform_after;
           gint i;
-          gimp_matrix3_identity (&transform);
-          gimp_transform_matrix_perspective (&transform,
+          gdouble comp_x, comp_y;
+          gimp_matrix3_identity (&transform_before);
+          gimp_matrix3_identity (&transform_after);
+          gimp_transform_matrix_perspective (&transform_before,
+                                             transform_tool->x1,
+                                             transform_tool->y1,
+                                             transform_tool->x2 - transform_tool->x1,
+                                             transform_tool->y2 - transform_tool->y1,
+                                             px[0], py[0],
+                                             px[1], py[1],
+                                             px[2], py[2],
+                                             px[3], py[3]);
+          gimp_transform_matrix_perspective (&transform_after,
                                              transform_tool->x1,
                                              transform_tool->y1,
                                              transform_tool->x2 - transform_tool->x1,
@@ -1016,16 +1010,14 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
                                              *x[1], *y[1],
                                              *x[2], *y[2],
                                              *x[3], *y[3]);
-          gdouble z = transform.coeff[2][0] + transform.coeff[2][1] + transform.coeff[2][2];
-          GimpVector2 pivot_compensate = {
-            .x = (transform.coeff[0][0] * pivot.x + transform.coeff[0][1] * pivot.y + transform.coeff[0][2]) / z,
-            .y = (transform.coeff[1][0] * pivot.x + transform.coeff[1][1] * pivot.y + transform.coeff[1][2]) / z};
-          *pivot_x = pivot_compensate.x;
-          *pivot_y = pivot_compensate.y;
-          if (0) for (i = 0; i < 4; i++)
+          gimp_matrix3_invert(&transform_before);
+          GimpMatrix3 transform = transform_before;
+          gimp_matrix3_mult(&transform_after, &transform);
+          gimp_matrix3_transform_point(&transform, pivot.x, pivot.y, &comp_x, &comp_y);
+          for (i = 0; i < 4; i++)
             {
-              *x[i] -= pivot_compensate.x - pivot.x;
-              *y[i] -= pivot_compensate.y - pivot.y;
+              *x[i] -= comp_x - pivot.x;
+              *y[i] -= comp_y - pivot.y;
             }
         }
     }
