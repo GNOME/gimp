@@ -12,16 +12,16 @@
 	#error "Unknown PLATFORM:" + PLATFORM
 #endif
 
-Source: "{#GIMP_DIR}\{#DIR}\*.dll"; DestDir: "{app}"; Components: gimp{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp
-Source: "{#GIMP_DIR}\{#DIR}\*.exe"; DestDir: "{app}"; Excludes: "\lib\gimp\2.0\plug-ins\twain.exe,\lib\gimp\2.0\plug-ins\file-ps.exe,\bin\gimp.exe,\bin\gimp-console.exe"; Components: gimp{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp
+Source: "{#GIMP_DIR}\{#DIR}\*.dll"; DestDir: "{app}"; Components: gimp{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
+Source: "{#GIMP_DIR}\{#DIR}\*.exe"; DestDir: "{app}"; Excludes: "\lib\gimp\2.0\plug-ins\twain.exe,\lib\gimp\2.0\plug-ins\file-ps.exe,\bin\gimp.exe,\bin\gimp-console.exe"; Components: gimp{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
 
-Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\2.0\plug-ins\file-ps.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: gimp{#PLATFORM} and gs; Flags: restartreplace comparetimestamp
+Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\2.0\plug-ins\file-ps.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: gimp{#PLATFORM} and gs; Flags: restartreplace comparetimestamp uninsrestartdelete
 
-Source: "{#DEPS_DIR}\{#DDIR}\*.dll"; DestDir: "{app}"; Excludes: "\bin\libgs-8.dll"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp
-Source: "{#DEPS_DIR}\{#DDIR}\bin\libgs-8.dll"; DestDir: "{app}\bin"; Components: gs and deps{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp
+Source: "{#DEPS_DIR}\{#DDIR}\*.dll"; DestDir: "{app}"; Excludes: "\bin\libgs-8.dll"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\bin\libgs-8.dll"; DestDir: "{app}\bin"; Components: gs and deps{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
 
-Source: "{#DEPS_DIR}\{#DDIR}\bin\gspawn-win*.exe"; DestDir: "{app}\bin"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp
-;Source: "{#DEPS_DIR}\{#DDIR}\bin\bzip2.exe"; DestDir: "{app}\bin"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace
-Source: "{#DEPS_DIR}\{#DDIR}\lib\*.dll"; DestDir: "{app}\lib"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp
-;Source: "{#DEPS_DIR}\{#DDIR}\lib\bonobo\servers\*"; DestDir: "{app}\lib\bonobo\servers"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace
-Source: "{#DEPS_DIR}\{#DDIR}\libexec\*.exe"; DestDir: "{app}\libexec"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp
+Source: "{#DEPS_DIR}\{#DDIR}\bin\gspawn-win*.exe"; DestDir: "{app}\bin"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\bin\bzip2.exe"; DestDir: "{app}\bin"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\lib\*.dll"; DestDir: "{app}\lib"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\lib\bonobo\servers\*"; DestDir: "{app}\lib\bonobo\servers"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\libexec\*.exe"; DestDir: "{app}\libexec"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete

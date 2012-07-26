@@ -210,49 +210,49 @@ Source: "installsplash_small.bmp"; Flags: dontcopy
 
 #ifndef NOFILES
 ;files common to both 32 and 64-bit versions
-Source: "{#GIMP_DIR32}\etc\*"; DestDir: "{app}\etc"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace
-Source: "{#GIMP_DIR32}\lib\gimp\2.0\environ\*"; DestDir: "{app}\lib\gimp\2.0\environ"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace
-Source: "{#GIMP_DIR32}\lib\gimp\2.0\interpreters\*"; DestDir: "{app}\lib\gimp\2.0\interpreters"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace
-Source: "{#GIMP_DIR32}\share\gimp\*"; DestDir: "{app}\share\gimp"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace
-Source: "{#DEPS_DIR32}\share\enchant\*"; DestDir: "{app}\share\enchant"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace
-Source: "{#DEPS_DIR32}\share\libwmf\*"; DestDir: "{app}\share\libwmf"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace
-Source: "{#DEPS_DIR32}\share\themes\*"; DestDir: "{app}\share\themes"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace
-Source: "{#DEPS_DIR32}\share\xml\*"; DestDir: "{app}\share\xml"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace
-Source: "{#DEPS_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: recursesubdirs restartreplace
-Source: "{#GIMP_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: recursesubdirs restartreplace
+Source: "{#GIMP_DIR32}\etc\*"; DestDir: "{app}\etc"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#GIMP_DIR32}\lib\gimp\2.0\environ\*"; DestDir: "{app}\lib\gimp\2.0\environ"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#GIMP_DIR32}\lib\gimp\2.0\interpreters\*"; DestDir: "{app}\lib\gimp\2.0\interpreters"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#GIMP_DIR32}\share\gimp\*"; DestDir: "{app}\share\gimp"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\share\enchant\*"; DestDir: "{app}\share\enchant"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\share\libwmf\*"; DestDir: "{app}\share\libwmf"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\share\themes\*"; DestDir: "{app}\share\themes"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\share\xml\*"; DestDir: "{app}\share\xml"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#GIMP_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: recursesubdirs restartreplace uninsrestartdelete
 
-Source: "{#DEPS_DIR32}\etc\fonts\*"; DestDir: "{app}\etc\fonts"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace
-Source: "{#DEPS_DIR32}\etc\gtk-2.0\*"; DestDir: "{app}\etc\gtk-2.0"; Excludes: gtkrc; Components: deps32 or deps64; Flags: recursesubdirs restartreplace
-Source: "{#DEPS_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\etc\gtk-2.0"; Components: deps32\wimp or deps64\wimp; Flags: recursesubdirs restartreplace
+Source: "{#DEPS_DIR32}\etc\fonts\*"; DestDir: "{app}\etc\fonts"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\etc\gtk-2.0\*"; DestDir: "{app}\etc\gtk-2.0"; Excludes: gtkrc; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\etc\gtk-2.0"; Components: deps32\wimp or deps64\wimp; Flags: recursesubdirs restartreplace uninsrestartdelete
 
 ;ghostscript TODO: detect version automatically
-Source: "{#DEPS_DIR32}\share\ghostscript\8.71\lib\*.*"; DestDir: "{app}\share\ghostscript\8.71\lib"; Components: gs; Flags: recursesubdirs restartreplace
-Source: "{#DEPS_DIR32}\share\ghostscript\8.71\Resource\*.*"; DestDir: "{app}\share\ghostscript\8.71\Resource"; Components: gs; Flags: recursesubdirs restartreplace
+Source: "{#DEPS_DIR32}\share\ghostscript\8.71\lib\*.*"; DestDir: "{app}\share\ghostscript\8.71\lib"; Components: gs; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\share\ghostscript\8.71\Resource\*.*"; DestDir: "{app}\share\ghostscript\8.71\Resource"; Components: gs; Flags: recursesubdirs restartreplace uninsrestartdelete
 
 ;32-on-64bit
 #include "32on64.isi"
 ;prefer 32bit twain plugin over 64bit because 64bit twain drivers are rare
-Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: gimp32on64; Flags: recursesubdirs restartreplace
-Source: "{#GIMP_DIR64}\lib\gimp\2.0\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: (not gimp32on64) and gimp64; Flags: recursesubdirs restartreplace
+Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#GIMP_DIR64}\lib\gimp\2.0\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: (not gimp32on64) and gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
 ;special case due to MS-Windows engine
-Source: "{#DEPS_DIR32}\etc\gtk-2.0\*"; DestDir: "{app}\32\etc\gtk-2.0"; Excludes: gtkrc; Components: gimp32on64; Flags: recursesubdirs restartreplace
-Source: "{#DEPS_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\32\etc\gtk-2.0"; Components: gimp32on64 and deps64\wimp; Flags: recursesubdirs restartreplace
+Source: "{#DEPS_DIR32}\etc\gtk-2.0\*"; DestDir: "{app}\32\etc\gtk-2.0"; Excludes: gtkrc; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\32\etc\gtk-2.0"; Components: gimp32on64 and deps64\wimp; Flags: recursesubdirs restartreplace uninsrestartdelete
 ;python scripts
-Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\*.py"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: gimp32on64\py; Flags: recursesubdirs restartreplace
-Source: "{#GIMP_DIR32}\lib\gimp\2.0\python\*.p*"; DestDir: "{app}\32\lib\gimp\2.0\python"; Components: gimp32on64\py; Flags: recursesubdirs restartreplace
+Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\*.py"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: gimp32on64\py; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#GIMP_DIR32}\lib\gimp\2.0\python\*.p*"; DestDir: "{app}\32\lib\gimp\2.0\python"; Components: gimp32on64\py; Flags: recursesubdirs restartreplace uninsrestartdelete
 ;compat libraries
-Source: "{#DEPS_DIR}-compat\*.dll"; DestDir: "{app}\32\"; Components: gimp32on64\compat; Flags: recursesubdirs restartreplace
+Source: "{#DEPS_DIR}-compat\*.dll"; DestDir: "{app}\32\"; Components: gimp32on64\compat; Flags: recursesubdirs restartreplace uninsrestartdelete
 
 ;32bit
 #define PLATFORM 32
 #include "files.isi"
 ;special case, since 64bit version doesn't work, and is excluded in files.isi
-Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: gimp32; Flags: recursesubdirs restartreplace
+Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: gimp32; Flags: recursesubdirs restartreplace uninsrestartdelete
 ;python scripts
-Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\*.py"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: py; Flags: recursesubdirs restartreplace
-Source: "{#GIMP_DIR32}\lib\gimp\2.0\python\*.p*"; DestDir: "{app}\lib\gimp\2.0\python"; Components: py; Flags: recursesubdirs restartreplace
+Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\*.py"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#GIMP_DIR32}\lib\gimp\2.0\python\*.p*"; DestDir: "{app}\lib\gimp\2.0\python"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete
 ;compat libraries
-Source: "{#DEPS_DIR}-compat\*.dll"; DestDir: "{app}"; Components: deps32\compat; Flags: recursesubdirs restartreplace
+Source: "{#DEPS_DIR}-compat\*.dll"; DestDir: "{app}"; Components: deps32\compat; Flags: recursesubdirs restartreplace uninsrestartdelete
 
 ;64bit
 #define PLATFORM 64
@@ -260,18 +260,18 @@ Source: "{#DEPS_DIR}-compat\*.dll"; DestDir: "{app}"; Components: deps32\compat;
 
 ;upgrade zlib1.dll in System32 if it's present there to avoid breaking plugins
 ;sharedfile flag will ensure that the upgraded file is left behind on uninstall to avoid breaking other programs that use the file
-Source: "{#DEPS_DIR32}\bin\zlib1.dll"; DestDir: "{sys}"; Components: deps32 or deps64; Flags: restartreplace sharedfile 32bit; Check: BadSysDLL('zlib1.dll',32)
-Source: "{#DEPS_DIR64}\bin\zlib1.dll"; DestDir: "{sys}"; Components: deps64; Flags: restartreplace sharedfile; Check: BadSysDLL('zlib1.dll',64)
+Source: "{#DEPS_DIR32}\bin\zlib1.dll"; DestDir: "{sys}"; Components: deps32 or deps64; Flags: restartreplace sharedfile 32bit uninsrestartdelete; Check: BadSysDLL('zlib1.dll',32)
+Source: "{#DEPS_DIR64}\bin\zlib1.dll"; DestDir: "{sys}"; Components: deps64; Flags: restartreplace sharedfile uninsrestartdelete; Check: BadSysDLL('zlib1.dll',64)
 
 ;overridden configuration files
 #include "configoverride.isi"
 
 ;python
-Source: "{#PY_DIR}\pythonw.exe"; DestDir: "{app}\Python"; Components: py or gimp32on64\py; Flags: restartreplace
-Source: "{#PY_DIR}\python.exe"; DestDir: "{app}\Python"; Components: py or gimp32on64\py; Flags: restartreplace
-Source: "{#PY_DIR}\python27.dll"; DestDir: "{app}\Python"; Components: py or gimp32on64\py; Flags: restartreplace
-Source: "{#PY_DIR}\DLLs\*"; DestDir: "{app}\Python\DLLs"; Components: py or gimp32on64\py; Flags: recursesubdirs restartreplace
-Source: "{#PY_DIR}\Lib\*"; DestDir: "{app}\Python\Lib"; Components: py or gimp32on64\py; Flags: recursesubdirs restartreplace
+Source: "{#PY_DIR}\pythonw.exe"; DestDir: "{app}\Python"; Components: py or gimp32on64\py; Flags: restartreplace uninsrestartdelete
+Source: "{#PY_DIR}\python.exe"; DestDir: "{app}\Python"; Components: py or gimp32on64\py; Flags: restartreplace uninsrestartdelete
+Source: "{#PY_DIR}\python27.dll"; DestDir: "{app}\Python"; Components: py or gimp32on64\py; Flags: restartreplace uninsrestartdelete
+Source: "{#PY_DIR}\DLLs\*"; DestDir: "{app}\Python\DLLs"; Components: py or gimp32on64\py; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#PY_DIR}\Lib\*"; DestDir: "{app}\Python\Lib"; Components: py or gimp32on64\py; Flags: recursesubdirs restartreplace uninsrestartdelete
 #endif //NOFILES
 
 [InstallDelete]
