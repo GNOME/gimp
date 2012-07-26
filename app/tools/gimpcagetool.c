@@ -237,13 +237,13 @@ gimp_cage_tool_control (GimpTool       *tool,
 
       if (ct->image_map)
         {
-          gimp_tool_control_set_preserve (tool->control, TRUE);
+          gimp_tool_control_push_preserve (tool->control, TRUE);
 
           gimp_image_map_abort (ct->image_map);
           g_object_unref (ct->image_map);
           ct->image_map = NULL;
 
-          gimp_tool_control_set_preserve (tool->control, FALSE);
+          gimp_tool_control_pop_preserve (tool->control);
 
           gimp_image_flush (gimp_display_get_image (tool->display));
         }
@@ -426,13 +426,13 @@ gimp_cage_tool_key_press (GimpTool    *tool,
         }
       else if (ct->tool_state == DEFORM_STATE_WAIT)
         {
-          gimp_tool_control_set_preserve (tool->control, TRUE);
+          gimp_tool_control_push_preserve (tool->control, TRUE);
 
           gimp_image_map_commit (ct->image_map);
           g_object_unref (ct->image_map);
           ct->image_map = NULL;
 
-          gimp_tool_control_set_preserve (tool->control, FALSE);
+          gimp_tool_control_pop_preserve (tool->control);
 
           gimp_image_flush (gimp_display_get_image (display));
 

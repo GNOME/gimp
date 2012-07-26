@@ -90,6 +90,8 @@ gimp_tool_control_finalize (GObject *object)
 {
   GimpToolControl *control = GIMP_TOOL_CONTROL (object);
 
+  g_slist_free (control->preserve_stack);
+
   g_free (control->action_value_1);
   g_free (control->action_value_2);
   g_free (control->action_value_3);
@@ -169,6 +171,31 @@ gimp_tool_control_get_preserve (GimpToolControl *control)
   g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
 
   return control->preserve;
+}
+
+void
+gimp_tool_control_push_preserve (GimpToolControl *control,
+                                 gboolean         preserve)
+{
+  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+
+  control->preserve_stack =
+    g_slist_prepend (control->preserve_stack,
+                     GINT_TO_POINTER (control->preserve));
+
+  control->preserve = preserve ? TRUE : FALSE;
+}
+
+void
+gimp_tool_control_pop_preserve (GimpToolControl *control)
+{
+  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (control->preserve_stack != NULL);
+
+  control->preserve = GPOINTER_TO_INT (control->preserve_stack->data);
+
+  control->preserve_stack = g_slist_delete_link (control->preserve_stack,
+                                                 control->preserve_stack);
 }
 
 void

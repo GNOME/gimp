@@ -42,6 +42,8 @@ struct _GimpToolControl
 
   gboolean             preserve;           /*  Preserve this tool across       *
                                             *  drawable changes                */
+  GSList              *preserve_stack;     /*  for push/pop preserve           */
+
   gboolean             scroll_lock;        /*  allow scrolling or not          */
   gboolean             handle_empty_image; /*  invoke the tool on images       *
                                             *  without active drawable         */
@@ -99,6 +101,10 @@ gboolean       gimp_tool_control_is_paused        (GimpToolControl *control);
 void           gimp_tool_control_set_preserve     (GimpToolControl *control,
                                                    gboolean         preserve);
 gboolean       gimp_tool_control_get_preserve     (GimpToolControl *control);
+
+void           gimp_tool_control_push_preserve    (GimpToolControl *control,
+                                                   gboolean         preserve);
+void           gimp_tool_control_pop_preserve     (GimpToolControl *control);
 
 void           gimp_tool_control_set_scroll_lock  (GimpToolControl *control,
                                                    gboolean         scroll_lock);

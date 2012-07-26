@@ -462,13 +462,13 @@ gimp_image_map_tool_control (GimpTool       *tool,
         {
           GimpImage *image;
 
-          gimp_tool_control_set_preserve (tool->control, TRUE);
+          gimp_tool_control_push_preserve (tool->control, TRUE);
 
           gimp_image_map_abort (image_map_tool->image_map);
           g_object_unref (image_map_tool->image_map);
           image_map_tool->image_map = NULL;
 
-          gimp_tool_control_set_preserve (tool->control, FALSE);
+          gimp_tool_control_pop_preserve (tool->control);
 
           /* don't call gimp_image_flush() here, because the tool
            * might be cancelled from some other place opening an undo
@@ -542,19 +542,19 @@ gimp_image_map_tool_options_notify (GimpTool         *tool,
 
       if (im_options->preview)
         {
-          gimp_tool_control_set_preserve (tool->control, TRUE);
+          gimp_tool_control_push_preserve (tool->control, TRUE);
 
           gimp_image_map_tool_map (image_map_tool);
 
-          gimp_tool_control_set_preserve (tool->control, FALSE);
+          gimp_tool_control_pop_preserve (tool->control);
         }
       else
         {
-          gimp_tool_control_set_preserve (tool->control, TRUE);
+          gimp_tool_control_push_preserve (tool->control, TRUE);
 
           gimp_image_map_clear (image_map_tool->image_map);
 
-          gimp_tool_control_set_preserve (tool->control, FALSE);
+          gimp_tool_control_pop_preserve (tool->control);
 
           gimp_image_map_tool_flush (image_map_tool->image_map,
                                      image_map_tool);
@@ -732,7 +732,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
         {
           GimpImageMapOptions *options = GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (tool);
 
-          gimp_tool_control_set_preserve (tool->control, TRUE);
+          gimp_tool_control_push_preserve (tool->control, TRUE);
 
           if (! options->preview)
             gimp_image_map_tool_map (image_map_tool);
@@ -741,7 +741,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
           g_object_unref (image_map_tool->image_map);
           image_map_tool->image_map = NULL;
 
-          gimp_tool_control_set_preserve (tool->control, FALSE);
+          gimp_tool_control_pop_preserve (tool->control);
 
           gimp_image_flush (gimp_display_get_image (tool->display));
 
@@ -810,11 +810,11 @@ gimp_image_map_tool_preview (GimpImageMapTool *image_map_tool)
 
   if (image_map_tool->image_map && options->preview)
     {
-      gimp_tool_control_set_preserve (tool->control, TRUE);
+      gimp_tool_control_push_preserve (tool->control, TRUE);
 
       gimp_image_map_tool_map (image_map_tool);
 
-      gimp_tool_control_set_preserve (tool->control, FALSE);
+      gimp_tool_control_pop_preserve (tool->control);
     }
 }
 
@@ -825,11 +825,11 @@ gimp_image_map_tool_gegl_notify (GObject          *config,
 {
   if (im_tool->image_map)
     {
-      gimp_tool_control_set_preserve (GIMP_TOOL (im_tool)->control, TRUE);
+      gimp_tool_control_push_preserve (GIMP_TOOL (im_tool)->control, TRUE);
 
       gimp_image_map_tool_create_map (im_tool);
 
-      gimp_tool_control_set_preserve (GIMP_TOOL (im_tool)->control, FALSE);
+      gimp_tool_control_pop_preserve (GIMP_TOOL (im_tool)->control);
 
       gimp_image_map_tool_preview (im_tool);
     }
