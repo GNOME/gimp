@@ -636,33 +636,32 @@ gimp_context_set_brush (const gchar *name)
 
 /**
  * gimp_context_get_brush_size:
- * @size: brush size in pixels.
  *
  * Get brush size in pixels.
  *
  * Get the brush size in pixels for brush based paint tools.
  *
- * Returns: TRUE on success.
+ * Returns: brush size in pixels.
  *
  * Since: GIMP 2.8
  **/
-gboolean
-gimp_context_get_brush_size (gdouble size)
+gdouble
+gimp_context_get_brush_size (void)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gboolean success = TRUE;
+  gdouble size = 0.0;
 
   return_vals = gimp_run_procedure ("gimp-context-get-brush-size",
                                     &nreturn_vals,
-                                    GIMP_PDB_FLOAT, size,
                                     GIMP_PDB_END);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    size = return_vals[1].data.d_float;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return success;
+  return size;
 }
 
 /**
@@ -728,33 +727,32 @@ gimp_context_set_brush_default_size (void)
 
 /**
  * gimp_context_get_brush_aspect_ratio:
- * @aspect: aspect ratio.
  *
  * Get brush aspect ratio.
  *
  * Set the aspect ratio for brush based paint tools.
  *
- * Returns: TRUE on success.
+ * Returns: aspect ratio.
  *
  * Since: GIMP 2.8
  **/
-gboolean
-gimp_context_get_brush_aspect_ratio (gdouble aspect)
+gdouble
+gimp_context_get_brush_aspect_ratio (void)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gboolean success = TRUE;
+  gdouble aspect = 0.0;
 
   return_vals = gimp_run_procedure ("gimp-context-get-brush-aspect-ratio",
                                     &nreturn_vals,
-                                    GIMP_PDB_FLOAT, aspect,
                                     GIMP_PDB_END);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    aspect = return_vals[1].data.d_float;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return success;
+  return aspect;
 }
 
 /**
@@ -790,33 +788,32 @@ gimp_context_set_brush_aspect_ratio (gdouble aspect)
 
 /**
  * gimp_context_get_brush_angle:
- * @angle: angle in degrees.
  *
  * Get brush angle in degrees.
  *
  * Set the angle in degrees for brush based paint tools.
  *
- * Returns: TRUE on success.
+ * Returns: angle in degrees.
  *
  * Since: GIMP 2.8
  **/
-gboolean
-gimp_context_get_brush_angle (gdouble angle)
+gdouble
+gimp_context_get_brush_angle (void)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gboolean success = TRUE;
+  gdouble angle = 0.0;
 
   return_vals = gimp_run_procedure ("gimp-context-get-brush-angle",
                                     &nreturn_vals,
-                                    GIMP_PDB_FLOAT, angle,
                                     GIMP_PDB_END);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    angle = return_vals[1].data.d_float;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return success;
+  return angle;
 }
 
 /**
