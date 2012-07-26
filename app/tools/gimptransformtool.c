@@ -1103,7 +1103,7 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tr_tool));
 
   /*  We're going to dirty this image, but we want to keep the tool around  */
-  gimp_tool_control_set_preserve (tool->control, TRUE);
+  gimp_tool_control_push_preserve (tool->control, TRUE);
 
   undo_desc = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->get_undo_desc (tr_tool);
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM, undo_desc);
@@ -1190,7 +1190,7 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   /*  We're done dirtying the image, and would like to be restarted if
    *  the image gets dirty while the tool exists
    */
-  gimp_tool_control_set_preserve (tool->control, FALSE);
+  gimp_tool_control_pop_preserve (tool->control);
 
   gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
 
