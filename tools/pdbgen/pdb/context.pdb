@@ -493,7 +493,7 @@ sub context_get_brush_size {
 
     &ejs_pdb_misc('2012', '2.8');
 
-    @inargs = (
+    @outargs = (
         { name => "size", type => "0 < float",
           desc => "brush size in pixels" }
     );
@@ -621,7 +621,7 @@ sub context_get_brush_aspect_ratio {
 
     &ejs_pdb_misc('2012', '2.8');
 
-    @inargs = (
+    @outargs = (
         { name => "aspect", type => "-20 <= float <= 20",
           desc => "aspect ratio" }
     );
@@ -681,7 +681,7 @@ sub context_get_brush_angle {
 
     &ejs_pdb_misc('2012', '2.8');
 
-    @inargs = (
+    @outargs = (
 	{ name => "angle", type => "-180 <= float <= 180",
 	  desc => "angle in degrees" }
     );

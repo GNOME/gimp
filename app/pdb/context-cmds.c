@@ -434,27 +434,28 @@ context_get_brush_size_invoker (GimpProcedure      *procedure,
                                 GError            **error)
 {
   gboolean success = TRUE;
-  gdouble size;
+  GValueArray *return_vals;
+  gdouble size = 0.0;
 
-  size = g_value_get_double (&args->values[0]);
+  /* all options should have the same value, so pick a random one */
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-paintbrush");
+
+  if (options)
+    g_object_get (options,
+                  "brush-size", &size,
+                   NULL);
+  else
+    success = FALSE;
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
-    {
-      /* all options should have the same value, so pick a random one */
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-paintbrush");
+    g_value_set_double (&return_vals->values[1], size);
 
-      if (options)
-        g_object_get (options,
-                      "brush-size", &size,
-                       NULL);
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return return_vals;
 }
 
 static GValueArray *
@@ -533,27 +534,28 @@ context_get_brush_aspect_ratio_invoker (GimpProcedure      *procedure,
                                         GError            **error)
 {
   gboolean success = TRUE;
-  gdouble aspect;
+  GValueArray *return_vals;
+  gdouble aspect = 0.0;
 
-  aspect = g_value_get_double (&args->values[0]);
+  /* all options should have the same value, so pick a random one */
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-paintbrush");
+
+  if (options)
+    g_object_get (options,
+                  "brush-aspect-ratio", &aspect,
+                  NULL);
+  else
+    success = FALSE;
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
-    {
-      /* all options should have the same value, so pick a random one */
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-paintbrush");
+    g_value_set_double (&return_vals->values[1], aspect);
 
-      if (options)
-        g_object_get (options,
-                      "brush-aspect-ratio", &aspect,
-                      NULL);
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return return_vals;
 }
 
 static GValueArray *
@@ -597,27 +599,28 @@ context_get_brush_angle_invoker (GimpProcedure      *procedure,
                                  GError            **error)
 {
   gboolean success = TRUE;
-  gdouble angle;
+  GValueArray *return_vals;
+  gdouble angle = 0.0;
 
-  angle = g_value_get_double (&args->values[0]);
+  /* all options should have the same value, so pick a random one */
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-paintbrush");
+
+  if (options)
+    g_object_get (options,
+                  "brush-angle", &angle,
+                  NULL);
+  else
+    success = FALSE;
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
 
   if (success)
-    {
-      /* all options should have the same value, so pick a random one */
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-paintbrush");
+    g_value_set_double (&return_vals->values[1], angle);
 
-      if (options)
-        g_object_get (options,
-                      "brush-angle", &angle,
-                      NULL);
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
+  return return_vals;
 }
 
 static GValueArray *
@@ -2403,12 +2406,12 @@ register_context_procs (GimpPDB *pdb)
                                      "Ed Swartz",
                                      "2012",
                                      NULL);
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("size",
-                                                    "size",
-                                                    "brush size in pixels",
-                                                    0, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("size",
+                                                        "size",
+                                                        "brush size in pixels",
+                                                        0, G_MAXDOUBLE, 0,
+                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -2466,12 +2469,12 @@ register_context_procs (GimpPDB *pdb)
                                      "Ed Swartz",
                                      "2012",
                                      NULL);
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("aspect",
-                                                    "aspect",
-                                                    "aspect ratio",
-                                                    -20, 20, -20,
-                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("aspect",
+                                                        "aspect",
+                                                        "aspect ratio",
+                                                        -20, 20, -20,
+                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -2512,12 +2515,12 @@ register_context_procs (GimpPDB *pdb)
                                      "Ed Swartz",
                                      "2012",
                                      NULL);
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("angle",
-                                                    "angle",
-                                                    "angle in degrees",
-                                                    -180, 180, -180,
-                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("angle",
+                                                        "angle",
+                                                        "angle in degrees",
+                                                        -180, 180, -180,
+                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
