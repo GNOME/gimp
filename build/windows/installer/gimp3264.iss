@@ -662,6 +662,8 @@ begin
 		Top := 0;
 		Width := Associations.AssociationsPage.Page.SurfaceWidth;
 		Height := ScaleY(13);
+		WordWrap := True;
+		AutoSize := True;
 		Caption := CustomMessage('SelectAssociationsInfo1')+#13+CustomMessage('SelectAssociationsInfo2')+#13;
 	end;	
 	Associations.AssociationsPage.lblAssocInfo2 := TNewStaticText.Create(Associations.AssociationsPage.Page);
