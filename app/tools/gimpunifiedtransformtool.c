@@ -1057,42 +1057,35 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       p = vectorproject (p, midline);
 
       if (keepaspect)
-        //TODO this scales about the center, not the opposite edge
         {
-          /* when the keep aspect transformation constraint is enabled, all
-           * four corners shall translate to keep all sides at constant angles. */
-          GimpVector2 mtl, mtr, tmpl, tmpr, ntl, ntr, nol, nor;
-          /* Where the two points on the moved side would move usually */
-          mtl = vectoradd (tl, p);
-          mtr = vectoradd (tr, p);
-          /* Intersect the line formed by mtl-mtr with the two diagonals in
-           * the pre-interaction transform, this is where these two corners
-           * will be */
-          ntl = lineintersect (mtl, mtr, or, tl);
-          ntr = lineintersect (mtl, mtr, ol, tr);
-          /* Extend two lines from the new position of our corners along the
-           * direction of the respective side (ol-tl and or-tr are the two sides
-           * going out perpendicular to the side being interacted with) */
-          tmpl = vectoradd (ntl, vectorsubtract (ol, tl));
-          tmpr = vectoradd (ntr, vectorsubtract (or, tr));
-          /* Now intersect the lines tmpl-ntl with one diagonal, and tmpr-ntr with
-           * the other diagonal, giving the points of the corners of the side opposite
-           * the one that was interacted with */
-          nol = lineintersect (tmpl, ntl, ol, tr);
-          nor = lineintersect (tmpr, ntr, or, tl);
-          /* We have all the new points, assign them to the real vars */
-          tl = ntl; tr = ntr; ol = nol; or = nor;
+          if (!frompivot)
+            {
+              /* center of the opposite side is pivot */
+              pivot = scalemult(vectoradd(ol, or), 0.5);
+            }
+          GimpVector2 mouse = { .x = transform_tool->mousex, .y = transform_tool->mousey };
+          GimpVector2 cur = { .x = transform_tool->curx, .y = transform_tool->cury };
+          GimpVector2 before = vectorsubtract(pivot, mouse);
+          GimpVector2 after = vectorsubtract(pivot, cur);
+          after = vectorproject(after, before);
+
+          gdouble distance = 0.5 * (after.x / before.x + after.y / before.y);
+
+          tl = vectoradd(pivot, scalemult(vectorsubtract(tl, pivot), distance));
+          tr = vectoradd(pivot, scalemult(vectorsubtract(tr, pivot), distance));
+          ol = vectoradd(pivot, scalemult(vectorsubtract(ol, pivot), distance));
+          or = vectoradd(pivot, scalemult(vectorsubtract(or, pivot), distance));
         }
       else
         {
           /* just move the side */
           tl = vectoradd (tl, p);
           tr = vectoradd (tr, p);
-        }
 
-      if (frompivot)
-        {
-          //TODO
+        if (frompivot)
+          {
+            //TODO
+          }
         }
 
       *x[this_l] = tl.x;
