@@ -514,7 +514,8 @@ gimp_clipboard_set_buffer (Gimp       *gimp,
                                     G_OBJECT (gimp));
 
       /*  mark the first entry (image/png) as suitable for storing  */
-      gtk_clipboard_set_can_store (clipboard, gimp_clip->target_entries, 1);
+      if (gimp_clip->n_target_entries > 0)
+        gtk_clipboard_set_can_store (clipboard, gimp_clip->target_entries, 1);
     }
   else if (gtk_clipboard_get_owner (clipboard) == G_OBJECT (gimp))
     {
