@@ -1081,11 +1081,6 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
           /* just move the side */
           tl = vectoradd (tl, p);
           tr = vectoradd (tr, p);
-
-        if (frompivot)
-          {
-            //TODO
-          }
         }
 
       *x[this_l] = tl.x;
@@ -1099,6 +1094,43 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
 
       *x[opp_r] = or.x;
       *y[opp_r] = or.y;
+
+      if (!keepaspect && frompivot)
+        {
+          //TODO don't duplicate this code from above
+          GimpMatrix3 transform_before, transform_after;
+          gint i;
+          gdouble comp_x, comp_y;
+          gimp_matrix3_identity (&transform_before);
+          gimp_matrix3_identity (&transform_after);
+          gimp_transform_matrix_perspective (&transform_before,
+                                             transform_tool->x1,
+                                             transform_tool->y1,
+                                             transform_tool->x2 - transform_tool->x1,
+                                             transform_tool->y2 - transform_tool->y1,
+                                             px[0], py[0],
+                                             px[1], py[1],
+                                             px[2], py[2],
+                                             px[3], py[3]);
+          gimp_transform_matrix_perspective (&transform_after,
+                                             transform_tool->x1,
+                                             transform_tool->y1,
+                                             transform_tool->x2 - transform_tool->x1,
+                                             transform_tool->y2 - transform_tool->y1,
+                                             *x[0], *y[0],
+                                             *x[1], *y[1],
+                                             *x[2], *y[2],
+                                             *x[3], *y[3]);
+          gimp_matrix3_invert(&transform_before);
+          GimpMatrix3 transform = transform_before;
+          gimp_matrix3_mult(&transform_after, &transform);
+          gimp_matrix3_transform_point(&transform, pivot.x, pivot.y, &comp_x, &comp_y);
+          for (i = 0; i < 4; i++)
+            {
+              *x[i] -= comp_x - pivot.x;
+              *y[i] -= comp_y - pivot.y;
+            }
+        }
     }
 
   /* shear */
