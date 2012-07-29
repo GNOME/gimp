@@ -1,24 +1,24 @@
+# The Korean translation for the GNU Image Manipulation Program
 # Copyright (C) 1999 Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # Sung-Hyun Nam <namsh@kldp.org>, 1999.
 # Dongsu Jang <iolo@hellocity.net>, 2004.
-# Choi, Ji-Hui <like.a.dust@gmail.com>, 2007.
-# 세벌 <sebuls@gmail.com>, 2012.
-# Jihui Choi <jihui.choi@gmail.com>, 2012
+# Ji-Hui Choi <like.a.dust@gmail.com>, 2007, 2012.
+# Sebul <sebuls@gmail.com>, 2012.
+# Seong-ho Cho <darkcircle.0426@gmail.com>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-05-18 17:04+0000\n"
+"POT-Creation-Date: 2012-07-26 16:42+0000\n"
 "PO-Revision-Date: 2012-05-18 16:20+0900\n"
-"Last-Translator: 세벌 <sebuls@gmail.com>\n"
+"Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
 "Language-Team: \n"
+"Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-Language: Korean\n"
 "X-Poedit-Country: KOREA, REPUBLIC OF\n"
@@ -40,7 +40,7 @@ msgid ""
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
 "저작권 © 1995-%s\n"
-"스펜서 킴벨, 피터 매티스, 김프 개발팀"
+"Spencer Kimball, Peter Mattis, 김프 개발 팀"
 
 #: ../app/about.h:34
 msgid ""
@@ -57,14 +57,13 @@ msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "GIMP.  If not, see <http://www.gnu.org/licenses/>."
 msgstr ""
-"김프는 자유 프로그램입니다. 자유 소프트웨어 재단의 GNU 일반 공증 허가서를 준"
-"수할 경우 자유롭게 수정, 배포할 수 있습니다(이 허가서의 제2판, 혹은(사용자의 "
-"선택에 따라) 그 이후 버전 이용가능).\n"
-"\n"
-"김프가 유용한 프로그램으로서 널리 배포되기를 원합니다. 하지만 사용상의 어떠"
-"한 보장도 하지 않습니다. 이와 동시에 상업적 이용이나 개인적인 변형에 따른 보"
-"장도 하지 않습니다. 이에 대한 자세한 사항은 GNU 일반 공증 허가서를 참고하시"
-"기 바랍니다.\n"
+"김프는 자유로운 프로그램 입니다. 자유 소프트웨어 재단의 GNU 일반 공중 사용허"
+"가서 버전 2 또는(여러분의 선택에 따라) 그 이후 버전의 조항에 의거하여 재배"
+"포, 수정할 수 있습니다.\n"
+"김프가 유용한 프로그램으로서 널리 배포되기를 원합니다. 하지만 어떠한 보장을 "
+"하지 않으며, 심지어는 상업적 또는 일부 목적의 적합성에 대한 암묵적 보증도 하"
+"지 않습니다. 이에 대한 자세한 사항은 GNU 일반 공증 허가서를 참고하시기 바랍니"
+"다.\n"
 "\n"
 "김프와 함께 GNU 일반 공증 허가서 사본이 배포됩니다. 만약 함께 받지 못했다면, "
 "자유 소프트웨어 재단으로 연락주시기 바랍니다. (Free Software Foundation, "
@@ -80,7 +79,7 @@ msgid ""
 msgstr ""
 "테스트 스왑 파일을 열 수 없습니다.\n"
 "\n"
-"데이터의 손실을 피하려면 환경 설정에 정의된 스왑 디렉토리(현재위치 \"%s\")의 "
+"데이터의 손실을 피하려면 환경 설정에 정의된 스왑 디렉터리(현재위치 \"%s\")의 "
 "위치와 허가 권한을 확인하십시오."
 
 #: ../app/batch.c:75
@@ -95,11 +94,11 @@ msgstr "일괄처리 해석기 '%s'을(를) 사용할 수 없음.  일괄처리 
 
 #: ../app/main.c:148
 msgid "Show version information and exit"
-msgstr "버전 정보 보여준 뒤 종료합니다."
+msgstr "버전 정보 보여준 뒤 끝냅니다."
 
 #: ../app/main.c:153
 msgid "Show license information and exit"
-msgstr "사용 허가서 정보를 보여준 뒤 종료합니다."
+msgstr "사용 허가서 정보를 보여준 뒤 끝냅니다."
 
 #: ../app/main.c:158
 msgid "Be more verbose"
@@ -165,7 +164,7 @@ msgstr "대화상자 대신에 콘솔로 메시지를 출력합니다."
 #. don't translate the mode names (off|on|warn)
 #: ../app/main.c:234
 msgid "PDB compatibility mode (off|on|warn)"
-msgstr "PDB 호환 모드 (off|on|warn)"
+msgstr "PDB 호환 모드(off|on|warn)"
 
 # 모드 이름은 번역하지 말 것 (off|on|warn)
 #. don't translate the mode names (never|query|always)
@@ -239,7 +238,7 @@ msgid ""
 "you didn't tell GLib about this. Please set the environment variable "
 "G_FILENAME_ENCODING."
 msgstr ""
-"김프 사용자 설정이 담긴 디렉토리의 이름 형식을 UTF-8 형식으로 바꿀 수 없습니"
+"김프 사용자 설정이 담긴 디렉터리의 이름 형식을 UTF-8 형식으로 바꿀 수 없습니"
 "다.: %s\n"
 "\n"
 "파일 시스템에서 다른 형식의 인코딩을 이용해 파일 저장을 한다라는 내용이 GLib"
@@ -423,7 +422,7 @@ msgstr "선택"
 #: ../app/actions/actions.c:214 ../app/core/gimp.c:989
 #: ../app/dialogs/dialogs.c:331
 msgid "Templates"
-msgstr "서식"
+msgstr "양식"
 
 #: ../app/actions/actions.c:217
 msgid "Text Tool"
@@ -490,7 +489,7 @@ msgstr "붓을 이미지로 열기(_O)"
 #: ../app/actions/brushes-actions.c:47
 msgctxt "brushes-action"
 msgid "Open brush as image"
-msgstr "붓을 이미지로 열기"
+msgstr "붓을 이미지로 엽니다"
 
 #: ../app/actions/brushes-actions.c:52
 msgctxt "brushes-action"
@@ -500,7 +499,7 @@ msgstr "새 붓(_N)"
 #: ../app/actions/brushes-actions.c:53
 msgctxt "brushes-action"
 msgid "Create a new brush"
-msgstr "새 붓 만들기"
+msgstr "새 붓을 만듭니다"
 
 #: ../app/actions/brushes-actions.c:58
 msgctxt "brushes-action"
@@ -510,7 +509,7 @@ msgstr "붓 복제(_U)"
 #: ../app/actions/brushes-actions.c:59
 msgctxt "brushes-action"
 msgid "Duplicate this brush"
-msgstr "이 붓 복제"
+msgstr "이 붓을 복제합니다"
 
 #: ../app/actions/brushes-actions.c:64
 msgctxt "brushes-action"
@@ -520,17 +519,17 @@ msgstr "붓 위치 복사(_L)"
 #: ../app/actions/brushes-actions.c:65
 msgctxt "brushes-action"
 msgid "Copy brush file location to clipboard"
-msgstr "붓 파일 위치를 클립보드에 저장하기"
+msgstr "붓 파일 위치를 클립보드에 저장합니다"
 
 #: ../app/actions/brushes-actions.c:70
 msgctxt "brushes-action"
 msgid "_Delete Brush"
-msgstr "붓 지우기(_D)"
+msgstr "붓 삭제(_D)"
 
 #: ../app/actions/brushes-actions.c:71
 msgctxt "brushes-action"
 msgid "Delete this brush"
-msgstr "이 붓 지우기"
+msgstr "이 붓을 삭제합니다"
 
 #: ../app/actions/brushes-actions.c:76
 msgctxt "brushes-action"
@@ -540,7 +539,7 @@ msgstr "붓 새로 고침(_R)"
 #: ../app/actions/brushes-actions.c:77
 msgctxt "brushes-action"
 msgid "Refresh brushes"
-msgstr "붓 새로고침"
+msgstr "붓을 새로 고칩니다"
 
 #: ../app/actions/brushes-actions.c:85
 msgctxt "brushes-action"
@@ -550,7 +549,7 @@ msgstr "붓 편집(_E)..."
 #: ../app/actions/brushes-actions.c:86
 msgctxt "brushes-action"
 msgid "Edit this brush"
-msgstr "붓 편집"
+msgstr "붓을 편집합니다"
 
 #: ../app/actions/buffers-actions.c:41
 msgctxt "buffers-action"
@@ -565,7 +564,7 @@ msgstr "버퍼 붙이기(_P)"
 #: ../app/actions/buffers-actions.c:46
 msgctxt "buffers-action"
 msgid "Paste the selected buffer"
-msgstr "선택 버퍼 붙이기"
+msgstr "선택한 버퍼를 붙여넣습니다"
 
 #: ../app/actions/buffers-actions.c:51
 msgctxt "buffers-action"
@@ -575,7 +574,7 @@ msgstr "...에 버퍼 붙이기(_I)"
 #: ../app/actions/buffers-actions.c:52
 msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection"
-msgstr "선택된 버퍼를 선택안으로 붙여 넣기"
+msgstr "선택한 버퍼를 선택안으로 붙여넣습니다"
 
 #: ../app/actions/buffers-actions.c:57
 msgctxt "buffers-action"
@@ -585,17 +584,17 @@ msgstr "버퍼를 새 이미지로 붙이기(_N)"
 #: ../app/actions/buffers-actions.c:58
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new image"
-msgstr "선택된 버퍼를 새 이미지로 붙여 넣기"
+msgstr "선택한 버퍼를 새 이미지로 붙여넣습니다"
 
 #: ../app/actions/buffers-actions.c:63
 msgctxt "buffers-action"
 msgid "_Delete Buffer"
-msgstr "버퍼 지우기(_D)"
+msgstr "버퍼 삭제(_D)"
 
 #: ../app/actions/buffers-actions.c:64
 msgctxt "buffers-action"
 msgid "Delete the selected buffer"
-msgstr "선택한 버퍼 지우기"
+msgstr "선택한 버퍼를 삭제합니다"
 
 #: ../app/actions/channels-actions.c:44
 msgctxt "channels-action"
@@ -610,7 +609,7 @@ msgstr "채널 속성 편집(_E)..."
 #: ../app/actions/channels-actions.c:49
 msgctxt "channels-action"
 msgid "Edit the channel's name, color and opacity"
-msgstr "채널 이름, 색, 불투명도 편집하기"
+msgstr "채널 이름, 색, 불투명도를 편집합니다"
 
 #: ../app/actions/channels-actions.c:54
 msgctxt "channels-action"
@@ -620,7 +619,7 @@ msgstr "새 채널(_N)..."
 #: ../app/actions/channels-actions.c:55
 msgctxt "channels-action"
 msgid "Create a new channel"
-msgstr "새 채널 생성"
+msgstr "새 채널을 만듭니다"
 
 #: ../app/actions/channels-actions.c:60
 msgctxt "channels-action"
@@ -630,7 +629,7 @@ msgstr "새 채널(_N)"
 #: ../app/actions/channels-actions.c:61
 msgctxt "channels-action"
 msgid "Create a new channel with last used values"
-msgstr "마지막 사용값으로 새 채널 생성"
+msgstr "마지막 사용값으로 새 채널을 만듭니다"
 
 #: ../app/actions/channels-actions.c:66
 msgctxt "channels-action"
@@ -640,17 +639,17 @@ msgstr "채널 복제(_U)"
 #: ../app/actions/channels-actions.c:68
 msgctxt "channels-action"
 msgid "Create a duplicate of this channel and add it to the image"
-msgstr "이 채널의 복사본을 만들고 이미지에 더하기"
+msgstr "이 채널의 복사본을 만들고 이미지에 추가랍니다"
 
 #: ../app/actions/channels-actions.c:73
 msgctxt "channels-action"
 msgid "_Delete Channel"
-msgstr "채널 지우기(_D)"
+msgstr "채널 삭제(_D)"
 
 #: ../app/actions/channels-actions.c:74
 msgctxt "channels-action"
 msgid "Delete this channel"
-msgstr "채널 지우기"
+msgstr "이 채널을 삭제합니다"
 
 #: ../app/actions/channels-actions.c:79
 msgctxt "channels-action"
@@ -660,7 +659,7 @@ msgstr "채널 올리기(_R)"
 #: ../app/actions/channels-actions.c:80
 msgctxt "channels-action"
 msgid "Raise this channel one step in the channel stack"
-msgstr "채널 스택에서 이 채널을 한단계 위로 올리기"
+msgstr "채널 스택에서 이 채널을 한단계 위로 올립니다"
 
 #: ../app/actions/channels-actions.c:85
 msgctxt "channels-action"
@@ -670,7 +669,7 @@ msgstr "채널을 꼭대기로 올리기(_T)"
 #: ../app/actions/channels-actions.c:87
 msgctxt "channels-action"
 msgid "Raise this channel to the top of the channel stack"
-msgstr "채널 대화상자에서 이 채널을 꼭대기로 올리기"
+msgstr "채널 대화상자에서 이 채널을 꼭대기로 올립니다"
 
 #: ../app/actions/channels-actions.c:92
 msgctxt "channels-action"
@@ -680,7 +679,7 @@ msgstr "채널 내리기(_L)"
 #: ../app/actions/channels-actions.c:93
 msgctxt "channels-action"
 msgid "Lower this channel one step in the channel stack"
-msgstr "채널 대화상자에서 이 채널을 한단계 아래로 내리기"
+msgstr "채널 대화상자에서 이 채널을 한단계 아래로 내립니다"
 
 #: ../app/actions/channels-actions.c:98
 msgctxt "channels-action"
@@ -690,7 +689,7 @@ msgstr "채널을 바닥으로 내리기(_B)"
 #: ../app/actions/channels-actions.c:100
 msgctxt "channels-action"
 msgid "Lower this channel to the bottom of the channel stack"
-msgstr "채널을 채널 스택의 바닥으로 내리기"
+msgstr "채널을 채널 스택의 바닥으로 내립니다"
 
 #: ../app/actions/channels-actions.c:108
 msgctxt "channels-action"
@@ -700,37 +699,37 @@ msgstr "채널을 선택으로(_C)"
 #: ../app/actions/channels-actions.c:109
 msgctxt "channels-action"
 msgid "Replace the selection with this channel"
-msgstr "선택을 이 채널로 교체"
+msgstr "선택을 이 채널로 교체합니다"
 
 #: ../app/actions/channels-actions.c:114
 msgctxt "channels-action"
 msgid "_Add to Selection"
-msgstr "선택에 더하기(_A)"
+msgstr "선택영역에 추가(_A)"
 
 #: ../app/actions/channels-actions.c:115
 msgctxt "channels-action"
 msgid "Add this channel to the current selection"
-msgstr "이 채널을 현재 선택에 더하기"
+msgstr "이 채널을 현재 선택영역에 추가합니다"
 
 #: ../app/actions/channels-actions.c:120
 msgctxt "channels-action"
 msgid "_Subtract from Selection"
-msgstr "선택에서 빼기(_S)"
+msgstr "선택영역에서 빼기(_S)"
 
 #: ../app/actions/channels-actions.c:121
 msgctxt "channels-action"
 msgid "Subtract this channel from the current selection"
-msgstr "현재 선택에서 이 채널 빼기"
+msgstr "현재 선택에서 이 채널을 뺍니다"
 
 #: ../app/actions/channels-actions.c:126
 msgctxt "channels-action"
 msgid "_Intersect with Selection"
-msgstr "선택과 교집합(_I)"
+msgstr "선택영역과 겹치기(_I)"
 
 #: ../app/actions/channels-actions.c:127
 msgctxt "channels-action"
 msgid "Intersect this channel with the current selection"
-msgstr "현재 선택과 이 채널의 교집합"
+msgstr "현재 선택영역과 이 채널의 겹칩니다"
 
 #: ../app/actions/channels-commands.c:85
 #: ../app/actions/channels-commands.c:402
@@ -748,7 +747,7 @@ msgstr "채널 색상 편집"
 #: ../app/actions/channels-commands.c:91
 #: ../app/actions/channels-commands.c:123
 msgid "_Fill opacity:"
-msgstr "불투명으로 채우기(_F):"
+msgstr "불투명도 채우기(_F):"
 
 #: ../app/actions/channels-commands.c:116 ../app/core/gimpchannel.c:272
 #: ../app/widgets/gimpchanneltreeview.c:331
@@ -790,27 +789,27 @@ msgstr "색 편집(_E)..."
 #: ../app/actions/colormap-actions.c:49
 msgctxt "colormap-action"
 msgid "Edit this color"
-msgstr "색 편집"
+msgstr "이 색을 편집합니다"
 
 #: ../app/actions/colormap-actions.c:57
 msgctxt "colormap-action"
 msgid "_Add Color from FG"
-msgstr "전경에서 색 더하기(_A)"
+msgstr "전경에서 색 추가(_A)"
 
 #: ../app/actions/colormap-actions.c:58
 msgctxt "colormap-action"
 msgid "Add current foreground color"
-msgstr "현재 전경색 더하기"
+msgstr "현재 전경색 추가합니다"
 
 #: ../app/actions/colormap-actions.c:63
 msgctxt "colormap-action"
 msgid "_Add Color from BG"
-msgstr "배경에서 색 더하기(_A)"
+msgstr "배경에서 색 추가(_A)"
 
 #: ../app/actions/colormap-actions.c:64
 msgctxt "colormap-action"
 msgid "Add current background color"
-msgstr "현재 배경색 더하기"
+msgstr "현재 배경색을 추가합니다"
 
 #: ../app/actions/colormap-commands.c:73
 #, c-format
@@ -819,7 +818,7 @@ msgstr "색상표 항목 #%d 편집"
 
 #: ../app/actions/colormap-commands.c:80
 msgid "Edit Colormap Entry"
-msgstr "색상표 항목 편집"
+msgstr "색상표 항목을 편집합니다"
 
 #: ../app/actions/config-actions.c:38
 msgctxt "config-action"
@@ -829,7 +828,7 @@ msgstr " _GEGL 사용"
 #: ../app/actions/config-actions.c:39
 msgctxt "config-action"
 msgid "If possible, use GEGL for image processing"
-msgstr "가능하면 이미지 처리에 GEGL을 사용하시오"
+msgstr "가능하면 이미지 처리에 GEGL을 사용합니다"
 
 #: ../app/actions/context-actions.c:46
 msgctxt "context-action"
@@ -919,7 +918,7 @@ msgstr "기본 색(_D)"
 #: ../app/actions/context-actions.c:82
 msgctxt "context-action"
 msgid "Set foreground color to black, background color to white"
-msgstr "전경색을 검정으로, 배경색을 흰색으로"
+msgstr "전경색을 검정으로, 배경색을 흰색으로 설정합니다"
 
 #: ../app/actions/context-actions.c:87
 msgctxt "context-action"
@@ -929,7 +928,7 @@ msgstr "색 바꾸기(_W)"
 #: ../app/actions/context-actions.c:88
 msgctxt "context-action"
 msgid "Exchange foreground and background colors"
-msgstr "전경색과 배경색을 서로 바꿈"
+msgstr "전경색과 배경색을 서로 바꿉니다"
 
 #: ../app/actions/context-commands.c:426
 #, c-format
@@ -964,7 +963,7 @@ msgstr "표본 합치기(_S)"
 #: ../app/actions/cursor-info-actions.c:48
 msgctxt "cursor-info-action"
 msgid "Use the composite color of all visible layers"
-msgstr "모든 보이는 레이어의 합성색 사용"
+msgstr "모든 보이는 레이어의 합성색을 사용합니다"
 
 #: ../app/actions/data-commands.c:89 ../app/actions/documents-commands.c:344
 #: ../app/actions/file-commands.c:194 ../app/dialogs/file-open-dialog.c:232
@@ -986,7 +985,7 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:118
 #: ../app/actions/tool-options-commands.c:72
-#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1519
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1529
 #: ../app/core/gimppalette-import.c:211 ../app/core/gimppalette-load.c:224
 #: ../app/core/gimppalette.c:399 ../app/dialogs/palette-import-dialog.c:771
 #: ../app/widgets/gimpdnd-xds.c:94
@@ -1006,7 +1005,7 @@ msgstr "도구 옵션(_O)"
 #: ../app/actions/dialogs-actions.c:56
 msgctxt "dialogs-action"
 msgid "Open the tool options dialog"
-msgstr "도구 옵션 대화 열기"
+msgstr "도구 옵션 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:61
 msgctxt "dialogs-action"
@@ -1016,7 +1015,7 @@ msgstr "장치 상태(_D)"
 #: ../app/actions/dialogs-actions.c:62
 msgctxt "dialogs-action"
 msgid "Open the device status dialog"
-msgstr "장치 상태 대화 열기"
+msgstr "장치 상태 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:67
 msgctxt "dialogs-action"
@@ -1026,7 +1025,7 @@ msgstr "레이어(_L)"
 #: ../app/actions/dialogs-actions.c:68
 msgctxt "dialogs-action"
 msgid "Open the layers dialog"
-msgstr "레이어 대화 열기"
+msgstr "레이어 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:73
 msgctxt "dialogs-action"
@@ -1036,7 +1035,7 @@ msgstr "채널(_C)"
 #: ../app/actions/dialogs-actions.c:74
 msgctxt "dialogs-action"
 msgid "Open the channels dialog"
-msgstr "채널 대화 열기"
+msgstr "채널 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:79
 msgctxt "dialogs-action"
@@ -1046,7 +1045,7 @@ msgstr "경로(_P)"
 #: ../app/actions/dialogs-actions.c:80
 msgctxt "dialogs-action"
 msgid "Open the paths dialog"
-msgstr "경로 대화 열기"
+msgstr "경로 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:85
 msgctxt "dialogs-action"
@@ -1056,7 +1055,7 @@ msgstr "색상표(_M)"
 #: ../app/actions/dialogs-actions.c:86
 msgctxt "dialogs-action"
 msgid "Open the colormap dialog"
-msgstr "색상표 대화 열기"
+msgstr "색상표 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:91
 msgctxt "dialogs-action"
@@ -1066,17 +1065,17 @@ msgstr "히스토그램(_M)"
 #: ../app/actions/dialogs-actions.c:92
 msgctxt "dialogs-action"
 msgid "Open the histogram dialog"
-msgstr "히스토그램 대화 열기"
+msgstr "히스토그램 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:97
 msgctxt "dialogs-action"
 msgid "_Selection Editor"
-msgstr "선택 편집기(_S)"
+msgstr "선택영역 편집기(_S)"
 
 #: ../app/actions/dialogs-actions.c:98
 msgctxt "dialogs-action"
 msgid "Open the selection editor"
-msgstr "선택 편집기 열기"
+msgstr "선택영역 편집기를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:103
 msgctxt "dialogs-action"
@@ -1086,7 +1085,7 @@ msgstr "내비게이션(_V)"
 #: ../app/actions/dialogs-actions.c:104
 msgctxt "dialogs-action"
 msgid "Open the display navigation dialog"
-msgstr "내비게이션 대화 열기"
+msgstr "디스플레이 탐색 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:109
 msgctxt "dialogs-action"
@@ -1096,7 +1095,7 @@ msgstr "실행취소 이력(_H)"
 #: ../app/actions/dialogs-actions.c:110
 msgctxt "dialogs-action"
 msgid "Open the undo history dialog"
-msgstr "실행 취소 이력 대화 열기"
+msgstr "실행 취소 기록 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:115
 msgctxt "dialogs-action"
@@ -1106,7 +1105,7 @@ msgstr "포인터"
 #: ../app/actions/dialogs-actions.c:116
 msgctxt "dialogs-action"
 msgid "Open the pointer information dialog"
-msgstr "포인터 정보 대화 열기"
+msgstr "포인터 정보 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:121
 msgctxt "dialogs-action"
@@ -1116,7 +1115,7 @@ msgstr "표본점(_S)"
 #: ../app/actions/dialogs-actions.c:122
 msgctxt "dialogs-action"
 msgid "Open the sample points dialog"
-msgstr "표본점 대화 열기"
+msgstr "표본점 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:127
 msgctxt "dialogs-action"
@@ -1126,7 +1125,7 @@ msgstr "색(_R)"
 #: ../app/actions/dialogs-actions.c:128
 msgctxt "dialogs-action"
 msgid "Open the FG/BG color dialog"
-msgstr "전경색/배경색 대화 열기"
+msgstr "전경색/배경색 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:133
 msgctxt "dialogs-action"
@@ -1136,7 +1135,7 @@ msgstr "붓(_B)"
 #: ../app/actions/dialogs-actions.c:134
 msgctxt "dialogs-action"
 msgid "Open the brushes dialog"
-msgstr "붓 대화 열기"
+msgstr "붓 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:139
 msgctxt "dialogs-action"
@@ -1146,7 +1145,7 @@ msgstr "붓 편집기"
 #: ../app/actions/dialogs-actions.c:140
 msgctxt "dialogs-action"
 msgid "Open the brush editor"
-msgstr "붓 편집기 열기"
+msgstr "붓 편집기를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:145
 msgctxt "dialogs-action"
@@ -1156,7 +1155,7 @@ msgstr "페인트 다이나믹"
 #: ../app/actions/dialogs-actions.c:146
 msgctxt "dialogs-action"
 msgid "Open paint dynamics dialog"
-msgstr "페인트 다이나믹 대화 열기"
+msgstr "페인트 다이나믹 대화상자를 엽니디"
 
 #: ../app/actions/dialogs-actions.c:151
 msgctxt "dialogs-action"
@@ -1166,7 +1165,7 @@ msgstr "페인트 다이나믹 편집기"
 #: ../app/actions/dialogs-actions.c:152
 msgctxt "dialogs-action"
 msgid "Open the paint dynamics editor"
-msgstr "페인트 다이나믹 편집기 열기"
+msgstr "페인트 다이나믹스 편집기를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:157
 msgctxt "dialogs-action"
@@ -1176,7 +1175,7 @@ msgstr "무늬(_A)"
 #: ../app/actions/dialogs-actions.c:158
 msgctxt "dialogs-action"
 msgid "Open the patterns dialog"
-msgstr "무늬 대화 열기"
+msgstr "무늬 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:163
 msgctxt "dialogs-action"
@@ -1186,7 +1185,7 @@ msgstr "그라디언트(_G)"
 #: ../app/actions/dialogs-actions.c:164
 msgctxt "dialogs-action"
 msgid "Open the gradients dialog"
-msgstr "그라디언트 대화 열기"
+msgstr "그라디언트 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:169
 msgctxt "dialogs-action"
@@ -1196,7 +1195,7 @@ msgstr "그라디언트 편집기"
 #: ../app/actions/dialogs-actions.c:170
 msgctxt "dialogs-action"
 msgid "Open the gradient editor"
-msgstr "그라디언트 편집기 열기"
+msgstr "그라디언트 편집기를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:175
 msgctxt "dialogs-action"
@@ -1206,7 +1205,7 @@ msgstr "팔레트(_E)"
 #: ../app/actions/dialogs-actions.c:176
 msgctxt "dialogs-action"
 msgid "Open the palettes dialog"
-msgstr "팔레트 대화 열기"
+msgstr "팔레트 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:181
 msgctxt "dialogs-action"
@@ -1216,7 +1215,7 @@ msgstr "팔레트 편집기"
 #: ../app/actions/dialogs-actions.c:182
 msgctxt "dialogs-action"
 msgid "Open the palette editor"
-msgstr "팔레트 편집기 열기"
+msgstr "팔레트 편집기를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:187
 msgctxt "dialogs-action"
@@ -1226,7 +1225,7 @@ msgstr "도구 프리셋"
 #: ../app/actions/dialogs-actions.c:188
 msgctxt "dialogs-action"
 msgid "Open tool presets dialog"
-msgstr "도구 프리셋 대화 열기"
+msgstr "도구 프리셋 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:193
 msgctxt "dialogs-action"
@@ -1236,7 +1235,7 @@ msgstr "글꼴(_F)"
 #: ../app/actions/dialogs-actions.c:194
 msgctxt "dialogs-action"
 msgid "Open the fonts dialog"
-msgstr "글꼴 대화 열기"
+msgstr "글꼴 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:199
 msgctxt "dialogs-action"
@@ -1246,7 +1245,7 @@ msgstr "버퍼(_U)"
 #: ../app/actions/dialogs-actions.c:200
 msgctxt "dialogs-action"
 msgid "Open the named buffers dialog"
-msgstr "이름있는 버퍼 대화 열기"
+msgstr "이름있는 버퍼 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:205
 msgctxt "dialogs-action"
@@ -1256,7 +1255,7 @@ msgstr "이미지(_I)"
 #: ../app/actions/dialogs-actions.c:206
 msgctxt "dialogs-action"
 msgid "Open the images dialog"
-msgstr "이미지 대화 열기"
+msgstr "이미지 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:211
 msgctxt "dialogs-action"
@@ -1266,17 +1265,17 @@ msgstr "문서 이력(_Y)"
 #: ../app/actions/dialogs-actions.c:212
 msgctxt "dialogs-action"
 msgid "Open the document history dialog"
-msgstr "문서 이력 대화 열기"
+msgstr "문서 이력 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:217
 msgctxt "dialogs-action"
 msgid "_Templates"
-msgstr "서식(_T)"
+msgstr "양식(_T)"
 
 #: ../app/actions/dialogs-actions.c:218
 msgctxt "dialogs-action"
 msgid "Open the image templates dialog"
-msgstr "이미지 서식 대화 열기"
+msgstr "이미지 양식 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:223
 msgctxt "dialogs-action"
@@ -1286,17 +1285,17 @@ msgstr "오류콘솔(_N)"
 #: ../app/actions/dialogs-actions.c:224
 msgctxt "dialogs-action"
 msgid "Open the error console"
-msgstr "오류콘솔 열기"
+msgstr "오류 콘솔을 엽니다"
 
 #: ../app/actions/dialogs-actions.c:234
 msgctxt "dialogs-action"
 msgid "_Preferences"
-msgstr "기본설정(_P)"
+msgstr "기본 설정(_P)"
 
 #: ../app/actions/dialogs-actions.c:235
 msgctxt "dialogs-action"
 msgid "Open the preferences dialog"
-msgstr "기본설정 대화 열기"
+msgstr "기본 설정 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:240
 msgctxt "dialogs-action"
@@ -1306,7 +1305,7 @@ msgstr "입력장치(_I)"
 #: ../app/actions/dialogs-actions.c:241
 msgctxt "dialogs-action"
 msgid "Open the input devices editor"
-msgstr "입력장치 편집기 열기"
+msgstr "입력장치 편집기를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:246
 msgctxt "dialogs-action"
@@ -1316,7 +1315,7 @@ msgstr "키보드 단축키(_K)"
 #: ../app/actions/dialogs-actions.c:247
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
-msgstr "키보드단축키 편집기 열기"
+msgstr "키보드단축키 편집기를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:252
 msgctxt "dialogs-action"
@@ -1326,7 +1325,7 @@ msgstr "모듈(_M)"
 #: ../app/actions/dialogs-actions.c:253
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
-msgstr "모듈 관리기 대화 열기"
+msgstr "모듈 관리기 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:258
 msgctxt "dialogs-action"
@@ -1336,17 +1335,17 @@ msgstr "오늘의 팁(_T)"
 #: ../app/actions/dialogs-actions.c:259
 msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
-msgstr "김프 사용에 도움되는 팁 보이기"
+msgstr "김프 사용에 도움되는 팁을 보입니다"
 
 #: ../app/actions/dialogs-actions.c:264
 msgctxt "dialogs-action"
 msgid "_About"
-msgstr "김프에 대해(_A)"
+msgstr "정보(_A)"
 
 #: ../app/actions/dialogs-actions.c:265
 msgctxt "dialogs-action"
 msgid "About GIMP"
-msgstr "김프에 대해"
+msgstr "김프 정보입니다"
 
 #: ../app/actions/dialogs-actions.c:328
 #: ../app/dialogs/preferences-dialog.c:1944 ../app/widgets/gimptoolbox.c:555
@@ -1355,7 +1354,7 @@ msgstr "도구상자"
 
 #: ../app/actions/dialogs-actions.c:329
 msgid "Raise the toolbox"
-msgstr "도구상자를 화면 앞쪽으로 가져오기"
+msgstr "도구상자를 화면 앞쪽으로 가져옵니다"
 
 #: ../app/actions/dialogs-actions.c:333
 msgid "New Toolbox"
@@ -1363,7 +1362,7 @@ msgstr "새 도구상자"
 
 #: ../app/actions/dialogs-actions.c:334
 msgid "Create a new toolbox"
-msgstr "새 도구상자 만들기"
+msgstr "새 도구상자를 만듭니다"
 
 #: ../app/actions/dock-actions.c:45
 msgctxt "dock-action"
@@ -1373,7 +1372,7 @@ msgstr "화면으로 이동(_O)"
 #: ../app/actions/dock-actions.c:49
 msgctxt "dock-action"
 msgid "Close Dock"
-msgstr "독 닫기"
+msgstr "독을 닫습니다"
 
 #: ../app/actions/dock-actions.c:54
 msgctxt "dock-action"
@@ -1383,12 +1382,12 @@ msgstr "화면 열기(_O)..."
 #: ../app/actions/dock-actions.c:55
 msgctxt "dock-action"
 msgid "Connect to another display"
-msgstr "다른 보기 창과 연결"
+msgstr "다른 디스플레이와 연결합니다"
 
 #: ../app/actions/dock-actions.c:63
 msgctxt "dock-action"
 msgid "_Show Image Selection"
-msgstr "이미지 선택 표시(_S)"
+msgstr "이미지 선택영역 표시(_S)"
 
 #: ../app/actions/dock-actions.c:69
 msgctxt "dock-action"
@@ -1403,7 +1402,7 @@ msgstr "대화 메뉴"
 #: ../app/actions/dockable-actions.c:53
 msgctxt "dockable-action"
 msgid "_Add Tab"
-msgstr "탭 더하기(_A)"
+msgstr "탭 추가(_A)"
 
 #: ../app/actions/dockable-actions.c:55
 msgctxt "dockable-action"
@@ -1538,7 +1537,7 @@ msgstr "이미지 열기(_O)"
 #: ../app/actions/documents-actions.c:46
 msgctxt "documents-action"
 msgid "Open the selected entry"
-msgstr "선택된 항목 열기"
+msgstr "선택한 항목 열기"
 
 #: ../app/actions/documents-actions.c:51
 msgctxt "documents-action"
@@ -1578,7 +1577,7 @@ msgstr "항목 제거(_E)"
 #: ../app/actions/documents-actions.c:70
 msgctxt "documents-action"
 msgid "Remove the selected entry"
-msgstr "선택된 항목 제거"
+msgstr "선택한 항목 제거"
 
 #: ../app/actions/documents-actions.c:75
 msgctxt "documents-action"
@@ -1633,8 +1632,8 @@ msgid ""
 "Clearing the document history will permanently remove all images from the "
 "recent documents list."
 msgstr ""
-"문서 이력 지우기는 모든 프로그램의 최근 문서 목록에서 모든 항목을 영구적으로 "
-"없앰."
+"문서 기록 지우기는 모든 프로그램의 최근 문서 목록에서 모든 이미지를 영원히 제"
+"거합니다."
 
 #: ../app/actions/drawable-actions.c:45
 msgctxt "drawable-action"
@@ -1812,7 +1811,7 @@ msgstr "다이나믹 삭제(_D)"
 #: ../app/actions/dynamics-actions.c:65
 msgctxt "dynamics-action"
 msgid "Delete this dynamics"
-msgstr "다이나믹 지우기"
+msgstr "이 다이나믹 삭제"
 
 #: ../app/actions/dynamics-actions.c:70
 msgctxt "dynamics-action"
@@ -1852,7 +1851,7 @@ msgstr "편집(_E)"
 #: ../app/actions/edit-actions.c:64
 msgctxt "edit-action"
 msgid "Paste _as"
-msgstr "붙여 넣기(고급)(_A)"
+msgstr "붙여넣기(고급)(_A)"
 
 #: ../app/actions/edit-actions.c:65
 msgctxt "edit-action"
@@ -1927,7 +1926,7 @@ msgstr "마지막 픽셀 다루기 그리기 모드 및 불투명도 수정"
 #: ../app/actions/edit-actions.c:110
 msgctxt "edit-action"
 msgid "Cu_t"
-msgstr "자르기(_T)"
+msgstr "잘라내기(_T)"
 
 #: ../app/actions/edit-actions.c:111
 msgctxt "edit-action"
@@ -1953,7 +1952,7 @@ msgstr "보이는 부분 복사(_V)"
 #: ../app/actions/edit-actions.c:123
 msgctxt "edit-action"
 msgid "Copy what is visible in the selected region"
-msgstr "선택된 영역에서 보이는 부분 복사하기"
+msgstr "선택한 영역에서 보이는 부분 복사하기"
 
 #: ../app/actions/edit-actions.c:128
 msgctxt "edit-action"
@@ -1968,7 +1967,7 @@ msgstr "클립보드의 내용을 붙여넣기"
 #: ../app/actions/edit-actions.c:134
 msgctxt "edit-action"
 msgid "Paste _Into"
-msgstr "안으로 붙여 넣기(_I)"
+msgstr "안으로 붙여넣기(_I)"
 
 #: ../app/actions/edit-actions.c:136
 msgctxt "edit-action"
@@ -1983,12 +1982,12 @@ msgstr "클립보드에서(_C)"
 #: ../app/actions/edit-actions.c:142 ../app/actions/edit-actions.c:148
 msgctxt "edit-action"
 msgid "Create a new image from the content of the clipboard"
-msgstr "클립보드 내용을 새 이미지에 붙여 넣기"
+msgstr "클립보드 내용을 새 이미지에 붙여넣기"
 
 #: ../app/actions/edit-actions.c:147
 msgctxt "edit-action"
 msgid "_New Image"
-msgstr "새 이미지..(_N)"
+msgstr "새 이미지(_N)"
 
 #: ../app/actions/edit-actions.c:153
 msgctxt "edit-action"
@@ -1998,12 +1997,12 @@ msgstr "새 레이어(_L)"
 #: ../app/actions/edit-actions.c:154
 msgctxt "edit-action"
 msgid "Create a new layer from the content of the clipboard"
-msgstr "클립보드 내용으로 새 레이어에 붙여 넣기"
+msgstr "클립보드 내용으로 새 레이어에 붙여넣기"
 
 #: ../app/actions/edit-actions.c:159
 msgctxt "edit-action"
 msgid "Cu_t Named..."
-msgstr "이름붙여 자르기(_T)..."
+msgstr "이름붙여 잘라내기(_T)..."
 
 #: ../app/actions/edit-actions.c:160
 msgctxt "edit-action"
@@ -2024,12 +2023,12 @@ msgstr "선택한 픽셀을 이름있는 버퍼로 복사"
 #: ../app/actions/edit-actions.c:171
 msgctxt "edit-action"
 msgid "Copy _Visible Named..."
-msgstr "보이는부분 복사(_V)..."
+msgstr "보이는 부분 복사(_V)..."
 
 #: ../app/actions/edit-actions.c:173
 msgctxt "edit-action"
 msgid "Copy what is visible in the selected region to a named buffer"
-msgstr "선택된 영역에서 보이는 부분만 이름있는 버퍼에 복사"
+msgstr "선택한 영역에서 보이는 부분만 이름있는 버퍼에 복사"
 
 #: ../app/actions/edit-actions.c:178
 msgctxt "edit-action"
@@ -2079,7 +2078,7 @@ msgstr "무늬로 채우기(_W)"
 #: ../app/actions/edit-actions.c:206
 msgctxt "edit-action"
 msgid "Fill the selection using the active pattern"
-msgstr "현재 무늬로 선택 채우기"
+msgstr "현재 무늬로 선택영역 채우기"
 
 #: ../app/actions/edit-actions.c:304
 #, c-format
@@ -2212,7 +2211,7 @@ msgstr "선택을 파일로 저장(_E)..."
 #: ../app/actions/error-console-actions.c:65
 msgctxt "error-console-action"
 msgid "Write the selected error messages to a file"
-msgstr "선택된 오류메시지를 파일로 내보내기"
+msgstr "선택한 오류메시지를 파일로 내보내기"
 
 #: ../app/actions/error-console-commands.c:84
 msgid "Cannot save. Nothing is selected."
@@ -2279,12 +2278,12 @@ msgstr "특정 위치에서 이미지 파일 열기"
 #: ../app/actions/file-actions.c:94
 msgctxt "file-action"
 msgid "Create Template..."
-msgstr "새 서식 만들기..."
+msgstr "새 양식 만들기..."
 
 #: ../app/actions/file-actions.c:95
 msgctxt "file-action"
 msgid "Create a new template from this image"
-msgstr "이 이미지에서 새 서식 만들기"
+msgstr "이 이미지에서 새 양식 만들기"
 
 #: ../app/actions/file-actions.c:100
 msgctxt "file-action"
@@ -2404,7 +2403,7 @@ msgstr "%s 덮어쓰기(_W)"
 msgid "Export to"
 msgstr "내보내기"
 
-#: ../app/actions/file-commands.c:112 ../app/actions/file-commands.c:499
+#: ../app/actions/file-commands.c:112 ../app/actions/file-commands.c:489
 #: ../app/dialogs/file-open-dialog.c:77
 msgid "Open Image"
 msgstr "이미지 열기"
@@ -2427,26 +2426,26 @@ msgstr "이미지의 사본을 저장"
 
 #: ../app/actions/file-commands.c:363
 msgid "Create New Template"
-msgstr "새 서식 만들기"
+msgstr "새 양식 만들기"
 
 #: ../app/actions/file-commands.c:367
 msgid "Enter a name for this template"
-msgstr "이 서식의 이름을 입력하십시오"
+msgstr "이 양식의 이름을 입력하십시오"
 
-#: ../app/actions/file-commands.c:401
+#: ../app/actions/file-commands.c:397
 msgid "Revert failed. No file name associated with this image."
 msgstr "원상 복구 실패. 이 이미지에 해당되는 파일이 없습니다."
 
-#: ../app/actions/file-commands.c:414
+#: ../app/actions/file-commands.c:409
 msgid "Revert Image"
 msgstr "이미지 원상 복구"
 
-#: ../app/actions/file-commands.c:445
+#: ../app/actions/file-commands.c:435
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "'%s'을(를) '%s'(으)로 되돌리겠습니까?"
 
-#: ../app/actions/file-commands.c:451
+#: ../app/actions/file-commands.c:441
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -2454,11 +2453,11 @@ msgstr ""
 "이미지를 디스크에 저장된 상태로 되돌릴 경우, 실행 취소 정보를 포함한 바꾼 내"
 "용 모두를 잃게 됩니다."
 
-#: ../app/actions/file-commands.c:662
+#: ../app/actions/file-commands.c:652
 msgid "(Unnamed Template)"
-msgstr "(이름없는 서식)"
+msgstr "(이름없는 양식)"
 
-#: ../app/actions/file-commands.c:713
+#: ../app/actions/file-commands.c:703
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -2624,12 +2623,12 @@ msgstr "사인 곡선(_S)"
 #: ../app/actions/gradient-editor-actions.c:332
 msgctxt "gradient-editor-blending"
 msgid "Spherical (i_ncreasing)"
-msgstr "구형 (증가)(_N)"
+msgstr "구형(증가)(_N)"
 
 #: ../app/actions/gradient-editor-actions.c:337
 msgctxt "gradient-editor-blending"
 msgid "Spherical (_decreasing)"
-msgstr "구형 (감소)(_D)"
+msgstr "구형(감소)(_D)"
 
 #: ../app/actions/gradient-editor-actions.c:342
 msgctxt "gradient-editor-blending"
@@ -2644,12 +2643,12 @@ msgstr "_RGB"
 #: ../app/actions/gradient-editor-actions.c:355
 msgctxt "gradient-editor-coloring"
 msgid "HSV (_counter-clockwise hue)"
-msgstr "HSV (시계반대방향 색상)(_C)"
+msgstr "HSV(시계반대방향 색상)(_C)"
 
 #: ../app/actions/gradient-editor-actions.c:360
 msgctxt "gradient-editor-coloring"
 msgid "HSV (clockwise _hue)"
-msgstr "HSV (시계방향색상)(_H)"
+msgstr "HSV(시계방향색상)(_H)"
 
 #: ../app/actions/gradient-editor-actions.c:365
 msgctxt "gradient-editor-coloring"
@@ -2709,7 +2708,7 @@ msgstr "균등한 구획 분할(_U)..."
 
 #: ../app/actions/gradient-editor-actions.c:789
 msgid "_Delete Segment"
-msgstr "구획 지우기(_D)"
+msgstr "구획 삭제(_D)"
 
 #: ../app/actions/gradient-editor-actions.c:791
 msgid "Re-_center Segment's Midpoint"
@@ -2721,19 +2720,19 @@ msgstr "구획의 조절점 재배치(_H)"
 
 #: ../app/actions/gradient-editor-actions.c:798
 msgid "_Blending Function for Selection"
-msgstr "선택의 혼합 함수(_B)"
+msgstr "선택영역에 대한 혼합 함수(_B)"
 
 #: ../app/actions/gradient-editor-actions.c:800
 msgid "Coloring _Type for Selection"
-msgstr "선택의 배색 유형(_T)"
+msgstr "선택영역의 배색 유형(_T)"
 
 #: ../app/actions/gradient-editor-actions.c:803
 msgid "_Flip Selection"
-msgstr "선택 뒤집기(_F)"
+msgstr "선택영역 뒤집기(_F)"
 
 #: ../app/actions/gradient-editor-actions.c:805
 msgid "_Replicate Selection..."
-msgstr "선택 복제(_R)..."
+msgstr "선택영역 복제(_R)..."
 
 #: ../app/actions/gradient-editor-actions.c:807
 msgid "Split Segments at _Midpoints"
@@ -2745,15 +2744,15 @@ msgstr "균등하게 구획 분할(_U)..."
 
 #: ../app/actions/gradient-editor-actions.c:811
 msgid "_Delete Selection"
-msgstr "선택 지우기(_D)"
+msgstr "선택영역 삭제(_D)"
 
 #: ../app/actions/gradient-editor-actions.c:813
 msgid "Re-_center Midpoints in Selection"
-msgstr "선택의 중점을 다시 가운데로(_C)"
+msgstr "선택영역의 중점을 다시 가운데로(_C)"
 
 #: ../app/actions/gradient-editor-actions.c:815
 msgid "Re-distribute _Handles in Selection"
-msgstr "선택의 조절점 재배치(_H)"
+msgstr "선택영역의 조절점 재배치(_H)"
 
 #: ../app/actions/gradient-editor-commands.c:84
 msgid "Left Endpoint Color"
@@ -2781,11 +2780,11 @@ msgstr "그라디언트 구획 복제"
 
 #: ../app/actions/gradient-editor-commands.c:456
 msgid "Replicate Selection"
-msgstr "선택 복제"
+msgstr "선택영역 복제"
 
 #: ../app/actions/gradient-editor-commands.c:457
 msgid "Replicate Gradient Selection"
-msgstr "그라디언트 선택 복제"
+msgstr "그라디언트 선택영역 복제"
 
 #: ../app/actions/gradient-editor-commands.c:470
 msgid "Replicate"
@@ -2891,12 +2890,12 @@ msgstr "그라디언트를 POV-Ray로 저장"
 #: ../app/actions/gradients-actions.c:71
 msgctxt "gradients-action"
 msgid "_Delete Gradient"
-msgstr "그라디언트 지우기(_D)"
+msgstr "그라디언트 삭제(_D)"
 
 #: ../app/actions/gradients-actions.c:72
 msgctxt "gradients-action"
 msgid "Delete this gradient"
-msgstr "그라디언트 지우기"
+msgstr "그라디언트 삭제"
 
 #: ../app/actions/gradients-actions.c:77
 msgctxt "gradients-action"
@@ -3026,12 +3025,12 @@ msgstr "이미지를 모든 레이어를 포함하는 크기로 바꾸기"
 #: ../app/actions/image-actions.c:85
 msgctxt "image-action"
 msgid "F_it Canvas to Selection"
-msgstr "선택에 캔버스 크기 맞추기(_I)"
+msgstr "선택영역에 캔버스 크기 맞추기(_I)"
 
 #: ../app/actions/image-actions.c:86
 msgctxt "image-action"
 msgid "Resize the image to the extents of the selection"
-msgstr "이미지 크기를 선택 너비에 맞추기"
+msgstr "이미지 크기를 선택영역 너비에 맞추기"
 
 #: ../app/actions/image-actions.c:91
 msgctxt "image-action"
@@ -3056,12 +3055,12 @@ msgstr "이미지 내용의 크기 바꾸기"
 #: ../app/actions/image-actions.c:103
 msgctxt "image-action"
 msgid "_Crop to Selection"
-msgstr "선택 잘라내기(_C)"
+msgstr "선택영역 잘라내기(_C)"
 
 #: ../app/actions/image-actions.c:104
 msgctxt "image-action"
 msgid "Crop the image to the extents of the selection"
-msgstr "선택의 크기대로 이미지 자르기"
+msgstr "선택영역의 크기대로 이미지 잘라내기"
 
 #: ../app/actions/image-actions.c:109
 msgctxt "image-action"
@@ -3215,7 +3214,7 @@ msgstr "뒤집기"
 
 #: ../app/actions/image-commands.c:403
 #: ../app/pdb/drawable-transform-cmds.c:602
-#: ../app/pdb/drawable-transform-cmds.c:694 ../app/pdb/image-cmds.c:533
+#: ../app/pdb/drawable-transform-cmds.c:694 ../app/pdb/image-cmds.c:534
 #: ../app/pdb/item-transform-cmds.c:433 ../app/pdb/transform-tools-cmds.c:245
 #: ../app/tools/gimprotatetool.c:125
 msgid "Rotating"
@@ -3237,8 +3236,8 @@ msgstr "이미지 크기 조정"
 #: ../app/actions/image-commands.c:682 ../app/actions/layers-commands.c:1145
 #: ../app/dialogs/preferences-dialog.c:1899
 #: ../app/pdb/drawable-transform-cmds.c:783
-#: ../app/pdb/drawable-transform-cmds.c:872 ../app/pdb/image-cmds.c:405
-#: ../app/pdb/image-cmds.c:441 ../app/pdb/item-transform-cmds.c:524
+#: ../app/pdb/drawable-transform-cmds.c:872 ../app/pdb/image-cmds.c:406
+#: ../app/pdb/image-cmds.c:442 ../app/pdb/item-transform-cmds.c:524
 #: ../app/pdb/layer-cmds.c:333 ../app/pdb/layer-cmds.c:378
 #: ../app/pdb/transform-tools-cmds.c:334 ../app/tools/gimpscaletool.c:118
 msgid "Scaling"
@@ -3277,7 +3276,7 @@ msgstr "이미지 삭제(_D)"
 #: ../app/actions/images-actions.c:60
 msgctxt "images-action"
 msgid "Delete this image"
-msgstr "이미지 지우기"
+msgstr "이미지 삭제"
 
 #: ../app/actions/layers-actions.c:49
 msgctxt "layers-action"
@@ -3352,7 +3351,7 @@ msgstr "새 레이어(_N)..."
 #: ../app/actions/layers-actions.c:83
 msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
-msgstr "새 레이어를 만들어서 이미지에 더하기"
+msgstr "새 레이어를 만들어서 이미지에 추가"
 
 #: ../app/actions/layers-actions.c:88 ../app/actions/layers-actions.c:611
 msgctxt "layers-action"
@@ -3557,17 +3556,17 @@ msgstr "레이어 내용의 크기 바꾸기"
 #: ../app/actions/layers-actions.c:210
 msgctxt "layers-action"
 msgid "_Crop to Selection"
-msgstr "선택 자르기(_C)"
+msgstr "선택영역 잘라내기(_C)"
 
 #: ../app/actions/layers-actions.c:211
 msgctxt "layers-action"
 msgid "Crop the layer to the extents of the selection"
-msgstr "선택한 확장으로 레이어 자르기"
+msgstr "선택한 확장으로 레이어 잘라내기"
 
 #: ../app/actions/layers-actions.c:216
 msgctxt "layers-action"
 msgid "Add La_yer Mask..."
-msgstr "레이어 마스크 더하기(_Y)..."
+msgstr "레이어 마스크 추가(_Y)..."
 
 #: ../app/actions/layers-actions.c:218
 msgctxt "layers-action"
@@ -3577,17 +3576,17 @@ msgstr "투명도 편집에 영향을 주지 않는 마스크 추가"
 #: ../app/actions/layers-actions.c:223
 msgctxt "layers-action"
 msgid "Add Alpha C_hannel"
-msgstr "알파 채널 더하기(_H)"
+msgstr "알파 채널 추가(_H)"
 
 #: ../app/actions/layers-actions.c:224
 msgctxt "layers-action"
 msgid "Add transparency information to the layer"
-msgstr "레이어에 투명 정보 더하기"
+msgstr "레이어에 투명 정보 추가"
 
 #: ../app/actions/layers-actions.c:229
 msgctxt "layers-action"
 msgid "_Remove Alpha Channel"
-msgstr "알파채널 지우기(_R)"
+msgstr "알파 채널 제거(_R)"
 
 #: ../app/actions/layers-actions.c:230
 msgctxt "layers-action"
@@ -3652,7 +3651,7 @@ msgstr "레이어 마스크와 효과 없애기"
 #: ../app/actions/layers-actions.c:284
 msgctxt "layers-action"
 msgid "_Mask to Selection"
-msgstr "마스크를 선택으로(_M)"
+msgstr "마스크를 선택영역으로(_M)"
 
 #: ../app/actions/layers-actions.c:285
 msgctxt "layers-action"
@@ -3662,17 +3661,17 @@ msgstr "선택을 레이어 마스크로 교체"
 #: ../app/actions/layers-actions.c:290
 msgctxt "layers-action"
 msgid "_Add to Selection"
-msgstr "선택에 더하기(_A)"
+msgstr "선택영역에 추가(_A)"
 
 #: ../app/actions/layers-actions.c:291
 msgctxt "layers-action"
 msgid "Add the layer mask to the current selection"
-msgstr "레이어 마스크를 현재선택에 더하기"
+msgstr "레이어 마스크를 현재선택에 추가"
 
 #: ../app/actions/layers-actions.c:296 ../app/actions/layers-actions.c:325
 msgctxt "layers-action"
 msgid "_Subtract from Selection"
-msgstr "선택에서 빼기(_S)"
+msgstr "선택영역에서 빼기(_S)"
 
 #: ../app/actions/layers-actions.c:297
 msgctxt "layers-action"
@@ -3682,17 +3681,17 @@ msgstr "현재 선택에서 레이어 마스크 빼기"
 #: ../app/actions/layers-actions.c:302 ../app/actions/layers-actions.c:332
 msgctxt "layers-action"
 msgid "_Intersect with Selection"
-msgstr "선택과 교집합(_I)"
+msgstr "선택영역과 겹치기(_I)"
 
 #: ../app/actions/layers-actions.c:303
 msgctxt "layers-action"
 msgid "Intersect the layer mask with the current selection"
-msgstr "현재 선택과 레이어 마스크의 교집합"
+msgstr "현재 선택영역과 레이어 마스크의 교집합"
 
 #: ../app/actions/layers-actions.c:311
 msgctxt "layers-action"
 msgid "Al_pha to Selection"
-msgstr "알파를 선택으로(_P)"
+msgstr "알파를 선택영역으로(_P)"
 
 #: ../app/actions/layers-actions.c:313
 msgctxt "layers-action"
@@ -3702,7 +3701,7 @@ msgstr "선택을 레이어 알파 채널로 교체"
 #: ../app/actions/layers-actions.c:318
 msgctxt "layers-action"
 msgid "A_dd to Selection"
-msgstr "선택에 더하기(_D)"
+msgstr "선택에 추가(_D)"
 
 #: ../app/actions/layers-actions.c:320
 msgctxt "layers-action"
@@ -3717,7 +3716,7 @@ msgstr "현재 선택에서 레이어 알파 채널 빼기"
 #: ../app/actions/layers-actions.c:334
 msgctxt "layers-action"
 msgid "Intersect the layer's alpha channel with the current selection"
-msgstr "현재 선택과 레이어 알파 채널의 교집합"
+msgstr "현재 선택영역과 레이어 알파 채널의 교집합"
 
 #: ../app/actions/layers-actions.c:342
 msgctxt "layers-action"
@@ -3823,7 +3822,7 @@ msgstr "채널을 우선 선택하십시오"
 #: ../app/actions/layers-commands.c:1088
 #: ../app/dialogs/layer-add-mask-dialog.c:82
 msgid "Add Layer Mask"
-msgstr "레이어 마스크 더하기"
+msgstr "레이어 마스크 추가"
 
 #: ../app/actions/palette-editor-actions.c:43
 msgctxt "palette-editor-action"
@@ -4237,12 +4236,12 @@ msgstr "퀵마스크 켜기/끄기"
 #: ../app/actions/quick-mask-actions.c:65
 msgctxt "quick-mask-action"
 msgid "Mask _Selected Areas"
-msgstr "선택 영역 마스크(_S)"
+msgstr "선택영역 영역 마스크(_S)"
 
 #: ../app/actions/quick-mask-actions.c:70
 msgctxt "quick-mask-action"
 msgid "Mask _Unselected Areas"
-msgstr "선택 안한 영역 마스크(_U)"
+msgstr "선택영역 안한 영역 마스크(_U)"
 
 #: ../app/actions/quick-mask-commands.c:105
 msgid "Quick Mask Attributes"
@@ -4278,7 +4277,7 @@ msgstr "모든 보이는 레이어에서 합성 색 선택(_S)"
 #: ../app/actions/select-actions.c:44
 msgctxt "select-action"
 msgid "Selection Editor Menu"
-msgstr "선택 편집기 메뉴"
+msgstr "선택영역 편집기 메뉴"
 
 #: ../app/actions/select-actions.c:47
 msgctxt "select-action"
@@ -4303,7 +4302,7 @@ msgstr "없음(_N)"
 #: ../app/actions/select-actions.c:57
 msgctxt "select-action"
 msgid "Dismiss the selection"
-msgstr "선택 버리기"
+msgstr "선택영역 버리기"
 
 #: ../app/actions/select-actions.c:62
 msgctxt "select-action"
@@ -4313,7 +4312,7 @@ msgstr "반전(_I)"
 #: ../app/actions/select-actions.c:63
 msgctxt "select-action"
 msgid "Invert the selection"
-msgstr "선택 반전"
+msgstr "선택영역 반전"
 
 #: ../app/actions/select-actions.c:68
 msgctxt "select-action"
@@ -4323,7 +4322,7 @@ msgstr "띄우기(_F)"
 #: ../app/actions/select-actions.c:69
 msgctxt "select-action"
 msgid "Create a floating selection"
-msgstr "떠있는 선택 생성"
+msgstr "떠있는 선택영역 만들기"
 
 #: ../app/actions/select-actions.c:74
 msgctxt "select-action"
@@ -4333,7 +4332,7 @@ msgstr "페더(_T)..."
 #: ../app/actions/select-actions.c:76
 msgctxt "select-action"
 msgid "Blur the selection border so that it fades out smoothly"
-msgstr "선택의 테두리를 점점 사라지게 하기"
+msgstr "선택영역의 테두리를 점점 사라지게 하기"
 
 #: ../app/actions/select-actions.c:81
 msgctxt "select-action"
@@ -4353,7 +4352,7 @@ msgstr "줄이기(_H)..."
 #: ../app/actions/select-actions.c:88
 msgctxt "select-action"
 msgid "Contract the selection"
-msgstr "선택 줄이기"
+msgstr "선택영역 줄이기"
 
 #: ../app/actions/select-actions.c:93
 msgctxt "select-action"
@@ -4363,7 +4362,7 @@ msgstr "늘이기(_G)..."
 #: ../app/actions/select-actions.c:94
 msgctxt "select-action"
 msgid "Enlarge the selection"
-msgstr "선택 확장"
+msgstr "선택영역 확장"
 
 #: ../app/actions/select-actions.c:99
 msgctxt "select-action"
@@ -4388,38 +4387,38 @@ msgstr "선택을 채널로 저장"
 #: ../app/actions/select-actions.c:111
 msgctxt "select-action"
 msgid "_Stroke Selection..."
-msgstr "선택 따라그리기(_S)..."
+msgstr "선택영역 따라그리기(_S)..."
 
 #: ../app/actions/select-actions.c:112
 msgctxt "select-action"
 msgid "Paint along the selection outline"
-msgstr "선택의 윤곽선 따라그리기"
+msgstr "선택영역의 윤곽선 따라그리기"
 
 #: ../app/actions/select-actions.c:117
 msgctxt "select-action"
 msgid "_Stroke Selection"
-msgstr "선택 따라그리기(_S)"
+msgstr "선택영역 따라그리기(_S)"
 
 #: ../app/actions/select-actions.c:118
 msgctxt "select-action"
 msgid "Stroke the selection with last used values"
-msgstr "마지막 사용값으로 선택 따라그리기"
+msgstr "마지막 사용값으로 선택영역 따라그리기"
 
 #: ../app/actions/select-commands.c:156
 msgid "Feather Selection"
-msgstr "선택 페더"
+msgstr "선택영역 페더"
 
 #: ../app/actions/select-commands.c:160
 msgid "Feather selection by"
-msgstr "선택 페더 량"
+msgstr "선택영역 페더 량"
 
 #: ../app/actions/select-commands.c:197
 msgid "Shrink Selection"
-msgstr "선택 줄이기"
+msgstr "선택영역 줄이기"
 
 #: ../app/actions/select-commands.c:201
 msgid "Shrink selection by"
-msgstr "선택 줄이기 량"
+msgstr "선택영역 줄이기 량"
 
 #: ../app/actions/select-commands.c:209
 msgid "_Shrink from image border"
@@ -4427,11 +4426,11 @@ msgstr "이미지 테두리 줄이기(_S)"
 
 #: ../app/actions/select-commands.c:237
 msgid "Grow Selection"
-msgstr "선택 늘이기"
+msgstr "선택영역 늘이기"
 
 #: ../app/actions/select-commands.c:241
 msgid "Grow selection by"
-msgstr "선택 증가 량"
+msgstr "선택영역 증가 량"
 
 #: ../app/actions/select-commands.c:267
 msgid "Border Selection"
@@ -4439,7 +4438,7 @@ msgstr "테두리 선택"
 
 #: ../app/actions/select-commands.c:271
 msgid "Border selection by"
-msgstr "테두리 선택 량"
+msgstr "테두리 선택영역 량"
 
 #. Feather button
 #: ../app/actions/select-commands.c:280
@@ -4459,85 +4458,85 @@ msgstr "따라 그릴 활성 레이어나 채널이 없습니다."
 
 #: ../app/actions/select-commands.c:351
 msgid "Stroke Selection"
-msgstr "선택 따라 그리기"
+msgstr "선택영역 따라 그리기"
 
 #: ../app/actions/templates-actions.c:41
 msgctxt "templates-action"
 msgid "Templates Menu"
-msgstr "서식 메뉴"
+msgstr "양식 메뉴"
 
 #: ../app/actions/templates-actions.c:45
 msgctxt "templates-action"
 msgid "_Create Image from Template"
-msgstr "서식에서 이미지 만들기(_C)..."
+msgstr "양식에서 이미지 만들기(_C)..."
 
 #: ../app/actions/templates-actions.c:46
 msgctxt "templates-action"
 msgid "Create a new image from the selected template"
-msgstr "선택한 서식에서 새 이미지 만들기"
+msgstr "선택한 양식에서 새 이미지 만들기"
 
 #: ../app/actions/templates-actions.c:51
 msgctxt "templates-action"
 msgid "_New Template..."
-msgstr "새 서식(_N)..."
+msgstr "새 양식(_N)..."
 
 #: ../app/actions/templates-actions.c:52
 msgctxt "templates-action"
 msgid "Create a new template"
-msgstr "새 서식 생성"
+msgstr "새 양식 만들기"
 
 #: ../app/actions/templates-actions.c:57
 msgctxt "templates-action"
 msgid "D_uplicate Template..."
-msgstr "서식 복제(_U)..."
+msgstr "양식 복제(_U)..."
 
 #: ../app/actions/templates-actions.c:58
 msgctxt "templates-action"
 msgid "Duplicate this template"
-msgstr "이 서식 복제"
+msgstr "이 양식 복제"
 
 #: ../app/actions/templates-actions.c:63
 msgctxt "templates-action"
 msgid "_Edit Template..."
-msgstr "서식 편집(_E)..."
+msgstr "양식 편집(_E)..."
 
 #: ../app/actions/templates-actions.c:64
 msgctxt "templates-action"
 msgid "Edit this template"
-msgstr "이 서식 편집"
+msgstr "이 양식 편집"
 
 #: ../app/actions/templates-actions.c:69
 msgctxt "templates-action"
 msgid "_Delete Template"
-msgstr "서식 삭제(_D)"
+msgstr "양식 삭제(_D)"
 
 #: ../app/actions/templates-actions.c:70
 msgctxt "templates-action"
 msgid "Delete this template"
-msgstr "이 서식 지우기"
+msgstr "이 양식 삭제"
 
 #: ../app/actions/templates-commands.c:110
 msgid "New Template"
-msgstr "새 서식"
+msgstr "새 양식"
 
 #: ../app/actions/templates-commands.c:113
 msgid "Create a New Template"
-msgstr "새 서식 만들기"
+msgstr "새 양식 만들기"
 
 #: ../app/actions/templates-commands.c:173
 #: ../app/actions/templates-commands.c:176
 msgid "Edit Template"
-msgstr "서식 편집"
+msgstr "양식 편집"
 
 #: ../app/actions/templates-commands.c:211
 msgid "Delete Template"
-msgstr "서식 지우기"
+msgstr "양식 삭제"
 
 #: ../app/actions/templates-commands.c:237
 #, c-format
 msgid ""
 "Are you sure you want to delete template '%s' from the list and from disk?"
-msgstr "정말로 서식 '%s'을(를) 목록과 디스크에서 지우시겠습니까?"
+msgstr "정말로 양식 '%s'을(를) 목록과 디스크에서 지우시겠습니까?"
 
 #: ../app/actions/text-editor-actions.c:43
 msgctxt "text-editor-action"
@@ -4582,7 +4581,7 @@ msgstr "오른쪽에서 왼쪽으로"
 #: ../app/actions/text-editor-commands.c:62
 #: ../app/actions/text-tool-commands.c:117
 msgid "Open Text File (UTF-8)"
-msgstr "텍스트 파일 열기 (UTF-8)"
+msgstr "텍스트 파일 열기(UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:143
 #: ../app/actions/text-tool-commands.c:226 ../app/config/gimpconfig-file.c:58
@@ -4607,12 +4606,12 @@ msgstr "텍스트 도구 메뉴"
 #: ../app/actions/text-tool-actions.c:54
 msgctxt "text-tool-action"
 msgid "Input _Methods"
-msgstr "입력 방법(_M)"
+msgstr "입력기(_M)"
 
 #: ../app/actions/text-tool-actions.c:58
 msgctxt "text-tool-action"
 msgid "Cu_t"
-msgstr "자르기(_T)"
+msgstr "잘라내기(_T)"
 
 #: ../app/actions/text-tool-actions.c:63
 msgctxt "text-tool-action"
@@ -4622,7 +4621,7 @@ msgstr "복사(_C)"
 #: ../app/actions/text-tool-actions.c:68
 msgctxt "text-tool-action"
 msgid "_Paste"
-msgstr "붙이기(_P)"
+msgstr "붙여넣기(_P)"
 
 #: ../app/actions/text-tool-actions.c:73
 msgctxt "text-tool-action"
@@ -5036,12 +5035,12 @@ msgstr "선택을 경로로 교체"
 #: ../app/actions/vectors-actions.c:180
 msgctxt "vectors-action"
 msgid "_Add to Selection"
-msgstr "선택에 더하기(_A)"
+msgstr "선택에 추가(_A)"
 
 #: ../app/actions/vectors-actions.c:181
 msgctxt "vectors-action"
 msgid "Add path to selection"
-msgstr "선택에 경로 더하기"
+msgstr "선택에 경로 추가"
 
 #: ../app/actions/vectors-actions.c:186
 msgctxt "vectors-action"
@@ -5056,22 +5055,22 @@ msgstr "선택에서 경로 빼기"
 #: ../app/actions/vectors-actions.c:192
 msgctxt "vectors-action"
 msgid "_Intersect with Selection"
-msgstr "선택과의 교집합(_I)"
+msgstr "선택영역 겹치기(_I)"
 
 #: ../app/actions/vectors-actions.c:193
 msgctxt "vectors-action"
 msgid "Intersect path with selection"
-msgstr "선택과 경로의 교집합(_I)"
+msgstr "선택영역과 경로 겹치기(_I)"
 
 #: ../app/actions/vectors-actions.c:201
 msgctxt "vectors-action"
 msgid "Selecti_on to Path"
-msgstr "선택을 경로로(_O)"
+msgstr "선택영역을 경로로(_O)"
 
 #: ../app/actions/vectors-actions.c:202 ../app/actions/vectors-actions.c:208
 msgctxt "vectors-action"
 msgid "Selection to path"
-msgstr "선택을 경로로"
+msgstr "선택영역을 경로로"
 
 #: ../app/actions/vectors-actions.c:207
 msgctxt "vectors-action"
@@ -5081,7 +5080,7 @@ msgstr "경로로(_P)"
 #: ../app/actions/vectors-actions.c:213
 msgctxt "vectors-action"
 msgid "Selection to Path (_Advanced)"
-msgstr "선택을 경로로(고급)(_A)"
+msgstr "선택영역을 경로로(고급)(_A)"
 
 #: ../app/actions/vectors-actions.c:214
 msgctxt "vectors-action"
@@ -5237,52 +5236,52 @@ msgstr "화면의 픽셀을 이미지 픽셀로 표현하기"
 #: ../app/actions/view-actions.c:140
 msgctxt "view-action"
 msgid "Show _Selection"
-msgstr "선택 표시(_S)"
+msgstr "선택영역 보이기(_S)"
 
 #: ../app/actions/view-actions.c:141
 msgctxt "view-action"
 msgid "Display the selection outline"
-msgstr "선택 외곽선 보기"
+msgstr "선택영역 외곽선을 보입니다"
 
 #: ../app/actions/view-actions.c:147
 msgctxt "view-action"
 msgid "Show _Layer Boundary"
-msgstr "레이어 경계 보기(_L)"
+msgstr "레이어 경계 보이기(_L)"
 
 #: ../app/actions/view-actions.c:148
 msgctxt "view-action"
 msgid "Draw a border around the active layer"
-msgstr "현재 레이어의 테두리 그리기"
+msgstr "현재 레이어의 테두리를 그립니다"
 
 #: ../app/actions/view-actions.c:154
 msgctxt "view-action"
 msgid "Show _Guides"
-msgstr "안내선 보기(_G)"
+msgstr "안내선 보이기(_G)"
 
 #: ../app/actions/view-actions.c:155
 msgctxt "view-action"
 msgid "Display the image's guides"
-msgstr "이미지의 안내선 표시"
+msgstr "이미지의 안내선을 보입니다"
 
 #: ../app/actions/view-actions.c:161
 msgctxt "view-action"
 msgid "S_how Grid"
-msgstr "격자 보기(_H)"
+msgstr "격자 보이기(_H)"
 
 #: ../app/actions/view-actions.c:162
 msgctxt "view-action"
 msgid "Display the image's grid"
-msgstr "이미지의 격자 보기"
+msgstr "이미지의 격자를 보입니다"
 
 #: ../app/actions/view-actions.c:168
 msgctxt "view-action"
 msgid "Show Sample Points"
-msgstr "표본점 보기"
+msgstr "표본점 보이기"
 
 #: ../app/actions/view-actions.c:169
 msgctxt "view-action"
 msgid "Display the image's color sample points"
-msgstr "이미지 색표본점 표시"
+msgstr "이미지 색표본점을 표시합니다"
 
 #: ../app/actions/view-actions.c:175
 msgctxt "view-action"
@@ -5292,7 +5291,7 @@ msgstr "안내선에 맞추기(_A)"
 #: ../app/actions/view-actions.c:176
 msgctxt "view-action"
 msgid "Tool operations snap to guides"
-msgstr "도구 동작을 안내선에 맞추기"
+msgstr "도구 동작을 안내선에 맞춥니다"
 
 #: ../app/actions/view-actions.c:182
 msgctxt "view-action"
@@ -5302,7 +5301,7 @@ msgstr "격자에 맞추기(_P)"
 #: ../app/actions/view-actions.c:183
 msgctxt "view-action"
 msgid "Tool operations snap to the grid"
-msgstr "도구 동작을 격자에 붙이기"
+msgstr "도구는 격자에 붙이는 동작을 수행합니다"
 
 #: ../app/actions/view-actions.c:189
 msgctxt "view-action"
@@ -5312,7 +5311,7 @@ msgstr "캔버스 경계에 맞추기(_C)"
 #: ../app/actions/view-actions.c:190
 msgctxt "view-action"
 msgid "Tool operations snap to the canvas edges"
-msgstr "도구 동작을 캔버스 경계에 붙이기"
+msgstr "도구는 캔버스 경계에 붙이는 동작을 수행합니다"
 
 #: ../app/actions/view-actions.c:196
 msgctxt "view-action"
@@ -5322,47 +5321,47 @@ msgstr "활성 경로에 맞추기(_O)"
 #: ../app/actions/view-actions.c:197
 msgctxt "view-action"
 msgid "Tool operations snap to the active path"
-msgstr "도구 동작을 활성 경로에 맞추기"
+msgstr "도구 동작을 활성 경로에 맞춥니다"
 
 #: ../app/actions/view-actions.c:203
 msgctxt "view-action"
 msgid "Show _Menubar"
-msgstr "메뉴바 표시(_M)"
+msgstr "메뉴 표시줄 보이기(_M)"
 
 #: ../app/actions/view-actions.c:204
 msgctxt "view-action"
 msgid "Show this window's menubar"
-msgstr "메뉴바 표시"
+msgstr "창의 메뉴 표시줄을 보입니다"
 
 #: ../app/actions/view-actions.c:210
 msgctxt "view-action"
 msgid "Show R_ulers"
-msgstr "눈금자 표시(_U)"
+msgstr "눈금자 보이기(_U)"
 
 #: ../app/actions/view-actions.c:211
 msgctxt "view-action"
 msgid "Show this window's rulers"
-msgstr "이 창의 눈금자 보기"
+msgstr "이 창의 눈금자를 보입니다"
 
 #: ../app/actions/view-actions.c:217
 msgctxt "view-action"
 msgid "Show Scroll_bars"
-msgstr "스크롤바 표시(_B)"
+msgstr "스크롤 막대 표시(_B)"
 
 #: ../app/actions/view-actions.c:218
 msgctxt "view-action"
 msgid "Show this window's scrollbars"
-msgstr "스크롤 바 표시"
+msgstr "창의 스크롤 막대를 표시합니다"
 
 #: ../app/actions/view-actions.c:224
 msgctxt "view-action"
 msgid "Show S_tatusbar"
-msgstr "상태표시줄 보기(_T)"
+msgstr "상태표시줄 보이기(_T)"
 
 #: ../app/actions/view-actions.c:225
 msgctxt "view-action"
 msgid "Show this window's statusbar"
-msgstr "상태 표시줄 표시"
+msgstr "상태 표시줄을 보입니다"
 
 #: ../app/actions/view-actions.c:231
 msgctxt "view-action"
@@ -5372,7 +5371,7 @@ msgstr "전체화면(_E)"
 #: ../app/actions/view-actions.c:232
 msgctxt "view-action"
 msgid "Toggle fullscreen view"
-msgstr "전체화면보기 전환"
+msgstr "전체화면 보기로 전환합니다"
 
 #: ../app/actions/view-actions.c:238
 msgctxt "view-action"
@@ -5382,7 +5381,7 @@ msgstr "GEGL 사용"
 #: ../app/actions/view-actions.c:239
 msgctxt "view-action"
 msgid "Use GEGL to create this window's projection"
-msgstr "이 창 투사를 생성하는 데 GEGL 사용"
+msgstr "이 창 투사를 만드는 데 GEGL을 사용합니다"
 
 #: ../app/actions/view-actions.c:263
 msgctxt "view-zoom-action"
@@ -5601,62 +5600,62 @@ msgstr "화면 %s"
 msgid "Move this window to screen %s"
 msgstr "이 창을 %s 화면으로 이동하기"
 
-#: ../app/actions/windows-actions.c:95
+#: ../app/actions/windows-actions.c:93
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "창(_W)"
 
-#: ../app/actions/windows-actions.c:97
+#: ../app/actions/windows-actions.c:95
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "최근 닫은 독(_R)"
 
-#: ../app/actions/windows-actions.c:99
+#: ../app/actions/windows-actions.c:97
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "도킹가능한 대화(_D)"
 
-#: ../app/actions/windows-actions.c:102
+#: ../app/actions/windows-actions.c:100
 msgctxt "windows-action"
 msgid "Next Image"
 msgstr "다음 이미지"
 
-#: ../app/actions/windows-actions.c:103
+#: ../app/actions/windows-actions.c:101
 msgctxt "windows-action"
 msgid "Switch to the next image"
 msgstr "다음 이미지로 전환"
 
-#: ../app/actions/windows-actions.c:108
+#: ../app/actions/windows-actions.c:106
 msgctxt "windows-action"
 msgid "Previous Image"
 msgstr "이전 이미지"
 
-#: ../app/actions/windows-actions.c:109
+#: ../app/actions/windows-actions.c:107
 msgctxt "windows-action"
 msgid "Switch to the previous image"
 msgstr "이전 이미지로 전환"
 
-#: ../app/actions/windows-actions.c:117
+#: ../app/actions/windows-actions.c:115
 msgctxt "windows-action"
 msgid "Hide Docks"
 msgstr "독 숨기기"
 
-#: ../app/actions/windows-actions.c:118
+#: ../app/actions/windows-actions.c:116
 msgctxt "windows-action"
 msgid ""
 "When enabled docks and other dialogs are hidden, leaving only image windows."
 msgstr ""
 "사용 가능한 독이나 다른 대화 상자가 숨김 상태이면, 이미지 창만 남겨둡니다."
 
-#: ../app/actions/windows-actions.c:124
+#: ../app/actions/windows-actions.c:122
 msgctxt "windows-action"
 msgid "Single-Window Mode"
 msgstr "단일창 모드"
 
-#: ../app/actions/windows-actions.c:125
+#: ../app/actions/windows-actions.c:123
 msgctxt "windows-action"
 msgid "When enabled GIMP is in a single-window mode."
-msgstr "체크하면 김프가 단일창 모드로 들어감"
+msgstr "활성화하면 김프는 단일창 모드로 들어갑니다."
 
 #: ../app/base/base-enums.c:23
 msgctxt "curve-type"
@@ -5736,7 +5735,7 @@ msgstr "차이"
 #: ../app/base/base-enums.c:120
 msgctxt "layer-mode-effects"
 msgid "Addition"
-msgstr "더하기"
+msgstr "추가"
 
 #: ../app/base/base-enums.c:121
 msgctxt "layer-mode-effects"
@@ -5821,12 +5820,12 @@ msgstr "지우기"
 #: ../app/base/base-enums.c:137
 msgctxt "layer-mode-effects"
 msgid "Replace"
-msgstr "교체"
+msgstr "바꾸기"
 
 #: ../app/base/base-enums.c:138
 msgctxt "layer-mode-effects"
 msgid "Anti erase"
-msgstr "지우기 복구"
+msgstr "지우기 방지"
 
 #: ../app/base/tile-swap.c:710
 msgid ""
@@ -5837,7 +5836,7 @@ msgid ""
 msgstr ""
 "스왑 파일을 열 수 없습니다. 메모리가 부족하며, 스왑 파일도 사용할 수 없습니"
 "다. 이미지의 일부가 망가질 수도 있으니, 작업 중인 내용을 다른 이름으로 저장"
-"후 김프를 다시 시작하십시오. 그리고 기본 설정에서 스왑 디렉토리의 위치를 확인"
+"후 김프를 다시 시작하십시오. 그리고 기본 설정에서 스왑 디렉터리의 위치를 확인"
 "하십시오."
 
 #: ../app/base/tile-swap.c:725
@@ -5976,8 +5975,8 @@ msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
 "backup of your configuration has been created at '%s'."
 msgstr ""
-"파일 '%s'에 치명적인 해석 오류: 기본 값을 사용합니다. 현재 설정의 사본이 '%"
-"s'(으)로 만들어졌습니다."
+"파일 '%s'에 치명적인 해석 오류: 기본 값을 사용합니다. 현재 설정의 사본이 "
+"'%s'(으)로 만들어졌습니다."
 
 #. Not all strings defined here are used in the user interface
 #. *  (the preferences dialog mainly) and only those that are should
@@ -6009,7 +6008,7 @@ msgstr "이미지 주위를 그리는 방법을 지정하십시오."
 
 #: ../app/config/gimprc-blurbs.h:43
 msgid "How to handle embedded color profiles when opening a file."
-msgstr "파일을 열 때 삽입된 색상 프로필을 다루는 방법"
+msgstr "파일을 열 때 삽입된 색상 프로필을 다루는 방법입니다."
 
 #: ../app/config/gimprc-blurbs.h:46
 msgid "Ask for confirmation before closing an image without saving."
@@ -6073,7 +6072,7 @@ msgstr "모든 도구에서 선택한 붓을 사용합니다."
 
 #: ../app/config/gimprc-blurbs.h:160
 msgid "When enabled, the selected dynamics will be used for all tools."
-msgstr "선택된 다이나믹은 모든 도구에 쓰일 것입니다."
+msgstr "선택한 다이나믹은 모든 도구에 쓰일 것입니다."
 
 #: ../app/config/gimprc-blurbs.h:166
 msgid "When enabled, the selected gradient will be used for all tools."
@@ -6121,8 +6120,8 @@ msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
 msgstr ""
-"선택 점선(marching ants)의 속도를 지정하십시오. 이 값은 밀리초 단위입니다.(값"
-"이 작을수록 빠릅니다)"
+"선택영역 점선(marching ants)의 속도를 지정하십시오. 이 값은 밀리초 단위입니"
+"다.(값이 작을수록 빠릅니다)"
 
 #: ../app/config/gimprc-blurbs.h:221
 msgid ""
@@ -6329,19 +6328,19 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:367
 msgid "Show a tooltip when the pointer hovers over an item."
-msgstr "각 항목에 마우스가 올라갈 때 풍선 도움말 표시"
+msgstr "각 항목에 마우스가 올라갈 때 풍선 도움말을 표시합니다."
 
 #: ../app/config/gimprc-blurbs.h:370
 msgid "Use GIMP in a single-window mode."
-msgstr "단일창 모드에서 김프를 사용."
+msgstr "단일창 모드에서 김프를 사용합니다."
 
 #: ../app/config/gimprc-blurbs.h:373
 msgid "Hide docks and other windows, leaving only image windows."
-msgstr "독과 다른 창을 숨기고, 이미지 창에서만 떠남."
+msgstr "이미지 창에서 떠난 독과 다른 창을 숨깁니다."
 
 #: ../app/config/gimprc-blurbs.h:376
 msgid "What to do when the space bar is pressed in the image window."
-msgstr "이미지 창에서 스페이스바를 눌렀을 때의 동작 설정"
+msgstr "이미지 창에서 스페이스바를 눌렀을 때의 동작을 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:379
 msgid ""
@@ -6355,7 +6354,7 @@ msgstr ""
 "스왑 파일 위치를 지정하십시오. 김프는 타일 기반의 메모리 할당 정책을 사용합니"
 "다. 스왑 파일은 스왑 타일들을 신속하고 쉽게 디스크에 저장하거나 불러올 때 사"
 "용됩니다. 김프에서 큰 이미지 작업을 하면 스왑 파일이 순식간에 매우 커질 수 있"
-"다는 것을 명심하십시오. 또한  NFS에 마운트된 디렉토리에 스왑 파일을 만들게 되"
+"다는 것을 명심하십시오. 또한  NFS에 마운트된 디렉터리에 스왑 파일을 만들게 되"
 "면 속도가 엄청나게 느려질 수 있습니다. 그러므로 스왑 파일은 \"/tmp\"에 저장하"
 "는 것이 바람직합니다."
 
@@ -6386,9 +6385,9 @@ msgid ""
 "files are likely to remain, so it is best if this folder not be one that is "
 "shared by other users."
 msgstr ""
-"임시 저장 디렉토리를 지정하십시오. 김프를 실행하는 동안 사용되는 파일들이 이"
+"임시 저장 디렉터리를 지정하십시오. 김프를 실행하는 동안 사용되는 파일들이 이"
 "곳에 저장됩니다. 이 파일들은 김프를 마칠 때 대부분 사라지지만, 몇몇 파일들은 "
-"남아 있으므로 이 디렉토리는 다른 사용자와 공유하지 않는 것이 좋습니다."
+"남아 있으므로 이 디렉터리는 다른 사용자와 공유하지 않는 것이 좋습니다."
 
 #: ../app/config/gimprc-blurbs.h:413
 msgid "Sets the size of the thumbnail shown in the Open dialog."
@@ -6415,23 +6414,23 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:426
 msgid "Show the current foreground and background colors in the toolbox."
-msgstr "도구상자의 현재 전경색/배경색 표시"
+msgstr "도구상자의 현재 전경색/배경색를 표시합니다."
 
 #: ../app/config/gimprc-blurbs.h:429
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
-msgstr "도구상자에 현재 선택된 붓, 무늬, 그라디언트 표시"
+msgstr "도구상자에 현재 선택한 붓, 무늬, 그라디언트를 보입니다."
 
 #: ../app/config/gimprc-blurbs.h:432
 msgid "Show the currently active image in the toolbox."
-msgstr "도구상자에 현재 이미지 표시"
+msgstr "도구상자에 현재 이미지를 표시합니다."
 
 #: ../app/config/gimprc-blurbs.h:438
 msgid "Sets the manner in which transparency is displayed in images."
-msgstr "이미지의 투명도를 표시할 방법을 지정하십시오."
+msgstr "이미지의 투명도를 표시할 방법을 지정합니다."
 
 #: ../app/config/gimprc-blurbs.h:441
 msgid "Sets the size of the checkerboard used to display transparency."
-msgstr "투명도를 표시할 체크보드의 크기를 지정하십시오."
+msgstr "투명도를 표시할 체크보드의 크기를 지정합니다."
 
 #: ../app/config/gimprc-blurbs.h:444
 msgid ""
@@ -6473,7 +6472,7 @@ msgstr "치명적인 해석 오류"
 #: ../app/config/gimprc-deserialize.c:163
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
-msgstr "잘못된 UTF-8 문자열 (토큰 %s)"
+msgstr "잘못된 UTF-8 문자열(토큰 %s)"
 
 #: ../app/core/core-enums.c:54
 msgctxt "convert-dither-type"
@@ -6483,17 +6482,17 @@ msgstr "없음"
 #: ../app/core/core-enums.c:55
 msgctxt "convert-dither-type"
 msgid "Floyd-Steinberg (normal)"
-msgstr "Folyd-Steinberg (보통)"
+msgstr "Folyd-Steinberg(보통)"
 
 #: ../app/core/core-enums.c:56
 msgctxt "convert-dither-type"
 msgid "Floyd-Steinberg (reduced color bleeding)"
-msgstr "Folyd-Steinberg Color Dithering (색 번짐 감소)"
+msgstr "Folyd-Steinberg Color Dithering(색 번짐 감소)"
 
 #: ../app/core/core-enums.c:57
 msgctxt "convert-dither-type"
 msgid "Positioned"
-msgstr "위치한"
+msgstr "위치"
 
 #: ../app/core/core-enums.c:87
 msgctxt "convert-palette-type"
@@ -6598,7 +6597,7 @@ msgstr "칠 도구로 따라 그리기"
 #: ../app/core/core-enums.c:345
 msgctxt "join-style"
 msgid "Miter"
-msgstr "뾰족하게 (Miter)"
+msgstr "뾰족하게(Miter)"
 
 #: ../app/core/core-enums.c:346
 msgctxt "join-style"
@@ -6608,12 +6607,12 @@ msgstr "둥글게"
 #: ../app/core/core-enums.c:347
 msgctxt "join-style"
 msgid "Bevel"
-msgstr "비스듬하게 (Bevel)"
+msgstr "비스듬하게(Bevel)"
 
 #: ../app/core/core-enums.c:376
 msgctxt "cap-style"
 msgid "Butt"
-msgstr "정확하게 (Butt)"
+msgstr "정확하게(Butt)"
 
 #: ../app/core/core-enums.c:377
 msgctxt "cap-style"
@@ -6798,17 +6797,17 @@ msgstr "미리보기 없음"
 #: ../app/core/core-enums.c:655
 msgctxt "thumbnail-size"
 msgid "Normal (128x128)"
-msgstr "보통 (128x128)"
+msgstr "보통(128x128)"
 
 #: ../app/core/core-enums.c:656
 msgctxt "thumbnail-size"
 msgid "Large (256x256)"
-msgstr "큰 (256x256)"
+msgstr "크게(256x256)"
 
 #: ../app/core/core-enums.c:833
 msgctxt "undo-type"
 msgid "<<invalid>>"
-msgstr "<<부적합>>"
+msgstr "<<잘못됨>>"
 
 #: ../app/core/core-enums.c:834
 msgctxt "undo-type"
@@ -6833,7 +6832,7 @@ msgstr "이미지 회전"
 #: ../app/core/core-enums.c:838
 msgctxt "undo-type"
 msgid "Crop image"
-msgstr "이미지 자르기"
+msgstr "이미지 잘라내기"
 
 #: ../app/core/core-enums.c:839
 msgctxt "undo-type"
@@ -6889,7 +6888,7 @@ msgstr "레이어/채널 변경"
 #: ../app/core/core-enums.c:849 ../app/core/core-enums.c:880
 msgctxt "undo-type"
 msgid "Selection mask"
-msgstr "선택 마스크"
+msgstr "선택영역 마스크"
 
 #: ../app/core/core-enums.c:850 ../app/core/core-enums.c:884
 msgctxt "undo-type"
@@ -6924,12 +6923,12 @@ msgstr "항목 크기조정"
 #: ../app/core/core-enums.c:856
 msgctxt "undo-type"
 msgid "Add layer"
-msgstr "레이어 더하기"
+msgstr "레이어 추가"
 
 #: ../app/core/core-enums.c:857 ../app/core/core-enums.c:896
 msgctxt "undo-type"
 msgid "Add layer mask"
-msgstr "레이어 마스크 더하기"
+msgstr "레이어 마스크 추가"
 
 #: ../app/core/core-enums.c:858 ../app/core/core-enums.c:898
 msgctxt "undo-type"
@@ -6944,12 +6943,12 @@ msgstr "뜬 선택을 레이어로"
 #: ../app/core/core-enums.c:860
 msgctxt "undo-type"
 msgid "Float selection"
-msgstr "선택 띄움"
+msgstr "선택영역 띄움"
 
 #: ../app/core/core-enums.c:861
 msgctxt "undo-type"
 msgid "Anchor floating selection"
-msgstr "뜬 선택 고정"
+msgstr "뜬 선택영역 고정"
 
 #: ../app/core/core-enums.c:862 ../app/core/gimp-edit.c:261
 msgctxt "undo-type"
@@ -6959,7 +6958,7 @@ msgstr "붙여넣기"
 #: ../app/core/core-enums.c:863 ../app/core/gimp-edit.c:502
 msgctxt "undo-type"
 msgid "Cut"
-msgstr "자르기"
+msgstr "잘라내기"
 
 #: ../app/core/core-enums.c:864
 msgctxt "undo-type"
@@ -7095,7 +7094,7 @@ msgstr "새 채널"
 #: ../app/core/core-enums.c:901
 msgctxt "undo-type"
 msgid "Delete channel"
-msgstr "채널 지우기"
+msgstr "채널 삭제"
 
 #: ../app/core/core-enums.c:902
 msgctxt "undo-type"
@@ -7110,7 +7109,7 @@ msgstr "새 경로"
 #: ../app/core/core-enums.c:904
 msgctxt "undo-type"
 msgid "Delete path"
-msgstr "경로 지우기"
+msgstr "경로 삭제"
 
 #: ../app/core/core-enums.c:905
 msgctxt "undo-type"
@@ -7299,19 +7298,19 @@ msgstr "전역 버퍼"
 
 #: ../app/core/gimp-gradients.c:62
 msgid "FG to BG (RGB)"
-msgstr "전경을 배경으로 (RGB)"
+msgstr "전경색을 배경색으로(RGB)"
 
 #: ../app/core/gimp-gradients.c:70
 msgid "FG to BG (Hardedge)"
-msgstr "FG to BG (Hardedge)"
+msgstr "전경색을 배경색으로(Hardedge)"
 
 #: ../app/core/gimp-gradients.c:87
 msgid "FG to BG (HSV counter-clockwise)"
-msgstr "전경색을 배경색으로 (HSV 시계반대방향)"
+msgstr "전경색을 배경색으로(HSV 시계반대방향)"
 
 #: ../app/core/gimp-gradients.c:95
 msgid "FG to BG (HSV clockwise hue)"
-msgstr "전경색을 배경색으로 (HSV 시계방향 색상)"
+msgstr "전경색을 배경색으로(HSV 시계방향 색상)"
 
 #: ../app/core/gimp-gradients.c:103
 msgid "FG to Transparent"
@@ -7371,7 +7370,7 @@ msgstr "내부 프로시져"
 #. initialize  the global parasite table
 #: ../app/core/gimp.c:947
 msgid "Looking for data files"
-msgstr "데이타 파일을 찾는 중"
+msgstr "데이터 파일을 찾는 중"
 
 #: ../app/core/gimp.c:947
 msgid "Parasites"
@@ -7387,7 +7386,7 @@ msgstr "다이나믹"
 #. initialize the list of fonts
 #: ../app/core/gimp.c:976
 msgid "Fonts (this may take a while)"
-msgstr "글꼴 (약간시간이 걸릴 수 있음)"
+msgstr "글꼴(약간시간이 걸릴 수 있음)"
 
 #. initialize the module list
 #: ../app/core/gimp.c:993 ../app/dialogs/preferences-dialog.c:2775
@@ -7408,22 +7407,22 @@ msgstr[0] "\t\t%d바이트를 '%s'에서 읽을 수 없습니다: %s"
 #: ../app/core/gimpbrush-load.c:200
 #, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
-msgstr "붓 파일 '%s'에 치명적인 해석 오류: Width = 0"
+msgstr "붓 파일 '%s'에 치명적인 해석 오류: Width = 0."
 
 #: ../app/core/gimpbrush-load.c:209
 #, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
-msgstr "붓 파일 '%s'에 치명적인 해석 오류: Height = 0"
+msgstr "붓 파일 '%s'에 치명적인 해석 오류: Height = 0."
 
 #: ../app/core/gimpbrush-load.c:218
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
-msgstr "붓 파일 '%s'에 치명적인 해석 오류:  Bytes = 0"
+msgstr "붓 파일 '%s'에 치명적인 해석 오류:  Bytes = 0."
 
 #: ../app/core/gimpbrush-load.c:242
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
-msgstr "붓 파일 '%s'에 치명적인 해석 오류: 알 수 없는 심도 %d."
+msgstr "붓 파일 '%s'에 치명적인 해석 오류: 알 수 없는 깊이 %d."
 
 #: ../app/core/gimpbrush-load.c:255
 #, c-format
@@ -7707,7 +7706,7 @@ msgstr "채널 불투명도 지정"
 
 #: ../app/core/gimpchannel.c:1932 ../app/core/gimpselection.c:154
 msgid "Selection Mask"
-msgstr "선택 마스크"
+msgstr "선택영역 마스크"
 
 #: ../app/core/gimpcontext.c:639 ../app/tools/gimppaintoptions-gui.c:111
 #: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:284
@@ -7753,7 +7752,7 @@ msgid ""
 "dialog's 'Folders' section."
 msgstr ""
 "지정된 쓰기 가능한 데이터 폴더(%s)가 있지만, 해당 폴더가 실제로는 존재하지 않"
-"습니다. 해당 폴더를 생성하거나 환경 설정 대화 상자의 '폴더' 부분에서 설정을 "
+"습니다. 해당 폴더를 만들하거나 환경 설정 대화 상자의 '폴더' 부분에서 설정을 "
 "변경하십시오."
 
 #: ../app/core/gimpdatafactory.c:763
@@ -7917,7 +7916,7 @@ msgstr "출력 유형"
 #: ../app/core/gimpgradient-load.c:118 ../app/core/gimpgradient-load.c:169
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Read error in line %d."
-msgstr "색상표 파일 '%s'에 치명적 해석 오류: %d번째 줄에서 읽기 오류"
+msgstr "색상표 파일 '%s'에 치명적 해석 오류: %d번째 줄에서 읽기 오류."
 
 #: ../app/core/gimpgradient-load.c:82
 #, c-format
@@ -8052,7 +8051,7 @@ msgstr "색상표 항목 바꾸기"
 #: ../app/core/gimpimage-colormap.c:271
 msgctxt "undo-type"
 msgid "Add Color to Colormap"
-msgstr "색상표로 색상 더하기"
+msgstr "색상표로 색상 추가"
 
 #: ../app/core/gimpimage-convert.c:793
 msgid "Cannot convert image: palette is empty."
@@ -8084,7 +8083,7 @@ msgstr "인덱스된 색상으로 변환(단계 3)"
 #: ../app/core/gimpimage-crop.c:129
 msgctxt "undo-type"
 msgid "Crop Image"
-msgstr "이미지 자르기"
+msgstr "이미지 잘라내기"
 
 #: ../app/core/gimpimage-crop.c:132 ../app/core/gimpimage-resize.c:86
 msgctxt "undo-type"
@@ -8094,12 +8093,12 @@ msgstr "이미지 크기조정"
 #: ../app/core/gimpimage-guides.c:52
 msgctxt "undo-type"
 msgid "Add Horizontal Guide"
-msgstr "수평 안내선 더하기"
+msgstr "수평 안내선 추가"
 
 #: ../app/core/gimpimage-guides.c:76
 msgctxt "undo-type"
 msgid "Add Vertical Guide"
-msgstr "수직 안내선 더하기"
+msgstr "수직 안내선 추가"
 
 #: ../app/core/gimpimage-guides.c:117
 msgctxt "undo-type"
@@ -8189,7 +8188,7 @@ msgstr "퀵마스크 사용 불가"
 #: ../app/core/gimpimage-sample-points.c:53
 msgctxt "undo-type"
 msgid "Add Sample Point"
-msgstr "표본점 더하기"
+msgstr "표본점 추가"
 
 #: ../app/core/gimpimage-sample-points.c:98
 msgctxt "undo-type"
@@ -8211,60 +8210,72 @@ msgstr "이미지 크기 조절"
 msgid "Can't undo %s"
 msgstr "%s을(를) 취소할 수 없습니다"
 
-#: ../app/core/gimpimage.c:1804
+#: ../app/core/gimpimage.c:1783
+msgid " (exported)"
+msgstr " (추출됨)"
+
+#: ../app/core/gimpimage.c:1787
+msgid " (overwritten)"
+msgstr " (겹쳐써짐)"
+
+#: ../app/core/gimpimage.c:1796
+msgid " (imported)"
+msgstr "(가져옴)"
+
+#: ../app/core/gimpimage.c:1917
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "이미지 해상도 바꾸기"
 
-#: ../app/core/gimpimage.c:1856
+#: ../app/core/gimpimage.c:1969
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "이미지 단위 바꾸기"
 
-#: ../app/core/gimpimage.c:2869
+#: ../app/core/gimpimage.c:2982
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "이미지에 기생충 덧붙이기"
 
-#: ../app/core/gimpimage.c:2910
+#: ../app/core/gimpimage.c:3023
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
-msgstr "이미지에서 기생충 지우기"
+msgstr "이미지에서 기생충 제거"
 
-#: ../app/core/gimpimage.c:3619
+#: ../app/core/gimpimage.c:3732
 msgctxt "undo-type"
 msgid "Add Layer"
-msgstr "레이어더하기"
+msgstr "레이어 추가"
 
-#: ../app/core/gimpimage.c:3669 ../app/core/gimpimage.c:3689
+#: ../app/core/gimpimage.c:3782 ../app/core/gimpimage.c:3802
 msgctxt "undo-type"
 msgid "Remove Layer"
-msgstr "레이어 없애기"
+msgstr "레이어 제거"
 
-#: ../app/core/gimpimage.c:3683
+#: ../app/core/gimpimage.c:3796
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
-msgstr "뜬 선택 제거"
+msgstr "뜬 선택영역 제거"
 
-#: ../app/core/gimpimage.c:3851
+#: ../app/core/gimpimage.c:3964
 msgctxt "undo-type"
 msgid "Add Channel"
-msgstr "채널 더하기"
+msgstr "채널 추가"
 
-#: ../app/core/gimpimage.c:3889 ../app/core/gimpimage.c:3902
+#: ../app/core/gimpimage.c:4002 ../app/core/gimpimage.c:4015
 msgctxt "undo-type"
 msgid "Remove Channel"
-msgstr "채널 없애기"
+msgstr "채널 제거"
 
-#: ../app/core/gimpimage.c:3956
+#: ../app/core/gimpimage.c:4069
 msgctxt "undo-type"
 msgid "Add Path"
-msgstr "경로 더하기"
+msgstr "경로 추가"
 
-#: ../app/core/gimpimage.c:3987
+#: ../app/core/gimpimage.c:4100
 msgctxt "undo-type"
 msgid "Remove Path"
-msgstr "경로 없애기"
+msgstr "경로 제거"
 
 #: ../app/core/gimpimagefile.c:697 ../app/dialogs/preferences-dialog.c:1711
 msgid "Folder"
@@ -8306,7 +8317,7 @@ msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
 msgstr[0] "%d × %d 픽셀"
 
-#: ../app/core/gimpimagefile.c:797 ../app/display/gimpdisplayshell-title.c:336
+#: ../app/core/gimpimagefile.c:797 ../app/display/gimpdisplayshell-title.c:317
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -8330,16 +8341,22 @@ msgstr "항목에 기생충 덧붙이기"
 #: ../app/core/gimpitem.c:1876 ../app/core/gimpitem.c:1883
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
-msgstr "항목에서 기생충 지우기"
+msgstr "항목에서 기생충 제거"
 
 #: ../app/core/gimpitem-exclusive.c:81
 msgid "Set Item Exclusive Visible"
 msgstr "항목을 배타적으로 표시"
 
+#: ../app/core/gimpitem-exclusive.c:172
+#, fuzzy
+#| msgid "Set Item Exclusive Visible"
+msgid "Set Item Exclusive Linked"
+msgstr "항목을 배타적으로 표시"
+
 #: ../app/core/gimplayer-floating-sel.c:95
 msgctxt "undo-type"
 msgid "Anchor Floating Selection"
-msgstr "뜬 선택 고정"
+msgstr "뜬 선택영역 고정"
 
 #: ../app/core/gimplayer-floating-sel.c:126 ../app/core/gimplayer.c:620
 msgid ""
@@ -8442,7 +8459,7 @@ msgstr "지정한 레이어와 크기가 다른 레이어 마크스를 더할 �
 #: ../app/core/gimplayer.c:1465
 msgctxt "undo-type"
 msgid "Add Layer Mask"
-msgstr "레이어마스크 더하기"
+msgstr "레이어마스크 추가"
 
 #: ../app/core/gimplayer.c:1583
 msgctxt "undo-type"
@@ -8457,12 +8474,12 @@ msgstr "레이어마스크 적용"
 #: ../app/core/gimplayer.c:1754
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
-msgstr "레이어마스크 지우기"
+msgstr "레이어마스크 삭제"
 
 #: ../app/core/gimplayer.c:1873
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
-msgstr "알파채널 더하기"
+msgstr "알파채널 추가"
 
 #: ../app/core/gimplayer.c:1927
 msgctxt "undo-type"
@@ -8608,27 +8625,27 @@ msgstr "잠시만 기다려 주십시오."
 #: ../app/core/gimpselection.c:155
 msgctxt "undo-type"
 msgid "Move Selection"
-msgstr "선택 이동"
+msgstr "선택영역 이동"
 
 #: ../app/core/gimpselection.c:156
 msgctxt "undo-type"
 msgid "Stroke Selection"
-msgstr "선택 따라그리기"
+msgstr "선택영역 따라그리기"
 
 #: ../app/core/gimpselection.c:172
 msgctxt "undo-type"
 msgid "Feather Selection"
-msgstr "선택 페더"
+msgstr "선택영역 페더"
 
 #: ../app/core/gimpselection.c:173
 msgctxt "undo-type"
 msgid "Sharpen Selection"
-msgstr "선택 선명하게"
+msgstr "선택영역 선명하게"
 
 #: ../app/core/gimpselection.c:174
 msgctxt "undo-type"
 msgid "Select None"
-msgstr "선택 없음"
+msgstr "선택영역 없음"
 
 #: ../app/core/gimpselection.c:175
 msgctxt "undo-type"
@@ -8638,7 +8655,7 @@ msgstr "모두 선택"
 #: ../app/core/gimpselection.c:176
 msgctxt "undo-type"
 msgid "Invert Selection"
-msgstr "선택 반전"
+msgstr "선택영역 반전"
 
 #: ../app/core/gimpselection.c:177
 msgctxt "undo-type"
@@ -8648,12 +8665,12 @@ msgstr "테두리 선택"
 #: ../app/core/gimpselection.c:178
 msgctxt "undo-type"
 msgid "Grow Selection"
-msgstr "선택 늘이기"
+msgstr "선택영역 늘이기"
 
 #: ../app/core/gimpselection.c:179
 msgctxt "undo-type"
 msgid "Shrink Selection"
-msgstr "선택 줄이기"
+msgstr "선택영역 줄이기"
 
 #: ../app/core/gimpselection.c:286
 msgid "There is no selection to stroke."
@@ -8665,12 +8682,12 @@ msgstr "선택한 영역이 비어있으므로, 잘라넣기나 복사를 할 �
 
 #: ../app/core/gimpselection.c:847
 msgid "Cannot float selection because the selected region is empty."
-msgstr "선택된 영역이 비어있으므로, 띄울 수 없습니다."
+msgstr "선택한 영역이 비어있으므로, 띄울 수 없습니다."
 
 #: ../app/core/gimpselection.c:854
 msgctxt "undo-type"
 msgid "Float Selection"
-msgstr "선택 띄우기"
+msgstr "선택영역 띄우기"
 
 #: ../app/core/gimpselection.c:870
 msgid "Floated Layer"
@@ -8682,20 +8699,20 @@ msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
 msgstr ""
-"연귀가 실제 연결 지점에서 연귀한계*선폭보다 길게 확장될 경우, 연귀 연결을 빗"
-"각 연결로 변환"
+"연귀가 실제 연결 지점에서 연귀한계*선폭보다 길게 확장할 경우, 연귀 연결을 빗"
+"각 연결로 변환합니다."
 
 #: ../app/core/gimptemplate.c:129
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
-msgstr "점-대-점 모드가 아닐때 좌표 출력에 사용할 단위."
+msgstr "점대점 모드가 아닐때 좌표 출력에 사용할 단위."
 
 #: ../app/core/gimptemplate.c:136
 msgid "The horizontal image resolution."
-msgstr "이미지 가로 해상도"
+msgstr "이미지 가로 해상도입니다."
 
 #: ../app/core/gimptemplate.c:142
 msgid "The vertical image resolution."
-msgstr "이미지 세로 해상도."
+msgstr "이미지 세로 해상도입니다."
 
 #: ../app/core/gimpunit.c:60
 msgctxt "unit-singular"
@@ -8705,7 +8722,7 @@ msgstr "픽셀"
 #: ../app/core/gimpunit.c:60
 msgctxt "unit-plural"
 msgid "pixels"
-msgstr "픽셀들"
+msgstr "픽셀"
 
 #: ../app/core/gimpunit.c:64
 msgctxt "unit-singular"
@@ -8789,7 +8806,7 @@ msgstr "채널 이름(_N):"
 
 #: ../app/dialogs/channel-options-dialog.c:175
 msgid "Initialize from _selection"
-msgstr "선택 초기화(_S)"
+msgstr "선택영역 초기화(_S)"
 
 #: ../app/dialogs/convert-dialog.c:125
 msgid "Indexed Color Conversion"
@@ -8874,7 +8891,7 @@ msgstr "이력"
 
 #: ../app/dialogs/dialogs.c:331
 msgid "Image Templates"
-msgstr "이미지 서식"
+msgstr "이미지 양식"
 
 #: ../app/dialogs/dialogs.c:358
 msgid "Histogram"
@@ -8886,7 +8903,7 @@ msgstr "선택"
 
 #: ../app/dialogs/dialogs.c:362
 msgid "Selection Editor"
-msgstr "선택 편집기"
+msgstr "선택영역 편집기"
 
 #: ../app/dialogs/dialogs.c:366
 msgid "Undo"
@@ -8939,7 +8956,7 @@ msgstr "위치 열기"
 
 #: ../app/dialogs/file-open-location-dialog.c:109
 msgid "Enter location (URI):"
-msgstr "위치 입력 (URI):"
+msgstr "위치 입력(URI):"
 
 #: ../app/dialogs/file-save-dialog.c:105
 msgid "Export Image"
@@ -8988,7 +9005,7 @@ msgstr "잘못된 확장자"
 
 #: ../app/dialogs/file-save-dialog.c:602
 msgid "The given file extension does not match the chosen file type."
-msgstr "입력한 파일 확장자명은 선택된 파일의 형식과 일치하지 않습니다."
+msgstr "입력한 파일 확장자명은 선택한 파일의 형식과 일치하지 않습니다."
 
 #: ../app/dialogs/file-save-dialog.c:606
 msgid "Do you want to save the image using this name anyway?"
@@ -9043,11 +9060,11 @@ msgstr "필요에 따라 확장"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:103
 msgid "Clipped to image"
-msgstr "이미지에 맞게 자르기"
+msgstr "이미지에 맞게 잘라내기"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:106
 msgid "Clipped to bottom layer"
-msgstr "맨 아래 레이어에 맞게 자르기"
+msgstr "맨 아래 레이어에 맞게 잘라내기"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:114
 msgid "Merge within active _group only"
@@ -9064,7 +9081,7 @@ msgstr "새 이미지 만들기"
 #: ../app/dialogs/image-new-dialog.c:135
 #: ../app/dialogs/preferences-dialog.c:2009
 msgid "_Template:"
-msgstr "서식(_T):"
+msgstr "양식(_T):"
 
 #: ../app/dialogs/image-new-dialog.c:308
 msgid "Confirm Image Size"
@@ -9154,7 +9171,7 @@ msgstr "마칠 때 키보드 단축키 저장(_A)"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:84
 msgid "Add a Mask to the Layer"
-msgstr "레이어에 마스크 더하기"
+msgstr "레이어에 마스크 추가"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:112
 msgid "Initialize Layer Mask to:"
@@ -9351,7 +9368,7 @@ msgstr "미리보기"
 
 #: ../app/dialogs/palette-import-dialog.c:382
 msgid "The selected source contains no colors."
-msgstr "선택된 원본에는 아무런 색상이 없습니다."
+msgstr "선택한 원본에는 아무런 색상이 없습니다."
 
 #: ../app/dialogs/preferences-dialog.c:266
 msgid "Reset All Preferences"
@@ -9415,7 +9432,7 @@ msgstr "상태표시줄 표시(_T)"
 
 #: ../app/dialogs/preferences-dialog.c:1284
 msgid "Show s_election"
-msgstr "선택 표시(_E)"
+msgstr "선택영역 표시(_E)"
 
 #: ../app/dialogs/preferences-dialog.c:1287
 msgid "Show _layer boundary"
@@ -9729,7 +9746,7 @@ msgstr "기본으로 \"점 대 점\" 사용(_D)"
 
 #: ../app/dialogs/preferences-dialog.c:2088
 msgid "Marching _ants speed:"
-msgstr "선택의 점선이 움직이는 속도(_A):"
+msgstr "선택영역의 점선이 움직이는 속도(_A):"
 
 #. Zoom & Resize Behavior
 #: ../app/dialogs/preferences-dialog.c:2092
@@ -9764,7 +9781,7 @@ msgstr "스페이스바를 누르고 있는 동안(_W):"
 #. Mouse Pointers
 #: ../app/dialogs/preferences-dialog.c:2121
 msgid "Mouse Pointers"
-msgstr "마우스 커서"
+msgstr "마우스 포인터"
 
 #: ../app/dialogs/preferences-dialog.c:2125
 msgid "Show _brush outline"
@@ -9995,7 +10012,7 @@ msgstr "창 관리 설정"
 
 #: ../app/dialogs/preferences-dialog.c:2638
 msgid "Hint for _docks and toolbox:"
-msgstr "독 및 도구상자 힌트(_D)"
+msgstr "독 및 도구상자 힌트(_D):"
 
 #: ../app/dialogs/preferences-dialog.c:2641
 msgid "Focus"
@@ -10040,7 +10057,7 @@ msgstr "스왑 폴더:"
 
 #: ../app/dialogs/preferences-dialog.c:2704
 msgid "Select Swap Folder"
-msgstr "스왑 디렉토리 선택"
+msgstr "스왑 디렉터리 선택"
 
 #: ../app/dialogs/preferences-dialog.c:2739
 msgid "Brush Folders"
@@ -10308,7 +10325,7 @@ msgstr "다음 팁(_N)"
 #. a link to the related section in the user manual
 #: ../app/dialogs/tips-dialog.c:193
 msgid "Learn more"
-msgstr "조금더 배우기"
+msgstr "좀 더 배우기"
 
 #. This is a special string to specify the language identifier to
 #. look for in the gimp-tips.xml file. Please translate the C in it
@@ -10447,7 +10464,7 @@ msgstr "단위"
 #. Selection Bounding Box
 #: ../app/display/gimpcursorview.c:256
 msgid "Selection Bounding Box"
-msgstr "선택 경계 상자"
+msgstr "선택영역 경계 상자"
 
 #. Width
 #: ../app/display/gimpcursorview.c:292
@@ -10469,7 +10486,7 @@ msgstr "이미지 메뉴 열기"
 
 #: ../app/display/gimpdisplayshell.c:622
 msgid "Zoom image when window size changes"
-msgstr "창 크기 변경시 이미지 확대/축소"
+msgstr "창 크기를 바꿀 때 이미지 확대/축소"
 
 #: ../app/display/gimpdisplayshell.c:651
 msgid "Toggle Quick Mask"
@@ -10479,8 +10496,8 @@ msgstr "퀵마스크 전환"
 msgid "Navigate the image display"
 msgstr "이미지 화면을 둘러보기"
 
-#: ../app/display/gimpdisplayshell.c:742
-#: ../app/display/gimpdisplayshell.c:1320 ../app/widgets/gimptoolbox.c:256
+#: ../app/display/gimpdisplayshell.c:746
+#: ../app/display/gimpdisplayshell.c:1325 ../app/widgets/gimptoolbox.c:256
 msgid "Drop image files here to open them"
 msgstr "이미지를 이곳에 끌어놓으면 이미지가 열립니다."
 
@@ -10543,7 +10560,7 @@ msgstr "새 경로 끌어서-놓기"
 #: ../app/display/gimpdisplayshell-dnd.c:449 ../app/tools/gimpblendtool.c:173
 #: ../app/tools/gimpbucketfilltool.c:136 ../app/tools/gimpimagemaptool.c:279
 msgid "Cannot modify the pixels of layer groups."
-msgstr "레이어 그룹의 픽셀을 바꿀 수 없음"
+msgstr "레이어 그룹의 픽셀을 바꿀 수 없습니다."
 
 #: ../app/display/gimpdisplayshell-dnd.c:355
 #: ../app/display/gimpdisplayshell-dnd.c:457 ../app/tools/gimpblendtool.c:180
@@ -10551,7 +10568,7 @@ msgstr "레이어 그룹의 픽셀을 바꿀 수 없음"
 #: ../app/tools/gimpimagemaptool.c:286 ../app/tools/gimppainttool.c:266
 #: ../app/tools/gimptransformtool.c:246 ../app/tools/gimptransformtool.c:1066
 msgid "The active layer's pixels are locked."
-msgstr "활성 레이어의 픽셀이 잠김"
+msgstr "활성 레이어의 픽셀이 잠겼습니다."
 
 #: ../app/display/gimpdisplayshell-dnd.c:535
 #: ../app/widgets/gimplayertreeview.c:725
@@ -10602,31 +10619,19 @@ msgstr "확대 배율:"
 msgid "Zoom:"
 msgstr "확대:"
 
-#: ../app/display/gimpdisplayshell-title.c:301
+#: ../app/display/gimpdisplayshell-title.c:282
 msgid "(modified)"
 msgstr "(수정됨)"
 
-#: ../app/display/gimpdisplayshell-title.c:306
+#: ../app/display/gimpdisplayshell-title.c:287
 msgid "(clean)"
 msgstr "(수정안됨)"
 
-#: ../app/display/gimpdisplayshell-title.c:357
-#: ../app/display/gimpdisplayshell-title.c:370
+#: ../app/display/gimpdisplayshell-title.c:338
+#: ../app/display/gimpdisplayshell-title.c:351
 #: ../app/widgets/gimpactiongroup.c:860
 msgid "(none)"
 msgstr "(없음)"
-
-#: ../app/display/gimpdisplayshell-title.c:499
-msgid " (exported)"
-msgstr " (추출됨)"
-
-#: ../app/display/gimpdisplayshell-title.c:501
-msgid " (overwritten)"
-msgstr " (겹쳐써짐)"
-
-#: ../app/display/gimpdisplayshell-title.c:507
-msgid " (imported)"
-msgstr "(가져옴)"
 
 #: ../app/display/gimpstatusbar.c:356
 #, c-format
@@ -10647,16 +10652,16 @@ msgstr "%s 플러그인이 성공적으로 적용되었습니다."
 msgid "%s plug-In could not open image"
 msgstr "%s 플러그인을 이용해 이미지를 열 수 없습니다."
 
-#: ../app/file/file-open.c:526
+#: ../app/file/file-open.c:530
 msgid "Image doesn't contain any layers"
 msgstr "이미지에 레이어가 없습니다."
 
-#: ../app/file/file-open.c:579
+#: ../app/file/file-open.c:583
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "'%s' 열기 실패: %s"
 
-#: ../app/file/file-open.c:686
+#: ../app/file/file-open.c:690
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -10668,7 +10673,7 @@ msgstr ""
 msgid "Unknown file type"
 msgstr "알 수 없는 이미지 유형"
 
-#: ../app/file/file-save.c:219
+#: ../app/file/file-save.c:221
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "%s 플러그인을 이용해 이미지를 저장할 수 없습니다."
@@ -11156,11 +11161,11 @@ msgstr "벡터 개체 %d은(는) ID %d 스트로크를 포함하고 있지 않�
 #: ../app/pdb/gimppdb.c:410
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong type for argument #%d. Expected %"
-"s, got %s."
+"Procedure '%s' has been called with a wrong type for argument #%d. Expected "
+"%s, got %s."
 msgstr ""
-"'%s' 프로시저는 인수 %d 에 대해 잘못된 형식의 값을 호출하였습니다. %s 대신 %"
-"s 가 옴."
+"'%s' 프로시저는 인수 %d에 대해 잘못된 형식의 값을 호출하였습니다. %s 대신 %s"
+"이(가) 있습니다."
 
 #: ../app/pdb/gimppdbcontext.c:89
 #: ../app/tools/gimpforegroundselectoptions.c:79
@@ -11179,17 +11184,17 @@ msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
-"'%s' 프로시저는 반환값 '%s'(#%d)에 대해 잘못된 형식의 값을 반환하였습니다. %"
-"s 제외, %s 수락"
+"'%s' 프로시저는 반환값 '%s'(#%d)에 대해 잘못된 형식의 값을 반환하였습니다. "
+"%s 값을 기대했지만 , %s 값이 왔습니다."
 
 #: ../app/pdb/gimpprocedure.c:654
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#%"
-"d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
 "'%s' 프로시저는 인수 '%s' (#%d)에 대해 잘못된 형식의 값을 호출하였습니다. %s "
-"제외, %s 수락"
+"값을 기대했지만, %s 값이 왔습니다."
 
 #: ../app/pdb/gimpprocedure.c:687
 #, c-format
@@ -11239,13 +11244,13 @@ msgstr ""
 #: ../app/pdb/gimpprocedure.c:765
 #, c-format
 msgid ""
-"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
-"s). This value is out of range."
+"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
+"%s). This value is out of range."
 msgstr ""
 "'%s' 프로시저는 '%s'을(를) '%s' (#%d, type %s)의 인수로 호출하였습니다. 이 값"
 "은 범위를 벗어난 값입니다."
 
-#: ../app/pdb/image-cmds.c:2360
+#: ../app/pdb/image-cmds.c:2365
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr "이미지 해상도가 범위를 넘었으므로, 기본 해상도를 대신 사용합니다."
@@ -11262,7 +11267,7 @@ msgstr "레이어 이동"
 #: ../app/pdb/text-layer-cmds.c:91
 #, c-format
 msgid "Failed to create text layer"
-msgstr "텍스트 레이어를 생성하지 못했습니다."
+msgstr "텍스트 레이어를 만드는데 실패했습니다"
 
 #: ../app/pdb/text-layer-cmds.c:164 ../app/pdb/text-layer-cmds.c:274
 #: ../app/pdb/text-layer-cmds.c:353 ../app/pdb/text-layer-cmds.c:426
@@ -11302,7 +11307,7 @@ msgstr "경로 스트로크 뒤집기"
 #: ../app/pdb/vectors-cmds.c:694 ../app/pdb/vectors-cmds.c:817
 #: ../app/pdb/vectors-cmds.c:1037
 msgid "Add path stroke"
-msgstr "경로 스트로크 더하기"
+msgstr "경로 실선 추가"
 
 #: ../app/pdb/vectors-cmds.c:870 ../app/pdb/vectors-cmds.c:923
 #: ../app/pdb/vectors-cmds.c:984
@@ -11375,7 +11380,7 @@ msgstr "\"%s\" 플러그인 실행 실패"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:229
 msgid "Searching Plug-Ins"
-msgstr "플러그인 찾기"
+msgstr "플러그인 검색 중"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:284
 msgid "Resource configuration"
@@ -11462,7 +11467,7 @@ msgstr ""
 
 #: ../app/text/gimptext-compat.c:105 ../app/tools/gimptexttool.c:1401
 msgid "Add Text Layer"
-msgstr "텍스트 레이어 더하기"
+msgstr "텍스트 레이어 추가"
 
 #: ../app/text/gimptextlayer.c:143
 msgid "Text Layer"
@@ -11564,7 +11569,7 @@ msgstr "흐름"
 
 #: ../app/tools/gimpalignoptions.c:91
 msgid "Reference image object a layer will be aligned on"
-msgstr "참조 이미지 개체: 레이어는 정렬될 것입니다."
+msgstr "정렬할 레이어에 있는 참조 이미지 객체"
 
 #: ../app/tools/gimpalignoptions.c:98
 msgid "Horizontal offset for distribution"
@@ -11804,7 +11809,7 @@ msgstr "영향을 받는 영역 (%s)"
 
 #: ../app/tools/gimpbucketfilloptions.c:248
 msgid "Fill whole selection"
-msgstr "전체 선택 채우기"
+msgstr "전체 선택영역 채우기"
 
 #: ../app/tools/gimpbucketfilloptions.c:249
 msgid "Fill similar colors"
@@ -11847,7 +11852,7 @@ msgstr "색상으로 선택"
 
 #: ../app/tools/gimpbycolorselecttool.c:68
 msgid "Select by Color Tool: Select regions with similar colors"
-msgstr "색상으로 선택 도구: 비슷한 색상을 기준으로 영역을 선택합니다."
+msgstr "색상으로 선택영역 도구: 비슷한 색상을 기준으로 영역을 선택합니다."
 
 #: ../app/tools/gimpbycolorselecttool.c:69
 msgid "_By Color Select"
@@ -11864,7 +11869,7 @@ msgstr "Cage 변형"
 
 #: ../app/tools/gimpcagetool.c:153
 msgid "Cage Transform: Deform a selection with a cage"
-msgstr "골조 변형: 골조로 선택 변형"
+msgstr "골조 변형: 골조로 선택영역 변형"
 
 #: ../app/tools/gimpcagetool.c:154
 msgid "_Cage Transform"
@@ -12172,7 +12177,7 @@ msgstr "컨발브 유형 (%s)"
 #: ../app/tools/gimpcropoptions.c:76
 #: ../app/tools/gimprectangleselectoptions.c:77
 msgid "Dim everything outside selection"
-msgstr "선택 외의 모든 부분을 어둡게"
+msgstr "선택영역 외의 모든 부분을 어둡게"
 
 #: ../app/tools/gimpcropoptions.c:82
 msgid "Crop only currently selected layer"
@@ -12290,7 +12295,7 @@ msgstr "무채화 도구는 RGB 색상 레이어에서만 동작."
 
 #: ../app/tools/gimpdesaturatetool.c:193
 msgid "Choose shade of gray based on:"
-msgstr "기본으로 사용될 회색 계조를 선택하십시오.:"
+msgstr "기본으로 사용할 회색 계조를 선택하십시오.:"
 
 #: ../app/tools/gimpdodgeburntool.c:73
 msgid "Dodge / Burn"
@@ -12349,12 +12354,12 @@ msgstr "노출"
 
 #: ../app/tools/gimpeditselectiontool.c:242
 msgid "Move Selection"
-msgstr "선택 이동"
+msgstr "선택영역 이동"
 
 #: ../app/tools/gimpeditselectiontool.c:246
 #: ../app/tools/gimpeditselectiontool.c:1241
 msgid "Move Floating Selection"
-msgstr "떠있는 선택 이동"
+msgstr "떠있는 선택영역 이동"
 
 #: ../app/tools/gimpeditselectiontool.c:455
 #: ../app/tools/gimpeditselectiontool.c:732
@@ -12367,7 +12372,7 @@ msgstr "타원 선택"
 
 #: ../app/tools/gimpellipseselecttool.c:67
 msgid "Ellipse Select Tool: Select an elliptical region"
-msgstr "타원 선택 도구: 타원형으로 영역을 선택합니다."
+msgstr "타원 선택영역 도구: 타원형으로 영역을 선택합니다."
 
 #: ../app/tools/gimpellipseselecttool.c:68
 msgid "_Ellipse Select"
@@ -12398,7 +12403,7 @@ msgstr "%s 배경색을 가져옵니다."
 #: ../app/tools/gimperasertool.c:145
 #, c-format
 msgid "Anti erase  (%s)"
-msgstr "지우기 복구 (%s)"
+msgstr "지우기 방지 (%s)"
 
 #: ../app/tools/gimpflipoptions.c:66
 msgid "Direction of flipping"
@@ -12464,12 +12469,12 @@ msgid ""
 "Smaller values give a more accurate selection border but may introduce holes "
 "in the selection"
 msgstr ""
-"작은 값은 조금더 정확한 선택 테두리를 만들 수 있습니다. 하지만 선택에 구멍들"
-"을 만들 수도 있습니다."
+"작은 값은 조금더 정확한 선택영역 테두리를 만들 수 있습니다. 하지만 선택에 구"
+"멍들을 만들 수도 있습니다."
 
 #: ../app/tools/gimpforegroundselectoptions.c:112
 msgid "Color of selection preview mask"
-msgstr "선택 미리 보기 마스크 색상"
+msgstr "선택영역 미리 보기 마스크 색상"
 
 #: ../app/tools/gimpforegroundselectoptions.c:124
 msgid "Sensitivity for brightness component"
@@ -12529,7 +12534,7 @@ msgstr "전경 선택"
 
 #: ../app/tools/gimpforegroundselecttool.c:145
 msgid "Foreground Select Tool: Select a region containing foreground objects"
-msgstr "물체 선택 도구: 물체를 포함한 영역을 선택합니다."
+msgstr "물체 선택영역 도구: 물체를 포함한 영역을 선택합니다."
 
 #: ../app/tools/gimpforegroundselecttool.c:146
 msgid "F_oreground Select"
@@ -12555,7 +12560,8 @@ msgstr "물체 선택"
 #: ../app/tools/gimpfreeselecttool.c:197
 msgid ""
 "Free Select Tool: Select a hand-drawn region with free and polygonal segments"
-msgstr "자유 선택 도구: 손으로 그린 듯 자유로운 선과 직선을 이용한 영역 선택"
+msgstr ""
+"자유 선택영역 도구: 손으로 그린 듯 자유로운 선과 직선을 이용한 영역 선택"
 
 #: ../app/tools/gimpfreeselecttool.c:198
 msgid "_Free Select"
@@ -12589,7 +12595,7 @@ msgstr "퍼지 선택"
 
 #: ../app/tools/gimpfuzzyselecttool.c:66
 msgid "Fuzzy Select Tool: Select a contiguous region on the basis of color"
-msgstr "퍼지 선택 도구: 색상을 기준으로 연속적인 영역을 선택합니다."
+msgstr "퍼지 선택영역 도구: 색상을 기준으로 연속적인 영역을 선택합니다."
 
 #: ../app/tools/gimpfuzzyselecttool.c:67
 msgid "Fu_zzy Select"
@@ -12786,7 +12792,7 @@ msgstr "잉크(_K)"
 
 #: ../app/tools/gimpiscissorsoptions.c:68
 msgid "Display future selection segment as you drag a control node"
-msgstr "제어 노드를 끌면서 미래 선택 선분 보기"
+msgstr "제어 노드를 끌면서 미래 선택영역 선분 보기"
 
 #: ../app/tools/gimpiscissorsoptions.c:127
 msgid "Interactive boundary"
@@ -12798,7 +12804,8 @@ msgstr "가위"
 
 #: ../app/tools/gimpiscissorstool.c:276
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
-msgstr "가위 선택 도구: 지능적인 경계 검출 기능을 이용해 모양을 선택합니다."
+msgstr ""
+"가위 선택영역 도구: 지능적인 경계 검출 기능을 이용해 모양을 선택합니다."
 
 #: ../app/tools/gimpiscissorstool.c:277
 msgid "Intelligent _Scissors"
@@ -12952,7 +12959,7 @@ msgstr "측정(_M)"
 
 #: ../app/tools/gimpmeasuretool.c:247
 msgid "Add Guides"
-msgstr "안내선 더하기"
+msgstr "안내선 추가"
 
 #: ../app/tools/gimpmeasuretool.c:313
 msgid "Drag to create a line"
@@ -13006,7 +13013,7 @@ msgstr "현재 레이어 이동"
 
 #: ../app/tools/gimpmoveoptions.c:144
 msgid "Move selection"
-msgstr "선택 이동"
+msgstr "선택영역 이동"
 
 #: ../app/tools/gimpmoveoptions.c:148
 msgid "Pick a path"
@@ -13045,7 +13052,7 @@ msgstr "안내선 이동:"
 
 #: ../app/tools/gimpmovetool.c:548
 msgid "Remove Guide"
-msgstr "안내선 지우기"
+msgstr "안내선 제거"
 
 #: ../app/tools/gimpmovetool.c:548
 msgid "Cancel Guide"
@@ -13053,7 +13060,7 @@ msgstr "안내선 취소"
 
 #: ../app/tools/gimpmovetool.c:554
 msgid "Add Guide: "
-msgstr "안내선 더하기"
+msgstr "안내선 추가"
 
 #: ../app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush Tool: Paint smooth strokes using a brush"
@@ -13243,11 +13250,11 @@ msgstr "왼쪽 위 구석의 Y 좌표"
 
 #: ../app/tools/gimprectangleoptions.c:151
 msgid "Width of selection"
-msgstr "선택 너비"
+msgstr "선택영역 너비"
 
 #: ../app/tools/gimprectangleoptions.c:160
 msgid "Height of selection"
-msgstr "선택 높이"
+msgstr "선택영역 높이"
 
 #: ../app/tools/gimprectangleoptions.c:169
 msgid "Unit of top left corner coordinate"
@@ -13255,7 +13262,7 @@ msgstr "왼쪽 위 구석 좌표의 단위"
 
 #: ../app/tools/gimprectangleoptions.c:178
 msgid "Unit of selection size"
-msgstr "선택 크기 단위"
+msgstr "선택영역 크기 단위"
 
 #: ../app/tools/gimprectangleoptions.c:187
 msgid "Enable lock of aspect ratio, width, height or size"
@@ -13279,7 +13286,7 @@ msgstr "고정 너비, 높이, 크기의 단위"
 
 #: ../app/tools/gimprectangleoptions.c:317
 msgid "Expand selection from center outwards"
-msgstr "중앙으로부터 선택 확장"
+msgstr "중앙으로부터 선택영역 확장"
 
 #. Current, as in what is currently in use.
 #: ../app/tools/gimprectangleoptions.c:761
@@ -13333,7 +13340,7 @@ msgstr "사각 선택"
 
 #: ../app/tools/gimprectangleselecttool.c:169
 msgid "Rectangle Select Tool: Select a rectangular region"
-msgstr "사각 선택 도구: 사각형 모양으로 영역을 선택합니다."
+msgstr "사각 선택영역 도구: 사각형 모양으로 영역을 선택합니다."
 
 #: ../app/tools/gimprectangleselecttool.c:170
 msgid "_Rectangle Select"
@@ -13353,7 +13360,7 @@ msgstr "모든 보이는 레이어에서 기본 선택"
 
 #: ../app/tools/gimpregionselectoptions.c:101
 msgid "Selection criterion"
-msgstr "선택 기준"
+msgstr "선택영역 기준"
 
 #: ../app/tools/gimpregionselectoptions.c:204
 msgid "Select transparent areas"
@@ -13361,7 +13368,7 @@ msgstr "투명한 영역 선택"
 
 #: ../app/tools/gimpregionselectoptions.c:226
 msgid "Select by:"
-msgstr "선택 :"
+msgstr "선택영역 :"
 
 #: ../app/tools/gimpregionselecttool.c:165
 msgid "Move the mouse to change threshold"
@@ -13417,7 +13424,7 @@ msgstr "%d x %d 비율로 크기 조정"
 
 #: ../app/tools/gimpselectionoptions.c:84
 msgid "Enable feathering of selection edges"
-msgstr "선택 외각에 페더링 사용"
+msgstr "선택영역 외각에 페더링 사용"
 
 #: ../app/tools/gimpselectionoptions.c:90
 msgid "Radius of feathering"
@@ -13449,19 +13456,19 @@ msgstr "현재 선택에서 빼려면 클릭후 드래그하십시오."
 
 #: ../app/tools/gimpselectiontool.c:286
 msgid "Click-Drag to intersect with the current selection"
-msgstr "현재 선택과 교차하는 부분만 남기려면 클릭후 드래그하십시오."
+msgstr "현재 선택영역과 교차하는 부분만 남기려면 클릭후 드래그하십시오."
 
 #: ../app/tools/gimpselectiontool.c:296
 msgid "Click-Drag to move the selection mask"
-msgstr "선택 마스크를 이동시키려면 클릭후 드래그하십시오."
+msgstr "선택영역 마스크를 이동시키려면 클릭후 드래그하십시오."
 
 #: ../app/tools/gimpselectiontool.c:304
 msgid "Click-Drag to move the selected pixels"
-msgstr "선택된 픽셀을 이동시키려면 클릭후 드래그하십시오."
+msgstr "선택한 픽셀을 이동시키려면 클릭후 드래그하십시오."
 
 #: ../app/tools/gimpselectiontool.c:308
 msgid "Click-Drag to move a copy of the selected pixels"
-msgstr "선택된 픽셀의 복사본을 이동시키려면 클릭후 드래그하십시오."
+msgstr "선택한 픽셀의 복사본을 이동시키려면 클릭후 드래그하십시오."
 
 #: ../app/tools/gimpselectiontool.c:312
 msgid "Click to anchor the floating selection"
@@ -13597,7 +13604,7 @@ msgstr "상자:"
 
 #: ../app/tools/gimptextoptions.c:609
 msgid "Language:"
-msgstr "언어"
+msgstr "언어:"
 
 #: ../app/tools/gimptexttool.c:191
 msgid "Text"
@@ -13637,7 +13644,7 @@ msgstr ""
 "해당 레이어를 편집하거나 해당 레이어의 텍스트 속성을 가진 새 텍스트 레이어를 "
 "만들 수 있습니다."
 
-#: ../app/tools/gimptexttool-editor.c:1172
+#: ../app/tools/gimptexttool-editor.c:1180
 msgid "GIMP Text Editor"
 msgstr "김프 텍스트 편집기"
 
@@ -13784,7 +13791,7 @@ msgid ""
 "%s  Subtract\n"
 "%s  Intersect"
 msgstr ""
-"경로를 선택으로\n"
+"경로를 선택영역으로\n"
 "%s  더하기\n"
 "%s  빼기\n"
 "%s  교집합"
@@ -13792,7 +13799,7 @@ msgstr ""
 #. Create a selection from the current path
 #: ../app/tools/gimpvectoroptions.c:189
 msgid "Selection from Path"
-msgstr "경로를 선택으로 만들기"
+msgstr "경로로부터 선택영역 만들기"
 
 #: ../app/tools/gimpvectortool.c:161
 msgid "Paths Tool: Create and edit paths"
@@ -13808,11 +13815,11 @@ msgstr "활성 경로가 잠겨 있습니다."
 
 #: ../app/tools/gimpvectortool.c:340
 msgid "Add Stroke"
-msgstr "획 더하기"
+msgstr "실선 추가"
 
 #: ../app/tools/gimpvectortool.c:365
 msgid "Add Anchor"
-msgstr "고정점 더하기"
+msgstr "연결점 추가"
 
 #: ../app/tools/gimpvectortool.c:391
 msgid "Insert Anchor"
@@ -13848,11 +13855,11 @@ msgstr "모서리 변환"
 
 #: ../app/tools/gimpvectortool.c:597
 msgid "Delete Anchor"
-msgstr "고정점 지우기"
+msgstr "고정점 삭제"
 
 #: ../app/tools/gimpvectortool.c:620
 msgid "Delete Segment"
-msgstr "구획 지우기"
+msgstr "구획 삭제"
 
 #: ../app/tools/gimpvectortool.c:842
 msgid "Move Anchors"
@@ -13917,7 +13924,7 @@ msgstr "고정점을 삭제하려면 클릭하십시오."
 
 #: ../app/tools/gimpvectortool.c:1300
 msgid "Click to connect this anchor with the selected endpoint"
-msgstr "이 고정점을 선택된 끝점과 연결하려면 클릭하십시오."
+msgstr "이 고정점을 선택한 끝점과 연결하려면 클릭하십시오."
 
 #: ../app/tools/gimpvectortool.c:1305
 msgid "Click to open up the path"
@@ -14043,7 +14050,7 @@ msgstr "경로 따라 그리기"
 #: ../app/vectors/gimpvectors.c:216
 msgctxt "undo-type"
 msgid "Path to Selection"
-msgstr "경로를 선택으로"
+msgstr "경로를 선택영역으로"
 
 #: ../app/vectors/gimpvectors.c:217
 msgctxt "undo-type"
@@ -14123,55 +14130,55 @@ msgstr "'%s'에서 경로를 들여올 수 없습니다: %s"
 
 #: ../app/widgets/gimpactioneditor.c:69
 msgid "_Search:"
-msgstr "찾기(_S):"
+msgstr "검색(_S):"
 
 #: ../app/widgets/gimpactiongroup.c:857
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpactionview.c:337
+#: ../app/widgets/gimpactionview.c:338
 #: ../app/widgets/gimpcontrollereditor.c:341
 msgid "Action"
 msgstr "동작"
 
-#: ../app/widgets/gimpactionview.c:366
+#: ../app/widgets/gimpactionview.c:367
 msgid "Shortcut"
 msgstr "단축키"
 
-#: ../app/widgets/gimpactionview.c:392
+#: ../app/widgets/gimpactionview.c:393
 msgid "Name"
 msgstr "이름"
 
-#: ../app/widgets/gimpactionview.c:632 ../app/widgets/gimpactionview.c:832
+#: ../app/widgets/gimpactionview.c:633 ../app/widgets/gimpactionview.c:841
 msgid "Changing shortcut failed."
-msgstr "단축키 변경 실패"
+msgstr "단축키 변경에 실패했습니다."
 
-#: ../app/widgets/gimpactionview.c:669
+#: ../app/widgets/gimpactionview.c:670
 msgid "Conflicting Shortcuts"
 msgstr "단축키 충돌"
 
-#: ../app/widgets/gimpactionview.c:675
+#: ../app/widgets/gimpactionview.c:676
 msgid "_Reassign shortcut"
 msgstr "단축키 재설정(_R)"
 
-#: ../app/widgets/gimpactionview.c:690
+#: ../app/widgets/gimpactionview.c:691
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr "단축키 \"%s\"은(는) 이미 \"%s\"(\"%s\" 그룹)에 할당되어 있습니다."
 
-#: ../app/widgets/gimpactionview.c:694
+#: ../app/widgets/gimpactionview.c:695
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr "재설정된 단축키는 \"%s\"에서 제거될 것입니다."
 
-#: ../app/widgets/gimpactionview.c:767
+#: ../app/widgets/gimpactionview.c:776
 msgid "Invalid shortcut."
-msgstr "잘못된 단축키"
+msgstr "잘못된 단축키입니다."
 
-#: ../app/widgets/gimpactionview.c:856
+#: ../app/widgets/gimpactionview.c:865
 msgid "Removing shortcut failed."
-msgstr "단축키 제거 실패"
+msgstr "단축키 제거에 실패했습니다."
 
 #: ../app/widgets/gimpbrusheditor.c:166
 msgid "Spikes"
@@ -14197,13 +14204,13 @@ msgid "Percentage of width of brush"
 msgstr "붓 너비의 백분율"
 
 #: ../app/widgets/gimpbufferview.c:179 ../app/widgets/gimpbufferview.c:264
-#: ../app/widgets/gimpeditor.c:748
+#: ../app/widgets/gimpeditor.c:747
 msgid "(None)"
 msgstr "(없음)"
 
 #: ../app/widgets/gimpcolordialog.c:149
 msgid "Add the current color to the color history"
-msgstr "현재 색상을 색상 이력에 더하기"
+msgstr "현재 색상을 색상 이력에 추가"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:154
 msgid "Available Filters"
@@ -14225,17 +14232,17 @@ msgstr "활성 필터"
 msgid "Reset the selected filter to default values"
 msgstr "선택한 필터를 기본 값으로 초기화"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:496
+#: ../app/widgets/gimpcolordisplayeditor.c:503
 #, c-format
 msgid "Add '%s' to the list of active filters"
-msgstr "활성 필터 목록에 '%s' 더하기"
+msgstr "활성 필터 목록에 '%s' 추가"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:533
+#: ../app/widgets/gimpcolordisplayeditor.c:540
 #, c-format
 msgid "Remove '%s' from the list of active filters"
-msgstr "현재 필터 목록에서 '%s' 지우기"
+msgstr "활성 필터 목록에서 '%s' 제거"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:564
+#: ../app/widgets/gimpcolordisplayeditor.c:571
 msgid "No filter selected"
 msgstr "선택한 필터 없음"
 
@@ -14745,7 +14752,7 @@ msgstr "파일이 존재합니다."
 
 #: ../app/widgets/gimpdnd-xds.c:227
 msgid "_Replace"
-msgstr "교체(_R)"
+msgstr "바꾸기(_R)"
 
 #: ../app/widgets/gimpdnd-xds.c:238
 #, c-format
@@ -14754,7 +14761,7 @@ msgstr "'%s' 파일 이름이 이미 존재합니다."
 
 #: ../app/widgets/gimpdnd-xds.c:243
 msgid "Do you want to replace it with the image you are saving?"
-msgstr "지금 저장하는 이미지로 파일을 대체하시겠습니까?"
+msgstr "지금 저장하는 이미지로 파일을 바꾸시겠습니까?"
 
 #. String used to separate dockables, e.g. "Tool Options, Layers"
 #: ../app/widgets/gimpdock.h:34
@@ -14817,7 +14824,7 @@ msgstr "점차 사라짐"
 
 #: ../app/widgets/gimperrordialog.c:150
 msgid "Too many error messages!"
-msgstr "너무 많은 오류 메세지가 있습니다!"
+msgstr "너무 많은 오류 메시지가 있습니다!"
 
 #: ../app/widgets/gimperrordialog.c:151
 msgid "Messages are redirected to stderr."
@@ -14924,7 +14931,7 @@ msgstr "끌기: 이동"
 #: ../app/widgets/gimpgradienteditor.c:1294
 #, c-format
 msgid "%s-Click: extend selection"
-msgstr "%s-클릭: 선택 확장"
+msgstr "%s-클릭: 선택영역 확장"
 
 #: ../app/widgets/gimpgradienteditor.c:1252
 #: ../app/widgets/gimpgradienteditor.c:1265
@@ -14934,7 +14941,7 @@ msgstr "클릭: 선택"
 #: ../app/widgets/gimpgradienteditor.c:1278
 #: ../app/widgets/gimpgradienteditor.c:1300
 msgid "Click: select    Drag: move"
-msgstr "클릭: 선택    끌기: 이동"
+msgstr "클릭: 선택영역    끌기: 이동"
 
 #: ../app/widgets/gimpgradienteditor.c:1515
 #: ../app/widgets/gimpgradienteditor.c:1523
@@ -15020,7 +15027,7 @@ msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
 msgstr ""
-"도움말 추가 패키지를 설치하거나 온라인 버전을 사용하도록 설정을 변경하십시오."
+"도움말 추가 패키지를 설치하거나 온라인 버전을 사용하도록 설정을 바꾸십시오."
 
 #: ../app/widgets/gimphistogrameditor.c:99
 msgid "Mean:"
@@ -15060,16 +15067,16 @@ msgid ""
 "Replace the current image comment with the default comment set in "
 "Edit→Preferences→Default Image."
 msgstr ""
-"편집→기본설정→기본 이미지 메뉴에서 현재 이미지의 설명을 기본 설명으로 교체합"
+"편집→기본 설정→기본 이미지 메뉴에서 현재 이미지의 설명을 기본 설명으로 교체합"
 "니다."
 
 #: ../app/widgets/gimpimageprofileview.c:200
 msgid "Querying..."
-msgstr "요청중..."
+msgstr "요청 중..."
 
 #: ../app/widgets/gimpimagepropview.c:120
 msgid "Size in pixels:"
-msgstr "Size in pixels:"
+msgstr "픽셀 단위 크기:"
 
 #: ../app/widgets/gimpimagepropview.c:123
 msgid "Print size:"
@@ -15235,11 +15242,11 @@ msgstr "파일에서 설정 가져오기"
 
 #: ../app/widgets/gimpsettingseditor.c:203
 msgid "Export the selected settings to a file"
-msgstr "선택된 설정을 파일로 내보내기"
+msgstr "선택한 설정을 파일로 내보내기"
 
 #: ../app/widgets/gimpsettingseditor.c:212
 msgid "Delete the selected settings"
-msgstr "선택된 설정 삭제하기"
+msgstr "선택한 설정 삭제하기"
 
 #: ../app/widgets/gimpsizebox.c:453
 #, c-format
@@ -15351,11 +15358,11 @@ msgstr "파일 '%s'에 잘못된 UTF-8 데이터가 있습니다."
 
 #: ../app/widgets/gimptexteditor.c:222
 msgid "_Use selected font"
-msgstr "선택된 글꼴 사용(_U)"
+msgstr "선택한 글꼴 사용(_U)"
 
 #: ../app/widgets/gimptextstyleeditor.c:206
 msgid "Change font of selected text"
-msgstr "선택된 텍스트의 글꼴 바꾸기"
+msgstr "선택한 텍스트의 글꼴 바꾸기"
 
 #: ../app/widgets/gimptextstyleeditor.c:217
 msgid "Change size of selected text"
@@ -15368,11 +15375,11 @@ msgstr "선택한 텍스트의 스타일 지우기"
 #: ../app/widgets/gimptextstyleeditor.c:247
 #: ../app/widgets/gimptextstyleeditor.c:256
 msgid "Change color of selected text"
-msgstr "선택한 텍스트의 색상 변경하기"
+msgstr "선택한 텍스트의 색상 바꾸기"
 
 #: ../app/widgets/gimptextstyleeditor.c:272
 msgid "Change kerning of selected text"
-msgstr "선택한 텍스트의 자간 변경하기"
+msgstr "선택한 텍스트의 자간 바꾸기"
 
 #: ../app/widgets/gimptextstyleeditor.c:288
 msgid "Change baseline of selected text"
@@ -15400,8 +15407,8 @@ msgid ""
 "Click to update preview\n"
 "%s-Click to force update even if preview is up-to-date"
 msgstr ""
-"미리 보기를 갱신하려면 클릭하십시오.\n"
-"%s-클릭을 하면 미리 보기가 최신이더라도 강제로 갱신합니다."
+"미리 보기를 새로 고치려면 클릭하십시오.\n"
+"%s-클릭을 하면 미리 보기가 최신이더라도 강제로 새로 고칩니다."
 
 #: ../app/widgets/gimpthumbbox.c:347
 msgid "Pr_eview"
@@ -15409,7 +15416,7 @@ msgstr "미리보기(_E)"
 
 #: ../app/widgets/gimpthumbbox.c:404 ../app/widgets/gimpthumbbox.c:468
 msgid "No selection"
-msgstr "선택 없음"
+msgstr "선택영역 없음"
 
 #: ../app/widgets/gimpthumbbox.c:596 ../app/widgets/gimpthumbbox.c:617
 #, c-format
@@ -15418,7 +15425,7 @@ msgstr "미리보기 %d / %d"
 
 #: ../app/widgets/gimpthumbbox.c:730 ../app/widgets/gimpthumbbox.c:740
 msgid "Creating preview..."
-msgstr "미리보기 생성 중..."
+msgstr "미리보기를 만드는 중..."
 
 #: ../app/widgets/gimptoolbox-color-area.c:79
 msgid ""
@@ -15430,7 +15437,7 @@ msgstr ""
 "전경색과 배경색.\n"
 "검정/흰 정사각형은 전경색과 배경색을 기본값으로 초기화시킵니다.\n"
 "화살표는 전경색과 배경색을 서로 맞바꿉니다.\n"
-"각 색상이 있는 부분을 클릭하면, 색상 선택 대화상자가 열립니다."
+"각 색상이 있는 부분을 클릭하면, 색상 선택영역 대화상자가 열립니다."
 
 #: ../app/widgets/gimptoolbox-color-area.c:140
 msgid "Change Foreground Color"
@@ -15507,7 +15514,7 @@ msgstr "도구 프리셋 복구..."
 
 #: ../app/widgets/gimptooloptionseditor.c:218
 msgid "Delete Tool Preset..."
-msgstr "도구 프리셋 지우기..."
+msgstr "도구 프리셋 삭제..."
 
 #: ../app/widgets/gimptoolpreseteditor.c:148
 msgid "Icon:"
@@ -15577,11 +15584,11 @@ msgstr "경로 스트로크 잠금"
 
 #: ../app/widgets/gimpviewablebox.c:87
 msgid "Open the brush selection dialog"
-msgstr "붓 선택 대화상자 표시"
+msgstr "붓 선택영역 대화상자 표시"
 
 #: ../app/widgets/gimpviewablebox.c:151
 msgid "Open the dynamics selection dialog"
-msgstr "다이나믹 선택 대화 열기"
+msgstr "다이나믹 선택영역 대화 열기"
 
 #: ../app/widgets/gimpviewablebox.c:216
 msgid "Open the pattern selection dialog"
@@ -15593,11 +15600,11 @@ msgstr "그라디언트 대화상자 표시"
 
 #: ../app/widgets/gimpviewablebox.c:401
 msgid "Open the palette selection dialog"
-msgstr "팔레트 선택 대화상자 열기"
+msgstr "팔레트 선택영역 대화상자 열기"
 
 #: ../app/widgets/gimpviewablebox.c:466
 msgid "Open the font selection dialog"
-msgstr "글꼴 선택 대화상자 표시"
+msgstr "글꼴 선택영역 대화상자 표시"
 
 #: ../app/widgets/gimpwidgets-utils.c:595
 #, c-format
@@ -15667,7 +15674,7 @@ msgstr "배경색 지정"
 #: ../app/widgets/widgets-enums.c:121
 msgctxt "color-pick-mode"
 msgid "Add to palette"
-msgstr "팔레트에 더하기"
+msgstr "팔레트에 추가"
 
 #: ../app/widgets/widgets-enums.c:178
 msgctxt "histogram-scale"
