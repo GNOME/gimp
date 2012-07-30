@@ -146,7 +146,7 @@ gimp_paned_box_init (GimpPanedBox *paned_box)
   gtk_label_set_line_wrap (GTK_LABEL (paned_box->p->instructions), TRUE);
   gtk_label_set_justify (GTK_LABEL (paned_box->p->instructions),
                          GTK_JUSTIFY_CENTER);
-  gtk_widget_set_size_request (paned_box->p->instructions, 100, 0);
+  gtk_widget_set_size_request (paned_box->p->instructions, 16, 0);
   gimp_label_set_attributes (GTK_LABEL (paned_box->p->instructions),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
