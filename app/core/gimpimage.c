@@ -1270,20 +1270,12 @@ gimp_image_get_proj_format (GimpProjectable *projectable)
     {
     case GIMP_RGB:
     case GIMP_INDEXED:
-#if 0
-      /* XXX use real format once the legacy projection is gone */
-      return gimp_image_get_format (image, GIMP_RGB, GIMP_PRECISION_U8, TRUE);
-#else
-      return babl_format ("R'G'B'A u8");
-#endif
+      return gimp_image_get_format (image, GIMP_RGB,
+                                    gimp_image_get_precision (image), TRUE);
 
     case GIMP_GRAY:
-#if 0
-      /* XXX use real format once the legacy projection is gone */
-      return gimp_image_get_format (image, GIMP_GRAY, GIMP_PRECISION_U8, TRUE);
-#else
-      return babl_format ("Y'A u8");
-#endif
+      return gimp_image_get_format (image, GIMP_GRAY,
+                                    gimp_image_get_precision (image), TRUE);
     }
 
   g_assert_not_reached ();
