@@ -163,12 +163,13 @@ gimp_edit_paste (GimpImage    *image,
 {
   GimpLayer     *layer;
   GimpImageType  type;
-  gint           center_x;
-  gint           center_y;
-  gint           offset_x;
-  gint           offset_y;
+  gint           image_width;
+  gint           image_height;
   gint           width;
   gint           height;
+  gint           offset_x;
+  gint           offset_y;
+  gboolean       clamp_to_image = TRUE;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), NULL);
@@ -192,6 +193,23 @@ gimp_edit_paste (GimpImage    *image,
   if (! layer)
     return NULL;
 
+  image_width  = gimp_image_get_width  (image);
+  image_height = gimp_image_get_height (image);
+
+  width  = gimp_item_get_width  (GIMP_ITEM (layer));
+  height = gimp_item_get_height (GIMP_ITEM (layer));
+
+  if (viewport_width  == image_width &&
+      viewport_height == image_height)
+    {
+      /* if the whole image is visible, act as if there was no viewport */
+
+      viewport_x      = 0;
+      viewport_y      = 0;
+      viewport_width  = 0;
+      viewport_height = 0;
+    }
+
   if (drawable)
     {
       /*  if pasting to a drawable  */
@@ -206,9 +224,13 @@ gimp_edit_paste (GimpImage    *image,
       have_mask = gimp_item_mask_bounds (GIMP_ITEM (drawable),
                                          &x1, &y1, &x2, &y2);
 
-      if (! have_mask         &&
-          viewport_width  > 0 &&
+      if (! have_mask         && /* if we have no mask */
+          viewport_width  > 0 && /* and we have a viewport */
           viewport_height > 0 &&
+          (width  < (x2 - x1) || /* and the paste is smaller than the target */
+           height < (y2 - y1)) &&
+
+          /* and the viewport intersects with the target */
           gimp_rectangle_intersect (viewport_x, viewport_y,
                                     viewport_width, viewport_height,
                                     off_x, off_y,
@@ -216,43 +238,53 @@ gimp_edit_paste (GimpImage    *image,
                                     &paste_x, &paste_y,
                                     &paste_width, &paste_height))
         {
-          center_x = paste_x + paste_width  / 2;
-          center_y = paste_y + paste_height / 2;
+          /*  center on the viewport  */
+
+          offset_x = paste_x + (paste_width - width)  / 2;
+          offset_y = paste_y + (paste_height- height) / 2;
         }
       else
         {
-          center_x = off_x + (x1 + x2) / 2;
-          center_y = off_y + (y1 + y2) / 2;
+          /*  otherwise center on the target  */
+
+          offset_x = off_x + ((x1 + x2) - width)  / 2;
+          offset_y = off_y + ((y1 + y2) - height) / 2;
+
+          /*  and keep it that way  */
+          clamp_to_image = FALSE;
         }
     }
-  else if (viewport_width > 0 && viewport_height > 0)
+  else if (viewport_width  > 0 &&  /* if we have a viewport */
+           viewport_height > 0 &&
+           (width  < image_width || /* and the paste is       */
+            height < image_height)) /* smaller than the image */
     {
-      /*  if we got a viewport set the offsets to the center of the viewport  */
+      /*  center on the viewport  */
 
-      center_x = viewport_x + viewport_width  / 2;
-      center_y = viewport_y + viewport_height / 2;
+      offset_x = viewport_x + (viewport_width  - width)  / 2;
+      offset_y = viewport_y + (viewport_height - height) / 2;
     }
   else
     {
-      /*  otherwise the offsets to the center of the image  */
+      /*  otherwise center on the image  */
 
-      center_x = gimp_image_get_width  (image) / 2;
-      center_y = gimp_image_get_height (image) / 2;
+      offset_x = (image_width  - width)  / 2;
+      offset_y = (image_height - height) / 2;
+
+      /*  and keep it that way  */
+      clamp_to_image = FALSE;
     }
 
-  width  = gimp_item_get_width  (GIMP_ITEM (layer));
-  height = gimp_item_get_height (GIMP_ITEM (layer));
-
-  offset_x = center_x - width  / 2;
-  offset_y = center_y - height / 2;
-
-  /*  Ensure that the pasted layer is always within the image, if it
-   *  fits and aligned at top left if it doesn't. (See bug #142944).
-   */
-  offset_x = MIN (offset_x, gimp_image_get_width  (image) - width);
-  offset_y = MIN (offset_y, gimp_image_get_height (image) - height);
-  offset_x = MAX (offset_x, 0);
-  offset_y = MAX (offset_y, 0);
+  if (clamp_to_image)
+    {
+      /*  Ensure that the pasted layer is always within the image, if it
+       *  fits and aligned at top left if it doesn't. (See bug #142944).
+       */
+      offset_x = MIN (offset_x, image_width  - width);
+      offset_y = MIN (offset_y, image_height - height);
+      offset_x = MAX (offset_x, 0);
+      offset_y = MAX (offset_y, 0);
+    }
 
   gimp_item_set_offset (GIMP_ITEM (layer), offset_x, offset_y);
 

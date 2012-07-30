@@ -162,20 +162,30 @@ gimp_display_shell_dnd_init (GimpDisplayShell *shell)
  */
 static void
 gimp_display_shell_dnd_position_item (GimpDisplayShell *shell,
+                                      GimpImage        *image,
                                       GimpItem         *item)
 {
-  gint x, y;
-  gint width, height;
-  gint off_x, off_y;
+  gint item_width  = gimp_item_get_width  (item);
+  gint item_height = gimp_item_get_height (item);
 
-  gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
+  if (item_width  >= gimp_image_get_width  (image) &&
+      item_height >= gimp_image_get_height (image))
+    {
+      gimp_item_set_offset (item,
+                            (gimp_image_get_width  (image) - item_width)  / 2,
+                            (gimp_image_get_height (image) - item_height) / 2);
+    }
+  else
+    {
+      gint x, y;
+      gint width, height;
 
-  gimp_item_get_offset (item, &off_x, &off_y);
+      gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
 
-  off_x = x + (width  - gimp_item_get_width  (item)) / 2 - off_x;
-  off_y = y + (height - gimp_item_get_height (item)) / 2 - off_y;
-
-  gimp_item_translate (item, off_x, off_y, FALSE);
+      gimp_item_set_offset (item,
+                            x + (width  - item_width)  / 2,
+                            y + (height - item_height) / 2);
+    }
 }
 
 static void
@@ -231,7 +241,7 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                    _("Drop New Layer"));
 
-      gimp_display_shell_dnd_position_item (shell, new_item);
+      gimp_display_shell_dnd_position_item (shell, image, new_item);
 
       gimp_item_set_visible (new_item, TRUE, FALSE);
       gimp_item_set_linked (new_item, FALSE, FALSE);
@@ -634,7 +644,7 @@ gimp_display_shell_drop_component (GtkWidget       *widget,
       gimp_image_undo_group_start (dest_image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                    _("Drop New Layer"));
 
-      gimp_display_shell_dnd_position_item (shell, new_item);
+      gimp_display_shell_dnd_position_item (shell, image, new_item);
 
       gimp_image_add_layer (dest_image, new_layer,
                             GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
@@ -692,7 +702,7 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                    _("Drop New Layer"));
 
-      gimp_display_shell_dnd_position_item (shell, new_item);
+      gimp_display_shell_dnd_position_item (shell, image, new_item);
 
       gimp_image_add_layer (image, new_layer,
                             GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
