@@ -759,7 +759,7 @@ inv_expose (GtkWidget *widget, GdkEventExpose *event)
 	gdk_flush ();
 
 	if (inv_do_pause) {
-		sleep (1);
+		g_usleep (G_USEC_PER_SEC);
 		inv_do_pause = FALSE;
 	}
 
