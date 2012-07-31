@@ -391,7 +391,6 @@ main (gint     argc,
 {
   gint  result;
 
-  g_thread_init (NULL);
   gegl_init (&argc, &argv);
   gimp_operations_init ();
   g_test_init (&argc, &argv, NULL);
