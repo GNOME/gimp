@@ -63,6 +63,7 @@ gen_element (GString     *buffer,
 {
   const gchar *attr_name;
   const gchar *attr_value;
+  gchar       *utf8 = NULL;
   va_list      args;
 
   while (indent--)
@@ -82,8 +83,11 @@ gen_element (GString     *buffer,
   va_end (args);
 
   if (value && *value)
+    utf8 = gimp_any_to_utf8 (value, -1,  NULL);
+
+  if (utf8 && *utf8)
     {
-      gchar *escaped_value = g_markup_escape_text (value, -1);
+      gchar *escaped_value = g_markup_escape_text (utf8, -1);
 
       g_string_append_printf (buffer, ">%s</%s:%s>\n",
                               escaped_value, prefix, name);
@@ -93,6 +97,8 @@ gen_element (GString     *buffer,
     {
       g_string_append (buffer, " />\n");
     }
+
+  g_free (utf8);
 }
 
 static void
