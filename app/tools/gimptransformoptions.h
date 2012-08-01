@@ -51,6 +51,7 @@ struct _GimpTransformOptions
   gboolean                  frompivot;
   gboolean                  freeshear;
   gboolean                  cornersnap;
+  gboolean                  fixedpivot;
 };
 
 

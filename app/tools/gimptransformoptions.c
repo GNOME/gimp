@@ -58,6 +58,7 @@ enum
   PROP_FROMPIVOT,
   PROP_FREESHEAR,
   PROP_CORNERSNAP,
+  PROP_FIXEDPIVOT,
 };
 
 
@@ -164,6 +165,11 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
                                     NULL,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FIXEDPIVOT,
+                                    "fixedpivot",
+                                    NULL,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -221,6 +227,9 @@ gimp_transform_options_set_property (GObject      *object,
     case PROP_CORNERSNAP:
       options->cornersnap = g_value_get_boolean (value);
       break;
+    case PROP_FIXEDPIVOT:
+      options->fixedpivot = g_value_get_boolean (value);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -275,6 +284,9 @@ gimp_transform_options_get_property (GObject    *object,
       break;
     case PROP_CORNERSNAP:
       g_value_set_boolean (value, options->cornersnap);
+      break;
+    case PROP_FIXEDPIVOT:
+      g_value_set_boolean (value, options->fixedpivot);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -416,29 +428,29 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   //TODO: check that the selection tools use the gimp_get_*_mask() functions for constrain/etc or change to what they use
   else if (tool_options->tool_info->tool_type == GIMP_TYPE_UNIFIED_TRANSFORM_TOOL)
     {
+      GdkModifierType shift = gimp_get_extend_selection_mask ();
+      GdkModifierType ctrl = gimp_get_constrain_behavior_mask ();
       struct {
-        gboolean shift;
+        GdkModifierType mod;
         gchar *name;
         gchar *desc;
       } opt_list[] = {
-        { TRUE, "keepaspect", "Keep aspect (%s)" },
-        { TRUE, "freeshear", "Move edge freely in shearing (%s)" },
-        { FALSE, "frompivot", "Scale from pivot / Symmetric shearing (%s)" },
-        { FALSE, "cornersnap", "Snap pivot point to corners/center (%s)" },
-        { FALSE, "constrain", "Constrain movement (%s)" },
+        { shift, "keepaspect", "Keep aspect (%s)" },
+        { shift, "freeshear", "Move edge freely in shearing (%s)" },
+        { ctrl, "frompivot", "Scale from pivot / Symmetric shearing (%s)" },
+        { ctrl, "cornersnap", "Snap pivot point to corners/center (%s)" },
+        { ctrl, "constrain", "Constrain movement (%s)" },
+        { 0, "fixedpivot", "Lock pivot to canvas" },
       };
 
       GtkWidget *button;
       gchar     *label;
       gint       i;
 
-      for (i = 0; i < 5; i++)
+      for (i = 0; i < 6; i++)
         {
           label = g_strdup_printf (opt_list[i].desc,
-                                   gimp_get_mod_string (
-                                     opt_list[i].shift
-                                       ? gimp_get_extend_selection_mask ()
-                                       : gimp_get_constrain_behavior_mask ()));
+                                   gimp_get_mod_string (opt_list[i].mod));
 
           button = gimp_prop_check_button_new (config, opt_list[i].name, label);
           gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);

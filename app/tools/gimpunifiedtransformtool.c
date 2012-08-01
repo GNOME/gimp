@@ -763,6 +763,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
   gboolean frompivot = options->frompivot;
   gboolean freeshear = options->freeshear;
   gboolean cornersnap = options->cornersnap;
+  gboolean fixedpivot = options->fixedpivot;
 
   TransformAction function = transform_tool->function;
 
@@ -825,8 +826,11 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
         *x[i] = px[i] + dx;
         *y[i] = py[i] + dy;
       }
-      *pivot_x = ppivot_x + dx;
-      *pivot_y = ppivot_y + dy;
+      if (!fixedpivot) {
+        *pivot_x = ppivot_x + dx;
+        *pivot_y = ppivot_y + dy;
+        fixedpivot = TRUE;
+      }
     }
 
   /* rotate */
@@ -849,6 +853,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
         *x[i] = m.x;
         *y[i] = m.y;
       }
+      fixedpivot = TRUE;
     }
 
   /* move rotation axis */
@@ -880,6 +885,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
         }
       *pivot_x = ppivot_x + dx;
       *pivot_y = ppivot_y + dy;
+      fixedpivot = TRUE;
     }
 
   /* scaling via corner */
@@ -1019,6 +1025,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
               *x[i] -= comp_x - pivot.x;
               *y[i] -= comp_y - pivot.y;
             }
+          fixedpivot = TRUE;
         }
     }
 
@@ -1130,6 +1137,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
               *x[i] -= comp_x - pivot.x;
               *y[i] -= comp_y - pivot.y;
             }
+          fixedpivot = TRUE;
         }
     }
 
@@ -1270,6 +1278,39 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
 
       *x[this] = px[this] + dx;
       *y[this] = py[this] + dy;
+    }
+
+  if (!fixedpivot)
+    {
+      //TODO don't duplicate this code from above
+      GimpMatrix3 transform_before, transform_after;
+      gdouble comp_x, comp_y;
+      gimp_matrix3_identity (&transform_before);
+      gimp_matrix3_identity (&transform_after);
+      gimp_transform_matrix_perspective (&transform_before,
+                                         transform_tool->x1,
+                                         transform_tool->y1,
+                                         transform_tool->x2 - transform_tool->x1,
+                                         transform_tool->y2 - transform_tool->y1,
+                                         px[0], py[0],
+                                         px[1], py[1],
+                                         px[2], py[2],
+                                         px[3], py[3]);
+      gimp_transform_matrix_perspective (&transform_after,
+                                         transform_tool->x1,
+                                         transform_tool->y1,
+                                         transform_tool->x2 - transform_tool->x1,
+                                         transform_tool->y2 - transform_tool->y1,
+                                         *x[0], *y[0],
+                                         *x[1], *y[1],
+                                         *x[2], *y[2],
+                                         *x[3], *y[3]);
+      gimp_matrix3_invert(&transform_before);
+      GimpMatrix3 transform = transform_before;
+      gimp_matrix3_mult(&transform_after, &transform);
+      gimp_matrix3_transform_point(&transform, ppivot_x, ppivot_y, &comp_x, &comp_y);
+      *pivot_x = comp_x;
+      *pivot_y = comp_y;
     }
 }
 
