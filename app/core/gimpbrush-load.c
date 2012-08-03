@@ -111,7 +111,9 @@ static gchar       abr_read_char                 (FILE         *file);
 static gint16      abr_read_short                (FILE         *file);
 static gint32      abr_read_long                 (FILE         *file);
 static gchar     * abr_read_ucs2_text            (FILE         *file);
-static gboolean    abr_supported                 (AbrHeader    *abr_hdr);
+static gboolean    abr_supported                 (AbrHeader    *abr_hdr,
+                                                  const gchar  *filename,
+                                                  GError      **error);
 static gboolean    abr_reach_8bim_section        (FILE         *abr,
                                                   const gchar  *name);
 static gint32      abr_rle_decode                (FILE         *file,
@@ -429,7 +431,7 @@ gimp_brush_load_abr (GimpContext  *context,
   abr_hdr.version = abr_read_short (file);
   abr_hdr.count   = abr_read_short (file); /* sub-version for ABR v6 */
 
-  if (abr_supported (&abr_hdr))
+  if (abr_supported (&abr_hdr, filename, error))
     {
       switch (abr_hdr.version)
         {
@@ -831,7 +833,9 @@ abr_read_ucs2_text (FILE *file)
 }
 
 static gboolean
-abr_supported (AbrHeader *abr_hdr)
+abr_supported (AbrHeader    *abr_hdr,
+               const gchar  *filename,
+               GError      **error)
 {
   switch (abr_hdr->version)
     {
@@ -844,6 +848,18 @@ abr_supported (AbrHeader *abr_hdr)
       /* in this case, count contains format sub-version */
       if (abr_hdr->count == 1 || abr_hdr->count == 2)
         return TRUE;
+
+      if (error && ! (*error))
+        g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                     _("Fatal parse error in brush file '%s': "
+                       "unable to decode abr format version %d."),
+                     gimp_filename_to_utf8 (filename),
+
+                     /* horrid subversion display, but better than
+                      * having yet another translatable string for
+                      * this
+                      */
+                     abr_hdr->version * 10 + abr_hdr->count);
       break;
     }
 
