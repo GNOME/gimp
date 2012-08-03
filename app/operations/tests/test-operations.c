@@ -16,20 +16,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include "config.h"
 
-#include <glib.h>
+#include <string.h>
+
 #include <gegl.h>
 #include <gegl-plugin.h>
-#include <math.h>
-#include <string.h>
+
+#include "libgimpmath/gimpmath.h"
 
 #include "app/operations/gimp-operations.h"
 
-#define DATA_DIR "data"
+
+#define DATA_DIR   "data"
 #define OUTPUT_DIR "output"
-#define PI M_PI
 
 
 static inline gdouble
@@ -98,16 +98,16 @@ delta_e (gfloat* src1,
   C1_ = sqrt (square (a1_) + square (b1));
   C2_ = sqrt (square (a2_) + square (b2));
   Ca_ = (C1_ + C2_) / 2.0;
-  tmp = atan2 (b1, a1_) * 180 / PI;
+  tmp = atan2 (b1, a1_) * 180 / G_PI;
   h1_ = (tmp >= 0.0) ? tmp : tmp + 360;
-  tmp = atan2 (b2, a2_) * 180 / PI;
+  tmp = atan2 (b2, a2_) * 180 / G_PI;
   h2_ = (tmp >= 0) ? tmp: tmp + 360;
   tmp = abs (h1_ - h2_);
   Ha_ = (tmp > 180) ? (h1_ + h2_ + 360) / 2.0 : (h1_ + h2_) / 2.0;
-  T = 1 - 0.17 * cos ((Ha_ - 30) * PI / 180) +
-    0.24 * cos ((Ha_ * 2) * PI / 180) +
-    0.32 * cos ((Ha_ * 3 + 6) * PI / 180) -
-    0.2 * cos ((Ha_ * 4 - 63) * PI / 180);
+  T = 1 - 0.17 * cos ((Ha_ - 30) * G_PI / 180) +
+    0.24 * cos ((Ha_ * 2) * G_PI / 180) +
+    0.32 * cos ((Ha_ * 3 + 6) * G_PI / 180) -
+    0.2 * cos ((Ha_ * 4 - 63) * G_PI / 180);
   if (tmp <= 180)
     dh_ = h2_ - h1_;
   else if (tmp > 180 && h2_ <= h1_)
@@ -116,7 +116,7 @@ delta_e (gfloat* src1,
     dh_ = h2_ - h1_ - 360;
   dL_ = L2 - L1;
   dC_ = C2_ - C1_;
-  dH_ = 2 * sqrt (C1_ * C2_) * sin (dh_ / 2.0 * PI / 180);
+  dH_ = 2 * sqrt (C1_ * C2_) * sin (dh_ / 2.0 * G_PI / 180);
   tmp = square (La_ - 50);
   Sl = 1 + 0.015 * tmp / sqrt (20 + tmp);
   Sc = 1 + 0.045 * Ca_;
@@ -124,7 +124,7 @@ delta_e (gfloat* src1,
   dPhi = 30 * exp (-square ((Ha_ - 275) / 25.0));
   tmp = pow (Ca_, 7);
   Rc = 2 * sqrt (tmp / (tmp + pow (25, 7)));
-  Rt = -Rc * sin (2 * dPhi * PI / 180);
+  Rt = -Rc * sin (2 * dPhi * G_PI / 180);
 
   dE = sqrt (square (dL_ / Sl) + square (dC_ / Sc) +
              square (dH_ / Sh) + Rt * dC_ * dH_ / Sc / Sh);
