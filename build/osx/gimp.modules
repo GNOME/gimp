@@ -25,6 +25,8 @@
               href="ftp://sourceware.org/pub/"/>
   <repository type="tarball" name="cairographics"
               href="http://cairographics.org/releases/"/>
+  <repository type="tarball" name="cairographics.org"
+              href="http://cairographics.org/releases/"/>
   <repository type="git" name="git.gnome.org"
               href="git://git.gnome.org/"/>
   <repository type="tarball" name="ftp.gtk.org" 
@@ -37,6 +39,19 @@
 	      href="http://icon-theme.freedesktop.org/releases"/>
   <repository type="git" name="freedesktop.git"
 	      href="git://anongit.freedesktop.org/git/"/>
+  <repository type="tarball" name="python"
+	      href="http://www.python.org/ftp/python/"/>
+  <repository type="tarball" name="oracle"
+	      href="http://download.oracle.com/"/>
+
+  <repository type="tarball" name="poppler"
+	      href="http://poppler.freedesktop.org/"/>
+
+  <repository type="tarball" name="jasper"
+	      href="http://www.ece.uvic.ca/~mdadams/jasper/software/"/>
+
+  <repository type="git" name="git.cairographics.org"
+              href="git://git.cairographics.org/git"/>
 
   <!-- These will be the initial image loading libraries. librsvg, jasper, and libopenraw may be added later. -->
   <autotools id="libpng" autogenargs="--enable-shared" autogen-sh="configure">
@@ -59,6 +74,20 @@
       <dep package="libjpeg"/>
     </dependencies>
   </autotools>
+
+  <!-- Required by some things -->
+  <!--<autotools id="librsvg">
+    <branch module="librsvg/2.32/librsvg-2.32.1.tar.bz2" version="2.32.1"
+	    hash="sha256:91b98051f352fab8a6257688d6b2fd665b4648ed66144861f2f853ccf876d334"/>
+  </autotools>
+
+  <autotools id="libcroco">
+    <branch module="libcroco/0.6/libcroco-0.6.2.tar.bz2" version="0.6.2"
+	    hash="sha256:be24853f64c09b63d39e563fb0222e29bae1a33c3d9f6cbffc0bc27669371749"/>
+    <dependencies>
+      <dep package="librsvg"/>
+    </dependencies>
+  </autotools>-->
 
   <!-- This is the beginning of the dependencies for gtk-doc -->
   <autotools id="libxml2" autogen-sh="configure">
@@ -159,9 +188,6 @@
             version="3.0.11" checkoutdir="atgreen-libffi-873d687"/>
   </autotools>
 
-  <!-- For now, libiconv will also be built -->
-  <!-- Secondary note, libiconv is not required after an upgrade to a newer glib version. This also fixed libpng. -->
-
   <!-- This is glib -->
   <autotools id="glib" autogen-sh="configure" autogenargs="--with-libiconv=native">
     <branch module="glib/2.32/glib-2.32.3.tar.xz"  version="2.32.3"
@@ -176,8 +202,8 @@
 
   <!-- This is atk -->
   <autotools id="atk" autogen-sh="configure">
-    <branch module="atk/2.2/atk-2.2.0.tar.bz2" version="2.2.0"
-            hash="sha256:d201e3f5808aef0b1aec2277bfa61074f68863e405428adb57a73aab5c838450"/>
+    <branch module="atk/2.5/atk-2.5.4.tar.xz" version="2.5.4"
+            hash="sha256:af6d6d8ec4543f338bf2476974de69891b7419913dd1cf4a94d53696bcc14aab"/>
     <dependencies>
     </dependencies>
     <after>
@@ -188,9 +214,9 @@
 
   <!-- This is pixman for cairo -->
   <autotools id="pixman" autogenargs="--disable-gtk" autogen-sh="configure">
-    <branch version="0.24.4" module="pixman-0.24.4.tar.gz"
+    <branch version="0.26.2" module="pixman-0.26.2.tar.gz"
             repo="cairographics"
-            hash="sha1:efaa09789128ebc42d17a11d2e350b7217a7cd05"/>
+            hash="sha1:3c7d72b5b52e6d301efc68aa480f0737a641bdd3"/>
     <after>
       <dep package="gtk-doc"/>
       <dep package="fontconfig"/>
@@ -217,13 +243,12 @@
     </after>
   </autotools>
 
-  <!-- Ah pango, the most painful dependency of them all -->
   <autotools id="pango"  autogen-sh="configure"
-             autogenargs="--without-x --with-included-modules=basic-coretext"
+             autogenargs="--without-x --with-included-modules=basic-coretext --enable-introspection=no --enable-shared --disable-silent-rules --with-included-modules"
              makeargs="-k -C modules; make">
-    <!-- The last version that will build on Tiger is 1.24.5, but who gives a crap -->
-    <branch version="1.30.0" module="pango/1.30/pango-1.30.0.tar.xz"
-            hash="sha256:7c6d2ab024affaed0e942f9279b818235f9c6a36d9fc50688f48d387f4102dff">
+    <!-- The last version that will build on Tiger is 1.24.5 -->
+    <branch version="1.30.1" module="pango/1.30/pango-1.30.1.tar.xz"
+            hash="sha256:3a8c061e143c272ddcd5467b3567e970cfbb64d1d1600a8f8e62435556220cbe">
     <!--<branch version="1.24.5" module="pango/1.24/pango-1.24.5.tar.bz2"
             hash="sha256:0f733d1ec3e8dafcae152d7ac58f1090bee1fd856176c8fee0e81b0e42392f4e">-->
     </branch>
@@ -251,10 +276,10 @@
     </after>
   </autotools>
 
-  <!-- The notorious gtk+. I loathe it so. Almost as much as gtk-doc.-->
+  <!-- gtk+ requires some tweaking before it compiles properly-->
   <!--<autotools id="gtk+" autogen-sh="configure"-->
   <autotools id="gtk+" autogen-sh="autogen.sh"
-             autogenargs="--with-gdktarget=quartz --disable-gtk-doc --enable-gtk-doc=no --enable-gtk-doc-html=no --enable-gtk-doc-pdf=no --enable-quartz-relocation --without-x --with-xinput --enable-xinerama"
+             autogenargs="--with-gdktarget=quartz --disable-gtk-doc --enable-gtk-doc=no --enable-gtk-doc-html=no --enable-gtk-doc-pdf=no --enable-quartz-relocation --without-x --with-xinput --enable-xinerama --disable-introspection"
              autogen-template="autoreconf -fis &amp;&amp; %(srcdir)s/%(autogen-sh)s --prefix %(prefix)s --libdir %(libdir)s %(autogenargs)s">
     <branch repo="git.gnome.org" module="gtk+" revision="gtk-2-24"/>
     <dependencies>
@@ -272,7 +297,7 @@
     </after>
   </autotools>
 
-  <!-- Now that all of that is taken care of, we can focus on the gimp libraries -->
+  <!-- Gimp libraries -->
   <autotools id="babl" >
     <!--<branch repo="ftp.gtk.org" version="0.1.10"
             module="babl/0.1/babl-0.1.10.tar.bz2"/>-->
@@ -293,14 +318,42 @@
   </autotools>
 
   <autotools id="lcms" autogen-sh="configure">
-    <branch module="lcms/lcms2-2.3.tar.gz" version="2.3" repo="sourceforge"
+    <branch module="lcms/lcms-1.19.tar.gz" version="1.19" repo="sourceforge"
             />
   </autotools>
 
-  <!-- Taken care of in gimp.modules -->
+  <autotools id="poppler" autogen-sh="configure">
+    <branch module="poppler-0.20.0.tar.gz" version="0.20.0" repo="poppler"
+            />
+    <dependencies>
+      <dep package="lcms"/>
+      <dep package="libjpeg"/>
+      <dep package="cairo"/>
+      <dep package="gtk+"/>
+      <dep package="libtiff"/>
+      <dep package="libxml"/>
+    </dependencies>
+  </autotools>
+
+  <autotools id="jasper" autogen-sh="configure"
+             autogenargs="--enable-shared">
+    <branch module="jasper-1.900.1.zip" version="1.900.1" repo="jasper"
+            />
+    <dependencies>
+      <dep package="libjpeg"/>
+    </dependencies>
+  </autotools>
+
+  <autotools id="exif" autogen-sh="configure">
+    <branch module="libexif/libexif-0.6.20.tar.bz2" version="0.6.20" repo="sourceforge"
+            />
+    <dependencies>
+      <dep package="gtk+"/>
+    </dependencies>
+  </autotools>
+
   <autotools id="gimp"  autogen-sh="autogen.sh"
-             autogenargs="--disable-python --without-x --disable-docs
-                          --without-dbus --without-gnomevfs --without-wmf --enable-binreloc" skip-autogen="never"
+             autogenargs="--without-x --disable-docs --without-dbus --without-gnomevfs --without-wmf --enable-binreloc --disable-python" skip-autogen="never"
 	     autogen-template="autoreconf -fis &amp;&amp; %(srcdir)s/%(autogen-sh)s --prefix %(prefix)s --libdir %(libdir)s %(autogenargs)s"
              makeargs='LDFLAGS="-framework Carbon"'>
     <!--<branch module="gimp/v2.8/gimp-2.8.0.tar.bz2" version="2.8.0"
@@ -314,6 +367,33 @@
       <dep package="libtiff"/>
     </after>
     <dependencies>
+      <dep package="exif"/>
+      <dep package="lcms"/>
+      <dep package="fontconfig"/>
+      <dep package="gegl"/>
+      <dep package="glib"/>
+      <dep package="gtk+"/>
+      <dep package="popper"/>
+      <dep package="jasper"/>
+    </dependencies>
+  </autotools>
+
+  <autotools id="gimp-python"  autogen-sh="autogen.sh"
+             autogenargs="--without-x --disable-docs --without-dbus --without-gnomevfs --without-wmf --enable-binreloc" skip-autogen="never"
+	     autogen-template="autoreconf -fis &amp;&amp; %(srcdir)s/%(autogen-sh)s --prefix %(prefix)s --libdir %(libdir)s %(autogenargs)s"
+             makeargs='LDFLAGS="-framework Carbon"'>
+    <!--<branch module="gimp/v2.8/gimp-2.8.0.tar.bz2" version="2.8.0"
+            md5sum="28997d14055f15db063eb92e1c8a7ebb" repo="gimp">
+    </branch>-->
+    <branch repo="git.gnome.org" module="gimp" revision="gimp-2-8"/>
+    <after>
+      <dep package="gtk-doc"/>
+      <dep package="libpng"/>
+      <dep package="libjpeg"/>
+      <dep package="libtiff"/>
+    </after>
+    <dependencies>
+      <dep package="exif"/>
       <dep package="lcms"/>
       <dep package="fontconfig"/>
       <dep package="gegl"/>
@@ -322,14 +402,10 @@
     </dependencies>
   </autotools>
 
+
   <autotools id="murrine-engine" autogen-sh="configure">
     <branch module="murrine/0.98/murrine-0.98.2.tar.xz" version="0.98.2"
 	    hash="sha256:e9c68ae001b9130d0f9d1b311e8121a94e5c134b82553ba03971088e57d12c89"/>
-  </autotools>
-
-  <autotools id="librsvg">
-    <branch module="librsvg/2.32/librsvg-2.32.1.tar.bz2" version="2.32.1"
-	    hash="sha256:91b98051f352fab8a6257688d6b2fd665b4648ed66144861f2f853ccf876d334"/>
   </autotools>
 
   <autotools id="tango-icon-theme" autogenargs="--disable-icon-framing"
@@ -350,6 +426,14 @@
     </after>
   </autotools>
 
+  <autotools id="gtk-quartz-engine" autogen-sh="autogen.sh">
+    <branch module="gtk-osx/gtk-quartz-engine-0.2.tar.gz"
+            repo="sourceforge" version="0.2" />
+    <after>
+      <dep package="gtk+"/>
+    </after>
+  </autotools>
+
   <metamodule id="meta-gimp">
     <dependencies>
       <dep package="libpng"/>
@@ -366,5 +450,102 @@
       <dep package="intltool"/>
     </dependencies>
   </metamodule>
+
+  <!-- Python modules -->
+  <metamodule id="meta-gtk-osx-python">
+    <dependencies>
+      <dep package="python"/>
+      <dep package="py2cairo"/>
+      <dep package="pygobject"/>
+      <dep package="pygtk"/>
+      <dep package="gtk-mac-integration-python"/>
+    </dependencies>
+  </metamodule>
+
+  <autotools id="berkeleydb" autogen-sh="dist/configure"
+         autogen-template="cd build_unix; ../%(autogen-sh)s --prefix %(prefix)s --libdir %(libdir)s %(autogenargs)s" makeargs="-C build_unix"
+         makeinstallargs="-C build_unix install">
+
+    <branch module="berkeley-db/db-4.8.30.NC.tar.gz" version="4.8.30"
+        repo="oracle" />
+  </autotools>
+
+  <autotools id="python" autogenargs="--enable-shared" autogen-sh="configure">
+    <branch repo="python"
+	    module="2.7.2/Python-2.7.2.tar.bz2" version="2.7.2">
+    </branch>
+    <after>
+      <dep package="berkeleydb"/>
+    </after>
+  </autotools>
+
+  <autotools id="py2cairo" autogen-sh="autogen.sh">
+    <branch repo="git.cairographics.org" module="py2cairo" revision="master"/>
+    <dependencies>
+      <dep package="cairo"/>
+    </dependencies>
+    <after>
+      <dep package="python"/>
+      <dep package="gtk+"/>
+    </after>
+  </autotools>
+
+<!-- This is the latest 0.10 version. Later versions are 1.29 and intended to work with glib 2.29; the minor version of gobject-introspection will track the minor version of glib that it's intended to work with. -->
+  <autotools id="gobject-introspection">
+    <branch module="gobject-introspection/0.10/gobject-introspection-0.10.8.tar.bz2"
+            version="0.10.8"
+            hash="sha256:5b1387ff37f03db880a2b1cbd6c6b6dfb923a29468d4d8367c458abf7704c61e">
+      <patch file="http://git.gnome.org/browse/gtk-osx/plain/patches/girscanner-objc.patch" strip="1"/>
+    </branch>
+    <dependencies>
+      <dep package="glib"/>
+      <dep package="cairo"/>
+     <dep package="libffi"/>
+    </dependencies>
+  </autotools>
+
+<!-- PyGObject 2.28 is the last series for Gtk+-2; for co-installation
+     with later versions it installs as pygobject2 and PyGObject 3
+     installs as pygobject3. Introspection is disabled here, because
+     gir-scanner isn't smart enough to co-install them. -->
+  <autotools id="pygobject" autogen-sh="configure" >
+    <branch version="2.28.6" module="pygobject/2.28/pygobject-2.28.6.tar.bz2"
+            hash="sha256:e4bfe017fa845940184c82a4d8949db3414cb29dfc84815fb763697dc85bdcee"/>
+    <dependencies>
+      <dep package="gtk+"/>
+      <dep package="gobject-introspection"/>
+    </dependencies>
+    <after>
+      <dep package="python"/>
+    </after>
+  </autotools>
+
+ <autotools id="pygtk" autogen-sh="configure" 
+	     autogenargs="CFLAGS=&quot;$CFLAGS -xobjective-c&quot; lt_cv_sys_global_symbol_pipe=&quot;'sed -n -e '\''s/^.*[ ]\([BCDEGRST][BCDEGRST]*\)[ ][ ]*_\([_A-Za-z][_A-Za-z0-9]*\)$/\1 _\2 \2/p'\'' | sed '\''/ __gnu_lto/d'\'''&quot;">
+    <branch version="2.24.0" module="pygtk/2.24/pygtk-2.24.0.tar.bz2"
+            hash="sha256:cd1c1ea265bd63ff669e92a2d3c2a88eb26bcd9e5363e0f82c896e649f206912">
+      <patch file="http://git.gnome.org/browse/gtk-osx/plain/patches/pygtk-libtool.patch" strip="1"/>
+    </branch>
+    <dependencies>
+      <dep package="gtk+"/>
+      <dep package="py2cairo"/>
+    </dependencies>
+    <after>
+      <dep package="libglade"/>
+    </after>
+  </autotools>
+
+  <autotools id="gtk-mac-integration-python" autogen-sh="configure"
+             autogenargs="--enable-python">
+    <branch module="gtk-mac-integration/1.0/gtk-mac-integration-1.0.1.tar.bz2"
+            version="1.0.1"
+	    hash="sha256:417773d32be5304839f6f917a6ce4637d9a642829105ce8f9527f663830b8089"/>
+    <dependencies>
+    </dependencies>
+    <after>
+      <dep package="pygtk"/>
+      <dep package="pygobject"/>
+    </after>
+  </autotools>
 
 </moduleset>

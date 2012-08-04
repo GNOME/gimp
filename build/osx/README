@@ -29,7 +29,9 @@ $ curl -o $HOME/.jhbuildrc-gimp http://git.gnome.org/browse/gimp/plain/build/osx
 Now you can download and install gimp, where 'gimp' is the directory prefix, and '10.6' is the minimum version you are building gimp for. As it stands, you should be able to leave the values as they are.
 
 $ JHB=gimp GIMP_SDK=10.6 jhbuild bootstrap --ignore-system
-$ JHB=gimp GIMP_SDK=10.6 jhbuild build meta-gimp
+$ JHB=gimp GIMP_SDK=10.6 jhbuild build gimp-python
+
+This should work. However, in the odd change that, during the compiling of gimp, docbook.make (or the like) is not found, you should copy and paste the configure script and options in the gimp source folder. Note, all you need to do is configure gimp once, then jhbuild will be able to handle gimp by itself.
 
 In order to create a .app you'll need to download an install gtk-mac-bundler.
 This will install gtk-mac-bundler into ~/.local/bin.
@@ -42,7 +44,7 @@ $ make install
 Now create the gimp.app.
 
 $ cd $HOME/gimp/10.6/source/gimp/build/osx
-$ gtk-mac-bundler gimp.bundle
+$ gtk-mac-bundler gimp-python.bundle
 
 Please note that this is not a finished process, and there are a few issues that still need to be fixed. Please joing #gimp on irc.gimp.org if you have any questions.
 

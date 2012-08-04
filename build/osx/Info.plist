@@ -6,6 +6,8 @@
 	<string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>GIMP</string>
+	<key>CFBundleName</key>
+	<string>GIMP</string>
 	<key>CFBundleGetInfoString</key>
 	<string>2.8, Copyright 2012</string>
 	<key>CFBundleIconFile</key>
