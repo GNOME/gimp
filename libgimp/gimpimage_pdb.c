@@ -1012,8 +1012,9 @@ gimp_image_add_layer (gint32 image_ID,
  * specifies the location of the layer inside the stack (or the group,
  * if a valid parent was supplied), starting from the top (0) and
  * increasing. If the position is specified as -1 and the parent is
- * specified as 0, then the layer is inserted above the active layer.
- * The layer type must be compatible with the image base type.
+ * specified as 0, then the layer is inserted above the active layer,
+ * or inside the group if the active layer is a layer group. The layer
+ * type must be compatible with the image base type.
  *
  * Returns: TRUE on success.
  **/
