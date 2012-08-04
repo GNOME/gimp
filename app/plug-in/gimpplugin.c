@@ -476,7 +476,7 @@ gimp_plug_in_close (GimpPlugIn *plug_in,
           DWORD dwExitCode = STILL_ACTIVE;
           DWORD dwTries    = 10;
 
-          while (dwExitCode == dwExitCode &&
+          while (dwExitCode == STILL_ACTIVE &&
                  GetExitCodeProcess ((HANDLE) plug_in->pid, &dwExitCode) &&
                  (dwTries > 0))
             {
