@@ -725,14 +725,13 @@ gimp_move_tool_cursor_update (GimpTool         *tool,
     }
   else
     {
-      GimpGuide  *guide;
       GimpLayer  *layer;
       const gint  snap_distance = display->config->snap_distance;
 
       if (gimp_display_shell_get_show_guides (shell) &&
-          (guide = gimp_image_find_guide (image, coords->x, coords->y,
-                                          FUNSCALEX (shell, snap_distance),
-                                          FUNSCALEY (shell, snap_distance))))
+          gimp_image_find_guide (image, coords->x, coords->y,
+                                 FUNSCALEX (shell, snap_distance),
+                                 FUNSCALEY (shell, snap_distance)))
         {
           tool_cursor = GIMP_TOOL_CURSOR_HAND;
           modifier    = GIMP_CURSOR_MODIFIER_MOVE;

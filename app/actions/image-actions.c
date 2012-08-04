@@ -281,7 +281,6 @@ image_actions_update (GimpActionGroup *group,
         case GIMP_RGB:     action = "image-convert-rgb";       break;
         case GIMP_GRAY:    action = "image-convert-grayscale"; break;
         case GIMP_INDEXED: action = "image-convert-indexed";   break;
-          break;
         }
 
       gimp_action_group_set_action_active (group, action, TRUE);
@@ -293,7 +292,6 @@ image_actions_update (GimpActionGroup *group,
         case GIMP_PRECISION_U32:   action = "image-convert-u32";   break;
         case GIMP_PRECISION_HALF:  action = "image-convert-half";  break;
         case GIMP_PRECISION_FLOAT: action = "image-convert-float"; break;
-          break;
         }
 
       gimp_action_group_set_action_active (group, action, TRUE);
