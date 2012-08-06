@@ -762,41 +762,40 @@ static inline GimpVector2 lineintersect (GimpVector2 p1, GimpVector2 p2,
   return p;
 }
 
-static inline GimpVector2 getpivotdelta (GimpTransformTool *tr_tool)
+static inline GimpVector2 getpivotdelta (GimpTransformTool *tr_tool,
+                                         GimpVector2       *oldpos,
+                                         GimpVector2       *newpos,
+                                         GimpVector2        pivot)
 {
-  TransInfo tr;
   GimpMatrix3 transform_before, transform_after;
   GimpVector2 delta;
 
   gimp_matrix3_identity (&transform_before);
   gimp_matrix3_identity (&transform_after);
 
-  memcpy (tr, tr_tool->trans_info, sizeof (TransInfo));
   gimp_transform_matrix_perspective (&transform_after,
                                      tr_tool->x1,
                                      tr_tool->y1,
                                      tr_tool->x2 - tr_tool->x1,
                                      tr_tool->y2 - tr_tool->y1,
-                                     tr[X0], tr[Y0],
-                                     tr[X1], tr[Y1],
-                                     tr[X2], tr[Y2],
-                                     tr[X3], tr[Y3]);
-  memcpy (tr, tr_tool->prev_trans_info[0], sizeof (TransInfo));
+                                     newpos[0].x, newpos[0].y,
+                                     newpos[1].x, newpos[1].y,
+                                     newpos[2].x, newpos[2].y,
+                                     newpos[3].x, newpos[3].y);
   gimp_transform_matrix_perspective (&transform_before,
                                      tr_tool->x1,
                                      tr_tool->y1,
                                      tr_tool->x2 - tr_tool->x1,
                                      tr_tool->y2 - tr_tool->y1,
-                                     tr[X0], tr[Y0],
-                                     tr[X1], tr[Y1],
-                                     tr[X2], tr[Y2],
-                                     tr[X3], tr[Y3]);
+                                     oldpos[0].x, oldpos[0].y,
+                                     oldpos[1].x, oldpos[1].y,
+                                     oldpos[2].x, oldpos[2].y,
+                                     oldpos[3].x, oldpos[3].y);
   gimp_matrix3_invert (&transform_before);
   gimp_matrix3_mult (&transform_after, &transform_before);
-  gimp_matrix3_transform_point (&transform_before, tr[PIVOT_X], tr[PIVOT_Y], &delta.x, &delta.y);
+  gimp_matrix3_transform_point (&transform_before, pivot.x, pivot.y, &delta.x, &delta.y);
 
-  delta.x -= tr[PIVOT_X];
-  delta.y -= tr[PIVOT_Y];
+  delta = vectorsubtract (delta, pivot);
 
   return delta;
 }
@@ -870,13 +869,10 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
             p.x = p.y = diag;
         }
       for (i = 0; i < 4; i++)
-      {
-        *x[i] = oldpos[i].x + p.x;
-        *y[i] = oldpos[i].y + p.y;
-      }
+        newpos[i] = vectoradd (oldpos[i], p);
+
       if (!fixedpivot) {
-        *newpivot_x = pivot.x + p.x;
-        *newpivot_y = pivot.y + p.y;
+        pivot = vectoradd (pivot, p);
         fixedpivot = TRUE;
       }
     }
@@ -892,11 +888,9 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
           angle = round (angle);
           angle *= 2*G_PI/24.;
         }
-      for (i = 0; i < 4; i++) {
+      for (i = 0; i < 4; i++)
         newpos[i] = vectoradd (pivot, rotate2d (vectorsubtract (oldpos[i], pivot), angle));
-        *x[i] = newpos[i].x;
-        *y[i] = newpos[i].y;
-      }
+
       fixedpivot = TRUE;
     }
 
@@ -927,8 +921,8 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
               return;
             }
         }
-      *newpivot_x = pivot.x + p.x;
-      *newpivot_y = pivot.y + p.y;
+      pivot = vectoradd (pivot, p);
+
       fixedpivot = TRUE;
     }
 
@@ -1005,10 +999,6 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
 
       newpos[opposite] = oldpos[opposite];
 
-      for (i = 0; i < 4; i++) {
-        *x[i] = newpos[i].x;
-        *y[i] = newpos[i].y;
-      }
       /*
        *
        *  /--------------/
@@ -1022,12 +1012,10 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
            * this difference */
           //TODO don't fly off to hell when the transform is 'invalid'
           //TODO the handle doesn't actually end up where the mouse cursor is
-          GimpVector2 delta = getpivotdelta (transform_tool);
+          GimpVector2 delta = getpivotdelta (transform_tool, oldpos, newpos, pivot);
           for (i = 0; i < 4; i++)
-            {
-              *x[i] -= delta.x;
-              *y[i] -= delta.y;
-            }
+            newpos[i] = vectorsubtract (newpos[i], delta);
+
           fixedpivot = TRUE;
         }
     }
@@ -1089,19 +1077,12 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
           newpos[opp_r] = oldpos[opp_r];
         }
 
-      for (i = 0; i < 4; i++) {
-        *x[i] = newpos[i].x;
-        *y[i] = newpos[i].y;
-      }
-
       if (!keepaspect && frompivot)
         {
-          GimpVector2 delta = getpivotdelta (transform_tool);
+          GimpVector2 delta = getpivotdelta (transform_tool, oldpos, newpos, pivot);
           for (i = 0; i < 4; i++)
-            {
-              *x[i] -= delta.x;
-              *y[i] -= delta.y;
-            }
+            newpos[i] = vectorsubtract (newpos[i], delta);
+
           fixedpivot = TRUE;
         }
     }
@@ -1150,19 +1131,12 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
           po = vectorproject (po, side);
         }
 
-      *x[this_l] = oldpos[this_l].x + p.x;
-      *y[this_l] = oldpos[this_l].y + p.y;
-
-      *x[this_r] = oldpos[this_r].x + p.x;
-      *y[this_r] = oldpos[this_r].y + p.y;
-
-      /* We have to set these unconditionally, or the opposite edge will stay
+      /* We have to set opp unconditionally, or the opposite edge will stay
        * in place when you toggle the frompivot constraint during an action */
-      *x[opp_l] = oldpos[opp_l].x + po.x;
-      *y[opp_l] = oldpos[opp_l].y + po.y;
-
-      *x[opp_r] = oldpos[opp_r].x + po.x;
-      *y[opp_r] = oldpos[opp_r].y + po.y;
+      newpos[this_l] = vectoradd (oldpos[this_l], p);
+      newpos[this_r] = vectoradd (oldpos[this_r], p);
+      newpos[opp_l] = vectoradd (oldpos[opp_l], po);
+      newpos[opp_r] = vectoradd (oldpos[opp_r], po);
     }
 
   /* perspective transform */
@@ -1212,26 +1186,36 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
             p = proj[opposite];
         }
 
-      *x[this] = oldpos[this].x + p.x;
-      *y[this] = oldpos[this].y + p.y;
+      newpos[this] = vectoradd (oldpos[this], p);
 
       if (frompivot) //TODO constrain and frompivot are both bound to ctrl
         {
-          GimpVector2 delta = getpivotdelta (transform_tool);
+          GimpVector2 delta = getpivotdelta (transform_tool, oldpos, newpos, pivot);
+
           for (i = 0; i < 4; i++)
-            {
-              *x[i] -= delta.x;
-              *y[i] -= delta.y;
-            }
+            newpos[i] = vectorsubtract (newpos[i], delta);
+
           fixedpivot = TRUE;
         }
     }
 
+  for (i = 0; i < 4; i++)
+    {
+      *x[i] = newpos[i].x;
+      *y[i] = newpos[i].y;
+    }
+
   if (!fixedpivot)
     {
-      GimpVector2 delta = getpivotdelta (transform_tool);
+      GimpVector2 delta = getpivotdelta (transform_tool, oldpos, newpos, pivot);
       *newpivot_x = pivot.x + delta.x;
       *newpivot_y = pivot.y + delta.y;
+    }
+  else
+    {
+      /* if options get toggled during operation, move pivot back */
+      *newpivot_x = pivot.x;
+      *newpivot_y = pivot.y;
     }
 }
 
