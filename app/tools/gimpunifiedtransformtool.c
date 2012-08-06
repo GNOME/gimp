@@ -773,15 +773,6 @@ static inline GimpVector2 getpivotdelta (GimpTransformTool *tr_tool,
   gimp_matrix3_identity (&transform_before);
   gimp_matrix3_identity (&transform_after);
 
-  gimp_transform_matrix_perspective (&transform_after,
-                                     tr_tool->x1,
-                                     tr_tool->y1,
-                                     tr_tool->x2 - tr_tool->x1,
-                                     tr_tool->y2 - tr_tool->y1,
-                                     newpos[0].x, newpos[0].y,
-                                     newpos[1].x, newpos[1].y,
-                                     newpos[2].x, newpos[2].y,
-                                     newpos[3].x, newpos[3].y);
   gimp_transform_matrix_perspective (&transform_before,
                                      tr_tool->x1,
                                      tr_tool->y1,
@@ -791,6 +782,15 @@ static inline GimpVector2 getpivotdelta (GimpTransformTool *tr_tool,
                                      oldpos[1].x, oldpos[1].y,
                                      oldpos[2].x, oldpos[2].y,
                                      oldpos[3].x, oldpos[3].y);
+  gimp_transform_matrix_perspective (&transform_after,
+                                     tr_tool->x1,
+                                     tr_tool->y1,
+                                     tr_tool->x2 - tr_tool->x1,
+                                     tr_tool->y2 - tr_tool->y1,
+                                     newpos[0].x, newpos[0].y,
+                                     newpos[1].x, newpos[1].y,
+                                     newpos[2].x, newpos[2].y,
+                                     newpos[3].x, newpos[3].y);
   gimp_matrix3_invert (&transform_before);
   gimp_matrix3_mult (&transform_after, &transform_before);
   gimp_matrix3_transform_point (&transform_before, pivot.x, pivot.y, &delta.x, &delta.y);
@@ -824,12 +824,13 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
 
   TransformAction function = transform_tool->function;
 
-  for (i = 0; i < 4; i++) {
-    x[i] = &transform_tool->trans_info[X0+i*2];
-    y[i] = &transform_tool->trans_info[Y0+i*2];
-    newpos[i].x = oldpos[i].x = transform_tool->prev_trans_info[0][X0+i*2];
-    newpos[i].y = oldpos[i].y = transform_tool->prev_trans_info[0][Y0+i*2];
-  }
+  for (i = 0; i < 4; i++)
+    {
+      x[i] = &transform_tool->trans_info[X0+i*2];
+      y[i] = &transform_tool->trans_info[Y0+i*2];
+      newpos[i].x = oldpos[i].x = transform_tool->prev_trans_info[0][X0+i*2];
+      newpos[i].y = oldpos[i].y = transform_tool->prev_trans_info[0][Y0+i*2];
+    }
 
   /* put center point in this array too */
   oldpos[4].x = (oldpos[0].x + oldpos[1].x + oldpos[2].x + oldpos[3].x) / 4.;
@@ -849,32 +850,33 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       if (constrain)
         {
           /* snap to 45 degree vectors from starting point */
-          gdouble angle = calcangle ((GimpVector2){1., 0.}, d) / (2.*G_PI);
-          gdouble diag = norm (d) / sqrt (2);
-          if (angle < 1./16 || angle >= 15./16)
+          gdouble angle = 16. * calcangle ((GimpVector2){1., 0.}, d) / (2.*G_PI);
+          gdouble dist = norm (d) / sqrt (2);
+          if (angle < 1. || angle >= 15.)
             d.y = 0;
-          else if (angle < 3./16)
-            d.y = -(d.x = diag);
-          else if (angle < 5./16)
+          else if (angle < 3.)
+            d.y = -(d.x = dist);
+          else if (angle < 5.)
             d.x = 0;
-          else if (angle < 7./16)
-            d.x = d.y = -diag;
-          else if (angle < 9./16)
+          else if (angle < 7.)
+            d.x = d.y = -dist;
+          else if (angle < 9.)
             d.y = 0;
-          else if (angle < 11./16)
-            d.x = -(d.y = diag);
-          else if (angle < 13./16)
+          else if (angle < 11.)
+            d.x = -(d.y = dist);
+          else if (angle < 13.)
             d.x = 0;
-          else if (angle < 15./16)
-            d.x = d.y = diag;
+          else if (angle < 15.)
+            d.x = d.y = dist;
         }
       for (i = 0; i < 4; i++)
         newpos[i] = vectoradd (oldpos[i], d);
 
-      if (!fixedpivot) {
-        pivot = vectoradd (pivot, d);
-        fixedpivot = TRUE;
-      }
+      if (!fixedpivot)
+        {
+          pivot = vectoradd (pivot, d);
+          fixedpivot = TRUE;
+        }
     }
 
   /* rotate */
@@ -997,8 +999,6 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
        *
        */
 
-      newpos[opposite] = oldpos[opposite];
-
       /*
        *
        *  /--------------/
@@ -1059,6 +1059,10 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
               /* center of the opposite side is pivot */
               effective_pivot = scalemult (vectoradd (oldpos[opp_l], oldpos[opp_r]), 0.5);
             }
+          /* get the difference between the distance from the pivot to where
+           * interaction started and the distance from the pivot to where
+           * cursor is now, and scale all corners distance from the pivot
+           * with this factor */
           before = vectorsubtract (effective_pivot, mouse);
           after = vectorsubtract (effective_pivot, cur);
           after = vectorproject (after, before);
@@ -1073,8 +1077,6 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
           /* just move the side */
           newpos[this_l] = vectoradd (oldpos[this_l], d);
           newpos[this_r] = vectoradd (oldpos[this_r], d);
-          newpos[opp_l] = oldpos[opp_l];
-          newpos[opp_r] = oldpos[opp_r];
         }
 
       if (!keepaspect && frompivot)
@@ -1205,18 +1207,16 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       *y[i] = newpos[i].y;
     }
 
+  /* this will have been set to TRUE if an operation used the pivot in addition to being a user option */
   if (!fixedpivot)
     {
       GimpVector2 delta = getpivotdelta (transform_tool, oldpos, newpos, pivot);
-      *newpivot_x = pivot.x + delta.x;
-      *newpivot_y = pivot.y + delta.y;
+      pivot = vectoradd (pivot, delta);
     }
-  else
-    {
-      /* if options get toggled during operation, move pivot back */
-      *newpivot_x = pivot.x;
-      *newpivot_y = pivot.y;
-    }
+
+  /* set unconditionally: if options get toggled during operation, we have to move pivot back */
+  *newpivot_x = pivot.x;
+  *newpivot_y = pivot.y;
 }
 
 static void
