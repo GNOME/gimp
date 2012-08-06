@@ -808,17 +808,17 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
   GimpVector2 oldpos[5], newpos[4];
   GimpVector2 cur   = { .x = transform_tool->curx,   .y = transform_tool->cury };
   GimpVector2 mouse = { .x = transform_tool->mousex, .y = transform_tool->mousey };
-  GimpVector2 p;
+  GimpVector2 d;
   GimpVector2 pivot;
   
   gint i;
   
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (transform_tool);
 
-  gboolean constrain = options->constrain;
+  gboolean constrain  = options->constrain;
   gboolean keepaspect = options->keepaspect;
-  gboolean frompivot = options->frompivot;
-  gboolean freeshear = options->freeshear;
+  gboolean frompivot  = options->frompivot;
+  gboolean freeshear  = options->freeshear;
   gboolean cornersnap = options->cornersnap;
   gboolean fixedpivot = options->fixedpivot;
 
@@ -835,7 +835,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
   oldpos[4].x = (oldpos[0].x + oldpos[1].x + oldpos[2].x + oldpos[3].x) / 4.;
   oldpos[4].y = (oldpos[0].y + oldpos[1].y + oldpos[2].y + oldpos[3].y) / 4.;
 
-  p = vectorsubtract (cur, mouse);
+  d = vectorsubtract (cur, mouse);
 
   newpivot_x = &transform_tool->trans_info[PIVOT_X];
   newpivot_y = &transform_tool->trans_info[PIVOT_Y];
@@ -849,30 +849,30 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       if (constrain)
         {
           /* snap to 45 degree vectors from starting point */
-          gdouble angle = calcangle ((GimpVector2){1., 0.}, p) / (2.*G_PI);
-          gdouble diag = norm (p) / sqrt (2);
-          if (angle < 1./16 || angle > 15./16)
-            p.y = 0;
+          gdouble angle = calcangle ((GimpVector2){1., 0.}, d) / (2.*G_PI);
+          gdouble diag = norm (d) / sqrt (2);
+          if (angle < 1./16 || angle >= 15./16)
+            d.y = 0;
           else if (angle < 3./16)
-            p.y = -(p.x = diag);
+            d.y = -(d.x = diag);
           else if (angle < 5./16)
-            p.x = 0;
+            d.x = 0;
           else if (angle < 7./16)
-            p.x = p.y = -diag;
+            d.x = d.y = -diag;
           else if (angle < 9./16)
-            p.y = 0;
+            d.y = 0;
           else if (angle < 11./16)
-            p.x = -(p.y = diag);
+            d.x = -(d.y = diag);
           else if (angle < 13./16)
-            p.x = 0;
+            d.x = 0;
           else if (angle < 15./16)
-            p.x = p.y = diag;
+            d.x = d.y = diag;
         }
       for (i = 0; i < 4; i++)
-        newpos[i] = vectoradd (oldpos[i], p);
+        newpos[i] = vectoradd (oldpos[i], d);
 
       if (!fixedpivot) {
-        pivot = vectoradd (pivot, p);
+        pivot = vectoradd (pivot, d);
         fixedpivot = TRUE;
       }
     }
@@ -921,7 +921,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
               return;
             }
         }
-      pivot = vectoradd (pivot, p);
+      pivot = vectoradd (pivot, d);
 
       fixedpivot = TRUE;
     }
@@ -956,17 +956,17 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
           /* restrict to movement along the diagonal */
           GimpVector2 diag = vectorsubtract (oldpos[this], oldpos[opposite]);
 
-          p = vectorproject (p, diag);
+          d = vectorproject (d, diag);
         }
 
       /* Move the corner being interacted with */
       /*    rp---------tp
-       *   /           /\ <- p, the interaction vector
+       *   /           /\ <- d, the interaction vector
        *  /           /  tp
        * op----------/
        *
        */
-      newpos[this] = vectoradd (oldpos[this], p);
+      newpos[this] = vectoradd (oldpos[this], d);
 
       /* Where the corner to the right and left would go, need these to form
        * lines to intersect with the sides */
@@ -978,8 +978,8 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
        *               nl
        */
 
-      newpos[right] = vectoradd (oldpos[right], p);
-      newpos[left] = vectoradd (oldpos[left], p);
+      newpos[right] = vectoradd (oldpos[right], d);
+      newpos[left] = vectoradd (oldpos[left], d);
 
       /* Now we just need to find the intersection of op-rp and nr-nt.
        *    rp----------/
@@ -1047,7 +1047,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       midline = vectoradd (side_l, side_r);
 
       /* restrict to movement along the midline */
-      p = vectorproject (p, midline);
+      d = vectorproject (d, midline);
 
       if (keepaspect)
         {
@@ -1071,8 +1071,8 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       else
         {
           /* just move the side */
-          newpos[this_l] = vectoradd (oldpos[this_l], p);
-          newpos[this_r] = vectoradd (oldpos[this_r], p);
+          newpos[this_l] = vectoradd (oldpos[this_l], d);
+          newpos[this_r] = vectoradd (oldpos[this_r], d);
           newpos[opp_l] = oldpos[opp_l];
           newpos[opp_r] = oldpos[opp_r];
         }
@@ -1111,7 +1111,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       opp_r = 3 - this_r;
 
       if (frompivot)
-        po = vectorsubtract (zero, p);
+        po = vectorsubtract (zero, d);
       else
         po = zero;
 
@@ -1120,7 +1120,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
           /* restrict to movement along the side */
           GimpVector2 side = vectorsubtract (oldpos[this_r], oldpos[this_l]);
 
-          p = vectorproject (p, side);
+          d = vectorproject (d, side);
         }
 
       if (!freeshear && frompivot)
@@ -1133,8 +1133,8 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
 
       /* We have to set opp unconditionally, or the opposite edge will stay
        * in place when you toggle the frompivot constraint during an action */
-      newpos[this_l] = vectoradd (oldpos[this_l], p);
-      newpos[this_r] = vectoradd (oldpos[this_r], p);
+      newpos[this_l] = vectoradd (oldpos[this_l], d);
+      newpos[this_r] = vectoradd (oldpos[this_r], d);
       newpos[opp_l] = vectoradd (oldpos[opp_l], po);
       newpos[opp_r] = vectoradd (oldpos[opp_r], po);
     }
@@ -1172,21 +1172,21 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
               if (i == this) continue;
               /* get the vectors along the sides and the diagonal */
               proj[i] = vectorsubtract (oldpos[this], oldpos[i]);
-              /* project p on each candidate vector and see
+              /* project d on each candidate vector and see
                * which has the shortest rejection */
-              proj[i] = vectorproject (p, proj[i]);
-              rej[i] = norm (vectorsubtract (p, proj[i]));
+              proj[i] = vectorproject (d, proj[i]);
+              rej[i] = norm (vectorsubtract (d, proj[i]));
             }
 
           if (rej[left] < rej[right] && rej[left] < rej[opposite])
-            p = proj[left];
+            d = proj[left];
           else if (rej[right] < rej[opposite])
-            p = proj[right];
+            d = proj[right];
           else
-            p = proj[opposite];
+            d = proj[opposite];
         }
 
-      newpos[this] = vectoradd (oldpos[this], p);
+      newpos[this] = vectoradd (oldpos[this], d);
 
       if (frompivot) //TODO constrain and frompivot are both bound to ctrl
         {
