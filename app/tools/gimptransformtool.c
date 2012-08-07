@@ -530,83 +530,90 @@ gimp_transform_tool_oper_update (GimpTool         *tool,
       return;
     }
 
-  if (tr_tool->use_handles)
+  if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->pick_function)
     {
-      gdouble closest_dist;
-      gdouble dist;
-
-      dist = gimp_draw_tool_calc_distance_square (draw_tool, display,
-                                                  coords->x, coords->y,
-                                                  tr_tool->tx1, tr_tool->ty1);
-      closest_dist = dist;
-      function = TRANSFORM_HANDLE_NW;
-
-      dist = gimp_draw_tool_calc_distance_square (draw_tool, display,
-                                                  coords->x, coords->y,
-                                                  tr_tool->tx2, tr_tool->ty2);
-      if (dist < closest_dist)
-        {
-          closest_dist = dist;
-          function = TRANSFORM_HANDLE_NE;
-        }
-
-      dist = gimp_draw_tool_calc_distance_square (draw_tool, display,
-                                                  coords->x, coords->y,
-                                                  tr_tool->tx3, tr_tool->ty3);
-      if (dist < closest_dist)
-        {
-          closest_dist = dist;
-          function = TRANSFORM_HANDLE_SW;
-        }
-
-      dist = gimp_draw_tool_calc_distance_square (draw_tool, display,
-                                                  coords->x, coords->y,
-                                                  tr_tool->tx4, tr_tool->ty4);
-      if (dist < closest_dist)
-        {
-          closest_dist = dist;
-          function = TRANSFORM_HANDLE_SE;
-        }
-
-      if (tr_tool->use_mid_handles)
-        {
-          if (gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_N],
-                                    coords->x, coords->y))
-            {
-              function = TRANSFORM_HANDLE_N;
-            }
-          else if (gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_E],
-                                         coords->x, coords->y))
-            {
-              function = TRANSFORM_HANDLE_E;
-            }
-          else if (gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_S],
-                                         coords->x, coords->y))
-            {
-              function = TRANSFORM_HANDLE_S;
-            }
-          else if (gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_W],
-                                         coords->x, coords->y))
-            {
-              function = TRANSFORM_HANDLE_W;
-            }
-        }
+      function = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->pick_function (tr_tool, coords, state, display);
     }
+  else
+    {
+      if (tr_tool->use_handles)
+        {
+            gdouble closest_dist;
+            gdouble dist;
 
-    if (tr_tool->use_pivot)
-      {
-        if (gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_PIVOT],
+            dist = gimp_draw_tool_calc_distance_square (draw_tool, display,
+                                                        coords->x, coords->y,
+                                                        tr_tool->tx1, tr_tool->ty1);
+            closest_dist = dist;
+            function = TRANSFORM_HANDLE_NW;
+
+            dist = gimp_draw_tool_calc_distance_square (draw_tool, display,
+                                                        coords->x, coords->y,
+                                                        tr_tool->tx2, tr_tool->ty2);
+            if (dist < closest_dist)
+              {
+                closest_dist = dist;
+                function = TRANSFORM_HANDLE_NE;
+              }
+
+            dist = gimp_draw_tool_calc_distance_square (draw_tool, display,
+                                                        coords->x, coords->y,
+                                                        tr_tool->tx3, tr_tool->ty3);
+            if (dist < closest_dist)
+              {
+                closest_dist = dist;
+                function = TRANSFORM_HANDLE_SW;
+              }
+
+            dist = gimp_draw_tool_calc_distance_square (draw_tool, display,
+                                                        coords->x, coords->y,
+                                                        tr_tool->tx4, tr_tool->ty4);
+            if (dist < closest_dist)
+              {
+                closest_dist = dist;
+                function = TRANSFORM_HANDLE_SE;
+              }
+
+            if (tr_tool->use_mid_handles)
+              {
+                if (gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_N],
+                                          coords->x, coords->y))
+                  {
+                    function = TRANSFORM_HANDLE_N;
+                  }
+                else if (gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_E],
+                                               coords->x, coords->y))
+                  {
+                    function = TRANSFORM_HANDLE_E;
+                  }
+                else if (gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_S],
+                                               coords->x, coords->y))
+                  {
+                    function = TRANSFORM_HANDLE_S;
+                  }
+                else if (gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_W],
+                                               coords->x, coords->y))
+                  {
+                    function = TRANSFORM_HANDLE_W;
+                  }
+              }
+        }
+
+          if (tr_tool->use_pivot)
+            {
+              if (gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_PIVOT],
+                                        coords->x, coords->y))
+                {
+                  function = TRANSFORM_HANDLE_PIVOT;
+                }
+            }
+
+        if (tr_tool->use_center &&
+            gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_CENTER],
                                   coords->x, coords->y))
           {
-            function = TRANSFORM_HANDLE_PIVOT;
+            function = TRANSFORM_HANDLE_CENTER;
           }
-      }
-
-  if (tr_tool->use_center &&
-      gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_CENTER],
-                            coords->x, coords->y))
-    {
-      function = TRANSFORM_HANDLE_CENTER;
     }
 
   gimp_transform_tool_set_function (tr_tool, function);

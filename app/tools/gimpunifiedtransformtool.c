@@ -68,20 +68,19 @@ enum
 
 /*  local function prototypes  */
 
-static void    gimp_transform_tool_oper_update           (GimpTool              *tool,
-                                                          const GimpCoords      *coords,
-                                                          GdkModifierType        state,
-                                                          gboolean               proximity,
-                                                          GimpDisplay           *display);
-static void    gimp_unified_transform_tool_dialog        (GimpTransformTool *tr_tool);
-static void    gimp_unified_transform_tool_dialog_update (GimpTransformTool *tr_tool);
-static void    gimp_unified_transform_tool_prepare       (GimpTransformTool *tr_tool);
-static void    gimp_unified_transform_tool_motion        (GimpTransformTool *tr_tool);
-static void    gimp_unified_transform_tool_recalc_matrix (GimpTransformTool *tr_tool);
-static gchar * gimp_unified_transform_tool_get_undo_desc (GimpTransformTool *tr_tool);
-static void    gimp_unified_transform_tool_draw_gui      (GimpTransformTool *draw_tool,
-                                                          gint               handle_w,
-                                                          gint               handle_h);
+static void            gimp_unified_transform_tool_dialog        (GimpTransformTool *tr_tool);
+static void            gimp_unified_transform_tool_dialog_update (GimpTransformTool *tr_tool);
+static void            gimp_unified_transform_tool_prepare       (GimpTransformTool *tr_tool);
+static void            gimp_unified_transform_tool_motion        (GimpTransformTool *tr_tool);
+static void            gimp_unified_transform_tool_recalc_matrix (GimpTransformTool *tr_tool);
+static gchar *         gimp_unified_transform_tool_get_undo_desc (GimpTransformTool *tr_tool);
+static TransformAction gimp_unified_transform_tool_pick_function (GimpTransformTool *tr_tool,
+                                                                  const GimpCoords  *coords,
+                                                                  GdkModifierType    state,
+                                                                  GimpDisplay       *display);
+static void            gimp_unified_transform_tool_draw_gui      (GimpTransformTool *tr_tool,
+                                                                  gint               handle_w,
+                                                                  gint               handle_h);
 
 
 G_DEFINE_TYPE (GimpUnifiedTransformTool, gimp_unified_transform_tool,
@@ -110,7 +109,6 @@ static void
 gimp_unified_transform_tool_class_init (GimpUnifiedTransformToolClass *klass)
 {
   GimpTransformToolClass *trans_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
-  GimpToolClass          *tool_class  = GIMP_TOOL_CLASS (klass);
 
   trans_class->dialog        = gimp_unified_transform_tool_dialog;
   trans_class->dialog_update = gimp_unified_transform_tool_dialog_update;
@@ -118,9 +116,8 @@ gimp_unified_transform_tool_class_init (GimpUnifiedTransformToolClass *klass)
   trans_class->motion        = gimp_unified_transform_tool_motion;
   trans_class->recalc_matrix = gimp_unified_transform_tool_recalc_matrix;
   trans_class->get_undo_desc = gimp_unified_transform_tool_get_undo_desc;
+  trans_class->pick_function = gimp_unified_transform_tool_pick_function;
   trans_class->draw_gui      = gimp_unified_transform_tool_draw_gui;
-
-  tool_class->oper_update = gimp_transform_tool_oper_update;
 }
 
 static void
@@ -134,67 +131,26 @@ gimp_unified_transform_tool_init (GimpUnifiedTransformTool *unified_tool)
 
   tr_tool->progress_text = _("Unified transform");
 
-  tr_tool->use_grid        = TRUE;
-  tr_tool->use_handles     = TRUE;
-  tr_tool->use_center      = TRUE;
-  tr_tool->use_mid_handles = TRUE;
-  tr_tool->use_pivot       = TRUE;
+  tr_tool->use_grid    = TRUE;
+  tr_tool->use_handles = TRUE;
 }
 
-/*hack*/
-static void
-gimp_transform_tool_set_function (GimpTransformTool *tr_tool,
-                                  TransformAction    function)
+static TransformAction
+gimp_unified_transform_tool_pick_function (GimpTransformTool *tr_tool,
+                                           const GimpCoords  *coords,
+                                           GdkModifierType    state,
+                                           GimpDisplay       *display)
 {
-  GimpTool *tool = GIMP_TOOL (tr_tool);
-  if (function != tr_tool->function)
-    {
-      if (tr_tool->handles[tr_tool->function] &&
-          gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tr_tool)))
-        {
-          gimp_canvas_item_set_highlight (tr_tool->handles[tr_tool->function],
-                                          FALSE);
-          gimp_tool_pop_status (tool, tool->display);
-        }
-
-      tr_tool->function = function;
-
-      if (tr_tool->handles[tr_tool->function] &&
-          gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tr_tool)))
-        {
-          gimp_canvas_item_set_highlight (tr_tool->handles[tr_tool->function],
-                                          TRUE);
-          gimp_tool_push_status (tool, tool->display, "%i", tr_tool->function);
-        }
-    }
-}
-static void
-gimp_transform_tool_oper_update (GimpTool         *tool,
-                                 const GimpCoords *coords,
-                                 GdkModifierType   state,
-                                 gboolean          proximity,
-                                 GimpDisplay      *display)
-{
-  GimpTransformTool *tr_tool   = GIMP_TRANSFORM_TOOL (tool);
-  GimpDrawTool      *draw_tool = GIMP_DRAW_TOOL (tool);
-  TransformAction    function  = TRANSFORM_HANDLE_NONE;
-  TransformAction    i;
-
-  if (display != tool->display || draw_tool->item == NULL)
-    {
-      gimp_transform_tool_set_function (tr_tool, TRANSFORM_HANDLE_NONE);
-      return;
-    }
+  TransformAction i;
 
   for (i = TRANSFORM_HANDLE_NONE + 1; i < TRANSFORM_HANDLE_NUM; i++) {
     if (gimp_canvas_item_hit (tr_tool->handles[i], coords->x, coords->y))
       {
-        function = i;
-        break;
+        return i;
       }
   }
 
-  gimp_transform_tool_set_function (tr_tool, function);
+  return TRANSFORM_HANDLE_NONE;
 }
 
 static void

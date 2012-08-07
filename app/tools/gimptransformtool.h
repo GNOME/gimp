@@ -128,22 +128,26 @@ struct _GimpTransformToolClass
   GimpDrawToolClass  parent_class;
 
   /*  virtual functions  */
-  void          (* dialog)        (GimpTransformTool *tool);
-  void          (* dialog_update) (GimpTransformTool *tool);
-  void          (* prepare)       (GimpTransformTool *tool);
-  void          (* motion)        (GimpTransformTool *tool);
-  void          (* recalc_matrix) (GimpTransformTool *tool);
-  gchar       * (* get_undo_desc) (GimpTransformTool *tool);
-  void          (* draw_gui)      (GimpTransformTool *tool,
-                                   gint               handle_w,
-                                   gint               handle_h);
-  GeglBuffer  * (* transform)     (GimpTransformTool *tool,
-                                   GimpItem          *item,
-                                   GeglBuffer        *orig_buffer,
-                                   gint               orig_offset_x,
-                                   gint               orig_offset_y,
-                                   gint              *new_offset_x,
-                                   gint              *new_offset_y);
+  void            (* dialog)        (GimpTransformTool *tool);
+  void            (* dialog_update) (GimpTransformTool *tool);
+  void            (* prepare)       (GimpTransformTool *tool);
+  void            (* motion)        (GimpTransformTool *tool);
+  void            (* recalc_matrix) (GimpTransformTool *tool);
+  gchar         * (* get_undo_desc) (GimpTransformTool *tool);
+  TransformAction (* pick_function) (GimpTransformTool *tool,
+                                     const GimpCoords  *coords,
+                                     GdkModifierType    state,
+                                     GimpDisplay       *display);
+  void            (* draw_gui)      (GimpTransformTool *tool,
+                                     gint               handle_w,
+                                     gint               handle_h);
+  GeglBuffer    * (* transform)     (GimpTransformTool *tool,
+                                     GimpItem          *item,
+                                     GeglBuffer        *orig_buffer,
+                                     gint               orig_offset_x,
+                                     gint               orig_offset_y,
+                                     gint              *new_offset_x,
+                                     gint              *new_offset_y);
 };
 
 
