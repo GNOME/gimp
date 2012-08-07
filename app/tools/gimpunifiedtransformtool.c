@@ -1278,6 +1278,44 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
 
       *x[this] = px[this] + dx;
       *y[this] = py[this] + dy;
+
+      if (frompivot)
+        {
+          //TODO don't duplicate this code from above
+          GimpMatrix3 transform_before, transform_after;
+          gint i;
+          gdouble comp_x, comp_y;
+          gimp_matrix3_identity (&transform_before);
+          gimp_matrix3_identity (&transform_after);
+          gimp_transform_matrix_perspective (&transform_before,
+                                             transform_tool->x1,
+                                             transform_tool->y1,
+                                             transform_tool->x2 - transform_tool->x1,
+                                             transform_tool->y2 - transform_tool->y1,
+                                             px[0], py[0],
+                                             px[1], py[1],
+                                             px[2], py[2],
+                                             px[3], py[3]);
+          gimp_transform_matrix_perspective (&transform_after,
+                                             transform_tool->x1,
+                                             transform_tool->y1,
+                                             transform_tool->x2 - transform_tool->x1,
+                                             transform_tool->y2 - transform_tool->y1,
+                                             *x[0], *y[0],
+                                             *x[1], *y[1],
+                                             *x[2], *y[2],
+                                             *x[3], *y[3]);
+          gimp_matrix3_invert(&transform_before);
+          GimpMatrix3 transform = transform_before;
+          gimp_matrix3_mult(&transform_after, &transform);
+          gimp_matrix3_transform_point(&transform, ppivot_x, ppivot_y, &comp_x, &comp_y);
+          for (i = 0; i < 4; i++)
+            {
+              *x[i] -= comp_x - ppivot_x;
+              *y[i] -= comp_y - ppivot_y;
+            }
+          fixedpivot = TRUE;
+        }
     }
 
   if (!fixedpivot)
