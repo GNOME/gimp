@@ -750,6 +750,45 @@ static inline GimpVector2 lineintersect (GimpVector2 p1, GimpVector2 p2,
     return p;
 }
 
+static inline GimpVector2 getpivotdelta (GimpTransformTool *tr_tool)
+{
+  TransInfo tr;
+  GimpMatrix3 transform_before, transform_after;
+  GimpVector2 delta;
+
+  gimp_matrix3_identity (&transform_before);
+  gimp_matrix3_identity (&transform_after);
+
+  memcpy (tr, tr_tool->trans_info, sizeof (TransInfo));
+  gimp_transform_matrix_perspective (&transform_after,
+                                     tr_tool->x1,
+                                     tr_tool->y1,
+                                     tr_tool->x2 - tr_tool->x1,
+                                     tr_tool->y2 - tr_tool->y1,
+                                     tr[X0], tr[Y0],
+                                     tr[X1], tr[Y1],
+                                     tr[X2], tr[Y2],
+                                     tr[X3], tr[Y3]);
+  memcpy (tr, tr_tool->prev_trans_info[0], sizeof (TransInfo));
+  gimp_transform_matrix_perspective (&transform_before,
+                                     tr_tool->x1,
+                                     tr_tool->y1,
+                                     tr_tool->x2 - tr_tool->x1,
+                                     tr_tool->y2 - tr_tool->y1,
+                                     tr[X0], tr[Y0],
+                                     tr[X1], tr[Y1],
+                                     tr[X2], tr[Y2],
+                                     tr[X3], tr[Y3]);
+  gimp_matrix3_invert (&transform_before);
+  gimp_matrix3_mult (&transform_after, &transform_before);
+  gimp_matrix3_transform_point (&transform_before, tr[PIVOT_X], tr[PIVOT_Y], &delta.x, &delta.y);
+
+  delta.x -= tr[PIVOT_X];
+  delta.y -= tr[PIVOT_Y];
+
+  return delta;
+}
+
 static void
 gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
 {
@@ -789,8 +828,6 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
   px[4] = (px[0] + px[1] + px[2] + px[3]) / 4.;
   py[4] = (py[0] + py[1] + py[2] + py[3]) / 4.;
 
-  //TODO: pivot point must transform along with the frame in all
-  //transformations, not just move
   pivot_x = &transform_tool->trans_info[PIVOT_X];
   pivot_y = &transform_tool->trans_info[PIVOT_Y];
 
@@ -993,37 +1030,12 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
            * this difference */
           //TODO don't fly off to hell when the transform is 'invalid'
           //TODO the handle doesn't actually end up where the mouse cursor is
-          GimpMatrix3 transform_before, transform_after;
           gint i;
-          gdouble comp_x, comp_y;
-          gimp_matrix3_identity (&transform_before);
-          gimp_matrix3_identity (&transform_after);
-          gimp_transform_matrix_perspective (&transform_before,
-                                             transform_tool->x1,
-                                             transform_tool->y1,
-                                             transform_tool->x2 - transform_tool->x1,
-                                             transform_tool->y2 - transform_tool->y1,
-                                             px[0], py[0],
-                                             px[1], py[1],
-                                             px[2], py[2],
-                                             px[3], py[3]);
-          gimp_transform_matrix_perspective (&transform_after,
-                                             transform_tool->x1,
-                                             transform_tool->y1,
-                                             transform_tool->x2 - transform_tool->x1,
-                                             transform_tool->y2 - transform_tool->y1,
-                                             *x[0], *y[0],
-                                             *x[1], *y[1],
-                                             *x[2], *y[2],
-                                             *x[3], *y[3]);
-          gimp_matrix3_invert(&transform_before);
-          GimpMatrix3 transform = transform_before;
-          gimp_matrix3_mult(&transform_after, &transform);
-          gimp_matrix3_transform_point(&transform, pivot.x, pivot.y, &comp_x, &comp_y);
+          GimpVector2 delta = getpivotdelta (transform_tool);
           for (i = 0; i < 4; i++)
             {
-              *x[i] -= comp_x - pivot.x;
-              *y[i] -= comp_y - pivot.y;
+              *x[i] -= delta.x;
+              *y[i] -= delta.y;
             }
           fixedpivot = TRUE;
         }
@@ -1104,38 +1116,11 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
 
       if (!keepaspect && frompivot)
         {
-          //TODO don't duplicate this code from above
-          GimpMatrix3 transform_before, transform_after;
-          gint i;
-          gdouble comp_x, comp_y;
-          gimp_matrix3_identity (&transform_before);
-          gimp_matrix3_identity (&transform_after);
-          gimp_transform_matrix_perspective (&transform_before,
-                                             transform_tool->x1,
-                                             transform_tool->y1,
-                                             transform_tool->x2 - transform_tool->x1,
-                                             transform_tool->y2 - transform_tool->y1,
-                                             px[0], py[0],
-                                             px[1], py[1],
-                                             px[2], py[2],
-                                             px[3], py[3]);
-          gimp_transform_matrix_perspective (&transform_after,
-                                             transform_tool->x1,
-                                             transform_tool->y1,
-                                             transform_tool->x2 - transform_tool->x1,
-                                             transform_tool->y2 - transform_tool->y1,
-                                             *x[0], *y[0],
-                                             *x[1], *y[1],
-                                             *x[2], *y[2],
-                                             *x[3], *y[3]);
-          gimp_matrix3_invert(&transform_before);
-          GimpMatrix3 transform = transform_before;
-          gimp_matrix3_mult(&transform_after, &transform);
-          gimp_matrix3_transform_point(&transform, pivot.x, pivot.y, &comp_x, &comp_y);
+          GimpVector2 delta = getpivotdelta (transform_tool);
           for (i = 0; i < 4; i++)
             {
-              *x[i] -= comp_x - pivot.x;
-              *y[i] -= comp_y - pivot.y;
+              *x[i] -= delta.x;
+              *y[i] -= delta.y;
             }
           fixedpivot = TRUE;
         }
@@ -1281,38 +1266,12 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
 
       if (frompivot)
         {
-          //TODO don't duplicate this code from above
-          GimpMatrix3 transform_before, transform_after;
           gint i;
-          gdouble comp_x, comp_y;
-          gimp_matrix3_identity (&transform_before);
-          gimp_matrix3_identity (&transform_after);
-          gimp_transform_matrix_perspective (&transform_before,
-                                             transform_tool->x1,
-                                             transform_tool->y1,
-                                             transform_tool->x2 - transform_tool->x1,
-                                             transform_tool->y2 - transform_tool->y1,
-                                             px[0], py[0],
-                                             px[1], py[1],
-                                             px[2], py[2],
-                                             px[3], py[3]);
-          gimp_transform_matrix_perspective (&transform_after,
-                                             transform_tool->x1,
-                                             transform_tool->y1,
-                                             transform_tool->x2 - transform_tool->x1,
-                                             transform_tool->y2 - transform_tool->y1,
-                                             *x[0], *y[0],
-                                             *x[1], *y[1],
-                                             *x[2], *y[2],
-                                             *x[3], *y[3]);
-          gimp_matrix3_invert(&transform_before);
-          GimpMatrix3 transform = transform_before;
-          gimp_matrix3_mult(&transform_after, &transform);
-          gimp_matrix3_transform_point(&transform, ppivot_x, ppivot_y, &comp_x, &comp_y);
+          GimpVector2 delta = getpivotdelta (transform_tool);
           for (i = 0; i < 4; i++)
             {
-              *x[i] -= comp_x - ppivot_x;
-              *y[i] -= comp_y - ppivot_y;
+              *x[i] -= delta.x;
+              *y[i] -= delta.y;
             }
           fixedpivot = TRUE;
         }
@@ -1320,35 +1279,9 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
 
   if (!fixedpivot)
     {
-      //TODO don't duplicate this code from above
-      GimpMatrix3 transform_before, transform_after;
-      gdouble comp_x, comp_y;
-      gimp_matrix3_identity (&transform_before);
-      gimp_matrix3_identity (&transform_after);
-      gimp_transform_matrix_perspective (&transform_before,
-                                         transform_tool->x1,
-                                         transform_tool->y1,
-                                         transform_tool->x2 - transform_tool->x1,
-                                         transform_tool->y2 - transform_tool->y1,
-                                         px[0], py[0],
-                                         px[1], py[1],
-                                         px[2], py[2],
-                                         px[3], py[3]);
-      gimp_transform_matrix_perspective (&transform_after,
-                                         transform_tool->x1,
-                                         transform_tool->y1,
-                                         transform_tool->x2 - transform_tool->x1,
-                                         transform_tool->y2 - transform_tool->y1,
-                                         *x[0], *y[0],
-                                         *x[1], *y[1],
-                                         *x[2], *y[2],
-                                         *x[3], *y[3]);
-      gimp_matrix3_invert(&transform_before);
-      GimpMatrix3 transform = transform_before;
-      gimp_matrix3_mult(&transform_after, &transform);
-      gimp_matrix3_transform_point(&transform, ppivot_x, ppivot_y, &comp_x, &comp_y);
-      *pivot_x = comp_x;
-      *pivot_y = comp_y;
+      GimpVector2 delta = getpivotdelta (transform_tool);
+      *pivot_x = ppivot_x + delta.x;
+      *pivot_y = ppivot_y + delta.y;
     }
 }
 
