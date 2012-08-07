@@ -16,9 +16,12 @@
  */
 
 
-void   print_page_setup_load (GtkPrintOperation *operation,
-                              gint32             image_ID);
-void   print_page_setup_save (GtkPrintOperation *operation,
-                              gint32             image_ID);
+#ifndef EMBED_PAGE_SETUP
+void   print_page_setup_dialog (GtkPrintOperation *operation);
+#endif
+void   print_page_setup_load   (GtkPrintOperation *operation,
+                                gint32             image_ID);
+void   print_page_setup_save   (GtkPrintOperation *operation,
+                                gint32             image_ID);
 
 

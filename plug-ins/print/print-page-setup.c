@@ -20,11 +20,31 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include "print.h"
 #include "print-page-setup.h"
 #include "print-utils.h"
 
 #define PRINT_PAGE_SETUP_NAME  "print-page-setup"
 
+
+#ifndef EMBED_PAGE_SETUP
+void
+print_page_setup_dialog (GtkPrintOperation *operation)
+{
+  GtkPrintSettings *settings;
+  GtkPageSetup     *setup;
+
+  g_return_if_fail (GTK_IS_PRINT_OPERATION (operation));
+
+  setup = gtk_print_operation_get_default_page_setup (operation);
+
+  settings = gtk_print_settings_new ();
+  setup = gtk_print_run_page_setup_dialog (NULL, setup, settings);
+  g_object_unref (settings);
+
+  gtk_print_operation_set_default_page_setup (operation, setup);
+}
+#endif
 
 void
 print_page_setup_load (GtkPrintOperation *operation,

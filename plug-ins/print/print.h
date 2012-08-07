@@ -16,6 +16,10 @@
  */
 
 
+#ifndef G_OS_WIN32
+#define EMBED_PAGE_SETUP 1
+#endif
+
 typedef enum
 {
   CENTER_NONE         = 0,
