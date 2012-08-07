@@ -240,13 +240,6 @@ static inline GimpVector2 rotate2d (GimpVector2 p, gdouble angle) {
     return ret;
 }
 
-static inline GimpVector2 shearvector (GimpVector2 p, gdouble factor) {
-    GimpVector2 ret;
-    ret.x = p.x + p.y * factor;
-    ret.y = p.y;
-    return ret;
-}
-
 static void
 gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
 {
