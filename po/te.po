@@ -1,5 +1,5 @@
 # Gimp Telugu Translation
-# Copyright (C) 1998-2011 Free Software Foundation, Inc.
+# Copyright (C) 1998-2012 Free Software Foundation, Inc.
 # This file is distributed under the same license as the Gimp package.
 # Suravara Translation Team <support@suravara.com>, 2012.
 # Praveen Illa <mail2ipn@gmail.com>, 2010, 2011, 2012.
@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2012-05-13 23:58+0000\n"
-"PO-Revision-Date: 2012-05-15 11:34+0530\n"
+"PO-Revision-Date: 2012-08-08 23:56+0530\n"
 "Last-Translator: Praveen Illa <mail2ipn@gmail.com>\n"
 "Language-Team: Telugu <indlinux-telugu@lists.sourceforge.net>\n"
 "Language: te\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
-"X-Generator: Virtaal 0.7.0\n"
+"X-Generator: Gtranslator 2.91.5\n"
 "X-Project-Style: gnome\n"
 "X-Poedit-Bookmarks: 2757,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
 "X-Poedit-Language: Telugu\n"
@@ -13321,7 +13321,7 @@ msgstr "దీనితో ఎంచుకో"
 
 #: ../app/tools/gimpregionselecttool.c:165
 msgid "Move the mouse to change threshold"
-msgstr "గడప మార్చుటకు మౌసును జరుపు"
+msgstr "గ్రాహకస్థాయి మార్చుటకు మౌసును జరుపు"
 
 #: ../app/tools/gimprotatetool.c:93
 msgid "Rotate"
@@ -13596,31 +13596,31 @@ msgstr "గింప్ పాఠ్య కూర్పకం"
 
 #: ../app/tools/gimpthresholdtool.c:91
 msgid "Threshold Tool: Reduce image to two colors using a threshold"
-msgstr "ఆధార పనిముట్టు: ఆధారాన్ని ఉపయోగించి బొమ్మను రెండు రంగులకు తగ్గించు"
+msgstr "గ్రాహకస్థాయి పనిముట్టు: గ్రాహకస్థాయిని ఉపయోగించి బొమ్మను రెండు రంగులకు తగ్గించు"
 
 #: ../app/tools/gimpthresholdtool.c:92
 msgid "_Threshold..."
-msgstr "గడప ...(_T)"
+msgstr "గ్రాహకస్థాయి...(_T)"
 
 #: ../app/tools/gimpthresholdtool.c:109
 msgid "Apply Threshold"
-msgstr "గడపను అనువర్తించు"
+msgstr "గ్రాహకస్థాయిని అనువర్తించు"
 
 #: ../app/tools/gimpthresholdtool.c:111
 msgid "Import Threshold Settings"
-msgstr "గడప ఐచ్చికాలను దిగుమతించు"
+msgstr "గ్రాహకస్థాయి ఐచ్చికాలను దిగుమతించు"
 
 #: ../app/tools/gimpthresholdtool.c:112
 msgid "Export Threshold Settings"
-msgstr "గడప ఐచ్చికాలను ఎగుమతించు"
+msgstr "గ్రాహకస్థాయి ఐచ్చికాలను ఎగుమతించు"
 
 #: ../app/tools/gimpthresholdtool.c:162
 msgid "Threshold does not operate on indexed layers."
-msgstr "సూచకంలోని పొరల మీద గడప పనిచేయదు."
+msgstr "సూచకంలోని పొరల మీద గ్రాహకస్థాయి పనిచేయదు."
 
 #: ../app/tools/gimpthresholdtool.c:270
 msgid "Automatically adjust to optimal binarization threshold"
-msgstr "ఉత్తమ అడ్డు గడపను స్వతహాగా సరిచేయి"
+msgstr "ఉత్తమ అడ్డు గ్రాహకస్థాయిని స్వతహాగా సరిచేయి"
 
 #: ../app/tools/gimptool.c:978
 msgid "Can't work on an empty image, add a layer first"
@@ -14278,11 +14278,11 @@ msgstr "పెద్ద మునుజూపులు"
 
 #: ../app/widgets/gimpcontrollereditor.c:198
 msgid "_Dump events from this controller"
-msgstr "ఈ అధికారి నుండి చర్యలను కుప్పచేయి(_D)"
+msgstr "ఈ నియంత్రకం నుండి చర్యలను కుప్పచేయి(_D)"
 
 #: ../app/widgets/gimpcontrollereditor.c:203
 msgid "_Enable this controller"
-msgstr "ఈ అధికారిని క్రియాత్మకం చేయి(_E)"
+msgstr "ఈ నియంత్రకాన్ని చేతనించు (_E)"
 
 #: ../app/widgets/gimpcontrollereditor.c:224
 msgid "Name:"
@@ -14302,12 +14302,12 @@ msgstr "కార్యక్రమంను లాగు(_G)"
 
 #: ../app/widgets/gimpcontrollereditor.c:369
 msgid "Select the next event arriving from the controller"
-msgstr "అధికారి నుండి తర్వాత వచ్చు కార్యక్రమంను ఎంచుకో"
+msgstr "నియంత్రకం నుండి తర్వాత వచ్చు కార్యక్రమాన్ని ఎంచుకొను"
 
 #: ../app/widgets/gimpcontrollereditor.c:525
 #, c-format
 msgid "Remove the action assigned to '%s'"
-msgstr "'%s'కు అప్పగించిన కార్యక్రమంను తొలగించు"
+msgstr "'%s'కు అప్పగించిన కార్యక్రమాన్ని తొలగించు"
 
 #: ../app/widgets/gimpcontrollereditor.c:530
 #, c-format
@@ -14317,11 +14317,11 @@ msgstr "'%s'కు  క్రియను అప్పగించు"
 #: ../app/widgets/gimpcontrollereditor.c:651
 #, c-format
 msgid "Select Action for Event '%s'"
-msgstr "'%s కార్యక్రమంకు క్రియను ఎంచుకో"
+msgstr "'%s కార్యక్రమ క్రియను ఎంచుకొను"
 
 #: ../app/widgets/gimpcontrollereditor.c:656
 msgid "Select Controller Event Action"
-msgstr "అధికారి కార్యక్రమ క్రియను ఎంచుకో"
+msgstr "నియంత్రకము కార్యక్రమ క్రియను ఎంచుకొను"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:67
 #: ../app/widgets/gimpcontrollerkeyboard.c:70
@@ -14383,33 +14383,33 @@ msgstr "సిద్ధం"
 
 #: ../app/widgets/gimpcontrollerlist.c:182
 msgid "Available Controllers"
-msgstr "అందుబాటులోవున్న అధికారులు"
+msgstr "అందుబాటులోవున్న నియంత్రకాలు"
 
 #: ../app/widgets/gimpcontrollerlist.c:277
 msgid "Active Controllers"
-msgstr "క్రియాశీల అధికారులు"
+msgstr "క్రియాశీల నియంత్రకాలు"
 
 #: ../app/widgets/gimpcontrollerlist.c:293
 msgid "Configure the selected controller"
-msgstr "ఎంచుకున్న అధికారిని స్వరూపించు"
+msgstr "ఎంచుకున్న నియంత్రకాన్ని స్వరూపించు"
 
 #: ../app/widgets/gimpcontrollerlist.c:301
 msgid "Move the selected controller up"
-msgstr "ఎంచుకున్న అధికారిని పైకి జరుపు"
+msgstr "ఎంచుకున్న నియంత్రకాన్ని పైకి జరుపు"
 
 #: ../app/widgets/gimpcontrollerlist.c:309
 msgid "Move the selected controller down"
-msgstr "ఎంచుకున్న అధికారిని క్రిందికి జరుపు"
+msgstr "ఎంచుకున్న నియంత్రకాన్ని క్రిందికి జరుపు"
 
 #: ../app/widgets/gimpcontrollerlist.c:427
 #, c-format
 msgid "Add '%s' to the list of active controllers"
-msgstr "%sను క్రియాశీల అధికారులు జాబితాకు చేర్చు"
+msgstr "%sను క్రియాశీల నియంత్రకాల జాబితాకు చేర్చు"
 
 #: ../app/widgets/gimpcontrollerlist.c:478
 #, c-format
 msgid "Remove '%s' from the list of active controllers"
-msgstr "%s ను క్రియాశీల అధికారుల జాబితానుండి తొలగించు"
+msgstr "%s ను క్రియాశీల నియంత్రకాల జాబితానుండి తొలగించు"
 
 #: ../app/widgets/gimpcontrollerlist.c:512
 msgid ""
@@ -14417,9 +14417,9 @@ msgid ""
 "\n"
 "You already have a keyboard controller in your list of active controllers."
 msgstr ""
-"ఒకే ఒక క్రియాశీల కీబోర్డు అధికారి ఉండవచ్చు.\n"
+"ఒకే ఒక క్రియాశీల కీబోర్డు నియంత్రకం ఉండవచ్చు.\n"
 "\n"
-"మీకు ఇప్పటికే జాబితాలో ఒక కీబోర్డు అధికారి ఉంది."
+"మీకు ఇప్పటికే జాబితాలో ఒక కీబోర్డు నియంత్రకం ఉంది."
 
 #: ../app/widgets/gimpcontrollerlist.c:523
 msgid ""
@@ -14427,9 +14427,9 @@ msgid ""
 "\n"
 "You already have a wheel controller in your list of active controllers."
 msgstr ""
-"ఒకే ఒక క్రియాశీల చక్ర అధికారి ఉండవచ్చు.\n"
+"ఒకే ఒక క్రియాశీల చక్ర నియంత్రకం ఉండవచ్చు.\n"
 "\n"
-"మీకు ఇప్పటికే ఒక చక్ర అధికారి జాబితాలో ఉంది."
+"మీకు ఇప్పటికే ఒక చక్ర నియంత్రకం జాబితాలో ఉంది."
 
 #: ../app/widgets/gimpcontrollerlist.c:534
 msgid ""
@@ -14437,26 +14437,26 @@ msgid ""
 "\n"
 "You already have a mouse controller in your list of active controllers."
 msgstr ""
-"ఒకే ఒక క్రియాశీల మౌస్ అధికారి ఉండవచ్చు.\n"
+"ఒకే ఒక క్రియాశీల మౌస్ నియంత్రకం ఉండవచ్చు.\n"
 "\n"
-"మీకు ఇప్పటికే జాబితాలో ఒక మౌస్ అధికారి ఉంది."
+"మీకు ఇప్పటికే జాబితాలో ఒక మౌస్ నియంత్రకము ఉంది."
 
 #: ../app/widgets/gimpcontrollerlist.c:560
 msgid "Remove Controller?"
-msgstr "అధికారిని తొలగించాలా?"
+msgstr "నియంత్రకాన్ని తీసివేయాలా?"
 
 #: ../app/widgets/gimpcontrollerlist.c:565
 msgid "Disable Controller"
-msgstr "అధికారిని అచేతనంచేయి"
+msgstr "నియంత్రకాన్ని అచేతనంచేయి"
 
 #: ../app/widgets/gimpcontrollerlist.c:567
 msgid "Remove Controller"
-msgstr "అధికారిని తొలగించు"
+msgstr "నియంత్రకాన్ని తీసివేయి"
 
 #: ../app/widgets/gimpcontrollerlist.c:579
 #, c-format
 msgid "Remove Controller '%s'?"
-msgstr "'%s' అధికారిని తొలగించాలా?"
+msgstr "'%s' నియంత్రకాన్ని తీసివేయాలా?"
 
 #: ../app/widgets/gimpcontrollerlist.c:583
 msgid ""
@@ -14466,14 +14466,14 @@ msgid ""
 "Selecting \"Disable Controller\" will disable the controller without "
 "removing it."
 msgstr ""
-"క్రియాశీల అధికార్జ జాబితానుండి ఈ అధికారిని తొలగిస్తే, మీరు స్వరూపించిన అన్ని మ్యాపింగులను శాస్వతంగా "
+"క్రియాశీల నియంత్రకాల జాబితానుండి ఈ నియంత్రకాన్ని తొలగిస్తే, మీరు స్వరూపించిన అన్ని మ్యాపింగులను శాస్వతంగా "
 "తొలగించబడతాయి.\n"
 "\n"
-"\"అధికారిని అచేతనం చేయి\" ఎంచుకోని ఐచ్చికాలు కోల్పోకుండా అధికారిని అచేతనం చెయ్యవచ్చు."
+"\"నియంత్రకాన్ని అచేతనం చేయి\" ఎంచుకోని ఐచ్చికాలు కోల్పోకుండా నియంత్రకాన్ని అచేతనం చెయ్యవచ్చు."
 
 #: ../app/widgets/gimpcontrollerlist.c:635
 msgid "Configure Input Controller"
-msgstr "ఇన్‌పుట్ అధికారిని స్వరూపించు"
+msgstr "ఇన్‌పుట్ నియంత్రకాన్ని స్వరూపించు"
 
 #: ../app/widgets/gimpcontrollermouse.c:70
 #: ../app/widgets/gimpcontrollermouse.c:73
