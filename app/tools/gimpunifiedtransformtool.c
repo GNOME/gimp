@@ -426,7 +426,7 @@ gimp_unified_transform_tool_dialog_update (GimpTransformTool *tr_tool)
 }
 
 static void
-gimp_unified_transform_tool_prepare (GimpTransformTool  *tr_tool)
+gimp_unified_transform_tool_prepare (GimpTransformTool *tr_tool)
 {
   tr_tool->trans_info[PIVOT_X] = (gdouble) (tr_tool->x1 + tr_tool->x2) / 2.0;
   tr_tool->trans_info[PIVOT_Y] = (gdouble) (tr_tool->y1 + tr_tool->y2) / 2.0;
@@ -441,6 +441,13 @@ gimp_unified_transform_tool_prepare (GimpTransformTool  *tr_tool)
   tr_tool->trans_info[Y3] = (gdouble) tr_tool->y2;
 }
 
+static gboolean transform_is_convex (GimpVector2 *newpos)
+{
+  return gimp_transform_polygon_is_convex (newpos[0].x, newpos[0].y,
+                                           newpos[1].x, newpos[1].y,
+                                           newpos[2].x, newpos[2].y,
+                                           newpos[3].x, newpos[3].y);
+}
 
 static inline gdouble dotprod (GimpVector2 a, GimpVector2 b)
 {
@@ -769,11 +776,10 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
        *
        */
 
-      if (frompivot)
+      if (frompivot && transform_is_convex (newpos))
         {
           /* transform the pivot point before the interaction and after, and move everything by
            * this difference */
-          //TODO don't fly off to hell when the transform is 'invalid'
           //TODO the handle doesn't actually end up where the mouse cursor is
           GimpVector2 delta = getpivotdelta (transform_tool, oldpos, newpos, pivot);
           for (i = 0; i < 4; i++)
@@ -842,7 +848,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
           newpos[this_r] = vectoradd (oldpos[this_r], d);
         }
 
-      if (!keepaspect && frompivot)
+      if (!keepaspect && frompivot && transform_is_convex (newpos))
         {
           GimpVector2 delta = getpivotdelta (transform_tool, oldpos, newpos, pivot);
           for (i = 0; i < 4; i++)
@@ -953,7 +959,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
 
       newpos[this] = vectoradd (oldpos[this], d);
 
-      if (frompivot) //TODO constrain and frompivot are both bound to ctrl
+      if (frompivot && transform_is_convex (newpos)) //TODO constrain and frompivot are both bound to ctrl
         {
           GimpVector2 delta = getpivotdelta (transform_tool, oldpos, newpos, pivot);
 
@@ -971,7 +977,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
     }
 
   /* this will have been set to TRUE if an operation used the pivot in addition to being a user option */
-  if (!fixedpivot)
+  if (!fixedpivot && transform_is_convex (newpos))
     {
       GimpVector2 delta = getpivotdelta (transform_tool, oldpos, newpos, pivot);
       pivot = vectoradd (pivot, delta);
