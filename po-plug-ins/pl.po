@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-02 20:26+0200\n"
-"PO-Revision-Date: 2012-07-02 20:27+0200\n"
+"POT-Creation-Date: 2012-08-08 02:02+0200\n"
+"PO-Revision-Date: 2012-08-08 02:03+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -13140,23 +13140,31 @@ msgstr "Pionowo"
 msgid "Both"
 msgstr "Obie"
 
-#: ../plug-ins/print/print.c:89
+#: ../plug-ins/print/print.c:107
 msgid "Print the image"
 msgstr "Drukuje obraz"
 
-#: ../plug-ins/print/print.c:94
+#: ../plug-ins/print/print.c:112
 msgid "_Print..."
 msgstr "Wy_drukuj..."
 
-#: ../plug-ins/print/print.c:216
+#: ../plug-ins/print/print.c:124
+msgid "Adjust page size and orientation for printing"
+msgstr "Dostosowuje wymiary strony i ułożenie dla drukowania"
+
+#: ../plug-ins/print/print.c:130
+msgid "Page Set_up"
+msgstr "_Ustawienia strony"
+
+#: ../plug-ins/print/print.c:275
 msgid "Image Settings"
 msgstr "Ustawienia obrazu"
 
-#: ../plug-ins/print/print.c:267
+#: ../plug-ins/print/print.c:373
 msgid "An error occurred while trying to print:"
 msgstr "Wystąpił błąd podczas próby wydrukowania:"
 
-#: ../plug-ins/print/print.c:294
+#: ../plug-ins/print/print.c:400
 msgid "Printing"
 msgstr "Drukowanie"
 
