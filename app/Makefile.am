@@ -138,8 +138,7 @@ calm_down_linker = \
 	-Wl,-u,$(SYMPREFIX)gimp_vectors_prop_undo_get_type	\
 	-Wl,-u,$(SYMPREFIX)gimp_curve_map_pixels		\
 	-Wl,-u,$(SYMPREFIX)gimp_param_spec_duplicate		\
-	-Wl,-u,$(SYMPREFIX)gimp_operations_init			\
-	-Wl,-u,$(SYMPREFIX)smooth_region
+	-Wl,-u,$(SYMPREFIX)gimp_operations_init
 
 AM_LDFLAGS = \
 	$(munix)					\
