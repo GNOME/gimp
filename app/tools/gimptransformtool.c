@@ -494,16 +494,16 @@ gimp_transform_tool_modifier_key (GimpTool        *tool,
       g_object_set (options,
                     "frompivot", ! options->frompivot,
                     NULL);
+    }
+
+  if (key == gimp_get_extend_selection_mask ())
+    {
       g_object_set (options,
                     "cornersnap", ! options->cornersnap,
                     NULL);
       g_object_set (options,
                     "constrain", ! options->constrain,
                     NULL);
-    }
-
-  if (key == gimp_get_extend_selection_mask ())
-    {
       g_object_set (options,
                     "keepaspect", ! options->keepaspect,
                     NULL);

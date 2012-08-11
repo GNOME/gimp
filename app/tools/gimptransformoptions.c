@@ -435,11 +435,11 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
         gchar *name;
         gchar *desc;
       } opt_list[] = {
+        { shift, "constrain", "Constrain movement (%s)" },
         { shift, "keepaspect", "Keep aspect (%s)" },
-        { shift, "freeshear", "Move edge freely in shearing (%s)" },
         { ctrl, "frompivot", "Scale from pivot / Symmetric shearing (%s)" },
-        { ctrl, "cornersnap", "Snap pivot point to corners/center (%s)" },
-        { ctrl, "constrain", "Constrain movement (%s)" },
+        { shift, "freeshear", "Move edge freely in shearing (%s)" },
+        { shift, "cornersnap", "Snap pivot point to corners/center (%s)" },
         { 0, "fixedpivot", "Lock pivot to canvas" },
       };
 

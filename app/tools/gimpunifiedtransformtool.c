@@ -959,7 +959,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
 
       newpos[this] = vectoradd (oldpos[this], d);
 
-      if (frompivot && transform_is_convex (newpos)) //TODO constrain and frompivot are both bound to ctrl
+      if (frompivot && transform_is_convex (newpos))
         {
           GimpVector2 delta = getpivotdelta (transform_tool, oldpos, newpos, pivot);
 
