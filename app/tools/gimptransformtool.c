@@ -492,7 +492,13 @@ gimp_transform_tool_modifier_key (GimpTool        *tool,
   if (key == gimp_get_constrain_behavior_mask ())
     {
       g_object_set (options,
-                    "frompivot", ! options->frompivot,
+                    "frompivot-scale", ! options->frompivot_scale,
+                    NULL);
+      g_object_set (options,
+                    "frompivot-shear", ! options->frompivot_shear,
+                    NULL);
+      g_object_set (options,
+                    "frompivot-perspective", ! options->frompivot_perspective,
                     NULL);
     }
 
@@ -501,14 +507,21 @@ gimp_transform_tool_modifier_key (GimpTool        *tool,
       g_object_set (options,
                     "cornersnap", ! options->cornersnap,
                     NULL);
+
       g_object_set (options,
-                    "constrain", ! options->constrain,
+                    "constrain-move", ! options->constrain_move,
                     NULL);
       g_object_set (options,
-                    "keepaspect", ! options->keepaspect,
+                    "constrain-scale", ! options->constrain_scale,
                     NULL);
       g_object_set (options,
-                    "freeshear", ! options->freeshear,
+                    "constrain-rotate", ! options->constrain_rotate,
+                    NULL);
+      g_object_set (options,
+                    "constrain-shear", ! options->constrain_shear,
+                    NULL);
+      g_object_set (options,
+                    "constrain-perspective", ! options->constrain_perspective,
                     NULL);
     }
 }
@@ -742,7 +755,10 @@ gimp_transform_tool_options_notify (GimpTool         *tool,
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
     }
 
-  if (! strcmp (pspec->name, "constrain") || ! strcmp (pspec->name, "alternate"))
+  if (g_str_has_prefix (pspec->name, "constrain-") ||
+      g_str_has_prefix (pspec->name, "frompivot-") ||
+      ! strcmp (pspec->name, "fixedpivot") ||
+      ! strcmp (pspec->name, "cornersnap"))
     {
       gimp_transform_tool_dialog_update (tr_tool);
     }

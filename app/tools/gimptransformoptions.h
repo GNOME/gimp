@@ -46,10 +46,14 @@ struct _GimpTransformOptions
   gdouble                   preview_opacity;
   GimpGuidesType            grid_type;
   gint                      grid_size;
-  gboolean                  constrain;
-  gboolean                  keepaspect;
-  gboolean                  frompivot;
-  gboolean                  freeshear;
+  gboolean                  constrain_move;
+  gboolean                  constrain_scale;
+  gboolean                  constrain_rotate;
+  gboolean                  constrain_shear;
+  gboolean                  constrain_perspective;
+  gboolean                  frompivot_scale;
+  gboolean                  frompivot_shear;
+  gboolean                  frompivot_perspective;
   gboolean                  cornersnap;
   gboolean                  fixedpivot;
 };

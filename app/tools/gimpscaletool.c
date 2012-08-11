@@ -139,7 +139,7 @@ gimp_scale_tool_dialog_update (GimpTransformTool *tr_tool)
   g_object_set (GIMP_SCALE_TOOL (tr_tool)->box,
                 "width",       width,
                 "height",      height,
-                "keep-aspect", options->constrain,
+                "keep-aspect", options->constrain_scale,
                 NULL);
 }
 
@@ -175,7 +175,7 @@ gimp_scale_tool_prepare (GimpTransformTool *tr_tool)
     g_object_new (GIMP_TYPE_SIZE_BOX,
                   "width",       tr_tool->x2 - tr_tool->x1,
                   "height",      tr_tool->y2 - tr_tool->y1,
-                  "keep-aspect", options->constrain,
+                  "keep-aspect", options->constrain_scale,
                   "unit",        gimp_display_get_shell (display)->unit,
                   "xresolution", xres,
                   "yresolution", yres,
@@ -267,7 +267,7 @@ gimp_scale_tool_motion (GimpTransformTool *tr_tool)
   *y1 += diff_y;
 
   /*  if control is being held, constrain the aspect ratio  */
-  if (options->constrain)
+  if (options->constrain_scale)
     {
       /*  FIXME: improve this  */
       gdouble h = tr_tool->trans_info[Y1] - tr_tool->trans_info[Y0];
@@ -384,7 +384,7 @@ gimp_scale_tool_size_notify (GtkWidget         *box,
                     "keep-aspect", &constrain,
                     NULL);
 
-      if (constrain != options->constrain)
+      if (constrain != options->constrain_scale)
         {
           gint width;
           gint height;
@@ -400,7 +400,7 @@ gimp_scale_tool_size_notify (GtkWidget         *box,
           tr_tool->aspect = (gdouble) width / (gdouble) height;
 
           g_object_set (options,
-                        "constrain", constrain,
+                        "constrain-scale", constrain,
                         NULL);
         }
     }

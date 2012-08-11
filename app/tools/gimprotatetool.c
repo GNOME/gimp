@@ -342,7 +342,7 @@ gimp_rotate_tool_motion (GimpTransformTool *tr_tool)
     }
 
   /*  constrain the angle to 15-degree multiples if ctrl is held down  */
-  if (options->constrain)
+  if (options->constrain_rotate)
     {
       tr_tool->trans_info[ANGLE] =
         FIFTEEN_DEG * (gint) ((tr_tool->trans_info[REAL_ANGLE] +

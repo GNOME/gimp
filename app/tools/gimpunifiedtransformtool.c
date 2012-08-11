@@ -585,11 +585,6 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
   
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (transform_tool);
 
-  gboolean constrain  = options->constrain;
-  gboolean keepaspect = options->keepaspect;
-  gboolean frompivot  = options->frompivot;
-  gboolean freeshear  = options->freeshear;
-  gboolean cornersnap = options->cornersnap;
   gboolean fixedpivot = options->fixedpivot;
 
   TransformAction function = transform_tool->function;
@@ -617,7 +612,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
   /* move */
   if (function == TRANSFORM_HANDLE_CENTER)
     {
-      if (constrain)
+      if (options->constrain_move)
         {
           /* snap to 45 degree vectors from starting point */
           gdouble angle = 16. * calcangle ((GimpVector2){1., 0.}, d) / (2.*G_PI);
@@ -653,7 +648,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
   if (function == TRANSFORM_HANDLE_ROTATION)
     {
       gdouble angle = calcangle (vectorsubtract (cur, pivot), vectorsubtract (mouse, pivot));
-      if (constrain)
+      if (options->constrain_rotate)
         {
           /* round to 15 degree multiple */
           angle /= 2*G_PI/24.;
@@ -671,7 +666,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
     {
       gint screenx, screeny;
 
-      if (cornersnap)
+      if (options->cornersnap)
         {
           /* snap to corner points and center */
           gint closest = 0;
@@ -723,7 +718,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       /* when the keep aspect transformation constraint is enabled, the
        * translation shall only be along the diagonal that runs trough
        * this corner point. */
-      if (keepaspect)
+      if (options->constrain_scale)
         {
           /* restrict to movement along the diagonal */
           GimpVector2 diag = vectorsubtract (oldpos[this], oldpos[opposite]);
@@ -776,7 +771,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
        *
        */
 
-      if (frompivot && transform_is_convex (newpos))
+      if (options->frompivot_scale && transform_is_convex (newpos))
         {
           /* transform the pivot point before the interaction and after, and move everything by
            * this difference */
@@ -818,12 +813,12 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       /* restrict to movement along the midline */
       d = vectorproject (d, midline);
 
-      if (keepaspect)
+      if (options->constrain_scale)
         {
           GimpVector2 before, after, effective_pivot = pivot;
           gdouble distance;
 
-          if (!frompivot)
+          if (!options->frompivot_scale)
             {
               /* center of the opposite side is pivot */
               effective_pivot = scalemult (vectoradd (oldpos[opp_l], oldpos[opp_r]), 0.5);
@@ -848,7 +843,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
           newpos[this_r] = vectoradd (oldpos[this_r], d);
         }
 
-      if (!keepaspect && frompivot && transform_is_convex (newpos))
+      if (!options->constrain_scale && options->frompivot_scale && transform_is_convex (newpos))
         {
           GimpVector2 delta = getpivotdelta (transform_tool, oldpos, newpos, pivot);
           for (i = 0; i < 4; i++)
@@ -881,12 +876,12 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       opp_l = 3 - this_l;
       opp_r = 3 - this_r;
 
-      if (frompivot)
+      if (options->frompivot_shear)
         po = vectorsubtract (zero, d);
       else
         po = zero;
 
-      if (!freeshear)
+      if (options->constrain_shear)
         {
           /* restrict to movement along the side */
           GimpVector2 side = vectorsubtract (oldpos[this_r], oldpos[this_l]);
@@ -894,7 +889,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
           d = vectorproject (d, side);
         }
 
-      if (!freeshear && frompivot)
+      if (options->constrain_shear && options->frompivot_shear)
         {
           /* restrict to movement along the opposite side */
           GimpVector2 side = vectorsubtract (oldpos[opp_r], oldpos[opp_l]);
@@ -929,7 +924,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
         this = 3; left = 2; right = 1; opposite = 0;
       } else g_assert_not_reached ();
 
-      if (constrain)
+      if (options->constrain_perspective)
         { /* when the constrain transformation constraint is enabled, the
              translation shall only be either along the side angles of the
              two sides that run to this corner point, or along the
@@ -959,7 +954,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
 
       newpos[this] = vectoradd (oldpos[this], d);
 
-      if (frompivot && transform_is_convex (newpos))
+      if (options->frompivot_perspective && transform_is_convex (newpos))
         {
           GimpVector2 delta = getpivotdelta (transform_tool, oldpos, newpos, pivot);
 
