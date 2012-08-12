@@ -1,11 +1,12 @@
 # Japanese message table for GIMP 2.0
-# Copyright (C) 1998-2005,2008 Free Software Foundation, Inc.
+# Copyright (C) 1998-2005,2008-2012 Free Software Foundation, Inc.
 # SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>, 1998-2001, 2004.
 # Ryoichi INAGAKI <ryo1@bc.wakwak.com>, 2003, 2004.
 # Tadashi Jokagi <elf2000@users.sourceforge.net>, 2005.
 # OKANO Takayoshi <kano@na.rim.or.jp>, 2005.
 # Ken Okubo <se5k-ookb@asahi-net.or.jp>, 2009
 # Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>, 2008-2012.
+# Jiro Matsuzawa <jmatsuzawa@gnome.org>, 2012.
 #
 msgid ""
 msgstr ""
@@ -13,8 +14,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2012-03-13 20:50+0000\n"
-"PO-Revision-Date: 2012-03-03 15:14+0900\n"
-"Last-Translator: Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>\n"
+"PO-Revision-Date: 2012-08-11 11:55+0900\n"
+"Last-Translator: Jiro Matsuzawa <jmatsuzawa@gnome.org>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1391,12 +1392,12 @@ msgstr "GIMP を上手に使うための Tip 集を表示します"
 #: ../app/actions/dialogs-actions.c:264
 msgctxt "dialogs-action"
 msgid "_About"
-msgstr "GIMP について(_A)"
+msgstr "このアプリケーションについて(_A)"
 
 #: ../app/actions/dialogs-actions.c:265
 msgctxt "dialogs-action"
 msgid "About GIMP"
-msgstr "GIMP について"
+msgstr "このアプリケーションの情報を表示します"
 
 #: ../app/actions/dialogs-actions.c:328
 #: ../app/dialogs/preferences-dialog.c:1944 ../app/widgets/gimptoolbox.c:555
