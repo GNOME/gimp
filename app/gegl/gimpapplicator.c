@@ -183,6 +183,7 @@ gimp_applicator_new (GeglBuffer        *dest_buffer,
     gegl_node_new_child (applicator->node,
                          "operation", "gegl:write-buffer",
                          "buffer",    dest_buffer,
+                         "flush",     FALSE,
                          NULL);
 
   if (affect == GIMP_COMPONENT_ALL)
