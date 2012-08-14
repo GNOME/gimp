@@ -26,6 +26,10 @@ typedef enum
 {
   TRANSFORM_CREATING,
   TRANSFORM_HANDLE_NONE,
+  TRANSFORM_HANDLE_NW_P, /* perspective handles */
+  TRANSFORM_HANDLE_NE_P,
+  TRANSFORM_HANDLE_SW_P,
+  TRANSFORM_HANDLE_SE_P,
   TRANSFORM_HANDLE_NW, /* north west */
   TRANSFORM_HANDLE_NE, /* north east */
   TRANSFORM_HANDLE_SW, /* south west */
@@ -36,11 +40,6 @@ typedef enum
   TRANSFORM_HANDLE_W,  /* west       */
   TRANSFORM_HANDLE_CENTER, /* for moving */
   TRANSFORM_HANDLE_PIVOT,  /* pivot for rotation and scaling */
-  /* extra handles for unified tool */
-  TRANSFORM_HANDLE_NW_P, /* perspective handles */
-  TRANSFORM_HANDLE_NE_P,
-  TRANSFORM_HANDLE_SW_P,
-  TRANSFORM_HANDLE_SE_P,
   TRANSFORM_HANDLE_N_S,  /* shearing handles */
   TRANSFORM_HANDLE_S_S,
   TRANSFORM_HANDLE_E_S,
