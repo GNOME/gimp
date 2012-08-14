@@ -1028,6 +1028,13 @@ ReadImage (FILE        *fd,
   cur_progress = 0;
   max_progress = height;
 
+  if (len > (G_MAXSIZE / height / (alpha_frame ? (promote_to_rgb ? 4 : 2) : 1)))
+  {
+    g_message ("'%s' has a larger image size than GIMP can handle.",
+               gimp_filename_to_utf8 (filename));
+    return -1;
+  }
+
   if (alpha_frame)
     dest = (guchar *) g_malloc (len * height * (promote_to_rgb ? 4 : 2));
   else
