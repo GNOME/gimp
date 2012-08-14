@@ -900,7 +900,7 @@ gimp_viewable_get_pixbuf (GimpViewable *viewable,
       if (gdk_pixbuf_get_width  (private->preview_pixbuf) == width &&
           gdk_pixbuf_get_height (private->preview_pixbuf) == height)
         {
-          return pixbuf;
+          return private->preview_pixbuf;
         }
 
       g_object_unref (private->preview_pixbuf);
