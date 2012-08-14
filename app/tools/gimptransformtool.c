@@ -782,9 +782,14 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
     {
       if (gimp_transform_options_show_preview (options))
         {
+          GimpMatrix3 matrix = tr_tool->transform;
+
+          if (options->direction == GIMP_TRANSFORM_BACKWARD)
+            gimp_matrix3_invert (&matrix);
+
           gimp_draw_tool_add_transform_preview (draw_tool,
                                                 tool->drawable,
-                                                &tr_tool->transform,
+                                                &matrix,
                                                 tr_tool->x1,
                                                 tr_tool->y1,
                                                 tr_tool->x2,
