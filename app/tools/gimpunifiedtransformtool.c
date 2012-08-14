@@ -135,6 +135,25 @@ gimp_unified_transform_tool_init (GimpUnifiedTransformTool *unified_tool)
   tr_tool->use_handles = TRUE;
 }
 
+static gboolean
+point_is_inside_polygon (gint n, gdouble *x, gdouble *y, gdouble px, gdouble py)
+{
+  int i, j;
+  gboolean odd = FALSE;
+
+  for (i = 0, j = n - 1; i < n; j = i++)
+    {
+      if ((y[i] < py && y[j] >= py) ||
+          (y[j] < py && y[i] >= py))
+        {
+          if (x[i] + (py - y[i]) / (y[j] - y[i]) * (x[j] - x[i]) < px)
+            odd = !odd;
+        }
+    }
+
+  return odd;
+}
+
 static TransformAction
 gimp_unified_transform_tool_pick_function (GimpTransformTool *tr_tool,
                                            const GimpCoords  *coords,
@@ -149,6 +168,15 @@ gimp_unified_transform_tool_pick_function (GimpTransformTool *tr_tool,
         return i;
       }
   }
+
+  /* points passed in clockwise order */
+  if (point_is_inside_polygon (4, 
+                               (gdouble[4]){ tr_tool->tx1, tr_tool->tx2, 
+                                             tr_tool->tx4, tr_tool->tx3 },
+                               (gdouble[4]){ tr_tool->ty1, tr_tool->ty2,
+                                             tr_tool->ty4, tr_tool->ty3 },
+                               coords->x, coords->y))
+      return TRANSFORM_HANDLE_CENTER;
 
   return TRANSFORM_HANDLE_NONE;
 }
