@@ -61,7 +61,7 @@ gimp_plug_in_progress_attach (GimpProgress *progress)
   attach_count++;
 
   g_object_set_data (G_OBJECT (progress), "plug-in-progress-attach-count",
-                     GINT_TO_POINTER (attach_count));;
+                     GINT_TO_POINTER (attach_count));
 
   return attach_count;
 }
@@ -80,7 +80,7 @@ gimp_plug_in_progress_detach (GimpProgress *progress)
   attach_count--;
 
   g_object_set_data (G_OBJECT (progress), "plug-in-progress-attach-count",
-                     GINT_TO_POINTER (attach_count));;
+                     GINT_TO_POINTER (attach_count));
 
   return attach_count;
 }

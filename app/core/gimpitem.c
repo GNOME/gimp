@@ -2134,7 +2134,7 @@ gimp_item_mask_bounds (GimpItem *item,
   if (x2) *x2 = tmp_x2;
   if (y2) *y2 = tmp_y2;
 
-  return retval;;
+  return retval;
 }
 
 gboolean

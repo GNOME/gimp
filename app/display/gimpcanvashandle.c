@@ -61,7 +61,7 @@ struct _GimpCanvasHandlePrivate
   gint             width;
   gint             height;
   gdouble          start_angle;
-  gdouble          slice_angle;;
+  gdouble          slice_angle;
 };
 
 #define GET_PRIVATE(handle) \

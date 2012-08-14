@@ -397,7 +397,7 @@ iterate (control_point *cp,
           tcos = cos (theta);
           r2 = sqrt (tx * tx + ty * ty);
           r2 = pow (r2, tsin);
-          nx = r2 * tcos;;
+          nx = r2 * tcos;
           ny = r2 * tsin;
           p[0] += v * nx;
           p[1] += v * ny;

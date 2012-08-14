@@ -594,7 +594,7 @@ create_orientmap_dialog (GtkWidget *parent)
   gtk_widget_show (tmpw);
 
   tmpw = orient_map_preview_prev = gimp_preview_area_new ();
-  gtk_widget_set_size_request (tmpw, OMWIDTH, OMHEIGHT);;
+  gtk_widget_set_size_request (tmpw, OMWIDTH, OMHEIGHT);
   gtk_container_add (GTK_CONTAINER (tmpw2), tmpw);
   gtk_widget_show (tmpw);
 

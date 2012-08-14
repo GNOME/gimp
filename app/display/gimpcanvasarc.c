@@ -57,7 +57,7 @@ struct _GimpCanvasArcPrivate
   gdouble  radius_x;
   gdouble  radius_y;
   gdouble  start_angle;
-  gdouble  slice_angle;;
+  gdouble  slice_angle;
   gboolean filled;
 };
 

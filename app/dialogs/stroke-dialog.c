@@ -249,7 +249,7 @@ stroke_dialog_response (GtkWidget  *widget,
 
   item    = g_object_get_data (G_OBJECT (dialog), "gimp-item");
   options = g_object_get_data (G_OBJECT (dialog), "gimp-stroke-options");
-  combo   = g_object_get_data (G_OBJECT (dialog), "gimp-tool-menu");;
+  combo   = g_object_get_data (G_OBJECT (dialog), "gimp-tool-menu");
 
   image   = gimp_item_get_image (item);
   context = GIMP_VIEWABLE_DIALOG (dialog)->context;
