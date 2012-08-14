@@ -1036,9 +1036,9 @@ ReadImage (FILE        *fd,
   }
 
   if (alpha_frame)
-    dest = (guchar *) g_malloc (len * height * (promote_to_rgb ? 4 : 2));
+    dest = (guchar *) g_malloc ((gsize)len * (gsize)height * (promote_to_rgb ? 4 : 2));
   else
-    dest = (guchar *) g_malloc (len * height);
+    dest = (guchar *) g_malloc ((gsize)len * (gsize)height);
 
 #ifdef GIFDEBUG
     g_print ("GIF: reading %d by %d%s GIF image, ncols=%d\n",
