@@ -304,7 +304,7 @@ gimp_unified_transform_tool_draw_gui (GimpTransformTool *tr_tool,
                                GIMP_HANDLE_ANCHOR_CENTER);
 
 
-  /*  draw the rotation handle  */
+  /*  draw the rotation handles  */
   x = (tr_tool->tx1 * 3 + tr_tool->tx2 * 2) / 5;
   y = (tr_tool->ty1 * 3 + tr_tool->ty2 * 2) / 5;
 
@@ -315,6 +315,15 @@ gimp_unified_transform_tool_draw_gui (GimpTransformTool *tr_tool,
                                handle_w, handle_h,
                                GIMP_HANDLE_ANCHOR_CENTER);
 
+  x = (tr_tool->tx3 * 2 + tr_tool->tx4 * 3) / 5;
+  y = (tr_tool->ty3 * 2 + tr_tool->ty4 * 3) / 5;
+
+  tr_tool->handles[TRANSFORM_HANDLE_ROTATION2] =
+    gimp_draw_tool_add_handle (draw_tool,
+                               GIMP_HANDLE_FILLED_CIRCLE,
+                               x, y,
+                               handle_w, handle_h,
+                               GIMP_HANDLE_ANCHOR_CENTER);
 
   /*  draw the rotation center axis handle  */
   d = MIN (handle_w, handle_h) * 2; /* so you can grab it from under the center handle */
@@ -645,7 +654,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
     }
 
   /* rotate */
-  if (function == TRANSFORM_HANDLE_ROTATION)
+  if (function == TRANSFORM_HANDLE_ROTATION || function == TRANSFORM_HANDLE_ROTATION2)
     {
       gdouble angle = calcangle (vectorsubtract (cur, pivot), vectorsubtract (mouse, pivot));
       if (options->constrain_rotate)
