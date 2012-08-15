@@ -154,31 +154,81 @@ point_is_inside_polygon (gint n, gdouble *x, gdouble *y, gdouble px, gdouble py)
   return odd;
 }
 
+static gchar*
+get_friendly_operation_name (TransformAction op)
+{
+  switch (op)
+    {
+      case TRANSFORM_HANDLE_NONE:
+        return "";
+      case TRANSFORM_HANDLE_NW_P:
+      case TRANSFORM_HANDLE_NE_P:
+      case TRANSFORM_HANDLE_SW_P:
+      case TRANSFORM_HANDLE_SE_P:
+        return "Change perspective";
+      case TRANSFORM_HANDLE_NW:
+      case TRANSFORM_HANDLE_NE:
+      case TRANSFORM_HANDLE_SW:
+      case TRANSFORM_HANDLE_SE:
+        return "Scale";
+      case TRANSFORM_HANDLE_N:
+      case TRANSFORM_HANDLE_S:
+      case TRANSFORM_HANDLE_E:
+      case TRANSFORM_HANDLE_W:
+        return "Scale";
+      case TRANSFORM_HANDLE_CENTER:
+        return "Move";
+      case TRANSFORM_HANDLE_PIVOT:
+        return "Move pivot";
+      case TRANSFORM_HANDLE_N_S:
+      case TRANSFORM_HANDLE_S_S:
+      case TRANSFORM_HANDLE_E_S:
+      case TRANSFORM_HANDLE_W_S:
+        return "Shear";
+      case TRANSFORM_HANDLE_ROTATION:
+      case TRANSFORM_HANDLE_ROTATION2:
+        return "Rotate";
+      default:
+        g_assert_not_reached();
+    }
+}
+
 static TransformAction
 gimp_unified_transform_tool_pick_function (GimpTransformTool *tr_tool,
                                            const GimpCoords  *coords,
                                            GdkModifierType    state,
                                            GimpDisplay       *display)
 {
-  TransformAction i;
+  TransformAction ret = TRANSFORM_HANDLE_NONE, i;
+  GimpTool *tool = GIMP_TOOL (tr_tool);
 
-  for (i = TRANSFORM_HANDLE_NONE + 1; i < TRANSFORM_HANDLE_NUM; i++) {
-    if (gimp_canvas_item_hit (tr_tool->handles[i], coords->x, coords->y))
-      {
-        return i;
-      }
-  }
+  for (i = TRANSFORM_HANDLE_NONE + 1; i < TRANSFORM_HANDLE_NUM; i++)
+    {
+      if (gimp_canvas_item_hit (tr_tool->handles[i], coords->x, coords->y))
+        {
+          ret = i;
+          break;
+        }
+    }
 
-  /* points passed in clockwise order */
-  if (point_is_inside_polygon (4, 
-                               (gdouble[4]){ tr_tool->tx1, tr_tool->tx2, 
-                                             tr_tool->tx4, tr_tool->tx3 },
-                               (gdouble[4]){ tr_tool->ty1, tr_tool->ty2,
-                                             tr_tool->ty4, tr_tool->ty3 },
-                               coords->x, coords->y))
-      return TRANSFORM_HANDLE_CENTER;
+  if (ret == TRANSFORM_HANDLE_NONE)
+    {
+      /* points passed in clockwise order */
+      if (point_is_inside_polygon (4, 
+                                   (gdouble[4]){ tr_tool->tx1, tr_tool->tx2, 
+                                                 tr_tool->tx4, tr_tool->tx3 },
+                                   (gdouble[4]){ tr_tool->ty1, tr_tool->ty2,
+                                                 tr_tool->ty4, tr_tool->ty3 },
+                                   coords->x, coords->y))
+          ret = TRANSFORM_HANDLE_CENTER;
+    }
 
-  return TRANSFORM_HANDLE_NONE;
+  gimp_tool_pop_status (tool, tool->display);
+
+  if (ret != TRANSFORM_HANDLE_NONE)
+    gimp_tool_push_status (tool, tool->display, "%s", get_friendly_operation_name (ret));
+
+  return ret;
 }
 
 static void
