@@ -197,7 +197,6 @@ get_friendly_operation_name (TransformAction op)
       case TRANSFORM_HANDLE_W_S:
         return "Shear";
       case TRANSFORM_HANDLE_ROTATION:
-      case TRANSFORM_HANDLE_ROTATION2:
         return "Rotate";
       default:
         g_assert_not_reached();
@@ -215,7 +214,7 @@ gimp_unified_transform_tool_pick_function (GimpTransformTool *tr_tool,
 
   for (i = TRANSFORM_HANDLE_NONE + 1; i < TRANSFORM_HANDLE_NUM; i++)
     {
-      if (gimp_canvas_item_hit (tr_tool->handles[i], coords->x, coords->y))
+      if (tr_tool->handles[i] && gimp_canvas_item_hit (tr_tool->handles[i], coords->x, coords->y))
         {
           ret = i;
           break;
@@ -231,7 +230,9 @@ gimp_unified_transform_tool_pick_function (GimpTransformTool *tr_tool,
                                    (gdouble[4]){ tr_tool->ty1, tr_tool->ty2,
                                                  tr_tool->ty4, tr_tool->ty3 },
                                    coords->x, coords->y))
-          ret = TRANSFORM_HANDLE_CENTER;
+        ret = TRANSFORM_HANDLE_CENTER;
+      else
+        ret = TRANSFORM_HANDLE_ROTATION;
     }
 
   gimp_tool_pop_status (tool, tool->display);
@@ -308,20 +309,6 @@ gimp_unified_transform_tool_draw_gui (GimpTransformTool *tr_tool,
                                  handle_w, handle_h,
                                  GIMP_HANDLE_ANCHOR_CENTER);
 
-  /*  draw the rotation handles  */
-  tx[0] = (tr_tool->tx1 * 3.0 + tr_tool->tx2 * 2.0) / 5.0;
-  ty[0] = (tr_tool->ty1 * 3.0 + tr_tool->ty2 * 2.0) / 5.0;
-  tx[1] = (tr_tool->tx3 * 2.0 + tr_tool->tx4 * 3.0) / 5.0;
-  ty[1] = (tr_tool->ty3 * 2.0 + tr_tool->ty4 * 3.0) / 5.0;
-
-  for (i = 0; i < 2; i++)
-    tr_tool->handles[TRANSFORM_HANDLE_ROTATION + i] =
-      gimp_draw_tool_add_handle (draw_tool,
-                                 GIMP_HANDLE_FILLED_CIRCLE,
-                                 tx[i], ty[i],
-                                 handle_w, handle_h,
-                                 GIMP_HANDLE_ANCHOR_CENTER);
-
   /*  draw the rotation center axis handle  */
   d = MIN (handle_w, handle_h) * 2.0; /* so you can grab it from under the center handle */
 
@@ -344,25 +331,6 @@ gimp_unified_transform_tool_draw_gui (GimpTransformTool *tr_tool,
 
   gimp_draw_tool_pop_group (draw_tool);
 
-  /*  draw the move handle  */
-  d = MIN (handle_w, handle_h);
-
-  stroke_group = gimp_draw_tool_add_stroke_group (draw_tool);
-
-  tr_tool->handles[TRANSFORM_HANDLE_CENTER] = GIMP_CANVAS_ITEM (stroke_group);
-
-  gimp_draw_tool_push_group (draw_tool, stroke_group);
-
-  gimp_draw_tool_add_handle (draw_tool,
-                             GIMP_HANDLE_CIRCLE,
-                             tr_tool->tcx, tr_tool->tcy,
-                             d, d,
-                             GIMP_HANDLE_ANCHOR_CENTER);
-  gimp_draw_tool_add_handle (draw_tool,
-                             GIMP_HANDLE_CROSS,
-                             tr_tool->tcx, tr_tool->tcy,
-                             d, d,
-                             GIMP_HANDLE_ANCHOR_CENTER);
   /* draw an item at 40,80 in screen coordinates */
   //gint x, y;
   //gimp_display_shell_untransform_xy (gimp_display_get_shell (tool->display),
@@ -372,8 +340,6 @@ gimp_unified_transform_tool_draw_gui (GimpTransformTool *tr_tool,
   //                           x, y,
   //                           5, 5,
   //                           GIMP_HANDLE_ANCHOR_CENTER);
-
-  gimp_draw_tool_pop_group (draw_tool);
 }
 
 static void
@@ -645,7 +611,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
     }
 
   /* rotate */
-  if (function == TRANSFORM_HANDLE_ROTATION || function == TRANSFORM_HANDLE_ROTATION2)
+  if (function == TRANSFORM_HANDLE_ROTATION)
     {
       gdouble angle = calcangle (vectorsubtract (cur, pivot), vectorsubtract (mouse, pivot));
       if (options->constrain_rotate)

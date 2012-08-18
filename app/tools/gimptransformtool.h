@@ -45,7 +45,6 @@ typedef enum
   TRANSFORM_HANDLE_E_S,
   TRANSFORM_HANDLE_W_S,
   TRANSFORM_HANDLE_ROTATION, /* rotation handle */
-  TRANSFORM_HANDLE_ROTATION2, /* extra rotation handle */
 
   TRANSFORM_HANDLE_NUM /* keep this last so *handles[] is the right size */
 } TransformAction;
