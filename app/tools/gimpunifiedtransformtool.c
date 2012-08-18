@@ -154,6 +154,17 @@ point_is_inside_polygon (gint n, gdouble *x, gdouble *y, gdouble px, gdouble py)
   return odd;
 }
 
+static gboolean
+point_is_inside_polygon_pos (GimpVector2 *pos, GimpVector2 point)
+{
+  return point_is_inside_polygon (4,
+                                   (gdouble[4]){ pos[0].x, pos[1].x, 
+                                                 pos[3].x, pos[2].x },
+                                   (gdouble[4]){ pos[0].y, pos[1].y, 
+                                                 pos[3].y, pos[2].y },
+                                   point.x, point.y);
+}
+
 static gchar*
 get_friendly_operation_name (TransformAction op)
 {
@@ -436,12 +447,12 @@ gimp_unified_transform_tool_prepare (GimpTransformTool *tr_tool)
   tr_tool->trans_info[Y3] = (gdouble) tr_tool->y2;
 }
 
-static gboolean transform_is_convex (GimpVector2 *newpos)
+static gboolean transform_is_convex (GimpVector2 *pos)
 {
-  return gimp_transform_polygon_is_convex (newpos[0].x, newpos[0].y,
-                                           newpos[1].x, newpos[1].y,
-                                           newpos[2].x, newpos[2].y,
-                                           newpos[3].x, newpos[3].y);
+  return gimp_transform_polygon_is_convex (pos[0].x, pos[0].y,
+                                           pos[1].x, pos[1].y,
+                                           pos[2].x, pos[2].y,
+                                           pos[3].x, pos[3].y);
 }
 
 static inline gdouble dotprod (GimpVector2 a, GimpVector2 b)
@@ -631,12 +642,6 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
         }
       for (i = 0; i < 4; i++)
         newpos[i] = vectoradd (oldpos[i], d);
-
-      if (!fixedpivot)
-        {
-          pivot = vectoradd (pivot, d);
-          fixedpivot = TRUE;
-        }
     }
 
   /* rotate */
@@ -762,7 +767,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
        *
        */
 
-      if (options->frompivot_scale && transform_is_convex (newpos))
+      if (options->frompivot_scale && transform_is_convex (newpos) && transform_is_convex (oldpos))
         {
           /* transform the pivot point before the interaction and after, and move everything by
            * this difference */
@@ -834,7 +839,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
           newpos[this_r] = vectoradd (oldpos[this_r], d);
         }
 
-      if (!options->constrain_scale && options->frompivot_scale && transform_is_convex (newpos))
+      if (!options->constrain_scale && options->frompivot_scale && transform_is_convex (newpos) && transform_is_convex (oldpos))
         {
           GimpVector2 delta = getpivotdelta (transform_tool, oldpos, newpos, pivot);
           for (i = 0; i < 4; i++)
@@ -945,7 +950,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
 
       newpos[this] = vectoradd (oldpos[this], d);
 
-      if (options->frompivot_perspective && transform_is_convex (newpos))
+      if (options->frompivot_perspective && transform_is_convex (newpos) && transform_is_convex (oldpos))
         {
           GimpVector2 delta = getpivotdelta (transform_tool, oldpos, newpos, pivot);
 
@@ -963,7 +968,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
     }
 
   /* this will have been set to TRUE if an operation used the pivot in addition to being a user option */
-  if (!fixedpivot && transform_is_convex (newpos))
+  if (!fixedpivot && transform_is_convex (newpos) && transform_is_convex (oldpos) && point_is_inside_polygon_pos (oldpos, pivot))
     {
       GimpVector2 delta = getpivotdelta (transform_tool, oldpos, newpos, pivot);
       pivot = vectoradd (pivot, delta);
