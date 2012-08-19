@@ -497,15 +497,25 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
       gchar     *label;
       gint       i;
 
-      for (i = 0; i < 13; i++)
+      frame = NULL;
+
+      for (i = 0; i < G_N_ELEMENTS (opt_list); i++)
         {
+          if (!opt_list[i].name && !opt_list[i].desc)
+            {
+              frame = NULL;
+              continue;
+            }
+
           label = g_strdup_printf (opt_list[i].desc,
                                    gimp_get_mod_string (opt_list[i].mod));
 
           if (opt_list[i].name)
             {
               button = gimp_prop_check_button_new (config, opt_list[i].name, label);
-              gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+              
+              gtk_box_pack_start (GTK_BOX (frame ? grid_box : vbox), button, FALSE, FALSE, 0);
+
               gtk_widget_show (button);
 
               g_free (label);
@@ -516,9 +526,13 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
             }
           else
             {
-              button = gtk_label_new (label);
-              gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-              gtk_widget_show (button);
+              frame = gimp_frame_new (label);
+              gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+              gtk_widget_show (frame);
+
+              grid_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+              gtk_container_add (GTK_CONTAINER (frame), grid_box);
+              gtk_widget_show (grid_box);
             }
 
           g_free (label);
