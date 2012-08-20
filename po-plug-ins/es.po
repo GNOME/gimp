@@ -20,15 +20,16 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-04-28 22:37+0000\n"
-"PO-Revision-Date: 2012-05-01 12:22+0200\n"
+"POT-Creation-Date: 2012-08-20 13:05+0000\n"
+"PO-Revision-Date: 2012-08-20 20:02+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Gtranslator 2.91.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:118
@@ -616,14 +617,14 @@ msgstr "_Vertical"
 #. * Create the "background" layer to hold the image...
 #.
 #: ../plug-ins/common/blinds.c:279 ../plug-ins/common/compose.c:936
-#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:363
-#: ../plug-ins/common/file-cel.c:366 ../plug-ins/common/file-dicom.c:612
+#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:438
+#: ../plug-ins/common/file-cel.c:441 ../plug-ins/common/file-dicom.c:612
 #: ../plug-ins/common/file-gif-load.c:943
 #: ../plug-ins/common/file-jp2-load.c:354 ../plug-ins/common/file-pcx.c:425
 #: ../plug-ins/common/file-pcx.c:431 ../plug-ins/common/file-pix.c:382
 #: ../plug-ins/common/file-png.c:891 ../plug-ins/common/file-pnm.c:583
 #: ../plug-ins/common/file-raw.c:763 ../plug-ins/common/file-sunras.c:977
-#: ../plug-ins/common/file-tga.c:1064 ../plug-ins/common/file-tiff-load.c:997
+#: ../plug-ins/common/file-tga.c:1064 ../plug-ins/common/file-tiff-load.c:1005
 #: ../plug-ins/common/file-xbm.c:897 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:257 ../plug-ins/common/tile.c:262
 #: ../plug-ins/file-bmp/bmp-read.c:380 ../plug-ins/file-bmp/bmp-read.c:647
@@ -1031,7 +1032,8 @@ msgstr "Cargar la configuración del mezclador de canales"
 #. stat error (file does not exist)
 #: ../plug-ins/common/channel-mixer.c:980
 #: ../plug-ins/common/cml-explorer.c:2208 ../plug-ins/common/curve-bend.c:892
-#: ../plug-ins/common/file-cel.c:312 ../plug-ins/common/file-dicom.c:340
+#: ../plug-ins/common/file-cel.c:293 ../plug-ins/common/file-cel.c:345
+#: ../plug-ins/common/file-cel.c:576 ../plug-ins/common/file-dicom.c:340
 #: ../plug-ins/common/file-gbr.c:368 ../plug-ins/common/file-gif-load.c:355
 #: ../plug-ins/common/file-gih.c:640 ../plug-ins/common/file-jp2-load.c:194
 #: ../plug-ins/common/file-jp2-load.c:203 ../plug-ins/common/file-mng.c:1156
@@ -1042,9 +1044,9 @@ msgstr "Cargar la configuración del mezclador de canales"
 #: ../plug-ins/common/file-raw.c:256 ../plug-ins/common/file-raw.c:711
 #: ../plug-ins/common/file-sunras.c:391 ../plug-ins/common/file-svg.c:333
 #: ../plug-ins/common/file-svg.c:713 ../plug-ins/common/file-tga.c:442
-#: ../plug-ins/common/file-tiff-load.c:291 ../plug-ins/common/file-xbm.c:737
-#: ../plug-ins/common/file-xmc.c:663 ../plug-ins/common/file-xmc.c:848
-#: ../plug-ins/common/file-xwd.c:433 ../plug-ins/common/sphere-designer.c:2010
+#: ../plug-ins/common/file-xbm.c:737 ../plug-ins/common/file-xmc.c:663
+#: ../plug-ins/common/file-xmc.c:848 ../plug-ins/common/file-xwd.c:433
+#: ../plug-ins/common/sphere-designer.c:2010
 #: ../plug-ins/file-bmp/bmp-read.c:153 ../plug-ins/file-faxg3/faxg3.c:229
 #: ../plug-ins/file-fits/fits.c:358 ../plug-ins/file-fli/fli-gimp.c:459
 #: ../plug-ins/file-fli/fli-gimp.c:496 ../plug-ins/file-ico/ico-load.c:651
@@ -1069,7 +1071,7 @@ msgstr "Guardar la configuración del mezclador de canales"
 
 #: ../plug-ins/common/channel-mixer.c:1058
 #: ../plug-ins/common/cml-explorer.c:2035 ../plug-ins/common/curve-bend.c:840
-#: ../plug-ins/common/file-cel.c:585 ../plug-ins/common/file-csource.c:407
+#: ../plug-ins/common/file-cel.c:769 ../plug-ins/common/file-csource.c:407
 #: ../plug-ins/common/file-dicom.c:1351 ../plug-ins/common/file-gbr.c:663
 #: ../plug-ins/common/file-gif-save.c:782 ../plug-ins/common/file-gih.c:1258
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-mng.c:649
@@ -1078,7 +1080,7 @@ msgstr "Guardar la configuración del mezclador de canales"
 #: ../plug-ins/common/file-png.c:1358 ../plug-ins/common/file-pnm.c:1010
 #: ../plug-ins/common/file-ps.c:1190 ../plug-ins/common/file-raw.c:591
 #: ../plug-ins/common/file-raw.c:619 ../plug-ins/common/file-sunras.c:565
-#: ../plug-ins/common/file-tga.c:1171 ../plug-ins/common/file-tiff-save.c:684
+#: ../plug-ins/common/file-tga.c:1171 ../plug-ins/common/file-tiff-save.c:710
 #: ../plug-ins/common/file-xbm.c:1036 ../plug-ins/common/file-xmc.c:1455
 #: ../plug-ins/common/file-xwd.c:619 ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:306 ../plug-ins/file-fits/fits.c:476
@@ -3036,19 +3038,26 @@ msgstr "Texto"
 msgid "_Format:"
 msgstr "_Formato:"
 
-#: ../plug-ins/common/file-cel.c:111 ../plug-ins/common/file-cel.c:129
+#: ../plug-ins/common/file-cel.c:114 ../plug-ins/common/file-cel.c:132
 msgid "KISS CEL"
 msgstr "KISS CEL"
 
-#: ../plug-ins/common/file-cel.c:191
+#: ../plug-ins/common/file-cel.c:199
 msgid "Load KISS Palette"
 msgstr "Cargar paleta KISS"
+
+#: ../plug-ins/common/file-cel.c:305 ../plug-ins/common/file-cel.c:360
+#: ../plug-ins/common/file-cel.c:380
+#, c-format
+#| msgid "Error while reading '%s': %s"
+msgid "EOF or error while reading image header"
+msgstr "EOF o error al leer la cabecera de la imagen"
 
 #. max. rows allocated
 #. column, highest column ever used
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
-#: ../plug-ins/common/file-cel.c:317 ../plug-ins/common/file-dicom.c:345
+#: ../plug-ins/common/file-cel.c:350 ../plug-ins/common/file-dicom.c:345
 #: ../plug-ins/common/file-gbr.c:373 ../plug-ins/common/file-gif-load.c:360
 #: ../plug-ins/common/file-gih.c:645 ../plug-ins/common/file-jp2-load.c:187
 #: ../plug-ins/common/file-pat.c:342 ../plug-ins/common/file-pcx.c:366
@@ -3056,7 +3065,7 @@ msgstr "Cargar paleta KISS"
 #: ../plug-ins/common/file-png.c:763 ../plug-ins/common/file-pnm.c:499
 #: ../plug-ins/common/file-ps.c:1020 ../plug-ins/common/file-raw.c:716
 #: ../plug-ins/common/file-sunras.c:487 ../plug-ins/common/file-tga.c:447
-#: ../plug-ins/common/file-tiff-load.c:603 ../plug-ins/common/file-wmf.c:994
+#: ../plug-ins/common/file-tiff-load.c:611 ../plug-ins/common/file-wmf.c:994
 #: ../plug-ins/common/file-xbm.c:742 ../plug-ins/common/file-xmc.c:675
 #: ../plug-ins/common/file-xpm.c:352 ../plug-ins/common/file-xwd.c:524
 #: ../plug-ins/file-bmp/bmp-read.c:158 ../plug-ins/file-faxg3/faxg3.c:213
@@ -3067,24 +3076,80 @@ msgstr "Cargar paleta KISS"
 msgid "Opening '%s'"
 msgstr "Abriendo «%s»"
 
-#: ../plug-ins/common/file-cel.c:354
+#: ../plug-ins/common/file-cel.c:388
+#, c-format
+#| msgid "'%s' is not a PCX file"
+msgid "is not a CEL image file"
+msgstr "no es un archivo de imagen CEL"
+
+#: ../plug-ins/common/file-cel.c:402
+#, c-format
+msgid "illegal bpp value in image: %hhu"
+msgstr "valor de bpp ilegal en la imagne: %hhu"
+
+#: ../plug-ins/common/file-cel.c:416
+#, c-format
+msgid ""
+"illegal image dimensions: width: %d, horizontal offset: %d, height: %d, "
+"vertical offset: %d"
+msgstr ""
+"dimensiones de la imagen ilegales: anchura: %s, desplazamiento horizontal: "
+"%d, desplazamiento vertical: %d"
+
+#: ../plug-ins/common/file-cel.c:429
+#, c-format
 msgid "Can't create a new image"
 msgstr "No se puede crear una imagen nueva"
 
-#: ../plug-ins/common/file-cel.c:444
+#: ../plug-ins/common/file-cel.c:467 ../plug-ins/common/file-cel.c:502
+#: ../plug-ins/common/file-cel.c:527
+#, c-format
+#| msgid "Error while reading '%s': %s"
+msgid "EOF or error while reading image data"
+msgstr "EOF o error al leer los datos de la imagen"
+
+#: ../plug-ins/common/file-cel.c:544
 #, c-format
 msgid "Unsupported bit depth (%d)!"
 msgstr "¡Profundidad de bits no soportada (%d)!"
 
+#: ../plug-ins/common/file-cel.c:626 ../plug-ins/common/file-cel.c:638
+#, c-format
+msgid "'%s': EOF or error while reading palette header"
+msgstr "«%s»: EOF o error al leer la cabecera de la paleta"
+
+#: ../plug-ins/common/file-cel.c:647
+#, c-format
+#| msgid "'%s' is not a PCX file"
+msgid "'%s': is not a KCF palette file"
+msgstr "«%s» no es un archivo de paleta KCF"
+
+#: ../plug-ins/common/file-cel.c:656
+#, c-format
+msgid "'%s': illegal bpp value in palette: %hhu"
+msgstr "«%s»: valor e bpp ilegal en la paleta: %hhu"
+
+#: ../plug-ins/common/file-cel.c:665
+#, c-format
+#| msgid "Number of colors:"
+msgid "'%s': illegal number of colors: %u"
+msgstr "«%s»: número ilegal de colores: %u"
+
+#: ../plug-ins/common/file-cel.c:680 ../plug-ins/common/file-cel.c:697
+#: ../plug-ins/common/file-cel.c:717
+#, c-format
+msgid "'%s': EOF or error while reading palette data"
+msgstr "«%s»: EOF o error al leer los datos de la paleta"
+
 #. init the progress meter
 #. And let's begin the progress
-#: ../plug-ins/common/file-cel.c:590 ../plug-ins/common/file-gbr.c:668
+#: ../plug-ins/common/file-cel.c:774 ../plug-ins/common/file-gbr.c:668
 #: ../plug-ins/common/file-gif-save.c:789 ../plug-ins/common/file-gih.c:1263
 #: ../plug-ins/common/file-html-table.c:257 ../plug-ins/common/file-pat.c:491
 #: ../plug-ins/common/file-pcx.c:644 ../plug-ins/common/file-pix.c:531
 #: ../plug-ins/common/file-png.c:1365 ../plug-ins/common/file-pnm.c:1015
 #: ../plug-ins/common/file-ps.c:1195 ../plug-ins/common/file-sunras.c:570
-#: ../plug-ins/common/file-tga.c:1176 ../plug-ins/common/file-tiff-save.c:694
+#: ../plug-ins/common/file-tga.c:1176 ../plug-ins/common/file-tiff-save.c:718
 #: ../plug-ins/common/file-xbm.c:1041 ../plug-ins/common/file-xmc.c:1460
 #: ../plug-ins/common/file-xpm.c:638 ../plug-ins/common/file-xwd.c:624
 #: ../plug-ins/file-bmp/bmp-write.c:317 ../plug-ins/file-fits/fits.c:481
@@ -3836,7 +3901,7 @@ msgid "Writing to file '%s' failed: %s"
 msgstr "Ocurrió un error al escribir en el archivo «%s»: %s"
 
 #: ../plug-ins/common/file-pdf-load.c:300
-#: ../plug-ins/common/file-pdf-save.c:289
+#: ../plug-ins/common/file-pdf-save.c:290
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
@@ -3861,7 +3926,7 @@ msgid "Import from PDF"
 msgstr "Importar desde PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1093 ../plug-ins/common/file-ps.c:2962
-#: ../plug-ins/common/file-tiff-load.c:483
+#: ../plug-ins/common/file-tiff-load.c:491
 msgid "_Import"
 msgstr "_Importar"
 
@@ -3893,15 +3958,15 @@ msgstr "Usar _Antialias"
 msgid "pixels/%a"
 msgstr "píxeles/%a"
 
-#: ../plug-ins/common/file-pdf-save.c:304
+#: ../plug-ins/common/file-pdf-save.c:305
 msgid "_Create multipage PDF..."
 msgstr "_Crear PDF de varias páginas…"
 
-#: ../plug-ins/common/file-pdf-save.c:401
+#: ../plug-ins/common/file-pdf-save.c:412
 msgid "You must select a file to save!"
 msgstr "Debe seleccionar un archivo para grabar."
 
-#: ../plug-ins/common/file-pdf-save.c:410
+#: ../plug-ins/common/file-pdf-save.c:422
 #, c-format
 msgid ""
 "An error occured while creating the PDF file:\n"
@@ -3914,50 +3979,50 @@ msgstr ""
 "Asegúrese de que ha introducido un nombre de archivo válido y que la carpeta "
 "de destino no es de solo lectura."
 
-#: ../plug-ins/common/file-pdf-save.c:733
-#: ../plug-ins/common/file-pdf-save.c:850
+#: ../plug-ins/common/file-pdf-save.c:746
+#: ../plug-ins/common/file-pdf-save.c:863
 msgid "Omit hidden layers and layers with zero opacity"
 msgstr "Omitir las capas ocultas y las que tienen opacidad cero"
 
-#: ../plug-ins/common/file-pdf-save.c:737
-#: ../plug-ins/common/file-pdf-save.c:854
+#: ../plug-ins/common/file-pdf-save.c:750
+#: ../plug-ins/common/file-pdf-save.c:867
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "Convertir los mapas de bit a gráficos vectoriales cuando sea posible"
 
-#: ../plug-ins/common/file-pdf-save.c:741
-#: ../plug-ins/common/file-pdf-save.c:858
+#: ../plug-ins/common/file-pdf-save.c:754
+#: ../plug-ins/common/file-pdf-save.c:871
 msgid "Apply layer masks before saving"
 msgstr "Aplicar máscaras de capa antes de guardar"
 
-#: ../plug-ins/common/file-pdf-save.c:744
-#: ../plug-ins/common/file-pdf-save.c:861
+#: ../plug-ins/common/file-pdf-save.c:757
+#: ../plug-ins/common/file-pdf-save.c:874
 msgid "Keeping the masks will not change the output"
 msgstr "Mantener las máscaras no cambiará la salida"
 
-#: ../plug-ins/common/file-pdf-save.c:797
+#: ../plug-ins/common/file-pdf-save.c:810
 msgid "Save to:"
 msgstr "Guardar en:"
 
-#: ../plug-ins/common/file-pdf-save.c:801
+#: ../plug-ins/common/file-pdf-save.c:814
 msgid "Browse..."
 msgstr "Explorar…"
 
-#: ../plug-ins/common/file-pdf-save.c:802
+#: ../plug-ins/common/file-pdf-save.c:815
 msgid "Multipage PDF export"
 msgstr "Exportación de PDF de varias páginas"
 
-#: ../plug-ins/common/file-pdf-save.c:835
+#: ../plug-ins/common/file-pdf-save.c:848
 msgid "Remove the selected pages"
 msgstr "Eliminar las páginas seleccionadas"
 
 # Pendiente hasa que sepa lo que significa. FVD
 # Puede ser una imagen pix de Alias WaveFront
 # Gracias ¿Quién lo dice? pon tus iniciales. FVD
-#: ../plug-ins/common/file-pdf-save.c:845
+#: ../plug-ins/common/file-pdf-save.c:858
 msgid "Add this image"
 msgstr "Añadir esta imagen"
 
-#: ../plug-ins/common/file-pdf-save.c:958
+#: ../plug-ins/common/file-pdf-save.c:971
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Error: para guardar el archivo, debe añadirse al menos una imagen."
 
@@ -4143,7 +4208,7 @@ msgstr "No se pudo interpretar el archivo PostScript «%s»"
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "Guardar como PostScript no funciona con imágenes con canales alfa"
 
-#: ../plug-ins/common/file-ps.c:1804 ../plug-ins/common/file-tiff-load.c:999
+#: ../plug-ins/common/file-ps.c:1804 ../plug-ins/common/file-tiff-load.c:1007
 #, c-format
 msgid "Page %d"
 msgstr "Página %d"
@@ -4615,31 +4680,31 @@ msgstr "Inferior izquierdo"
 msgid "Top left"
 msgstr "Arriba a la izquierda"
 
-#: ../plug-ins/common/file-tiff-load.c:240
-#: ../plug-ins/common/file-tiff-save.c:183
-#: ../plug-ins/common/file-tiff-save.c:200
+#: ../plug-ins/common/file-tiff-load.c:243
+#: ../plug-ins/common/file-tiff-save.c:186
+#: ../plug-ins/common/file-tiff-save.c:203
 msgid "TIFF image"
 msgstr "Imagen TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:310
+#: ../plug-ins/common/file-tiff-load.c:297
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "El TIFF «%s» no contiene ninguna carpeta"
 
-#: ../plug-ins/common/file-tiff-load.c:478
+#: ../plug-ins/common/file-tiff-load.c:486
 msgid "Import from TIFF"
 msgstr "Importar desde TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:780
+#: ../plug-ins/common/file-tiff-load.c:788
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-de-%d-páginas"
 
-#: ../plug-ins/common/file-tiff-load.c:1015
+#: ../plug-ins/common/file-tiff-load.c:1023
 msgid "TIFF Channel"
 msgstr "Canal TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:1024
+#: ../plug-ins/common/file-tiff-load.c:1032
 #: ../plug-ins/file-psd/psd-load.c:333
 msgid ""
 "Warning:\n"
@@ -4652,7 +4717,7 @@ msgstr ""
 "8 bits, por lo cual será convertida para usted. Debido a esta conversión se "
 "perderá información."
 
-#: ../plug-ins/common/file-tiff-save.c:888
+#: ../plug-ins/common/file-tiff-save.c:912
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -4660,48 +4725,48 @@ msgstr ""
 "El formato TIFF sólo soporta comentarios en \n"
 "codificación ASCII de 7 bits. No se guardará ningún comentario."
 
-#: ../plug-ins/common/file-tiff-save.c:1062
+#: ../plug-ins/common/file-tiff-save.c:1085
 msgid "TIFF"
 msgstr "TIFF"
 
 #. compression
-#: ../plug-ins/common/file-tiff-save.c:1070
+#: ../plug-ins/common/file-tiff-save.c:1093
 msgid "Compression"
 msgstr "Compresión"
 
-#: ../plug-ins/common/file-tiff-save.c:1074
+#: ../plug-ins/common/file-tiff-save.c:1097
 msgid "_None"
 msgstr "_Ninguno"
 
-#: ../plug-ins/common/file-tiff-save.c:1075
+#: ../plug-ins/common/file-tiff-save.c:1098
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/common/file-tiff-save.c:1076
+#: ../plug-ins/common/file-tiff-save.c:1099
 msgid "_Pack Bits"
 msgstr "_Paquetes de bits"
 
-#: ../plug-ins/common/file-tiff-save.c:1077
+#: ../plug-ins/common/file-tiff-save.c:1100
 msgid "_Deflate"
 msgstr "_Desinflar"
 
-#: ../plug-ins/common/file-tiff-save.c:1078
+#: ../plug-ins/common/file-tiff-save.c:1101
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/common/file-tiff-save.c:1079
+#: ../plug-ins/common/file-tiff-save.c:1102
 msgid "CCITT Group _3 fax"
 msgstr "Fax CCITT grupo _3"
 
-#: ../plug-ins/common/file-tiff-save.c:1080
+#: ../plug-ins/common/file-tiff-save.c:1103
 msgid "CCITT Group _4 fax"
 msgstr "Fax CCITT grupo _4"
 
-#: ../plug-ins/common/file-tiff-save.c:1102
+#: ../plug-ins/common/file-tiff-save.c:1125
 msgid "Save _color values from transparent pixels"
 msgstr "Guardar los valores de los colores de los píxeles _transparentes"
 
-#: ../plug-ins/common/file-tiff-save.c:1118 ../plug-ins/common/file-xbm.c:1235
+#: ../plug-ins/common/file-tiff-save.c:1141 ../plug-ins/common/file-xbm.c:1235
 msgid "Comment:"
 msgstr "Comentario:"
 
@@ -8718,19 +8783,19 @@ msgstr "32 bits"
 msgid "Windows BMP image"
 msgstr "Imagen BMP de Windows"
 
-#: ../plug-ins/file-compressor/file-compressor.c:162
+#: ../plug-ins/file-compressor/file-compressor.c:166
 msgid "gzip archive"
 msgstr "archivador gzip"
 
-#: ../plug-ins/file-compressor/file-compressor.c:181
+#: ../plug-ins/file-compressor/file-compressor.c:185
 msgid "bzip archive"
 msgstr "archivador bzip"
 
-#: ../plug-ins/file-compressor/file-compressor.c:388
+#: ../plug-ins/file-compressor/file-compressor.c:392
 msgid "No sensible file extension, saving as compressed XCF."
 msgstr "No hay una extensión razonable, guardando como XCF comprimido."
 
-#: ../plug-ins/file-compressor/file-compressor.c:444
+#: ../plug-ins/file-compressor/file-compressor.c:448
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr ""
 "No hay una extensión razonable, intentando cargar mediante magia de archivos."
@@ -12946,27 +13011,22 @@ msgid "Drawing maze"
 msgstr "Dibujando laberinto"
 
 #: ../plug-ins/metadata/interface.c:110
-#| msgid "Properties"
 msgid "Property"
 msgstr "Propiedad"
 
 #: ../plug-ins/metadata/interface.c:204 ../plug-ins/metadata/interface.c:206
-#| msgid "Description:"
 msgid "Description"
 msgstr "Descripción"
 
 #: ../plug-ins/metadata/interface.c:222
-#| msgid "Image _height:"
 msgid "Image _title:"
 msgstr "_Título de la imagen:"
 
 #: ../plug-ins/metadata/interface.c:231
-#| msgid "Aut_hor:"
 msgid "_Author:"
 msgstr "_Autor:"
 
 #: ../plug-ins/metadata/interface.c:256
-#| msgid "Description:"
 msgid "Description _writer:"
 msgstr "_Descripción:"
 
@@ -12981,72 +13041,58 @@ msgid "Empty"
 msgstr "Vacío"
 
 #: ../plug-ins/metadata/interface.c:286
-#| msgid "_Copyright:"
 msgid "Copyright"
 msgstr "Copyright"
 
 #: ../plug-ins/metadata/interface.c:298
-#| msgid "Original"
 msgid "Origin"
 msgstr "Origen"
 
 #: ../plug-ins/metadata/interface.c:310
-#| msgid "C_amera"
 msgid "Camera 1"
 msgstr "Cámara 1"
 
 #: ../plug-ins/metadata/interface.c:322
-#| msgid "C_amera"
 msgid "Camera 2"
 msgstr "Cámara 2"
 
 #: ../plug-ins/metadata/interface.c:337
-#| msgid "Save _thumbnail"
 msgid "Thumbnail"
 msgstr "Miniatura"
 
 #: ../plug-ins/metadata/interface.c:356
-#| msgid "_Advanced"
 msgid "Advanced"
 msgstr "Avanzada"
 
 #: ../plug-ins/metadata/interface.c:447
-#| msgid "Import from PDF"
 msgid "Import XMP from File"
 msgstr "Importar XMP desde un archivo"
 
 #: ../plug-ins/metadata/interface.c:498
-#| msgid "Can't create a new image"
 msgid "Cannot create file"
 msgstr "No se pudo crear el archivo"
 
 #: ../plug-ins/metadata/interface.c:508
-#| msgid "An error occurred while trying to print:"
 msgid "Some error occurred while saving"
 msgstr "Ocurrió un error al guardar"
 
 #: ../plug-ins/metadata/interface.c:518
-#| msgid "Couldn't save file:"
 msgid "Could not close the file"
 msgstr "No se pudo cerrar el archivo"
 
 #: ../plug-ins/metadata/interface.c:540
-#| msgid "Export Preview"
 msgid "Export XMP to File"
 msgstr "Exportar XMP a un archivo"
 
 #: ../plug-ins/metadata/interface.c:607
-#| msgid "Properties"
 msgid "Image Properties"
 msgstr "Propiedades de la imagen"
 
 #: ../plug-ins/metadata/interface.c:611
-#| msgid "_Import"
 msgid "_Import XMP..."
 msgstr "_Importar XMP…"
 
 #: ../plug-ins/metadata/interface.c:612
-#| msgid "CML _Explorer..."
 msgid "_Export XMP..."
 msgstr "_Exportar XMP…"
 
@@ -13104,20 +13150,20 @@ msgstr "No se permiten elementos anidados (<%s>) en este contexto"
 msgid "End of element <%s> not expected in this context"
 msgstr "No se esperaba el final del elemento <%s> en este contexto"
 
-#: ../plug-ins/metadata/xmp-parse.c:1140
+#: ../plug-ins/metadata/xmp-parse.c:1139
 #, c-format
 msgid "The current element (<%s>) cannot contain text"
 msgstr "El elemento actual (<%s>) no puede contener texto"
 
-#: ../plug-ins/metadata/xmp-parse.c:1165
+#: ../plug-ins/metadata/xmp-parse.c:1164
 msgid "XMP packets must start with <?xpacket begin=...?>"
 msgstr "Los paquetes XMP deben empezar con <?xpacket begin=…?>"
 
-#: ../plug-ins/metadata/xmp-parse.c:1179
+#: ../plug-ins/metadata/xmp-parse.c:1178
 msgid "XMP packets must end with <?xpacket end=...?>"
 msgstr "Los paquetes XMP deben terminar con <?xpacket end=…?>"
 
-#: ../plug-ins/metadata/xmp-parse.c:1192
+#: ../plug-ins/metadata/xmp-parse.c:1191
 msgid "XMP cannot contain XML comments or processing instructions"
 msgstr "XMP no puede contener comentarios XML o instrucciones de proceso"
 
@@ -13232,23 +13278,31 @@ msgstr "Verticalmente"
 msgid "Both"
 msgstr "Ambos"
 
-#: ../plug-ins/print/print.c:89
+#: ../plug-ins/print/print.c:107
 msgid "Print the image"
 msgstr "Imprimir la imagen"
 
-#: ../plug-ins/print/print.c:94
+#: ../plug-ins/print/print.c:112
 msgid "_Print..."
 msgstr "_Imprimir…"
 
-#: ../plug-ins/print/print.c:216
+#: ../plug-ins/print/print.c:124
+msgid "Adjust page size and orientation for printing"
+msgstr "Ajustar el tamaño y la orientación de impresión de la página"
+
+#: ../plug-ins/print/print.c:130
+msgid "Page Set_up"
+msgstr "_Preparación de la página"
+
+#: ../plug-ins/print/print.c:275
 msgid "Image Settings"
 msgstr "Ajustes de la imagen"
 
-#: ../plug-ins/print/print.c:267
+#: ../plug-ins/print/print.c:373
 msgid "An error occurred while trying to print:"
 msgstr "Ocurrió un error durante la impresión:"
 
-#: ../plug-ins/print/print.c:294
+#: ../plug-ins/print/print.c:400
 msgid "Printing"
 msgstr "Impresión"
 
@@ -13313,9 +13367,3 @@ msgstr "_Captura de pantalla…"
 #: ../plug-ins/win-snap/winsnap.c:1149
 msgid "No data captured"
 msgstr "No se capturó nada"
-
-#~ msgid "Adjust page size and orientation for printing"
-#~ msgstr "Ajustar el tamaño y la orientación de impresión de la página"
-
-#~ msgid "Page Set_up"
-#~ msgstr "_Preparación de la página"
