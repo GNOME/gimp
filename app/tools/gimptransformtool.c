@@ -651,18 +651,22 @@ gimp_transform_tool_cursor_update (GimpTool         *tool,
       switch (tr_tool->function)
         {
         case TRANSFORM_HANDLE_NW:
+        case TRANSFORM_HANDLE_NW_P:
           cursor = GIMP_CURSOR_CORNER_TOP_LEFT;
           break;
 
         case TRANSFORM_HANDLE_NE:
+        case TRANSFORM_HANDLE_NE_P:
           cursor = GIMP_CURSOR_CORNER_TOP_RIGHT;
           break;
 
         case TRANSFORM_HANDLE_SW:
+        case TRANSFORM_HANDLE_SW_P:
           cursor = GIMP_CURSOR_CORNER_BOTTOM_LEFT;
           break;
 
         case TRANSFORM_HANDLE_SE:
+        case TRANSFORM_HANDLE_SE_P:
           cursor = GIMP_CURSOR_CORNER_BOTTOM_RIGHT;
           break;
 
@@ -691,6 +695,11 @@ gimp_transform_tool_cursor_update (GimpTool         *tool,
   if (tr_tool->use_center && tr_tool->function == TRANSFORM_HANDLE_CENTER)
     {
       modifier = GIMP_CURSOR_MODIFIER_MOVE;
+    }
+
+  if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->cursor_update)
+    {
+      GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->cursor_update (tr_tool, &cursor, &modifier);
     }
 
   switch (options->type)

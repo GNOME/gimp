@@ -78,6 +78,9 @@ static TransformAction gimp_unified_transform_tool_pick_function (GimpTransformT
                                                                   const GimpCoords  *coords,
                                                                   GdkModifierType    state,
                                                                   GimpDisplay       *display);
+static void            gimp_unified_transform_tool_cursor_update (GimpTransformTool  *tr_tool,
+                                                                  GimpCursorType     *cursor,
+                                                                  GimpCursorModifier *modifier);
 static void            gimp_unified_transform_tool_draw_gui      (GimpTransformTool *tr_tool,
                                                                   gint               handle_w,
                                                                   gint               handle_h);
@@ -117,6 +120,7 @@ gimp_unified_transform_tool_class_init (GimpUnifiedTransformToolClass *klass)
   trans_class->recalc_matrix = gimp_unified_transform_tool_recalc_matrix;
   trans_class->get_undo_desc = gimp_unified_transform_tool_get_undo_desc;
   trans_class->pick_function = gimp_unified_transform_tool_pick_function;
+  trans_class->cursor_update = gimp_unified_transform_tool_cursor_update;
   trans_class->draw_gui      = gimp_unified_transform_tool_draw_gui;
 }
 
@@ -125,9 +129,6 @@ gimp_unified_transform_tool_init (GimpUnifiedTransformTool *unified_tool)
 {
   GimpTool          *tool    = GIMP_TOOL (unified_tool);
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (unified_tool);
-
-  gimp_tool_control_set_tool_cursor (tool->control,
-                                     GIMP_TOOL_CURSOR_UNIFIED_TRANSFORM);
 
   tr_tool->progress_text = _("Unified transform");
 
@@ -241,6 +242,60 @@ gimp_unified_transform_tool_pick_function (GimpTransformTool *tr_tool,
     gimp_tool_push_status (tool, tool->display, "%s", get_friendly_operation_name (ret));
 
   return ret;
+}
+
+static void
+gimp_unified_transform_tool_cursor_update (GimpTransformTool  *tr_tool,
+                                           GimpCursorType     *cursor,
+                                           GimpCursorModifier *modifier)
+{
+  GimpToolCursorType toolcursor = GIMP_TOOL_CURSOR_NONE;
+
+  /* parent class handles *cursor and *modifier for most handles */
+  switch (tr_tool->function)
+    {
+    case TRANSFORM_HANDLE_NONE:
+      toolcursor = GIMP_TOOL_CURSOR_NONE;
+      break;
+    case TRANSFORM_HANDLE_NW_P:
+    case TRANSFORM_HANDLE_NE_P:
+    case TRANSFORM_HANDLE_SW_P:
+    case TRANSFORM_HANDLE_SE_P:
+      toolcursor = GIMP_TOOL_CURSOR_PERSPECTIVE;
+      break;
+    case TRANSFORM_HANDLE_NW:
+    case TRANSFORM_HANDLE_NE:
+    case TRANSFORM_HANDLE_SW:
+    case TRANSFORM_HANDLE_SE:
+    case TRANSFORM_HANDLE_N:
+    case TRANSFORM_HANDLE_S:
+    case TRANSFORM_HANDLE_E:
+    case TRANSFORM_HANDLE_W:
+      toolcursor = GIMP_TOOL_CURSOR_RESIZE;
+      break;
+    case TRANSFORM_HANDLE_CENTER:
+      toolcursor = GIMP_TOOL_CURSOR_MOVE;
+      break;
+    case TRANSFORM_HANDLE_PIVOT:
+      toolcursor = GIMP_TOOL_CURSOR_ROTATE;
+      *modifier = GIMP_CURSOR_MODIFIER_MOVE;
+      break;
+    case TRANSFORM_HANDLE_N_S:
+    case TRANSFORM_HANDLE_S_S:
+    case TRANSFORM_HANDLE_E_S:
+    case TRANSFORM_HANDLE_W_S:
+      toolcursor = GIMP_TOOL_CURSOR_SHEAR;
+      *cursor = GIMP_CURSOR_CROSSHAIR_SMALL;
+      break;
+    case TRANSFORM_HANDLE_ROTATION:
+      toolcursor = GIMP_TOOL_CURSOR_ROTATE;
+      break;
+    default:
+      g_assert_not_reached();
+    }
+
+  /* parent class sets cursor and cursor_modifier */
+  gimp_tool_control_set_tool_cursor (GIMP_TOOL (tr_tool)->control, toolcursor);
 }
 
 static void

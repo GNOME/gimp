@@ -137,6 +137,9 @@ struct _GimpTransformToolClass
                                      const GimpCoords  *coords,
                                      GdkModifierType    state,
                                      GimpDisplay       *display);
+  void            (* cursor_update) (GimpTransformTool  *tr_tool,
+                                     GimpCursorType     *cursor,
+                                     GimpCursorModifier *modifier);
   void            (* draw_gui)      (GimpTransformTool *tool,
                                      gint               handle_w,
                                      gint               handle_h);
