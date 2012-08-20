@@ -387,6 +387,7 @@ app/tools/gimptool.c
 app/tools/gimp-tools.c
 app/tools/gimptransformoptions.c
 app/tools/gimptransformtool.c
+app/tools/gimpunifiedtransformtool.c
 app/tools/gimpvectoroptions.c
 app/tools/gimpvectortool.c
 app/tools/tools-enums.c
