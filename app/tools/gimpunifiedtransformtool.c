@@ -170,36 +170,36 @@ get_friendly_operation_name (TransformAction op)
 {
   switch (op)
     {
-      case TRANSFORM_HANDLE_NONE:
-        return "";
-      case TRANSFORM_HANDLE_NW_P:
-      case TRANSFORM_HANDLE_NE_P:
-      case TRANSFORM_HANDLE_SW_P:
-      case TRANSFORM_HANDLE_SE_P:
-        return "Change perspective";
-      case TRANSFORM_HANDLE_NW:
-      case TRANSFORM_HANDLE_NE:
-      case TRANSFORM_HANDLE_SW:
-      case TRANSFORM_HANDLE_SE:
-        return "Scale";
-      case TRANSFORM_HANDLE_N:
-      case TRANSFORM_HANDLE_S:
-      case TRANSFORM_HANDLE_E:
-      case TRANSFORM_HANDLE_W:
-        return "Scale";
-      case TRANSFORM_HANDLE_CENTER:
-        return "Move";
-      case TRANSFORM_HANDLE_PIVOT:
-        return "Move pivot";
-      case TRANSFORM_HANDLE_N_S:
-      case TRANSFORM_HANDLE_S_S:
-      case TRANSFORM_HANDLE_E_S:
-      case TRANSFORM_HANDLE_W_S:
-        return "Shear";
-      case TRANSFORM_HANDLE_ROTATION:
-        return "Rotate";
-      default:
-        g_assert_not_reached();
+    case TRANSFORM_HANDLE_NONE:
+      return "";
+    case TRANSFORM_HANDLE_NW_P:
+    case TRANSFORM_HANDLE_NE_P:
+    case TRANSFORM_HANDLE_SW_P:
+    case TRANSFORM_HANDLE_SE_P:
+      return "Change perspective";
+    case TRANSFORM_HANDLE_NW:
+    case TRANSFORM_HANDLE_NE:
+    case TRANSFORM_HANDLE_SW:
+    case TRANSFORM_HANDLE_SE:
+      return "Scale";
+    case TRANSFORM_HANDLE_N:
+    case TRANSFORM_HANDLE_S:
+    case TRANSFORM_HANDLE_E:
+    case TRANSFORM_HANDLE_W:
+      return "Scale";
+    case TRANSFORM_HANDLE_CENTER:
+      return "Move";
+    case TRANSFORM_HANDLE_PIVOT:
+      return "Move pivot";
+    case TRANSFORM_HANDLE_N_S:
+    case TRANSFORM_HANDLE_S_S:
+    case TRANSFORM_HANDLE_E_S:
+    case TRANSFORM_HANDLE_W_S:
+      return "Shear";
+    case TRANSFORM_HANDLE_ROTATION:
+      return "Rotate";
+    default:
+      g_assert_not_reached();
     }
 }
 
