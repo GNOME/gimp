@@ -822,7 +822,6 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       function == TRANSFORM_HANDLE_W_S)
     {
       gint this_l, this_r, opp_l, opp_r;
-      GimpVector2 po, zero = { .x = 0.0, .y = 0.0 };
 
       /* set up indices for this edge and the opposite edge */
       if (function == TRANSFORM_HANDLE_N_S) {
@@ -838,11 +837,6 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       opp_l = 3 - this_l;
       opp_r = 3 - this_r;
 
-      if (options->frompivot_shear)
-        po = vectorsubtract (zero, d);
-      else
-        po = zero;
-
       if (options->constrain_shear)
         {
           /* restrict to movement along the side */
@@ -851,20 +845,17 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
           d = vectorproject (d, side);
         }
 
-      if (options->constrain_shear && options->frompivot_shear)
-        {
-          /* restrict to movement along the opposite side */
-          GimpVector2 side = vectorsubtract (oldpos[opp_r], oldpos[opp_l]);
-
-          po = vectorproject (po, side);
-        }
-
-      /* We have to set opp unconditionally, or the opposite edge will stay
-       * in place when you toggle the frompivot constraint during an action */
       newpos[this_l] = vectoradd (oldpos[this_l], d);
       newpos[this_r] = vectoradd (oldpos[this_r], d);
-      newpos[opp_l] = vectoradd (oldpos[opp_l], po);
-      newpos[opp_r] = vectoradd (oldpos[opp_r], po);
+
+      if (options->frompivot_shear && transform_is_convex (newpos) && transform_is_convex (oldpos))
+        {
+          GimpVector2 delta = getpivotdelta (transform_tool, oldpos, newpos, pivot);
+          for (i = 0; i < 4; i++)
+            newpos[i] = vectorsubtract (newpos[i], delta);
+
+          fixedpivot = TRUE;
+        }
     }
 
   /* perspective transform */
