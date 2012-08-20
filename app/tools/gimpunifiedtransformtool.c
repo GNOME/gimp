@@ -821,7 +821,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       function == TRANSFORM_HANDLE_S_S ||
       function == TRANSFORM_HANDLE_W_S)
     {
-      gint this_l, this_r, opp_l, opp_r;
+      gint this_l, this_r;
 
       /* set up indices for this edge and the opposite edge */
       if (function == TRANSFORM_HANDLE_N_S) {
@@ -833,9 +833,6 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       } else if (function == TRANSFORM_HANDLE_E_S) {
         this_l = 3; this_r = 1;
       } else g_assert_not_reached ();
-
-      opp_l = 3 - this_l;
-      opp_r = 3 - this_r;
 
       if (options->constrain_shear)
         {
