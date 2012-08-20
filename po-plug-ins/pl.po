@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-08 02:02+0200\n"
-"PO-Revision-Date: 2012-08-08 02:03+0200\n"
+"POT-Creation-Date: 2012-08-20 15:01+0200\n"
+"PO-Revision-Date: 2012-08-20 15:02+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -611,8 +611,8 @@ msgstr "P_ionowe"
 #. * Create the "background" layer to hold the image...
 #.
 #: ../plug-ins/common/blinds.c:279 ../plug-ins/common/compose.c:936
-#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:363
-#: ../plug-ins/common/file-cel.c:366 ../plug-ins/common/file-dicom.c:612
+#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:438
+#: ../plug-ins/common/file-cel.c:441 ../plug-ins/common/file-dicom.c:612
 #: ../plug-ins/common/file-gif-load.c:943
 #: ../plug-ins/common/file-jp2-load.c:354 ../plug-ins/common/file-pcx.c:425
 #: ../plug-ins/common/file-pcx.c:431 ../plug-ins/common/file-pix.c:382
@@ -1023,7 +1023,8 @@ msgstr "Wczytanie ustawień miksera kanałów"
 #. stat error (file does not exist)
 #: ../plug-ins/common/channel-mixer.c:980
 #: ../plug-ins/common/cml-explorer.c:2208 ../plug-ins/common/curve-bend.c:892
-#: ../plug-ins/common/file-cel.c:312 ../plug-ins/common/file-dicom.c:340
+#: ../plug-ins/common/file-cel.c:293 ../plug-ins/common/file-cel.c:345
+#: ../plug-ins/common/file-cel.c:576 ../plug-ins/common/file-dicom.c:340
 #: ../plug-ins/common/file-gbr.c:368 ../plug-ins/common/file-gif-load.c:355
 #: ../plug-ins/common/file-gih.c:640 ../plug-ins/common/file-jp2-load.c:194
 #: ../plug-ins/common/file-jp2-load.c:203 ../plug-ins/common/file-mng.c:1156
@@ -1061,7 +1062,7 @@ msgstr "Zapis ustawień miksera kanałów"
 
 #: ../plug-ins/common/channel-mixer.c:1058
 #: ../plug-ins/common/cml-explorer.c:2035 ../plug-ins/common/curve-bend.c:840
-#: ../plug-ins/common/file-cel.c:585 ../plug-ins/common/file-csource.c:407
+#: ../plug-ins/common/file-cel.c:769 ../plug-ins/common/file-csource.c:407
 #: ../plug-ins/common/file-dicom.c:1351 ../plug-ins/common/file-gbr.c:663
 #: ../plug-ins/common/file-gif-save.c:782 ../plug-ins/common/file-gih.c:1258
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-mng.c:649
@@ -3013,19 +3014,25 @@ msgstr "Tekst"
 msgid "_Format:"
 msgstr "_Format:"
 
-#: ../plug-ins/common/file-cel.c:111 ../plug-ins/common/file-cel.c:129
+#: ../plug-ins/common/file-cel.c:114 ../plug-ins/common/file-cel.c:132
 msgid "KISS CEL"
 msgstr "KISS CEL"
 
-#: ../plug-ins/common/file-cel.c:191
+#: ../plug-ins/common/file-cel.c:199
 msgid "Load KISS Palette"
 msgstr "Wczytaj paletę KISS"
+
+#: ../plug-ins/common/file-cel.c:305 ../plug-ins/common/file-cel.c:360
+#: ../plug-ins/common/file-cel.c:380
+#, c-format
+msgid "EOF or error while reading image header"
+msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
 
 #. max. rows allocated
 #. column, highest column ever used
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
-#: ../plug-ins/common/file-cel.c:317 ../plug-ins/common/file-dicom.c:345
+#: ../plug-ins/common/file-cel.c:350 ../plug-ins/common/file-dicom.c:345
 #: ../plug-ins/common/file-gbr.c:373 ../plug-ins/common/file-gif-load.c:360
 #: ../plug-ins/common/file-gih.c:645 ../plug-ins/common/file-jp2-load.c:187
 #: ../plug-ins/common/file-pat.c:342 ../plug-ins/common/file-pcx.c:366
@@ -3044,18 +3051,70 @@ msgstr "Wczytaj paletę KISS"
 msgid "Opening '%s'"
 msgstr "Otwieranie \"%s\""
 
-#: ../plug-ins/common/file-cel.c:354
+#: ../plug-ins/common/file-cel.c:388
+#, c-format
+msgid "is not a CEL image file"
+msgstr "nie jest plikiem obrazu CEL"
+
+#: ../plug-ins/common/file-cel.c:402
+#, c-format
+msgid "illegal bpp value in image: %hhu"
+msgstr "niedozwolona wartość BPP w obrazie: %hhu"
+
+#: ../plug-ins/common/file-cel.c:416
+#, c-format
+msgid ""
+"illegal image dimensions: width: %d, horizontal offset: %d, height: %d, "
+"vertical offset: %d"
+msgstr ""
+"niedozwolone wymiary obrazu: szerokość: %d, przesunięcie poziome: %d, "
+"wysokość: %d, przesunięcie pionowe: %d"
+
+#: ../plug-ins/common/file-cel.c:429
+#, c-format
 msgid "Can't create a new image"
 msgstr "Nie można utworzyć nowego obrazu"
 
-#: ../plug-ins/common/file-cel.c:444
+#: ../plug-ins/common/file-cel.c:467 ../plug-ins/common/file-cel.c:502
+#: ../plug-ins/common/file-cel.c:527
+#, c-format
+msgid "EOF or error while reading image data"
+msgstr "Koniec pliku lub błąd podczas odczytywania danych obrazu"
+
+#: ../plug-ins/common/file-cel.c:544
 #, c-format
 msgid "Unsupported bit depth (%d)!"
 msgstr "Nieobsługiwana głębia kolorów (%d)."
 
+#: ../plug-ins/common/file-cel.c:626 ../plug-ins/common/file-cel.c:638
+#, c-format
+msgid "'%s': EOF or error while reading palette header"
+msgstr "\"%s\": koniec pliku lub błąd podczas odczytywania nagłówka desenia"
+
+#: ../plug-ins/common/file-cel.c:647
+#, c-format
+msgid "'%s': is not a KCF palette file"
+msgstr "\"%s\": nie jest plikiem desenia KCF"
+
+#: ../plug-ins/common/file-cel.c:656
+#, c-format
+msgid "'%s': illegal bpp value in palette: %hhu"
+msgstr "\"%s\": niedozwolona wartość BPP w deseniu: %hhu"
+
+#: ../plug-ins/common/file-cel.c:665
+#, c-format
+msgid "'%s': illegal number of colors: %u"
+msgstr "\"%s\": niedozwolona liczba kolorów: %u"
+
+#: ../plug-ins/common/file-cel.c:680 ../plug-ins/common/file-cel.c:697
+#: ../plug-ins/common/file-cel.c:717
+#, c-format
+msgid "'%s': EOF or error while reading palette data"
+msgstr "\"%s\": koniec pliku lub błąd podczas odczytywania danych desenia"
+
 #. init the progress meter
 #. And let's begin the progress
-#: ../plug-ins/common/file-cel.c:590 ../plug-ins/common/file-gbr.c:668
+#: ../plug-ins/common/file-cel.c:774 ../plug-ins/common/file-gbr.c:668
 #: ../plug-ins/common/file-gif-save.c:789 ../plug-ins/common/file-gih.c:1263
 #: ../plug-ins/common/file-html-table.c:257 ../plug-ins/common/file-pat.c:491
 #: ../plug-ins/common/file-pcx.c:644 ../plug-ins/common/file-pix.c:531
