@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-20 15:01+0200\n"
-"PO-Revision-Date: 2012-08-20 15:02+0200\n"
+"POT-Creation-Date: 2012-08-22 01:42+0200\n"
+"PO-Revision-Date: 2012-08-22 01:43+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -7030,7 +7030,7 @@ msgstr "Zrzut ekranu"
 
 #: ../plug-ins/common/screenshot.c:853
 msgid "Mouse Pointer"
-msgstr "Wskaźnik myszy"
+msgstr "Kursor myszy"
 
 #: ../plug-ins/common/screenshot.c:972
 msgid "Specified window not found"
@@ -7073,7 +7073,7 @@ msgstr "Wykonanie zrzutu całego _ekranu"
 
 #: ../plug-ins/common/screenshot.c:1204
 msgid "Include _mouse pointer"
-msgstr "Wraz z wskaźnikiem _myszy"
+msgstr "Wraz z kursorem _myszy"
 
 #: ../plug-ins/common/screenshot.c:1225
 msgid "Select a _region to grab"
