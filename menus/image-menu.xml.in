@@ -567,6 +567,7 @@
         <menuitem action="tools-scale" />
         <menuitem action="tools-shear" />
         <menuitem action="tools-perspective" />
+        <menuitem action="tools-unified-transform" />
         <menuitem action="tools-flip" />
         <menuitem action="tools-cage" />
       </menu>
