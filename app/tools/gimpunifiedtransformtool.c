@@ -39,6 +39,7 @@
 #include "widgets/gimphelp-ids.h"
 
 #include "display/gimpcanvasgroup.h"
+#include "display/gimpcanvashandle.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
@@ -134,6 +135,164 @@ gimp_unified_transform_tool_init (GimpUnifiedTransformTool *unified_tool)
 
   tr_tool->use_grid    = TRUE;
   tr_tool->use_handles = TRUE;
+}
+
+static gboolean
+transform_is_convex (GimpVector2 *pos)
+{
+  return gimp_transform_polygon_is_convex (pos[0].x, pos[0].y,
+                                           pos[1].x, pos[1].y,
+                                           pos[2].x, pos[2].y,
+                                           pos[3].x, pos[3].y);
+}
+
+static inline gdouble
+dotprod (GimpVector2 a,
+         GimpVector2 b)
+{
+  return a.x * b.x + a.y * b.y;
+}
+
+static inline gdouble norm (GimpVector2 a)
+{
+  return sqrt (dotprod (a, a));
+}
+
+static inline GimpVector2
+vectorsubtract (GimpVector2 a,
+                GimpVector2 b)
+{
+  GimpVector2 c;
+
+  c.x = a.x - b.x;
+  c.y = a.y - b.y;
+
+  return c;
+}
+
+static inline GimpVector2
+vectoradd (GimpVector2 a,
+           GimpVector2 b)
+{
+  GimpVector2 c;
+
+  c.x = a.x + b.x;
+  c.y = a.y + b.y;
+
+  return c;
+}
+
+static inline GimpVector2
+scalemult (GimpVector2 a,
+           gdouble     b)
+{
+  GimpVector2 c;
+
+  c.x = a.x * b;
+  c.y = a.y * b;
+
+  return c;
+}
+
+static inline GimpVector2
+vectorproject (GimpVector2 a,
+               GimpVector2 b)
+{
+  return scalemult (b, dotprod (a, b) / dotprod (b, b));
+}
+
+/* finds the clockwise angle between the vectors given, 0-2π */
+static inline gdouble
+calcangle (GimpVector2 a,
+           GimpVector2 b)
+{
+  gdouble angle, angle2;
+  gdouble length = norm (a) * norm (b);
+
+  angle = acos (dotprod (a, b)/length);
+  angle2 = b.y;
+  b.y = -b.x;
+  b.x = angle2;
+  angle2 = acos (dotprod (a, b)/length);
+
+  return ((angle2 > G_PI/2.) ? angle : 2*G_PI-angle);
+}
+
+static inline GimpVector2
+rotate2d (GimpVector2 p,
+          gdouble     angle)
+{
+  GimpVector2 ret;
+
+  ret.x = cos (angle) * p.x-sin (angle) * p.y;
+  ret.y = sin (angle) * p.x+cos (angle) * p.y;
+
+  return ret;
+}
+
+static inline GimpVector2
+lineintersect (GimpVector2 p1, GimpVector2 p2,
+               GimpVector2 q1, GimpVector2 q2)
+{
+  gdouble     denom, u;
+  GimpVector2 p;
+
+  denom = (q2.y - q1.y) * (p2.x - p1.x) - (q2.x - q1.x) * (p2.y - p1.y);
+  if (denom == 0.0)
+    {
+      p.x = (p1.x + p2.x + q1.x + q2.x) / 4;
+      p.y = (p1.y + p2.y + q1.y + q2.y) / 4;
+    }
+  else
+    {
+      u = (q2.x - q1.x) * (p1.y - q1.y) - (q2.y - q1.y) * (p1.x - q1.x);
+      u /= denom;
+
+      p.x = p1.x + u * (p2.x - p1.x);
+      p.y = p1.y + u * (p2.y - p1.y);
+    }
+
+  return p;
+}
+
+static inline GimpVector2
+getpivotdelta (GimpTransformTool *tr_tool,
+               GimpVector2       *oldpos,
+               GimpVector2       *newpos,
+               GimpVector2        pivot)
+{
+  GimpMatrix3 transform_before, transform_after;
+  GimpVector2 delta;
+
+  gimp_matrix3_identity (&transform_before);
+  gimp_matrix3_identity (&transform_after);
+
+  gimp_transform_matrix_perspective (&transform_before,
+                                     tr_tool->x1,
+                                     tr_tool->y1,
+                                     tr_tool->x2 - tr_tool->x1,
+                                     tr_tool->y2 - tr_tool->y1,
+                                     oldpos[0].x, oldpos[0].y,
+                                     oldpos[1].x, oldpos[1].y,
+                                     oldpos[2].x, oldpos[2].y,
+                                     oldpos[3].x, oldpos[3].y);
+  gimp_transform_matrix_perspective (&transform_after,
+                                     tr_tool->x1,
+                                     tr_tool->y1,
+                                     tr_tool->x2 - tr_tool->x1,
+                                     tr_tool->y2 - tr_tool->y1,
+                                     newpos[0].x, newpos[0].y,
+                                     newpos[1].x, newpos[1].y,
+                                     newpos[2].x, newpos[2].y,
+                                     newpos[3].x, newpos[3].y);
+  gimp_matrix3_invert (&transform_before);
+  gimp_matrix3_mult (&transform_after, &transform_before);
+  gimp_matrix3_transform_point (&transform_before,
+                                pivot.x, pivot.y, &delta.x, &delta.y);
+
+  delta = vectorsubtract (delta, pivot);
+
+  return delta;
 }
 
 static gboolean
@@ -309,65 +468,85 @@ gimp_unified_transform_tool_draw_gui (GimpTransformTool *tr_tool,
   GimpDrawTool    *draw_tool = GIMP_DRAW_TOOL (tr_tool);
   GimpCanvasGroup *stroke_group;
   gint             d, i;
-  gdouble          tx[] = { tr_tool->tx1, tr_tool->tx2,
-                            tr_tool->tx3, tr_tool->tx4 },
-                   ty[] = { tr_tool->ty1, tr_tool->ty2,
-                            tr_tool->ty3, tr_tool->ty4 };
+  gdouble          angle[8];
+  GimpVector2      o[] = { { .x = tr_tool->tx1, .y = tr_tool->ty1 },
+                           { .x = tr_tool->tx2, .y = tr_tool->ty2 },
+                           { .x = tr_tool->tx3, .y = tr_tool->ty3 },
+                           { .x = tr_tool->tx4, .y = tr_tool->ty4 } },
+                   t[] = { o[0], o[1], o[2], o[3] },
+                   right = { .x = 1.0, .y = 0.0 },
+                   up    = { .x = 0.0, .y = 1.0 };
+
+  angle[0] = calcangle (vectorsubtract (o[0], o[1]), right);
+  angle[1] = calcangle (vectorsubtract (o[2], o[3]), right);
+  angle[2] = calcangle (vectorsubtract (o[3], o[1]), up);
+  angle[3] = calcangle (vectorsubtract (o[2], o[0]), up);
+
+  angle[4] = angle[0] + angle[3];
+  angle[5] = angle[0] + angle[2];
+  angle[6] = angle[1] + angle[3];
+  angle[7] = angle[1] + angle[2];
 
   for (i = 0; i < 4; i++)
     {
+      GimpCanvasItem *h;
+
       /*  draw the scale handles  */
-      tr_tool->handles[TRANSFORM_HANDLE_NW + i] =
-        gimp_draw_tool_add_handle (draw_tool,
-                                   GIMP_HANDLE_SQUARE,
-                                   tx[i], ty[i],
-                                   handle_w * 1.5, handle_h * 1.5,
-                                   GIMP_HANDLE_ANCHOR_CENTER);
+      h = gimp_draw_tool_add_handle (draw_tool,
+                                     GIMP_HANDLE_SQUARE,
+                                     t[i].x, t[i].y,
+                                     handle_w * 1.5, handle_h * 1.5,
+                                     GIMP_HANDLE_ANCHOR_CENTER);
+      gimp_canvas_handle_set_angles (h, angle[i + 4] / 2.0, 0.0);
+      tr_tool->handles[TRANSFORM_HANDLE_NW + i] = h;
 
       /*  draw the perspective handles  */
-      tr_tool->handles[TRANSFORM_HANDLE_NW_P + i] =
-        gimp_draw_tool_add_handle (draw_tool,
-                                   GIMP_HANDLE_SQUARE,
-                                   tx[i], ty[i],
-                                   handle_w * 0.8, handle_h * 0.8,
-                                   GIMP_HANDLE_ANCHOR_CENTER);
+      h = gimp_draw_tool_add_handle (draw_tool,
+                                     GIMP_HANDLE_SQUARE,
+                                     t[i].x, t[i].y,
+                                     handle_w * 0.8, handle_h * 0.8,
+                                     GIMP_HANDLE_ANCHOR_CENTER);
+      gimp_canvas_handle_set_angles (h, angle[i + 4] / 2.0, 0.0);
+      tr_tool->handles[TRANSFORM_HANDLE_NW_P + i] = h;
     }
 
   /*  draw the side handles  */
-  tx[0] = (tr_tool->tx1 + tr_tool->tx2) / 2.0;
-  ty[0] = (tr_tool->ty1 + tr_tool->ty2) / 2.0;
-  tx[1] = (tr_tool->tx3 + tr_tool->tx4) / 2.0;
-  ty[1] = (tr_tool->ty3 + tr_tool->ty4) / 2.0;
-  tx[2] = (tr_tool->tx2 + tr_tool->tx4) / 2.0;
-  ty[2] = (tr_tool->ty2 + tr_tool->ty4) / 2.0;
-  tx[3] = (tr_tool->tx3 + tr_tool->tx1) / 2.0;
-  ty[3] = (tr_tool->ty3 + tr_tool->ty1) / 2.0;
+  t[0] = scalemult (vectoradd (o[0], o[1]), 0.5);
+  t[1] = scalemult (vectoradd (o[2], o[3]), 0.5);
+  t[2] = scalemult (vectoradd (o[1], o[3]), 0.5);
+  t[3] = scalemult (vectoradd (o[2], o[0]), 0.5);
 
   for (i = 0; i < 4; i++)
-    tr_tool->handles[TRANSFORM_HANDLE_N + i] =
-      gimp_draw_tool_add_handle (draw_tool,
-                                 GIMP_HANDLE_SQUARE,
-                                 tx[i], ty[i],
-                                 handle_w, handle_h,
-                                 GIMP_HANDLE_ANCHOR_CENTER);
+    {
+      GimpCanvasItem *h;
+
+      h = gimp_draw_tool_add_handle (draw_tool,
+                                     GIMP_HANDLE_SQUARE,
+                                     t[i].x, t[i].y,
+                                     handle_w, handle_h,
+                                     GIMP_HANDLE_ANCHOR_CENTER);
+      gimp_canvas_handle_set_angles (h, angle[i], 0.0);
+      tr_tool->handles[TRANSFORM_HANDLE_N + i] = h;
+    }
 
   /*  draw the shear handles  */
-  tx[0] = (tr_tool->tx1 * 1.0 + tr_tool->tx2 * 3.0) / 4.0;
-  ty[0] = (tr_tool->ty1 * 1.0 + tr_tool->ty2 * 3.0) / 4.0;
-  tx[1] = (tr_tool->tx3 * 3.0 + tr_tool->tx4 * 1.0) / 4.0;
-  ty[1] = (tr_tool->ty3 * 3.0 + tr_tool->ty4 * 1.0) / 4.0;
-  tx[2] = (tr_tool->tx2 * 1.0 + tr_tool->tx4 * 3.0) / 4.0;
-  ty[2] = (tr_tool->ty2 * 1.0 + tr_tool->ty4 * 3.0) / 4.0;
-  tx[3] = (tr_tool->tx3 * 3.0 + tr_tool->tx1 * 1.0) / 4.0;
-  ty[3] = (tr_tool->ty3 * 3.0 + tr_tool->ty1 * 1.0) / 4.0;
+  t[0] = scalemult (vectoradd (           o[0]      , scalemult (o[1], 3.0)), 0.25);
+  t[1] = scalemult (vectoradd (scalemult (o[2], 3.0),            o[3]      ), 0.25);
+  t[2] = scalemult (vectoradd (           o[1]      , scalemult (o[3], 3.0)), 0.25);
+  t[3] = scalemult (vectoradd (scalemult (o[2], 3.0),            o[0]      ), 0.25);
 
   for (i = 0; i < 4; i++)
-    tr_tool->handles[TRANSFORM_HANDLE_N_S + i] =
-      gimp_draw_tool_add_handle (draw_tool,
-                                 GIMP_HANDLE_FILLED_DIAMOND,
-                                 tx[i], ty[i],
-                                 handle_w, handle_h,
-                                 GIMP_HANDLE_ANCHOR_CENTER);
+    {
+      GimpCanvasItem *h;
+
+      h = gimp_draw_tool_add_handle (draw_tool,
+                                     GIMP_HANDLE_FILLED_DIAMOND,
+                                     t[i].x, t[i].y,
+                                     handle_w, handle_h,
+                                     GIMP_HANDLE_ANCHOR_CENTER);
+      gimp_canvas_handle_set_angles (h, angle[i], 0.0);
+      tr_tool->handles[TRANSFORM_HANDLE_N_S + i] = h;
+    }
 
   /*  draw the rotation center axis handle  */
   d = MIN (handle_w, handle_h);
@@ -471,164 +650,6 @@ gimp_unified_transform_tool_prepare (GimpTransformTool *tr_tool)
   tr_tool->trans_info[Y2] = (gdouble) tr_tool->y2;
   tr_tool->trans_info[X3] = (gdouble) tr_tool->x2;
   tr_tool->trans_info[Y3] = (gdouble) tr_tool->y2;
-}
-
-static gboolean
-transform_is_convex (GimpVector2 *pos)
-{
-  return gimp_transform_polygon_is_convex (pos[0].x, pos[0].y,
-                                           pos[1].x, pos[1].y,
-                                           pos[2].x, pos[2].y,
-                                           pos[3].x, pos[3].y);
-}
-
-static inline gdouble
-dotprod (GimpVector2 a,
-         GimpVector2 b)
-{
-  return a.x * b.x + a.y * b.y;
-}
-
-static inline gdouble norm (GimpVector2 a)
-{
-  return sqrt (dotprod (a, a));
-}
-
-static inline GimpVector2
-vectorsubtract (GimpVector2 a,
-                GimpVector2 b)
-{
-  GimpVector2 c;
-
-  c.x = a.x - b.x;
-  c.y = a.y - b.y;
-
-  return c;
-}
-
-static inline GimpVector2
-vectoradd (GimpVector2 a,
-           GimpVector2 b)
-{
-  GimpVector2 c;
-
-  c.x = a.x + b.x;
-  c.y = a.y + b.y;
-
-  return c;
-}
-
-static inline GimpVector2
-scalemult (GimpVector2 a,
-           gdouble     b)
-{
-  GimpVector2 c;
-
-  c.x = a.x * b;
-  c.y = a.y * b;
-
-  return c;
-}
-
-static inline GimpVector2
-vectorproject (GimpVector2 a,
-               GimpVector2 b)
-{
-  return scalemult (b, dotprod (a, b) / dotprod (b, b));
-}
-
-/* finds the clockwise angle between the vectors given, 0-2π */
-static inline gdouble
-calcangle (GimpVector2 a,
-           GimpVector2 b)
-{
-  gdouble angle, angle2;
-  gdouble length = norm (a) * norm (b);
-
-  angle = acos (dotprod (a, b)/length);
-  angle2 = b.y;
-  b.y = -b.x;
-  b.x = angle2;
-  angle2 = acos (dotprod (a, b)/length);
-
-  return ((angle2 > G_PI/2.) ? angle : 2*G_PI-angle);
-}
-
-static inline GimpVector2
-rotate2d (GimpVector2 p,
-          gdouble     angle)
-{
-  GimpVector2 ret;
-
-  ret.x = cos (angle) * p.x-sin (angle) * p.y;
-  ret.y = sin (angle) * p.x+cos (angle) * p.y;
-
-  return ret;
-}
-
-static inline GimpVector2
-lineintersect (GimpVector2 p1, GimpVector2 p2,
-               GimpVector2 q1, GimpVector2 q2)
-{
-  gdouble     denom, u;
-  GimpVector2 p;
-
-  denom = (q2.y - q1.y) * (p2.x - p1.x) - (q2.x - q1.x) * (p2.y - p1.y);
-  if (denom == 0.0)
-    {
-      p.x = (p1.x + p2.x + q1.x + q2.x) / 4;
-      p.y = (p1.y + p2.y + q1.y + q2.y) / 4;
-    }
-  else
-    {
-      u = (q2.x - q1.x) * (p1.y - q1.y) - (q2.y - q1.y) * (p1.x - q1.x);
-      u /= denom;
-
-      p.x = p1.x + u * (p2.x - p1.x);
-      p.y = p1.y + u * (p2.y - p1.y);
-    }
-
-  return p;
-}
-
-static inline GimpVector2
-getpivotdelta (GimpTransformTool *tr_tool,
-               GimpVector2       *oldpos,
-               GimpVector2       *newpos,
-               GimpVector2        pivot)
-{
-  GimpMatrix3 transform_before, transform_after;
-  GimpVector2 delta;
-
-  gimp_matrix3_identity (&transform_before);
-  gimp_matrix3_identity (&transform_after);
-
-  gimp_transform_matrix_perspective (&transform_before,
-                                     tr_tool->x1,
-                                     tr_tool->y1,
-                                     tr_tool->x2 - tr_tool->x1,
-                                     tr_tool->y2 - tr_tool->y1,
-                                     oldpos[0].x, oldpos[0].y,
-                                     oldpos[1].x, oldpos[1].y,
-                                     oldpos[2].x, oldpos[2].y,
-                                     oldpos[3].x, oldpos[3].y);
-  gimp_transform_matrix_perspective (&transform_after,
-                                     tr_tool->x1,
-                                     tr_tool->y1,
-                                     tr_tool->x2 - tr_tool->x1,
-                                     tr_tool->y2 - tr_tool->y1,
-                                     newpos[0].x, newpos[0].y,
-                                     newpos[1].x, newpos[1].y,
-                                     newpos[2].x, newpos[2].y,
-                                     newpos[3].x, newpos[3].y);
-  gimp_matrix3_invert (&transform_before);
-  gimp_matrix3_mult (&transform_after, &transform_before);
-  gimp_matrix3_transform_point (&transform_before,
-                                pivot.x, pivot.y, &delta.x, &delta.y);
-
-  delta = vectorsubtract (delta, pivot);
-
-  return delta;
 }
 
 static void
