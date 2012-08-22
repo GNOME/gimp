@@ -159,11 +159,11 @@ static gboolean
 point_is_inside_polygon_pos (GimpVector2 *pos, GimpVector2 point)
 {
   return point_is_inside_polygon (4,
-                                   (gdouble[4]){ pos[0].x, pos[1].x, 
-                                                 pos[3].x, pos[2].x },
-                                   (gdouble[4]){ pos[0].y, pos[1].y, 
-                                                 pos[3].y, pos[2].y },
-                                   point.x, point.y);
+                                  (gdouble[4]){ pos[0].x, pos[1].x,
+                                                pos[3].x, pos[2].x },
+                                  (gdouble[4]){ pos[0].y, pos[1].y,
+                                                pos[3].y, pos[2].y },
+                                  point.x, point.y);
 }
 
 static gchar*
@@ -210,12 +210,14 @@ gimp_unified_transform_tool_pick_function (GimpTransformTool *tr_tool,
                                            GdkModifierType    state,
                                            GimpDisplay       *display)
 {
-  TransformAction ret = TRANSFORM_HANDLE_NONE, i;
-  GimpTool *tool = GIMP_TOOL (tr_tool);
+  GimpTool        *tool = GIMP_TOOL (tr_tool);
+  TransformAction  ret = TRANSFORM_HANDLE_NONE;
+  TransformAction  i;
 
   for (i = TRANSFORM_HANDLE_NONE + 1; i < TRANSFORM_HANDLE_NUM; i++)
     {
-      if (tr_tool->handles[i] && gimp_canvas_item_hit (tr_tool->handles[i], coords->x, coords->y))
+      if (tr_tool->handles[i] &&
+          gimp_canvas_item_hit (tr_tool->handles[i], coords->x, coords->y))
         {
           ret = i;
           break;
@@ -225,8 +227,8 @@ gimp_unified_transform_tool_pick_function (GimpTransformTool *tr_tool,
   if (ret == TRANSFORM_HANDLE_NONE)
     {
       /* points passed in clockwise order */
-      if (point_is_inside_polygon (4, 
-                                   (gdouble[4]){ tr_tool->tx1, tr_tool->tx2, 
+      if (point_is_inside_polygon (4,
+                                   (gdouble[4]){ tr_tool->tx1, tr_tool->tx2,
                                                  tr_tool->tx4, tr_tool->tx3 },
                                    (gdouble[4]){ tr_tool->ty1, tr_tool->ty2,
                                                  tr_tool->ty4, tr_tool->ty3 },
@@ -239,7 +241,8 @@ gimp_unified_transform_tool_pick_function (GimpTransformTool *tr_tool,
   gimp_tool_pop_status (tool, tool->display);
 
   if (ret != TRANSFORM_HANDLE_NONE)
-    gimp_tool_push_status (tool, tool->display, "%s", get_friendly_operation_name (ret));
+    gimp_tool_push_status (tool, tool->display, "%s",
+                           get_friendly_operation_name (ret));
 
   return ret;
 }
@@ -303,11 +306,13 @@ gimp_unified_transform_tool_draw_gui (GimpTransformTool *tr_tool,
                                       gint               handle_w,
                                       gint               handle_h)
 {
-  GimpDrawTool         *draw_tool = GIMP_DRAW_TOOL (tr_tool);
-  GimpCanvasGroup      *stroke_group;
-  gint                  d, i;
-  gdouble               tx[] = { tr_tool->tx1, tr_tool->tx2, tr_tool->tx3, tr_tool->tx4 },
-                        ty[] = { tr_tool->ty1, tr_tool->ty2, tr_tool->ty3, tr_tool->ty4 };
+  GimpDrawTool    *draw_tool = GIMP_DRAW_TOOL (tr_tool);
+  GimpCanvasGroup *stroke_group;
+  gint             d, i;
+  gdouble          tx[] = { tr_tool->tx1, tr_tool->tx2,
+                            tr_tool->tx3, tr_tool->tx4 },
+                   ty[] = { tr_tool->ty1, tr_tool->ty2,
+                            tr_tool->ty3, tr_tool->ty4 };
 
   for (i = 0; i < 4; i++)
     {
@@ -401,10 +406,10 @@ static void
 gimp_unified_transform_tool_dialog (GimpTransformTool *tr_tool)
 {
   GimpUnifiedTransformTool *unified = GIMP_UNIFIED_TRANSFORM_TOOL (tr_tool);
-  GtkWidget                     *content_area;
-  GtkWidget                     *frame;
-  GtkWidget                     *table;
-  gint                           x, y;
+  GtkWidget                *content_area;
+  GtkWidget                *frame;
+  GtkWidget                *table;
+  gint                      x, y;
 
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (tr_tool->dialog));
 
@@ -438,7 +443,7 @@ static void
 gimp_unified_transform_tool_dialog_update (GimpTransformTool *tr_tool)
 {
   GimpUnifiedTransformTool *unified = GIMP_UNIFIED_TRANSFORM_TOOL (tr_tool);
-  gint                           x, y;
+  gint                      x, y;
 
   for (y = 0; y < 3; y++)
     for (x = 0; x < 3; x++)
@@ -468,7 +473,8 @@ gimp_unified_transform_tool_prepare (GimpTransformTool *tr_tool)
   tr_tool->trans_info[Y3] = (gdouble) tr_tool->y2;
 }
 
-static gboolean transform_is_convex (GimpVector2 *pos)
+static gboolean
+transform_is_convex (GimpVector2 *pos)
 {
   return gimp_transform_polygon_is_convex (pos[0].x, pos[0].y,
                                            pos[1].x, pos[1].y,
@@ -476,9 +482,11 @@ static gboolean transform_is_convex (GimpVector2 *pos)
                                            pos[3].x, pos[3].y);
 }
 
-static inline gdouble dotprod (GimpVector2 a, GimpVector2 b)
+static inline gdouble
+dotprod (GimpVector2 a,
+         GimpVector2 b)
 {
-  return a.x*b.x + a.y*b.y;
+  return a.x * b.x + a.y * b.y;
 }
 
 static inline gdouble norm (GimpVector2 a)
@@ -486,62 +494,86 @@ static inline gdouble norm (GimpVector2 a)
   return sqrt (dotprod (a, a));
 }
 
-static inline GimpVector2 vectorsubtract (GimpVector2 a, GimpVector2 b)
+static inline GimpVector2
+vectorsubtract (GimpVector2 a,
+                GimpVector2 b)
 {
   GimpVector2 c;
+
   c.x = a.x - b.x;
   c.y = a.y - b.y;
+
   return c;
 }
 
-static inline GimpVector2 vectoradd (GimpVector2 a, GimpVector2 b)
+static inline GimpVector2
+vectoradd (GimpVector2 a,
+           GimpVector2 b)
 {
   GimpVector2 c;
+
   c.x = a.x + b.x;
   c.y = a.y + b.y;
+
   return c;
 }
 
-static inline GimpVector2 scalemult (GimpVector2 a, gdouble b)
+static inline GimpVector2
+scalemult (GimpVector2 a,
+           gdouble     b)
 {
   GimpVector2 c;
+
   c.x = a.x * b;
   c.y = a.y * b;
+
   return c;
 }
 
-static inline GimpVector2 vectorproject (GimpVector2 a, GimpVector2 b)
+static inline GimpVector2
+vectorproject (GimpVector2 a,
+               GimpVector2 b)
 {
-  return scalemult (b, dotprod (a, b)/dotprod (b, b));
+  return scalemult (b, dotprod (a, b) / dotprod (b, b));
 }
 
 /* finds the clockwise angle between the vectors given, 0-2π */
-static inline gdouble calcangle (GimpVector2 a, GimpVector2 b)
+static inline gdouble
+calcangle (GimpVector2 a,
+           GimpVector2 b)
 {
-  gdouble angle, angle2, length = norm (a) * norm (b);
+  gdouble angle, angle2;
+  gdouble length = norm (a) * norm (b);
+
   angle = acos (dotprod (a, b)/length);
   angle2 = b.y;
   b.y = -b.x;
   b.x = angle2;
   angle2 = acos (dotprod (a, b)/length);
+
   return ((angle2 > G_PI/2.) ? angle : 2*G_PI-angle);
 }
 
-static inline GimpVector2 rotate2d (GimpVector2 p, gdouble angle)
+static inline GimpVector2
+rotate2d (GimpVector2 p,
+          gdouble     angle)
 {
   GimpVector2 ret;
-  ret.x = cos (angle)*p.x-sin (angle)*p.y;
-  ret.y = sin (angle)*p.x+cos (angle)*p.y;
+
+  ret.x = cos (angle) * p.x-sin (angle) * p.y;
+  ret.y = sin (angle) * p.x+cos (angle) * p.y;
+
   return ret;
 }
 
-static inline GimpVector2 lineintersect (GimpVector2 p1, GimpVector2 p2,
-                                         GimpVector2 q1, GimpVector2 q2)
+static inline GimpVector2
+lineintersect (GimpVector2 p1, GimpVector2 p2,
+               GimpVector2 q1, GimpVector2 q2)
 {
-  gdouble denom, u;
+  gdouble     denom, u;
   GimpVector2 p;
 
-  denom = (q2.y-q1.y) * (p2.x-p1.x) - (q2.x-q1.x) * (p2.y-p1.y);
+  denom = (q2.y - q1.y) * (p2.x - p1.x) - (q2.x - q1.x) * (p2.y - p1.y);
   if (denom == 0.0)
     {
       p.x = (p1.x + p2.x + q1.x + q2.x) / 4;
@@ -549,7 +581,7 @@ static inline GimpVector2 lineintersect (GimpVector2 p1, GimpVector2 p2,
     }
   else
     {
-      u = (q2.x-q1.x) * (p1.y-q1.y) - (q2.y-q1.y) * (p1.x-q1.x);
+      u = (q2.x - q1.x) * (p1.y - q1.y) - (q2.y - q1.y) * (p1.x - q1.x);
       u /= denom;
 
       p.x = p1.x + u * (p2.x - p1.x);
@@ -559,10 +591,11 @@ static inline GimpVector2 lineintersect (GimpVector2 p1, GimpVector2 p2,
   return p;
 }
 
-static inline GimpVector2 getpivotdelta (GimpTransformTool *tr_tool,
-                                         GimpVector2       *oldpos,
-                                         GimpVector2       *newpos,
-                                         GimpVector2        pivot)
+static inline GimpVector2
+getpivotdelta (GimpTransformTool *tr_tool,
+               GimpVector2       *oldpos,
+               GimpVector2       *newpos,
+               GimpVector2        pivot)
 {
   GimpMatrix3 transform_before, transform_after;
   GimpVector2 delta;
@@ -590,7 +623,8 @@ static inline GimpVector2 getpivotdelta (GimpTransformTool *tr_tool,
                                      newpos[3].x, newpos[3].y);
   gimp_matrix3_invert (&transform_before);
   gimp_matrix3_mult (&transform_after, &transform_before);
-  gimp_matrix3_transform_point (&transform_before, pivot.x, pivot.y, &delta.x, &delta.y);
+  gimp_matrix3_transform_point (&transform_before,
+                                pivot.x, pivot.y, &delta.x, &delta.y);
 
   delta = vectorsubtract (delta, pivot);
 
@@ -600,21 +634,23 @@ static inline GimpVector2 getpivotdelta (GimpTransformTool *tr_tool,
 static void
 gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
 {
-  gdouble *x[4], *y[4], *newpivot_x, *newpivot_y;
-  
-  GimpVector2 oldpos[5], newpos[4];
-  GimpVector2 cur   = { .x = transform_tool->curx,   .y = transform_tool->cury };
-  GimpVector2 mouse = { .x = transform_tool->mousex, .y = transform_tool->mousey };
-  GimpVector2 d;
-  GimpVector2 pivot;
-  
-  gint i;
-  
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (transform_tool);
+  gdouble              *x[4], *y[4];
+  gdouble              *newpivot_x, *newpivot_y;
 
-  gboolean fixedpivot = options->fixedpivot;
+  GimpVector2           oldpos[5], newpos[4];
+  GimpVector2           cur   = { .x = transform_tool->curx,
+                                  .y = transform_tool->cury };
+  GimpVector2           mouse = { .x = transform_tool->mousex,
+                                  .y = transform_tool->mousey };
+  GimpVector2           d;
+  GimpVector2           pivot;
 
-  TransformAction function = transform_tool->function;
+  gint                  i;
+
+  gboolean              fixedpivot = options->fixedpivot;
+
+  TransformAction       function = transform_tool->function;
 
   for (i = 0; i < 4; i++)
     {
@@ -644,6 +680,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
           /* snap to 45 degree vectors from starting point */
           gdouble angle = 16. * calcangle ((GimpVector2){1., 0.}, d) / (2.*G_PI);
           gdouble dist = norm (d) / sqrt (2);
+
           if (angle < 1. || angle >= 15.)
             d.y = 0;
           else if (angle < 3.)
@@ -661,6 +698,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
           else if (angle < 15.)
             d.x = d.y = dist;
         }
+
       for (i = 0; i < 4; i++)
         newpos[i] = vectoradd (oldpos[i], d);
     }
@@ -669,6 +707,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
   if (function == TRANSFORM_HANDLE_ROTATION)
     {
       gdouble angle = calcangle (vectorsubtract (cur, pivot), vectorsubtract (mouse, pivot));
+
       if (options->constrain_rotate)
         {
           /* round to 15 degree multiple */
@@ -676,8 +715,11 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
           angle = round (angle);
           angle *= 2*G_PI/24.;
         }
+
       for (i = 0; i < 4; i++)
-        newpos[i] = vectoradd (pivot, rotate2d (vectorsubtract (oldpos[i], pivot), angle));
+        newpos[i] = vectoradd (pivot,
+                               rotate2d (vectorsubtract (oldpos[i], pivot),
+                                         angle));
 
       fixedpivot = TRUE;
     }
@@ -690,8 +732,9 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       if (options->cornersnap)
         {
           /* snap to corner points and center */
-          gint closest = 0;
+          gint    closest = 0;
           gdouble closest_dist = G_MAXDOUBLE, dist;
+
           for (i = 0; i < 5; i++)
             {
               dist = norm (vectorsubtract (pivot, oldpos[i]));
@@ -701,7 +744,9 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
                   closest = i;
                 }
             }
-          if (closest_dist * gimp_display_get_shell (GIMP_TOOL (transform_tool)->display)->scale_x < 50)
+
+          if (closest_dist *
+              gimp_display_get_shell (GIMP_TOOL (transform_tool)->display)->scale_x < 50)
             {
               pivot = oldpos[closest];
             }
@@ -722,19 +767,29 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       gint this, left, right, opposite;
 
       /* 0: northwest, 1: northeast, 2: southwest, 3: southeast */
-      if (function == TRANSFORM_HANDLE_NW) {
-        this = 0; left = 1; right = 2; opposite = 3;
-      } else if (function == TRANSFORM_HANDLE_NE) {
-        this = 1; left = 3; right = 0; opposite = 2;
-      } else if (function == TRANSFORM_HANDLE_SW) {
-        this = 2; left = 0; right = 3; opposite = 1;
-      } else if (function == TRANSFORM_HANDLE_SE) {
-        this = 3; left = 2; right = 1; opposite = 0;
-      } else g_assert_not_reached ();
+      if (function == TRANSFORM_HANDLE_NW)
+        {
+          this = 0; left = 1; right = 2; opposite = 3;
+        }
+      else if (function == TRANSFORM_HANDLE_NE)
+        {
+          this = 1; left = 3; right = 0; opposite = 2;
+        }
+      else if (function == TRANSFORM_HANDLE_SW)
+        {
+          this = 2; left = 0; right = 3; opposite = 1;
+        }
+      else if (function == TRANSFORM_HANDLE_SE)
+        {
+          this = 3; left = 2; right = 1; opposite = 0;
+        }
+      else
+        g_assert_not_reached ();
 
-      /* when the keep aspect transformation constraint is enabled, the
-       * translation shall only be along the diagonal that runs trough
-       * this corner point. */
+      /* when the keep aspect transformation constraint is enabled,
+       * the translation shall only be along the diagonal that runs
+       * trough this corner point.
+       */
       if (options->constrain_scale)
         {
           /* restrict to movement along the diagonal */
@@ -807,19 +862,28 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       function == TRANSFORM_HANDLE_S ||
       function == TRANSFORM_HANDLE_W)
     {
-      gint this_l, this_r, opp_l, opp_r;
+      gint        this_l, this_r, opp_l, opp_r;
       GimpVector2 side_l, side_r, midline;
 
       /* 0: northwest, 1: northeast, 2: southwest, 3: southeast */
-      if (function == TRANSFORM_HANDLE_N) {
-        this_l = 1; this_r = 0;
-      } else if (function == TRANSFORM_HANDLE_E) {
-        this_l = 3; this_r = 1;
-      } else if (function == TRANSFORM_HANDLE_S) {
-        this_l = 2; this_r = 3;
-      } else if (function == TRANSFORM_HANDLE_W) {
-        this_l = 0; this_r = 2;
-      } else g_assert_not_reached ();
+      if (function == TRANSFORM_HANDLE_N)
+        {
+          this_l = 1; this_r = 0;
+        }
+      else if (function == TRANSFORM_HANDLE_E)
+        {
+          this_l = 3; this_r = 1;
+        }
+      else if (function == TRANSFORM_HANDLE_S)
+        {
+          this_l = 2; this_r = 3;
+        }
+      else if (function == TRANSFORM_HANDLE_W)
+        {
+          this_l = 0; this_r = 2;
+        }
+      else
+        g_assert_not_reached ();
 
       opp_l = 3 - this_r; opp_r = 3 - this_l;
 
@@ -833,7 +897,7 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       if (options->constrain_scale)
         {
           GimpVector2 before, after, effective_pivot = pivot;
-          gdouble distance;
+          gdouble     distance;
 
           if (!options->frompivot_scale)
             {
@@ -851,7 +915,10 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
           distance = 0.5 * (after.x / before.x + after.y / before.y);
 
           for (i = 0; i < 4; i++)
-            newpos[i] = vectoradd (effective_pivot, scalemult (vectorsubtract (oldpos[i], effective_pivot), distance));
+            newpos[i] = vectoradd (effective_pivot,
+                                   scalemult (vectorsubtract (oldpos[i],
+                                                              effective_pivot),
+                                              distance));
         }
       else
         {
@@ -860,9 +927,11 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
           newpos[this_r] = vectoradd (oldpos[this_r], d);
         }
 
-      if (!options->constrain_scale && options->frompivot_scale && transform_is_convex (newpos) && transform_is_convex (oldpos))
+      if (!options->constrain_scale && options->frompivot_scale &&
+          transform_is_convex (newpos) && transform_is_convex (oldpos))
         {
-          GimpVector2 delta = getpivotdelta (transform_tool, oldpos, newpos, pivot);
+          GimpVector2 delta = getpivotdelta (transform_tool,
+                                             oldpos, newpos, pivot);
           for (i = 0; i < 4; i++)
             newpos[i] = vectorsubtract (newpos[i], delta);
 
@@ -879,15 +948,24 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       gint this_l, this_r;
 
       /* set up indices for this edge and the opposite edge */
-      if (function == TRANSFORM_HANDLE_N_S) {
-        this_l = 1; this_r = 0;
-      } else if (function == TRANSFORM_HANDLE_W_S) {
-        this_l = 0; this_r = 2;
-      } else if (function == TRANSFORM_HANDLE_S_S) {
-        this_l = 2; this_r = 3;
-      } else if (function == TRANSFORM_HANDLE_E_S) {
-        this_l = 3; this_r = 1;
-      } else g_assert_not_reached ();
+      if (function == TRANSFORM_HANDLE_N_S)
+        {
+          this_l = 1; this_r = 0;
+        }
+      else if (function == TRANSFORM_HANDLE_W_S)
+        {
+          this_l = 0; this_r = 2;
+        }
+      else if (function == TRANSFORM_HANDLE_S_S)
+        {
+          this_l = 2; this_r = 3;
+        }
+      else if (function == TRANSFORM_HANDLE_E_S)
+        {
+          this_l = 3; this_r = 1;
+        }
+      else
+        g_assert_not_reached ();
 
       if (options->constrain_shear)
         {
@@ -900,9 +978,11 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       newpos[this_l] = vectoradd (oldpos[this_l], d);
       newpos[this_r] = vectoradd (oldpos[this_r], d);
 
-      if (options->frompivot_shear && transform_is_convex (newpos) && transform_is_convex (oldpos))
+      if (options->frompivot_shear && transform_is_convex (newpos) &&
+          transform_is_convex (oldpos))
         {
-          GimpVector2 delta = getpivotdelta (transform_tool, oldpos, newpos, pivot);
+          GimpVector2 delta = getpivotdelta (transform_tool,
+                                             oldpos, newpos, pivot);
           for (i = 0; i < 4; i++)
             newpos[i] = vectorsubtract (newpos[i], delta);
 
@@ -919,32 +999,46 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       gint this, left, right, opposite;
 
       /* 0: northwest, 1: northeast, 2: southwest, 3: southeast */
-      if (function == TRANSFORM_HANDLE_NW_P) {
-        this = 0; left = 1; right = 2; opposite = 3;
-      } else if (function == TRANSFORM_HANDLE_NE_P) {
-        this = 1; left = 3; right = 0; opposite = 2;
-      } else if (function == TRANSFORM_HANDLE_SW_P) {
-        this = 2; left = 0; right = 3; opposite = 1;
-      } else if (function == TRANSFORM_HANDLE_SE_P) {
-        this = 3; left = 2; right = 1; opposite = 0;
-      } else g_assert_not_reached ();
+      if (function == TRANSFORM_HANDLE_NW_P)
+        {
+          this = 0; left = 1; right = 2; opposite = 3;
+        }
+      else if (function == TRANSFORM_HANDLE_NE_P)
+        {
+          this = 1; left = 3; right = 0; opposite = 2;
+        }
+      else if (function == TRANSFORM_HANDLE_SW_P)
+        {
+          this = 2; left = 0; right = 3; opposite = 1;
+        }
+      else if (function == TRANSFORM_HANDLE_SE_P)
+        {
+          this = 3; left = 2; right = 1; opposite = 0;
+        }
+      else
+        g_assert_not_reached ();
 
       if (options->constrain_perspective)
-        { /* when the constrain transformation constraint is enabled, the
-             translation shall only be either along the side angles of the
-             two sides that run to this corner point, or along the
-             diagonal that runs trough this corner point. */
-
+        {
+          /* when the constrain transformation constraint is enabled,
+           * the translation shall only be either along the side
+           * angles of the two sides that run to this corner point, or
+           * along the diagonal that runs trough this corner point.
+           */
           GimpVector2 proj[4];
-          gdouble rej[4];
+          gdouble     rej[4];
 
           for (i = 0; i < 4; i++)
             {
-              if (i == this) continue;
+              if (i == this)
+                continue;
+
               /* get the vectors along the sides and the diagonal */
               proj[i] = vectorsubtract (oldpos[this], oldpos[i]);
-              /* project d on each candidate vector and see
-               * which has the shortest rejection */
+
+              /* project d on each candidate vector and see which has
+               * the shortest rejection
+               */
               proj[i] = vectorproject (d, proj[i]);
               rej[i] = norm (vectorsubtract (d, proj[i]));
             }
@@ -959,9 +1053,11 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
 
       newpos[this] = vectoradd (oldpos[this], d);
 
-      if (options->frompivot_perspective && transform_is_convex (newpos) && transform_is_convex (oldpos))
+      if (options->frompivot_perspective && transform_is_convex (newpos) &&
+          transform_is_convex (oldpos))
         {
-          GimpVector2 delta = getpivotdelta (transform_tool, oldpos, newpos, pivot);
+          GimpVector2 delta = getpivotdelta (transform_tool,
+                                             oldpos, newpos, pivot);
 
           for (i = 0; i < 4; i++)
             newpos[i] = vectorsubtract (newpos[i], delta);
@@ -976,14 +1072,19 @@ gimp_unified_transform_tool_motion (GimpTransformTool *transform_tool)
       *y[i] = newpos[i].y;
     }
 
-  /* this will have been set to TRUE if an operation used the pivot in addition to being a user option */
-  if (!fixedpivot && transform_is_convex (newpos) && transform_is_convex (oldpos) && point_is_inside_polygon_pos (oldpos, pivot))
+  /* this will have been set to TRUE if an operation used the pivot in
+   * addition to being a user option
+   */
+  if (!fixedpivot && transform_is_convex (newpos) &&
+      transform_is_convex (oldpos) && point_is_inside_polygon_pos (oldpos, pivot))
     {
       GimpVector2 delta = getpivotdelta (transform_tool, oldpos, newpos, pivot);
       pivot = vectoradd (pivot, delta);
     }
 
-  /* set unconditionally: if options get toggled during operation, we have to move pivot back */
+  /* set unconditionally: if options get toggled during operation, we
+   * have to move pivot back
+   */
   *newpivot_x = pivot.x;
   *newpivot_y = pivot.y;
 }
