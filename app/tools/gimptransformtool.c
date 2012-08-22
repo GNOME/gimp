@@ -1600,8 +1600,10 @@ gimp_transform_tool_response (GtkWidget         *widget,
               }
             else if (response_id == RESPONSE_RESET)
               {
-                /* Move all undo events to redo, and pop off the first one as that's the current one,
-                 * which always sits on the undo_list */
+                /* Move all undo events to redo, and pop off the first
+                 * one as that's the current one, which always sits on
+                 * the undo_list
+                 */
                 tr_tool->redo_list =
                   g_list_remove (g_list_concat (g_list_reverse (tr_tool->undo_list),
                                                 tr_tool->redo_list),
