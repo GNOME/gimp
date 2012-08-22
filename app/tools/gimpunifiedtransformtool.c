@@ -352,14 +352,14 @@ gimp_unified_transform_tool_draw_gui (GimpTransformTool *tr_tool,
                                  GIMP_HANDLE_ANCHOR_CENTER);
 
   /*  draw the shear handles  */
-  tx[0] = (tr_tool->tx1 * 2.0 + tr_tool->tx2 * 3.0) / 5.0;
-  ty[0] = (tr_tool->ty1 * 2.0 + tr_tool->ty2 * 3.0) / 5.0;
-  tx[1] = (tr_tool->tx3 * 3.0 + tr_tool->tx4 * 2.0) / 5.0;
-  ty[1] = (tr_tool->ty3 * 3.0 + tr_tool->ty4 * 2.0) / 5.0;
-  tx[2] = (tr_tool->tx2 * 2.0 + tr_tool->tx4 * 3.0) / 5.0;
-  ty[2] = (tr_tool->ty2 * 2.0 + tr_tool->ty4 * 3.0) / 5.0;
-  tx[3] = (tr_tool->tx3 * 3.0 + tr_tool->tx1 * 2.0) / 5.0;
-  ty[3] = (tr_tool->ty3 * 3.0 + tr_tool->ty1 * 2.0) / 5.0;
+  tx[0] = (tr_tool->tx1 * 1.0 + tr_tool->tx2 * 3.0) / 4.0;
+  ty[0] = (tr_tool->ty1 * 1.0 + tr_tool->ty2 * 3.0) / 4.0;
+  tx[1] = (tr_tool->tx3 * 3.0 + tr_tool->tx4 * 1.0) / 4.0;
+  ty[1] = (tr_tool->ty3 * 3.0 + tr_tool->ty4 * 1.0) / 4.0;
+  tx[2] = (tr_tool->tx2 * 1.0 + tr_tool->tx4 * 3.0) / 4.0;
+  ty[2] = (tr_tool->ty2 * 1.0 + tr_tool->ty4 * 3.0) / 4.0;
+  tx[3] = (tr_tool->tx3 * 3.0 + tr_tool->tx1 * 1.0) / 4.0;
+  ty[3] = (tr_tool->ty3 * 3.0 + tr_tool->ty1 * 1.0) / 4.0;
 
   for (i = 0; i < 4; i++)
     tr_tool->handles[TRANSFORM_HANDLE_N_S + i] =
@@ -370,7 +370,7 @@ gimp_unified_transform_tool_draw_gui (GimpTransformTool *tr_tool,
                                  GIMP_HANDLE_ANCHOR_CENTER);
 
   /*  draw the rotation center axis handle  */
-  d = MIN (handle_w, handle_h) * 2.0; /* so you can grab it from under the center handle */
+  d = MIN (handle_w, handle_h);
 
   stroke_group = gimp_draw_tool_add_stroke_group (draw_tool);
 
@@ -379,7 +379,7 @@ gimp_unified_transform_tool_draw_gui (GimpTransformTool *tr_tool,
   gimp_draw_tool_push_group (draw_tool, stroke_group);
 
   gimp_draw_tool_add_handle (draw_tool,
-                             GIMP_HANDLE_SQUARE,
+                             GIMP_HANDLE_CIRCLE,
                              tr_tool->tpx, tr_tool->tpy,
                              d, d,
                              GIMP_HANDLE_ANCHOR_CENTER);

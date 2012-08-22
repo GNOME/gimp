@@ -880,7 +880,9 @@ gimp_transform_tool_real_draw_gui (GimpTransformTool *tr_tool, gint handle_w, gi
   if (tr_tool->use_pivot)
     {
       GimpCanvasGroup *stroke_group;
-      gint d = MIN (handle_w, handle_h) * 2; /* so you can grab it from under the center handle */
+      gint d = MIN (handle_w, handle_h);
+      if (tr_tool->use_center)
+        d *= 2; /* so you can grab it from under the center handle */
 
       stroke_group = gimp_draw_tool_add_stroke_group (draw_tool);
 
@@ -889,7 +891,7 @@ gimp_transform_tool_real_draw_gui (GimpTransformTool *tr_tool, gint handle_w, gi
       gimp_draw_tool_push_group (draw_tool, stroke_group);
 
       gimp_draw_tool_add_handle (draw_tool,
-                                 GIMP_HANDLE_SQUARE,
+                                 GIMP_HANDLE_CIRCLE,
                                  tr_tool->tpx, tr_tool->tpy,
                                  d, d,
                                  GIMP_HANDLE_ANCHOR_CENTER);
@@ -915,7 +917,7 @@ gimp_transform_tool_real_draw_gui (GimpTransformTool *tr_tool, gint handle_w, gi
       gimp_draw_tool_push_group (draw_tool, stroke_group);
 
       gimp_draw_tool_add_handle (draw_tool,
-                                 GIMP_HANDLE_CIRCLE,
+                                 GIMP_HANDLE_SQUARE,
                                  tr_tool->tcx, tr_tool->tcy,
                                  d, d,
                                  GIMP_HANDLE_ANCHOR_CENTER);
