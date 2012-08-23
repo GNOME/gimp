@@ -312,7 +312,8 @@ gimp_write_and_read_file (Gimp     *gimp,
              proc,
              GIMP_RUN_NONINTERACTIVE,
              FALSE /*change_saved_state*/,
-             FALSE /*export*/,
+             FALSE /*export_backward*/,
+             FALSE /*export_forward*/,
              NULL /*error*/);
 
   /* Load from file */

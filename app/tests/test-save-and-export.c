@@ -219,7 +219,8 @@ saved_imported_file_uris (gconstpointer data)
              proc,
              GIMP_RUN_NONINTERACTIVE,
              TRUE /*change_saved_state*/,
-             FALSE /*export*/,
+             FALSE /*export_backward*/,
+             FALSE /*export_forward*/,
              NULL /*error*/);
 
   /* Assert */
@@ -259,7 +260,8 @@ exported_file_uris (gconstpointer data)
              proc,
              GIMP_RUN_NONINTERACTIVE,
              FALSE /*change_saved_state*/,
-             TRUE /*export*/,
+             FALSE /*export_backward*/,
+             TRUE /*export_forward*/,
              NULL /*error*/);
 
   g_assert (gimp_image_get_uri (image) == NULL);
@@ -323,7 +325,8 @@ clear_import_uri_after_export (gconstpointer data)
              proc,
              GIMP_RUN_NONINTERACTIVE,
              FALSE /*change_saved_state*/,
-             TRUE /*export*/,
+             FALSE /*export_backward*/,
+             TRUE /*export_forward*/,
              NULL /*error*/);
 
   g_assert (gimp_image_get_uri (image) == NULL);
