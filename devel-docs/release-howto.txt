@@ -21,8 +21,10 @@
 
  ( ) Does the splash screen need to be changed?
 
- ( ) Check that the version number is correct in configure.ac. It should
-     be the version number of the release you are about to make.
+ ( ) Bump the version number to an even micro in configure.ac and
+     commit this change. It should be the version number of the
+     release you are about to make. Releases always have even micro
+     numbers.
 
  ( ) Make dist tarballs:
 
@@ -84,7 +86,8 @@
      then update itself soon (usually less than an hour).
 
  ( ) Bump the version number (past the tagged version) in configure.ac
-     and commit this change.
+     to the next odd micro and commit this change. GIT version always
+     have odd micro numbers.
 
  ( ) Grab a properly chilled beverage and enjoy yourself.
 
