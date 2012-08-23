@@ -153,7 +153,8 @@ dotprod (GimpVector2 a,
   return a.x * b.x + a.y * b.y;
 }
 
-static inline gdouble norm (GimpVector2 a)
+static inline gdouble
+norm (GimpVector2 a)
 {
   return sqrt (dotprod (a, a));
 }
