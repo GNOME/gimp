@@ -46,7 +46,7 @@ Plug-ins:
 Source and build system:
 
  - Add Windows installer infrastructure
- - Add infrastructure to buid GIMP.app on OSX
+ - Add infrastructure to build GIMP.app on OSX
 
 
 General:
