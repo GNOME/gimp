@@ -524,15 +524,15 @@ begin
 	DefaultEnv := ExpandConstant('{app}\lib\gimp\2.0\environ\default.env');
 	DebugMsg('PrepareGimpPath','Setting environment in ' + DefaultEnv);
 
-	Env := #10'PATH=' + ExpandConstant('{app}\bin');
+	Env := #10'PATH=${gimp_installation_dir}\bin';
 	
 	if IsComponentSelected('gimp32on64') then
 	begin
 
-		Env := Env + ';' + ExpandConstant('{app}\32\bin') + #10;
+		Env := Env + ';${gimp_installation_dir}\32\bin' + #10;
 
 		if IsComponentSelected('gimp32on64\py') then
-			Env := Env + 'PYTHONPATH=' + ExpandConstant('{app}\32\lib\gimp\2.0\python') + #10; //only needed on 64bit GIMP
+			Env := Env + 'PYTHONPATH=${gimp_installation_dir}\32\lib\gimp\2.0\python' + #10; //only needed on 64bit GIMP
 
 	end else
 	begin
