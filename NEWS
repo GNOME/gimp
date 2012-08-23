@@ -39,7 +39,7 @@ Libgimp:
 
 Plug-ins:
 
- - Fix remebmering of JPEG load/save defaults
+ - Fix remembering of JPEG load/save defaults
  - Revive the page setup dialog on Windows
 
 
