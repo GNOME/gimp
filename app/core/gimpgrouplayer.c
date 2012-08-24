@@ -811,7 +811,9 @@ gimp_group_layer_estimate_memsize (const GimpDrawable *drawable,
 
   base_type = gimp_drawable_get_base_type (drawable);
 
-  memsize += gimp_projection_estimate_memsize (base_type, width, height);
+  memsize += gimp_projection_estimate_memsize (base_type,
+                                               gimp_drawable_get_precision (drawable),
+                                               width, height);
 
   return memsize + GIMP_DRAWABLE_CLASS (parent_class)->estimate_memsize (drawable,
                                                                          width,

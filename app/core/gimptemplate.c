@@ -30,6 +30,8 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "gimpimage.h"
 #include "gimpprojection.h"
 #include "gimptemplate.h"
@@ -316,23 +318,31 @@ gimp_template_notify (GObject    *object,
                       GParamSpec *pspec)
 {
   GimpTemplatePrivate *private = GET_PRIVATE (object);
-  gint                 channels;
+  const Babl          *format;
+  gint                 bytes;
 
   if (G_OBJECT_CLASS (parent_class)->notify)
     G_OBJECT_CLASS (parent_class)->notify (object, pspec);
 
-  channels = ((private->base_type == GIMP_RGB ? 3 : 1)      /* color      */ +
-              (private->fill_type == GIMP_TRANSPARENT_FILL) /* alpha      */ +
-              1                                             /* selection  */);
+  /* the initial layer */
+  format = gimp_babl_format (private->base_type,
+                             private->precision,
+                             private->fill_type == GIMP_TRANSPARENT_FILL);
+  bytes = babl_format_get_bytes_per_pixel (format);
 
-  /* XXX todo honor precision */
+  /* the selection */
+  format = gimp_babl_format (GIMP_GRAY,
+                             private->precision,
+                             FALSE);
+  bytes += babl_format_get_bytes_per_pixel (format);
 
-  private->initial_size = ((guint64) channels       *
+  private->initial_size = ((guint64) bytes          *
                            (guint64) private->width *
                            (guint64) private->height);
 
   private->initial_size +=
     gimp_projection_estimate_memsize (private->base_type,
+                                      private->precision,
                                       private->width, private->height);
 
   if (! strcmp (pspec->name, "stock-id"))
