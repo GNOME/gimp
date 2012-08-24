@@ -249,7 +249,7 @@ gimp_buffer_new (GeglBuffer    *buffer,
                               "name", name,
                               NULL);
 
-  if (TRUE /* XXX FIXME copy_pixels */)
+  if (copy_pixels)
     gimp_buffer->buffer = gegl_buffer_dup (buffer);
   else
     gimp_buffer->buffer = g_object_ref (buffer);
