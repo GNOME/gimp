@@ -62,7 +62,9 @@ gimp_init_for_testing (void)
 {
   Gimp *gimp;
 
+  g_type_init();
   gimp_log_init ();
+  gegl_init (NULL, NULL);
 
   gimp = gimp_new ("Unit Tested GIMP", NULL, FALSE, TRUE, TRUE, TRUE,
                    FALSE, TRUE, TRUE, FALSE);
@@ -71,7 +73,6 @@ gimp_init_for_testing (void)
 
   gimp_load_config (gimp, NULL, NULL);
 
-  gegl_init(NULL, NULL);
   gimp_gegl_init (gimp);
   gimp_initialize (gimp, gimp_status_func_dummy);
   gimp_restore (gimp, gimp_status_func_dummy);
@@ -92,6 +93,7 @@ gimp_init_for_gui_testing_internal (gboolean     show_gui,
   /* from main() */
   g_type_init();
   gimp_log_init ();
+  gegl_init (NULL, NULL);
 
   /* Introduce an error margin for positions written to sessionrc */
   klass = g_type_class_ref (GIMP_TYPE_SESSION_INFO);
@@ -103,7 +105,6 @@ gimp_init_for_gui_testing_internal (gboolean     show_gui,
   gimp_set_show_gui (gimp, show_gui);
   units_init (gimp);
   gimp_load_config (gimp, gimprc, NULL);
-  gegl_init(NULL, NULL);
   gimp_gegl_init (gimp);
   gui_init (gimp, TRUE);
   gimp_initialize (gimp, gimp_status_func_dummy);
