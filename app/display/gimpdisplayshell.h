@@ -139,7 +139,6 @@ struct _GimpDisplayShell
 
   guint              fill_idle_id;     /*  display_shell_fill() idle ID       */
 
-  GimpCursorFormat   cursor_format;    /*  Currently used cursor format       */
   GimpHandedness     cursor_handedness;/*  Handedness for cursor display      */
   GimpCursorType     current_cursor;   /*  Currently installed main cursor    */
   GimpToolCursorType tool_cursor;      /*  Current Tool cursor                */

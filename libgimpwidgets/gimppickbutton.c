@@ -174,19 +174,8 @@ make_cursor (GdkDisplay *display)
 {
   GdkCursor           *cursor;
   GdkPixbuf           *pixbuf;
-  static const guint8 *data;
 
-  if (gdk_display_supports_cursor_alpha (display) &&
-      gdk_display_supports_cursor_color (display))
-    {
-      data = cursor_color_picker;
-    }
-  else
-    {
-      data = cursor_color_picker_bw;
-    }
-
-  pixbuf = gdk_pixbuf_new_from_inline (-1, data, FALSE, NULL);
+  pixbuf = gdk_pixbuf_new_from_inline (-1, cursor_color_picker, FALSE, NULL);
 
   cursor = gdk_cursor_new_from_pixbuf (display, pixbuf, 1, 30);
 

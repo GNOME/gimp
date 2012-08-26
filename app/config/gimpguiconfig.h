@@ -65,7 +65,6 @@ struct _GimpGuiConfig
   gboolean             user_manual_online;
   gchar               *user_manual_online_uri;
   GimpWindowHint       dock_window_hint;
-  GimpCursorFormat     cursor_format;
   GimpHandedness       cursor_handedness;
 
   /* saved in sessionrc */
