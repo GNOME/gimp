@@ -5,16 +5,24 @@ CURSOR_IMAGES = \
 	cursor-color-picker.png			\
 	cursor-corner-bottom-left.png		\
 	cursor-corner-bottom-right.png		\
+	cursor-corner-bottom.png		\
+	cursor-corner-left.png			\
+	cursor-corner-right.png			\
 	cursor-corner-top-left.png		\
 	cursor-corner-top-right.png		\
-	cursor-crosshair.png			\
+	cursor-corner-top.png			\
 	cursor-crosshair-small.png		\
+	cursor-crosshair.png			\
 	cursor-mouse.png			\
 	cursor-move.png				\
 	cursor-none.png				\
+	cursor-side-bottom-left.png		\
+	cursor-side-bottom-right.png		\
 	cursor-side-bottom.png			\
 	cursor-side-left.png			\
 	cursor-side-right.png			\
+	cursor-side-top-left.png		\
+	cursor-side-top-right.png		\
 	cursor-side-top.png			\
 	cursor-zoom.png				\
 	\
