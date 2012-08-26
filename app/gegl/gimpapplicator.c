@@ -167,14 +167,14 @@ gimp_applicator_new (GeglBuffer        *dest_buffer,
                                         "y",         (gdouble) mask_offset_y,
                                         NULL);
 
-          gegl_node_connect_to (mask_src,        "output",
-                                offset,          "input");
-          gegl_node_connect_to (offset,          "output",
+          gegl_node_connect_to (mask_src,              "output",
+                                offset,                "input");
+          gegl_node_connect_to (offset,                "output",
                                 applicator->mode_node, "aux2");
         }
       else
         {
-          gegl_node_connect_to (mask_src,        "output",
+          gegl_node_connect_to (mask_src,              "output",
                                 applicator->mode_node, "aux2");
         }
     }
@@ -201,10 +201,10 @@ gimp_applicator_new (GeglBuffer        *dest_buffer,
                                          NULL);
 
       gegl_node_connect_to (applicator->src_node,  "output",
-                            affect_node,     "input");
+                            affect_node,           "input");
       gegl_node_connect_to (applicator->mode_node, "output",
-                            affect_node,     "aux");
-      gegl_node_connect_to (affect_node,     "output",
+                            affect_node,           "aux");
+      gegl_node_connect_to (affect_node,           "output",
                             applicator->dest_node, "input");
     }
 
@@ -214,13 +214,13 @@ gimp_applicator_new (GeglBuffer        *dest_buffer,
 }
 
 void
-gimp_applicator_apply (GimpApplicator           *applicator,
-                       GeglBuffer               *src_buffer,
-                       GeglBuffer               *apply_buffer,
-                       gint                      apply_buffer_x,
-                       gint                      apply_buffer_y,
-                       gdouble                   opacity,
-                       GimpLayerModeEffects      paint_mode)
+gimp_applicator_apply (GimpApplicator       *applicator,
+                       GeglBuffer           *src_buffer,
+                       GeglBuffer           *apply_buffer,
+                       gint                  apply_buffer_x,
+                       gint                  apply_buffer_y,
+                       gdouble               opacity,
+                       GimpLayerModeEffects  paint_mode)
 {
   gint width;
   gint height;
