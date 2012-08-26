@@ -69,8 +69,8 @@ void gimp_metadata_store_exif    (gint32    image_ID,
   return_vals = gimp_run_procedure ("plug-in-metadata-decode-exif",
                                     &nreturn_vals,
                                     GIMP_PDB_IMAGE,      image_ID,
-                                    GIMP_PDB_INT32,      exif_data->size,
-                                    GIMP_PDB_INT8ARRAY,  exif_data,
+                                    GIMP_PDB_INT32,      7,
+                                    GIMP_PDB_INT8ARRAY,  "unused",
                                     GIMP_PDB_END);
   if (return_vals[0].data.d_status != GIMP_PDB_SUCCESS)
     g_warning ("JPEG Exif -> XMP Merge failed");
