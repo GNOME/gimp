@@ -471,37 +471,37 @@ gimp_unified_transform_tool_cursor_update (GimpTransformTool  *tr_tool,
 
     case TRANSFORM_HANDLE_NE_P:
     case TRANSFORM_HANDLE_NE:
-      *cursor = map[((int)angle[4] + 2) % 8];
+      *cursor = map[((int)angle[5] + 2) % 8];
       break;
 
     case TRANSFORM_HANDLE_SW_P:
     case TRANSFORM_HANDLE_SW:
-      *cursor = map[((int)angle[4] + 6) % 8];
+      *cursor = map[((int)angle[6] + 6) % 8];
       break;
 
     case TRANSFORM_HANDLE_SE_P:
     case TRANSFORM_HANDLE_SE:
-      *cursor = map[((int)angle[4] + 4) % 8];
+      *cursor = map[((int)angle[7] + 4) % 8];
       break;
 
     case TRANSFORM_HANDLE_N:
     case TRANSFORM_HANDLE_N_S:
-      *cursor = map[((int)angle[4] + 1) % 8] + 8;
+      *cursor = map[((int)angle[0] + 1) % 8] + 8;
       break;
 
     case TRANSFORM_HANDLE_S:
     case TRANSFORM_HANDLE_S_S:
-      *cursor = map[((int)angle[4] + 5) % 8] + 8;
+      *cursor = map[((int)angle[1] + 5) % 8] + 8;
       break;
 
     case TRANSFORM_HANDLE_E:
     case TRANSFORM_HANDLE_E_S:
-      *cursor = map[((int)angle[4] + 3) % 8] + 8;
+      *cursor = map[((int)angle[2] + 3) % 8] + 8;
       break;
 
     case TRANSFORM_HANDLE_W:
     case TRANSFORM_HANDLE_W_S:
-      *cursor = map[((int)angle[4] + 7) % 8] + 8;
+      *cursor = map[((int)angle[3] + 7) % 8] + 8;
       break;
 
     default:
