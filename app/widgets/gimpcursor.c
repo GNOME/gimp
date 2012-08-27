@@ -26,54 +26,17 @@
 #include "cursors/gimp-tool-cursors.h"
 
 
-#define cursor_none_x_hot 10
-#define cursor_none_y_hot 10
+#define cursor_default_x_hot 10
+#define cursor_default_y_hot 10
+
 #define cursor_mouse_x_hot 3
 #define cursor_mouse_y_hot 2
 #define cursor_crosshair_x_hot 15
 #define cursor_crosshair_y_hot 15
-#define cursor_crosshair_small_x_hot 10
-#define cursor_crosshair_small_y_hot 10
-#define cursor_bad_x_hot 10
-#define cursor_bad_y_hot 10
-#define cursor_move_x_hot 10
-#define cursor_move_y_hot 10
 #define cursor_zoom_x_hot 8
 #define cursor_zoom_y_hot 8
 #define cursor_color_picker_x_hot 1
 #define cursor_color_picker_y_hot 30
-#define cursor_corner_top_left_x_hot 10
-#define cursor_corner_top_left_y_hot 10
-#define cursor_corner_top_x_hot 10
-#define cursor_corner_top_y_hot 10
-#define cursor_corner_top_right_x_hot 10
-#define cursor_corner_top_right_y_hot 10
-#define cursor_corner_left_x_hot 10
-#define cursor_corner_left_y_hot 10
-#define cursor_corner_right_x_hot 10
-#define cursor_corner_right_y_hot 10
-#define cursor_corner_bottom_left_x_hot 10
-#define cursor_corner_bottom_left_y_hot 10
-#define cursor_corner_bottom_x_hot 10
-#define cursor_corner_bottom_y_hot 10
-#define cursor_corner_bottom_right_x_hot 10
-#define cursor_corner_bottom_right_y_hot 10
-#define cursor_side_top_left_x_hot 10
-#define cursor_side_top_left_y_hot 10
-#define cursor_side_top_x_hot 10
-#define cursor_side_top_y_hot 10
-#define cursor_side_top_right_x_hot 10
-#define cursor_side_top_right_y_hot 10
-#define cursor_side_left_x_hot 10
-#define cursor_side_left_y_hot 10
-#define cursor_side_right_x_hot 10
-#define cursor_side_right_y_hot 10
-#define cursor_side_bottom_left_x_hot 10
-#define cursor_side_bottom_left_y_hot 10
-#define cursor_side_bottom_x_hot 10
-#define cursor_side_bottom_y_hot 10
-#define cursor_side_bottom_right_x_hot 10
-#define cursor_side_bottom_right_y_hot 10
 
 
 typedef struct _GimpCursor GimpCursor;
@@ -93,7 +56,7 @@ static GimpCursor gimp_cursors[] =
 
   {
     cursor_none,
-    cursor_none_x_hot, cursor_none_y_hot
+    cursor_default_x_hot, cursor_default_y_hot
   },
   {
     cursor_mouse,
@@ -105,15 +68,15 @@ static GimpCursor gimp_cursors[] =
   },
   {
     cursor_crosshair_small,
-    cursor_crosshair_small_x_hot, cursor_crosshair_small_y_hot
+    cursor_default_x_hot, cursor_default_y_hot
   },
   {
     cursor_bad,
-    cursor_bad_x_hot, cursor_bad_y_hot
+    cursor_default_x_hot, cursor_default_y_hot
   },
   {
     cursor_move,
-    cursor_move_x_hot, cursor_move_y_hot
+    cursor_default_x_hot, cursor_default_y_hot
   },
   {
     cursor_zoom,
@@ -125,67 +88,67 @@ static GimpCursor gimp_cursors[] =
   },
   {
     cursor_corner_top_left,
-    cursor_corner_top_left_x_hot, cursor_corner_top_left_y_hot
+    cursor_default_x_hot, cursor_default_y_hot
   },
   {
     cursor_corner_top,
-    cursor_corner_top_x_hot, cursor_corner_top_y_hot
+    cursor_default_x_hot, cursor_default_y_hot
   },
   {
     cursor_corner_top_right,
-    cursor_corner_top_right_x_hot, cursor_corner_top_right_y_hot
+    cursor_default_x_hot, cursor_default_y_hot
   },
   {
     cursor_corner_left,
-    cursor_corner_left_x_hot, cursor_corner_left_y_hot
+    cursor_default_x_hot, cursor_default_y_hot
   },
   {
     cursor_corner_right,
-    cursor_corner_right_x_hot, cursor_corner_right_y_hot
+    cursor_default_x_hot, cursor_default_y_hot
   },
   {
     cursor_corner_bottom_left,
-    cursor_corner_bottom_left_x_hot, cursor_corner_bottom_left_y_hot
+    cursor_default_x_hot, cursor_default_y_hot
   },
   {
     cursor_corner_bottom,
-    cursor_corner_bottom_x_hot, cursor_corner_bottom_y_hot
+    cursor_default_x_hot, cursor_default_y_hot
   },
   {
     cursor_corner_bottom_right,
-    cursor_corner_bottom_right_x_hot, cursor_corner_bottom_right_y_hot
+    cursor_default_x_hot, cursor_default_y_hot
   },
   {
     cursor_side_top_left,
-    cursor_side_top_left_x_hot, cursor_side_top_left_y_hot
+    cursor_default_x_hot, cursor_default_y_hot
   },
   {
     cursor_side_top,
-    cursor_side_top_x_hot, cursor_side_top_y_hot
+    cursor_default_x_hot, cursor_default_y_hot
   },
   {
     cursor_side_top_right,
-    cursor_side_top_right_x_hot, cursor_side_top_right_y_hot
+    cursor_default_x_hot, cursor_default_y_hot
   },
   {
     cursor_side_left,
-    cursor_side_left_x_hot, cursor_side_left_y_hot
+    cursor_default_x_hot, cursor_default_y_hot
   },
   {
     cursor_side_right,
-    cursor_side_right_x_hot, cursor_side_right_y_hot
+    cursor_default_x_hot, cursor_default_y_hot
   },
   {
     cursor_side_bottom_left,
-    cursor_side_bottom_left_x_hot, cursor_side_bottom_left_y_hot
+    cursor_default_x_hot, cursor_default_y_hot
   },
   {
     cursor_side_bottom,
-    cursor_side_bottom_x_hot, cursor_side_bottom_y_hot
+    cursor_default_x_hot, cursor_default_y_hot
   },
   {
     cursor_side_bottom_right,
-    cursor_side_bottom_right_x_hot, cursor_side_bottom_right_y_hot
+    cursor_default_x_hot, cursor_default_y_hot
   }
 };
 
@@ -251,6 +214,7 @@ static GimpCursor gimp_cursor_modifiers[] =
   { modifier_join },
   { modifier_select }
 };
+
 
 static const GdkPixbuf *
 get_cursor_pixbuf (GimpCursor *cursor)
@@ -318,53 +282,46 @@ gimp_cursor_new (GdkDisplay         *display,
 
   if (cursor_handedness == GIMP_HANDEDNESS_LEFT)
     {
-      if (cursor_type == GIMP_CURSOR_CORNER_TOP_LEFT)
+      switch (cursor_type)
         {
-          cursor_type = GIMP_CURSOR_CORNER_TOP_RIGHT;
-        }
-      else if (cursor_type == GIMP_CURSOR_CORNER_TOP_RIGHT)
-        {
-          cursor_type = GIMP_CURSOR_CORNER_TOP_LEFT;
-        }
-      else if (cursor_type == GIMP_CURSOR_CORNER_LEFT)
-        {
-          cursor_type = GIMP_CURSOR_CORNER_RIGHT;
-        }
-      else if (cursor_type == GIMP_CURSOR_CORNER_RIGHT)
-        {
-          cursor_type = GIMP_CURSOR_CORNER_LEFT;
-        }
-      else if (cursor_type == GIMP_CURSOR_CORNER_BOTTOM_LEFT)
-        {
-          cursor_type = GIMP_CURSOR_CORNER_BOTTOM_RIGHT;
-        }
-      else if (cursor_type == GIMP_CURSOR_CORNER_BOTTOM_RIGHT)
-        {
-          cursor_type = GIMP_CURSOR_CORNER_BOTTOM_LEFT;
-        }
-      else if (cursor_type == GIMP_CURSOR_SIDE_TOP_LEFT)
-        {
-          cursor_type = GIMP_CURSOR_SIDE_TOP_RIGHT;
-        }
-      else if (cursor_type == GIMP_CURSOR_SIDE_TOP_RIGHT)
-        {
-          cursor_type = GIMP_CURSOR_SIDE_TOP_LEFT;
-        }
-      else if (cursor_type == GIMP_CURSOR_SIDE_LEFT)
-        {
-          cursor_type = GIMP_CURSOR_SIDE_RIGHT;
-        }
-      else if (cursor_type == GIMP_CURSOR_SIDE_RIGHT)
-        {
-          cursor_type = GIMP_CURSOR_SIDE_LEFT;
-        }
-      else if (cursor_type == GIMP_CURSOR_SIDE_BOTTOM_LEFT)
-        {
-          cursor_type = GIMP_CURSOR_SIDE_BOTTOM_RIGHT;
-        }
-      else if (cursor_type == GIMP_CURSOR_SIDE_BOTTOM_RIGHT)
-        {
-          cursor_type = GIMP_CURSOR_SIDE_BOTTOM_LEFT;
+        case GIMP_CURSOR_CORNER_TOP_LEFT:
+          cursor_type = GIMP_CURSOR_CORNER_TOP_RIGHT; break;
+
+        case GIMP_CURSOR_CORNER_TOP_RIGHT:
+          cursor_type = GIMP_CURSOR_CORNER_TOP_LEFT; break;
+
+        case GIMP_CURSOR_CORNER_LEFT:
+          cursor_type = GIMP_CURSOR_CORNER_RIGHT; break;
+
+        case GIMP_CURSOR_CORNER_RIGHT:
+          cursor_type = GIMP_CURSOR_CORNER_LEFT; break;
+
+        case GIMP_CURSOR_CORNER_BOTTOM_LEFT:
+          cursor_type = GIMP_CURSOR_CORNER_BOTTOM_RIGHT; break;
+
+        case GIMP_CURSOR_CORNER_BOTTOM_RIGHT:
+          cursor_type = GIMP_CURSOR_CORNER_BOTTOM_LEFT; break;
+
+        case GIMP_CURSOR_SIDE_TOP_LEFT:
+          cursor_type = GIMP_CURSOR_SIDE_TOP_RIGHT; break;
+
+        case GIMP_CURSOR_SIDE_TOP_RIGHT:
+          cursor_type = GIMP_CURSOR_SIDE_TOP_LEFT; break;
+
+        case GIMP_CURSOR_SIDE_LEFT:
+          cursor_type = GIMP_CURSOR_SIDE_RIGHT; break;
+
+        case GIMP_CURSOR_SIDE_RIGHT:
+          cursor_type = GIMP_CURSOR_SIDE_LEFT; break;
+
+        case GIMP_CURSOR_SIDE_BOTTOM_LEFT:
+          cursor_type = GIMP_CURSOR_SIDE_BOTTOM_RIGHT; break;
+
+        case GIMP_CURSOR_SIDE_BOTTOM_RIGHT:
+          cursor_type = GIMP_CURSOR_SIDE_BOTTOM_LEFT; break;
+
+        default:
+          break;
         }
     }
 
