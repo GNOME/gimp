@@ -244,7 +244,7 @@ gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
 
         case GIMP_CURSOR_MODE_TOOL_CROSSHAIR:
           if (cursor_type < GIMP_CURSOR_CORNER_TOP_LEFT ||
-              cursor_type > GIMP_CURSOR_SIDE_BOTTOM)
+              cursor_type > GIMP_CURSOR_SIDE_BOTTOM_RIGHT)
             {
               /* the corner and side cursors count as crosshair, so leave
                * them and override everything else
