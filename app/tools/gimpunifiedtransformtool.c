@@ -408,16 +408,111 @@ gimp_unified_transform_tool_pick_function (GimpTransformTool *tr_tool,
 }
 
 static void
+gethandlegeometry (GimpTransformTool *tr_tool,
+                   GimpVector2       *position,
+                   gdouble           *angle)
+{
+  GimpVector2      o[] = { { .x = tr_tool->tx1, .y = tr_tool->ty1 },
+                           { .x = tr_tool->tx2, .y = tr_tool->ty2 },
+                           { .x = tr_tool->tx3, .y = tr_tool->ty3 },
+                           { .x = tr_tool->tx4, .y = tr_tool->ty4 } },
+                   right = { .x = 1.0, .y = 0.0 },
+                   up =    { .x = 0.0, .y = 1.0 };
+
+  if (position)
+    {
+      position[0] = o[0];
+      position[1] = o[1];
+      position[2] = o[2];
+      position[3] = o[3];
+    }
+
+  angle[0] = calcangle (vectorsubtract (o[1], o[0]), right);
+  angle[1] = calcangle (vectorsubtract (o[3], o[2]), right);
+  angle[2] = calcangle (vectorsubtract (o[3], o[1]), up);
+  angle[3] = calcangle (vectorsubtract (o[2], o[0]), up);
+
+  angle[4] = (angle[0] + angle[3]) / 2.0;
+  angle[5] = (angle[0] + angle[2]) / 2.0;
+  angle[6] = (angle[1] + angle[3]) / 2.0;
+  angle[7] = (angle[1] + angle[2]) / 2.0;
+}
+
+static void
 gimp_unified_transform_tool_cursor_update (GimpTransformTool  *tr_tool,
                                            GimpCursorType     *cursor,
                                            GimpCursorModifier *modifier)
 {
   GimpToolCursorType toolcursor = GIMP_TOOL_CURSOR_NONE;
+  gdouble angle[8];
+  gint i;
+  GimpCursorType map[8];
+
+  map[0] = GIMP_CURSOR_CORNER_TOP_LEFT;
+  map[1] = GIMP_CURSOR_CORNER_TOP;
+  map[2] = GIMP_CURSOR_CORNER_TOP_RIGHT;
+  map[3] = GIMP_CURSOR_CORNER_RIGHT;
+  map[4] = GIMP_CURSOR_CORNER_BOTTOM_RIGHT;
+  map[5] = GIMP_CURSOR_CORNER_BOTTOM;
+  map[6] = GIMP_CURSOR_CORNER_BOTTOM_LEFT;
+  map[7] = GIMP_CURSOR_CORNER_LEFT;
+
+  gethandlegeometry (tr_tool, NULL, angle);
+
+  for (i = 0; i < 8; i++)
+    angle[i] = round(angle[i] * 180. / G_PI / 45.);
+
+  switch (tr_tool->function)
+    {
+    case TRANSFORM_HANDLE_NW_P:
+    case TRANSFORM_HANDLE_NW:
+      *cursor = map[((int)angle[4] + 0) % 8];
+      break;
+
+    case TRANSFORM_HANDLE_NE_P:
+    case TRANSFORM_HANDLE_NE:
+      *cursor = map[((int)angle[4] + 2) % 8];
+      break;
+
+    case TRANSFORM_HANDLE_SW_P:
+    case TRANSFORM_HANDLE_SW:
+      *cursor = map[((int)angle[4] + 6) % 8];
+      break;
+
+    case TRANSFORM_HANDLE_SE_P:
+    case TRANSFORM_HANDLE_SE:
+      *cursor = map[((int)angle[4] + 4) % 8];
+      break;
+
+    case TRANSFORM_HANDLE_N:
+    case TRANSFORM_HANDLE_N_S:
+      *cursor = map[((int)angle[4] + 1) % 8] + 8;
+      break;
+
+    case TRANSFORM_HANDLE_S:
+    case TRANSFORM_HANDLE_S_S:
+      *cursor = map[((int)angle[4] + 5) % 8] + 8;
+      break;
+
+    case TRANSFORM_HANDLE_E:
+    case TRANSFORM_HANDLE_E_S:
+      *cursor = map[((int)angle[4] + 3) % 8] + 8;
+      break;
+
+    case TRANSFORM_HANDLE_W:
+    case TRANSFORM_HANDLE_W_S:
+      *cursor = map[((int)angle[4] + 7) % 8] + 8;
+      break;
+
+    default:
+      break;
+    }
 
   /* parent class handles *cursor and *modifier for most handles */
   switch (tr_tool->function)
     {
     case TRANSFORM_HANDLE_NONE:
+    case TRANSFORM_CREATING:
       toolcursor = GIMP_TOOL_CURSOR_NONE;
       break;
     case TRANSFORM_HANDLE_NW_P:
@@ -448,7 +543,6 @@ gimp_unified_transform_tool_cursor_update (GimpTransformTool  *tr_tool,
     case TRANSFORM_HANDLE_E_S:
     case TRANSFORM_HANDLE_W_S:
       toolcursor = GIMP_TOOL_CURSOR_SHEAR;
-      *cursor = GIMP_CURSOR_CROSSHAIR_SMALL;
       break;
     case TRANSFORM_HANDLE_ROTATION:
       toolcursor = GIMP_TOOL_CURSOR_ROTATE;
@@ -470,23 +564,9 @@ gimp_unified_transform_tool_draw_gui (GimpTransformTool *tr_tool,
   GimpCanvasGroup *stroke_group;
   gint             d, i;
   gdouble          angle[8];
-  GimpVector2      o[] = { { .x = tr_tool->tx1, .y = tr_tool->ty1 },
-                           { .x = tr_tool->tx2, .y = tr_tool->ty2 },
-                           { .x = tr_tool->tx3, .y = tr_tool->ty3 },
-                           { .x = tr_tool->tx4, .y = tr_tool->ty4 } },
-                   t[] = { o[0], o[1], o[2], o[3] },
-                   right = { .x = 1.0, .y = 0.0 },
-                   up    = { .x = 0.0, .y = 1.0 };
+  GimpVector2      o[4], t[4];
 
-  angle[0] = calcangle (vectorsubtract (o[0], o[1]), right);
-  angle[1] = calcangle (vectorsubtract (o[2], o[3]), right);
-  angle[2] = calcangle (vectorsubtract (o[3], o[1]), up);
-  angle[3] = calcangle (vectorsubtract (o[2], o[0]), up);
-
-  angle[4] = angle[0] + angle[3];
-  angle[5] = angle[0] + angle[2];
-  angle[6] = angle[1] + angle[3];
-  angle[7] = angle[1] + angle[2];
+  gethandlegeometry (tr_tool, o, angle);
 
   for (i = 0; i < 4; i++)
     {
@@ -495,19 +575,19 @@ gimp_unified_transform_tool_draw_gui (GimpTransformTool *tr_tool,
       /*  draw the scale handles  */
       h = gimp_draw_tool_add_handle (draw_tool,
                                      GIMP_HANDLE_SQUARE,
-                                     t[i].x, t[i].y,
+                                     o[i].x, o[i].y,
                                      handle_w * 1.5, handle_h * 1.5,
                                      GIMP_HANDLE_ANCHOR_CENTER);
-      gimp_canvas_handle_set_angles (h, angle[i + 4] / 2.0, 0.0);
+      gimp_canvas_handle_set_angles (h, angle[i + 4], 0.0);
       tr_tool->handles[TRANSFORM_HANDLE_NW + i] = h;
 
       /*  draw the perspective handles  */
       h = gimp_draw_tool_add_handle (draw_tool,
-                                     GIMP_HANDLE_SQUARE,
-                                     t[i].x, t[i].y,
+                                     GIMP_HANDLE_DIAMOND,
+                                     o[i].x, o[i].y,
                                      handle_w * 0.8, handle_h * 0.8,
                                      GIMP_HANDLE_ANCHOR_CENTER);
-      gimp_canvas_handle_set_angles (h, angle[i + 4] / 2.0, 0.0);
+      gimp_canvas_handle_set_angles (h, angle[i + 4], 0.0);
       tr_tool->handles[TRANSFORM_HANDLE_NW_P + i] = h;
     }
 
