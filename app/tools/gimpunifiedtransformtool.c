@@ -446,6 +446,8 @@ gimp_unified_transform_tool_cursor_update (GimpTransformTool  *tr_tool,
   gdouble angle[8];
   gint i;
   GimpCursorType map[8];
+  GimpVector2 pos[4], this, that;
+  gboolean flip = FALSE, side = FALSE, setcursor = TRUE;
 
   map[0] = GIMP_CURSOR_CORNER_TOP_LEFT;
   map[1] = GIMP_CURSOR_CORNER_TOP;
@@ -456,7 +458,7 @@ gimp_unified_transform_tool_cursor_update (GimpTransformTool  *tr_tool,
   map[6] = GIMP_CURSOR_CORNER_BOTTOM_LEFT;
   map[7] = GIMP_CURSOR_CORNER_LEFT;
 
-  gethandlegeometry (tr_tool, NULL, angle);
+  gethandlegeometry (tr_tool, pos, angle);
 
   for (i = 0; i < 8; i++)
     angle[i] = round(angle[i] * 180. / G_PI / 45.);
@@ -465,46 +467,116 @@ gimp_unified_transform_tool_cursor_update (GimpTransformTool  *tr_tool,
     {
     case TRANSFORM_HANDLE_NW_P:
     case TRANSFORM_HANDLE_NW:
-      *cursor = map[((int)angle[4] + 0) % 8];
+      i = (gint)angle[4] + 0;
+      this = pos[0];
+      that = pos[3];
       break;
 
     case TRANSFORM_HANDLE_NE_P:
     case TRANSFORM_HANDLE_NE:
-      *cursor = map[((int)angle[5] + 2) % 8];
+      i = (gint)angle[5] + 2;
+      this = pos[1];
+      that = pos[2];
       break;
 
     case TRANSFORM_HANDLE_SW_P:
     case TRANSFORM_HANDLE_SW:
-      *cursor = map[((int)angle[6] + 6) % 8];
+      i = (gint)angle[6] + 6;
+      this = pos[2];
+      that = pos[1];
       break;
 
     case TRANSFORM_HANDLE_SE_P:
     case TRANSFORM_HANDLE_SE:
-      *cursor = map[((int)angle[7] + 4) % 8];
+      i = (gint)angle[7] + 4;
+      this = pos[3];
+      that = pos[0];
       break;
 
     case TRANSFORM_HANDLE_N:
     case TRANSFORM_HANDLE_N_S:
-      *cursor = map[((int)angle[0] + 1) % 8] + 8;
+      i = (gint)angle[0] + 1;
+      this = vectoradd (pos[0], pos[1]);
+      that = vectoradd (pos[2], pos[3]);
+      side = TRUE;
       break;
 
     case TRANSFORM_HANDLE_S:
     case TRANSFORM_HANDLE_S_S:
-      *cursor = map[((int)angle[1] + 5) % 8] + 8;
+      i = (gint)angle[1] + 5;
+      this = vectoradd (pos[2], pos[3]);
+      that = vectoradd (pos[0], pos[1]);
+      side = TRUE;
       break;
 
     case TRANSFORM_HANDLE_E:
     case TRANSFORM_HANDLE_E_S:
-      *cursor = map[((int)angle[2] + 3) % 8] + 8;
+      i = (gint)angle[2] + 3;
+      this = vectoradd (pos[1], pos[3]);
+      that = vectoradd (pos[0], pos[2]);
+      side = TRUE;
       break;
 
     case TRANSFORM_HANDLE_W:
     case TRANSFORM_HANDLE_W_S:
-      *cursor = map[((int)angle[3] + 7) % 8] + 8;
+      i = (gint)angle[3] + 7;
+      this = vectoradd (pos[0], pos[2]);
+      that = vectoradd (pos[1], pos[3]);
+      side = TRUE;
       break;
 
     default:
+      setcursor = FALSE;
       break;
+    }
+
+  if (setcursor)
+    {
+      i %= 8;
+
+      switch (map[i])
+        {
+        case GIMP_CURSOR_CORNER_TOP_LEFT:
+          if (this.x + this.y > that.x + that.y)
+            flip = TRUE;
+          break;
+        case GIMP_CURSOR_CORNER_TOP:
+          if (this.y > that.y)
+            flip = TRUE;
+          break;
+        case GIMP_CURSOR_CORNER_TOP_RIGHT:
+          if (this.x - this.y < that.x - that.y)
+            flip = TRUE;
+          break;
+        case GIMP_CURSOR_CORNER_RIGHT:
+          if (this.x < that.x)
+            flip = TRUE;
+          break;
+        case GIMP_CURSOR_CORNER_BOTTOM_RIGHT:
+          if (this.x + this.y < that.x + that.y)
+            flip = TRUE;
+          break;
+        case GIMP_CURSOR_CORNER_BOTTOM:
+          if (this.y < that.y)
+            flip = TRUE;
+          break;
+        case GIMP_CURSOR_CORNER_BOTTOM_LEFT:
+          if (this.x - this.y > that.x - that.y)
+            flip = TRUE;
+          break;
+        case GIMP_CURSOR_CORNER_LEFT:
+          if (this.x > that.x)
+            flip = TRUE;
+          break;
+        default:
+          g_assert_not_reached ();
+        }
+      if (flip)
+        *cursor = map[(i + 4) % 8];
+      else
+        *cursor = map[i];
+      if (side)
+        *cursor += 8;
     }
 
   /* parent class handles *cursor and *modifier for most handles */
