@@ -373,7 +373,7 @@
       <dep package="gegl"/>
       <dep package="glib"/>
       <dep package="gtk+"/>
-      <dep package="popper"/>
+      <dep package="poppler"/>
       <dep package="jasper"/>
     </dependencies>
   </autotools>
