@@ -699,13 +699,13 @@ load_image (const gchar        *filename,
           image_type = GIMP_RGB;
           layer_type = (alpha) ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
           if (bps == 8 && alpha)
-            base_format = babl_format ("RGBA u8");
+            base_format = babl_format ("R'G'B'A u8");
           else if (bps == 8 && !alpha)
-            base_format = babl_format ("RGB u8");
+            base_format = babl_format ("R'G'B' u8");
           else if (bps == 16 && alpha)
-            base_format = babl_format ("RGBA u16");
+            base_format = babl_format ("R'G'B'A u16");
           else if (bps == 16 && !alpha)
-            base_format = babl_format ("RGB u16");
+            base_format = babl_format ("R'G'B' u16");
           break;
 
 #if 0
@@ -1468,7 +1468,7 @@ load_contiguous (TIFF         *tif,
                                                GEGL_ABYSS_NONE);
               gegl_buffer_iterator_add (iter, channel[i].buffer,
                                         GEGL_RECTANGLE (x, y, cols, rows),
-                                        0, NULL,
+                                        0, channel[i].format,
                                         GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
          
               while (gegl_buffer_iterator_next (iter))
@@ -1594,7 +1594,7 @@ load_separate (TIFF         *tif,
                                                    GEGL_ABYSS_NONE);
                   gegl_buffer_iterator_add (iter, channel[i].buffer,
                                             GEGL_RECTANGLE (x, y, cols, rows),
-                                            0, NULL,
+                                            0, channel[i].format,
                                             GEGL_BUFFER_READWRITE,
                                             GEGL_ABYSS_NONE);
              
