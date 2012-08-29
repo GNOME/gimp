@@ -76,18 +76,26 @@
   </autotools>
 
   <!-- Required by some things -->
-  <!--<autotools id="librsvg">
-    <branch module="librsvg/2.32/librsvg-2.32.1.tar.bz2" version="2.32.1"
-	    hash="sha256:91b98051f352fab8a6257688d6b2fd665b4648ed66144861f2f853ccf876d334"/>
+  <autotools id="librsvg" autogen-sh="configure"
+	     autogenargs="--disable-static --disable-Bsymbolic --enable-introspection=no">
+    <branch module="librsvg/2.36/librsvg-2.36.2.tar.xz" version="2.36.2"
+	    hash="sha256:3906ad8aa5426f6db3891de98d3b72143155282f63c306a71fdb42f3246a1f08"/>
+    <dependencies>
+      <dep package="libcroco"/>
+      <dep package="pango"/>
+      <dep package="gdk-pixbuf"/>
+    </dependencies>
   </autotools>
 
-  <autotools id="libcroco">
+  <autotools id="libcroco" autogen-sh="configure"
+	     autogenargs="--disable-static">
     <branch module="libcroco/0.6/libcroco-0.6.2.tar.bz2" version="0.6.2"
 	    hash="sha256:be24853f64c09b63d39e563fb0222e29bae1a33c3d9f6cbffc0bc27669371749"/>
     <dependencies>
-      <dep package="librsvg"/>
+      <dep package="glib"/>
+      <dep package="libxml2"/>
     </dependencies>
-  </autotools>-->
+  </autotools>
 
   <!-- This is the beginning of the dependencies for gtk-doc -->
   <autotools id="libxml2" autogen-sh="configure">
@@ -190,8 +198,10 @@
 
   <!-- This is glib -->
   <autotools id="glib" autogen-sh="configure" autogenargs="--with-libiconv=native">
-    <branch module="glib/2.32/glib-2.32.3.tar.xz"  version="2.32.3"
-            hash="sha256:b65ceb462807e4a2f91c95e4293ce6bbefca308cb44a1407bcfdd9e40363ff4d"/>
+    <branch module="glib/2.33/glib-2.33.6.tar.xz"  version="2.33.6"
+        hash="sha256:613707eac08d96a421b6d5113f605235a35748eb582bc9c216cbb4ccfcd6f9e8">
+      <patch file="http://bugzilla-attachments.gnome.org/attachment.cgi?id=212477" strip="1" />
+    </branch>
     <dependencies>
       <dep package="libffi"/>
     </dependencies>
@@ -308,7 +318,7 @@
     </after>
   </autotools>
 
-  <autotools id="gegl" autogen-sh="autogen.sh" autogenargs="--disable-docs">
+  <autotools id="gegl" autogen-sh="autogen.sh" autogenargs="--disable-docs --enable-introspection=no">
     <!--<branch repo="ftp.gtk.org" version="0.2.0"
             module="gegl/0.2/gegl-0.2.0.tar.bz2"/>-->
     <branch repo="git.gnome.org" module="gegl" revision="master"/>
@@ -353,7 +363,7 @@
   </autotools>
 
   <autotools id="gimp"  autogen-sh="autogen.sh"
-             autogenargs="--without-x --disable-docs --without-dbus --without-gnomevfs --without-wmf --enable-binreloc --disable-python" skip-autogen="never"
+             autogenargs="--without-x --disable-docs --without-dbus --enable-introspection=no --without-gnomevfs --without-wmf --enable-binreloc --disable-python" skip-autogen="never"
 	     autogen-template="autoreconf -fis &amp;&amp; %(srcdir)s/%(autogen-sh)s --prefix %(prefix)s --libdir %(libdir)s %(autogenargs)s"
              makeargs='LDFLAGS="-framework Carbon"'>
     <!--<branch module="gimp/v2.8/gimp-2.8.0.tar.bz2" version="2.8.0"
@@ -394,6 +404,7 @@
     </after>
     <dependencies>
       <dep package="exif"/>
+      <dep package="librsvg"/>
       <dep package="lcms"/>
       <dep package="fontconfig"/>
       <dep package="gegl"/>

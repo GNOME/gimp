@@ -86,6 +86,15 @@
   <!-- Name of main gimp binary -->
   <main-binary>${prefix}/bin/gimp</main-binary>
 
+  <!-- Copy in gimp plugins -->
+  <binary>${prefix}/lib/gimp/2.0/plug-ins/*</binary>
+
+  <!-- Copy in gimp modules -->
+  <binary>${prefix}/lib/gimp/2.0/modules/*.so</binary>
+
+  <!-- Copy in gimp python modules -->
+  <binary>${prefix}/lib/gimp/2.0/python/*</binary>
+
   <!-- Copy in GTK+ modules -->
   <binary>${prefix}/lib/${gtkdir}/modules/*.so</binary>
 
@@ -95,13 +104,13 @@
   <!-- Copy in gegl modules -->
   <binary>${prefix}/lib/gegl-0.2/*.so</binary>
 
-  <!-- Copy in GTK+ themeing engines-->
+  <!-- Copy in GTK+ themeing engines -->
   <binary>${prefix}/lib/${gtkdir}/${pkg:${gtk}:gtk_binary_version}/engines/*.so</binary>
 
-  <!-- Copy in GTK+ printer backends-->
+  <!-- Copy in GTK+ printer backends -->
   <binary>${prefix}/lib/${gtkdir}/${pkg:${gtk}:gtk_binary_version}/printbackends/*.so</binary>
 
-  <!-- Copy in GTK+ printer backends-->
+  <!-- Copy in GTK+ immodules -->
   <binary>${prefix}/lib/${gtkdir}/${pkg:${gtk}:gtk_binary_version}/immodules/*.so</binary>
 
   <!-- Copy in pango modules -->
@@ -115,24 +124,10 @@
     ${prefix}/share/locale
   </translations>
 
-  <!-- data>
-    ${prefix}/share/gtk-demo
-  </data -->
-
-  <!-- Missing dylibs -->
-  <binary>${prefix}/lib/libgimpui-2.0.0.dylib</binary>
-  
-  <!-- Where plugin dylibs need to be explicitly defined -->
-  <binary>${prefix}/lib/liblqr-1.0.dylib</binary>
-  <binary>${prefix}/lib/libexif.12.dylib</binary>
-  <binary>${prefix}/lib/liblcms.1.dylib</binary>
-
   <!-- GTK+2 data -->
   <data>${prefix}/etc/gtk-2.0/*</data>
 
   <!-- Fontconfig data; requires clean up -->
-  <data>${prefix}/etc/fonts/fonts.conf</data>
-  <!--<data>${prefix}/etc/fonts/fonts.conf.bak</data>-->
   <data>${prefix}/etc/fonts/fonts.dtd</data>
   <data>${prefix}/etc/fonts/conf.avail/*</data>
   <data>${prefix}/etc/fonts/conf.d/*</data>
@@ -140,9 +135,6 @@
   <!-- Gimp data -->
   <data>${prefix}/etc/gimp/2.0/*</data>
   <data dest="${bundle}/Contents/Resources/share/gimp">${prefix}/share/gimp</data>
-  <data>${prefix}/lib/gimp/2.0/modules/*.so</data>
-  <data>${prefix}/lib/gimp/2.0/plug-ins/*</data>
-  <data>${prefix}/lib/gimp/2.0/python/*</data>
 
   <!-- Pango data -->
   <data>${prefix}/etc/pango/pango.modules</data>
@@ -157,12 +149,25 @@
   <!-- Theme data-->
   <data>${prefix}/share/themes</data>
 
+  <!-- Theme data-->
+  <data>${prefix}/share/themes</data>
+
   <!-- GTK+ theme data -->
   <data>${prefix}/share/gtk-engines/*.xml</data>
 
   <!-- mitch says this will change default theme, didn't work. -->
   <data dest="${bundle}/Contents/Resources/etc/${gtkdir}/gtkrc">
     ${project}/gtkrc
+  </data>
+
+  <!-- Interesting defaults -->
+  <data dest="${bundle}/Contents/Resources/etc/gimp/2.0/gimprc">
+    ${project}/gimprc
+  </data>
+
+  <!-- Because fontconfig has terrible defaults -->
+  <data dest="${bundle}/Contents/Resources/etc/fonts/fonts.conf">
+    ${project}/fonts.conf
   </data>
 
   <!-- Icons -->

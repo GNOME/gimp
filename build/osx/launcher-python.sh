@@ -50,8 +50,8 @@ export FONTCONFIG_FILE="$bundle_etc/fonts/fonts.conf"
 # Help gdk find its loader modules
 export GDK_PIXBUF_MODULE_FILE="$bundle_etc/gtk-2.0/gdk-pixbuf.loaders"
 
-# Fix for the theme engine paths is no longer required
-# export GTK_PATH="$bundle_lib/gtk-2.0/2.10.0"
+# Fix for the theme engine paths
+export GTK_PATH="$bundle_lib/gtk-2.0/2.10.0"
 
 # GTK path no longer required
 # export GTK_IM_MODULE_FILE="$bundle_etc/gtk-2.0/gtk.immodules"
@@ -59,8 +59,17 @@ export GDK_PIXBUF_MODULE_FILE="$bundle_etc/gtk-2.0/gdk-pixbuf.loaders"
 # Pango path no longer required
 # export PANGO_RC_FILE="$bundle_etc/pango/pangorc"
 
+# Fix the gegl path issue
+export GEGL_PATH="$bundle_lib/gegl-0.2"
+
 # Define gtkrc file
-# export GTK2_RC_FILES="$bundle_etc/gtk-2.0/gtkrc"
+export GTK2_RC_FILES="$bundle_etc/gtk-2.0/gtkrc"
+
+# Workaround for <https://bugzilla.gnome.org/show_bug.cgi?id=671817>
+if [ ! -f "$HOME/.local/share/recently-used.xbel" ]
+then
+    mkdir -p "$HOME/.local/share"
+fi
 
 # Strip out arguments added by the OS
 if [ x`echo "x$1" | sed -e "s/^x-psn_.*//"` == x ]; then
