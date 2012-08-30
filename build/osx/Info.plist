@@ -13,7 +13,7 @@
 	<key>CFBundleIconFile</key>
 	<string>gimp.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>org.gimp.GIMP</string>
+	<string>org.gimp.gimp</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>2.8.2</string>
 	<key>CFBundlePackageType</key>
