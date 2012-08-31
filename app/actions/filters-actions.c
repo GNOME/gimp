@@ -39,6 +39,12 @@
 
 static const GimpStringActionEntry filters_actions[] =
 {
+  { "filters-cartoon", GIMP_STOCK_GEGL,
+    NC_("filters-action", "Ca_rtoon..."), NULL,
+    NC_("filters-action", "Simulate a cartoon by enhancing edges"),
+    "gegl:cartoon",
+    NULL /* FIXME GIMP_HELP_FILTER_CARTOON */ },
+
   { "filters-color-reduction", GIMP_STOCK_GEGL,
     NC_("filters-action", "Color _Reduction..."), NULL,
     NC_("filters-action", "Reduce the number of colors in the image, with optional dithering"),
@@ -81,6 +87,42 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:lens-distortion",
     NULL /* FIXME GIMP_HELP_FILTER_LENS_DISTORTION */ },
 
+  { "filters-noise-hsv", GIMP_STOCK_GEGL,
+    NC_("filters-action", "HSV Noise..."), NULL,
+    NC_("filters-action", "Scattering pixel values in HSV space"),
+    "gegl:noise-hsv",
+    NULL /* FIXME GIMP_HELP_FILTER_NOISE_HSV */ },
+
+  { "filters-noise-hurl", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Hurl..."), NULL,
+    NC_("filters-action", "Completely randomize a fraction of pixels"),
+    "gegl:noise-hurl",
+    NULL /* FIXME GIMP_HELP_FILTER_NOISE_HURL */ },
+
+  { "filters-noise-pick", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Pick..."), NULL,
+    NC_("filters-action", "Randomly interchange some pixels with neighbors"),
+    "gegl:noise-pick",
+    NULL /* FIXME GIMP_HELP_FILTER_NOISE_PICK */ },
+
+  { "filters-noise-rgb", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_RGB Noise..."), NULL,
+    NC_("filters-action", "Distort colors by random amounts"),
+    "gegl:noise-rgb",
+    NULL /* FIXME GIMP_HELP_FILTER_NOISE_RGB */ },
+
+  { "filters-noise-slur", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Slur..."), NULL,
+    NC_("filters-action", "Randomly slide some pixels downward (similar to melting)"),
+    "gegl:noise-slur",
+    NULL /* FIXME GIMP_HELP_FILTER_NOISE_SLUR */ },
+
+  { "filters-photocopy", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Photocopy..."), NULL,
+    NC_("filters-action", "Simulate color distortion produced by a copy machine"),
+    "gegl:photocopy",
+    NULL /* FIXME GIMP_HELP_FILTER_PHOTOCOPY */ },
+
   { "filters-pixelize", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Pixelize..."), NULL,
     NC_("filters-action", "Simplify image into an array of solid-colored squares"),
@@ -110,6 +152,12 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "Specialized direction-dependent edge-detection"),
     "gegl:edge-sobel",
     NULL /* FIXME GIMP_HELP_FILTER_SOBEL */ },
+
+  { "filters-softglow", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Softglow..."), NULL,
+    NC_("filters-action", "Simulate glow by making highlights intense and fuzzy"),
+    "gegl:softglow",
+    NULL /* FIXME GIMP_HELP_FILTER_SOFTGLOW */ },
 
   { "filters-threshold-alpha", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Threshold Alpha..."), NULL,
@@ -171,17 +219,25 @@ filters_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
+  SET_SENSITIVE ("filters-cartoon",                 writable);
   SET_SENSITIVE ("filters-color-reduction",         writable);
   SET_SENSITIVE ("filters-color-temperature",       writable && !gray);
   SET_SENSITIVE ("filters-color-to-alpha",          writable && !gray && alpha);
   SET_SENSITIVE ("filters-difference-of-gaussians", writable);
   SET_SENSITIVE ("filters-gaussian-blur",           writable);
   SET_SENSITIVE ("filters-laplace",                 writable);
+  SET_SENSITIVE ("filters-noise-hsv",               writable && !gray);
+  SET_SENSITIVE ("filters-noise-hurl",              writable);
+  SET_SENSITIVE ("filters-noise-pick",              writable);
+  SET_SENSITIVE ("filters-noise-rgb",               writable);
+  SET_SENSITIVE ("filters-noise-slur",              writable);
   SET_SENSITIVE ("filters-lens-distortion",         writable);
+  SET_SENSITIVE ("filters-photocopy",               writable);
   SET_SENSITIVE ("filters-pixelize",                writable);
   SET_SENSITIVE ("filters-polar-coordinates",       writable);
   SET_SENSITIVE ("filters-ripple",                  writable);
   SET_SENSITIVE ("filters-sobel",                   writable);
+  SET_SENSITIVE ("filters-softglow",                writable);
   SET_SENSITIVE ("filters-semi-flatten",            writable && alpha);
   SET_SENSITIVE ("filters-threshold-alpha",         writable && alpha);
   SET_SENSITIVE ("filters-unsharp-mask",            writable);

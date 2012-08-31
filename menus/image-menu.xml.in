@@ -621,7 +621,13 @@
         <separator />
         <placeholder name="Glass" />
       </menu>
-      <menu action="plug-in-noise-menu" name="Noise" />
+      <menu action="plug-in-noise-menu" name="Noise">
+        <menuitem action="filters-noise-hsv" />
+        <menuitem action="filters-noise-hurl" />
+        <menuitem action="filters-noise-pick" />
+        <menuitem action="filters-noise-rgb" />
+        <menuitem action="filters-noise-slur" />
+      </menu>
       <menu action="plug-in-edge-detect-menu" name="Edge-Detect">
         <menuitem action="filters-difference-of-gaussians" />
         <menuitem action="filters-laplace" />
@@ -629,7 +635,11 @@
       </menu>
       <menu action="plug-in-generic-menu" name="Generic" />
       <menu action="plug-in-combine-menu" name="Combine" />
-      <menu action="plug-in-artistic-menu" name="Artistic" />
+      <menu action="plug-in-artistic-menu" name="Artistic">
+	<menuitem action="filters-cartoon" />
+	<menuitem action="filters-photocopy" />
+	<menuitem action="filters-softglow" />
+      </menu>
       <menu action="plug-in-decor-menu" name="Decor" />
       <menu action="plug-in-map-menu" name="Map" />
       <menu action="plug-in-render-menu" name="Render">
