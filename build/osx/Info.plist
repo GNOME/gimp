@@ -15,15 +15,15 @@
 	<key>CFBundleIdentifier</key>
 	<string>org.gimp.gimp</string>
 	<key>CFBundleInfoDictionaryVersion</key>
-	<string>2.8.2</string>
+	<string>6.0</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.8</string>
+	<string>2.8.2</string>
 	<key>CFBundleSignature</key>
 	<string>gimp</string>
 	<key>CFBundleVersion</key>
-	<string>2.8.2</string>
+	<string>2.8.2.2</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright 2012</string>
 	<key>CFBundleDocumentTypes</key>
