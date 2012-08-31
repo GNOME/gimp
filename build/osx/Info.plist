@@ -9,7 +9,7 @@
 	<key>CFBundleName</key>
 	<string>GIMP</string>
 	<key>CFBundleGetInfoString</key>
-	<string>2.8.2, Copyright 2012</string>
+	<string>2.8.2, © 1995-2012 The GIMP Development Team</string>
 	<key>CFBundleIconFile</key>
 	<string>gimp.icns</string>
 	<key>CFBundleIdentifier</key>
@@ -25,7 +25,11 @@
 	<key>CFBundleVersion</key>
 	<string>2.8.2.2</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright 2012</string>
+	<string>© 1995-2012 The GIMP Development Team</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.6.0</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
