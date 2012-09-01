@@ -27,6 +27,9 @@
 /* and, very loosely on hrz.c by */
 /* Albert Cahalan <acahalan at cs.uml.edu> */
 
+/* LZMA compression code is based on code by Lasse Collin which was
+ * placed in the public-domain. */
+
 /* This is reads and writes compressed image files for GIMP
  *
  * It should work with file names of the form
@@ -87,6 +90,7 @@
 
 #include <zlib.h>
 #include <bzlib.h>
+#include <lzma.h>
 
 /* Author 1: Josh MacDonald (url.c)          */
 /* Author 2: Daniel Risacher (gz.c)          */
@@ -159,6 +163,12 @@ bzip2_load                                (const char         *infile,
 static gboolean
 bzip2_save                                (const char         *infile,
                                            const char         *outfile);
+static gboolean
+xz_load                                   (const char         *infile,
+                                           const char         *outfile);
+static gboolean
+xz_save                                   (const char         *infile,
+                                           const char         *outfile);
 
 static const Compressor compressors[] =
 {
@@ -198,6 +208,25 @@ static const Compressor compressors[] =
     "saves files compressed with bzip2",
     "This procedure saves files in the bzip2 compressed format.",
     bzip2_save
+  },
+
+  {
+    N_("xz archive"),
+    "application/x-xz",
+    "xcf.xz,xz,xcfxz",
+    "0,ustring,\xFD7zXZ\x00",
+    ".xcfxz",
+    ".xz",
+
+    "file-xz-load",
+    "loads files compressed with xz",
+    "This procedure loads files in the xz compressed format.",
+    xz_load,
+
+    "file-xz-save",
+    "saves files compressed with xz",
+    "This procedure saves files in the xz compressed format.",
+    xz_save
   }
 };
 
@@ -761,6 +790,184 @@ bzip2_save (const char *infile,
   /* There is no need to close(fd) as it is closed by BZ2_bzclose(). */
   if (out)
     BZ2_bzclose (out);
+
+  return ret;
+}
+
+static gboolean
+xz_load (const char *infile,
+         const char *outfile)
+{
+  gboolean ret;
+  FILE *in;
+  FILE *out;
+  lzma_stream strm = LZMA_STREAM_INIT;
+  lzma_action action;
+  guint8 inbuf[BUFSIZ];
+  guint8 outbuf[BUFSIZ];
+  lzma_ret status;
+
+  ret = FALSE;
+  in = NULL;
+  out = NULL;
+
+  in = g_fopen (infile, "rb");
+  if (!in)
+    goto out;
+
+  out = g_fopen (outfile, "wb");
+  if (!out)
+    goto out;
+
+  if (lzma_stream_decoder (&strm, UINT64_MAX, 0) != LZMA_OK)
+    goto out;
+
+  strm.next_in = NULL;
+  strm.avail_in = 0;
+  strm.next_out = outbuf;
+  strm.avail_out = sizeof outbuf;
+
+  action = LZMA_RUN;
+  status = LZMA_OK;
+
+  while (status == LZMA_OK)
+    {
+      /* Fill the input buffer if it is empty. */
+      if ((strm.avail_in == 0) && (!feof(in)))
+        {
+          strm.next_in = inbuf;
+          strm.avail_in = fread (inbuf, 1, sizeof inbuf, in);
+
+          if (ferror (in))
+            goto out;
+
+          /* Once the end of the input file has been reached, we need to
+             tell lzma_code() that no more input will be coming and that
+             it should finish the encoding. */
+          if (feof (in))
+            action = LZMA_FINISH;
+        }
+
+      status = lzma_code (&strm, action);
+
+      if ((strm.avail_out == 0) || (status == LZMA_STREAM_END))
+        {
+          /* When lzma_code() has returned LZMA_STREAM_END, the output
+             buffer is likely to be only partially full. Calculate how
+             much new data there is to be written to the output file. */
+          size_t write_size = sizeof outbuf - strm.avail_out;
+
+          if (fwrite (outbuf, 1, write_size, out) != write_size)
+            goto out;
+
+          /* Reset next_out and avail_out. */
+          strm.next_out = outbuf;
+          strm.avail_out = sizeof outbuf;
+        }
+    }
+
+  if (status != LZMA_STREAM_END)
+    goto out;
+
+  lzma_end (&strm);
+  ret = TRUE;
+
+ out:
+  if (in)
+    fclose (in);
+
+  if (out)
+    fclose (out);
+
+  return ret;
+}
+
+static gboolean
+xz_save (const char *infile,
+         const char *outfile)
+{
+  gboolean ret;
+  FILE *in;
+  FILE *out;
+  lzma_stream strm = LZMA_STREAM_INIT;
+  lzma_action action;
+  guint8 inbuf[BUFSIZ];
+  guint8 outbuf[BUFSIZ];
+  lzma_ret status;
+
+  ret = FALSE;
+  in = NULL;
+  out = NULL;
+
+  in = g_fopen (infile, "rb");
+  if (!in)
+    goto out;
+
+  out = g_fopen (outfile, "wb");
+  if (!out)
+    goto out;
+
+  if (lzma_easy_encoder (&strm,
+                         LZMA_PRESET_DEFAULT,
+                         LZMA_CHECK_CRC64) != LZMA_OK)
+    goto out;
+
+  strm.next_in = NULL;
+  strm.avail_in = 0;
+  strm.next_out = outbuf;
+  strm.avail_out = sizeof outbuf;
+
+  action = LZMA_RUN;
+  status = LZMA_OK;
+
+  while (status == LZMA_OK)
+    {
+      /* Fill the input buffer if it is empty. */
+      if ((strm.avail_in == 0) && (!feof(in)))
+        {
+          strm.next_in = inbuf;
+          strm.avail_in = fread (inbuf, 1, sizeof inbuf, in);
+
+          if (ferror (in))
+            goto out;
+
+          /* Once the end of the input file has been reached, we need to
+             tell lzma_code() that no more input will be coming and that
+             it should finish the encoding. */
+          if (feof (in))
+            action = LZMA_FINISH;
+        }
+
+      status = lzma_code (&strm, action);
+
+      if ((strm.avail_out == 0) || (status == LZMA_STREAM_END))
+        {
+          /* When lzma_code() has returned LZMA_STREAM_END, the output
+             buffer is likely to be only partially full. Calculate how
+             much new data there is to be written to the output file. */
+          size_t write_size = sizeof outbuf - strm.avail_out;
+
+          if (fwrite (outbuf, 1, write_size, out) != write_size)
+            goto out;
+
+          /* Reset next_out and avail_out. */
+          strm.next_out = outbuf;
+          strm.avail_out = sizeof outbuf;
+        }
+    }
+
+  if (status != LZMA_STREAM_END)
+    goto out;
+
+  lzma_end (&strm);
+  ret = TRUE;
+
+ out:
+  if (in)
+    fclose (in);
+
+  if (out)
+    fclose (out);
 
   return ret;
 }

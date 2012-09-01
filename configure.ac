@@ -63,6 +63,7 @@ m4_define([libgudev_required_version], [167])
 m4_define([exif_required_version], [0.6.15])
 m4_define([lcms_required_version], [1.16])
 m4_define([libpng_required_version], [1.2.37])
+m4_define([liblzma_required_version], [5.0.0])
 
 
 AC_INIT([GIMP], [gimp_version],
@@ -1176,8 +1177,34 @@ fi
 AM_CONDITIONAL(HAVE_BZIP2, test "x$have_libbzip2" = xyes)
 AC_SUBST(BZIP2_LIBS)
 
+
+###################
+# Check for liblzma
+###################
+
+AC_ARG_WITH(liblzma,  [  --without-liblzma       build without LZMA support])
+
+have_liblzma=no
+if test "x$with_liblzma" != xno; then
+  have_liblzma=yes
+  PKG_CHECK_MODULES(LZMA, liblzma >= liblzma_required_version,
+    AC_DEFINE(HAVE_LIBLZMA, 1, [Define to 1 if liblzma is available]),
+    have_liblzma="no (liblzma not found or too old)")
+fi
+
+AC_SUBST(LZMA_CFLAGS)
+AC_SUBST(LZMA_LIBS)
+
+AM_CONDITIONAL(HAVE_LIBLZMA, test "x$have_liblzma" = xyes)
+
+
+#######################################################################
+# file-compressor is only built when all the compressor libraries are
+# available. We should revisit this at some point to make it build even
+# with fewer libraries.
+#######################################################################
 have_compressor=no
-if test "x$have_zlib" = xyes && test "x$have_libbzip2" = xyes; then
+if test "x$have_zlib" = xyes && test "x$have_libbzip2" = xyes && test "x$have_liblzma" = xyes; then
    have_compressor=yes
 fi
 
