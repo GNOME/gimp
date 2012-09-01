@@ -214,7 +214,7 @@ static const Compressor compressors[] =
     N_("xz archive"),
     "application/x-xz",
     "xcf.xz,xz,xcfxz",
-    "0,ustring,\xFD7zXZ\x00",
+    "0,ustring,\3757zXZ\x00",
     ".xcfxz",
     ".xz",
 
