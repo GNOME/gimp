@@ -227,7 +227,8 @@ file_procedure_in_group (GimpPlugInProcedure *file_proc,
   is_xcf_save = (strcmp (name, "gimp-xcf-save") == 0);
 
   is_filter   = (strcmp (name, "file-gz-save")  == 0 ||
-                 strcmp (name, "file-bz2-save") == 0);
+                 strcmp (name, "file-bz2-save") == 0 ||
+                 strcmp (name, "file-xz-save") == 0);
 
   switch (group)
     {
@@ -238,7 +239,7 @@ file_procedure_in_group (GimpPlugInProcedure *file_proc,
 
     case FILE_PROCEDURE_GROUP_EXPORT:
       /* Anything but .xcf shall pass */
-      /* FIXME: Handle .gz and .bz2 properly */
+      /* FIXME: Handle .gz, .bz2 and .xz properly */
       return ! is_xcf_save || is_filter;
 
     case FILE_PROCEDURE_GROUP_OPEN:
