@@ -92,6 +92,7 @@
 #include <bzlib.h>
 #include <lzma.h>
 
+
 /* Author 1: Josh MacDonald (url.c)          */
 /* Author 2: Daniel Risacher (gz.c)          */
 /* Author 3: Michael Natterer (compressor.c) */
@@ -151,24 +152,22 @@ static gint32              load_image     (const Compressor   *compressor,
 static gboolean            valid_file     (const gchar        *filename);
 static const gchar       * find_extension (const Compressor   *compressor,
                                            const gchar        *filename);
-static gboolean
-gzip_load                                 (const char         *infile,
+
+static gboolean            gzip_load      (const char         *infile,
                                            const char         *outfile);
-static gboolean
-gzip_save                                 (const char         *infile,
+static gboolean            gzip_save      (const char         *infile,
+
                                            const char         *outfile);
-static gboolean
-bzip2_load                                (const char         *infile,
+static gboolean            bzip2_load     (const char         *infile,
                                            const char         *outfile);
-static gboolean
-bzip2_save                                (const char         *infile,
+static gboolean            bzip2_save     (const char         *infile,
                                            const char         *outfile);
-static gboolean
-xz_load                                   (const char         *infile,
+
+static gboolean            xz_load        (const char         *infile,
                                            const char         *outfile);
-static gboolean
-xz_save                                   (const char         *infile,
+static gboolean            xz_save        (const char         *infile,
                                            const char         *outfile);
+
 
 static const Compressor compressors[] =
 {
@@ -563,11 +562,11 @@ gzip_load (const char *infile,
            const char *outfile)
 {
   gboolean ret;
-  int fd;
-  gzFile in;
-  FILE *out;
-  char buf[16384];
-  int len;
+  int      fd;
+  gzFile   in;
+  FILE    *out;
+  char     buf[16384];
+  int      len;
 
   ret = FALSE;
   in = NULL;
@@ -620,12 +619,12 @@ static gboolean
 gzip_save (const char *infile,
            const char *outfile)
 {
-  gboolean ret;
-  FILE *in;
-  int fd;
-  gzFile out;
-  char buf[16384];
-  int len;
+  gboolean  ret;
+  FILE     *in;
+  int       fd;
+  gzFile    out;
+  char      buf[16384];
+  int       len;
 
   ret = FALSE;
   in = NULL;
@@ -680,12 +679,12 @@ static gboolean
 bzip2_load (const char *infile,
             const char *outfile)
 {
-  gboolean ret;
-  int fd;
-  BZFILE *in;
-  FILE *out;
-  char buf[16384];
-  int len;
+  gboolean  ret;
+  int       fd;
+  BZFILE   *in;
+  FILE     *out;
+  char      buf[16384];
+  int       len;
 
   ret = FALSE;
   in = NULL;
@@ -738,12 +737,12 @@ static gboolean
 bzip2_save (const char *infile,
             const char *outfile)
 {
-  gboolean ret;
-  FILE *in;
-  int fd;
-  BZFILE *out;
-  char buf[16384];
-  int len;
+  gboolean  ret;
+  FILE     *in;
+  int       fd;
+  BZFILE   *out;
+  char      buf[16384];
+  int       len;
 
   ret = FALSE;
   in = NULL;
@@ -798,14 +797,14 @@ static gboolean
 xz_load (const char *infile,
          const char *outfile)
 {
-  gboolean ret;
-  FILE *in;
-  FILE *out;
-  lzma_stream strm = LZMA_STREAM_INIT;
-  lzma_action action;
-  guint8 inbuf[BUFSIZ];
-  guint8 outbuf[BUFSIZ];
-  lzma_ret status;
+  gboolean     ret;
+  FILE        *in;
+  FILE        *out;
+  lzma_stream  strm = LZMA_STREAM_INIT;
+  lzma_action  action;
+  guint8       inbuf[BUFSIZ];
+  guint8       outbuf[BUFSIZ];
+  lzma_ret     status;
 
   ret = FALSE;
   in = NULL;
@@ -886,14 +885,14 @@ static gboolean
 xz_save (const char *infile,
          const char *outfile)
 {
-  gboolean ret;
-  FILE *in;
-  FILE *out;
-  lzma_stream strm = LZMA_STREAM_INIT;
-  lzma_action action;
-  guint8 inbuf[BUFSIZ];
-  guint8 outbuf[BUFSIZ];
-  lzma_ret status;
+  gboolean     ret;
+  FILE        *in;
+  FILE        *out;
+  lzma_stream  strm = LZMA_STREAM_INIT;
+  lzma_action  action;
+  guint8       inbuf[BUFSIZ];
+  guint8       outbuf[BUFSIZ];
+  lzma_ret     status;
 
   ret = FALSE;
   in = NULL;
