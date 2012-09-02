@@ -8,8 +8,8 @@
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011.
 # Piotr Zaryk <pzaryk@aviary.pl>, 2008.
 # Robert Gomulka <carramba@epf.pl>, 2008.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011, 2012.
-# Aviary.pl <gnomepl@aviary.pl>, 2011, 2012.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011-2012.
+# Aviary.pl <gnomepl@aviary.pl>, 2011-2012.
 #
 # Terminy:
 #  drawable    - obszar rysowania (warstwa, kanał itp.)
@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-22 01:41+0200\n"
-"PO-Revision-Date: 2012-08-22 01:42+0200\n"
+"POT-Creation-Date: 2012-09-03 01:51+0200\n"
+"PO-Revision-Date: 2012-09-03 01:52+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -8936,8 +8936,8 @@ msgstr ""
 "Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011\n"
 "Piotr Zaryk <pzaryk@aviary.pl>, 2008\n"
 "Robert Gomulka <carramba@epf.pl>, 2008\n"
-"Piotr Drąg <piotrdrag@gmail.com>, 2011, 2012\n"
-"Aviary.pl <gnomepl@aviary.pl>, 2011, 2012"
+"Piotr Drąg <piotrdrag@gmail.com>, 2011-2012\n"
+"Aviary.pl <gnomepl@aviary.pl>, 2011-2012"
 
 #: ../app/dialogs/about-dialog.c:521
 msgid "GIMP is brought to you by"
@@ -15067,23 +15067,31 @@ msgstr "Komunikaty zostaną przekierowane na standardowe wyjście błędów."
 msgid "%s Message"
 msgstr "Komunikat: %s"
 
-#: ../app/widgets/gimpfiledialog.c:327
+#: ../app/widgets/gimpfiledialog.c:330
 msgid "Automatically Detected"
 msgstr "Wykrywanie automatyczne"
 
-#: ../app/widgets/gimpfiledialog.c:344
+#: ../app/widgets/gimpfiledialog.c:347
 msgid "By Extension"
 msgstr "Według rozszerzenia"
 
-#: ../app/widgets/gimpfiledialog.c:793
+#: ../app/widgets/gimpfiledialog.c:798
 msgid "All files"
 msgstr "Wszystkie pliki"
 
-#: ../app/widgets/gimpfiledialog.c:798
+#: ../app/widgets/gimpfiledialog.c:803
 msgid "All images"
 msgstr "Wszystkie obrazy"
 
-#: ../app/widgets/gimpfiledialog.c:974
+#: ../app/widgets/gimpfiledialog.c:810
+msgid "All XCF images"
+msgstr "Wszystkie obrazy XCF"
+
+#: ../app/widgets/gimpfiledialog.c:812
+msgid "All export images"
+msgstr "Wszystkie eksportowane obrazy"
+
+#: ../app/widgets/gimpfiledialog.c:996
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Wybór _typu pliku (%s)"
