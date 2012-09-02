@@ -27,7 +27,9 @@ endif
 
 if HAVE_Z
 if HAVE_BZIP2
+if HAVE_LIBLZMA
 file_compressor = file-compressor
+endif
 endif
 endif
 
