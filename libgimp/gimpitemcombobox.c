@@ -23,6 +23,7 @@
 #include "config.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 #include <gtk/gtk.h>
 
@@ -111,6 +112,7 @@ static void  gimp_item_combo_box_model_add (GtkListStore               *store,
                                             gint32                      image,
                                             gint                        num_items,
                                             gint32                     *items,
+                                            gint                        tree_level,
                                             GimpComboBoxType            type,
                                             GimpItemConstraintFunc      constraint,
                                             gpointer                    data);
@@ -368,7 +370,7 @@ gimp_item_combo_box_new (GimpComboBoxType       type,
           items = gimp_image_get_layers (images[i], &num_items);
           gimp_item_combo_box_model_add (GTK_LIST_STORE (model),
                                          images[i],
-                                         num_items, items, type,
+                                         num_items, items, 0, type,
                                          constraint, data);
           g_free (items);
         }
@@ -379,7 +381,7 @@ gimp_item_combo_box_new (GimpComboBoxType       type,
           items = gimp_image_get_channels (images[i], &num_items);
           gimp_item_combo_box_model_add (GTK_LIST_STORE (model),
                                          images[i],
-                                         num_items, items, type,
+                                         num_items, items, 0, type,
                                          constraint, data);
           g_free (items);
         }
@@ -389,7 +391,7 @@ gimp_item_combo_box_new (GimpComboBoxType       type,
           items = gimp_image_get_vectors (images[i], &num_items);
           gimp_item_combo_box_model_add (GTK_LIST_STORE (model),
                                          images[i],
-                                         num_items, items, type,
+                                         num_items, items, 0, type,
                                          constraint, data);
           g_free (items);
         }
@@ -409,12 +411,26 @@ gimp_item_combo_box_model_add (GtkListStore           *store,
                                gint32                  image,
                                gint                    num_items,
                                gint32                 *items,
+                               gint                    tree_level,
                                GimpComboBoxType        type,
                                GimpItemConstraintFunc  constraint,
                                gpointer                data)
 {
   GtkTreeIter  iter;
   gint         i;
+  gchar       *indent;
+
+  if (tree_level > 0)
+    {
+      indent = g_new (gchar, tree_level + 2);
+      memset (indent, '-', tree_level);
+      indent[tree_level] = ' ';
+      indent[tree_level + 1] = '\0';
+    }
+  else
+    {
+      indent = g_strdup ("");
+    }
 
   for (i = 0; i < num_items; i++)
     {
@@ -425,8 +441,8 @@ gimp_item_combo_box_model_add (GtkListStore           *store,
           gchar     *label;
           GdkPixbuf *thumb;
 
-          label = g_strdup_printf ("%s-%d/%s-%d",
-                                   image_name, image,
+          label = g_strdup_printf ("%s%s-%d / %s-%d",
+                                   indent, image_name, image,
                                    item_name, items[i]);
 
           g_free (item_name);
@@ -450,8 +466,24 @@ gimp_item_combo_box_model_add (GtkListStore           *store,
             g_object_unref (thumb);
 
           g_free (label);
+
+          if (gimp_item_is_group (items[i]))
+            {
+              gint32 *children;
+              gint    n_children;
+
+              children = gimp_item_get_children (items[i], &n_children);
+              gimp_item_combo_box_model_add (store,
+                                             image,
+                                             n_children, children,
+                                             tree_level + 1, type,
+                                             constraint, data);
+              g_free (children);
+            }
         }
     }
+
+  g_free (indent);
 }
 
 static void
