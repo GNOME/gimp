@@ -31,7 +31,7 @@
 #endif /* HAVE_LIBEXIF */
 
 #ifdef HAVE_LCMS
-#include <lcms.h>
+#include <lcms2.h>
 #endif
 
 #include <libgimp/gimp.h>
@@ -969,7 +969,7 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
   GimpColorConfig *config       = gimp_get_color_configuration ();
   cmsHPROFILE      cmyk_profile = NULL;
   cmsHPROFILE      rgb_profile  = NULL;
-  DWORD            flags        = 0;
+  cmsUInt32Number  flags        = 0;
   cmsHTRANSFORM    transform;
 
   /*  try to load the embedded CMYK profile  */
@@ -979,7 +979,7 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
 
       if (cmyk_profile)
         {
-          if (! cmsGetColorSpace (cmyk_profile) == icSigCmykData)
+          if (! cmsGetColorSpace (cmyk_profile) == cmsSigCmykData)
             {
               cmsCloseProfile (cmyk_profile);
               cmyk_profile = NULL;
@@ -992,7 +992,7 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
     {
       cmyk_profile = cmsOpenProfileFromFile (config->cmyk_profile, "r");
 
-      if (cmyk_profile && ! cmsGetColorSpace (cmyk_profile) == icSigCmykData)
+      if (cmyk_profile && ! cmsGetColorSpace (cmyk_profile) == cmsSigCmykData)
         {
           cmsCloseProfile (cmyk_profile);
           cmyk_profile = NULL;
@@ -1011,7 +1011,7 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
     {
       rgb_profile = cmsOpenProfileFromFile (config->rgb_profile, "r");
 
-      if (rgb_profile && ! cmsGetColorSpace (rgb_profile) == icSigRgbData)
+      if (rgb_profile && ! cmsGetColorSpace (rgb_profile) == cmsSigRgbData)
         {
           cmsCloseProfile (rgb_profile);
           rgb_profile = NULL;

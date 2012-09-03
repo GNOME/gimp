@@ -61,7 +61,7 @@ m4_define([libcurl_required_version], [7.15.1])
 m4_define([dbus_glib_required_version], [0.70])
 m4_define([libgudev_required_version], [167])
 m4_define([exif_required_version], [0.6.15])
-m4_define([lcms_required_version], [1.16])
+m4_define([lcms_required_version], [2.2])
 m4_define([libpng_required_version], [1.2.37])
 m4_define([liblzma_required_version], [5.0.0])
 
@@ -1569,7 +1569,7 @@ AC_ARG_WITH(lcms, [  --without-lcms          build without lcms support])
 have_lcms="no (lcms support disabled)"
 if test "x$with_lcms" != xno; then
   have_lcms=yes
-  PKG_CHECK_MODULES(LCMS, lcms >= lcms_required_version,
+  PKG_CHECK_MODULES(LCMS, lcms2 >= lcms_required_version,
     AC_DEFINE(HAVE_LCMS, 1, [Define to 1 if lcms is available])
     LCMS='lcms$(EXEEXT)',
     have_lcms="no (lcms not found or unusable)")
