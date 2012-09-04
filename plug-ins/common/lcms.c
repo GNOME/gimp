@@ -517,7 +517,7 @@ lcms_icc_profile_get_desc (cmsHPROFILE profile)
 {
   cmsUInt32Number  descSize;
   gchar           *descData;
-  gchar            desc = NULL;
+  gchar           *desc = NULL;
 
   descSize = cmsGetProfileInfoASCII (profile, cmsInfoDescription,
                                      "en", "US", NULL, 0);
@@ -540,7 +540,7 @@ lcms_icc_profile_get_info (cmsHPROFILE profile)
 {
   cmsUInt32Number  descSize;
   gchar           *descData;
-  gchar            info = NULL;
+  gchar           *info = NULL;
 
   descSize = cmsGetProfileInfoASCII (profile, cmsInfoModel,
                                      "en", "US", NULL, 0);
