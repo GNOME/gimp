@@ -111,7 +111,7 @@ gimp_device_info_get_device_coords (GimpDeviceInfo *info,
                                     GdkWindow      *window,
                                     GimpCoords     *coords)
 {
-  gdouble axes[GDK_AXIS_LAST];
+  gdouble axes[GDK_AXIS_LAST] = { 0, };
 
   *coords = default_coords;
 
