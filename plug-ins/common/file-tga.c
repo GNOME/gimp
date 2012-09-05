@@ -812,7 +812,7 @@ upsample (guchar       *dest,
 
       if (alpha)
         {
-          dest[3] = (src[1] & 0x80) ? 0 : 255;
+          dest[3] = (src[1] & 0x80) ? 255 : 0;
           dest += 4;
         }
       else
