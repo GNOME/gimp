@@ -39,6 +39,8 @@
 #include "gimpprogress.h"
 #include "gimpsamplepoint.h"
 
+#include "text/gimptextlayer.h"
+
 #include "gimp-intl.h"
 
 
@@ -53,7 +55,7 @@ gimp_image_resize (GimpImage    *image,
 {
   gimp_image_resize_with_layers (image, context,
                                  new_width, new_height, offset_x, offset_y,
-                                 GIMP_ITEM_SET_NONE,
+                                 GIMP_ITEM_SET_NONE, TRUE,
                                  progress);
 }
 
@@ -65,6 +67,7 @@ gimp_image_resize_with_layers (GimpImage    *image,
                                gint          offset_x,
                                gint          offset_y,
                                GimpItemSet   layer_set,
+                               gboolean      resize_text_layers,
                                GimpProgress *progress)
 {
   GList   *list;
@@ -169,6 +172,9 @@ gimp_image_resize_with_layers (GimpImage    *image,
 
       /*  group layers can't be resized here  */
       if (gimp_viewable_get_children (GIMP_VIEWABLE (item)))
+        continue;
+
+      if (! resize_text_layers && gimp_item_is_text_layer (item))
         continue;
 
       gimp_item_get_offset (item, &old_offset_x, &old_offset_y);

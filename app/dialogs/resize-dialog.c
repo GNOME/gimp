@@ -53,6 +53,7 @@ typedef struct
   GtkWidget          *offset;
   GtkWidget          *area;
   GimpItemSet         layer_set;
+  gboolean            resize_text_layers;
   GimpResizeCallback  callback;
   gpointer            user_data;
 } ResizeDialog;
@@ -158,13 +159,14 @@ resize_dialog_new (GimpViewable       *viewable,
   g_object_weak_ref (G_OBJECT (dialog),
                      (GWeakNotify) resize_dialog_free, private);
 
-  private->viewable   = viewable;
-  private->old_width  = width;
-  private->old_height = height;
-  private->old_unit   = unit;
-  private->layer_set  = GIMP_ITEM_SET_NONE;
-  private->callback   = callback;
-  private->user_data  = user_data;
+  private->viewable           = viewable;
+  private->old_width          = width;
+  private->old_height         = height;
+  private->old_unit           = unit;
+  private->layer_set          = GIMP_ITEM_SET_NONE;
+  private->resize_text_layers = FALSE;
+  private->callback           = callback;
+  private->user_data          = user_data;
 
   gimp_image_get_resolution (image, &xres, &yres);
 
@@ -288,8 +290,12 @@ resize_dialog_new (GimpViewable       *viewable,
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
+      vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+      gtk_container_add (GTK_CONTAINER (frame), vbox);
+      gtk_widget_show (vbox);
+
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-      gtk_container_add (GTK_CONTAINER (frame), hbox);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
       label = gtk_label_new_with_mnemonic (_("Resize _layers:"));
@@ -306,6 +312,16 @@ resize_dialog_new (GimpViewable       *viewable,
                                   private->layer_set,
                                   G_CALLBACK (gimp_int_combo_box_get_active),
                                   &private->layer_set);
+
+      button = gtk_check_button_new_with_mnemonic (_("Resize _text layers"));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                    private->resize_text_layers);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
+
+      g_signal_connect (button, "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &private->resize_text_layers);
     }
 
   return dialog;
@@ -342,6 +358,7 @@ resize_dialog_response (GtkWidget    *dialog,
                          gimp_size_entry_get_refval (entry, 0),
                          gimp_size_entry_get_refval (entry, 1),
                          private->layer_set,
+                         private->resize_text_layers,
                          private->user_data);
       break;
 

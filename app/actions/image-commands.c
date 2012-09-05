@@ -85,6 +85,7 @@ static void   image_resize_callback        (GtkWidget              *dialog,
                                             gint                    offset_x,
                                             gint                    offset_y,
                                             GimpItemSet             layer_set,
+                                            gboolean                resize_text_layers,
                                             gpointer                data);
 static void   image_resize_options_free    (ImageResizeOptions     *options);
 
@@ -586,6 +587,7 @@ image_resize_callback (GtkWidget    *dialog,
                        gint          offset_x,
                        gint          offset_y,
                        GimpItemSet   layer_set,
+                       gboolean      resize_text_layers,
                        gpointer      data)
 {
   ImageResizeOptions *options = data;
@@ -612,6 +614,7 @@ image_resize_callback (GtkWidget    *dialog,
                                      context,
                                      width, height, offset_x, offset_y,
                                      layer_set,
+                                     resize_text_layers,
                                      progress);
 
       if (progress)

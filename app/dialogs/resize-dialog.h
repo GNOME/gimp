@@ -27,6 +27,7 @@ typedef void (* GimpResizeCallback) (GtkWidget    *dialog,
                                      gint          offset_x,
                                      gint          offset_y,
                                      GimpItemSet   layer_set,
+                                     gboolean      resize_text_layers,
                                      gpointer      user_data);
 
 

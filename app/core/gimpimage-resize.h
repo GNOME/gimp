@@ -34,6 +34,7 @@ void   gimp_image_resize_with_layers  (GimpImage    *image,
                                        gint          offset_x,
                                        gint          offset_y,
                                        GimpItemSet   layer_set,
+                                       gboolean      resize_text_layers,
                                        GimpProgress *progress);
 
 void   gimp_image_resize_to_layers    (GimpImage    *image,
