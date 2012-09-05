@@ -29,6 +29,17 @@
 #include "gimpcurve-map.h"
 
 
+#if defined (HAVE_FINITE)
+#define FINITE(x) finite(x)
+#elif defined (HAVE_ISFINITE)
+#define FINITE(x) isfinite(x)
+#elif defined (G_OS_WIN32)
+#define FINITE(x) _finite(x)
+#else
+#error "no FINITE() implementation available?!"
+#endif
+
+
 enum
 {
   CURVE_NONE   = 0,
@@ -204,18 +215,17 @@ gimp_curve_map_value_inline (GimpCurve *curve,
 {
   if (curve->identity)
     {
-      return value;
+      if (FINITE (value))
+        return CLAMP (value, 0.0, 1.0);
+
+      return 0.0;
     }
 
-  if (value < 0.0)
-    {
-      return curve->samples[0];
-    }
-  else if (value >= 1.0)
-    {
-      return curve->samples[curve->n_samples - 1];
-    }
-  else  /* interpolate the curve */
+  /*  check for known values first, so broken values like NaN
+   *  delivered by broken drivers don't run into the interpolation
+   *  code
+   */
+  if (value > 0.0 && value < 1.0) /* interpolate the curve */
     {
       gdouble f;
       gint    index;
@@ -230,5 +240,13 @@ gimp_curve_map_value_inline (GimpCurve *curve,
       f = value - index;
 
       return (1.0 - f) * curve->samples[index] + f * curve->samples[index + 1];
+    }
+  else if (value >= 1.0)
+    {
+      return curve->samples[curve->n_samples - 1];
+    }
+  else
+    {
+      return curve->samples[0];
     }
 }
