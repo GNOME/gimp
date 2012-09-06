@@ -393,7 +393,7 @@ value_propagate (GimpDrawable *drawable)
       return GIMP_PDB_EXECUTION_ERROR;
     }
   if ((vpvals.lower_limit < 0) || (255 < vpvals.lower_limit) ||
-       (vpvals.upper_limit < 0) || (255 < vpvals.lower_limit) ||
+       (vpvals.upper_limit < 0) || (255 < vpvals.upper_limit) ||
        (vpvals.upper_limit < vpvals.lower_limit))
     {
       /* gimp_message ("Limit values are not valid."); */
