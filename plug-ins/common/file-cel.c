@@ -186,7 +186,10 @@ run (const gchar      *name,
       if (run_mode == GIMP_RUN_NONINTERACTIVE)
         {
           palette_file = param[3].data.d_string;
-          data_length = strlen (palette_file) + 1;
+          if (palette_file)
+            data_length = strlen (palette_file) + 1;
+          else
+            data_length = 0;
         }
       else if (run_mode == GIMP_RUN_INTERACTIVE)
         {
