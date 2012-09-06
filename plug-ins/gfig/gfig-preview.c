@@ -227,16 +227,7 @@ gfig_preview_events (GtkWidget *widget,
       else
         {
           if (selvals.opts.snap2grid)
-            {
-              if (bevent->button == 3)
-                {
-                  find_grid_pos (&point, &point, FALSE);
-                }
-              else
-                {
-                  find_grid_pos (&point, &point, FALSE);
-                }
-            }
+            find_grid_pos (&point, &point, FALSE);
           object_start (&point, bevent->state & GDK_SHIFT_MASK);
 
           gtk_widget_queue_draw (widget);
