@@ -1257,15 +1257,6 @@ get_drawable_image (GimpDrawable *drawable)
   switch (bpp)
     {
     case 1: /* GRAY or INDEXED */
-      if (! indexed)
-        {
-          format = CAIRO_FORMAT_RGB24;
-        }
-      else
-        {
-          format = CAIRO_FORMAT_RGB24;
-        }
-      break;
     case 3: /* RGB */
       format = CAIRO_FORMAT_RGB24;
       break;
