@@ -449,6 +449,7 @@ typedef enum  /*< pdb-skip >*/
   GIMP_DIRTY_DRAWABLE        = 1 << 6,
   GIMP_DIRTY_VECTORS         = 1 << 7,
   GIMP_DIRTY_SELECTION       = 1 << 8,
+  GIMP_DIRTY_ACTIVE_DRAWABLE = 1 << 9,
 
   GIMP_DIRTY_ALL             = 0xffff
 } GimpDirtyMask;

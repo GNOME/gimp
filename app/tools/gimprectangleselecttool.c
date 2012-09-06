@@ -229,6 +229,7 @@ gimp_rectangle_select_tool_init (GimpRectangleSelectTool *rect_sel_tool)
                                      GIMP_CURSOR_PRECISION_PIXEL_BORDER);
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_RECT_SELECT);
+  gimp_tool_control_set_preserve    (tool->control, FALSE);
   gimp_tool_control_set_dirty_mask  (tool->control,
                                      GIMP_DIRTY_IMAGE_SIZE |
                                      GIMP_DIRTY_SELECTION);

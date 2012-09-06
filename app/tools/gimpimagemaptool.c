@@ -201,7 +201,8 @@ gimp_image_map_tool_init (GimpImageMapTool *image_map_tool)
                                      GIMP_DIRTY_IMAGE           |
                                      GIMP_DIRTY_IMAGE_STRUCTURE |
                                      GIMP_DIRTY_DRAWABLE        |
-                                     GIMP_DIRTY_SELECTION);
+                                     GIMP_DIRTY_SELECTION       |
+                                     GIMP_DIRTY_ACTIVE_DRAWABLE);
 
   image_map_tool->drawable       = NULL;
   image_map_tool->operation      = NULL;

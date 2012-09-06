@@ -201,7 +201,8 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
   gimp_tool_control_set_dirty_mask  (tool->control,
                                      GIMP_DIRTY_IMAGE_SIZE |
                                      GIMP_DIRTY_DRAWABLE   |
-                                     GIMP_DIRTY_SELECTION);
+                                     GIMP_DIRTY_SELECTION  |
+                                     GIMP_DIRTY_ACTIVE_DRAWABLE);
   gimp_tool_control_set_precision   (tool->control,
                                      GIMP_CURSOR_PRECISION_SUBPIXEL);
 
