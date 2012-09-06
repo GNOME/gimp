@@ -1686,7 +1686,9 @@ gimp_display_shell_initialize_tool (GimpDisplayShell *shell,
         }
       else if ((active_tool->drawable !=
                 gimp_image_get_active_drawable (image)) &&
-               ! gimp_tool_control_get_preserve (active_tool->control))
+               (! gimp_tool_control_get_preserve (active_tool->control) &&
+                (gimp_tool_control_get_dirty_mask (active_tool->control) &
+                 GIMP_DIRTY_ACTIVE_DRAWABLE)))
         {
           /*  create a new one, deleting the current  */
           gimp_context_tool_changed (gimp_get_user_context (gimp));
