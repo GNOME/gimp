@@ -392,8 +392,8 @@ value_propagate (GimpDrawable *drawable)
       /* gimp_message ("No direction selected."); */
       return GIMP_PDB_EXECUTION_ERROR;
     }
-  if ((vpvals.lower_limit < 0) || (255 < vpvals.lower_limit) ||
-       (vpvals.upper_limit < 0) || (255 < vpvals.upper_limit) ||
+  if ((vpvals.lower_limit < 0) || (vpvals.lower_limit > 255) ||
+       (vpvals.upper_limit < 0) || (vpvals.upper_limit > 255) ||
        (vpvals.upper_limit < vpvals.lower_limit))
     {
       /* gimp_message ("Limit values are not valid."); */
