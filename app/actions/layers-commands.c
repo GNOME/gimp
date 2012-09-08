@@ -130,6 +130,7 @@ static void   layers_resize_layer_callback (GtkWidget             *dialog,
                                             gint                   offset_x,
                                             gint                   offset_y,
                                             GimpItemSet            unused,
+                                            gboolean               unused2,
                                             gpointer               data);
 
 static gint   layers_mode_index            (GimpLayerModeEffects   layer_mode);
@@ -1172,6 +1173,7 @@ layers_resize_layer_callback (GtkWidget    *dialog,
                               gint          offset_x,
                               gint          offset_y,
                               GimpItemSet   unused,
+                              gboolean      unused2,
                               gpointer      data)
 {
   GimpContext *context = GIMP_CONTEXT (data);
