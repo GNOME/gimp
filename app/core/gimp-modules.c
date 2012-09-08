@@ -73,6 +73,9 @@ gimp_modules_load (Gimp *gimp)
   if (gimp->no_interface)
     return;
 
+  /* FIXME, gimp->be_verbose is not yet initialized in init() */
+  gimp->module_db->verbose = gimp->be_verbose;
+
   filename = gimp_personal_rc_file ("modulerc");
 
   if (gimp->be_verbose)
