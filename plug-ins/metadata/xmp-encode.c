@@ -174,9 +174,14 @@ gen_property (GString            *buffer,
                    NULL);
       break;
 
+    case XMP_TYPE_GPS_COORDINATE:
+      gen_element (buffer, 2,
+                   schema->prefix, property->name, value_array[0],
+                   NULL);
+      break;
+
     case XMP_TYPE_RESOURCE_REF:
     case XMP_TYPE_DIMENSIONS:
-    case XMP_TYPE_GPS_COORDINATE:
     case XMP_TYPE_FLASH:
     case XMP_TYPE_OECF_SFR:
     case XMP_TYPE_CFA_PATTERN:
