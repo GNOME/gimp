@@ -87,6 +87,10 @@ libapp_a_SOURCES = $(libapp_sources) $(libapp_generated_sources)
 gimp_@GIMP_APP_VERSION@_SOURCES = $(libapp_sources) main.c
 
 
+if PLATFORM_OSX
+framework_carbon = -framework Carbon
+endif
+
 if OS_WIN32
 win32_ldflags = -mwindows $(WIN32_LARGE_ADDRESS_AWARE)
 endif
@@ -180,6 +184,7 @@ gimpconsoleldadd = \
 gimp_@GIMP_APP_VERSION@_LDFLAGS = \
 	$(AM_LDFLAGS)		\
 	$(win32_ldflags)	\
+	$(framework_carbon)	\
 	-Wl,-u,$(SYMPREFIX)gimp_lebl_dialog
 
 gimp_@GIMP_APP_VERSION@_LDADD = \
