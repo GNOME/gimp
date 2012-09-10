@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-23 01:30+0200\n"
-"PO-Revision-Date: 2012-08-23 01:39+0200\n"
+"POT-Creation-Date: 2012-09-10 12:10+0200\n"
+"PO-Revision-Date: 2012-09-10 12:10+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: \n"
@@ -602,14 +602,14 @@ msgstr "_Verticale"
 #. * Create the "background" layer to hold the image...
 #.
 #: ../plug-ins/common/blinds.c:277 ../plug-ins/common/compose.c:936
-#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:438
-#: ../plug-ins/common/file-cel.c:441 ../plug-ins/common/file-dicom.c:612
+#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:441
+#: ../plug-ins/common/file-cel.c:444 ../plug-ins/common/file-dicom.c:612
 #: ../plug-ins/common/file-gegl.c:311 ../plug-ins/common/file-gif-load.c:943
 #: ../plug-ins/common/file-jp2-load.c:354 ../plug-ins/common/file-pcx.c:425
 #: ../plug-ins/common/file-pcx.c:431 ../plug-ins/common/file-pix.c:382
 #: ../plug-ins/common/file-png.c:906 ../plug-ins/common/file-pnm.c:583
 #: ../plug-ins/common/file-raw.c:877 ../plug-ins/common/file-sunras.c:977
-#: ../plug-ins/common/file-tga.c:1064 ../plug-ins/common/file-tiff-load.c:998
+#: ../plug-ins/common/file-tga.c:1064 ../plug-ins/common/file-tiff-load.c:983
 #: ../plug-ins/common/file-xbm.c:897 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:255 ../plug-ins/common/tile.c:262
 #: ../plug-ins/file-bmp/bmp-read.c:380 ../plug-ins/file-bmp/bmp-read.c:647
@@ -1015,8 +1015,8 @@ msgstr "Carica le impostazioni del mixer dei canali"
 #. stat error (file does not exist)
 #: ../plug-ins/common/channel-mixer.c:980
 #: ../plug-ins/common/cml-explorer.c:2208 ../plug-ins/common/curve-bend.c:892
-#: ../plug-ins/common/file-cel.c:293 ../plug-ins/common/file-cel.c:345
-#: ../plug-ins/common/file-cel.c:576 ../plug-ins/common/file-dicom.c:340
+#: ../plug-ins/common/file-cel.c:296 ../plug-ins/common/file-cel.c:348
+#: ../plug-ins/common/file-cel.c:579 ../plug-ins/common/file-dicom.c:340
 #: ../plug-ins/common/file-gbr.c:368 ../plug-ins/common/file-gif-load.c:355
 #: ../plug-ins/common/file-gih.c:640 ../plug-ins/common/file-jp2-load.c:194
 #: ../plug-ins/common/file-jp2-load.c:203 ../plug-ins/common/file-mng.c:1156
@@ -1054,7 +1054,7 @@ msgstr "Salva le impostazioni del mixer dei canali"
 
 #: ../plug-ins/common/channel-mixer.c:1058
 #: ../plug-ins/common/cml-explorer.c:2035 ../plug-ins/common/curve-bend.c:840
-#: ../plug-ins/common/file-cel.c:769 ../plug-ins/common/file-csource.c:407
+#: ../plug-ins/common/file-cel.c:772 ../plug-ins/common/file-csource.c:407
 #: ../plug-ins/common/file-dicom.c:1351 ../plug-ins/common/file-gbr.c:663
 #: ../plug-ins/common/file-gif-save.c:782 ../plug-ins/common/file-gih.c:1258
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-mng.c:649
@@ -2984,21 +2984,22 @@ msgstr "_Formato:"
 msgid "KISS CEL"
 msgstr "Immagine KISS CEL"
 
-#: ../plug-ins/common/file-cel.c:199
+#: ../plug-ins/common/file-cel.c:202
 msgid "Load KISS Palette"
 msgstr "Carica tavolozza KISS"
 
-#: ../plug-ins/common/file-cel.c:305 ../plug-ins/common/file-cel.c:360
-#: ../plug-ins/common/file-cel.c:380
+#: ../plug-ins/common/file-cel.c:308 ../plug-ins/common/file-cel.c:363
+#: ../plug-ins/common/file-cel.c:383
 #, c-format
 msgid "EOF or error while reading image header"
-msgstr "Fine del file o errore durante la lettura dell'intestazione dell'immagine"
+msgstr ""
+"Fine del file o errore durante la lettura dell'intestazione dell'immagine"
 
 #. max. rows allocated
 #. column, highest column ever used
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
-#: ../plug-ins/common/file-cel.c:350 ../plug-ins/common/file-dicom.c:345
+#: ../plug-ins/common/file-cel.c:353 ../plug-ins/common/file-dicom.c:345
 #: ../plug-ins/common/file-gbr.c:373 ../plug-ins/common/file-gegl.c:230
 #: ../plug-ins/common/file-gif-load.c:360 ../plug-ins/common/file-gih.c:645
 #: ../plug-ins/common/file-jp2-load.c:187 ../plug-ins/common/file-pat.c:344
@@ -3006,7 +3007,7 @@ msgstr "Fine del file o errore durante la lettura dell'intestazione dell'immagin
 #: ../plug-ins/common/file-pix.c:348 ../plug-ins/common/file-png.c:764
 #: ../plug-ins/common/file-pnm.c:499 ../plug-ins/common/file-ps.c:1020
 #: ../plug-ins/common/file-raw.c:806 ../plug-ins/common/file-sunras.c:487
-#: ../plug-ins/common/file-tga.c:447 ../plug-ins/common/file-tiff-load.c:574
+#: ../plug-ins/common/file-tga.c:447 ../plug-ins/common/file-tiff-load.c:559
 #: ../plug-ins/common/file-wmf.c:994 ../plug-ins/common/file-xbm.c:742
 #: ../plug-ins/common/file-xmc.c:675 ../plug-ins/common/file-xpm.c:352
 #: ../plug-ins/common/file-xwd.c:524 ../plug-ins/file-bmp/bmp-read.c:158
@@ -3018,68 +3019,73 @@ msgstr "Fine del file o errore durante la lettura dell'intestazione dell'immagin
 msgid "Opening '%s'"
 msgstr "Apertura di '%s'"
 
-#: ../plug-ins/common/file-cel.c:388
+#: ../plug-ins/common/file-cel.c:391
 #, c-format
 msgid "is not a CEL image file"
 msgstr "non è un file immagine CEL"
 
-#: ../plug-ins/common/file-cel.c:402
+#: ../plug-ins/common/file-cel.c:405
 #, c-format
 msgid "illegal bpp value in image: %hhu"
 msgstr "valore illegale di bpp nell'immagine: %hhu"
 
-#: ../plug-ins/common/file-cel.c:416
+#: ../plug-ins/common/file-cel.c:419
 #, c-format
 msgid ""
 "illegal image dimensions: width: %d, horizontal offset: %d, height: %d, "
 "vertical offset: %d"
-msgstr "dimensioni immagine illegali: larghezza: %d, spostamento orizzontale: %d, altezza: %d, spostamento verticale: %d"
+msgstr ""
+"dimensioni immagine illegali: larghezza: %d, spostamento orizzontale: %d, "
+"altezza: %d, spostamento verticale: %d"
 
-#: ../plug-ins/common/file-cel.c:429
+#: ../plug-ins/common/file-cel.c:432
 #, c-format
 msgid "Can't create a new image"
 msgstr "Impossibile creare una nuova immagine"
 
-#: ../plug-ins/common/file-cel.c:467 ../plug-ins/common/file-cel.c:502
-#: ../plug-ins/common/file-cel.c:527
+#: ../plug-ins/common/file-cel.c:470 ../plug-ins/common/file-cel.c:505
+#: ../plug-ins/common/file-cel.c:530
 #, c-format
 msgid "EOF or error while reading image data"
 msgstr "Fine del file o errore durante la lettura dei dati immagine"
 
-#: ../plug-ins/common/file-cel.c:544
+#: ../plug-ins/common/file-cel.c:547
 #, c-format
 msgid "Unsupported bit depth (%d)!"
 msgstr "Profondità di colore (in bit) non supportata (%d)!"
 
-#: ../plug-ins/common/file-cel.c:626 ../plug-ins/common/file-cel.c:638
+#: ../plug-ins/common/file-cel.c:629 ../plug-ins/common/file-cel.c:641
 #, c-format
 msgid "'%s': EOF or error while reading palette header"
-msgstr "\"%s\": fine del file o errore durante la lettura della intestazione della tavolozza"
+msgstr ""
+"\"%s\": fine del file o errore durante la lettura della intestazione della "
+"tavolozza"
 
-#: ../plug-ins/common/file-cel.c:647
+#: ../plug-ins/common/file-cel.c:650
 #, c-format
 msgid "'%s': is not a KCF palette file"
 msgstr "\"%s\": non è un file tavolozza KCF"
 
-#: ../plug-ins/common/file-cel.c:656
+#: ../plug-ins/common/file-cel.c:659
 #, c-format
 msgid "'%s': illegal bpp value in palette: %hhu"
 msgstr "\"%s\": valore illegale di bpp nella tavolozza: %hhu"
 
-#: ../plug-ins/common/file-cel.c:665
+#: ../plug-ins/common/file-cel.c:668
 #, c-format
 msgid "'%s': illegal number of colors: %u"
 msgstr "\"%s\": numero di colori illegale: %u"
 
-#: ../plug-ins/common/file-cel.c:680 ../plug-ins/common/file-cel.c:697
-#: ../plug-ins/common/file-cel.c:717
+#: ../plug-ins/common/file-cel.c:683 ../plug-ins/common/file-cel.c:700
+#: ../plug-ins/common/file-cel.c:720
 #, c-format
 msgid "'%s': EOF or error while reading palette data"
-msgstr "\"%s\": fine del file o errore durante la lettura dei dati della tavolozza"
+msgstr ""
+"\"%s\": fine del file o errore durante la lettura dei dati della tavolozza"
 
 #. init the progress meter
 #. And let's begin the progress
-#: ../plug-ins/common/file-cel.c:774 ../plug-ins/common/file-gbr.c:668
+#: ../plug-ins/common/file-cel.c:777 ../plug-ins/common/file-gbr.c:668
 #: ../plug-ins/common/file-gif-save.c:789 ../plug-ins/common/file-gih.c:1263
 #: ../plug-ins/common/file-html-table.c:257 ../plug-ins/common/file-pat.c:522
 #: ../plug-ins/common/file-pcx.c:644 ../plug-ins/common/file-pix.c:531
@@ -3864,7 +3870,7 @@ msgid "Import from PDF"
 msgstr "Importa da PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1090 ../plug-ins/common/file-ps.c:2962
-#: ../plug-ins/common/file-tiff-load.c:451
+#: ../plug-ins/common/file-tiff-load.c:436
 msgid "_Import"
 msgstr "_Importa"
 
@@ -4144,7 +4150,7 @@ msgstr "Impossibile interpretare il file postscript \"%s\""
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "Il salvataggio PostScript non può gestire immagini con canali alfa"
 
-#: ../plug-ins/common/file-ps.c:1804 ../plug-ins/common/file-tiff-load.c:1000
+#: ../plug-ins/common/file-ps.c:1804 ../plug-ins/common/file-tiff-load.c:985
 #, c-format
 msgid "Page %d"
 msgstr "Pagina %d"
@@ -4631,27 +4637,27 @@ msgstr "In basso a sinistra"
 msgid "Top left"
 msgstr "In alto a sinistra"
 
-#: ../plug-ins/common/file-tiff-load.c:201
+#: ../plug-ins/common/file-tiff-load.c:186
 #: ../plug-ins/common/file-tiff-save.c:186
 #: ../plug-ins/common/file-tiff-save.c:203
 msgid "TIFF image"
 msgstr "Immagine TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:257
+#: ../plug-ins/common/file-tiff-load.c:242
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "Il file TIFF \"%s\" non contiene cartelle"
 
-#: ../plug-ins/common/file-tiff-load.c:446
+#: ../plug-ins/common/file-tiff-load.c:431
 msgid "Import from TIFF"
 msgstr "Importa da TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:781
+#: ../plug-ins/common/file-tiff-load.c:766
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-di-%d-pagine"
 
-#: ../plug-ins/common/file-tiff-load.c:1017
+#: ../plug-ins/common/file-tiff-load.c:1002
 msgid "TIFF Channel"
 msgstr "Canale TIFF"
 
@@ -5837,114 +5843,114 @@ msgstr "Informazioni sul profilo di colore dell'immagine"
 msgid "Color Profile Information"
 msgstr "Informazioni sul profilo di colore"
 
-#: ../plug-ins/common/lcms.c:572
+#: ../plug-ins/common/lcms.c:619
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Il profilo di colore \"%s\" non è adatto allo spazio colore RGB."
 
-#: ../plug-ins/common/lcms.c:679
+#: ../plug-ins/common/lcms.c:726
 msgid "Default RGB working space"
 msgstr "Spazio di lavoro RGB predefinito"
 
-#: ../plug-ins/common/lcms.c:775
+#: ../plug-ins/common/lcms.c:822
 msgid ""
 "Data attached as 'icc-profile' does not appear to be an ICC color profile"
 msgstr ""
 "I dati allegati come \"icc-profile\" non sembrano essere un profilo di "
 "colore ICC"
 
-#: ../plug-ins/common/lcms.c:825
+#: ../plug-ins/common/lcms.c:872
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "\"%s\" non sembra essere un profilo di colore ICC"
 
 #. ICC color profile conversion
-#: ../plug-ins/common/lcms.c:885
+#: ../plug-ins/common/lcms.c:932
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Conversione da \"%s\" a \"%s\""
 
-#: ../plug-ins/common/lcms.c:1129
+#: ../plug-ins/common/lcms.c:1176
 #, c-format
 msgid "Could not load ICC profile from '%s'"
 msgstr "Impossibile caricare il profilo ICC da \"%s\""
 
-#: ../plug-ins/common/lcms.c:1151
+#: ../plug-ins/common/lcms.c:1198
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr "L'immagine \"%s\" possiede un profilo di colore incorporato:"
 
-#: ../plug-ins/common/lcms.c:1195
+#: ../plug-ins/common/lcms.c:1242
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Convertire l'immagine allo spazio di lavoro RGB (%s)?"
 
-#: ../plug-ins/common/lcms.c:1226
+#: ../plug-ins/common/lcms.c:1273
 msgid "Convert to RGB working space?"
 msgstr "Conversione nello spazio di lavoro RGB?"
 
-#: ../plug-ins/common/lcms.c:1231
+#: ../plug-ins/common/lcms.c:1278
 msgid "_Keep"
 msgstr "_Mantieni"
 
-#: ../plug-ins/common/lcms.c:1236
+#: ../plug-ins/common/lcms.c:1283
 msgid "_Convert"
 msgstr "_Converti"
 
-#: ../plug-ins/common/lcms.c:1264 ../plug-ins/file-jpeg/jpeg-exif.c:436
+#: ../plug-ins/common/lcms.c:1311 ../plug-ins/file-jpeg/jpeg-exif.c:436
 msgid "_Don't ask me again"
 msgstr "_Non chiedermelo più"
 
-#: ../plug-ins/common/lcms.c:1328
+#: ../plug-ins/common/lcms.c:1375
 msgid "Select destination profile"
 msgstr "Seleziona profilo di destinazione"
 
-#: ../plug-ins/common/lcms.c:1355
+#: ../plug-ins/common/lcms.c:1402
 msgid "All files (*.*)"
 msgstr "Tutti i file (*.*)"
 
-#: ../plug-ins/common/lcms.c:1360
+#: ../plug-ins/common/lcms.c:1407
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Profilo di colore ICC (*.icc, *.icm)"
 
-#: ../plug-ins/common/lcms.c:1403
+#: ../plug-ins/common/lcms.c:1450
 #, c-format
 msgid "RGB workspace (%s)"
 msgstr "Spazio di lavoro RGB (%s)"
 
-#: ../plug-ins/common/lcms.c:1453
+#: ../plug-ins/common/lcms.c:1500
 msgid "Convert to ICC Color Profile"
 msgstr "Converti il profilo di colore ICC"
 
-#: ../plug-ins/common/lcms.c:1454
+#: ../plug-ins/common/lcms.c:1501
 msgid "Assign ICC Color Profile"
 msgstr "Assegna il profilo di colore ICC"
 
-#: ../plug-ins/common/lcms.c:1462
+#: ../plug-ins/common/lcms.c:1509
 msgid "_Assign"
 msgstr "_Assegna"
 
-#: ../plug-ins/common/lcms.c:1480
+#: ../plug-ins/common/lcms.c:1527
 msgid "Current Color Profile"
 msgstr "Profilo di colore corrente"
 
-#: ../plug-ins/common/lcms.c:1495
+#: ../plug-ins/common/lcms.c:1542
 msgid "Convert to"
 msgstr "Converti a"
 
-#: ../plug-ins/common/lcms.c:1495
+#: ../plug-ins/common/lcms.c:1542
 msgid "Assign"
 msgstr "Assegna"
 
-#: ../plug-ins/common/lcms.c:1519
+#: ../plug-ins/common/lcms.c:1566
 msgid "_Rendering Intent:"
 msgstr "Scopo del _rendering:"
 
-#: ../plug-ins/common/lcms.c:1535
+#: ../plug-ins/common/lcms.c:1582
 msgid "_Black Point Compensation"
 msgstr "Compensazione del punto _nero"
 
-#: ../plug-ins/common/lcms.c:1577
+#: ../plug-ins/common/lcms.c:1624
 msgid "Destination profile is not for RGB color space."
 msgstr "Il profilo di destinazione non è adatto allo spazio colore RGB."
 
@@ -8589,19 +8595,23 @@ msgstr "32 bits"
 msgid "Windows BMP image"
 msgstr "Immagine BMP Windows"
 
-#: ../plug-ins/file-compressor/file-compressor.c:166
+#: ../plug-ins/file-compressor/file-compressor.c:175
 msgid "gzip archive"
 msgstr "archivio gzip"
 
-#: ../plug-ins/file-compressor/file-compressor.c:185
+#: ../plug-ins/file-compressor/file-compressor.c:194
 msgid "bzip archive"
 msgstr "archivio bzip"
 
-#: ../plug-ins/file-compressor/file-compressor.c:392
+#: ../plug-ins/file-compressor/file-compressor.c:213
+msgid "xz archive"
+msgstr "archivio xz"
+
+#: ../plug-ins/file-compressor/file-compressor.c:420
 msgid "No sensible file extension, saving as compressed XCF."
 msgstr "Nessuna estensione plausibile, salvataggio come XCF compresso."
 
-#: ../plug-ins/file-compressor/file-compressor.c:448
+#: ../plug-ins/file-compressor/file-compressor.c:476
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr ""
 "Nessuna estensione plausibile, tentativo di salvataggio tramite il magic del "
@@ -10112,12 +10122,12 @@ msgstr "Modifica di oggetto in sola lettura - non sarà possibile salvarlo"
 msgid "Regular Polygon Number of Sides"
 msgstr "Numero di lati del poligono regolare"
 
-#: ../plug-ins/gfig/gfig-preview.c:337
+#: ../plug-ins/gfig/gfig-preview.c:328
 msgid "Object Details"
 msgstr "Dettagli oggetto"
 
 #. Position labels
-#: ../plug-ins/gfig/gfig-preview.c:388
+#: ../plug-ins/gfig/gfig-preview.c:379
 msgid "XY position:"
 msgstr "Posizione XY:"
 
