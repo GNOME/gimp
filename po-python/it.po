@@ -1,13 +1,13 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000-2002
-# Marco Ciampa <ciampix@libero.it>, 2003-2011
+# Marco Ciampa <ciampix@libero.it>, 2003-2012
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-12-05 15:12+0100\n"
-"PO-Revision-Date: 2011-12-05 15:13+0100\n"
+"PO-Revision-Date: 2012-09-10 02:07+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "Language: \n"
@@ -133,11 +133,11 @@ msgstr "Op_acità"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
 msgid "Offset the colors in a palette"
-msgstr "Spostamento dei colori in una tavolozza"
+msgstr "Sposta i colori in una tavolozza"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
 msgid "_Offset Palette..."
-msgstr "Sp_ostamento tavolozza..."
+msgstr "Sp_osta tavolozza..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:56
@@ -152,7 +152,7 @@ msgstr "_Spostamento"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:48
 msgid "Sort the colors in a palette"
-msgstr "Ordina i colori nella tavolozza"
+msgstr "Ordina i colori in una tavolozza"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:53
 msgid "_Sort Palette..."
