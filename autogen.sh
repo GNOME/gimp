@@ -109,7 +109,7 @@ if test x$LIBTOOLIZE != x; then
     check_version $VER $LIBTOOL_REQUIRED_VERSION
 fi
 
-# check if gtk-doc is explicitely disabled
+# check if gtk-doc is explicitly disabled
 for ag_option in $AUTOGEN_CONFIGURE_ARGS $@
 do
   case $ag_option in

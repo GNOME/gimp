@@ -124,7 +124,7 @@ msgstr "SEÇİLİ DEYİL"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1711
 msgid ""
-"At least one font you've choosen is invalid.\n"
+"At least one font you've chosen is invalid.\n"
 "Please check your settings.\n"
 msgstr ""
 "Seçdiklərinizdən ən az biri hökmsüzdür.\n"

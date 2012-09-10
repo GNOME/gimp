@@ -33,7 +33,7 @@ struct _GimpAnchor
 {
   GimpCoords        position;
 
-  GimpAnchorType    type;   /* Interpretation dependant on GimpStroke type */
+  GimpAnchorType    type;   /* Interpretation dependent on GimpStroke type */
   gboolean          selected;
 };
 

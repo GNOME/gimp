@@ -974,7 +974,7 @@ if test "$gdk_target" = x11; then
    # doc-shooter is X11 specific
    DOC_SHOOTER=doc-shooter
 
-   # screenshot plug-in needs to link to X11 explicitely
+   # screenshot plug-in needs to link to X11 explicitly
    SCREENSHOT_LIBS="$X_LIBS -lX11"
 
    gimp_save_CFLAGS="$CFLAGS"

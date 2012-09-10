@@ -1654,7 +1654,7 @@ order_cmp (const void *va,
  *
  * Actually, it turns out that qsort()ing a function which is already
  * balanced can quite significantly detract from the quality of the
- * final result.  This is particularly noticable with the line or
+ * final result.  This is particularly noticeable with the line or
  * diamond spot functions at 45 degrees.  This is because if the spot
  * function has multiple locations with the same value, qsort may use
  * them in any order.  Often, there is quite clearly an optimal order

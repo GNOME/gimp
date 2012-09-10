@@ -3852,7 +3852,7 @@ msgstr "Xach 効果(_X)..."
 #~ msgstr "輪半径 (hypo < 0 < epi)"
 
 #~ msgid ""
-#~ "At least one font you've choosen is invalid.\n"
+#~ "At least one font you've chosen is invalid.\n"
 #~ "Please check your settings.\n"
 #~ msgstr ""
 #~ "選択したフォント中に少なくとも一つ\n"

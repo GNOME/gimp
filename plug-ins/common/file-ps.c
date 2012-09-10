@@ -2248,7 +2248,7 @@ dither_grey (const guchar *grey,
     }
 }
 
-/* Write a device independant screen preview */
+/* Write a device independent screen preview */
 static void
 save_ps_preview (FILE   *ofp,
                  gint32  drawable_ID)

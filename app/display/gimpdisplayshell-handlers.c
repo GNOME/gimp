@@ -994,7 +994,7 @@ gimp_display_shell_padding_notify_handler (GObject          *config,
   else
     fullscreen = FALSE;
 
-  /*  if the user did not set the padding mode for this display explicitely  */
+  /*  if the user did not set the padding mode for this display explicitly  */
   if (! shell->fullscreen_options->padding_mode_set)
     {
       padding_mode  = display_config->default_fullscreen_view->padding_mode;
@@ -1011,7 +1011,7 @@ gimp_display_shell_padding_notify_handler (GObject          *config,
         }
     }
 
-  /*  if the user did not set the padding mode for this display explicitely  */
+  /*  if the user did not set the padding mode for this display explicitly  */
   if (! shell->options->padding_mode_set)
     {
       padding_mode  = display_config->default_view->padding_mode;

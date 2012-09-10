@@ -258,7 +258,7 @@
 	    <entry><filename>app/core</filename></entry>
 	    <entry>
 	      the core of the GIMP core, makes heavy use of GObject
-              but is not GTK+-dependant
+              but is not GTK+-dependent
 	    </entry>
 	  </row>
 	  <row>

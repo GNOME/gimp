@@ -285,8 +285,8 @@ gimp_palette_get_colors (const gchar *name,
  *
  * Retrieves the number of columns to use to display this palette
  *
- * This procedures retrieves the prefered number of columns to use when
- * the palette is being displayed.
+ * This procedures retrieves the preferred number of columns to use
+ * when the palette is being displayed.
  *
  * Returns: The number of columns used to display this palette.
  *
@@ -357,7 +357,7 @@ gimp_palette_set_columns (const gchar *name,
  *
  * Adds a palette entry to the specified palette.
  *
- * This procedure adds an entry to the specifed palette. It returns an
+ * This procedure adds an entry to the specified palette. It returns an
  * error if the entry palette does not exist.
  *
  * Returns: TRUE on success.
@@ -400,7 +400,7 @@ gimp_palette_add_entry (const gchar   *name,
  *
  * Deletes a palette entry from the specified palette.
  *
- * This procedure deletes an entry from the specifed palette. It
+ * This procedure deletes an entry from the specified palette. It
  * returns an error if the entry palette does not exist.
  *
  * Returns: TRUE on success.
@@ -436,7 +436,7 @@ gimp_palette_delete_entry (const gchar *name,
  *
  * Gets the specified palette entry from the specified palette.
  *
- * This procedure retrieves the color of the zero-based entry specifed
+ * This procedure retrieves the color of the zero-based entry specified
  * for the specified palette. It returns an error if the entry does not
  * exist.
  *
@@ -477,7 +477,7 @@ gimp_palette_entry_get_color (const gchar *name,
  *
  * Sets the specified palette entry in the specified palette.
  *
- * This procedure sets the color of the zero-based entry specifed for
+ * This procedure sets the color of the zero-based entry specified for
  * the specified palette. It returns an error if the entry does not
  * exist.
  *
@@ -516,7 +516,7 @@ gimp_palette_entry_set_color (const gchar   *name,
  *
  * Gets the specified palette entry from the specified palette.
  *
- * This procedure retrieves the name of the zero-based entry specifed
+ * This procedure retrieves the name of the zero-based entry specified
  * for the specified palette. It returns an error if the entry does not
  * exist.
  *
@@ -559,7 +559,7 @@ gimp_palette_entry_get_name (const gchar  *name,
  *
  * Sets the specified palette entry in the specified palette.
  *
- * This procedure sets the name of the zero-based entry specifed for
+ * This procedure sets the name of the zero-based entry specified for
  * the specified palette. It returns an error if the entry does not
  * exist.
  *

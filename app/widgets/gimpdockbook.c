@@ -158,7 +158,7 @@ static gboolean     gimp_dockbook_tab_drag_drop               (GtkWidget      *w
                                                                gint            x,
                                                                gint            y,
                                                                guint           time);
-static GimpTabStyle gimp_dockbook_tab_style_to_prefered       (GimpTabStyle    tab_style,
+static GimpTabStyle gimp_dockbook_tab_style_to_preferred       (GimpTabStyle    tab_style,
                                                                GimpDockable   *dockable);
 static void         gimp_dockbook_refresh_tab_layout_lut      (GimpDockbook   *dockbook);
 static void         gimp_dockbook_update_automatic_tab_style  (GimpDockbook   *dockbook);
@@ -672,7 +672,7 @@ gimp_dockbook_get_dockable_tab_width (GimpDockbook *dockbook,
 }
 
 /**
- * gimp_dockbook_tab_style_to_prefered:
+ * gimp_dockbook_tab_style_to_preferred:
  * @tab_style:
  * @dockable:
  *
@@ -686,7 +686,7 @@ gimp_dockbook_get_dockable_tab_width (GimpDockbook *dockbook,
  *          in automatic mode.
  **/
 static GimpTabStyle
-gimp_dockbook_tab_style_to_prefered (GimpTabStyle  tab_style,
+gimp_dockbook_tab_style_to_preferred (GimpTabStyle  tab_style,
                                      GimpDockable *dockable)
 {
   GimpDocked *docked = GIMP_DOCKED (gtk_bin_get_child (GTK_BIN (dockable)));
@@ -740,7 +740,7 @@ gimp_dockbook_refresh_tab_layout_lut (GimpDockbook *dockbook)
           GimpDockable *dockable = GIMP_DOCKABLE (iter->data);
           GimpTabStyle  style_to_use;
 
-          style_to_use = gimp_dockbook_tab_style_to_prefered (candidate,
+          style_to_use = gimp_dockbook_tab_style_to_preferred (candidate,
                                                               dockable);
           size_with_candidate +=
             gimp_dockbook_get_dockable_tab_width (dockbook,
@@ -859,7 +859,7 @@ gimp_dockbook_update_automatic_tab_style (GimpDockbook *dockbook)
       if (gimp_dockable_get_tab_style (dockable) != GIMP_TAB_STYLE_AUTOMATIC)
         continue;
 
-      actual_tab_style = gimp_dockbook_tab_style_to_prefered (tab_style,
+      actual_tab_style = gimp_dockbook_tab_style_to_preferred (tab_style,
                                                               dockable);
 
       if (gimp_dockable_set_actual_tab_style (dockable, actual_tab_style))

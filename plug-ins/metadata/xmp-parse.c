@@ -32,7 +32,7 @@
  * forbidden by the XMP specs, such as rdf:parseType="Litteral".
  *
  * The design goals for this parser are: support all RDF features
- * needed for XMP (at least the features explicitely described in the
+ * needed for XMP (at least the features explicitly described in the
  * XMP spec), be tolerant in case unknown elements or attributes are
  * found, be as simple as possible, avoid building a DOM tree.
  *

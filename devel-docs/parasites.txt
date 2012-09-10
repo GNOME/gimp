@@ -145,7 +145,7 @@ Global data follows no strict rules.
         Example: for sRGB images this might contain "0.45454545"
 
 "chromaticity" (IMAGE, PERSISTENT)
-	This parasite contains 8 floatingpoint values (ascii, seperated by
+	This parasite contains 8 floatingpoint values (ascii, separated by
         whitespace) specifying the x and y coordinates of the whitepoint, the
         red, green and blue primaries, in this order.
 

@@ -485,7 +485,7 @@ typedef struct {
    char       Reserved[512]; /**/
 } TW_FILESYSTEM, FAR * pTW_FILESYSTEM;
 
-/* DAT_PASSTHRU, device dependant data to pass through Data Source */
+/* DAT_PASSTHRU, device dependent data to pass through Data Source */
 typedef struct {
    TW_MEMREF  pCommand;        /* Pointer to Command buffer */
    TW_UINT32  CommandBytes;    /* Number of bytes in Command buffer */

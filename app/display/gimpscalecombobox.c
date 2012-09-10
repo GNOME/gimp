@@ -377,7 +377,7 @@ gimp_scale_combo_box_scale_iter_set (GtkListStore *store,
 {
   gchar label[32];
 
-  /*  use U+2009 THIN SPACE to seperate the percent sign from the number */
+  /*  use U+2009 THIN SPACE to separate the percent sign from the number */
 
   if (scale > 1.0)
     g_snprintf (label, sizeof (label),

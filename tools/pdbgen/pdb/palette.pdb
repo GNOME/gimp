@@ -264,7 +264,7 @@ CODE
 sub palette_get_columns {
     $blurb = "Retrieves the number of columns to use to display this palette";
     $help = <<'HELP';
-This procedures retrieves the prefered number of columns to use when the
+This procedures retrieves the preferred number of columns to use when the
 palette is being displayed.
 HELP
 
@@ -329,7 +329,7 @@ sub palette_add_entry {
     $blurb = 'Adds a palette entry to the specified palette.';
 
     $help = <<'HELP';
-This procedure adds an entry to the specifed palette.
+This procedure adds an entry to the specified palette.
 It returns an error if the entry palette does not exist.
 HELP
 
@@ -372,7 +372,7 @@ sub palette_delete_entry {
     $blurb = 'Deletes a palette entry from the specified palette.';
 
     $help = <<'HELP';
-This procedure deletes an entry from the specifed palette.
+This procedure deletes an entry from the specified palette.
 It returns an error if the entry palette does not exist.
 HELP
 
@@ -410,7 +410,7 @@ sub palette_entry_get_color {
     $blurb = 'Gets the specified palette entry from the specified palette.';
 
     $help = <<'HELP';
-This procedure retrieves the color of the zero-based entry specifed for the
+This procedure retrieves the color of the zero-based entry specified for the
 specified palette. It returns an error if the entry does not exist.
 HELP
 
@@ -453,7 +453,7 @@ sub palette_entry_set_color {
     $blurb = 'Sets the specified palette entry in the specified palette.';
 
     $help = <<'HELP';
-This procedure sets the color of the zero-based entry specifed for the
+This procedure sets the color of the zero-based entry specified for the
 specified palette. It returns an error if the entry does not exist.
 HELP
 
@@ -486,7 +486,7 @@ sub palette_entry_get_name {
     $blurb = 'Gets the specified palette entry from the specified palette.';
 
     $help = <<'HELP';
-This procedure retrieves the name of the zero-based entry specifed for the
+This procedure retrieves the name of the zero-based entry specified for the
 specified palette. It returns an error if the entry does not exist.
 HELP
 
@@ -529,7 +529,7 @@ sub palette_entry_set_name {
     $blurb = 'Sets the specified palette entry in the specified palette.';
 
     $help = <<'HELP';
-This procedure sets the name of the zero-based entry specifed for the
+This procedure sets the name of the zero-based entry specified for the
 specified palette. It returns an error if the entry does not exist.
 HELP
 

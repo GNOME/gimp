@@ -110,7 +110,7 @@ query (void)
                           "operator. The user can specify which direction to "
                           "use. When both directions are used, the result is "
                           "the RMS of the two gradients; if only one direction "
-                          "is used, the result either the absolut value of the "
+                          "is used, the result either the absolute value of the "
                           "gradient, or 127 + gradient (if the 'keep sign' "
                           "switch is on). This way, information about the "
                           "direction of the gradient is preserved. Resulting "

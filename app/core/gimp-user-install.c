@@ -566,7 +566,7 @@ user_install_migrate_files (GimpUserInstall *install)
       g_free (source);
     }
 
-  /*  create the tmp directory that was explicitely not copied  */
+  /*  create the tmp directory that was explicitly not copied  */
 
   g_snprintf (dest, sizeof (dest), "%s%c%s",
               gimp_directory (), G_DIR_SEPARATOR, "tmp");

@@ -136,7 +136,7 @@ query (void)
     "values result in more subtle pen strokes and detail everywhere. Small "
     "values for the pct_black make the blend from the color regions to the "
     "black border lines smoother and the lines themselves thinner and less "
-    "noticable; larger values achieve the opposite effect.";
+    "noticeable; larger values achieve the opposite effect.";
 
   gimp_install_procedure (PLUG_IN_PROC,
                           N_("Simulate a cartoon by enhancing edges"),

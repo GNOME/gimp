@@ -132,7 +132,7 @@ query (void)
                           "Rotates a layer or the whole image by 90, 180 or 270 degrees",
                           "This plug-in does rotate the active layer or the "
                           "whole image clockwise by multiples of 90 degrees. "
-                          "When the whole image is choosen, the image is "
+                          "When the whole image is chosen, the image is "
                           "resized if necessary.",
                           PLUG_IN_AUTHOR,
                           PLUG_IN_COPYRIGHT,

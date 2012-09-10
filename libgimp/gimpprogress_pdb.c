@@ -37,7 +37,7 @@
 /**
  * _gimp_progress_init:
  * @message: Message to use in the progress dialog.
- * @gdisplay_ID: GimpDisplay to update progressbar in, or -1 for a seperate window.
+ * @gdisplay_ID: GimpDisplay to update progressbar in, or -1 for a separate window.
  *
  * Initializes the progress bar for the current plug-in.
  *

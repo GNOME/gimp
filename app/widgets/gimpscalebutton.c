@@ -99,7 +99,7 @@ gimp_scale_button_update_tooltip (GimpScaleButton *button)
   lower = gtk_adjustment_get_lower (adj);
   upper = gtk_adjustment_get_upper (adj);
 
-  /*  use U+2009 THIN SPACE to seperate the percent sign from the number */
+  /*  use U+2009 THIN SPACE to separate the percent sign from the number */
 
   text = g_strdup_printf ("%d\342\200\211%%",
                           (gint) (0.5 + ((value - lower) * 100.0 /

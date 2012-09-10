@@ -124,7 +124,7 @@ style is enforced.  The GIMP coding style is defined as follows:
 
     * Function names are lowercase, words separated by underscores.
 
-    * Macros and enums are all uppercase, words seperated by
+    * Macros and enums are all uppercase, words separated by
       underscores.
 
     * Types are all words capitalized, no separators between words.

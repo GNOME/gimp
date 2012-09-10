@@ -146,7 +146,7 @@ query (void)
     "inside regions of color. Small values result in less toner overall "
     "and more detail everywhere. Small values for the pct_black make the "
     "blend from the white regions to the black border lines smoother and "
-    "the toner regions themselves thinner and less noticable; larger values "
+    "the toner regions themselves thinner and less noticeable; larger values "
     "achieve the opposite effect.";
 
   gimp_install_procedure (PLUG_IN_PROC,

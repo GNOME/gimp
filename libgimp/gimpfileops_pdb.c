@@ -228,7 +228,7 @@ gimp_file_save (GimpRunMode  run_mode,
  * so that it belongs to the file with the given filename. This means
  * you have to save the image under this name first, otherwise this
  * procedure will fail. This procedure may become useful if you want to
- * explicitely save a thumbnail with a file.
+ * explicitly save a thumbnail with a file.
  *
  * Returns: TRUE on success.
  **/

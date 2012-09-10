@@ -63,9 +63,9 @@
 /* Copyright (C) 1997 Peter Kirchgessner                                      */
 /* (email: peter@kirchgessner.net, WWW: http://www.kirchgessner.net)          */
 /* The library was developed for a FITS-plug-in to GIMP, the GNU Image        */
-/* Manipulation Program. But it is completely independant to that (beside use */
+/* Manipulation Program. But it is completely independent to that (beside use */
 /* of glib). If someone finds it useful for other purposes, try to keep it    */
-/* independant from your application.                                         */
+/* independent from your application.                                         */
 /******************************************************************************/
 /*                                                                            */
 /* This program is free software: you can redistribute it and/or modify       */

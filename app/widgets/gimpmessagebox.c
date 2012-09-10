@@ -108,7 +108,7 @@ gimp_message_box_init (GimpMessageBox *box)
 
   /*  Unset the focus chain to keep the labels from being in the focus
    *  chain.  Users of GimpMessageBox that add focusable widgets should
-   *  either unset the focus chain or (better) explicitely set one.
+   *  either unset the focus chain or (better) explicitly set one.
    */
   gtk_container_set_focus_chain (GTK_CONTAINER (box), NULL);
 
