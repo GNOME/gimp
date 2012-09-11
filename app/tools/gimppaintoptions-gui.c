@@ -132,7 +132,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
       scale = gimp_prop_spin_scale_new (config, "brush-size",
                                         _("Size"),
-                                        0.01, 1.0, 2);
+                                        1.0, 10.0, 2);
       gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 1000.0);
       gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
       gtk_widget_show (scale);
@@ -157,7 +157,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
       scale = gimp_prop_spin_scale_new (config, "brush-aspect-ratio",
                                         _("Aspect Ratio"),
-                                        0.01, 0.1, 2);
+                                        0.1, 1.0, 2);
       gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
       gtk_widget_show (scale);
 
