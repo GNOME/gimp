@@ -1083,6 +1083,7 @@ file_gbr_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_gbr_RC)

@@ -50,7 +50,7 @@
     'file-csource' => { ui => 1 },
     'file-desktop-link' => {},
     'file-dicom' => { ui => 1, cflags => '-fno-strict-aliasing' },
-    'file-gbr' => { ui => 1 },
+    'file-gbr' => { ui => 1, gegl => 1 },
     'file-gegl' => { ui => 1, gegl => 1 },
     'file-gif-load' => {},
     'file-gif-save' => { ui => 1 },

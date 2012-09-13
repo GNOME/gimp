@@ -173,7 +173,7 @@ query (void)
                           "Tim Newsome, Jens Lautenbacher, Sven Neumann",
                           "1997-2000",
                           N_("GIMP brush"),
-                          "RGB*, GRAY*",
+                          "*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
@@ -202,6 +202,8 @@ run (const gchar      *name,
   run_mode = param[0].data.d_int32;
 
   INIT_I18N ();
+
+  gegl_init (NULL, NULL);
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -353,12 +355,13 @@ load_image (const gchar  *filename,
   gint32             image_ID;
   gint32             layer_ID;
   GimpParasite      *parasite;
-  GimpDrawable      *drawable;
-  GimpPixelRgn       pixel_rgn;
+  GeglBuffer        *buffer;
+  const Babl        *format;
   gint               bn_size;
   GimpImageBaseType  base_type;
   GimpImageType      image_type;
   gsize              size;
+  gint               i;
 
   fd = g_open (filename, O_RDONLY | _O_BINARY, 0);
 
@@ -389,7 +392,7 @@ load_image (const gchar  *filename,
   bh.spacing      = g_ntohl (bh.spacing);
 
   /* Sanitize values */
-  if ((bh.width == 0) || (bh.width > GIMP_MAX_IMAGE_SIZE) ||
+  if ((bh.width  == 0) || (bh.width  > GIMP_MAX_IMAGE_SIZE) ||
       (bh.height == 0) || (bh.height > GIMP_MAX_IMAGE_SIZE) ||
       ((bh.bytes != 1) && (bh.bytes != 2) && (bh.bytes != 4) &&
        (bh.bytes != 18)) ||
@@ -529,7 +532,6 @@ load_image (const gchar  *filename,
     case 2:
       {
         guint16 *buf = (guint16 *) brush_buf;
-        gint     i;
 
         for (i = 0; i < bh.width * bh.height; i++, buf++)
           {
@@ -568,11 +570,13 @@ load_image (const gchar  *filename,
     case 1:
       base_type = GIMP_GRAY;
       image_type = GIMP_GRAY_IMAGE;
+      format = babl_format ("Y' u8");
       break;
 
     case 4:
       base_type = GIMP_RGB;
       image_type = GIMP_RGBA_IMAGE;
+      format = babl_format ("R'G'B'A u8");
       break;
 
     default:
@@ -598,21 +602,22 @@ load_image (const gchar  *filename,
 
   g_free (name);
 
-  drawable = gimp_drawable_get (layer_ID);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable,
-                       0, 0, drawable->width, drawable->height,
-                       TRUE, FALSE);
+  buffer = gimp_drawable_get_buffer (layer_ID);
 
-  gimp_pixel_rgn_set_rect (&pixel_rgn, brush_buf,
-                           0, 0, bh.width, bh.height);
-  g_free (brush_buf);
-
+  /*  invert  */
   if (image_type == GIMP_GRAY_IMAGE)
-    gimp_invert (layer_ID);
+    for (i = 0; i < bh.width * bh.height; i++)
+      brush_buf[i] = 255 - brush_buf[i];
+
+  gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, bh.width, bh.height), 0,
+                   format, brush_buf, GEGL_AUTO_ROWSTRIDE);
+
+  g_object_unref (buffer);
+
+  g_free (brush_buf);
 
   close (fd);
 
-  gimp_drawable_flush (drawable);
   gimp_progress_update (1.0);
 
   return image_ID;
@@ -626,34 +631,38 @@ save_image (const gchar  *filename,
 {
   gint          fd;
   BrushHeader   bh;
-  guchar       *buffer;
-  GimpDrawable *drawable;
+  guchar       *brush_buf;
+  GeglBuffer   *buffer;
+  const Babl   *format;
   gint          line;
   gint          x;
   gint          bpp;
-  GimpPixelRgn  pixel_rgn;
+  gint          file_bpp;
+  gint          width;
+  gint          height;
   GimpRGB       gray, white;
 
   gimp_rgba_set_uchar (&white, 255, 255, 255, 255);
 
   switch (gimp_drawable_type (drawable_ID))
     {
-    case GIMP_RGB_IMAGE:
-    case GIMP_RGBA_IMAGE:
-      bpp = 4;
+    case GIMP_GRAY_IMAGE:
+      file_bpp = 1;
+      format = babl_format ("Y' u8");
       break;
 
-    case GIMP_GRAY_IMAGE:
     case GIMP_GRAYA_IMAGE:
-      bpp = 1;
+      file_bpp = 1;
+      format = babl_format ("Y'A u8");
       break;
 
     default:
-      {
-        g_message (_("GIMP brushes are either GRAYSCALE or RGBA"));
-        return FALSE;
-      }
+      file_bpp = 4;
+      format = babl_format ("R'G'B'A u8");
+      break;
     }
+
+  bpp = babl_format_get_bytes_per_pixel (format);
 
   fd = g_open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0666);
 
@@ -668,14 +677,17 @@ save_image (const gchar  *filename,
   gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));
 
-  drawable = gimp_drawable_get (drawable_ID);
+  buffer = gimp_drawable_get_buffer (drawable_ID);
+
+  width  = gimp_drawable_width  (drawable_ID);
+  height = gimp_drawable_height (drawable_ID);
 
   bh.header_size  = g_htonl (sizeof (BrushHeader) +
                              strlen (info.description) + 1);
   bh.version      = g_htonl (2);
-  bh.width        = g_htonl (drawable->width);
-  bh.height       = g_htonl (drawable->height);
-  bh.bytes        = g_htonl (bpp);
+  bh.width        = g_htonl (width);
+  bh.height       = g_htonl (height);
+  bh.bytes        = g_htonl (file_bpp);
   bh.magic_number = g_htonl (GBRUSH_MAGIC);
   bh.spacing      = g_htonl (info.spacing);
 
@@ -692,65 +704,52 @@ save_image (const gchar  *filename,
       return FALSE;
     }
 
-  gimp_pixel_rgn_init (&pixel_rgn, drawable,
-                       0, 0, drawable->width, drawable->height,
-                       FALSE, FALSE);
+  brush_buf = g_new (guchar, width * bpp);
 
-  buffer = g_new (guchar, drawable->width * MAX (bpp, drawable->bpp));
-
-  for (line = 0; line < drawable->height; line++)
+  for (line = 0; line < height; line++)
     {
-      gimp_pixel_rgn_get_row (&pixel_rgn, buffer, 0, line, drawable->width);
+      gegl_buffer_get (buffer, GEGL_RECTANGLE (0, line, width, 1), 1.0,
+                       format, brush_buf,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-      switch (drawable->bpp)
+      switch (bpp)
         {
         case 1:
           /*  invert  */
-          for (x = 0; x < drawable->width; x++)
-            buffer[x] = 255 - buffer[x];
+          for (x = 0; x < width; x++)
+            brush_buf[x] = 255 - brush_buf[x];
           break;
 
         case 2:
-          for (x = 0; x < drawable->width; x++)
+          for (x = 0; x < width; x++)
             {
               /*  apply alpha channel  */
               gimp_rgba_set_uchar (&gray,
-                                   buffer[2 * x],
-                                   buffer[2 * x],
-                                   buffer[2 * x],
-                                   buffer[2 * x + 1]);
+                                   brush_buf[2 * x],
+                                   brush_buf[2 * x],
+                                   brush_buf[2 * x],
+                                   brush_buf[2 * x + 1]);
               gimp_rgb_composite (&gray, &white, GIMP_RGB_COMPOSITE_BEHIND);
-              gimp_rgba_get_uchar (&gray, &buffer[x], NULL, NULL, NULL);
+              gimp_rgba_get_uchar (&gray, &brush_buf[x], NULL, NULL, NULL);
               /* invert */
-              buffer[x] = 255 - buffer[x];
-            }
-          break;
-
-        case 3:
-          /*  add alpha channel  */
-          for (x = drawable->width - 1; x >= 0; x--)
-            {
-              buffer[x * 4 + 3] = 0xFF;
-              buffer[x * 4 + 2] = buffer[x * 3 + 2];
-              buffer[x * 4 + 1] = buffer[x * 3 + 1];
-              buffer[x * 4 + 0] = buffer[x * 3 + 0];
+              brush_buf[x] = 255 - brush_buf[x];
             }
           break;
         }
 
-      if (write (fd, buffer, drawable->width * bpp) != drawable->width * bpp)
+      if (write (fd, brush_buf, width * file_bpp) != width * file_bpp)
         {
-          g_free (buffer);
+          g_free (brush_buf);
           close (fd);
           return FALSE;
         }
 
-      gimp_progress_update ((gdouble) line / (gdouble) drawable->height);
+      gimp_progress_update ((gdouble) line / (gdouble) height);
     }
 
-  g_free (buffer);
+  g_free (brush_buf);
 
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
 
   close (fd);
 
