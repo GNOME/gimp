@@ -242,7 +242,7 @@ gimp_module_db_set_load_inhibit (GimpModuleDB *db,
  * gimp_module_db_get_load_inhibit:
  * @db: A #GimpModuleDB.
  *
- * Return the #G_SEARCHPATH_SEPARATOR selimited list of module filenames
+ * Return the #G_SEARCHPATH_SEPARATOR delimited list of module filenames
  * which are excluded from auto-loading.
  *
  * Return value: the @db's @load_inhibit string.
