@@ -997,6 +997,7 @@ file_aa_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(AA_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\

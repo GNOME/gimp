@@ -96,7 +96,7 @@ query (void)
                           "Tim Newsome <nuisance@cmu.edu>",
                           "1997",
                           N_("ASCII art"),
-                          "RGB*, GRAY*",
+                          "*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
@@ -145,6 +145,8 @@ run (const gchar      *name,
 
   INIT_I18N ();
 
+  gegl_init (NULL, NULL);
+
   /* Set us up to return a status. */
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -161,8 +163,9 @@ run (const gchar      *name,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY, FALSE);
       export = gimp_export_image (&image_ID, &drawable_ID, NULL,
-                                  (GIMP_EXPORT_CAN_HANDLE_RGB  |
-                                   GIMP_EXPORT_CAN_HANDLE_GRAY |
+                                  (GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                   GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                   GIMP_EXPORT_CAN_HANDLE_INDEXED |
                                    GIMP_EXPORT_CAN_HANDLE_ALPHA ));
       if (export == GIMP_EXPORT_CANCEL)
         {
@@ -267,55 +270,76 @@ static void
 gimp2aa (gint32      drawable_ID,
          aa_context *context)
 {
-  GimpDrawable    *drawable;
-  GimpPixelRgn     pixel_rgn;
+  GeglBuffer      *buffer;
+  const Babl      *format;
   aa_renderparams *renderparams;
+  gint             width;
+  gint             height;
+  gint             x, y;
+  gint             bpp;
+  guchar          *buf;
+  guchar          *p;
 
-  gint    width;
-  gint    height;
-  gint    x, y;
-  gint    bpp;
-  guchar *buffer;
-  guchar *p;
-
-  drawable = gimp_drawable_get (drawable_ID);
+  buffer = gimp_drawable_get_buffer (drawable_ID);
 
   width  = aa_imgwidth  (context);
   height = aa_imgheight (context);
-  bpp    = drawable->bpp;
 
-  gimp_tile_cache_ntiles ((width / gimp_tile_width ()) + 1);
+  switch (gimp_drawable_type (drawable_ID))
+    {
+    case GIMP_GRAY_IMAGE:
+      format = babl_format ("Y' u8");
+      break;
 
-  gimp_pixel_rgn_init (&pixel_rgn,
-                       drawable, 0, 0, width, height,
-                       FALSE, FALSE);
+    case GIMP_GRAYA_IMAGE:
+      format = babl_format ("Y'A u8");
+      break;
 
-  buffer = g_new (guchar, width * bpp);
+    case GIMP_RGB_IMAGE:
+    case GIMP_INDEXED_IMAGE:
+      format = babl_format ("R'G'B' u8");
+      break;
+
+    case GIMP_RGBA_IMAGE:
+    case GIMP_INDEXEDA_IMAGE:
+      format = babl_format ("R'G'B'A u8");
+      break;
+
+    default:
+      g_return_if_reached ();
+      break;
+    }
+
+  bpp = babl_format_get_bytes_per_pixel (format);
+
+  buf = g_new (guchar, width * bpp);
 
   for (y = 0; y < height; y++)
     {
-      gimp_pixel_rgn_get_row (&pixel_rgn, buffer, 0, y, width);
+      gegl_buffer_get (buffer, GEGL_RECTANGLE (0, y, width, 1), 1.0,
+                       format, buf,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
       switch (bpp)
         {
         case 1:  /* GRAY */
-          for (x = 0, p = buffer; x < width; x++, p++)
+          for (x = 0, p = buf; x < width; x++, p++)
             aa_putpixel (context, x, y, *p);
           break;
 
         case 2:  /* GRAYA, blend over black */
-          for (x = 0, p = buffer; x < width; x++, p += 2)
+          for (x = 0, p = buf; x < width; x++, p += 2)
             aa_putpixel (context, x, y, (p[0] * (p[1] + 1)) >> 8);
           break;
 
         case 3:  /* RGB */
-          for (x = 0, p = buffer; x < width; x++, p += 3)
+          for (x = 0, p = buf; x < width; x++, p += 3)
             aa_putpixel (context, x, y,
                          GIMP_RGB_LUMINANCE (p[0], p[1], p[2]) + 0.5);
           break;
 
         case 4:  /* RGBA, blend over black */
-          for (x = 0, p = buffer; x < width; x++, p += 4)
+          for (x = 0, p = buf; x < width; x++, p += 4)
             aa_putpixel (context, x, y,
                          ((guchar) (GIMP_RGB_LUMINANCE (p[0], p[1], p[2]) + 0.5)
                           * (p[3] + 1)) >> 8);
@@ -327,7 +351,9 @@ gimp2aa (gint32      drawable_ID,
         }
     }
 
-  g_free (buffer);
+  g_free (buf);
+
+  g_object_unref (buffer);
 
   renderparams = aa_getrenderparams ();
   renderparams->dither = AA_FLOYD_S;
