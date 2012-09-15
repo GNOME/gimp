@@ -189,6 +189,8 @@ run (const gchar      *name,
 
   INIT_I18N ();
 
+  gegl_init (NULL, NULL);
+
   *nreturn_vals = 1;
   *return_vals  = values;
 
@@ -883,8 +885,7 @@ ReadImage (FILE        *fd,
   static gint   frame_number = 1;
 
   gint32        layer_ID;
-  GimpPixelRgn  pixel_rgn;
-  GimpDrawable *drawable;
+  GeglBuffer   *buffer;
   guchar       *dest, *temp;
   guchar        c;
   gint          xpos = 0, ypos = 0, pass = 0;
@@ -1052,8 +1053,6 @@ ReadImage (FILE        *fd,
   gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
   gimp_layer_translate (layer_ID, (gint) leftpos, (gint) toppos);
 
-  drawable = gimp_drawable_get (layer_ID);
-
   cur_progress = 0;
   max_progress = height;
 
@@ -1175,16 +1174,16 @@ ReadImage (FILE        *fd,
   if (LZWReadByte (fd, FALSE, c) >= 0)
     g_print ("GIF: too much input data, ignoring extra...\n");
 
-  gimp_progress_update (1.0);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable,
-                       0, 0, drawable->width, drawable->height, TRUE, FALSE);
-  gimp_pixel_rgn_set_rect (&pixel_rgn, dest,
-                           0, 0, drawable->width, drawable->height);
+  buffer = gimp_drawable_get_buffer (layer_ID);
+
+  gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, len, height), 0,
+                   NULL, dest, GEGL_AUTO_ROWSTRIDE);
 
   g_free (dest);
 
-  gimp_drawable_flush (drawable);
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
+
+  gimp_progress_update (1.0);
 
   return image_ID;
 }

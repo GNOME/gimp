@@ -52,7 +52,7 @@
     'file-dicom' => { ui => 1, cflags => '-fno-strict-aliasing' },
     'file-gbr' => { ui => 1, gegl => 1 },
     'file-gegl' => { ui => 1, gegl => 1 },
-    'file-gif-load' => {},
+    'file-gif-load' => { gegl => 1 },
     'file-gif-save' => { ui => 1 },
     'file-gih' => { ui => 1 },
     'file-glob' => {},
