@@ -126,6 +126,8 @@ run (const gchar      *name,
   gint32            image_ID;
   GError           *error = NULL;
 
+  gegl_init (NULL, NULL);
+
   *nreturn_vals = 1;
   *return_vals  = values;
 
@@ -501,13 +503,14 @@ emitgimp (gint         hcol,
           gint         bperrow,
           const gchar *filename)
 {
-  GimpPixelRgn  pixel_rgn;
-  GimpDrawable *drawable;
-  gint32        image_ID;
-  gint32        layer_ID;
-  guchar       *buf;
-  guchar        tmp;
-  gint          x,y,xx,yy,tile_height;
+  GeglBuffer *buffer;
+  gint32      image_ID;
+  gint32      layer_ID;
+  guchar     *buf;
+  guchar      tmp;
+  gint        x, y;
+  gint        xx, yy;
+  gint        tile_height;
 
   /* initialize */
 
@@ -526,15 +529,14 @@ emitgimp (gint         hcol,
                              GIMP_GRAY_IMAGE, 100, GIMP_NORMAL_MODE);
   gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
 
-  drawable = gimp_drawable_get (layer_ID);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable,
-                       0, 0, drawable->width, drawable->height, TRUE, FALSE);
+  buffer = gimp_drawable_get_buffer (layer_ID);
+
   tile_height = gimp_tile_height ();
 #ifdef DEBUG
   g_printerr ("tile height: %d\n", tile_height);
 #endif
 
-  buf = g_new (guchar, hcol*tile_height);
+  buf = g_new (guchar, hcol * tile_height);
 
   xx = 0;
   yy = 0;
@@ -554,8 +556,12 @@ emitgimp (gint         hcol,
 #ifdef DEBUG
           g_printerr ("update tile height: %d\n", tile_height);
 #endif
-          gimp_pixel_rgn_set_rect (&pixel_rgn, buf, 0, yy, hcol, tile_height);
+
+          gegl_buffer_set (buffer, GEGL_RECTANGLE (0, yy, hcol, tile_height), 0,
+                           NULL, buf, GEGL_AUTO_ROWSTRIDE);
+
           gimp_progress_update (0.5 + (float) y / row / 2.0);
+
           xx = 0;
           yy += tile_height;
         }
@@ -566,14 +572,16 @@ emitgimp (gint         hcol,
 #ifdef DEBUG
       g_printerr ("update rest: %d\n", row-yy);
 #endif
-      gimp_pixel_rgn_set_rect (&pixel_rgn, buf, 0, yy, hcol, row - yy);
+
+      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, yy, hcol, row - yy), 0,
+                       NULL, buf, GEGL_AUTO_ROWSTRIDE);
     }
 
   gimp_progress_update (1.0);
 
   g_free (buf);
 
-  gimp_drawable_flush (drawable);
+  g_object_unref (buffer);
 
   return image_ID;
 }

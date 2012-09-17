@@ -43,6 +43,7 @@ LDADD = \
 	$(libgimpmath)		\
 	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
+	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_faxg3_RC)
