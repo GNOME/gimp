@@ -55,7 +55,7 @@ gimp_gegl_init (Gimp *gimp)
                                     "tile-cache-size"))
     {
       g_object_set (gegl_config (),
-                    "cache-size", (guint64) config->tile_cache_size,
+                    "tile-cache-size", (guint64) config->tile_cache_size,
 #if 0
                     "threads",    config->num_processors,
 #endif
@@ -98,9 +98,19 @@ gimp_gegl_init (Gimp *gimp)
 static void
 gimp_gegl_notify_tile_cache_size (GimpGeglConfig *config)
 {
-  g_object_set (gegl_config (),
-                "cache-size", (gint) MIN (config->tile_cache_size, G_MAXINT),
-                NULL);
+  if (g_object_class_find_property (G_OBJECT_GET_CLASS (gegl_config ()),
+                                    "tile-cache-size"))
+    {
+      g_object_set (gegl_config (),
+                    "tile-cache-size", (guint64) config->tile_cache_size,
+                    NULL);
+    }
+  else
+    {
+      g_object_set (gegl_config (),
+                    "cache-size", (gint) MIN (config->tile_cache_size, G_MAXINT),
+                    NULL);
+    }
 }
 
 static void
