@@ -516,13 +516,17 @@ insert_sort (gint *data,
 }
 
 static void
-fill_run (guchar *dest,
-          guchar  alpha,
+fill_run (gfloat *dest,
+          gfloat  alpha,
           gint    w)
 {
-  if (alpha == 255)
+  if (alpha == 1.0)
     {
-      memset (dest, 255, w);
+      while (w--)
+        {
+          *dest = 1.0;
+          dest++;
+        }
     }
   else
     {
@@ -536,7 +540,7 @@ fill_run (guchar *dest,
 
 static void
 render_blob_line (GimpBlob *blob,
-                  guchar   *dest,
+                  gfloat   *dest,
                   gint      x,
                   gint      y,
                   gint      width)
@@ -606,7 +610,7 @@ render_blob_line (GimpBlob *blob,
 
       /* Fill in portion leading up to this pixel */
       if (current && cur_x != last_x)
-        fill_run (dest + last_x, (255 * current) / SUBSAMPLE, cur_x - last_x);
+        fill_run (dest + last_x, (gfloat) current / SUBSAMPLE, cur_x - last_x);
 
       /* Compute the value for this pixel */
       pixel = current * SUBSAMPLE;
@@ -632,13 +636,13 @@ render_blob_line (GimpBlob *blob,
           i++;
         }
 
-      dest[cur_x] = MAX (dest[cur_x], (pixel * 255) / (SUBSAMPLE * SUBSAMPLE));
+      dest[cur_x] = MAX (dest[cur_x], (gfloat) pixel / (SUBSAMPLE * SUBSAMPLE));
 
       last_x = cur_x + 1;
     }
 
   if (current != 0)
-    fill_run (dest + last_x, (255 * current)/ SUBSAMPLE, width - last_x);
+    fill_run (dest + last_x, (gfloat) current / SUBSAMPLE, width - last_x);
 }
 
 static void
@@ -649,13 +653,13 @@ render_blob (GeglBuffer    *buffer,
   GeglBufferIterator *iter;
   GeglRectangle      *roi;
 
-  iter = gegl_buffer_iterator_new (buffer, rect, 0, babl_format ("Y u8"),
+  iter = gegl_buffer_iterator_new (buffer, rect, 0, babl_format ("Y float"),
                                    GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
   roi = &iter->roi[0];
 
   while (gegl_buffer_iterator_next (iter))
     {
-      guchar *d = iter->data[0];
+      gfloat *d = iter->data[0];
       gint    h = roi->height;
       gint    y;
 
