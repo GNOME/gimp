@@ -456,17 +456,17 @@ WriteBMP (const gchar  *filename,
         default:
         case RGB_888:
         case RGBX_8888:
-          Mask[0] = 0xff000000;
-          Mask[1] = 0x00ff0000;
-          Mask[2] = 0x0000ff00;
+          Mask[0] = 0x00ff0000;
+          Mask[1] = 0x0000ff00;
+          Mask[2] = 0x000000ff;
           Mask[3] = 0x00000000;
           break;
 
         case RGBA_8888:
-          Mask[0] = 0xff000000;
-          Mask[1] = 0x00ff0000;
-          Mask[2] = 0x0000ff00;
-          Mask[3] = 0x000000ff;
+          Mask[0] = 0x00ff0000;
+          Mask[1] = 0x0000ff00;
+          Mask[2] = 0x000000ff;
+          Mask[3] = 0xff000000;
           break;
 
         case RGB_565:
@@ -617,20 +617,20 @@ write_image (FILE   *f,
                   Write (f, buf, 3);
                   break;
                 case RGBX_8888:
-                  buf[3] = *temp++;
                   buf[2] = *temp++;
                   buf[1] = *temp++;
-                  buf[0] = 0;
+                  buf[0] = *temp++;
+                  buf[3] = 0;
                   xpos++;
                   if (channels > 3 && (guchar) *temp == 0)
                     buf[0] = buf[1] = buf[2] = 0xff;
                   Write (f, buf, 4);
                   break;
                 case RGBA_8888:
-                  buf[3] = *temp++;
                   buf[2] = *temp++;
                   buf[1] = *temp++;
-                  buf[0] = *temp;
+                  buf[0] = *temp++;
+                  buf[3] = *temp;
                   xpos++;
                   Write (f, buf, 4);
                   break;
