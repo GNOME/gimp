@@ -819,10 +819,10 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
   /*  configure the canvas buffer  */
   if ((x2 - x1) && (y2 - y1))
     {
-      const Babl  *format = gimp_drawable_get_format_with_alpha (drawable);
       GimpTempBuf *temp_buf;
 
-      temp_buf = gimp_temp_buf_new ((x2 - x1), (y2 - y1), format);
+      temp_buf = gimp_temp_buf_new ((x2 - x1), (y2 - y1),
+                                    babl_format ("RGBA float"));
 
       *paint_buffer_x = x1;
       *paint_buffer_y = y1;
