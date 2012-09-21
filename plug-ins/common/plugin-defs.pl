@@ -2,7 +2,7 @@
     'alien-map' => { ui => 1 },
     'align-layers' => { ui => 1 },
     'animation-optimize' => {},
-    'animation-play' => { ui => 1 },
+    'animation-play' => { ui => 1, gegl => 1 },
     'antialias' => {},
     'apply-canvas' => { ui => 1 },
     'blinds' => { ui => 1 },

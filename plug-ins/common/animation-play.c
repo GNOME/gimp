@@ -131,7 +131,6 @@ static gint32             image_id;
 static gint32             total_frames;
 static guint              frame_number;
 static gint32            *layers;
-static GimpDrawable      *drawable;
 static gboolean           playing = FALSE;
 static guint              timer   = 0;
 static GimpImageBaseType  imagetype;
@@ -199,6 +198,8 @@ run (const gchar      *name,
   run_mode = param[0].data.d_int32;
 
   INIT_I18N ();
+
+  gegl_init (NULL, NULL);
 
  if (run_mode == GIMP_RUN_NONINTERACTIVE && n_params != 3)
    {
@@ -782,10 +783,6 @@ do_playback (void)
 
   frame_number = 0;
 
-  /* cache hint "cache nothing", since we iterate over every
-     tile in every layer. */
-  gimp_tile_cache_size (0);
-
   init_preview ();
 
   build_dialog (gimp_image_base_type (image_id),
@@ -808,7 +805,8 @@ render_frame (gint32 whichframe)
 {
   GtkStyle      *shape_style   = gtk_widget_get_style (shape_drawing_area);
   GtkStyle      *drawing_style = gtk_widget_get_style (drawing_area);
-  GimpPixelRgn   pixel_rgn;
+  GeglBuffer    *buffer;
+  gint           drawable_id;
   static guchar *rawframe = NULL;
   static gint    rawwidth = 0, rawheight = 0, rawbpp = 0;
   gint           rawx = 0, rawy = 0;
@@ -824,9 +822,12 @@ render_frame (gint32 whichframe)
       gimp_quit ();
     }
 
-  drawable = gimp_drawable_get (layers[total_frames - (whichframe + 1)]);
+  drawable_id = layers[total_frames - (whichframe + 1)];
+
+  buffer = gimp_drawable_get_buffer (drawable_id);
+
   /* Lame attempt to catch the case that a user has closed the image. */
-  if (!drawable)
+  if (!buffer)
     {
       gimp_message (_("Tried to display an invalid layer."));
       gtk_main_quit ();
@@ -835,13 +836,8 @@ render_frame (gint32 whichframe)
 
   dispose = get_frame_disposal (frame_number);
 
-  /* Image has been closed/etc since we got the layer list? */
-  /* FIXME - How do we tell if a gimp_drawable_get() fails? */
-  if (gimp_drawable_width (drawable->drawable_id) == 0)
-    gtk_widget_destroy (window);
-
   if (((dispose == DISPOSE_REPLACE) || (whichframe == 0)) &&
-      gimp_drawable_has_alpha (drawable->drawable_id))
+      gimp_drawable_has_alpha (drawable_id))
     {
       total_alpha_preview (preview_data);
     }
@@ -851,333 +847,210 @@ render_frame (gint32 whichframe)
      the previous raw buffer were different sizes */
 
   if ((rawwidth * rawheight * rawbpp) !=
-      ((gimp_drawable_width (drawable->drawable_id) *
-        gimp_drawable_height (drawable->drawable_id) *
-        gimp_drawable_bpp (drawable->drawable_id))))
+      ((gimp_drawable_width (drawable_id) *
+        gimp_drawable_height (drawable_id) *
+        gimp_drawable_has_alpha (drawable_id) ? 4 : 3)))
     {
       if (rawframe != NULL)
         g_free (rawframe);
 
-      rawframe = g_malloc ((gimp_drawable_width (drawable->drawable_id)) *
-                           (gimp_drawable_height (drawable->drawable_id)) *
-                           (gimp_drawable_bpp (drawable->drawable_id)));
+      rawwidth  = gimp_drawable_width (drawable_id);
+      rawheight = gimp_drawable_height (drawable_id);
+      rawbpp    = gimp_drawable_has_alpha (drawable_id) ? 4 : 3;
+
+      rawframe = g_malloc (rawwidth * rawheight * rawbpp);
     }
-
-  rawwidth  = gimp_drawable_width (drawable->drawable_id);
-  rawheight = gimp_drawable_height (drawable->drawable_id);
-  rawbpp    = gimp_drawable_bpp (drawable->drawable_id);
-
 
   /* Initialise and fetch the whole raw new frame */
 
-  gimp_pixel_rgn_init (&pixel_rgn, drawable,
-                       0, 0, drawable->width, drawable->height,
-                       FALSE, FALSE);
-  gimp_pixel_rgn_get_rect (&pixel_rgn, rawframe,
-                           0, 0, drawable->width, drawable->height);
+  gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, rawwidth, rawheight), 1.0,
+                   gimp_drawable_has_alpha (drawable_id) ?
+                   babl_format ("R'G'B'A u8") :
+                   babl_format ("R'G'B' u8"),
+                   rawframe, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-  gimp_drawable_offsets (drawable->drawable_id, &rawx, &rawy);
+  gimp_drawable_offsets (drawable_id, &rawx, &rawy);
 
 
   /* render... */
 
-  switch (imagetype)
+  if ((rawwidth == width) &&
+      (rawheight == height) &&
+      (rawx == 0) &&
+      (rawy == 0))
     {
-    case GIMP_RGB:
-      if ((rawwidth == width) &&
-          (rawheight == height) &&
-          (rawx == 0) &&
-          (rawy == 0))
+      /* --- These cases are for the best cases,  in        --- */
+      /* --- which this frame is the same size and position --- */
+      /* --- as the preview buffer itself                   --- */
+
+      if (gimp_drawable_has_alpha (drawable_id))
         {
-          /* --- These cases are for the best cases,  in        --- */
-          /* --- which this frame is the same size and position --- */
-          /* --- as the preview buffer itself                   --- */
+          destptr = preview_data;
+          srcptr  = rawframe;
 
-          if (gimp_drawable_has_alpha (drawable->drawable_id))
+          i = rawwidth * rawheight;
+          while (i--)
             {
-              destptr = preview_data;
-              srcptr  = rawframe;
-
-              i = rawwidth * rawheight;
-              while (i--)
+              if (! (srcptr[3] & 128))
                 {
-                  if (! (srcptr[3] & 128))
-                    {
-                      srcptr  += 4;
-                      destptr += 3;
-                      continue;
-                    }
-
-                  *(destptr++) = *(srcptr++);
-                  *(destptr++) = *(srcptr++);
-                  *(destptr++) = *(srcptr++);
-
-                  srcptr++;
+                  srcptr  += 4;
+                  destptr += 3;
+                  continue;
                 }
 
-              /* calculate the shape mask */
-              if (detached)
-                {
-                  srcptr = rawframe + 3;
+              *(destptr++) = *(srcptr++);
+              *(destptr++) = *(srcptr++);
+              *(destptr++) = *(srcptr++);
 
-                  for (j = 0; j < rawheight; j++)
-                    {
-                      k = j * ((7 + rawwidth) / 8);
-
-                      for (i = 0; i < rawwidth; i++)
-                        {
-                          if ((*srcptr) & 128)
-                            shape_preview_mask[k + i/8] |= (1 << (i&7));
-
-                          srcptr += 4;
-                        }
-                    }
-                }
-            }
-          else /* no alpha */
-            {
-              if ((rawwidth == width) && (rawheight == height))
-                memcpy (preview_data, rawframe, width * height * 3);
-
-              if (detached)
-                {
-                  /* opacify the shape mask */
-                  memset (shape_preview_mask, 255,
-                          (rawwidth * rawheight) / 8 + rawheight);
-                }
+              srcptr++;
             }
 
-          /* Display the preview buffer... finally. */
+          /* calculate the shape mask */
           if (detached)
             {
-              reshape_from_bitmap (shape_preview_mask);
-              gdk_draw_rgb_image (gtk_widget_get_window (shape_drawing_area),
-                                  shape_style->white_gc,
-                                  0, 0, width, height,
-                                  (total_frames == 1 ?
-                                   GDK_RGB_DITHER_MAX : DITHERTYPE),
-                                  preview_data, width * 3);
-            }
-          else
-            {
-              reshape_from_bitmap (shape_preview_mask);
-              gdk_draw_rgb_image (gtk_widget_get_window (drawing_area),
-                                  drawing_style->white_gc,
-                                  0, 0, width, height,
-                                  (total_frames == 1 ?
-                                   GDK_RGB_DITHER_MAX : DITHERTYPE),
-                                  preview_data, width * 3);
-            }
-        }
-      else
-        {
-          /* --- These are suboptimal catch-all cases for when  --- */
-          /* --- this frame is bigger/smaller than the preview  --- */
-          /* --- buffer, and/or offset within it.               --- */
+              srcptr = rawframe + 3;
 
-          if (gimp_drawable_has_alpha (drawable->drawable_id))
-            {
-              srcptr = rawframe;
-
-              for (j = rawy; j < rawheight + rawy; j++)
+              for (j = 0; j < rawheight; j++)
                 {
-                  for (i = rawx; i < rawwidth + rawx; i++)
+                  k = j * ((7 + rawwidth) / 8);
+
+                  for (i = 0; i < rawwidth; i++)
                     {
-                      if ((i >= 0 && i < width) &&
-                          (j >= 0 && j < height))
-                        {
-                          if (srcptr[3] & 128)
-                            {
-                              preview_data[(j * width + i) * 3    ] = *(srcptr);
-                              preview_data[(j * width + i) * 3 + 1] = *(srcptr + 1);
-                              preview_data[(j * width + i) * 3 + 2] = *(srcptr + 2);
-                            }
-                        }
+                      if ((*srcptr) & 128)
+                        shape_preview_mask[k + i/8] |= (1 << (i&7));
 
                       srcptr += 4;
                     }
                 }
-
-              if (detached)
-                {
-                  srcptr = rawframe + 3;
-
-                  for (j = rawy; j < rawheight + rawy; j++)
-                    {
-                      k = j * ((width + 7) / 8);
-
-                      for (i = rawx; i < rawwidth + rawx; i++)
-                        {
-                          if ((i>=0 && i<width) &&
-                              (j>=0 && j<height))
-                            {
-                              if ((*srcptr) & 128)
-                                shape_preview_mask[k + i/8] |= (1 << (i&7));
-                            }
-
-                          srcptr += 4;
-                        }
-                    }
-                }
             }
-          else
+        }
+      else /* no alpha */
+        {
+          if ((rawwidth == width) && (rawheight == height))
+            memcpy (preview_data, rawframe, width * height * 3);
+
+          if (detached)
             {
-              /* noalpha */
+              /* opacify the shape mask */
+              memset (shape_preview_mask, 255,
+                      (rawwidth * rawheight) / 8 + rawheight);
+            }
+        }
 
-              srcptr = rawframe;
+      /* Display the preview buffer... finally. */
+      if (detached)
+        {
+          reshape_from_bitmap (shape_preview_mask);
+          gdk_draw_rgb_image (gtk_widget_get_window (shape_drawing_area),
+                              shape_style->white_gc,
+                              0, 0, width, height,
+                              (total_frames == 1 ?
+                               GDK_RGB_DITHER_MAX : DITHERTYPE),
+                              preview_data, width * 3);
+        }
+      else
+        {
+          reshape_from_bitmap (shape_preview_mask);
+          gdk_draw_rgb_image (gtk_widget_get_window (drawing_area),
+                              drawing_style->white_gc,
+                              0, 0, width, height,
+                              (total_frames == 1 ?
+                               GDK_RGB_DITHER_MAX : DITHERTYPE),
+                              preview_data, width * 3);
+        }
+    }
+  else
+    {
+      /* --- These are suboptimal catch-all cases for when  --- */
+      /* --- this frame is bigger/smaller than the preview  --- */
+      /* --- buffer, and/or offset within it.               --- */
 
-              for (j = rawy; j < rawheight + rawy; j++)
+      if (gimp_drawable_has_alpha (drawable_id))
+        {
+          srcptr = rawframe;
+
+          for (j = rawy; j < rawheight + rawy; j++)
+            {
+              for (i = rawx; i < rawwidth + rawx; i++)
                 {
-                  for (i = rawx; i < rawwidth + rawx; i++)
+                  if ((i >= 0 && i < width) &&
+                      (j >= 0 && j < height))
                     {
-                      if ((i >= 0 && i < width) &&
-                          (j >= 0 && j < height))
+                      if (srcptr[3] & 128)
                         {
                           preview_data[(j * width + i) * 3    ] = *(srcptr);
                           preview_data[(j * width + i) * 3 + 1] = *(srcptr + 1);
                           preview_data[(j * width + i) * 3 + 2] = *(srcptr + 2);
                         }
-
-                      srcptr += 3;
                     }
+
+                  srcptr += 4;
                 }
             }
 
-          /* Display the preview buffer... finally. */
           if (detached)
             {
-              if ((dispose != DISPOSE_REPLACE) && (whichframe != 0))
-                {
-                  gint top    = MAX (rawy, 0);
-                  gint bottom = MIN (rawy + rawheight, height);
+              srcptr = rawframe + 3;
 
-                  reshape_from_bitmap (shape_preview_mask);
-                  gdk_draw_rgb_image (gtk_widget_get_window (shape_drawing_area),
-                                      shape_style->white_gc,
-                                      0, top, width, bottom - top,
-                                      (total_frames == 1 ?
-                                       GDK_RGB_DITHER_MAX : DITHERTYPE),
-                                      preview_data + 3 * top * width,
-                                      width * 3);
-                }
-              else
+              for (j = rawy; j < rawheight + rawy; j++)
                 {
-                  reshape_from_bitmap (shape_preview_mask);
-                  gdk_draw_rgb_image (gtk_widget_get_window (shape_drawing_area),
-                                      shape_style->white_gc,
-                                      0, 0, width, height,
-                                      (total_frames == 1 ?
-                                       GDK_RGB_DITHER_MAX : DITHERTYPE),
-                                      preview_data, width * 3);
-                }
-            }
-          else
-            {
-              if ((dispose != DISPOSE_REPLACE) && (whichframe != 0))
-                {
-                  gint top    = MAX (rawy, 0);
-                  gint bottom = MIN (rawy + rawheight, height);
+                  k = j * ((width + 7) / 8);
 
-                  gdk_draw_rgb_image (gtk_widget_get_window (drawing_area),
-                                      drawing_style->white_gc,
-                                      0, top, width, bottom - top,
-                                      (total_frames == 1 ?
-                                       GDK_RGB_DITHER_MAX : DITHERTYPE),
-                                      preview_data + 3 * top * width,
-                                      width * 3);
-                }
-              else
-                {
-                  gdk_draw_rgb_image (gtk_widget_get_window (drawing_area),
-                                      drawing_style->white_gc,
-                                      0, 0, width, height,
-                                      (total_frames == 1 ?
-                                       GDK_RGB_DITHER_MAX : DITHERTYPE),
-                                      preview_data, width * 3);
+                  for (i = rawx; i < rawwidth + rawx; i++)
+                    {
+                      if ((i>=0 && i<width) &&
+                          (j>=0 && j<height))
+                        {
+                          if ((*srcptr) & 128)
+                            shape_preview_mask[k + i/8] |= (1 << (i&7));
+                        }
+
+                      srcptr += 4;
+                    }
                 }
             }
         }
-      break;
-
-    case GIMP_GRAY:
-    case GIMP_INDEXED:
-      if ((rawwidth == width) &&
-          (rawheight == height) &&
-          (rawx == 0) &&
-          (rawy == 0))
+      else
         {
-          /* --- These cases are for the best cases,  in        --- */
-          /* --- which this frame is the same size and position --- */
-          /* --- as the preview buffer itself                   --- */
+          /* noalpha */
 
-          if (gimp_drawable_has_alpha (drawable->drawable_id))
+          srcptr = rawframe;
+
+          for (j = rawy; j < rawheight + rawy; j++)
             {
-              destptr = preview_data;
-              srcptr  = rawframe;
-
-              i = rawwidth * rawheight;
-
-              while (i--)
+              for (i = rawx; i < rawwidth + rawx; i++)
                 {
-                  if (! srcptr[1])
+                  if ((i >= 0 && i < width) &&
+                      (j >= 0 && j < height))
                     {
-                      srcptr  += 2;
-                      destptr += 3;
-                      continue;
+                      preview_data[(j * width + i) * 3    ] = *(srcptr);
+                      preview_data[(j * width + i) * 3 + 1] = *(srcptr + 1);
+                      preview_data[(j * width + i) * 3 + 2] = *(srcptr + 2);
                     }
 
-                  *(destptr++) = palette[0 + 3 * (*(srcptr))];
-                  *(destptr++) = palette[1 + 3 * (*(srcptr))];
-                  *(destptr++) = palette[2 + 3 * (*(srcptr))];
-
-                  srcptr+=2;
-                }
-
-              /* calculate the shape mask */
-              if (detached)
-                {
-                  srcptr = rawframe + 1;
-
-                  for (j = 0; j < rawheight; j++)
-                    {
-                      k = j * ((7 + rawwidth) / 8);
-
-                      for (i = 0; i < rawwidth; i++)
-                        {
-                          if (*srcptr)
-                            shape_preview_mask[k + i/8] |= (1 << (i&7));
-
-                          srcptr += 2;
-                        }
-                    }
+                  srcptr += 3;
                 }
             }
-          else /* no alpha */
+        }
+
+      /* Display the preview buffer... finally. */
+      if (detached)
+        {
+          if ((dispose != DISPOSE_REPLACE) && (whichframe != 0))
             {
-              destptr = preview_data;
-              srcptr  = rawframe;
+              gint top    = MAX (rawy, 0);
+              gint bottom = MIN (rawy + rawheight, height);
 
-              i = rawwidth * rawheight;
-
-              while (--i)
-                {
-                  *(destptr++) = palette[0 + 3 * (*(srcptr))];
-                  *(destptr++) = palette[1 + 3 * (*(srcptr))];
-                  *(destptr++) = palette[2 + 3 * (*(srcptr))];
-
-                  srcptr++;
-                }
-
-              if (detached)
-                {
-                  /* opacify the shape mask */
-                  memset (shape_preview_mask, 255,
-                          (rawwidth * rawheight) / 8 + rawheight);
-                }
+              reshape_from_bitmap (shape_preview_mask);
+              gdk_draw_rgb_image (gtk_widget_get_window (shape_drawing_area),
+                                  shape_style->white_gc,
+                                  0, top, width, bottom - top,
+                                  (total_frames == 1 ?
+                                   GDK_RGB_DITHER_MAX : DITHERTYPE),
+                                  preview_data + 3 * top * width,
+                                  width * 3);
             }
-
-          /* Display the preview buffer... finally. */
-          if (detached)
+          else
             {
               reshape_from_bitmap (shape_preview_mask);
               gdk_draw_rgb_image (gtk_widget_get_window (shape_drawing_area),
@@ -1186,6 +1059,22 @@ render_frame (gint32 whichframe)
                                   (total_frames == 1 ?
                                    GDK_RGB_DITHER_MAX : DITHERTYPE),
                                   preview_data, width * 3);
+            }
+        }
+      else
+        {
+          if ((dispose != DISPOSE_REPLACE) && (whichframe != 0))
+            {
+              gint top    = MAX (rawy, 0);
+              gint bottom = MIN (rawy + rawheight, height);
+
+              gdk_draw_rgb_image (gtk_widget_get_window (drawing_area),
+                                  drawing_style->white_gc,
+                                  0, top, width, bottom - top,
+                                  (total_frames == 1 ?
+                                   GDK_RGB_DITHER_MAX : DITHERTYPE),
+                                  preview_data + 3 * top * width,
+                                  width * 3);
             }
           else
             {
@@ -1197,145 +1086,10 @@ render_frame (gint32 whichframe)
                                   preview_data, width * 3);
             }
         }
-      else
-        {
-          /* --- These are suboptimal catch-all cases for when  --- */
-          /* --- this frame is bigger/smaller than the preview  --- */
-          /* --- buffer, and/or offset within it.               --- */
-
-          if (gimp_drawable_has_alpha (drawable->drawable_id))
-            {
-              srcptr = rawframe;
-
-              for (j = rawy; j < rawheight + rawy; j++)
-                {
-                  for (i = rawx; i < rawwidth + rawx; i++)
-                    {
-                      if ((i >= 0 && i < width) &&
-                          (j >= 0 && j < height))
-                        {
-                          if (*(srcptr+1))
-                            {
-                              preview_data[(j * width + i) * 3 + 0] =
-                                palette[0 + 3 * (*(srcptr))];
-                              preview_data[(j * width + i) * 3 + 1] =
-                                palette[1 + 3 * (*(srcptr))];
-                              preview_data[(j * width + i) * 3 + 2] =
-                                palette[2 + 3 * (*(srcptr))];
-                            }
-                        }
-
-                      srcptr += 2;
-                    }
-                }
-
-              if (detached)
-                {
-                  srcptr = rawframe + 1;
-
-                  for (j=rawy; j<rawheight+rawy; j++)
-                    {
-                      k = j * ((width + 7) / 8);
-
-                      for (i = rawx; i < rawwidth + rawx; i++)
-                        {
-                          if ((i >= 0 && i < width) &&
-                              (j >= 0 && j < height))
-                            {
-                              if (*srcptr)
-                                shape_preview_mask[k + i/8] |= (1 << (i&7));
-                            }
-
-                          srcptr += 2;
-                        }
-                    }
-                }
-            }
-          else
-            {
-              /* noalpha */
-              srcptr = rawframe;
-
-              for (j = rawy; j < rawheight + rawy; j++)
-                {
-                  for (i = rawx; i < rawwidth + rawx; i++)
-                    {
-                      if ((i >= 0 && i < width) &&
-                          (j >= 0 && j < height))
-                        {
-                          preview_data[(j * width + i) * 3 + 0] =
-                            palette[0 + 3 * (*(srcptr))];
-                          preview_data[(j * width + i) * 3 + 1] =
-                            palette[1 + 3 * (*(srcptr))];
-                          preview_data[(j * width + i) * 3 + 2] =
-                            palette[2 + 3 * (*(srcptr))];
-                        }
-
-                      srcptr ++;
-                    }
-                }
-            }
-
-          /* Display the preview buffer... finally. */
-          if (detached)
-            {
-              if ((dispose != DISPOSE_REPLACE) && (whichframe != 0))
-                {
-                  gint top    = MAX (rawy, 0);
-                  gint bottom = MIN (rawy + rawheight, height);
-
-                  reshape_from_bitmap (shape_preview_mask);
-                  gdk_draw_rgb_image (gtk_widget_get_window (shape_drawing_area),
-                                      shape_style->white_gc,
-                                      0, top, width, bottom - top,
-                                      (total_frames == 1 ?
-                                       GDK_RGB_DITHER_MAX : DITHERTYPE),
-                                      preview_data + 3 * top * width,
-                                      width * 3);
-                }
-              else
-                {
-                  reshape_from_bitmap (shape_preview_mask);
-                  gdk_draw_rgb_image (gtk_widget_get_window (shape_drawing_area),
-                                      shape_style->white_gc,
-                                      0, 0, width, height,
-                                      (total_frames == 1 ?
-                                       GDK_RGB_DITHER_MAX : DITHERTYPE),
-                                      preview_data, width * 3);
-                }
-            }
-          else
-            {
-              if ((dispose != DISPOSE_REPLACE) && (whichframe != 0))
-                {
-                  gint top    = MAX (rawy, 0);
-                  gint bottom = MIN (rawy + rawheight, height);
-
-                  gdk_draw_rgb_image (gtk_widget_get_window (drawing_area),
-                                      drawing_style->white_gc,
-                                      0, top, width, bottom - top,
-                                      (total_frames == 1 ?
-                                       GDK_RGB_DITHER_MAX : DITHERTYPE),
-                                      preview_data + 3 * top * width,
-                                      width * 3);
-                }
-              else
-                {
-                  gdk_draw_rgb_image (gtk_widget_get_window (drawing_area),
-                                      drawing_style->white_gc,
-                                      0, 0, width, height,
-                                      (total_frames == 1 ?
-                                       GDK_RGB_DITHER_MAX : DITHERTYPE),
-                                      preview_data, width * 3);
-                }
-            }
-        }
-      break;
-
     }
 
   /* clean up */
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
 }
 
 static void
