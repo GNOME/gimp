@@ -156,6 +156,8 @@ run (const gchar      *name,
 
   INIT_I18N ();
 
+  gegl_init (NULL, NULL);
+
   *nreturn_vals = 1;
   *return_vals  = values;
 

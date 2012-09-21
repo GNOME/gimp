@@ -44,7 +44,7 @@ struct _PrintPreview
   gboolean         dragging;
   gboolean         inside;
 
-  GimpDrawable    *drawable;
+  gint32           drawable_id;
 
   gdouble          image_offset_x;
   gdouble          image_offset_y;
@@ -107,7 +107,7 @@ static void      print_preview_get_page_margins     (PrintPreview     *preview,
                                                      gdouble          *right_margin,
                                                      gdouble          *top_margin,
                                                      gdouble          *bottom_margin);
-static cairo_surface_t * print_preview_get_thumbnail (GimpDrawable    *drawable,
+static cairo_surface_t * print_preview_get_thumbnail (gint32           drawable_id,
                                                       gint             width,
                                                       gint             height);
 
@@ -207,12 +207,6 @@ static void
 print_preview_finalize (GObject *object)
 {
   PrintPreview *preview = PRINT_PREVIEW (object);
-
-  if (preview->drawable)
-    {
-      gimp_drawable_detach (preview->drawable);
-      preview->drawable = NULL;
-    }
 
   if (preview->thumbnail)
     {
@@ -481,10 +475,10 @@ print_preview_expose_event (GtkWidget      *widget,
     }
 
   if (preview->thumbnail == NULL &&
-      gimp_item_is_valid (preview->drawable->drawable_id))
+      gimp_item_is_valid (preview->drawable_id))
     {
       preview->thumbnail =
-        print_preview_get_thumbnail (preview->drawable,
+        print_preview_get_thumbnail (preview->drawable_id,
                                      MIN (allocation.width,  1024),
                                      MIN (allocation.height, 1024));
     }
@@ -531,7 +525,7 @@ print_preview_new (GtkPageSetup *page,
 
   preview = g_object_new (PRINT_TYPE_PREVIEW, NULL);
 
-  preview->drawable = gimp_drawable_get (drawable_id);
+  preview->drawable_id = drawable_id;
 
   print_preview_set_page_setup (preview, page);
 
@@ -558,8 +552,8 @@ print_preview_set_image_dpi (PrintPreview *preview,
   g_return_if_fail (PRINT_IS_PREVIEW (preview));
   g_return_if_fail (xres > 0.0 && yres > 0.0);
 
-  width  = preview->drawable->width  * 72.0 / xres;
-  height = preview->drawable->height * 72.0 / yres;
+  width  = gimp_drawable_width  (preview->drawable_id) * 72.0 / xres;
+  height = gimp_drawable_height (preview->drawable_id) * 72.0 / yres;
 
   if (width != preview->image_width || height != preview->image_height)
     {
@@ -784,9 +778,9 @@ print_preview_get_page_margins (PrintPreview *preview,
 /*  This thumbnail code should eventually end up in libgimpui.  */
 
 static cairo_surface_t *
-print_preview_get_thumbnail (GimpDrawable *drawable,
-                             gint          width,
-                             gint          height)
+print_preview_get_thumbnail (gint32 drawable_id,
+                             gint   width,
+                             gint   height)
 {
   cairo_surface_t *surface;
   cairo_format_t   format;
@@ -801,7 +795,7 @@ print_preview_get_thumbnail (GimpDrawable *drawable,
   g_return_val_if_fail (width  > 0 && width  <= 1024, NULL);
   g_return_val_if_fail (height > 0 && height <= 1024, NULL);
 
-  data = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+  data = gimp_drawable_get_thumbnail_data (drawable_id,
                                            &width, &height, &bpp);
 
   switch (bpp)
