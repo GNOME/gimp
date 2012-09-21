@@ -497,7 +497,7 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
   ss = sin (- 2 * G_PI / spikes);
 
   /* for an even number of spikes compute one half and mirror it */
-  for (y = (spikes % 2 ? -half_height : 0); y <= half_height; y++)
+  for (y = ((spikes % 2) ? -half_height : 0); y <= half_height; y++)
     {
       for (x = -half_width; x <= half_width; x++)
         {
