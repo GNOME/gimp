@@ -1754,6 +1754,7 @@ gimp_image_format_display_uri (GimpImage *image,
   gboolean     is_exported;
   gchar       *display_uri   = NULL;
   gchar       *format_string;
+  gchar       *tmp;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -1812,19 +1813,23 @@ gimp_image_format_display_uri (GimpImage *image,
     }
   else if (basename)
     {
-      gchar *tmp = file_utils_uri_display_basename (display_uri);
+      tmp = file_utils_uri_display_basename (display_uri);
       g_free (display_uri);
       display_uri = tmp;
     }
   else
     {
-      gchar *tmp = file_utils_uri_display_name (display_uri);
+      tmp = file_utils_uri_display_name (display_uri);
       g_free (display_uri);
       display_uri = tmp;
     }
 
   format_string = g_strconcat (uri_format, export_status, NULL);
-  display_uri = g_strdup_printf (format_string, display_uri);
+
+  tmp = g_strdup_printf (format_string, display_uri);
+  g_free (display_uri);
+  display_uri = tmp;
+
   g_free (format_string);
 
   return display_uri;
