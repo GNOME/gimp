@@ -268,6 +268,7 @@ WriteBMP (const gchar  *filename,
       if (interactive && !save_dialog (channels))
         return GIMP_PDB_CANCEL;
 
+      /* mask_info_size is only set to non-zero for 16- and 32-bpp */
       switch (BMPSaveData.rgb_format)
         {
         case RGB_888:
@@ -275,6 +276,7 @@ WriteBMP (const gchar  *filename,
           break;
         case RGBA_8888:
           BitsPerPixel = 32;
+          mask_info_size = 16;
           break;
         case RGBX_8888:
           BitsPerPixel = 32;
@@ -290,6 +292,7 @@ WriteBMP (const gchar  *filename,
           break;
         case RGB_555:
           BitsPerPixel = 16;
+          mask_info_size = 16;
           break;
         default:
           g_return_val_if_reached (GIMP_PDB_EXECUTION_ERROR);
