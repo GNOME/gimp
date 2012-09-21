@@ -158,7 +158,7 @@ gimp_thumbnail_class_init (GimpThumbnailClass *klass)
                                    PROP_IMAGE_MTIME,
                                    g_param_spec_int64 ("image-mtime", NULL,
                                                        "Modification time of the image file in seconds since the Epoch",
-                                                       0, G_MAXINT64, 0,
+                                                       G_MININT64, G_MAXINT64, 0,
                                                        GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class,
                                    PROP_IMAGE_FILESIZE,
