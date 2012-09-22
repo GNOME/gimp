@@ -567,7 +567,7 @@ image_crop_invoker (GimpProcedure         *procedure,
       else
         gimp_image_crop (image, context,
                          offx, offy, offx + new_width, offy + new_height,
-                         FALSE, TRUE);
+                         TRUE);
     }
 
   return gimp_procedure_get_return_values (procedure, success,

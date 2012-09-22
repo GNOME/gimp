@@ -311,6 +311,7 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
       if (options->layer_only)
         {
           GimpLayer *layer = gimp_image_get_active_layer (image);
+          gint       off_x, off_y;
 
           if (! layer)
             {
@@ -325,12 +326,21 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
                                          _("The active layer's pixels are locked."));
               return FALSE;
             }
-        }
 
-      gimp_image_crop (image, GIMP_CONTEXT (options),
-                       x, y, w + x, h + y,
-                       options->layer_only,
-                       TRUE);
+          gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
+
+          off_x -= x;
+          off_y -= y;
+
+          gimp_item_resize (GIMP_ITEM (layer), GIMP_CONTEXT (options),
+                            w, h, off_x, off_y);
+        }
+      else
+        {
+          gimp_image_crop (image, GIMP_CONTEXT (options),
+                           x, y, w + x, h + y,
+                           TRUE);
+        }
 
       gimp_image_flush (image);
 

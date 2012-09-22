@@ -458,7 +458,7 @@ image_crop_cmd_callback (GtkAction *action,
     }
 
   gimp_image_crop (image, action_data_get_context (data),
-                   x1, y1, x2, y2, FALSE, TRUE);
+                   x1, y1, x2, y2, TRUE);
   gimp_image_flush (image);
 }
 

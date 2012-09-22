@@ -414,7 +414,7 @@ HELP
   else
     gimp_image_crop (image, context,
                      offx, offy, offx + new_width, offy + new_height,
-                     FALSE, TRUE);
+                     TRUE);
 }
 CODE
     );

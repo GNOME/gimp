@@ -45,16 +45,14 @@ gimp_image_crop (GimpImage   *image,
                  gint         y1,
                  gint         x2,
                  gint         y2,
-                 gboolean     active_layer_only,
                  gboolean     crop_layers)
 {
-  gint width, height;
-  gint previous_width, previous_height;
+  GList *list;
+  gint   width, height;
+  gint   previous_width, previous_height;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (active_layer_only == FALSE ||
-                    gimp_image_get_active_layer (image));
 
   previous_width  = gimp_image_get_width (image);
   previous_height = gimp_image_get_height (image);
@@ -68,192 +66,169 @@ gimp_image_crop (GimpImage   *image,
 
   gimp_set_busy (image->gimp);
 
-  if (active_layer_only)
-    {
-      GimpLayer *layer;
-      gint       off_x, off_y;
+  g_object_freeze_notify (G_OBJECT (image));
 
-      layer = gimp_image_get_active_layer (image);
-
-      gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
-
-      off_x -= x1;
-      off_y -= y1;
-
-      gimp_item_resize (GIMP_ITEM (layer), context, width, height, off_x, off_y);
-    }
+  if (crop_layers)
+    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CROP,
+                                 C_("undo-type", "Crop Image"));
   else
-    {
-      GList *list;
+    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_RESIZE,
+                                 C_("undo-type", "Resize Image"));
 
-      g_object_freeze_notify (G_OBJECT (image));
+  /*  Push the image size to the stack  */
+  gimp_image_undo_push_image_size (image, NULL,
+                                   x1, y1, width, height);
+
+  /*  Set the new width and height  */
+  g_object_set (image,
+                "width",  width,
+                "height", height,
+                NULL);
+
+  /*  Resize all channels  */
+  for (list = gimp_image_get_channel_iter (image);
+       list;
+       list = g_list_next (list))
+    {
+      GimpItem *item = list->data;
+
+      gimp_item_resize (item, context, width, height, -x1, -y1);
+    }
+
+  /*  Resize all vectors  */
+  for (list = gimp_image_get_vectors_iter (image);
+       list;
+       list = g_list_next (list))
+    {
+      GimpItem *item = list->data;
+
+      gimp_item_resize (item, context, width, height, -x1, -y1);
+    }
+
+  /*  Don't forget the selection mask!  */
+  gimp_item_resize (GIMP_ITEM (gimp_image_get_mask (image)), context,
+                    width, height, -x1, -y1);
+
+  /*  crop all layers  */
+  list = gimp_image_get_layer_iter (image);
+
+  while (list)
+    {
+      GimpItem *item = list->data;
+
+      list = g_list_next (list);
+
+      gimp_item_translate (item, -x1, -y1, TRUE);
 
       if (crop_layers)
-        gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CROP,
-                                     C_("undo-type", "Crop Image"));
-      else
-        gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_RESIZE,
-                                     C_("undo-type", "Resize Image"));
-
-      /*  Push the image size to the stack  */
-      gimp_image_undo_push_image_size (image,
-                                       NULL,
-                                       x1,
-                                       y1,
-                                       width,
-                                       height);
-
-      /*  Set the new width and height  */
-      g_object_set (image,
-                    "width",  width,
-                    "height", height,
-                    NULL);
-
-      /*  Resize all channels  */
-      for (list = gimp_image_get_channel_iter (image);
-           list;
-           list = g_list_next (list))
         {
-          GimpItem *item = list->data;
+          gint off_x, off_y;
+          gint lx1, ly1, lx2, ly2;
 
-          gimp_item_resize (item, context, width, height, -x1, -y1);
-        }
+          gimp_item_get_offset (item, &off_x, &off_y);
 
-      /*  Resize all vectors  */
-      for (list = gimp_image_get_vectors_iter (image);
-           list;
-           list = g_list_next (list))
-        {
-          GimpItem *item = list->data;
+          lx1 = CLAMP (off_x, 0, gimp_image_get_width  (image));
+          ly1 = CLAMP (off_y, 0, gimp_image_get_height (image));
+          lx2 = CLAMP (gimp_item_get_width  (item) + off_x,
+                       0, gimp_image_get_width (image));
+          ly2 = CLAMP (gimp_item_get_height (item) + off_y,
+                       0, gimp_image_get_height (image));
 
-          gimp_item_resize (item, context, width, height, -x1, -y1);
-        }
+          width  = lx2 - lx1;
+          height = ly2 - ly1;
 
-      /*  Don't forget the selection mask!  */
-      gimp_item_resize (GIMP_ITEM (gimp_image_get_mask (image)), context,
-                        width, height, -x1, -y1);
-
-      /*  crop all layers  */
-      list = gimp_image_get_layer_iter (image);
-
-      while (list)
-        {
-          GimpItem *item = list->data;
-
-          list = g_list_next (list);
-
-          gimp_item_translate (item, -x1, -y1, TRUE);
-
-          if (crop_layers)
+          if (width > 0 && height > 0)
             {
-              gint off_x, off_y;
-              gint lx1, ly1, lx2, ly2;
-
-              gimp_item_get_offset (item, &off_x, &off_y);
-
-              lx1 = CLAMP (off_x, 0, gimp_image_get_width  (image));
-              ly1 = CLAMP (off_y, 0, gimp_image_get_height (image));
-              lx2 = CLAMP (gimp_item_get_width  (item) + off_x,
-                           0, gimp_image_get_width (image));
-              ly2 = CLAMP (gimp_item_get_height (item) + off_y,
-                           0, gimp_image_get_height (image));
-
-              width  = lx2 - lx1;
-              height = ly2 - ly1;
-
-              if (width > 0 && height > 0)
-                {
-                  gimp_item_resize (item, context, width, height,
-                                    -(lx1 - off_x),
-                                    -(ly1 - off_y));
-                }
-              else
-                {
-                  gimp_image_remove_layer (image, GIMP_LAYER (item),
-                                           TRUE, NULL);
-                }
+              gimp_item_resize (item, context, width, height,
+                                -(lx1 - off_x),
+                                -(ly1 - off_y));
+            }
+          else
+            {
+              gimp_image_remove_layer (image, GIMP_LAYER (item),
+                                       TRUE, NULL);
             }
         }
-
-      /*  Reposition or remove all guides  */
-      list = gimp_image_get_guides (image);
-
-      while (list)
-        {
-          GimpGuide *guide        = list->data;
-          gboolean   remove_guide = FALSE;
-          gint       position     = gimp_guide_get_position (guide);
-
-          list = g_list_next (list);
-
-          switch (gimp_guide_get_orientation (guide))
-            {
-            case GIMP_ORIENTATION_HORIZONTAL:
-              if ((position < y1) || (position > y2))
-                remove_guide = TRUE;
-              else
-                position -= y1;
-              break;
-
-            case GIMP_ORIENTATION_VERTICAL:
-              if ((position < x1) || (position > x2))
-                remove_guide = TRUE;
-              else
-                position -= x1;
-              break;
-
-            default:
-              break;
-            }
-
-          if (remove_guide)
-            gimp_image_remove_guide (image, guide, TRUE);
-          else if (position != gimp_guide_get_position (guide))
-            gimp_image_move_guide (image, guide, position, TRUE);
-        }
-
-      /*  Reposition or remove sample points  */
-      list = gimp_image_get_sample_points (image);
-
-      while (list)
-        {
-          GimpSamplePoint *sample_point        = list->data;
-          gboolean         remove_sample_point = FALSE;
-          gint             new_x               = sample_point->x;
-          gint             new_y               = sample_point->y;
-
-          list = g_list_next (list);
-
-          new_y -= y1;
-          if ((sample_point->y < y1) || (sample_point->y > y2))
-            remove_sample_point = TRUE;
-
-          new_x -= x1;
-          if ((sample_point->x < x1) || (sample_point->x > x2))
-            remove_sample_point = TRUE;
-
-          if (remove_sample_point)
-            gimp_image_remove_sample_point (image, sample_point, TRUE);
-          else if (new_x != sample_point->x || new_y != sample_point->y)
-            gimp_image_move_sample_point (image, sample_point,
-                                          new_x, new_y, TRUE);
-        }
-
-      gimp_image_undo_group_end (image);
-
-      gimp_image_invalidate (image,
-                             0, 0,
-                             gimp_image_get_width  (image),
-                             gimp_image_get_height (image));
-
-      gimp_image_size_changed_detailed (image,
-                                        -x1,
-                                        -y1,
-                                        previous_width,
-                                        previous_height);
-
-      g_object_thaw_notify (G_OBJECT (image));
     }
+
+  /*  Reposition or remove all guides  */
+  list = gimp_image_get_guides (image);
+
+  while (list)
+    {
+      GimpGuide *guide        = list->data;
+      gboolean   remove_guide = FALSE;
+      gint       position     = gimp_guide_get_position (guide);
+
+      list = g_list_next (list);
+
+      switch (gimp_guide_get_orientation (guide))
+        {
+        case GIMP_ORIENTATION_HORIZONTAL:
+          if ((position < y1) || (position > y2))
+            remove_guide = TRUE;
+          else
+            position -= y1;
+          break;
+
+        case GIMP_ORIENTATION_VERTICAL:
+          if ((position < x1) || (position > x2))
+            remove_guide = TRUE;
+          else
+            position -= x1;
+          break;
+
+        default:
+          break;
+        }
+
+      if (remove_guide)
+        gimp_image_remove_guide (image, guide, TRUE);
+      else if (position != gimp_guide_get_position (guide))
+        gimp_image_move_guide (image, guide, position, TRUE);
+    }
+
+  /*  Reposition or remove sample points  */
+  list = gimp_image_get_sample_points (image);
+
+  while (list)
+    {
+      GimpSamplePoint *sample_point        = list->data;
+      gboolean         remove_sample_point = FALSE;
+      gint             new_x               = sample_point->x;
+      gint             new_y               = sample_point->y;
+
+      list = g_list_next (list);
+
+      new_y -= y1;
+      if ((sample_point->y < y1) || (sample_point->y > y2))
+        remove_sample_point = TRUE;
+
+      new_x -= x1;
+      if ((sample_point->x < x1) || (sample_point->x > x2))
+        remove_sample_point = TRUE;
+
+      if (remove_sample_point)
+        gimp_image_remove_sample_point (image, sample_point, TRUE);
+      else if (new_x != sample_point->x || new_y != sample_point->y)
+        gimp_image_move_sample_point (image, sample_point,
+                                      new_x, new_y, TRUE);
+    }
+
+  gimp_image_undo_group_end (image);
+
+  gimp_image_invalidate (image,
+                         0, 0,
+                         gimp_image_get_width  (image),
+                         gimp_image_get_height (image));
+
+  gimp_image_size_changed_detailed (image,
+                                    -x1,
+                                    -y1,
+                                    previous_width,
+                                    previous_height);
+
+  g_object_thaw_notify (G_OBJECT (image));
 
   gimp_unset_busy (image->gimp);
 }

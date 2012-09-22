@@ -25,7 +25,6 @@ void   gimp_image_crop (GimpImage   *image,
                         gint         y1,
                         gint         x2,
                         gint         y2,
-                        gboolean     active_layer_only,
                         gboolean     crop_layers);
 
 
