@@ -667,22 +667,25 @@ gimp_drawable_attach_new_parasite (gint32          drawable_ID,
 GeglBuffer *
 gimp_drawable_get_buffer (gint32 drawable_ID)
 {
-  GimpDrawable *drawable;
-
   gimp_plugin_enable_precision ();
 
-  drawable = gimp_drawable_get (drawable_ID);
-
-  if (drawable)
+  if (gimp_item_is_valid (drawable_ID))
     {
-      GeglTileBackend *backend;
-      GeglBuffer      *buffer;
+      GimpDrawable *drawable;
 
-      backend = _gimp_tile_backend_plugin_new (drawable, FALSE);
-      buffer = gegl_buffer_new_for_backend (NULL, backend);
-      g_object_unref (backend);
+      drawable = gimp_drawable_get (drawable_ID);
 
-      return buffer;
+      if (drawable)
+        {
+          GeglTileBackend *backend;
+          GeglBuffer      *buffer;
+
+          backend = _gimp_tile_backend_plugin_new (drawable, FALSE);
+          buffer = gegl_buffer_new_for_backend (NULL, backend);
+          g_object_unref (backend);
+
+          return buffer;
+        }
     }
 
   return NULL;
