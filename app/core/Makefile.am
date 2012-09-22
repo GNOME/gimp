@@ -315,6 +315,8 @@ libappcore_a_sources = \
 	gimppdbprogress.h			\
 	gimppickable.c				\
 	gimppickable.h				\
+	gimppickable-auto-shrink.c		\
+	gimppickable-auto-shrink.h		\
 	gimpprogress.c				\
 	gimpprogress.h				\
 	gimpprojectable.c			\

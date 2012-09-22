@@ -34,10 +34,10 @@
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
-#include "core/gimpimage-crop.h"
 #include "core/gimpimage.h"
 #include "core/gimpmarshal.h"
 #include "core/gimppickable.h"
+#include "core/gimppickable-auto-shrink.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpwidgets-utils.h"
@@ -2502,6 +2502,7 @@ gimp_rectangle_tool_auto_shrink (GimpRectangleTool *rect_tool)
   GimpRectangleToolPrivate *private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
   GimpDisplay              *display = tool->display;
   GimpImage                *image;
+  GimpPickable             *pickable;
   gint                      offset_x = 0;
   gint                      offset_y = 0;
   gint                      x1, y1;
@@ -2523,34 +2524,34 @@ gimp_rectangle_tool_auto_shrink (GimpRectangleTool *rect_tool)
 
   if (shrink_merged)
     {
-      x1 = MAX (private->x1, 0);
-      y1 = MAX (private->y1, 0);
-      x2 = MIN (private->x2, gimp_image_get_width  (image));
-      y2 = MIN (private->y2, gimp_image_get_height (image));
+      pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
+
+      x1 = private->x1;
+      y1 = private->y1;
+      x2 = private->x2;
+      y2 = private->y2;
     }
   else
     {
-      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
-      GimpItem     *item     = GIMP_ITEM (drawable);
+      pickable = GIMP_PICKABLE (gimp_image_get_active_drawable (image));
 
-      if (! drawable)
+      if (! pickable)
         return;
 
-      gimp_item_get_offset (item, &offset_x, &offset_y);
+      gimp_item_get_offset (GIMP_ITEM (pickable), &offset_x, &offset_y);
 
-      x1 = MAX (private->x1 - offset_x, 0);
-      y1 = MAX (private->y1 - offset_y, 0);
-      x2 = MIN (private->x2 - offset_x, gimp_item_get_width  (item));
-      y2 = MIN (private->y2 - offset_y, gimp_item_get_height (item));
+      x1 = private->x1 - offset_x;
+      y1 = private->y1 - offset_y;
+      x2 = private->x2 - offset_x;
+      y2 = private->y2 - offset_y;
     }
 
-  if (gimp_image_crop_auto_shrink (image,
-                                   x1, y1, x2, y2,
-                                   ! shrink_merged,
-                                   &shrunk_x1,
-                                   &shrunk_y1,
-                                   &shrunk_x2,
-                                   &shrunk_y2))
+  if (gimp_pickable_auto_shrink (pickable,
+                                 x1, y1, x2, y2,
+                                 &shrunk_x1,
+                                 &shrunk_y1,
+                                 &shrunk_x2,
+                                 &shrunk_y2))
     {
       GimpRectangleFunction original_function = private->function;
 

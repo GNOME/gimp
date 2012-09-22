@@ -15,18 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_CROP_H__
-#define __GIMP_IMAGE_CROP_H__
+#ifndef __GIMP_PICKABLE_AUTO_SHRINK_H__
+#define __GIMP_PICKABLE_AUTO_SHRINK_H__
 
 
-void   gimp_image_crop (GimpImage   *image,
-                        GimpContext *context,
-                        gint         x1,
-                        gint         y1,
-                        gint         x2,
-                        gint         y2,
-                        gboolean     active_layer_only,
-                        gboolean     crop_layers);
+gboolean   gimp_pickable_auto_shrink (GimpPickable *pickable,
+                                      gint         x1,
+                                      gint         y1,
+                                      gint         x2,
+                                      gint         y2,
+                                      gint        *shrunk_x1,
+                                      gint        *shrunk_y1,
+                                      gint        *shrunk_x2,
+                                      gint        *shrunk_y2);
 
 
-#endif  /* __GIMP_IMAGE_CROP_H__ */
+#endif  /* __GIMP_PICKABLE_AUTO_SHRINK_H__ */
