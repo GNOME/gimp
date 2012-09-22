@@ -1307,7 +1307,7 @@ gimp_brush_core_solidify_mask (GimpBrushCore     *core,
 {
   GimpTempBuf  *dest;
   const guchar *m;
-  guchar       *d;
+  gfloat       *d;
   gint          dest_offset_x     = 0;
   gint          dest_offset_y     = 0;
   gint          brush_mask_width  = gimp_temp_buf_get_width  (brush_mask);
@@ -1354,20 +1354,20 @@ gimp_brush_core_solidify_mask (GimpBrushCore     *core,
 
   dest = gimp_temp_buf_new (brush_mask_width  + 2,
                             brush_mask_height + 2,
-                            gimp_temp_buf_get_format (brush_mask));
+                            babl_format ("Y float"));
   gimp_temp_buf_data_clear (dest);
 
   core->solid_brushes[dest_offset_y][dest_offset_x] = dest;
 
   m = gimp_temp_buf_get_data (brush_mask);
-  d = (gimp_temp_buf_get_data (dest) +
-       (dest_offset_y + 1) * gimp_temp_buf_get_width (dest) +
-       (dest_offset_x + 1));
+  d = ((gfloat *) gimp_temp_buf_get_data (dest) +
+       ((dest_offset_y + 1) * gimp_temp_buf_get_width (dest) +
+        (dest_offset_x + 1)));
 
   for (i = 0; i < brush_mask_height; i++)
     {
       for (j = 0; j < brush_mask_width; j++)
-        *d++ = (*m++) ? 255 : 0;
+        *d++ = (*m++) ? 1.0 : 0.0;
 
       d += 2;
     }
