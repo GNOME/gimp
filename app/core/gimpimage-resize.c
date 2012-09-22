@@ -95,19 +95,16 @@ gimp_image_resize_with_layers (GimpImage    *image,
   progress_max = (gimp_container_get_n_children (gimp_image_get_layers (image))   +
                   gimp_container_get_n_children (gimp_image_get_channels (image)) +
                   gimp_container_get_n_children (gimp_image_get_vectors (image))  +
-                  g_list_length (resize_layers)                   +
+                  g_list_length (resize_layers)                                   +
                   1 /* selection */);
 
   old_width  = gimp_image_get_width  (image);
   old_height = gimp_image_get_height (image);
 
   /*  Push the image size to the stack  */
-  gimp_image_undo_push_image_size (image,
-                                   NULL,
-                                   -offset_x,
-                                   -offset_y,
-                                   new_width,
-                                   new_height);
+  gimp_image_undo_push_image_size (image, NULL,
+                                   -offset_x, -offset_y,
+                                   new_width, new_height);
 
   /*  Set the new width and height  */
   g_object_set (image,
@@ -250,10 +247,8 @@ gimp_image_resize_with_layers (GimpImage    *image,
   gimp_image_undo_group_end (image);
 
   gimp_image_size_changed_detailed (image,
-                                    offset_x,
-                                    offset_y,
-                                    old_width,
-                                    old_height);
+                                    offset_x, offset_y,
+                                    old_width, old_height);
 
   g_object_thaw_notify (G_OBJECT (image));
 
