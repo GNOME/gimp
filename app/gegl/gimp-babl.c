@@ -152,13 +152,13 @@ static const struct
 babl_descriptions[] =
 {
   { "R'G'B' u8",  N_("RGB") },
-  { "R'G'B' u16",    N_("RGB") },
+  { "R'G'B' u16", N_("RGB") },
   { "RGB u32",    N_("RGB") },
   { "RGB half",   N_("RGB") },
   { "RGB float",  N_("RGB") },
 
   { "R'G'B'A u8", N_("RGB-alpha") },
-  { "R'G'B'A u16",   N_("RGB-alpha") },
+  { "R'G'B'A u16",N_("RGB-alpha") },
   { "RGBA u32",   N_("RGB-alpha") },
   { "RGBA half",  N_("RGB-alpha") },
   { "RGBA float", N_("RGB-alpha") },
@@ -178,19 +178,19 @@ babl_descriptions[] =
   { "YA float",   N_("Grayscale-alpha") },
 
   { "R' u8",      N_("Red component") },
-  { "R' u16",      N_("Red component") },
+  { "R' u16",     N_("Red component") },
   { "R u32",      N_("Red component") },
   { "R half",     N_("Red component") },
   { "R float",    N_("Red component") },
 
   { "G' u8",      N_("Green component") },
-  { "G' u16",      N_("Green component") },
+  { "G' u16",     N_("Green component") },
   { "G u32",      N_("Green component") },
   { "G half",     N_("Green component") },
   { "G float",    N_("Green component") },
 
   { "B' u8",      N_("Blue component") },
-  { "B' u16",      N_("Blue component") },
+  { "B' u16",     N_("Blue component") },
   { "B u32",      N_("Blue component") },
   { "B half",     N_("Blue component") },
   { "B float",    N_("Blue component") },
