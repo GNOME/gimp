@@ -70,7 +70,9 @@ void   layers_resize_to_image_cmd_callback    (GtkAction   *action,
                                                gpointer     data);
 void   layers_scale_cmd_callback              (GtkAction   *action,
                                                gpointer     data);
-void   layers_crop_cmd_callback               (GtkAction   *action,
+void   layers_crop_to_selection_cmd_callback  (GtkAction   *action,
+                                               gpointer     data);
+void   layers_crop_to_content_cmd_callback    (GtkAction   *action,
                                                gpointer     data);
 
 void   layers_mask_add_cmd_callback           (GtkAction   *action,

@@ -41,6 +41,8 @@
 #include "core/gimpimage-rotate.h"
 #include "core/gimpimage-scale.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimppickable.h"
+#include "core/gimppickable-auto-shrink.h"
 #include "core/gimpprogress.h"
 
 #include "widgets/gimpdialogfactory.h"
@@ -439,8 +441,8 @@ image_rotate_cmd_callback (GtkAction *action,
 }
 
 void
-image_crop_cmd_callback (GtkAction *action,
-                         gpointer   data)
+image_crop_to_selection_cmd_callback (GtkAction *action,
+                                      gpointer   data)
 {
   GimpImage *image;
   GtkWidget *widget;
@@ -454,6 +456,33 @@ image_crop_cmd_callback (GtkAction *action,
       gimp_message_literal (image->gimp,
 			    G_OBJECT (widget), GIMP_MESSAGE_WARNING,
 			    _("Cannot crop because the current selection is empty."));
+      return;
+    }
+
+  gimp_image_crop (image, action_data_get_context (data),
+                   x1, y1, x2, y2, TRUE);
+  gimp_image_flush (image);
+}
+
+void
+image_crop_to_content_cmd_callback (GtkAction *action,
+                                    gpointer   data)
+{
+  GimpImage *image;
+  GtkWidget *widget;
+  gint       x1, y1, x2, y2;
+  return_if_no_image (image, data);
+  return_if_no_widget (widget, data);
+
+  if (! gimp_pickable_auto_shrink (GIMP_PICKABLE (gimp_image_get_projection (image)),
+                                   0, 0,
+                                   gimp_image_get_width  (image),
+                                   gimp_image_get_height (image),
+                                   &x1, &y1, &x2, &y2))
+    {
+      gimp_message_literal (image->gimp,
+			    G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+			    _("Cannot crop because the image has no content."));
       return;
     }
 

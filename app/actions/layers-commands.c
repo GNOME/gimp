@@ -41,6 +41,7 @@
 #include "core/gimpitemundo.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimppickable.h"
+#include "core/gimppickable-auto-shrink.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimpundostack.h"
 #include "core/gimpprogress.h"
@@ -673,8 +674,8 @@ layers_scale_cmd_callback (GtkAction *action,
 }
 
 void
-layers_crop_cmd_callback (GtkAction *action,
-                          gpointer   data)
+layers_crop_to_selection_cmd_callback (GtkAction *action,
+                                       gpointer   data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -699,10 +700,44 @@ layers_crop_cmd_callback (GtkAction *action,
   off_y -= y1;
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
-                               _("Crop Layer"));
+                               _("Crop Layer to Selection"));
 
   gimp_item_resize (GIMP_ITEM (layer), action_data_get_context (data),
                     x2 - x1, y2 - y1, off_x, off_y);
+
+  gimp_image_undo_group_end (image);
+
+  gimp_image_flush (image);
+}
+
+void
+layers_crop_to_content_cmd_callback (GtkAction *action,
+                                     gpointer   data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  GtkWidget *widget;
+  gint       x1, y1, x2, y2;
+  return_if_no_layer (image, layer, data);
+  return_if_no_widget (widget, data);
+
+  if (! gimp_pickable_auto_shrink (GIMP_PICKABLE (layer),
+                                   0, 0,
+                                   gimp_item_get_width  (GIMP_ITEM (layer)),
+                                   gimp_item_get_height (GIMP_ITEM (layer)),
+                                   &x1, &y1, &x2, &y2))
+    {
+      gimp_message_literal (image->gimp,
+			    G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+			    _("Cannot crop because the active layer has no content."));
+      return;
+    }
+
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
+                               _("Crop Layer to Content"));
+
+  gimp_item_resize (GIMP_ITEM (layer), action_data_get_context (data),
+                    x2 - x1, y2 - y1, -x1, -y1);
 
   gimp_image_undo_group_end (image);
 

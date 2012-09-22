@@ -351,7 +351,8 @@
       </placeholder>
       <separator />
       <placeholder name="Crop">
-        <menuitem action="image-crop" />
+        <menuitem action="image-crop-to-selection" />
+        <menuitem action="image-crop-to-content" />
       </placeholder>
       <separator />
       <placeholder name="Structure">
@@ -490,7 +491,8 @@
         <menuitem action="layers-scale" />
       </placeholder>
       <placeholder name="Crop">
-        <menuitem action="layers-crop" />
+        <menuitem action="layers-crop-to-selection" />
+        <menuitem action="layers-crop-to-content" />
       </placeholder>
       <separator />
     </menu>

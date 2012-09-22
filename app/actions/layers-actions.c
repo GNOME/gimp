@@ -206,10 +206,16 @@ static const GimpActionEntry layers_actions[] =
     G_CALLBACK (layers_scale_cmd_callback),
     GIMP_HELP_LAYER_SCALE },
 
-  { "layers-crop", GIMP_STOCK_TOOL_CROP,
+  { "layers-crop-to-selection", GIMP_STOCK_TOOL_CROP,
     NC_("layers-action", "_Crop to Selection"), NULL,
     NC_("layers-action", "Crop the layer to the extents of the selection"),
-    G_CALLBACK (layers_crop_cmd_callback),
+    G_CALLBACK (layers_crop_to_selection_cmd_callback),
+    GIMP_HELP_LAYER_CROP },
+
+  { "layers-crop-to-content", GIMP_STOCK_TOOL_CROP,
+    NC_("layers-action", "Crop to C_ontent"), NULL,
+    NC_("layers-action", "Crop the layer to the extents its content (remove empty borders from the layer)"),
+    G_CALLBACK (layers_crop_to_content_cmd_callback),
     GIMP_HELP_LAYER_CROP },
 
   { "layers-mask-add", GIMP_STOCK_LAYER_MASK,
@@ -643,7 +649,8 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-resize-to-image", writable && !ac);
   SET_SENSITIVE ("layers-scale",           writable && !ac);
 
-  SET_SENSITIVE ("layers-crop",            writable && sel);
+  SET_SENSITIVE ("layers-crop-to-selection", writable && sel);
+  SET_SENSITIVE ("layers-crop-to-content",   writable);
 
   SET_SENSITIVE ("layers-alpha-add",       writable && !children && !fs && !alpha);
   SET_SENSITIVE ("layers-alpha-remove",    writable && !children && !fs &&  alpha);

@@ -100,10 +100,16 @@ static const GimpActionEntry image_actions[] =
     G_CALLBACK (image_scale_cmd_callback),
     GIMP_HELP_IMAGE_SCALE },
 
-  { "image-crop", GIMP_STOCK_TOOL_CROP,
+  { "image-crop-to-selection", GIMP_STOCK_TOOL_CROP,
     NC_("image-action", "_Crop to Selection"), NULL,
     NC_("image-action", "Crop the image to the extents of the selection"),
-    G_CALLBACK (image_crop_cmd_callback),
+    G_CALLBACK (image_crop_to_selection_cmd_callback),
+    GIMP_HELP_IMAGE_CROP },
+
+  { "image-crop-to-content", GIMP_STOCK_TOOL_CROP,
+    NC_("image-action", "Crop to C_ontent"), NULL,
+    NC_("image-action", "Crop the image to the extents of its content (remove empty borders from the image)"),
+    G_CALLBACK (image_crop_to_content_cmd_callback),
     GIMP_HELP_IMAGE_CROP },
 
   { "image-duplicate", GIMP_STOCK_DUPLICATE,
@@ -331,7 +337,8 @@ image_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("image-resize-to-selection", image && sel);
   SET_SENSITIVE ("image-print-size",          image);
   SET_SENSITIVE ("image-scale",               image);
-  SET_SENSITIVE ("image-crop",                image && sel);
+  SET_SENSITIVE ("image-crop-to-selection",   image && sel);
+  SET_SENSITIVE ("image-crop-to-content",     image);
   SET_SENSITIVE ("image-duplicate",           image);
   SET_SENSITIVE ("image-merge-layers",        image && !aux && lp);
   SET_SENSITIVE ("image-flatten",             image && !aux && lp);
