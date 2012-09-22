@@ -27,7 +27,6 @@
     'contrast-stretch' => {},
     'contrast-stretch-hsv' => {},
     'convolution-matrix' => { ui => 1 },
-    'crop-auto' => {},
     'crop-zealous' => {},
     'cubism' => { ui => 1 },
     'curve-bend' => { ui => 1 },

@@ -35,7 +35,12 @@
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable-operation.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpimage-crop.h"
+#include "core/gimpimage-undo.h"
+#include "core/gimpimage.h"
 #include "core/gimpparamspecs.h"
+#include "core/gimppickable-auto-shrink.h"
+#include "core/gimppickable.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimppdb.h"
@@ -45,6 +50,103 @@
 
 #include "gimp-intl.h"
 
+
+static GimpValueArray *
+plug_in_autocrop_invoker (GimpProcedure         *procedure,
+                          Gimp                  *gimp,
+                          GimpContext           *context,
+                          GimpProgress          *progress,
+                          const GimpValueArray  *args,
+                          GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  GimpDrawable *drawable;
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error))
+        {
+          gint x1, y1, x2, y2;
+
+          if (gimp_pickable_auto_shrink (GIMP_PICKABLE (drawable),
+                                         0, 0,
+                                         gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                         gimp_item_get_height (GIMP_ITEM (drawable)),
+                                         &x1, &y1, &x2, &y2))
+            {
+              gint off_x, off_y;
+
+              gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+
+              x1 += off_x; x2 += off_x;
+              y1 += off_y; y2 += off_y;
+
+              gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
+                                           _("Autocrop image"));
+
+              gimp_image_crop (image, context,
+                               x2 - x1, y2 - y1, -x1, -y1, TRUE);
+
+              gimp_image_undo_group_end (image);
+            }
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_autocrop_layer_invoker (GimpProcedure         *procedure,
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  GimpDrawable *drawable;
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error))
+        {
+          GimpLayer *layer = gimp_image_get_active_layer (image);
+          gint       x1, y1, x2, y2;
+
+          if (layer &&
+              gimp_pickable_auto_shrink (GIMP_PICKABLE (drawable),
+                                         0, 0,
+                                         gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                         gimp_item_get_height (GIMP_ITEM (drawable)),
+                                         &x1, &y1, &x2, &y2))
+            {
+              gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
+                                           _("Autocrop layer"));
+
+              gimp_item_resize (GIMP_ITEM (layer), context,
+                                x2 - x1, y2 - y1, -x1, -y1);
+
+              gimp_image_undo_group_end (image);
+            }
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
 
 static GimpValueArray *
 plug_in_colortoalpha_invoker (GimpProcedure         *procedure,
@@ -352,6 +454,78 @@ void
 register_plug_in_compat_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
+
+  /*
+   * gimp-plug-in-autocrop
+   */
+  procedure = gimp_procedure_new (plug_in_autocrop_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-autocrop");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-autocrop",
+                                     "Remove empty borders from the image",
+                                     "Remove empty borders from the image.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1997",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-autocrop-layer
+   */
+  procedure = gimp_procedure_new (plug_in_autocrop_layer_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-autocrop-layer");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-autocrop-layer",
+                                     "Remove empty borders from the layer",
+                                     "Remove empty borders from the layer.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1997",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-plug-in-colortoalpha

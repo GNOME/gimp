@@ -72,7 +72,6 @@ libexec_PROGRAMS = \
 	contrast-stretch \
 	contrast-stretch-hsv \
 	convolution-matrix \
-	crop-auto \
 	crop-zealous \
 	cubism \
 	curve-bend \
@@ -684,21 +683,6 @@ convolution_matrix_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(convolution_matrix_RC)
-
-crop_auto_SOURCES = \
-	crop-auto.c
-
-crop_auto_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(CAIRO_LIBS)		\
-	$(GDK_PIXBUF_LIBS)	\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(crop_auto_RC)
 
 crop_zealous_SOURCES = \
 	crop-zealous.c

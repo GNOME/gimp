@@ -16,6 +16,111 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
+sub plug_in_autocrop {
+    $blurb = 'Remove empty borders from the image';
+
+    $help = <<'HELP';
+Remove empty borders from the image.
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image',
+	  desc => 'Input image)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error))
+    {
+      gint x1, y1, x2, y2;
+
+      if (gimp_pickable_auto_shrink (GIMP_PICKABLE (drawable),
+                                     0, 0,
+                                     gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                     gimp_item_get_height (GIMP_ITEM (drawable)),
+                                     &x1, &y1, &x2, &y2))
+        {
+          gint off_x, off_y;
+
+          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+
+          x1 += off_x; x2 += off_x;
+          y1 += off_y; y2 += off_y;
+
+          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
+                                       _("Autocrop image"));
+
+          gimp_image_crop (image, context,
+                           x2 - x1, y2 - y1, -x1, -y1, TRUE);
+
+          gimp_image_undo_group_end (image);
+        }
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub plug_in_autocrop_layer {
+    $blurb = 'Remove empty borders from the layer';
+
+    $help = <<'HELP';
+Remove empty borders from the layer.
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image',
+	  desc => 'Input image)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error))
+    {
+      GimpLayer *layer = gimp_image_get_active_layer (image);
+      gint       x1, y1, x2, y2;
+
+      if (layer &&
+          gimp_pickable_auto_shrink (GIMP_PICKABLE (drawable),
+                                     0, 0,
+                                     gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                     gimp_item_get_height (GIMP_ITEM (drawable)),
+                                     &x1, &y1, &x2, &y2))
+        {
+          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
+                                       _("Autocrop layer"));
+
+          gimp_item_resize (GIMP_ITEM (layer), context,
+                            x2 - x1, y2 - y1, -x1, -y1);
+
+          gimp_image_undo_group_end (image);
+        }
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_colortoalpha {
     $blurb = 'Convert a specified color to transparency';
 
@@ -375,10 +480,16 @@ CODE
               "core/gimpcontext.h"
               "core/gimpdrawable.h"
               "core/gimpdrawable-operation.h"
+              "core/gimpimage-crop.h"
+              "core/gimpimage-undo.h"
+              "core/gimppickable.h"
+              "core/gimppickable-auto-shrink.h"
               "gimppdb-utils.h"
               "gimp-intl.h");
 
-@procs = qw(plug_in_colortoalpha
+@procs = qw(plug_in_autocrop
+            plug_in_autocrop_layer
+            plug_in_colortoalpha
             plug_in_pixelize
             plug_in_pixelize2
             plug_in_polar_coords
