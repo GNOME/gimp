@@ -200,6 +200,8 @@ run (const gchar      *name,
 
   INIT_I18N ();
 
+  gegl_init (NULL, NULL);
+
   *nreturn_vals = 1;
   *return_vals  = values;
 
@@ -637,34 +639,34 @@ save_image (const gchar *filename,
             gint32       orig_image_ID,
             GError     **error)
 {
-  GimpPixelRgn pixel_rgn;
-  GimpDrawable *drawable;
-  GimpImageType drawable_type;
-  FILE *outfile;
-  gint Red[MAXCOLORS];
-  gint Green[MAXCOLORS];
-  gint Blue[MAXCOLORS];
-  guchar *cmap;
-  guint rows, cols;
-  gint BitsPerPixel, liberalBPP = 0, useBPP = 0;
-  gint colors;
-  gint i;
-  gint transparent;
-  gint offset_x, offset_y;
+  GeglBuffer    *buffer;
+  GimpImageType  drawable_type;
+  const Babl    *format = NULL;
+  FILE          *outfile;
+  gint           Red[MAXCOLORS];
+  gint           Green[MAXCOLORS];
+  gint           Blue[MAXCOLORS];
+  guchar        *cmap;
+  guint          rows, cols;
+  gint           BitsPerPixel, liberalBPP = 0, useBPP = 0;
+  gint           colors;
+  gint           i;
+  gint           transparent;
+  gint           offset_x, offset_y;
 
-  gint32 *layers;
-  gint    nlayers;
+  gint32        *layers;
+  gint           nlayers;
 
-  gboolean is_gif89 = FALSE;
+  gboolean       is_gif89 = FALSE;
 
-  gint   Delay89;
-  gint   Disposal;
-  gchar *layer_name;
+  gint           Delay89;
+  gint           Disposal;
+  gchar         *layer_name;
 
-  GimpRGB background;
-  guchar  bgred, bggreen, bgblue;
-  guchar  bgindex = 0;
-  guint   best_error = 0xFFFFFFFF;
+  GimpRGB        background;
+  guchar         bgred, bggreen, bgblue;
+  guchar         bgindex = 0;
+  guint          best_error = 0xFFFFFFFF;
 
 
 #ifdef FACEHUGGERS
@@ -747,6 +749,11 @@ save_image (const gchar *filename,
         {
           Red[i] = Green[i] = Blue[i] = i;
         }
+
+      if (drawable_type == GIMP_GRAYA_IMAGE)
+        format = babl_format ("Y'A u8");
+      else
+        format = babl_format ("Y' u8");
       break;
 
     default:
@@ -839,39 +846,36 @@ save_image (const gchar *filename,
   for (i = nlayers - 1; i >= 0; i--, cur_progress = (nlayers - i) * rows)
     {
       drawable_type = gimp_drawable_type (layers[i]);
-      drawable = gimp_drawable_get (layers[i]);
+      buffer = gimp_drawable_get_buffer (layers[i]);
       gimp_drawable_offsets (layers[i], &offset_x, &offset_y);
-      cols = drawable->width;
-      rows = drawable->height;
-      rowstride = drawable->width;
+      cols = gimp_drawable_width (layers[i]);
+      rows = gimp_drawable_height (layers[i]);
+      rowstride = cols;
 
-      gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
-                           drawable->width, drawable->height, FALSE, FALSE);
+      pixels = g_new (guchar, (cols * rows *
+                               (((drawable_type == GIMP_INDEXEDA_IMAGE) ||
+                                 (drawable_type == GIMP_GRAYA_IMAGE)) ? 2 : 1)));
 
-      pixels = g_new (guchar, (drawable->width * drawable->height
-                               * (((drawable_type == GIMP_INDEXEDA_IMAGE)
-                                   || (drawable_type == GIMP_GRAYA_IMAGE)) ? 2 : 1)));
-
-      gimp_pixel_rgn_get_rect (&pixel_rgn, pixels, 0, 0,
-                               drawable->width, drawable->height);
-
+      gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, cols, rows), 1.0,
+                       format, pixels,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
       /* sort out whether we need to do transparency jiggery-pokery */
-      if ((drawable_type == GIMP_INDEXEDA_IMAGE)
-          || (drawable_type == GIMP_GRAYA_IMAGE))
+      if ((drawable_type == GIMP_INDEXEDA_IMAGE) ||
+          (drawable_type == GIMP_GRAYA_IMAGE))
         {
           /* Try to find an entry which isn't actually used in the
              image, for a transparency index. */
 
           transparent =
             find_unused_ia_colour (pixels,
-                                   drawable->width * drawable->height,
+                                   cols * rows,
                                    bpp_to_colors (colors_to_bpp (colors)),
                                    &colors);
 
           special_flatten_indexed_alpha (pixels,
                                          transparent,
-                                         drawable->width * drawable->height);
+                                         cols * rows);
         }
       else
         {
@@ -949,7 +953,7 @@ save_image (const gchar *filename,
                              offset_x, offset_y);
       gimp_progress_update (1.0);
 
-      gimp_drawable_detach (drawable);
+      g_object_unref (buffer);
 
       g_free (pixels);
     }
