@@ -1434,6 +1434,7 @@ xcf_load_level (XcfInfo    *info,
                 GeglBuffer *buffer)
 {
   const Babl *format;
+  gint        bpp;
   guint32     saved_pos;
   guint32     offset, offset2;
   gint        n_tile_rows;
@@ -1445,6 +1446,7 @@ xcf_load_level (XcfInfo    *info,
   gint        fail;
 
   format = gegl_buffer_get_format (buffer);
+  bpp    = babl_format_get_bytes_per_pixel (format);
 
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
@@ -1491,7 +1493,7 @@ xcf_load_level (XcfInfo    *info,
       /* if the offset is 0 then we need to read in the maximum possible
          allowing for negative compression */
       if (offset2 == 0)
-        offset2 = offset + XCF_TILE_WIDTH * XCF_TILE_WIDTH * 4 * 1.5;
+        offset2 = offset + XCF_TILE_WIDTH * XCF_TILE_WIDTH * bpp * 1.5;
                                         /* 1.5 is probably more
                                            than we need to allow */
 
