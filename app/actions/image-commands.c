@@ -52,6 +52,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
+#include "dialogs/convert-precision-dialog.h"
 #include "dialogs/convert-type-dialog.h"
 #include "dialogs/grid-dialog.h"
 #include "dialogs/image-merge-layers-dialog.h"
@@ -67,7 +68,8 @@
 #include "gimp-intl.h"
 
 
-#define IMAGE_CONVERT_TYPE_DIALOG_KEY "image-convert-type-dialog"
+#define IMAGE_CONVERT_PRECISION_DIALOG_KEY "image-convert-precision-dialog"
+#define IMAGE_CONVERT_TYPE_DIALOG_KEY      "image-convert-type-dialog"
 
 
 typedef struct
@@ -150,7 +152,7 @@ image_new_cmd_callback (GtkAction *action,
 }
 
 static void
-image_convert_dialog_unset (GtkWidget *widget)
+image_convert_type_dialog_unset (GtkWidget *widget)
 {
   g_object_set_data (G_OBJECT (widget), IMAGE_CONVERT_TYPE_DIALOG_KEY, NULL);
 }
@@ -208,7 +210,7 @@ image_convert_base_type_cmd_callback (GtkAction *action,
                                IMAGE_CONVERT_TYPE_DIALOG_KEY, dialog);
 
             g_signal_connect_object (dialog, "destroy",
-                                     G_CALLBACK (image_convert_dialog_unset),
+                                     G_CALLBACK (image_convert_type_dialog_unset),
                                      widget, G_CONNECT_SWAPPED);
           }
 
@@ -220,15 +222,23 @@ image_convert_base_type_cmd_callback (GtkAction *action,
   gimp_image_flush (image);
 }
 
+static void
+image_convert_precision_dialog_unset (GtkWidget *widget)
+{
+  g_object_set_data (G_OBJECT (widget), IMAGE_CONVERT_PRECISION_DIALOG_KEY, NULL);
+}
+
 void
 image_convert_precision_cmd_callback (GtkAction *action,
                                       GtkAction *current,
                                       gpointer   data)
 {
   GimpImage     *image;
+  GtkWidget     *widget;
   GimpDisplay   *display;
   GimpPrecision  value;
   return_if_no_image (image, data);
+  return_if_no_widget (widget, data);
   return_if_no_display (display, data);
 
   value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
@@ -236,7 +246,37 @@ image_convert_precision_cmd_callback (GtkAction *action,
   if (value == gimp_image_get_precision (image))
     return;
 
-  gimp_image_convert_precision (image, value, GIMP_PROGRESS (display));
+  if (value < gimp_image_get_precision (image))
+    {
+      GtkWidget *dialog;
+
+      dialog = g_object_get_data (G_OBJECT (widget),
+                                  IMAGE_CONVERT_PRECISION_DIALOG_KEY);
+
+      if (! dialog)
+        {
+          dialog = convert_precision_dialog_new (image,
+                                                 action_data_get_context (data),
+                                                 widget,
+                                                 value,
+                                                 GIMP_PROGRESS (display));
+
+          g_object_set_data (G_OBJECT (widget),
+                             IMAGE_CONVERT_PRECISION_DIALOG_KEY, dialog);
+
+          g_signal_connect_object (dialog, "destroy",
+                                   G_CALLBACK (image_convert_precision_dialog_unset),
+                                   widget, G_CONNECT_SWAPPED);
+        }
+
+      gtk_window_present (GTK_WINDOW (dialog));
+    }
+  else
+    {
+      gimp_image_convert_precision (image, value, 0, 0,
+                                    GIMP_PROGRESS (display));
+    }
+
   gimp_image_flush (image);
 }
 

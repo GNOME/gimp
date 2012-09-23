@@ -168,6 +168,7 @@ app/core/gimp-user-install.c
 
 app/dialogs/about-dialog.c
 app/dialogs/channel-options-dialog.c
+app/dialogs/convert-precision-dialog.c
 app/dialogs/convert-type-dialog.c
 app/dialogs/data-delete-dialog.c
 app/dialogs/dialogs.c

@@ -121,6 +121,7 @@
 #define GIMP_HELP_IMAGE_CONVERT_U32               "gimp-image-convert-u32"
 #define GIMP_HELP_IMAGE_CONVERT_HALF              "gimp-image-convert-half"
 #define GIMP_HELP_IMAGE_CONVERT_FLOAT             "gimp-image-convert-float"
+#define GIMP_HELP_IMAGE_CONVERT_PRECISION         "gimp-image-convert-precision"
 #define GIMP_HELP_IMAGE_FLIP_HORIZONTAL           "gimp-image-flip-horizontal"
 #define GIMP_HELP_IMAGE_FLIP_VERTICAL             "gimp-image-flip-vertical"
 #define GIMP_HELP_IMAGE_ROTATE_90                 "gimp-image-rotate-90"

@@ -1,9 +1,6 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpimage-convert-precision.h
- * Copyright (C) 2012 Michael Natterer <mitch@gimp.org>
- *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -18,15 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_CONVERT_PRECISION_H__
-#define __GIMP_IMAGE_CONVERT_PRECISION_H__
+#ifndef __CONVERT_PRECISION_DIALOG_H__
+#define __CONVERT_PRECISION_DIALOG_H__
 
 
-void   gimp_image_convert_precision (GimpImage     *image,
-                                     GimpPrecision  precision,
-                                     gint           layer_dither_type,
-                                     gint           mask_dither_type,
-                                     GimpProgress  *progress);
+GtkWidget * convert_precision_dialog_new (GimpImage     *image,
+                                          GimpContext   *context,
+                                          GtkWidget     *parent,
+                                          GimpPrecision  precision,
+                                          GimpProgress  *progress);
 
 
-#endif  /*  __GIMP_IMAGE_CONVERT_PRECISION_H__  */
+#endif  /*  __CONVERT_PRECISION_DIALOG_H__  */

@@ -39,6 +39,8 @@
 void
 gimp_image_convert_precision (GimpImage     *image,
                               GimpPrecision  precision,
+                              gint           layer_dither_type,
+                              gint           mask_dither_type,
                               GimpProgress  *progress)
 {
   GList       *all_drawables;

@@ -25,6 +25,8 @@ libappdialogs_a_sources = \
 	about-dialog.h			\
 	channel-options-dialog.c	\
 	channel-options-dialog.h	\
+	convert-precision-dialog.c	\
+	convert-precision-dialog.h	\
 	convert-type-dialog.c		\
 	convert-type-dialog.h		\
 	data-delete-dialog.c		\
