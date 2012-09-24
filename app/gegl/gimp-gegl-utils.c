@@ -45,6 +45,34 @@ gimp_interpolation_to_gegl_filter (GimpInterpolationType interpolation)
   return "nearest";
 }
 
+GType
+gimp_gegl_get_op_enum_type (const gchar *operation,
+                            const gchar *property)
+{
+  GeglNode   *node;
+  GObject    *op;
+  GParamSpec *pspec;
+
+  g_return_val_if_fail (operation != NULL, G_TYPE_NONE);
+  g_return_val_if_fail (property != NULL, G_TYPE_NONE);
+
+  node = g_object_new (GEGL_TYPE_NODE,
+                       "operation", operation,
+                       NULL);
+  g_object_get (node, "gegl-operation", &op, NULL);
+  g_object_unref (node);
+
+  g_return_val_if_fail (op != NULL, G_TYPE_NONE);
+
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (op), property);
+
+  g_return_val_if_fail (G_IS_PARAM_SPEC_ENUM (pspec), G_TYPE_NONE);
+
+  g_object_unref (op);
+
+  return G_TYPE_FROM_CLASS (G_PARAM_SPEC_ENUM (pspec)->enum_class);
+}
+
 GeglColor *
 gimp_gegl_color_new (const GimpRGB *rgb)
 {

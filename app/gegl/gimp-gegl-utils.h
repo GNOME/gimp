@@ -24,6 +24,9 @@
 
 const gchar * gimp_interpolation_to_gegl_filter (GimpInterpolationType  interpolation) G_GNUC_CONST;
 
+GType         gimp_gegl_get_op_enum_type        (const gchar           *operation,
+                                                 const gchar           *property);
+
 GeglColor   * gimp_gegl_color_new               (const GimpRGB         *rgb);
 
 void          gimp_gegl_progress_connect        (GeglNode              *node,

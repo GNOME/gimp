@@ -25,6 +25,8 @@
 
 #include "dialogs-types.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
@@ -88,8 +90,6 @@ convert_precision_dialog_new (GimpImage     *image,
   GtkSizeGroup  *size_group;
   const gchar   *enum_desc;
   gchar         *blurb;
-  GType          operation_type;
-  GParamSpec    *dither_pspec;
   GType          dither_type;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
@@ -155,10 +155,8 @@ convert_precision_dialog_new (GimpImage     *image,
 
   /*  dithering  */
 
-  operation_type = gegl_operation_gtype_from_name ("gegl:color-reduction");
-  dither_pspec = g_object_class_find_property (g_type_class_peek (operation_type),
-                                               "dither-strategy");
-  dither_type = G_TYPE_FROM_CLASS (G_PARAM_SPEC_ENUM (dither_pspec)->enum_class);
+  dither_type = gimp_gegl_get_op_enum_type ("gegl:color-reduction",
+                                            "dither-strategy");
 
   frame = gimp_frame_new (_("Dithering"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
