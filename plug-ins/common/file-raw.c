@@ -55,22 +55,25 @@
 
 typedef enum
 {
-  RAW_RGB,                      /* RGB Image */
-  RAW_RGBA,                     /* RGB Image with an Alpha channel */
-  RAW_RGB565,                   /* RGB Image 16bit, 5,6,5 bits per channel */
-  RAW_PLANAR,                   /* Planar RGB */
+  RAW_RGB,          /* RGB Image */
+  RAW_RGBA,         /* RGB Image with an Alpha channel */
+  RAW_RGB565_BE,    /* RGB Image 16bit, 5,6,5 bits per channel, big-endian */
+  RAW_RGB565_LE,    /* RGB Image 16bit, 5,6,5 bits per channel, little-endian */
+  RAW_BGR565_BE,    /* RGB Image 16bit, 5,6,5 bits per channel, big-endian, red and blue swapped */
+  RAW_BGR565_LE,    /* RGB Image 16bit, 5,6,5 bits per channel, little-endian, red and blue swapped */
+  RAW_PLANAR,       /* Planar RGB */
   RAW_GRAY_1BPP,
   RAW_GRAY_2BPP,
   RAW_GRAY_4BPP,
   RAW_GRAY_8BPP,
-  RAW_INDEXED,                  /* Indexed image */
-  RAW_INDEXEDA                  /* Indexed image with an Alpha channel */
+  RAW_INDEXED,      /* Indexed image */
+  RAW_INDEXEDA      /* Indexed image with an Alpha channel */
 } RawType;
 
 typedef enum
 {
-  RAW_PALETTE_RGB,              /* standard RGB */
-  RAW_PALETTE_BGR               /* Windows BGRX */
+  RAW_PALETTE_RGB,  /* standard RGB */
+  RAW_PALETTE_BGR   /* Windows BGRX */
 } RawPaletteType;
 
 
@@ -107,7 +110,8 @@ static gboolean          raw_load_standard   (RawGimpData      *data,
 static gboolean          raw_load_gray       (RawGimpData      *data,
                                               gint              bpp,
                                               gint              bitspp);
-static gboolean          raw_load_rgb565     (RawGimpData      *data);
+static gboolean          raw_load_rgb565     (RawGimpData      *data,
+                                              RawType           type);
 static gboolean          raw_load_planar     (RawGimpData      *data);
 static gboolean          raw_load_palette    (RawGimpData      *data,
                                               const gchar      *palette_filename);
@@ -125,7 +129,8 @@ static int               mmap_read           (gint              fd,
                                               gint              rowstride);
 static void              rgb_565_to_888      (guint16          *in,
                                               guchar           *out,
-                                              gint32            num_pixels);
+                                              gint32            num_pixels,
+                                              RawType           type);
 
 static gint32            load_image          (const gchar      *filename,
                                               GError          **error);
@@ -495,14 +500,15 @@ raw_load_gray (RawGimpData *data,
 
 /* this handles RGB565 images */
 static gboolean
-raw_load_rgb565 (RawGimpData *data)
+raw_load_rgb565 (RawGimpData *data,
+                 RawType      type)
 {
   gint32   num_pixels = runtime->image_width * runtime->image_height;
   guint16 *in         = g_malloc (num_pixels * 2);
   guchar  *row        = g_malloc (num_pixels * 3);
 
   raw_read_row (data->fp, (guchar *)in, runtime->file_offset, num_pixels * 2);
-  rgb_565_to_888 (in, row, num_pixels);
+  rgb_565_to_888 (in, row, num_pixels, type);
 
   gimp_pixel_rgn_set_rect (&data->region, row,
                            0, 0, runtime->image_width, runtime->image_height);
@@ -518,15 +524,57 @@ raw_load_rgb565 (RawGimpData *data)
 static void
 rgb_565_to_888 (guint16 *in,
                 guchar  *out,
-                gint32   num_pixels)
+                gint32   num_pixels,
+                RawType  type)
 {
   guint32 i, j;
+  guint16 input;
+  gboolean swap_endian;
 
-  for (i = 0, j = 0; i < num_pixels; i++)
+  if (G_BYTE_ORDER == G_LITTLE_ENDIAN || G_BYTE_ORDER == G_PDP_ENDIAN)
     {
-      out[j++] = ((((in[i] >> 11) & 0x1f) * 0x21) >> 2);
-      out[j++] = ((((in[i] >>  5) & 0x3f) * 0x41) >> 4);
-      out[j++] = ((((in[i] >>  0) & 0x1f) * 0x21) >> 2);
+      swap_endian = (type == RAW_RGB565_BE || type == RAW_BGR565_BE);
+    }
+  else if (G_BYTE_ORDER == G_BIG_ENDIAN)
+    {
+      swap_endian = (type == RAW_RGB565_LE || type == RAW_BGR565_LE);
+    }
+
+  switch (type)
+    {
+    case RAW_RGB565_LE:
+    case RAW_RGB565_BE:
+      for (i = 0, j = 0; i < num_pixels; i++)
+        {
+          input = in[i];
+
+          if (swap_endian)
+            input = GUINT16_SWAP_LE_BE (input);
+
+          out[j++] = ((((input >> 11) & 0x1f) * 0x21) >> 2);
+          out[j++] = ((((input >>  5) & 0x3f) * 0x41) >> 4);
+          out[j++] = ((((input >>  0) & 0x1f) * 0x21) >> 2);
+        }
+      break;
+
+    case RAW_BGR565_BE:
+    case RAW_BGR565_LE:
+      for (i = 0, j = 0; i < num_pixels; i++)
+        {
+          input = in[i];
+
+          if (swap_endian)
+            input = GUINT16_SWAP_LE_BE (input);
+
+          out[j++] = ((((input >>  0) & 0x1f) * 0x21) >> 2);
+          out[j++] = ((((input >>  5) & 0x3f) * 0x41) >> 4);
+          out[j++] = ((((input >> 11) & 0x1f) * 0x21) >> 2);
+        }
+      break;
+
+    default:
+      /*This conversion function does not handle the passed in image-type*/
+      g_assert_not_reached ();
     }
 }
 
@@ -817,7 +865,10 @@ load_image (const gchar  *filename,
       itype = GIMP_RGB;
       break;
 
-    case RAW_RGB565:          /* RGB565 */
+    case RAW_RGB565_BE:       /* RGB565 big endian */
+    case RAW_RGB565_LE:       /* RGB565 little endian */
+    case RAW_BGR565_BE:       /* RGB565 big endian */
+    case RAW_BGR565_LE:       /* RGB565 little endian */
       bpp   = 2;
       ltype = GIMP_RGB_IMAGE;
       itype = GIMP_RGB;
@@ -830,25 +881,25 @@ load_image (const gchar  *filename,
       break;
 
     case RAW_GRAY_1BPP:
-      bpp = 1;
+      bpp    = 1;
       bitspp = 1;
-      ltype = GIMP_RGB_IMAGE;
-      itype = GIMP_RGB;
+      ltype  = GIMP_RGB_IMAGE;
+      itype  = GIMP_RGB;
       break;
     case RAW_GRAY_2BPP:
-      bpp = 1;
+      bpp    = 1;
       bitspp = 2;
-      ltype = GIMP_RGB_IMAGE;
-      itype = GIMP_RGB;
+      ltype  = GIMP_RGB_IMAGE;
+      itype  = GIMP_RGB;
       break;
     case RAW_GRAY_4BPP:
-      bpp = 1;
+      bpp    = 1;
       bitspp = 4;
-      ltype = GIMP_RGB_IMAGE;
-      itype = GIMP_RGB;
+      ltype  = GIMP_RGB_IMAGE;
+      itype  = GIMP_RGB;
       break;
     case RAW_GRAY_8BPP:
-      bpp = 1;
+      bpp   = 1;
       ltype = GIMP_RGB_IMAGE;
       itype = GIMP_RGB;
       break;
@@ -892,8 +943,11 @@ load_image (const gchar  *filename,
       raw_load_standard (data, bpp);
       break;
 
-    case RAW_RGB565:
-      raw_load_rgb565 (data);
+    case RAW_RGB565_BE:
+    case RAW_RGB565_LE:
+    case RAW_BGR565_BE:
+    case RAW_BGR565_LE:
+      raw_load_rgb565 (data, runtime->image_type);
       break;
 
     case RAW_PLANAR:
@@ -992,8 +1046,11 @@ preview_update (GimpPreviewArea *preview)
       }
       break;
 
-    case RAW_RGB565:
-      /* RGB565 image */
+    case RAW_RGB565_BE:
+    case RAW_RGB565_LE:
+    case RAW_BGR565_BE:
+    case RAW_BGR565_LE:
+      /* RGB565 image, big/little endian */
       {
         guint16 *in  = g_malloc0 (width * 2);
         guchar  *row = g_malloc0 (width * 3);
@@ -1002,7 +1059,7 @@ preview_update (GimpPreviewArea *preview)
           {
             pos = runtime->file_offset + runtime->image_width * y * 2;
             mmap_read (preview_fd, in, width * 2, pos, width * 2);
-            rgb_565_to_888 (in, row, width);
+            rgb_565_to_888 (in, row, width, runtime->image_type);
 
             gimp_preview_area_draw (preview, 0, y, width, 1,
                                     GIMP_RGB_IMAGE, row, width * 3);
@@ -1307,16 +1364,19 @@ load_dialog (const gchar *filename)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  combo = gimp_int_combo_box_new (_("RGB"),           RAW_RGB,
-                                  _("RGB Alpha"),     RAW_RGBA,
-                                  _("RGB565"),        RAW_RGB565,
-                                  _("Planar RGB"),    RAW_PLANAR,
-                                  _("B&W 1 bit"),     RAW_GRAY_1BPP,
-                                  _("Gray 2 bit"),    RAW_GRAY_2BPP,
-                                  _("Gray 4 bit"),    RAW_GRAY_4BPP,
-                                  _("Gray 8 bit"),    RAW_GRAY_8BPP,
-                                  _("Indexed"),       RAW_INDEXED,
-                                  _("Indexed Alpha"), RAW_INDEXEDA,
+  combo = gimp_int_combo_box_new (_("RGB"),                  RAW_RGB,
+                                  _("RGB Alpha"),            RAW_RGBA,
+                                  _("RGB565 Big Endian"),    RAW_RGB565_BE,
+                                  _("RGB565 Little Endian"), RAW_RGB565_LE,
+                                  _("BGR565 Big Endian"),    RAW_BGR565_BE,
+                                  _("BGR565 Little Endian"), RAW_BGR565_LE,
+                                  _("Planar RGB"),           RAW_PLANAR,
+                                  _("B&W 1 bit"),            RAW_GRAY_1BPP,
+                                  _("Gray 2 bit"),           RAW_GRAY_2BPP,
+                                  _("Gray 4 bit"),           RAW_GRAY_4BPP,
+                                  _("Gray 8 bit"),           RAW_GRAY_8BPP,
+                                  _("Indexed"),              RAW_INDEXED,
+                                  _("Indexed Alpha"),        RAW_INDEXEDA,
                                   NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
                                  runtime->image_type);
