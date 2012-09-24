@@ -214,7 +214,7 @@ static const GimpActionEntry layers_actions[] =
 
   { "layers-crop-to-content", GIMP_STOCK_TOOL_CROP,
     NC_("layers-action", "Crop to C_ontent"), NULL,
-    NC_("layers-action", "Crop the layer to the extents its content (remove empty borders from the layer)"),
+    NC_("layers-action", "Crop the layer to the extents of its content (remove empty borders from the layer)"),
     G_CALLBACK (layers_crop_to_content_cmd_callback),
     GIMP_HELP_LAYER_CROP },
 
