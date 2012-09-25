@@ -209,6 +209,9 @@ cdisplay_lcms_profile_get_info (cmsHPROFILE   profile,
           *name = g_strdup (_("(invalid UTF-8 string)"));
         }
 
+      if (! *name)
+        *name = g_strdup ("(unnamed profile)");
+
       descSize = cmsGetProfileInfoASCII (profile, cmsInfoManufacturer,
                                          "en", "US", NULL, 0);
       if (descSize > 0)
