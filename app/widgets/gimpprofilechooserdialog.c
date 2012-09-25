@@ -332,7 +332,7 @@ gimp_profile_view_query (GimpProfileChooserDialog *dialog)
                                          &name, &desc, &info,
                                          NULL))
         {
-          gsize info_len = strlen (info);
+          gsize info_len = info ? strlen (info) : 0;
           gsize name_len = strlen (filename);
 
           /*  lcms tends to adds the filename at the end of the info string.
@@ -344,7 +344,7 @@ gimp_profile_view_query (GimpProfileChooserDialog *dialog)
               info_len -= name_len;
             }
 
-          gtk_text_buffer_set_text (dialog->buffer, info, info_len);
+          gtk_text_buffer_set_text (dialog->buffer, info ? info : "", info_len);
 
           if (desc)
             {
