@@ -210,7 +210,10 @@ cdisplay_lcms_profile_get_info (cmsHPROFILE   profile,
         }
 
       if (! *name)
-        *name = g_strdup ("(unnamed profile)");
+	{
+	  /* a color profile without a name */
+	  *name = g_strdup (_("(unnamed profile)"));
+	}
 
       descSize = cmsGetProfileInfoASCII (profile, cmsInfoManufacturer,
                                          "en", "US", NULL, 0);
