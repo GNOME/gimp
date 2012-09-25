@@ -592,7 +592,7 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
       GIMP_LOG (WM, "Image window '%s' [%p] set fullscreen %s",
                 gtk_window_get_title (GTK_WINDOW (widget)),
                 widget,
-                fullscreen ? "TURE" : "FALSE");
+                fullscreen ? "TRUE" : "FALSE");
 
       if (private->menubar)
         gtk_widget_set_name (private->menubar,
