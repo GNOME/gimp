@@ -120,7 +120,7 @@ static void      gimp_brush_core_invalidate_cache   (GimpBrush         *brush,
 static void  gimp_brush_core_paint_line_pixmap_mask (GimpDrawable      *drawable,
                                                      const GimpTempBuf *pixmap_mask,
                                                      const GimpTempBuf *brush_mask,
-                                                     guchar            *d,
+                                                     gfloat            *d,
                                                      gint               x,
                                                      gint               y,
                                                      gint               width,
@@ -1551,7 +1551,6 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
 {
   GeglBufferIterator *iter;
   GeglRectangle      *roi;
-  gint                bpp;
   gint                ulx;
   gint                uly;
   gint                offsetx;
@@ -1590,15 +1589,14 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
   offsetx = area_x - ulx;
   offsety = area_y - uly;
 
-  bpp = babl_format_get_bytes_per_pixel (gegl_buffer_get_format (area));
-
-  iter = gegl_buffer_iterator_new (area, NULL, 0, NULL,
+  iter = gegl_buffer_iterator_new (area, NULL, 0,
+                                   babl_format ("RGBA float"),
                                    GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
   roi = &iter->roi[0];
 
   while (gegl_buffer_iterator_next (iter))
     {
-      guchar *d = iter->data[0];
+      gfloat *d = iter->data[0];
       gint    y;
 
       for (y = 0; y < roi->height; y++)
@@ -1607,7 +1605,7 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
                                                   pixmap_mask, brush_mask,
                                                   d, offsetx, y + offsety,
                                                   roi->width, mode);
-          d += roi->width * bpp;
+          d += roi->width * 4;
         }
     }
 }
@@ -1616,7 +1614,7 @@ static void
 gimp_brush_core_paint_line_pixmap_mask (GimpDrawable             *drawable,
                                         const GimpTempBuf        *pixmap_mask,
                                         const GimpTempBuf        *brush_mask,
-                                        guchar                   *d,
+                                        gfloat                   *d,
                                         gint                      x,
                                         gint                      y,
                                         gint                      width,
@@ -1658,7 +1656,7 @@ gimp_brush_core_paint_line_pixmap_mask (GimpDrawable             *drawable,
 
       fish = babl_fish (gimp_babl_format (pixmap_base_type, pixmap_precision,
                                           TRUE),
-                        gimp_drawable_get_format_with_alpha (drawable));
+                        babl_format ("RGBA float"));
 
       /* put the source pixmap's pixels, plus the mask's alpha, into
        * one line, so we can use one single call to babl_process() to
@@ -1685,8 +1683,7 @@ gimp_brush_core_paint_line_pixmap_mask (GimpDrawable             *drawable,
       guchar     *l        = line_buf;
       gint        i;
 
-      fish = babl_fish (pixmap_format,
-                        gimp_drawable_get_format_with_alpha (drawable));
+      fish = babl_fish (pixmap_format, babl_format ("RGBA float"));
 
       /* put the source pixmap's pixels into one line, so we can use
        * one single call to babl_process() to convert the entire line
