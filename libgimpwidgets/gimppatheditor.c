@@ -373,7 +373,7 @@ gimp_path_editor_set_path (GimpPathEditor *editor,
 
   g_free (old_path);
 
-  path_list = gimp_path_parse (path, 16, FALSE, NULL);
+  path_list = gimp_path_parse (path, 256, FALSE, NULL);
 
   gtk_list_store_clear (editor->dir_list);
 
@@ -456,7 +456,7 @@ gimp_path_editor_set_writable_path (GimpPathEditor *editor,
 
   gtk_tree_view_column_set_visible (editor->writable_column, TRUE);
 
-  path_list = gimp_path_parse (path, 16, FALSE, NULL);
+  path_list = gimp_path_parse (path, 256, FALSE, NULL);
 
   model = GTK_TREE_MODEL (editor->dir_list);
 

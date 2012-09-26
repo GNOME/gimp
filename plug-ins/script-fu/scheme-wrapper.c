@@ -235,7 +235,7 @@ tinyscheme_init (const gchar *path,
 
   if (path)
     {
-      GList *dir_list = gimp_path_parse (path, 16, TRUE, NULL);
+      GList *dir_list = gimp_path_parse (path, 256, TRUE, NULL);
       GList *list;
 
       for (list = dir_list; list; list = g_list_next (list))

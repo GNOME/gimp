@@ -611,7 +611,7 @@ gfig_get_user_writable_dir (void)
       GList *list;
       gchar *dir;
 
-      list = gimp_path_parse (gfig_path, 16, FALSE, NULL);
+      list = gimp_path_parse (gfig_path, 256, FALSE, NULL);
       dir = gimp_path_get_user_writable_dir (list);
       gimp_path_free (list);
 
