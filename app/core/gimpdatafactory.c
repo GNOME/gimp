@@ -345,7 +345,7 @@ gimp_data_factory_data_load (GimpDataFactory *factory,
           g_free (writable_path);
           writable_path = tmp;
 
-          writable_list = gimp_path_parse (writable_path, 16, TRUE, NULL);
+          writable_list = gimp_path_parse (writable_path, 256, TRUE, NULL);
 
           g_object_set_data (G_OBJECT (factory),
                              WRITABLE_PATH_KEY, writable_list);
@@ -711,8 +711,8 @@ gimp_data_factory_get_save_dir (GimpDataFactory  *factory,
   g_free (writable_path);
   writable_path = tmp;
 
-  path_list     = gimp_path_parse (path,          16, FALSE, NULL);
-  writable_list = gimp_path_parse (writable_path, 16, FALSE, NULL);
+  path_list     = gimp_path_parse (path,          256, FALSE, NULL);
+  writable_list = gimp_path_parse (writable_path, 256, FALSE, NULL);
 
   g_free (path);
   g_free (writable_path);

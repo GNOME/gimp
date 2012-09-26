@@ -153,7 +153,7 @@ parsepath (void)
       g_free (full_path);
     }
 
-  parsepath_cached_path = gimp_path_parse (rc_path, 16, FALSE, NULL);
+  parsepath_cached_path = gimp_path_parse (rc_path, 256, FALSE, NULL);
 
   g_free (rc_path);
 

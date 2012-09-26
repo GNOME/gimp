@@ -1589,7 +1589,7 @@ file_chooser_set_default_folder (GtkFileChooser *chooser)
   if (! fractalexplorer_path)
     return;
 
-  path_list = gimp_path_parse (fractalexplorer_path, 16, FALSE, NULL);
+  path_list = gimp_path_parse (fractalexplorer_path, 256, FALSE, NULL);
 
   dir = gimp_path_get_user_writable_dir (path_list);
 

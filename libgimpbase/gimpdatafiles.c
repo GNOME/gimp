@@ -91,7 +91,7 @@ gimp_datafiles_read_directories (const gchar            *path_str,
 
   local_path = g_strdup (path_str);
 
-  path = gimp_path_parse (local_path, 16, TRUE, NULL);
+  path = gimp_path_parse (local_path, 256, TRUE, NULL);
 
   for (list = path; list; list = g_list_next (list))
     {
