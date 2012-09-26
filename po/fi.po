@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-06-26 20:12+0300\n"
-"PO-Revision-Date: 2012-06-26 \n"
+"PO-Revision-Date: 2012-09-26 11:54+0300\n"
 "Last-Translator: Janne Peltonen <peltzi@gimp-suomi.org>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -2395,7 +2395,7 @@ msgstr "Vie kuva eri tiedostomuodoissa kuten PNG tai JPEG"
 #: ../app/actions/file-actions.c:292
 #, c-format
 msgid "Export to %s"
-msgstr "Vie muodossa %s"
+msgstr "Vie nimellä %s"
 
 #: ../app/actions/file-actions.c:298
 #, c-format
@@ -2404,7 +2404,7 @@ msgstr "Kor_vaa %s"
 
 #: ../app/actions/file-actions.c:306
 msgid "Export to"
-msgstr "Vie muodossa"
+msgstr "Vie nimellä"
 
 #: ../app/actions/file-commands.c:112 ../app/actions/file-commands.c:499
 #: ../app/dialogs/file-open-dialog.c:77
