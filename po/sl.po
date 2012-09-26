@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-09-22 19:00+0000\n"
-"PO-Revision-Date: 2012-09-23 14:07+0100\n"
+"POT-Creation-Date: 2012-09-24 13:39+0000\n"
+"PO-Revision-Date: 2012-09-25 21:31+0100\n"
 "Last-Translator: Martin Srebotnjak  <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: \n"
@@ -2494,7 +2494,6 @@ msgid "Simulate a cartoon by enhancing edges"
 msgstr "Oponaša stripovsko risbo z zaljšanjem robov"
 
 #: ../app/actions/filters-actions.c:49
-#| msgid "Colori_ze..."
 msgctxt "filters-action"
 msgid "Color _Reduction..."
 msgstr "Barvna _redukcija ..."
@@ -2545,7 +2544,6 @@ msgid "Apply a gaussian blur"
 msgstr "Uveljavi gaussovo zabrisanost"
 
 #: ../app/actions/filters-actions.c:79
-#| msgid "_Replace"
 msgctxt "filters-action"
 msgid "_Laplace"
 msgstr "_Laplace"
@@ -2556,8 +2554,6 @@ msgid "High-resolution edge detection"
 msgstr "Visoko ločljivostna zaznava robov"
 
 #: ../app/actions/filters-actions.c:85
-#| msgctxt "file-action"
-#| msgid "Open _Location..."
 msgctxt "filters-action"
 msgid "Lens Distortion..."
 msgstr "Popačenje leč ..."
@@ -2588,8 +2584,6 @@ msgid "Completely randomize a fraction of pixels"
 msgstr "Povsem naključno določi del slik. točk"
 
 #: ../app/actions/filters-actions.c:103
-#| msgctxt "select-action"
-#| msgid "S_hrink..."
 msgctxt "filters-action"
 msgid "_Pick..."
 msgstr "_Naberi ..."
@@ -2600,8 +2594,6 @@ msgid "Randomly interchange some pixels with neighbors"
 msgstr "Naključno izmenjaj nekaj slik. točk s sosednjimi"
 
 #: ../app/actions/filters-actions.c:109
-#| msgctxt "plug-in-action"
-#| msgid "_Noise"
 msgctxt "filters-action"
 msgid "_RGB Noise..."
 msgstr "Šum R_GB ..."
@@ -2612,8 +2604,6 @@ msgid "Distort colors by random amounts"
 msgstr "Popačenje barv za naključne količine"
 
 #: ../app/actions/filters-actions.c:115
-#| msgctxt "layers-action"
-#| msgid "_Scale Layer..."
 msgctxt "filters-action"
 msgid "_Slur..."
 msgstr "_Nerazločno ..."
@@ -2654,8 +2644,6 @@ msgid "Convert image to or from polar coordinates"
 msgstr "Pretvori sliko iz ali v polarne koordinate"
 
 #: ../app/actions/filters-actions.c:139
-#| msgctxt "filters-action"
-#| msgid "_Pixelize..."
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "_Valovanje ..."
@@ -3322,8 +3310,6 @@ msgid "Crop to C_ontent"
 msgstr "Obreži na vse_bino"
 
 #: ../app/actions/image-actions.c:111
-#| msgctxt "image-action"
-#| msgid "Crop the image to the extents of the selection"
 msgctxt "image-action"
 msgid "Crop the image to the extents of its content (remove empty borders from the image)"
 msgstr "Obreže sliko na mero vsebine (odstrani prazne robove iz slike)"
@@ -3508,28 +3494,28 @@ msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the left"
 msgstr "Zasukaj sliko za 90 stopinj v nasprotni smeri urinega kazalca"
 
-#: ../app/actions/image-commands.c:266
+#: ../app/actions/image-commands.c:306
 msgid "Set Image Canvas Size"
 msgstr "Nastavite velikost platna slike"
 
-#: ../app/actions/image-commands.c:295
-#: ../app/actions/image-commands.c:319
-#: ../app/actions/image-commands.c:640
+#: ../app/actions/image-commands.c:335
+#: ../app/actions/image-commands.c:359
+#: ../app/actions/image-commands.c:680
 msgid "Resizing"
 msgstr "Spreminjanje velikosti ..."
 
-#: ../app/actions/image-commands.c:346
+#: ../app/actions/image-commands.c:386
 msgid "Set Image Print Resolution"
 msgstr "Nastavi ločljivost tiskanja slike"
 
-#: ../app/actions/image-commands.c:408
+#: ../app/actions/image-commands.c:448
 #: ../app/pdb/drawable-transform-cmds.c:163
 #: ../app/pdb/drawable-transform-cmds.c:251
 #: ../app/pdb/item-transform-cmds.c:166
 msgid "Flipping"
 msgstr "Prevračanje ..."
 
-#: ../app/actions/image-commands.c:432
+#: ../app/actions/image-commands.c:472
 #: ../app/pdb/drawable-transform-cmds.c:606
 #: ../app/pdb/drawable-transform-cmds.c:698
 #: ../app/pdb/image-cmds.c:619
@@ -3539,26 +3525,25 @@ msgstr "Prevračanje ..."
 msgid "Rotating"
 msgstr "Sukanje ..."
 
-#: ../app/actions/image-commands.c:458
+#: ../app/actions/image-commands.c:498
 #: ../app/actions/layers-commands.c:693
 msgid "Cannot crop because the current selection is empty."
 msgstr "Obrezava ni možna, ker je trenutni izbor prazen."
 
-#: ../app/actions/image-commands.c:485
-#| msgid "Cannot crop because the current selection is empty."
+#: ../app/actions/image-commands.c:525
 msgid "Cannot crop because the image has no content."
 msgstr "Obrezava ni možna, ker slika nima vsebine."
 
-#: ../app/actions/image-commands.c:688
+#: ../app/actions/image-commands.c:728
 msgid "Change Print Size"
 msgstr "Spremeni velikost tiskanja"
 
-#: ../app/actions/image-commands.c:729
+#: ../app/actions/image-commands.c:769
 msgid "Scale Image"
 msgstr "Spremeni merilo slike"
 
 #. Scaling
-#: ../app/actions/image-commands.c:740
+#: ../app/actions/image-commands.c:780
 #: ../app/actions/layers-commands.c:1181
 #: ../app/dialogs/preferences-dialog.c:1893
 #: ../app/pdb/drawable-transform-cmds.c:787
@@ -3902,9 +3887,11 @@ msgstr "Obreži na vse_bino"
 
 #: ../app/actions/layers-actions.c:217
 #| msgctxt "layers-action"
-#| msgid "Crop the layer to the extents of the selection"
+#| msgid ""
+#| "Crop the layer to the extents its content (remove empty borders from the "
+#| "layer)"
 msgctxt "layers-action"
-msgid "Crop the layer to the extents its content (remove empty borders from the layer)"
+msgid "Crop the layer to the extents of its content (remove empty borders from the layer)"
 msgstr "Obreže plast na mero vsebine (odstrani prazne robove s plasti)"
 
 #: ../app/actions/layers-actions.c:222
@@ -4161,19 +4148,14 @@ msgid "Scale Layer"
 msgstr "Spremeni merilo plasti"
 
 #: ../app/actions/layers-commands.c:703
-#| msgctxt "image-action"
-#| msgid "_Crop to Selection"
 msgid "Crop Layer to Selection"
 msgstr "Obreži plast na vsebino"
 
 #: ../app/actions/layers-commands.c:732
-#| msgid "Cannot crop because the current selection is empty."
 msgid "Cannot crop because the active layer has no content."
 msgstr "Obrezava ni možna, ker je trenutna plast prazna."
 
 #: ../app/actions/layers-commands.c:737
-#| msgctxt "undo-type"
-#| msgid "Lower Layer to Bottom"
 msgid "Crop Layer to Content"
 msgstr "Obreži plast na vsebino"
 
@@ -8277,27 +8259,27 @@ msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Dodaj barvo v katalog barv"
 
-#: ../app/core/gimpimage-convert-precision.c:63
+#: ../app/core/gimpimage-convert-precision.c:65
 msgctxt "undo-type"
 msgid "Convert Image to 8 bit integer"
 msgstr "Pretvori sliko v 8-bitno celoštevilsko"
 
-#: ../app/core/gimpimage-convert-precision.c:67
+#: ../app/core/gimpimage-convert-precision.c:69
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit integer"
 msgstr "Pretvori sliko v 16-bitno celoštevilsko"
 
-#: ../app/core/gimpimage-convert-precision.c:71
+#: ../app/core/gimpimage-convert-precision.c:73
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit integer"
 msgstr "Pretvori sliko v 32-bitno celoštevilsko"
 
-#: ../app/core/gimpimage-convert-precision.c:75
+#: ../app/core/gimpimage-convert-precision.c:77
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit floating point"
 msgstr "Pretvori sliko v 16-bitno s plavajočo vejico"
 
-#: ../app/core/gimpimage-convert-precision.c:79
+#: ../app/core/gimpimage-convert-precision.c:81
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit floating point"
 msgstr "Pretvori sliko v 32-bitno s plavajočo vejico"
@@ -8542,7 +8524,6 @@ msgid "Set Item Exclusive Visible"
 msgstr "Predmet naj bo izključno viden"
 
 #: ../app/core/gimpitem-exclusive.c:172
-#| msgid "Set Item Exclusive Visible"
 msgid "Set Item Exclusive Linked"
 msgstr "Predmet naj bo izključno povezan"
 
@@ -9030,6 +9011,47 @@ msgstr "_Ime kanala:"
 msgid "Initialize from _selection"
 msgstr "_Inicializiraj iz izbora"
 
+#: ../app/dialogs/convert-precision-dialog.c:111
+#, c-format
+#| msgctxt "undo-type"
+#| msgid "Convert Image to RGB"
+msgid "Convert Image to %s"
+msgstr "Pretvori sliko v %s"
+
+#: ../app/dialogs/convert-precision-dialog.c:115
+#| msgid "Precision:"
+msgid "Precision Conversion"
+msgstr "Natančna pretvorba"
+
+#: ../app/dialogs/convert-precision-dialog.c:130
+#: ../app/dialogs/convert-type-dialog.c:138
+msgid "C_onvert"
+msgstr "Pr_etvori"
+
+#. dithering
+#: ../app/dialogs/convert-precision-dialog.c:163
+#: ../app/dialogs/convert-type-dialog.c:234
+#: ../app/tools/gimpblendoptions.c:255
+msgid "Dithering"
+msgstr "Stresanje"
+
+#: ../app/dialogs/convert-precision-dialog.c:179
+#| msgctxt "dialogs-action"
+#| msgid "_Layers"
+msgid "_Layers:"
+msgstr "P_lasti:"
+
+#: ../app/dialogs/convert-precision-dialog.c:201
+#| msgid "Channel _name:"
+msgid "_Channels and Masks:"
+msgstr "_Kanali in maske:"
+
+#: ../app/dialogs/convert-precision-dialog.c:235
+#| msgctxt "undo-type"
+#| msgid "Convert Image to 8 bit integer"
+msgid "Converting to lower bit depth"
+msgstr "Pretvorba v nižjo bitno globino"
+
 #: ../app/dialogs/convert-type-dialog.c:125
 msgid "Indexed Color Conversion"
 msgstr "Pretvorba v indeksirane barve"
@@ -9038,10 +9060,6 @@ msgstr "Pretvorba v indeksirane barve"
 msgid "Convert Image to Indexed Colors"
 msgstr "Pretvori sliko v barvno indeksirano"
 
-#: ../app/dialogs/convert-type-dialog.c:138
-msgid "C_onvert"
-msgstr "Pr_etvori"
-
 #: ../app/dialogs/convert-type-dialog.c:190
 msgid "_Maximum number of colors:"
 msgstr "_Največje število barv:"
@@ -9049,12 +9067,6 @@ msgstr "_Največje število barv:"
 #: ../app/dialogs/convert-type-dialog.c:217
 msgid "_Remove unused colors from colormap"
 msgstr "_Odstrani neuporabljene barve iz kataloga barv"
-
-#. dithering
-#: ../app/dialogs/convert-type-dialog.c:234
-#: ../app/tools/gimpblendoptions.c:255
-msgid "Dithering"
-msgstr "Stresanje"
 
 #: ../app/dialogs/convert-type-dialog.c:246
 msgid "Color _dithering:"
@@ -9530,7 +9542,6 @@ msgid "Edge Behavior"
 msgstr "Vedenje robov"
 
 #: ../app/dialogs/offset-dialog.c:246
-#| msgid "_Wrap around"
 msgid "W_rap around"
 msgstr "_Ovij okrog"
 
@@ -10479,7 +10490,6 @@ msgid "Resize _layers:"
 msgstr "Spremeni velikost _plasti:"
 
 #: ../app/dialogs/resize-dialog.c:316
-#| msgid "Resize Text Layer"
 msgid "Resize _text layers"
 msgstr "Spremeni velikost plastem z _besedilom"
 
@@ -10790,7 +10800,6 @@ msgstr[3] "Če ne shranite slike, bodo spremembe zadnjih %d minut izgubljene."
 
 #: ../app/display/gimpdisplayshell-close.c:304
 #, c-format
-#| msgid "Image exported to '%s'"
 msgid "The image has been exported to '%s'."
 msgstr "Slika izvožena v '%s'"
 
@@ -11622,13 +11631,10 @@ msgid "Move Layer"
 msgstr "Premakni plast"
 
 #: ../app/pdb/plug-in-compat-cmds.c:89
-#| msgctxt "undo-type"
-#| msgid "Crop image"
 msgid "Autocrop image"
 msgstr "Samoobreži sliko"
 
 #: ../app/pdb/plug-in-compat-cmds.c:135
-#| msgid "Drop layers"
 msgid "Autocrop layer"
 msgstr "Samoobreži plast"
 
@@ -14160,32 +14166,26 @@ msgid "The active path's strokes are locked."
 msgstr "Poteze aktivne poti so zaklenjene."
 
 #: ../app/tools/gimpunifiedtransformtool.c:103
-#| msgid "Cage Transform"
 msgid "Unified Transform"
 msgstr "Enovito preoblikovanje"
 
 #: ../app/tools/gimpunifiedtransformtool.c:104
-#| msgid "Shear Tool: Shear the layer, selection or path"
 msgid "Unified Transform Tool: Transform the layer, selection or path"
 msgstr "Orodje Enovito preoblikovanje: Preoblikujte plast, izbor ali pot"
 
 #: ../app/tools/gimpunifiedtransformtool.c:106
-#| msgid "_Cage Transform"
 msgid "_Unified Transform"
 msgstr "_Enovito preoblikovanje"
 
 #: ../app/tools/gimpunifiedtransformtool.c:134
-#| msgid "Cage transform"
 msgid "Unified transform"
 msgstr "Enovito preoblikovanje"
 
 #: ../app/tools/gimpunifiedtransformtool.c:676
-#| msgid "Transformation Matrix"
 msgid "Transform Matrix"
 msgstr "Matrika transformacije"
 
 #: ../app/tools/gimpunifiedtransformtool.c:1219
-#| msgid "Cage Transform"
 msgctxt "undo-type"
 msgid "Unified Transform"
 msgstr "Enovito preoblikovanje"
@@ -15272,12 +15272,10 @@ msgid "All images"
 msgstr "Vse slike"
 
 #: ../app/widgets/gimpfiledialog.c:810
-#| msgid "All images"
 msgid "All XCF images"
 msgstr "Vse slike XCF"
 
 #: ../app/widgets/gimpfiledialog.c:812
-#| msgid "All images"
 msgid "All export images"
 msgstr "Vse izvožene slike"
 
