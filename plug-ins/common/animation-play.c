@@ -1220,9 +1220,17 @@ play_callback (GtkToggleAction *action)
   playing = gtk_toggle_action_get_active (action);
 
   if (playing)
-    timer = g_timeout_add (get_frame_duration (frame_number) *
-                           get_duration_factor (duration_index),
-                           advance_frame_callback, NULL);
+    {
+      timer = g_timeout_add (get_frame_duration (frame_number) *
+                             get_duration_factor (duration_index),
+                             advance_frame_callback, NULL);
+
+      gtk_action_set_stock_id (GTK_ACTION (action), GTK_STOCK_MEDIA_PAUSE);
+    }
+  else
+    {
+      gtk_action_set_stock_id (GTK_ACTION (action), GTK_STOCK_MEDIA_PLAY);
+    }
 
   g_object_set (action,
                 "tooltip", playing ? _("Stop playback") : _("Start playback"),
