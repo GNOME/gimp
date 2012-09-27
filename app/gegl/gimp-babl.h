@@ -32,6 +32,7 @@ GimpPrecision       gimp_babl_format_get_precision  (const Babl        *format);
 const Babl        * gimp_babl_format                (GimpImageBaseType  base_type,
                                                      GimpPrecision      precision,
                                                      gboolean           with_alpha);
+const Babl        * gimp_babl_mask_format           (GimpPrecision      precision);
 const Babl        * gimp_babl_component_format      (GimpImageBaseType  base_type,
                                                      GimpPrecision      precision,
                                                      gint               index);

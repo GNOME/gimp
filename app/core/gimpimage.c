@@ -1532,16 +1532,7 @@ gimp_image_get_mask_format (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  switch (gimp_image_get_precision (image))
-    {
-    case GIMP_PRECISION_U8:    return babl_format ("Y u8");
-    case GIMP_PRECISION_U16:   return babl_format ("Y u16");
-    case GIMP_PRECISION_U32:   return babl_format ("Y u32");
-    case GIMP_PRECISION_HALF:  return babl_format ("Y half");
-    case GIMP_PRECISION_FLOAT: return babl_format ("Y float");
-    }
-
-  g_return_val_if_reached (NULL);
+  return gimp_babl_mask_format (gimp_image_get_precision (image));
 }
 
 gint
