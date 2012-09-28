@@ -822,7 +822,8 @@ gimp_group_layer_estimate_memsize (const GimpDrawable *drawable,
 
 static const Babl *
 get_projection_format (GimpProjectable   *projectable,
-                       GimpImageBaseType  base_type)
+                       GimpImageBaseType  base_type,
+                       GimpPrecision      precision)
 {
   GimpImage *image = gimp_item_get_image (GIMP_ITEM (projectable));
 
@@ -830,14 +831,10 @@ get_projection_format (GimpProjectable   *projectable,
     {
     case GIMP_RGB:
     case GIMP_INDEXED:
-      return gimp_image_get_format (image, GIMP_RGB,
-                                    gimp_image_get_precision (image),
-                                    TRUE);
+      return gimp_image_get_format (image, GIMP_RGB, precision, TRUE);
 
     case GIMP_GRAY:
-      return gimp_image_get_format (image, GIMP_GRAY,
-                                    gimp_image_get_precision (image),
-                                    TRUE);
+      return gimp_image_get_format (image, GIMP_GRAY, precision, TRUE);
     }
 
   g_assert_not_reached ();
@@ -869,7 +866,8 @@ gimp_group_layer_convert_type (GimpDrawable      *drawable,
    *  depth
    */
   private->convert_format = get_projection_format (GIMP_PROJECTABLE (drawable),
-                                                   new_base_type);
+                                                   new_base_type,
+                                                   new_precision);
   gimp_projectable_structure_changed (GIMP_PROJECTABLE (drawable));
 
   buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (private->projection));
@@ -891,7 +889,6 @@ gimp_group_layer_convert_type (GimpDrawable      *drawable,
       gimp_drawable_convert_type (GIMP_DRAWABLE (mask), dest_image,
                                   GIMP_GRAY, new_precision, push_undo);
     }
-
 }
 
 static const Babl *
@@ -899,13 +896,15 @@ gimp_group_layer_get_format (GimpProjectable *projectable)
 {
   GimpGroupLayerPrivate *private = GET_PRIVATE (projectable);
   GimpImageBaseType      base_type;
+  GimpPrecision          precision;
 
   if (private->convert_format)
     return private->convert_format;
 
   base_type = gimp_drawable_get_base_type (GIMP_DRAWABLE (projectable));
+  precision = gimp_drawable_get_precision (GIMP_DRAWABLE (projectable));
 
-  return get_projection_format (projectable, base_type);
+  return get_projection_format (projectable, base_type, precision);
 }
 
 static GeglNode *
