@@ -8,19 +8,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD.lv\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-05-04 13:53+0000\n"
-"PO-Revision-Date: 2012-05-11 23:13+0300\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-28 12:26+0300\n"
+"PO-Revision-Date: 2012-09-28 13:07+0300\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
+"Language: lv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Lokalize 1.4\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
-"Language: lv\n"
 
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1077
@@ -176,7 +175,7 @@ msgstr "Apstiprināt"
 
 #: ../libgimp/gimpexport.c:512
 msgid "Export File"
-msgstr "Eksportēt failu"
+msgstr "Eksportēt datni"
 
 #: ../libgimp/gimpexport.c:516
 msgid "_Ignore"
@@ -251,7 +250,7 @@ msgstr "Raksta izvēle"
 
 #: ../libgimp/gimpprocbrowserdialog.c:149
 msgid "by name"
-msgstr "pēc vārda"
+msgstr "pēc nosaukuma"
 
 #: ../libgimp/gimpprocbrowserdialog.c:150
 msgid "by description"
@@ -293,7 +292,7 @@ msgstr "Meklē"
 
 #: ../libgimp/gimpprocbrowserdialog.c:417
 msgid "Searching by name"
-msgstr "Meklē pēc vārda"
+msgstr "Meklē pēc nosaukuma"
 
 #: ../libgimp/gimpprocbrowserdialog.c:438
 msgid "Searching by description"
@@ -660,7 +659,7 @@ msgstr "Iekļauts attēlu buferis"
 #: ../libgimpbase/gimpbaseenums.c:478
 msgctxt "icon-type"
 msgid "Image file"
-msgstr "Attēla fails"
+msgstr "Attēla datne"
 
 #: ../libgimpbase/gimpbaseenums.c:508
 msgctxt "image-base-type"
@@ -1004,31 +1003,31 @@ msgstr "zīmes %s vērtība nav derīga UTF-8 rinda"
 #: ../libgimpconfig/gimpconfig-deserialize.c:444
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr "gaidāmā būla vērtība 'yes' vai 'no' ir %s, iegūts '%s'"
+msgstr "gaidāmā būla vērtība “yes” vai “no” ir %s, iegūts “%s”"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:518
 #, c-format
 msgid "invalid value '%s' for token %s"
-msgstr "nepareiza vērtība '%s' zīmei %s"
+msgstr "nepareiza vērtība “%s” zīmei %s"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:533
 #, c-format
 msgid "invalid value '%ld' for token %s"
-msgstr "nepareiza vērtība '%ld' zīmei %s"
+msgstr "nepareiza vērtība “%ld” zīmei %s"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:602
 #, c-format
 msgid "while parsing token '%s': %s"
-msgstr "notiek sintaktiskā analīze '%s' — %s"
+msgstr "parsējot marķieri “%s” — %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:482
 #: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:559
 #: ../libgimpconfig/gimpscanner.c:641
 #: ../libgimpwidgets/gimpcolorprofilestore.c:656
 msgid "fatal parse error"
-msgstr "nelabojama leks. analīzes kļūda"
+msgstr "nelabojama parsēšanas kļūda"
 
-#: ../libgimpconfig/gimpconfig-path.c:387
+#: ../libgimpconfig/gimpconfig-path.c:389
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Nevar izvērst ${%s}"
@@ -1037,17 +1036,17 @@ msgstr "Nevar izvērst ${%s}"
 #: ../libgimpconfig/gimpconfigwriter.c:728
 #, c-format
 msgid "Error writing to '%s': %s"
-msgstr "Kļūda ierakstot '%s' — %s"
+msgstr "Kļūda, ierakstot “%s” — %s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:145
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
-msgstr "Neizdevās izveidot pagaidu failu priekš '%s' — %s"
+msgstr "Neizdevās izveidot pagaidu datni priekš “%s” — %s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:158
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Nevar atvērt '%s' ierakstīšanai — %s"
+msgstr "Nevar atvērt “%s” ierakstīšanai — %s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:689
 #: ../libgimpconfig/gimpconfigwriter.c:709
@@ -1056,8 +1055,8 @@ msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "The original file has not been touched."
 msgstr ""
-"Kļūme ierakstot pagaidu failā '%s' — %s\n"
-"Oriģinālais fails nav aiztikts."
+"Kļūda, ierakstot pagaidu datnē “%s” — %s\n"
+"Oriģinālā datne nav aiztikta."
 
 #: ../libgimpconfig/gimpconfigwriter.c:717
 #, c-format
@@ -1065,13 +1064,13 @@ msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "No file has been created."
 msgstr ""
-"Kļūda ierakstot pagaidu failā '%s' — %s\n"
-"Fails nav izveidots."
+"Kļūda, ierakstot pagaidu datnē “%s” — %s\n"
+"Datne nav izveidota."
 
 #: ../libgimpconfig/gimpconfigwriter.c:741
 #, c-format
 msgid "Could not create '%s': %s"
-msgstr "Neizdevās izveidot '%s' — %s"
+msgstr "Neizdevās izveidot “%s” — %s"
 
 #: ../libgimpconfig/gimpscanner.c:268
 #, c-format
@@ -1082,19 +1081,19 @@ msgstr "nekorekta UTF-8 rinda"
 #: ../libgimpconfig/gimpscanner.c:431
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
-msgstr "gaidāmā būla vērtība 'yes' vai 'no', iegūta '%s'"
+msgstr "gaidāmā būla vērtība “yes” vai “no”, iegūta “%s”"
 
 #: ../libgimpconfig/gimpscanner.c:668
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
-msgstr "Sintakses kļūda '%s' rindā %d — %s"
+msgstr "Kļūda, parsējot “%s” rindā %d — %s"
 
 #: ../libgimpmodule/gimpmodule.c:163 ../libgimpmodule/gimpmodule.c:181
 #: ../libgimpmodule/gimpmodule.c:290 ../libgimpmodule/gimpmodule.c:317
 #: ../libgimpmodule/gimpmodule.c:443
 #, c-format
 msgid "Module '%s' load error: %s"
-msgstr "Moduļa '%s' ielādes kļūda — %s"
+msgstr "Moduļa “%s” ielādes kļūda — %s"
 
 #: ../libgimpmodule/gimpmodule.c:385
 msgid "Module error"
@@ -1112,19 +1111,19 @@ msgstr "Ielādes kļūda"
 msgid "Not loaded"
 msgstr "Nav ielādēts"
 
-#: ../libgimpthumb/gimpthumb-utils.c:131
+#: ../libgimpthumb/gimpthumb-utils.c:157
 #, c-format
 msgid ""
 "Cannot determine a valid home directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
 "Nevar noteikt korektu mājas mapi.\n"
-"Sīktēli tiks izvietoti pagaidu failu mapē (%s)."
+"Sīktēli tiks izvietoti pagaidu datņu mapē (%s)."
 
-#: ../libgimpthumb/gimpthumb-utils.c:255 ../libgimpthumb/gimpthumb-utils.c:323
+#: ../libgimpthumb/gimpthumb-utils.c:281 ../libgimpthumb/gimpthumb-utils.c:349
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr "Neizdevās izveidot sīktēlu mapi '%s'."
+msgstr "Neizdevās izveidot sīktēlu mapi “%s”."
 
 #: ../libgimpthumb/gimpthumbnail.c:508
 #, c-format
@@ -1134,7 +1133,7 @@ msgstr "Sīktēls nesatur Thumb::URI birku"
 #: ../libgimpthumb/gimpthumbnail.c:904
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
-msgstr "Neizdevās izveidot sīktēlu priekš '%s' — %s"
+msgstr "Neizdevās izveidot sīktēlu priekš “%s” — %s"
 
 #: ../libgimpwidgets/gimpbrowser.c:112
 msgid "_Search:"
@@ -1191,11 +1190,11 @@ msgstr "HTML _notācija:"
 
 #: ../libgimpwidgets/gimpfileentry.c:200
 msgid "Open a file selector to browse your folders"
-msgstr "Atvērt failu izvēli, lai pārlūkotu mapes"
+msgstr "Atvērt datņu izvēli, lai pārlūkotu mapes"
 
 #: ../libgimpwidgets/gimpfileentry.c:201
 msgid "Open a file selector to browse your files"
-msgstr "Atvērt failu izvēli, lai pārlūkotu failus"
+msgstr "Atvērt datņu izvēli, lai pārlūkotu datnes"
 
 #: ../libgimpwidgets/gimpfileentry.c:361
 msgid "Select Folder"
@@ -1203,7 +1202,7 @@ msgstr "Izvēlēties mapi"
 
 #: ../libgimpwidgets/gimpfileentry.c:363
 msgid "Select File"
-msgstr "Izvēlēties failu"
+msgstr "Izvēlieties datni"
 
 #: ../libgimpwidgets/gimphelpui.c:432
 msgid "Press F1 for more help"
@@ -1393,7 +1392,7 @@ msgid ""
 "a given \"random\" operation"
 msgstr ""
 "Izmantojiet šo vērtību gadījumskaitļu ģeneratora inicializēšanai - tas ļaus "
-"jums atkārtot izvēlēto \"gadījuma\" darbību"
+"jums atkārtot izvēlēto “gadījuma” darbību"
 
 #: ../libgimpwidgets/gimpwidgets.c:520
 msgid "_New Seed"
@@ -1875,7 +1874,7 @@ msgstr "Linux ievada notikumu kontrolieris"
 
 #: ../modules/controller-linux-input.c:218
 msgid "The name of the device to read Linux Input events from."
-msgstr "Iekārtas vārds, no kuras ielasīt Linux ievades notikumus."
+msgstr "Iekārtas nosaukums, no kuras ielasīt Linux ievades notikumus."
 
 #: ../modules/controller-linux-input.c:229
 msgid "Linux Input"
@@ -1900,7 +1899,7 @@ msgstr "Iekārta nav pieejama: %s"
 
 #: ../modules/controller-linux-input.c:631 ../modules/controller-midi.c:576
 msgid "End of file"
-msgstr "Faila beigas"
+msgstr "Datnes beigas"
 
 #: ../modules/controller-midi.c:163
 msgid "MIDI event controller"
@@ -1912,7 +1911,7 @@ msgstr "Iekārtas nosaukums, no kuras ielasīt MIDI notikumus."
 
 #: ../modules/controller-midi.c:205
 msgid "Enter 'alsa' to use the ALSA sequencer."
-msgstr "Ievadiet 'alsa', lai izmantotu ALSA virknētāju."
+msgstr "Ievadiet “alsa”, lai izmantotu ALSA virknētāju."
 
 #: ../modules/controller-midi.c:220
 msgid "Channel:"
@@ -2023,7 +2022,7 @@ msgid ""
 "Preferences dialog."
 msgstr ""
 "Šis filtrs savu konfigurāciju ņem no krāsu pārvaldības sadaļas iestatījumu "
-"dialogā."
+"dialoglodziņā."
 
 #: ../modules/display-filter-lcms.c:221
 msgid "Mode of operation:"
@@ -2055,7 +2054,7 @@ msgstr "Izvēlēties ICC krāsu parametrus"
 
 #: ../modules/display-filter-proof.c:365
 msgid "All files (*.*)"
-msgstr "Visi faili (*.*)"
+msgstr "Visas datnes (*.*)"
 
 #: ../modules/display-filter-proof.c:370
 msgid "ICC color profile (*.icc, *.icm)"

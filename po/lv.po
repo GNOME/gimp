@@ -11,16 +11,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: lv\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-05-11 03:49+0000\n"
-"PO-Revision-Date: 2012-05-11 23:46+0300\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-28 01:49+0300\n"
+"PO-Revision-Date: 2012-09-28 12:58+0300\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
+"Language: lv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: lv\n"
 "X-Generator: Lokalize 1.4\n"
 "Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
@@ -79,22 +78,22 @@ msgid ""
 "To avoid data loss, please check the location and permissions of the swap "
 "directory defined in your Preferences (currently \"%s\")."
 msgstr ""
-"Nevar atvērt testa swap failu.\n"
+"Nevar atvērt testa swap datni.\n"
 "\n"
-"Lai nezaudētu informāciju, pārbaudiet faila mapes atrašanās vietu un "
+"Lai nezaudētu informāciju, pārbaudiet datnes mapes atrašanās vietu un "
 "piekļuves tiesības iestatījumos (patlaban \"%s\")."
 
 #: ../app/batch.c:75
 #, c-format
 msgid "No batch interpreter specified, using the default '%s'.\n"
 msgstr ""
-"Nav norādīts pakešu (batch) interpretators, izmanto noklusējuma '%s'.\n"
+"Nav norādīts pakešu (batch) interpretators, izmanto noklusējuma “%s”.\n"
 
 #: ../app/batch.c:93 ../app/batch.c:111
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
-"Pakešu (batch) interpretators '%s' nav pieejams, pakešu režīms ir izslēgts."
+"Pakešu (batch) interpretators “%s” nav pieejams, pakešu režīms ir izslēgts."
 
 #: ../app/main.c:148
 msgid "Show version information and exit"
@@ -142,15 +141,15 @@ msgstr "Neizmantot procesora (CPU) paātrinātājus"
 
 #: ../app/main.c:203
 msgid "Use an alternate sessionrc file"
-msgstr "Izmantot citu sessionrc failu"
+msgstr "Izmantot citu sessionrc datni"
 
 #: ../app/main.c:208
 msgid "Use an alternate user gimprc file"
-msgstr "Izmantot citu lietotāja gimprc failu"
+msgstr "Izmantot citu lietotāja gimprc datni"
 
 #: ../app/main.c:213
 msgid "Use an alternate system gimprc file"
-msgstr "Izmantot citu sistēmas gimprc failu"
+msgstr "Izmantot citu sistēmas gimprc datni"
 
 #: ../app/main.c:218
 msgid "Batch command to run (can be used multiple times)"
@@ -162,7 +161,7 @@ msgstr "Procedūra, ar kuru apstrādāt paketes (batch) komandu"
 
 #: ../app/main.c:228
 msgid "Send messages to console instead of using a dialog"
-msgstr "Rādīt brīdinājumus konsolē nevis ar dialoga logiem"
+msgstr "Rādīt brīdinājumus konsolē nevis ar dialoglodziņiem"
 
 #. don't translate the mode names (off|on|warn)
 #: ../app/main.c:234
@@ -184,7 +183,7 @@ msgstr "Atzīmēt visus brīdinājumus kā fatālus"
 
 #: ../app/main.c:255
 msgid "Output a gimprc file with default settings"
-msgstr "Parādīt gimprc failu ar noklusējuma iestatījumiem"
+msgstr "Parādīt gimprc datni ar noklusējuma iestatījumiem"
 
 #: ../app/main.c:271
 msgid "Output a sorted list of deprecated procedures in the PDB"
@@ -192,7 +191,7 @@ msgstr "Izvada sakārtotu sarakstu at novecojušām PDB procedūrām"
 
 #: ../app/main.c:389
 msgid "[FILE|URI...]"
-msgstr "[FAILS|URI...]"
+msgstr "[DATNE|URI...]"
 
 #: ../app/main.c:407
 msgid ""
@@ -226,9 +225,9 @@ msgid ""
 "\n"
 "Please check the value of the environment variable G_FILENAME_ENCODING."
 msgstr ""
-"Norādīto faila nosaukumu kodējumu nevar konvertēt uz UTF-8: %s\n"
+"Norādīto datnes nosaukumu kodējumu nevar konvertēt uz UTF-8 — %s\n"
 "\n"
-"Lūdzu pārbaudiet mainīgā G_FILENAME_ENCODING vērtību."
+"Lūdzu, pārbaudiet mainīgā G_FILENAME_ENCODING vērtību."
 
 #: ../app/sanity.c:452
 #, c-format
@@ -240,10 +239,10 @@ msgid ""
 "you didn't tell GLib about this. Please set the environment variable "
 "G_FILENAME_ENCODING."
 msgstr ""
-"GIMP lietotāja parametru mapi nevar konvertēt uz UTF-8: %s\n"
+"GIMP lietotāja parametru mapi nevar konvertēt uz UTF-8 — %s\n"
 "\n"
-"Ļoti iespējams, ka jūsu sistēmas faili ir kodēti citā kodējumā nevis UTF-8 "
-"un GLib tas nav definēts. Lūdzu pārbaudiet sistēmas mainīgo "
+"Ļoti iespējams, ka sistēmas datnes ir kodētas citā kodējumā nevis UTF-8 "
+"un GLib tas nav definēts. Lūdzu, pārbaudiet sistēmas mainīgo "
 "G_FILENAME_ENCODING."
 
 #. show versions of libraries used by GIMP
@@ -299,7 +298,7 @@ msgstr "Atkļūdošana"
 
 #: ../app/actions/actions.c:136
 msgid "Dialogs"
-msgstr "Dialogi"
+msgstr "Dialoglodziņi"
 
 #: ../app/actions/actions.c:139
 msgid "Dock"
@@ -339,7 +338,7 @@ msgstr "Kļūdu konsole"
 
 #: ../app/actions/actions.c:163
 msgid "File"
-msgstr "Fails"
+msgstr "Datne"
 
 #: ../app/actions/actions.c:166 ../app/dialogs/dialogs.c:325
 #: ../app/dialogs/preferences-dialog.c:2759
@@ -521,7 +520,7 @@ msgstr "Kopēt otas _atrašanās vietu"
 #: ../app/actions/brushes-actions.c:65
 msgctxt "brushes-action"
 msgid "Copy brush file location to clipboard"
-msgstr "Kopē otas faila atrašanās vietu uz starpliktuvi"
+msgstr "Kopē otas datnes atrašanās vietu uz starpliktuvi"
 
 #: ../app/actions/brushes-actions.c:70
 msgctxt "brushes-action"
@@ -771,7 +770,7 @@ msgid "New Channel Color"
 msgstr "Jauna kanāla krāsa"
 
 #: ../app/actions/channels-commands.c:244 ../app/core/gimpimage-new.c:257
-#: ../app/display/gimpdisplayshell-dnd.c:632
+#: ../app/display/gimpdisplayshell-dnd.c:646
 #: ../app/widgets/gimpchanneltreeview.c:258
 #: ../app/widgets/gimplayertreeview.c:776
 #, c-format
@@ -935,22 +934,22 @@ msgstr "Mainīt vietām priekšplāna un fona krāsu"
 #: ../app/actions/context-commands.c:426
 #, c-format
 msgid "Paint Mode: %s"
-msgstr "Zīmēšanas režīms: %s"
+msgstr "Zīmēšanas režīms — %s"
 
 #: ../app/actions/context-commands.c:552
 #, c-format
 msgid "Brush Shape: %s"
-msgstr "Otas forma: %s"
+msgstr "Otas forma — %s"
 
 #: ../app/actions/context-commands.c:612
 #, c-format
 msgid "Brush Radius: %2.2f"
-msgstr "Otas rādiuss: %2.2f"
+msgstr "Otas rādiuss — %2.2f"
 
 #: ../app/actions/context-commands.c:720
 #, c-format
 msgid "Brush Angle: %2.2f"
-msgstr "Otas leņķis: %2.2f"
+msgstr "Otas leņķis — %2.2f"
 
 #: ../app/actions/cursor-info-actions.c:40
 msgctxt "cursor-info-action"
@@ -972,7 +971,7 @@ msgstr "Apgabala iezīmējuma noteikšanai izmantot visus redzamos slāņus"
 #: ../app/dialogs/file-open-dialog.c:277
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
-#: ../app/display/gimpdisplayshell-dnd.c:578
+#: ../app/display/gimpdisplayshell-dnd.c:592
 #: ../app/widgets/gimplayertreeview.c:736 ../app/widgets/gimptoolbox-dnd.c:170
 #: ../app/widgets/gimptoolbox.c:833
 #, c-format
@@ -981,13 +980,13 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"Nevar atvērt '%s':\n"
+"Nevar atvērt “%s”:\n"
 "\n"
 "%s"
 
 #: ../app/actions/data-commands.c:118
 #: ../app/actions/tool-options-commands.c:72
-#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1523
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1529
 #: ../app/core/gimppalette-import.c:211 ../app/core/gimppalette-load.c:224
 #: ../app/core/gimppalette.c:399 ../app/dialogs/palette-import-dialog.c:771
 #: ../app/widgets/gimpdnd-xds.c:94
@@ -1007,7 +1006,7 @@ msgstr "Rīka _opcijas"
 #: ../app/actions/dialogs-actions.c:56
 msgctxt "dialogs-action"
 msgid "Open the tool options dialog"
-msgstr "Atvērt rīka opciju dialogu"
+msgstr "Atvērt rīka opciju dialoglodziņu"
 
 #: ../app/actions/dialogs-actions.c:61
 msgctxt "dialogs-action"
@@ -1017,7 +1016,7 @@ msgstr "_Ierīces statuss"
 #: ../app/actions/dialogs-actions.c:62
 msgctxt "dialogs-action"
 msgid "Open the device status dialog"
-msgstr "Atvērt ierīces statusa dialogu"
+msgstr "Atvērt ierīces statusa dialoglodziņu"
 
 #: ../app/actions/dialogs-actions.c:67
 msgctxt "dialogs-action"
@@ -1027,7 +1026,7 @@ msgstr "S_lāņi"
 #: ../app/actions/dialogs-actions.c:68
 msgctxt "dialogs-action"
 msgid "Open the layers dialog"
-msgstr "Atvērt slāņu dialogu"
+msgstr "Atvērt slāņu dialoglodziņu"
 
 #: ../app/actions/dialogs-actions.c:73
 msgctxt "dialogs-action"
@@ -1037,7 +1036,7 @@ msgstr "_Kanāli"
 #: ../app/actions/dialogs-actions.c:74
 msgctxt "dialogs-action"
 msgid "Open the channels dialog"
-msgstr "Atvērt kanālu dialogu"
+msgstr "Atvērt kanālu dialoglodziņu"
 
 #: ../app/actions/dialogs-actions.c:79
 msgctxt "dialogs-action"
@@ -1047,7 +1046,7 @@ msgstr "_Ceļi"
 #: ../app/actions/dialogs-actions.c:80
 msgctxt "dialogs-action"
 msgid "Open the paths dialog"
-msgstr "Atvērt ceļu dialogu"
+msgstr "Atvērt ceļu dialoglodziņu"
 
 #: ../app/actions/dialogs-actions.c:85
 msgctxt "dialogs-action"
@@ -1057,7 +1056,7 @@ msgstr "Krāsu _karte"
 #: ../app/actions/dialogs-actions.c:86
 msgctxt "dialogs-action"
 msgid "Open the colormap dialog"
-msgstr "Atvērt krāsu kartes dialogu"
+msgstr "Atvērt krāsu kartes dialoglodziņu"
 
 #: ../app/actions/dialogs-actions.c:91
 msgctxt "dialogs-action"
@@ -1067,7 +1066,7 @@ msgstr "Histogra_mma"
 #: ../app/actions/dialogs-actions.c:92
 msgctxt "dialogs-action"
 msgid "Open the histogram dialog"
-msgstr "Atvērt histogrammas dialogu"
+msgstr "Atvērt histogrammas dialoglodziņu"
 
 #: ../app/actions/dialogs-actions.c:97
 msgctxt "dialogs-action"
@@ -1087,7 +1086,7 @@ msgstr "Na_vigācija"
 #: ../app/actions/dialogs-actions.c:104
 msgctxt "dialogs-action"
 msgid "Open the display navigation dialog"
-msgstr "Atvērt displeja navigācijas dialogu"
+msgstr "Atvērt displeja navigācijas dialoglodziņu"
 
 #: ../app/actions/dialogs-actions.c:109
 msgctxt "dialogs-action"
@@ -1097,7 +1096,7 @@ msgstr "Atsaukšanas _vēsture"
 #: ../app/actions/dialogs-actions.c:110
 msgctxt "dialogs-action"
 msgid "Open the undo history dialog"
-msgstr "Atvērt atsaukšanas vēstures dialogu"
+msgstr "Atvērt atsaukšanas vēstures dialoglodziņu"
 
 #: ../app/actions/dialogs-actions.c:115
 msgctxt "dialogs-action"
@@ -1107,7 +1106,7 @@ msgstr "Rādītājs"
 #: ../app/actions/dialogs-actions.c:116
 msgctxt "dialogs-action"
 msgid "Open the pointer information dialog"
-msgstr "Atvērt rādītāja informācijas dialogu"
+msgstr "Atvērt rādītāja informācijas dialoglodziņu"
 
 #: ../app/actions/dialogs-actions.c:121
 msgctxt "dialogs-action"
@@ -1117,7 +1116,7 @@ msgstr "_Paraugpunkti"
 #: ../app/actions/dialogs-actions.c:122
 msgctxt "dialogs-action"
 msgid "Open the sample points dialog"
-msgstr "Atvērt paraugpunktu dialogu"
+msgstr "Atvērt paraugpunktu dialoglodziņu"
 
 #: ../app/actions/dialogs-actions.c:127
 msgctxt "dialogs-action"
@@ -1127,7 +1126,7 @@ msgstr "K_rāsas"
 #: ../app/actions/dialogs-actions.c:128
 msgctxt "dialogs-action"
 msgid "Open the FG/BG color dialog"
-msgstr "Atvērt priekšplāna/fona krāsu dialogu"
+msgstr "Atvērt priekšplāna/fona krāsu dialoglodziņu"
 
 #: ../app/actions/dialogs-actions.c:133
 msgctxt "dialogs-action"
@@ -1137,7 +1136,7 @@ msgstr "_Otas"
 #: ../app/actions/dialogs-actions.c:134
 msgctxt "dialogs-action"
 msgid "Open the brushes dialog"
-msgstr "Atvērt otu dialogu"
+msgstr "Atvērt otu dialoglodziņu"
 
 #: ../app/actions/dialogs-actions.c:139
 msgctxt "dialogs-action"
@@ -1177,7 +1176,7 @@ msgstr "R_aksti"
 #: ../app/actions/dialogs-actions.c:158
 msgctxt "dialogs-action"
 msgid "Open the patterns dialog"
-msgstr "Atvērt rakstu dialogu"
+msgstr "Atvērt rakstu dialoglodziņu"
 
 #: ../app/actions/dialogs-actions.c:163
 msgctxt "dialogs-action"
@@ -1187,7 +1186,7 @@ msgstr "Krāsu _pārejas"
 #: ../app/actions/dialogs-actions.c:164
 msgctxt "dialogs-action"
 msgid "Open the gradients dialog"
-msgstr "Atvērt krāsu pāreju dialogu"
+msgstr "Atvērt krāsu pāreju dialoglodziņu"
 
 #: ../app/actions/dialogs-actions.c:169
 msgctxt "dialogs-action"
@@ -1207,7 +1206,7 @@ msgstr "Pal_etes"
 #: ../app/actions/dialogs-actions.c:176
 msgctxt "dialogs-action"
 msgid "Open the palettes dialog"
-msgstr "Atvērt palešu dialogu"
+msgstr "Atvērt palešu dialoglodziņu"
 
 #: ../app/actions/dialogs-actions.c:181
 msgctxt "dialogs-action"
@@ -1227,7 +1226,7 @@ msgstr "Rīku regulējumi"
 #: ../app/actions/dialogs-actions.c:188
 msgctxt "dialogs-action"
 msgid "Open tool presets dialog"
-msgstr "Atvērt rīka regulējumu dialogu"
+msgstr "Atvērt rīka regulējumu dialoglodziņu"
 
 #: ../app/actions/dialogs-actions.c:193
 msgctxt "dialogs-action"
@@ -1237,7 +1236,7 @@ msgstr "_Fonti"
 #: ../app/actions/dialogs-actions.c:194
 msgctxt "dialogs-action"
 msgid "Open the fonts dialog"
-msgstr "Atvērt fontu dialogu"
+msgstr "Atvērt fontu dialoglodziņu"
 
 #: ../app/actions/dialogs-actions.c:199
 msgctxt "dialogs-action"
@@ -1247,7 +1246,7 @@ msgstr "B_uferi"
 #: ../app/actions/dialogs-actions.c:200
 msgctxt "dialogs-action"
 msgid "Open the named buffers dialog"
-msgstr "Atvērt nosaukto buferu dialogu"
+msgstr "Atvērt nosaukto buferu dialoglodziņu"
 
 #: ../app/actions/dialogs-actions.c:205
 msgctxt "dialogs-action"
@@ -1257,7 +1256,7 @@ msgstr "Attēl_i"
 #: ../app/actions/dialogs-actions.c:206
 msgctxt "dialogs-action"
 msgid "Open the images dialog"
-msgstr "Atvērt attēlu dialogu"
+msgstr "Atvērt attēlu dialoglodziņu"
 
 #: ../app/actions/dialogs-actions.c:211
 msgctxt "dialogs-action"
@@ -1267,7 +1266,7 @@ msgstr "Dokumentu _vēsture"
 #: ../app/actions/dialogs-actions.c:212
 msgctxt "dialogs-action"
 msgid "Open the document history dialog"
-msgstr "Atvērt dokumentu vēstures dialogu"
+msgstr "Atvērt dokumentu vēstures dialoglodziņu"
 
 #: ../app/actions/dialogs-actions.c:217
 msgctxt "dialogs-action"
@@ -1277,7 +1276,7 @@ msgstr "_Veidnes"
 #: ../app/actions/dialogs-actions.c:218
 msgctxt "dialogs-action"
 msgid "Open the image templates dialog"
-msgstr "Atvērt attēlu veidņu dialogu"
+msgstr "Atvērt attēlu veidņu dialoglodziņu"
 
 #: ../app/actions/dialogs-actions.c:223
 msgctxt "dialogs-action"
@@ -1297,7 +1296,7 @@ msgstr "_Iestatījumi"
 #: ../app/actions/dialogs-actions.c:235
 msgctxt "dialogs-action"
 msgid "Open the preferences dialog"
-msgstr "Atvērt iestatījumu dialogu"
+msgstr "Atvērt iestatījumu dialoglodziņu"
 
 #: ../app/actions/dialogs-actions.c:240
 msgctxt "dialogs-action"
@@ -1327,7 +1326,7 @@ msgstr "_Moduļi"
 #: ../app/actions/dialogs-actions.c:253
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
-msgstr "Atvērt moduļu pārvaldības dialogu"
+msgstr "Atvērt moduļu pārvaldības dialoglodziņu"
 
 #: ../app/actions/dialogs-actions.c:258
 msgctxt "dialogs-action"
@@ -1399,7 +1398,7 @@ msgstr "Automātiski _sekot aktīvajam attēlam"
 #: ../app/actions/dockable-actions.c:48
 msgctxt "dockable-action"
 msgid "Dialogs Menu"
-msgstr "Dialogu izvēlne"
+msgstr "Dialoglodziņu izvēlne"
 
 #: ../app/actions/dockable-actions.c:53
 msgctxt "dockable-action"
@@ -1554,12 +1553,12 @@ msgstr "Pacelt logu, ja tas ir atvērts"
 #: ../app/actions/documents-actions.c:57
 msgctxt "documents-action"
 msgid "File Open _Dialog"
-msgstr "Faila atvēršanas _dialogs"
+msgstr "Datņu atvēršanas _dialoglodziņš"
 
 #: ../app/actions/documents-actions.c:58
 msgctxt "documents-action"
 msgid "Open image dialog"
-msgstr "Atvērt attēla dialogu"
+msgstr "Atvērt attēla dialoglodziņu"
 
 #: ../app/actions/documents-actions.c:63
 msgctxt "documents-action"
@@ -1619,7 +1618,7 @@ msgstr "Dzēst _novecojušus ierakstus"
 #: ../app/actions/documents-actions.c:95
 msgctxt "documents-action"
 msgid "Remove entries for which the corresponding file is not available"
-msgstr "Izņem ierakstus, kuriem nav pieejams atbilstošais fails"
+msgstr "Izņem ierakstus, kuriem nav pieejama atbilstošā datne"
 
 #: ../app/actions/documents-commands.c:192
 msgid "Clear Document History"
@@ -1803,7 +1802,7 @@ msgstr "Kopēt dinamikas _vietu"
 #: ../app/actions/dynamics-actions.c:59
 msgctxt "dynamics-action"
 msgid "Copy dynamics file location to clipboard"
-msgstr "Kopēt dinamikas faila vietu uz starpliktuvi"
+msgstr "Kopēt dinamikas datnes vietu uz starpliktuvi"
 
 #: ../app/actions/dynamics-actions.c:64
 msgctxt "dynamics-action"
@@ -2147,7 +2146,7 @@ msgstr "Izgriezt nosaukto buferi"
 #: ../app/actions/edit-commands.c:377 ../app/actions/edit-commands.c:418
 #: ../app/actions/edit-commands.c:438
 msgid "Enter a name for this buffer"
-msgstr "Ievadīt vārdu šim buferim"
+msgstr "Ievadīt nosaukumu šim buferim"
 
 #: ../app/actions/edit-commands.c:415
 msgid "Copy Named"
@@ -2198,22 +2197,22 @@ msgstr "Izvēlēties visus kļūdas ziņojumus"
 #: ../app/actions/error-console-actions.c:58
 msgctxt "error-console-action"
 msgid "_Save Error Log to File..."
-msgstr "_Saglabāt kļūdu žurnālu failā..."
+msgstr "_Saglabāt kļūdu žurnālu datnē..."
 
 #: ../app/actions/error-console-actions.c:59
 msgctxt "error-console-action"
 msgid "Write all error messages to a file"
-msgstr "Rakstīt visus kļūdu ziņojumus failā"
+msgstr "Rakstīt visus kļūdu ziņojumus datnē"
 
 #: ../app/actions/error-console-actions.c:64
 msgctxt "error-console-action"
 msgid "Save S_election to File..."
-msgstr "Saglabāt _izvēli failā..."
+msgstr "Saglabāt _izvēli datnē..."
 
 #: ../app/actions/error-console-actions.c:65
 msgctxt "error-console-action"
 msgid "Write the selected error messages to a file"
-msgstr "Rakstīt izvēlētos kļūdu ziņojumus failā"
+msgstr "Rakstīt izvēlētos kļūdu ziņojumus datnē"
 
 #: ../app/actions/error-console-commands.c:84
 msgid "Cannot save. Nothing is selected."
@@ -2221,7 +2220,7 @@ msgstr "Nevar saglabāt. Nekas nav izvēlēts."
 
 #: ../app/actions/error-console-commands.c:95
 msgid "Save Error Log to File"
-msgstr "Saglabāt kļūdu sarakstu failā"
+msgstr "Saglabāt kļūdu sarakstu datnē"
 
 #: ../app/actions/error-console-commands.c:157
 #, c-format
@@ -2229,13 +2228,13 @@ msgid ""
 "Error writing file '%s':\n"
 "%s"
 msgstr ""
-"Kļūda, rakstot failā '%s':\n"
+"Kļūda, rakstot datnē “%s”:\n"
 "%s"
 
 #: ../app/actions/file-actions.c:71
 msgctxt "file-action"
 msgid "_File"
-msgstr "_Fails"
+msgstr "_Datne"
 
 #: ../app/actions/file-actions.c:72
 msgctxt "file-action"
@@ -2255,7 +2254,7 @@ msgstr "_Atvērt..."
 #: ../app/actions/file-actions.c:77
 msgctxt "file-action"
 msgid "Open an image file"
-msgstr "Atvērt attēla failu"
+msgstr "Atvērt attēla datni"
 
 #: ../app/actions/file-actions.c:82
 msgctxt "file-action"
@@ -2265,7 +2264,7 @@ msgstr "Atv_ērt kā slāņus..."
 #: ../app/actions/file-actions.c:83
 msgctxt "file-action"
 msgid "Open an image file as layers"
-msgstr "Atvērt attēla failu kā slāņus"
+msgstr "Atvērt attēla datni kā slāņus"
 
 #: ../app/actions/file-actions.c:88
 msgctxt "file-action"
@@ -2295,7 +2294,7 @@ msgstr "Atgrie_zt"
 #: ../app/actions/file-actions.c:101
 msgctxt "file-action"
 msgid "Reload the image file from disk"
-msgstr "Pārlādēt attēla failu no diska"
+msgstr "Pārlādēt attēla datni no diska"
 
 #: ../app/actions/file-actions.c:106
 msgctxt "file-action"
@@ -2348,7 +2347,7 @@ msgid ""
 "Save a copy of this image, without affecting the source file (if any) or the "
 "current state of the image"
 msgstr ""
-"Saglabāt šī faila kopiju, neietekmējot avota failu (ja ir) vai attēla "
+"Saglabāt šīs datnes kopiju, neietekmējot avota datni (ja ir) vai attēla "
 "pašreizējo stāvokli"
 
 #: ../app/actions/file-actions.c:140
@@ -2379,7 +2378,7 @@ msgstr "Pā_rrakstīt"
 #: ../app/actions/file-actions.c:153
 msgctxt "file-action"
 msgid "Export the image back to the imported file in the import format"
-msgstr "Eksportēt attēlu atpakaļ uz importēto failu, importētā faila formātā"
+msgstr "Eksportēt attēlu atpakaļ uz importēto datni, importētās datnes formātā"
 
 #: ../app/actions/file-actions.c:158
 msgctxt "file-action"
@@ -2389,7 +2388,7 @@ msgstr "Eksportēt..."
 #: ../app/actions/file-actions.c:159
 msgctxt "file-action"
 msgid "Export the image to various file formats such as PNG or JPEG"
-msgstr "Eksportēt attēlu uz dažādiem failu formātiem, piemēram, PNG vai JPEG"
+msgstr "Eksportēt attēlu uz dažādiem datņu formātiem, piemēram, PNG vai JPEG"
 
 #: ../app/actions/file-actions.c:292
 #, c-format
@@ -2405,7 +2404,7 @@ msgstr "Pār_rakstīt %s"
 msgid "Export to"
 msgstr "Eksportēt uz"
 
-#: ../app/actions/file-commands.c:112 ../app/actions/file-commands.c:492
+#: ../app/actions/file-commands.c:112 ../app/actions/file-commands.c:489
 #: ../app/dialogs/file-open-dialog.c:77
 msgid "Open Image"
 msgstr "Atvērt attēlu"
@@ -2426,28 +2425,28 @@ msgstr "Saglabāt attēlu"
 msgid "Save a Copy of the Image"
 msgstr "Saglabāt attēla kopiju"
 
-#: ../app/actions/file-commands.c:356
+#: ../app/actions/file-commands.c:363
 msgid "Create New Template"
 msgstr "Izveidot jaunu veidni"
 
-#: ../app/actions/file-commands.c:360
+#: ../app/actions/file-commands.c:367
 msgid "Enter a name for this template"
 msgstr "Ievadīt šīs veidnes nosaukumu"
 
-#: ../app/actions/file-commands.c:394
+#: ../app/actions/file-commands.c:397
 msgid "Revert failed. No file name associated with this image."
-msgstr "Atgriešana nesekmīga. Nav faila, kas atbilstu šim attēlam."
+msgstr "Atgriešana nesekmīga. Nav datnes, kas atbilstu šim attēlam."
 
-#: ../app/actions/file-commands.c:407
+#: ../app/actions/file-commands.c:409
 msgid "Revert Image"
 msgstr "Atgriezt attēlu"
 
-#: ../app/actions/file-commands.c:438
+#: ../app/actions/file-commands.c:435
 #, c-format
 msgid "Revert '%s' to '%s'?"
-msgstr "Atgriezt '%s' uz '%s'?"
+msgstr "Atgriezt “%s” uz “%s”?"
 
-#: ../app/actions/file-commands.c:444
+#: ../app/actions/file-commands.c:441
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -2455,18 +2454,18 @@ msgstr ""
 "Atgriežot attēlu stāvoklī, kāds ir saglabāts uz diska, jūs zaudēsiet visas "
 "izmaiņas, ieskaitot visu atsaukšanas informāciju."
 
-#: ../app/actions/file-commands.c:655
+#: ../app/actions/file-commands.c:652
 msgid "(Unnamed Template)"
 msgstr "(Nenosaukta veidne)"
 
-#: ../app/actions/file-commands.c:706
+#: ../app/actions/file-commands.c:703
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
 "\n"
 "%s"
 msgstr ""
-"Atgriešana uz '%s' nesekmīga:\n"
+"Atgriešana uz “%s” nesekmīga:\n"
 "\n"
 "%s"
 
@@ -2922,7 +2921,7 @@ msgstr "Rediģēt krāsu pāreju"
 #: ../app/actions/gradients-commands.c:65
 #, c-format
 msgid "Save '%s' as POV-Ray"
-msgstr "Saglabāt '%s' kā POV-Ray"
+msgstr "Saglabāt “%s” kā POV-Ray"
 
 #: ../app/actions/help-actions.c:37 ../app/actions/help-actions.c:40
 msgctxt "help-action"
@@ -3216,7 +3215,7 @@ msgstr "Apmešana"
 
 #: ../app/actions/image-commands.c:403
 #: ../app/pdb/drawable-transform-cmds.c:602
-#: ../app/pdb/drawable-transform-cmds.c:694 ../app/pdb/image-cmds.c:533
+#: ../app/pdb/drawable-transform-cmds.c:694 ../app/pdb/image-cmds.c:534
 #: ../app/pdb/item-transform-cmds.c:433 ../app/pdb/transform-tools-cmds.c:245
 #: ../app/tools/gimprotatetool.c:125
 msgid "Rotating"
@@ -3238,8 +3237,8 @@ msgstr "Mērogot attēlu"
 #: ../app/actions/image-commands.c:682 ../app/actions/layers-commands.c:1145
 #: ../app/dialogs/preferences-dialog.c:1899
 #: ../app/pdb/drawable-transform-cmds.c:783
-#: ../app/pdb/drawable-transform-cmds.c:872 ../app/pdb/image-cmds.c:405
-#: ../app/pdb/image-cmds.c:441 ../app/pdb/item-transform-cmds.c:524
+#: ../app/pdb/drawable-transform-cmds.c:872 ../app/pdb/image-cmds.c:406
+#: ../app/pdb/image-cmds.c:442 ../app/pdb/item-transform-cmds.c:524
 #: ../app/pdb/layer-cmds.c:333 ../app/pdb/layer-cmds.c:378
 #: ../app/pdb/transform-tools-cmds.c:334 ../app/tools/gimpscaletool.c:118
 msgid "Scaling"
@@ -3949,7 +3948,7 @@ msgstr "Kopēt pa_letes atrašanās vietu"
 #: ../app/actions/palettes-actions.c:72
 msgctxt "palettes-action"
 msgid "Copy palette file location to clipboard"
-msgstr "Kopēt paletes faila atrašanās vietu uz starpliktuvi"
+msgstr "Kopēt paletes datnes atrašanās vietu uz starpliktuvi"
 
 #: ../app/actions/palettes-actions.c:77
 msgctxt "palettes-action"
@@ -4032,7 +4031,7 @@ msgstr "Kopēt raksta _atrašanās vietu"
 #: ../app/actions/patterns-actions.c:65
 msgctxt "patterns-action"
 msgid "Copy pattern file location to clipboard"
-msgstr "Kopēt raksta faila atrašanās vietu uz starpliktuvi"
+msgstr "Kopēt raksta datnes atrašanās vietu uz starpliktuvi"
 
 #: ../app/actions/patterns-actions.c:70
 msgctxt "patterns-action"
@@ -4188,17 +4187,17 @@ msgstr "V_ēlreiz parādīt pēdējo"
 #: ../app/actions/plug-in-actions.c:141
 msgctxt "plug-in-action"
 msgid "Show the last used plug-in dialog again"
-msgstr "Vēlreiz parādīt pēdējā lietotā spraudņa dialogu"
+msgstr "Vēlreiz parādīt pēdējā lietotā spraudņa dialoglodziņu"
 
 #: ../app/actions/plug-in-actions.c:551
 #, c-format
 msgid "Re_peat \"%s\""
-msgstr "_Atkārtot \"%s\""
+msgstr "_Atkārtot “%s”"
 
 #: ../app/actions/plug-in-actions.c:552
 #, c-format
 msgid "R_e-Show \"%s\""
-msgstr "V_ēlreiz parādīt \"%s\""
+msgstr "V_ēlreiz parādīt “%s”"
 
 #: ../app/actions/plug-in-actions.c:568
 msgid "Repeat Last"
@@ -4539,7 +4538,7 @@ msgstr "Dzēst veidni"
 #, c-format
 msgid ""
 "Are you sure you want to delete template '%s' from the list and from disk?"
-msgstr "Vai tiešām vēlaties dzēst paraugu '%s' no saraksta un cietā diska?"
+msgstr "Vai tiešām vēlaties dzēst paraugu “%s” no saraksta un cietā diska?"
 
 #: ../app/actions/text-editor-actions.c:43
 msgctxt "text-editor-action"
@@ -4549,7 +4548,7 @@ msgstr "Atvērt"
 #: ../app/actions/text-editor-actions.c:44
 msgctxt "text-editor-action"
 msgid "Load text from file"
-msgstr "Ielādēt tekstu no faila"
+msgstr "Ielādēt tekstu no datnes"
 
 #: ../app/actions/text-editor-actions.c:49
 msgctxt "text-editor-action"
@@ -4584,11 +4583,11 @@ msgstr "No labās uz kreiso"
 #: ../app/actions/text-editor-commands.c:62
 #: ../app/actions/text-tool-commands.c:117
 msgid "Open Text File (UTF-8)"
-msgstr "Atvērt teksta failu (UTF-8)"
+msgstr "Atvērt teksta datni (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:143
 #: ../app/actions/text-tool-commands.c:226 ../app/config/gimpconfig-file.c:58
-#: ../app/core/gimpbrush-load.c:140 ../app/core/gimpbrush-load.c:424
+#: ../app/core/gimpbrush-load.c:142 ../app/core/gimpbrush-load.c:426
 #: ../app/core/gimpbrushgenerated-load.c:73
 #: ../app/core/gimpbrushpipe-load.c:81 ../app/core/gimpcurve-load.c:54
 #: ../app/core/gimpgradient-load.c:63 ../app/core/gimppalette-load.c:77
@@ -4599,7 +4598,7 @@ msgstr "Atvērt teksta failu (UTF-8)"
 #: ../app/xcf/xcf.c:329
 #, c-format
 msgid "Could not open '%s' for reading: %s"
-msgstr "Nevar atvērt '%s' lasīšanai: %s"
+msgstr "Nevar atvērt “%s” lasīšanai — %s"
 
 #: ../app/actions/text-tool-actions.c:50
 msgctxt "text-tool-action"
@@ -4634,7 +4633,7 @@ msgstr "_Dzēst"
 #: ../app/actions/text-tool-actions.c:78
 msgctxt "text-tool-action"
 msgid "_Open text file..."
-msgstr "_Atvērt teksta failu..."
+msgstr "_Atvērt teksta datni..."
 
 #: ../app/actions/text-tool-actions.c:83
 msgctxt "text-tool-action"
@@ -4768,7 +4767,7 @@ msgstr "Kopēt rīka regulējuma _atrašanās vietu"
 #: ../app/actions/tool-presets-actions.c:61
 msgctxt "tool-presets-action"
 msgid "Copy tool preset file location to clipboard"
-msgstr "Kopē rīka regulējuma faila atrašanās vietu uz starpliktuvi"
+msgstr "Kopē rīka regulējuma datnes atrašanās vietu uz starpliktuvi"
 
 #: ../app/actions/tool-presets-actions.c:66
 msgctxt "tool-presets-action"
@@ -5393,7 +5392,6 @@ msgid "Zoom _Out"
 msgstr "_Tālināt"
 
 #: ../app/actions/view-actions.c:264 ../app/actions/view-actions.c:276
-#| msgid "Zoom out"
 msgctxt "view-zoom-action"
 msgid "Zoom out"
 msgstr "Tālināt"
@@ -5404,7 +5402,6 @@ msgid "Zoom _In"
 msgstr "Tuv_ināt"
 
 #: ../app/actions/view-actions.c:270 ../app/actions/view-actions.c:282
-#| msgid "Zoom in"
 msgctxt "view-zoom-action"
 msgid "Zoom in"
 msgstr "Tuvināt"
@@ -5606,60 +5603,60 @@ msgstr "Ekrāns %s"
 msgid "Move this window to screen %s"
 msgstr "Pārvietot šo logu uz ekrānu %s"
 
-#: ../app/actions/windows-actions.c:95
+#: ../app/actions/windows-actions.c:93
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "_Logs"
 
-#: ../app/actions/windows-actions.c:97
+#: ../app/actions/windows-actions.c:95
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "Nesen aizvē_rtie doki"
 
-#: ../app/actions/windows-actions.c:99
+#: ../app/actions/windows-actions.c:97
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
-msgstr "_Dokojami dialogi"
+msgstr "_Dokojami dialoglodziņi"
 
-#: ../app/actions/windows-actions.c:102
+#: ../app/actions/windows-actions.c:100
 msgctxt "windows-action"
 msgid "Next Image"
 msgstr "Nākamais attēls"
 
-#: ../app/actions/windows-actions.c:103
+#: ../app/actions/windows-actions.c:101
 msgctxt "windows-action"
 msgid "Switch to the next image"
 msgstr "Pārslēgties uz nākamo attēlu"
 
-#: ../app/actions/windows-actions.c:108
+#: ../app/actions/windows-actions.c:106
 msgctxt "windows-action"
 msgid "Previous Image"
 msgstr "Iepriekšējais attēls"
 
-#: ../app/actions/windows-actions.c:109
+#: ../app/actions/windows-actions.c:107
 msgctxt "windows-action"
 msgid "Switch to the previous image"
 msgstr "Pārslēgties uz iepriekšējo attēlu"
 
-#: ../app/actions/windows-actions.c:117
+#: ../app/actions/windows-actions.c:115
 msgctxt "windows-action"
 msgid "Hide Docks"
 msgstr "Slēpt dokus"
 
-#: ../app/actions/windows-actions.c:118
+#: ../app/actions/windows-actions.c:116
 msgctxt "windows-action"
 msgid ""
 "When enabled docks and other dialogs are hidden, leaving only image windows."
 msgstr ""
-"Kad aktivēts, doki un citi dialogi tiek paslēpti, atstājot tikai attēla logu."
+"Kad aktivēts, doki un citi dialoglodziņi tiek paslēpti, atstājot tikai attēla "
+"logu."
 
-#: ../app/actions/windows-actions.c:124
+#: ../app/actions/windows-actions.c:122
 msgctxt "windows-action"
 msgid "Single-Window Mode"
 msgstr "Viena loga režīms"
 
-#: ../app/actions/windows-actions.c:125
-#| msgid "Use GIMP in a single-window mode."
+#: ../app/actions/windows-actions.c:123
 msgctxt "windows-action"
 msgid "When enabled GIMP is in a single-window mode."
 msgstr "Lietot GIMP viena loga režīmā."
@@ -5841,15 +5838,15 @@ msgid ""
 "using different filenames, restart GIMP and check the location of the swap "
 "directory in your Preferences."
 msgstr ""
-"Nevar atvērt swap failu. GIMP ir aizņēmis visu atmiņu un nevar izmantot swap "
-"failu. Jūsu attēla elementi var tikt sabojāti. Mēģiniet tos saglabāt ar citu "
+"Nevar atvērt swap datni. GIMP ir aizņēmis visu atmiņu un nevar izmantot swap "
+"datni. Jūsu attēla elementi var tikt sabojāti. Mēģiniet tos saglabāt ar citu "
 "nosaukumu, pārstartējiet GIMP un pārbaudiet swap kataloga norādes programmas "
 "iestatījumos."
 
 #: ../app/base/tile-swap.c:725
 #, c-format
 msgid "Failed to resize swap file: %s"
-msgstr "Neizdevās izmainīt apmaiņas faila izmēru — %s"
+msgstr "Neizdevās izmainīt apmaiņas datnes izmēru — %s"
 
 #: ../app/config/config-enums.c:24
 msgctxt "cursor-mode"
@@ -5964,17 +5961,17 @@ msgstr "Labroča"
 #: ../app/xcf/xcf.c:422
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Nevar atvērt '%s' rakstīšanai — %s"
+msgstr "Nevar atvērt “%s” rakstīšanai — %s"
 
 #: ../app/config/gimpconfig-file.c:78 ../app/config/gimpconfig-file.c:101
 #, c-format
 msgid "Error writing '%s': %s"
-msgstr "Kļūda, rakstot '%s' — %s"
+msgstr "Kļūda, rakstot “%s” — %s"
 
 #: ../app/config/gimpconfig-file.c:89
 #, c-format
 msgid "Error reading '%s': %s"
-msgstr "Kļūda, nolasot '%s' — %s"
+msgstr "Kļūda, nolasot “%s” — %s"
 
 #: ../app/config/gimpconfig-file.c:131
 #, c-format
@@ -5982,8 +5979,8 @@ msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
 "backup of your configuration has been created at '%s'."
 msgstr ""
-"Kļūda, nolasot failu '%s'. Tiks izmantotas noklusējuma vērtības. Jūsu "
-"konfigurācijas rezerves kopija tika izveidota šeit: '%s'."
+"Kļūda, nolasot datni “%s”. Tiks izmantotas noklusējuma vērtības. "
+"Konfigurācijas rezerves kopija tika izveidota šeit — “%s”."
 
 #. Not all strings defined here are used in the user interface
 #. *  (the preferences dialog mainly) and only those that are should
@@ -6008,8 +6005,8 @@ msgid ""
 "Sets the canvas padding color used if the padding mode is set to custom "
 "color."
 msgstr ""
-"Nosaka fona krāsu ap attēlu, ja fona tonēšanas režīmā norādīts \"Izvēlēta "
-"krāsa\"."
+"Nosaka fona krāsu ap attēlu, ja fona tonēšanas režīmā norādīts “Izvēlēta "
+"krāsa”."
 
 #: ../app/config/gimprc-blurbs.h:37
 msgid "Specifies how the area around the image should be drawn."
@@ -6017,7 +6014,7 @@ msgstr "Nosaka fona krāsu ap attēlu."
 
 #: ../app/config/gimprc-blurbs.h:43
 msgid "How to handle embedded color profiles when opening a file."
-msgstr "Kā rīkoties ar iegultajiem krāsu profiliem atverot failu."
+msgstr "Kā rīkoties ar iegultajiem krāsu profiliem, atverot datni."
 
 #: ../app/config/gimprc-blurbs.h:46
 msgid "Ask for confirmation before closing an image without saving."
@@ -6051,7 +6048,7 @@ msgstr "Ieslēdzot šo funkciju, katrs attēla punkts atbildīs punktam uz ekrā
 
 #: ../app/config/gimprc-blurbs.h:96
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
-msgstr "Distance, kurā nostrādā \"lipšana\" pie palīglīnijām un tīkla."
+msgstr "Distance, kurā nostrādā “lipšana” pie palīglīnijām un tīkla."
 
 #: ../app/config/gimprc-blurbs.h:112
 msgid ""
@@ -6061,7 +6058,7 @@ msgid ""
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
 msgstr ""
-"Tādi rīki kā \"Aizpildīšana\" un \"Brīva iezīmēšana\" izmanto graudainās "
+"Tādi rīki kā “Aizpildīšana” un “Brīva iezīmēšana” izmanto graudainās "
 "aizpildīšanas algoritmu. Graudainā aizpildīšana sākas ar sākotnēji izvēlētu "
 "punktu un turpinās tik ilgi, kamēr starpība starp sākotnēji izvēlēto punktu "
 "un oriģinālu nepārsniedz noteiktu līmeni. Šeit norādītais skaitlis nosaka šo "
@@ -6133,7 +6130,7 @@ msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
 msgstr ""
-"\"Skudras celiņa\" ātrums iezīmētajā laukumā. Vērtība norādāma\n"
+"“Skudru celiņa” ātrums iezīmētajā laukumā. Vērtība norādāma\n"
 "milisekundēs (jo mazāka vērtība, jo ātrāk kustas iezīmētā\n"
 "laukuma robeža)."
 
@@ -6142,7 +6139,7 @@ msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
 msgstr ""
-"GIMP brīdinās lietotāju, ja tiks izveidots fails, kura izmērs pārsniedz šeit "
+"GIMP brīdinās lietotāju, ja tiks izveidota datne, kuras izmērs pārsniedz šeit "
 "norādīto vērtību."
 
 #: ../app/config/gimprc-blurbs.h:231
@@ -6211,7 +6208,7 @@ msgid ""
 "dialogs."
 msgstr ""
 "Iestata slāņu un kanālu priekšskatījuma sākotnējos izmērus jaunizvedotos "
-"dialogos."
+"dialoglodziņos."
 
 #: ../app/config/gimprc-blurbs.h:287
 msgid "Sets the default quick mask color."
@@ -6247,12 +6244,13 @@ msgid ""
 "Keep a permanent record of all opened and saved files in the Recent "
 "Documents list."
 msgstr ""
-"Turēt pastāvīgus ierakstus par visiem atvērtajiem un saglabātajiem failiem "
+"Turēt pastāvīgus ierakstus par visām atvērtajām un saglabātajām datnēm "
 "Nesen izmantoto dokumentu sarakstā."
 
 #: ../app/config/gimprc-blurbs.h:309
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
-msgstr "Saglabāt galveno dialogu novietojumus un izmērus, izejot no GIMP."
+msgstr ""
+"Saglabāt galveno dialoglodziņu novietojumus un izmērus, izejot no GIMP."
 
 #: ../app/config/gimprc-blurbs.h:312
 msgid "Save the tool options when GIMP exits."
@@ -6270,8 +6268,8 @@ msgid ""
 "related help page.  Without this button, the help page can still be reached "
 "by pressing F1."
 msgstr ""
-"Dialogos redzama palīdzības poga. Bez šīs pogas palīdzības failus var iegūt "
-"spiežot F1 taustiņu."
+"Dialoglodziņos redzama palīdzības poga. Bez šīs pogas palīdzības datnes var "
+"iegūt, spiežot F1 taustiņu."
 
 #: ../app/config/gimprc-blurbs.h:327
 msgid ""
@@ -6286,64 +6284,64 @@ msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
 msgstr ""
-"Ja ieslēgts, izvēlņu josla ir redzama. Tas pats panākams, ieķeksējot \"Skats-"
-">Rādīt izvēlņu joslu\"."
+"Ja ieslēgts, izvēļņu josla ir redzama. Tas pats panākams, ieķeksējot “Skats-"
+">Rādīt izvēļņu joslu”."
 
 #: ../app/config/gimprc-blurbs.h:335
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 msgstr ""
-"Ja ieslēgts, mērjoslas ir redzamas. Tas pats panākams, ieķeksējot \"Skats-"
-">Rādīt mērjoslas\"."
+"Ja ieslēgts, mērjoslas ir redzamas. Tas pats panākams, ieķeksējot “Skats-"
+">Rādīt mērjoslas”."
 
 #: ../app/config/gimprc-blurbs.h:339
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
-"Ja ieslēgts, ritjoslas ir redzamas. Tas pats panākams, ieķeksējot \"Skats-"
-">Rādīt ritjoslas\"."
+"Ja ieslēgts, ritjoslas ir redzamas. Tas pats panākams, ieķeksējot “Skats-"
+">Rādīt ritjoslas”."
 
 #: ../app/config/gimprc-blurbs.h:343
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
 msgstr ""
-"Ja ieslēgts, stāvokļa josla ir redzama. Tas pats panākams, ieķeksējot\"Skats-"
-">Rādīt stāvokļa joslu\"."
+"Ja ieslēgts, stāvokļa josla ir redzama. Tas pats panākams, ieķeksējot “Skats-"
+">Rādīt stāvokļa joslu”."
 
 #: ../app/config/gimprc-blurbs.h:347
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
 msgstr ""
-"Ja ieslēgts, iezīmējums ir redzams. Tas pats panākams, ieķeksējot\"Skats-"
-">Rādīt izvēlēto\"."
+"Ja ieslēgts, iezīmējums ir redzams. Tas pats panākams, ieķeksējot “Skats-"
+">Rādīt izvēlēto”."
 
 #: ../app/config/gimprc-blurbs.h:351
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
-"Ja ieslēgts, slāņa robeža ir redzama. Tas pats panākams, ieķeksējot\"Skats-"
-">Rādīt slāņu robežas\"."
+"Ja ieslēgts, slāņa robeža ir redzama. Tas pats panākams, ieķeksējot “Skats-"
+">Rādīt slāņu robežas”."
 
 #: ../app/config/gimprc-blurbs.h:355
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
 msgstr ""
-"Ja ieslēgts, palīglīnijas ir redzamas. Tas pats panākams, ieķeksējot\"Skats-"
-">Rādīt palīglīnijas\"."
+"Ja ieslēgts, palīglīnijas ir redzamas. Tas pats panākams, ieķeksējot “Skats-"
+">Rādīt palīglīnijas”."
 
 #: ../app/config/gimprc-blurbs.h:359
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
 msgstr ""
-"Ja ieslēgts, tīkls ir redzams. Tas pats panākams, ieķeksējot \"Skats->Rādīt "
-"režģi\"."
+"Ja ieslēgts, tīkls ir redzams. Tas pats panākams, ieķeksējot “Skats->Rādīt "
+"režģi”."
 
 #: ../app/config/gimprc-blurbs.h:363
 msgid ""
@@ -6351,7 +6349,7 @@ msgid ""
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
 "Ja ieslēgts, paraugpunkti ir redzami pēc noklusējuma. Tas pats panākams, "
-"ieķeksējot \"Skats->Rādīt paraugpunktus\"."
+"ieķeksējot “Skats->Rādīt paraugpunktus”."
 
 #: ../app/config/gimprc-blurbs.h:367
 msgid "Show a tooltip when the pointer hovers over an item."
@@ -6378,12 +6376,12 @@ msgid ""
 "file is created on a folder that is mounted over NFS.  For these reasons, it "
 "may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
-"Iestata apmaiņas faila atrašanās vietu. GIMP izmanto uz flīzēm balstītu "
-"iedalīšanas shēmu. Apmaiņas failu izmanto, lai ātri un viegli ierakstītu "
-"flīzes diskā un atpakaļ atmiņā. Ņemiet vērā, ka apmaiņas fails var viegli "
-"kļūt ļoti liels, ja GIMP strādā ar lieliem attēliem. GIMP var kļūt ļoti "
-"lēns, ja apmaiņas fails ir uzmontēts uz NFS. Šo iemeslu dēļ varētu būt "
-"vēlams novietot apmaiņas failu uz \"/tmp\"."
+"Iestata apmaiņas datnes atrašanās vietu. GIMP izmanto uz flīzēm balstītu "
+"iedalīšanas shēmu. Apmaiņas datni izmanto, lai ātri un viegli ierakstītu "
+"flīzes diskā un atpakaļ atmiņā. Ņemiet vērā, ka apmaiņas datne var viegli "
+"kļūt ļoti liela, ja GIMP strādā ar lieliem attēliem. GIMP var kļūt ļoti "
+"lēns, ja apmaiņas datne ir uzmontēts uz NFS. Šo iemeslu dēļ varētu būt "
+"vēlams novietot apmaiņas datni uz “/tmp”."
 
 #: ../app/config/gimprc-blurbs.h:388
 msgid "When enabled, menus can be torn off."
@@ -6412,20 +6410,20 @@ msgid ""
 "files are likely to remain, so it is best if this folder not be one that is "
 "shared by other users."
 msgstr ""
-"Norāda pagaidu katalogu. Šeit tiks izvietoti faili, ar kuriem GIMP pašreiz "
-"strādā. Vairums failu, aizverot GIMP, tiks dzēsti, tomēr daži var palikt, "
+"Norāda pagaidu katalogu. Šeit tiks izvietotas datnes, ar kurām GIMP pašlaik "
+"strādā. Vairums datņu, aizverot GIMP, tiks dzēstas, tomēr dažas var palikt, "
 "tāpēc šai mapei nevajadzētu būt koplietošanā ar citiem lietotājiem."
 
 #: ../app/config/gimprc-blurbs.h:413
 msgid "Sets the size of the thumbnail shown in the Open dialog."
-msgstr "Iestata atvēršanas dialogā esošo sīktēlu izmēru."
+msgstr "Iestata atvēršanas dialoglodziņā esošo sīktēlu izmēru."
 
 #: ../app/config/gimprc-blurbs.h:416
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
 msgstr ""
-"Sīktēls dialogā \"Atvērt\" automātiski atjaunināsies, ja priekšskatījums "
+"Sīktēls dialoglodziņā “Atvērt” automātiski atjaunināsies, ja priekšskatījums "
 "bijis mazāks nekā šeit norādīts."
 
 #: ../app/config/gimprc-blurbs.h:420
@@ -6492,11 +6490,11 @@ msgstr "Iestata priekšskatījuma izmēru atsaukšanas vēsturē."
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Ja ieslēgts, taustiņš F1 atver palīga pārlūku."
 
-#: ../app/config/gimprc-deserialize.c:135 ../app/core/gimp-modules.c:133
+#: ../app/config/gimprc-deserialize.c:135 ../app/core/gimp-modules.c:136
 #: ../app/core/gimp-units.c:167 ../app/gui/session.c:286
 #: ../app/plug-in/plug-in-rc.c:212
 msgid "fatal parse error"
-msgstr "nelabojama kļūda analīzes laikā"
+msgstr "nelabojama parsēšanas kļūda"
 
 #: ../app/config/gimprc-deserialize.c:163
 #, c-format
@@ -6942,12 +6940,12 @@ msgstr "Pārvietot elementu"
 #: ../app/core/core-enums.c:854
 msgctxt "undo-type"
 msgid "Scale item"
-msgstr "Mērogot elementu"
+msgstr "Mērogot vienumu"
 
 #: ../app/core/core-enums.c:855
 msgctxt "undo-type"
 msgid "Resize item"
-msgstr "Mainīt elementa izmērus"
+msgstr "Mainīt vienuma izmērus"
 
 #: ../app/core/core-enums.c:856
 msgctxt "undo-type"
@@ -6979,12 +6977,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Fiksēt peldošo iezīmējumu"
 
-#: ../app/core/core-enums.c:862 ../app/core/gimp-edit.c:261
+#: ../app/core/core-enums.c:862 ../app/core/gimp-edit.c:293
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Ielīmēt"
 
-#: ../app/core/core-enums.c:863 ../app/core/gimp-edit.c:502
+#: ../app/core/core-enums.c:863 ../app/core/gimp-edit.c:534
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Izgriezt"
@@ -7048,12 +7046,12 @@ msgstr "Mainīt indeksēto paleti"
 #: ../app/core/core-enums.c:881
 msgctxt "undo-type"
 msgid "Reorder item"
-msgstr "Pārkārtot elementu"
+msgstr "Pārkārtot vienumu"
 
 #: ../app/core/core-enums.c:882
 msgctxt "undo-type"
 msgid "Rename item"
-msgstr "Pārsaukt elementu"
+msgstr "Pārsaukt vienumu"
 
 #: ../app/core/core-enums.c:886
 msgctxt "undo-type"
@@ -7160,122 +7158,122 @@ msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Nav atsaucams"
 
-#: ../app/core/core-enums.c:1185
+#: ../app/core/core-enums.c:1187
 msgctxt "select-criterion"
 msgid "Composite"
 msgstr "Salikts"
 
-#: ../app/core/core-enums.c:1186
+#: ../app/core/core-enums.c:1188
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Sarkans"
 
-#: ../app/core/core-enums.c:1187
+#: ../app/core/core-enums.c:1189
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Zaļš"
 
-#: ../app/core/core-enums.c:1188
+#: ../app/core/core-enums.c:1190
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Zils"
 
-#: ../app/core/core-enums.c:1189
+#: ../app/core/core-enums.c:1191
 msgctxt "select-criterion"
 msgid "Hue"
 msgstr "Tonis"
 
-#: ../app/core/core-enums.c:1190
+#: ../app/core/core-enums.c:1192
 msgctxt "select-criterion"
 msgid "Saturation"
 msgstr "Piesātinājums"
 
-#: ../app/core/core-enums.c:1191
+#: ../app/core/core-enums.c:1193
 msgctxt "select-criterion"
 msgid "Value"
 msgstr "Vērtība"
 
-#: ../app/core/core-enums.c:1220
+#: ../app/core/core-enums.c:1222
 msgctxt "message-severity"
 msgid "Message"
 msgstr "Ziņojums"
 
-#: ../app/core/core-enums.c:1221
+#: ../app/core/core-enums.c:1223
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "Brīdinājums"
 
-#: ../app/core/core-enums.c:1222
+#: ../app/core/core-enums.c:1224
 msgctxt "message-severity"
 msgid "Error"
 msgstr "Kļūda"
 
-#: ../app/core/core-enums.c:1251
+#: ../app/core/core-enums.c:1253
 msgctxt "color-profile-policy"
 msgid "Ask what to do"
 msgstr "Jautāt, ko darīt"
 
-#: ../app/core/core-enums.c:1252
+#: ../app/core/core-enums.c:1254
 msgctxt "color-profile-policy"
 msgid "Keep embedded profile"
 msgstr "Saglabāt iegulto profilu"
 
-#: ../app/core/core-enums.c:1253
+#: ../app/core/core-enums.c:1255
 msgctxt "color-profile-policy"
 msgid "Convert to RGB workspace"
 msgstr "Pārvērst par RGB darba virsmu"
 
-#: ../app/core/core-enums.c:1290
+#: ../app/core/core-enums.c:1292
 msgctxt "dynamics-output-type"
 msgid "Opacity"
 msgstr "Blīvums"
 
-#: ../app/core/core-enums.c:1291
+#: ../app/core/core-enums.c:1293
 msgctxt "dynamics-output-type"
 msgid "Size"
 msgstr "Izmērs"
 
-#: ../app/core/core-enums.c:1292
+#: ../app/core/core-enums.c:1294
 msgctxt "dynamics-output-type"
 msgid "Angle"
 msgstr "Leņķis"
 
-#: ../app/core/core-enums.c:1293
+#: ../app/core/core-enums.c:1295
 msgctxt "dynamics-output-type"
 msgid "Color"
 msgstr "Krāsa"
 
-#: ../app/core/core-enums.c:1294
+#: ../app/core/core-enums.c:1296
 msgctxt "dynamics-output-type"
 msgid "Hardness"
 msgstr "Stingrums"
 
-#: ../app/core/core-enums.c:1295
+#: ../app/core/core-enums.c:1297
 msgctxt "dynamics-output-type"
 msgid "Force"
 msgstr "Spēks"
 
-#: ../app/core/core-enums.c:1296
+#: ../app/core/core-enums.c:1298
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
 msgstr "Izmēru attiecība"
 
-#: ../app/core/core-enums.c:1297
+#: ../app/core/core-enums.c:1299
 msgctxt "dynamics-output-type"
 msgid "Spacing"
 msgstr "Atstatums"
 
-#: ../app/core/core-enums.c:1298
+#: ../app/core/core-enums.c:1300
 msgctxt "dynamics-output-type"
 msgid "Rate"
 msgstr "Ātrums"
 
-#: ../app/core/core-enums.c:1299
+#: ../app/core/core-enums.c:1301
 msgctxt "dynamics-output-type"
 msgid "Flow"
 msgstr "Plūsma"
 
-#: ../app/core/core-enums.c:1300
+#: ../app/core/core-enums.c:1302
 msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "Trīcēšana"
@@ -7287,41 +7285,41 @@ msgstr "Trīcēšana"
 msgid "Deleting \"%s\" failed: %s"
 msgstr "Neizdevās izdzēst “%s” — %s"
 
-#: ../app/core/gimp-edit.c:189 ../app/core/gimpimage-new.c:309
+#: ../app/core/gimp-edit.c:190 ../app/core/gimpimage-new.c:309
 msgid "Pasted Layer"
 msgstr "Ielīmētais slānis"
 
-#: ../app/core/gimp-edit.c:388
+#: ../app/core/gimp-edit.c:420
 msgctxt "undo-type"
 msgid "Clear"
 msgstr "Attīrīt"
 
-#: ../app/core/gimp-edit.c:407
+#: ../app/core/gimp-edit.c:439
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "Aizpildīt ar priekšplāna krāsu"
 
-#: ../app/core/gimp-edit.c:411
+#: ../app/core/gimp-edit.c:443
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "Aizpildīt ar fona krāsu"
 
-#: ../app/core/gimp-edit.c:415
+#: ../app/core/gimp-edit.c:447
 msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "Aizpildīt ar baltu"
 
-#: ../app/core/gimp-edit.c:419
+#: ../app/core/gimp-edit.c:451
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr "Aizpildīt ar caurspīdību"
 
-#: ../app/core/gimp-edit.c:423
+#: ../app/core/gimp-edit.c:455
 msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "Aizpildīt ar rakstu"
 
-#: ../app/core/gimp-edit.c:515
+#: ../app/core/gimp-edit.c:547
 msgid "Global Buffer"
 msgstr "Globālais buferis"
 
@@ -7355,38 +7353,38 @@ msgstr "No priekšplāna uz caurspīdīgumu"
 msgid "tags-locale:C"
 msgstr "tags-locale:lv"
 
-#: ../app/core/gimp-user-install.c:159
+#: ../app/core/gimp-user-install.c:173
 #, c-format
 msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
 "settings to '%s'."
 msgstr ""
 "Izskatās, ka esat lietojuši GIMP %s jau agrāk. GIMP migrēs jūsu iestatījumus "
-"uz '%s'."
+"uz “%s”."
 
-#: ../app/core/gimp-user-install.c:164
+#: ../app/core/gimp-user-install.c:178
 #, c-format
 msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
 "a folder named '%s' and copy some files to it."
 msgstr ""
-"Izskatās, ka lietojat GIMP pirmo reizi. GIMP izveidos mapi '%s' un iekopēs "
-"tajā dažus failus."
+"Izskatās, ka lietojat GIMP pirmo reizi. GIMP izveidos mapi “%s” un iekopēs "
+"tajā dažas datnes."
 
-#: ../app/core/gimp-user-install.c:316
+#: ../app/core/gimp-user-install.c:329
 #, c-format
 msgid "Copying file '%s' from '%s'..."
-msgstr "Failu kopēšana: '%s' no '%s'..."
+msgstr "Kopē datni “%s” no “%s”..."
 
-#: ../app/core/gimp-user-install.c:331 ../app/core/gimp-user-install.c:357
+#: ../app/core/gimp-user-install.c:344 ../app/core/gimp-user-install.c:370
 #, c-format
 msgid "Creating folder '%s'..."
-msgstr "Izveido mapi '%s' ..."
+msgstr "Izveido mapi “%s” ..."
 
-#: ../app/core/gimp-user-install.c:342 ../app/core/gimp-user-install.c:368
+#: ../app/core/gimp-user-install.c:355 ../app/core/gimp-user-install.c:381
 #, c-format
 msgid "Cannot create folder '%s': %s"
-msgstr "Nevar izveidot mapi '%s' — %s"
+msgstr "Nevar izveidot mapi “%s” — %s"
 
 #: ../app/core/gimp.c:595
 msgid "Initialization"
@@ -7400,7 +7398,7 @@ msgstr "Iekšējās procedūras"
 #. initialize  the global parasite table
 #: ../app/core/gimp.c:947
 msgid "Looking for data files"
-msgstr "Meklē datu failus"
+msgstr "Meklē datu datnes"
 
 #: ../app/core/gimp.c:947
 msgid "Parasites"
@@ -7427,79 +7425,79 @@ msgstr "Moduļi"
 msgid "Updating tag cache"
 msgstr "Atjaunina birkas kešu"
 
-#: ../app/core/gimpbrush-load.c:178
+#: ../app/core/gimpbrush-load.c:180
 #, c-format
 msgid "Could not read %d byte from '%s': %s"
 msgid_plural "Could not read %d bytes from '%s': %s"
-msgstr[0] "Nevar nolasīt %d baitu no '%s' — %s"
-msgstr[1] "Nevar nolasīt %d baitus no '%s' — %s"
-msgstr[2] "Nevar nolasīt %d baitu no '%s': %s"
+msgstr[0] "Nevar nolasīt %d baitu no “%s” — %s"
+msgstr[1] "Nevar nolasīt %d baitus no “%s” — %s"
+msgstr[2] "Nevar nolasīt %d baitu no “%s” — %s"
 
-#: ../app/core/gimpbrush-load.c:200
+#: ../app/core/gimpbrush-load.c:202
 #, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
-msgstr "Nelabojama kļūda, analizējot otas failu '%s — platums = 0."
+msgstr "Nelabojama kļūda, parsējot otas datni “%s” — platums = 0."
 
-#: ../app/core/gimpbrush-load.c:209
+#: ../app/core/gimpbrush-load.c:211
 #, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
-msgstr "Nelabojama kļūda, analizējot otas failu '%s' — augstums = 0."
+msgstr "Nelabojama kļūda, parsējot otas datni “%s” — augstums = 0."
 
-#: ../app/core/gimpbrush-load.c:218
+#: ../app/core/gimpbrush-load.c:220
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
-msgstr "Nelabojama kļūda, analizējot otas failu '%s' — izmērs = 0."
+msgstr "Nelabojama kļūda, parsējot otas datni “%s” — izmērs = 0."
 
-#: ../app/core/gimpbrush-load.c:242
+#: ../app/core/gimpbrush-load.c:244
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
-msgstr "Nelabojama kļūda, analizējot otas failu '%s' — nezināms dziļums %d."
+msgstr "Nelabojama kļūda, parsējot otas datni “%s” — nezināms dziļums %d."
 
-#: ../app/core/gimpbrush-load.c:255
+#: ../app/core/gimpbrush-load.c:257
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
-msgstr "Nelabojama kļūda, analizējot otas failu '%s' — nezināma versija %d."
+msgstr "Nelabojama kļūda, parsējot otas datni “%s” — nezināma versija %d."
 
-#: ../app/core/gimpbrush-load.c:271 ../app/core/gimpbrush-load.c:391
-#: ../app/core/gimpbrush-load.c:725
+#: ../app/core/gimpbrush-load.c:273 ../app/core/gimpbrush-load.c:393
+#: ../app/core/gimpbrush-load.c:727
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr ""
-"Nelabojama kļūda, analizējot otas failu '%s' — iespējams, ka fails ir "
-"nepilnīgs."
+"Nelabojama kļūda, parsējot otas datni “%s” — iespējams, ka datne ir "
+"nepilnīga."
 
-#: ../app/core/gimpbrush-load.c:279 ../app/core/gimpbrushgenerated-load.c:128
+#: ../app/core/gimpbrush-load.c:281 ../app/core/gimpbrushgenerated-load.c:128
 #: ../app/core/gimpbrushpipe-load.c:97
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "Nepieļaujama UTF-8 rinda otas failā '%s'."
+msgstr "Nederīga UTF-8 rinda otas datnē “%s”."
 
-#: ../app/core/gimpbrush-load.c:286 ../app/core/gimppattern-load.c:146
+#: ../app/core/gimpbrush-load.c:288 ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:83
 #: ../app/tools/gimpvectortool.c:317
 msgid "Unnamed"
 msgstr "Bez nosaukuma"
 
-#: ../app/core/gimpbrush-load.c:380
+#: ../app/core/gimpbrush-load.c:382
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
-"Nelabojama kļūda, analizējot otas failu '%s' — nepieļaujams dziļums %d. GIMP "
+"Nelabojama kļūda, parsējot otas datni “%s” — nepieļaujams dziļums %d. GIMP "
 "otas darbojas tikai RGBA un pelēktoņu režīmos."
 
-#: ../app/core/gimpbrush-load.c:452
+#: ../app/core/gimpbrush-load.c:454 ../app/core/gimpbrush-load.c:854
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': unable to decode abr format version %d."
-msgstr "Nelabojama kļūda, analizējot otas failu '%s' — nezināma versija %d."
+msgstr "Nelabojama kļūda, parsējot otas datni “%s” — nezināma versija %d."
 
-#: ../app/core/gimpbrush-load.c:619
+#: ../app/core/gimpbrush-load.c:621
 #, c-format
 msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
 msgstr ""
-"Nelabojama kļūda, analizējot otas failu '%s' — platas otras nav atbalstītas."
+"Nelabojama kļūda, parsējot otas datni “%s” — platas otras nav atbalstītas."
 
 #: ../app/core/gimpbrush.c:148
 msgid "Brush Spacing"
@@ -7508,15 +7506,14 @@ msgstr "Otas atstatums"
 #: ../app/core/gimpbrushgenerated-load.c:87
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
-msgstr ""
-"Nelabojama kļūda, analizējot otas failu '%s' — tas nav GIMP otas fails."
+msgstr "Nelabojama kļūda, parsējot otas datni “%s” — tā nav GIMP otas datne."
 
 #: ../app/core/gimpbrushgenerated-load.c:104
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
 msgstr ""
-"Nelabojama kļūda, analizējot otas failu '%s' — nepazīstama GIMP otas versija "
+"Nelabojama kļūda, parsējot otas datni “%s” — nepazīstama GIMP otas versija "
 "rindiņā %d."
 
 #: ../app/core/gimpbrushgenerated-load.c:150
@@ -7524,7 +7521,7 @@ msgstr ""
 msgid ""
 "Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
 msgstr ""
-"Nelabojama kļūda, analizējot otas failu '%s' — nepazīstama GIMP otas forma "
+"Nelabojama kļūda, parsējot otas datni “%s” — nepazīstama GIMP otas forma "
 "rindiņā %d."
 
 #: ../app/core/gimpbrushgenerated-load.c:226
@@ -7535,12 +7532,12 @@ msgstr "Rinda %d: %s"
 #: ../app/core/gimpbrushgenerated-load.c:228
 #, c-format
 msgid "File is truncated in line %d"
-msgstr "Fails ir aprauts rindā %d"
+msgstr "Datne ir aprauta rindā %d"
 
 #: ../app/core/gimpbrushgenerated-load.c:231
 #, c-format
 msgid "Error while reading brush file '%s': %s"
-msgstr "Kļūda, nolasot otas failu '%s' — %s."
+msgstr "Kļūda, nolasot otas datni “%s” — %s."
 
 #: ../app/core/gimpbrushgenerated.c:129
 msgid "Brush Shape"
@@ -7570,7 +7567,7 @@ msgstr "Otas leņķis"
 #: ../app/core/gimpbrushpipe-load.c:224
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
-msgstr "Nelabojama kļūda, analizējot otas failu '%s' — fails ir bojāts."
+msgstr "Nelabojama kļūda, parsējot otas datni “%s” — datne ir bojāta."
 
 #: ../app/core/gimpchannel-select.c:60
 msgctxt "undo-type"
@@ -7756,7 +7753,7 @@ msgstr "Zīmēšanas režīms"
 #: ../app/core/gimpdata.c:670
 #, c-format
 msgid "Could not delete '%s': %s"
-msgstr "Nevar izdzēst '%s' — %s"
+msgstr "Nevar izdzēst “%s” — %s"
 
 #: ../app/core/gimpdatafactory.c:428 ../app/core/gimpdatafactory.c:457
 #: ../app/core/gimpdatafactory.c:623 ../app/core/gimpdatafactory.c:645
@@ -7789,7 +7786,7 @@ msgid ""
 msgstr ""
 "Jums ir nokonfigurēta rakstāma datu mape (%s), bet šī mape neeksistē. Lūdzu, "
 "izveidojiet mapi vai salabojiet savu konfigurāciju iestatījumu "
-"dialoglodziņā, sadaļā 'Mapes'."
+"dialoglodziņā, sadaļā “Mapes”."
 
 #: ../app/core/gimpdatafactory.c:763
 #, c-format
@@ -7798,9 +7795,9 @@ msgid ""
 "your data search path. You probably edited the gimprc file manually, please "
 "fix it in the Preferences dialog's 'Folders' section."
 msgstr ""
-"Jums ir nokonfigurēta rakstāma datu mape, bet šī mape nav daļā no jūsu datu "
-"meklēšanas ceļa. Jūs droši vien rediģējāt gimprc failu pašrocīgi, lūdzu, "
-"salabojiet to iestatījumu dialoglodziņā, sadaļā 'Mapes'."
+"Ir nokonfigurēta rakstāma datu mape, bet šī mape nav daļā no datu "
+"meklēšanas ceļa. Jūs droši vien rediģējāt gimprc datni pašrocīgi, lūdzu, "
+"salabojiet to iestatījumu dialoglodziņā, sadaļā “Mapes”."
 
 #: ../app/core/gimpdatafactory.c:773
 #, c-format
@@ -7953,50 +7950,49 @@ msgstr "Izvades tips"
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Read error in line %d."
 msgstr ""
-"Nelabojama kļūda, analizējot krāsu pārejas failu '%s' — lasīšanas kļūda "
-"rindiņā %"
-"d."
+"Nelabojama kļūda, parsējot krāsu pārejas datni “%s” — lasīšanas kļūda "
+"rindiņā %d."
 
 #: ../app/core/gimpgradient-load.c:82
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
 msgstr ""
-"Nelabojama kļūda, analizējot gradienta failu '%s' — nav GIMP krāsu pārejas "
-"faila."
+"Nelabojama kļūda, parsējot krāsu pārejas datni “%s” — nav GIMP krāsu pārejas "
+"datne."
 
 #: ../app/core/gimpgradient-load.c:110
 #, c-format
 msgid "Invalid UTF-8 string in gradient file '%s'."
-msgstr "Nekorekta UTF-8 virkne krāsu pārejas failā '%s'."
+msgstr "Nederīga UTF-8 virkne krāsu pārejas datnē “%s”."
 
 #: ../app/core/gimpgradient-load.c:137
 #, c-format
 msgid "Fatal parse error in gradient file '%s': File is corrupt in line %d."
 msgstr ""
-"Nelabojama kļūda, analizējot krāsu pārejas failu '%s' — fails ir sabojāts "
+"Nelabojama kļūda, parsējot krāsu pārejas datni “%s” — datne ir sabojāta "
 "rindiņā %d."
 
 #: ../app/core/gimpgradient-load.c:219 ../app/core/gimpgradient-load.c:230
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Corrupt segment %d in line %d."
 msgstr ""
-"Nelabojama kļūda, analizējot krāsu pārejas failu '%s' — sabojāts segments %d "
+"Nelabojama kļūda, parsējot krāsu pārejas datni “%s” — sabojāts segments %d "
 "rindiņā %d."
 
 #: ../app/core/gimpgradient-load.c:242 ../app/core/gimpgradient-load.c:256
 #, c-format
 msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
-msgstr "Krāsu pārejas fails '%s' ir bojāts — segments neiekļaujas robežās 0-1."
+msgstr "Krāsu pārejas datne “%s” ir bojāta — segments neiekļaujas robežās 0-1."
 
 #: ../app/core/gimpgradient-load.c:336
 #, c-format
 msgid "No linear gradients found in '%s'"
-msgstr "'%s' nav atrastas lineāras krāsu pārejas."
+msgstr "“%s” nav atrastas lineāras krāsu pārejas."
 
 #: ../app/core/gimpgradient-load.c:346
 #, c-format
 msgid "Failed to import gradients from '%s': %s"
-msgstr "Neizdevās ielādēt krāsu pārejas no '%s' — %s"
+msgstr "Neizdevās ielādēt krāsu pārejas no “%s” — %s"
 
 #: ../app/core/gimpgrid.c:84
 msgid "Line style used for the grid."
@@ -8009,7 +8005,7 @@ msgstr "Režģa priekšplāna krāsa."
 #: ../app/core/gimpgrid.c:95
 msgid ""
 "The background color of the grid; only used in double dashed line style."
-msgstr "Režģa fona krāsa (tikai stilam \"Dubultai punktējums\")."
+msgstr "Režģa fona krāsa (tikai stilam “Dubultai punktējums”)."
 
 #: ../app/core/gimpgrid.c:101
 msgid "Horizontal spacing of grid lines."
@@ -8249,57 +8245,69 @@ msgstr "Mērogot attēlu"
 msgid "Can't undo %s"
 msgstr "Nevar atsaukt %s"
 
-#: ../app/core/gimpimage.c:1808
+#: ../app/core/gimpimage.c:1784
+msgid " (exported)"
+msgstr " (eksportēts)"
+
+#: ../app/core/gimpimage.c:1788
+msgid " (overwritten)"
+msgstr " (pārrakstīts)"
+
+#: ../app/core/gimpimage.c:1797
+msgid " (imported)"
+msgstr " (importēts)"
+
+#: ../app/core/gimpimage.c:1922
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Mainīt attēla izšķirtspēju"
 
-#: ../app/core/gimpimage.c:1860
+#: ../app/core/gimpimage.c:1974
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Mainīt attēla mērvienības"
 
-#: ../app/core/gimpimage.c:2852
+#: ../app/core/gimpimage.c:2987
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Pievienot trokšņus attēlam"
 
-#: ../app/core/gimpimage.c:2893
+#: ../app/core/gimpimage.c:3028
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Izņemt trokšņus no attēla"
 
-#: ../app/core/gimpimage.c:3602
+#: ../app/core/gimpimage.c:3737
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Pievienot slāni"
 
-#: ../app/core/gimpimage.c:3652 ../app/core/gimpimage.c:3672
+#: ../app/core/gimpimage.c:3787 ../app/core/gimpimage.c:3807
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Izņemt slāni"
 
-#: ../app/core/gimpimage.c:3666
+#: ../app/core/gimpimage.c:3801
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Dzēst peldošo iezīmējumu"
 
-#: ../app/core/gimpimage.c:3834
+#: ../app/core/gimpimage.c:3969
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Pievienot kanālu"
 
-#: ../app/core/gimpimage.c:3872 ../app/core/gimpimage.c:3885
+#: ../app/core/gimpimage.c:4007 ../app/core/gimpimage.c:4020
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Izņemt kanālu"
 
-#: ../app/core/gimpimage.c:3939
+#: ../app/core/gimpimage.c:4074
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Pievienot ceļu"
 
-#: ../app/core/gimpimage.c:3970
+#: ../app/core/gimpimage.c:4105
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Izņemt ceļu"
@@ -8310,11 +8318,11 @@ msgstr "Mape"
 
 #: ../app/core/gimpimagefile.c:702
 msgid "Special File"
-msgstr "Īpašs fails"
+msgstr "Īpaša datne"
 
 #: ../app/core/gimpimagefile.c:718
 msgid "Remote File"
-msgstr "Attālināts fails"
+msgstr "Attālināta datne"
 
 #: ../app/core/gimpimagefile.c:737
 msgid "Click to create preview"
@@ -8346,7 +8354,7 @@ msgstr[0] "%d × %d pikselis"
 msgstr[1] "%d × %d pikseļi"
 msgstr[2] "%d × %d pikseļi"
 
-#: ../app/core/gimpimagefile.c:797 ../app/display/gimpdisplayshell-title.c:336
+#: ../app/core/gimpimagefile.c:797 ../app/display/gimpdisplayshell-title.c:317
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -8357,7 +8365,7 @@ msgstr[2] "%d slāņi"
 #: ../app/core/gimpimagefile.c:845
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
-msgstr "Nevar atvērt sīktēlu '%s' — %s"
+msgstr "Nevar atvērt sīktēlu “%s” — %s"
 
 #: ../app/core/gimpitem.c:1815
 msgctxt "undo-type"
@@ -8367,16 +8375,20 @@ msgstr "Pievienot trokšņus"
 #: ../app/core/gimpitem.c:1825
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
-msgstr "Pievienot trokšņus elementam"
+msgstr "Pievienot trokšņus vienumam"
 
 #: ../app/core/gimpitem.c:1876 ../app/core/gimpitem.c:1883
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
-msgstr "Izņemt trokšņus no elementa"
+msgstr "Izņemt trokšņus no vienuma"
 
 #: ../app/core/gimpitem-exclusive.c:81
 msgid "Set Item Exclusive Visible"
-msgstr "Iestatīt elementa redzamību"
+msgstr "Iestatīt vienuma redzamību"
+
+#: ../app/core/gimpitem-exclusive.c:172
+msgid "Set Item Exclusive Linked"
+msgstr "Norādīt saikni ar vienumu"
 
 #: ../app/core/gimplayer-floating-sel.c:95
 msgctxt "undo-type"
@@ -8555,7 +8567,7 @@ msgstr "Indekss %d"
 #: ../app/core/gimppalette-import.c:549
 #, c-format
 msgid "Unknown type of palette file: %s"
-msgstr "Nezināms paletes faila tips — %s"
+msgstr "Nezināms paletes datnes tips — %s"
 
 #: ../app/core/gimppalette-load.c:86 ../app/core/gimppalette-load.c:112
 #: ../app/core/gimppalette-load.c:133 ../app/core/gimppalette-load.c:162
@@ -8563,17 +8575,18 @@ msgstr "Nezināms paletes faila tips — %s"
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
 msgstr ""
-"Nelabojama kļūda, analizējot paletes failu '%s' — lasīšanas kļūda rindā %d."
+"Nelabojama kļūda, parsējot paletes datni “%s” — lasīšanas kļūda rindā %d."
 
 #: ../app/core/gimppalette-load.c:96
 #, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
-msgstr "Nelabojama kļūda, analizējot paletes failu '%s' — trūkst galva."
+msgstr ""
+"Nelabojama kļūda, parsējot paletes datni “%s” — trūkst maģiskā galvene."
 
 #: ../app/core/gimppalette-load.c:125
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
-msgstr "Nekorekta UTF-8 rinda paletes failā '%s'"
+msgstr "Nederīga UTF-8 rinda paletes datnes “%s”"
 
 #: ../app/core/gimppalette-load.c:149
 #, c-format
@@ -8581,54 +8594,53 @@ msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 msgstr ""
-"Nolasot paletes failu '%s' — nepareizs kolonnas numurs rindā %d. Tiek "
+"Nolasot paletes datni “%s” — nederīgs kolonnas numurs rindā %d. Tiek "
 "izmantota noklusējuma vērtība."
 
 #: ../app/core/gimppalette-load.c:185
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
-msgstr "Paletes faila '%s' nolasīšana — trūkst komponents RED līnijā %d."
+msgstr "Paletes datnes “%s” nolasīšana — trūkst komponents RED līnijā %d."
 
 #: ../app/core/gimppalette-load.c:193
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
-msgstr "Paletes faila '%s' nolasīšana — trūkst komponents GREEN līnijā %d."
+msgstr "Paletes datnes “%s” nolasīšana — trūkst komponents GREEN līnijā %d."
 
 #: ../app/core/gimppalette-load.c:201
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
-msgstr "Paletes faila '%s' nolasīšana — trūkst komponents BLUE līnijā %d."
+msgstr "Paletes datnes “%s” nolasīšana — trūkst komponents BLUE līnijā %d."
 
 #: ../app/core/gimppalette-load.c:211
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr ""
-"Paletes faila '%s' nolasīšana — RGB vērtība ārpus noteiktā diapazona rindiņā "
+"Paletes datnes “%s” nolasīšana — RGB vērtība ārpus noteiktā diapazona rindiņā "
 "%d."
 
 #: ../app/core/gimppalette-load.c:478
 #, c-format
 msgid "Could not read header from palette file '%s'"
-msgstr "Nevar nolasīt galvu no paletes faila — %s"
+msgstr "Nevar nolasīt galveni no paletes datnes — %s"
 
 #: ../app/core/gimppalette-load.c:501 ../app/core/gimppalette-load.c:589
 #, c-format
 msgid "Fatal parse error in palette file '%s'"
-msgstr "Nelabojama kļūda, analizējot paletes failu '%s'"
+msgstr "Nelabojama kļūda, parsējot paletes datni “%s”"
 
 #: ../app/core/gimppattern-load.c:85 ../app/core/gimppattern-load.c:131
 #: ../app/core/gimppattern-load.c:162
 #, c-format
 msgid "Fatal parse error in pattern file '%s': File appears truncated."
-msgstr ""
-"Nelabojama kļūda, analizējot raksta failu '%s' — fails izskatās aprauts."
+msgstr "Nelabojama kļūda, parsējot raksta datni “%s” — datne izskatās aprauta."
 
 #: ../app/core/gimppattern-load.c:104
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
-"Nelabojama kļūda, analizējot raksta failu '%s' — nezināma šablona formāta "
+"Nelabojama kļūda, parsējot rakstu datni “%s” — nezināma raksta formāta "
 "versija %d."
 
 #: ../app/core/gimppattern-load.c:114
@@ -8637,14 +8649,14 @@ msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
-"Nelabojama kļūda, analizējot raksta failu '%s' — neatbalstīts raksta dziļums %"
-"d.\n"
+"Nelabojama kļūda, parsējot rakstu datni “%s” — neatbalstīts raksta dziļums "
+"%d.\n"
 "GIMP rakstiem jābūt pelēktoņu vai RGB."
 
 #: ../app/core/gimppattern-load.c:139
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "Nekorekta UTF-8 rinda rakstu failā '%s'."
+msgstr "Nederīga UTF-8 rinda rakstu datnē “%s”."
 
 #: ../app/core/gimppdbprogress.c:279 ../app/widgets/gimppdbdialog.c:331
 #, c-format
@@ -8737,7 +8749,7 @@ msgstr ""
 
 #: ../app/core/gimptemplate.c:129
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
-msgstr "Vienība izmantojama, ja atslēgts režīms \"Punkts pēc punkta\"."
+msgstr "Vienība izmantojama, ja atslēgts režīms “Punkts pēc punkta”."
 
 #: ../app/core/gimptemplate.c:136
 msgid "The horizontal image resolution."
@@ -8887,13 +8899,13 @@ msgstr "Dzēst objektu"
 #: ../app/dialogs/data-delete-dialog.c:104
 #, c-format
 msgid "Delete '%s'?"
-msgstr "Dzēst '%s'?"
+msgstr "Dzēst “%s”?"
 
 #: ../app/dialogs/data-delete-dialog.c:107
 #, c-format
 msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
-msgstr "Vai tiešām vēlaties izņemt '%s' no saraksta un no dzēst no diska?"
+msgstr "Vai tiešām vēlaties izņemt “%s” no saraksta un no dzēst no diska?"
 
 #: ../app/dialogs/dialogs-constructors.c:203 ../app/gui/gui.c:161
 #: ../app/gui/gui-message.c:149
@@ -8997,64 +9009,64 @@ msgstr "Eksportēt attēlu"
 msgid "_Export"
 msgstr "_Eksportēt"
 
-#: ../app/dialogs/file-save-dialog.c:431
+#: ../app/dialogs/file-save-dialog.c:432
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
 "format or enter no file extension at all."
 msgstr ""
-"Saglabājot attālinātus failus nepieciešams noteikt faila formātu pēc tā "
-"paplašinājuma. Lūdzu norādiet faila paplašinājumu, kas atbilst izvēlētā "
-"faila formātam vai vispār to nenorādiet."
+"Saglabājot attālinātas datnes, nepieciešams noteikt datnes formātu pēc tās "
+"paplašinājuma. Lūdzu, norādiet datnes paplašinājumu, kas atbilst izvēlētās "
+"datnes formātam vai vispār to nenorādiet."
 
-#: ../app/dialogs/file-save-dialog.c:558
+#: ../app/dialogs/file-save-dialog.c:559
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
 msgstr ""
-"Jūs varat izmantot šo dialogu, lai eksportētu uz dažādiem failu formātiem. "
-"Ja vēlaties saglabāt attālu GIMP XCF formātā, lietojiet Fails→Saglabāt."
+"Šo dialoglodziņu varat izmantot, lai eksportētu uz dažādiem datņu formātiem. "
+"Ja vēlaties saglabāt attālu GIMP XCF formātā, lietojiet Datne→Saglabāt."
 
-#: ../app/dialogs/file-save-dialog.c:565
+#: ../app/dialogs/file-save-dialog.c:566
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
 msgstr ""
 "Jūs varat izmantot šo dialoglodziņu, lai saglabātu GIMP XCF formātā. "
-"Lietojiet Fails→Eksportēt, lai eksportētu uz citiem failu formātiem."
+"Lietojiet Datne→Eksportēt, lai eksportētu uz citiem datņu formātiem."
 
-#: ../app/dialogs/file-save-dialog.c:571
+#: ../app/dialogs/file-save-dialog.c:572
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
 msgstr ""
-"Faila vārds nesatur nevienu zināmu faila paplašinājumu. Lūdzu ievadiet "
-"zināmu faila paplašinājumu vai izvēlieties faila formātu no saraksta."
+"Datnes nosaukums nesatur nevienu zināmu datnes paplašinājumu. Lūdzu, ievadiet "
+"zināmu datnes paplašinājumu vai izvēlieties datnes formātu no saraksta."
 
-#: ../app/dialogs/file-save-dialog.c:585
+#: ../app/dialogs/file-save-dialog.c:586
 msgid "Extension Mismatch"
 msgstr "Paplašinājums neatbilst"
 
-#: ../app/dialogs/file-save-dialog.c:601
+#: ../app/dialogs/file-save-dialog.c:602
 msgid "The given file extension does not match the chosen file type."
-msgstr "Norādītais faila paplašinājums neatbilst faila tipam."
+msgstr "Norādītais datnes paplašinājums neatbilst datnes tipam."
 
-#: ../app/dialogs/file-save-dialog.c:605
+#: ../app/dialogs/file-save-dialog.c:606
 msgid "Do you want to save the image using this name anyway?"
-msgstr "Jūs vēlaties tomēr lietot šo faila vārdu?"
+msgstr "Tomēr vēlaties saglabāt ar šo datnes nosaukumu?"
 
-#: ../app/dialogs/file-save-dialog.c:660
+#: ../app/dialogs/file-save-dialog.c:664
 msgid "Saving canceled"
 msgstr "Saglabāšana atcelta"
 
-#: ../app/dialogs/file-save-dialog.c:668 ../app/widgets/gimpdnd-xds.c:185
+#: ../app/dialogs/file-save-dialog.c:672 ../app/widgets/gimpdnd-xds.c:186
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
 "\n"
 "%s"
 msgstr ""
-"Kļūda, saglabājot '%s':\n"
+"Kļūda, saglabājot “%s”:\n"
 "\n"
 "%s"
 
@@ -9131,8 +9143,8 @@ msgid ""
 "An image of the chosen size will use more memory than what is configured as "
 "\"Maximum Image Size\" in the Preferences dialog (currently %s)."
 msgstr ""
-"Attēls aizņems vairāk atmiņas nekā norādīts iestatījumu punktā \"Maksimālais "
-"attēla izmērs\" (patlaban %s)."
+"Attēls aizņems vairāk atmiņas nekā norādīts iestatījumu punktā “Maksimālais "
+"attēla izmērs” (patlaban %s)."
 
 #: ../app/dialogs/image-properties-dialog.c:60
 #: ../app/dialogs/image-properties-dialog.c:63
@@ -9168,8 +9180,8 @@ msgid ""
 "%s)."
 msgstr ""
 "Ja attēla izmērs tiks mainīts ar norādītajām vērtībām, tas aizņems vairāk "
-"atmiņas nekā norādīts iestatījumu punktā \"Maksimālais attēla izmērs"
-"\" (patlaban %s)."
+"atmiņas nekā norādīts iestatījumu punktā “Maksimālais attēla izmērs” "
+"(patlaban %s)."
 
 #: ../app/dialogs/image-scale-dialog.c:260
 msgid ""
@@ -9362,12 +9374,12 @@ msgstr "_Tikai iezīmētos pikseļus"
 
 #: ../app/dialogs/palette-import-dialog.c:263
 msgid "Palette _file"
-msgstr "Paletes _fails"
+msgstr "Paletes _datne"
 
 #. Palette file name entry
 #: ../app/dialogs/palette-import-dialog.c:292
 msgid "Select Palette File"
-msgstr "Norādīt paletes failu"
+msgstr "Norādiet paletes datni"
 
 #. The "Import" frame
 #: ../app/dialogs/palette-import-dialog.c:303
@@ -9460,7 +9472,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1266
 msgid "Show _menubar"
-msgstr "Rādīt _izvēlņu joslu"
+msgstr "Rādīt _izvēļņu joslu"
 
 #: ../app/dialogs/preferences-dialog.c:1270
 msgid "Show _rulers"
@@ -9546,7 +9558,7 @@ msgstr "Sīk_tēlu izmērs:"
 
 #: ../app/dialogs/preferences-dialog.c:1559
 msgid "Maximum _filesize for thumbnailing:"
-msgstr "Maksimālais _faila izmērs sīktēla veidošanai:"
+msgstr "Maksimālais _datnes izmērs sīktēla veidošanai:"
 
 #. File Saving
 #: ../app/dialogs/preferences-dialog.c:1563
@@ -9560,7 +9572,7 @@ msgstr "Pieprasīt saglabāšanu nesaglabātu attēlu aizvēršanas laikā"
 #: ../app/dialogs/preferences-dialog.c:1576
 msgid "Keep record of used files in the Recent Documents list"
 msgstr ""
-"Turēt ierakstus par izmantotajiem failiem nesen izmantoto dokumentu sarakstā"
+"Turēt ierakstus par izmantotajām datnēm nesen izmantoto dokumentu sarakstā"
 
 #: ../app/dialogs/preferences-dialog.c:1585
 msgid "User Interface"
@@ -9766,12 +9778,10 @@ msgid "Default Image"
 msgstr "Noklusējuma attēls"
 
 #: ../app/dialogs/preferences-dialog.c:2028
-#| msgid "Edit Quick Mask Color"
 msgid "Set the default Quick Mask color"
 msgstr "Iestata ātrās maskas noklusējuma krāsu"
 
 #: ../app/dialogs/preferences-dialog.c:2034
-#| msgid "Edit Quick Mask Color"
 msgid "Quick Mask color:"
 msgstr "Ātrās maskas krāsa:"
 
@@ -9789,7 +9799,7 @@ msgstr "Attēla logs"
 
 #: ../app/dialogs/preferences-dialog.c:2082
 msgid "Use \"_Dot for dot\" by default"
-msgstr "Izmantot \"_Punkts pēc punkta\" pēc noklusējuma"
+msgstr "Izmantot “_Punkts pēc punkta” pēc noklusējuma"
 
 #: ../app/dialogs/preferences-dialog.c:2088
 msgid "Marching _ants speed:"
@@ -10014,7 +10024,7 @@ msgstr "Izvēlēties brīdinājuma krāsu"
 
 #: ../app/dialogs/preferences-dialog.c:2545
 msgid "File Open behaviour:"
-msgstr "Faila atvēršanas uzvedība:"
+msgstr "Datņu atvēršanas uzvedība:"
 
 #: ../app/dialogs/preferences-dialog.c:2557
 msgid "Input Devices"
@@ -10092,11 +10102,11 @@ msgstr "Mapes"
 
 #: ../app/dialogs/preferences-dialog.c:2698
 msgid "Temporary folder:"
-msgstr "Pagaidu failu mape:"
+msgstr "Pagaidu datņu mape:"
 
 #: ../app/dialogs/preferences-dialog.c:2699
 msgid "Select Folder for Temporary Files"
-msgstr "Izvēlieties mapi pagaidu failiem"
+msgstr "Izvēlieties mapi pagaidu datnēm"
 
 #: ../app/dialogs/preferences-dialog.c:2703
 msgid "Swap folder:"
@@ -10345,20 +10355,20 @@ msgstr "_Emulēt otas dinamiku"
 
 #: ../app/dialogs/tips-dialog.c:88
 msgid "The GIMP tips file is empty!"
-msgstr "GIMP padomu fails ir tukšs!"
+msgstr "GIMP padomu datne ir tukša!"
 
 #: ../app/dialogs/tips-dialog.c:92
 msgid "The GIMP tips file appears to be missing!"
-msgstr "GIMP padomu fails nav atrasts!"
+msgstr "GIMP padomu datne nav atrasta!"
 
 #: ../app/dialogs/tips-dialog.c:94
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
-msgstr "Jābūt failam '%s'. Pārbaudiet programmas instalāciju."
+msgstr "Jābūt datnei “%s”. Pārbaudiet programmas instalāciju."
 
 #: ../app/dialogs/tips-dialog.c:100
 msgid "The GIMP tips file could not be parsed!"
-msgstr "GIMP padomu failu nevarēja analizēt!"
+msgstr "GIMP padomu datni nevarēja parsēt!"
 
 #: ../app/dialogs/tips-dialog.c:128
 msgid "GIMP Tip of the Day"
@@ -10422,7 +10432,7 @@ msgstr "Importēt ceļus no SVG"
 #: ../app/dialogs/vectors-import-dialog.c:92
 #: ../app/widgets/gimpprofilechooserdialog.c:122
 msgid "All files (*.*)"
-msgstr "Visi faili (*.*)"
+msgstr "Visas datnes (*.*)"
 
 #: ../app/dialogs/vectors-import-dialog.c:97
 msgid "Scalable SVG image (*.svg)"
@@ -10544,10 +10554,10 @@ msgstr "Pārslēgt ātro masku"
 msgid "Navigate the image display"
 msgstr "Navigācija pa attēlu"
 
-#: ../app/display/gimpdisplayshell.c:742
-#: ../app/display/gimpdisplayshell.c:1320 ../app/widgets/gimptoolbox.c:256
+#: ../app/display/gimpdisplayshell.c:746
+#: ../app/display/gimpdisplayshell.c:1325 ../app/widgets/gimptoolbox.c:256
 msgid "Drop image files here to open them"
-msgstr "Nomest attēlu failus šeit, lai tos atvērtu"
+msgstr "Nometiet attēlu datnes šeit, lai tās atvērtu"
 
 #: ../app/display/gimpdisplayshell-close.c:156
 #: ../app/display/gimpdisplayshell-close.c:229
@@ -10562,7 +10572,7 @@ msgstr "Aiz_vērt bez saglabāšanas"
 #: ../app/display/gimpdisplayshell-close.c:237
 #, c-format
 msgid "Save the changes to image '%s' before closing?"
-msgstr "Saglabāt '%s' izmaiņas pirms aizvēršanas?"
+msgstr "Saglabāt “%s” izmaiņas pirms aizvēršanas?"
 
 #: ../app/display/gimpdisplayshell-close.c:270
 #, c-format
@@ -10608,41 +10618,40 @@ msgstr[2] ""
 
 #: ../app/display/gimpdisplayshell-close.c:305
 #, c-format
-#| msgid "Image exported to '%s'"
 msgid "The image has been exported to '%s'."
-msgstr "Attēls tika eksportēts uz '%s'"
+msgstr "Attēls tika eksportēts uz “%s”"
 
-#: ../app/display/gimpdisplayshell-dnd.c:232
-#: ../app/display/gimpdisplayshell-dnd.c:635
-#: ../app/display/gimpdisplayshell-dnd.c:693
+#: ../app/display/gimpdisplayshell-dnd.c:246
+#: ../app/display/gimpdisplayshell-dnd.c:649
+#: ../app/display/gimpdisplayshell-dnd.c:707
 msgid "Drop New Layer"
 msgstr "Nomest jaunu slāni"
 
-#: ../app/display/gimpdisplayshell-dnd.c:275
+#: ../app/display/gimpdisplayshell-dnd.c:289
 msgid "Drop New Path"
 msgstr "Nomest jaunu ceļu"
 
-#: ../app/display/gimpdisplayshell-dnd.c:347
-#: ../app/display/gimpdisplayshell-dnd.c:449 ../app/tools/gimpblendtool.c:173
-#: ../app/tools/gimpbucketfilltool.c:136 ../app/tools/gimpimagemaptool.c:279
+#: ../app/display/gimpdisplayshell-dnd.c:361
+#: ../app/display/gimpdisplayshell-dnd.c:463 ../app/tools/gimpblendtool.c:173
+#: ../app/tools/gimpbucketfilltool.c:136 ../app/tools/gimpimagemaptool.c:280
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Nevar modificēt slāņu grupas pikseļus"
 
-#: ../app/display/gimpdisplayshell-dnd.c:355
-#: ../app/display/gimpdisplayshell-dnd.c:457 ../app/tools/gimpblendtool.c:180
+#: ../app/display/gimpdisplayshell-dnd.c:369
+#: ../app/display/gimpdisplayshell-dnd.c:471 ../app/tools/gimpblendtool.c:180
 #: ../app/tools/gimpbucketfilltool.c:143 ../app/tools/gimpcroptool.c:325
-#: ../app/tools/gimpimagemaptool.c:286 ../app/tools/gimppainttool.c:266
-#: ../app/tools/gimptransformtool.c:246 ../app/tools/gimptransformtool.c:1066
+#: ../app/tools/gimpimagemaptool.c:287 ../app/tools/gimppainttool.c:266
+#: ../app/tools/gimptransformtool.c:247 ../app/tools/gimptransformtool.c:1067
 msgid "The active layer's pixels are locked."
 msgstr "Aktīvā slāņa pikseļi ir slēgti."
 
-#: ../app/display/gimpdisplayshell-dnd.c:535
+#: ../app/display/gimpdisplayshell-dnd.c:549
 #: ../app/widgets/gimplayertreeview.c:725
 msgid "Drop layers"
 msgstr "Nomest slāņus"
 
-#: ../app/display/gimpdisplayshell-dnd.c:668
-#: ../app/display/gimpdisplayshell-dnd.c:685
+#: ../app/display/gimpdisplayshell-dnd.c:682
+#: ../app/display/gimpdisplayshell-dnd.c:699
 #: ../app/widgets/gimplayertreeview.c:802 ../app/widgets/gimptoolbox-dnd.c:266
 msgid "Dropped Buffer"
 msgstr "Dzēst buferi"
@@ -10658,12 +10667,12 @@ msgstr "Iestatīt ekrāna krāsu filtrus"
 #: ../app/display/gimpdisplayshell-handlers.c:796
 #, c-format
 msgid "Image saved to '%s'"
-msgstr "Attēls saglabāts '%s'"
+msgstr "Attēls saglabāts “%s”"
 
 #: ../app/display/gimpdisplayshell-handlers.c:810
 #, c-format
 msgid "Image exported to '%s'"
-msgstr "Attēls eksportēts uz '%s'"
+msgstr "Attēls eksportēts uz “%s”"
 
 #: ../app/display/gimpdisplayshell-layer-select.c:122
 msgid "Layer Select"
@@ -10685,40 +10694,28 @@ msgstr "Mērogs:"
 msgid "Zoom:"
 msgstr "Mērogs:"
 
-#: ../app/display/gimpdisplayshell-title.c:301
+#: ../app/display/gimpdisplayshell-title.c:282
 msgid "(modified)"
 msgstr "(izmainīts)"
 
-#: ../app/display/gimpdisplayshell-title.c:306
+#: ../app/display/gimpdisplayshell-title.c:287
 msgid "(clean)"
 msgstr "(neizmainīts)"
 
-#: ../app/display/gimpdisplayshell-title.c:357
-#: ../app/display/gimpdisplayshell-title.c:370
+#: ../app/display/gimpdisplayshell-title.c:338
+#: ../app/display/gimpdisplayshell-title.c:351
 #: ../app/widgets/gimpactiongroup.c:860
 msgid "(none)"
 msgstr "(nekas)"
-
-#: ../app/display/gimpdisplayshell-title.c:499
-msgid " (exported)"
-msgstr " (eksportēts)"
-
-#: ../app/display/gimpdisplayshell-title.c:501
-msgid " (overwritten)"
-msgstr " (pārrakstīts)"
-
-#: ../app/display/gimpdisplayshell-title.c:507
-msgid " (imported)"
-msgstr " (importēts)"
 
 #: ../app/display/gimpstatusbar.c:356
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "Atcelt <i>%s</i>"
 
-#: ../app/file/file-open.c:136 ../app/file/file-save.c:112
+#: ../app/file/file-open.c:136 ../app/file/file-save.c:115
 msgid "Not a regular file"
-msgstr "Neparasts fails"
+msgstr "Nav parasta datne"
 
 #: ../app/file/file-open.c:188
 #, c-format
@@ -10730,27 +10727,27 @@ msgstr "%s spraudnis sekmīgi paveica darbību, taču neatgrieza attēlu"
 msgid "%s plug-In could not open image"
 msgstr "%s spraudnis nevar atvērt attēlu"
 
-#: ../app/file/file-open.c:526
+#: ../app/file/file-open.c:530
 msgid "Image doesn't contain any layers"
 msgstr "Attēlā nav neviena slāņa"
 
-#: ../app/file/file-open.c:579
+#: ../app/file/file-open.c:583
 #, c-format
 msgid "Opening '%s' failed: %s"
-msgstr "Nevar atvērt '%s': %s"
+msgstr "Nevar atvērt “%s” — %s"
 
-#: ../app/file/file-open.c:686
+#: ../app/file/file-open.c:690
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
 msgstr ""
-"Krāsu pārvaldība ir izslēgta. To var atkal ieslēgt iestatījumu dialogā."
+"Krāsu pārvaldība ir izslēgta. To var atkal ieslēgt iestatījumu dialoglodziņā."
 
 #: ../app/file/file-procedure.c:195
 msgid "Unknown file type"
-msgstr "Nezināms faila tips"
+msgstr "Nezināms datnes tips"
 
-#: ../app/file/file-save.c:208
+#: ../app/file/file-save.c:221
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "%s spraudnis nevar saglabāt attēlu"
@@ -10758,11 +10755,11 @@ msgstr "%s spraudnis nevar saglabāt attēlu"
 #: ../app/file/file-utils.c:74
 #, c-format
 msgid "'%s:' is not a valid URI scheme"
-msgstr "%s:' nav derīga URI shēma"
+msgstr "“%s:” nav derīga URI shēma"
 
 #: ../app/file/file-utils.c:90 ../app/file/file-utils.c:126
 msgid "Invalid character sequence in URI"
-msgstr "Nepareiza simbolu secība URI adresē"
+msgstr "Nederīga simbolu secība URI adresē"
 
 #: ../app/gegl/gimp-gegl-enums.c:24
 msgctxt "cage-mode"
@@ -10776,15 +10773,15 @@ msgstr "Mainīt aploka formu, lai mainītu attēla formu"
 
 #: ../app/gegl/gimpcurvesconfig.c:388
 msgid "not a GIMP Curves file"
-msgstr "nav GIMP līkņu fails"
+msgstr "nav GIMP līkņu datne"
 
 #: ../app/gegl/gimpcurvesconfig.c:403 ../app/gegl/gimplevelsconfig.c:789
 msgid "parse error"
-msgstr "kļūda analizējot"
+msgstr "kļūda parsējot"
 
 #: ../app/gegl/gimplevelsconfig.c:742
 msgid "not a GIMP Levels file"
-msgstr "nav GIMP Līmeņu fails"
+msgstr "nav GIMP līmeņu datne"
 
 #: ../app/gegl/gimpoperationcagecoefcalc.c:67
 msgid "Compute a set of coefficient buffer for the GIMP cage tool"
@@ -10985,22 +10982,16 @@ msgid "Sharpen"
 msgstr "Asināšana"
 
 #: ../app/paint/paint-enums.c:144
-#| msgctxt "brush-generated-shape"
-#| msgid "Circle"
 msgctxt "ink-blob-type"
 msgid "Circle"
 msgstr "Aplis"
 
 #: ../app/paint/paint-enums.c:145
-#| msgctxt "cap-style"
-#| msgid "Square"
 msgctxt "ink-blob-type"
 msgid "Square"
 msgstr "Kvadrāts"
 
 #: ../app/paint/paint-enums.c:146
-#| msgctxt "brush-generated-shape"
-#| msgid "Diamond"
 msgctxt "ink-blob-type"
 msgid "Diamond"
 msgstr "Rombs"
@@ -11062,7 +11053,7 @@ msgstr ""
 #: ../app/pdb/gimppdb.c:375
 #, c-format
 msgid "Procedure '%s' not found"
-msgstr "Procedūra '%s' nav atrasta"
+msgstr "Procedūra “%s” nav atrasta"
 
 #: ../app/pdb/gimppdb-utils.c:73
 msgid "Invalid empty brush name"
@@ -11071,17 +11062,17 @@ msgstr "Otas nosaukums nevar būt tukšs"
 #: ../app/pdb/gimppdb-utils.c:82
 #, c-format
 msgid "Brush '%s' not found"
-msgstr "Ota '%s' nav atrasta"
+msgstr "Ota “%s” nav atrasta"
 
 #: ../app/pdb/gimppdb-utils.c:87
 #, c-format
 msgid "Brush '%s' is not editable"
-msgstr "Ota '%s' nav rediģējama"
+msgstr "Ota “%s” nav rediģējama"
 
 #: ../app/pdb/gimppdb-utils.c:113
 #, c-format
 msgid "Brush '%s' is not a generated brush"
-msgstr "Ota '%s' nav ģenerēta ota"
+msgstr "Ota “%s” nav ģenerēta ota"
 
 #: ../app/pdb/gimppdb-utils.c:134
 msgid "Invalid empty paint dynamics name"
@@ -11090,12 +11081,12 @@ msgstr "Zīmēšanas dinamikas nosaukums nevar būt tukšs"
 #: ../app/pdb/gimppdb-utils.c:143
 #, c-format
 msgid "Paint dynamics '%s' not found"
-msgstr "Otas dinamika '%s' nav atrasta"
+msgstr "Otas dinamika “%s” nav atrasta"
 
 #: ../app/pdb/gimppdb-utils.c:148
 #, c-format
 msgid "Paint dynamics '%s' is not editable"
-msgstr "Otas dinamika '%s' nav rediģējama"
+msgstr "Otas dinamika “%s” nav rediģējama"
 
 #: ../app/pdb/gimppdb-utils.c:168
 msgid "Invalid empty pattern name"
@@ -11104,7 +11095,7 @@ msgstr "Raksta nosaukums nevar būt tukšs"
 #: ../app/pdb/gimppdb-utils.c:177
 #, c-format
 msgid "Pattern '%s' not found"
-msgstr "Raksts '%s' nav atrasts"
+msgstr "Raksts “%s” nav atrasts"
 
 #: ../app/pdb/gimppdb-utils.c:197
 msgid "Invalid empty gradient name"
@@ -11113,12 +11104,12 @@ msgstr "Krāsu pārejas nosaukums nevar būt tukšs"
 #: ../app/pdb/gimppdb-utils.c:206
 #, c-format
 msgid "Gradient '%s' not found"
-msgstr "Krāsu pāreja '%s' nav atrasta"
+msgstr "Krāsu pāreja “%s” nav atrasta"
 
 #: ../app/pdb/gimppdb-utils.c:211
 #, c-format
 msgid "Gradient '%s' is not editable"
-msgstr "Krāsu pāreja '%s' nav rediģējama"
+msgstr "Krāsu pāreja “%s” nav rediģējama"
 
 #: ../app/pdb/gimppdb-utils.c:232
 msgid "Invalid empty palette name"
@@ -11127,12 +11118,12 @@ msgstr "Paletes nosaukums nevar būt tukšs"
 #: ../app/pdb/gimppdb-utils.c:241
 #, c-format
 msgid "Palette '%s' not found"
-msgstr "Palete '%s' nav atrasta"
+msgstr "Palete “%s” nav atrasta"
 
 #: ../app/pdb/gimppdb-utils.c:246
 #, c-format
 msgid "Palette '%s' is not editable"
-msgstr "Palete '%s' nav rediģējama"
+msgstr "Palete “%s” nav rediģējama"
 
 #: ../app/pdb/gimppdb-utils.c:266
 msgid "Invalid empty font name"
@@ -11141,7 +11132,7 @@ msgstr "Fonta nosaukums nevar būt tukšs"
 #: ../app/pdb/gimppdb-utils.c:276
 #, c-format
 msgid "Font '%s' not found"
-msgstr "Fonts '%s' nav atrasts"
+msgstr "Fonts “%s” nav atrasts"
 
 #: ../app/pdb/gimppdb-utils.c:295
 msgid "Invalid empty buffer name"
@@ -11150,7 +11141,7 @@ msgstr "Bufera nosaukums nevar būt tukšs"
 #: ../app/pdb/gimppdb-utils.c:305
 #, c-format
 msgid "Named buffer '%s' not found"
-msgstr "Nosauktais buferis '%s' nav atrasts"
+msgstr "Nosauktais buferis “%s” nav atrasts"
 
 #: ../app/pdb/gimppdb-utils.c:324
 msgid "Invalid empty paint method name"
@@ -11159,25 +11150,24 @@ msgstr "Zīmēšanas metodes nosaukums nevar būt tukšs"
 #: ../app/pdb/gimppdb-utils.c:334
 #, c-format
 msgid "Paint method '%s' does not exist"
-msgstr "Zīmēšanas metode '%s' neeksistē"
+msgstr "Zīmēšanas metode “%s” neeksistē"
 
 #: ../app/pdb/gimppdb-utils.c:353
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it has not been added to an image"
-msgstr "Elementu '%s' (%d) nevar izmantot, jo tas nav pievienots attēlam"
+msgstr "Vienumu “%s” (%d) nevar izmantot, jo tas nav pievienots attēlam"
 
 #: ../app/pdb/gimppdb-utils.c:363
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is attached to another image"
-msgstr "Elementu '%s' (%d) nevar izmantot, jo tas nav pievienots citam attēlam"
+msgstr "Vienumu “%s” (%d) nevar izmantot, jo tas nav pievienots citam attēlam"
 
 #: ../app/pdb/gimppdb-utils.c:392
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be used because it is not a direct child of an item "
 "tree"
-msgstr ""
-"Elementu '%s' (%d) nevar izmantot, jo tas nav tiešs elementa koka bērns"
+msgstr "Vienumu “%s” (%d) nevar izmantot, jo tas nav tiešs elementa koka bērns"
 
 #: ../app/pdb/gimppdb-utils.c:420
 #, c-format
@@ -11185,53 +11175,53 @@ msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
 "the same item tree"
 msgstr ""
-"Elementus '%s' (%d) un '%s' (%d) nevar izmantot, jo tie nav daļa no viena un "
-"tā paša elementa koka"
+"Vienumus “%s” (%d) un “%s” (%d) nevar izmantot, jo tie nav daļa no viena un "
+"tā paša vienuma koka"
 
 #: ../app/pdb/gimppdb-utils.c:445
 #, c-format
 msgid "Item '%s' (%d) must not be an ancestor of '%s' (%d)"
-msgstr "Elements '%s' (%d) nevar būt '%s' (%d) sencis"
+msgstr "Vienums “%s” (%d) nevar būt “%s” (%d) sencis"
 
 #: ../app/pdb/gimppdb-utils.c:469
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
-msgstr "Elements '%s' (%d) jau ir pievienots attēlam"
+msgstr "Vienums “%s” (%d) jau ir pievienots attēlam"
 
 #: ../app/pdb/gimppdb-utils.c:477
 #, c-format
 msgid "Trying to add item '%s' (%d) to wrong image"
-msgstr "Mēģina pievienot elementu '%s' (%d) neīstajam attēlam"
+msgstr "Mēģina pievienot vienumu “%s” (%d) neīstajam attēlam"
 
 #: ../app/pdb/gimppdb-utils.c:496
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
-msgstr "Elementu '%s' (%d) nevar mainīt, jo tā saturs ir slēgts"
+msgstr "Vienumu “%s” (%d) nevar mainīt, jo tā saturs ir slēgts"
 
 #: ../app/pdb/gimppdb-utils.c:516
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is not a group item"
-msgstr "Elementu '%s' (%d) nevar izmantot, jo tas nav grupas elements"
+msgstr "Vienumu “%s” (%d) nevar izmantot, jo tas nav grupas elements"
 
 #: ../app/pdb/gimppdb-utils.c:536
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because it is a group item"
-msgstr "Elementu '%s' (%d) nevar modificēt, jo tas ir grupas elements"
+msgstr "Vienumu “%s” (%d) nevar modificēt, jo tas ir grupas elements"
 
 #: ../app/pdb/gimppdb-utils.c:557
 #, c-format
 msgid "Layer '%s' (%d) cannot be used because it is not a text layer"
-msgstr "Slāni '%s' (%d) nevar izmantot, jo tas nav teksta slānis"
+msgstr "Slāni “%s” (%d) nevar izmantot, jo tas nav teksta slānis"
 
 #: ../app/pdb/gimppdb-utils.c:598
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
-msgstr "Attēls '%s' (%d) ir ar tipu '%s', bet tiek gaidīts attēls ar tipu '%s'"
+msgstr "Attēls “%s” (%d) ir ar tipu “%s”, bet tiek gaidīts attēls ar tipu “%s”"
 
 #: ../app/pdb/gimppdb-utils.c:621
 #, c-format
 msgid "Image '%s' (%d) is already of type '%s'"
-msgstr "Attēls '%s' (%d) jau ir ar tipu '%s'"
+msgstr "Attēls “%s” (%d) jau ir ar tipu “%s”"
 
 #: ../app/pdb/gimppdb-utils.c:649
 #, c-format
@@ -11241,10 +11231,10 @@ msgstr "Vektoru objekts %d nesatur kontūru ar ID %d"
 #: ../app/pdb/gimppdb.c:410
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong type for argument #%d. Expected %"
-"s, got %s."
+"Procedure '%s' has been called with a wrong type for argument #%d. Expected "
+"%s, got %s."
 msgstr ""
-"procedūra '%s' ir izsaukta ar nepareizu argumenta tipu #%d. Gaidīja %s, "
+"Procedūra “%s” ir izsaukta ar nepareizu argumenta tipu #%d. Gaidīja %s, "
 "saņēma %s."
 
 #: ../app/pdb/gimppdbcontext.c:89
@@ -11256,7 +11246,7 @@ msgstr "Nogludināt malas"
 #: ../app/pdb/gimpprocedure.c:372 ../app/plug-in/gimppluginprocframe.c:208
 #, c-format
 msgid "Procedure '%s' returned no return values"
-msgstr "Procedūra '%s' neatgrieza vērtību"
+msgstr "Procedūra “%s” neatgrieza vērtību"
 
 #: ../app/pdb/gimpprocedure.c:642
 #, c-format
@@ -11264,17 +11254,17 @@ msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
-"Procedūra '%s' atgrieza nepareizu vērtības tipu vērtībai '%s' (#%d).\r\n"
+"Procedūra “%s” atgrieza nepareizu vērtības tipu vērtībai “%s” (#%d).\r\n"
 "Gaidīja %s, saņēma %s."
 
 #: ../app/pdb/gimpprocedure.c:654
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#%"
-"d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
-"Procedūra '%s' tika izsaukta ar nepareizu vērtības tipu parametram '%s' (#%"
-"d).\r\n"
+"Procedūra “%s” tika izsaukta ar nepareizu vērtības tipu parametram “%s” (#"
+"%d).\r\n"
 "Gaidīja %s, saņēma %s."
 
 #: ../app/pdb/gimpprocedure.c:687
@@ -11283,7 +11273,7 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"Procedūra '%s' atgrieza nederīgu ID argumentam '%s'. Iespējams, spraudnis "
+"Procedūra “%s” atgrieza nederīgu ID parametru “%s”. Iespējams, spraudnis "
 "mēģina darboties ar slāni, kas vairs neeksistē."
 
 #: ../app/pdb/gimpprocedure.c:700
@@ -11292,7 +11282,7 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"Procedūra '%s' tika izsaukta ar nederīgu ID argumentam '%s'. Iespējams, "
+"Procedūra “%s” tika izsaukta ar nederīgu ID argumentam “%s”. Iespējams, "
 "spraudnis mēģina darboties ar slāni, kas vairs neeksistē."
 
 #: ../app/pdb/gimpprocedure.c:717
@@ -11301,7 +11291,7 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"Procedūra '%s' atgrieza nederīgu ID argumentam '%s'. Iespējams, spraudnis "
+"Procedūra “%s” atgrieza nederīgu ID argumentam “%s”. Iespējams, spraudnis "
 "mēģina darboties ar attēlu, kas vairs neeksistē."
 
 #: ../app/pdb/gimpprocedure.c:730
@@ -11310,7 +11300,7 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"Procedūra '%s' tika izsaukta ar nederīgu ID argumentam '%s'. Iespējams, "
+"Procedūra “%s” tika izsaukta ar nederīgu ID argumentam “%s”. Iespējams, "
 "spraudnis mēģina darboties ar attēlu, kas vairs neeksistē."
 
 #: ../app/pdb/gimpprocedure.c:751
@@ -11319,19 +11309,19 @@ msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr ""
-"Procedūra '%s' atgrieza '%s' kā atbildi '%s' (#%d, tips %s). Šī vērtība ir "
+"Procedūra “%s” atgrieza “%s” kā atbildi “%s” (#%d, tips %s). Šī vērtība ir "
 "ārpus pieļaujamo vērtību apgabala."
 
 #: ../app/pdb/gimpprocedure.c:765
 #, c-format
 msgid ""
-"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
-"s). This value is out of range."
+"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
+"%s). This value is out of range."
 msgstr ""
-"Procedūra '%s' tika izsaukta ar vērtību  '%s' argumentam '%s' (#%d, tips %"
-"s). Šī vērtība ir ārpus pieļaujamo vērtību apgabala."
+"Procedūra “%s” tika izsaukta ar vērtību  “%s” argumentam “%s” (#%d, tips "
+"%s). Šī vērtība ir ārpus pieļaujamo vērtību apgabala."
 
-#: ../app/pdb/image-cmds.c:2360
+#: ../app/pdb/image-cmds.c:2365
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -11400,22 +11390,22 @@ msgstr "Izvērst ceļa vilkumu"
 #: ../app/plug-in/gimpenvirontable.c:281
 #, c-format
 msgid "Empty variable name in environment file %s"
-msgstr "Nav norādīts mainīgais vides failā %s"
+msgstr "Nav norādīts mainīgais vides datnē %s"
 
 #: ../app/plug-in/gimpenvirontable.c:299
 #, c-format
 msgid "Illegal variable name in environment file %s: %s"
-msgstr "Nepareiza mainīgā vērtība vides failā %s: %s"
+msgstr "Nepareiza mainīgā vērtība vides datnē %s — %s"
 
 #: ../app/plug-in/gimpinterpreterdb.c:263
 #, c-format
 msgid "Bad interpreter referenced in interpreter file %s: %s"
-msgstr "Atsauce uz nekorektu interpretatoru failā %s: %s"
+msgstr "Atsauce uz nekorektu interpretatoru datnē %s — %s"
 
 #: ../app/plug-in/gimpinterpreterdb.c:322
 #, c-format
 msgid "Bad binary format string in interpreter file %s"
-msgstr "Nekorekta binārā formāta rinda interpretatora failā %s"
+msgstr "Nekorekta binārā formāta rinda interpretatora datnē %s"
 
 #: ../app/plug-in/gimpplugin-message.c:450
 #, c-format
@@ -11423,7 +11413,7 @@ msgid ""
 "Calling error for procedure '%s':\n"
 "%s"
 msgstr ""
-"Izsaukšanas kļūda procedūrai '%s':\n"
+"Izsaukšanas kļūda procedūrai “%s”:\n"
 "%s"
 
 #: ../app/plug-in/gimpplugin-message.c:459
@@ -11432,7 +11422,7 @@ msgid ""
 "Execution error for procedure '%s':\n"
 "%s"
 msgstr ""
-"Izpildīšanas kļūda procedūrai '%s':\n"
+"Izpildīšanas kļūda procedūrai “%s”:\n"
 "%s"
 
 #: ../app/plug-in/gimpplugin-progress.c:331
@@ -11448,7 +11438,7 @@ msgid ""
 "The dying plug-in may have messed up GIMP's internal state. You may want to "
 "save your images and restart GIMP to be on the safe side."
 msgstr ""
-"Spraudnis avarēja: \"%s\"\n"
+"Spraudnis avarēja — “%s”\n"
 "(%s)\n"
 "\n"
 "Iespējams, ka tas ietekmējis GIMP iekšējo stāvokli. Drošības pēc jūs varētu "
@@ -11459,7 +11449,7 @@ msgstr ""
 #: ../app/plug-in/gimppluginmanager-call.c:321
 #, c-format
 msgid "Failed to run plug-in \"%s\""
-msgstr "Neizdevās palaist spraudni \"%s\""
+msgstr "Neizdevās palaist spraudni “%s”"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:229
 msgid "Searching Plug-Ins"
@@ -11495,7 +11485,7 @@ msgid ""
 "Calling error for '%s':\n"
 "%s"
 msgstr ""
-"'%s' izsaukšanas kļūda:\n"
+"“%s” izsaukšanas kļūda:\n"
 "%s"
 
 #: ../app/plug-in/gimppluginprocedure.c:992
@@ -11504,7 +11494,7 @@ msgid ""
 "Execution error for '%s':\n"
 "%s"
 msgstr ""
-"'%s' izpildīšanas kļūda:\n"
+"“%s” izpildīšanas kļūda:\n"
 "%s"
 
 #: ../app/plug-in/plug-in-icc-profile.c:112
@@ -11512,7 +11502,7 @@ msgstr ""
 #: ../app/plug-in/plug-in-icc-profile.c:246
 #, c-format
 msgid "Error running '%s'"
-msgstr "Kļūda, darbinot '%s'"
+msgstr "Kļūda, darbinot “%s”"
 
 #: ../app/plug-in/plug-in-icc-profile.c:136
 #: ../app/plug-in/plug-in-icc-profile.c:197
@@ -11524,17 +11514,17 @@ msgstr "Nav atrodams spraudnis (%s)"
 #: ../app/plug-in/plug-in-rc.c:205
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
-msgstr "Ignorēts '%s': nepareiza GIMP protokola versija."
+msgstr "Ignorēts “%s” — nepareiza GIMP protokola versija."
 
 #: ../app/plug-in/plug-in-rc.c:477
 #, c-format
 msgid "invalid value '%s' for icon type"
-msgstr "nekorekta piktogrammas vērtība '%s'"
+msgstr "nekorekta piktogrammas vērtība “%s”"
 
 #: ../app/plug-in/plug-in-rc.c:492
 #, c-format
 msgid "invalid value '%ld' for icon type"
-msgstr "nekorekta piktogrammas vērtība '%ld'"
+msgstr "nekorekta piktogrammas vērtība “%ld”"
 
 #. This is a so-called pangram; it's supposed to
 #. contain all characters found in the alphabet.
@@ -11603,7 +11593,7 @@ msgid ""
 "Some text properties may be wrong. Unless you want to edit the text layer, "
 "you don't need to worry about this."
 msgstr ""
-"Kļūme tekstu trokšņu analīzes laikā slānim '%s':\n"
+"Problēma, tekstu trokšņu analīzes laikā slānim “%s”:\n"
 "%s\n"
 "\n"
 "Teksta parametri ir kļūdaini. Ja vien nevēlaties labot teksta slāni, par to "
@@ -11740,7 +11730,7 @@ msgstr ""
 
 #: ../app/tools/gimpaligntool.c:557
 msgid "Click to pick this layer as first item"
-msgstr "Klikšķiniet, lai izvēlētos šo slāni kā pirmo elementu"
+msgstr "Klikšķiniet, lai izvēlētos šo slāni kā pirmo vienumu"
 
 #: ../app/tools/gimpaligntool.c:564
 msgid "Click to add this layer to the list"
@@ -11748,7 +11738,7 @@ msgstr "Klikšķiniet, lai pievienotu šo slāni sarakstam"
 
 #: ../app/tools/gimpaligntool.c:568
 msgid "Click to pick this guide as first item"
-msgstr "Klikšķiniet, lai izvēlētos šo palīglīniju kā pirmo elementu"
+msgstr "Klikšķiniet, lai izvēlētos šo palīglīniju kā pirmo vienumu"
 
 #: ../app/tools/gimpaligntool.c:575
 msgid "Click to add this guide to the list"
@@ -11756,7 +11746,7 @@ msgstr "Klikšķiniet, lai pievienotu šo palīglīniju sarakstam"
 
 #: ../app/tools/gimpaligntool.c:579
 msgid "Click to pick this path as first item"
-msgstr "Klikšķiniet, lai izvēlētos šo ceļu kā pirmo elementu"
+msgstr "Klikšķiniet, lai izvēlētos šo ceļu kā pirmo vienumu"
 
 #: ../app/tools/gimpaligntool.c:586
 msgid "Click to add this path to the list"
@@ -11945,7 +11935,7 @@ msgctxt "command"
 msgid "Select by Color"
 msgstr "Iezīmēt pēc krāsas"
 
-#: ../app/tools/gimpcagetool.c:152 ../app/tools/gimpcagetool.c:1154
+#: ../app/tools/gimpcagetool.c:152 ../app/tools/gimpcagetool.c:1155
 msgid "Cage Transform"
 msgstr "Aploka pārveidošana"
 
@@ -11957,15 +11947,15 @@ msgstr "Aploka pārveidošana — maina iezīmējuma formu ar aploku"
 msgid "_Cage Transform"
 msgstr "_Aploka pārveidošana"
 
-#: ../app/tools/gimpcagetool.c:351
+#: ../app/tools/gimpcagetool.c:352
 msgid "Press ENTER to commit the transform"
 msgstr "Nospiediet ENTER, lai izpildītu transformāciju"
 
-#: ../app/tools/gimpcagetool.c:1095
+#: ../app/tools/gimpcagetool.c:1096
 msgid "Computing Cage Coefficients"
 msgstr "Aprēķina aploka koeficientus"
 
-#: ../app/tools/gimpcagetool.c:1272
+#: ../app/tools/gimpcagetool.c:1273
 msgid "Cage transform"
 msgstr "Aploka pārveidošana"
 
@@ -12149,7 +12139,8 @@ msgstr "Izvēlieties, ko darīt krāsu pipetei"
 msgid ""
 "Open a floating dialog to view picked color values in various color models"
 msgstr ""
-"Atvērt peldošo dialogu, lai skatītu izvēlēto krāsa vērtību dažādos krāsu "
+"Atvērt peldošo dialoglodziņu, lai skatītu izvēlēto krāsa vērtību dažādos "
+"krāsu "
 "modeļos"
 
 #. the pick FG/BG frame
@@ -12355,11 +12346,11 @@ msgstr "Līknes _tips:"
 #: ../app/tools/gimpcurvestool.c:658 ../app/tools/gimplevelstool.c:756
 #, c-format
 msgid "Could not read header from '%s': %s"
-msgstr "Nevar nolasīt galvu no '%s' — %s"
+msgstr "Nevar nolasīt galvu no “%s” — %s"
 
 #: ../app/tools/gimpcurvestool.c:731
 msgid "Use _old curves file format"
-msgstr "Izmantot vec_o līkņu faila formātu"
+msgstr "Izmantot vec_o līkņu datņu formātu"
 
 #: ../app/tools/gimpdesaturatetool.c:78
 msgid "Desaturate Tool: Turn colors into shades of gray"
@@ -12389,8 +12380,7 @@ msgstr "Izgaismošana / Aptumšošana"
 msgid "Dodge / Burn Tool: Selectively lighten or darken using a brush"
 msgstr ""
 "Izgaismošanas / aptumšošanas rīks — selektīvi izgaismo vai aptumšo, "
-"izmantojot "
-"otu"
+"izmantojot otu"
 
 #: ../app/tools/gimpdodgeburntool.c:75
 msgid "Dod_ge / Burn"
@@ -12630,19 +12620,19 @@ msgstr ""
 msgid "F_oreground Select"
 msgstr "_Priekšplāna iezīmēšana"
 
-#: ../app/tools/gimpforegroundselecttool.c:302
+#: ../app/tools/gimpforegroundselecttool.c:304
 msgid "Add more strokes or press Enter to accept the selection"
 msgstr "Apvelciet vēl, vai spiediet Enter, lai pieņemtu iezīmējumu"
 
-#: ../app/tools/gimpforegroundselecttool.c:304
+#: ../app/tools/gimpforegroundselecttool.c:306
 msgid "Mark foreground by painting on the object to extract"
 msgstr "Iezīmējiet priekšplānu krāsojot uz izdalāmā objekta"
 
-#: ../app/tools/gimpforegroundselecttool.c:309
+#: ../app/tools/gimpforegroundselecttool.c:311
 msgid "Roughly outline the object to extract"
 msgstr "Apmēram iezīmējiet izvelkamo objektu"
 
-#: ../app/tools/gimpforegroundselecttool.c:751
+#: ../app/tools/gimpforegroundselecttool.c:753
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "Priekšplāna iezīmēšana"
@@ -12651,7 +12641,8 @@ msgstr "Priekšplāna iezīmēšana"
 msgid ""
 "Free Select Tool: Select a hand-drawn region with free and polygonal segments"
 msgstr ""
-"Brīvās iezīmēšanas rīks — iezīmē ar brīvu roku vai daudzstūri apvilktu laukumu"
+"Brīvās iezīmēšanas rīks — iezīmē ar brīvu roku vai daudzstūri apvilktu "
+"laukumu"
 
 #: ../app/tools/gimpfreeselecttool.c:198
 msgid "_Free Select"
@@ -12833,9 +12824,9 @@ msgstr "Reg_ulējumi:"
 #: ../app/tools/gimpimagemaptool-settings.c:223
 #, c-format
 msgid "Settings saved to '%s'"
-msgstr "Iestatījumi ir saglabāti '%s'"
+msgstr "Iestatījumi ir saglabāti “%s”"
 
-#: ../app/tools/gimpimagemaptool.c:362
+#: ../app/tools/gimpimagemaptool.c:363
 msgid "_Preview"
 msgstr "_Priekšskatījums"
 
@@ -12904,32 +12895,32 @@ msgstr ""
 msgid "Intelligent _Scissors"
 msgstr "Gudrā_s šķēres"
 
-#: ../app/tools/gimpiscissorstool.c:900 ../app/tools/gimpmeasuretool.c:605
+#: ../app/tools/gimpiscissorstool.c:902 ../app/tools/gimpmeasuretool.c:605
 msgid "Click-Drag to move this point"
 msgstr "Klikšķiniet un pavelciet, lai pārvietotu šo punktu"
 
-#: ../app/tools/gimpiscissorstool.c:902 ../app/tools/gimpiscissorstool.c:967
+#: ../app/tools/gimpiscissorstool.c:904 ../app/tools/gimpiscissorstool.c:969
 #, c-format
 msgid "%s: disable auto-snap"
 msgstr "%s — atslēgt auto-pielipšanu"
 
-#: ../app/tools/gimpiscissorstool.c:919
+#: ../app/tools/gimpiscissorstool.c:921
 msgid "Click to close the curve"
 msgstr "Klikšķiniet, lai aizvēru līkni"
 
-#: ../app/tools/gimpiscissorstool.c:925
+#: ../app/tools/gimpiscissorstool.c:927
 msgid "Click to add a point on this segment"
 msgstr "Klikšķiniet, lai pievienotu punktu šim segmentam"
 
-#: ../app/tools/gimpiscissorstool.c:939
+#: ../app/tools/gimpiscissorstool.c:941
 msgid "Click or press Enter to convert to a selection"
 msgstr "Uzklikšķiniet vai spiediet Enter, lai pārveidotu par iezīmējumu"
 
-#: ../app/tools/gimpiscissorstool.c:949
+#: ../app/tools/gimpiscissorstool.c:951
 msgid "Press Enter to convert to a selection"
 msgstr "Spiediet Enter, lai pārveidotu par iezīmējumu"
 
-#: ../app/tools/gimpiscissorstool.c:964
+#: ../app/tools/gimpiscissorstool.c:966
 msgid "Click or Click-Drag to add a point"
 msgstr "Klikšķiniet vai klikšķiniet un pavelciet, lai pievienotu punktu"
 
@@ -12998,7 +12989,7 @@ msgstr "Rediģēt šos iestatījumus kā līknes"
 
 #: ../app/tools/gimplevelstool.c:829
 msgid "Use _old levels file format"
-msgstr "Izmantot vec_o līmeņu faila formātu"
+msgstr "Izmantot vec_o līmeņu datņu formātu"
 
 #: ../app/tools/gimpmagnifyoptions.c:79
 msgid "Resize image window to accommodate new zoom level"
@@ -13027,8 +13018,6 @@ msgid "Zoom Tool: Adjust the zoom level"
 msgstr "Mēroga rīks — maina attēla mērogu"
 
 #: ../app/tools/gimpmagnifytool.c:93
-#| msgctxt "view-action"
-#| msgid "_Zoom"
 msgid "_Zoom"
 msgstr "_Mērogs"
 
@@ -13534,39 +13523,39 @@ msgstr "Nogludināšana"
 msgid "Feather edges"
 msgstr "Retušēt malas"
 
-#: ../app/tools/gimpselectiontool.c:250
+#: ../app/tools/gimpselectiontool.c:255
 msgid "Click-Drag to replace the current selection"
 msgstr "Klikšķiniet un pavelciet, lai aizvietotu pašreizējo iezīmējumu"
 
-#: ../app/tools/gimpselectiontool.c:258
+#: ../app/tools/gimpselectiontool.c:263
 msgid "Click-Drag to create a new selection"
 msgstr "Klikšķiniet un pavelciet, lai izveidotu jaunu iezīmējumu"
 
-#: ../app/tools/gimpselectiontool.c:263
+#: ../app/tools/gimpselectiontool.c:268
 msgid "Click-Drag to add to the current selection"
 msgstr "Klikšķiniet un pavelciet, lai pievienotu esošajam iezīmējumam"
 
-#: ../app/tools/gimpselectiontool.c:272
+#: ../app/tools/gimpselectiontool.c:277
 msgid "Click-Drag to subtract from the current selection"
 msgstr "Klikšķiniet un pavelciet, lai atņemtu no esošā iezīmējuma"
 
-#: ../app/tools/gimpselectiontool.c:281
+#: ../app/tools/gimpselectiontool.c:286
 msgid "Click-Drag to intersect with the current selection"
 msgstr "Klikšķiniet un pavelciet, lai šķeltu ar esošo iezīmējumu"
 
-#: ../app/tools/gimpselectiontool.c:291
+#: ../app/tools/gimpselectiontool.c:296
 msgid "Click-Drag to move the selection mask"
 msgstr "Klikšķiniet un pavelciet, lai pārvietotu iezīmējuma masku"
 
-#: ../app/tools/gimpselectiontool.c:299
+#: ../app/tools/gimpselectiontool.c:304
 msgid "Click-Drag to move the selected pixels"
 msgstr "Klikšķiniet un pavelciet, lai pārvietotu iezīmētos pikseļus"
 
-#: ../app/tools/gimpselectiontool.c:303
+#: ../app/tools/gimpselectiontool.c:308
 msgid "Click-Drag to move a copy of the selected pixels"
 msgstr "Klikšķiniet un pavelciet, lai pārvietotu iezīmēto pikseļu kopijas"
 
-#: ../app/tools/gimpselectiontool.c:307
+#: ../app/tools/gimpselectiontool.c:312
 msgid "Click to anchor the floating selection"
 msgstr "Klikšķiniet, lai nofiksētu peldošo iezīmējumu"
 
@@ -13741,7 +13730,7 @@ msgstr ""
 "\n"
 "Jūs varat turpināt rediģēt šo slāni vai arī izveidot jaunu."
 
-#: ../app/tools/gimptexttool-editor.c:1172
+#: ../app/tools/gimptexttool-editor.c:1180
 msgid "GIMP Text Editor"
 msgstr "GIMP teksta redaktors"
 
@@ -13852,19 +13841,19 @@ msgstr "Saglabāt attiecību (%s)"
 msgid "Keep the original aspect ratio"
 msgstr "Paturēt sākotnējo izmēru attiecību"
 
-#: ../app/tools/gimptransformtool.c:212
+#: ../app/tools/gimptransformtool.c:213
 msgid "Transforming"
 msgstr "Pārveido"
 
-#: ../app/tools/gimptransformtool.c:1065
+#: ../app/tools/gimptransformtool.c:1066
 msgid "There is no layer to transform."
 msgstr "Nav slāņa, kuru pārveidot."
 
-#: ../app/tools/gimptransformtool.c:1078
+#: ../app/tools/gimptransformtool.c:1079
 msgid "There is no path to transform."
 msgstr "Nav ceļa, kuru pārveidot."
 
-#: ../app/tools/gimptransformtool.c:1079
+#: ../app/tools/gimptransformtool.c:1080
 msgid "The active path's strokes are locked."
 msgstr "Aktīvie ceļa vilkumi ir slēgti."
 
@@ -14201,7 +14190,7 @@ msgstr "Pārveidot ceļu"
 #: ../app/vectors/gimpvectors-export.c:95
 #, c-format
 msgid "Error while writing '%s': %s"
-msgstr "Kļūda, ierakstot '%s' — %s"
+msgstr "Kļūda, ierakstot “%s” — %s"
 
 #: ../app/vectors/gimpvectors-import.c:330
 msgid "Import Paths"
@@ -14214,7 +14203,7 @@ msgstr "Importēts ceļš"
 #: ../app/vectors/gimpvectors-import.c:372
 #, c-format
 msgid "No paths found in '%s'"
-msgstr "Nav atrasti ceļi '%s'"
+msgstr "Nav atrasti ceļi “%s”"
 
 #: ../app/vectors/gimpvectors-import.c:376
 msgid "No paths found in the buffer"
@@ -14223,7 +14212,7 @@ msgstr "Buferī nav atrasti ceļi"
 #: ../app/vectors/gimpvectors-import.c:386
 #, c-format
 msgid "Failed to import paths from '%s': %s"
-msgstr "Neizdevās importēt ceļus no '%s' — %s"
+msgstr "Neizdevās importēt ceļus no “%s” — %s"
 
 #: ../app/widgets/gimpactioneditor.c:69
 msgid "_Search:"
@@ -14234,47 +14223,46 @@ msgstr "_Meklēt:"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpactionview.c:337
+#: ../app/widgets/gimpactionview.c:338
 #: ../app/widgets/gimpcontrollereditor.c:341
 msgid "Action"
 msgstr "Darbība"
 
-#: ../app/widgets/gimpactionview.c:366
+#: ../app/widgets/gimpactionview.c:367
 msgid "Shortcut"
 msgstr "Īsinājumtaustiņš"
 
-#: ../app/widgets/gimpactionview.c:392
+#: ../app/widgets/gimpactionview.c:393
 msgid "Name"
 msgstr "Nosaukums"
 
-#: ../app/widgets/gimpactionview.c:632 ../app/widgets/gimpactionview.c:832
+#: ../app/widgets/gimpactionview.c:633 ../app/widgets/gimpactionview.c:841
 msgid "Changing shortcut failed."
 msgstr "Neizdevās izmanīt īsinājumtaustiņu."
 
-#: ../app/widgets/gimpactionview.c:669
+#: ../app/widgets/gimpactionview.c:670
 msgid "Conflicting Shortcuts"
 msgstr "Konfliktējoši īsinājumtaustiņi"
 
-#: ../app/widgets/gimpactionview.c:675
+#: ../app/widgets/gimpactionview.c:676
 msgid "_Reassign shortcut"
 msgstr "Piešķi_rt īsinājumikonu citai komandai"
 
-#: ../app/widgets/gimpactionview.c:690
+#: ../app/widgets/gimpactionview.c:691
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
-msgstr "Īsinājumtaustiņu \"%s\" jau izmanto \"%s\" grupā \"%s\"."
+msgstr "Īsinājumtaustiņu “%s” jau izmanto “%s” grupā “%s”."
 
-#: ../app/widgets/gimpactionview.c:694
+#: ../app/widgets/gimpactionview.c:695
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
-msgstr ""
-"Piešķiršot īsinājumtaustiņu citai komandai, tas tiks izņemts no \"%s\"."
+msgstr "Piešķiršot īsinājumtaustiņu citai komandai, tas tiks izņemts no “%s”."
 
-#: ../app/widgets/gimpactionview.c:767
+#: ../app/widgets/gimpactionview.c:776
 msgid "Invalid shortcut."
 msgstr "Nederīgs īsinājumtaustiņš."
 
-#: ../app/widgets/gimpactionview.c:856
+#: ../app/widgets/gimpactionview.c:865
 msgid "Removing shortcut failed."
 msgstr "Īsinājumikonas noņemšana nav izdevusies."
 
@@ -14302,7 +14290,7 @@ msgid "Percentage of width of brush"
 msgstr "Procentuāli no otas platuma"
 
 #: ../app/widgets/gimpbufferview.c:179 ../app/widgets/gimpbufferview.c:264
-#: ../app/widgets/gimpeditor.c:748
+#: ../app/widgets/gimpeditor.c:747
 msgid "(None)"
 msgstr "(Nekas)"
 
@@ -14330,17 +14318,17 @@ msgstr "Aktīvie filtri"
 msgid "Reset the selected filter to default values"
 msgstr "Atstatīt izvēlēto filtru uz noklusējuma vērtībām"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:496
+#: ../app/widgets/gimpcolordisplayeditor.c:503
 #, c-format
 msgid "Add '%s' to the list of active filters"
-msgstr "Pievienot %s' aktīvo filtru sarakstam"
+msgstr "Pievienot “%s” aktīvo filtru sarakstam"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:533
+#: ../app/widgets/gimpcolordisplayeditor.c:540
 #, c-format
 msgid "Remove '%s' from the list of active filters"
-msgstr "Izņemt '%s' no aktīvo filtru saraksta"
+msgstr "Izņemt “%s” no aktīvo filtru saraksta"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:564
+#: ../app/widgets/gimpcolordisplayeditor.c:571
 msgid "No filter selected"
 msgstr "Izvēlētu filtru nav"
 
@@ -14350,7 +14338,7 @@ msgid ""
 "CSS color names."
 msgstr ""
 "Heksadecimālais krāsas pieraksts, kāds tiek lietots HTML un CSS valodās. Šis "
-"lauks pieņem arī CSS krāsu vārdus."
+"lauks pieņem arī CSS krāsu nosaukumus."
 
 #: ../app/widgets/gimpcolorframe.c:511
 msgid "Index:"
@@ -14459,17 +14447,17 @@ msgstr "Izvēlieties nākamo notikumu, kurš pienāks no kontroliera"
 #: ../app/widgets/gimpcontrollereditor.c:525
 #, c-format
 msgid "Remove the action assigned to '%s'"
-msgstr "Novākt '%s' piešķirto darbību"
+msgstr "Novākt “%s” piešķirto darbību"
 
 #: ../app/widgets/gimpcontrollereditor.c:530
 #, c-format
 msgid "Assign an action to '%s'"
-msgstr "Piešķirt darbību '%s'"
+msgstr "Piešķirt darbību “%s”"
 
 #: ../app/widgets/gimpcontrollereditor.c:651
 #, c-format
 msgid "Select Action for Event '%s'"
-msgstr "Izvēlieties darbību notikumam '%s'"
+msgstr "Izvēlieties darbību notikumam “%s”"
 
 #: ../app/widgets/gimpcontrollereditor.c:656
 msgid "Select Controller Event Action"
@@ -14556,12 +14544,12 @@ msgstr "Pārvietot izvēlēto kontrolieri lejup"
 #: ../app/widgets/gimpcontrollerlist.c:427
 #, c-format
 msgid "Add '%s' to the list of active controllers"
-msgstr "Pievienot '%s' aktīvo kontrolieru sarakstam"
+msgstr "Pievienot “%s” aktīvo kontrolieru sarakstam"
 
 #: ../app/widgets/gimpcontrollerlist.c:478
 #, c-format
 msgid "Remove '%s' from the list of active controllers"
-msgstr "Izņemt '%s' no aktīvo kontrolieru saraksta"
+msgstr "Izņemt “%s” no aktīvo kontrolieru saraksta"
 
 #: ../app/widgets/gimpcontrollerlist.c:512
 msgid ""
@@ -14608,7 +14596,7 @@ msgstr "Izņemt kontrolieri"
 #: ../app/widgets/gimpcontrollerlist.c:579
 #, c-format
 msgid "Remove Controller '%s'?"
-msgstr "Izņemt kontrolieri '%s'?"
+msgstr "Izņemt kontrolieri “%s”?"
 
 #: ../app/widgets/gimpcontrollerlist.c:583
 msgid ""
@@ -14621,7 +14609,7 @@ msgstr ""
 "Šī kontroliera izņemšana no aktīvo kontrolieru saraksta pilnībā izdzēsīs "
 "visus jūsu konfigurētos notikumu kartējumus.\n"
 "\n"
-"Izvēloties \"Atslēgt kontrolieri\", jūs varat atslēgt kontrolieri to "
+"Izvēloties “Atslēgt kontrolieri”, jūs varat atslēgt kontrolieri to "
 "neizdzēšot."
 
 #: ../app/widgets/gimpcontrollerlist.c:635
@@ -14767,7 +14755,7 @@ msgstr "Dzēst ierīces iestatījumus"
 #: ../app/widgets/gimpdeviceeditor.c:523
 #, c-format
 msgid "Delete \"%s\"?"
-msgstr "Dzēst \"%s\"?"
+msgstr "Dzēst “%s”?"
 
 #: ../app/widgets/gimpdeviceeditor.c:526
 msgid ""
@@ -14826,7 +14814,7 @@ msgstr "_Atstatīt likni"
 #: ../app/widgets/gimpdeviceinfoeditor.c:484
 #, c-format
 msgid "The axis '%s' has no curve"
-msgstr "Asij '%s' nav līkņu"
+msgstr "Asij “%s” nav līkņu"
 
 #: ../app/widgets/gimpdevicestatus.c:137
 msgid "Save device status"
@@ -14842,24 +14830,24 @@ msgstr "Priekšplāns: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Fons: %d, %d, %d"
 
-#: ../app/widgets/gimpdnd-xds.c:203
+#: ../app/widgets/gimpdnd-xds.c:204
 msgid "The given filename does not have any known file extension."
-msgstr "Norādītajam failam nav atpazīts faila paplašinājums."
+msgstr "Norādītajai datnei nav atpazīts datnes paplašinājums."
 
-#: ../app/widgets/gimpdnd-xds.c:221
+#: ../app/widgets/gimpdnd-xds.c:222
 msgid "File Exists"
-msgstr "Fails eksistē"
+msgstr "Datne eksistē"
 
-#: ../app/widgets/gimpdnd-xds.c:226
+#: ../app/widgets/gimpdnd-xds.c:227
 msgid "_Replace"
 msgstr "Pār_rakstīt"
 
-#: ../app/widgets/gimpdnd-xds.c:237
+#: ../app/widgets/gimpdnd-xds.c:238
 #, c-format
 msgid "A file named '%s' already exists."
-msgstr "Fails ar nosaukumu '%s' jau eksistē."
+msgstr "Datne ar nosaukumu “%s” jau eksistē."
 
-#: ../app/widgets/gimpdnd-xds.c:242
+#: ../app/widgets/gimpdnd-xds.c:243
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "Vai jūs vēlaties to pārrakstīt ar attēlu, kuru saglabājat?"
 
@@ -14897,7 +14885,7 @@ msgstr "Auto"
 #: ../app/widgets/gimpdockwindow.c:393
 msgid ""
 "When enabled the dialog automatically follows the image you are working on."
-msgstr "Ja ieslēgts, dialoga saturs mainās atkarībā no aktīvā attēla."
+msgstr "Ja ieslēgts, dialoglodziņa saturs mainās atkarībā no aktīvā attēla."
 
 #: ../app/widgets/gimpdrawabletreeview.c:122
 msgid "Lock pixels"
@@ -14935,30 +14923,38 @@ msgstr "Paziņojumi pāradresēti uz stderr."
 msgid "%s Message"
 msgstr "%s paziņojums"
 
-#: ../app/widgets/gimpfiledialog.c:327
+#: ../app/widgets/gimpfiledialog.c:330
 msgid "Automatically Detected"
 msgstr "Automātiski noteikts"
 
-#: ../app/widgets/gimpfiledialog.c:344
+#: ../app/widgets/gimpfiledialog.c:347
 msgid "By Extension"
 msgstr "Pēc paplašinājuma"
 
-#: ../app/widgets/gimpfiledialog.c:793
-msgid "All files"
-msgstr "Visi faili"
-
 #: ../app/widgets/gimpfiledialog.c:798
+msgid "All files"
+msgstr "Visas datnes"
+
+#: ../app/widgets/gimpfiledialog.c:803
 msgid "All images"
 msgstr "Visi attēli"
 
-#: ../app/widgets/gimpfiledialog.c:974
+#: ../app/widgets/gimpfiledialog.c:810
+msgid "All XCF images"
+msgstr "Visi XCF attēli"
+
+#: ../app/widgets/gimpfiledialog.c:812
+msgid "All export images"
+msgstr "Visi eksporta attēli"
+
+#: ../app/widgets/gimpfiledialog.c:996
 #, c-format
 msgid "Select File _Type (%s)"
-msgstr "Norādīt faila _tipu (%s)"
+msgstr "Norādīt datnes _tipu (%s)"
 
 #: ../app/widgets/gimpfileprocview.c:185
 msgid "File Type"
-msgstr "Faila tips"
+msgstr "Datnes tips"
 
 #: ../app/widgets/gimpfileprocview.c:197
 msgid "Extensions"
@@ -15193,15 +15189,15 @@ msgstr "Krāsu režīms:"
 
 #: ../app/widgets/gimpimagepropview.c:134
 msgid "File Name:"
-msgstr "Faila nosaukums:"
+msgstr "Datnes nosaukums:"
 
 #: ../app/widgets/gimpimagepropview.c:140
 msgid "File Size:"
-msgstr "Faila izmērs:"
+msgstr "Datnes izmērs:"
 
 #: ../app/widgets/gimpimagepropview.c:143
 msgid "File Type:"
-msgstr "Faila tips:"
+msgstr "Datnes tips:"
 
 #: ../app/widgets/gimpimagepropview.c:148
 msgid "Size in memory:"
@@ -15278,7 +15274,7 @@ msgstr "Kolonnas:"
 
 #: ../app/widgets/gimppanedbox.c:58
 msgid "You can drop dockable dialogs here"
-msgstr "Jūs varat nomest dokojamos dialogus šeit"
+msgstr "Jūs varat nomest dokojamos dialoglodziņus šeit"
 
 #: ../app/widgets/gimpprofilechooserdialog.c:127
 msgid "ICC color profile (*.icc, *.icm)"
@@ -15295,13 +15291,13 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"Faila vārdu '%s' nevar konvertēt par korektu URL:\n"
+"Datnes nosaukumu “%s” nevar konvertēt par korektu URI:\n"
 "\n"
 "%s"
 
 #: ../app/widgets/gimpselectiondata.c:253
 msgid "Invalid UTF-8"
-msgstr "Nekorekts UTF-8"
+msgstr "Nederīgs UTF-8"
 
 #: ../app/widgets/gimpsettingsbox.c:269
 msgid "Pick a setting from the list"
@@ -15313,11 +15309,11 @@ msgstr "Pievienot iestatījumus izlasei"
 
 #: ../app/widgets/gimpsettingsbox.c:319
 msgid "_Import Settings from File..."
-msgstr "_Importēt iestatījumus no faila..."
+msgstr "_Importēt iestatījumus no datnes..."
 
 #: ../app/widgets/gimpsettingsbox.c:325
 msgid "_Export Settings to File..."
-msgstr "_Eksportēt iestatījumus failā..."
+msgstr "_Eksportēt iestatījumus datnē..."
 
 #: ../app/widgets/gimpsettingsbox.c:332
 msgid "_Manage Settings..."
@@ -15341,11 +15337,11 @@ msgstr "Pārvaldīt saglabātos iestatījumus"
 
 #: ../app/widgets/gimpsettingseditor.c:194
 msgid "Import settings from a file"
-msgstr "Importēt iestatījumus no faila"
+msgstr "Importēt iestatījumus no datnes"
 
 #: ../app/widgets/gimpsettingseditor.c:203
 msgid "Export the selected settings to a file"
-msgstr "Eksportēt izvēlētos iestatījumus failā"
+msgstr "Eksportēt izvēlētos iestatījumus datnē"
 
 #: ../app/widgets/gimpsettingseditor.c:212
 msgid "Delete the selected settings"
@@ -15447,7 +15443,7 @@ msgstr "%d ppi, %s"
 #: ../app/widgets/gimptextbuffer-serialize.c:340
 #, c-format
 msgid "Attribute \"%s\" is invalid on <%s> element in this context"
-msgstr "Atribūts \"%s\" ir nederīgs <%s> elementam šajā kontekstā"
+msgstr "Atribūts “%s” ir nederīgs <%s> elementam šajā kontekstā"
 
 #: ../app/widgets/gimptextbuffer-serialize.c:412
 #, c-format
@@ -15457,7 +15453,7 @@ msgstr "Ārējam teksta elementam jābūt <markup>, nevis <%s>"
 #: ../app/widgets/gimptextbuffer.c:1454
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
-msgstr "Nekorekti UTF-8 dati failā '%s'."
+msgstr "Nederīgi UTF-8 dati datnē “%s”."
 
 #: ../app/widgets/gimptexteditor.c:222
 msgid "_Use selected font"
@@ -15557,11 +15553,11 @@ msgid ""
 "Click to open the Image Dialog."
 msgstr ""
 "Aktīvais attēls.\n"
-"Klikšķināt, lai atvērtu dialogu \"Attēls\"."
+"Klikšķināt, lai atvērtu dialoglodziņu “Attēls”."
 
 #: ../app/widgets/gimptoolbox-image-area.c:120
 msgid "Drag to an XDS enabled file-manager to save the image."
-msgstr "Vilkt uz failu pārvaldnieku ar XDS atbalstu, lai saglabātu attēlu."
+msgstr "Velciet uz datņu pārvaldnieku ar XDS atbalstu, lai saglabātu attēlu."
 
 #: ../app/widgets/gimptoolbox-indicator-area.c:163
 msgid ""
@@ -15569,7 +15565,7 @@ msgid ""
 "Click to open the Brush Dialog."
 msgstr ""
 "Aktīvā ota.\n"
-"Klikšķināt, lai atvērtu dialogu \"Otas\"."
+"Klikšķināt, lai atvērtu dialoglodziņu “Otas”."
 
 #: ../app/widgets/gimptoolbox-indicator-area.c:195
 msgid ""
@@ -15577,7 +15573,7 @@ msgid ""
 "Click to open the Pattern Dialog."
 msgstr ""
 "Aktīvais raksts.\n"
-"Klikšķiniet, lai atvērtu dialogu \"Raksti\"."
+"Klikšķiniet, lai atvērtu dialoglodziņu “Raksti”."
 
 #: ../app/widgets/gimptoolbox-indicator-area.c:227
 msgid ""
@@ -15585,7 +15581,7 @@ msgid ""
 "Click to open the Gradient Dialog."
 msgstr ""
 "Aktīvā krāsu pāreja.\n"
-"Klikšķiniet, lai atvērtu dialogu \"Krāsu pāreja\"."
+"Klikšķiniet, lai atvērtu dialoglodziņu “Krāsu pāreja”."
 
 #: ../app/widgets/gimptooleditor.c:294
 msgid "Raise this tool"
@@ -15670,12 +15666,12 @@ msgstr "GIMP instalācija nav pabeigta:"
 
 #: ../app/widgets/gimpuimanager.c:744
 msgid "Please make sure the menu XML files are correctly installed."
-msgstr "Lūdzu, pārliecinieties, ka izvēlnes XML faili ir korekti uzinstalēti."
+msgstr "Lūdzu, pārliecinieties, ka izvēlnes XML datnes ir korekti uzinstalēti."
 
 #: ../app/widgets/gimpuimanager.c:750
 #, c-format
 msgid "There was an error parsing the menu definition from %s: %s"
-msgstr "Gadījās kļūda, analizējot izvēlnes definīcijas no %s: %s"
+msgstr "Gadījās kļūda, analizējot izvēlnes definīcijas no %s — %s"
 
 #: ../app/widgets/gimpundoeditor.c:262
 msgid "[ Base Image ]"
@@ -15687,27 +15683,27 @@ msgstr "Slēgt ceļa vilkumus"
 
 #: ../app/widgets/gimpviewablebox.c:87
 msgid "Open the brush selection dialog"
-msgstr "Atvērt otas izvēles dialogu"
+msgstr "Atvērt otas izvēles dialoglodziņu"
 
 #: ../app/widgets/gimpviewablebox.c:151
 msgid "Open the dynamics selection dialog"
-msgstr "Atvērt dinamiku izvēles dialogu"
+msgstr "Atvērt dinamiku izvēles dialoglodziņu"
 
 #: ../app/widgets/gimpviewablebox.c:216
 msgid "Open the pattern selection dialog"
-msgstr "Atvērt raksta izvēles dialogu"
+msgstr "Atvērt raksta izvēles dialoglodziņu"
 
 #: ../app/widgets/gimpviewablebox.c:284
 msgid "Open the gradient selection dialog"
-msgstr "Atvērt krāsu pārejas izvēles dialogu"
+msgstr "Atvērt krāsu pārejas izvēles dialoglodziņu"
 
 #: ../app/widgets/gimpviewablebox.c:401
 msgid "Open the palette selection dialog"
-msgstr "Atvērt paletes izvēles dialogu"
+msgstr "Atvērt paletes izvēles dialoglodziņu"
 
 #: ../app/widgets/gimpviewablebox.c:466
 msgid "Open the font selection dialog"
-msgstr "Atvērt fonta izvēles dialogu"
+msgstr "Atvērt fonta izvēles dialoglodziņu"
 
 #: ../app/widgets/gimpwidgets-utils.c:595
 #, c-format
@@ -15838,13 +15834,13 @@ msgstr "Nedefinēts"
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
-msgstr "Šis XFC fails ir bojāts! Ielādēju cik spēju, bet tas ir nepilnīgs."
+msgstr "Šīs XCF datne ir bojāts! Ielādēju cik spēju, bet tas ir nepilnīgs."
 
 #: ../app/xcf/xcf-load.c:347
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
-msgstr "Šis XFC fails ir bojāts! Nevarēju izglābt nekādus attēla datus."
+msgstr "Šīs XCF datne ir bojāts! Nevarēju izglābt nekādus attēla datus."
 
 #: ../app/xcf/xcf-load.c:420
 msgid ""
@@ -15852,13 +15848,13 @@ msgid ""
 "did not save indexed colormaps correctly.\n"
 "Substituting grayscale map."
 msgstr ""
-"XCF brīdinājums: 0 versijas XCF faila formāts\n"
-"pareizi nesaglabāja indeksētas krāsu kartes.\n"
+"XCF brīdinājums — 0 versijas XCF datnes formāts\n"
+"nesaglabāja pareizi indeksētas krāsu kartes.\n"
 "Aktīvā karte tiks aizvietota ar pelēktoņu karti."
 
 #: ../app/xcf/xcf-read.c:115
 msgid "Invalid UTF-8 string in XCF file"
-msgstr "Nekorekta UTF-8 rinda XCF failā"
+msgstr "Nederīga UTF-8 rinda XCF datnē"
 
 #: ../app/xcf/xcf-write.c:86
 #, c-format
@@ -15868,7 +15864,7 @@ msgstr "Kļūda, rakstot XCF — %s"
 #: ../app/xcf/xcf-seek.c:43 ../app/xcf/xcf-seek.c:60 ../app/xcf/xcf-seek.c:71
 #, c-format
 msgid "Could not seek in XCF file: %s"
-msgstr "Nevar meklēt XCF failā — %s"
+msgstr "Nevar meklēt XCF datnē — %s"
 
 #: ../app/xcf/xcf.c:99 ../app/xcf/xcf.c:167
 msgid "GIMP XCF image"
@@ -15877,22 +15873,22 @@ msgstr "GIMP XCF attēls"
 #: ../app/xcf/xcf.c:271
 #, c-format
 msgid "Opening '%s'"
-msgstr "Atver '%s'"
+msgstr "Atver “%s”"
 
 #: ../app/xcf/xcf.c:313
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr "XCF kļūda — neatbalstīta XCF faila versija %d"
+msgstr "XCF kļūda — neatbalstīta XCF datnes versija %d"
 
 #: ../app/xcf/xcf.c:383
 #, c-format
 msgid "Saving '%s'"
-msgstr "Saglabā '%s'"
+msgstr "Saglabā “%s”"
 
 #: ../app/xcf/xcf.c:403
 #, c-format
 msgid "Error saving XCF file: %s"
-msgstr "Kļūda, saglabājot XCF failu — %s"
+msgstr "Kļūda, saglabājot XCF datni — %s"
 
 #: ../data/tags/gimp-tags-default.xml.in.h:1
 msgid "round"
@@ -15940,9 +15936,6 @@ msgstr "Veido attēlus vai rediģē fotogrāfijas"
 
 #~ msgid "Opacity:"
 #~ msgstr "Blīvums:"
-
-#~ msgid "Set Item Exclusive Linked"
-#~ msgstr "Norādīt saikni ar elementu"
 
 #~ msgid "Message repeated %d times."
 #~ msgstr "Paziņojums atkārtots %d reizes."
