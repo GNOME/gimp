@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lv\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-28 01:49+0300\n"
+"POT-Creation-Date: 2012-09-29 13:51+0300\n"
 "PO-Revision-Date: 2012-09-28 12:58+0300\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
@@ -241,8 +241,8 @@ msgid ""
 msgstr ""
 "GIMP lietotāja parametru mapi nevar konvertēt uz UTF-8 — %s\n"
 "\n"
-"Ļoti iespējams, ka sistēmas datnes ir kodētas citā kodējumā nevis UTF-8 "
-"un GLib tas nav definēts. Lūdzu, pārbaudiet sistēmas mainīgo "
+"Ļoti iespējams, ka sistēmas datnes ir kodētas citā kodējumā nevis UTF-8 un "
+"GLib tas nav definēts. Lūdzu, pārbaudiet sistēmas mainīgo "
 "G_FILENAME_ENCODING."
 
 #. show versions of libraries used by GIMP
@@ -5648,8 +5648,8 @@ msgctxt "windows-action"
 msgid ""
 "When enabled docks and other dialogs are hidden, leaving only image windows."
 msgstr ""
-"Kad aktivēts, doki un citi dialoglodziņi tiek paslēpti, atstājot tikai attēla "
-"logu."
+"Kad aktivēts, doki un citi dialoglodziņi tiek paslēpti, atstājot tikai "
+"attēla logu."
 
 #: ../app/actions/windows-actions.c:122
 msgctxt "windows-action"
@@ -6139,8 +6139,8 @@ msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
 msgstr ""
-"GIMP brīdinās lietotāju, ja tiks izveidota datne, kuras izmērs pārsniedz šeit "
-"norādīto vērtību."
+"GIMP brīdinās lietotāju, ja tiks izveidota datne, kuras izmērs pārsniedz "
+"šeit norādīto vērtību."
 
 #: ../app/config/gimprc-blurbs.h:231
 msgid ""
@@ -6244,8 +6244,8 @@ msgid ""
 "Keep a permanent record of all opened and saved files in the Recent "
 "Documents list."
 msgstr ""
-"Turēt pastāvīgus ierakstus par visām atvērtajām un saglabātajām datnēm "
-"Nesen izmantoto dokumentu sarakstā."
+"Turēt pastāvīgus ierakstus par visām atvērtajām un saglabātajām datnēm Nesen "
+"izmantoto dokumentu sarakstā."
 
 #: ../app/config/gimprc-blurbs.h:309
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
@@ -7795,9 +7795,9 @@ msgid ""
 "your data search path. You probably edited the gimprc file manually, please "
 "fix it in the Preferences dialog's 'Folders' section."
 msgstr ""
-"Ir nokonfigurēta rakstāma datu mape, bet šī mape nav daļā no datu "
-"meklēšanas ceļa. Jūs droši vien rediģējāt gimprc datni pašrocīgi, lūdzu, "
-"salabojiet to iestatījumu dialoglodziņā, sadaļā “Mapes”."
+"Ir nokonfigurēta rakstāma datu mape, bet šī mape nav daļā no datu meklēšanas "
+"ceļa. Jūs droši vien rediģējāt gimprc datni pašrocīgi, lūdzu, salabojiet to "
+"iestatījumu dialoglodziņā, sadaļā “Mapes”."
 
 #: ../app/core/gimpdatafactory.c:773
 #, c-format
@@ -8616,8 +8616,8 @@ msgstr "Paletes datnes “%s” nolasīšana — trūkst komponents BLUE līnij�
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr ""
-"Paletes datnes “%s” nolasīšana — RGB vērtība ārpus noteiktā diapazona rindiņā "
-"%d."
+"Paletes datnes “%s” nolasīšana — RGB vērtība ārpus noteiktā diapazona "
+"rindiņā %d."
 
 #: ../app/core/gimppalette-load.c:478
 #, c-format
@@ -9040,8 +9040,9 @@ msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
 msgstr ""
-"Datnes nosaukums nesatur nevienu zināmu datnes paplašinājumu. Lūdzu, ievadiet "
-"zināmu datnes paplašinājumu vai izvēlieties datnes formātu no saraksta."
+"Datnes nosaukums nesatur nevienu zināmu datnes paplašinājumu. Lūdzu, "
+"ievadiet zināmu datnes paplašinājumu vai izvēlieties datnes formātu no "
+"saraksta."
 
 #: ../app/dialogs/file-save-dialog.c:586
 msgid "Extension Mismatch"
@@ -9180,8 +9181,8 @@ msgid ""
 "%s)."
 msgstr ""
 "Ja attēla izmērs tiks mainīts ar norādītajām vērtībām, tas aizņems vairāk "
-"atmiņas nekā norādīts iestatījumu punktā “Maksimālais attēla izmērs” "
-"(patlaban %s)."
+"atmiņas nekā norādīts iestatījumu punktā “Maksimālais attēla "
+"izmērs” (patlaban %s)."
 
 #: ../app/dialogs/image-scale-dialog.c:260
 msgid ""
@@ -11254,8 +11255,8 @@ msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
-"Procedūra “%s” atgrieza nepareizu vērtības tipu vērtībai “%s” (#%d).\r\n"
-"Gaidīja %s, saņēma %s."
+"Procedūra “%s” atgrieza nepareizu vērtības tipu vērtībai “%s” (#%d). Gaidīja "
+"%s, saņēma %s."
 
 #: ../app/pdb/gimpprocedure.c:654
 #, c-format
@@ -11264,8 +11265,7 @@ msgid ""
 "%d). Expected %s, got %s."
 msgstr ""
 "Procedūra “%s” tika izsaukta ar nepareizu vērtības tipu parametram “%s” (#"
-"%d).\r\n"
-"Gaidīja %s, saņēma %s."
+"%d). Gaidīja %s, saņēma %s."
 
 #: ../app/pdb/gimpprocedure.c:687
 #, c-format
@@ -12140,8 +12140,7 @@ msgid ""
 "Open a floating dialog to view picked color values in various color models"
 msgstr ""
 "Atvērt peldošo dialoglodziņu, lai skatītu izvēlēto krāsa vērtību dažādos "
-"krāsu "
-"modeļos"
+"krāsu modeļos"
 
 #. the pick FG/BG frame
 #: ../app/tools/gimpcolorpickeroptions.c:163
