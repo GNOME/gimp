@@ -57,7 +57,7 @@ gimp_image_convert_precision (GimpImage     *image,
   all_drawables = g_list_concat (gimp_image_get_layer_list (image),
                                  gimp_image_get_channel_list (image));
 
-  n_drawables = g_list_length (all_drawables);
+  n_drawables = g_list_length (all_drawables) + 1 /* + selection */;
 
   switch (precision)
     {
@@ -129,6 +129,12 @@ gimp_image_convert_precision (GimpImage     *image,
 
     gimp_drawable_set_buffer (GIMP_DRAWABLE (mask), FALSE, NULL, buffer);
     g_object_unref (buffer);
+
+    nth_drawable++;
+
+    if (progress)
+      gimp_progress_set_value (progress,
+                               (gdouble) nth_drawable / (gdouble) n_drawables);
   }
 
   gimp_image_undo_group_end (image);
