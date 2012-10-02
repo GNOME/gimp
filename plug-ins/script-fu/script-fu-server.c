@@ -56,6 +56,10 @@ typedef short sa_family_t;	/* Not defined by winsock */
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+
+#ifndef AI_ADDRCONFIG
+#define AI_ADDRCONFIG 0
+#endif
 #endif
 
 #include <glib/gstdio.h>
