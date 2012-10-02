@@ -70,7 +70,10 @@
 #include "gimp-intl.h"
 
 
+#define MAX_XCF_PARASITE_DATA_LEN (256L * 1024 * 1024)
+
 /* #define GIMP_XCF_PATH_DEBUG */
+
 
 static void            xcf_load_add_masks     (GimpImage     *image);
 static gboolean        xcf_load_image_props   (XcfInfo       *info,
@@ -585,12 +588,15 @@ xcf_load_image_props (XcfInfo   *info,
 
         case PROP_PARASITES:
           {
-            glong         base = info->cp;
-            GimpParasite *p;
+            glong base = info->cp;
 
             while (info->cp - base < prop_size)
               {
-                p = xcf_load_parasite (info);
+                GimpParasite *p = xcf_load_parasite (info);
+
+                if (! p)
+                  return FALSE;
+
                 gimp_image_parasite_attach (image, p);
                 gimp_parasite_free (p);
               }
@@ -843,12 +849,15 @@ xcf_load_layer_props (XcfInfo    *info,
 
         case PROP_PARASITES:
           {
-            glong         base = info->cp;
-            GimpParasite *p;
+            glong base = info->cp;
 
             while (info->cp - base < prop_size)
               {
-                p = xcf_load_parasite (info);
+                GimpParasite *p = xcf_load_parasite (info);
+
+                if (! p)
+                  return FALSE;
+
                 gimp_item_parasite_attach (GIMP_ITEM (*layer), p, FALSE);
                 gimp_parasite_free (p);
               }
@@ -1026,12 +1035,15 @@ xcf_load_channel_props (XcfInfo      *info,
 
         case PROP_PARASITES:
           {
-            glong         base = info->cp;
-            GimpParasite *p;
+            glong base = info->cp;
 
             while ((info->cp - base) < prop_size)
               {
-                p = xcf_load_parasite (info);
+                GimpParasite *p = xcf_load_parasite (info);
+
+                if (! p)
+                  return FALSE;
+
                 gimp_item_parasite_attach (GIMP_ITEM (*channel), p, FALSE);
                 gimp_parasite_free (p);
               }
@@ -1716,6 +1728,14 @@ xcf_load_parasite (XcfInfo *info)
   info->cp += xcf_read_string (info->fp, &name, 1);
   info->cp += xcf_read_int32  (info->fp, &flags, 1);
   info->cp += xcf_read_int32  (info->fp, &size, 1);
+
+  if (size > MAX_XCF_PARASITE_DATA_LEN)
+    {
+      g_warning ("Maximum parasite data length (%ld bytes) exceeded. "
+                 "Possibly corrupt XCF file.", MAX_XCF_PARASITE_DATA_LEN);
+      g_free (name);
+      return NULL;
+    }
 
   data = g_new (gchar, size);
   info->cp += xcf_read_int8 (info->fp, data, size);
