@@ -109,7 +109,7 @@ string_to_unit (const GValue *src_value,
   return;
 
  error:
-  g_warning ("Can't convert string to GimpUnit.");
+  g_warning ("Can't convert string '%s' to GimpUnit.", str);
 }
 
 
