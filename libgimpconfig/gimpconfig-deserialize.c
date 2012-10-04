@@ -87,6 +87,9 @@ static GTokenType  gimp_config_deserialize_value_array (GValue     *value,
                                                         GimpConfig *config,
                                                         GParamSpec *prop_spec,
                                                         GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_unit        (GValue     *value,
+                                                        GParamSpec *prop_spec,
+                                                        GScanner   *scanner);
 static GTokenType  gimp_config_deserialize_any         (GValue     *value,
                                                         GParamSpec *prop_spec,
                                                         GScanner   *scanner);
@@ -354,6 +357,10 @@ gimp_config_deserialize_value (GValue     *value,
     {
       return gimp_config_deserialize_value_array (value,
                                                   config, prop_spec, scanner);
+    }
+  else if (prop_spec->value_type == GIMP_TYPE_UNIT)
+    {
+      return gimp_config_deserialize_unit (value, prop_spec, scanner);
     }
 
   /*  This fallback will only work for value_types that
@@ -741,12 +748,98 @@ gimp_config_deserialize_value_array (GValue     *value,
   return G_TOKEN_RIGHT_PAREN;
 }
 
+/* This function is entirely sick, so is our method of serializing
+ * units, which we write out as (unit foo bar) instead of
+ * (unit "foo bar"). The assumption that caused this shit was that a
+ * unit's "identifier" is really an identifier in the C-ish sense,
+ * when in fact it's just a random user entered string.
+ *
+ * Here, we try to parse at least the default units shipped with gimp,
+ * and we add code to parse (unit "foo bar") in order to be compatible
+ * with future correct unit serializing.
+ */
+static GTokenType
+gimp_config_deserialize_unit (GValue     *value,
+                              GParamSpec *prop_spec,
+                              GScanner   *scanner)
+{
+  gchar      *old_cset_skip_characters;
+  gchar      *old_cset_identifier_first;
+  gchar      *old_cset_identifier_nth;
+  GString    *buffer;
+  GValue      src = G_VALUE_INIT;
+  GTokenType  token;
+
+  /* parse the next token *before* reconfiguring the scanner, so it
+   * skips whitespace first
+   */
+  token = g_scanner_peek_next_token (scanner);
+
+  if (token == G_TOKEN_STRING)
+    return gimp_config_deserialize_any (value, prop_spec, scanner);
+
+  old_cset_skip_characters  = scanner->config->cset_skip_characters;
+  old_cset_identifier_first = scanner->config->cset_identifier_first;
+  old_cset_identifier_nth   = scanner->config->cset_identifier_nth;
+
+  scanner->config->cset_skip_characters  = "";
+  scanner->config->cset_identifier_first = ( G_CSET_a_2_z G_CSET_A_2_Z "." );
+  scanner->config->cset_identifier_nth   = ( G_CSET_a_2_z G_CSET_A_2_Z
+                                             G_CSET_DIGITS "-_." );
+
+  buffer = g_string_new ("");
+
+  while (g_scanner_peek_next_token (scanner) != G_TOKEN_RIGHT_PAREN)
+    {
+      token = g_scanner_peek_next_token (scanner);
+
+      if (token == G_TOKEN_IDENTIFIER)
+        {
+          g_scanner_get_next_token (scanner);
+          g_string_append (buffer, scanner->value.v_identifier);
+        }
+      else if (token == G_TOKEN_CHAR)
+        {
+          g_scanner_get_next_token (scanner);
+          g_string_append_c (buffer, scanner->value.v_char);
+        }
+      else if (token == ' ')
+        {
+          g_scanner_get_next_token (scanner);
+          g_string_append_c (buffer, token);
+        }
+      else
+        {
+          token = G_TOKEN_IDENTIFIER;
+          goto cleanup;
+        }
+    }
+
+  g_value_init (&src, G_TYPE_STRING);
+  g_value_set_static_string (&src, buffer->str);
+  g_value_transform (&src, value);
+  g_value_unset (&src);
+
+  token = G_TOKEN_RIGHT_PAREN;
+
+ cleanup:
+
+  g_string_free (buffer, TRUE);
+
+  scanner->config->cset_skip_characters  = old_cset_skip_characters;
+  scanner->config->cset_identifier_first = old_cset_identifier_first;
+  scanner->config->cset_identifier_nth   = old_cset_identifier_nth;
+
+  return token;
+}
+
 static GTokenType
 gimp_config_deserialize_any (GValue     *value,
                              GParamSpec *prop_spec,
                              GScanner   *scanner)
 {
-  GValue src = { 0, };
+  GValue     src = G_VALUE_INIT;
+  GTokenType token;
 
   if (!g_value_type_transformable (G_TYPE_STRING, prop_spec->value_type))
     {
@@ -755,13 +848,23 @@ gimp_config_deserialize_any (GValue     *value,
       return G_TOKEN_NONE;
     }
 
-  if (g_scanner_peek_next_token (scanner) != G_TOKEN_IDENTIFIER)
-    return G_TOKEN_IDENTIFIER;
+  token = g_scanner_peek_next_token (scanner);
+
+  if (token != G_TOKEN_IDENTIFIER &&
+      token != G_TOKEN_STRING)
+    {
+      return G_TOKEN_IDENTIFIER;
+    }
 
   g_scanner_get_next_token (scanner);
 
   g_value_init (&src, G_TYPE_STRING);
-  g_value_set_static_string (&src, scanner->value.v_identifier);
+
+  if (token == G_TOKEN_IDENTIFIER)
+    g_value_set_static_string (&src, scanner->value.v_identifier);
+  else
+    g_value_set_static_string (&src, scanner->value.v_string);
+
   g_value_transform (&src, value);
   g_value_unset (&src);
 
