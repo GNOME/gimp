@@ -59,8 +59,9 @@
 #include "gimpdrawtool.h"
 
 
-#define DRAW_TIMEOUT 4
-#define USE_TIMEOUT  1
+#define DRAW_TIMEOUT           4
+#define USE_TIMEOUT            1
+#define MINIMUM_DRAW_INTERVAL 50 /* 50 microseconds == 20 fps */
 
 
 static void          gimp_draw_tool_dispose      (GObject          *object);
@@ -190,11 +191,20 @@ gimp_draw_tool_draw_timeout (GimpDrawTool *draw_tool)
 static void
 gimp_draw_tool_draw (GimpDrawTool *draw_tool)
 {
+  guint64 now = g_get_monotonic_time ();
+
   if (draw_tool->display &&
       draw_tool->paused_count == 0 &&
-      ! draw_tool->draw_timeout)
+      (! draw_tool->draw_timeout ||
+       (now - draw_tool->last_draw_time) > MINIMUM_DRAW_INTERVAL))
     {
       GimpDisplayShell *shell = gimp_display_get_shell (draw_tool->display);
+
+      if (draw_tool->draw_timeout)
+        {
+          g_source_remove (draw_tool->draw_timeout);
+          draw_tool->draw_timeout = 0;
+        }
 
       gimp_draw_tool_undraw (draw_tool);
 
@@ -216,6 +226,8 @@ gimp_draw_tool_draw (GimpDrawTool *draw_tool)
 
       if (draw_tool->item)
         gimp_display_shell_add_tool_item (shell, draw_tool->item);
+
+      draw_tool->last_draw_time = now;
     }
 }
 
@@ -274,6 +286,8 @@ gimp_draw_tool_stop (GimpDrawTool *draw_tool)
       g_source_remove (draw_tool->draw_timeout);
       draw_tool->draw_timeout = 0;
     }
+
+  draw_tool->last_draw_time = 0;
 
   draw_tool->display = NULL;
 }

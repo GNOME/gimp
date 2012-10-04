@@ -42,12 +42,13 @@ struct _GimpDrawTool
 {
   GimpTool        parent_instance;
 
-  GimpDisplay    *display;      /*  The display we are drawing to (may be
-                                 *  a different one than tool->display)
-                                 */
+  GimpDisplay    *display;        /*  The display we are drawing to (may be
+                                   *  a different one than tool->display)
+                                   */
 
-  gint            paused_count; /*  count to keep track of multiple pauses  */
-  guint           draw_timeout; /*  draw delay timeout ID                   */
+  gint            paused_count;   /*  count to keep track of multiple pauses  */
+  guint           draw_timeout;   /*  draw delay timeout ID                   */
+  guint64         last_draw_time; /*  time of last draw(), monotonically      */
 
   GimpCanvasItem *preview;
   GimpCanvasItem *item;
