@@ -322,16 +322,23 @@ gimp_draw_tool_resume (GimpDrawTool *draw_tool)
 
   draw_tool->paused_count--;
 
+  if (draw_tool->paused_count == 0)
+    {
 #ifdef USE_TIMEOUT
-  if (draw_tool->paused_count == 0 && ! draw_tool->draw_timeout)
-    draw_tool->draw_timeout =
-      gdk_threads_add_timeout_full (G_PRIORITY_HIGH_IDLE,
-                                    DRAW_TIMEOUT,
-                                    (GSourceFunc) gimp_draw_tool_draw_timeout,
-                                    draw_tool, NULL);
-#else
-  gimp_draw_tool_draw (draw_tool);
+      if (! draw_tool->draw_timeout)
+        draw_tool->draw_timeout =
+          gdk_threads_add_timeout_full (G_PRIORITY_HIGH_IDLE,
+                                        DRAW_TIMEOUT,
+                                        (GSourceFunc) gimp_draw_tool_draw_timeout,
+                                        draw_tool, NULL);
 #endif
+
+      /* call draw() anyway, it will do nothing if the timeout is
+       * running, but will additionally check the drawing times to
+       * ensure the minimum framerate
+       */
+      gimp_draw_tool_draw (draw_tool);
+    }
 }
 
 /**
