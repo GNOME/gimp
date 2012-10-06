@@ -345,7 +345,7 @@ gimp_data_editor_set_context (GimpDocked  *docked,
 
       g_object_ref (editor->context);
 
-      data_type = gimp_container_get_children_type (gimp_data_factory_get_container (editor->data_factory));
+      data_type = gimp_data_factory_get_data_type (editor->data_factory);
       data = GIMP_DATA (gimp_context_get_by_type (editor->context, data_type));
 
       g_signal_connect (editor->context,
@@ -488,7 +488,7 @@ gimp_data_editor_set_data (GimpDataEditor *editor,
   g_return_if_fail (data == NULL || GIMP_IS_DATA (data));
   g_return_if_fail (data == NULL ||
                     g_type_is_a (G_TYPE_FROM_INSTANCE (data),
-                                 gimp_container_get_children_type (gimp_data_factory_get_container (editor->data_factory))));
+                                 gimp_data_factory_get_data_type (editor->data_factory)));
 
   if (editor->data != data)
     {
@@ -525,7 +525,7 @@ gimp_data_editor_set_edit_active (GimpDataEditor *editor,
           GType     data_type;
           GimpData *data;
 
-          data_type = gimp_container_get_children_type (gimp_data_factory_get_container (editor->data_factory));
+          data_type = gimp_data_factory_get_data_type (editor->data_factory);
           data = GIMP_DATA (gimp_context_get_by_type (editor->context,
                                                       data_type));
 
