@@ -651,6 +651,14 @@ gimp_data_factory_data_save_single (GimpDataFactory  *factory,
   return TRUE;
 }
 
+GType
+gimp_data_factory_get_data_type (GimpDataFactory *factory)
+{
+  g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), G_TYPE_NONE);
+
+  return gimp_container_get_children_type (factory->priv->container);
+}
+
 GimpContainer *
 gimp_data_factory_get_container (GimpDataFactory *factory)
 {
