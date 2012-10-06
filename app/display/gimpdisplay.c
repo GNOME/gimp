@@ -75,7 +75,7 @@ struct _GimpDisplayPrivate
   GtkWidget *shell;
   GSList    *update_areas;
 
-  GTimeVal   last_flush_now;
+  guint64    last_flush_now;
 };
 
 #define GIMP_DISPLAY_GET_PRIVATE(display) \
@@ -838,21 +838,13 @@ gimp_display_flush_whenever (GimpDisplay *display,
 
   if (now)
     {
-      GTimeVal time_now;
-      gint     diff_usec;
+      guint64 now = g_get_monotonic_time ();
 
-      g_get_current_time (&time_now);
-
-      diff_usec = (((guint64) time_now.tv_sec * G_USEC_PER_SEC +
-                    (guint64) time_now.tv_usec) -
-                   ((guint64) private->last_flush_now.tv_sec * G_USEC_PER_SEC +
-                    (guint64) private->last_flush_now.tv_usec));
-
-      if (diff_usec > FLUSH_NOW_INTERVAL)
+      if ((now - private->last_flush_now) > FLUSH_NOW_INTERVAL)
         {
           gimp_display_shell_flush (gimp_display_get_shell (display), now);
 
-          g_get_current_time (&private->last_flush_now);
+          private->last_flush_now = now;
         }
     }
   else
