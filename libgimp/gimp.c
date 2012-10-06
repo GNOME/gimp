@@ -114,7 +114,7 @@
  **/
 
 
-#define TILE_MAP_SIZE (_tile_width * _tile_height * 4)
+#define TILE_MAP_SIZE (_tile_width * _tile_height * 16)
 
 #define ERRMSG_SHM_FAILED "Could not attach to gimp shared memory segment"
 
