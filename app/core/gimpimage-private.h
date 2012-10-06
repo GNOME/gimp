@@ -68,6 +68,7 @@ struct _GimpImagePrivate
 
   GimpProjection    *projection;            /*  projection layers & channels */
   GeglNode          *graph;                 /*  GEGL projection graph        */
+  GeglNode          *visible_mask;          /*  component visibility node    */
 
   GList             *guides;                /*  guides                       */
   GimpGrid          *grid;                  /*  grid                         */

@@ -910,6 +910,7 @@ gimp_image_finalize (GObject *object)
     {
       g_object_unref (private->graph);
       private->graph = NULL;
+      private->visible_mask = NULL;
     }
 
   if (private->colormap)
@@ -1286,12 +1287,13 @@ gimp_image_get_proj_format (GimpProjectable *projectable)
 static GeglNode *
 gimp_image_get_graph (GimpProjectable *projectable)
 {
-  GimpImage        *image   = GIMP_IMAGE (projectable);
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
-  GeglNode         *layers_node;
-  GeglNode         *channels_node;
-  GeglNode         *blend_node;
-  GeglNode         *output;
+  GimpImage         *image   = GIMP_IMAGE (projectable);
+  GimpImagePrivate  *private = GIMP_IMAGE_GET_PRIVATE (image);
+  GeglNode          *layers_node;
+  GeglNode          *channels_node;
+  GeglNode          *blend_node;
+  GeglNode          *output;
+  GimpComponentMask  mask;
 
   if (private->graph)
     return private->graph;
@@ -1317,10 +1319,21 @@ gimp_image_get_graph (GimpProjectable *projectable)
   gegl_node_connect_to (channels_node, "output",
                         blend_node,    "aux");
 
+  mask = ~gimp_image_get_visible_mask (image) & GIMP_COMPONENT_ALL;
+
+  private->visible_mask =
+    gegl_node_new_child (private->graph,
+                         "operation", "gimp:mask-components",
+                         "mask",      mask,
+                         NULL);
+
+  gegl_node_connect_to (blend_node,            "output",
+                        private->visible_mask, "input");
+
   output = gegl_node_get_output_proxy (private->graph, "output");
 
-  gegl_node_connect_to (blend_node, "output",
-                        output,     "input");
+  gegl_node_connect_to (private->visible_mask, "output",
+                        output,                "input");
 
   return private->graph;
 }
@@ -2347,6 +2360,17 @@ gimp_image_set_component_visible (GimpImage       *image,
     {
       private->visible[index] = visible ? TRUE : FALSE;
 
+      if (private->visible_mask)
+        {
+          GimpComponentMask mask;
+
+          mask = ~gimp_image_get_visible_mask (image) & GIMP_COMPONENT_ALL;
+
+          gegl_node_set (private->visible_mask,
+                         "mask", mask,
+                         NULL);
+        }
+
       g_signal_emit (image,
                      gimp_image_signals[COMPONENT_VISIBILITY_CHANGED], 0,
                      channel);
@@ -2388,6 +2412,37 @@ gimp_image_get_visible_array (const GimpImage *image,
 
   for (i = 0; i < MAX_CHANNELS; i++)
     components[i] = private->visible[i];
+}
+
+GimpComponentMask
+gimp_image_get_visible_mask (const GimpImage *image)
+{
+  GimpImagePrivate  *private;
+  GimpComponentMask  mask = 0;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  switch (gimp_image_get_base_type (image))
+    {
+    case GIMP_RGB:
+      mask |= (private->visible[RED])   ? GIMP_COMPONENT_RED   : 0;
+      mask |= (private->visible[GREEN]) ? GIMP_COMPONENT_GREEN : 0;
+      mask |= (private->visible[BLUE])  ? GIMP_COMPONENT_BLUE  : 0;
+      mask |= (private->visible[ALPHA]) ? GIMP_COMPONENT_ALPHA : 0;
+      break;
+
+    case GIMP_GRAY:
+    case GIMP_INDEXED:
+      mask |= (private->visible[GRAY])  ? GIMP_COMPONENT_RED   : 0;
+      mask |= (private->visible[GRAY])  ? GIMP_COMPONENT_GREEN : 0;
+      mask |= (private->visible[GRAY])  ? GIMP_COMPONENT_BLUE  : 0;
+      mask |= (private->visible[ALPHA]) ? GIMP_COMPONENT_ALPHA : 0;
+      break;
+    }
+
+  return mask;
 }
 
 

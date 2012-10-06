@@ -211,6 +211,7 @@ gboolean        gimp_image_get_component_visible (const GimpImage    *image,
                                                   GimpChannelType     type);
 void            gimp_image_get_visible_array     (const GimpImage    *image,
                                                   gboolean           *components);
+GimpComponentMask gimp_image_get_visible_mask    (const GimpImage    *image);
 
 
 /*  emitting image signals  */
