@@ -156,6 +156,10 @@ gimp_operation_mask_components_process (GeglOperation       *operation,
   gfloat                      *aux  = aux_buf;
   gfloat                      *dest = out_buf;
   GimpComponentMask            mask = self->mask;
+  static const gfloat          nothing[] = { 0.0, 0.0, 0.0, 0.0 };
+
+  if (! aux)
+    aux = nothing;
 
   while (samples--)
     {
@@ -164,8 +168,11 @@ gimp_operation_mask_components_process (GeglOperation       *operation,
       dest[BLUE]  = (mask & GIMP_COMPONENT_BLUE)  ? aux[BLUE]  : src[BLUE];
       dest[ALPHA] = (mask & GIMP_COMPONENT_ALPHA) ? aux[ALPHA] : src[ALPHA];
 
-      src  += 4;
-      aux  += 4;
+      src += 4;
+
+      if (aux_buf)
+        aux  += 4;
+
       dest += 4;
     }
 
