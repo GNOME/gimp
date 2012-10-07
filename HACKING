@@ -88,14 +88,13 @@ part of recent Linux distribution releases.
 Patches
 -------
 
-The best way to submit patches is to publish your git repository and
-ask developers to git-fetch from you.
+The best way to submit patches is to provide files created with
+git-format-patch.
 
-For bug fixes where the patch is small you can file a bug report at
+It is recommended that you file a bug report at
 http://bugzilla.gnome.org/ and attach your patch to it as a plain text
 file, not compressed. If your patch is reasonably small you can submit
-it to the gimp-developer@lists.xcf.berkeley.edu mailing list. You can
-create the patch file with git-format-patch
+it to the gimp-developer-list@gnome.org mailing list.
 
 If the patch needs to be discussed, you should also consider using the
 mailing list instead of Bugzilla because bug reports tend to be hard
