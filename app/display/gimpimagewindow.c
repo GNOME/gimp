@@ -282,7 +282,13 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
 static void
 gimp_image_window_init (GimpImageWindow *window)
 {
-  gtk_window_set_role (GTK_WINDOW (window), "gimp-image-window");
+  static gint  role_serial = 1;
+  gchar       *role;
+
+  role = g_strdup_printf ("gimp-image-window-%d", role_serial++);
+  gtk_window_set_role (GTK_WINDOW (window), role);
+  g_free (role);
+
   gtk_window_set_resizable (GTK_WINDOW (window), TRUE);
 }
 

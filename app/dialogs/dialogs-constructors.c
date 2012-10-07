@@ -243,11 +243,19 @@ dialogs_toolbox_dock_window_new (GimpDialogFactory *factory,
                                  GimpUIManager     *ui_manager,
                                  gint               view_size)
 {
-  return gimp_dock_window_new ("gimp-toolbox",
+  static gint  role_serial = 1;
+  GtkWidget   *dock;
+  gchar       *role;
+
+  role = g_strdup_printf ("gimp-toolbox-%d", role_serial++);
+  dock = gimp_dock_window_new (role,
                                "<Toolbox>",
                                TRUE,
                                factory,
                                context);
+  g_free (role);
+
+  return dock;
 }
 
 GtkWidget *
@@ -265,11 +273,19 @@ dialogs_dock_window_new (GimpDialogFactory *factory,
                          GimpUIManager     *ui_manager,
                          gint               view_size)
 {
-  return gimp_dock_window_new ("gimp-dock",
+  static gint  role_serial = 1;
+  GtkWidget   *dock;
+  gchar       *role;
+
+  role = g_strdup_printf ("gimp-dock-%d", role_serial++);
+  dock = gimp_dock_window_new (role,
                                "<Dock>",
                                FALSE,
                                factory,
                                context);
+  g_free (role);
+
+  return dock;
 }
 
 
