@@ -1258,13 +1258,19 @@ script_fu_marshal_procedure_call (scheme  *sc,
 
   if (success)
     {
+      /* refuse to refresh scripts from a script, better than crashing
+       * see bug #575830
+       */
+      if (strcmp (proc_name, "script-fu-refresh-scripts"))
+        {
 #if DEBUG_MARSHALL
-      g_printerr ("    calling %s...", proc_name);
+          g_printerr ("    calling %s...", proc_name);
 #endif
-      values = gimp_run_procedure2 (proc_name, &nvalues, nparams, args);
+          values = gimp_run_procedure2 (proc_name, &nvalues, nparams, args);
 #if DEBUG_MARSHALL
-      g_printerr ("  done.\n");
+          g_printerr ("  done.\n");
 #endif
+        }
     }
   else
     {
