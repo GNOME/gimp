@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP - standardni vtičniki\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-09-22 19:07+0000\n"
-"PO-Revision-Date: 2012-09-23 14:30+0100\n"
-"Last-Translator: filmsi\n"
+"POT-Creation-Date: 2012-09-27 06:53+0000\n"
+"PO-Revision-Date: 2012-10-07 10:53+0100\n"
+"Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -637,7 +637,7 @@ msgstr "_Navpične"
 #: ../plug-ins/common/file-pix.c:382
 #: ../plug-ins/common/file-png.c:906
 #: ../plug-ins/common/file-pnm.c:583
-#: ../plug-ins/common/file-raw.c:877
+#: ../plug-ins/common/file-raw.c:928
 #: ../plug-ins/common/file-sunras.c:977
 #: ../plug-ins/common/file-tga.c:1064
 #: ../plug-ins/common/file-tiff-load.c:983
@@ -1107,8 +1107,8 @@ msgstr "Naloži nastavitve mešalca kanalov"
 #: ../plug-ins/common/file-ps.c:1014
 #: ../plug-ins/common/file-ps.c:2910
 #: ../plug-ins/common/file-psp.c:1717
-#: ../plug-ins/common/file-raw.c:265
-#: ../plug-ins/common/file-raw.c:801
+#: ../plug-ins/common/file-raw.c:270
+#: ../plug-ins/common/file-raw.c:849
 #: ../plug-ins/common/file-sunras.c:391
 #: ../plug-ins/common/file-svg.c:333
 #: ../plug-ins/common/file-svg.c:713
@@ -1154,7 +1154,7 @@ msgstr "Shrani nastavitve mešalca kanalov"
 #: ../plug-ins/common/file-csource.c:407
 #: ../plug-ins/common/file-dicom.c:1351
 #: ../plug-ins/common/file-gbr.c:672
-#: ../plug-ins/common/file-gif-save.c:782
+#: ../plug-ins/common/file-gif-save.c:789
 #: ../plug-ins/common/file-gih.c:1258
 #: ../plug-ins/common/file-html-table.c:236
 #: ../plug-ins/common/file-mng.c:649
@@ -1165,8 +1165,8 @@ msgstr "Shrani nastavitve mešalca kanalov"
 #: ../plug-ins/common/file-png.c:1368
 #: ../plug-ins/common/file-pnm.c:1010
 #: ../plug-ins/common/file-ps.c:1190
-#: ../plug-ins/common/file-raw.c:680
-#: ../plug-ins/common/file-raw.c:708
+#: ../plug-ins/common/file-raw.c:728
+#: ../plug-ins/common/file-raw.c:756
 #: ../plug-ins/common/file-sunras.c:565
 #: ../plug-ins/common/file-tga.c:1171
 #: ../plug-ins/common/file-tiff-save.c:710
@@ -1834,7 +1834,7 @@ msgstr "Povlecite in spustite barve, da spremenite razpored kataloga barv.  Prik
 
 #: ../plug-ins/common/compose.c:189
 #: ../plug-ins/common/decompose.c:170
-#: ../plug-ins/common/file-raw.c:1310
+#: ../plug-ins/common/file-raw.c:1367
 msgid "RGB"
 msgstr "RGB"
 
@@ -2210,7 +2210,7 @@ msgstr "D_elitelj:"
 
 #: ../plug-ins/common/convolution-matrix.c:1001
 #: ../plug-ins/common/depth-merge.c:775
-#: ../plug-ins/common/file-raw.c:1335
+#: ../plug-ins/common/file-raw.c:1395
 msgid "O_ffset:"
 msgstr "_Zamik:"
 
@@ -2768,7 +2768,7 @@ msgstr "Odstrani trakove"
 #: ../plug-ins/common/file-html-table.c:584
 #: ../plug-ins/common/file-ps.c:3034
 #: ../plug-ins/common/file-ps.c:3232
-#: ../plug-ins/common/file-raw.c:1348
+#: ../plug-ins/common/file-raw.c:1408
 #: ../plug-ins/common/smooth-palette.c:435
 #: ../plug-ins/common/tile.c:428
 #: ../plug-ins/common/tile-paper.c:303
@@ -3095,7 +3095,7 @@ msgstr "Vgraviraj"
 #: ../plug-ins/common/file-html-table.c:600
 #: ../plug-ins/common/file-ps.c:3044
 #: ../plug-ins/common/file-ps.c:3241
-#: ../plug-ins/common/file-raw.c:1364
+#: ../plug-ins/common/file-raw.c:1424
 #: ../plug-ins/common/film.c:1002
 #: ../plug-ins/common/smooth-palette.c:440
 #: ../plug-ins/common/tile.c:432
@@ -3136,7 +3136,6 @@ msgstr "Naloži paleto KISS"
 #: ../plug-ins/common/file-cel.c:363
 #: ../plug-ins/common/file-cel.c:383
 #, c-format
-#| msgid "Error while reading '%s': %s"
 msgid "EOF or error while reading image header"
 msgstr "EOF ali napaka pri branju zaglavja slike"
 
@@ -3158,7 +3157,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: ../plug-ins/common/file-png.c:764
 #: ../plug-ins/common/file-pnm.c:499
 #: ../plug-ins/common/file-ps.c:1020
-#: ../plug-ins/common/file-raw.c:806
+#: ../plug-ins/common/file-raw.c:854
 #: ../plug-ins/common/file-sunras.c:487
 #: ../plug-ins/common/file-tga.c:447
 #: ../plug-ins/common/file-tiff-load.c:559
@@ -3181,7 +3180,6 @@ msgstr "Odpiranje '%s' ..."
 
 #: ../plug-ins/common/file-cel.c:391
 #, c-format
-#| msgid "'%s' is not a PCX file"
 msgid "is not a CEL image file"
 msgstr "ni slikovna datoteka CEL"
 
@@ -3204,7 +3202,6 @@ msgstr "Nove slike ni mogoče ustvariti"
 #: ../plug-ins/common/file-cel.c:505
 #: ../plug-ins/common/file-cel.c:530
 #, c-format
-#| msgid "Error while reading '%s': %s"
 msgid "EOF or error while reading image data"
 msgstr "EOF ali napaka pri branju podatkov slike"
 
@@ -3221,7 +3218,6 @@ msgstr "'%s': EOF ali napaka pri branju zaglavja palete"
 
 #: ../plug-ins/common/file-cel.c:650
 #, c-format
-#| msgid "'%s' is not a PCX file"
 msgid "'%s': is not a KCF palette file"
 msgstr "'%s': ni datoteka palete KCF"
 
@@ -3232,7 +3228,6 @@ msgstr "'%s': neveljavna vrednost bpp v paleti - %hhu"
 
 #: ../plug-ins/common/file-cel.c:668
 #, c-format
-#| msgid "Number of colors:"
 msgid "'%s': illegal number of colors: %u"
 msgstr "'%s': neveljavno število barv - %u"
 
@@ -3247,7 +3242,7 @@ msgstr "'%s': EOF ali napaka pri branju podatkov palete"
 #. And let's begin the progress
 #: ../plug-ins/common/file-cel.c:777
 #: ../plug-ins/common/file-gbr.c:677
-#: ../plug-ins/common/file-gif-save.c:789
+#: ../plug-ins/common/file-gif-save.c:796
 #: ../plug-ins/common/file-gih.c:1263
 #: ../plug-ins/common/file-html-table.c:257
 #: ../plug-ins/common/file-pat.c:522
@@ -3462,40 +3457,40 @@ msgstr "Sličica %d (%d%s)"
 msgid "GIF: Undocumented GIF composite type %d is not handled.  Animation might not play or re-save perfectly."
 msgstr "GIF: Nedokumentiran sestavek GIF vrste %d ni podprt. Animacija se morda ne bo predvajala ali shranila pravilno."
 
-#: ../plug-ins/common/file-gif-save.c:468
+#: ../plug-ins/common/file-gif-save.c:470
 msgid "Couldn't simply reduce colors further. Saving as opaque."
 msgstr "Nadaljnja redukcija barv ni možna. Shranjeno kot prekrivno."
 
-#: ../plug-ins/common/file-gif-save.c:583
+#: ../plug-ins/common/file-gif-save.c:585
 #, c-format
 msgid "Unable to save '%s'.  The GIF file format does not support images that are more than %d pixels wide or tall."
 msgstr "Shranjevanje '%s' ni uspelo.  Vrsta datotek GIF ne podpira slik, ki so daljše ali širše od %d slikovnih točk."
 
-#: ../plug-ins/common/file-gif-save.c:694
+#: ../plug-ins/common/file-gif-save.c:696
 msgid "The GIF format only supports comments in 7bit ASCII encoding. No comment is saved."
 msgstr "Zapis GIF podpira komentarje le v 7-bitni kodni tabeli ASCII. Komentar ne bo shranjen."
 
-#: ../plug-ins/common/file-gif-save.c:753
+#: ../plug-ins/common/file-gif-save.c:760
 msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr "Barvnih slik RGB ni mogoče shraniti. Najprej pretvorite v indeksirano ali sivinsko sliko."
 
-#: ../plug-ins/common/file-gif-save.c:931
+#: ../plug-ins/common/file-gif-save.c:935
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr "Zaradi preprečitve preobremenitve CPE pri animaciji je vstavljena zakasnitev."
 
-#: ../plug-ins/common/file-gif-save.c:972
+#: ../plug-ins/common/file-gif-save.c:976
 msgid "The image you are trying to save as a GIF contains layers which extend beyond the actual borders of the image."
 msgstr "Slika, ki jo želite shraniti kot GIF, vsebuje plasti, ki se raztezajo prek dejanskih meja slike."
 
-#: ../plug-ins/common/file-gif-save.c:989
+#: ../plug-ins/common/file-gif-save.c:993
 msgid "The GIF file format does not allow this.  You may choose whether to crop all of the layers to the image borders, or cancel this save."
 msgstr "Datotečni zapis GIF tega ne podpira.  Izberite, ali želite vse plasti porezati na robove slike ali pa preklicati shranjevanje."
 
-#: ../plug-ins/common/file-gif-save.c:1125
+#: ../plug-ins/common/file-gif-save.c:1129
 msgid "GIF"
 msgstr "GIF"
 
-#: ../plug-ins/common/file-gif-save.c:1133
+#: ../plug-ins/common/file-gif-save.c:1137
 #, c-format
 msgid ""
 "Error loading UI file '%s':\n"
@@ -3504,28 +3499,28 @@ msgstr ""
 "Napaka pri nalaganju datoteke up. vmesnika '%s':\n"
 "%s"
 
-#: ../plug-ins/common/file-gif-save.c:1187
+#: ../plug-ins/common/file-gif-save.c:1191
 msgid "I don't care"
 msgstr "vseeno mi je"
 
-#: ../plug-ins/common/file-gif-save.c:1189
+#: ../plug-ins/common/file-gif-save.c:1193
 msgid "Cumulative layers (combine)"
 msgstr "kumulativne plasti (združuj)"
 
-#: ../plug-ins/common/file-gif-save.c:1191
+#: ../plug-ins/common/file-gif-save.c:1195
 msgid "One frame per layer (replace)"
 msgstr "ena sličica na plast (zamenjaj)"
 
-#: ../plug-ins/common/file-gif-save.c:1208
+#: ../plug-ins/common/file-gif-save.c:1212
 msgid "You can only export as animation when the image has more than one layer. The image you are trying to export only has one layer."
 msgstr "Kot animacijo lahko sliko izvozite le, če ima več kot eno plast. Slika, ki jo skušate izvoziti, ima le eno plast."
 
-#: ../plug-ins/common/file-gif-save.c:2312
+#: ../plug-ins/common/file-gif-save.c:2316
 msgid "Error writing output file."
 msgstr "Napaka pri zapisovanju izhodne datoteke."
 
 #. translators: the %d is *always* 240 here
-#: ../plug-ins/common/file-gif-save.c:2385
+#: ../plug-ins/common/file-gif-save.c:2389
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Privzeti komentar je omejen na %d znakov."
@@ -4456,107 +4451,118 @@ msgstr "RLE"
 msgid "LZ77"
 msgstr "LZ77"
 
-#: ../plug-ins/common/file-raw.c:196
-#: ../plug-ins/common/file-raw.c:211
+#: ../plug-ins/common/file-raw.c:201
+#: ../plug-ins/common/file-raw.c:216
 msgid "Raw image data"
 msgstr "Surovi podatki slike (RAW)"
 
-#: ../plug-ins/common/file-raw.c:1262
+#: ../plug-ins/common/file-raw.c:1319
 msgid "Load Image from Raw Data"
 msgstr "Naloži sliko iz surovih podatkov"
 
-#: ../plug-ins/common/file-raw.c:1300
+#: ../plug-ins/common/file-raw.c:1357
 msgid "Image"
 msgstr "Slika"
 
-#: ../plug-ins/common/file-raw.c:1311
+#: ../plug-ins/common/file-raw.c:1368
 msgid "RGB Alpha"
 msgstr "RGB z alfo"
 
-#: ../plug-ins/common/file-raw.c:1312
-msgid "RGB565"
-msgstr "RGB565"
+#: ../plug-ins/common/file-raw.c:1369
+msgid "RGB565 Big Endian"
+msgstr "RGB565, največje na koncu"
 
-#: ../plug-ins/common/file-raw.c:1313
+#: ../plug-ins/common/file-raw.c:1370
+msgid "RGB565 Little Endian"
+msgstr "RGB565, najmanjše na koncu"
+
+#: ../plug-ins/common/file-raw.c:1371
+msgid "BGR565 Big Endian"
+msgstr "BGR565, največje na koncu"
+
+#: ../plug-ins/common/file-raw.c:1372
+msgid "BGR565 Little Endian"
+msgstr "BGR565, najmanjše na koncu"
+
+#: ../plug-ins/common/file-raw.c:1373
 msgid "Planar RGB"
 msgstr "Ravninska RGB"
 
-#: ../plug-ins/common/file-raw.c:1314
-#| msgid "16 bits"
+#: ../plug-ins/common/file-raw.c:1374
 msgid "B&W 1 bit"
 msgstr "Č/B, 1-bitna"
 
-#: ../plug-ins/common/file-raw.c:1315
+#: ../plug-ins/common/file-raw.c:1375
 msgid "Gray 2 bit"
 msgstr "Sivinska, 2-bitna"
 
-#: ../plug-ins/common/file-raw.c:1316
+#: ../plug-ins/common/file-raw.c:1376
 msgid "Gray 4 bit"
 msgstr "Sivinska, 4-bitna"
 
-#: ../plug-ins/common/file-raw.c:1317
+#: ../plug-ins/common/file-raw.c:1377
 msgid "Gray 8 bit"
 msgstr "Sivinska, 8-bitna"
 
-#: ../plug-ins/common/file-raw.c:1318
+#: ../plug-ins/common/file-raw.c:1378
 msgid "Indexed"
 msgstr "Indeksirana"
 
-#: ../plug-ins/common/file-raw.c:1319
+#: ../plug-ins/common/file-raw.c:1379
 msgid "Indexed Alpha"
 msgstr "Indeksirana z alfo"
 
-#: ../plug-ins/common/file-raw.c:1324
+#: ../plug-ins/common/file-raw.c:1384
 msgid "Image _Type:"
 msgstr "Vrs_ta slike:"
 
-#: ../plug-ins/common/file-raw.c:1380
+#: ../plug-ins/common/file-raw.c:1440
 msgid "Palette"
 msgstr "Paleta"
 
-#: ../plug-ins/common/file-raw.c:1390
-#: ../plug-ins/common/file-raw.c:1475
+#: ../plug-ins/common/file-raw.c:1450
+#: ../plug-ins/common/file-raw.c:1535
 msgid "R, G, B (normal)"
 msgstr "R, G, B (navadno)"
 
-#: ../plug-ins/common/file-raw.c:1391
-#: ../plug-ins/common/file-raw.c:1477
+#: ../plug-ins/common/file-raw.c:1451
+#: ../plug-ins/common/file-raw.c:1537
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (slog BMP)"
 
-#: ../plug-ins/common/file-raw.c:1396
+#: ../plug-ins/common/file-raw.c:1456
 msgid "_Palette Type:"
 msgstr "Vrsta _palete:"
 
-#: ../plug-ins/common/file-raw.c:1407
+#: ../plug-ins/common/file-raw.c:1467
 msgid "Off_set:"
 msgstr "_Zamik:"
 
-#: ../plug-ins/common/file-raw.c:1419
+#: ../plug-ins/common/file-raw.c:1479
 msgid "Select Palette File"
 msgstr "Izberite datoteko palete"
 
-#: ../plug-ins/common/file-raw.c:1425
+#: ../plug-ins/common/file-raw.c:1485
 msgid "Pal_ette File:"
 msgstr "Datoteka pal_ete:"
 
-#: ../plug-ins/common/file-raw.c:1453
+#: ../plug-ins/common/file-raw.c:1513
 msgid "Raw Image"
 msgstr "Surova slika (RAW)"
 
-#: ../plug-ins/common/file-raw.c:1461
+#: ../plug-ins/common/file-raw.c:1521
 msgid "RGB Save Type"
 msgstr "Vrsta shranjevanja RGB"
 
-#: ../plug-ins/common/file-raw.c:1465
+#: ../plug-ins/common/file-raw.c:1525
 msgid "Standard (R,G,B)"
 msgstr "Navadno (R,G,B)"
 
-#: ../plug-ins/common/file-raw.c:1466
+#: ../plug-ins/common/file-raw.c:1526
 msgid "Planar (RRR,GGG,BBB)"
 msgstr "Planarno (RRR,GGG,BBB)"
 
-#: ../plug-ins/common/file-raw.c:1471
+#: ../plug-ins/common/file-raw.c:1531
 msgid "Indexed Palette Type"
 msgstr "Vrsta indeksirane palete"
 
@@ -8714,7 +8720,6 @@ msgid "bzip archive"
 msgstr "Arhiv bzip"
 
 #: ../plug-ins/file-compressor/file-compressor.c:213
-#| msgid "gzip archive"
 msgid "xz archive"
 msgstr "Arhiv xz"
 
@@ -13150,7 +13155,6 @@ msgid "Adjust page size and orientation for printing"
 msgstr "Prilagodi velikost in postavitev strani za tiskanje"
 
 #: ../plug-ins/print/print.c:130
-#| msgid "Page Curl"
 msgid "Page Set_up"
 msgstr "N_astavitev strani"
 
