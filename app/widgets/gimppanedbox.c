@@ -50,11 +50,11 @@
  * order to be inserted and get space on their own (rather than
  * inserted among others and sharing space)
  */
-#define DROP_AREA_SIZE            5
+#define DROP_AREA_SIZE            6
 
 #define INSERT_INDEX_UNUSED       G_MININT
 
-#define INSTRUCTIONS_TEXT_PADDING 4
+#define INSTRUCTIONS_TEXT_PADDING 6
 #define INSTRUCTIONS_TEXT         _("You can drop dockable dialogs here")
 
 
@@ -146,7 +146,7 @@ gimp_paned_box_init (GimpPanedBox *paned_box)
   gtk_label_set_line_wrap (GTK_LABEL (paned_box->p->instructions), TRUE);
   gtk_label_set_justify (GTK_LABEL (paned_box->p->instructions),
                          GTK_JUSTIFY_CENTER);
-  gtk_widget_set_size_request (paned_box->p->instructions, 16, 0);
+  gtk_widget_set_size_request (paned_box->p->instructions, 16, DROP_AREA_SIZE);
   gimp_label_set_attributes (GTK_LABEL (paned_box->p->instructions),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
@@ -258,10 +258,8 @@ gimp_paned_box_get_drop_area_size (GimpPanedBox *paned_box)
       else if (orientation == GTK_ORIENTATION_VERTICAL)
         drop_area_size = allocation.height;
     }
-  else
-    {
-      drop_area_size = DROP_AREA_SIZE;
-    }
+
+  drop_area_size = MAX (drop_area_size, DROP_AREA_SIZE);
 
   return drop_area_size;
 }
