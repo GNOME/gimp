@@ -156,10 +156,10 @@ gimp_operation_mask_components_process (GeglOperation       *operation,
   gfloat                      *aux  = aux_buf;
   gfloat                      *dest = out_buf;
   GimpComponentMask            mask = self->mask;
-  static const gfloat          nothing[] = { 0.0, 0.0, 0.0, 0.0 };
+  static const gfloat          nothing[] = { 0.0, 0.0, 0.0, 1.0 };
 
   if (! aux)
-    aux = nothing;
+    aux = (gfloat *) nothing;
 
   while (samples--)
     {
