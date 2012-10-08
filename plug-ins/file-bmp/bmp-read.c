@@ -302,9 +302,9 @@ ReadBMP (const gchar  *name,
               masks[2].mask     = 0x000000ff;
               masks[2].shiftin  = 0;
               masks[2].max_value= (gfloat)255.0;
-              masks[3].mask     = 0xff000000;
-              masks[3].shiftin  = 24;
-              masks[3].max_value= (gfloat)255.0;
+              masks[3].mask     = 0x00000000;
+              masks[3].shiftin  = 0;
+              masks[3].max_value= (gfloat)0.0;
               break;
             case 24:
               masks[0].mask     = 0xff0000;
