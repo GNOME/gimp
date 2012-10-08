@@ -204,7 +204,7 @@ gimp_modules_unload (Gimp *gimp)
       if (writer)
         {
           gimp_config_writer_open (writer, "module-load-inhibit");
-          gimp_config_writer_printf (writer, "\"%s\"", p);
+          gimp_config_writer_string (writer, p);
           gimp_config_writer_close (writer);
 
           gimp_config_writer_finish (writer, "end of modulerc", &error);
