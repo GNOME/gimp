@@ -35,10 +35,11 @@
 
 
 #if !defined(WIN32) || defined(__MINGW32__)
-#define BI_RGB          0
-#define BI_RLE8         1
-#define BI_RLE4         2
-#define BI_BITFIELDS    3
+#define BI_RGB            0
+#define BI_RLE8           1
+#define BI_RLE4           2
+#define BI_BITFIELDS      3
+#define BI_ALPHABITFIELDS 4
 #endif
 
 static gint32 ReadImage (FILE                  *fd,
@@ -285,56 +286,66 @@ ReadBMP (const gchar  *name,
           Bitmap_Head.masks[0] = ToL(&buffer[0x00]);
           Bitmap_Head.masks[1] = ToL(&buffer[0x04]);
           Bitmap_Head.masks[2] = ToL(&buffer[0x08]);
-         ReadChannelMasks (&Bitmap_Head.masks[0], masks, 3);
+          ReadChannelMasks (&Bitmap_Head.masks[0], masks, 3);
+        }
+      else if (Bitmap_Head.biCompr == BI_RGB)
+        {
+          switch (Bitmap_Head.biBitCnt)
+            {
+            case 32:
+              masks[0].mask     = 0x00ff0000;
+              masks[0].shiftin  = 16;
+              masks[0].max_value= (gfloat)255.0;
+              masks[1].mask     = 0x0000ff00;
+              masks[1].shiftin  = 8;
+              masks[1].max_value= (gfloat)255.0;
+              masks[2].mask     = 0x000000ff;
+              masks[2].shiftin  = 0;
+              masks[2].max_value= (gfloat)255.0;
+              masks[3].mask     = 0xff000000;
+              masks[3].shiftin  = 24;
+              masks[3].max_value= (gfloat)255.0;
+              break;
+            case 24:
+              masks[0].mask     = 0xff0000;
+              masks[0].shiftin  = 16;
+              masks[0].max_value= (gfloat)255.0;
+              masks[1].mask     = 0x00ff00;
+              masks[1].shiftin  = 8;
+              masks[1].max_value= (gfloat)255.0;
+              masks[2].mask     = 0x0000ff;
+              masks[2].shiftin  = 0;
+              masks[2].max_value= (gfloat)255.0;
+              masks[3].mask     = 0x0;
+              masks[3].shiftin  = 0;
+              masks[3].max_value= (gfloat)0.0;
+              break;
+            case 16:
+              masks[0].mask     = 0x7c00;
+              masks[0].shiftin  = 10;
+              masks[0].max_value= (gfloat)31.0;
+              masks[1].mask     = 0x03e0;
+              masks[1].shiftin  = 5;
+              masks[1].max_value= (gfloat)31.0;
+              masks[2].mask     = 0x001f;
+              masks[2].shiftin  = 0;
+              masks[2].max_value= (gfloat)31.0;
+              masks[3].mask     = 0x0;
+              masks[3].shiftin  = 0;
+              masks[3].max_value= (gfloat)0.0;
+              break;
+            default:
+              break;
+            }
         }
       else
-        switch (Bitmap_Head.biBitCnt)
-          {
-          case 32:
-            masks[0].mask     = 0x00ff0000;
-            masks[0].shiftin  = 16;
-            masks[0].max_value= (gfloat)255.0;
-            masks[1].mask     = 0x0000ff00;
-            masks[1].shiftin  = 8;
-            masks[1].max_value= (gfloat)255.0;
-            masks[2].mask     = 0x000000ff;
-            masks[2].shiftin  = 0;
-            masks[2].max_value= (gfloat)255.0;
-            masks[3].mask     = 0xff000000;
-            masks[3].shiftin  = 24;
-            masks[3].max_value= (gfloat)255.0;
-            break;
-         case 24:
-            masks[0].mask     = 0xff0000;
-            masks[0].shiftin  = 16;
-            masks[0].max_value= (gfloat)255.0;
-            masks[1].mask     = 0x00ff00;
-            masks[1].shiftin  = 8;
-            masks[1].max_value= (gfloat)255.0;
-            masks[2].mask     = 0x0000ff;
-            masks[2].shiftin  = 0;
-            masks[2].max_value= (gfloat)255.0;
-            masks[3].mask     = 0x0;
-            masks[3].shiftin  = 0;
-            masks[3].max_value= (gfloat)0.0;
-            break;
-         case 16:
-            masks[0].mask     = 0x7c00;
-            masks[0].shiftin  = 10;
-            masks[0].max_value= (gfloat)31.0;
-            masks[1].mask     = 0x03e0;
-            masks[1].shiftin  = 5;
-            masks[1].max_value= (gfloat)31.0;
-            masks[2].mask     = 0x001f;
-            masks[2].shiftin  = 0;
-            masks[2].max_value= (gfloat)31.0;
-            masks[3].mask     = 0x0;
-            masks[3].shiftin  = 0;
-            masks[3].max_value= (gfloat)0.0;
-            break;
-         default:
-            break;
-         }
+        {
+          /* BI_ALPHABITFIELDS, etc. */
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Unsupported compression (%lu) in BMP file from '%s'"),
+                       Bitmap_Head.biCompr,
+                       gimp_filename_to_utf8 (filename));
+        }
     }
   else if (Bitmap_File_Head.biSize >= 56 && Bitmap_File_Head.biSize <= 64)
     /* enhanced Windows format with bit masks */
