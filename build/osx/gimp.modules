@@ -2,9 +2,10 @@
 <!DOCTYPE moduleset SYSTEM "moduleset.dtd">
 <?xml-stylesheet type="text/xsl" href="moduleset.xsl"?>
 <moduleset>
-
   <repository type="tarball" name="sourceforge"
 	      href="http://downloads.sourceforge.net/sourceforge/"/>
+  <repository type="tarball" name="freedesktop"
+	       href="http://freedesktop.org/"/>
   <repository type="tarball" name="jpeg"
 	      href="http://www.ijg.org/files/"/>
   <repository type="tarball" name="libtiff"
@@ -43,20 +44,34 @@
 	      href="http://www.python.org/ftp/python/"/>
   <repository type="tarball" name="oracle"
 	      href="http://download.oracle.com/"/>
-
+  <repository type="tarball" name="cpan" href="http://search.cpan.org/CPAN/" />
   <repository type="tarball" name="poppler"
 	      href="http://poppler.freedesktop.org/"/>
-
+  <repository type="tarball" name="iso-codes"
+              href="http://ftp.us.debian.org/debian/pool/main/i/iso-codes/"/>
   <repository type="tarball" name="jasper"
 	      href="http://www.ece.uvic.ca/~mdadams/jasper/software/"/>
-
   <repository type="git" name="git.cairographics.org"
               href="git://git.cairographics.org/git"/>
 
-  <!-- These will be the initial image loading libraries. librsvg, jasper, and libopenraw may be added later. -->
-  <autotools id="libpng" autogenargs="--enable-shared" autogen-sh="configure">
-    <branch version="1.5.10" module="libpng/libpng-1.5.10.tar.bz2"
+  <!-- meta-gtk-osx-bootstrap -->
+
+  <autotools id="libpng" autogenargs="--enable-shared --disable-gtk-theme" autogen-sh="configure">
+    <branch module="libpng/libpng-1.5.12.tar.xz"
+            version="1.5.10"
 	    repo="sourceforge"/>
+  </autotools>
+
+  <autotools id="gtk-doc" autogenargs="--disable-scrollkeeper --with-xml-catalog=$JHBUILD_PREFIX/etc/xml/catalog"
+	     makeargs="-k -i" makeinstallargs="-k -i install"
+	     autogen-sh="configure">
+    <branch module="gtk-doc/1.18/gtk-doc-1.18.tar.bz2"
+            version="1.18"
+	    hash="sha256:a634d2e93d70468237033c06a17c97f29cf71a35ac5cc01c016324c965d42f73"/>
+    <dependencies>
+      <dep package="gtk-osx-docbook"/>
+      <dep package="gnome-doc-utils"/>
+    </dependencies>
   </autotools>
 
   <autotools id="libjpeg">
@@ -68,39 +83,80 @@
 
   <autotools id="libtiff" autogen-sh="configure"
 	     autogenargs="--without-x --without-apple-opengl-framework">
-    <branch version="4.0.1" module="libtiff/tiff-4.0.1.tar.gz"
+    <branch version="4.0.2" module="libtiff/tiff-4.0.2.tar.gz"
 	    repo="libtiff"/>
     <dependencies>
       <dep package="libjpeg"/>
     </dependencies>
   </autotools>
 
-  <!-- Required by some things -->
-  <autotools id="librsvg" autogen-sh="configure"
-	     autogenargs="--disable-static --disable-Bsymbolic --enable-introspection=no">
-    <branch module="librsvg/2.36/librsvg-2.36.2.tar.xz" version="2.36.2"
-	    hash="sha256:3906ad8aa5426f6db3891de98d3b72143155282f63c306a71fdb42f3246a1f08"/>
-    <dependencies>
-      <dep package="libcroco"/>
-      <dep package="pango"/>
-      <dep package="gdk-pixbuf"/>
-    </dependencies>
+  <autotools id="gtk-osx-docbook" autogen-sh="configure" >
+     <branch repo="sourceforge" module="gtk-osx/gtk-osx-docbook-1.1.tar.gz"
+	     version="1.1"/>
   </autotools>
 
-  <autotools id="libcroco" autogen-sh="configure"
-	     autogenargs="--disable-static">
-    <branch module="libcroco/0.6/libcroco-0.6.2.tar.bz2" version="0.6.2"
-	    hash="sha256:be24853f64c09b63d39e563fb0222e29bae1a33c3d9f6cbffc0bc27669371749"/>
+
+  <autotools id="gnome-doc-utils" autogenargs="--disable-scrollkeeper">
+    <branch module="gnome-doc-utils/0.20/gnome-doc-utils-0.20.10.tar.xz" version="0.20.10"
+	    hash="sha256:cb0639ffa9550b6ddf3b62f3b1add92fb92ab4690d351f2353cffe668be8c4a6"/>
     <dependencies>
-      <dep package="glib"/>
+      <dep package="gnome-common"/>
+      <dep package="libxslt"/>
+      <dep package="intltool"/>
       <dep package="libxml2"/>
+      <dep package="python"/>
     </dependencies>
   </autotools>
 
-  <!-- This is the beginning of the dependencies for gtk-doc -->
+  <autotools id="expat" autogen-sh="configure">
+    <branch module="expat/expat-2.1.0.tar.gz" version="2.1.0"
+	    repo="sourceforge"/>
+  </autotools>
+
+  <perl id="perl-xml-parser" makeargs="EXPATLIBPATH=${prefix}/lib EXPATINCPATH=${prefix}/include; make -j3; make -j3 install PREFIX=${prefix}">
+    <branch repo="cpan"
+        module="authors/id/T/TO/TODDR/XML-Parser-2.41.tar.gz"
+version="2.41"/>
+    <dependencies>
+      <dep package="expat"/>
+    </dependencies>
+  </perl>
+
+  <perl id="perl-xml-simple" makeargs="EXPATLIBPATH=${prefix}/lib EXPATINCPATH=${prefix}/include; make -j3; make -j3 install PREFIX=${prefix}">
+    <branch repo="cpan"
+        module="authors/id/G/GR/GRANTM/XML-Simple-2.18.tar.gz" version="2.18"
+        size="71129" md5sum="593aa8001e5c301cdcdb4bb3b63abc33"/>
+    <dependencies>
+      <dep package="perl-xml-parser"/>
+    </dependencies>
+  </perl>
+
+  <autotools id="hicolor-icon-theme" autogen-sh="configure">
+    <branch module="hicolor-icon-theme-0.11.tar.gz" repo="icon-theme"
+	    version="0.11" />
+  </autotools>
+
+  <autotools id="gnome-common">
+    <branch module="gnome-common/2.34/gnome-common-2.34.0.tar.bz2" version="2.34.0"
+	    hash="sha256:7a9c4f9ab975501c36be3192aa61641abca045a215d519d7d00527706f1de1df"/>
+  </autotools>
+
+  <autotools id="intltool" autogen-sh="configure">
+    <branch repo="intltool" module="0.50.2/+download/intltool-0.50.2.tar.gz"
+	    version="0.50.2"
+	    hash="md5:23fbd879118253cb99aeac067da5f591"/>
+    <dependencies>
+      <dep package="gnome-common"/>
+      <dep package="perl-xml-parser"/>
+    </dependencies>
+  </autotools>
+
   <autotools id="libxml2" autogen-sh="configure">
-    <branch version="2.7.8" module="libxml2-2.7.8.tar.gz"
+    <branch version="2.8.0" module="libxml2-2.8.0.tar.gz"
 	    repo="xmlsoft.org"/>
+    <dependencies>
+      <dep package="python"/>
+    </dependencies>
   </autotools>
 
   <autotools id="libxslt" autogen-sh="configure">
@@ -111,7 +167,119 @@
     </dependencies>
   </autotools>
 
-  <autotools id="xmlcatmgr" autogen-sh="configure">
+  <autotools id="freetype" autogen-sh="configure">
+    <branch module="freetype/freetype-2.4.10.tar.gz" version="2.4.10"
+            repo="sourceforge">
+    </branch>
+  </autotools>
+
+  <autotools id="fontconfig" autogen-sh="configure"
+	     autogenargs="--disable-docs">
+    <branch repo="fontconfig" version="2.10.1" module="fontconfig-2.10.1.tar.gz"/>
+    <dependencies>
+      <dep package="expat"/>
+      <dep package="freetype"/>
+      <dep package="libxml2"/>
+    </dependencies>
+  </autotools>
+
+  <metamodule id="meta-gtk-osx-bootstrap">
+    <dependencies>
+      <dep package="libpng"/>
+      <dep package="gtk-doc"/>
+      <dep package="libjpeg"/>
+      <dep package="libtiff"/>
+      <dep package="gtk-osx-docbook"/>
+      <dep package="gnome-doc-utils"/>
+      <dep package="expat"/>
+      <dep package="perl-xml-parser"/>
+      <dep package="perl-xml-simple"/>
+      <dep package="hicolor-icon-theme"/>
+      <dep package="gnome-common"/>
+      <dep package="intltool"/>
+      <dep package="meta-gtk-osx-freetype"/>
+    </dependencies>
+  </metamodule>
+
+  <metamodule id="meta-gtk-osx-freetype">
+    <dependencies>
+      <dep package="freetype"/>
+      <dep package="fontconfig"/>
+      <dep package="expat"/>
+    </dependencies>
+  </metamodule>
+
+  <!-- meta-gtk-osx-core -->
+
+  <autotools id="gtk+" autogen-sh="autogen.sh"
+             autogenargs="--with-gdktarget=quartz --disable-gtk-doc --enable-gtk-doc=no --enable-gtk-doc-html=no --enable-gtk-doc-pdf=no --enable-quartz-relocation --without-x --with-xinput --enable-xinerama"
+             autogen-template="autoreconf -fis &amp;&amp; %(srcdir)s/%(autogen-sh)s --prefix %(prefix)s --libdir %(libdir)s %(autogenargs)s">
+    <branch repo="git.gnome.org" module="gtk+" revision="gtk-2-24">
+<patch file="https://dl.dropbox.com/u/942685/gimp/gtk+/0001-Add-extended-input-support-to-GTK-Quartz.patch" strip="1"/>
+    </branch>
+    <dependencies>
+      <dep package="glib"/>
+      <dep package="pango"/>
+      <dep package="atk"/>
+      <dep package="gdk-pixbuf"/>
+      <dep package="gobject-introspection"/>
+    </dependencies>
+  </autotools>
+
+  <metamodule id="meta-gtk-osx-core">
+    <dependencies>
+      <dep package="gtk+"/>
+      <dep package="gtk-mac-integration"/>
+      <dep package="meta-gtk-osx-bootstrap"/>
+    </dependencies>
+    <after>
+      <!--<dep package="meta-gtk-osx-bootstrap"/>-->
+    </after>
+  </metamodule>
+
+  <autotools id="libmng" autogen-sh="unmaintained/autogen.sh">
+    <branch module="libmng/libmng-1.0.10.tar.bz2" version="1.0.10"
+	    repo="sourceforge"/>
+    <dependencies>
+      <dep package="zlib"/>
+    </dependencies>
+  </autotools>
+
+  <autotools id="libwmf" autogen-sh="configure" autogenargs="--without-x --with-expat --with-jpeg">
+    <branch module="wvware/libwmf-0.2.8.4.tar.gz" version="0.2.8.4"
+	    repo="sourceforge"/>
+    <dependencies>
+      <dep package="zlib"/>
+      <dep package="libpng"/>
+      <dep package="libjpeg"/>
+      <dep package="freetype"/>
+      <dep package="expat"/>
+    </dependencies>
+  </autotools>
+
+  <autotools id="librsvg" autogen-sh="configure"
+	     autogenargs="--disable-static --disable-Bsymbolic --enable-introspection=no">
+    <branch module="librsvg/2.36/librsvg-2.36.2.tar.xz" version="2.36.2"
+	    hash="sha256:3906ad8aa5426f6db3891de98d3b72143155282f63c306a71fdb42f3246a1f08"/>
+    <dependencies>
+      <dep package="libcroco"/>
+      <dep package="gtk+"/>
+      <dep package="libxml2"/>
+      <dep package="python"/>
+    </dependencies>
+  </autotools>
+
+  <autotools id="libcroco" autogen-sh="configure"
+	     autogenargs="--disable-static --enable-shared --disable-Bsymbolic">
+    <branch module="libcroco/0.6/libcroco-0.6.5.tar.xz" version="0.6.5"
+	    hash="sha256:2c6959c3644e889264a61c35ddf17401c86943681d4fe3c1682ecd9acabda7e3"/>
+    <dependencies>
+      <dep package="glib"/>
+      <dep package="libxml2"/>
+    </dependencies>
+  </autotools>
+
+  <autotools id="xmlcatmgr" autogen-sh="configure" autogenargs="--mandir=$PREFIX/share/man">
     <branch module="xmlcatmgr/xmlcatmgr-2.2.tar.gz" version="2.2"
 	    repo="sourceforge"/>
     <dependencies>
@@ -120,123 +288,94 @@
     </dependencies>
   </autotools>
 
-  <autotools id="intltool" autogen-sh="configure">
-    <branch repo="intltool" module="0.41.1/+download/intltool-0.41.1.tar.gz"
-	    version="0.41.1"
-	    hash="sha256:06d02133a85b9d6f29cd763050dc9267a6d73ef3008993f5b917cafc7ece96c0"/>
-  </autotools>
-
-  <autotools id="gtk-osx-docbook" autogen-sh="configure" >
-     <branch repo="sourceforge" module="gtk-osx/gtk-osx-docbook-1.1.tar.gz"
-	     version="1.1"/>
-  </autotools>
-
-  <autotools id="gnome-common">
-    <branch module="gnome-common/2.34/gnome-common-2.34.0.tar.bz2" version="2.34.0"
-	    hash="sha256:7a9c4f9ab975501c36be3192aa61641abca045a215d519d7d00527706f1de1df"/>
-  </autotools>
-
-  <autotools id="gnome-doc-utils" autogenargs="--disable-scrollkeeper">
-    <branch module="gnome-doc-utils/0.20/gnome-doc-utils-0.20.6.tar.bz2" version="0.20.6"
-	    hash="sha256:091486e370480bf45349ad09dac799211092a02938b26a0d68206172cb6cebbf"/>
+  <autotools id="gtk-doc2" autogen-sh="configure" autogenargs="--with-xml-catalog=$PREFIX/etc/xml/catalog">
+    <branch repo="ftp.gnome.org"
+            module="gtk-doc/1.18/gtk-doc-1.18.tar.xz"
+            version="1.18"
+            hash="sha256:785b591c561be1c8206f0d2575dc63558ea6199c3afe49cbc4efde94a6629a20"/>
     <dependencies>
-      <dep package="gnome-common"/>
-      <dep package="libxslt"/>
-      <dep package="intltool"/>
-    </dependencies>
-  </autotools>
-
-  <!-- If this honestly works for you, well then you're a better man/woman than I -->
-  <autotools id="gtk-doc" autogenargs="--disable-scrollkeeper --with-xml-catalog=$JHBUILD_PREFIX/etc/xml/catalog"
-	     makeargs="-k -i" makeinstallargs="-k -i install"
-	     autogen-sh="configure">
-    <branch version="1.18" module="gtk-doc/1.18/gtk-doc-1.18.tar.bz2"
-	    hash="sha256:a634d2e93d70468237033c06a17c97f29cf71a35ac5cc01c016324c965d42f73"/>
-    <dependencies>
+      <dep package="docbook-xml"/>
+      <dep package="docbook-xsl"/>
       <dep package="libxml2"/>
-      <dep package="libxslt"/>
-      <dep package="gtk-osx-docbook"/>
-      <dep package="gnome-doc-utils"/>
     </dependencies>
   </autotools>
 
-  <!-- This will configure everything required for fontconfig -->
-  <autotools id="expat" autogen-sh="configure">
-    <branch module="expat/expat-2.1.0.tar.gz" version="2.1.0"
-	    repo="sourceforge"/>
+  <autotools id="docbook-xsl" autogen-sh="configure" autogenargs="--with-xml-catalog=$PREFIX/etc/xml/catalog">
+    <branch repo="sourceforge"
+            module="docbook/docbook-xsl-doc-1.77.1.tar.bz2"
+            version="1.77.1"
+            hash="sha256:d19824d7136250b9414742af39d8e4d2847899c2a3f19422d713d069152092da"/>
   </autotools>
 
-  <!-- For some messed up reason, all of the default modules in jhbuild decide that the configure step isn't needed for freetype. Well, it is. -->
-  <autotools id="freetype" autogen-sh="configure" skip-autogen="never"
-	     autogen-template="%(srcdir)s/configure --prefix %(prefix)s %(autogenargs)s">
-    <branch module="freetype/freetype-2.4.6.tar.gz" version="2.4.6"
-            repo="sourceforge">
-    </branch>
-  </autotools>
-
-  <autotools id="fontconfig" autogen-sh="configure"
-	     autogenargs="--disable-docs">
-    <branch repo="fontconfig" version="2.8.0" module="fontconfig-2.8.0.tar.gz"/>
-    <dependencies>
-      <dep package="expat"/>
-      <dep package="freetype"/>
-      <dep package="intltool"/> <!-- this is just so that intltool is actually built-->
-    </dependencies>
-  </autotools>
-
-  <!-- This icon theme may or may not be entirely necessary -->
-  <autotools id="hicolor-icon-theme" autogen-sh="configure">
-    <branch module="hicolor-icon-theme-0.11.tar.gz" repo="icon-theme"
-	    version="0.11" />
-  </autotools>
-
-  <!-- libffi is required for glib -->
   <autotools id="libffi" autogenargs="--disable-builddir">
     <branch module="libffi/libffi-3.0.11.tar.gz" repo="sourceware.org"
             version="3.0.11" checkoutdir="atgreen-libffi-873d687"/>
   </autotools>
 
-  <!-- This is glib -->
   <autotools id="glib" autogen-sh="configure" autogenargs="--with-libiconv=native">
-    <branch module="glib/2.33/glib-2.33.6.tar.xz"  version="2.33.6"
-        hash="sha256:613707eac08d96a421b6d5113f605235a35748eb582bc9c216cbb4ccfcd6f9e8">
-      <patch file="http://bugzilla-attachments.gnome.org/attachment.cgi?id=212477" strip="1" />
+    <branch module="glib/2.33/glib-2.33.10.tar.xz"  version="2.33.10"
+        hash="sha256:6caf18eb963aa2c3c7c0dc63201021bc29e7972c60d191f566e8971af77e9505">
+      <patch file="https://dl.dropbox.com/u/942685/gimp/glib/glib-gunicollate.diff" strip="1" />
     </branch>
     <dependencies>
       <dep package="libffi"/>
-    </dependencies>
-    <after>
       <dep package="gtk-doc"/>
-    </after>
+      <dep package="python"/>
+      <dep package="gtk-doc"/>
+    </dependencies>
   </autotools>
 
-  <!-- This is atk -->
+  <autotools id="shared-mime-info" autogenargs="" autogen-sh="configure">
+    <branch version="1.0" module="~hadess/shared-mime-info-1.0.tar.xz"
+            repo="freedesktop"/>
+    <dependencies>
+      <dep package="glib"/>
+      <dep package="intltool"/>
+      <dep package="libxml2"/>
+    </dependencies>
+  </autotools>
+
+  <autotools id="desktop-file-utils" autogenargs="" autogen-sh="configure">
+    <branch version="0.20" module="software/desktop-file-utils/releases/desktop-file-utils-0.20.tar.xz"
+            repo="freedesktop"/>
+    <dependencies>
+      <dep package="glib"/>
+    </dependencies>
+  </autotools>
+
+  <autotools id="gnome-mime-data" autogenargs="" autogen-sh="configure">
+    <branch version="2.18.0" module="gnome-mime-data/2.18/gnome-mime-data-2.18.0.tar.bz2"/>
+    <dependencies>
+      <dep package="perl-xml-parser"/>
+    </dependencies>
+  </autotools>
+
   <autotools id="atk" autogen-sh="configure">
     <branch module="atk/2.5/atk-2.5.4.tar.xz" version="2.5.4"
             hash="sha256:af6d6d8ec4543f338bf2476974de69891b7419913dd1cf4a94d53696bcc14aab"/>
     <dependencies>
-    </dependencies>
-    <after>
       <dep package="glib"/>
+      <dep package="shared-mime-info"/>
+      <dep package="desktop-file-utils"/>
       <dep package="gtk-doc"/>
-    </after>
+      <dep package="gobject-introspection"/>
+    </dependencies>
   </autotools>
 
-  <!-- This is pixman for cairo -->
   <autotools id="pixman" autogenargs="--disable-gtk" autogen-sh="configure">
     <branch version="0.26.2" module="pixman-0.26.2.tar.gz"
             repo="cairographics"
             hash="sha1:3c7d72b5b52e6d301efc68aa480f0737a641bdd3"/>
-    <after>
+    <dependencies>>
       <dep package="gtk-doc"/>
       <dep package="fontconfig"/>
+      <dep package="freetype"/>
       <dep package="libpng"/>
-      <dep package="libjpeg"/>
-      <dep package="libtiff"/>
-    </after>
+      <dep package="zlib"/>
+      <dep package="expat"/>
+    </dependencies>
   </autotools>
 
-  <!-- This is cairo, now we must modify it to use git -->
   <autotools id="cairo"  autogen-sh="configure"
              autogenargs="--enable-pdf --enable-quartz --enable-xlib=no --without-x">
     <branch module="cairo-1.12.2.tar.xz"  version="1.12.2"
@@ -245,77 +384,56 @@
     </branch>
     <dependencies>
       <dep package="pixman"/>
-    </dependencies>
-    <after>
       <dep package="gtk-doc"/>
       <dep package="fontconfig"/>
       <dep package="freetype"/>
-    </after>
+      <dep package="libpng"/>
+      <dep package="zlib"/>
+      <dep package="expat"/>
+      <dep package="glib"/>
+    </dependencies>
   </autotools>
 
   <autotools id="pango"  autogen-sh="configure"
-             autogenargs="--without-x --with-included-modules=basic-coretext --enable-introspection=no --enable-shared --disable-silent-rules --with-included-modules"
+             autogenargs="--without-x --with-included-modules=basic-coretext --enable-shared --disable-silent-rules --with-included-modules"
              makeargs="-k -C modules; make">
-    <!-- The last version that will build on Tiger is 1.24.5 -->
     <branch version="1.30.1" module="pango/1.30/pango-1.30.1.tar.xz"
             hash="sha256:3a8c061e143c272ddcd5467b3567e970cfbb64d1d1600a8f8e62435556220cbe">
-    <!--<branch version="1.24.5" module="pango/1.24/pango-1.24.5.tar.bz2"
-            hash="sha256:0f733d1ec3e8dafcae152d7ac58f1090bee1fd856176c8fee0e81b0e42392f4e">-->
     </branch>
     <dependencies>
       <dep package="cairo"/>
+      <dep package="libpng"/>
       <dep package="fontconfig"/>
       <dep package="glib"/>
-    </dependencies>
-    <after>
       <dep package="gtk-doc"/>
-    </after>
+      <dep package="gobject-introspection"/>
+    </dependencies>
   </autotools>
 
   <autotools id="gdk-pixbuf">
-    <branch module="gdk-pixbuf/2.26/gdk-pixbuf-2.26.1.tar.xz" version="2.26.1"
-            hash="sha256:a60af12b58d9cc15ba4c680c6730ce5d38e8d664af1d575a379385b94b4ec7ba"/>
+    <branch module="gdk-pixbuf/2.26/gdk-pixbuf-2.26.3.tar.xz" version="2.26.3"
+            hash="sha256:a22373a72621c6f73e8c216410aeb46e3bb05b477e600b6ac481a47ecd4c09cc"/>
     <dependencies>
       <dep package="libpng"/>
       <dep package="libjpeg"/>
       <dep package="libtiff"/>
+      <dep package="jasper"/>
       <dep package="gtk-doc"/>
-    </dependencies>
-    <after>
       <dep package="pango"/>
-    </after>
-  </autotools>
-
-  <!-- gtk+ requires some tweaking before it compiles properly-->
-  <!--<autotools id="gtk+" autogen-sh="configure"-->
-  <autotools id="gtk+" autogen-sh="autogen.sh"
-             autogenargs="--with-gdktarget=quartz --disable-gtk-doc --enable-gtk-doc=no --enable-gtk-doc-html=no --enable-gtk-doc-pdf=no --enable-quartz-relocation --without-x --with-xinput --enable-xinerama --disable-introspection"
-             autogen-template="autoreconf -fis &amp;&amp; %(srcdir)s/%(autogen-sh)s --prefix %(prefix)s --libdir %(libdir)s %(autogenargs)s">
-    <branch repo="git.gnome.org" module="gtk+" revision="gtk-2-24"/>
-    <dependencies>
       <dep package="glib"/>
-      <dep package="pango"/>
-      <dep package="atk"/>
-      <dep package="gdk-pixbuf"/>
-      <dep package="freetype"/>
+      <dep package="gobject-introspection"/>
     </dependencies>
-    <after>
-      <dep package="gtk-doc"/>
-      <dep package="libpng"/>
-      <dep package="libjpeg"/>
-      <dep package="libtiff"/>
-    </after>
   </autotools>
 
-  <!-- Gimp libraries -->
   <autotools id="babl" >
     <!--<branch repo="ftp.gtk.org" version="0.1.10"
             module="babl/0.1/babl-0.1.10.tar.bz2"/>-->
     <branch repo="git.gnome.org" module="babl" revision="master"/>
-    <after>
+    <dependencies>
+      <dep package="gobject-introspection"/>
       <!-- This is only to keep the proper build order -->
       <dep package="gtk+"/>
-    </after>
+    </dependencies>
   </autotools>
 
   <autotools id="gegl" autogen-sh="autogen.sh" autogenargs="--disable-docs --enable-introspection=no">
@@ -324,6 +442,15 @@
     <branch repo="git.gnome.org" module="gegl" revision="master"/>
     <dependencies>
       <dep package="babl"/>
+      <dep package="glib"/>
+      <!-- Keeping build order intact -->
+      <dep package="cairo"/>
+      <dep package="gdk-pixbuf"/>
+      <dep package="libjpeg"/>
+      <dep package="libpng"/>
+      <dep package="librsvg"/>
+      <dep package="python"/>
+      <dep package="pango"/>
     </dependencies>
   </autotools>
 
@@ -332,91 +459,125 @@
             />
   </autotools>
 
+  <autotools id="lcms2" autogen-sh="configure">
+    <branch module="lcms/lcms2-2.3.tar.gz" version="2.3" repo="sourceforge"
+            />
+  </autotools>
+
   <autotools id="poppler" autogen-sh="configure">
     <branch module="poppler-0.20.0.tar.gz" version="0.20.0" repo="poppler"
-            />
+    />
     <dependencies>
       <dep package="lcms"/>
       <dep package="libjpeg"/>
       <dep package="cairo"/>
       <dep package="gtk+"/>
       <dep package="libtiff"/>
-      <dep package="libxml"/>
+      <dep package="libxml2"/>
     </dependencies>
   </autotools>
 
   <autotools id="jasper" autogen-sh="configure"
              autogenargs="--enable-shared">
     <branch module="jasper-1.900.1.zip" version="1.900.1" repo="jasper"
-            />
+    />
     <dependencies>
       <dep package="libjpeg"/>
     </dependencies>
   </autotools>
 
   <autotools id="exif" autogen-sh="configure">
-    <branch module="libexif/libexif-0.6.20.tar.bz2" version="0.6.20" repo="sourceforge"
-            />
+    <branch module="libexif/libexif-0.6.21.tar.bz2" version="0.6.21" repo="sourceforge"
+    />
     <dependencies>
       <dep package="gtk+"/>
     </dependencies>
   </autotools>
 
-  <autotools id="gimp"  autogen-sh="autogen.sh"
-             autogenargs="--without-x --disable-docs --without-dbus --enable-introspection=no --without-gnomevfs --without-wmf --enable-binreloc --disable-python" skip-autogen="never"
-	     autogen-template="autoreconf -fis &amp;&amp; %(srcdir)s/%(autogen-sh)s --prefix %(prefix)s --libdir %(libdir)s %(autogenargs)s"
-             makeargs='LDFLAGS="-framework Carbon"'>
-    <!--<branch module="gimp/v2.8/gimp-2.8.0.tar.bz2" version="2.8.0"
-            md5sum="28997d14055f15db063eb92e1c8a7ebb" repo="gimp">
-    </branch>-->
-    <branch repo="git.gnome.org" module="gimp" revision="gimp-2-8"/>
-    <after>
-      <dep package="gtk-doc"/>
-      <dep package="libpng"/>
-      <dep package="libjpeg"/>
-      <dep package="libtiff"/>
-    </after>
-    <dependencies>
-      <dep package="exif"/>
-      <dep package="lcms"/>
-      <dep package="fontconfig"/>
-      <dep package="gegl"/>
-      <dep package="glib"/>
-      <dep package="gtk+"/>
-      <dep package="poppler"/>
-      <dep package="jasper"/>
-    </dependencies>
+  <autotools id="iso-codes" autogen-sh="configure">
+    <branch module="iso-codes_3.38.orig.tar.xz" version="3.38" repo="iso-codes" checkoutdir="iso-codes-3.37"/>
   </autotools>
 
   <autotools id="gimp-python"  autogen-sh="autogen.sh"
-             autogenargs="--without-x --disable-docs --without-dbus --without-gnomevfs --without-wmf --enable-binreloc" skip-autogen="never"
+             autogenargs="--without-x --disable-docs --without-gvfs --without-dbus --without-wmf --enable-binreloc" skip-autogen="never"
 	     autogen-template="autoreconf -fis &amp;&amp; %(srcdir)s/%(autogen-sh)s --prefix %(prefix)s --libdir %(libdir)s %(autogenargs)s"
              makeargs='LDFLAGS="-framework Carbon"'>
     <!--<branch module="gimp/v2.8/gimp-2.8.0.tar.bz2" version="2.8.0"
             md5sum="28997d14055f15db063eb92e1c8a7ebb" repo="gimp">
     </branch>-->
     <branch repo="git.gnome.org" module="gimp" revision="gimp-2-8"/>
-    <after>
+    <dependencies>
       <dep package="gtk-doc"/>
       <dep package="libpng"/>
       <dep package="libjpeg"/>
       <dep package="libtiff"/>
-    </after>
-    <dependencies>
       <dep package="exif"/>
+      <dep package="libmng"/>
       <dep package="librsvg"/>
       <dep package="lcms"/>
       <dep package="fontconfig"/>
       <dep package="gegl"/>
       <dep package="glib"/>
       <dep package="gtk+"/>
+      <dep package="poppler"/>
+      <dep package="iso-codes"/>
+      <dep package="jasper"/>
+      <dep package="meta-gtk-osx-python"/>
+      <dep package="tango-icon-theme"/>
     </dependencies>
   </autotools>
 
+  <!-- Start help files -->
+
+  <autotools id="gimp-help" autogenargs="--without-gimp" makeargs="ALL_LINGUAS=en" autogen-sh="autogen.sh">
+    <branch module="gimp/help/gimp-help-2.8.0.tar.bz2" version="2.8.0"
+            repo="gimp"/>
+    <dependencies>
+      <dep package="pngcrush"/>
+    </dependencies>
+  </autotools>
+
+  <autotools id="gimp-help-git" autogenargs="--without-gimp" makeargs="ALL_LINGUAS=en" autogen-sh="autogen.sh">
+    <branch module="gimp-help-2" reversion="master"
+            repo="git.gnome.org"/>
+    <dependencies>
+      <dep package="pngcrush"/>
+    </dependencies>
+  </autotools>
+
+  <autotools id="pngcrush" makeargs="-f Makefile" makeinstallargs="-f Makefile" skip-autogen="skip-autogen">
+    <branch module="pmt/pngcrush-1.7.37.tar.xz" version="1.7.37"
+	    repo="sourceforge"/>
+  </autotools>
+
+  <!-- End help files -->
 
   <autotools id="murrine-engine" autogen-sh="configure">
     <branch module="murrine/0.98/murrine-0.98.2.tar.xz" version="0.98.2"
 	    hash="sha256:e9c68ae001b9130d0f9d1b311e8121a94e5c134b82553ba03971088e57d12c89"/>
+  </autotools>
+
+  <autotools id="gtk-engines2" autogen-sh="configure"
+        autogenargs="--enable-shared --enable-animation --disable-crux --disable-hc --disable-industrial --disable-mist --disable-redmond --disable-glide --disable-thinice">
+    <branch module="gtk-engines/2.20/gtk-engines-2.20.2.tar.gz" version="2.20.2"
+	    hash="sha256:aa65209c824a71feb82c31a6c5bdee22658874cff4fca610d174d983c807c22f">
+<patch file="https://dl.dropbox.com/u/942685/gimp/gtk-engines2/patch-engines-clearlooks-src-animation.c.diff" strip="0"/>
+    </branch>
+  </autotools>
+
+  <autotools id="gnome-themes" autogen-sh="configure"
+        autogenargs="--enable-shared --enable-all-themes">
+    <branch module="gnome-themes/2.30/gnome-themes-2.30.2.tar.gz" version="2.30.2"
+	    hash="sha256:928c114940c16cde6e25f3ac80b5b9dfef836d88a78461f79e016103a44f100e"/>
+    <dependencies>
+      <dep package="gtk-engines2"/>
+    </dependencies>
+  </autotools>
+
+  <autotools id="gnome-themes-standard" autogen-sh="configure"
+        autogenargs="--enable-shared --disable-gtk3-engines">
+    <branch module="gnome-themes-standard/3.5/gnome-themes-standard-3.5.90.tar.xz" version="3.5"
+	    hash="sha256:4a508ff5a959a9f4e8b0d76673f420b0d7fb6b91bf9647d5a5a258563f6ee510"/>
   </autotools>
 
   <autotools id="tango-icon-theme" autogenargs="--disable-icon-framing"
@@ -463,6 +624,7 @@
   </metamodule>
 
   <!-- Python modules -->
+
   <metamodule id="meta-gtk-osx-python">
     <dependencies>
       <dep package="python"/>
@@ -487,6 +649,7 @@
     </branch>
     <after>
       <dep package="berkeleydb"/>
+      <dep package="expat"/>
     </after>
   </autotools>
 
@@ -501,34 +664,34 @@
     </after>
   </autotools>
 
-<!-- This is the latest 0.10 version. Later versions are 1.29 and intended to work with glib 2.29; the minor version of gobject-introspection will track the minor version of glib that it's intended to work with. -->
   <autotools id="gobject-introspection">
-    <branch module="gobject-introspection/0.10/gobject-introspection-0.10.8.tar.bz2"
-            version="0.10.8"
-            hash="sha256:5b1387ff37f03db880a2b1cbd6c6b6dfb923a29468d4d8367c458abf7704c61e">
-      <patch file="http://git.gnome.org/browse/gtk-osx/plain/patches/girscanner-objc.patch" strip="1"/>
+    <branch module="gobject-introspection/1.33/gobject-introspection-1.33.9.tar.xz"
+            version="1.33.9"
+            hash="sha256:4d8283bcbf30f78e13e2d085a8be9a41a8b197a22ad48dc913e6ea7bec3fe8b0">
     </branch>
     <dependencies>
       <dep package="glib"/>
       <dep package="cairo"/>
-     <dep package="libffi"/>
+      <dep package="python"/>
+      <dep package="libffi"/>
     </dependencies>
   </autotools>
 
-<!-- PyGObject 2.28 is the last series for Gtk+-2; for co-installation
+  <!-- PyGObject 2.28 is the last series for Gtk+-2; for co-installation
      with later versions it installs as pygobject2 and PyGObject 3
      installs as pygobject3. Introspection is disabled here, because
      gir-scanner isn't smart enough to co-install them. -->
-  <autotools id="pygobject" autogen-sh="configure" >
+  <autotools id="pygobject" autogen-sh="configure" autogenargs=" --enable-introspection=no">
     <branch version="2.28.6" module="pygobject/2.28/pygobject-2.28.6.tar.bz2"
             hash="sha256:e4bfe017fa845940184c82a4d8949db3414cb29dfc84815fb763697dc85bdcee"/>
     <dependencies>
       <dep package="gtk+"/>
       <dep package="gobject-introspection"/>
-    </dependencies>
-    <after>
+      <dep package="glib"/>
+      <dep package="libxslt"/>
+      <dep package="libffi"/>
       <dep package="python"/>
-    </after>
+    </dependencies>
   </autotools>
 
  <autotools id="pygtk" autogen-sh="configure" 
@@ -557,6 +720,147 @@
       <dep package="pygtk"/>
       <dep package="pygobject"/>
     </after>
+  </autotools>
+
+ <!-- Ghostscript GPL -->
+  <autotools id="ghostscript" autogenargs="--disable-compile-inits --disable-cups --without-luratech --with-system-libtiff --disable-gtk --without-x --enable-dynamic" autogen-sh="configure">
+    <branch version="9.06" module="ghostscript/ghostscript-9.06.tar.gz"
+	    repo="sourceforge"/>
+  </autotools>
+
+<!-- Language Support -->
+  <repository type="tarball" name="iso-codes"
+	      href="http://pkg-isocodes.alioth.debian.org/downloads/"/>
+
+  <autotools id="iso-codes" autogen-sh="configure">
+    <branch repo="iso-codes" module="iso-codes-3.38.tar.xz"
+            version="0.4.1"
+	    hash="md5:df8dacc718116dae3db453a4d85c018a"/>
+    <dependencies>
+    </dependencies>
+    <after>
+    </after>
+  </autotools>
+
+  <!-- Ufraw plugin -->
+
+  <repository type="tarball" name="gtkimageview"
+	      href="http://ftp.riken.jp/pub/FreeBSD/ports/local-distfiles/kwm/"/>
+  <!--<repository type="tarball" name="ufraw"
+	      href="http://ftp.riken.jp/pub/FreeBSD/ports/local-distfiles/kwm/"/>-->
+  <repository type="cvs" name="ufraw"
+    cvsroot=":pserver:anonymous@ufraw.cvs.sourceforge.net:/cvsroot/ufraw"
+    password=""/>
+
+  <repository type="svn" name="svn.berlios.de"
+    href="http://svn.berlios.de/svnroot/repos/"/>
+
+  <autotools id="lensfun" autogen-sh="configure" autogen-template="%(srcdir)s/%(autogen-sh)s --prefix=%(prefix)s --libdir=%(libdir)s %(autogenargs)s">
+    <branch repo="svn.berlios.de" module="lensfun/trunk" version="0.2.6">
+      <patch file="https://dl.dropbox.com/u/942685/gimp/lensfun/patch-pkgconfig.diff" strip="1" />
+      <patch file="https://dl.dropbox.com/u/942685/gimp/lensfun/patch-build-tibs-target-mac-mak.diff" strip="1" />
+    </branch>
+  </autotools>
+
+  <autotools id="gtkimageview" autogen-sh="configure">
+    <branch repo="gtkimageview" module="gtkimageview-1.6.4.tar.gz"
+            version="1.6.4"/>
+  </autotools>
+
+  <autotools id="ufraw" autogen-sh="autogen.sh" makeargs="CC=clang">
+    <branch repo="ufraw" module="ufraw"
+            version="0.18"/>
+    <dependencies>
+      <dep package="lensfun"/>
+      <dep package="gtkimageview"/>
+    </dependencies>
+  </autotools>
+
+  <!-- Webkit browser -->
+
+  <autotools id="zlib" autogen-sh="configure">
+    <branch repo="sourceforge" module="libpng/zlib-1.2.7.tar.bz2"
+            version="1.2.7"/>
+  </autotools>
+
+  <!-- Web plugin -->
+
+  <autotools id="saveforweb" autogen-sh="autogen.sh">
+    <branch repo="github-git" module="auris/gimp-save-for-web.git" revision="master"/>
+  </autotools>
+
+  <!-- Resynthesizer plugin -->
+
+  <repository type="git" name="github-git"
+              href="https://github.com/"/>
+
+  <autotools id="resynthesizer" autogen-sh="autogen.sh">
+    <branch repo="github-git" module="bootchk/resynthesizer.git" revision="master"/>
+  </autotools>
+
+  <!-- Liquid rescale plugin -->
+
+  <repository type="tarball" name="liblqr"
+	      href="http://liblqr.wikidot.com/local--files/en:download-page/"/>
+  <repository type="tarball" name="gimp-lqr-plugin"
+	      href="http://liquidrescale.wikidot.com/local--files/en:download-page-sources/"/>
+
+  <autotools id="liblqr" autogen-sh="configure">
+    <branch repo="liblqr" module="liblqr-1-0.4.1.tar.bz2"
+            version="0.4.1"/>
+    <after>
+      <dep package="gimp-python"/>
+    </after>
+  </autotools>
+
+  <autotools id="gimp-lqr-plugin" autogen-sh="configure">
+    <branch repo="gimp-lqr-plugin" module="gimp-lqr-plugin-0.7.1.tar.bz2"
+            version="0.7.1"/>
+    <dependencies>
+    </dependencies>
+    <after>
+      <dep package="liblqr"/>
+    </after>
+  </autotools>
+
+  <!-- ReFocus plugin -->
+
+  <autotools id="refocus-it" autogenargs="--enable-shared" makeargs="CC=clang" autogen-sh="configure">
+    <branch version="2.0.0" module="refocus-it/refocus-it-2.0.0.tar.gz"
+	    repo="sourceforge"/>
+  </autotools>
+
+  <!-- BIMP plugin-->
+
+  <autotools id="pcre" autogenargs="--enable-shared" autogen-sh="configure">
+    <branch version="8.31" module="pcre/pcre-8.31.tar.gz"
+	    repo="sourceforge"/>
+  </autotools>
+
+  <!-- GMIC plugin -->
+
+  <repository type="tarball" name="fftw"
+	      href="ftp://ftp.fftw.org/pub/fftw/"/>
+  <repository type="tarball" name="github-tar"
+	      href="https://github.com/downloads/"/>
+
+  <autotools id="fftw" autogen-sh="configure">
+    <branch repo="fftw" module="fftw-3.3.2.tar.gz"
+	    version="3.3.2"
+	    hash="md5:6977ee770ed68c85698c7168ffa6e178"/>
+  </autotools>
+
+  <autotools id="ilmbase" autogenargs="--enable-shared" autogen-sh="configure">
+    <branch version="1.0.3" module="openexr/openexr/ilmbase-1.0.3.tar.gz"
+	    repo="github-tar"/>
+  </autotools>
+
+  <autotools id="openexr" autogenargs="--enable-shared --disable-ilmbasetest" autogen-sh="configure">
+    <branch version="8.31" module="openexr/openexr/openexr-1.7.1.tar.gz"
+	    repo="github-tar"/>
+    <dependencies>
+      <dep package="ilmbase"/>
+    </dependencies>
   </autotools>
 
 </moduleset>
