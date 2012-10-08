@@ -238,7 +238,7 @@ gimp_directory (void)
 
       pool = [[NSAutoreleasePool alloc] init];
 
-      path = NSSearchPathForDirectoriesInDomains (NSLibraryDirectory,
+      path = NSSearchPathForDirectoriesInDomains (NSApplicationSupportDirectory,
                                                   NSUserDomainMask, YES);
       library_dir = [path objectAtIndex:0];
 
