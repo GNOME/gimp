@@ -51,7 +51,10 @@ typedef struct _GimpImageComboBoxClass GimpImageComboBoxClass;
 
 struct _GimpImageComboBox
 {
-  GimpIntComboBox  parent_instance;
+  GimpIntComboBox          parent_instance;
+
+  GimpImageConstraintFunc  constraint;
+  gpointer                 data;
 };
 
 struct _GimpImageComboBoxClass
@@ -60,6 +63,7 @@ struct _GimpImageComboBoxClass
 };
 
 
+static void  gimp_image_combo_box_populate  (GimpImageComboBox       *combo_box);
 static void  gimp_image_combo_box_model_add (GtkListStore            *store,
                                              gint                     num_images,
                                              gint32                  *images,
@@ -73,6 +77,8 @@ static void  gimp_image_combo_box_drag_data_received (GtkWidget        *widget,
                                                       GtkSelectionData *selection,
                                                       guint             info,
                                                       guint             time);
+
+static void  gimp_image_combo_box_changed   (GimpImageComboBox *combo_box);
 
 
 static const GtkTargetEntry target = { "application/x-gimp-image-id", 0 };
@@ -123,16 +129,32 @@ GtkWidget *
 gimp_image_combo_box_new (GimpImageConstraintFunc constraint,
                           gpointer                data)
 {
-  GtkWidget    *combo_box;
-  GtkTreeModel *model;
-  GtkTreeIter   iter;
-  gint32       *images;
-  gint          num_images;
+  GimpImageComboBox *combo_box;
 
   combo_box = g_object_new (GIMP_TYPE_IMAGE_COMBO_BOX,
                             "width-request", WIDTH_REQUEST,
                             "ellipsize",     PANGO_ELLIPSIZE_MIDDLE,
                             NULL);
+
+  combo_box->constraint = constraint;
+  combo_box->data       = data;
+
+  gimp_image_combo_box_populate (combo_box);
+
+  g_signal_connect (combo_box, "changed",
+                    G_CALLBACK (gimp_image_combo_box_changed),
+                    NULL);
+
+  return GTK_WIDGET (combo_box);
+}
+
+static void
+gimp_image_combo_box_populate (GimpImageComboBox *combo_box)
+{
+  GtkTreeModel *model;
+  GtkTreeIter   iter;
+  gint32       *images;
+  gint          num_images;
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
 
@@ -140,13 +162,13 @@ gimp_image_combo_box_new (GimpImageConstraintFunc constraint,
 
   gimp_image_combo_box_model_add (GTK_LIST_STORE (model),
                                   num_images, images,
-                                  constraint, data);
+                                  combo_box->constraint,
+                                  combo_box->data);
+
   g_free (images);
 
   if (gtk_tree_model_get_iter_first (model, &iter))
     gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo_box), &iter);
-
-  return combo_box;
 }
 
 static void
@@ -224,4 +246,26 @@ gimp_image_combo_box_drag_data_received (GtkWidget        *widget,
     }
 
   g_free (str);
+}
+
+static void
+gimp_image_combo_box_changed (GimpImageComboBox *combo_box)
+{
+  gint image_ID;
+
+  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo_box),
+                                     &image_ID))
+    {
+      if (! gimp_image_is_valid (image_ID))
+        {
+          GtkTreeModel *model;
+
+          model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
+
+          g_signal_stop_emission_by_name (combo_box, "changed");
+
+          gtk_list_store_clear (GTK_LIST_STORE (model));
+          gimp_image_combo_box_populate (combo_box);
+        }
+    }
 }
