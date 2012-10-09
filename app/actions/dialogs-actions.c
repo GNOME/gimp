@@ -40,9 +40,6 @@
 #include "gimp-intl.h"
 
 
-static gboolean dialogs_actions_toolbox_exists (Gimp *gimp);
-
-
 const GimpStringActionEntry dialogs_dockable_actions[] =
 {
   { "dialogs-toolbox", NULL,
@@ -268,7 +265,7 @@ static const GimpStringActionEntry dialogs_toplevel_actions[] =
 };
 
 
-static gboolean
+gboolean
 dialogs_actions_toolbox_exists (Gimp *gimp)
 {
   GimpDialogFactory *factory       = gimp_dialog_factory_get_singleton ();

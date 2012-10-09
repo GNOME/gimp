@@ -64,7 +64,6 @@ static void      windows_menu_dock_window_removed        (GimpDialogFactory *fac
                                                           GimpDockWindow    *dock_window,
                                                           GimpUIManager     *manager);
 static gboolean  windows_menu_is_toolbox_dock_window     (GimpDockWindow    *dock_window);
-static void      windows_menu_remove_toolbox_entries     (GimpContainer     *docks);
 static gchar   * windows_menu_dock_window_to_merge_id    (GimpDockWindow    *dock_window);
 static void      windows_menu_recent_add                 (GimpContainer     *container,
                                                           GimpSessionInfo   *info,
@@ -276,12 +275,6 @@ windows_menu_dock_window_added (GimpDialogFactory *factory,
                          GTK_UI_MANAGER_MENUITEM,
                          FALSE);
 
-  /* There can only be one toolbox around, so if a new is created,
-   * make sure to remove any toolbox entries from Recenly Closed Docks
-   */
-  if (windows_menu_is_toolbox_dock_window (dock_window))
-    windows_menu_remove_toolbox_entries (global_recent_docks);
-
   g_free (merge_key);
   g_free (action_path);
   g_free (action_name);
@@ -315,31 +308,6 @@ windows_menu_is_toolbox_dock_window (GimpDockWindow *dock_window)
     is_for_toolbox = TRUE;
 
   return is_for_toolbox;
-}
-
-static void
-windows_menu_remove_toolbox_entries (GimpContainer *docks)
-{
-  GList *iter        = NULL;
-  GList *for_removal = NULL;
-
-  for (iter = GIMP_LIST (docks)->list; iter; iter = g_list_next (iter))
-    {
-      GimpSessionInfo        *info  = iter->data;
-      GimpDialogFactoryEntry *entry = gimp_session_info_get_factory_entry (info);
-
-      if (entry && strcmp ("gimp-toolbox-window", entry->identifier) == 0)
-        for_removal = g_list_prepend (for_removal, info);
-    }
-
-  for (iter = for_removal; iter; iter = g_list_next (iter))
-    {
-      GimpSessionInfo *info = iter->data;
-
-      gimp_container_remove (docks, GIMP_OBJECT (info));
-    }
-
-  g_list_free (for_removal);
 }
 
 static gchar *

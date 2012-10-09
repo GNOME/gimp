@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -29,6 +31,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 
+#include "widgets/gimpactiongroup.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpsessioninfo.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -39,7 +42,10 @@
 #include "dialogs/dialogs.h"
 
 #include "actions.h"
+#include "dialogs-actions.h"
 #include "windows-commands.h"
+
+#include "gimp-intl.h"
 
 
 void
@@ -140,7 +146,24 @@ void
 windows_open_recent_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
-  GimpSessionInfo *info = g_object_get_data (G_OBJECT (action), "info");
+  GimpSessionInfo        *info;
+  GimpDialogFactoryEntry *entry;
+  Gimp                   *gimp;
+  return_if_no_gimp (gimp, data);
+
+  info  = g_object_get_data (G_OBJECT (action), "info");
+  entry = gimp_session_info_get_factory_entry (info);
+
+  if (entry && strcmp ("gimp-toolbox-window", entry->identifier) == 0 &&
+      dialogs_actions_toolbox_exists (gimp))
+    {
+      gimp_message (gimp,
+                    G_OBJECT (action_data_get_widget (data)),
+                    GIMP_MESSAGE_WARNING,
+                    _("The chosen recent dock contains a toolbox. Please "
+                      "close the currently open toolbox and try again."));
+      return;
+    }
 
   g_object_ref (info);
 
