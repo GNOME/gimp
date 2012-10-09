@@ -327,7 +327,7 @@ gimpwidgetsmarshal.c: gimpwidgetsmarshal.h
 
 
 gimp-wilber-pixbufs.h: $(WILBER_IMAGES) Makefile.am
-	$(GDK_PIXBUF_CSOURCE) --raw --build-list $(WILBER_VARIABLES) > $(@F)
+	$(AM_V_GEN) $(GDK_PIXBUF_CSOURCE) --raw --build-list $(WILBER_VARIABLES) > $(@F)
 
 
 #
