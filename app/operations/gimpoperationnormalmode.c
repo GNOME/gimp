@@ -98,6 +98,11 @@ gimp_operation_normal_parent_process (GeglOperation        *operation,
                                       const GeglRectangle  *result,
                                       gint                  level)
 {
+#if 0
+  /*  this code tries to be smart but is in fact just a too stupid
+   *  copy from gegl's normal mode. to fix it, it needs to take
+   *  mask and opacity into account
+   */
   const GeglRectangle *in_extent  = NULL;
   const GeglRectangle *aux_extent = NULL;
   GObject             *input;
@@ -129,6 +134,7 @@ gimp_operation_normal_parent_process (GeglOperation        *operation,
       gegl_operation_context_set_object (context, "output", input);
       return TRUE;
     }
+#endif
 
   /* chain up, which will create the needed buffers for our actual
    * process function
