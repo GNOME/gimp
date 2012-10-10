@@ -50,71 +50,60 @@
 #define WIDTH_REQUEST  200
 
 
-#define GIMP_TYPE_ITEM_COMBO_BOX    (gimp_item_combo_box_get_type ())
-#define GIMP_ITEM_COMBO_BOX(obj)    (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ITEM_COMBO_BOX, GimpItemComboBox))
-#define GIMP_IS_ITEM_COMBO_BOX(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ITEM_COMBO_BOX))
+#define GET_PRIVATE(obj) (g_object_get_data (G_OBJECT (obj), "gimp-item-combo-box-private"))
 
-GType   gimp_item_combo_box_get_type (void) G_GNUC_CONST;
 
-typedef struct _GimpItemComboBox          GimpItemComboBox;
+typedef struct _GimpItemComboBoxPrivate   GimpItemComboBoxPrivate;
 
-typedef struct _GimpItemComboBoxClass     GimpItemComboBoxClass;
+struct _GimpItemComboBoxPrivate
+{
+  GimpItemConstraintFunc  constraint;
+  gpointer                data;
+};
+
 typedef struct _GimpDrawableComboBoxClass GimpDrawableComboBoxClass;
 typedef struct _GimpChannelComboBoxClass  GimpChannelComboBoxClass;
 typedef struct _GimpLayerComboBoxClass    GimpLayerComboBoxClass;
 typedef struct _GimpVectorsComboBoxClass  GimpVectorsComboBoxClass;
 
-struct _GimpItemComboBox
-{
-  GimpIntComboBox         parent_instance;
-
-  GimpItemConstraintFunc  constraint;
-  gpointer                data;
-};
-
-struct _GimpItemComboBoxClass
-{
-  GimpIntComboBoxClass  parent_class;
-};
-
 struct _GimpDrawableComboBox
 {
-  GimpItemComboBox  parent_instance;
+  GimpIntComboBox  parent_instance;
 };
 
 struct _GimpDrawableComboBoxClass
 {
-  GimpItemComboBoxClass  parent_class;
+  GimpIntComboBoxClass  parent_class;
 };
 
 struct _GimpChannelComboBox
 {
-  GimpItemComboBox  parent_instance;
+  GimpIntComboBox  parent_instance;
 };
 
 struct _GimpChannelComboBoxClass
 {
-  GimpItemComboBoxClass  parent_class;
+  GimpIntComboBoxClass  parent_class;
 };
 
 struct _GimpLayerComboBox
 {
-  GimpItemComboBox  parent_instance;
+  GimpIntComboBox  parent_instance;
 };
 
 struct _GimpLayerComboBoxClass
 {
-  GimpItemComboBoxClass  parent_class;
+  GimpIntComboBoxClass  parent_class;
 };
 
 struct _GimpVectorsComboBox
 {
-  GimpItemComboBox  parent_instance;
+  GimpIntComboBox  parent_instance;
 };
 
 struct _GimpVectorsComboBoxClass
 {
-  GimpItemComboBoxClass  parent_class;
+  GimpIntComboBoxClass  parent_class;
 };
 
 
@@ -122,8 +111,8 @@ static GtkWidget * gimp_item_combo_box_new (GType                       type,
                                             GimpItemConstraintFunc      constraint,
                                             gpointer                    data);
 
-static void  gimp_item_combo_box_populate  (GimpItemComboBox           *combo_box);
-static void  gimp_item_combo_box_model_add (GimpItemComboBox           *combo_box,
+static void  gimp_item_combo_box_populate  (GimpIntComboBox            *combo_box);
+static void  gimp_item_combo_box_model_add (GimpIntComboBox            *combo_box,
                                             GtkListStore               *store,
                                             gint32                      image,
                                             gint                        num_items,
@@ -138,7 +127,7 @@ static void  gimp_item_combo_box_drag_data_received (GtkWidget         *widget,
                                                      guint              info,
                                                      guint              time);
 
-static void  gimp_item_combo_box_changed   (GimpItemComboBox *combo_box);
+static void  gimp_item_combo_box_changed   (GimpIntComboBox *combo_box);
 
 
 static const GtkTargetEntry targets[] =
@@ -149,29 +138,15 @@ static const GtkTargetEntry targets[] =
 };
 
 
-G_DEFINE_TYPE (GimpItemComboBox, gimp_item_combo_box,
-               GIMP_TYPE_INT_COMBO_BOX)
-
-static void
-gimp_item_combo_box_class_init (GimpItemComboBoxClass *klass)
-{
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  widget_class->drag_data_received = gimp_item_combo_box_drag_data_received;
-}
-
-static void
-gimp_item_combo_box_init (GimpItemComboBox *combo_box)
-{
-}
-
-
 G_DEFINE_TYPE (GimpDrawableComboBox, gimp_drawable_combo_box,
-               GIMP_TYPE_ITEM_COMBO_BOX)
+               GIMP_TYPE_INT_COMBO_BOX)
 
 static void
 gimp_drawable_combo_box_class_init (GimpDrawableComboBoxClass *klass)
 {
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+  widget_class->drag_data_received = gimp_item_combo_box_drag_data_received;
 }
 
 static void
@@ -183,6 +158,10 @@ gimp_drawable_combo_box_init (GimpDrawableComboBox *combo_box)
                      GTK_DEST_DEFAULT_DROP,
                      targets, 2,
                      GDK_ACTION_COPY);
+
+  g_object_set_data_full (G_OBJECT (combo_box), "gimp-item-combo-box-private",
+                          g_new0 (GimpItemComboBoxPrivate, 1),
+                          (GDestroyNotify) g_free);
 }
 
 /**
@@ -214,11 +193,14 @@ gimp_drawable_combo_box_new (GimpDrawableConstraintFunc constraint,
 
 
 G_DEFINE_TYPE (GimpChannelComboBox, gimp_channel_combo_box,
-               GIMP_TYPE_ITEM_COMBO_BOX)
+               GIMP_TYPE_INT_COMBO_BOX)
 
 static void
 gimp_channel_combo_box_class_init (GimpChannelComboBoxClass *klass)
 {
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+  widget_class->drag_data_received = gimp_item_combo_box_drag_data_received;
 }
 
 static void
@@ -230,6 +212,10 @@ gimp_channel_combo_box_init (GimpChannelComboBox *combo_box)
                      GTK_DEST_DEFAULT_DROP,
                      targets, 1,
                      GDK_ACTION_COPY);
+
+  g_object_set_data_full (G_OBJECT (combo_box), "gimp-item-combo-box-private",
+                          g_new0 (GimpItemComboBoxPrivate, 1),
+                          (GDestroyNotify) g_free);
 }
 
 /**
@@ -254,11 +240,14 @@ gimp_channel_combo_box_new (GimpDrawableConstraintFunc constraint,
 
 
 G_DEFINE_TYPE (GimpLayerComboBox, gimp_layer_combo_box,
-               GIMP_TYPE_ITEM_COMBO_BOX)
+               GIMP_TYPE_INT_COMBO_BOX)
 
 static void
 gimp_layer_combo_box_class_init (GimpLayerComboBoxClass *klass)
 {
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+  widget_class->drag_data_received = gimp_item_combo_box_drag_data_received;
 }
 
 static void
@@ -270,6 +259,10 @@ gimp_layer_combo_box_init (GimpLayerComboBox *combo_box)
                      GTK_DEST_DEFAULT_DROP,
                      targets + 1, 1,
                      GDK_ACTION_COPY);
+
+  g_object_set_data_full (G_OBJECT (combo_box), "gimp-item-combo-box-private",
+                          g_new0 (GimpItemComboBoxPrivate, 1),
+                          (GDestroyNotify) g_free);
 }
 
 /**
@@ -294,11 +287,14 @@ gimp_layer_combo_box_new (GimpDrawableConstraintFunc constraint,
 
 
 G_DEFINE_TYPE (GimpVectorsComboBox, gimp_vectors_combo_box,
-               GIMP_TYPE_ITEM_COMBO_BOX)
+               GIMP_TYPE_INT_COMBO_BOX)
 
 static void
 gimp_vectors_combo_box_class_init (GimpVectorsComboBoxClass *klass)
 {
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+  widget_class->drag_data_received = gimp_item_combo_box_drag_data_received;
 }
 
 static void
@@ -310,6 +306,10 @@ gimp_vectors_combo_box_init (GimpVectorsComboBox *combo_box)
                      GTK_DEST_DEFAULT_DROP,
                      targets + 2, 1,
                      GDK_ACTION_COPY);
+
+  g_object_set_data_full (G_OBJECT (combo_box), "gimp-item-combo-box-private",
+                          g_new0 (GimpItemComboBoxPrivate, 1),
+                          (GDestroyNotify) g_free);
 }
 
 
@@ -346,15 +346,18 @@ gimp_item_combo_box_new (GType                  type,
                          GimpItemConstraintFunc constraint,
                          gpointer               data)
 {
-  GimpItemComboBox *combo_box;
+  GimpIntComboBox         *combo_box;
+  GimpItemComboBoxPrivate *private;
 
   combo_box = g_object_new (type,
                             "width-request", WIDTH_REQUEST,
                             "ellipsize",     PANGO_ELLIPSIZE_MIDDLE,
                             NULL);
 
-  combo_box->constraint = constraint;
-  combo_box->data       = data;
+  private = GET_PRIVATE (combo_box);
+
+  private->constraint = constraint;
+  private->data       = data;
 
   gimp_item_combo_box_populate (combo_box);
 
@@ -366,7 +369,7 @@ gimp_item_combo_box_new (GType                  type,
 }
 
 static void
-gimp_item_combo_box_populate (GimpItemComboBox *combo_box)
+gimp_item_combo_box_populate (GimpIntComboBox *combo_box)
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
@@ -420,16 +423,17 @@ gimp_item_combo_box_populate (GimpItemComboBox *combo_box)
 }
 
 static void
-gimp_item_combo_box_model_add (GimpItemComboBox       *combo_box,
-                               GtkListStore           *store,
-                               gint32                  image,
-                               gint                    num_items,
-                               gint32                 *items,
-                               gint                    tree_level)
+gimp_item_combo_box_model_add (GimpIntComboBox *combo_box,
+                               GtkListStore    *store,
+                               gint32           image,
+                               gint             num_items,
+                               gint32          *items,
+                               gint             tree_level)
 {
-  GtkTreeIter  iter;
-  gint         i;
-  gchar       *indent;
+  GimpItemComboBoxPrivate *private = GET_PRIVATE (combo_box);
+  GtkTreeIter              iter;
+  gint                     i;
+  gchar                   *indent;
 
   if (tree_level > 0)
     {
@@ -445,8 +449,8 @@ gimp_item_combo_box_model_add (GimpItemComboBox       *combo_box,
 
   for (i = 0; i < num_items; i++)
     {
-      if (! combo_box->constraint ||
-          (* combo_box->constraint) (image, items[i], combo_box->data))
+      if (! private->constraint ||
+          (* private->constraint) (image, items[i], private->data))
         {
           gchar     *image_name = gimp_image_get_name (image);
           gchar     *item_name  = gimp_item_get_name (items[i]);
@@ -534,12 +538,11 @@ gimp_item_combo_box_drag_data_received (GtkWidget        *widget,
 }
 
 static void
-gimp_item_combo_box_changed (GimpItemComboBox *combo_box)
+gimp_item_combo_box_changed (GimpIntComboBox *combo_box)
 {
   gint item_ID;
 
-  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo_box),
-                                     &item_ID))
+  if (gimp_int_combo_box_get_active (combo_box, &item_ID))
     {
       if (! gimp_item_is_valid (item_ID))
         {
