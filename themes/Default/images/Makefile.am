@@ -382,7 +382,7 @@ CLEANFILES = $(noinst_DATA) stock-icons.list
 
 
 stock-icons.list: $(STOCK_IMAGES) Makefile.am
-	( rm -f $@; \
+	$(AM_V_GEN) ( rm -f $@; \
           for image in $(STOCK_IMAGES); do \
             echo $$image | \
               sed -e 's|.*/||' -e 's|-|_|g' -e 's|\.png$$||' >> $@; \
@@ -390,7 +390,7 @@ stock-icons.list: $(STOCK_IMAGES) Makefile.am
 	  done )
 
 gimp-core-pixbufs.h: $(CORE_IMAGES) Makefile.am
-	$(GDK_PIXBUF_CSOURCE) --raw --build-list $(CORE_VARIABLES) > $(@F)
+	$(AM_V_GEN) $(GDK_PIXBUF_CSOURCE) --raw --build-list $(CORE_VARIABLES) > $(@F)
 
 gimp-stock-pixbufs.h: stock-icons.list
-	$(GDK_PIXBUF_CSOURCE) --raw --build-list `cat $<` > $(@F)
+	$(AM_V_GEN) $(GDK_PIXBUF_CSOURCE) --raw --build-list `cat $<` > $(@F)
