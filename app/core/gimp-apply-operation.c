@@ -45,6 +45,7 @@ gimp_apply_operation (GeglBuffer          *src_buffer,
   GeglProcessor *processor;
   GeglRectangle  rect = { 0, };
   gdouble        value;
+  gboolean       progress_active = FALSE;
 
   g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
@@ -80,7 +81,9 @@ gimp_apply_operation (GeglBuffer          *src_buffer,
 
   if (progress)
     {
-      if (gimp_progress_is_active (progress))
+      progress_active = gimp_progress_is_active (progress);
+
+      if (progress_active)
         {
           if (undo_desc)
             gimp_progress_set_text (progress, undo_desc);
@@ -99,6 +102,6 @@ gimp_apply_operation (GeglBuffer          *src_buffer,
 
   g_object_unref (gegl);
 
-  if (progress)
+  if (progress && ! progress_active)
     gimp_progress_end (progress);
 }
