@@ -128,7 +128,6 @@ gimp_unified_transform_tool_class_init (GimpUnifiedTransformToolClass *klass)
 static void
 gimp_unified_transform_tool_init (GimpUnifiedTransformTool *unified_tool)
 {
-  GimpTool          *tool    = GIMP_TOOL (unified_tool);
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (unified_tool);
 
   tr_tool->progress_text = _("Unified transform");
