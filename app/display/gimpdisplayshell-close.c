@@ -338,7 +338,7 @@ gimp_display_shell_close_response (GtkWidget        *widget,
           {
             GimpUIManager *manager = gimp_image_window_get_ui_manager (window);
 
-            /* FIXME image window: set this display active */
+            gimp_image_window_set_active_shell (window, shell);
 
             gimp_ui_manager_activate_action (manager,
                                              "file", "file-save-and-close");
