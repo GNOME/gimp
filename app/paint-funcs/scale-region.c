@@ -978,7 +978,7 @@ interpolate_bilinear (PixelSurround *surround,
   switch (bytes)
     {
     case 1:
-      sum = weighted_sum (xfrac, yfrac, p1[0], p2[0], p3[0], p4[0]);
+      sum = RINT (weighted_sum (xfrac, yfrac, p1[0], p2[0], p3[0], p4[0]));
 
       pixel[0] = CLAMP (sum, 0, 255);
       break;
@@ -990,7 +990,8 @@ interpolate_bilinear (PixelSurround *surround,
           sum = weighted_sum (xfrac, yfrac,
                               p1[0] * p1[1], p2[0] * p2[1],
                               p3[0] * p3[1], p4[0] * p4[1]);
-          sum /= alphasum;
+          sum = RINT (sum / alphasum);
+          alphasum = RINT (alphasum);
 
           pixel[0] = CLAMP (sum, 0, 255);
           pixel[1] = CLAMP (alphasum, 0, 255);
@@ -1004,7 +1005,7 @@ interpolate_bilinear (PixelSurround *surround,
     case 3:
       for (b = 0; b < 3; b++)
         {
-          sum = weighted_sum (xfrac, yfrac, p1[b], p2[b], p3[b], p4[b]);
+          sum = RINT (weighted_sum (xfrac, yfrac, p1[b], p2[b], p3[b], p4[b]));
 
           pixel[b] = CLAMP (sum, 0, 255);
         }
@@ -1019,11 +1020,12 @@ interpolate_bilinear (PixelSurround *surround,
               sum = weighted_sum (xfrac, yfrac,
                                   p1[b] * p1[3], p2[b] * p2[3],
                                   p3[b] * p3[3], p4[b] * p4[3]);
-              sum /= alphasum;
+              sum = RINT (sum / alphasum);
 
               pixel[b] = CLAMP (sum, 0, 255);
             }
 
+          alphasum = RINT (alphasum);
           pixel[3] = CLAMP (alphasum, 0, 255);
         }
       else
@@ -1079,7 +1081,7 @@ interpolate_cubic (PixelSurround *surround,
       p2 = cubic_spline_fit (xfrac, s2[0], s2[1], s2[2], s2[3]);
       p3 = cubic_spline_fit (xfrac, s3[0], s3[1], s3[2], s3[3]);
 
-      sum = cubic_spline_fit (yfrac, p0, p1, p2, p3);
+      sum = RINT (cubic_spline_fit (yfrac, p0, p1, p2, p3));
 
       pixel[0]= CLAMP (sum, 0, 255);
       break;
@@ -1107,10 +1109,11 @@ interpolate_cubic (PixelSurround *surround,
                                  s3[0] * s3[1], s3[2] * s3[3],
                                  s3[4] * s3[5], s3[6] * s3[7]);
 
-          sum  = cubic_spline_fit (yfrac, p0, p1, p2, p3);
-          sum /= alphasum;
-
+          sum = cubic_spline_fit (yfrac, p0, p1, p2, p3);
+          sum = RINT (sum / alphasum);
           pixel[0] = CLAMP (sum, 0, 255);
+
+          alphasum = RINT (alphasum);
           pixel[1] = CLAMP (alphasum, 0, 255);
         }
       else
@@ -1127,7 +1130,7 @@ interpolate_cubic (PixelSurround *surround,
           p2 = cubic_spline_fit (xfrac, s2[b], s2[3 + b], s2[6 + b], s2[9 + b]);
           p3 = cubic_spline_fit (xfrac, s3[b], s3[3 + b], s3[6 + b], s3[9 + b]);
 
-          sum = cubic_spline_fit (yfrac, p0, p1, p2, p3);
+          sum = RINT (cubic_spline_fit (yfrac, p0, p1, p2, p3));
 
           pixel[b] = CLAMP (sum, 0, 255);
         }
@@ -1158,12 +1161,13 @@ interpolate_cubic (PixelSurround *surround,
                                      s3[0 + b] * s3[ 3], s3[ 4 + b] * s3[7],
                                      s3[8 + b] * s3[11], s3[12 + b] * s3[15]);
 
-              sum  = cubic_spline_fit (yfrac, p0, p1, p2, p3);
-              sum /= alphasum;
+              sum = cubic_spline_fit (yfrac, p0, p1, p2, p3);
+              sum = RINT (sum / alphasum);
 
               pixel[b] = CLAMP (sum, 0, 255);
             }
 
+          alphasum = RINT (alphasum);
           pixel[3] = CLAMP (alphasum, 0, 255);
         }
       else
@@ -1273,7 +1277,7 @@ interpolate_lanczos3 (PixelSurround *surround,
   switch (bytes)
     {
     case 1:
-      sum = lanczos3_mul (src, x_kernel, y_kernel, stride, 1, 0);
+      sum = RINT (lanczos3_mul (src, x_kernel, y_kernel, stride, 1, 0));
 
       pixel[0] = CLAMP (sum, 0, 255);
       break;
@@ -1283,9 +1287,10 @@ interpolate_lanczos3 (PixelSurround *surround,
       if (alphasum > 0)
         {
           sum = lanczos3_mul_alpha (src, x_kernel, y_kernel, stride, 2, 0);
-          sum /= alphasum;
-
+          sum = RINT (sum / alphasum);
           pixel[0] = CLAMP (sum, 0, 255);
+
+          alphasum = RINT (alphasum);
           pixel[1] = CLAMP (alphasum, 0, 255);
         }
       else
@@ -1297,7 +1302,7 @@ interpolate_lanczos3 (PixelSurround *surround,
     case 3:
       for (b = 0; b < 3; b++)
         {
-          sum = lanczos3_mul (src, x_kernel, y_kernel, stride, 3, b);
+          sum = RINT (lanczos3_mul (src, x_kernel, y_kernel, stride, 3, b));
 
           pixel[b] = CLAMP (sum, 0, 255);
         }
@@ -1310,11 +1315,12 @@ interpolate_lanczos3 (PixelSurround *surround,
           for (b = 0; b < 3; b++)
             {
               sum = lanczos3_mul_alpha (src, x_kernel, y_kernel, stride, 4, b);
-              sum /= alphasum;
+              sum = RINT (sum / alphasum);
 
               pixel[b] = CLAMP (sum, 0, 255);
             }
 
+          alphasum = RINT (alphasum);
           pixel[3] = CLAMP (alphasum, 0, 255);
         }
       else
