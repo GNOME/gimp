@@ -62,7 +62,9 @@ static void           scale                    (TileManager           *srcTM,
                                                 GimpProgressFunc       progress_callback,
                                                 gpointer               progress_data,
                                                 gint                  *progress,
-                                                gint                   max_progress);
+                                                gint                   max_progress,
+                                                const gdouble          scalex,
+                                                const gdouble          scaley);
 static void           decimate_xy              (TileManager           *srcTM,
                                                 TileManager           *dstTM,
                                                 GimpInterpolationType  interpolation,
@@ -212,14 +214,14 @@ scale_determine_levels (PixelRegion *srcPR,
   while (scalex < 0.5 && width > 1)
     {
       scalex  *= 2;
-      width   /= 2;
+      width    = (width + 1) / 2;
       *levelx += 1;
     }
 
   while (scaley < 0.5 && height > 1)
     {
       scaley  *= 2;
-      height  *= 2;
+      height   = (height + 1) / 2;
       *levely += 1;
     }
 }
@@ -242,8 +244,8 @@ scale_determine_progress (PixelRegion *srcPR,
 
   while (levelx > 0 && levely > 0)
     {
-      width  >>= 1;
-      height >>= 1;
+      width  = (width + 1) >> 1;
+      height = (height + 1) >> 1;
       levelx--;
       levely--;
 
@@ -252,7 +254,7 @@ scale_determine_progress (PixelRegion *srcPR,
 
   while (levelx > 0)
     {
-      width >>= 1;
+      width  = (width + 1) >> 1;
       levelx--;
 
       tiles += NUM_TILES (width, height);
@@ -260,7 +262,7 @@ scale_determine_progress (PixelRegion *srcPR,
 
   while (levely > 0)
     {
-      height >>= 1;
+      height = (height + 1) >> 1;
       levely--;
 
       tiles += NUM_TILES (width, height);
@@ -288,6 +290,8 @@ scale_region_tile (PixelRegion           *srcPR,
   gint         progress     = 0;
   gint         levelx       = 0;
   gint         levely       = 0;
+  gdouble      scalex       = (gdouble) width / dstPR->w;
+  gdouble      scaley       = (gdouble) height / dstPR->h;
 
   /* determine scaling levels */
   if (interpolation != GIMP_INTERPOLATION_NONE)
@@ -300,13 +304,16 @@ scale_region_tile (PixelRegion           *srcPR,
   if (levelx == 0 && levely == 0)
     {
       scale (srcTM, dstTM, interpolation,
-             progress_callback, progress_data, &progress, max_progress);
+             progress_callback, progress_data, &progress, max_progress,
+             scalex, scaley);
     }
 
   while (levelx > 0 && levely > 0)
     {
-      width  >>= 1;
-      height >>= 1;
+      width  = (width + 1) >> 1;
+      height = (height + 1) >> 1;
+      scalex *= .5;
+      scaley *= .5;
 
       tmpTM = tile_manager_new (width, height, bytes);
       decimate_xy (srcTM, tmpTM, interpolation,
@@ -322,7 +329,8 @@ scale_region_tile (PixelRegion           *srcPR,
 
   while (levelx > 0)
     {
-      width >>= 1;
+      width = (width + 1) >> 1;
+      scalex *= .5;
 
       tmpTM = tile_manager_new (width, height, bytes);
       decimate_x (srcTM, tmpTM, interpolation,
@@ -337,7 +345,8 @@ scale_region_tile (PixelRegion           *srcPR,
 
   while (levely > 0)
     {
-      height >>= 1;
+      height = (height + 1) >> 1;
+      scaley *= .5;
 
       tmpTM = tile_manager_new (width, height, bytes);
       decimate_y (srcTM, tmpTM, interpolation,
@@ -353,7 +362,8 @@ scale_region_tile (PixelRegion           *srcPR,
   if (tmpTM != NULL)
     {
       scale (tmpTM, dstTM, interpolation,
-             progress_callback, progress_data, &progress, max_progress);
+             progress_callback, progress_data, &progress, max_progress,
+             scalex, scaley);
       tile_manager_unref (tmpTM);
     }
 
@@ -370,7 +380,9 @@ scale (TileManager           *srcTM,
        GimpProgressFunc       progress_callback,
        gpointer               progress_data,
        gint                  *progress,
-       gint                   max_progress)
+       gint                   max_progress,
+       const gdouble          scalex,
+       const gdouble          scaley)
 {
   PixelRegion     region;
   PixelSurround  *surround   = NULL;
@@ -379,8 +391,6 @@ scale (TileManager           *srcTM,
   const guint     bytes      = tile_manager_bpp    (dstTM);
   const guint     dst_width  = tile_manager_width  (dstTM);
   const guint     dst_height = tile_manager_height (dstTM);
-  const gdouble   scaley     = (gdouble) src_height / (gdouble) dst_height;
-  const gdouble   scalex     = (gdouble) src_width  / (gdouble) dst_width;
   gpointer        pr;
   gfloat         *kernel_lookup = NULL;
 
