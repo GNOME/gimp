@@ -319,9 +319,9 @@ gimp_transform_region_nearest (TileManager        *orig_tiles,
           gdouble  tu, tv, tw;   /* undivided source coordinates and divisor */
 
           /* set up inverse transform steps */
-          tu = uinc * x + m->coeff[0][1] * (dest_y1 + y) + m->coeff[0][2];
-          tv = vinc * x + m->coeff[1][1] * (dest_y1 + y) + m->coeff[1][2];
-          tw = winc * x + m->coeff[2][1] * (dest_y1 + y) + m->coeff[2][2];
+          tu = uinc * (x + .5) + m->coeff[0][1] * (dest_y1 + y + .5) + m->coeff[0][2];
+          tv = vinc * (x + .5) + m->coeff[1][1] * (dest_y1 + y + .5) + m->coeff[1][2];
+          tw = winc * (x + .5) + m->coeff[2][1] * (dest_y1 + y + .5) + m->coeff[2][2];
 
           while (width--)
             {
@@ -331,8 +331,8 @@ gimp_transform_region_nearest (TileManager        *orig_tiles,
               /*  normalize homogeneous coords  */
               normalize_coords (1, &tu, &tv, &tw, &u, &v);
 
-              iu = (gint) u;
-              iv = (gint) v;
+              iu = RINT (u);
+              iv = RINT (v);
 
               /*  Set the destination pixels  */
               if (iu >= u1 && iu < u2 &&
@@ -689,12 +689,14 @@ gimp_transform_region_lanczos (TileManager       *orig_tiles,
 
 static inline void
 untransform_coords (const GimpMatrix3 *m,
-                    const gint         x,
-                    const gint         y,
+                    const gint         ix,
+                    const gint         iy,
                     gdouble           *tu,
                     gdouble           *tv,
                     gdouble           *tw)
 {
+  gdouble x = ix + .5;
+  gdouble y = iy + .5;
   tu[0] = m->coeff[0][0] * (x    ) + m->coeff[0][1] * (y    ) + m->coeff[0][2];
   tv[0] = m->coeff[1][0] * (x    ) + m->coeff[1][1] * (y    ) + m->coeff[1][2];
   tw[0] = m->coeff[2][0] * (x    ) + m->coeff[2][1] * (y    ) + m->coeff[2][2];
@@ -730,8 +732,8 @@ normalize_coords (const gint     coords,
     {
       if (G_LIKELY (tw[i] != 0.0))
         {
-          u[i] = tu[i] / tw[i];
-          v[i] = tv[i] / tw[i];
+          u[i] = tu[i] / tw[i] - .5;
+          v[i] = tv[i] / tw[i] - .5;
         }
       else
         {
