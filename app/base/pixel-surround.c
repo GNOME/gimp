@@ -345,6 +345,18 @@ pixel_surround_get_data (PixelSurround *surround,
       return tile_data_pointer (surround->tile, x, y);
     }
 
+  if (x < 0)
+    *w = MIN (- x, surround->w);
+  else
+    *w = surround->w;
+
+  if (y < 0)
+    *h = MIN (- y, surround->h);
+  else
+    *h = surround->h;
+
+  *rowstride = surround->rowstride;
+
   if (surround->mode == PIXEL_SURROUND_SMEAR)
     {
       const guchar *edata;
@@ -392,28 +404,17 @@ pixel_surround_get_data (PixelSurround *surround,
         case (TOP):
         case (BOTTOM):
           pixel_surround_fill_row (surround, edata, ew);
+          *w = MIN (*w, ew);
           break;
 
         case (LEFT):
         case (RIGHT):
           pixel_surround_fill_col (surround, edata, estride, eh);
+          *h = MIN (*h, eh);
           break;
         }
     }
 
   /*   return a pointer to the virtual background tile  */
-
-  if (x < 0)
-    *w = MIN (- x, surround->w);
-  else
-    *w = surround->w;
-
-  if (y < 0)
-    *h = MIN (- y, surround->h);
-  else
-    *h = surround->h;
-
-  *rowstride = surround->rowstride;
-
   return surround->bg;
 }
