@@ -104,7 +104,10 @@ gimp_image_convert_precision (GimpImage     *image,
 
       gimp_drawable_convert_type (drawable, image,
                                   gimp_drawable_get_base_type (drawable),
-                                  precision, TRUE);
+                                  precision,
+                                  layer_dither_type,
+                                  mask_dither_type,
+                                  TRUE);
 
       if (progress)
         gimp_progress_set_value (progress,

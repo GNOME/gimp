@@ -129,6 +129,13 @@ static void       gimp_channel_to_selection  (GimpItem          *item,
                                               gdouble            feather_radius_x,
                                               gdouble            feather_radius_y);
 
+static void       gimp_channel_convert_type  (GimpDrawable      *drawable,
+                                              GimpImage         *dest_image,
+                                              GimpImageBaseType  new_base_type,
+                                              GimpPrecision      new_precision,
+                                              gint               layer_dither_type,
+                                              gint               mask_dither_type,
+                                              gboolean           push_undo);
 static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
 static void gimp_channel_get_active_components (const GimpDrawable *drawable,
                                                 gboolean           *active);
@@ -281,6 +288,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
   item_class->raise_failed         = _("Channel cannot be raised higher.");
   item_class->lower_failed         = _("Channel cannot be lowered more.");
 
+  drawable_class->convert_type          = gimp_channel_convert_type;
   drawable_class->invalidate_boundary   = gimp_channel_invalidate_boundary;
   drawable_class->get_active_components = gimp_channel_get_active_components;
   drawable_class->get_active_mask       = gimp_channel_get_active_mask;
@@ -448,6 +456,7 @@ gimp_channel_convert (GimpItem  *item,
     {
       gimp_drawable_convert_type (drawable, dest_image, GIMP_GRAY,
                                   gimp_image_get_precision (dest_image),
+                                  0, 0,
                                   FALSE);
     }
 
@@ -784,6 +793,60 @@ gimp_channel_to_selection (GimpItem       *item,
                                channel, off_x, off_y,
                                op,
                                feather, feather_radius_x, feather_radius_x);
+}
+
+static void
+gimp_channel_convert_type (GimpDrawable      *drawable,
+                           GimpImage         *dest_image,
+                           GimpImageBaseType  new_base_type,
+                           GimpPrecision      new_precision,
+                           gint               layer_dither_type,
+                           gint               mask_dither_type,
+                           gboolean           push_undo)
+{
+  GeglBuffer *dest_buffer;
+  const Babl *format;
+
+  format = gimp_image_get_format (dest_image,
+                                  new_base_type,
+                                  new_precision,
+                                  gimp_drawable_has_alpha (drawable));
+
+  dest_buffer =
+    gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                     gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                     gimp_item_get_height (GIMP_ITEM (drawable))),
+                     format);
+
+  if (mask_dither_type == 0)
+    {
+      gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
+                        dest_buffer, NULL);
+    }
+  else
+    {
+      GeglNode *dither;
+      gint      bits;
+
+      bits = (babl_format_get_bytes_per_pixel (format) * 8 /
+              babl_format_get_n_components (format));
+
+      dither = gegl_node_new_child (NULL,
+                                    "operation",       "gegl:color-reduction",
+                                    "red-bits",        bits,
+                                    "green-bits",      bits,
+                                    "blue-bits",       bits,
+                                    "alpha-bits",      bits,
+                                    "dither-strategy", mask_dither_type,
+                                    NULL);
+
+      gimp_drawable_apply_operation_to_buffer (drawable, NULL, NULL,
+                                               dither, dest_buffer);
+      g_object_unref (dither);
+    }
+
+  gimp_drawable_set_buffer (drawable, push_undo, NULL, dest_buffer);
+  g_object_unref (dest_buffer);
 }
 
 static void

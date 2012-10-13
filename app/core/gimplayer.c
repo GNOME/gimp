@@ -159,6 +159,8 @@ static void    gimp_layer_convert_type          (GimpDrawable       *drawable,
                                                  GimpImage          *dest_image,
                                                  GimpImageBaseType   new_base_type,
                                                  GimpPrecision       new_precision,
+                                                 gint                layer_dither_type,
+                                                 gint                mask_dither_type,
                                                  gboolean            push_undo);
 static void    gimp_layer_invalidate_boundary   (GimpDrawable       *drawable);
 static void    gimp_layer_get_active_components (const GimpDrawable *drawable,
@@ -631,6 +633,7 @@ gimp_layer_convert (GimpItem  *item,
     {
       gimp_drawable_convert_type (drawable, dest_image,
                                   new_base_type, new_precision,
+                                  0, 0,
                                   FALSE);
     }
 
@@ -950,21 +953,63 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
                          GimpImage         *dest_image,
                          GimpImageBaseType  new_base_type,
                          GimpPrecision      new_precision,
+                         gint               layer_dither_type,
+                         gint               mask_dither_type,
                          gboolean           push_undo)
 {
-  GimpLayer *layer = GIMP_LAYER (drawable);
+  GimpLayer  *layer = GIMP_LAYER (drawable);
+  GeglBuffer *dest_buffer;
+  const Babl *format;
+
+  format = gimp_image_get_format (dest_image,
+                                  new_base_type,
+                                  new_precision,
+                                  gimp_drawable_has_alpha (drawable));
+
+  dest_buffer =
+    gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                     gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                     gimp_item_get_height (GIMP_ITEM (drawable))),
+                     format);
+
+  if (layer_dither_type == 0)
+    {
+      gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
+                        dest_buffer, NULL);
+    }
+  else
+    {
+      GeglNode *dither;
+      gint      bits;
+
+      bits = (babl_format_get_bytes_per_pixel (format) * 8 /
+              babl_format_get_n_components (format));
+
+      dither = gegl_node_new_child (NULL,
+                                    "operation",       "gegl:color-reduction",
+                                    "red-bits",        bits,
+                                    "green-bits",      bits,
+                                    "blue-bits",       bits,
+                                    "alpha-bits",      bits,
+                                    "dither-strategy", layer_dither_type,
+                                    NULL);
+
+      gimp_drawable_apply_operation_to_buffer (drawable, NULL, NULL,
+                                               dither, dest_buffer);
+      g_object_unref (dither);
+    }
+
+  gimp_drawable_set_buffer (drawable, push_undo, NULL, dest_buffer);
+  g_object_unref (dest_buffer);
 
   if (layer->mask &&
       new_precision != gimp_drawable_get_precision (GIMP_DRAWABLE (layer->mask)))
     {
       gimp_drawable_convert_type (GIMP_DRAWABLE (layer->mask), dest_image,
-                                  GIMP_GRAY, new_precision, push_undo);
+                                  GIMP_GRAY, new_precision,
+                                  layer_dither_type, mask_dither_type,
+                                  push_undo);
     }
-
-  GIMP_DRAWABLE_CLASS (parent_class)->convert_type (drawable, dest_image,
-                                                    new_base_type,
-                                                    new_precision,
-                                                    push_undo);
 }
 
 static void

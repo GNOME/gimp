@@ -64,6 +64,8 @@ struct _GimpDrawableClass
                                            GimpImage            *dest_image,
                                            GimpImageBaseType     new_base_type,
                                            GimpPrecision         new_precision,
+                                           gint                  layer_dither_type,
+                                           gint                  mask_dither_type,
                                            gboolean              push_undo);
   void          (* apply_buffer)          (GimpDrawable         *drawable,
                                            GeglBuffer           *buffer,
@@ -137,6 +139,8 @@ void            gimp_drawable_convert_type       (GimpDrawable       *drawable,
                                                   GimpImage          *dest_image,
                                                   GimpImageBaseType   new_base_type,
                                                   GimpPrecision       new_precision,
+                                                  gint                layer_dither_type,
+                                                  gint                mask_dither_type,
                                                   gboolean            push_undo);
 
 void            gimp_drawable_apply_buffer       (GimpDrawable        *drawable,

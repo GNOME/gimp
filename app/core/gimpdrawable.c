@@ -132,6 +132,8 @@ static void       gimp_drawable_real_convert_type  (GimpDrawable      *drawable,
                                                     GimpImage         *dest_image,
                                                     GimpImageBaseType  new_base_type,
                                                     GimpPrecision      new_precision,
+                                                    gint               layer_dither_type,
+                                                    gint               mask_dither_type,
                                                     gboolean           push_undo);
 
 static GeglBuffer * gimp_drawable_real_get_buffer  (GimpDrawable      *drawable);
@@ -670,11 +672,17 @@ gimp_drawable_real_estimate_memsize (const GimpDrawable *drawable,
   return (gint64) babl_format_get_bytes_per_pixel (format) * width * height;
 }
 
+/* FIXME: this default impl is currently unused because no subclass
+ * chins up. the goal is to handle the almost identical subclass code
+ * here again.
+ */
 static void
 gimp_drawable_real_convert_type (GimpDrawable      *drawable,
                                  GimpImage         *dest_image,
                                  GimpImageBaseType  new_base_type,
                                  GimpPrecision      new_precision,
+                                 gint               layer_dither_type,
+                                 gint               mask_dither_type,
                                  gboolean           push_undo)
 {
   GeglBuffer *dest_buffer;
@@ -1137,6 +1145,8 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
                             GimpImage         *dest_image,
                             GimpImageBaseType  new_base_type,
                             GimpPrecision      new_precision,
+                            gint               layer_dither_type,
+                            gint               mask_dither_type,
                             gboolean           push_undo)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
@@ -1150,6 +1160,8 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
   GIMP_DRAWABLE_GET_CLASS (drawable)->convert_type (drawable, dest_image,
                                                     new_base_type,
                                                     new_precision,
+                                                    layer_dither_type,
+                                                    mask_dither_type,
                                                     push_undo);
 }
 

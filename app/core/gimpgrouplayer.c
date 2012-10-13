@@ -135,6 +135,8 @@ static void            gimp_group_layer_convert_type (GimpDrawable      *drawabl
                                                       GimpImage         *dest_image,
                                                       GimpImageBaseType  new_base_type,
                                                       GimpPrecision      new_precision,
+                                                      gint               layer_dither_type,
+                                                      gint               mask_dither_type,
                                                       gboolean           push_undo);
 
 static const Babl    * gimp_group_layer_get_format   (GimpProjectable *projectable);
@@ -847,6 +849,8 @@ gimp_group_layer_convert_type (GimpDrawable      *drawable,
                                GimpImage         *dest_image,
                                GimpImageBaseType  new_base_type,
                                GimpPrecision      new_precision,
+                               gint               layer_dither_type,
+                               gint               mask_dither_type,
                                gboolean           push_undo)
 {
   GimpGroupLayer        *group   = GIMP_GROUP_LAYER (drawable);
@@ -887,7 +891,9 @@ gimp_group_layer_convert_type (GimpDrawable      *drawable,
       new_precision != gimp_drawable_get_precision (GIMP_DRAWABLE (mask)))
     {
       gimp_drawable_convert_type (GIMP_DRAWABLE (mask), dest_image,
-                                  GIMP_GRAY, new_precision, push_undo);
+                                  GIMP_GRAY, new_precision,
+                                  layer_dither_type, mask_dither_type,
+                                  push_undo);
     }
 }
 
