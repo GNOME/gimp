@@ -240,32 +240,6 @@ scale_determine_progress (PixelRegion *srcPR,
 
   /*  The logic here should be kept in sync with scale_region_tile().  */
 
-  while (levelx < 0 && levely < 0)
-    {
-      width  <<= 1;
-      height <<= 1;
-      levelx++;
-      levely++;
-
-      tiles += NUM_TILES (width, height);
-    }
-
-  while (levelx < 0)
-    {
-      width <<= 1;
-      levelx++;
-
-      tiles += NUM_TILES (width, height);
-    }
-
-  while (levely < 0)
-    {
-      height <<= 1;
-      levely++;
-
-      tiles += NUM_TILES (width, height);
-    }
-
   while (levelx > 0 && levely > 0)
     {
       width  >>= 1;
@@ -327,53 +301,6 @@ scale_region_tile (PixelRegion           *srcPR,
     {
       scale (srcTM, dstTM, interpolation,
              progress_callback, progress_data, &progress, max_progress);
-    }
-
-  while (levelx < 0 && levely < 0)
-    {
-      width  <<= 1;
-      height <<= 1;
-
-      tmpTM = tile_manager_new (width, height, bytes);
-      scale (srcTM, tmpTM, interpolation,
-             progress_callback, progress_data, &progress, max_progress);
-
-      if (srcTM != srcPR->tiles)
-        tile_manager_unref (srcTM);
-
-      srcTM = tmpTM;
-      levelx++;
-      levely++;
-    }
-
-  while (levelx < 0)
-    {
-      width <<= 1;
-
-      tmpTM = tile_manager_new (width, height, bytes);
-      scale (srcTM, tmpTM, interpolation,
-             progress_callback, progress_data, &progress, max_progress);
-
-      if (srcTM != srcPR->tiles)
-        tile_manager_unref (srcTM);
-
-      srcTM = tmpTM;
-      levelx++;
-    }
-
-  while (levely < 0)
-    {
-      height <<= 1;
-
-      tmpTM = tile_manager_new (width, height, bytes);
-      scale (srcTM, tmpTM, interpolation,
-             progress_callback, progress_data, &progress, max_progress);
-
-      if (srcTM != srcPR->tiles)
-        tile_manager_unref (srcTM);
-
-      srcTM = tmpTM;
-      levely++;
     }
 
   while (levelx > 0 && levely > 0)
