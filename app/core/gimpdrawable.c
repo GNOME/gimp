@@ -130,6 +130,7 @@ static gint64  gimp_drawable_real_estimate_memsize (const GimpDrawable *drawable
 
 static void       gimp_drawable_real_convert_type  (GimpDrawable      *drawable,
                                                     GimpImage         *dest_image,
+                                                    const Babl        *new_format,
                                                     GimpImageBaseType  new_base_type,
                                                     GimpPrecision      new_precision,
                                                     gint               layer_dither_type,
@@ -679,6 +680,7 @@ gimp_drawable_real_estimate_memsize (const GimpDrawable *drawable,
 static void
 gimp_drawable_real_convert_type (GimpDrawable      *drawable,
                                  GimpImage         *dest_image,
+                                 const Babl        *new_format,
                                  GimpImageBaseType  new_base_type,
                                  GimpPrecision      new_precision,
                                  gint               layer_dither_type,
@@ -1149,6 +1151,8 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
                             gint               mask_dither_type,
                             gboolean           push_undo)
 {
+  const Babl *new_format;
+
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_IMAGE (dest_image));
   g_return_if_fail (new_base_type != gimp_drawable_get_base_type (drawable) ||
@@ -1157,7 +1161,13 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
     push_undo = FALSE;
 
+  new_format = gimp_image_get_format (dest_image,
+                                      new_base_type,
+                                      new_precision,
+                                      gimp_drawable_has_alpha (drawable));
+
   GIMP_DRAWABLE_GET_CLASS (drawable)->convert_type (drawable, dest_image,
+                                                    new_format,
                                                     new_base_type,
                                                     new_precision,
                                                     layer_dither_type,

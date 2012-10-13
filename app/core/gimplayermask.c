@@ -26,6 +26,8 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "gimperror.h"
 #include "gimpimage.h"
 #include "gimpimage-undo-push.h"
@@ -35,15 +37,24 @@
 #include "gimp-intl.h"
 
 
-static gboolean        gimp_layer_mask_is_attached       (const GimpItem *item);
-static gboolean        gimp_layer_mask_is_content_locked (const GimpItem *item);
-static GimpItemTree  * gimp_layer_mask_get_tree          (GimpItem       *item);
-static GimpItem      * gimp_layer_mask_duplicate         (GimpItem       *item,
-                                                          GType           new_type);
-static gboolean        gimp_layer_mask_rename            (GimpItem       *item,
-                                                          const gchar    *new_name,
-                                                          const gchar    *undo_desc,
-                                                          GError        **error);
+static gboolean        gimp_layer_mask_is_attached       (const GimpItem    *item);
+static gboolean        gimp_layer_mask_is_content_locked (const GimpItem    *item);
+static GimpItemTree  * gimp_layer_mask_get_tree          (GimpItem          *item);
+static GimpItem      * gimp_layer_mask_duplicate         (GimpItem          *item,
+                                                          GType              new_type);
+static gboolean        gimp_layer_mask_rename            (GimpItem          *item,
+                                                          const gchar       *new_name,
+                                                          const gchar       *undo_desc,
+                                                          GError           **error);
+
+static void            gimp_layer_mask_convert_type      (GimpDrawable      *drawable,
+                                                          GimpImage         *dest_image,
+                                                          const Babl        *new_format,
+                                                          GimpImageBaseType  new_base_type,
+                                                          GimpPrecision      new_precision,
+                                                          gint               layer_dither_type,
+                                                          gint               mask_dither_type,
+                                                          gboolean           push_undo);
 
 
 G_DEFINE_TYPE (GimpLayerMask, gimp_layer_mask, GIMP_TYPE_CHANNEL)
@@ -56,6 +67,7 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 {
   GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
   GimpItemClass     *item_class     = GIMP_ITEM_CLASS (klass);
+  GimpDrawableClass *drawable_class = GIMP_DRAWABLE_CLASS (klass);
 
   viewable_class->default_stock_id = "gimp-layer-mask";
 
@@ -66,6 +78,8 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
   item_class->rename            = gimp_layer_mask_rename;
   item_class->translate_desc    = C_("undo-type", "Move Layer Mask");
   item_class->to_selection_desc = C_("undo-type", "Layer Mask to Selection");
+
+  drawable_class->convert_type  = gimp_layer_mask_convert_type;
 }
 
 static void
@@ -129,6 +143,27 @@ gimp_layer_mask_rename (GimpItem     *item,
 	       _("Cannot rename layer masks."));
 
   return FALSE;
+}
+
+static void
+gimp_layer_mask_convert_type (GimpDrawable      *drawable,
+                              GimpImage         *dest_image,
+                              const Babl        *new_format,
+                              GimpImageBaseType  new_base_type,
+                              GimpPrecision      new_precision,
+                              gint               layer_dither_type,
+                              gint               mask_dither_type,
+                              gboolean           push_undo)
+{
+  new_format = gimp_babl_mask_format (new_precision);
+
+  GIMP_DRAWABLE_CLASS (parent_class)->convert_type (drawable, dest_image,
+                                                    new_format,
+                                                    new_base_type,
+                                                    new_precision,
+                                                    layer_dither_type,
+                                                    mask_dither_type,
+                                                    push_undo);
 }
 
 GimpLayerMask *

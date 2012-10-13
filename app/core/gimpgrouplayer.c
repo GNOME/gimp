@@ -133,6 +133,7 @@ static gint64      gimp_group_layer_estimate_memsize (const GimpDrawable *drawab
                                                       gint             height);
 static void            gimp_group_layer_convert_type (GimpDrawable      *drawable,
                                                       GimpImage         *dest_image,
+                                                      const Babl        *new_format,
                                                       GimpImageBaseType  new_base_type,
                                                       GimpPrecision      new_precision,
                                                       gint               layer_dither_type,
@@ -847,6 +848,7 @@ get_projection_format (GimpProjectable   *projectable,
 static void
 gimp_group_layer_convert_type (GimpDrawable      *drawable,
                                GimpImage         *dest_image,
+                               const Babl        *new_format /* unused */,
                                GimpImageBaseType  new_base_type,
                                GimpPrecision      new_precision,
                                gint               layer_dither_type,

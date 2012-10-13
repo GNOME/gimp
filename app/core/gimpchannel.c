@@ -131,6 +131,7 @@ static void       gimp_channel_to_selection  (GimpItem          *item,
 
 static void       gimp_channel_convert_type  (GimpDrawable      *drawable,
                                               GimpImage         *dest_image,
+                                              const Babl        *new_format,
                                               GimpImageBaseType  new_base_type,
                                               GimpPrecision      new_precision,
                                               gint               layer_dither_type,
@@ -798,6 +799,7 @@ gimp_channel_to_selection (GimpItem       *item,
 static void
 gimp_channel_convert_type (GimpDrawable      *drawable,
                            GimpImage         *dest_image,
+                           const Babl        *new_format,
                            GimpImageBaseType  new_base_type,
                            GimpPrecision      new_precision,
                            gint               layer_dither_type,
@@ -805,18 +807,12 @@ gimp_channel_convert_type (GimpDrawable      *drawable,
                            gboolean           push_undo)
 {
   GeglBuffer *dest_buffer;
-  const Babl *format;
-
-  format = gimp_image_get_format (dest_image,
-                                  new_base_type,
-                                  new_precision,
-                                  gimp_drawable_has_alpha (drawable));
 
   dest_buffer =
     gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                      gimp_item_get_width  (GIMP_ITEM (drawable)),
                                      gimp_item_get_height (GIMP_ITEM (drawable))),
-                     format);
+                     new_format);
 
   if (mask_dither_type == 0)
     {
@@ -828,8 +824,8 @@ gimp_channel_convert_type (GimpDrawable      *drawable,
       GeglNode *dither;
       gint      bits;
 
-      bits = (babl_format_get_bytes_per_pixel (format) * 8 /
-              babl_format_get_n_components (format));
+      bits = (babl_format_get_bytes_per_pixel (new_format) * 8 /
+              babl_format_get_n_components (new_format));
 
       dither = gegl_node_new_child (NULL,
                                     "operation",       "gegl:color-reduction",

@@ -62,6 +62,7 @@ struct _GimpDrawableClass
   GimpComponentMask (* get_active_mask)   (const GimpDrawable   *drawable);
   void          (* convert_type)          (GimpDrawable         *drawable,
                                            GimpImage            *dest_image,
+                                           const Babl           *new_format,
                                            GimpImageBaseType     new_base_type,
                                            GimpPrecision         new_precision,
                                            gint                  layer_dither_type,

@@ -23,6 +23,7 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
@@ -80,6 +81,14 @@ static gboolean   gimp_selection_stroke        (GimpItem            *item,
                                                 gboolean             push_undo,
                                                 GimpProgress        *progress,
                                                 GError             **error);
+static void       gimp_selection_convert_type  (GimpDrawable        *drawable,
+                                                GimpImage           *dest_image,
+                                                const Babl          *new_format,
+                                                GimpImageBaseType    new_base_type,
+                                                GimpPrecision        new_precision,
+                                                gint                 layer_dither_type,
+                                                gint                 mask_dither_type,
+                                                gboolean             push_undo);
 static void gimp_selection_invalidate_boundary (GimpDrawable        *drawable);
 
 static gboolean   gimp_selection_boundary      (GimpChannel         *channel,
@@ -154,6 +163,7 @@ gimp_selection_class_init (GimpSelectionClass *klass)
   item_class->translate_desc          = C_("undo-type", "Move Selection");
   item_class->stroke_desc             = C_("undo-type", "Stroke Selection");
 
+  drawable_class->convert_type        = gimp_selection_convert_type;
   drawable_class->invalidate_boundary = gimp_selection_invalidate_boundary;
 
   channel_class->boundary             = gimp_selection_boundary;
@@ -295,6 +305,27 @@ gimp_selection_stroke (GimpItem           *item,
   gimp_selection_pop_stroking (selection);
 
   return retval;
+}
+
+static void
+gimp_selection_convert_type (GimpDrawable      *drawable,
+                             GimpImage         *dest_image,
+                             const Babl        *new_format,
+                             GimpImageBaseType  new_base_type,
+                             GimpPrecision      new_precision,
+                             gint               layer_dither_type,
+                             gint               mask_dither_type,
+                             gboolean           push_undo)
+{
+  new_format = gimp_babl_mask_format (new_precision);
+
+  GIMP_DRAWABLE_CLASS (parent_class)->convert_type (drawable, dest_image,
+                                                    new_format,
+                                                    new_base_type,
+                                                    new_precision,
+                                                    layer_dither_type,
+                                                    mask_dither_type,
+                                                    push_undo);
 }
 
 static void
