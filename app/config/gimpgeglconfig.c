@@ -142,6 +142,9 @@ gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
 
   memory_size = gimp_get_physical_memory_size ();
 
+  /* limit to the amount one process can handle */
+  memory_size = MIN (G_MAXSIZE, memory_size);
+
   if (memory_size > 0)
     memory_size = memory_size / 2; /* half the memory */
   else
