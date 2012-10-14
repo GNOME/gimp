@@ -46,8 +46,8 @@ A typical gimpfu plug-in would look like this:
               "My plug-in",
               "*",
               [
-                  (PF_IMAGE, "image", "Input image"),
-                  (PF_DRAWABLE, "drawable", "Input drawable"),
+                  (PF_IMAGE, "image", "Input image", None),
+                  (PF_DRAWABLE, "drawable", "Input drawable", None),
                   (PF_STRING, "arg", "The argument", "default-value")
               ],
               [],
