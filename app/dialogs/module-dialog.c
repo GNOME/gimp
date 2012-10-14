@@ -282,22 +282,25 @@ static void
 dialog_select_callback (GtkTreeSelection *sel,
                         ModuleDialog     *dialog)
 {
-  GimpModule  *module;
-  GtkTreeIter  iter;
+  GtkTreeIter iter;
 
-  gtk_tree_selection_get_selected (sel, NULL, &iter);
-  gtk_tree_model_get (GTK_TREE_MODEL (dialog->list), &iter,
-                      COLUMN_MODULE, &module, -1);
+  if (gtk_tree_selection_get_selected (sel, NULL, &iter))
+    {
+      GimpModule *module;
 
-  if (module)
-    g_object_unref (module);
+      gtk_tree_model_get (GTK_TREE_MODEL (dialog->list), &iter,
+                          COLUMN_MODULE, &module, -1);
 
-  if (dialog->selected == module)
-    return;
+      if (module)
+        g_object_unref (module);
 
-  dialog->selected = module;
+      if (dialog->selected == module)
+        return;
 
-  dialog_info_update (dialog->gimp->module_db, dialog->selected, dialog);
+      dialog->selected = module;
+
+      dialog_info_update (dialog->gimp->module_db, dialog->selected, dialog);
+    }
 }
 
 static void
