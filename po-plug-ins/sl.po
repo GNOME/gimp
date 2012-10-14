@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP - standardni vtičniki\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-09-27 06:53+0000\n"
-"PO-Revision-Date: 2012-10-07 10:53+0100\n"
-"Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
+"POT-Creation-Date: 2012-10-13 19:56+0000\n"
+"PO-Revision-Date: 2012-10-14 16:07+0100\n"
+"Last-Translator: filmsi\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -645,8 +645,8 @@ msgstr "_Navpične"
 #: ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:255
 #: ../plug-ins/common/tile.c:262
-#: ../plug-ins/file-bmp/bmp-read.c:380
-#: ../plug-ins/file-bmp/bmp-read.c:646
+#: ../plug-ins/file-bmp/bmp-read.c:391
+#: ../plug-ins/file-bmp/bmp-read.c:657
 #: ../plug-ins/file-faxg3/faxg3.c:526
 #: ../plug-ins/file-fits/fits.c:530
 #: ../plug-ins/file-jpeg/jpeg-load.c:255
@@ -1118,7 +1118,7 @@ msgstr "Naloži nastavitve mešalca kanalov"
 #: ../plug-ins/common/file-xmc.c:848
 #: ../plug-ins/common/file-xwd.c:433
 #: ../plug-ins/common/sphere-designer.c:2010
-#: ../plug-ins/file-bmp/bmp-read.c:153
+#: ../plug-ins/file-bmp/bmp-read.c:154
 #: ../plug-ins/file-faxg3/faxg3.c:235
 #: ../plug-ins/file-fits/fits.c:358
 #: ../plug-ins/file-fli/fli-gimp.c:459
@@ -3166,7 +3166,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: ../plug-ins/common/file-xmc.c:675
 #: ../plug-ins/common/file-xpm.c:352
 #: ../plug-ins/common/file-xwd.c:524
-#: ../plug-ins/file-bmp/bmp-read.c:158
+#: ../plug-ins/file-bmp/bmp-read.c:159
 #: ../plug-ins/file-faxg3/faxg3.c:219
 #: ../plug-ins/file-fli/fli-gimp.c:501
 #: ../plug-ins/file-ico/ico-load.c:644
@@ -3908,14 +3908,14 @@ msgid "'%s' is not a PCX file"
 msgstr "'%s' ni datoteka PCX"
 
 #: ../plug-ins/common/file-pcx.c:397
-#: ../plug-ins/file-bmp/bmp-read.c:635
+#: ../plug-ins/file-bmp/bmp-read.c:646
 #: ../plug-ins/file-psd/psd-load.c:301
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Nepodprta ali neveljavna širina slike: %d"
 
 #: ../plug-ins/common/file-pcx.c:403
-#: ../plug-ins/file-bmp/bmp-read.c:641
+#: ../plug-ins/file-bmp/bmp-read.c:652
 #: ../plug-ins/file-psd/psd-load.c:293
 #, c-format
 msgid "Unsupported or invalid image height: %d"
@@ -8618,45 +8618,51 @@ msgstr "_Moč:"
 msgid "Higher values increase the magnitude of the effect"
 msgstr "Višje vrednosti povečajo stopnjo učinka"
 
-#: ../plug-ins/file-bmp/bmp-read.c:85
+#: ../plug-ins/file-bmp/bmp-read.c:86
 msgid "Bad colormap"
 msgstr "Poškodovan katalog barv"
 
-#: ../plug-ins/file-bmp/bmp-read.c:169
-#: ../plug-ins/file-bmp/bmp-read.c:180
-#: ../plug-ins/file-bmp/bmp-read.c:187
-#: ../plug-ins/file-bmp/bmp-read.c:196
-#: ../plug-ins/file-bmp/bmp-read.c:211
-#: ../plug-ins/file-bmp/bmp-read.c:416
-#: ../plug-ins/file-bmp/bmp-read.c:437
+#: ../plug-ins/file-bmp/bmp-read.c:170
+#: ../plug-ins/file-bmp/bmp-read.c:181
+#: ../plug-ins/file-bmp/bmp-read.c:188
+#: ../plug-ins/file-bmp/bmp-read.c:197
+#: ../plug-ins/file-bmp/bmp-read.c:212
+#: ../plug-ins/file-bmp/bmp-read.c:427
 #: ../plug-ins/file-bmp/bmp-read.c:448
-#: ../plug-ins/file-bmp/bmp-read.c:456
-#: ../plug-ins/file-bmp/bmp-read.c:464
-#: ../plug-ins/file-bmp/bmp-read.c:476
+#: ../plug-ins/file-bmp/bmp-read.c:459
+#: ../plug-ins/file-bmp/bmp-read.c:467
+#: ../plug-ins/file-bmp/bmp-read.c:475
+#: ../plug-ins/file-bmp/bmp-read.c:487
 #, c-format
 msgid "'%s' is not a valid BMP file"
 msgstr "'%s' ni veljavna datoteka BMP."
 
-#: ../plug-ins/file-bmp/bmp-read.c:225
-#: ../plug-ins/file-bmp/bmp-read.c:252
-#: ../plug-ins/file-bmp/bmp-read.c:280
-#: ../plug-ins/file-bmp/bmp-read.c:345
-#: ../plug-ins/file-bmp/bmp-read.c:395
+#: ../plug-ins/file-bmp/bmp-read.c:226
+#: ../plug-ins/file-bmp/bmp-read.c:253
+#: ../plug-ins/file-bmp/bmp-read.c:281
+#: ../plug-ins/file-bmp/bmp-read.c:356
+#: ../plug-ins/file-bmp/bmp-read.c:406
 #, c-format
 msgid "Error reading BMP file header from '%s'"
 msgstr "Napaka pri branju glave slikovne datoteke BMP pri '%s'"
 
-#: ../plug-ins/file-bmp/bmp-read.c:587
+#: ../plug-ins/file-bmp/bmp-read.c:345
+#, c-format
+#| msgid "Unsupported compression mode: %d"
+msgid "Unsupported compression (%lu) in BMP file from '%s'"
+msgstr "Nepodprti način stiskanja:(%lu) v datoteki BMP iz '%s'"
+
+#: ../plug-ins/file-bmp/bmp-read.c:598
 msgid "Unrecognized or invalid BMP compression format."
 msgstr "Neprepoznan ali neveljaven zapis stiskanja BMP."
 
-#: ../plug-ins/file-bmp/bmp-read.c:629
+#: ../plug-ins/file-bmp/bmp-read.c:640
 msgid "Unsupported or invalid bitdepth."
 msgstr "Nepodprta vrsta datoteke ali neveljavna bitna globina."
 
-#: ../plug-ins/file-bmp/bmp-read.c:816
-#: ../plug-ins/file-bmp/bmp-read.c:857
-#: ../plug-ins/file-bmp/bmp-read.c:907
+#: ../plug-ins/file-bmp/bmp-read.c:827
+#: ../plug-ins/file-bmp/bmp-read.c:868
+#: ../plug-ins/file-bmp/bmp-read.c:918
 msgid "The bitmap ends unexpectedly."
 msgstr "Bitna slika se nepričakovano zaključi."
 
