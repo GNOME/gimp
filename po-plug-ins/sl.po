@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP - standardni vtičniki 2.8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-08-21 23:59+0000\n"
-"PO-Revision-Date: 2012-08-22 10:20+0100\n"
-"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
+"POT-Creation-Date: 2012-10-14 19:43+0000\n"
+"PO-Revision-Date: 2012-10-15 18:02+0100\n"
+"Last-Translator: filmsi\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -626,8 +626,8 @@ msgstr "_Navpične"
 #: ../plug-ins/common/blinds.c:279
 #: ../plug-ins/common/compose.c:936
 #: ../plug-ins/common/decompose.c:729
-#: ../plug-ins/common/file-cel.c:438
 #: ../plug-ins/common/file-cel.c:441
+#: ../plug-ins/common/file-cel.c:444
 #: ../plug-ins/common/file-dicom.c:612
 #: ../plug-ins/common/file-gif-load.c:943
 #: ../plug-ins/common/file-jp2-load.c:354
@@ -644,8 +644,8 @@ msgstr "_Navpične"
 #: ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:257
 #: ../plug-ins/common/tile.c:262
-#: ../plug-ins/file-bmp/bmp-read.c:380
-#: ../plug-ins/file-bmp/bmp-read.c:647
+#: ../plug-ins/file-bmp/bmp-read.c:391
+#: ../plug-ins/file-bmp/bmp-read.c:658
 #: ../plug-ins/file-faxg3/faxg3.c:474
 #: ../plug-ins/file-fits/fits.c:530
 #: ../plug-ins/file-jpeg/jpeg-load.c:255
@@ -1090,9 +1090,9 @@ msgstr "Naloži nastavitve mešalca kanalov"
 #: ../plug-ins/common/channel-mixer.c:980
 #: ../plug-ins/common/cml-explorer.c:2208
 #: ../plug-ins/common/curve-bend.c:892
-#: ../plug-ins/common/file-cel.c:293
-#: ../plug-ins/common/file-cel.c:345
-#: ../plug-ins/common/file-cel.c:576
+#: ../plug-ins/common/file-cel.c:296
+#: ../plug-ins/common/file-cel.c:348
+#: ../plug-ins/common/file-cel.c:579
 #: ../plug-ins/common/file-dicom.c:340
 #: ../plug-ins/common/file-gbr.c:368
 #: ../plug-ins/common/file-gif-load.c:355
@@ -1119,7 +1119,7 @@ msgstr "Naloži nastavitve mešalca kanalov"
 #: ../plug-ins/common/file-xmc.c:848
 #: ../plug-ins/common/file-xwd.c:433
 #: ../plug-ins/common/sphere-designer.c:2010
-#: ../plug-ins/file-bmp/bmp-read.c:153
+#: ../plug-ins/file-bmp/bmp-read.c:154
 #: ../plug-ins/file-faxg3/faxg3.c:229
 #: ../plug-ins/file-fits/fits.c:358
 #: ../plug-ins/file-fli/fli-gimp.c:459
@@ -1151,7 +1151,7 @@ msgstr "Shrani nastavitve mešalca kanalov"
 #: ../plug-ins/common/channel-mixer.c:1058
 #: ../plug-ins/common/cml-explorer.c:2035
 #: ../plug-ins/common/curve-bend.c:840
-#: ../plug-ins/common/file-cel.c:769
+#: ../plug-ins/common/file-cel.c:772
 #: ../plug-ins/common/file-csource.c:407
 #: ../plug-ins/common/file-dicom.c:1351
 #: ../plug-ins/common/file-gbr.c:663
@@ -1175,7 +1175,7 @@ msgstr "Shrani nastavitve mešalca kanalov"
 #: ../plug-ins/common/file-xmc.c:1455
 #: ../plug-ins/common/file-xwd.c:619
 #: ../plug-ins/common/sphere-designer.c:2121
-#: ../plug-ins/file-bmp/bmp-write.c:306
+#: ../plug-ins/file-bmp/bmp-write.c:309
 #: ../plug-ins/file-fits/fits.c:476
 #: ../plug-ins/file-fli/fli-gimp.c:750
 #: ../plug-ins/file-ico/ico-save.c:1007
@@ -3178,15 +3178,14 @@ msgstr "_Oblika:"
 msgid "KISS CEL"
 msgstr "KISS CEL"
 
-#: ../plug-ins/common/file-cel.c:199
+#: ../plug-ins/common/file-cel.c:202
 msgid "Load KISS Palette"
 msgstr "Naloži paleto KISS"
 
-#: ../plug-ins/common/file-cel.c:305
-#: ../plug-ins/common/file-cel.c:360
-#: ../plug-ins/common/file-cel.c:380
+#: ../plug-ins/common/file-cel.c:308
+#: ../plug-ins/common/file-cel.c:363
+#: ../plug-ins/common/file-cel.c:383
 #, c-format
-#| msgid "Error while reading '%s': %s"
 msgid "EOF or error while reading image header"
 msgstr "EOF ali napaka pri branju zaglavja slike"
 
@@ -3194,7 +3193,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #. column, highest column ever used
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
-#: ../plug-ins/common/file-cel.c:350
+#: ../plug-ins/common/file-cel.c:353
 #: ../plug-ins/common/file-dicom.c:345
 #: ../plug-ins/common/file-gbr.c:373
 #: ../plug-ins/common/file-gif-load.c:360
@@ -3216,7 +3215,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: ../plug-ins/common/file-xmc.c:675
 #: ../plug-ins/common/file-xpm.c:352
 #: ../plug-ins/common/file-xwd.c:524
-#: ../plug-ins/file-bmp/bmp-read.c:158
+#: ../plug-ins/file-bmp/bmp-read.c:159
 #: ../plug-ins/file-faxg3/faxg3.c:213
 #: ../plug-ins/file-fli/fli-gimp.c:501
 #: ../plug-ins/file-ico/ico-load.c:644
@@ -3228,73 +3227,69 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 msgid "Opening '%s'"
 msgstr "Odpiranje '%s' ..."
 
-#: ../plug-ins/common/file-cel.c:388
+#: ../plug-ins/common/file-cel.c:391
 #, c-format
-#| msgid "'%s' is not a PCX file"
 msgid "is not a CEL image file"
 msgstr "ni datoteka slike CEL"
 
-#: ../plug-ins/common/file-cel.c:402
+#: ../plug-ins/common/file-cel.c:405
 #, c-format
 msgid "illegal bpp value in image: %hhu"
 msgstr "neveljavna vrednost bpp v sliki: %hhu"
 
-#: ../plug-ins/common/file-cel.c:416
+#: ../plug-ins/common/file-cel.c:419
 #, c-format
 msgid "illegal image dimensions: width: %d, horizontal offset: %d, height: %d, vertical offset: %d"
 msgstr "neveljavne mere slike: širina: %d, vodoravni odmik: %d, višina: %d, navpični odmik: %d"
 
-#: ../plug-ins/common/file-cel.c:429
+#: ../plug-ins/common/file-cel.c:432
 #, c-format
 msgid "Can't create a new image"
 msgstr "Nove slike ni mogoče ustvariti"
 
-#: ../plug-ins/common/file-cel.c:467
-#: ../plug-ins/common/file-cel.c:502
-#: ../plug-ins/common/file-cel.c:527
+#: ../plug-ins/common/file-cel.c:470
+#: ../plug-ins/common/file-cel.c:505
+#: ../plug-ins/common/file-cel.c:530
 #, c-format
-#| msgid "Error while reading '%s': %s"
 msgid "EOF or error while reading image data"
 msgstr "EOF ali napaka pri branju podatkov slike"
 
-#: ../plug-ins/common/file-cel.c:544
+#: ../plug-ins/common/file-cel.c:547
 #, c-format
 msgid "Unsupported bit depth (%d)!"
 msgstr "Nepodprta bitna globina (%d)!"
 
-#: ../plug-ins/common/file-cel.c:626
-#: ../plug-ins/common/file-cel.c:638
+#: ../plug-ins/common/file-cel.c:629
+#: ../plug-ins/common/file-cel.c:641
 #, c-format
 msgid "'%s': EOF or error while reading palette header"
 msgstr "'%s': EOF ali napaka pri branju zaglavja palete"
 
-#: ../plug-ins/common/file-cel.c:647
+#: ../plug-ins/common/file-cel.c:650
 #, c-format
-#| msgid "'%s' is not a PCX file"
 msgid "'%s': is not a KCF palette file"
 msgstr "'%s': ni datoteka palete KCF"
 
-#: ../plug-ins/common/file-cel.c:656
+#: ../plug-ins/common/file-cel.c:659
 #, c-format
 msgid "'%s': illegal bpp value in palette: %hhu"
 msgstr "'%s': neveljavna vrednost bpp v paleti: %hhu"
 
-#: ../plug-ins/common/file-cel.c:665
+#: ../plug-ins/common/file-cel.c:668
 #, c-format
-#| msgid "Number of colors:"
 msgid "'%s': illegal number of colors: %u"
 msgstr "'%s': neveljavno število barv: %u"
 
-#: ../plug-ins/common/file-cel.c:680
-#: ../plug-ins/common/file-cel.c:697
-#: ../plug-ins/common/file-cel.c:717
+#: ../plug-ins/common/file-cel.c:683
+#: ../plug-ins/common/file-cel.c:700
+#: ../plug-ins/common/file-cel.c:720
 #, c-format
 msgid "'%s': EOF or error while reading palette data"
 msgstr "'%s': EOF ali napaka pri branju podatkov palete"
 
 #. init the progress meter
 #. And let's begin the progress
-#: ../plug-ins/common/file-cel.c:774
+#: ../plug-ins/common/file-cel.c:777
 #: ../plug-ins/common/file-gbr.c:668
 #: ../plug-ins/common/file-gif-save.c:789
 #: ../plug-ins/common/file-gih.c:1263
@@ -3312,7 +3307,7 @@ msgstr "'%s': EOF ali napaka pri branju podatkov palete"
 #: ../plug-ins/common/file-xmc.c:1460
 #: ../plug-ins/common/file-xpm.c:638
 #: ../plug-ins/common/file-xwd.c:624
-#: ../plug-ins/file-bmp/bmp-write.c:317
+#: ../plug-ins/file-bmp/bmp-write.c:320
 #: ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:718
 #: ../plug-ins/file-ico/ico-save.c:1001
@@ -3956,14 +3951,14 @@ msgid "'%s' is not a PCX file"
 msgstr "'%s' ni datoteka PCX"
 
 #: ../plug-ins/common/file-pcx.c:397
-#: ../plug-ins/file-bmp/bmp-read.c:636
+#: ../plug-ins/file-bmp/bmp-read.c:647
 #: ../plug-ins/file-psd/psd-load.c:301
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Nepodprta ali neveljavna širina slike: %d"
 
 #: ../plug-ins/common/file-pcx.c:403
-#: ../plug-ins/file-bmp/bmp-read.c:642
+#: ../plug-ins/file-bmp/bmp-read.c:653
 #: ../plug-ins/file-psd/psd-load.c:293
 #, c-format
 msgid "Unsupported or invalid image height: %d"
@@ -7154,83 +7149,83 @@ msgstr "Analiziraj vzorec ..."
 msgid "Remap colorized"
 msgstr "Ponovno poslikaj prebarvano ..."
 
-#: ../plug-ins/common/screenshot.c:240
+#: ../plug-ins/common/screenshot.c:251
 msgid "Create an image from an area of the screen"
 msgstr "Ustvari sliko iz področja zaslona"
 
-#: ../plug-ins/common/screenshot.c:253
+#: ../plug-ins/common/screenshot.c:273
 msgid "_Screenshot..."
 msgstr "_Posnetek namizja ..."
 
-#: ../plug-ins/common/screenshot.c:418
+#: ../plug-ins/common/screenshot.c:446
 msgid "Error selecting the window"
 msgstr "Napaka pri izbiranju okna"
 
-#: ../plug-ins/common/screenshot.c:786
+#: ../plug-ins/common/screenshot.c:814
 msgid "Importing screenshot"
 msgstr "Uvoz zaslonske slike ..."
 
-#: ../plug-ins/common/screenshot.c:812
-#: ../plug-ins/common/screenshot.c:1085
+#: ../plug-ins/common/screenshot.c:840
+#: ../plug-ins/common/screenshot.c:1202
 msgid "Screenshot"
 msgstr "Posnetek namizja"
 
-#: ../plug-ins/common/screenshot.c:853
+#: ../plug-ins/common/screenshot.c:881
 msgid "Mouse Pointer"
 msgstr "Miškin kazalec"
 
-#: ../plug-ins/common/screenshot.c:972
+#: ../plug-ins/common/screenshot.c:1015
 msgid "Specified window not found"
 msgstr "Navedenega okna ni mogoče najti"
 
-#: ../plug-ins/common/screenshot.c:1094
+#: ../plug-ins/common/screenshot.c:1211
 msgid "S_nap"
 msgstr "_Pripni"
 
-#: ../plug-ins/common/screenshot.c:1124
+#: ../plug-ins/common/screenshot.c:1241
 msgid "After the delay, the screenshot is taken."
 msgstr "Posnetek namizja nastane po zakasnitvi."
 
-#: ../plug-ins/common/screenshot.c:1126
+#: ../plug-ins/common/screenshot.c:1243
 msgid "After the delay, drag your mouse to select the region for the screenshot."
 msgstr "Po zamiku povlecite miško, da izberete področje posnetka namizja."
 
-#: ../plug-ins/common/screenshot.c:1129
+#: ../plug-ins/common/screenshot.c:1246
 msgid "At the end of the delay, click in a window to snap it."
 msgstr "Po koncu zamika kliknite v okno, da ga poslikate."
 
 #. Area
-#: ../plug-ins/common/screenshot.c:1135
+#: ../plug-ins/common/screenshot.c:1252
 msgid "Area"
 msgstr "Področje"
 
-#: ../plug-ins/common/screenshot.c:1146
+#: ../plug-ins/common/screenshot.c:1263
 msgid "Take a screenshot of a single _window"
 msgstr "Naredi posnetek posameznega _okna"
 
-#: ../plug-ins/common/screenshot.c:1165
+#: ../plug-ins/common/screenshot.c:1282
 msgid "Include window _decoration"
 msgstr "Vključi _okrasitev okna"
 
-#: ../plug-ins/common/screenshot.c:1185
+#: ../plug-ins/common/screenshot.c:1302
 msgid "Take a screenshot of the entire _screen"
 msgstr "Naredi posnetek _celega zaslona"
 
-#: ../plug-ins/common/screenshot.c:1204
+#: ../plug-ins/common/screenshot.c:1321
 msgid "Include _mouse pointer"
 msgstr "Vključi kazalec _miške"
 
-#: ../plug-ins/common/screenshot.c:1225
+#: ../plug-ins/common/screenshot.c:1342
 msgid "Select a _region to grab"
 msgstr "Izberi _področje za zajem"
 
 #. Delay
-#: ../plug-ins/common/screenshot.c:1240
+#: ../plug-ins/common/screenshot.c:1357
 msgid "Delay"
 msgstr "Zakasni"
 
 #. this is the unit label of a spinbutton
-#: ../plug-ins/common/screenshot.c:1262
+#: ../plug-ins/common/screenshot.c:1379
 msgid "seconds"
 msgstr "sekund"
 
@@ -8763,45 +8758,51 @@ msgstr "_Moč:"
 msgid "Higher values increase the magnitude of the effect"
 msgstr "Višje vrednosti povečajo stopnjo učinka"
 
-#: ../plug-ins/file-bmp/bmp-read.c:85
+#: ../plug-ins/file-bmp/bmp-read.c:86
 msgid "Bad colormap"
 msgstr "Poškodovan katalog barv"
 
-#: ../plug-ins/file-bmp/bmp-read.c:169
-#: ../plug-ins/file-bmp/bmp-read.c:180
-#: ../plug-ins/file-bmp/bmp-read.c:187
-#: ../plug-ins/file-bmp/bmp-read.c:196
-#: ../plug-ins/file-bmp/bmp-read.c:211
-#: ../plug-ins/file-bmp/bmp-read.c:416
-#: ../plug-ins/file-bmp/bmp-read.c:437
+#: ../plug-ins/file-bmp/bmp-read.c:170
+#: ../plug-ins/file-bmp/bmp-read.c:181
+#: ../plug-ins/file-bmp/bmp-read.c:188
+#: ../plug-ins/file-bmp/bmp-read.c:197
+#: ../plug-ins/file-bmp/bmp-read.c:212
+#: ../plug-ins/file-bmp/bmp-read.c:427
 #: ../plug-ins/file-bmp/bmp-read.c:448
-#: ../plug-ins/file-bmp/bmp-read.c:456
-#: ../plug-ins/file-bmp/bmp-read.c:464
-#: ../plug-ins/file-bmp/bmp-read.c:476
+#: ../plug-ins/file-bmp/bmp-read.c:459
+#: ../plug-ins/file-bmp/bmp-read.c:467
+#: ../plug-ins/file-bmp/bmp-read.c:475
+#: ../plug-ins/file-bmp/bmp-read.c:487
 #, c-format
 msgid "'%s' is not a valid BMP file"
 msgstr "'%s' ni veljavna datoteka BMP."
 
-#: ../plug-ins/file-bmp/bmp-read.c:225
-#: ../plug-ins/file-bmp/bmp-read.c:252
-#: ../plug-ins/file-bmp/bmp-read.c:280
-#: ../plug-ins/file-bmp/bmp-read.c:345
-#: ../plug-ins/file-bmp/bmp-read.c:395
+#: ../plug-ins/file-bmp/bmp-read.c:226
+#: ../plug-ins/file-bmp/bmp-read.c:253
+#: ../plug-ins/file-bmp/bmp-read.c:281
+#: ../plug-ins/file-bmp/bmp-read.c:356
+#: ../plug-ins/file-bmp/bmp-read.c:406
 #, c-format
 msgid "Error reading BMP file header from '%s'"
 msgstr "Napaka pri branju glave slikovne datoteke BMP pri '%s'"
 
-#: ../plug-ins/file-bmp/bmp-read.c:588
+#: ../plug-ins/file-bmp/bmp-read.c:345
+#, c-format
+#| msgid "Unsupported compression mode: %d"
+msgid "Unsupported compression (%lu) in BMP file from '%s'"
+msgstr "Nepodprti način stiskanja:(%lu) v datoteki BMP iz '%s'"
+
+#: ../plug-ins/file-bmp/bmp-read.c:599
 msgid "Unrecognized or invalid BMP compression format."
 msgstr "Neprepoznan ali neveljaven zapis stiskanja BMP."
 
-#: ../plug-ins/file-bmp/bmp-read.c:630
+#: ../plug-ins/file-bmp/bmp-read.c:641
 msgid "Unsupported or invalid bitdepth."
 msgstr "Nepodprta vrsta datoteke ali neveljavna bitna globina."
 
-#: ../plug-ins/file-bmp/bmp-read.c:818
-#: ../plug-ins/file-bmp/bmp-read.c:859
-#: ../plug-ins/file-bmp/bmp-read.c:909
+#: ../plug-ins/file-bmp/bmp-read.c:829
+#: ../plug-ins/file-bmp/bmp-read.c:870
+#: ../plug-ins/file-bmp/bmp-read.c:920
 msgid "The bitmap ends unexpectedly."
 msgstr "Bitna slika se nepričakovano zaključi."
 
@@ -8816,38 +8817,38 @@ msgid "Alpha channel will be ignored."
 msgstr "Kanal alfa ne bo upoštevan."
 
 #. Run-Length Encoded
-#: ../plug-ins/file-bmp/bmp-write.c:861
+#: ../plug-ins/file-bmp/bmp-write.c:864
 msgid "_Run-Length Encoded"
 msgstr "_Kodirano s tekočo dolžino (RLE)"
 
 #. Compatibility Options
-#: ../plug-ins/file-bmp/bmp-write.c:874
+#: ../plug-ins/file-bmp/bmp-write.c:877
 msgid "Co_mpatibility Options"
 msgstr "Možnosti z_družljivosti"
 
-#: ../plug-ins/file-bmp/bmp-write.c:884
+#: ../plug-ins/file-bmp/bmp-write.c:887
 msgid "_Do not write color space information"
 msgstr "_Ne zapisuj podatkov o barvnem prostoru"
 
-#: ../plug-ins/file-bmp/bmp-write.c:886
+#: ../plug-ins/file-bmp/bmp-write.c:889
 msgid "Some applications can not read BMP images that include color space information. GIMP writes color space information by default. Enabling this option will cause GIMP to not write color space information to the file."
 msgstr "Nekateri programi ne morejo brati slik BMP, ki vsebujejo podatke o barvnem prostoru. GIMP privzeto zapiše podatke o barvnem prostoru. S to možnostjo GIMP v datoteko ne bo zapisal podatkov o barvnem prostoru."
 
 #. Advanced Options
-#: ../plug-ins/file-bmp/bmp-write.c:902
+#: ../plug-ins/file-bmp/bmp-write.c:905
 #: ../plug-ins/file-jpeg/jpeg-save.c:901
 msgid "_Advanced Options"
 msgstr "_Napredne možnosti"
 
-#: ../plug-ins/file-bmp/bmp-write.c:917
+#: ../plug-ins/file-bmp/bmp-write.c:920
 msgid "16 bits"
 msgstr "16-bitno"
 
-#: ../plug-ins/file-bmp/bmp-write.c:953
+#: ../plug-ins/file-bmp/bmp-write.c:956
 msgid "24 bits"
 msgstr "24-bitno"
 
-#: ../plug-ins/file-bmp/bmp-write.c:970
+#: ../plug-ins/file-bmp/bmp-write.c:973
 msgid "32 bits"
 msgstr "32-bitno"
 
@@ -13288,7 +13289,6 @@ msgid "Adjust page size and orientation for printing"
 msgstr "Prilagodi velikost in postavitev strani za tiskanje"
 
 #: ../plug-ins/print/print.c:130
-#| msgid "Page Curl"
 msgid "Page Set_up"
 msgstr "N_astavitev strani"
 
