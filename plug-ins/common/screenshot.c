@@ -27,11 +27,8 @@
 
 #include "config.h"
 
+#include <stdlib.h> /* for system() on OSX */
 #include <string.h>
-
-#ifdef PLATFORM_OSX
-#include <stdlib.h>
-#endif
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -207,7 +204,9 @@ static gint32     create_image         (cairo_surface_t  *surface,
 
 static gint32     shoot                (GdkScreen        *screen);
 static gint32     shoot_main           (GdkScreen        *screen);
+#ifdef PLATFORM_OSX
 static gint32     shoot_osx            (GdkScreen        *screen);
+#endif
 static gboolean   shoot_dialog         (GdkScreen       **screen);
 static void       shoot_delay          (gint32            delay);
 static gboolean   shoot_delay_callback (gpointer          data);
@@ -954,14 +953,14 @@ static gint32
 shoot (GdkScreen *screen)
 {
 #ifdef PLATFORM_OSX
-    /* on Mac OS X, either with X11 (which is a rootless X server) or
-     * as a native quartz build, we have to implement it differently,
-     * without using X and just use the standard OS X screenshot
-     * utility.
-     */
-    return shoot_osx (screen);
+  /* on Mac OS X, either with X11 (which is a rootless X server) or
+   * as a native quartz build, we have to implement it differently,
+   * without using X and just use the standard OS X screenshot
+   * utility.
+   */
+  return shoot_osx (screen);
 #else
-    return shoot_main (screen);
+  return shoot_main (screen);
 #endif
 }
 
@@ -1072,6 +1071,7 @@ shoot_main (GdkScreen *screen)
   return image;
 }
 
+#ifdef PLATFORM_OSX
 /*
  * Mac OS X uses a rootless X server. This won't let us use
  * gdk_pixbuf_get_from_drawable() and similar function on the root
@@ -1143,6 +1143,8 @@ shoot_osx (GdkScreen *screen)
 
   return image;
 }
+#endif /* PLATFORM_OSX */
+
 
 /*  Screenshot dialog  */
 
@@ -1188,7 +1190,7 @@ shoot_dialog (GdkScreen **screen)
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *button;
-#if (defined (HAVE_X11_XMU_WINUTIL_H) || defined (PLATFORM_OSX))
+#if (defined (HAVE_XFIXES) || defined (HAVE_X11_XMU_WINUTIL_H) || defined (PLATFORM_OSX))
   GtkWidget *toggle;
 #endif
   GtkWidget *spinner;
