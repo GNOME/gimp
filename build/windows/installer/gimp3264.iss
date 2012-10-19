@@ -165,6 +165,8 @@ Name: "en"; MessagesFile: "compiler:Default.isl,lang\en.setup.isl"
 Name: "de"; MessagesFile: "compiler:Languages\German.isl,lang\de.setup.isl"
 Name: "it"; MessagesFile: "compiler:Languages\Italian.isl,lang\it.setup.isl"
 Name: "pl"; MessagesFile: "compiler:Languages\Polish.isl,lang\pl.setup.isl"
+Name: "pt_BR"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl,lang\pt_BR.setup.isl"
+Name: "ru"; MessagesFile: "compiler:Languages\Russian.isl,lang\ru.setup.isl"
 Name: "sl"; MessagesFile: "compiler:Languages\Slovenian.isl,lang\sl.setup.isl"
 ;Name: "ro"; MessagesFile: "Romanian.islu,ro.setup.islu"
 
