@@ -996,10 +996,24 @@ begin
 	Result := Copy(S, Start, Len);
 end;
 
+function Unicode2RTF(const pIn: String): String; //convert to RTF-compatible unicode
+var	i: Integer;
+	c: SmallInt;
+begin
+	Result := '';
+	for i := 1 to Length(pIn) do
+		if Ord(pIn[i]) <= 127 then
+		begin
+			Result := Result + pIn[i];
+		end else
+		begin
+			c := Ord(pIn[i]); //code points above 7FFF must be expressed as negative numbers
+			Result := Result + '\u' + IntToStr(c) + '?';
+		end;
+end;
+
 function ParseReadyMemoText(pSpaces,pText: String): String;
 var sTemp: String;
-	i: Integer;
-	c: SmallInt;
 begin
 
 	sTemp := CopyW(pText,Pos(#10,pText)+1,Length(pText));
@@ -1010,16 +1024,7 @@ begin
 	sTemp := '\b ' + CopyW(pText,1,Pos(#13,pText)-1) + '\par\sb0' +
 						'\li284\b0 ' + sTemp + '\par \pard';
 
-	Result := '';
-	for i := 1 to Length(sTemp) do //convert to RTF-compatible unicode
-		if Ord(sTemp[i]) <= 127 then
-		begin
-			Result := Result + sTemp[i];
-		end else
-		begin
-			c := Ord(sTemp[i]); //code points above 7FFF must be expressed as negative numbers
-			Result := Result + '\u' + IntToStr(c) + '?';
-		end;
+	Result := Unicode2RTF(sTemp);
 end;
 
 
@@ -1043,7 +1048,7 @@ begin
 
 	if bShowAssoc then
 	begin
-		sText := sText + '\sb100\b '+CustomMessage('ReadyMemoAssociations')+'\par \sb0\li284\b0 '; //which file types to associate
+		sText := sText + '\sb100\b '+Unicode2RTF(CustomMessage('ReadyMemoAssociations'))+'\par \sb0\li284\b0 '; //which file types to associate
 
 		for i := 0 to GetArrayLength(Associations.Association) - 1 do							
 			if Associations.Association[i].Selected then
