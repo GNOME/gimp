@@ -163,6 +163,7 @@ SignedUninstallerDir=_Uninst
 [Languages]
 Name: "en"; MessagesFile: "compiler:Default.isl,lang\en.setup.isl"
 Name: "de"; MessagesFile: "compiler:Languages\German.isl,lang\de.setup.isl"
+Name: "es"; MessagesFile: "compiler:Languages\Spanish.isl,lang\es.setup.isl"
 Name: "it"; MessagesFile: "compiler:Languages\Italian.isl,lang\it.setup.isl"
 Name: "pl"; MessagesFile: "compiler:Languages\Polish.isl,lang\pl.setup.isl"
 Name: "pt_BR"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl,lang\pt_BR.setup.isl"
