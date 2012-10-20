@@ -82,6 +82,7 @@ app/actions/view-actions.c
 app/actions/view-commands.c
 app/actions/window-actions.c
 app/actions/windows-actions.c
+app/actions/windows-commands.c
 
 app/config/config-enums.c
 app/config/gimpconfig-file.c
