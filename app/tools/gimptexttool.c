@@ -1167,11 +1167,10 @@ gimp_text_tool_text_notify (GimpText         *text,
       g_signal_handlers_block_by_func (text_tool->buffer,
                                        gimp_text_tool_buffer_end_edit,
                                        text_tool);
-
-      if (pspec->name[0] == 't')
-        gimp_text_buffer_set_text (text_tool->buffer, text->text);
-      else
+      if (text->markup)
         gimp_text_buffer_set_markup (text_tool->buffer, text->markup);
+      else
+        gimp_text_buffer_set_text (text_tool->buffer, text->text);
 
       g_signal_handlers_unblock_by_func (text_tool->buffer,
                                          gimp_text_tool_buffer_end_edit,
