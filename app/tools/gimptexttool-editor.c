@@ -1135,8 +1135,7 @@ gimp_text_tool_options_notify (GimpTextOptions *options,
     {
       if (options->use_editor)
         {
-          if (text_tool->text)
-            gimp_text_tool_editor_dialog (text_tool);
+          gimp_text_tool_editor_dialog (text_tool);
         }
       else
         {
