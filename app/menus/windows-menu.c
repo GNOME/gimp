@@ -63,7 +63,6 @@ static void      windows_menu_dock_window_added          (GimpDialogFactory *fac
 static void      windows_menu_dock_window_removed        (GimpDialogFactory *factory,
                                                           GimpDockWindow    *dock_window,
                                                           GimpUIManager     *manager);
-static gboolean  windows_menu_is_toolbox_dock_window     (GimpDockWindow    *dock_window);
 static gchar   * windows_menu_dock_window_to_merge_id    (GimpDockWindow    *dock_window);
 static void      windows_menu_recent_add                 (GimpContainer     *container,
                                                           GimpSessionInfo   *info,
@@ -294,20 +293,6 @@ windows_menu_dock_window_removed (GimpDialogFactory *factory,
   g_object_set_data (G_OBJECT (manager), merge_key, NULL);
 
   g_free (merge_key);
-}
-
-static gboolean
-windows_menu_is_toolbox_dock_window (GimpDockWindow *dock_window)
-{
-  GimpDialogFactoryEntry *entry          = NULL;
-  gboolean                is_for_toolbox = FALSE;
-
-  gimp_dialog_factory_from_widget (GTK_WIDGET (dock_window), &entry);
-
-  if (entry && strcmp ("gimp-toolbox-window", entry->identifier) == 0)
-    is_for_toolbox = TRUE;
-
-  return is_for_toolbox;
 }
 
 static gchar *
