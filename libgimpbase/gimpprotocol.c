@@ -833,7 +833,12 @@ _gp_tile_data_destroy (GimpWireMessage *msg)
 
   if  (tile_data)
     {
-      g_free (tile_data->data);
+      if (tile_data->data)
+        {
+          g_free (tile_data->data);
+          tile_data->data = NULL;
+        }
+
       g_slice_free (GPTileData, tile_data);
     }
 }

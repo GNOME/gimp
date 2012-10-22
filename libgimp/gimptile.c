@@ -272,6 +272,9 @@ gimp_tile_put (GimpTile *tile)
   if (! gp_tile_data_write (_writechannel, &tile_data, NULL))
     gimp_quit ();
 
+  if (! tile_info->use_shm)
+    tile_data.data = NULL;
+
   gimp_wire_destroy (&msg);
 
   gimp_read_expect_msg (&msg, GP_TILE_ACK);
