@@ -38,7 +38,6 @@
 #include "gimpchannel-select.h"
 #include "gimpcontext.h"
 #include "gimpcontainer.h"
-#include "gimpdrawable-operation.h"
 #include "gimperror.h"
 #include "gimpimage-undo-push.h"
 #include "gimpimage-undo.h"
@@ -990,8 +989,10 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
                                     "dither-strategy", layer_dither_type,
                                     NULL);
 
-      gimp_drawable_apply_operation_to_buffer (drawable, NULL, NULL,
-                                               dither, dest_buffer);
+      gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
+                                 NULL, NULL,
+                                 dither,
+                                 dest_buffer, NULL);
       g_object_unref (dither);
     }
 
@@ -1620,8 +1621,10 @@ gimp_layer_apply_mask (GimpLayer         *layer,
       apply_opacity = gimp_gegl_create_apply_opacity_node (mask_buffer, 0, 0,
                                                            1.0);
 
-      gimp_drawable_apply_operation_to_buffer (GIMP_DRAWABLE (layer), NULL, NULL,
-                                               apply_opacity, dest_buffer);
+      gimp_gegl_apply_operation (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
+                                 NULL, NULL,
+                                 apply_opacity,
+                                 dest_buffer, NULL);
 
       g_object_unref (apply_opacity);
     }
@@ -1869,8 +1872,10 @@ gimp_layer_flatten (GimpLayer   *layer,
   gimp_context_get_background (context, &background);
   flatten = gimp_gegl_create_flatten_node (&background);
 
-  gimp_drawable_apply_operation_to_buffer (GIMP_DRAWABLE (layer), NULL, NULL,
-                                           flatten, new_buffer);
+  gimp_gegl_apply_operation (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
+                             NULL, NULL,
+                             flatten,
+                             new_buffer, NULL);
 
   g_object_unref (flatten);
 

@@ -47,7 +47,6 @@
 #include "gimpchannel.h"
 #include "gimpchannel-select.h"
 #include "gimpcontext.h"
-#include "gimpdrawable-operation.h"
 #include "gimpdrawable-stroke.h"
 #include "gimpmarshal.h"
 #include "gimppaintinfo.h"
@@ -479,8 +478,10 @@ gimp_channel_convert (GimpItem  *item,
       gimp_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
       flatten = gimp_gegl_create_flatten_node (&background);
 
-      gimp_drawable_apply_operation_to_buffer (drawable, NULL, NULL,
-                                               flatten, new_buffer);
+      gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
+                                 NULL, NULL,
+                                 flatten,
+                                 new_buffer, NULL);
 
       g_object_unref (flatten);
 
@@ -836,8 +837,10 @@ gimp_channel_convert_type (GimpDrawable      *drawable,
                                     "dither-strategy", mask_dither_type,
                                     NULL);
 
-      gimp_drawable_apply_operation_to_buffer (drawable, NULL, NULL,
-                                               dither, dest_buffer);
+      gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
+                                 NULL, NULL,
+                                 dither,
+                                 dest_buffer, NULL);
       g_object_unref (dither);
     }
 
@@ -1296,9 +1299,10 @@ gimp_channel_real_feather (GimpChannel *channel,
                               "std-dev-y", radius_y / 3.5,
                               NULL);
 
-  gimp_drawable_apply_operation_to_buffer (drawable, NULL, NULL,
-                                           node,
-                                           gimp_drawable_get_buffer (drawable));
+  gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
+                             NULL, NULL,
+                             node,
+                             gimp_drawable_get_buffer (drawable), NULL);
 
   g_object_unref (node);
 
@@ -1327,9 +1331,10 @@ gimp_channel_real_sharpen (GimpChannel *channel,
                               "value",     0.5,
                               NULL);
 
-  gimp_drawable_apply_operation_to_buffer (drawable, NULL, NULL,
-                                           node,
-                                           gimp_drawable_get_buffer (drawable));
+  gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
+                             NULL, NULL,
+                             node,
+                             gimp_drawable_get_buffer (drawable), NULL);
 
   g_object_unref (node);
 
@@ -1436,9 +1441,10 @@ gimp_channel_real_invert (GimpChannel *channel,
                                      "operation", "gegl:invert",
                                      NULL);
 
-      gimp_drawable_apply_operation_to_buffer (drawable, NULL, NULL,
-                                               node,
-                                               gimp_drawable_get_buffer (drawable));
+      gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
+                                 NULL, NULL,
+                                 node,
+                                 gimp_drawable_get_buffer (drawable), NULL);
 
       g_object_unref (node);
 

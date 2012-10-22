@@ -102,22 +102,3 @@ gimp_drawable_apply_operation_by_name (GimpDrawable *drawable,
 
   g_object_unref (node);
 }
-
-void
-gimp_drawable_apply_operation_to_buffer (GimpDrawable *drawable,
-                                         GimpProgress *progress,
-                                         const gchar  *undo_desc,
-                                         GeglNode     *operation,
-                                         GeglBuffer   *dest_buffer)
-{
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
-  g_return_if_fail (progress == NULL || undo_desc != NULL);
-  g_return_if_fail (GEGL_IS_NODE (operation));
-  g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
-
-  gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
-                             progress, undo_desc,
-                             operation,
-                             dest_buffer, NULL);
-}

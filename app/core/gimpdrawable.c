@@ -28,6 +28,7 @@
 #include "core-types.h"
 
 #include "gegl/gimp-babl.h"
+#include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
@@ -35,7 +36,6 @@
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-combine.h"
-#include "gimpdrawable-operation.h"
 #include "gimpdrawable-preview.h"
 #include "gimpdrawable-private.h"
 #include "gimpdrawable-shadow.h"
@@ -431,9 +431,10 @@ gimp_drawable_scale (GimpItem              *item,
                                 gimp_item_get_height (item)),
                  NULL);
 
-  gimp_drawable_apply_operation_to_buffer (drawable, progress,
-                                           C_("undo-type", "Scale"),
-                                           scale, new_buffer);
+  gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
+                             progress, C_("undo-type", "Scale"),
+                             scale,
+                             new_buffer, NULL);
   g_object_unref (scale);
 
   gimp_drawable_set_buffer_full (drawable, gimp_item_is_attached (item), NULL,
