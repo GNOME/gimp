@@ -32,7 +32,6 @@
 #include "gegl/gimpapplicator.h"
 
 #include "core/gimp.h"
-#include "core/gimp-apply-operation.h"
 #include "core/gimp-utils.h"
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"

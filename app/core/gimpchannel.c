@@ -32,10 +32,10 @@
 
 #include "gegl/gimp-gegl-nodes.h"
 
+#include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
-#include "gimp-apply-operation.h"
 #include "gimp-utils.h"
 #include "gimpboundary.h"
 #include "gimpcontainer.h"
@@ -1504,11 +1504,11 @@ gimp_channel_real_border (GimpChannel *channel,
                                 "edge-lock", edge_lock,
                                 NULL);
 
-  gimp_apply_operation (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                        NULL, NULL,
-                        border,
-                        gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                        GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1));
+  gimp_gegl_apply_operation (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                             NULL, NULL,
+                             border,
+                             gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                             GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1));
 
   g_object_unref (border);
 
@@ -1578,11 +1578,11 @@ gimp_channel_real_grow (GimpChannel *channel,
                               "radius-y",  radius_y,
                               NULL);
 
-  gimp_apply_operation (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                        NULL, NULL,
-                        grow,
-                        gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                        GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1));
+  gimp_gegl_apply_operation (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                             NULL, NULL,
+                             grow,
+                             gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                             GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1));
 
   g_object_unref (grow);
 
@@ -1643,11 +1643,11 @@ gimp_channel_real_shrink (GimpChannel *channel,
                                 "edge-lock", edge_lock,
                                 NULL);
 
-  gimp_apply_operation (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                        NULL, NULL,
-                        shrink,
-                        gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                        GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1));
+  gimp_gegl_apply_operation (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                             NULL, NULL,
+                             shrink,
+                             gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                             GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1));
 
   g_object_unref (shrink);
 

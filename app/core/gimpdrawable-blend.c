@@ -30,11 +30,11 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
 #include "gimp-utils.h"
-#include "gimp-apply-operation.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-blend.h"
@@ -609,9 +609,9 @@ gradient_precalc_shapeburst (GimpImage           *image,
 
   gimp_gegl_progress_connect (shapeburst, progress, NULL);
 
-  gimp_apply_operation (temp_buffer, NULL, NULL,
-                        shapeburst,
-                        dist_buffer, NULL);
+  gimp_gegl_apply_operation (temp_buffer, NULL, NULL,
+                             shapeburst,
+                             dist_buffer, NULL);
 
   gegl_node_get (shapeburst, "max-iterations", &max, NULL);
 

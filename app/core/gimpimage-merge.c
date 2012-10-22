@@ -28,13 +28,13 @@
 #include "core-types.h"
 
 #include "gegl/gimp-babl-compat.h"
+#include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "vectors/gimpvectors.h"
 
 #include "gimp.h"
-#include "gimp-apply-operation.h"
 #include "gimpcontext.h"
 #include "gimperror.h"
 #include "gimpgrouplayer.h"
@@ -49,6 +49,7 @@
 #include "gimpundostack.h"
 
 #include "gimp-intl.h"
+
 
 static GimpLayer * gimp_image_merge_layers (GimpImage     *image,
                                             GimpContainer *container,
@@ -621,9 +622,9 @@ gimp_image_merge_layers (GimpImage     *image,
                                             mode,
                                             GIMP_COMPONENT_ALL);
 
-      gimp_apply_operation (merge_buffer, NULL, NULL,
-                            apply,
-                            merge_buffer, NULL);
+      gimp_gegl_apply_operation (merge_buffer, NULL, NULL,
+                                 apply,
+                                 merge_buffer, NULL);
 
       g_object_unref (apply);
 

@@ -27,11 +27,11 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
-#include "gimp-apply-operation.h"
 #include "gimpchannel.h"
 #include "gimpchannel-combine.h"
 #include "gimpcontext.h"
@@ -251,9 +251,9 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
                                                        -mask_offset_y,
                                                        1.0);
 
-  gimp_apply_operation (buffer, NULL, NULL,
-                        apply_opacity,
-                        buffer, NULL);
+  gimp_gegl_apply_operation (buffer, NULL, NULL,
+                             apply_opacity,
+                             buffer, NULL);
 
   g_object_unref (apply_opacity);
   g_object_unref (mask);

@@ -24,20 +24,21 @@
 
 #include <gegl.h>
 
-#include "core-types.h"
+#include "gimp-gegl-types.h"
 
-#include "gimp-utils.h"
-#include "gimp-apply-operation.h"
-#include "gimpprogress.h"
+#include "core/gimp-utils.h"
+#include "core/gimpprogress.h"
+
+#include "gimp-gegl-apply-operation.h"
 
 
 void
-gimp_apply_operation (GeglBuffer          *src_buffer,
-                      GimpProgress        *progress,
-                      const gchar         *undo_desc,
-                      GeglNode            *operation,
-                      GeglBuffer          *dest_buffer,
-                      const GeglRectangle *dest_rect)
+gimp_gegl_apply_operation (GeglBuffer          *src_buffer,
+                           GimpProgress        *progress,
+                           const gchar         *undo_desc,
+                           GeglNode            *operation,
+                           GeglBuffer          *dest_buffer,
+                           const GeglRectangle *dest_rect)
 {
   GeglNode      *gegl;
   GeglNode      *src_node;

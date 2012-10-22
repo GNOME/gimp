@@ -24,6 +24,8 @@ libappgegl_a_sources = \
 	gimp-babl-compat.h		\
 	gimp-gegl.c			\
 	gimp-gegl.h			\
+	gimp-gegl-apply-operation.c	\
+	gimp-gegl-apply-operation.h	\
 	gimp-gegl-config-proxy.c	\
 	gimp-gegl-config-proxy.h	\
 	gimp-gegl-loops.c		\

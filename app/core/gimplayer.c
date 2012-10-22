@@ -30,10 +30,10 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
-#include "gimp-apply-operation.h"
 #include "gimpboundary.h"
 #include "gimpchannel-select.h"
 #include "gimpcontext.h"
@@ -1429,11 +1429,11 @@ gimp_layer_create_mask (const GimpLayer *layer,
                                                "value",     1.0,
                                                NULL);
 
-              gimp_apply_operation (gimp_drawable_get_buffer (drawable),
-                                    NULL, NULL,
-                                    set_alpha,
-                                    gimp_drawable_get_buffer (drawable),
-                                    NULL);
+              gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
+                                         NULL, NULL,
+                                         set_alpha,
+                                         gimp_drawable_get_buffer (drawable),
+                                         NULL);
 
               g_object_unref (set_alpha);
             }
@@ -1526,9 +1526,9 @@ gimp_layer_create_mask (const GimpLayer *layer,
             gimp_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
             flatten = gimp_gegl_create_flatten_node (&background);
 
-            gimp_apply_operation (src_buffer, NULL, NULL,
-                                  flatten,
-                                  dest_buffer, NULL);
+            gimp_gegl_apply_operation (src_buffer, NULL, NULL,
+                                       flatten,
+                                       dest_buffer, NULL);
 
             g_object_unref (flatten);
           }

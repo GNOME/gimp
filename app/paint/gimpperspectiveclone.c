@@ -32,7 +32,6 @@
 
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
-#include "core/gimp-apply-operation.h"
 #include "core/gimpdrawable.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"

@@ -24,12 +24,12 @@
 #include "core-types.h"
 
 #include "gegl/gimp-babl-compat.h"
+#include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
-#include "gimp-apply-operation.h"
 #include "gimpchannel.h"
 #include "gimpdrawable-combine.h"
 #include "gimpdrawableundo.h"
@@ -138,10 +138,10 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
                                               mode,
                                               affect);
 
-  gimp_apply_operation (base_buffer, NULL, NULL,
-                        apply,
-                        gimp_drawable_get_buffer (drawable),
-                        GEGL_RECTANGLE (x, y, width, height));
+  gimp_gegl_apply_operation (base_buffer, NULL, NULL,
+                             apply,
+                             gimp_drawable_get_buffer (drawable),
+                             GEGL_RECTANGLE (x, y, width, height));
 
   g_object_unref (apply);
 }

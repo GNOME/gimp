@@ -20,16 +20,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_APPLY_OPERATION_H__
-#define __GIMP_APPLY_OPERATION_H__
+#ifndef __GIMP_GEGL_APPLY_OPERATION_H__
+#define __GIMP_GEGL_APPLY_OPERATION_H__
 
 
-void   gimp_apply_operation (GeglBuffer          *src_buffer,
-                             GimpProgress        *progress,
-                             const gchar         *undo_desc,
-                             GeglNode            *operation,
-                             GeglBuffer          *dest_buffer,
-                             const GeglRectangle *dest_rect);
+void   gimp_gegl_apply_operation (GeglBuffer          *src_buffer,
+                                  GimpProgress        *progress,
+                                  const gchar         *undo_desc,
+                                  GeglNode            *operation,
+                                  GeglBuffer          *dest_buffer,
+                                  const GeglRectangle *dest_rect);
 
 
-#endif /* __GIMP_APPLY_OPERATION_H__ */
+#endif /* __GIMP_GEGL_APPLY_OPERATION_H__ */

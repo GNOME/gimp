@@ -24,12 +24,12 @@
 #include "core-types.h"
 
 #include "gegl/gimp-babl.h"
+#include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
 #include "gimp-edit.h"
-#include "gimp-apply-operation.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-private.h"
 #include "gimperror.h"
@@ -757,9 +757,9 @@ gimp_selection_extract (GimpSelection *selection,
                                                            - (off_y + y1),
                                                            1.0);
 
-      gimp_apply_operation (dest_buffer, NULL, NULL,
-                            apply_opacity,
-                            dest_buffer, NULL);
+      gimp_gegl_apply_operation (dest_buffer, NULL, NULL,
+                                 apply_opacity,
+                                 dest_buffer, NULL);
 
       g_object_unref (apply_opacity);
 

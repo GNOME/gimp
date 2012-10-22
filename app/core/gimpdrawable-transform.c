@@ -30,11 +30,11 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
-#include "gimp-apply-operation.h"
 #include "gimp-transform-resize.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
@@ -144,9 +144,9 @@ gimp_drawable_transform_buffer_affine (GimpDrawable           *drawable,
 
   gimp_gegl_node_set_matrix (affine, &gegl_matrix);
 
-  gimp_apply_operation (orig_buffer, progress, NULL,
-                        affine,
-                        new_buffer, NULL);
+  gimp_gegl_apply_operation (orig_buffer, progress, NULL,
+                             affine,
+                             new_buffer, NULL);
 
   g_object_unref (affine);
 

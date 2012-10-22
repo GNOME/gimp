@@ -30,11 +30,11 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
-#include "gimp-apply-operation.h"
 #include "gimpbezierdesc.h"
 #include "gimpboundary.h"
 #include "gimpchannel.h"
@@ -381,9 +381,9 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
 
   apply_opacity = gimp_gegl_create_apply_opacity_node (mask_buffer, 0, 0, 1.0);
 
-  gimp_apply_operation (base_buffer, NULL, NULL,
-                        apply_opacity,
-                        base_buffer, NULL);
+  gimp_gegl_apply_operation (base_buffer, NULL, NULL,
+                             apply_opacity,
+                             base_buffer, NULL);
 
   g_object_unref (apply_opacity);
 

@@ -26,7 +26,8 @@
 
 #include "core-types.h"
 
-#include "gimp-apply-operation.h"
+#include "gegl/gimp-gegl-apply-operation.h"
+
 #include "gimpdrawable.h"
 #include "gimpdrawable-operation.h"
 #include "gimpdrawable-shadow.h"
@@ -58,10 +59,10 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
 
   dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
 
-  gimp_apply_operation (gimp_drawable_get_buffer (drawable),
-                        progress, undo_desc,
-                        operation,
-                        dest_buffer, &rect);
+  gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
+                             progress, undo_desc,
+                             operation,
+                             dest_buffer, &rect);
 
   gimp_drawable_merge_shadow_buffer (drawable, TRUE, undo_desc);
   gimp_drawable_free_shadow_buffer (drawable);
@@ -115,8 +116,8 @@ gimp_drawable_apply_operation_to_buffer (GimpDrawable *drawable,
   g_return_if_fail (GEGL_IS_NODE (operation));
   g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
 
-  gimp_apply_operation (gimp_drawable_get_buffer (drawable),
-                        progress, undo_desc,
-                        operation,
-                        dest_buffer, NULL);
+  gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
+                             progress, undo_desc,
+                             operation,
+                             dest_buffer, NULL);
 }
