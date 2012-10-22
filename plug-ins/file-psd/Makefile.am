@@ -50,7 +50,8 @@ EXTRA_DIST = \
 INCLUDES = \
 	-I$(top_srcdir)		\
 	$(GTK_CFLAGS)		\
-	$(GEGL_CFLAGS) \
+	$(EXIF_CFLAGS)		\
+	$(GEGL_CFLAGS)		\
 	-I$(includedir)
 
 LDADD = \
