@@ -367,7 +367,7 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
   cmsHPROFILE      dest_profile  = NULL;
   cmsHPROFILE      proof_profile = NULL;
   cmsUInt32Number  flags         = 0;
-  cmsUInt16Number  alarmCodes[cmsMAXCHANNELS] = { 0 };
+  cmsUInt16Number  alarmCodes[cmsMAXCHANNELS] = { 0, };
 
   if (lcms->transform)
     {
@@ -402,10 +402,10 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
   if (proof_profile)
     {
       if (! src_profile)
-       src_profile = cmsCreate_sRGBProfile ();
+        src_profile = cmsCreate_sRGBProfile ();
 
       if (! dest_profile)
-       dest_profile = cmsCreate_sRGBProfile ();
+        dest_profile = cmsCreate_sRGBProfile ();
 
       flags |= cmsFLAGS_SOFTPROOFING;
 
@@ -417,9 +417,9 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
 
           gimp_rgb_get_uchar (&config->out_of_gamut_color, &r, &g, &b);
 
-          alarmCodes[0] = (cmsUInt16Number) r;
-          alarmCodes[1] = (cmsUInt16Number) g;
-          alarmCodes[2] = (cmsUInt16Number) b;
+          alarmCodes[0] = (cmsUInt16Number) r * 256;
+          alarmCodes[1] = (cmsUInt16Number) g * 256;
+          alarmCodes[2] = (cmsUInt16Number) b * 256;
 
           cmsSetAlarmCodes (alarmCodes);
         }
@@ -435,10 +435,10 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
   else if (src_profile || dest_profile)
     {
       if (! src_profile)
-       src_profile = cmsCreate_sRGBProfile ();
+        src_profile = cmsCreate_sRGBProfile ();
 
       if (! dest_profile)
-       dest_profile = cmsCreate_sRGBProfile ();
+        dest_profile = cmsCreate_sRGBProfile ();
 
       lcms->transform = cmsCreateTransform (src_profile, TYPE_ARGB_8,
                                             dest_profile, TYPE_ARGB_8,
