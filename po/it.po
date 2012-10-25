@@ -1,7 +1,7 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000-2002
-# Marco Ciampa <ciampix@libero.it>, 2003-2011
+# Marco Ciampa <ciampix@libero.it>, 2003-2012
 # Alessandro Falappa <alessandro@falappa.net>, 2007-2008
 #
 # Convenzioni adottate per GIMP:
@@ -31,7 +31,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-09-09 17:33+0200\n"
-"PO-Revision-Date: 2012-09-09 17:34+0200\n"
+"PO-Revision-Date: 2012-10-25 11:01+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: \n"
@@ -15059,7 +15059,7 @@ msgstr "Casualità"
 #: ../app/widgets/gimpdynamicseditor.c:147
 #: ../app/widgets/gimpdynamicsoutputeditor.c:75
 msgid "Fade"
-msgstr "Sfuma"
+msgstr "Sfumatura"
 
 #: ../app/widgets/gimperrordialog.c:150
 msgid "Too many error messages!"
