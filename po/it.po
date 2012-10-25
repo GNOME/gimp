@@ -30,8 +30,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-10 12:09+0200\n"
-"PO-Revision-Date: 2012-09-10 12:06+0200\n"
+"POT-Creation-Date: 2012-10-25 11:03+0200\n"
+"PO-Revision-Date: 2012-10-25 11:14+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: \n"
@@ -420,7 +420,7 @@ msgid "Plug-Ins"
 msgstr "Plug-in"
 
 #. Quick Mask Color
-#: ../app/actions/actions.c:205 ../app/core/gimpchannel.c:380
+#: ../app/actions/actions.c:205 ../app/core/gimpchannel.c:388
 #: ../app/dialogs/preferences-dialog.c:2019
 msgid "Quick Mask"
 msgstr "Maschera veloce"
@@ -764,7 +764,7 @@ msgstr "Modifica il colore del canale"
 msgid "_Fill opacity:"
 msgstr "_Opacità riempimento:"
 
-#: ../app/actions/channels-commands.c:116 ../app/core/gimpchannel.c:266
+#: ../app/actions/channels-commands.c:116 ../app/core/gimpchannel.c:273
 #: ../app/widgets/gimpchanneltreeview.c:331
 msgid "Channel"
 msgstr "Canale"
@@ -990,382 +990,382 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:119
 #: ../app/actions/tool-options-commands.c:73
-#: ../app/core/gimpbrushgenerated-load.c:123 ../app/core/gimpimage.c:1592
+#: ../app/core/gimpbrushgenerated-load.c:123 ../app/core/gimpimage.c:1596
 #: ../app/core/gimppalette.c:399 ../app/core/gimppalette-import.c:210
 #: ../app/core/gimppalette-load.c:225
 #: ../app/dialogs/palette-import-dialog.c:771 ../app/widgets/gimpdnd-xds.c:94
 msgid "Untitled"
 msgstr "Senzanome"
 
-#: ../app/actions/dialogs-actions.c:49
+#: ../app/actions/dialogs-actions.c:46
 msgctxt "windows-action"
 msgid "Tool_box"
 msgstr "S_trumenti"
 
-#: ../app/actions/dialogs-actions.c:55
+#: ../app/actions/dialogs-actions.c:52
 msgctxt "dialogs-action"
 msgid "Tool _Options"
 msgstr "_Opzioni strumento"
 
-#: ../app/actions/dialogs-actions.c:56
+#: ../app/actions/dialogs-actions.c:53
 msgctxt "dialogs-action"
 msgid "Open the tool options dialog"
 msgstr "Apri la finestra delle opzioni strumento"
 
-#: ../app/actions/dialogs-actions.c:61
+#: ../app/actions/dialogs-actions.c:58
 msgctxt "dialogs-action"
 msgid "_Device Status"
 msgstr "Stato del _dispositivo"
 
-#: ../app/actions/dialogs-actions.c:62
+#: ../app/actions/dialogs-actions.c:59
 msgctxt "dialogs-action"
 msgid "Open the device status dialog"
 msgstr "Apri la finestra di stato del dispositivo"
 
-#: ../app/actions/dialogs-actions.c:67
+#: ../app/actions/dialogs-actions.c:64
 msgctxt "dialogs-action"
 msgid "_Layers"
 msgstr "_Livelli"
 
-#: ../app/actions/dialogs-actions.c:68
+#: ../app/actions/dialogs-actions.c:65
 msgctxt "dialogs-action"
 msgid "Open the layers dialog"
 msgstr "Apri la finestra dei livelli"
 
-#: ../app/actions/dialogs-actions.c:73
+#: ../app/actions/dialogs-actions.c:70
 msgctxt "dialogs-action"
 msgid "_Channels"
 msgstr "_Canali"
 
-#: ../app/actions/dialogs-actions.c:74
+#: ../app/actions/dialogs-actions.c:71
 msgctxt "dialogs-action"
 msgid "Open the channels dialog"
 msgstr "Apri la finestra dei canali"
 
-#: ../app/actions/dialogs-actions.c:79
+#: ../app/actions/dialogs-actions.c:76
 msgctxt "dialogs-action"
 msgid "_Paths"
 msgstr "_Tracciati"
 
-#: ../app/actions/dialogs-actions.c:80
+#: ../app/actions/dialogs-actions.c:77
 msgctxt "dialogs-action"
 msgid "Open the paths dialog"
 msgstr "Apri la finestra dei tracciati"
 
-#: ../app/actions/dialogs-actions.c:85
+#: ../app/actions/dialogs-actions.c:82
 msgctxt "dialogs-action"
 msgid "Color_map"
 msgstr "_Mappa colore"
 
-#: ../app/actions/dialogs-actions.c:86
+#: ../app/actions/dialogs-actions.c:83
 msgctxt "dialogs-action"
 msgid "Open the colormap dialog"
 msgstr "Apri la finestra della mappa colore"
 
-#: ../app/actions/dialogs-actions.c:91
+#: ../app/actions/dialogs-actions.c:88
 msgctxt "dialogs-action"
 msgid "Histogra_m"
 msgstr "Istogram_ma"
 
-#: ../app/actions/dialogs-actions.c:92
+#: ../app/actions/dialogs-actions.c:89
 msgctxt "dialogs-action"
 msgid "Open the histogram dialog"
 msgstr "Apri la finestra degli istogrammi"
 
-#: ../app/actions/dialogs-actions.c:97
+#: ../app/actions/dialogs-actions.c:94
 msgctxt "dialogs-action"
 msgid "_Selection Editor"
 msgstr "Editor della _selezione"
 
-#: ../app/actions/dialogs-actions.c:98
+#: ../app/actions/dialogs-actions.c:95
 msgctxt "dialogs-action"
 msgid "Open the selection editor"
 msgstr "Apri la finestra della selezione"
 
-#: ../app/actions/dialogs-actions.c:103
+#: ../app/actions/dialogs-actions.c:100
 msgctxt "dialogs-action"
 msgid "Na_vigation"
 msgstr "Na_vigazione"
 
-#: ../app/actions/dialogs-actions.c:104
+#: ../app/actions/dialogs-actions.c:101
 msgctxt "dialogs-action"
 msgid "Open the display navigation dialog"
 msgstr "Apri la finestra di navigazione"
 
-#: ../app/actions/dialogs-actions.c:109
+#: ../app/actions/dialogs-actions.c:106
 msgctxt "dialogs-action"
 msgid "Undo _History"
 msgstr "Cronologia _annullamenti"
 
-#: ../app/actions/dialogs-actions.c:110
+#: ../app/actions/dialogs-actions.c:107
 msgctxt "dialogs-action"
 msgid "Open the undo history dialog"
 msgstr "Apri la finestra della cronologia degli annullamenti"
 
-#: ../app/actions/dialogs-actions.c:115
+#: ../app/actions/dialogs-actions.c:112
 msgctxt "dialogs-action"
 msgid "Pointer"
 msgstr "Puntatore"
 
-#: ../app/actions/dialogs-actions.c:116
+#: ../app/actions/dialogs-actions.c:113
 msgctxt "dialogs-action"
 msgid "Open the pointer information dialog"
 msgstr "Apri la finestra delle informazioni del puntatore"
 
-#: ../app/actions/dialogs-actions.c:121
+#: ../app/actions/dialogs-actions.c:118
 msgctxt "dialogs-action"
 msgid "_Sample Points"
 msgstr "Punti di _campionamento"
 
-#: ../app/actions/dialogs-actions.c:122
+#: ../app/actions/dialogs-actions.c:119
 msgctxt "dialogs-action"
 msgid "Open the sample points dialog"
 msgstr "Apri la finestra dei punti di campionamento"
 
-#: ../app/actions/dialogs-actions.c:127
+#: ../app/actions/dialogs-actions.c:124
 msgctxt "dialogs-action"
 msgid "Colo_rs"
 msgstr "Colo_ri"
 
-#: ../app/actions/dialogs-actions.c:128
+#: ../app/actions/dialogs-actions.c:125
 msgctxt "dialogs-action"
 msgid "Open the FG/BG color dialog"
 msgstr "Apri la finestra dei colori di primopiano/sfondo"
 
-#: ../app/actions/dialogs-actions.c:133
+#: ../app/actions/dialogs-actions.c:130
 msgctxt "dialogs-action"
 msgid "_Brushes"
 msgstr "_Pennelli"
 
-#: ../app/actions/dialogs-actions.c:134
+#: ../app/actions/dialogs-actions.c:131
 msgctxt "dialogs-action"
 msgid "Open the brushes dialog"
 msgstr "Apri la finestra dei pennelli"
 
-#: ../app/actions/dialogs-actions.c:139
+#: ../app/actions/dialogs-actions.c:136
 msgctxt "dialogs-action"
 msgid "Brush Editor"
 msgstr "Editor pennelli"
 
-#: ../app/actions/dialogs-actions.c:140
+#: ../app/actions/dialogs-actions.c:137
 msgctxt "dialogs-action"
 msgid "Open the brush editor"
 msgstr "Apri l'editor dei pennelli"
 
-#: ../app/actions/dialogs-actions.c:145
+#: ../app/actions/dialogs-actions.c:142
 msgctxt "dialogs-action"
 msgid "Paint Dynamics"
 msgstr "Dinamica di disegno"
 
-#: ../app/actions/dialogs-actions.c:146
+#: ../app/actions/dialogs-actions.c:143
 msgctxt "dialogs-action"
 msgid "Open paint dynamics dialog"
 msgstr "Apri la finestra di dialogo della dinamica di disegno"
 
-#: ../app/actions/dialogs-actions.c:151
+#: ../app/actions/dialogs-actions.c:148
 msgctxt "dialogs-action"
 msgid "Paint Dynamics Editor"
 msgstr "Editor della dinamica di disegno"
 
-#: ../app/actions/dialogs-actions.c:152
+#: ../app/actions/dialogs-actions.c:149
 msgctxt "dialogs-action"
 msgid "Open the paint dynamics editor"
 msgstr "Apri l'editor della dinamica di disegno"
 
-#: ../app/actions/dialogs-actions.c:157
+#: ../app/actions/dialogs-actions.c:154
 msgctxt "dialogs-action"
 msgid "P_atterns"
 msgstr "_Motivi"
 
-#: ../app/actions/dialogs-actions.c:158
+#: ../app/actions/dialogs-actions.c:155
 msgctxt "dialogs-action"
 msgid "Open the patterns dialog"
 msgstr "Apri la finestra dei motivi"
 
-#: ../app/actions/dialogs-actions.c:163
+#: ../app/actions/dialogs-actions.c:160
 msgctxt "dialogs-action"
 msgid "_Gradients"
 msgstr "_Gradienti"
 
-#: ../app/actions/dialogs-actions.c:164
+#: ../app/actions/dialogs-actions.c:161
 msgctxt "dialogs-action"
 msgid "Open the gradients dialog"
 msgstr "Apri la finestra dei gradienti"
 
-#: ../app/actions/dialogs-actions.c:169
+#: ../app/actions/dialogs-actions.c:166
 msgctxt "dialogs-action"
 msgid "Gradient Editor"
 msgstr "Editor dei gradienti"
 
-#: ../app/actions/dialogs-actions.c:170
+#: ../app/actions/dialogs-actions.c:167
 msgctxt "dialogs-action"
 msgid "Open the gradient editor"
 msgstr "Apri l'editor dei gradienti"
 
-#: ../app/actions/dialogs-actions.c:175
+#: ../app/actions/dialogs-actions.c:172
 msgctxt "dialogs-action"
 msgid "Pal_ettes"
 msgstr "_Tavolozze"
 
-#: ../app/actions/dialogs-actions.c:176
+#: ../app/actions/dialogs-actions.c:173
 msgctxt "dialogs-action"
 msgid "Open the palettes dialog"
 msgstr "Apri la finestra delle tavolozze"
 
-#: ../app/actions/dialogs-actions.c:181
+#: ../app/actions/dialogs-actions.c:178
 msgctxt "dialogs-action"
 msgid "Palette Editor"
 msgstr "Editor tavolozza"
 
-#: ../app/actions/dialogs-actions.c:182
+#: ../app/actions/dialogs-actions.c:179
 msgctxt "dialogs-action"
 msgid "Open the palette editor"
 msgstr "Apri l'editor della tavolozza"
 
-#: ../app/actions/dialogs-actions.c:187
+#: ../app/actions/dialogs-actions.c:184
 msgctxt "dialogs-action"
 msgid "Tool presets"
 msgstr "Preimpostazioni dello strumento"
 
-#: ../app/actions/dialogs-actions.c:188
+#: ../app/actions/dialogs-actions.c:185
 msgctxt "dialogs-action"
 msgid "Open tool presets dialog"
 msgstr "Apri la finestra delle preimpostazioni strumento"
 
-#: ../app/actions/dialogs-actions.c:193
+#: ../app/actions/dialogs-actions.c:190
 msgctxt "dialogs-action"
 msgid "_Fonts"
 msgstr "_Caratteri"
 
-#: ../app/actions/dialogs-actions.c:194
+#: ../app/actions/dialogs-actions.c:191
 msgctxt "dialogs-action"
 msgid "Open the fonts dialog"
 msgstr "Apri la finestra dei caratteri"
 
-#: ../app/actions/dialogs-actions.c:199
+#: ../app/actions/dialogs-actions.c:196
 msgctxt "dialogs-action"
 msgid "B_uffers"
 msgstr "_Buffer"
 
-#: ../app/actions/dialogs-actions.c:200
+#: ../app/actions/dialogs-actions.c:197
 msgctxt "dialogs-action"
 msgid "Open the named buffers dialog"
 msgstr "Apri la finestra dei buffer"
 
-#: ../app/actions/dialogs-actions.c:205
+#: ../app/actions/dialogs-actions.c:202
 msgctxt "dialogs-action"
 msgid "_Images"
 msgstr "_Immagini"
 
-#: ../app/actions/dialogs-actions.c:206
+#: ../app/actions/dialogs-actions.c:203
 msgctxt "dialogs-action"
 msgid "Open the images dialog"
 msgstr "Apri la finestra delle immagini"
 
-#: ../app/actions/dialogs-actions.c:211
+#: ../app/actions/dialogs-actions.c:208
 msgctxt "dialogs-action"
 msgid "Document Histor_y"
 msgstr "Cronologia _documenti"
 
-#: ../app/actions/dialogs-actions.c:212
+#: ../app/actions/dialogs-actions.c:209
 msgctxt "dialogs-action"
 msgid "Open the document history dialog"
 msgstr "Apri la finestra della cronologia dei documenti"
 
-#: ../app/actions/dialogs-actions.c:217
+#: ../app/actions/dialogs-actions.c:214
 msgctxt "dialogs-action"
 msgid "_Templates"
 msgstr "Model_li"
 
-#: ../app/actions/dialogs-actions.c:218
+#: ../app/actions/dialogs-actions.c:215
 msgctxt "dialogs-action"
 msgid "Open the image templates dialog"
 msgstr "Apri finestra dei modelli di immagine"
 
-#: ../app/actions/dialogs-actions.c:223
+#: ../app/actions/dialogs-actions.c:220
 msgctxt "dialogs-action"
 msgid "Error Co_nsole"
 msgstr "Co_nsole errori"
 
-#: ../app/actions/dialogs-actions.c:224
+#: ../app/actions/dialogs-actions.c:221
 msgctxt "dialogs-action"
 msgid "Open the error console"
 msgstr "Apri la console errori"
 
-#: ../app/actions/dialogs-actions.c:234
+#: ../app/actions/dialogs-actions.c:231
 msgctxt "dialogs-action"
 msgid "_Preferences"
 msgstr "_Preferenze"
 
-#: ../app/actions/dialogs-actions.c:235
+#: ../app/actions/dialogs-actions.c:232
 msgctxt "dialogs-action"
 msgid "Open the preferences dialog"
 msgstr "Apri la finestra delle preferenze"
 
-#: ../app/actions/dialogs-actions.c:240
+#: ../app/actions/dialogs-actions.c:237
 msgctxt "dialogs-action"
 msgid "_Input Devices"
 msgstr "Dispositivi di _ingresso"
 
-#: ../app/actions/dialogs-actions.c:241
+#: ../app/actions/dialogs-actions.c:238
 msgctxt "dialogs-action"
 msgid "Open the input devices editor"
 msgstr "Apri l'editor dei dispositivi d'ingresso"
 
-#: ../app/actions/dialogs-actions.c:246
+#: ../app/actions/dialogs-actions.c:243
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts"
 msgstr "_Tasti scorciatoia"
 
-#: ../app/actions/dialogs-actions.c:247
+#: ../app/actions/dialogs-actions.c:244
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
 msgstr "Apri la finestra dell'editor tasti scorciatoia"
 
-#: ../app/actions/dialogs-actions.c:252
+#: ../app/actions/dialogs-actions.c:249
 msgctxt "dialogs-action"
 msgid "_Modules"
 msgstr "_Moduli"
 
-#: ../app/actions/dialogs-actions.c:253
+#: ../app/actions/dialogs-actions.c:250
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
 msgstr "Apri finestra di gestione moduli"
 
-#: ../app/actions/dialogs-actions.c:258
+#: ../app/actions/dialogs-actions.c:255
 msgctxt "dialogs-action"
 msgid "_Tip of the Day"
 msgstr "Suggerimenti del _giorno"
 
-#: ../app/actions/dialogs-actions.c:259
+#: ../app/actions/dialogs-actions.c:256
 msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
 msgstr "Mostra alcuni utili suggerimenti sull'uso di GIMP"
 
-#: ../app/actions/dialogs-actions.c:264
+#: ../app/actions/dialogs-actions.c:261
 msgctxt "dialogs-action"
 msgid "_About"
 msgstr "_Informazioni"
 
-#: ../app/actions/dialogs-actions.c:265
+#: ../app/actions/dialogs-actions.c:262
 msgctxt "dialogs-action"
 msgid "About GIMP"
 msgstr "Informazioni su GIMP"
 
-#: ../app/actions/dialogs-actions.c:328
+#: ../app/actions/dialogs-actions.c:325
 #: ../app/dialogs/preferences-dialog.c:1938 ../app/widgets/gimptoolbox.c:556
 msgid "Toolbox"
 msgstr "Pannello strumenti"
 
-#: ../app/actions/dialogs-actions.c:329
+#: ../app/actions/dialogs-actions.c:326
 msgid "Raise the toolbox"
 msgstr "Alza il pannello strumenti"
 
-#: ../app/actions/dialogs-actions.c:333
+#: ../app/actions/dialogs-actions.c:330
 msgid "New Toolbox"
 msgstr "Nuovo pannello strumenti"
 
-#: ../app/actions/dialogs-actions.c:334
+#: ../app/actions/dialogs-actions.c:331
 msgid "Create a new toolbox"
 msgstr "Crea un nuovo pennello strumenti"
 
@@ -3310,205 +3310,217 @@ msgstr "Ritaglia l'immagine all'estensione della selezione"
 
 #: ../app/actions/image-actions.c:110
 msgctxt "image-action"
+msgid "Crop to C_ontent"
+msgstr "Ritaglia al c_ontenuto"
+
+#: ../app/actions/image-actions.c:111
+msgctxt "image-action"
+msgid ""
+"Crop the image to the extents of its content (remove empty borders from the "
+"image)"
+msgstr "Ritaglia l'immagine all'estensione del suo contenuto (rimuove i bordi vuoti dall'immagine)"
+
+#: ../app/actions/image-actions.c:116
+msgctxt "image-action"
 msgid "_Duplicate"
 msgstr "_Duplica"
 
-#: ../app/actions/image-actions.c:111
+#: ../app/actions/image-actions.c:117
 msgctxt "image-action"
 msgid "Create a duplicate of this image"
 msgstr "Crea un duplicato di questa immagine"
 
-#: ../app/actions/image-actions.c:116
+#: ../app/actions/image-actions.c:122
 msgctxt "image-action"
 msgid "Merge Visible _Layers..."
 msgstr "Fonde i _livelli visibili..."
 
-#: ../app/actions/image-actions.c:117
+#: ../app/actions/image-actions.c:123
 msgctxt "image-action"
 msgid "Merge all visible layers into one layer"
 msgstr "Fonde tutti i livelli visibili in un livello"
 
-#: ../app/actions/image-actions.c:122
+#: ../app/actions/image-actions.c:128
 msgctxt "image-action"
 msgid "_Flatten Image"
 msgstr "A_ppiattisci immagine"
 
-#: ../app/actions/image-actions.c:123
+#: ../app/actions/image-actions.c:129
 msgctxt "image-action"
 msgid "Merge all layers into one and remove transparency"
 msgstr "Fonde tutti i livelli in uno e rimuove la trasparenza"
 
-#: ../app/actions/image-actions.c:128
+#: ../app/actions/image-actions.c:134
 msgctxt "image-action"
 msgid "Configure G_rid..."
 msgstr "Configura la g_riglia..."
 
-#: ../app/actions/image-actions.c:129
+#: ../app/actions/image-actions.c:135
 msgctxt "image-action"
 msgid "Configure the grid for this image"
 msgstr "Configura la griglia per questa immagine"
 
-#: ../app/actions/image-actions.c:134
+#: ../app/actions/image-actions.c:140
 msgctxt "image-action"
 msgid "Image Pr_operties"
 msgstr "Pr_oprietà dell'immagine"
 
-#: ../app/actions/image-actions.c:135
+#: ../app/actions/image-actions.c:141
 msgctxt "image-action"
 msgid "Display information about this image"
 msgstr "Mostra le informazioni su questa immagine"
 
-#: ../app/actions/image-actions.c:143
+#: ../app/actions/image-actions.c:149
 msgctxt "image-convert-action"
 msgid "_RGB"
 msgstr "_RGB"
 
-#: ../app/actions/image-actions.c:144
+#: ../app/actions/image-actions.c:150
 msgctxt "image-convert-action"
 msgid "Convert the image to the RGB colorspace"
 msgstr "Converti immagine allo spazio colore RGB"
 
-#: ../app/actions/image-actions.c:148
+#: ../app/actions/image-actions.c:154
 msgctxt "image-convert-action"
 msgid "_Grayscale"
 msgstr "Scala di _grigi"
 
-#: ../app/actions/image-actions.c:149
+#: ../app/actions/image-actions.c:155
 msgctxt "image-convert-action"
 msgid "Convert the image to grayscale"
 msgstr "Converti l'immagine in scala di grigi"
 
-#: ../app/actions/image-actions.c:153
+#: ../app/actions/image-actions.c:159
 msgctxt "image-convert-action"
 msgid "_Indexed..."
 msgstr "_Indicizzata..."
 
-#: ../app/actions/image-actions.c:154
+#: ../app/actions/image-actions.c:160
 msgctxt "image-convert-action"
 msgid "Convert the image to indexed colors"
 msgstr "Converti l'immagine a colori indicizzati"
 
-#: ../app/actions/image-actions.c:161
+#: ../app/actions/image-actions.c:167
 msgctxt "image-convert-action"
 msgid "8 bit integer"
 msgstr "8 bit interi"
 
-#: ../app/actions/image-actions.c:162
+#: ../app/actions/image-actions.c:168
 msgctxt "image-convert-action"
 msgid "Convert the image to 8 bit integer"
 msgstr "Converti l'immagine a 8 bit interi"
 
-#: ../app/actions/image-actions.c:166
+#: ../app/actions/image-actions.c:172
 msgctxt "image-convert-action"
 msgid "16 bit integer"
 msgstr "16 bit interi"
 
-#: ../app/actions/image-actions.c:167
+#: ../app/actions/image-actions.c:173
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit integer"
 msgstr "Converti l'immagine a 16 bit interi"
 
-#: ../app/actions/image-actions.c:171
+#: ../app/actions/image-actions.c:177
 msgctxt "image-convert-action"
 msgid "32 bit integer"
 msgstr "32 bit interi"
 
-#: ../app/actions/image-actions.c:172
+#: ../app/actions/image-actions.c:178
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit integer"
 msgstr "Converti l'immagine a 32 bit interi"
 
-#: ../app/actions/image-actions.c:176
+#: ../app/actions/image-actions.c:182
 msgctxt "image-convert-action"
 msgid "16 bit floating point"
 msgstr "16 bit in virgola mobile"
 
-#: ../app/actions/image-actions.c:177
+#: ../app/actions/image-actions.c:183
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit floating point"
 msgstr "Converti l'immagine a 16 bit in virgola mobile"
 
-#: ../app/actions/image-actions.c:181
+#: ../app/actions/image-actions.c:187
 msgctxt "image-convert-action"
 msgid "32 bit floating point"
 msgstr "32 bit in virgola mobile"
 
-#: ../app/actions/image-actions.c:182
+#: ../app/actions/image-actions.c:188
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit floating point"
 msgstr "Converti l'immagine a 32 bit in virgola mobile"
 
-#: ../app/actions/image-actions.c:189
+#: ../app/actions/image-actions.c:195
 msgctxt "image-action"
 msgid "Flip _Horizontally"
 msgstr "Rifletti ori_zzontalmente"
 
-#: ../app/actions/image-actions.c:190
+#: ../app/actions/image-actions.c:196
 msgctxt "image-action"
 msgid "Flip image horizontally"
 msgstr "Rifletti l'immagine orizzontalmente"
 
-#: ../app/actions/image-actions.c:195
+#: ../app/actions/image-actions.c:201
 msgctxt "image-action"
 msgid "Flip _Vertically"
 msgstr "Rifletti _verticalmente"
 
-#: ../app/actions/image-actions.c:196
+#: ../app/actions/image-actions.c:202
 msgctxt "image-action"
 msgid "Flip image vertically"
 msgstr "Rifletti l'immagine verticalmente"
 
-#: ../app/actions/image-actions.c:204
+#: ../app/actions/image-actions.c:210
 msgctxt "image-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Ruota di 90° in senso _orario"
 
-#: ../app/actions/image-actions.c:205
+#: ../app/actions/image-actions.c:211
 msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the right"
 msgstr "Ruota l'immagine di 90 gradi a destra"
 
-#: ../app/actions/image-actions.c:210
+#: ../app/actions/image-actions.c:216
 msgctxt "image-action"
 msgid "Rotate _180°"
 msgstr "Ruota di _180°"
 
-#: ../app/actions/image-actions.c:211
+#: ../app/actions/image-actions.c:217
 msgctxt "image-action"
 msgid "Turn the image upside-down"
 msgstr "Gira l'immagine sottosopra"
 
-#: ../app/actions/image-actions.c:216
+#: ../app/actions/image-actions.c:222
 msgctxt "image-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Ruota di 90° in senso _antiorario"
 
-#: ../app/actions/image-actions.c:217
+#: ../app/actions/image-actions.c:223
 msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the left"
 msgstr "Ruota l'immagine di 90 gradi a sinistra"
 
-#: ../app/actions/image-commands.c:264
+#: ../app/actions/image-commands.c:306
 msgid "Set Image Canvas Size"
 msgstr "Configura la dimensione della superficie"
 
-#: ../app/actions/image-commands.c:293 ../app/actions/image-commands.c:317
-#: ../app/actions/image-commands.c:611
+#: ../app/actions/image-commands.c:335 ../app/actions/image-commands.c:359
+#: ../app/actions/image-commands.c:680
 msgid "Resizing"
 msgstr "Ridimensionamento"
 
-#: ../app/actions/image-commands.c:344
+#: ../app/actions/image-commands.c:386
 msgid "Set Image Print Resolution"
 msgstr "Imposta risoluzione di stampa immagine"
 
-#: ../app/actions/image-commands.c:406
+#: ../app/actions/image-commands.c:448
 #: ../app/pdb/drawable-transform-cmds.c:163
 #: ../app/pdb/drawable-transform-cmds.c:251
 #: ../app/pdb/item-transform-cmds.c:166
 msgid "Flipping"
 msgstr "Riflessione"
 
-#: ../app/actions/image-commands.c:430
+#: ../app/actions/image-commands.c:472
 #: ../app/pdb/drawable-transform-cmds.c:606
 #: ../app/pdb/drawable-transform-cmds.c:698 ../app/pdb/image-cmds.c:619
 #: ../app/pdb/item-transform-cmds.c:437 ../app/pdb/transform-tools-cmds.c:249
@@ -3516,20 +3528,24 @@ msgstr "Riflessione"
 msgid "Rotating"
 msgstr "Rotazione"
 
-#: ../app/actions/image-commands.c:456 ../app/actions/layers-commands.c:692
+#: ../app/actions/image-commands.c:498 ../app/actions/layers-commands.c:693
 msgid "Cannot crop because the current selection is empty."
 msgstr "Non è possibile ritagliare perché la regione selezionata è vuota."
 
-#: ../app/actions/image-commands.c:659
+#: ../app/actions/image-commands.c:525
+msgid "Cannot crop because the image has no content."
+msgstr "Non è possibile ritagliare perché l'immagine è vuota."
+
+#: ../app/actions/image-commands.c:728
 msgid "Change Print Size"
 msgstr "Modifica le dimensioni della stampa"
 
-#: ../app/actions/image-commands.c:700
+#: ../app/actions/image-commands.c:769
 msgid "Scale Image"
 msgstr "Scala immagine"
 
 #. Scaling
-#: ../app/actions/image-commands.c:711 ../app/actions/layers-commands.c:1146
+#: ../app/actions/image-commands.c:780 ../app/actions/layers-commands.c:1181
 #: ../app/dialogs/preferences-dialog.c:1893
 #: ../app/pdb/drawable-transform-cmds.c:787
 #: ../app/pdb/drawable-transform-cmds.c:876 ../app/pdb/image-cmds.c:491
@@ -3639,7 +3655,7 @@ msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "Modifica il nome del livello"
 
-#: ../app/actions/layers-actions.c:82 ../app/actions/layers-actions.c:610
+#: ../app/actions/layers-actions.c:82 ../app/actions/layers-actions.c:616
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "_Nuovo livello..."
@@ -3649,7 +3665,7 @@ msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "Crea un nuovo livello e aggiungilo all'immagine"
 
-#: ../app/actions/layers-actions.c:88 ../app/actions/layers-actions.c:611
+#: ../app/actions/layers-actions.c:88 ../app/actions/layers-actions.c:617
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "_Nuovo livello"
@@ -3861,199 +3877,211 @@ msgstr "Ritaglia il livello alla dimensione della selezione"
 
 #: ../app/actions/layers-actions.c:216
 msgctxt "layers-action"
+msgid "Crop to C_ontent"
+msgstr "Ritaglia al c_ontenuto"
+
+#: ../app/actions/layers-actions.c:217
+msgctxt "layers-action"
+msgid ""
+"Crop the layer to the extents of its content (remove empty borders from the "
+"layer)"
+msgstr "Ritaglia il livello all'estensione dei suoi contenuti (rimuove i bordi vuoti dal livello)"
+
+#: ../app/actions/layers-actions.c:222
+msgctxt "layers-action"
 msgid "Add La_yer Mask..."
 msgstr "Aggi_ungi maschera di livello..."
 
-#: ../app/actions/layers-actions.c:218
+#: ../app/actions/layers-actions.c:224
 msgctxt "layers-action"
 msgid "Add a mask that allows non-destructive editing of transparency"
 msgstr ""
 "Aggiungi una maschera che permetta la modifica non distruttiva della "
 "trasparenza"
 
-#: ../app/actions/layers-actions.c:223
+#: ../app/actions/layers-actions.c:229
 msgctxt "layers-action"
 msgid "Add Alpha C_hannel"
 msgstr "Aggiungi _canale alfa"
 
-#: ../app/actions/layers-actions.c:224
+#: ../app/actions/layers-actions.c:230
 msgctxt "layers-action"
 msgid "Add transparency information to the layer"
 msgstr "Aggiungi le informazioni di trasparenza al livello"
 
-#: ../app/actions/layers-actions.c:229
+#: ../app/actions/layers-actions.c:235
 msgctxt "layers-action"
 msgid "_Remove Alpha Channel"
 msgstr "_Rimuovi canale alfa"
 
-#: ../app/actions/layers-actions.c:230
+#: ../app/actions/layers-actions.c:236
 msgctxt "layers-action"
 msgid "Remove transparency information from the layer"
 msgstr "Rimuovi le informazioni di trasparenza dal livello"
 
-#: ../app/actions/layers-actions.c:238
+#: ../app/actions/layers-actions.c:244
 msgctxt "layers-action"
 msgid "Lock Alph_a Channel"
 msgstr "Blocca canale alfa"
 
-#: ../app/actions/layers-actions.c:240
+#: ../app/actions/layers-actions.c:246
 msgctxt "layers-action"
 msgid "Keep transparency information on this layer from being modified"
 msgstr ""
 "Mantieni le informazioni di trasparenza su questo livello dall'essere "
 "modificate"
 
-#: ../app/actions/layers-actions.c:246
+#: ../app/actions/layers-actions.c:252
 msgctxt "layers-action"
 msgid "_Edit Layer Mask"
 msgstr "Modifica masch_era di livello"
 
-#: ../app/actions/layers-actions.c:247
+#: ../app/actions/layers-actions.c:253
 msgctxt "layers-action"
 msgid "Work on the layer mask"
 msgstr "Lavora sulla maschera di livello"
 
-#: ../app/actions/layers-actions.c:253
+#: ../app/actions/layers-actions.c:259
 msgctxt "layers-action"
 msgid "S_how Layer Mask"
 msgstr "Mostra maschera di li_vello"
 
-#: ../app/actions/layers-actions.c:259
+#: ../app/actions/layers-actions.c:265
 msgctxt "layers-action"
 msgid "_Disable Layer Mask"
 msgstr "_Disabilita maschera di livello"
 
-#: ../app/actions/layers-actions.c:260
+#: ../app/actions/layers-actions.c:266
 msgctxt "layers-action"
 msgid "Dismiss the effect of the layer mask"
 msgstr "Abbandona gli effetti della maschera di livello"
 
-#: ../app/actions/layers-actions.c:269
+#: ../app/actions/layers-actions.c:275
 msgctxt "layers-action"
 msgid "Apply Layer _Mask"
 msgstr "Applica _maschera di livello"
 
-#: ../app/actions/layers-actions.c:270
+#: ../app/actions/layers-actions.c:276
 msgctxt "layers-action"
 msgid "Apply the effect of the layer mask and remove it"
 msgstr "Applica l'effetto della maschera di livello e rimuovilo"
 
-#: ../app/actions/layers-actions.c:275
+#: ../app/actions/layers-actions.c:281
 msgctxt "layers-action"
 msgid "Delete Layer Mas_k"
 msgstr "Elimina masc_hera di livello"
 
-#: ../app/actions/layers-actions.c:276
+#: ../app/actions/layers-actions.c:282
 msgctxt "layers-action"
 msgid "Remove the layer mask and its effect"
 msgstr "Rimuovi la maschera di livello ed i suoi effetti"
 
-#: ../app/actions/layers-actions.c:284
+#: ../app/actions/layers-actions.c:290
 msgctxt "layers-action"
 msgid "_Mask to Selection"
 msgstr "_Maschera a selezione"
 
-#: ../app/actions/layers-actions.c:285
+#: ../app/actions/layers-actions.c:291
 msgctxt "layers-action"
 msgid "Replace the selection with the layer mask"
 msgstr "Rimpiazza la selezione con la maschera di livello"
 
-#: ../app/actions/layers-actions.c:290
+#: ../app/actions/layers-actions.c:296
 msgctxt "layers-action"
 msgid "_Add to Selection"
 msgstr "_Aggiungi alla selezione"
 
-#: ../app/actions/layers-actions.c:291
+#: ../app/actions/layers-actions.c:297
 msgctxt "layers-action"
 msgid "Add the layer mask to the current selection"
 msgstr "Aggiungi la maschera di livello alla selezione corrente"
 
-#: ../app/actions/layers-actions.c:296 ../app/actions/layers-actions.c:325
+#: ../app/actions/layers-actions.c:302 ../app/actions/layers-actions.c:331
 msgctxt "layers-action"
 msgid "_Subtract from Selection"
 msgstr "_Sottrai dalla selezione"
 
-#: ../app/actions/layers-actions.c:297
+#: ../app/actions/layers-actions.c:303
 msgctxt "layers-action"
 msgid "Subtract the layer mask from the current selection"
 msgstr "Sottrai la maschera di livello dalla selezione corrente"
 
-#: ../app/actions/layers-actions.c:302 ../app/actions/layers-actions.c:332
+#: ../app/actions/layers-actions.c:308 ../app/actions/layers-actions.c:338
 msgctxt "layers-action"
 msgid "_Intersect with Selection"
 msgstr "_Interseca con la selezione"
 
-#: ../app/actions/layers-actions.c:303
+#: ../app/actions/layers-actions.c:309
 msgctxt "layers-action"
 msgid "Intersect the layer mask with the current selection"
 msgstr "Interseca la maschera di livello con la selezione corrente"
 
-#: ../app/actions/layers-actions.c:311
+#: ../app/actions/layers-actions.c:317
 msgctxt "layers-action"
 msgid "Al_pha to Selection"
 msgstr "Al_fa a selezione"
 
-#: ../app/actions/layers-actions.c:313
+#: ../app/actions/layers-actions.c:319
 msgctxt "layers-action"
 msgid "Replace the selection with the layer's alpha channel"
 msgstr "Rimpiazza la selezione con il canale alfa del livello"
 
-#: ../app/actions/layers-actions.c:318
+#: ../app/actions/layers-actions.c:324
 msgctxt "layers-action"
 msgid "A_dd to Selection"
 msgstr "A_ggiungi alla selezione"
 
-#: ../app/actions/layers-actions.c:320
+#: ../app/actions/layers-actions.c:326
 msgctxt "layers-action"
 msgid "Add the layer's alpha channel to the current selection"
 msgstr "Aggiungi il canale alfa del livello alla selezione corrente"
 
-#: ../app/actions/layers-actions.c:327
+#: ../app/actions/layers-actions.c:333
 msgctxt "layers-action"
 msgid "Subtract the layer's alpha channel from the current selection"
 msgstr "Sottrai il canale alfa del livello dalla selezione corrente"
 
-#: ../app/actions/layers-actions.c:334
+#: ../app/actions/layers-actions.c:340
 msgctxt "layers-action"
 msgid "Intersect the layer's alpha channel with the current selection"
 msgstr "Interseca il canale alfa del livello con la selezione corrente"
 
-#: ../app/actions/layers-actions.c:342
+#: ../app/actions/layers-actions.c:348
 msgctxt "layers-action"
 msgid "Select _Top Layer"
 msgstr "Seleziona il livello in _cima"
 
-#: ../app/actions/layers-actions.c:343
+#: ../app/actions/layers-actions.c:349
 msgctxt "layers-action"
 msgid "Select the topmost layer"
 msgstr "Seleziona il livello in cima"
 
-#: ../app/actions/layers-actions.c:348
+#: ../app/actions/layers-actions.c:354
 msgctxt "layers-action"
 msgid "Select _Bottom Layer"
 msgstr "Seleziona il livello in _fondo"
 
-#: ../app/actions/layers-actions.c:349
+#: ../app/actions/layers-actions.c:355
 msgctxt "layers-action"
 msgid "Select the bottommost layer"
 msgstr "Seleziona il livello in fondo"
 
-#: ../app/actions/layers-actions.c:354
+#: ../app/actions/layers-actions.c:360
 msgctxt "layers-action"
 msgid "Select _Previous Layer"
 msgstr "Seleziona il livello _precedente"
 
-#: ../app/actions/layers-actions.c:355
+#: ../app/actions/layers-actions.c:361
 msgctxt "layers-action"
 msgid "Select the layer above the current layer"
 msgstr "Seleziona il livello sopra il livello corrente"
 
-#: ../app/actions/layers-actions.c:360
+#: ../app/actions/layers-actions.c:366
 msgctxt "layers-action"
 msgid "Select _Next Layer"
 msgstr "Selezio_na il livello successivo"
 
-#: ../app/actions/layers-actions.c:361
+#: ../app/actions/layers-actions.c:367
 msgctxt "layers-action"
 msgid "Select the layer below the current layer"
 msgstr "Seleziona il livello sotto il livello corrente"
@@ -4061,65 +4089,73 @@ msgstr "Seleziona il livello sotto il livello corrente"
 #. Will be followed with e.g. "Shift-Click
 #. on thumbnail"
 #.
-#: ../app/actions/layers-actions.c:442
+#: ../app/actions/layers-actions.c:448
 msgid "Shortcut: "
 msgstr "Scorciatoia: "
 
 #. Will be prepended with a modifier key
 #. string, e.g. "Shift"
 #.
-#: ../app/actions/layers-actions.c:447
+#: ../app/actions/layers-actions.c:453
 msgid "-Click on thumbnail in Layers dockable"
 msgstr "-clic sulla miniatura in livelli agganciabili"
 
-#: ../app/actions/layers-actions.c:605 ../app/actions/layers-actions.c:606
+#: ../app/actions/layers-actions.c:611 ../app/actions/layers-actions.c:612
 msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "A _nuovo livello"
 
-#: ../app/actions/layers-commands.c:204
+#: ../app/actions/layers-commands.c:205
 msgid "Layer Attributes"
 msgstr "Attributi di livello"
 
-#: ../app/actions/layers-commands.c:207
+#: ../app/actions/layers-commands.c:208
 msgid "Edit Layer Attributes"
 msgstr "Modifica attributi livello"
 
-#: ../app/actions/layers-commands.c:251 ../app/core/gimplayer.c:289
+#: ../app/actions/layers-commands.c:252 ../app/core/gimplayer.c:291
 msgid "Layer"
 msgstr "Livello"
 
-#: ../app/actions/layers-commands.c:253 ../app/actions/layers-commands.c:321
+#: ../app/actions/layers-commands.c:254 ../app/actions/layers-commands.c:322
 #: ../app/widgets/gimpdrawabletreeview.c:318
 #: ../app/widgets/gimplayertreeview.c:837
 msgid "New Layer"
 msgstr "Nuovo livello"
 
-#: ../app/actions/layers-commands.c:256
+#: ../app/actions/layers-commands.c:257
 msgid "Create a New Layer"
 msgstr "Crea un nuovo livello"
 
-#: ../app/actions/layers-commands.c:357
+#: ../app/actions/layers-commands.c:358
 msgid "Visible"
 msgstr "Visibile"
 
-#: ../app/actions/layers-commands.c:619
+#: ../app/actions/layers-commands.c:620
 msgid "Set Layer Boundary Size"
 msgstr "Imposta dimensione margini del livello"
 
-#: ../app/actions/layers-commands.c:664
+#: ../app/actions/layers-commands.c:665
 msgid "Scale Layer"
 msgstr "Scala livello"
 
-#: ../app/actions/layers-commands.c:702
-msgid "Crop Layer"
-msgstr "Ritaglia livello"
+#: ../app/actions/layers-commands.c:703
+msgid "Crop Layer to Selection"
+msgstr "Ritaglia il livello alla selezione"
 
-#: ../app/actions/layers-commands.c:1081
+#: ../app/actions/layers-commands.c:732
+msgid "Cannot crop because the active layer has no content."
+msgstr "Impossibile ritagliare perché il livello attivo selezionato è vuoto."
+
+#: ../app/actions/layers-commands.c:737
+msgid "Crop Layer to Content"
+msgstr "Ritaglia il livello al contenuto"
+
+#: ../app/actions/layers-commands.c:1116
 msgid "Please select a channel first"
 msgstr "Selezionare prima un canale"
 
-#: ../app/actions/layers-commands.c:1089
+#: ../app/actions/layers-commands.c:1124
 #: ../app/dialogs/layer-add-mask-dialog.c:82
 msgid "Add Layer Mask"
 msgstr "Aggiungi maschera di livello"
@@ -5949,6 +5985,12 @@ msgstr "Modalità a finestra singola"
 msgctxt "windows-action"
 msgid "When enabled GIMP is in a single-window mode."
 msgstr "Se abilitata GIMP funzionerà in modalità a finestra singola."
+
+#: ../app/actions/windows-commands.c:163
+msgid ""
+"The chosen recent dock contains a toolbox. Please close the currently open "
+"toolbox and try again."
+msgstr "Il pannello scelto recentemente è un pannello degli strumenti. Chiudere il pannello strumenti corrente e riprovare."
 
 #: ../app/config/config-enums.c:24
 msgctxt "cursor-mode"
@@ -7805,139 +7847,139 @@ msgstr "Moduli"
 msgid "Updating tag cache"
 msgstr "Aggiornamento cache dei marcatori"
 
-#: ../app/core/gimpchannel.c:267
+#: ../app/core/gimpchannel.c:274
 msgctxt "undo-type"
 msgid "Rename Channel"
 msgstr "Rinomina canale"
 
-#: ../app/core/gimpchannel.c:268
+#: ../app/core/gimpchannel.c:275
 msgctxt "undo-type"
 msgid "Move Channel"
 msgstr "Sposta canale"
 
-#: ../app/core/gimpchannel.c:269
+#: ../app/core/gimpchannel.c:276
 msgctxt "undo-type"
 msgid "Scale Channel"
 msgstr "Scala canale"
 
-#: ../app/core/gimpchannel.c:270
+#: ../app/core/gimpchannel.c:277
 msgctxt "undo-type"
 msgid "Resize Channel"
 msgstr "Ridimensiona canale"
 
-#: ../app/core/gimpchannel.c:271
+#: ../app/core/gimpchannel.c:278
 msgctxt "undo-type"
 msgid "Flip Channel"
 msgstr "Rifletti canale"
 
-#: ../app/core/gimpchannel.c:272
+#: ../app/core/gimpchannel.c:279
 msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Ruota canale"
 
-#: ../app/core/gimpchannel.c:273 ../app/core/gimpdrawable-transform.c:976
+#: ../app/core/gimpchannel.c:280 ../app/core/gimpdrawable-transform.c:976
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Trasforma canale"
 
-#: ../app/core/gimpchannel.c:274
+#: ../app/core/gimpchannel.c:281
 msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr "Delinea canale"
 
-#: ../app/core/gimpchannel.c:275 ../app/core/gimpselection.c:584
+#: ../app/core/gimpchannel.c:282 ../app/core/gimpselection.c:615
 msgctxt "undo-type"
 msgid "Channel to Selection"
 msgstr "Canale a selezione"
 
-#: ../app/core/gimpchannel.c:276
+#: ../app/core/gimpchannel.c:283
 msgctxt "undo-type"
 msgid "Reorder Channel"
 msgstr "Ordina il canale"
 
-#: ../app/core/gimpchannel.c:277
+#: ../app/core/gimpchannel.c:284
 msgctxt "undo-type"
 msgid "Raise Channel"
 msgstr "Alza il canale"
 
-#: ../app/core/gimpchannel.c:278
+#: ../app/core/gimpchannel.c:285
 msgctxt "undo-type"
 msgid "Raise Channel to Top"
 msgstr "Alza il canale fino in cima"
 
-#: ../app/core/gimpchannel.c:279
+#: ../app/core/gimpchannel.c:286
 msgctxt "undo-type"
 msgid "Lower Channel"
 msgstr "Abbassa il canale"
 
-#: ../app/core/gimpchannel.c:280
+#: ../app/core/gimpchannel.c:287
 msgctxt "undo-type"
 msgid "Lower Channel to Bottom"
 msgstr "Abbassa il canale fino in fondo"
 
-#: ../app/core/gimpchannel.c:281
+#: ../app/core/gimpchannel.c:288
 msgid "Channel cannot be raised higher."
 msgstr "Il canale non può essere alzato ulteriormente."
 
-#: ../app/core/gimpchannel.c:282
+#: ../app/core/gimpchannel.c:289
 msgid "Channel cannot be lowered more."
 msgstr "Il canale non può essere abbassato ulteriormente."
 
-#: ../app/core/gimpchannel.c:304
+#: ../app/core/gimpchannel.c:312
 msgctxt "undo-type"
 msgid "Feather Channel"
 msgstr "Sfuma canale"
 
-#: ../app/core/gimpchannel.c:305
+#: ../app/core/gimpchannel.c:313
 msgctxt "undo-type"
 msgid "Sharpen Channel"
 msgstr "Affila canale"
 
-#: ../app/core/gimpchannel.c:306
+#: ../app/core/gimpchannel.c:314
 msgctxt "undo-type"
 msgid "Clear Channel"
 msgstr "Cancella canale"
 
-#: ../app/core/gimpchannel.c:307
+#: ../app/core/gimpchannel.c:315
 msgctxt "undo-type"
 msgid "Fill Channel"
 msgstr "Riempi canali"
 
-#: ../app/core/gimpchannel.c:308
+#: ../app/core/gimpchannel.c:316
 msgctxt "undo-type"
 msgid "Invert Channel"
 msgstr "Inverti canale"
 
-#: ../app/core/gimpchannel.c:309
+#: ../app/core/gimpchannel.c:317
 msgctxt "undo-type"
 msgid "Border Channel"
 msgstr "Bordo canale"
 
-#: ../app/core/gimpchannel.c:310
+#: ../app/core/gimpchannel.c:318
 msgctxt "undo-type"
 msgid "Grow Channel"
 msgstr "Ingrandisci canale"
 
-#: ../app/core/gimpchannel.c:311
+#: ../app/core/gimpchannel.c:319
 msgctxt "undo-type"
 msgid "Shrink Channel"
 msgstr "Riduci canale"
 
-#: ../app/core/gimpchannel.c:719
+#: ../app/core/gimpchannel.c:730
 msgid "Cannot stroke empty channel."
 msgstr "Impossibile delineare un canale vuoto."
 
-#: ../app/core/gimpchannel.c:1749
+#: ../app/core/gimpchannel.c:1814
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Imposta il colore del canale"
 
-#: ../app/core/gimpchannel.c:1808
+#: ../app/core/gimpchannel.c:1873
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Imposta opacità canale"
 
-#: ../app/core/gimpchannel.c:1910 ../app/core/gimpselection.c:153
+#: ../app/core/gimpchannel.c:1975 ../app/core/gimpselection.c:162
 msgid "Selection Mask"
 msgstr "Maschera di selezione"
 
@@ -7956,7 +7998,7 @@ msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
 msgstr "Selezione rettangolare arrotondata"
 
-#: ../app/core/gimpchannel-select.c:408 ../app/core/gimplayer.c:297
+#: ../app/core/gimpchannel-select.c:408 ../app/core/gimplayer.c:299
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Alfa a selezione"
@@ -8020,7 +8062,7 @@ msgstr "copia"
 msgid "%s copy"
 msgstr "%s copia"
 
-#: ../app/core/gimpdatafactory.c:742
+#: ../app/core/gimpdatafactory.c:750
 #, c-format
 msgid ""
 "You have a writable data folder configured (%s), but this folder does not "
@@ -8031,7 +8073,7 @@ msgstr ""
 "Creare la cartella o correggere la configurazione nella sezione 'cartelle' "
 "della finestra di dialogo delle preferenze."
 
-#: ../app/core/gimpdatafactory.c:763
+#: ../app/core/gimpdatafactory.c:771
 #, c-format
 msgid ""
 "You have a writable data folder configured, but this folder is not part of "
@@ -8043,12 +8085,12 @@ msgstr ""
 "gimprc. Correggere il problema agendo nella sezione 'cartelle' della "
 "finestra di dialogo delle preferenze."
 
-#: ../app/core/gimpdatafactory.c:773
+#: ../app/core/gimpdatafactory.c:781
 #, c-format
 msgid "You don't have any writable data folder configured."
 msgstr "Non è stata configurata nessuna una cartella data scrivibile."
 
-#: ../app/core/gimpdatafactory.c:937
+#: ../app/core/gimpdatafactory.c:945
 #, c-format
 msgid ""
 "Failed to load data:\n"
@@ -8068,7 +8110,7 @@ msgstr "Sfumatura"
 msgid "Calculating distance map"
 msgstr "Calcolo della mappa della distanza"
 
-#: ../app/core/gimpdrawable-blend.c:938 ../app/pdb/edit-cmds.c:774
+#: ../app/core/gimpdrawable-blend.c:940 ../app/pdb/edit-cmds.c:774
 #: ../app/tools/gimpblendtool.c:242
 msgid "Blending"
 msgstr "Sfumatura in corso"
@@ -8082,7 +8124,7 @@ msgctxt "undo-type"
 msgid "Bucket Fill"
 msgstr "Riempimento colore"
 
-#: ../app/core/gimpdrawable.c:432
+#: ../app/core/gimpdrawable.c:435
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Scala"
@@ -8129,7 +8171,7 @@ msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Ruota"
 
-#: ../app/core/gimpdrawable-transform.c:974 ../app/core/gimplayer.c:296
+#: ../app/core/gimpdrawable-transform.c:974 ../app/core/gimplayer.c:298
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Trasforma livello"
@@ -8286,41 +8328,41 @@ msgstr ""
 "Scostamento verticale della prima linea della griglia; dev'essere un numero "
 "negativo."
 
-#: ../app/core/gimpgrouplayer.c:217
+#: ../app/core/gimpgrouplayer.c:220
 msgid "Layer Group"
 msgstr "Gruppo livelli"
 
-#: ../app/core/gimpgrouplayer.c:218
+#: ../app/core/gimpgrouplayer.c:221
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Rinomina gruppo livelli"
 
-#: ../app/core/gimpgrouplayer.c:219
+#: ../app/core/gimpgrouplayer.c:222
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Sposta gruppo livelli"
 
-#: ../app/core/gimpgrouplayer.c:220
+#: ../app/core/gimpgrouplayer.c:223
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Scala gruppo livelli"
 
-#: ../app/core/gimpgrouplayer.c:221
+#: ../app/core/gimpgrouplayer.c:224
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Ridimensiona gruppo livelli"
 
-#: ../app/core/gimpgrouplayer.c:222
+#: ../app/core/gimpgrouplayer.c:225
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Rifletti gruppo livelli"
 
-#: ../app/core/gimpgrouplayer.c:223
+#: ../app/core/gimpgrouplayer.c:226
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Ruota gruppo livelli"
 
-#: ../app/core/gimpgrouplayer.c:224
+#: ../app/core/gimpgrouplayer.c:227
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Trasforma gruppo livelli"
@@ -8330,69 +8372,69 @@ msgctxt "undo-type"
 msgid "Arrange Objects"
 msgstr "Disponi oggetti"
 
-#: ../app/core/gimpimage.c:1846
+#: ../app/core/gimpimage.c:1851
 msgid " (exported)"
 msgstr " (esportata)"
 
-#: ../app/core/gimpimage.c:1850
+#: ../app/core/gimpimage.c:1855
 msgid " (overwritten)"
 msgstr " (sovrascritta)"
 
-#: ../app/core/gimpimage.c:1859
+#: ../app/core/gimpimage.c:1864
 msgid " (imported)"
 msgstr " (importata)"
 
-#: ../app/core/gimpimage.c:1980
+#: ../app/core/gimpimage.c:1989
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Cambia risoluzione immagine"
 
-#: ../app/core/gimpimage.c:2032
+#: ../app/core/gimpimage.c:2041
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Cambia unità immagine"
 
-#: ../app/core/gimpimage.c:2866
+#: ../app/core/gimpimage.c:2917
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Allega parassita all'immagine"
 
-#: ../app/core/gimpimage.c:2907
+#: ../app/core/gimpimage.c:2958
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Rimuovi parassita dall'immagine"
 
-#: ../app/core/gimpimage.c:3616
+#: ../app/core/gimpimage.c:3667
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Aggiungi livello"
 
-#: ../app/core/gimpimage.c:3666 ../app/core/gimpimage.c:3686
+#: ../app/core/gimpimage.c:3717 ../app/core/gimpimage.c:3737
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Rimuovi livello"
 
-#: ../app/core/gimpimage.c:3680
+#: ../app/core/gimpimage.c:3731
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Rimuovi selezione fluttuante"
 
-#: ../app/core/gimpimage.c:3848
+#: ../app/core/gimpimage.c:3899
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Aggiungi canale"
 
-#: ../app/core/gimpimage.c:3886 ../app/core/gimpimage.c:3899
+#: ../app/core/gimpimage.c:3937 ../app/core/gimpimage.c:3950
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Rimuovi canale"
 
-#: ../app/core/gimpimage.c:3953
+#: ../app/core/gimpimage.c:4004
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Aggiungi tracciato"
 
-#: ../app/core/gimpimage.c:3984
+#: ../app/core/gimpimage.c:4035
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Rimuovi tracciato"
@@ -8417,27 +8459,27 @@ msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Aggiungi colore alla mappa colore"
 
-#: ../app/core/gimpimage-convert-precision.c:63
+#: ../app/core/gimpimage-convert-precision.c:65
 msgctxt "undo-type"
 msgid "Convert Image to 8 bit integer"
 msgstr "Converti immagine a 8 bit interi"
 
-#: ../app/core/gimpimage-convert-precision.c:67
+#: ../app/core/gimpimage-convert-precision.c:69
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit integer"
 msgstr "Converti immagine a 16 bit interi"
 
-#: ../app/core/gimpimage-convert-precision.c:71
+#: ../app/core/gimpimage-convert-precision.c:73
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit integer"
 msgstr "Converti immagine a 32 bit interi"
 
-#: ../app/core/gimpimage-convert-precision.c:75
+#: ../app/core/gimpimage-convert-precision.c:77
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit floating point"
 msgstr "Converti l'immagine a 16 bit in virgola mobile"
 
-#: ../app/core/gimpimage-convert-precision.c:79
+#: ../app/core/gimpimage-convert-precision.c:81
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit floating point"
 msgstr "Converti l'immagine a 32 bit in virgola mobile"
@@ -8469,12 +8511,12 @@ msgstr "Conversione in colori indicizzati (fase 2)"
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Conversione in colori indicizzati (fase 3)"
 
-#: ../app/core/gimpimage-crop.c:122
+#: ../app/core/gimpimage-crop.c:73
 msgctxt "undo-type"
 msgid "Crop Image"
 msgstr "Ritaglia immagine"
 
-#: ../app/core/gimpimage-crop.c:125 ../app/core/gimpimage-resize.c:89
+#: ../app/core/gimpimage-crop.c:76 ../app/core/gimpimage-resize.c:89
 msgctxt "undo-type"
 msgid "Resize Image"
 msgstr "Ridimensiona immagine"
@@ -8572,44 +8614,44 @@ msgctxt "undo-type"
 msgid "Transform Items"
 msgstr "Trasforma gli elementi"
 
-#: ../app/core/gimpimage-merge.c:131
+#: ../app/core/gimpimage-merge.c:132
 msgctxt "undo-type"
 msgid "Merge Visible Layers"
 msgstr "Fondi livelli visibili"
 
-#: ../app/core/gimpimage-merge.c:177
+#: ../app/core/gimpimage-merge.c:178
 msgctxt "undo-type"
 msgid "Flatten Image"
 msgstr "Appiattisci immagine"
 
-#: ../app/core/gimpimage-merge.c:247
+#: ../app/core/gimpimage-merge.c:248
 msgid "Cannot merge down to a layer group."
 msgstr "Impossibile fondere in un gruppo livelli."
 
-#: ../app/core/gimpimage-merge.c:254
+#: ../app/core/gimpimage-merge.c:255
 msgid "The layer to merge down to is locked."
 msgstr "Il livello da fondere in basso è bloccato."
 
-#: ../app/core/gimpimage-merge.c:266
+#: ../app/core/gimpimage-merge.c:267
 msgid "There is no visible layer to merge down to."
 msgstr "Nessun livello visibile su cui fondere in basso."
 
-#: ../app/core/gimpimage-merge.c:276
+#: ../app/core/gimpimage-merge.c:277
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Fondi in basso"
 
-#: ../app/core/gimpimage-merge.c:304
+#: ../app/core/gimpimage-merge.c:305
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Fondi il gruppo livelli"
 
-#: ../app/core/gimpimage-merge.c:357
+#: ../app/core/gimpimage-merge.c:358
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Fondi tracciati visibili"
 
-#: ../app/core/gimpimage-merge.c:393
+#: ../app/core/gimpimage-merge.c:394
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "Non ci sono abbastanza tracciati visibili da fondere. Ce ne devono essere "
@@ -8677,76 +8719,76 @@ msgstr "Imposta voce esclusiva visibile"
 msgid "Set Item Exclusive Linked"
 msgstr "Imposta voce esclusiva collegata"
 
-#: ../app/core/gimplayer.c:290
+#: ../app/core/gimplayer.c:292
 msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "Rinomina livello"
 
-#: ../app/core/gimplayer.c:291
+#: ../app/core/gimplayer.c:293
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "Sposta livello"
 
-#: ../app/core/gimplayer.c:292
+#: ../app/core/gimplayer.c:294
 msgctxt "undo-type"
 msgid "Scale Layer"
 msgstr "Scala livello"
 
-#: ../app/core/gimplayer.c:293
+#: ../app/core/gimplayer.c:295
 msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "Ridimensiona Livello"
 
-#: ../app/core/gimplayer.c:294
+#: ../app/core/gimplayer.c:296
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "Rifletti livello"
 
-#: ../app/core/gimplayer.c:295
+#: ../app/core/gimplayer.c:297
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "Ruota livello"
 
-#: ../app/core/gimplayer.c:298
+#: ../app/core/gimplayer.c:300
 msgctxt "undo-type"
 msgid "Reorder Layer"
 msgstr "Ordina il livello"
 
-#: ../app/core/gimplayer.c:299
+#: ../app/core/gimplayer.c:301
 msgctxt "undo-type"
 msgid "Raise Layer"
 msgstr "Alza il livello"
 
-#: ../app/core/gimplayer.c:300
+#: ../app/core/gimplayer.c:302
 msgctxt "undo-type"
 msgid "Raise Layer to Top"
 msgstr "Alza il livello fino in cima"
 
-#: ../app/core/gimplayer.c:301
+#: ../app/core/gimplayer.c:303
 msgctxt "undo-type"
 msgid "Lower Layer"
 msgstr "Abbassa il livello"
 
-#: ../app/core/gimplayer.c:302
+#: ../app/core/gimplayer.c:304
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
 msgstr "Abbassa il livello fino in fondo"
 
-#: ../app/core/gimplayer.c:303
+#: ../app/core/gimplayer.c:305
 msgid "Layer cannot be raised higher."
 msgstr "Il livello non può essere alzato ulteriormente."
 
-#: ../app/core/gimplayer.c:304
+#: ../app/core/gimplayer.c:306
 msgid "Layer cannot be lowered more."
 msgstr "Il livello non può essere abbassato ulteriormente."
 
-#: ../app/core/gimplayer.c:478 ../app/core/gimplayer.c:1328
-#: ../app/core/gimplayermask.c:183
+#: ../app/core/gimplayer.c:480 ../app/core/gimplayer.c:1370
+#: ../app/core/gimplayermask.c:218
 #, c-format
 msgid "%s mask"
 msgstr "%s maschera"
 
-#: ../app/core/gimplayer.c:517
+#: ../app/core/gimplayer.c:519
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -8755,7 +8797,7 @@ msgstr ""
 "Selezione fluttuante\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:662 ../app/core/gimplayer-floating-sel.c:124
+#: ../app/core/gimplayer.c:665 ../app/core/gimplayer-floating-sel.c:124
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -8763,64 +8805,64 @@ msgstr ""
 "Impossibile creare un nuovo livello da una selezione fluttuante perché "
 "appartiene ad una maschera di livello o canale."
 
-#: ../app/core/gimplayer.c:1233
+#: ../app/core/gimplayer.c:1275
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 "Impossibile aggiungere una maschera di livello dato che il livello ne ha già "
 "una."
 
-#: ../app/core/gimplayer.c:1244
+#: ../app/core/gimplayer.c:1286
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Impossibile aggiungere maschera livello con dimensioni diverse dal livello "
 "specificato."
 
-#: ../app/core/gimplayer.c:1250
+#: ../app/core/gimplayer.c:1292
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Aggiungi maschera di livello"
 
-#: ../app/core/gimplayer.c:1380
+#: ../app/core/gimplayer.c:1422
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Trasferimento alfa su maschera"
 
-#: ../app/core/gimplayer.c:1540
+#: ../app/core/gimplayer.c:1582
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Applica maschera di livello"
 
-#: ../app/core/gimplayer.c:1541
+#: ../app/core/gimplayer.c:1583
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Elimina maschera di livello"
 
-#: ../app/core/gimplayer.c:1649
+#: ../app/core/gimplayer.c:1693
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "Abilita maschera di livello"
 
-#: ../app/core/gimplayer.c:1650
+#: ../app/core/gimplayer.c:1694
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "Disabilita maschera di livello"
 
-#: ../app/core/gimplayer.c:1729
+#: ../app/core/gimplayer.c:1773
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Mostra maschera di livello"
 
-#: ../app/core/gimplayer.c:1803
+#: ../app/core/gimplayer.c:1847
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Aggiungi canale alfa"
 
-#: ../app/core/gimplayer.c:1838
+#: ../app/core/gimplayer.c:1884
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Rimuovi canale alfa"
 
-#: ../app/core/gimplayer.c:1858
+#: ../app/core/gimplayer.c:1904
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Livello a dimensione immagine"
@@ -8835,17 +8877,17 @@ msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Selezione fluttuante al livello"
 
-#: ../app/core/gimplayermask.c:67
+#: ../app/core/gimplayermask.c:79
 msgctxt "undo-type"
 msgid "Move Layer Mask"
 msgstr "Sposta maschera di livello"
 
-#: ../app/core/gimplayermask.c:68
+#: ../app/core/gimplayermask.c:80
 msgctxt "undo-type"
 msgid "Layer Mask to Selection"
 msgstr "Maschera di livello a selezione"
 
-#: ../app/core/gimplayermask.c:129
+#: ../app/core/gimplayermask.c:143
 #, c-format
 msgid "Cannot rename layer masks."
 msgstr "Impossibile rinominare le maschere di livello."
@@ -8961,76 +9003,76 @@ msgstr ""
 msgid "Please wait"
 msgstr "Attendere"
 
-#: ../app/core/gimpselection.c:154
+#: ../app/core/gimpselection.c:163
 msgctxt "undo-type"
 msgid "Move Selection"
 msgstr "Sposta selezione"
 
-#: ../app/core/gimpselection.c:155
+#: ../app/core/gimpselection.c:164
 msgctxt "undo-type"
 msgid "Stroke Selection"
 msgstr "Delinea selezione"
 
-#: ../app/core/gimpselection.c:171
+#: ../app/core/gimpselection.c:181
 msgctxt "undo-type"
 msgid "Feather Selection"
 msgstr "Selezione sfumata"
 
-#: ../app/core/gimpselection.c:172
+#: ../app/core/gimpselection.c:182
 msgctxt "undo-type"
 msgid "Sharpen Selection"
 msgstr "Assottiglia la selezione"
 
-#: ../app/core/gimpselection.c:173
+#: ../app/core/gimpselection.c:183
 msgctxt "undo-type"
 msgid "Select None"
 msgstr "Seleziona nulla"
 
-#: ../app/core/gimpselection.c:174
+#: ../app/core/gimpselection.c:184
 msgctxt "undo-type"
 msgid "Select All"
 msgstr "Seleziona tutto"
 
-#: ../app/core/gimpselection.c:175
+#: ../app/core/gimpselection.c:185
 msgctxt "undo-type"
 msgid "Invert Selection"
 msgstr "Inverti selezione"
 
-#: ../app/core/gimpselection.c:176
+#: ../app/core/gimpselection.c:186
 msgctxt "undo-type"
 msgid "Border Selection"
 msgstr "Selezione bordo"
 
-#: ../app/core/gimpselection.c:177
+#: ../app/core/gimpselection.c:187
 msgctxt "undo-type"
 msgid "Grow Selection"
 msgstr "Allarga la selezione"
 
-#: ../app/core/gimpselection.c:178
+#: ../app/core/gimpselection.c:188
 msgctxt "undo-type"
 msgid "Shrink Selection"
 msgstr "Restringi la selezione"
 
-#: ../app/core/gimpselection.c:285
+#: ../app/core/gimpselection.c:295
 msgid "There is no selection to stroke."
 msgstr "Nessuna selezione da disegnare."
 
-#: ../app/core/gimpselection.c:665
+#: ../app/core/gimpselection.c:696
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr ""
 "Non è possibile a tagliare o copiare perché la regione selezionata è vuota."
 
-#: ../app/core/gimpselection.c:799
+#: ../app/core/gimpselection.c:830
 msgid "Cannot float selection because the selected region is empty."
 msgstr ""
 "Non è possibile la selezione fluttuante perché la regione selezionata è vuota"
 
-#: ../app/core/gimpselection.c:806
+#: ../app/core/gimpselection.c:837
 msgctxt "undo-type"
 msgid "Float Selection"
 msgstr "Selezione fluttuante"
 
-#: ../app/core/gimpselection.c:822
+#: ../app/core/gimpselection.c:853
 msgid "Floated Layer"
 msgstr "Livello fluttuante"
 
@@ -9192,6 +9234,39 @@ msgstr "_Nome canale:"
 msgid "Initialize from _selection"
 msgstr "Inizializza dalla _selezione"
 
+#: ../app/dialogs/convert-precision-dialog.c:111
+#, c-format
+msgid "Convert Image to %s"
+msgstr "Converti l'immagine a %s"
+
+#: ../app/dialogs/convert-precision-dialog.c:115
+msgid "Precision Conversion"
+msgstr "Conversione di precisione:"
+
+#: ../app/dialogs/convert-precision-dialog.c:130
+#: ../app/dialogs/convert-type-dialog.c:138
+msgid "C_onvert"
+msgstr "C_onversione"
+
+#. dithering
+#: ../app/dialogs/convert-precision-dialog.c:161
+#: ../app/dialogs/convert-type-dialog.c:234
+#: ../app/tools/gimpblendoptions.c:255
+msgid "Dithering"
+msgstr "Dithering"
+
+#: ../app/dialogs/convert-precision-dialog.c:177
+msgid "_Layers:"
+msgstr "_Livelli:"
+
+#: ../app/dialogs/convert-precision-dialog.c:199
+msgid "_Channels and Masks:"
+msgstr "_Canali e maschere:"
+
+#: ../app/dialogs/convert-precision-dialog.c:233
+msgid "Converting to lower bit depth"
+msgstr "Conversione ad una profondità di colore inferiore"
+
 #: ../app/dialogs/convert-type-dialog.c:125
 msgid "Indexed Color Conversion"
 msgstr "Conversione a indicizzato"
@@ -9200,10 +9275,6 @@ msgstr "Conversione a indicizzato"
 msgid "Convert Image to Indexed Colors"
 msgstr "Converti immagine a indicizzata"
 
-#: ../app/dialogs/convert-type-dialog.c:138
-msgid "C_onvert"
-msgstr "C_onversione"
-
 #: ../app/dialogs/convert-type-dialog.c:190
 msgid "_Maximum number of colors:"
 msgstr "Numero _massimo di colori:"
@@ -9211,12 +9282,6 @@ msgstr "Numero _massimo di colori:"
 #: ../app/dialogs/convert-type-dialog.c:217
 msgid "_Remove unused colors from colormap"
 msgstr "_Rimuovere i colori inutilizzati dalla mappa colore"
-
-#. dithering
-#: ../app/dialogs/convert-type-dialog.c:234
-#: ../app/tools/gimpblendoptions.c:255
-msgid "Dithering"
-msgstr "Dithering"
 
 #: ../app/dialogs/convert-type-dialog.c:246
 msgid "Color _dithering:"
@@ -9654,31 +9719,31 @@ msgstr "È necessario riavviare GIMP affinché i cambiamenti abbiano effetto."
 msgid "Module"
 msgstr "Modulo"
 
-#: ../app/dialogs/module-dialog.c:465
+#: ../app/dialogs/module-dialog.c:468
 msgid "Only in memory"
 msgstr "Solo in memoria"
 
-#: ../app/dialogs/module-dialog.c:470
+#: ../app/dialogs/module-dialog.c:473
 msgid "No longer available"
 msgstr "Non più disponibile"
 
-#: ../app/dialogs/module-dialog.c:495
+#: ../app/dialogs/module-dialog.c:498
 msgid "Author:"
 msgstr "Autore:"
 
-#: ../app/dialogs/module-dialog.c:496
+#: ../app/dialogs/module-dialog.c:499
 msgid "Version:"
 msgstr "Versione:"
 
-#: ../app/dialogs/module-dialog.c:497
+#: ../app/dialogs/module-dialog.c:500
 msgid "Date:"
 msgstr "Data:"
 
-#: ../app/dialogs/module-dialog.c:498
+#: ../app/dialogs/module-dialog.c:501
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: ../app/dialogs/module-dialog.c:499
+#: ../app/dialogs/module-dialog.c:502
 msgid "Location:"
 msgstr "Posizione:"
 
@@ -11018,9 +11083,9 @@ msgstr "Impossibile modificare i pixel di un gruppo di livelli."
 
 #: ../app/display/gimpdisplayshell-dnd.c:368
 #: ../app/display/gimpdisplayshell-dnd.c:467 ../app/tools/gimpblendtool.c:173
-#: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcroptool.c:325
+#: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcroptool.c:326
 #: ../app/tools/gimpimagemaptool.c:297 ../app/tools/gimppainttool.c:266
-#: ../app/tools/gimptransformtool.c:263 ../app/tools/gimptransformtool.c:1217
+#: ../app/tools/gimptransformtool.c:263 ../app/tools/gimptransformtool.c:1223
 msgid "The active layer's pixels are locked."
 msgstr "I pixel del livello attivo sono bloccati."
 
@@ -11170,44 +11235,45 @@ msgstr "RGB-alpha"
 #: ../app/gegl/gimp-babl.c:166 ../app/gegl/gimp-babl.c:167
 #: ../app/gegl/gimp-babl.c:168 ../app/gegl/gimp-babl.c:169
 #: ../app/gegl/gimp-babl.c:170 ../app/gegl/gimp-babl.c:171
+#: ../app/gegl/gimp-babl.c:172
 msgid "Grayscale"
 msgstr "Scala di grigi"
 
-#: ../app/gegl/gimp-babl.c:173 ../app/gegl/gimp-babl.c:174
-#: ../app/gegl/gimp-babl.c:175 ../app/gegl/gimp-babl.c:176
-#: ../app/gegl/gimp-babl.c:177
+#: ../app/gegl/gimp-babl.c:174 ../app/gegl/gimp-babl.c:175
+#: ../app/gegl/gimp-babl.c:176 ../app/gegl/gimp-babl.c:177
+#: ../app/gegl/gimp-babl.c:178
 msgid "Grayscale-alpha"
 msgstr "Scala di grigi - alfa"
 
-#: ../app/gegl/gimp-babl.c:179 ../app/gegl/gimp-babl.c:180
-#: ../app/gegl/gimp-babl.c:181 ../app/gegl/gimp-babl.c:182
-#: ../app/gegl/gimp-babl.c:183
+#: ../app/gegl/gimp-babl.c:180 ../app/gegl/gimp-babl.c:181
+#: ../app/gegl/gimp-babl.c:182 ../app/gegl/gimp-babl.c:183
+#: ../app/gegl/gimp-babl.c:184
 msgid "Red component"
 msgstr "Componente rossa"
 
-#: ../app/gegl/gimp-babl.c:185 ../app/gegl/gimp-babl.c:186
-#: ../app/gegl/gimp-babl.c:187 ../app/gegl/gimp-babl.c:188
-#: ../app/gegl/gimp-babl.c:189
+#: ../app/gegl/gimp-babl.c:186 ../app/gegl/gimp-babl.c:187
+#: ../app/gegl/gimp-babl.c:188 ../app/gegl/gimp-babl.c:189
+#: ../app/gegl/gimp-babl.c:190
 msgid "Green component"
 msgstr "Componente verde"
 
-#: ../app/gegl/gimp-babl.c:191 ../app/gegl/gimp-babl.c:192
-#: ../app/gegl/gimp-babl.c:193 ../app/gegl/gimp-babl.c:194
-#: ../app/gegl/gimp-babl.c:195
+#: ../app/gegl/gimp-babl.c:192 ../app/gegl/gimp-babl.c:193
+#: ../app/gegl/gimp-babl.c:194 ../app/gegl/gimp-babl.c:195
+#: ../app/gegl/gimp-babl.c:196
 msgid "Blue component"
 msgstr "Componente blu"
 
-#: ../app/gegl/gimp-babl.c:197 ../app/gegl/gimp-babl.c:198
-#: ../app/gegl/gimp-babl.c:199 ../app/gegl/gimp-babl.c:200
-#: ../app/gegl/gimp-babl.c:201 ../app/gegl/gimp-babl.c:202
+#: ../app/gegl/gimp-babl.c:198 ../app/gegl/gimp-babl.c:199
+#: ../app/gegl/gimp-babl.c:200 ../app/gegl/gimp-babl.c:201
+#: ../app/gegl/gimp-babl.c:202 ../app/gegl/gimp-babl.c:203
 msgid "Alpha component"
 msgstr "Componente alfa"
 
-#: ../app/gegl/gimp-babl.c:230
+#: ../app/gegl/gimp-babl.c:231
 msgid "Indexed-alpha"
 msgstr "Alfa indicizzata"
 
-#: ../app/gegl/gimp-babl.c:232
+#: ../app/gegl/gimp-babl.c:233
 msgid "Indexed"
 msgstr "Indicizzata"
 
@@ -11325,7 +11391,7 @@ msgstr "Angolo macchia stilo"
 msgid "Paintbrush"
 msgstr "Pennello"
 
-#: ../app/paint/gimppaintcore.c:137
+#: ../app/paint/gimppaintcore.c:136
 msgid "Paint"
 msgstr "Disegna"
 
@@ -11377,7 +11443,7 @@ msgstr "Gravità della matita"
 msgid "Pencil"
 msgstr "Matita"
 
-#: ../app/paint/gimpperspectiveclone.c:87
+#: ../app/paint/gimpperspectiveclone.c:86
 #: ../app/tools/gimpperspectiveclonetool.c:133
 msgid "Perspective Clone"
 msgstr "Clona in prospettiva"
@@ -11860,32 +11926,40 @@ msgstr "Selezione libera"
 msgid "Move Layer"
 msgstr "Sposta livello"
 
-#: ../app/pdb/plug-in-compat-cmds.c:80
+#: ../app/pdb/plug-in-compat-cmds.c:89
+msgid "Autocrop image"
+msgstr "Autoritaglio immagine"
+
+#: ../app/pdb/plug-in-compat-cmds.c:135
+msgid "Autocrop layer"
+msgstr "Autoritaglio livello"
+
+#: ../app/pdb/plug-in-compat-cmds.c:182
 msgctxt "undo-type"
 msgid "Color to Alpha"
 msgstr "Colore a alfa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:121 ../app/pdb/plug-in-compat-cmds.c:164
+#: ../app/pdb/plug-in-compat-cmds.c:223 ../app/pdb/plug-in-compat-cmds.c:266
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Effetto pixel"
 
-#: ../app/pdb/plug-in-compat-cmds.c:216
+#: ../app/pdb/plug-in-compat-cmds.c:318
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Coordinate polari"
 
-#: ../app/pdb/plug-in-compat-cmds.c:260
+#: ../app/pdb/plug-in-compat-cmds.c:362
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Semi-appiattisci"
 
-#: ../app/pdb/plug-in-compat-cmds.c:301
+#: ../app/pdb/plug-in-compat-cmds.c:403
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Soglia alfa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:338
+#: ../app/pdb/plug-in-compat-cmds.c:440
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Inverti valore"
@@ -12089,7 +12163,7 @@ msgstr ""
 "Mai posto quiz vaghi\n"
 "o indecifrabili."
 
-#: ../app/text/gimptext-compat.c:106 ../app/tools/gimptexttool.c:1401
+#: ../app/text/gimptext-compat.c:106 ../app/tools/gimptexttool.c:1400
 msgid "Add Text Layer"
 msgstr "Aggiungi livello testo"
 
@@ -12840,7 +12914,7 @@ msgstr "Rita_glia"
 msgid "Click or press Enter to crop"
 msgstr "Fare clic o premere invio per ritagliare"
 
-#: ../app/tools/gimpcroptool.c:318
+#: ../app/tools/gimpcroptool.c:319
 msgid "There is no active layer to crop."
 msgstr "Non c'è un livello attivo da tagliare."
 
@@ -14259,15 +14333,15 @@ msgstr "_Testo"
 msgid "Reshape Text Layer"
 msgstr "Risagoma il livello di testo"
 
-#: ../app/tools/gimptexttool.c:1512 ../app/tools/gimptexttool.c:1515
+#: ../app/tools/gimptexttool.c:1511 ../app/tools/gimptexttool.c:1514
 msgid "Confirm Text Editing"
 msgstr "Conferma modifica del testo"
 
-#: ../app/tools/gimptexttool.c:1519
+#: ../app/tools/gimptexttool.c:1518
 msgid "Create _New Layer"
 msgstr "Crea un _nuovo livello"
 
-#: ../app/tools/gimptexttool.c:1543
+#: ../app/tools/gimptexttool.c:1542
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -14282,7 +14356,7 @@ msgstr ""
 "Puoi modificare il livello oppure creare un nuovo livello di testo dai suoi "
 "attributi."
 
-#: ../app/tools/gimptexttool-editor.c:1180
+#: ../app/tools/gimptexttool-editor.c:1179
 msgid "GIMP Text Editor"
 msgstr "Editor di testi di GIMP"
 
@@ -14403,15 +14477,15 @@ msgstr "Mantieni il rapporto proporzioni originale"
 msgid "Transforming"
 msgstr "Trasformazione"
 
-#: ../app/tools/gimptransformtool.c:1216
+#: ../app/tools/gimptransformtool.c:1222
 msgid "There is no layer to transform."
 msgstr "Nessun livello da trasformare."
 
-#: ../app/tools/gimptransformtool.c:1229
+#: ../app/tools/gimptransformtool.c:1235
 msgid "There is no path to transform."
 msgstr "Nessun tracciato da trasformare."
 
-#: ../app/tools/gimptransformtool.c:1230
+#: ../app/tools/gimptransformtool.c:1236
 msgid "The active path's strokes are locked."
 msgstr "Le delineature del tracciato attivo sono bloccate."
 
@@ -14429,15 +14503,15 @@ msgstr ""
 msgid "_Unified Transform"
 msgstr "Trasformazione _unificata"
 
-#: ../app/tools/gimpunifiedtransformtool.c:134
+#: ../app/tools/gimpunifiedtransformtool.c:133
 msgid "Unified transform"
 msgstr "Trasformazione unificata"
 
-#: ../app/tools/gimpunifiedtransformtool.c:676
+#: ../app/tools/gimpunifiedtransformtool.c:675
 msgid "Transform Matrix"
 msgstr "Matrice di trasformazione"
 
-#: ../app/tools/gimpunifiedtransformtool.c:1219
+#: ../app/tools/gimpunifiedtransformtool.c:1218
 msgctxt "undo-type"
 msgid "Unified Transform"
 msgstr "Trasformazione unificata"
@@ -15498,7 +15572,7 @@ msgstr "Casualità"
 #: ../app/widgets/gimpdynamicseditor.c:148
 #: ../app/widgets/gimpdynamicsoutputeditor.c:76
 msgid "Fade"
-msgstr "Sfuma"
+msgstr "Sfumatura"
 
 #: ../app/widgets/gimperrordialog.c:150
 msgid "Too many error messages!"
@@ -15521,23 +15595,23 @@ msgstr "Rilevato automaticamente"
 msgid "By Extension"
 msgstr "Per estensione"
 
-#: ../app/widgets/gimpfiledialog.c:798
+#: ../app/widgets/gimpfiledialog.c:799
 msgid "All files"
 msgstr "Tutti i file"
 
-#: ../app/widgets/gimpfiledialog.c:803
+#: ../app/widgets/gimpfiledialog.c:804
 msgid "All images"
 msgstr "Tutte le immagini"
 
-#: ../app/widgets/gimpfiledialog.c:810
+#: ../app/widgets/gimpfiledialog.c:811
 msgid "All XCF images"
 msgstr "Tutte le immagini XCF"
 
-#: ../app/widgets/gimpfiledialog.c:812
+#: ../app/widgets/gimpfiledialog.c:813
 msgid "All export images"
 msgstr "Tutte le immagini esportabili"
 
-#: ../app/widgets/gimpfiledialog.c:996
+#: ../app/widgets/gimpfiledialog.c:997
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Seleziona _tipo di file (%s)"
@@ -16453,7 +16527,7 @@ msgstr "Salvataggio di \"%s\""
 msgid "Error saving XCF file: %s"
 msgstr "Errore durante il salvataggio del file XCF: %s"
 
-#: ../app/xcf/xcf-load.c:344
+#: ../app/xcf/xcf-load.c:347
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -16461,7 +16535,7 @@ msgstr ""
 "Questo file XCF è danneggiato! È stato caricato tutto quello che si è "
 "potuto, ma è incompleto."
 
-#: ../app/xcf/xcf-load.c:355
+#: ../app/xcf/xcf-load.c:358
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -16469,7 +16543,7 @@ msgstr ""
 "Questo file XCF è danneggiato! Non è stato possibile ripristinare neanche "
 "una parte di esso."
 
-#: ../app/xcf/xcf-load.c:446
+#: ../app/xcf/xcf-load.c:449
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
