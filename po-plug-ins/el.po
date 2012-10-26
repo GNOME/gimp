@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
 "eywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-06-13 00:13+0000\n"
-"PO-Revision-Date: 2012-06-17 12:46+0300\n"
+"POT-Creation-Date: 2012-10-22 17:09+0000\n"
+"PO-Revision-Date: 2012-10-24 09:41+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@gnome.gr\n"
 "Language: el\n"
@@ -641,8 +641,8 @@ msgstr "Κά_θετος"
 #. * Create the "background" layer to hold the image...
 #.
 #: ../plug-ins/common/blinds.c:279 ../plug-ins/common/compose.c:936
-#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:363
-#: ../plug-ins/common/file-cel.c:366 ../plug-ins/common/file-dicom.c:612
+#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:441
+#: ../plug-ins/common/file-cel.c:444 ../plug-ins/common/file-dicom.c:612
 #: ../plug-ins/common/file-gif-load.c:943
 #: ../plug-ins/common/file-jp2-load.c:354 ../plug-ins/common/file-pcx.c:425
 #: ../plug-ins/common/file-pcx.c:431 ../plug-ins/common/file-pix.c:382
@@ -651,7 +651,7 @@ msgstr "Κά_θετος"
 #: ../plug-ins/common/file-tga.c:1064 ../plug-ins/common/file-tiff-load.c:1005
 #: ../plug-ins/common/file-xbm.c:897 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:257 ../plug-ins/common/tile.c:262
-#: ../plug-ins/file-bmp/bmp-read.c:380 ../plug-ins/file-bmp/bmp-read.c:647
+#: ../plug-ins/file-bmp/bmp-read.c:391 ../plug-ins/file-bmp/bmp-read.c:658
 #: ../plug-ins/file-faxg3/faxg3.c:474 ../plug-ins/file-fits/fits.c:530
 #: ../plug-ins/file-jpeg/jpeg-load.c:255 ../plug-ins/file-jpeg/jpeg-load.c:819
 #: ../plug-ins/file-psd/psd-image-res-load.c:1001
@@ -1066,7 +1066,8 @@ msgstr "Φόρτωση ρυθμίσεων μείκτη καναλιού"
 #. stat error (file does not exist)
 #: ../plug-ins/common/channel-mixer.c:980
 #: ../plug-ins/common/cml-explorer.c:2208 ../plug-ins/common/curve-bend.c:892
-#: ../plug-ins/common/file-cel.c:312 ../plug-ins/common/file-dicom.c:340
+#: ../plug-ins/common/file-cel.c:296 ../plug-ins/common/file-cel.c:348
+#: ../plug-ins/common/file-cel.c:579 ../plug-ins/common/file-dicom.c:340
 #: ../plug-ins/common/file-gbr.c:368 ../plug-ins/common/file-gif-load.c:355
 #: ../plug-ins/common/file-gih.c:640 ../plug-ins/common/file-jp2-load.c:194
 #: ../plug-ins/common/file-jp2-load.c:203 ../plug-ins/common/file-mng.c:1156
@@ -1080,7 +1081,7 @@ msgstr "Φόρτωση ρυθμίσεων μείκτη καναλιού"
 #: ../plug-ins/common/file-xbm.c:737 ../plug-ins/common/file-xmc.c:663
 #: ../plug-ins/common/file-xmc.c:848 ../plug-ins/common/file-xwd.c:433
 #: ../plug-ins/common/sphere-designer.c:2010
-#: ../plug-ins/file-bmp/bmp-read.c:153 ../plug-ins/file-faxg3/faxg3.c:229
+#: ../plug-ins/file-bmp/bmp-read.c:154 ../plug-ins/file-faxg3/faxg3.c:229
 #: ../plug-ins/file-fits/fits.c:358 ../plug-ins/file-fli/fli-gimp.c:459
 #: ../plug-ins/file-fli/fli-gimp.c:496 ../plug-ins/file-ico/ico-load.c:651
 #: ../plug-ins/file-ico/ico-load.c:729 ../plug-ins/file-jpeg/jpeg-load.c:117
@@ -1104,7 +1105,7 @@ msgstr "Αποθήκευση ρυθμίσεων μείκτη καναλιών"
 
 #: ../plug-ins/common/channel-mixer.c:1058
 #: ../plug-ins/common/cml-explorer.c:2035 ../plug-ins/common/curve-bend.c:840
-#: ../plug-ins/common/file-cel.c:585 ../plug-ins/common/file-csource.c:407
+#: ../plug-ins/common/file-cel.c:772 ../plug-ins/common/file-csource.c:407
 #: ../plug-ins/common/file-dicom.c:1351 ../plug-ins/common/file-gbr.c:663
 #: ../plug-ins/common/file-gif-save.c:782 ../plug-ins/common/file-gih.c:1258
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-mng.c:649
@@ -1116,7 +1117,7 @@ msgstr "Αποθήκευση ρυθμίσεων μείκτη καναλιών"
 #: ../plug-ins/common/file-tga.c:1171 ../plug-ins/common/file-tiff-save.c:710
 #: ../plug-ins/common/file-xbm.c:1036 ../plug-ins/common/file-xmc.c:1455
 #: ../plug-ins/common/file-xwd.c:619 ../plug-ins/common/sphere-designer.c:2121
-#: ../plug-ins/file-bmp/bmp-write.c:306 ../plug-ins/file-fits/fits.c:476
+#: ../plug-ins/file-bmp/bmp-write.c:309 ../plug-ins/file-fits/fits.c:476
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1007
 #: ../plug-ins/file-jpeg/jpeg-save.c:332 ../plug-ins/file-psd/psd-save.c:1652
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:166
@@ -3124,19 +3125,26 @@ msgstr "Κείμενο"
 msgid "_Format:"
 msgstr "Μορ_φοποίηση:"
 
-#: ../plug-ins/common/file-cel.c:111 ../plug-ins/common/file-cel.c:129
+#: ../plug-ins/common/file-cel.c:114 ../plug-ins/common/file-cel.c:132
 msgid "KISS CEL"
 msgstr "KISS CEL"
 
-#: ../plug-ins/common/file-cel.c:191
+#: ../plug-ins/common/file-cel.c:202
 msgid "Load KISS Palette"
 msgstr "Φόρτωση παλέτας KISS"
+
+#: ../plug-ins/common/file-cel.c:308 ../plug-ins/common/file-cel.c:363
+#: ../plug-ins/common/file-cel.c:383
+#, c-format
+#| msgid "Error while reading '%s': %s"
+msgid "EOF or error while reading image header"
+msgstr "Τέλος αρχείου ή σφάλμα ανάγνωσης κεφαλίδας εικόνας"
 
 #. max. rows allocated
 #. column, highest column ever used
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
-#: ../plug-ins/common/file-cel.c:317 ../plug-ins/common/file-dicom.c:345
+#: ../plug-ins/common/file-cel.c:353 ../plug-ins/common/file-dicom.c:345
 #: ../plug-ins/common/file-gbr.c:373 ../plug-ins/common/file-gif-load.c:360
 #: ../plug-ins/common/file-gih.c:645 ../plug-ins/common/file-jp2-load.c:187
 #: ../plug-ins/common/file-pat.c:342 ../plug-ins/common/file-pcx.c:366
@@ -3147,7 +3155,7 @@ msgstr "Φόρτωση παλέτας KISS"
 #: ../plug-ins/common/file-tiff-load.c:611 ../plug-ins/common/file-wmf.c:994
 #: ../plug-ins/common/file-xbm.c:742 ../plug-ins/common/file-xmc.c:675
 #: ../plug-ins/common/file-xpm.c:352 ../plug-ins/common/file-xwd.c:524
-#: ../plug-ins/file-bmp/bmp-read.c:158 ../plug-ins/file-faxg3/faxg3.c:213
+#: ../plug-ins/file-bmp/bmp-read.c:159 ../plug-ins/file-faxg3/faxg3.c:213
 #: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:644
 #: ../plug-ins/file-jpeg/jpeg-load.c:123 ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-sgi/sgi.c:330 ../plug-ins/file-xjt/xjt.c:3333
@@ -3155,18 +3163,74 @@ msgstr "Φόρτωση παλέτας KISS"
 msgid "Opening '%s'"
 msgstr "Άνοιγμα του '%s'"
 
-#: ../plug-ins/common/file-cel.c:354
+#: ../plug-ins/common/file-cel.c:391
+#, c-format
+#| msgid "'%s' is not a PCX file"
+msgid "is not a CEL image file"
+msgstr "δεν είναι αρχείο εικόνας CEL"
+
+#: ../plug-ins/common/file-cel.c:405
+#, c-format
+msgid "illegal bpp value in image: %hhu"
+msgstr "μη αποδεκτή τιμή bpp στην εικόνα: %hhu"
+
+#: ../plug-ins/common/file-cel.c:419
+#, c-format
+msgid ""
+"illegal image dimensions: width: %d, horizontal offset: %d, height: %d, "
+"vertical offset: %d"
+msgstr ""
+"μη αποδεκτές διαστάσεις εικόνας: πλάτος: %d, οριζόντια αντιστάθμιση: %d, "
+"ύψος: %d, κάθετη αντιστάθμιση: %d"
+
+#: ../plug-ins/common/file-cel.c:432
+#, c-format
 msgid "Can't create a new image"
 msgstr "Αδυναμία δημιουργίας νέας εικόνας"
 
-#: ../plug-ins/common/file-cel.c:444
+#: ../plug-ins/common/file-cel.c:470 ../plug-ins/common/file-cel.c:505
+#: ../plug-ins/common/file-cel.c:530
+#, c-format
+#| msgid "Error while reading '%s': %s"
+msgid "EOF or error while reading image data"
+msgstr "Τέλος αρχείου ή σφάλμα ανάγνωσης δεδομένων εικόνας"
+
+#: ../plug-ins/common/file-cel.c:547
 #, c-format
 msgid "Unsupported bit depth (%d)!"
 msgstr "Μη υποστηριζόμενη βάθος δυαδικού ψηφίου (%d)!"
 
+#: ../plug-ins/common/file-cel.c:629 ../plug-ins/common/file-cel.c:641
+#, c-format
+msgid "'%s': EOF or error while reading palette header"
+msgstr "'%s': Τέλος αρχείου ή σφάλμα ανάγνωσης κεφαλίδας παλέτας"
+
+#: ../plug-ins/common/file-cel.c:650
+#, c-format
+#| msgid "'%s' is not a PCX file"
+msgid "'%s': is not a KCF palette file"
+msgstr "'%s': δεν είναι αρχείο παλέτας KCF"
+
+#: ../plug-ins/common/file-cel.c:659
+#, c-format
+msgid "'%s': illegal bpp value in palette: %hhu"
+msgstr "'%s': απαράδεκτη τιμή bpp σε παλέτα: %hhu"
+
+#: ../plug-ins/common/file-cel.c:668
+#, c-format
+#| msgid "Number of colors:"
+msgid "'%s': illegal number of colors: %u"
+msgstr "'%s': απαράδεκτος αριθμός χρωμάτων: %u"
+
+#: ../plug-ins/common/file-cel.c:683 ../plug-ins/common/file-cel.c:700
+#: ../plug-ins/common/file-cel.c:720
+#, c-format
+msgid "'%s': EOF or error while reading palette data"
+msgstr "'%s': τέλος αρχείου ή σφάλμα ανάγνωσης δεδομένων παλέτας"
+
 #. init the progress meter
 #. And let's begin the progress
-#: ../plug-ins/common/file-cel.c:590 ../plug-ins/common/file-gbr.c:668
+#: ../plug-ins/common/file-cel.c:777 ../plug-ins/common/file-gbr.c:668
 #: ../plug-ins/common/file-gif-save.c:789 ../plug-ins/common/file-gih.c:1263
 #: ../plug-ins/common/file-html-table.c:257 ../plug-ins/common/file-pat.c:491
 #: ../plug-ins/common/file-pcx.c:644 ../plug-ins/common/file-pix.c:531
@@ -3175,7 +3239,7 @@ msgstr "Μη υποστηριζόμενη βάθος δυαδικού ψηφίο
 #: ../plug-ins/common/file-tga.c:1176 ../plug-ins/common/file-tiff-save.c:718
 #: ../plug-ins/common/file-xbm.c:1041 ../plug-ins/common/file-xmc.c:1460
 #: ../plug-ins/common/file-xpm.c:638 ../plug-ins/common/file-xwd.c:624
-#: ../plug-ins/file-bmp/bmp-write.c:317 ../plug-ins/file-fits/fits.c:481
+#: ../plug-ins/file-bmp/bmp-write.c:320 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1001
 #: ../plug-ins/file-jpeg/jpeg-save.c:289 ../plug-ins/file-psd/psd-save.c:1657
 #: ../plug-ins/file-sgi/sgi.c:576 ../plug-ins/file-xjt/xjt.c:1696
@@ -3891,13 +3955,13 @@ msgstr "Αδυναμία ανάγνωσης κεφαλίδας από '%s'"
 msgid "'%s' is not a PCX file"
 msgstr "Το '%s' δεν είναι αρχείο PCX"
 
-#: ../plug-ins/common/file-pcx.c:397 ../plug-ins/file-bmp/bmp-read.c:636
+#: ../plug-ins/common/file-pcx.c:397 ../plug-ins/file-bmp/bmp-read.c:647
 #: ../plug-ins/file-psd/psd-load.c:301
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Μη υποστηριζόμενη ή άκυρη εικόνα πλάτους: %d"
 
-#: ../plug-ins/common/file-pcx.c:403 ../plug-ins/file-bmp/bmp-read.c:642
+#: ../plug-ins/common/file-pcx.c:403 ../plug-ins/file-bmp/bmp-read.c:653
 #: ../plug-ins/file-psd/psd-load.c:293
 #, c-format
 msgid "Unsupported or invalid image height: %d"
@@ -5148,15 +5212,15 @@ msgstr ""
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
 msgstr ""
-"Το πλαίσιο '%s' είναι πολύ πλατύ. Παρακαλώ μειώστε σε όχι περισσότερο από %"
-"dpx."
+"Το πλαίσιο '%s' είναι πολύ πλατύ. Παρακαλώ μειώστε σε όχι περισσότερο από "
+"%dpx."
 
 #: ../plug-ins/common/file-xmc.c:1514
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr ""
-"Το πλαίσιο '%s' είναι πολύ υψηλό. Παρακαλώ μειώστε σε όχι περισσότερο από %"
-"dpx."
+"Το πλαίσιο '%s' είναι πολύ υψηλό. Παρακαλώ μειώστε σε όχι περισσότερο από "
+"%dpx."
 
 #: ../plug-ins/common/file-xmc.c:1521
 #, c-format
@@ -7204,85 +7268,85 @@ msgstr "Ανάλυση δείγματος"
 msgid "Remap colorized"
 msgstr "Χρωματιστή επαναπεικόνιση"
 
-#: ../plug-ins/common/screenshot.c:240
+#: ../plug-ins/common/screenshot.c:250
 msgid "Create an image from an area of the screen"
 msgstr "Δημιουργία εικόνας από μια περιοχή της οθόνης"
 
-#: ../plug-ins/common/screenshot.c:253
+#: ../plug-ins/common/screenshot.c:272
 msgid "_Screenshot..."
 msgstr "_Στιγμιότυπο..."
 
-#: ../plug-ins/common/screenshot.c:418
+#: ../plug-ins/common/screenshot.c:445
 msgid "Error selecting the window"
 msgstr "Σφάλμα επιλογής παραθύρου"
 
-#: ../plug-ins/common/screenshot.c:786
+#: ../plug-ins/common/screenshot.c:813
 msgid "Importing screenshot"
 msgstr "Εισαγωγή στιγμιότυπου"
 
-#: ../plug-ins/common/screenshot.c:812 ../plug-ins/common/screenshot.c:1085
+#: ../plug-ins/common/screenshot.c:839 ../plug-ins/common/screenshot.c:1204
 msgid "Screenshot"
 msgstr "Στιγμιότυπο"
 
-#: ../plug-ins/common/screenshot.c:853
+#: ../plug-ins/common/screenshot.c:880
 msgid "Mouse Pointer"
 msgstr "Δείκτης ποντικιού"
 
-#: ../plug-ins/common/screenshot.c:972
+#: ../plug-ins/common/screenshot.c:1014
 msgid "Specified window not found"
 msgstr "Το καθορισμένο παράθυρο δεν βρέθηκε"
 
-#: ../plug-ins/common/screenshot.c:1094
+#: ../plug-ins/common/screenshot.c:1213
 msgid "S_nap"
 msgstr "Πρό_σδεση"
 
-#: ../plug-ins/common/screenshot.c:1124
+#: ../plug-ins/common/screenshot.c:1243
 msgid "After the delay, the screenshot is taken."
 msgstr "Μετά την καθυστέρηση, το στιγμιότυπο ελήφθη."
 
-#: ../plug-ins/common/screenshot.c:1126
+#: ../plug-ins/common/screenshot.c:1245
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr ""
 "Μετά την καθυστέρηση, σύρσιμο του ποντικιού σας για επιλογή της περιοχής "
 "στιγμιότυπου."
 
-#: ../plug-ins/common/screenshot.c:1129
+#: ../plug-ins/common/screenshot.c:1248
 msgid "At the end of the delay, click in a window to snap it."
 msgstr "Στο τέλος της καθυστέρησης, κλικ σε παράθυρο για λήψη του."
 
 #. Area
-#: ../plug-ins/common/screenshot.c:1135
+#: ../plug-ins/common/screenshot.c:1254
 msgid "Area"
 msgstr "Περιοχή"
 
-#: ../plug-ins/common/screenshot.c:1146
+#: ../plug-ins/common/screenshot.c:1265
 msgid "Take a screenshot of a single _window"
 msgstr "Λή_ψη στιγμιότυπου ενός μονού παραθύρου"
 
-#: ../plug-ins/common/screenshot.c:1165
+#: ../plug-ins/common/screenshot.c:1284
 msgid "Include window _decoration"
 msgstr "Συμπερίληψη _διακόσμησης παραθύρου"
 
-#: ../plug-ins/common/screenshot.c:1185
+#: ../plug-ins/common/screenshot.c:1304
 msgid "Take a screenshot of the entire _screen"
 msgstr "Λήψη _στιγμιότυπου της συνολικής οθόνης"
 
-#: ../plug-ins/common/screenshot.c:1204
+#: ../plug-ins/common/screenshot.c:1323
 msgid "Include _mouse pointer"
 msgstr "Συ_μπερίληψη δείκτη ποντικιού"
 
-#: ../plug-ins/common/screenshot.c:1225
+#: ../plug-ins/common/screenshot.c:1344
 msgid "Select a _region to grab"
 msgstr "Επιλογή πε_ριοχή σύλληψης"
 
 #. Delay
-#: ../plug-ins/common/screenshot.c:1240
+#: ../plug-ins/common/screenshot.c:1359
 msgid "Delay"
 msgstr "Καθυστέρηση"
 
 #. this is the unit label of a spinbutton
-#: ../plug-ins/common/screenshot.c:1262
+#: ../plug-ins/common/screenshot.c:1381
 msgid "seconds"
 msgstr "δευτερόλεπτα"
 
@@ -8882,37 +8946,43 @@ msgstr "­_Δύναμη:"
 msgid "Higher values increase the magnitude of the effect"
 msgstr "Υψηλότερες τιμές αυξάνουν το μέγεθος του εφέ"
 
-#: ../plug-ins/file-bmp/bmp-read.c:85
+#: ../plug-ins/file-bmp/bmp-read.c:86
 msgid "Bad colormap"
 msgstr "Λαθεμένο χρωματολόγιο"
 
-#: ../plug-ins/file-bmp/bmp-read.c:169 ../plug-ins/file-bmp/bmp-read.c:180
-#: ../plug-ins/file-bmp/bmp-read.c:187 ../plug-ins/file-bmp/bmp-read.c:196
-#: ../plug-ins/file-bmp/bmp-read.c:211 ../plug-ins/file-bmp/bmp-read.c:416
-#: ../plug-ins/file-bmp/bmp-read.c:437 ../plug-ins/file-bmp/bmp-read.c:448
-#: ../plug-ins/file-bmp/bmp-read.c:456 ../plug-ins/file-bmp/bmp-read.c:464
-#: ../plug-ins/file-bmp/bmp-read.c:476
+#: ../plug-ins/file-bmp/bmp-read.c:170 ../plug-ins/file-bmp/bmp-read.c:181
+#: ../plug-ins/file-bmp/bmp-read.c:188 ../plug-ins/file-bmp/bmp-read.c:197
+#: ../plug-ins/file-bmp/bmp-read.c:212 ../plug-ins/file-bmp/bmp-read.c:427
+#: ../plug-ins/file-bmp/bmp-read.c:448 ../plug-ins/file-bmp/bmp-read.c:459
+#: ../plug-ins/file-bmp/bmp-read.c:467 ../plug-ins/file-bmp/bmp-read.c:475
+#: ../plug-ins/file-bmp/bmp-read.c:487
 #, c-format
 msgid "'%s' is not a valid BMP file"
 msgstr "Το '%s' δεν είναι έγκυρο αρχείο BMP"
 
-#: ../plug-ins/file-bmp/bmp-read.c:225 ../plug-ins/file-bmp/bmp-read.c:252
-#: ../plug-ins/file-bmp/bmp-read.c:280 ../plug-ins/file-bmp/bmp-read.c:345
-#: ../plug-ins/file-bmp/bmp-read.c:395
+#: ../plug-ins/file-bmp/bmp-read.c:226 ../plug-ins/file-bmp/bmp-read.c:253
+#: ../plug-ins/file-bmp/bmp-read.c:281 ../plug-ins/file-bmp/bmp-read.c:356
+#: ../plug-ins/file-bmp/bmp-read.c:406
 #, c-format
 msgid "Error reading BMP file header from '%s'"
 msgstr "Σφάλμα ανάγνωσης κεφαλίδας αρχείου BMP από '%s'"
 
-#: ../plug-ins/file-bmp/bmp-read.c:588
+#: ../plug-ins/file-bmp/bmp-read.c:345
+#, c-format
+#| msgid "Unsupported compression mode: %d"
+msgid "Unsupported compression (%lu) in BMP file from '%s'"
+msgstr "Μη υποστηριζόμενη συμπίεση (%lu) σε αρχείο BMP από '%s'"
+
+#: ../plug-ins/file-bmp/bmp-read.c:599
 msgid "Unrecognized or invalid BMP compression format."
 msgstr "Άγνωστη ή άκυρη μορφή συμπίεσης BMP."
 
-#: ../plug-ins/file-bmp/bmp-read.c:630
+#: ../plug-ins/file-bmp/bmp-read.c:641
 msgid "Unsupported or invalid bitdepth."
 msgstr "Μη υποστηριζόμενο ή άκυρο βάθος δυαδικών ψηφίων."
 
-#: ../plug-ins/file-bmp/bmp-read.c:818 ../plug-ins/file-bmp/bmp-read.c:859
-#: ../plug-ins/file-bmp/bmp-read.c:909
+#: ../plug-ins/file-bmp/bmp-read.c:829 ../plug-ins/file-bmp/bmp-read.c:870
+#: ../plug-ins/file-bmp/bmp-read.c:920
 msgid "The bitmap ends unexpectedly."
 msgstr "Οι ψηφιογραφίες τελειώνουν αναπάντεχα."
 
@@ -8926,21 +8996,21 @@ msgid "Alpha channel will be ignored."
 msgstr "Το κανάλι άλφα θα αγνοηθεί."
 
 #. Run-Length Encoded
-#: ../plug-ins/file-bmp/bmp-write.c:861
+#: ../plug-ins/file-bmp/bmp-write.c:864
 msgid "_Run-Length Encoded"
 msgstr "Κωδικοποίηση _Run-Length"
 
 #
 #. Compatibility Options
-#: ../plug-ins/file-bmp/bmp-write.c:874
+#: ../plug-ins/file-bmp/bmp-write.c:877
 msgid "Co_mpatibility Options"
 msgstr "Επιλογές συ_μβατότητας"
 
-#: ../plug-ins/file-bmp/bmp-write.c:884
+#: ../plug-ins/file-bmp/bmp-write.c:887
 msgid "_Do not write color space information"
 msgstr "_Μην γράφετε πληροφορίες χρωματικού χώρου"
 
-#: ../plug-ins/file-bmp/bmp-write.c:886
+#: ../plug-ins/file-bmp/bmp-write.c:889
 msgid ""
 "Some applications can not read BMP images that include color space "
 "information. GIMP writes color space information by default. Enabling this "
@@ -8952,19 +9022,19 @@ msgstr ""
 "μην γράψει πληροφορίες χρωματικού χώρου στο αρχείο."
 
 #. Advanced Options
-#: ../plug-ins/file-bmp/bmp-write.c:902 ../plug-ins/file-jpeg/jpeg-save.c:901
+#: ../plug-ins/file-bmp/bmp-write.c:905 ../plug-ins/file-jpeg/jpeg-save.c:901
 msgid "_Advanced Options"
 msgstr "Προχ_ωρημένες επιλογές"
 
-#: ../plug-ins/file-bmp/bmp-write.c:917
+#: ../plug-ins/file-bmp/bmp-write.c:920
 msgid "16 bits"
 msgstr "16 δυαδικά ψηφία"
 
-#: ../plug-ins/file-bmp/bmp-write.c:953
+#: ../plug-ins/file-bmp/bmp-write.c:956
 msgid "24 bits"
 msgstr "24 δυαδικά ψηφία"
 
-#: ../plug-ins/file-bmp/bmp-write.c:970
+#: ../plug-ins/file-bmp/bmp-write.c:973
 msgid "32 bits"
 msgstr "32 δυαδικά ψηφία"
 
@@ -9221,11 +9291,11 @@ msgstr "Αποθήκευση _μικρογραφίας"
 msgid "Save _XMP data"
 msgstr "Αποθήκευση δεδομένων _XMP"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1055
+#: ../plug-ins/file-jpeg/jpeg-save.c:1058
 msgid "_Use quality settings from original image"
 msgstr "Χρήση ρυ_θμίσεων ποιότητας από την αρχική εικόνα"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1061
+#: ../plug-ins/file-jpeg/jpeg-save.c:1064
 msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality "
 "settings (quantization tables), enable this option to get almost the same "
@@ -9236,54 +9306,54 @@ msgstr ""
 "για να πάρετε σχεδόν την ίδια ποιότητα και μέγεθος αρχείου."
 
 #. Subsampling
-#: ../plug-ins/file-jpeg/jpeg-save.c:1085
+#: ../plug-ins/file-jpeg/jpeg-save.c:1088
 msgid "Su_bsampling:"
 msgstr "Υποδειγματολη_ψία:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1092
+#: ../plug-ins/file-jpeg/jpeg-save.c:1095
 msgid "4:4:4 (best quality)"
 msgstr "4:4:4 (άριστη ποιότητα)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1094
+#: ../plug-ins/file-jpeg/jpeg-save.c:1097
 msgid "4:2:2 horizontal (chroma halved)"
 msgstr "4:2:2 οριζόντια (υποδιπλασιασμένο χρώμα)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1096
+#: ../plug-ins/file-jpeg/jpeg-save.c:1099
 msgid "4:2:2 vertical (chroma halved)"
 msgstr "4:2:2 κάθετο (υποδιπλασιασμένο χρώμα)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1098
+#: ../plug-ins/file-jpeg/jpeg-save.c:1101
 msgid "4:2:0 (chroma quartered)"
 msgstr "4:2:0 (υποτετραπλασιασμένο χρώμα)"
 
 #. DCT method
-#: ../plug-ins/file-jpeg/jpeg-save.c:1128
+#: ../plug-ins/file-jpeg/jpeg-save.c:1131
 msgid "_DCT method:"
 msgstr "Μέθοδος _DCT:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1134
+#: ../plug-ins/file-jpeg/jpeg-save.c:1137
 msgid "Fast Integer"
 msgstr "Γρήγορος ακέραιος"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1135
+#: ../plug-ins/file-jpeg/jpeg-save.c:1138
 msgid "Integer"
 msgstr "Ακέραιος"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1136
+#: ../plug-ins/file-jpeg/jpeg-save.c:1139
 msgid "Floating-Point"
 msgstr "Κινητή υποδιαστολή"
 
 #
-#: ../plug-ins/file-jpeg/jpeg-save.c:1152
+#: ../plug-ins/file-jpeg/jpeg-save.c:1155
 msgid "Comment"
 msgstr "Σχόλιο"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1189
+#: ../plug-ins/file-jpeg/jpeg-save.c:1192
 #: ../plug-ins/ui/plug-in-file-png.ui.h:11
 msgid "_Load Defaults"
 msgstr "Φόρτωση προεπι_λογών"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1198
+#: ../plug-ins/file-jpeg/jpeg-save.c:1201
 msgid "Sa_ve Defaults"
 msgstr "Απο_θήκευση προεπιλογών"
 
@@ -13630,23 +13700,31 @@ msgstr "Κάθετα"
 msgid "Both"
 msgstr "Και τα δύο"
 
-#: ../plug-ins/print/print.c:89
+#: ../plug-ins/print/print.c:107
 msgid "Print the image"
 msgstr "Εκτύπωση της εικόνας"
 
-#: ../plug-ins/print/print.c:94
+#: ../plug-ins/print/print.c:112
 msgid "_Print..."
 msgstr "Εκτύ_πωση..."
 
-#: ../plug-ins/print/print.c:216
+#: ../plug-ins/print/print.c:124
+msgid "Adjust page size and orientation for printing"
+msgstr "Ρύθμιση μεγέθους σελίδας και προσανατολισμού για εκτύπωση"
+
+#: ../plug-ins/print/print.c:130
+msgid "Page Set_up"
+msgstr "Δια_μόρφωση σελίδας"
+
+#: ../plug-ins/print/print.c:275
 msgid "Image Settings"
 msgstr "Ρυθμίσεις εικόνας"
 
-#: ../plug-ins/print/print.c:267
+#: ../plug-ins/print/print.c:373
 msgid "An error occurred while trying to print:"
 msgstr "Σφάλμα κατά την εκτύπωση:"
 
-#: ../plug-ins/print/print.c:294
+#: ../plug-ins/print/print.c:400
 msgid "Printing"
 msgstr "Εκτύπωση"
 
@@ -13742,20 +13820,14 @@ msgstr "Χωρίς λήψη δεδομένων"
 
 #~ msgid "Width of '%s' is too large. Please reduce more than %dpx."
 #~ msgstr ""
-#~ "Το πλάτος '%s' είναι υπερβολικά μεγάλο. Παρακαλώ μειώστε περισσότερο από %"
-#~ "dpx."
+#~ "Το πλάτος '%s' είναι υπερβολικά μεγάλο. Παρακαλώ μειώστε περισσότερο από "
+#~ "%dpx."
 
 #~ msgid "The size of '%s' is zero!"
 #~ msgstr "Το μέγεθος του '%s' είναι μηδέν!"
 
 #~ msgid "BMP"
 #~ msgstr "BMP"
-
-#~ msgid "Adjust page size and orientation for printing"
-#~ msgstr "Ρύθμιση μεγέθους σελίδας και προσανατολισμού για εκτύπωση"
-
-#~ msgid "Page Set_up"
-#~ msgstr "Δια_μόρφωση σελίδας"
 
 #
 #~ msgid "About"
