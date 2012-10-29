@@ -31,7 +31,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-29 01:06+0100\n"
-"PO-Revision-Date: 2012-10-29 01:24+0100\n"
+"PO-Revision-Date: 2012-10-29 23:13+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: \n"
@@ -46,7 +46,7 @@ msgstr "GNU Image Manipulation Program"
 
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "Image Editor"
-msgstr "Editor immagine"
+msgstr "Modifica immagine"
 
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Create images and edit photographs"
@@ -273,7 +273,7 @@ msgstr "%s versione %s"
 #: ../app/actions/actions.c:109 ../app/dialogs/dialogs.c:391
 #: ../app/widgets/gimpbrusheditor.c:89
 msgid "Brush Editor"
-msgstr "Editor pennelli"
+msgstr "Modifica pennello"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:112 ../app/core/gimp.c:951
@@ -336,7 +336,7 @@ msgstr "Dinamiche di disegno"
 #: ../app/actions/actions.c:151 ../app/dialogs/dialogs.c:395
 #: ../app/widgets/gimpdynamicseditor.c:93
 msgid "Paint Dynamics Editor"
-msgstr "Editor delle dinamiche di disegno"
+msgstr "Modifica delle dinamiche di disegno"
 
 #: ../app/actions/actions.c:154
 msgid "Edit"
@@ -362,7 +362,7 @@ msgstr "Caratteri"
 #: ../app/actions/actions.c:169 ../app/dialogs/dialogs.c:399
 #: ../app/widgets/gimpgradienteditor.c:270
 msgid "Gradient Editor"
-msgstr "Editor dei gradienti"
+msgstr "Modifica del gradiente"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:172 ../app/core/gimp.c:971
@@ -373,12 +373,12 @@ msgstr "Gradienti"
 #: ../app/actions/actions.c:175 ../app/core/gimp.c:983
 #: ../app/dialogs/dialogs.c:340 ../app/dialogs/preferences-dialog.c:2754
 msgid "Tool Presets"
-msgstr "Preimpostazioni strumento"
+msgstr "Preimpostazioni dello strumento"
 
 #: ../app/actions/actions.c:178 ../app/dialogs/dialogs.c:407
 #: ../app/widgets/gimptoolpreseteditor.c:93
 msgid "Tool Preset Editor"
-msgstr "Editor delle preimpostazioni dello strumento"
+msgstr "Modifica preimpostazioni dello strumento"
 
 #: ../app/actions/actions.c:181
 msgid "Help"
@@ -401,7 +401,7 @@ msgstr "Livelli"
 #: ../app/actions/actions.c:193 ../app/dialogs/dialogs.c:403
 #: ../app/widgets/gimppaletteeditor.c:144
 msgid "Palette Editor"
-msgstr "Editor tavolozza"
+msgstr "Modifica tavolozza"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:196 ../app/core/gimp.c:966
@@ -445,7 +445,7 @@ msgstr "Strumento testo"
 
 #: ../app/actions/actions.c:220
 msgid "Text Editor"
-msgstr "Editor di testi"
+msgstr "Modifica del testo"
 
 #: ../app/actions/actions.c:223 ../app/dialogs/dialogs.c:301
 #: ../app/dialogs/preferences-dialog.c:1848 ../app/gui/gui.c:424
@@ -484,7 +484,7 @@ msgstr "%s: %d"
 #: ../app/actions/brush-editor-actions.c:43
 msgctxt "brush-editor-action"
 msgid "Brush Editor Menu"
-msgstr "Menu editor pennelli"
+msgstr "Menu modifica pennello"
 
 #: ../app/actions/brush-editor-actions.c:50
 msgctxt "brush-editor-action"
@@ -1075,7 +1075,7 @@ msgstr "Apri la finestra degli istogrammi"
 #: ../app/actions/dialogs-actions.c:94
 msgctxt "dialogs-action"
 msgid "_Selection Editor"
-msgstr "Editor della _selezione"
+msgstr "Modifica la _selezione"
 
 #: ../app/actions/dialogs-actions.c:95
 msgctxt "dialogs-action"
@@ -1145,12 +1145,12 @@ msgstr "Apri la finestra dei pennelli"
 #: ../app/actions/dialogs-actions.c:136
 msgctxt "dialogs-action"
 msgid "Brush Editor"
-msgstr "Editor pennelli"
+msgstr "Modifica pennello"
 
 #: ../app/actions/dialogs-actions.c:137
 msgctxt "dialogs-action"
 msgid "Open the brush editor"
-msgstr "Apri l'editor dei pennelli"
+msgstr "Apri la modifica del pennello"
 
 #: ../app/actions/dialogs-actions.c:142
 msgctxt "dialogs-action"
@@ -1165,12 +1165,12 @@ msgstr "Apri la finestra di dialogo delle dinamiche di disegno"
 #: ../app/actions/dialogs-actions.c:148
 msgctxt "dialogs-action"
 msgid "Paint Dynamics Editor"
-msgstr "Editor delle dinamiche di disegno"
+msgstr "Modifica le dinamiche di disegno"
 
 #: ../app/actions/dialogs-actions.c:149
 msgctxt "dialogs-action"
 msgid "Open the paint dynamics editor"
-msgstr "Apri l'editor delle dinamiche di disegno"
+msgstr "Apri la modifica delle dinamiche di disegno"
 
 #: ../app/actions/dialogs-actions.c:154
 msgctxt "dialogs-action"
@@ -1195,12 +1195,12 @@ msgstr "Apri la finestra dei gradienti"
 #: ../app/actions/dialogs-actions.c:166
 msgctxt "dialogs-action"
 msgid "Gradient Editor"
-msgstr "Editor dei gradienti"
+msgstr "Modifica del gradiente"
 
 #: ../app/actions/dialogs-actions.c:167
 msgctxt "dialogs-action"
 msgid "Open the gradient editor"
-msgstr "Apri l'editor dei gradienti"
+msgstr "Apri la modifica del gradiente"
 
 #: ../app/actions/dialogs-actions.c:172
 msgctxt "dialogs-action"
@@ -1215,12 +1215,12 @@ msgstr "Apri la finestra delle tavolozze"
 #: ../app/actions/dialogs-actions.c:178
 msgctxt "dialogs-action"
 msgid "Palette Editor"
-msgstr "Editor tavolozza"
+msgstr "Modifica della tavolozza"
 
 #: ../app/actions/dialogs-actions.c:179
 msgctxt "dialogs-action"
 msgid "Open the palette editor"
-msgstr "Apri l'editor della tavolozza"
+msgstr "Apri la modifica della tavolozza"
 
 #: ../app/actions/dialogs-actions.c:184
 msgctxt "dialogs-action"
@@ -1310,7 +1310,7 @@ msgstr "Dispositivi di _ingresso"
 #: ../app/actions/dialogs-actions.c:238
 msgctxt "dialogs-action"
 msgid "Open the input devices editor"
-msgstr "Apri l'editor dei dispositivi d'ingresso"
+msgstr "Apri la modifica dei dispositivi d'ingresso"
 
 #: ../app/actions/dialogs-actions.c:243
 msgctxt "dialogs-action"
@@ -1320,7 +1320,7 @@ msgstr "_Tasti scorciatoia"
 #: ../app/actions/dialogs-actions.c:244
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
-msgstr "Apri la finestra dell'editor tasti scorciatoia"
+msgstr "Apri la modifica dei tasti scorciatoia"
 
 #: ../app/actions/dialogs-actions.c:249
 msgctxt "dialogs-action"
@@ -1849,7 +1849,7 @@ msgstr "Modifica le dinamiche"
 #: ../app/actions/dynamics-editor-actions.c:43
 msgctxt "dynamics-editor-action"
 msgid "Paint Dynamics Editor Menu"
-msgstr "Menu dell'editor delle dinamiche di disegno"
+msgstr "Menu modifica delle dinamiche di disegno"
 
 #: ../app/actions/dynamics-editor-actions.c:51
 msgctxt "dynamics-editor-action"
@@ -2727,7 +2727,7 @@ msgstr "Rileggi i caratteri installati"
 #: ../app/actions/gradient-editor-actions.c:46
 msgctxt "gradient-editor-action"
 msgid "Gradient Editor Menu"
-msgstr "Menu editor dei gradienti"
+msgstr "Menu modifica del gradiente"
 
 #: ../app/actions/gradient-editor-actions.c:50
 msgctxt "gradient-editor-action"
@@ -4167,7 +4167,7 @@ msgstr "Aggiungi maschera di livello"
 #: ../app/actions/palette-editor-actions.c:44
 msgctxt "palette-editor-action"
 msgid "Palette Editor Menu"
-msgstr "Menu editor tavolozza"
+msgstr "Menu modifica tavolozza"
 
 #: ../app/actions/palette-editor-actions.c:48
 msgctxt "palette-editor-action"
@@ -5056,30 +5056,30 @@ msgstr "Reimposta ai valori predefiniti"
 #: ../app/actions/tool-options-actions.c:88
 msgctxt "tool-options-action"
 msgid "Reset _all Tool Options"
-msgstr "Reimpost_a tutte le opzioni strumento"
+msgstr "Reimpost_a tutte le opzioni dello strumento"
 
 #: ../app/actions/tool-options-actions.c:89
 msgctxt "tool-options-action"
 msgid "Reset all tool options"
-msgstr "Reimposta tutte le opzioni strumento"
+msgstr "Reimposta tutte le opzioni dello strumento"
 
 #: ../app/actions/tool-options-commands.c:187
 msgid "Reset All Tool Options"
-msgstr "Reimposta tutte le opzioni strumento"
+msgstr "Reimposta tutte le opzioni dello strumento"
 
 #: ../app/actions/tool-options-commands.c:210
 msgid "Do you really want to reset all tool options to default values?"
-msgstr "Reimpostare tutte le opzioni strumento ai valori predefiniti?"
+msgstr "Reimpostare tutte le opzioni dello strumento ai valori predefiniti?"
 
 #: ../app/actions/tool-preset-editor-actions.c:43
 msgctxt "tool-preset-editor-action"
 msgid "Tool Preset Editor Menu"
-msgstr "Menu dell'editor delle preimpostazioni strumento"
+msgstr "Menu modifica delle preimpostazioni dello strumento"
 
 #: ../app/actions/tool-preset-editor-actions.c:51
 msgctxt "tool-preset-editor-action"
 msgid "Edit Active Tool Preset"
-msgstr "Modifica la preimpostazione strumento corrente"
+msgstr "Modifica le preimpostazioni dello strumento corrente"
 
 #: ../app/actions/tool-presets-actions.c:45
 msgctxt "tool-presets-action"
@@ -9353,7 +9353,7 @@ msgstr "Selezione"
 
 #: ../app/dialogs/dialogs.c:365
 msgid "Selection Editor"
-msgstr "Editor della selezione"
+msgstr "Modifica la selezione"
 
 #: ../app/dialogs/dialogs.c:369
 msgid "Undo"
@@ -12389,7 +12389,7 @@ msgstr "Forma:"
 
 #: ../app/tools/gimpblendoptions.c:239 ../app/tools/gimppaintoptions-gui.c:326
 msgid "Repeat:"
-msgstr "Ripeti"
+msgstr "Ripetizione:"
 
 #: ../app/tools/gimpblendoptions.c:262
 msgid "Adaptive supersampling"
@@ -14363,7 +14363,7 @@ msgstr ""
 
 #: ../app/tools/gimptexttool-editor.c:1179
 msgid "GIMP Text Editor"
-msgstr "Editor di testi di GIMP"
+msgstr "Modifica del testo di GIMP"
 
 #: ../app/tools/gimpthresholdtool.c:88
 msgid "Threshold Tool: Reduce image to two colors using a threshold"
