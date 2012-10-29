@@ -30,23 +30,74 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#define LOAD_PROC      "file-gegl-load"
-#define SAVE_PROC      "file-gegl-save"
+
 #define PLUG_IN_BINARY "file-gegl"
 
 
-static void     query             (void);
-static void     run               (const gchar      *name,
-                                   gint              nparams,
-                                   const GimpParam  *param,
-                                   gint             *nreturn_vals,
-                                   GimpParam       **return_vals);
-static gint32   load_image        (const gchar      *filename,
-                                   GError          **error);
-static gboolean save_image        (const gchar      *filename,
-                                   gint32            image_ID,
-                                   gint32            drawable_ID,
-                                   GError          **error);
+typedef struct _FileFormat FileFormat;
+
+struct _FileFormat
+{
+  const gchar *file_type;
+  const gchar *mime_type;
+  const gchar *extensions;
+  const gchar *magic;
+
+  const gchar *load_proc;
+  const gchar *load_blurb;
+  const gchar *load_help;
+
+  const gchar *save_proc;
+  const gchar *save_blurb;
+  const gchar *save_help;
+};
+
+
+static void     query      (void);
+static void     run        (const gchar      *name,
+                            gint              nparams,
+                            const GimpParam  *param,
+                            gint             *nreturn_vals,
+                            GimpParam       **return_vals);
+static gint32   load_image (const gchar      *filename,
+                            GError          **error);
+static gboolean save_image (const gchar      *filename,
+                            gint32            image_ID,
+                            gint32            drawable_ID,
+                            GError          **error);
+
+
+static const FileFormat file_formats[] =
+{
+  {
+    N_("EXR image"),
+    "image/x-exr",
+    "exr,hdr",
+    "",
+
+    "file-exr-load",
+    "Loads EXR images using GEGL",
+    "This procedure loads images in EXR format, using gegl:load",
+
+    "file-exr-save",
+    "Save EXR images using GEGL",
+    "This procedure saves images in EXR format, using gegl:save"
+  },
+
+  {
+    N_("NEF image"),
+    "image/x-nikon-nef",
+    "nef",
+    "",
+
+    "file-nef-load",
+    "Loads NEF images using GEGL",
+    "This procedure loads images in NEF format, using gegl:load",
+
+    NULL, NULL, NULL /* no NEF saving */
+  }
+};
+
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -55,7 +106,6 @@ const GimpPlugInInfo PLUG_IN_INFO =
   query, /* query proc */
   run,   /* run_proc */
 };
-
 
 MAIN ()
 
@@ -83,37 +133,52 @@ query (void)
     { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" }
   };
 
-  gimp_install_procedure (LOAD_PROC,
-                          "Loads images using GEGL.",
-                          "The GEGL image loader.",
-                          "Simon Budig",
-                          "Simon Budig",
-                          "2012",
-                          N_("image via GEGL"),
-                          NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (load_args),
-                          G_N_ELEMENTS (load_return_vals),
-                          load_args, load_return_vals);
+  gint i;
 
-#warning need some EXR magic here.
-  gimp_register_file_handler_mime (LOAD_PROC, "image/x-exr");
-  gimp_register_magic_load_handler (LOAD_PROC, "exr,hdr", "", "");
+  for (i = 0; i < G_N_ELEMENTS (file_formats); i++)
+    {
+      const FileFormat *format = &file_formats[i];
 
-  gimp_install_procedure (SAVE_PROC,
-                          "Saves images using GEGL.",
-                          "The GEGL image saver",
-                          "Simon Budig",
-                          "Simon Budig",
-                          "2012",
-                          N_("image via GEGL"),
-                          "RGB*, GRAY*, INDEXED*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (save_args), 0,
-                          save_args, NULL);
+      gimp_install_procedure (format->load_proc,
+                              format->load_blurb,
+                              format->load_help,
+                              "Simon Budig",
+                              "Simon Budig",
+                              "2012",
+                              format->file_type,
+                              NULL,
+                              GIMP_PLUGIN,
+                              G_N_ELEMENTS (load_args),
+                              G_N_ELEMENTS (load_return_vals),
+                              load_args, load_return_vals);
 
-  gimp_register_save_handler (SAVE_PROC, "exr,hdr", "");
+      gimp_register_file_handler_mime (format->load_proc,
+                                       format->mime_type);
+      gimp_register_magic_load_handler (format->load_proc,
+                                        format->extensions,
+                                        "",
+                                        format->magic);
 
+      if (format->save_proc)
+        {
+          gimp_install_procedure (format->save_proc,
+                                  format->save_blurb,
+                                  format->save_help,
+                                  "Simon Budig",
+                                  "Simon Budig",
+                                  "2012",
+                                  format->file_type,
+                                  "*",
+                                  GIMP_PLUGIN,
+                                  G_N_ELEMENTS (save_args), 0,
+                                  save_args, NULL);
+
+          gimp_register_file_handler_mime (format->save_proc,
+                                           format->mime_type);
+          gimp_register_save_handler (format->save_proc,
+                                      format->extensions, "");
+        }
+    }
 }
 
 static void
@@ -129,6 +194,7 @@ run (const gchar      *name,
   gint               image_ID;
   gint               drawable_ID;
   GError            *error = NULL;
+  gint               i;
 
   run_mode = param[0].data.d_int32;
 
@@ -142,63 +208,73 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, LOAD_PROC) == 0)
+  for (i = 0; i < G_N_ELEMENTS (file_formats); i++)
     {
-      image_ID = load_image (param[1].data.d_string, &error);
+      const FileFormat *format = &file_formats[i];
 
-      if (image_ID != -1)
+      if (strcmp (name, format->load_proc))
         {
-          *nreturn_vals = 2;
-          values[1].type         = GIMP_PDB_IMAGE;
-          values[1].data.d_image = image_ID;
+          image_ID = load_image (param[1].data.d_string, &error);
+
+          if (image_ID != -1)
+            {
+              *nreturn_vals = 2;
+              values[1].type         = GIMP_PDB_IMAGE;
+              values[1].data.d_image = image_ID;
+            }
+          else
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+
+          break;
         }
-      else
+      else if (strcmp (name, format->save_proc))
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          GimpExportReturn export = GIMP_EXPORT_CANCEL;
+
+          image_ID    = param[1].data.d_int32;
+          drawable_ID = param[2].data.d_int32;
+
+          /*  eventually export the image */
+          switch (run_mode)
+            {
+            case GIMP_RUN_INTERACTIVE:
+            case GIMP_RUN_WITH_LAST_VALS:
+              gimp_ui_init (PLUG_IN_BINARY, FALSE);
+              export = gimp_export_image (&image_ID, &drawable_ID, NULL,
+                                          (GIMP_EXPORT_CAN_HANDLE_RGB |
+                                           GIMP_EXPORT_CAN_HANDLE_GRAY |
+                                           GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                           GIMP_EXPORT_CAN_HANDLE_ALPHA));
+
+              if (export == GIMP_EXPORT_CANCEL)
+                {
+                  *nreturn_vals = 1;
+                  values[0].data.d_status = GIMP_PDB_CANCEL;
+                  return;
+                }
+              break;
+
+            default:
+              break;
+            }
+
+          if (! save_image (param[3].data.d_string, image_ID, drawable_ID,
+                            &error))
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+
+          if (export == GIMP_EXPORT_EXPORT)
+            gimp_image_delete (image_ID);
+
+          break;
         }
     }
-  else if (strcmp (name, SAVE_PROC) == 0)
-   {
-     GimpExportReturn export = GIMP_EXPORT_CANCEL;
-     image_ID    = param[1].data.d_int32;
-     drawable_ID = param[2].data.d_int32;
 
-     /*  eventually export the image */
-     switch (run_mode)
-       {
-       case GIMP_RUN_INTERACTIVE:
-       case GIMP_RUN_WITH_LAST_VALS:
-         gimp_ui_init (PLUG_IN_BINARY, FALSE);
-         export = gimp_export_image (&image_ID, &drawable_ID, NULL,
-                                     (GIMP_EXPORT_CAN_HANDLE_RGB |
-                                      GIMP_EXPORT_CAN_HANDLE_GRAY |
-                                      GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                      GIMP_EXPORT_CAN_HANDLE_ALPHA));
-
-         if (export == GIMP_EXPORT_CANCEL)
-           {
-             *nreturn_vals = 1;
-             values[0].data.d_status = GIMP_PDB_CANCEL;
-             return;
-           }
-         break;
-
-       default:
-         break;
-       }
-
-     if (! save_image (param[3].data.d_string, image_ID, drawable_ID, &error))
-       {
-         status = GIMP_PDB_EXECUTION_ERROR;
-       }
-
-     if (export == GIMP_EXPORT_EXPORT)
-       gimp_image_delete (image_ID);
-   }
-  else
-    {
-      status = GIMP_PDB_CALLING_ERROR;
-    }
+  if (i == G_N_ELEMENTS (file_formats))
+    status = GIMP_PDB_CALLING_ERROR;
 
   if (status != GIMP_PDB_SUCCESS && error)
     {
@@ -223,30 +299,37 @@ load_image (const gchar  *filename,
   GimpPrecision      precision;
   gint               width;
   gint               height;
-  GeglNode          *graph, *sink, *source;
-  GeglBuffer        *src_buf = NULL, *dest_buf = NULL;
-  const Babl        *format, *model, *type;
+  GeglNode          *graph;
+  GeglNode          *sink;
+  GeglNode          *source;
+  GeglBuffer        *src_buf  = NULL;
+  GeglBuffer        *dest_buf = NULL;
+  const Babl        *format;
+  const Babl        *model;
+  const Babl        *type;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
 
   graph = gegl_node_new ();
-  sink = gegl_node_new_child (graph,
-                              "operation", "gegl:buffer-sink",
-                              "buffer", &src_buf,
-                              NULL);
+
   source = gegl_node_new_child (graph,
                                 "operation", "gegl:load",
-                                "path", filename,
+                                "path",      filename,
                                 NULL);
+  sink = gegl_node_new_child (graph,
+                              "operation", "gegl:buffer-sink",
+                              "buffer",    &src_buf,
+                              NULL);
 
   gegl_node_connect_to (source, "output",
                         sink,   "input");
 
   gegl_node_process (sink);
+
   g_object_unref (graph);
 
-  if (!src_buf)
+  if (! src_buf)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not open '%s'"),
@@ -254,9 +337,9 @@ load_image (const gchar  *filename,
       return -1;
     }
 
-  gimp_progress_update (80);
+  gimp_progress_update (0.33);
 
-  width = gegl_buffer_get_width (src_buf);
+  width  = gegl_buffer_get_width (src_buf);
   height = gegl_buffer_get_height (src_buf);
   format = gegl_buffer_get_format (src_buf);
 
@@ -268,6 +351,7 @@ load_image (const gchar  *filename,
       model == babl_model ("Y'A"))
     {
       base_type = GIMP_GRAY;
+
       if (babl_format_has_alpha (format))
         image_type = GIMP_GRAYA_IMAGE;
       else
@@ -276,6 +360,7 @@ load_image (const gchar  *filename,
   else if (babl_format_is_palette (format))
     {
       base_type = GIMP_INDEXED;
+
       if (babl_format_has_alpha (format))
         image_type = GIMP_INDEXEDA_IMAGE;
       else
@@ -284,6 +369,7 @@ load_image (const gchar  *filename,
   else
     {
       base_type = GIMP_RGB;
+
       if (babl_format_has_alpha (format))
         image_type = GIMP_RGBA_IMAGE;
       else
@@ -314,12 +400,14 @@ load_image (const gchar  *filename,
   gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
   dest_buf = gimp_drawable_get_buffer (layer_ID);
 
+  gimp_progress_update (0.66);
+
   gegl_buffer_copy (src_buf, NULL, dest_buf, NULL);
 
   g_object_unref (src_buf);
   g_object_unref (dest_buf);
 
-  gimp_progress_update (100);
+  gimp_progress_update (1.0);
 
   return image_ID;
 }
@@ -330,25 +418,29 @@ save_image (const gchar  *filename,
             gint32        drawable_ID,
             GError      **error)
 {
-  GeglNode  *graph, *sink, *source;
+  GeglNode   *graph;
+  GeglNode   *source;
+  GeglNode   *sink;
   GeglBuffer *src_buf;
 
   src_buf = gimp_drawable_get_buffer (drawable_ID);
 
   graph = gegl_node_new ();
+
   source = gegl_node_new_child (graph,
                                 "operation", "gegl:buffer-source",
-                                "buffer", src_buf,
+                                "buffer",    src_buf,
                                 NULL);
   sink = gegl_node_new_child (graph,
                               "operation", "gegl:save",
-                              "path", filename,
+                              "path",      filename,
                               NULL);
 
   gegl_node_connect_to (source, "output",
                         sink,   "input");
 
   gegl_node_process (sink);
+
   g_object_unref (graph);
   g_object_unref (src_buf);
 
