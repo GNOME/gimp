@@ -31,7 +31,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-29 01:06+0100\n"
-"PO-Revision-Date: 2012-10-29 01:13+0100\n"
+"PO-Revision-Date: 2012-10-29 01:24+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: \n"
@@ -1794,7 +1794,7 @@ msgstr "_Nuove dinamiche"
 #: ../app/actions/dynamics-actions.c:48
 msgctxt "dynamics-action"
 msgid "Create a new dynamics"
-msgstr "Crea un nuovo gruppo di dinamiche"
+msgstr "Crea delle nuove dinamiche"
 
 #: ../app/actions/dynamics-actions.c:53
 msgctxt "dynamics-action"
