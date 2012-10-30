@@ -75,13 +75,7 @@ gimp_text_vectors_new (GimpImage *image,
 
       context.vectors = vectors;
 
-      /* A cairo_t needs an image surface to function, so "surface" is
-       * created temporarily for this purpose. Nothing is drawn to
-       * "surface", but it is still needed to be connected to "cr" for
-       * "cr" to execute cr_glyph_path(). The size of surface is
-       * therefore irrelevant.
-       */
-      surface = cairo_image_surface_create (CAIRO_FORMAT_A8, 2, 2);
+      surface = cairo_recording_surface_create (CAIRO_CONTENT_ALPHA, NULL);
       cr = cairo_create (surface);
 
       gimp_image_get_resolution (image, &xres, &yres);
