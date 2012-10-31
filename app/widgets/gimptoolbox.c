@@ -141,9 +141,6 @@ static GtkWidget * toolbox_create_image_area            (GimpToolbox    *toolbox
 static void        toolbox_area_notify                  (GimpGuiConfig  *config,
                                                          GParamSpec     *pspec,
                                                          GtkWidget      *area);
-static void        toolbox_wilber_notify                (GimpGuiConfig  *config,
-                                                         GParamSpec     *pspec,
-                                                         GtkWidget      *wilber);
 static void        toolbox_paste_received               (GtkClipboard   *clipboard,
                                                          const gchar    *text,
                                                          gpointer        data);
@@ -243,8 +240,9 @@ gimp_toolbox_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (toolbox->p->vbox), toolbox->p->header,
                       FALSE, FALSE, 0);
 
-  if (config->toolbox_wilber)
-    gtk_widget_show (toolbox->p->header);
+  g_object_bind_property (config,             "toolbox-wilber",
+                          toolbox->p->header, "visible",
+                          G_BINDING_SYNC_CREATE);
 
   g_signal_connect (toolbox->p->header, "size-request",
                     G_CALLBACK (gimp_toolbox_size_request_wilber),
@@ -255,10 +253,6 @@ gimp_toolbox_constructed (GObject *object)
 
   gimp_help_set_help_data (toolbox->p->header,
                            _("Drop image files here to open them"), NULL);
-
-  g_signal_connect_object (config, "notify::toolbox-wilber",
-                           G_CALLBACK (toolbox_wilber_notify),
-                           toolbox->p->header, 0);
 
   toolbox->p->tool_palette = gimp_tool_palette_new ();
   gimp_tool_palette_set_toolbox (GIMP_TOOL_PALETTE (toolbox->p->tool_palette),
@@ -785,17 +779,6 @@ toolbox_area_notify (GimpGuiConfig *config,
 
   g_object_get (config, pspec->name, &visible, NULL);
   g_object_set (area, "visible", visible, NULL);
-}
-
-static void
-toolbox_wilber_notify (GimpGuiConfig *config,
-                       GParamSpec    *pspec,
-                       GtkWidget     *wilber)
-{
-  gboolean   visible;
-
-  g_object_get (config, pspec->name, &visible, NULL);
-  g_object_set (wilber, "visible", visible, NULL);
 }
 
 static void

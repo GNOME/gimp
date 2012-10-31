@@ -75,9 +75,6 @@ static void     gimp_tool_palette_tool_reorder        (GimpContainer   *containe
                                                        GimpToolInfo    *tool_info,
                                                        gint             index,
                                                        GimpToolPalette *palette);
-static void     gimp_tool_palette_tool_visible_notify (GimpToolInfo    *tool_info,
-                                                       GParamSpec      *pspec,
-                                                       GtkToolItem     *item);
 static void     gimp_tool_palette_tool_button_toggled (GtkWidget       *widget,
                                                        GimpToolPalette *palette);
 static gboolean gimp_tool_palette_tool_button_press   (GtkWidget       *widget,
@@ -333,15 +330,6 @@ gimp_tool_palette_tool_reorder (GimpContainer   *container,
 }
 
 static void
-gimp_tool_palette_tool_visible_notify (GimpToolInfo *tool_info,
-                                       GParamSpec   *pspec,
-                                       GtkToolItem  *item)
-{
-  gtk_tool_item_set_visible_horizontal (item, tool_info->visible);
-  gtk_tool_item_set_visible_vertical   (item, tool_info->visible);
-}
-
-static void
 gimp_tool_palette_tool_button_toggled (GtkWidget       *widget,
                                        GimpToolPalette *palette)
 {
@@ -410,12 +398,12 @@ gimp_tool_palette_initialize_tools (GimpToolPalette *palette)
       gtk_tool_item_group_insert (GTK_TOOL_ITEM_GROUP (group), item, -1);
       gtk_widget_show (GTK_WIDGET (item));
 
-      gtk_tool_item_set_visible_horizontal (item, tool_info->visible);
-      gtk_tool_item_set_visible_vertical   (item, tool_info->visible);
-
-      g_signal_connect_object (tool_info, "notify::visible",
-                               G_CALLBACK (gimp_tool_palette_tool_visible_notify),
-                               item, 0);
+      g_object_bind_property (tool_info, "visible",
+                              item,      "visible-horizontal",
+                              G_BINDING_SYNC_CREATE);
+      g_object_bind_property (tool_info, "visible",
+                              item,      "visible-vertical",
+                              G_BINDING_SYNC_CREATE);
 
       g_object_set_data (G_OBJECT (tool_info), TOOL_BUTTON_DATA_KEY, item);
       g_object_set_data (G_OBJECT (item)  ,    TOOL_INFO_DATA_KEY,   tool_info);
