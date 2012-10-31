@@ -31,7 +31,6 @@
 #include "core-types.h"
 
 #include "gegl/gimp-gegl-apply-operation.h"
-#include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
@@ -84,7 +83,6 @@ gimp_drawable_transform_buffer_affine (GimpDrawable           *drawable,
   GimpMatrix3  inv;
   gint         u1, v1, u2, v2;  /* source bounding box */
   gint         x1, y1, x2, y2;  /* target bounding box */
-  GeglNode    *affine;
   GimpMatrix3  gegl_matrix;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
@@ -136,19 +134,10 @@ gimp_drawable_transform_buffer_affine (GimpDrawable           *drawable,
   gimp_matrix3_mult (&inv, &gegl_matrix);
   gimp_matrix3_translate (&gegl_matrix, -x1, -y1);
 
-  affine = gegl_node_new_child (NULL,
-                                "operation",  "gegl:transform",
-                                "filter",     gimp_interpolation_to_gegl_filter (interpolation_type),
-                                "hard-edges", TRUE,
-                                NULL);
-
-  gimp_gegl_node_set_matrix (affine, &gegl_matrix);
-
-  gimp_gegl_apply_operation (orig_buffer, progress, NULL,
-                             affine,
-                             new_buffer, NULL);
-
-  g_object_unref (affine);
+  gimp_gegl_apply_transform (orig_buffer, progress, NULL,
+                             new_buffer,
+                             interpolation_type,
+                             &gegl_matrix);
 
   *new_offset_x = x1;
   *new_offset_y = y1;

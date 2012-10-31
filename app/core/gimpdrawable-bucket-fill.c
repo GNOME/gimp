@@ -28,7 +28,6 @@
 #include "core-types.h"
 
 #include "gegl/gimp-gegl-apply-operation.h"
-#include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
@@ -140,7 +139,6 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
   GimpChannel *mask;
   GeglBuffer  *buffer;
   GeglBuffer  *mask_buffer;
-  GeglNode    *apply_opacity;
   gint         x1, y1, x2, y2;
   gint         mask_offset_x = 0;
   gint         mask_offset_y = 0;
@@ -246,16 +244,11 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
       break;
     }
 
-  apply_opacity = gimp_gegl_create_apply_opacity_node (mask_buffer,
-                                                       -mask_offset_x,
-                                                       -mask_offset_y,
-                                                       1.0);
-
-  gimp_gegl_apply_operation (buffer, NULL, NULL,
-                             apply_opacity,
-                             buffer, NULL);
-
-  g_object_unref (apply_opacity);
+  gimp_gegl_apply_opacity (buffer, NULL, NULL, buffer,
+                           mask_buffer,
+                           -mask_offset_x,
+                           -mask_offset_y,
+                           1.0);
   g_object_unref (mask);
 
   /*  Apply it to the image  */

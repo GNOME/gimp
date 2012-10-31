@@ -25,8 +25,6 @@
 
 #include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-apply-operation.h"
-#include "gegl/gimp-gegl-nodes.h"
-#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
 #include "gimp-edit.h"
@@ -748,20 +746,14 @@ gimp_selection_extract (GimpSelection *selection,
       /*  If there is a selection, mask the dest_buffer with it  */
 
       GeglBuffer *mask_buffer;
-      GeglNode   *apply_opacity;
 
       mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (selection));
 
-      apply_opacity = gimp_gegl_create_apply_opacity_node (mask_buffer,
-                                                           - (off_x + x1),
-                                                           - (off_y + y1),
-                                                           1.0);
-
-      gimp_gegl_apply_operation (dest_buffer, NULL, NULL,
-                                 apply_opacity,
-                                 dest_buffer, NULL);
-
-      g_object_unref (apply_opacity);
+      gimp_gegl_apply_opacity (dest_buffer, NULL, NULL, dest_buffer,
+                               mask_buffer,
+                               - (off_x + x1),
+                               - (off_y + y1),
+                               1.0);
 
       if (cut_image && GIMP_IS_DRAWABLE (pickable))
         {

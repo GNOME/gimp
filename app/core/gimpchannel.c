@@ -30,8 +30,6 @@
 #include "paint/gimppaintcore-stroke.h"
 #include "paint/gimppaintoptions.h"
 
-#include "gegl/gimp-gegl-nodes.h"
-
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-utils.h"
 
@@ -463,7 +461,6 @@ gimp_channel_convert (GimpItem  *item,
   if (gimp_drawable_has_alpha (drawable))
     {
       GeglBuffer *new_buffer;
-      GeglNode   *flatten;
       const Babl *format;
       GimpRGB     background;
 
@@ -476,14 +473,10 @@ gimp_channel_convert (GimpItem  *item,
                          format);
 
       gimp_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
-      flatten = gimp_gegl_create_flatten_node (&background);
 
-      gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
-                                 NULL, NULL,
-                                 flatten,
-                                 new_buffer, NULL);
-
-      g_object_unref (flatten);
+      gimp_gegl_apply_flatten (gimp_drawable_get_buffer (drawable),
+                               NULL, NULL,
+                               new_buffer, &background);
 
       gimp_drawable_set_buffer_full (drawable, FALSE, NULL,
                                      new_buffer,
@@ -822,26 +815,14 @@ gimp_channel_convert_type (GimpDrawable      *drawable,
     }
   else
     {
-      GeglNode *dither;
-      gint      bits;
+      gint bits;
 
       bits = (babl_format_get_bytes_per_pixel (new_format) * 8 /
               babl_format_get_n_components (new_format));
 
-      dither = gegl_node_new_child (NULL,
-                                    "operation",       "gegl:color-reduction",
-                                    "red-bits",        bits,
-                                    "green-bits",      bits,
-                                    "blue-bits",       bits,
-                                    "alpha-bits",      bits,
-                                    "dither-strategy", mask_dither_type,
-                                    NULL);
-
-      gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
-                                 NULL, NULL,
-                                 dither,
-                                 dest_buffer, NULL);
-      g_object_unref (dither);
+      gimp_gegl_apply_color_reduction (gimp_drawable_get_buffer (drawable),
+                                       NULL, NULL,
+                                       dest_buffer, bits, mask_dither_type);
     }
 
   gimp_drawable_set_buffer (drawable, push_undo, NULL, dest_buffer);
@@ -1282,7 +1263,6 @@ gimp_channel_real_feather (GimpChannel *channel,
                            gboolean     push_undo)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (channel);
-  GeglNode     *node;
 
   if (push_undo)
     gimp_channel_push_undo (channel,
@@ -1293,18 +1273,11 @@ gimp_channel_real_feather (GimpChannel *channel,
   /* 3.5 is completely magic and picked to visually match the old
    * gaussian_blur_region() on a crappy laptop display
    */
-  node = gegl_node_new_child (NULL,
-                              "operation", "gegl:gaussian-blur",
-                              "std-dev-x", radius_x / 3.5,
-                              "std-dev-y", radius_y / 3.5,
-                              NULL);
-
-  gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
-                             NULL, NULL,
-                             node,
-                             gimp_drawable_get_buffer (drawable), NULL);
-
-  g_object_unref (node);
+  gimp_gegl_apply_gaussian_blur (gimp_drawable_get_buffer (drawable),
+                                 NULL, NULL,
+                                 gimp_drawable_get_buffer (drawable),
+                                 radius_x / 3.5,
+                                 radius_y / 3.5);
 
   channel->bounds_known = FALSE;
 
@@ -1318,7 +1291,6 @@ gimp_channel_real_sharpen (GimpChannel *channel,
                            gboolean     push_undo)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (channel);
-  GeglNode     *node;
 
   if (push_undo)
     gimp_channel_push_undo (channel,
@@ -1326,17 +1298,10 @@ gimp_channel_real_sharpen (GimpChannel *channel,
   else
     gimp_drawable_invalidate_boundary (drawable);
 
-  node = gegl_node_new_child (NULL,
-                              "operation", "gegl:threshold",
-                              "value",     0.5,
-                              NULL);
-
-  gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
+  gimp_gegl_apply_threshold (gimp_drawable_get_buffer (drawable),
                              NULL, NULL,
-                             node,
-                             gimp_drawable_get_buffer (drawable), NULL);
-
-  g_object_unref (node);
+                             gimp_drawable_get_buffer (drawable),
+                             0.5);
 
   channel->bounds_known = FALSE;
 
@@ -1437,16 +1402,9 @@ gimp_channel_real_invert (GimpChannel *channel,
     }
   else
     {
-      GeglNode *node = g_object_new (GEGL_TYPE_NODE,
-                                     "operation", "gegl:invert",
-                                     NULL);
-
-      gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
-                                 NULL, NULL,
-                                 node,
-                                 gimp_drawable_get_buffer (drawable), NULL);
-
-      g_object_unref (node);
+      gimp_gegl_apply_invert (gimp_drawable_get_buffer (drawable),
+                              NULL, NULL,
+                              gimp_drawable_get_buffer (drawable));
 
       channel->bounds_known = FALSE;
 

@@ -31,7 +31,6 @@
 #include "core-types.h"
 
 #include "gegl/gimp-gegl-apply-operation.h"
-#include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
@@ -286,7 +285,6 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
   GimpImage   *image   = gimp_item_get_image (GIMP_ITEM (drawable));
   GeglBuffer  *base_buffer;
   GeglBuffer  *mask_buffer;
-  GeglNode    *apply_opacity;
   gint         x, y, w, h;
   gint         off_x;
   gint         off_y;
@@ -379,14 +377,8 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
       break;
     }
 
-  apply_opacity = gimp_gegl_create_apply_opacity_node (mask_buffer, 0, 0, 1.0);
-
-  gimp_gegl_apply_operation (base_buffer, NULL, NULL,
-                             apply_opacity,
-                             base_buffer, NULL);
-
-  g_object_unref (apply_opacity);
-
+  gimp_gegl_apply_opacity (base_buffer, NULL, NULL, base_buffer,
+                           mask_buffer, 0, 0, 1.0);
   g_object_unref (mask_buffer);
 
   /* Apply to drawable */

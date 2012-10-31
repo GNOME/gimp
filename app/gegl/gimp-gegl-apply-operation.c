@@ -30,6 +30,8 @@
 #include "core/gimpprogress.h"
 
 #include "gimp-gegl-apply-operation.h"
+#include "gimp-gegl-nodes.h"
+#include "gegl/gimp-gegl-utils.h"
 
 
 void
@@ -105,4 +107,230 @@ gimp_gegl_apply_operation (GeglBuffer          *src_buffer,
 
   if (progress && ! progress_active)
     gimp_progress_end (progress);
+}
+
+void
+gimp_gegl_apply_color_reduction (GeglBuffer   *src_buffer,
+                                 GimpProgress *progress,
+                                 const gchar  *undo_desc,
+                                 GeglBuffer   *dest_buffer,
+                                 gint          bits,
+                                 gint          dither_type)
+{
+  GeglNode *node;
+
+  g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
+
+  node = gegl_node_new_child (NULL,
+                              "operation",       "gegl:color-reduction",
+                              "red-bits",        bits,
+                              "green-bits",      bits,
+                              "blue-bits",       bits,
+                              "alpha-bits",      bits,
+                              "dither-strategy", dither_type,
+                              NULL);
+
+  gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
+                             node, dest_buffer, NULL);
+  g_object_unref (node);
+}
+
+void
+gimp_gegl_apply_flatten (GeglBuffer    *src_buffer,
+                         GimpProgress  *progress,
+                         const gchar   *undo_desc,
+                         GeglBuffer    *dest_buffer,
+                         const GimpRGB *background)
+{
+  GeglNode *node;
+
+  g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
+  g_return_if_fail (background != NULL);
+
+  node = gimp_gegl_create_flatten_node (background);
+
+  gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
+                             node, dest_buffer, NULL);
+  g_object_unref (node);
+}
+
+void
+gimp_gegl_apply_gaussian_blur (GeglBuffer   *src_buffer,
+                               GimpProgress *progress,
+                               const gchar  *undo_desc,
+                               GeglBuffer   *dest_buffer,
+                               gdouble       std_dev_x,
+                               gdouble       std_dev_y)
+{
+  GeglNode *node;
+
+  g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
+
+  node = gegl_node_new_child (NULL,
+                              "operation", "gegl:gaussian-blur",
+                              "std-dev-x", std_dev_x,
+                              "std-dev-y", std_dev_y,
+                              NULL);
+
+  gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
+                             node, dest_buffer, NULL);
+  g_object_unref (node);
+}
+
+void
+gimp_gegl_apply_invert (GeglBuffer    *src_buffer,
+                        GimpProgress  *progress,
+                        const gchar   *undo_desc,
+                        GeglBuffer    *dest_buffer)
+{
+  GeglNode *node;
+
+  g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
+
+  node = gegl_node_new_child (NULL,
+                              "operation", "gegl:invert",
+                              NULL);
+
+  gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
+                             node, dest_buffer, NULL);
+  g_object_unref (node);
+}
+
+
+void
+gimp_gegl_apply_opacity (GeglBuffer    *src_buffer,
+                         GimpProgress  *progress,
+                         const gchar   *undo_desc,
+                         GeglBuffer    *dest_buffer,
+                         GeglBuffer    *mask,
+                         gint           mask_offset_x,
+                         gint           mask_offset_y,
+                         gdouble        opacity)
+{
+  GeglNode *node;
+
+  g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
+  g_return_if_fail (mask == NULL || GEGL_IS_BUFFER (mask));
+
+  node = gimp_gegl_create_apply_opacity_node (mask,
+                                              mask_offset_x,
+                                              mask_offset_y,
+                                              opacity);
+
+  gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
+                             node, dest_buffer, NULL);
+  g_object_unref (node);
+}
+
+void
+gimp_gegl_apply_scale (GeglBuffer            *src_buffer,
+                       GimpProgress          *progress,
+                       const gchar           *undo_desc,
+                       GeglBuffer            *dest_buffer,
+                       GimpInterpolationType  interpolation_type,
+                       gdouble                x,
+                       gdouble                y)
+{
+  GeglNode *node;
+
+  g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
+
+  node = gegl_node_new_child (NULL,
+                              "operation", "gegl:scale",
+                              "origin-x",   0.0,
+                              "origin-y",   0.0,
+                              "filter",     gimp_interpolation_to_gegl_filter (interpolation_type),
+                              "hard-edges", TRUE,
+                              "x",          x,
+                              "y",          y,
+                              NULL);
+
+  gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
+                             node, dest_buffer, NULL);
+  g_object_unref (node);
+}
+
+void
+gimp_gegl_apply_set_alpha (GeglBuffer    *src_buffer,
+                           GimpProgress  *progress,
+                           const gchar   *undo_desc,
+                           GeglBuffer    *dest_buffer,
+                           gdouble        value)
+{
+  GeglNode *node;
+
+  g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
+
+  node = gegl_node_new_child (NULL,
+                              "operation", "gimp:set-alpha",
+                              "value",     value,
+                              NULL);
+
+  gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
+                             node, dest_buffer, NULL);
+  g_object_unref (node);
+}
+
+void
+gimp_gegl_apply_threshold (GeglBuffer    *src_buffer,
+                           GimpProgress  *progress,
+                           const gchar   *undo_desc,
+                           GeglBuffer    *dest_buffer,
+                           gdouble        value)
+{
+  GeglNode *node;
+
+  g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
+
+  node = gegl_node_new_child (NULL,
+                              "operation", "gegl:threshold",
+                              "value",     value,
+                              NULL);
+
+  gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
+                             node, dest_buffer, NULL);
+  g_object_unref (node);
+}
+
+void
+gimp_gegl_apply_transform (GeglBuffer            *src_buffer,
+                           GimpProgress          *progress,
+                           const gchar           *undo_desc,
+                           GeglBuffer            *dest_buffer,
+                           GimpInterpolationType  interpolation_type,
+                           GimpMatrix3           *transform)
+{
+  GeglNode *node;
+
+  g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
+
+  node = gegl_node_new_child (NULL,
+                              "operation", "gegl:transform",
+                              "filter",     gimp_interpolation_to_gegl_filter (interpolation_type),
+                              "hard-edges", TRUE,
+                              NULL);
+
+  gimp_gegl_node_set_matrix (node, transform);
+
+  gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
+                             node, dest_buffer, NULL);
+  g_object_unref (node);
 }

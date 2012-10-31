@@ -32,7 +32,6 @@
 
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-nodes.h"
-#include "gegl/gimp-gegl-utils.h"
 
 #include "gimpboundary.h"
 #include "gimpchannel-select.h"
@@ -974,26 +973,14 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
     }
   else
     {
-      GeglNode *dither;
-      gint      bits;
+      gint bits;
 
       bits = (babl_format_get_bytes_per_pixel (new_format) * 8 /
               babl_format_get_n_components (new_format));
 
-      dither = gegl_node_new_child (NULL,
-                                    "operation",       "gegl:color-reduction",
-                                    "red-bits",        bits,
-                                    "green-bits",      bits,
-                                    "blue-bits",       bits,
-                                    "alpha-bits",      bits,
-                                    "dither-strategy", layer_dither_type,
-                                    NULL);
-
-      gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
-                                 NULL, NULL,
-                                 dither,
-                                 dest_buffer, NULL);
-      g_object_unref (dither);
+      gimp_gegl_apply_color_reduction (gimp_drawable_get_buffer (drawable),
+                                       NULL, NULL,
+                                       dest_buffer, bits, layer_dither_type);
     }
 
   gimp_drawable_set_buffer (drawable, push_undo, NULL, dest_buffer);
@@ -1416,8 +1403,6 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
           if (add_mask_type == GIMP_ADD_ALPHA_TRANSFER_MASK)
             {
-              GeglNode *set_alpha;
-
               gimp_drawable_push_undo (drawable,
                                        C_("undo-type", "Transfer Alpha to Mask"),
                                        NULL,
@@ -1425,18 +1410,10 @@ gimp_layer_create_mask (const GimpLayer *layer,
                                        gimp_item_get_width  (item),
                                        gimp_item_get_height (item));
 
-              set_alpha = gegl_node_new_child (NULL,
-                                               "operation", "gimp:set-alpha",
-                                               "value",     1.0,
-                                               NULL);
-
-              gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
+              gimp_gegl_apply_set_alpha (gimp_drawable_get_buffer (drawable),
                                          NULL, NULL,
-                                         set_alpha,
                                          gimp_drawable_get_buffer (drawable),
-                                         NULL);
-
-              g_object_unref (set_alpha);
+                                         1.0);
             }
         }
       break;
@@ -1521,17 +1498,12 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
         if (gimp_drawable_has_alpha (drawable))
           {
-            GeglNode *flatten;
-            GimpRGB   background;
+            GimpRGB background;
 
             gimp_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
-            flatten = gimp_gegl_create_flatten_node (&background);
 
-            gimp_gegl_apply_operation (src_buffer, NULL, NULL,
-                                       flatten,
-                                       dest_buffer, NULL);
-
-            g_object_unref (flatten);
+            gimp_gegl_apply_flatten (src_buffer, NULL, NULL,
+                                     dest_buffer, &background);
           }
         else
           {
@@ -1605,7 +1577,6 @@ gimp_layer_apply_mask (GimpLayer         *layer,
     {
       GeglBuffer *mask_buffer;
       GeglBuffer *dest_buffer;
-      GeglNode   *apply_opacity;
 
       if (push_undo)
         gimp_drawable_push_undo (GIMP_DRAWABLE (layer), NULL,
@@ -1618,15 +1589,9 @@ gimp_layer_apply_mask (GimpLayer         *layer,
       mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
       dest_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
-      apply_opacity = gimp_gegl_create_apply_opacity_node (mask_buffer, 0, 0,
-                                                           1.0);
-
-      gimp_gegl_apply_operation (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
-                                 NULL, NULL,
-                                 apply_opacity,
-                                 dest_buffer, NULL);
-
-      g_object_unref (apply_opacity);
+      gimp_gegl_apply_opacity (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
+                               NULL, NULL, dest_buffer,
+                               mask_buffer, 0, 0, 1.0);
     }
 
   g_signal_handlers_disconnect_by_func (mask,
@@ -1853,7 +1818,6 @@ void
 gimp_layer_flatten (GimpLayer   *layer,
                     GimpContext *context)
 {
-  GeglNode   *flatten;
   GeglBuffer *new_buffer;
   GimpRGB     background;
 
@@ -1870,14 +1834,10 @@ gimp_layer_flatten (GimpLayer   *layer,
                      gimp_drawable_get_format_without_alpha (GIMP_DRAWABLE (layer)));
 
   gimp_context_get_background (context, &background);
-  flatten = gimp_gegl_create_flatten_node (&background);
 
-  gimp_gegl_apply_operation (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
-                             NULL, NULL,
-                             flatten,
-                             new_buffer, NULL);
-
-  g_object_unref (flatten);
+  gimp_gegl_apply_flatten (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
+                           NULL, NULL,
+                           new_buffer, &background);
 
   gimp_drawable_set_buffer (GIMP_DRAWABLE (layer),
                             gimp_item_is_attached (GIMP_ITEM (layer)),

@@ -24,12 +24,78 @@
 #define __GIMP_GEGL_APPLY_OPERATION_H__
 
 
-void   gimp_gegl_apply_operation (GeglBuffer          *src_buffer,
-                                  GimpProgress        *progress,
-                                  const gchar         *undo_desc,
-                                  GeglNode            *operation,
-                                  GeglBuffer          *dest_buffer,
-                                  const GeglRectangle *dest_rect);
+/*  generic function, also used by the specific ones below  */
+
+void   gimp_gegl_apply_operation       (GeglBuffer            *src_buffer,
+                                        GimpProgress          *progress,
+                                        const gchar           *undo_desc,
+                                        GeglNode              *operation,
+                                        GeglBuffer            *dest_buffer,
+                                        const GeglRectangle   *dest_rect);
+
+
+/*  apply specific operations  */
+
+void   gimp_gegl_apply_color_reduction (GeglBuffer            *src_buffer,
+                                        GimpProgress          *progress,
+                                        const gchar           *undo_desc,
+                                        GeglBuffer            *dest_buffer,
+                                        gint                   bits,
+                                        gint                   dither_type);
+
+void   gimp_gegl_apply_flatten         (GeglBuffer            *src_buffer,
+                                        GimpProgress          *progress,
+                                        const gchar           *undo_desc,
+                                        GeglBuffer            *dest_buffer,
+                                        const GimpRGB         *background);
+
+void   gimp_gegl_apply_gaussian_blur   (GeglBuffer            *src_buffer,
+                                        GimpProgress          *progress,
+                                        const gchar           *undo_desc,
+                                        GeglBuffer            *dest_buffer,
+                                        gdouble                std_dev_x,
+                                        gdouble                std_dev_y);
+
+void   gimp_gegl_apply_invert          (GeglBuffer            *src_buffer,
+                                        GimpProgress          *progress,
+                                        const gchar           *undo_desc,
+                                        GeglBuffer            *dest_buffer);
+
+void   gimp_gegl_apply_opacity         (GeglBuffer            *src_buffer,
+                                        GimpProgress          *progress,
+                                        const gchar           *undo_desc,
+                                        GeglBuffer            *dest_buffer,
+                                        GeglBuffer            *mask,
+                                        gint                   mask_offset_x,
+                                        gint                   mask_offset_y,
+                                        gdouble                opacity);
+
+void   gimp_gegl_apply_scale           (GeglBuffer            *src_buffer,
+                                        GimpProgress          *progress,
+                                        const gchar           *undo_desc,
+                                        GeglBuffer            *dest_buffer,
+                                        GimpInterpolationType  interpolation_type,
+                                        gdouble                x,
+                                        gdouble                y);
+
+void   gimp_gegl_apply_set_alpha       (GeglBuffer            *src_buffer,
+                                        GimpProgress          *progress,
+                                        const gchar           *undo_desc,
+                                        GeglBuffer            *dest_buffer,
+                                        gdouble                value);
+
+void   gimp_gegl_apply_threshold       (GeglBuffer            *src_buffer,
+                                        GimpProgress          *progress,
+                                        const gchar           *undo_desc,
+                                        GeglBuffer            *dest_buffer,
+                                        gdouble                value);
+
+void   gimp_gegl_apply_transform       (GeglBuffer            *src_buffer,
+                                        GimpProgress          *progress,
+                                        const gchar           *undo_desc,
+                                        GeglBuffer            *dest_buffer,
+                                        GimpInterpolationType  interpolation_type,
+                                        GimpMatrix3           *transform);
 
 
 #endif /* __GIMP_GEGL_APPLY_OPERATION_H__ */

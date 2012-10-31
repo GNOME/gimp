@@ -410,32 +410,19 @@ gimp_drawable_scale (GimpItem              *item,
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
   GeglBuffer   *new_buffer;
-  GeglNode     *scale;
 
   new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                 new_width, new_height),
                                 gimp_drawable_get_format (drawable));
 
-  scale = g_object_new (GEGL_TYPE_NODE,
-                        "operation", "gegl:scale",
-                        NULL);
-
-  gegl_node_set (scale,
-                 "origin-x",   0.0,
-                 "origin-y",   0.0,
-                 "filter",     gimp_interpolation_to_gegl_filter (interpolation_type),
-                 "hard-edges", TRUE,
-                 "x",          ((gdouble) new_width /
-                                gimp_item_get_width  (item)),
-                 "y",          ((gdouble) new_height /
-                                gimp_item_get_height (item)),
-                 NULL);
-
-  gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
-                             progress, C_("undo-type", "Scale"),
-                             scale,
-                             new_buffer, NULL);
-  g_object_unref (scale);
+  gimp_gegl_apply_scale (gimp_drawable_get_buffer (drawable),
+                         progress, C_("undo-type", "Scale"),
+                         new_buffer,
+                         interpolation_type,
+                         ((gdouble) new_width /
+                          gimp_item_get_width  (item)),
+                         ((gdouble) new_height /
+                          gimp_item_get_height (item)));
 
   gimp_drawable_set_buffer_full (drawable, gimp_item_is_attached (item), NULL,
                                  new_buffer,
