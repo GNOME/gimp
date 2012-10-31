@@ -167,6 +167,10 @@ gimp_error_dialog_add (GimpErrorDialog *dialog,
     gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (box), "%s", domain);
   else
     gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (box),
+                                       /* %s is a message domain,
+                                        * like "GIMP Message" or
+                                        * "PNG Message"
+                                        */
                                        _("%s Message"), domain);
 
   gimp_message_box_set_text (GIMP_MESSAGE_BOX (box), "%s", message);
