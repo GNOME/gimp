@@ -30,8 +30,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-29 00:51+0100\n"
-"PO-Revision-Date: 2012-10-29 22:52+0100\n"
+"POT-Creation-Date: 2012-10-31 19:58+0100\n"
+"PO-Revision-Date: 2012-10-31 22:36+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: \n"
@@ -1939,7 +1939,7 @@ msgstr "Rimuovi tutte le operazioni dalla cronologia"
 #: ../app/actions/edit-actions.c:103
 msgctxt "edit-action"
 msgid "_Fade..."
-msgstr "S_fuma..."
+msgstr "Dissol_venza..."
 
 #: ../app/actions/edit-actions.c:105
 msgctxt "edit-action"
@@ -2117,7 +2117,7 @@ msgstr "_Ripeti %s"
 #: ../app/actions/edit-actions.c:326
 #, c-format
 msgid "_Fade %s..."
-msgstr "S_fuma %s..."
+msgstr "Dissol_venza %s..."
 
 #: ../app/actions/edit-actions.c:338
 msgid "_Undo"
@@ -2129,7 +2129,7 @@ msgstr "_Ripeti"
 
 #: ../app/actions/edit-actions.c:340
 msgid "_Fade..."
-msgstr "S_fuma..."
+msgstr "Dissol_venza..."
 
 #: ../app/actions/edit-commands.c:137
 msgid "Clear Undo History"
@@ -6117,7 +6117,9 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:160
 msgid "When enabled, the selected dynamics will be used for all tools."
-msgstr "Se abilitata, le dinamiche selezionate verranno usate per tutti gli strumenti."
+msgstr ""
+"Se abilitata, le dinamiche selezionate verranno usate per tutti gli "
+"strumenti."
 
 #: ../app/config/gimprc-blurbs.h:166
 msgid "When enabled, the selected gradient will be used for all tools."
@@ -6492,12 +6494,7 @@ msgid ""
 "tiles to disk.  This is a lot slower but it makes it possible to work on "
 "images that wouldn't fit into memory otherwise.  If you have a lot of RAM, "
 "you may want to set this to a higher value."
-msgstr ""
-"Quando l'ammontare dei dati pixel eccede questo limite, GIMP comincerà a "
-"trasferire riquadri su disco. Ciò rallenta molto le operazioni ma permette "
-"di lavorare su immagini che altrimenti non sarebbero mantenute in memoria. "
-"Se si possiede molta  memoria RAM può essere desiderabile impostare la voce "
-"ad un valore maggiore."
+msgstr "Quando l'ammontare dei dati pixel eccede questo limite, GIMP comincerà a trasferire riquadri su disco. Ciò rallenta molto le operazioni ma permette di lavorare su immagini che altrimenti non sarebbero mantenute in memoria. Se si possiede molta  memoria RAM può essere desiderabile impostare la voce ad un valore maggiore."
 
 #: ../app/config/gimprc-blurbs.h:426
 msgid "Show the current foreground and background colors in the toolbox."
@@ -7337,7 +7334,7 @@ msgstr "Spaziatura"
 #: ../app/core/core-enums.c:1300
 msgctxt "dynamics-output-type"
 msgid "Rate"
-msgstr "Ammontare"
+msgstr "Frequenza"
 
 #: ../app/core/core-enums.c:1301
 msgctxt "dynamics-output-type"
@@ -7347,7 +7344,7 @@ msgstr "Flusso"
 #: ../app/core/core-enums.c:1302
 msgctxt "dynamics-output-type"
 msgid "Jitter"
-msgstr "Jitter"
+msgstr "Tremolio"
 
 #: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:375
 #: ../app/gui/session.c:399 ../app/menus/menus.c:464
@@ -9071,11 +9068,11 @@ msgstr "Colore PP/SF"
 #: ../app/dialogs/fade-dialog.c:109
 #, c-format
 msgid "Fade %s"
-msgstr "Sfuma %s"
+msgstr "Dissolvenza %s"
 
 #: ../app/dialogs/fade-dialog.c:121
 msgid "_Fade"
-msgstr "S_fuma"
+msgstr "Dissol_venza"
 
 #: ../app/dialogs/fade-dialog.c:156 ../app/widgets/gimpdeviceinfoeditor.c:344
 msgid "_Mode:"
@@ -13327,7 +13324,7 @@ msgstr "Opzioni delle dinamiche"
 
 #: ../app/tools/gimppaintoptions-gui.c:291
 msgid "Fade Options"
-msgstr "Opzioni della dissolvenza"
+msgstr "Opzioni di dissolvenza"
 
 #: ../app/tools/gimppaintoptions-gui.c:305
 msgid "Fade length"
@@ -13344,11 +13341,11 @@ msgstr "Opzioni colore"
 
 #: ../app/tools/gimppaintoptions-gui.c:367
 msgid "Amount"
-msgstr "Ammontare"
+msgstr "Quantità"
 
 #: ../app/tools/gimppaintoptions-gui.c:371
 msgid "Apply Jitter"
-msgstr "Applica jitter"
+msgstr "Applica tremolio"
 
 #: ../app/tools/gimppaintoptions-gui.c:389
 msgid "Smooth stroke"
@@ -15058,7 +15055,7 @@ msgstr "Casualità"
 #: ../app/widgets/gimpdynamicseditor.c:147
 #: ../app/widgets/gimpdynamicsoutputeditor.c:75
 msgid "Fade"
-msgstr "Sfumatura"
+msgstr "Dissolvenza"
 
 #: ../app/widgets/gimperrordialog.c:150
 msgid "Too many error messages!"
@@ -15068,7 +15065,11 @@ msgstr "Troppi messaggi di errore!"
 msgid "Messages are redirected to stderr."
 msgstr "I messaggi sono rediretti su stderr."
 
-#: ../app/widgets/gimperrordialog.c:170
+#. %s is a message domain,
+#. * like "GIMP Message" or
+#. * "PNG Message"
+#.
+#: ../app/widgets/gimperrordialog.c:174
 #, c-format
 msgid "%s Message"
 msgstr "Messaggio %s"
