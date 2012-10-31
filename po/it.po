@@ -30,8 +30,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-29 01:06+0100\n"
-"PO-Revision-Date: 2012-10-29 23:13+0100\n"
+"POT-Creation-Date: 2012-10-31 22:39+0100\n"
+"PO-Revision-Date: 2012-10-31 23:00+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: \n"
@@ -1931,7 +1931,7 @@ msgstr "Rimuovi tutte le operazioni dalla cronologia"
 #: ../app/actions/edit-actions.c:103
 msgctxt "edit-action"
 msgid "_Fade..."
-msgstr "S_fuma..."
+msgstr "Dissol_venza..."
 
 #: ../app/actions/edit-actions.c:105
 msgctxt "edit-action"
@@ -2109,7 +2109,7 @@ msgstr "_Ripeti %s"
 #: ../app/actions/edit-actions.c:326
 #, c-format
 msgid "_Fade %s..."
-msgstr "S_fuma %s..."
+msgstr "Dissol_venza %s..."
 
 #: ../app/actions/edit-actions.c:338
 msgid "_Undo"
@@ -2121,7 +2121,7 @@ msgstr "_Ripeti"
 
 #: ../app/actions/edit-actions.c:340
 msgid "_Fade..."
-msgstr "S_fuma..."
+msgstr "Dissol_venza..."
 
 #: ../app/actions/edit-commands.c:137
 msgid "Clear Undo History"
@@ -6231,7 +6231,9 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:157
 msgid "When enabled, the selected dynamics will be used for all tools."
-msgstr "Se abilitata, le dinamiche selezionate verranno usate per tutti gli strumenti."
+msgstr ""
+"Se abilitata, le dinamiche selezionate verranno usate per tutti gli "
+"strumenti."
 
 #: ../app/config/gimprc-blurbs.h:163
 msgid "When enabled, the selected gradient will be used for all tools."
@@ -7651,7 +7653,7 @@ msgstr "Spaziatura"
 #: ../app/core/core-enums.c:1585
 msgctxt "dynamics-output-type"
 msgid "Rate"
-msgstr "Ammontare"
+msgstr "Frequenza"
 
 #: ../app/core/core-enums.c:1586
 msgctxt "dynamics-output-type"
@@ -7661,7 +7663,7 @@ msgstr "Flusso"
 #: ../app/core/core-enums.c:1587
 msgctxt "dynamics-output-type"
 msgid "Jitter"
-msgstr "Jitter"
+msgstr "Tremolio"
 
 #: ../app/core/gimpbrush.c:147
 msgid "Brush Spacing"
@@ -9246,7 +9248,7 @@ msgstr "Converti l'immagine a %s"
 
 #: ../app/dialogs/convert-precision-dialog.c:115
 msgid "Precision Conversion"
-msgstr "Conversione di precisione:"
+msgstr "Conversione di precisione"
 
 #: ../app/dialogs/convert-precision-dialog.c:130
 #: ../app/dialogs/convert-type-dialog.c:138
@@ -9387,13 +9389,13 @@ msgstr "Messaggio GIMP"
 #: ../app/dialogs/fade-dialog.c:109
 #, c-format
 msgid "Fade %s"
-msgstr "Sfuma %s"
+msgstr "Dissolvenza %s"
 
 #: ../app/dialogs/fade-dialog.c:121
 msgid "_Fade"
-msgstr "S_fuma"
+msgstr "Dissol_venza"
 
-#: ../app/dialogs/fade-dialog.c:156 ../app/widgets/gimpdeviceinfoeditor.c:345
+#: ../app/dialogs/fade-dialog.c:156 ../app/widgets/gimpdeviceinfoeditor.c:347
 msgid "_Mode:"
 msgstr "_Modalità:"
 
@@ -11430,7 +11432,7 @@ msgstr "Inverti la direzione della dissolvenza"
 
 #: ../app/paint/gimppaintoptions.c:196
 msgid "How fade is repeated as you paint"
-msgstr "Come le dissolvenza viene ripetuta durante il disegno"
+msgstr "Come la dissolvenza viene ripetuta durante il disegno"
 
 #: ../app/paint/gimppaintoptions.c:255
 msgid "Paint smoother strokes"
@@ -12397,7 +12399,7 @@ msgstr "Sovracampionamento adattivo"
 
 #: ../app/tools/gimpblendoptions.c:269
 msgid "Max depth"
-msgstr "Profondità max:"
+msgstr "Profondità max"
 
 #: ../app/tools/gimpblendtool.c:109
 msgid "Blend"
@@ -12967,7 +12969,7 @@ msgstr "Ca_nale:"
 msgid "R_eset Channel"
 msgstr "R_eimposta canale"
 
-#: ../app/tools/gimpcurvestool.c:534 ../app/widgets/gimpdeviceinfoeditor.c:459
+#: ../app/tools/gimpcurvestool.c:534 ../app/widgets/gimpdeviceinfoeditor.c:462
 msgid "Curve _type:"
 msgstr "_Tipo di curva:"
 
@@ -13819,7 +13821,7 @@ msgstr "Opzioni delle dinamiche"
 
 #: ../app/tools/gimppaintoptions-gui.c:292
 msgid "Fade Options"
-msgstr "Opzioni della dissolvenza"
+msgstr "Opzioni di dissolvenza"
 
 #: ../app/tools/gimppaintoptions-gui.c:306
 msgid "Fade length"
@@ -13836,11 +13838,11 @@ msgstr "Opzioni colore"
 
 #: ../app/tools/gimppaintoptions-gui.c:368
 msgid "Amount"
-msgstr "Ammontare"
+msgstr "Intensità"
 
 #: ../app/tools/gimppaintoptions-gui.c:372
 msgid "Apply Jitter"
-msgstr "Applica jitter"
+msgstr "Applica tremolio"
 
 #: ../app/tools/gimppaintoptions-gui.c:390
 msgid "Smooth stroke"
@@ -15446,39 +15448,42 @@ msgstr "Inclinazione X"
 msgid "Y tilt"
 msgstr "Inclinazione Y"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:144
+#. Wheel as in mouse or input device wheel
+#: ../app/widgets/gimpdeviceinfoeditor.c:145
 #: ../app/widgets/gimpdynamicseditor.c:146
 #: ../app/widgets/gimpdynamicsoutputeditor.c:74
 msgid "Wheel"
 msgstr "Rotellina"
 
 #. the axes
-#: ../app/widgets/gimpdeviceinfoeditor.c:194
+#. The axes of an input device
+#: ../app/widgets/gimpdeviceinfoeditor.c:196
 msgid "Axes"
 msgstr "Assi"
 
 #. the keys
-#: ../app/widgets/gimpdeviceinfoeditor.c:268
+#: ../app/widgets/gimpdeviceinfoeditor.c:270
 msgid "Keys"
 msgstr "Tasti"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:365
-#: ../app/widgets/gimpdeviceinfoeditor.c:583
+#: ../app/widgets/gimpdeviceinfoeditor.c:367
+#: ../app/widgets/gimpdeviceinfoeditor.c:586
 #, c-format
 msgid "none"
 msgstr "nessuno"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:413
+#. e.g. "Pressure Curve" for mapping input device axes
+#: ../app/widgets/gimpdeviceinfoeditor.c:416
 #, c-format
 msgid "%s Curve"
 msgstr "Curve %s"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:472
+#: ../app/widgets/gimpdeviceinfoeditor.c:475
 #: ../app/widgets/gimpdynamicsoutputeditor.c:210
 msgid "_Reset Curve"
 msgstr "_Reimposta la curva"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:485
+#: ../app/widgets/gimpdeviceinfoeditor.c:488
 #, c-format
 msgid "The axis '%s' has no curve"
 msgstr "L'asse \"%s\" non possiede una curva"
@@ -15577,7 +15582,7 @@ msgstr "Casualità"
 #: ../app/widgets/gimpdynamicseditor.c:148
 #: ../app/widgets/gimpdynamicsoutputeditor.c:76
 msgid "Fade"
-msgstr "Sfumatura"
+msgstr "Dissolvenza"
 
 #: ../app/widgets/gimperrordialog.c:150
 msgid "Too many error messages!"
@@ -15587,7 +15592,11 @@ msgstr "Troppi messaggi di errore!"
 msgid "Messages are redirected to stderr."
 msgstr "I messaggi sono rediretti su stderr."
 
-#: ../app/widgets/gimperrordialog.c:170
+#. %s is a message domain,
+#. * like "GIMP Message" or
+#. * "PNG Message"
+#.
+#: ../app/widgets/gimperrordialog.c:174
 #, c-format
 msgid "%s Message"
 msgstr "Messaggio %s"
