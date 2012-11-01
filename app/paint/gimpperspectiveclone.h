@@ -46,7 +46,6 @@ struct _GimpPerspectiveClone
   GimpMatrix3    transform_inv;
 
   GeglNode      *node;
-  GeglNode      *src_node;
   GeglNode      *transform_node;
   GeglNode      *dest_node;
   GeglProcessor *processor;

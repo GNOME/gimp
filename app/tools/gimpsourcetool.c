@@ -232,7 +232,9 @@ gimp_source_tool_modifier_key (GimpTool        *tool,
   GimpPaintTool     *paint_tool  = GIMP_PAINT_TOOL (tool);
   GimpSourceOptions *options     = GIMP_SOURCE_TOOL_GET_OPTIONS (tool);
 
-  if (options->use_source && key == gimp_get_toggle_behavior_mask ())
+  if (gimp_source_core_use_source (GIMP_SOURCE_CORE (paint_tool->core),
+                                   options) &&
+      key == gimp_get_toggle_behavior_mask ())
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
@@ -262,11 +264,13 @@ gimp_source_tool_cursor_update (GimpTool         *tool,
                                 GdkModifierType   state,
                                 GimpDisplay      *display)
 {
-  GimpSourceOptions  *options  = GIMP_SOURCE_TOOL_GET_OPTIONS (tool);
-  GimpCursorType      cursor   = GIMP_CURSOR_MOUSE;
-  GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_NONE;
+  GimpPaintTool      *paint_tool = GIMP_PAINT_TOOL (tool);
+  GimpSourceOptions  *options    = GIMP_SOURCE_TOOL_GET_OPTIONS (tool);
+  GimpCursorType      cursor     = GIMP_CURSOR_MOUSE;
+  GimpCursorModifier  modifier   = GIMP_CURSOR_MODIFIER_NONE;
 
-  if (options->use_source)
+  if (gimp_source_core_use_source (GIMP_SOURCE_CORE (paint_tool->core),
+                                   options))
     {
       GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
 
@@ -293,14 +297,16 @@ gimp_source_tool_oper_update (GimpTool         *tool,
                               gboolean          proximity,
                               GimpDisplay      *display)
 {
+  GimpPaintTool     *paint_tool  = GIMP_PAINT_TOOL (tool);
   GimpSourceTool    *source_tool = GIMP_SOURCE_TOOL (tool);
   GimpSourceOptions *options     = GIMP_SOURCE_TOOL_GET_OPTIONS (tool);
+  GimpSourceCore    *source;
+
+  source = GIMP_SOURCE_CORE (GIMP_PAINT_TOOL (tool)->core);
 
   if (proximity)
     {
-      GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
-
-      if (options->use_source)
+      if (gimp_source_core_use_source (source, options))
         paint_tool->status_ctrl = source_tool->status_set_source_ctrl;
       else
         paint_tool->status_ctrl = NULL;
@@ -309,10 +315,8 @@ gimp_source_tool_oper_update (GimpTool         *tool,
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
                                                display);
 
-  if (options->use_source)
+  if (gimp_source_core_use_source (source, options))
     {
-      GimpSourceCore *source = GIMP_SOURCE_CORE (GIMP_PAINT_TOOL (tool)->core);
-
       if (source->src_drawable == NULL)
         {
           GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
@@ -371,7 +375,8 @@ gimp_source_tool_draw (GimpDrawTool *draw_tool)
 
   GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
 
-  if (options->use_source && source->src_drawable && source_tool->src_display)
+  if (gimp_source_core_use_source (source, options) &&
+      source->src_drawable && source_tool->src_display)
     {
       GimpDisplayShell *src_shell;
       gint              off_x;

@@ -40,29 +40,32 @@
 #include "gimp-intl.h"
 
 
-static gboolean   gimp_clone_start  (GimpPaintCore    *paint_core,
-                                     GimpDrawable     *drawable,
-                                     GimpPaintOptions *paint_options,
-                                     const GimpCoords *coords,
-                                     GError          **error);
+static gboolean   gimp_clone_start      (GimpPaintCore     *paint_core,
+                                         GimpDrawable      *drawable,
+                                         GimpPaintOptions  *paint_options,
+                                         const GimpCoords  *coords,
+                                         GError           **error);
 
-static void       gimp_clone_motion (GimpSourceCore   *source_core,
-                                     GimpDrawable     *drawable,
-                                     GimpPaintOptions *paint_options,
-                                     const GimpCoords *coords,
-                                     gdouble           opacity,
-                                     GimpPickable     *src_pickable,
-                                     GeglBuffer       *src_buffer,
-                                     GeglRectangle    *src_rect,
-                                     gint              src_offset_x,
-                                     gint              src_offset_y,
-                                     GeglBuffer       *paint_buffer,
-                                     gint              paint_buffer_x,
-                                     gint              paint_buffer_y,
-                                     gint              paint_area_offset_x,
-                                     gint              paint_area_offset_y,
-                                     gint              paint_area_width,
-                                     gint              paint_area_height);
+static void       gimp_clone_motion     (GimpSourceCore    *source_core,
+                                         GimpDrawable      *drawable,
+                                         GimpPaintOptions  *paint_options,
+                                         const GimpCoords  *coords,
+                                         gdouble            opacity,
+                                         GimpPickable      *src_pickable,
+                                         GeglBuffer        *src_buffer,
+                                         GeglRectangle     *src_rect,
+                                         gint               src_offset_x,
+                                         gint               src_offset_y,
+                                         GeglBuffer        *paint_buffer,
+                                         gint               paint_buffer_x,
+                                         gint               paint_buffer_y,
+                                         gint               paint_area_offset_x,
+                                         gint               paint_area_offset_y,
+                                         gint               paint_area_width,
+                                         gint               paint_area_height);
+
+static gboolean   gimp_clone_use_source (GimpSourceCore    *source_core,
+                                         GimpSourceOptions *options);
 
 
 G_DEFINE_TYPE (GimpClone, gimp_clone, GIMP_TYPE_SOURCE_CORE)
@@ -88,9 +91,10 @@ gimp_clone_class_init (GimpCloneClass *klass)
   GimpPaintCoreClass  *paint_core_class  = GIMP_PAINT_CORE_CLASS (klass);
   GimpSourceCoreClass *source_core_class = GIMP_SOURCE_CORE_CLASS (klass);
 
-  paint_core_class->start   = gimp_clone_start;
+  paint_core_class->start       = gimp_clone_start;
 
-  source_core_class->motion = gimp_clone_motion;
+  source_core_class->use_source = gimp_clone_use_source;
+  source_core_class->motion     = gimp_clone_motion;
 }
 
 static void
@@ -154,41 +158,37 @@ gimp_clone_motion (GimpSourceCore   *source_core,
   gdouble            fade_point;
   gdouble            force;
 
-  switch (options->clone_type)
+  if (gimp_source_core_use_source (source_core, source_options))
     {
-    case GIMP_IMAGE_CLONE:
-      {
-        gegl_buffer_copy (src_buffer,
-                          GEGL_RECTANGLE (src_rect->x,
-                                          src_rect->y,
-                                          paint_area_width,
-                                          paint_area_height),
-                          paint_buffer,
-                          GEGL_RECTANGLE (paint_area_offset_x,
-                                          paint_area_offset_y,
-                                          0, 0));
-      }
-      break;
+      gegl_buffer_copy (src_buffer,
+                        GEGL_RECTANGLE (src_rect->x,
+                                        src_rect->y,
+                                        paint_area_width,
+                                        paint_area_height),
+                        paint_buffer,
+                        GEGL_RECTANGLE (paint_area_offset_x,
+                                        paint_area_offset_y,
+                                        0, 0));
+    }
+  else if (options->clone_type == GIMP_PATTERN_CLONE)
+    {
+      GimpPattern *pattern    = gimp_context_get_pattern (context);
+      GeglBuffer  *src_buffer = gimp_pattern_create_buffer (pattern);
 
-    case GIMP_PATTERN_CLONE:
-      {
-        /* XXX: move this to INIT */
-        GimpPattern *pattern    = gimp_context_get_pattern (context);
-        GeglBuffer  *src_buffer = gimp_pattern_create_buffer (pattern);
+      gegl_buffer_set_pattern (paint_buffer,
+                               GEGL_RECTANGLE (paint_area_offset_x,
+                                               paint_area_offset_y,
+                                               paint_area_width,
+                                               paint_area_height),
+                               src_buffer,
+                               - paint_buffer_x - src_offset_x,
+                               - paint_buffer_y - src_offset_y);
 
-        gegl_buffer_set_pattern (paint_buffer,
-                                 GEGL_RECTANGLE (paint_area_offset_x,
-                                                 paint_area_offset_y,
-                                                 paint_area_width,
-                                                 paint_area_height),
-                                 src_buffer,
-                                 - paint_buffer_x - src_offset_x,
-                                 - paint_buffer_y - src_offset_y);
-
-        /* XXX: move this to FINISH */
-        g_object_unref (src_buffer);
-      }
-      break;
+      g_object_unref (src_buffer);
+    }
+  else
+    {
+      g_return_if_reached ();
     }
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
@@ -217,4 +217,11 @@ gimp_clone_motion (GimpSourceCore   *source_core,
                                 source_options->align_mode ==
                                 GIMP_SOURCE_ALIGN_FIXED ?
                                 GIMP_PAINT_INCREMENTAL : GIMP_PAINT_CONSTANT);
+}
+
+static gboolean
+gimp_clone_use_source (GimpSourceCore    *source_core,
+                       GimpSourceOptions *options)
+{
+  return GIMP_CLONE_OPTIONS (options)->clone_type == GIMP_IMAGE_CLONE;
 }

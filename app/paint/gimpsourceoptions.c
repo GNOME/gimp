@@ -70,7 +70,6 @@ gimp_source_options_class_init (GimpSourceOptionsClass *klass)
 static void
 gimp_source_options_init (GimpSourceOptions *options)
 {
-  options->use_source = TRUE;
 }
 
 static void

@@ -47,52 +47,54 @@ enum
 };
 
 
-static void     gimp_source_core_set_property    (GObject          *object,
-                                                  guint             property_id,
-                                                  const GValue     *value,
-                                                  GParamSpec       *pspec);
-static void     gimp_source_core_get_property    (GObject          *object,
-                                                  guint             property_id,
-                                                  GValue           *value,
-                                                  GParamSpec       *pspec);
+static void     gimp_source_core_set_property    (GObject           *object,
+                                                  guint              property_id,
+                                                  const GValue      *value,
+                                                  GParamSpec        *pspec);
+static void     gimp_source_core_get_property    (GObject           *object,
+                                                  guint              property_id,
+                                                  GValue            *value,
+                                                  GParamSpec        *pspec);
 
-static gboolean gimp_source_core_start           (GimpPaintCore    *paint_core,
-                                                  GimpDrawable     *drawable,
-                                                  GimpPaintOptions *paint_options,
-                                                  const GimpCoords *coords,
-                                                  GError          **error);
-static void     gimp_source_core_paint           (GimpPaintCore    *paint_core,
-                                                  GimpDrawable     *drawable,
-                                                  GimpPaintOptions *paint_options,
-                                                  const GimpCoords *coords,
-                                                  GimpPaintState    paint_state,
-                                                  guint32           time);
+static gboolean gimp_source_core_start           (GimpPaintCore     *paint_core,
+                                                  GimpDrawable      *drawable,
+                                                  GimpPaintOptions  *paint_options,
+                                                  const GimpCoords  *coords,
+                                                  GError           **error);
+static void     gimp_source_core_paint           (GimpPaintCore     *paint_core,
+                                                  GimpDrawable      *drawable,
+                                                  GimpPaintOptions  *paint_options,
+                                                  const GimpCoords  *coords,
+                                                  GimpPaintState     paint_state,
+                                                  guint32            time);
 
 #if 0
-static void     gimp_source_core_motion          (GimpSourceCore   *source_core,
-                                                  GimpDrawable     *drawable,
-                                                  GimpPaintOptions *paint_options,
-                                                  const GimpCoords *coords);
+static void     gimp_source_core_motion          (GimpSourceCore    *source_core,
+                                                  GimpDrawable      *drawable,
+                                                  GimpPaintOptions  *paint_options,
+                                                  const GimpCoords  *coords);
 #endif
 
+static gboolean gimp_source_core_real_use_source (GimpSourceCore    *source_core,
+                                                  GimpSourceOptions *options);
 static GeglBuffer *
-                gimp_source_core_real_get_source (GimpSourceCore   *source_core,
-                                                  GimpDrawable     *drawable,
-                                                  GimpPaintOptions *paint_options,
-                                                  GimpPickable     *src_pickable,
-                                                  gint              src_offset_x,
-                                                  gint              src_offset_y,
-                                                  GeglBuffer       *paint_buffer,
-                                                  gint              paint_buffer_x,
-                                                  gint              paint_buffer_y,
-                                                  gint             *paint_area_offset_x,
-                                                  gint             *paint_area_offset_y,
-                                                  gint             *paint_area_width,
-                                                  gint             *paint_area_height,
-                                                  GeglRectangle    *src_rect);
+                gimp_source_core_real_get_source (GimpSourceCore    *source_core,
+                                                  GimpDrawable      *drawable,
+                                                  GimpPaintOptions  *paint_options,
+                                                  GimpPickable      *src_pickable,
+                                                  gint               src_offset_x,
+                                                  gint               src_offset_y,
+                                                  GeglBuffer        *paint_buffer,
+                                                  gint               paint_buffer_x,
+                                                  gint               paint_buffer_y,
+                                                  gint              *paint_area_offset_x,
+                                                  gint              *paint_area_offset_y,
+                                                  gint              *paint_area_width,
+                                                  gint              *paint_area_height,
+                                                  GeglRectangle     *src_rect);
 
-static void    gimp_source_core_set_src_drawable (GimpSourceCore   *source_core,
-                                                  GimpDrawable     *drawable);
+static void    gimp_source_core_set_src_drawable (GimpSourceCore    *source_core,
+                                                  GimpDrawable      *drawable);
 
 
 G_DEFINE_TYPE (GimpSourceCore, gimp_source_core, GIMP_TYPE_BRUSH_CORE)
@@ -115,6 +117,7 @@ gimp_source_core_class_init (GimpSourceCoreClass *klass)
 
   brush_core_class->handles_changing_brush = TRUE;
 
+  klass->use_source                        = gimp_source_core_real_use_source;
   klass->get_source                        = gimp_source_core_real_get_source;
   klass->motion                            = NULL;
 
@@ -224,7 +227,8 @@ gimp_source_core_start (GimpPaintCore     *paint_core,
 
   paint_core->use_saved_proj = FALSE;
 
-  if (! source_core->set_source && options->use_source)
+  if (! source_core->set_source &&
+      gimp_source_core_use_source (source_core, options))
     {
       if (! source_core->src_drawable)
         {
@@ -378,7 +382,7 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
   src_offset_x = source_core->offset_x;
   src_offset_y = source_core->offset_y;
 
-  if (options->use_source)
+  if (gimp_source_core_use_source (source_core, options))
     {
       src_pickable = GIMP_PICKABLE (source_core->src_drawable);
 
@@ -411,7 +415,7 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
   paint_area_width    = gegl_buffer_get_width  (paint_buffer);
   paint_area_height   = gegl_buffer_get_height (paint_buffer);
 
-  if (options->use_source)
+  if (gimp_source_core_use_source (source_core, options))
     {
       src_buffer =
         GIMP_SOURCE_CORE_GET_CLASS (source_core)->get_source (source_core,
@@ -455,6 +459,21 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
 
   if (src_buffer)
     g_object_unref (src_buffer);
+}
+
+gboolean
+gimp_source_core_use_source (GimpSourceCore    *source_core,
+                             GimpSourceOptions *options)
+{
+  return GIMP_SOURCE_CORE_GET_CLASS (source_core)->use_source (source_core,
+                                                               options);
+}
+
+static gboolean
+gimp_source_core_real_use_source (GimpSourceCore    *source_core,
+                                  GimpSourceOptions *options)
+{
+  return TRUE;
 }
 
 static GeglBuffer *

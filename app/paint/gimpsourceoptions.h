@@ -38,8 +38,6 @@ struct _GimpSourceOptions
 
   GimpSourceAlignMode  align_mode;
   gboolean             sample_merged;
-
-  gboolean             use_source; /* not a property */
 };
 
 struct _GimpSourceOptionsClass

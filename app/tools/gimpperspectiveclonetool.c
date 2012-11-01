@@ -567,18 +567,15 @@ gimp_perspective_clone_tool_cursor_update (GimpTool         *tool,
     }
   else
     {
-      if (GIMP_CLONE_OPTIONS (options)->clone_type == GIMP_IMAGE_CLONE)
-        {
-          GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
+      GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
 
-          if ((state & (toggle_mask | GDK_SHIFT_MASK)) == toggle_mask)
-            {
-              cursor = GIMP_CURSOR_CROSSHAIR_SMALL;
-            }
-          else if (! GIMP_SOURCE_CORE (GIMP_PAINT_TOOL (tool)->core)->src_drawable)
-            {
-              modifier = GIMP_CURSOR_MODIFIER_BAD;
-            }
+      if ((state & (toggle_mask | GDK_SHIFT_MASK)) == toggle_mask)
+        {
+          cursor = GIMP_CURSOR_CROSSHAIR_SMALL;
+        }
+      else if (! GIMP_SOURCE_CORE (GIMP_PAINT_TOOL (tool)->core)->src_drawable)
+        {
+          modifier = GIMP_CURSOR_MODIFIER_BAD;
         }
     }
 
@@ -662,8 +659,7 @@ gimp_perspective_clone_tool_oper_update (GimpTool         *tool,
       GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state,
                                                    proximity, display);
 
-      if (GIMP_CLONE_OPTIONS (options)->clone_type == GIMP_IMAGE_CLONE &&
-          proximity)
+      if (proximity)
         {
           GimpPaintCore        *core        = GIMP_PAINT_TOOL (tool)->core;
           GimpPerspectiveClone *clone       = GIMP_PERSPECTIVE_CLONE (core);
@@ -766,8 +762,7 @@ gimp_perspective_clone_tool_draw (GimpDrawTool *draw_tool)
                                  GIMP_HANDLE_ANCHOR_CENTER);
     }
 
-  if (GIMP_CLONE_OPTIONS (options)->clone_type == GIMP_IMAGE_CLONE &&
-      source_core->src_drawable && clone_tool->src_display)
+  if (source_core->src_drawable && clone_tool->src_display)
     {
       GimpDisplay *tmp_display;
 
