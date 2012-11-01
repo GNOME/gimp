@@ -205,8 +205,6 @@ query (void)
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
-
-  gimp_register_file_handler_mime (SAVE2_PROC, "image/tiff");
 }
 
 static void
