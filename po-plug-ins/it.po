@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-31 22:43+0100\n"
-"PO-Revision-Date: 2012-10-31 23:00+0100\n"
+"PO-Revision-Date: 2012-11-02 20:36+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: \n"
@@ -635,7 +635,7 @@ msgstr "_Spostamento:"
 
 #: ../plug-ins/common/blinds.c:319
 msgid "_Number of segments:"
-msgstr "_Numero di segmenti"
+msgstr "_Numero di segmenti:"
 
 #: ../plug-ins/common/blur.c:124
 msgid "Simple blur, fast but not very strong"
@@ -869,7 +869,7 @@ msgstr "Sinusoidale"
 
 #: ../plug-ins/common/bump-map.c:850
 msgid "_Map type:"
-msgstr "Tipo _mappa"
+msgstr "Tipo _mappa:"
 
 #. Compensate darkening
 #: ../plug-ins/common/bump-map.c:855
@@ -1479,7 +1479,7 @@ msgstr "# di sottocampi:"
 
 #: ../plug-ins/common/cml-explorer.c:1652
 msgid "P(ower factor):"
-msgstr "P(otenza, fattore di)"
+msgstr "P(otenza, fattore di):"
 
 #: ../plug-ins/common/cml-explorer.c:1661
 msgid "Parameter k:"
