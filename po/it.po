@@ -31,7 +31,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-31 19:58+0100\n"
-"PO-Revision-Date: 2012-10-31 22:36+0100\n"
+"PO-Revision-Date: 2012-11-03 00:12+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: \n"
@@ -10445,7 +10445,7 @@ msgstr "Strumento di disegno:"
 
 #: ../app/dialogs/stroke-dialog.c:228
 msgid "_Emulate brush dynamics"
-msgstr "_Emula pennelli dinamici"
+msgstr "_Emula le dinamiche del pennello"
 
 #: ../app/dialogs/tips-dialog.c:88
 msgid "The GIMP tips file is empty!"
