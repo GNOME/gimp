@@ -128,7 +128,7 @@ module_dialog_new (Gimp *gimp)
                            gimp_standard_help_func, GIMP_HELP_MODULE_DIALOG,
 
                            GTK_STOCK_REFRESH, RESPONSE_REFRESH,
-                           GTK_STOCK_CLOSE,   GTK_STOCK_CLOSE,
+                           GTK_STOCK_CLOSE,   GTK_RESPONSE_CLOSE,
 
                            NULL);
 
