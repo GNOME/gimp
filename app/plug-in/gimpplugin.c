@@ -420,8 +420,6 @@ void
 gimp_plug_in_close (GimpPlugIn *plug_in,
                     gboolean    kill_it)
 {
-  GList *list;
-
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
   g_return_if_fail (plug_in->open);
 
@@ -533,9 +531,9 @@ gimp_plug_in_close (GimpPlugIn *plug_in,
 
   gimp_wire_clear_error ();
 
-  for (list = plug_in->temp_proc_frames; list; list = g_list_next (list))
+  while (plug_in->temp_proc_frames)
     {
-      GimpPlugInProcFrame *proc_frame = list->data;
+      GimpPlugInProcFrame *proc_frame = plug_in->temp_proc_frames->data;
 
 #ifdef GIMP_UNSTABLE
       g_printerr ("plug-in '%s' aborted before sending its "
@@ -548,6 +546,12 @@ gimp_plug_in_close (GimpPlugIn *plug_in,
         {
           g_main_loop_quit (proc_frame->main_loop);
         }
+
+      /* pop the frame here, because normally this only happens in
+       * gimp_plug_in_handle_temp_proc_return(), which can't
+       * be called after plug_in_close()
+       */
+      gimp_plug_in_proc_frame_pop (plug_in);
     }
 
   if (plug_in->main_proc_frame.main_loop &&
