@@ -37,10 +37,6 @@
 #include "gimpviewrenderer.h"
 
 
-#define gimp_container_entry_get_model(entry) \
-  gtk_entry_completion_get_model (gtk_entry_get_completion (GTK_ENTRY (entry)))
-
-
 static void     gimp_container_entry_view_iface_init (GimpContainerViewInterface *iface);
 
 static void     gimp_container_entry_set_context  (GimpContainerView      *view,
@@ -198,6 +194,19 @@ gimp_container_entry_new (GimpContainer *container,
 
 /*  GimpContainerView methods  */
 
+static GtkTreeModel *
+gimp_container_entry_get_model (GimpContainerView *view)
+{
+  GtkEntryCompletion *completion;
+
+  completion = gtk_entry_get_completion (GTK_ENTRY (view));
+
+  if (completion)
+    return gtk_entry_completion_get_model (completion);
+
+  return NULL;
+}
+
 static void
 gimp_container_entry_set_context (GimpContainerView *view,
                                   GimpContext       *context)
@@ -288,6 +297,10 @@ static void
 gimp_container_entry_clear_items (GimpContainerView *view)
 {
   GtkTreeModel *model = gimp_container_entry_get_model (view);
+
+  /* happens in dispose() */
+  if (! model)
+    return;
 
   gimp_container_tree_store_clear_items (GIMP_CONTAINER_TREE_STORE (model));
 
