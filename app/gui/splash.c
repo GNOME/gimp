@@ -138,18 +138,7 @@ splash_create (gboolean be_verbose)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  /*  If the splash image is static, we use a drawing area and set the
-   *  image as back pixmap, otherwise a GtkImage is being used.
-   */
-  if (gdk_pixbuf_animation_is_static_image (pixbuf))
-    {
-      splash->area = gtk_drawing_area_new ();
-    }
-  else
-    {
-      splash->area = gtk_image_new_from_animation (pixbuf);
-    }
-
+  splash->area = gtk_image_new_from_animation (pixbuf);
   gtk_box_pack_start (GTK_BOX (vbox), splash->area, TRUE, TRUE, 0);
   gtk_widget_show (splash->area);
 
@@ -166,27 +155,6 @@ splash_create (gboolean be_verbose)
   splash_average_text_area (splash,
                             gdk_pixbuf_animation_get_static_image (pixbuf),
                             &splash->color);
-
-  gtk_widget_realize (splash->area);
-
-  if (gdk_pixbuf_animation_is_static_image (pixbuf))
-    {
-      GdkPixbuf *static_pixbuf = gdk_pixbuf_animation_get_static_image (pixbuf);
-      GdkPixmap *pixmap;
-      cairo_t   *cr;
-
-      pixmap = gdk_pixmap_new (gtk_widget_get_window (splash->area),
-                               splash->width, splash->height, -1);
-
-      cr = gdk_cairo_create (pixmap);
-      gdk_cairo_set_source_pixbuf (cr, static_pixbuf, 0.0, 0.0);
-      cairo_paint (cr);
-      cairo_destroy (cr);
-
-      gdk_window_set_back_pixmap (gtk_widget_get_window (splash->area),
-                                  pixmap, FALSE);
-      g_object_unref (pixmap);
-    }
 
   g_object_unref (pixbuf);
 
