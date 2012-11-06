@@ -95,7 +95,8 @@ ts_output_string (TsOutputType  type,
 #define TOK_VEC     12
 #define TOK_USCORE  13
 
-# define BACKQUOTE '`'
+#define BACKQUOTE '`'
+#define DELIMITERS  "()\";\f\t\v\n\r "
 
 /*
  *  Basic memory allocation units
@@ -4309,7 +4310,7 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
                sc->tok = token(sc);
                s_goto(sc,OP_RDSEXPR);
           case TOK_ATOM:
-               s_return(sc,mk_atom(sc, readstr_upto(sc, "();\t\n\r ")));
+               s_return(sc,mk_atom(sc, readstr_upto(sc, DELIMITERS)));
           case TOK_DQUOTE:
                x=readstrexp(sc);
                if(x==sc->F) {
@@ -4340,7 +4341,7 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
                }
           }
           case TOK_SHARP_CONST:
-               if ((x = mk_sharp_const(sc, readstr_upto(sc, "();\t\n\r "))) == sc->NIL) {
+               if ((x = mk_sharp_const(sc, readstr_upto(sc, DELIMITERS))) == sc->NIL) {
                     Error_0(sc,"undefined sharp expression");
                } else {
                     s_return(sc,x);
