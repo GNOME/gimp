@@ -259,6 +259,7 @@ gimp_text_tool_init (GimpTextTool *text_tool)
   gimp_text_tool_editor_init (text_tool);
 
   gimp_tool_control_set_scroll_lock          (tool->control, TRUE);
+  gimp_tool_control_set_handle_empty_image   (tool->control, TRUE);
   gimp_tool_control_set_wants_click          (tool->control, TRUE);
   gimp_tool_control_set_wants_double_click   (tool->control, TRUE);
   gimp_tool_control_set_wants_triple_click   (tool->control, TRUE);
