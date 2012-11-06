@@ -439,13 +439,16 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
     case GDK_BUTTON_PRESS:
       {
-        GdkEventButton *bevent = (GdkEventButton *) event;
+        GdkEventButton  *bevent = (GdkEventButton *) event;
+        GdkModifierType  button_state;
 
         /*  ignore new mouse events  */
         if (gimp->busy || shell->scrolling || shell->pointer_grabbed)
           return TRUE;
 
-        state |= gimp_display_shell_button_to_state (bevent->button);
+        button_state = gimp_display_shell_button_to_state (bevent->button);
+
+        state |= button_state;
 
         /* ignore new buttons while another button is down */
         if (((state & (GDK_BUTTON1_MASK)) && (state & (GDK_BUTTON2_MASK |
@@ -473,7 +476,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         gimp_display_shell_update_focus (shell, TRUE,
                                          &image_coords, state);
         gimp_display_shell_update_cursor (shell, &display_coords,
-                                          &image_coords, state, FALSE);
+                                          &image_coords, state & ~button_state,
+                                          FALSE);
 
         if (gdk_event_triggers_context_menu (event))
           {
