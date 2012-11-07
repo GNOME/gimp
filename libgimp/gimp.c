@@ -49,7 +49,7 @@
 #define WAIT_ANY -1
 #endif
 
-#include <glib-object.h>
+#include <gtk/gtk.h> /* need GDK_WINDOWING_FOO defines */
 
 #ifndef G_OS_WIN32
 #include "libgimpbase/gimpsignal.h"
@@ -81,6 +81,10 @@
 #include <sys/mman.h>
 
 #endif /* USE_POSIX_SHM */
+
+#ifdef GDK_WINDOWING_QUARTZ
+#include <Cocoa/Cocoa.h>
+#endif
 
 #if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
 #  define STRICT
@@ -2003,7 +2007,6 @@ gimp_proc_run (GPProcRun *proc_run)
     }
 }
 
-
 static void
 gimp_temp_proc_run (GPProcRun *proc_run)
 {
@@ -2014,6 +2017,14 @@ gimp_temp_proc_run (GPProcRun *proc_run)
       GPProcReturn  proc_return;
       GimpParam    *return_vals;
       gint          n_return_vals;
+
+#ifdef GDK_WINDOWING_QUARTZ
+      if (proc_run->params &&
+          proc_run->params[0].data.d_int32 == GIMP_RUN_INTERACTIVE)
+        {
+          [NSApp activateIgnoringOtherApps:YES];
+        }
+#endif
 
       (* run_proc) (proc_run->name,
                     proc_run->nparams,

@@ -11,6 +11,11 @@ if PLATFORM_WIN32
 no_undefined = -no-undefined
 endif
 
+if PLATFORM_OSX
+xobjective_c = "-xobjective-c"
+framework_cocoa = -framework Cocoa
+endif
+
 if OS_WIN32
 gimp_def = gimp.def
 gimpui_def = gimpui.def
@@ -64,7 +69,8 @@ AM_CPPFLAGS = \
 INCLUDES = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
-	-I$(includedir)
+	-I$(includedir)	\
+	$(xobjective_c)
 
 lib_LTLIBRARIES = libgimp-2.0.la libgimpui-2.0.la
 
@@ -361,7 +367,8 @@ gimpinclude_HEADERS = \
 libgimp_2_0_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined)				\
-	$(libgimp_export_symbols)
+	$(libgimp_export_symbols)		\
+	$(framework_cocoa)
 
 libgimp_2_0_la_LIBADD = \
 	$(libgimpconfig)	\
@@ -380,7 +387,8 @@ libgimp_2_0_la_DEPENDENCIES = \
 libgimpui_2_0_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined)				\
-	$(libgimpui_export_symbols)
+	$(libgimpui_export_symbols)		\
+	$(framework_cocoa)
 
 libgimpui_2_0_la_LIBADD = \
 	$(libgimp)		\
