@@ -28,6 +28,10 @@
 #include <gdk/gdkx.h>
 #endif
 
+#ifdef GDK_WINDOWING_QUARTZ
+#include <Cocoa/Cocoa.h>
+#endif
+
 #include "gimp.h"
 #include "gimpui.h"
 
@@ -142,6 +146,10 @@ gimp_ui_init (const gchar *prog_name,
     gimp_help_disable_tooltips ();
 
   gimp_dialogs_show_help_button (gimp_show_help_button ());
+
+#ifdef GDK_WINDOWING_QUARTZ
+  [NSApp activateIgnoringOtherApps:YES];
+#endif
 
   gimp_ui_initialized = TRUE;
 }
