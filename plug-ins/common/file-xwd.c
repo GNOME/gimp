@@ -186,11 +186,13 @@ static gint32 load_xwd_f2_d16_b16 (const gchar *,
 static gint32 load_xwd_f2_d24_b32 (const gchar *,
                                    FILE *,
                                    L_XWDFILEHEADER *,
-                                   L_XWDCOLOR *);
+                                   L_XWDCOLOR *,
+                                   GError **);
 static gint32 load_xwd_f1_d24_b1  (const gchar *,
                                    FILE *,
                                    L_XWDFILEHEADER *,
-                                   L_XWDCOLOR *);
+                                   L_XWDCOLOR *,
+                                   GError **);
 
 static L_CARD32 read_card32  (FILE *,
                               gint *);
@@ -540,7 +542,8 @@ load_image (const gchar  *filename,
     case 1:    /* Single plane pixmap */
       if ((depth <= 24) && (bpp == 1))
         {
-          image_ID = load_xwd_f1_d24_b1 (filename, ifp, &xwdhdr, xwdcolmap);
+          image_ID = load_xwd_f1_d24_b1 (filename, ifp, &xwdhdr, xwdcolmap,
+                                         error);
         }
       break;
 
@@ -559,7 +562,8 @@ load_image (const gchar  *filename,
         }
       else if ((depth <= 24) && ((bpp == 24) || (bpp == 32)))
         {
-          image_ID = load_xwd_f2_d24_b32 (filename, ifp, &xwdhdr, xwdcolmap);
+          image_ID = load_xwd_f2_d24_b32 (filename, ifp, &xwdhdr, xwdcolmap,
+                                          error);
         }
       break;
     }
@@ -570,7 +574,7 @@ load_image (const gchar  *filename,
   if (xwdcolmap)
     g_free (xwdcolmap);
 
-  if (image_ID == -1)
+  if (image_ID == -1 && ! (error && *error))
     g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                  _("XWD-file %s has format %d, depth %d and bits per pixel %d. "
                    "Currently this is not supported."),
@@ -1624,10 +1628,11 @@ load_xwd_f2_d16_b16 (const gchar     *filename,
 /* Load XWD with pixmap_format 2, pixmap_depth up to 24, bits_per_pixel 24/32 */
 
 static gint32
-load_xwd_f2_d24_b32 (const gchar     *filename,
-                     FILE            *ifp,
-                     L_XWDFILEHEADER *xwdhdr,
-                     L_XWDCOLOR      *xwdcolmap)
+load_xwd_f2_d24_b32 (const gchar      *filename,
+                     FILE             *ifp,
+                     L_XWDFILEHEADER  *xwdhdr,
+                     L_XWDCOLOR       *xwdcolmap,
+                     GError          **error)
 {
   register guchar *dest, lsbyte_first;
   gint             width, height, linepad, i, j, c0, c1, c2, c3;
@@ -1651,12 +1656,6 @@ load_xwd_f2_d24_b32 (const gchar     *filename,
 
   width  = xwdhdr->l_pixmap_width;
   height = xwdhdr->l_pixmap_height;
-
-  image_ID = create_new_image (filename, width, height, GIMP_RGB,
-                               &layer_ID, &drawable, &pixel_rgn);
-
-  tile_height = gimp_tile_height ();
-  data = g_malloc (tile_height * width * 3);
 
   redmask   = xwdhdr->l_red_mask;
   greenmask = xwdhdr->l_green_mask;
@@ -1684,6 +1683,22 @@ load_xwd_f2_d24_b32 (const gchar     *filename,
 
   maxblue = 0; while (bluemask >> (blueshift + maxblue)) maxblue++;
   maxblue = (1 << maxblue) - 1;
+
+  if (maxred   > sizeof (redmap)   ||
+      maxgreen > sizeof (greenmap) ||
+      maxblue  > sizeof (bluemap))
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("XWD-file %s is corrupt."),
+                   gimp_filename_to_utf8 (filename));
+      return -1;
+    }
+
+  image_ID = create_new_image (filename, width, height, GIMP_RGB,
+                               &layer_ID, &drawable, &pixel_rgn);
+
+  tile_height = gimp_tile_height ();
+  data = g_malloc (tile_height * width * 3);
 
   /* Set map-arrays for red, green, blue */
   for (red = 0; red <= maxred; red++)
@@ -1825,10 +1840,11 @@ load_xwd_f2_d24_b32 (const gchar     *filename,
 /* Load XWD with pixmap_format 1, pixmap_depth up to 24, bits_per_pixel 1 */
 
 static gint32
-load_xwd_f1_d24_b1 (const gchar     *filename,
-                    FILE            *ifp,
-                    L_XWDFILEHEADER *xwdhdr,
-                    L_XWDCOLOR      *xwdcolmap)
+load_xwd_f1_d24_b1 (const gchar      *filename,
+                    FILE             *ifp,
+                    L_XWDFILEHEADER  *xwdhdr,
+                    L_XWDCOLOR       *xwdcolmap,
+                    GError          **error)
 {
   register guchar *dest, outmask, inmask, do_reverse;
   gint             width, height, i, j, plane, fromright;
@@ -1862,13 +1878,6 @@ load_xwd_f1_d24_b1 (const gchar     *filename,
   height          = xwdhdr->l_pixmap_height;
   indexed         = (xwdhdr->l_pixmap_depth <= 8);
   bytes_per_pixel = (indexed ? 1 : 3);
-
-  image_ID = create_new_image (filename, width, height,
-                               indexed ? GIMP_INDEXED : GIMP_RGB,
-                               &layer_ID, &drawable, &pixel_rgn);
-
-  tile_height = gimp_tile_height ();
-  data = g_malloc (tile_height * width * bytes_per_pixel);
 
   for (j = 0; j < 256; j++)   /* Create an array for reversing bits */
     {
@@ -1913,6 +1922,16 @@ load_xwd_f1_d24_b1 (const gchar     *filename,
       maxblue = 0; while (bluemask >> (blueshift + maxblue)) maxblue++;
       maxblue = (1 << maxblue) - 1;
 
+      if (maxred   > sizeof (redmap)   ||
+          maxgreen > sizeof (greenmap) ||
+          maxblue  > sizeof (bluemap))
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("XWD-file %s is corrupt."),
+                       gimp_filename_to_utf8 (filename));
+          return -1;
+        }
+
       /* Set map-arrays for red, green, blue */
       for (red = 0; red <= maxred; red++)
         redmap[red] = (red * 255) / maxred;
@@ -1921,6 +1940,13 @@ load_xwd_f1_d24_b1 (const gchar     *filename,
       for (blue = 0; blue <= maxblue; blue++)
         bluemap[blue] = (blue * 255) / maxblue;
     }
+
+  image_ID = create_new_image (filename, width, height,
+                               indexed ? GIMP_INDEXED : GIMP_RGB,
+                               &layer_ID, &drawable, &pixel_rgn);
+
+  tile_height = gimp_tile_height ();
+  data = g_malloc (tile_height * width * bytes_per_pixel);
 
   ncols = xwdhdr->l_colormap_entries;
   if (xwdhdr->l_ncolors < ncols)
