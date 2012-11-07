@@ -331,12 +331,18 @@ gimp_draw_tool_resume (GimpDrawTool *draw_tool)
   if (draw_tool->paused_count == 0)
     {
 #ifdef USE_TIMEOUT
-      if (! draw_tool->draw_timeout)
-        draw_tool->draw_timeout =
-          gdk_threads_add_timeout_full (G_PRIORITY_HIGH_IDLE,
-                                        DRAW_TIMEOUT,
-                                        (GSourceFunc) gimp_draw_tool_draw_timeout,
-                                        draw_tool, NULL);
+      /* Don't install the timeout if the draw tool isn't active, so
+       * suspend()/resume() can always be called, and have no side
+       * effect on an inactive tool. See bug #687851.
+       */
+      if (gimp_draw_tool_is_active (draw_tool) && ! draw_tool->draw_timeout)
+        {
+          draw_tool->draw_timeout =
+            gdk_threads_add_timeout_full (G_PRIORITY_HIGH_IDLE,
+                                          DRAW_TIMEOUT,
+                                          (GSourceFunc) gimp_draw_tool_draw_timeout,
+                                          draw_tool, NULL);
+        }
 #endif
 
       /* call draw() anyway, it will do nothing if the timeout is
