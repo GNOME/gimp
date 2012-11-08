@@ -433,7 +433,7 @@ drawable_mask_bounds_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, FALSE, error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, 0, error))
         non_empty = gimp_item_mask_bounds (GIMP_ITEM (drawable), &x1, &y1, &x2, &y2);
       else
         success = FALSE;
@@ -475,7 +475,7 @@ drawable_mask_intersect_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, FALSE, error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, 0, error))
         non_empty = gimp_item_mask_intersect (GIMP_ITEM (drawable),
                                               &x, &y, &width, &height);
       else
@@ -514,7 +514,8 @@ drawable_merge_shadow_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           const gchar *undo_desc = _("Plug-In");
@@ -672,7 +673,8 @@ drawable_set_pixel_invoker (GimpProcedure         *procedure,
           format = gimp_babl_compat_u8_format (format);
         }
 
-      if (gimp_pdb_item_is_writable (GIMP_ITEM (drawable), error) &&
+      if (gimp_pdb_item_is_modifyable (GIMP_ITEM (drawable),
+                                       GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
           x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
           y_coord < gimp_item_get_height (GIMP_ITEM (drawable)) &&
@@ -707,7 +709,8 @@ drawable_fill_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_writable (GIMP_ITEM (drawable), error) &&
+      if (gimp_pdb_item_is_modifyable (GIMP_ITEM (drawable),
+                                       GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         gimp_drawable_fill_by_type (drawable, context, (GimpFillType) fill_type);
       else
@@ -741,7 +744,8 @@ drawable_offset_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         gimp_drawable_offset (drawable, context, wrap_around, fill_type,
                               offset_x, offset_y);
@@ -933,7 +937,7 @@ drawable_foreground_extract_invoker (GimpProcedure         *procedure,
   if (success)
     {
     /*
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, FALSE, error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, 0, error))
         gimp_drawable_foreground_extract (drawable, mode, mask, progress);
       else
         success = FALSE;

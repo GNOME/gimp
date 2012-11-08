@@ -200,7 +200,8 @@ selection_float_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
@@ -428,7 +429,7 @@ selection_layer_alpha_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL, FALSE, error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL, 0, error))
         gimp_item_to_selection (GIMP_ITEM (layer),
                                 GIMP_CHANNEL_OP_REPLACE,
                                 TRUE, FALSE, 0.0, 0.0);
@@ -455,7 +456,7 @@ selection_load_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), NULL, FALSE, error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), NULL, 0, error))
         gimp_item_to_selection (GIMP_ITEM (channel),
                                 GIMP_CHANNEL_OP_REPLACE,
                                 TRUE, FALSE, 0.0, 0.0);
@@ -516,7 +517,7 @@ selection_combine_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), NULL, FALSE, error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), NULL, 0, error))
         gimp_item_to_selection (GIMP_ITEM (channel),
                                 operation,
                                 TRUE, FALSE, 0.0, 0.0);

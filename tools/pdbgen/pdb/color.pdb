@@ -41,7 +41,8 @@ HELP
         headers => [ qw("operations/gimpbrightnesscontrastconfig.h") ],
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
       GObject *config = g_object_new (GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG,
@@ -101,7 +102,8 @@ HELP
 	headers => [ qw("operations/gimplevelsconfig.h") ],
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
       (gimp_drawable_has_alpha (drawable) || channel != GIMP_HISTOGRAM_ALPHA) &&
       (! gimp_drawable_is_gray (drawable) ||
@@ -153,7 +155,8 @@ HELP
         headers => [ qw("core/gimpdrawable-levels.h") ],
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
       gimp_drawable_levels_stretch (drawable, progress);
@@ -177,7 +180,8 @@ sub levels_auto {
         headers => [ qw("core/gimpdrawable-levels.h") ],
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
       gimp_drawable_levels_stretch (drawable, progress);
@@ -211,7 +215,8 @@ HELP
         headers => [ qw("operations/gimpposterizeconfig.h") ],
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
       GObject *config = g_object_new (GIMP_TYPE_POSTERIZE_CONFIG,
@@ -250,7 +255,8 @@ HELP
 	headers => [ qw("operations/gimpdesaturateconfig.h") ],
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
       gimp_drawable_is_rgb (drawable))
     {
@@ -297,7 +303,8 @@ HELP
 	headers => [ qw("operations/gimpdesaturateconfig.h") ],
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
       gimp_drawable_is_rgb (drawable))
     {
@@ -344,7 +351,8 @@ HELP
 	headers => [ qw("core/gimpdrawable-equalize.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
+  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                   GIMP_PDB_ITEM_CONTENT, error) ||
       ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     success = FALSE;
 
@@ -374,7 +382,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
       gimp_drawable_apply_operation_by_name (drawable, progress,
@@ -420,7 +429,8 @@ HELP
 	headers => [ qw("operations/gimpcurvesconfig.h") ],
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
       ! (num_points & 1) &&
       (gimp_drawable_has_alpha (drawable) || channel != GIMP_HISTOGRAM_ALPHA) &&
@@ -474,7 +484,8 @@ HELP
 	headers => [ qw("operations/gimpcurvesconfig.h") ],
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
       (num_bytes == 256) &&
       (gimp_drawable_has_alpha (drawable) || channel != GIMP_HISTOGRAM_ALPHA) &&
@@ -533,7 +544,8 @@ HELP
 	headers => [ qw("operations/gimpcolorbalanceconfig.h") ],
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error)  &&
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error)  &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
       GObject *config = g_object_new (GIMP_TYPE_COLORIZE_CONFIG,
@@ -585,7 +597,8 @@ HELP
 	headers => [ qw("operations/gimpcolorizeconfig.h") ],
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
       ! gimp_drawable_is_gray (drawable))
     {
@@ -660,7 +673,7 @@ HELP
                         "core/gimphistogram.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, FALSE, error) ||
+  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, 0, error) ||
       gimp_drawable_is_indexed (drawable) ||
       (! gimp_drawable_has_alpha (drawable) &&
        channel == GIMP_HISTOGRAM_ALPHA) ||
@@ -723,7 +736,8 @@ HELP
 	headers => [ qw("operations/gimphuesaturationconfig.h") ],
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
       GObject *config = g_object_new (GIMP_TYPE_HUE_SATURATION_CONFIG,
@@ -774,7 +788,8 @@ HELP
 	headers => [ qw("operations/gimpthresholdconfig.h") ],
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
       GObject *config = g_object_new (GIMP_TYPE_THRESHOLD_CONFIG,

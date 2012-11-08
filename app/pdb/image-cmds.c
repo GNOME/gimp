@@ -1040,7 +1040,7 @@ image_insert_layer_invoker (GimpProcedure         *procedure,
                                        gimp_drawable_get_base_type (GIMP_DRAWABLE (layer)),
                                        error) &&
           (parent == NULL ||
-           (gimp_pdb_item_is_in_tree (GIMP_ITEM (parent), image, FALSE, error) &&
+           (gimp_pdb_item_is_in_tree (GIMP_ITEM (parent), image, 0, error) &&
             gimp_pdb_item_is_group (GIMP_ITEM (parent), error))))
         {
           if (position == -1 && parent == NULL)
@@ -1076,7 +1076,7 @@ image_remove_layer_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), image, FALSE, error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), image, 0, error))
         gimp_image_remove_layer (image, layer, TRUE, NULL);
       else
         success = FALSE;
@@ -1143,7 +1143,7 @@ image_insert_channel_invoker (GimpProcedure         *procedure,
     {
       if (gimp_pdb_item_is_floating (GIMP_ITEM (channel), image, error) &&
           (parent == NULL ||
-           (gimp_pdb_item_is_in_tree (GIMP_ITEM (parent), image, FALSE, error) &&
+           (gimp_pdb_item_is_in_tree (GIMP_ITEM (parent), image, 0, error) &&
             gimp_pdb_item_is_group (GIMP_ITEM (parent), error))))
         {
           if (position == -1 && parent == NULL)
@@ -1179,7 +1179,7 @@ image_remove_channel_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), image, FALSE, error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), image, 0, error))
         gimp_image_remove_channel (image, channel, TRUE, NULL);
       else
         success = FALSE;
@@ -1246,7 +1246,7 @@ image_insert_vectors_invoker (GimpProcedure         *procedure,
     {
       if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), image, error) &&
           (parent == NULL ||
-           (gimp_pdb_item_is_in_tree (GIMP_ITEM (parent), image, FALSE, error) &&
+           (gimp_pdb_item_is_in_tree (GIMP_ITEM (parent), image, 0, error) &&
             gimp_pdb_item_is_group (GIMP_ITEM (parent), error))))
         {
           if (position == -1 && parent == NULL)
@@ -1282,7 +1282,7 @@ image_remove_vectors_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), image, FALSE, error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), image, 0, error))
         gimp_image_remove_vectors (image, vectors, TRUE, NULL);
       else
         success = FALSE;
@@ -1311,7 +1311,7 @@ image_get_item_position_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_in_tree (item, image, FALSE, error))
+      if (gimp_pdb_item_is_in_tree (item, image, 0, error))
         position = gimp_item_get_index (item);
       else
         success = FALSE;
@@ -1343,7 +1343,7 @@ image_raise_item_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_in_tree (item, image, FALSE, error))
+      if (gimp_pdb_item_is_in_tree (item, image, 0, error))
         success = gimp_image_raise_item (image, item, error);
       else
         success = FALSE;
@@ -1370,7 +1370,7 @@ image_lower_item_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_in_tree (item, image, FALSE, error))
+      if (gimp_pdb_item_is_in_tree (item, image, 0, error))
         success = gimp_image_lower_item (image, item, error);
       else
         success = FALSE;
@@ -1397,7 +1397,7 @@ image_raise_item_to_top_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_in_tree (item, image, FALSE, error))
+      if (gimp_pdb_item_is_in_tree (item, image, 0, error))
         success = gimp_image_raise_item_to_top (image, item);
       else
         success = FALSE;
@@ -1424,7 +1424,7 @@ image_lower_item_to_bottom_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_in_tree (item, image, FALSE, error))
+      if (gimp_pdb_item_is_in_tree (item, image, 0, error))
         success = gimp_image_lower_item_to_bottom (image, item);
       else
         success = FALSE;
@@ -1455,7 +1455,7 @@ image_reorder_item_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_in_tree (item, image, FALSE, error) &&
+      if (gimp_pdb_item_is_in_tree (item, image, 0, error) &&
           (parent == NULL ||
            (gimp_pdb_item_is_in_same_tree (item, parent, image, error) &&
             gimp_pdb_item_is_group (parent, error) &&
@@ -1560,7 +1560,7 @@ image_merge_down_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (merge_layer), image, FALSE, error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (merge_layer), image, 0, error))
         {
           layer = gimp_image_merge_down (image, merge_layer, context, merge_type,
                                          error);
@@ -1630,7 +1630,12 @@ image_remove_layer_mask_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), image, mode == GIMP_MASK_APPLY, error) &&
+      GimpPDBItemModify modify = 0;
+
+      if (mode == GIMP_MASK_APPLY)
+        modify |= GIMP_PDB_ITEM_CONTENT;
+
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), image, modify, error) &&
           gimp_layer_get_mask (layer))
         gimp_layer_apply_mask (layer, mode, TRUE);
       else

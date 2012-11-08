@@ -36,4 +36,10 @@ typedef enum
 } GimpPDBCompatMode;
 
 
+typedef enum
+{
+  GIMP_PDB_ITEM_CONTENT = 1 << 0
+} GimpPDBItemModify;
+
+
 #endif /* __PDB_TYPES_H__ */

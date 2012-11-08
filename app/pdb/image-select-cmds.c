@@ -71,7 +71,7 @@ image_select_color_invoker (GimpProcedure         *procedure,
       GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
 
       if (pdb_context->sample_merged ||
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), image, FALSE, error))
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), image, 0, error))
         {
           gimp_channel_select_by_color (gimp_image_get_mask (image), drawable,
                                         pdb_context->sample_merged,
@@ -119,7 +119,7 @@ image_select_contiguous_color_invoker (GimpProcedure         *procedure,
       GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
 
       if (pdb_context->sample_merged ||
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), image, FALSE, error))
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), image, 0, error))
         {
 
           gimp_channel_select_fuzzy (gimp_image_get_mask (image),
@@ -332,7 +332,7 @@ image_select_item_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (item, image, FALSE, error))
+      if (gimp_pdb_item_is_attached (item, image, 0, error))
         {
           GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
 

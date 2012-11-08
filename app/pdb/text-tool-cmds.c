@@ -75,7 +75,8 @@ text_fontname_invoker (GimpProcedure         *procedure,
   if (success)
     {
       if (drawable &&
-          (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), image, TRUE, error) ||
+          (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), image,
+                                        GIMP_PDB_ITEM_CONTENT, error) ||
            ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error)))
         success = FALSE;
 
@@ -181,7 +182,8 @@ text_invoker (GimpProcedure         *procedure,
   if (success)
     {
       if (drawable &&
-          (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), image, TRUE, error) ||
+          (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), image,
+                                        GIMP_PDB_ITEM_CONTENT, error) ||
            ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error)))
         success = FALSE;
 

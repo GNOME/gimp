@@ -338,10 +338,10 @@ gimp_pdb_get_paint_info (Gimp         *gimp,
 }
 
 gboolean
-gimp_pdb_item_is_attached (GimpItem  *item,
-                           GimpImage *image,
-                           gboolean   writable,
-                           GError   **error)
+gimp_pdb_item_is_attached (GimpItem           *item,
+                           GimpImage          *image,
+                           GimpPDBItemModify   modify,
+                           GError            **error)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
   g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), FALSE);
@@ -367,23 +367,20 @@ gimp_pdb_item_is_attached (GimpItem  *item,
       return FALSE;
     }
 
-  if (writable)
-    return gimp_pdb_item_is_writable (item, error);
-
-  return TRUE;
+  return gimp_pdb_item_is_modifyable (item, modify, error);
 }
 
 gboolean
-gimp_pdb_item_is_in_tree (GimpItem   *item,
-                          GimpImage  *image,
-                          gboolean    writable,
-                          GError    **error)
+gimp_pdb_item_is_in_tree (GimpItem           *item,
+                          GimpImage          *image,
+                          GimpPDBItemModify   modify,
+                          GError            **error)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
   g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (! gimp_pdb_item_is_attached (item, image, writable, error))
+  if (! gimp_pdb_item_is_attached (item, image, modify, error))
     return FALSE;
 
   if (! gimp_item_get_tree (item))
@@ -484,13 +481,14 @@ gimp_pdb_item_is_floating (GimpItem  *item,
 }
 
 gboolean
-gimp_pdb_item_is_writable (GimpItem  *item,
-                           GError   **error)
+gimp_pdb_item_is_modifyable (GimpItem           *item,
+                             GimpPDBItemModify   modify,
+                             GError            **error)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (gimp_item_is_content_locked (item))
+  if ((modify & GIMP_PDB_ITEM_CONTENT) && gimp_item_is_content_locked (item))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Item '%s' (%d) cannot be modified because its "
@@ -544,9 +542,9 @@ gimp_pdb_item_is_not_group (GimpItem  *item,
 }
 
 gboolean
-gimp_pdb_layer_is_text_layer (GimpLayer  *layer,
-                              gboolean    writable,
-                              GError    **error)
+gimp_pdb_layer_is_text_layer (GimpLayer          *layer,
+                              GimpPDBItemModify   modify,
+                              GError            **error)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
@@ -562,7 +560,7 @@ gimp_pdb_layer_is_text_layer (GimpLayer  *layer,
       return FALSE;
     }
 
-  return gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL, writable, error);
+  return gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL, modify, error);
 }
 
 static const gchar *
@@ -670,10 +668,10 @@ gimp_pdb_image_is_not_precision (GimpImage      *image,
 }
 
 GimpStroke *
-gimp_pdb_get_vectors_stroke (GimpVectors  *vectors,
-                             gint          stroke_ID,
-                             gboolean      writable,
-                             GError      **error)
+gimp_pdb_get_vectors_stroke (GimpVectors        *vectors,
+                             gint                stroke_ID,
+                             GimpPDBItemModify   modify,
+                             GError            **error)
 {
   GimpStroke *stroke = NULL;
 
@@ -683,7 +681,8 @@ gimp_pdb_get_vectors_stroke (GimpVectors  *vectors,
   if (! gimp_pdb_item_is_not_group (GIMP_ITEM (vectors), error))
     return NULL;
 
-  if (! writable || gimp_pdb_item_is_writable (GIMP_ITEM (vectors), error))
+  if (! modify || gimp_pdb_item_is_modifyable (GIMP_ITEM (vectors),
+                                               modify, error))
     {
       stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_ID);
 

@@ -191,7 +191,7 @@ sub vectors_stroke_get_length {
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, FALSE, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, 0, error);
   
   if (stroke)
     length = gimp_stroke_get_length (stroke, precision);
@@ -240,7 +240,7 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, FALSE, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, 0, error);
   
   if (stroke)
     {
@@ -277,7 +277,8 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
+                                                    GIMP_PDB_ITEM_CONTENT, error);
   
   if (stroke)
     {
@@ -314,7 +315,8 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
+                                                    GIMP_PDB_ITEM_CONTENT, error);
   
   if (stroke)
     {
@@ -356,7 +358,8 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
+                                                    GIMP_PDB_ITEM_CONTENT, error);
   
   if (stroke)
     {
@@ -397,7 +400,8 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
+                                                    GIMP_PDB_ITEM_CONTENT, error);
   
   if (stroke)
     {
@@ -439,7 +443,8 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
+                                                    GIMP_PDB_ITEM_CONTENT, error);
   
   if (stroke)
     {
@@ -480,7 +485,8 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
+                                                    GIMP_PDB_ITEM_CONTENT, error);
   
   if (stroke)
     {
@@ -526,7 +532,8 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
+                                                    GIMP_PDB_ITEM_CONTENT, error);
   
   if (stroke)
     {
@@ -576,7 +583,7 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, FALSE, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, 0, error);
   
   if (GIMP_IS_BEZIER_STROKE (stroke))
     {
@@ -642,7 +649,7 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, FALSE, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, 0, error);
   
   if (stroke)
     {
@@ -781,7 +788,8 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  if (gimp_pdb_item_is_writable (GIMP_ITEM (vectors), error) &&
+  if (gimp_pdb_item_is_modifyable (GIMP_ITEM (vectors),
+                                   GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (vectors), error))
     {
       GimpStroke *stroke;
@@ -832,7 +840,8 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
+                                                    GIMP_PDB_ITEM_CONTENT, error);
 
   if (stroke)
     {
@@ -884,7 +893,8 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
+                                                    GIMP_PDB_ITEM_CONTENT, error);
 
   if (stroke)
     {
@@ -942,7 +952,8 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
+                                                    GIMP_PDB_ITEM_CONTENT, error);
 
   if (stroke)
     {
@@ -1006,7 +1017,8 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  if (gimp_pdb_item_is_writable (GIMP_ITEM (vectors), error) &&
+  if (gimp_pdb_item_is_modifyable (GIMP_ITEM (vectors),
+                                   GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (vectors), error))
     {
       GimpStroke *stroke;
@@ -1056,7 +1068,7 @@ sub vectors_to_selection {
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), NULL, FALSE, error))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), NULL, 0, error))
     gimp_item_to_selection (GIMP_ITEM (vectors),
                             operation,
                             antialias,

@@ -138,7 +138,8 @@ airbrush_invoker (GimpProcedure         *procedure,
                                             "gimp-airbrush");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           options = gimp_config_duplicate (GIMP_CONFIG (options));
@@ -184,7 +185,8 @@ airbrush_default_invoker (GimpProcedure         *procedure,
                                             "gimp-airbrush");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           options = gimp_config_duplicate (GIMP_CONFIG (options));
@@ -234,7 +236,8 @@ clone_invoker (GimpProcedure         *procedure,
                                             "gimp-clone");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           options = gimp_config_duplicate (GIMP_CONFIG (options));
@@ -283,7 +286,8 @@ clone_default_invoker (GimpProcedure         *procedure,
                                             "gimp-clone");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           options = gimp_config_duplicate (GIMP_CONFIG (options));
@@ -329,7 +333,8 @@ convolve_invoker (GimpProcedure         *procedure,
                                             "gimp-convolve");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           options = gimp_config_duplicate (GIMP_CONFIG (options));
@@ -376,7 +381,8 @@ convolve_default_invoker (GimpProcedure         *procedure,
                                             "gimp-convolve");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           options = gimp_config_duplicate (GIMP_CONFIG (options));
@@ -424,7 +430,8 @@ dodgeburn_invoker (GimpProcedure         *procedure,
                                             "gimp-dodge-burn");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           options = gimp_config_duplicate (GIMP_CONFIG (options));
@@ -472,7 +479,8 @@ dodgeburn_default_invoker (GimpProcedure         *procedure,
                                             "gimp-dodge-burn");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           options = gimp_config_duplicate (GIMP_CONFIG (options));
@@ -518,7 +526,8 @@ eraser_invoker (GimpProcedure         *procedure,
                                             "gimp-eraser");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           options = gimp_config_duplicate (GIMP_CONFIG (options));
@@ -565,7 +574,8 @@ eraser_default_invoker (GimpProcedure         *procedure,
                                             "gimp-eraser");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           options = gimp_config_duplicate (GIMP_CONFIG (options));
@@ -613,7 +623,8 @@ heal_invoker (GimpProcedure         *procedure,
                                             "gimp-heal");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           options = gimp_config_duplicate (GIMP_CONFIG (options));
@@ -658,7 +669,8 @@ heal_default_invoker (GimpProcedure         *procedure,
                                             "gimp-heal");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           options = gimp_config_duplicate (GIMP_CONFIG (options));
@@ -706,7 +718,8 @@ paintbrush_invoker (GimpProcedure         *procedure,
                                             "gimp-paintbrush");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpDynamics *pdb_dynamics  = GIMP_DYNAMICS (gimp_dynamics_new (context, "pdb"));
@@ -784,7 +797,8 @@ paintbrush_default_invoker (GimpProcedure         *procedure,
                                             "gimp-paintbrush");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           options = gimp_config_duplicate (GIMP_CONFIG (options));
@@ -826,7 +840,8 @@ pencil_invoker (GimpProcedure         *procedure,
                                             "gimp-pencil");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           options = gimp_config_duplicate (GIMP_CONFIG (options));
@@ -870,7 +885,8 @@ smudge_invoker (GimpProcedure         *procedure,
                                             "gimp-smudge");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           options = gimp_config_duplicate (GIMP_CONFIG (options));
@@ -916,7 +932,8 @@ smudge_default_invoker (GimpProcedure         *procedure,
                                             "gimp-smudge");
 
       if (options &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           options = gimp_config_duplicate (GIMP_CONFIG (options));

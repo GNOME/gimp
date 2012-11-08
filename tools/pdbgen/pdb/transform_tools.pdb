@@ -37,7 +37,8 @@ sub flip {
 {
   gint x, y, width, height;
 
-  success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
+  success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                       GIMP_PDB_ITEM_CONTENT, error);
 
   if (success &&
       gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
@@ -111,7 +112,8 @@ sub perspective {
 {
   gint x, y, width, height;
 
-  success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
+  success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                       GIMP_PDB_ITEM_CONTENT, error);
 
   if (success &&
       gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
@@ -188,7 +190,8 @@ sub rotate {
 {
   gint x, y, width, height;
 
-  success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
+  success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                       GIMP_PDB_ITEM_CONTENT, error);
 
   if (success &&
       gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
@@ -274,7 +277,8 @@ sub scale {
 {
   gint x, y, width, height;
 
-  success = (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+  success = (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                        GIMP_PDB_ITEM_CONTENT, error) &&
              x0 < x1 && y0 < y1);
 
   if (success &&
@@ -354,7 +358,8 @@ sub shear {
 {
   gint x, y, width, height;
 
-  success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
+  success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                       GIMP_PDB_ITEM_CONTENT, error);
 
   if (success &&
       gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
@@ -442,7 +447,8 @@ sub transform_2d {
 {
   gint x, y, width, height;
 
-  success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
+  success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                       GIMP_PDB_ITEM_CONTENT, error);
 
   if (success &&
       gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))

@@ -54,11 +54,11 @@ GimpPaintInfo * gimp_pdb_get_paint_info         (Gimp               *gimp,
 
 gboolean        gimp_pdb_item_is_attached       (GimpItem           *item,
                                                  GimpImage          *image,
-                                                 gboolean            writable,
+                                                 GimpPDBItemModify   modify,
                                                  GError            **error);
 gboolean        gimp_pdb_item_is_in_tree        (GimpItem           *item,
                                                  GimpImage          *image,
-                                                 gboolean            writable,
+                                                 GimpPDBItemModify   modify,
                                                  GError            **error);
 gboolean        gimp_pdb_item_is_in_same_tree   (GimpItem           *item,
                                                  GimpItem           *item2,
@@ -70,7 +70,8 @@ gboolean        gimp_pdb_item_is_not_ancestor   (GimpItem           *item,
 gboolean        gimp_pdb_item_is_floating       (GimpItem           *item,
                                                  GimpImage          *dest_image,
                                                  GError            **error);
-gboolean        gimp_pdb_item_is_writable       (GimpItem           *item,
+gboolean        gimp_pdb_item_is_modifyable     (GimpItem           *item,
+                                                 GimpPDBItemModify   modify,
                                                  GError            **error);
 gboolean        gimp_pdb_item_is_group          (GimpItem           *item,
                                                  GError            **error);
@@ -78,7 +79,7 @@ gboolean        gimp_pdb_item_is_not_group      (GimpItem           *item,
                                                  GError            **error);
 
 gboolean        gimp_pdb_layer_is_text_layer    (GimpLayer          *layer,
-                                                 gboolean            writable,
+                                                 GimpPDBItemModify   modify,
                                                  GError            **error);
 
 gboolean        gimp_pdb_image_is_base_type     (GimpImage          *image,
@@ -97,7 +98,7 @@ gboolean        gimp_pdb_image_is_not_precision (GimpImage          *image,
 
 GimpStroke    * gimp_pdb_get_vectors_stroke     (GimpVectors        *vectors,
                                                  gint                stroke_ID,
-                                                 gboolean            writable,
+                                                 GimpPDBItemModify   modify,
                                                  GError            **error);
 
 
