@@ -57,17 +57,17 @@ enum
 };
 
 
-static void      gimp_text_style_editor_constructed       (GObject               *object);
-static void      gimp_text_style_editor_dispose           (GObject               *object);
-static void      gimp_text_style_editor_finalize          (GObject               *object);
-static void      gimp_text_style_editor_set_property      (GObject               *object,
-                                                           guint                  property_id,
-                                                           const GValue          *value,
-                                                           GParamSpec            *pspec);
-static void      gimp_text_style_editor_get_property      (GObject               *object,
-                                                           guint                  property_id,
-                                                           GValue                *value,
-                                                           GParamSpec            *pspec);
+static void      gimp_text_style_editor_constructed       (GObject             *object);
+static void      gimp_text_style_editor_dispose           (GObject             *object);
+static void      gimp_text_style_editor_finalize          (GObject             *object);
+static void      gimp_text_style_editor_set_property      (GObject             *object,
+                                                           guint                property_id,
+                                                           const GValue        *value,
+                                                           GParamSpec          *pspec);
+static void      gimp_text_style_editor_get_property      (GObject             *object,
+                                                           guint                property_id,
+                                                           GValue              *value,
+                                                           GParamSpec          *pspec);
 
 static GtkWidget * gimp_text_style_editor_create_toggle   (GimpTextStyleEditor *editor,
                                                            GtkTextTag          *tag,
@@ -559,6 +559,54 @@ gimp_text_style_editor_list_tags (GimpTextStyleEditor  *editor,
         }
     }
 
+  {
+    GtkTextTag  *tag;
+    GList       *list;
+    gdouble      pixels;
+    gdouble      points;
+
+    for (list = editor->buffer->size_tags; list; list = g_list_next (list))
+      *remove_tags = g_list_prepend (*remove_tags, list->data);
+
+    pixels = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (editor->size_entry), 0);
+    points = gimp_units_to_points (pixels,
+                                   GIMP_UNIT_PIXEL,
+                                   editor->resolution_y);
+    tag = gimp_text_buffer_get_size_tag (editor->buffer,
+                                         PANGO_SCALE * points);
+
+    tags = g_list_prepend (tags, tag);
+  }
+
+  {
+    GtkTextTag  *tag;
+    GList       *list;
+    const gchar *font_name;
+
+    for (list = editor->buffer->font_tags; list; list = g_list_next (list))
+      *remove_tags = g_list_prepend (*remove_tags, list->data);
+
+    font_name = gimp_context_get_font_name (editor->context);
+    tag = gimp_text_buffer_get_font_tag (editor->buffer, font_name);
+
+    tags = g_list_prepend (tags, tag);
+  }
+
+  {
+    GtkTextTag *tag;
+    GList      *list;
+    GimpRGB     color;
+
+    for (list = editor->buffer->color_tags; list; list = g_list_next (list))
+      *remove_tags = g_list_prepend (*remove_tags, list->data);
+
+    gimp_color_button_get_color (GIMP_COLOR_BUTTON (editor->color_button),
+                                 &color);
+    tag = gimp_text_buffer_get_color_tag (editor->buffer, &color);
+
+    tags = g_list_prepend (tags, tag);
+  }
+
   *remove_tags = g_list_reverse (*remove_tags);
 
   return g_list_reverse (tags);
@@ -623,15 +671,25 @@ gimp_text_style_editor_font_changed (GimpContext         *context,
                                      GimpTextStyleEditor *editor)
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (editor->buffer);
-  GtkTextIter    start, end;
+  GList         *insert_tags;
+  GList         *remove_tags;
 
-  if (! gtk_text_buffer_get_selection_bounds (buffer, &start, &end))
+  if (gtk_text_buffer_get_has_selection (buffer))
     {
-      return;
+      GtkTextIter start, end;
+
+      gtk_text_buffer_get_selection_bounds (buffer, &start, &end);
+
+      gtk_text_buffer_begin_user_action (buffer);
+
+      gimp_text_buffer_set_font (editor->buffer, &start, &end,
+                                 gimp_context_get_font_name (context));
+
+      gtk_text_buffer_end_user_action (buffer);
     }
 
-  gimp_text_buffer_set_font (editor->buffer, &start, &end,
-                             gimp_context_get_font_name (context));
+  insert_tags = gimp_text_style_editor_list_tags (editor, &remove_tags);
+  gimp_text_buffer_set_insert_tags (editor->buffer, insert_tags, remove_tags);
 }
 
 static void
@@ -675,16 +733,26 @@ gimp_text_style_editor_color_changed (GimpColorButton     *button,
                                       GimpTextStyleEditor *editor)
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (editor->buffer);
-  GtkTextIter    start, end;
-  GimpRGB        color;
+  GList         *insert_tags;
+  GList         *remove_tags;
 
-  if (! gtk_text_buffer_get_selection_bounds (buffer, &start, &end))
+  if (gtk_text_buffer_get_has_selection (buffer))
     {
-      return;
+      GtkTextIter start, end;
+      GimpRGB     color;
+
+      gtk_text_buffer_get_selection_bounds (buffer, &start, &end);
+
+      gtk_text_buffer_begin_user_action (buffer);
+
+      gimp_color_button_get_color (button, &color);
+      gimp_text_buffer_set_color (editor->buffer, &start, &end, &color);
+
+      gtk_text_buffer_end_user_action (buffer);
     }
 
-  gimp_color_button_get_color (button, &color);
-  gimp_text_buffer_set_color (editor->buffer, &start, &end, &color);
+  insert_tags = gimp_text_style_editor_list_tags (editor, &remove_tags);
+  gimp_text_buffer_set_insert_tags (editor->buffer, insert_tags, remove_tags);
 }
 
 static void
@@ -779,20 +847,30 @@ gimp_text_style_editor_size_changed (GimpSizeEntry       *entry,
                                      GimpTextStyleEditor *editor)
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (editor->buffer);
-  GtkTextIter    start, end;
-  gdouble        points;
+  GList         *insert_tags;
+  GList         *remove_tags;
 
-  if (! gtk_text_buffer_get_selection_bounds (buffer, &start, &end))
+  if (gtk_text_buffer_get_has_selection (buffer))
     {
-      return;
+      GtkTextIter start, end;
+      gdouble     points;
+
+      gtk_text_buffer_get_selection_bounds (buffer, &start, &end);
+
+      gtk_text_buffer_begin_user_action (buffer);
+
+      points = gimp_units_to_points (gimp_size_entry_get_refval (entry, 0),
+                                     GIMP_UNIT_PIXEL,
+                                     editor->resolution_y);
+
+      gimp_text_buffer_set_size (editor->buffer, &start, &end,
+                                 PANGO_SCALE * points);
+
+      gtk_text_buffer_end_user_action (buffer);
     }
 
-  points = gimp_units_to_points (gimp_size_entry_get_refval (entry, 0),
-                                 GIMP_UNIT_PIXEL,
-                                 editor->resolution_y);
-
-  gimp_text_buffer_set_size (editor->buffer, &start, &end,
-                             PANGO_SCALE * points);
+  insert_tags = gimp_text_style_editor_list_tags (editor, &remove_tags);
+  gimp_text_buffer_set_insert_tags (editor->buffer, insert_tags, remove_tags);
 }
 
 static void
