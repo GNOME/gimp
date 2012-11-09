@@ -357,7 +357,7 @@ gimp_text_buffer_get_iter_size (GimpTextBuffer    *buffer,
   return NULL;
 }
 
-static GtkTextTag *
+GtkTextTag *
 gimp_text_buffer_get_size_tag (GimpTextBuffer *buffer,
                                gint            size)
 {
@@ -837,7 +837,7 @@ gimp_text_buffer_get_iter_font (GimpTextBuffer     *buffer,
   return NULL;
 }
 
-static GtkTextTag *
+GtkTextTag *
 gimp_text_buffer_get_font_tag (GimpTextBuffer *buffer,
                                const gchar    *font)
 {
@@ -931,7 +931,7 @@ gimp_text_buffer_get_iter_color (GimpTextBuffer    *buffer,
   return NULL;
 }
 
-static GtkTextTag *
+GtkTextTag *
 gimp_text_buffer_get_color_tag (GimpTextBuffer *buffer,
                                 const GimpRGB  *color)
 {

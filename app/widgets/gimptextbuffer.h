@@ -76,6 +76,8 @@ gboolean         gimp_text_buffer_has_markup        (GimpTextBuffer    *buffer);
 GtkTextTag     * gimp_text_buffer_get_iter_size     (GimpTextBuffer    *buffer,
                                                      const GtkTextIter *iter,
                                                      gint              *size);
+GtkTextTag     * gimp_text_buffer_get_size_tag      (GimpTextBuffer    *buffer,
+                                                     gint               size);
 void             gimp_text_buffer_set_size          (GimpTextBuffer    *buffer,
                                                      const GtkTextIter *start,
                                                      const GtkTextIter *end,
@@ -112,6 +114,8 @@ void             gimp_text_buffer_change_kerning    (GimpTextBuffer    *buffer,
 GtkTextTag     * gimp_text_buffer_get_iter_font     (GimpTextBuffer    *buffer,
                                                      const GtkTextIter *iter,
                                                      gchar            **font);
+GtkTextTag     * gimp_text_buffer_get_font_tag      (GimpTextBuffer    *buffer,
+                                                     const gchar       *font);
 void             gimp_text_buffer_set_font          (GimpTextBuffer    *buffer,
                                                      const GtkTextIter *start,
                                                      const GtkTextIter *end,
@@ -120,6 +124,8 @@ void             gimp_text_buffer_set_font          (GimpTextBuffer    *buffer,
 GtkTextTag     * gimp_text_buffer_get_iter_color    (GimpTextBuffer    *buffer,
                                                      const GtkTextIter *iter,
                                                      GimpRGB           *color);
+GtkTextTag     * gimp_text_buffer_get_color_tag     (GimpTextBuffer    *buffer,
+                                                     const GimpRGB     *color);
 void             gimp_text_buffer_set_color         (GimpTextBuffer    *buffer,
                                                      const GtkTextIter *start,
                                                      const GtkTextIter *end,
