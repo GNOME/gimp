@@ -69,6 +69,8 @@ void   vectors_linked_cmd_callback               (GtkAction   *action,
                                                   gpointer     data);
 void   vectors_lock_content_cmd_callback         (GtkAction   *action,
                                                   gpointer     data);
+void   vectors_lock_position_cmd_callback        (GtkAction   *action,
+                                                  gpointer     data);
 
 
 #endif /* __VECTORS_COMMANDS_H__ */

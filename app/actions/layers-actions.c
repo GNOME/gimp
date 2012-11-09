@@ -535,6 +535,7 @@ layers_actions_update (GimpActionGroup *group,
   gboolean       can_lock_alpha = FALSE;
   gboolean       text_layer     = FALSE;
   gboolean       writable       = FALSE;
+  gboolean       movable        = FALSE;
   gboolean       children       = FALSE;
   GList         *next           = NULL;
   GList         *next_visible   = NULL;
@@ -559,6 +560,7 @@ layers_actions_update (GimpActionGroup *group,
           can_lock_alpha = gimp_layer_can_lock_alpha (layer);
           alpha          = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
           writable       = ! gimp_item_is_content_locked (GIMP_ITEM (layer));
+          movable        = ! gimp_item_is_position_locked (GIMP_ITEM (layer));
 
           if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
             children = TRUE;
@@ -641,19 +643,19 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-merge-layers",     layer && !fs && !ac);
   SET_SENSITIVE ("layers-flatten-image",    layer && !fs && !ac);
 
-  SET_VISIBLE   ("layers-text-discard",             text_layer && !ac);
-  SET_VISIBLE   ("layers-text-to-vectors",          text_layer && !ac);
-  SET_VISIBLE   ("layers-text-along-vectors",       text_layer && !ac);
+  SET_VISIBLE   ("layers-text-discard",       text_layer && !ac);
+  SET_VISIBLE   ("layers-text-to-vectors",    text_layer && !ac);
+  SET_VISIBLE   ("layers-text-along-vectors", text_layer && !ac);
 
-  SET_SENSITIVE ("layers-resize",          writable && !ac);
-  SET_SENSITIVE ("layers-resize-to-image", writable && !ac);
-  SET_SENSITIVE ("layers-scale",           writable && !ac);
+  SET_SENSITIVE ("layers-resize",          writable && movable && !ac);
+  SET_SENSITIVE ("layers-resize-to-image", writable && movable && !ac);
+  SET_SENSITIVE ("layers-scale",           writable && movable && !ac);
 
-  SET_SENSITIVE ("layers-crop-to-selection", writable && sel);
-  SET_SENSITIVE ("layers-crop-to-content",   writable);
+  SET_SENSITIVE ("layers-crop-to-selection", writable && movable && sel);
+  SET_SENSITIVE ("layers-crop-to-content",   writable && movable);
 
-  SET_SENSITIVE ("layers-alpha-add",       writable && !children && !fs && !alpha);
-  SET_SENSITIVE ("layers-alpha-remove",    writable && !children && !fs &&  alpha);
+  SET_SENSITIVE ("layers-alpha-add",    writable && !children && !fs && !alpha);
+  SET_SENSITIVE ("layers-alpha-remove", writable && !children && !fs &&  alpha);
 
   SET_SENSITIVE ("layers-lock-alpha", can_lock_alpha);
   SET_ACTIVE    ("layers-lock-alpha", lock_alpha);

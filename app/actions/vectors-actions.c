@@ -159,7 +159,13 @@ static const GimpToggleActionEntry vectors_toggle_actions[] =
     NC_("vectors-action", "L_ock strokes"), NULL, NULL,
     G_CALLBACK (vectors_lock_content_cmd_callback),
     FALSE,
-    NULL /* GIMP_HELP_PATH_LOCK_STROKES */ }
+    GIMP_HELP_PATH_LOCK_STROKES },
+
+  { "vectors-lock-position", GIMP_STOCK_TOOL_MOVE,
+    NC_("vectors-action", "L_ock position"), NULL, NULL,
+    G_CALLBACK (vectors_lock_position_cmd_callback),
+    FALSE,
+    GIMP_HELP_PATH_LOCK_POSITION }
 };
 
 static const GimpEnumActionEntry vectors_to_selection_actions[] =
@@ -243,19 +249,21 @@ void
 vectors_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
-  GimpImage    *image       = action_data_get_image (data);
-  GimpVectors  *vectors     = NULL;
-  GimpDrawable *drawable    = NULL;
-  gint          n_vectors   = 0;
-  gboolean      mask_empty  = TRUE;
-  gboolean      visible     = FALSE;
-  gboolean      linked      = FALSE;
-  gboolean      locked      = FALSE;
-  gboolean      can_lock    = FALSE;
-  gboolean      dr_writable = FALSE;
-  gboolean      dr_children = FALSE;
-  GList        *next        = NULL;
-  GList        *prev        = NULL;
+  GimpImage    *image        = action_data_get_image (data);
+  GimpVectors  *vectors      = NULL;
+  GimpDrawable *drawable     = NULL;
+  gint          n_vectors    = 0;
+  gboolean      mask_empty   = TRUE;
+  gboolean      visible      = FALSE;
+  gboolean      linked       = FALSE;
+  gboolean      locked       = FALSE;
+  gboolean      can_lock     = FALSE;
+  gboolean      locked_pos   = FALSE;
+  gboolean      can_lock_pos = FALSE;
+  gboolean      dr_writable  = FALSE;
+  gboolean      dr_children  = FALSE;
+  GList        *next         = NULL;
+  GList        *prev         = NULL;
 
   if (image)
     {
@@ -270,11 +278,12 @@ vectors_actions_update (GimpActionGroup *group,
           GList    *vectors_list;
           GList    *list;
 
-          visible  = gimp_item_get_visible (item);
-          linked   = gimp_item_get_linked (item);
-          locked   = gimp_item_get_lock_content (item);
-          can_lock = gimp_item_can_lock_content (item);
-
+          visible      = gimp_item_get_visible (item);
+          linked       = gimp_item_get_linked (item);
+          locked       = gimp_item_get_lock_content (item);
+          can_lock     = gimp_item_can_lock_content (item);
+          locked_pos   = gimp_item_get_lock_position (item);
+          can_lock_pos = gimp_item_can_lock_position (item);
           vectors_list = gimp_item_get_container_iter (item);
 
           list = g_list_find (vectors_list, vectors);
@@ -323,13 +332,15 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-export", vectors);
   SET_SENSITIVE ("vectors-import", image);
 
-  SET_SENSITIVE ("vectors-visible",      vectors);
-  SET_SENSITIVE ("vectors-linked",       vectors);
-  SET_SENSITIVE ("vectors-lock-content", can_lock);
+  SET_SENSITIVE ("vectors-visible",       vectors);
+  SET_SENSITIVE ("vectors-linked",        vectors);
+  SET_SENSITIVE ("vectors-lock-content",  can_lock);
+  SET_SENSITIVE ("vectors-lock-position", can_lock_pos);
 
-  SET_ACTIVE ("vectors-visible",      visible);
-  SET_ACTIVE ("vectors-linked",       linked);
-  SET_ACTIVE ("vectors-lock-content", locked);
+  SET_ACTIVE ("vectors-visible",       visible);
+  SET_ACTIVE ("vectors-linked",        linked);
+  SET_ACTIVE ("vectors-lock-content",  locked);
+  SET_ACTIVE ("vectors-lock-position", locked_pos);
 
   SET_SENSITIVE ("vectors-selection-to-vectors",          image && !mask_empty);
   SET_SENSITIVE ("vectors-selection-to-vectors-short",    image && !mask_empty);

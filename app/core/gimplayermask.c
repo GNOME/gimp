@@ -37,24 +37,25 @@
 #include "gimp-intl.h"
 
 
-static gboolean        gimp_layer_mask_is_attached       (const GimpItem    *item);
-static gboolean        gimp_layer_mask_is_content_locked (const GimpItem    *item);
-static GimpItemTree  * gimp_layer_mask_get_tree          (GimpItem          *item);
-static GimpItem      * gimp_layer_mask_duplicate         (GimpItem          *item,
-                                                          GType              new_type);
-static gboolean        gimp_layer_mask_rename            (GimpItem          *item,
-                                                          const gchar       *new_name,
-                                                          const gchar       *undo_desc,
-                                                          GError           **error);
+static gboolean        gimp_layer_mask_is_attached        (const GimpItem    *item);
+static gboolean        gimp_layer_mask_is_content_locked  (const GimpItem    *item);
+static gboolean        gimp_layer_mask_is_position_locked (const GimpItem    *item);
+static GimpItemTree  * gimp_layer_mask_get_tree           (GimpItem          *item);
+static GimpItem      * gimp_layer_mask_duplicate          (GimpItem          *item,
+                                                           GType              new_type);
+static gboolean        gimp_layer_mask_rename             (GimpItem          *item,
+                                                           const gchar       *new_name,
+                                                           const gchar       *undo_desc,
+                                                           GError           **error);
 
-static void            gimp_layer_mask_convert_type      (GimpDrawable      *drawable,
-                                                          GimpImage         *dest_image,
-                                                          const Babl        *new_format,
-                                                          GimpImageBaseType  new_base_type,
-                                                          GimpPrecision      new_precision,
-                                                          gint               layer_dither_type,
-                                                          gint               mask_dither_type,
-                                                          gboolean           push_undo);
+static void            gimp_layer_mask_convert_type       (GimpDrawable      *drawable,
+                                                           GimpImage         *dest_image,
+                                                           const Babl        *new_format,
+                                                           GimpImageBaseType  new_base_type,
+                                                           GimpPrecision      new_precision,
+                                                           gint               layer_dither_type,
+                                                           gint               mask_dither_type,
+                                                           gboolean           push_undo);
 
 
 G_DEFINE_TYPE (GimpLayerMask, gimp_layer_mask, GIMP_TYPE_CHANNEL)
@@ -71,13 +72,14 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 
   viewable_class->default_stock_id = "gimp-layer-mask";
 
-  item_class->is_attached       = gimp_layer_mask_is_attached;
-  item_class->is_content_locked = gimp_layer_mask_is_content_locked;
-  item_class->get_tree          = gimp_layer_mask_get_tree;
-  item_class->duplicate         = gimp_layer_mask_duplicate;
-  item_class->rename            = gimp_layer_mask_rename;
-  item_class->translate_desc    = C_("undo-type", "Move Layer Mask");
-  item_class->to_selection_desc = C_("undo-type", "Layer Mask to Selection");
+  item_class->is_attached        = gimp_layer_mask_is_attached;
+  item_class->is_content_locked  = gimp_layer_mask_is_content_locked;
+  item_class->is_position_locked = gimp_layer_mask_is_position_locked;
+  item_class->get_tree           = gimp_layer_mask_get_tree;
+  item_class->duplicate          = gimp_layer_mask_duplicate;
+  item_class->rename             = gimp_layer_mask_rename;
+  item_class->translate_desc     = C_("undo-type", "Move Layer Mask");
+  item_class->to_selection_desc  = C_("undo-type", "Layer Mask to Selection");
 
   drawable_class->convert_type  = gimp_layer_mask_convert_type;
 }
@@ -96,6 +98,18 @@ gimp_layer_mask_is_content_locked (const GimpItem *item)
 
   if (layer)
     return gimp_item_is_content_locked (GIMP_ITEM (layer));
+
+  return FALSE;
+}
+
+static gboolean
+gimp_layer_mask_is_position_locked (const GimpItem *item)
+{
+  GimpLayerMask *mask  = GIMP_LAYER_MASK (item);
+  GimpLayer     *layer = gimp_layer_mask_get_layer (mask);
+
+  if (layer)
+    return gimp_item_is_position_locked (GIMP_ITEM (layer));
 
   return FALSE;
 }

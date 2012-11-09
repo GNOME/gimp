@@ -74,6 +74,7 @@ struct _GimpItemTreeViewPriv
   GtkWidget       *lock_box;
 
   GtkWidget       *lock_content_toggle;
+  GtkWidget       *lock_position_toggle;
 
   GtkWidget       *edit_button;
   GtkWidget       *new_button;
@@ -91,6 +92,7 @@ struct _GimpItemTreeViewPriv
   GimpTreeHandler *visible_changed_handler;
   GimpTreeHandler *linked_changed_handler;
   GimpTreeHandler *lock_content_changed_handler;
+  GimpTreeHandler *lock_position_changed_handler;
 
   gboolean         inserting_item; /* EEK */
 };
@@ -169,6 +171,8 @@ static void   gimp_item_tree_view_linked_changed       (GimpItem          *item,
                                                         GimpItemTreeView  *view);
 static void   gimp_item_tree_view_lock_content_changed (GimpItem          *item,
                                                         GimpItemTreeView  *view);
+static void   gimp_item_tree_view_lock_position_changed(GimpItem          *item,
+                                                        GimpItemTreeView  *view);
 
 static void   gimp_item_tree_view_eye_clicked       (GtkCellRendererToggle *toggle,
                                                      gchar             *path,
@@ -181,7 +185,9 @@ static void   gimp_item_tree_view_chain_clicked     (GtkCellRendererToggle *togg
 static void   gimp_item_tree_view_lock_content_toggled
                                                     (GtkWidget         *widget,
                                                      GimpItemTreeView  *view);
-
+static void   gimp_item_tree_view_lock_position_toggled
+                                                    (GtkWidget         *widget,
+                                                     GimpItemTreeView  *view);
 static void   gimp_item_tree_view_update_options    (GimpItemTreeView  *view,
                                                      GimpItem          *item);
 
@@ -270,6 +276,10 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->lock_content_stock_id   = NULL;
   klass->lock_content_tooltip    = NULL;
   klass->lock_content_help_id    = NULL;
+
+  klass->lock_position_stock_id   = NULL;
+  klass->lock_position_tooltip    = NULL;
+  klass->lock_position_help_id    = NULL;
 
   g_type_class_add_private (klass, sizeof (GimpItemTreeViewPriv));
 }
@@ -451,11 +461,9 @@ gimp_item_tree_view_constructed (GObject *object)
                                   GTK_BUTTON (item_view->priv->delete_button),
                                   item_view_class->item_type);
 
-
-  /*  Lock content toggle  */
-
   hbox = gimp_item_tree_view_get_lock_box (item_view);
 
+  /*  Lock content toggle  */
   item_view->priv->lock_content_toggle = gtk_toggle_button_new ();
   gtk_box_pack_start (GTK_BOX (hbox), item_view->priv->lock_content_toggle,
                       FALSE, FALSE, 0);
@@ -478,6 +486,28 @@ gimp_item_tree_view_constructed (GObject *object)
   image = gtk_image_new_from_stock (item_view_class->lock_content_stock_id,
                                     icon_size);
   gtk_container_add (GTK_CONTAINER (item_view->priv->lock_content_toggle),
+                     image);
+  gtk_widget_show (image);
+
+  /*  Lock position toggle  */
+  item_view->priv->lock_position_toggle = gtk_toggle_button_new ();
+  gtk_box_pack_start (GTK_BOX (hbox), item_view->priv->lock_position_toggle,
+                      FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (hbox),
+                         item_view->priv->lock_position_toggle, 1);
+  gtk_widget_show (item_view->priv->lock_position_toggle);
+
+  g_signal_connect (item_view->priv->lock_position_toggle, "toggled",
+                    G_CALLBACK (gimp_item_tree_view_lock_position_toggled),
+                    item_view);
+
+  gimp_help_set_help_data (item_view->priv->lock_position_toggle,
+                           item_view_class->lock_position_tooltip,
+                           item_view_class->lock_position_help_id);
+
+  image = gtk_image_new_from_stock (item_view_class->lock_position_stock_id,
+                                    icon_size);
+  gtk_container_add (GTK_CONTAINER (item_view->priv->lock_position_toggle),
                      image);
   gtk_widget_show (image);
 }
@@ -862,6 +892,9 @@ gimp_item_tree_view_set_container (GimpContainerView *view,
 
       gimp_tree_handler_disconnect (item_view->priv->lock_content_changed_handler);
       item_view->priv->lock_content_changed_handler = NULL;
+
+      gimp_tree_handler_disconnect (item_view->priv->lock_position_changed_handler);
+      item_view->priv->lock_position_changed_handler = NULL;
     }
 
   parent_view_iface->set_container (view, container);
@@ -881,6 +914,11 @@ gimp_item_tree_view_set_container (GimpContainerView *view,
       item_view->priv->lock_content_changed_handler =
         gimp_tree_handler_connect (container, "lock-content-changed",
                                    G_CALLBACK (gimp_item_tree_view_lock_content_changed),
+                                   view);
+
+      item_view->priv->lock_position_changed_handler =
+        gimp_tree_handler_connect (container, "lock-position-changed",
+                                   G_CALLBACK (gimp_item_tree_view_lock_position_changed),
                                    view);
     }
 }
@@ -1393,6 +1431,61 @@ gimp_item_tree_view_lock_content_toggled (GtkWidget         *widget,
     }
 }
 
+static void
+gimp_item_tree_view_lock_position_changed (GimpItem         *item,
+                                           GimpItemTreeView *view)
+{
+  GimpImage *image = view->priv->image;
+  GimpItem  *active_item;
+
+  active_item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (image);
+
+  if (active_item == item)
+    gimp_item_tree_view_update_options (view, item);
+}
+
+static void
+gimp_item_tree_view_lock_position_toggled (GtkWidget         *widget,
+                                           GimpItemTreeView  *view)
+{
+  GimpImage *image = view->priv->image;
+  GimpItem  *item;
+
+  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (image);
+
+  if (item)
+    {
+      gboolean lock_position;
+
+      lock_position = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
+
+      if (gimp_item_get_lock_position (item) != lock_position)
+        {
+          GimpUndo *undo;
+          gboolean  push_undo = TRUE;
+
+          /*  compress lock position undos  */
+          undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
+                                               GIMP_UNDO_ITEM_LOCK_POSITION);
+
+          if (undo && GIMP_ITEM_UNDO (undo)->item == item)
+            push_undo = FALSE;
+
+          g_signal_handlers_block_by_func (item,
+                                           gimp_item_tree_view_lock_position_changed,
+                                           view);
+
+          gimp_item_set_lock_position (item, lock_position, push_undo);
+
+          g_signal_handlers_unblock_by_func (item,
+                                             gimp_item_tree_view_lock_position_changed,
+                                             view);
+
+          gimp_image_flush (image);
+        }
+    }
+}
+
 static gboolean
 gimp_item_tree_view_item_pre_clicked (GimpCellRendererViewable *cell,
                                       const gchar              *path_str,
@@ -1407,7 +1500,7 @@ gimp_item_tree_view_item_pre_clicked (GimpCellRendererViewable *cell,
   path = gtk_tree_path_new_from_string (path_str);
 
   if (gtk_tree_model_get_iter (tree_view->model, &iter, path) &&
-      state & GDK_MOD1_MASK)
+      (state & GDK_MOD1_MASK))
     {
       GimpImage        *image    = gimp_item_tree_view_get_image (item_view);
       GimpViewRenderer *renderer = NULL;
@@ -1456,8 +1549,26 @@ gimp_item_tree_view_update_options (GimpItemTreeView *view,
                                          view);
     }
 
+  if (gimp_item_get_lock_position (item) !=
+      gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (view->priv->lock_position_toggle)))
+    {
+      g_signal_handlers_block_by_func (view->priv->lock_position_toggle,
+                                       gimp_item_tree_view_lock_position_toggled,
+                                       view);
+
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (view->priv->lock_position_toggle),
+                                    gimp_item_get_lock_position (item));
+
+      g_signal_handlers_unblock_by_func (view->priv->lock_position_toggle,
+                                         gimp_item_tree_view_lock_position_toggled,
+                                         view);
+    }
+
   gtk_widget_set_sensitive (view->priv->lock_content_toggle,
                             gimp_item_can_lock_content (item));
+
+  gtk_widget_set_sensitive (view->priv->lock_position_toggle,
+                            gimp_item_can_lock_position (item));
 }
 
 

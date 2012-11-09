@@ -227,6 +227,36 @@ drawable_lock_content_cmd_callback (GtkAction *action,
     }
 }
 
+void
+drawable_lock_position_cmd_callback (GtkAction *action,
+                                    gpointer   data)
+{
+  GimpImage    *image;
+  GimpDrawable *drawable;
+  gboolean      locked;
+  return_if_no_drawable (image, drawable, data);
+
+  locked = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  if (GIMP_IS_LAYER_MASK (drawable))
+    drawable =
+      GIMP_DRAWABLE (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)));
+
+  if (locked != gimp_item_get_lock_position (GIMP_ITEM (drawable)))
+    {
+      GimpUndo *undo;
+      gboolean  push_undo = TRUE;
+
+      undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
+                                           GIMP_UNDO_ITEM_LOCK_POSITION);
+
+      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (drawable))
+        push_undo = FALSE;
+
+      gimp_item_set_lock_position (GIMP_ITEM (drawable), locked, push_undo);
+      gimp_image_flush (image);
+    }
+}
 
 void
 drawable_flip_cmd_callback (GtkAction *action,

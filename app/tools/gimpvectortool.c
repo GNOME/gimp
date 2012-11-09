@@ -243,7 +243,8 @@ gimp_vector_tool_control (GimpTool       *tool,
 static gboolean
 gimp_vector_tool_check_writable (GimpVectorTool *vector_tool)
 {
-  if (gimp_item_is_content_locked (GIMP_ITEM (vector_tool->vectors)))
+  if (gimp_item_is_content_locked (GIMP_ITEM (vector_tool->vectors)) ||
+      gimp_item_is_position_locked (GIMP_ITEM (vector_tool->vectors)))
     {
       gimp_tool_message_literal (GIMP_TOOL (vector_tool),
                                  GIMP_TOOL (vector_tool)->display,

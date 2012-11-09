@@ -101,7 +101,7 @@ vectors_new_from_text_layer_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
+      if (gimp_pdb_layer_is_text_layer (layer, 0, error))
         {
           gint x, y;
 
@@ -397,7 +397,9 @@ vectors_stroke_translate_invoker (GimpProcedure         *procedure,
   if (success)
     {
       GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                        GIMP_PDB_ITEM_CONTENT, error);
+                                                        GIMP_PDB_ITEM_CONTENT |
+                                                        GIMP_PDB_ITEM_POSITION,
+                                                        error);
 
       if (stroke)
         {
@@ -438,7 +440,9 @@ vectors_stroke_scale_invoker (GimpProcedure         *procedure,
   if (success)
     {
       GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                        GIMP_PDB_ITEM_CONTENT, error);
+                                                        GIMP_PDB_ITEM_CONTENT |
+                                                        GIMP_PDB_ITEM_POSITION,
+                                                        error);
 
       if (stroke)
         {
@@ -481,7 +485,9 @@ vectors_stroke_rotate_invoker (GimpProcedure         *procedure,
   if (success)
     {
       GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                        GIMP_PDB_ITEM_CONTENT, error);
+                                                        GIMP_PDB_ITEM_CONTENT |
+                                                        GIMP_PDB_ITEM_POSITION,
+                                                        error);
 
       if (stroke)
         {
@@ -522,7 +528,9 @@ vectors_stroke_flip_invoker (GimpProcedure         *procedure,
   if (success)
     {
       GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                        GIMP_PDB_ITEM_CONTENT, error);
+                                                        GIMP_PDB_ITEM_CONTENT |
+                                                        GIMP_PDB_ITEM_POSITION,
+                                                        error);
 
       if (stroke)
         {
@@ -567,7 +575,9 @@ vectors_stroke_flip_free_invoker (GimpProcedure         *procedure,
   if (success)
     {
       GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                        GIMP_PDB_ITEM_CONTENT, error);
+                                                        GIMP_PDB_ITEM_CONTENT |
+                                                        GIMP_PDB_ITEM_POSITION,
+                                                        error);
 
       if (stroke)
         {

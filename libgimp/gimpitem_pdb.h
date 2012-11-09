@@ -58,6 +58,9 @@ gboolean      gimp_item_set_linked        (gint32              item_ID,
 gboolean      gimp_item_get_lock_content  (gint32              item_ID);
 gboolean      gimp_item_set_lock_content  (gint32              item_ID,
                                            gboolean            lock_content);
+gboolean      gimp_item_get_lock_position (gint32              item_ID);
+gboolean      gimp_item_set_lock_position (gint32              item_ID,
+                                           gboolean            lock_position);
 gint          gimp_item_get_tattoo        (gint32              item_ID);
 gboolean      gimp_item_set_tattoo        (gint32              item_ID,
                                            gint                tattoo);

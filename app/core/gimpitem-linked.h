@@ -19,29 +19,31 @@
 #define __GIMP_ITEM_LINKED_H__
 
 
-void   gimp_item_linked_translate (GimpItem               *item,
-                                   gint                    offset_x,
-                                   gint                    offset_y,
-                                   gboolean                push_undo);
-void   gimp_item_linked_flip      (GimpItem               *item,
-                                   GimpContext            *context,
-                                   GimpOrientationType     flip_type,
-                                   gdouble                 axis,
-                                   gboolean                clip_result);
-void   gimp_item_linked_rotate    (GimpItem               *item,
-                                   GimpContext            *context,
-                                   GimpRotationType        rotate_type,
-                                   gdouble                 center_x,
-                                   gdouble                 center_y,
-                                   gboolean                clip_result);
-void   gimp_item_linked_transform (GimpItem               *item,
-                                   GimpContext            *context,
-                                   const GimpMatrix3      *matrix,
-                                   GimpTransformDirection  direction,
-                                   GimpInterpolationType   interpolation_type,
-                                   gint                    recursion_level,
-                                   GimpTransformResize     clip_result,
-                                   GimpProgress           *progress);
+gboolean gimp_item_linked_is_locked (const GimpItem         *item);
+
+void     gimp_item_linked_translate (GimpItem               *item,
+                                     gint                    offset_x,
+                                     gint                    offset_y,
+                                     gboolean                push_undo);
+void     gimp_item_linked_flip      (GimpItem               *item,
+                                     GimpContext            *context,
+                                     GimpOrientationType     flip_type,
+                                     gdouble                 axis,
+                                     gboolean                clip_result);
+void     gimp_item_linked_rotate    (GimpItem               *item,
+                                     GimpContext            *context,
+                                     GimpRotationType        rotate_type,
+                                     gdouble                 center_x,
+                                     gdouble                 center_y,
+                                     gboolean                clip_result);
+void     gimp_item_linked_transform (GimpItem               *item,
+                                     GimpContext            *context,
+                                     const GimpMatrix3      *matrix,
+                                     GimpTransformDirection  direction,
+                                     GimpInterpolationType   interpolation_type,
+                                     gint                    recursion_level,
+                                     GimpTransformResize     clip_result,
+                                     GimpProgress           *progress);
 
 
 #endif /* __GIMP_ITEM_LINKED_H__ */

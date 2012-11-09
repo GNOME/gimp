@@ -42,15 +42,17 @@ struct _GimpItemClass
   GimpViewableClass  parent_class;
 
   /*  signals  */
-  void            (* removed)              (GimpItem             *item);
-  void            (* visibility_changed)   (GimpItem             *item);
-  void            (* linked_changed)       (GimpItem             *item);
-  void            (* lock_content_changed) (GimpItem             *item);
+  void            (* removed)               (GimpItem            *item);
+  void            (* visibility_changed)    (GimpItem            *item);
+  void            (* linked_changed)        (GimpItem            *item);
+  void            (* lock_content_changed)  (GimpItem            *item);
+  void            (* lock_position_changed) (GimpItem            *item);
 
   /*  virtual functions  */
   void            (* unset_removed)      (GimpItem               *item);
   gboolean        (* is_attached)        (const GimpItem         *item);
   gboolean        (* is_content_locked)  (const GimpItem         *item);
+  gboolean        (* is_position_locked) (const GimpItem         *item);
   GimpItemTree  * (* get_tree)           (GimpItem               *item);
   GimpItem      * (* duplicate)          (GimpItem               *item,
                                           GType                   new_type);
@@ -307,6 +309,13 @@ void            gimp_item_set_lock_content   (GimpItem           *item,
 gboolean        gimp_item_get_lock_content   (const GimpItem     *item);
 gboolean        gimp_item_can_lock_content   (const GimpItem     *item);
 gboolean        gimp_item_is_content_locked  (const GimpItem     *item);
+
+void            gimp_item_set_lock_position  (GimpItem          *item,
+                                              gboolean           lock_position,
+                                              gboolean           push_undo);
+gboolean        gimp_item_get_lock_position  (const GimpItem    *item);
+gboolean        gimp_item_can_lock_position  (const GimpItem    *item);
+gboolean        gimp_item_is_position_locked (const GimpItem    *item);
 
 gboolean        gimp_item_mask_bounds        (GimpItem           *item,
                                               gint               *x1,

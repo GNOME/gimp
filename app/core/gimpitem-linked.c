@@ -32,6 +32,39 @@
 
 /*  public functions  */
 
+gboolean
+gimp_item_linked_is_locked (const GimpItem *item)
+{
+  GList    *list;
+  GList    *l;
+  gboolean  locked = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (gimp_item_get_linked (item) == TRUE, FALSE);
+  g_return_val_if_fail (gimp_item_is_attached (item), FALSE);
+
+  list = gimp_image_item_list_get_list (gimp_item_get_image (item), item,
+                                        GIMP_ITEM_TYPE_ALL,
+                                        GIMP_ITEM_SET_LINKED);
+
+  list = gimp_image_item_list_filter (item, list, TRUE, FALSE);
+
+  for (l = list; l; l = g_list_next (l))
+    {
+      GimpItem *item = l->data;
+
+      if (gimp_item_is_position_locked (item))
+        {
+          locked = TRUE;
+          break;
+        }
+    }
+
+  g_list_free (list);
+
+  return locked;
+}
+
 void
 gimp_item_linked_translate (GimpItem *item,
                             gint      offset_x,

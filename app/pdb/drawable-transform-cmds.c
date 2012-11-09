@@ -74,7 +74,8 @@ drawable_transform_flip_simple_invoker (GimpProcedure         *procedure,
       gint x, y, width, height;
 
       success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                           GIMP_PDB_ITEM_CONTENT, error);
+                                           GIMP_PDB_ITEM_CONTENT |
+                                           GIMP_PDB_ITEM_POSITION, error);
 
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
@@ -143,7 +144,9 @@ drawable_transform_flip_invoker (GimpProcedure         *procedure,
       gint x, y, width, height;
 
       success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                                        GIMP_PDB_ITEM_CONTENT, error);
+                                                        GIMP_PDB_ITEM_CONTENT |
+                                                        GIMP_PDB_ITEM_POSITION,
+                                                        error);
 
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
@@ -228,7 +231,8 @@ drawable_transform_flip_default_invoker (GimpProcedure         *procedure,
       gint x, y, width, height;
 
       success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                                        GIMP_PDB_ITEM_CONTENT, error);
+                                                        GIMP_PDB_ITEM_CONTENT |
+                                                        GIMP_PDB_ITEM_POSITION, error);
 
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
@@ -329,7 +333,9 @@ drawable_transform_perspective_invoker (GimpProcedure         *procedure,
       gint x, y, width, height;
 
       success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                                        GIMP_PDB_ITEM_CONTENT, error);
+                                                        GIMP_PDB_ITEM_CONTENT |
+                                                        GIMP_PDB_ITEM_POSITION,
+                                                        error);
 
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
@@ -424,7 +430,8 @@ drawable_transform_perspective_default_invoker (GimpProcedure         *procedure
       gint x, y, width, height;
 
       success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                                        GIMP_PDB_ITEM_CONTENT, error);
+                                                        GIMP_PDB_ITEM_CONTENT |
+                                                        GIMP_PDB_ITEM_POSITION, error);
 
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
@@ -513,7 +520,8 @@ drawable_transform_rotate_simple_invoker (GimpProcedure         *procedure,
       gint x, y, width, height;
 
       success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                           GIMP_PDB_ITEM_CONTENT, error);
+                                           GIMP_PDB_ITEM_CONTENT |
+                                           GIMP_PDB_ITEM_POSITION, error);
 
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
@@ -587,7 +595,9 @@ drawable_transform_rotate_invoker (GimpProcedure         *procedure,
       gint x, y, width, height;
 
       success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                                        GIMP_PDB_ITEM_CONTENT, error);
+                                                        GIMP_PDB_ITEM_CONTENT |
+                                                        GIMP_PDB_ITEM_POSITION,
+                                                        error);
 
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
@@ -676,7 +686,8 @@ drawable_transform_rotate_default_invoker (GimpProcedure         *procedure,
       gint x, y, width, height;
 
       success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                                        GIMP_PDB_ITEM_CONTENT, error);
+                                                        GIMP_PDB_ITEM_CONTENT |
+                                                        GIMP_PDB_ITEM_POSITION, error);
 
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
@@ -773,7 +784,8 @@ drawable_transform_scale_invoker (GimpProcedure         *procedure,
       gint x, y, width, height;
 
       success = (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                                          GIMP_PDB_ITEM_CONTENT, error) && x0 < x1 && y0 < y1);
+                                                          GIMP_PDB_ITEM_CONTENT |
+                                                          GIMP_PDB_ITEM_POSITION, error) && x0 < x1 && y0 < y1);
 
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
@@ -859,7 +871,8 @@ drawable_transform_scale_default_invoker (GimpProcedure         *procedure,
       gint x, y, width, height;
 
       success = (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                                          GIMP_PDB_ITEM_CONTENT, error) && x0 < x1 && y0 < y1);
+                                                          GIMP_PDB_ITEM_CONTENT |
+                                                          GIMP_PDB_ITEM_POSITION, error) && x0 < x1 && y0 < y1);
 
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
@@ -949,7 +962,9 @@ drawable_transform_shear_invoker (GimpProcedure         *procedure,
       gint x, y, width, height;
 
       success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                                        GIMP_PDB_ITEM_CONTENT, error);
+                                                        GIMP_PDB_ITEM_CONTENT |
+                                                        GIMP_PDB_ITEM_POSITION,
+                                                        error);
 
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
@@ -1031,7 +1046,8 @@ drawable_transform_shear_default_invoker (GimpProcedure         *procedure,
       gint x, y, width, height;
 
       success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                                        GIMP_PDB_ITEM_CONTENT, error);
+                                                        GIMP_PDB_ITEM_CONTENT |
+                                                        GIMP_PDB_ITEM_POSITION, error);
 
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
@@ -1131,7 +1147,9 @@ drawable_transform_2d_invoker (GimpProcedure         *procedure,
       gint x, y, width, height;
 
       success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                                        GIMP_PDB_ITEM_CONTENT, error);
+                                                        GIMP_PDB_ITEM_CONTENT |
+                                                        GIMP_PDB_ITEM_POSITION,
+                                                        error);
 
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
@@ -1224,7 +1242,8 @@ drawable_transform_2d_default_invoker (GimpProcedure         *procedure,
       gint x, y, width, height;
 
       success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                                        GIMP_PDB_ITEM_CONTENT, error);
+                                                        GIMP_PDB_ITEM_CONTENT |
+                                                        GIMP_PDB_ITEM_POSITION, error);
 
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
@@ -1329,7 +1348,9 @@ drawable_transform_matrix_invoker (GimpProcedure         *procedure,
       gint x, y, width, height;
 
       success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                                        GIMP_PDB_ITEM_CONTENT, error);
+                                                        GIMP_PDB_ITEM_CONTENT |
+                                                        GIMP_PDB_ITEM_POSITION,
+                                                        error);
 
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
@@ -1430,7 +1451,8 @@ drawable_transform_matrix_default_invoker (GimpProcedure         *procedure,
       gint x, y, width, height;
 
       success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                                        GIMP_PDB_ITEM_CONTENT, error);
+                                                        GIMP_PDB_ITEM_CONTENT |
+                                                        GIMP_PDB_ITEM_POSITION, error);
 
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))

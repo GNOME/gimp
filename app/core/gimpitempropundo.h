@@ -41,8 +41,10 @@ struct _GimpItemPropUndo
   gchar        *name;
   gint          offset_x;
   gint          offset_y;
-  gboolean      visible;
-  gboolean      linked;
+  guint         visible       : 1;
+  guint         linked        : 1;
+  guint         lock_content  : 1;
+  guint         lock_position : 1;
   gchar        *parasite_name;
   GimpParasite *parasite;
 };

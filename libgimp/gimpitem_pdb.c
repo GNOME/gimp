@@ -733,6 +733,72 @@ gimp_item_set_lock_content (gint32   item_ID,
 }
 
 /**
+ * gimp_item_get_lock_position:
+ * @item_ID: The item.
+ *
+ * Get the 'lock position' state of the specified item.
+ *
+ * This procedure returns the specified item's lock position state.
+ *
+ * Returns: Whether the item's position is locked.
+ *
+ * Since: GIMP 2.10
+ **/
+gboolean
+gimp_item_get_lock_position (gint32 item_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean lock_position = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp-item-get-lock-position",
+                                    &nreturn_vals,
+                                    GIMP_PDB_ITEM, item_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    lock_position = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return lock_position;
+}
+
+/**
+ * gimp_item_set_lock_position:
+ * @item_ID: The item.
+ * @lock_position: The new item 'lock position' state.
+ *
+ * Set the 'lock position' state of the specified item.
+ *
+ * This procedure sets the specified item's lock position state.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.10
+ **/
+gboolean
+gimp_item_set_lock_position (gint32   item_ID,
+                             gboolean lock_position)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-item-set-lock-position",
+                                    &nreturn_vals,
+                                    GIMP_PDB_ITEM, item_ID,
+                                    GIMP_PDB_INT32, lock_position,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_item_get_tattoo:
  * @item_ID: The item.
  *

@@ -641,6 +641,33 @@ vectors_lock_content_cmd_callback (GtkAction *action,
     }
 }
 
+void
+vectors_lock_position_cmd_callback (GtkAction *action,
+                                   gpointer   data)
+{
+  GimpImage   *image;
+  GimpVectors *vectors;
+  gboolean     locked;
+  return_if_no_vectors (image, vectors, data);
+
+  locked = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  if (locked != gimp_item_get_lock_position (GIMP_ITEM (vectors)))
+    {
+      GimpUndo *undo;
+      gboolean  push_undo = TRUE;
+
+      undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
+                                           GIMP_UNDO_ITEM_LOCK_POSITION);
+
+      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (vectors))
+        push_undo = FALSE;
+
+
+      gimp_item_set_lock_position (GIMP_ITEM (vectors), locked, push_undo);
+      gimp_image_flush (image);
+    }
+}
 
 /*  private functions  */
 

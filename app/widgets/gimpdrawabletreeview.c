@@ -117,8 +117,10 @@ gimp_drawable_tree_view_class_init (GimpDrawableTreeViewClass *klass)
 
   item_view_class->set_image     = gimp_drawable_tree_view_set_image;
 
-  item_view_class->lock_content_stock_id = GIMP_STOCK_TOOL_PAINTBRUSH;
-  item_view_class->lock_content_tooltip  = _("Lock pixels");
+  item_view_class->lock_content_stock_id  = GIMP_STOCK_TOOL_PAINTBRUSH;
+  item_view_class->lock_content_tooltip   = _("Lock pixels");
+  item_view_class->lock_position_stock_id = GIMP_STOCK_TOOL_MOVE;
+  item_view_class->lock_position_tooltip  = _("Lock position and size");
 }
 
 static void

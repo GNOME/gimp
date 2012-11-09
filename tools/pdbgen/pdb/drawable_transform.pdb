@@ -25,11 +25,14 @@
 sub transform_invoke {
     my ($progress_text, $assemble_matrix, $check) = @_;
     my $success_check = 'gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                                    GIMP_PDB_ITEM_CONTENT, error);';
+                                                    GIMP_PDB_ITEM_CONTENT |
+                                                    GIMP_PDB_ITEM_POSITION,
+                                                    error);';
 
     if ($check) {
         $success_check = "(gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                                      GIMP_PDB_ITEM_CONTENT, error) && " . $check . ");";
+                                                      GIMP_PDB_ITEM_CONTENT |
+                                                      GIMP_PDB_ITEM_POSITION, error) && " . $check . ");";
     }
 
     %invoke = (
@@ -86,11 +89,13 @@ CODE
 sub transform_default_invoke {
     my ($progress_text, $assemble_matrix, $check) = @_;
     my $success_check = 'gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                                    GIMP_PDB_ITEM_CONTENT, error);';
+                                                    GIMP_PDB_ITEM_CONTENT |
+                                                    GIMP_PDB_ITEM_POSITION, error);';
 
     if ($check) {
         $success_check = "(gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                                      GIMP_PDB_ITEM_CONTENT, error) && " . $check . ");";
+                                                      GIMP_PDB_ITEM_CONTENT |
+                                                      GIMP_PDB_ITEM_POSITION, error) && " . $check . ");";
     }
 
     %invoke = (
@@ -180,7 +185,8 @@ sub drawable_transform_flip_simple {
   gint x, y, width, height;
 
   success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                       GIMP_PDB_ITEM_CONTENT, error);
+                                       GIMP_PDB_ITEM_CONTENT |
+                                       GIMP_PDB_ITEM_POSITION, error);
 
   if (success &&
       gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
@@ -423,7 +429,8 @@ sub drawable_transform_rotate_simple {
   gint x, y, width, height;
 
   success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                       GIMP_PDB_ITEM_CONTENT, error);
+                                       GIMP_PDB_ITEM_CONTENT |
+                                       GIMP_PDB_ITEM_POSITION, error);
 
   if (success &&
       gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))

@@ -87,6 +87,7 @@ static gboolean        gimp_group_layer_get_expanded (GimpViewable    *viewable)
 static void            gimp_group_layer_set_expanded (GimpViewable    *viewable,
                                                       gboolean         expanded);
 
+static gboolean  gimp_group_layer_is_position_locked (const GimpItem  *item);
 static GimpItem      * gimp_group_layer_duplicate    (GimpItem        *item,
                                                       GType            new_type);
 static void            gimp_group_layer_convert      (GimpItem        *item,
@@ -208,6 +209,7 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   viewable_class->set_expanded     = gimp_group_layer_set_expanded;
   viewable_class->get_expanded     = gimp_group_layer_get_expanded;
 
+  item_class->is_position_locked   = gimp_group_layer_is_position_locked;
   item_class->duplicate            = gimp_group_layer_duplicate;
   item_class->convert              = gimp_group_layer_convert;
   item_class->translate            = gimp_group_layer_translate;
@@ -403,6 +405,25 @@ gimp_group_layer_set_expanded (GimpViewable *viewable,
   GimpGroupLayer *group = GIMP_GROUP_LAYER (viewable);
 
   GET_PRIVATE (group)->expanded = expanded;
+}
+
+static gboolean
+gimp_group_layer_is_position_locked (const GimpItem *item)
+{
+  GimpGroupLayerPrivate *private = GET_PRIVATE (item);
+  GList                 *list;
+
+  for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (private->children));
+       list;
+       list = g_list_next (list))
+    {
+      GimpItem *child = list->data;
+
+      if (gimp_item_is_position_locked (child))
+        return TRUE;
+    }
+
+  return GIMP_ITEM_CLASS (parent_class)->is_position_locked (item);
 }
 
 static GimpItem *

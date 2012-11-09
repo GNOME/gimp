@@ -95,7 +95,15 @@ static const GimpToggleActionEntry drawable_toggle_actions[] =
         "Keep the pixels on this drawable from being modified"),
     G_CALLBACK (drawable_lock_content_cmd_callback),
     FALSE,
-    NULL, /* GIMP_HELP_LAYER_LOCK_PIXELS */ }
+    GIMP_HELP_LAYER_LOCK_PIXELS },
+
+  { "drawable-lock-position", GIMP_STOCK_TOOL_MOVE,
+    NC_("drawable-action", "L_ock position of channel"), NULL,
+    NC_("drawable-action",
+        "Keep the position on this drawable from being modified"),
+    G_CALLBACK (drawable_lock_position_cmd_callback),
+    FALSE,
+    GIMP_HELP_LAYER_LOCK_POSITION },
 };
 
 static const GimpEnumActionEntry drawable_flip_actions[] =
@@ -171,14 +179,17 @@ drawable_actions_update (GimpActionGroup *group,
                          gpointer         data)
 {
   GimpImage    *image;
-  GimpDrawable *drawable   = NULL;
-  gboolean      is_rgb     = FALSE;
-  gboolean      visible    = FALSE;
-  gboolean      linked     = FALSE;
-  gboolean      locked     = FALSE;
-  gboolean      can_lock   = FALSE;
-  gboolean      writable   = FALSE;
-  gboolean      children   = FALSE;
+  GimpDrawable *drawable     = NULL;
+  gboolean      is_rgb       = FALSE;
+  gboolean      visible      = FALSE;
+  gboolean      linked       = FALSE;
+  gboolean      locked       = FALSE;
+  gboolean      can_lock     = FALSE;
+  gboolean      locked_pos   = FALSE;
+  gboolean      can_lock_pos = FALSE;
+  gboolean      writable     = FALSE;
+  gboolean      movable      = FALSE;
+  gboolean      children     = FALSE;
 
   image = action_data_get_image (data);
 
@@ -197,11 +208,14 @@ drawable_actions_update (GimpActionGroup *group,
           else
             item = GIMP_ITEM (drawable);
 
-          visible  = gimp_item_get_visible (item);
-          linked   = gimp_item_get_linked (item);
-          locked   = gimp_item_get_lock_content (item);
-          can_lock = gimp_item_can_lock_content (item);
-          writable = ! gimp_item_is_content_locked (item);
+          visible       = gimp_item_get_visible (item);
+          linked        = gimp_item_get_linked (item);
+          locked        = gimp_item_get_lock_content (item);
+          can_lock      = gimp_item_can_lock_content (item);
+          writable      = ! gimp_item_is_content_locked (item);
+          locked_pos    = gimp_item_get_lock_position (item);
+          can_lock_pos  = gimp_item_can_lock_position (item);
+          movable       = ! gimp_item_is_position_locked (item);
 
           if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
             children = TRUE;
@@ -219,20 +233,22 @@ drawable_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("drawable-levels-stretch", writable && !children && is_rgb);
   SET_SENSITIVE ("drawable-offset",         writable && !children);
 
-  SET_SENSITIVE ("drawable-visible",      drawable);
-  SET_SENSITIVE ("drawable-linked",       drawable);
-  SET_SENSITIVE ("drawable-lock-content", can_lock);
+  SET_SENSITIVE ("drawable-visible",       drawable);
+  SET_SENSITIVE ("drawable-linked",        drawable);
+  SET_SENSITIVE ("drawable-lock-content",  can_lock);
+  SET_SENSITIVE ("drawable-lock-position", can_lock_pos);
 
-  SET_ACTIVE ("drawable-visible",      visible);
-  SET_ACTIVE ("drawable-linked",       linked);
-  SET_ACTIVE ("drawable-lock-content", locked);
+  SET_ACTIVE ("drawable-visible",       visible);
+  SET_ACTIVE ("drawable-linked",        linked);
+  SET_ACTIVE ("drawable-lock-content",  locked);
+  SET_ACTIVE ("drawable-lock-position", locked_pos);
 
-  SET_SENSITIVE ("drawable-flip-horizontal", writable);
-  SET_SENSITIVE ("drawable-flip-vertical",   writable);
+  SET_SENSITIVE ("drawable-flip-horizontal", writable && movable);
+  SET_SENSITIVE ("drawable-flip-vertical",   writable && movable);
 
-  SET_SENSITIVE ("drawable-rotate-90",  writable);
-  SET_SENSITIVE ("drawable-rotate-180", writable);
-  SET_SENSITIVE ("drawable-rotate-270", writable);
+  SET_SENSITIVE ("drawable-rotate-90",  writable && movable);
+  SET_SENSITIVE ("drawable-rotate-180", writable && movable);
+  SET_SENSITIVE ("drawable-rotate-270", writable && movable);
 
 #undef SET_SENSITIVE
 #undef SET_ACTIVE

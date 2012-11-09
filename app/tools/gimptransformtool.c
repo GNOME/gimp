@@ -260,7 +260,14 @@ gimp_transform_tool_initialize (GimpTool     *tool,
   if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("The active layer's pixels are locked."));
+                           _("The active layer's pixels are locked."));
+      return FALSE;
+    }
+
+  if (gimp_item_is_position_locked (GIMP_ITEM (drawable)))
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                           _("The active layer's position and size are locked."));
       return FALSE;
     }
 
@@ -729,11 +736,13 @@ gimp_transform_tool_cursor_update (GimpTool         *tool,
 
   switch (options->type)
     {
-      GimpDrawable *drawable;
+      GimpDrawable *drawable = NULL;
+      GimpVectors  *vectors  = NULL;
 
     case GIMP_TRANSFORM_TYPE_LAYER:
       drawable = gimp_image_get_active_drawable (image);
-      if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+      if (gimp_item_is_content_locked (GIMP_ITEM (drawable)) ||
+          gimp_item_is_position_locked (GIMP_ITEM (drawable)))
         modifier = GIMP_CURSOR_MODIFIER_BAD;
       break;
 
@@ -741,7 +750,10 @@ gimp_transform_tool_cursor_update (GimpTool         *tool,
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
-      if (! gimp_image_get_active_vectors (image))
+      vectors = gimp_image_get_active_vectors (image);
+      if (! vectors ||
+          gimp_item_is_content_locked (GIMP_ITEM (vectors)) ||
+          gimp_item_is_position_locked (GIMP_ITEM (vectors)))
         modifier = GIMP_CURSOR_MODIFIER_BAD;
       break;
     }
@@ -1218,22 +1230,34 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   switch (options->type)
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
-      active_item = GIMP_ITEM (gimp_image_get_active_drawable (image));
-      null_message   = _("There is no layer to transform.");
-      locked_message = _("The active layer's pixels are locked.");
+      active_item  = GIMP_ITEM (gimp_image_get_active_drawable (image));
+      null_message = _("There is no layer to transform.");
+
+      if (gimp_item_is_content_locked (active_item))
+        locked_message = _("The active layer's pixels are locked.");
+      else
+        locked_message = _("The active layer's position and size are locked.");
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
-      active_item = GIMP_ITEM (gimp_image_get_mask (image));
+      active_item  = GIMP_ITEM (gimp_image_get_mask (image));
       /* cannot happen, so don't translate these messages */
-      null_message   = "There is no selection to transform.";
-      locked_message = "The selection's pixels are locked.";
+      null_message = "There is no selection to transform.";
+
+      if (gimp_item_is_content_locked (active_item))
+        locked_message = "The selection's pixels are locked.";
+      else
+        locked_message = "The selection's position and size are locked.";
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
-      active_item = GIMP_ITEM (gimp_image_get_active_vectors (image));
-      null_message   = _("There is no path to transform.");
-      locked_message = _("The active path's strokes are locked.");
+      active_item  = GIMP_ITEM (gimp_image_get_active_vectors (image));
+      null_message = _("There is no path to transform.");
+
+      if (gimp_item_is_content_locked (active_item))
+        locked_message = _("The active path's strokes are locked.");
+      else
+        locked_message = _("The active path's position are locked.");
       break;
     }
 
@@ -1244,7 +1268,8 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
       return;
     }
 
-  if (gimp_item_is_content_locked (active_item))
+  if (gimp_item_is_content_locked (active_item) ||
+      gimp_item_is_position_locked (active_item))
     {
       gimp_tool_message_literal (tool, display, locked_message);
       gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);

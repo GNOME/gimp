@@ -506,6 +506,8 @@ xcf_save_layer_props (XcfInfo    *info,
                                   gimp_item_get_lock_content (GIMP_ITEM (layer))));
   xcf_check_error (xcf_save_prop (info, image, PROP_LOCK_ALPHA, error,
                                   gimp_layer_get_lock_alpha (layer)));
+  xcf_check_error (xcf_save_prop (info, image, PROP_LOCK_POSITION, error,
+                                  gimp_item_get_lock_position (GIMP_ITEM (layer))));
 
   if (gimp_layer_get_mask (layer))
     {
@@ -596,6 +598,8 @@ xcf_save_channel_props (XcfInfo      *info,
                                   gimp_item_get_linked (GIMP_ITEM (channel))));
   xcf_check_error (xcf_save_prop (info, image, PROP_LOCK_CONTENT, error,
                                   gimp_item_get_lock_content (GIMP_ITEM (channel))));
+  xcf_check_error (xcf_save_prop (info, image, PROP_LOCK_POSITION, error,
+                                  gimp_item_get_lock_position (GIMP_ITEM (channel))));
   xcf_check_error (xcf_save_prop (info, image, PROP_SHOW_MASKED, error,
                                   gimp_channel_get_show_masked (channel)));
 
@@ -760,6 +764,19 @@ xcf_save_prop (XcfInfo    *info,
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
         xcf_write_int32_check_error (info, &lock_alpha, 1);
+      }
+      break;
+
+    case PROP_LOCK_POSITION:
+      {
+        guint32 lock_position;
+
+        lock_position = va_arg (args, guint32);
+        size = 4;
+
+        xcf_write_prop_type_check_error (info, prop_type);
+        xcf_write_int32_check_error (info, &size, 1);
+        xcf_write_int32_check_error (info, &lock_position, 1);
       }
       break;
 

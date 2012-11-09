@@ -35,6 +35,7 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpitem.h"
+#include "gimpitem-linked.h"
 #include "gimpitem-preview.h"
 #include "gimpitemtree.h"
 #include "gimplist.h"
@@ -52,6 +53,7 @@ enum
   VISIBILITY_CHANGED,
   LINKED_CHANGED,
   LOCK_CONTENT_CHANGED,
+  LOCK_POSITION_CHANGED,
   LAST_SIGNAL
 };
 
@@ -66,7 +68,8 @@ enum
   PROP_OFFSET_Y,
   PROP_VISIBLE,
   PROP_LINKED,
-  PROP_LOCK_CONTENT
+  PROP_LOCK_CONTENT,
+  PROP_LOCK_POSITION
 };
 
 
@@ -84,9 +87,10 @@ struct _GimpItemPrivate
   gint              width, height;      /*  size in pixels           */
   gint              offset_x, offset_y; /*  pixel offset in image    */
 
-  guint             visible      : 1;   /*  control visibility       */
-  guint             linked       : 1;   /*  control linkage          */
-  guint             lock_content : 1;   /*  content editability      */
+  guint             visible       : 1;  /*  control visibility       */
+  guint             linked        : 1;  /*  control linkage          */
+  guint             lock_content  : 1;  /*  content editability      */
+  guint             lock_position : 1;  /*  content movability       */
 
   guint             removed : 1;        /*  removed from the image?  */
 
@@ -119,6 +123,7 @@ static gint64     gimp_item_get_memsize             (GimpObject     *object,
 static void       gimp_item_real_visibility_changed (GimpItem       *item);
 
 static gboolean   gimp_item_real_is_content_locked  (const GimpItem *item);
+static gboolean   gimp_item_real_is_position_locked (const GimpItem *item);
 static GimpItem * gimp_item_real_duplicate          (GimpItem       *item,
                                                      GType           new_type);
 static void       gimp_item_real_convert            (GimpItem       *item,
@@ -197,6 +202,15 @@ gimp_item_class_init (GimpItemClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  gimp_item_signals[LOCK_POSITION_CHANGED] =
+    g_signal_new ("lock-position-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpItemClass, lock_position_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
   object_class->constructed        = gimp_item_constructed;
   object_class->finalize           = gimp_item_finalize;
   object_class->set_property       = gimp_item_set_property;
@@ -211,10 +225,12 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->visibility_changed        = gimp_item_real_visibility_changed;
   klass->linked_changed            = NULL;
   klass->lock_content_changed      = NULL;
+  klass->lock_position_changed     = NULL;
 
   klass->unset_removed             = NULL;
   klass->is_attached               = NULL;
   klass->is_content_locked         = gimp_item_real_is_content_locked;
+  klass->is_position_locked        = gimp_item_real_is_position_locked;
   klass->get_tree                  = NULL;
   klass->duplicate                 = gimp_item_real_duplicate;
   klass->convert                   = gimp_item_real_convert;
@@ -286,6 +302,12 @@ gimp_item_class_init (GimpItemClass *klass)
                                                          FALSE,
                                                          GIMP_PARAM_READABLE));
 
+  g_object_class_install_property (object_class, PROP_LOCK_POSITION,
+                                   g_param_spec_boolean ("lock-position",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READABLE));
+
   g_type_class_add_private (klass, sizeof (GimpItemPrivate));
 }
 
@@ -296,18 +318,19 @@ gimp_item_init (GimpItem *item)
 
   g_object_force_floating (G_OBJECT (item));
 
-  private->ID           = 0;
-  private->tattoo       = 0;
-  private->image        = NULL;
-  private->parasites    = gimp_parasite_list_new ();
-  private->width        = 0;
-  private->height       = 0;
-  private->offset_x     = 0;
-  private->offset_y     = 0;
-  private->visible      = TRUE;
-  private->linked       = FALSE;
-  private->lock_content = FALSE;
-  private->removed      = FALSE;
+  private->ID            = 0;
+  private->tattoo        = 0;
+  private->image         = NULL;
+  private->parasites     = gimp_parasite_list_new ();
+  private->width         = 0;
+  private->height        = 0;
+  private->offset_x      = 0;
+  private->offset_y      = 0;
+  private->visible       = TRUE;
+  private->linked        = FALSE;
+  private->lock_content  = FALSE;
+  private->lock_position = FALSE;
+  private->removed       = FALSE;
 }
 
 static void
@@ -412,6 +435,9 @@ gimp_item_get_property (GObject    *object,
     case PROP_LOCK_CONTENT:
       g_value_set_boolean (value, private->lock_content);
       break;
+    case PROP_LOCK_POSITION:
+      g_value_set_boolean (value, private->lock_position);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -464,6 +490,16 @@ gimp_item_real_is_content_locked (const GimpItem *item)
     return TRUE;
 
   return GET_PRIVATE (item)->lock_content;
+}
+
+static gboolean
+gimp_item_real_is_position_locked (const GimpItem *item)
+{
+  if (gimp_item_get_linked (item))
+    if (gimp_item_linked_is_locked (item))
+      return TRUE;
+
+  return GET_PRIVATE (item)->lock_position;
 }
 
 static GimpItem *
@@ -527,6 +563,10 @@ gimp_item_real_duplicate (GimpItem *item,
   if (gimp_item_can_lock_content (new_item))
     gimp_item_set_lock_content (new_item, gimp_item_get_lock_content (item),
                                 FALSE);
+
+  if (gimp_item_can_lock_position (new_item))
+    gimp_item_set_lock_position (new_item, gimp_item_get_lock_position (item),
+                                 FALSE);
 
   return new_item;
 }
@@ -1746,9 +1786,10 @@ gimp_item_replace_item (GimpItem *item,
                       gimp_item_get_width  (replace),
                       gimp_item_get_height (replace));
 
-  gimp_item_set_visible      (item, gimp_item_get_visible (replace), FALSE);
-  gimp_item_set_linked       (item, gimp_item_get_linked (replace), FALSE);
-  gimp_item_set_lock_content (item, gimp_item_get_lock_content (replace), FALSE);
+  gimp_item_set_visible       (item, gimp_item_get_visible (replace), FALSE);
+  gimp_item_set_linked        (item, gimp_item_get_linked (replace), FALSE);
+  gimp_item_set_lock_content  (item, gimp_item_get_lock_content (replace), FALSE);
+  gimp_item_set_lock_position (item, gimp_item_get_lock_position (replace), FALSE);
 }
 
 /**
@@ -2084,6 +2125,60 @@ gimp_item_is_content_locked (const GimpItem *item)
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
   return GIMP_ITEM_GET_CLASS (item)->is_content_locked (item);
+}
+
+void
+gimp_item_set_lock_position (GimpItem *item,
+                             gboolean  lock_position,
+                             gboolean  push_undo)
+{
+  g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (gimp_item_can_lock_position (item));
+
+  lock_position = lock_position ? TRUE : FALSE;
+
+  if (gimp_item_get_lock_position (item) != lock_position)
+    {
+      if (push_undo && gimp_item_is_attached (item))
+        {
+          GimpImage *image = gimp_item_get_image (item);
+
+          gimp_image_undo_push_item_lock_position (image, NULL, item);
+        }
+
+      GET_PRIVATE (item)->lock_position = lock_position;
+
+      g_signal_emit (item, gimp_item_signals[LOCK_POSITION_CHANGED], 0);
+
+      g_object_notify (G_OBJECT (item), "lock-position");
+    }
+}
+
+gboolean
+gimp_item_get_lock_position (const GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  return GET_PRIVATE (item)->lock_position;
+}
+
+gboolean
+gimp_item_can_lock_position (const GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (item)))
+    return FALSE;
+
+  return TRUE;
+}
+
+gboolean
+gimp_item_is_position_locked (const GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  return GIMP_ITEM_GET_CLASS (item)->is_position_locked (item);
 }
 
 gboolean

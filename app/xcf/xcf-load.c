@@ -805,6 +805,18 @@ xcf_load_layer_props (XcfInfo    *info,
           }
           break;
 
+        case PROP_LOCK_POSITION:
+          {
+            gboolean lock_position;
+
+            info->cp += xcf_read_int32 (info->fp, (guint32 *) &lock_position, 1);
+
+            if (gimp_item_can_lock_position (GIMP_ITEM (*layer)))
+              gimp_item_set_lock_position (GIMP_ITEM (*layer),
+                                           lock_position, FALSE);
+          }
+          break;
+
         case PROP_APPLY_MASK:
           info->cp += xcf_read_int32 (info->fp, (guint32 *) apply_mask, 1);
           break;
@@ -1003,6 +1015,16 @@ xcf_load_channel_props (XcfInfo      *info,
             info->cp += xcf_read_int32 (info->fp, (guint32 *) &lock_content, 1);
             gimp_item_set_lock_content (GIMP_ITEM (*channel),
                                         lock_content ? TRUE : FALSE, FALSE);
+          }
+          break;
+
+        case PROP_LOCK_POSITION:
+          {
+            gboolean lock_position;
+
+            info->cp += xcf_read_int32 (info->fp, (guint32 *) &lock_position, 1);
+            gimp_item_set_lock_position (GIMP_ITEM (*channel),
+                                         lock_position ? TRUE : FALSE, FALSE);
           }
           break;
 
