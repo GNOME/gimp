@@ -680,12 +680,8 @@ gimp_text_style_editor_font_changed (GimpContext         *context,
 
       gtk_text_buffer_get_selection_bounds (buffer, &start, &end);
 
-      gtk_text_buffer_begin_user_action (buffer);
-
       gimp_text_buffer_set_font (editor->buffer, &start, &end,
                                  gimp_context_get_font_name (context));
-
-      gtk_text_buffer_end_user_action (buffer);
     }
 
   insert_tags = gimp_text_style_editor_list_tags (editor, &remove_tags);
@@ -743,12 +739,8 @@ gimp_text_style_editor_color_changed (GimpColorButton     *button,
 
       gtk_text_buffer_get_selection_bounds (buffer, &start, &end);
 
-      gtk_text_buffer_begin_user_action (buffer);
-
       gimp_color_button_get_color (button, &color);
       gimp_text_buffer_set_color (editor->buffer, &start, &end, &color);
-
-      gtk_text_buffer_end_user_action (buffer);
     }
 
   insert_tags = gimp_text_style_editor_list_tags (editor, &remove_tags);
@@ -857,16 +849,12 @@ gimp_text_style_editor_size_changed (GimpSizeEntry       *entry,
 
       gtk_text_buffer_get_selection_bounds (buffer, &start, &end);
 
-      gtk_text_buffer_begin_user_action (buffer);
-
       points = gimp_units_to_points (gimp_size_entry_get_refval (entry, 0),
                                      GIMP_UNIT_PIXEL,
                                      editor->resolution_y);
 
       gimp_text_buffer_set_size (editor->buffer, &start, &end,
                                  PANGO_SCALE * points);
-
-      gtk_text_buffer_end_user_action (buffer);
     }
 
   insert_tags = gimp_text_style_editor_list_tags (editor, &remove_tags);
