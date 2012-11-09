@@ -385,13 +385,13 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
           if (inconsistent)
             {
               gdk_cairo_set_source_color (cr, &style->fg[state]);
-              cairo_set_line_width (cr, 2.0);
+              cairo_set_line_width (cr, 1.5);
               cairo_move_to (cr,
-                             toggle_rect.x + toggle_rect.width,
-                             toggle_rect.y);
+                             toggle_rect.x + toggle_rect.width - 1,
+                             toggle_rect.y + 1);
               cairo_line_to (cr,
-                             toggle_rect.x,
-                             toggle_rect.y + toggle_rect.height);
+                             toggle_rect.x + 1,
+                             toggle_rect.y + toggle_rect.height - 1);
               cairo_stroke (cr);
             }
 
