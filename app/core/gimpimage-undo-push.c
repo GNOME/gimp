@@ -653,6 +653,22 @@ gimp_image_undo_push_text_layer_modified (GimpImage     *image,
                                NULL);
 }
 
+GimpUndo *
+gimp_image_undo_push_text_layer_convert (GimpImage     *image,
+                                         const gchar   *undo_desc,
+                                         GimpTextLayer *layer)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_TEXT_LAYER (layer), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_TEXT_UNDO,
+                               GIMP_UNDO_TEXT_LAYER_CONVERT, undo_desc,
+                               GIMP_DIRTY_ITEM,
+                               "item", layer,
+                               NULL);
+}
+
 
 /**********************/
 /*  Layer Mask Undos  */

@@ -155,6 +155,8 @@
 #include "gimppalette.h"
 #include "gimpprogress.h"
 
+#include "text/gimptextlayer.h"
+
 #include "gimpimage-convert-fsdither.h"
 #include "gimpimage-convert-data.h"
 #include "gimpimage-convert-type.h"
@@ -739,6 +741,7 @@ gimp_image_convert_type (GimpImage               *image,
                          gint                     num_cols,
                          GimpConvertDitherType    dither,
                          gboolean                 alpha_dither,
+                         gboolean                 text_layer_dither,
                          gboolean                 remove_dups,
                          GimpConvertPaletteType   palette_type,
                          GimpPalette             *custom_palette,
@@ -970,43 +973,54 @@ gimp_image_convert_type (GimpImage               *image,
        list;
        list = g_list_next (list), nth_layer++)
     {
-      GimpLayer *layer = list->data;
+      GimpLayer *layer    = list->data;
+      gboolean   quantize = FALSE;
 
       switch (new_type)
         {
         case GIMP_RGB:
         case GIMP_GRAY:
-          gimp_drawable_convert_type (GIMP_DRAWABLE (layer), image, new_type,
-                                      gimp_drawable_get_precision (GIMP_DRAWABLE (layer)),
-                                      0, 0,
-                                      TRUE);
+          quantize = FALSE;
           break;
 
         case GIMP_INDEXED:
-          {
-            GeglBuffer *new_buffer;
-            gboolean    has_alpha;
-
-            has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
-
-            new_buffer =
-              gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                               gimp_item_get_width  (GIMP_ITEM (layer)),
-                                               gimp_item_get_height (GIMP_ITEM (layer))),
-                               gimp_image_get_layer_format (image,
-                                                            has_alpha));
-
-            quantobj->nth_layer = nth_layer;
-            quantobj->second_pass (quantobj, layer, new_buffer);
-
-            gimp_drawable_set_buffer (GIMP_DRAWABLE (layer), TRUE, NULL,
-                                      new_buffer);
-            g_object_unref (new_buffer);
-          }
+          if (gimp_item_is_text_layer (GIMP_ITEM (layer)))
+            quantize = text_layer_dither;
+          else
+            quantize = TRUE;
           break;
 
         default:
           break;
+        }
+
+      if (quantize)
+        {
+          GeglBuffer *new_buffer;
+          gboolean    has_alpha;
+
+          has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+
+          new_buffer =
+            gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                             gimp_item_get_width  (GIMP_ITEM (layer)),
+                                             gimp_item_get_height (GIMP_ITEM (layer))),
+                             gimp_image_get_layer_format (image,
+                                                          has_alpha));
+
+          quantobj->nth_layer = nth_layer;
+          quantobj->second_pass (quantobj, layer, new_buffer);
+
+          gimp_drawable_set_buffer (GIMP_DRAWABLE (layer), TRUE, NULL,
+                                    new_buffer);
+          g_object_unref (new_buffer);
+        }
+      else
+        {
+          gimp_drawable_convert_type (GIMP_DRAWABLE (layer), image, new_type,
+                                      gimp_drawable_get_precision (GIMP_DRAWABLE (layer)),
+                                      0, 0,
+                                      TRUE);
         }
     }
 

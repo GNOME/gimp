@@ -40,6 +40,7 @@ struct _GimpTextUndo
   const GParamSpec *pspec;
   GValue           *value;
   gboolean          modified;
+  const Babl       *format;
 };
 
 struct _GimpTextUndoClass

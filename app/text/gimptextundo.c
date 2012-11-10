@@ -23,6 +23,8 @@
 
 #include "text-types.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "core/gimpitem.h"
 #include "core/gimpitemundo.h"
 #include "core/gimp-utils.h"
@@ -126,6 +128,10 @@ gimp_text_undo_constructed (GObject *object)
 
     case GIMP_UNDO_TEXT_LAYER_MODIFIED:
       text_undo->modified = layer->modified;
+      break;
+
+    case GIMP_UNDO_TEXT_LAYER_CONVERT:
+      text_undo->format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
       break;
 
     default:
@@ -255,6 +261,20 @@ gimp_text_undo_pop (GimpUndo            *undo,
         text_undo->modified = modified;
 
         gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
+      }
+      break;
+
+    case GIMP_UNDO_TEXT_LAYER_CONVERT:
+      {
+        const Babl *format;
+
+        format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+        gimp_drawable_convert_type (GIMP_DRAWABLE (layer),
+                                    gimp_item_get_image (GIMP_ITEM (layer)),
+                                    gimp_babl_format_get_base_type (text_undo->format),
+                                    gimp_babl_format_get_precision (text_undo->format),
+                                    0, 0, FALSE);
+        text_undo->format = format;
       }
       break;
 

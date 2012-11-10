@@ -181,7 +181,7 @@ image_convert_base_type_cmd_callback (GtkAction *action,
     case GIMP_RGB:
     case GIMP_GRAY:
       if (! gimp_image_convert_type (image, value,
-                                     0, 0, FALSE, FALSE, 0, NULL,
+                                     0, 0, FALSE, FALSE, FALSE, 0, NULL,
                                      NULL, &error))
         {
           gimp_message_literal (image->gimp,
@@ -273,7 +273,7 @@ image_convert_precision_cmd_callback (GtkAction *action,
     }
   else
     {
-      gimp_image_convert_precision (image, value, 0, 0,
+      gimp_image_convert_precision (image, value, 0, 0, 0,
                                     GIMP_PROGRESS (display));
     }
 

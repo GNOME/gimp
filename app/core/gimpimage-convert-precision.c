@@ -33,6 +33,8 @@
 #include "gimpimage-undo-push.h"
 #include "gimpprogress.h"
 
+#include "text/gimptextlayer.h"
+
 #include "gimp-intl.h"
 
 
@@ -40,6 +42,7 @@ void
 gimp_image_convert_precision (GimpImage     *image,
                               GimpPrecision  precision,
                               gint           layer_dither_type,
+                              gint           text_layer_dither_type,
                               gint           mask_dither_type,
                               GimpProgress  *progress)
 {
@@ -101,11 +104,17 @@ gimp_image_convert_precision (GimpImage     *image,
        list = g_list_next (list), nth_drawable++)
     {
       GimpDrawable *drawable = list->data;
+      gint          dither_type;
+
+      if (gimp_item_is_text_layer (GIMP_ITEM (drawable)))
+        dither_type = text_layer_dither_type;
+      else
+        dither_type = layer_dither_type;
 
       gimp_drawable_convert_type (drawable, image,
                                   gimp_drawable_get_base_type (drawable),
                                   precision,
-                                  layer_dither_type,
+                                  dither_type,
                                   mask_dither_type,
                                   TRUE);
 

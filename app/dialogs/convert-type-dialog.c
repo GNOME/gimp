@@ -56,6 +56,7 @@ typedef struct
 
   GimpConvertDitherType   dither_type;
   gboolean                alpha_dither;
+  gboolean                text_layer_dither;
   gboolean                remove_dups;
   gint                    num_colors;
   GimpConvertPaletteType  palette_type;
@@ -76,12 +77,13 @@ static void        convert_dialog_free            (IndexedDialog    *dialog);
 
 /*  defaults  */
 
-static GimpConvertDitherType   saved_dither_type  = GIMP_NO_DITHER;
-static gboolean                saved_alpha_dither = FALSE;
-static gboolean                saved_remove_dups  = TRUE;
-static gint                    saved_num_colors   = 256;
-static GimpConvertPaletteType  saved_palette_type = GIMP_MAKE_PALETTE;
-static GimpPalette            *saved_palette      = NULL;
+static GimpConvertDitherType   saved_dither_type       = GIMP_NO_DITHER;
+static gboolean                saved_alpha_dither      = FALSE;
+static gboolean                saved_text_layer_dither = FALSE;
+static gboolean                saved_remove_dups       = TRUE;
+static gint                    saved_num_colors        = 256;
+static GimpConvertPaletteType  saved_palette_type      = GIMP_MAKE_PALETTE;
+static GimpPalette            *saved_palette           = NULL;
 
 
 /*  public functions  */
@@ -112,13 +114,14 @@ convert_type_dialog_new (GimpImage    *image,
 
   dialog = g_slice_new0 (IndexedDialog);
 
-  dialog->image        = image;
-  dialog->progress     = progress;
-  dialog->dither_type  = saved_dither_type;
-  dialog->alpha_dither = saved_alpha_dither;
-  dialog->remove_dups  = saved_remove_dups;
-  dialog->num_colors   = saved_num_colors;
-  dialog->palette_type = saved_palette_type;
+  dialog->image             = image;
+  dialog->progress          = progress;
+  dialog->dither_type       = saved_dither_type;
+  dialog->alpha_dither      = saved_alpha_dither;
+  dialog->text_layer_dither = saved_text_layer_dither;
+  dialog->remove_dups       = saved_remove_dups;
+  dialog->num_colors        = saved_num_colors;
+  dialog->palette_type      = saved_palette_type;
 
   dialog->dialog =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
@@ -268,6 +271,22 @@ convert_type_dialog_new (GimpImage    *image,
                     G_CALLBACK (gimp_toggle_button_update),
                     &dialog->alpha_dither);
 
+
+  toggle =
+    gtk_check_button_new_with_mnemonic (_("Enable dithering of text layers"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                dialog->text_layer_dither);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &dialog->text_layer_dither);
+
+  gimp_help_set_help_data (toggle,
+                           _("Dithering text layers will make them uneditable"),
+                           NULL);
+
   return dialog->dialog;
 }
 
@@ -293,6 +312,7 @@ convert_dialog_response (GtkWidget     *widget,
                                      dialog->num_colors,
                                      dialog->dither_type,
                                      dialog->alpha_dither,
+                                     dialog->text_layer_dither,
                                      dialog->remove_dups,
                                      dialog->palette_type,
                                      dialog->custom_palette,
@@ -314,12 +334,13 @@ convert_dialog_response (GtkWidget     *widget,
       gimp_image_flush (dialog->image);
 
       /* Save defaults for next time */
-      saved_dither_type  = dialog->dither_type;
-      saved_alpha_dither = dialog->alpha_dither;
-      saved_remove_dups  = dialog->remove_dups;
-      saved_num_colors   = dialog->num_colors;
-      saved_palette_type = dialog->palette_type;
-      saved_palette      = dialog->custom_palette;
+      saved_dither_type       = dialog->dither_type;
+      saved_alpha_dither      = dialog->alpha_dither;
+      saved_text_layer_dither = dialog->text_layer_dither;
+      saved_remove_dups       = dialog->remove_dups;
+      saved_num_colors        = dialog->num_colors;
+      saved_palette_type      = dialog->palette_type;
+      saved_palette           = dialog->custom_palette;
     }
 
   gtk_widget_destroy (dialog->dialog);

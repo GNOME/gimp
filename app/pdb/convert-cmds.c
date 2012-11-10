@@ -64,7 +64,7 @@ image_convert_rgb_invoker (GimpProcedure         *procedure,
       if (gimp_pdb_image_is_not_base_type (image, GIMP_RGB, error))
         {
           success = gimp_image_convert_type (image, GIMP_RGB,
-                                             0, 0, FALSE, FALSE, 0, NULL,
+                                             0, 0, FALSE, FALSE, FALSE, 0, NULL,
                                              NULL, error);
         }
       else
@@ -95,7 +95,7 @@ image_convert_grayscale_invoker (GimpProcedure         *procedure,
       if (gimp_pdb_image_is_not_base_type (image, GIMP_GRAY, error))
         {
           success = gimp_image_convert_type (image, GIMP_GRAY,
-                                             0, 0, FALSE, FALSE, 0, NULL,
+                                             0, 0, FALSE, FALSE, FALSE, 0, NULL,
                                              NULL, error);
         }
       else
@@ -177,7 +177,7 @@ image_convert_indexed_invoker (GimpProcedure         *procedure,
       if (success)
         success = gimp_image_convert_type (image, GIMP_INDEXED,
                                            num_cols, dither_type,
-                                           alpha_dither, remove_unused,
+                                           alpha_dither, FALSE, remove_unused,
                                            palette_type, pal,
                                            NULL, error);
     }
@@ -247,7 +247,7 @@ image_convert_precision_invoker (GimpProcedure         *procedure,
       if (gimp_pdb_image_is_not_base_type (image, GIMP_INDEXED, error) &&
           gimp_pdb_image_is_not_precision (image, precision, error))
         {
-          gimp_image_convert_precision (image, precision, 0, 0, NULL);
+          gimp_image_convert_precision (image, precision, 0, 0, 0, NULL);
         }
       else
         {

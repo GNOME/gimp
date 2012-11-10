@@ -54,6 +54,7 @@ typedef struct
 
   GimpPrecision  precision;
   gint           layer_dither_type;
+  gint           text_layer_dither_type;
   gint           mask_dither_type;
 } ConvertDialog;
 
@@ -66,8 +67,9 @@ static void   convert_precision_dialog_free     (ConvertDialog    *dialog);
 
 /*  defaults  */
 
-static gint   saved_layer_dither_type = 0;
-static gint   saved_mask_dither_type  = 0;
+static gint   saved_layer_dither_type      = 0;
+static gint   saved_text_layer_dither_type = 0;
+static gint   saved_mask_dither_type       = 0;
 
 
 /*  public functions  */
@@ -99,11 +101,12 @@ convert_precision_dialog_new (GimpImage     *image,
 
   dialog = g_slice_new0 (ConvertDialog);
 
-  dialog->image             = image;
-  dialog->precision         = precision;
-  dialog->progress          = progress;
-  dialog->layer_dither_type = saved_layer_dither_type;
-  dialog->mask_dither_type  = saved_mask_dither_type;
+  dialog->image                  = image;
+  dialog->precision              = precision;
+  dialog->progress               = progress;
+  dialog->layer_dither_type      = saved_layer_dither_type;
+  dialog->text_layer_dither_type = saved_text_layer_dither_type;
+  dialog->mask_dither_type       = saved_mask_dither_type;
 
   gimp_enum_get_value (GIMP_TYPE_PRECISION, precision,
                        NULL, NULL, &enum_desc, NULL);
@@ -190,7 +193,33 @@ convert_precision_dialog_new (GimpImage     *image,
                               G_CALLBACK (gimp_int_combo_box_get_active),
                               &dialog->layer_dither_type);
 
-  /*  layers  */
+  /*  text layers  */
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new_with_mnemonic (_("_Text Layers:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_size_group_add_widget (size_group, label);
+  gtk_widget_show (label);
+
+  combo = gimp_enum_combo_box_new (dither_type);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
+  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
+  gtk_widget_show (combo);
+
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                              dialog->text_layer_dither_type,
+                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              &dialog->text_layer_dither_type);
+
+  gimp_help_set_help_data (combo,
+                           _("Dithering text layers will make them uneditable"),
+                           NULL);
+
+  /*  channels  */
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -235,6 +264,7 @@ convert_precision_dialog_response (GtkWidget     *widget,
       gimp_image_convert_precision (dialog->image,
                                     dialog->precision,
                                     dialog->layer_dither_type,
+                                    dialog->text_layer_dither_type,
                                     dialog->mask_dither_type,
                                     progress);
 

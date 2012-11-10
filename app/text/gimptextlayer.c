@@ -33,6 +33,7 @@
 
 #include "text-types.h"
 
+#include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
@@ -63,44 +64,52 @@ enum
 };
 
 
-static void       gimp_text_layer_finalize       (GObject         *object);
-static void       gimp_text_layer_get_property   (GObject         *object,
-                                                  guint            property_id,
-                                                  GValue          *value,
-                                                  GParamSpec      *pspec);
-static void       gimp_text_layer_set_property   (GObject         *object,
-                                                  guint            property_id,
-                                                  const GValue    *value,
-                                                  GParamSpec      *pspec);
+static void       gimp_text_layer_finalize       (GObject           *object);
+static void       gimp_text_layer_get_property   (GObject           *object,
+                                                  guint              property_id,
+                                                  GValue            *value,
+                                                  GParamSpec        *pspec);
+static void       gimp_text_layer_set_property   (GObject           *object,
+                                                  guint              property_id,
+                                                  const GValue      *value,
+                                                  GParamSpec        *pspec);
 
-static gint64     gimp_text_layer_get_memsize    (GimpObject      *object,
-                                                  gint64          *gui_size);
+static gint64     gimp_text_layer_get_memsize    (GimpObject        *object,
+                                                  gint64            *gui_size);
 
-static GimpItem * gimp_text_layer_duplicate      (GimpItem        *item,
-                                                  GType            new_type);
-static gboolean   gimp_text_layer_rename         (GimpItem        *item,
-                                                  const gchar     *new_name,
-                                                  const gchar     *undo_desc,
-                                                  GError         **error);
+static GimpItem * gimp_text_layer_duplicate      (GimpItem          *item,
+                                                  GType              new_type);
+static gboolean   gimp_text_layer_rename         (GimpItem          *item,
+                                                  const gchar       *new_name,
+                                                  const gchar       *undo_desc,
+                                                  GError           **error);
 
-static void       gimp_text_layer_set_buffer     (GimpDrawable    *drawable,
-                                                  gboolean         push_undo,
-                                                  const gchar     *undo_desc,
-                                                  GeglBuffer      *buffer,
-                                                  gint             offset_x,
-                                                  gint             offset_y);
-static void       gimp_text_layer_push_undo      (GimpDrawable    *drawable,
-                                                  const gchar     *undo_desc,
-                                                  GeglBuffer      *buffer,
-                                                  gint             x,
-                                                  gint             y,
-                                                  gint             width,
-                                                  gint             height);
+static void       gimp_text_layer_convert_type   (GimpDrawable      *drawable,
+                                                  GimpImage         *dest_image,
+                                                  const Babl        *new_format,
+                                                  GimpImageBaseType  new_base_type,
+                                                  GimpPrecision      new_precision,
+                                                  gint               layer_dither_type,
+                                                  gint               mask_dither_type,
+                                                  gboolean           push_undo);
+static void       gimp_text_layer_set_buffer     (GimpDrawable      *drawable,
+                                                  gboolean           push_undo,
+                                                  const gchar       *undo_desc,
+                                                  GeglBuffer        *buffer,
+                                                  gint               offset_x,
+                                                  gint               offset_y);
+static void       gimp_text_layer_push_undo      (GimpDrawable      *drawable,
+                                                  const gchar       *undo_desc,
+                                                  GeglBuffer        *buffer,
+                                                  gint               x,
+                                                  gint               y,
+                                                  gint               width,
+                                                  gint               height);
 
-static void       gimp_text_layer_text_changed   (GimpTextLayer   *layer);
-static gboolean   gimp_text_layer_render         (GimpTextLayer   *layer);
-static void       gimp_text_layer_render_layout  (GimpTextLayer   *layer,
-                                                  GimpTextLayout  *layout);
+static void       gimp_text_layer_text_changed   (GimpTextLayer     *layer);
+static gboolean   gimp_text_layer_render         (GimpTextLayer     *layer);
+static void       gimp_text_layer_render_layout  (GimpTextLayer     *layer,
+                                                  GimpTextLayout    *layout);
 
 
 G_DEFINE_TYPE (GimpTextLayer, gimp_text_layer, GIMP_TYPE_LAYER)
@@ -144,6 +153,7 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
   item_class->rotate_desc          = _("Rotate Text Layer");
   item_class->transform_desc       = _("Transform Text Layer");
 
+  drawable_class->convert_type     = gimp_text_layer_convert_type;
   drawable_class->set_buffer       = gimp_text_layer_set_buffer;
   drawable_class->push_undo        = gimp_text_layer_push_undo;
 
@@ -298,6 +308,42 @@ gimp_text_layer_rename (GimpItem     *item,
     }
 
   return FALSE;
+}
+
+static void
+gimp_text_layer_convert_type (GimpDrawable      *drawable,
+                              GimpImage         *dest_image,
+                              const Babl        *new_format,
+                              GimpImageBaseType  new_base_type,
+                              GimpPrecision      new_precision,
+                              gint               layer_dither_type,
+                              gint               mask_dither_type,
+                              gboolean           push_undo)
+{
+  GimpTextLayer *layer = GIMP_TEXT_LAYER (drawable);
+  GimpImage     *image = gimp_item_get_image (GIMP_ITEM (layer));
+
+  if (! layer->text || layer->modified || layer_dither_type != 0)
+    {
+      GIMP_DRAWABLE_CLASS (parent_class)->convert_type (drawable, dest_image,
+                                                        new_format,
+                                                        new_base_type,
+                                                        new_precision,
+                                                        layer_dither_type,
+                                                        mask_dither_type,
+                                                        push_undo);
+    }
+  else
+    {
+      if (push_undo)
+        gimp_image_undo_push_text_layer_convert (image, NULL, layer);
+
+      layer->convert_format = new_format;
+
+      gimp_text_layer_render (layer);
+
+      layer->convert_format = NULL;
+    }
 }
 
 static void
@@ -529,6 +575,15 @@ gimp_item_is_text_layer (GimpItem *item)
 
 /*  private functions  */
 
+static const Babl *
+gimp_text_layer_get_format (GimpTextLayer *layer)
+{
+  if (layer->convert_format)
+    return layer->convert_format;
+
+  return gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+}
+
 static void
 gimp_text_layer_text_changed (GimpTextLayer *layer)
 {
@@ -583,12 +638,14 @@ gimp_text_layer_render (GimpTextLayer *layer)
 
   if (gimp_text_layout_get_size (layout, &width, &height) &&
       (width  != gimp_item_get_width  (item) ||
-       height != gimp_item_get_height (item)))
+       height != gimp_item_get_height (item) ||
+       gimp_text_layer_get_format (layer) !=
+       gimp_drawable_get_format (drawable)))
     {
       GeglBuffer *new_buffer;
 
       new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
-                                    gimp_drawable_get_format (drawable));
+                                    gimp_text_layer_get_format (layer));
       gimp_drawable_set_buffer (drawable, FALSE, NULL, new_buffer);
       g_object_unref (new_buffer);
 

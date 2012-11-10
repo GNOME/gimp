@@ -46,6 +46,8 @@ struct _GimpTextLayer
                                  */
   gboolean      auto_rename;
   gboolean      modified;
+
+  const Babl   *convert_format;
 };
 
 struct _GimpTextLayerClass

@@ -158,6 +158,9 @@ GimpUndo * gimp_image_undo_push_text_layer          (GimpImage     *image,
 GimpUndo * gimp_image_undo_push_text_layer_modified (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpTextLayer *layer);
+GimpUndo * gimp_image_undo_push_text_layer_convert  (GimpImage     *image,
+                                                     const gchar   *undo_desc,
+                                                     GimpTextLayer *layer);
 
 
 /*  layer mask undos  */

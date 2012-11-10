@@ -534,6 +534,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_LAYER_CONVERT,      /*< desc="Convert group layer"         >*/
   GIMP_UNDO_TEXT_LAYER,               /*< desc="Text layer"                  >*/
   GIMP_UNDO_TEXT_LAYER_MODIFIED,      /*< desc="Text layer modification"     >*/
+  GIMP_UNDO_TEXT_LAYER_CONVERT,       /*< desc="Convert text layer"          >*/
   GIMP_UNDO_LAYER_MASK_ADD,           /*< desc="Add layer mask"              >*/
   GIMP_UNDO_LAYER_MASK_REMOVE,        /*< desc="Delete layer mask"           >*/
   GIMP_UNDO_LAYER_MASK_APPLY,         /*< desc="Apply layer mask"            >*/
