@@ -216,6 +216,9 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
                 tile = gegl_node_new_child (clone->node,
                                             "operation", "gegl:tile",
                                             NULL);
+                clone->crop = gegl_node_new_child (clone->node,
+                                                   "operation", "gegl:crop",
+                                                   NULL);
               }
               break;
             }
@@ -240,8 +243,8 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
           if (tile)
             {
               gegl_node_link_many (src_node,
-#warning enable gegl:tile once it works
-                                   //tile,
+                                   tile,
+                                   clone->crop,
                                    clone->transform_node,
                                    clone->dest_node,
                                    NULL);
@@ -322,6 +325,7 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
           g_object_unref (clone->node);
           g_object_unref (clone->processor);
           clone->node           = NULL;
+          clone->crop           = NULL;
           clone->transform_node = NULL;
           clone->dest_node      = NULL;
           clone->processor      = NULL;
@@ -359,7 +363,8 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
                                    gint             *paint_area_height,
                                    GeglRectangle    *src_rect)
 {
-  GimpPerspectiveClone *clone = GIMP_PERSPECTIVE_CLONE (source_core);
+  GimpPerspectiveClone *clone         = GIMP_PERSPECTIVE_CLONE (source_core);
+  GimpCloneOptions     *clone_options = GIMP_CLONE_OPTIONS (paint_options);
   GeglBuffer           *src_buffer;
   GeglBuffer           *dest_buffer;
   const Babl           *src_format_alpha;
@@ -392,15 +397,29 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
   xmax = ceil  (MAX4 (x1s, x2s, x3s, x4s));
   ymax = ceil  (MAX4 (y1s, y2s, y3s, y4s));
 
-  if (! gimp_rectangle_intersect (xmin, ymin,
-                                  xmax - xmin, ymax - ymin,
-                                  0, 0,
-                                  gegl_buffer_get_width  (src_buffer),
-                                  gegl_buffer_get_height (src_buffer),
-                                  NULL, NULL, NULL, NULL))
+  switch (clone_options->clone_type)
     {
-      /* if the source area is completely out of the image */
-      return NULL;
+    case GIMP_IMAGE_CLONE:
+      if (! gimp_rectangle_intersect (xmin, ymin,
+                                      xmax - xmin, ymax - ymin,
+                                      0, 0,
+                                      gegl_buffer_get_width  (src_buffer),
+                                      gegl_buffer_get_height (src_buffer),
+                                      NULL, NULL, NULL, NULL))
+        {
+          /* if the source area is completely out of the image */
+          return NULL;
+        }
+      break;
+
+    case GIMP_PATTERN_CLONE:
+      gegl_node_set (clone->crop,
+                     "x",      (gdouble) xmin,
+                     "y",      (gdouble) ymin,
+                     "width",  (gdouble) xmax - xmin,
+                     "height", (gdouble) ymax - ymin,
+                     NULL);
+      break;
     }
 
   dest_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, x2d - x1d, y2d - y1d),
