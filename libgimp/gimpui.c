@@ -57,13 +57,13 @@
 
 /*  local function prototypes  */
 
-static void  gimp_ui_help_func              (const gchar *help_id,
-                                             gpointer     help_data);
-static void  gimp_ensure_modules            (void);
-static void  gimp_window_transient_realized (GtkWidget   *window,
-                                             GdkWindow   *parent);
-static void  gimp_window_set_transient_for  (GtkWindow   *window,
-                                             GdkWindow   *parent);
+static void      gimp_ui_help_func              (const gchar *help_id,
+                                                 gpointer     help_data);
+static void      gimp_ensure_modules            (void);
+static void      gimp_window_transient_realized (GtkWidget   *window,
+                                                 GdkWindow   *parent);
+static gboolean  gimp_window_set_transient_for  (GtkWindow   *window,
+                                                 GdkWindow   *parent);
 
 
 static gboolean gimp_ui_initialized = FALSE;
@@ -252,8 +252,15 @@ gimp_window_set_transient_for_display (GtkWindow *window,
   g_return_if_fail (gimp_ui_initialized);
   g_return_if_fail (GTK_IS_WINDOW (window));
 
-  gimp_window_set_transient_for (window,
-                                 gimp_ui_get_display_window (gdisp_ID));
+  if (! gimp_window_set_transient_for (window,
+                                       gimp_ui_get_display_window (gdisp_ID)))
+    {
+      /*  if setting the window transient failed, at least set
+       *  WIN_POS_CENTER, which will center the window on the screen
+       *  where the mouse is (see bug #684003).
+       */
+      gtk_window_set_position (window, GTK_WIN_POS_CENTER);
+    }
 }
 
 /**
@@ -272,7 +279,11 @@ gimp_window_set_transient (GtkWindow *window)
   g_return_if_fail (gimp_ui_initialized);
   g_return_if_fail (GTK_IS_WINDOW (window));
 
-  gimp_window_set_transient_for (window, gimp_ui_get_progress_window ());
+  if (! gimp_window_set_transient_for (window, gimp_ui_get_progress_window ()))
+    {
+      /*  see above  */
+      gtk_window_set_position (window, GTK_WIN_POS_CENTER);
+    }
 }
 
 
@@ -313,7 +324,7 @@ gimp_window_transient_realized (GtkWidget *window,
     gdk_window_set_transient_for (gtk_widget_get_window (window), parent);
 }
 
-static void
+static gboolean
 gimp_window_set_transient_for (GtkWindow *window,
                                GdkWindow *parent)
 {
@@ -326,7 +337,7 @@ gimp_window_set_transient_for (GtkWindow *window,
                                         NULL);
 
   if (! parent)
-    return;
+    return FALSE;
 
   if (gtk_widget_get_realized (GTK_WIDGET (window)))
     gdk_window_set_transient_for (gtk_widget_get_window (GTK_WIDGET (window)),
@@ -336,5 +347,9 @@ gimp_window_set_transient_for (GtkWindow *window,
                            G_CALLBACK (gimp_window_transient_realized),
                            parent, 0);
   g_object_unref (parent);
+
+  return TRUE;
 #endif
+
+  return FALSE;
 }
