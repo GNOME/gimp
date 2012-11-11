@@ -729,17 +729,14 @@ gimp_path_parse (const gchar  *path,
                  gboolean      check,
                  GList       **check_failed)
 {
-  const gchar  *home;
-  gchar       **patharray;
-  GList        *list      = NULL;
-  GList        *fail_list = NULL;
-  gint          i;
-  gboolean      exists    = TRUE;
+  gchar    **patharray;
+  GList     *list      = NULL;
+  GList     *fail_list = NULL;
+  gint       i;
+  gboolean   exists    = TRUE;
 
   if (!path || !*path || max_paths < 1 || max_paths > 256)
     return NULL;
-
-  home = g_get_home_dir ();
 
   patharray = g_strsplit (path, G_SEARCHPATH_SEPARATOR_S, max_paths);
 
@@ -753,7 +750,7 @@ gimp_path_parse (const gchar  *path,
 #ifndef G_OS_WIN32
       if (*patharray[i] == '~')
         {
-          dir = g_string_new (home);
+          dir = g_string_new (g_get_home_dir ());
           g_string_append (dir, patharray[i] + 1);
         }
       else
