@@ -110,8 +110,10 @@ gimp_user_install_items[] =
 };
 
 
-static gboolean  gimp_user_install_detect_old    (GimpUserInstall  *install,
+static gboolean  user_install_detect_old         (GimpUserInstall  *install,
                                                   const gchar      *gimp_dir);
+static gchar *   user_install_old_style_gimpdir  (void);
+
 static void      user_install_log                (GimpUserInstall  *install,
                                                   const gchar      *format,
                                                   ...) G_GNUC_PRINTF (2, 3);
@@ -134,6 +136,7 @@ static gboolean  user_install_create_files       (GimpUserInstall  *install);
 static gboolean  user_install_migrate_files      (GimpUserInstall  *install);
 
 
+/*  public functions  */
 
 GimpUserInstall *
 gimp_user_install_new (gboolean verbose)
@@ -142,20 +145,17 @@ gimp_user_install_new (gboolean verbose)
 
   install->verbose = verbose;
 
-  gimp_user_install_detect_old (install, gimp_directory ());
+  user_install_detect_old (install, gimp_directory ());
 
-#ifdef PLATFORM_OSX
   if (! install->old_dir)
     {
-      /*  if the default old gimpdir was not found, try the "classic" one
-       *  in the home folder
+      /* if the default XDG-style config directory was not found, try
+       * the "old-style" path in the home folder.
        */
-      gchar *dir = g_strdup_printf ("%s/.gimp-%s",
-                                    g_get_home_dir (), GIMP_APP_VERSION);
-      gimp_user_install_detect_old (install, dir);
+      gchar *dir = user_install_old_style_gimpdir ();
+      user_install_detect_old (install, dir);
       g_free (dir);
     }
-#endif
 
   return install;
 }
@@ -220,8 +220,8 @@ gimp_user_install_set_log_handler (GimpUserInstall        *install,
 /*  Local functions  */
 
 static gboolean
-gimp_user_install_detect_old (GimpUserInstall *install,
-                              const gchar     *gimp_dir)
+user_install_detect_old (GimpUserInstall *install,
+                         const gchar     *gimp_dir)
 {
   gchar    *dir     = g_strdup (gimp_dir);
   gchar    *version;
@@ -264,6 +264,52 @@ gimp_user_install_detect_old (GimpUserInstall *install,
     }
 
   return migrate;
+}
+
+static gchar *
+user_install_old_style_gimpdir (void)
+{
+  const gchar *home_dir = g_get_home_dir ();
+  gchar       *gimp_dir = NULL;
+
+  if (home_dir)
+    {
+      gimp_dir = g_build_filename (home_dir, ".gimp-" GIMP_APP_VERSION, NULL);
+    }
+  else
+    {
+      gchar *user_name = g_strdup (g_get_user_name ());
+      gchar *subdir_name;
+
+#ifdef G_OS_WIN32
+      gchar *p = user_name;
+
+      while (*p)
+        {
+          /* Replace funny characters in the user name with an
+           * underscore. The code below also replaces some
+           * characters that in fact are legal in file names, but
+           * who cares, as long as the definitely illegal ones are
+           * caught.
+           */
+          if (!g_ascii_isalnum (*p) && !strchr ("-.,@=", *p))
+            *p = '_';
+          p++;
+        }
+#endif
+
+#ifndef G_OS_WIN32
+      g_message ("warning: no home directory.");
+#endif
+      subdir_name = g_strconcat (".gimp-" GIMP_APP_VERSION ".", user_name, NULL);
+      gimp_dir = g_build_filename (gimp_data_directory (),
+                                   subdir_name,
+                                   NULL);
+      g_free (user_name);
+      g_free (subdir_name);
+    }
+
+  return gimp_dir;
 }
 
 static void
