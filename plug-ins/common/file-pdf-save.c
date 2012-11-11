@@ -79,8 +79,8 @@
  * August 17, 2009 | Barak Itkin <lightningismyname@gmail.com>
  *   Most of the plugin was rewritten from scratch and it now has several new
  *   features:
- *   - Got rid of the optimization macros in the code. The gui now allows to
- *     select which optimizations to apply.
+ *   - Got rid of the optimization macros in the code. The gui now supports
+ *     selecting which optimizations to apply.
  *   - Added a procedure to allow the creation of multiple paged PDF's
  *   - Registered the plugin on "<Image>/File/Create/PDF"
  *

@@ -378,7 +378,7 @@ gimp_rgba_parse_css (GimpRGB     *rgba,
  * @names:  return location for an array of color names
  * @colors: return location for an array of GimpRGB structs
  *
- * Allows to retrieve the list of <ulink
+ * Returns the list of <ulink
  * url="http://www.w3.org/TR/SVG/types.html">SVG 1.0 color
  * keywords</ulink> that is used by gimp_rgb_parse_name().
  *

@@ -118,9 +118,9 @@ sub progress_set_text {
     $blurb = 'Changes the text in the progress bar for the current plug-in.';
 
     $help = <<'HELP';
-This function allows to change the text in the progress bar for the
-current plug-in. Unlike gimp_progress_init() it does not change the
-displayed value.
+This function changes the text in the progress bar for the current
+plug-in. Unlike gimp_progress_init() it does not change the displayed
+value.
 HELP
 
     &neo_pdb_misc('2005', '2.4');

@@ -35,7 +35,7 @@
  * @short_description: A #GtkComboBox to select a #GimpUnit.
  * @see_also: #GimpUnit, #GimpUnitStore
  *
- * #GimpUnitComboBox allows to select units stored in a #GimpUnitStore.
+ * #GimpUnitComboBox selects units stored in a #GimpUnitStore.
  * It replaces the deprecated #GimpUnitMenu.
  **/
 

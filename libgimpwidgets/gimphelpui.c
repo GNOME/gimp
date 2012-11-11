@@ -239,9 +239,9 @@ gimp_help_set_help_data (GtkWidget   *widget,
  * @tooltip: The markup for this widget's tooltip (or %NULL).
  * @help_id: The @help_id for the #GtkTipsQuery tooltips inspector.
  *
- * Just like gimp_help_set_help_data(), but it allows to pass text which
- * is marked up with
- * <link linkend="PangoMarkupFormat">Pango text markup language</link>.
+ * Just like gimp_help_set_help_data(), but supports to pass text
+ * which is marked up with <link linkend="PangoMarkupFormat">Pango
+ * text markup language</link>.
  *
  * Since: GIMP 2.6
  **/

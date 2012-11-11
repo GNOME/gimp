@@ -308,7 +308,7 @@ query (void)
                           "This plug-in saves Portable Network Graphics "
                           "(PNG) files. "
                           "This procedure adds 2 extra parameters to "
-                          "file-png-save that allows to control whether "
+                          "file-png-save that control whether "
                           "image comments are saved and whether transparent "
                           "pixels are saved or nullified.",
                           "Michael Sweet <mike@easysw.com>, "

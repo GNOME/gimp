@@ -54,8 +54,8 @@
  *
  * On click a color selection dialog is opened. Additionally the
  * button supports Drag and Drop and has a right-click menu that
- * allows to choose the color from the current FG or BG color. If the
- * user changes the color, the "color-changed" signal is emitted.
+ * allows one to choose the color from the current FG or BG color. If
+ * the user changes the color, the "color-changed" signal is emitted.
  **/
 
 

@@ -1753,7 +1753,7 @@ gimp_display_shell_resume (GimpDisplayShell *shell)
  * @shell:     a #GimpDisplayShell
  * @highlight: a rectangle in image coordinates that should be brought out
  *
- * This function allows to set an area of the image that should be
+ * This function sets an area of the image that should be
  * accentuated. The actual implementation is to dim all pixels outside
  * this rectangle. Passing %NULL for @highlight unsets the rectangle.
  **/
@@ -1789,9 +1789,9 @@ gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
  * @mask:  a #GimpDrawable (1 byte per pixel)
  * @color: the color to use for drawing the mask
  *
- * Allows to preview a selection (used by the foreground selection
- * tool).  Pixels that are not selected (> 127) in the mask are tinted
- * with the given color.
+ * Previews a selection (used by the foreground selection tool).
+ * Pixels that are not selected (> 127) in the mask are tinted with
+ * the given color.
  **/
 void
 gimp_display_shell_set_mask (GimpDisplayShell *shell,

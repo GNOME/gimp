@@ -95,8 +95,8 @@ gimp_enum_radio_box_new (GType       enum_type,
  * @first_button:  returns the first button in the created group.
  *
  * Just like gimp_enum_radio_box_new(), this function creates a group
- * of radio buttons, but it allows to limit the range of available
- * enum values.
+ * of radio buttons, but additionally it supports limiting the range
+ * of available enum values.
  *
  * Return value: a new #GtkVBox holding a group of #GtkRadioButtons.
  *
@@ -317,8 +317,8 @@ gimp_enum_stock_box_new (GType         enum_type,
  * @first_button:  returns the first button in the created group.
  *
  * Just like gimp_enum_stock_box_new(), this function creates a group
- * of radio buttons, but it allows to limit the range of available
- * enum values.
+ * of radio buttons, but additionally it supports limiting the range
+ * of available enum values.
  *
  * Return value: a new #GtkHBox holding a group of #GtkRadioButtons.
  *

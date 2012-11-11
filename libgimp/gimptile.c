@@ -148,7 +148,7 @@ gimp_tile_cache_size (gulong kilobytes)
  * @ntiles: number of tiles that should fit into the cache
  *
  * Sets the size of the tile cache on the plug-in side. This function
- * is similar to gimp_tile_cache_size() but allows to specify the
+ * is similar to gimp_tile_cache_size() but supports specifying the
  * number of tiles directly.
  *
  * If your plug-in access pixels tile-by-tile, it doesn't need a tile

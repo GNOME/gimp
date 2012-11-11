@@ -1779,7 +1779,7 @@ gimp_preview_area_menu_new (GimpPreviewArea *area,
  * @area:  a #GimpPreviewArea
  * @event: the button event that causes the menu to popup or %NULL
  *
- * Creates a popup menu that allows to configure the size and type of
+ * Creates a popup menu that allows one to configure the size and type of
  * the checkerboard pattern that the @area uses to visualize transparency.
  *
  * Since: GIMP 2.2

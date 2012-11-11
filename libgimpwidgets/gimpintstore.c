@@ -100,7 +100,7 @@ gimp_int_store_class_init (GimpIntStoreClass *klass)
   /**
    * GimpIntStore:user-data-type:
    *
-   * Allows to set the #GType for the GIMP_INT_STORE_USER_DATA column.
+   * Sets the #GType for the GIMP_INT_STORE_USER_DATA column.
    *
    * You need to set this property when constructing the store if you want
    * to use the GIMP_INT_STORE_USER_DATA column and want to have the store

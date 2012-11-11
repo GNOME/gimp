@@ -283,8 +283,8 @@ gimp_progress_init_printf (const gchar *format,
  *
  * Changes the text in the progress bar for the current plug-in.
  *
- * This function allows to change the text in the progress bar for the
- * current plug-in. Unlike gimp_progress_init() it does not change the
+ * This function changes the text in the progress bar for the current
+ * plug-in. Unlike gimp_progress_init() it does not change the
  * displayed value.
  *
  * Returns: %TRUE on success.

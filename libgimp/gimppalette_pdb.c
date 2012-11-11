@@ -319,9 +319,9 @@ gimp_palette_get_columns (const gchar *name)
  *
  * Sets the number of columns to use when displaying the palette
  *
- * This procedures allows to control how many colors are shown per row
- * when the palette is being displayed. This value can only be changed
- * if the palette is writable. The maximum allowed value is 64.
+ * This procedures controls how many colors are shown per row when the
+ * palette is being displayed. This value can only be changed if the
+ * palette is writable. The maximum allowed value is 64.
  *
  * Returns: TRUE on success.
  *

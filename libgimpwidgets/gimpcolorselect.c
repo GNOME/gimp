@@ -49,8 +49,8 @@
  * @short_description: A #GimpColorSelector implementation.
  *
  * The #GimpColorSelect widget is an implementation of a
- * #GimpColorSelector. It shows a square area that allows to
- * interactively change two color channels and a smaller area to
+ * #GimpColorSelector. It shows a square area that supports
+ * interactively changing two color channels and a smaller area to
  * change the third channel. You can select which channel should be
  * the third by calling gimp_color_selector_set_channel(). The widget
  * will then change the other two channels accordingly.

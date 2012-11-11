@@ -35,8 +35,8 @@
  * @short_description: A #GtkButton with a little extra functionality.
  *
  * #GimpButton adds an extra signal to the #GtkButton widget that
- * allows to distinguish a normal click from a click that was
- * performed with modifier keys pressed.
+ * allows the callback to distinguish a normal click from a click that
+ * was performed with modifier keys pressed.
  **/
 
 

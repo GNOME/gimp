@@ -53,12 +53,12 @@ static void  gimp_rc_destroy_unknown_tokens (GSList *unknown_tokens);
  * @key: a nul-terminated string to identify the value.
  * @value: a nul-terminated string representing the value.
  *
- * This function allows to add arbitrary key/value pairs to a GObject.
- * It's purpose is to attach additional data to a #GimpConfig object
- * that can be stored along with the object properties when
- * serializing the object to a configuration file. Please note however
- * that the default gimp_config_serialize() implementation does not
- * serialize unknown tokens.
+ * This function adds arbitrary key/value pairs to a GObject.  It's
+ * purpose is to attach additional data to a #GimpConfig object that
+ * can be stored along with the object properties when serializing the
+ * object to a configuration file. Please note however that the
+ * default gimp_config_serialize() implementation does not serialize
+ * unknown tokens.
  *
  * If you want to remove a key/value pair from the object, call this
  * function with a %NULL @value.
