@@ -49,15 +49,20 @@ gimp_item_linked_is_locked (const GimpItem *item)
 
   list = gimp_image_item_list_filter (item, list, TRUE, FALSE);
 
-  for (l = list; l; l = g_list_next (l))
+  for (l = list; l && ! locked; l = g_list_next (l))
     {
       GimpItem *item = l->data;
 
+      /*  temporarily set the item to not being linked, or we will
+       *  run into a recursion because gimp_item_is_position_locked()
+       *  call this function if the item is linked
+       */
+      gimp_item_set_linked (item, FALSE, FALSE);
+
       if (gimp_item_is_position_locked (item))
-        {
-          locked = TRUE;
-          break;
-        }
+        locked = TRUE;
+
+      gimp_item_set_linked (item, TRUE, FALSE);
     }
 
   g_list_free (list);
