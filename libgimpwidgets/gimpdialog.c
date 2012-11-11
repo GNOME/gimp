@@ -149,10 +149,6 @@ gimp_dialog_class_init (GimpDialogClass *klass)
 static void
 gimp_dialog_init (GimpDialog *dialog)
 {
-#ifdef GDK_WINDOWING_QUARTZ
-  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
-#endif
-
   g_signal_connect (dialog, "response",
                     G_CALLBACK (gimp_dialog_response),
                     NULL);
