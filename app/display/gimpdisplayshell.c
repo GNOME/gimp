@@ -1319,6 +1319,8 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
 
   gimp_display_shell_unset_cursor (shell);
 
+  gimp_display_shell_sync_config (shell, shell->display->config);
+
   gimp_display_shell_appearance_update (shell);
 #if 0
   gimp_help_set_help_data (shell->canvas,
