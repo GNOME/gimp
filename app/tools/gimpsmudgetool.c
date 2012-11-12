@@ -89,7 +89,7 @@ gimp_smudge_options_gui (GimpToolOptions *tool_options)
 
   /*  the rate scale  */
   scale = gimp_prop_spin_scale_new (config, "rate",
-                                    _("Rate"),
+                                    C_("smudge-tool", "Rate"),
                                     1.0, 10.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
