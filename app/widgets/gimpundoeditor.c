@@ -128,8 +128,7 @@ gimp_undo_editor_constructed (GObject *object)
 {
   GimpUndoEditor *undo_editor = GIMP_UNDO_EDITOR (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   undo_editor->view = gimp_container_tree_view_new (NULL, NULL,
                                                     undo_editor->view_size,

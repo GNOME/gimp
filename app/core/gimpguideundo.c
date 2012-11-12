@@ -86,8 +86,7 @@ gimp_guide_undo_constructed (GObject *object)
 {
   GimpGuideUndo *guide_undo = GIMP_GUIDE_UNDO (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_GUIDE (guide_undo->guide));
 

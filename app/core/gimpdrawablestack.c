@@ -113,8 +113,7 @@ gimp_drawable_stack_constructed (GObject *object)
 {
   GimpContainer *container = GIMP_CONTAINER (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (g_type_is_a (gimp_container_get_children_type (container),
                          GIMP_TYPE_DRAWABLE));

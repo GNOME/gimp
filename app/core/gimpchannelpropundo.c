@@ -62,8 +62,7 @@ gimp_channel_prop_undo_constructed (GObject *object)
   GimpChannelPropUndo *channel_prop_undo = GIMP_CHANNEL_PROP_UNDO (object);
   GimpChannel         *channel;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_CHANNEL (GIMP_ITEM_UNDO (object)->item));
 

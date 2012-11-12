@@ -217,8 +217,7 @@ gimp_tag_popup_constructed (GObject *object)
   GdkRectangle         popup_rects[2]; /* variants of popup placement */
   GdkRectangle         popup_rect; /* best popup rect in screen coordinates */
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   entry = GTK_WIDGET (popup->combo_entry);
 

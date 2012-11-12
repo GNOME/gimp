@@ -129,8 +129,7 @@ gimp_brush_tool_constructed (GObject *object)
   GimpBrushTool     *brush_tool = GIMP_BRUSH_TOOL (object);
   GimpDisplayConfig *display_config;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_BRUSH_CORE (paint_tool->core));
 

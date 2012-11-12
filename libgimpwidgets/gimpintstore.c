@@ -141,8 +141,7 @@ gimp_int_store_constructed (GObject *object)
   GimpIntStorePrivate *priv  = GIMP_INT_STORE_GET_PRIVATE (store);
   GType                types[GIMP_INT_STORE_NUM_COLUMNS];
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   types[GIMP_INT_STORE_VALUE]     = G_TYPE_INT;
   types[GIMP_INT_STORE_LABEL]     = G_TYPE_STRING;

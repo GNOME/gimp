@@ -115,8 +115,7 @@ gimp_action_group_constructed (GObject *object)
   GimpActionGroup *group = GIMP_ACTION_GROUP (object);
   const gchar     *name;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_GIMP (group->gimp));
 

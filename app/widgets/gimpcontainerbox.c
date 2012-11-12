@@ -121,8 +121,7 @@ gimp_container_box_constructed (GObject *object)
   gimp_container_view_set_dnd_widget (GIMP_CONTAINER_VIEW (box),
                                       box->scrolled_win);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 }
 
 void

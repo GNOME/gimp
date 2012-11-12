@@ -202,8 +202,7 @@ gimp_data_editor_constructed (GObject *object)
 {
   GimpDataEditor *editor = GIMP_DATA_EDITOR (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_DATA_FACTORY (editor->data_factory));
   g_assert (GIMP_IS_CONTEXT (editor->context));

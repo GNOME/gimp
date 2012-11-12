@@ -148,8 +148,7 @@ gimp_string_combo_box_constructed (GObject *object)
   GimpStringComboBoxPrivate *priv = GIMP_STRING_COMBO_BOX_GET_PRIVATE (object);
   GtkCellRenderer           *cell;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   priv->text_renderer = cell = gtk_cell_renderer_text_new ();
 

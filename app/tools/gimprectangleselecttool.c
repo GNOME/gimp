@@ -246,8 +246,7 @@ gimp_rectangle_select_tool_constructed (GObject *object)
   GimpRectangleSelectOptions     *options;
   GimpRectangleSelectToolPrivate *priv;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_rectangle_tool_constructor (object);
 

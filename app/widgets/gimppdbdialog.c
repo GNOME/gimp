@@ -182,8 +182,7 @@ gimp_pdb_dialog_constructed (GObject *object)
   GimpPdbDialog *dialog = GIMP_PDB_DIALOG (object);
   const gchar   *signal_name;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_PDB (dialog->pdb));
   g_assert (GIMP_IS_CONTEXT (dialog->caller_context));

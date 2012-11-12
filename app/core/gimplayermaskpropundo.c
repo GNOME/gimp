@@ -62,8 +62,7 @@ gimp_layer_mask_prop_undo_constructed (GObject *object)
 
   layer_mask_prop_undo = GIMP_LAYER_MASK_PROP_UNDO (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_LAYER (GIMP_ITEM_UNDO (object)->item));
 

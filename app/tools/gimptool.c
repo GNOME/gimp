@@ -192,8 +192,7 @@ gimp_tool_constructed (GObject *object)
 {
   GimpTool *tool = GIMP_TOOL (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_TOOL_INFO (tool->tool_info));
 

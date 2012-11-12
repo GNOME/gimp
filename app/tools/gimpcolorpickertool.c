@@ -130,8 +130,7 @@ gimp_color_picker_tool_constructed (GObject *object)
 {
   GimpTool *tool = GIMP_TOOL (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_color_tool_enable (GIMP_COLOR_TOOL (object),
                           GIMP_COLOR_TOOL_GET_OPTIONS (tool));

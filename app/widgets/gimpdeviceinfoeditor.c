@@ -332,8 +332,7 @@ gimp_device_info_editor_constructed (GObject *object)
 
   private = GIMP_DEVICE_INFO_EDITOR_GET_PRIVATE (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_DEVICE_INFO (private->info));
 

@@ -182,8 +182,7 @@ gimp_device_info_constructed (GObject *object)
   GimpDeviceInfo *info = GIMP_DEVICE_INFO (object);
   Gimp           *gimp;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert ((info->device == NULL         && info->display == NULL) ||
             (GDK_IS_DEVICE (info->device) && GDK_IS_DISPLAY (info->display)));

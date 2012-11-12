@@ -103,8 +103,7 @@ gimp_text_buffer_constructed (GObject *object)
 {
   GimpTextBuffer *buffer = GIMP_TEXT_BUFFER (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gtk_text_buffer_set_text (GTK_TEXT_BUFFER (buffer), "", -1);
 

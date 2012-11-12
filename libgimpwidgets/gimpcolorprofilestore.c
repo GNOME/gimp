@@ -135,8 +135,7 @@ gimp_color_profile_store_constructed (GObject *object)
   GimpColorProfileStore *store = GIMP_COLOR_PROFILE_STORE (object);
   GtkTreeIter            iter;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gtk_list_store_append (GTK_LIST_STORE (store), &iter);
   gtk_list_store_set (GTK_LIST_STORE (store), &iter,

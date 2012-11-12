@@ -142,8 +142,7 @@ gimp_drawable_tree_view_constructed (GObject *object)
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (object);
   GimpItemTreeView      *item_view = GIMP_ITEM_TREE_VIEW (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_dnd_viewable_dest_add (gimp_item_tree_view_get_new_button (item_view),
                               GIMP_TYPE_PATTERN,

@@ -104,8 +104,7 @@ gimp_combo_tag_entry_constructed (GObject *object)
 {
   GimpComboTagEntry *entry = GIMP_COMBO_TAG_ENTRY (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_signal_connect_object (GIMP_TAG_ENTRY (entry)->container,
                            "tag-count-changed",

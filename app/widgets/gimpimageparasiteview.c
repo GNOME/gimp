@@ -121,8 +121,7 @@ gimp_image_parasite_view_constructed (GObject *object)
 {
   GimpImageParasiteView *view = GIMP_IMAGE_PARASITE_VIEW (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (view->parasite != NULL);
   g_assert (view->image != NULL);

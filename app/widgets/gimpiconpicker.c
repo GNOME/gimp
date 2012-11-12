@@ -126,8 +126,7 @@ gimp_icon_picker_constructed (GObject *object)
   GSList                *stock_list;
   GSList                *list;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_GIMP (private->gimp));
 

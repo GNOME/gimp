@@ -232,8 +232,7 @@ gimp_image_map_tool_constructed (GObject *object)
   GimpImageMapTool      *image_map_tool = GIMP_IMAGE_MAP_TOOL (object);
   GimpImageMapToolClass *klass;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   klass = GIMP_IMAGE_MAP_TOOL_GET_CLASS (image_map_tool);
 

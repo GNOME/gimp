@@ -122,8 +122,7 @@ gimp_filtered_container_constructed (GObject *object)
 {
   GimpFilteredContainer *filtered_container = GIMP_FILTERED_CONTAINER (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_CONTAINER (filtered_container->src_container));
 

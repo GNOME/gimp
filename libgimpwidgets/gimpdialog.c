@@ -159,8 +159,7 @@ gimp_dialog_constructed (GObject *object)
 {
   GimpDialogPrivate *private = GET_PRIVATE (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   if (private->help_func)
     gimp_help_connect (GTK_WIDGET (object),

@@ -191,8 +191,7 @@ gimp_canvas_item_constructed (GObject *object)
 
   private->change_count = 0; /* undo hack from init() */
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 }
 
 static void

@@ -116,8 +116,7 @@ gimp_stroke_editor_constructed (GObject *object)
   GtkCellRenderer   *cell;
   gint               row = 0;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_STROKE_OPTIONS (fill_editor->options));
 

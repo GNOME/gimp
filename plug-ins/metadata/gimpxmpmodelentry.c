@@ -77,8 +77,7 @@ gimp_xmp_model_entry_init (GimpXmpModelEntry *entry)
 static void
 gimp_xmp_model_entry_constructed (GObject *object)
 {
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_xmp_model_widget_constructor (object);
 }

@@ -99,8 +99,7 @@ gimp_pattern_clipboard_constructed (GObject *object)
 {
   GimpPatternClipboard *pattern = GIMP_PATTERN_CLIPBOARD (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_GIMP (pattern->gimp));
 

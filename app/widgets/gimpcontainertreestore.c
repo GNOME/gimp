@@ -117,8 +117,7 @@ gimp_container_tree_store_init (GimpContainerTreeStore *store)
 static void
 gimp_container_tree_store_constructed (GObject *object)
 {
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 }
 
 static void

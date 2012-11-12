@@ -60,8 +60,7 @@ gimp_group_layer_undo_constructed (GObject *object)
   GimpGroupLayerUndo *group_layer_undo = GIMP_GROUP_LAYER_UNDO (object);
   GimpGroupLayer     *group;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_GROUP_LAYER (GIMP_ITEM_UNDO (object)->item));
 

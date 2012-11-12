@@ -338,8 +338,7 @@ gimp_item_constructed (GObject *object)
 {
   GimpItemPrivate *private = GET_PRIVATE (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_IMAGE (private->image));
   g_assert (private->ID != 0);

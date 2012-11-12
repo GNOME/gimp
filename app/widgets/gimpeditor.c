@@ -227,8 +227,7 @@ gimp_editor_constructed (GObject *object)
 {
   GimpEditor *editor = GIMP_EDITOR (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   if (! editor->priv->popup_data)
     editor->priv->popup_data = editor;

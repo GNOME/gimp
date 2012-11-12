@@ -178,8 +178,7 @@ gimp_crop_tool_constructed (GObject *object)
   GimpContext     *gimp_context;
   GimpToolInfo    *tool_info;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_rectangle_tool_constructor (object);
 

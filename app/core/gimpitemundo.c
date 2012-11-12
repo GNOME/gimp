@@ -81,8 +81,7 @@ gimp_item_undo_constructed (GObject *object)
 {
   GimpItemUndo *item_undo = GIMP_ITEM_UNDO (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_ITEM (item_undo->item));
 }

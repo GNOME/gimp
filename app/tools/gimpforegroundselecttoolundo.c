@@ -89,8 +89,7 @@ gimp_foreground_select_tool_undo_constructed (GObject *object)
 {
   GimpForegroundSelectToolUndo *fg_select_tool_undo;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   fg_select_tool_undo = GIMP_FOREGROUND_SELECT_TOOL_UNDO (object);
 

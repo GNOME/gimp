@@ -223,8 +223,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
 static void
 gimp_brush_editor_constructed (GObject *object)
 {
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_docked_set_show_button_bar (GIMP_DOCKED (object), FALSE);
 }

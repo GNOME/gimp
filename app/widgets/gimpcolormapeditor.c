@@ -220,8 +220,7 @@ gimp_colormap_editor_constructed (GObject *object)
 {
   GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_editor_add_action_button (GIMP_EDITOR (editor), "colormap",
                                  "colormap-edit-color",

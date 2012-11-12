@@ -297,8 +297,7 @@ gimp_dock_window_constructed (GObject *object)
   gint            menu_view_width  = -1;
   gint            menu_view_height = -1;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp   = GIMP (dock_window->p->context->gimp);
   config = GIMP_GUI_CONFIG (gimp->config);
@@ -323,7 +322,7 @@ gimp_dock_window_constructed (GObject *object)
                                    dock_window->p->ui_manager_name,
                                    dock_window,
                                    config->tearoff_menus);
-  accel_group = 
+  accel_group =
     gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (dock_window->p->ui_manager));
   gtk_window_add_accel_group (GTK_WINDOW (dock_window), accel_group);
 

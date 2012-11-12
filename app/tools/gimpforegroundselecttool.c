@@ -207,8 +207,7 @@ gimp_foreground_select_tool_constructed (GObject *object)
 {
   GimpToolOptions *options = GIMP_TOOL_GET_OPTIONS (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_signal_connect_object (options, "notify",
                            G_CALLBACK (gimp_foreground_select_options_notify),

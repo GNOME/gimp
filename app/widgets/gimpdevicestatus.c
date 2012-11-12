@@ -148,8 +148,7 @@ gimp_device_status_constructed (GObject *object)
   GimpContainer    *devices;
   GList            *list;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_GIMP (status->gimp));
 

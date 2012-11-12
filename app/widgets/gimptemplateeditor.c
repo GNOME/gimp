@@ -148,8 +148,7 @@ gimp_template_editor_constructed (GObject *object)
   GList                     *focus_chain = NULL;
   gchar                     *text;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (private->template != NULL);
 

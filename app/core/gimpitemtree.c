@@ -147,8 +147,7 @@ gimp_item_tree_constructed (GObject *object)
   GimpItemTree        *tree    = GIMP_ITEM_TREE (object);
   GimpItemTreePrivate *private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_IMAGE (private->image));
   g_assert (g_type_is_a (private->container_type, GIMP_TYPE_ITEM_STACK));

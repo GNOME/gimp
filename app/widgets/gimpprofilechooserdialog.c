@@ -99,8 +99,7 @@ gimp_profile_chooser_dialog_constructed (GObject *object)
   GimpProfileChooserDialog *dialog = GIMP_PROFILE_CHOOSER_DIALOG (object);
   GtkFileFilter            *filter;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gtk_window_set_role (GTK_WINDOW (dialog), "gimp-profile-chooser-dialog");
 

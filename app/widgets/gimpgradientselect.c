@@ -94,8 +94,7 @@ gimp_gradient_select_constructed (GObject *object)
   GimpPdbDialog *dialog = GIMP_PDB_DIALOG (object);
   GtkWidget     *content_area;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   dialog->view =
     gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,

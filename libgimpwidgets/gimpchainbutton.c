@@ -153,8 +153,7 @@ gimp_chain_button_constructed (GObject *object)
 {
   GimpChainButton *button = GIMP_CHAIN_BUTTON (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   button->line1 = gimp_chain_line_new (button->position, 1);
   button->line2 = gimp_chain_line_new (button->position, -1);

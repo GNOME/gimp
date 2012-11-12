@@ -209,8 +209,7 @@ gimp_controller_keyboard_init (GimpControllerKeyboard *keyboard)
 static void
 gimp_controller_keyboard_constructed (GObject *object)
 {
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_object_set (object,
                 "name",  _("Keyboard Events"),

@@ -159,8 +159,7 @@ gimp_color_display_init (GimpColorDisplay *display)
 static void
 gimp_color_display_constructed (GObject *object)
 {
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   /* emit an initial "changed" signal after all construct properties are set */
   gimp_color_display_changed (GIMP_COLOR_DISPLAY (object));

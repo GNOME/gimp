@@ -195,8 +195,7 @@ gimp_tool_options_editor_constructed (GObject *object)
   GimpToolOptionsEditor *editor = GIMP_TOOL_OPTIONS_EDITOR (object);
   GimpContext           *user_context;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   editor->p->save_button =
     gimp_editor_add_button (GIMP_EDITOR (editor), GTK_STOCK_SAVE,

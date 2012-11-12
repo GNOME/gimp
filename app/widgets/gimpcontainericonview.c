@@ -182,8 +182,7 @@ gimp_container_icon_view_constructed (GObject *object)
   GimpContainerView     *view      = GIMP_CONTAINER_VIEW (object);
   GimpContainerBox      *box       = GIMP_CONTAINER_BOX (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   icon_view->model = gimp_container_tree_store_new (view,
                                                     icon_view->n_model_columns,

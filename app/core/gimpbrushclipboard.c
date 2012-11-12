@@ -98,8 +98,7 @@ gimp_brush_clipboard_constructed (GObject *object)
 {
   GimpBrushClipboard *brush = GIMP_BRUSH_CLIPBOARD (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_GIMP (brush->gimp));
 

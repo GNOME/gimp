@@ -86,8 +86,7 @@ gimp_translation_store_constructed (GObject *object)
   GimpTranslationStore *store = GIMP_TRANSLATION_STORE (object);
   gchar                *label;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_translation_store_populate (store);
 

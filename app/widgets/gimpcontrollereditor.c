@@ -174,8 +174,7 @@ gimp_controller_editor_constructed (GObject *object)
   gint                  row;
   gint                  i;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_CONTROLLER_INFO (editor->info));
 

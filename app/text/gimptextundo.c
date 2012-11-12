@@ -100,8 +100,7 @@ gimp_text_undo_constructed (GObject *object)
   GimpTextUndo  *text_undo = GIMP_TEXT_UNDO (object);
   GimpTextLayer *layer;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_TEXT_LAYER (GIMP_ITEM_UNDO (text_undo)->item));
 

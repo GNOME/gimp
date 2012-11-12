@@ -103,8 +103,7 @@ gimp_channel_undo_init (GimpChannelUndo *undo)
 static void
 gimp_channel_undo_constructed (GObject *object)
 {
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_CHANNEL (GIMP_ITEM_UNDO (object)->item));
 }

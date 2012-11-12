@@ -99,8 +99,7 @@ gimp_language_entry_constructed (GObject *object)
 {
   GimpLanguageEntry *entry = GIMP_LANGUAGE_ENTRY (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   if (entry->store)
     {

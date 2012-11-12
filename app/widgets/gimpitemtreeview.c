@@ -345,8 +345,7 @@ gimp_item_tree_view_constructed (GObject *object)
   GtkWidget             *image;
   GtkIconSize            icon_size;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_container_tree_view_connect_name_edited (tree_view,
                                                 G_CALLBACK (gimp_item_tree_view_name_edited),

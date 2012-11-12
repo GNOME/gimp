@@ -76,8 +76,7 @@ gimp_language_store_init (GimpLanguageStore *store)
 static void
 gimp_language_store_constructed (GObject *object)
 {
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_language_store_parse_iso_codes (GIMP_LANGUAGE_STORE (object), NULL);
 }

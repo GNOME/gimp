@@ -111,8 +111,7 @@ gimp_hint_box_constructed (GObject *object)
   GimpHintBox *box = GIMP_HINT_BOX (object);
   GtkWidget   *label;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gtk_box_set_spacing (GTK_BOX (box), 12);
 

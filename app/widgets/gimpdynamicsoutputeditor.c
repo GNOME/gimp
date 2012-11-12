@@ -179,8 +179,7 @@ gimp_dynamics_output_editor_constructed (GObject *object)
   editor  = GIMP_DYNAMICS_OUTPUT_EDITOR (object);
   private = GET_PRIVATE (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_DYNAMICS_OUTPUT (private->output));
 

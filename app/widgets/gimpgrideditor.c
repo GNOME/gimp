@@ -127,8 +127,7 @@ gimp_grid_editor_constructed (GObject *object)
   GtkWidget      *color_button;
   GtkWidget      *sizeentry;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (editor->grid != NULL);
 

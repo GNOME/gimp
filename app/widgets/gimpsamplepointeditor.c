@@ -168,8 +168,7 @@ gimp_sample_point_editor_init (GimpSamplePointEditor *editor)
 static void
 gimp_sample_point_editor_constructed (GObject *object)
 {
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 }
 
 static void

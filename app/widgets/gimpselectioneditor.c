@@ -145,8 +145,7 @@ gimp_selection_editor_constructed (GObject *object)
 {
   GimpSelectionEditor *editor = GIMP_SELECTION_EDITOR (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   editor->all_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor), "select",

@@ -150,8 +150,7 @@ gimp_image_undo_constructed (GObject *object)
   GimpImageUndo *image_undo = GIMP_IMAGE_UNDO (object);
   GimpImage     *image;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   image = GIMP_UNDO (object)->image;
 

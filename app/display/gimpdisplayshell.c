@@ -363,8 +363,7 @@ gimp_display_shell_constructed (GObject *object)
   gint                   shell_width;
   gint                   shell_height;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_UI_MANAGER (shell->popup_manager));
   g_assert (GIMP_IS_DISPLAY (shell->display));

@@ -92,8 +92,7 @@ gimp_layer_mask_undo_constructed (GObject *object)
 {
   GimpLayerMaskUndo *layer_mask_undo = GIMP_LAYER_MASK_UNDO (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_LAYER (GIMP_ITEM_UNDO (object)->item));
   g_assert (GIMP_IS_LAYER_MASK (layer_mask_undo->layer_mask));

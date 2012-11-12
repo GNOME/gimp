@@ -97,8 +97,7 @@ gimp_drawable_mod_undo_constructed (GObject *object)
   GimpItem            *item;
   GimpDrawable        *drawable;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_DRAWABLE (GIMP_ITEM_UNDO (object)->item));
 

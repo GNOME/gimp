@@ -97,8 +97,7 @@ gimp_mask_undo_constructed (GObject *object)
   GimpDrawable *drawable;
   gint          x1, y1, x2, y2;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_CHANNEL (GIMP_ITEM_UNDO (object)->item));
 

@@ -164,8 +164,7 @@ gimp_pdb_context_constructed (GObject *object)
   gint                   threshold;
   GParamSpec            *pspec;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   /* get default interpolation from gimprc */
 

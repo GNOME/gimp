@@ -109,8 +109,7 @@ gimp_error_console_constructed (GObject *object)
 {
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   console->clear_button =
     gimp_editor_add_action_button (GIMP_EDITOR (console), "error-console",

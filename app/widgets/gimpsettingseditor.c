@@ -161,8 +161,7 @@ gimp_settings_editor_constructed (GObject *object)
   GimpSettingsEditorPrivate *private = GET_PRIVATE (object);
   GimpContainerTreeView     *tree_view;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_GIMP (private->gimp));
   g_assert (GIMP_IS_CONFIG (private->config));

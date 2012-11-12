@@ -105,8 +105,7 @@ gimp_fill_editor_constructed (GObject *object)
   GtkWidget      *box;
   GtkWidget      *button;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_FILL_OPTIONS (editor->options));
 

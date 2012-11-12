@@ -168,8 +168,7 @@ gimp_align_tool_constructed (GObject *object)
   GimpAlignTool    *align_tool = GIMP_ALIGN_TOOL (object);
   GimpAlignOptions *options;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   options = GIMP_ALIGN_TOOL_GET_OPTIONS (align_tool);
 

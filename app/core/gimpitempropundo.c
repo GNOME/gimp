@@ -97,8 +97,7 @@ gimp_item_prop_undo_constructed (GObject *object)
   GimpItemPropUndo *item_prop_undo = GIMP_ITEM_PROP_UNDO (object);
   GimpItem         *item;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   item = GIMP_ITEM_UNDO (object)->item;
 

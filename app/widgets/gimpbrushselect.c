@@ -135,8 +135,7 @@ gimp_brush_select_constructed (GObject *object)
   GtkWidget       *label;
   GtkAdjustment   *spacing_adj;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_context_set_opacity    (dialog->context, select->initial_opacity);
   gimp_context_set_paint_mode (dialog->context, select->initial_mode);

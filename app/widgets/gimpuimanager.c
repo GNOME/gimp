@@ -198,8 +198,7 @@ gimp_ui_manager_constructed (GObject *object)
 {
   GimpUIManager *manager = GIMP_UI_MANAGER (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   if (manager->name)
     {

@@ -208,8 +208,7 @@ gimp_zoom_preview_constructed (GObject *object)
   gchar                  *data_name;
   PreviewSettings         settings;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   data_name = g_strdup_printf ("%s-zoom-preview-%d",
                                g_get_prgname (),

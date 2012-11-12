@@ -775,8 +775,7 @@ gimp_context_constructed (GObject *object)
   Gimp          *gimp;
   GimpContainer *container;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp = GIMP_CONTEXT (object)->gimp;
 

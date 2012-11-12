@@ -84,8 +84,7 @@ gimp_paint_core_undo_constructed (GObject *object)
 {
   GimpPaintCoreUndo *paint_core_undo = GIMP_PAINT_CORE_UNDO (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_PAINT_CORE (paint_core_undo->paint_core));
 

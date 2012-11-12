@@ -278,8 +278,7 @@ gimp_text_tool_constructed (GObject *object)
   GimpTextTool    *text_tool = GIMP_TEXT_TOOL (object);
   GimpTextOptions *options   = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_rectangle_tool_constructor (object);
 

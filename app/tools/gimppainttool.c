@@ -150,8 +150,7 @@ gimp_paint_tool_constructed (GObject *object)
   GimpPaintOptions *options    = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
   GimpPaintInfo    *paint_info;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_TOOL_INFO (tool->tool_info));
   g_assert (GIMP_IS_PAINT_INFO (tool->tool_info->paint_info));

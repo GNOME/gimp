@@ -81,8 +81,7 @@ gimp_brush_cache_constructed (GObject *object)
 {
   GimpBrushCache *cache = GIMP_BRUSH_CACHE (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (cache->data_destroy != NULL);
 }

@@ -177,8 +177,7 @@ gimp_tool_preset_constructed (GObject *object)
 {
   GimpToolPreset *preset = GIMP_TOOL_PRESET (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_GIMP (preset->gimp));
 }

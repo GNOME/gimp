@@ -224,8 +224,7 @@ gimp_container_editor_constructed (GObject *object)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_CONTAINER (editor->priv->container));
   g_assert (GIMP_IS_CONTEXT (editor->priv->context));

@@ -138,8 +138,7 @@ gimp_vectors_tree_view_constructed (GObject *object)
   GdkModifierType        extend_mask;
   GdkModifierType        modify_mask;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   extend_mask = gtk_widget_get_modifier_mask (GTK_WIDGET (object),
                                               GDK_MODIFIER_INTENT_EXTEND_SELECTION);

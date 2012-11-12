@@ -297,8 +297,7 @@ gimp_text_style_editor_constructed (GObject *object)
 {
   GimpTextStyleEditor *editor = GIMP_TEXT_STYLE_EDITOR (object);
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_GIMP (editor->gimp));
   g_assert (GIMP_IS_FONT_LIST (editor->fonts));
