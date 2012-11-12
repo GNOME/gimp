@@ -161,6 +161,7 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
                               &renderer,
                               -1);
 
+          drop_path     = gtk_tree_model_get_path (tree_view->model, &iter);
           dest_viewable = renderer->viewable;
           drop_pos      = GTK_TREE_VIEW_DROP_AFTER;
 
