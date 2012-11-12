@@ -235,6 +235,9 @@ gimp_drawable_stack_get_graph (GimpDrawableStack *stack)
       GimpDrawable *drawable = list->data;
 
       reverse_list = g_list_prepend (reverse_list, drawable);
+
+      if (! g_list_next (list))
+        gimp_drawable_set_is_last_node (drawable, TRUE);
     }
 
   stack->graph = gegl_node_new ();
@@ -271,6 +274,7 @@ static void
 gimp_drawable_stack_add_node (GimpDrawableStack *stack,
                               GimpDrawable      *drawable)
 {
+  GimpDrawable *drawable_above = NULL;
   GimpDrawable *drawable_below;
   GeglNode     *node_above;
   GeglNode     *node;
@@ -287,8 +291,6 @@ gimp_drawable_stack_add_node (GimpDrawableStack *stack,
     }
   else
     {
-      GimpDrawable *drawable_above;
-
       drawable_above = (GimpDrawable *)
         gimp_container_get_child_by_index (GIMP_CONTAINER (stack), index - 1);
 
@@ -308,12 +310,20 @@ gimp_drawable_stack_add_node (GimpDrawableStack *stack,
       gegl_node_connect_to (node_below, "output",
                             node,       "input");
     }
+  else
+    {
+      if (drawable_above)
+        gimp_drawable_set_is_last_node (drawable_above, FALSE);
+
+      gimp_drawable_set_is_last_node (drawable, TRUE);
+    }
 }
 
 static void
 gimp_drawable_stack_remove_node (GimpDrawableStack *stack,
                                  GimpDrawable      *drawable)
 {
+  GimpDrawable *drawable_above = NULL;
   GimpDrawable *drawable_below;
   GeglNode     *node_above;
   GeglNode     *node;
@@ -330,8 +340,6 @@ gimp_drawable_stack_remove_node (GimpDrawableStack *stack,
     }
   else
     {
-      GimpDrawable *drawable_above;
-
       drawable_above = (GimpDrawable *)
         gimp_container_get_child_by_index (GIMP_CONTAINER (stack), index - 1);
 
@@ -352,6 +360,11 @@ gimp_drawable_stack_remove_node (GimpDrawableStack *stack,
   else
     {
       gegl_node_disconnect (node_above, "input");
+
+      gimp_drawable_set_is_last_node (drawable, FALSE);
+
+      if (drawable_above)
+        gimp_drawable_set_is_last_node (drawable_above, TRUE);
     }
 }
 

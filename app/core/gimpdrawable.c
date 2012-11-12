@@ -61,6 +61,12 @@ enum
   LAST_SIGNAL
 };
 
+enum
+{
+  PROP_0,
+  PROP_IS_LAST_NODE
+};
+
 
 /*  local function prototypes  */
 
@@ -68,6 +74,14 @@ static void  gimp_drawable_pickable_iface_init (GimpPickableInterface *iface);
 
 static void       gimp_drawable_dispose            (GObject           *object);
 static void       gimp_drawable_finalize           (GObject           *object);
+static void       gimp_drawable_set_property       (GObject           *object,
+                                                    guint              property_id,
+                                                    const GValue      *value,
+                                                    GParamSpec        *pspec);
+static void       gimp_drawable_get_property       (GObject           *object,
+                                                    guint              property_id,
+                                                    GValue            *value,
+                                                    GParamSpec        *pspec);
 
 static gint64     gimp_drawable_get_memsize        (GimpObject        *object,
                                                     gint64            *gui_size);
@@ -212,6 +226,8 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
 
   object_class->dispose              = gimp_drawable_dispose;
   object_class->finalize             = gimp_drawable_finalize;
+  object_class->set_property         = gimp_drawable_set_property;
+  object_class->get_property         = gimp_drawable_get_property;
 
   gimp_object_class->get_memsize     = gimp_drawable_get_memsize;
 
@@ -241,6 +257,12 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   klass->set_buffer                  = gimp_drawable_real_set_buffer;
   klass->push_undo                   = gimp_drawable_real_push_undo;
   klass->swap_pixels                 = gimp_drawable_real_swap_pixels;
+
+  g_object_class_install_property (object_class, PROP_IS_LAST_NODE,
+                                   g_param_spec_boolean ("is-last-node",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
 
   g_type_class_add_private (klass, sizeof (GimpDrawablePrivate));
 }
@@ -296,6 +318,46 @@ gimp_drawable_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_drawable_set_property (GObject      *object,
+                            guint         property_id,
+                            const GValue *value,
+                            GParamSpec   *pspec)
+{
+  GimpDrawable *drawable = GIMP_DRAWABLE (object);
+
+  switch (property_id)
+    {
+    case PROP_IS_LAST_NODE:
+      drawable->private->is_last_node = g_value_get_boolean (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_drawable_get_property (GObject    *object,
+                            guint       property_id,
+                            GValue     *value,
+                            GParamSpec *pspec)
+{
+  GimpDrawable *drawable = GIMP_DRAWABLE (object);
+
+  switch (property_id)
+    {
+    case PROP_IS_LAST_NODE:
+      g_value_set_boolean (value, drawable->private->is_last_node);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static gint64
@@ -1316,6 +1378,28 @@ gimp_drawable_get_mode_node (GimpDrawable *drawable)
     gimp_item_get_node (GIMP_ITEM (drawable));
 
   return drawable->private->mode_node;
+}
+
+void
+gimp_drawable_set_is_last_node (GimpDrawable *drawable,
+                                gboolean      last_node)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  if (last_node != drawable->private->is_last_node)
+    {
+      g_object_set (drawable,
+                    "is-last-node", last_node ? TRUE : FALSE,
+                    NULL);
+    }
+}
+
+gboolean
+gimp_drawable_get_is_last_node (GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+
+  return drawable->private->is_last_node;
 }
 
 void

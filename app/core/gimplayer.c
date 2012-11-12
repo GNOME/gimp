@@ -85,6 +85,8 @@ static void       gimp_layer_get_property       (GObject            *object,
                                                  GParamSpec         *pspec);
 static void       gimp_layer_dispose            (GObject            *object);
 static void       gimp_layer_finalize           (GObject            *object);
+static void       gimp_layer_notify             (GObject            *object,
+                                                 GParamSpec         *pspec);
 
 static void       gimp_layer_name_changed       (GimpObject         *object);
 static gint64     gimp_layer_get_memsize        (GimpObject         *object,
@@ -264,6 +266,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   object_class->get_property          = gimp_layer_get_property;
   object_class->dispose               = gimp_layer_dispose;
   object_class->finalize              = gimp_layer_finalize;
+  object_class->notify                = gimp_layer_notify;
 
   gimp_object_class->name_changed     = gimp_layer_name_changed;
   gimp_object_class->get_memsize      = gimp_layer_get_memsize;
@@ -464,6 +467,39 @@ gimp_layer_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static GimpLayerModeEffects
+gimp_layer_get_visible_mode (GimpLayer *layer)
+{
+  if (layer->mode != GIMP_DISSOLVE_MODE &&
+      gimp_drawable_get_is_last_node (GIMP_DRAWABLE (layer)))
+    return GIMP_NORMAL_MODE;
+
+  return layer->mode;
+}
+
+static void
+gimp_layer_notify (GObject    *object,
+                   GParamSpec *pspec)
+{
+  if (! strcmp (pspec->name, "is-last-node") &&
+      gimp_item_peek_node (GIMP_ITEM (object)))
+    {
+      GimpLayer *layer = GIMP_LAYER (object);
+      GeglNode  *mode_node;
+
+      mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
+
+      gimp_gegl_mode_node_set (mode_node,
+                               gimp_layer_get_visible_mode (layer),
+                               layer->opacity, FALSE);
+
+      gimp_drawable_update (GIMP_DRAWABLE (layer),
+                            0, 0,
+                            gimp_item_get_width  (GIMP_ITEM (layer)),
+                            gimp_item_get_height (GIMP_ITEM (layer)));
+    }
 }
 
 static void
@@ -880,7 +916,9 @@ gimp_layer_get_node (GimpItem *item)
    */
   mode_node = gimp_drawable_get_mode_node (drawable);
 
-  gimp_gegl_mode_node_set (mode_node, layer->mode, layer->opacity, FALSE);
+  gimp_gegl_mode_node_set (mode_node,
+                           gimp_layer_get_visible_mode (layer),
+                           layer->opacity, FALSE);
 
   /* the layer's offset node */
   layer->layer_offset_node = gegl_node_new_child (node,
@@ -1944,7 +1982,8 @@ gimp_layer_set_opacity (GimpLayer *layer,
           mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
 
           gimp_gegl_mode_node_set (mode_node,
-                                   layer->mode, layer->opacity, FALSE);
+                                   gimp_layer_get_visible_mode (layer),
+                                   layer->opacity, FALSE);
         }
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
@@ -1990,7 +2029,8 @@ gimp_layer_set_mode (GimpLayer            *layer,
           mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
 
           gimp_gegl_mode_node_set (mode_node,
-                                   layer->mode, layer->opacity, FALSE);
+                                   gimp_layer_get_visible_mode (layer),
+                                   layer->opacity, FALSE);
         }
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
