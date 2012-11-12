@@ -2021,7 +2021,7 @@ gimp_temp_proc_run (GPProcRun *proc_run)
       if (proc_run->params &&
           proc_run->params[0].data.d_int32 == GIMP_RUN_INTERACTIVE)
         {
-          [NSApp activateIgnoringOtherApps:YES];
+          [NSApp activateIgnoringOtherApps: YES];
         }
 #endif
 

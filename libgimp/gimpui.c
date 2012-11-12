@@ -231,6 +231,17 @@ gimp_ui_get_progress_window (void)
   return NULL;
 }
 
+#ifdef GDK_WINDOWING_QUARTZ
+static void
+gimp_window_transient_show (GtkWidget *window)
+{
+  g_signal_handlers_disconnect_by_func (window,
+                                        gimp_window_transient_show,
+                                        NULL);
+  [NSApp arrangeInFront: nil];
+}
+#endif
+
 /**
  * gimp_window_set_transient_for_display:
  * @window:   the #GtkWindow that should become transient
@@ -262,14 +273,9 @@ gimp_window_set_transient_for_display (GtkWindow *window,
       gtk_window_set_position (window, GTK_WIN_POS_CENTER);
 
 #ifdef GDK_WINDOWING_QUARTZ
-      /*  in OSX, bringing the plug-in's window to front hilariously
-       *  fails even though we call [NSApp activateIgnoringOtherApps];
-       *  as a workaround, set the window to UTILITY which places them
-       *  above all normal windows (which sucks, but it's better than
-       *  below the image window, and not that bad because plug-in
-       *  windows are generally temporary, see bug #677776).
-       */
-      gtk_window_set_type_hint (window, GDK_WINDOW_TYPE_HINT_UTILITY);
+      g_signal_connect (window, "show",
+                        G_CALLBACK (gimp_window_transient_show),
+                        NULL);
 #endif
     }
 }
@@ -296,8 +302,9 @@ gimp_window_set_transient (GtkWindow *window)
       gtk_window_set_position (window, GTK_WIN_POS_CENTER);
 
 #ifdef GDK_WINDOWING_QUARTZ
-      /*  ditto  */
-      gtk_window_set_type_hint (window, GDK_WINDOW_TYPE_HINT_UTILITY);
+      g_signal_connect (window, "show",
+                        G_CALLBACK (gimp_window_transient_show),
+                        NULL);
 #endif
     }
 }
