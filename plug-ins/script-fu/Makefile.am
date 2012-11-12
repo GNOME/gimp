@@ -1,5 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 
+if PLATFORM_OSX
+xobjective_c = "-xobjective-c"
+framework_cocoa = -framework Cocoa
+endif
+
 if OS_WIN32
 mwindows = -mwindows
 WINSOCK_LIBS = -lws2_32
@@ -24,14 +29,19 @@ script_fu_RC = script-fu.rc.o
 endif
 
 AM_CFLAGS = \
-	-DSTANDALONE=0     \
-	-DUSE_INTERFACE=1  \
-	-DUSE_STRLWR=0     \
-	-I$(top_srcdir)    \
-	$(GTK_CFLAGS)      \
-	-I$(includedir)
+	-DSTANDALONE=0		\
+	-DUSE_INTERFACE=1	\
+	-DUSE_STRLWR=0
 
-AM_LDFLAGS = $(mwindows)
+INCLUDES = \
+	-I$(top_srcdir)	\
+	$(GTK_CFLAGS)	\
+	-I$(includedir)	\
+	$(xobjective_c)
+
+AM_LDFLAGS = \
+	$(mwindows)	\
+	$(framework_cocoa)
 
 SUBDIRS = tinyscheme ftx scripts
 

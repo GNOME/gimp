@@ -22,6 +22,10 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#ifdef GDK_WINDOWING_QUARTZ
+#import <Cocoa/Cocoa.h>
+#endif
+
 #include "tinyscheme/scheme-private.h"
 #include "scheme-wrapper.h"
 
@@ -737,11 +741,23 @@ script_fu_response (GtkWidget *widget,
       gtk_widget_set_sensitive (action_area, FALSE);
 
       script_fu_ok (script);
+
+#ifdef GDK_WINDOWING_QUARTZ
+      [NSApp hide: nil];
+      while (g_main_context_pending (NULL))
+        g_main_context_iteration (NULL, TRUE);
+#endif
       gtk_widget_destroy (sf_interface->dialog);
       break;
 
     default:
       sf_status = GIMP_PDB_CANCEL;
+
+#ifdef GDK_WINDOWING_QUARTZ
+      [NSApp hide: nil];
+      while (g_main_context_pending (NULL))
+        g_main_context_iteration (NULL, TRUE);
+#endif
       gtk_widget_destroy (sf_interface->dialog);
       break;
     }
