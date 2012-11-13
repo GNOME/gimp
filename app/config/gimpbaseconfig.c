@@ -43,6 +43,8 @@
 #include "gimp-intl.h"
 
 
+#define GIMP_MAX_MEM_PROCESS (MIN (G_MAXSIZE, GIMP_MAX_MEMSIZE))
+
 enum
 {
   PROP_0,
@@ -143,7 +145,7 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
   memory_size = get_physical_memory_size ();
 
   /* limit to the amount one process can handle */
-  memory_size = MIN (G_MAXSIZE, memory_size);
+  memory_size = MIN (GIMP_MAX_MEM_PROCESS, memory_size);
 
   if (memory_size > 0)
     memory_size = memory_size / 2; /* half the memory */
@@ -152,7 +154,7 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_TILE_CACHE_SIZE,
                                     "tile-cache-size", TILE_CACHE_SIZE_BLURB,
-                                    0, MIN (G_MAXSIZE, GIMP_MAX_MEMSIZE),
+                                    0, GIMP_MAX_MEM_PROCESS,
                                     memory_size,
                                     GIMP_PARAM_STATIC_STRINGS |
                                     GIMP_CONFIG_PARAM_CONFIRM);
