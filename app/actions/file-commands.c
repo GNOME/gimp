@@ -522,11 +522,8 @@ file_open_dialog_show (Gimp        *gimp,
       gimp_file_dialog_set_open_image (GIMP_FILE_DIALOG (dialog),
                                        image, open_as_layers);
 
-      parent = gtk_widget_get_toplevel (parent);
-
-      if (GTK_IS_WINDOW (parent))
-        gtk_window_set_transient_for (GTK_WINDOW (dialog),
-                                      GTK_WINDOW (parent));
+      gtk_window_set_transient_for (GTK_WINDOW (dialog),
+                                    GTK_WINDOW (gtk_widget_get_toplevel (parent)));
 
       gtk_window_present (GTK_WINDOW (dialog));
     }
