@@ -555,7 +555,7 @@ file_save_dialog_show (Gimp        *gimp,
       if (dialog)
         {
           gtk_window_set_transient_for (GTK_WINDOW (dialog),
-                                        GTK_WINDOW (parent));
+                                        GTK_WINDOW (gtk_widget_get_toplevel (parent)));
 
           g_object_set_data_full (G_OBJECT (image),
                                   "gimp-file-save-dialog", dialog,
@@ -606,7 +606,7 @@ file_export_dialog_show (Gimp      *gimp,
       if (dialog)
         {
           gtk_window_set_transient_for (GTK_WINDOW (dialog),
-                                        GTK_WINDOW (parent));
+                                        GTK_WINDOW (gtk_widget_get_toplevel (parent)));
 
           g_object_set_data_full (G_OBJECT (image),
                                   "gimp-file-export-dialog", dialog,
