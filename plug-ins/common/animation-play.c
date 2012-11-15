@@ -68,6 +68,7 @@ static void        do_playback               (void);
 
 static void        window_destroy            (GtkWidget       *widget);
 static void        play_callback             (GtkToggleAction *action);
+static void        step_back_callback        (GtkAction       *action);
 static void        step_callback             (GtkAction       *action);
 static void        rewind_callback           (GtkAction       *action);
 static void        speed_up_callback         (GtkAction       *action);
@@ -444,6 +445,10 @@ ui_manager_new (GtkWidget *window)
 {
   static GtkActionEntry actions[] =
   {
+    { "step-back", GTK_STOCK_MEDIA_PREVIOUS,
+      N_("_Step_back"), NULL, N_("Step back to previous frame"),
+      G_CALLBACK (step_back_callback) },
+
     { "step", GTK_STOCK_MEDIA_NEXT,
       N_("_Step"), NULL, N_("Step to next frame"),
       G_CALLBACK (step_callback) },
@@ -520,6 +525,7 @@ ui_manager_new (GtkWidget *window)
                                      "<ui>"
                                      "  <toolbar name=\"anim-play-toolbar\">"
                                      "    <toolitem action=\"play\" />"
+                                     "    <toolitem action=\"step-back\" />"
                                      "    <toolitem action=\"step\" />"
                                      "    <toolitem action=\"rewind\" />"
                                      "    <separator />"
@@ -542,6 +548,7 @@ ui_manager_new (GtkWidget *window)
                                      "<ui>"
                                      "  <popup name=\"anim-play-popup\">"
                                      "    <menuitem action=\"play\" />"
+                                     "    <menuitem action=\"step-back\" />"
                                      "    <menuitem action=\"step\" />"
                                      "    <menuitem action=\"rewind\" />"
                                      "    <separator />"
@@ -964,6 +971,16 @@ remove_timer (void)
 }
 
 static void
+do_back_step (void)
+{
+  if (frame_number == 0)
+    frame_number = total_frames - 1;
+  else
+    frame_number = (frame_number - 1) % total_frames;
+  render_frame (frame_number);
+}
+
+static void
 do_step (void)
 {
   frame_number = (frame_number + 1) % total_frames;
@@ -1081,6 +1098,16 @@ get_fps (gint index)
     default:
       return 10;
     }
+}
+
+static void
+step_back_callback (GtkAction *action)
+{
+  if (playing)
+    gtk_action_activate (gtk_ui_manager_get_action (ui_manager,
+                                                    "/anim-play-toolbar/play"));
+  do_back_step();
+  show_frame();
 }
 
 static void
@@ -1360,6 +1387,10 @@ init_frames (void)
       gtk_action_set_sensitive (action, FALSE);
 
       action = gtk_ui_manager_get_action (ui_manager,
+                                          "/ui/anim-play-toolbar/step-back");
+      gtk_action_set_sensitive (action, FALSE);
+
+      action = gtk_ui_manager_get_action (ui_manager,
                                           "/ui/anim-play-toolbar/step");
       gtk_action_set_sensitive (action, FALSE);
 
@@ -1371,6 +1402,10 @@ init_frames (void)
     {
       action = gtk_ui_manager_get_action (ui_manager,
                                           "/ui/anim-play-toolbar/play");
+      gtk_action_set_sensitive (action, TRUE);
+
+      action = gtk_ui_manager_get_action (ui_manager,
+                                          "/ui/anim-play-toolbar/step-back");
       gtk_action_set_sensitive (action, TRUE);
 
       action = gtk_ui_manager_get_action (ui_manager,
