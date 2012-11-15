@@ -50,9 +50,8 @@
 
 typedef enum
 {
-  DISPOSE_UNDEFINED = 0x00,
-  DISPOSE_COMBINE   = 0x01,
-  DISPOSE_REPLACE   = 0x02
+  DISPOSE_COMBINE   = 0x00,
+  DISPOSE_REPLACE   = 0x01
 } DisposeType;
 
 
@@ -74,6 +73,8 @@ static void        rewind_callback           (GtkAction       *action);
 static void        speed_up_callback         (GtkAction       *action);
 static void        speed_down_callback       (GtkAction       *action);
 static void        speed_reset_callback      (GtkAction       *action);
+static void        framecombo_changed        (GtkWidget       *combo,
+                                              gpointer         data);
 static void        speedcombo_changed        (GtkWidget       *combo,
                                               gpointer         data);
 static void        fpscombo_changed          (GtkWidget       *combo,
@@ -143,6 +144,7 @@ static GimpImageBaseType  imagetype;
 static guchar            *palette;
 static gint               ncolours;
 static gint               duration_index = 3;
+static DisposeType        default_frame_disposal = DISPOSE_COMBINE;
 static gint               default_frame_duration = 100; /* ms */
 
 
@@ -157,6 +159,7 @@ static GtkWidget *shape_window       = NULL;
 static GdkWindow *root_win           = NULL;
 static gboolean   detached           = FALSE;
 static GtkWidget *speedcombo         = NULL;
+static GtkWidget *frame_disposal_combo = NULL;
 
 MAIN ()
 
@@ -586,6 +589,7 @@ build_dialog (GimpImageBaseType  basetype,
   GdkCursor   *cursor;
   gchar       *name;
   gint         index;
+  gchar       *text;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
@@ -659,8 +663,6 @@ build_dialog (GimpImageBaseType  basetype,
 
   for (index = 0; index < 9; index++)
     {
-      gchar *text;
-
       /* list is given in "fps" - frames per second */
       text = g_strdup_printf  (_("%d fps"), get_fps (index));
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (speedcombo), text);
@@ -681,8 +683,6 @@ build_dialog (GimpImageBaseType  basetype,
 
   for (index = 0; index < 7; index++)
     {
-      gchar *text;
-
       text = g_strdup_printf  ("%g\303\227", (100 / get_duration_factor (index)) / 100);
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (speedcombo), text);
       g_free (text);
@@ -714,6 +714,27 @@ build_dialog (GimpImageBaseType  basetype,
   action = gtk_ui_manager_get_action (ui_manager,
                                       "/anim-play-popup/speed-reset");
   gtk_action_set_sensitive (action, FALSE);
+
+  /* Set up the frame disposal combo. */
+  frame_disposal_combo = gtk_combo_box_text_new ();
+
+  /* 2 styles of default frame disposals: cumulative layers and one frame per layer. */
+  text = g_strdup (_("Cumulative layers (combine)"));
+  gtk_combo_box_text_insert_text (GTK_COMBO_BOX_TEXT (frame_disposal_combo), DISPOSE_COMBINE, text);
+  g_free (text);
+
+  text = g_strdup (_("One frame per layer (replace)"));
+  gtk_combo_box_text_insert_text (GTK_COMBO_BOX_TEXT (frame_disposal_combo), DISPOSE_REPLACE, text);
+  g_free (text);
+
+  gtk_combo_box_set_active (GTK_COMBO_BOX (frame_disposal_combo), default_frame_disposal);
+
+  g_signal_connect (frame_disposal_combo, "changed",
+                G_CALLBACK (framecombo_changed),
+                NULL);
+
+  gtk_box_pack_end (GTK_BOX (hbox), frame_disposal_combo, FALSE, FALSE, 0);
+  gtk_widget_show (frame_disposal_combo);
 
   gtk_widget_show (window);
 
@@ -1187,6 +1208,13 @@ speed_reset_callback (GtkAction *action)
   update_combobox ();
 }
 
+static void
+framecombo_changed (GtkWidget *combo, gpointer data)
+{
+  default_frame_disposal = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
+  init_frames ();
+  render_frame (frame_number);
+}
 
 static void
 speedcombo_changed (GtkWidget *combo, gpointer data)
@@ -1371,7 +1399,7 @@ parse_disposal_tag (const gchar *str)
         return rtn;
     }
 
-  return DISPOSE_UNDEFINED; /* FIXME */
+  return default_frame_disposal;
 }
 
 static void
