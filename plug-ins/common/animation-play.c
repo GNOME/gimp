@@ -84,6 +84,8 @@ static gboolean    repaint_da                (GtkWidget       *darea,
                                               GdkEventExpose  *event,
                                               gpointer         data);
 
+static void        init_frames               (void);
+static void        generate_frames           (void);
 static void        render_frame              (gint32           whichframe);
 static void        show_frame                (void);
 static void        total_alpha_preview       (guchar          *ptr);
@@ -128,9 +130,12 @@ static guint              width, height;
 static guchar            *preview_alpha1_data;
 static guchar            *preview_alpha2_data;
 static gint32             image_id;
+static guchar            *rawframe                = NULL;
+static gint32            *frames                  = NULL;
 static gint32             total_frames;
 static guint              frame_number;
 static gint32            *layers;
+static gint32             total_layers;
 static gboolean           playing = FALSE;
 static guint              timer   = 0;
 static GimpImageBaseType  imagetype;
@@ -295,16 +300,6 @@ shape_pressed (GtkWidget      *widget,
     }
 
   return FALSE;
-}
-
-static gboolean
-maybeblocked_expose (GtkWidget      *widget,
-                     GdkEventExpose *event)
-{
-  if (playing)
-    return TRUE;
-
-  return repaint_sda (widget, event, NULL);
 }
 
 static gboolean
@@ -750,7 +745,7 @@ build_dialog (GimpImageBaseType  basetype,
                     NULL);
 
   g_signal_connect (shape_drawing_area, "expose-event",
-                    G_CALLBACK (maybeblocked_expose),
+                    G_CALLBACK (repaint_sda),
                     NULL);
 
   root_win = gdk_get_default_root_window ();
@@ -761,7 +756,7 @@ do_playback (void)
 {
   width     = gimp_image_width (image_id);
   height    = gimp_image_height (image_id);
-  layers    = gimp_image_get_layers (image_id, &total_frames);
+  layers    = gimp_image_get_layers (image_id, &total_layers);
   imagetype = gimp_image_base_type (image_id);
 
   if (imagetype == GIMP_INDEXED)
@@ -787,8 +782,7 @@ do_playback (void)
   build_dialog (gimp_image_base_type (image_id),
                 gimp_image_get_name (image_id));
 
-  /* Make sure that whole preview is dirtied with pure-alpha */
-  total_alpha_preview (preview_data);
+  init_frames ();
 
   render_frame (0);
   show_frame ();
@@ -806,13 +800,9 @@ render_frame (gint32 whichframe)
   GtkStyle      *drawing_style = gtk_widget_get_style (drawing_area);
   GeglBuffer    *buffer;
   gint           drawable_id;
-  static guchar *rawframe = NULL;
-  static gint    rawwidth = 0, rawheight = 0, rawbpp = 0;
-  gint           rawx = 0, rawy = 0;
+  gint i, j, k;
   guchar        *srcptr;
   guchar        *destptr;
-  gint           i, j, k; /* imaginative loop variables */
-  DisposeType    dispose;
 
   if (whichframe >= total_frames)
     {
@@ -821,8 +811,7 @@ render_frame (gint32 whichframe)
       gimp_quit ();
     }
 
-  drawable_id = layers[total_frames - (whichframe + 1)];
-
+  drawable_id = frames[whichframe];
   buffer = gimp_drawable_get_buffer (drawable_id);
 
   /* Lame attempt to catch the case that a user has closed the image. */
@@ -833,259 +822,65 @@ render_frame (gint32 whichframe)
       return;
     }
 
-  dispose = get_frame_disposal (frame_number);
-
-  if (((dispose == DISPOSE_REPLACE) || (whichframe == 0)) &&
-      gimp_drawable_has_alpha (drawable_id))
-    {
-      total_alpha_preview (preview_data);
-    }
-
-
-  /* only get a new 'raw' drawable-data buffer if this and
-     the previous raw buffer were different sizes */
-
-  if ((rawwidth * rawheight * rawbpp) !=
-      ((gimp_drawable_width (drawable_id) *
-        gimp_drawable_height (drawable_id) *
-        gimp_drawable_has_alpha (drawable_id) ? 4 : 3)))
-    {
-      if (rawframe != NULL)
-        g_free (rawframe);
-
-      rawwidth  = gimp_drawable_width (drawable_id);
-      rawheight = gimp_drawable_height (drawable_id);
-      rawbpp    = gimp_drawable_has_alpha (drawable_id) ? 4 : 3;
-
-      rawframe = g_malloc (rawwidth * rawheight * rawbpp);
-    }
+  /* Initialize the rawframe only once. */
+  if (rawframe == NULL)
+    rawframe = g_malloc (width * height * 4);
 
   /* Initialise and fetch the whole raw new frame */
-
-  gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, rawwidth, rawheight), 1.0,
-                   gimp_drawable_has_alpha (drawable_id) ?
-                   babl_format ("R'G'B'A u8") :
-                   babl_format ("R'G'B' u8"),
+  gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, width, height), 1.0,
+                   babl_format ("R'G'B'A u8"),
                    rawframe, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-  gimp_drawable_offsets (drawable_id, &rawx, &rawy);
-
-
   /* render... */
+  total_alpha_preview (preview_data);
 
-  if ((rawwidth == width) &&
-      (rawheight == height) &&
-      (rawx == 0) &&
-      (rawy == 0))
+  i = width * height;
+  destptr = preview_data;
+  srcptr  = rawframe;
+  while (i--)
     {
-      /* --- These cases are for the best cases,  in        --- */
-      /* --- which this frame is the same size and position --- */
-      /* --- as the preview buffer itself                   --- */
-
-      if (gimp_drawable_has_alpha (drawable_id))
+      if (! (srcptr[3] & 128))
         {
-          destptr = preview_data;
-          srcptr  = rawframe;
-
-          i = rawwidth * rawheight;
-          while (i--)
-            {
-              if (! (srcptr[3] & 128))
-                {
-                  srcptr  += 4;
-                  destptr += 3;
-                  continue;
-                }
-
-              *(destptr++) = *(srcptr++);
-              *(destptr++) = *(srcptr++);
-              *(destptr++) = *(srcptr++);
-
-              srcptr++;
-            }
-
-          /* calculate the shape mask */
-          if (detached)
-            {
-              srcptr = rawframe + 3;
-
-              for (j = 0; j < rawheight; j++)
-                {
-                  k = j * ((7 + rawwidth) / 8);
-
-                  for (i = 0; i < rawwidth; i++)
-                    {
-                      if ((*srcptr) & 128)
-                        shape_preview_mask[k + i/8] |= (1 << (i&7));
-
-                      srcptr += 4;
-                    }
-                }
-            }
-        }
-      else /* no alpha */
-        {
-          if ((rawwidth == width) && (rawheight == height))
-            memcpy (preview_data, rawframe, width * height * 3);
-
-          if (detached)
-            {
-              /* opacify the shape mask */
-              memset (shape_preview_mask, 255,
-                      (rawwidth * rawheight) / 8 + rawheight);
-            }
+          srcptr  += 4;
+          destptr += 3;
+          continue;
         }
 
-      /* Display the preview buffer... finally. */
-      if (detached)
-        {
-          reshape_from_bitmap (shape_preview_mask);
-          gdk_draw_rgb_image (gtk_widget_get_window (shape_drawing_area),
-                              shape_style->white_gc,
-                              0, 0, width, height,
-                              (total_frames == 1 ?
-                               GDK_RGB_DITHER_MAX : DITHERTYPE),
-                              preview_data, width * 3);
-        }
-      else
-        {
-          reshape_from_bitmap (shape_preview_mask);
-          gdk_draw_rgb_image (gtk_widget_get_window (drawing_area),
-                              drawing_style->white_gc,
-                              0, 0, width, height,
-                              (total_frames == 1 ?
-                               GDK_RGB_DITHER_MAX : DITHERTYPE),
-                              preview_data, width * 3);
-        }
+      *(destptr++) = *(srcptr++);
+      *(destptr++) = *(srcptr++);
+      *(destptr++) = *(srcptr++);
+
+      srcptr++;
     }
-  else
+
+  /* calculate the shape mask */
+  if (detached)
     {
-      /* --- These are suboptimal catch-all cases for when  --- */
-      /* --- this frame is bigger/smaller than the preview  --- */
-      /* --- buffer, and/or offset within it.               --- */
+      memset (shape_preview_mask, 0, (width * height) / 8 + height);
+      srcptr = rawframe + 3;
 
-      if (gimp_drawable_has_alpha (drawable_id))
+      for (j = 0; j < height; j++)
         {
-          srcptr = rawframe;
+          k = j * ((7 + width) / 8);
 
-          for (j = rawy; j < rawheight + rawy; j++)
+          for (i = 0; i < width; i++)
             {
-              for (i = rawx; i < rawwidth + rawx; i++)
-                {
-                  if ((i >= 0 && i < width) &&
-                      (j >= 0 && j < height))
-                    {
-                      if (srcptr[3] & 128)
-                        {
-                          preview_data[(j * width + i) * 3    ] = *(srcptr);
-                          preview_data[(j * width + i) * 3 + 1] = *(srcptr + 1);
-                          preview_data[(j * width + i) * 3 + 2] = *(srcptr + 2);
-                        }
-                    }
+              if ((*srcptr) & 128)
+                shape_preview_mask[k + i/8] |= (1 << (i&7));
 
-                  srcptr += 4;
-                }
-            }
-
-          if (detached)
-            {
-              srcptr = rawframe + 3;
-
-              for (j = rawy; j < rawheight + rawy; j++)
-                {
-                  k = j * ((width + 7) / 8);
-
-                  for (i = rawx; i < rawwidth + rawx; i++)
-                    {
-                      if ((i>=0 && i<width) &&
-                          (j>=0 && j<height))
-                        {
-                          if ((*srcptr) & 128)
-                            shape_preview_mask[k + i/8] |= (1 << (i&7));
-                        }
-
-                      srcptr += 4;
-                    }
-                }
+              srcptr += 4;
             }
         }
-      else
-        {
-          /* noalpha */
-
-          srcptr = rawframe;
-
-          for (j = rawy; j < rawheight + rawy; j++)
-            {
-              for (i = rawx; i < rawwidth + rawx; i++)
-                {
-                  if ((i >= 0 && i < width) &&
-                      (j >= 0 && j < height))
-                    {
-                      preview_data[(j * width + i) * 3    ] = *(srcptr);
-                      preview_data[(j * width + i) * 3 + 1] = *(srcptr + 1);
-                      preview_data[(j * width + i) * 3 + 2] = *(srcptr + 2);
-                    }
-
-                  srcptr += 3;
-                }
-            }
-        }
-
-      /* Display the preview buffer... finally. */
-      if (detached)
-        {
-          if ((dispose != DISPOSE_REPLACE) && (whichframe != 0))
-            {
-              gint top    = MAX (rawy, 0);
-              gint bottom = MIN (rawy + rawheight, height);
-
-              reshape_from_bitmap (shape_preview_mask);
-              gdk_draw_rgb_image (gtk_widget_get_window (shape_drawing_area),
-                                  shape_style->white_gc,
-                                  0, top, width, bottom - top,
-                                  (total_frames == 1 ?
-                                   GDK_RGB_DITHER_MAX : DITHERTYPE),
-                                  preview_data + 3 * top * width,
-                                  width * 3);
-            }
-          else
-            {
-              reshape_from_bitmap (shape_preview_mask);
-              gdk_draw_rgb_image (gtk_widget_get_window (shape_drawing_area),
-                                  shape_style->white_gc,
-                                  0, 0, width, height,
-                                  (total_frames == 1 ?
-                                   GDK_RGB_DITHER_MAX : DITHERTYPE),
-                                  preview_data, width * 3);
-            }
-        }
-      else
-        {
-          if ((dispose != DISPOSE_REPLACE) && (whichframe != 0))
-            {
-              gint top    = MAX (rawy, 0);
-              gint bottom = MIN (rawy + rawheight, height);
-
-              gdk_draw_rgb_image (gtk_widget_get_window (drawing_area),
-                                  drawing_style->white_gc,
-                                  0, top, width, bottom - top,
-                                  (total_frames == 1 ?
-                                   GDK_RGB_DITHER_MAX : DITHERTYPE),
-                                  preview_data + 3 * top * width,
-                                  width * 3);
-            }
-          else
-            {
-              gdk_draw_rgb_image (gtk_widget_get_window (drawing_area),
-                                  drawing_style->white_gc,
-                                  0, 0, width, height,
-                                  (total_frames == 1 ?
-                                   GDK_RGB_DITHER_MAX : DITHERTYPE),
-                                  preview_data, width * 3);
-            }
-        }
+      reshape_from_bitmap (shape_preview_mask);
     }
+
+  /* Display the preview buffer. */
+  gdk_draw_rgb_image (gtk_widget_get_window (detached? shape_drawing_area : drawing_area),
+                      detached? shape_style->white_gc : drawing_style->white_gc,
+                      0, 0, width, height,
+                      (total_frames == 1 ?
+                       GDK_RGB_DITHER_MAX : DITHERTYPE),
+                      preview_data, width * 3);
 
   /* clean up */
   g_object_unref (buffer);
@@ -1550,4 +1345,83 @@ parse_disposal_tag (const gchar *str)
     }
 
   return DISPOSE_UNDEFINED; /* FIXME */
+}
+
+static void
+init_frames (void)
+{
+  GtkAction   *action;
+  total_frames = total_layers;
+  generate_frames();
+  if (total_frames < 2)
+    {
+      action = gtk_ui_manager_get_action (ui_manager,
+                                          "/ui/anim-play-toolbar/play");
+      gtk_action_set_sensitive (action, FALSE);
+
+      action = gtk_ui_manager_get_action (ui_manager,
+                                          "/ui/anim-play-toolbar/step");
+      gtk_action_set_sensitive (action, FALSE);
+
+      action = gtk_ui_manager_get_action (ui_manager,
+                                          "/ui/anim-play-toolbar/rewind");
+      gtk_action_set_sensitive (action, FALSE);
+    }
+  else
+    {
+      action = gtk_ui_manager_get_action (ui_manager,
+                                          "/ui/anim-play-toolbar/play");
+      gtk_action_set_sensitive (action, TRUE);
+
+      action = gtk_ui_manager_get_action (ui_manager,
+                                          "/ui/anim-play-toolbar/step");
+      gtk_action_set_sensitive (action, TRUE);
+
+      action = gtk_ui_manager_get_action (ui_manager,
+                                          "/ui/anim-play-toolbar/rewind");
+      gtk_action_set_sensitive (action, TRUE);
+    }
+}
+
+static void
+generate_frames (void)
+{
+  /* Frames are associated to an unused image. */
+  static gint32 frames_image_id;
+  gint          i;
+  gint32        new_frame, previous_frame, new_layer;
+
+  /* Cleanup before re-generation. */
+  if (frames != NULL)
+    {
+      for (i = 0; i < total_frames; i++)
+        gimp_image_remove_layer (frames_image_id, frames[i]);
+      gimp_image_delete (frames_image_id);
+      g_free (frames);
+    }
+  frames = g_try_malloc0_n (total_frames, sizeof (gint32));
+
+  if (frames == NULL)
+    {
+      gimp_message (_("Memory could not be allocated to the frame container."));
+      gtk_main_quit ();
+      return;
+    }
+  frames_image_id = gimp_image_new (width, height, imagetype);
+
+  for (i = 0; i < total_frames; i++)
+    {
+      if (i > 0 && get_frame_disposal (i) != DISPOSE_REPLACE)
+        {
+          previous_frame = gimp_layer_copy (frames[i - 1]);
+          gimp_image_insert_layer (frames_image_id, previous_frame, 0, -1);
+          gimp_item_set_visible (previous_frame, TRUE);
+        }
+      new_layer = gimp_layer_new_from_drawable (layers[total_layers - (i + 1)], frames_image_id);
+      gimp_item_set_visible (new_layer, TRUE);
+      gimp_image_insert_layer (frames_image_id, new_layer, 0, -1);
+      new_frame = gimp_image_merge_visible_layers (frames_image_id, GIMP_CLIP_TO_IMAGE);
+      frames[i] = new_frame;
+      gimp_item_set_visible (new_frame, FALSE);
+    }
 }
