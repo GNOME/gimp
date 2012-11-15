@@ -735,8 +735,7 @@ gimp_ruler_realize (GtkWidget *widget)
   attributes.wclass      = GDK_INPUT_ONLY;
   attributes.event_mask  = (gtk_widget_get_events (widget) |
                             GDK_EXPOSURE_MASK              |
-                            GDK_POINTER_MOTION_MASK        |
-                            GDK_POINTER_MOTION_HINT_MASK);
+                            GDK_POINTER_MOTION_MASK);
 
   attributes_mask = GDK_WA_X | GDK_WA_Y;
 
@@ -866,8 +865,6 @@ gimp_ruler_motion_notify (GtkWidget      *widget,
                           GdkEventMotion *event)
 {
   GimpRuler *ruler = GIMP_RULER (widget);
-
-  gdk_event_request_motions (event);
 
   gimp_ruler_update_position (ruler, event->x, event->y);
 
