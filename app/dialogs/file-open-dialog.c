@@ -53,12 +53,10 @@ static void       file_open_dialog_response    (GtkWidget           *open_dialog
 static GimpImage *file_open_dialog_open_image  (GtkWidget           *open_dialog,
                                                 Gimp                *gimp,
                                                 const gchar         *uri,
-                                                const gchar         *entered_filename,
                                                 GimpPlugInProcedure *load_proc);
 static gboolean   file_open_dialog_open_layers (GtkWidget           *open_dialog,
                                                 GimpImage           *image,
                                                 const gchar         *uri,
-                                                const gchar         *entered_filename,
                                                 GimpPlugInProcedure *load_proc);
 
 
@@ -155,7 +153,6 @@ file_open_dialog_response (GtkWidget *open_dialog,
               dialog->image = file_open_dialog_open_image (open_dialog,
                                                            gimp,
                                                            list->data,
-                                                           list->data,
                                                            dialog->file_proc);
 
               if (dialog->image)
@@ -163,7 +160,6 @@ file_open_dialog_response (GtkWidget *open_dialog,
             }
           else if (file_open_dialog_open_layers (open_dialog,
                                                  dialog->image,
-                                                 list->data,
                                                  list->data,
                                                  dialog->file_proc))
             {
@@ -174,7 +170,6 @@ file_open_dialog_response (GtkWidget *open_dialog,
         {
           if (file_open_dialog_open_image (open_dialog,
                                            gimp,
-                                           list->data,
                                            list->data,
                                            dialog->file_proc))
             {
@@ -210,7 +205,6 @@ static GimpImage *
 file_open_dialog_open_image (GtkWidget           *open_dialog,
                              Gimp                *gimp,
                              const gchar         *uri,
-                             const gchar         *entered_filename,
                              GimpPlugInProcedure *load_proc)
 {
   GimpImage         *image;
@@ -220,7 +214,7 @@ file_open_dialog_open_image (GtkWidget           *open_dialog,
   image = file_open_with_proc_and_display (gimp,
                                            gimp_get_user_context (gimp),
                                            GIMP_PROGRESS (open_dialog),
-                                           uri, entered_filename, FALSE,
+                                           uri, uri, FALSE,
                                            load_proc,
                                            &status, &error);
 
@@ -242,7 +236,6 @@ static gboolean
 file_open_dialog_open_layers (GtkWidget           *open_dialog,
                               GimpImage           *image,
                               const gchar         *uri,
-                              const gchar         *entered_filename,
                               GimpPlugInProcedure *load_proc)
 {
   GList             *new_layers;
