@@ -21,26 +21,6 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <errno.h>
-
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
-#include <glib/gstdio.h>
-#ifdef G_OS_WIN32
-#include <libgimpbase/gimpwin32-io.h>
-#endif
-
-#ifndef _O_BINARY
-#define _O_BINARY 0
-#endif
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -143,7 +123,7 @@ query (void)
                           "Tim Newsome",
                           "1997",
                           N_("GIMP pattern"),
-                          "RGB*, GRAY*",
+                          "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
@@ -212,8 +192,9 @@ run (const gchar      *name,
         case GIMP_RUN_WITH_LAST_VALS:
           gimp_ui_init (PLUG_IN_BINARY, FALSE);
           export = gimp_export_image (&image_ID, &drawable_ID, NULL,
-                                      GIMP_EXPORT_CAN_HANDLE_GRAY |
-                                      GIMP_EXPORT_CAN_HANDLE_RGB |
+                                      GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                      GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                      GIMP_EXPORT_CAN_HANDLE_INDEXED |
                                       GIMP_EXPORT_CAN_HANDLE_ALPHA);
           if (export == GIMP_EXPORT_CANCEL)
             {
@@ -317,7 +298,7 @@ static gint32
 load_image (const gchar  *filename,
             GError      **error)
 {
-  gint              fd;
+  GFileInputStream *input;
   PatternHeader     ph;
   gchar            *name;
   gchar            *temp;
@@ -331,22 +312,18 @@ load_image (const gchar  *filename,
   GimpImageBaseType base_type;
   GimpImageType     image_type;
 
-  fd = g_open (filename, O_RDONLY | _O_BINARY, 0);
-
-  if (fd == -1)
-    {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
-      return -1;
-    }
+  input = g_file_read (g_file_new_for_path (filename), NULL, error);
+  if (! input)
+    return -1;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
 
-  if (read (fd, &ph, sizeof (PatternHeader)) != sizeof (PatternHeader))
+  if (g_input_stream_read (G_INPUT_STREAM (input),
+                           &ph, sizeof (PatternHeader), NULL, error) !=
+      sizeof (PatternHeader))
     {
-      close (fd);
+      g_object_unref (input);
       return -1;
     }
 
@@ -362,17 +339,19 @@ load_image (const gchar  *filename,
       ph.version      != 1 ||
       ph.header_size  <= sizeof (PatternHeader))
     {
-      close (fd);
+      g_object_unref (input);
       return -1;
     }
 
   temp = g_new (gchar, ph.header_size - sizeof (PatternHeader));
 
-  if (read (fd, temp, ph.header_size - sizeof (PatternHeader)) !=
+  if (g_input_stream_read (G_INPUT_STREAM (input),
+                           temp, ph.header_size - sizeof (PatternHeader),
+                           NULL, error) !=
       ph.header_size - sizeof (PatternHeader))
     {
       g_free (temp);
-      close (fd);
+      g_object_unref (input);
       return -1;
     }
 
@@ -450,11 +429,13 @@ load_image (const gchar  *filename,
 
   for (line = 0; line < ph.height; line++)
     {
-      if (read (fd, buf, ph.width * ph.bytes) != ph.width * ph.bytes)
+      if (g_input_stream_read (G_INPUT_STREAM (input),
+                               buf, ph.width * ph.bytes, NULL, error) !=
+          ph.width * ph.bytes)
         {
-          close (fd);
           g_free (buf);
           g_object_unref (buffer);
+          g_object_unref (input);
           return -1;
         }
 
@@ -468,6 +449,7 @@ load_image (const gchar  *filename,
 
   g_free (buf);
   g_object_unref (buffer);
+  g_object_unref (input);
 
   return image_ID;
 }
@@ -478,25 +460,20 @@ save_image (const gchar  *filename,
             gint32        drawable_ID,
             GError      **error)
 {
-  gint           fd;
-  PatternHeader  ph;
-  GeglBuffer    *buffer;
-  const Babl    *file_format;
-  guchar        *buf;
-  gint           width;
-  gint           height;
-  gint           line_size;
-  gint           line;
+  GFileOutputStream *output;
+  PatternHeader      ph;
+  GeglBuffer        *buffer;
+  const Babl        *file_format;
+  guchar            *buf;
+  gint               width;
+  gint               height;
+  gint               line_size;
+  gint               line;
 
-  fd = g_open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0666);
-
-  if (fd == -1)
-    {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
-      return FALSE;
-    }
+  output = g_file_replace (g_file_new_for_path (filename), NULL, FALSE, 0,
+                           NULL, error);
+  if (! output)
+    return FALSE;
 
   switch (gimp_drawable_type (drawable_ID))
     {
@@ -507,9 +484,11 @@ save_image (const gchar  *filename,
       file_format = babl_format ("Y'A u8");
       break;
     case GIMP_RGB_IMAGE:
+    case GIMP_INDEXED_IMAGE:
       file_format = babl_format ("R'G'B' u8");
       break;
     case GIMP_RGBA_IMAGE:
+    case GIMP_INDEXEDA_IMAGE:
       file_format = babl_format ("R'G'B'A u8");
       break;
     default:
@@ -534,15 +513,20 @@ save_image (const gchar  *filename,
   ph.bytes        = g_htonl (babl_format_get_bytes_per_pixel (file_format));
   ph.magic_number = g_htonl (GPATTERN_MAGIC);
 
-  if (write (fd, &ph, sizeof (PatternHeader)) != sizeof (PatternHeader))
+  if (g_output_stream_write (G_OUTPUT_STREAM (output),
+                             &ph, sizeof (PatternHeader), NULL, error) !=
+      sizeof (PatternHeader))
     {
-      close (fd);
+      g_object_unref (output);
       return FALSE;
     }
 
-  if (write (fd, description, strlen (description) + 1) != strlen (description) + 1)
+  if (g_output_stream_write (G_OUTPUT_STREAM (output),
+                             description, strlen (description) + 1,
+                             NULL, error) !=
+      strlen (description) + 1)
     {
-      close (fd);
+      g_object_unref (output);
       return FALSE;
     }
 
@@ -557,16 +541,18 @@ save_image (const gchar  *filename,
                        file_format, buf,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-      if (write (fd, buf, line_size) != line_size)
+      if (g_output_stream_write (G_OUTPUT_STREAM (output),
+                                 buf, line_size, NULL, error) !=
+          line_size)
         {
-          close (fd);
+          g_object_unref (output);
           return FALSE;
         }
 
       gimp_progress_update ((gdouble) line / (gdouble) ph.height);
     }
 
-  close (fd);
+  g_object_unref (output);
 
   return TRUE;
 }
