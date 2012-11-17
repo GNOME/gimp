@@ -297,6 +297,34 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
+static gssize
+gimp_input_stream_read (GInputStream *stream,
+                        void         *buffer,
+                        gsize         count,
+                        GError      **error)
+{
+  gssize bytes_read = 0;
+
+  while (TRUE)
+    {
+      gssize n_read;
+
+      n_read = g_input_stream_read (stream,
+                                    (guchar *) buffer + bytes_read,
+                                    count - bytes_read,
+                                    NULL, error);
+
+      if (n_read == -1)
+        return -1;
+      else if (n_read == 0)
+        break;
+
+      bytes_read += n_read;
+    }
+
+  return bytes_read;
+}
+
 static gint32
 load_image (GFile   *file,
             GError **error)
@@ -322,8 +350,8 @@ load_image (GFile   *file,
   gimp_progress_init_printf (_("Opening '%s'"),
                              g_file_get_parse_name (file));
 
-  if (g_input_stream_read (G_INPUT_STREAM (input),
-                           &ph, sizeof (PatternHeader), NULL, error) !=
+  if (gimp_input_stream_read (G_INPUT_STREAM (input),
+                              &ph, sizeof (PatternHeader), error) !=
       sizeof (PatternHeader))
     {
       g_object_unref (input);
@@ -348,9 +376,9 @@ load_image (GFile   *file,
 
   temp = g_new (gchar, ph.header_size - sizeof (PatternHeader));
 
-  if (g_input_stream_read (G_INPUT_STREAM (input),
-                           temp, ph.header_size - sizeof (PatternHeader),
-                           NULL, error) !=
+  if (gimp_input_stream_read (G_INPUT_STREAM (input),
+                              temp, ph.header_size - sizeof (PatternHeader),
+                              error) !=
       ph.header_size - sizeof (PatternHeader))
     {
       g_free (temp);
@@ -434,8 +462,8 @@ load_image (GFile   *file,
 
   for (line = 0; line < ph.height; line++)
     {
-      if (g_input_stream_read (G_INPUT_STREAM (input),
-                               buf, ph.width * ph.bytes, NULL, error) !=
+      if (gimp_input_stream_read (G_INPUT_STREAM (input),
+                                  buf, ph.width * ph.bytes, error) !=
           ph.width * ph.bytes)
         {
           if (line == 0)
@@ -447,7 +475,8 @@ load_image (GFile   *file,
             }
           else
             {
-              g_message ("Returning partially loaded pattern (%d of %d lines).",
+              g_message ("GIMP Pattern file is truncated "
+                         "(%d of %d lines recovered).",
                          line - 1, ph.height);
               break;
             }
@@ -466,6 +495,34 @@ load_image (GFile   *file,
   g_object_unref (input);
 
   return image_ID;
+}
+
+static gssize
+gimp_output_stream_write (GOutputStream *stream,
+                          void          *buffer,
+                          gsize          count,
+                          GError       **error)
+{
+  gssize bytes_written = 0;
+
+  while (TRUE)
+    {
+      gssize n_written;
+
+      n_written = g_output_stream_write (stream,
+                                         (guchar *) buffer + bytes_written,
+                                         count - bytes_written,
+                                         NULL, error);
+
+      if (n_written == -1)
+        return -1;
+      else if (n_written == 0)
+        break;
+
+      bytes_written += n_written;
+    }
+
+  return bytes_written;
 }
 
 static gboolean
@@ -526,17 +583,17 @@ save_image (GFile   *file,
   ph.bytes        = g_htonl (babl_format_get_bytes_per_pixel (file_format));
   ph.magic_number = g_htonl (GPATTERN_MAGIC);
 
-  if (g_output_stream_write (G_OUTPUT_STREAM (output),
-                             &ph, sizeof (PatternHeader), NULL, error) !=
+  if (gimp_output_stream_write (G_OUTPUT_STREAM (output),
+                                &ph, sizeof (PatternHeader), error) !=
       sizeof (PatternHeader))
     {
       g_object_unref (output);
       return FALSE;
     }
 
-  if (g_output_stream_write (G_OUTPUT_STREAM (output),
-                             description, strlen (description) + 1,
-                             NULL, error) !=
+  if (gimp_output_stream_write (G_OUTPUT_STREAM (output),
+                                description, strlen (description) + 1,
+                                error) !=
       strlen (description) + 1)
     {
       g_object_unref (output);
@@ -554,8 +611,8 @@ save_image (GFile   *file,
                        file_format, buf,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-      if (g_output_stream_write (G_OUTPUT_STREAM (output),
-                                 buf, line_size, NULL, error) !=
+      if (gimp_output_stream_write (G_OUTPUT_STREAM (output),
+                                    buf, line_size, error) !=
           line_size)
         {
           g_object_unref (output);
