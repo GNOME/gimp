@@ -43,9 +43,9 @@ static void       run            (const gchar      *name,
                                   const GimpParam  *param,
                                   gint             *nreturn_vals,
                                   GimpParam       **return_vals);
-static gint32     load_image     (const gchar      *filename,
+static gint32     load_image     (GFile            *file,
                                   GError          **error);
-static gboolean   save_image     (const gchar      *filename,
+static gboolean   save_image     (GFile            *file,
                                   gint32            image_ID,
                                   gint32            drawable_ID,
                                   GError          **error);
@@ -74,9 +74,9 @@ query (void)
 {
   static const GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw-filename", "The name of the file to load" }
+    { GIMP_PDB_INT32,  "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
+    { GIMP_PDB_STRING, "uri",      "The URI of the file to load" },
+    { GIMP_PDB_STRING, "raw-uri",  "The URI of the file to load" }
   };
   static const GimpParamDef load_return_vals[] =
   {
@@ -85,12 +85,12 @@ query (void)
 
   static const GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"     },
-    { GIMP_PDB_IMAGE,    "image",        "Input image"                      },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save"                 },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "description",  "Short description of the pattern" }
+    { GIMP_PDB_INT32,    "run-mode",    "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"     },
+    { GIMP_PDB_IMAGE,    "image",       "Input image"                      },
+    { GIMP_PDB_DRAWABLE, "drawable",    "Drawable to save"                 },
+    { GIMP_PDB_STRING,   "uri",         "The URI of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw-uri",     "The URI of the file to save the image in" },
+    { GIMP_PDB_STRING,   "description", "Short description of the pattern" }
   };
 
   gimp_install_procedure (LOAD_PROC,
@@ -110,6 +110,7 @@ query (void)
   gimp_plugin_icon_register (LOAD_PROC, GIMP_ICON_TYPE_STOCK_ID,
                              (const guint8 *) GIMP_STOCK_PATTERN);
   gimp_register_file_handler_mime (LOAD_PROC, "image/x-gimp-pat");
+  gimp_register_file_handler_uri (LOAD_PROC);
   gimp_register_magic_load_handler (LOAD_PROC,
                                     "pat",
                                     "",
@@ -131,6 +132,7 @@ query (void)
   gimp_plugin_icon_register (SAVE_PROC, GIMP_ICON_TYPE_STOCK_ID,
                              (const guint8 *) GIMP_STOCK_PATTERN);
   gimp_register_file_handler_mime (SAVE_PROC, "image/x-gimp-pat");
+  gimp_register_file_handler_uri (SAVE_PROC);
   gimp_register_save_handler (SAVE_PROC, "pat", "");
 }
 
@@ -163,7 +165,8 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      image_ID = load_image (param[1].data.d_string, &error);
+      image_ID = load_image (g_file_new_for_uri (param[1].data.d_string),
+                             &error);
 
       if (image_ID != -1)
         {
@@ -249,8 +252,8 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          if (save_image (param[3].data.d_string, image_ID, drawable_ID,
-                          &error))
+          if (save_image (g_file_new_for_uri (param[3].data.d_string),
+                          image_ID, drawable_ID, &error))
             {
               gimp_set_data (SAVE_PROC, description, sizeof (description));
             }
@@ -295,8 +298,8 @@ run (const gchar      *name,
 }
 
 static gint32
-load_image (const gchar  *filename,
-            GError      **error)
+load_image (GFile   *file,
+            GError **error)
 {
   GFileInputStream *input;
   PatternHeader     ph;
@@ -312,12 +315,12 @@ load_image (const gchar  *filename,
   GimpImageBaseType base_type;
   GimpImageType     image_type;
 
-  input = g_file_read (g_file_new_for_path (filename), NULL, error);
+  input = g_file_read (file, NULL, error);
   if (! input)
     return -1;
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             g_file_get_parse_name (file));
 
   if (g_input_stream_read (G_INPUT_STREAM (input),
                            &ph, sizeof (PatternHeader), NULL, error) !=
@@ -357,7 +360,7 @@ load_image (const gchar  *filename,
 
   name = gimp_any_to_utf8 (temp, -1,
                            _("Invalid UTF-8 string in pattern file '%s'."),
-                           gimp_filename_to_utf8 (filename));
+                           g_file_get_parse_name (file));
   g_free (temp);
 
   /* Now there's just raw data left. */
@@ -391,6 +394,7 @@ load_image (const gchar  *filename,
     default:
       g_message ("Unsupported pattern depth: %d\n"
                  "GIMP Patterns must be GRAY or RGB", ph.bytes);
+      g_object_unref (input);
       return -1;
     }
 
@@ -401,14 +405,15 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Invalid header data in '%s': width=%lu, height=%lu, "
-                     "bytes=%lu"), gimp_filename_to_utf8 (filename),
+                     "bytes=%lu"), g_file_get_parse_name (file),
                    (unsigned long int)ph.width, (unsigned long int)ph.height,
                    (unsigned long int)ph.bytes);
+      g_object_unref (input);
       return -1;
     }
 
   image_ID = gimp_image_new (ph.width, ph.height, base_type);
-  gimp_image_set_filename (image_ID, filename);
+  gimp_image_set_filename (image_ID, g_file_get_uri (file));
 
   parasite = gimp_parasite_new ("gimp-pattern-name",
                                 GIMP_PARASITE_PERSISTENT,
@@ -433,10 +438,19 @@ load_image (const gchar  *filename,
                                buf, ph.width * ph.bytes, NULL, error) !=
           ph.width * ph.bytes)
         {
-          g_free (buf);
-          g_object_unref (buffer);
-          g_object_unref (input);
-          return -1;
+          if (line == 0)
+            {
+              g_free (buf);
+              g_object_unref (buffer);
+              g_object_unref (input);
+              return -1;
+            }
+          else
+            {
+              g_message ("Returning partially loaded pattern (%d of %d lines).",
+                         line - 1, ph.height);
+              break;
+            }
         }
 
       gegl_buffer_set (buffer, GEGL_RECTANGLE (0, line, ph.width, 1), 0,
@@ -455,10 +469,10 @@ load_image (const gchar  *filename,
 }
 
 static gboolean
-save_image (const gchar  *filename,
-            gint32        image_ID,
-            gint32        drawable_ID,
-            GError      **error)
+save_image (GFile   *file,
+            gint32   image_ID,
+            gint32   drawable_ID,
+            GError **error)
 {
   GFileOutputStream *output;
   PatternHeader      ph;
@@ -470,8 +484,7 @@ save_image (const gchar  *filename,
   gint               line_size;
   gint               line;
 
-  output = g_file_replace (g_file_new_for_path (filename), NULL, FALSE, 0,
-                           NULL, error);
+  output = g_file_replace (file, NULL, FALSE, 0, NULL, error);
   if (! output)
     return FALSE;
 
@@ -499,7 +512,7 @@ save_image (const gchar  *filename,
     }
 
   gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             g_file_get_parse_name (file));
 
   buffer = gimp_drawable_get_buffer (drawable_ID);
 
