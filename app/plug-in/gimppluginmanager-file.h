@@ -35,6 +35,9 @@ gboolean   gimp_plug_in_manager_register_mime_type    (GimpPlugInManager *manage
                                                        const gchar       *name,
                                                        const gchar       *mime_type);
 
+gboolean   gimp_plug_in_manager_register_handles_uri  (GimpPlugInManager *manager,
+                                                       const gchar       *name);
+
 gboolean   gimp_plug_in_manager_register_thumb_loader (GimpPlugInManager *manager,
                                                        const gchar       *load_proc,
                                                        const gchar       *thumb_proc);

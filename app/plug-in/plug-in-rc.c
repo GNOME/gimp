@@ -39,7 +39,7 @@
 #include "gimp-intl.h"
 
 
-#define PLUG_IN_RC_FILE_VERSION 1
+#define PLUG_IN_RC_FILE_VERSION 2
 
 
 /*
@@ -90,6 +90,7 @@ enum
   PREFIX,
   MAGIC,
   MIME_TYPE,
+  HANDLES_URI,
   THUMB_LOADER
 };
 
@@ -154,6 +155,8 @@ plug_in_rc_parse (Gimp         *gimp,
   g_scanner_scope_add_symbol (scanner, LOAD_PROC,
                               "mime-type", GINT_TO_POINTER (MIME_TYPE));
   g_scanner_scope_add_symbol (scanner, LOAD_PROC,
+                              "handles-uri", GINT_TO_POINTER (HANDLES_URI));
+  g_scanner_scope_add_symbol (scanner, LOAD_PROC,
                               "thumb-loader", GINT_TO_POINTER (THUMB_LOADER));
 
   g_scanner_scope_add_symbol (scanner, SAVE_PROC,
@@ -162,6 +165,8 @@ plug_in_rc_parse (Gimp         *gimp,
                               "prefix", GINT_TO_POINTER (PREFIX));
   g_scanner_scope_add_symbol (scanner, SAVE_PROC,
                               "mime-type", GINT_TO_POINTER (MIME_TYPE));
+  g_scanner_scope_add_symbol (scanner, SAVE_PROC,
+                              "handles-uri", GINT_TO_POINTER (HANDLES_URI));
 
   token = G_TOKEN_LEFT_PAREN;
 
@@ -598,7 +603,7 @@ plug_in_file_proc_deserialize (GScanner            *scanner,
           if (! gimp_scanner_parse_string_no_validate (scanner, &value))
             return G_TOKEN_STRING;
         }
-      else
+      else if (symbol != HANDLES_URI)
         {
           if (! gimp_scanner_parse_string (scanner, &value))
             return G_TOKEN_STRING;
@@ -624,6 +629,10 @@ plug_in_file_proc_deserialize (GScanner            *scanner,
         case MIME_TYPE:
           gimp_plug_in_procedure_set_mime_type (proc, value);
           g_free (value);
+          break;
+
+        case HANDLES_URI:
+          gimp_plug_in_procedure_set_handles_uri (proc);
           break;
 
         case THUMB_LOADER:
@@ -914,6 +923,12 @@ plug_in_rc_write (GSList       *plug_in_defs,
                     {
                       gimp_config_writer_open (writer, "mime-type");
                       gimp_config_writer_string (writer, proc->mime_type);
+                      gimp_config_writer_close (writer);
+                    }
+
+                  if (proc->handles_uri)
+                    {
+                      gimp_config_writer_open (writer, "handles-uri");
                       gimp_config_writer_close (writer);
                     }
 

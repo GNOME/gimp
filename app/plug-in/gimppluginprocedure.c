@@ -943,6 +943,14 @@ gimp_plug_in_procedure_set_mime_type (GimpPlugInProcedure *proc,
 }
 
 void
+gimp_plug_in_procedure_set_handles_uri (GimpPlugInProcedure *proc)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
+
+  proc->handles_uri = TRUE;
+}
+
+void
 gimp_plug_in_procedure_set_thumb_loader (GimpPlugInProcedure *proc,
                                          const gchar         *thumb_loader)
 {
