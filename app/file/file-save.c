@@ -127,6 +127,12 @@ file_save (Gimp                *gimp,
               goto out;
             }
         }
+
+      if (file_proc->handles_uri)
+        {
+          g_free (filename);
+          filename = g_strdup (uri);
+        }
     }
   else
     {

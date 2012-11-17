@@ -147,6 +147,12 @@ file_open_image (Gimp                *gimp,
               return NULL;
             }
         }
+
+      if (file_proc->handles_uri)
+        {
+          g_free (filename);
+          filename = g_strdup (uri);
+        }
     }
   else
     {
