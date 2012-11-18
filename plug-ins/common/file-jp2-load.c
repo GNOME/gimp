@@ -123,6 +123,7 @@ run (const gchar      *name,
   GError            *error = NULL;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -175,8 +176,7 @@ load_image (const gchar  *filename,
   gint               height;
   gint               num_components;
   gint               colourspace_family;
-  GimpPixelRgn       pixel_rgn;
-  GimpDrawable      *drawable;
+  GeglBuffer        *buffer;
   gint               i, j, k;
   guchar            *pixels;
   jas_matrix_t      *matrix;
@@ -219,7 +219,7 @@ load_image (const gchar  *filename,
   jas_stream_close (stream);
   close (fd);
 
-  width = jas_image_width (image);
+  width  = jas_image_width  (image);
   height = jas_image_height (image);
 
   /* determine image type */
@@ -237,6 +237,7 @@ load_image (const gchar  *filename,
                        gimp_filename_to_utf8 (filename));
           return -1;
         }
+
       components[1] = jas_image_getcmptbytype (image, JAS_IMAGE_CT_OPACITY);
       if (components[1] != -1)
         {
@@ -355,12 +356,8 @@ load_image (const gchar  *filename,
                              width, height,
                              image_type, 100, GIMP_NORMAL_MODE);
   gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
-  drawable = gimp_drawable_get (layer_ID);
 
-  gimp_tile_cache_ntiles (drawable->ntile_cols);
-
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
-                       width, height, TRUE, FALSE);
+  buffer = gimp_drawable_get_buffer (layer_ID);
 
   pixels = malloc (width * num_components);
   matrix = jas_matrix_create (1, width);
@@ -394,21 +391,21 @@ load_image (const gchar  *filename,
             }
         }
 
-      gimp_pixel_rgn_set_rect (&pixel_rgn, pixels, 0, i, width, 1);
+      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, i, width, 1), 0,
+                       NULL, pixels, GEGL_AUTO_ROWSTRIDE);
     }
-
-  gimp_progress_update (100);
 
   load_icc_profile (image, image_ID);
 
   jas_matrix_destroy (matrix);
-  free(pixels);
+  free (pixels);
   jas_image_destroy (image);
 
-  gimp_drawable_flush (drawable);
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
 
   jas_cleanup ();
+
+  gimp_progress_update (1.0);
 
   return image_ID;
 }
@@ -426,21 +423,15 @@ load_icc_profile (jas_image_t *jas_image,
 
   cm_prof = jas_image_cmprof (jas_image);
   if (!cm_prof)
-    {
-      return;
-    }
+    return;
 
   jas_icc = jas_iccprof_createfromcmprof (cm_prof);
   if (!jas_icc)
-    {
-      return;
-    }
+    return;
 
   stream = jas_stream_memopen (NULL, -1);
   if (!stream)
-    {
-      return;
-    }
+    return;
 
   jas_iccprof_save (jas_icc, stream);
 

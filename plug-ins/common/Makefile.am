@@ -1203,6 +1203,7 @@ file_jp2_load_LDADD = \
 	$(libgimpbase)		\
 	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
+	$(GEGL_LIBS)		\
 	$(JP2_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
