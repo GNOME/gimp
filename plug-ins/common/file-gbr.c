@@ -178,11 +178,10 @@ run (const gchar      *name,
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
   GError            *error  = NULL;
 
-  run_mode = param[0].data.d_int32;
-
   INIT_I18N ();
-
   gegl_init (NULL, NULL);
+
+  run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -622,10 +621,8 @@ load_image (GFile   *file,
   gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, bh.width, bh.height), 0,
                    format, brush_buf, GEGL_AUTO_ROWSTRIDE);
 
-  g_object_unref (buffer);
-
   g_free (brush_buf);
-
+  g_object_unref (buffer);
   g_object_unref (input);
 
   gimp_progress_update (1.0);
@@ -762,10 +759,10 @@ save_image (GFile   *file,
     }
 
   g_free (brush_buf);
-
   g_object_unref (buffer);
-
   g_object_unref (output);
+
+  gimp_progress_update (1.0);
 
   return TRUE;
 }

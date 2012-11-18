@@ -151,17 +151,16 @@ run (const gchar      *name,
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
   GError            *error  = NULL;
 
+  INIT_I18N ();
+  gegl_init (NULL, NULL);
+
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
 
-  gegl_init (NULL, NULL);
-
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
-  INIT_I18N ();
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
@@ -463,11 +462,11 @@ load_image (GFile   *file,
       gimp_progress_update ((gdouble) line / (gdouble) ph.height);
     }
 
-  gimp_progress_update (1.0);
-
   g_free (buf);
   g_object_unref (buffer);
   g_object_unref (input);
+
+  gimp_progress_update (1.0);
 
   return image_ID;
 }
@@ -565,6 +564,7 @@ save_image (GFile   *file,
                                        &bytes_written, NULL, error) ||
           bytes_written != line_size)
         {
+          g_object_unref (buffer);
           g_object_unref (output);
           return FALSE;
         }
@@ -572,7 +572,10 @@ save_image (GFile   *file,
       gimp_progress_update ((gdouble) line / (gdouble) ph.height);
     }
 
+  g_object_unref (buffer);
   g_object_unref (output);
+
+  gimp_progress_update (1.0);
 
   return TRUE;
 }
