@@ -34,29 +34,6 @@
 
 #include "config.h"
 
-#include <errno.h>
-#include <string.h>
-
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
-#include <glib/gstdio.h>
-
-#include <glib.h>
-
-#ifdef G_OS_WIN32
-#include <io.h>
-#endif
-
-#ifndef _O_BINARY
-#define _O_BINARY 0
-#endif
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -88,9 +65,9 @@ static void       run            (const gchar      *name,
                                   gint             *nreturn_vals,
                                   GimpParam       **return_vals);
 
-static gint32     load_image     (const gchar      *filename,
+static gint32     load_image     (GFile            *file,
                                   GError          **error);
-static gboolean   save_image     (const gchar      *filename,
+static gboolean   save_image     (GFile            *file,
                                   gint32            image_ID,
                                   gint32            drawable_ID,
                                   GError          **error);
@@ -125,9 +102,9 @@ query (void)
 {
   static const GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw-filename", "The name of the file to load" }
+    { GIMP_PDB_INT32,  "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
+    { GIMP_PDB_STRING, "uri",      "The URI of the file to load" },
+    { GIMP_PDB_STRING, "raw-uri",  "The URI of the file to load" }
   };
   static const GimpParamDef load_return_vals[] =
   {
@@ -136,13 +113,13 @@ query (void)
 
   static const GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",        "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },
-    { GIMP_PDB_INT32,    "spacing",      "Spacing of the brush" },
-    { GIMP_PDB_STRING,   "description",  "Short description of the brush" }
+    { GIMP_PDB_INT32,    "run-mode",    "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
+    { GIMP_PDB_IMAGE,    "image",       "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",    "Drawable to save" },
+    { GIMP_PDB_STRING,   "uri",         "The URI of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw-uri",     "The URI of the file to save the image in" },
+    { GIMP_PDB_INT32,    "spacing",     "Spacing of the brush" },
+    { GIMP_PDB_STRING,   "description", "Short description of the brush" }
   };
 
   gimp_install_procedure (LOAD_PROC,
@@ -161,6 +138,7 @@ query (void)
   gimp_plugin_icon_register (LOAD_PROC, GIMP_ICON_TYPE_STOCK_ID,
                              (const guint8 *) GIMP_STOCK_BRUSH);
   gimp_register_file_handler_mime (LOAD_PROC, "image/x-gimp-gbr");
+  gimp_register_file_handler_uri (LOAD_PROC);
   gimp_register_magic_load_handler (LOAD_PROC,
                                     "gbr, gpb",
                                     "",
@@ -181,6 +159,7 @@ query (void)
   gimp_plugin_icon_register (SAVE_PROC, GIMP_ICON_TYPE_STOCK_ID,
                              (const guint8 *) GIMP_STOCK_BRUSH);
   gimp_register_file_handler_mime (SAVE_PROC, "image/x-gimp-gbr");
+  gimp_register_file_handler_uri (SAVE_PROC);
   gimp_register_save_handler (SAVE_PROC, "gbr", "");
 }
 
@@ -213,7 +192,8 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      image_ID = load_image (param[1].data.d_string, &error);
+      image_ID = load_image (g_file_new_for_uri (param[1].data.d_string),
+                             &error);
 
       if (image_ID != -1)
         {
@@ -299,8 +279,8 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          if (save_image (param[3].data.d_string, image_ID, drawable_ID,
-                          &error))
+          if (save_image (g_file_new_for_uri (param[3].data.d_string),
+                          image_ID, drawable_ID, &error))
             {
               gimp_set_data (SAVE_PROC, &info, sizeof (info));
             }
@@ -345,11 +325,11 @@ run (const gchar      *name,
 }
 
 static gint32
-load_image (const gchar  *filename,
-            GError      **error)
+load_image (GFile   *file,
+            GError **error)
 {
+  GFileInputStream  *input;
   gchar             *name;
-  gint               fd;
   BrushHeader        bh;
   guchar            *brush_buf = NULL;
   gint32             image_ID;
@@ -360,25 +340,25 @@ load_image (const gchar  *filename,
   gint               bn_size;
   GimpImageBaseType  base_type;
   GimpImageType      image_type;
+  gsize              bytes_read;
   gsize              size;
   gint               i;
 
-  fd = g_open (filename, O_RDONLY | _O_BINARY, 0);
-
-  if (fd == -1)
-    {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
-      return -1;
-    }
+  input = g_file_read (file, NULL, error);
+  if (! input)
+    return -1;
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             g_file_get_parse_name (file));
 
-  if (read (fd, &bh, sizeof (BrushHeader)) != sizeof (BrushHeader))
+  size = G_STRUCT_OFFSET (BrushHeader, magic_number);
+
+  if (! g_input_stream_read_all (G_INPUT_STREAM (input),
+                                 &bh, size,
+                                 &bytes_read, NULL, error) ||
+      bytes_read != size)
     {
-      close (fd);
+      g_object_unref (input);
       return -1;
     }
 
@@ -388,8 +368,6 @@ load_image (const gchar  *filename,
   bh.width        = g_ntohl (bh.width);
   bh.height       = g_ntohl (bh.height);
   bh.bytes        = g_ntohl (bh.bytes);
-  bh.magic_number = g_ntohl (bh.magic_number);
-  bh.spacing      = g_ntohl (bh.spacing);
 
   /* Sanitize values */
   if ((bh.width  == 0) || (bh.width  > GIMP_MAX_IMAGE_SIZE) ||
@@ -400,7 +378,7 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Invalid header data in '%s': width=%lu, height=%lu, "
-                     "bytes=%lu"), gimp_filename_to_utf8 (filename),
+                     "bytes=%lu"), g_file_get_parse_name (file),
                    (unsigned long int)bh.width, (unsigned long int)bh.height,
                    (unsigned long int)bh.bytes);
       return -1;
@@ -411,32 +389,48 @@ load_image (const gchar  *filename,
     case 1:
       /* Version 1 didn't have a magic number and had no spacing  */
       bh.spacing = 25;
-      /* And we need to rewind the handle, 4 due spacing and 4 due magic */
-      lseek (fd, -8, SEEK_CUR);
       bh.header_size += 8;
       break;
 
+    case 2:
     case 3: /*  cinepaint brush  */
-      if (bh.bytes == 18 /* FLOAT16_GRAY_GIMAGE */)
+      size = sizeof (bh.magic_number) + sizeof (bh.spacing);
+
+      if (! g_input_stream_read_all (G_INPUT_STREAM (input),
+                                     (guchar *) &bh +
+                                     G_STRUCT_OFFSET (BrushHeader,
+                                                      magic_number), size,
+                                     &bytes_read, NULL, error) ||
+          bytes_read != size)
         {
-          bh.bytes = 2;
-        }
-      else
-        {
-          g_message (_("Unsupported brush format"));
-          close (fd);
+          g_object_unref (input);
           return -1;
         }
-      /*  fallthrough  */
 
-    case 2:
+      bh.magic_number = g_ntohl (bh.magic_number);
+      bh.spacing      = g_ntohl (bh.spacing);
+
+      if (bh.version == 3)
+        {
+          if (bh.bytes == 18 /* FLOAT16_GRAY_GIMAGE */)
+            {
+              bh.bytes = 2;
+            }
+          else
+            {
+              g_message (_("Unsupported brush format"));
+              g_object_unref (input);
+              return -1;
+            }
+        }
+
       if (bh.magic_number == GBRUSH_MAGIC &&
           bh.header_size  >  sizeof (BrushHeader))
         break;
 
     default:
       g_message (_("Unsupported brush format"));
-      close (fd);
+      g_object_unref (input);
       return -1;
     }
 
@@ -444,19 +438,22 @@ load_image (const gchar  *filename,
     {
       gchar *temp = g_new (gchar, bn_size);
 
-      if ((read (fd, temp, bn_size)) < bn_size)
+      if (! g_input_stream_read_all (G_INPUT_STREAM (input),
+                                     temp, bn_size,
+                                     &bytes_read, NULL, error) ||
+          bytes_read != bn_size)
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Error in GIMP brush file '%s'"),
-                       gimp_filename_to_utf8 (filename));
-          close (fd);
+                       g_file_get_parse_name (file));
+          g_object_unref (input);
           g_free (temp);
           return -1;
         }
 
       name = gimp_any_to_utf8 (temp, -1,
                                _("Invalid UTF-8 string in brush file '%s'."),
-                               gimp_filename_to_utf8 (filename));
+                               g_file_get_parse_name (file));
       g_free (temp);
     }
   else
@@ -469,9 +466,12 @@ load_image (const gchar  *filename,
   size = bh.width * bh.height * bh.bytes;
   brush_buf = g_malloc (size);
 
-  if (read (fd, brush_buf, size) != size)
+  if (! g_input_stream_read_all (G_INPUT_STREAM (input),
+                                 brush_buf, size,
+                                 &bytes_read, NULL, error) ||
+      bytes_read != size)
     {
-      close (fd);
+      g_object_unref (input);
       g_free (brush_buf);
       g_free (name);
       return -1;
@@ -486,7 +486,10 @@ load_image (const gchar  *filename,
         /*  For backwards-compatibility, check if a pattern follows.
             The obsolete .gpb format did it this way.  */
 
-        if (read (fd, &ph, sizeof (PatternHeader)) == sizeof(PatternHeader))
+        if (g_input_stream_read_all (G_INPUT_STREAM (input),
+                                     &ph, sizeof (PatternHeader),
+                                     &bytes_read, NULL, NULL) &&
+            bytes_read == sizeof(PatternHeader))
           {
             /*  rearrange the bytes in each unsigned int  */
             ph.header_size  = g_ntohl (ph.header_size);
@@ -502,8 +505,10 @@ load_image (const gchar  *filename,
                 ph.bytes        == 3                     &&
                 ph.width        == bh.width              &&
                 ph.height       == bh.height             &&
-                lseek (fd, ph.header_size - sizeof (PatternHeader),
-                       SEEK_CUR) > 0)
+                g_input_stream_skip (G_INPUT_STREAM (input),
+                                     ph.header_size - sizeof (PatternHeader),
+                                     NULL, NULL) ==
+                ph.header_size - sizeof (PatternHeader))
               {
                 guchar *plain_brush = brush_buf;
                 gint    i;
@@ -513,16 +518,21 @@ load_image (const gchar  *filename,
 
                 for (i = 0; i < ph.width * ph.height; i++)
                   {
-                    if (read (fd, brush_buf + i * 4, 3) != 3)
+                    if (! g_input_stream_read_all (G_INPUT_STREAM (input),
+                                                   brush_buf + i * 4, 3,
+                                                   &bytes_read, NULL, error) ||
+                        bytes_read != 3)
                       {
-                        close (fd);
+                        g_object_unref (input);
                         g_free (name);
                         g_free (plain_brush);
                         g_free (brush_buf);
                         return -1;
                       }
+
                     brush_buf[i * 4 + 3] = plain_brush[i];
                   }
+
                 g_free (plain_brush);
               }
           }
@@ -588,7 +598,7 @@ load_image (const gchar  *filename,
     }
 
   image_ID = gimp_image_new (bh.width, bh.height, base_type);
-  gimp_image_set_filename (image_ID, filename);
+  gimp_image_set_filename (image_ID, g_file_get_uri (file));
 
   parasite = gimp_parasite_new ("gimp-brush-name",
                                 GIMP_PARASITE_PERSISTENT,
@@ -616,7 +626,7 @@ load_image (const gchar  *filename,
 
   g_free (brush_buf);
 
-  close (fd);
+  g_object_unref (input);
 
   gimp_progress_update (1.0);
 
@@ -624,23 +634,24 @@ load_image (const gchar  *filename,
 }
 
 static gboolean
-save_image (const gchar  *filename,
-            gint32        image_ID,
-            gint32        drawable_ID,
-            GError      **error)
+save_image (GFile   *file,
+            gint32   image_ID,
+            gint32   drawable_ID,
+            GError **error)
 {
-  gint          fd;
-  BrushHeader   bh;
-  guchar       *brush_buf;
-  GeglBuffer   *buffer;
-  const Babl   *format;
-  gint          line;
-  gint          x;
-  gint          bpp;
-  gint          file_bpp;
-  gint          width;
-  gint          height;
-  GimpRGB       gray, white;
+  GFileOutputStream *output;
+  BrushHeader        bh;
+  guchar            *brush_buf;
+  GeglBuffer        *buffer;
+  const Babl        *format;
+  gint               line;
+  gint               x;
+  gint               bpp;
+  gint               file_bpp;
+  gint               width;
+  gint               height;
+  GimpRGB            gray, white;
+  gsize              bytes_written;
 
   gimp_rgba_set_uchar (&white, 255, 255, 255, 255);
 
@@ -664,18 +675,12 @@ save_image (const gchar  *filename,
 
   bpp = babl_format_get_bytes_per_pixel (format);
 
-  fd = g_open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0666);
-
-  if (fd == -1)
-    {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
-      return FALSE;
-    }
+  output = g_file_replace (file, NULL, FALSE, 0, NULL, error);
+  if (! output)
+    return FALSE;
 
   gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             g_file_get_parse_name (file));
 
   buffer = gimp_drawable_get_buffer (drawable_ID);
 
@@ -691,16 +696,22 @@ save_image (const gchar  *filename,
   bh.magic_number = g_htonl (GBRUSH_MAGIC);
   bh.spacing      = g_htonl (info.spacing);
 
-  if (write (fd, &bh, sizeof (BrushHeader)) != sizeof (BrushHeader))
+  if (! g_output_stream_write_all (G_OUTPUT_STREAM (output),
+                                   &bh, sizeof (BrushHeader),
+                                   &bytes_written, NULL, error) ||
+      bytes_written != sizeof (BrushHeader))
     {
-      close (fd);
+      g_object_unref (output);
       return FALSE;
     }
 
-  if (write (fd, info.description, strlen (info.description) + 1) !=
-      strlen (info.description) + 1)
+  if (! g_output_stream_write_all (G_OUTPUT_STREAM (output),
+                                   info.description,
+                                   strlen (info.description) + 1,
+                                   &bytes_written, NULL, error) ||
+      bytes_written != strlen (info.description) + 1)
     {
-      close (fd);
+      g_object_unref (output);
       return FALSE;
     }
 
@@ -737,10 +748,13 @@ save_image (const gchar  *filename,
           break;
         }
 
-      if (write (fd, brush_buf, width * file_bpp) != width * file_bpp)
+      if (! g_output_stream_write_all (G_OUTPUT_STREAM (output),
+                                       brush_buf, width * file_bpp,
+                                       &bytes_written, NULL, error) ||
+          bytes_written != width * file_bpp)
         {
           g_free (brush_buf);
-          close (fd);
+          g_object_unref (output);
           return FALSE;
         }
 
@@ -751,7 +765,7 @@ save_image (const gchar  *filename,
 
   g_object_unref (buffer);
 
-  close (fd);
+  g_object_unref (output);
 
   return TRUE;
 }
