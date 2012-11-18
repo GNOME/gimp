@@ -95,9 +95,10 @@ run (const gchar      *name,
   GimpRunMode       run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
-  run_mode = param[0].data.d_int32;
-
   INIT_I18N ();
+  gegl_init (NULL, NULL);
+
+  run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -120,8 +121,8 @@ run (const gchar      *name,
         case GIMP_RUN_WITH_LAST_VALS:
           gimp_ui_init (PLUG_IN_BINARY, FALSE);
           export = gimp_export_image (&image_ID, &drawable_ID, NULL,
-                                      (GIMP_EXPORT_CAN_HANDLE_RGB |
-                                       GIMP_EXPORT_CAN_HANDLE_INDEXED));
+                                      GIMP_EXPORT_CAN_HANDLE_RGB |
+                                      GIMP_EXPORT_CAN_HANDLE_INDEXED);
           if (export == GIMP_EXPORT_CANCEL)
             {
               values[0].data.d_status = GIMP_PDB_CANCEL;
@@ -154,8 +155,8 @@ save_image (const gchar *filename,
             gint32       image_ID,
             gint32       drawable_ID)
 {
-  GimpPixelRgn   pixel_rgn;
-  GimpDrawable  *drawable;
+  GeglBuffer    *buffer;
+  const Babl    *format;
   GimpImageType  drawable_type;
   FILE          *fp;
   gint           x, y, b, c;
@@ -167,19 +168,23 @@ save_image (const gchar *filename,
   guchar        *data      = NULL;
   guchar        *cmap;
   gint           colors;
+  gint           width;
+  gint           height;
 
   if ((fp = g_fopen (filename, "w")) == NULL)
     return FALSE;
 
-  drawable = gimp_drawable_get (drawable_ID);
+  buffer = gimp_drawable_get_buffer (drawable_ID);
+
+  width  = gegl_buffer_get_width  (buffer);
+  height = gegl_buffer_get_height (buffer);
+
   drawable_type = gimp_drawable_type (drawable_ID);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable,
-                       0, 0, drawable->width, drawable->height, FALSE, FALSE);
 
   fprintf (fp, "/*  GIMP header image file format (%s): %s  */\n\n",
            GIMP_RGB_IMAGE == drawable_type ? "RGB" : "INDEXED", filename);
-  fprintf (fp, "static unsigned int width = %d;\n", drawable->width);
-  fprintf (fp, "static unsigned int height = %d;\n\n", drawable->height);
+  fprintf (fp, "static unsigned int width = %d;\n", width);
+  fprintf (fp, "static unsigned int height = %d;\n\n", height);
   fprintf (fp, "/*  Call this macro repeatedly.  After each use, the pixel data can be extracted  */\n\n");
 
   switch (drawable_type)
@@ -193,16 +198,21 @@ save_image (const gchar *filename,
                "data += 4; \\\n}\n");
       fprintf (fp, "static char *header_data =\n\t\"");
 
-      data = g_new (guchar, drawable->width * drawable->bpp);
+      format = babl_format ("R'G'B' u8");
+
+      data = g_new (guchar, width * babl_format_get_bytes_per_pixel (format));
+
 
       c = 0;
-      for (y = 0; y < drawable->height; y++)
+      for (y = 0; y < height; y++)
         {
-          gimp_pixel_rgn_get_row (&pixel_rgn, data, 0, y, drawable->width);
+          gegl_buffer_get (buffer, GEGL_RECTANGLE (0, y, width, 1), 1.0,
+                           format, data,
+                           GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-          for (x = 0; x < drawable->width; x++)
+          for (x = 0; x < width; x++)
             {
-              d = data + x * drawable->bpp;
+              d = data + x * babl_format_get_bytes_per_pixel (format);
 
               buf[0] = ((d[0] >> 2) & 0x3F) + 33;
               buf[1] = ((((d[0] & 0x3) << 4) | (d[1] >> 4)) & 0x3F) + 33;
@@ -258,16 +268,18 @@ save_image (const gchar *filename,
       /* save image */
       fprintf (fp, "static char header_data[] = {\n\t");
 
-      data = g_new (guchar, drawable->width * drawable->bpp);
+      data = g_new (guchar, width * 1);
 
       c = 0;
-      for (y = 0; y < drawable->height; y++)
+      for (y = 0; y < height; y++)
         {
-          gimp_pixel_rgn_get_row (&pixel_rgn, data, 0, y, drawable->width);
+          gegl_buffer_get (buffer, GEGL_RECTANGLE (0, y, width, 1), 1.0,
+                           NULL, data,
+                           GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-          for (x = 0; x < drawable->width-1; x++)
+          for (x = 0; x < width  -1; x++)
             {
-              d = data + x * drawable->bpp;
+              d = data + x * 1;
 
               fprintf (fp, "%d,", (int)d[0]);
 
@@ -279,7 +291,7 @@ save_image (const gchar *filename,
                 }
             }
 
-          if (y != drawable->height - 1)
+          if (y != height - 1)
             fprintf (fp, "%d,\n\t", (int)d[1]);
           else
             fprintf (fp, "%d\n\t", (int)d[1]);
@@ -297,9 +309,8 @@ save_image (const gchar *filename,
     }
 
   fclose (fp);
-
   g_free (data);
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
 
   return TRUE;
 }
