@@ -246,6 +246,7 @@ run (const gchar      *name,
   GimpExportReturn   export        = GIMP_EXPORT_CANCEL;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   strncpy (xsvals.comment, "Created with GIMP", MAX_COMMENT);
 
@@ -709,9 +710,8 @@ static gint32
 load_image (const gchar  *filename,
             GError      **error)
 {
-  GimpPixelRgn  pixel_rgn;
-  GimpDrawable *drawable;
   FILE         *fp;
+  GeglBuffer   *buffer;
   gint32        image_ID;
   gint32        layer_ID;
   guchar       *data;
@@ -901,10 +901,7 @@ load_image (const gchar  *filename,
                              GIMP_NORMAL_MODE);
   gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
 
-  drawable = gimp_drawable_get (layer_ID);
-
-  /* Prepare the pixel region. */
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, TRUE, FALSE);
+  buffer = gimp_drawable_get_buffer (layer_ID);
 
   /* Allocate the data. */
   tileheight = gimp_tile_height ();
@@ -943,17 +940,17 @@ load_image (const gchar  *filename,
         }
 
       /* Put the data into the image. */
+      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, i, width, tileheight), 0,
+                       NULL, data, GEGL_AUTO_ROWSTRIDE);
+
       gimp_progress_update ((double) (i + tileheight) / (double) height);
-      gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i, width, tileheight);
     }
-  gimp_progress_update (1.0);
 
   g_free (data);
-
-  gimp_drawable_flush (drawable);
-  gimp_drawable_detach (drawable);
-
+  g_object_unref (buffer);
   fclose (fp);
+
+  gimp_progress_update (1.0);
 
   return image_ID;
 }
@@ -967,19 +964,15 @@ save_image (const gchar  *filename,
             gint32        drawable_ID,
             GError      **error)
 {
-  GimpDrawable *drawable;
-  GimpPixelRgn  pixel_rgn;
-  FILE         *fp;
-
-  gint          width, height, colors, dark;
-  gint          intbits, lineints, need_comma, nints, rowoffset, tileheight;
-  gint          c, i, j, k, thisbit;
-
-  gboolean      has_alpha;
-  gint          bpp;
-
-  guchar       *data, *cmap;
-  const gchar  *intfmt;
+  FILE        *fp;
+  GeglBuffer  *buffer;
+  gint         width, height, colors, dark;
+  gint         intbits, lineints, need_comma, nints, rowoffset, tileheight;
+  gint         c, i, j, k, thisbit;
+  gboolean     has_alpha;
+  gint         bpp;
+  guchar      *data, *cmap;
+  const gchar *intfmt;
 
 #if 0
   if (save_mask)
@@ -988,10 +981,7 @@ save_image (const gchar  *filename,
     g_printerr ("%s: save_image '%s'\n", G_STRFUNC, prefix);
 #endif
 
-  drawable = gimp_drawable_get (drawable_ID);
-  width    = drawable->width;
-  height   = drawable->height;
-  cmap     = gimp_image_get_colormap (image_ID, &colors);
+  cmap = gimp_image_get_colormap (image_ID, &colors);
 
   if (! gimp_drawable_is_indexed (drawable_ID) || colors > 2)
     {
@@ -1000,6 +990,7 @@ save_image (const gchar  *filename,
                    "an XBM contains more than two colors.\n\n"
                    "Please convert it to a black and white "
                    "(1-bit) indexed image and try again."));
+      g_free (cmap);
       return FALSE;
     }
 
@@ -1012,7 +1003,10 @@ save_image (const gchar  *filename,
       return FALSE;
     }
 
-  bpp = gimp_drawable_bpp (drawable_ID);
+  buffer = gimp_drawable_get_buffer (drawable_ID);
+  width  = gegl_buffer_get_width  (buffer);
+  height = gegl_buffer_get_height (buffer);
+  bpp    = gimp_drawable_bpp (drawable_ID);
 
   /* Figure out which color is black, and which is white. */
   dark = 0;
@@ -1083,9 +1077,6 @@ save_image (const gchar  *filename,
   tileheight = gimp_tile_height ();
   data = (guchar *) g_malloc (width * tileheight * bpp);
 
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height,
-                       FALSE, FALSE);
-
   /* Write out the integers. */
   need_comma = 0;
   nints = 0;
@@ -1093,7 +1084,10 @@ save_image (const gchar  *filename,
     {
       /* Get a horizontal slice of the image. */
       tileheight = MIN (tileheight, height - i);
-      gimp_pixel_rgn_get_rect (&pixel_rgn, data, 0, i, width, tileheight);
+
+      gegl_buffer_get (buffer, GEGL_RECTANGLE (0, i, width, tileheight), 1.0,
+                       NULL, data,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
 #ifdef VERBOSE
       if (verbose > 1)
@@ -1163,11 +1157,14 @@ save_image (const gchar  *filename,
 
       gimp_progress_update ((double) (i + tileheight) / (double) height);
     }
-  gimp_progress_update (1.0);
 
   /* Write the trailer. */
   fprintf (fp, " };\n");
+
+  g_object_unref (buffer);
   fclose (fp);
+
+  gimp_progress_update (1.0);
 
   return TRUE;
 }
