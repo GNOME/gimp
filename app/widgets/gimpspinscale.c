@@ -134,6 +134,13 @@ gimp_spin_scale_class_init (GimpSpinScaleClass *klass)
 static void
 gimp_spin_scale_init (GimpSpinScale *scale)
 {
+  gtk_widget_add_events (GTK_WIDGET (scale),
+                         GDK_BUTTON_PRESS_MASK   |
+                         GDK_BUTTON_RELEASE_MASK |
+                         GDK_POINTER_MOTION_MASK |
+                         GDK_BUTTON1_MOTION_MASK |
+                         GDK_LEAVE_NOTIFY_MASK);
+
   gtk_entry_set_alignment (GTK_ENTRY (scale), 1.0);
   gtk_entry_set_has_frame (GTK_ENTRY (scale), FALSE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (scale), TRUE);
@@ -530,6 +537,8 @@ gimp_spin_scale_motion_notify (GtkWidget      *widget,
                                GdkEventMotion *event)
 {
   GimpSpinScalePrivate *private = GET_PRIVATE (widget);
+
+  gdk_event_request_motions (event);
 
   if (private->changing_value)
     {
