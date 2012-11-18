@@ -51,7 +51,6 @@ typedef struct
 } Config;
 
 
-/* --- prototypes --- */
 static void     query           (void);
 static void     run             (const gchar      *name,
                                  gint              nparams,
@@ -65,7 +64,7 @@ static gboolean save_image      (Config           *config,
                                  GError          **error);
 static gboolean run_save_dialog (Config           *config);
 
-/* --- variables --- */
+
 const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
@@ -88,10 +87,10 @@ static Config config =
   100.0,        /* opacity */
 };
 
-/* --- implement main (), provided by libgimp --- */
+
 MAIN ()
 
-/* --- functions --- */
+
 static void
 query (void)
 {
@@ -133,12 +132,13 @@ run (const gchar      *name,
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
   GError            *error  = NULL;
 
+  INIT_I18N ();
+  gegl_init (NULL, NULL);
+
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
-
-  INIT_I18N ();
 
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
@@ -173,8 +173,8 @@ run (const gchar      *name,
       gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
       export = gimp_export_image (&image_ID, &drawable_ID, NULL,
-                                  (GIMP_EXPORT_CAN_HANDLE_RGB |
-                                   GIMP_EXPORT_CAN_HANDLE_ALPHA ));
+                                  GIMP_EXPORT_CAN_HANDLE_RGB |
+                                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
 
       if (export == GIMP_EXPORT_CANCEL)
         {
@@ -390,15 +390,19 @@ save_image (Config  *config,
             gint32   drawable_ID,
             GError **error)
 {
-  GimpDrawable *drawable      = gimp_drawable_get (drawable_ID);
-  GimpImageType drawable_type = gimp_drawable_type (drawable_ID);
-  GimpPixelRgn pixel_rgn;
-  gchar  *s_uint_8, *s_uint, *s_char, *s_null;
-  FILE   *fp;
-  guint   c;
-  gchar  *macro_name;
-  guint8 *img_buffer, *img_buffer_end;
-  gchar  *basename;
+  GeglBuffer    *buffer;
+  FILE          *fp;
+  GimpImageType  drawable_type = gimp_drawable_type (drawable_ID);
+  gchar         *s_uint_8, *s_uint, *s_char, *s_null;
+  guint          c;
+  gchar         *macro_name;
+  guint8        *img_buffer, *img_buffer_end;
+  gchar         *basename;
+  guint8        *data, *p;
+  gint           width;
+  gint           height;
+  gint           x, y, pad, n_bytes, bpp;
+  gint           drawable_bpp;
 
   fp = g_fopen (config->file_name, "w");
   if (! fp)
@@ -410,82 +414,88 @@ save_image (Config  *config,
       return FALSE;
     }
 
-  gimp_pixel_rgn_init (&pixel_rgn, drawable,
-                       0, 0, drawable->width, drawable->height, FALSE, FALSE);
+  buffer = gimp_drawable_get_buffer (drawable_ID);
 
-  if (1)
+  width  = gegl_buffer_get_width  (buffer);
+  height = gegl_buffer_get_height (buffer);
+
+  drawable_bpp = gimp_drawable_bpp (drawable_ID);
+
+  bpp = config->rgb565 ? 2 : (config->alpha ? 4 : 3);
+  n_bytes = width * height * bpp;
+  pad = width * bpp;
+  if (config->use_rle)
+    pad = MAX (pad, 130 + n_bytes / 127);
+
+  data = g_new (guint8, pad + n_bytes);
+  p = data + pad;
+
+  for (y = 0; y < height; y++)
     {
-      guint8 *data, *p;
-      gint x, y, pad, n_bytes, bpp;
+      gegl_buffer_get (buffer, GEGL_RECTANGLE (0, y, width, 1), 1.0,
+                       NULL, data,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-      bpp = config->rgb565 ? 2 : (config->alpha ? 4 : 3);
-      n_bytes = drawable->width * drawable->height * bpp;
-      pad = drawable->width * drawable->bpp;
-      if (config->use_rle)
-        pad = MAX (pad, 130 + n_bytes / 127);
-
-      data = g_new (guint8, pad + n_bytes);
-      p = data + pad;
-
-      for (y = 0; y < drawable->height; y++)
+      if (bpp == 2)
         {
-          gimp_pixel_rgn_get_row (&pixel_rgn, data, 0, y, drawable->width);
+          for (x = 0; x < width; x++)
+            {
+              guint8 *d = data + x * drawable_bpp;
+              guint8 r, g, b;
+              gushort rgb16;
+              gdouble alpha = drawable_type == GIMP_RGBA_IMAGE ? d[3] : 0xff;
 
-          if (bpp == 2)
-             for (x = 0; x < drawable->width; x++)
-              {
-                guint8 *d = data + x * drawable->bpp;
-                guint8 r, g, b;
-                gushort rgb16;
-                gdouble alpha = drawable_type == GIMP_RGBA_IMAGE ? d[3] : 0xff;
-
-                alpha *= config->opacity / 25500.0;
-                r = (0.5 + alpha * (gdouble) d[0]);
-                g = (0.5 + alpha * (gdouble) d[1]);
-                b = (0.5 + alpha * (gdouble) d[2]);
-                r >>= 3;
-                g >>= 2;
-                b >>= 3;
-                rgb16 = (r << 11) + (g << 5) + b;
-                *(p++) = (guchar) rgb16;
-                *(p++) = (guchar) (rgb16 >> 8);
-              }
-          else if (config->alpha)
-            for (x = 0; x < drawable->width; x++)
-              {
-                guint8 *d = data + x * drawable->bpp;
-                gdouble alpha = drawable_type == GIMP_RGBA_IMAGE ? d[3] : 0xff;
-
-                alpha *= config->opacity / 100.0;
-                *(p++) = d[0];
-                *(p++) = d[1];
-                *(p++) = d[2];
-                *(p++) = alpha + 0.5;
-              }
-          else
-            for (x = 0; x < drawable->width; x++)
-              {
-                guint8 *d = data + x * drawable->bpp;
-                gdouble alpha = drawable_type == GIMP_RGBA_IMAGE ? d[3] : 0xff;
-
-                alpha *= config->opacity / 25500.0;
-                *(p++) = 0.5 + alpha * (gdouble) d[0];
-                *(p++) = 0.5 + alpha * (gdouble) d[1];
-                *(p++) = 0.5 + alpha * (gdouble) d[2];
-              }
+              alpha *= config->opacity / 25500.0;
+              r = (0.5 + alpha * (gdouble) d[0]);
+              g = (0.5 + alpha * (gdouble) d[1]);
+              b = (0.5 + alpha * (gdouble) d[2]);
+              r >>= 3;
+              g >>= 2;
+              b >>= 3;
+              rgb16 = (r << 11) + (g << 5) + b;
+              *(p++) = (guchar) rgb16;
+              *(p++) = (guchar) (rgb16 >> 8);
+            }
         }
-
-      img_buffer = data + pad;
-      if (config->use_rle)
+      else if (config->alpha)
         {
-          img_buffer_end = rl_encode_rgbx (data, img_buffer,
-                                           img_buffer + n_bytes, bpp);
-          img_buffer = data;
+          for (x = 0; x < width; x++)
+            {
+              guint8 *d = data + x * drawable_bpp;
+              gdouble alpha = drawable_type == GIMP_RGBA_IMAGE ? d[3] : 0xff;
+
+              alpha *= config->opacity / 100.0;
+              *(p++) = d[0];
+              *(p++) = d[1];
+              *(p++) = d[2];
+              *(p++) = alpha + 0.5;
+            }
         }
       else
         {
-          img_buffer_end = img_buffer + n_bytes;
+          for (x = 0; x < width; x++)
+            {
+              guint8 *d = data + x * drawable_bpp;
+              gdouble alpha = drawable_type == GIMP_RGBA_IMAGE ? d[3] : 0xff;
+
+              alpha *= config->opacity / 25500.0;
+              *(p++) = 0.5 + alpha * (gdouble) d[0];
+              *(p++) = 0.5 + alpha * (gdouble) d[1];
+              *(p++) = 0.5 + alpha * (gdouble) d[2];
+            }
         }
+    }
+
+  img_buffer = data + pad;
+  if (config->use_rle)
+    {
+      img_buffer_end = rl_encode_rgbx (data, img_buffer,
+                                       img_buffer + n_bytes, bpp);
+      img_buffer = data;
+    }
+  else
+    {
+      img_buffer_end = img_buffer + n_bytes;
     }
 
   if (!config->use_macros && config->glib_types)
@@ -551,21 +561,21 @@ save_image (Config  *config,
         fprintf (fp, "%u + 1];\n", (guint) (img_buffer_end - img_buffer));
       else
         fprintf (fp, "%u * %u * %u + 1];\n",
-                 drawable->width,
-                 drawable->height,
+                 width,
+                 height,
                  config->rgb565 ? 2 : (config->alpha ? 4 : 3));
       fprintf (fp, "} %s = {\n", config->prefixed_name);
       fprintf (fp, "  %u, %u, %u,\n",
-               drawable->width,
-               drawable->height,
+               width,
+               height,
                config->rgb565 ? 2 : (config->alpha ? 4 : 3));
     }
   else /* use macros */
     {
       fprintf (fp, "#define %s_WIDTH (%u)\n",
-               macro_name, drawable->width);
+               macro_name, width);
       fprintf (fp, "#define %s_HEIGHT (%u)\n",
-               macro_name, drawable->height);
+               macro_name, height);
       fprintf (fp, "#define %s_BYTES_PER_PIXEL (%u) /* 3:RGB, 4:RGBA */\n",
                macro_name, config->alpha ? 4 : 3);
     }
@@ -630,8 +640,8 @@ save_image (Config  *config,
         fprintf (fp, "%u] =\n", (guint) (img_buffer_end - img_buffer));
       else
         fprintf (fp, "%u * %u * %u + 1] =\n",
-                 drawable->width,
-                 drawable->height,
+                 width,
+                 height,
                  config->alpha ? 4 : 3);
       fprintf (fp, "(\"");
       c = 2;
@@ -660,8 +670,7 @@ save_image (Config  *config,
     fprintf (fp, "\");\n\n");
 
   fclose (fp);
-
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
 
   return TRUE;
 }
