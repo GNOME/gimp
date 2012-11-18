@@ -1131,15 +1131,17 @@ psp_zfree (void *opaque,
 }
 
 static int
-read_channel_data (FILE       *f,
-                   PSPimage   *ia,
-                   guchar    **pixels,
-                   guint       bytespp,
-                   guint       offset,
-                   GimpDrawable  *drawable,
-                   guint32     compressed_len)
+read_channel_data (FILE        *f,
+                   PSPimage    *ia,
+                   guchar     **pixels,
+                   guint        bytespp,
+                   guint        offset,
+                   GeglBuffer  *buffer,
+                   guint32      compressed_len)
 {
-  gint i, y, width = drawable->width, height = drawable->height;
+  gint i, y;
+  gint width = gegl_buffer_get_width (buffer);
+  gint height = gegl_buffer_get_height (buffer);
   gint npixels = width * height;
   guchar *buf;
   guchar *buf2 = NULL;  /* please the compiler */
@@ -1300,8 +1302,7 @@ read_layer_block (FILE     *f,
   guint16 bitmap_type, channel_type;
   gint width, height, bytespp, offset;
   guchar **pixels, *pixel;
-  GimpDrawable *drawable;
-  GimpPixelRgn pixel_rgn;
+  GeglBuffer *buffer;
 
   block_start = ftell (f);
 
@@ -1494,11 +1495,7 @@ read_layer_block (FILE     *f,
             pixels[i] = pixel + width * bytespp * i;
         }
 
-      drawable = gimp_drawable_get (layer_ID);
-      gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
-                           width, height, TRUE, FALSE);
-
-      gimp_tile_cache_size (gimp_tile_height () * width * bytespp);
+      buffer = gimp_drawable_get_buffer (layer_ID);
 
       /* Read the layer channel sub-blocks */
       while (ftell (f) < sub_block_start + sub_total_len)
@@ -1570,7 +1567,7 @@ read_layer_block (FILE     *f,
 
           if (!null_layer)
             if (read_channel_data (f, ia, pixels, bytespp,
-                                   offset, drawable, compressed_len) == -1)
+                                   offset, buffer, compressed_len) == -1)
               {
                 return -1;
               }
@@ -1581,10 +1578,10 @@ read_layer_block (FILE     *f,
             }
         }
 
-      gimp_pixel_rgn_set_rect (&pixel_rgn, pixel, 0, 0, width, height);
+      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
+                       NULL, pixel, GEGL_AUTO_ROWSTRIDE);
 
-      gimp_drawable_flush (drawable);
-      gimp_drawable_detach (drawable);
+      g_object_unref (buffer);
 
       g_free (pixels);
       g_free (pixel);
@@ -1913,6 +1910,7 @@ run (const gchar      *name,
   GError            *error  = NULL;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   run_mode = param[0].data.d_int32;
 

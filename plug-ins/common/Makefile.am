@@ -1390,6 +1390,7 @@ file_psp_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(Z_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
