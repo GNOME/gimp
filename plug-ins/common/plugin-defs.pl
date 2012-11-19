@@ -53,7 +53,7 @@
     'file-gegl' => { ui => 1, gegl => 1 },
     'file-gif-load' => { gegl => 1 },
     'file-gif-save' => { ui => 1, gegl => 1 },
-    'file-gih' => { ui => 1 },
+    'file-gih' => { ui => 1, gegl => 1 },
     'file-glob' => {},
     'file-header' => { ui => 1, gegl => 1 },
     'file-html-table' => { ui => 1 },

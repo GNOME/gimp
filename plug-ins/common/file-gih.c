@@ -146,7 +146,8 @@ static gboolean  gih_load_one_brush  (gint           fd,
 
 static gboolean  gih_save_dialog     (gint32         image_ID);
 static gboolean  gih_save_one_brush  (gint           fd,
-                                      GimpPixelRgn  *pixel_rgn,
+                                      gint32         drawable_ID,
+                                      GeglRectangle *rect,
                                       const gchar   *name);
 static gboolean  gih_save_image      (const gchar   *filename,
                                       gint32         image_ID,
@@ -259,6 +260,9 @@ run (const gchar      *name,
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
   GError            *error  = NULL;
 
+  INIT_I18N();
+  gegl_init (NULL, NULL);
+
   run_mode = param[0].data.d_int32;
 
   *return_vals  = values;
@@ -266,8 +270,6 @@ run (const gchar      *name,
 
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
-  INIT_I18N();
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
@@ -435,8 +437,6 @@ gih_load_one_brush (gint   fd,
   BrushHeader    bh;
   guchar        *brush_buf  = NULL;
   gint32         layer_ID;
-  GimpDrawable  *drawable;
-  GimpPixelRgn   pixel_rgn;
   gint           bn_size;
   GimpImageType  image_type;
   gint           width, height;
@@ -594,23 +594,25 @@ gih_load_one_brush (gint   fd,
 
   if (layer_ID != -1)
     {
+      GeglBuffer *buffer;
+      gint        i;
+
       gimp_image_insert_layer (image_ID, layer_ID, -1, num_layers++);
       gimp_layer_set_offsets (layer_ID,
                               (new_width - bh.width)   / 2,
                               (new_height - bh.height) / 2);
 
-      drawable = gimp_drawable_get (layer_ID);
-      gimp_pixel_rgn_init (&pixel_rgn, drawable,
-                           0, 0, drawable->width, drawable->height,
-                           TRUE, FALSE);
+      buffer = gimp_drawable_get_buffer (layer_ID);
 
-      gimp_pixel_rgn_set_rect (&pixel_rgn,
-                               brush_buf, 0, 0, bh.width, bh.height);
-
+      /*  invert  */
       if (image_type == GIMP_GRAY_IMAGE)
-        {
-          gimp_invert (layer_ID);
-        }
+        for (i = 0; i < bh.width * bh.height; i++)
+          brush_buf[i] = 255 - brush_buf[i];
+
+      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, bh.width, bh.height), 0,
+                       NULL, brush_buf, GEGL_AUTO_ROWSTRIDE);
+
+      g_object_unref (buffer);
     }
 
   g_free (brush_buf);
@@ -1119,28 +1121,56 @@ gih_save_dialog (gint32 image_ID)
 }
 
 static gboolean
-gih_save_one_brush (gint          fd,
-                    GimpPixelRgn *pixel_rgn,
-                    const gchar  *name)
+gih_save_one_brush (gint           fd,
+                    gint32         drawable_ID,
+                    GeglRectangle *rect,
+                    const gchar   *name)
 {
-  BrushHeader  header;
-  guchar      *buffer;
-  guint        y;
+  GeglBuffer    *buffer;
+  const Babl    *format;
+  BrushHeader    header;
+  guchar        *data;
+  GimpImageType  drawable_type;
+  gint           bpp;
+  guint          y;
 
-  g_return_val_if_fail (fd != -1, FALSE);
-  g_return_val_if_fail (pixel_rgn != NULL, FALSE);
+  buffer = gimp_drawable_get_buffer (drawable_ID);
 
-  if (pixel_rgn->w < 1 || pixel_rgn->h < 1)
-    return FALSE;
+  drawable_type = gimp_drawable_type (drawable_ID);
 
   if (! name)
     name = _("Unnamed");
 
+  switch (drawable_type)
+    {
+    case GIMP_GRAY_IMAGE:
+      format = babl_format ("Y' u8");
+      break;
+
+    case GIMP_GRAYA_IMAGE:
+      format = babl_format ("Y'A u8");
+      break;
+
+    case GIMP_RGB_IMAGE:
+      format = babl_format ("R'G'B' u8");
+      break;
+
+    case GIMP_RGBA_IMAGE:
+      format = babl_format ("R'G'B'A u8");
+      break;
+
+    default:
+      g_return_val_if_reached (FALSE);
+      break;
+    }
+
+  bpp = babl_format_get_bytes_per_pixel (format);
+
   header.header_size  = g_htonl (sizeof (header) + strlen (name) + 1);
   header.version      = g_htonl (2);
-  header.width        = g_htonl (pixel_rgn->w);
-  header.height       = g_htonl (pixel_rgn->h);
-  header.bytes        = g_htonl (pixel_rgn->bpp > 2 ? 4 : 1);
+  header.width        = g_htonl (rect->width);
+  header.height       = g_htonl (rect->height);
+  header.bytes        = g_htonl (bpp > 2 ? 4 : 1);
   header.magic_number = g_htonl (GBRUSH_MAGIC);
   header.spacing      = g_htonl (info.spacing);
 
@@ -1150,66 +1180,68 @@ gih_save_one_brush (gint          fd,
   if (write (fd, name, strlen (name) + 1) != strlen (name) + 1)
     return FALSE;
 
-  buffer = g_malloc (pixel_rgn->w * pixel_rgn->bpp);
+  data = g_malloc (rect->width * bpp);
 
-  for (y = 0; y < pixel_rgn->h; y++)
+  for (y = 0; y < rect->height; y++)
     {
       guint x;
 
-      gimp_pixel_rgn_get_row (pixel_rgn, buffer,
-                              0 + pixel_rgn->x, y + pixel_rgn->y, pixel_rgn->w);
+      gegl_buffer_get (buffer,
+                       GEGL_RECTANGLE (rect->x, rect->y + y, rect->width, 1),
+                       1.0, format, data,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-      switch (pixel_rgn->bpp)
+      switch (bpp)
         {
         case 1: /* GRAY */
-          for (x = 0; x < pixel_rgn->w; x++)
+          for (x = 0; x < rect->width; x++)
             {
-              const guchar value = 255 - buffer[x];
+              const guchar value = 255 - data[x];
 
               if (write (fd, &value, 1) != 1)
                 {
-                  g_free (buffer);
+                  g_free (data);
                   return FALSE;
                 }
             }
           break;
 
         case 2: /* GRAYA, alpha channel is ignored */
-          for (x = 0; x < pixel_rgn->w; x++)
+          for (x = 0; x < rect->width; x++)
             {
-              const guchar value = 255 - buffer[2 * x];
+              const guchar value = 255 - data[2 * x];
 
               if (write (fd, &value, 1) != 1)
                 {
-                  g_free (buffer);
+                  g_free (data);
                   return FALSE;
                 }
             }
           break;
 
         case 3: /* RGB, alpha channel is added */
-          for (x = 0; x < pixel_rgn->w; x++)
+          for (x = 0; x < rect->width; x++)
             {
               guchar value[4];
 
-              value[0] = buffer[3 * x + 0];
-              value[1] = buffer[3 * x + 1];
-              value[2] = buffer[3 * x + 2];
+              value[0] = data[3 * x + 0];
+              value[1] = data[3 * x + 1];
+              value[2] = data[3 * x + 2];
               value[3] = 255;
 
               if (write (fd, value, 4) != 4)
                 {
-                  g_free (buffer);
+                  g_free (data);
                   return FALSE;
                 }
             }
           break;
 
         case 4: /* RGBA */
-          if (write (fd, buffer, pixel_rgn->w * pixel_rgn->bpp) !=
-              pixel_rgn->w * pixel_rgn->bpp)
+          if (write (fd, data, rect->width * bpp) !=
+              rect->width * bpp)
             {
-              g_free (buffer);
+              g_free (data);
               return FALSE;
             }
           break;
@@ -1220,7 +1252,8 @@ gih_save_one_brush (gint          fd,
         }
     }
 
-  g_free (buffer);
+  g_free (data);
+  g_object_unref (buffer);
 
   return TRUE;
 }
@@ -1248,7 +1281,6 @@ gih_save_image (const gchar  *filename,
 
   imagew = gimp_image_width (image_ID);
   imageh = gimp_image_height (image_ID);
-  gimp_tile_cache_size (gimp_tile_height () * imagew * 4);
 
   fd = g_open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0666);
 
@@ -1290,10 +1322,11 @@ gih_save_image (const gchar  *filename,
 
   for (layer = 0, k = 0; layer < nlayers; layer++)
     {
-      GimpDrawable *drawable = gimp_drawable_get (layer_ID[layer]);
-      gchar        *name     = gimp_item_get_name (drawable->drawable_id);
+      gchar *name   = gimp_item_get_name (layer_ID[layer]);
+      gint   width  = gimp_drawable_width (layer_ID[layer]);
+      gint   height = gimp_drawable_height (layer_ID[layer]);
 
-      gimp_drawable_offsets (drawable->drawable_id, &offsetx, &offsety);
+      gimp_drawable_offsets (layer_ID[layer], &offsetx, &offsety);
 
       for (row = 0; row < gihparams.rows; row++)
         {
@@ -1310,24 +1343,23 @@ gih_save_image (const gchar  *filename,
            */
           thisy = MAX (0, y - offsety);
           thish = (ynext - offsety) - thisy;
-          thish = MIN (thish, drawable->height - thisy);
+          thish = MIN (thish, height - thisy);
 
           for (col = 0; col < gihparams.cols; col++)
             {
-              GimpPixelRgn  pixel_rgn;
-              gint          x, xnext;
-              gint          thisx, thisw;
+              gint x, xnext;
+              gint thisx, thisw;
 
               x = (col * imagew / gihparams.cols);
               xnext = ((col + 1) * imagew / gihparams.cols);
               thisx = MAX (0, x - offsetx);
               thisw = (xnext - offsetx) - thisx;
-              thisw = MIN (thisw, drawable->width - thisx);
+              thisw = MIN (thisw, width - thisx);
 
-              gimp_pixel_rgn_init (&pixel_rgn, drawable, thisx, thisy,
-                                   thisw, thish, FALSE, FALSE);
-
-              if (! gih_save_one_brush (fd, &pixel_rgn, name))
+              if (! gih_save_one_brush (fd, layer_ID[layer],
+                                        GEGL_RECTANGLE (thisx, thisy,
+                                                        thisw, thish),
+                                        name))
                 {
                   close (fd);
                   return FALSE;
@@ -1339,14 +1371,13 @@ gih_save_image (const gchar  *filename,
         }
 
       g_free (name);
-      gimp_drawable_detach (drawable);
     }
 
-  gimp_progress_update (1.0);
 
   g_free (layer_ID);
-
   close (fd);
+
+  gimp_progress_update (1.0);
 
   return TRUE;
 }
