@@ -108,7 +108,7 @@ static void     run                      (const gchar      *name,
                                           GimpParam       **return_vals);
 
 static gboolean save_image               (const gchar      *filename,
-                                          GimpDrawable     *drawable,
+                                          GeglBuffer       *buffer,
                                           GError          **error);
 static gboolean save_dialog              (gint32            image_ID);
 
@@ -154,7 +154,7 @@ query (void)
                           "Daniel Dunbar",
                           "1998",
                           _("HTML table"),
-                          "RGB*, GRAY*",
+                          "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
@@ -172,12 +172,10 @@ run (const gchar      *name,
 {
   static GimpParam   values[2];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpDrawable      *drawable;
   GError            *error  = NULL;
 
   INIT_I18N ();
-
-  drawable = gimp_drawable_get (param[2].data.d_int32);
+  gegl_init (NULL, NULL);
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -189,7 +187,11 @@ run (const gchar      *name,
 
   if (save_dialog (param[1].data.d_int32))
     {
-      if (save_image (param[3].data.d_string, drawable, &error))
+      GeglBuffer *buffer;
+
+      buffer = gimp_drawable_get_buffer (param[2].data.d_int32);
+
+      if (save_image (param[3].data.d_string, buffer, &error))
         {
           gimp_set_data (SAVE_PROC, &gtmvals, sizeof (GTMValues));
         }
@@ -197,6 +199,8 @@ run (const gchar      *name,
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
+
+      g_object_unref (buffer);
     }
   else
     {
@@ -214,19 +218,22 @@ run (const gchar      *name,
 }
 
 static gboolean
-save_image (const gchar   *filename,
-            GimpDrawable  *drawable,
-            GError       **error)
+save_image (const gchar  *filename,
+            GeglBuffer   *buffer,
+            GError      **error)
 {
-  gint          row,col, cols, rows, x, y;
+  const Babl   *format = babl_format ("R'G'B'A u8");
+  gint          row, col, cols, rows, x, y;
   gint          colcount, colspan, rowspan;
   gint         *palloc;
-  guchar       *buffer, *buf2;
+  guchar       *buf, *buf2;
   gchar        *width, *height;
-  GimpPixelRgn  pixel_rgn;
   FILE         *fp;
 
-  palloc = g_new (int, drawable->width * drawable->height);
+  cols = gegl_buffer_get_width  (buffer);
+  rows = gegl_buffer_get_height (buffer);
+
+  palloc = g_new (int, rows * cols);
 
   fp = g_fopen (filename, "w");
 
@@ -257,14 +264,8 @@ save_image (const gchar   *filename,
   gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));
 
-  gimp_pixel_rgn_init (&pixel_rgn, drawable,
-                       0, 0, drawable->width, drawable->height,
-                       FALSE, FALSE);
-
-  cols   = drawable->width;
-  rows   = drawable->height;
-  buffer = g_new (guchar, drawable->bpp);
-  buf2   = g_new (guchar, drawable->bpp);
+  buf  = g_new (guchar, babl_format_get_bytes_per_pixel (format));
+  buf2 = g_new (guchar, babl_format_get_bytes_per_pixel (format));
 
   width = height = NULL;
 
@@ -288,7 +289,7 @@ save_image (const gchar   *filename,
 
   for (row = 0; row < rows; row++)
     for (col = 0; col < cols; col++)
-      palloc[drawable->width * row + col] = 1;
+      palloc[cols * row + col] = 1;
 
   colspan = 0;
   rowspan = 0;
@@ -299,7 +300,8 @@ save_image (const gchar   *filename,
 
       for (x = 0; x < cols; x++)
         {
-          gimp_pixel_rgn_get_pixel (&pixel_rgn, buffer, x, y);
+          gegl_buffer_sample (buffer, x, y, NULL, buf, format,
+                              GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
           /* Determine ROWSPAN and COLSPAN */
 
@@ -311,20 +313,22 @@ save_image (const gchar   *filename,
               colspan  = 0;
               rowspan  = 0;
 
-              gimp_pixel_rgn_get_pixel (&pixel_rgn, buf2, col, row);
+              gegl_buffer_sample (buffer, col, row, NULL, buf2, format,
+                                  GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
-              while (color_comp (buffer,buf2) &&
-                     palloc[drawable->width * row + col] == 1 &&
-                     row < drawable->height)
+              while (color_comp (buf, buf2) &&
+                     palloc[cols * row + col] == 1 &&
+                     row < rows)
                 {
-                  while (color_comp (buffer,buf2) &&
-                         palloc[drawable->width * row + col] == 1 &&
-                         col < drawable->width )
+                  while (color_comp (buf, buf2) &&
+                         palloc[cols * row + col] == 1 &&
+                         col < cols)
                     {
                       colcount++;
                       col++;
 
-                      gimp_pixel_rgn_get_pixel (&pixel_rgn, buf2, col, row);
+                      gegl_buffer_sample (buffer, col, row, NULL, buf2, format,
+                                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
                     }
 
                   if (colcount != 0)
@@ -339,29 +343,30 @@ save_image (const gchar   *filename,
                   col = x;
                   colcount = 0;
 
-                  gimp_pixel_rgn_get_pixel (&pixel_rgn, buf2, col, row);
+                  gegl_buffer_sample (buffer, col, row, NULL, buf2, format,
+                                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
                 }
 
               if (colspan > 1 || rowspan > 1)
                 {
                   for (row = 0; row < rowspan; row++)
                     for (col = 0; col < colspan; col++)
-                      palloc[drawable->width * (row + y) + (col + x)] = 0;
+                      palloc[cols * (row + y) + (col + x)] = 0;
 
-                  palloc[drawable->width * y + x] = 2;
+                  palloc[cols * y + x] = 2;
                 }
             }
 
-          if (palloc[drawable->width * y + x] == 1)
+          if (palloc[cols * y + x] == 1)
             fprintf (fp, "      <TD%s%sBGCOLOR=#%02x%02x%02x>",
-                     width, height, buffer[0], buffer[1], buffer[2]);
+                     width, height, buf[0], buf[1], buf[2]);
 
-          if (palloc[drawable->width * y + x] == 2)
+          if (palloc[cols * y + x] == 2)
             fprintf (fp,"      <TD ROWSPAN=\"%d\" COLSPAN=\"%d\"%s%sBGCOLOR=#%02x%02x%02x>",
                      rowspan, colspan, width, height,
-                     buffer[0], buffer[1], buffer[2]);
+                     buf[0], buf[1], buf[2]);
 
-          if (palloc[drawable->width * y + x] != 0)
+          if (palloc[cols * y + x] != 0)
             {
               if (gtmvals.tdcomp)
                 fprintf (fp, "%s</TD>\n", gtmvals.cellcontent);
@@ -374,6 +379,7 @@ save_image (const gchar   *filename,
 
       gimp_progress_update ((double) y / (double) rows);
     }
+
   gimp_progress_update (1.0);
 
   if (gtmvals.fulldoc)
@@ -382,11 +388,8 @@ save_image (const gchar   *filename,
     fprintf (fp, "</TABLE>\n");
 
   fclose (fp);
-  gimp_drawable_detach (drawable);
-
   g_free (width);
   g_free (height);
-
   g_free (palloc);
 
   return TRUE;
@@ -648,12 +651,12 @@ save_dialog (gint32 image_ID)
 }
 
 static gboolean
-color_comp (guchar *buffer,
+color_comp (guchar *buf,
             guchar *buf2)
 {
-  return (buffer[0] == buf2[0] &&
-          buffer[1] == buf2[1] &&
-          buffer[2] == buf2[2]);
+  return (buf[0] == buf2[0] &&
+          buf[1] == buf2[1] &&
+          buf[2] == buf2[2]);
 }
 
 /*  Save interface functions  */

@@ -56,7 +56,7 @@
     'file-gih' => { ui => 1, gegl => 1 },
     'file-glob' => {},
     'file-header' => { ui => 1, gegl => 1 },
-    'file-html-table' => { ui => 1 },
+    'file-html-table' => { ui => 1, gegl => 1 },
     'file-jp2-load' => { optional => 1, gegl => 1, libs => 'JP2_LIBS' },
     'file-mng' => { ui => 1, optional => 1, libs => 'MNG_LIBS', cflags => 'MNG_CFLAGS' },
     'file-pat' => { ui => 1, gegl => 1 },
