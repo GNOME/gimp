@@ -37,6 +37,7 @@
 #define PLUG_IN_BINARY "file-pcx"
 #define PLUG_IN_ROLE   "gimp-file-pcx"
 
+
 /* Declare local functions.  */
 
 static void   query      (void);
@@ -52,25 +53,25 @@ static gint32 load_image (const gchar      *filename,
 static void   load_1     (FILE             *fp,
                           gint              width,
                           gint              height,
-                          guchar           *buffer,
+                          guchar           *buf,
                           guint16           bytes);
 static void   load_4     (FILE             *fp,
                           gint              width,
                           gint              height,
-                          guchar           *buffer,
+                          guchar           *buf,
                           guint16           bytes);
 static void   load_8     (FILE             *fp,
                           gint              width,
                           gint              height,
-                          guchar           *buffer,
+                          guchar           *buf,
                           guint16           bytes);
 static void   load_24    (FILE             *fp,
                           gint              width,
                           gint              height,
-                          guchar           *buffer,
+                          guchar           *buf,
                           guint16           bytes);
 static void   readline   (FILE             *fp,
-                          guchar           *buffer,
+                          guchar           *buf,
                           gint              bytes);
 
 static gint   save_image (const gchar      *filename,
@@ -81,13 +82,13 @@ static gint   save_image (const gchar      *filename,
 static void   save_8     (FILE             *fp,
                           gint              width,
                           gint              height,
-                          const guchar     *buffer);
+                          const guchar     *buf);
 static void   save_24    (FILE             *fp,
                           gint              width,
                           gint              height,
-                          const guchar     *buffer);
+                          const guchar     *buf);
 static void   writeline  (FILE             *fp,
-                          const guchar     *buffer,
+                          const guchar     *buf,
                           gint              bytes);
 
 
@@ -174,9 +175,10 @@ run (const gchar      *name,
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
   GError            *error  = NULL;
 
-  run_mode = param[0].data.d_int32;
-
   INIT_I18N ();
+  gegl_init (NULL, NULL);
+
+  run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -345,8 +347,7 @@ load_image (const gchar  *filename,
             GError      **error)
 {
   FILE         *fd;
-  GimpDrawable *drawable;
-  GimpPixelRgn  pixel_rgn;
+  GeglBuffer   *buffer;
   guint16       offset_x, offset_y, bytesperline;
   gint32        width, height;
   gint32        image, layer;
@@ -434,7 +435,8 @@ load_image (const gchar  *filename,
   gimp_image_set_filename (image, filename);
   gimp_image_insert_layer (image, layer, -1, 0);
   gimp_layer_set_offsets (layer, offset_x, offset_y);
-  drawable = gimp_drawable_get (layer);
+
+  buffer = gimp_drawable_get_buffer (layer);
 
   if (pcx_header.planes == 1 && pcx_header.bpp == 1)
     {
@@ -468,16 +470,14 @@ load_image (const gchar  *filename,
       return -1;
     }
 
-  gimp_progress_update (1.0);
-
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, TRUE, FALSE);
-  gimp_pixel_rgn_set_rect (&pixel_rgn, dest, 0, 0, width, height);
+  gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
+                   NULL, dest, GEGL_AUTO_ROWSTRIDE);
 
   fclose (fd);
   g_free (dest);
+  g_object_unref (buffer);
 
-  gimp_drawable_flush (drawable);
-  gimp_drawable_detach (drawable);
+  gimp_progress_update (1.0);
 
   return image;
 }
@@ -486,16 +486,16 @@ static void
 load_8 (FILE    *fp,
         gint     width,
         gint     height,
-        guchar  *buffer,
+        guchar  *buf,
         guint16  bytes)
 {
   gint    row;
   guchar *line = g_new (guchar, bytes);
 
-  for (row = 0; row < height; buffer += width, ++row)
+  for (row = 0; row < height; buf += width, ++row)
     {
       readline (fp, line, bytes);
-      memcpy (buffer, line, width);
+      memcpy (buf, line, width);
       gimp_progress_update ((double) row / (double) height);
     }
 
@@ -506,20 +506,20 @@ static void
 load_24 (FILE    *fp,
          gint     width,
          gint     height,
-         guchar  *buffer,
+         guchar  *buf,
          guint16  bytes)
 {
   gint    x, y, c;
   guchar *line = g_new (guchar, bytes);
 
-  for (y = 0; y < height; buffer += width * 3, ++y)
+  for (y = 0; y < height; buf += width * 3, ++y)
     {
       for (c = 0; c < 3; ++c)
         {
           readline (fp, line, bytes);
           for (x = 0; x < width; ++x)
             {
-              buffer[x * 3 + c] = line[x];
+              buf[x * 3 + c] = line[x];
             }
         }
       gimp_progress_update ((double) y / (double) height);
@@ -532,21 +532,21 @@ static void
 load_1 (FILE    *fp,
         gint     width,
         gint     height,
-        guchar  *buffer,
+        guchar  *buf,
         guint16  bytes)
 {
   gint    x, y;
   guchar *line = g_new (guchar, bytes);
 
-  for (y = 0; y < height; buffer += width, ++y)
+  for (y = 0; y < height; buf += width, ++y)
     {
       readline (fp, line, bytes);
       for (x = 0; x < width; ++x)
         {
           if (line[x / 8] & (128 >> (x % 8)))
-            buffer[x] = 1;
+            buf[x] = 1;
           else
-            buffer[x] = 0;
+            buf[x] = 0;
         }
       gimp_progress_update ((double) y / (double) height);
     }
@@ -558,23 +558,23 @@ static void
 load_4 (FILE    *fp,
         gint     width,
         gint     height,
-        guchar  *buffer,
+        guchar  *buf,
         guint16  bytes)
 {
   gint    x, y, c;
   guchar *line = g_new (guchar, bytes);
 
-  for (y = 0; y < height; buffer += width, ++y)
+  for (y = 0; y < height; buf += width, ++y)
     {
       for (x = 0; x < width; ++x)
-        buffer[x] = 0;
+        buf[x] = 0;
       for (c = 0; c < 4; ++c)
         {
           readline(fp, line, bytes);
           for (x = 0; x < width; ++x)
             {
               if (line[x / 8] & (128 >> (x % 8)))
-                buffer[x] += (1 << c);
+                buf[x] += (1 << c);
             }
         }
       gimp_progress_update ((double) y / (double) height);
@@ -585,7 +585,7 @@ load_4 (FILE    *fp,
 
 static void
 readline (FILE   *fp,
-          guchar *buffer,
+          guchar *buf,
           gint    bytes)
 {
   static guchar count = 0, value = 0;
@@ -608,12 +608,12 @@ readline (FILE   *fp,
                 }
             }
           count--;
-          *(buffer++) = value;
+          *(buf++) = value;
         }
     }
   else
     {
-      fread (buffer, bytes, 1, fp);
+      fread (buf, bytes, 1, fp);
     }
 }
 
@@ -624,8 +624,8 @@ save_image (const gchar  *filename,
             GError      **error)
 {
   FILE          *fp;
-  GimpPixelRgn   pixel_rgn;
-  GimpDrawable  *drawable;
+  GeglBuffer    *buffer;
+  const Babl    *format;
   GimpImageType  drawable_type;
   guchar        *cmap= NULL;
   guchar        *pixels;
@@ -634,12 +634,13 @@ save_image (const gchar  *filename,
   gint           colors, i;
   guint8         header_buf[128];
 
-  drawable = gimp_drawable_get (layer);
   drawable_type = gimp_drawable_type (layer);
   gimp_drawable_offsets (layer, &offset_x, &offset_y);
-  width = drawable->width;
-  height = drawable->height;
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, FALSE, FALSE);
+
+  buffer = gimp_drawable_get_buffer (layer);
+
+  width  = gegl_buffer_get_width  (buffer);
+  height = gegl_buffer_get_height (buffer);
 
   gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));
@@ -651,25 +652,28 @@ save_image (const gchar  *filename,
   switch (drawable_type)
     {
     case GIMP_INDEXED_IMAGE:
-      cmap = gimp_image_get_colormap (image, &colors);
-      pcx_header.bpp = 8;
+      cmap                    = gimp_image_get_colormap (image, &colors);
+      pcx_header.bpp          = 8;
+      pcx_header.planes       = 1;
+      pcx_header.color        = GUINT16_TO_LE (1);
       pcx_header.bytesperline = GUINT16_TO_LE (width);
-      pcx_header.planes = 1;
-      pcx_header.color = GUINT16_TO_LE (1);
+      format                  = NULL;
       break;
 
     case GIMP_RGB_IMAGE:
-      pcx_header.bpp = 8;
-      pcx_header.planes = 3;
-      pcx_header.color = GUINT16_TO_LE (1);
+      pcx_header.bpp          = 8;
+      pcx_header.planes       = 3;
+      pcx_header.color        = GUINT16_TO_LE (1);
       pcx_header.bytesperline = GUINT16_TO_LE (width);
+      format                  = babl_format ("R'G'B' u8");
       break;
 
     case GIMP_GRAY_IMAGE:
-      pcx_header.bpp = 8;
-      pcx_header.planes = 1;
-      pcx_header.color = GUINT16_TO_LE (2);
+      pcx_header.bpp          = 8;
+      pcx_header.planes       = 1;
+      pcx_header.color        = GUINT16_TO_LE (2);
       pcx_header.bytesperline = GUINT16_TO_LE (width);
+      format                  = babl_format ("Y' u8");
       break;
 
     default:
@@ -678,7 +682,10 @@ save_image (const gchar  *filename,
   }
 
   pixels = (guchar *) g_malloc (width * height * pcx_header.planes);
-  gimp_pixel_rgn_get_rect (&pixel_rgn, pixels, 0, 0, width, height);
+
+  gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, width, height), 1.0,
+                   format, pixels,
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
   if ((offset_x < 0) || (offset_x > (1<<16)))
     {
@@ -760,7 +767,7 @@ save_image (const gchar  *filename,
       return FALSE;
     }
 
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
   g_free (pixels);
 
   if (fclose (fp) != 0)
@@ -778,14 +785,14 @@ static void
 save_8 (FILE         *fp,
         gint          width,
         gint          height,
-        const guchar *buffer)
+        const guchar *buf)
 {
   int row;
 
   for (row = 0; row < height; ++row)
     {
-      writeline (fp, buffer, width);
-      buffer += width;
+      writeline (fp, buf, width);
+      buf += width;
       gimp_progress_update ((double) row / (double) height);
     }
 }
@@ -794,7 +801,7 @@ static void
 save_24 (FILE         *fp,
          gint          width,
          gint          height,
-         const guchar *buffer)
+         const guchar *buf)
 {
   int     x, y, c;
   guchar *line;
@@ -807,11 +814,11 @@ save_24 (FILE         *fp,
         {
           for (x = 0; x < width; ++x)
             {
-              line[x] = buffer[(3*x) + c];
+              line[x] = buf[(3*x) + c];
             }
           writeline (fp, line, width);
         }
-      buffer += width * 3;
+      buf += width * 3;
       gimp_progress_update ((double) y / (double) height);
     }
   g_free (line);
@@ -819,21 +826,21 @@ save_24 (FILE         *fp,
 
 static void
 writeline (FILE         *fp,
-           const guchar *buffer,
+           const guchar *buf,
            gint          bytes)
 {
-  const guchar *finish = buffer + bytes;
+  const guchar *finish = buf + bytes;
   guchar        value;
   guchar        count;
 
-  while (buffer < finish)
+  while (buf < finish)
     {
-      value = *(buffer++);
+      value = *(buf++);
       count = 1;
 
-      while (buffer < finish && count < 63 && *buffer == value)
+      while (buf < finish && count < 63 && *buf == value)
         {
-          count++; buffer++;
+          count++; buf++;
         }
 
       if (value < 0xc0 && count == 1)

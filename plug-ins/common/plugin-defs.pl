@@ -60,7 +60,7 @@
     'file-jp2-load' => { optional => 1, gegl => 1, libs => 'JP2_LIBS' },
     'file-mng' => { ui => 1, optional => 1, libs => 'MNG_LIBS', cflags => 'MNG_CFLAGS' },
     'file-pat' => { ui => 1, gegl => 1 },
-    'file-pcx' => { ui => 1 },
+    'file-pcx' => { ui => 1, gegl => 1 },
     'file-pix' => { ui => 1 },
     'file-png' => { ui => 1, gegl => 1, optional => 1, libs => 'PNG_LIBS', cflags => 'PNG_CFLAGS' },
     'file-pnm' => { ui => 1 },
