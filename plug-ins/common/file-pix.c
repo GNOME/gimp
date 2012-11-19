@@ -146,9 +146,7 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_load_handler (LOAD_PROC,
-                              "pix,matte,mask,alpha,als",
-                              "");
+  gimp_register_load_handler (LOAD_PROC, "pix,matte,mask,alpha,als", "");
 
   gimp_install_procedure (SAVE_PROC,
                           "save file in the Alias|Wavefront pix/matte file format",
@@ -192,12 +190,14 @@ run (const gchar      *name,
   GimpExportReturn  export = GIMP_EXPORT_CANCEL;
   GError           *error  = NULL;
 
-  run_mode = param[0].data.d_int32;
-
   INIT_I18N ();
+  gegl_init (NULL, NULL);
+
+  run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
@@ -231,8 +231,8 @@ run (const gchar      *name,
         case GIMP_RUN_WITH_LAST_VALS:
           gimp_ui_init (PLUG_IN_BINARY, FALSE);
           export = gimp_export_image (&image_ID, &drawable_ID, NULL,
-                                      (GIMP_EXPORT_CAN_HANDLE_RGB |
-                                       GIMP_EXPORT_CAN_HANDLE_GRAY));
+                                      GIMP_EXPORT_CAN_HANDLE_RGB |
+                                      GIMP_EXPORT_CAN_HANDLE_GRAY);
           if (export == GIMP_EXPORT_CANCEL)
             {
               values[0].data.d_status = GIMP_PDB_CANCEL;
@@ -320,18 +320,16 @@ static gint32
 load_image (const gchar  *filename,
             GError      **error)
 {
-  gint       i, j, tile_height, row;
-  FILE      *file = NULL;
-  guchar    *dest;
-  guchar    *dest_base;
-  GimpDrawable *drawable;
-  gint32     image_ID;
-  gint32     layer_ID;
-  GimpPixelRgn  pixel_rgn;
-  gushort    width, height, depth;
-
+  GeglBuffer        *buffer;
+  FILE              *file;
   GimpImageBaseType  imgtype;
-  GimpImageType gdtype;
+  GimpImageType      gdtype;
+  guchar            *dest;
+  guchar            *dest_base;
+  gint32             image_ID;
+  gint32             layer_ID;
+  gushort            width, height, depth;
+  gint               i, j, tile_height, row;
 
   PIX_DEBUG_PRINT ("Opening file: %s\n", filename);
 
@@ -362,13 +360,13 @@ load_image (const gchar  *filename,
     {
       /* Loading a matte file */
       imgtype = GIMP_GRAY;
-      gdtype = GIMP_GRAY_IMAGE;
+      gdtype  = GIMP_GRAY_IMAGE;
     }
   else if (depth == 24)
     {
       /* Loading an RGB file */
       imgtype = GIMP_RGB;
-      gdtype = GIMP_RGB_IMAGE;
+      gdtype  = GIMP_RGB_IMAGE;
     }
   else
     {
@@ -384,9 +382,8 @@ load_image (const gchar  *filename,
                              height,
                              gdtype, 100, GIMP_NORMAL_MODE);
   gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
-  drawable = gimp_drawable_get (layer_ID);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,
-                       drawable->height, TRUE, FALSE);
+
+  buffer = gimp_drawable_get_buffer (layer_ID);
 
   tile_height = gimp_tile_height ();
 
@@ -395,7 +392,6 @@ load_image (const gchar  *filename,
       /* Read a 24-bit Pix image */
       guchar record[4];
       gint   readlen;
-      tile_height = gimp_tile_height ();
 
       dest_base = dest = g_new (guchar, 3 * width * tile_height);
 
@@ -427,8 +423,10 @@ load_image (const gchar  *filename,
                     }
                 }
             }
-          gimp_pixel_rgn_set_rect (&pixel_rgn, dest_base, 0, i-row,
-                                   width, row);
+
+          gegl_buffer_set (buffer, GEGL_RECTANGLE (0, i - row, width, row), 0,
+                           NULL, dest_base, GEGL_AUTO_ROWSTRIDE);
+
           gimp_progress_update ((double) i / (double) height);
         }
 
@@ -466,21 +464,23 @@ load_image (const gchar  *filename,
                         break;
                     }
                 }
+
               dest += width;
             }
-          gimp_pixel_rgn_set_rect (&pixel_rgn, dest_base, 0, i-row,
-                                   width, row);
+
+          gegl_buffer_set (buffer, GEGL_RECTANGLE (0, i - row, width, row), 0,
+                           NULL, dest_base, GEGL_AUTO_ROWSTRIDE);
+
           gimp_progress_update ((double) i / (double) height);
         }
+
       g_free (dest_base);
     }
 
-  gimp_progress_update (1.0);
-
-  gimp_drawable_flush (drawable);
-  gimp_drawable_detach (drawable);
-
+  g_object_unref (buffer);
   fclose (file);
+
+  gimp_progress_update (1.0);
 
   return image_ID;
 }
@@ -501,21 +501,29 @@ save_image (const gchar  *filename,
             gint32        drawable_ID,
             GError      **error)
 {
-  gint       depth, i, j, row, tile_height, writelen, rectHeight;
-  gboolean   savingColor = TRUE;
-  guchar    *src;
-  guchar    *src_base;
-  GimpDrawable *drawable;
-  GimpPixelRgn  pixel_rgn;
-  FILE      *file;
+  GeglBuffer *buffer;
+  const Babl *format;
+  FILE       *file;
+  gint        width;
+  gint        height;
+  gint        depth, i, j, row, tile_height, writelen, rectHeight;
+  gboolean    savingColor = TRUE;
+  guchar     *src;
+  guchar     *src_base;
 
   /* Get info about image */
-  drawable = gimp_drawable_get (drawable_ID);
+  buffer = gimp_drawable_get_buffer (drawable_ID);
 
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,
-                       drawable->height, FALSE, FALSE);
+  width  = gegl_buffer_get_width  (buffer);
+  height = gegl_buffer_get_height (buffer);
 
   savingColor = gimp_drawable_is_rgb (drawable_ID);
+
+  if (savingColor)
+    format = babl_format ("R'G'B' u8");
+  else
+    format = babl_format ("Y' u8");
+
   depth = gimp_drawable_bpp (drawable_ID);
 
   /* Open the output file. */
@@ -532,15 +540,15 @@ save_image (const gchar  *filename,
                              gimp_filename_to_utf8 (filename));
 
   /* Write the image header */
-  PIX_DEBUG_PRINT ("Width %hu\n", drawable->width);
-  PIX_DEBUG_PRINT ("Height %hu\n", drawable->height);
-  put_short (drawable->width, file);
-  put_short (drawable->height, file);
+  PIX_DEBUG_PRINT ("Width %hu\n",  width);
+  PIX_DEBUG_PRINT ("Height %hu\n", height);
+  put_short (width, file);
+  put_short (height, file);
   put_short (0, file);
   put_short (0, file);
 
   tile_height = gimp_tile_height ();
-  src_base    = g_new (guchar, tile_height * drawable->width * depth);
+  src_base    = g_new (guchar, tile_height * width * depth);
 
   if (savingColor)
     {
@@ -549,15 +557,17 @@ save_image (const gchar  *filename,
 
       put_short (24, file);
 
-      for (i = 0; i < drawable->height;)
+      for (i = 0; i < height;)
         {
-          rectHeight = (tile_height < (drawable->height - i - 1)) ?
-            tile_height : (drawable->height - i - 1);
-          gimp_pixel_rgn_get_rect (&pixel_rgn, src_base, 0, i,
-                                   drawable->width, rectHeight);
+          rectHeight = (tile_height < (height - i - 1)) ?
+                        tile_height : (height - i - 1);
+
+          gegl_buffer_get (buffer, GEGL_RECTANGLE (0, i, width, rectHeight), 1.0,
+                           format, src_base,
+                           GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
           for (src = src_base, row = 0;
-               row < tile_height && i < drawable->height;
+               row < tile_height && i < height;
                i += 1, row += 1)
             {
               /* Write a row of the image */
@@ -566,7 +576,7 @@ save_image (const gchar  *filename,
               record[2] = src[1];
               record[1] = src[2];
               src += depth;
-              for (j = 1; j < drawable->width; ++j)
+              for (j = 1; j < width; ++j)
                 {
                   if ((record[3] != src[0]) ||
                        (record[2] != src[1]) ||
@@ -588,10 +598,12 @@ save_image (const gchar  *filename,
                     }
                   src += depth;
                 }
+
               /* Write last record in row */
               writelen = fwrite (record, 1, 4, file);
             }
-          gimp_progress_update ((double) i / (double) drawable->height);
+
+          gimp_progress_update ((double) i / (double) height);
         }
     }
   else
@@ -601,22 +613,24 @@ save_image (const gchar  *filename,
 
       put_short (8, file);
 
-      for (i = 0; i < drawable->height;)
+      for (i = 0; i < height;)
         {
-          rectHeight = (tile_height < (drawable->height - i - 1)) ?
-            tile_height : (drawable->height - i - 1);
-          gimp_pixel_rgn_get_rect (&pixel_rgn, src_base, 0, i,
-                                   drawable->width, rectHeight);
+          rectHeight = (tile_height < (height - i - 1)) ?
+                        tile_height : (height - i - 1);
+
+          gegl_buffer_get (buffer, GEGL_RECTANGLE (0, i, width, rectHeight), 1.0,
+                           format, src_base,
+                           GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
           for (src = src_base, row = 0;
-               row < tile_height && i < drawable->height;
+               row < tile_height && i < height;
                i += 1, row += 1)
             {
               /* Write a row of the image */
               record[0] = 1;
               record[1] = src[0];
               src += depth;
-              for (j = 1; j < drawable->width; ++j)
+              for (j = 1; j < width; ++j)
                 {
                   if ((record[1] != src[0]) || (record[0] == 255))
                     {
@@ -632,16 +646,20 @@ save_image (const gchar  *filename,
                     }
                   src += depth;
                 }
+
               /* Write last record in row */
               writelen = fwrite (record, 1, 2, file);
             }
-          gimp_progress_update ((double) i / (double) drawable->height);
+
+          gimp_progress_update ((double) i / (double) height);
         }
     }
-  gimp_progress_update (1.0);
 
   g_free (src_base);
-
   fclose (file);
+  g_object_unref (buffer);
+
+  gimp_progress_update (1.0);
+
   return TRUE;
 }
