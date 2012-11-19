@@ -327,7 +327,7 @@ static gint32
 load_image (GFile   *file,
             GError **error)
 {
-  GFileInputStream  *input;
+  GInputStream      *input;
   gchar             *name;
   BrushHeader        bh;
   guchar            *brush_buf = NULL;
@@ -336,14 +336,13 @@ load_image (GFile   *file,
   GimpParasite      *parasite;
   GeglBuffer        *buffer;
   const Babl        *format;
-  gint               bn_size;
   GimpImageBaseType  base_type;
   GimpImageType      image_type;
   gsize              bytes_read;
   gsize              size;
   gint               i;
 
-  input = g_file_read (file, NULL, error);
+  input = G_INPUT_STREAM (g_file_read (file, NULL, error));
   if (! input)
     return -1;
 
@@ -352,8 +351,7 @@ load_image (GFile   *file,
 
   size = G_STRUCT_OFFSET (BrushHeader, magic_number);
 
-  if (! g_input_stream_read_all (G_INPUT_STREAM (input),
-                                 &bh, size,
+  if (! g_input_stream_read_all (input, &bh, size,
                                  &bytes_read, NULL, error) ||
       bytes_read != size)
     {
@@ -395,7 +393,7 @@ load_image (GFile   *file,
     case 3: /*  cinepaint brush  */
       size = sizeof (bh.magic_number) + sizeof (bh.spacing);
 
-      if (! g_input_stream_read_all (G_INPUT_STREAM (input),
+      if (! g_input_stream_read_all (input,
                                      (guchar *) &bh +
                                      G_STRUCT_OFFSET (BrushHeader,
                                                       magic_number), size,
@@ -433,14 +431,13 @@ load_image (GFile   *file,
       return -1;
     }
 
-  if ((bn_size = (bh.header_size - sizeof (BrushHeader))) > 0)
+  if ((size = (bh.header_size - sizeof (BrushHeader))) > 0)
     {
-      gchar *temp = g_new (gchar, bn_size);
+      gchar *temp = g_new (gchar, size);
 
-      if (! g_input_stream_read_all (G_INPUT_STREAM (input),
-                                     temp, bn_size,
+      if (! g_input_stream_read_all (input, temp, size,
                                      &bytes_read, NULL, error) ||
-          bytes_read != bn_size)
+          bytes_read != size)
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Error in GIMP brush file '%s'"),
@@ -465,8 +462,7 @@ load_image (GFile   *file,
   size = bh.width * bh.height * bh.bytes;
   brush_buf = g_malloc (size);
 
-  if (! g_input_stream_read_all (G_INPUT_STREAM (input),
-                                 brush_buf, size,
+  if (! g_input_stream_read_all (input, brush_buf, size,
                                  &bytes_read, NULL, error) ||
       bytes_read != size)
     {
@@ -485,8 +481,7 @@ load_image (GFile   *file,
         /*  For backwards-compatibility, check if a pattern follows.
             The obsolete .gpb format did it this way.  */
 
-        if (g_input_stream_read_all (G_INPUT_STREAM (input),
-                                     &ph, sizeof (PatternHeader),
+        if (g_input_stream_read_all (input, &ph, sizeof (PatternHeader),
                                      &bytes_read, NULL, NULL) &&
             bytes_read == sizeof(PatternHeader))
           {
@@ -504,7 +499,7 @@ load_image (GFile   *file,
                 ph.bytes        == 3                     &&
                 ph.width        == bh.width              &&
                 ph.height       == bh.height             &&
-                g_input_stream_skip (G_INPUT_STREAM (input),
+                g_input_stream_skip (input,
                                      ph.header_size - sizeof (PatternHeader),
                                      NULL, NULL) ==
                 ph.header_size - sizeof (PatternHeader))
@@ -517,7 +512,7 @@ load_image (GFile   *file,
 
                 for (i = 0; i < ph.width * ph.height; i++)
                   {
-                    if (! g_input_stream_read_all (G_INPUT_STREAM (input),
+                    if (! g_input_stream_read_all (input,
                                                    brush_buf + i * 4, 3,
                                                    &bytes_read, NULL, error) ||
                         bytes_read != 3)
@@ -636,19 +631,19 @@ save_image (GFile   *file,
             gint32   drawable_ID,
             GError **error)
 {
-  GFileOutputStream *output;
-  BrushHeader        bh;
-  guchar            *brush_buf;
-  GeglBuffer        *buffer;
-  const Babl        *format;
-  gint               line;
-  gint               x;
-  gint               bpp;
-  gint               file_bpp;
-  gint               width;
-  gint               height;
-  GimpRGB            gray, white;
-  gsize              bytes_written;
+  GOutputStream *output;
+  BrushHeader    bh;
+  guchar        *brush_buf;
+  GeglBuffer    *buffer;
+  const Babl    *format;
+  gint           line;
+  gint           x;
+  gint           bpp;
+  gint           file_bpp;
+  gint           width;
+  gint           height;
+  GimpRGB        gray, white;
+  gsize          bytes_written;
 
   gimp_rgba_set_uchar (&white, 255, 255, 255, 255);
 
@@ -672,7 +667,7 @@ save_image (GFile   *file,
 
   bpp = babl_format_get_bytes_per_pixel (format);
 
-  output = g_file_replace (file, NULL, FALSE, 0, NULL, error);
+  output = G_OUTPUT_STREAM (g_file_replace (file, NULL, FALSE, 0, NULL, error));
   if (! output)
     return FALSE;
 
@@ -693,8 +688,7 @@ save_image (GFile   *file,
   bh.magic_number = g_htonl (GBRUSH_MAGIC);
   bh.spacing      = g_htonl (info.spacing);
 
-  if (! g_output_stream_write_all (G_OUTPUT_STREAM (output),
-                                   &bh, sizeof (BrushHeader),
+  if (! g_output_stream_write_all (output, &bh, sizeof (BrushHeader),
                                    &bytes_written, NULL, error) ||
       bytes_written != sizeof (BrushHeader))
     {
@@ -702,7 +696,7 @@ save_image (GFile   *file,
       return FALSE;
     }
 
-  if (! g_output_stream_write_all (G_OUTPUT_STREAM (output),
+  if (! g_output_stream_write_all (output,
                                    info.description,
                                    strlen (info.description) + 1,
                                    &bytes_written, NULL, error) ||
@@ -745,8 +739,7 @@ save_image (GFile   *file,
           break;
         }
 
-      if (! g_output_stream_write_all (G_OUTPUT_STREAM (output),
-                                       brush_buf, width * file_bpp,
+      if (! g_output_stream_write_all (output, brush_buf, width * file_bpp,
                                        &bytes_written, NULL, error) ||
           bytes_written != width * file_bpp)
         {

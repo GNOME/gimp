@@ -300,7 +300,7 @@ static gint32
 load_image (GFile   *file,
             GError **error)
 {
-  GFileInputStream *input;
+  GInputStream     *input;
   PatternHeader     ph;
   gchar            *name;
   gchar            *temp;
@@ -315,15 +315,14 @@ load_image (GFile   *file,
   GimpImageType     image_type;
   gsize             bytes_read;
 
-  input = g_file_read (file, NULL, error);
+  input = G_INPUT_STREAM (g_file_read (file, NULL, error));
   if (! input)
     return -1;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              g_file_get_parse_name (file));
 
-  if (! g_input_stream_read_all (G_INPUT_STREAM (input),
-                                 &ph, sizeof (PatternHeader),
+  if (! g_input_stream_read_all (input, &ph, sizeof (PatternHeader),
                                  &bytes_read, NULL, error) ||
       bytes_read != sizeof (PatternHeader))
     {
@@ -349,7 +348,7 @@ load_image (GFile   *file,
 
   temp = g_new (gchar, ph.header_size - sizeof (PatternHeader));
 
-  if (! g_input_stream_read_all (G_INPUT_STREAM (input),
+  if (! g_input_stream_read_all (input,
                                  temp, ph.header_size - sizeof (PatternHeader),
                                  &bytes_read, NULL, error) ||
       bytes_read != ph.header_size - sizeof (PatternHeader))
@@ -435,8 +434,7 @@ load_image (GFile   *file,
 
   for (line = 0; line < ph.height; line++)
     {
-      if (! g_input_stream_read_all (G_INPUT_STREAM (input),
-                                     buf, ph.width * ph.bytes,
+      if (! g_input_stream_read_all (input, buf, ph.width * ph.bytes,
                                      &bytes_read, NULL, error) ||
           bytes_read != ph.width * ph.bytes)
         {
@@ -477,43 +475,47 @@ save_image (GFile   *file,
             gint32   drawable_ID,
             GError **error)
 {
-  GFileOutputStream *output;
-  PatternHeader      ph;
-  GeglBuffer        *buffer;
-  const Babl        *file_format;
-  guchar            *buf;
-  gint               width;
-  gint               height;
-  gint               line_size;
-  gint               line;
-  gsize              bytes_written;
-
-  output = g_file_replace (file, NULL, FALSE, 0, NULL, error);
-  if (! output)
-    return FALSE;
+  GOutputStream *output;
+  PatternHeader  ph;
+  GeglBuffer    *buffer;
+  const Babl    *file_format;
+  guchar        *buf;
+  gint           width;
+  gint           height;
+  gint           line_size;
+  gint           line;
+  gsize          bytes_written;
 
   switch (gimp_drawable_type (drawable_ID))
     {
     case GIMP_GRAY_IMAGE:
       file_format = babl_format ("Y' u8");
       break;
+
     case GIMP_GRAYA_IMAGE:
       file_format = babl_format ("Y'A u8");
       break;
+
     case GIMP_RGB_IMAGE:
     case GIMP_INDEXED_IMAGE:
       file_format = babl_format ("R'G'B' u8");
       break;
+
     case GIMP_RGBA_IMAGE:
     case GIMP_INDEXEDA_IMAGE:
       file_format = babl_format ("R'G'B'A u8");
       break;
+
     default:
       g_message ("Unsupported image type: %d\n"
                  "GIMP Patterns must be GRAY or RGB",
                  gimp_drawable_type (drawable_ID));
       return FALSE;
     }
+
+  output = G_OUTPUT_STREAM (g_file_replace (file, NULL, FALSE, 0, NULL, error));
+  if (! output)
+    return FALSE;
 
   gimp_progress_init_printf (_("Saving '%s'"),
                              g_file_get_parse_name (file));
@@ -530,8 +532,7 @@ save_image (GFile   *file,
   ph.bytes        = g_htonl (babl_format_get_bytes_per_pixel (file_format));
   ph.magic_number = g_htonl (GPATTERN_MAGIC);
 
-  if (! g_output_stream_write_all (G_OUTPUT_STREAM (output),
-                                   &ph, sizeof (PatternHeader),
+  if (! g_output_stream_write_all (output, &ph, sizeof (PatternHeader),
                                    &bytes_written, NULL, error) ||
       bytes_written != sizeof (PatternHeader))
     {
@@ -539,7 +540,7 @@ save_image (GFile   *file,
       return FALSE;
     }
 
-  if (! g_output_stream_write_all (G_OUTPUT_STREAM (output),
+  if (! g_output_stream_write_all (output,
                                    description, strlen (description) + 1,
                                    &bytes_written, NULL, error) ||
       bytes_written != strlen (description) + 1)
@@ -559,8 +560,7 @@ save_image (GFile   *file,
                        file_format, buf,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-      if (! g_output_stream_write_all (G_OUTPUT_STREAM (output),
-                                       buf, line_size,
+      if (! g_output_stream_write_all (output, buf, line_size,
                                        &bytes_written, NULL, error) ||
           bytes_written != line_size)
         {
