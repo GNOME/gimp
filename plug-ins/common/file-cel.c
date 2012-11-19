@@ -49,10 +49,8 @@ static gint      load_palette   (const gchar  *file,
                                  guchar        palette[],
                                  GError      **error);
 static gint32    load_image     (const gchar  *file,
-                                 const gchar  *brief,
                                  GError      **error);
 static gboolean  save_image     (const gchar  *file,
-                                 const gchar  *brief,
                                  gint32        image,
                                  gint32        layer,
                                  GError      **error);
@@ -155,9 +153,10 @@ run (const gchar      *name,
   GError            *error  = NULL;
   gint               needs_palette = 0;
 
-  run_mode = param[0].data.d_int32;
-
   INIT_I18N ();
+  gegl_init (NULL, NULL);
+
+  run_mode = param[0].data.d_int32;
 
   /* Set up default return values */
 
@@ -207,7 +206,7 @@ run (const gchar      *name,
 
       if (! error)
         {
-          image = load_image (param[1].data.d_string, param[2].data.d_string,
+          image = load_image (param[1].data.d_string,
                               &error);
 
           if (image != -1)
@@ -238,10 +237,9 @@ run (const gchar      *name,
         case GIMP_RUN_WITH_LAST_VALS:
           gimp_ui_init (PLUG_IN_BINARY, FALSE);
           export = gimp_export_image (&image_ID, &drawable_ID, NULL,
-                                      (GIMP_EXPORT_CAN_HANDLE_RGB |
-                                       GIMP_EXPORT_CAN_HANDLE_ALPHA |
-                                       GIMP_EXPORT_CAN_HANDLE_INDEXED
-                                       ));
+                                      GIMP_EXPORT_CAN_HANDLE_RGB   |
+                                      GIMP_EXPORT_CAN_HANDLE_ALPHA |
+                                      GIMP_EXPORT_CAN_HANDLE_INDEXED);
           if (export == GIMP_EXPORT_CANCEL)
             {
               values[0].data.d_status = GIMP_PDB_CANCEL;
@@ -252,7 +250,7 @@ run (const gchar      *name,
           break;
         }
 
-      if (save_image (param[3].data.d_string, param[4].data.d_string,
+      if (save_image (param[3].data.d_string,
                       image_ID, drawable_ID, &error))
         {
           gimp_set_data (SAVE_PROC, palette_file, data_length);
@@ -316,27 +314,24 @@ need_palette (const gchar *file,
 
 static gint32
 load_image (const gchar  *file,
-            const gchar  *brief,
             GError      **error)
 {
-  FILE      *fp;            /* Read file pointer */
-  guchar     header[32],    /* File header */
-             file_mark,     /* KiSS file type */
-             bpp;           /* Bits per pixel */
-  gint       height, width, /* Dimensions of image */
-             offx, offy,    /* Layer offets */
-             colours;       /* Number of colours */
+  FILE       *fp;            /* Read file pointer */
+  guchar      header[32],    /* File header */
+              file_mark,     /* KiSS file type */
+              bpp;           /* Bits per pixel */
+  gint        height, width, /* Dimensions of image */
+              offx, offy,    /* Layer offets */
+              colours;       /* Number of colours */
 
-  gint32     image,         /* Image */
-             layer;         /* Layer */
-  guchar    *palette,       /* 24 bit palette */
-            *buffer,        /* Temporary buffer */
-            *line;          /* Pixel data */
-  GimpDrawable *drawable;   /* Drawable for layer */
-  GimpPixelRgn  pixel_rgn;  /* Pixel region for layer */
+  gint32      image,         /* Image */
+              layer;         /* Layer */
+  guchar     *buf;           /* Temporary buffer */
+  guchar     *line;          /* Pixel data */
+  GeglBuffer *buffer;        /* Buffer for layer */
 
-  gint       i, j, k;       /* Counters */
-  size_t     n_read;        /* Number of items read from file */
+  gint        i, j, k;       /* Counters */
+  size_t      n_read;        /* Number of items read from file */
 
 
   /* Open the file for reading */
@@ -351,7 +346,7 @@ load_image (const gchar  *file,
     }
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (brief));
+                             gimp_filename_to_utf8 (file));
 
   /* Get the image dimensions and create the image... */
 
@@ -448,21 +443,18 @@ load_image (const gchar  *file,
 
   /* Get the drawable and set the pixel region for our load... */
 
-  drawable = gimp_drawable_get (layer);
-
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,
-                       drawable->height, TRUE, FALSE);
+  buffer = gimp_drawable_get_buffer (layer);
 
   /* Read the image in and give it to GIMP a line at a time */
-  buffer = g_new (guchar, width * 4);
-  line   = g_new (guchar, (width + 1) * 4);
+  buf  = g_new (guchar, width * 4);
+  line = g_new (guchar, (width + 1) * 4);
 
   for (i = 0; i < height && !feof(fp); ++i)
     {
       switch (bpp)
         {
         case 4:
-          n_read = fread (buffer, (width+1)/2, 1, fp);
+          n_read = fread (buf, (width + 1) / 2, 1, fp);
 
           if (n_read < 1)
             {
@@ -471,33 +463,34 @@ load_image (const gchar  *file,
               return -1;
             }
 
-          for (j = 0, k = 0; j < width*2; j+= 4, ++k)
+          for (j = 0, k = 0; j < width * 2; j+= 4, ++k)
             {
-              if (buffer[k] / 16 == 0)
+              if (buf[k] / 16 == 0)
                 {
-                  line[j]= 16;
-                  line[j+1]= 0;
+                  line[j]     = 16;
+                  line[j+ 1 ] = 0;
                 }
               else
                 {
-                  line[j]= (buffer[k] / 16) - 1;
-                  line[j+1]= 255;
+                  line[j]     = (buf[k] / 16) - 1;
+                  line[j + 1] = 255;
                 }
-              if (buffer[k] % 16 == 0)
+
+              if (buf[k] % 16 == 0)
                 {
-                  line[j+2]= 16;
-                  line[j+3]= 0;
+                  line[j + 2] = 16;
+                  line[j + 3] = 0;
                 }
               else
                 {
-                  line[j+2]= (buffer[k] % 16) - 1;
-                  line[j+3]= 255;
+                  line[j + 2] = (buf[k] % 16) - 1;
+                  line[j + 3] = 255;
                 }
             }
           break;
 
         case 8:
-          n_read = fread (buffer, width, 1, fp);
+          n_read = fread (buf, width, 1, fp);
 
           if (n_read < 1)
             {
@@ -506,23 +499,23 @@ load_image (const gchar  *file,
               return -1;
             }
 
-          for (j = 0, k = 0; j < width*2; j+= 2, ++k)
+          for (j = 0, k = 0; j < width * 2; j+= 2, ++k)
             {
-              if (buffer[k] == 0)
+              if (buf[k] == 0)
                 {
-                  line[j]= 255;
-                  line[j+1]= 0;
+                  line[j]     = 255;
+                  line[j + 1] = 0;
                 }
               else
                 {
-                  line[j]= buffer[k] - 1;
-                  line[j+1]= 255;
+                  line[j]     = buf[k] - 1;
+                  line[j + 1] = 255;
                 }
             }
           break;
 
         case 32:
-          n_read = fread (line, width*4, 1, fp);
+          n_read = fread (line, width * 4, 1, fp);
 
           if (n_read < 1)
             {
@@ -548,21 +541,22 @@ load_image (const gchar  *file,
           return -1;
         }
 
-      gimp_pixel_rgn_set_rect (&pixel_rgn, line, 0, i, drawable->width, 1);
+      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, i, width, 1), 0,
+                       NULL, line, GEGL_AUTO_ROWSTRIDE);
+
       gimp_progress_update ((float) i / (float) height);
     }
-  gimp_progress_update (1.0);
 
   /* Close image files, give back allocated memory */
 
   fclose (fp);
-  g_free (buffer);
+  g_free (buf);
   g_free (line);
 
   if (bpp != 32)
     {
       /* Use palette from file or otherwise default grey palette */
-      guchar palette[256*3];
+      guchar palette[256 * 3];
 
       /* Open the file for reading if user picked one */
       if (palette_file == NULL)
@@ -594,7 +588,7 @@ load_image (const gchar  *file,
         {
           for (i= 0; i < colours; ++i)
             {
-              palette[i*3] = palette[i*3+1] = palette[i*3+2]= i * 256 / colours;
+              palette[i * 3] = palette[i * 3 + 1] = palette[i * 3 + 2]= i * 256 / colours;
             }
         }
 
@@ -603,8 +597,9 @@ load_image (const gchar  *file,
 
   /* Now get everything redrawn and hand back the finished image */
 
-  gimp_drawable_flush (drawable);
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
+
+  gimp_progress_update (1.0);
 
   return image;
 }
@@ -733,35 +728,44 @@ load_palette (const gchar *file,
 
 static gboolean
 save_image (const gchar  *file,
-            const gchar  *brief,
             gint32        image,
             gint32        layer,
             GError      **error)
 {
   FILE          *fp;            /* Write file pointer */
+  GeglBuffer    *buffer;
+  const Babl    *format;
+  gint           width;
+  gint           height;
   guchar         header[32];    /* File header */
   gint           bpp;           /* Bit per pixel */
   gint           colours, type; /* Number of colours, type of layer */
   gint           offx, offy;    /* Layer offsets */
-
-  guchar        *buffer;        /* Temporary buffer */
+  guchar        *buf;           /* Temporary buffer */
   guchar        *line;          /* Pixel data */
-  GimpDrawable  *drawable;      /* Drawable for layer */
-  GimpPixelRgn   pixel_rgn;     /* Pixel region for layer */
-
   gint           i, j, k;       /* Counters */
 
   /* Check that this is an indexed image, fail otherwise */
   type = gimp_drawable_type (layer);
-  if (type != GIMP_INDEXEDA_IMAGE)
-    bpp = 32;
+
+  if (type == GIMP_INDEXEDA_IMAGE)
+    {
+      bpp    = 4;
+      format = NULL;
+    }
   else
-    bpp = 4;
+    {
+      bpp    = 32;
+      format = babl_format ("R'G'B'A u8");
+    }
 
   /* Find out how offset this layer was */
   gimp_drawable_offsets (layer, &offx, &offy);
 
-  drawable = gimp_drawable_get (layer);
+  buffer = gimp_drawable_get_buffer (layer);
+
+  width  = gegl_buffer_get_width  (buffer);
+  height = gegl_buffer_get_height (buffer);
 
   /* Open the file for writing */
   fp = g_fopen (file, "w");
@@ -775,7 +779,7 @@ save_image (const gchar  *file,
     }
 
   gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_filename_to_utf8 (brief));
+                             gimp_filename_to_utf8 (file));
 
   /* Headers */
   memset (header, 0, 32);
@@ -786,6 +790,7 @@ save_image (const gchar  *file,
   if (bpp < 32)
     {
       g_free (gimp_image_get_colormap (image, &colours));
+
       if (colours > 15)
         {
           header[5] = 8;
@@ -796,13 +801,15 @@ save_image (const gchar  *file,
         }
     }
   else
-    header[5] = 32;
+    {
+      header[5] = 32;
+    }
 
   /* Fill in the blanks ... */
-  header[8]  = drawable->width % 256;
-  header[9]  = drawable->width / 256;
-  header[10] = drawable->height % 256;
-  header[11] = drawable->height / 256;
+  header[8]  = width % 256;
+  header[9]  = width / 256;
+  header[10] = height % 256;
+  header[11] = height / 256;
   header[12] = offx % 256;
   header[13] = offx / 256;
   header[14] = offy % 256;
@@ -810,64 +817,71 @@ save_image (const gchar  *file,
   fwrite (header, 32, 1, fp);
 
   /* Arrange for memory etc. */
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,
-                       drawable->height, TRUE, FALSE);
-  buffer = g_new (guchar, drawable->width*4);
-  line = g_new (guchar, (drawable->width+1) * 4);
+  buf  = g_new (guchar, width * 4);
+  line = g_new (guchar, (width + 1) * 4);
 
   /* Get the image from GIMP one line at a time and write it out */
-  for (i = 0; i < drawable->height; ++i)
+  for (i = 0; i < height; ++i)
     {
-      gimp_pixel_rgn_get_rect (&pixel_rgn, line, 0, i, drawable->width, 1);
-      memset (buffer, 0, drawable->width);
+      gegl_buffer_get (buffer, GEGL_RECTANGLE (0, i, width, 1), 1.0,
+                       format, line,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+      memset (buf, 0, width);
 
       if (bpp == 32)
         {
-          for (j = 0; j < drawable->width; j++)
+          for (j = 0; j < width; j++)
             {
-              buffer[4*j] = line[4*j+2];     /* B */
-              buffer[4*j+1] = line[4*j+1];   /* G */
-              buffer[4*j+2] = line[4*j+0];   /* R */
-              buffer[4*j+3] = line[4*j+3];   /* Alpha */
+              buf[4 * j]     = line[4 * j + 2];   /* B */
+              buf[4 * j + 1] = line[4 * j + 1];   /* G */
+              buf[4 * j + 2] = line[4 * j + 0];   /* R */
+              buf[4 * j + 3] = line[4 * j + 3];   /* Alpha */
             }
-          fwrite (buffer, drawable->width, 4, fp);
+
+          fwrite (buf, width, 4, fp);
         }
       else if (colours > 16)
         {
-          for (j = 0, k = 0; j < drawable->width*2; j+= 2, ++k)
+          for (j = 0, k = 0; j < width * 2; j += 2, ++k)
             {
-              if (line[j+1] > 127)
+              if (line[j + 1] > 127)
                 {
-                  buffer[k]= line[j] + 1;
+                  buf[k]= line[j] + 1;
                 }
             }
-          fwrite (buffer, drawable->width, 1, fp);
+
+          fwrite (buf, width, 1, fp);
         }
       else
         {
-          for (j = 0, k = 0; j < drawable->width*2; j+= 4, ++k)
+          for (j = 0, k = 0; j < width * 2; j+= 4, ++k)
             {
-              buffer[k] = 0;
-              if (line[j+1] > 127)
+              buf[k] = 0;
+
+              if (line[j + 1] > 127)
                 {
-                  buffer[k] += (line[j] + 1)<< 4;
+                  buf[k] += (line[j] + 1)<< 4;
                 }
-              if (line[j+3] > 127)
+
+              if (line[j + 3] > 127)
                 {
-                  buffer[k] += (line[j+2] + 1);
+                  buf[k] += (line[j + 2] + 1);
                 }
             }
-          fwrite (buffer, (drawable->width+1)/2, 1, fp);
+
+          fwrite (buf, (width + 1) / 2, 1, fp);
         }
 
-      gimp_progress_update ((float) i / (float) drawable->height);
+      gimp_progress_update ((float) i / (float) height);
     }
-  gimp_progress_update (1.0);
 
-  /* Close files, give back allocated memory */
-  fclose (fp);
-  g_free (buffer);
+  g_free (buf);
   g_free (line);
+  g_object_unref (buffer);
+  fclose (fp);
+
+  gimp_progress_update (1.0);
 
   return TRUE;
 }
