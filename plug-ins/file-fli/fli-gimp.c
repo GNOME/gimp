@@ -229,9 +229,10 @@ run (const gchar      *name,
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
   GError            *error  = NULL;
 
-  run_mode = param[0].data.d_int32;
-
   INIT_I18N ();
+  gegl_init (NULL, NULL);
+
+  run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -481,11 +482,10 @@ load_image (const gchar  *filename,
             GError      **error)
 {
   FILE         *file;
-  GimpDrawable *drawable;
+  GeglBuffer   *buffer;
   gint32        image_id, layer_ID;
   guchar       *fb, *ofb, *fb_x;
   guchar        cm[768], ocm[768];
-  GimpPixelRgn  pixel_rgn;
   s_fli_header  fli_header;
   gint          cnt;
 
@@ -565,18 +565,16 @@ load_image (const gchar  *filename,
 				 GIMP_INDEXED_IMAGE, 100, GIMP_NORMAL_MODE);
       g_free (name_buf);
 
-      drawable = gimp_drawable_get (layer_ID);
+      buffer = gimp_drawable_get_buffer (layer_ID);
 
       fli_read_frame (file, &fli_header, ofb, ocm, fb, cm);
 
-      gimp_pixel_rgn_init (&pixel_rgn, drawable,
-			   0, 0, fli_header.width, fli_header.height,
-			   TRUE, FALSE);
-      gimp_pixel_rgn_set_rect (&pixel_rgn, fb,
-			       0, 0, fli_header.width, fli_header.height);
+      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0,
+                                               fli_header.width,
+                                               fli_header.height), 0,
+                       NULL, fb, GEGL_AUTO_ROWSTRIDE);
 
-      gimp_drawable_flush (drawable);
-      gimp_drawable_detach (drawable);
+      g_object_unref (buffer);
 
       if (cnt > 0)
 	gimp_layer_add_alpha (layer_ID);
@@ -591,7 +589,6 @@ load_image (const gchar  *filename,
 
       gimp_progress_update ((double) cnt + 1 / (double)(to_frame - from_frame));
     }
-  gimp_progress_update (1.0);
 
   gimp_image_set_colormap (image_id, cm, 256);
 
@@ -599,6 +596,8 @@ load_image (const gchar  *filename,
 
   g_free (fb);
   g_free (ofb);
+
+  gimp_progress_update (1.0);
 
   return image_id;
 }
@@ -617,25 +616,22 @@ save_image (const gchar  *filename,
 	    gint32        to_frame,
             GError      **error)
 {
-  FILE *file;
-  GimpDrawable *drawable;
-  gint32 *framelist;
-  gint nframes;
-  gint colors, i;
-  guchar *cmap;
-  guchar bg;
-  guchar red, green, blue;
-  gint diff, sum, max;
-  gint offset_x, offset_y, xc, yc, xx, yy;
-  guint rows, cols, bytes;
-  guchar *src_row;
-  guchar *fb, *ofb;
-  guchar cm[768];
-  GimpPixelRgn pixel_rgn;
-  GimpRGB      background;
-  s_fli_header fli_header;
-
-  gint cnt;
+  FILE         *file;
+  gint32       *framelist;
+  gint          nframes;
+  gint          colors, i;
+  guchar       *cmap;
+  guchar        bg;
+  guchar        red, green, blue;
+  gint          diff, sum, max;
+  gint          offset_x, offset_y, xc, yc, xx, yy;
+  guint         rows, cols, bytes;
+  guchar       *src_row;
+  guchar       *fb, *ofb;
+  guchar        cm[768];
+  GimpRGB       background;
+  s_fli_header  fli_header;
+  gint          cnt;
 
   framelist = gimp_image_get_layers (image_id, &nframes);
 
@@ -764,15 +760,30 @@ save_image (const gchar  *filename,
    */
   for (cnt = from_frame; cnt <= to_frame; cnt++)
     {
-     /* get layer data from GIMP */
-      drawable = gimp_drawable_get (framelist[nframes-cnt]);
+      GeglBuffer *buffer;
+      const Babl *format = NULL;
+
+      buffer = gimp_drawable_get_buffer (framelist[nframes-cnt]);
+
+      if (gimp_drawable_is_gray (framelist[nframes-cnt]))
+        {
+          if (gimp_drawable_has_alpha (framelist[nframes-cnt]))
+            format = babl_format ("Y' u8");
+          else
+            format = babl_format ("Y'A u8");
+        }
+      else
+        {
+          format = gegl_buffer_get_format (buffer);
+        }
+
+      cols = gegl_buffer_get_width  (buffer);
+      rows = gegl_buffer_get_height (buffer);
+
       gimp_drawable_offsets (framelist[nframes-cnt], &offset_x, &offset_y);
-      cols = drawable->width;
-      rows = drawable->height;
-      bytes = drawable->bpp;
-      gimp_pixel_rgn_init (&pixel_rgn, drawable,
-			   0, 0, cols, rows,
-			   FALSE, FALSE);
+
+      bytes = babl_format_get_bytes_per_pixel (format);
+
       src_row = g_malloc (cols * bytes);
 
       /* now paste it into the framebuffer, with the neccessary offset */
@@ -780,7 +791,9 @@ save_image (const gchar  *filename,
 	{
 	  if (yy >= 0 && yy < fli_header.height)
 	    {
-	      gimp_pixel_rgn_get_row (&pixel_rgn, src_row, 0, yc, cols);
+              gegl_buffer_get (buffer, GEGL_RECTANGLE (0, yc, cols, 1), 1.0,
+                               format, src_row,
+                               GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
 	      for (xc = 0, xx = offset_x; xc < cols; xc++, xx++)
 		{
@@ -791,6 +804,7 @@ save_image (const gchar  *filename,
 	}
 
       g_free (src_row);
+      g_object_unref (buffer);
 
       /* save the frame */
       if (cnt > from_frame)
@@ -809,7 +823,6 @@ save_image (const gchar  *filename,
 
       gimp_progress_update ((double) cnt + 1 / (double)(to_frame - from_frame));
     }
-  gimp_progress_update (1.0);
 
   /*
    * finish fli
@@ -820,6 +833,8 @@ save_image (const gchar  *filename,
   g_free (fb);
   g_free (ofb);
   g_free (framelist);
+
+  gimp_progress_update (1.0);
 
   return TRUE;
 }
