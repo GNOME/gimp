@@ -67,6 +67,7 @@ LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(selection_to_path_RC)

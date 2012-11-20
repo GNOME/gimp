@@ -78,11 +78,11 @@ const GimpPlugInInfo PLUG_IN_INFO =
   run,     /* run_proc */
 };
 
-static gint         sel_x1, sel_y1, sel_x2, sel_y2;
-static gint         has_sel, sel_width, sel_height;
-static SELVALS      selVals;
-static GimpPixelRgn selection_rgn;
-static gboolean     retVal = TRUE;  /* Toggle if cancle button clicked */
+static gint        sel_x1, sel_y1, sel_x2, sel_y2;
+static gint        has_sel, sel_width, sel_height;
+static SELVALS     selVals;
+static GeglBuffer *sel_buffer;
+static gboolean    retVal = TRUE;  /* Toggle if cancle button clicked */
 
 MAIN ()
 
@@ -161,9 +161,10 @@ run (const gchar      *name,
   GimpPDBStatusType  status    = GIMP_PDB_SUCCESS;
   gboolean           no_dialog;
 
-  run_mode = param[0].data.d_int32;
-
   INIT_I18N ();
+  gegl_init (NULL, NULL);
+
+  run_mode = param[0].data.d_int32;
 
   no_dialog = (strcmp (name, "plug-in-sel2path") == 0);
 
@@ -371,7 +372,9 @@ sel_pixel_value (gint row,
       return 0;
     }
 
-  gimp_pixel_rgn_get_pixel(&selection_rgn,&ret,col+sel_x1,row+sel_y1);
+  gegl_buffer_sample (sel_buffer, col + sel_x1, row + sel_y1, NULL,
+                      &ret, babl_format ("Y u8"),
+                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
   return ret;
 }
@@ -486,7 +489,6 @@ static gboolean
 sel2path (gint32 image_ID)
 {
   gint32                   selection_ID;
-  GimpDrawable            *sel_drawable;
   pixel_outline_list_type  olt;
   spline_list_array_type   splines;
 
@@ -503,20 +505,7 @@ sel2path (gint32 image_ID)
   if (selection_ID < 0)
     return FALSE;
 
-  sel_drawable = gimp_drawable_get (selection_ID);
-
-  if (gimp_drawable_bpp (selection_ID) != 1)
-    {
-      g_warning ("Internal error. Selection bpp > 1");
-      return FALSE;
-    }
-
-  gimp_pixel_rgn_init (&selection_rgn, sel_drawable,
-                       sel_x1, sel_y1, sel_width, sel_height,
-                       FALSE, FALSE);
-
-  gimp_tile_cache_ntiles (2 * (sel_drawable->width + gimp_tile_width () - 1) /
-                          gimp_tile_width ());
+  sel_buffer = gimp_drawable_get_buffer (selection_ID);
 
   olt = find_outline_pixels ();
 
@@ -524,7 +513,7 @@ sel2path (gint32 image_ID)
 
   do_points (splines, image_ID);
 
-  gimp_drawable_detach (sel_drawable);
+  g_object_unref (sel_buffer);
 
   gimp_displays_flush ();
 
