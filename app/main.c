@@ -41,6 +41,8 @@
 #include <gdk/gdk.h>
 #endif
 
+#include <babl/babl.h>
+
 #include "libgimpbase/gimpbase.h"
 
 #include "pdb/pdb-types.h"
@@ -594,6 +596,7 @@ gimp_option_dump_gimprc (const gchar  *option_name,
       gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
 
       units_init (gimp);
+      babl_init ();
 
       success = gimp_config_dump (format);
 
