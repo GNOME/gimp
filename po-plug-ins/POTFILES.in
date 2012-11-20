@@ -172,7 +172,6 @@ plug-ins/file-uri/uri-backend-gvfs.c
 plug-ins/file-uri/uri-backend-libcurl.c
 plug-ins/file-uri/uri-backend-wget.c
 plug-ins/file-uri/uri.c
-plug-ins/file-xjt/xjt.c
 plug-ins/flame/flame.c
 plug-ins/fractal-explorer/fractal-explorer-dialogs.c
 plug-ins/fractal-explorer/fractal-explorer.c

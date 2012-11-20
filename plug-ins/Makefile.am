@@ -47,10 +47,6 @@ else
 file_uri = file-uri
 endif
 
-if BUILD_XJT
-file_xjt = file-xjt
-endif
-
 if HAVE_LIBEXIF
 metadata = metadata
 endif
@@ -70,7 +66,6 @@ SUBDIRS = \
 	$(file_psd)		\
 	file-sgi		\
 	$(file_uri)		\
-	$(file_xjt)		\
 	flame			\
 	fractal-explorer	\
 	gfig			\

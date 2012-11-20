@@ -1079,8 +1079,7 @@ jpeg_ok=no
 if test "x$with_libjpeg" != xno && test -z "$JPEG_LIBS"; then
   AC_CHECK_LIB(jpeg, jpeg_destroy_decompress,
     jpeg_ok=yes,
-    [jpeg_ok="no (JPEG library not found)"
-    AC_MSG_WARN(*** XJT plug-in will not be built (JPEG library not found) ***)])
+    [jpeg_ok="no (JPEG library not found)"])
   if test "$jpeg_ok" = yes; then
     AC_MSG_CHECKING([for jpeglib.h])
     AC_PREPROC_IFELSE(
@@ -1116,18 +1115,6 @@ fi
 
 AM_CONDITIONAL(BUILD_JPEG, test "x$jpeg_ok" = xyes)
 AC_SUBST(JPEG_LIBS)
-
-
-## xjt does build, but it is more confusing than useful on Win32,
-## as it wants to run tar, mv and bzip2, which seldom are available
-AM_CONDITIONAL(BUILD_XJT, test "x$jpeg_ok" = xyes && test "x$os_win32" = xno)
-if test "x$jpeg_ok" != xyes; then
-  have_xjt="no (no JPEG library)"
-elif test "x$os_win32" = xyes; then
-  have_xjt="no (not built on Windows)"
-else
-  have_xjt=yes
-fi
 
 
 ################
@@ -2227,7 +2214,6 @@ plug-ins/file-jpeg/Makefile
 plug-ins/file-psd/Makefile
 plug-ins/file-sgi/Makefile
 plug-ins/file-uri/Makefile
-plug-ins/file-xjt/Makefile
 plug-ins/flame/Makefile
 plug-ins/fractal-explorer/Makefile
 plug-ins/fractal-explorer/examples/Makefile
@@ -2387,7 +2373,6 @@ Optional Plug-Ins:
   Webpage:             $have_webkit
   Windows ICO:         $have_libpng
   WMF:                 $have_libwmf
-  XJT:                 $have_xjt
   X11 Mouse Cursor:    $have_xmc
   XPM:                 $have_libxpm
 
