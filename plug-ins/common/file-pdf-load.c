@@ -1154,7 +1154,7 @@ load_dialog (PopplerDocument  *doc,
   thread_data.selector          = GIMP_PAGE_SELECTOR (selector);
   thread_data.stop_thumbnailing = FALSE;
 
-  thread = g_thread_create (thumbnail_thread, &thread_data, TRUE, NULL);
+  thread = g_thread_new ("thumbnailer", thumbnail_thread, &thread_data);
 
   /* Resolution */
 
