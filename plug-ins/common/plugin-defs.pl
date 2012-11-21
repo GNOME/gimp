@@ -48,7 +48,7 @@
     'file-cel' => { ui => 1, gegl => 1 },
     'file-csource' => { ui => 1, gegl => 1 },
     'file-desktop-link' => {},
-    'file-dicom' => { ui => 1, cflags => '-fno-strict-aliasing' },
+    'file-dicom' => { ui => 1, gegl => 1, cflags => '-fno-strict-aliasing' },
     'file-gbr' => { ui => 1, gegl => 1 },
     'file-gegl' => { ui => 1, gegl => 1 },
     'file-gif-load' => { gegl => 1 },

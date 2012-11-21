@@ -74,7 +74,7 @@ static gboolean  save_image            (const gchar      *filename,
                                         GError          **error);
 static void      dicom_loader          (guint8           *pix_buf,
                                         DicomInfo        *info,
-                                        GimpPixelRgn     *pixel_rgn);
+                                        GeglBuffer       *buffer);
 static void      guess_and_set_endian2 (guint16          *buf16,
                                         gint              length);
 static void      toggle_endian2        (guint16          *buf16,
@@ -188,6 +188,7 @@ run (const gchar      *name,
   GError            *error  = NULL;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   run_mode = param[0].data.d_int32;
 
@@ -313,10 +314,9 @@ static gint32
 load_image (const gchar  *filename,
             GError      **error)
 {
-  GimpPixelRgn    pixel_rgn;
   gint32 volatile image_ID          = -1;
   gint32          layer_ID;
-  GimpDrawable   *drawable;
+  GeglBuffer     *buffer;
   GSList         *elements          = NULL;
   FILE           *DICOM;
   gchar           buf[500];    /* buffer for random things like scanning */
@@ -616,16 +616,14 @@ load_image (const gchar  *filename,
                              100, GIMP_NORMAL_MODE);
   gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
 
-  drawable = gimp_drawable_get (layer_ID);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable,
-                       0, 0, drawable->width, drawable->height, TRUE, FALSE);
+  buffer = gimp_drawable_get_buffer (layer_ID);
 
 #if GUESS_ENDIAN
   if (bpp == 16)
     guess_and_set_endian2 ((guint16 *) pix_buf, width * height);
 #endif
 
-  dicom_loader (pix_buf, dicominfo, &pixel_rgn);
+  dicom_loader (pix_buf, dicominfo, buffer);
 
   if (elements)
     {
@@ -643,15 +641,15 @@ load_image (const gchar  *filename,
 
   fclose (DICOM);
 
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
 
   return image_ID;
 }
 
 static void
-dicom_loader (guint8       *pix_buffer,
-              DicomInfo    *info,
-              GimpPixelRgn *pixel_rgn)
+dicom_loader (guint8     *pix_buffer,
+              DicomInfo  *info,
+              GeglBuffer *buffer)
 {
   guchar  *data;
   gint     row_idx;
@@ -750,13 +748,17 @@ dicom_loader (guint8       *pix_buffer,
           d += width * samples_per_pixel;
         }
 
-      gimp_progress_update ((gdouble) row_idx / (gdouble) height);
-      gimp_pixel_rgn_set_rect (pixel_rgn, data, 0, row_idx, width, scanlines);
+      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, row_idx, width, scanlines), 0,
+                       NULL, data, GEGL_AUTO_ROWSTRIDE);
+
       row_idx += scanlines;
+
+      gimp_progress_update ((gdouble) row_idx / (gdouble) height);
     }
-  gimp_progress_update (1.0);
 
   g_free (data);
+
+  gimp_progress_update (1.0);
 }
 
 
@@ -1295,8 +1297,10 @@ save_image (const gchar  *filename,
 {
   FILE          *DICOM;
   GimpImageType  drawable_type;
-  GimpDrawable  *drawable;
-  GimpPixelRgn   pixel_rgn;
+  GeglBuffer    *buffer;
+  const Babl    *format;
+  gint           width;
+  gint           height;
   GByteArray    *group_stream;
   GSList        *elements = NULL;
   gint           group;
@@ -1311,7 +1315,6 @@ save_image (const gchar  *filename,
   guchar        *src = NULL;
 
   drawable_type = gimp_drawable_type (drawable_ID);
-  drawable = gimp_drawable_get (drawable_ID);
 
   /*  Make sure we're not saving an image with an alpha channel  */
   if (gimp_drawable_has_alpha (drawable_ID))
@@ -1323,13 +1326,17 @@ save_image (const gchar  *filename,
   switch (drawable_type)
     {
     case GIMP_GRAY_IMAGE:
+      format = babl_format ("Y' u8");
       samples_per_pixel = 1;
       photometric_interp = "MONOCHROME2";
       break;
+
     case GIMP_RGB_IMAGE:
+      format = babl_format ("R'G'B' u8");
       samples_per_pixel = 3;
       photometric_interp = "RGB";
       break;
+
     default:
       g_message (_("Cannot operate on unknown image types."));
       return FALSE;
@@ -1346,12 +1353,16 @@ save_image (const gchar  *filename,
 
   if (!DICOM)
     {
-      gimp_drawable_detach (drawable);
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
+
+  buffer = gimp_drawable_get_buffer (drawable_ID);
+
+  width  = gegl_buffer_get_width  (buffer);
+  height = gegl_buffer_get_height (buffer);
 
   /* Print dicom header */
   {
@@ -1395,10 +1406,10 @@ save_image (const gchar  *filename,
                                       (guint8 *) &zero);
   /* rows */
   elements = dicom_add_element_int (elements, group, 0x0010, "US",
-                                    (guint8 *) &(drawable->height));
+                                    (guint8 *) &height);
   /* columns */
   elements = dicom_add_element_int (elements, group, 0x0011, "US",
-                                    (guint8 *) &(drawable->width));
+                                    (guint8 *) &width);
   /* Bits allocated */
   elements = dicom_add_element_int (elements, group, 0x0100, "US",
                                     (guint8 *) &eight);
@@ -1414,18 +1425,15 @@ save_image (const gchar  *filename,
 
   /* Pixel data */
   group = 0x7fe0;
-  src = g_new (guchar,
-               drawable->height * drawable->width * samples_per_pixel);
+  src = g_new (guchar, height * width * samples_per_pixel);
   if (src)
     {
-      gimp_pixel_rgn_init (&pixel_rgn, drawable,
-                           0, 0, drawable->width, drawable->height,
-                           FALSE, FALSE);
-      gimp_pixel_rgn_get_rect (&pixel_rgn,
-                               src, 0, 0, drawable->width, drawable->height);
+      gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, width, height), 1.0,
+                       format, src,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
       elements = dicom_add_element (elements, group, 0x0010, "OW",
-                                    drawable->width * drawable->height *
-                                    samples_per_pixel,
+                                    width * height * samples_per_pixel,
                                     (guint8 *) src);
 
       elements = dicom_add_tags (DICOM, group_stream, elements);
@@ -1441,7 +1449,7 @@ save_image (const gchar  *filename,
 
   dicom_elements_destroy (elements);
   g_byte_array_free (group_stream, TRUE);
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
 
   return retval;
 }
