@@ -128,6 +128,34 @@
 #define THUMB_HEIGHT             120
 
 
+typedef enum
+{
+  SA_RUN_MODE,
+  SA_IMAGE,
+  SA_DRAWABLE,
+  SA_FILENAME,
+  SA_RAW_FILENAME,
+  SA_VECTORIZE,
+  SA_IGNORE_HIDDEN,
+  SA_APPLY_MASKS,
+  SA_ARG_COUNT
+} SaveArgs;
+
+#define SA_ARG_COUNT_DEFAULT 5
+
+typedef enum
+{
+  SMA_RUN_MODE,
+  SMA_IMAGES,
+  SMA_COUNT,
+  SMA_VECTORIZE,
+  SMA_IGNORE_HIDDEN,
+  SMA_APPLY_MASKS,
+  SMA_FILENAME,
+  SMA_RAWFILENAME,
+  SMA_ARG_COUNT
+} SaveMultiArgs;
+
 typedef struct
 {
   gboolean vectorize;
@@ -164,50 +192,51 @@ typedef struct
 } Page;
 
 
-static gboolean           init_vals                  (const gchar *name,
-                                                      gint nparams,
-                                                      const GimpParam *param,
-                                                      gboolean *single,
-                                                      gboolean *defaults,
-                                                      GimpRunMode  *run_mode);
+static void              query                      (void);
+static void              run                        (const gchar     *name,
+                                                     gint             nparams,
+                                                     const GimpParam *param,
+                                                     gint            *nreturn_vals,
+                                                     GimpParam      **return_vals);
 
-static void               init_image_list_defaults   (gint32 image);
+static gboolean          init_vals                  (const gchar     *name,
+                                                     gint             nparams,
+                                                     const GimpParam *param,
+                                                     gboolean        *single,
+                                                     gboolean        *defaults,
+                                                     GimpRunMode     *run_mode);
 
-static void               validate_image_list        (void);
+static void              init_image_list_defaults   (gint32           image);
 
-static gboolean           gui_single                 (void);
-static gboolean           gui_multi                  (void);
+static void              validate_image_list        (void);
 
-static void               choose_file_call           (GtkWidget* browse_button,
-                                                      gpointer file_entry);
+static gboolean          gui_single                 (void);
+static gboolean          gui_multi                  (void);
 
-static gboolean           get_image_list             (void);
-static GtkTreeModel*      create_model               (void);
+static void              choose_file_call           (GtkWidget       *browse_button,
+                                                     gpointer         file_entry);
 
-static void               add_image_call             (GtkWidget *widget,
-                                                      gpointer img_combo);
-static void               del_image_call             (GtkWidget *widget,
-                                                      gpointer icon_view);
-static void               remove_call                (GtkTreeModel *tree_model,
-                                                      GtkTreePath  *path,
-                                                      gpointer      user_data);
-static void               recount_pages              (void);
+static gboolean          get_image_list             (void);
+static GtkTreeModel    * create_model               (void);
 
-static cairo_surface_t   *get_drawable_image         (gint32        drawable_ID);
-static GimpRGB            get_layer_color            (gint32        layer_ID,
-                                                      gboolean     *single);
-static void               drawText                   (gint32  text_id,
-                                                      gdouble opacity,
-                                                      cairo_t *cr,
-                                                      gdouble x_res,
-                                                      gdouble y_res);
+static void              add_image_call             (GtkWidget       *widget,
+                                                     gpointer         img_combo);
+static void              del_image_call             (GtkWidget       *widget,
+                                                     gpointer         icon_view);
+static void              remove_call                (GtkTreeModel    *tree_model,
+                                                     GtkTreePath     *path,
+                                                     gpointer         user_data);
+static void              recount_pages              (void);
 
-static void query (void);
-static void run   (const gchar      *name,
-                   gint              nparams,
-                   const GimpParam  *param,
-                   gint             *nreturn_vals,
-                   GimpParam       **return_vals);
+static cairo_surface_t * get_drawable_image         (gint32           drawable_ID);
+static GimpRGB           get_layer_color            (gint32           layer_ID,
+                                                     gboolean        *single);
+static void              drawText                   (gint32           text_id,
+                                                     gdouble          opacity,
+                                                     cairo_t         *cr,
+                                                     gdouble          x_res,
+                                                     gdouble          y_res);
+
 
 static gboolean     dnd_remove = TRUE;
 static PdfMultiPage multi_page;
@@ -222,34 +251,6 @@ static PdfOptimize optimize =
 static GtkTreeModel *model;
 static GtkWidget    *file_choose;
 static gchar        *file_name;
-
-typedef enum
-{
-  SA_RUN_MODE,
-  SA_IMAGE,
-  SA_DRAWABLE,
-  SA_FILENAME,
-  SA_RAW_FILENAME,
-  SA_VECTORIZE,
-  SA_IGNORE_HIDDEN,
-  SA_APPLY_MASKS,
-  SA_ARG_COUNT
-} SaveArgs;
-
-#define SA_ARG_COUNT_DEFAULT 5
-
-typedef enum
-{
-  SMA_RUN_MODE,
-  SMA_IMAGES,
-  SMA_COUNT,
-  SMA_VECTORIZE,
-  SMA_IGNORE_HIDDEN,
-  SMA_APPLY_MASKS,
-  SMA_FILENAME,
-  SMA_RAWFILENAME,
-  SMA_ARG_COUNT
-} SaveMultiArgs;
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -266,28 +267,28 @@ static void
 query (void)
 {
   static GimpParamDef save_args[] =
-    {
-      {GIMP_PDB_INT32,    "run-mode",     "Run mode"},
-      {GIMP_PDB_IMAGE,    "image",        "Input image"},
-      {GIMP_PDB_DRAWABLE, "drawable",     "Input drawable"},
-      {GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in"},
-      {GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in"},
-      {GIMP_PDB_INT32,    "vectorize",    "Convert bitmaps to vector graphics where possible. TRUE or FALSE"},
-      {GIMP_PDB_INT32,    "ignore-hidden","Omit hidden layers and layers with zero opacity. TRUE or FALSE"},
-      {GIMP_PDB_INT32,    "apply-masks",  "Apply layer masks before saving. TRUE or FALSE (Keeping them will not change the output)"}
-    };
+  {
+    { GIMP_PDB_INT32,    "run-mode",     "Run mode" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Input drawable" },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },
+    { GIMP_PDB_INT32,    "vectorize",    "Convert bitmaps to vector graphics where possible. TRUE or FALSE" },
+    { GIMP_PDB_INT32,    "ignore-hidden","Omit hidden layers and layers with zero opacity. TRUE or FALSE" },
+    { GIMP_PDB_INT32,    "apply-masks",  "Apply layer masks before saving. TRUE or FALSE (Keeping them will not change the output)" }
+  };
 
   static GimpParamDef save_multi_args[] =
-    {
-      {GIMP_PDB_INT32,      "run-mode",     "Run mode"},
-      {GIMP_PDB_INT32ARRAY, "images",       "Input image for each page (An image can appear more than once)"},
-      {GIMP_PDB_INT32,      "count",        "The amount of images entered (This will be the amount of pages). 1 <= count <= MAX_PAGE_COUNT"},
-      {GIMP_PDB_INT32,      "vectorize",    "Convert bitmaps to vector graphics where possible. TRUE or FALSE"},
-      {GIMP_PDB_INT32,      "ignore-hidden","Omit hidden layers and layers with zero opacity. TRUE or FALSE"},
-      {GIMP_PDB_INT32,      "apply-masks",  "Apply layer masks before saving. TRUE or FALSE (Keeping them will not change the output)"},
-      {GIMP_PDB_STRING,     "filename",     "The name of the file to save the image in"},
-      {GIMP_PDB_STRING,     "raw-filename", "The name of the file to save the image in"}
-    };
+  {
+    { GIMP_PDB_INT32,      "run-mode",     "Run mode" },
+    { GIMP_PDB_INT32ARRAY, "images",       "Input image for each page (An image can appear more than once)" },
+    { GIMP_PDB_INT32,      "count",        "The amount of images entered (This will be the amount of pages). 1 <= count <= MAX_PAGE_COUNT" },
+    { GIMP_PDB_INT32,      "vectorize",    "Convert bitmaps to vector graphics where possible. TRUE or FALSE" },
+    { GIMP_PDB_INT32,      "ignore-hidden","Omit hidden layers and layers with zero opacity. TRUE or FALSE" },
+    { GIMP_PDB_INT32,      "apply-masks",  "Apply layer masks before saving. TRUE or FALSE (Keeping them will not change the output)" },
+    { GIMP_PDB_STRING,     "filename",     "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,     "raw-filename", "The name of the file to save the image in" }
+  };
 
   gimp_install_procedure (SAVE_PROC,
                           "Save files in PDF format",
@@ -319,8 +320,10 @@ query (void)
                           G_N_ELEMENTS (save_multi_args), 0,
                           save_multi_args, NULL);
 
-/*  gimp_plugin_menu_register (SAVE_MULTI_PROC,
-                             "<Image>/File/Create/PDF"); */
+#if 0
+  gimp_plugin_menu_register (SAVE_MULTI_PROC,
+                             "<Image>/File/Create/PDF");
+#endif
 
   gimp_register_file_handler_mime (SAVE_PROC, "application/pdf");
   gimp_register_save_handler (SAVE_PROC, "pdf", "");
@@ -425,31 +428,33 @@ run (const gchar      *name,
 
   for (i = 0; i < multi_page.image_count; i++)
     {
-      GimpImageBaseType  type;
-      gint              *layers;
-      gint32             image_ID;
-      gboolean           exported;
-      gint32             num_of_layers;
-      gdouble            x_res, y_res;
-      gdouble            x_scale, y_scale;
-      gint32             temp;
-      gint               j;
+      gint32    image_ID = multi_page.images[i];
+      gboolean  exported;
+      gint32   *layers;
+      gint32    n_layers;
+      gdouble   x_res, y_res;
+      gdouble   x_scale, y_scale;
+      gint32    temp;
+      gint      j;
+
+      temp = gimp_image_get_active_drawable (image_ID);
+      if (temp < 1)
+        continue;
 
       /* Save the state of the surface before any changes, so that
        * settings from one page won't affect all the others
        */
       cairo_save (cr);
 
-      image_ID =  multi_page.images[i];
-
-      /* We need the active layer in order to use gimp_image_export */
-      temp = gimp_image_get_active_drawable (image_ID);
-      if (temp == -1)
-        exported = gimp_export_image (&image_ID, &temp, NULL, capabilities) == GIMP_EXPORT_EXPORT;
+      if (gimp_export_image (&image_ID, &temp, NULL,
+                             capabilities) == GIMP_EXPORT_EXPORT)
+        {
+          exported = TRUE;
+        }
       else
-        exported = FALSE;
-
-      type = gimp_image_base_type (image_ID);
+        {
+          exported = FALSE;
+        }
 
       gimp_image_get_resolution (image_ID, &x_res, &y_res);
       x_scale = 72.0 / x_res;
@@ -470,11 +475,11 @@ run (const gchar      *name,
       cairo_scale (cr, x_scale, y_scale);
 
       /* Now, we should loop over the layers of each image */
-      layers = gimp_image_get_layers (image_ID, &num_of_layers);
+      layers = gimp_image_get_layers (image_ID, &n_layers);
 
-      for (j = 0; j < num_of_layers; j++)
+      for (j = 0; j < n_layers; j++)
         {
-          gint32           layer_ID   = layers [num_of_layers - j - 1];
+          gint32           layer_ID   = layers [n_layers - j - 1];
           gint32           mask_ID    = -1;
           cairo_surface_t *mask_image = NULL;
           gdouble          opacity;
