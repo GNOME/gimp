@@ -1156,218 +1156,41 @@ recount_pages (void)
     }
 }
 
+
 /******************************************************/
 /* Begining of the actual PDF functions               */
 /******************************************************/
 
-/* A function to get a cairo image surface from a drawable.
- * Some of the code was taken from the gimp-print plugin
- */
-
-/* Gimp RGB (24 bit) to Cairo RGB (24 bit) */
-static inline void
-convert_from_rgb_to_rgb (const guchar *src,
-                         guchar       *dest,
-                         gint          pixels)
-{
-  while (pixels--)
-    {
-      GIMP_CAIRO_RGB24_SET_PIXEL (dest,
-                                  src[0], src[1], src[2]);
-
-      src  += 3;
-      dest += 4;
-    }
-}
-
-/* Gimp RGBA (32 bit) to Cairo RGBA (32 bit) */
-static inline void
-convert_from_rgba_to_rgba (const guchar *src,
-                           guchar       *dest,
-                           gint          pixels)
-{
-  while (pixels--)
-    {
-      GIMP_CAIRO_ARGB32_SET_PIXEL (dest,
-                                   src[0], src[1], src[2], src[3]);
-
-      src  += 4;
-      dest += 4;
-    }
-}
-
-/* Gimp Gray (8 bit) to Cairo RGB (24 bit) */
-static inline void
-convert_from_gray_to_rgb (const guchar *src,
-                           guchar       *dest,
-                           gint          pixels)
-{
-  while (pixels--)
-    {
-      GIMP_CAIRO_RGB24_SET_PIXEL (dest,
-                                  src[0], src[0], src[0]);
-
-      src  += 1;
-      dest += 4;
-    }
-}
-
-/* Gimp GrayA (16 bit) to Cairo RGBA (32 bit) */
-static inline void
-convert_from_graya_to_rgba (const guchar *src,
-                            guchar       *dest,
-                            gint          pixels)
-{
-  while (pixels--)
-    {
-      GIMP_CAIRO_ARGB32_SET_PIXEL (dest,
-                                   src[0], src[0], src[0], src[1]);
-
-      src  += 2;
-      dest += 4;
-    }
-}
-
-/* Gimp Indexed (8 bit) to Cairo RGB (24 bit) */
-static inline void
-convert_from_indexed_to_rgb (const guchar *src,
-                             guchar       *dest,
-                             gint          pixels,
-                             const guchar *cmap)
-{
-  while (pixels--)
-    {
-      const gint i = 3 * src[0];
-
-      GIMP_CAIRO_RGB24_SET_PIXEL (dest,
-                                  cmap[i], cmap[i + 1], cmap[i + 2]);
-
-      src  += 1;
-      dest += 4;
-    }
-}
-
-/* Gimp IndexedA (16 bit) to Cairo RGBA (32 bit) */
-static inline void
-convert_from_indexeda_to_rgba (const guchar *src,
-                               guchar       *dest,
-                               gint          pixels,
-                               const guchar *cmap)
-{
-  while (pixels--)
-    {
-      const gint i = 3 * src[0];
-
-      GIMP_CAIRO_ARGB32_SET_PIXEL (dest,
-                                   cmap[i], cmap[i + 1], cmap[i + 2], src[1]);
-
-      src  += 2;
-      dest += 4;
-    }
-}
-
 static cairo_surface_t *
 get_drawable_image (gint32 drawable_ID)
 {
-  GimpDrawable    *drawable;
-  GimpPixelRgn     region;
-  GimpImageType    image_type = gimp_drawable_type (drawable_ID);
+  GeglBuffer      *src_buffer;
+  GeglBuffer      *dest_buffer;
   cairo_surface_t *surface;
   cairo_format_t   format;
   gint             width;
   gint             height;
-  guchar           cmap[3 * 256] = { 0, };
-  guchar          *pixels;
-  gint             stride;
-  gpointer         pr;
-  int              bpp;
 
-  drawable = gimp_drawable_get (drawable_ID);
+  src_buffer = gimp_drawable_get_buffer (drawable_ID);
 
-  width  = drawable->width;
-  height = drawable->height;
-  bpp    = drawable->bpp;
+  width  = gegl_buffer_get_width  (src_buffer);
+  height = gegl_buffer_get_height (src_buffer);
 
-  if (gimp_drawable_is_indexed (drawable_ID))
-    {
-      guchar *colors;
-      gint    num_colors;
-
-      colors = gimp_image_get_colormap (gimp_item_get_image (drawable_ID),
-                                        &num_colors);
-      memcpy (cmap, colors, 3 * num_colors);
-      g_free (colors);
-    }
-
-  switch (bpp)
-    {
-    case 1: /* GRAY or INDEXED */
-    case 3: /* RGB */
-      format = CAIRO_FORMAT_RGB24;
-      break;
-
-    case 2: /* GRAYA or INDEXEDA */
-    case 4: /* RGBA */
-      format = CAIRO_FORMAT_ARGB32;
-      break;
-
-    default:
-      g_assert_not_reached ();
-      break;
-    }
+  if (gimp_drawable_has_alpha (drawable_ID))
+    format = CAIRO_FORMAT_ARGB32;
+  else
+    format = CAIRO_FORMAT_RGB24;
 
   surface = cairo_image_surface_create (format, width, height);
 
-  pixels = cairo_image_surface_get_data (surface);
-  stride = cairo_image_surface_get_stride (surface);
+  dest_buffer = gimp_cairo_surface_create_buffer (surface);
 
-  gimp_pixel_rgn_init (&region, drawable, 0, 0, width, height, FALSE, FALSE);
-
-  for (pr = gimp_pixel_rgns_register (1, &region);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
-    {
-      const guchar *src  = region.data;
-      guchar       *dest = pixels + region.y * stride + region.x * 4;
-      gint          y;
-
-      for (y = 0; y < region.h; y++)
-        {
-          switch (image_type)
-            {
-            case GIMP_RGB_IMAGE:
-              convert_from_rgb_to_rgb (src, dest, region.w);
-              break;
-
-            case GIMP_RGBA_IMAGE:
-              convert_from_rgba_to_rgba (src, dest, region.w);
-              break;
-
-            case GIMP_GRAY_IMAGE:
-              convert_from_gray_to_rgb (src, dest, region.w);
-              break;
-
-            case GIMP_GRAYA_IMAGE:
-              convert_from_graya_to_rgba (src, dest, region.w);
-              break;
-
-            case GIMP_INDEXED_IMAGE:
-              convert_from_indexed_to_rgb (src, dest, region.w, cmap);
-              break;
-
-            case GIMP_INDEXEDA_IMAGE:
-              convert_from_indexeda_to_rgba (src, dest, region.w, cmap);
-              break;
-            }
-
-          src  += region.rowstride;
-          dest += stride;
-        }
-    }
+  gegl_buffer_copy (src_buffer, NULL, dest_buffer, NULL);
 
   cairo_surface_mark_dirty (surface);
 
-  gimp_drawable_detach (drawable);
+  g_object_unref (src_buffer);
+  g_object_unref (dest_buffer);
 
   return surface;
 }

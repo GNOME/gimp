@@ -1306,6 +1306,7 @@ file_pdf_save_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(CAIRO_PDF_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
