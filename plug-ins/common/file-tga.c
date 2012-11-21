@@ -290,9 +290,10 @@ run (const gchar      *name,
   struct tms tbuf1, tbuf2;
 #endif
 
-  run_mode = param[0].data.d_int32;
-
   INIT_I18N ();
+  gegl_init (NULL, NULL);
+
+  run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -431,8 +432,7 @@ load_image (const gchar  *filename,
   guchar    footer[26];
   guchar    extension[495];
   long      offset;
-
-  gint32 image_ID = -1;
+  gint32    image_ID = -1;
 
   fp = g_fopen (filename, "rb");
 
@@ -629,25 +629,25 @@ load_image (const gchar  *filename,
 
 static void
 rle_write (FILE   *fp,
-           guchar *buffer,
+           guchar *buf,
            guint   width,
            guint   bytes)
 {
   gint    repeat = 0;
   gint    direct = 0;
-  guchar *from   = buffer;
+  guchar *from   = buf;
   guint   x;
 
   for (x = 1; x < width; ++x)
     {
-      if (memcmp (buffer, buffer + bytes, bytes))
+      if (memcmp (buf, buf + bytes, bytes))
         {
           /* next pixel is different */
           if (repeat)
             {
               putc (128 + repeat, fp);
               fwrite (from, bytes, 1, fp);
-              from = buffer + bytes; /* point to first different pixel */
+              from = buf + bytes; /* point to first different pixel */
               repeat = 0;
               direct = 0;
             }
@@ -663,7 +663,7 @@ rle_write (FILE   *fp,
             {
               putc (direct - 1, fp);
               fwrite (from, bytes, direct, fp);
-              from = buffer; /* point to first identical pixel */
+              from = buf; /* point to first identical pixel */
               direct = 0;
               repeat = 1;
             }
@@ -677,7 +677,7 @@ rle_write (FILE   *fp,
         {
           putc (255, fp);
           fwrite (from, bytes, 1, fp);
-          from = buffer + bytes;
+          from = buf + bytes;
           direct = 0;
           repeat = 0;
         }
@@ -685,12 +685,12 @@ rle_write (FILE   *fp,
         {
           putc (127, fp);
           fwrite (from, bytes, direct, fp);
-          from = buffer+ bytes;
+          from = buf+ bytes;
           direct = 0;
           repeat = 0;
         }
 
-      buffer += bytes;
+      buf += bytes;
     }
 
   if (repeat > 0)
@@ -707,7 +707,7 @@ rle_write (FILE   *fp,
 
 static gint
 rle_read (FILE     *fp,
-          guchar   *buffer,
+          guchar   *buf,
           tga_info *info)
 {
   static gint   repeat = 0;
@@ -743,45 +743,45 @@ rle_read (FILE     *fp,
         {
           for (k = 0; k < info->bytes; ++k)
             {
-              buffer[k] = sample[k];
+              buf[k] = sample[k];
             }
 
           repeat--;
         }
       else /* direct > 0 */
         {
-          if (fread (buffer, info->bytes, 1, fp) < 1)
+          if (fread (buf, info->bytes, 1, fp) < 1)
             return EOF;
 
           direct--;
         }
 
-      buffer += info->bytes;
+      buf += info->bytes;
     }
 
   return 0;
 }
 
 static void
-flip_line (guchar   *buffer,
+flip_line (guchar   *buf,
            tga_info *info)
 {
   guchar  temp;
   guchar *alt;
   gint    x, s;
 
-  alt = buffer + (info->bytes * (info->width - 1));
+  alt = buf + (info->bytes * (info->width - 1));
 
   for (x = 0; x * 2 <= info->width; x++)
     {
       for (s = 0; s < info->bytes; ++s)
         {
-          temp = buffer[s];
-          buffer[s] = alt[s];
+          temp = buf[s];
+          buf[s] = alt[s];
           alt[s] = temp;
         }
 
-      buffer += info->bytes;
+      buf += info->bytes;
       alt -= info->bytes;
     }
 }
@@ -895,44 +895,44 @@ apply_colormap (guchar       *dest,
 static void
 read_line (FILE         *fp,
            guchar       *row,
-           guchar       *buffer,
+           guchar       *buf,
            tga_info     *info,
-           GimpDrawable *drawable,
+           gint          bpp,
            const guchar *convert_cmap)
 {
   if (info->imageCompression == TGA_COMP_RLE)
     {
-      rle_read (fp, buffer, info);
+      rle_read (fp, buf, info);
     }
   else
     {
-      fread (buffer, info->bytes, info->width, fp);
+      fread (buf, info->bytes, info->width, fp);
     }
 
   if (info->flipHoriz)
     {
-      flip_line (buffer, info);
+      flip_line (buf, info);
     }
 
   if (info->imageType == TGA_TYPE_COLOR)
     {
       if (info->bpp == 16 || info->bpp == 15)
         {
-          upsample (row, buffer, info->width, info->bytes, info->alphaBits);
+          upsample (row, buf, info->width, info->bytes, info->alphaBits);
         }
       else
         {
-          bgr2rgb (row, buffer, info->width, info->bytes, info->alphaBits);
+          bgr2rgb (row, buf, info->width, info->bytes, info->alphaBits);
         }
     }
   else if (convert_cmap)
     {
-      apply_colormap (row, buffer, info->width, convert_cmap,
+      apply_colormap (row, buf, info->width, convert_cmap,
                       (info->colorMapSize > 24));
     }
   else
     {
-      memcpy (row, buffer, info->width * drawable->bpp);
+      memcpy (row, buf, info->width * bpp);
     }
 }
 
@@ -943,19 +943,16 @@ ReadImage (FILE        *fp,
 {
   static gint32      image_ID;
   gint32             layer_ID;
-
-  GimpPixelRgn       pixel_rgn;
-  GimpDrawable      *drawable;
-  guchar            *data, *buffer, *row;
+  GeglBuffer        *buffer;
+  guchar            *data, *buf, *row;
   GimpImageType      dtype = 0;
   GimpImageBaseType  itype = 0;
+  gint               bpp;
   gint               i, y;
-
   gint               max_tileheight, tileheight;
-
-  guint              cmap_bytes = 0;
-  guchar            *tga_cmap = NULL;
-  guchar            *gimp_cmap = NULL;
+  guint              cmap_bytes   = 0;
+  guchar            *tga_cmap     = NULL;
+  guchar            *gimp_cmap    = NULL;
   guchar            *convert_cmap = NULL;
 
   switch (info->imageType)
@@ -1068,16 +1065,14 @@ ReadImage (FILE        *fp,
 
   gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
 
-  drawable = gimp_drawable_get (layer_ID);
+  buffer = gimp_drawable_get_buffer (layer_ID);
 
-  /* Prepare the pixel region. */
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
-                       info->width, info->height, TRUE, FALSE);
+  bpp = gimp_drawable_bpp (layer_ID);
 
   /* Allocate the data. */
   max_tileheight = gimp_tile_height ();
-  data = g_new (guchar, info->width * max_tileheight * drawable->bpp);
-  buffer = g_new (guchar, info->width * info->bytes);
+  data = g_new (guchar, info->width * max_tileheight * bpp);
+  buf  = g_new (guchar, info->width * info->bytes);
 
   if (info->flipVert)
     {
@@ -1089,15 +1084,17 @@ ReadImage (FILE        *fp,
 
           for (y = 1; y <= tileheight; ++y)
             {
-              row = data + (info->width * drawable->bpp * (tileheight - y));
-              read_line (fp, row, buffer, info, drawable, convert_cmap);
+              row = data + (info->width * bpp * (tileheight - y));
+              read_line (fp, row, buf, info, bpp, convert_cmap);
             }
+
+          gegl_buffer_set (buffer,
+                           GEGL_RECTANGLE (0, info->height - i - tileheight,
+                                           info->width, tileheight), 0,
+                           NULL, data, GEGL_AUTO_ROWSTRIDE);
 
           gimp_progress_update ((gdouble) (i + tileheight) /
                                 (gdouble) info->height);
-          gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0,
-                                   info->height - i - tileheight,
-                                   info->width, tileheight);
         }
     }
   else
@@ -1108,30 +1105,32 @@ ReadImage (FILE        *fp,
 
           for (y = 0; y < tileheight; ++y)
             {
-              row= data + (info->width * drawable->bpp * y);
-              read_line (fp, row, buffer, info, drawable, convert_cmap);
+              row= data + (info->width * bpp * y);
+              read_line (fp, row, buf, info, bpp, convert_cmap);
             }
+
+          gegl_buffer_set (buffer,
+                           GEGL_RECTANGLE (0, i, info->width, tileheight), 0,
+                           NULL, data, GEGL_AUTO_ROWSTRIDE);
 
           gimp_progress_update ((gdouble) (i + tileheight) /
                                 (gdouble) info->height);
-          gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i,
-                                   info->width, tileheight);
         }
     }
-  gimp_progress_update (1.0);
 
   g_free (data);
-  g_free (buffer);
+  g_free (buf);
 
   g_free (convert_cmap);
   g_free (gimp_cmap);
   g_free (tga_cmap);
 
-  gimp_drawable_flush (drawable);
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
+
+  gimp_progress_update (1.0);
 
   return image_ID;
-}  /*read_image*/
+}
 
 
 static gboolean
@@ -1140,30 +1139,30 @@ save_image (const gchar  *filename,
             gint32        drawable_ID,
             GError      **error)
 {
-  GimpPixelRgn   pixel_rgn;
-  GimpDrawable  *drawable;
+  GeglBuffer    *buffer;
+  const Babl    *format;
   GimpImageType  dtype;
+  gint           bpp;
   gint           width;
   gint           height;
+  FILE          *fp;
+  gint           out_bpp = 0;
+  gboolean       status  = TRUE;
+  gint           i, row;
+  guchar         header[18];
+  guchar         footer[26];
+  guchar        *pixels;
+  guchar        *data;
+  gint           num_colors;
+  guchar        *gimp_cmap = NULL;
 
-  FILE     *fp;
-  gint      out_bpp = 0;
-  gboolean  status  = TRUE;
-  gint      i, row;
+  buffer = gimp_drawable_get_buffer (drawable_ID);
 
-  guchar  header[18];
-  guchar  footer[26];
-  guchar *pixels;
-  guchar *data;
+  dtype = gimp_drawable_type (drawable_ID);
+  bpp   = gimp_drawable_bpp (drawable_ID);
 
-  gint    num_colors;
-  guchar *gimp_cmap = NULL;
-
-  drawable = gimp_drawable_get (drawable_ID);
-  dtype    = gimp_drawable_type (drawable_ID);
-
-  width  = drawable->width;
-  height = drawable->height;
+  width  = gegl_buffer_get_width  (buffer);
+  height = gegl_buffer_get_height (buffer);
 
   if ((fp = g_fopen (filename, "wb")) == NULL)
     {
@@ -1230,26 +1229,36 @@ save_image (const gchar  *filename,
   switch (dtype)
     {
     case GIMP_INDEXED_IMAGE:
-    case GIMP_GRAY_IMAGE:
     case GIMP_INDEXEDA_IMAGE:
+      format  = NULL;
+      out_bpp = 1;
+      header[16] = 8; /* bpp */
+      header[17] = tsvals.origin ? 0 : 0x20; /* alpha + orientation */
+      break;
+
+    case GIMP_GRAY_IMAGE:
+      format  = babl_format ("Y' u8");
       out_bpp = 1;
       header[16] = 8; /* bpp */
       header[17] = tsvals.origin ? 0 : 0x20; /* alpha + orientation */
       break;
 
     case GIMP_GRAYA_IMAGE:
+      format  = babl_format ("Y'A u8");
       out_bpp = 2;
       header[16] = 16; /* bpp */
       header[17] = tsvals.origin ? 8 : 0x28; /* alpha + orientation */
       break;
 
     case GIMP_RGB_IMAGE:
+      format  = babl_format ("R'G'B' u8");
       out_bpp = 3;
       header[16] = 24; /* bpp */
       header[17] = tsvals.origin ? 0 : 0x20; /* alpha + orientation */
       break;
 
     case GIMP_RGBA_IMAGE:
+      format  = babl_format ("R'G'B'A u8");
       out_bpp = 4;
       header[16] = 32; /* bpp */
       header[17] = tsvals.origin ? 8 : 0x28; /* alpha + orientation */
@@ -1286,33 +1295,33 @@ save_image (const gchar  *filename,
       fputc (0, fp);
     }
 
-  gimp_tile_cache_ntiles ((width / gimp_tile_width ()) + 1);
-
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, FALSE, FALSE);
-
-  pixels = g_new (guchar, width * drawable->bpp);
+  pixels = g_new (guchar, width * bpp);
   data   = g_new (guchar, width * out_bpp);
 
   for (row = 0; row < height; ++row)
     {
       if (tsvals.origin)
         {
-          gimp_pixel_rgn_get_row (&pixel_rgn,
-                                  pixels, 0, height - (row + 1), width);
+          gegl_buffer_get (buffer,
+                           GEGL_RECTANGLE (0, height - (row + 1), width, 1), 1.0,
+                           format, pixels,
+                           GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
         }
       else
         {
-          gimp_pixel_rgn_get_row (&pixel_rgn,
-                                  pixels, 0, row, width);
+          gegl_buffer_get (buffer,
+                           GEGL_RECTANGLE (0, row, width, 1), 1.0,
+                           format, pixels,
+                           GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
         }
 
       if (dtype == GIMP_RGB_IMAGE)
         {
-          bgr2rgb (data, pixels, width, drawable->bpp, 0);
+          bgr2rgb (data, pixels, width, bpp, 0);
         }
       else if (dtype == GIMP_RGBA_IMAGE)
         {
-          bgr2rgb (data, pixels, width, drawable->bpp, 1);
+          bgr2rgb (data, pixels, width, bpp, 1);
         }
       else if (dtype == GIMP_INDEXEDA_IMAGE)
         {
@@ -1326,7 +1335,7 @@ save_image (const gchar  *filename,
         }
       else
         {
-          memcpy (data, pixels, width * drawable->bpp);
+          memcpy (data, pixels, width * bpp);
         }
 
       if (tsvals.rle)
@@ -1341,9 +1350,8 @@ save_image (const gchar  *filename,
       if (row % 16 == 0)
         gimp_progress_update ((gdouble) row / (gdouble) height);
     }
-  gimp_progress_update (1.0);
 
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
 
   g_free (data);
   g_free (pixels);
@@ -1354,6 +1362,8 @@ save_image (const gchar  *filename,
   fwrite (footer, sizeof (footer), 1, fp);
 
   fclose (fp);
+
+  gimp_progress_update (1.0);
 
   return status;
 }
