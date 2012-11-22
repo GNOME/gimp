@@ -29,6 +29,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpmarshal.h"
+#include "core/gimptoolinfo.h"
 
 #include "gimpdeviceinfo.h"
 #include "gimpdevicemanager.h"
@@ -328,6 +329,19 @@ gimp_device_manager_device_added (GdkDisplay        *gdk_display,
   else
     {
       device_info = gimp_device_info_new (private->gimp, device, gdk_display);
+
+      if (gdk_device_get_source (device) == GDK_SOURCE_ERASER)
+        {
+          GimpContainer *tools = private->gimp->tool_info_list;
+          GimpToolInfo  *eraser;
+
+          eraser =
+            GIMP_TOOL_INFO (gimp_container_get_child_by_name (tools,
+                                                              "gimp-eraser-tool"));
+
+          if (eraser)
+            gimp_context_set_tool (GIMP_CONTEXT (device_info), eraser);
+        }
 
       gimp_container_add (GIMP_CONTAINER (manager), GIMP_OBJECT (device_info));
       g_object_unref (device_info);
