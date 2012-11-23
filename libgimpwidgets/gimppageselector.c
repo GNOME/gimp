@@ -82,17 +82,12 @@ typedef struct
   GtkWidget              *range_entry;
 
   GdkPixbuf              *default_thumbnail;
-
-  gint                    default_item_width;
-  gint                    max_item_width;
-  guint                   item_width_idle_id;
 } GimpPageSelectorPrivate;
 
 #define GIMP_PAGE_SELECTOR_GET_PRIVATE(obj) \
   ((GimpPageSelectorPrivate *) ((GimpPageSelector *) (obj))->priv)
 
 
-static void   gimp_page_selector_dispose           (GObject          *object);
 static void   gimp_page_selector_finalize          (GObject          *object);
 static void   gimp_page_selector_get_property      (GObject          *object,
                                                     guint             property_id,
@@ -102,8 +97,6 @@ static void   gimp_page_selector_set_property      (GObject          *object,
                                                     guint             property_id,
                                                     const GValue     *value,
                                                     GParamSpec       *pspec);
-static void   gimp_page_selector_style_set         (GtkWidget        *widget,
-                                                    GtkStyle         *prev_style);
 
 static void   gimp_page_selector_selection_changed (GtkIconView      *icon_view,
                                                     GimpPageSelector *selector);
@@ -120,9 +113,6 @@ static gint   gimp_page_selector_int_compare       (gconstpointer     a,
 static void   gimp_page_selector_print_range       (GString          *string,
                                                     gint              start,
                                                     gint              end);
-
-static void   gimp_page_selector_update_item_width (GimpPageSelector *selector);
-static gboolean gimp_page_selector_item_width_idle (GimpPageSelector *selector);
 
 static GdkPixbuf * gimp_page_selector_add_frame    (GtkWidget        *widget,
                                                     GdkPixbuf        *pixbuf);
@@ -141,12 +131,9 @@ gimp_page_selector_class_init (GimpPageSelectorClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->dispose      = gimp_page_selector_dispose;
   object_class->finalize     = gimp_page_selector_finalize;
   object_class->get_property = gimp_page_selector_get_property;
   object_class->set_property = gimp_page_selector_set_property;
-
-  widget_class->style_set    = gimp_page_selector_style_set;
 
   klass->selection_changed   = NULL;
   klass->activate            = NULL;
@@ -346,20 +333,6 @@ gimp_page_selector_init (GimpPageSelector *selector)
 }
 
 static void
-gimp_page_selector_dispose (GObject *object)
-{
-  GimpPageSelectorPrivate *priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (object);
-
-  if (priv->item_width_idle_id)
-    {
-      g_source_remove (priv->item_width_idle_id);
-      priv->item_width_idle_id = 0;
-    }
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
-}
-
-static void
 gimp_page_selector_finalize (GObject *object)
 {
   GimpPageSelectorPrivate *priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (object);
@@ -415,49 +388,6 @@ gimp_page_selector_set_property (GObject      *object,
     }
 }
 
-static void
-gimp_page_selector_style_set (GtkWidget *widget,
-                              GtkStyle  *prev_style)
-{
-  GimpPageSelectorPrivate *priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (widget);
-  PangoLayout             *layout;
-  PangoRectangle           ink_rect;
-  PangoRectangle           logical_rect;
-  gint                     focus_line_width;
-  gint                     focus_padding;
-  gint                     item_width;
-
-  if (GTK_WIDGET_CLASS (parent_class)->style_set)
-    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
-
-  layout = gtk_widget_create_pango_layout (widget, _("Page 000"));
-  pango_layout_get_extents (layout, &ink_rect, &logical_rect);
-  g_object_unref (layout);
-
-  gtk_widget_style_get (widget,
-                        "focus-line-width", &focus_line_width,
-                        "focus-padding",    &focus_padding,
-                        NULL);
-
-#define ICON_TEXT_PADDING 3 /* EEK */
-
-  item_width  = MAX (priv->default_thumbnail ?
-                     gdk_pixbuf_get_width (priv->default_thumbnail) : 0,
-                     PANGO_PIXELS (MAX (ink_rect.width,
-                                        logical_rect.width)) +
-                     2 * (focus_line_width + focus_padding +
-                          ICON_TEXT_PADDING));
-
-  if (item_width != priv->default_item_width)
-    {
-      priv->default_item_width = item_width;
-
-      gtk_icon_view_set_item_width (GTK_ICON_VIEW (priv->view),
-                                    MAX (priv->default_item_width,
-                                         priv->max_item_width));
-    }
-}
-
 
 /*  public functions  */
 
@@ -509,8 +439,6 @@ gimp_page_selector_set_n_pages (GimpPageSelector *selector,
                                              &iter, NULL, n_pages);
               gtk_list_store_remove (priv->store, &iter);
             }
-
-          gimp_page_selector_update_item_width (selector);
         }
       else
         {
@@ -637,50 +565,11 @@ gimp_page_selector_set_page_thumbnail (GimpPageSelector *selector,
   if (! thumbnail)
     {
       thumbnail = g_object_ref (priv->default_thumbnail);
-
-      gimp_page_selector_update_item_width (selector);
     }
   else
     {
-      gint focus_line_width;
-      gint focus_padding;
-      gint width;
-
       thumbnail = gimp_page_selector_add_frame (GTK_WIDGET (selector),
                                                 thumbnail);
-
-      gtk_widget_style_get (GTK_WIDGET (selector),
-                            "focus-line-width", &focus_line_width,
-                            "focus-padding",    &focus_padding,
-                            NULL);
-
-      width = gdk_pixbuf_get_width (thumbnail) + 2 * (focus_line_width +
-                                                      focus_padding);
-
-      if (width > priv->max_item_width)
-        {
-          priv->max_item_width = width;
-
-          gtk_icon_view_set_item_width (GTK_ICON_VIEW (priv->view),
-                                        MAX (priv->default_item_width,
-                                             priv->max_item_width));
-        }
-      else if (width < priv->max_item_width)
-        {
-          GdkPixbuf *old;
-
-          gtk_tree_model_get (GTK_TREE_MODEL (priv->store), &iter,
-                              COLUMN_THUMBNAIL, &old,
-                              -1);
-
-          if (old)
-            {
-              if (gdk_pixbuf_get_width (old) == priv->max_item_width)
-                gimp_page_selector_update_item_width (selector);
-
-              g_object_unref (old);
-            }
-        }
     }
 
   gtk_list_store_set (priv->store, &iter,
@@ -1253,79 +1142,6 @@ gimp_page_selector_print_range (GString *string,
     g_string_append_printf (string, "%d", start + 1);
   else
     g_string_append_printf (string, "%d-%d", start + 1, end + 1);
-}
-
-static void
-gimp_page_selector_update_item_width (GimpPageSelector *selector)
-{
-  GimpPageSelectorPrivate *priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (selector);
-
-  if (priv->item_width_idle_id)
-    g_source_remove (priv->item_width_idle_id);
-
-  priv->item_width_idle_id =
-    g_idle_add ((GSourceFunc) gimp_page_selector_item_width_idle, selector);
-}
-
-static gboolean
-gimp_page_selector_item_width_idle (GimpPageSelector *selector)
-{
-  GimpPageSelectorPrivate *priv    = GIMP_PAGE_SELECTOR_GET_PRIVATE (selector);
-  GtkTreeModel            *model   = GTK_TREE_MODEL (priv->store);
-  GtkTreeIter              iter;
-  gboolean                 iter_valid;
-  gint                     focus_line_width;
-  gint                     focus_padding;
-  gint                     max_width = 0;
-
-  GDK_THREADS_ENTER ();
-
-  priv->item_width_idle_id = 0;
-
-  gtk_widget_style_get (GTK_WIDGET (selector),
-                        "focus-line-width", &focus_line_width,
-                        "focus-padding",    &focus_padding,
-                        NULL);
-
-  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
-       iter_valid;
-       iter_valid = gtk_tree_model_iter_next (model, &iter))
-    {
-      GdkPixbuf *thumbnail;
-
-      gtk_tree_model_get (GTK_TREE_MODEL (priv->store), &iter,
-                          COLUMN_THUMBNAIL, &thumbnail,
-                          -1);
-
-      if (thumbnail)
-        {
-          if (thumbnail != priv->default_thumbnail)
-            {
-              gint width;
-
-              width = (gdk_pixbuf_get_width (thumbnail) +
-                       2 * (focus_line_width + focus_padding));
-
-              if (width > max_width)
-                max_width = width;
-            }
-
-          g_object_unref (thumbnail);
-        }
-    }
-
-  if (max_width != priv->max_item_width)
-    {
-      priv->max_item_width = max_width;
-
-      gtk_icon_view_set_item_width (GTK_ICON_VIEW (priv->view),
-                                    MAX (priv->default_item_width,
-                                         priv->max_item_width));
-    }
-
-  GDK_THREADS_LEAVE ();
-
-  return FALSE;
 }
 
 static void
