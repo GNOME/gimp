@@ -85,6 +85,8 @@ void             gimp_device_info_set_device        (GimpDeviceInfo  *info,
                                                      GdkDevice       *device,
                                                      GdkDisplay      *display);
 
+void             gimp_device_info_set_default_tool  (GimpDeviceInfo  *info);
+
 GdkInputMode     gimp_device_info_get_mode          (GimpDeviceInfo  *info);
 void             gimp_device_info_set_mode          (GimpDeviceInfo  *info,
                                                      GdkInputMode     mode);
