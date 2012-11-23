@@ -118,6 +118,8 @@ gimp_devices_restore (Gimp *gimp)
 
       gimp_context_copy_properties (user_context, GIMP_CONTEXT (device_info),
                                     GIMP_DEVICE_INFO_CONTEXT_MASK);
+
+      gimp_device_info_set_default_tool (device_info);
     }
 
   filename = gimp_personal_rc_file ("devicerc");

@@ -34,6 +34,7 @@
 #include "core/gimpcurve-map.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpmarshal.h"
+#include "core/gimptoolinfo.h"
 
 #include "gimpdeviceinfo.h"
 
@@ -628,6 +629,26 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
 
   g_object_notify (G_OBJECT (info), "device");
   gimp_device_info_changed (info);
+}
+
+void
+gimp_device_info_set_default_tool (GimpDeviceInfo *info)
+{
+  g_return_if_fail (GIMP_IS_DEVICE_INFO (info));
+
+  if (info->device &&
+      gdk_device_get_source (info->device) == GDK_SOURCE_ERASER)
+    {
+      GimpContainer *tools = GIMP_CONTEXT (info)->gimp->tool_info_list;
+      GimpToolInfo  *eraser;
+
+      eraser =
+        GIMP_TOOL_INFO (gimp_container_get_child_by_name (tools,
+                                                          "gimp-eraser-tool"));
+
+      if (eraser)
+        gimp_context_set_tool (GIMP_CONTEXT (info), eraser);
+    }
 }
 
 GdkInputMode
