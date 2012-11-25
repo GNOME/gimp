@@ -1802,6 +1802,7 @@ lcms_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(LCMS_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\

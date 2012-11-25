@@ -128,11 +128,6 @@ static void         lcms_image_transform_indexed (gint32           image,
                                                   cmsHPROFILE      dest_profile,
                                                   GimpColorRenderingIntent intent,
                                                   gboolean          bpc);
-
-static void         lcms_drawable_transform      (GimpDrawable    *drawable,
-                                                  cmsHTRANSFORM    transform,
-                                                  gdouble          progress_start,
-                                                  gdouble          progress_end);
 static void         lcms_sRGB_checksum           (guchar          *digest);
 
 static cmsHPROFILE  lcms_load_profile            (const gchar     *filename,
@@ -333,6 +328,7 @@ run (const gchar      *name,
   static GimpParam          values[6];
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   values[0].type = GIMP_PDB_STATUS;
 
@@ -982,7 +978,7 @@ lcms_image_transform_rgb (gint32                    image,
                           gboolean                  bpc)
 {
   cmsHTRANSFORM    transform   = NULL;
-  cmsUInt32Number  last_format = 0;
+  cmsUInt32Number  lcms_format = 0;
   gint            *layers;
   gint             num_layers;
   gint             i;
@@ -991,53 +987,106 @@ lcms_image_transform_rgb (gint32                    image,
 
   for (i = 0; i < num_layers; i++)
     {
-      GimpDrawable    *drawable = gimp_drawable_get (layers[i]);
-      cmsUInt32Number  format;
+      gint32          layer_id     = layers[i];
+      const Babl     *layer_format = gimp_drawable_get_format (layer_id);
+      const gboolean  has_alpha    = babl_format_has_alpha (layer_format);
+      const Babl     *type         = babl_format_get_type (layer_format, 0);
+      const Babl     *iter_format;
 
-      switch (drawable->bpp)
+      if (type == babl_type ("u8"))
         {
-        case 3:
-          format = TYPE_RGB_8;
-          break;
-        case 4:
-          format = TYPE_RGBA_8;
-          break;
-
-        default:
-          g_warning ("%s: unexpected bpp", G_STRLOC);
-          continue;
+          if (has_alpha)
+            {
+              lcms_format = TYPE_RGBA_8;
+              iter_format = babl_format ("R'G'B'A u8");
+            }
+          else
+            {
+              lcms_format = TYPE_RGB_8;
+              iter_format = babl_format ("R'G'B' u8");
+            }
         }
-
-      if (! transform || format != last_format)
+      else if (type == babl_type ("u16"))
         {
-          if (transform)
-            cmsDeleteTransform (transform);
-
-          transform = cmsCreateTransform (src_profile,  format,
-                                          dest_profile, format,
-                                          intent,
-                                          bpc ?
-                                          cmsFLAGS_BLACKPOINTCOMPENSATION : 0);
-
-          last_format = format;
+          if (has_alpha)
+            {
+              lcms_format = TYPE_RGBA_16;
+              iter_format = babl_format ("R'G'B'A u16");
+            }
+          else
+            {
+              lcms_format = TYPE_RGB_16;
+              iter_format = babl_format ("R'G'B' u16");
+            }
         }
-
-      if (transform)
+      else if (type == babl_type ("float"))
         {
-          lcms_drawable_transform (drawable, transform,
-                                   (gdouble) i / num_layers,
-                                   (gdouble) (i + 1) / num_layers);
+          if (has_alpha)
+            {
+              lcms_format = TYPE_RGBA_FLT;
+              iter_format = babl_format ("R'G'B'A float");
+            }
+          else
+            {
+              lcms_format = TYPE_RGB_FLT;
+              iter_format = babl_format ("R'G'B' float");
+            }
         }
       else
         {
-          g_warning ("cmsCreateTransform() failed!");
+          g_warning ("layer format has not been coded yet; unable to create transform");
+          continue;
         }
 
-      gimp_drawable_detach (drawable);
-    }
+      if (lcms_format != 0)
+        {
+          transform = cmsCreateTransform (src_profile,  lcms_format,
+                                          dest_profile, lcms_format,
+                                          intent,
+                                          cmsFLAGS_NOOPTIMIZE |
+                                          bpc ? cmsFLAGS_BLACKPOINTCOMPENSATION : 0);
 
-  if (transform)
-    cmsDeleteTransform(transform);
+          if (transform)
+            {
+              GeglBuffer         *buffer;
+              GeglBufferIterator *iter;
+              gint                layer_width;
+              gint                layer_height;
+              gdouble             progress_start = (gdouble) i / num_layers;
+              gdouble             progress_end   = (gdouble) (i + 1) / num_layers;
+              gdouble             range          = progress_end - progress_start;
+              gint                count          = 0;
+              gint                done           = 0;
+
+              buffer       = gimp_drawable_get_buffer (layer_id);
+              layer_width  = gegl_buffer_get_width (buffer);
+              layer_height = gegl_buffer_get_height (buffer);
+
+              iter = gegl_buffer_iterator_new (buffer, NULL, 0, iter_format,
+                                               GEGL_BUFFER_READWRITE,
+                                               GEGL_ABYSS_NONE);
+
+              while (gegl_buffer_iterator_next (iter))
+                {
+                  cmsDoTransform (transform,
+                                  iter->data[0], iter->data[0], iter->length);
+                }
+
+              g_object_unref (buffer);
+
+              gimp_drawable_update (layer_id, 0, 0, layer_width, layer_height);
+
+              if (count++ % 32 == 0)
+                {
+                  gimp_progress_update (progress_start +
+                                        (gdouble) done /
+                                        (layer_width * layer_height) * range);
+                }
+
+              cmsDeleteTransform (transform);
+            }
+        }
+    }
 
   g_free (layers);
 }
@@ -1049,95 +1098,31 @@ lcms_image_transform_indexed (gint32                    image,
                               GimpColorRenderingIntent  intent,
                               gboolean                  bpc)
 {
-  cmsHTRANSFORM   transform;
-  guchar         *cmap;
-  gint            num_colors;
+  cmsHTRANSFORM    transform;
+  guchar          *cmap;
+  gint             num_colors;
+  cmsUInt32Number  format = TYPE_RGB_8;
 
   cmap = gimp_image_get_colormap (image, &num_colors);
 
-  transform = cmsCreateTransform (src_profile,  TYPE_RGB_8,
-                                  dest_profile, TYPE_RGB_8,
+  transform = cmsCreateTransform (src_profile,  format,
+                                  dest_profile, format,
                                   intent,
+                                  cmsFLAGS_NOOPTIMIZE |
                                   bpc ? cmsFLAGS_BLACKPOINTCOMPENSATION : 0);
 
   if (transform)
     {
       cmsDoTransform (transform, cmap, cmap, num_colors);
-      cmsDeleteTransform(transform);
+      cmsDeleteTransform (transform);
     }
+
   else
     {
       g_warning ("cmsCreateTransform() failed!");
     }
 
   gimp_image_set_colormap (image, cmap, num_colors);
-}
-
-static void
-lcms_drawable_transform (GimpDrawable  *drawable,
-                         cmsHTRANSFORM  transform,
-                         gdouble        progress_start,
-                         gdouble        progress_end)
-{
-  GimpPixelRgn   src_rgn;
-  GimpPixelRgn   dest_rgn;
-  gpointer       pr;
-  const gboolean alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-  gdouble        range = progress_end - progress_start;
-  guint          count = 0;
-  guint          done  = 0;
-
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-                       0, 0, drawable->width, drawable->height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable,
-                       0, 0, drawable->width, drawable->height, TRUE, TRUE);
-
-  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
-    {
-      guchar *src  = src_rgn.data;
-      guchar *dest = dest_rgn.data;
-      gint    y;
-
-      for (y = 0; y < dest_rgn.h; y++)
-        {
-          cmsDoTransform (transform, src, dest, dest_rgn.w);
-
-          /* copy the alpha values, cmsDoTransform() leaves them untouched */
-          if (alpha)
-            {
-              const guchar *s = src;
-              guchar       *d = dest;
-              gint          w = dest_rgn.w;
-
-              while (w--)
-                {
-                  d[3] = s[3];
-
-                  s += 4;
-                  d += 4;
-                }
-            }
-
-          src  += src_rgn.rowstride;
-          dest += dest_rgn.rowstride;
-        }
-
-      done += dest_rgn.h * dest_rgn.w;
-
-      if (count++ % 32 == 0)
-        gimp_progress_update (progress_start +
-                              (gdouble) done /
-                              (drawable->width * drawable->height) * range);
-    }
-
-  gimp_progress_update (progress_end);
-
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id,
-                        0, 0, drawable->width, drawable->height);
 }
 
 static cmsHPROFILE
