@@ -1048,7 +1048,8 @@ lcms_image_transform_rgb (gint32                    image,
 
           if (transform)
             {
-              GeglBuffer         *buffer;
+              GeglBuffer         *src_buffer;
+              GeglBuffer         *dest_buffer;
               GeglBufferIterator *iter;
               gint                layer_width;
               gint                layer_height;
@@ -1058,22 +1059,29 @@ lcms_image_transform_rgb (gint32                    image,
               gint                count          = 0;
               gint                done           = 0;
 
-              buffer       = gimp_drawable_get_buffer (layer_id);
-              layer_width  = gegl_buffer_get_width (buffer);
-              layer_height = gegl_buffer_get_height (buffer);
+              src_buffer   = gimp_drawable_get_buffer (layer_id);
+              dest_buffer  = gimp_drawable_get_shadow_buffer (layer_id);
+              layer_width  = gegl_buffer_get_width (src_buffer);
+              layer_height = gegl_buffer_get_height (src_buffer);
 
-              iter = gegl_buffer_iterator_new (buffer, NULL, 0, iter_format,
-                                               GEGL_BUFFER_READWRITE,
-                                               GEGL_ABYSS_NONE);
+              iter = gegl_buffer_iterator_new (src_buffer, NULL, 0,
+                                               iter_format,
+                                               GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+
+              gegl_buffer_iterator_add (iter, dest_buffer, NULL, 0,
+                                        iter_format,
+                                        GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
 
               while (gegl_buffer_iterator_next (iter))
                 {
                   cmsDoTransform (transform,
-                                  iter->data[0], iter->data[0], iter->length);
+                                  iter->data[0], iter->data[1], iter->length);
                 }
 
-              g_object_unref (buffer);
+              g_object_unref (src_buffer);
+              g_object_unref (dest_buffer);
 
+              gimp_drawable_merge_shadow (layer_id, TRUE);
               gimp_drawable_update (layer_id, 0, 0, layer_width, layer_height);
 
               if (count++ % 32 == 0)
