@@ -76,7 +76,8 @@ static void     file_save_dialog_show        (Gimp                *gimp,
                                               GtkWidget           *parent,
                                               const gchar         *title,
                                               gboolean             save_a_copy,
-                                              gboolean             close_after_saving);
+                                              gboolean             close_after_saving,
+                                              GimpDisplay         *display);
 static void     file_export_dialog_show      (Gimp                *gimp,
                                               GimpImage           *image,
                                               GtkWidget           *parent);
@@ -270,13 +271,13 @@ file_save_cmd_callback (GtkAction *action,
     case GIMP_SAVE_MODE_SAVE_AS:
       file_save_dialog_show (gimp, image, widget,
                              _("Save Image"), FALSE,
-                             save_mode == GIMP_SAVE_MODE_SAVE_AND_CLOSE);
+                             save_mode == GIMP_SAVE_MODE_SAVE_AND_CLOSE, display);
       break;
 
     case GIMP_SAVE_MODE_SAVE_A_COPY:
       file_save_dialog_show (gimp, image, widget,
                              _("Save a Copy of the Image"), TRUE,
-                             FALSE);
+                             FALSE, display);
       break;
 
     case GIMP_SAVE_MODE_EXPORT:
@@ -535,7 +536,8 @@ file_save_dialog_show (Gimp        *gimp,
                        GtkWidget   *parent,
                        const gchar *title,
                        gboolean     save_a_copy,
-                       gboolean     close_after_saving)
+                       gboolean     close_after_saving,
+                       GimpDisplay *display)
 {
   GtkWidget *dialog;
 
@@ -569,7 +571,7 @@ file_save_dialog_show (Gimp        *gimp,
 
       gimp_file_dialog_set_save_image (GIMP_FILE_DIALOG (dialog),
                                        gimp, image, save_a_copy, FALSE,
-                                       close_after_saving);
+                                       close_after_saving, GIMP_OBJECT (display));
 
       gtk_window_present (GTK_WINDOW (dialog));
     }
@@ -621,7 +623,8 @@ file_export_dialog_show (Gimp      *gimp,
                                        image,
                                        FALSE,
                                        TRUE,
-                                       FALSE);
+                                       FALSE,
+                                       NULL);
 
       gtk_window_present (GTK_WINDOW (dialog));
     }

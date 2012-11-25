@@ -486,7 +486,8 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
                                  GimpImage      *image,
                                  gboolean        save_a_copy,
                                  gboolean        export,
-                                 gboolean        close_after_saving)
+                                 gboolean        close_after_saving,
+                                 GimpObject     *display)
 {
   const gchar *dir_uri  = NULL;
   const gchar *name_uri = NULL;
@@ -504,6 +505,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
   dialog->save_a_copy        = save_a_copy;
   dialog->export             = export;
   dialog->close_after_saving = close_after_saving;
+  dialog->display_to_close   = display;
 
   gimp_file_dialog_set_file_proc (dialog, NULL);
 
