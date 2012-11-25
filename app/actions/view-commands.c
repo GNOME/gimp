@@ -49,6 +49,7 @@
 #include "display/gimpdisplayshell-scale.h"
 #include "display/gimpdisplayshell-scale-dialog.h"
 #include "display/gimpdisplayshell-scroll.h"
+#include "display/gimpdisplayshell-close.h"
 #include "display/gimpimagewindow.h"
 
 #include "actions.h"
@@ -90,6 +91,25 @@ view_new_cmd_callback (GtkAction *action,
   gimp_create_display (display->gimp,
                        gimp_display_get_image (display),
                        shell->unit, gimp_zoom_model_get_factor (shell->zoom));
+}
+
+void
+view_close_cmd_callback (GtkAction *action,
+                         gpointer   data)
+{
+  GimpDisplay      *display;
+  GimpDisplayShell *shell;
+  GimpImage        *image;
+
+  return_if_no_display (display, data);
+  shell  = gimp_display_get_shell(display);
+  image = gimp_display_get_image (display);
+
+  /* Check for active image so we don't close the last display. */
+  if (! GIMP_IS_IMAGE (image) || ! gimp_image_get_active_drawable (image))
+    return;
+  if (shell)
+    gimp_display_shell_close (shell, FALSE);
 }
 
 void

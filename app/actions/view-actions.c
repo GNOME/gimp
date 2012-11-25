@@ -79,9 +79,9 @@ static const GimpActionEntry view_actions[] =
     GIMP_HELP_VIEW_NEW },
 
   { "view-close", GTK_STOCK_CLOSE,
-    NC_("view-action",  "_Close"), "<primary>W",
-    NC_("view-action", "Close this image window"),
-    G_CALLBACK (window_close_cmd_callback),
+    NC_("view-action",  "_Close View"), "<primary>W",
+    NC_("view-action", "Close the active image view"),
+    G_CALLBACK (view_close_cmd_callback),
     GIMP_HELP_FILE_CLOSE },
 
   { "view-zoom-fit-in", GTK_STOCK_ZOOM_FIT,
