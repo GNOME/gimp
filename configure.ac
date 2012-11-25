@@ -486,7 +486,7 @@ PKG_CHECK_MODULES(ATK, atk >= atk_required_version)
 
 AM_PATH_GLIB_2_0(glib_required_version, :,
   AC_MSG_ERROR(Test for GLIB failed. See the file 'INSTALL' for help.),
-  gobject gthread)
+  gobject)
 
 PKG_CHECK_MODULES(GMODULE_NO_EXPORT, gmodule-no-export-2.0)
 
@@ -514,8 +514,7 @@ LIBS=$gimp_save_LIBS
 AC_PATH_XTRA
 
 AM_PATH_GTK_2_0(gtk_required_version, :,
-  AC_MSG_ERROR(Test for GTK+ failed. See the file 'INSTALL' for help.),
-  gthread)
+  AC_MSG_ERROR(Test for GTK+ failed. See the file 'INSTALL' for help.))
 
 # GTK+ 2.26.0 will never be released, we keep the check around anyway
 # because we will need it again after the switch to GTK+ 3.x
@@ -1415,7 +1414,7 @@ AC_ARG_WITH(poppler,[  --without-poppler       build without poppler support])
 have_poppler=no
 if test "x$with_poppler" != xno; then
   PKG_CHECK_MODULES(POPPLER,
-    poppler-glib >= poppler_required_version gthread-2.0,
+    poppler-glib >= poppler_required_version,
     FILE_PDF_LOAD='file-pdf-load$(EXEEXT)'
     AC_DEFINE(HAVE_POPPLER, 1, [Define to 1 if libpoppler is available])
     have_poppler=yes,
