@@ -45,6 +45,7 @@ struct _GimpFileDialog
   gboolean              save_a_copy;
   gboolean              export;
   gboolean              close_after_saving;
+  GimpObject           *display_to_close;
 
   GtkWidget            *thumb_box;
   GtkWidget            *proc_expander;
@@ -87,7 +88,8 @@ void        gimp_file_dialog_set_save_image (GimpFileDialog       *dialog,
                                              GimpImage            *image,
                                              gboolean              save_a_copy,
                                              gboolean              export,
-                                             gboolean              close_after_saving);
+                                             gboolean              close_after_saving,
+                                             GimpObject           *display);
 
 GimpFileDialogState * gimp_file_dialog_get_state     (GimpFileDialog      *dialog);
 void                  gimp_file_dialog_set_state     (GimpFileDialog      *dialog,

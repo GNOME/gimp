@@ -215,28 +215,15 @@ file_save_dialog_response (GtkWidget *save_dialog,
           /*  make sure the menus are updated with the keys we've just set  */
           gimp_image_flush (dialog->image);
 
-          /* Handle close-after-saing */
-          if (dialog)
+          /* Handle close-after-saving */
+          if (dialog->close_after_saving && dialog->display_to_close)
             {
-              GtkWindow *parent;
-
-              parent = gtk_window_get_transient_for (GTK_WINDOW (dialog));
-
-              if (dialog->close_after_saving)
-                {
-                  if (GIMP_IS_DISPLAY_SHELL (parent))
-                    {
-                      GimpDisplay *display;
-
-                      display = GIMP_DISPLAY_SHELL (parent)->display;
-
-                      if (! gimp_image_is_dirty (gimp_display_get_image (display)))
-                        gimp_display_close (display);
-                    }
-                }
-
-              gtk_widget_destroy (save_dialog);
+              GimpDisplay *display = GIMP_DISPLAY (dialog->display_to_close);
+              if (display && ! gimp_image_is_dirty (gimp_display_get_image (display)))
+                gimp_display_close (display);
             }
+
+          gtk_widget_destroy (save_dialog);
         }
 
       g_free (uri);
