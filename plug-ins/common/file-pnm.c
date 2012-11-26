@@ -88,7 +88,7 @@ typedef struct _PNMInfo
   gboolean   asciibody;         /* 1 if ascii body, 0 if raw body */
   jmp_buf    jmpbuf;            /* Where to jump to on an error loading */
   /* Routine to use to load the pnm body */
-  void    (* loader) (PNMScanner *, struct _PNMInfo *, GimpPixelRgn *);
+  void    (* loader) (PNMScanner *, struct _PNMInfo *, GeglBuffer *);
 } PNMInfo;
 
 /* Contains the information needed to write out PNM rows */
@@ -138,13 +138,13 @@ static gint   save_dialog              (void);
 
 static void   pnm_load_ascii           (PNMScanner   *scan,
                                         PNMInfo      *info,
-                                        GimpPixelRgn *pixel_rgn);
+                                        GeglBuffer   *buffer);
 static void   pnm_load_raw             (PNMScanner   *scan,
                                         PNMInfo      *info,
-                                        GimpPixelRgn *pixel_rgn);
+                                        GeglBuffer   *buffer);
 static void   pnm_load_rawpbm          (PNMScanner   *scan,
                                         PNMInfo      *info,
-                                        GimpPixelRgn *pixel_rgn);
+                                        GeglBuffer   *buffer);
 
 static void   pnmsaverow_ascii         (PNMRowInfo   *ri,
                                         const guchar *data);
@@ -187,7 +187,7 @@ static const struct struct_pnm_types
   gint  np;
   gint  asciibody;
   gint  maxval;
-  void (* loader) (PNMScanner *, struct _PNMInfo *, GimpPixelRgn *pixel_rgn);
+  void (* loader) (PNMScanner *, struct _PNMInfo *, GeglBuffer *buffer);
 } pnm_types[] =
 {
   { '1', 0, 1,   1, pnm_load_ascii  },  /* ASCII PBM */
@@ -333,14 +333,15 @@ run (const gchar      *name,
   GError            *error  = NULL;
   gboolean           pbm    = FALSE;  /* flag for PBM output */
 
+  INIT_I18N ();
+  gegl_init (NULL, NULL);
+
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
-  INIT_I18N ();
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
@@ -475,10 +476,9 @@ static gint32
 load_image (const gchar  *filename,
             GError      **error)
 {
-  GimpPixelRgn    pixel_rgn;
+  GeglBuffer     *buffer;
   gint32 volatile image_ID = -1;
   gint32          layer_ID;
-  GimpDrawable   *drawable;
   int             fd;           /* File descriptor */
   char            buf[BUFLEN];  /* buffer for random things like scanning */
   PNMInfo        *pnminfo;
@@ -587,32 +587,24 @@ load_image (const gchar  *filename,
                              100, GIMP_NORMAL_MODE);
   gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
 
-  drawable = gimp_drawable_get (layer_ID);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable,
-                       0, 0, drawable->width, drawable->height, TRUE, FALSE);
+  buffer = gimp_drawable_get_buffer (layer_ID);
 
-  pnminfo->loader (scan, pnminfo, &pixel_rgn);
+  pnminfo->loader (scan, pnminfo, buffer);
 
   /* Destroy the scanner */
   pnmscanner_destroy (scan);
 
-  /* free the structures */
+  g_object_unref (buffer);
   g_free (pnminfo);
-
-  /* close the file */
   close (fd);
-
-  /* Tell GIMP to display the image.
-   */
-  gimp_drawable_flush (drawable);
 
   return image_ID;
 }
 
 static void
-pnm_load_ascii (PNMScanner   *scan,
-                PNMInfo      *info,
-                GimpPixelRgn *pixel_rgn)
+pnm_load_ascii (PNMScanner *scan,
+                PNMInfo    *info,
+                GeglBuffer *buffer)
 {
   guchar   *data, *d;
   gint      x, y, i, b;
@@ -688,19 +680,21 @@ pnm_load_ascii (PNMScanner   *scan,
             d += np;
           }
 
+      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, y, info->xres, scanlines), 0,
+                       NULL, data, GEGL_AUTO_ROWSTRIDE);
+
       gimp_progress_update ((double) y / (double) info->yres);
-      gimp_pixel_rgn_set_rect (pixel_rgn, data, 0, y, info->xres, scanlines);
     }
 
-  gimp_progress_update (1.0);
-
   g_free (data);
+
+  gimp_progress_update (1.0);
 }
 
 static void
-pnm_load_raw (PNMScanner   *scan,
-              PNMInfo      *info,
-              GimpPixelRgn *pixel_rgn)
+pnm_load_raw (PNMScanner *scan,
+              PNMInfo    *info,
+              GeglBuffer *buffer)
 {
   gint    bpc;
   guchar *data, *bdata, *d, *b;
@@ -721,7 +715,7 @@ pnm_load_raw (PNMScanner   *scan,
 
   fd = pnmscanner_fd (scan);
 
-  for (y = 0; y < info->yres; )
+  for (y = 0; y < info->yres; y += scanlines)
     {
       start = y;
       end = y + gimp_tile_height ();
@@ -766,26 +760,32 @@ pnm_load_raw (PNMScanner   *scan,
             }
         }
 
-      gimp_progress_update ((double) y / (double) info->yres);
-
       if (bpc > 1)
-        gimp_pixel_rgn_set_rect (pixel_rgn, bdata, 0, y, info->xres, scanlines);
+        {
+          gegl_buffer_set (buffer,
+                           GEGL_RECTANGLE (0, y, info->xres, scanlines), 0,
+                           NULL, bdata, GEGL_AUTO_ROWSTRIDE);
+        }
       else
-        gimp_pixel_rgn_set_rect (pixel_rgn, data, 0, y, info->xres, scanlines);
+        {
+          gegl_buffer_set (buffer,
+                           GEGL_RECTANGLE (0, y, info->xres, scanlines), 0,
+                           NULL, data, GEGL_AUTO_ROWSTRIDE);
+        }
 
-      y += scanlines;
+      gimp_progress_update ((double) y / (double) info->yres);
     }
-
-  gimp_progress_update (1.0);
 
   g_free (data);
   g_free (bdata);
+
+  gimp_progress_update (1.0);
 }
 
 static void
-pnm_load_rawpbm (PNMScanner   *scan,
-                 PNMInfo      *info,
-                 GimpPixelRgn *pixel_rgn)
+pnm_load_rawpbm (PNMScanner *scan,
+                 PNMInfo    *info,
+                 GeglBuffer *buffer)
 {
   guchar *buf;
   guchar  curbyte;
@@ -800,7 +800,7 @@ pnm_load_rawpbm (PNMScanner   *scan,
   data = g_new (guchar, gimp_tile_height () * info->xres);
   buf = g_new (guchar, rowlen);
 
-  for (y = 0; y < info->yres; )
+  for (y = 0; y < info->yres; y += scanlines)
     {
       start = y;
       end = y + gimp_tile_height ();
@@ -826,15 +826,16 @@ pnm_load_rawpbm (PNMScanner   *scan,
           d += info->xres;
         }
 
-      gimp_progress_update ((double) y / (double) info->yres);
-      gimp_pixel_rgn_set_rect (pixel_rgn, data, 0, y, info->xres, scanlines);
-      y += scanlines;
-    }
+      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, y, info->xres, scanlines), 0,
+                       NULL, data, GEGL_AUTO_ROWSTRIDE);
 
-  gimp_progress_update (1.0);
+      gimp_progress_update ((double) y / (double) info->yres);
+    }
 
   g_free (buf);
   g_free (data);
+
+  gimp_progress_update (1.0);
 }
 
 /* Writes out mono raw rows */
@@ -972,8 +973,8 @@ save_image (const gchar  *filename,
             gboolean      pbm,
             GError      **error)
 {
-  GimpPixelRgn   pixel_rgn;
-  GimpDrawable  *drawable;
+  GeglBuffer    *buffer;
+  const Babl    *format;
   GimpImageType  drawable_type;
   PNMRowInfo     rowinfo;
   void (*saverow) (PNMRowInfo *, const guchar *) = NULL;
@@ -985,14 +986,10 @@ save_image (const gchar  *filename,
   gchar          buf[BUFLEN];
   gint           np = 0;
   gint           xres, yres;
+  gint           bpp;
   gint           ypos, yend;
   gint           rowbufsize = 0;
   gint           fd;
-
-  drawable = gimp_drawable_get (drawable_ID);
-  drawable_type = gimp_drawable_type (drawable_ID);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable,
-                       0, 0, drawable->width, drawable->height, FALSE, FALSE);
 
   /*  Make sure we're not saving an image with an alpha channel  */
   if (gimp_drawable_has_alpha (drawable_ID))
@@ -1015,8 +1012,12 @@ save_image (const gchar  *filename,
   gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));
 
-  xres = drawable->width;
-  yres = drawable->height;
+  buffer = gimp_drawable_get_buffer (drawable_ID);
+
+  xres = gegl_buffer_get_width  (buffer);
+  yres = gegl_buffer_get_height (buffer);
+
+  drawable_type = gimp_drawable_type (drawable_ID);
 
   /* write out magic number */
   if (!psvals.raw)
@@ -1024,6 +1025,7 @@ save_image (const gchar  *filename,
       if (pbm)
         {
           write (fd, "P1\n", 3);
+          format = babl_format ("Y' u8");
           np = 0;
           rowbufsize = xres + (int) (xres / 70) + 1;
           saverow = pnmsaverow_ascii_pbm;
@@ -1034,6 +1036,7 @@ save_image (const gchar  *filename,
             {
             case GIMP_GRAY_IMAGE:
               write (fd, "P2\n", 3);
+              format = babl_format ("Y' u8");
               np = 1;
               rowbufsize = xres * 4;
               saverow = pnmsaverow_ascii;
@@ -1041,6 +1044,7 @@ save_image (const gchar  *filename,
 
             case GIMP_RGB_IMAGE:
               write (fd, "P3\n", 3);
+              format = babl_format ("R'G'B' u8");
               np = 3;
               rowbufsize = xres * 12;
               saverow = pnmsaverow_ascii;
@@ -1048,6 +1052,7 @@ save_image (const gchar  *filename,
 
             case GIMP_INDEXED_IMAGE:
               write (fd, "P3\n", 3);
+              format = gegl_buffer_get_format (buffer);
               np = 1;
               rowbufsize = xres * 12;
               saverow = pnmsaverow_ascii_indexed;
@@ -1064,6 +1069,7 @@ save_image (const gchar  *filename,
       if (pbm)
         {
           write (fd, "P4\n", 3);
+          format = babl_format ("Y' u8");
           np = 0;
           rowbufsize = (int)ceil ((double)(xres)/8.0);
           saverow = pnmsaverow_raw_pbm;
@@ -1074,6 +1080,7 @@ save_image (const gchar  *filename,
             {
             case GIMP_GRAY_IMAGE:
               write (fd, "P5\n", 3);
+              format = babl_format ("Y' u8");
               np = 1;
               rowbufsize = xres;
               saverow = pnmsaverow_raw;
@@ -1081,6 +1088,7 @@ save_image (const gchar  *filename,
 
             case GIMP_RGB_IMAGE:
               write (fd, "P6\n", 3);
+              format = babl_format ("R'G'B' u8");
               np = 3;
               rowbufsize = xres * 3;
               saverow = pnmsaverow_raw;
@@ -1088,6 +1096,7 @@ save_image (const gchar  *filename,
 
             case GIMP_INDEXED_IMAGE:
               write (fd, "P6\n", 3);
+              format = gegl_buffer_get_format (buffer);
               np = 1;
               rowbufsize = xres * 3;
               saverow = pnmsaverow_raw_indexed;
@@ -1154,8 +1163,10 @@ save_image (const gchar  *filename,
       g_free (cmap);
     }
 
+  bpp = babl_format_get_bytes_per_pixel (format);
+
   /* allocate a buffer for retrieving information from the pixel region  */
-  data = g_new (guchar, gimp_tile_height () * drawable->width * drawable->bpp);
+  data = g_new (guchar, gimp_tile_height () * xres * bpp);
 
   /* write out comment string */
   write (fd, SAVE_COMMENT_STRING, strlen (SAVE_COMMENT_STRING));
@@ -1184,8 +1195,12 @@ save_image (const gchar  *filename,
         {
           yend = ypos + gimp_tile_height ();
           yend = MIN (yend, yres);
-          gimp_pixel_rgn_get_rect (&pixel_rgn, data,
-                                   0, ypos, xres, (yend - ypos));
+
+          gegl_buffer_get (buffer,
+                           GEGL_RECTANGLE (0, ypos, xres, yend - ypos), 1.0,
+                           NULL, data,
+                           GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
           d = data;
         }
 
@@ -1196,15 +1211,14 @@ save_image (const gchar  *filename,
         gimp_progress_update ((double) ypos / (double) yres);
     }
 
-  gimp_progress_update (1.0);
-
-  /* close the file */
   close (fd);
 
   g_free (rowbuf);
   g_free (data);
 
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
+
+  gimp_progress_update (1.0);
 
   return TRUE;
 }
