@@ -1584,6 +1584,7 @@ file_xpm_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(XPM_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
