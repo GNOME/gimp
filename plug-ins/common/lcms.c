@@ -1035,7 +1035,6 @@ lcms_image_transform_rgb (gint32                    image,
       else
         {
           g_warning ("layer format has not been coded yet; unable to create transform");
-          continue;
         }
 
       if (lcms_format != 0)
@@ -1053,6 +1052,8 @@ lcms_image_transform_rgb (gint32                    image,
               GeglBufferIterator *iter;
               gint                layer_width;
               gint                layer_height;
+              gint                layer_bpp;
+              gboolean            layer_alpha;
               gdouble             progress_start = (gdouble) i / num_layers;
               gdouble             progress_end   = (gdouble) (i + 1) / num_layers;
               gdouble             range          = progress_end - progress_start;
@@ -1063,6 +1064,8 @@ lcms_image_transform_rgb (gint32                    image,
               dest_buffer  = gimp_drawable_get_shadow_buffer (layer_id);
               layer_width  = gegl_buffer_get_width (src_buffer);
               layer_height = gegl_buffer_get_height (src_buffer);
+              layer_bpp    = babl_format_get_bytes_per_pixel (iter_format);
+              layer_alpha  = babl_format_has_alpha (iter_format);
 
               iter = gegl_buffer_iterator_new (src_buffer, NULL, 0,
                                                iter_format,
@@ -1074,6 +1077,12 @@ lcms_image_transform_rgb (gint32                    image,
 
               while (gegl_buffer_iterator_next (iter))
                 {
+                  /*  lcms doesn't touch the alpha channel, simply
+                   *  copy everything to dest before the transform
+                   */
+                  if (layer_alpha)
+                    memcpy (iter->data[1], iter->data[0], iter->length * bpp);
+
                   cmsDoTransform (transform,
                                   iter->data[0], iter->data[1], iter->length);
                 }
