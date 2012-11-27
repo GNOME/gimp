@@ -222,18 +222,16 @@ save_image (const gchar  *filename,
             GeglBuffer   *buffer,
             GError      **error)
 {
-  const Babl   *format = babl_format ("R'G'B'A u8");
-  gint          row, col, cols, rows, x, y;
-  gint          colcount, colspan, rowspan;
-  gint         *palloc;
-  guchar       *buf, *buf2;
-  gchar        *width, *height;
-  FILE         *fp;
+  const Babl *format = babl_format ("R'G'B'A u8");
+  gint        row, col, cols, rows, x, y;
+  gint        colcount, colspan, rowspan;
+  gint       *palloc;
+  guchar     *buf, *buf2;
+  gchar      *width, *height;
+  FILE       *fp;
 
   cols = gegl_buffer_get_width  (buffer);
   rows = gegl_buffer_get_height (buffer);
-
-  palloc = g_new (int, rows * cols);
 
   fp = g_fopen (filename, "w");
 
@@ -242,9 +240,10 @@ save_image (const gchar  *filename,
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
-      g_free (palloc);
       return FALSE;
     }
+
+  palloc = g_new (int, rows * cols);
 
   if (gtmvals.fulldoc)
     {

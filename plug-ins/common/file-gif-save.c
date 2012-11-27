@@ -196,11 +196,10 @@ run (const gchar      *name,
   GimpExportReturn  export = GIMP_EXPORT_CANCEL;
   GError           *error  = NULL;
 
-  run_mode = param[0].data.d_int32;
-
   INIT_I18N ();
-
   gegl_init (NULL, NULL);
+
+  run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;

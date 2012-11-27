@@ -110,7 +110,7 @@ static void   run       (const gchar      *name,
 
 static gboolean  load_dialog      (TIFF               *tif,
                                    TiffSelectedPages  *pages);
-                                
+
 static gint32    load_image       (const gchar        *filename,
                                    TIFF               *tif,
                                    TiffSelectedPages  *pages,
@@ -210,14 +210,13 @@ run (const gchar      *name,
   gint32             image;
   TiffSelectedPages  pages;
 
-  run_mode = param[0].data.d_int32;
-
   INIT_I18N ();
+  gegl_init (NULL, NULL);
+
+  run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
-
-  gegl_init (NULL, NULL);
 
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;

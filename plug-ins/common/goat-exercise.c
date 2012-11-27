@@ -85,15 +85,14 @@ run (const gchar      *name,
   gint32             drawable_id;
   gint               x, y, width, height;
 
+  INIT_I18N();
+  gegl_init (NULL, NULL);
+
   *nreturn_vals = 1;
   *return_vals = values;
 
-  gegl_init (NULL, NULL);
-
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
-
-  INIT_I18N();
 
   drawable_id = param[2].data.d_drawable;
 

@@ -96,7 +96,7 @@ query (void)
                           "Tim Newsome <nuisance@cmu.edu>",
                           "1997",
                           N_("ASCII art"),
-                          "*",
+                          "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
@@ -144,29 +144,28 @@ run (const gchar      *name,
   GimpExportReturn  export = GIMP_EXPORT_CANCEL;
 
   INIT_I18N ();
-
   gegl_init (NULL, NULL);
 
-  /* Set us up to return a status. */
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+
   run_mode    = param[0].data.d_int32;
   image_ID    = param[1].data.d_int32;
   drawable_ID = param[2].data.d_int32;
 
-  /*  eventually export the image */
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY, FALSE);
       export = gimp_export_image (&image_ID, &drawable_ID, NULL,
-                                  (GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                   GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                   GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                   GIMP_EXPORT_CAN_HANDLE_ALPHA ));
+                                  GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                  GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
       if (export == GIMP_EXPORT_CANCEL)
         {
           values[0].data.d_status = GIMP_PDB_CANCEL;

@@ -288,23 +288,22 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  GimpRunMode        run_mode = param[0].data.d_int32;
+  static GimpParam   values[2];
   GimpPDBStatusType  status   = GIMP_PDB_SUCCESS;
+  GimpRunMode        run_mode;
   GdkScreen         *screen   = NULL;
   gint32             image_ID;
 
-  static GimpParam   values[2];
+  INIT_I18N ();
+  gegl_init (NULL, NULL);
 
-  /* initialize the return of the status */
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
+  run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
 
-  INIT_I18N ();
-
-  gegl_init (NULL, NULL);
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = status;
 
   /* how are we running today? */
   switch (run_mode)

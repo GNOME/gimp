@@ -126,6 +126,7 @@ run (const gchar      *name,
   gint32            image_ID;
   GError           *error = NULL;
 
+  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   *nreturn_vals = 1;
@@ -136,8 +137,6 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      INIT_I18N ();
-
       image_ID = load_image (param[1].data.d_string, &error);
 
       if (image_ID != -1)

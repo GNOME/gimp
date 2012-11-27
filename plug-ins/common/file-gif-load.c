@@ -188,7 +188,6 @@ run (const gchar      *name,
   gint32             image_ID;
 
   INIT_I18N ();
-
   gegl_init (NULL, NULL);
 
   *nreturn_vals = 1;

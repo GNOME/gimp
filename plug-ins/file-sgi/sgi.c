@@ -139,7 +139,7 @@ query (void)
                           "Copyright 1997-1998 by Michael Sweet",
                           PLUG_IN_VERSION,
                           N_("Silicon Graphics IRIS image"),
-                          "*",
+                          "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args),
                           0,
@@ -165,16 +165,16 @@ run (const gchar      *name,
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
   GError            *error  = NULL;
 
+  INIT_I18N ();
+  gegl_init (NULL, NULL);
+
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
-  INIT_I18N ();
-
-  gegl_init (NULL, NULL);
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
@@ -203,10 +203,10 @@ run (const gchar      *name,
         case GIMP_RUN_WITH_LAST_VALS:
           gimp_ui_init (PLUG_IN_BINARY, FALSE);
           export = gimp_export_image (&image_ID, &drawable_ID, NULL,
-                                      (GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                       GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                       GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                       GIMP_EXPORT_CAN_HANDLE_ALPHA));
+                                      GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                      GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                      GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                      GIMP_EXPORT_CAN_HANDLE_ALPHA);
           if (export == GIMP_EXPORT_CANCEL)
             {
               values[0].data.d_status = GIMP_PDB_CANCEL;
@@ -546,20 +546,24 @@ save_image (const gchar  *filename,
       zsize = 1;
       format = babl_format ("Y' u8");
       break;
+
     case GIMP_GRAYA_IMAGE:
       zsize = 2;
       format = babl_format ("Y'A u8");
       break;
+
     case GIMP_RGB_IMAGE:
     case GIMP_INDEXED_IMAGE:
       zsize = 3;
       format = babl_format ("R'G'B' u8");
       break;
+
     case GIMP_RGBA_IMAGE:
     case GIMP_INDEXEDA_IMAGE:
       format = babl_format ("R'G'B'A u8");
       zsize = 4;
       break;
+
     default:
       return FALSE;
     }
