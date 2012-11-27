@@ -1127,18 +1127,12 @@ dicom_get_elements_list (gint32 image_ID)
                   gimp_parasite_free (parasite);
                 }
             }
-
-          /* make sure we free each individual parasite name, in
-           * addition to the array of names
-           */
-          g_free (parasites[i]);
         }
     }
+
   /* cleanup the array of names */
-  if (parasites)
-    {
-      g_free (parasites);
-    }
+  g_strfreev (parasites);
+
   return elements;
 }
 

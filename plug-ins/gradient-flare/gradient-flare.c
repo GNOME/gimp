@@ -4726,6 +4726,8 @@ gradient_get_list (gint *num_gradients)
       gradients[n++] = g_strdup (external_gradients[i]);
     }
 
+  g_strfreev (external_gradients);
+
   return gradients;
 }
 

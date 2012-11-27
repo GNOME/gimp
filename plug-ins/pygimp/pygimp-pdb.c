@@ -637,7 +637,7 @@ pdb_query(PyGimpPDB *self, PyObject *args)
     for (i = 0; i < num; i++)
 	PyList_SetItem(ret, i, PyString_FromString(names[i]));
 
-    g_free(names);
+    g_strfreev(names);
 
     return ret;
 }
@@ -723,10 +723,9 @@ build_procedure_list(void)
                 *p = '_';
 	}
         PyList_SetItem(ret, i, PyString_FromString(name));
-        g_free(name);
     }
 
-    g_free(names);
+    g_strfreev(names);
 
     return ret;
 }

@@ -910,10 +910,9 @@ pygimp_gradients_get_list(PyObject *self, PyObject *args, PyObject *kwargs)
 
     for (i = 0; i < num; i++) {
         PyList_SetItem(ret, i, PyString_FromString(list[i]));
-        g_free(list[i]);
     }
 
-    g_free(list);
+    g_strfreev(list);
 
     return ret;
 }
@@ -1319,10 +1318,9 @@ pygimp_parasite_list(PyObject *self)
 
         for (i = 0; i < num_parasites; i++) {
             PyTuple_SetItem(ret, i, PyString_FromString(parasites[i]));
-            g_free(parasites[i]);
         }
 
-        g_free(parasites);
+        g_strfreev(parasites);
         return ret;
     }
 
@@ -1473,10 +1471,9 @@ pygimp_fonts_get_list(PyObject *self, PyObject *args, PyObject *kwargs)
 
     for (i = 0; i < num; i++) {
         PyList_SetItem(ret, i, PyString_FromString(list[i]));
-        g_free(list[i]);
     }
 
-    g_free(list);
+    g_strfreev(list);
 
     return ret;
 }

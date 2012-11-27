@@ -521,11 +521,9 @@ browser_search (GimpBrowser           *browser,
           gtk_list_store_set (dialog->store, &iter,
                               COLUMN_PROC_NAME, proc_list[i],
                               -1);
-
-          g_free (proc_list[i]);
         }
 
-      g_free (proc_list);
+      g_strfreev (proc_list);
 
       gtk_tree_view_columns_autosize (GTK_TREE_VIEW (dialog->tree_view));
 

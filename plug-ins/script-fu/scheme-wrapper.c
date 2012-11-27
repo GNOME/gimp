@@ -566,11 +566,9 @@ ts_init_procedures (scheme   *sc,
           gimp_destroy_paramdefs (params, n_params);
           gimp_destroy_paramdefs (return_vals, n_return_vals);
         }
-
-      g_free (proc_list[i]);
     }
 
-  g_free (proc_list);
+  g_strfreev (proc_list);
 }
 
 static gboolean
