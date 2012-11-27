@@ -3109,9 +3109,10 @@ gimp_image_get_parasite_list (gint32  image_ID,
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       *num_parasites = return_vals[1].data.d_int32;
-      parasites = g_new (gchar *, *num_parasites);
+      parasites = g_new (gchar *, *num_parasites + 1);
       for (i = 0; i < *num_parasites; i++)
         parasites[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+      parasites[i] = NULL;
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

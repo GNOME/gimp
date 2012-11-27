@@ -165,9 +165,10 @@ gimp_context_list_paint_methods (gint    *num_paint_methods,
   if (success)
     {
       *num_paint_methods = return_vals[1].data.d_int32;
-      *paint_methods = g_new (gchar *, *num_paint_methods);
+      *paint_methods = g_new (gchar *, *num_paint_methods + 1);
       for (i = 0; i < *num_paint_methods; i++)
         (*paint_methods)[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+      (*paint_methods)[i] = NULL;
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

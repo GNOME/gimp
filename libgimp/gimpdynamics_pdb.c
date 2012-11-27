@@ -98,9 +98,10 @@ gimp_dynamics_get_list (const gchar *filter,
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       *num_dynamics = return_vals[1].data.d_int32;
-      dynamics_list = g_new (gchar *, *num_dynamics);
+      dynamics_list = g_new (gchar *, *num_dynamics + 1);
       for (i = 0; i < *num_dynamics; i++)
         dynamics_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+      dynamics_list[i] = NULL;
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

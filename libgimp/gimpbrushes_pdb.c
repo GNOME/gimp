@@ -96,9 +96,10 @@ gimp_brushes_get_list (const gchar *filter,
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       *num_brushes = return_vals[1].data.d_int32;
-      brush_list = g_new (gchar *, *num_brushes);
+      brush_list = g_new (gchar *, *num_brushes + 1);
       for (i = 0; i < *num_brushes; i++)
         brush_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+      brush_list[i] = NULL;
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

@@ -265,7 +265,10 @@ CODE
 		my $arg = $arg_types{$type};
 		my $var;
 	    
-		my $ch = ""; my $cf = "";
+		my $ch = ""; my $cf = ""; my $numvarplus = "";
+		if ($type =~ /stringarray/) {
+		    $numvarplus = ' + 1';
+		}
 		if ($type =~ /^string(array)?/) {
 		    $ch = 'g_strdup (';
 		    $cf = ')';
@@ -312,7 +315,7 @@ CODE
 
 		    $return_marshal .= <<NEW . (($ch || $cf) ? <<CP1 : <<CP2);
       $numvar = return_vals[$numpos].data.d_$numtype;
-      $var = g_new ($datatype, $numvar);
+      $var = g_new ($datatype, $numvar$numvarplus);
 NEW
       for (i = 0; i < $numvar; i++)
         $dh$_->{name}$df\[i] = ${ch}return_vals[$argc].data.d_$type\[i]${cf};
@@ -321,6 +324,11 @@ CP1
               return_vals[$argc].data.d_$type,
               $numvar * sizeof ($datatype));
 CP2
+                    if ($type =~ /stringarray/) {
+			$return_marshal .= <<FINISH
+      $dh$_->{name}$df\[i] = NULL;
+FINISH
+		    }
 		    $out->{headers} = "#include <string.h>\n" unless ($ch || $cf);
                 }
 		else {

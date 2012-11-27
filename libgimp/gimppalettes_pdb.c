@@ -94,9 +94,10 @@ gimp_palettes_get_list (const gchar *filter,
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       *num_palettes = return_vals[1].data.d_int32;
-      palette_list = g_new (gchar *, *num_palettes);
+      palette_list = g_new (gchar *, *num_palettes + 1);
       for (i = 0; i < *num_palettes; i++)
         palette_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+      palette_list[i] = NULL;
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

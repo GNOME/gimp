@@ -96,9 +96,10 @@ gimp_patterns_get_list (const gchar *filter,
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       *num_patterns = return_vals[1].data.d_int32;
-      pattern_list = g_new (gchar *, *num_patterns);
+      pattern_list = g_new (gchar *, *num_patterns + 1);
       for (i = 0; i < *num_patterns; i++)
         pattern_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+      pattern_list[i] = NULL;
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
