@@ -56,7 +56,7 @@ HELP
 
     @outargs = (
         { name => 'image_ids', type => 'int32array',
-          desc => 'The list of images currently open',
+          desc => 'The list of images currently open. The returned value must be freed with g_free()',
           array => { name => 'num_images',
                      desc => 'The number of images currently open' } }
     );
@@ -509,7 +509,7 @@ HELP
 
     @outargs = (
         { name => 'layer_ids', type => 'int32array',
-          desc => 'The list of layers contained in the image',
+          desc => 'The list of layers contained in the image. The returned value must be freed with g_free()',
           array => { name => 'num_layers',
                      desc => 'The number of layers contained in the image' } }
     );
@@ -553,7 +553,7 @@ HELP
 
     @outargs = (
         { name => 'channel_ids', type => 'int32array',
-          desc => 'The list of channels contained in the image',
+          desc => 'The list of channels contained in the image. The returned value must be freed with g_free()',
           array => { name => 'num_channels',
                      desc => 'The number of channels contained in the image' } }
     );
@@ -595,7 +595,7 @@ HELP
 
     @outargs = (
         { name => 'vector_ids', type => 'int32array',
-          desc => 'The list of vectors contained in the image',
+          desc => 'The list of vectors contained in the image. The returned value must be freed with g_free()',
           array => { name => 'num_vectors',
                      desc => 'The number of vectors contained in the image' } }
     );
@@ -1572,7 +1572,7 @@ HELP
 
     @outargs = (
         { name => 'colormap', type => 'int8array', wrap => 1,
-          desc => "The image's colormap",
+          desc => "The image's colormap. The returned value must be freed with g_free()",
           array => { name => 'num_bytes',
                      desc => 'Number of bytes in the colormap array' } }
     );
@@ -2178,7 +2178,7 @@ HELP
 
     @outargs = (
         { name => 'filename', type => 'string',
-          desc => 'The filename' }
+          desc => 'The filename. The returned value must be freed with g_free()' }
     );
 
     %invoke = (
@@ -2258,7 +2258,7 @@ HELP
 
     @outargs = (
         { name => 'uri', type => 'string',
-          desc => 'The URI' }
+          desc => 'The URI. The returned value must be freed with g_free()' }
     );
 
     %invoke = (
@@ -2290,7 +2290,7 @@ HELP
 
     @outargs = (
         { name => 'uri', type => 'string',
-          desc => 'The imported URI' }
+          desc => 'The imported URI. The returned value must be freed with g_free()' }
     );
 
     %invoke = (
@@ -2324,7 +2324,7 @@ HELP
 
     @outargs = (
         { name => 'uri', type => 'string',
-          desc => 'The imported URI' }
+          desc => 'The imported URI. The returned value must be freed with g_free()' }
     );
 
     %invoke = (
@@ -2357,7 +2357,7 @@ HELP
 
     @outargs = (
         { name => 'uri', type => 'string',
-          desc => 'The exported URI' }
+          desc => 'The exported URI. The returned value must be freed with g_free()' }
     );
 
     %invoke = (
@@ -2386,7 +2386,7 @@ HELP
 
     @outargs = (
         { name => 'name', type => 'string',
-          desc => 'The name' }
+          desc => 'The name. The returned value must be freed with g_free()' }
     );
 
     %invoke = (

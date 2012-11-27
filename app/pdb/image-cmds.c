@@ -2930,7 +2930,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32_array ("image-ids",
                                                                 "image ids",
-                                                                "The list of images currently open",
+                                                                "The list of images currently open. The returned value must be freed with g_free()",
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -3504,7 +3504,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32_array ("layer-ids",
                                                                 "layer ids",
-                                                                "The list of layers contained in the image",
+                                                                "The list of layers contained in the image. The returned value must be freed with g_free()",
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -3538,7 +3538,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32_array ("channel-ids",
                                                                 "channel ids",
-                                                                "The list of channels contained in the image",
+                                                                "The list of channels contained in the image. The returned value must be freed with g_free()",
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -3572,7 +3572,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32_array ("vector-ids",
                                                                 "vector ids",
-                                                                "The list of vectors contained in the image",
+                                                                "The list of vectors contained in the image. The returned value must be freed with g_free()",
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -4512,7 +4512,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int8_array ("colormap",
                                                                "colormap",
-                                                               "The image's colormap",
+                                                               "The image's colormap. The returned value must be freed with g_free()",
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -5037,7 +5037,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("filename",
                                                            "filename",
-                                                           "The filename",
+                                                           "The filename. The returned value must be freed with g_free()",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
@@ -5097,7 +5097,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("uri",
                                                            "uri",
-                                                           "The URI",
+                                                           "The URI. The returned value must be freed with g_free()",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
@@ -5127,7 +5127,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("uri",
                                                            "uri",
-                                                           "The imported URI",
+                                                           "The imported URI. The returned value must be freed with g_free()",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
@@ -5157,7 +5157,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("uri",
                                                            "uri",
-                                                           "The imported URI",
+                                                           "The imported URI. The returned value must be freed with g_free()",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
@@ -5187,7 +5187,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("uri",
                                                            "uri",
-                                                           "The exported URI",
+                                                           "The exported URI. The returned value must be freed with g_free()",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
@@ -5217,7 +5217,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("name",
                                                            "name",
-                                                           "The name",
+                                                           "The name. The returned value must be freed with g_free()",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
