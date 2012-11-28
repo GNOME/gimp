@@ -991,7 +991,7 @@ lcms_image_transform_rgb (gint32                    image,
       const Babl     *layer_format = gimp_drawable_get_format (layer_id);
       const gboolean  has_alpha    = babl_format_has_alpha (layer_format);
       const Babl     *type         = babl_format_get_type (layer_format, 0);
-      const Babl     *iter_format;
+      const Babl     *iter_format  = NULL;
 
       if (type == babl_type ("u8"))
         {
@@ -1081,7 +1081,8 @@ lcms_image_transform_rgb (gint32                    image,
                    *  copy everything to dest before the transform
                    */
                   if (layer_alpha)
-                    memcpy (iter->data[1], iter->data[0], iter->length * bpp);
+                    memcpy (iter->data[1], iter->data[0],
+                            iter->length * layer_bpp);
 
                   cmsDoTransform (transform,
                                   iter->data[0], iter->data[1], iter->length);
