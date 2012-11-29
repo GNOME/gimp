@@ -210,7 +210,7 @@ static gboolean  respin_cmap     (png_structp       png_ptr,
                                   png_infop         png_info_ptr,
                                   guchar           *remap,
                                   gint32            image_id,
-                                  GimpDrawable     *drawable,
+                                  GeglBuffer       *buffer,
                                   int              *bit_depth);
 
 static gboolean  mng_save_image  (const gchar      *filename,
@@ -451,10 +451,10 @@ get_bit_depth_for_palette (int num_palette)
 static gboolean
 respin_cmap (png_structp  pp,
              png_infop    info,
-             guchar       *remap,
+             guchar      *remap,
              gint32       image_id,
-             GimpDrawable *drawable,
-             int          *bit_depth)
+             GeglBuffer  *buffer,
+             int         *bit_depth)
 {
   static guchar  trans[] = { 0 };
   guchar        *before;
@@ -463,7 +463,6 @@ respin_cmap (png_structp  pp,
   gint           colors;
   gint           transparent;
   gint           cols, rows;
-  GimpPixelRgn   pixel_rgn;
 
   before = gimp_image_get_colormap (image_id, &colors);
 
@@ -474,17 +473,15 @@ respin_cmap (png_structp  pp,
       colors = 1;
     }
 
-  cols      = drawable->width;
-  rows      = drawable->height;
+  cols      = gegl_buffer_get_width  (buffer);
+  rows      = gegl_buffer_get_height (buffer);
   numpixels = cols * rows;
-
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
-                       drawable->width, drawable->height, FALSE, FALSE);
 
   pixels = (guchar *) g_malloc (numpixels * 2);
 
-  gimp_pixel_rgn_get_rect (&pixel_rgn, pixels, 0, 0,
-                           drawable->width, drawable->height);
+  gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, cols, rows), 1.0,
+                   NULL, pixels,
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
   if (ia_has_transparent_pixels (pixels, numpixels))
     {
@@ -817,13 +814,13 @@ mng_save_image (const gchar  *filename,
   for (i = (num_layers - 1); i >= 0; i--)
     {
       GimpImageType   layer_drawable_type;
-      GimpDrawable   *layer_drawable;
+      GeglBuffer     *layer_buffer;
       gint            layer_offset_x, layer_offset_y;
       gint            layer_rows, layer_cols;
       gchar          *layer_name;
       gint            layer_chunks_type;
+      const Babl     *layer_format;
       volatile gint   layer_bpp;
-      GimpPixelRgn    layer_pixel_rgn;
 
       guint8          layer_mng_colortype;
       guint8          layer_mng_compression_type;
@@ -849,9 +846,9 @@ mng_save_image (const gchar  *filename,
       layer_chunks_type   = parse_chunks_type_from_layer_name (layer_name);
       layer_drawable_type = gimp_drawable_type (layers[i]);
 
-      layer_drawable      = gimp_drawable_get (layers[i]);
-      layer_rows          = layer_drawable->height;
-      layer_cols          = layer_drawable->width;
+      layer_buffer        = gimp_drawable_get_buffer (layers[i]);
+      layer_rows          = gegl_buffer_get_width  (layer_buffer);
+      layer_cols          = gegl_buffer_get_height (layer_buffer);
 
       gimp_drawable_offsets (layers[i], &layer_offset_x, &layer_offset_y);
       layer_has_unique_palette = TRUE;
@@ -862,33 +859,35 @@ mng_save_image (const gchar  *filename,
       switch (layer_drawable_type)
         {
         case GIMP_RGB_IMAGE:
-          layer_bpp = 3;
+          layer_format        = babl_format ("R'G'B' u8");
           layer_mng_colortype = MNG_COLORTYPE_RGB;
           break;
         case GIMP_RGBA_IMAGE:
-          layer_bpp = 4;
+          layer_format        = babl_format ("R'G'B'A u8");
           layer_mng_colortype = MNG_COLORTYPE_RGBA;
           break;
         case GIMP_GRAY_IMAGE:
-          layer_bpp = 1;
+          layer_format        = babl_format ("Y' u8");
           layer_mng_colortype = MNG_COLORTYPE_GRAY;
           break;
         case GIMP_GRAYA_IMAGE:
-          layer_bpp = 2;
+          layer_format        = babl_format ("Y'A u8");
           layer_mng_colortype = MNG_COLORTYPE_GRAYA;
           break;
         case GIMP_INDEXED_IMAGE:
-          layer_bpp = 1;
+          layer_format        = gegl_buffer_get_format (layer_buffer);
           layer_mng_colortype = MNG_COLORTYPE_INDEXED;
           break;
         case GIMP_INDEXEDA_IMAGE:
-          layer_bpp = 2;
+          layer_format        = gegl_buffer_get_format (layer_buffer);
           layer_mng_colortype = MNG_COLORTYPE_INDEXED | MNG_COLORTYPE_GRAYA;
           break;
         default:
           g_warning ("Unsupported GimpImageType in mng_save_image()");
           goto err3;
         }
+
+      layer_bpp = babl_format_get_bytes_per_pixel (layer_format);
 
       /* Delta PNG chunks are not yet supported */
 
@@ -989,7 +988,7 @@ mng_save_image (const gchar  *filename,
         }
 
       pp = png_create_write_struct (PNG_LIBPNG_VER_STRING,
-                                         NULL, NULL, NULL);
+                                    NULL, NULL, NULL);
       if (NULL == pp)
         {
           g_warning ("Unable to png_create_write_struct() in mng_save_image()");
@@ -1047,7 +1046,7 @@ mng_save_image (const gchar  *filename,
           color_type = PNG_COLOR_TYPE_PALETTE;
           layer_has_unique_palette =
             respin_cmap (pp, info, layer_remap,
-                         image_id, layer_drawable,
+                         image_id, layer_buffer,
                          &bit_depth);
           break;
         default:
@@ -1061,11 +1060,11 @@ mng_save_image (const gchar  *filename,
       /* Note: png_set_IHDR() must be called before any other
          png_set_*() functions. */
       png_set_IHDR (pp, info, layer_cols, layer_rows,
-                bit_depth,
-                color_type,
-                mng_data.interlaced ? PNG_INTERLACE_ADAM7 : PNG_INTERLACE_NONE,
-                PNG_COMPRESSION_TYPE_BASE,
-                PNG_FILTER_TYPE_BASE);
+                    bit_depth,
+                    color_type,
+                    mng_data.interlaced ? PNG_INTERLACE_ADAM7 : PNG_INTERLACE_NONE,
+                    PNG_COMPRESSION_TYPE_BASE,
+                    PNG_FILTER_TYPE_BASE);
 
       if (mngg.has_trns)
         {
@@ -1097,9 +1096,6 @@ mng_save_image (const gchar  *filename,
       for (j = 0; j < tile_height; j++)
         layer_pixels[j] = layer_pixel + (layer_cols * layer_bpp * j);
 
-      gimp_pixel_rgn_init (&layer_pixel_rgn, layer_drawable, 0, 0,
-                           layer_cols, layer_rows, FALSE, FALSE);
-
       for (pass = 0; pass < num_passes; pass++)
         {
           for (begin = 0, end = tile_height;
@@ -1110,8 +1106,11 @@ mng_save_image (const gchar  *filename,
                 end = layer_rows;
 
               num = end - begin;
-              gimp_pixel_rgn_get_rect (&layer_pixel_rgn, layer_pixel, 0,
-                                       begin, layer_cols, num);
+
+              gegl_buffer_get (layer_buffer,
+                               GEGL_RECTANGLE (0, begin, layer_cols, num), 1.0,
+                               layer_format, layer_pixel,
+                               GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
               if (png_get_valid (pp, info, PNG_INFO_tRNS))
                 {
@@ -1124,9 +1123,8 @@ mng_save_image (const gchar  *filename,
                           layer_remap[fixed[k * 2]] : 0;
                     }
                 }
-              else
-                if (png_get_valid (pp, info, PNG_INFO_PLTE)
-                    && (layer_bpp == 2))
+              else if (png_get_valid (pp, info, PNG_INFO_PLTE)
+                       && (layer_bpp == 2))
                 {
                   for (j = 0; j < num; j++)
                     {
@@ -1140,6 +1138,8 @@ mng_save_image (const gchar  *filename,
               png_write_rows (pp, layer_pixels, num);
             }
         }
+
+      g_object_unref (layer_buffer);
 
       png_write_end (pp, info);
       png_destroy_write_struct (&pp, &info);
@@ -1572,6 +1572,16 @@ mng_save_dialog (gint32 image_id)
 
 /* GIMP calls these methods. */
 
+const GimpPlugInInfo PLUG_IN_INFO =
+{
+  NULL,
+  NULL,
+  query,
+  run
+};
+
+MAIN ()
+
 static void
 query (void)
 {
@@ -1625,9 +1635,11 @@ run (const gchar      *name,
   static GimpParam values[2];
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_SUCCESS;
 
@@ -1646,11 +1658,11 @@ run (const gchar      *name,
 
           gimp_ui_init (PLUG_IN_BINARY, FALSE);
           export = gimp_export_image (&image_id, &drawable_id, NULL,
-                                      (GIMP_EXPORT_CAN_HANDLE_RGB |
-                                       GIMP_EXPORT_CAN_HANDLE_GRAY |
-                                       GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                       GIMP_EXPORT_CAN_HANDLE_ALPHA |
-                                       GIMP_EXPORT_CAN_HANDLE_LAYERS));
+                                      GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                      GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                      GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                      GIMP_EXPORT_CAN_HANDLE_ALPHA   |
+                                      GIMP_EXPORT_CAN_HANDLE_LAYERS);
         }
 
       if (export == GIMP_EXPORT_CANCEL)
@@ -1767,17 +1779,3 @@ run (const gchar      *name,
       values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
     }
 }
-
-
-
-/* Only query and run are implemented by this plug-in. */
-
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,
-  NULL,
-  query,
-  run
-};
-
-MAIN ()

@@ -1230,6 +1230,7 @@ file_mng_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(MNG_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
