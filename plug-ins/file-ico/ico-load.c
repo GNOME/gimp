@@ -241,7 +241,7 @@ ico_read_info (FILE *fp,
 static gboolean
 ico_read_png (FILE    *fp,
               guint32  header,
-              guchar  *buffer,
+              guchar  *buf,
               gint     maxsize,
               gint    *width,
               gint    *height)
@@ -319,7 +319,7 @@ ico_read_png (FILE    *fp,
   *width = w;
   *height = h;
   rows = g_new (guint32*, h);
-  rows[0] = (guint32*) buffer;
+  rows[0] = (guint32*) buf;
   for (i = 1; i < h; i++)
     rows[i] = rows[i-1] + w;
   png_read_image (png_ptr, (png_bytepp) rows);
@@ -393,7 +393,7 @@ ico_get_byte_from_data (const guint8 *data,
 static gboolean
 ico_read_icon (FILE    *fp,
                guint32  header_size,
-               guchar  *buffer,
+               guchar  *buf,
                gint     maxsize,
                gint    *width,
                gint    *height)
@@ -472,7 +472,7 @@ ico_read_icon (FILE    *fp,
   ico_read_int8 (fp, and_map, length);
   D(("  length of and_map: %i\n", length));
 
-  dest_vec = (guint32 *) buffer;
+  dest_vec = (guint32 *) buf;
   switch (data.bpp)
     {
     case 1:
@@ -580,16 +580,15 @@ static gint32
 ico_load_layer (FILE        *fp,
                 gint32       image,
                 gint32       icon_num,
-                guchar      *buffer,
+                guchar      *buf,
                 gint         maxsize,
                 IcoLoadInfo *info)
 {
-  gint          width, height;
-  gint32        layer;
-  guint32       first_bytes;
-  GimpDrawable *drawable;
-  GimpPixelRgn  pixel_rgn;
-  gchar         buf [ICO_MAXBUF];
+  gint        width, height;
+  gint32      layer;
+  guint32     first_bytes;
+  GeglBuffer *buffer;
+  gchar       name[ICO_MAXBUF];
 
   if ( fseek (fp, info->offset, SEEK_SET) < 0
        || !ico_read_int32 (fp, &first_bytes, 1) )
@@ -597,12 +596,12 @@ ico_load_layer (FILE        *fp,
 
   if (first_bytes == ICO_PNG_MAGIC)
     {
-      if (!ico_read_png (fp, first_bytes, buffer, maxsize, &width, &height))
+      if (!ico_read_png (fp, first_bytes, buf, maxsize, &width, &height))
         return -1;
     }
   else if (first_bytes == 40)
     {
-      if (!ico_read_icon (fp, first_bytes, buffer, maxsize, &width, &height))
+      if (!ico_read_icon (fp, first_bytes, buf, maxsize, &width, &height))
         return -1;
     }
   else
@@ -610,19 +609,18 @@ ico_load_layer (FILE        *fp,
       return -1;
     }
 
-
   /* read successfully. add to image */
-  g_snprintf (buf, sizeof (buf), _("Icon #%i"), icon_num+1);
-  layer = gimp_layer_new (image, buf, width, height,
+  g_snprintf (name, sizeof (name), _("Icon #%i"), icon_num+1);
+  layer = gimp_layer_new (image, name, width, height,
                           GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
   gimp_image_insert_layer (image, layer, -1, icon_num);
-  drawable = gimp_drawable_get (layer);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
-                       drawable->width, drawable->height, TRUE, FALSE);
-  gimp_pixel_rgn_set_rect (&pixel_rgn, (const guchar*) buffer,
-                           0, 0, drawable->width,
-                           drawable->height);
-  gimp_drawable_detach (drawable);
+
+  buffer = gimp_drawable_get_buffer (layer);
+
+  gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
+                   NULL, buf, GEGL_AUTO_ROWSTRIDE);
+
+  g_object_unref (buffer);
 
   return layer;
 }
@@ -637,7 +635,7 @@ ico_load_image (const gchar  *filename,
   gint         max_width, max_height;
   gint         i;
   gint32       image;
-  guchar      *buffer;
+  guchar      *buf;
   guint        icon_count;
   gint         maxsize;
 
@@ -689,12 +687,12 @@ ico_load_image (const gchar  *filename,
   gimp_image_set_filename (image, filename);
 
   maxsize = max_width * max_height * 4;
-  buffer = g_new (guchar, max_width * max_height * 4);
+  buf = g_new (guchar, max_width * max_height * 4);
   for (i = 0; i < icon_count; i++)
     {
-      ico_load_layer (fp, image, i, buffer, maxsize, info+i);
+      ico_load_layer (fp, image, i, buf, maxsize, info+i);
     }
-  g_free (buffer);
+  g_free (buf);
   g_free (info);
   fclose (fp);
 
@@ -717,7 +715,7 @@ ico_load_thumbnail_image (const gchar  *filename,
   gint         bpp   = 0;
   gint         match = 0;
   gint         i, icon_count;
-  guchar      *buffer;
+  guchar      *buf;
 
   gimp_progress_init_printf (_("Opening thumbnail for '%s'"),
                              gimp_filename_to_utf8 (filename));
@@ -774,9 +772,9 @@ ico_load_thumbnail_image (const gchar  *filename,
     return -1;
 
   image = gimp_image_new (w, h, GIMP_RGB);
-  buffer = g_new (guchar, w*h*4);
-  ico_load_layer (fp, image, match, buffer, w*h*4, info+match);
-  g_free (buffer);
+  buf = g_new (guchar, w*h*4);
+  ico_load_layer (fp, image, match, buf, w*h*4, info+match);
+  g_free (buf);
 
   *width  = w;
   *height = h;

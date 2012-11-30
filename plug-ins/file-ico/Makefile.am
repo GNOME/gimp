@@ -50,6 +50,7 @@ LDADD = \
 	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)             \
+	$(GEGL_LIBS)		\
 	$(PNG_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\

@@ -156,11 +156,12 @@ ico_write_int8 (FILE     *fp,
 
 
 static void
-ico_save_init (gint32 image_ID, IcoSaveInfo *info)
+ico_save_init (gint32       image_ID,
+               IcoSaveInfo *info)
 {
   gint	    *layers;
   gint       i, num_colors;
-  gboolean   uses_alpha_values;
+  gboolean   uses_alpha_values = FALSE;
 
   layers = gimp_image_get_layers (image_ID, &info->num_icons);
   info->layers = layers;
@@ -425,31 +426,58 @@ static gint
 ico_get_layer_num_colors (gint32    layer,
                           gboolean *uses_alpha_levels)
 {
-  GimpPixelRgn    pixel_rgn;
-  gint            w, h;
-  gint            bpp;
-  gint            num_colors = 0;
-  guint           num_pixels;
-  guchar         *buffer;
-  guchar         *src;
-  guint32        *colors;
-  guint32        *c;
-  GHashTable     *hash;
-  GimpDrawable   *drawable = gimp_drawable_get (layer);
+  gint        w, h;
+  gint        bpp;
+  gint        num_colors = 0;
+  guint       num_pixels;
+  guchar     *buf;
+  guchar     *src;
+  guint32    *colors;
+  guint32    *c;
+  GHashTable *hash;
+  GeglBuffer *buffer = gimp_drawable_get_buffer (layer);
+  const Babl *format;
 
-  w = gimp_drawable_width (layer);
-  h = gimp_drawable_height (layer);
+  w = gegl_buffer_get_width  (buffer);
+  h = gegl_buffer_get_height (buffer);
 
   num_pixels = w * h;
 
-  bpp = gimp_drawable_bpp (layer);
+  switch (gimp_drawable_type (layer))
+    {
+    case GIMP_RGB_IMAGE:
+      format = babl_format ("R'G'B' u8");
+      break;
 
-  buffer = src = g_new (guchar, num_pixels * bpp);
+    case GIMP_RGBA_IMAGE:
+      format = babl_format ("R'G'B'A u8");
+      break;
 
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, w, h, FALSE, FALSE);
-  gimp_pixel_rgn_get_rect (&pixel_rgn, buffer, 0, 0, w, h);
+    case GIMP_GRAY_IMAGE:
+      format = babl_format ("Y' u8");
+      break;
 
-  gimp_drawable_detach (drawable);
+    case GIMP_GRAYA_IMAGE:
+      format = babl_format ("Y'A u8");
+      break;
+
+    case GIMP_INDEXED_IMAGE:
+    case GIMP_INDEXEDA_IMAGE:
+      format = gegl_buffer_get_format (buffer);
+
+    default:
+      g_return_val_if_reached (0);
+    }
+
+  bpp = babl_format_get_bytes_per_pixel (format);
+
+  buf = src = g_new (guchar, num_pixels * bpp);
+
+  gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, w, h), 1.0,
+                   format, buf,
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+  g_object_unref (buffer);
 
   hash = g_hash_table_new (g_int_hash, g_int_equal);
   *uses_alpha_levels = FALSE;
@@ -508,7 +536,7 @@ ico_get_layer_num_colors (gint32    layer,
   g_hash_table_destroy (hash);
 
   g_free (colors);
-  g_free (buffer);
+  g_free (buf);
 
   return num_colors;
 }
@@ -539,29 +567,53 @@ ico_image_get_reduced_buf (guint32   layer,
                            guchar  **cmap_out,
                            guchar  **buf_out)
 {
-  GimpPixelRgn    src_pixel_rgn, dst_pixel_rgn;
-  gint32          tmp_image;
-  gint32          tmp_layer;
-  gint            w, h;
-  guchar         *buffer;
-  guchar         *cmap = NULL;
-  GimpDrawable   *drawable = gimp_drawable_get (layer);
+  gint32      tmp_image;
+  gint32      tmp_layer;
+  gint        w, h;
+  guchar     *buf;
+  guchar     *cmap   = NULL;
+  GeglBuffer *buffer = gimp_drawable_get_buffer (layer);
+  const Babl *format;
 
-  w = gimp_drawable_width (layer);
-  h = gimp_drawable_height (layer);
+  w = gegl_buffer_get_width  (buffer);
+  h = gegl_buffer_get_height (buffer);
+
+  switch (gimp_drawable_type (layer))
+    {
+    case GIMP_RGB_IMAGE:
+      format = babl_format ("R'G'B' u8");
+      break;
+
+    case GIMP_RGBA_IMAGE:
+      format = babl_format ("R'G'B'A u8");
+      break;
+
+    case GIMP_GRAY_IMAGE:
+      format = babl_format ("Y' u8");
+      break;
+
+    case GIMP_GRAYA_IMAGE:
+      format = babl_format ("Y'A u8");
+      break;
+
+    case GIMP_INDEXED_IMAGE:
+    case GIMP_INDEXEDA_IMAGE:
+      format = gegl_buffer_get_format (buffer);
+
+    default:
+      g_return_if_reached ();
+    }
 
   *num_colors = 0;
 
-  buffer = g_new (guchar, w * h * 4);
+  buf = g_new (guchar, w * h * 4);
 
-  if (bpp <= 8 || bpp == 24 || drawable->bpp != 4)
+  if (bpp <= 8 || bpp == 24 || babl_format_get_bytes_per_pixel (format) != 4)
     {
-      gint32        image = gimp_item_get_image (layer);
-      GimpDrawable *tmp;
+      gint32      image = gimp_item_get_image (layer);
+      GeglBuffer *tmp;
 
-      tmp_image = gimp_image_new (gimp_drawable_width (layer),
-                                  gimp_drawable_height (layer),
-                                  gimp_image_base_type (image));
+      tmp_image = gimp_image_new (w, h, gimp_image_base_type (image));
       gimp_image_undo_disable (tmp_image);
 
       if (gimp_drawable_is_indexed (layer))
@@ -579,13 +631,15 @@ ico_image_get_reduced_buf (guint32   layer,
                                   100, GIMP_NORMAL_MODE);
       gimp_image_insert_layer (tmp_image, tmp_layer, -1, 0);
 
-      tmp = gimp_drawable_get (tmp_layer);
+      tmp = gimp_drawable_get_buffer (tmp_layer);
 
-      gimp_pixel_rgn_init (&src_pixel_rgn, drawable, 0, 0, w, h, FALSE, FALSE);
-      gimp_pixel_rgn_init (&dst_pixel_rgn, tmp,      0, 0, w, h, TRUE, FALSE);
-      gimp_pixel_rgn_get_rect (&src_pixel_rgn, buffer, 0, 0, w, h);
-      gimp_pixel_rgn_set_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
-      gimp_drawable_detach (tmp);
+      gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, w, h), 1.0,
+                       format, buf,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+      gegl_buffer_copy (buffer, NULL, tmp, NULL);
+
+      g_object_unref (tmp);
 
       if (! gimp_drawable_is_rgb (tmp_layer))
         gimp_image_convert_rgb (tmp_image);
@@ -599,7 +653,7 @@ ico_image_get_reduced_buf (guint32   layer,
           cmap = gimp_image_get_colormap (tmp_image, num_colors);
 
           if (*num_colors == (1 << bpp) &&
-              !ico_cmap_contains_black (cmap, *num_colors))
+              ! ico_cmap_contains_black (cmap, *num_colors))
             {
               /* Windows icons with color maps need the color black.
                * We need to eliminate one more color to make room for black.
@@ -620,13 +674,14 @@ ico_image_get_reduced_buf (guint32   layer,
                   gimp_image_convert_rgb (tmp_image);
                 }
 
-              tmp = gimp_drawable_get (tmp_layer);
-              gimp_pixel_rgn_init (&dst_pixel_rgn,
-                                   tmp, 0, 0, w, h, TRUE, FALSE);
-              gimp_pixel_rgn_set_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
-              gimp_drawable_detach (tmp);
+              tmp = gimp_drawable_get_buffer (tmp_layer);
 
-              if (!gimp_drawable_is_rgb (layer))
+              gegl_buffer_set (tmp, GEGL_RECTANGLE (0, 0, w, h), 0,
+                               format, buf, GEGL_AUTO_ROWSTRIDE);
+
+              g_object_unref (tmp);
+
+              if (! gimp_drawable_is_rgb (layer))
                 gimp_image_convert_rgb (tmp_image);
 
               gimp_image_convert_indexed (tmp_image,
@@ -655,23 +710,27 @@ ico_image_get_reduced_buf (guint32   layer,
 
       gimp_layer_add_alpha (tmp_layer);
 
-      tmp = gimp_drawable_get (tmp_layer);
-      gimp_pixel_rgn_init (&src_pixel_rgn, tmp, 0, 0, w, h, FALSE, FALSE);
-      gimp_pixel_rgn_get_rect (&src_pixel_rgn, buffer, 0, 0, w, h);
-      gimp_drawable_detach (tmp);
+      tmp = gimp_drawable_get_buffer (tmp_layer);
+
+      gegl_buffer_get (tmp, GEGL_RECTANGLE (0, 0, w, h), 1.0,
+                       NULL, buf,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+      g_object_unref (tmp);
 
       gimp_image_delete (tmp_image);
     }
   else
     {
-      gimp_pixel_rgn_init (&src_pixel_rgn, drawable, 0, 0, w, h, FALSE, FALSE);
-      gimp_pixel_rgn_get_rect (&src_pixel_rgn, buffer, 0, 0, w, h);
+      gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, w, h), 1.0,
+                       format, buf,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
     }
 
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
 
   *cmap_out = cmap;
-  *buf_out = buffer;
+  *buf_out = buf;
 }
 
 static gboolean
@@ -686,11 +745,11 @@ ico_write_png (FILE   *fp,
   gint        width, height;
   gint        num_colors_used;
   guchar     *palette;
-  guchar     *buffer;
+  guchar     *buf;
 
   row_pointers = NULL;
   palette = NULL;
-  buffer = NULL;
+  buf = NULL;
 
   width = gimp_drawable_width (layer);
   height = gimp_drawable_height (layer);
@@ -713,13 +772,13 @@ ico_write_png (FILE   *fp,
         g_free (row_pointers);
       if (palette)
         g_free (palette);
-      if (buffer)
-        g_free (buffer);
+      if (buf)
+        g_free (buf);
       return FALSE;
     }
 
   ico_image_get_reduced_buf (layer, depth, &num_colors_used,
-                             &palette, &buffer);
+                             &palette, &buf);
 
   png_init_io (png_ptr, fp);
   png_set_IHDR (png_ptr, info_ptr, width, height,
@@ -734,7 +793,7 @@ ico_write_png (FILE   *fp,
   row_pointers = g_new (png_byte*, height);
   for (i = 0; i < height; i++)
     {
-      row_pointers[i] = buffer + rowstride * i;
+      row_pointers[i] = buf + rowstride * i;
     }
   png_write_image (png_ptr, row_pointers);
 
@@ -745,7 +804,7 @@ ico_write_png (FILE   *fp,
 
   g_free (row_pointers);
   g_free (palette);
-  g_free (buffer);
+  g_free (buf);
   return TRUE;
 }
 
@@ -758,8 +817,8 @@ ico_write_icon (FILE   *fp,
   gint               and_len, xor_len, palette_index, x, y;
   gint               num_colors = 0, num_colors_used = 0, black_index = 0;
   gint               width, height;
-  guchar            *buffer = NULL, *pixel;
-  guint32           *buffer32;
+  guchar            *buf = NULL, *pixel;
+  guint32           *buf32;
   guchar            *palette;
   GHashTable        *color_to_slot = NULL;
   guchar            *xor_map, *and_map;
@@ -793,8 +852,8 @@ ico_write_icon (FILE   *fp,
 
   /* Reduce colors in copy of image */
   ico_image_get_reduced_buf (layer, header.bpp, &num_colors_used,
-                             &palette, &buffer);
-  buffer32 = (guint32 *) buffer;
+                             &palette, &buf);
+  buf32 = (guint32 *) buf;
 
   /* Set up colormap and and_map when necessary: */
   if (header.bpp <= 8)
@@ -817,7 +876,7 @@ ico_write_icon (FILE   *fp,
   for (y = 0; y < height; y++)
     for (x = 0; x < width; x++)
       {
-        pixel = (guint8 *) &buffer32[y * width + x];
+        pixel = (guint8 *) &buf32[y * width + x];
 
         ico_set_bit_in_data (and_map, width,
                              (height - y -1) * width + x,
@@ -833,7 +892,7 @@ ico_write_icon (FILE   *fp,
       for (y = 0; y < height; y++)
         for (x = 0; x < width; x++)
           {
-            pixel = (guint8 *) &buffer32[y * width + x];
+            pixel = (guint8 *) &buf32[y * width + x];
             palette_index = ico_get_palette_index (color_to_slot, pixel[0],
                                                    pixel[1], pixel[2]);
 
@@ -857,7 +916,7 @@ ico_write_icon (FILE   *fp,
       for (y = 0; y < height; y++)
         for (x = 0; x < width; x++)
           {
-            pixel = (guint8 *) &buffer32[y * width + x];
+            pixel = (guint8 *) &buf32[y * width + x];
             palette_index = ico_get_palette_index(color_to_slot, pixel[0],
                                                   pixel[1], pixel[2]);
 
@@ -881,7 +940,7 @@ ico_write_icon (FILE   *fp,
       for (y = 0; y < height; y++)
         for (x = 0; x < width; x++)
           {
-            pixel = (guint8 *) &buffer32[y * width + x];
+            pixel = (guint8 *) &buf32[y * width + x];
             palette_index = ico_get_palette_index (color_to_slot,
                                                    pixel[0],
                                                    pixel[1],
@@ -911,7 +970,7 @@ ico_write_icon (FILE   *fp,
 
           for (x = 0; x < width; x++)
             {
-              pixel = (guint8 *) &buffer32[y * width + x];
+              pixel = (guint8 *) &buf32[y * width + x];
 
               row[0] = pixel[2];
               row[1] = pixel[1];
@@ -926,7 +985,7 @@ ico_write_icon (FILE   *fp,
       for (y = 0; y < height; y++)
         for (x = 0; x < width; x++)
           {
-            pixel = (guint8 *) &buffer32[y * width + x];
+            pixel = (guint8 *) &buf32[y * width + x];
 
             ((guint32 *) xor_map)[(height - y -1) * width + x] =
               GUINT32_TO_LE ((pixel[0] << 16) |
@@ -943,7 +1002,7 @@ ico_write_icon (FILE   *fp,
     g_hash_table_destroy (color_to_slot);
 
   g_free (palette);
-  g_free (buffer);
+  g_free (buf);
 
   ico_write_int32 (fp, (guint32*) &header, 3);
   ico_write_int16 (fp, &header.planes, 2);
