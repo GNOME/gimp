@@ -1443,6 +1443,16 @@ gimp_prop_table_chain_toggled (GimpChainButton *chain,
     }
 }
 
+static void
+gimp_prop_table_new_seed_clicked (GtkButton     *button,
+                                  GtkAdjustment *adj)
+{
+  guint32 value = g_random_int_range (gtk_adjustment_get_lower (adj),
+                                      gtk_adjustment_get_upper (adj));
+
+  gtk_adjustment_set_value (adj, value);
+}
+
 GtkWidget *
 gimp_prop_table_new (GObject              *config,
                      GType                 owner_type,
@@ -1525,6 +1535,30 @@ gimp_prop_table_new (GObject              *config,
         {
           widget = gimp_prop_enum_combo_box_new (config, pspec->name, 0, 0);
           label = g_param_spec_get_nick (pspec);
+        }
+      else if (GEGL_IS_PARAM_SPEC_SEED (pspec))
+        {
+          GtkAdjustment *adj;
+          GtkWidget     *scale;
+          GtkWidget     *button;
+
+          widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
+
+          scale = gimp_prop_spin_scale_new (config, pspec->name,
+                                            g_param_spec_get_nick (pspec),
+                                            1.0, 1.0, 0);
+          gtk_box_pack_start (GTK_BOX (widget), scale, TRUE, TRUE, 0);
+          gtk_widget_show (scale);
+
+          button = gtk_button_new_with_label (_("New Seed"));
+          gtk_box_pack_start (GTK_BOX (widget), button, FALSE, FALSE, 0);
+          gtk_widget_show (button);
+
+          adj = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (scale));
+
+          g_signal_connect (button, "clicked",
+                            G_CALLBACK (gimp_prop_table_new_seed_clicked),
+                            adj);
         }
       else if (G_IS_PARAM_SPEC_INT (pspec)   ||
                G_IS_PARAM_SPEC_UINT (pspec)  ||

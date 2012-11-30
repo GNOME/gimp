@@ -162,6 +162,14 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
                                   pspec->flags |
                                   GIMP_CONFIG_PARAM_SERIALIZE);
     }
+  else if (GEGL_IS_PARAM_SPEC_SEED (pspec))
+    {
+      return gegl_param_spec_seed (pspec->name,
+                                   g_param_spec_get_nick (pspec),
+                                   g_param_spec_get_blurb (pspec),
+                                   pspec->flags |
+                                   GIMP_CONFIG_PARAM_SERIALIZE);
+    }
   else if (G_IS_PARAM_SPEC_INT (pspec))
     {
       GParamSpecInt *spec = G_PARAM_SPEC_INT (pspec);
