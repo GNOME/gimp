@@ -247,6 +247,20 @@ gimp_display_shell_canvas_no_image_events (GtkWidget        *canvas,
 {
   switch (event->type)
     {
+    case GDK_2BUTTON_PRESS:
+      {
+        GdkEventButton  *bevent = (GdkEventButton *) event;
+        if (bevent->button == 1)
+          {
+            GimpImageWindow *window  = gimp_display_shell_get_window (shell);
+            GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
+
+            gimp_ui_manager_activate_action (manager, "file", "file-open");
+          }
+        return TRUE;
+      }
+      break;
+
     case GDK_BUTTON_PRESS:
       if (gdk_event_triggers_context_menu (event))
         {
