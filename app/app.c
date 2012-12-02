@@ -280,9 +280,6 @@ app_exit_after_callback (Gimp      *gimp,
 
   gegl_exit ();
 
-  /*  make sure that the swap files are removed before we quit */
-  tile_swap_exit ();
-
   exit (EXIT_SUCCESS);
 
 #endif
