@@ -30,11 +30,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-13 18:46+0100\n"
-"PO-Revision-Date: 2012-11-14 01:52+0100\n"
+"POT-Creation-Date: 2012-12-03 20:27+0100\n"
+"PO-Revision-Date: 2012-12-03 20:41+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
-"Language: \n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -104,105 +104,105 @@ msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
 "L'interprete batch \"%s\" non è disponibile. Modalità batch disabilitata."
 
-#: ../app/main.c:146
+#: ../app/main.c:148
 msgid "Show version information and exit"
 msgstr "Mostra le informazioni sulla versione e esce"
 
-#: ../app/main.c:151
+#: ../app/main.c:153
 msgid "Show license information and exit"
 msgstr "Mostra le informazioni sulla licenza e esce"
 
-#: ../app/main.c:156
+#: ../app/main.c:158
 msgid "Be more verbose"
 msgstr "Sii più prolisso"
 
-#: ../app/main.c:161
+#: ../app/main.c:163
 msgid "Start a new GIMP instance"
 msgstr "Esegui una nuova istanza di GIMP"
 
-#: ../app/main.c:166
+#: ../app/main.c:168
 msgid "Open images as new"
 msgstr "Apri le immagini come nuove"
 
-#: ../app/main.c:171
+#: ../app/main.c:173
 msgid "Run without a user interface"
 msgstr "Esegui senza interfaccia utente"
 
-#: ../app/main.c:176
+#: ../app/main.c:178
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Non caricare pennelli, gradienti, motivi, ..."
 
-#: ../app/main.c:181
+#: ../app/main.c:183
 msgid "Do not load any fonts"
 msgstr "Non caricare nessun carattere"
 
-#: ../app/main.c:186
+#: ../app/main.c:188
 msgid "Do not show a splash screen"
 msgstr "Non mostrare la schermata iniziale"
 
-#: ../app/main.c:191
+#: ../app/main.c:193
 msgid "Do not use shared memory between GIMP and plugins"
 msgstr "Non utilizzare la memoria condivisa tra GIMP e i plugin"
 
-#: ../app/main.c:196
+#: ../app/main.c:198
 msgid "Do not use special CPU acceleration functions"
 msgstr "Non utilizzare le speciali accelerazioni CPU"
 
-#: ../app/main.c:201
+#: ../app/main.c:203
 msgid "Use an alternate sessionrc file"
 msgstr "Usa un file sessionrc alternativo"
 
-#: ../app/main.c:206
+#: ../app/main.c:208
 msgid "Use an alternate user gimprc file"
 msgstr "Usa un file gimprc utente alternativo"
 
-#: ../app/main.c:211
+#: ../app/main.c:213
 msgid "Use an alternate system gimprc file"
 msgstr "Usa un file gimprc di sistema alternativo"
 
-#: ../app/main.c:216
+#: ../app/main.c:218
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Comando batch da eseguire (può essere usato più di una volta)"
 
-#: ../app/main.c:221
+#: ../app/main.c:223
 msgid "The procedure to process batch commands with"
 msgstr "La procedura per elaborare i comandi batch"
 
-#: ../app/main.c:226
+#: ../app/main.c:228
 msgid "Send messages to console instead of using a dialog"
 msgstr "Mostra messaggi sulla console invece che in una finestra di dialogo"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:232
+#: ../app/main.c:234
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "Modalità compatibile PDB (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:238
+#: ../app/main.c:240
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Esegui il debug nel caso di un blocco (never|query|always)"
 
-#: ../app/main.c:243
+#: ../app/main.c:245
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Abilita debugging dei segnali non fatali"
 
-#: ../app/main.c:248
+#: ../app/main.c:250
 msgid "Make all warnings fatal"
 msgstr "Fai in modo che tutti gli avvertimenti (warning) siano fatali"
 
-#: ../app/main.c:253
+#: ../app/main.c:255
 msgid "Output a gimprc file with default settings"
 msgstr "Genera un file gimprc con valori predefiniti"
 
-#: ../app/main.c:269
+#: ../app/main.c:271
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "Genera un elenco ordinato delle procedure sconsigliate nel PDB"
 
-#: ../app/main.c:385
+#: ../app/main.c:387
 msgid "[FILE|URI...]"
 msgstr "[FILE|URI...]"
 
-#: ../app/main.c:403
+#: ../app/main.c:405
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -210,21 +210,21 @@ msgstr ""
 "GIMP non può inizializzare l'interfaccia grafica.\n"
 "Controllare la corretta esistenza dell'impostazione dell'ambiente grafico."
 
-#: ../app/main.c:422
+#: ../app/main.c:424
 msgid "Another GIMP instance is already running."
 msgstr "Un'altra istanza di GIMP è già in esecuzione."
 
-#: ../app/main.c:492
+#: ../app/main.c:494
 msgid "GIMP output. Type any character to close this window."
 msgstr ""
 "Messaggi di GIMP. Premere un tasto qualsiasi per chiudere questa finestra."
 
-#: ../app/main.c:493
+#: ../app/main.c:495
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(premere un tasto qualsiasi per chiudere questa finestra)\n"
 
-#: ../app/main.c:510
+#: ../app/main.c:512
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
 "Messaggi di GIMP. È possibile ridurre a icona questa finestra ma non "
@@ -971,8 +971,8 @@ msgid "Use the composite color of all visible layers"
 msgstr "Usa il colore composto da tutti i livelli visibili"
 
 #: ../app/actions/data-commands.c:90 ../app/actions/documents-commands.c:345
-#: ../app/actions/file-commands.c:194 ../app/dialogs/file-open-dialog.c:232
-#: ../app/dialogs/file-open-dialog.c:277
+#: ../app/actions/file-commands.c:195 ../app/dialogs/file-open-dialog.c:226
+#: ../app/dialogs/file-open-dialog.c:270
 #: ../app/dialogs/file-open-location-dialog.c:214
 #: ../app/dialogs/file-open-location-dialog.c:226
 #: ../app/display/gimpdisplayshell-dnd.c:588
@@ -2432,49 +2432,49 @@ msgstr "So_vrascrivi %s"
 msgid "Export to"
 msgstr "Esporta su"
 
-#: ../app/actions/file-commands.c:112 ../app/actions/file-commands.c:489
-#: ../app/dialogs/file-open-dialog.c:77
+#: ../app/actions/file-commands.c:113 ../app/actions/file-commands.c:490
+#: ../app/dialogs/file-open-dialog.c:75
 msgid "Open Image"
 msgstr "Apri immagine"
 
-#: ../app/actions/file-commands.c:133
+#: ../app/actions/file-commands.c:134
 msgid "Open Image as Layers"
 msgstr "Apri immagine come livelli"
 
-#: ../app/actions/file-commands.c:265
+#: ../app/actions/file-commands.c:266
 msgid "No changes need to be saved"
 msgstr "Nessuna modifica da salvare"
 
-#: ../app/actions/file-commands.c:272 ../app/dialogs/file-save-dialog.c:95
+#: ../app/actions/file-commands.c:273 ../app/dialogs/file-save-dialog.c:95
 msgid "Save Image"
 msgstr "Salva immagine"
 
-#: ../app/actions/file-commands.c:278
+#: ../app/actions/file-commands.c:279
 msgid "Save a Copy of the Image"
 msgstr "Salva una copia dell'immagine"
 
-#: ../app/actions/file-commands.c:363
+#: ../app/actions/file-commands.c:364
 msgid "Create New Template"
 msgstr "Crea un nuovo modello"
 
-#: ../app/actions/file-commands.c:367
+#: ../app/actions/file-commands.c:368
 msgid "Enter a name for this template"
 msgstr "Inserisci un nome per questo modello"
 
-#: ../app/actions/file-commands.c:397
+#: ../app/actions/file-commands.c:398
 msgid "Revert failed. No file name associated with this image."
 msgstr "Fallita la ricarica. Nessun nome file associato a quest'immagine."
 
-#: ../app/actions/file-commands.c:409
+#: ../app/actions/file-commands.c:410
 msgid "Revert Image"
 msgstr "Ricarica immagine"
 
-#: ../app/actions/file-commands.c:435
+#: ../app/actions/file-commands.c:436
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Ricaricare \"%s\" a \"%s\"?"
 
-#: ../app/actions/file-commands.c:441
+#: ../app/actions/file-commands.c:442
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -6694,7 +6694,7 @@ msgstr "Se abilitata, premendo F1 si aprirà il visualizzatore dell'aiuto."
 
 #: ../app/config/gimprc-deserialize.c:136 ../app/core/gimp-modules.c:136
 #: ../app/core/gimp-units.c:167 ../app/gui/session.c:286
-#: ../app/plug-in/plug-in-rc.c:212
+#: ../app/plug-in/plug-in-rc.c:241
 msgid "fatal parse error"
 msgstr "errore di analisi fatale"
 
@@ -7390,7 +7390,7 @@ msgid "Text"
 msgstr "Testo"
 
 #: ../app/core/core-enums.c:1152 ../app/core/core-enums.c:1198
-#: ../app/core/gimpdrawable-transform.c:647
+#: ../app/core/gimpdrawable-transform.c:667
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Trasforma"
@@ -7914,7 +7914,7 @@ msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Ruota canale"
 
-#: ../app/core/gimpchannel.c:278 ../app/core/gimpdrawable-transform.c:965
+#: ../app/core/gimpchannel.c:278 ../app/core/gimpdrawable-transform.c:985
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Trasforma canale"
@@ -8067,7 +8067,7 @@ msgstr "Modalità disegno"
 
 #: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:375
 #: ../app/gui/session.c:399 ../app/menus/menus.c:465
-#: ../app/widgets/gimpdevices.c:207
+#: ../app/widgets/gimpdevices.c:209
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "La cancellazione di \"%s\" è fallita: %s"
@@ -8198,22 +8198,22 @@ msgctxt "undo-type"
 msgid "Render Stroke"
 msgstr "Disegna il delineato"
 
-#: ../app/core/gimpdrawable-transform.c:736
+#: ../app/core/gimpdrawable-transform.c:756
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Riflessione"
 
-#: ../app/core/gimpdrawable-transform.c:822
+#: ../app/core/gimpdrawable-transform.c:842
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Ruota"
 
-#: ../app/core/gimpdrawable-transform.c:963 ../app/core/gimplayer.c:300
+#: ../app/core/gimpdrawable-transform.c:983 ../app/core/gimplayer.c:300
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Trasforma livello"
 
-#: ../app/core/gimpdrawable-transform.c:976
+#: ../app/core/gimpdrawable-transform.c:996
 msgid "Transformation"
 msgstr "Trasformazione"
 
@@ -9446,7 +9446,7 @@ msgstr "_Modalità:"
 msgid "_Opacity:"
 msgstr "_Opacità:"
 
-#: ../app/dialogs/file-open-dialog.c:266
+#: ../app/dialogs/file-open-dialog.c:259
 msgid "Open layers"
 msgstr "Apri livelli"
 
@@ -9466,7 +9466,7 @@ msgstr "Esporta immagine"
 msgid "_Export"
 msgstr "_Esporta"
 
-#: ../app/dialogs/file-save-dialog.c:432
+#: ../app/dialogs/file-save-dialog.c:419
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -9476,7 +9476,7 @@ msgstr ""
 "file dall'estensione. Inserire un'estensione corrispondente con il formato "
 "file selezionato o non inserire nessuna estensione."
 
-#: ../app/dialogs/file-save-dialog.c:559
+#: ../app/dialogs/file-save-dialog.c:546
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
@@ -9485,7 +9485,7 @@ msgstr ""
 "desidera salvare l'immagine nel formato nativo di GIMP XCF, usare il comando "
 "File→Salva."
 
-#: ../app/dialogs/file-save-dialog.c:566
+#: ../app/dialogs/file-save-dialog.c:553
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
@@ -9493,7 +9493,7 @@ msgstr ""
 "Questa finestra di dialogo serve per salvare nel formato nativo di GIMP XCF. "
 "Per esportare in altri formati usare invece il comando File→Esporta."
 
-#: ../app/dialogs/file-save-dialog.c:572
+#: ../app/dialogs/file-save-dialog.c:559
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -9501,23 +9501,23 @@ msgstr ""
 "Il nome file dato ha un'estensione sconosciuta. Inserire un'estensione "
 "conosciuta o selezionare un formato file dall'elenco dei formati."
 
-#: ../app/dialogs/file-save-dialog.c:586
+#: ../app/dialogs/file-save-dialog.c:573
 msgid "Extension Mismatch"
 msgstr "Estensione non corrispondente"
 
-#: ../app/dialogs/file-save-dialog.c:602
+#: ../app/dialogs/file-save-dialog.c:589
 msgid "The given file extension does not match the chosen file type."
 msgstr "L'estensione file data non corrisponde con il tipo di file scelto."
 
-#: ../app/dialogs/file-save-dialog.c:606
+#: ../app/dialogs/file-save-dialog.c:593
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Usare ugualmente questo nome per salvare l'immagine?"
 
-#: ../app/dialogs/file-save-dialog.c:664
+#: ../app/dialogs/file-save-dialog.c:651
 msgid "Saving canceled"
 msgstr "Salvataggio annullato"
 
-#: ../app/dialogs/file-save-dialog.c:672 ../app/widgets/gimpdnd-xds.c:186
+#: ../app/dialogs/file-save-dialog.c:659 ../app/widgets/gimpdnd-xds.c:186
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -11225,26 +11225,26 @@ msgstr "Cancella <i>%s</i>"
 msgid "Not a regular file"
 msgstr "Non è un file regolare"
 
-#: ../app/file/file-open.c:191
+#: ../app/file/file-open.c:197
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr "Il plug-in %s ha risposto successo ma non ha restituito un'immagine"
 
-#: ../app/file/file-open.c:202
+#: ../app/file/file-open.c:208
 #, c-format
 msgid "%s plug-In could not open image"
 msgstr "Il plug-in %s non può aprire l'immagine"
 
-#: ../app/file/file-open.c:571
+#: ../app/file/file-open.c:577
 msgid "Image doesn't contain any layers"
 msgstr "L'immagine non contiene nessun livello"
 
-#: ../app/file/file-open.c:624
+#: ../app/file/file-open.c:630
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "L'apertura di \"%s\" è fallita: %s"
 
-#: ../app/file/file-open.c:735
+#: ../app/file/file-open.c:741
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -11252,11 +11252,11 @@ msgstr ""
 "La gestione dei colori è stata disabilitata. Può essere nuovamente "
 "riabilitata agendo nella finestra delle preferenze."
 
-#: ../app/file/file-procedure.c:195
+#: ../app/file/file-procedure.c:210
 msgid "Unknown file type"
 msgstr "Tipo file sconosciuto"
 
-#: ../app/file/file-save.c:223
+#: ../app/file/file-save.c:229
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "Il plug-in %s non può salvare l'immagine"
@@ -11834,7 +11834,9 @@ msgstr ""
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be modified because its position and size are locked"
-msgstr "L'elemento \"%s\" (%d) non può essere modificato perché la sua posizione e dimensione sono bloccate."
+msgstr ""
+"L'elemento \"%s\" (%d) non può essere modificato perché la sua posizione e "
+"dimensione sono bloccate."
 
 #: ../app/pdb/gimppdb-utils.c:524
 #, c-format
@@ -12158,7 +12160,7 @@ msgstr ""
 "Errore di esecuzione per la procedura \"%s\":\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:983
+#: ../app/plug-in/gimppluginprocedure.c:991
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -12167,7 +12169,7 @@ msgstr ""
 "Errore di chiamata per \"%s\":\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:995
+#: ../app/plug-in/gimppluginprocedure.c:1003
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -12194,17 +12196,22 @@ msgstr "Errore durante l'esecuzione di \"%s\""
 msgid "Plug-In missing (%s)"
 msgstr "Plug-in mancante (%s)"
 
-#: ../app/plug-in/plug-in-rc.c:205
+#: ../app/plug-in/plug-in-rc.c:227
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "Salto di '%s': versione protocollo GIMP errata."
 
-#: ../app/plug-in/plug-in-rc.c:477
+#: ../app/plug-in/plug-in-rc.c:234
+#, c-format
+msgid "Skipping '%s': wrong pluginrc file format version."
+msgstr "Salto di '%s': versione del formato del file pluginrc errata."
+
+#: ../app/plug-in/plug-in-rc.c:506
 #, c-format
 msgid "invalid value '%s' for icon type"
 msgstr "valore non valido '%s' per il tipo icona"
 
-#: ../app/plug-in/plug-in-rc.c:492
+#: ../app/plug-in/plug-in-rc.c:521
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "valore non valido '%ld' per il tipo icona"
@@ -12790,7 +12797,7 @@ msgstr "_Luminosità:"
 msgid "Colorize Color"
 msgstr "Colore colorazione"
 
-#: ../app/tools/gimpcolorizetool.c:280 ../app/widgets/gimppropwidgets.c:1602
+#: ../app/tools/gimpcolorizetool.c:280 ../app/widgets/gimppropwidgets.c:1636
 msgid "Pick color from image"
 msgstr "Prelievo colore da un'immagine"
 
@@ -15704,23 +15711,23 @@ msgstr "Rilevato automaticamente"
 msgid "By Extension"
 msgstr "Per estensione"
 
-#: ../app/widgets/gimpfiledialog.c:799
+#: ../app/widgets/gimpfiledialog.c:801
 msgid "All files"
 msgstr "Tutti i file"
 
-#: ../app/widgets/gimpfiledialog.c:804
+#: ../app/widgets/gimpfiledialog.c:806
 msgid "All images"
 msgstr "Tutte le immagini"
 
-#: ../app/widgets/gimpfiledialog.c:811
+#: ../app/widgets/gimpfiledialog.c:813
 msgid "All XCF images"
 msgstr "Tutte le immagini XCF"
 
-#: ../app/widgets/gimpfiledialog.c:813
+#: ../app/widgets/gimpfiledialog.c:815
 msgid "All export images"
 msgstr "Tutte le immagini esportabili"
 
-#: ../app/widgets/gimpfiledialog.c:997
+#: ../app/widgets/gimpfiledialog.c:999
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Seleziona _tipo di file (%s)"
@@ -16060,6 +16067,10 @@ msgstr "Profilo colore ICC (*.icc, *.icm)"
 #: ../app/widgets/gimpprogressdialog.c:221
 msgid "Progress"
 msgstr "Operazione in corso"
+
+#: ../app/widgets/gimppropwidgets.c:1553
+msgid "New Seed"
+msgstr "Nuovo seme"
 
 #: ../app/widgets/gimpselectiondata.c:248
 #, c-format

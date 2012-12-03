@@ -1,16 +1,24 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000-2002
-# Marco Ciampa <ciampix@libero.it>, 2003-2011
+# Marco Ciampa <ciampix@libero.it>, 2003-2012
+#
+# Terminologia:
+# Lightness=chiarezza
+# Brightness=luminosità
+# Hue=tonalità
+# Luma=luminanza
+# Chroma=crominanza
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-05 15:12+0100\n"
-"PO-Revision-Date: 2012-09-10 12:16+0200\n"
+"POT-Creation-Date: 2012-12-03 20:29+0100\n"
+"PO-Revision-Date: 2012-12-03 20:53+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
-"Language: \n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -140,7 +148,7 @@ msgid "_Offset Palette..."
 msgstr "Sp_osta tavolozza..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:56
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:309
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
@@ -150,45 +158,121 @@ msgstr "Tavolozza"
 msgid "Off_set"
 msgstr "_Sposta"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:48
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:22
+msgid "Red"
+msgstr "Rosso"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:22
+msgid "Green"
+msgstr "Verde"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:22
+msgid "Blue"
+msgstr "Blu"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:23
+msgid "Luma (Y)"
+msgstr "Luminanza (Y)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:24
+msgid "Hue"
+msgstr "Tonalità"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:24
+msgid "Saturation"
+msgstr "Saturazione"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:24
+msgid "Value"
+msgstr "Valore"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+msgid "Saturation (HSL)"
+msgstr "Saturazione (HSL)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+msgid "Lightness (HSL)"
+msgstr "Chiarezza (HSL)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:26
+msgid "Index"
+msgstr "Indice"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+msgid "Random"
+msgstr "Casuale"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:78
+msgid "Lightness (LAB)"
+msgstr "Chiarezza (LAB)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:78
+msgid "A-color"
+msgstr "Colore-A"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:78
+msgid "B-color"
+msgstr "Colore-B"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:79
+msgid "Chroma (LCHab)"
+msgstr "Crominanza (LCHab)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:79
+msgid "Hue (LCHab)"
+msgstr "Tonalità (LCHab)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:300
 msgid "Sort the colors in a palette"
 msgstr "Ordina i colori nella tavolozza"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:53
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:306
 msgid "_Sort Palette..."
 msgstr "Ordina tavoloz_za..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
-msgid "Color _model"
-msgstr "_Modello di colore"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:310
+msgid "Se_lections"
+msgstr "Se_lezioni"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
-msgid "RGB"
-msgstr "RGB"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+msgid "All"
+msgstr "Tutto"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
-msgid "HSV"
-msgstr "HSV"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+msgid "Slice / Array"
+msgstr "Partizione / insieme"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+msgid "Autoslice (fg->bg)"
+msgstr "Autopartiziona (pp->sf)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+msgid "Partitioned"
+msgstr "Partizionato"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:312
+msgid "Slice _expression"
+msgstr "_Espressione di partizionamento"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:313
 msgid "Channel to _sort"
 msgstr "Canale da _ordinare"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
-msgid "Red or Hue"
-msgstr "Rosso o tonalità"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:315
+msgid "_Quantization"
+msgstr "_Quantizzazione"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
-msgid "Green or Saturation"
-msgstr "Verde o saturazione"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
-msgid "Blue or Value"
-msgstr "Blu o valore"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:316
 msgid "_Ascending"
 msgstr "_Ascendente"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:317
+msgid "_Partitioning channel"
+msgstr "Canale di _partizionamento"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:319
+msgid "Partition q_uantization"
+msgstr "Q_uantizzazione partizione"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
@@ -319,24 +403,3 @@ msgstr "Spiazzamento _X ombra generata"
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
 msgstr "Spiazzamento _Y ombra generata"
-
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:75
-msgid "Create a new brush with characters from a text sequence"
-msgstr ""
-"Crea un nuovo pennello con i caratteri provenienti da una sequenza di testo"
-
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:81
-msgid "New Brush from _Text..."
-msgstr "Nuovo pennello da un _testo..."
-
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:84
-msgid "Font"
-msgstr "Font"
-
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:85
-msgid "Pixel Size"
-msgstr "Dimensione pixel"
-
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:86
-msgid "Text"
-msgstr "Testo"

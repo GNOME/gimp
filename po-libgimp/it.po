@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-15 11:28+0200\n"
-"PO-Revision-Date: 2012-05-15 11:30+0200\n"
+"POT-Creation-Date: 2012-12-03 20:28+0100\n"
+"PO-Revision-Date: 2012-12-03 20:29+0100\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -40,22 +40,22 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1076
+#: ../libgimp/gimp.c:1080
 msgid "success"
 msgstr "azione riuscita"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1080
+#: ../libgimp/gimp.c:1084
 msgid "execution error"
 msgstr "errore di esecuzione"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1084
+#: ../libgimp/gimp.c:1088
 msgid "calling error"
 msgstr "errore di chiamata"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1088
+#: ../libgimp/gimp.c:1092
 msgid "cancelled"
 msgstr "annullato"
 
@@ -258,7 +258,7 @@ msgstr "Selezione gradiente"
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
 #.
-#: ../libgimp/gimpmenu.c:461 ../libgimpwidgets/gimpintstore.c:241
+#: ../libgimp/gimpmenu.c:461 ../libgimpwidgets/gimpintstore.c:258
 msgid "(Empty)"
 msgstr "(Vuoto)"
 
@@ -300,7 +300,7 @@ msgstr "per tipo"
 
 #. count label
 #: ../libgimp/gimpprocbrowserdialog.c:394
-#: ../libgimp/gimpprocbrowserdialog.c:545 ../libgimpwidgets/gimpbrowser.c:139
+#: ../libgimp/gimpprocbrowserdialog.c:543 ../libgimpwidgets/gimpbrowser.c:139
 msgid "No matches"
 msgstr "Nessuna corrispondenza"
 
@@ -925,9 +925,9 @@ msgid "Filled"
 msgstr "Giustificato"
 
 #: ../libgimpbase/gimputils.c:178 ../libgimpbase/gimputils.c:183
-#: ../modules/color-selector-cmyk-lcms.c:425
-#: ../modules/color-selector-cmyk-lcms.c:431
-#: ../modules/display-filter-lcms.c:179
+#: ../modules/color-selector-cmyk-lcms.c:442
+#: ../modules/color-selector-cmyk-lcms.c:465
+#: ../modules/display-filter-lcms.c:209
 msgid "(invalid UTF-8 string)"
 msgstr "(stringa UTF-8 non valida)"
 
@@ -1029,28 +1029,28 @@ msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "Colorimetrico assoluto"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:107
+#: ../libgimpconfig/gimpconfig-deserialize.c:110
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "il valore per il token %s non è una stringa UTF-8 valida"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:445
+#: ../libgimpconfig/gimpconfig-deserialize.c:452
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "atteso \"yes\" o \"no\" per il token booleano %s, ottenuto \"%s\""
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:519
+#: ../libgimpconfig/gimpconfig-deserialize.c:526
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "valore \"%s\" non valido per il token %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:534
+#: ../libgimpconfig/gimpconfig-deserialize.c:541
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "valore \"%ld\" non valido per il token %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:603
+#: ../libgimpconfig/gimpconfig-deserialize.c:610
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "durante l'analisi del token \"%s\": %s"
@@ -1058,11 +1058,11 @@ msgstr "durante l'analisi del token \"%s\": %s"
 #: ../libgimpconfig/gimpconfig-iface.c:482
 #: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:560
 #: ../libgimpconfig/gimpscanner.c:642
-#: ../libgimpwidgets/gimpcolorprofilestore.c:656
+#: ../libgimpwidgets/gimpcolorprofilestore.c:655
 msgid "fatal parse error"
 msgstr "errore di analisi irrimediabile"
 
-#: ../libgimpconfig/gimpconfig-path.c:387
+#: ../libgimpconfig/gimpconfig-path.c:389
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Impossibile espandere ${%s}"
@@ -1191,11 +1191,11 @@ msgstr "_Nero"
 msgid "_White"
 msgstr "_Bianco"
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:146
+#: ../libgimpwidgets/gimpcolorprofilestore.c:145
 msgid "Select color profile from disk..."
 msgstr "Seleziona il profilo di colore da disco..."
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:280
+#: ../libgimpwidgets/gimpcolorprofilestore.c:279
 msgctxt "profile"
 msgid "None"
 msgstr "Nessuno"
@@ -1257,40 +1257,36 @@ msgid "Gigabytes"
 msgstr "Gigabyte"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:282
-#: ../libgimpwidgets/gimppageselector.c:1178
+#: ../libgimpwidgets/gimppageselector.c:269
+#: ../libgimpwidgets/gimppageselector.c:1067
 msgid "Nothing selected"
 msgstr "Nessuna selezione"
 
 # usato accelerato gtk+
-#: ../libgimpwidgets/gimppageselector.c:300
+#: ../libgimpwidgets/gimppageselector.c:287
 msgid "Select _All"
 msgstr "_Seleziona tutto"
 
-#: ../libgimpwidgets/gimppageselector.c:320
+#: ../libgimpwidgets/gimppageselector.c:307
 msgid "Select _range:"
 msgstr "Seleziona inte_rvallo:"
 
-#: ../libgimpwidgets/gimppageselector.c:332
+#: ../libgimpwidgets/gimppageselector.c:319
 msgid "Open _pages as"
 msgstr "Apri _pagine come"
 
-#: ../libgimpwidgets/gimppageselector.c:433
-msgid "Page 000"
-msgstr "Pagina 000"
-
-#: ../libgimpwidgets/gimppageselector.c:521
-#: ../libgimpwidgets/gimppageselector.c:758
+#: ../libgimpwidgets/gimppageselector.c:449
+#: ../libgimpwidgets/gimppageselector.c:647
 #, c-format
 msgid "Page %d"
 msgstr "Pagina %d"
 
-#: ../libgimpwidgets/gimppageselector.c:1183
+#: ../libgimpwidgets/gimppageselector.c:1072
 msgid "One page selected"
 msgstr "Selezionata una pagina"
 
-#: ../libgimpwidgets/gimppageselector.c:1190
-#: ../libgimpwidgets/gimppageselector.c:1194
+#: ../libgimpwidgets/gimppageselector.c:1079
+#: ../libgimpwidgets/gimppageselector.c:1083
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
@@ -1397,7 +1393,7 @@ msgstr "_Scala"
 msgid "Cr_op"
 msgstr "Rita_glia"
 
-#: ../libgimpwidgets/gimpstock.c:335
+#: ../libgimpwidgets/gimpstock.c:335 ../libgimpwidgets/gimpstock.c:345
 msgid "_Transform"
 msgstr "_Trasforma"
 
@@ -1568,45 +1564,45 @@ msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/color-selector-cmyk-lcms.c:169
+#: ../modules/color-selector-cmyk-lcms.c:167
 #: ../modules/color-selector-cmyk.c:125
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/color-selector-cmyk-lcms.c:171
+#: ../modules/color-selector-cmyk-lcms.c:169
 #: ../modules/color-selector-cmyk.c:127
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/color-selector-cmyk-lcms.c:173
+#: ../modules/color-selector-cmyk-lcms.c:171
 #: ../modules/color-selector-cmyk.c:129
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/color-selector-cmyk-lcms.c:175
+#: ../modules/color-selector-cmyk-lcms.c:173
 #: ../modules/color-selector-cmyk.c:131
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/color-selector-cmyk-lcms.c:179
+#: ../modules/color-selector-cmyk-lcms.c:177
 #: ../modules/color-selector-cmyk.c:135
 msgid "Cyan"
 msgstr "Ciano"
 
-#: ../modules/color-selector-cmyk-lcms.c:180
+#: ../modules/color-selector-cmyk-lcms.c:178
 #: ../modules/color-selector-cmyk.c:136
 msgid "Magenta"
 msgstr "Magenta"
 
-#: ../modules/color-selector-cmyk-lcms.c:181
+#: ../modules/color-selector-cmyk-lcms.c:179
 #: ../modules/color-selector-cmyk.c:137
 msgid "Yellow"
 msgstr "Giallo"
 
-#: ../modules/color-selector-cmyk-lcms.c:182
+#: ../modules/color-selector-cmyk-lcms.c:180
 #: ../modules/color-selector-cmyk.c:138
 msgid "Black"
 msgstr "Nero"
@@ -1615,7 +1611,7 @@ msgstr "Nero"
 msgid "Profile: (none)"
 msgstr "Profilo: (nessuno)"
 
-#: ../modules/color-selector-cmyk-lcms.c:434
+#: ../modules/color-selector-cmyk-lcms.c:468
 #, c-format
 msgid "Profile: %s"
 msgstr "Profilo: %s"
@@ -2049,21 +2045,26 @@ msgstr "Contrasto"
 msgid "Contrast c_ycles:"
 msgstr "_Cicli di contrasto:"
 
-#: ../modules/display-filter-lcms.c:98
+#: ../modules/display-filter-lcms.c:101
 msgid "Color management display filter using ICC color profiles"
 msgstr ""
 "Il filtro di gestione del colore del display usa i profili di colore ICC"
 
-#: ../modules/display-filter-lcms.c:130
+#: ../modules/display-filter-lcms.c:133
 msgid "Color Management"
 msgstr "Gestione del colore"
 
+#. a color profile without a name
+#: ../modules/display-filter-lcms.c:215
+msgid "(unnamed profile)"
+msgstr "(profilo senza nome)"
+
 # repeat-mode
-#: ../modules/display-filter-lcms.c:187
+#: ../modules/display-filter-lcms.c:239
 msgid "None"
 msgstr "Nessuna"
 
-#: ../modules/display-filter-lcms.c:208
+#: ../modules/display-filter-lcms.c:260
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -2071,19 +2072,19 @@ msgstr ""
 "Questo filtro prende la sua configurazione dalla sezione gestione del colore "
 "nella finestra delle preferenze."
 
-#: ../modules/display-filter-lcms.c:222
+#: ../modules/display-filter-lcms.c:274
 msgid "Mode of operation:"
 msgstr "Modalità di operazione:"
 
-#: ../modules/display-filter-lcms.c:229
+#: ../modules/display-filter-lcms.c:281
 msgid "Image profile:"
 msgstr "Profilo dell'immagine:"
 
-#: ../modules/display-filter-lcms.c:237
+#: ../modules/display-filter-lcms.c:289
 msgid "Monitor profile:"
 msgstr "Profilo del monitor:"
 
-#: ../modules/display-filter-lcms.c:245
+#: ../modules/display-filter-lcms.c:297
 msgid "Print simulation profile:"
 msgstr "Profilo di simulazione di stampa:"
 
@@ -2095,26 +2096,29 @@ msgstr "Filtro a prova di colore usando i profili di colore ICC"
 msgid "Color Proof"
 msgstr "Prova di colore"
 
-#: ../modules/display-filter-proof.c:339
+#: ../modules/display-filter-proof.c:365
 msgid "Choose an ICC Color Profile"
 msgstr "Scegliere un profilo di colore ICC"
 
-#: ../modules/display-filter-proof.c:366
+#: ../modules/display-filter-proof.c:392
 msgid "All files (*.*)"
 msgstr "Tutti i file (*.*)"
 
-#: ../modules/display-filter-proof.c:371
+#: ../modules/display-filter-proof.c:397
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Profilo colore ICC (*.icc, *.icm)"
 
-#: ../modules/display-filter-proof.c:429
+#: ../modules/display-filter-proof.c:455
 msgid "_Profile:"
 msgstr "_Profilo:"
 
-#: ../modules/display-filter-proof.c:435
+#: ../modules/display-filter-proof.c:461
 msgid "_Intent:"
 msgstr "_Intento:"
 
-#: ../modules/display-filter-proof.c:440
+#: ../modules/display-filter-proof.c:466
 msgid "_Black Point Compensation"
 msgstr "Compensazione del punto _nero"
+
+#~ msgid "Page 000"
+#~ msgstr "Pagina 000"
