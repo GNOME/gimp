@@ -75,7 +75,7 @@ gimp_dynamics_refresh (void)
  * This procedure returns a list of the paint dynamics that are
  * currently available.
  *
- * Returns: The list of paint dynamics names. The returned value must be freed with g_strfreev().
+ * Returns: The list of paint dynamics names.
  *
  * Since: GIMP 2.8
  **/

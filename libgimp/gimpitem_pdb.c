@@ -982,7 +982,7 @@ gimp_item_get_parasite (gint32       item_ID,
  *
  * Returns a list of all parasites currently attached the an item.
  *
- * Returns: The names of currently attached parasites. The returned value must be freed with g_strfreev().
+ * Returns: The names of currently attached parasites.
  *
  * Since: GIMP 2.8
  **/

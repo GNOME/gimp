@@ -52,7 +52,7 @@ HELP
 
     @outargs = (
 	{ name => 'pattern_list', type => 'stringarray',
-	  desc => 'The list of pattern names. The returned value must be freed with g_strfreev()',
+	  desc => 'The list of pattern names',
 	  array => { name => 'num_patterns',
 		     desc => 'The number of patterns in the pattern list' } }
     );

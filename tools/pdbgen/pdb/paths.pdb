@@ -26,7 +26,7 @@ sub path_list {
 
     @outargs = (
 	{ name => 'path_list', type => 'stringarray',
-	  desc => 'List of the paths belonging to this image. The returned value must be freed with g_strfreev()',
+	  desc => 'List of the paths belonging to this image.',
 	  array => { name => 'num_paths',
 		     desc => 'The number of paths returned.' } }
     );

@@ -174,7 +174,7 @@ sub get_parasite_list {
 
     @outargs = (
 	{ name => 'parasites', type => 'stringarray',
-	  desc => 'The names of currently attached parasites. The returned value must be freed with g_strfreev()',
+	  desc => 'The names of currently attached parasites',
 	  array => { desc => 'The number of attached parasites' } }
     );
 

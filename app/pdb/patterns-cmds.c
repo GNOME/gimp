@@ -238,7 +238,7 @@ register_patterns_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string_array ("pattern-list",
                                                                  "pattern list",
-                                                                 "The list of pattern names. The returned value must be freed with g_strfreev()",
+                                                                 "The list of pattern names",
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

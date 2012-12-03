@@ -170,7 +170,7 @@ HELP
 
     @outargs = (
         { name => 'paint_methods', type => 'stringarray', void_ret => 1,
-          desc => 'The names of the available paint methods. The returned value must be freed with g_strfreev()',
+          desc => 'The names of the available paint methods',
           array => { desc => 'The number of the available paint methods' } }
     );
 

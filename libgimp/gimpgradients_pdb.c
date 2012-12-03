@@ -75,7 +75,7 @@ gimp_gradients_refresh (void)
  * loaded. You can later use the gimp_context_set_gradient() function
  * to set the active gradient.
  *
- * Returns: The list of gradient names. The returned value must be freed with g_strfreev().
+ * Returns: The list of gradient names.
  **/
 gchar **
 gimp_gradients_get_list (const gchar *filter,

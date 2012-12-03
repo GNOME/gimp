@@ -317,7 +317,7 @@ register_buffer_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string_array ("buffer-list",
                                                                  "buffer list",
-                                                                 "The list of buffer names. The returned value must be freed with g_strfreev()",
+                                                                 "The list of buffer names",
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

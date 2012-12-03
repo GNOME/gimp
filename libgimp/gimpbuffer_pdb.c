@@ -44,7 +44,7 @@
  * This procedure returns a complete listing of available named
  * buffers.
  *
- * Returns: The list of buffer names. The returned value must be freed with g_strfreev().
+ * Returns: The list of buffer names.
  *
  * Since: GIMP 2.4
  **/

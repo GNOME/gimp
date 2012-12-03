@@ -51,7 +51,7 @@ HELP
 
     @outargs = (
 	{ name => 'font_list', type => 'stringarray',
-	  desc => 'The list of font names. The returned value must be freed with g_strfreev()',
+	  desc => 'The list of font names',
 	  array => { name => 'num_fonts',
 		     desc => 'The number of available fonts' } }
     );

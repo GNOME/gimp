@@ -133,7 +133,7 @@ gimp_context_set_defaults (void)
 /**
  * gimp_context_list_paint_methods:
  * @num_paint_methods: The number of the available paint methods.
- * @paint_methods: The names of the available paint methods. The returned value must be freed with g_strfreev().
+ * @paint_methods: The names of the available paint methods.
  *
  * Lists the available paint methods.
  *

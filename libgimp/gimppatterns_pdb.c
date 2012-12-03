@@ -75,7 +75,7 @@ gimp_patterns_refresh (void)
  * patterns. Each name returned can be used as input to the
  * gimp_context_set_pattern().
  *
- * Returns: The list of pattern names. The returned value must be freed with g_strfreev().
+ * Returns: The list of pattern names.
  **/
 gchar **
 gimp_patterns_get_list (const gchar *filter,

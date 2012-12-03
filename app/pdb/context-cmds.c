@@ -2072,7 +2072,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string_array ("paint-methods",
                                                                  "paint methods",
-                                                                 "The names of the available paint methods. The returned value must be freed with g_strfreev()",
+                                                                 "The names of the available paint methods",
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

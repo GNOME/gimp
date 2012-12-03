@@ -43,7 +43,7 @@
  *
  * Deprecated: Use gimp_image_get_vectors() instead.
  *
- * Returns: List of the paths belonging to this image. The returned value must be freed with g_strfreev().
+ * Returns: List of the paths belonging to this image.
  **/
 gchar **
 gimp_path_list (gint32  image_ID,
