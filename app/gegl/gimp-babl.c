@@ -69,7 +69,7 @@ gimp_babl_init (void)
                    babl_component ("B'"),
                    NULL);
   babl_format_new ("name", "A u16",
-                   babl_model ("RGBA"),
+                   babl_model ("R'G'B'A"),
                    babl_type ("u16"),
                    babl_component ("A"),
                    NULL);
