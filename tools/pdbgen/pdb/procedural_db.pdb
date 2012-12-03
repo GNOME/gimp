@@ -112,7 +112,7 @@ HELP
 
     @outargs = (
 	{ name  => 'procedure_names', type  => 'stringarray', void_ret => 1,
-	  desc  => 'The list of procedure names',
+	  desc  => 'The list of procedure names. The returned value must be freed with g_strfreev()',
 	  array => { name  => 'num_matches',
 		     desc  => 'The number of matching procedures' } }
     );

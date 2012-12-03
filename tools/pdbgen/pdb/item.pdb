@@ -830,7 +830,7 @@ sub item_get_parasite_list {
 
     @outargs = (
 	{ name => 'parasites', type => 'stringarray',
-	  desc => 'The names of currently attached parasites',
+	  desc => 'The names of currently attached parasites. The returned value must be freed with g_strfreev()',
 	  array => { desc => 'The number of attached parasites' } }
     );
 

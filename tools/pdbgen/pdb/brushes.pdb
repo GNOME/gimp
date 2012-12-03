@@ -53,7 +53,7 @@ HELP
 
     @outargs = (
 	{ name => 'brush_list', type => 'stringarray',
-	  desc => 'The list of brush names',
+	  desc => 'The list of brush names. The returned value must be freed with g_strfreev()',
 	  array => { name => 'num_brushes',
 		     desc => 'The number of brushes in the brush list' } }
     );

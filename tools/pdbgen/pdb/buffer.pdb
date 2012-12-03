@@ -32,7 +32,7 @@ HELP
 
     @outargs = (
 	{ name => 'buffer_list', type => 'stringarray',
-	  desc => 'The list of buffer names',
+	  desc => 'The list of buffer names. The returned value must be freed with g_strfreev()',
 	  array => { name => 'num_buffers',
 		     desc => 'The number of buffers' } }
     );

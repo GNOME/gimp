@@ -72,7 +72,7 @@ gimp_fonts_refresh (void)
  * This procedure returns a list of the fonts that are currently
  * available.
  *
- * Returns: The list of font names.
+ * Returns: The list of font names. The returned value must be freed with g_strfreev().
  **/
 gchar **
 gimp_fonts_get_list (const gchar *filter,
