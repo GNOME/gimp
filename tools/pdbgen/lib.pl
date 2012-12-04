@@ -121,6 +121,10 @@ sub generate {
 	    $retarg->{retval} = 1;
 
 	    $retdesc = exists $retarg->{desc} ? $retarg->{desc} : "";
+
+	    if ($retarg->{type} eq 'stringarray') {
+		$retdesc .= " The returned value must be freed with g_strfreev().";
+	    }
 	}
 	else {
 	    # No return values
