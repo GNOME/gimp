@@ -927,12 +927,9 @@ read_line (FILE         *fp,
     }
   else if (convert_cmap)
     {
-      gboolean has_alpha = (info->colorMapSize > 24) ||
-                            ((info->colorMapSize == 16 ||
-                              info->colorMapSize == 15) &&
-                             (info->alphaBits > 0));
+      gboolean has_alpha = (info->alphaBits > 0);
 
-      apply_colormap (row, buffer, info->width, convert_cmap, has_alpha);
+      apply_colormap (row, buf, info->width, convert_cmap, has_alpha);
     }
   else
     {
