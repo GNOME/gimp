@@ -812,7 +812,7 @@ upsample (guchar       *dest,
 
       if (alpha)
         {
-          dest[3] = (src[1] & 0x80) ? 0 : 255;
+          dest[3] = (src[1] & 0x80) ? 255 : 0;
           dest += 4;
         }
       else
@@ -927,8 +927,12 @@ read_line (FILE         *fp,
     }
   else if (convert_cmap)
     {
-      apply_colormap (row, buf, info->width, convert_cmap,
-                      (info->colorMapSize > 24));
+      gboolean has_alpha = (info->colorMapSize > 24) ||
+                            ((info->colorMapSize == 16 ||
+                              info->colorMapSize == 15) &&
+                             (info->alphaBits > 0));
+
+      apply_colormap (row, buffer, info->width, convert_cmap, has_alpha);
     }
   else
     {
@@ -974,6 +978,13 @@ ReadImage (FILE        *fp,
           itype = GIMP_RGB;
           dtype = GIMP_RGB_IMAGE;
           convert_cmap = g_new (guchar, info->colorMapLength * 3);
+        }
+      else if (info->alphaBits > 0)
+        {
+          /* if alpha exists here, promote to RGB */
+          itype = GIMP_RGB;
+          dtype = GIMP_RGBA_IMAGE;
+          convert_cmap = g_new (guchar, info->colorMapLength * 4);
         }
       else
         {
