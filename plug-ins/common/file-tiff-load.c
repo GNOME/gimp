@@ -748,6 +748,36 @@ load_image (const gchar        *filename,
           break;
         }
 
+      /* attach a parasite containing the compression */
+      if (!TIFFGetField (tif, TIFFTAG_COMPRESSION, &tmp))
+        {
+          save_vals.compression = COMPRESSION_NONE;
+        }
+      else
+        {
+          switch (tmp)
+            {
+            case COMPRESSION_NONE:
+            case COMPRESSION_LZW:
+            case COMPRESSION_PACKBITS:
+            case COMPRESSION_DEFLATE:
+            case COMPRESSION_JPEG:
+            case COMPRESSION_CCITTFAX3:
+            case COMPRESSION_CCITTFAX4:
+              save_vals.compression = tmp;
+              break;
+
+            case COMPRESSION_OJPEG:
+              worst_case = TRUE;
+              save_vals.compression = COMPRESSION_JPEG;
+              break;
+
+            default:
+              save_vals.compression = COMPRESSION_NONE;
+              break;
+            }
+        }
+
       if (worst_case)
         {
           image_type = GIMP_RGB;
@@ -813,31 +843,6 @@ load_image (const gchar        *filename,
           gimp_parasite_free (parasite);
         }
 #endif
-
-      /* attach a parasite containing the compression */
-      if (!TIFFGetField (tif, TIFFTAG_COMPRESSION, &tmp))
-        {
-          save_vals.compression = COMPRESSION_NONE;
-        }
-      else
-        {
-          switch (tmp)
-            {
-            case COMPRESSION_NONE:
-            case COMPRESSION_LZW:
-            case COMPRESSION_PACKBITS:
-            case COMPRESSION_DEFLATE:
-            case COMPRESSION_JPEG:
-            case COMPRESSION_CCITTFAX3:
-            case COMPRESSION_CCITTFAX4:
-              save_vals.compression = tmp;
-              break;
-
-            default:
-              save_vals.compression = COMPRESSION_NONE;
-              break;
-            }
-        }
 
       parasite = gimp_parasite_new ("tiff-save-options", 0,
                                     sizeof (save_vals), &save_vals);
