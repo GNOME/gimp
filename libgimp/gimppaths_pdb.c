@@ -43,7 +43,8 @@
  *
  * Deprecated: Use gimp_image_get_vectors() instead.
  *
- * Returns: List of the paths belonging to this image. The returned value must be freed with g_strfreev().
+ * Returns: List of the paths belonging to this image. The returned
+ * value must be freed with g_strfreev().
  **/
 gchar **
 gimp_path_list (gint32  image_ID,
@@ -173,7 +174,8 @@ gimp_path_delete (gint32       image_ID,
  *
  * Deprecated: Use gimp_vectors_stroke_get_points() instead.
  *
- * Returns: The type of the path. Currently only one type (1 = Bezier) is supported.
+ * Returns: The type of the path. Currently only one type (1 = Bezier)
+ * is supported.
  **/
 gint
 gimp_path_get_points (gint32        image_ID,

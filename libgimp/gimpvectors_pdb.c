@@ -46,7 +46,8 @@
  * Creates a new empty vectors object. The vectors object needs to be
  * added to the image using gimp_image_insert_vectors().
  *
- * Returns: the current vector object, 0 if no vector exists in the image.
+ * Returns: the current vector object, 0 if no vector exists in the
+ * image.
  *
  * Since: GIMP 2.4
  **/
@@ -582,7 +583,8 @@ gimp_vectors_stroke_flip_free (gint32  vectors_ID,
  * this is always a bezier stroke, where the coordinates are the
  * control points.
  *
- * Returns: type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).
+ * Returns: type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER
+ * for now).
  *
  * Since: GIMP 2.4
  **/

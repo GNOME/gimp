@@ -720,7 +720,7 @@ register_paths_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string_array ("path-list",
                                                                  "path list",
-                                                                 "List of the paths belonging to this image.",
+                                                                 "List of the paths belonging to this image",
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

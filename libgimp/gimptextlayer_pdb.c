@@ -161,7 +161,8 @@ gimp_text_layer_set_text (gint32       layer_ID,
  * markup. Note: Setting the markup of a text layer using Pango's
  * markup is not supported for now.
  *
- * Returns: The markup which represents the style of the specified text layer.
+ * Returns: The markup which represents the style of the specified text
+ * layer.
  *
  * Since: GIMP 2.8
  **/
@@ -337,7 +338,8 @@ gimp_text_layer_set_font_size (gint32   layer_ID,
  * This procedure checks if antialiasing is enabled in the specified
  * text layer.
  *
- * Returns: A flag which is true if antialiasing is used for rendering the font in the text layer.
+ * Returns: A flag which is true if antialiasing is used for rendering
+ * the font in the text layer.
  *
  * Since: GIMP 2.6
  **/
