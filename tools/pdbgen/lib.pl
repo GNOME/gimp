@@ -83,7 +83,7 @@ sub generate {
 
 	my $funcname = "gimp_$name"; my $wrapped = "";
 	my %usednames;
-	my $retdesc = "";
+	my $retdesc = "Returns: ";
 
 	if ($proc->{deprecated}) {
 	    if ($proc->{deprecated} eq 'NONE') {
@@ -120,10 +120,10 @@ sub generate {
 
 	    $retarg->{retval} = 1;
 
-	    $retdesc = exists $retarg->{desc} ? $retarg->{desc} : "";
+	    $retdesc .= exists $retarg->{desc} ? $retarg->{desc} : "";
 
 	    if ($retarg->{type} eq 'stringarray') {
-		$retdesc .= " The returned value must be freed with g_strfreev().";
+		$retdesc .= ". The returned value must be freed with g_strfreev().";
 	    }
 	}
 	else {
@@ -172,7 +172,7 @@ sub generate {
 	# return success/failure boolean if we don't have anything else
 	if ($rettype eq 'void') {
 	    $return_args .= "\n" . ' ' x 2 . "gboolean success = TRUE;";
-	    $retdesc = "TRUE on success.";
+	    $retdesc .= "TRUE on success.";
 	}
 
 	# We only need to bother with this if we have to return a value
@@ -464,6 +464,8 @@ CODE
 			&desc_wrap($proc->{help});
 	}
 
+	$retdesc = &desc_wrap($retdesc);
+
 	$out->{code} .= <<CODE;
 
 /**
@@ -471,7 +473,7 @@ CODE
 $argdesc *
 $procdesc
  *
- * Returns: $retdesc$sincedesc
+$retdesc$sincedesc
  **/
 $rettype
 $wrapped$funcname ($clist)
