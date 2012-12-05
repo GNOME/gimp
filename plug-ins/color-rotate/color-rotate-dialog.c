@@ -54,11 +54,13 @@
 
 /* Defines */
 
-#define INITIAL_ALPHA      0
-#define INITIAL_BETA       G_PI_2
-#define INITIAL_GRAY_SAT   0.0
-#define INITIAL_GRAY_RSAT  0.0
-#define INITIAL_GRAY_HUE   0.0
+#define INITIAL_ALPHA              0.0
+#define INITIAL_ALPHA_RADIANS      0.0
+#define INITIAL_BETA               90.0
+#define INITIAL_BETA_RADIANS       ((INITIAL_BETA / 360) * 2 * G_PI)
+#define INITIAL_GRAY_SAT           0.0
+#define INITIAL_GRAY_RSAT          0.0
+#define INITIAL_GRAY_HUE           0.0
 
 #define RANGE_ADJUST_MASK GDK_EXPOSURE_MASK | \
                           GDK_ENTER_NOTIFY_MASK | \
@@ -201,8 +203,8 @@ rcm_create_one_circle (gint         height,
   st = g_new (RcmCircle, 1);
 
   st->angle         = g_new (RcmAngle, 1);
-  st->angle->alpha  = INITIAL_ALPHA;
-  st->angle->beta   = INITIAL_BETA;
+  st->angle->alpha  = INITIAL_ALPHA_RADIANS;
+  st->angle->beta   = INITIAL_BETA_RADIANS;
   st->angle->cw_ccw = 1;
 
   /** Main: Circle: create (main) frame **/
@@ -300,9 +302,10 @@ rcm_create_one_circle (gint         height,
                     0, GTK_EXPAND, 5, 5);
 
   st->angle->alpha = INITIAL_ALPHA;
-  adj = (GtkAdjustment *) gtk_adjustment_new(st->angle->alpha, 0.0, 2.0, 0.0001, 0.001, 0.0);
-  st->alpha_entry = entry = gtk_spin_button_new(adj, 0.01, 4);
-  gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(entry), TRUE);
+  adj = (GtkAdjustment *) gtk_adjustment_new(st->angle->alpha,
+                                             0.0, 360.0, 0.01, 1.0, 0.0);
+  st->alpha_entry = entry = gtk_spin_button_new(adj, 0.01, 2);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON(entry), TRUE);
   gtk_table_attach(GTK_TABLE(legend_table), entry, 1,2, 0,1,
 		   GTK_EXPAND|GTK_FILL, GTK_EXPAND, 2, 4);
   gtk_widget_show(entry);
@@ -325,10 +328,9 @@ rcm_create_one_circle (gint         height,
   gtk_table_attach (GTK_TABLE (legend_table), label, 3,4, 0,1,
                     0, GTK_EXPAND, 4, 4);
 
-  st->angle->beta = INITIAL_BETA;
-  adj = (GtkAdjustment *) gtk_adjustment_new (st->angle->beta,
-                                              0.0, 2.0, 0.0001, 0.001, 0.0);
-  st->beta_entry = entry = gtk_spin_button_new (adj, 0.01, 4);
+  st->angle->beta = INITIAL_BETA_RADIANS;
+  adj = (GtkAdjustment *) gtk_adjustment_new (INITIAL_BETA, 0.0, 360.0, 0.01, 1.0, 0.0);
+  st->beta_entry = entry = gtk_spin_button_new (adj, 0.01, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (entry), TRUE);
   gtk_table_attach (GTK_TABLE (legend_table), entry, 4,5, 0,1,
                     GTK_EXPAND|GTK_FILL, GTK_EXPAND, 2, 4);

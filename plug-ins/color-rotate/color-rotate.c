@@ -66,7 +66,7 @@ RcmParams Current =
 {
   SELECTION,           /* SELECTION ONLY */
   TRUE,                /* REAL TIME */
-  RADIANS_OVER_PI,     /* START IN RADIANS OVER PI */
+  DEGREES,             /* START IN DEGREES */
   GRAY_TO
 };
 
