@@ -179,7 +179,7 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
   smudge->accum_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                           accum_size,
                                                           accum_size),
-                                          gimp_drawable_get_format (drawable));
+                                          babl_format ("RGBA float"));
 
   /*  adjust the x and y coordinates to the upper left corner of the
    *  accumulator
@@ -304,7 +304,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
                                           paint_buffer_y - y,
                                           paint_buffer_width,
                                           paint_buffer_height),
-                          ROUND (rate * 255.0));
+                          rate);
 
   gegl_buffer_copy (smudge->accum_buffer,
                     GEGL_RECTANGLE (paint_buffer_x - x,

@@ -340,38 +340,38 @@ gimp_gegl_smudge_blend (GeglBuffer          *top_buffer,
                         const GeglRectangle *bottom_rect,
                         GeglBuffer          *dest_buffer,
                         const GeglRectangle *dest_rect,
-                        guchar               blend)
+                        gdouble              blend)
 {
   GeglBufferIterator *iter;
 
   iter = gegl_buffer_iterator_new (top_buffer, top_rect, 0,
-                                   babl_format ("R'G'B'A u8"),
+                                   babl_format ("RGBA float"),
                                    GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, bottom_buffer, bottom_rect, 0,
-                            babl_format ("R'G'B'A u8"),
+                            babl_format ("RGBA float"),
                             GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
-                            babl_format ("R'G'B'A u8"),
+                            babl_format ("RGBA float"),
                             GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *top    = iter->data[0];
-      const guchar *bottom = iter->data[1];
-      guchar       *dest   = iter->data[2];
-      const guint   blend1 = 255 - blend;
-      const guint   blend2 = blend + 1;
+      const gfloat *top    = iter->data[0];
+      const gfloat *bottom = iter->data[1];
+      gfloat       *dest   = iter->data[2];
+      const gfloat  blend1 = 1.0 - blend;
+      const gfloat  blend2 = blend;
 
       while (iter->length--)
         {
-          const gint  a1 = blend1 * bottom[3];
-          const gint  a2 = blend2 * top[3];
-          const gint  a  = a1 + a2;
-          guint       b;
+          const gfloat a1 = blend1 * bottom[3];
+          const gfloat a2 = blend2 * top[3];
+          const gfloat a  = a1 + a2;
+          gint         b;
 
-          if (!a)
+          if (a == 0)
             {
               for (b = 0; b < 4; b++)
                 dest[b] = 0;
@@ -380,9 +380,9 @@ gimp_gegl_smudge_blend (GeglBuffer          *top_buffer,
             {
               for (b = 0; b < 3; b++)
                 dest[b] =
-                  bottom[b] + (bottom[b] * a1 + top[b] * a2 - a * bottom[b]) / a;
+                  bottom[b] + (bottom[b] * a1 + top[b] * a2 - a * bottom[b]);
 
-              dest[3] = a >> 8;
+              dest[3] = a;
             }
 
           top    += 4;

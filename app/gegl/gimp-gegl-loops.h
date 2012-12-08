@@ -49,7 +49,7 @@ void   gimp_gegl_smudge_blend       (GeglBuffer          *top_buffer,
                                      const GeglRectangle *bottom_rect,
                                      GeglBuffer          *dest_buffer,
                                      const GeglRectangle *dest_rect,
-                                     guchar               blend);
+                                     gdouble              blend);
 
 void   gimp_gegl_apply_mask         (GeglBuffer          *mask_buffer,
                                      const GeglRectangle *mask_rect,
