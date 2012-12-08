@@ -52,8 +52,10 @@ gimp_applicator_class_init (GimpApplicatorClass *klass)
 }
 
 static void
-gimp_applicator_init (GimpApplicator *core)
+gimp_applicator_init (GimpApplicator *applicator)
 {
+  applicator->opacity    = 1.0;
+  applicator->paint_mode = GIMP_NORMAL_MODE;
 }
 
 static void
@@ -222,27 +224,42 @@ gimp_applicator_apply (GimpApplicator       *applicator,
                        gdouble               opacity,
                        GimpLayerModeEffects  paint_mode)
 {
-  gint width;
-  gint height;
+  gint width  = gegl_buffer_get_width  (apply_buffer);
+  gint height = gegl_buffer_get_height (apply_buffer);
 
-  gegl_node_set (applicator->src_node,
-                 "buffer", src_buffer,
-                 NULL);
+  if (applicator->src_buffer != src_buffer)
+    {
+      applicator->src_buffer = src_buffer;
 
-  gegl_node_set (applicator->apply_src_node,
-                 "buffer", apply_buffer,
-                 NULL);
+      gegl_node_set (applicator->src_node,
+                     "buffer", src_buffer,
+                     NULL);
+    }
+
+  if (applicator->apply_buffer != apply_buffer)
+    {
+      applicator->apply_buffer = apply_buffer;
+
+      gegl_node_set (applicator->apply_src_node,
+                     "buffer", apply_buffer,
+                     NULL);
+    }
+
 
   gegl_node_set (applicator->apply_offset_node,
                  "x", (gdouble) apply_buffer_x,
                  "y", (gdouble) apply_buffer_y,
                  NULL);
 
-  gimp_gegl_mode_node_set (applicator->mode_node,
-                           paint_mode, opacity, FALSE);
+  if ((applicator->opacity    != opacity) ||
+      (applicator->paint_mode != paint_mode))
+    {
+      applicator->opacity    = opacity;
+      applicator->paint_mode = paint_mode;
 
-  width  = gegl_buffer_get_width  (apply_buffer);
-  height = gegl_buffer_get_height (apply_buffer);
+      gimp_gegl_mode_node_set (applicator->mode_node,
+                               paint_mode, opacity, FALSE);
+    }
 
   gegl_processor_set_rectangle (applicator->processor,
                                 GEGL_RECTANGLE (apply_buffer_x,

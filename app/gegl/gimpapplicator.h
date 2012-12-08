@@ -34,15 +34,22 @@ typedef struct _GimpApplicatorClass GimpApplicatorClass;
 
 struct _GimpApplicator
 {
-  GObject        parent_instance;
+  GObject               parent_instance;
 
-  GeglNode      *node;
-  GeglNode      *mode_node;
-  GeglNode      *src_node;
-  GeglNode      *apply_src_node;
-  GeglNode      *apply_offset_node;
-  GeglNode      *dest_node;
-  GeglProcessor *processor;
+  GeglNode             *node;
+  GeglNode             *mode_node;
+  GeglNode             *src_node;
+  GeglNode             *apply_src_node;
+  GeglNode             *apply_offset_node;
+  GeglNode             *dest_node;
+  GeglProcessor        *processor;
+
+  GeglBuffer           *src_buffer;
+  GeglBuffer           *apply_buffer;
+  gint                  apply_buffer_x;
+  gint                  apply_buffer_y;
+  gdouble               opacity;
+  GimpLayerModeEffects  paint_mode;
 };
 
 struct _GimpApplicatorClass
