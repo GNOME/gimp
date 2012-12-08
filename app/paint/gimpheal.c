@@ -154,11 +154,13 @@ gimp_heal_sub (GeglBuffer          *top_buffer,
                const GeglRectangle *result_rect)
 {
   GeglBufferIterator *iter;
-  const Babl         *format = gegl_buffer_get_format (top_buffer);
-  gint                bpp    = babl_format_get_bytes_per_pixel (format);
+  const Babl         *format     = gegl_buffer_get_format (top_buffer);
+  gint                components = babl_format_get_n_components (format);
 
-  gegl_buffer_set_format (top_buffer, babl_format_n (babl_type ("u8"), bpp));
-  gegl_buffer_set_format (bottom_buffer, babl_format_n (babl_type ("u8"), bpp));
+  gegl_buffer_set_format (top_buffer, babl_format_n (babl_type ("float"),
+                                                     components));
+  gegl_buffer_set_format (bottom_buffer, babl_format_n (babl_type ("float"),
+                                                        components));
 
   iter = gegl_buffer_iterator_new (top_buffer, top_rect, 0, NULL,
                                    GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
@@ -167,18 +169,18 @@ gimp_heal_sub (GeglBuffer          *top_buffer,
                             GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, result_buffer, result_rect, 0,
-                            babl_format_n (babl_type ("double"), bpp),
+                            babl_format_n (babl_type ("double"), components),
                             GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
     {
-      guchar  *t      = iter->data[0];
-      guchar  *b      = iter->data[1];
+      gfloat  *t      = iter->data[0];
+      gfloat  *b      = iter->data[1];
       gdouble *r      = iter->data[2];
-      gint     length = iter->length * bpp;
+      gint     length = iter->length * components;
 
       while (length--)
-        *r++ = (gdouble) *t++ - (gdouble) *b++;
+        *r++ = *t++ - *b++;
     }
 
   gegl_buffer_set_format (top_buffer, NULL);
@@ -197,13 +199,16 @@ gimp_heal_add (GeglBuffer          *first_buffer,
 {
   GeglBufferIterator *iter;
   const Babl         *format = gegl_buffer_get_format (result_buffer);
-  gint                bpp    = babl_format_get_bytes_per_pixel (format);
+  gint                components = babl_format_get_n_components (format);
 
-  gegl_buffer_set_format (second_buffer, babl_format_n (babl_type ("u8"), bpp));
-  gegl_buffer_set_format (result_buffer, babl_format_n (babl_type ("u8"), bpp));
+  gegl_buffer_set_format (second_buffer, babl_format_n (babl_type ("float"),
+                                                        components));
+  gegl_buffer_set_format (result_buffer, babl_format_n (babl_type ("float"),
+                                                        components));
 
   iter = gegl_buffer_iterator_new (first_buffer, first_rect, 0,
-                                   babl_format_n (babl_type ("double"), bpp),
+                                   babl_format_n (babl_type ("double"),
+                                                  components),
                                    GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, second_buffer, second_rect, 0, NULL,
@@ -215,16 +220,12 @@ gimp_heal_add (GeglBuffer          *first_buffer,
   while (gegl_buffer_iterator_next (iter))
     {
       gdouble *f      = iter->data[0];
-      guchar  *s      = iter->data[1];
-      guchar  *r      = iter->data[2];
-      gint     length = iter->length * bpp;
+      gfloat  *s      = iter->data[1];
+      gfloat  *r      = iter->data[2];
+      gint     length = iter->length * components;
 
       while (length--)
-        {
-          gdouble tmp = ROUND (*f++ + (gdouble) *s++);
-
-          *r++ = (guchar) CLAMP0255 (tmp);
-        }
+          *r++ = *f++ + *s++;
     }
 
   gegl_buffer_set_format (second_buffer, NULL);
@@ -390,8 +391,8 @@ gimp_heal (GeglBuffer          *src_buffer,
 {
   const Babl *src_format;
   const Babl *dest_format;
-  gint        src_bpp;
-  gint        dest_bpp;
+  gint        src_components;
+  gint        dest_components;
   gint        width;
   gint        height;
   gdouble    *i_1;
@@ -403,28 +404,28 @@ gimp_heal (GeglBuffer          *src_buffer,
   src_format  = gegl_buffer_get_format (src_buffer);
   dest_format = gegl_buffer_get_format (dest_buffer);
 
-  src_bpp  = babl_format_get_bytes_per_pixel (src_format);
-  dest_bpp = babl_format_get_bytes_per_pixel (dest_format);
+  src_components  = babl_format_get_n_components (src_format);
+  dest_components = babl_format_get_n_components (dest_format);
 
   width  = gegl_buffer_get_width  (src_buffer);
   height = gegl_buffer_get_height (src_buffer);
 
-  g_return_if_fail (src_bpp == dest_bpp);
+  g_return_if_fail (src_components == dest_components);
 
-  i_1  = g_new (gdouble, width * height * src_bpp);
-  i_2  = g_new (gdouble, width * height * src_bpp);
+  i_1  = g_new (gdouble, width * height * src_components);
+  i_2  = g_new (gdouble, width * height * src_components);
 
   i_1_buffer =
     gegl_buffer_linear_new_from_data (i_1,
                                       babl_format_n (babl_type ("double"),
-                                                     src_bpp),
+                                                     src_components),
                                       GEGL_RECTANGLE (0, 0, width, height),
                                       GEGL_AUTO_ROWSTRIDE,
                                       (GDestroyNotify) g_free, i_1);
   i_2_buffer =
     gegl_buffer_linear_new_from_data (i_2,
                                       babl_format_n (babl_type ("double"),
-                                                     src_bpp),
+                                                     src_components),
                                       GEGL_RECTANGLE (0, 0, width, height),
                                       GEGL_AUTO_ROWSTRIDE,
                                       (GDestroyNotify) g_free, i_2);
@@ -440,7 +441,7 @@ gimp_heal (GeglBuffer          *src_buffer,
                    mask, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
   /* FIXME: is a faster implementation needed? */
-  gimp_heal_laplace_loop (i_1, height, src_bpp, width, i_2, mask);
+  gimp_heal_laplace_loop (i_1, height, src_components, width, i_2, mask);
 
   g_free (mask);
 
@@ -513,7 +514,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
     gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                      src_rect->width,
                                      src_rect->height),
-                     gimp_drawable_get_format_with_alpha (drawable));
+                     babl_format ("RGBA float"));
 
   gegl_buffer_copy (src_buffer,
                     src_rect,
