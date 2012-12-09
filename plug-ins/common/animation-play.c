@@ -63,12 +63,15 @@ static void        run   (const gchar      *name,
                           gint             *nreturn_vals,
                           GimpParam       **return_vals);
 
-static void        do_playback               (void);
+static void        initialize                (void);
+static void        build_dialog              (gchar           *imagename);
+static void        refresh_dialog            (gchar           *imagename);
 
 static void        window_destroy            (GtkWidget       *widget);
 static void        play_callback             (GtkToggleAction *action);
 static void        step_back_callback        (GtkAction       *action);
 static void        step_callback             (GtkAction       *action);
+static void        refresh_callback          (GtkAction       *action);
 static void        rewind_callback           (GtkAction       *action);
 static void        speed_up_callback         (GtkAction       *action);
 static void        speed_down_callback       (GtkAction       *action);
@@ -87,7 +90,6 @@ static gboolean    repaint_da                (GtkWidget       *darea,
                                               gpointer         data);
 
 static void        init_frames               (void);
-static void        generate_frames           (void);
 static void        render_frame              (gint32           whichframe);
 static void        show_frame                (void);
 static void        total_alpha_preview       (guchar          *ptr);
@@ -100,8 +102,6 @@ static gint        get_fps                   (gint             index);
 /* tag util functions*/
 static gint        parse_ms_tag              (const gchar     *str);
 static DisposeType parse_disposal_tag        (const gchar     *str);
-static DisposeType get_frame_disposal        (guint            whichframe);
-static guint32     get_frame_duration        (guint            whichframe);
 static gboolean    is_disposal_tag           (const gchar     *str,
                                               DisposeType     *disposal,
                                               gint            *taglength);
@@ -128,20 +128,21 @@ static GtkWidget         *shape_drawing_area      = NULL;
 static guchar            *shape_drawing_area_data = NULL;
 static guchar            *drawing_area_data       = NULL;
 static GtkWidget         *progress;
-static guint              width, height;
-static guchar            *preview_alpha1_data;
-static guchar            *preview_alpha2_data;
+static guint              width = -1, height = -1;
+static guchar            *preview_alpha1_data     = NULL;
+static guchar            *preview_alpha2_data     = NULL;
 static gint32             image_id;
 static guchar            *rawframe                = NULL;
 static gint32            *frames                  = NULL;
+static guint32           *frame_durations         = NULL;
 static gint32             total_frames;
-static guint              frame_number;
-static gint32            *layers;
+static guint              frame_number            = 0;
+static gint32            *layers                  = NULL;
 static gint32             total_layers;
 static gboolean           playing = FALSE;
 static guint              timer   = 0;
 static GimpImageBaseType  imagetype;
-static guchar            *palette;
+static guchar            *palette                 = NULL;
 static gint               ncolours;
 static gint               duration_index = 3;
 static DisposeType        default_frame_disposal = DISPOSE_COMBINE;
@@ -218,7 +219,8 @@ run (const gchar      *name,
     {
       image_id = param[1].data.d_image;
 
-      do_playback ();
+      initialize ();
+      gtk_main ();
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
@@ -460,6 +462,10 @@ ui_manager_new (GtkWidget *window)
       NULL, NULL, N_("Rewind the animation"),
       G_CALLBACK (rewind_callback) },
 
+    { "refresh", GTK_STOCK_REFRESH,
+      NULL, "<control>R", N_("Reload the image"),
+      G_CALLBACK (refresh_callback) },
+
     { "help", GTK_STOCK_HELP,
       NULL, NULL, NULL,
       G_CALLBACK (help_callback) },
@@ -533,6 +539,7 @@ ui_manager_new (GtkWidget *window)
                                      "    <toolitem action=\"rewind\" />"
                                      "    <separator />"
                                      "    <toolitem action=\"detach\" />"
+                                     "    <toolitem action=\"refresh\" />"
                                      "    <separator name=\"space\" />"
                                      "    <toolitem action=\"help\" />"
                                      "  </toolbar>"
@@ -560,6 +567,7 @@ ui_manager_new (GtkWidget *window)
                                      "    <menuitem action=\"speed-reset\" />"
                                      "    <separator />"
                                      "    <menuitem action=\"detach\" />"
+                                     "    <menuitem action=\"refresh\" />"
                                      "    <menuitem action=\"close\" />"
                                      "  </popup>"
                                      "</ui>",
@@ -575,8 +583,23 @@ ui_manager_new (GtkWidget *window)
 }
 
 static void
-build_dialog (GimpImageBaseType  basetype,
-              gchar             *imagename)
+refresh_dialog (gchar *imagename)
+{
+  gchar     *name;
+
+  /* Image Name */
+  name = g_strconcat (_("Animation Playback:"), " ", imagename, NULL);
+  gtk_window_set_title (GTK_WINDOW (window), name);
+  g_free (name);
+
+  /* Update GUI size. */
+  gtk_widget_set_size_request (drawing_area, width, height);
+  gtk_widget_set_size_request (shape_drawing_area, width, height);
+  gtk_window_reshow_with_initial_size (GTK_WINDOW (window));
+}
+
+static void
+build_dialog (gchar             *imagename)
 {
   GtkWidget   *toolbar;
   GtkWidget   *frame;
@@ -696,21 +719,6 @@ build_dialog (GimpImageBaseType  basetype,
 
   gimp_help_set_help_data (speedcombo, _("Playback speed"), NULL);
 
-  if (total_frames < 2)
-    {
-      action = gtk_ui_manager_get_action (ui_manager,
-                                          "/ui/anim-play-toolbar/play");
-      gtk_action_set_sensitive (action, FALSE);
-
-      action = gtk_ui_manager_get_action (ui_manager,
-                                          "/ui/anim-play-toolbar/step");
-      gtk_action_set_sensitive (action, FALSE);
-
-      action = gtk_ui_manager_get_action (ui_manager,
-                                          "/ui/anim-play-toolbar/rewind");
-      gtk_action_set_sensitive (action, FALSE);
-    }
-
   action = gtk_ui_manager_get_action (ui_manager,
                                       "/anim-play-popup/speed-reset");
   gtk_action_set_sensitive (action, FALSE);
@@ -780,8 +788,23 @@ build_dialog (GimpImageBaseType  basetype,
 }
 
 static void
-do_playback (void)
+initialize (void)
 {
+  guint previous_width = width;
+  guint previous_height = height;
+
+  /* Freeing existing data after a refresh. */
+  g_free (layers);
+  g_free (palette);
+
+  /* Catch the case when the user has closed the image in the meantime. */
+  if (! gimp_image_is_valid (image_id))
+    {
+      gimp_message (_("Invalid image. Did you close it?"));
+      gtk_main_quit ();
+      return;
+    }
+
   width     = gimp_image_width (image_id);
   height    = gimp_image_height (image_id);
   layers    = gimp_image_get_layers (image_id, &total_layers);
@@ -803,19 +826,21 @@ do_playback (void)
       ncolours = 256;
     }
 
-  frame_number = 0;
+  if (previous_width != width || previous_height != height)
+  {
+    g_free (rawframe);
+    rawframe = g_malloc (width * height * 4);
+    init_preview ();
+  }
 
-  init_preview ();
-
-  build_dialog (gimp_image_base_type (image_id),
-                gimp_image_get_name (image_id));
+  if (window)
+    refresh_dialog (gimp_image_get_name (image_id));
+  else
+    build_dialog (gimp_image_get_name (image_id));
 
   init_frames ();
-
-  render_frame (0);
+  render_frame (frame_number);
   show_frame ();
-
-  gtk_main ();
 }
 
 
@@ -832,27 +857,10 @@ render_frame (gint32 whichframe)
   guchar        *srcptr;
   guchar        *destptr;
 
-  if (whichframe >= total_frames)
-    {
-      printf( "playback: Asked for frame number %d in a %d-frame animation!\n",
-             (int) (whichframe+1), (int) total_frames);
-      gimp_quit ();
-    }
+  g_assert (whichframe < total_frames);
 
   drawable_id = frames[whichframe];
   buffer = gimp_drawable_get_buffer (drawable_id);
-
-  /* Lame attempt to catch the case that a user has closed the image. */
-  if (!buffer)
-    {
-      gimp_message (_("Tried to display an invalid layer."));
-      gtk_main_quit ();
-      return;
-    }
-
-  /* Initialize the rawframe only once. */
-  if (rawframe == NULL)
-    rawframe = g_malloc (width * height * 4);
 
   /* Initialise and fetch the whole raw new frame */
   gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, width, height), 1.0,
@@ -934,6 +942,12 @@ init_preview (void)
 {
   gint i;
 
+  /* Cleaning, after a refresh with different image size. */
+  g_free (preview_data);
+  g_free (shape_preview_mask);
+  g_free (preview_alpha1_data);
+  g_free (preview_alpha2_data);
+
   preview_data = g_malloc (width * height * 3);
   shape_preview_mask = g_malloc ((width * height) / 8 + 1 + height);
   preview_alpha1_data = g_malloc (width * 3);
@@ -961,7 +975,15 @@ init_preview (void)
         }
     }
 
-  drawing_area_data = preview_data;
+  if (detached)
+    {
+      g_free (drawing_area_data);
+      drawing_area_data = g_malloc (width * height * 3);
+      total_alpha_preview (drawing_area_data);
+      memset (shape_preview_mask, 0, (width * height) / 8 + height);
+    }
+  else
+    drawing_area_data = preview_data;
   shape_drawing_area_data = preview_data;
 }
 
@@ -1031,7 +1053,7 @@ advance_frame_callback (gpointer data)
 
   remove_timer();
 
-  duration = get_frame_duration ((frame_number + 1) % total_frames);
+  duration = frame_durations[(frame_number + 1) % total_frames];
 
   timer = g_timeout_add (duration * get_duration_factor (duration_index),
                          advance_frame_callback, NULL);
@@ -1053,7 +1075,7 @@ play_callback (GtkToggleAction *action)
 
   if (playing)
     {
-      timer = g_timeout_add (get_frame_duration (frame_number) *
+      timer = g_timeout_add ((gdouble) frame_durations[frame_number] *
                              get_duration_factor (duration_index),
                              advance_frame_callback, NULL);
 
@@ -1139,6 +1161,12 @@ step_callback (GtkAction *action)
                                                     "/anim-play-toolbar/play"));
   do_step();
   show_frame();
+}
+
+static void
+refresh_callback (GtkAction *action)
+{
+  initialize ();
 }
 
 static void
@@ -1249,38 +1277,6 @@ update_combobox (void)
 }
 
 /* tag util. */
-
-static DisposeType
-get_frame_disposal (guint whichframe)
-{
-  DisposeType  disposal;
-  gchar       *layer_name;
-
-  layer_name = gimp_item_get_name (layers[total_frames-(whichframe+1)]);
-  disposal = parse_disposal_tag (layer_name);
-  g_free (layer_name);
-
-  return disposal;
-}
-
-static guint32
-get_frame_duration (guint whichframe)
-{
-  gchar *layer_name;
-  gint   duration = 0;
-
-  layer_name = gimp_item_get_name (layers[total_frames-(whichframe+1)]);
-  if (layer_name)
-    {
-      duration = parse_ms_tag (layer_name);
-      g_free (layer_name);
-    }
-
-  if (duration <= 0)
-    duration = default_frame_duration;
-
-  return (guint32) duration;
-}
 
 static gboolean
 is_ms_tag (const gchar *str,
@@ -1405,86 +1401,85 @@ parse_disposal_tag (const gchar *str)
 static void
 init_frames (void)
 {
-  GtkAction   *action;
-  total_frames = total_layers;
-  generate_frames();
-  if (total_frames < 2)
-    {
-      action = gtk_ui_manager_get_action (ui_manager,
-                                          "/ui/anim-play-toolbar/play");
-      gtk_action_set_sensitive (action, FALSE);
-
-      action = gtk_ui_manager_get_action (ui_manager,
-                                          "/ui/anim-play-toolbar/step-back");
-      gtk_action_set_sensitive (action, FALSE);
-
-      action = gtk_ui_manager_get_action (ui_manager,
-                                          "/ui/anim-play-toolbar/step");
-      gtk_action_set_sensitive (action, FALSE);
-
-      action = gtk_ui_manager_get_action (ui_manager,
-                                          "/ui/anim-play-toolbar/rewind");
-      gtk_action_set_sensitive (action, FALSE);
-    }
-  else
-    {
-      action = gtk_ui_manager_get_action (ui_manager,
-                                          "/ui/anim-play-toolbar/play");
-      gtk_action_set_sensitive (action, TRUE);
-
-      action = gtk_ui_manager_get_action (ui_manager,
-                                          "/ui/anim-play-toolbar/step-back");
-      gtk_action_set_sensitive (action, TRUE);
-
-      action = gtk_ui_manager_get_action (ui_manager,
-                                          "/ui/anim-play-toolbar/step");
-      gtk_action_set_sensitive (action, TRUE);
-
-      action = gtk_ui_manager_get_action (ui_manager,
-                                          "/ui/anim-play-toolbar/rewind");
-      gtk_action_set_sensitive (action, TRUE);
-    }
-}
-
-static void
-generate_frames (void)
-{
   /* Frames are associated to an unused image. */
   static gint32 frames_image_id;
   gint          i;
   gint32        new_frame, previous_frame, new_layer;
+  gboolean      animated;
+  GtkAction    *action;
+  gint          duration = 0;
+  DisposeType   disposal = default_frame_disposal;
+  gchar        *layer_name;
+
+  total_frames = total_layers;
 
   /* Cleanup before re-generation. */
-  if (frames != NULL)
+  if (frames)
     {
-      for (i = 0; i < total_frames; i++)
-        gimp_image_remove_layer (frames_image_id, frames[i]);
       gimp_image_delete (frames_image_id);
       g_free (frames);
+      g_free (frame_durations);
     }
   frames = g_try_malloc0_n (total_frames, sizeof (gint32));
-
-  if (frames == NULL)
+  frame_durations = g_try_malloc0_n (total_frames, sizeof (guint32));
+  if (! frames || ! frame_durations)
     {
       gimp_message (_("Memory could not be allocated to the frame container."));
       gtk_main_quit ();
+      gimp_quit ();
       return;
     }
   frames_image_id = gimp_image_new (width, height, imagetype);
+  /* Save processing time and memory by not saving history and merged frames. */
+  gimp_image_undo_disable (frames_image_id);
 
   for (i = 0; i < total_frames; i++)
     {
-      if (i > 0 && get_frame_disposal (i) != DISPOSE_REPLACE)
+      layer_name = gimp_item_get_name (layers[total_layers - (i + 1)]);
+      if (layer_name)
+        {
+          duration = parse_ms_tag (layer_name);
+          disposal = parse_disposal_tag (layer_name);
+          g_free (layer_name);
+        }
+
+      if (i > 0 && disposal != DISPOSE_REPLACE)
         {
           previous_frame = gimp_layer_copy (frames[i - 1]);
           gimp_image_insert_layer (frames_image_id, previous_frame, 0, -1);
           gimp_item_set_visible (previous_frame, TRUE);
         }
       new_layer = gimp_layer_new_from_drawable (layers[total_layers - (i + 1)], frames_image_id);
-      gimp_item_set_visible (new_layer, TRUE);
       gimp_image_insert_layer (frames_image_id, new_layer, 0, -1);
+      gimp_item_set_visible (new_layer, TRUE);
       new_frame = gimp_image_merge_visible_layers (frames_image_id, GIMP_CLIP_TO_IMAGE);
       frames[i] = new_frame;
       gimp_item_set_visible (new_frame, FALSE);
+
+      if (duration <= 0)
+        duration = default_frame_duration;
+      frame_durations[i] = (guint32) duration;
     }
+
+  /* Update the UI. */
+  animated = total_frames >= 2;
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/ui/anim-play-toolbar/play");
+  gtk_action_set_sensitive (action, animated);
+
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/ui/anim-play-toolbar/step-back");
+  gtk_action_set_sensitive (action, animated);
+
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/ui/anim-play-toolbar/step");
+  gtk_action_set_sensitive (action, animated);
+
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/ui/anim-play-toolbar/rewind");
+  gtk_action_set_sensitive (action, animated);
+
+  /* Keep the same frame number, unless it is now invalid. */
+  if (frame_number >= total_frames)
+    frame_number = 0;
 }
