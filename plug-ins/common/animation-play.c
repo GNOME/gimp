@@ -54,6 +54,13 @@ typedef enum
   DISPOSE_REPLACE   = 0x01
 } DisposeType;
 
+typedef struct
+{
+  gint        duration_index;
+  DisposeType default_frame_disposal;
+  guint32     default_frame_duration;
+}
+AnimationSettings;
 
 /* Declare local functions. */
 static void        query (void);
@@ -144,9 +151,14 @@ static guint              timer   = 0;
 static GimpImageBaseType  imagetype;
 static guchar            *palette                 = NULL;
 static gint               ncolours;
-static gint               duration_index = 3;
-static DisposeType        default_frame_disposal = DISPOSE_COMBINE;
-static gint               default_frame_duration = 100; /* ms */
+
+/* Default settings. */
+static AnimationSettings settings =
+{
+  3,
+  DISPOSE_COMBINE,
+  100 /* ms */
+};
 
 
 /* for shaping */
@@ -160,6 +172,7 @@ static GtkWidget *shape_window       = NULL;
 static GdkWindow *root_win           = NULL;
 static gboolean   detached           = FALSE;
 static GtkWidget *speedcombo         = NULL;
+static GtkWidget *fpscombo           = NULL;
 static GtkWidget *frame_disposal_combo = NULL;
 
 MAIN ()
@@ -217,10 +230,12 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
+      gimp_get_data (PLUG_IN_PROC, &settings);
       image_id = param[1].data.d_image;
 
       initialize ();
       gtk_main ();
+      gimp_set_data (PLUG_IN_PROC, &settings, sizeof (settings));
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
@@ -680,26 +695,28 @@ build_dialog (gchar             *imagename)
   gtk_box_pack_end (GTK_BOX (hbox), progress, TRUE, TRUE, 0);
   gtk_widget_show (progress);
 
-  speedcombo = gtk_combo_box_text_new ();
-  gtk_box_pack_end (GTK_BOX (hbox), speedcombo, FALSE, FALSE, 0);
-  gtk_widget_show (speedcombo);
+  /* fps combo */
+  fpscombo = gtk_combo_box_text_new ();
+  gtk_box_pack_end (GTK_BOX (hbox), fpscombo, FALSE, FALSE, 0);
+  gtk_widget_show (fpscombo);
 
   for (index = 0; index < 9; index++)
     {
       /* list is given in "fps" - frames per second */
       text = g_strdup_printf  (_("%d fps"), get_fps (index));
-      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (speedcombo), text);
+      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (fpscombo), text);
       g_free (text);
+      if (settings.default_frame_duration == 1000 / get_fps(index))
+        gtk_combo_box_set_active (GTK_COMBO_BOX (fpscombo), index);
     }
 
-  gtk_combo_box_set_active (GTK_COMBO_BOX (speedcombo), 0);
-
-  g_signal_connect (speedcombo, "changed",
+  g_signal_connect (fpscombo, "changed",
                     G_CALLBACK (fpscombo_changed),
                     NULL);
 
-  gimp_help_set_help_data (speedcombo, _("Default framerate"), NULL);
+  gimp_help_set_help_data (fpscombo, _("Default framerate"), NULL);
 
+  /* Speed Combo */
   speedcombo = gtk_combo_box_text_new ();
   gtk_box_pack_end (GTK_BOX (hbox), speedcombo, FALSE, FALSE, 0);
   gtk_widget_show (speedcombo);
@@ -711,7 +728,7 @@ build_dialog (gchar             *imagename)
       g_free (text);
     }
 
-  gtk_combo_box_set_active (GTK_COMBO_BOX (speedcombo), 3);
+  gtk_combo_box_set_active (GTK_COMBO_BOX (speedcombo), settings.duration_index);
 
   g_signal_connect (speedcombo, "changed",
                     G_CALLBACK (speedcombo_changed),
@@ -735,7 +752,7 @@ build_dialog (gchar             *imagename)
   gtk_combo_box_text_insert_text (GTK_COMBO_BOX_TEXT (frame_disposal_combo), DISPOSE_REPLACE, text);
   g_free (text);
 
-  gtk_combo_box_set_active (GTK_COMBO_BOX (frame_disposal_combo), default_frame_disposal);
+  gtk_combo_box_set_active (GTK_COMBO_BOX (frame_disposal_combo), settings.default_frame_disposal);
 
   g_signal_connect (frame_disposal_combo, "changed",
                 G_CALLBACK (framecombo_changed),
@@ -1055,7 +1072,7 @@ advance_frame_callback (gpointer data)
 
   duration = frame_durations[(frame_number + 1) % total_frames];
 
-  timer = g_timeout_add (duration * get_duration_factor (duration_index),
+  timer = g_timeout_add (duration * get_duration_factor (settings.duration_index),
                          advance_frame_callback, NULL);
 
   do_step ();
@@ -1076,7 +1093,7 @@ play_callback (GtkToggleAction *action)
   if (playing)
     {
       timer = g_timeout_add ((gdouble) frame_durations[frame_number] *
-                             get_duration_factor (duration_index),
+                             get_duration_factor (settings.duration_index),
                              advance_frame_callback, NULL);
 
       gtk_action_set_stock_id (GTK_ACTION (action), GTK_STOCK_MEDIA_PAUSE);
@@ -1183,14 +1200,14 @@ rewind_callback (GtkAction *action)
 static void
 speed_up_callback (GtkAction *action)
 {
-  if (duration_index > 0)
-    --duration_index;
+  if (settings.duration_index > 0)
+    --settings.duration_index;
 
-  gtk_action_set_sensitive (action, duration_index > 0);
+  gtk_action_set_sensitive (action, settings.duration_index > 0);
 
   action = gtk_ui_manager_get_action (ui_manager,
                                       "/anim-play-popup/speed-reset");
-  gtk_action_set_sensitive (action, duration_index != 3);
+  gtk_action_set_sensitive (action, settings.duration_index != 3);
 
   action = gtk_ui_manager_get_action (ui_manager,
                                       "/anim-play-popup/speed-down");
@@ -1202,14 +1219,14 @@ speed_up_callback (GtkAction *action)
 static void
 speed_down_callback (GtkAction *action)
 {
-  if (duration_index < 6)
-    ++duration_index;
+  if (settings.duration_index < 6)
+    ++settings.duration_index;
 
-  gtk_action_set_sensitive (action, duration_index < 6);
+  gtk_action_set_sensitive (action, settings.duration_index < 6);
 
   action = gtk_ui_manager_get_action (ui_manager,
                                       "/anim-play-popup/speed-reset");
-  gtk_action_set_sensitive (action, duration_index != 3);
+  gtk_action_set_sensitive (action, settings.duration_index != 3);
 
   action = gtk_ui_manager_get_action (ui_manager,
                                       "/anim-play-popup/speed-up");
@@ -1221,7 +1238,7 @@ speed_down_callback (GtkAction *action)
 static void
 speed_reset_callback (GtkAction *action)
 {
-  duration_index = 3;
+  settings.duration_index = 3;
 
   gtk_action_set_sensitive (action, FALSE);
 
@@ -1239,7 +1256,7 @@ speed_reset_callback (GtkAction *action)
 static void
 framecombo_changed (GtkWidget *combo, gpointer data)
 {
-  default_frame_disposal = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
+  settings.default_frame_disposal = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
   init_frames ();
   render_frame (frame_number);
 }
@@ -1249,31 +1266,31 @@ speedcombo_changed (GtkWidget *combo, gpointer data)
 {
   GtkAction * action;
 
-  duration_index = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
+  settings.duration_index = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
 
   action = gtk_ui_manager_get_action (ui_manager,
                                       "/anim-play-popup/speed-reset");
-  gtk_action_set_sensitive (action, duration_index != 3);
+  gtk_action_set_sensitive (action, settings.duration_index != 3);
 
   action = gtk_ui_manager_get_action (ui_manager,
                                       "/anim-play-popup/speed-down");
-  gtk_action_set_sensitive (action, duration_index < 6);
+  gtk_action_set_sensitive (action, settings.duration_index < 6);
 
   action = gtk_ui_manager_get_action (ui_manager,
                                       "/anim-play-popup/speed-up");
-  gtk_action_set_sensitive (action, duration_index > 0);
+  gtk_action_set_sensitive (action, settings.duration_index > 0);
 }
 
 static void
 fpscombo_changed (GtkWidget *combo, gpointer data)
 {
-  default_frame_duration = 1000 / get_fps(gtk_combo_box_get_active (GTK_COMBO_BOX (combo)));
+  settings.default_frame_duration = 1000 / get_fps(gtk_combo_box_get_active (GTK_COMBO_BOX (combo)));
 }
 
 static void
 update_combobox (void)
 {
-  gtk_combo_box_set_active (GTK_COMBO_BOX (speedcombo), duration_index);
+  gtk_combo_box_set_active (GTK_COMBO_BOX (speedcombo), settings.duration_index);
 }
 
 /* tag util. */
@@ -1395,7 +1412,7 @@ parse_disposal_tag (const gchar *str)
         return rtn;
     }
 
-  return default_frame_disposal;
+  return settings.default_frame_disposal;
 }
 
 static void
@@ -1408,7 +1425,7 @@ init_frames (void)
   gboolean      animated;
   GtkAction    *action;
   gint          duration = 0;
-  DisposeType   disposal = default_frame_disposal;
+  DisposeType   disposal = settings.default_frame_disposal;
   gchar        *layer_name;
 
   total_frames = total_layers;
@@ -1457,7 +1474,7 @@ init_frames (void)
       gimp_item_set_visible (new_frame, FALSE);
 
       if (duration <= 0)
-        duration = default_frame_duration;
+        duration = settings.default_frame_duration;
       frame_durations[i] = (guint32) duration;
     }
 
