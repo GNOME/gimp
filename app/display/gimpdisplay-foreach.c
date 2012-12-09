@@ -204,7 +204,7 @@ gimp_displays_reconnect (Gimp      *gimp,
   g_return_if_fail (GIMP_IS_IMAGE (old));
   g_return_if_fail (GIMP_IS_IMAGE (new));
 
-  /*  remember which contexts refer to old_image  */
+  /*  check which contexts refer to old_image  */
   for (list = gimp->context_list; list; list = g_list_next (list))
     {
       GimpContext *context = list->data;
@@ -212,6 +212,17 @@ gimp_displays_reconnect (Gimp      *gimp,
       if (gimp_context_get_image (context) == old)
         contexts = g_list_prepend (contexts, list->data);
     }
+
+  /*  set the new_image on the remembered contexts (in reverse order,
+   *  since older contexts are usually the parents of newer
+   *  ones). Also, update the contexts before the displays, or we
+   *  might run into menu update functions that would see an
+   *  inconsistent state (display = new, context = old), and thus
+   *  inadvertently call actions as if the user had selected a menu
+   *  item.
+   */
+  g_list_foreach (contexts, (GFunc) gimp_context_set_image, new);
+  g_list_free (contexts);
 
   for (list = gimp_get_display_iter (gimp);
        list;
@@ -222,13 +233,6 @@ gimp_displays_reconnect (Gimp      *gimp,
       if (gimp_display_get_image (display) == old)
         gimp_display_set_image (display, new);
     }
-
-  /*  set the new_image on the remembered contexts (in reverse
-   *  order, since older contexts are usually the parents of
-   *  newer ones)
-   */
-  g_list_foreach (contexts, (GFunc) gimp_context_set_image, new);
-  g_list_free (contexts);
 }
 
 gint
