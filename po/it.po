@@ -30,8 +30,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-03 20:27+0100\n"
-"PO-Revision-Date: 2012-12-03 20:41+0100\n"
+"POT-Creation-Date: 2012-12-10 23:03+0100\n"
+"PO-Revision-Date: 2012-12-10 23:03+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -373,12 +373,12 @@ msgstr "Gradienti"
 #: ../app/actions/actions.c:175 ../app/core/gimp.c:983
 #: ../app/dialogs/dialogs.c:340 ../app/dialogs/preferences-dialog.c:2754
 msgid "Tool Presets"
-msgstr "Preimpostazioni dello strumento"
+msgstr "Preimpostazioni strumento"
 
 #: ../app/actions/actions.c:178 ../app/dialogs/dialogs.c:407
 #: ../app/widgets/gimptoolpreseteditor.c:93
 msgid "Tool Preset Editor"
-msgstr "Modifica preimpostazioni dello strumento"
+msgstr "Modifica preimpostazione strumento"
 
 #: ../app/actions/actions.c:181
 msgid "Help"
@@ -1225,12 +1225,12 @@ msgstr "Apri la modifica della tavolozza"
 #: ../app/actions/dialogs-actions.c:184
 msgctxt "dialogs-action"
 msgid "Tool presets"
-msgstr "Preimpostazioni dello strumento"
+msgstr "Preimpostazioni strumento"
 
 #: ../app/actions/dialogs-actions.c:185
 msgctxt "dialogs-action"
 msgid "Open tool presets dialog"
-msgstr "Apri la finestra delle preimpostazioni strumento"
+msgstr "Apri la finestra preimpostazioni strumento"
 
 #: ../app/actions/dialogs-actions.c:190
 msgctxt "dialogs-action"
@@ -5031,32 +5031,32 @@ msgstr "Menu opzioni strumento"
 #: ../app/actions/tool-options-actions.c:61
 msgctxt "tool-options-action"
 msgid "_Save Tool Preset"
-msgstr "_Salva la preimpostazione dello strumento"
+msgstr "_Salva la preimpostazione strumento"
 
 #: ../app/actions/tool-options-actions.c:65
 msgctxt "tool-options-action"
 msgid "_Restore Tool Preset"
-msgstr "_Recupera la preimpostazione dello strumento"
+msgstr "_Recupera la preimpostazione strumento"
 
 #: ../app/actions/tool-options-actions.c:69
 msgctxt "tool-options-action"
 msgid "E_dit Tool Preset"
-msgstr "Modifica la preimpostazione _dello strumento"
+msgstr "Mo_difica la preimpostazione strumento"
 
 #: ../app/actions/tool-options-actions.c:73
 msgctxt "tool-options-action"
 msgid "_Delete Tool Preset"
-msgstr "Cancella la preimpostazione _dello strumento"
+msgstr "Elimina la preimposta_zione strumento"
 
 #: ../app/actions/tool-options-actions.c:77
 msgctxt "tool-options-action"
 msgid "_New Tool Preset..."
-msgstr "_Nuove preimpostazioni dello strumento..."
+msgstr "_Nuova preimpostazione strumento..."
 
 #: ../app/actions/tool-options-actions.c:82
 msgctxt "tool-options-action"
 msgid "R_eset Tool Options"
-msgstr "R_eimposta le opzioni dello strumento"
+msgstr "R_eimposta le opzioni strumento"
 
 #: ../app/actions/tool-options-actions.c:83
 msgctxt "tool-options-action"
@@ -5066,7 +5066,7 @@ msgstr "Reimposta ai valori predefiniti"
 #: ../app/actions/tool-options-actions.c:88
 msgctxt "tool-options-action"
 msgid "Reset _all Tool Options"
-msgstr "Reimpost_a tutte le opzioni dello strumento"
+msgstr "Reimpost_a tutte le opzioni strumento"
 
 #: ../app/actions/tool-options-actions.c:89
 msgctxt "tool-options-action"
@@ -5084,12 +5084,12 @@ msgstr "Reimpostare tutte le opzioni dello strumento ai valori predefiniti?"
 #: ../app/actions/tool-preset-editor-actions.c:43
 msgctxt "tool-preset-editor-action"
 msgid "Tool Preset Editor Menu"
-msgstr "Menu modifica delle preimpostazioni dello strumento"
+msgstr "Menu modifica preimpostazioni strumento"
 
 #: ../app/actions/tool-preset-editor-actions.c:51
 msgctxt "tool-preset-editor-action"
 msgid "Edit Active Tool Preset"
-msgstr "Modifica le preimpostazioni dello strumento corrente"
+msgstr "Modifica preimpostazioni strumento attivo"
 
 #: ../app/actions/tool-presets-actions.c:45
 msgctxt "tool-presets-action"
@@ -5099,7 +5099,7 @@ msgstr "Menu preimpostazioni strumento"
 #: ../app/actions/tool-presets-actions.c:49
 msgctxt "tool-presets-action"
 msgid "_New Tool Preset"
-msgstr "_Nuove preimpostazioni strumento"
+msgstr "_Nuova preimpostazione strumento"
 
 #: ../app/actions/tool-presets-actions.c:50
 msgctxt "tool-presets-action"
@@ -5129,12 +5129,12 @@ msgstr "Copia la posizione della preimpostazione strumento negli appunti"
 #: ../app/actions/tool-presets-actions.c:67
 msgctxt "tool-presets-action"
 msgid "_Delete Tool Preset"
-msgstr "Cancella la preimposta_zione strumento"
+msgstr "Elimina la preimposta_zione strumento"
 
 #: ../app/actions/tool-presets-actions.c:68
 msgctxt "tool-presets-action"
 msgid "Delete this tool preset"
-msgstr "Cancella questa preimpostazione strumento"
+msgstr "Elimina questa preimpostazione strumento"
 
 #: ../app/actions/tool-presets-actions.c:73
 msgctxt "tool-presets-action"
@@ -15000,7 +15000,7 @@ msgstr "Scorciatoia"
 msgid "Name"
 msgstr "Nome"
 
-#: ../app/widgets/gimpactionview.c:633 ../app/widgets/gimpactionview.c:843
+#: ../app/widgets/gimpactionview.c:633 ../app/widgets/gimpactionview.c:862
 msgid "Changing shortcut failed."
 msgstr "Fallito il cambiamento della scorciatoia."
 
@@ -15023,11 +15023,15 @@ msgstr ""
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr "La riassegnazione della scorciatoia causerà la rimozione da \"%s\"."
 
-#: ../app/widgets/gimpactionview.c:778
+#: ../app/widgets/gimpactionview.c:790
 msgid "Invalid shortcut."
 msgstr "Scorciatoia non valida."
 
-#: ../app/widgets/gimpactionview.c:867
+#: ../app/widgets/gimpactionview.c:797 ../app/widgets/gimpactionview.c:890
+msgid "F1 cannot be remapped."
+msgstr "F1 non può essere rimappato."
+
+#: ../app/widgets/gimpactionview.c:898
 msgid "Removing shortcut failed."
 msgstr "Fallita la rimozione della scorciatoia."
 
