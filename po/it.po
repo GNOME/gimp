@@ -31,7 +31,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-31 19:58+0100\n"
-"PO-Revision-Date: 2012-12-10 22:47+0100\n"
+"PO-Revision-Date: 2012-12-10 23:06+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: \n"
@@ -4836,7 +4836,7 @@ msgstr "Menu modifica preimpostazione strumento"
 #: ../app/actions/tool-preset-editor-actions.c:50
 msgctxt "tool-preset-editor-action"
 msgid "Edit Active Tool Preset"
-msgstr "Modifica la preimpostazione strumento corrente"
+msgstr "Modifica preimpostazione strumento attivo"
 
 #: ../app/actions/tools-actions.c:45
 msgctxt "tools-action"
