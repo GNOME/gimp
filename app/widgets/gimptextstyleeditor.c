@@ -364,6 +364,8 @@ gimp_text_style_editor_constructed (GObject *object)
                          G_CALLBACK (gimp_text_style_editor_update),
                          editor, 0,
                          G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+
+  gimp_text_style_editor_update (editor);
 }
 
 static void
