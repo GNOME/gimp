@@ -31,7 +31,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-31 19:58+0100\n"
-"PO-Revision-Date: 2012-11-06 10:38+0100\n"
+"PO-Revision-Date: 2012-12-10 22:47+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: \n"
@@ -383,7 +383,7 @@ msgstr "Preimpostazioni strumento"
 #: ../app/actions/actions.c:178 ../app/dialogs/dialogs.c:404
 #: ../app/widgets/gimptoolpreseteditor.c:92
 msgid "Tool Preset Editor"
-msgstr "Modifica delle preimpostazioni dello strumento"
+msgstr "Modifica preimpostazione strumento"
 
 #: ../app/actions/actions.c:181
 msgid "Help"
@@ -1240,12 +1240,12 @@ msgstr "Apri la modifica della tavolozza"
 #: ../app/actions/dialogs-actions.c:187
 msgctxt "dialogs-action"
 msgid "Tool presets"
-msgstr "Preimpostazioni dello strumento"
+msgstr "Preimpostazioni strumento"
 
 #: ../app/actions/dialogs-actions.c:188
 msgctxt "dialogs-action"
 msgid "Open tool presets dialog"
-msgstr "Apri la finestra delle preimpostazioni strumento"
+msgstr "Apri la finestra preimpostazioni strumento"
 
 #: ../app/actions/dialogs-actions.c:193
 msgctxt "dialogs-action"
@@ -4713,32 +4713,32 @@ msgstr "Menu opzioni strumento"
 #: ../app/actions/tool-options-actions.c:60
 msgctxt "tool-options-action"
 msgid "_Save Tool Preset"
-msgstr "_Salva la preimpostazione dello strumento"
+msgstr "_Salva la preimpostazione strumento"
 
 #: ../app/actions/tool-options-actions.c:64
 msgctxt "tool-options-action"
 msgid "_Restore Tool Preset"
-msgstr "_Recupera la preimpostazione dello strumento"
+msgstr "_Recupera la preimpostazione strumento"
 
 #: ../app/actions/tool-options-actions.c:68
 msgctxt "tool-options-action"
 msgid "E_dit Tool Preset"
-msgstr "Modifica la preimpostazione _dello strumento"
+msgstr "Mo_difica la preimpostazione strumento"
 
 #: ../app/actions/tool-options-actions.c:72
 msgctxt "tool-options-action"
 msgid "_Delete Tool Preset"
-msgstr "Cancella la preimpostazione _dello strumento"
+msgstr "Elimina la preimposta_zione strumento"
 
 #: ../app/actions/tool-options-actions.c:76
 msgctxt "tool-options-action"
 msgid "_New Tool Preset..."
-msgstr "_Nuove preimpostazioni dello strumento..."
+msgstr "_Nuova preimpostazione strumento..."
 
 #: ../app/actions/tool-options-actions.c:81
 msgctxt "tool-options-action"
 msgid "R_eset Tool Options"
-msgstr "R_eimposta le opzioni dello strumento"
+msgstr "R_eimposta le opzioni strumento"
 
 #: ../app/actions/tool-options-actions.c:82
 msgctxt "tool-options-action"
@@ -4771,7 +4771,7 @@ msgstr "Menu preimpostazioni strumento"
 #: ../app/actions/tool-presets-actions.c:48
 msgctxt "tool-presets-action"
 msgid "_New Tool Preset"
-msgstr "_Nuove preimpostazioni strumento"
+msgstr "_Nuova preimpostazione strumento"
 
 #: ../app/actions/tool-presets-actions.c:49
 msgctxt "tool-presets-action"
@@ -4801,12 +4801,12 @@ msgstr "Copia la posizione della preimpostazione strumento negli appunti"
 #: ../app/actions/tool-presets-actions.c:66
 msgctxt "tool-presets-action"
 msgid "_Delete Tool Preset"
-msgstr "Cancella la preimposta_zione strumento"
+msgstr "Eli_mina la preimpostazione strumento"
 
 #: ../app/actions/tool-presets-actions.c:67
 msgctxt "tool-presets-action"
 msgid "Delete this tool preset"
-msgstr "Cancella questa preimpostazione strumento"
+msgstr "Elimina questa preimpostazione strumento"
 
 #: ../app/actions/tool-presets-actions.c:72
 msgctxt "tool-presets-action"
@@ -4831,7 +4831,7 @@ msgstr "Modifica questa preimpostazione strumento"
 #: ../app/actions/tool-preset-editor-actions.c:42
 msgctxt "tool-preset-editor-action"
 msgid "Tool Preset Editor Menu"
-msgstr "Menu modifica preimpostazioni dello strumento"
+msgstr "Menu modifica preimpostazione strumento"
 
 #: ../app/actions/tool-preset-editor-actions.c:50
 msgctxt "tool-preset-editor-action"
@@ -15756,15 +15756,15 @@ msgstr "Reimposta l'ordine e la visibilità degli strumenti"
 
 #: ../app/widgets/gimptooloptionseditor.c:202
 msgid "Save Tool Preset..."
-msgstr "Salva le preimpostazioni dello strumento..."
+msgstr "Salva la preimpostazione strumento..."
 
 #: ../app/widgets/gimptooloptionseditor.c:210
 msgid "Restore Tool Preset..."
-msgstr "Ricarica la preimpostazioni dello strumento..."
+msgstr "Recupera la preimpostazione strumento..."
 
 #: ../app/widgets/gimptooloptionseditor.c:218
 msgid "Delete Tool Preset..."
-msgstr "Cancella le preimpostazioni dello strumento..."
+msgstr "Elimina la preimpostazione strumento..."
 
 #: ../app/widgets/gimptoolpreseteditor.c:148
 msgid "Icon:"
@@ -15780,7 +15780,7 @@ msgstr "Applica pennello memorizzato"
 
 #: ../app/widgets/gimptoolpreseteditor.c:171
 msgid "Apply stored dynamics"
-msgstr "Applica le dinamiche memorizzate"
+msgstr "Applica dinamiche memorizzate"
 
 #: ../app/widgets/gimptoolpreseteditor.c:177
 msgid "Apply stored gradient"
@@ -15801,7 +15801,7 @@ msgstr "Applica carattere memorizzato"
 #: ../app/widgets/gimptoolpreseteditor.c:292
 #, c-format
 msgid "%s Preset"
-msgstr "Preimpostazioni %s"
+msgstr "Preimpostazione %s"
 
 #: ../app/widgets/gimptranslationstore.c:100
 msgid "System Language"
