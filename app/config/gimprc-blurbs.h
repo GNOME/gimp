@@ -312,7 +312,7 @@ N_("Save the tool options when GIMP exits.")
 "This path will be searched for scripts when the Script-Fu plug-in is run."
 
 #define SHOW_BRUSH_OUTLINE_BLURB \
-N_("When enabled, all paint tools will show a preview of the current " \
+N_("When enabled, all brush-based paint tools will show a preview of the current " \
    "brush's outline.")
 
 #define SHOW_HELP_BUTTON_BLURB \
@@ -322,7 +322,7 @@ N_("When enabled, dialogs will show a help button that gives access to " \
 
 #define SHOW_PAINT_TOOL_CURSOR_BLURB \
 N_("When enabled, the mouse pointer will be shown over the image while " \
-    "using a paint tool.")
+    "using a brush-based paint tool.")
 
 #define SHOW_MENUBAR_BLURB \
 N_("When enabled, the menubar is visible by default. This can also be " \
