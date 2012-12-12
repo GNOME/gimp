@@ -55,9 +55,14 @@ gimp_config_file_copy (const gchar        *source,
   gint         unwritten_len = 0;
   GRegex      *old_options_regexp = NULL;
 
-  if (old_options_pattern && update_callback && !(old_options_regexp = g_regex_new (old_options_pattern, 0, 0, error)))
-    /* error set by g_regex_new. */
-    return FALSE;
+  if (old_options_pattern && update_callback)
+    {
+      old_options_regexp = g_regex_new (old_options_pattern, 0, 0, error);
+
+      /* error set by g_regex_new. */
+      if (! old_options_regexp)
+        return FALSE;
+    }
 
   sfile = g_fopen (source, "rb");
   if (sfile == NULL)
@@ -82,7 +87,8 @@ gimp_config_file_copy (const gchar        *source,
       return FALSE;
     }
 
-  while ((nbytes = fread (buffer + unwritten_len, 1, sizeof (buffer) - unwritten_len, sfile)) > 0 || unwritten_len)
+  while ((nbytes = fread (buffer + unwritten_len, 1,
+                          sizeof (buffer) - unwritten_len, sfile)) > 0 || unwritten_len)
     {
       size_t read_len = nbytes + unwritten_len;
       size_t write_len;
@@ -98,10 +104,13 @@ gimp_config_file_copy (const gchar        *source,
         }
       else if (! feof (sfile))
         {
-          /* We are in unlikely case where a single config line is longer than the buffer! */
+          /* We are in unlikely case where a single config line is
+           * longer than the buffer!
+           */
           g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
-                       _("Error parsing '%s': line over %ld characters."),
-                       gimp_filename_to_utf8 (dest), sizeof (buffer));
+                       _("Error parsing '%s': line longer than %"
+                         G_GINT64_FORMAT" characters."),
+                       gimp_filename_to_utf8 (dest), (gint64) sizeof (buffer));
           fclose (sfile);
           fclose (dfile);
           if (old_options_regexp)
@@ -111,7 +120,9 @@ gimp_config_file_copy (const gchar        *source,
 
       if (old_options_regexp && update_callback)
         {
-          write_bytes = g_regex_replace_eval (old_options_regexp, buffer, read_len, 0, 0, update_callback, NULL, error);
+          write_bytes = g_regex_replace_eval (old_options_regexp, buffer,
+                                              read_len, 0, 0, update_callback,
+                                              NULL, error);
           if (write_bytes == NULL)
             {
               /* error already set. */

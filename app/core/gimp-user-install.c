@@ -110,32 +110,32 @@ gimp_user_install_items[] =
 };
 
 
-static gboolean  user_install_detect_old         (GimpUserInstall  *install,
-                                                  const gchar      *gimp_dir);
+static gboolean  user_install_detect_old         (GimpUserInstall    *install,
+                                                  const gchar        *gimp_dir);
 static gchar *   user_install_old_style_gimpdir  (void);
 
-static void      user_install_log                (GimpUserInstall  *install,
-                                                  const gchar      *format,
+static void      user_install_log                (GimpUserInstall    *install,
+                                                  const gchar        *format,
                                                   ...) G_GNUC_PRINTF (2, 3);
-static void      user_install_log_newline        (GimpUserInstall  *install);
-static void      user_install_log_error          (GimpUserInstall  *install,
-                                                  GError          **error);
+static void      user_install_log_newline        (GimpUserInstall    *install);
+static void      user_install_log_error          (GimpUserInstall    *install,
+                                                  GError            **error);
 
-static gboolean  user_install_mkdir              (GimpUserInstall  *install,
-                                                  const gchar      *dirname);
-static gboolean  user_install_mkdir_with_parents (GimpUserInstall  *install,
-                                                  const gchar      *dirname);
+static gboolean  user_install_mkdir              (GimpUserInstall    *install,
+                                                  const gchar        *dirname);
+static gboolean  user_install_mkdir_with_parents (GimpUserInstall    *install,
+                                                  const gchar        *dirname);
 static gboolean  user_install_file_copy          (GimpUserInstall    *install,
                                                   const gchar        *source,
                                                   const gchar        *dest,
                                                   const gchar        *old_options_regexp,
                                                   GRegexEvalCallback  update_callback);
-static gboolean  user_install_dir_copy           (GimpUserInstall  *install,
-                                                  const gchar      *source,
-                                                  const gchar      *base);
+static gboolean  user_install_dir_copy           (GimpUserInstall    *install,
+                                                  const gchar        *source,
+                                                  const gchar        *base);
 
-static gboolean  user_install_create_files       (GimpUserInstall  *install);
-static gboolean  user_install_migrate_files      (GimpUserInstall  *install);
+static gboolean  user_install_create_files       (GimpUserInstall    *install);
+static gboolean  user_install_migrate_files      (GimpUserInstall    *install);
 
 
 /*  public functions  */
