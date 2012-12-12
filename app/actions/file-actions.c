@@ -46,7 +46,6 @@
 #include "actions.h"
 #include "file-actions.h"
 #include "file-commands.h"
-#include "view-actions.h"
 
 #include "gimp-intl.h"
 
@@ -247,9 +246,6 @@ file_actions_setup (GimpActionGroup *group)
                            group, 0);
 
   file_actions_close_all_update (group->gimp->displays, NULL, group);
-
-  /* Allows to interact with the active file view from docks. */
-  view_actions_setup (group);
 }
 
 void
