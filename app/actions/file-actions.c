@@ -46,6 +46,7 @@
 #include "actions.h"
 #include "file-actions.h"
 #include "file-commands.h"
+#include "view-actions.h"
 
 #include "gimp-intl.h"
 
