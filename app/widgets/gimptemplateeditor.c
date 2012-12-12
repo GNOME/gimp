@@ -518,8 +518,7 @@ gimp_template_editor_new (GimpTemplate *template,
                                  _("_Name:"), 1.0, 0.5,
                                  entry, 1, FALSE);
 
-      icon_picker = gimp_prop_icon_picker_new (G_OBJECT (private->template),
-                                               "stock-id",
+      icon_picker = gimp_prop_icon_picker_new (GIMP_VIEWABLE (private->template),
                                                gimp);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                                  _("_Icon:"), 1.0, 0.5,

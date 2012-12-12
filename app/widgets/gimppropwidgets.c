@@ -1311,10 +1311,10 @@ gimp_prop_language_entry_notify (GObject    *config,
   g_free (value);
 }
 
-
 /*****************/
 /*  icon picker  */
 /*****************/
+
 
 static void   gimp_prop_icon_picker_callback (GtkWidget  *picker,
                                               GParamSpec *param_spec,
@@ -1324,61 +1324,75 @@ static void   gimp_prop_icon_picker_notify   (GObject    *config,
                                               GtkWidget  *picker);
 
 GtkWidget *
-gimp_prop_icon_picker_new (GObject     *config,
-                           const gchar *property_name,
-                           Gimp        *gimp)
+gimp_prop_icon_picker_new (GimpViewable *viewable,
+                           Gimp         *gimp)
 {
-  GParamSpec *param_spec;
-  GtkWidget  *picker;
-  gchar      *value;
-
-  param_spec = check_param_spec_w (config, property_name,
-                                   G_TYPE_PARAM_STRING, G_STRFUNC);
-  if (! param_spec)
-    return NULL;
-
-  g_object_get (config,
-                property_name, &value,
-                NULL);
+  GObject     *object         = G_OBJECT (viewable);
+  GtkWidget   *picker         = NULL;
+  GdkPixbuf   *pixbuf_value   = NULL;
+  gchar       *stock_id_value = NULL;
 
   picker = gimp_icon_picker_new (gimp);
-  gimp_icon_picker_set_stock_id (GIMP_ICON_PICKER (picker), value);
-  g_free (value);
 
-  set_param_spec (G_OBJECT (picker), picker, param_spec);
+  g_object_get (object,
+                "stock-id", &stock_id_value,
+                "icon-pixbuf", &pixbuf_value,
+                NULL);
+
+  gimp_icon_picker_set_stock_id (GIMP_ICON_PICKER (picker), stock_id_value);
+  gimp_icon_picker_set_icon_pixbuf (GIMP_ICON_PICKER (picker), pixbuf_value);
+
+  g_signal_connect (picker, "notify::icon-pixbuf",
+                    G_CALLBACK (gimp_prop_icon_picker_callback),
+                    object);
 
   g_signal_connect (picker, "notify::stock-id",
                     G_CALLBACK (gimp_prop_icon_picker_callback),
-                    config);
+                    object);
 
-  connect_notify (config, property_name,
+  connect_notify (object, "stock-id",
                   G_CALLBACK (gimp_prop_icon_picker_notify),
                   picker);
+
+  connect_notify (object, "icon-pixbuf",
+                  G_CALLBACK (gimp_prop_icon_picker_notify),
+                  picker);
+
+  if (stock_id_value)
+    g_free (stock_id_value);
+  if (pixbuf_value)
+    g_object_unref (pixbuf_value);
 
   return picker;
 }
 
 static void
 gimp_prop_icon_picker_callback (GtkWidget  *picker,
-                                GParamSpec *unuded_param_spec,
+                                GParamSpec *param_spec,
                                 GObject    *config)
 {
-  GParamSpec  *param_spec;
-  const gchar *value;
-
-  param_spec = get_param_spec (G_OBJECT (picker));
-  if (! param_spec)
-    return;
-
-  value = gimp_icon_picker_get_stock_id (GIMP_ICON_PICKER (picker));
-
   g_signal_handlers_block_by_func (config,
                                    gimp_prop_icon_picker_notify,
                                    picker);
 
-  g_object_set (config,
-                param_spec->name, value,
-                NULL);
+  if (!strcmp (param_spec->name, "stock-id"))
+    {
+      const gchar *value = gimp_icon_picker_get_stock_id (GIMP_ICON_PICKER (picker));
+
+      g_object_set (config,
+                    "stock-id", value,
+                    NULL);
+
+    }
+  else if (!strcmp (param_spec->name, "icon-pixbuf"))
+    {
+      GdkPixbuf *value = gimp_icon_picker_get_icon_pixbuf (GIMP_ICON_PICKER (picker));
+
+      g_object_set (config,
+                    "icon-pixbuf", value,
+                    NULL);
+    }
+
 
   g_signal_handlers_unblock_by_func (config,
                                      gimp_prop_icon_picker_notify,
@@ -1390,25 +1404,41 @@ gimp_prop_icon_picker_notify (GObject    *config,
                               GParamSpec *param_spec,
                               GtkWidget  *picker)
 {
-  gchar *value;
-
-  g_object_get (config,
-                param_spec->name, &value,
-                NULL);
-
   g_signal_handlers_block_by_func (picker,
                                    gimp_prop_icon_picker_callback,
                                    config);
 
-  gimp_icon_picker_set_stock_id (GIMP_ICON_PICKER (picker), value);
+  if (!strcmp (param_spec->name, "stock-id"))
+    {
+      gchar *value = NULL;
 
-  g_free (value);
+      g_object_get (config,
+                    "stock-id", &value,
+                    NULL);
+
+      gimp_icon_picker_set_stock_id (GIMP_ICON_PICKER (picker), value);
+
+      if (value)
+        g_free (value);
+    }
+  else if (!strcmp (param_spec->name, "icon-pixbuf"))
+    {
+      GdkPixbuf *value = NULL;
+
+      g_object_get (config,
+                    "icon-pixbuf", &value,
+                    NULL);
+
+      gimp_icon_picker_set_icon_pixbuf (GIMP_ICON_PICKER (picker), value);
+
+      if (value)
+        g_object_unref (value);
+    }
 
   g_signal_handlers_unblock_by_func (picker,
                                      gimp_prop_icon_picker_callback,
                                      config);
 }
-
 
 /***********/
 /*  table  */

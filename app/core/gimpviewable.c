@@ -45,6 +45,7 @@ enum
 {
   PROP_0,
   PROP_STOCK_ID,
+  PROP_ICON_PIXBUF,
   PROP_FROZEN
 };
 
@@ -61,6 +62,7 @@ typedef struct _GimpViewablePrivate GimpViewablePrivate;
 struct _GimpViewablePrivate
 {
   gchar        *stock_id;
+  GdkPixbuf    *icon_pixbuf;
   gint          freeze_count;
   GimpViewable *parent;
 
@@ -116,6 +118,12 @@ static gboolean gimp_viewable_serialize_property     (GimpConfig    *config,
                                                       GParamSpec    *pspec,
                                                       GimpConfigWriter *writer);
 
+static gboolean gimp_viewable_deserialize_property   (GimpConfig       *config,
+                                                      guint             property_id,
+                                                      GValue           *value,
+                                                      GParamSpec       *pspec,
+                                                      GScanner         *scanner,
+                                                      GTokenType       *expected);
 
 G_DEFINE_TYPE_WITH_CODE (GimpViewable, gimp_viewable, GIMP_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
@@ -178,6 +186,12 @@ gimp_viewable_class_init (GimpViewableClass *klass)
                                    NULL, NULL,
                                    GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_ICON_PIXBUF,
+                                   "icon-pixbuf", NULL,
+                                   GDK_TYPE_PIXBUF,
+                                   G_PARAM_CONSTRUCT |
+                                   GIMP_PARAM_STATIC_STRINGS);
+
   g_object_class_install_property (object_class, PROP_FROZEN,
                                    g_param_spec_boolean ("frozen",
                                                          NULL, NULL,
@@ -195,6 +209,7 @@ gimp_viewable_init (GimpViewable *viewable)
 static void
 gimp_viewable_config_iface_init (GimpConfigInterface *iface)
 {
+  iface->deserialize_property = gimp_viewable_deserialize_property;
   iface->serialize_property = gimp_viewable_serialize_property;
 }
 
@@ -207,6 +222,12 @@ gimp_viewable_finalize (GObject *object)
     {
       g_free (private->stock_id);
       private->stock_id = NULL;
+    }
+
+  if (private->icon_pixbuf)
+    {
+      g_object_unref (private->icon_pixbuf);
+      private->icon_pixbuf = NULL;
     }
 
   if (private->preview_temp_buf)
@@ -230,12 +251,19 @@ gimp_viewable_set_property (GObject      *object,
                             const GValue *value,
                             GParamSpec   *pspec)
 {
-  GimpViewable *viewable = GIMP_VIEWABLE (object);
+  GimpViewable        *viewable = GIMP_VIEWABLE (object);
+  GimpViewablePrivate *private  = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_STOCK_ID:
       gimp_viewable_set_stock_id (viewable, g_value_get_string (value));
+      break;
+    case PROP_ICON_PIXBUF:
+      if (private->icon_pixbuf)
+        g_object_unref (private->icon_pixbuf);
+      private->icon_pixbuf = g_value_dup_object (value);
+      gimp_viewable_invalidate_preview (viewable);
       break;
     case PROP_FROZEN:
       /* read-only, fall through */
@@ -252,12 +280,16 @@ gimp_viewable_get_property (GObject    *object,
                             GValue     *value,
                             GParamSpec *pspec)
 {
-  GimpViewable *viewable = GIMP_VIEWABLE (object);
+  GimpViewable        *viewable = GIMP_VIEWABLE (object);
+  GimpViewablePrivate *private  = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_STOCK_ID:
       g_value_set_string (value, gimp_viewable_get_stock_id (viewable));
+      break;
+    case PROP_ICON_PIXBUF:
+      g_value_set_object (value, private->icon_pixbuf);
       break;
     case PROP_FROZEN:
       g_value_set_boolean (value, gimp_viewable_preview_is_frozen (viewable));
@@ -348,8 +380,9 @@ gimp_viewable_real_get_new_pixbuf (GimpViewable *viewable,
                                    gint          width,
                                    gint          height)
 {
-  GimpTempBuf *temp_buf;
-  GdkPixbuf   *pixbuf = NULL;
+  GimpViewablePrivate *private = GET_PRIVATE (viewable);
+  GdkPixbuf           *pixbuf  = NULL;
+  GimpTempBuf         *temp_buf;
 
   temp_buf = gimp_viewable_get_preview (viewable, context, width, height);
 
@@ -371,6 +404,13 @@ gimp_viewable_real_get_new_pixbuf (GimpViewable *viewable,
 
       g_object_unref (src_buffer);
       g_object_unref (dest_buffer);
+    }
+  else if (private->icon_pixbuf)
+    {
+      pixbuf = gdk_pixbuf_scale_simple (private->icon_pixbuf,
+                                        width,
+                                        height,
+                                        GDK_INTERP_BILINEAR);
     }
 
   return pixbuf;
@@ -409,11 +449,98 @@ gimp_viewable_serialize_property (GimpConfig       *config,
         }
       return TRUE;
 
+    case PROP_ICON_PIXBUF:
+      {
+        GdkPixbuf *icon_pixbuf    = NULL;
+        gchar     *pixbuffer      = NULL;
+        gchar     *pixbuffer_enc  = NULL;
+        gsize      pixbuffer_size = 0;
+        GError    *error          = NULL;
+
+        icon_pixbuf = g_value_get_object (value);
+        if (icon_pixbuf)
+          {
+            if (gdk_pixbuf_save_to_buffer (icon_pixbuf,
+                                           &pixbuffer,
+                                           &pixbuffer_size,
+                                           "png", &error, NULL))
+              {
+                pixbuffer_enc = g_base64_encode ((guchar *)pixbuffer,
+                                                 pixbuffer_size);
+                gimp_config_writer_open (writer, "icon-pixbuf");
+                gimp_config_writer_string (writer, pixbuffer_enc);
+                gimp_config_writer_close (writer);
+
+                g_free (pixbuffer_enc);
+                g_free (pixbuffer);
+              }
+          }
+      }
+      return TRUE;
+
     default:
       break;
     }
 
   return FALSE;
+}
+
+static gboolean
+gimp_viewable_deserialize_property (GimpConfig *config,
+                                    guint       property_id,
+                                    GValue     *value,
+                                    GParamSpec *pspec,
+                                    GScanner   *scanner,
+                                    GTokenType *expected)
+{
+  switch (property_id)
+    {
+    case PROP_ICON_PIXBUF:
+      {
+        gchar     *encoded_image = NULL;
+        GdkPixbuf *icon_pixbuf   = NULL;
+
+        if (! gimp_scanner_parse_string (scanner, &encoded_image))
+          {
+            *expected = G_TOKEN_STRING;
+            break;
+          }
+
+        if (encoded_image && strlen (encoded_image) > 0)
+          {
+            gsize   out_len       = 0;
+            guchar *decoded_image = g_base64_decode (encoded_image, &out_len);
+
+            if (decoded_image)
+              {
+                GInputStream *decoded_image_stream = NULL;
+                GdkPixbuf    *pixbuf               = NULL;
+
+                decoded_image_stream =
+                  g_memory_input_stream_new_from_data (decoded_image,
+                                                       out_len, NULL);
+                pixbuf = gdk_pixbuf_new_from_stream (decoded_image_stream,
+                                                     NULL,
+                                                     NULL);
+                if (pixbuf)
+                  {
+                    if (icon_pixbuf)
+                      g_object_unref (icon_pixbuf);
+                    icon_pixbuf = pixbuf;
+                  }
+                g_free (decoded_image);
+              }
+          }
+
+          g_value_take_object (value, icon_pixbuf);
+      }
+      break;
+
+    default:
+      return FALSE;
+    }
+
+  return TRUE;
 }
 
 /**
@@ -1086,6 +1213,8 @@ gimp_viewable_set_stock_id (GimpViewable *viewable,
           strcmp (stock_id, viewable_class->default_stock_id))
         private->stock_id = g_strdup (stock_id);
     }
+
+  gimp_viewable_invalidate_preview (viewable);
 
   g_object_notify (G_OBJECT (viewable), "stock-id");
 }
