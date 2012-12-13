@@ -35,7 +35,7 @@
 enum
 {
   PROP_0,
-  PROP_PREMULTIPLIED,
+  PROP_LINEAR,
   PROP_OPACITY
 };
 
@@ -73,8 +73,8 @@ gimp_operation_point_layer_mode_class_init (GimpOperationPointLayerModeClass *kl
                                  "categories",  "compositors",
                                  NULL);
 
-  g_object_class_install_property (object_class, PROP_PREMULTIPLIED,
-                                   g_param_spec_boolean ("premultiplied",
+  g_object_class_install_property (object_class, PROP_LINEAR,
+                                   g_param_spec_boolean ("linear",
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE |
@@ -103,8 +103,8 @@ gimp_operation_point_layer_mode_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_PREMULTIPLIED:
-      self->premultiplied = g_value_get_boolean (value);
+    case PROP_LINEAR:
+      self->linear = g_value_get_boolean (value);
       break;
 
     case PROP_OPACITY:
@@ -127,8 +127,8 @@ gimp_operation_point_layer_mode_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_PREMULTIPLIED:
-      g_value_set_boolean (value, self->premultiplied);
+    case PROP_LINEAR:
+      g_value_set_boolean (value, self->linear);
       break;
 
     case PROP_OPACITY:
@@ -147,8 +147,8 @@ gimp_operation_point_layer_mode_prepare (GeglOperation *operation)
   GimpOperationPointLayerMode *self = GIMP_OPERATION_POINT_LAYER_MODE (operation);
   const Babl                  *format;
 
-  if (self->premultiplied)
-    format = babl_format ("R'aG'aB'aA float");
+  if (self->linear)
+    format = babl_format ("RGBA float");
   else
     format = babl_format ("R'G'B'A float");
 

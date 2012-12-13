@@ -162,72 +162,41 @@ gimp_operation_normal_mode_process (GeglOperation       *operation,
   gfloat                      *out      = out_buf;
   const gboolean               has_mask = mask != NULL;
 
-  if (point->premultiplied)
+  while (samples--)
     {
-      while (samples--)
-        {
-          gdouble value;
-          gfloat  aux_alpha;
-          gint    b;
+      gfloat aux_alpha;
 
-          value = opacity;
-          if (has_mask)
-            value *= *mask;
-          aux_alpha = aux[ALPHA] * value;
+      aux_alpha = aux[ALPHA] * opacity;
+      if (has_mask)
+        aux_alpha *= *mask;
+
+      out[ALPHA] = aux_alpha + in[ALPHA] - aux_alpha * in[ALPHA];
+
+      if (out[ALPHA])
+        {
+          gint b;
 
           for (b = RED; b < ALPHA; b++)
             {
-              out[b] = aux[b] * value + in[b] * (1.0f - aux_alpha);
+              out[b] = (aux[b] * aux_alpha + in[b] * in[ALPHA] * (1.0f - aux_alpha)) / out[ALPHA];
             }
-
-          out[ALPHA] = aux_alpha + in[ALPHA] - aux_alpha * in[ALPHA];
-
-          in   += 4;
-          aux  += 4;
-          out  += 4;
-
-          if (has_mask)
-            mask++;
         }
-    }
-  else
-    {
-      while (samples--)
+      else
         {
-          gfloat aux_alpha;
+          gint b;
 
-          aux_alpha = aux[ALPHA] * opacity;
-          if (has_mask)
-            aux_alpha *= *mask;
-
-          out[ALPHA] = aux_alpha + in[ALPHA] - aux_alpha * in[ALPHA];
-
-          if (out[ALPHA])
+          for (b = RED; b < ALPHA; b++)
             {
-              gint b;
-
-              for (b = RED; b < ALPHA; b++)
-                {
-                  out[b] = (aux[b] * aux_alpha + in[b] * in[ALPHA] * (1.0f - aux_alpha)) / out[ALPHA];
-                }
+              out[b] = in[b];
             }
-          else
-            {
-              gint b;
-
-              for (b = RED; b < ALPHA; b++)
-                {
-                  out[b] = in[b];
-                }
-            }
-
-          in   += 4;
-          aux  += 4;
-          out  += 4;
-
-          if (has_mask)
-            mask++;
         }
+
+      in   += 4;
+      aux  += 4;
+      out  += 4;
+
+      if (has_mask)
+        mask++;
     }
 
   return TRUE;

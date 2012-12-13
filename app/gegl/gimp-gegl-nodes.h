@@ -49,7 +49,7 @@ GeglNode * gimp_gegl_add_buffer_source         (GeglNode             *parent,
 void       gimp_gegl_mode_node_set             (GeglNode             *node,
                                                 GimpLayerModeEffects  mode,
                                                 gdouble               opacity,
-                                                gboolean              premultiplied);
+                                                gboolean              linear);
 void       gimp_gegl_node_set_matrix           (GeglNode             *node,
                                                 const GimpMatrix3    *matrix);
 

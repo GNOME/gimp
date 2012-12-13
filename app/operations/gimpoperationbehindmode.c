@@ -83,63 +83,37 @@ gimp_operation_behind_mode_process (GeglOperation       *operation,
   gfloat                      *out      = out_buf;
   const gboolean               has_mask = mask != NULL;
 
-  if (point->premultiplied)
+  while (samples--)
     {
-      while (samples--)
+      gint    b;
+      gdouble value = opacity;
+
+      if (has_mask)
+        value *= *mask;
+
+      out[ALPHA] = in[ALPHA] + (1.0 - in[ALPHA]) * layer[ALPHA] * value;
+
+      if (out[ALPHA])
         {
-          gint    b;
-          gdouble value = opacity;
-
-          if (has_mask)
-            value *= *mask;
-
+          for (b = RED; b < ALPHA; b++)
+            {
+              out[b] = (in[b] * in[ALPHA] + layer[b] * value * layer[ALPHA] * value * (1.0 - in[ALPHA])) / out[ALPHA];
+            }
+        }
+      else
+        {
           for (b = RED; b <= ALPHA; b++)
             {
-              out[b] = in[b] + layer[b] * value * (1.0 - in[ALPHA]);
+              out[b] = in[b];
             }
-
-          in    += 4;
-          layer += 4;
-          out   += 4;
-
-          if (has_mask)
-            mask++;
         }
-    }
-  else
-    {
-      while (samples--)
-        {
-          gint    b;
-          gdouble value = opacity;
 
-          if (has_mask)
-            value *= *mask;
+      in    += 4;
+      layer += 4;
+      out   += 4;
 
-          out[ALPHA] = in[ALPHA] + (1.0 - in[ALPHA]) * layer[ALPHA] * value;
-
-          if (out[ALPHA])
-            {
-              for (b = RED; b < ALPHA; b++)
-                {
-                  out[b] = (in[b] * in[ALPHA] + layer[b] * value * layer[ALPHA] * value * (1.0 - in[ALPHA])) / out[ALPHA];
-                }
-            }
-          else
-            {
-              for (b = RED; b <= ALPHA; b++)
-                {
-                  out[b] = in[b];
-                }
-            }
-
-          in    += 4;
-          layer += 4;
-          out   += 4;
-
-          if (has_mask)
-            mask++;
-        }
+      if (has_mask)
+        mask++;
     }
 
   return TRUE;

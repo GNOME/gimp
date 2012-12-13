@@ -266,7 +266,7 @@ void
 gimp_gegl_mode_node_set (GeglNode             *node,
                          GimpLayerModeEffects  mode,
                          gdouble               opacity,
-                         gboolean              premultiplied)
+                         gboolean              linear)
 {
   const gchar *operation = "gimp:normal-mode";
 
@@ -305,9 +305,9 @@ gimp_gegl_mode_node_set (GeglNode             *node,
     }
 
   gegl_node_set (node,
-                 "operation",     operation,
-                 "opacity",       opacity,
-                 "premultiplied", premultiplied,
+                 "operation", operation,
+                 "opacity",   opacity,
+                 "linear",    linear,
                  NULL);
 }
 

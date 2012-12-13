@@ -41,7 +41,7 @@ struct _GimpOperationPointLayerMode
 {
   GeglOperationPointComposer3  parent_instance;
 
-  gboolean                     premultiplied;
+  gboolean                     linear;
   gdouble                      opacity;
 };
 
