@@ -1004,9 +1004,9 @@ lcms_image_transform_indexed (gint32                    image,
 {
   cmsHTRANSFORM   transform;
   guchar         *cmap;
-  gint            num_colors;
+  gint            n_cmap_bytes;
 
-  cmap = gimp_image_get_colormap (image, &num_colors);
+  cmap = gimp_image_get_colormap (image, &n_cmap_bytes);
 
   transform = cmsCreateTransform (src_profile,  TYPE_RGB_8,
                                   dest_profile, TYPE_RGB_8,
@@ -1015,15 +1015,15 @@ lcms_image_transform_indexed (gint32                    image,
 
   if (transform)
     {
-      cmsDoTransform (transform, cmap, cmap, num_colors);
-      cmsDeleteTransform(transform);
+      cmsDoTransform (transform, cmap, cmap, n_cmap_bytes / 3);
+      cmsDeleteTransform (transform);
     }
   else
     {
       g_warning ("cmsCreateTransform() failed!");
     }
 
-  gimp_image_set_colormap (image, cmap, num_colors);
+  gimp_image_set_colormap (image, cmap, n_cmap_bytes);
 }
 
 static void
