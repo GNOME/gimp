@@ -416,15 +416,36 @@ gimp_selection_tool_start_edit (GimpSelectionTool *sel_tool,
       return TRUE;
 
     case SELECTION_MOVE:
-      gimp_edit_selection_tool_start (tool, display, coords,
-                                      GIMP_TRANSLATE_MODE_MASK_TO_LAYER, FALSE);
-      return TRUE;
-
     case SELECTION_MOVE_COPY:
-      gimp_edit_selection_tool_start (tool, display, coords,
-                                      GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER,
-                                      FALSE);
-      return TRUE;
+      {
+        GimpImage    *image    = gimp_display_get_image (display);
+        GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+
+        if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+          {
+            gimp_tool_message_literal (tool, display,
+                                       _("Cannot modify the pixels of layer groups."));
+          }
+        else if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+          {
+            gimp_tool_message_literal (tool, display,
+                                       _("The active layer's pixels are locked."));
+          }
+        else
+          {
+            GimpTranslateMode edit_mode;
+
+            if (sel_tool->function == SELECTION_MOVE)
+              edit_mode = GIMP_TRANSLATE_MODE_MASK_TO_LAYER;
+            else
+              edit_mode = GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER;
+
+            gimp_edit_selection_tool_start (tool, display, coords,
+                                            edit_mode, FALSE);
+         }
+
+        return TRUE;
+      }
 
     default:
       break;
