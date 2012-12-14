@@ -119,7 +119,7 @@ gimp_metadata_generate_exif (gint32 image_ID)
  *
  * This function is a wrapper around the libexif function
  * exif_content_get_value(), necessary to deal with an incompatible
- * API change.  It looks up the value of the specifed tag,
+ * API change.  It looks up the value of the specified tag,
  * returning the result as a human-readable string.  Note that
  * @value must be pre-allocated.
  */

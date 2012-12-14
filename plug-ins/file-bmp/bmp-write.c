@@ -55,7 +55,7 @@ static struct
   RGBMode rgb_format;
   gint    use_run_length_encoding;
 
-  /* Weather or not to write BITMAPV5HEADER color space data */
+  /* Whether or not to write BITMAPV5HEADER color space data */
   gint    dont_write_color_space_data;
 } BMPSaveData;
 
@@ -193,7 +193,7 @@ WriteBMP (const gchar  *filename,
 
     case GIMP_GRAYA_IMAGE:
       if (interactive && !warning_dialog (_("Cannot save indexed image with "
-    					    "transparency in BMP file format."),
+                                            "transparency in BMP file format."),
                                           _("Alpha channel will be ignored.")))
         return GIMP_PDB_CANCEL;
 
@@ -225,7 +225,7 @@ WriteBMP (const gchar  *filename,
 
     case GIMP_INDEXEDA_IMAGE:
       if (interactive && !warning_dialog (_("Cannot save indexed image with "
-    			                    "transparency in BMP file format."),
+                                            "transparency in BMP file format."),
                                           _("Alpha channel will be ignored.")))
         return GIMP_PDB_CANCEL;
 
