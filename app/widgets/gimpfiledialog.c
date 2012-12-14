@@ -123,7 +123,7 @@ static void     gimp_file_dialog_help_clicked           (GtkWidget        *widge
                                                          gpointer          dialog);
 
 static gchar  * gimp_file_dialog_pattern_from_extension (const gchar   *extension);
-static gchar  * gimp_file_dialog_get_documents_uri      (void);
+static gchar  * gimp_file_dialog_get_default_uri        (Gimp          *gimp);
 static gchar  * gimp_file_dialog_get_dirname_from_uri   (const gchar   *uri);
 
 
@@ -489,17 +489,17 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
                                  gboolean        close_after_saving,
                                  GimpObject     *display)
 {
-  const gchar *dir_uri  = NULL;
-  const gchar *name_uri = NULL;
-  const gchar *ext_uri  = NULL;
-  gchar       *docs_uri = NULL;
-  gchar       *dirname  = NULL;
-  gchar       *basename = NULL;
+  const gchar *dir_uri     = NULL;
+  const gchar *name_uri    = NULL;
+  const gchar *ext_uri     = NULL;
+  gchar       *default_uri = NULL;
+  gchar       *dirname     = NULL;
+  gchar       *basename    = NULL;
 
   g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  docs_uri = gimp_file_dialog_get_documents_uri ();
+  default_uri = gimp_file_dialog_get_default_uri (gimp);
 
   dialog->image              = image;
   dialog->save_a_copy        = save_a_copy;
@@ -519,7 +519,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        *   3. Path of source XCF
        *   4. Path of Import source
        *   5. Last Save path of any GIMP document
-       *   6. The OS 'Documents' path
+       *   6. The default path (usually the OS 'Documents' path)
        */
 
       if (save_a_copy)
@@ -540,7 +540,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
                                      GIMP_FILE_SAVE_LAST_URI_KEY);
 
       if (! dir_uri)
-        dir_uri = docs_uri;
+        dir_uri = default_uri;
 
 
       /* Priority of default basenames for Save:
@@ -588,7 +588,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        *   3. Path of XCF source
        *   4. Last path of any save to XCF
        *   5. Last Export path of any document
-       *   6. The OS 'Documents' path
+       *   6. The default path (usually the OS 'Documents' path)
        */
 
       dir_uri = gimp_image_get_exported_uri (image);
@@ -612,7 +612,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
                                      GIMP_FILE_EXPORT_LAST_URI_KEY);
 
       if (! dir_uri)
-        dir_uri = docs_uri;
+        dir_uri = default_uri;
 
 
       /* Priority of default basenames for Export:
@@ -672,7 +672,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
   gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (dialog), dirname);
   gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), basename);
 
-  g_free (docs_uri);
+  g_free (default_uri);
   g_free (basename);
   g_free (dirname);
 }
@@ -1143,20 +1143,27 @@ gimp_file_dialog_pattern_from_extension (const gchar *extension)
 }
 
 static gchar *
-gimp_file_dialog_get_documents_uri (void)
+gimp_file_dialog_get_default_uri (Gimp *gimp)
 {
-  gchar *path;
-  gchar *uri;
+  if (gimp->default_folder)
+    {
+      return g_strdup (gimp->default_folder);
+    }
+  else
+    {
+      gchar *path;
+      gchar *uri;
 
-  /* Make sure it ends in '/' */
-  path = g_build_path ("/",
-                       g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS),
-                       "/",
-                       NULL);
-  uri = g_filename_to_uri (path, NULL, NULL);
-  g_free (path);
+      /* Make sure it ends in '/' */
+      path = g_build_path (G_DIR_SEPARATOR_S,
+                           g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS),
+                           G_DIR_SEPARATOR_S,
+                           NULL);
+      uri = g_filename_to_uri (path, NULL, NULL);
+      g_free (path);
 
-  return uri;
+      return uri;
+    }
 }
 
 static gchar *

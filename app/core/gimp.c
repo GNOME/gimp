@@ -191,6 +191,7 @@ gimp_init (Gimp *gimp)
 {
   gimp->config           = NULL;
   gimp->session_name     = NULL;
+  gimp->default_folder   = NULL;
 
   gimp->be_verbose       = FALSE;
   gimp->no_data          = FALSE;
@@ -453,6 +454,12 @@ gimp_finalize (GObject *object)
     {
       g_object_unref (gimp->edit_config);
       gimp->edit_config = NULL;
+    }
+
+  if (gimp->default_folder)
+    {
+      g_free (gimp->default_folder);
+      gimp->default_folder = NULL;
     }
 
   if (gimp->session_name)
@@ -746,6 +753,7 @@ gimp_real_exit (Gimp     *gimp,
 Gimp *
 gimp_new (const gchar       *name,
           const gchar       *session_name,
+          const gchar       *default_folder,
           gboolean           be_verbose,
           gboolean           no_data,
           gboolean           no_fonts,
@@ -764,6 +772,7 @@ gimp_new (const gchar       *name,
                        NULL);
 
   gimp->session_name     = g_strdup (session_name);
+  gimp->default_folder   = g_strdup (default_folder);
   gimp->be_verbose       = be_verbose       ? TRUE : FALSE;
   gimp->no_data          = no_data          ? TRUE : FALSE;
   gimp->no_fonts         = no_fonts         ? TRUE : FALSE;

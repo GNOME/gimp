@@ -145,12 +145,34 @@ app_run (const gchar         *full_prog_name,
   GimpInitStatusFunc  update_status_func = NULL;
   Gimp               *gimp;
   GMainLoop          *loop;
+  gchar              *default_folder = NULL;
+
+  if (filenames && filenames[0] && ! filenames[1] &&
+      g_file_test (filenames[0], G_FILE_TEST_IS_DIR))
+    {
+      if (g_path_is_absolute (filenames[0]))
+        {
+          default_folder = g_filename_to_uri (filenames[0], NULL, NULL);
+        }
+      else
+        {
+          gchar *absolute = g_build_path (G_DIR_SEPARATOR_S,
+                                          g_get_current_dir (),
+                                          filenames[0],
+                                          NULL);
+          default_folder = g_filename_to_uri (absolute, NULL, NULL);
+          g_free (absolute);
+        }
+
+      filenames = NULL;
+    }
 
   /*  Create an instance of the "Gimp" object which is the root of the
    *  core object system
    */
   gimp = gimp_new (full_prog_name,
                    session_name,
+                   default_folder,
                    be_verbose,
                    no_data,
                    no_fonts,
