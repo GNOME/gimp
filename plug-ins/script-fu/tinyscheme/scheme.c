@@ -1437,7 +1437,6 @@ static int file_push(scheme *sc, const char *fname) {
     if(fname)
       sc->load_stack[sc->file_i].rep.stdio.filename = store_string(sc, strlen(fname), fname, 0);
 #endif
-
   }
   return fin!=0;
 }
@@ -2126,17 +2125,38 @@ static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen) {
           snprintf(p, STRBUFFSIZE, "#<PORT>");
      } else if (is_number(l)) {
           p = sc->strbuff;
-          if(num_is_integer(l)) {
-               snprintf(p, STRBUFFSIZE, "%ld", ivalue_unchecked(l));
+          if (f <= 1 || f == 10) /* f is the base for numbers if > 1 */ {
+              if(num_is_integer(l)) {
+                   snprintf(p, STRBUFFSIZE, "%ld", ivalue_unchecked(l));
+              } else {
+                   snprintf(p, STRBUFFSIZE, "%.10g", rvalue_unchecked(l));
+                   /* r5rs says there must be a '.' (unless 'e'?) */
+                   f = strcspn(p, ".e");
+                   if (p[f] == 0) {
+                        p[f] = '.'; // not found, so add '.0' at the end
+                        p[f+1] = '0';
+                        p[f+2] = 0;
+                   }
+              }
           } else {
-               snprintf(p, STRBUFFSIZE, "%.10g", rvalue_unchecked(l));
-               /* R5RS says there must be a '.' (unless 'e'?) */
-               f = strcspn(p, ".e");
-               if (p[f] == 0) {
-                    p[f] = '.'; // not found, so add '.0' at the end
-                    p[f+1] = '0';
-                    p[f+2] = 0;
-               }
+              long v = ivalue(l);
+              if (f == 16) {
+                  if (v >= 0)
+                    snprintf(p, STRBUFFSIZE, "%lx", v);
+                  else
+                    snprintf(p, STRBUFFSIZE, "-%lx", -v);
+              } else if (f == 8) {
+                  if (v >= 0)
+                    snprintf(p, STRBUFFSIZE, "%lo", v);
+                  else
+                    snprintf(p, STRBUFFSIZE, "-%lo", -v);
+              } else if (f == 2) {
+                  unsigned long b = (v < 0) ? -v : v;
+                  p = &p[STRBUFFSIZE-1];
+                  *p = 0;
+                  do { *--p = (b&1) ? '1' : '0'; b >>= 1; } while (b != 0);
+                  if (v < 0) *--p = '-';
+              }
           }
      } else if (is_string(l)) {
           if (!f) {
@@ -2981,7 +3001,7 @@ static pointer opexe_0(scheme *sc, enum scheme_opcodes op) {
                sc->code = car(sc->code);
           else
                sc->code = cadr(sc->code);  /* (if #f 1) ==> () because
-                               * car(sc->NIL) = sc->NIL */
+                                            * car(sc->NIL) = sc->NIL */
           s_goto(sc,OP_EVAL);
 
      case OP_LET0:       /* let */
@@ -3528,28 +3548,70 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
           s_return(sc,mk_symbol(sc,strvalue(car(sc->args))));
 
      case OP_STR2ATOM: /* string->atom */ {
-       char *s=strvalue(car(sc->args));
-       if(*s=='#') {
-         s_return(sc, mk_sharp_const(sc, s+1));
-       } else {
-         s_return(sc, mk_atom(sc, s));
-       }
-     }
+          char *s=strvalue(car(sc->args));
+          long pf = 0;
+          if(cdr(sc->args)!=sc->NIL) {
+            /* we know cadr(sc->args) is a natural number */
+            /* see if it is 2, 8, 10, or 16, or error */
+            pf = ivalue_unchecked(cadr(sc->args));
+            if(pf == 16 || pf == 10 || pf == 8 || pf == 2) {
+               /* base is OK */
+            }
+            else {
+              pf = -1;
+            }
+          }
+          if (pf < 0) {
+            Error_1(sc, "string->atom: bad base:", cadr(sc->args));
+          } else if(*s=='#') /* no use of base! */ {
+            s_return(sc, mk_sharp_const(sc, s+1));
+          } else {
+            if (pf == 0 || pf == 10) {
+              s_return(sc, mk_atom(sc, s));
+            }
+            else {
+              char *ep;
+              long iv = strtol(s,&ep,(int )pf);
+              if (*ep == 0) {
+                s_return(sc, mk_integer(sc, iv));
+              }
+              else {
+                s_return(sc, sc->F);
+              }
+            }
+          }
+        }
 
      case OP_SYM2STR: /* symbol->string */
           x=mk_string(sc,symname(car(sc->args)));
           setimmutable(x);
           s_return(sc,x);
-     case OP_ATOM2STR: /* atom->string */
-       x=car(sc->args);
-       if(is_number(x) || is_character(x) || is_string(x) || is_symbol(x)) {
-         char *p;
-         int len;
-         atom2str(sc,x,0,&p,&len);
-         s_return(sc,mk_counted_string(sc,p,len));
-       } else {
-         Error_1(sc, "atom->string: not an atom:", x);
-       }
+
+     case OP_ATOM2STR: /* atom->string */ {
+          long pf = 0;
+          x=car(sc->args);
+          if(cdr(sc->args)!=sc->NIL) {
+            /* we know cadr(sc->args) is a natural number */
+            /* see if it is 2, 8, 10, or 16, or error */
+            pf = ivalue_unchecked(cadr(sc->args));
+            if(is_number(x) && (pf == 16 || pf == 10 || pf == 8 || pf == 2)) {
+              /* base is OK */
+            }
+            else {
+              pf = -1;
+            }
+          }
+          if (pf < 0) {
+            Error_1(sc, "atom->string: bad base:", cadr(sc->args));
+          } else if(is_number(x) || is_character(x) || is_string(x) || is_symbol(x)) {
+            char *p;
+            int len;
+            atom2str(sc,x,(int )pf,&p,&len);
+            s_return(sc,mk_counted_string(sc,p,len));
+          } else {
+            Error_1(sc, "atom->string: not an atom:", x);
+          }
+        }
 
      case OP_MKSTRING: { /* make-string */
           gunichar fill=' ';

@@ -142,15 +142,18 @@
        (if (pred a) a
          (error "string->xxx: not a xxx" a))))
 
-(define (string->number str) (string->anyatom str number?))
+(define (string->number str . base)
+    (let ((n (string->atom str (if (null? base) 10 (car base)))))
+        (if (number? n) n #f)))
 
 (define (anyatom->string n pred)
   (if (pred n)
       (atom->string n)
       (error "xxx->string: not a xxx" n)))
 
+(define (number->string n . base)
+    (atom->string n (if (null? base) 10 (car base))))
 
-(define (number->string n) (anyatom->string n number?))
 
 (define (char-cmp? cmp a b)
      (cmp (char->integer a) (char->integer b)))
