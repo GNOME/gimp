@@ -100,7 +100,7 @@ gimp_window_key_press_event (GtkWidget   *widget,
     accel_mods |= gtk_window_get_mnemonic_modifier (window);
 
   /* invoke modified accelerators */
-  if (! handled && event->state & accel_mods)
+  if (! handled && (event->state & accel_mods))
     {
       handled = gtk_window_activate_key (window, event);
 
