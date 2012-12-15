@@ -82,6 +82,14 @@
 
 #include "gimp-intl.h"
 
+
+/*  halfway between G_PRIORITY_HIGH_IDLE and G_PRIORITY_DEFAULT_IDLE - 1,
+ *  so a bit higher than projection construction
+ */
+#define GIMP_DISPLAY_SHELL_FILL_IDLE_PRIORITY \
+        ((G_PRIORITY_HIGH_IDLE + G_PRIORITY_DEFAULT_IDLE) / 2 - 1)
+
+
 enum
 {
   PROP_0,
@@ -1388,8 +1396,10 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
   /*  we double buffer image drawing manually  */
   gtk_widget_set_double_buffered (shell->canvas, FALSE);
 
-  shell->fill_idle_id = g_idle_add ((GSourceFunc) gimp_display_shell_fill_idle,
-                                    shell);
+  shell->fill_idle_id =
+    g_idle_add_full (GIMP_DISPLAY_SHELL_FILL_IDLE_PRIORITY,
+                     (GSourceFunc) gimp_display_shell_fill_idle, shell,
+                     NULL);
 }
 
 /* We used to calculate the scale factor in the SCALEFACTOR_X() and
