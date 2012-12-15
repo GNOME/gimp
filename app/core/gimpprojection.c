@@ -280,8 +280,17 @@ gimp_projection_get_buffer (GimpPickable *pickable)
 
       proj->validate_handler = gimp_tile_handler_projection_new (graph);
       gegl_buffer_add_handler (proj->buffer, proj->validate_handler);
-      gimp_tile_handler_projection_invalidate (proj->validate_handler,
-                                               0, 0, width, height);
+
+      /*  This used to call gimp_tile_handler_projection_invalidate()
+       *  which forced the entire projection to be constructed in one
+       *  go for new images, causing a potentially huge delay. Now we
+       *  initially validate stuff the normal way, which makes the
+       *  image appear incrementally, but it keeps everything
+       *  responsive.
+       */
+      gimp_projection_add_update_area (proj, 0, 0, width, height);
+      proj->invalidate_preview = TRUE;
+      gimp_projection_flush (proj);
     }
 
   return proj->buffer;
