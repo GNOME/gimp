@@ -50,7 +50,8 @@
 typedef enum
 {
   DISPOSE_COMBINE   = 0x00,
-  DISPOSE_REPLACE   = 0x01
+  DISPOSE_REPLACE   = 0x01,
+  DISPOSE_TAGS      = 0x02,
 } DisposeType;
 
 typedef struct
@@ -124,6 +125,7 @@ static void        update_scale              (gdouble          scale);
 
 /* tag util functions*/
 static gint        parse_ms_tag              (const gchar     *str);
+static void        set_total_frames          (void);
 static DisposeType parse_disposal_tag        (const gchar     *str);
 static gboolean    is_disposal_tag           (const gchar     *str,
                                               DisposeType     *disposal,
@@ -177,12 +179,18 @@ static gint32             total_frames              = 0;
 static gint32            *frames                    = NULL;
 static guchar            *rawframe                  = NULL;
 static guint32           *frame_durations           = NULL;
-static guint              frame_number              = 0;
+static guint              frame_number;
+static guint              frame_number_min, frame_number_max;
 
 static gboolean           playing                   = FALSE;
 static guint              timer                     = 0;
 static gboolean           detached                  = FALSE;
 static gdouble            scale, shape_scale;
+
+/* Some regexp used to parse layer tags. */
+static GRegex* nospace_reg = NULL;
+static GRegex* layers_reg = NULL;
+static GRegex* all_reg = NULL;
 
 /* Default settings. */
 static AnimationSettings settings =
@@ -251,6 +259,11 @@ run (const gchar      *name,
     {
       gimp_get_data (PLUG_IN_PROC, &settings);
       image_id = param[1].data.d_image;
+
+      /* Frame parsing. */
+      nospace_reg = g_regex_new("[ \t]*", G_REGEX_OPTIMIZE, 0, NULL);
+      layers_reg = g_regex_new("\\[(([0-9]+(-[0-9]+)?)(,[0-9]+(-[0-9]+)?)*)\\]", G_REGEX_OPTIMIZE, 0, NULL);
+      all_reg = g_regex_new("\\[\\*\\]", G_REGEX_OPTIMIZE, 0, NULL);
 
       initialize ();
       gtk_main ();
@@ -362,7 +375,7 @@ da_size_callback (GtkWidget *widget,
       rawframe = g_malloc ((unsigned long) drawing_area_width * drawing_area_height * 4);
 
       /* As we re-allocated the drawn data, let's render it again. */
-      if (frame_number < total_frames)
+      if (frame_number - frame_number_min < total_frames)
         render_frame (frame_number);
     }
   else
@@ -413,7 +426,7 @@ sda_size_callback (GtkWidget *widget,
       g_free (rawframe);
       rawframe = g_malloc ((unsigned long) shape_drawing_area_width * shape_drawing_area_height * 4);
 
-      if (frame_number < total_frames)
+      if (frame_number - frame_number_min < total_frames)
         render_frame (frame_number);
     }
 }
@@ -936,6 +949,10 @@ build_dialog (gchar             *imagename)
   gtk_combo_box_text_insert_text (GTK_COMBO_BOX_TEXT (frame_disposal_combo), DISPOSE_REPLACE, text);
   g_free (text);
 
+  text = g_strdup (_("Use layer tags (custom)"));
+  gtk_combo_box_text_insert_text (GTK_COMBO_BOX_TEXT (frame_disposal_combo), DISPOSE_TAGS, text);
+  g_free (text);
+
   gtk_combo_box_set_active (GTK_COMBO_BOX (frame_disposal_combo), settings.default_frame_disposal);
 
   g_signal_connect (frame_disposal_combo, "changed",
@@ -1002,7 +1019,7 @@ static void
 init_frames (void)
 {
   /* Frames are associated to an unused image. */
-  gint          i;
+  static gint32 frames_image_id;
   gint32        new_frame, previous_frame, new_layer;
   gboolean      animated;
   GtkAction    *action;
@@ -1010,7 +1027,14 @@ init_frames (void)
   DisposeType   disposal = settings.default_frame_disposal;
   gchar        *layer_name;
 
-  total_frames = total_layers;
+  set_total_frames ();
+  if (total_frames <= 0)
+    {
+      gimp_message (_("This animation has no frame."));
+      gtk_main_quit ();
+      gimp_quit ();
+      return;
+    }
 
   /* Cleanup before re-generation. */
   if (frames)
@@ -1019,6 +1043,7 @@ init_frames (void)
       g_free (frames);
       g_free (frame_durations);
     }
+
   frames = g_try_malloc0_n (total_frames, sizeof (gint32));
   frame_durations = g_try_malloc0_n (total_frames, sizeof (guint32));
   if (! frames || ! frame_durations)
@@ -1035,32 +1060,133 @@ init_frames (void)
   /* Save processing time and memory by not saving history and merged frames. */
   gimp_image_undo_disable (frames_image_id);
 
-  for (i = 0; i < total_frames; i++)
+  if (disposal == DISPOSE_TAGS)
     {
-      layer_name = gimp_item_get_name (layers[total_layers - (i + 1)]);
-      if (layer_name)
+      gint        i, j, k;
+      gchar*      nospace_name;
+      GMatchInfo *match_info;
+
+      for (i = 0; i < total_layers; i++)
         {
-          duration = parse_ms_tag (layer_name);
-          disposal = parse_disposal_tag (layer_name);
+          layer_name = gimp_item_get_name (layers[total_layers - (i + 1)]);
+          nospace_name = g_regex_replace_literal (nospace_reg, layer_name, -1, 0, "", 0, NULL);
+          if (g_regex_match (all_reg, nospace_name, 0, NULL))
+            {
+              for (j = 0; j < total_frames; j++)
+                {
+                  new_layer = gimp_layer_new_from_drawable (layers[total_layers - (i + 1)], frames_image_id);
+                  gimp_image_insert_layer (frames_image_id, new_layer, 0, 0);
+                  if (! frames[j])
+                    frames[j] = new_layer;
+                  else
+                    {
+                      gimp_item_set_visible (frames[j], TRUE);
+                      gimp_item_set_visible (new_layer, TRUE);
+                      frames[j] = gimp_image_merge_visible_layers (frames_image_id, GIMP_CLIP_TO_IMAGE);
+                    }
+                  gimp_item_set_visible (frames[j], FALSE);
+                }
+            }
+          else
+            {
+              g_regex_match (layers_reg, nospace_name, 0, &match_info);
+
+              while (g_match_info_matches (match_info))
+                {
+                  gchar *tag = g_match_info_fetch (match_info, 1);
+                  gchar** tokens = g_strsplit(tag, ",", 0);
+
+                  for (j = 0; tokens[j] != NULL; j++)
+                    {
+                      gchar* hyphen;
+                      hyphen = g_strrstr(tokens[j], "-");
+                      if (hyphen != NULL)
+                        {
+                          gint32 first = (gint32) g_ascii_strtoll (tokens[j], NULL, 10);
+                          gint32 second = (gint32) g_ascii_strtoll (&hyphen[1], NULL, 10);
+                          for (k = first; k <= second; k++)
+                            {
+                              new_layer = gimp_layer_new_from_drawable (layers[total_layers - (i + 1)], frames_image_id);
+                              gimp_image_insert_layer (frames_image_id, new_layer, 0, 0);
+                              if (! frames[k - frame_number_min])
+                                frames[k - frame_number_min] = new_layer;
+                              else
+                                {
+                                  gimp_item_set_visible (frames[k - frame_number_min], TRUE);
+                                  gimp_item_set_visible (new_layer, TRUE);
+                                  frames[k - frame_number_min] = gimp_image_merge_visible_layers (frames_image_id, GIMP_CLIP_TO_IMAGE);
+                                }
+                              gimp_item_set_visible (frames[k - frame_number_min], FALSE);
+                            }
+                        }
+                      else
+                        {
+                          gint32 num = (gint32) g_ascii_strtoll (tokens[j], NULL, 10);
+
+                          new_layer = gimp_layer_new_from_drawable (layers[total_layers - (i + 1)], frames_image_id);
+                          gimp_image_insert_layer (frames_image_id, new_layer, 0, 0);
+                          if (! frames[num - frame_number_min])
+                            frames[num - frame_number_min] = new_layer;
+                          else
+                            {
+                              gimp_item_set_visible (frames[num - frame_number_min], TRUE);
+                              gimp_item_set_visible (new_layer, TRUE);
+                              frames[num - frame_number_min] = gimp_image_merge_visible_layers (frames_image_id, GIMP_CLIP_TO_IMAGE);
+                            }
+                          gimp_item_set_visible (frames[num - frame_number_min], FALSE);
+                        }
+                    }
+                  g_strfreev (tokens);
+                  g_free (tag);
+                  g_match_info_next (match_info, NULL);
+                }
+              g_match_info_free (match_info);
+            }
           g_free (layer_name);
+          g_free (nospace_name);
         }
 
-      if (i > 0 && disposal != DISPOSE_REPLACE)
+      for (i = 0; i < total_frames; i++)
         {
-          previous_frame = gimp_layer_copy (frames[i - 1]);
-          gimp_image_insert_layer (frames_image_id, previous_frame, 0, -1);
-          gimp_item_set_visible (previous_frame, TRUE);
-        }
-      new_layer = gimp_layer_new_from_drawable (layers[total_layers - (i + 1)], frames_image_id);
-      gimp_image_insert_layer (frames_image_id, new_layer, 0, -1);
-      gimp_item_set_visible (new_layer, TRUE);
-      new_frame = gimp_image_merge_visible_layers (frames_image_id, GIMP_CLIP_TO_IMAGE);
-      frames[i] = new_frame;
-      gimp_item_set_visible (new_frame, FALSE);
+          /* If for some reason a frame is absent, use the previous one.
+           * We are ensured that there is at least a "first" frame for this. */
+          if (! frames[i])
+            frames[i] = frames[i - 1];
 
-      if (duration <= 0)
-        duration = settings.default_frame_duration;
-      frame_durations[i] = (guint32) duration;
+          frame_durations[i] = settings.default_frame_duration;
+        }
+    }
+  else
+    {
+      gint i;
+
+      for (i = 0; i < total_frames; i++)
+        {
+          layer_name = gimp_item_get_name (layers[total_layers - (i + 1)]);
+          if (layer_name)
+            {
+              duration = parse_ms_tag (layer_name);
+              disposal = parse_disposal_tag (layer_name);
+              g_free (layer_name);
+            }
+
+          if (i > 0 && disposal != DISPOSE_REPLACE)
+            {
+              previous_frame = gimp_layer_copy (frames[i - 1]);
+              gimp_image_insert_layer (frames_image_id, previous_frame, 0, 0);
+              gimp_item_set_visible (previous_frame, TRUE);
+            }
+          new_layer = gimp_layer_new_from_drawable (layers[total_layers - (i + 1)], frames_image_id);
+          gimp_image_insert_layer (frames_image_id, new_layer, 0, 0);
+          gimp_item_set_visible (new_layer, TRUE);
+          new_frame = gimp_image_merge_visible_layers (frames_image_id, GIMP_CLIP_TO_IMAGE);
+          frames[i] = new_frame;
+          gimp_item_set_visible (new_frame, FALSE);
+
+          if (duration <= 0)
+            duration = settings.default_frame_duration;
+          frame_durations[i] = (guint32) duration;
+        }
     }
 
   /* Update the UI. */
@@ -1082,8 +1208,8 @@ init_frames (void)
   gtk_action_set_sensitive (action, animated);
 
   /* Keep the same frame number, unless it is now invalid. */
-  if (frame_number >= total_frames)
-    frame_number = 0;
+  if (frame_number > frame_number_max || frame_number < frame_number_min)
+    frame_number = frame_number_min;
 }
 
 static void
@@ -1110,7 +1236,6 @@ initialize (void)
 
   init_frames ();
   render_frame (frame_number);
-  show_frame ();
 }
 
 /* Rendering Functions */
@@ -1127,7 +1252,7 @@ render_frame (gint32 whichframe)
   gdouble        drawing_scale;
   guchar        *preview_data;
 
-  g_assert (whichframe < total_frames);
+  g_assert (whichframe >= frame_number_min && whichframe <= frame_number_max);
 
   if (detached)
     {
@@ -1149,7 +1274,7 @@ render_frame (gint32 whichframe)
       total_alpha_preview ();
     }
 
-  buffer = gimp_drawable_get_buffer (frames[whichframe]);
+  buffer = gimp_drawable_get_buffer (frames[whichframe - frame_number_min]);
 
   /* Fetch and scale the whole raw new frame */
   gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, drawing_width, drawing_height),
@@ -1209,6 +1334,9 @@ render_frame (gint32 whichframe)
 
   /* clean up */
   g_object_unref (buffer);
+
+  /* Update UI. */
+  show_frame ();
 }
 
 static void
@@ -1218,10 +1346,13 @@ show_frame (void)
 
   /* update the dialog's progress bar */
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (progress),
-                                 ((gfloat) frame_number /
+                                 ((gfloat) (frame_number - frame_number_min) /
                                   (gfloat) (total_frames - 0.999)));
 
-  text = g_strdup_printf (_("Frame %d of %d"), frame_number + 1, total_frames);
+  if (settings.default_frame_disposal != DISPOSE_TAGS || frame_number_min == 1)
+    text = g_strdup_printf (_("Frame %d of %d"), frame_number, total_frames);
+  else
+    text = g_strdup_printf (_("Frame %d (%d) of %d"), frame_number - frame_number_min + 1, frame_number, total_frames);
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (progress), text);
   g_free (text);
 }
@@ -1289,17 +1420,17 @@ remove_timer (void)
 static void
 do_back_step (void)
 {
-  if (frame_number == 0)
-    frame_number = total_frames - 1;
+  if (frame_number == frame_number_min)
+    frame_number = frame_number_max;
   else
-    frame_number = (frame_number - 1) % total_frames;
+    frame_number = frame_number - 1;
   render_frame (frame_number);
 }
 
 static void
 do_step (void)
 {
-  frame_number = (frame_number + 1) % total_frames;
+  frame_number = frame_number_min + ((frame_number - frame_number_min + 1) % total_frames);
   render_frame (frame_number);
 }
 
@@ -1326,13 +1457,12 @@ advance_frame_callback (gpointer data)
 
   remove_timer();
 
-  duration = frame_durations[(frame_number + 1) % total_frames];
+  duration = frame_durations[(frame_number - frame_number_min + 1) % total_frames];
 
   timer = g_timeout_add (duration * get_duration_factor (settings.duration_index),
                          advance_frame_callback, NULL);
 
   do_step ();
-  show_frame ();
 
   return FALSE;
 }
@@ -1348,7 +1478,7 @@ play_callback (GtkToggleAction *action)
 
   if (playing)
     {
-      timer = g_timeout_add ((gdouble) frame_durations[frame_number] *
+      timer = g_timeout_add ((gdouble) frame_durations[frame_number - frame_number_min] *
                              get_duration_factor (settings.duration_index),
                              advance_frame_callback, NULL);
 
@@ -1457,7 +1587,6 @@ step_back_callback (GtkAction *action)
     gtk_action_activate (gtk_ui_manager_get_action (ui_manager,
                                                     "/anim-play-toolbar/play"));
   do_back_step();
-  show_frame();
 }
 
 static void
@@ -1467,7 +1596,6 @@ step_callback (GtkAction *action)
     gtk_action_activate (gtk_ui_manager_get_action (ui_manager,
                                                     "/anim-play-toolbar/play"));
   do_step();
-  show_frame();
 }
 
 static void
@@ -1482,9 +1610,8 @@ rewind_callback (GtkAction *action)
   if (playing)
     gtk_action_activate (gtk_ui_manager_get_action (ui_manager,
                                                     "/anim-play-toolbar/play"));
-  frame_number = 0;
+  frame_number = frame_number_min;
   render_frame (frame_number);
-  show_frame ();
 }
 
 static void
@@ -1712,6 +1839,72 @@ parse_ms_tag (const gchar *str)
     }
 
   return -1;
+}
+
+/**
+ * Set the `total_frames` for the DISPOSE_TAGS disposal.
+ * Will set 0 if no layer has frame tags in tags mode, or if there is no layer in combine/replace.
+ */
+static void
+set_total_frames (void)
+{
+  gint max = G_MININT;
+  gint min = G_MAXINT;
+  gint i, j;
+  gchar* layer_name;
+  gchar* nospace_name;
+  GMatchInfo* match_info;
+
+  if (settings.default_frame_disposal != DISPOSE_TAGS)
+    {
+      total_frames = total_layers;
+      frame_number_min = 1;
+      frame_number_max = frame_number_min + total_frames - 1;
+      return;
+    }
+
+  for (i = 0; i < total_layers; i++)
+    {
+      layer_name = gimp_item_get_name (layers[i]);
+      nospace_name = g_regex_replace_literal (nospace_reg, layer_name, -1, 0, "", 0, NULL);
+
+      g_regex_match (layers_reg, nospace_name, 0, &match_info);
+
+      while (g_match_info_matches (match_info))
+        {
+          gchar *tag = g_match_info_fetch (match_info, 1);
+          gchar** tokens = g_strsplit(tag, ",", 0);
+
+          for (j = 0; tokens[j] != NULL; j++)
+            {
+              gchar* hyphen;
+              hyphen = g_strrstr(tokens[j], "-");
+              if (hyphen != NULL)
+                {
+                  gint32 first = (gint32) g_ascii_strtoll (tokens[j], NULL, 10);
+                  gint32 second = (gint32) g_ascii_strtoll (&hyphen[1], NULL, 10);
+                  max = (second > first && second > max)? second : max;
+                  min = (second > first && first < min)? first : min;
+                }
+              else
+                {
+                  gint32 num = (gint32) g_ascii_strtoll (tokens[j], NULL, 10);
+                  max = (num > max)? num : max;
+                  min = (num < min)? num : min;
+                }
+            }
+          g_strfreev (tokens);
+          g_free (tag);
+          g_free (layer_name);
+          g_match_info_next (match_info, NULL);
+        }
+
+      g_free (nospace_name);
+      g_match_info_free (match_info);
+      total_frames = (max > min)? max + 1 - min : 0;
+      frame_number_min = min;
+      frame_number_max = max;
+    }
 }
 
 static gboolean
