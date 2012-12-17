@@ -587,11 +587,11 @@ ui_manager_new (GtkWidget *window)
   static GtkActionEntry actions[] =
   {
     { "step-back", GTK_STOCK_MEDIA_PREVIOUS,
-      N_("_Step_back"), NULL, N_("Step back to previous frame"),
+      N_("_Step_back"), "d", N_("Step back to previous frame"),
       G_CALLBACK (step_back_callback) },
 
     { "step", GTK_STOCK_MEDIA_NEXT,
-      N_("_Step"), NULL, N_("Step to next frame"),
+      N_("_Step"), "f", N_("Step to next frame"),
       G_CALLBACK (step_callback) },
 
     { "rewind", GTK_STOCK_MEDIA_REWIND,
@@ -635,7 +635,7 @@ ui_manager_new (GtkWidget *window)
   static GtkToggleActionEntry toggle_actions[] =
   {
     { "play", GTK_STOCK_MEDIA_PLAY,
-      NULL, NULL, N_("Start playback"),
+      NULL, "space", N_("Start playback"),
       G_CALLBACK (play_callback), FALSE },
 
     { "detach", GIMP_STOCK_DETACH,
