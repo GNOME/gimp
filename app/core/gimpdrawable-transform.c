@@ -134,30 +134,10 @@ gimp_drawable_transform_buffer_affine (GimpDrawable           *drawable,
   gimp_matrix3_mult (&inv, &gegl_matrix);
   gimp_matrix3_translate (&gegl_matrix, -x1, -y1);
 
-  /*  Experimental HACK to check the performance improvement of having
-   *  the transform op's input cached in the right format
-   */
-  if (gegl_buffer_get_format (orig_buffer) == babl_format ("RaGaBaA float"))
-    {
-      g_object_ref (orig_buffer);
-    }
-  else
-    {
-      GeglBuffer *temp =
-        gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                         gegl_buffer_get_width  (orig_buffer),
-                                         gegl_buffer_get_height (orig_buffer)),
-                         babl_format ("RaGaBaA float"));
-      gegl_buffer_copy (orig_buffer, NULL, temp, NULL);
-      orig_buffer = temp;
-    }
-
   gimp_gegl_apply_transform (orig_buffer, progress, NULL,
                              new_buffer,
                              interpolation_type,
                              &gegl_matrix);
-
-  g_object_unref (orig_buffer);
 
   *new_offset_x = x1;
   *new_offset_y = y1;
