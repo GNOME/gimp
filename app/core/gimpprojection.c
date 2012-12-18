@@ -229,6 +229,9 @@ gimp_projection_pickable_flush (GimpPickable *pickable)
 {
   GimpProjection *proj = GIMP_PROJECTION (pickable);
 
+  /* create the buffer if it doesn't exist */
+  gimp_projection_get_buffer (pickable);
+
   gimp_projection_finish_draw (proj);
   gimp_projection_flush_now (proj);
 
