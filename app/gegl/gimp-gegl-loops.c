@@ -46,31 +46,31 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
   GeglRectangle      *dest_roi;
   const Babl         *src_format;
   const Babl         *dest_format;
-  gint                src_bpp;
-  gint                dest_bpp;
+  gint                src_components;
+  gint                dest_components;
 
   src_format = gegl_buffer_get_format (src_buffer);
 
   if (babl_format_is_palette (src_format))
-    src_format = gimp_babl_format (GIMP_RGB, GIMP_PRECISION_U8,
+    src_format = gimp_babl_format (GIMP_RGB, GIMP_PRECISION_FLOAT,
                                    babl_format_has_alpha (src_format));
   else
     src_format = gimp_babl_format (gimp_babl_format_get_base_type (src_format),
-                                   GIMP_PRECISION_U8,
+                                   GIMP_PRECISION_FLOAT,
                                    babl_format_has_alpha (src_format));
 
   dest_format = gegl_buffer_get_format (dest_buffer);
 
   if (babl_format_is_palette (dest_format))
-    dest_format = gimp_babl_format (GIMP_RGB, GIMP_PRECISION_U8,
+    dest_format = gimp_babl_format (GIMP_RGB, GIMP_PRECISION_FLOAT,
                                     babl_format_has_alpha (dest_format));
   else
     dest_format = gimp_babl_format (gimp_babl_format_get_base_type (dest_format),
-                                    GIMP_PRECISION_U8,
+                                    GIMP_PRECISION_FLOAT,
                                     babl_format_has_alpha (dest_format));
 
-  src_bpp  = babl_format_get_bytes_per_pixel (src_format);
-  dest_bpp = babl_format_get_bytes_per_pixel (dest_format);
+  src_components  = babl_format_get_n_components (src_format);
+  dest_components = babl_format_get_n_components (dest_format);
 
   iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0, src_format,
                                    GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
@@ -85,33 +85,33 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
       /*  Convolve the src image using the convolution kernel, writing
        *  to dest Convolve is not tile-enabled--use accordingly
        */
-      const guchar *src       = iter->data[0];
-      guchar       *dest      = iter->data[1];
-      const gint    bytes     = src_bpp;
-      const gint    a_byte    = bytes - 1;
-      const gint    rowstride = src_bpp * src_roi->width;
-      const gint    margin    = kernel_size / 2;
-      const gint    x1        = src_roi->x;
-      const gint    y1        = src_roi->y;
-      const gint    x2        = src_roi->x + src_roi->width  - 1;
-      const gint    y2        = src_roi->y + src_roi->height - 1;
+      const gfloat *src         = iter->data[0];
+      gfloat       *dest        = iter->data[1];
+      const gint    components  = src_components;
+      const gint    a_component = components - 1;
+      const gint    rowstride   = src_components * src_roi->width;
+      const gint    margin      = kernel_size / 2;
+      const gint    x1          = src_roi->x;
+      const gint    y1          = src_roi->y;
+      const gint    x2          = src_roi->x + src_roi->width  - 1;
+      const gint    y2          = src_roi->y + src_roi->height - 1;
       gint          x, y;
-      gint          offset;
+      gfloat        offset;
 
       /*  If the mode is NEGATIVE_CONVOL, the offset should be 128  */
       if (mode == GIMP_NEGATIVE_CONVOL)
         {
-          offset = 128;
+          offset = 0.5;
           mode = GIMP_NORMAL_CONVOL;
         }
       else
         {
-          offset = 0;
+          offset = 0.0;
         }
 
       for (y = 0; y < dest_roi->height; y++)
         {
-          guchar *d = dest;
+          gfloat *d = dest;
 
           if (alpha_weighting)
             {
@@ -128,8 +128,8 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
                         {
                           gint          xx = CLAMP (i, x1, x2);
                           gint          yy = CLAMP (j, y1, y2);
-                          const guchar *s  = src + yy * rowstride + xx * bytes;
-                          const guchar  a  = s[a_byte];
+                          const gfloat *s  = src + yy * rowstride + xx * components;
+                          const gfloat  a  = s[a_component];
 
                           if (a)
                             {
@@ -137,10 +137,10 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
 
                               weighted_divisor += mult_alpha;
 
-                              for (b = 0; b < a_byte; b++)
+                              for (b = 0; b < a_component; b++)
                                 total[b] += mult_alpha * s[b];
 
-                              total[a_byte] += mult_alpha;
+                              total[a_component] += mult_alpha;
                             }
                         }
                     }
@@ -148,22 +148,19 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
                   if (weighted_divisor == 0.0)
                     weighted_divisor = divisor;
 
-                  for (b = 0; b < a_byte; b++)
+                  for (b = 0; b < a_component; b++)
                     total[b] /= weighted_divisor;
 
-                  total[a_byte] /= divisor;
+                  total[a_component] /= divisor;
 
-                  for (b = 0; b < bytes; b++)
+                  for (b = 0; b < components; b++)
                     {
                       total[b] += offset;
 
                       if (mode != GIMP_NORMAL_CONVOL && total[b] < 0.0)
                         total[b] = - total[b];
 
-                      if (total[b] < 0.0)
-                        *d++ = 0;
-                      else
-                        *d++ = (total[b] > 255.0) ? 255 : (guchar) ROUND (total[b]);
+                      *d++ = CLAMP (total[b], 0.0, 1.0);
                     }
                 }
             }
@@ -181,29 +178,26 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
                         {
                           gint          xx = CLAMP (i, x1, x2);
                           gint          yy = CLAMP (j, y1, y2);
-                          const guchar *s  = src + yy * rowstride + xx * bytes;
+                          const gfloat *s  = src + yy * rowstride + xx * components;
 
-                          for (b = 0; b < bytes; b++)
+                          for (b = 0; b < components; b++)
                             total[b] += *m * s[b];
                         }
                     }
 
-                  for (b = 0; b < bytes; b++)
+                  for (b = 0; b < components; b++)
                     {
                       total[b] = total[b] / divisor + offset;
 
                       if (mode != GIMP_NORMAL_CONVOL && total[b] < 0.0)
                         total[b] = - total[b];
 
-                      if (total[b] < 0.0)
-                        *d++ = 0.0;
-                      else
-                        *d++ = (total[b] > 255.0) ? 255 : (guchar) ROUND (total[b]);
+                      total[b] = CLAMP (total[b], 0.0, 1.0);
                     }
                 }
             }
 
-          dest += dest_roi->width * dest_bpp;
+          dest += dest_roi->width * dest_components;
         }
     }
 }
