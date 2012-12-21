@@ -479,7 +479,7 @@ language_init (const gchar *language)
           language = "pl";    /* Polish */
           break;
         case 1046:
-          language = "pt";    /* Portuguese - Brazil */
+          language = "pt_BR"; /* Portuguese - Brazil */
           break;
         case 2070:
           language = "pt";    /* Portuguese - Portugal */
