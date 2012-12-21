@@ -22,14 +22,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*
- * TODO:
- *  pdb interface - should we bother?
- *
- *  speedups (caching?  most bottlenecks seem to be in pixelrgns)
- *    -> do pixelrgns properly!
- */
-
 #include "config.h"
 
 #include <string.h>
@@ -45,7 +37,6 @@
 #define PLUG_IN_BINARY "animation-play"
 #define PLUG_IN_ROLE   "gimp-animation-play"
 #define DITHERTYPE     GDK_RGB_DITHER_NORMAL
-
 
 typedef enum
 {
@@ -104,6 +95,8 @@ static void        zoomcombo_activated       (GtkEntry        *combo,
                                               gpointer         data);
 static void        zoomcombo_changed         (GtkWidget       *combo,
                                               gpointer         data);
+static void        quality_checkbox_toggled  (GtkToggleButton *button,
+                                              gpointer         data);
 static gboolean    repaint_sda               (GtkWidget       *darea,
                                               GdkEventExpose  *event,
                                               gpointer         data);
@@ -111,9 +104,11 @@ static gboolean    repaint_da                (GtkWidget       *darea,
                                               GdkEventExpose  *event,
                                               gpointer         data);
 
+static void        init_quality_checkbox     (void);
 static void        init_frames               (void);
-static void        render_frame              (gint32           whichframe);
-static void        show_frame                (void);
+static void        render_frame              (guint            whichframe);
+static void        show_playing_progress     (void);
+static void        show_loading_progress     (gint             layer_nb);
 static void        total_alpha_preview       (void);
 static void        update_alpha_preview      (void);
 static void        update_combobox           (void);
@@ -122,6 +117,9 @@ static gint        get_fps                   (gint             index);
 static gdouble     get_scale                 (gint             index);
 static void        update_scale              (gdouble          scale);
 
+/* Utils */
+static void        remove_timer              (void);
+static void        clean_exit                (void);
 
 /* tag util functions*/
 static gint        parse_ms_tag              (const gchar     *str);
@@ -146,17 +144,20 @@ const GimpPlugInInfo PLUG_IN_INFO =
 
 /* Global widgets'n'stuff */
 static GtkWidget         *window                    = NULL;
+static gulong             destroy_handler;
 static GdkWindow         *root_win                  = NULL;
 static GtkUIManager      *ui_manager                = NULL;
 static GtkWidget         *progress;
 static GtkWidget         *speedcombo                = NULL;
 static GtkWidget         *fpscombo                  = NULL;
 static GtkWidget         *zoomcombo                 = NULL;
+static GtkWidget         *quality_checkbox          = NULL;
 static GtkWidget         *frame_disposal_combo      = NULL;
 
 static gint32             image_id;
 static guint              width                     = -1,
-                          height                    = -1;
+                          height                    = -1,
+                          preview_width, preview_height;
 static gint32            *layers                    = NULL;
 static gint32             total_layers              = 0;
 
@@ -174,15 +175,19 @@ static guint              shape_drawing_area_width  = -1,
                           shape_drawing_area_height = -1;
 static gchar             *shape_preview_mask        = NULL;
 
-
+static gint32             frames_image_id;
 static gint32             total_frames              = 0;
 static gint32            *frames                    = NULL;
 static guchar            *rawframe                  = NULL;
 static guint32           *frame_durations           = NULL;
 static guint              frame_number;
 static guint              frame_number_min, frame_number_max;
+/* Since the application is single-thread, a boolean is enough.
+ * It may become a mutex in the future with multi-thread support. */
+static gboolean           frames_lock               = FALSE;
 
 static gboolean           playing                   = FALSE;
+static gboolean           initialized_once          = FALSE;
 static guint              timer                     = 0;
 static gboolean           detached                  = FALSE;
 static gdouble            scale, shape_scale;
@@ -201,6 +206,33 @@ static AnimationSettings settings =
 };
 
 static gint32 frames_image_id = 0;
+
+static void
+clean_exit (void)
+{
+  if (playing)
+    remove_timer ();
+
+  if (frames_image_id)
+    gimp_image_delete (frames_image_id);
+  frames_image_id = 0;
+
+  if (shape_window)
+    gtk_widget_destroy (GTK_WIDGET (shape_window));
+
+  g_signal_handler_disconnect (window, destroy_handler);
+  if (window)
+    gtk_widget_destroy (GTK_WIDGET (window));
+
+  if (frames)
+    g_free (frames);
+  if (frame_durations)
+    g_free (frame_durations);
+
+  gegl_exit ();
+  gtk_main_quit ();
+  gimp_quit ();
+}
 
 MAIN ()
 
@@ -241,9 +273,13 @@ run (const gchar      *name,
   static GimpParam  values[1];
   GimpRunMode       run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  GeglConfig       *config;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
+  config = gegl_config ();
+  /* For preview, we want fast (0.0) over high quality (1.0). */
+  g_object_set (config, "quality", 0.0, NULL);
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -266,6 +302,10 @@ run (const gchar      *name,
       all_reg = g_regex_new("\\[\\*\\]", G_REGEX_OPTIMIZE, 0, NULL);
 
       initialize ();
+
+      /* At least one full initialization finished. */
+      initialized_once = TRUE;
+
       gtk_main ();
       gimp_set_data (PLUG_IN_PROC, &settings, sizeof (settings));
 
@@ -349,7 +389,8 @@ da_size_callback (GtkWidget *widget,
 
   drawing_area_width = allocation->width;
   drawing_area_height = allocation->height;
-  scale = MIN ((gdouble) drawing_area_width / (gdouble) width, (gdouble) drawing_area_height / (gdouble) height);
+  scale = MIN ((gdouble) drawing_area_width / (gdouble) preview_width,
+               (gdouble) drawing_area_height / (gdouble) preview_height);
 
   g_free (drawing_area_data);
   drawing_area_data = g_malloc (drawing_area_width * drawing_area_height * 3);
@@ -400,7 +441,8 @@ sda_size_callback (GtkWidget *widget,
 
   shape_drawing_area_width = allocation->width;
   shape_drawing_area_height = allocation->height;
-  shape_scale = MIN ((gdouble) shape_drawing_area_width / (gdouble) width, (gdouble) shape_drawing_area_height / (gdouble) height);
+  shape_scale = MIN ((gdouble) shape_drawing_area_width / (gdouble) preview_width,
+                     (gdouble) shape_drawing_area_height / (gdouble) preview_height);
 
   g_free (shape_drawing_area_data);
   g_free (shape_preview_mask);
@@ -507,8 +549,8 @@ repaint_da (GtkWidget      *darea,
 
   gdk_draw_rgb_image (gtk_widget_get_window (darea),
                       style->white_gc,
-                      (gint) ((drawing_area_width - scale * width) / 2),
-                      (gint) ((drawing_area_height - scale * height) / 2),
+                      (gint) ((drawing_area_width - scale * preview_width) / 2),
+                      (gint) ((drawing_area_height - scale * preview_height) / 2),
                       drawing_area_width, drawing_area_height,
                       (total_frames == 1) ? GDK_RGB_DITHER_MAX : DITHERTYPE,
                       drawing_area_data, drawing_area_width * 3);
@@ -525,8 +567,8 @@ repaint_sda (GtkWidget      *darea,
 
   gdk_draw_rgb_image (gtk_widget_get_window (darea),
                       style->white_gc,
-                      (gint) ((shape_drawing_area_width - shape_scale * width) / 2),
-                      (gint) ((shape_drawing_area_height - shape_scale * height) / 2),
+                      (gint) ((shape_drawing_area_width - shape_scale * preview_width) / 2),
+                      (gint) ((shape_drawing_area_height - shape_scale * preview_height) / 2),
                       shape_drawing_area_width, shape_drawing_area_height,
                       (total_frames == 1) ? GDK_RGB_DITHER_MAX : DITHERTYPE,
                       shape_drawing_area_data, shape_drawing_area_width * 3);
@@ -538,7 +580,7 @@ static void
 close_callback (GtkAction *action,
                 gpointer   data)
 {
-  gtk_widget_destroy (GTK_WIDGET (data));
+  clean_exit ();
 }
 
 static void
@@ -756,10 +798,11 @@ refresh_dialog (gchar *imagename)
    * diminish the drawing area by as much, then compute the corresponding scale. */
   if (window_width + 50 > screen_width || window_height + 50 > screen_height)
   {
-      guint expected_drawing_area_width = MAX (1, width - window_width + screen_width);
-      guint expected_drawing_area_height = MAX (1, height - window_height + screen_height);
-      gdouble expected_scale = MIN ((gdouble) expected_drawing_area_width / (gdouble) width,
-                                    (gdouble) expected_drawing_area_height / (gdouble) height);
+      gint expected_drawing_area_width = MAX (1, preview_width - window_width + screen_width);
+      gint expected_drawing_area_height = MAX (1, preview_height - window_height + screen_height);
+
+      gdouble expected_scale = MIN ((gdouble) expected_drawing_area_width / (gdouble) preview_width,
+                                    (gdouble) expected_drawing_area_height / (gdouble) preview_height);
       update_scale (expected_scale);
 
       /* There is unfortunately no good way to know the size of the decorations, taskbars, etc.
@@ -794,9 +837,9 @@ build_dialog (gchar             *imagename)
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_role (GTK_WINDOW (window), "animation-playback");
 
-  g_signal_connect (window, "destroy",
-                    G_CALLBACK (window_destroy),
-                    NULL);
+  destroy_handler = g_signal_connect (window, "destroy",
+                                      G_CALLBACK (window_destroy),
+                                      NULL);
   g_signal_connect (window, "popup-menu",
                     G_CALLBACK (popup_menu),
                     NULL);
@@ -867,6 +910,21 @@ build_dialog (gchar             *imagename)
   progress = gtk_progress_bar_new ();
   gtk_box_pack_end (GTK_BOX (hbox), progress, TRUE, TRUE, 0);
   gtk_widget_show (progress);
+
+  /* Degraded quality animation preview. */
+  quality_checkbox = gtk_check_button_new_with_label (_("Preview Quality"));
+  gtk_box_pack_end (GTK_BOX (hbox), quality_checkbox, FALSE, FALSE, 0);
+  gtk_widget_show (quality_checkbox);
+
+  init_quality_checkbox ();
+  quality_checkbox_toggled (GTK_TOGGLE_BUTTON (quality_checkbox), NULL);
+
+  g_signal_connect (GTK_TOGGLE_BUTTON (quality_checkbox),
+                    "toggled",
+                    G_CALLBACK (quality_checkbox_toggled),
+                    NULL);
+
+  gimp_help_set_help_data (quality_checkbox, _("Degraded image quality for low memory footprint"), NULL);
 
   /* Zoom */
   zoomcombo = gtk_combo_box_text_new_with_entry ();
@@ -963,7 +1021,7 @@ build_dialog (gchar             *imagename)
   gtk_widget_show (frame_disposal_combo);
 
   gtk_window_set_resizable (GTK_WINDOW (window), TRUE);
-  gtk_window_set_default_size (GTK_WINDOW (window), width + 20, height + 90);
+  gtk_window_set_default_size (GTK_WINDOW (window), preview_width + 20, preview_height + 90);
   gtk_widget_show (window);
 
   /* shape_drawing_area for detached feature. */
@@ -1009,32 +1067,84 @@ build_dialog (gchar             *imagename)
 
   /* We request a minimum size *after* having connecting the
    * size-allocate signal for correct initialization. */
-  gtk_widget_set_size_request (drawing_area, width, height);
-  gtk_widget_set_size_request (shape_drawing_area, width, height);
+  gtk_widget_set_size_request (drawing_area, preview_width, preview_height);
+  gtk_widget_set_size_request (shape_drawing_area, preview_width, preview_height);
 
   root_win = gdk_get_default_root_window ();
+}
+
+static void
+init_quality_checkbox (void)
+{
+  GdkScreen         *screen;
+  guint              screen_width, screen_height;
+  static const gint  lower_quality_frame_limit = 10;
+
+  screen = gtk_widget_get_screen (window);
+  screen_height = gdk_screen_get_height (screen);
+  screen_width = gdk_screen_get_width (screen);
+
+  /* We will set a lower quality as default if image is more than half the screen size
+   * and there are more than a given limit of frames. */
+  if (total_frames > lower_quality_frame_limit &&
+      (width > screen_width || height > screen_height))
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (quality_checkbox), TRUE);
+  else
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (quality_checkbox), FALSE);
 }
 
 static void
 init_frames (void)
 {
   /* Frames are associated to an unused image. */
-  static gint32 frames_image_id;
   gint32        new_frame, previous_frame, new_layer;
   gboolean      animated;
   GtkAction    *action;
   gint          duration = 0;
   DisposeType   disposal = settings.default_frame_disposal;
   gchar        *layer_name;
+  gint          layer_offx, layer_offy;
+  gboolean      preview_quality;
 
-  set_total_frames ();
   if (total_frames <= 0)
     {
       gimp_message (_("This animation has no frame."));
-      gtk_main_quit ();
-      gimp_quit ();
+      clean_exit ();
       return;
     }
+
+  if (frames_lock)
+    return;
+  frames_lock = TRUE;
+
+  /* Block the frame-related UI during frame initialization. */
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/ui/anim-play-toolbar/play");
+  gtk_action_set_sensitive (action, FALSE);
+
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/ui/anim-play-toolbar/step-back");
+  gtk_action_set_sensitive (action, FALSE);
+
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/ui/anim-play-toolbar/step");
+  gtk_action_set_sensitive (action, FALSE);
+
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/ui/anim-play-toolbar/rewind");
+  gtk_action_set_sensitive (action, FALSE);
+
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/ui/anim-play-toolbar/refresh");
+  gtk_action_set_sensitive (action, FALSE);
+
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/ui/anim-play-toolbar/detach");
+  gtk_action_set_sensitive (action, FALSE);
+
+  gtk_widget_set_sensitive (GTK_WIDGET (zoomcombo), FALSE);
+  gtk_widget_set_sensitive (GTK_WIDGET (frame_disposal_combo), FALSE);
+  gtk_widget_set_sensitive (GTK_WIDGET (quality_checkbox), FALSE);
 
   /* Cleanup before re-generation. */
   if (frames)
@@ -1048,17 +1158,21 @@ init_frames (void)
   frame_durations = g_try_malloc0_n (total_frames, sizeof (guint32));
   if (! frames || ! frame_durations)
     {
+      frames_lock = FALSE;
       gimp_message (_("Memory could not be allocated to the frame container."));
-      gtk_main_quit ();
-      gimp_quit ();
+      clean_exit ();
       return;
     }
+
   /* We only use RGB images for display because indexed images would somehow
      render terrible colors. Layers from other types will be automatically
      converted. */
   frames_image_id = gimp_image_new (width, height, GIMP_RGB);
+
   /* Save processing time and memory by not saving history and merged frames. */
   gimp_image_undo_disable (frames_image_id);
+
+  preview_quality = preview_width != width || preview_height != height;
 
   if (disposal == DISPOSE_TAGS)
     {
@@ -1068,6 +1182,7 @@ init_frames (void)
 
       for (i = 0; i < total_layers; i++)
         {
+          show_loading_progress (i);
           layer_name = gimp_item_get_name (layers[total_layers - (i + 1)]);
           nospace_name = g_regex_replace_literal (nospace_reg, layer_name, -1, 0, "", 0, NULL);
           if (g_regex_match (all_reg, nospace_name, 0, NULL))
@@ -1076,12 +1191,23 @@ init_frames (void)
                 {
                   new_layer = gimp_layer_new_from_drawable (layers[total_layers - (i + 1)], frames_image_id);
                   gimp_image_insert_layer (frames_image_id, new_layer, 0, 0);
+                  gimp_item_set_visible (new_layer, TRUE);
+                  if (preview_quality)
+                    {
+                      gimp_layer_scale (new_layer,
+                                        (gimp_drawable_width (layers[total_layers - (i + 1)]) * (gint) preview_width) / (gint) width,
+                                        (gimp_drawable_height (layers[total_layers - (i + 1)]) * (gint) preview_height) / (gint) height,
+                                        FALSE);
+                      gimp_drawable_offsets (layers[total_layers - (i + 1)], &layer_offx, &layer_offy);
+                      gimp_layer_set_offsets (new_layer, (layer_offx * (gint) preview_width) / (gint) width,
+                                              (layer_offy * (gint) preview_height) / (gint) height);
+                    }
+                  gimp_layer_resize_to_image_size (new_layer);
                   if (! frames[j])
                     frames[j] = new_layer;
                   else
                     {
                       gimp_item_set_visible (frames[j], TRUE);
-                      gimp_item_set_visible (new_layer, TRUE);
                       frames[j] = gimp_image_merge_visible_layers (frames_image_id, GIMP_CLIP_TO_IMAGE);
                     }
                   gimp_item_set_visible (frames[j], FALSE);
@@ -1108,12 +1234,23 @@ init_frames (void)
                             {
                               new_layer = gimp_layer_new_from_drawable (layers[total_layers - (i + 1)], frames_image_id);
                               gimp_image_insert_layer (frames_image_id, new_layer, 0, 0);
+                              gimp_item_set_visible (new_layer, TRUE);
+                              if (preview_quality)
+                                {
+                                  gimp_layer_scale (new_layer,
+                                                    (gimp_drawable_width (layers[total_layers - (i + 1)]) * (gint) preview_width) / (gint) width,
+                                                    (gimp_drawable_height (layers[total_layers - (i + 1)]) * (gint) preview_height) / (gint) height,
+                                                    FALSE);
+                                  gimp_drawable_offsets (layers[total_layers - (i + 1)], &layer_offx, &layer_offy);
+                                  gimp_layer_set_offsets (new_layer, (layer_offx * (gint) preview_width) / (gint) width,
+                                                          (layer_offy * (gint) preview_height) / (gint) height);
+                                }
+                              gimp_layer_resize_to_image_size (new_layer);
                               if (! frames[k - frame_number_min])
                                 frames[k - frame_number_min] = new_layer;
                               else
                                 {
                                   gimp_item_set_visible (frames[k - frame_number_min], TRUE);
-                                  gimp_item_set_visible (new_layer, TRUE);
                                   frames[k - frame_number_min] = gimp_image_merge_visible_layers (frames_image_id, GIMP_CLIP_TO_IMAGE);
                                 }
                               gimp_item_set_visible (frames[k - frame_number_min], FALSE);
@@ -1125,12 +1262,23 @@ init_frames (void)
 
                           new_layer = gimp_layer_new_from_drawable (layers[total_layers - (i + 1)], frames_image_id);
                           gimp_image_insert_layer (frames_image_id, new_layer, 0, 0);
+                          gimp_item_set_visible (new_layer, TRUE);
+                          if (preview_quality)
+                            {
+                              gimp_layer_scale (new_layer,
+                                                (gimp_drawable_width (layers[total_layers - (i + 1)]) * (gint) preview_width) / (gint) width,
+                                                (gimp_drawable_height (layers[total_layers - (i + 1)]) * (gint) preview_height) / (gint) height,
+                                                FALSE);
+                              gimp_drawable_offsets (layers[total_layers - (i + 1)], &layer_offx, &layer_offy);
+                              gimp_layer_set_offsets (new_layer, (layer_offx * (gint) preview_width) / (gint) width,
+                                                      (layer_offy * (gint) preview_height) / (gint) height);
+                            }
+                          gimp_layer_resize_to_image_size (new_layer);
                           if (! frames[num - frame_number_min])
                             frames[num - frame_number_min] = new_layer;
                           else
                             {
                               gimp_item_set_visible (frames[num - frame_number_min], TRUE);
-                              gimp_item_set_visible (new_layer, TRUE);
                               frames[num - frame_number_min] = gimp_image_merge_visible_layers (frames_image_id, GIMP_CLIP_TO_IMAGE);
                             }
                           gimp_item_set_visible (frames[num - frame_number_min], FALSE);
@@ -1162,6 +1310,7 @@ init_frames (void)
 
       for (i = 0; i < total_frames; i++)
         {
+          show_loading_progress (i);
           layer_name = gimp_item_get_name (layers[total_layers - (i + 1)]);
           if (layer_name)
             {
@@ -1173,12 +1322,22 @@ init_frames (void)
           if (i > 0 && disposal != DISPOSE_REPLACE)
             {
               previous_frame = gimp_layer_copy (frames[i - 1]);
+
               gimp_image_insert_layer (frames_image_id, previous_frame, 0, 0);
               gimp_item_set_visible (previous_frame, TRUE);
             }
+
           new_layer = gimp_layer_new_from_drawable (layers[total_layers - (i + 1)], frames_image_id);
+
           gimp_image_insert_layer (frames_image_id, new_layer, 0, 0);
           gimp_item_set_visible (new_layer, TRUE);
+          gimp_layer_scale (new_layer, (gimp_drawable_width (layers[total_layers - (i + 1)]) * (gint) preview_width) / (gint) width,
+                            (gimp_drawable_height (layers[total_layers - (i + 1)]) * (gint) preview_height) / (gint) height, FALSE);
+          gimp_drawable_offsets (layers[total_layers - (i + 1)], &layer_offx, &layer_offy);
+          gimp_layer_set_offsets (new_layer, (layer_offx * (gint) preview_width) / (gint) width,
+                                  (layer_offy * (gint) preview_height) / (gint) height);
+          gimp_layer_resize_to_image_size (new_layer);
+
           new_frame = gimp_image_merge_visible_layers (frames_image_id, GIMP_CLIP_TO_IMAGE);
           frames[i] = new_frame;
           gimp_item_set_visible (new_frame, FALSE);
@@ -1207,9 +1366,23 @@ init_frames (void)
                                       "/ui/anim-play-toolbar/rewind");
   gtk_action_set_sensitive (action, animated);
 
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/ui/anim-play-toolbar/refresh");
+  gtk_action_set_sensitive (action, TRUE);
+
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/ui/anim-play-toolbar/detach");
+  gtk_action_set_sensitive (action, TRUE);
+
+  gtk_widget_set_sensitive (GTK_WIDGET (zoomcombo), TRUE);
+  gtk_widget_set_sensitive (GTK_WIDGET (frame_disposal_combo), TRUE);
+  gtk_widget_set_sensitive (GTK_WIDGET (quality_checkbox), TRUE);
+
   /* Keep the same frame number, unless it is now invalid. */
   if (frame_number > frame_number_max || frame_number < frame_number_min)
     frame_number = frame_number_min;
+
+  frames_lock = FALSE;
 }
 
 static void
@@ -1222,7 +1395,7 @@ initialize (void)
   if (! gimp_image_is_valid (image_id))
     {
       gimp_message (_("Invalid image. Did you close it?"));
-      gtk_main_quit ();
+      clean_exit ();
       return;
     }
 
@@ -1230,9 +1403,16 @@ initialize (void)
   height    = gimp_image_height (image_id);
   layers    = gimp_image_get_layers (image_id, &total_layers);
 
+  set_total_frames ();
+
   if (!window)
     build_dialog (gimp_image_get_name (image_id));
   refresh_dialog (gimp_image_get_name (image_id));
+
+  /* I want to make sure the progress bar is realized before init_frames()
+   * which may take quite a bit of time. */
+  if (!gtk_widget_get_realized (progress))
+    gtk_widget_realize (progress);
 
   init_frames ();
   render_frame (frame_number);
@@ -1241,7 +1421,7 @@ initialize (void)
 /* Rendering Functions */
 
 static void
-render_frame (gint32 whichframe)
+render_frame (guint whichframe)
 {
   GeglBuffer    *buffer;
   gint           i, j, k;
@@ -1251,6 +1431,12 @@ render_frame (gint32 whichframe)
   guint          drawing_width, drawing_height;
   gdouble        drawing_scale;
   guchar        *preview_data;
+
+  /* Do not try to update the drawing areas while init_frame() is still running. */
+  if (frames_lock)
+    return;
+
+  frames_lock = TRUE;
 
   g_assert (whichframe >= frame_number_min && whichframe <= frame_number_max);
 
@@ -1325,8 +1511,8 @@ render_frame (gint32 whichframe)
   /* Display the preview buffer. */
   gdk_draw_rgb_image (gtk_widget_get_window (da),
                       (gtk_widget_get_style (da))->white_gc,
-                      (gint) ((drawing_width - drawing_scale * width) / 2),
-                      (gint) ((drawing_height - drawing_scale * height) / 2),
+                      (gint) ((drawing_width - drawing_scale * preview_width) / 2),
+                      (gint) ((drawing_height - drawing_scale * preview_height) / 2),
                       drawing_width, drawing_height,
                       (total_frames == 1 ?
                        GDK_RGB_DITHER_MAX : DITHERTYPE),
@@ -1336,11 +1522,31 @@ render_frame (gint32 whichframe)
   g_object_unref (buffer);
 
   /* Update UI. */
-  show_frame ();
+  show_playing_progress ();
+
+  frames_lock = FALSE;
 }
 
 static void
-show_frame (void)
+show_loading_progress (gint layer_nb)
+{
+  gchar *text;
+  gfloat load_rate = (gfloat) layer_nb / ((gfloat) total_layers - 0.999);
+
+  /* update the dialog's progress bar */
+  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (progress), load_rate);
+
+  text = g_strdup_printf (_("Loading animation %d %%"), (gint) (load_rate * 100));
+  gtk_progress_bar_set_text (GTK_PROGRESS_BAR (progress), text);
+  g_free (text);
+
+  /* Forcing the UI to update even with intensive computation. */
+  while (gtk_events_pending ())
+    gtk_main_iteration ();
+}
+
+static void
+show_playing_progress (void)
 {
   gchar *text;
 
@@ -1440,13 +1646,7 @@ do_step (void)
 static void
 window_destroy (GtkWidget *widget)
 {
-  if (playing)
-    remove_timer ();
-
-  if (shape_window)
-    gtk_widget_destroy (GTK_WIDGET (shape_window));
-
-  gtk_main_quit ();
+  clean_exit ();
 }
 
 
@@ -1674,6 +1874,8 @@ static void
 framecombo_changed (GtkWidget *combo, gpointer data)
 {
   settings.default_frame_disposal = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
+
+  set_total_frames ();
   init_frames ();
   render_frame (frame_number);
 }
@@ -1706,10 +1908,10 @@ update_scale (gdouble scale)
 
   /* FIXME: scales under 0.5 are broken. See bug 690265. */
   if (scale <= 0.5)
-    scale = 0.501;
+    scale = 0.51;
 
-  expected_drawing_area_width = width * scale;
-  expected_drawing_area_height = height * scale;
+  expected_drawing_area_width = preview_width * scale;
+  expected_drawing_area_height = preview_height * scale;
 
   gtk_widget_set_size_request (drawing_area, expected_drawing_area_width, expected_drawing_area_height);
   gtk_widget_set_size_request (shape_drawing_area, expected_drawing_area_width, expected_drawing_area_height);
@@ -1721,6 +1923,46 @@ update_scale (gdouble scale)
       gdk_window_get_origin (gtk_widget_get_window (shape_window), &x, &y);
       gtk_window_reshow_with_initial_size (GTK_WINDOW (shape_window));
       gtk_window_move (GTK_WINDOW (shape_window), x, y);
+    }
+}
+
+/*
+ * Callback emitted when the user toggle the quality checkbox.
+ */
+static void
+quality_checkbox_toggled (GtkToggleButton *button,
+                          gpointer         data)
+{
+  gint previous_preview_width = preview_width;
+
+  if (gtk_toggle_button_get_active (button))
+    {
+      GdkScreen         *screen;
+      guint              screen_width, screen_height;
+
+      screen = gtk_widget_get_screen (window);
+      screen_height = gdk_screen_get_height (screen);
+      screen_width = gdk_screen_get_width (screen);
+
+      /* Get some maximum value for both dimension. */
+      preview_width = MIN (screen_width / 2, width);
+      preview_height = MIN (screen_height / 2, height);
+      /* Get the correct ratio. */
+      preview_width = MIN (preview_width, preview_height * width / height);
+      preview_height = preview_width * height / width;
+    }
+  else
+    {
+      preview_width = width;
+      preview_height = height;
+    }
+
+  if (initialized_once && previous_preview_width != preview_width)
+    {
+      gint index = gtk_combo_box_get_active (GTK_COMBO_BOX (zoomcombo));
+
+      init_frames ();
+      update_scale (get_scale (index));
     }
 }
 
