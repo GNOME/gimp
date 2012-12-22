@@ -47,6 +47,14 @@ typedef enum
 
 typedef struct
 {
+  gint32  drawable_id;
+  GList  *indexes;
+  GList  *updated_indexes;
+}
+Frame;
+
+typedef struct
+{
   gint        duration_index;
   DisposeType default_frame_disposal;
   guint32     default_frame_duration;
@@ -177,7 +185,7 @@ static gchar             *shape_preview_mask        = NULL;
 
 static gint32             frames_image_id;
 static gint32             total_frames              = 0;
-static gint32            *frames                    = NULL;
+static Frame            **frames                    = NULL;
 static guchar            *rawframe                  = NULL;
 static guint32           *frame_durations           = NULL;
 static guint              frame_number;
@@ -187,6 +195,7 @@ static guint              frame_number_min, frame_number_max;
 static gboolean           frames_lock               = FALSE;
 
 static gboolean           playing                   = FALSE;
+static gboolean           force_render              = TRUE;
 static gboolean           initialized_once          = FALSE;
 static guint              timer                     = 0;
 static gboolean           detached                  = FALSE;
@@ -416,6 +425,7 @@ da_size_callback (GtkWidget *widget,
       rawframe = g_malloc ((unsigned long) drawing_area_width * drawing_area_height * 4);
 
       /* As we re-allocated the drawn data, let's render it again. */
+      force_render = TRUE;
       if (frame_number - frame_number_min < total_frames)
         render_frame (frame_number);
     }
@@ -468,6 +478,7 @@ sda_size_callback (GtkWidget *widget,
       g_free (rawframe);
       rawframe = g_malloc ((unsigned long) shape_drawing_area_width * shape_drawing_area_height * 4);
 
+      force_render = TRUE;
       if (frame_number - frame_number_min < total_frames)
         render_frame (frame_number);
     }
@@ -630,11 +641,12 @@ detach_callback (GtkToggleAction *action)
 
       /* Set "alpha grid" background. */
       total_alpha_preview ();
-      repaint_da(drawing_area, NULL, NULL);
+      repaint_da (drawing_area, NULL, NULL);
     }
   else
     gtk_widget_hide (shape_window);
 
+  force_render = TRUE;
   render_frame (frame_number);
 }
 
@@ -1097,14 +1109,15 @@ static void
 init_frames (void)
 {
   /* Frames are associated to an unused image. */
-  gint32        new_frame, previous_frame, new_layer;
-  gboolean      animated;
-  GtkAction    *action;
-  gint          duration = 0;
-  DisposeType   disposal = settings.default_frame_disposal;
-  gchar        *layer_name;
-  gint          layer_offx, layer_offy;
-  gboolean      preview_quality;
+  static GList    *previous_frames = NULL;
+  gint32           new_frame, previous_frame, new_layer;
+  gboolean         animated;
+  GtkAction       *action;
+  gint             duration = 0;
+  DisposeType      disposal = settings.default_frame_disposal;
+  gchar           *layer_name;
+  gint             layer_offx, layer_offy;
+  gboolean         preview_quality;
 
   if (total_frames <= 0)
     {
@@ -1149,12 +1162,27 @@ init_frames (void)
   /* Cleanup before re-generation. */
   if (frames)
     {
+      GList *idx;
+
       gimp_image_delete (frames_image_id);
+
+      /* Freeing previous frames. */
+      for (idx = g_list_first (previous_frames); idx != NULL; idx = g_list_next (idx))
+        {
+          Frame* frame = (Frame*) idx->data;
+
+          g_list_free (frame->indexes);
+          g_list_free (frame->updated_indexes);
+          g_free (frame);
+        }
+      g_list_free (previous_frames);
+      previous_frames = NULL;
+
       g_free (frames);
       g_free (frame_durations);
     }
 
-  frames = g_try_malloc0_n (total_frames, sizeof (gint32));
+  frames = g_try_malloc0_n (total_frames, sizeof (Frame*));
   frame_durations = g_try_malloc0_n (total_frames, sizeof (guint32));
   if (! frames || ! frame_durations)
     {
@@ -1167,7 +1195,7 @@ init_frames (void)
   /* We only use RGB images for display because indexed images would somehow
      render terrible colors. Layers from other types will be automatically
      converted. */
-  frames_image_id = gimp_image_new (width, height, GIMP_RGB);
+  frames_image_id = gimp_image_new (preview_width, preview_height, GIMP_RGB);
 
   /* Save processing time and memory by not saving history and merged frames. */
   gimp_image_undo_disable (frames_image_id);
@@ -1182,6 +1210,8 @@ init_frames (void)
 
       for (i = 0; i < total_layers; i++)
         {
+          Frame *empty_frame = NULL;
+
           show_loading_progress (i);
           layer_name = gimp_item_get_name (layers[total_layers - (i + 1)]);
           nospace_name = g_regex_replace_literal (nospace_reg, layer_name, -1, 0, "", 0, NULL);
@@ -1189,28 +1219,24 @@ init_frames (void)
             {
               for (j = 0; j < total_frames; j++)
                 {
-                  new_layer = gimp_layer_new_from_drawable (layers[total_layers - (i + 1)], frames_image_id);
-                  gimp_image_insert_layer (frames_image_id, new_layer, 0, 0);
-                  gimp_item_set_visible (new_layer, TRUE);
-                  if (preview_quality)
-                    {
-                      gimp_layer_scale (new_layer,
-                                        (gimp_drawable_width (layers[total_layers - (i + 1)]) * (gint) preview_width) / (gint) width,
-                                        (gimp_drawable_height (layers[total_layers - (i + 1)]) * (gint) preview_height) / (gint) height,
-                                        FALSE);
-                      gimp_drawable_offsets (layers[total_layers - (i + 1)], &layer_offx, &layer_offy);
-                      gimp_layer_set_offsets (new_layer, (layer_offx * (gint) preview_width) / (gint) width,
-                                              (layer_offy * (gint) preview_height) / (gint) height);
-                    }
-                  gimp_layer_resize_to_image_size (new_layer);
                   if (! frames[j])
-                    frames[j] = new_layer;
-                  else
                     {
-                      gimp_item_set_visible (frames[j], TRUE);
-                      frames[j] = gimp_image_merge_visible_layers (frames_image_id, GIMP_CLIP_TO_IMAGE);
+                      if (! empty_frame)
+                        {
+                          empty_frame = g_new (Frame, 1);
+                          empty_frame->indexes = NULL;
+                          empty_frame->updated_indexes = NULL;
+                          empty_frame->drawable_id = 0;
+
+                          previous_frames = g_list_append (previous_frames, empty_frame);
+                        }
+
+                      empty_frame->updated_indexes = g_list_append (empty_frame->updated_indexes, GINT_TO_POINTER (j));
+
+                      frames[j] = empty_frame;
                     }
-                  gimp_item_set_visible (frames[j], FALSE);
+                  else if (! g_list_find (frames[j]->updated_indexes, GINT_TO_POINTER (j)))
+                    frames[j]->updated_indexes = g_list_append (frames[j]->updated_indexes, GINT_TO_POINTER (j));
                 }
             }
           else
@@ -1224,64 +1250,59 @@ init_frames (void)
 
                   for (j = 0; tokens[j] != NULL; j++)
                     {
-                      gchar* hyphen;
-                      hyphen = g_strrstr(tokens[j], "-");
+                      gchar* hyphen = g_strrstr(tokens[j], "-");
+
                       if (hyphen != NULL)
                         {
                           gint32 first = (gint32) g_ascii_strtoll (tokens[j], NULL, 10);
                           gint32 second = (gint32) g_ascii_strtoll (&hyphen[1], NULL, 10);
+
                           for (k = first; k <= second; k++)
                             {
-                              new_layer = gimp_layer_new_from_drawable (layers[total_layers - (i + 1)], frames_image_id);
-                              gimp_image_insert_layer (frames_image_id, new_layer, 0, 0);
-                              gimp_item_set_visible (new_layer, TRUE);
-                              if (preview_quality)
-                                {
-                                  gimp_layer_scale (new_layer,
-                                                    (gimp_drawable_width (layers[total_layers - (i + 1)]) * (gint) preview_width) / (gint) width,
-                                                    (gimp_drawable_height (layers[total_layers - (i + 1)]) * (gint) preview_height) / (gint) height,
-                                                    FALSE);
-                                  gimp_drawable_offsets (layers[total_layers - (i + 1)], &layer_offx, &layer_offy);
-                                  gimp_layer_set_offsets (new_layer, (layer_offx * (gint) preview_width) / (gint) width,
-                                                          (layer_offy * (gint) preview_height) / (gint) height);
-                                }
-                              gimp_layer_resize_to_image_size (new_layer);
                               if (! frames[k - frame_number_min])
-                                frames[k - frame_number_min] = new_layer;
-                              else
                                 {
-                                  gimp_item_set_visible (frames[k - frame_number_min], TRUE);
-                                  frames[k - frame_number_min] = gimp_image_merge_visible_layers (frames_image_id, GIMP_CLIP_TO_IMAGE);
+                                  if (! empty_frame)
+                                    {
+                                      empty_frame = g_new (Frame, 1);
+                                      empty_frame->indexes = NULL;
+                                      empty_frame->updated_indexes = NULL;
+                                      empty_frame->drawable_id = 0;
+
+                                      previous_frames = g_list_append (previous_frames, empty_frame);
+                                    }
+
+                                  empty_frame->updated_indexes = g_list_append (empty_frame->updated_indexes, GINT_TO_POINTER (k - frame_number_min));
+
+                                  frames[k - frame_number_min] = empty_frame;
                                 }
-                              gimp_item_set_visible (frames[k - frame_number_min], FALSE);
+                              else if (! g_list_find (frames[k - frame_number_min]->updated_indexes, GINT_TO_POINTER (k - frame_number_min)))
+                                frames[k - frame_number_min]->updated_indexes = g_list_append (frames[k - frame_number_min]->updated_indexes,
+                                                                                               GINT_TO_POINTER (k - frame_number_min));
                             }
                         }
                       else
                         {
                           gint32 num = (gint32) g_ascii_strtoll (tokens[j], NULL, 10);
 
-                          new_layer = gimp_layer_new_from_drawable (layers[total_layers - (i + 1)], frames_image_id);
-                          gimp_image_insert_layer (frames_image_id, new_layer, 0, 0);
-                          gimp_item_set_visible (new_layer, TRUE);
-                          if (preview_quality)
-                            {
-                              gimp_layer_scale (new_layer,
-                                                (gimp_drawable_width (layers[total_layers - (i + 1)]) * (gint) preview_width) / (gint) width,
-                                                (gimp_drawable_height (layers[total_layers - (i + 1)]) * (gint) preview_height) / (gint) height,
-                                                FALSE);
-                              gimp_drawable_offsets (layers[total_layers - (i + 1)], &layer_offx, &layer_offy);
-                              gimp_layer_set_offsets (new_layer, (layer_offx * (gint) preview_width) / (gint) width,
-                                                      (layer_offy * (gint) preview_height) / (gint) height);
-                            }
-                          gimp_layer_resize_to_image_size (new_layer);
                           if (! frames[num - frame_number_min])
-                            frames[num - frame_number_min] = new_layer;
-                          else
                             {
-                              gimp_item_set_visible (frames[num - frame_number_min], TRUE);
-                              frames[num - frame_number_min] = gimp_image_merge_visible_layers (frames_image_id, GIMP_CLIP_TO_IMAGE);
+                              if (! empty_frame)
+                                {
+                                  empty_frame = g_new (Frame, 1);
+                                  empty_frame->indexes = NULL;
+                                  empty_frame->updated_indexes = NULL;
+                                  empty_frame->drawable_id = 0;
+
+                                  previous_frames = g_list_append (previous_frames, empty_frame);
+                                }
+
+                              empty_frame->updated_indexes = g_list_append (empty_frame->updated_indexes, GINT_TO_POINTER (num - frame_number_min));
+
+                              frames[num - frame_number_min] = empty_frame;
                             }
-                          gimp_item_set_visible (frames[num - frame_number_min], FALSE);
+                          else if (! g_list_find (frames[num - frame_number_min]->updated_indexes, GINT_TO_POINTER (num - frame_number_min)))
+                            frames[num - frame_number_min]->updated_indexes = g_list_append (frames[num - frame_number_min]->updated_indexes,
+                                                                                             GINT_TO_POINTER (num - frame_number_min));
                         }
                     }
                   g_strfreev (tokens);
@@ -1290,6 +1311,76 @@ init_frames (void)
                 }
               g_match_info_free (match_info);
             }
+
+          for (j = 0; j < total_frames; j++)
+            {
+                /* Check which frame must be updated with the current layer. */
+                if (frames[j] && g_list_length (frames[j]->updated_indexes))
+                  {
+                    new_layer = gimp_layer_new_from_drawable (layers[total_layers - (i + 1)], frames_image_id);
+                    gimp_image_insert_layer (frames_image_id, new_layer, 0, 0);
+
+                    if (preview_quality)
+                      {
+                        gimp_layer_scale (new_layer,
+                                          (gimp_drawable_width (layers[total_layers - (i + 1)]) * (gint) preview_width) / (gint) width,
+                                          (gimp_drawable_height (layers[total_layers - (i + 1)]) * (gint) preview_height) / (gint) height,
+                                          FALSE);
+                        gimp_drawable_offsets (layers[total_layers - (i + 1)], &layer_offx, &layer_offy);
+                        gimp_layer_set_offsets (new_layer, (layer_offx * (gint) preview_width) / (gint) width,
+                                                (layer_offy * (gint) preview_height) / (gint) height);
+                      }
+                    gimp_layer_resize_to_image_size (new_layer);
+
+                    if (frames[j]->drawable_id == 0)
+                      {
+                        frames[j]->drawable_id = new_layer;
+                        frames[j]->indexes = frames[j]->updated_indexes;
+                        frames[j]->updated_indexes = NULL;
+                      }
+                    else if (g_list_length (frames[j]->indexes) == g_list_length (frames[j]->updated_indexes))
+                      {
+                        gimp_item_set_visible (new_layer, TRUE);
+                        gimp_item_set_visible (frames[j]->drawable_id, TRUE);
+
+                        frames[j]->drawable_id = gimp_image_merge_visible_layers (frames_image_id, GIMP_CLIP_TO_IMAGE);
+                        g_list_free (frames[j]->updated_indexes);
+                        frames[j]->updated_indexes = NULL;
+                      }
+                    else
+                      {
+                        GList  *idx;
+                        Frame  *forked_frame = g_new (Frame, 1);
+                        gint32  forked_drawable_id = gimp_layer_new_from_drawable (frames[j]->drawable_id, frames_image_id);
+
+                        /* if part only of the frames are updated, we fork the existing frame. */
+                        gimp_image_insert_layer (frames_image_id, forked_drawable_id, 0, 1);
+                        gimp_item_set_visible (new_layer, TRUE);
+                        gimp_item_set_visible (forked_drawable_id, TRUE);
+                        forked_drawable_id = gimp_image_merge_visible_layers (frames_image_id, GIMP_CLIP_TO_IMAGE);
+
+                        forked_frame->drawable_id = forked_drawable_id;
+                        forked_frame->indexes = frames[j]->updated_indexes;
+                        forked_frame->updated_indexes = NULL;
+                        frames[j]->updated_indexes = NULL;
+
+                        for (idx = g_list_first (forked_frame->indexes); idx != NULL; idx = g_list_next (idx))
+                          {
+                            frames[j]->indexes = g_list_remove (frames[j]->indexes, idx->data);
+                            /* Frame j must also be moved to the forked frame, but only after the loop. */
+                            if (GPOINTER_TO_INT (idx->data) != j)
+                              frames[GPOINTER_TO_INT (idx->data)] = forked_frame;
+                          }
+                        frames[j] = forked_frame;
+                        gimp_item_set_visible (forked_drawable_id, FALSE);
+
+                        previous_frames = g_list_append (previous_frames, forked_frame);
+                      }
+
+                    gimp_item_set_visible (frames[j]->drawable_id, FALSE);
+                  }
+            }
+
           g_free (layer_name);
           g_free (nospace_name);
         }
@@ -1299,7 +1390,10 @@ init_frames (void)
           /* If for some reason a frame is absent, use the previous one.
            * We are ensured that there is at least a "first" frame for this. */
           if (! frames[i])
-            frames[i] = frames[i - 1];
+            {
+              frames[i] = frames[i - 1];
+              frames[i]->indexes = g_list_append (frames[i]->indexes, GINT_TO_POINTER (i));
+            }
 
           frame_durations[i] = settings.default_frame_duration;
         }
@@ -1311,6 +1405,14 @@ init_frames (void)
       for (i = 0; i < total_frames; i++)
         {
           show_loading_progress (i);
+
+          frames[i] = g_new (Frame, 1);
+          frames[i]->indexes = NULL;
+          frames[i]->indexes = g_list_append (frames[i]->indexes, GINT_TO_POINTER (i));
+          frames[i]->updated_indexes = NULL;
+
+          previous_frames = g_list_append (previous_frames, frames[i]);
+
           layer_name = gimp_item_get_name (layers[total_layers - (i + 1)]);
           if (layer_name)
             {
@@ -1321,7 +1423,7 @@ init_frames (void)
 
           if (i > 0 && disposal != DISPOSE_REPLACE)
             {
-              previous_frame = gimp_layer_copy (frames[i - 1]);
+              previous_frame = gimp_layer_copy (frames[i - 1]->drawable_id);
 
               gimp_image_insert_layer (frames_image_id, previous_frame, 0, 0);
               gimp_item_set_visible (previous_frame, TRUE);
@@ -1339,7 +1441,7 @@ init_frames (void)
           gimp_layer_resize_to_image_size (new_layer);
 
           new_frame = gimp_image_merge_visible_layers (frames_image_id, GIMP_CLIP_TO_IMAGE);
-          frames[i] = new_frame;
+          frames[i]->drawable_id = new_frame;
           gimp_item_set_visible (new_frame, FALSE);
 
           if (duration <= 0)
@@ -1382,7 +1484,10 @@ init_frames (void)
   if (frame_number > frame_number_max || frame_number < frame_number_min)
     frame_number = frame_number_min;
 
+  force_render = TRUE;
+
   frames_lock = FALSE;
+
 }
 
 static void
@@ -1423,6 +1528,7 @@ initialize (void)
 static void
 render_frame (guint whichframe)
 {
+  static gint    last_frame_index = -1;
   GeglBuffer    *buffer;
   gint           i, j, k;
   guchar        *srcptr;
@@ -1432,8 +1538,15 @@ render_frame (guint whichframe)
   gdouble        drawing_scale;
   guchar        *preview_data;
 
-  /* Do not try to update the drawing areas while init_frame() is still running. */
+  /* Do not try to update the drawing areas while init_frames() is still running. */
   if (frames_lock)
+    return;
+
+  /* Unless we are in a case where we always want to redraw
+   * (after a zoom, preview mode change, reinitialization, and such),
+   * we don't redraw if the same frame was already drawn. */
+  if ((! force_render) && last_frame_index > -1 &&
+      g_list_find (frames[last_frame_index]->indexes, GINT_TO_POINTER (whichframe - frame_number_min)))
     return;
 
   frames_lock = TRUE;
@@ -1460,7 +1573,7 @@ render_frame (guint whichframe)
       total_alpha_preview ();
     }
 
-  buffer = gimp_drawable_get_buffer (frames[whichframe - frame_number_min]);
+  buffer = gimp_drawable_get_buffer (frames[whichframe - frame_number_min]->drawable_id);
 
   /* Fetch and scale the whole raw new frame */
   gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, drawing_width, drawing_height),
@@ -1523,6 +1636,9 @@ render_frame (guint whichframe)
 
   /* Update UI. */
   show_playing_progress ();
+
+  last_frame_index = whichframe - frame_number_min;
+  force_render = FALSE;
 
   frames_lock = FALSE;
 }
