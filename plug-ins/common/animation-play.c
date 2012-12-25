@@ -117,6 +117,7 @@ static void        init_frames               (void);
 static void        render_frame              (guint            whichframe);
 static void        show_playing_progress     (void);
 static void        show_loading_progress     (gint             layer_nb);
+static void        show_goto_progress        (guint            frame_nb);
 static void        total_alpha_preview       (void);
 static void        update_alpha_preview      (void);
 static void        update_combobox           (void);
@@ -200,6 +201,8 @@ static gboolean           initialized_once          = FALSE;
 static guint              timer                     = 0;
 static gboolean           detached                  = FALSE;
 static gdouble            scale, shape_scale;
+static gulong             progress_entered_handler, progress_motion_handler,
+                          progress_left_handler, progress_button_handler;
 
 /* Some regexp used to parse layer tags. */
 static GRegex* nospace_reg = NULL;
@@ -525,6 +528,75 @@ shape_released (GtkWidget *widget)
 }
 
 static gboolean
+progress_button (GtkWidget      *widget,
+                 GdkEventButton *event,
+                 gpointer        user_data)
+{
+  /* ignore double and triple click */
+  if (event->type == GDK_BUTTON_PRESS)
+    {
+      GtkAllocation  allocation;
+      guint          goto_frame;
+
+      gtk_widget_get_allocation (widget, &allocation);
+
+      goto_frame = frame_number_min + (gint) (event->x / (allocation.width / total_frames));
+
+      if (goto_frame >= frame_number_min && goto_frame < frame_number_min + total_frames)
+        {
+          frame_number = goto_frame;
+          render_frame (frame_number);
+        }
+    }
+
+  return FALSE;
+}
+
+static gboolean
+progress_entered (GtkWidget        *widget,
+                  GdkEventCrossing *event,
+                  gpointer          user_data)
+{
+  GtkAllocation  allocation;
+  guint          goto_frame;
+
+  gtk_widget_get_allocation (widget, &allocation);
+
+  goto_frame = frame_number_min + (gint) (event->x / (allocation.width / total_frames));
+
+  show_goto_progress (goto_frame);
+
+  return FALSE;
+}
+
+static gboolean
+progress_motion (GtkWidget      *widget,
+                 GdkEventMotion *event,
+                 gpointer        user_data)
+{
+  GtkAllocation  allocation;
+  guint          goto_frame;
+
+  gtk_widget_get_allocation (widget, &allocation);
+
+  goto_frame = frame_number_min + (gint) (event->x / (allocation.width / total_frames));
+
+  show_goto_progress (goto_frame);
+
+  return FALSE;
+}
+
+static gboolean
+progress_left (GtkWidget        *widget,
+               GdkEventCrossing *event,
+               gpointer          user_data)
+{
+  show_playing_progress ();
+
+  return FALSE;
+}
+
+static gboolean
 shape_motion (GtkWidget      *widget,
               GdkEventMotion *event)
 {
@@ -637,7 +709,6 @@ detach_callback (GtkToggleAction *action)
       gtk_window_move (GTK_WINDOW (shape_window), x + 6, y + 6);
 
       gdk_window_set_back_pixmap (gtk_widget_get_window (shape_drawing_area), NULL, TRUE);
-
 
       /* Set "alpha grid" background. */
       total_alpha_preview ();
@@ -923,6 +994,22 @@ build_dialog (gchar             *imagename)
   gtk_box_pack_end (GTK_BOX (hbox), progress, TRUE, TRUE, 0);
   gtk_widget_show (progress);
 
+  gtk_widget_add_events (progress,
+                         GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK |
+                         GDK_POINTER_MOTION_MASK | GDK_BUTTON_PRESS_MASK);
+  progress_entered_handler = g_signal_connect (progress, "enter-notify-event",
+                                               G_CALLBACK (progress_entered),
+                                               NULL);
+  progress_left_handler = g_signal_connect (progress, "leave-notify-event",
+                                            G_CALLBACK (progress_left),
+                                            NULL);
+  progress_motion_handler = g_signal_connect (progress, "motion-notify-event",
+                                              G_CALLBACK (progress_motion),
+                                              NULL);
+  progress_button_handler = g_signal_connect (progress, "button-press-event",
+                                              G_CALLBACK (progress_button),
+                                              NULL);
+
   /* Degraded quality animation preview. */
   quality_checkbox = gtk_check_button_new_with_label (_("Preview Quality"));
   gtk_box_pack_end (GTK_BOX (hbox), quality_checkbox, FALSE, FALSE, 0);
@@ -1158,6 +1245,11 @@ init_frames (void)
   gtk_widget_set_sensitive (GTK_WIDGET (zoomcombo), FALSE);
   gtk_widget_set_sensitive (GTK_WIDGET (frame_disposal_combo), FALSE);
   gtk_widget_set_sensitive (GTK_WIDGET (quality_checkbox), FALSE);
+
+  g_signal_handler_block (progress, progress_entered_handler);
+  g_signal_handler_block (progress, progress_left_handler);
+  g_signal_handler_block (progress, progress_motion_handler);
+  g_signal_handler_block (progress, progress_button_handler);
 
   /* Cleanup before re-generation. */
   if (frames)
@@ -1480,6 +1572,11 @@ init_frames (void)
   gtk_widget_set_sensitive (GTK_WIDGET (frame_disposal_combo), TRUE);
   gtk_widget_set_sensitive (GTK_WIDGET (quality_checkbox), TRUE);
 
+  g_signal_handler_unblock (progress, progress_entered_handler);
+  g_signal_handler_unblock (progress, progress_left_handler);
+  g_signal_handler_unblock (progress, progress_motion_handler);
+  g_signal_handler_unblock (progress, progress_button_handler);
+
   /* Keep the same frame number, unless it is now invalid. */
   if (frame_number > frame_number_max || frame_number < frame_number_min)
     frame_number = frame_number_min;
@@ -1641,6 +1738,25 @@ render_frame (guint whichframe)
   force_render = FALSE;
 
   frames_lock = FALSE;
+}
+
+
+static void
+show_goto_progress (guint goto_frame)
+{
+  gchar         *text;
+
+  /* update the dialog's progress bar */
+  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (progress),
+                                 ((gfloat) (frame_number - frame_number_min) /
+                                  (gfloat) (total_frames - 0.999)));
+
+  if (settings.default_frame_disposal != DISPOSE_TAGS || frame_number_min == 1)
+    text = g_strdup_printf (_("Go to frame %d of %d"), goto_frame, total_frames);
+  else
+    text = g_strdup_printf (_("Go to frame %d (%d) of %d"), goto_frame - frame_number_min + 1, goto_frame, total_frames);
+  gtk_progress_bar_set_text (GTK_PROGRESS_BAR (progress), text);
+  g_free (text);
 }
 
 static void
