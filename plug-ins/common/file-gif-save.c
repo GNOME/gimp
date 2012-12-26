@@ -104,7 +104,7 @@ static gboolean  save_image            (const gchar      *filename,
                                         GError          **error);
 
 static GimpPDBStatusType sanity_check  (const gchar      *filename,
-                                        gint32            image_ID,
+                                        gint32           *image_ID,
                                         GError          **error);
 static gboolean bad_bounds_dialog      (void);
 
@@ -209,7 +209,7 @@ run (const gchar      *name,
   if (strcmp (name, SAVE_PROC) == 0)
     {
       const gchar *filename;
-      gint32       image_ID;
+      gint32       image_ID, sanitized_image_ID = 0;
       gint32       drawable_ID;
       gint32       orig_image_ID;
 
@@ -221,11 +221,15 @@ run (const gchar      *name,
           run_mode == GIMP_RUN_WITH_LAST_VALS)
         gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-      status = sanity_check (filename, image_ID, &error);
+      status = sanity_check (filename, &image_ID, &error);
 
       /* Get the export options */
       if (status == GIMP_PDB_SUCCESS)
         {
+          /* If the sanity check succeeded, the image_ID will point to
+           * a duplicate image to delete later. */
+          sanitized_image_ID = image_ID;
+
           switch (run_mode)
             {
             case GIMP_RUN_INTERACTIVE:
@@ -283,6 +287,8 @@ run (const gchar      *name,
             if (export == GIMP_EXPORT_CANCEL)
               {
                 values[0].data.d_status = GIMP_PDB_CANCEL;
+                if (sanitized_image_ID)
+                  gimp_image_delete (sanitized_image_ID);
                 return;
               }
           }
@@ -305,6 +311,8 @@ run (const gchar      *name,
             {
               status = GIMP_PDB_EXECUTION_ERROR;
             }
+
+          gimp_image_delete (sanitized_image_ID);
         }
 
       if (export == GIMP_EXPORT_EXPORT)
@@ -565,7 +573,7 @@ parse_disposal_tag (const gchar *str)
 
 static GimpPDBStatusType
 sanity_check (const gchar  *filename,
-              gint32        image_ID,
+              gint32       *image_ID,
               GError      **error)
 {
   gint32 *layers;
@@ -574,8 +582,8 @@ sanity_check (const gchar  *filename,
   gint    image_height;
   gint    i;
 
-  image_width  = gimp_image_width (image_ID);
-  image_height = gimp_image_height (image_ID);
+  image_width  = gimp_image_width (*image_ID);
+  image_height = gimp_image_height (*image_ID);
 
   if (image_width > G_MAXUSHORT || image_height > G_MAXUSHORT)
     {
@@ -591,7 +599,8 @@ sanity_check (const gchar  *filename,
   /*** Iterate through the layers to make sure they're all ***/
   /*** within the bounds of the image                      ***/
 
-  layers = gimp_image_get_layers (image_ID, &nlayers);
+  *image_ID = gimp_image_duplicate (*image_ID);
+  layers = gimp_image_get_layers (*image_ID, &nlayers);
 
   for (i = 0; i < nlayers; i++)
     {
@@ -614,11 +623,12 @@ sanity_check (const gchar  *filename,
            */
           if ((run_mode == GIMP_RUN_NONINTERACTIVE) || bad_bounds_dialog ())
             {
-              gimp_image_crop (image_ID, image_width, image_height, 0, 0);
+              gimp_image_crop (*image_ID, image_width, image_height, 0, 0);
               return GIMP_PDB_SUCCESS;
             }
           else
             {
+              gimp_image_delete (*image_ID);
               return GIMP_PDB_CANCEL;
             }
         }
