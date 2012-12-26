@@ -103,6 +103,10 @@ static void        zoomcombo_activated       (GtkEntry        *combo,
                                               gpointer         data);
 static void        zoomcombo_changed         (GtkWidget       *combo,
                                               gpointer         data);
+static void        startframe_changed        (GtkAdjustment   *adjustment,
+                                              gpointer         user_data);
+static void        endframe_changed          (GtkAdjustment   *adjustment,
+                                              gpointer         user_data);
 static void        quality_checkbox_toggled  (GtkToggleButton *button,
                                               gpointer         data);
 static gboolean    repaint_sda               (GtkWidget       *darea,
@@ -162,6 +166,10 @@ static GtkWidget         *fpscombo                  = NULL;
 static GtkWidget         *zoomcombo                 = NULL;
 static GtkWidget         *quality_checkbox          = NULL;
 static GtkWidget         *frame_disposal_combo      = NULL;
+static GtkAdjustment     *startframe_adjust         = NULL;
+static GtkWidget         *startframe_spin           = NULL;
+static GtkAdjustment     *endframe_adjust           = NULL;
+static GtkWidget         *endframe_spin             = NULL;
 
 static gint32             image_id;
 static guint              width                     = -1,
@@ -191,6 +199,7 @@ static guchar            *rawframe                  = NULL;
 static guint32           *frame_durations           = NULL;
 static guint              frame_number;
 static guint              frame_number_min, frame_number_max;
+static guint              start_frame, end_frame;
 /* Since the application is single-thread, a boolean is enough.
  * It may become a mutex in the future with multi-thread support. */
 static gboolean           frames_lock               = FALSE;
@@ -528,6 +537,22 @@ shape_released (GtkWidget *widget)
 }
 
 static gboolean
+adjustment_pressed (GtkWidget      *widget,
+                    GdkEventButton *event,
+                    gpointer        user_data)
+{
+  if (event->type == GDK_2BUTTON_PRESS)
+    {
+      GtkSpinButton *spin = GTK_SPIN_BUTTON (widget);
+      GtkAdjustment *adj = gtk_spin_button_get_adjustment (spin);
+
+      gtk_adjustment_set_value (adj, (gdouble) frame_number);
+    }
+
+  return FALSE;
+}
+
+static gboolean
 progress_button (GtkWidget      *widget,
                  GdkEventButton *event,
                  gpointer        user_data)
@@ -541,6 +566,12 @@ progress_button (GtkWidget      *widget,
       gtk_widget_get_allocation (widget, &allocation);
 
       goto_frame = frame_number_min + (gint) (event->x / (allocation.width / total_frames));
+
+      if (goto_frame < start_frame)
+        gtk_adjustment_set_value (startframe_adjust, (gdouble) goto_frame);
+
+      if (goto_frame > end_frame)
+        gtk_adjustment_set_value (endframe_adjust, (gdouble) goto_frame);
 
       if (goto_frame >= frame_number_min && goto_frame < frame_number_min + total_frames)
         {
@@ -908,6 +939,8 @@ build_dialog (gchar             *imagename)
   GtkWidget   *vbox;
   GtkWidget   *hbox;
   GtkWidget   *abox;
+  GtkWidget   *progress_hbox;
+  GtkWidget   *config_hbox;
   GtkToolItem *item;
   GtkAction   *action;
   GdkCursor   *cursor;
@@ -944,6 +977,8 @@ build_dialog (gchar             *imagename)
                                               "/anim-play-toolbar/space"));
   gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item), FALSE);
   gtk_tool_item_set_expand (item, TRUE);
+
+  /* Vbox for the preview window and lower option bar */
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, TRUE, TRUE, 0);
@@ -984,14 +1019,41 @@ build_dialog (gchar             *imagename)
 
   /* Lower option bar. */
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
+  hbox = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
+
+  /* Progress box. */
+
+  progress_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_paned_add2 (GTK_PANED (hbox), progress_hbox);
+  gtk_widget_show (progress_hbox);
+
+  /* End frame spin button. */
+
+  endframe_adjust = GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.0, 0.0, 1.0, 5.0, 0.0));
+  endframe_spin = gtk_spin_button_new (endframe_adjust, 1.0, 0);
+  gtk_entry_set_width_chars (GTK_ENTRY (endframe_spin), 2);
+
+  gtk_box_pack_end (GTK_BOX (progress_hbox), endframe_spin, FALSE, FALSE, 0);
+  gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (endframe_spin), GTK_UPDATE_IF_VALID);
+  gtk_widget_show (endframe_spin);
+
+  g_signal_connect (endframe_adjust,
+                    "value-changed",
+                    G_CALLBACK (endframe_changed),
+                    NULL);
+
+  g_signal_connect (endframe_spin, "button-press-event",
+                    G_CALLBACK (adjustment_pressed),
+                    NULL);
+
+  gimp_help_set_help_data (endframe_spin, _("End frame"), NULL);
 
   /* Progress bar. */
 
   progress = gtk_progress_bar_new ();
-  gtk_box_pack_end (GTK_BOX (hbox), progress, TRUE, TRUE, 0);
+  gtk_box_pack_end (GTK_BOX (progress_hbox), progress, TRUE, TRUE, 0);
   gtk_widget_show (progress);
 
   gtk_widget_add_events (progress,
@@ -1010,9 +1072,36 @@ build_dialog (gchar             *imagename)
                                               G_CALLBACK (progress_button),
                                               NULL);
 
+  /* Start frame spin button. */
+
+  startframe_adjust = GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.0, 0.0, 1.0, 5.0, 0.0));
+  startframe_spin = gtk_spin_button_new (startframe_adjust, 1.0, 0);
+  gtk_entry_set_width_chars (GTK_ENTRY (startframe_spin), 2);
+
+  gtk_box_pack_end (GTK_BOX (progress_hbox), startframe_spin, FALSE, FALSE, 0);
+  gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (startframe_spin), GTK_UPDATE_IF_VALID);
+  gtk_widget_show (startframe_spin);
+
+  g_signal_connect (startframe_adjust,
+                    "value-changed",
+                    G_CALLBACK (startframe_changed),
+                    NULL);
+
+  g_signal_connect (startframe_spin, "button-press-event",
+                    G_CALLBACK (adjustment_pressed),
+                    NULL);
+
+  gimp_help_set_help_data (startframe_spin, _("Start frame"), NULL);
+
+  /* Configuration box. */
+
+  config_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_paned_add1 (GTK_PANED (hbox), config_hbox);
+  gtk_widget_show (config_hbox);
+
   /* Degraded quality animation preview. */
   quality_checkbox = gtk_check_button_new_with_label (_("Preview Quality"));
-  gtk_box_pack_end (GTK_BOX (hbox), quality_checkbox, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (config_hbox), quality_checkbox, FALSE, FALSE, 0);
   gtk_widget_show (quality_checkbox);
 
   init_quality_checkbox ();
@@ -1027,7 +1116,7 @@ build_dialog (gchar             *imagename)
 
   /* Zoom */
   zoomcombo = gtk_combo_box_text_new_with_entry ();
-  gtk_box_pack_end (GTK_BOX (hbox), zoomcombo, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (config_hbox), zoomcombo, FALSE, FALSE, 0);
   gtk_widget_show (zoomcombo);
   for (index = 0; index < 5; index++)
     {
@@ -1051,7 +1140,7 @@ build_dialog (gchar             *imagename)
 
   /* fps combo */
   fpscombo = gtk_combo_box_text_new ();
-  gtk_box_pack_end (GTK_BOX (hbox), fpscombo, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (config_hbox), fpscombo, FALSE, FALSE, 0);
   gtk_widget_show (fpscombo);
 
   for (index = 0; index < 9; index++)
@@ -1072,7 +1161,7 @@ build_dialog (gchar             *imagename)
 
   /* Speed Combo */
   speedcombo = gtk_combo_box_text_new ();
-  gtk_box_pack_end (GTK_BOX (hbox), speedcombo, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (config_hbox), speedcombo, FALSE, FALSE, 0);
   gtk_widget_show (speedcombo);
 
   for (index = 0; index < 7; index++)
@@ -1116,7 +1205,7 @@ build_dialog (gchar             *imagename)
                     G_CALLBACK (framecombo_changed),
                     NULL);
 
-  gtk_box_pack_end (GTK_BOX (hbox), frame_disposal_combo, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (config_hbox), frame_disposal_combo, FALSE, FALSE, 0);
   gtk_widget_show (frame_disposal_combo);
 
   gtk_window_set_resizable (GTK_WINDOW (window), TRUE);
@@ -1213,6 +1302,10 @@ init_frames (void)
       return;
     }
 
+  if (playing)
+    gtk_action_activate (gtk_ui_manager_get_action (ui_manager,
+                                                    "/anim-play-toolbar/play"));
+
   if (frames_lock)
     return;
   frames_lock = TRUE;
@@ -1245,6 +1338,8 @@ init_frames (void)
   gtk_widget_set_sensitive (GTK_WIDGET (zoomcombo), FALSE);
   gtk_widget_set_sensitive (GTK_WIDGET (frame_disposal_combo), FALSE);
   gtk_widget_set_sensitive (GTK_WIDGET (quality_checkbox), FALSE);
+  gtk_widget_set_sensitive (GTK_WIDGET (startframe_spin), FALSE);
+  gtk_widget_set_sensitive (GTK_WIDGET (endframe_spin), FALSE);
 
   g_signal_handler_block (progress, progress_entered_handler);
   g_signal_handler_block (progress, progress_left_handler);
@@ -1543,7 +1638,17 @@ init_frames (void)
     }
 
   /* Update the UI. */
-  animated = total_frames >= 2;
+  start_frame = gtk_adjustment_get_value (startframe_adjust);
+  if (start_frame < frame_number_min || start_frame > frame_number_max)
+    start_frame = frame_number_min;
+  gtk_adjustment_configure (startframe_adjust, start_frame, frame_number_min, frame_number_max, 1.0, 5.0, 0.0);
+
+  end_frame = gtk_adjustment_get_value (endframe_adjust);
+  if (end_frame < frame_number_min || end_frame > frame_number_max || end_frame < start_frame)
+    end_frame = frame_number_max;
+  gtk_adjustment_configure (endframe_adjust, end_frame, start_frame, frame_number_max, 1.0, 5.0, 0.0);
+
+  animated = end_frame - start_frame >= 1;
   action = gtk_ui_manager_get_action (ui_manager,
                                       "/ui/anim-play-toolbar/play");
   gtk_action_set_sensitive (action, animated);
@@ -1571,6 +1676,8 @@ init_frames (void)
   gtk_widget_set_sensitive (GTK_WIDGET (zoomcombo), TRUE);
   gtk_widget_set_sensitive (GTK_WIDGET (frame_disposal_combo), TRUE);
   gtk_widget_set_sensitive (GTK_WIDGET (quality_checkbox), TRUE);
+  gtk_widget_set_sensitive (GTK_WIDGET (startframe_spin), TRUE);
+  gtk_widget_set_sensitive (GTK_WIDGET (endframe_spin), TRUE);
 
   g_signal_handler_unblock (progress, progress_entered_handler);
   g_signal_handler_unblock (progress, progress_left_handler);
@@ -1578,8 +1685,8 @@ init_frames (void)
   g_signal_handler_unblock (progress, progress_button_handler);
 
   /* Keep the same frame number, unless it is now invalid. */
-  if (frame_number > frame_number_max || frame_number < frame_number_min)
-    frame_number = frame_number_min;
+  if (frame_number > end_frame || frame_number < start_frame)
+    frame_number = start_frame;
 
   force_render = TRUE;
 
@@ -1644,11 +1751,14 @@ render_frame (guint whichframe)
    * we don't redraw if the same frame was already drawn. */
   if ((! force_render) && last_frame_index > -1 &&
       g_list_find (frames[last_frame_index]->indexes, GINT_TO_POINTER (whichframe - frame_number_min)))
-    return;
+    {
+      show_playing_progress ();
+      return;
+    }
 
   frames_lock = TRUE;
 
-  g_assert (whichframe >= frame_number_min && whichframe <= frame_number_max);
+  g_assert (whichframe >= start_frame && whichframe <= end_frame);
 
   if (detached)
     {
@@ -1858,8 +1968,8 @@ remove_timer (void)
 static void
 do_back_step (void)
 {
-  if (frame_number == frame_number_min)
-    frame_number = frame_number_max;
+  if (frame_number == start_frame)
+    frame_number = end_frame;
   else
     frame_number = frame_number - 1;
   render_frame (frame_number);
@@ -1868,7 +1978,7 @@ do_back_step (void)
 static void
 do_step (void)
 {
-  frame_number = frame_number_min + ((frame_number - frame_number_min + 1) % total_frames);
+  frame_number = start_frame + ((frame_number - start_frame + 1) % (end_frame - start_frame + 1));
   render_frame (frame_number);
 }
 
@@ -2042,7 +2152,7 @@ rewind_callback (GtkAction *action)
   if (playing)
     gtk_action_activate (gtk_ui_manager_get_action (ui_manager,
                                                     "/anim-play-toolbar/play"));
-  frame_number = frame_number_min;
+  frame_number = start_frame;
   render_frame (frame_number);
 }
 
@@ -2156,6 +2266,89 @@ update_scale (gdouble scale)
       gtk_window_reshow_with_initial_size (GTK_WINDOW (shape_window));
       gtk_window_move (GTK_WINDOW (shape_window), x, y);
     }
+}
+
+/* Update the tool sensitivity for playing, depending on the number of frames. */
+static void
+update_ui (void)
+{
+  GtkAction * action;
+  gboolean animated;
+
+  animated = end_frame - start_frame >= 1;
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/ui/anim-play-toolbar/play");
+  gtk_action_set_sensitive (action, animated);
+
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/ui/anim-play-toolbar/step-back");
+  gtk_action_set_sensitive (action, animated);
+
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/ui/anim-play-toolbar/step");
+  gtk_action_set_sensitive (action, animated);
+
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/ui/anim-play-toolbar/rewind");
+  gtk_action_set_sensitive (action, animated);
+}
+
+static void
+startframe_changed (GtkAdjustment *adjustment,
+                    gpointer       user_data)
+{
+  gdouble value = gtk_adjustment_get_value (adjustment);
+
+  if (value < frame_number_min || value > frame_number_max)
+    {
+      value = frame_number_min;
+      gtk_adjustment_set_value (adjustment, frame_number_min);
+    }
+
+  start_frame = (guint) value;
+
+  if (gtk_adjustment_get_value (endframe_adjust) < value)
+    {
+      gtk_adjustment_set_value (endframe_adjust, frame_number_max);
+      end_frame = (guint) frame_number_max;
+    }
+
+  if (frame_number < start_frame)
+    {
+      frame_number = start_frame;
+      render_frame (frame_number);
+    }
+
+  update_ui ();
+}
+
+static void
+endframe_changed (GtkAdjustment *adjustment,
+                  gpointer       user_data)
+{
+  gdouble value = gtk_adjustment_get_value (adjustment);
+
+  if (value < frame_number_min || value > frame_number_max)
+    {
+      value = frame_number_max;
+      gtk_adjustment_set_value (adjustment, frame_number_max);
+    }
+
+  end_frame = (guint) value;
+
+  if (gtk_adjustment_get_value (startframe_adjust) > value)
+    {
+      gtk_adjustment_set_value (startframe_adjust, frame_number_min);
+      start_frame = (guint) frame_number_min;
+    }
+
+  if (frame_number > end_frame)
+    {
+      frame_number = end_frame;
+      render_frame (frame_number);
+    }
+
+  update_ui ();
 }
 
 /*
