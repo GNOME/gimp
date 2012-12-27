@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-03 01:51+0200\n"
-"PO-Revision-Date: 2012-09-03 01:52+0200\n"
+"POT-Creation-Date: 2012-12-27 21:00+0100\n"
+"PO-Revision-Date: 2012-12-27 21:01+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -731,7 +731,7 @@ msgstr "Zamienia zaznaczenie na ten kanał"
 #: ../app/actions/channels-actions.c:114
 msgctxt "channels-action"
 msgid "_Add to Selection"
-msgstr "Dod_aj do zaznaczenia"
+msgstr "_Dodaj do zaznaczenia"
 
 #: ../app/actions/channels-actions.c:115
 msgctxt "channels-action"
@@ -796,7 +796,7 @@ msgid "New Channel Color"
 msgstr "Kolor nowego kanału"
 
 #: ../app/actions/channels-commands.c:244 ../app/core/gimpimage-new.c:257
-#: ../app/display/gimpdisplayshell-dnd.c:642
+#: ../app/display/gimpdisplayshell-dnd.c:646
 #: ../app/widgets/gimpchanneltreeview.c:258
 #: ../app/widgets/gimplayertreeview.c:776
 #, c-format
@@ -993,11 +993,11 @@ msgid "Use the composite color of all visible layers"
 msgstr "Używa połączonych kolorów wszystkich widocznych warstw"
 
 #: ../app/actions/data-commands.c:89 ../app/actions/documents-commands.c:344
-#: ../app/actions/file-commands.c:194 ../app/dialogs/file-open-dialog.c:232
+#: ../app/actions/file-commands.c:195 ../app/dialogs/file-open-dialog.c:232
 #: ../app/dialogs/file-open-dialog.c:277
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
-#: ../app/display/gimpdisplayshell-dnd.c:588
+#: ../app/display/gimpdisplayshell-dnd.c:592
 #: ../app/widgets/gimplayertreeview.c:736 ../app/widgets/gimptoolbox-dnd.c:170
 #: ../app/widgets/gimptoolbox.c:833
 #, c-format
@@ -2431,49 +2431,49 @@ msgstr "_Zastąp %s"
 msgid "Export to"
 msgstr "Wyeksportuj do"
 
-#: ../app/actions/file-commands.c:112 ../app/actions/file-commands.c:489
+#: ../app/actions/file-commands.c:113 ../app/actions/file-commands.c:490
 #: ../app/dialogs/file-open-dialog.c:77
 msgid "Open Image"
 msgstr "Otwarcie obrazu"
 
-#: ../app/actions/file-commands.c:133
+#: ../app/actions/file-commands.c:134
 msgid "Open Image as Layers"
 msgstr "Otwiera obraz jako warstwy"
 
-#: ../app/actions/file-commands.c:265
+#: ../app/actions/file-commands.c:266
 msgid "No changes need to be saved"
 msgstr "Brak niezapisanych zmian"
 
-#: ../app/actions/file-commands.c:272 ../app/dialogs/file-save-dialog.c:95
+#: ../app/actions/file-commands.c:273 ../app/dialogs/file-save-dialog.c:95
 msgid "Save Image"
 msgstr "Zapis obrazu"
 
-#: ../app/actions/file-commands.c:278
+#: ../app/actions/file-commands.c:279
 msgid "Save a Copy of the Image"
 msgstr "Zapis kopii obrazu"
 
-#: ../app/actions/file-commands.c:363
+#: ../app/actions/file-commands.c:364
 msgid "Create New Template"
 msgstr "Utworzenie nowego szablonu"
 
-#: ../app/actions/file-commands.c:367
+#: ../app/actions/file-commands.c:368
 msgid "Enter a name for this template"
 msgstr "Proszę wprowadzić nazwę tego szablonu"
 
-#: ../app/actions/file-commands.c:397
+#: ../app/actions/file-commands.c:398
 msgid "Revert failed. No file name associated with this image."
 msgstr "Przywrócenie się nie powiodło. Obrazowi nie nadano nazwy."
 
-#: ../app/actions/file-commands.c:409
+#: ../app/actions/file-commands.c:410
 msgid "Revert Image"
 msgstr "Przywrócenie obrazu"
 
-#: ../app/actions/file-commands.c:435
+#: ../app/actions/file-commands.c:436
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Przywrócić \"%s\" do wersji \"%s\"?"
 
-#: ../app/actions/file-commands.c:441
+#: ../app/actions/file-commands.c:442
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -3690,7 +3690,7 @@ msgstr "Zamienia zaznaczenie na maska warstwy"
 #: ../app/actions/layers-actions.c:290
 msgctxt "layers-action"
 msgid "_Add to Selection"
-msgstr "Dod_aj do zaznaczenia"
+msgstr "_Dodaj do zaznaczenia"
 
 #: ../app/actions/layers-actions.c:291
 msgctxt "layers-action"
@@ -3730,7 +3730,7 @@ msgstr "Zamienia zaznaczenie z kanałem alfa warstwy"
 #: ../app/actions/layers-actions.c:318
 msgctxt "layers-action"
 msgid "A_dd to Selection"
-msgstr "Dod_aj do zaznaczenia"
+msgstr "_Dodaj do zaznaczenia"
 
 #: ../app/actions/layers-actions.c:320
 msgctxt "layers-action"
@@ -5064,7 +5064,7 @@ msgstr "Zamienia zaznaczenie na kanał"
 #: ../app/actions/vectors-actions.c:180
 msgctxt "vectors-action"
 msgid "_Add to Selection"
-msgstr "Dod_aj do zaznaczenia"
+msgstr "_Dodaj do zaznaczenia"
 
 #: ../app/actions/vectors-actions.c:181
 msgctxt "vectors-action"
@@ -6551,7 +6551,7 @@ msgstr "Ustawia rozmiar podglądów w historii działań."
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Powoduje uruchomienie przeglądarki pomocy po naciśnięciu klawisza F1."
 
-#: ../app/config/gimprc-deserialize.c:135 ../app/core/gimp-modules.c:133
+#: ../app/config/gimprc-deserialize.c:135 ../app/core/gimp-modules.c:136
 #: ../app/core/gimp-units.c:167 ../app/gui/session.c:286
 #: ../app/plug-in/plug-in-rc.c:212
 msgid "fatal parse error"
@@ -7219,129 +7219,129 @@ msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Nie do cofnięcia"
 
-#: ../app/core/core-enums.c:1185
+#: ../app/core/core-enums.c:1187
 msgctxt "select-criterion"
 msgid "Composite"
 msgstr "Zbiorowy"
 
-#: ../app/core/core-enums.c:1186
+#: ../app/core/core-enums.c:1188
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Czerwony"
 
-#: ../app/core/core-enums.c:1187
+#: ../app/core/core-enums.c:1189
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Zielony"
 
-#: ../app/core/core-enums.c:1188
+#: ../app/core/core-enums.c:1190
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Niebieski"
 
-#: ../app/core/core-enums.c:1189
+#: ../app/core/core-enums.c:1191
 msgctxt "select-criterion"
 msgid "Hue"
 msgstr "Barwa"
 
-#: ../app/core/core-enums.c:1190
+#: ../app/core/core-enums.c:1192
 msgctxt "select-criterion"
 msgid "Saturation"
 msgstr "Nasycenie"
 
-#: ../app/core/core-enums.c:1191
+#: ../app/core/core-enums.c:1193
 msgctxt "select-criterion"
 msgid "Value"
 msgstr "Wartość"
 
-#: ../app/core/core-enums.c:1220
+#: ../app/core/core-enums.c:1222
 msgctxt "message-severity"
 msgid "Message"
 msgstr "Komunikat"
 
-#: ../app/core/core-enums.c:1221
+#: ../app/core/core-enums.c:1223
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "Ostrzeżenie"
 
-#: ../app/core/core-enums.c:1222
+#: ../app/core/core-enums.c:1224
 msgctxt "message-severity"
 msgid "Error"
 msgstr "Błąd"
 
-#: ../app/core/core-enums.c:1251
+#: ../app/core/core-enums.c:1253
 msgctxt "color-profile-policy"
 msgid "Ask what to do"
 msgstr "Pytanie, co zrobić"
 
-#: ../app/core/core-enums.c:1252
+#: ../app/core/core-enums.c:1254
 msgctxt "color-profile-policy"
 msgid "Keep embedded profile"
 msgstr "Zachowanie osadzonego profilu"
 
-#: ../app/core/core-enums.c:1253
+#: ../app/core/core-enums.c:1255
 msgctxt "color-profile-policy"
 msgid "Convert to RGB workspace"
 msgstr "Konwertowanie do obszaru roboczego RGB"
 
-#: ../app/core/core-enums.c:1290
+#: ../app/core/core-enums.c:1292
 msgctxt "dynamics-output-type"
 msgid "Opacity"
 msgstr "Krycie"
 
-#: ../app/core/core-enums.c:1291
+#: ../app/core/core-enums.c:1293
 msgctxt "dynamics-output-type"
 msgid "Size"
 msgstr "Rozmiar"
 
-#: ../app/core/core-enums.c:1292
+#: ../app/core/core-enums.c:1294
 msgctxt "dynamics-output-type"
 msgid "Angle"
 msgstr "Kąt"
 
-#: ../app/core/core-enums.c:1293
+#: ../app/core/core-enums.c:1295
 msgctxt "dynamics-output-type"
 msgid "Color"
 msgstr "Kolor"
 
-#: ../app/core/core-enums.c:1294
+#: ../app/core/core-enums.c:1296
 msgctxt "dynamics-output-type"
 msgid "Hardness"
 msgstr "Twardość"
 
-#: ../app/core/core-enums.c:1295
+#: ../app/core/core-enums.c:1297
 msgctxt "dynamics-output-type"
 msgid "Force"
 msgstr "Siła"
 
-#: ../app/core/core-enums.c:1296
+#: ../app/core/core-enums.c:1298
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
 msgstr "Proporcje"
 
-#: ../app/core/core-enums.c:1297
+#: ../app/core/core-enums.c:1299
 msgctxt "dynamics-output-type"
 msgid "Spacing"
 msgstr "Odstępy"
 
-#: ../app/core/core-enums.c:1298
+#: ../app/core/core-enums.c:1300
 msgctxt "dynamics-output-type"
 msgid "Rate"
 msgstr "Tempo"
 
-#: ../app/core/core-enums.c:1299
+#: ../app/core/core-enums.c:1301
 msgctxt "dynamics-output-type"
 msgid "Flow"
 msgstr "Strumień"
 
-#: ../app/core/core-enums.c:1300
+#: ../app/core/core-enums.c:1302
 msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "Drganie"
 
 #: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:375
 #: ../app/gui/session.c:399 ../app/menus/menus.c:464
-#: ../app/widgets/gimpdevices.c:206
+#: ../app/widgets/gimpdevices.c:208
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "Usunięcie \"%s\" się nie powiodło: %s"
@@ -8330,69 +8330,69 @@ msgstr "Skalowanie obrazu"
 msgid "Can't undo %s"
 msgstr "Nie można cofnąć działania %s"
 
-#: ../app/core/gimpimage.c:1783
+#: ../app/core/gimpimage.c:1784
 msgid " (exported)"
 msgstr " (eksportowany)"
 
-#: ../app/core/gimpimage.c:1787
+#: ../app/core/gimpimage.c:1788
 msgid " (overwritten)"
 msgstr " (zastąpiony)"
 
-#: ../app/core/gimpimage.c:1796
+#: ../app/core/gimpimage.c:1797
 msgid " (imported)"
 msgstr " (zaimportowany)"
 
-#: ../app/core/gimpimage.c:1917
+#: ../app/core/gimpimage.c:1922
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Zmiana rozdzielczości obrazu"
 
-#: ../app/core/gimpimage.c:1969
+#: ../app/core/gimpimage.c:1974
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Zmiana jednostki obrazu"
 
-#: ../app/core/gimpimage.c:2982
+#: ../app/core/gimpimage.c:2987
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Dołączenie do obrazu danych pasożytniczych"
 
-#: ../app/core/gimpimage.c:3023
+#: ../app/core/gimpimage.c:3028
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Usunięcie z obrazu danych pasożytniczych"
 
-#: ../app/core/gimpimage.c:3732
+#: ../app/core/gimpimage.c:3737
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Dodanie warstwy"
 
-#: ../app/core/gimpimage.c:3782 ../app/core/gimpimage.c:3802
+#: ../app/core/gimpimage.c:3787 ../app/core/gimpimage.c:3807
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Usunięcie warstwy"
 
-#: ../app/core/gimpimage.c:3796
+#: ../app/core/gimpimage.c:3801
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Usunięcie oderwanego zaznaczenia"
 
-#: ../app/core/gimpimage.c:3964
+#: ../app/core/gimpimage.c:3969
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Dodanie kanału"
 
-#: ../app/core/gimpimage.c:4002 ../app/core/gimpimage.c:4015
+#: ../app/core/gimpimage.c:4007 ../app/core/gimpimage.c:4020
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Usunięcie kanału"
 
-#: ../app/core/gimpimage.c:4069
+#: ../app/core/gimpimage.c:4074
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Dodanie ścieżki"
 
-#: ../app/core/gimpimage.c:4100
+#: ../app/core/gimpimage.c:4105
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Usunięcie ścieżki"
@@ -9085,7 +9085,7 @@ msgstr "Zanikanie %s"
 msgid "_Fade"
 msgstr "_Zanikanie"
 
-#: ../app/dialogs/fade-dialog.c:156 ../app/widgets/gimpdeviceinfoeditor.c:344
+#: ../app/dialogs/fade-dialog.c:156 ../app/widgets/gimpdeviceinfoeditor.c:346
 msgid "_Mode:"
 msgstr "_Tryb:"
 
@@ -9113,7 +9113,7 @@ msgstr "Eksport obrazu"
 msgid "_Export"
 msgstr "Wy_eksportuj"
 
-#: ../app/dialogs/file-save-dialog.c:432
+#: ../app/dialogs/file-save-dialog.c:419
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -9123,7 +9123,7 @@ msgstr ""
 "podstawie jego rozszerzenia. Proszę wpisać rozszerzenie pliku, które pasuje "
 "do podanego pliku lub nie wpisywać żadnego."
 
-#: ../app/dialogs/file-save-dialog.c:559
+#: ../app/dialogs/file-save-dialog.c:546
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
@@ -9132,7 +9132,7 @@ msgstr ""
 "Należy użyć polecenia \"Plik→Zapisz\", aby zapisać plik w formacie XCF "
 "programu GIMP."
 
-#: ../app/dialogs/file-save-dialog.c:566
+#: ../app/dialogs/file-save-dialog.c:553
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
@@ -9141,7 +9141,7 @@ msgstr ""
 "Należy użyć polecenia \"Plik→Wyeksportuj\", aby wyeksportować obraz do "
 "innych formatów."
 
-#: ../app/dialogs/file-save-dialog.c:572
+#: ../app/dialogs/file-save-dialog.c:559
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -9149,23 +9149,23 @@ msgstr ""
 "Podany plik nie ma żadnego znanego rozszerzenia. Proszę wpisać lub wybrać "
 "rozszerzenie z listy."
 
-#: ../app/dialogs/file-save-dialog.c:586
+#: ../app/dialogs/file-save-dialog.c:573
 msgid "Extension Mismatch"
 msgstr "Niezgodność rozszerzeń"
 
-#: ../app/dialogs/file-save-dialog.c:602
+#: ../app/dialogs/file-save-dialog.c:589
 msgid "The given file extension does not match the chosen file type."
 msgstr "Podane rozszerzenie nie pasuje do wybranego typu pliku."
 
-#: ../app/dialogs/file-save-dialog.c:606
+#: ../app/dialogs/file-save-dialog.c:593
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Zapisać obraz pod tą nazwą mimo to?"
 
-#: ../app/dialogs/file-save-dialog.c:664
+#: ../app/dialogs/file-save-dialog.c:651
 msgid "Saving canceled"
 msgstr "Anulowano zapisywanie"
 
-#: ../app/dialogs/file-save-dialog.c:672 ../app/widgets/gimpdnd-xds.c:186
+#: ../app/dialogs/file-save-dialog.c:659 ../app/widgets/gimpdnd-xds.c:186
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -9367,31 +9367,31 @@ msgstr "Należy ponownie uruchomić program GIMP, aby uwzględnić zmiany."
 msgid "Module"
 msgstr "Moduł"
 
-#: ../app/dialogs/module-dialog.c:465
+#: ../app/dialogs/module-dialog.c:468
 msgid "Only in memory"
 msgstr "Tylko w pamięci"
 
-#: ../app/dialogs/module-dialog.c:470
+#: ../app/dialogs/module-dialog.c:473
 msgid "No longer available"
 msgstr "Niedostępny"
 
-#: ../app/dialogs/module-dialog.c:495
+#: ../app/dialogs/module-dialog.c:498
 msgid "Author:"
 msgstr "Autor:"
 
-#: ../app/dialogs/module-dialog.c:496
+#: ../app/dialogs/module-dialog.c:499
 msgid "Version:"
 msgstr "Wersja:"
 
-#: ../app/dialogs/module-dialog.c:497
+#: ../app/dialogs/module-dialog.c:500
 msgid "Date:"
 msgstr "Data:"
 
-#: ../app/dialogs/module-dialog.c:498
+#: ../app/dialogs/module-dialog.c:501
 msgid "Copyright:"
 msgstr "Prawa autorskie:"
 
-#: ../app/dialogs/module-dialog.c:499
+#: ../app/dialogs/module-dialog.c:502
 msgid "Location:"
 msgstr "Położenie:"
 
@@ -10659,7 +10659,7 @@ msgid "Navigate the image display"
 msgstr "Kontroluje wyświetlanie obrazu"
 
 #: ../app/display/gimpdisplayshell.c:746
-#: ../app/display/gimpdisplayshell.c:1325 ../app/widgets/gimptoolbox.c:256
+#: ../app/display/gimpdisplayshell.c:1327 ../app/widgets/gimptoolbox.c:256
 msgid "Drop image files here to open them"
 msgstr "Upuszczenie plików obrazów w tym miejscu otworzy je"
 
@@ -10726,42 +10726,44 @@ msgstr[2] ""
 "Jeśli obraz nie zostanie zapisany, to zmiany z ostatnich %d minut zostaną "
 "utracone."
 
-#: ../app/display/gimpdisplayshell-close.c:305
+#: ../app/display/gimpdisplayshell-close.c:311
 #, c-format
 msgid "The image has been exported to '%s'."
 msgstr "Wyeksportowano obraz do \"%s\"."
 
-#: ../app/display/gimpdisplayshell-dnd.c:242
-#: ../app/display/gimpdisplayshell-dnd.c:645
-#: ../app/display/gimpdisplayshell-dnd.c:703
+#: ../app/display/gimpdisplayshell-dnd.c:246
+#: ../app/display/gimpdisplayshell-dnd.c:649
+#: ../app/display/gimpdisplayshell-dnd.c:707
 msgid "Drop New Layer"
 msgstr "Upuszczenie nowej warstwy"
 
-#: ../app/display/gimpdisplayshell-dnd.c:285
+#: ../app/display/gimpdisplayshell-dnd.c:289
 msgid "Drop New Path"
 msgstr "Upuszczenie nowej ścieżki"
 
-#: ../app/display/gimpdisplayshell-dnd.c:357
-#: ../app/display/gimpdisplayshell-dnd.c:459 ../app/tools/gimpblendtool.c:173
-#: ../app/tools/gimpbucketfilltool.c:136 ../app/tools/gimpimagemaptool.c:279
+#: ../app/display/gimpdisplayshell-dnd.c:361
+#: ../app/display/gimpdisplayshell-dnd.c:463 ../app/tools/gimpblendtool.c:173
+#: ../app/tools/gimpbucketfilltool.c:136 ../app/tools/gimpimagemaptool.c:280
+#: ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Nie można zmodyfikować pikseli grup warstw."
 
-#: ../app/display/gimpdisplayshell-dnd.c:365
-#: ../app/display/gimpdisplayshell-dnd.c:467 ../app/tools/gimpblendtool.c:180
+#: ../app/display/gimpdisplayshell-dnd.c:369
+#: ../app/display/gimpdisplayshell-dnd.c:471 ../app/tools/gimpblendtool.c:180
 #: ../app/tools/gimpbucketfilltool.c:143 ../app/tools/gimpcroptool.c:325
-#: ../app/tools/gimpimagemaptool.c:286 ../app/tools/gimppainttool.c:266
-#: ../app/tools/gimptransformtool.c:246 ../app/tools/gimptransformtool.c:1066
+#: ../app/tools/gimpimagemaptool.c:287 ../app/tools/gimppainttool.c:266
+#: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:247
+#: ../app/tools/gimptransformtool.c:1067
 msgid "The active layer's pixels are locked."
 msgstr "Aktywne piksele warstwy są zablokowane."
 
-#: ../app/display/gimpdisplayshell-dnd.c:545
+#: ../app/display/gimpdisplayshell-dnd.c:549
 #: ../app/widgets/gimplayertreeview.c:725
 msgid "Drop layers"
 msgstr "Upuszczone warstwy"
 
-#: ../app/display/gimpdisplayshell-dnd.c:678
-#: ../app/display/gimpdisplayshell-dnd.c:695
+#: ../app/display/gimpdisplayshell-dnd.c:682
+#: ../app/display/gimpdisplayshell-dnd.c:699
 #: ../app/widgets/gimplayertreeview.c:802 ../app/widgets/gimptoolbox-dnd.c:266
 msgid "Dropped Buffer"
 msgstr "Upuszczony bufor"
@@ -11558,7 +11560,7 @@ msgstr ""
 msgid "Cancelled"
 msgstr "Anulowano"
 
-#: ../app/plug-in/gimpplugin.c:639
+#: ../app/plug-in/gimpplugin.c:643
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -11609,7 +11611,7 @@ msgstr "Interpreter wtyczek"
 msgid "Plug-In Environment"
 msgstr "Środowisko wtyczek"
 
-#: ../app/plug-in/gimppluginprocedure.c:980
+#: ../app/plug-in/gimppluginprocedure.c:976
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -11618,7 +11620,7 @@ msgstr ""
 "Błąd wywołania dla \"%s\":\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:992
+#: ../app/plug-in/gimppluginprocedure.c:988
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -12068,7 +12070,7 @@ msgctxt "command"
 msgid "Select by Color"
 msgstr "Zaznaczenie według koloru"
 
-#: ../app/tools/gimpcagetool.c:152 ../app/tools/gimpcagetool.c:1154
+#: ../app/tools/gimpcagetool.c:152 ../app/tools/gimpcagetool.c:1155
 msgid "Cage Transform"
 msgstr "Przekształcenie klatki"
 
@@ -12080,15 +12082,15 @@ msgstr "Przekształcenie klatki: zniekształca zaznaczenie za pomocą klatki"
 msgid "_Cage Transform"
 msgstr "Przekształcenie _klatki"
 
-#: ../app/tools/gimpcagetool.c:351
+#: ../app/tools/gimpcagetool.c:352
 msgid "Press ENTER to commit the transform"
 msgstr "Naciśnięcie klawisza Enter zatwierdzi przekształcenie"
 
-#: ../app/tools/gimpcagetool.c:1095
+#: ../app/tools/gimpcagetool.c:1096
 msgid "Computing Cage Coefficients"
 msgstr "Obliczanie współrzędnych klatki"
 
-#: ../app/tools/gimpcagetool.c:1272
+#: ../app/tools/gimpcagetool.c:1273
 msgid "Cage transform"
 msgstr "Przekształcenie klatki"
 
@@ -12472,7 +12474,7 @@ msgstr "Ka_nał:"
 msgid "R_eset Channel"
 msgstr "_Przywróć kanał"
 
-#: ../app/tools/gimpcurvestool.c:583 ../app/widgets/gimpdeviceinfoeditor.c:458
+#: ../app/tools/gimpcurvestool.c:583 ../app/widgets/gimpdeviceinfoeditor.c:461
 msgid "Curve _type:"
 msgstr "_Typ krzywej:"
 
@@ -12752,21 +12754,21 @@ msgstr ""
 msgid "F_oreground Select"
 msgstr "Zaznaczenie pi_erwszego planu"
 
-#: ../app/tools/gimpforegroundselecttool.c:302
+#: ../app/tools/gimpforegroundselecttool.c:304
 msgid "Add more strokes or press Enter to accept the selection"
 msgstr ""
 "Należy dodać więcej pociągnięć lub nacisnąć klawisz Enter, aby zaakceptować "
 "zaznaczenie"
 
-#: ../app/tools/gimpforegroundselecttool.c:304
+#: ../app/tools/gimpforegroundselecttool.c:306
 msgid "Mark foreground by painting on the object to extract"
 msgstr "Zaznacza pierwszy plan, poprzez odrysowanie obiektu do wydobycia"
 
-#: ../app/tools/gimpforegroundselecttool.c:309
+#: ../app/tools/gimpforegroundselecttool.c:311
 msgid "Roughly outline the object to extract"
 msgstr "Nierówno obrysowuje obiekt do wydobycia"
 
-#: ../app/tools/gimpforegroundselecttool.c:751
+#: ../app/tools/gimpforegroundselecttool.c:753
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "Zaznaczenie pierwszego planu"
@@ -12959,7 +12961,7 @@ msgstr "_Ustawienia:"
 msgid "Settings saved to '%s'"
 msgstr "Zapisano ustawienia do \"%s\""
 
-#: ../app/tools/gimpimagemaptool.c:362
+#: ../app/tools/gimpimagemaptool.c:363
 msgid "_Preview"
 msgstr "_Podgląd"
 
@@ -13030,33 +13032,33 @@ msgstr ""
 msgid "Intelligent _Scissors"
 msgstr "Inteligentne _nożyce"
 
-#: ../app/tools/gimpiscissorstool.c:900 ../app/tools/gimpmeasuretool.c:605
+#: ../app/tools/gimpiscissorstool.c:902 ../app/tools/gimpmeasuretool.c:605
 msgid "Click-Drag to move this point"
 msgstr "Kliknięcie i przeciągnięcie przemieści ten punkt"
 
-#: ../app/tools/gimpiscissorstool.c:902 ../app/tools/gimpiscissorstool.c:967
+#: ../app/tools/gimpiscissorstool.c:904 ../app/tools/gimpiscissorstool.c:969
 #, c-format
 msgid "%s: disable auto-snap"
 msgstr "%s: wyłącza automatyczne przyciąganie"
 
-#: ../app/tools/gimpiscissorstool.c:919
+#: ../app/tools/gimpiscissorstool.c:921
 msgid "Click to close the curve"
 msgstr "Kliknięcie zamknie krzywą"
 
-#: ../app/tools/gimpiscissorstool.c:925
+#: ../app/tools/gimpiscissorstool.c:927
 msgid "Click to add a point on this segment"
 msgstr "Kliknięcie doda punkt w tym segmencie"
 
-#: ../app/tools/gimpiscissorstool.c:939
+#: ../app/tools/gimpiscissorstool.c:941
 msgid "Click or press Enter to convert to a selection"
 msgstr ""
 "Kliknięcie lub naciśnięcie klawisza Enter przekonwertuje do zaznaczenia"
 
-#: ../app/tools/gimpiscissorstool.c:949
+#: ../app/tools/gimpiscissorstool.c:951
 msgid "Press Enter to convert to a selection"
 msgstr "Naciśnięcie klawisza Enter przekonwertuje do zaznaczenia"
 
-#: ../app/tools/gimpiscissorstool.c:964
+#: ../app/tools/gimpiscissorstool.c:966
 msgid "Click or Click-Drag to add a point"
 msgstr "Kliknięcie lub kliknięcie i przeciągnięcie doda punkt"
 
@@ -13841,7 +13843,7 @@ msgstr "Tekst: tworzy i modyfikuje warstwy tekstu"
 msgid "Te_xt"
 msgstr "_Tekst"
 
-#: ../app/tools/gimptexttool.c:958
+#: ../app/tools/gimptexttool.c:959
 msgid "Reshape Text Layer"
 msgstr "Zmiana kształtu warstwy tekstowej"
 
@@ -13868,7 +13870,7 @@ msgstr ""
 "Możliwe jest zmodyfikowanie warstwy lub utworzenie nowej warstwy tekstowej w "
 "oparciu o atrybuty obecnej."
 
-#: ../app/tools/gimptexttool-editor.c:1180
+#: ../app/tools/gimptexttool-editor.c:1199
 msgid "GIMP Text Editor"
 msgstr "Edytor tekstowy programu GIMP"
 
@@ -13981,19 +13983,19 @@ msgstr "Stałe proporcje  (%s)"
 msgid "Keep the original aspect ratio"
 msgstr "Utrzymywanie pierwotnych proporcji"
 
-#: ../app/tools/gimptransformtool.c:212
+#: ../app/tools/gimptransformtool.c:213
 msgid "Transforming"
 msgstr "Przekształcanie"
 
-#: ../app/tools/gimptransformtool.c:1065
+#: ../app/tools/gimptransformtool.c:1066
 msgid "There is no layer to transform."
 msgstr "Brak warstwy do przekształcenia."
 
-#: ../app/tools/gimptransformtool.c:1078
+#: ../app/tools/gimptransformtool.c:1079
 msgid "There is no path to transform."
 msgstr "Brak ścieżki do przekształcenia."
 
-#: ../app/tools/gimptransformtool.c:1079
+#: ../app/tools/gimptransformtool.c:1080
 msgid "The active path's strokes are locked."
 msgstr "Rysowanie wzdłuż ścieżki jest zablokowane."
 
@@ -14376,7 +14378,7 @@ msgstr "Skrót"
 msgid "Name"
 msgstr "Nazwa"
 
-#: ../app/widgets/gimpactionview.c:633 ../app/widgets/gimpactionview.c:841
+#: ../app/widgets/gimpactionview.c:633 ../app/widgets/gimpactionview.c:843
 msgid "Changing shortcut failed."
 msgstr "Zmiana skrótu się nie powiodła."
 
@@ -14402,11 +14404,11 @@ msgstr ""
 "Zmiana przypisania skrótu spowoduje, że jego skojarzenie z czynnością \"%s\" "
 "zostanie usunięte."
 
-#: ../app/widgets/gimpactionview.c:776
+#: ../app/widgets/gimpactionview.c:778
 msgid "Invalid shortcut."
 msgstr "Nieprawidłowy skrót."
 
-#: ../app/widgets/gimpactionview.c:865
+#: ../app/widgets/gimpactionview.c:867
 msgid "Removing shortcut failed."
 msgstr "Usunięcie skrótu się nie powiodło."
 
@@ -14922,39 +14924,42 @@ msgstr "Nachylenie X"
 msgid "Y tilt"
 msgstr "Nachylenie Y"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:143
+#. Wheel as in mouse or input device wheel
+#: ../app/widgets/gimpdeviceinfoeditor.c:144
 #: ../app/widgets/gimpdynamicseditor.c:145
 #: ../app/widgets/gimpdynamicsoutputeditor.c:73
 msgid "Wheel"
 msgstr "Kółko myszy"
 
 #. the axes
-#: ../app/widgets/gimpdeviceinfoeditor.c:193
+#. The axes of an input device
+#: ../app/widgets/gimpdeviceinfoeditor.c:195
 msgid "Axes"
 msgstr "Osie"
 
 #. the keys
-#: ../app/widgets/gimpdeviceinfoeditor.c:267
+#: ../app/widgets/gimpdeviceinfoeditor.c:269
 msgid "Keys"
 msgstr "Klawisze"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:364
-#: ../app/widgets/gimpdeviceinfoeditor.c:582
+#: ../app/widgets/gimpdeviceinfoeditor.c:366
+#: ../app/widgets/gimpdeviceinfoeditor.c:585
 #, c-format
 msgid "none"
 msgstr "brak"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:412
+#. e.g. "Pressure Curve" for mapping input device axes
+#: ../app/widgets/gimpdeviceinfoeditor.c:415
 #, c-format
 msgid "%s Curve"
 msgstr "%s krzywe"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:471
+#: ../app/widgets/gimpdeviceinfoeditor.c:474
 #: ../app/widgets/gimpdynamicsoutputeditor.c:209
 msgid "_Reset Curve"
 msgstr "_Przywróć krzywe"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:484
+#: ../app/widgets/gimpdeviceinfoeditor.c:487
 #, c-format
 msgid "The axis '%s' has no curve"
 msgstr "Oś \"%s\" nie ma krzywych"
@@ -15062,7 +15067,11 @@ msgstr "Za dużo komunikatów o błędach."
 msgid "Messages are redirected to stderr."
 msgstr "Komunikaty zostaną przekierowane na standardowe wyjście błędów."
 
-#: ../app/widgets/gimperrordialog.c:170
+#. %s is a message domain,
+#. * like "GIMP Message" or
+#. * "PNG Message"
+#.
+#: ../app/widgets/gimperrordialog.c:174
 #, c-format
 msgid "%s Message"
 msgstr "Komunikat: %s"
@@ -15075,23 +15084,23 @@ msgstr "Wykrywanie automatyczne"
 msgid "By Extension"
 msgstr "Według rozszerzenia"
 
-#: ../app/widgets/gimpfiledialog.c:798
+#: ../app/widgets/gimpfiledialog.c:801
 msgid "All files"
 msgstr "Wszystkie pliki"
 
-#: ../app/widgets/gimpfiledialog.c:803
+#: ../app/widgets/gimpfiledialog.c:806
 msgid "All images"
 msgstr "Wszystkie obrazy"
 
-#: ../app/widgets/gimpfiledialog.c:810
+#: ../app/widgets/gimpfiledialog.c:813
 msgid "All XCF images"
 msgstr "Wszystkie obrazy XCF"
 
-#: ../app/widgets/gimpfiledialog.c:812
+#: ../app/widgets/gimpfiledialog.c:815
 msgid "All export images"
 msgstr "Wszystkie eksportowane obrazy"
 
-#: ../app/widgets/gimpfiledialog.c:996
+#: ../app/widgets/gimpfiledialog.c:999
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Wybór _typu pliku (%s)"
@@ -15976,7 +15985,7 @@ msgctxt "tab-style"
 msgid "Undefined"
 msgstr "Nieokreślone"
 
-#: ../app/xcf/xcf-load.c:336
+#: ../app/xcf/xcf-load.c:339
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -15984,14 +15993,14 @@ msgstr ""
 "Ten plik XCF jest uszkodzony. Tylko część pliku została wczytana, dlatego "
 "jest niekompletny."
 
-#: ../app/xcf/xcf-load.c:347
+#: ../app/xcf/xcf-load.c:350
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr ""
 "Ten plik XCF jest uszkodzony. Nie można było wczytać nawet części pliku."
 
-#: ../app/xcf/xcf-load.c:420
+#: ../app/xcf/xcf-load.c:423
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
