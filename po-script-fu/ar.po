@@ -1441,7 +1441,7 @@ msgstr "IIR"
 #~ msgstr "نمو_ذج جديد..."
 
 #~ msgid "Paste the clipboard contents into a new pattern"
-#~ msgstr "الصق محتويات الحافظة في نموذج جديد"
+#~ msgstr "ألصق محتويات الحافظة في نموذج جديد"
 
 #~ msgid "Pattern name"
 #~ msgstr "اسم النموذج"

@@ -1325,11 +1325,11 @@ msgstr "موصول"
 
 #: ../libgimpwidgets/gimpstock.c:132
 msgid "Paste as New"
-msgstr "الصق كجديد"
+msgstr "ألصق كجديد"
 
 #: ../libgimpwidgets/gimpstock.c:133
 msgid "Paste Into"
-msgstr "الصق في"
+msgstr "ألصق في"
 
 #: ../libgimpwidgets/gimpstock.c:134
 msgid "_Reset"

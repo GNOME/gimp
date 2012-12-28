@@ -544,32 +544,32 @@ msgstr "قائمة البراحات"
 #: ../app/actions/buffers-actions.c:46
 msgctxt "buffers-action"
 msgid "_Paste Buffer"
-msgstr "ال_صق البراح"
+msgstr "أل_صق البراح"
 
 #: ../app/actions/buffers-actions.c:47
 msgctxt "buffers-action"
 msgid "Paste the selected buffer"
-msgstr "الصق البراح المختار"
+msgstr "ألصق البراح المختار"
 
 #: ../app/actions/buffers-actions.c:52
 msgctxt "buffers-action"
 msgid "Paste Buffer _Into"
-msgstr "الصق البراح إ_لى"
+msgstr "ألصق البراح إ_لى"
 
 #: ../app/actions/buffers-actions.c:53
 msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection"
-msgstr "الصق البراح المختار إلى التحديد"
+msgstr "ألصق البراح المختار إلى التحديد"
 
 #: ../app/actions/buffers-actions.c:58
 msgctxt "buffers-action"
 msgid "Paste Buffer as _New"
-msgstr "الصق البراح كج_ديد"
+msgstr "ألصق البراح كج_ديد"
 
 #: ../app/actions/buffers-actions.c:59
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new image"
-msgstr "الصق البراح المختار كصورة جديدة"
+msgstr "ألصق البراح المختار كصورة جديدة"
 
 #: ../app/actions/buffers-actions.c:64
 msgctxt "buffers-action"
@@ -1833,7 +1833,7 @@ msgstr "ت_حرير"
 #: ../app/actions/edit-actions.c:64
 msgctxt "edit-action"
 msgid "Paste _as"
-msgstr "ا_لصق ك‍"
+msgstr "أ_لصق ك‍"
 
 #: ../app/actions/edit-actions.c:65
 msgctxt "edit-action"
@@ -1939,17 +1939,17 @@ msgstr "انسخ ما هو مرئي في المنطقة المحددة"
 #: ../app/actions/edit-actions.c:128
 msgctxt "edit-action"
 msgid "_Paste"
-msgstr "ال_صق"
+msgstr "أل_صق"
 
 #: ../app/actions/edit-actions.c:129
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard"
-msgstr "الصق محتويات الحافظة"
+msgstr "ألصق محتويات الحافظة"
 
 #: ../app/actions/edit-actions.c:134
 msgctxt "edit-action"
 msgid "Paste _Into"
-msgstr "الصق إل_ى"
+msgstr "ألصق إل_ى"
 
 #: ../app/actions/edit-actions.c:136
 msgctxt "edit-action"
@@ -2015,12 +2015,12 @@ msgstr "انسخ المرئي في المنطقة المحددة إلى براح
 #: ../app/actions/edit-actions.c:178
 msgctxt "edit-action"
 msgid "_Paste Named..."
-msgstr "ال_صق مسمى..."
+msgstr "أل_صق مسمى..."
 
 #: ../app/actions/edit-actions.c:179
 msgctxt "edit-action"
 msgid "Paste the content of a named buffer"
-msgstr "الصق محتوى براح مسمى"
+msgstr "ألصق محتوى براح مسمى"
 
 #: ../app/actions/edit-actions.c:184
 msgctxt "edit-action"
@@ -4922,7 +4922,7 @@ msgstr "ا_نسخ"
 #: ../app/actions/text-tool-actions.c:68
 msgctxt "text-tool-action"
 msgid "_Paste"
-msgstr "ال_صق"
+msgstr "أل_صق"
 
 #: ../app/actions/text-tool-actions.c:73
 msgctxt "text-tool-action"
@@ -5285,7 +5285,7 @@ msgstr "ان_سخ المسار"
 #: ../app/actions/vectors-actions.c:129
 msgctxt "vectors-action"
 msgid "Paste Pat_h"
-msgstr "ال_صق المسار"
+msgstr "أل_صق المسار"
 
 #: ../app/actions/vectors-actions.c:134
 msgctxt "vectors-action"
@@ -7212,7 +7212,7 @@ msgstr "اربط التحديد الحر"
 #: ../app/core/core-enums.c:1146 ../app/core/gimp-edit.c:288
 msgctxt "undo-type"
 msgid "Paste"
-msgstr "الصق"
+msgstr "ألصق"
 
 #: ../app/core/core-enums.c:1147 ../app/core/gimp-edit.c:608
 msgctxt "undo-type"
@@ -16609,7 +16609,7 @@ msgstr "ضبابي"
 #~ msgstr "أعِد ترتيب المسار"
 
 #~ msgid "Paste"
-#~ msgstr "الصق"
+#~ msgstr "ألصق"
 
 #~ msgid "Cut"
 #~ msgstr "قص"
