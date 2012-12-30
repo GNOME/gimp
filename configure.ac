@@ -1024,7 +1024,7 @@ AC_SUBST(GIMP_COMMAND)
 
 # The list of MIME types that are supported by plug-ins that are compiled
 # unconditionally:
-MIME_TYPES="application/postscript;application/pdf;image/bmp;image/g3fax;image/gif;image/x-fits;image/x-pcx;image/x-portable-anymap;image/x-portable-bitmap;image/x-portable-graymap;image/x-portable-pixmap;image/x-psd;image/x-sgi;image/x-tga;image/x-xbitmap;image/x-xwindowdump;image/x-xcf;image/x-compressed-xcf;image/x-gimp-gbr;image/x-gimp-pat;image/x-gimp-gih"
+MIME_TYPES="image/bmp;image/g3fax;image/gif;image/x-fits;image/x-pcx;image/x-portable-anymap;image/x-portable-bitmap;image/x-portable-graymap;image/x-portable-pixmap;image/x-psd;image/x-sgi;image/x-tga;image/x-xbitmap;image/x-xwindowdump;image/x-xcf;image/x-compressed-xcf;image/x-gimp-gbr;image/x-gimp-pat;image/x-gimp-gih"
 
 
 ###################
@@ -1199,6 +1199,10 @@ if test "x$with_gs" != xno; then
 *** Checks for Ghostscript library failed. You can build without it by passing
 *** --without-gs to configure but you won't be able to use Postscript files then.])
   fi
+fi
+
+if test "x$have_gs" = xyes; then
+  MIME_TYPES="$MIME_TYPES;application/postscript"
 fi
 
 AC_SUBST(FILE_PS)
