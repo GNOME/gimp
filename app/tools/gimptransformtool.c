@@ -1257,7 +1257,7 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
       if (gimp_item_is_content_locked (active_item))
         locked_message = _("The active path's strokes are locked.");
       else
-        locked_message = _("The active path's position are locked.");
+        locked_message = _("The active path's position is locked.");
       break;
     }
 
