@@ -20,8 +20,8 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-11-07 23:31+0000\n"
-"PO-Revision-Date: 2012-11-08 12:31+0100\n"
+"POT-Creation-Date: 2012-12-28 01:51+0000\n"
+"PO-Revision-Date: 2012-12-31 11:09+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -32,122 +32,122 @@ msgstr ""
 "X-Generator: Gtranslator 2.91.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:118
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:120
 msgid "Original"
 msgstr "Original"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:136
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:138
 msgid "Rotated"
 msgstr "Rotado"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:154
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:156
 msgid "Continuous update"
 msgstr "Actualización continua"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:167
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:169
 msgid "Area:"
 msgstr "Área:"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:171
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:173
 msgid "Entire Layer"
 msgstr "Capa completa"
 
 #. Create selection
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:172
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:174
 #: ../plug-ins/common/film.c:965 ../plug-ins/imagemap/imap_selection.c:339
 #: ../plug-ins/selection-to-path/selection-to-path.c:434
 msgid "Selection"
 msgstr "Selección"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:173
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:175
 msgid "Context"
 msgstr "Contexto"
 
 #. spinbutton 1
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:297
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:299
 msgctxt "color-range"
 msgid "From:"
 msgstr "De:"
 
 #. spinbutton 2
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:323
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:326
 msgctxt "color-range"
 msgid "To:"
 msgstr "A:"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:375
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:377
 msgctxt "color-rotate"
 msgid "From:"
 msgstr "Desde:"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:376
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:378
 msgctxt "color-rotate"
 msgid "To:"
 msgstr "Hasta:"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:416
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:418
 #: ../plug-ins/common/file-ps.c:3096 ../plug-ins/imagemap/imap_menu.c:213
 msgid "Gray"
 msgstr "Gris"
 
 #. Gray: Circle: Spinbutton 1
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:464
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:466
 msgid "Hue:"
 msgstr "Tono:"
 
 #. Gray: Circle: Spinbutton 2
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:491
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:553
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:493
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:555
 msgid "Saturation:"
 msgstr "Saturación:"
 
 #. * Gray: Operation-Mode *
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:511
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:513
 msgid "Gray Mode"
 msgstr "Modo de gris"
 
 #. Gray: Operation-Mode: two radio buttons
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:520
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:522
 msgid "Treat as this"
 msgstr "Tratar como éste"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:532
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:534
 msgid "Change to this"
 msgstr "Cambiar a éste"
 
 #. * Gray: What is gray? *
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:545
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:547
 msgid "Gray Threshold"
 msgstr "Umbral de gris"
 
 #. * Misc: Used unit selection *
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:585
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:695
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:587
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:697
 msgid "Units"
 msgstr "Unidades"
 
 #. Misc: Used unit selection: 3 radio buttons
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:594
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:596
 msgid "Radians"
 msgstr "Radianes"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:606
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:608
 msgid "Radians/Pi"
 msgstr "Radiantes/PI"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:618
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:620
 msgid "Degrees"
 msgstr "Grados"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:649
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:651
 msgid "Rotate Colors"
 msgstr "Rotar los colores"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:689
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:691
 msgid "Main Options"
 msgstr "Opciones principales"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:692
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:694
 msgid "Gray Options"
 msgstr "Opciones de gris"
 
@@ -513,7 +513,7 @@ msgstr "Velocidad de la reproducción"
 
 #: ../plug-ins/common/animation-play.c:831
 msgid "Tried to display an invalid layer."
-msgstr "Se intentó mostrar una capa inválida."
+msgstr "Se intentó mostrar una capa no válida."
 
 #: ../plug-ins/common/animation-play.c:1351
 #, c-format
@@ -624,7 +624,7 @@ msgstr "_Vertical"
 #: ../plug-ins/common/file-pcx.c:431 ../plug-ins/common/file-pix.c:382
 #: ../plug-ins/common/file-png.c:891 ../plug-ins/common/file-pnm.c:583
 #: ../plug-ins/common/file-raw.c:763 ../plug-ins/common/file-sunras.c:977
-#: ../plug-ins/common/file-tga.c:1064 ../plug-ins/common/file-tiff-load.c:1005
+#: ../plug-ins/common/file-tga.c:1072 ../plug-ins/common/file-tiff-load.c:1010
 #: ../plug-ins/common/file-xbm.c:897 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:257 ../plug-ins/common/tile.c:262
 #: ../plug-ins/file-bmp/bmp-read.c:391 ../plug-ins/file-bmp/bmp-read.c:658
@@ -1080,7 +1080,7 @@ msgstr "Guardar la configuración del mezclador de canales"
 #: ../plug-ins/common/file-png.c:1358 ../plug-ins/common/file-pnm.c:1010
 #: ../plug-ins/common/file-ps.c:1190 ../plug-ins/common/file-raw.c:591
 #: ../plug-ins/common/file-raw.c:619 ../plug-ins/common/file-sunras.c:565
-#: ../plug-ins/common/file-tga.c:1171 ../plug-ins/common/file-tiff-save.c:708
+#: ../plug-ins/common/file-tga.c:1179 ../plug-ins/common/file-tiff-save.c:708
 #: ../plug-ins/common/file-xbm.c:1036 ../plug-ins/common/file-xmc.c:1447
 #: ../plug-ins/common/file-xwd.c:623 ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:309 ../plug-ins/file-fits/fits.c:476
@@ -1738,7 +1738,8 @@ msgstr "Intercambiar colore_s"
 #: ../plug-ins/common/colormap-remap.c:308
 msgid "Invalid remap array was passed to remap function"
 msgstr ""
-"Se ha pasado una matriz de reasignación inválida a la función de reasignación"
+"Se ha pasado una matriz de reasignación no válida a la función de "
+"reasignación"
 
 #: ../plug-ins/common/colormap-remap.c:332
 msgid "Rearranging the colormap"
@@ -3144,7 +3145,7 @@ msgstr "«%s»: EOF o error al leer los datos de la paleta"
 #: ../plug-ins/common/file-pcx.c:644 ../plug-ins/common/file-pix.c:531
 #: ../plug-ins/common/file-png.c:1365 ../plug-ins/common/file-pnm.c:1015
 #: ../plug-ins/common/file-ps.c:1195 ../plug-ins/common/file-sunras.c:570
-#: ../plug-ins/common/file-tga.c:1176 ../plug-ins/common/file-tiff-save.c:716
+#: ../plug-ins/common/file-tga.c:1184 ../plug-ins/common/file-tiff-save.c:716
 #: ../plug-ins/common/file-xbm.c:1041 ../plug-ins/common/file-xmc.c:1452
 #: ../plug-ins/common/file-xpm.c:638 ../plug-ins/common/file-xwd.c:628
 #: ../plug-ins/file-bmp/bmp-write.c:320 ../plug-ins/file-fits/fits.c:481
@@ -3261,7 +3262,7 @@ msgstr "Error en el archivo de pinceles «%s» de GIMP"
 #: ../plug-ins/common/file-gbr.c:455
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "Cadena UTF-8 inválida en el archivo de pincel «%s»."
+msgstr "Cadena UTF-8 no válida en el archivo de pincel «%s»."
 
 # # //R ¿Con subrayado?
 #: ../plug-ins/common/file-gbr.c:461 ../plug-ins/common/file-gih.c:487
@@ -3824,7 +3825,7 @@ msgstr "Patrón GIMP"
 #: ../plug-ins/common/file-pat.c:378
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "Cadena UTF-8 inválida en el archivo de patrón «%s»."
+msgstr "Cadena UTF-8 no válida en el archivo de patrón «%s»."
 
 #: ../plug-ins/common/file-pat.c:553
 msgid "Pattern"
@@ -3858,7 +3859,7 @@ msgstr "Altura de imagen no soportada o no válida: %d"
 
 #: ../plug-ins/common/file-pcx.c:409
 msgid "Invalid number of bytes per line in PCX header"
-msgstr "Número de bytes por línea inválido en la cabecera PCX"
+msgstr "Número de bytes por línea no válido en la cabecera PCX"
 
 #: ../plug-ins/common/file-pcx.c:417
 #, c-format
@@ -4203,7 +4204,7 @@ msgstr "No se pudo interpretar el archivo PostScript «%s»"
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "Guardar como PostScript no funciona con imágenes con canales alfa"
 
-#: ../plug-ins/common/file-ps.c:1804 ../plug-ins/common/file-tiff-load.c:1007
+#: ../plug-ins/common/file-ps.c:1804 ../plug-ins/common/file-tiff-load.c:1012
 #, c-format
 msgid "Page %d"
 msgstr "Página %d"
@@ -4654,24 +4655,24 @@ msgstr "No se puede leer la extensión de «%s»"
 msgid "Cannot read header from '%s'"
 msgstr "No se pudo leer la cabecera de «%s»"
 
-#: ../plug-ins/common/file-tga.c:1372
+#: ../plug-ins/common/file-tga.c:1380
 msgid "TGA"
 msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1381
+#: ../plug-ins/common/file-tga.c:1389
 msgid "_RLE compression"
 msgstr "Compresión _RLE"
 
-#: ../plug-ins/common/file-tga.c:1395
+#: ../plug-ins/common/file-tga.c:1403
 msgid "Or_igin:"
 msgstr "Or_iginal:"
 
-#: ../plug-ins/common/file-tga.c:1399
+#: ../plug-ins/common/file-tga.c:1407
 msgid "Bottom left"
 msgstr "Inferior izquierdo"
 
-#: ../plug-ins/common/file-tga.c:1400
+#: ../plug-ins/common/file-tga.c:1408
 msgid "Top left"
 msgstr "Arriba a la izquierda"
 
@@ -4690,16 +4691,16 @@ msgstr "El TIFF «%s» no contiene ninguna carpeta"
 msgid "Import from TIFF"
 msgstr "Importar desde TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:788
+#: ../plug-ins/common/file-tiff-load.c:818
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-de-%d-páginas"
 
-#: ../plug-ins/common/file-tiff-load.c:1023
+#: ../plug-ins/common/file-tiff-load.c:1028
 msgid "TIFF Channel"
 msgstr "Canal TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:1032
+#: ../plug-ins/common/file-tiff-load.c:1037
 #: ../plug-ins/file-psd/psd-load.c:333
 msgid ""
 "Warning:\n"
@@ -5146,7 +5147,7 @@ msgstr "Ocurrió un error al abrir el archivo «%s»"
 
 #: ../plug-ins/common/file-xpm.c:369 ../plug-ins/common/file-xpm.c:781
 msgid "XPM file invalid"
-msgstr "Archivo XPM inválido"
+msgstr "Archivo XPM no válido"
 
 #: ../plug-ins/common/file-xpm.c:807
 msgid "XPM"
@@ -5184,7 +5185,6 @@ msgstr "No se pueden guardar imágenes con canales alfa."
 
 #: ../plug-ins/common/file-xwd.c:1692 ../plug-ins/common/file-xwd.c:1930
 #, c-format
-#| msgid "The file is corrupt!"
 msgid "XWD-file %s is corrupt."
 msgstr "El archivo XWD %s está corrupto."
 
@@ -8722,7 +8722,7 @@ msgstr "Modo de compresión (%lu) no soportado en el archivo BMP de «%s»"
 
 #: ../plug-ins/file-bmp/bmp-read.c:599
 msgid "Unrecognized or invalid BMP compression format."
-msgstr "Formato de compresión BMP no reconocido o inválido."
+msgstr "Formato de compresión BMP no reconocido o no válido."
 
 #: ../plug-ins/file-bmp/bmp-read.c:641
 msgid "Unsupported or invalid bitdepth."
@@ -9939,11 +9939,11 @@ msgstr "Renderizando fractal"
 #: ../plug-ins/gradient-flare/gradient-flare.c:3201
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
-msgstr "¿Seguro que quiere borrar «%s» de la lista y del disco?"
+msgstr "¿Seguro que quiere eliminar «%s» de la lista y del disco?"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:755
 msgid "Delete Fractal"
-msgstr "Borrar fractal"
+msgstr "Eliminar fractal"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:944
 #, c-format
@@ -9973,7 +9973,7 @@ msgstr "Aplicar el fractal seleccionado actualmente"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1087
 msgid "Delete currently selected fractal"
-msgstr "Borrar el fractal seleccionado actualmente"
+msgstr "Eliminar el fractal seleccionado actualmente"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1110
 msgid "Rescan for Fractals"
@@ -10164,7 +10164,7 @@ msgstr "Copiar un objeto"
 
 #: ../plug-ins/gfig/gfig-dialog.c:969 ../plug-ins/gfig/gfig-stock.c:44
 msgid "Delete an object"
-msgstr "Borrar un objeto"
+msgstr "Eliminar un objeto"
 
 #: ../plug-ins/gfig/gfig-dialog.c:972 ../plug-ins/gfig/gfig-stock.c:51
 msgid "Select an object"
@@ -10684,7 +10684,7 @@ msgstr "E_liminar"
 
 #: ../plug-ins/gimpressionist/orientmap.c:629
 msgid "Delete selected vector"
-msgstr "Borra el vector seleccionado"
+msgstr "Eliminar el vector seleccionado"
 
 #: ../plug-ins/gimpressionist/orientmap.c:640
 msgid "Type"
@@ -10846,7 +10846,7 @@ msgstr "Lee el preajuste seleccionado en la memoria"
 
 #: ../plug-ins/gimpressionist/presets.c:1072
 msgid "Deletes the selected Preset"
-msgstr "Borra el preajuste seleccionado"
+msgstr "Eliminar el preajuste seleccionado"
 
 #: ../plug-ins/gimpressionist/presets.c:1078
 msgid "Reread the folder of Presets"
@@ -10968,7 +10968,7 @@ msgstr "Añadir nuevo vector-tmño"
 
 #: ../plug-ins/gimpressionist/sizemap.c:501
 msgid "Delete selected smvector"
-msgstr "Borrar vector-tmño seleccionado"
+msgstr "Eliminar vector-tmño seleccionado"
 
 #: ../plug-ins/gimpressionist/sizemap.c:514
 msgid "Change the angle of the selected smvector"
@@ -11107,7 +11107,7 @@ msgstr "«%s» no es un archivo GFlare válido"
 #: ../plug-ins/gradient-flare/gradient-flare.c:1327
 #, c-format
 msgid "invalid formatted GFlare file: %s\n"
-msgstr "Formato de archivo GFlare inválido: %s\n"
+msgstr "Formato de archivo GFlare no válido: %s\n"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:1452
 #, c-format
@@ -11211,11 +11211,11 @@ msgstr "¡El nombre «%s» ya está usado!"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3195
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr "¡No se puede borrar! Al menos debe haber un destello [GFlare]."
+msgstr "¡No se puede eliminar! Al menos debe haber un destello [GFlare]."
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3205
 msgid "Delete Gradient Flare"
-msgstr "Borrar destello degradado"
+msgstr "Eliminar destello degradado"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3277
 #, c-format
@@ -11699,12 +11699,12 @@ msgstr "Cortar"
 #: ../plug-ins/imagemap/imap_cmd_delete.c:56
 #: ../plug-ins/imagemap/imap_menu.c:161
 msgid "Delete"
-msgstr "Borrar"
+msgstr "Eliminar"
 
 #: ../plug-ins/imagemap/imap_cmd_delete_point.c:60
 #: ../plug-ins/imagemap/imap_menu.c:178
 msgid "Delete Point"
-msgstr "Borrar punto"
+msgstr "Eliminar punto"
 
 #: ../plug-ins/imagemap/imap_cmd_edit_object.c:53
 msgid "Edit Object"
@@ -12134,7 +12134,7 @@ msgstr "Mover área al fondo"
 
 #: ../plug-ins/imagemap/imap_menu.c:173
 msgid "Delete Area"
-msgstr "Borrar área"
+msgstr "Eliminar área"
 
 #: ../plug-ins/imagemap/imap_menu.c:180
 msgid "_View"

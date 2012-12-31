@@ -8,42 +8,43 @@
 # Pablo G. del Campo <pablodc@par001001-703>, 2003, 2004.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007.
 # Jorge González <jorgegonz@svn.gnome.org>, 2009.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2005, 2006, 2007, 2008, 2009, 2011.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-11-09 20:56+0000\n"
-"PO-Revision-Date: 2011-11-07 09:10+0100\n"
-"Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
-"Language-Team: Español <gnome-es-list@gnome.org>\n"
+"POT-Creation-Date: 2012-12-28 01:51+0000\n"
+"PO-Revision-Date: 2012-12-31 11:06+0100\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Gtranslator 2.91.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1077
+#: ../libgimp/gimp.c:1081
 msgid "success"
 msgstr "éxito"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1081
+#: ../libgimp/gimp.c:1085
 msgid "execution error"
 msgstr "error de ejecución"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1085
+#: ../libgimp/gimp.c:1089
 msgid "calling error"
 msgstr "error en la llamada"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1089
+#: ../libgimp/gimp.c:1093
 msgid "cancelled"
 msgstr "cancelado"
 
@@ -248,7 +249,7 @@ msgstr "Selección de degradado"
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
 #.
-#: ../libgimp/gimpmenu.c:461 ../libgimpwidgets/gimpintstore.c:241
+#: ../libgimp/gimpmenu.c:461 ../libgimpwidgets/gimpintstore.c:259
 msgid "(Empty)"
 msgstr "(Vacío)"
 
@@ -908,7 +909,7 @@ msgstr "Relleno"
 #: ../modules/color-selector-cmyk-lcms.c:430
 #: ../modules/display-filter-lcms.c:178
 msgid "(invalid UTF-8 string)"
-msgstr "(cadena UTF-8 inválida)"
+msgstr "(cadena UTF-8 no válida)"
 
 #. *
 #. * SECTION: gimpcolorconfig
@@ -1008,28 +1009,28 @@ msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "Colorimétrica absoluta"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:106
+#: ../libgimpconfig/gimpconfig-deserialize.c:109
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "el valor para el elemento %s no es una cadena UTF-8 válida"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:444
+#: ../libgimpconfig/gimpconfig-deserialize.c:451
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "se esperaba «yes» o «no» para la señal booleana %s, se obtuvo «%s»"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:518
+#: ../libgimpconfig/gimpconfig-deserialize.c:525
 #, c-format
 msgid "invalid value '%s' for token %s"
-msgstr "valor inválido «%s» para la señal %s"
+msgstr "valor no válido «%s» para la señal %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:533
+#: ../libgimpconfig/gimpconfig-deserialize.c:540
 #, c-format
 msgid "invalid value '%ld' for token %s"
-msgstr "valor inválido «%ld» para la señal %s"
+msgstr "valor no válido «%ld» para la señal %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:602
+#: ../libgimpconfig/gimpconfig-deserialize.c:609
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "mientras se analizaba la señal «%s»: %s"
@@ -1041,7 +1042,7 @@ msgstr "mientras se analizaba la señal «%s»: %s"
 msgid "fatal parse error"
 msgstr "Error fatal de análisis"
 
-#: ../libgimpconfig/gimpconfig-path.c:387
+#: ../libgimpconfig/gimpconfig-path.c:389
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "No se puede expandir ${%s}"
@@ -1089,7 +1090,7 @@ msgstr "No se ha podido crear «%s»: %s"
 #: ../libgimpconfig/gimpscanner.c:268
 #, c-format
 msgid "invalid UTF-8 string"
-msgstr "cadena UTF-8 inválida"
+msgstr "cadena UTF-8 no válida"
 
 #. please don't translate 'yes' and 'no'
 #: ../libgimpconfig/gimpscanner.c:431
@@ -1125,7 +1126,7 @@ msgstr "La carga falló"
 msgid "Not loaded"
 msgstr "No cargado"
 
-#: ../libgimpthumb/gimpthumb-utils.c:131
+#: ../libgimpthumb/gimpthumb-utils.c:157
 #, c-format
 msgid ""
 "Cannot determine a valid home directory.\n"
@@ -1135,7 +1136,7 @@ msgstr ""
 "Las miniaturas se almacenarán en la carpeta para archivos temporales (%s) en "
 "su lugar."
 
-#: ../libgimpthumb/gimpthumb-utils.c:255 ../libgimpthumb/gimpthumb-utils.c:323
+#: ../libgimpthumb/gimpthumb-utils.c:281 ../libgimpthumb/gimpthumb-utils.c:349
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "No se ha podido crear la carpeta de miniaturas «%s»."
@@ -1236,40 +1237,36 @@ msgid "Gigabytes"
 msgstr "Gigabytes"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:282
-#: ../libgimpwidgets/gimppageselector.c:1178
+#: ../libgimpwidgets/gimppageselector.c:269
+#: ../libgimpwidgets/gimppageselector.c:1067
 msgid "Nothing selected"
 msgstr "No hay nada seleccionado"
 
 # Esta es de stock (serrador)
-#: ../libgimpwidgets/gimppageselector.c:300
+#: ../libgimpwidgets/gimppageselector.c:287
 msgid "Select _All"
 msgstr "Seleccionar _todo"
 
-#: ../libgimpwidgets/gimppageselector.c:320
+#: ../libgimpwidgets/gimppageselector.c:307
 msgid "Select _range:"
 msgstr "Seleccionar _rango:"
 
-#: ../libgimpwidgets/gimppageselector.c:332
+#: ../libgimpwidgets/gimppageselector.c:319
 msgid "Open _pages as"
 msgstr "Abrir _páginas como"
 
-#: ../libgimpwidgets/gimppageselector.c:433
-msgid "Page 000"
-msgstr "Página 000"
-
-#: ../libgimpwidgets/gimppageselector.c:521
-#: ../libgimpwidgets/gimppageselector.c:758
+#: ../libgimpwidgets/gimppageselector.c:449
+#: ../libgimpwidgets/gimppageselector.c:647
 #, c-format
 msgid "Page %d"
 msgstr "Página %d"
 
-#: ../libgimpwidgets/gimppageselector.c:1183
+#: ../libgimpwidgets/gimppageselector.c:1072
 msgid "One page selected"
 msgstr "Una página seleccionada"
 
-#: ../libgimpwidgets/gimppageselector.c:1190
-#: ../libgimpwidgets/gimppageselector.c:1194
+#: ../libgimpwidgets/gimppageselector.c:1079
+#: ../libgimpwidgets/gimppageselector.c:1083
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
@@ -2094,3 +2091,6 @@ msgstr "_Objetivo:"
 #: ../modules/display-filter-proof.c:439
 msgid "_Black Point Compensation"
 msgstr "Compensación de punto _negro"
+
+#~ msgid "Page 000"
+#~ msgstr "Página 000"
