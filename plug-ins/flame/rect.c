@@ -393,4 +393,5 @@ render_rectangle (frame_spec    *spec,
 
   free (filter);
   free (temporal_filter);
+  free (temporal_deltas);
 }
