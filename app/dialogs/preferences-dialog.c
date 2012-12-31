@@ -1845,7 +1845,7 @@ prefs_dialog_new (Gimp       *gimp,
   /******************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
-                                     _("Tool Options"),
+                                     C_("preferences", "Tool Options"),
                                      "tool-options",
                                      GTK_TREE_STORE (tree),
                                      NULL,
