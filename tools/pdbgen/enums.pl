@@ -176,11 +176,13 @@ package Gimp::CodeGen::enums;
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
 	  symbols => [ qw(GIMP_INTERPOLATION_NONE GIMP_INTERPOLATION_LINEAR
-			  GIMP_INTERPOLATION_CUBIC GIMP_INTERPOLATION_LOHALO) ],
+			  GIMP_INTERPOLATION_CUBIC GIMP_INTERPOLATION_NOHALO
+			  GIMP_INTERPOLATION_LOHALO) ],
 	  mapping => { GIMP_INTERPOLATION_NONE => '0',
 		       GIMP_INTERPOLATION_LINEAR => '1',
 		       GIMP_INTERPOLATION_CUBIC => '2',
-		       GIMP_INTERPOLATION_LOHALO => '3' }
+		       GIMP_INTERPOLATION_NOHALO => '3',
+		       GIMP_INTERPOLATION_LOHALO => '4' }
 	},
     GimpPaintApplicationMode =>
 	{ contig => 1,
