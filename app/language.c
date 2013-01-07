@@ -50,673 +50,673 @@ language_init (const gchar *language)
       switch (GetUserDefaultUILanguage())
         {
         case 1078:
-          language = "af";    /* Afrikaans - South Africa */
+          language = "af";          /* Afrikaans - South Africa */
           break;
         case 1052:
-          language = "sq";    /* Albanian - Albania */
+          language = "sq";          /* Albanian - Albania */
           break;
         case 1118:
-          language = "am";    /* Amharic - Ethiopia */
+          language = "am";          /* Amharic - Ethiopia */
           break;
         case 1025:
-          language = "ar";    /* Arabic - Saudi Arabia */
+          language = "ar_SA";       /* Arabic - Saudi Arabia */
           break;
         case 5121:
-          language = "ar";    /* Arabic - Algeria */
+          language = "ar_DZ";       /* Arabic - Algeria */
           break;
         case 15361:
-          language = "ar";    /* Arabic - Bahrain */
+          language = "ar_BH";       /* Arabic - Bahrain */
           break;
         case 3073:
-          language = "ar";    /* Arabic - Egypt */
+          language = "ar_EG";       /* Arabic - Egypt */
           break;
         case 2049:
-          language = "ar";    /* Arabic - Iraq */
+          language = "ar_IQ";       /* Arabic - Iraq */
           break;
         case 11265:
-          language = "ar";    /* Arabic - Jordan */
+          language = "ar_JO";       /* Arabic - Jordan */
           break;
         case 13313:
-          language = "ar";    /* Arabic - Kuwait */
+          language = "ar_KW";       /* Arabic - Kuwait */
           break;
         case 12289:
-          language = "ar";    /* Arabic - Lebanon */
+          language = "ar_LB";       /* Arabic - Lebanon */
           break;
         case 4097:
-          language = "ar";    /* Arabic - Libya */
+          language = "ar_LY";       /* Arabic - Libya */
           break;
         case 6145:
-          language = "ar";    /* Arabic - Morocco */
+          language = "ar_MO";       /* Arabic - Morocco */
           break;
         case 8193:
-          language = "ar";    /* Arabic - Oman */
+          language = "ar_OM";       /* Arabic - Oman */
           break;
         case 16385:
-          language = "ar";    /* Arabic - Qatar */
+          language = "ar_QA";       /* Arabic - Qatar */
           break;
         case 10241:
-          language = "ar";    /* Arabic - Syria */
+          language = "ar_SY";       /* Arabic - Syria */
           break;
         case 7169:
-          language = "ar";    /* Arabic - Tunisia */
+          language = "ar_TN";       /* Arabic - Tunisia */
           break;
         case 14337:
-          language = "ar";    /* Arabic - U.A.E. */
+          language = "ar_AE";       /* Arabic - U.A.E. */
           break;
         case 9217:
-          language = "ar";    /* Arabic - Yemen */
+          language = "ar_YE";       /* Arabic - Yemen */
           break;
         case 1067:
-          language = "hy";    /* Armenian - Armenia */
+          language = "hy";          /* Armenian - Armenia */
           break;
         case 1101:
-          language = "as";    /* Assamese */
+          language = "as";          /* Assamese */
           break;
         case 2092:
-          language = NULL;    /* Azeri (Cyrillic) */
+          language = NULL;          /* Azeri (Cyrillic) */
           break;
         case 1068:
-          language = NULL;    /* Azeri (Latin) */
+          language = NULL;          /* Azeri (Latin) */
           break;
         case 1069:
-          language = "eu";    /* Basque */
+          language = "eu";          /* Basque */
           break;
         case 1059:
-          language = "be";    /* Belarusian */
+          language = "be";          /* Belarusian */
           break;
         case 1093:
-          language = "bn";    /* Bengali (India) */
+          language = "bn_IN";       /* Bengali (India) */
           break;
         case 2117:
-          language = "bn";    /* Bengali (Bangladesh) */
+          language = "bn_BD";       /* Bengali (Bangladesh) */
           break;
         case 5146:
-          language = "bs";    /* Bosnian (Bosnia/Herzegovina) */
+          language = "bs";          /* Bosnian (Bosnia/Herzegovina) */
           break;
         case 1026:
-          language = "bg";    /* Bulgarian */
+          language = "bg";          /* Bulgarian */
           break;
         case 1109:
-          language = "my";    /* Burmese */
+          language = "my";          /* Burmese */
           break;
         case 1027:
-          language = "ca";    /* Catalan */
+          language = "ca";          /* Catalan */
           break;
         case 1116:
-          language = NULL;    /* Cherokee - United States */
+          language = NULL;          /* Cherokee - United States */
           break;
         case 2052:
-          language = "zh";    /* Chinese - People"s Republic of China */
+          language = "zh_CN";       /* Chinese - People"s Republic of China */
           break;
         case 4100:
-          language = "zh";    /* Chinese - Singapore */
+          language = "zh_SG";       /* Chinese - Singapore */
           break;
         case 1028:
-          language = "zh";    /* Chinese - Taiwan */
+          language = "zh_TW";       /* Chinese - Taiwan */
           break;
         case 3076:
-          language = "zh";    /* Chinese - Hong Kong SAR */
+          language = "zh_HK";       /* Chinese - Hong Kong SAR */
           break;
         case 5124:
-          language = "zh";    /* Chinese - Macao SAR */
+          language = "zh_MO";       /* Chinese - Macao SAR */
           break;
         case 1050:
-          language = "hr";    /* Croatian */
+          language = "hr_HR";       /* Croatian */
           break;
         case 4122:
-          language = "hr";    /* Croatian (Bosnia/Herzegovina) */
+          language = "hr_BA";       /* Croatian (Bosnia/Herzegovina) */
           break;
         case 1029:
-          language = "cs";    /* Czech */
+          language = "cs";          /* Czech */
           break;
         case 1030:
-          language = "da";    /* Danish */
+          language = "da";          /* Danish */
           break;
         case 1125:
-          language = "dv";    /* Divehi */
+          language = "dv";          /* Divehi */
           break;
         case 1043:
-          language = "nl";    /* Dutch - Netherlands */
+          language = "nl_NL";       /* Dutch - Netherlands */
           break;
         case 2067:
-          language = "nl";    /* Dutch - Belgium */
+          language = "nl_BE";       /* Dutch - Belgium */
           break;
         case 1126:
-          language = NULL;    /* Edo */
+          language = NULL;          /* Edo */
           break;
         case 1033:
-          language = "en";    /* English - United States */
+          language = "en_US";       /* English - United States */
           break;
         case 2057:
-          language = "en";    /* English - United Kingdom */
+          language = "en_UK";       /* English - United Kingdom */
           break;
         case 3081:
-          language = "en";    /* English - Australia */
+          language = "en_AU";       /* English - Australia */
           break;
         case 10249:
-          language = "en";    /* English - Belize */
+          language = "en_BZ";       /* English - Belize */
           break;
         case 4105:
-          language = "en";    /* English - Canada */
+          language = "en_CA";       /* English - Canada */
           break;
         case 9225:
-          language = "en";    /* English - Caribbean */
+          language = "en";          /* English - Caribbean */
           break;
         case 15369:
-          language = "en";    /* English - Hong Kong SAR */
+          language = "en_HK";       /* English - Hong Kong SAR */
           break;
         case 16393:
-          language = "en";    /* English - India */
+          language = "en_IN";       /* English - India */
           break;
         case 14345:
-          language = "en";    /* English - Indonesia */
+          language = "en_ID";       /* English - Indonesia */
           break;
         case 6153:
-          language = "en";    /* English - Ireland */
+          language = "en_IR";       /* English - Ireland */
           break;
         case 8201:
-          language = "en";    /* English - Jamaica */
+          language = "en_JM";       /* English - Jamaica */
           break;
         case 17417:
-          language = "en";    /* English - Malaysia */
+          language = "en_MW";       /* English - Malaysia */
           break;
         case 5129:
-          language = "en";    /* English - New Zealand */
+          language = "en_NZ";       /* English - New Zealand */
           break;
         case 13321:
-          language = "en";    /* English - Philippines */
+          language = "en_PH";       /* English - Philippines */
           break;
         case 18441:
-          language = "en";    /* English - Singapore */
+          language = "en_SG";       /* English - Singapore */
           break;
         case 7177:
-          language = "en";    /* English - South Africa */
+          language = "en_ZA";       /* English - South Africa */
           break;
         case 11273:
-          language = "en";    /* English - Trinidad */
+          language = "en_TT";       /* English - Trinidad */
           break;
         case 12297:
-          language = "en";    /* English - Zimbabwe */
+          language = "en_ZW";       /* English - Zimbabwe */
           break;
         case 1061:
-          language = "et";    /* Estonian */
+          language = "et";          /* Estonian */
           break;
         case 1080:
-          language = "fo";    /* Faroese */
+          language = "fo";          /* Faroese */
           break;
         case 1065:
-          language = NULL;    /* Farsi */
+          language = "fa";          /* Farsi */
           break;
         case 1124:
-          language = NULL;    /* Filipino */
+          language = NULL;          /* Filipino */
           break;
         case 1035:
-          language = "fi";    /* Finnish */
+          language = "fi";          /* Finnish */
           break;
         case 1036:
-          language = "fr";    /* French - France */
+          language = "fr_FR";       /* French - France */
           break;
         case 2060:
-          language = "fr";    /* French - Belgium */
+          language = "fr_BE";       /* French - Belgium */
           break;
         case 11276:
-          language = "fr";    /* French - Cameroon */
+          language = "fr_CM";       /* French - Cameroon */
           break;
         case 3084:
-          language = "fr";    /* French - Canada */
+          language = "fr_CA";       /* French - Canada */
           break;
         case 9228:
-          language = "fr";    /* French - Democratic Rep. of Congo */
+          language = "fr_CD";       /* French - Democratic Rep. of Congo */
           break;
         case 12300:
-          language = "fr";    /* French - Cote d"Ivoire */
+          language = "fr_CI";       /* French - Cote d"Ivoire */
           break;
         case 15372:
-          language = "fr";    /* French - Haiti */
+          language = "fr_HT";       /* French - Haiti */
           break;
         case 5132:
-          language = "fr";    /* French - Luxembourg */
+          language = "fr_LU";       /* French - Luxembourg */
           break;
         case 13324:
-          language = "fr";    /* French - Mali */
+          language = "fr_ML";       /* French - Mali */
           break;
         case 6156:
-          language = "fr";    /* French - Monaco */
+          language = "fr_MC";       /* French - Monaco */
           break;
         case 14348:
-          language = "fr";    /* French - Morocco */
+          language = "fr_MA";       /* French - Morocco */
           break;
         case 58380:
-          language = "fr";    /* French - North Africa */
+          language = "fr";          /* French - North Africa */
           break;
         case 8204:
-          language = "fr";    /* French - Reunion */
+          language = "fr_RE";       /* French - Reunion */
           break;
         case 10252:
-          language = "fr";    /* French - Senegal */
+          language = "fr_SN";       /* French - Senegal */
           break;
         case 4108:
-          language = "fr";    /* French - Switzerland */
+          language = "fr_CH";       /* French - Switzerland */
           break;
         case 7180:
-          language = "fr";    /* French - West Indies */
+          language = "fr";          /* French - West Indies */
           break;
         case 1122:
-          language = "fy";    /* Frisian - Netherlands */
+          language = "fy";          /* Frisian - Netherlands */
           break;
         case 1127:
-          language = NULL;    /* Fulfulde - Nigeria */
+          language = NULL;          /* Fulfulde - Nigeria */
           break;
         case 1071:
-          language = "mk";    /* FYRO Macedonian */
+          language = "mk";          /* FYRO Macedonian */
           break;
         case 2108:
-          language = "ga";    /* Gaelic (Ireland) */
+          language = "ga";          /* Gaelic (Ireland) */
           break;
         case 1084:
-          language = "gd";    /* Gaelic (Scotland) */
+          language = "gd";          /* Gaelic (Scotland) */
           break;
         case 1110:
-          language = "gl";    /* Galician */
+          language = "gl";          /* Galician */
           break;
         case 1079:
-          language = "ka";    /* Georgian */
+          language = "ka";          /* Georgian */
           break;
         case 1031:
-          language = "de";    /* German - Germany */
+          language = "de_DE";       /* German - Germany */
           break;
         case 3079:
-          language = "de";    /* German - Austria */
+          language = "de_AT";       /* German - Austria */
           break;
         case 5127:
-          language = "de";    /* German - Liechtenstein */
+          language = "de_LI";       /* German - Liechtenstein */
           break;
         case 4103:
-          language = "de";    /* German - Luxembourg */
+          language = "de_LU";       /* German - Luxembourg */
           break;
         case 2055:
-          language = "de";    /* German - Switzerland */
+          language = "de_CH";       /* German - Switzerland */
           break;
         case 1032:
-          language = "el";    /* Greek */
+          language = "el";          /* Greek */
           break;
         case 1140:
-          language = "gn";    /* Guarani - Paraguay */
+          language = "gn";          /* Guarani - Paraguay */
           break;
         case 1095:
-          language = "gu";    /* Gujarati */
+          language = "gu";          /* Gujarati */
           break;
         case 1128:
-          language = "ha";    /* Hausa - Nigeria */
+          language = "ha";          /* Hausa - Nigeria */
           break;
         case 1141:
-          language = NULL;    /* Hawaiian - United States */
+          language = NULL;          /* Hawaiian - United States */
           break;
         case 1037:
-          language = "he";    /* Hebrew */
+          language = "he";          /* Hebrew */
           break;
         case 1081:
-          language = "hi";    /* Hindi */
+          language = "hi";          /* Hindi */
           break;
         case 1038:
-          language = "hu";    /* Hungarian */
+          language = "hu";          /* Hungarian */
           break;
         case 1129:
-          language = NULL;    /* Ibibio - Nigeria */
+          language = NULL;          /* Ibibio - Nigeria */
           break;
         case 1039:
-          language = "is";    /* Icelandic */
+          language = "is";          /* Icelandic */
           break;
         case 1136:
-          language = "ig";    /* Igbo - Nigeria */
+          language = "ig";          /* Igbo - Nigeria */
           break;
         case 1057:
-          language = "id";    /* Indonesian */
+          language = "id";          /* Indonesian */
           break;
         case 1117:
-          language = "iu";    /* Inuktitut */
+          language = "iu";          /* Inuktitut */
           break;
         case 1040:
-          language = "it";    /* Italian - Italy */
+          language = "it_IT";       /* Italian - Italy */
           break;
         case 2064:
-          language = "it";    /* Italian - Switzerland */
+          language = "it_CH";       /* Italian - Switzerland */
           break;
         case 1041:
-          language = "ja";    /* Japanese */
+          language = "ja";          /* Japanese */
           break;
         case 1099:
-          language = "kn";    /* Kannada */
+          language = "kn";          /* Kannada */
           break;
         case 1137:
-          language = "kr";    /* Kanuri - Nigeria */
+          language = "kr";          /* Kanuri - Nigeria */
           break;
         case 2144:
-          language = "ks";    /* Kashmiri */
+          language = "ks";          /* Kashmiri */
           break;
         case 1120:
-          language = "ks";    /* Kashmiri (Arabic) */
+          language = "ks";          /* Kashmiri (Arabic) */
           break;
         case 1087:
-          language = "kk";    /* Kazakh */
+          language = "kk";          /* Kazakh */
           break;
         case 1107:
-          language = "km";    /* Khmer */
+          language = "km";          /* Khmer */
           break;
         case 1111:
-          language = NULL;    /* Konkani */
+          language = NULL;          /* Konkani */
           break;
         case 1042:
-          language = "ko";    /* Korean */
+          language = "ko";          /* Korean */
           break;
         case 1088:
-          language = "ky";    /* Kyrgyz (Cyrillic) */
+          language = "ky";          /* Kyrgyz (Cyrillic) */
           break;
         case 1108:
-          language = "lo";    /* Lao */
+          language = "lo";          /* Lao */
           break;
         case 1142:
-          language = "la";    /* Latin */
+          language = "la";          /* Latin */
           break;
         case 1062:
-          language = "lv";    /* Latvian */
+          language = "lv";          /* Latvian */
           break;
         case 1063:
-          language = "lt";    /* Lithuanian */
+          language = "lt";          /* Lithuanian */
           break;
         case 1086:
-          language = "ms";    /* Malay - Malaysia */
+          language = "ms_MY";       /* Malay - Malaysia */
           break;
         case 2110:
-          language = "ms";    /* Malay - Brunei Darussalam */
+          language = "ms_BN";       /* Malay - Brunei Darussalam */
           break;
         case 1100:
-          language = "ml";    /* Malayalam */
+          language = "ml";          /* Malayalam */
           break;
         case 1082:
-          language = "mt";    /* Maltese */
+          language = "mt";          /* Maltese */
           break;
         case 1112:
-          language = NULL;    /* Manipuri */
+          language = NULL;          /* Manipuri */
           break;
         case 1153:
-          language = "mi";    /* Maori - New Zealand */
+          language = "mi";          /* Maori - New Zealand */
           break;
         case 1102:
-          language = "mr";    /* Marathi */
+          language = "mr";          /* Marathi */
           break;
         case 1104:
-          language = "mn";    /* Mongolian (Cyrillic) */
+          language = "mn";          /* Mongolian (Cyrillic) */
           break;
         case 2128:
-          language = "mn";    /* Mongolian (Mongolian) */
+          language = "mn";          /* Mongolian (Mongolian) */
           break;
         case 1121:
-          language = "ne";    /* Nepali */
+          language = "ne_NP";       /* Nepali */
           break;
         case 2145:
-          language = "ne";    /* Nepali - India */
+          language = "ne_IN";       /* Nepali - India */
           break;
         case 1044:
-          language = "no";    /* Norwegian (Bokmￃﾥl) */
+          language = "no";          /* Norwegian (Bokmￃﾥl) */
           break;
         case 2068:
-          language = "no";    /* Norwegian (Nynorsk) */
+          language = "no";          /* Norwegian (Nynorsk) */
           break;
         case 1096:
-          language = "or";    /* Oriya */
+          language = "or";          /* Oriya */
           break;
         case 1138:
-          language = "om";    /* Oromo */
+          language = "om";          /* Oromo */
           break;
         case 1145:
-          language = NULL;    /* Papiamentu */
+          language = NULL;          /* Papiamentu */
           break;
         case 1123:
-          language = "ps";    /* Pashto */
+          language = "ps";          /* Pashto */
           break;
         case 1045:
-          language = "pl";    /* Polish */
+          language = "pl";          /* Polish */
           break;
         case 1046:
-          language = "pt_BR"; /* Portuguese - Brazil */
+          language = "pt_BR";       /* Portuguese - Brazil */
           break;
         case 2070:
-          language = "pt";    /* Portuguese - Portugal */
+          language = "pt_PT";       /* Portuguese - Portugal */
           break;
         case 1094:
-          language = "pa";    /* Punjabi */
+          language = "pa";          /* Punjabi */
           break;
         case 2118:
-          language = "pa";    /* Punjabi (Pakistan) */
+          language = "pa_PK";       /* Punjabi (Pakistan) */
           break;
         case 1131:
-          language = "qu";    /* Quecha - Bolivia */
+          language = "qu_BO";       /* Quecha - Bolivia */
           break;
         case 2155:
-          language = "qu";    /* Quecha - Ecuador */
+          language = "qu_EC";       /* Quecha - Ecuador */
           break;
         case 3179:
-          language = "qu";    /* Quecha - Peru */
+          language = "qu_PE";       /* Quecha - Peru */
           break;
         case 1047:
-          language = "rm";    /* Rhaeto-Romanic */
+          language = "rm";          /* Rhaeto-Romanic */
           break;
         case 1048:
-          language = "ro";    /* Romanian */
+          language = "ro_RO";       /* Romanian */
           break;
         case 2072:
-          language = "ro";    /* Romanian - Moldava */
+          language = "ro_MD";       /* Romanian - Moldava */
           break;
         case 1049:
-          language = "ru";    /* Russian */
+          language = "ru_RU";       /* Russian */
           break;
         case 2073:
-          language = "ru";    /* Russian - Moldava */
+          language = "ru_MD";       /* Russian - Moldava */
           break;
         case 1083:
-          language = NULL;    /* Sami (Lappish) */
+          language = NULL;          /* Sami (Lappish) */
           break;
         case 1103:
-          language = "sa";    /* Sanskrit */
+          language = "sa";          /* Sanskrit */
           break;
         case 1132:
-          language = NULL;    /* Sepedi */
+          language = NULL;          /* Sepedi */
           break;
         case 3098:
-          language = "sr";    /* Serbian (Cyrillic) */
+          language = "sr";          /* Serbian (Cyrillic) */
           break;
         case 2074:
-          language = "sr";    /* Serbian (Latin) */
+          language = "sr@latin";    /* Serbian (Latin) */
           break;
         case 1113:
-          language = "sd";    /* Sindhi - India */
+          language = "sd_IN";       /* Sindhi - India */
           break;
         case 2137:
-          language = "sd";    /* Sindhi - Pakistan */
+          language = "sd_PK";       /* Sindhi - Pakistan */
           break;
         case 1115:
-          language = "si";    /* Sinhalese - Sri Lanka */
+          language = "si";          /* Sinhalese - Sri Lanka */
           break;
         case 1051:
-          language = "sk";    /* Slovak */
+          language = "sk";          /* Slovak */
           break;
         case 1060:
-          language = "sl";    /* Slovenian */
+          language = "sl";          /* Slovenian */
           break;
         case 1143:
-          language = "so";    /* Somali */
+          language = "so";          /* Somali */
           break;
         case 1070:
-          language = NULL;    /* Sorbian */
+          language = NULL;          /* Sorbian */
           break;
         case 3082:
-          language = "es";    /* Spanish - Spain (Modern Sort) */
+          language = "es";          /* Spanish - Spain (Modern Sort) */
           break;
         case 1034:
-          language = "es";    /* Spanish - Spain (Traditional Sort) */
+          language = "es";          /* Spanish - Spain (Traditional Sort) */
           break;
         case 11274:
-          language = "es";    /* Spanish - Argentina */
+          language = "es_AR";       /* Spanish - Argentina */
           break;
         case 16394:
-          language = "es";    /* Spanish - Bolivia */
+          language = "es_BO";       /* Spanish - Bolivia */
           break;
         case 13322:
-          language = "es";    /* Spanish - Chile */
+          language = "es_CL";       /* Spanish - Chile */
           break;
         case 9226:
-          language = "es";    /* Spanish - Colombia */
+          language = "es_CO";       /* Spanish - Colombia */
           break;
         case 5130:
-          language = "es";    /* Spanish - Costa Rica */
+          language = "es_CR";       /* Spanish - Costa Rica */
           break;
         case 7178:
-          language = "es";    /* Spanish - Dominican Republic */
+          language = "es_DO";       /* Spanish - Dominican Republic */
           break;
         case 12298:
-          language = "es";    /* Spanish - Ecuador */
+          language = "es_EC";       /* Spanish - Ecuador */
           break;
         case 17418:
-          language = "es";    /* Spanish - El Salvador */
+          language = "es_SV";       /* Spanish - El Salvador */
           break;
         case 4106:
-          language = "es";    /* Spanish - Guatemala */
+          language = "es_GT";       /* Spanish - Guatemala */
           break;
         case 18442:
-          language = "es";    /* Spanish - Honduras */
+          language = "es_HN";       /* Spanish - Honduras */
           break;
         case 58378:
-          language = "es";    /* Spanish - Latin America */
+          language = "es";          /* Spanish - Latin America */
           break;
         case 2058:
-          language = "es";    /* Spanish - Mexico */
+          language = "es_MX";       /* Spanish - Mexico */
           break;
         case 19466:
-          language = "es";    /* Spanish - Nicaragua */
+          language = "es_NI";       /* Spanish - Nicaragua */
           break;
         case 6154:
-          language = "es";    /* Spanish - Panama */
+          language = "es_PA";       /* Spanish - Panama */
           break;
         case 15370:
-          language = "es";    /* Spanish - Paraguay */
+          language = "es_PY";       /* Spanish - Paraguay */
           break;
         case 10250:
-          language = "es";    /* Spanish - Peru */
+          language = "es_PE";       /* Spanish - Peru */
           break;
         case 20490:
-          language = "es";    /* Spanish - Puerto Rico */
+          language = "es_PR";       /* Spanish - Puerto Rico */
           break;
         case 21514:
-          language = "es";    /* Spanish - United States */
+          language = "es_US";       /* Spanish - United States */
           break;
         case 14346:
-          language = "es";    /* Spanish - Uruguay */
+          language = "es_UY";       /* Spanish - Uruguay */
           break;
         case 8202:
-          language = "es";    /* Spanish - Venezuela */
+          language = "es_VE";       /* Spanish - Venezuela */
           break;
         case 1072:
-          language = NULL;    /* Sutu */
+          language = NULL;          /* Sutu */
           break;
         case 1089:
-          language = "sw";    /* Swahili */
+          language = "sw";          /* Swahili */
           break;
         case 1053:
-          language = "sv";    /* Swedish */
+          language = "sv_SE";       /* Swedish */
           break;
         case 2077:
-          language = "sv";    /* Swedish - Finland */
+          language = "sv_FI";       /* Swedish - Finland */
           break;
         case 1114:
-          language = NULL;    /* Syriac */
+          language = NULL;          /* Syriac */
           break;
         case 1064:
-          language = "tg";    /* Tajik */
+          language = "tg";          /* Tajik */
           break;
         case 1119:
-          language = NULL;    /* Tamazight (Arabic) */
+          language = NULL;          /* Tamazight (Arabic) */
           break;
         case 2143:
-          language = NULL;    /* Tamazight (Latin) */
+          language = NULL;          /* Tamazight (Latin) */
           break;
         case 1097:
-          language = "ta";    /* Tamil */
+          language = "ta";          /* Tamil */
           break;
         case 1092:
-          language = "tt";    /* Tatar */
+          language = "tt";          /* Tatar */
           break;
         case 1098:
-          language = "te";    /* Telugu */
+          language = "te";          /* Telugu */
           break;
         case 1054:
-          language = "th";    /* Thai */
+          language = "th";          /* Thai */
           break;
         case 2129:
-          language = "bo";    /* Tibetan - Bhutan */
+          language = "bo_BT";       /* Tibetan - Bhutan */
           break;
         case 1105:
-          language = "bo";    /* Tibetan - People"s Republic of China */
+          language = "bo_CN";       /* Tibetan - People"s Republic of China */
           break;
         case 2163:
-          language = "ti";    /* Tigrigna - Eritrea */
+          language = "ti_ER";       /* Tigrigna - Eritrea */
           break;
         case 1139:
-          language = "ti";    /* Tigrigna - Ethiopia */
+          language = "ti_ET";       /* Tigrigna - Ethiopia */
           break;
         case 1073:
-          language = "ts";    /* Tsonga */
+          language = "ts";          /* Tsonga */
           break;
         case 1074:
-          language = "tn";    /* Tswana */
+          language = "tn";          /* Tswana */
           break;
         case 1055:
-          language = "tr";    /* Turkish */
+          language = "tr";          /* Turkish */
           break;
         case 1090:
-          language = "tk";    /* Turkmen */
+          language = "tk";          /* Turkmen */
           break;
         case 1152:
-          language = "ug";    /* Uighur - China */
+          language = "ug";          /* Uighur - China */
           break;
         case 1058:
-          language = "uk";    /* Ukrainian */
+          language = "uk";          /* Ukrainian */
           break;
         case 1056:
-          language = "ur";    /* Urdu */
+          language = "ur";          /* Urdu */
           break;
         case 2080:
-          language = "ur";    /* Urdu - India */
+          language = "ur_IN";       /* Urdu - India */
           break;
         case 2115:
-          language = "uz";    /* Uzbek (Cyrillic) */
+          language = "uz";          /* Uzbek (Cyrillic) */
           break;
         case 1091:
-          language = "uz";    /* Uzbek (Latin) */
+          language = "uz@latin";    /* Uzbek (Latin) */
           break;
         case 1075:
-          language = "ve";    /* Venda */
+          language = "ve";          /* Venda */
           break;
         case 1066:
-          language = "vi";    /* Vietnamese */
+          language = "vi";          /* Vietnamese */
           break;
         case 1106:
-          language = "cy";    /* Welsh */
+          language = "cy";          /* Welsh */
           break;
         case 1076:
-          language = "xh";    /* Xhosa */
+          language = "xh";          /* Xhosa */
           break;
         case 1144:
-          language = NULL;    /* Yi */
+          language = NULL;          /* Yi */
           break;
         case 1085:
-          language = "yi";    /* Yiddish */
+          language = "yi";          /* Yiddish */
           break;
         case 1130:
-          language = "yo";    /* Yoruba */
+          language = "yo";          /* Yoruba */
           break;
         case 1077:
-          language = "zu";    /* Zulu */
+          language = "zu";          /* Zulu */
           break;
         default:
           language = NULL;
