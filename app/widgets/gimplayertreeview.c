@@ -366,9 +366,9 @@ gimp_layer_tree_view_constructed (GObject *object)
                                NULL, tree_view);
   gimp_dnd_viewable_dest_add  (GTK_WIDGET (tree_view->view), GIMP_TYPE_LAYER_MASK,
                                NULL, tree_view);
-  gimp_dnd_pixbuf_dest_add    (GTK_WIDGET (tree_view->view),
-                               NULL, tree_view);
   gimp_dnd_uri_list_dest_add  (GTK_WIDGET (tree_view->view),
+                               NULL, tree_view);
+  gimp_dnd_pixbuf_dest_add    (GTK_WIDGET (tree_view->view),
                                NULL, tree_view);
 
   /*  hide basically useless edit button  */

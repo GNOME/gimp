@@ -140,17 +140,17 @@ gimp_display_shell_dnd_init (GimpDisplayShell *shell)
   gimp_dnd_color_dest_add     (shell->canvas,
                                gimp_display_shell_drop_color,
                                shell);
-  gimp_dnd_svg_dest_add       (shell->canvas,
-                               gimp_display_shell_drop_svg,
-                               shell);
   gimp_dnd_component_dest_add (shell->canvas,
                                gimp_display_shell_drop_component,
                                shell);
-  gimp_dnd_pixbuf_dest_add    (shell->canvas,
-                               gimp_display_shell_drop_pixbuf,
-                               shell);
   gimp_dnd_uri_list_dest_add  (shell->canvas,
                                gimp_display_shell_drop_uri_list,
+                               shell);
+  gimp_dnd_svg_dest_add       (shell->canvas,
+                               gimp_display_shell_drop_svg,
+                               shell);
+  gimp_dnd_pixbuf_dest_add    (shell->canvas,
+                               gimp_display_shell_drop_pixbuf,
                                shell);
 }
 
