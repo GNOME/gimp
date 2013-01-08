@@ -103,37 +103,35 @@ gimp_toolbox_dnd_init (GimpToolbox *toolbox,
                      0, NULL, 0,
                      GDK_ACTION_COPY | GDK_ACTION_MOVE);
 
-  gimp_dnd_viewable_dest_add (vbox,
-                              GIMP_TYPE_LAYER,
-                              gimp_toolbox_drop_drawable,
-                              context);
-  gimp_dnd_viewable_dest_add (vbox,
-                              GIMP_TYPE_LAYER_MASK,
-                              gimp_toolbox_drop_drawable,
-                              context);
-  gimp_dnd_viewable_dest_add (vbox,
-                              GIMP_TYPE_CHANNEL,
-                              gimp_toolbox_drop_drawable,
-                              context);
-  gimp_dnd_viewable_dest_add (vbox,
-                              GIMP_TYPE_TOOL_INFO,
-                              gimp_toolbox_drop_tool,
-                              context);
-  gimp_dnd_viewable_dest_add (vbox,
-                              GIMP_TYPE_BUFFER,
-                              gimp_toolbox_drop_buffer,
-                              context);
-
+  gimp_dnd_viewable_dest_add  (vbox,
+                               GIMP_TYPE_LAYER,
+                               gimp_toolbox_drop_drawable,
+                               context);
+  gimp_dnd_viewable_dest_add  (vbox,
+                               GIMP_TYPE_LAYER_MASK,
+                               gimp_toolbox_drop_drawable,
+                               context);
+  gimp_dnd_viewable_dest_add  (vbox,
+                               GIMP_TYPE_CHANNEL,
+                               gimp_toolbox_drop_drawable,
+                               context);
+  gimp_dnd_viewable_dest_add  (vbox,
+                               GIMP_TYPE_TOOL_INFO,
+                               gimp_toolbox_drop_tool,
+                               context);
+  gimp_dnd_viewable_dest_add  (vbox,
+                               GIMP_TYPE_BUFFER,
+                               gimp_toolbox_drop_buffer,
+                               context);
   gimp_dnd_component_dest_add (vbox,
                                gimp_toolbox_drop_component,
+                               context);
+  gimp_dnd_uri_list_dest_add  (vbox,
+                               gimp_toolbox_drop_uri_list,
                                context);
   gimp_dnd_pixbuf_dest_add    (vbox,
                                gimp_toolbox_drop_pixbuf,
                                context);
-
-  gimp_dnd_uri_list_dest_add (vbox,
-                              gimp_toolbox_drop_uri_list,
-                              context);
 }
 
 
