@@ -1109,8 +1109,6 @@ del_image_call (GtkWidget *widget,
           gtk_tree_row_reference_free (items[i]);
           multi_page.image_count--;
         }
-
-      g_free (items);
     }
 
   dnd_remove = TRUE;
