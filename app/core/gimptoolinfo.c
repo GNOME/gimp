@@ -138,7 +138,7 @@ gimp_tool_info_finalize (GObject *object)
   if (tool_info->help)
     {
       g_free (tool_info->help);
-      tool_info->blurb = NULL;
+      tool_info->help = NULL;
     }
 
   if (tool_info->menu_label)
