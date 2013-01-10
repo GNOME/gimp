@@ -81,7 +81,7 @@ static gint           save_image         (const gchar        *filename,
                                           GError            **error);
 
 static FITS_HDU_LIST *create_fits_header (FITS_FILE          *ofp,
-					  guint               width,
+                                          guint               width,
                                           guint               height,
                                           guint               bpp);
 static gint           save_index         (FITS_FILE          *ofp,
@@ -173,8 +173,8 @@ query (void)
 
   gimp_register_file_handler_mime (LOAD_PROC, "image/x-fits");
   gimp_register_magic_load_handler (LOAD_PROC,
-				    "fit,fits",
-				    "",
+                                    "fit,fits",
+                                    "",
                                     "0,string,SIMPLE");
 
   gimp_install_procedure (SAVE_PROC,
@@ -222,18 +222,18 @@ run (const gchar      *name,
   if (strcmp (name, LOAD_PROC) == 0)
     {
       switch (run_mode)
-	{
+        {
         case GIMP_RUN_INTERACTIVE:
           /*  Possibly retrieve data  */
           gimp_get_data (LOAD_PROC, &plvals);
 
           if (!load_dialog ())
-	    status = GIMP_PDB_CANCEL;
-	  break;
+            status = GIMP_PDB_CANCEL;
+          break;
 
         case GIMP_RUN_NONINTERACTIVE:
           if (nparams != 3)
-	    status = GIMP_PDB_CALLING_ERROR;
+            status = GIMP_PDB_CALLING_ERROR;
           break;
 
         case GIMP_RUN_WITH_LAST_VALS:
@@ -243,31 +243,31 @@ run (const gchar      *name,
 
         default:
           break;
-	}
+        }
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  check_load_vals ();
-	  image_ID = load_image (param[1].data.d_string, &error);
+        {
+          check_load_vals ();
+          image_ID = load_image (param[1].data.d_string, &error);
 
-	  /* Write out error messages of FITS-Library */
-	  show_fits_errors ();
+          /* Write out error messages of FITS-Library */
+          show_fits_errors ();
 
-	  if (image_ID != -1)
-	    {
-	      *nreturn_vals = 2;
-	      values[1].type         = GIMP_PDB_IMAGE;
-	      values[1].data.d_image = image_ID;
-	    }
-	  else
-	    {
-	      status = GIMP_PDB_EXECUTION_ERROR;
-	    }
+          if (image_ID != -1)
+            {
+              *nreturn_vals = 2;
+              values[1].type         = GIMP_PDB_IMAGE;
+              values[1].data.d_image = image_ID;
+            }
+          else
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
 
-	  /*  Store plvals data  */
-	  if (status == GIMP_PDB_SUCCESS)
-	    gimp_set_data (LOAD_PROC, &plvals, sizeof (FITSLoadVals));
-	}
+          /*  Store plvals data  */
+          if (status == GIMP_PDB_SUCCESS)
+            gimp_set_data (LOAD_PROC, &plvals, sizeof (FITSLoadVals));
+        }
     }
   else if (strcmp (name, SAVE_PROC) == 0)
     {
@@ -276,22 +276,22 @@ run (const gchar      *name,
 
       /*  eventually export the image */
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init (PLUG_IN_BINARY, FALSE);
-	  export = gimp_export_image (&image_ID, &drawable_ID, NULL,
-				      (GIMP_EXPORT_CAN_HANDLE_RGB |
-				       GIMP_EXPORT_CAN_HANDLE_GRAY |
-				       GIMP_EXPORT_CAN_HANDLE_INDEXED));
-	if (export == GIMP_EXPORT_CANCEL)
-	  {
-	    values[0].data.d_status = GIMP_PDB_CANCEL;
-	    return;
-	  }
-	break;
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_ui_init (PLUG_IN_BINARY, FALSE);
+          export = gimp_export_image (&image_ID, &drawable_ID, NULL,
+                                      (GIMP_EXPORT_CAN_HANDLE_RGB |
+                                       GIMP_EXPORT_CAN_HANDLE_GRAY |
+                                       GIMP_EXPORT_CAN_HANDLE_INDEXED));
+        if (export == GIMP_EXPORT_CANCEL)
+          {
+            values[0].data.d_status = GIMP_PDB_CANCEL;
+            return;
+          }
+        break;
       default:
-	break;
+        break;
       }
 
       switch (run_mode)
@@ -313,14 +313,14 @@ run (const gchar      *name,
         }
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  if (! save_image (param[3].data.d_string, image_ID, drawable_ID,
+        {
+          if (! save_image (param[3].data.d_string, image_ID, drawable_ID,
                             &error))
-	    status = GIMP_PDB_EXECUTION_ERROR;
-	}
+            status = GIMP_PDB_EXECUTION_ERROR;
+        }
 
       if (export == GIMP_EXPORT_EXPORT)
-	gimp_image_delete (image_ID);
+        gimp_image_delete (image_ID);
     }
   else
     {
@@ -387,11 +387,11 @@ load_image (const gchar  *filename,
 
       /* Get number of FITS-images to compose */
       compose = (   plvals.compose && (hdu_picnum == 1) && (hdu->naxis == 3)
-		    && (hdu->naxisn[2] > 1) && (hdu->naxisn[2] <= 4));
+                    && (hdu->naxisn[2] > 1) && (hdu->naxisn[2] <= 4));
       if (compose)
-	compose = hdu->naxisn[2];
+        compose = hdu->naxisn[2];
       else
-	compose = 1;  /* Load as GRAY */
+        compose = 1;  /* Load as GRAY */
 
       image_ID = load_fits (filename, ifp, picnum, compose);
 
@@ -400,12 +400,12 @@ load_image (const gchar  *filename,
 
       if (image_ID == -1) break;
       if (n_images == max_images)
-	{
-	  nl = (gint32 *)g_realloc (image_list, (max_images+10)*sizeof (gint32));
-	  if (nl == NULL) break;
-	  image_list = nl;
-	  max_images += 10;
-	}
+        {
+          nl = (gint32 *)g_realloc (image_list, (max_images+10)*sizeof (gint32));
+          if (nl == NULL) break;
+          image_list = nl;
+          max_images += 10;
+        }
       image_list[n_images++] = image_ID;
 
       picnum += compose;
@@ -420,11 +420,11 @@ load_image (const gchar  *filename,
   if (l_run_mode != GIMP_RUN_NONINTERACTIVE)
     {
       for (k = n_images-1; k >= 1; k--)
-	{
-	  gimp_image_undo_enable (image_list[k]);
-	  gimp_image_clean_all (image_list[k]);
-	  gimp_display_new (image_list[k]);
-	}
+        {
+          gimp_image_undo_enable (image_list[k]);
+          gimp_image_clean_all (image_list[k]);
+          gimp_display_new (image_list[k]);
+        }
     }
 
   image_ID = (n_images > 0) ? image_list[0] : -1;
@@ -527,12 +527,12 @@ create_new_image (const gchar        *filename,
 
   gimp_image_undo_disable (image_ID);
   *layer_ID = gimp_layer_new (image_ID, _("Background"), width, height,
-			      dtype, 100, GIMP_NORMAL_MODE);
+                              dtype, 100, GIMP_NORMAL_MODE);
   gimp_image_insert_layer (image_ID, *layer_ID, -1, 0);
 
   *drawable = gimp_drawable_get (*layer_ID);
   gimp_pixel_rgn_init (pixel_rgn, *drawable, 0, 0, (*drawable)->width,
-		       (*drawable)->height, TRUE, FALSE);
+                       (*drawable)->height, TRUE, FALSE);
 
   return (image_ID);
 }
@@ -592,7 +592,7 @@ load_fits (const gchar *filename,
     }
 
   image_ID = create_new_image (filename, picnum, width, height, itype, dtype,
-			       &layer_ID, &drawable, &pixel_rgn);
+                               &layer_ID, &drawable, &pixel_rgn);
 
   tile_height = gimp_tile_height ();
 
@@ -638,31 +638,31 @@ load_fits (const gchar *filename,
       scan_lines = 0;
 
       for (i = 0; i < height; i++)
-	{
-	  /* Read FITS line */
-	  dest -= width;
-	  if (fits_read_pixel (ifp, hdulist, width, &trans, dest) != width)
-	    {
-	      err = 1;
-	      break;
-	    }
+        {
+          /* Read FITS line */
+          dest -= width;
+          if (fits_read_pixel (ifp, hdulist, width, &trans, dest) != width)
+            {
+              err = 1;
+              break;
+            }
 
-	  scan_lines++;
+          scan_lines++;
 
-	  if ((i % 20) == 0)
-	    gimp_progress_update ((gdouble) (i + 1) / (gdouble) height);
+          if ((i % 20) == 0)
+            gimp_progress_update ((gdouble) (i + 1) / (gdouble) height);
 
-	  if ((scan_lines == tile_height) || ((i+1) == height))
-	    {
-	      gimp_pixel_rgn_set_rect (&pixel_rgn, dest, 0, height-i-1,
-				       width, scan_lines);
-	      scan_lines = 0;
-	      dest = data + tile_height * width;
-	    }
+          if ((scan_lines == tile_height) || ((i+1) == height))
+            {
+              gimp_pixel_rgn_set_rect (&pixel_rgn, dest, 0, height-i-1,
+                                       width, scan_lines);
+              scan_lines = 0;
+              dest = data + tile_height * width;
+            }
 
-	  if (err)
+          if (err)
             break;
-	}
+        }
     }
   else   /* multiple images to compose */
     {
@@ -671,59 +671,59 @@ load_fits (const gchar *filename,
         return -1;
 
       for (channel = 0; channel < ncompose; channel++)
-	{
-	  dest = data + tile_height * width * ncompose + channel;
-	  scan_lines = 0;
+        {
+          dest = data + tile_height * width * ncompose + channel;
+          scan_lines = 0;
 
-	  for (i = 0; i < height; i++)
-	    {
-	      if ((channel > 0) && ((i % tile_height) == 0))
-		{
+          for (i = 0; i < height; i++)
+            {
+              if ((channel > 0) && ((i % tile_height) == 0))
+                {
                   /* Reload a region for follow up channels */
-		  max_scan = tile_height;
+                  max_scan = tile_height;
 
-		  if (i + tile_height > height)
+                  if (i + tile_height > height)
                     max_scan = height - i;
 
-		  gimp_pixel_rgn_get_rect (&pixel_rgn,
-					   data_end-max_scan * width * ncompose,
-					   0, height - i - max_scan, width,
-					   max_scan);
-		}
+                  gimp_pixel_rgn_get_rect (&pixel_rgn,
+                                           data_end-max_scan * width * ncompose,
+                                           0, height - i - max_scan, width,
+                                           max_scan);
+                }
 
-	      /* Read FITS scanline */
-	      dest -= width * ncompose;
-	      if (fits_read_pixel (ifp, hdulist, width, &trans, linebuf) != width)
-		{
-		  err = 1;
-		  break;
-		}
-	      j = width;
-	      src = linebuf;
-	      while (j--)
-		{
-		  *dest = *(src++);
-		  dest += ncompose;
-		}
-	      dest -= width * ncompose;
-	      scan_lines++;
+              /* Read FITS scanline */
+              dest -= width * ncompose;
+              if (fits_read_pixel (ifp, hdulist, width, &trans, linebuf) != width)
+                {
+                  err = 1;
+                  break;
+                }
+              j = width;
+              src = linebuf;
+              while (j--)
+                {
+                  *dest = *(src++);
+                  dest += ncompose;
+                }
+              dest -= width * ncompose;
+              scan_lines++;
 
-	      if ((i % 20) == 0)
-		gimp_progress_update ((gdouble) (channel * height + i + 1) /
+              if ((i % 20) == 0)
+                gimp_progress_update ((gdouble) (channel * height + i + 1) /
                                       (gdouble) (height * ncompose));
 
-	      if ((scan_lines == tile_height) || ((i + 1) == height))
-		{
-		  gimp_pixel_rgn_set_rect (&pixel_rgn, dest-channel,
-					   0, height - i - 1, width, scan_lines);
-		  scan_lines = 0;
-		  dest = data + tile_height * width * ncompose + channel;
-		}
+              if ((scan_lines == tile_height) || ((i + 1) == height))
+                {
+                  gimp_pixel_rgn_set_rect (&pixel_rgn, dest-channel,
+                                           0, height - i - 1, width, scan_lines);
+                  scan_lines = 0;
+                  dest = data + tile_height * width * ncompose + channel;
+                }
 
-	      if (err)
+              if (err)
                 break;
-	    }
-	}
+            }
+        }
 
       g_free (linebuf);
     }
@@ -743,9 +743,9 @@ load_fits (const gchar *filename,
 
 static FITS_HDU_LIST *
 create_fits_header (FITS_FILE *ofp,
-		    guint      width,
-		    guint      height,
-		    guint      bpp)
+                    guint      width,
+                    guint      height,
+                    guint      bpp)
 {
   FITS_HDU_LIST *hdulist;
   int            print_ctype3 = 0; /* The CTYPE3-card may not be FITS-conforming */
@@ -788,12 +788,12 @@ create_fits_header (FITS_FILE *ofp,
 
   fits_add_card (hdulist, "");
   fits_add_card (hdulist,
-		 "HISTORY THIS FITS FILE WAS GENERATED BY GIMP USING FITSRW");
+                 "HISTORY THIS FITS FILE WAS GENERATED BY GIMP USING FITSRW");
   fits_add_card (hdulist, "");
   fits_add_card (hdulist,
-		 "COMMENT FitsRW is (C) Peter Kirchgessner (peter@kirchgessner.net), but available");
+                 "COMMENT FitsRW is (C) Peter Kirchgessner (peter@kirchgessner.net), but available");
   fits_add_card (hdulist,
-		 "COMMENT under the GNU general public licence.");
+                 "COMMENT under the GNU general public licence.");
   fits_add_card (hdulist,
                  "COMMENT For sources see http://www.kirchgessner.net");
   fits_add_card (hdulist, "");
@@ -814,8 +814,8 @@ create_fits_header (FITS_FILE *ofp,
 /* Save direct colours (GRAY, GRAYA, RGB, RGBA) */
 static gint
 save_direct (FITS_FILE *ofp,
-	     gint32     image_ID,
-	     gint32     drawable_ID)
+             gint32     image_ID,
+             gint32     drawable_ID)
 {
   int            height, width, i, j, channel;
   int            tile_height, bpp, bpsl;
@@ -847,8 +847,8 @@ save_direct (FITS_FILE *ofp,
   for (channel = 0; channel < bpp; channel++)
     {
       for (i = 0; i < height; i++)
-	{
-	  if ((i % tile_height) == 0)
+        {
+          if ((i % tile_height) == 0)
             {
               int scan_lines;
 
@@ -861,27 +861,27 @@ save_direct (FITS_FILE *ofp,
               src = data + bpsl *(scan_lines - 1) + channel;
             }
 
-	  if (bpp == 1)  /* One channel only ? Write the scanline */
-	    {
-	      fwrite (src, 1, width, ofp->fp);
-	      src += bpsl;
-	    }
-	  else           /* Multiple channels */
-	    {
-	      for (j = 0; j < width; j++)  /* Write out bytes for current channel */
-		{
-		  putc (*src, ofp->fp);
-		  src += bpp;
-		}
-	    }
+          if (bpp == 1)  /* One channel only ? Write the scanline */
+            {
+              fwrite (src, 1, width, ofp->fp);
+              src += bpsl;
+            }
+          else           /* Multiple channels */
+            {
+              for (j = 0; j < width; j++)  /* Write out bytes for current channel */
+                {
+                  putc (*src, ofp->fp);
+                  src += bpp;
+                }
+            }
 
-	  nbytes += width;
-	  src -= 2 * bpsl;
+          nbytes += width;
+          src -= 2 * bpsl;
 
-	  if ((i % 20) == 0)
-	    gimp_progress_update ((gdouble) (i + channel * height) /
+          if ((i % 20) == 0)
+            gimp_progress_update ((gdouble) (i + channel * height) /
                                   (gdouble) (height * bpp));
-	}
+        }
     }
 
   gimp_progress_update (1.0);
@@ -890,7 +890,7 @@ save_direct (FITS_FILE *ofp,
   if (nbytes)
     {
       while (nbytes++ < FITS_RECORD_SIZE)
-	putc (0, ofp->fp);
+        putc (0, ofp->fp);
     }
 
   g_free (data);
@@ -965,48 +965,48 @@ save_index (FITS_FILE *ofp,
     {
       cmapptr = channels[channel];
       for (i = 0; i < height; i++)
-	{
-	  if ((i % tile_height) == 0)
-	    GET_INDEXED_TILE (data); /* get more data */
+        {
+          if ((i % tile_height) == 0)
+            GET_INDEXED_TILE (data); /* get more data */
 
-	  for (j = 0; j < width; j++)  /* Write out bytes for current channel */
-	    {
-	      putc (cmapptr[*src], ofp->fp);
-	      src += bpp;
-	    }
-	  nbytes += width;
-	  src -= 2*bpsl;
-	}
+          for (j = 0; j < width; j++)  /* Write out bytes for current channel */
+            {
+              putc (cmapptr[*src], ofp->fp);
+              src += bpp;
+            }
+          nbytes += width;
+          src -= 2*bpsl;
+        }
 
       if ((i % 20) == 0)
-	gimp_progress_update ((gdouble) (i + channel * height) /
-			      (gdouble) (height * (bpp + 2)));
+        gimp_progress_update ((gdouble) (i + channel * height) /
+                              (gdouble) (height * (bpp + 2)));
     }
 
   /* Write the Alpha-channel */
   if (bpp > 1)
     {
       for (i = 0; i < height; i++)
-	{
-	  if ((i % tile_height) == 0)
-	    {
-	      GET_INDEXED_TILE (data); /* get more data */
-	      src++;                   /* Step to alpha channel data */
-	    }
+        {
+          if ((i % tile_height) == 0)
+            {
+              GET_INDEXED_TILE (data); /* get more data */
+              src++;                   /* Step to alpha channel data */
+            }
 
-	  for (j = 0; j < width; j++)  /* Write out bytes for alpha channel */
-	    {
-	      putc (*src, ofp->fp);
-	      src += bpp;
-	    }
+          for (j = 0; j < width; j++)  /* Write out bytes for alpha channel */
+            {
+              putc (*src, ofp->fp);
+              src += bpp;
+            }
 
-	  nbytes += width;
-	  src -= 2*bpsl;
-	}
+          nbytes += width;
+          src -= 2*bpsl;
+        }
 
       if ((i % 20) == 0)
-	gimp_progress_update ((gdouble) (i + channel * height) /
-			      (gdouble) (height * (bpp + 2)));
+        gimp_progress_update ((gdouble) (i + channel * height) /
+                              (gdouble) (height * (bpp + 2)));
     }
 
   gimp_progress_update (1.0);
@@ -1015,7 +1015,7 @@ save_index (FITS_FILE *ofp,
   if (nbytes)
     {
       while (nbytes++ < FITS_RECORD_SIZE)
-	putc (0, ofp->fp);
+        putc (0, ofp->fp);
     }
 
   g_free (data);
@@ -1046,12 +1046,12 @@ load_dialog (void)
 
   dialog = gimp_dialog_new (_("Load FITS File"), PLUG_IN_ROLE,
                             NULL, 0,
-			    gimp_standard_help_func, LOAD_PROC,
+                            gimp_standard_help_func, LOAD_PROC,
 
-			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			    GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
 
-			    NULL);
+                            NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
@@ -1069,37 +1069,37 @@ load_dialog (void)
   gtk_widget_show (vbox);
 
   frame = gimp_int_radio_group_new (TRUE, _("Replacement for undefined pixels"),
-				    G_CALLBACK (gimp_radio_button_update),
-				    &plvals.replace, plvals.replace,
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &plvals.replace, plvals.replace,
 
-				    _("Black"), 0,   NULL,
-				    _("White"), 255, NULL,
+                                    _("Black"), 0,   NULL,
+                                    _("White"), 255, NULL,
 
-				    NULL);
+                                    NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   frame =
     gimp_int_radio_group_new (TRUE, _("Pixel value scaling"),
-			      G_CALLBACK (gimp_radio_button_update),
-			      &plvals.use_datamin, plvals.use_datamin,
+                              G_CALLBACK (gimp_radio_button_update),
+                              &plvals.use_datamin, plvals.use_datamin,
 
-			      _("Automatic"),          FALSE, NULL,
-			      _("By DATAMIN/DATAMAX"), TRUE,  NULL,
+                              _("Automatic"),          FALSE, NULL,
+                              _("By DATAMIN/DATAMAX"), TRUE,  NULL,
 
-			      NULL);
+                              NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   frame =
     gimp_int_radio_group_new (TRUE, _("Image Composing"),
-			      G_CALLBACK (gimp_radio_button_update),
-			      &plvals.compose, plvals.compose,
+                              G_CALLBACK (gimp_radio_button_update),
+                              &plvals.compose, plvals.compose,
 
-			      C_("composing", "None"),   FALSE, NULL,
-			      "NAXIS=3, NAXIS3=2,...,4", TRUE,  NULL,
+                              C_("composing", "None"),   FALSE, NULL,
+                              "NAXIS=3, NAXIS3=2,...,4", TRUE,  NULL,
 
-			      NULL);
+                              NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
