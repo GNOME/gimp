@@ -84,10 +84,7 @@ static FITS_HDU_LIST *create_fits_header (FITS_FILE          *ofp,
                                           guint               width,
                                           guint               height,
                                           guint               bpp);
-static gint           save_index         (FITS_FILE          *ofp,
-                                          gint32              image_ID,
-                                          gint32              drawable_ID);
-static gint           save_direct        (FITS_FILE          *ofp,
+static gint           save_fits          (FITS_FILE          *ofp,
                                           gint32              image_ID,
                                           gint32              drawable_ID);
 
@@ -98,8 +95,7 @@ static gint32         create_new_image   (const gchar        *filename,
                                           GimpImageBaseType   itype,
                                           GimpImageType       dtype,
                                           gint32             *layer_ID,
-                                          GimpDrawable      **drawable,
-                                          GimpPixelRgn       *pixel_rgn);
+                                          GeglBuffer        **buffer);
 
 static void           check_load_vals    (void);
 
@@ -210,12 +206,14 @@ run (const gchar      *name,
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
   GError            *error  = NULL;
 
-  l_run_mode = run_mode = (GimpRunMode)param[0].data.d_int32;
-
   INIT_I18N ();
+  gegl_init (NULL, NULL);
+
+  l_run_mode = run_mode = (GimpRunMode)param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
@@ -480,11 +478,7 @@ save_image (const gchar  *filename,
   gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));
 
-  if ((drawable_type == GIMP_INDEXED_IMAGE) ||
-      (drawable_type == GIMP_INDEXEDA_IMAGE))
-    retval = save_index (ofp,image_ID, drawable_ID);
-  else
-    retval = save_direct (ofp,image_ID, drawable_ID);
+  retval = save_fits (ofp,image_ID, drawable_ID);
 
   fits_close (ofp);
 
@@ -509,8 +503,7 @@ create_new_image (const gchar        *filename,
                   GimpImageBaseType   itype,
                   GimpImageType       dtype,
                   gint32             *layer_ID,
-                  GimpDrawable      **drawable,
-                  GimpPixelRgn       *pixel_rgn)
+                  GeglBuffer        **buffer)
 {
   gint32  image_ID;
   char   *tmp;
@@ -530,11 +523,9 @@ create_new_image (const gchar        *filename,
                               dtype, 100, GIMP_NORMAL_MODE);
   gimp_image_insert_layer (image_ID, *layer_ID, -1, 0);
 
-  *drawable = gimp_drawable_get (*layer_ID);
-  gimp_pixel_rgn_init (pixel_rgn, *drawable, 0, 0, (*drawable)->width,
-                       (*drawable)->height, TRUE, FALSE);
+  *buffer = gimp_drawable_get_buffer (*layer_ID);
 
-  return (image_ID);
+  return image_ID;
 }
 
 
@@ -551,11 +542,10 @@ load_fits (const gchar *filename,
   register guchar    *dest, *src;
   guchar             *data, *data_end, *linebuf;
   int                 width, height, tile_height, scan_lines;
-  int                 i, j, channel, max_scan;
+  int                 i, j, max_scan;
   double              a, b;
   gint32              layer_ID, image_ID;
-  GimpPixelRgn        pixel_rgn;
-  GimpDrawable       *drawable;
+  GeglBuffer         *buffer;
   GimpImageBaseType   itype;
   GimpImageType       dtype;
   gint                err = 0;
@@ -592,7 +582,7 @@ load_fits (const gchar *filename,
     }
 
   image_ID = create_new_image (filename, picnum, width, height, itype, dtype,
-                               &layer_ID, &drawable, &pixel_rgn);
+                               &layer_ID, &buffer);
 
   tile_height = gimp_tile_height ();
 
@@ -605,9 +595,9 @@ load_fits (const gchar *filename,
   /* If the transformation from pixel value to data value has been
    * specified, use it
    */
-  if (   plvals.use_datamin
-      && hdulist->used.datamin && hdulist->used.datamax
-      && hdulist->used.bzero && hdulist->used.bscale)
+  if (plvals.use_datamin    &&
+      hdulist->used.datamin && hdulist->used.datamax &&
+      hdulist->used.bzero   && hdulist->used.bscale)
     {
       a = (hdulist->datamin - hdulist->bzero) / hdulist->bscale;
       b = (hdulist->datamax - hdulist->bzero) / hdulist->bscale;
@@ -652,10 +642,13 @@ load_fits (const gchar *filename,
           if ((i % 20) == 0)
             gimp_progress_update ((gdouble) (i + 1) / (gdouble) height);
 
-          if ((scan_lines == tile_height) || ((i+1) == height))
+          if ((scan_lines == tile_height) || ((i + 1) == height))
             {
-              gimp_pixel_rgn_set_rect (&pixel_rgn, dest, 0, height-i-1,
-                                       width, scan_lines);
+              gegl_buffer_set (buffer,
+                               GEGL_RECTANGLE (0, height - i - 1,
+                                               width, scan_lines), 0,
+                               NULL, dest, GEGL_AUTO_ROWSTRIDE);
+
               scan_lines = 0;
               dest = data + tile_height * width;
             }
@@ -666,6 +659,8 @@ load_fits (const gchar *filename,
     }
   else   /* multiple images to compose */
     {
+      gint channel;
+
       linebuf = g_malloc (width);
       if (linebuf == NULL)
         return -1;
@@ -685,10 +680,11 @@ load_fits (const gchar *filename,
                   if (i + tile_height > height)
                     max_scan = height - i;
 
-                  gimp_pixel_rgn_get_rect (&pixel_rgn,
-                                           data_end-max_scan * width * ncompose,
-                                           0, height - i - max_scan, width,
-                                           max_scan);
+                  gegl_buffer_get (buffer,
+                                   GEGL_RECTANGLE (0, height - i - max_scan,
+                                                   width, max_scan), 1.0,
+                                   NULL, data_end - max_scan * width * ncompose,
+                                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
                 }
 
               /* Read FITS scanline */
@@ -714,8 +710,11 @@ load_fits (const gchar *filename,
 
               if ((scan_lines == tile_height) || ((i + 1) == height))
                 {
-                  gimp_pixel_rgn_set_rect (&pixel_rgn, dest-channel,
-                                           0, height - i - 1, width, scan_lines);
+                  gegl_buffer_set (buffer,
+                                   GEGL_RECTANGLE (0, height - i - 1,
+                                                   width, scan_lines), 0,
+                                   NULL, dest - channel, GEGL_AUTO_ROWSTRIDE);
+
                   scan_lines = 0;
                   dest = data + tile_height * width * ncompose + channel;
                 }
@@ -728,14 +727,14 @@ load_fits (const gchar *filename,
       g_free (linebuf);
     }
 
-  gimp_progress_update (1.0);
-
   g_free (data);
 
   if (err)
     g_message (_("EOF encountered on reading"));
 
-  gimp_drawable_flush (drawable);
+  g_object_unref (buffer);
+
+  gimp_progress_update (1.0);
 
   return err ? -1 : image_ID;
 }
@@ -813,28 +812,51 @@ create_fits_header (FITS_FILE *ofp,
 
 /* Save direct colours (GRAY, GRAYA, RGB, RGBA) */
 static gint
-save_direct (FITS_FILE *ofp,
-             gint32     image_ID,
-             gint32     drawable_ID)
+save_fits (FITS_FILE *ofp,
+           gint32     image_ID,
+           gint32     drawable_ID)
 {
-  int            height, width, i, j, channel;
-  int            tile_height, bpp, bpsl;
+  gint           height, width, i, j, channel;
+  gint           tile_height, bpp, bpsl;
   long           nbytes;
   guchar        *data, *src;
-  GimpPixelRgn   pixel_rgn;
-  GimpDrawable  *drawable;
+  GeglBuffer    *buffer;
+  const Babl    *format = NULL;
   FITS_HDU_LIST *hdu;
 
-  drawable = gimp_drawable_get (drawable_ID);
-  width = drawable->width;
-  height = drawable->height;
-  bpp = drawable->bpp;       /* Bytes per pixel */
-  bpsl = width * bpp;        /* Bytes per scanline */
+  buffer = gimp_drawable_get_buffer (drawable_ID);
+
+  width  = gegl_buffer_get_width  (buffer);
+  height = gegl_buffer_get_height (buffer);
+
+  switch (gimp_drawable_type (drawable_ID))
+    {
+    case GIMP_GRAY_IMAGE:
+      format = babl_format ("Y' u8");
+      break;
+
+    case GIMP_GRAYA_IMAGE:
+      format = babl_format ("Y'A u8");
+      break;
+
+    case GIMP_RGB_IMAGE:
+    case GIMP_INDEXED_IMAGE:
+      format = babl_format ("R'G'B' u8");
+      break;
+
+    case GIMP_RGBA_IMAGE:
+    case GIMP_INDEXEDA_IMAGE:
+      format = babl_format ("R'G'B'A u8");
+      break;
+    }
+
+  bpp  = babl_format_get_bytes_per_pixel (format);
+  bpsl = width * bpp; /* Bytes per scanline */
+
   tile_height = gimp_tile_height ();
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, FALSE, FALSE);
 
   /* allocate a buffer for retrieving information from the pixel region  */
-  src = data = (guchar *)g_malloc (width * height * bpp);
+  src = data = (guchar *) g_malloc (width * height * bpp);
 
   hdu = create_fits_header (ofp, width, height, bpp);
   if (hdu == NULL)
@@ -850,15 +872,18 @@ save_direct (FITS_FILE *ofp,
         {
           if ((i % tile_height) == 0)
             {
-              int scan_lines;
+              gint scan_lines;
 
               scan_lines = (i + tile_height-1 < height) ?
                             tile_height : (height - i);
 
-              gimp_pixel_rgn_get_rect (&pixel_rgn, data, 0, height-i-scan_lines,
-                                       width, scan_lines);
+              gegl_buffer_get (buffer,
+                               GEGL_RECTANGLE (0, height - i - scan_lines,
+                                               width, scan_lines), 1.0,
+                               format, data,
+                               GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-              src = data + bpsl *(scan_lines - 1) + channel;
+              src = data + bpsl * (scan_lines - 1) + channel;
             }
 
           if (bpp == 1)  /* One channel only ? Write the scanline */
@@ -884,8 +909,6 @@ save_direct (FITS_FILE *ofp,
         }
     }
 
-  gimp_progress_update (1.0);
-
   nbytes = nbytes % FITS_RECORD_SIZE;
   if (nbytes)
     {
@@ -895,7 +918,9 @@ save_direct (FITS_FILE *ofp,
 
   g_free (data);
 
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
+
+  gimp_progress_update (1.0);
 
   if (ferror (ofp->fp))
     {
@@ -906,131 +931,6 @@ save_direct (FITS_FILE *ofp,
   return TRUE;
 }
 
-
-/* Save indexed colours (INDEXED, INDEXEDA) */
-static gint
-save_index (FITS_FILE *ofp,
-            gint32     image_ID,
-            gint32     drawable_ID)
-{
-  int            height, width, i, j, channel;
-  int            tile_height, bpp, bpsl, ncols;
-  long           nbytes;
-  guchar        *data, *src, *cmap, *cmapptr;
-  guchar         red[256], green[256], blue[256];
-  guchar        *channels[3];
-  GimpPixelRgn   pixel_rgn;
-  GimpDrawable  *drawable;
-  FITS_HDU_LIST *hdu;
-
-  channels[0] = red;   channels[1] = green;   channels[2] = blue;
-
-  drawable = gimp_drawable_get (drawable_ID);
-  width = drawable->width;
-  height = drawable->height;
-  bpp = drawable->bpp;       /* Bytes per pixel */
-  bpsl = width * bpp;        /* Bytes per scanline */
-  tile_height = gimp_tile_height ();
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, FALSE, FALSE);
-
-  /* allocate a buffer for retrieving information from the pixel region  */
-  src = data = (guchar *)g_malloc (width * height * bpp);
-
-  cmapptr = cmap = gimp_image_get_colormap (image_ID, &ncols);
-  if (ncols > sizeof (red)) ncols = sizeof (red);
-  for (i = 0; i < ncols; i++)
-    {
-      red[i] = *(cmapptr++);
-      green[i] = *(cmapptr++);
-      blue[i] = *(cmapptr++);
-    }
-  for (i = ncols; i < sizeof (red); i++)
-    red[i] = green[i] = blue[i] = 0;
-
-  hdu = create_fits_header (ofp, width, height, bpp+2);
-  if (hdu == NULL) return (FALSE);
-  if (fits_write_header (ofp, hdu) < 0) return (FALSE);
-
-#define GET_INDEXED_TILE(begin) \
-  {int scan_lines; \
-    scan_lines = (i+tile_height-1 < height) ? tile_height : (height-i); \
-    gimp_pixel_rgn_get_rect (&pixel_rgn, begin, 0, height-i-scan_lines, \
-                             width, scan_lines); \
-    src = begin+bpsl*(scan_lines-1); }
-
-  nbytes = 0;
-
-  /* Write the RGB-channels */
-  for (channel = 0; channel < 3; channel++)
-    {
-      cmapptr = channels[channel];
-      for (i = 0; i < height; i++)
-        {
-          if ((i % tile_height) == 0)
-            GET_INDEXED_TILE (data); /* get more data */
-
-          for (j = 0; j < width; j++)  /* Write out bytes for current channel */
-            {
-              putc (cmapptr[*src], ofp->fp);
-              src += bpp;
-            }
-          nbytes += width;
-          src -= 2*bpsl;
-        }
-
-      if ((i % 20) == 0)
-        gimp_progress_update ((gdouble) (i + channel * height) /
-                              (gdouble) (height * (bpp + 2)));
-    }
-
-  /* Write the Alpha-channel */
-  if (bpp > 1)
-    {
-      for (i = 0; i < height; i++)
-        {
-          if ((i % tile_height) == 0)
-            {
-              GET_INDEXED_TILE (data); /* get more data */
-              src++;                   /* Step to alpha channel data */
-            }
-
-          for (j = 0; j < width; j++)  /* Write out bytes for alpha channel */
-            {
-              putc (*src, ofp->fp);
-              src += bpp;
-            }
-
-          nbytes += width;
-          src -= 2*bpsl;
-        }
-
-      if ((i % 20) == 0)
-        gimp_progress_update ((gdouble) (i + channel * height) /
-                              (gdouble) (height * (bpp + 2)));
-    }
-
-  gimp_progress_update (1.0);
-
-  nbytes = nbytes % FITS_RECORD_SIZE;
-  if (nbytes)
-    {
-      while (nbytes++ < FITS_RECORD_SIZE)
-        putc (0, ofp->fp);
-    }
-
-  g_free (data);
-
-  gimp_drawable_detach (drawable);
-
-  if (ferror (ofp->fp))
-    {
-      g_message (_("Write error occurred"));
-      return FALSE;
-    }
-
-  return TRUE;
-#undef GET_INDEXED_TILE
-}
 
 /*  Load interface functions  */
 
