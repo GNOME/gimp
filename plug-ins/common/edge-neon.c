@@ -506,6 +506,7 @@ neon (GimpDrawable *drawable,
   g_free (val_p);
   g_free (val_m);
   g_free (src);
+  g_free (src2);
   g_free (dest);
 }
 
