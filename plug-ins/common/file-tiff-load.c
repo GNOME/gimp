@@ -1455,16 +1455,16 @@ load_contiguous (TIFF         *tif,
                                                       GEGL_RECTANGLE (0, 0, cols, rows),
                                                       GEGL_AUTO_ROWSTRIDE,
                                                       NULL, NULL);
-         
+
           offset = 0;
-         
+
           for (i = 0; i <= extra; i++)
             {
               gint src_bpp, dest_bpp;
-         
+
               src_bpp = babl_format_get_bytes_per_pixel (src_format);
               dest_bpp = babl_format_get_bytes_per_pixel (channel[i].format);
-         
+
               iter = gegl_buffer_iterator_new (src_buf,
                                                GEGL_RECTANGLE (0, 0, cols, rows),
                                                0, NULL,
@@ -1474,13 +1474,13 @@ load_contiguous (TIFF         *tif,
                                         GEGL_RECTANGLE (x, y, cols, rows),
                                         0, channel[i].format,
                                         GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
-         
+
               while (gegl_buffer_iterator_next (iter))
                 {
                   guchar *s = iter->data[0];
                   guchar *d = iter->data[1];
                   gint length = iter->length;
-         
+
                   s += offset;
 
                   while (length--)
@@ -1490,7 +1490,7 @@ load_contiguous (TIFF         *tif,
                       s += src_bpp;
                     }
                 }
-         
+
               offset += dest_bpp;
             }
 
@@ -1567,7 +1567,7 @@ load_separate (TIFF         *tif,
       dest_bpp = babl_format_get_bytes_per_pixel (channel[i].format);
 
       offset = 0;
-             
+
       for (j = 0; j < n_comps; j++)
         {
           for (y = 0; y < imageLength; y += tileLength)
@@ -1576,21 +1576,21 @@ load_separate (TIFF         *tif,
                 {
                   gimp_progress_update (progress + one_row *
                                         ( (gdouble) x / (gdouble) imageWidth));
-     
+
                   if (TIFFIsTiled (tif))
                     TIFFReadTile (tif, buffer, x, y, 0, compindex);
                   else
                     TIFFReadScanline (tif, buffer, y, compindex);
-     
+
                   cols = MIN (imageWidth - x, tileWidth);
                   rows = MIN (imageLength - y, tileLength);
-     
+
                   src_buf = gegl_buffer_linear_new_from_data (buffer,
                                                               src_format,
                                                               GEGL_RECTANGLE (0, 0, cols, rows),
                                                               GEGL_AUTO_ROWSTRIDE,
                                                               NULL, NULL);
-                 
+
                   iter = gegl_buffer_iterator_new (src_buf,
                                                    GEGL_RECTANGLE (0, 0, cols, rows),
                                                    0, NULL,
@@ -1601,15 +1601,15 @@ load_separate (TIFF         *tif,
                                             0, channel[i].format,
                                             GEGL_BUFFER_READWRITE,
                                             GEGL_ABYSS_NONE);
-             
+
                   while (gegl_buffer_iterator_next (iter))
                     {
                       guchar *s = iter->data[0];
                       guchar *d = iter->data[1];
                       gint length = iter->length;
-             
+
                       d += offset;
-         
+
                       while (length--)
                         {
                           memcpy (d, s, src_bpp);
@@ -1617,7 +1617,7 @@ load_separate (TIFF         *tif,
                           s += src_bpp;
                         }
                     }
-             
+
                   g_object_unref (src_buf);
                 }
             }
