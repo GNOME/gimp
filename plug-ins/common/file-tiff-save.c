@@ -1061,6 +1061,7 @@ save_image (const gchar  *filename,
 
   gimp_drawable_detach (drawable);
   g_free (data);
+  g_free (src);
 
   return TRUE;
 }
