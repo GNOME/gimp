@@ -278,15 +278,7 @@ fits_scanfdouble (const gchar *buf,
 static FITS_FILE *
 fits_new_filestruct (void)
 {
-  FITS_FILE *ff;
-
-  ff = (FITS_FILE *)malloc (sizeof (FITS_FILE));
-  if (ff == NULL)
-    return NULL;
-
-  memset ((char *)ff, 0, sizeof (*ff));
-
-  return ff;
+  return g_new0 (FITS_FILE, 1);
 }
 
 
@@ -353,13 +345,14 @@ fits_delete_filestruct (FITS_FILE *ff)
 static void
 fits_delete_recordlist (FITS_RECORD_LIST *rl)
 {
-  FITS_RECORD_LIST *next;
-
   while (rl != NULL)
     {
-      next = rl->next_record;
+      FITS_RECORD_LIST *next;
+
+     next = rl->next_record;
       rl->next_record = NULL;
-      free ((char *)rl);
+      g_free (rl);
+
       rl = next;
     }
 }
@@ -380,14 +373,15 @@ fits_delete_recordlist (FITS_RECORD_LIST *rl)
 static void
 fits_delete_hdulist (FITS_HDU_LIST *hl)
 {
-  FITS_HDU_LIST *next;
-
   while (hl != NULL)
     {
+      FITS_HDU_LIST *next;
+
       fits_delete_recordlist (hl->header_record_list);
       next = hl->next_hdu;
       hl->next_hdu = NULL;
-      free ((char *)hl);
+      g_free (hl);
+
       hl = next;
     }
 }
@@ -893,12 +887,7 @@ fits_read_header (FILE *fp,
 
   for (;;)   /* Process all header records */
     {
-      new_record = (FITS_RECORD_LIST *)malloc (sizeof (FITS_RECORD_LIST));
-      if (new_record == NULL)
-        {
-          fits_delete_recordlist (start_list);
-          FITS_RETURN ("fits_read_header: Not enough memory", NULL);
-        }
+      new_record = g_new0 (FITS_RECORD_LIST, 1);
       memcpy (new_record->data, record, FITS_RECORD_SIZE);
       new_record->next_record = NULL;
       (*nrec)++;
@@ -1961,29 +1950,22 @@ fits_seek_image (FITS_FILE *ff,
 /* #END-PAR                                                                  */
 /*****************************************************************************/
 
-int
+gint
 fits_read_pixel (FITS_FILE          *ff,
                  FITS_HDU_LIST      *hdulist,
                  gint                npix,
                  FITS_PIX_TRANSFORM *trans,
                  void               *buf)
 {
-  gdouble         offs, scale;
-  gdouble         datadiff, pixdiff;
-  guchar          pixbuffer[4096], *pix, *cdata;
-  guchar          creplace;
-  gint            transcount = 0;
-  glong           tdata, tmin, tmax;
-  gint            maxelem;
-  FITS_BITPIX8    bp8, bp8blank;
-  FITS_BITPIX16   bp16, bp16blank;
-  FITS_BITPIX32   bp32, bp32blank;
-  FITS_BITPIXM32  bpm32;
-  FITS_BITPIXM64  bpm64;
-
-  /* initialize */
-
-  bpm32 = 0;
+  gdouble  offs, scale;
+  gdouble  datadiff, pixdiff;
+  guchar   pixbuffer[4096];
+  guchar  *pix;
+  guchar  *cdata;
+  guchar   creplace;
+  gint     transcount = 0;
+  glong    tdata, tmin, tmax;
+  gint     maxelem;
 
   if (ff->openmode != 'r')
     return -1;   /* Not open for reading */
@@ -2021,11 +2003,14 @@ fits_read_pixel (FITS_FILE          *ff,
     case 8:
       while (npix > 0)  /* For all pixels to read */
         {
+          FITS_BITPIX8 bp8, bp8blank;
+
           maxelem = sizeof (pixbuffer) / hdulist->bpp;
           if (maxelem > npix)
             maxelem = npix;
 
-          if (fread ((gchar *) pixbuffer, hdulist->bpp, maxelem, ff->fp) != maxelem)
+          if (fread ((gchar *) pixbuffer, hdulist->bpp,
+                     maxelem, ff->fp) != maxelem)
             return -1;
 
           npix -= maxelem;
@@ -2047,10 +2032,7 @@ fits_read_pixel (FITS_FILE          *ff,
                   else                      /* Do transform */
                     {
                       tdata = (glong) (bp8 * scale + offs);
-                      if (tdata < tmin)
-                        tdata = tmin;
-                      else if (tdata > tmax)
-                        tdata = tmax;
+                      tdata = CLAMP (tdata, tmin, tmax);
 
                       *(cdata++) = (guchar) tdata;
                     }
@@ -2063,12 +2045,9 @@ fits_read_pixel (FITS_FILE          *ff,
               while (maxelem--)
                 {
                   bp8 = (FITS_BITPIX8) * (pix++);
-                  tdata = (glong) (bp8 * scale + offs);
 
-                  if (tdata < tmin)
-                    tdata = tmin;
-                  else if (tdata > tmax)
-                    tdata = tmax;
+                  tdata = (glong) (bp8 * scale + offs);
+                  tdata = CLAMP (tdata, tmin, tmax);
 
                   *(cdata++) = (guchar) tdata;
 
@@ -2081,11 +2060,14 @@ fits_read_pixel (FITS_FILE          *ff,
     case 16:
       while (npix > 0)  /* For all pixels to read */
         {
+          FITS_BITPIX16 bp16, bp16blank;
+
           maxelem = sizeof (pixbuffer) / hdulist->bpp;
           if (maxelem > npix)
             maxelem = npix;
 
-          if (fread ((gchar *) pixbuffer, hdulist->bpp, maxelem, ff->fp) != maxelem)
+          if (fread ((gchar *) pixbuffer, hdulist->bpp,
+                     maxelem, ff->fp) != maxelem)
             return -1;
 
           npix -= maxelem;
@@ -2143,11 +2125,14 @@ fits_read_pixel (FITS_FILE          *ff,
     case 32:
       while (npix > 0)  /* For all pixels to read */
         {
+          FITS_BITPIX32 bp32, bp32blank;
+
           maxelem = sizeof (pixbuffer) / hdulist->bpp;
           if (maxelem > npix)
             maxelem = npix;
 
-          if (fread ((gchar *) pixbuffer, hdulist->bpp, maxelem, ff->fp) != maxelem)
+          if (fread ((gchar *) pixbuffer, hdulist->bpp,
+                     maxelem, ff->fp) != maxelem)
             return -1;
 
           npix -= maxelem;
@@ -2187,10 +2172,7 @@ fits_read_pixel (FITS_FILE          *ff,
                   FITS_GETBITPIX32 (pix, bp32);
 
                   tdata = (glong) (bp32 * scale + offs);
-                  if (tdata < tmin)
-                    tdata = tmin;
-                  else if (tdata > tmax)
-                    tdata = tmax;
+                  tdata = CLAMP (tdata, tmin, tmax);
 
                   *(cdata++) = (guchar) tdata;
 
@@ -2204,11 +2186,14 @@ fits_read_pixel (FITS_FILE          *ff,
     case -32:
       while (npix > 0)  /* For all pixels to read */
         {
+          FITS_BITPIXM32 bpm32 = 0;
+
           maxelem = sizeof (pixbuffer) / hdulist->bpp;
           if (maxelem > npix)
             maxelem = npix;
 
-          if (fread ((gchar *) pixbuffer, hdulist->bpp, maxelem, ff->fp) != maxelem)
+          if (fread ((gchar *) pixbuffer, hdulist->bpp,
+                     maxelem, ff->fp) != maxelem)
             return -1;
 
           npix -= maxelem;
@@ -2225,10 +2210,7 @@ fits_read_pixel (FITS_FILE          *ff,
                   FITS_GETBITPIXM32 (pix, bpm32);
 
                   tdata = (glong) (bpm32 * scale + offs);
-                  if (tdata < tmin)
-                    tdata = tmin;
-                  else if (tdata > tmax)
-                    tdata = tmax;
+                  tdata = CLAMP (tdata, tmin, tmax);
 
                   *(cdata++) = (guchar) tdata;
                 }
@@ -2242,11 +2224,14 @@ fits_read_pixel (FITS_FILE          *ff,
     case -64:
       while (npix > 0)  /* For all pixels to read */
         {
+          FITS_BITPIXM64 bpm64;
+
           maxelem = sizeof (pixbuffer) / hdulist->bpp;
           if (maxelem > npix)
             maxelem = npix;
 
-          if (fread ((gchar *) pixbuffer, hdulist->bpp, maxelem, ff->fp) != maxelem)
+          if (fread ((gchar *) pixbuffer, hdulist->bpp,
+                     maxelem, ff->fp) != maxelem)
             return -1;
 
           npix -= maxelem;
@@ -2263,10 +2248,7 @@ fits_read_pixel (FITS_FILE          *ff,
                   FITS_GETBITPIXM64 (pix, bpm64);
 
                   tdata = (glong) (bpm64 * scale + offs);
-                  if (tdata < tmin)
-                    tdata = tmin;
-                  else if (tdata > tmax)
-                    tdata = tmax;
+                  tdata = CLAMP (tdata, tmin, tmax);
 
                   *(cdata++) = (guchar) tdata;
                 }
