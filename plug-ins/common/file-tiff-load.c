@@ -1628,6 +1628,8 @@ load_separate (TIFF         *tif,
 
       progress += one_row;
     }
+
+  g_free (buffer);
 }
 
 
