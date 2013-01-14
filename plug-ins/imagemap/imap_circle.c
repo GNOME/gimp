@@ -62,8 +62,6 @@ static const gchar* circle_get_stock_icon_name(void);
 static ObjectClass_t circle_class = {
    N_("C_ircle"),
    NULL,                        /* info_dialog */
-   NULL,                        /* icon */
-   NULL,                        /* mask */
 
    circle_is_valid,
    NULL,                        /* circle_destruct */

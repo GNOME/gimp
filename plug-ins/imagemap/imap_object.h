@@ -53,8 +53,6 @@ struct AreaInfoDialog_t;
 struct ObjectClass_t {
    const gchar          *name;
    AreaInfoDialog_t     *info_dialog;
-   GdkPixmap            *icon;
-   GdkBitmap            *mask;
 
    gboolean (*is_valid)(Object_t *obj);
    void (*destruct)(Object_t *obj);

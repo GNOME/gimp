@@ -204,7 +204,6 @@ get_preferences(void)
 static void
 init_preferences(void)
 {
-   GdkColormap *colormap = gdk_drawable_get_colormap(gtk_widget_get_window (_dlg));
    ColorSelData_t *colors = &_preferences.colors;
 
    colors->normal_fg.red = 0;
@@ -232,11 +231,6 @@ init_preferences(void)
    colors->interactive_bg.blue = 0;
 
    preferences_load(&_preferences);
-
-   gdk_colormap_alloc_color(colormap, &colors->normal_fg, FALSE, TRUE);
-   gdk_colormap_alloc_color(colormap, &colors->normal_bg, FALSE, TRUE);
-   gdk_colormap_alloc_color(colormap, &colors->selected_fg, FALSE, TRUE);
-   gdk_colormap_alloc_color(colormap, &colors->selected_bg, FALSE, TRUE);
 
    mru_set_size(_mru, _preferences.mru_size);
    command_list_set_undo_level(_preferences.undo_levels);

@@ -67,8 +67,6 @@ static const gchar* rectangle_get_stock_icon_name(void);
 static ObjectClass_t rectangle_class = {
    N_("_Rectangle"),
    NULL,                        /* info_dialog */
-   NULL,                        /* icon */
-   NULL,                        /* mask */
 
    rectangle_is_valid,
    NULL,                        /* rectangle_destruct */
