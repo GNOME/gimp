@@ -1868,7 +1868,9 @@ respin_cmap (png_structp   pp,
    */
   if (colors == 0)
     {
-      before = g_new0 (guchar, 3);
+      before = g_newa (guchar, 3);
+      memset (before, 0, sizeof (guchar) * 3);
+
       colors = 1;
     }
 
