@@ -499,15 +499,16 @@ gimp_session_info_restore_docks (GimpRestoreDocksData *data)
                 }
             }
         }
-
-      g_object_unref (dialog);
-      g_object_unref (screen);
-      g_object_unref (factory);
-      g_object_unref (info);
-      g_slice_free (GimpRestoreDocksData, data);
     }
 
   gimp_session_info_clear_info (info);
+
+  g_object_unref (dialog);
+  g_object_unref (screen);
+  g_object_unref (factory);
+  g_object_unref (info);
+
+  g_slice_free (GimpRestoreDocksData, data);
 
   return FALSE;
 }
