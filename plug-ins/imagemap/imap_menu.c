@@ -493,40 +493,30 @@ menu_check_grid(gboolean check)
 GtkWidget*
 make_toolbar(GtkWidget *main_vbox, GtkWidget *window)
 {
-  GtkWidget *handlebox, *toolbar;
+  GtkWidget *toolbar;
 
-  handlebox = gtk_handle_box_new ();
-  gtk_box_pack_start (GTK_BOX (main_vbox), handlebox, FALSE, FALSE, 0);
   toolbar = gtk_ui_manager_get_widget (ui_manager, "/Toolbar");
-
   gtk_toolbar_set_style (GTK_TOOLBAR (toolbar), GTK_TOOLBAR_ICONS);
   gtk_container_set_border_width (GTK_CONTAINER (toolbar), 0);
-
-  gtk_container_add (GTK_CONTAINER (handlebox), toolbar);
+  gtk_box_pack_start (GTK_BOX (main_vbox), toolbar, FALSE, FALSE, 0);
   gtk_widget_show (toolbar);
-  gtk_widget_show (handlebox);
 
-  return handlebox;
+  return toolbar;
 }
 
 GtkWidget*
 make_tools(GtkWidget *window)
 {
-  GtkWidget *handlebox, *toolbar;
+  GtkWidget *toolbar;
 
-  handlebox = gtk_handle_box_new ();
   toolbar = gtk_ui_manager_get_widget (ui_manager, "/Tools");
   gtk_orientable_set_orientation (GTK_ORIENTABLE (toolbar),
                                   GTK_ORIENTATION_VERTICAL);
-
   gtk_toolbar_set_style (GTK_TOOLBAR (toolbar), GTK_TOOLBAR_ICONS);
   gtk_container_set_border_width (GTK_CONTAINER (toolbar), 0);
-
-  gtk_container_add (GTK_CONTAINER (handlebox), toolbar);
   gtk_widget_show (toolbar);
-  gtk_widget_show (handlebox);
 
-  return handlebox;
+  return toolbar;
 }
 
 GtkWidget*
