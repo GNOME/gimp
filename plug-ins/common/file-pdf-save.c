@@ -357,6 +357,7 @@ run (const gchar      *name,
   gint                    i;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   /* Setting mandatory output values */
   *nreturn_vals = 1;
