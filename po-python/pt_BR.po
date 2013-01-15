@@ -1,22 +1,25 @@
-# translation of pt_BR.po to Brazilian Portuguese
-# translation of pt_BR.po to
-# Mensagens em português do Brazil pt_BR para o GIMP.
+# Brazilian Portuguese translation of gimp-python
+# Copyright (C) 2013 gimp-python's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gimp-python package.
+# Joao S. O. Bueno <gwidion@mpc.com.br>, 2007, 2008.
+# Mateus Gondim R. Batista <gondim.mateus@gmail.com>, 2012.
+# Enrico Nicoletto <liverig@gmail.com>, 2013.
 #
-# Joao S. O. Bueno <gwidion@gmail.com>, 2007, 2008, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-16 12:17-0300\n"
-"PO-Revision-Date: 2012-04-16 12:19-0300\n"
-"Last-Translator: Joao S. O. Bueno <gwidion@gmail.com>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2013-01-15 15:01+0000\n"
+"PO-Revision-Date: 2013-01-15 19:57-0300\n"
+"Last-Translator: Enrico Nicoletto <liverig@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.4\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Virtaal 0.5.2\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:394
 msgid "Missing exception information"
@@ -71,7 +74,7 @@ msgstr "XHTML colorido"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 msgid "Character _source"
-msgstr "Origem dos caracteres"
+msgstr "Or_igem dos caracteres"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Source code"
@@ -83,7 +86,7 @@ msgstr "Arquivo texto"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
 msgid "Entry box"
-msgstr "Texto da entrada "
+msgstr "Texto da entrada"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
 msgid "_File to read or characters to use"
@@ -91,7 +94,7 @@ msgstr "Arquivo a _ler, ou texto a usar"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
 msgid "Fo_nt size in pixels"
-msgstr "_Tamanho  da fonte (px)"
+msgstr "_Tamanho da fonte (px)"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
 msgid "_Write a separate CSS file"
@@ -99,7 +102,7 @@ msgstr "_Escrever um arquivo CSS separado"
 
 #: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
 msgid "Gradient to use"
-msgstr "Degradê a usar"
+msgstr "Degradê a utilizar"
 
 #: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
 msgid "File Name"
@@ -142,7 +145,7 @@ msgid "_Offset Palette..."
 msgstr "_Deslocar paleta..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:56
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:309
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
@@ -152,45 +155,121 @@ msgstr "Paleta"
 msgid "Off_set"
 msgstr "D_eslocamento"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:48
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:22
+msgid "Red"
+msgstr "Vermelho"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:22
+msgid "Green"
+msgstr "Verde"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:22
+msgid "Blue"
+msgstr "Azul"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:23
+msgid "Luma (Y)"
+msgstr "Luminosidade (Y)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:24
+msgid "Hue"
+msgstr "Tonalidade"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:24
+msgid "Saturation"
+msgstr "Saturação"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:24
+msgid "Value"
+msgstr "Valor"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+msgid "Saturation (HSL)"
+msgstr "Saturação (HSL)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+msgid "Lightness (HSL)"
+msgstr "Claridade (HSL)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:26
+msgid "Index"
+msgstr "Índice"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+msgid "Random"
+msgstr "Aleatório"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:78
+msgid "Lightness (LAB)"
+msgstr "Claridade (LAB)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:78
+msgid "A-color"
+msgstr "Cor-A"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:78
+msgid "B-color"
+msgstr "Cor-B"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:79
+msgid "Chroma (LCHab)"
+msgstr "Crominância (LCHab)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:79
+msgid "Hue (LCHab)"
+msgstr "Tonalidade (LCHab)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:300
 msgid "Sort the colors in a palette"
 msgstr "Ordena as cores da paleta"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:53
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:306
 msgid "_Sort Palette..."
 msgstr "_Ordena paleta..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
-msgid "Color _model"
-msgstr "_Modelo de cor"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:310
+msgid "Se_lections"
+msgstr "Se_leções"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
-msgid "RGB"
-msgstr "RGB"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+msgid "All"
+msgstr "Todas"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
-msgid "HSV"
-msgstr "HSV"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+msgid "Slice / Array"
+msgstr "Fatia / Vetor"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+msgid "Autoslice (fg->bg)"
+msgstr "Fatiamento automático (frente->fundo)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+msgid "Partitioned"
+msgstr "Particionado"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:312
+msgid "Slice _expression"
+msgstr "E_xpressão de fatiamento"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:313
 msgid "Channel to _sort"
 msgstr "Canal a _ordenar"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
-msgid "Red or Hue"
-msgstr "Vermelho ou matiz"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:315
+msgid "_Quantization"
+msgstr "_Quantização"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
-msgid "Green or Saturation"
-msgstr "Verde ou saturação"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
-msgid "Blue or Value"
-msgstr "Azul ou valor"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:316
 msgid "_Ascending"
 msgstr "_Ascendente"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:317
+msgid "_Partitioning channel"
+msgstr "Canal de _particionamento"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:319
+msgid "Partition q_uantization"
+msgstr "Q_uantização da partição"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
@@ -206,7 +285,7 @@ msgstr "Cria um degradê usando cores da paleta"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
 msgid "Palette to _Gradient"
-msgstr "Paleta para degradê"
+msgstr "Paleta para de_gradê"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:59
 msgid "Slice"
@@ -319,29 +398,35 @@ msgstr "_Sombra projetada"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 msgid "Drop shadow _X displacement"
-msgstr "Deslocamento _x  da sombra"
+msgstr "Deslocamento _X da sombra"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
-msgstr "Deslocamento _y da sombra"
+msgstr "Deslocamento _Y da sombra"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:75
-msgid "Create a new brush with characters from a text sequence"
-msgstr "Cria um novo pincel usando letras uma linha de texto"
+#~ msgid "Color _model"
+#~ msgstr "_Modelo de cor"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:81
-msgid "New Brush from _Text..."
-msgstr "Novo pincel a partir de _texto..."
+#~ msgid "RGB"
+#~ msgstr "RGB"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:84
-msgid "Font"
-msgstr "Fonte"
+#~ msgid "HSV"
+#~ msgstr "HSV"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:85
-msgid "Pixel Size"
-msgstr "Tamanho em pixels"
+#~ msgid "Red or Hue"
+#~ msgstr "Vermelho ou matiz"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:86
-msgid "Text"
-msgstr "Texto"
+#~ msgid "Blue or Value"
+#~ msgstr "Azul ou valor"
 
+#~ msgid "Create a new brush with characters from a text sequence"
+#~ msgstr "Criar um novo pincel com caracteres de uma seqüência de texto"
+
+#~ msgid "New Brush from _Text..."
+#~ msgstr "Novo pincel a partir do _texto..."
+
+#~ msgid "Font"
+#~ msgstr "Fonte"
+
+#~ msgid "Pixel Size"
+#~ msgstr "Tamanho do pixel"
