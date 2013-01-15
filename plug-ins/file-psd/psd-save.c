@@ -1065,7 +1065,7 @@ save_layer_and_mask (FILE   *fd,
 
   /* Create first array dimension (layers, channels) */
 
-  ChannelLengthPos = g_new (glong *, PSDImageData.nLayers);
+  ChannelLengthPos = g_newa (glong *, PSDImageData.nLayers);
 
   /* Layer and mask information section */
 
@@ -1233,6 +1233,7 @@ save_layer_and_mask (FILE   *fd,
     {
       IFDBG printf ("\t\tWriting pixel data for layer slot %d\n", i);
       write_pixel_data(fd, PSDImageData.lLayers[i], ChannelLengthPos[i], 0);
+      g_free (ChannelLengthPos[i]);
     }
 
   eof_pos = ftell (fd);
