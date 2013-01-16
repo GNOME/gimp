@@ -1164,6 +1164,8 @@ save_image (const gchar  *filename,
   g_object_unref (buffer);
   fclose (fp);
 
+  g_free (data);
+
   gimp_progress_update (1.0);
 
   return TRUE;
