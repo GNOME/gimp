@@ -92,16 +92,17 @@ void
 statusbar_set_status(StatusBar_t *statusbar, const gchar *format, ...)
 {
    va_list ap;
-   char scratch[256];
+   char *str;
 
    va_start(ap, format);
-   vsprintf(scratch, format, ap);
+   str = g_strdup_vprintf (format, ap);
    va_end(ap);
 
    statusbar_clear_status(statusbar);
    statusbar->message_id =
                         gtk_statusbar_push(GTK_STATUSBAR(statusbar->status),
-                                           statusbar->status_id, scratch);
+                                           statusbar->status_id, str);
+   g_free (str);
 }
 
 void
