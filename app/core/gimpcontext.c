@@ -3102,8 +3102,8 @@ gimp_context_get_tool_preset (GimpContext *context)
 }
 
 void
-gimp_context_set_tool_preset (GimpContext  *context,
-                           GimpToolPreset *tool_preset)
+gimp_context_set_tool_preset (GimpContext    *context,
+                              GimpToolPreset *tool_preset)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (! tool_preset || GIMP_IS_TOOL_PRESET (tool_preset));
