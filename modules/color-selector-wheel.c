@@ -56,7 +56,7 @@ struct _ColorselWheelClass
 };
 
 
-GType         colorsel_wheel_get_type      (void);
+static GType  colorsel_wheel_get_type      (void);
 
 static void   colorsel_wheel_set_color     (GimpColorSelector *selector,
                                             const GimpRGB     *rgb,

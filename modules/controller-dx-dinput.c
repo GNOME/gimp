@@ -124,7 +124,7 @@ struct _ControllerDXDInputClass
 };
 
 
-GType         controller_dx_dinput_get_type     (void);
+static GType  controller_dx_dinput_get_type     (void);
 
 static void   dx_dinput_dispose                 (GObject        *object);
 static void   dx_dinput_finalize                (GObject        *object);

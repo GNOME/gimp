@@ -114,7 +114,7 @@ enum
 };
 
 
-GType              cdisplay_colorblind_get_type        (void);
+static GType       cdisplay_colorblind_get_type        (void);
 
 static void        cdisplay_colorblind_set_property    (GObject               *object,
                                                         guint                  property_id,

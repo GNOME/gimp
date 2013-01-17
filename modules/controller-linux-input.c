@@ -143,7 +143,7 @@ struct _ControllerLinuxInputClass
 };
 
 
-GType         controller_linux_input_get_type     (void);
+static GType  controller_linux_input_get_type     (void);
 
 static void   linux_input_dispose                 (GObject        *object);
 static void   linux_input_finalize                (GObject        *object);

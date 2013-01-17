@@ -63,7 +63,7 @@ enum
 };
 
 
-GType              cdisplay_contrast_get_type        (void);
+static GType       cdisplay_contrast_get_type        (void);
 
 static void        cdisplay_contrast_set_property    (GObject          *object,
                                                       guint             property_id,
@@ -90,6 +90,7 @@ static const GimpModuleInfo cdisplay_contrast_info =
   "(c) 2000, released under the GPL",
   "October 14, 2000"
 };
+
 
 G_DEFINE_DYNAMIC_TYPE (CdisplayContrast, cdisplay_contrast,
                        GIMP_TYPE_COLOR_DISPLAY)

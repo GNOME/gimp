@@ -59,7 +59,7 @@ struct _ColorselWaterClass
 };
 
 
-GType             colorsel_water_get_type (void);
+static GType      colorsel_water_get_type (void);
 
 static gboolean   select_area_expose      (GtkWidget          *widget,
                                            GdkEventExpose     *event);

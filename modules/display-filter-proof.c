@@ -69,7 +69,7 @@ enum
 };
 
 
-GType              cdisplay_proof_get_type        (void);
+static GType       cdisplay_proof_get_type        (void);
 
 static void        cdisplay_proof_finalize        (GObject          *object);
 static void        cdisplay_proof_get_property    (GObject          *object,
@@ -98,8 +98,10 @@ static const GimpModuleInfo cdisplay_proof_info =
   "November 14, 2003"
 };
 
+
 G_DEFINE_DYNAMIC_TYPE (CdisplayProof, cdisplay_proof,
                        GIMP_TYPE_COLOR_DISPLAY)
+
 
 G_MODULE_EXPORT const GimpModuleInfo *
 gimp_module_query (GTypeModule *module)

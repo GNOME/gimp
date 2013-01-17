@@ -63,7 +63,7 @@ enum
 };
 
 
-GType              cdisplay_gamma_get_type        (void);
+static GType       cdisplay_gamma_get_type        (void);
 
 static void        cdisplay_gamma_set_property    (GObject            *object,
                                                    guint               property_id,
@@ -90,6 +90,7 @@ static const GimpModuleInfo cdisplay_gamma_info =
   "(c) 1999, released under the GPL",
   "October 14, 2000"
 };
+
 
 G_DEFINE_DYNAMIC_TYPE (CdisplayGamma, cdisplay_gamma,
                        GIMP_TYPE_COLOR_DISPLAY)
