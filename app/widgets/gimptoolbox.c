@@ -98,8 +98,6 @@ static void        gimp_toolbox_get_property            (GObject        *object,
                                                          GParamSpec     *pspec);
 static void        gimp_toolbox_size_allocate           (GtkWidget      *widget,
                                                          GtkAllocation  *allocation);
-static void        gimp_toolbox_style_set               (GtkWidget      *widget,
-                                                         GtkStyle       *previous_style);
 static gboolean    gimp_toolbox_button_press_event      (GtkWidget      *widget,
                                                          GdkEventButton *event);
 static void        gimp_toolbox_drag_leave              (GtkWidget      *widget,
@@ -166,7 +164,6 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
   object_class->get_property          = gimp_toolbox_get_property;
 
   widget_class->size_allocate         = gimp_toolbox_size_allocate;
-  widget_class->style_set             = gimp_toolbox_style_set;
   widget_class->button_press_event    = gimp_toolbox_button_press_event;
 
   dock_class->get_description         = gimp_toolbox_get_description;
@@ -329,9 +326,6 @@ gimp_toolbox_constructed (GObject *object)
                            toolbox->p->image_area, 0);
 
   gimp_toolbox_dnd_init (GIMP_TOOLBOX (toolbox), toolbox->p->vbox);
-
-  gimp_toolbox_style_set (GTK_WIDGET (toolbox),
-                          gtk_widget_get_style (GTK_WIDGET (toolbox)));
 }
 
 static void
@@ -441,15 +435,6 @@ gimp_toolbox_size_allocate (GtkWidget     *widget,
       gtk_widget_set_size_request (toolbox->p->area_wbox, -1,
                                    area_rows * height);
     }
-}
-
-static void
-gimp_toolbox_style_set (GtkWidget *widget,
-                        GtkStyle  *previous_style)
-{
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, previous_style);
-
-  gimp_dock_invalidate_geometry (GIMP_DOCK (widget));
 }
 
 static gboolean

@@ -208,6 +208,8 @@ gimp_tool_palette_style_set (GtkWidget *widget,
           gtk_button_set_relief (GTK_BUTTON (button), relief);
         }
     }
+
+  gimp_dock_invalidate_geometry (GIMP_DOCK (private->toolbox));
 }
 
 GtkWidget *
