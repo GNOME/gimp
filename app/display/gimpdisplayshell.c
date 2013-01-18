@@ -300,8 +300,10 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->y_src_dec   = 1;
 
   shell->render_surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
-                                                      GIMP_DISPLAY_RENDER_BUF_WIDTH,
-                                                      GIMP_DISPLAY_RENDER_BUF_HEIGHT);
+                                                      GIMP_DISPLAY_RENDER_BUF_WIDTH *
+                                                      GIMP_DISPLAY_RENDER_MAX_SCALE,
+                                                      GIMP_DISPLAY_RENDER_BUF_HEIGHT *
+                                                      GIMP_DISPLAY_RENDER_MAX_SCALE);
 
   gimp_display_shell_items_init (shell);
 

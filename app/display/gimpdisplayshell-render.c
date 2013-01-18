@@ -54,6 +54,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   GimpImage      *image;
   GimpProjection *projection;
   GeglBuffer     *buffer;
+  gdouble         window_scale = 1.0;
   gint            viewport_offset_x;
   gint            viewport_offset_y;
   gint            viewport_width;
@@ -67,6 +68,13 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   projection = gimp_image_get_projection (image);
   buffer     = gimp_pickable_get_buffer (GIMP_PICKABLE (projection));
 
+#ifdef GIMP_DISPLAY_RENDER_ENABLE_SCALING
+  /* if we had this future API, things would look pretty on hires (retina) */
+  window_scale = gdk_window_get_scale_factor (gtk_widget_get_window (gtk_widget_get_toplevel (GTK_WIDGET (shell))));
+#endif
+
+  window_scale = MIN (window_scale, GIMP_DISPLAY_RENDER_MAX_SCALE);
+
   gimp_display_shell_scroll_get_scaled_viewport (shell,
                                                  &viewport_offset_x,
                                                  &viewport_offset_y,
@@ -74,10 +82,11 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                                                  &viewport_height);
 
   gegl_buffer_get (buffer,
-                   GEGL_RECTANGLE (x + viewport_offset_x,
-                                   y + viewport_offset_y,
-                                   w, h),
-                   shell->scale_x,
+                   GEGL_RECTANGLE ((x + viewport_offset_x) * window_scale,
+                                   (y + viewport_offset_y) * window_scale,
+                                   w * window_scale,
+                                   h * window_scale),
+                   shell->scale_x * window_scale,
                    babl_format ("cairo-ARGB32"),
                    cairo_image_surface_get_data (shell->render_surface),
                    cairo_image_surface_get_stride (shell->render_surface),
@@ -91,7 +100,9 @@ gimp_display_shell_render (GimpDisplayShell *shell,
       if (w != GIMP_DISPLAY_RENDER_BUF_WIDTH ||
           h != GIMP_DISPLAY_RENDER_BUF_HEIGHT)
         sub = cairo_image_surface_create_for_data (cairo_image_surface_get_data (sub),
-                                                   CAIRO_FORMAT_ARGB32, w, h,
+                                                   CAIRO_FORMAT_ARGB32,
+                                                   w * window_scale,
+                                                   h * window_scale,
                                                    GIMP_DISPLAY_RENDER_BUF_WIDTH * 4);
 
       gimp_color_display_stack_convert_surface (shell->filter_stack, sub);
@@ -100,7 +111,9 @@ gimp_display_shell_render (GimpDisplayShell *shell,
         cairo_surface_destroy (sub);
     }
 
-  cairo_surface_mark_dirty_rectangle (shell->render_surface, 0, 0, w, h);
+  cairo_surface_mark_dirty_rectangle (shell->render_surface,
+                                      0, 0,
+                                      w * window_scale, h * window_scale);
 
 #if 0
   if (shell->mask)
@@ -136,7 +149,12 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   cairo_rectangle (cr, x, y, w, h);
   cairo_clip (cr);
 
-  cairo_set_source_surface (cr, shell->render_surface, x, y);
+  cairo_scale (cr, 1.0 / window_scale, 1.0 / window_scale);
+
+  cairo_set_source_surface (cr, shell->render_surface,
+                            x * window_scale,
+                            y * window_scale);
+
   cairo_paint (cr);
 
 #if 0
