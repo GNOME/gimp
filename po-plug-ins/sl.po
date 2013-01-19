@@ -4,14 +4,14 @@
 # This file is distributed under the same license as the GIMP package.
 #
 # Nedeljko Grabant <nedeljkograbant@gmail.com>, 2007.
-# Martin Srebotnjak <miles@filmsi.net>, 2007, 2012.
+# Martin Srebotnjak <miles@filmsi.net>, 2007, 2012-2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP - standardni vtičniki 2.8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-10-14 19:43+0000\n"
-"PO-Revision-Date: 2012-10-15 18:02+0100\n"
+"POT-Creation-Date: 2013-01-17 18:45+0000\n"
+"PO-Revision-Date: 2013-01-18 00:09+0100\n"
 "Last-Translator: filmsi\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: \n"
@@ -23,124 +23,124 @@ msgstr ""
 "X-Poedit-Country: SLOVENIA\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:118
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:120
 msgid "Original"
 msgstr "Izvirnik"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:136
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:138
 msgid "Rotated"
 msgstr "Zasukano"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:154
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:156
 msgid "Continuous update"
 msgstr "Stalno posodabljanje"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:167
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:169
 msgid "Area:"
 msgstr "Površina:"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:171
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:173
 msgid "Entire Layer"
 msgstr "Celotna plast"
 
 #. Create selection
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:172
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:174
 #: ../plug-ins/common/film.c:965
 #: ../plug-ins/imagemap/imap_selection.c:339
 #: ../plug-ins/selection-to-path/selection-to-path.c:434
 msgid "Selection"
 msgstr "Izbor"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:173
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:175
 msgid "Context"
 msgstr "Kontekst"
 
 #. spinbutton 1
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:297
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:299
 msgctxt "color-range"
 msgid "From:"
 msgstr "Iz:"
 
 #. spinbutton 2
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:323
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:326
 msgctxt "color-range"
 msgid "To:"
 msgstr "V:"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:375
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:377
 msgctxt "color-rotate"
 msgid "From:"
 msgstr "Iz:"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:376
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:378
 msgctxt "color-rotate"
 msgid "To:"
 msgstr "V:"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:416
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:418
 #: ../plug-ins/common/file-ps.c:3096
 #: ../plug-ins/imagemap/imap_menu.c:213
 msgid "Gray"
 msgstr "sivinsko"
 
 #. Gray: Circle: Spinbutton 1
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:464
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:466
 msgid "Hue:"
 msgstr "Obarvanost:"
 
 #. Gray: Circle: Spinbutton 2
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:491
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:553
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:493
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:555
 msgid "Saturation:"
 msgstr "Nasičenost:"
 
 #. * Gray: Operation-Mode *
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:511
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:513
 msgid "Gray Mode"
 msgstr "Sivinski način"
 
 #. Gray: Operation-Mode: two radio buttons
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:520
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:522
 msgid "Treat as this"
 msgstr "Obravnavaj kot to"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:532
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:534
 msgid "Change to this"
 msgstr "Spremeni v to"
 
 #. * Gray: What is gray? *
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:545
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:547
 msgid "Gray Threshold"
 msgstr "Sivinski prag"
 
 #. * Misc: Used unit selection *
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:585
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:695
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:587
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:697
 msgid "Units"
 msgstr "Enot"
 
 #. Misc: Used unit selection: 3 radio buttons
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:594
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:596
 msgid "Radians"
 msgstr "radianov"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:606
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:608
 msgid "Radians/Pi"
 msgstr "radianov/Pi"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:618
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:620
 msgid "Degrees"
 msgstr "stopinj"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:649
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:651
 msgid "Rotate Colors"
 msgstr "Zasukaj barve"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:689
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:691
 msgid "Main Options"
 msgstr "Glavne možnosti"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:692
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:694
 msgid "Gray Options"
 msgstr "Možnosti sivin"
 
@@ -638,8 +638,8 @@ msgstr "_Navpične"
 #: ../plug-ins/common/file-pnm.c:583
 #: ../plug-ins/common/file-raw.c:763
 #: ../plug-ins/common/file-sunras.c:977
-#: ../plug-ins/common/file-tga.c:1064
-#: ../plug-ins/common/file-tiff-load.c:1005
+#: ../plug-ins/common/file-tga.c:1072
+#: ../plug-ins/common/file-tiff-load.c:1010
 #: ../plug-ins/common/file-xbm.c:897
 #: ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:257
@@ -1115,9 +1115,9 @@ msgstr "Naloži nastavitve mešalca kanalov"
 #: ../plug-ins/common/file-svg.c:713
 #: ../plug-ins/common/file-tga.c:442
 #: ../plug-ins/common/file-xbm.c:737
-#: ../plug-ins/common/file-xmc.c:663
-#: ../plug-ins/common/file-xmc.c:848
-#: ../plug-ins/common/file-xwd.c:433
+#: ../plug-ins/common/file-xmc.c:655
+#: ../plug-ins/common/file-xmc.c:840
+#: ../plug-ins/common/file-xwd.c:435
 #: ../plug-ins/common/sphere-designer.c:2010
 #: ../plug-ins/file-bmp/bmp-read.c:154
 #: ../plug-ins/file-faxg3/faxg3.c:229
@@ -1169,11 +1169,11 @@ msgstr "Shrani nastavitve mešalca kanalov"
 #: ../plug-ins/common/file-raw.c:591
 #: ../plug-ins/common/file-raw.c:619
 #: ../plug-ins/common/file-sunras.c:565
-#: ../plug-ins/common/file-tga.c:1171
-#: ../plug-ins/common/file-tiff-save.c:710
+#: ../plug-ins/common/file-tga.c:1179
+#: ../plug-ins/common/file-tiff-save.c:708
 #: ../plug-ins/common/file-xbm.c:1036
-#: ../plug-ins/common/file-xmc.c:1455
-#: ../plug-ins/common/file-xwd.c:619
+#: ../plug-ins/common/file-xmc.c:1447
+#: ../plug-ins/common/file-xwd.c:623
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:309
 #: ../plug-ins/file-fits/fits.c:476
@@ -1216,7 +1216,7 @@ msgid "Checkerboard"
 msgstr "Šahovnica"
 
 #: ../plug-ins/common/checkerboard.c:413
-#: ../plug-ins/common/file-xmc.c:1162
+#: ../plug-ins/common/file-xmc.c:1154
 #: ../plug-ins/gimpressionist/sizemap.c:510
 msgid "_Size:"
 msgstr "_Velikost:"
@@ -2780,7 +2780,7 @@ msgid "R_ecursive"
 msgstr "_Rekurzivno"
 
 #: ../plug-ins/common/despeckle.c:510
-#: ../plug-ins/common/edge-neon.c:734
+#: ../plug-ins/common/edge-neon.c:735
 #: ../plug-ins/common/nl-filter.c:1091
 #: ../plug-ins/common/nova.c:362
 #: ../plug-ins/common/unsharp-mask.c:865
@@ -3014,11 +3014,11 @@ msgstr "_Neon ..."
 msgid "Neon"
 msgstr "Neon"
 
-#: ../plug-ins/common/edge-neon.c:696
+#: ../plug-ins/common/edge-neon.c:697
 msgid "Neon Detection"
 msgstr "Razpoznava neona"
 
-#: ../plug-ins/common/edge-neon.c:749
+#: ../plug-ins/common/edge-neon.c:750
 #: ../plug-ins/common/unsharp-mask.c:878
 msgid "_Amount:"
 msgstr "_Količina:"
@@ -3212,9 +3212,9 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: ../plug-ins/common/file-tiff-load.c:611
 #: ../plug-ins/common/file-wmf.c:994
 #: ../plug-ins/common/file-xbm.c:742
-#: ../plug-ins/common/file-xmc.c:675
+#: ../plug-ins/common/file-xmc.c:667
 #: ../plug-ins/common/file-xpm.c:352
-#: ../plug-ins/common/file-xwd.c:524
+#: ../plug-ins/common/file-xwd.c:526
 #: ../plug-ins/file-bmp/bmp-read.c:159
 #: ../plug-ins/file-faxg3/faxg3.c:213
 #: ../plug-ins/file-fli/fli-gimp.c:501
@@ -3301,12 +3301,12 @@ msgstr "'%s': EOF ali napaka pri branju podatkov palete"
 #: ../plug-ins/common/file-pnm.c:1015
 #: ../plug-ins/common/file-ps.c:1195
 #: ../plug-ins/common/file-sunras.c:570
-#: ../plug-ins/common/file-tga.c:1176
-#: ../plug-ins/common/file-tiff-save.c:718
+#: ../plug-ins/common/file-tga.c:1184
+#: ../plug-ins/common/file-tiff-save.c:716
 #: ../plug-ins/common/file-xbm.c:1041
-#: ../plug-ins/common/file-xmc.c:1460
+#: ../plug-ins/common/file-xmc.c:1452
 #: ../plug-ins/common/file-xpm.c:638
-#: ../plug-ins/common/file-xwd.c:624
+#: ../plug-ins/common/file-xwd.c:628
 #: ../plug-ins/file-bmp/bmp-write.c:320
 #: ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:718
@@ -3400,7 +3400,7 @@ msgstr "Slik ni mogoče shraniti s kanalom alfa."
 #: ../plug-ins/common/file-dicom.c:1334
 #: ../plug-ins/common/file-ps.c:1180
 #: ../plug-ins/common/file-ps.c:1212
-#: ../plug-ins/common/file-xwd.c:609
+#: ../plug-ins/common/file-xwd.c:613
 #: ../plug-ins/file-fits/fits.c:466
 #: ../plug-ins/file-xjt/xjt.c:1691
 msgid "Cannot operate on unknown image types."
@@ -4307,7 +4307,7 @@ msgid "PostScript save cannot handle images with alpha channels"
 msgstr "Shranjevanje PostScript ne podpira slik s kanali alfa"
 
 #: ../plug-ins/common/file-ps.c:1804
-#: ../plug-ins/common/file-tiff-load.c:1007
+#: ../plug-ins/common/file-tiff-load.c:1012
 #, c-format
 msgid "Page %d"
 msgstr "Stran %d"
@@ -4606,7 +4606,7 @@ msgstr "Vrsta kataloga barv ni podprta"
 
 #: ../plug-ins/common/file-sunras.c:457
 #: ../plug-ins/common/file-xbm.c:827
-#: ../plug-ins/common/file-xwd.c:489
+#: ../plug-ins/common/file-xwd.c:491
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4617,7 +4617,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-sunras.c:465
 #: ../plug-ins/common/file-xbm.c:834
-#: ../plug-ins/common/file-xwd.c:499
+#: ../plug-ins/common/file-xwd.c:501
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4628,7 +4628,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-sunras.c:473
 #: ../plug-ins/common/file-xbm.c:841
-#: ../plug-ins/common/file-xwd.c:508
+#: ../plug-ins/common/file-xwd.c:510
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4639,7 +4639,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-sunras.c:481
 #: ../plug-ins/common/file-xbm.c:848
-#: ../plug-ins/common/file-xwd.c:517
+#: ../plug-ins/common/file-xwd.c:519
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4665,11 +4665,11 @@ msgstr "Operacije nad neznanimi vrstami datotek niso možne"
 #: ../plug-ins/common/file-sunras.c:1175
 #: ../plug-ins/common/file-sunras.c:1256
 #: ../plug-ins/common/file-sunras.c:1351
-#: ../plug-ins/common/file-xwd.c:1357
-#: ../plug-ins/common/file-xwd.c:1458
-#: ../plug-ins/common/file-xwd.c:1616
-#: ../plug-ins/common/file-xwd.c:1817
-#: ../plug-ins/common/file-xwd.c:2069
+#: ../plug-ins/common/file-xwd.c:1361
+#: ../plug-ins/common/file-xwd.c:1462
+#: ../plug-ins/common/file-xwd.c:1620
+#: ../plug-ins/common/file-xwd.c:1832
+#: ../plug-ins/common/file-xwd.c:2095
 #: ../plug-ins/file-fits/fits.c:698
 msgid "EOF encountered on reading"
 msgstr "Pri branju je prišlo do nepredvidenega konca datoteke"
@@ -4783,24 +4783,24 @@ msgstr "Iz '%s' ni mogoče prebrati razširitve"
 msgid "Cannot read header from '%s'"
 msgstr "Glave datoteke '%s' ni mogoče prebrati"
 
-#: ../plug-ins/common/file-tga.c:1372
+#: ../plug-ins/common/file-tga.c:1380
 msgid "TGA"
 msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1381
+#: ../plug-ins/common/file-tga.c:1389
 msgid "_RLE compression"
 msgstr "Stiskanje _RLE"
 
-#: ../plug-ins/common/file-tga.c:1395
+#: ../plug-ins/common/file-tga.c:1403
 msgid "Or_igin:"
 msgstr "Izvi_rnik:"
 
-#: ../plug-ins/common/file-tga.c:1399
+#: ../plug-ins/common/file-tga.c:1407
 msgid "Bottom left"
 msgstr "Levo spodaj"
 
-#: ../plug-ins/common/file-tga.c:1400
+#: ../plug-ins/common/file-tga.c:1408
 msgid "Top left"
 msgstr "Levo zgoraj"
 
@@ -4819,16 +4819,16 @@ msgstr "TIFF '%s' ne vsebuje nobenih map"
 msgid "Import from TIFF"
 msgstr "Uvozi iz TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:788
+#: ../plug-ins/common/file-tiff-load.c:818
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-od-%d-strani"
 
-#: ../plug-ins/common/file-tiff-load.c:1023
+#: ../plug-ins/common/file-tiff-load.c:1028
 msgid "TIFF Channel"
 msgstr "Kanal TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:1032
+#: ../plug-ins/common/file-tiff-load.c:1037
 #: ../plug-ins/file-psd/psd-load.c:333
 msgid ""
 "Warning:\n"
@@ -4837,7 +4837,7 @@ msgstr ""
 "Opozorilo:\n"
 "Slika, ki jo nalagate, ima 16 bitov na kanal. GIMP lahko obdeluje le 8 bitov, zato bo slika pretvorjena. Zaradi te pretvorbe bodo določene informacije izgubljene."
 
-#: ../plug-ins/common/file-tiff-save.c:912
+#: ../plug-ins/common/file-tiff-save.c:910
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -4845,48 +4845,48 @@ msgstr ""
 "Zapis TIFF podpira komentarje le v 7-bitnem\n"
 "zapisu ASCII. Komentar ni bil shranjen."
 
-#: ../plug-ins/common/file-tiff-save.c:1085
+#: ../plug-ins/common/file-tiff-save.c:1083
 msgid "TIFF"
 msgstr "TIFF"
 
 #. compression
-#: ../plug-ins/common/file-tiff-save.c:1093
+#: ../plug-ins/common/file-tiff-save.c:1091
 msgid "Compression"
 msgstr "Stiskanje"
 
-#: ../plug-ins/common/file-tiff-save.c:1097
+#: ../plug-ins/common/file-tiff-save.c:1095
 msgid "_None"
 msgstr "_brez"
 
-#: ../plug-ins/common/file-tiff-save.c:1098
+#: ../plug-ins/common/file-tiff-save.c:1096
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/common/file-tiff-save.c:1099
+#: ../plug-ins/common/file-tiff-save.c:1097
 msgid "_Pack Bits"
 msgstr "_Zloži bite"
 
-#: ../plug-ins/common/file-tiff-save.c:1100
+#: ../plug-ins/common/file-tiff-save.c:1098
 msgid "_Deflate"
 msgstr "_Stisni"
 
-#: ../plug-ins/common/file-tiff-save.c:1101
+#: ../plug-ins/common/file-tiff-save.c:1099
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/common/file-tiff-save.c:1102
+#: ../plug-ins/common/file-tiff-save.c:1100
 msgid "CCITT Group _3 fax"
 msgstr "Faks CCITT Group _3"
 
-#: ../plug-ins/common/file-tiff-save.c:1103
+#: ../plug-ins/common/file-tiff-save.c:1101
 msgid "CCITT Group _4 fax"
 msgstr "Faks CCITT Group _4"
 
-#: ../plug-ins/common/file-tiff-save.c:1125
+#: ../plug-ins/common/file-tiff-save.c:1123
 msgid "Save _color values from transparent pixels"
 msgstr "Shrani _barvne vrednosti iz prosojnih slikovnih točk"
 
-#: ../plug-ins/common/file-tiff-save.c:1141
+#: ../plug-ins/common/file-tiff-save.c:1139
 #: ../plug-ins/common/file-xbm.c:1235
 msgid "Comment:"
 msgstr "Komentar:"
@@ -4982,7 +4982,7 @@ msgid "_Write hot spot values"
 msgstr "_Zapiši vrednosti vroče točke"
 
 #: ../plug-ins/common/file-xbm.c:1266
-#: ../plug-ins/common/file-xmc.c:1089
+#: ../plug-ins/common/file-xmc.c:1081
 msgid "Hot spot _X:"
 msgstr "Vroča točka _X:"
 
@@ -5003,13 +5003,13 @@ msgstr "_Zapiši dodatno datoteko maske"
 msgid "_Mask file extension:"
 msgstr "Končnica datoteke maske:"
 
-#: ../plug-ins/common/file-xmc.c:333
-#: ../plug-ins/common/file-xmc.c:373
-#: ../plug-ins/common/file-xmc.c:1052
+#: ../plug-ins/common/file-xmc.c:331
+#: ../plug-ins/common/file-xmc.c:369
+#: ../plug-ins/common/file-xmc.c:1044
 msgid "X11 Mouse Cursor"
 msgstr "Miškin kazalec X11"
 
-#: ../plug-ins/common/file-xmc.c:481
+#: ../plug-ins/common/file-xmc.c:473
 #, c-format
 msgid ""
 "Cannot set the hot spot!\n"
@@ -5018,37 +5018,37 @@ msgstr ""
 "Vroče točke ni mogoče nastaviti!\n"
 "Plasti morate razvrstiti tako, da bodo vse imele presek."
 
-#: ../plug-ins/common/file-xmc.c:670
+#: ../plug-ins/common/file-xmc.c:662
 #, c-format
 msgid "'%s' is not a valid X cursor."
 msgstr "'%s' ni veljaven kazalec X."
 
-#: ../plug-ins/common/file-xmc.c:686
+#: ../plug-ins/common/file-xmc.c:678
 #, c-format
 msgid "Frame %d of '%s' is too wide for an X cursor."
 msgstr "Sličica %d iz '%s' je preširoka za kazalec X."
 
-#: ../plug-ins/common/file-xmc.c:693
+#: ../plug-ins/common/file-xmc.c:685
 #, c-format
 msgid "Frame %d of '%s' is too high for an X cursor."
 msgstr "Sličica %d iz '%s' je previsoka za kazalec X."
 
-#: ../plug-ins/common/file-xmc.c:896
+#: ../plug-ins/common/file-xmc.c:888
 #, c-format
 msgid "there is no image chunk in \"%s\"."
 msgstr "V \"%s\" ni koščka slike."
 
-#: ../plug-ins/common/file-xmc.c:938
+#: ../plug-ins/common/file-xmc.c:930
 #, c-format
 msgid "'%s' is too wide for an X cursor."
 msgstr "'%s' je preširoka za kazalec X."
 
-#: ../plug-ins/common/file-xmc.c:945
+#: ../plug-ins/common/file-xmc.c:937
 #, c-format
 msgid "'%s' is too high for an X cursor."
 msgstr "'%s' je previsoka za kazalec X."
 
-#: ../plug-ins/common/file-xmc.c:1015
+#: ../plug-ins/common/file-xmc.c:1007
 #, c-format
 msgid "A read error occurred."
 msgstr "Prišlo je do napake pri branju."
@@ -5056,23 +5056,23 @@ msgstr "Prišlo je do napake pri branju."
 #.
 #. * parameter settings
 #.
-#: ../plug-ins/common/file-xmc.c:1057
+#: ../plug-ins/common/file-xmc.c:1049
 msgid "XMC Options"
 msgstr "Možnosti XMC"
 
-#: ../plug-ins/common/file-xmc.c:1085
+#: ../plug-ins/common/file-xmc.c:1077
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr "Vnesite koordinato X vroče točke. Izhodišče je levi zgornji kot."
 
-#: ../plug-ins/common/file-xmc.c:1103
+#: ../plug-ins/common/file-xmc.c:1095
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr "Vnesite koordinato Y vroče točke. Izhodišče je levi zgornji kot."
 
-#: ../plug-ins/common/file-xmc.c:1114
+#: ../plug-ins/common/file-xmc.c:1106
 msgid "_Auto-Crop all frames."
 msgstr "_Samo-obreži vse sličice."
 
-#: ../plug-ins/common/file-xmc.c:1127
+#: ../plug-ins/common/file-xmc.c:1119
 msgid ""
 "Remove the empty borders of all frames.\n"
 "This reduces the file size and may fix the problem that some large cursors disorder the screen.\n"
@@ -5082,7 +5082,7 @@ msgstr ""
 "To zmanjša velikost datotek in lahko razreši težavo, da nekateri veliki kazalci razmečejo zaslon.\n"
 "Ne potrdite, če nameravate urediti izvoženi kazalec z drugimi programi."
 
-#: ../plug-ins/common/file-xmc.c:1150
+#: ../plug-ins/common/file-xmc.c:1142
 msgid ""
 "Choose the nominal size of frames.\n"
 "If you don't have plans to make multi-sized cursor, or you have no idea, leave it \"32px\".\n"
@@ -5094,51 +5094,51 @@ msgstr ""
 "Nominalna velikost nima nobene povezave z dejansko velikostjo (višino ali širino).\n"
 "Namenjena je le ugotavljanju, katera sličica je odvisna od katerega animiranega zaporedja ter katero zaporedje je uporabljeno glede na vrednost \"gtk-cursor-theme-size\"."
 
-#: ../plug-ins/common/file-xmc.c:1167
+#: ../plug-ins/common/file-xmc.c:1159
 msgid "_Use this value only for a frame which size is not specified."
 msgstr "_To vrednost uporabi le za sličice, katerih velikost ni navedena."
 
-#: ../plug-ins/common/file-xmc.c:1170
+#: ../plug-ins/common/file-xmc.c:1162
 msgid "_Replace the size of all frames even if it is specified."
 msgstr "_Zamenjaj velikost vseh sličic, tudi če je navedena."
 
-#: ../plug-ins/common/file-xmc.c:1204
+#: ../plug-ins/common/file-xmc.c:1196
 msgid "Enter time span in milliseconds in which each frame is rendered."
 msgstr "Vnesite časovni razpon v milisekundah, v katerem je upodobljena posamezna sličica."
 
-#: ../plug-ins/common/file-xmc.c:1207
+#: ../plug-ins/common/file-xmc.c:1199
 msgid "_Delay:"
 msgstr "_Zakasnitev:"
 
-#: ../plug-ins/common/file-xmc.c:1212
+#: ../plug-ins/common/file-xmc.c:1204
 msgid "_Use this value only for a frame which delay is not specified."
 msgstr "_To vrednost uporabi le za sličice, katerih zakasnitev ni določena."
 
-#: ../plug-ins/common/file-xmc.c:1215
+#: ../plug-ins/common/file-xmc.c:1207
 msgid "_Replace the delay of all frames even if it is specified."
 msgstr "_Zamenjaj zakasnitev vseh sličic, tudi če je navedena."
 
-#: ../plug-ins/common/file-xmc.c:1240
+#: ../plug-ins/common/file-xmc.c:1232
 msgid "The part of copyright information that exceeded 65535 characters was removed."
 msgstr "Del podatkov o avtorskih pravicah, ki presega 65535 znakov, je bil odstranjen."
 
-#: ../plug-ins/common/file-xmc.c:1250
+#: ../plug-ins/common/file-xmc.c:1242
 msgid "Enter copyright information."
 msgstr "Vnesite podatke o avtorskih pravicah."
 
-#: ../plug-ins/common/file-xmc.c:1252
+#: ../plug-ins/common/file-xmc.c:1244
 msgid "_Copyright:"
 msgstr "_Avtorske pravice:"
 
-#: ../plug-ins/common/file-xmc.c:1268
+#: ../plug-ins/common/file-xmc.c:1260
 msgid "The part of license information that exceeded 65535 characters was removed."
 msgstr "Del podatkov o licenci, ki presega 65535 znakov, je bil odstranjen."
 
-#: ../plug-ins/common/file-xmc.c:1278
+#: ../plug-ins/common/file-xmc.c:1270
 msgid "Enter license information."
 msgstr "Vnesite podatke o licenci."
 
-#: ../plug-ins/common/file-xmc.c:1280
+#: ../plug-ins/common/file-xmc.c:1272
 msgid "_License:"
 msgstr "_Licenca:"
 
@@ -5147,40 +5147,40 @@ msgstr "_Licenca:"
 #.
 #. We use gtk_text_view for "Other" while "Copyright" & "License" is entered
 #. * in gtk_entry because We want allow '\n' for "Other".
-#: ../plug-ins/common/file-xmc.c:1287
+#: ../plug-ins/common/file-xmc.c:1279
 msgid "_Other:"
 msgstr "_Drugo:"
 
-#: ../plug-ins/common/file-xmc.c:1321
+#: ../plug-ins/common/file-xmc.c:1313
 msgid "Enter other comment if you want."
 msgstr "Vnesite dodaten komentar, če želite."
 
-#: ../plug-ins/common/file-xmc.c:1371
+#: ../plug-ins/common/file-xmc.c:1363
 #, c-format
 msgid "Comment is limited to %d characters."
 msgstr "Komentar je omejen na %d znakov."
 
-#: ../plug-ins/common/file-xmc.c:1489
+#: ../plug-ins/common/file-xmc.c:1481
 #, c-format
 msgid "This plug-in can only handle RGBA image files with 8bit color depth."
 msgstr "Ta vtičnik lahko obdeluje le datoteke slik RGBA z 8-bitno barvno globino."
 
-#: ../plug-ins/common/file-xmc.c:1507
+#: ../plug-ins/common/file-xmc.c:1499
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
 msgstr "Sličica '%s' je preširoka. Zmanjšajte jo na nič več kot %dpx."
 
-#: ../plug-ins/common/file-xmc.c:1514
+#: ../plug-ins/common/file-xmc.c:1506
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr "Sličica '%s' je previsoka. Zmanjšajte jo na nič več kot %dpx."
 
-#: ../plug-ins/common/file-xmc.c:1521
+#: ../plug-ins/common/file-xmc.c:1513
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
 msgstr "Širina in/ali višina sličice '%s' je nič!"
 
-#: ../plug-ins/common/file-xmc.c:1561
+#: ../plug-ins/common/file-xmc.c:1553
 #, c-format
 msgid ""
 "Cannot save the cursor because the hot spot is not on frame '%s'.\n"
@@ -5189,7 +5189,7 @@ msgstr ""
 "Kazalca ni mogoče shraniti, ker vroča točka ni na sličici '%s'.\n"
 "Poskusite spremeniti položaj vroče točke, geometrijo plasti ali pa shranite s samo-obrezavo."
 
-#: ../plug-ins/common/file-xmc.c:1718
+#: ../plug-ins/common/file-xmc.c:1710
 #, c-format
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose width or height is more than %ipx.\n"
@@ -5198,7 +5198,7 @@ msgstr ""
 "Vaš kazalec je bil uspešno shranjen, vendar vsebuje eno ali več sličic, katerih širina ali višina je več kot %ipx.\n"
 "V nekaterih okoljih bo naredil zmedo na namizju."
 
-#: ../plug-ins/common/file-xmc.c:1725
+#: ../plug-ins/common/file-xmc.c:1717
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose nominal size is not supported by GNOME settings.\n"
 "You can satisfy it by checking \"Replace the size of all frames...\" in the save dialog, or your cursor may not appear in GNOME settings."
@@ -5206,13 +5206,13 @@ msgstr ""
 "Vaš kazalec je bil uspešno shranjen, vendar vsebuje eno ali več sličic, katerih nominalna velikost ni podprta na strani nastavitev za GNOME.\n"
 "Slednje lahko zadovoljite, če potrdite \"Zamenjaj velikost v vseh sličicah ...\" v oknu shranjevanja, sicer vaš kazalec morda ne bo prisoten v nastavitvah za GNOME."
 
-#: ../plug-ins/common/file-xmc.c:1962
+#: ../plug-ins/common/file-xmc.c:1954
 #, c-format
 msgid "The parasite \"%s\" is too long for an X cursor comment. It was cut off to fit."
 msgstr "Zajedalec \"%s\" je predolg za komentar kazalca X. Bil je obrezan na ustrezno dolžino."
 
 #. translators: the %i is *always* 8 here
-#: ../plug-ins/common/file-xmc.c:2165
+#: ../plug-ins/common/file-xmc.c:2157
 #, c-format
 msgid "Sorry, this plug-in cannot handle a cursor which contains over %i different nominal sizes."
 msgstr "Žal ta vtičnik ne more ravnati s kazalcem, ki vsebuje več kot %i različnih nominalnih velikosti."
@@ -5241,34 +5241,41 @@ msgstr "XPM"
 msgid "_Alpha threshold:"
 msgstr "Prag _alfe:"
 
-#: ../plug-ins/common/file-xwd.c:278
-#: ../plug-ins/common/file-xwd.c:298
+#: ../plug-ins/common/file-xwd.c:280
+#: ../plug-ins/common/file-xwd.c:300
 msgid "X window dump"
 msgstr "Izmet okna X"
 
-#: ../plug-ins/common/file-xwd.c:442
+#: ../plug-ins/common/file-xwd.c:444
 #, c-format
 msgid "Could not read XWD header from '%s'"
 msgstr "Glave XWD iz '%s' ni mogoče prebrati"
 
-#: ../plug-ins/common/file-xwd.c:480
+#: ../plug-ins/common/file-xwd.c:482
 msgid "Can't read color entries"
 msgstr "Barvnih vnosov ni mogoče prebrati"
 
-#: ../plug-ins/common/file-xwd.c:575
+#: ../plug-ins/common/file-xwd.c:579
 #, c-format
 msgid "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is not supported."
 msgstr "Datoteka XWD %s ima zapis %d, globino %d in %d bitov na slikovno točko. Trenutna različica teh vrednosti ne podpira."
 
-#: ../plug-ins/common/file-xwd.c:598
+#: ../plug-ins/common/file-xwd.c:602
 msgid "Cannot save images with alpha channels."
 msgstr "Slik s kanali alfa ni mogoče shraniti."
 
-#: ../plug-ins/common/file-xwd.c:2198
+#: ../plug-ins/common/file-xwd.c:1692
+#: ../plug-ins/common/file-xwd.c:1930
+#, c-format
+#| msgid "The file is corrupt!"
+msgid "XWD-file %s is corrupt."
+msgstr "Datoteka XWD %s je okvarjena."
+
+#: ../plug-ins/common/file-xwd.c:2224
 msgid "Error during writing indexed/gray image"
 msgstr "Napaka pri zapisovanju slike"
 
-#: ../plug-ins/common/file-xwd.c:2294
+#: ../plug-ins/common/file-xwd.c:2320
 msgid "Error during writing rgb image"
 msgstr "Napaka pri zapisovanju slike rgb"
 
@@ -7149,83 +7156,83 @@ msgstr "Analiziraj vzorec ..."
 msgid "Remap colorized"
 msgstr "Ponovno poslikaj prebarvano ..."
 
-#: ../plug-ins/common/screenshot.c:251
+#: ../plug-ins/common/screenshot.c:250
 msgid "Create an image from an area of the screen"
 msgstr "Ustvari sliko iz področja zaslona"
 
-#: ../plug-ins/common/screenshot.c:273
+#: ../plug-ins/common/screenshot.c:272
 msgid "_Screenshot..."
 msgstr "_Posnetek namizja ..."
 
-#: ../plug-ins/common/screenshot.c:446
+#: ../plug-ins/common/screenshot.c:445
 msgid "Error selecting the window"
 msgstr "Napaka pri izbiranju okna"
 
-#: ../plug-ins/common/screenshot.c:814
+#: ../plug-ins/common/screenshot.c:813
 msgid "Importing screenshot"
 msgstr "Uvoz zaslonske slike ..."
 
-#: ../plug-ins/common/screenshot.c:840
-#: ../plug-ins/common/screenshot.c:1202
+#: ../plug-ins/common/screenshot.c:839
+#: ../plug-ins/common/screenshot.c:1204
 msgid "Screenshot"
 msgstr "Posnetek namizja"
 
-#: ../plug-ins/common/screenshot.c:881
+#: ../plug-ins/common/screenshot.c:880
 msgid "Mouse Pointer"
 msgstr "Miškin kazalec"
 
-#: ../plug-ins/common/screenshot.c:1015
+#: ../plug-ins/common/screenshot.c:1014
 msgid "Specified window not found"
 msgstr "Navedenega okna ni mogoče najti"
 
-#: ../plug-ins/common/screenshot.c:1211
+#: ../plug-ins/common/screenshot.c:1213
 msgid "S_nap"
 msgstr "_Pripni"
 
-#: ../plug-ins/common/screenshot.c:1241
+#: ../plug-ins/common/screenshot.c:1243
 msgid "After the delay, the screenshot is taken."
 msgstr "Posnetek namizja nastane po zakasnitvi."
 
-#: ../plug-ins/common/screenshot.c:1243
+#: ../plug-ins/common/screenshot.c:1245
 msgid "After the delay, drag your mouse to select the region for the screenshot."
 msgstr "Po zamiku povlecite miško, da izberete področje posnetka namizja."
 
-#: ../plug-ins/common/screenshot.c:1246
+#: ../plug-ins/common/screenshot.c:1248
 msgid "At the end of the delay, click in a window to snap it."
 msgstr "Po koncu zamika kliknite v okno, da ga poslikate."
 
 #. Area
-#: ../plug-ins/common/screenshot.c:1252
+#: ../plug-ins/common/screenshot.c:1254
 msgid "Area"
 msgstr "Področje"
 
-#: ../plug-ins/common/screenshot.c:1263
+#: ../plug-ins/common/screenshot.c:1265
 msgid "Take a screenshot of a single _window"
 msgstr "Naredi posnetek posameznega _okna"
 
-#: ../plug-ins/common/screenshot.c:1282
+#: ../plug-ins/common/screenshot.c:1284
 msgid "Include window _decoration"
 msgstr "Vključi _okrasitev okna"
 
-#: ../plug-ins/common/screenshot.c:1302
+#: ../plug-ins/common/screenshot.c:1304
 msgid "Take a screenshot of the entire _screen"
 msgstr "Naredi posnetek _celega zaslona"
 
-#: ../plug-ins/common/screenshot.c:1321
+#: ../plug-ins/common/screenshot.c:1323
 msgid "Include _mouse pointer"
 msgstr "Vključi kazalec _miške"
 
-#: ../plug-ins/common/screenshot.c:1342
+#: ../plug-ins/common/screenshot.c:1344
 msgid "Select a _region to grab"
 msgstr "Izberi _področje za zajem"
 
 #. Delay
-#: ../plug-ins/common/screenshot.c:1357
+#: ../plug-ins/common/screenshot.c:1359
 msgid "Delay"
 msgstr "Zakasni"
 
 #. this is the unit label of a spinbutton
-#: ../plug-ins/common/screenshot.c:1379
+#: ../plug-ins/common/screenshot.c:1381
 msgid "seconds"
 msgstr "sekund"
 
@@ -8788,7 +8795,6 @@ msgstr "Napaka pri branju glave slikovne datoteke BMP pri '%s'"
 
 #: ../plug-ins/file-bmp/bmp-read.c:345
 #, c-format
-#| msgid "Unsupported compression mode: %d"
 msgid "Unsupported compression (%lu) in BMP file from '%s'"
 msgstr "Nepodprti način stiskanja:(%lu) v datoteki BMP iz '%s'"
 
@@ -9099,62 +9105,62 @@ msgstr "Shrani sli_čico za predogled"
 msgid "Save _XMP data"
 msgstr "Shrani podatke _XMP"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1055
+#: ../plug-ins/file-jpeg/jpeg-save.c:1058
 msgid "_Use quality settings from original image"
 msgstr "_Uporabi nastavitve kakovosti izvorne slike"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1061
+#: ../plug-ins/file-jpeg/jpeg-save.c:1064
 msgid "If the original image was loaded from a JPEG file using non-standard quality settings (quantization tables), enable this option to get almost the same quality and file size."
 msgstr "Če je izvorna slika naložena iz datoteke JPEG z nestandardnimi nastavitvami kakovosti (tabele kvantizacije), omogočite to izbiro, da boste določili skoraj isto kakovost in velikost datoteke."
 
 #. Subsampling
-#: ../plug-ins/file-jpeg/jpeg-save.c:1085
+#: ../plug-ins/file-jpeg/jpeg-save.c:1088
 msgid "Su_bsampling:"
 msgstr "Po_dvzorčenje:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1092
+#: ../plug-ins/file-jpeg/jpeg-save.c:1095
 msgid "4:4:4 (best quality)"
 msgstr "4:4:4 (najvišja kakovost)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1094
+#: ../plug-ins/file-jpeg/jpeg-save.c:1097
 msgid "4:2:2 horizontal (chroma halved)"
 msgstr "4:2:2 vodoravno (polovična kroma)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1096
+#: ../plug-ins/file-jpeg/jpeg-save.c:1099
 msgid "4:2:2 vertical (chroma halved)"
 msgstr "4:2:2 navpično (polovična kroma)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1098
+#: ../plug-ins/file-jpeg/jpeg-save.c:1101
 msgid "4:2:0 (chroma quartered)"
 msgstr "4:2:0 (četrtinska kroma)"
 
 #. DCT method
-#: ../plug-ins/file-jpeg/jpeg-save.c:1128
+#: ../plug-ins/file-jpeg/jpeg-save.c:1131
 msgid "_DCT method:"
 msgstr "Metoda _DCT:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1134
+#: ../plug-ins/file-jpeg/jpeg-save.c:1137
 msgid "Fast Integer"
 msgstr "hitri integer"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1135
+#: ../plug-ins/file-jpeg/jpeg-save.c:1138
 msgid "Integer"
 msgstr "integer"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1136
+#: ../plug-ins/file-jpeg/jpeg-save.c:1139
 msgid "Floating-Point"
 msgstr "plavajoča vejica"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1152
+#: ../plug-ins/file-jpeg/jpeg-save.c:1155
 msgid "Comment"
 msgstr "Komentar"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1189
+#: ../plug-ins/file-jpeg/jpeg-save.c:1192
 #: ../plug-ins/ui/plug-in-file-png.ui.h:11
 msgid "_Load Defaults"
 msgstr "_Naloži privzete vrednosti"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1198
+#: ../plug-ins/file-jpeg/jpeg-save.c:1201
 msgid "Sa_ve Defaults"
 msgstr "S_hrani privzete vrednosti"
 
