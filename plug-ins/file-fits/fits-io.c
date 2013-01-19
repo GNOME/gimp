@@ -160,33 +160,38 @@ static gint fits_ieee64_motorola = 0;
    val = *(FitsBitpixM64 *)uc; } else val = *(FitsBitpixM64 *)p; }
 
 #define FITS_WRITE_BOOLCARD(fp,key,value) \
-{ char card[81]; \
-  sprintf (card, "%-8.8s= %20s%50s", key, value ? "T" : "F", " "); \
+{ gchar card[81]; \
+  g_snprintf (card, sizeof (card), \
+              "%-8.8s= %20s%50s", key, value ? "T" : "F", " "); \
   fwrite (card, 1, 80, fp); }
 
 #define FITS_WRITE_LONGCARD(fp,key,value) \
-{ char card[81]; \
-  sprintf (card, "%-8.8s= %20ld%50s", key, (long)value, " "); \
+{ gchar card[81]; \
+  g_snprintf (card, sizeof (card), \
+              "%-8.8s= %20ld%50s", key, (long)value, " "); \
   fwrite (card, 1, 80, fp); }
 
 #define FITS_WRITE_DOUBLECARD(fp,key,value) \
-{ char card[81], dbl[21], *istr; \
+{ gchar card[81], dbl[21], *istr; \
   g_ascii_formatd (dbl, sizeof(dbl), "%f", (gdouble)value); \
   istr = strstr (dbl, "e"); \
   if (istr) *istr = 'E'; \
-  sprintf (card, "%-8.8s= %20.20s%50s", key, dbl, " "); \
+  g_snprintf (card, sizeof (card), \
+              "%-8.8s= %20.20s%50s", key, dbl, " "); \
   fwrite (card, 1, 80, fp); }
 
 #define FITS_WRITE_STRINGCARD(fp,key,value) \
-{ char card[81]; int k;\
-  sprintf (card, "%-8.8s= \'%s", key, value); \
+{ gchar card[81]; int k;\
+  g_snprintf (card, sizeof (card), \
+              "%-8.8s= \'%s", key, value); \
   for (k = strlen (card); k < 81; k++) card[k] = ' '; \
   k = strlen (key); if (k < 8) card[19] = '\''; else card[11+k] = '\''; \
   fwrite (card, 1, 80, fp); }
 
 #define FITS_WRITE_CARD(fp,value) \
-{ char card[81]; \
-  sprintf (card, "%-80.80s", value); \
+{ gchar card[81]; \
+  g_snprintf (card, sizeof (card), \
+              "%-80.80s", value); \
   fwrite (card, 1, 80, fp); }
 
 
@@ -464,7 +469,7 @@ fits_nan_64 (guchar *v)
 /* #END-PAR                                                                  */
 /*****************************************************************************/
 
-char *
+gchar *
 fits_get_error (void)
 {
   static gchar errmsg[FITS_ERROR_LENGTH];
@@ -500,7 +505,7 @@ fits_get_error (void)
 /*****************************************************************************/
 
 static void
-fits_set_error (const char *errmsg)
+fits_set_error (const gchar *errmsg)
 {
   if (fits_n_error < FITS_MAX_ERROR)
     {
@@ -1252,8 +1257,10 @@ fits_decode_header (FitsRecordList *hdr,
     {
       gchar msg[160];
 
-      sprintf (msg, "fits_decode_header: IEEE floating point format required for\
- BITPIX=%d\nis not supported on this machine", hdulist->bitpix);
+      g_snprintf (msg, sizeof (msg),
+                  "fits_decode_header: IEEE floating point format required for "
+                  "BITPIX=%d\nis not supported on this machine",
+                  hdulist->bitpix);
       fits_set_error (msg);
     }
 
@@ -1304,7 +1311,7 @@ fits_eval_pixrange (FILE        *fp,
   if (fseek (fp, hdu->data_offset, SEEK_SET) < 0)
     FITS_RETURN ("fits_eval_pixrange: cant position file", -1);
 
-  bpp = hdu->bpp;                  /* Number of bytes per pixel */
+  bpp   = hdu->bpp;                /* Number of bytes per pixel */
   nelem = hdu->udata_size / bpp;   /* Number of data elements */
 
   switch (hdu->bitpix)
@@ -1493,7 +1500,7 @@ fits_eval_pixrange (FILE        *fp,
         register guchar        *ptr;
         FitsBitpixM32           minval = 0;
         FitsBitpixM32           maxval = 0;
-        gboolean                 first  = TRUE;
+        gboolean                first  = TRUE;
 
         while (nelem > 0)
           {
@@ -1545,7 +1552,7 @@ fits_eval_pixrange (FILE        *fp,
         register guchar        *ptr;
         FitsBitpixM64           minval = 0;
         FitsBitpixM64           maxval = 0;
-        gboolean                 first  = TRUE;
+        gboolean                first  = TRUE;
 
         while (nelem > 0)
           {
@@ -1609,7 +1616,7 @@ fits_eval_pixrange (FILE        *fp,
 /*                                                                           */
 /* Parameters:                                                               */
 /* const char *card   [I] : pointer to card image                            */
-/* FitsDataType data_type [I] : datatype to decode                        */
+/* FitsDataType data_type [I] : datatype to decode                           */
 /*                  ( mode : I=input, O=output, I/O=input/output )           */
 /*                                                                           */
 /* Decodes a card and returns a pointer to the union, keeping the data.      */
@@ -1628,7 +1635,7 @@ fits_decode_card (const gchar  *card,
   static FitsData  data;
   glong            l_long;
   gdouble          l_double;
-  gchar            l_card[FITS_CARD_SIZE+1];
+  gchar            l_card[FITS_CARD_SIZE + 1];
   gchar            msg[256];
   gchar           *cp, *dst, *end;
   gint             ErrCount = 0;
@@ -1784,7 +1791,7 @@ fits_decode_card (const gchar  *card,
 /* Function  : fits_search_card - search a card in the record list           */
 /*                                                                           */
 /* Parameters:                                                               */
-/* FitsRecordList *rl  [I] : record list to search                         */
+/* FitsRecordList *rl  [I] : record list to search                           */
 /* char *keyword         [I] : keyword identifying the card                  */
 /*                  ( mode : I=input, O=output, I/O=input/output )           */
 /*                                                                           */
@@ -1840,12 +1847,12 @@ fits_search_card (FitsRecordList *rl,
 /* Function  : fits_image_info - get information about an image              */
 /*                                                                           */
 /* Parameters:                                                               */
-/* FitsFile *ff         [I] : FITS file structure                           */
+/* FitsFile *ff         [I] : FITS file structure                            */
 /* int picind            [I] : Index of picture in file (1,2,...)            */
 /* int *hdupicind        [O] : Index of picture in HDU (1,2,...)             */
 /*                  ( mode : I=input, O=output, I/O=input/output )           */
 /*                                                                           */
-/* The function returns on success a pointer to a FitsHduList. hdupicind   */
+/* The function returns on success a pointer to a FitsHduList. hdupicind     */
 /* then gives the index of the image within the HDU.                         */
 /* On failure, NULL is returned.                                             */
 /*                                                                           */
@@ -1895,12 +1902,12 @@ fits_image_info (FitsFile *ff,
 /* Function  : fits_seek_image - position to a specific image                */
 /*                                                                           */
 /* Parameters:                                                               */
-/* FitsFile *ff         [I] : FITS file structure                           */
+/* FitsFile *ff         [I] : FITS file structure                            */
 /* int picind            [I] : Index of picture to seek (1,2,...)            */
 /*                  ( mode : I=input, O=output, I/O=input/output )           */
 /*                                                                           */
 /* The function positions the file pointer to a specified image.             */
-/* The function returns on success a pointer to a FitsHduList. This pointer*/
+/* The function returns on success a pointer to a FitsHduList. This pointer  */
 /* must also be used when reading data from the image.                       */
 /* On failure, NULL is returned.                                             */
 /*                                                                           */
@@ -1934,10 +1941,10 @@ fits_seek_image (FitsFile *ff,
 /* Function  : fits_read_pixel - read pixel values from a file               */
 /*                                                                           */
 /* Parameters:                                                               */
-/* FitsFile *ff           [I] : FITS file structure                         */
-/* FitsHduList *hdulist  [I] : pointer to hdulist that describes image     */
+/* FitsFile *ff           [I] : FITS file structure                          */
+/* FitsHduList *hdulist  [I] : pointer to hdulist that describes image       */
 /* int npix                [I] : number of pixel values to read              */
-/* FitsPixTransform *trans [I]: pixel transformation                       */
+/* FitsPixTransform *trans [I]: pixel transformation                         */
 /* void *buf               [O] : buffer where to place transformed pixels    */
 /*                  ( mode : I=input, O=output, I/O=input/output )           */
 /*                                                                           */
@@ -1979,9 +1986,9 @@ fits_read_pixel (FitsFile         *ff,
     return npix;
 
   datadiff = trans->datamax - trans->datamin;
-  pixdiff = trans->pixmax - trans->pixmin;
+  pixdiff  = trans->pixmax - trans->pixmin;
 
-  offs = trans->datamin - trans->pixmin * datadiff / pixdiff;
+  offs  = trans->datamin - trans->pixmin * datadiff / pixdiff;
   scale = datadiff / pixdiff;
 
   tmin = (glong) trans->datamin;
@@ -1997,7 +2004,7 @@ fits_read_pixel (FitsFile         *ff,
   else if (tmax > 255)
     tmax = 255;
 
-  cdata = (guchar *) buf;
+  cdata    = (guchar *) buf;
   creplace = (guchar) trans->replacement;
 
   switch (hdulist->bitpix)
@@ -2320,12 +2327,12 @@ fits_to_pgmraw (gchar *fitsfile,
   /* Set up transformation for FITS pixel values to 0...255 */
   /* It maps trans.pixmin to trans.datamin and trans.pixmax to trans.datamax. */
   /* Values out of range [datamin, datamax] are clamped */
-  trans.pixmin = hdu->pixmin;
-  trans.pixmax = hdu->pixmax;
-  trans.datamin = 0.0;
-  trans.datamax = 255.0;
+  trans.pixmin      = hdu->pixmin;
+  trans.pixmax      = hdu->pixmax;
+  trans.datamin     = 0.0;
+  trans.datamax     = 255.0;
   trans.replacement = 0.0;  /* Blank/NaN replacement value */
-  trans.dsttyp = 'c';       /* Output type is character */
+  trans.dsttyp      = 'c';       /* Output type is character */
 
   nbytes = hdu->naxisn[0]*hdu->naxisn[1];
   while (nbytes > 0)
@@ -2429,19 +2436,19 @@ pgmraw_to_fits (gchar *pgmfile,
   if (hdu == NULL)
     goto err_return;
 
-  hdu->used.simple = 1;         /* Set proper values */
-  hdu->bitpix = 8;
-  hdu->naxis = 2;
-  hdu->naxisn[0] = width;
-  hdu->naxisn[1] = height;
+  hdu->used.simple  = 1;         /* Set proper values */
+  hdu->bitpix       = 8;
+  hdu->naxis        = 2;
+  hdu->naxisn[0]    = width;
+  hdu->naxisn[1]    = height;
   hdu->used.datamin = 1;
-  hdu->datamin = 0.0;
+  hdu->datamin      = 0.0;
   hdu->used.datamax = 1;
-  hdu->datamax = 255.0;
-  hdu->used.bzero = 1;
-  hdu->bzero = 0.0;
-  hdu->used.bscale = 1;
-  hdu->bscale = 1.0;
+  hdu->datamax      = 255.0;
+  hdu->used.bzero   = 1;
+  hdu->bzero        = 0.0;
+  hdu->used.bscale  = 1;
+  hdu->bscale       = 1.0;
 
   fits_add_card (hdu, "");
   fits_add_card (hdu,
@@ -2492,4 +2499,4 @@ pgmraw_to_fits (gchar *pgmfile,
   return retval;
 }
 
-#endif
+#endif /* ! FITS_NO_DEMO */
