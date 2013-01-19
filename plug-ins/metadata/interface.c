@@ -142,7 +142,7 @@ add_view_columns (GtkTreeView *treeview)
                     model);
   col_offset =
     gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (treeview),
-                                                 -1, _("Value"),
+                                                 -1, C_("metadata-value", "Value"),
                                                  renderer,
                                                  "text",
                                                  COL_XMP_VALUE,
