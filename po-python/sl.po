@@ -9,10 +9,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-Python\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-08-25 19:40+0000\n"
-"PO-Revision-Date: 2011-08-26 23:43+0100\n"
-"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
+"POT-Creation-Date: 2012-11-07 21:59+0000\n"
+"PO-Revision-Date: 2013-01-18 00:50+0100\n"
+"Last-Translator: filmsi\n"
 "Language-Team: Martin Srebotnjak, Nedeljko Grabant <miles@filmsi.net, nedeljkograbant@gmail.com>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -148,7 +149,7 @@ msgid "_Offset Palette..."
 msgstr "_Zamakni paleto ..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:56
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:309
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
@@ -158,45 +159,124 @@ msgstr "Paleta"
 msgid "Off_set"
 msgstr "_Zamik"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:48
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:22
+msgid "Red"
+msgstr "Rdeča"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:22
+msgid "Green"
+msgstr "Zelena"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:22
+msgid "Blue"
+msgstr "Modra"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:23
+#, fuzzy
+msgid "Luma (Y)"
+msgstr "Luma (Y)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:24
+msgid "Hue"
+msgstr "Obarvanost"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:24
+#| msgid "Green or Saturation"
+msgid "Saturation"
+msgstr "Nasičenost"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:24
+msgid "Value"
+msgstr "Vrednost"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+msgid "Saturation (HSL)"
+msgstr "Nasičenost (HSL)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+msgid "Lightness (HSL)"
+msgstr "Svetlost (HSL)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:26
+msgid "Index"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+msgid "Random"
+msgstr "Naključno"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:78
+msgid "Lightness (LAB)"
+msgstr "Svetlost (LAB)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:78
+msgid "A-color"
+msgstr "A-barva"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:78
+msgid "B-color"
+msgstr "B-barva"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:79
+msgid "Chroma (LCHab)"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:79
+msgid "Hue (LCHab)"
+msgstr "Obarvanost (LCHab)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:300
 msgid "Sort the colors in a palette"
 msgstr "Razvrsti barve na paleti"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:53
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:306
 msgid "_Sort Palette..."
 msgstr "_Razvrsti paleto ..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
-msgid "Color _model"
-msgstr "Barvni _način"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:310
+msgid "Se_lections"
+msgstr "Iz_bire"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
-msgid "RGB"
-msgstr "RGB"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+msgid "All"
+msgstr "Vse"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
-msgid "HSV"
-msgstr "HSV"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+msgid "Slice / Array"
+msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+msgid "Autoslice (fg->bg)"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+msgid "Partitioned"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:312
+msgid "Slice _expression"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:313
 msgid "Channel to _sort"
 msgstr "Kanal za _razvrščanje"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
-msgid "Red or Hue"
-msgstr "Rdeča ali odtenek"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:315
+#, fuzzy
+msgid "_Quantization"
+msgstr "_Kvantizacija"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
-msgid "Green or Saturation"
-msgstr "Zelena ali nasičenost"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
-msgid "Blue or Value"
-msgstr "Modra ali vrednost"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:316
 msgid "_Ascending"
 msgstr "N_araščajoče"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:317
+msgid "_Partitioning channel"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:319
+msgid "Partition q_uantization"
+msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
@@ -325,24 +405,4 @@ msgstr "Oddaljenost padle sence _X"
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
 msgstr "Oddaljenost padle sence _Y"
-
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:75
-msgid "Create a new brush with characters from a text sequence"
-msgstr "Ustvari nov čopič z znaki iz besedilnega niza"
-
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:81
-msgid "New Brush from _Text..."
-msgstr "Nov čopič iz _besedila ..."
-
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:84
-msgid "Font"
-msgstr "Pisava"
-
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:85
-msgid "Pixel Size"
-msgstr "Velikost slikovnih točk"
-
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:86
-msgid "Text"
-msgstr "Besedilo"
 
