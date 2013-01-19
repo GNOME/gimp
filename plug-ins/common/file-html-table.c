@@ -263,8 +263,8 @@ save_image (const gchar  *filename,
   gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));
 
-  buf  = g_new (guchar, babl_format_get_bytes_per_pixel (format));
-  buf2 = g_new (guchar, babl_format_get_bytes_per_pixel (format));
+  buf  = g_newa (guchar, babl_format_get_bytes_per_pixel (format));
+  buf2 = g_newa (guchar, babl_format_get_bytes_per_pixel (format));
 
   width = height = NULL;
 
