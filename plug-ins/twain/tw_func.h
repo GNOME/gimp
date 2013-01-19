@@ -234,8 +234,10 @@ void registerTransferCallbacks(pTW_SESSION, pTXFR_CB_FUNCS, void *);
 void setClientData(pTW_SESSION session, void *clientData);
 pTW_SESSION initializeTwain(void);
 
+#ifdef G_OS_WIN32
 void LogLastWinError(void);
 BOOL InitApplication(HINSTANCE hInstance);
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow, pTW_SESSION twSession);
+#endif
 
 #endif /* _TW_FUNC_H */
