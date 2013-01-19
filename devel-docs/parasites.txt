@@ -69,6 +69,12 @@ Global data follows no strict rules.
         saving .gbr files. A trailing \0 might be included and is not
         part of the name.
 
+"gimp-brush-pipe-name" (IMAGE, PERSISTENT)
+        A string in UTF-8 encoding specifying the name of a GIMP brush
+        pipe. Currently, the gih plug-in uses this parasite when loading and
+        saving .gih files. A trailing \0 might be included and is not
+        part of the name.
+
 "gimp-brush-pipe-parameters" (IMAGE, PERSISTENT)
 	This is all very preliminary:
 

@@ -234,6 +234,7 @@ run (const gchar      *name,
   static GimpParam   values[2];
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpParasite      *name_parasite;
   GimpParasite      *pipe_parasite;
   gint32             image_ID;
   gint32             orig_image_ID;
@@ -319,6 +320,17 @@ run (const gchar      *name,
                 gimp_image_height (image_ID) / gihparams.rows;
             }
 
+          name_parasite =
+            gimp_image_get_parasite (orig_image_ID,
+                                     "gimp-brush-pipe-name");
+          if (name_parasite)
+            {
+              strncpy (info.description,
+                       gimp_parasite_data (name_parasite),
+                       MIN (MAXDESCLEN, gimp_parasite_data_size (name_parasite)));
+              info.description[MAXDESCLEN] = 0;
+            }
+
           pipe_parasite =
             gimp_image_get_parasite (orig_image_ID,
                                      "gimp-brush-pipe-parameters");
@@ -368,6 +380,18 @@ run (const gchar      *name,
 
         case GIMP_RUN_WITH_LAST_VALS:
           gimp_get_data (SAVE_PROC, &info);
+
+         name_parasite =
+           gimp_image_get_parasite (orig_image_ID,
+                                    "gimp-brush-pipe-name");
+         if (name_parasite)
+           {
+             strncpy (info.description,
+                      gimp_parasite_data (name_parasite),
+                      MIN (MAXDESCLEN, gimp_parasite_data_size (name_parasite)));
+             info.description[MAXDESCLEN] = 0;
+           }
+
           pipe_parasite =
             gimp_image_get_parasite (orig_image_ID,
                                      "gimp-brush-pipe-parameters");
@@ -561,6 +585,7 @@ gih_load_image (GFile   *file,
   gchar        *name = NULL;
   gint          num_of_brushes = 0;
   gchar        *paramstring;
+  GimpParasite *name_parasite;
   GimpParasite *pipe_parasite;
   gsize         bytes_read;
 
@@ -639,6 +664,14 @@ gih_load_image (GFile   *file,
     }
 
   g_object_unref (input);
+
+  /*  Attaching name as a parasite */
+  name_parasite = gimp_parasite_new ("gimp-brush-pipe-name",
+                                     GIMP_PARASITE_PERSISTENT,
+                                     strlen (name) + 1,
+                                     name);
+  gimp_image_attach_parasite (image_ID, name_parasite);
+  gimp_parasite_free (name_parasite);
 
   while (*paramstring && g_ascii_isspace (*paramstring))
     paramstring++;
@@ -1162,6 +1195,7 @@ gih_save_image (GFile    *file,
                 GError  **error)
 {
   GOutputStream *output;
+  GimpParasite  *name_parasite;
   GimpParasite  *pipe_parasite;
   gchar         *header;
   gchar         *parstring;
@@ -1202,6 +1236,13 @@ gih_save_image (GFile    *file,
     }
 
   g_free (header);
+
+  name_parasite = gimp_parasite_new ("gimp-brush-pipe-name",
+                                     GIMP_PARASITE_PERSISTENT,
+                                     strlen (info.description) + 1,
+                                     info.description);
+  gimp_image_attach_parasite (orig_image_ID, name_parasite);
+  gimp_parasite_free (name_parasite);
 
   pipe_parasite = gimp_parasite_new ("gimp-brush-pipe-parameters",
                                      GIMP_PARASITE_PERSISTENT,
