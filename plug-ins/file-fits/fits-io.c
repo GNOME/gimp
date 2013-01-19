@@ -96,22 +96,22 @@
 
 /* Declaration of local funtions */
 
-static FITS_FILE        * fits_new_filestruct    (void);
-static FITS_HDU_LIST    * fits_new_hdulist       (void);
-static void               fits_delete_filestruct (FITS_FILE        *ff);
-static void               fits_delete_recordlist (FITS_RECORD_LIST *rl);
-static void               fits_delete_hdulist    (FITS_HDU_LIST    *hl);
-static gint               fits_nan_32            (guchar           *value);
-static gint               fits_nan_64            (guchar           *value);
-static void               fits_set_error         (const char       *errmsg);
-static void               fits_drop_error        (void);
-static FITS_RECORD_LIST * fits_read_header       (FILE             *fp,
-                                                  gint             *nrec);
-static FITS_HDU_LIST    * fits_decode_header     (FITS_RECORD_LIST *hdr,
-                                                  glong             hdr_offset,
-                                                  glong             dat_offset);
-static gint               fits_eval_pixrange     (FILE             *fp,
-                                                  FITS_HDU_LIST    *hdu);
+static FitsFile       * fits_new_filestruct    (void);
+static FitsHduList    * fits_new_hdulist       (void);
+static void             fits_delete_filestruct (FitsFile       *ff);
+static void             fits_delete_recordlist (FitsRecordList *rl);
+static void             fits_delete_hdulist    (FitsHduList    *hl);
+static gint             fits_nan_32            (guchar         *value);
+static gint             fits_nan_64            (guchar         *value);
+static void             fits_set_error         (const char     *errmsg);
+static void             fits_drop_error        (void);
+static FitsRecordList * fits_read_header       (FILE           *fp,
+                                                gint           *nrec);
+static FitsHduList    * fits_decode_header     (FitsRecordList *hdr,
+                                                glong           hdr_offset,
+                                                glong           dat_offset);
+static gint             fits_eval_pixrange     (FILE           *fp,
+                                                FitsHduList    *hdu);
 
 
 /* Error handling like a FIFO */
@@ -142,22 +142,22 @@ static gint fits_ieee64_motorola = 0;
 #define FITS_GETBITPIXM32(p,val) \
  { if (fits_ieee32_intel) {guchar uc[4]; \
    uc[0] = p[3]; uc[1] = p[2]; uc[2] = p[1]; uc[3] = p[0]; \
-   val = *(FITS_BITPIXM32 *)uc; } \
-   else if (fits_ieee32_motorola) { val = *(FITS_BITPIXM32 *)p; } \
-   else if (fits_ieee64_motorola) {FITS_BITPIXM64 m64; \
+   val = *(FitsBitpixM32 *)uc; } \
+   else if (fits_ieee32_motorola) { val = *(FitsBitpixM32 *)p; } \
+   else if (fits_ieee64_motorola) {FitsBitpixM64 m64; \
    guchar *uc= (guchar *)&m64; \
    uc[0]=p[0]; uc[1]=p[1]; uc[2]=p[2]; uc[3]=p[3]; uc[4]=uc[5]=uc[6]=uc[7]=0; \
-   val = (FITS_BITPIXM32)m64; } \
-   else if (fits_ieee64_intel) {FITS_BITPIXM64 i64; \
+   val = (FitsBitpixM32)m64; } \
+   else if (fits_ieee64_intel) {FitsBitpixM64 i64; \
    guchar *uc= (guchar *)&i64; \
    uc[0]=uc[1]=uc[2]=uc[3]=0; uc[7]=p[0]; uc[6]=p[1]; uc[5]=p[2]; uc[4]=p[3]; \
-   val = (FITS_BITPIXM32)i64;} }
+   val = (FitsBitpixM32)i64;} }
 
 #define FITS_GETBITPIXM64(p,val) \
  { if (fits_ieee64_intel) {guchar uc[8]; \
    uc[0] = p[7]; uc[1] = p[6]; uc[2] = p[5]; uc[3] = p[4]; \
    uc[4] = p[3]; uc[5] = p[2]; uc[6] = p[1]; uc[7] = p[0]; \
-   val = *(FITS_BITPIXM64 *)uc; } else val = *(FITS_BITPIXM64 *)p; }
+   val = *(FitsBitpixM64 *)uc; } else val = *(FitsBitpixM64 *)p; }
 
 #define FITS_WRITE_BOOLCARD(fp,key,value) \
 { char card[81]; \
@@ -275,10 +275,10 @@ fits_scanfdouble (const gchar *buf,
 /* #END-PAR                                                                  */
 /*****************************************************************************/
 
-static FITS_FILE *
+static FitsFile *
 fits_new_filestruct (void)
 {
-  return g_new0 (FITS_FILE, 1);
+  return g_new0 (FitsFile, 1);
 }
 
 
@@ -296,10 +296,10 @@ fits_new_filestruct (void)
 /* #END-PAR                                                                  */
 /*****************************************************************************/
 
-static FITS_HDU_LIST *
+static FitsHduList *
 fits_new_hdulist (void)
 {
-  return g_new0 (FITS_HDU_LIST, 1);
+  return g_new0 (FitsHduList, 1);
 }
 
 
@@ -309,7 +309,7 @@ fits_new_hdulist (void)
 /* Function  : fits_delete_filestruct - (local) delete file structure        */
 /*                                                                           */
 /* Parameters:                                                               */
-/* FITS_FILE *ff   [I] : pointer to fits file structure                      */
+/* FitsFile *ff   [I] : pointer to fits file structure                      */
 /*                  ( mode : I=input, O=output, I/O=input/output )           */
 /*                                                                           */
 /* Frees all memory allocated by the file structure.                         */
@@ -318,7 +318,7 @@ fits_new_hdulist (void)
 /*****************************************************************************/
 
 static void
-fits_delete_filestruct (FITS_FILE *ff)
+fits_delete_filestruct (FitsFile *ff)
 {
   if (ff == NULL)
     return;
@@ -336,20 +336,20 @@ fits_delete_filestruct (FITS_FILE *ff)
 /* Function  : fits_delete_recordlist - (local) delete record list           */
 /*                                                                           */
 /* Parameters:                                                               */
-/* FITS_RECORD_LIST *rl  [I] : record list to delete                         */
+/* FitsRecordList *rl  [I] : record list to delete                         */
 /*                  ( mode : I=input, O=output, I/O=input/output )           */
 /*                                                                           */
 /* #END-PAR                                                                  */
 /*****************************************************************************/
 
 static void
-fits_delete_recordlist (FITS_RECORD_LIST *rl)
+fits_delete_recordlist (FitsRecordList *rl)
 {
   while (rl != NULL)
     {
-      FITS_RECORD_LIST *next;
+      FitsRecordList *next;
 
-     next = rl->next_record;
+      next = rl->next_record;
       rl->next_record = NULL;
       g_free (rl);
 
@@ -364,18 +364,18 @@ fits_delete_recordlist (FITS_RECORD_LIST *rl)
 /* Function  : fits_delete_hdulist - (local) delete hdu list                 */
 /*                                                                           */
 /* Parameters:                                                               */
-/* FITS_HDU_LIST *hl  [I] : hdu list to delete                               */
+/* FitsHduList *hl  [I] : hdu list to delete                               */
 /*                  ( mode : I=input, O=output, I/O=input/output )           */
 /*                                                                           */
 /* #END-PAR                                                                  */
 /*****************************************************************************/
 
 static void
-fits_delete_hdulist (FITS_HDU_LIST *hl)
+fits_delete_hdulist (FitsHduList *hl)
 {
   while (hl != NULL)
     {
-      FITS_HDU_LIST *next;
+      FitsHduList *next;
 
       fits_delete_recordlist (hl->header_record_list);
       next = hl->next_hdu;
@@ -541,7 +541,7 @@ fits_drop_error (void)
 /* char *openmode   [I] : mode to open the file ("r", "w")                   */
 /*                  ( mode : I=input, O=output, I/O=input/output )           */
 /*                                                                           */
-/* On success, a FITS_FILE-pointer is returned. On failure, a NULL-          */
+/* On success, a FitsFile-pointer is returned. On failure, a NULL-          */
 /* pointer is returned.                                                      */
 /* The functions scans through the file loading each header and analyzing    */
 /* them.                                                                     */
@@ -549,18 +549,18 @@ fits_drop_error (void)
 /* #END-PAR                                                                  */
 /*****************************************************************************/
 
-FITS_FILE *
+FitsFile *
 fits_open (const gchar *filename,
            const gchar *openmode)
 
 {
-  gint              reading, writing, n_rec, n_hdr;
-  glong             fpos_header, fpos_data;
-  FILE             *fp;
-  FITS_FILE        *ff;
-  FITS_RECORD_LIST *hdrlist;
-  FITS_HDU_LIST    *hdulist      = NULL;
-  FITS_HDU_LIST    *last_hdulist = NULL;
+  gint            reading, writing, n_rec, n_hdr;
+  glong           fpos_header, fpos_data;
+  FILE           *fp;
+  FitsFile       *ff;
+  FitsRecordList *hdrlist;
+  FitsHduList    *hdulist      = NULL;
+  FitsHduList    *last_hdulist = NULL;
 
   /* Check the IEEE-format we are running on */
   {
@@ -661,14 +661,14 @@ fits_open (const gchar *filename,
 /* Function  : fits_close - close a FITS file                                */
 /*                                                                           */
 /* Parameters:                                                               */
-/* FITS_FILE *ff  [I] : FITS file pointer                                    */
+/* FitsFile *ff  [I] : FITS file pointer                                    */
 /*                  ( mode : I=input, O=output, I/O=input/output )           */
 /*                                                                           */
 /* #END-PAR                                                                  */
 /*****************************************************************************/
 
 void
-fits_close (FITS_FILE *ff)
+fits_close (FitsFile *ff)
 {
   if (ff == NULL)
     FITS_VRETURN ("fits_close: Invalid parameter");
@@ -685,7 +685,7 @@ fits_close (FITS_FILE *ff)
 /* Function  : fits_add_hdu - add a HDU to the file                          */
 /*                                                                           */
 /* Parameters:                                                               */
-/* FITS_FILE *ff  [I] : FITS file pointer                                    */
+/* FitsFile *ff  [I] : FITS file pointer                                    */
 /*                  ( mode : I=input, O=output, I/O=input/output )           */
 /*                                                                           */
 /* Adds a new HDU to the list kept in ff. A pointer to the new HDU is        */
@@ -694,10 +694,10 @@ fits_close (FITS_FILE *ff)
 /* #END-PAR                                                                  */
 /*****************************************************************************/
 
-FITS_HDU_LIST *
-fits_add_hdu (FITS_FILE *ff)
+FitsHduList *
+fits_add_hdu (FitsFile *ff)
 {
-  FITS_HDU_LIST *newhdu, *hdu;
+  FitsHduList *newhdu, *hdu;
 
   if (ff->openmode != 'w')
     FITS_RETURN ("fits_add_hdu: file not open for writing", NULL);
@@ -728,7 +728,7 @@ fits_add_hdu (FITS_FILE *ff)
 /* Function  : fits_add_card - add a card to the HDU                         */
 /*                                                                           */
 /* Parameters:                                                               */
-/* FITS_HDU_LIST *hdulist [I] : HDU listr                                    */
+/* FitsHduList *hdulist [I] : HDU listr                                    */
 /* char *card             [I] : card to add                                  */
 /*                  ( mode : I=input, O=output, I/O=input/output )           */
 /*                                                                           */
@@ -740,8 +740,8 @@ fits_add_hdu (FITS_FILE *ff)
 /*****************************************************************************/
 
 gint
-fits_add_card (FITS_HDU_LIST *hdulist,
-               const gchar   *card)
+fits_add_card (FitsHduList *hdulist,
+               const gchar *card)
 {
   gint k;
 
@@ -770,14 +770,14 @@ fits_add_card (FITS_HDU_LIST *hdulist,
 /* Function  : fits_print_header - print the internal representation         */
 /*                                 of a single header                        */
 /* Parameters:                                                               */
-/* FITS_HDU_LIST *hdr  [I] : pointer to the header                           */
+/* FitsHduList *hdr  [I] : pointer to the header                           */
 /*                  ( mode : I=input, O=output, I/O=input/output )           */
 /*                                                                           */
 /* #END-PAR                                                                  */
 /*****************************************************************************/
 
 void
-fits_print_header (FITS_HDU_LIST *hdr)
+fits_print_header (FitsHduList *hdr)
 {
   gint  k;
   gchar buf[G_ASCII_DTOSTR_BUF_SIZE];
@@ -855,16 +855,16 @@ fits_print_header (FITS_HDU_LIST *hdr)
 /* #END-PAR                                                                  */
 /*****************************************************************************/
 
-static FITS_RECORD_LIST *
+static FitsRecordList *
 fits_read_header (FILE *fp,
                   gint *nrec)
 {
-  gchar             record[FITS_RECORD_SIZE];
-  FITS_RECORD_LIST *start_list = NULL;
-  FITS_RECORD_LIST *cu_record  = NULL;
-  FITS_RECORD_LIST *new_record;
-  FITS_DATA        *fdat;
-  gint              k, simple, xtension;
+  gchar           record[FITS_RECORD_SIZE];
+  FitsRecordList *start_list = NULL;
+  FitsRecordList *cu_record  = NULL;
+  FitsRecordList *new_record;
+  FitsData       *fdat;
+  gint            k, simple, xtension;
 
   *nrec = 0;
 
@@ -879,7 +879,7 @@ fits_read_header (FILE *fp,
 
   if (simple)
     {
-      fdat = fits_decode_card (record, typ_fbool);
+      fdat = fits_decode_card (record, FITS_DATA_TYPE_FBOOL);
       if (fdat && !fdat->fbool)
         fits_set_error ("fits_read_header (warning): keyword SIMPLE does not "
                         "have value T");
@@ -887,7 +887,7 @@ fits_read_header (FILE *fp,
 
   for (;;)   /* Process all header records */
     {
-      new_record = g_new0 (FITS_RECORD_LIST, 1);
+      new_record = g_new0 (FitsRecordList, 1);
       memcpy (new_record->data, record, FITS_RECORD_SIZE);
       new_record->next_record = NULL;
       (*nrec)++;
@@ -918,8 +918,8 @@ fits_read_header (FILE *fp,
 /* Function  : fits_write_header - write a FITS header                       */
 /*                                                                           */
 /* Parameters:                                                               */
-/* FITS_FILE *ff [I] : FITS-file pointer                                     */
-/* FITS_HDU_LIST [I] : pointer to header                                     */
+/* FitsFile *ff [I] : FITS-file pointer                                     */
+/* FitsHduList [I] : pointer to header                                     */
 /*                  ( mode : I=input, O=output, I/O=input/output )           */
 /*                                                                           */
 /* Writes a header to the file. On success, 0 is returned. On failure,       */
@@ -928,9 +928,9 @@ fits_read_header (FILE *fp,
 /* #END-PAR                                                                  */
 /*****************************************************************************/
 
-int
-fits_write_header (FITS_FILE     *ff,
-                   FITS_HDU_LIST *hdulist)
+gint
+fits_write_header (FitsFile    *ff,
+                   FitsHduList *hdulist)
 {
   gint numcards;
   gint k;
@@ -1047,27 +1047,27 @@ fits_write_header (FITS_FILE     *ff,
 /* Function  : fits_decode_header - (local) decode a header                  */
 /*                                                                           */
 /* Parameters:                                                               */
-/* FITS_RECORD_LIST *hdr  [I] : the header record list                       */
+/* FitsRecordList *hdr  [I] : the header record list                       */
 /* long hdr_offset        [I] : fileposition of header                       */
 /* long dat_offset        [I] : fileposition of data (end of header)         */
 /*                  ( mode : I=input, O=output, I/O=input/output )           */
 /*                                                                           */
 /* The function decodes the mostly used data within the header and generates */
-/* a FITS_HDU_LIST-entry. On failure, a NULL-pointer is returned.            */
+/* a FitsHduList-entry. On failure, a NULL-pointer is returned.            */
 /*                                                                           */
 /* #END-PAR                                                                  */
 /*****************************************************************************/
 
-static FITS_HDU_LIST *
-fits_decode_header (FITS_RECORD_LIST *hdr,
-                    glong             hdr_offset,
-                    glong             dat_offset)
+static FitsHduList *
+fits_decode_header (FitsRecordList *hdr,
+                    glong           hdr_offset,
+                    glong           dat_offset)
 {
-  FITS_HDU_LIST *hdulist;
-  FITS_DATA     *fdat;
-  gchar          errmsg[80], key[9];
-  gint           k, bpp, random_groups;
-  glong          mul_axis, data_size, bitpix_supported;
+  FitsHduList *hdulist;
+  FitsData    *fdat;
+  gchar        errmsg[80], key[9];
+  gint         k, bpp, random_groups;
+  glong        mul_axis, data_size, bitpix_supported;
 
 #define FITS_DECODE_CARD(mhdr,mkey,mfdat,mtyp) \
   { strcpy (key, mkey);                                            \
@@ -1075,7 +1075,7 @@ fits_decode_header (FITS_RECORD_LIST *hdr,
     if (mfdat == NULL) goto err_missing; }
 
 #define FITS_TRY_CARD(mhdr,mhdu,mkey,mvar,mtyp,unionvar) \
-  { FITS_DATA *mfdat = fits_decode_card (fits_search_card (mhdr,mkey), mtyp); \
+  { FitsData *mfdat = fits_decode_card (fits_search_card (mhdr,mkey), mtyp); \
     mhdu->used.mvar = (mfdat != NULL);                                  \
     if (mhdu->used.mvar) mhdu->mvar = mfdat->unionvar; }
 
@@ -1092,7 +1092,8 @@ fits_decode_header (FITS_RECORD_LIST *hdr,
 
   if (hdulist->used.xtension)
     {
-      fdat = fits_decode_card (fits_search_card (hdr, "XTENSION"), typ_fstring);
+      fdat = fits_decode_card (fits_search_card (hdr, "XTENSION"),
+                               FITS_DATA_TYPE_FSTRING);
       if (fdat != NULL)
         {
           strcpy (hdulist->xtension, fdat->fstring);
@@ -1104,10 +1105,10 @@ fits_decode_header (FITS_RECORD_LIST *hdr,
         }
     }
 
-  FITS_DECODE_CARD (hdr, "NAXIS", fdat, typ_flong);
+  FITS_DECODE_CARD (hdr, "NAXIS", fdat, FITS_DATA_TYPE_FLONG);
   hdulist->naxis = fdat->flong;
 
-  FITS_DECODE_CARD (hdr, "BITPIX", fdat, typ_flong);
+  FITS_DECODE_CARD (hdr, "BITPIX", fdat, FITS_DATA_TYPE_FLONG);
   bpp = hdulist->bitpix = (gint) fdat->flong;
   if ((bpp != 8)   && (bpp != 16) && (bpp != 32) &&
       (bpp != -32) && (bpp != -64))
@@ -1122,13 +1123,13 @@ fits_decode_header (FITS_RECORD_LIST *hdr,
   bpp /= 8;
   hdulist->bpp = bpp;
 
-  FITS_TRY_CARD (hdr, hdulist, "GCOUNT", gcount, typ_flong, flong);
-  FITS_TRY_CARD (hdr, hdulist, "PCOUNT", pcount, typ_flong, flong);
+  FITS_TRY_CARD (hdr, hdulist, "GCOUNT", gcount, FITS_DATA_TYPE_FLONG, flong);
+  FITS_TRY_CARD (hdr, hdulist, "PCOUNT", pcount, FITS_DATA_TYPE_FLONG, flong);
 
-  FITS_TRY_CARD (hdr, hdulist, "GROUPS", groups, typ_fbool, fbool);
+  FITS_TRY_CARD (hdr, hdulist, "GROUPS", groups, FITS_DATA_TYPE_FLONG, fbool);
   random_groups = hdulist->used.groups && hdulist->groups;
 
-  FITS_TRY_CARD (hdr, hdulist, "EXTEND", extend, typ_fbool, fbool);
+  FITS_TRY_CARD (hdr, hdulist, "EXTEND", extend, FITS_DATA_TYPE_FLONG, fbool);
 
   if (hdulist->used.xtension)  /* Extension requires GCOUNT and PCOUNT */
     {
@@ -1147,7 +1148,8 @@ fits_decode_header (FITS_RECORD_LIST *hdr,
       gchar naxisn[9];
 
       sprintf (naxisn, "NAXIS%-3d", k);
-      fdat = fits_decode_card (fits_search_card (hdr, naxisn), typ_flong);
+      fdat = fits_decode_card (fits_search_card (hdr, naxisn),
+                               FITS_DATA_TYPE_FLONG);
       if (fdat == NULL)
         {
           k--;   /* Save the last NAXISk read */
@@ -1205,13 +1207,13 @@ fits_decode_header (FITS_RECORD_LIST *hdr,
   data_size *= FITS_RECORD_SIZE;
   hdulist->data_size = data_size;
 
-  FITS_TRY_CARD (hdr, hdulist, "BLANK", blank, typ_flong, flong);
+  FITS_TRY_CARD (hdr, hdulist, "BLANK", blank, FITS_DATA_TYPE_FLONG, flong);
 
-  FITS_TRY_CARD (hdr, hdulist, "DATAMIN", datamin, typ_fdouble, fdouble);
-  FITS_TRY_CARD (hdr, hdulist, "DATAMAX", datamax, typ_fdouble, fdouble);
+  FITS_TRY_CARD (hdr, hdulist, "DATAMIN", datamin, FITS_DATA_TYPE_FDOUBLE, fdouble);
+  FITS_TRY_CARD (hdr, hdulist, "DATAMAX", datamax, FITS_DATA_TYPE_FDOUBLE, fdouble);
 
-  FITS_TRY_CARD (hdr, hdulist, "BZERO", bzero, typ_fdouble, fdouble);
-  FITS_TRY_CARD (hdr, hdulist, "BSCALE", bscale, typ_fdouble, fdouble);
+  FITS_TRY_CARD (hdr, hdulist, "BZERO", bzero, FITS_DATA_TYPE_FDOUBLE, fdouble);
+  FITS_TRY_CARD (hdr, hdulist, "BSCALE", bscale, FITS_DATA_TYPE_FDOUBLE, fdouble);
 
   /* Evaluate number of interpretable images for this HDU */
   hdulist->numpic = 0;
@@ -1279,7 +1281,7 @@ fits_decode_header (FITS_RECORD_LIST *hdr,
 /*                                                                           */
 /* Parameters:                                                               */
 /* FILE *fp               [I] : file pointer                                 */
-/* FITS_HDU_LIST *hdu     [I] : pointer to header                            */
+/* FitsHduList *hdu     [I] : pointer to header                            */
 /*                  ( mode : I=input, O=output, I/O=input/output )           */
 /*                                                                           */
 /* The Function sets the values hdu->pixmin and hdu->pixmax. On success 0    */
@@ -1289,8 +1291,8 @@ fits_decode_header (FITS_RECORD_LIST *hdr,
 /*****************************************************************************/
 
 static gint
-fits_eval_pixrange (FILE          *fp,
-                    FITS_HDU_LIST *hdu)
+fits_eval_pixrange (FILE        *fp,
+                    FitsHduList *hdu)
 {
   register gint maxelem;
 #define FITSNPIX 4096
@@ -1309,10 +1311,10 @@ fits_eval_pixrange (FILE          *fp,
     {
     case 8:
       {
-        register FITS_BITPIX8  pixval;
-        register guchar       *ptr;
-        FITS_BITPIX8           minval = 255;
-        FITS_BITPIX8           maxval = 0;
+        register FitsBitpix8  pixval;
+        register guchar      *ptr;
+        FitsBitpix8           minval = 255;
+        FitsBitpix8           maxval = 0;
 
         while (nelem > 0)
           {
@@ -1327,11 +1329,11 @@ fits_eval_pixrange (FILE          *fp,
             ptr = pixdat;
             if (hdu->used.blank)
               {
-                FITS_BITPIX8 blankval = (FITS_BITPIX8) hdu->blank;
+                FitsBitpix8 blankval = (FitsBitpix8) hdu->blank;
 
                 while (maxelem-- > 0)
                   {
-                    pixval = (FITS_BITPIX8)*(ptr++);
+                    pixval = (FitsBitpix8)*(ptr++);
 
                     if (pixval != blankval)
                       {
@@ -1350,7 +1352,7 @@ fits_eval_pixrange (FILE          *fp,
               {
                 while (maxelem-- > 0)
                   {
-                    pixval = (FITS_BITPIX8)*(ptr++);
+                    pixval = (FitsBitpix8)*(ptr++);
 
                     if (pixval < minval)
                       minval = pixval;
@@ -1367,10 +1369,10 @@ fits_eval_pixrange (FILE          *fp,
 
     case 16:
       {
-        register FITS_BITPIX16  pixval;
-        register guchar        *ptr;
-        FITS_BITPIX16           minval = 0x7fff;
-        FITS_BITPIX16           maxval = ~0x7fff;
+        register FitsBitpix16  pixval;
+        register guchar       *ptr;
+        FitsBitpix16           minval = 0x7fff;
+        FitsBitpix16           maxval = ~0x7fff;
 
         while (nelem > 0)
           {
@@ -1385,7 +1387,7 @@ fits_eval_pixrange (FILE          *fp,
             ptr = pixdat;
             if (hdu->used.blank)
               {
-                FITS_BITPIX16 blankval = (FITS_BITPIX16) hdu->blank;
+                FitsBitpix16 blankval = (FitsBitpix16) hdu->blank;
 
                 while (maxelem-- > 0)
                   {
@@ -1427,10 +1429,10 @@ fits_eval_pixrange (FILE          *fp,
 
     case 32:
       {
-        register FITS_BITPIX32  pixval;
-        register guchar        *ptr;
-        FITS_BITPIX32           minval = 0x7fffffff;
-        FITS_BITPIX32           maxval = ~0x7fffffff;
+        register FitsBitpix32  pixval;
+        register guchar       *ptr;
+        FitsBitpix32           minval = 0x7fffffff;
+        FitsBitpix32           maxval = ~0x7fffffff;
 
         while (nelem > 0)
           {
@@ -1445,7 +1447,7 @@ fits_eval_pixrange (FILE          *fp,
             ptr = pixdat;
             if (hdu->used.blank)
               {
-                FITS_BITPIX32 blankval = (FITS_BITPIX32)hdu->blank;
+                FitsBitpix32 blankval = (FitsBitpix32)hdu->blank;
 
                 while (maxelem-- > 0)
                   {
@@ -1487,10 +1489,10 @@ fits_eval_pixrange (FILE          *fp,
 
     case -32:
       {
-        register FITS_BITPIXM32  pixval = 0;
-        register guchar         *ptr;
-        FITS_BITPIXM32           minval = 0;
-        FITS_BITPIXM32           maxval = 0;
+        register FitsBitpixM32  pixval = 0;
+        register guchar        *ptr;
+        FitsBitpixM32           minval = 0;
+        FitsBitpixM32           maxval = 0;
         gboolean                 first  = TRUE;
 
         while (nelem > 0)
@@ -1539,10 +1541,10 @@ fits_eval_pixrange (FILE          *fp,
 
     case -64:
       {
-        register FITS_BITPIXM64  pixval;
-        register guchar         *ptr;
-        FITS_BITPIXM64           minval = 0;
-        FITS_BITPIXM64           maxval = 0;
+        register FitsBitpixM64  pixval;
+        register guchar        *ptr;
+        FitsBitpixM64           minval = 0;
+        FitsBitpixM64           maxval = 0;
         gboolean                 first  = TRUE;
 
         while (nelem > 0)
@@ -1607,7 +1609,7 @@ fits_eval_pixrange (FILE          *fp,
 /*                                                                           */
 /* Parameters:                                                               */
 /* const char *card   [I] : pointer to card image                            */
-/* FITS_DATA_TYPES data_type [I] : datatype to decode                        */
+/* FitsDataType data_type [I] : datatype to decode                        */
 /*                  ( mode : I=input, O=output, I/O=input/output )           */
 /*                                                                           */
 /* Decodes a card and returns a pointer to the union, keeping the data.      */
@@ -1619,11 +1621,11 @@ fits_eval_pixrange (FILE          *fp,
 /* #END-PAR                                                                  */
 /*****************************************************************************/
 
-FITS_DATA *
-fits_decode_card (const gchar     *card,
-                  FITS_DATA_TYPES  data_type)
+FitsData *
+fits_decode_card (const gchar  *card,
+                  FitsDataType  data_type)
 {
-  static FITS_DATA data;
+  static FitsData  data;
   glong            l_long;
   gdouble          l_double;
   gchar            l_card[FITS_CARD_SIZE+1];
@@ -1648,51 +1650,51 @@ fits_decode_card (const gchar     *card,
 
   switch (data_type)
     {
-    case typ_bitpix8:
-      data.bitpix8 = (FITS_BITPIX8) (l_card[10]);
+    case FITS_DATA_TYPE_BITPIX_8:
+      data.bitpix8 = (FitsBitpix8) (l_card[10]);
       break;
 
-    case typ_bitpix16:
+    case FITS_DATA_TYPE_BITPIX_16:
       if (sscanf (l_card + 10, "%ld", &l_long) != 1)
         {
-          fits_set_error ("fits_decode_card: error decoding typ_bitpix16");
+          fits_set_error ("fits_decode_card: error decoding FITS_DATA_TYPE_BITPIX_16");
           ErrCount++;
           break;
         }
-      data.bitpix16 = (FITS_BITPIX16) l_long;
+      data.bitpix16 = (FitsBitpix16) l_long;
       break;
 
-    case typ_bitpix32:
+    case FITS_DATA_TYPE_BITPIX_32:
       if (sscanf (l_card + 10, "%ld", &l_long) != 1)
         {
-          fits_set_error ("fits_decode_card: error decoding typ_bitpix32");
+          fits_set_error ("fits_decode_card: error decoding FITS_DATA_TYPE_BITPIX_32");
           ErrCount++;
           break;
         }
-      data.bitpix32 = (FITS_BITPIX32) l_long;
+      data.bitpix32 = (FitsBitpix32) l_long;
       break;
 
-    case typ_bitpixm32:
+    case FITS_DATA_TYPE_BITPIX_M32:
       if (fits_scanfdouble (l_card + 10, &l_double) != 1)
         {
-          fits_set_error ("fits_decode_card: error decoding typ_bitpixm32");
+          fits_set_error ("fits_decode_card: error decoding FITS_DATA_TYPE_BITPIX_M32");
           ErrCount++;
           break;
         }
-      data.bitpixm32 = (FITS_BITPIXM32) l_double;
+      data.bitpixm32 = (FitsBitpixM32) l_double;
       break;
 
-    case typ_bitpixm64:
+    case FITS_DATA_TYPE_BITPIX_M64:
       if (fits_scanfdouble (l_card + 10, &l_double) != 1)
         {
-          fits_set_error ("fits_decode_card: error decoding typ_bitpixm64");
+          fits_set_error ("fits_decode_card: error decoding FITS_DATA_TYPE_BITPIX_M64");
           ErrCount++;
           break;
         }
-      data.bitpixm64 = (FITS_BITPIXM64) l_double;
+      data.bitpixm64 = (FitsBitpixM64) l_double;
       break;
 
-    case typ_fbool:
+    case FITS_DATA_TYPE_FBOOL:
       cp = l_card + 10;
       while (*cp == ' ')
         cp++;
@@ -1707,37 +1709,37 @@ fits_decode_card (const gchar     *card,
         }
       else
         {
-          fits_set_error ("fits_decode_card: error decoding typ_fbool");
+          fits_set_error ("fits_decode_card: error decoding FITS_DATA_TYPE_FBOOL");
           ErrCount++;
           break;
         }
       break;
 
-    case typ_flong:
+    case FITS_DATA_TYPE_FLONG:
       if (sscanf (l_card + 10, "%ld", &l_long) != 1)
         {
-          fits_set_error ("fits_decode_card: error decoding typ_flong");
+          fits_set_error ("fits_decode_card: error decoding FITS_DATA_TYPE_FLONG");
           ErrCount++;
           break;
         }
-      data.flong = (FITS_BITPIX32) l_long;
+      data.flong = (FitsBitpix32) l_long;
       break;
 
-    case typ_fdouble:
+    case FITS_DATA_TYPE_FDOUBLE:
       if (fits_scanfdouble (l_card + 10, &l_double) != 1)
         {
-          fits_set_error ("fits_decode_card: error decoding typ_fdouble");
+          fits_set_error ("fits_decode_card: error decoding FITS_DATA_TYPE_FDOUBLE");
           ErrCount++;
           break;
         }
-      data.fdouble = (FITS_BITPIXM32) l_double;
+      data.fdouble = (FitsBitpixM32) l_double;
       break;
 
-    case typ_fstring:
+    case FITS_DATA_TYPE_FSTRING:
       cp = l_card + 10;
       if (*cp != '\'')
         {
-          fits_set_error ("fits_decode_card: missing \' decoding typ_fstring");
+          fits_set_error ("fits_decode_card: missing \' decoding FITS_DATA_TYPE_FSTRING");
           ErrCount++;
           break;
         }
@@ -1782,7 +1784,7 @@ fits_decode_card (const gchar     *card,
 /* Function  : fits_search_card - search a card in the record list           */
 /*                                                                           */
 /* Parameters:                                                               */
-/* FITS_RECORD_LIST *rl  [I] : record list to search                         */
+/* FitsRecordList *rl  [I] : record list to search                         */
 /* char *keyword         [I] : keyword identifying the card                  */
 /*                  ( mode : I=input, O=output, I/O=input/output )           */
 /*                                                                           */
@@ -1798,8 +1800,8 @@ fits_decode_card (const gchar     *card,
 /*****************************************************************************/
 
 gchar *
-fits_search_card (FITS_RECORD_LIST *rl,
-                  gchar            *keyword)
+fits_search_card (FitsRecordList *rl,
+                  gchar          *keyword)
 {
   gint  key_len, k;
   gchar key[9];
@@ -1838,25 +1840,25 @@ fits_search_card (FITS_RECORD_LIST *rl,
 /* Function  : fits_image_info - get information about an image              */
 /*                                                                           */
 /* Parameters:                                                               */
-/* FITS_FILE *ff         [I] : FITS file structure                           */
+/* FitsFile *ff         [I] : FITS file structure                           */
 /* int picind            [I] : Index of picture in file (1,2,...)            */
 /* int *hdupicind        [O] : Index of picture in HDU (1,2,...)             */
 /*                  ( mode : I=input, O=output, I/O=input/output )           */
 /*                                                                           */
-/* The function returns on success a pointer to a FITS_HDU_LIST. hdupicind   */
+/* The function returns on success a pointer to a FitsHduList. hdupicind   */
 /* then gives the index of the image within the HDU.                         */
 /* On failure, NULL is returned.                                             */
 /*                                                                           */
 /* #END-PAR                                                                  */
 /*****************************************************************************/
 
-FITS_HDU_LIST *
-fits_image_info (FITS_FILE *ff,
-                 gint       picind,
-                 gint      *hdupicind)
+FitsHduList *
+fits_image_info (FitsFile *ff,
+                 gint      picind,
+                 gint     *hdupicind)
 {
-  FITS_HDU_LIST *hdulist;
-  gint           firstpic, lastpic;
+  FitsHduList *hdulist;
+  gint         firstpic, lastpic;
 
   if (ff == NULL)
     FITS_RETURN ("fits_image_info: ff is NULL", NULL);
@@ -1893,25 +1895,25 @@ fits_image_info (FITS_FILE *ff,
 /* Function  : fits_seek_image - position to a specific image                */
 /*                                                                           */
 /* Parameters:                                                               */
-/* FITS_FILE *ff         [I] : FITS file structure                           */
+/* FitsFile *ff         [I] : FITS file structure                           */
 /* int picind            [I] : Index of picture to seek (1,2,...)            */
 /*                  ( mode : I=input, O=output, I/O=input/output )           */
 /*                                                                           */
 /* The function positions the file pointer to a specified image.             */
-/* The function returns on success a pointer to a FITS_HDU_LIST. This pointer*/
+/* The function returns on success a pointer to a FitsHduList. This pointer*/
 /* must also be used when reading data from the image.                       */
 /* On failure, NULL is returned.                                             */
 /*                                                                           */
 /* #END-PAR                                                                  */
 /*****************************************************************************/
 
-FITS_HDU_LIST *
-fits_seek_image (FITS_FILE *ff,
-                 gint       picind)
+FitsHduList *
+fits_seek_image (FitsFile *ff,
+                 gint      picind)
 {
-  FITS_HDU_LIST *hdulist;
-  gint           hdupicind;
-  glong          offset, pic_size;
+  FitsHduList *hdulist;
+  gint         hdupicind;
+  glong        offset, pic_size;
 
   hdulist = fits_image_info (ff, picind, &hdupicind);
   if (hdulist == NULL)
@@ -1932,10 +1934,10 @@ fits_seek_image (FITS_FILE *ff,
 /* Function  : fits_read_pixel - read pixel values from a file               */
 /*                                                                           */
 /* Parameters:                                                               */
-/* FITS_FILE *ff           [I] : FITS file structure                         */
-/* FITS_HDU_LIST *hdulist  [I] : pointer to hdulist that describes image     */
+/* FitsFile *ff           [I] : FITS file structure                         */
+/* FitsHduList *hdulist  [I] : pointer to hdulist that describes image     */
 /* int npix                [I] : number of pixel values to read              */
-/* FITS_PIX_TRANSFORM *trans [I]: pixel transformation                       */
+/* FitsPixTransform *trans [I]: pixel transformation                       */
 /* void *buf               [O] : buffer where to place transformed pixels    */
 /*                  ( mode : I=input, O=output, I/O=input/output )           */
 /*                                                                           */
@@ -1951,11 +1953,11 @@ fits_seek_image (FITS_FILE *ff,
 /*****************************************************************************/
 
 gint
-fits_read_pixel (FITS_FILE          *ff,
-                 FITS_HDU_LIST      *hdulist,
-                 gint                npix,
-                 FITS_PIX_TRANSFORM *trans,
-                 void               *buf)
+fits_read_pixel (FitsFile         *ff,
+                 FitsHduList      *hdulist,
+                 gint              npix,
+                 FitsPixTransform *trans,
+                 void             *buf)
 {
   gdouble  offs, scale;
   gdouble  datadiff, pixdiff;
@@ -2003,7 +2005,7 @@ fits_read_pixel (FITS_FILE          *ff,
     case 8:
       while (npix > 0)  /* For all pixels to read */
         {
-          FITS_BITPIX8 bp8, bp8blank;
+          FitsBitpix8 bp8, bp8blank;
 
           maxelem = sizeof (pixbuffer) / hdulist->bpp;
           if (maxelem > npix)
@@ -2019,11 +2021,11 @@ fits_read_pixel (FITS_FILE          *ff,
 
           if (hdulist->used.blank)
             {
-              bp8blank = (FITS_BITPIX8) hdulist->blank;
+              bp8blank = (FitsBitpix8) hdulist->blank;
 
               while (maxelem--)
                 {
-                  bp8 = (FITS_BITPIX8) * (pix++);
+                  bp8 = (FitsBitpix8) * (pix++);
 
                   if (bp8 == bp8blank)      /* Is it a blank pixel ? */
                     {
@@ -2044,7 +2046,7 @@ fits_read_pixel (FITS_FILE          *ff,
             {
               while (maxelem--)
                 {
-                  bp8 = (FITS_BITPIX8) * (pix++);
+                  bp8 = (FitsBitpix8) * (pix++);
 
                   tdata = (glong) (bp8 * scale + offs);
                   tdata = CLAMP (tdata, tmin, tmax);
@@ -2060,7 +2062,7 @@ fits_read_pixel (FITS_FILE          *ff,
     case 16:
       while (npix > 0)  /* For all pixels to read */
         {
-          FITS_BITPIX16 bp16, bp16blank;
+          FitsBitpix16 bp16, bp16blank;
 
           maxelem = sizeof (pixbuffer) / hdulist->bpp;
           if (maxelem > npix)
@@ -2075,7 +2077,7 @@ fits_read_pixel (FITS_FILE          *ff,
           pix = pixbuffer;
           if (hdulist->used.blank)
             {
-              bp16blank = (FITS_BITPIX16) hdulist->blank;
+              bp16blank = (FitsBitpix16) hdulist->blank;
 
               while (maxelem--)
                 {
@@ -2125,7 +2127,7 @@ fits_read_pixel (FITS_FILE          *ff,
     case 32:
       while (npix > 0)  /* For all pixels to read */
         {
-          FITS_BITPIX32 bp32, bp32blank;
+          FitsBitpix32 bp32, bp32blank;
 
           maxelem = sizeof (pixbuffer) / hdulist->bpp;
           if (maxelem > npix)
@@ -2140,7 +2142,7 @@ fits_read_pixel (FITS_FILE          *ff,
           pix = pixbuffer;
           if (hdulist->used.blank)
             {
-              bp32blank = (FITS_BITPIX32) hdulist->blank;
+              bp32blank = (FitsBitpix32) hdulist->blank;
 
               while (maxelem--)
                 {
@@ -2186,7 +2188,7 @@ fits_read_pixel (FITS_FILE          *ff,
     case -32:
       while (npix > 0)  /* For all pixels to read */
         {
-          FITS_BITPIXM32 bpm32 = 0;
+          FitsBitpixM32 bpm32 = 0;
 
           maxelem = sizeof (pixbuffer) / hdulist->bpp;
           if (maxelem > npix)
@@ -2224,7 +2226,7 @@ fits_read_pixel (FITS_FILE          *ff,
     case -64:
       while (npix > 0)  /* For all pixels to read */
         {
-          FITS_BITPIXM64 bpm64;
+          FitsBitpixM64 bpm64;
 
           maxelem = sizeof (pixbuffer) / hdulist->bpp;
           if (maxelem > npix)
@@ -2287,12 +2289,12 @@ gint
 fits_to_pgmraw (gchar *fitsfile,
                 gchar *pgmfile)
 {
-  FITS_FILE          *fitsin = NULL;
-  FILE               *pgmout = NULL;
-  FITS_HDU_LIST      *hdu;
-  FITS_PIX_TRANSFORM  trans;
-  gint                retval = -1, nbytes, maxbytes;
-  gchar               buffer[1024];
+  FitsFile         *fitsin = NULL;
+  FILE             *pgmout = NULL;
+  FitsHduList      *hdu;
+  FitsPixTransform  trans;
+  gint              retval = -1, nbytes, maxbytes;
+  gchar             buffer[1024];
 
   fitsin = fits_open (fitsfile, "r");  /* Open FITS-file for reading */
   if (fitsin == NULL)
@@ -2377,12 +2379,12 @@ gint
 pgmraw_to_fits (gchar *pgmfile,
                 gchar *fitsfile)
 {
-  FITS_FILE     *fitsout = NULL;
-  FILE          *pgmin   = NULL;
-  FITS_HDU_LIST *hdu;
-  gchar          buffer[1024];
-  gint           width, height, numbytes, maxbytes;
-  gint           retval = -1;
+  FitsFile    *fitsout = NULL;
+  FILE        *pgmin   = NULL;
+  FitsHduList *hdu;
+  gchar        buffer[1024];
+  gint         width, height, numbytes, maxbytes;
+  gint         retval = -1;
 
   fitsout = fits_open (fitsfile, "w");
   if (fitsout == NULL)

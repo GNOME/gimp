@@ -29,61 +29,73 @@
 #define FITS_NADD_CARDS    128
 
 /* Data representations */
-typedef unsigned char FITS_BITPIX8;
-typedef short         FITS_BITPIX16;
-typedef long          FITS_BITPIX32;
-typedef float         FITS_BITPIXM32;
-typedef double        FITS_BITPIXM64;
 
-typedef int           FITS_BOOL;
-typedef long          FITS_LONG;
-typedef double        FITS_DOUBLE;
-typedef char          FITS_STRING[FITS_CARD_SIZE];
+typedef unsigned char FitsBitpix8;
+typedef short         FitsBitpix16;
+typedef long          FitsBitpix32;
+typedef float         FitsBitpixM32;
+typedef double        FitsBitpixM64;
+typedef int           FitsBool;
+typedef long          FitsLong;
+typedef double        FitsDouble;
+typedef char          FitsString[FITS_CARD_SIZE];
 
 typedef enum
 {
-  typ_bitpix8,
-  typ_bitpix16,
-  typ_bitpix32,
-  typ_bitpixm32,
-  typ_bitpixm64,
-  typ_fbool,
-  typ_flong,
-  typ_fdouble,
-  typ_fstring
-} FITS_DATA_TYPES;
+  FITS_DATA_TYPE_BITPIX_8,
+  FITS_DATA_TYPE_BITPIX_16,
+  FITS_DATA_TYPE_BITPIX_32,
+  FITS_DATA_TYPE_BITPIX_M32,
+  FITS_DATA_TYPE_BITPIX_M64,
+  FITS_DATA_TYPE_FBOOL,
+  FITS_DATA_TYPE_FLONG,
+  FITS_DATA_TYPE_FDOUBLE,
+  FITS_DATA_TYPE_FSTRING
+} FitsDataType;
+
+typedef union
+{
+  FitsBitpix8   bitpix8;
+  FitsBitpix16  bitpix16;
+  FitsBitpix32  bitpix32;
+  FitsBitpixM32 bitpixm32;
+  FitsBitpixM64 bitpixm64;
+  FitsBool      fbool;
+  FitsLong      flong;
+  FitsDouble    fdouble;
+  FitsString    fstring;
+} FitsData;
+
 
 /* How to transform FITS pixel values */
-typedef struct
+
+typedef struct _FitsPixTransform FitsPixTransform;
+
+struct _FitsPixTransform
 {
   gdouble pixmin, pixmax;    /* Pixel values [pixmin,pixmax] should be mapped */
   gdouble datamin, datamax;  /* to [datamin,datamax] */
   gdouble replacement;       /* datavalue to use for blank or NaN pixels */
   gchar   dsttyp;            /* Destination typ ('c' = char) */
-} FITS_PIX_TRANSFORM;
+};
 
-typedef union
+
+/* Record list */
+
+typedef struct _FitsRecordList FitsRecordList;
+
+struct _FitsRecordList
 {
-  FITS_BITPIX8   bitpix8;
-  FITS_BITPIX16  bitpix16;
-  FITS_BITPIX32  bitpix32;
-  FITS_BITPIXM32 bitpixm32;
-  FITS_BITPIXM64 bitpixm64;
-
-  FITS_BOOL   fbool;
-  FITS_LONG   flong;
-  FITS_DOUBLE fdouble;
-  FITS_STRING fstring;
-} FITS_DATA;
-
-typedef struct fits_record_list        /* Record list */
-{
-  gchar                    data[FITS_RECORD_SIZE];
-  struct fits_record_list *next_record;
-} FITS_RECORD_LIST;
+  gchar           data[FITS_RECORD_SIZE];
+  FitsRecordList *next_record;
+};
 
 
-typedef struct fits_hdu_list    /* Header and Data Unit List */
+/* Header and Data Unit List */
+
+typedef struct _FitsHduList FitsHduList;
+
+struct _FitsHduList
 {
   glong header_offset;             /* Offset of header in the file */
   glong data_offset;               /* Offset of data in the file */
@@ -125,13 +137,15 @@ typedef struct fits_hdu_list    /* Header and Data Unit List */
   gint    groups;                  /* Random groups indicator */
   gint    extend;                  /* Extend flag */
 
-  FITS_RECORD_LIST *header_record_list; /* Header records read in */
+  FitsRecordList *header_record_list; /* Header records read in */
 
-  struct fits_hdu_list *next_hdu;
-} FITS_HDU_LIST;
+  FitsHduList    *next_hdu;
+};
 
 
-typedef struct
+typedef struct _FitsFile FitsFile;
+
+struct _FitsFile
 {
   FILE     *fp;               /* File pointer to fits file */
   gchar     openmode;         /* Mode the file was opened (0, 'r', 'w') */
@@ -141,43 +155,45 @@ typedef struct
   gboolean  nan_used;         /* NaN's used in the file ? */
   gboolean  blank_used;       /* Blank's used in the file ? */
 
-  FITS_HDU_LIST *hdu_list;    /* Header and Data Unit List */
-} FITS_FILE;
+  FitsHduList *hdu_list;    /* Header and Data Unit List */
+};
 
 
 /* User callable functions of the FITS-library */
 
-FITS_FILE     * fits_open         (const gchar        *filename,
-                                   const gchar        *openmode);
-void            fits_close        (FITS_FILE          *ff);
-FITS_HDU_LIST * fits_add_hdu      (FITS_FILE          *ff);
-gint            fits_add_card     (FITS_HDU_LIST      *hdulist,
-                                   const gchar        *card);
-gint            fits_write_header (FITS_FILE          *ff,
-                                   FITS_HDU_LIST      *hdulist);
-FITS_HDU_LIST * fits_image_info   (FITS_FILE          *ff,
-                                   gint                picind,
-                                   gint               *hdupicind);
-FITS_HDU_LIST * fits_seek_image   (FITS_FILE          *ff,
-                                   gint                picind);
-void            fits_print_header (FITS_HDU_LIST      *hdr);
-FITS_DATA     * fits_decode_card  (const gchar        *card,
-                                   FITS_DATA_TYPES     data_type);
-gchar         * fits_search_card  (FITS_RECORD_LIST   *rl,
-                                   gchar              *keyword);
-gint            fits_read_pixel   (FITS_FILE          *ff,
-                                   FITS_HDU_LIST      *hdulist,
-                                   gint                npix,
-                                   FITS_PIX_TRANSFORM *trans,
-                                   void               *buf);
+FitsFile    * fits_open         (const gchar      *filename,
+                                 const gchar      *openmode);
+void          fits_close        (FitsFile         *ff);
+FitsHduList * fits_add_hdu      (FitsFile         *ff);
+gint          fits_add_card     (FitsHduList      *hdulist,
+                                 const gchar      *card);
+gint          fits_write_header (FitsFile         *ff,
+                                 FitsHduList      *hdulist);
+FitsHduList * fits_image_info   (FitsFile         *ff,
+                                 gint              picind,
+                                 gint             *hdupicind);
+FitsHduList * fits_seek_image   (FitsFile         *ff,
+                                 gint              picind);
+void          fits_print_header (FitsHduList      *hdr);
+FitsData    * fits_decode_card  (const gchar      *card,
+                                 FitsDataType      data_type);
+gchar       * fits_search_card  (FitsRecordList   *rl,
+                                 gchar            *keyword);
+gint          fits_read_pixel   (FitsFile         *ff,
+                                 FitsHduList      *hdulist,
+                                 gint              npix,
+                                 FitsPixTransform *trans,
+                                 void             *buf);
 
-gchar         * fits_get_error    (void);
+gchar       * fits_get_error    (void);
+
 
 /* Demo functions */
+
 #define FITS_NO_DEMO
-gint            fits_to_pgmraw    (gchar              *fitsfile,
-                                   gchar              *pgmfile);
-gint            pgmraw_to_fits    (gchar              *pgmfile,
-                                   gchar              *fitsfile);
+gint          fits_to_pgmraw    (gchar            *fitsfile,
+                                 gchar            *pgmfile);
+gint          pgmraw_to_fits    (gchar            *pgmfile,
+                                 gchar            *fitsfile);
 
 #endif /* __FITS_IO_H__ */

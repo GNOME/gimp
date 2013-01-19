@@ -66,46 +66,46 @@ typedef struct
 
 /* Declare some local functions.
  */
-static void           query              (void);
-static void           run                (const gchar        *name,
-                                          gint                nparams,
-                                          const GimpParam    *param,
-                                          gint               *nreturn_vals,
-                                          GimpParam         **return_vals);
+static void          query              (void);
+static void          run                (const gchar        *name,
+                                         gint                nparams,
+                                         const GimpParam    *param,
+                                         gint               *nreturn_vals,
+                                         GimpParam         **return_vals);
 
-static gint32         load_image         (const gchar        *filename,
-                                          GError            **error);
-static gint           save_image         (const gchar        *filename,
-                                          gint32              image_ID,
-                                          gint32              drawable_ID,
-                                          GError            **error);
+static gint32        load_image         (const gchar        *filename,
+                                         GError            **error);
+static gint          save_image         (const gchar        *filename,
+                                         gint32              image_ID,
+                                         gint32              drawable_ID,
+                                         GError            **error);
 
-static FITS_HDU_LIST *create_fits_header (FITS_FILE          *ofp,
-                                          guint               width,
-                                          guint               height,
-                                          guint               bpp);
-static gint           save_fits          (FITS_FILE          *ofp,
-                                          gint32              image_ID,
-                                          gint32              drawable_ID);
+static FitsHduList * create_fits_header (FitsFile           *ofp,
+                                         guint               width,
+                                         guint               height,
+                                         guint               bpp);
+static gint          save_fits        (FitsFile           *ofp,
+                                       gint32              image_ID,
+                                       gint32              drawable_ID);
 
-static gint32         create_new_image   (const gchar        *filename,
-                                          guint               pagenum,
-                                          guint               width,
-                                          guint               height,
-                                          GimpImageBaseType   itype,
-                                          GimpImageType       dtype,
-                                          gint32             *layer_ID,
-                                          GeglBuffer        **buffer);
+static gint32        create_new_image   (const gchar        *filename,
+                                         guint               pagenum,
+                                         guint               width,
+                                         guint               height,
+                                         GimpImageBaseType   itype,
+                                         GimpImageType       dtype,
+                                         gint32             *layer_ID,
+                                         GeglBuffer        **buffer);
 
-static void           check_load_vals    (void);
+static void          check_load_vals    (void);
 
-static gint32         load_fits          (const gchar        *filename,
-                                          FITS_FILE          *ifp,
-                                          guint               picnum,
-                                          guint               ncompose);
+static gint32        load_fits          (const gchar        *filename,
+                                         FitsFile           *ifp,
+                                         guint               picnum,
+                                         guint               ncompose);
 
-static gboolean       load_dialog        (void);
-static void           show_fits_errors   (void);
+static gboolean      load_dialog        (void);
+static void          show_fits_errors   (void);
 
 
 static FITSLoadVals plvals =
@@ -340,13 +340,13 @@ static gint32
 load_image (const gchar  *filename,
             GError      **error)
 {
-  gint32         image_ID, *image_list, *nl;
-  guint          picnum;
-  gint           k, n_images, max_images, hdu_picnum;
-  gint           compose;
-  FILE          *fp;
-  FITS_FILE     *ifp;
-  FITS_HDU_LIST *hdu;
+  gint32       image_ID, *image_list, *nl;
+  guint        picnum;
+  gint         k, n_images, max_images, hdu_picnum;
+  gint         compose;
+  FILE        *fp;
+  FitsFile    *ifp;
+  FitsHduList *hdu;
 
   fp = g_fopen (filename, "rb");
   if (!fp)
@@ -438,7 +438,7 @@ save_image (const gchar  *filename,
             gint32        drawable_ID,
             GError      **error)
 {
-  FITS_FILE     *ofp;
+  FitsFile      *ofp;
   GimpImageType  drawable_type;
   gint           retval;
 
@@ -535,22 +535,22 @@ create_new_image (const gchar        *filename,
  */
 static gint32
 load_fits (const gchar *filename,
-           FITS_FILE   *ifp,
+           FitsFile    *ifp,
            guint        picnum,
            guint        ncompose)
 {
-  register guchar    *dest, *src;
-  guchar             *data, *data_end, *linebuf;
-  int                 width, height, tile_height, scan_lines;
-  int                 i, j, max_scan;
-  double              a, b;
-  gint32              layer_ID, image_ID;
-  GeglBuffer         *buffer;
-  GimpImageBaseType   itype;
-  GimpImageType       dtype;
-  gint                err = 0;
-  FITS_HDU_LIST      *hdulist;
-  FITS_PIX_TRANSFORM  trans;
+  register guchar   *dest, *src;
+  guchar            *data, *data_end, *linebuf;
+  int                width, height, tile_height, scan_lines;
+  int                i, j, max_scan;
+  double             a, b;
+  gint32             layer_ID, image_ID;
+  GeglBuffer        *buffer;
+  GimpImageBaseType  itype;
+  GimpImageType      dtype;
+  gint               err = 0;
+  FitsHduList       *hdulist;
+  FitsPixTransform   trans;
 
   hdulist = fits_seek_image (ifp, (int)picnum);
   if (hdulist == NULL)
@@ -740,14 +740,14 @@ load_fits (const gchar *filename,
 }
 
 
-static FITS_HDU_LIST *
-create_fits_header (FITS_FILE *ofp,
-                    guint      width,
-                    guint      height,
-                    guint      bpp)
+static FitsHduList *
+create_fits_header (FitsFile *ofp,
+                    guint     width,
+                    guint     height,
+                    guint     bpp)
 {
-  FITS_HDU_LIST *hdulist;
-  int            print_ctype3 = 0; /* The CTYPE3-card may not be FITS-conforming */
+  FitsHduList *hdulist;
+  gint         print_ctype3 = 0; /* The CTYPE3-card may not be FITS-conforming */
 
   static const char *ctype3_card[] =
   {
@@ -812,9 +812,9 @@ create_fits_header (FITS_FILE *ofp,
 
 /* Save direct colours (GRAY, GRAYA, RGB, RGBA) */
 static gint
-save_fits (FITS_FILE *ofp,
-           gint32     image_ID,
-           gint32     drawable_ID)
+save_fits (FitsFile *ofp,
+           gint32    image_ID,
+           gint32    drawable_ID)
 {
   gint           height, width, i, j, channel;
   gint           tile_height, bpp, bpsl;
@@ -822,7 +822,7 @@ save_fits (FITS_FILE *ofp,
   guchar        *data, *src;
   GeglBuffer    *buffer;
   const Babl    *format = NULL;
-  FITS_HDU_LIST *hdu;
+  FitsHduList *hdu;
 
   buffer = gimp_drawable_get_buffer (drawable_ID);
 
