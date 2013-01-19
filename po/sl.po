@@ -2,9 +2,9 @@
 # Copyright (C) 2004-2012 THE GIMP'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the GIMP package.
 #
-# Boštjan Špetič <igzebede@cyberpipe.org>, 2004 - 2005.
+# Boštjan Špetič <igzebede@cyberpipe.org>, 2004-2005.
 # Nedeljko Grabant <nedeljkograbant@gmail.com>, 2007.
-# Martin Srebotnjak <miles@filmsi.net>, 2007 - 2012, translated from scratch.
+# Martin Srebotnjak <miles@filmsi.net>, 2007-2013, translated from scratch.
 #
 msgid ""
 msgstr ""
