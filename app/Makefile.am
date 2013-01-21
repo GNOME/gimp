@@ -94,7 +94,7 @@ framework_carbon = -framework Carbon
 endif
 
 if OS_WIN32
-win32_ldflags = -mwindows $(WIN32_LARGE_ADDRESS_AWARE)
+win32_ldflags = -mwindows -Wl,--tsaware $(WIN32_LARGE_ADDRESS_AWARE)
 endif
 
 if USE_BINRELOC
