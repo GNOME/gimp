@@ -291,7 +291,7 @@ gimp_directory (void)
 
 #ifdef G_OS_WIN32
 
-/* Taken and slightly modified from glib 2.34.0 code. */
+/* Taken from glib 2.35 code. */
 static gchar *
 get_special_folder (int csidl)
 {
@@ -301,7 +301,7 @@ get_special_folder (int csidl)
   BOOL         b;
   gchar       *retval = NULL;
 
-  hr = SHGetFolderLocation (NULL, csidl, NULL, 0, &pidl);
+  hr = SHGetSpecialFolderLocation (NULL, csidl, &pidl);
   if (hr == S_OK)
     {
       b = SHGetPathFromIDListW (pidl, path);
