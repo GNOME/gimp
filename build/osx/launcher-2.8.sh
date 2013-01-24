@@ -80,5 +80,5 @@ if [ "x$GTK_DEBUG_SHELL" != "x" ]; then
 	exec bash
 
 else
-	$EXEC "$bundle_contents/MacOS/$name-bin"
+	$EXEC "$bundle_contents/MacOS/$name-bin" "$@"
 fi

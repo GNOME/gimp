@@ -9,7 +9,7 @@
 	<key>CFBundleName</key>
 	<string>GIMP</string>
 	<key>CFBundleGetInfoString</key>
-	<string>2.8.2, © 1995-2012 The GIMP Development Team</string>
+	<string>2.8.3, © 1995-2012 The GIMP Development Team</string>
 	<key>CFBundleIconFile</key>
 	<string>gimp.icns</string>
 	<key>CFBundleIdentifier</key>
@@ -19,15 +19,20 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.8.2</string>
+	<string>2.8.3</string>
 	<key>CFBundleSignature</key>
 	<string>gimp</string>
 	<key>CFBundleVersion</key>
-	<string>2.8.2.2</string>
+	<string>2.8.3</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>© 1995-2012 The GIMP Development Team</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.6.0</string>
+	<key>LSMinimumSystemVersionByArchitecture</key>
+	<dict>
+		<key>x86_64</key>
+		<string>10.6.0</string>
+	</dict>
 	<key>NSHighResolutionCapable</key>
 	<true/>
 	<key>CFBundleDocumentTypes</key>
