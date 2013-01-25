@@ -25,6 +25,7 @@ GUI:
  - Allow the text tool to start on an image without layers
  - Various fixes for text style attribute handling
  - Set unconfigured input devices to eraser if GTK+ says they are erasers
+ - Make language selectable in Preferences on OSX
 
 
 Libgimp:
@@ -39,6 +40,11 @@ Plug-ins:
  - Better default values in the Drop Shadow script
  - Fix a whole bunch of bugs in the BMP plug-in
  - On OSX, use the system's screenshot utility
+
+
+Installer:
+
+ - Add Brazilian-Portuguese translation to the Windows installer
 
 
 Source and build system:
