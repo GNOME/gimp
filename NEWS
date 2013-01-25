@@ -7,6 +7,52 @@ This is the stable branch of GIMP. No new features are being added
 here, just bug-fixes.
 
 
+Overview of Changes from GIMP 2.8.2 to GIMP 2.8.4
+=================================================
+
+
+Core:
+
+ - Move the OSX gimpdir to "~/Library/Application Support"
+
+
+GUI:
+
+ - Better names for the default filters in save and export
+ - Make tool drawing (esp. the brush outline) much more responsive
+ - Remember the "maximized" state across sessions
+ - Simplify the splash image code a lot, makes it appear immediately again
+ - Allow the text tool to start on an image without layers
+ - Various fixes for text style attribute handling
+ - Set unconfigured input devices to eraser if GTK+ says they are erasers
+
+
+Libgimp:
+
+ - Make libgimp drawable combo boxes aware of layer groups
+ - Make sure plug-in windows appear on top on OSX
+ - Fix item width in GimpPageSelector (used e.g. in PDF import)
+
+
+Plug-ins:
+
+ - Better default values in the Drop Shadow script
+ - Fix a whole bunch of bugs in the BMP plug-in
+ - On OSX, use the system's screenshot utility
+
+
+Source and build system:
+
+ - Many improvements to the OSX bundle build system
+ - Support automake 1.13
+
+
+General:
+
+ - Lots of bug fixes
+ - Lots of translation updates
+
+
 Overview of Changes from GIMP 2.8.0 to GIMP 2.8.2
 =================================================
 
