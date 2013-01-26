@@ -92,34 +92,33 @@ gimp_config_file_copy (const gchar        *source,
     {
       size_t read_len = nbytes + unwritten_len;
       size_t write_len;
-      gchar* eol;
+      gchar* eol = NULL;
       gchar* write_bytes = NULL;
-
-      eol = g_strrstr_len (buffer, read_len, "\n");
-      if (eol)
-        {
-          *eol = '\0';
-          read_len = strlen (buffer) + 1;
-          *eol++ = '\n';
-        }
-      else if (! feof (sfile))
-        {
-          /* We are in unlikely case where a single config line is
-           * longer than the buffer!
-           */
-          g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
-                       _("Error parsing '%s': line longer than %"
-                         G_GINT64_FORMAT" characters."),
-                       gimp_filename_to_utf8 (dest), (gint64) sizeof (buffer));
-          fclose (sfile);
-          fclose (dfile);
-          if (old_options_regexp)
-            g_regex_unref (old_options_regexp);
-          return FALSE;
-        }
 
       if (old_options_regexp && update_callback)
         {
+          eol = g_strrstr_len (buffer, read_len, "\n");
+          if (eol)
+            {
+              *eol = '\0';
+              read_len = strlen (buffer) + 1;
+              *eol++ = '\n';
+            }
+          else if (! feof (sfile))
+            {
+              /* We are in unlikely case where a single config line is
+               * longer than the buffer!
+               */
+              g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+                           _("Error parsing '%s': line longer than %"
+                             G_GINT64_FORMAT" characters."),
+                           gimp_filename_to_utf8 (source), (gint64) sizeof (buffer));
+              fclose (sfile);
+              fclose (dfile);
+              g_regex_unref (old_options_regexp);
+              return FALSE;
+            }
+
           write_bytes = g_regex_replace_eval (old_options_regexp, buffer,
                                               read_len, 0, 0, update_callback,
                                               NULL, error);
@@ -157,16 +156,16 @@ gimp_config_file_copy (const gchar        *source,
       if (old_options_regexp && update_callback)
         {
           g_free (write_bytes);
-        }
 
-      if (eol)
-        {
-          unwritten_len = nbytes + unwritten_len - read_len;
-          memmove (buffer, eol, unwritten_len);
+          if (eol)
+            {
+              unwritten_len = nbytes + unwritten_len - read_len;
+              memmove (buffer, eol, unwritten_len);
+            }
+          else
+            /* EOF */
+            break;
         }
-      else
-        /* EOF */
-        break;
     }
 
   if (ferror (sfile))
