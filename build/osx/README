@@ -1,8 +1,14 @@
-This are simple step-by-step instructions on how to build gimp on Mac OSX. This guide assumes that you are already somewhat familiar with jhbuild. Before you begin, it's best to remove all references to previous jhbuild, MacPorts, or HomeBrew install from your .profile. Simply renaming it would suffice.
+This are simple step-by-step instructions on how to build gimp on Mac OSX. This guide assumes that you are already somewhat familiar with jhbuild. Before you begin, it's best to remove all references to previous jhbuild, MacPorts, or HomeBrew install from your .profile. Sometimes configure will still pick up random libraries installed in other prefixes (like /opt/local/ or /opt/X11 for example). I recommend moving /opt/ to /opt2/ during the build process.
 
 The dollar sign precedes terminal commands.
 
-These coomands will check for a .profile in your $HOME directory. If one exists, it will rename it.
+Temporarily moving a MacPorts or XQuartz installation to another prefix:
+$ sudo mv /opt /opt2
+
+To move the files back:
+$ sudo mv /opt2 /opt
+
+These commands will check for a .profile in your $HOME directory. If one exists, it will rename it.
 $ if [ -f $HOME/.profile ];
 $ then
 $ mv $HOME/.profile $HOME/.profile-backup
@@ -15,6 +21,7 @@ Once you have git set up, you should download and install jhbuild:
 
 $ cd $HOME
 $ curl -O http://git.gnome.org/browse/gtk-osx/plain/gtk-osx-build-setup.sh
+$ chmod +x gtk-osx-build-setup.sh
 $ sh gtk-osx-build-setup.sh
 
 Now add the jhbuild path to your shell and new .profile:
@@ -29,9 +36,31 @@ $ curl -o $HOME/.jhbuildrc-gimp http://git.gnome.org/browse/gimp/plain/build/osx
 Now you can download and install gimp, where 'gimp' is the directory prefix, and '10.6' is the minimum version you are building gimp for. As it stands, you should be able to leave the values as they are.
 
 $ JHB=gimp GIMP_SDK=10.6 jhbuild bootstrap --ignore-system
-$ JHB=gimp GIMP_SDK=10.6 jhbuild build gimp-python
 
+Now we'll start with freetype, since it's a troublesome one.
+$ JHB=gimp GIMP_SDK=10.6 jhbuild build freetype
+
+The funny thing about jhbuild is that it's no perfect. Meaning you'll have to coax it along. To begin with, neither freetype nor zlib will actually bother configuring themselves. To fix this, you'll need to drop out of jhbuild (or simply open up another Terminal window) and enter the jhbuild shell.
+$ JHB=gimp GIMP_SDK=10.6 jhbuild shell
+
+Then, cd into the freetype and zlib and pass the proper configure commands yourself.
+$ cd ~/gimp/10.6/source/freetype[freetype version here]
+$ ./configure --prefix=$PREFIX
+$ make -j3
+$ make -j3 install
+
+Do the same for zlib when the error comes about.
+$ JHB=gimp GIMP_SDK=10.6 jhbuild build zlib
+
+NOTE: When the perl module pops up, it may tell you that it can neither make nor install. That's fine, just enter "2" and then press the enter key, and then press "2" again and hit the enter key again.
+
+Now that all of that is taken care of, we can finally move on. In order to build gimp, just type this in.
+
+$ JHB=gimp GIMP_SDK=10.6 jhbuild build gimp-2.8
+
+## Ignore ##
 This should work. However, in the odd change that, during the compiling of gimp, docbook.make (or the like) is not found, you should copy and paste the configure script and options in the gimp source folder. Note, all you need to do is configure gimp once, then jhbuild will be able to handle gimp by itself.
+## Ignore ##
 
 In order to create a .app you'll need to download an install gtk-mac-bundler.
 This will install gtk-mac-bundler into ~/.local/bin.
@@ -44,7 +73,7 @@ $ make install
 Now create the gimp.app.
 
 $ cd $HOME/gimp/10.6/source/gimp/build/osx
-$ gtk-mac-bundler gimp-python.bundle
+$ gtk-mac-bundler gimp-2.8.bundle
 
-Please note that this is not a finished process, and there are a few issues that still need to be fixed. Please joing #gimp on irc.gimp.org if you have any questions.
+Please note that this is not a finished process, and there are a few issues that still need to be fixed. Please join #gimp on irc.gimp.org if you have any questions.
 

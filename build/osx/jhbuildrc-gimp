@@ -41,4 +41,4 @@ os.environ['MAKE'] = 'make -j3'
 skip.append("libiconv")
 
 # Main module set
-moduleset = "~/gimp/directory/jhbuild/gimp.modules"
+moduleset = "http://git.gnome.org/browse/gimp/plain/build/osx/gimp.modules?h=gimp-2-8"
