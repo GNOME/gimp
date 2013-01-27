@@ -736,7 +736,7 @@ sel_gauss (GimpDrawable *drawable,
   gboolean     has_alpha;
   guchar      *dest;
   guchar      *src;
-  gint         x, y;
+  gint         x, y, x2, y2;
   gint         width, height;
   gdouble     *mat;
   gint         numrad;
@@ -751,6 +751,14 @@ sel_gauss (GimpDrawable *drawable,
   numrad = (gint) (radius + 1.0);
   mat = g_new (gdouble, numrad);
   init_matrix (radius, mat, numrad);
+
+  x2 = MIN (x + width - 1 + numrad, drawable->width);
+  y2 = MIN (y + height - 1 + numrad, drawable->height);
+
+  x = MAX (x - numrad + 1, 0);
+  y = MAX (y - numrad + 1, 0);
+  width = x2 - x;
+  height = y2 - y;
 
   /*  allocate with extra padding because MMX instructions may read
       more than strictly necessary  */

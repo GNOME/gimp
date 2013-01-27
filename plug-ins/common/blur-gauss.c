@@ -1442,8 +1442,20 @@ gauss (GimpDrawable *drawable,
       preview_buffer = g_new (guchar, width * height * drawable->bpp);
 
     }
-  else if (! gimp_drawable_mask_intersect (drawable->drawable_id,
-                                           &x, &y, &width, &height))
+  else if (gimp_drawable_mask_intersect (drawable->drawable_id,
+                                         &x, &y, &width, &height))
+    { /* With a selection, extend the input area of the amount required */
+      gint hor_extra = method == BLUR_IIR ? 4 : 1 + ceil (horz);
+      gint ver_extra = method == BLUR_IIR ? 4 : 1 + ceil (vert);
+      gint x2        = x + width;
+      gint y2        = y + height;
+
+      x = MAX (x - hor_extra, 0);
+      y = MAX (y - ver_extra, 0);
+      width  = MIN (x2 + hor_extra, drawable->width) - x;
+      height = MIN (y2 + ver_extra, drawable->height) - y;
+    }
+  else
     {
       return;
     }
