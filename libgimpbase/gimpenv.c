@@ -320,7 +320,7 @@ static HMODULE libgimpbase_dll = NULL;
 
 /* Minimal DllMain that just stores the handle to this DLL */
 
-BOOL WINAPI			/* Avoid silly "no previous prototype" gcc warning */
+BOOL WINAPI /* Avoid silly "no previous prototype" gcc warning */
 DllMain (HINSTANCE hinstDLL,
 	 DWORD     fdwReason,
 	 LPVOID    lpvReserved);
@@ -370,39 +370,9 @@ gimp_installation_directory (void)
 
 #ifdef G_OS_WIN32
 
-  {
-    /* Figure it out from the location of this DLL */
-    gchar *filename;
-    gchar *sep1, *sep2;
-
-    wchar_t w_filename[MAX_PATH];
-
-    if (GetModuleFileNameW (libgimpbase_dll, w_filename, G_N_ELEMENTS (w_filename)) == 0)
-      g_error ("GetModuleFilenameW failed");
-
-    filename = g_utf16_to_utf8 (w_filename, -1, NULL, NULL, NULL);
-    if (filename == NULL)
-      g_error ("Converting module filename to UTF-8 failed");
-
-    /* If the DLL file name is of the format
-     * <foobar>\bin\*.dll, use <foobar>.
-     * Otherwise, use the directory where the DLL is.
-     */
-
-    sep1 = strrchr (filename, '\\');
-    *sep1 = '\0';
-
-    sep2 = strrchr (filename, '\\');
-    if (sep2 != NULL)
-      {
-        if (g_ascii_strcasecmp (sep2 + 1, "bin") == 0)
-          {
-            *sep2 = '\0';
-          }
-      }
-
-    toplevel = filename;
-  }
+  toplevel = g_win32_get_package_installation_directory_of_module (libgimpbase_dll);
+  if (! toplevel)
+    g_error ("g_win32_get_package_installation_directory_of_module() failed");
 
 #elif PLATFORM_OSX
 
