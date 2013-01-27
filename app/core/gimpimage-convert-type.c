@@ -58,7 +58,7 @@
  *  remove duplicate or unused colour entries from final colourmap. [Adam]
  *
  * 99/02/24 - Many revisions to the box-cut quantizer used in RGB->INDEXED
- *  conversion.  Box to be cut is chosen on the basis of posessing an axis
+ *  conversion.  Box to be cut is chosen on the basis of possessing an axis
  *  with the largest sum of weighted perceptible error, rather than based on
  *  volume or population.  The box is split along this axis rather than its
  *  longest axis, at the point of error mean rather than simply at its centre.

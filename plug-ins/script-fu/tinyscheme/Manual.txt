@@ -140,7 +140,7 @@ Please read accompanying file COPYING.
      with #\return and #\tab, with obvious meanings. Hex character
      representations are allowed (e.g. #\x20 is #\space).
      When USE_ASCII_NAMES is defined, various control characters can be
-     refered to by their ASCII name.
+     referred to by their ASCII name.
      0	     #\nul	       17       #\dc1
      1	     #\soh             18       #\dc2
      2	     #\stx             19       #\dc3

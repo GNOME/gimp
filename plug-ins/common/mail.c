@@ -633,7 +633,7 @@ create_headers (FILE *mailpipe)
 {
   /* create all the mail header stuff. Feel free to add your own */
   /* It is advisable to leave the X-Mailer header though, as     */
-  /* there is a possibilty of a Gimp mail scanner/reader in the  */
+  /* there is a possibility of a Gimp mail scanner/reader in the  */
   /* future. It will probabaly need that header.                 */
 
   fprintf (mailpipe, "To: %s \n", mail_info.receipt);

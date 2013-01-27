@@ -1055,7 +1055,7 @@ fi
 
 if test "x$with_libtiff" != xno && test -z "$TIFF_LIBS"; then
   AC_MSG_ERROR([
-*** Checks for TIFF libary failed. You can build without it by passing
+*** Checks for TIFF library failed. You can build without it by passing
 *** --without-libtiff to configure but you won't be able to use TIFFs then.])
 fi
 

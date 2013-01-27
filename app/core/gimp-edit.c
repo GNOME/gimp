@@ -470,7 +470,7 @@ gimp_edit_fill (GimpImage            *image,
       break;
 
     case GIMP_NO_FILL:
-      return TRUE;  /*  nothing to do, but the fill succeded  */
+      return TRUE;  /*  nothing to do, but the fill succeeded  */
 
     default:
       g_warning ("%s: unknown fill type", G_STRFUNC);
@@ -504,7 +504,7 @@ gimp_edit_fill_full (GimpImage            *image,
   g_return_val_if_fail (color != NULL || pattern != NULL, FALSE);
 
   if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
-    return TRUE;  /*  nothing to do, but the fill succeded  */
+    return TRUE;  /*  nothing to do, but the fill succeeded  */
 
   if (pattern &&
       babl_format_has_alpha (gimp_temp_buf_get_format (pattern->mask)) &&

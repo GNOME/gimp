@@ -45,7 +45,7 @@
  *
  * The method used here is similar to the lighting invariant correctin
  * method but slightly different: we do not divide the RGB components,
- * but substract them I2 = I0 - I1, where I0 is the sample image to be
+ * but subtract them I2 = I0 - I1, where I0 is the sample image to be
  * corrected, I1 is the reference pattern. Then we solve DeltaI=0
  * (Laplace) with I2 Dirichlet conditions at the borders of the
  * mask. The solver is a unoptimized red/black checker Gauss-Siedel
@@ -430,7 +430,7 @@ gimp_heal (GeglBuffer          *src_buffer,
                                       GEGL_AUTO_ROWSTRIDE,
                                       (GDestroyNotify) g_free, i_2);
 
-  /* substract pattern from image and store the result as a double in i_1 */
+  /* subtract pattern from image and store the result as a double in i_1 */
   gimp_heal_sub (dest_buffer, dest_rect,
                  src_buffer, src_rect,
                  i_1_buffer, GEGL_RECTANGLE (0, 0, width, height));

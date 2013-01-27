@@ -536,7 +536,7 @@ gimp_ui_configurer_get_uber_window (GimpUIConfigurer *ui_configurer)
  * @ui_configurer:
  *
  * Updates the appearance of all shells in all image windows, so they
- * do whatever they deem neccessary to fit the new UI mode mode.
+ * do whatever they deem necessary to fit the new UI mode mode.
  **/
 static void
 gimp_ui_configurer_update_appearance (GimpUIConfigurer *ui_configurer)

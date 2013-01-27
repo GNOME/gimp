@@ -815,7 +815,7 @@ LZWReadByte (FILE *fd,
             ;
 
           if (count != 0)
-            g_print ("GIF: missing EOD in data stream (common occurence)");
+            g_print ("GIF: missing EOD in data stream (common occurrence)");
 
           return -2;
         }

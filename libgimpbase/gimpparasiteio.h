@@ -56,7 +56,7 @@ struct _GimpPixPipeParams
   gboolean  free_selection_string;
 };
 
-/* Initalize with dummy values */
+/* Initialize with dummy values */
 void    gimp_pixpipe_params_init  (GimpPixPipeParams *params);
 
 /* Parse a string into a GimpPixPipeParams */

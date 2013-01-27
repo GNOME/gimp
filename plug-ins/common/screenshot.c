@@ -260,7 +260,7 @@ query (void)
                           "On Mac OS X, when called non-interactively, the plugin"
                           "only can take screenshots of the entire root window."
                           "Grabbing a window or a region is not supported"
-                          "non-interactively. To grab a region or a paticular"
+                          "non-interactively. To grab a region or a particular"
                           "window, you need to use the interactive mode."
 #endif
                           ,

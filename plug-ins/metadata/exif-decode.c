@@ -51,7 +51,7 @@ static void         exif_foreach_entry_cb       (ExifEntry   *entry,
  * Load the Exif data, which is attached to the image as a parasite. The
  * parsed Exif data is merged into the XMP model.
  *
- * Return value: %TRUE on success, %FALSE if an error occured during
+ * Return value: %TRUE on success, %FALSE if an error occurred during
  * reading/writing
  *
  **/

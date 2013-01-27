@@ -147,7 +147,7 @@ Version 1.26
     try a more gradual approach next time.
 
 Version 1.25
-    Types have been homogenized to be able to accomodate a different
+    Types have been homogenized to be able to accommodate a different
     representation. Plus, promises are no longer closures. Unfortunately,
     I discovered that continuations and force/delay do not pass the SCM
     test (and never did)... However, on the bright side, what little

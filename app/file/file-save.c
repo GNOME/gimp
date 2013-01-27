@@ -191,7 +191,7 @@ file_save (Gimp                *gimp,
         }
       else if (export_forward)
         {
-          /* Remeber the last entered Export URI for the image. We
+          /* Remember the last entered Export URI for the image. We
            * only need to do this explicitly when exporting. It
            * happens implicitly when saving since the GimpObject name
            * of a GimpImage is the last-save URI

@@ -733,7 +733,7 @@ save_image (const gchar  *filename,
   fli_header.depth    = 8;  /* I've never seen a depth != 8 */
   fli_header.flags    = 3;
   fli_header.speed    = 1000 / 25;
-  fli_header.created  = 0;  /* program ID. not neccessary... */
+  fli_header.created  = 0;  /* program ID. not necessary... */
   fli_header.updated  = 0;  /* date in MS-DOS format. ignore...*/
   fli_header.aspect_x = 1;  /* aspect ratio. Will be added as soon.. */
   fli_header.aspect_y = 1;  /* ... as GIMP supports it. */
@@ -786,7 +786,7 @@ save_image (const gchar  *filename,
 
       src_row = g_malloc (cols * bytes);
 
-      /* now paste it into the framebuffer, with the neccessary offset */
+      /* now paste it into the framebuffer, with the necessary offset */
       for (yc = 0, yy = offset_y; yc < rows; yc++, yy++)
 	{
 	  if (yy >= 0 && yy < fli_header.height)

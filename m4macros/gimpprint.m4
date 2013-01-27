@@ -89,7 +89,7 @@ main ()
              gimpprint_major_version, gimpprint_minor_version, gimpprint_micro_version);
       printf ("*** was found! If gimpprint-config was correct, then it is best\n");
       printf ("*** to remove the old version of GIMP-PRINT. You may also be able to fix the\n");
-      printf("*** error by modifying your LD_LIBRARY_PATH enviroment variable, or by\n");
+      printf("*** error by modifying your LD_LIBRARY_PATH environment variable, or by\n");
       printf("*** editing /etc/ld.so.conf. Make sure you have run ldconfig if that is\n");
       printf("*** required on your system.\n");
       printf("*** If gimpprint-config was wrong, set the environment variable GIMPPRINT_CONFIG\n");
@@ -129,7 +129,7 @@ main ()
         printf("*** being found. The easiest way to fix this is to remove the old version\n");
         printf("*** of GIMP-PRINT, but you can also set the GIMPPRINT_CONFIG environment to\n");
         printf("*** point to the correct copy of gimpprint-config. (In this case, you will have\n");
-        printf("*** to modify your LD_LIBRARY_PATH enviroment variable, or edit /etc/ld.so.conf\n");
+        printf("*** to modify your LD_LIBRARY_PATH environment variable, or edit /etc/ld.so.conf\n");
         printf("*** so that the correct libraries are found at run-time))\n");
       }
     }

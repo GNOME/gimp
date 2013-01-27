@@ -182,7 +182,7 @@ def load_ora(filename, raw_filename):
         if not path.lower().endswith('.png'):
             continue
         if not name:
-            # use the filename without extention as name
+            # use the filename without extension as name
             n = os.path.basename(path)
             name = os.path.splitext(n)[0]
 

@@ -128,7 +128,7 @@ gimp_tool_options_dispose (GObject *object)
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
-/*  This is such a horrible hack, but neccessary because we
+/*  This is such a horrible hack, but necessary because we
  *  a) load an option's tool-info from disk in many cases
  *  b) screwed up in the past and saved the wrong tool-info in some cases
  */

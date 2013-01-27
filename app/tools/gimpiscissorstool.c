@@ -32,7 +32,7 @@
  */
 
 /* The history of this implementation is lonog and varied.  It was
- * orignally done by Spencer and Peter, and worked fine in the 0.54
+ * originally done by Spencer and Peter, and worked fine in the 0.54
  * (motif only) release of GIMP.  Later revisions (0.99.something
  * until about 1.1.4) completely changed the algorithm used, until it
  * bore little resemblance to the one described in the paper above.
@@ -1567,7 +1567,7 @@ find_optimal_path (TileManager *gradient_map,
         {
           min_cost = G_MAXINT;
 
-          /* pixel[] array encodes how to get to a neigbour, if possible.
+          /* pixel[] array encodes how to get to a neighbour, if possible.
            * 0 means no connection (eg edge).
            * Rest packed as bottom two bytes: y offset then x offset.
            * Initially, we assume we can't get anywhere. */

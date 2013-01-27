@@ -33,7 +33,7 @@
 /*#define DEBUG_CAGE */
 
 /* This DELTA is aimed to not have handle on exact pixel during computation,
- * to avoid particular case. It shouldn't be so usefull, but it's a double
+ * to avoid particular case. It shouldn't be so useful, but it's a double
  * safety. */
 #define DELTA             0.010309278351
 
@@ -334,7 +334,7 @@ gimp_cage_config_get_point_coordinate (GimpCageConfig *gcc,
  * @y: y displacement value
  *
  * Add a displacement for all slected point of the cage.
- * This displacement need to be commited to become effective.
+ * This displacement need to be committed to become effective.
  */
 void
 gimp_cage_config_add_displacement (GimpCageConfig *gcc,

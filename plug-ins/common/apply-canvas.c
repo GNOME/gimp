@@ -20,7 +20,7 @@
  */
 
 /* Don't ask me why its called "Struc". The first .c-file
- * just happend to be called struc.c
+ * just happened to be called struc.c
  *
  * Some code for the dialog was taken from Motion Blur plug-in for
  * GIMP 0.99 by Daniel Skarda (0rfelyus@atrey.karlin.mff.cuni.cz)

@@ -63,7 +63,7 @@ If you "Cancel", nothing will be done to the file.
 
 The "normal" brushes are simply grayscale PGM files, which can be created
 with almost any program, including xv and of course GIMP. A number of
-brushes is included, so I guess a more in-depth explaination is not
+brushes is included, so I guess a more in-depth explanation is not
 necessary. And, for those who might want to try it, GIMPressionist can
 also read GBR files, which is GIMP's native brush format. (You still
 need to copy them to the GIMPressionist's brush-directory, though. This

@@ -126,7 +126,7 @@ static const NamedConstant const script_constants[] =
 };
 
 /* The following constants are deprecated. They are
- * included to keep backwards compatability with
+ * included to keep backwards compatibility with
  * older scripts used with version 2.0 of GIMP.
  */
 static const NamedConstant const old_constants[] =

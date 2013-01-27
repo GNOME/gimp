@@ -93,7 +93,7 @@ gimp_operation_color_balance_map (gfloat  value,
    *     ‾\___
    *     _/‾\_
    *     ___/‾
-   * whith ramps of width a at x = b and x = 1 - b.
+   * with ramps of width a at x = b and x = 1 - b.
    *
    * The sum of these masks equals 1 for x in 0..1, so applying the
    * same correction in the shadows and in the midtones is equivalent

@@ -24,7 +24,7 @@
   <para>
     The <application>GIMP</application> source tree can be divided
     into the core application, libraries, plug-ins, data files and
-    some stuff that doesn't fit into these catagories. Here is a list
+    some stuff that doesn't fit into these categories. Here is a list
     of top-level directories:
   </para>
   

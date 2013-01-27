@@ -232,7 +232,7 @@ gimp_config_writer_new_string (GString *string)
  * system-wide installed gimprc that documents the default settings.
  *
  * Since comments have to start at the beginning of a line, this
- * funtion will insert a newline if necessary.
+ * function will insert a newline if necessary.
  *
  * Since: GIMP 2.4
  **/

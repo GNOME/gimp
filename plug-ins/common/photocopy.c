@@ -132,7 +132,7 @@ query (void)
     "Propagates dark values in an image based on "
     "each pixel's relative darkness to a neighboring average. The idea behind "
     "this filter is to give the look of a photocopied version of the image, "
-    "with toner transfered based on the relative darkness of a particular "
+    "with toner transferred based on the relative darkness of a particular "
     "region. This is achieved by darkening areas of the image which are "
     "measured to be darker than a neighborhood average and setting other "
     "pixels to white. In this way, sufficiently large shifts in intensity "

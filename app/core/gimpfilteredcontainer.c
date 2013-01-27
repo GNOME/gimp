@@ -296,7 +296,7 @@ gimp_filtered_container_real_src_thaw (GimpFilteredContainer *filtered_container
  *
  * Creates a new #GimpFilteredContainer object which creates filtered
  * data view of #GimpTagged objects. It filters @src_container for objects
- * containing all of the filtering tags. Syncronization with @src_container
+ * containing all of the filtering tags. Synchronization with @src_container
  * data is performed automatically.
  *
  * Return value: a new #GimpFilteredContainer object.

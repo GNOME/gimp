@@ -158,7 +158,7 @@ static void             gimp_eevl_error                    (GimpEevl            
  * @data:               Data passed to unit resolver.
  * @error_pos:          Will point to the poisiton within the string,
  *                      before which the parse / evaluation error
- *                      occured. Will be set to null of no error occured.
+ *                      occurred. Will be set to null of no error occurred.
  * @error_message:      Will point to a static string with a semi-descriptive
  *                      error message if parsing / evaluation failed.
  *

@@ -356,7 +356,7 @@ init (void)
   /* Create an array of random gradient vectors uniformly on the unit sphere */
 
   gr = g_rand_new ();
-  g_rand_set_seed (gr, 1);    /* Use static seed, to get reproducable results */
+  g_rand_set_seed (gr, 1);    /* Use static seed, to get reproducible results */
 
   for (i = 0; i < B; i++)
     {

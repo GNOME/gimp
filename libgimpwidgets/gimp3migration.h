@@ -28,7 +28,7 @@
 
 
 /* This file is evil. Its purpose is to keep GIMP's gtk3-port branch
- * managable, and contains functions that are only in GTK+ 3.x but
+ * manageable, and contains functions that are only in GTK+ 3.x but
  * are *not* in GTK+ 2.x. Please just ignore the uglyness and move
  * along. This file will be removed in GIMP 3.
  */

@@ -13,7 +13,7 @@
  * * program cleaned and reorganized by mzraly@ldbvax.dnet.lotus.com
  * *
  * * don't make people pay for this, or I'll jump up and down and
- * * yell and scream and embarass you in front of your friends...
+ * * yell and scream and embarrass you in front of your friends...
  */
 
 /* I've put a HTMLized version of the FAQ up at

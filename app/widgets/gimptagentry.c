@@ -382,7 +382,7 @@ gimp_tag_entry_activate (GtkEntry *entry)
  *
  * Sets tags from @tag_string to @tag_entry. Given tags do not need to
  * be valid as they can be fixed or dropped automatically. Depending on
- * selected #GimpTagEntryMode, appropriate action is peformed.
+ * selected #GimpTagEntryMode, appropriate action is performed.
  **/
 void
 gimp_tag_entry_set_tag_string (GimpTagEntry *entry,

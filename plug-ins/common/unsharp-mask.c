@@ -255,7 +255,7 @@ box_blur_line (const gint    box_width,   /* Width of the kernel           */
 {
   gint  i;
   gint  lead;    /* This marks the leading edge of the kernel              */
-  gint  output;  /* This marks the center of ther kernel                   */
+  gint  output;  /* This marks the center of the kernel                    */
   gint  trail;   /* This marks the pixel BEHIND the last 1 in the
                     kernel; it's the pixel to remove from the accumulator. */
   gint  ac[bpp]; /* Accumulator for each channel                           */
@@ -742,7 +742,7 @@ gen_convolve_matrix (gdouble   radius,
 
   /* we want to generate a matrix that goes out a certain radius
    * from the center, so we have to go out ceil(rad-0.5) pixels,
-   * inlcuding the center pixel.  Of course, that's only in one direction,
+   * including the center pixel.  Of course, that's only in one direction,
    * so we have to go the same amount in the other direction, but not count
    * the center pixel again.  So we double the previous result and subtract
    * one.

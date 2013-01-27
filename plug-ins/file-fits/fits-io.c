@@ -1309,7 +1309,7 @@ fits_eval_pixrange (FILE        *fp,
   gboolean      nan_found   = FALSE;
 
   if (fseek (fp, hdu->data_offset, SEEK_SET) < 0)
-    FITS_RETURN ("fits_eval_pixrange: cant position file", -1);
+    FITS_RETURN ("fits_eval_pixrange: can't position file", -1);
 
   bpp   = hdu->bpp;                /* Number of bytes per pixel */
   nelem = hdu->udata_size / bpp;   /* Number of data elements */
@@ -2408,7 +2408,7 @@ pgmraw_to_fits (gchar *pgmfile,
   if ((buffer[0] != 'P') || (buffer[1] != '5'))
     goto err_return;
 
-  /* Skip comments upto width/height */
+  /* Skip comments up to width/height */
   do
     {
       if (fgets (buffer, sizeof (buffer), pgmin) == NULL)
@@ -2422,7 +2422,7 @@ pgmraw_to_fits (gchar *pgmfile,
   if ((width < 1) || (height < 1))
     goto err_return;
 
-  /* Skip comments upto maxval */
+  /* Skip comments up to maxval */
   do
     {
       if (fgets (buffer, sizeof (buffer), pgmin) == NULL)

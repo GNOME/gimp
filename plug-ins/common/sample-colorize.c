@@ -90,14 +90,14 @@ typedef struct
   gint32 orig_inten;       /* TRUE or FALSE */
   gint32 rnd_subcolors;    /* TRUE or FALSE */
   gint32 guess_missing;    /* TRUE or FALSE */
-  gint32 lvl_in_min;       /* 0 upto 254 */
-  gint32 lvl_in_max;       /* 1 upto 255 */
-  float  lvl_in_gamma;     /* 0.1 upto 10.0  (1.0 == linear) */
-  gint32 lvl_out_min;      /* 0 upto 254 */
-  gint32 lvl_out_max;      /* 1 upto 255 */
+  gint32 lvl_in_min;       /* 0 up to 254 */
+  gint32 lvl_in_max;       /* 1 up to 255 */
+  float  lvl_in_gamma;     /* 0.1 up to 10.0  (1.0 == linear) */
+  gint32 lvl_out_min;      /* 0 up to 254 */
+  gint32 lvl_out_max;      /* 1 up to 255 */
 
-  float  tol_col_err;      /* 0.0% upto 100.0%
-                            * this is uesd to findout colors of the same
+  float  tol_col_err;      /* 0.0% up to 100.0%
+                            * this is used to findout colors of the same
                             * colortone, while analyzing sample colors,
                             * It does not make much sense for the user to adjust this
                             * value. (I used a param file to findout a suitable value)

@@ -1290,7 +1290,7 @@ page_in_list (gchar *list,
           *(c0++) = *c1;
         }
       else if ((*c1 == '-') || (*c1 == ','))
-        { /* Try to remove double occurances of these characters */
+        { /* Try to remove double occurrences of these characters */
           if (c0 == tmplist)
             {
               *(c0++) = *c1;
@@ -1514,7 +1514,7 @@ ps_open (const gchar      *filename,
   *urx = width - 1;
   *ury = height - 1;
 
-  /* Check if the file is a PDF. For PDF, we cant set geometry */
+  /* Check if the file is a PDF. For PDF, we can't set geometry */
   is_pdf = FALSE;
 
   /* Check if it is a EPS-file */

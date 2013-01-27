@@ -1017,7 +1017,7 @@ gimp_bezier_stroke_is_extendable (GimpStroke *stroke,
       else
         {
           /*
-           * it isnt. if we are on a handle go to the nearest
+           * It isn't. If we are on a handle go to the nearest
            * anchor and see if we can find an end from it.
            * Yes, this is tedious.
            */
@@ -1130,7 +1130,7 @@ gimp_bezier_stroke_extend (GimpStroke           *stroke,
           else
             {
               /*
-               * it isnt. if we are on a handle go to the nearest
+               * It isn't. If we are on a handle go to the nearest
                * anchor and see if we can find an end from it.
                * Yes, this is tedious.
                */

@@ -1402,7 +1402,7 @@ add_layers (const gint32  image_id,
                   layer_size = lm_w * lm_h;
                   pixels = g_malloc (layer_size);
                   IFDBG(3) g_debug ("Allocate Pixels %d", layer_size);
-                  /* Crop mask at layer boundry */
+                  /* Crop mask at layer boundary */
                   IFDBG(3) g_debug ("Original Mask %d %d %d %d", lm_x, lm_y, lm_w, lm_h);
                   if (lm_x < 0
                       || lm_y < 0
@@ -1973,7 +1973,7 @@ convert_1_bit (const gchar *src,
                guint32      columns)
 {
 /* Convert bits to bytes left to right by row.
-   Rows are padded out to a byte boundry.
+   Rows are padded out to a byte boundary.
 */
   guint32 row_pos = 0;
   gint    i, j;

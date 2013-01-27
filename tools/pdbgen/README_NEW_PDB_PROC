@@ -148,7 +148,7 @@ HELP
 ----
 
 The +<<'*HELP*'+ practically mean that the content of the string will be
-specified in the next lines and it will continue untill reaching a line
+specified in the next lines and it will continue until reaching a line
 which has the content +HELP+ in it (without any spaces before/after it,
 and without anything else in that line).
 
@@ -482,7 +482,7 @@ you'll be able to find these lines:
 As you can see from the code above, the +controlpoints+ argument starts
 just as a pointer to a double (array) - you have to do the allocation of
 the array yourself. However, if we would specify an array as an input
-argument, then the pointer will point to it's begining.
+argument, then the pointer will point to it's beginning.
 
 Summary
 -------

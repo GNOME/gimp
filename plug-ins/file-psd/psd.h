@@ -34,7 +34,7 @@
 #define PSD_DEBUG 0
 #define IFDBG(level) if (PSD_DEBUG >= level)
 
-/* Set to FALSE to supress pop-up warnings about lossy file conversions */
+/* Set to FALSE to suppress pop-up warnings about lossy file conversions */
 #define CONVERSION_WARNINGS             FALSE
 
 #define LOAD_PROC                       "file-psd-load"

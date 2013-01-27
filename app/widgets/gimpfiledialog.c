@@ -1184,7 +1184,7 @@ gimp_file_dialog_get_dirname_from_uri (const gchar *uri)
    * assertion failure in gtk+. This scenario occurs if we have opened
    * an image from the root of a drive and then do Save As.
    *
-   * Of course, gtk+ shouldn't assert even if we feed it slighly bogus
+   * Of course, gtk+ shouldn't assert even if we feed it slightly bogus
    * data, and that problem should be fixed, too. But to get the
    * correct default current folder in the filechooser combo box, we
    * need to pass it the proper URI for an absolute path anyway. So

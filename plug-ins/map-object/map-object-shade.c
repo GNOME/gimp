@@ -156,7 +156,7 @@ plane_intersect (GimpVector3 *dir,
               imat[1][3] * imat[2][1] * imat[0][0] -
               imat[2][3] * imat[0][1] * imat[1][0]);
 
-      /* Now we have the simultanous solutions. Lets compute the unknowns */
+      /* Now we have the simultaneous solutions. Lets compute the unknowns */
       /* (skip u&v if t is <0, this means the intersection is behind us)  */
       /* ================================================================ */
 

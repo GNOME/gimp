@@ -71,7 +71,7 @@ static void  gimp_rgn_render_region        (const GimpPixelRgn *srcPR,
  * @unused:   ignored
  *
  * Creates a new #GimpRgnIterator for @drawable. The #GimpRunMode
- * parameter is ignored. Use gimp_rgn_iterator_free() to free thsi
+ * parameter is ignored. Use gimp_rgn_iterator_free() to free this
  * iterator.
  *
  * Return value: a newly allocated #GimpRgnIterator.

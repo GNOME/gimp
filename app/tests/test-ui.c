@@ -289,7 +289,7 @@ keyboard_zoom_focus (gconstpointer data)
                                    &shell_y_after_zoom);
   factor_after_zoom = gimp_zoom_model_get_factor (shell->zoom);
 
-  /* First of all make sure a zoom happend at all. If this assert
+  /* First of all make sure a zoom happened at all. If this assert
    * fails, it means that the zoom didn't happen. Possible causes:
    *
    *  * gdk_test_simulate_key() failed to map 'GDK_KEY_plus' to the proper
@@ -443,7 +443,7 @@ restore_recently_closed_multi_column_dock (gconstpointer data)
    */
   gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
                                    "windows",
-                                   /* FIXME: This is severly hardcoded */
+                                   /* FIXME: This is severely hardcoded */
                                    "windows-recent-0003");
   gimp_test_run_mainloop_until_idle ();
   session_infos = gimp_dialog_factory_get_session_infos (gimp_dialog_factory_get_singleton ());

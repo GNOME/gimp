@@ -272,7 +272,7 @@
       <title>GimpData Objects</title>
 
       <para>
-        Object hierarchy of auxilary data objects which share a common
+        Object hierarchy of auxiliary data objects which share a common
         API. Data objects have an on-disk representation and live in a
         <link linkend="GimpDataFactory">GimpDataFactory</link> which
         manages them.

@@ -1624,7 +1624,7 @@ grid_render (GimpDrawable *drawable,
             process_poly (&poly, mvals.tile_allow_split, drawable, col, vary,
                           x1, y1, x2, y2, dest);
 
-            /*  The auxillary hexagon  */
+            /*  The auxiliary hexagon  */
             polygon_reset (&poly);
             polygon_add_point (&poly,
                                grid[index + 2].x,
@@ -1658,7 +1658,7 @@ grid_render (GimpDrawable *drawable,
             process_poly (&poly, mvals.tile_allow_split, drawable, col, vary,
                           x1, y1, x2, y2, dest);
 
-            /*  The auxillary octagon  */
+            /*  The auxiliary octagon  */
             polygon_reset (&poly);
             polygon_add_point (&poly,
                                grid[index + 3].x,
@@ -1704,7 +1704,7 @@ grid_render (GimpDrawable *drawable,
             process_poly (&poly, FALSE, drawable, col, vary,
                           x1, y1, x2, y2, dest);
 
-            /*  The auxillary square  */
+            /*  The auxiliary square  */
             polygon_reset (&poly);
             polygon_add_point (&poly,
                                grid[index + 5].x,

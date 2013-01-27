@@ -10,7 +10,7 @@ commits.
 
      Detailed description that may span several paragraphs and
      lines. Like this example description that is more than one
-     line. Focus on explaning _why_ the commit is needed.
+     line. Focus on explaining _why_ the commit is needed.
 
    or
 
@@ -18,7 +18,7 @@ commits.
 
      Detailed description that may span several paragraphs and
      lines. Like this example description that is more than one
-     line. Focus on explaning _why_ the commit is needed.
+     line. Focus on explaining _why_ the commit is needed.
 
    Look at existing commit messages for examples.
 

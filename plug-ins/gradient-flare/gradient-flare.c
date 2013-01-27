@@ -4864,7 +4864,7 @@ gradient_get_default (const gchar *name,
   currently 6 gradient menus.)
 
   However, this caching routine is not too good. It picks up just
-  GRADIENT_RESOLUTION samples everytime, and rescales it later.  And
+  GRADIENT_RESOLUTION samples every time, and rescales it later.  And
   cached values are stored in guchar array. No accuracy.
  */
 static void

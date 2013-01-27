@@ -128,7 +128,7 @@ gimp_coords_scalarprod (const GimpCoords *a,
 
 
 /*
- * The "lenght" of the gimpcoord.
+ * The "length" of the gimpcoord.
  * Applies a metric that increases the weight on the
  * pressure/xtilt/ytilt/wheel to ensure proper interpolation
  */

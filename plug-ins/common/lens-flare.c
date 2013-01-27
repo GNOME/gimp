@@ -38,7 +38,7 @@
  * Note, the algorithm does not render into an alpha channel.
  * Therefore, changed RGB* to RGB in the capabilities.
  * Someone who actually knows something about graphics should
- * take a look to see why this doesnt render on alpha channel :)
+ * take a look to see why this doesn't render on alpha channel :)
  *
  */
 
@@ -715,7 +715,7 @@ mrt4 (guchar *s,
 /*=================================================================
     CenterFrame
 
-    A frame that contains one preview and 2 entrys, used for positioning
+    A frame that contains one preview and 2 entries, used for positioning
     of the center of Flare.
     This whole thing is just too ugly, but I don't want to dig into it
      - tim

@@ -70,7 +70,7 @@ so it gets a shortcut.
           desc => 'The new display', alias => 'gdisp', init => 1 }
     );
 
-This is a real argument. It has a name, type, description at a minumum.
+This is a real argument. It has a name, type, description at a minimum.
 "alias" lets you use the alias name in your invoker code, but the real
 name is still shown in the ProcRecord. This is useful not only as a
 shorthand, but for grabbing variables defined somewhere else (or constants),

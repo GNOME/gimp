@@ -680,7 +680,7 @@ gimp_image_snap_rectangle (GimpImage *image,
  * Finds out if snapping occurs from position to a snapping candidate
  * and sets the target accordingly.
  *
- * Return value: %TRUE if snapping occured, %FALSE otherwise
+ * Return value: %TRUE if snapping occurred, %FALSE otherwise
  */
 static gboolean
 gimp_image_snap_distance (const gdouble  unsnapped,

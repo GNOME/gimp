@@ -62,7 +62,7 @@
   )
 
 ; If a string num-str is shorter then size, pad it with pad-str in the
-; begining untill it's at least size long
+; beginning until it's at least size long
 (define (pre-pad-number num-str size pad-str)
   (if (< (string-length num-str) size)
       (pre-pad-number (string-append pad-str num-str) size pad-str)
@@ -102,7 +102,7 @@
                  ", " (number->string (color-get-blue color)) ")")
   )
 
-; Convert a color to a simple pair of braces with comma seperated values
+; Convert a color to a simple pair of braces with comma separated values
 ; '(255 255 255) => "(255, 255, 255)"
 (define (color-rgb-to-comma-seperated-list color)
   (string-append "(" (number->string (color-get-red color))
@@ -142,7 +142,7 @@
                         (string->list str)))
   )
 
-; A function that recieves the a file-name, and filters out all the
+; A function that receives the a file-name, and filters out all the
 ; character that shouldn't appear in file names. Then, it makes sure
 ; the remaining name isn't only white-spaces. If it's only
 ; white-spaces, the function returns false. Otherwise, it returns the
@@ -171,7 +171,7 @@
   )
 
 ; This function does the same as name-alpha-numeric, with an added
-; operation - it removes any numbers from the begining
+; operation - it removes any numbers from the beginning
 (define (name-standard str)
   (let ((cleaned (clean str '())))
     (while (char-numeric? (string-ref cleaned 0))

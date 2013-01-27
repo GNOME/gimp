@@ -33,7 +33,7 @@ G_BEGIN_DECLS
 
 #  define SGI_COMP_NONE	0	/* No compression */
 #  define SGI_COMP_RLE	1	/* Run-length encoding */
-#  define SGI_COMP_ARLE	2	/* Agressive run-length encoding */
+#  define SGI_COMP_ARLE	2	/* Aggressive run-length encoding */
 
 
 /*

@@ -109,7 +109,7 @@ typedef struct
 } spot_info_t;
 
 
-/* This is all the info needed per spot function.  Functions are refered to
+/* This is all the info needed per spot function.  Functions are referred to
  * by their index into this array. */
 static spot_info_t spotfn_list[] =
 {

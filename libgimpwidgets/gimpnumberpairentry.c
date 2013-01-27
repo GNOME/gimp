@@ -800,7 +800,7 @@ gimp_number_pair_entry_set_user_override (GimpNumberPairEntry *entry,
  * gimp_number_pair_entry_get_user_override:
  * @entry: A #GimpNumberPairEntry widget.
  *
- * Returns: Wether or not the the widget is in user overridden mode.
+ * Returns: Whether or not the the widget is in user overridden mode.
  *
  * Since: GIMP 2.4
  **/

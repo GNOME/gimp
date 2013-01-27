@@ -380,7 +380,7 @@ pdb.query(name, [blurb, [help, [author, [copyright, [date, [type]]]]]])
 	<VarListEntry>
 	  <term>proc_blurb</term>
 	  <ListItem>
-	    <Para>A short peice of information about the procedure.</Para>
+	    <Para>A short piece of information about the procedure.</Para>
 	  </ListItem>
 	</VarListEntry>
 	<VarListEntry>
@@ -851,7 +851,7 @@ pdb.query(name, [blurb, [help, [author, [copyright, [date, [type]]]]]])
 	<VarListEntry>
 	  <Term><function>gimp.quit</function>()</Term>
 	  <ListItem>
-	    <Para>Stops execution imediately and exits.</Para>
+	    <Para>Stops execution immediately and exits.</Para>
 	  </listitem>
 	</VarListEntry>
 	<VarListEntry>

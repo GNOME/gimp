@@ -183,7 +183,7 @@ script_fu_run (const gchar      *name,
    */
   if (strcmp (name, "extension-script-fu") == 0)
     {
-      /*  Setup auxillary temporary procedures for the base extension  */
+      /*  Setup auxiliary temporary procedures for the base extension  */
       script_fu_extension_init ();
 
       /*  Init the interpreter and register scripts */

@@ -1428,7 +1428,7 @@ save_image (const gchar *filename,
   /* temporary buffer which store pixel data (guchar * bpp = guint32) */
   guint32 pixelbuf[SQR(MAX_SAVE_DIMENSION)];
 
-  /* This will be used in set_size_and_delay fucntion later.
+  /* This will be used in set_size_and_delay function later.
      To define this in that function is easy to read but place here to
      reduce overheads. */
   re = g_regex_new ("[(][ ]*(\\d+)[ ]*(px|ms)[ ]*[)]",
@@ -1814,7 +1814,7 @@ premultiply_alpha (guint32 pixel)
 }
 
 /* set comments to cursor from xmcparas.comments. */
-/* don't forget to XcursorCommentsDestory returned pointer later. */
+/* don't forget to XcursorCommentsDestroy returned pointer later. */
 static XcursorComments *
 set_cursor_comments (void)
 {

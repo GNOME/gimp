@@ -105,7 +105,7 @@ usability features:
    pressing return or otherwise, it becomes a jellybean, i.e. a single
    unit, not a bunch of characters. Navigating in GimpTagEntry,
    deleting tags, etc can be performed much quicker. However, when tag
-   is just beeing entered (not yet confirmed), all actions operate on
+   is just being entered (not yet confirmed), all actions operate on
    characters as usual.
 
  * custom auto completion is implemented in GimpTagEntry widget which

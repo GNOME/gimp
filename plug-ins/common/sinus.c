@@ -224,7 +224,7 @@ run (const gchar      *name,
       /*  Possibly retrieve data  */
       gimp_get_data (PLUG_IN_PROC, &svals);
 
-      /* In order to prepare the dialog I need to know wether it's grayscale or not */
+      /* In order to prepare the dialog I need to know whether it's grayscale or not */
       drawable = gimp_drawable_get (param[2].data.d_drawable);
       thePreview = mw_preview_build_virgin(drawable);
       drawable_is_grayscale = gimp_drawable_is_gray (drawable->drawable_id);

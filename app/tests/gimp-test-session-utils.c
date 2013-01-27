@@ -186,7 +186,7 @@ gimp_test_session_load_and_write_session_files (const gchar *loaded_sessionrc,
   sessionrc_filename = gimp_personal_rc_file (expected_sessionrc);
   dockrc_filename    = gimp_personal_rc_file (expected_dockrc);
 
-  /* Remeber the modtimes and MD5s */
+  /* Remember the modtimes and MD5s */
   g_assert (gimp_test_get_file_state_verbose (sessionrc_filename,
                                               &initial_sessionrc_state));
   g_assert (gimp_test_get_file_state_verbose (dockrc_filename,

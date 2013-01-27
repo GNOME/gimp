@@ -222,7 +222,7 @@ Global data follows no strict rules.
         from GtkPageSetup. The content is identical to what is stored in
 	~/.gimp-2.x/print-page-setup.
 
-"dcm/XXXX-XXXX-AA" (IMAGE, PERSISTANT)
+"dcm/XXXX-XXXX-AA" (IMAGE, PERSISTENT)
         These parasites are stored by the Dicom plug-in and hold the DICOM
         element information for that image. The format is raw binary data
         as read from the original image.
@@ -251,11 +251,11 @@ Global data follows no strict rules.
 ------------------------------------------------------------------
 *** PARASITE FORMAT:
 
-The parasite data format is not rigidly specified. For non-persistant
+The parasite data format is not rigidly specified. For non-persistent
 parasites you are entirely free, as the parasite data does not survive the
-current gimp session. If you need persistant data, you basically have to
+current gimp session. If you need persistent data, you basically have to
 choose between the following alternatives (also, having some standard for
-non-persistant data might be fine as well):
+non-persistent data might be fine as well):
 
 - Cook your own binary data format
   
@@ -270,7 +270,7 @@ non-persistant data might be fine as well):
   that in the parasite, and later sscanf it again. This often solves most
   of the problems you might encounter, makes for easier debugging and
   more robustness (consider the case when you add more entries to your
-  persistant data: older plug-ins might be able to read the relevant
+  persistent data: older plug-ins might be able to read the relevant
   parts and your application can detect missing fields easily). The
   drawback is that your data is likely to be larger than a compact binary
   representation would be. Not much a problem for most applications,

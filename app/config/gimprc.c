@@ -458,7 +458,7 @@ gimp_rc_query (GimpRc      *rc,
 }
 
 /**
- * gimp_rc_set_unkown_token:
+ * gimp_rc_set_unknown_token:
  * @gimprc: a #GimpRc object.
  * @token:
  * @value:

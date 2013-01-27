@@ -195,7 +195,7 @@ gimp_sub_progress_message (GimpProgress        *progress,
  * @progress: parent progress or %NULL
  *
  * GimpSubProgress implements the GimpProgress interface and can be
- * used whereever a GimpProgress is needed. It maps progress
+ * used wherever a GimpProgress is needed. It maps progress
  * information to a sub-range of its parent @progress. This is useful
  * when an action breaks down into multiple sub-actions that itself
  * need a #GimpProgress pointer. See gimp_image_scale() for an example.

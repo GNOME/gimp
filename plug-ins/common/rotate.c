@@ -42,7 +42,7 @@
  *  - rewrite the main function to make it work on tiles rather than
  *    process the image row by row. This should result in a significant
  *    speedup (thanks to quartic for this suggestion).
- *  - do something magical so that only one rotate can be occuring at a time!
+ *  - do something magical so that only one rotate can be occurring at a time!
  */
 
 #include "config.h"

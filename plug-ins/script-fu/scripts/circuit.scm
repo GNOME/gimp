@@ -8,8 +8,8 @@
 ;  Genrates what looks a little like the back of an old circuit board.
 ;  Looks even better when gradmapped with a suitable gradient.
 ;
-; This script doesnt handle or color combos well. ie, black/black
-;  doesnt work..
+; This script doesn't handle or color combos well. ie, black/black
+;  doesn't work..
 ;  The effect seems to work best on odd shaped selections because of some
 ; limitations in the maze codes selection handling ablity
 ;

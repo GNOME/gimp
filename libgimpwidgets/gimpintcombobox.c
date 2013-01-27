@@ -461,7 +461,7 @@ gimp_int_combo_box_get_active (GimpIntComboBox *combo_box,
  * @callback:  a callback to connect to the @combo_box's "changed" signal
  * @data:      a pointer passed as data to g_signal_connect()
  *
- * A convenience function that sets the inital @value of a
+ * A convenience function that sets the initial @value of a
  * #GimpIntComboBox and connects @callback to the "changed"
  * signal.
  *

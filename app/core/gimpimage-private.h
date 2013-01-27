@@ -102,7 +102,7 @@ struct _GimpImagePrivate
   gint               group_count;           /*  nested undo groups           */
   GimpUndoType       pushing_undo_group;    /*  undo group status flag       */
 
-  /*  Signal emmision accumulator  */
+  /*  Signal emission accumulator  */
   GimpImageFlushAccumulator  flush_accum;
 };
 

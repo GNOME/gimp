@@ -38,7 +38,7 @@ portable to different operating systems.
         (2) for directories, and FILE_TYPE_LINK (3) for symbolic
         links. The value FILE_TYPE_OTHER (0) is returned if the file
         is of some other type, does not exist, or if the user does
-		not have sufficient priveleges to allow the file type to be
+        not have sufficient privileges to allow the file type to be
         determined.
 
 (file-size filename)

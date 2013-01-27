@@ -60,7 +60,7 @@ static void compat_callback_data_free (CompatCallbackData       *data);
  * @title:         Title of the dialog to use or %NULL to use the default title.
  * @gradient_name: Initial gradient name.
  * @callback:      A function to call when the selected gradient changes.
- * @data:          A pointer to arbitary data to be used in the call to @callback.
+ * @data:          A pointer to arbitrary data to be used in the call to @callback.
  *
  * Creates a new #GtkWidget that completely controls the selection of
  * a gradient.  This widget is suitable for placement in a table in a

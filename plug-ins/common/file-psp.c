@@ -776,7 +776,7 @@ read_general_image_attribute_block (FILE     *f,
       /* TODO: This causes the chunk size to be ignored. Better verify if it is
        *       valid since it might create read offset problems with the
        *       "expansion field" (which follows after the "graphics content" and
-       *       is of unkown size).
+       *       is of unknown size).
        */
       fseek (f, 4, SEEK_CUR);
     }

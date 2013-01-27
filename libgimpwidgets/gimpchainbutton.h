@@ -22,7 +22,7 @@
 /*
  * This implements a widget derived from GtkTable that visualizes
  * it's state with two different pixmaps showing a closed and a
- * broken chain. It's intented to be used with the GimpSizeEntry
+ * broken chain. It's intended to be used with the GimpSizeEntry
  * widget. The usage is quite similar to the one the GtkToggleButton
  * provides.
  */

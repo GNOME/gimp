@@ -1276,7 +1276,7 @@ gimp_dockbook_set_drag_handler (GimpDockbook *dockbook,
  * @drag_source: A drag-and-drop source widget
  *
  * Gets the dockable associated with a drag-and-drop source. If
- * successfull, the function will also cleanup the dockable.
+ * successful, the function will also cleanup the dockable.
  *
  * Returns: The dockable
  **/

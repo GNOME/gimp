@@ -4,7 +4,7 @@
 ;
 ;All items defined in this file except for the random number routines are
 ;deprecated. Existing scripts should be updated to avoid the use of the
-;compability functions and define statements which follow the random number 
+;compatibility functions and define statements which follow the random number 
 ;generator routines.
 ;
 ;The items marked as deprecated at the end of this file may be removed
@@ -125,7 +125,7 @@
 )
 
 
-;Items below this line are for compatability with Script-Fu but
+;Items below this line are for compatibility with Script-Fu but
 ;may be useful enough to keep around
 
 (define (delq item lis)

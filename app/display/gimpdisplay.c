@@ -885,7 +885,7 @@ gimp_display_paint_area (GimpDisplay *display,
   /*  make sure to expose a superset of the transformed sub-pixel expose
    *  area, not a subset. bug #126942. --mitch
    *
-   *  also acommodate for spill introduced by potential box filtering.
+   *  also accommodate for spill introduced by potential box filtering.
    *  (bug #474509). --simon
    */
   x1 = floor (x1_f - 0.5);

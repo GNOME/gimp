@@ -482,7 +482,7 @@ static GtkWidget *size_label = NULL;
 
 /*  This function retrieves the pixel size from an SVG file. Parsing
  *  stops after the first chunk that provided the parser with enough
- *  information to determine the size. This is usally the opening
+ *  information to determine the size. This is usually the opening
  *  <svg> element and should thus be in the first chunk (1024 bytes).
  */
 static gboolean

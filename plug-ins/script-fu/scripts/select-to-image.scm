@@ -5,7 +5,7 @@
 ; Copyright (c) 1997 Adrian Likins
 ; aklikins@eos.ncsu.edu
 ;
-; Takes the Current selection and saves it as a seperate image.
+; Takes the Current selection and saves it as a separate image.
 ;
 ;
 ; This program is free software: you can redistribute it and/or modify

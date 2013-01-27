@@ -876,7 +876,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                  * to lower border. The second is due to poor X event
                  * resolution. We need to do -1 to ensure that the
                  * amount of events between timestamps is final or
-                 * risk loosing some.
+                 * risk losing some.
                  */
                 last_motion_time =
                   gimp_motion_buffer_get_last_motion_time (shell->motion_buffer);

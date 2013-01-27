@@ -410,7 +410,7 @@ nova_dialog (GimpDrawable *drawable)
 /*=================================================================
     CenterFrame
 
-    A frame that contains one preview and 2 entrys, used for positioning
+    A frame that contains one preview and 2 entries, used for positioning
     of the center of Nova.
 ==================================================================*/
 

@@ -622,7 +622,7 @@ gimp_display_shell_scale_handle_zoom_revert (GimpDisplayShell *shell)
  *
  * Directly sets the image scale and image offsets used by the display. If
  * @resize_window is %TRUE then the display window is resized to better
- * accomodate the image, see gimp_display_shell_shrink_wrap().
+ * accommodate the image, see gimp_display_shell_shrink_wrap().
  **/
 void
 gimp_display_shell_scale_by_values (GimpDisplayShell *shell,
@@ -681,7 +681,7 @@ gimp_display_shell_scale_shrink_wrap (GimpDisplayShell *shell,
  *
  * Function commonly called after a change in display scale to make the changes
  * visible to the user. If @resize_window is %TRUE then the display window is
- * resized to accomodate the display image as per
+ * resized to accommodate the display image as per
  * gimp_display_shell_shrink_wrap().
  **/
 void

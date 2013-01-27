@@ -3365,7 +3365,7 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
           x=car(sc->args);
           if (num_is_integer(x) && num_is_integer(y))
              real_result=0;
-          /* This 'if' is an R5RS compatability fix. */
+          /* This 'if' is an R5RS compatibility fix. */
           /* NOTE: Remove this 'if' fix for R6RS.    */
           if (rvalue(x) == 0 && rvalue(y) < 0) {
              result = 0.0;
