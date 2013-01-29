@@ -19,14 +19,15 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-06-26 20:12+0300\n"
-"PO-Revision-Date: 2012-09-26 11:54+0300\n"
-"Last-Translator: Janne Peltonen <peltzi@gimp-suomi.org>\n"
+"PO-Revision-Date: 2013-01-27 19:04+0200\n"
+"Last-Translator: Ville Skyttä <ville.skytta@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -8201,7 +8202,7 @@ msgstr "Yhdistä näkyvät polut"
 
 #: ../app/core/gimpimage-merge.c:394
 msgid "Not enough visible paths for a merge. There must be at least two."
-msgstr "Ei tarpeeksi polkuja yhdistämiseen. Pitää olla vähintäin kaksi."
+msgstr "Ei tarpeeksi polkuja yhdistämiseen. Pitää olla vähintään kaksi."
 
 #: ../app/core/gimpimage-new.c:140
 msgid "Background"
@@ -9930,7 +9931,7 @@ msgstr "Pysty"
 #: ../app/dialogs/preferences-dialog.c:2350
 #: ../app/widgets/gimpimagepropview.c:470
 msgid "ppi"
-msgstr "dpi"
+msgstr "ppi"
 
 #: ../app/dialogs/preferences-dialog.c:2366
 #, c-format
@@ -12248,7 +12249,7 @@ msgstr "_Rajaa"
 
 #: ../app/tools/gimpcroptool.c:253
 msgid "Click or press Enter to crop"
-msgstr "Rajaa napsauttamalla tai painamalla enteriä"
+msgstr "Rajaa napsauttamalla tai painamalla Enteriä"
 
 #: ../app/tools/gimpcroptool.c:318
 msgid "There is no active layer to crop."
@@ -12661,7 +12662,7 @@ msgstr "_GEGL-toiminto..."
 
 #: ../app/tools/gimpgegltool.c:160
 msgid "GEGL operations do not operate on indexed layers."
-msgstr "GEGL-toiminnont eivät toimi indeksoiduilla tasoilla."
+msgstr "GEGL-toiminnot eivät toimi indeksoiduilla tasoilla."
 
 #: ../app/tools/gimpgegltool.c:378
 msgid "_Operation:"
@@ -12872,11 +12873,11 @@ msgstr "Lisää ohjauspiste osioon napsauttamalla"
 
 #: ../app/tools/gimpiscissorstool.c:939
 msgid "Click or press Enter to convert to a selection"
-msgstr "Muunna valinnaksi napsauttamalla tai painamalla enteriä"
+msgstr "Muunna valinnaksi napsauttamalla tai painamalla Enteriä"
 
 #: ../app/tools/gimpiscissorstool.c:949
 msgid "Press Enter to convert to a selection"
-msgstr "Muunna valinnaksi painamalla enteriä"
+msgstr "Muunna valinnaksi painamalla Enteriä"
 
 #: ../app/tools/gimpiscissorstool.c:964
 msgid "Click or Click-Drag to add a point"
@@ -13253,7 +13254,7 @@ msgstr "Perspektiivi"
 
 #: ../app/tools/gimpposterizetool.c:85
 msgid "Posterize Tool: Reduce to a limited set of colors"
-msgstr "Postrisaatiotyökalu: Vähennä värien määrää"
+msgstr "Posterisaatiotyökalu: Vähennä värien määrää"
 
 #: ../app/tools/gimpposterizetool.c:86
 msgid "_Posterize..."
@@ -13273,7 +13274,7 @@ msgstr "Posterisaatioarvot:"
 
 #: ../app/tools/gimprectangleoptions.c:104
 msgid "Automatically shrink to the nearest rectangular shape in a layer"
-msgstr "Kutista automaatisesti tason lähimpään suorakulmaiseen muotoon"
+msgstr "Kutista automaattisesti tason lähimpään suorakulmaiseen muotoon"
 
 #: ../app/tools/gimprectangleoptions.c:113
 msgid "Use all visible layers when shrinking the selection"
@@ -15624,7 +15625,7 @@ msgstr "[ peruskuva ]"
 
 #: ../app/widgets/gimpvectorstreeview.c:111
 msgid "Lock path strokes"
-msgstr "Lukiste polun piirrot"
+msgstr "Lukitse polun piirrot"
 
 #: ../app/widgets/gimpviewablebox.c:87
 msgid "Open the brush selection dialog"

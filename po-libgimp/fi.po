@@ -12,13 +12,14 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2012-05-04 13:53+0000\n"
-"PO-Revision-Date: 2012-06-22 \n"
-"Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
+"PO-Revision-Date: 2013-01-27 18:33+0200\n"
+"Last-Translator: Ville Skyttä <ville.skytta@iki.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1077
@@ -922,7 +923,7 @@ msgstr "Sisäinen GIMP-proseduuri"
 #| msgid "GIMP Plug-In"
 msgctxt "pdb-proc-type"
 msgid "GIMP Plug-In"
-msgstr "GIMP-liitänninen"
+msgstr "GIMP-liitännäinen"
 
 #: ../libgimpbase/gimpbaseenums.c:937
 #| msgid "GIMP Extension"
@@ -1001,7 +1002,7 @@ msgstr "Tasaa molemmat"
 #: ../modules/color-selector-cmyk-lcms.c:430
 #: ../modules/display-filter-lcms.c:178
 msgid "(invalid UTF-8 string)"
-msgstr "(Kelpaamaton unicode merkkijono)"
+msgstr "(kelpaamaton UTF-8 -merkkijono)"
 
 #. *
 #. * SECTION: gimpcolorconfig
@@ -1034,7 +1035,7 @@ msgstr "Oletuksena käytettävä RGB-työtilan väriprofiili."
 
 #: ../libgimpconfig/gimpcolorconfig.c:62
 msgid "The CMYK color profile used to convert between RGB and CMYK."
-msgstr "RGB- ja CMYK-värin väliseen konversioon käyetty CMYK-väriprofiili."
+msgstr "RGB- ja CMYK-värin väliseen konversioon käytetty CMYK-väriprofiili."
 
 #: ../libgimpconfig/gimpcolorconfig.c:64
 msgid "The color profile used for simulating a printed version (softproof)."
@@ -1131,7 +1132,7 @@ msgstr "kelvoton arvo \"%ld\" symbolille %s"
 #: ../libgimpconfig/gimpconfig-deserialize.c:602
 #, c-format
 msgid "while parsing token '%s': %s"
-msgstr "jäsennettäesssä symbolia \"%s\": %s"
+msgstr "jäsennettäessä symbolia \"%s\": %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:482
 #: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:559
@@ -1188,7 +1189,7 @@ msgstr "Tiedostoa \"%s\" ei voitu luoda: %s"
 #: ../libgimpconfig/gimpscanner.c:268
 #, c-format
 msgid "invalid UTF-8 string"
-msgstr "Epäkelpo unicode-merkkijono"
+msgstr "epäkelpo UTF-8 -merkkijono"
 
 #. please don't translate 'yes' and 'no'
 #: ../libgimpconfig/gimpscanner.c:431
@@ -1295,8 +1296,8 @@ msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
 msgstr ""
-"HTML ja CSS-tiedostoissa käytettä heksadesimaalimerkintä värimäärittely. "
-"Kohta hyväkysyy myös CSS värinimet."
+"HTML- ja CSS-tiedostoissa käytetty heksadesimaalimerkintä värimäärittely. "
+"Kohta hyväksyy myös CSS-värinimet."
 
 #: ../libgimpwidgets/gimpcolorselection.c:320
 msgid "HTML _notation:"
@@ -1743,7 +1744,7 @@ msgstr "Pyörä"
 
 #: ../modules/controller-dx-dinput.c:155
 msgid "DirectX DirectInput event controller"
-msgstr "DirectX DirectInpu syöteohjain"
+msgstr "DirectX DirectInput syöteohjain"
 
 #: ../modules/controller-dx-dinput.c:195
 #: ../modules/controller-linux-input.c:217 ../modules/controller-midi.c:211
@@ -1832,7 +1833,7 @@ msgstr "Z-akselin kääntö oikealle"
 #: ../modules/controller-dx-dinput.c:500
 #, c-format
 msgid "Slider %d Increase"
-msgstr "Liu'n %d kasvatus"
+msgstr "Liu'un %d kasvatus"
 
 #: ../modules/controller-dx-dinput.c:503
 #, c-format
@@ -2039,7 +2040,7 @@ msgstr "Laite, josta MIDI-tapahtumia luetaan."
 
 #: ../modules/controller-midi.c:205
 msgid "Enter 'alsa' to use the ALSA sequencer."
-msgstr "Syötä 'alsa', jos haluat käyttää ALSAn sekvensseria."
+msgstr "Syötä 'alsa', jos haluat käyttää ALSAn sekvensseriä."
 
 #: ../modules/controller-midi.c:220
 msgid "Channel:"
