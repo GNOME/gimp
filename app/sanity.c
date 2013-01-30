@@ -163,7 +163,7 @@ static gchar *
 sanity_check_cairo (void)
 {
 #define CAIRO_REQUIRED_MAJOR 1
-#define CAIRO_REQUIRED_MINOR 10
+#define CAIRO_REQUIRED_MINOR 12
 #define CAIRO_REQUIRED_MICRO 2
 
   if (cairo_version () < CAIRO_VERSION_ENCODE (CAIRO_REQUIRED_MAJOR,

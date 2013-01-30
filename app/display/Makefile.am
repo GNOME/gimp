@@ -75,6 +75,8 @@ libappdisplay_a_sources = \
 	gimpdisplay-foreach.h			\
 	gimpdisplay-handlers.c			\
 	gimpdisplay-handlers.h			\
+	gimpdisplay-transport.c			\
+	gimpdisplay-transport.h			\
 	gimpdisplayshell.c			\
 	gimpdisplayshell.h			\
 	gimpdisplayshell-appearance.c		\

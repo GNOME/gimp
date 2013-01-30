@@ -299,12 +299,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->x_src_dec   = 1;
   shell->y_src_dec   = 1;
 
-  shell->render_surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
-                                                      GIMP_DISPLAY_RENDER_BUF_WIDTH *
-                                                      GIMP_DISPLAY_RENDER_MAX_SCALE,
-                                                      GIMP_DISPLAY_RENDER_BUF_HEIGHT *
-                                                      GIMP_DISPLAY_RENDER_MAX_SCALE);
-
   gimp_display_shell_items_init (shell);
 
   shell->icon_size  = 32;
@@ -781,12 +775,6 @@ gimp_display_shell_dispose (GObject *object)
     {
       g_source_remove (shell->filter_idle_id);
       shell->filter_idle_id = 0;
-    }
-
-  if (shell->render_surface)
-    {
-      cairo_surface_destroy (shell->render_surface);
-      shell->render_surface = NULL;
     }
 
   if (shell->mask_surface)

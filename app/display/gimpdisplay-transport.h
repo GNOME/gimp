@@ -15,14 +15,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_RENDER_H__
-#define __GIMP_DISPLAY_SHELL_RENDER_H__
+#ifndef __GIMP_DISPLAY_TRANSPORT_H__
+#define __GIMP_DISPLAY_TRANSPORT_H__
 
-void  gimp_display_shell_render (GimpDisplayShell *shell,
-                                 cairo_t          *cr,
-                                 gint              x,
-                                 gint              y,
-                                 gint              w,
-                                 gint              h);
+#include <cairo.h>
 
-#endif  /*  __GIMP_DISPLAY_SHELL_RENDER_H__  */
+/* #define GIMP_DISPLAY_RENDER_ENABLE_SCALING 1 */
+
+#define GIMP_DISPLAY_RENDER_BUF_WIDTH  256
+#define GIMP_DISPLAY_RENDER_BUF_HEIGHT 256
+
+#ifdef GIMP_DISPLAY_RENDER_ENABLE_SCALING
+#define GIMP_DISPLAY_RENDER_MAX_SCALE 2.0
+#else
+#define GIMP_DISPLAY_RENDER_MAX_SCALE 1.0
+#endif
+
+typedef struct GimpDisplayXfer GimpDisplayXfer;
+
+GimpDisplayXfer *
+gimp_display_xfer_realize (GtkWidget *widget);
+
+cairo_surface_t *
+gimp_display_xfer_get_surface (GimpDisplayXfer *xfer,
+			       gint w, gint h,
+			       gint *src_x, gint *src_y);
+
+#endif  /*  __GIMP_DISPLAY_TRANSPORT_H__  */

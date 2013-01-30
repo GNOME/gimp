@@ -42,7 +42,6 @@
 #include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-scroll.h"
 
-
 void
 gimp_display_shell_render (GimpDisplayShell *shell,
                            cairo_t          *cr,
@@ -59,6 +58,10 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   gint            viewport_offset_y;
   gint            viewport_width;
   gint            viewport_height;
+  cairo_surface_t *xfer;
+  gint            src_x, src_y;
+  gint            stride;
+  unsigned char  *data;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
@@ -80,6 +83,14 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                                                  &viewport_offset_y,
                                                  &viewport_width,
                                                  &viewport_height);
+  xfer = gimp_display_xfer_get_surface (shell->xfer,
+					w * window_scale,
+					h * window_scale,
+					&src_x, &src_y);
+
+  stride =cairo_image_surface_get_stride (xfer);
+  data = cairo_image_surface_get_data (xfer);
+  data += src_y * stride + src_x * 4;
 
   gegl_buffer_get (buffer,
                    GEGL_RECTANGLE ((x + viewport_offset_x) * window_scale,
@@ -88,32 +99,20 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                                    h * window_scale),
                    shell->scale_x * window_scale,
                    babl_format ("cairo-ARGB32"),
-                   cairo_image_surface_get_data (shell->render_surface),
-                   cairo_image_surface_get_stride (shell->render_surface),
+		   data, stride,
                    GEGL_ABYSS_NONE);
 
   /*  apply filters to the rendered projection  */
   if (shell->filter_stack)
     {
-      cairo_surface_t *sub = shell->render_surface;
-
-      if (w != GIMP_DISPLAY_RENDER_BUF_WIDTH ||
-          h != GIMP_DISPLAY_RENDER_BUF_HEIGHT)
-        sub = cairo_image_surface_create_for_data (cairo_image_surface_get_data (sub),
-                                                   CAIRO_FORMAT_ARGB32,
-                                                   w * window_scale,
-                                                   h * window_scale,
-                                                   GIMP_DISPLAY_RENDER_BUF_WIDTH * 4);
-
-      gimp_color_display_stack_convert_surface (shell->filter_stack, sub);
-
-      if (sub != shell->render_surface)
-        cairo_surface_destroy (sub);
+      cairo_surface_t *image =
+	cairo_image_surface_create_for_data (data, CAIRO_FORMAT_ARGB32,
+					     w * window_scale,
+					     h * window_scale,
+					     stride);
+      gimp_color_display_stack_convert_surface (shell->filter_stack, image);
+      cairo_surface_destroy (image);
     }
-
-  cairo_surface_mark_dirty_rectangle (shell->render_surface,
-                                      0, 0,
-                                      w * window_scale, h * window_scale);
 
 #if 0
   if (shell->mask)
@@ -151,9 +150,9 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
   cairo_scale (cr, 1.0 / window_scale, 1.0 / window_scale);
 
-  cairo_set_source_surface (cr, shell->render_surface,
-                            x * window_scale,
-                            y * window_scale);
+  cairo_set_source_surface (cr, xfer,
+                            (x - src_x) * window_scale,
+                            (y - src_y) * window_scale);
 
   cairo_paint (cr);
 
