@@ -36,6 +36,7 @@
 #include "gimpcanvas.h"
 #include "gimpcanvaspath.h"
 #include "gimpdisplay.h"
+#include "gimpdisplay-transport.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-render.h"

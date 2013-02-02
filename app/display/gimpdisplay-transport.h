@@ -18,7 +18,6 @@
 #ifndef __GIMP_DISPLAY_TRANSPORT_H__
 #define __GIMP_DISPLAY_TRANSPORT_H__
 
-#include <cairo.h>
 
 /* #define GIMP_DISPLAY_RENDER_ENABLE_SCALING 1 */
 
@@ -31,14 +30,14 @@
 #define GIMP_DISPLAY_RENDER_MAX_SCALE 1.0
 #endif
 
-typedef struct GimpDisplayXfer GimpDisplayXfer;
 
-GimpDisplayXfer *
-gimp_display_xfer_realize (GtkWidget *widget);
+GimpDisplayXfer * gimp_display_xfer_realize     (GtkWidget       *widget);
 
-cairo_surface_t *
-gimp_display_xfer_get_surface (GimpDisplayXfer *xfer,
-			       gint w, gint h,
-			       gint *src_x, gint *src_y);
+cairo_surface_t * gimp_display_xfer_get_surface (GimpDisplayXfer *xfer,
+                                                 gint             w,
+                                                 gint             h,
+                                                 gint            *src_x,
+                                                 gint            *src_y);
+
 
 #endif  /*  __GIMP_DISPLAY_TRANSPORT_H__  */

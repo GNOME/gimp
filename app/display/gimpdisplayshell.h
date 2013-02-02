@@ -18,7 +18,6 @@
 #ifndef __GIMP_DISPLAY_SHELL_H__
 #define __GIMP_DISPLAY_SHELL_H__
 
-#include "gimpdisplay-transport.h"
 
 /* Apply to a float the same rounding mode used in the renderer */
 #define  PROJ_ROUND(coord)   ((gint) RINT (coord))
@@ -115,7 +114,7 @@ struct _GimpDisplayShell
 
   GtkWidget         *statusbar;        /*  statusbar                          */
 
-  GimpDisplayXfer   *xfer;
+  GimpDisplayXfer   *xfer;             /*  managers image buffer transfers    */
   cairo_surface_t   *mask_surface;     /*  buffer for rendering the mask      */
   cairo_pattern_t   *checkerboard;     /*  checkerboard pattern               */
 

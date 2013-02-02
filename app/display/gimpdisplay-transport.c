@@ -20,30 +20,50 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "display-types.h"
+
 #include "gimpdisplay-transport.h"
+
 
 #define NUM_PAGES 2
 
-struct GimpDisplayXfer {
-  struct rtree {
-      struct rtree_node {
-	  struct rtree_node *children[2];
-	  struct rtree_node *next;
-	  int x, y, w, h;
-      } root, *available;
-  } rtree; /* track subregions of render_surface for efficient uploads */
-  cairo_surface_t *render_surface[NUM_PAGES];
-  int page;
+typedef struct _RTree     RTree;
+typedef struct _RTreeNode RTreeNode;
+
+struct _RTreeNode
+{
+  RTreeNode *children[2];
+  RTreeNode *next;
+  gint       x, y, w, h;
 };
 
-static struct rtree_node *
-rtree_node_create (struct rtree *rtree, struct rtree_node **prev,
-		   int x, int y, int w, int h)
+struct _RTree
 {
-  struct rtree_node *node;
+  RTreeNode  root;
+  RTreeNode *available;
+};
 
-  g_assert(x >= 0 && x+w <= rtree->root.w);
-  g_assert(y >= 0 && y+h <= rtree->root.h);
+struct _GimpDisplayXfer
+{
+  /* track subregions of render_surface for efficient uploads */
+  RTree            rtree;
+  cairo_surface_t *render_surface[NUM_PAGES];
+  gint             page;
+};
+
+
+static RTreeNode *
+rtree_node_create (RTree      *rtree,
+                   RTreeNode **prev,
+		   gint        x,
+                   gint        y,
+                   gint        w,
+                   gint        h)
+{
+  RTreeNode *node;
+
+  g_assert (x >= 0 && x+w <= rtree->root.w);
+  g_assert (y >= 0 && y+h <= rtree->root.h);
 
   node = g_slice_alloc (sizeof (*node));
   if (node == NULL)
@@ -63,9 +83,10 @@ rtree_node_create (struct rtree *rtree, struct rtree_node **prev,
 }
 
 static void
-rtree_node_destroy (struct rtree *rtree, struct rtree_node *node)
+rtree_node_destroy (RTree     *rtree,
+                    RTreeNode *node)
 {
-  int i;
+  gint i;
 
   for (i = 0; i < 2; i++)
     {
@@ -73,19 +94,22 @@ rtree_node_destroy (struct rtree *rtree, struct rtree_node *node)
 	rtree_node_destroy (rtree, node->children[i]);
     }
 
-  g_slice_free (struct rtree_node, node);
+  g_slice_free (RTreeNode, node);
 }
 
-static struct rtree_node *
-rtree_node_insert (struct rtree *rtree, struct rtree_node **prev,
-		   struct rtree_node *node, int w, int h)
+static RTreeNode *
+rtree_node_insert (RTree      *rtree,
+                   RTreeNode **prev,
+		   RTreeNode  *node,
+                   gint        w,
+                   gint        h)
 {
   *prev = node->next;
 
   if (((node->w - w) | (node->h - h)) > 1)
     {
-      int ww = node->w - w;
-      int hh = node->h - h;
+      gint ww = node->w - w;
+      gint hh = node->h - h;
 
       if (ww >= hh)
 	{
@@ -110,10 +134,12 @@ rtree_node_insert (struct rtree *rtree, struct rtree_node **prev,
   return node;
 }
 
-static struct rtree_node *
-rtree_insert (struct rtree *rtree, int w, int h)
+static RTreeNode *
+rtree_insert (RTree *rtree,
+              gint   w,
+              gint   h)
 {
-  struct rtree_node *node, **prev;
+  RTreeNode *node, **prev;
 
   for (prev = &rtree->available; (node = *prev); prev = &node->next)
     if (node->w >= w && w < 2 * node->w && node->h >= h && h < 2 * node->h)
@@ -127,7 +153,9 @@ rtree_insert (struct rtree *rtree, int w, int h)
 }
 
 static void
-rtree_init (struct rtree *rtree, int w, int h)
+rtree_init (RTree *rtree,
+            gint   w,
+            gint   h)
 {
   rtree->root.x = 0;
   rtree->root.y = 0;
@@ -140,9 +168,9 @@ rtree_init (struct rtree *rtree, int w, int h)
 }
 
 static void
-rtree_reset (struct rtree *rtree)
+rtree_reset (RTree *rtree)
 {
-  int i;
+  gint i;
 
   for (i = 0; i < 2; i++)
     {
@@ -178,6 +206,7 @@ gimp_display_xfer_realize (GtkWidget *widget)
 
   screen = gtk_widget_get_screen (widget);
   xfer = g_object_get_data (G_OBJECT (screen), "gimpdisplay-transport");
+
   if (xfer == NULL)
     {
       cairo_t *cr;
@@ -209,10 +238,12 @@ gimp_display_xfer_realize (GtkWidget *widget)
 
 cairo_surface_t *
 gimp_display_xfer_get_surface (GimpDisplayXfer *xfer,
-			       gint w, gint h,
-			       gint *src_x, gint *src_y)
+			       gint             w,
+                               gint             h,
+			       gint            *src_x,
+                               gint            *src_y)
 {
-  struct rtree_node *node;
+  RTreeNode *node;
 
   g_assert (w <= GIMP_DISPLAY_RENDER_BUF_WIDTH * GIMP_DISPLAY_RENDER_MAX_SCALE &&
 	    h <= GIMP_DISPLAY_RENDER_BUF_HEIGHT * GIMP_DISPLAY_RENDER_MAX_SCALE);
@@ -230,5 +261,6 @@ gimp_display_xfer_get_surface (GimpDisplayXfer *xfer,
 
   *src_x = node->x;
   *src_y = node->y;
+
   return xfer->render_surface[xfer->page];
 }

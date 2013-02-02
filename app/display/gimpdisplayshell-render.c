@@ -36,11 +36,13 @@
 #include "core/gimpprojection.h"
 
 #include "gimpdisplay.h"
+#include "gimpdisplay-transport.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-transform.h"
 #include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-scroll.h"
+
 
 void
 gimp_display_shell_render (GimpDisplayShell *shell,
@@ -50,18 +52,18 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                            gint              w,
                            gint              h)
 {
-  GimpImage      *image;
-  GimpProjection *projection;
-  GeglBuffer     *buffer;
-  gdouble         window_scale = 1.0;
-  gint            viewport_offset_x;
-  gint            viewport_offset_y;
-  gint            viewport_width;
-  gint            viewport_height;
+  GimpImage       *image;
+  GimpProjection  *projection;
+  GeglBuffer      *buffer;
+  gdouble          window_scale = 1.0;
+  gint             viewport_offset_x;
+  gint             viewport_offset_y;
+  gint             viewport_width;
+  gint             viewport_height;
   cairo_surface_t *xfer;
-  gint            src_x, src_y;
-  gint            stride;
-  unsigned char  *data;
+  gint             src_x, src_y;
+  gint             stride;
+  guchar          *data;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
@@ -88,7 +90,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 					h * window_scale,
 					&src_x, &src_y);
 
-  stride =cairo_image_surface_get_stride (xfer);
+  stride = cairo_image_surface_get_stride (xfer);
   data = cairo_image_surface_get_data (xfer);
   data += src_y * stride + src_x * 4;
 

@@ -34,6 +34,7 @@
 
 #include "gimpcanvasitem.h"
 #include "gimpdisplay.h"
+#include "gimpdisplay-transport.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-callbacks.h"
