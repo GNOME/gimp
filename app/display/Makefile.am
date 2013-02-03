@@ -75,8 +75,6 @@ libappdisplay_a_sources = \
 	gimpdisplay-foreach.h			\
 	gimpdisplay-handlers.c			\
 	gimpdisplay-handlers.h			\
-	gimpdisplay-transport.c			\
-	gimpdisplay-transport.h			\
 	gimpdisplayshell.c			\
 	gimpdisplayshell.h			\
 	gimpdisplayshell-appearance.c		\
@@ -129,6 +127,8 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-tool-events.h		\
 	gimpdisplayshell-transform.c		\
 	gimpdisplayshell-transform.h		\
+	gimpdisplayxfer.c			\
+	gimpdisplayxfer.h			\
 	gimpimagewindow.c			\
 	gimpimagewindow.h			\
 	gimpmotionbuffer.c			\

@@ -36,12 +36,12 @@
 #include "core/gimpprojection.h"
 
 #include "gimpdisplay.h"
-#include "gimpdisplay-transport.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-transform.h"
 #include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-scroll.h"
+#include "gimpdisplayxfer.h"
 
 
 void

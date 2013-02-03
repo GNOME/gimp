@@ -34,7 +34,6 @@
 
 #include "gimpcanvasitem.h"
 #include "gimpdisplay.h"
-#include "gimpdisplay-transport.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-callbacks.h"
@@ -42,6 +41,7 @@
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-title.h"
+#include "gimpdisplayxfer.h"
 #include "gimpimagewindow.h"
 #include "gimpnavigationeditor.h"
 

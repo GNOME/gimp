@@ -22,7 +22,7 @@
 
 #include "display-types.h"
 
-#include "gimpdisplay-transport.h"
+#include "gimpdisplayxfer.h"
 
 
 #define NUM_PAGES 2
@@ -205,7 +205,7 @@ gimp_display_xfer_realize (GtkWidget *widget)
   GimpDisplayXfer *xfer;
 
   screen = gtk_widget_get_screen (widget);
-  xfer = g_object_get_data (G_OBJECT (screen), "gimpdisplay-transport");
+  xfer = g_object_get_data (G_OBJECT (screen), "gimp-display-xfer");
 
   if (xfer == NULL)
     {
@@ -229,7 +229,7 @@ gimp_display_xfer_realize (GtkWidget *widget)
       xfer->page = 0;
 
       g_object_set_data_full (G_OBJECT (screen),
-			      "gimpdisplay-transport",
+			      "gimp-display-xfer",
 			      xfer, xfer_destroy);
     }
 

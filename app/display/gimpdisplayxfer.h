@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_TRANSPORT_H__
-#define __GIMP_DISPLAY_TRANSPORT_H__
+#ifndef __GIMP_DISPLAY_XFER_H__
+#define __GIMP_DISPLAY_XFER_H__
 
 
 /* #define GIMP_DISPLAY_RENDER_ENABLE_SCALING 1 */
@@ -40,4 +40,4 @@ cairo_surface_t * gimp_display_xfer_get_surface (GimpDisplayXfer *xfer,
                                                  gint            *src_y);
 
 
-#endif  /*  __GIMP_DISPLAY_TRANSPORT_H__  */
+#endif  /*  __GIMP_DISPLAY_XFER_H__  */
