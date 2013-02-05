@@ -42,7 +42,7 @@
 # specified in bytes, kilobytes, megabytes or gigabytes. If no suffix is
 # specified the size defaults to being specified in kilobytes.
 # 
-# (tile-cache-size 2038980k)
+# (tile-cache-size 2039030k)
 
 # Specifies the language to use for the user interface.  This is a string
 # value.
