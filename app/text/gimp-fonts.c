@@ -116,10 +116,8 @@ gimp_fonts_reset (Gimp *gimp)
   if (gimp->no_fonts)
     return;
 
-  /* We clear the default config here, so any subsequent fontconfig use will
-   * reinit the library with defaults. (Maybe we should call FcFini here too?)
-   */
-  FcConfigSetCurrent (NULL);
+  /* Reinit the library with defaults. */
+  FcInitReinitialize ();
 }
 
 static gboolean
