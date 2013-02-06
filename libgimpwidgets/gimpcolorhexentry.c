@@ -99,6 +99,11 @@ gimp_color_hex_entry_init (GimpColorHexEntry *entry)
   gint                 num_colors;
   gint                 i;
 
+  /* GtkEntry's minimum size is way too large, set a reasonable one
+   * for our use case
+   */
+  gtk_entry_set_width_chars (GTK_ENTRY (entry), 8);
+
   gimp_rgba_set (&entry->color, 0.0, 0.0, 0.0, 1.0);
 
   store = gtk_list_store_new (NUM_COLUMNS, G_TYPE_STRING, GIMP_TYPE_RGB);
