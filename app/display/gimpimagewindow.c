@@ -389,7 +389,7 @@ gimp_image_window_constructed (GObject *object)
                            private->dialog_factory,
                            private->menubar_manager);
   gtk_paned_pack1 (GTK_PANED (private->left_hpane), private->left_docks,
-                   FALSE, TRUE);
+                   FALSE, FALSE);
   gtk_widget_set_visible (private->left_docks, config->single_window_mode);
 
   /* Create the right pane */
@@ -419,7 +419,7 @@ gimp_image_window_constructed (GObject *object)
                            private->dialog_factory,
                            private->menubar_manager);
   gtk_paned_pack2 (GTK_PANED (private->right_hpane), private->right_docks,
-                   FALSE, TRUE);
+                   FALSE, FALSE);
   gtk_widget_set_visible (private->right_docks, config->single_window_mode);
 
   g_signal_connect_object (config, "notify::single-window-mode",
