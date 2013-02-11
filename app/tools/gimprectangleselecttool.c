@@ -776,6 +776,8 @@ gimp_rectangle_select_tool_execute (GimpRectangleTool *rectangle,
 
           gimp_rectangle_tool_set_function (rectangle,
                                             GIMP_RECTANGLE_TOOL_MOVING);
+          gimp_rectangle_select_tool_update_option_defaults (rect_sel_tool,
+                                                             FALSE);
 
           return FALSE;
         }
