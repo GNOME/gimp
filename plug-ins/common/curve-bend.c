@@ -66,7 +66,6 @@
 
 #define MIDDLE 127
 
-#define SIGNED_ROUND(x)  ((int) (((x < 0) ? (x) - 0.5 : (x) + 0.5)  ))
 #define MIX_CHANNEL(a, b, m)  (((a * m) + (b * (255 - m))) / 255)
 
 #define UP_GRAPH              0x1
