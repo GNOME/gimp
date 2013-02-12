@@ -4133,13 +4133,13 @@ gimp_rectangle_tool_update_int_rect (GimpRectangleTool *rect_tool)
 {
   GimpRectangleToolPrivate *priv = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
 
-  priv->x1_int = ROUND (priv->x1);
-  priv->y1_int = ROUND (priv->y1);
+  priv->x1_int = SIGNED_ROUND (priv->x1);
+  priv->y1_int = SIGNED_ROUND (priv->y1);
 
   if (gimp_rectangle_tool_rect_rubber_banding_func (rect_tool))
     {
-      priv->width_int  = (gint) ROUND (priv->x2) - priv->x1_int;
-      priv->height_int = (gint) ROUND (priv->y2) - priv->y1_int;
+      priv->width_int  = (gint) SIGNED_ROUND (priv->x2) - priv->x1_int;
+      priv->height_int = (gint) SIGNED_ROUND (priv->y2) - priv->y1_int;
     }
 }
 
