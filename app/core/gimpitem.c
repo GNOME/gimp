@@ -1250,8 +1250,8 @@ gimp_item_scale_by_factors (GimpItem              *item,
       return FALSE;
     }
 
-  new_offset_x = ROUND (w_factor * (gdouble) private->offset_x);
-  new_offset_y = ROUND (h_factor * (gdouble) private->offset_y);
+  new_offset_x = SIGNED_ROUND (w_factor * (gdouble) private->offset_x);
+  new_offset_y = SIGNED_ROUND (h_factor * (gdouble) private->offset_y);
   new_width    = ROUND (w_factor * (gdouble) gimp_item_get_width  (item));
   new_height   = ROUND (h_factor * (gdouble) gimp_item_get_height (item));
 
