@@ -243,7 +243,8 @@ file_procedure_in_group (GimpPlugInProcedure *file_proc,
 
   is_filter   = (strcmp (name, "file-gz-save")  == 0 ||
                  strcmp (name, "file-bz2-save") == 0 ||
-                 strcmp (name, "file-xz-save") == 0);
+                 strcmp (name, "file-xz-save")  == 0 ||
+                 strcmp (name, "file-uri-save") == 0);
 
   switch (group)
     {

@@ -141,7 +141,8 @@ gimp_plug_in_manager_register_save_handler (GimpPlugInManager *manager,
       if (! g_slist_find (manager->save_procs, file_proc))
         manager->save_procs = g_slist_prepend (manager->save_procs, file_proc);
     }
-  else
+
+  if (file_procedure_in_group (file_proc, FILE_PROCEDURE_GROUP_EXPORT))
     {
       if (! g_slist_find (manager->export_procs, file_proc))
         manager->export_procs = g_slist_prepend (manager->export_procs, file_proc);
