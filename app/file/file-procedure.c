@@ -227,7 +227,8 @@ file_procedure_in_group (GimpPlugInProcedure *file_proc,
   is_xcf_save = (strcmp (name, "gimp-xcf-save") == 0);
 
   is_filter   = (strcmp (name, "file-gz-save")  == 0 ||
-                 strcmp (name, "file-bz2-save") == 0);
+                 strcmp (name, "file-bz2-save") == 0 ||
+                 strcmp (name, "file-uri-save") == 0);
 
   switch (group)
     {
