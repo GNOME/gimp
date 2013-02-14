@@ -174,7 +174,7 @@ static const Compressor compressors[] =
   {
     N_("gzip archive"),
     "application/x-gzip",
-    "xcf.gz,gz,xcfgz",
+    "xcf.gz,xcfgz", /* FIXME "xcf.gz,gz,xcfgz" */
     "0,string,\037\213",
     ".xcfgz",
     ".gz",
@@ -193,7 +193,7 @@ static const Compressor compressors[] =
   {
     N_("bzip archive"),
     "application/x-bzip",
-    "xcf.bz2,bz2,xcfbz2",
+    "xcf.bz2,xcfbz2", /* FIXME "xcf.bz2,bz2,xcfbz2" */
     "0,string,BZh",
     ".xcfbz2",
     ".bz2",
@@ -212,7 +212,7 @@ static const Compressor compressors[] =
   {
     N_("xz archive"),
     "application/x-xz",
-    "xcf.xz,xz,xcfxz",
+    "xcf.xz,xcfxz", /* FIXME "xcf.xz,xz,xcfxz" */
     "0,ustring,\3757zXZ\x00",
     ".xcfxz",
     ".xz",
