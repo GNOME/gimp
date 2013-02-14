@@ -223,24 +223,24 @@ file_procedure_in_group (GimpPlugInProcedure *file_proc,
   const gchar *name        = gimp_object_get_name (file_proc);
   gboolean     is_xcf_save = FALSE;
   gboolean     is_filter   = FALSE;
+  gboolean     is_uri      = FALSE;
 
   is_xcf_save = (strcmp (name, "gimp-xcf-save") == 0);
 
   is_filter   = (strcmp (name, "file-gz-save")  == 0 ||
-                 strcmp (name, "file-bz2-save") == 0 ||
-                 strcmp (name, "file-uri-save") == 0);
+                 strcmp (name, "file-bz2-save") == 0);
+
+  is_uri      = (strcmp (name, "file-uri-save") == 0);
 
   switch (group)
     {
     case FILE_PROCEDURE_GROUP_SAVE:
       /* Only .xcf shall pass */
-      /* FIXME: Handle .gz and .bz2 properly */
-      return is_xcf_save || is_filter;
+      return is_xcf_save || is_filter || is_uri;
 
     case FILE_PROCEDURE_GROUP_EXPORT:
       /* Anything but .xcf shall pass */
-      /* FIXME: Handle .gz and .bz2 properly */
-      return ! is_xcf_save || is_filter;
+      return ! is_xcf_save || is_uri;
 
     case FILE_PROCEDURE_GROUP_OPEN:
       /* No filter applied for Open */
