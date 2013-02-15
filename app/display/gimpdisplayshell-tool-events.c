@@ -1003,6 +1003,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           }
         else
           {
+            gboolean arrow_key = FALSE;
+
             tool_manager_focus_display_active (gimp, display);
 
             if (gimp_tool_control_get_wants_all_key_events (active_tool->control))
@@ -1019,8 +1021,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
             switch (kevent->keyval)
               {
-                gboolean arrow_key = FALSE;
-
               case GDK_KEY_Left:
               case GDK_KEY_Right:
               case GDK_KEY_Up:
