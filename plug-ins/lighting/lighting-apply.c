@@ -104,8 +104,9 @@ compute_image (void)
 
   gimp_progress_init (_("Lighting Effects"));
 
-/*  if (mapvals.antialiasing==FALSE)
-    { */
+  /* Init the first row */
+  if (mapvals.bump_mapped == TRUE && mapvals.bumpmap_id != -1 && height >= 2)
+    interpol_row (0, width, 0);
 
   for (ycount = 0; ycount < height; ycount++)
     {

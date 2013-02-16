@@ -13,5 +13,8 @@ void    precompute_init               (gint         w,
 void    precompute_normals            (gint         x1,
 				       gint         x2,
 				       gint         y);
+void    interpol_row                  (gint         x1,
+                                       gint         x2,
+                                       gint         y);
 
 #endif  /* __LIGHTING_SHADE_H__ */

@@ -167,9 +167,114 @@ precompute_init (gint w,
     }
 }
 
+
+/* Interpol linearly height[2] and triangle_normals[1]
+ * using the next row
+ */
+void
+interpol_row (gint x1,
+              gint x2,
+              gint y)
+{
+  GimpVector3   p1, p2, p3;
+  gint          n, i;
+  guchar        *map = NULL;
+  gint          bpp = 1;
+  guchar* bumprow1 = NULL;
+  guchar* bumprow2 = NULL;
+
+  if (mapvals.bumpmap_id != -1)
+    {
+      bpp = gimp_drawable_bpp(mapvals.bumpmap_id);
+    }
+
+  bumprow1 = g_new (guchar, pre_w * bpp);
+  bumprow2 = g_new (guchar, pre_w * bpp);
+
+  gimp_pixel_rgn_get_row (&bump_region, bumprow1, x1, y, x2 - x1);
+  gimp_pixel_rgn_get_row (&bump_region, bumprow2, x1, y+1, x2 - x1);
+
+  if (mapvals.bumpmaptype > 0)
+    {
+      switch (mapvals.bumpmaptype)
+        {
+        case 1:
+          map = logmap;
+          break;
+        case 2:
+          map = sinemap;
+          break;
+        default:
+          map = spheremap;
+          break;
+        }
+    }
+
+  for (n = 0; n < (x2 - x1); n++)
+    {
+      gdouble diff;
+      guchar mapval;
+      guchar mapval1, mapval2;
+
+      if (bpp>1)
+        {
+          mapval1 = (guchar)((float)((bumprow1[n * bpp] +bumprow1[n * bpp +1] + bumprow1[n * bpp + 2])/3.0 )) ;
+          mapval2 = (guchar)((float)((bumprow2[n * bpp] +bumprow2[n * bpp +1] + bumprow2[n * bpp + 2])/3.0 )) ;
+        }
+      else
+        {
+          mapval1 = bumprow1[n * bpp];
+          mapval2 = bumprow2[n * bpp];
+        }
+
+      diff =  mapval1 - mapval2;
+      mapval = (guchar) CLAMP (mapval1 + diff, 0.0, 255.0);
+
+      if (mapvals.bumpmaptype > 0)
+        {
+          heights[1][n] = (gdouble) mapvals.bumpmax * (gdouble) map[mapval1] / 255.0;
+          heights[2][n] = (gdouble) mapvals.bumpmax * (gdouble) map[mapval] / 255.0;
+        }
+      else
+        {
+          heights[1][n] = (gdouble) mapvals.bumpmax * (gdouble) mapval1 / 255.0;
+          heights[2][n] = (gdouble) mapvals.bumpmax * (gdouble) mapval / 255.0;
+        }
+    }
+
+  i = 0;
+  for (n = 0; n < (x2 - x1 - 1); n++)
+    {
+      /* heights rows 1 and 2 are inverted */
+      p1.x = 0.0;
+      p1.y = ystep;
+      p1.z = heights[1][n] - heights[2][n];
+
+      p2.x = xstep;
+      p2.y = ystep;
+      p2.z = heights[1][n+1] - heights[2][n];
+
+      p3.x = xstep;
+      p3.y = 0.0;
+      p3.z = heights[2][n+1] - heights[2][n];
+
+      triangle_normals[1][i] = gimp_vector3_cross_product (&p2, &p1);
+      triangle_normals[1][i+1] = gimp_vector3_cross_product (&p3, &p2);
+
+      gimp_vector3_normalize (&triangle_normals[1][i]);
+      gimp_vector3_normalize (&triangle_normals[1][i+1]);
+
+      i += 2;
+    }
+
+  g_free (bumprow1);
+  g_free (bumprow2);
+}
+
 /********************************************/
 /* Compute triangle and then vertex normals */
 /********************************************/
+
 
 void
 precompute_normals (gint x1,
