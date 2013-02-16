@@ -1110,7 +1110,8 @@ gimp_text_tool_proxy_notify (GimpText         *text,
   if (! text_tool->text)
     return;
 
-  if ((pspec->flags & G_PARAM_READWRITE) == G_PARAM_READWRITE)
+  if ((pspec->flags & G_PARAM_READWRITE) == G_PARAM_READWRITE &&
+      pspec->owner_type == GIMP_TYPE_TEXT)
     {
       gimp_text_tool_block_drawing (text_tool);
 
