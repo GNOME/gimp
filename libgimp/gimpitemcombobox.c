@@ -543,14 +543,15 @@ gimp_item_combo_box_remove_items (GtkTreeModel *model,
                                   GtkTreeIter  *iter,
                                   gpointer      data)
 {
-  gint item_ID;
+  gint    item_ID;
+  GList **remove = data;
 
   gtk_tree_model_get (model, iter,
                       GIMP_INT_STORE_VALUE, &item_ID,
                       -1);
 
   if (item_ID > 0)
-    gtk_list_store_remove (GTK_LIST_STORE (model), iter);
+    *remove = g_list_prepend (*remove, g_memdup (iter, sizeof (GtkTreeIter)));
 
   return FALSE;
 }
@@ -565,6 +566,8 @@ gimp_item_combo_box_changed (GimpIntComboBox *combo_box)
       if (item_ID > 0 && ! gimp_item_is_valid (item_ID))
         {
           GtkTreeModel *model;
+          GList        *remove = NULL;
+          GList        *list;
 
           model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
 
@@ -572,7 +575,13 @@ gimp_item_combo_box_changed (GimpIntComboBox *combo_box)
 
           gtk_tree_model_foreach (model,
                                   gimp_item_combo_box_remove_items,
-                                  NULL);
+                                  &remove);
+
+          for (list = remove; list; list = g_list_next (list))
+            gtk_list_store_remove (GTK_LIST_STORE (model), list->data);
+
+          g_list_free_full (remove, (GDestroyNotify) g_free);
+
           gimp_item_combo_box_populate (combo_box);
         }
     }
