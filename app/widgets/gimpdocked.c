@@ -126,12 +126,13 @@ gimp_docked_iface_set_aux_info (GimpDocked *docked,
 static GList *
 gimp_docked_iface_get_aux_info (GimpDocked *docked)
 {
-  if (gimp_docked_has_button_bar (docked) &&
-      ! gimp_docked_get_show_button_bar (docked))
+  if (gimp_docked_has_button_bar (docked))
     {
+      gboolean show = gimp_docked_get_show_button_bar (docked);
+
       return g_list_append (NULL,
                             gimp_session_info_aux_new (AUX_INFO_SHOW_BUTTON_BAR,
-                                                       "false"));
+                                                       show ? "true" : "false"));
     }
 
   return NULL;
