@@ -1970,8 +1970,7 @@ fits_read_pixel (FitsFile         *ff,
   gdouble  datadiff, pixdiff;
   guchar   pixbuffer[4096];
   guchar  *pix;
-  guchar  *cdata;
-  guchar   creplace;
+  glong    creplace;
   gint     transcount = 0;
   glong    tdata, tmin, tmax;
   gint     maxelem;
@@ -1979,8 +1978,8 @@ fits_read_pixel (FitsFile         *ff,
   if (ff->openmode != 'r')
     return -1;   /* Not open for reading */
 
-  if (trans->dsttyp != 'c')
-    return -1;  /* Currently we only return chars */
+  if (trans->dsttyp != 'k')
+    return -1;  /* Currently we only return types equavalent to the image format */
 
   if (npix <= 0)
     return npix;
@@ -1994,278 +1993,282 @@ fits_read_pixel (FitsFile         *ff,
   tmin = (glong) trans->datamin;
   tmax = (glong) trans->datamax;
 
-  if (tmin < 0)
-    tmin = 0;
-  else if (tmin > 255)
-    tmin = 255;
-
-  if (tmax < 0)
-    tmax = 0;
-  else if (tmax > 255)
-    tmax = 255;
-
-  cdata    = (guchar *) buf;
-  creplace = (guchar) trans->replacement;
+  creplace = (glong) trans->replacement;
 
   switch (hdulist->bitpix)
     {
     case 8:
-      while (npix > 0)  /* For all pixels to read */
-        {
-          FitsBitpix8 bp8, bp8blank;
+      {
+        guchar *cdata = (guchar *) buf;
+        while (npix > 0)  /* For all pixels to read */
+          {
+            FitsBitpix8 bp8, bp8blank;
 
-          maxelem = sizeof (pixbuffer) / hdulist->bpp;
-          if (maxelem > npix)
-            maxelem = npix;
+            maxelem = sizeof (pixbuffer) / hdulist->bpp;
+            if (maxelem > npix)
+              maxelem = npix;
 
-          if (fread ((gchar *) pixbuffer, hdulist->bpp,
-                     maxelem, ff->fp) != maxelem)
-            return -1;
+            if (fread ((gchar *) pixbuffer, hdulist->bpp,
+                       maxelem, ff->fp) != maxelem)
+              return -1;
 
-          npix -= maxelem;
+            npix -= maxelem;
 
-          pix = pixbuffer;
+            pix = pixbuffer;
 
-          if (hdulist->used.blank)
-            {
-              bp8blank = (FitsBitpix8) hdulist->blank;
+            if (hdulist->used.blank)
+              {
+                bp8blank = (FitsBitpix8) hdulist->blank;
 
-              while (maxelem--)
-                {
-                  bp8 = (FitsBitpix8) * (pix++);
+                while (maxelem--)
+                  {
+                    bp8 = (FitsBitpix8) * (pix++);
 
-                  if (bp8 == bp8blank)      /* Is it a blank pixel ? */
-                    {
-                      *(cdata++) = creplace;
-                    }
-                  else                      /* Do transform */
-                    {
-                      tdata = (glong) (bp8 * scale + offs);
-                      tdata = CLAMP (tdata, tmin, tmax);
+                    if (bp8 == bp8blank)      /* Is it a blank pixel ? */
+                      {
+                        *(cdata++) = (guchar) creplace;
+                      }
+                    else                      /* Do transform */
+                      {
+                        tdata = (glong) (bp8 * scale + offs);
+                        tdata = CLAMP (tdata, tmin, tmax);
 
-                      *(cdata++) = (guchar) tdata;
-                    }
+                        *(cdata++) = (guchar) tdata;
+                      }
 
-                  transcount++;
-                }
-            }
-          else
-            {
-              while (maxelem--)
-                {
-                  bp8 = (FitsBitpix8) * (pix++);
+                    transcount++;
+                  }
+              }
+            else
+              {
+                while (maxelem--)
+                  {
+                    bp8 = (FitsBitpix8) * (pix++);
 
-                  tdata = (glong) (bp8 * scale + offs);
-                  tdata = CLAMP (tdata, tmin, tmax);
+                    tdata = (glong) (bp8 * scale + offs);
+                    tdata = CLAMP (tdata, tmin, tmax);
 
-                  *(cdata++) = (guchar) tdata;
+                    *(cdata++) = (guchar) tdata;
 
-                  transcount++;
-                }
-            }
-        }
+                    transcount++;
+                  }
+              }
+          }
+      }
       break;
 
     case 16:
-      while (npix > 0)  /* For all pixels to read */
-        {
-          FitsBitpix16 bp16, bp16blank;
+      {
+        FitsBitpix16 *cdata = (FitsBitpix16 *) buf;
+        while (npix > 0)  /* For all pixels to read */
+          {
+            FitsBitpix16 bp16, bp16blank;
 
-          maxelem = sizeof (pixbuffer) / hdulist->bpp;
-          if (maxelem > npix)
-            maxelem = npix;
+            maxelem = sizeof (pixbuffer) / hdulist->bpp;
+            if (maxelem > npix)
+              maxelem = npix;
 
-          if (fread ((gchar *) pixbuffer, hdulist->bpp,
-                     maxelem, ff->fp) != maxelem)
-            return -1;
+            if (fread ((gchar *) pixbuffer, hdulist->bpp,
+                       maxelem, ff->fp) != maxelem)
+              return -1;
 
-          npix -= maxelem;
+            npix -= maxelem;
 
-          pix = pixbuffer;
-          if (hdulist->used.blank)
-            {
-              bp16blank = (FitsBitpix16) hdulist->blank;
+            pix = pixbuffer;
+            if (hdulist->used.blank)
+              {
+                bp16blank = (FitsBitpix16) hdulist->blank;
 
-              while (maxelem--)
-                {
-                  FITS_GETBITPIX16 (pix, bp16);
+                while (maxelem--)
+                  {
+                    FITS_GETBITPIX16 (pix, bp16);
 
-                  if (bp16 == bp16blank)
-                    {
-                      *(cdata++) = creplace;
-                    }
-                  else
-                    {
-                      tdata = (glong) (bp16 * scale + offs);
+                    if (bp16 == bp16blank)
+                      {
+                        *(cdata++) = (FitsBitpix16) creplace;
+                      }
+                    else
+                      {
+                        tdata = (glong) (bp16 * scale + offs);
 
-                      if (tdata < tmin)
-                        tdata = tmin;
-                      else if (tdata > tmax)
-                        tdata = tmax;
+                        if (tdata < tmin)
+                          tdata = tmin;
+                        else if (tdata > tmax)
+                          tdata = tmax;
 
-                      *(cdata++) = (guchar) tdata;
-                    }
+                        *(cdata++) = (FitsBitpix16) tdata;
+                      }
 
-                  transcount++;
-                  pix += 2;
-                }
-            }
-          else
-            {
-              while (maxelem--)
-                {
-                  FITS_GETBITPIX16 (pix, bp16);
+                    transcount++;
+                    pix += 2;
+                  }
+              }
+            else
+              {
+                while (maxelem--)
+                  {
+                    FITS_GETBITPIX16 (pix, bp16);
 
-                  tdata = (glong) (bp16 * scale + offs);
-                  if (tdata < tmin)
-                    tdata = tmin;
-                  else if (tdata > tmax)
-                    tdata = tmax;
+                    tdata = (glong) (bp16 * scale + offs);
+                    if (tdata < tmin)
+                      tdata = tmin;
+                    else if (tdata > tmax)
+                      tdata = tmax;
 
-                  *(cdata++) = (guchar) tdata;
+                    *(cdata++) = (FitsBitpix16) tdata;
 
-                  transcount++;
-                  pix += 2;
-                }
-            }
-        }
+                    transcount++;
+                    pix += 2;
+                  }
+              }
+          }
+      }
       break;
 
     case 32:
-      while (npix > 0)  /* For all pixels to read */
-        {
-          FitsBitpix32 bp32, bp32blank;
+      {
+        FitsBitpix32 *cdata = (FitsBitpix32 *) buf;
+        while (npix > 0)  /* For all pixels to read */
+          {
+            FitsBitpix32 bp32, bp32blank;
 
-          maxelem = sizeof (pixbuffer) / hdulist->bpp;
-          if (maxelem > npix)
-            maxelem = npix;
+            maxelem = sizeof (pixbuffer) / hdulist->bpp;
+            if (maxelem > npix)
+              maxelem = npix;
 
-          if (fread ((gchar *) pixbuffer, hdulist->bpp,
-                     maxelem, ff->fp) != maxelem)
-            return -1;
+            if (fread ((gchar *) pixbuffer, hdulist->bpp,
+                       maxelem, ff->fp) != maxelem)
+              return -1;
 
-          npix -= maxelem;
+            npix -= maxelem;
 
-          pix = pixbuffer;
-          if (hdulist->used.blank)
-            {
-              bp32blank = (FitsBitpix32) hdulist->blank;
+            pix = pixbuffer;
+            if (hdulist->used.blank)
+              {
+                bp32blank = (FitsBitpix32) hdulist->blank;
 
-              while (maxelem--)
-                {
-                  FITS_GETBITPIX32 (pix, bp32);
+                while (maxelem--)
+                  {
+                    FITS_GETBITPIX32 (pix, bp32);
 
-                  if (bp32 == bp32blank)
-                    {
-                      *(cdata++) = creplace;
-                    }
-                  else
-                    {
-                      tdata = (glong) (bp32 * scale + offs);
-                      if (tdata < tmin)
-                        tdata = tmin;
-                      else if (tdata > tmax)
-                        tdata = tmax;
+                    if (bp32 == bp32blank)
+                      {
+                        *(cdata++) = (FitsBitpix32) creplace;
+                      }
+                    else
+                      {
+                        tdata = (glong) (bp32 * scale + offs);
+                        if (tdata < tmin)
+                          tdata = tmin;
+                        else if (tdata > tmax)
+                          tdata = tmax;
 
-                      *(cdata++) = (guchar) tdata;
-                    }
+                        *(cdata++) = (FitsBitpix32) tdata;
+                      }
 
-                  transcount++;
-                  pix += 4;
-                }
-            }
-          else
-            {
-              while (maxelem--)
-                {
-                  FITS_GETBITPIX32 (pix, bp32);
+                    transcount++;
+                    pix += 4;
+                  }
+              }
+            else
+              {
+                while (maxelem--)
+                  {
+                    FITS_GETBITPIX32 (pix, bp32);
 
-                  tdata = (glong) (bp32 * scale + offs);
-                  tdata = CLAMP (tdata, tmin, tmax);
+                    tdata = (glong) (bp32 * scale + offs);
+                    tdata = CLAMP (tdata, tmin, tmax);
 
-                  *(cdata++) = (guchar) tdata;
+                    *(cdata++) = (FitsBitpix32) tdata;
 
-                  transcount++;
-                  pix += 4;
-                }
-            }
-        }
+                    transcount++;
+                    pix += 4;
+                  }
+              }
+          }
+      }
       break;
 
     case -32:
-      while (npix > 0)  /* For all pixels to read */
-        {
-          FitsBitpixM32 bpm32 = 0;
+      {
+        FitsBitpixM32 *cdata = (FitsBitpixM32 *) buf;
+        while (npix > 0)  /* For all pixels to read */
+          {
+            FitsBitpixM32 bpm32 = 0;
 
-          maxelem = sizeof (pixbuffer) / hdulist->bpp;
-          if (maxelem > npix)
-            maxelem = npix;
+            maxelem = sizeof (pixbuffer) / hdulist->bpp;
+            if (maxelem > npix)
+              maxelem = npix;
 
-          if (fread ((gchar *) pixbuffer, hdulist->bpp,
-                     maxelem, ff->fp) != maxelem)
-            return -1;
+            if (fread ((gchar *) pixbuffer, hdulist->bpp,
+                       maxelem, ff->fp) != maxelem)
+              return -1;
 
-          npix -= maxelem;
+            npix -= maxelem;
 
-          pix = pixbuffer;
-          while (maxelem--)
-            {
-              if (fits_nan_32 (pix))    /* An IEEE special value ? */
-                {
-                  *(cdata++) = creplace;
-                }
-              else                      /* Do transform */
-                {
-                  FITS_GETBITPIXM32 (pix, bpm32);
+            pix = pixbuffer;
+            while (maxelem--)
+              {
+                if (fits_nan_32 (pix))    /* An IEEE special value ? */
+                  {
+                    *(cdata++) = trans->replacement;
+                  }
+                else                      /* Do transform */
+                  {
+                    FITS_GETBITPIXM32 (pix, bpm32);
 
-                  tdata = (glong) (bpm32 * scale + offs);
-                  tdata = CLAMP (tdata, tmin, tmax);
+                    bpm32 = bpm32 * scale + offs;
+                    bpm32 = CLAMP (bpm32, trans->datamin, trans->datamax);
 
-                  *(cdata++) = (guchar) tdata;
-                }
+                    *(cdata++) = bpm32;
+                  }
 
-              transcount++;
-              pix += 4;
-            }
-        }
+                transcount++;
+                pix += 4;
+              }
+          }
+      }
       break;
 
     case -64:
-      while (npix > 0)  /* For all pixels to read */
-        {
-          FitsBitpixM64 bpm64;
+      {
+        FitsBitpixM64 *cdata = (FitsBitpixM64 *) buf;
+        while (npix > 0)  /* For all pixels to read */
+          {
+            FitsBitpixM64 bpm64;
 
-          maxelem = sizeof (pixbuffer) / hdulist->bpp;
-          if (maxelem > npix)
-            maxelem = npix;
+            maxelem = sizeof (pixbuffer) / hdulist->bpp;
+            if (maxelem > npix)
+              maxelem = npix;
 
-          if (fread ((gchar *) pixbuffer, hdulist->bpp,
-                     maxelem, ff->fp) != maxelem)
-            return -1;
+            if (fread ((gchar *) pixbuffer, hdulist->bpp,
+                       maxelem, ff->fp) != maxelem)
+              return -1;
 
-          npix -= maxelem;
+            npix -= maxelem;
 
-          pix = pixbuffer;
-          while (maxelem--)
-            {
-              if (fits_nan_64 (pix))
-                {
-                  *(cdata++) = creplace;
-                }
-              else
-                {
-                  FITS_GETBITPIXM64 (pix, bpm64);
+            pix = pixbuffer;
+            while (maxelem--)
+              {
+                if (fits_nan_64 (pix))
+                  {
+                    *(cdata++) = trans->replacement;
+                  }
+                else
+                  {
+                    FITS_GETBITPIXM64 (pix, bpm64);
 
-                  tdata = (glong) (bpm64 * scale + offs);
-                  tdata = CLAMP (tdata, tmin, tmax);
+                    bpm64 = bpm64 * scale + offs;
+                    bpm64 = CLAMP (bpm64, trans->datamin, trans->datamax);
 
-                  *(cdata++) = (guchar) tdata;
-                }
+                    *(cdata++) = bpm64;
+                  }
 
-              transcount++;
-              pix += 8;
-            }
-        }
+                transcount++;
+                pix += 8;
+              }
+          }
+      }
       break;
     }
 

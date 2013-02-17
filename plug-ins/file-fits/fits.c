@@ -94,6 +94,7 @@ static gint32        create_new_image   (const gchar        *filename,
                                          guint               height,
                                          GimpImageBaseType   itype,
                                          GimpImageType       dtype,
+                                         GimpPrecision       iprecision,
                                          gint32             *layer_ID,
                                          GeglBuffer        **buffer);
 
@@ -502,13 +503,15 @@ create_new_image (const gchar        *filename,
                   guint               height,
                   GimpImageBaseType   itype,
                   GimpImageType       dtype,
+                  GimpPrecision       iprecision,
                   gint32             *layer_ID,
                   GeglBuffer        **buffer)
 {
   gint32  image_ID;
   char   *tmp;
 
-  image_ID = gimp_image_new (width, height, itype);
+  image_ID = gimp_image_new_with_precision (width, height, itype, iprecision);
+
   if ((tmp = g_malloc (strlen (filename) + 64)) != NULL)
     {
       sprintf (tmp, "%s-img%ld", filename, (long)pagenum);
@@ -548,9 +551,12 @@ load_fits (const gchar *filename,
   GeglBuffer        *buffer;
   GimpImageBaseType  itype;
   GimpImageType      dtype;
+  GimpPrecision      iprecision;
   gint               err = 0;
   FitsHduList       *hdulist;
   FitsPixTransform   trans;
+  double             datamax, replacetransform;
+  const Babl        *type, *format;
 
   hdulist = fits_seek_image (ifp, (int)picnum);
   if (hdulist == NULL)
@@ -559,38 +565,96 @@ load_fits (const gchar *filename,
   width  = hdulist->naxisn[0];  /* Set the size of the FITS image */
   height = hdulist->naxisn[1];
 
+  switch (hdulist->bitpix)
+    {
+    case 8:
+      iprecision = GIMP_PRECISION_U8;
+      type = babl_type ("u8");
+      datamax = 255.0;
+      replacetransform = 1.0;
+      break;
+    case 16:
+      iprecision = GIMP_PRECISION_U16;
+      type = babl_type ("u16");
+      datamax = 65535.0;
+      replacetransform = 257;
+      break;
+    case 32:
+      iprecision = GIMP_PRECISION_U32;
+      type = babl_type ("u32");
+      datamax = 4294967295.0;
+      replacetransform = 16843009;
+      break;
+    case -32:
+      iprecision = GIMP_PRECISION_FLOAT;
+      type = babl_type ("float");
+      datamax = 1.0;
+      replacetransform = 1.0 / 255.0;
+      break;
+    case -64:
+      iprecision = GIMP_PRECISION_FLOAT;
+      type = babl_type ("double");
+      datamax = 1.0;
+      replacetransform = 1.0 / 255.0;
+      break;
+    default:
+      return -1;
+    }
+
   if (ncompose == 2)
     {
       itype = GIMP_GRAY;
       dtype = GIMP_GRAYA_IMAGE;
+      format = babl_format_new (babl_model ("Y'A"),
+                                type,
+                                babl_component ("Y'"),
+                                babl_component ("A"),
+                                NULL);
     }
   else if (ncompose == 3)
     {
       itype = GIMP_RGB;
       dtype = GIMP_RGB_IMAGE;
+      format = babl_format_new (babl_model ("R'G'B'"),
+                                type,
+                                babl_component ("R'"),
+                                babl_component ("G'"),
+                                babl_component ("B'"),
+                                NULL);
     }
   else if (ncompose == 4)
     {
       itype = GIMP_RGB;
       dtype = GIMP_RGBA_IMAGE;
+      format = babl_format_new (babl_model ("R'G'B'A"),
+                                type,
+                                babl_component ("R'"),
+                                babl_component ("G'"),
+                                babl_component ("B'"),
+                                babl_component ("A"),
+                                NULL);
     }
   else
     {
       ncompose = 1;
       itype = GIMP_GRAY;
       dtype = GIMP_GRAY_IMAGE;
+      format = babl_format_new (babl_model ("Y'"),
+                                type,
+                                babl_component ("Y'"),
+                                NULL);
     }
 
-  image_ID = create_new_image (filename, picnum, width, height, itype, dtype,
+  image_ID = create_new_image (filename, picnum, width, height, itype, dtype, iprecision,
                                &layer_ID, &buffer);
 
   tile_height = gimp_tile_height ();
 
-  data = g_malloc (tile_height * width * ncompose);
+  data = g_malloc (tile_height * width * ncompose * hdulist->bpp);
   if (data == NULL)
     return -1;
 
-  data_end = data + tile_height * width * ncompose;
+  data_end = data + tile_height * width * ncompose * hdulist->bpp;
 
   /* If the transformation from pixel value to data value has been
    * specified, use it
@@ -614,9 +678,9 @@ load_fits (const gchar *filename,
     }
 
   trans.datamin     = 0.0;
-  trans.datamax     = 255.0;
-  trans.replacement = plvals.replace;
-  trans.dsttyp      = 'c';
+  trans.datamax     = datamax;
+  trans.replacement = plvals.replace * replacetransform;
+  trans.dsttyp      = 'k';
 
   /* FITS stores images with bottom row first. Therefore we have to
    * fill the image from bottom to top.
@@ -624,13 +688,13 @@ load_fits (const gchar *filename,
 
   if (ncompose == 1)
     {
-      dest = data + tile_height * width;
+      dest = data + tile_height * width * hdulist->bpp;
       scan_lines = 0;
 
       for (i = 0; i < height; i++)
         {
           /* Read FITS line */
-          dest -= width;
+          dest -= width * hdulist->bpp;
           if (fits_read_pixel (ifp, hdulist, width, &trans, dest) != width)
             {
               err = 1;
@@ -647,27 +711,28 @@ load_fits (const gchar *filename,
               gegl_buffer_set (buffer,
                                GEGL_RECTANGLE (0, height - i - 1,
                                                width, scan_lines), 0,
-                               NULL, dest, GEGL_AUTO_ROWSTRIDE);
+                               format, dest, GEGL_AUTO_ROWSTRIDE);
 
               scan_lines = 0;
-              dest = data + tile_height * width;
+              dest = data + tile_height * width * hdulist->bpp;
             }
 
           if (err)
             break;
         }
     }
+  /* XXX: Needs to be ported to high bit depths */
   else   /* multiple images to compose */
     {
       gint channel;
 
-      linebuf = g_malloc (width);
+      linebuf = g_malloc (width * hdulist->bpp);
       if (linebuf == NULL)
         return -1;
 
       for (channel = 0; channel < ncompose; channel++)
         {
-          dest = data + tile_height * width * ncompose + channel;
+          dest = data + tile_height * width * hdulist->bpp * ncompose + channel;
           scan_lines = 0;
 
           for (i = 0; i < height; i++)
@@ -683,12 +748,12 @@ load_fits (const gchar *filename,
                   gegl_buffer_get (buffer,
                                    GEGL_RECTANGLE (0, height - i - max_scan,
                                                    width, max_scan), 1.0,
-                                   NULL, data_end - max_scan * width * ncompose,
+                                   format, data_end - max_scan * width * hdulist->bpp * ncompose,
                                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
                 }
 
               /* Read FITS scanline */
-              dest -= width * ncompose;
+              dest -= width * ncompose * hdulist->bpp;
               if (fits_read_pixel (ifp, hdulist, width, &trans, linebuf) != width)
                 {
                   err = 1;
@@ -698,10 +763,11 @@ load_fits (const gchar *filename,
               src = linebuf;
               while (j--)
                 {
-                  *dest = *(src++);
-                  dest += ncompose;
+                  memcpy (dest, src, hdulist->bpp);
+                  src += hdulist->bpp;
+                  dest += ncompose * hdulist->bpp;
                 }
-              dest -= width * ncompose;
+              dest -= width * ncompose * hdulist->bpp;
               scan_lines++;
 
               if ((i % 20) == 0)
@@ -713,10 +779,10 @@ load_fits (const gchar *filename,
                   gegl_buffer_set (buffer,
                                    GEGL_RECTANGLE (0, height - i - 1,
                                                    width, scan_lines), 0,
-                                   NULL, dest - channel, GEGL_AUTO_ROWSTRIDE);
+                                   format, dest - channel * hdulist->bpp, GEGL_AUTO_ROWSTRIDE);
 
                   scan_lines = 0;
-                  dest = data + tile_height * width * ncompose + channel;
+                  dest = data + tile_height * width * ncompose * hdulist->bpp + channel * hdulist->bpp;
                 }
 
               if (err)
