@@ -33,28 +33,38 @@
             (current-page 0)
             (dockable "gimp-layer-list"
                 (tab-style icon)
-                (preview-size 32)))
+                (preview-size 32)
+                (aux-info
+                    (show-button-bar "true"))))
         (book
             (position 380)
             (current-page 0)
             (dockable "gimp-brush-grid"
-                (tab-style preview))))
+                (tab-style preview)
+                (aux-info
+                    (show-button-bar "true")))))
     (gimp-dock
         (side right)
         (position 200)
         (book
             (current-page 0)
             (dockable "gimp-tool-options"
-                (tab-style icon))))
+                (tab-style icon)
+                (aux-info
+                    (show-button-bar "true")))))
     (gimp-dock
         (side right)
         (position 550)
         (book
             (current-page 1)
             (dockable "gimp-pattern-grid"
-                (tab-style preview))
+                (tab-style preview)
+                (aux-info
+                    (show-button-bar "true")))
             (dockable "gimp-gradient-list"
-                (tab-style preview)))))
+                (tab-style preview)
+                (aux-info
+                    (show-button-bar "true"))))))
 
 (hide-docks no)
 (single-window-mode yes)

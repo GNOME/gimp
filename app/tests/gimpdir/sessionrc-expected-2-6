@@ -18,12 +18,16 @@
             (current-page 0)
             (dockable "gimp-layer-list"
                 (tab-style icon)
-                (preview-size 32)))
+                (preview-size 32)
+                (aux-info
+                    (show-button-bar "true"))))
         (book
             (position 290)
             (current-page 0)
             (dockable "gimp-brush-grid"
-                (tab-style preview)))))
+                (tab-style preview)
+                (aux-info
+                    (show-button-bar "true"))))))
 (session-info "toplevel"
     (factory-entry "gimp-dock-window")
     (position 140 290)
@@ -36,7 +40,9 @@
         (book
             (current-page 0)
             (dockable "gimp-tool-options"
-                (tab-style icon)))))
+                (tab-style icon)
+                (aux-info
+                    (show-button-bar "true"))))))
 (session-info "toplevel"
     (factory-entry "gimp-dock-window")
     (position 795 45)
@@ -49,9 +55,13 @@
         (book
             (current-page 1)
             (dockable "gimp-pattern-grid"
-                (tab-style preview))
+                (tab-style preview)
+                (aux-info
+                    (show-button-bar "true")))
             (dockable "gimp-gradient-list"
-                (tab-style preview)))))
+                (tab-style preview)
+                (aux-info
+                    (show-button-bar "true"))))))
 (session-info "toplevel"
     (factory-entry "gimp-dock-window")
     (position 805 345)
@@ -65,13 +75,16 @@
             (current-page 0)
             (dockable "gimp-channel-list"
                 (tab-style automatic)
-                (preview-size 32)))
+                (preview-size 32)
+                (aux-info
+                    (show-button-bar "true"))))
         (book
             (position 200)
             (current-page 0)
             (dockable "gimp-palette-editor"
                 (tab-style icon)
                 (aux-info
+                    (show-button-bar "true")
                     (edit-active "true")
                     (current-data "Standard")
                     (zoom-factor "2.80"))))))
