@@ -617,10 +617,10 @@ start_element_handler  (GMarkupParseContext  *markup_context,
     {
     case STATE_INSIDE_XPACKET:
       if (! strcmp (element_name, "x:xmpmeta")
-	  || ! strcmp (element_name, "x:xapmeta")
+          || ! strcmp (element_name, "x:xapmeta")
           || matches_with_prefix (element_name, context->xmp_prefix,
                                   context->xmp_prefix_len, "xmpmeta"))
-	context->state = STATE_INSIDE_XMPMETA;
+        context->state = STATE_INSIDE_XMPMETA;
       else if (matches_rdf (element_name, context, "RDF"))
         {
           /* the x:xmpmeta element is missing, but this is allowed */
@@ -628,33 +628,33 @@ start_element_handler  (GMarkupParseContext  *markup_context,
           context->state = STATE_INSIDE_RDF;
         }
       else
-	parse_error_element (context, error, "x:xmpmeta",
+        parse_error_element (context, error, "x:xmpmeta",
                              FALSE, element_name);
       break;
 
     case STATE_INSIDE_XMPMETA:
       if (matches_rdf (element_name, context, "RDF"))
-	context->state = STATE_INSIDE_RDF;
+        context->state = STATE_INSIDE_RDF;
       else
-	parse_error_element (context, error, "rdf:RDF",
+        parse_error_element (context, error, "rdf:RDF",
                              FALSE, element_name);
       break;
 
     case STATE_INSIDE_RDF:
       if (matches_rdf (element_name, context, "Description"))
-	{
+        {
           XMLNameSpace *ns;
           gboolean      about_seen = FALSE;
 
-	  context->state = STATE_INSIDE_TOPLEVEL_DESC;
-	  for (attr = 0; attribute_names[attr] != NULL; ++attr)
-	    {
+          context->state = STATE_INSIDE_TOPLEVEL_DESC;
+          for (attr = 0; attribute_names[attr] != NULL; ++attr)
+            {
               if (matches_rdf (attribute_names[attr], context, "about")
                   || ! strcmp (attribute_names[attr], "about") /* old style */)
                 about_seen = TRUE;
-	      else if (g_str_has_prefix (attribute_names[attr], "xmlns"))
+              else if (g_str_has_prefix (attribute_names[attr], "xmlns"))
                 ; /* the namespace has already been pushed on the stack */
-	      else
+              else
                 {
                   ns = new_property_in_ns (context, attribute_names[attr]);
                   if (ns != NULL)
@@ -675,9 +675,9 @@ start_element_handler  (GMarkupParseContext  *markup_context,
             parse_error (context, error, XMP_ERROR_MISSING_ABOUT,
                              _("Required attribute rdf:about missing in <%s>"),
                              element_name);
-	}
+        }
       else
-	parse_error_element (context, error, "rdf:Description",
+        parse_error_element (context, error, "rdf:Description",
                                  FALSE, element_name);
       break;
 
@@ -714,37 +714,37 @@ start_element_handler  (GMarkupParseContext  *markup_context,
 
     case STATE_INSIDE_PROPERTY:
       if (matches_rdf (element_name, context, "Description"))
-	{
+        {
           context->saved_state = context->state;
-	  context->state = STATE_INSIDE_QDESC;
-	  for (attr = 0; attribute_names[attr] != NULL; ++attr)
-	    {
-	      if (g_str_has_prefix (attribute_names[attr], "xmlns"))
-		{
-		  /* this desc. is a structure, not a property qualifier */
-		  context->state = STATE_INSIDE_STRUCT_ADD_NS;
-		}
-	      else
+          context->state = STATE_INSIDE_QDESC;
+          for (attr = 0; attribute_names[attr] != NULL; ++attr)
+            {
+              if (g_str_has_prefix (attribute_names[attr], "xmlns"))
+                {
+                  /* this desc. is a structure, not a property qualifier */
+                  context->state = STATE_INSIDE_STRUCT_ADD_NS;
+                }
+              else
                 unknown_attribute (context, error, element_name,
                                    attribute_names[attr],
                                    attribute_values[attr]);
-	    }
-	}
+            }
+        }
       else if (matches_rdf (element_name, context, "Alt"))
-	context->state = STATE_INSIDE_ALT;
+        context->state = STATE_INSIDE_ALT;
       else if (matches_rdf (element_name, context, "Bag"))
-	context->state = STATE_INSIDE_BAG;
+        context->state = STATE_INSIDE_BAG;
       else if (matches_rdf (element_name, context, "Seq"))
-	context->state = STATE_INSIDE_SEQ;
+        context->state = STATE_INSIDE_SEQ;
       else
         unknown_element (context, error, element_name);
       break;
 
     case STATE_INSIDE_QDESC:
       if (matches_rdf (element_name, context, "value"))
-	context->state = STATE_INSIDE_QDESC_VALUE;
+        context->state = STATE_INSIDE_QDESC_VALUE;
       else
-	context->state = STATE_INSIDE_QDESC_QUAL;
+        context->state = STATE_INSIDE_QDESC_QUAL;
       break;
 
     case STATE_INSIDE_STRUCT_ADD_NS:
@@ -788,22 +788,22 @@ start_element_handler  (GMarkupParseContext  *markup_context,
 
     case STATE_INSIDE_ALT:
       if (matches_rdf (element_name, context, "li"))
-	{
-	  context->state = STATE_INSIDE_ALT_LI;
-	  for (attr = 0; attribute_names[attr] != NULL; ++attr)
-	    {
-	      if (matches_rdf (attribute_names[attr], context, "parseType")
+        {
+          context->state = STATE_INSIDE_ALT_LI;
+          for (attr = 0; attribute_names[attr] != NULL; ++attr)
+            {
+              if (matches_rdf (attribute_names[attr], context, "parseType")
                   && ! strcmp (attribute_values[attr], "Resource"))
                 context->state = STATE_INSIDE_ALT_LI_RSC;
-	      else if (! strcmp (attribute_names[attr], "xml:lang"))
+              else if (! strcmp (attribute_names[attr], "xml:lang"))
                 add_property_value (context, XMP_PTYPE_ALT_LANG,
                                     g_strdup (attribute_values[attr]),
                                     NULL);
-	      else
+              else
                 unknown_attribute (context, error, element_name,
                                    attribute_names[attr],
                                    attribute_values[attr]);
-	    }
+            }
           /* rdf:Alt is not an ordered list, but some broken XMP files use */
           /* it instead of rdf:Seq.  Workaround: if we did not find some */
           /* attributes for the valid cases ALT_LANG or ALT_LI_RSC, then */
@@ -812,55 +812,55 @@ start_element_handler  (GMarkupParseContext  *markup_context,
               && (context->state != STATE_INSIDE_ALT_LI_RSC))
             add_property_value (context, XMP_PTYPE_ORDERED_LIST,
                                 NULL, NULL);
-	}
+        }
       else
-	parse_error_element (context, error, "rdf:li",
+        parse_error_element (context, error, "rdf:li",
                                  FALSE, element_name);
       break;
 
     case STATE_INSIDE_BAG:
       if (matches_rdf (element_name, context, "li"))
-	{
+        {
           context->state = STATE_INSIDE_BAG_LI;
-	  for (attr = 0; attribute_names[attr] != NULL; ++attr)
-	    {
-	      if (matches_rdf (attribute_names[attr], context, "parseType")
+          for (attr = 0; attribute_names[attr] != NULL; ++attr)
+            {
+              if (matches_rdf (attribute_names[attr], context, "parseType")
                   && ! strcmp (attribute_values[attr], "Resource"))
                 context->state = STATE_INSIDE_BAG_LI_RSC;
-	      else
+              else
                 unknown_attribute (context, error, element_name,
                                    attribute_names[attr],
                                    attribute_values[attr]);
-	    }
+            }
           if (context->state != STATE_INSIDE_BAG_LI_RSC)
             add_property_value (context, XMP_PTYPE_UNORDERED_LIST,
                                 NULL, NULL);
-	}
+        }
       else
-	parse_error_element (context, error, "rdf:li",
+        parse_error_element (context, error, "rdf:li",
                                  FALSE, element_name);
       break;
 
     case STATE_INSIDE_SEQ:
       if (matches_rdf (element_name, context, "li"))
-	{
+        {
           context->state = STATE_INSIDE_SEQ_LI;
-	  for (attr = 0; attribute_names[attr] != NULL; ++attr)
-	    {
-	      if (matches_rdf (attribute_names[attr], context, "parseType")
+          for (attr = 0; attribute_names[attr] != NULL; ++attr)
+            {
+              if (matches_rdf (attribute_names[attr], context, "parseType")
                   && ! strcmp (attribute_values[attr], "Resource"))
                 context->state = STATE_INSIDE_SEQ_LI_RSC;
-	      else
+              else
                 unknown_attribute (context, error, element_name,
                                    attribute_names[attr],
                                    attribute_values[attr]);
-	    }
+            }
           if (context->state != STATE_INSIDE_SEQ_LI_RSC)
             add_property_value (context, XMP_PTYPE_ORDERED_LIST,
                                 NULL, NULL);
-	}
+        }
       else
-	parse_error_element (context, error, "rdf:li",
+        parse_error_element (context, error, "rdf:li",
                                  FALSE, element_name);
       break;
 
@@ -872,7 +872,7 @@ start_element_handler  (GMarkupParseContext  *markup_context,
           context->state = STATE_INSIDE_QDESC;
         }
       else
-	parse_error_element (context, error, "rdf:Description",
+        parse_error_element (context, error, "rdf:Description",
                              TRUE, element_name);
       break;
 
@@ -1028,7 +1028,7 @@ end_element_handler    (GMarkupParseContext  *markup_context,
 
     default:
       parse_error (context, error, XMP_ERROR_PARSE,
-		       _("End of element <%s> not expected in this context"),
+                       _("End of element <%s> not expected in this context"),
                          element_name);
       break;
     }
@@ -1123,8 +1123,8 @@ text_handler           (GMarkupParseContext  *markup_context,
     case STATE_INSIDE_QDESC_QUAL:
 #ifdef DEBUG_XMP_PARSER
       g_print ("ignoring qualifier for part of \"%s\"[]: \"%.*s\"\n",
-	       context->property,
-	       (int)text_len, text);
+               context->property,
+               (int)text_len, text);
 #endif
       /* FIXME: notify the user? add a way to collect qualifiers? */
       break;
@@ -1135,8 +1135,8 @@ text_handler           (GMarkupParseContext  *markup_context,
 
     default:
       if (! is_whitespace_string (text))
-	parse_error (context, error, XMP_ERROR_INVALID_CONTENT,
-			 _("The current element (<%s>) cannot contain text"),
+        parse_error (context, error, XMP_ERROR_INVALID_CONTENT,
+                         _("The current element (<%s>) cannot contain text"),
                          g_markup_parse_context_get_element (markup_context));
       break;
     }
@@ -1158,9 +1158,9 @@ passthrough_handler    (GMarkupParseContext  *markup_context,
     case STATE_AFTER_XPACKET:
       if ((text_len >= 21)
           && (! strncmp (passthrough_text, "<?xpacket begin=", 16)))
-	context->state = STATE_INSIDE_XPACKET;
+        context->state = STATE_INSIDE_XPACKET;
       else
-	parse_error (context, error, XMP_ERROR_PARSE,
+        parse_error (context, error, XMP_ERROR_PARSE,
                      _("XMP packets must start with <?xpacket begin=...?>"));
       break;
 
@@ -1172,9 +1172,9 @@ passthrough_handler    (GMarkupParseContext  *markup_context,
     case STATE_AFTER_XMPMETA:
       if ((text_len >= 19)
           && (! strncmp (passthrough_text, "<?xpacket end=", 14)))
-	context->state = STATE_AFTER_XPACKET;
+        context->state = STATE_AFTER_XPACKET;
       else
-	parse_error (context, error, XMP_ERROR_PARSE,
+        parse_error (context, error, XMP_ERROR_PARSE,
                      _("XMP packets must end with <?xpacket end=...?>"));
       break;
 
