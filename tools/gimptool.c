@@ -528,8 +528,7 @@ do_build_nogimpui (const gchar *what)
 static gchar *
 get_user_plugin_dir (void)
 {
-  return g_build_filename (g_get_home_dir (),
-                           GIMPDIR,
+  return g_build_filename (gimp_directory (),
                            "plug-ins",
                            NULL);
 }
@@ -644,8 +643,7 @@ do_uninstall_admin_bin (const gchar *what)
 static gchar *
 get_user_script_dir (void)
 {
-  return g_build_filename (g_get_home_dir (),
-                           GIMPDIR,
+  return g_build_filename (gimp_directory (),
                            "scripts",
                            NULL);
 }

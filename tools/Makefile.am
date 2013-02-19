@@ -1,5 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
+libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+
 if WITH_PDBGEN
 D_pdbgen = pdbgen
 else
@@ -19,6 +21,7 @@ gimptool_2_0_SOURCES = \
 	gimptool.c
 
 gimptool_2_0_LDADD = \
+	$(libgimpbase)			\
 	$(GTK_LIBS)
 
 kernelgen_SOURCES = kernelgen.c
