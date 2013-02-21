@@ -62,6 +62,16 @@ enum
   V_BASE_BOTTOM
 };
 
+
+typedef struct
+{
+  gint step_x;
+  gint step_y;
+  gint base_x;
+  gint base_y;
+} AlignData;
+
+
 static void     query   (void);
 static void     run     (const gchar      *name,
                          gint              nparams,
@@ -69,12 +79,32 @@ static void     run     (const gchar      *name,
                          gint             *nreturn_vals,
                          GimpParam       **return_vals);
 
-static GimpPDBStatusType align_layers                   (gint32  image_id);
-static void              align_layers_get_align_offsets (gint32  drawable_id,
-                                                         gint   *x,
-                                                         gint   *y);
+/* Main function */
+static GimpPDBStatusType align_layers                (gint32  image_id);
 
-static gint              align_layers_dialog             (void);
+/* Helpers and internal functions */
+static gint      align_layers_count_visibles_layers  (gint     *layers,
+                                                      gint      length);
+static gint      align_layers_find_last_layer        (gint     *layers,
+                                                      gint      layers_num,
+                                                      gboolean *found);
+static gint      align_layers_spread_visibles_layers (gint     *layers,
+                                                      gint      layers_num,
+                                                      gint     *layers_array);
+static gint    * align_layers_spread_image           (gint32    image_id,
+                                                      gint     *layer_num);
+static gint      align_layers_find_background        (gint32    image_id);
+static AlignData align_layers_gather_data            (gint     *layers,
+                                                      gint      layer_num,
+                                                      gint      background);
+static void      align_layers_perform_alignment      (gint     *layers,
+                                                      gint      layer_num,
+                                                      AlignData data);
+static void      align_layers_get_align_offsets      (gint32    drawable_id,
+                                                      gint     *x,
+                                                      gint     *y);
+static gint      align_layers_dialog                 (void);
+
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -150,6 +180,7 @@ run (const gchar      *name,
   GimpPDBStatusType status = GIMP_PDB_EXECUTION_ERROR;
   GimpRunMode       run_mode;
   gint              image_id, layer_num;
+  gint             *layers;
 
   run_mode = param[0].data.d_int32;
   image_id = param[1].data.d_int32;
@@ -165,7 +196,10 @@ run (const gchar      *name,
   switch ( run_mode )
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_image_get_layers (image_id, &layer_num);
+      layers = gimp_image_get_layers (image_id, &layer_num);
+      layer_num = align_layers_count_visibles_layers (layers,
+                                                      layer_num);
+      g_free (layers);
       if (layer_num < 2)
         {
           *nreturn_vals = 2;
@@ -191,123 +225,318 @@ run (const gchar      *name,
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
+
   if (run_mode == GIMP_RUN_INTERACTIVE && status == GIMP_PDB_SUCCESS)
     gimp_set_data (PLUG_IN_PROC, &VALS, sizeof (ValueType));
 
-  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
+/*
+ * Main function
+ */
 static GimpPDBStatusType
 align_layers (gint32 image_id)
 {
-  gint  layer_num = 0;
-  gint  visible_layer_num = 0;
-  gint *layers = NULL;
-  gint  index;
-  gint  vindex;
-  gint  step_x   = 0;
-  gint  step_y   = 0;
-  gint  x        = 0;
-  gint  y        = 0;
-  gint  orig_x   = 0;
-  gint  orig_y   = 0;
-  gint  offset_x = 0;
-  gint  offset_y = 0;
-  gint  base_x   = 0;
-  gint  base_y   = 0;
-  gint  bg_index = 0;
+  gint       layer_num  = 0;
+  gint      *layers     = NULL;
+  gint       background = 0;
+  AlignData  data;
 
-  layers = gimp_image_get_layers (image_id, &layer_num);
-  bg_index = layer_num - 1;
-
-  for (index = 0; index < layer_num; index++)
+  layers = align_layers_spread_image (image_id, &layer_num);
+  if (layer_num < 2)
     {
-      if (gimp_item_get_visible (layers[index]))
-        visible_layer_num++;
+      g_free (layers);
+      return GIMP_PDB_EXECUTION_ERROR;
     }
 
-  if (VALS.ignore_bottom)
+  background = align_layers_find_background (image_id);
+
+  /* If we want to ignore the bottom layer and if it's visible */
+  if (VALS.ignore_bottom && background == layers[layer_num - 1])
     {
       layer_num--;
-      if (gimp_item_get_visible (layers[bg_index]))
-        visible_layer_num--;
     }
 
-  if (0 < visible_layer_num)
-    {
-      gint      min_x = G_MAXINT;
-      gint      min_y = G_MAXINT;
-      gint      max_x = G_MININT;
-      gint      max_y = G_MININT;
-
-      /* 0 is the top layer */
-      for (index = 0; index < layer_num; index++)
-        {
-          if (gimp_item_get_visible (layers[index]))
-            {
-              gimp_drawable_offsets (layers[index], &orig_x, &orig_y);
-              align_layers_get_align_offsets (layers[index], &offset_x,
-                                              &offset_y);
-              orig_x += offset_x;
-              orig_y += offset_y;
-
-              if ( orig_x < min_x ) min_x = orig_x;
-              if ( max_x < orig_x ) max_x = orig_x;
-              if ( orig_y < min_y ) min_y = orig_y;
-              if ( max_y < orig_y ) max_y = orig_y;
-            }
-        }
-
-      if (VALS.base_is_bottom_layer)
-        {
-          gimp_drawable_offsets (layers[bg_index], &orig_x, &orig_y);
-          align_layers_get_align_offsets (layers[bg_index], &offset_x,
-                                          &offset_y);
-          orig_x += offset_x;
-          orig_y += offset_y;
-          base_x = min_x = orig_x;
-          base_y = min_y = orig_y;
-        }
-
-      if (visible_layer_num > 1)
-        {
-          step_x = (max_x - min_x) / (visible_layer_num - 1);
-          step_y = (max_y - min_y) / (visible_layer_num - 1);
-        }
-
-      if ( (VALS.h_style == LEFT2RIGHT) || (VALS.h_style == RIGHT2LEFT))
-        base_x = min_x;
-
-      if ( (VALS.v_style == TOP2BOTTOM) || (VALS.v_style == BOTTOM2TOP))
-        base_y = min_y;
-    }
+  data = align_layers_gather_data (layers,
+                                   layer_num,
+                                   background);
 
   gimp_image_undo_group_start (image_id);
 
-  for (vindex = -1, index = 0; index < layer_num; index++)
+  align_layers_perform_alignment (layers,
+                                  layer_num,
+                                  data);
+
+  gimp_image_undo_group_end (image_id);
+
+  g_free (layers);
+
+  return GIMP_PDB_SUCCESS;
+}
+
+/*
+ * Find the bottommost layer, visible or not
+ * The image must contain at least one layer.
+ */
+static gint
+align_layers_find_last_layer (gint     *layers,
+                              gint      layers_num,
+                              gboolean *found)
+{
+  gint i;
+
+  for (i = layers_num - 1; i >= 0; i--)
     {
-      if (gimp_item_get_visible (layers[index]))
-        vindex++;
-      else
-        continue;
+      gint item = layers[i];
+
+      if (gimp_item_is_group (item))
+        {
+          gint *children;
+          gint  children_num;
+          gint  last_layer;
+
+          children = gimp_item_get_children (item, &children_num);
+          last_layer = align_layers_find_last_layer (children,
+                                                     children_num,
+                                                     found);
+          g_free (children);
+          if (*found)
+            return last_layer;
+        }
+      else if (gimp_item_is_layer (item))
+        {
+          *found = TRUE;
+          return item;
+        }
+    }
+
+  /* should never happen */
+  return -1;
+}
+
+/*
+ * Return the bottom layer.
+ */
+static gint
+align_layers_find_background (gint32 image_id)
+{
+  gint    *layers;
+  gint     layers_num;
+  gint     background;
+  gboolean found = FALSE;
+
+  layers = gimp_image_get_layers (image_id, &layers_num);
+  background = align_layers_find_last_layer (layers,
+                                             layers_num,
+                                             &found);
+  g_free (layers);
+
+  return background;
+}
+
+/*
+ * Fill layers_array with all visible layers.
+ * layers_array needs to be allocated before the call
+ */
+static gint
+align_layers_spread_visibles_layers (gint *layers,
+                                     gint  layers_num,
+                                     gint *layers_array)
+{
+  gint i;
+  gint index = 0;
+
+  for (i = 0; i < layers_num; i++)
+    {
+      gint item = layers[i];
+
+      if (gimp_item_get_visible (item))
+        {
+          if (gimp_item_is_group (item))
+            {
+              gint *children;
+              gint  children_num;
+
+              children = gimp_item_get_children (item, &children_num);
+              index += align_layers_spread_visibles_layers (children,
+                                                            children_num,
+                                                            &(layers_array[index]));
+              g_free (children);
+            }
+          else if (gimp_item_is_layer (item))
+            {
+              layers_array[index] = item;
+              index++;
+            }
+        }
+    }
+
+  return index;
+}
+
+/*
+ * Return a contiguous array of all visible layers
+ */
+static gint *
+align_layers_spread_image (gint32  image_id,
+                           gint   *layer_num)
+{
+  gint *layers;
+  gint *layers_array;
+  gint  layer_num_loc;
+
+  layers = gimp_image_get_layers (image_id, &layer_num_loc);
+  *layer_num = align_layers_count_visibles_layers (layers,
+                                                   layer_num_loc);
+
+  layers_array = g_malloc (sizeof (gint) * *layer_num);
+
+  align_layers_spread_visibles_layers (layers,
+                                       layer_num_loc,
+                                       layers_array);
+  g_free (layers);
+
+  return layers_array;
+}
+
+static gint
+align_layers_count_visibles_layers (gint *layers,
+                                    gint  length)
+{
+  gint i;
+  gint count = 0;
+
+  for (i = 0; i<length; i++)
+    {
+      gint item = layers[i];
+
+      if (gimp_item_get_visible (item))
+        {
+          if (gimp_item_is_group (item))
+            {
+              gint *children;
+              gint  children_num;
+
+              children = gimp_item_get_children (item, &children_num);
+              count += align_layers_count_visibles_layers (children,
+                                                           children_num);
+              g_free (children);
+            }
+          else if (gimp_item_is_layer (item))
+            {
+              count += 1;
+            }
+        }
+    }
+
+  return count;
+}
+
+static AlignData
+align_layers_gather_data (gint *layers,
+                          gint  layer_num,
+                          gint  background)
+{
+  AlignData data;
+  gint   min_x = G_MAXINT;
+  gint   min_y = G_MAXINT;
+  gint   max_x = G_MININT;
+  gint   max_y = G_MININT;
+  gint   index;
+  gint   orig_x   = 0;
+  gint   orig_y   = 0;
+  gint   offset_x = 0;
+  gint   offset_y = 0;
+
+  data.step_x = 0;
+  data.step_y = 0;
+  data.base_x = 0;
+  data.base_y = 0;
+
+  /* 0 is the top layer */
+  for (index = 0; index < layer_num; index++)
+    {
+      gimp_drawable_offsets (layers[index], &orig_x, &orig_y);
+
+      align_layers_get_align_offsets (layers[index],
+                                      &offset_x,
+                                      &offset_y);
+      orig_x += offset_x;
+      orig_y += offset_y;
+
+      min_x = MIN (min_x, orig_x);
+      max_x = MAX (max_x, orig_x);
+      min_y = MIN (min_y, orig_y);
+      max_y = MAX (max_y, orig_y);
+    }
+
+  if (VALS.base_is_bottom_layer)
+    {
+      gimp_drawable_offsets (background, &orig_x, &orig_y);
+
+      align_layers_get_align_offsets (background,
+                                      &offset_x,
+                                      &offset_y);
+      orig_x += offset_x;
+      orig_y += offset_y;
+      data.base_x = min_x = orig_x;
+      data.base_y = min_y = orig_y;
+    }
+
+  if (layer_num > 1)
+    {
+      data.step_x = (max_x - min_x) / (layer_num - 1);
+      data.step_y = (max_y - min_y) / (layer_num - 1);
+    }
+
+  if ( (VALS.h_style == LEFT2RIGHT) || (VALS.h_style == RIGHT2LEFT))
+    data.base_x = min_x;
+
+  if ( (VALS.v_style == TOP2BOTTOM) || (VALS.v_style == BOTTOM2TOP))
+    data.base_y = min_y;
+
+  return data;
+}
+
+/*
+ * Modifies position of each visible layers
+ * according to data.
+ */
+static void
+align_layers_perform_alignment (gint      *layers,
+                                gint       layer_num,
+                                AlignData  data)
+{
+  gint index;
+
+  for (index = 0; index < layer_num; index++)
+    {
+      gint x = 0;
+      gint y = 0;
+      gint orig_x;
+      gint orig_y;
+      gint offset_x;
+      gint offset_y;
 
       gimp_drawable_offsets (layers[index], &orig_x, &orig_y);
-      align_layers_get_align_offsets (layers[index], &offset_x, &offset_y);
 
+      align_layers_get_align_offsets (layers[index],
+                                      &offset_x,
+                                      &offset_y);
       switch (VALS.h_style)
         {
         case H_NONE:
           x = orig_x;
           break;
         case H_COLLECT:
-          x = base_x - offset_x;
+          x = data.base_x - offset_x;
           break;
         case LEFT2RIGHT:
-          x = (base_x + vindex * step_x) - offset_x;
+          x = (data.base_x + index * data.step_x) - offset_x;
           break;
         case RIGHT2LEFT:
-          x = (base_x + (visible_layer_num - vindex - 1) * step_x) - offset_x;
+          x = (data.base_x + (layer_num - index - 1) * data.step_x) - offset_x;
           break;
         case SNAP2HGRID:
           x = VALS.grid_size
@@ -315,19 +544,20 @@ align_layers (gint32 image_id)
             - offset_x;
           break;
         }
+
       switch (VALS.v_style)
         {
         case V_NONE:
           y = orig_y;
           break;
         case V_COLLECT:
-          y = base_y - offset_y;
+          y = data.base_y - offset_y;
           break;
         case TOP2BOTTOM:
-          y = (base_y + vindex * step_y) - offset_y;
+          y = (data.base_y + index * data.step_y) - offset_y;
           break;
         case BOTTOM2TOP:
-          y = (base_y + (visible_layer_num - vindex - 1) * step_y) - offset_y;
+          y = (data.base_y + (layer_num - index - 1) * data.step_y) - offset_y;
           break;
         case SNAP2VGRID:
           y = VALS.grid_size
@@ -335,12 +565,9 @@ align_layers (gint32 image_id)
             - offset_y;
           break;
         }
+
       gimp_layer_set_offsets (layers[index], x, y);
     }
-
-  gimp_image_undo_group_end (image_id);
-
-  return GIMP_PDB_SUCCESS;
 }
 
 static void
