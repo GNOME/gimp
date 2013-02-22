@@ -4,7 +4,6 @@ ACLOCAL_AMFLAGS = -I m4macros ${ACLOCAL_FLAGS}
 
 SUBDIRS = \
 	m4macros	\
-	tools		\
 	cursors		\
 	themes		\
 	po		\
@@ -30,6 +29,7 @@ SUBDIRS = \
 	etc		\
 	devel-docs	\
 	docs		\
+	tools		\
 	build
 
 pkgconfigdir = $(libdir)/pkgconfig
