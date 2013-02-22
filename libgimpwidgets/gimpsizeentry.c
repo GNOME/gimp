@@ -1310,7 +1310,9 @@ gimp_size_entry_eevl_input_callback (GtkSpinButton *spinner,
   else
     {
       /* transform back to UI-unit */
-      GimpEevlQuantity ui_unit;
+      GimpEevlQuantity  ui_unit;
+      GtkAdjustment    *adj;
+      gdouble           val;
 
       switch (gsef->gse->unit)
         {
@@ -1329,6 +1331,22 @@ gimp_size_entry_eevl_input_callback (GtkSpinButton *spinner,
         }
 
       *return_val = result.value * ui_unit.value;
+
+      /*  CLAMP() to adjustment bounds, or too large/small values
+       *  will make the validation machinery revert to the old value.
+       *  See bug #694477.
+       */
+      adj = gtk_spin_button_get_adjustment (spinner);
+
+      val = CLAMP (*return_val,
+                   gtk_adjustment_get_lower (adj),
+                   gtk_adjustment_get_upper (adj));
+
+      if (val != *return_val)
+        {
+          gtk_widget_error_bell (GTK_WIDGET (spinner));
+          *return_val = val;
+        }
 
       return TRUE;
     }
