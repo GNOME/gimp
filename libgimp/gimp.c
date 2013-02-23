@@ -337,6 +337,8 @@ gimp_main (const GimpPlugInInfo *info,
 
   if (env_string)
     {
+      const gchar *debug_messages;
+
       debug_string = strchr (env_string, ',');
 
       if (debug_string)
@@ -355,6 +357,20 @@ gimp_main (const GimpPlugInInfo *info,
       else if (strcmp (env_string, basename) == 0)
         {
           gimp_debug_flags = GIMP_DEBUG_DEFAULT;
+        }
+
+      /*  make debug output visible by setting G_MESSAGES_DEBUG  */
+      debug_messages = g_getenv ("G_MESSAGES_DEBUG");
+
+      if (debug_messages)
+        {
+          gchar *tmp = g_strconcat (debug_messages, ",LibGimp", NULL);
+          g_setenv ("G_MESSAGES_DEBUG", tmp, TRUE);
+          g_free (tmp);
+        }
+      else
+        {
+          g_setenv ("G_MESSAGES_DEBUG", "LibGimp", TRUE);
         }
     }
 
