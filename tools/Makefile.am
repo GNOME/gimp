@@ -10,7 +10,19 @@ endif
 
 SUBDIRS = $(D_pdbgen)
 
+if OS_WIN32
+
+bin_PROGRAMS = \
+	gimptool-2.0 \
+	gimp-debug-resume
+
+gimp_debug_resume_SOURCES = gimp-debug-resume.c
+
+else
+
 bin_PROGRAMS = gimptool-2.0
+
+endif
 
 noinst_PROGRAMS = test-clipboard
 

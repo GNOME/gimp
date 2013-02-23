@@ -90,6 +90,7 @@
 #  define STRICT
 #  define _WIN32_WINNT 0x0601
 #  include <windows.h>
+#  include <tlhelp32.h>
 #  undef RGB
 #  define USE_WIN32_SHM 1
 #endif
@@ -1649,10 +1650,50 @@ static void
 gimp_debug_stop (void)
 {
 #ifndef G_OS_WIN32
+
   g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "Waiting for debugger...");
   raise (SIGSTOP);
+
 #else
-  g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "Debugging not implemented on Win32");
+
+  HANDLE        hThreadSnap = NULL;
+  THREADENTRY32 te32        = { 0 };
+  pid_t         opid        = getpid ();
+
+  g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "Debugging (restart externally): %d",
+         opid);
+
+  hThreadSnap = CreateToolhelp32Snapshot (TH32CS_SNAPTHREAD, 0);
+  if (hThreadSnap == INVALID_HANDLE_VALUE)
+    {
+      g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG,
+             "error getting threadsnap - debugging impossible");
+      return;
+    }
+
+  te32.dwSize = sizeof (THREADENTRY32);
+
+  if (Thread32First (hThreadSnap, &te32))
+    {
+      do
+        {
+          if (te32.th32OwnerProcessID == opid)
+            {
+              HANDLE hThread = OpenThread (THREAD_SUSPEND_RESUME, FALSE,
+                                           te32.th32ThreadID);
+              SuspendThread (hThread);
+              CloseHandle (hThread);
+            }
+        }
+      while (Thread32Next (hThreadSnap, &te32));
+    }
+  else
+    {
+      g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "error getting threads");
+    }
+
+  CloseHandle (hThreadSnap);
+
 #endif
 }
 
