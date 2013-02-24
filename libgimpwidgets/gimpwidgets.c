@@ -588,6 +588,10 @@ gimp_coordinates_callback (GtkWidget           *widget,
         {
           if ((data->orig_x != 0) && (data->orig_y != 0))
             {
+              g_signal_handlers_block_by_func (widget,
+                                               gimp_coordinates_callback,
+                                               data);
+
               if (ROUND (new_x) != ROUND (data->last_x))
                 {
                   data->last_x = new_x;
@@ -608,6 +612,10 @@ gimp_coordinates_callback (GtkWidget           *widget,
                   data->last_x
                     = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
                 }
+
+              g_signal_handlers_unblock_by_func (widget,
+                                                 gimp_coordinates_callback,
+                                                 data);
             }
         }
       else
