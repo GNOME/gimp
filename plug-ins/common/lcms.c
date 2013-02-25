@@ -1019,6 +1019,22 @@ lcms_image_transform_rgb (gint32                    image,
               iter_format = babl_format ("R'G'B' u16");
             }
         }
+#ifdef TYPE_RGB_HALF_FLT
+      /* half float types are only in lcms 2.4 and newer */
+      else if (type == babl_type ("half")) /* 16-bit floating point (half) */
+        {
+          if (has_alpha)
+            {
+              lcms_format = TYPE_RGBA_HALF_FLT;
+              iter_format = babl_format ("R'G'B'A half");
+            }
+          else
+            {
+              lcms_format = TYPE_RGB_HALF_FLT;
+              iter_format = babl_format ("R'G'B' half");
+            }
+        }
+#endif /* TYPE_RGB_HALF_FLT */
       else if (type == babl_type ("float"))
         {
           if (has_alpha)
