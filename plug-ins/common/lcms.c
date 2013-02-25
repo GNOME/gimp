@@ -1019,6 +1019,19 @@ lcms_image_transform_rgb (gint32                    image,
               iter_format = babl_format ("R'G'B' u16");
             }
         }
+      else if (type == babl_type ("half")) /* 16-bit floating point (half) */
+        {
+          if (has_alpha)
+            {
+              lcms_format = TYPE_RGBA_HALF_FLT;
+              iter_format = babl_format ("R'G'B'A half");
+            }
+          else
+            {
+              lcms_format = TYPE_RGB_HALF_FLT;
+              iter_format = babl_format ("R'G'B' half");
+            }
+        }
       else if (type == babl_type ("float"))
         {
           if (has_alpha)
