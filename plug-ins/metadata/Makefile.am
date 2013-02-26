@@ -80,6 +80,7 @@ LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(EXIF_LIBS)		\
+	$(GEXIV2_LIBS)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\

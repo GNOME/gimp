@@ -61,6 +61,7 @@ m4_define([libcurl_required_version], [7.15.1])
 m4_define([dbus_glib_required_version], [0.70])
 m4_define([libgudev_required_version], [167])
 m4_define([exif_required_version], [0.6.15])
+m4_define([gexiv2_required_version], [0.4])
 m4_define([lcms_required_version], [2.2])
 m4_define([libpng_required_version], [1.2.37])
 m4_define([liblzma_required_version], [5.0.0])
@@ -1299,6 +1300,23 @@ AC_SUBST(EXIF_LIBS)
 AM_CONDITIONAL(HAVE_LIBEXIF, test "x$have_libexif" = xyes)
 
 
+#####################
+# Check for libgexiv2
+#####################
+
+AC_ARG_WITH(libgexiv2, [  --without-libgexiv2 don't build the metadata plug-in])
+
+have_libgexiv2=no
+if test "x$with_libgexiv2" != xno; then
+  have_libgexiv2=yes
+  PKG_CHECK_MODULES(GEXIV2, gexiv2 >= gexiv2_required_version,
+                    AC_DEFINE(HAVE_LIBGEXIV2, 1, [libgexi2v is available]),
+                    have_libgexiv2="no (libgexiv2 not found or too old)")
+fi
+
+AM_CONDITIONAL(HAVE_LIBGEXIV2, test "x$have_libgexiv2" = xyes)
+
+
 #################
 # Check for libaa
 #################
@@ -2383,6 +2401,7 @@ Optional Plug-Ins:
 
 Plug-In Features:
   EXIF support:        $have_libexif
+  XMP support:         $have_libexiv2
 
 Optional Modules:
   ALSA (MIDI Input):   $have_alsa
