@@ -559,7 +559,7 @@ parse_set_property (XMPParseContext     *context,
 
     case XMP_PTYPE_RESOURCE:
 #ifdef DEBUG_XMP_MODEL
-      g_print ("\t%s:%s @ = \"%s\"\n", ns_prefix, name,
+      g_print ("\t%s:%s @ = \"%s\"\n", schema->prefix, name,
               value[0]);
 #endif
       if (property != NULL)
@@ -601,7 +601,7 @@ parse_set_property (XMPParseContext     *context,
     case XMP_PTYPE_ALT_THUMBS:
 #ifdef DEBUG_XMP_MODEL
       for (i = 0; value[i] != NULL; i += 2)
-        g_print ("\t%s:%s [size:%d] = \"...\"\n", ns_prefix, name,
+        g_print ("\t%s:%s [size:%d] = \"...\"\n", schema->prefix, name,
                 *(int *)(value[i]));
       g_print ("\n");
 #endif
@@ -637,7 +637,7 @@ parse_set_property (XMPParseContext     *context,
     case XMP_PTYPE_ALT_LANG:
 #ifdef DEBUG_XMP_MODEL
       for (i = 0; value[i] != NULL; i += 2)
-        g_print ("\t%s:%s [lang:%s] = \"%s\"\n", ns_prefix, name,
+        g_print ("\t%s:%s [lang:%s] = \"%s\"\n", schema->prefix, name,
                 value[i], value[i + 1]);
 #endif
       xmp_model_set_property (xmp_model, XMP_TYPE_LANG_ALT, schema->uri, name, value);
@@ -646,7 +646,7 @@ parse_set_property (XMPParseContext     *context,
     case XMP_PTYPE_STRUCTURE:
 #ifdef DEBUG_XMP_MODEL
       for (i = 2; value[i] != NULL; i += 2)
-        g_print ("\t%s:%s [%s] = \"%s\"\n", ns_prefix, name,
+        g_print ("\t%s:%s [%s] = \"%s\"\n", schema->prefix, name,
                 value[i], value[i + 1]);
 #endif
       if (property != NULL)
@@ -682,7 +682,7 @@ parse_set_property (XMPParseContext     *context,
 
     default:
 #ifdef DEBUG_XMP_MODEL
-      g_print ("\t%s:%s = ?\n", ns_prefix, name);
+      g_print ("\t%s:%s = ?\n", schema->prefix, name);
 #endif
       break;
     }
@@ -1077,7 +1077,7 @@ xmp_model_set_property (XMPModel    *xmp_model,
      case XMP_TYPE_TEXT_BAG:
      case XMP_TYPE_TEXT_SEQ:
 #ifdef DEBUG_XMP_MODEL
-      g_print ("\t%s:%s [] =", ns_prefix, name);
+      g_print ("\t%s:%s [] =", schema->prefix, property_name);
       for (i = 0; value[i] != NULL; i++)
         if (i == 0)
           g_print (" \"%s\"", value[i]);
@@ -1117,7 +1117,7 @@ xmp_model_set_property (XMPModel    *xmp_model,
 
     case XMP_TYPE_TEXT:
 #ifdef DEBUG_XMP_MODEL
-      g_print ("\t%s:%s = \"%s\"\n", ns_prefix, name, value[0]);
+      g_print ("\t%s:%s = \"%s\"\n", schema->prefix, property_name, value[0]);
 #endif
       if (property != NULL)
         /* FIXME */;
@@ -1149,7 +1149,7 @@ xmp_model_set_property (XMPModel    *xmp_model,
     case XMP_TYPE_LANG_ALT:
 #ifdef DEBUG_XMP_MODEL
       for (i = 0; value[i] != NULL; i += 2)
-        g_print ("\t%s:%s [lang:%s] = \"%s\"\n", ns_prefix, name,
+        g_print ("\t%s:%s [lang:%s] = \"%s\"\n", schema->prefix, property_name,
                 value[i], value[i + 1]);
 #endif
       if (property != NULL)
@@ -1184,7 +1184,7 @@ xmp_model_set_property (XMPModel    *xmp_model,
 
     default:
 #ifdef DEBUG_XMP_MODEL
-      g_print ("\t%s:%s = ?\n", ns_prefix, name);
+      g_print ("\t%s:%s = ?\n", schema->prefix, property_name);
 #endif
       break;
     }
