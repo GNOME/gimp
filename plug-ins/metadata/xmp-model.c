@@ -822,12 +822,14 @@ xmp_model_parse_file (XMPModel     *xmp_model,
                       const gchar  *filename,
                       GError      **error)
 {
-  GExiv2Metadata *metadata  = NULL;
-  gchar         **tags      = NULL;
-  gchar          *tag       = NULL;
-  gchar          *value     = NULL;
-  gchar         **temp      = NULL;
-  int             i         = 0;
+  GExiv2Metadata *metadata = NULL;
+  gchar         **tags = NULL;
+  gchar          *tag = NULL;
+  gchar          *value = NULL;
+  gchar         **val_array;
+  gchar         **raw_value;
+  int             i = 0;
+  XMPType         type;
 
   metadata = gexiv2_metadata_new ();
   if (! gexiv2_metadata_open_path (metadata, filename, error))
@@ -838,19 +840,33 @@ xmp_model_parse_file (XMPModel     *xmp_model,
   for (i = 0; tags[i] != NULL; i++)
    {
     tag = tags[i];
-    value = gexiv2_metadata_get_xmp_tag_string (metadata, tag);
 
     /* the value is of the form: Xmp.<schema>.<property_name>. Split and
      * use the last items of the array to set the value.
      */
-    temp = g_strsplit (tag, ".", 0);
-    if (! xmp_model_set_scalar_property (xmp_model, temp[1], temp[2], value))
-      g_printerr ("\n Unable to set XMP tag: %s:%s - %s\n", temp[1], temp[2], value);
+    value = gexiv2_metadata_get_xmp_tag_string (metadata, tag);
+    val_array = g_strsplit (tag, ".", 0);
+    type = xmp_model_find_xmptype_by (xmp_model, val_array[1], val_array[2]);
+    if (type == XMP_TYPE_LANG_ALT)
+      raw_value = convert_xmp_value (value);
+    else
+     {
+      raw_value = g_new (gchar *, 2);
+      raw_value[0] = value;
+      raw_value[1] = NULL;
+     }
+    if (! xmp_model_set_property (xmp_model,
+                                  type,
+                                  val_array[1],
+                                  val_array[2],
+                                  (const gchar**) g_strdupv (raw_value)));
+      g_printerr ("\n Unable to set XMP tag: %s:%s - %s\n",
+                  val_array[1], val_array[2], value);
    }
 
   gexiv2_metadata_free (metadata);
   g_free (tags);
-  g_free (temp);
+  g_free (val_array);
   g_free (value);
   return TRUE;
 }
