@@ -47,6 +47,8 @@ static void         tree_model_row_changed  (GtkTreeModel    *model,
 static XMPSchema *  find_xmp_schema_by_iter (XMPModel       *xmp_model,
                                              GtkTreeIter    *iter);
 
+gchar**             convert_xmp_value       (const gchar    *in);
+
 enum
 {
   PROPERTY_CHANGED,
@@ -214,6 +216,52 @@ tree_model_row_changed (GtkTreeModel    *model,
     xmp_model_property_changed (XMP_MODEL (model), schema, iter);
   }
 }
+
+
+/* utility function in order to translate XMP_TYPE_LANG_ALT values to an
+ * array of strings. This is needed to set the value in
+ * xmp_model_set_property.
+ * TODO: Possibly this function can be ignored after the full
+ * integration of gexiv2
+ */
+gchar**
+convert_xmp_value (const gchar *in)
+{
+  gchar    **splitted = NULL;
+  gchar    **result;
+  gchar     *value = NULL;
+  GSList    *list = NULL;
+  GSList    *list_iter;
+  int        i;
+
+  /* extract the language and corresponding value
+   */
+  splitted = g_strsplit_set (in, "\",", -1);
+  for (i=0; splitted[i] != NULL; i++)
+   {
+     value = g_strchug (splitted[i]);
+     if (g_str_has_prefix (value, "lang"))
+         continue;
+     else
+         list = g_slist_append (list, g_strdup (value));
+   }
+
+  /* put it back into an array and return it
+   */
+  i = g_slist_length (list);
+  result = g_new (gchar*, i + 1);
+  result[i--] = NULL;
+  list = g_slist_reverse(list);
+  for (list_iter = list; list_iter != NULL; list_iter = list_iter->next)
+   {
+     result[i--] = list_iter->data;
+   }
+
+  g_slist_free (list);
+  g_strfreev (splitted);
+  return g_strdupv(result);
+}
+
 
 static XMPSchema *
 find_xmp_schema_by_iter (XMPModel       *xmp_model,
