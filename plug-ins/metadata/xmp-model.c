@@ -25,6 +25,8 @@
 
 #include <libgimp/gimp.h>
 
+#include <gexiv2/gexiv2.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 #include "xmp-schemas.h"
@@ -772,19 +774,36 @@ xmp_model_parse_file (XMPModel     *xmp_model,
                       const gchar  *filename,
                       GError      **error)
 {
-  gchar *buffer;
-  gsize  buffer_length;
+  GExiv2Metadata *metadata  = NULL;
+  gchar         **tags      = NULL;
+  gchar          *tag       = NULL;
+  gchar          *value     = NULL;
+  gchar         **temp      = NULL;
+  int             i         = 0;
 
-  g_return_val_if_fail (filename != NULL, FALSE);
-
-  if (! g_file_get_contents (filename, &buffer, &buffer_length, error))
+  metadata = gexiv2_metadata_new ();
+  if (! gexiv2_metadata_open_path (metadata, filename, error))
     return FALSE;
 
-  if (! xmp_model_parse_buffer (xmp_model, buffer, buffer_length, TRUE, error))
-    return FALSE;
+  tags = gexiv2_metadata_get_xmp_tags (metadata);
 
-  g_free (buffer);
+  for (i = 0; tags[i] != NULL; i++)
+   {
+    tag = tags[i];
+    value = gexiv2_metadata_get_xmp_tag_string (metadata, tag);
 
+    /* the value is of the form: Xmp.<schema>.<property_name>. Split and
+     * use the last items of the array to set the value.
+     */
+    temp = g_strsplit (tag, ".", 0);
+    if (! xmp_model_set_scalar_property (xmp_model, temp[1], temp[2], value))
+      g_printerr ("\n Unable to set XMP tag: %s:%s - %s\n", temp[1], temp[2], value);
+   }
+
+  gexiv2_metadata_free (metadata);
+  g_free (tags);
+  g_free (temp);
+  g_free (value);
   return TRUE;
 }
 

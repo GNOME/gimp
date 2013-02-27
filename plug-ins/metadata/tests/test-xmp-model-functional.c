@@ -99,10 +99,10 @@ static void
 test_xmp_model_import_export_structures (GimpTestFixture *fixture,
                                          gconstpointer    data)
 {
-  int             i, j;
+  int             i;
   gboolean        result;
-  const gchar   **before_value;
-  const gchar   **after_value;
+  const gchar    *before_value;
+  const gchar    *after_value;
   GString        *buffer;
   TestDataEntry  *testdata;
   const gchar    *scalarvalue = "test";
@@ -122,9 +122,9 @@ test_xmp_model_import_export_structures (GimpTestFixture *fixture,
     testdata = &(import_exportdata[i]);
 
     /* backup the original raw value */
-    before_value = xmp_model_get_raw_property_value (fixture->xmp_model,
-                                                     testdata->schema_name,
-                                                     testdata->name);
+    before_value = xmp_model_get_scalar_property (fixture->xmp_model,
+                                                  testdata->schema_name,
+                                                  testdata->name);
     g_assert (before_value != NULL);
 
     /* set a new scalar value */
@@ -144,23 +144,13 @@ test_xmp_model_import_export_structures (GimpTestFixture *fixture,
                             buffer->len,
                             TRUE,
                             error);
-    after_value = xmp_model_get_raw_property_value (fixture->xmp_model,
-                                                    testdata->schema_name,
-                                                    testdata->name);
+    after_value = xmp_model_get_scalar_property (fixture->xmp_model,
+                                                 testdata->schema_name,
+                                                 testdata->name);
     /* check that the scalar value is correctly exported */
     g_assert (after_value != NULL);
-    g_assert_cmpstr (after_value[testdata->pos], ==, scalarvalue);
+    g_assert_cmpstr (after_value, ==, scalarvalue);
 
-    /* check that the original data is not changed */
-    for (j = 0; after_value[j] != NULL; ++j)
-     {
-       if (j == testdata->pos)
-         continue;
-
-       g_assert (before_value[j] != NULL);
-       g_assert (after_value[j]  != NULL);
-       g_assert_cmpstr (before_value[j], ==, after_value[j]);
-     }
    }
 }
 

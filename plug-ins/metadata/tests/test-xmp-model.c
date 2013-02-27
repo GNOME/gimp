@@ -261,7 +261,7 @@ test_xmp_model_parse_file (GimpTestFixture *fixture,
 
   // title
   value = xmp_model_get_scalar_property (fixture->xmp_model, "dc", "title");
-  g_assert_cmpstr (value, == , "image title");
+  g_assert_cmpstr (value, == , "lang=\"x-default\" image title");
 
   // creator
   value = xmp_model_get_scalar_property (fixture->xmp_model, "dc", "creator");
@@ -269,7 +269,7 @@ test_xmp_model_parse_file (GimpTestFixture *fixture,
 
   // description
   value = xmp_model_get_scalar_property (fixture->xmp_model, "dc", "description");
-  g_assert_cmpstr (value, == , "bla");
+  g_assert_cmpstr (value, == , "lang=\"x-default\" bla, lang=\"de_de\" Deutsche Beschreibung");
 
   g_free (uri);
 }
