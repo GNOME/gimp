@@ -814,6 +814,7 @@ gimp_image_window_get_aux_info (GimpSessionManaged *session_managed)
   if (config->single_window_mode)
     {
       GimpSessionInfoAux *aux;
+      GtkAllocation       allocation;
       gchar               widthbuf[128];
 
       g_snprintf (widthbuf, sizeof (widthbuf), "%d",
@@ -821,8 +822,14 @@ gimp_image_window_get_aux_info (GimpSessionManaged *session_managed)
       aux = gimp_session_info_aux_new (GIMP_IMAGE_WINDOW_LEFT_DOCKS_WIDTH, widthbuf);
       aux_info = g_list_append (aux_info, aux);
 
+      gtk_widget_get_allocation (private->right_hpane, &allocation);
+
+      /* a negative number will be interpreted as the width of the second
+       * child of the pane
+       */
       g_snprintf (widthbuf, sizeof (widthbuf), "%d",
-                  gtk_paned_get_position (GTK_PANED (private->right_hpane)));
+                  gtk_paned_get_position (GTK_PANED (private->right_hpane)) -
+                  allocation.width);
       aux = gimp_session_info_aux_new (GIMP_IMAGE_WINDOW_RIGHT_DOCKS_POS, widthbuf);
       aux_info = g_list_append (aux_info, aux);
 
@@ -844,7 +851,10 @@ gimp_image_window_set_right_hpane_position (GtkPaned      *paned,
 
   g_return_if_fail (GTK_IS_PANED (paned));
 
-  gtk_paned_set_position (paned, position);
+  if (position > 0)
+    gtk_paned_set_position (paned, position);
+  else
+    gtk_paned_set_position (paned, position + allocation->width);
 
   g_signal_handlers_disconnect_by_func (paned,
                                         gimp_image_window_set_right_hpane_position,
@@ -898,7 +908,7 @@ gimp_image_window_set_aux_info (GimpSessionManaged *session_managed,
   if (right_docks_pos > 0 &&
       gtk_paned_get_position (GTK_PANED (private->right_hpane)) != right_docks_pos)
     {
-      if (wait_with_right_docks)
+      if (wait_with_right_docks || right_docks_pos < 0)
         {
           /* We must wait on a size allocation before we can set the
            * position
