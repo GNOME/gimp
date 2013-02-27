@@ -52,18 +52,6 @@ metadata_SOURCES = \
 #	iptc-decode.h		\
 #	iptc-decode.c	
 
-noinst_PROGRAMS = xmpdump
-xmpdump_SOURCES = \
-	xmpdump.c	\
-	xmp-schemas.h	\
-	xmp-schemas.c	\
-	xmp-encode.h	\
-	xmp-encode.c	\
-	xmp-model.h	\
-	xmp-model.c	\
-	xmp-parse.h	\
-	xmp-parse.c	
-
 INCLUDES = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
