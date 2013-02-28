@@ -53,7 +53,6 @@ static TestDataEntry propertiestotest[] =
    { XMP_PREFIX_DUBLIN_CORE,  "creator",        0 },
    { XMP_PREFIX_DUBLIN_CORE,  "description",    1 },
    { XMP_PREFIX_DUBLIN_CORE,  "subject",        0 },
-   { XMP_PREFIX_PHOTOSHOP,    "CaptionWriter",  0 },
    { NULL,  NULL,          0 }
 };
 TestDataEntry * const import_exportdata = propertiestotest;

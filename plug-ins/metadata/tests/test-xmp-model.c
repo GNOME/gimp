@@ -271,6 +271,10 @@ test_xmp_model_parse_file (GimpTestFixture *fixture,
   value = xmp_model_get_scalar_property (fixture->xmp_model, "dc", "description");
   g_assert_cmpstr (value, == , "lang=\"x-default\" bla, lang=\"de_de\" Deutsche Beschreibung");
 
+  // exif
+  value = xmp_model_get_scalar_property (fixture->xmp_model, "exif", "CompressedBitsPerPixel");
+  g_assert_cmpstr (value, == , "5/1");
+
   g_free (uri);
 }
 
