@@ -45,7 +45,6 @@ gimp_gegl_apply_operation (GeglBuffer          *src_buffer,
   GeglNode      *gegl;
   GeglNode      *src_node;
   GeglNode      *dest_node;
-  GeglProcessor *processor;
   GeglRectangle  rect = { 0, };
   gdouble        value;
   gboolean       progress_active = FALSE;
@@ -80,10 +79,12 @@ gimp_gegl_apply_operation (GeglBuffer          *src_buffer,
 
   gegl_node_link_many (src_node, operation, dest_node, NULL);
 
-  processor = gegl_node_new_processor (dest_node, &rect);
-
   if (progress)
     {
+      GeglProcessor *processor;
+
+      processor = gegl_node_new_processor (dest_node, &rect);
+
       progress_active = gimp_progress_is_active (progress);
 
       if (progress_active)
@@ -95,13 +96,17 @@ gimp_gegl_apply_operation (GeglBuffer          *src_buffer,
         {
           gimp_progress_start (progress, undo_desc, FALSE);
         }
+
+      while (gegl_processor_work (processor, &value))
+        gimp_progress_set_value (progress, value);
+
+      g_object_unref (processor);
     }
-
-  while (gegl_processor_work (processor, &value))
-    if (progress)
-      gimp_progress_set_value (progress, value);
-
-  g_object_unref (processor);
+  else
+    {
+      gegl_node_blit (dest_node, 1.0, &rect,
+                      NULL, NULL, 0, GEGL_BLIT_DEFAULT);
+    }
 
   g_object_unref (gegl);
 
