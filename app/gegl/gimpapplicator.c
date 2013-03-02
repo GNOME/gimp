@@ -69,12 +69,6 @@ gimp_applicator_finalize (GObject *object)
       applicator->node = NULL;
     }
 
-  if (applicator->processor)
-    {
-      g_object_unref (applicator->processor);
-      applicator->processor = NULL;
-    }
-
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -210,8 +204,6 @@ gimp_applicator_new (GeglBuffer        *dest_buffer,
                             applicator->dest_node, "input");
     }
 
-  applicator->processor = gegl_node_new_processor (applicator->dest_node, NULL);
-
   return applicator;
 }
 
@@ -245,7 +237,6 @@ gimp_applicator_apply (GimpApplicator       *applicator,
                      NULL);
     }
 
-
   gegl_node_set (applicator->apply_offset_node,
                  "x", (gdouble) apply_buffer_x,
                  "y", (gdouble) apply_buffer_y,
@@ -261,10 +252,8 @@ gimp_applicator_apply (GimpApplicator       *applicator,
                                paint_mode, opacity, FALSE);
     }
 
-  gegl_processor_set_rectangle (applicator->processor,
-                                GEGL_RECTANGLE (apply_buffer_x,
-                                                apply_buffer_y,
-                                                width, height));
-
-  while (gegl_processor_work (applicator->processor, NULL));
+  gegl_node_blit (applicator->dest_node, 1.0,
+                  GEGL_RECTANGLE (apply_buffer_x, apply_buffer_y,
+                                  width, height),
+                  NULL, NULL, 0, GEGL_BLIT_DEFAULT);
 }

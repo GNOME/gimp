@@ -42,7 +42,6 @@ struct _GimpApplicator
   GeglNode             *apply_src_node;
   GeglNode             *apply_offset_node;
   GeglNode             *dest_node;
-  GeglProcessor        *processor;
 
   GeglBuffer           *src_buffer;
   GeglBuffer           *apply_buffer;
