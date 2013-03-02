@@ -83,7 +83,9 @@ static gint          save_image         (const gchar        *filename,
 static FitsHduList * create_fits_header (FitsFile           *ofp,
                                          guint               width,
                                          guint               height,
-                                         guint               bpp);
+                                         guint               channels,
+                                         guint               bitpix);
+
 static gint          save_fits        (FitsFile           *ofp,
                                        gint32              image_ID,
                                        gint32              drawable_ID);
@@ -810,7 +812,8 @@ static FitsHduList *
 create_fits_header (FitsFile *ofp,
                     guint     width,
                     guint     height,
-                    guint     bpp)
+                    guint     channels,
+                    guint     bitpix)
 {
   FitsHduList *hdulist;
   gint         print_ctype3 = 0; /* The CTYPE3-card may not be FITS-conforming */
@@ -837,19 +840,38 @@ create_fits_header (FitsFile *ofp,
     return NULL;
 
   hdulist->used.simple  = 1;
-  hdulist->bitpix       = 8;
-  hdulist->naxis        = (bpp == 1) ? 2 : 3;
+  hdulist->bitpix       = bitpix;
+  hdulist->naxis        = (channels == 1) ? 2 : 3;
   hdulist->naxisn[0]    = width;
   hdulist->naxisn[1]    = height;
-  hdulist->naxisn[2]    = bpp;
+  hdulist->naxisn[2]    = channels;
   hdulist->used.datamin = 1;
   hdulist->datamin      = 0.0;
   hdulist->used.datamax = 1;
-  hdulist->datamax      = 255.0;
   hdulist->used.bzero   = 1;
   hdulist->bzero        = 0.0;
   hdulist->used.bscale  = 1;
   hdulist->bscale       = 1.0;
+
+  switch (bitpix)
+    {
+    case 8:
+      hdulist->datamax = 255;
+      break;
+    case 16:
+      hdulist->datamax = 65535;
+      break;
+    case 32:
+      hdulist->datamax = 4294967295;
+      break;
+    case -32:
+      hdulist->datamax = 1.0;
+      break;
+    case -64:
+      hdulist->datamax = 1.0;
+    default:
+      return NULL;
+    }
 
   fits_add_card (hdulist, "");
   fits_add_card (hdulist,
@@ -862,13 +884,13 @@ create_fits_header (FitsFile *ofp,
   fits_add_card (hdulist,
                  "COMMENT For sources see http://www.kirchgessner.net");
   fits_add_card (hdulist, "");
-  fits_add_card (hdulist, ctype3_card[bpp * 3]);
+  fits_add_card (hdulist, ctype3_card[channels * 3]);
 
-  if (ctype3_card[bpp * 3 + 1] != NULL)
-    fits_add_card (hdulist, ctype3_card[bpp * 3 + 1]);
+  if (ctype3_card[channels * 3 + 1] != NULL)
+    fits_add_card (hdulist, ctype3_card[channels * 3 + 1]);
 
-  if (print_ctype3 && (ctype3_card[bpp * 3 + 2] != NULL))
-    fits_add_card (hdulist, ctype3_card[bpp * 3 + 2]);
+  if (print_ctype3 && (ctype3_card[channels * 3 + 2] != NULL))
+    fits_add_card (hdulist, ctype3_card[channels * 3 + 2]);
 
   fits_add_card (hdulist, "");
 
@@ -882,49 +904,99 @@ save_fits (FitsFile *ofp,
            gint32    image_ID,
            gint32    drawable_ID)
 {
-  gint           height, width, i, j, channel;
-  gint           tile_height, bpp, bpsl;
+  gint           height, width, i, j, channel, channelnum;
+  gint           tile_height, bpp, bpsl, bitpix, bpc;
   long           nbytes;
   guchar        *data, *src;
   GeglBuffer    *buffer;
-  const Babl    *format = NULL;
-  FitsHduList *hdu;
+  const Babl    *format, *type;
+  FitsHduList   *hdu;
 
   buffer = gimp_drawable_get_buffer (drawable_ID);
 
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
 
+  format = gegl_buffer_get_format (buffer);
+  type   = babl_format_get_type (format, 0);
+
+  if (type == babl_type ("u8"))
+    {
+      bitpix = 8;
+    }
+  else if (type == babl_type ("u16"))
+    {
+      bitpix = 16;
+    }
+  else if (type == babl_type ("u32"))
+    {
+      bitpix = 32;
+    }
+  else if (type == babl_type ("float"))
+    {
+      bitpix = -32;
+    }
+  else if (type == babl_type ("half"))
+    {
+      bitpix = -32;
+      type = babl_type ("float");
+    }
+  else
+    {
+      return FALSE;
+    }
+
   switch (gimp_drawable_type (drawable_ID))
     {
     case GIMP_GRAY_IMAGE:
-      format = babl_format ("Y' u8");
+      format = babl_format_new (babl_model ("Y'"),
+                                type,
+                                babl_component ("Y'"),
+                                NULL);
       break;
 
     case GIMP_GRAYA_IMAGE:
-      format = babl_format ("Y'A u8");
+      format = babl_format_new (babl_model ("Y'A"),
+                                type,
+                                babl_component ("Y'"),
+                                babl_component ("A"),
+                                NULL);
       break;
 
     case GIMP_RGB_IMAGE:
     case GIMP_INDEXED_IMAGE:
-      format = babl_format ("R'G'B' u8");
+      format = babl_format_new (babl_model ("R'G'B'"),
+                                type,
+                                babl_component ("R'"),
+                                babl_component ("G'"),
+                                babl_component ("B'"),
+                                NULL);
       break;
 
     case GIMP_RGBA_IMAGE:
     case GIMP_INDEXEDA_IMAGE:
-      format = babl_format ("R'G'B'A u8");
+      format = babl_format_new (babl_model ("R'G'B'A"),
+                                type,
+                                babl_component ("R'"),
+                                babl_component ("G'"),
+                                babl_component ("B'"),
+                                babl_component ("A"),
+                                NULL);
       break;
     }
 
-  bpp  = babl_format_get_bytes_per_pixel (format);
-  bpsl = width * bpp; /* Bytes per scanline */
+  channelnum = babl_format_get_n_components (format);
+  bpp        = babl_format_get_bytes_per_pixel (format);
+
+  bpc  = bpp / channelnum; /* Bytes per channel */
+  bpsl = width * bpp;      /* Bytes per scanline */
 
   tile_height = gimp_tile_height ();
 
   /* allocate a buffer for retrieving information from the pixel region  */
   src = data = (guchar *) g_malloc (width * height * bpp);
 
-  hdu = create_fits_header (ofp, width, height, bpp);
+  hdu = create_fits_header (ofp, width, height, channelnum, bitpix);
   if (hdu == NULL)
     return FALSE;
 
@@ -932,7 +1004,7 @@ save_fits (FitsFile *ofp,
     return FALSE;
 
   nbytes = 0;
-  for (channel = 0; channel < bpp; channel++)
+  for (channel = 0; channel < channelnum; channel++)
     {
       for (i = 0; i < height; i++)
         {
@@ -949,29 +1021,68 @@ save_fits (FitsFile *ofp,
                                format, data,
                                GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-              src = data + bpsl * (scan_lines - 1) + channel;
+              src = data + bpsl * (scan_lines - 1) + channel * bpc;
             }
 
-          if (bpp == 1)  /* One channel only ? Write the scanline */
+          if (channelnum == 1 && bitpix == 8)  /* One channel and 8 bit? Write the scanline */
             {
-              fwrite (src, 1, width, ofp->fp);
+              fwrite (src, bpc, width, ofp->fp);
               src += bpsl;
             }
-          else           /* Multiple channels */
+          else           /* Multiple channels or high bit depth */
             {
-              for (j = 0; j < width; j++)  /* Write out bytes for current channel */
-                {
-                  putc (*src, ofp->fp);
-                  src += bpp;
-                }
+            /* Write out bytes for current channel */
+            /* FIXME: Don't assume a little endian arch */
+            switch (bitpix)
+              {
+              case 8:
+                for (j = 0; j < width; j++)
+                  {
+                    putc (*src, ofp->fp);
+                    src += bpp;
+                  }
+                break;
+              case 16:
+                for (j = 0; j < width; j++)
+                  {
+                    *((guint16*)src) += 32768;
+                    putc (*(src + 1), ofp->fp);
+                    putc (*(src + 0), ofp->fp);
+                    src += bpp;
+                  }
+                break;
+              case 32:
+                for (j = 0; j < width; j++)
+                  {
+                    *((guint32*)src) += 2147483648;
+                    putc (*(src + 3), ofp->fp);
+                    putc (*(src + 2), ofp->fp);
+                    putc (*(src + 1), ofp->fp);
+                    putc (*(src + 0), ofp->fp);
+                    src += bpp;
+                  }
+                break;
+              case -32:
+                for (j = 0; j < width; j++)
+                  {
+                    putc (*(src + 3), ofp->fp);
+                    putc (*(src + 2), ofp->fp);
+                    putc (*(src + 1), ofp->fp);
+                    putc (*(src + 0), ofp->fp);
+                    src += bpp;
+                  }
+                break;
+              default:
+                return FALSE;
+              }
             }
 
-          nbytes += width;
+          nbytes += width * bpc;
           src -= 2 * bpsl;
 
           if ((i % 20) == 0)
             gimp_progress_update ((gdouble) (i + channel * height) /
-                                  (gdouble) (height * bpp));
+                                  (gdouble) (height * channelnum));
         }
     }
 
