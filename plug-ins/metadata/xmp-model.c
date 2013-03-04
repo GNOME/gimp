@@ -827,9 +827,7 @@ xmp_model_parse_file (XMPModel     *xmp_model,
   gchar          *tag = NULL;
   gchar          *value = NULL;
   gchar         **val_array;
-  gchar         **raw_value;
   int             i = 0;
-  XMPType         type;
 
   metadata = gexiv2_metadata_new ();
   if (! gexiv2_metadata_open_path (metadata, filename, error))
@@ -846,20 +844,10 @@ xmp_model_parse_file (XMPModel     *xmp_model,
      */
     value = gexiv2_metadata_get_xmp_tag_string (metadata, tag);
     val_array = g_strsplit (tag, ".", 0);
-    type = xmp_model_find_xmptype_by (xmp_model, val_array[1], val_array[2]);
-    if (type == XMP_TYPE_LANG_ALT)
-      raw_value = convert_xmp_value (value);
-    else
-     {
-      raw_value = g_new (gchar *, 2);
-      raw_value[0] = value;
-      raw_value[1] = NULL;
-     }
-    if (! xmp_model_set_property (xmp_model,
-                                  type,
-                                  val_array[1],
-                                  val_array[2],
-                                  (const gchar**) g_strdupv (raw_value)));
+    if (! xmp_model_set_scalar_property (xmp_model,
+                                         val_array[1],
+                                         val_array[2],
+                                         value))
       g_printerr ("\n Unable to set XMP tag: %s:%s - %s\n",
                   val_array[1], val_array[2], value);
    }
@@ -1035,68 +1023,29 @@ xmp_model_set_scalar_property (XMPModel    *xmp_model,
                                const gchar *property_name,
                                const gchar *property_value)
 {
-  XMPSchema    *schema;
-  XMPProperty  *property = NULL;
-  const gchar **value = NULL;
-  GtkTreeIter   iter;
-  GtkTreeIter   child_iter;
-  int           i;
+  gchar       **value = NULL;
   XMPType       type;
 
   g_return_val_if_fail (xmp_model != NULL, FALSE);
   g_return_val_if_fail (schema_name != NULL, FALSE);
   g_return_val_if_fail (property_name != NULL, FALSE);
   g_return_val_if_fail (property_value != NULL, FALSE);
-  schema = find_xmp_schema_by_uri (xmp_model, schema_name);
-  if (! schema)
-    schema = find_xmp_schema_prefix (xmp_model, schema_name);
 
-  if (! schema)
-    return FALSE;
-
-  if (! find_iter_for_schema (xmp_model, schema, &iter))
-    add_known_schema (xmp_model, schema, &iter);
-
-  if (schema->properties != NULL)
-    for (i = 0; schema->properties[i].name != NULL; ++i)
-      if (! strcmp (schema->properties[i].name, property_name))
-        {
-          property = &(schema->properties[i]);
-          break;
-        }
-
-  if (property != NULL)
-    {
-      value = xmp_model_get_raw_property_value (xmp_model, schema_name, property_name);
-      find_and_remove_property (xmp_model, property, &iter);
-    }
+  type = xmp_model_find_xmptype_by (xmp_model, schema_name, property_name);
+  if (type == XMP_TYPE_LANG_ALT)
+    value = convert_xmp_value (property_value);
   else
-    {
-      type = xmp_model_find_xmptype_by (xmp_model, schema_name, property_name);
+   {
+    value = g_new (gchar *, 2);
+    value[0] = g_strdup (property_value);
+    value[1] = NULL;
+   }
 
-      property = g_new (XMPProperty, 1);
-      property->name     = g_strdup (property_name);
-      property->type     = type;
-      property->editable = TRUE;
-
-      xmp_model->custom_properties =
-        g_slist_prepend (xmp_model->custom_properties, property);
-    }
-
-  gtk_tree_store_append (GTK_TREE_STORE (xmp_model), &child_iter, &iter);
-  gtk_tree_store_set (GTK_TREE_STORE (xmp_model), &child_iter,
-                      COL_XMP_NAME, g_strdup (property_name),
-                      COL_XMP_VALUE, g_strdup (property_value),
-                      COL_XMP_VALUE_RAW, value,
-                      COL_XMP_TYPE_XREF, property,
-                      COL_XMP_WIDGET_XREF, NULL,
-                      COL_XMP_EDITABLE, property->editable,
-                      COL_XMP_EDIT_ICON, NULL,
-                      COL_XMP_VISIBLE, TRUE,
-                      COL_XMP_WEIGHT, PANGO_WEIGHT_NORMAL,
-                      COL_XMP_WEIGHT_SET, FALSE,
-                      -1);
-  return TRUE;
+  return xmp_model_set_property (xmp_model,
+                                 type,
+                                 schema_name,
+                                 property_name,
+                                 (const gchar**) value);
 }
 
 /**
