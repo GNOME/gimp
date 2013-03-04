@@ -235,7 +235,7 @@ gimp_tile_handler_projection_validate (GeglTileSource *source,
                           (blit_rect.y % projection->tile_height) * tile_stride +
                           (blit_rect.x % projection->tile_width)  * tile_bpp,
                           tile_stride,
-                          GEGL_ABYSS_NONE);
+                          GEGL_BLIT_DEFAULT);
         }
 
       gegl_tile_unlock (tile);
