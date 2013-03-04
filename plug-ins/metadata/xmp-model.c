@@ -220,7 +220,7 @@ tree_model_row_changed (GtkTreeModel    *model,
 
 /* utility function in order to translate XMP_TYPE_LANG_ALT values to an
  * array of strings. This is needed to set the value in
- * xmp_model_set_property.
+ * xmp_model_set_property when extracted by libgexiv2.
  * TODO: Possibly this function can be ignored after the full
  * integration of gexiv2
  */
@@ -246,9 +246,17 @@ convert_xmp_value (const gchar *in)
          list = g_slist_append (list, g_strdup (value));
    }
 
+  /* in case we only extracted one element, the language identifier is
+   * missing. We'll simply append one */
+  i = g_slist_length (list);
+  if (i == 1)
+   {
+    list = g_slist_prepend (list, "x-default");
+    i++;
+   }
+
   /* put it back into an array and return it
    */
-  i = g_slist_length (list);
   result = g_new (gchar*, i + 1);
   result[i--] = NULL;
   list = g_slist_reverse(list);

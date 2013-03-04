@@ -147,23 +147,19 @@ test_xmp_model_set_get_scalar_property (GimpTestFixture *fixture,
                                                 "title");
   g_assert_cmpstr (scalar_value, ==, "title_lang_alt");
 
-  /* The raw data for this type looks different tho. Because we only
-   * changed the string represenation we expect it to return FALSE as
-   * there is currently no RAW value set.
-   **/
-  value = xmp_model_get_raw_property_value (fixture->xmp_model,
-                                            "dc", "title");
-  g_assert (value == NULL);
-
+  /* Setting an XMP_TYPE_LANG_ALT value without a language identifier,
+   * we'll assume it is 'x-default' and the accessor returns the same
+   * value.
+   */
   result = xmp_model_set_scalar_property (fixture->xmp_model,
                                            "dc",
                                            "title",
                                            "me too");
   g_assert (result == TRUE);
 
-  value = xmp_model_get_raw_property_value (fixture->xmp_model,
-                                             "dc", "title");
-  g_assert (value == NULL);
+  scalar_value = xmp_model_get_scalar_property (fixture->xmp_model,
+                                         "dc", "title");
+  g_assert_cmpstr (scalar_value, ==, "me too");
 }
 
 
