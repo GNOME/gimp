@@ -103,7 +103,6 @@ test_xmp_model_set_get_scalar_property (GimpTestFixture *fixture,
 {
   const gchar  *property_name = NULL;
   const gchar  *scalar_value;
-  const gchar **value;
   gboolean      result;
 
   /* Schema is nonsense, so nothing is set */
