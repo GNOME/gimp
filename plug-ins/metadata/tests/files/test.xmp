@@ -31,8 +31,6 @@
  <rdf:Description rdf:about=""
    xmlns:exif="http://ns.adobe.com/exif/1.0/">
    <exif:ExifVersion>0220</exif:ExifVersion>
-   <exif:CompressedBitsPerPixel>5/1</exif:CompressedBitsPerPixel>
-   <exif:DateTimeOriginal>2004-11-01T14:53:15+10:00</exif:DateTimeOriginal>
  </rdf:Description>
 </rdf:RDF>
 </x:xmpmeta>
