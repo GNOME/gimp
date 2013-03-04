@@ -117,7 +117,7 @@ test_xmp_model_set_get_scalar_property (GimpTestFixture *fixture,
   /* Contributor is a scalar property. When set, we expect the XMPModel
    * not to be empty any more and that we can retrieve the same value.
    **/
-  property_name = "me";
+  property_name = "me_text";
   result = xmp_model_set_scalar_property (fixture->xmp_model,
                                            "dc",
                                            "contributor",
@@ -131,8 +131,11 @@ test_xmp_model_set_get_scalar_property (GimpTestFixture *fixture,
   g_assert_cmpstr (scalar_value, ==, property_name);
 
   /* Now we assure, that we can even set titles, which is of type
-   * XMP_TYPE_LANG_ALT. This could be internally stored as a dictionary.
+   * XMP_TYPE_LANG_ALT.
+   * The scalar value returned is always the first value next to the
+   * language specifier.
    **/
+  property_name = "lang=\"x-default\" title_lang_alt";
   result = xmp_model_set_scalar_property (fixture->xmp_model,
                                           "dc",
                                           "title",
@@ -142,7 +145,7 @@ test_xmp_model_set_get_scalar_property (GimpTestFixture *fixture,
   scalar_value = xmp_model_get_scalar_property (fixture->xmp_model,
                                                 "dc",
                                                 "title");
-  g_assert_cmpstr (scalar_value, ==, property_name);
+  g_assert_cmpstr (scalar_value, ==, "title_lang_alt");
 
   /* The raw data for this type looks different tho. Because we only
    * changed the string represenation we expect it to return FALSE as
