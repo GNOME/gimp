@@ -47,7 +47,7 @@ static void         tree_model_row_changed  (GtkTreeModel    *model,
 static XMPSchema *  find_xmp_schema_by_iter (XMPModel       *xmp_model,
                                              GtkTreeIter    *iter);
 
-gchar**             convert_xmp_value       (const gchar    *in);
+gchar**             convert_to_xmp_model_raw_value (const gchar    *in);
 
 enum
 {
@@ -218,14 +218,25 @@ tree_model_row_changed (GtkTreeModel    *model,
 }
 
 
-/* utility function in order to translate XMP_TYPE_LANG_ALT values to an
- * array of strings. This is needed to set the value in
- * xmp_model_set_property when extracted by libgexiv2.
+/**
+ * convert_to_xmp_model_raw_value: 
+ * @in: a string which is converted in to a raw value for the #XMPModel
+ *
+ * Utility function in order to translate XMP_TYPE_LANG_ALT values to an
+ * array of strings. Each odd index in the array is the language
+ * specifier (e.g. x-default, de_DE, etc). Each even array index is the
+ * value.
+ *
+ * A single string is converted to a two element array and the string is
+ * marked as 'x-default'.
+ *
  * TODO: Possibly this function can be ignored after the full
  * integration of gexiv2
+ *
+ * Return value: array of strings.
  */
 gchar**
-convert_xmp_value (const gchar *in)
+convert_to_xmp_model_raw_value (const gchar *in)
 {
   gchar    **splitted = NULL;
   gchar    **result;
@@ -830,12 +841,12 @@ xmp_model_parse_file (XMPModel     *xmp_model,
                       const gchar  *filename,
                       GError      **error)
 {
-  GExiv2Metadata *metadata = NULL;
-  gchar         **tags = NULL;
-  gchar          *tag = NULL;
-  gchar          *value = NULL;
-  gchar         **val_array;
-  int             i = 0;
+  int             i         = 0;
+  GExiv2Metadata *metadata  = NULL;
+  gchar         **tags      = NULL;
+  gchar          *tag       = NULL;
+  gchar          *value     = NULL;
+  gchar         **val_array = NULL;
 
   metadata = gexiv2_metadata_new ();
   if (! gexiv2_metadata_open_path (metadata, filename, error))
@@ -1021,6 +1032,9 @@ xmp_model_get_raw_property_value (XMPModel    *xmp_model,
  * @property_value: value to store
  *
  * Store a new value for the specified XMP property.
+ * This is a wrapper function for xmp_model_set_property which sets the
+ * raw values. The @property_value is converted to a raw value and
+ * passed to xmp_model_set_property.
  *
  * Return value: %TRUE if the property was set, %FALSE if an error
  *               occurred (for example, the @schema_name is invalid)
@@ -1040,8 +1054,10 @@ xmp_model_set_scalar_property (XMPModel    *xmp_model,
   g_return_val_if_fail (property_value != NULL, FALSE);
 
   type = xmp_model_find_xmptype_by (xmp_model, schema_name, property_name);
+
+  /* TODO: Ugh - perhaps this can be done better */
   if (type == XMP_TYPE_LANG_ALT)
-    value = convert_xmp_value (property_value);
+    value = convert_to_xmp_model_raw_value (property_value);
   else
    {
     value = g_new (gchar *, 2);
