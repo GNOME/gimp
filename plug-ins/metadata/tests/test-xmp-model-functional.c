@@ -45,17 +45,31 @@ typedef struct
   const gchar *schema_name;
   const gchar *name;
   int          pos;
+  const gchar *expected_value;
 } TestDataEntry;
 
 static TestDataEntry propertiestotest[] =
 {
-   { XMP_PREFIX_DUBLIN_CORE,  "title",          1 },
-   { XMP_PREFIX_DUBLIN_CORE,  "creator",        0 },
-   { XMP_PREFIX_DUBLIN_CORE,  "description",    1 },
-   { XMP_PREFIX_DUBLIN_CORE,  "subject",        0 },
+   { XMP_PREFIX_DUBLIN_CORE,  "title",          1, NULL },
+   { XMP_PREFIX_DUBLIN_CORE,  "creator",        0, NULL },
+   { XMP_PREFIX_DUBLIN_CORE,  "description",    1, NULL },
+   { XMP_PREFIX_DUBLIN_CORE,  "subject",        0, NULL },
    { NULL,  NULL,          0 }
 };
 TestDataEntry * const import_exportdata = propertiestotest;
+
+/**
+ * This testdata tests different types in the #XMPModel and what they
+ * return for the editor.
+ * Note: The pos attribute is ignored.
+ */
+static TestDataEntry _xmp_property_values_view[] =
+{
+   { XMP_PREFIX_DUBLIN_CORE,  "title",          0, "Hello, World," },  // lang alt
+   { XMP_PREFIX_DUBLIN_CORE,  "creator",        0, "1) Wilber, 2) Wilma" },  // seq
+   { NULL,  NULL,          0 }
+};
+TestDataEntry * const xmp_property_values_view = _xmp_property_values_view;
 
 
 static void gimp_test_xmp_model_setup       (GimpTestFixture *fixture,
@@ -84,6 +98,43 @@ gimp_test_xmp_model_teardown (GimpTestFixture *fixture,
                               gconstpointer    data)
 {
   g_object_unref (fixture->xmp_model);
+}
+
+
+/**
+ * test_xmp_model_value_types
+ * @fixture:
+ * @data:
+ *
+ * Test if different value types are correctly set. The string
+ * representation of the value should be correct.
+ **/
+static void
+test_xmp_model_value_types (GimpTestFixture *fixture,
+                            gconstpointer    data)
+{
+  int             i;
+  const gchar    *value;
+  TestDataEntry  *testdata;
+  GError        **error       = NULL;
+  gchar          *uri         = NULL;
+
+  uri = g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
+                          "plug-ins/metadata/tests/files/test_xmp.jpg",
+                          NULL);
+
+  xmp_model_parse_file (fixture->xmp_model, uri, error);
+  g_free (uri);
+
+  for (i = 0; xmp_property_values_view[i].name != NULL; ++i)
+   {
+    testdata = &(xmp_property_values_view[i]);
+
+    value = xmp_model_get_scalar_property (fixture->xmp_model,
+                                           testdata->schema_name,
+                                           testdata->name);
+    g_assert_cmpstr (value, ==, testdata->expected_value);
+   }
 }
 
 /**
@@ -215,6 +266,7 @@ int main(int argc, char **argv)
 
   ADD_TEST (test_xmp_model_import_export);
   ADD_TEST (test_xmp_model_import_export_structures);
+  ADD_TEST (test_xmp_model_value_types);
 
   result = g_test_run ();
 
