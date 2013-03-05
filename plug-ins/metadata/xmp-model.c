@@ -870,10 +870,11 @@ xmp_model_parse_file (XMPModel     *xmp_model,
                   val_array[1], val_array[2], value);
    }
 
-  gexiv2_metadata_free (metadata);
-  g_free (tags);
   g_free (val_array);
   g_free (value);
+  g_free (tag);
+  g_free (tags);
+  gexiv2_metadata_free (metadata);
   return TRUE;
 }
 
