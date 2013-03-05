@@ -46,15 +46,16 @@ typedef struct
   const gchar *name;
   int          pos;
   const gchar *expected_value;
+  const gchar *expected_values[10];
 } TestDataEntry;
 
 static TestDataEntry propertiestotest[] =
 {
-   { XMP_PREFIX_DUBLIN_CORE,  "title",          1, NULL },
-   { XMP_PREFIX_DUBLIN_CORE,  "creator",        0, NULL },
-   { XMP_PREFIX_DUBLIN_CORE,  "description",    1, NULL },
-   { XMP_PREFIX_DUBLIN_CORE,  "subject",        0, NULL },
-   { NULL,  NULL,          0 }
+   { XMP_PREFIX_DUBLIN_CORE,  "title",          1, NULL, { NULL } },
+   { XMP_PREFIX_DUBLIN_CORE,  "creator",        0, NULL, { NULL } },
+   { XMP_PREFIX_DUBLIN_CORE,  "description",    1, NULL, { NULL } },
+   { XMP_PREFIX_DUBLIN_CORE,  "subject",        0, NULL, { NULL } },
+   { NULL,                    NULL,             0, NULL, { NULL } }
 };
 TestDataEntry * const import_exportdata = propertiestotest;
 
@@ -65,9 +66,11 @@ TestDataEntry * const import_exportdata = propertiestotest;
  */
 static TestDataEntry _xmp_property_values_view[] =
 {
-   { XMP_PREFIX_DUBLIN_CORE,  "title",          0, "Hello, World," },  // lang alt
-   { XMP_PREFIX_DUBLIN_CORE,  "creator",        0, "1) Wilber, 2) Wilma" },  // seq
-   { NULL,  NULL,          0 }
+   { XMP_PREFIX_DUBLIN_CORE,  "title",      0, "Hello, World,",
+     {"x-default", "Hello, World,", "ja", "\xe3\x81\x93"} },
+   { XMP_PREFIX_DUBLIN_CORE,  "creator",    0, "1) Wilber, 2) Wilma",
+     {"1) Wilber, 2) Wilma"} },
+   { NULL,  NULL,          0, NULL, { NULL } }
 };
 TestDataEntry * const xmp_property_values_view = _xmp_property_values_view;
 
@@ -113,8 +116,10 @@ static void
 test_xmp_model_value_types (GimpTestFixture *fixture,
                             gconstpointer    data)
 {
-  int             i;
+  int             i, j;
+  guint           a, b;
   const gchar    *value;
+  const gchar   **raw         = NULL;
   TestDataEntry  *testdata;
   GError        **error       = NULL;
   gchar          *uri         = NULL;
@@ -130,11 +135,25 @@ test_xmp_model_value_types (GimpTestFixture *fixture,
    {
     testdata = &(xmp_property_values_view[i]);
 
+    /* view representation for the editor */
     value = xmp_model_get_scalar_property (fixture->xmp_model,
                                            testdata->schema_name,
                                            testdata->name);
     g_assert_cmpstr (value, ==, testdata->expected_value);
+
+    /* internal data, which the view representation is created from */
+    raw = xmp_model_get_raw_property_value (fixture->xmp_model,
+                                            testdata->schema_name,
+                                            testdata->name);
+    a = g_strv_length ((gchar **) raw);
+    b = g_strv_length ((gchar **) testdata->expected_values);
+    g_assert_cmpuint (a, ==, b);
+    for (j = 0; raw[j] != NULL; j++)
+     {
+      g_assert_cmpstr (raw[j], ==, testdata->expected_values[j]);
+     }
    }
+
 }
 
 /**
