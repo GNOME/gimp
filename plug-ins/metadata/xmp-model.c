@@ -245,16 +245,15 @@ convert_to_xmp_model_raw_value (const gchar *in)
   GSList    *list_iter;
   int        i;
 
-  /* extract the language and corresponding value
+  /* extract the language and corresponding value.
+   * TODO: Fix up values ending with a separator charactor (e.g. ',')
    */
-  splitted = g_strsplit_set (in, "\",", -1);
+  splitted = g_regex_split_simple ("lang=\"([\\w_\\-]+)\"", in, 0, 0);
   for (i=0; splitted[i] != NULL; i++)
    {
-     value = g_strchug (splitted[i]);
-     if (g_str_has_prefix (value, "lang"))
-         continue;
-     else
-         list = g_slist_append (list, g_strdup (value));
+     value = g_strstrip (splitted[i]);
+     if (strcmp (value, ""))
+       list = g_slist_append (list, g_strdup (value));
    }
 
   /* in case we only extracted one element, the language identifier is

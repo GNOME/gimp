@@ -267,7 +267,7 @@ test_xmp_model_parse_file (GimpTestFixture *fixture,
 
   // description
   value = xmp_model_get_scalar_property (fixture->xmp_model, "dc", "description");
-  g_assert_cmpstr (value, == , "bla");
+  g_assert_cmpstr (value, == , "Hello, World,");
 
   g_free (uri);
 }

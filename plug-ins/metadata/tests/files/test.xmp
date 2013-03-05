@@ -15,8 +15,8 @@
   </dc:creator>
   <dc:description>
    <rdf:Alt>
-    <rdf:li xml:lang='x-default'>bla</rdf:li>
-    <rdf:li xml:lang='de_DE'>Deutsche Beschreibung</rdf:li>
+    <rdf:li xml:lang='x-default'>Hello, World</rdf:li>
+    <rdf:li xml:lang='de_DE'>Hallo, "Welt!"</rdf:li>
    </rdf:Alt>
  </dc:description>
  <dc:subject>
