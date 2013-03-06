@@ -38,6 +38,24 @@ Current status
   discard all changes as soon as you press OK.  This is a problem that
   cannot be solved easily as long as the metadata editor is a plug-in.
 
+
+Design
+------
+
+1. Scenario:
+    1. A user opens a file (e.g. a jpeg)
+    1. A file plug-in (e.g. jpeg-load) finds an XMP header and calls the
+       metadata plug-in through the PDB to decode the XMP.
+    1. The metadata plug-in parses the XMP and stores the result in a
+       parasite.
+    1. The file has finished loading.
+    1. The user opens the metadata editor from the menu.
+    1. The metadata editor finds the XMP packet stored in the parasite.
+    1. The parasite is parsed again and the data read into the XMPModel
+    1. The editor has finished loading.
+    1. The data is displayed in the editor.
+
+
 How to find test images?
 ------------------------
 
@@ -47,7 +65,12 @@ The Exiv2 project provides quite a big amount of test images:
 
 Work in progress:
 -----------------
+
 - libgexiv2 integration
+
+    * Reducing amount of code to maintain
+    * Less error prone and sharing of code.
+
 - improve XMP code generation (xmp-encode.c) - currently, some structured
   property types are not written back to the buffer, so the round-trip
   decode/encode can silently discard some properties
