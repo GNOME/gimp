@@ -1,5 +1,5 @@
 What is this?
--------------
+=============
 
 This is the beginning of an editor for metadata.  It is far from
 complete yet.
@@ -21,6 +21,7 @@ library instead of continuing the work of that component.
 
 Current status
 --------------
+
 - It does not read metadata, except if there is an XMP block in the
   image file.
 - It does not write metadata, it can only export XMP into a separate
@@ -79,12 +80,13 @@ Work in progress:
 - register PDB functions correctly (for setting/getting metadata)
 
 Near future:
+
 - smarter display of rational values, closed sets, ...
 - improve the layout of the various tabs
 
-
 -------------------------------------------------------------------------------
 Files modified (2004-08-24):
+
   configure.in                    (added /plug-ins/metadata/Makefile)
   menus/image-menu.xml.in         (added placeholder "<Image>/File/Info")
   plug-ins/Makefile.am            (added "metadata" in SUBDIRS)
