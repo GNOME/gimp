@@ -1219,22 +1219,19 @@ xmp_model_set_property (XMPModel    *xmp_model,
           xmp_model->custom_properties =
             g_slist_prepend (xmp_model->custom_properties, property);
         }
-      for (i = 0; value[i] != NULL; i += 2)
-        {
-          gtk_tree_store_append (GTK_TREE_STORE (xmp_model), &child_iter, &iter);
-          gtk_tree_store_set (GTK_TREE_STORE (xmp_model), &child_iter,
-                              COL_XMP_NAME, property_name,
-                              COL_XMP_VALUE, value[i + 1],
-                              COL_XMP_VALUE_RAW, value,
-                              COL_XMP_TYPE_XREF, property,
-                              COL_XMP_WIDGET_XREF, NULL,
-                              COL_XMP_EDITABLE, property->editable,
-                              COL_XMP_EDIT_ICON, NULL,
-                              COL_XMP_VISIBLE, TRUE,
-                              COL_XMP_WEIGHT, PANGO_WEIGHT_NORMAL,
-                              COL_XMP_WEIGHT_SET, FALSE,
-                              -1);
-        }
+      gtk_tree_store_append (GTK_TREE_STORE (xmp_model), &child_iter, &iter);
+      gtk_tree_store_set (GTK_TREE_STORE (xmp_model), &child_iter,
+                          COL_XMP_NAME, property_name,
+                          COL_XMP_VALUE, value[1],
+                          COL_XMP_VALUE_RAW, value,
+                          COL_XMP_TYPE_XREF, property,
+                          COL_XMP_WIDGET_XREF, NULL,
+                          COL_XMP_EDITABLE, property->editable,
+                          COL_XMP_EDIT_ICON, NULL,
+                          COL_XMP_VISIBLE, TRUE,
+                          COL_XMP_WEIGHT, PANGO_WEIGHT_NORMAL,
+                          COL_XMP_WEIGHT_SET, FALSE,
+                          -1);
       result = TRUE;
       break;
 
