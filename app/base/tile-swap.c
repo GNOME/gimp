@@ -110,7 +110,7 @@ static void          tile_swap_gap_destroy    (SwapFileGap *gap);
 
 static SwapFile     * gimp_swap_file   = NULL;
 
-static const gint64   swap_file_grow   = 1024 * TILE_WIDTH * TILE_HEIGHT * 4;
+static const guint64  swap_file_grow   = 1024 * TILE_WIDTH * TILE_HEIGHT * 4;
 
 static gboolean       seek_err_msg     = TRUE;
 static gboolean       read_err_msg     = TRUE;
