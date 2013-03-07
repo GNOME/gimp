@@ -258,8 +258,6 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
                                    clone->dest_node,
                                    NULL);
             }
-
-          clone->processor = gegl_node_new_processor (clone->dest_node, NULL);
         }
       break;
 
@@ -323,12 +321,10 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
       if (clone->node)
         {
           g_object_unref (clone->node);
-          g_object_unref (clone->processor);
           clone->node           = NULL;
           clone->crop           = NULL;
           clone->transform_node = NULL;
           clone->dest_node      = NULL;
-          clone->processor      = NULL;
         }
       break;
 
@@ -437,10 +433,9 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
                  "buffer", dest_buffer,
                  NULL);
 
-  gegl_processor_set_rectangle (clone->processor,
-                                GEGL_RECTANGLE (0, 0,
-                                                x2d - x1d, y2d - y1d));
-  while (gegl_processor_work (clone->processor, NULL));
+  gegl_node_blit (clone->dest_node, 1.0,
+                  GEGL_RECTANGLE (0, 0, x2d - x1d, y2d - y1d),
+                  NULL, NULL, 0, GEGL_BLIT_DEFAULT);
 
   *src_rect = *GEGL_RECTANGLE (0, 0, x2d - x1d, y2d - y1d);
 
