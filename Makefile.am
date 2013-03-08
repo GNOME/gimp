@@ -16,6 +16,7 @@ SUBDIRS = \
 	desktop		\
 	menus		\
 	libgimpbase	\
+	tools		\
 	libgimpcolor	\
 	libgimpmath	\
 	libgimpconfig	\
@@ -29,7 +30,6 @@ SUBDIRS = \
 	etc		\
 	devel-docs	\
 	docs		\
-	tools		\
 	build
 
 pkgconfigdir = $(libdir)/pkgconfig
