@@ -110,6 +110,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
   };
   static const gchar * const name_blacklist[] =
   {
+    "gegl:cartoon", /* in gimp */
     "gegl:color", /* pointless */
     "gegl:color-reduction", /* in gimp */
     "gegl:color-temperature", /* in gimp */
@@ -130,8 +131,14 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:layer",
     "gegl:lens-correct",
     "gegl:lens-distortion", /* in gimp */
+    "gegl:noise-hurl", /* in gimp */
+    "gegl:noise-pick", /* in gimp */
+    "gegl:noise-hsv", /* in gimp */
+    "gegl:noise-rgb", /* in gimp */
+    "gegl:noise-slur", /* in gimp */
     "gegl:opacity", /* pointless */
     "gegl:path",
+    "gegl:photocopy", /* in gimp */
     "gegl:pixelize", /* in gimp */
     "gegl:polar-coordinates", /* in gimp */
     "gegl:posterize", /* in gimp */
