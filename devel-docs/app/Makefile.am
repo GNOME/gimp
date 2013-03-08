@@ -28,22 +28,12 @@ CFILE_GLOB = $(DOC_SOURCE_DIR)/*.c
 
 # Header files to ignore when scanning
 IGNORE_HFILES = \
-	gimp-composite-dispatch.h	\
-	gimp-composite-regression.h	\
-	gimp-composite-altivec.h	\
-	gimp-composite-3dnow.h		\
-	gimp-composite-mmx.h		\
-	gimp-composite-sse.h		\
-	gimp-composite-sse2.h		\
-	gimp-composite-vis.h		\
-	gimp-composite-x86.h		\
 	gimp-intl.h			\
 	gimpdbusservice-glue.h		\
 	gimpimage-convert-data.h	\
 	gimpimage-convert-fsdither.h	\
 	gimphelp-ids.h			\
-	gimprc-blurbs.h			\
-	paint-funcs-generic.h
+	gimprc-blurbs.h
 
 # Images to copy into HTML directory
 HTML_IMAGES =
@@ -66,6 +56,8 @@ GTKDOC_LIBS = \
 	-Wl,-u,$(SYMPREFIX)internal_procs_init 				     \
 	-Wl,-u,$(SYMPREFIX)gimp_coords_mix	   			     \
 	-Wl,-u,$(SYMPREFIX)gimp_plug_in_manager_restore			     \
+	-Wl,-u,$(SYMPREFIX)gimp_lebl_dialog				     \
+	-Wl,-u,$(SYMPREFIX)gimp_param_spec_duplicate			     \
 	$(top_builddir)/app/app.o					     \
         $(top_builddir)/app/batch.o					     \
         $(top_builddir)/app/errors.o					     \
@@ -92,9 +84,7 @@ GTKDOC_LIBS = \
         $(top_builddir)/app/text/libapptext.a				     \
         $(top_builddir)/app/config/libappconfig.a			     \
         $(top_builddir)/app/gegl/libappgegl.a				     \
-        $(top_builddir)/app/paint-funcs/libapppaint-funcs.a		     \
-        $(top_builddir)/app/composite/libappcomposite.a			     \
-        $(top_builddir)/app/base/libappbase.a				     \
+        $(top_builddir)/app/operations/libappoperations.a		     \
         $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la \
         $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).la   \
         $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la     \
