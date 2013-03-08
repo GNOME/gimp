@@ -3,10 +3,11 @@ Developers documentation
 
 This directory holds information that you will find useful if you
 develop a GIMP plug-in or want to work on the GIMP core.
-See http://wiki.gimp.org/index.php/Main_Page for more.
+
+See http://wiki.gimp.org/index.php/Main_Page for more information.
 
    app                     - setup for documentation of the GIMP core;
-                             not build by default since it is huge and
+                             not built by default since it is huge and
                              only relevant for core developers
 
    libgimp
@@ -28,7 +29,7 @@ See http://wiki.gimp.org/index.php/Main_Page for more.
                              uses milestones in the Bugzilla bugtracker
    commit-rules.txt        - describes rules and things to think
                              about when creating GIMP commits
-   contexts.txt            - describes how the GimpContext's in GIMP are used
+   contexts.txt            - describes how GimpContexts are used in GIMP
    debug-plug-ins.txt      - how to debug GIMP plug-ins
    exif-handling.txt       - how GIMP should handle EXIF data
    includes.txt            - the policy for inclusion of header files
@@ -36,7 +37,7 @@ See http://wiki.gimp.org/index.php/Main_Page for more.
    release-howto.txt       - a check-list for doing a GIMP release
    submitting-patches.txt  - how to submit a patch for GIMP
    tagging.txt             - how resource tagging in Gimp works
-   ui-framework.txt        - describes the GIMP UI framework functions and
+   ui-framework.txt        - describes how the GIMP UI framework functions and
                              how it is implemented
    undo.txt                - description of the undo system
 
@@ -46,9 +47,9 @@ See http://wiki.gimp.org/index.php/Main_Page for more.
                              also check out gimp-module-dependencies.svg
 
 
-   gbr.txt                 - description of the GBR format used to store a
+   gbr.txt                 - description of the GBR format used to store
                              pixmap brushes
-   ggr.txt                 - description of the GGR format used to store a
+   ggr.txt                 - description of the GGR format used to store
                              GIMP gradients
    gih.txt                 - description of the GIH format used to store a
                              series of pixmap brushes

@@ -1,7 +1,7 @@
 gtkbuilder-porting-guide.txt
 ============================
 
-This document describes some tips and rules for how to port UI code
+This document describes some tips and rules for porting UI code
 written with GTK+ and C to GtkBuilder + Glade.
 
 
