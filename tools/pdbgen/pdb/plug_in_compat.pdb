@@ -335,6 +335,192 @@ CODE
     );
 }
 
+sub plug_in_randomize_hurl {
+    $blurb = 'Completely randomize a fraction of pixels';
+
+    $help = <<'HELP';
+This plug-in "hurls" randomly-valued pixels onto the selection or
+image.  You may select the percentage of pixels to modify and the
+number of times to repeat the process.
+HELP
+
+    &std_pdb_compat('gegl:noise-hurl');
+    $date = '2013';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+        { name => 'rndm_pct', type => '1.0 <= float <= 100.0',
+          desc => 'Randomization percentage' },
+        { name => 'rndm_rcount', type => '1.0 <= float <= 100.0',
+          desc => 'Repeat count' },
+        { name => 'randomize', type => 'boolean',
+          desc => 'Use random seed' },
+        { name => 'seed', type => 'int32',
+          desc => 'Seed value (used only if randomize is FALSE)' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node;
+
+      if (randomize)
+        seed = g_random_int ();
+
+      node =
+        gegl_node_new_child (NULL,
+                             "operation",  "gegl:noise-hurl",
+                             "seed",       seed,
+                             "pct-random", rndm_pct,
+                             "repeat",     (gint) rndm_rcount,
+                             NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Random Hurl"),
+                                     node);
+
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub plug_in_randomize_pick {
+    $blurb = 'Randomly interchange some pixels with neighbors';
+
+    $help = <<'HELP';
+This plug-in replaces a pixel with a random adjacent pixel.  You may
+select the percentage of pixels to modify and the number of times to
+repeat the process.
+HELP
+
+    &std_pdb_compat('gegl:noise-pick');
+    $date = '2013';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+        { name => 'rndm_pct', type => '1.0 <= float <= 100.0',
+          desc => 'Randomization percentage' },
+        { name => 'rndm_rcount', type => '1.0 <= float <= 100.0',
+          desc => 'Repeat count' },
+        { name => 'randomize', type => 'boolean',
+          desc => 'Use random seed' },
+        { name => 'seed', type => 'int32',
+          desc => 'Seed value (used only if randomize is FALSE)' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node;
+
+      if (randomize)
+        seed = g_random_int ();
+
+      node =
+        gegl_node_new_child (NULL,
+                             "operation",  "gegl:noise-pick",
+                             "seed",       seed,
+                             "pct-random", rndm_pct,
+                             "repeat",     (gint) rndm_rcount,
+                             NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Random Pick"),
+                                     node);
+
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub plug_in_randomize_slur {
+    $blurb = 'Randomly slide some pixels downward (similar to melting';
+
+    $help = <<'HELP';
+This plug-in "slurs" (melts like a bunch of icicles) an image.  You may
+select the percentage of pixels to modify and the number of times to
+repeat the process.
+HELP
+
+    &std_pdb_compat('gegl:noise-slur');
+    $date = '2013';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+        { name => 'rndm_pct', type => '1.0 <= float <= 100.0',
+          desc => 'Randomization percentage' },
+        { name => 'rndm_rcount', type => '1.0 <= float <= 100.0',
+          desc => 'Repeat count' },
+        { name => 'randomize', type => 'boolean',
+          desc => 'Use random seed' },
+        { name => 'seed', type => 'int32',
+          desc => 'Seed value (used only if randomize is FALSE)' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node;
+
+      if (randomize)
+        seed = g_random_int ();
+
+      node =
+        gegl_node_new_child (NULL,
+                             "operation",  "gegl:noise-slur",
+                             "seed",       seed,
+                             "pct-random", rndm_pct,
+                             "repeat",     (gint) rndm_rcount,
+                             NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Random Slur"),
+                                     node);
+
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_semiflatten {
     $blurb = 'Replace partial transparency with the current background color';
 
@@ -502,8 +688,11 @@ CODE
             plug_in_pixelize
             plug_in_pixelize2
             plug_in_polar_coords
+            plug_in_randomize_hurl
+            plug_in_randomize_pick
+            plug_in_randomize_slur
             plug_in_semiflatten
-	    plug_in_threshold_alpha
+            plug_in_threshold_alpha
             plug_in_vinvert);
 
 %exports = (app => [@procs], lib => []);

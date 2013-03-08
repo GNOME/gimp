@@ -335,6 +335,168 @@ plug_in_polar_coords_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_randomize_hurl_invoker (GimpProcedure         *procedure,
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble rndm_pct;
+  gdouble rndm_rcount;
+  gboolean randomize;
+  gint32 seed;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  rndm_pct = g_value_get_double (gimp_value_array_index (args, 3));
+  rndm_rcount = g_value_get_double (gimp_value_array_index (args, 4));
+  randomize = g_value_get_boolean (gimp_value_array_index (args, 5));
+  seed = g_value_get_int (gimp_value_array_index (args, 6));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node;
+
+          if (randomize)
+            seed = g_random_int ();
+
+          node =
+            gegl_node_new_child (NULL,
+                                 "operation",  "gegl:noise-hurl",
+                                 "seed",       seed,
+                                 "pct-random", rndm_pct,
+                                 "repeat",     (gint) rndm_rcount,
+                                 NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Random Hurl"),
+                                         node);
+
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_randomize_pick_invoker (GimpProcedure         *procedure,
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble rndm_pct;
+  gdouble rndm_rcount;
+  gboolean randomize;
+  gint32 seed;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  rndm_pct = g_value_get_double (gimp_value_array_index (args, 3));
+  rndm_rcount = g_value_get_double (gimp_value_array_index (args, 4));
+  randomize = g_value_get_boolean (gimp_value_array_index (args, 5));
+  seed = g_value_get_int (gimp_value_array_index (args, 6));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node;
+
+          if (randomize)
+            seed = g_random_int ();
+
+          node =
+            gegl_node_new_child (NULL,
+                                 "operation",  "gegl:noise-pick",
+                                 "seed",       seed,
+                                 "pct-random", rndm_pct,
+                                 "repeat",     (gint) rndm_rcount,
+                                 NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Random Pick"),
+                                         node);
+
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_randomize_slur_invoker (GimpProcedure         *procedure,
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble rndm_pct;
+  gdouble rndm_rcount;
+  gboolean randomize;
+  gint32 seed;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  rndm_pct = g_value_get_double (gimp_value_array_index (args, 3));
+  rndm_rcount = g_value_get_double (gimp_value_array_index (args, 4));
+  randomize = g_value_get_boolean (gimp_value_array_index (args, 5));
+  seed = g_value_get_int (gimp_value_array_index (args, 6));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node;
+
+          if (randomize)
+            seed = g_random_int ();
+
+          node =
+            gegl_node_new_child (NULL,
+                                 "operation",  "gegl:noise-slur",
+                                 "seed",       seed,
+                                 "pct-random", rndm_pct,
+                                 "repeat",     (gint) rndm_rcount,
+                                 NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Random Slur"),
+                                         node);
+
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_semiflatten_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
@@ -732,6 +894,186 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                      "Polar to rectangular",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-randomize-hurl
+   */
+  procedure = gimp_procedure_new (plug_in_randomize_hurl_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-randomize-hurl");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-randomize-hurl",
+                                     "Completely randomize a fraction of pixels",
+                                     "This plug-in \"hurls\" randomly-valued pixels onto the selection or image. You may select the percentage of pixels to modify and the number of times to repeat the process.",
+                                     "Compatibility procedure. Please see 'gegl:noise-hurl' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:noise-hurl' for credits.",
+                                     "2013",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("rndm-pct",
+                                                    "rndm pct",
+                                                    "Randomization percentage",
+                                                    1.0, 100.0, 1.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("rndm-rcount",
+                                                    "rndm rcount",
+                                                    "Repeat count",
+                                                    1.0, 100.0, 1.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("randomize",
+                                                     "randomize",
+                                                     "Use random seed",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("seed",
+                                                      "seed",
+                                                      "Seed value (used only if randomize is FALSE)",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-randomize-pick
+   */
+  procedure = gimp_procedure_new (plug_in_randomize_pick_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-randomize-pick");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-randomize-pick",
+                                     "Randomly interchange some pixels with neighbors",
+                                     "This plug-in replaces a pixel with a random adjacent pixel. You may select the percentage of pixels to modify and the number of times to repeat the process.",
+                                     "Compatibility procedure. Please see 'gegl:noise-pick' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:noise-pick' for credits.",
+                                     "2013",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("rndm-pct",
+                                                    "rndm pct",
+                                                    "Randomization percentage",
+                                                    1.0, 100.0, 1.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("rndm-rcount",
+                                                    "rndm rcount",
+                                                    "Repeat count",
+                                                    1.0, 100.0, 1.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("randomize",
+                                                     "randomize",
+                                                     "Use random seed",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("seed",
+                                                      "seed",
+                                                      "Seed value (used only if randomize is FALSE)",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-randomize-slur
+   */
+  procedure = gimp_procedure_new (plug_in_randomize_slur_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-randomize-slur");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-randomize-slur",
+                                     "Randomly slide some pixels downward (similar to melting",
+                                     "This plug-in \"slurs\" (melts like a bunch of icicles) an image. You may select the percentage of pixels to modify and the number of times to repeat the process.",
+                                     "Compatibility procedure. Please see 'gegl:noise-slur' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:noise-slur' for credits.",
+                                     "2013",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("rndm-pct",
+                                                    "rndm pct",
+                                                    "Randomization percentage",
+                                                    1.0, 100.0, 1.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("rndm-rcount",
+                                                    "rndm rcount",
+                                                    "Repeat count",
+                                                    1.0, 100.0, 1.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("randomize",
+                                                     "randomize",
+                                                     "Use random seed",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("seed",
+                                                      "seed",
+                                                      "Seed value (used only if randomize is FALSE)",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

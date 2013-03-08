@@ -204,8 +204,6 @@
 /nl-filter.exe
 /noise-hsv
 /noise-hsv.exe
-/noise-randomize
-/noise-randomize.exe
 /noise-rgb
 /noise-rgb.exe
 /noise-solid

@@ -107,7 +107,6 @@ plug-ins/common/mosaic.c
 plug-ins/common/newsprint.c
 plug-ins/common/nl-filter.c
 plug-ins/common/noise-hsv.c
-plug-ins/common/noise-randomize.c
 plug-ins/common/noise-rgb.c
 plug-ins/common/noise-solid.c
 plug-ins/common/noise-spread.c

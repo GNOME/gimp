@@ -145,7 +145,6 @@ libexec_PROGRAMS = \
 	newsprint \
 	nl-filter \
 	noise-hsv \
-	noise-randomize \
 	noise-rgb \
 	noise-solid \
 	noise-spread \
@@ -1963,23 +1962,6 @@ noise_hsv_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(noise_hsv_RC)
-
-noise_randomize_SOURCES = \
-	noise-randomize.c
-
-noise_randomize_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(noise_randomize_RC)
 
 noise_rgb_SOURCES = \
 	noise-rgb.c

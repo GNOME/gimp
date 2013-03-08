@@ -164,4 +164,9 @@ sub std_pdb_deprecated {
     $author = $copyright = $date = '';
 }
 
+sub std_pdb_compat {
+    $author = $copyright = "Compatibility procedure. Please see '@_' for credits.";
+}
+
+
 1;
