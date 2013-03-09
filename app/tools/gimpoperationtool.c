@@ -129,6 +129,7 @@ gimp_operation_tool_class_init (GimpOperationToolClass *klass)
 static void
 gimp_operation_tool_init (GimpOperationTool *tool)
 {
+  GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->settings_name = NULL; /* XXX hack */
 }
 
 static void
@@ -342,7 +343,11 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
   GIMP_IMAGE_MAP_TOOL (tool)->config = g_object_ref (tool->config);
 
   GIMP_VIEWABLE_GET_CLASS (tool->config)->default_stock_id = GIMP_STOCK_GEGL;
-  GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->settings_name = dialog_desc; /* XXX hack */
+
+  if (dialog_desc)
+    GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->settings_name = "yes"; /* XXX hack */
+  else
+    GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->settings_name = NULL; /* XXX hack */
 
   if (tool->options_table)
     {
