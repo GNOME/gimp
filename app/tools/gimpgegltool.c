@@ -133,6 +133,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:layer",
     "gegl:lens-correct",
     "gegl:lens-distortion", /* in gimp */
+    "gegl:matting-global", /* useless */
     "gegl:mono-mixer", /* in gimp */
     "gegl:noise-hurl", /* in gimp */
     "gegl:noise-pick", /* in gimp */
@@ -149,9 +150,11 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:rotate", /* in gimp */
     "gegl:scale", /* in gimp */
     "gegl:sdl-display", /* useless */
+    "gegl:seamless-clone",
     "gegl:shear", /* in gimp */
     "gegl:text",
     "gegl:threshold", /* in gimp */
+    "gegl:tile", /* useless */
     "gegl:transform", /* in gimp */
     "gegl:translate", /* pointless */
     "gegl:unsharp-mask", /* in gimp */
