@@ -71,7 +71,19 @@ filters_filter_cmd_callback (GtkAction   *action,
 
   if (GIMP_IS_OPERATION_TOOL (active_tool))
     {
-      gchar *label = gimp_strip_uline (gtk_action_get_label (action));
+      gchar       *label    = gimp_strip_uline (gtk_action_get_label (action));
+      const gchar *ellipsis = _("...");
+      gint         label_len;
+      gint         ellipsis_len;
+
+      label_len    = strlen (label);
+      ellipsis_len = strlen (ellipsis);
+
+      if (label_len > ellipsis_len &&
+          strcmp (label + label_len - ellipsis_len, ellipsis) == 0)
+        {
+          label[label_len - ellipsis_len] = '\0';
+        }
 
       gimp_operation_tool_set_operation (GIMP_OPERATION_TOOL (active_tool),
                                          operation, label);
