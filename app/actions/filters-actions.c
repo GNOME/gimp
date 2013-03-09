@@ -105,6 +105,12 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:mono-mixer",
     NULL /* FIXME GIMP_HELP_FILTER_MONO_MIXER */ },
 
+  { "filters-noise-cie-lch", GIMP_STOCK_GEGL,
+    NC_("filters-action", "CIE lch Noise..."), NULL,
+    NC_("filters-action", "Randomize lightness, chroma and hue independently"),
+    "gegl:noise-CIE_lch",
+    NULL /* FIXME GIMP_HELP_FILTER_NOISE_CIE_LCH */ },
+
   { "filters-noise-hsv", GIMP_STOCK_GEGL,
     NC_("filters-action", "HSV Noise..."), NULL,
     NC_("filters-action", "Scattering pixel values in HSV space"),
@@ -247,6 +253,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-gaussian-blur",           writable);
   SET_SENSITIVE ("filters-laplace",                 writable);
   SET_SENSITIVE ("filters-mono-mixer",              writable && !gray);
+  SET_SENSITIVE ("filters-noise-cie-lch",           writable);
   SET_SENSITIVE ("filters-noise-hsv",               writable && !gray);
   SET_SENSITIVE ("filters-noise-hurl",              writable);
   SET_SENSITIVE ("filters-noise-pick",              writable);

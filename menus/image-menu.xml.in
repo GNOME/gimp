@@ -630,6 +630,7 @@
         <placeholder name="Glass" />
       </menu>
       <menu action="plug-in-noise-menu" name="Noise">
+        <menuitem action="filters-noise-cie-lch" />
         <menuitem action="filters-noise-hsv" />
         <menuitem action="filters-noise-hurl" />
         <menuitem action="filters-noise-pick" />
