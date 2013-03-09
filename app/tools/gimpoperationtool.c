@@ -250,6 +250,8 @@ gimp_operation_tool_get_settings_ui (GimpImageMapTool  *image_map_tool,
   GtkWidget         *widget;
   gchar             *basename;
   gchar             *filename;
+  gchar             *import_title;
+  gchar             *export_title;
 
   settings = gimp_gegl_get_config_container (type);
   if (! gimp_list_get_sort_func (GIMP_LIST (settings)))
@@ -260,17 +262,22 @@ gimp_operation_tool_get_settings_ui (GimpImageMapTool  *image_map_tool,
   filename = g_build_filename (gimp_directory (), "filters", basename, NULL);
   g_free (basename);
 
+  import_title = g_strdup_printf (_("Import '%s' Settings"), tool->dialog_desc);
+  export_title = g_strdup_printf (_("Export '%s' Settings"), tool->dialog_desc);
+
   widget =
     GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->get_settings_ui (image_map_tool,
                                                                settings,
                                                                filename,
-                                                               "Import foo",
-                                                               "Export foo",
+                                                               import_title,
+                                                               export_title,
                                                                "help-foo",
                                                                g_get_home_dir (),
                                                                settings_box);
 
   g_free (filename);
+  g_free (import_title);
+  g_free (export_title);
 
   return widget;
 }
