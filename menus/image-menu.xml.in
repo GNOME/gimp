@@ -507,6 +507,8 @@
       <menuitem action="tools-curves" />
       <menuitem action="tools-posterize" />
       <menuitem action="tools-desaturate" />
+      <menuitem action="filters-mono-mixer" />
+      <menuitem action="filters-c2g" />
       <separator />
       <placeholder name="Invert">
         <menuitem action="drawable-invert" />
@@ -606,6 +608,7 @@
       <separator />
       <menu action="plug-in-blur-menu" name="Blur">
       	<menuitem action="filters-gaussian-blur" />
+      	<menuitem action="filters-dot" />
       	<menuitem action="filters-pixelize" />
       </menu>
       <menu action="plug-in-enhance-menu" name="Enhance">

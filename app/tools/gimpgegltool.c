@@ -110,6 +110,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
   };
   static const gchar * const name_blacklist[] =
   {
+    "gegl:c2g", /* in gimp */
     "gegl:cartoon", /* in gimp */
     "gegl:color", /* pointless */
     "gegl:color-reduction", /* in gimp */
@@ -120,6 +121,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:convert-format",
     "gegl:difference-of-gaussians", /* in gimp */
     "gegl:display",
+    "gegl:dot", /* in gimp */
     "gegl:edge-laplace", /* in gimp */
     "gegl:edge-sobel", /* in gimp */
     "gegl:fill-path",
@@ -131,6 +133,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:layer",
     "gegl:lens-correct",
     "gegl:lens-distortion", /* in gimp */
+    "gegl:mono-mixer", /* in gimp */
     "gegl:noise-hurl", /* in gimp */
     "gegl:noise-pick", /* in gimp */
     "gegl:noise-hsv", /* in gimp */

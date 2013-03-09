@@ -39,6 +39,12 @@
 
 static const GimpStringActionEntry filters_actions[] =
 {
+  { "filters-c2g", GIMP_STOCK_GEGL,
+    NC_("filters-action", "Color to Gray..."), NULL,
+    NC_("filters-action", "Color to grayscale conversion"),
+    "gegl:c2g",
+    NULL /* FIXME GIMP_HELP_FILTER_C2G */ },
+
   { "filters-cartoon", GIMP_STOCK_GEGL,
     NC_("filters-action", "Ca_rtoon..."), NULL,
     NC_("filters-action", "Simulate a cartoon by enhancing edges"),
@@ -63,6 +69,12 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:color-to-alpha",
     NULL /* FIXME GIMP_HELP_FILTER_COLOR_TO_ALPHA */ },
 
+  { "filters-dot", GIMP_STOCK_GEGL,
+    NC_("filters-action", "Dots..."), NULL,
+    NC_("filters-action", "Simplify image into an array of solid-colored dots"),
+    "gegl:dot",
+    NULL /* FIXME GIMP_HELP_FILTER_DOT */ },
+
   { "filters-difference-of-gaussians", GIMP_STOCK_GEGL,
     NC_("filters-action", "Difference of Gaussians..."), NULL,
     NC_("filters-action", "Edge detection with control of edge thickness"),
@@ -86,6 +98,12 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "Corrects lens distortion"),
     "gegl:lens-distortion",
     NULL /* FIXME GIMP_HELP_FILTER_LENS_DISTORTION */ },
+
+  { "filters-mono-mixer", GIMP_STOCK_GEGL,
+    NC_("filters-action", "Mono Mixer..."), NULL,
+    NC_("filters-action", "Monochrome channel mixer"),
+    "gegl:mono-mixer",
+    NULL /* FIXME GIMP_HELP_FILTER_MONO_MIXER */ },
 
   { "filters-noise-hsv", GIMP_STOCK_GEGL,
     NC_("filters-action", "HSV Noise..."), NULL,
