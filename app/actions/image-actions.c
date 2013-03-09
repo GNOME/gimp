@@ -63,6 +63,7 @@ static const GimpActionEntry image_actions[] =
   { "colors-auto-menu",       NULL, NC_("image-action", "_Auto")       },
   { "colors-map-menu",        NULL, NC_("image-action", "_Map")        },
   { "colors-components-menu", NULL, NC_("image-action", "C_omponents") },
+  { "colors-desaturate-menu", NULL, NC_("image-action", "D_esaturate") },
 
   { "image-new", GTK_STOCK_NEW,
     NC_("image-action", "_New..."), "<primary>N",
