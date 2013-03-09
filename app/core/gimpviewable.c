@@ -117,13 +117,13 @@ static gboolean gimp_viewable_serialize_property     (GimpConfig    *config,
                                                       const GValue  *value,
                                                       GParamSpec    *pspec,
                                                       GimpConfigWriter *writer);
-
 static gboolean gimp_viewable_deserialize_property   (GimpConfig       *config,
                                                       guint             property_id,
                                                       GValue           *value,
                                                       GParamSpec       *pspec,
                                                       GScanner         *scanner,
                                                       GTokenType       *expected);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpViewable, gimp_viewable, GIMP_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
@@ -210,7 +210,7 @@ static void
 gimp_viewable_config_iface_init (GimpConfigInterface *iface)
 {
   iface->deserialize_property = gimp_viewable_deserialize_property;
-  iface->serialize_property = gimp_viewable_serialize_property;
+  iface->serialize_property   = gimp_viewable_serialize_property;
 }
 
 static void
@@ -522,17 +522,20 @@ gimp_viewable_deserialize_property (GimpConfig *config,
                 pixbuf = gdk_pixbuf_new_from_stream (decoded_image_stream,
                                                      NULL,
                                                      NULL);
+                g_object_unref (decoded_image_stream);
+
                 if (pixbuf)
                   {
                     if (icon_pixbuf)
                       g_object_unref (icon_pixbuf);
                     icon_pixbuf = pixbuf;
                   }
+
                 g_free (decoded_image);
               }
           }
 
-          g_value_take_object (value, icon_pixbuf);
+        g_value_take_object (value, icon_pixbuf);
       }
       break;
 
