@@ -368,7 +368,7 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
                                G_CALLBACK (gimp_image_map_tool_response),
                                G_OBJECT (image_map_tool), 0);
 
-      if (klass->settings_name)
+      if (image_map_tool->config && klass->settings_name)
         {
           GtkWidget *settings_ui;
           gchar     *settings_filename;
