@@ -34,13 +34,12 @@
 #include "core/gimptemplate.h"
 #include "core/gimpviewable.h"
 
-#include "gimpiconpicker.h"
-#include "gimpviewablebutton.h"
 #include "gimpcontainerpopup.h"
+#include "gimpiconpicker.h"
+#include "gimpview.h"
+#include "gimpviewablebutton.h"
 
 #include "gimp-intl.h"
-
-#include "gimpview.h"
 
 enum
 {
@@ -81,12 +80,10 @@ struct _GimpIconPickerPrivate
 
 static void    gimp_icon_picker_constructed     (GObject        *object);
 static void    gimp_icon_picker_finalize        (GObject        *object);
-
 static void    gimp_icon_picker_set_property    (GObject        *object,
                                                  guint           property_id,
                                                  const GValue   *value,
                                                  GParamSpec     *pspec);
-
 static void    gimp_icon_picker_get_property    (GObject        *object,
                                                  guint           property_id,
                                                  GValue         *value,
@@ -95,7 +92,6 @@ static void    gimp_icon_picker_get_property    (GObject        *object,
 static void    gimp_icon_picker_icon_changed    (GimpContext    *context,
                                                  GimpTemplate   *template,
                                                  GimpIconPicker *picker);
-
 static void    gimp_icon_picker_clicked         (GtkWidget      *widget,
                                                  GdkEventButton *event,
                                                  gpointer        data);
@@ -103,18 +99,16 @@ static void    gimp_icon_picker_clicked         (GtkWidget      *widget,
 static void    gimp_icon_picker_menu_from_file  (GtkWidget      *widget,
                                                  GdkEventButton *event,
                                                  gpointer        data);
-
 static void    gimp_icon_picker_menu_from_stock (GtkWidget      *widget,
                                                  GdkEventButton *event,
                                                  gpointer        data);
-
 static void    gimp_icon_picker_menu_paste      (GtkWidget      *widget,
                                                  GdkEventButton *event,
                                                  gpointer        data);
-
 static void    gimp_icon_picker_menu_copy       (GtkWidget      *widget,
                                                  GdkEventButton *event,
                                                  gpointer        data);
+
 
 G_DEFINE_TYPE (GimpIconPicker, gimp_icon_picker, GTK_TYPE_BOX)
 
@@ -163,7 +157,6 @@ gimp_icon_picker_init (GimpIconPicker *picker)
                                    "stock-id", private->stock_id,
                                    "icon-pixbuf", private->icon_pixbuf,
                                    NULL);
-  private->icon_pixbuf = NULL;
 }
 
 static void
@@ -245,33 +238,41 @@ gimp_icon_picker_constructed (GObject *object)
   private->right_click_menu = gtk_menu_new ();
   gtk_menu_attach_to_widget (GTK_MENU (private->right_click_menu), button, NULL);
 
-  private->menu_item_file_icon = gtk_menu_item_new_with_label (_("From file..."));
-  g_signal_connect (private->menu_item_file_icon, "button-press-event",
-                    G_CALLBACK (gimp_icon_picker_menu_from_file), object);
-
+  private->menu_item_file_icon =
+    gtk_menu_item_new_with_label (_("From File..."));
   gtk_menu_shell_append (GTK_MENU_SHELL (private->right_click_menu),
                          GTK_WIDGET (private->menu_item_file_icon));
 
-  private->menu_item_stock_icon = gtk_menu_item_new_with_label (_("From stock icons..."));
-  g_signal_connect (private->menu_item_stock_icon, "button-press-event",
-                    G_CALLBACK (gimp_icon_picker_menu_from_stock), object);
+  g_signal_connect (private->menu_item_file_icon, "button-press-event",
+                    G_CALLBACK (gimp_icon_picker_menu_from_file),
+                    object);
 
+  private->menu_item_stock_icon =
+    gtk_menu_item_new_with_label (_("From Stock Icons..."));
   gtk_menu_shell_append (GTK_MENU_SHELL (private->right_click_menu),
                          GTK_WIDGET (private->menu_item_stock_icon));
 
-  private->menu_item_copy = gtk_menu_item_new_with_label (_("Copy icon"));
-  g_signal_connect (private->menu_item_copy, "button-press-event",
-                    G_CALLBACK (gimp_icon_picker_menu_copy), object);
+  g_signal_connect (private->menu_item_stock_icon, "button-press-event",
+                    G_CALLBACK (gimp_icon_picker_menu_from_stock),
+                    object);
 
+  private->menu_item_copy =
+    gtk_menu_item_new_with_label (_("Copy Icon to Clipboard"));
   gtk_menu_shell_append (GTK_MENU_SHELL (private->right_click_menu),
                          GTK_WIDGET (private->menu_item_copy));
 
-  private->menu_item_paste = gtk_menu_item_new_with_label (_("Paste icon"));
-  g_signal_connect (private->menu_item_paste, "button-press-event",
-                    G_CALLBACK (gimp_icon_picker_menu_paste), object);
+  g_signal_connect (private->menu_item_copy, "button-press-event",
+                    G_CALLBACK (gimp_icon_picker_menu_copy),
+                    object);
 
+  private->menu_item_paste =
+    gtk_menu_item_new_with_label (_("Paste Icon from Clipboard"));
   gtk_menu_shell_append (GTK_MENU_SHELL (private->right_click_menu),
                          GTK_WIDGET (private->menu_item_paste));
+
+  g_signal_connect (private->menu_item_paste, "button-press-event",
+                    G_CALLBACK (gimp_icon_picker_menu_paste),
+                    object);
 
   gtk_widget_show_all (GTK_WIDGET (private->right_click_menu));
 }
@@ -341,7 +342,7 @@ gimp_icon_picker_set_property (GObject      *object,
 
     case PROP_ICON_PIXBUF:
       gimp_icon_picker_set_icon_pixbuf (GIMP_ICON_PICKER (object),
-                                        GDK_PIXBUF (g_value_get_object (value)));
+                                        g_value_get_object (value));
       break;
 
     default:
@@ -422,7 +423,9 @@ gimp_icon_picker_set_stock_id (GimpIconPicker *picker,
                                    GIMP_TEMPLATE (object));
     }
 
-  g_object_set (private->preview, "stock-id", private->stock_id, NULL);
+  g_object_set (private->preview,
+                "stock-id", private->stock_id,
+                NULL);
 
   g_object_notify (G_OBJECT (picker), "stock-id");
 }
@@ -470,7 +473,9 @@ gimp_icon_picker_set_icon_pixbuf (GimpIconPicker *picker,
                                    GIMP_TEMPLATE (object));
     }
 
-  g_object_set (private->preview, "icon-pixbuf", private->icon_pixbuf, NULL);
+  g_object_set (private->preview,
+                "icon-pixbuf", private->icon_pixbuf,
+                NULL);
 
   g_object_notify (G_OBJECT (picker), "icon-pixbuf");
 }
@@ -514,7 +519,7 @@ gimp_icon_picker_menu_from_file (GtkWidget      *widget,
 
   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
     {
-      gchar *filename;
+      gchar     *filename;
       GdkPixbuf *icon_pixbuf = NULL;
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
@@ -621,5 +626,6 @@ gimp_icon_picker_menu_from_stock (GtkWidget      *widget,
   gimp_container_popup_set_view_type (GIMP_CONTAINER_POPUP (popup),
                                       GIMP_VIEW_TYPE_GRID);
 
-  gimp_container_popup_show (GIMP_CONTAINER_POPUP (popup), GTK_WIDGET (picker));
+  gimp_container_popup_show (GIMP_CONTAINER_POPUP (popup),
+                             GTK_WIDGET (picker));
 }
