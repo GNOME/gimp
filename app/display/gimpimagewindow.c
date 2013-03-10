@@ -1035,10 +1035,10 @@ gimp_image_window_add_shell (GimpImageWindow  *window,
   private->shells = g_list_append (private->shells, shell);
 
   if (g_list_length (private->shells) > 1)
-   {
-    gimp_image_window_keep_canvas_pos (window);
-    gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), TRUE);
-   }
+    {
+      gimp_image_window_keep_canvas_pos (window);
+      gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), TRUE);
+    }
 
   tab_label = gimp_image_window_create_tab_label (window, shell);
 
