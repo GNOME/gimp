@@ -324,6 +324,10 @@ gimp_statusbar_hbox_size_request (GtkWidget      *widget,
   requisition->height = MAX (requisition->height,
                              child_requisition.height);
 
+  gtk_widget_size_request (statusbar->label, &child_requisition);
+  requisition->height = MAX (requisition->height,
+                             child_requisition.height);
+
   gtk_widget_size_request (statusbar->cancel_button, &child_requisition);
   requisition->height = MAX (requisition->height,
                              child_requisition.height);
