@@ -44,6 +44,11 @@ static void       gimp_operation_mask_components_set_property (GObject          
                                                                GParamSpec          *pspec);
 
 static void       gimp_operation_mask_components_prepare      (GeglOperation       *operation);
+static gboolean gimp_operation_mask_components_parent_process (GeglOperation        *operation,
+                                                               GeglOperationContext *context,
+                                                               const gchar          *output_prop,
+                                                               const GeglRectangle  *result,
+                                                               gint                  level);
 static gboolean   gimp_operation_mask_components_process      (GeglOperation       *operation,
                                                                void                *in_buf,
                                                                void                *aux_buf,
@@ -76,6 +81,7 @@ gimp_operation_mask_components_class_init (GimpOperationMaskComponentsClass *kla
                                  NULL);
 
   operation_class->prepare = gimp_operation_mask_components_prepare;
+  operation_class->process = gimp_operation_mask_components_parent_process;
 
   point_class->process     = gimp_operation_mask_components_process;
 
@@ -140,6 +146,37 @@ gimp_operation_mask_components_prepare (GeglOperation *operation)
   gegl_operation_set_format (operation, "input",  babl_format ("RGBA float"));
   gegl_operation_set_format (operation, "aux",    babl_format ("RGBA float"));
   gegl_operation_set_format (operation, "output", babl_format ("RGBA float"));
+}
+
+static gboolean
+gimp_operation_mask_components_parent_process (GeglOperation        *operation,
+                                               GeglOperationContext *context,
+                                               const gchar          *output_prop,
+                                               const GeglRectangle  *result,
+                                               gint                  level)
+{
+  GimpOperationMaskComponents *self = GIMP_OPERATION_MASK_COMPONENTS (operation);
+
+  if (self->mask == 0)
+    {
+      GObject *input = gegl_operation_context_get_object (context, "input");
+
+      gegl_operation_context_set_object (context, "output", input);
+
+      return TRUE;
+    }
+  else if (self->mask == GIMP_COMPONENT_ALL)
+    {
+      GObject *aux = gegl_operation_context_get_object (context, "aux");
+
+      gegl_operation_context_set_object (context, "output", aux);
+
+      return TRUE;
+    }
+
+  return GEGL_OPERATION_CLASS (parent_class)->process (operation, context,
+                                                       output_prop, result,
+                                                       level);
 }
 
 static gboolean
