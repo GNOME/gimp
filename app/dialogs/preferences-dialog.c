@@ -46,6 +46,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
+#include "widgets/gimpprefsbox.h"
 #include "widgets/gimpprofilechooserdialog.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimptemplateeditor.h"
@@ -90,10 +91,6 @@ static void        prefs_message                  (GtkMessageType  type,
                                                    gboolean        destroy,
                                                    const gchar    *message);
 
-static void   prefs_notebook_page_callback        (GtkNotebook      *notebook,
-                                                   gpointer          page,
-                                                   guint             page_num,
-                                                   GtkTreeSelection *sel);
 static void   prefs_resolution_source_callback    (GtkWidget  *widget,
                                                    GObject    *config);
 static void   prefs_resolution_calibrate_callback (GtkWidget  *widget,
@@ -475,13 +472,13 @@ prefs_resolution_calibrate_callback (GtkWidget *widget,
                                      GtkWidget *entry)
 {
   GtkWidget *dialog;
-  GtkWidget *notebook;
+  GtkWidget *prefs_box;
   GtkWidget *image;
 
   dialog = gtk_widget_get_toplevel (entry);
 
-  notebook = g_object_get_data (G_OBJECT (dialog),   "notebook");
-  image    = g_object_get_data (G_OBJECT (notebook), "image");
+  prefs_box = g_object_get_data (G_OBJECT (dialog), "prefs-box");
+  image     = gimp_prefs_box_get_image (GIMP_PREFS_BOX (prefs_box));
 
   resolution_calibrate_dialog (entry, gtk_image_get_pixbuf (GTK_IMAGE (image)));
 }
@@ -680,177 +677,6 @@ prefs_tool_options_clear_callback (GtkWidget *widget,
       prefs_message (GTK_MESSAGE_INFO, TRUE,
                      _("Your tool options will be reset to "
                        "default values the next time you start GIMP."));
-    }
-}
-
-static GtkWidget *
-prefs_notebook_append_page (Gimp          *gimp,
-                            GtkNotebook   *notebook,
-                            const gchar   *notebook_label,
-                            const gchar   *notebook_icon,
-                            GtkTreeStore  *tree,
-                            const gchar   *tree_label,
-                            const gchar   *help_id,
-                            GtkTreeIter   *parent,
-                            GtkTreeIter   *iter,
-                            gint           page_index)
-{
-  GtkWidget *event_box;
-  GtkWidget *vbox;
-  GdkPixbuf *pixbuf       = NULL;
-  GdkPixbuf *small_pixbuf = NULL;
-
-  event_box = gtk_event_box_new ();
-  gtk_event_box_set_visible_window (GTK_EVENT_BOX (event_box), FALSE);
-  gtk_notebook_append_page (notebook, event_box, NULL);
-  gtk_widget_show (event_box);
-
-  gimp_help_set_help_data (event_box, NULL, help_id);
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_add (GTK_CONTAINER (event_box), vbox);
-  gtk_widget_show (vbox);
-
-  if (notebook_icon)
-    {
-      gchar *basename;
-      gchar *filename;
-
-      basename = g_strconcat (notebook_icon, ".png", NULL);
-      filename = themes_get_theme_file (gimp, "images", "preferences",
-                                        basename, NULL);
-
-      if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
-        pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
-
-      g_free (filename);
-      g_free (basename);
-
-      basename = g_strconcat (notebook_icon, "-22.png", NULL);
-      filename = themes_get_theme_file (gimp, "images", "preferences",
-                                        basename, NULL);
-
-      if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
-        small_pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
-      else if (pixbuf)
-        small_pixbuf = gdk_pixbuf_scale_simple (pixbuf,
-                                                22, 22, GDK_INTERP_BILINEAR);
-
-      g_free (filename);
-      g_free (basename);
-    }
-
-  gtk_tree_store_append (tree, iter, parent);
-  gtk_tree_store_set (tree, iter,
-                      0, small_pixbuf,
-                      1, tree_label ? tree_label : notebook_label,
-                      2, page_index,
-                      3, notebook_label,
-                      4, pixbuf,
-                      -1);
-
-  if (pixbuf)
-    g_object_unref (pixbuf);
-
-  if (small_pixbuf)
-    g_object_unref (small_pixbuf);
-
-  return vbox;
-}
-
-static void
-prefs_tree_select_callback (GtkTreeSelection *sel,
-                            GtkNotebook      *notebook)
-{
-  GtkWidget    *label;
-  GtkWidget    *image;
-  GtkTreeModel *model;
-  GtkTreeIter   iter;
-  gchar        *text;
-  GdkPixbuf    *pixbuf;
-  gint          index;
-
-  if (! gtk_tree_selection_get_selected (sel, &model, &iter))
-    return;
-
-  label = g_object_get_data (G_OBJECT (notebook), "label");
-  image = g_object_get_data (G_OBJECT (notebook), "image");
-
-  gtk_tree_model_get (model, &iter,
-                      3, &text,
-                      4, &pixbuf,
-                      2, &index,
-                      -1);
-
-  gtk_label_set_text (GTK_LABEL (label), text);
-  g_free (text);
-
-  gtk_image_set_from_pixbuf (GTK_IMAGE (image), pixbuf);
-  if (pixbuf)
-    g_object_unref (pixbuf);
-
-  g_signal_handlers_block_by_func (notebook,
-                                   prefs_notebook_page_callback,
-                                   sel);
-  gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), index);
-  g_signal_handlers_unblock_by_func (notebook,
-                                     prefs_notebook_page_callback,
-                                     sel);
-}
-
-static void
-prefs_notebook_page_callback (GtkNotebook      *notebook,
-                              gpointer          page,
-                              guint             page_num,
-                              GtkTreeSelection *sel)
-{
-  GtkTreeView  *view;
-  GtkTreeModel *model;
-  GtkTreeIter   iter;
-  gboolean      iter_valid;
-
-  view  = gtk_tree_selection_get_tree_view (sel);
-  model = gtk_tree_view_get_model (view);
-
-  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
-       iter_valid;
-       iter_valid = gtk_tree_model_iter_next (model, &iter))
-    {
-      gint index;
-
-      gtk_tree_model_get (model, &iter, 2, &index, -1);
-
-      if (index == page_num)
-        {
-          gtk_tree_selection_select_iter (sel, &iter);
-          return;
-        }
-
-      if (gtk_tree_model_iter_has_child (model, &iter))
-        {
-          gint num_children;
-          gint i;
-
-          num_children = gtk_tree_model_iter_n_children (model, &iter);
-
-          for (i = 0; i < num_children; i++)
-            {
-              GtkTreeIter child_iter;
-
-              gtk_tree_model_iter_nth_child (model, &child_iter, &iter, i);
-              gtk_tree_model_get (model, &child_iter, 2, &index, -1);
-
-              if (index == page_num)
-                {
-                  GtkTreePath *path;
-
-                  path = gtk_tree_model_get_path (model, &child_iter);
-                  gtk_tree_view_expand_to_path (view, path);
-                  gtk_tree_selection_select_iter (sel, &child_iter);
-                  return;
-                }
-            }
-        }
     }
 }
 
@@ -1317,11 +1143,13 @@ static void
 prefs_help_func (const gchar *help_id,
                  gpointer     help_data)
 {
+  GtkWidget *prefs_box;
   GtkWidget *notebook;
   GtkWidget *event_box;
   gint       page_num;
 
-  notebook  = g_object_get_data (G_OBJECT (help_data), "notebook");
+  prefs_box = g_object_get_data (G_OBJECT (help_data), "prefs-box");
+  notebook  = gimp_prefs_box_get_notebook (GIMP_PREFS_BOX (prefs_box));
   page_num  = gtk_notebook_get_current_page (GTK_NOTEBOOK (notebook));
   event_box = gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), page_num);
 
@@ -1348,33 +1176,76 @@ prefs_message (GtkMessageType  type,
   gtk_widget_show (dialog);
 }
 
+static gboolean
+prefs_idle_unref (gpointer data)
+{
+  g_object_unref (data);
+
+  return FALSE;
+}
+
+static GdkPixbuf *
+prefs_get_pixbufs (Gimp         *gimp,
+                   const gchar  *name,
+                   GdkPixbuf   **small_pixbuf)
+{
+  GdkPixbuf *pixbuf = NULL;
+  gchar     *basename;
+  gchar     *filename;
+
+  *small_pixbuf = NULL;
+
+  basename = g_strconcat (name, ".png", NULL);
+  filename = themes_get_theme_file (gimp, "images", "preferences",
+                                    basename, NULL);
+
+  if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
+    pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+
+  g_free (filename);
+  g_free (basename);
+
+  basename = g_strconcat (name, "-22.png", NULL);
+  filename = themes_get_theme_file (gimp, "images", "preferences",
+                                    basename, NULL);
+
+  if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
+    *small_pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+  else if (pixbuf)
+    *small_pixbuf = gdk_pixbuf_scale_simple (pixbuf,
+                                             22, 22, GDK_INTERP_BILINEAR);
+
+  g_free (filename);
+  g_free (basename);
+
+  if (pixbuf)
+    g_idle_add (prefs_idle_unref, pixbuf);
+
+  if (*small_pixbuf)
+    g_idle_add (prefs_idle_unref, *small_pixbuf);
+
+  return pixbuf;
+}
+
 static GtkWidget *
 prefs_dialog_new (Gimp       *gimp,
                   GimpConfig *config)
 {
   GtkWidget         *dialog;
-  GtkWidget         *tv;
-  GtkTreeStore      *tree;
-  GtkTreeViewColumn *column;
-  GtkCellRenderer   *cell;
-  GtkTreeSelection  *sel;
-  GtkTreePath       *path;
   GtkTreeIter        top_iter;
   GtkTreeIter        child_iter;
-  gint               page_index;
 
   GtkSizeGroup      *size_group = NULL;
-  GtkWidget         *frame;
-  GtkWidget         *ebox;
-  GtkWidget         *notebook;
+  GdkPixbuf         *pixbuf;
+  GdkPixbuf         *small_pixbuf = NULL;
+  GtkWidget         *prefs_box;
   GtkWidget         *vbox;
-  GtkWidget         *vbox2;
   GtkWidget         *hbox;
+  GtkWidget         *vbox2;
   GtkWidget         *button;
   GtkWidget         *button2;
   GtkWidget         *table;
   GtkWidget         *label;
-  GtkWidget         *image;
   GtkWidget         *entry;
   GtkWidget         *calibrate_button;
   GSList            *group;
@@ -1413,109 +1284,28 @@ prefs_dialog_new (Gimp       *gimp,
                     G_CALLBACK (prefs_response),
                     dialog);
 
-  /* The main hbox */
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
+  /* The prefs box */
+  prefs_box = gimp_prefs_box_new ();
+  gtk_container_set_border_width (GTK_CONTAINER (prefs_box), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      hbox, TRUE, TRUE, 0);
-  gtk_widget_show (hbox);
+                      prefs_box, TRUE, TRUE, 0);
+  gtk_widget_show (prefs_box);
 
-  /* The categories tree */
-  frame = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (frame),
-                                       GTK_SHADOW_IN);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (frame),
-                                  GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  tree = gtk_tree_store_new (5,
-                             GDK_TYPE_PIXBUF, G_TYPE_STRING,
-                             G_TYPE_INT, G_TYPE_STRING, GDK_TYPE_PIXBUF);
-  tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (tree));
-  g_object_unref (tree);
-
-  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tv), FALSE);
-
-  column = gtk_tree_view_column_new ();
-
-  cell = gtk_cell_renderer_pixbuf_new ();
-  gtk_tree_view_column_pack_start (column, cell, FALSE);
-  gtk_tree_view_column_set_attributes (column, cell, "pixbuf", 0, NULL);
-
-  cell = gtk_cell_renderer_text_new ();
-  gtk_tree_view_column_pack_start (column, cell, TRUE);
-  gtk_tree_view_column_set_attributes (column, cell, "text", 1, NULL);
-
-  gtk_tree_view_append_column (GTK_TREE_VIEW (tv), column);
-
-  gtk_container_add (GTK_CONTAINER (frame), tv);
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
-  ebox = gtk_event_box_new ();
-  gtk_widget_set_state (ebox, GTK_STATE_SELECTED);
-  gtk_box_pack_start (GTK_BOX (vbox), ebox, FALSE, TRUE, 0);
-  gtk_widget_show (ebox);
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
-  gtk_container_add (GTK_CONTAINER (ebox), hbox);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gimp_label_set_attributes (GTK_LABEL (label),
-                             PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
-                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
-                             -1);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  image = gtk_image_new ();
-  gtk_box_pack_end (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
-
-  /* The main preferences notebook */
-  notebook = gtk_notebook_new ();
-  gtk_notebook_set_show_tabs (GTK_NOTEBOOK (notebook), FALSE);
-  gtk_notebook_set_show_border (GTK_NOTEBOOK (notebook), FALSE);
-  gtk_box_pack_start (GTK_BOX (vbox), notebook, TRUE, TRUE, 0);
-
-  g_object_set_data (G_OBJECT (dialog), "notebook", notebook);
-
-  g_object_set_data (G_OBJECT (notebook), "label", label);
-  g_object_set_data (G_OBJECT (notebook), "image", image);
-
-  sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (tv));
-  g_signal_connect (sel, "changed",
-                    G_CALLBACK (prefs_tree_select_callback),
-                    notebook);
-  g_signal_connect (notebook, "switch-page",
-                    G_CALLBACK (prefs_notebook_page_callback),
-                    sel);
-
-  page_index = 0;
+  g_object_set_data (G_OBJECT (dialog), "prefs-box", prefs_box);
 
 
   /*****************/
   /*  Environment  */
   /*****************/
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-                                     _("Environment"),
-                                     "environment",
-                                     GTK_TREE_STORE (tree),
-                                     NULL,
-                                     GIMP_HELP_PREFS_ENVIRONMENT,
-                                     NULL,
-                                     &top_iter,
-                                     page_index++);
-
-  /* select this page in the tree */
-  gtk_tree_selection_select_iter (sel, &top_iter);
+  pixbuf = prefs_get_pixbufs (gimp, "environment", &small_pixbuf);
+  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  _("Environment"),
+                                  pixbuf,
+                                  NULL,
+                                  small_pixbuf,
+                                  GIMP_HELP_PREFS_ENVIRONMENT,
+                                  NULL,
+                                  &top_iter);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -1574,16 +1364,15 @@ prefs_dialog_new (Gimp       *gimp,
   /***************/
   /*  Interface  */
   /***************/
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-                                     _("User Interface"),
-                                     "interface",
-                                     GTK_TREE_STORE (tree),
-                                     _("Interface"),
-                                      GIMP_HELP_PREFS_INTERFACE,
-                                     NULL,
-                                     &top_iter,
-                                     page_index++);
+  pixbuf = prefs_get_pixbufs (gimp, "interface", &small_pixbuf);
+  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  _("User Interface"),
+                                  pixbuf,
+                                  _("Interface"),
+                                  small_pixbuf,
+                                  GIMP_HELP_PREFS_INTERFACE,
+                                  NULL,
+                                  &top_iter);
 
   /*  Language  */
 
@@ -1656,16 +1445,15 @@ prefs_dialog_new (Gimp       *gimp,
   /***********/
   /*  Theme  */
   /***********/
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-                                     _("Theme"),
-                                     "theme",
-                                     GTK_TREE_STORE (tree),
-                                     NULL,
-                                     GIMP_HELP_PREFS_THEME,
-                                     NULL,
-                                     &top_iter,
-                                     page_index++);
+  pixbuf = prefs_get_pixbufs (gimp, "theme", &small_pixbuf);
+  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  _("Theme"),
+                                  pixbuf,
+                                  NULL,
+                                  small_pixbuf,
+                                  GIMP_HELP_PREFS_THEME,
+                                  NULL,
+                                  &top_iter);
 
   vbox2 = prefs_frame_new (_("Select Theme"), GTK_CONTAINER (vbox), TRUE);
 
@@ -1759,16 +1547,15 @@ prefs_dialog_new (Gimp       *gimp,
   /*****************/
   /*  Help System  */
   /*****************/
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-                                     _("Help System"),
-                                     "help-system",
-                                     GTK_TREE_STORE (tree),
-                                     NULL,
-                                     GIMP_HELP_PREFS_HELP,
-                                     NULL,
-                                     &top_iter,
-                                     page_index++);
+  pixbuf = prefs_get_pixbufs (gimp, "help-system", &small_pixbuf);
+  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  _("Help System"),
+                                  pixbuf,
+                                  NULL,
+                                  small_pixbuf,
+                                  GIMP_HELP_PREFS_HELP,
+                                  NULL,
+                                  &top_iter);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -1843,16 +1630,15 @@ prefs_dialog_new (Gimp       *gimp,
   /******************/
   /*  Tool Options  */
   /******************/
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-                                     C_("preferences", "Tool Options"),
-                                     "tool-options",
-                                     GTK_TREE_STORE (tree),
-                                     NULL,
-                                     GIMP_HELP_PREFS_TOOL_OPTIONS,
-                                     NULL,
-                                     &top_iter,
-                                     page_index++);
+  pixbuf = prefs_get_pixbufs (gimp, "tool-options", &small_pixbuf);
+  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  C_("preferences", "Tool Options"),
+                                  pixbuf,
+                                  NULL,
+                                  small_pixbuf,
+                                  GIMP_HELP_PREFS_TOOL_OPTIONS,
+                                  NULL,
+                                  &top_iter);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -1933,16 +1719,15 @@ prefs_dialog_new (Gimp       *gimp,
   /*************/
   /*  Toolbox  */
   /*************/
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-                                     _("Toolbox"),
-                                     "toolbox",
-                                     GTK_TREE_STORE (tree),
-                                     NULL,
-                                     GIMP_HELP_PREFS_TOOLBOX,
-                                     NULL,
-                                     &top_iter,
-                                     page_index++);
+  pixbuf = prefs_get_pixbufs (gimp, "toolbox", &small_pixbuf);
+  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  _("Toolbox"),
+                                  pixbuf,
+                                  NULL,
+                                  small_pixbuf,
+                                  GIMP_HELP_PREFS_TOOLBOX,
+                                  NULL,
+                                  &top_iter);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -1980,16 +1765,15 @@ prefs_dialog_new (Gimp       *gimp,
   /***********************/
   /*  Default New Image  */
   /***********************/
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-                                     _("Default New Image"),
-                                     "new-image",
-                                     GTK_TREE_STORE (tree),
-                                     _("Default Image"),
-                                     GIMP_HELP_PREFS_NEW_IMAGE,
-                                     NULL,
-                                     &top_iter,
-                                     page_index++);
+  pixbuf = prefs_get_pixbufs (gimp, "new-image", &small_pixbuf);
+  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  _("Default New Image"),
+                                  pixbuf,
+                                  _("Default Image"),
+                                  small_pixbuf,
+                                  GIMP_HELP_PREFS_NEW_IMAGE,
+                                  NULL,
+                                  &top_iter);
 
   table = prefs_table_new (1, GTK_CONTAINER (vbox));
 
@@ -2033,16 +1817,15 @@ prefs_dialog_new (Gimp       *gimp,
   /******************/
   /*  Default Grid  */
   /******************/
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-                                     _("Default Image Grid"),
-                                     "default-grid",
-                                     GTK_TREE_STORE (tree),
-                                     _("Default Grid"),
-                                     GIMP_HELP_PREFS_DEFAULT_GRID,
-                                     NULL,
-                                     &top_iter,
-                                     page_index++);
+  pixbuf = prefs_get_pixbufs (gimp, "default-grid", &small_pixbuf);
+  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  _("Default Image Grid"),
+                                  pixbuf,
+                                  _("Default Grid"),
+                                  small_pixbuf,
+                                  GIMP_HELP_PREFS_DEFAULT_GRID,
+                                  NULL,
+                                  &top_iter);
 
   /*  Grid  */
   editor = gimp_grid_editor_new (core_config->default_grid,
@@ -2056,16 +1839,15 @@ prefs_dialog_new (Gimp       *gimp,
   /*******************/
   /*  Image Windows  */
   /*******************/
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-                                     _("Image Windows"),
-                                     "image-windows",
-                                     GTK_TREE_STORE (tree),
-                                     NULL,
-                                     GIMP_HELP_PREFS_IMAGE_WINDOW,
-                                     NULL,
-                                     &top_iter,
-                                     page_index++);
+  pixbuf = prefs_get_pixbufs (gimp, "image-windows", &small_pixbuf);
+  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  _("Image Windows"),
+                                  pixbuf,
+                                  NULL,
+                                  small_pixbuf,
+                                  GIMP_HELP_PREFS_IMAGE_WINDOW,
+                                  NULL,
+                                  &top_iter);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -2138,16 +1920,15 @@ prefs_dialog_new (Gimp       *gimp,
   /********************************/
   /*  Image Windows / Appearance  */
   /********************************/
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-                                     _("Image Window Appearance"),
-                                     "image-windows",
-                                     GTK_TREE_STORE (tree),
-                                     _("Appearance"),
-                                     GIMP_HELP_PREFS_IMAGE_WINDOW_APPEARANCE,
-                                     &top_iter,
-                                     &child_iter,
-                                     page_index++);
+  pixbuf = prefs_get_pixbufs (gimp, "image-windows", &small_pixbuf);
+  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  _("Image Window Appearance"),
+                                  pixbuf,
+                                  _("Appearance"),
+                                  small_pixbuf,
+                                  GIMP_HELP_PREFS_IMAGE_WINDOW_APPEARANCE,
+                                  &top_iter,
+                                  &child_iter);
 
   prefs_display_options_frame_add (gimp,
                                    G_OBJECT (display_config->default_view),
@@ -2163,16 +1944,15 @@ prefs_dialog_new (Gimp       *gimp,
   /****************************************************/
   /*  Image Windows / Image Title & Statusbar Format  */
   /****************************************************/
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-                                     _("Image Title & Statusbar Format"),
-                                     "image-title",
-                                     GTK_TREE_STORE (tree),
-                                     _("Title & Status"),
-                                     GIMP_HELP_PREFS_IMAGE_WINDOW_TITLE,
-                                     &top_iter,
-                                     &child_iter,
-                                     page_index++);
+  pixbuf = prefs_get_pixbufs (gimp, "image-title", &small_pixbuf);
+  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  _("Image Title & Statusbar Format"),
+                                  pixbuf,
+                                  _("Title & Status"),
+                                  small_pixbuf,
+                                  GIMP_HELP_PREFS_IMAGE_WINDOW_TITLE,
+                                  &top_iter,
+                                  &child_iter);
 
   {
     const gchar *format_strings[] =
@@ -2288,16 +2068,15 @@ prefs_dialog_new (Gimp       *gimp,
   /*************/
   /*  Display  */
   /*************/
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-                                     _("Display"),
-                                     "display",
-                                     GTK_TREE_STORE (tree),
-                                     NULL,
-                                     GIMP_HELP_PREFS_DISPLAY,
-                                     NULL,
-                                     &top_iter,
-                                     page_index++);
+  pixbuf = prefs_get_pixbufs (gimp, "display", &small_pixbuf);
+  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  _("Display"),
+                                  pixbuf,
+                                  NULL,
+                                  small_pixbuf,
+                                  GIMP_HELP_PREFS_DISPLAY,
+                                  NULL,
+                                  &top_iter);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -2413,16 +2192,15 @@ prefs_dialog_new (Gimp       *gimp,
   /**********************/
   /*  Color Management  */
   /**********************/
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-                                     _("Color Management"),
-                                     "color-management",
-                                     GTK_TREE_STORE (tree),
-                                     NULL,
-                                     GIMP_HELP_PREFS_COLOR_MANAGEMENT,
-                                     NULL,
-                                     &top_iter,
-                                     page_index++);
+  pixbuf = prefs_get_pixbufs (gimp, "color-management", &small_pixbuf);
+  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  _("Color Management"),
+                                  pixbuf,
+                                  NULL,
+                                  small_pixbuf,
+                                  GIMP_HELP_PREFS_COLOR_MANAGEMENT,
+                                  NULL,
+                                  &top_iter);
 
   table = prefs_table_new (10, GTK_CONTAINER (vbox));
 
@@ -2543,16 +2321,15 @@ prefs_dialog_new (Gimp       *gimp,
   /*******************/
   /*  Input Devices  */
   /*******************/
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-                                     _("Input Devices"),
-                                     "input-devices",
-                                     GTK_TREE_STORE (tree),
-                                     NULL,
-                                     GIMP_HELP_PREFS_INPUT_DEVICES,
-                                     NULL,
-                                     &top_iter,
-                                     page_index++);
+  pixbuf = prefs_get_pixbufs (gimp, "input-devices", &small_pixbuf);
+  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  _("Input Devices"),
+                                  pixbuf,
+                                  NULL,
+                                  small_pixbuf,
+                                  GIMP_HELP_PREFS_INPUT_DEVICES,
+                                  NULL,
+                                  &top_iter);
 
   /*  Extended Input Devices  */
   vbox2 = prefs_frame_new (_("Extended Input Devices"),
@@ -2590,16 +2367,15 @@ prefs_dialog_new (Gimp       *gimp,
   /****************************/
   /*  Additional Controllers  */
   /****************************/
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-                                     _("Additional Input Controllers"),
-                                     "controllers",
-                                     GTK_TREE_STORE (tree),
-                                     _("Input Controllers"),
-                                     GIMP_HELP_PREFS_INPUT_CONTROLLERS,
-                                     &top_iter,
-                                     &child_iter,
-                                     page_index++);
+  pixbuf = prefs_get_pixbufs (gimp, "controllers", &small_pixbuf);
+  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  _("Additional Input Controllers"),
+                                  pixbuf,
+                                  _("Input Controllers"),
+                                  small_pixbuf,
+                                  GIMP_HELP_PREFS_INPUT_CONTROLLERS,
+                                  &top_iter,
+                                  &child_iter);
 
   vbox2 = gimp_controller_list_new (gimp);
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, TRUE, TRUE, 0);
@@ -2609,16 +2385,15 @@ prefs_dialog_new (Gimp       *gimp,
   /***********************/
   /*  Window Management  */
   /***********************/
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-                                     _("Window Management"),
-                                     "window-management",
-                                     GTK_TREE_STORE (tree),
-                                     NULL,
-                                     GIMP_HELP_PREFS_WINDOW_MANAGEMENT,
-                                     NULL,
-                                     &top_iter,
-                                     page_index++);
+  pixbuf = prefs_get_pixbufs (gimp, "window-management", &small_pixbuf);
+  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  _("Window Management"),
+                                  pixbuf,
+                                  NULL,
+                                  small_pixbuf,
+                                  GIMP_HELP_PREFS_WINDOW_MANAGEMENT,
+                                  NULL,
+                                  &top_iter);
 
   vbox2 = prefs_frame_new (_("Window Manager Hints"),
                            GTK_CONTAINER (vbox), FALSE);
@@ -2664,16 +2439,15 @@ prefs_dialog_new (Gimp       *gimp,
   /*************/
   /*  Folders  */
   /*************/
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-                                     _("Folders"),
-                                     "folders",
-                                     GTK_TREE_STORE (tree),
-                                     NULL,
-                                     GIMP_HELP_PREFS_FOLDERS,
-                                     NULL,
-                                     &top_iter,
-                                     page_index++);
+  pixbuf = prefs_get_pixbufs (gimp, "folders", &small_pixbuf);
+  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  _("Folders"),
+                                  pixbuf,
+                                  NULL,
+                                  small_pixbuf,
+                                  GIMP_HELP_PREFS_FOLDERS,
+                                  NULL,
+                                  &top_iter);
 
   {
     static const struct
@@ -2785,16 +2559,15 @@ prefs_dialog_new (Gimp       *gimp,
       {
         GtkWidget *editor;
 
-        vbox = prefs_notebook_append_page (gimp,
-                                           GTK_NOTEBOOK (notebook),
-                                           gettext (paths[i].label),
-                                           paths[i].icon,
-                                           GTK_TREE_STORE (tree),
-                                           gettext (paths[i].tree_label),
-                                           paths[i].help_data,
-                                           &top_iter,
-                                           &child_iter,
-                                           page_index++);
+        pixbuf = prefs_get_pixbufs (gimp, paths[i].icon, &small_pixbuf);
+        vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                        gettext (paths[i].label),
+                                        pixbuf,
+                                        gettext (paths[i].tree_label),
+                                        small_pixbuf,
+                                        paths[i].help_data,
+                                        &top_iter,
+                                        &child_iter);
 
         editor = gimp_prop_path_editor_new (object,
                                             paths[i].path_property_name,
@@ -2805,15 +2578,20 @@ prefs_dialog_new (Gimp       *gimp,
       }
   }
 
-  gtk_tree_view_expand_all (GTK_TREE_VIEW (tv));
+  {
+    GtkWidget    *tv;
+    GtkTreeModel *model;
+    GtkTreePath  *path;
 
-  /*  collapse the Folders subtree */
-  path = gtk_tree_model_get_path (GTK_TREE_MODEL (tree), &top_iter);
-  gtk_tree_view_collapse_row (GTK_TREE_VIEW (tv), path);
-  gtk_tree_path_free (path);
+    tv = gimp_prefs_box_get_tree_view (GIMP_PREFS_BOX (prefs_box));
+    gtk_tree_view_expand_all (GTK_TREE_VIEW (tv));
 
-  gtk_widget_show (tv);
-  gtk_widget_show (notebook);
+    /*  collapse the Folders subtree */
+    model = gtk_tree_view_get_model (GTK_TREE_VIEW (tv));
+    path = gtk_tree_model_get_path (model, &top_iter);
+    gtk_tree_view_collapse_row (GTK_TREE_VIEW (tv), path);
+    gtk_tree_path_free (path);
+  }
 
   return dialog;
 }
