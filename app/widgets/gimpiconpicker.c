@@ -38,6 +38,7 @@
 #include "gimpiconpicker.h"
 #include "gimpview.h"
 #include "gimpviewablebutton.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -216,25 +217,24 @@ gimp_icon_picker_constructed (GObject *object)
 
 
   /* Set up preview button */
+  button = gtk_button_new ();
+  gtk_box_pack_start (GTK_BOX (picker), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "button-press-event",
+                    G_CALLBACK (gimp_icon_picker_clicked),
+                    object);
+
+
   viewable_view = gimp_view_new (private->stock_id_context,
                                  private->preview,
                                  GIMP_VIEW_SIZE_SMALL,
                                  0,
                                  FALSE);
-
-  button = gtk_button_new ();
-
   gtk_container_add (GTK_CONTAINER (button), GTK_WIDGET (viewable_view));
-
-  g_signal_connect (button, "button-press-event",
-                    G_CALLBACK (gimp_icon_picker_clicked), object);
-
-  gtk_box_pack_start (GTK_BOX (picker), button, FALSE, FALSE, 0);
-
   gtk_widget_show (viewable_view);
-  gtk_widget_show (button);
 
-  /* Set up right click menu */
+  /* Set up button menu */
   private->right_click_menu = gtk_menu_new ();
   gtk_menu_attach_to_widget (GTK_MENU (private->right_click_menu), button, NULL);
 
@@ -576,6 +576,16 @@ gimp_icon_picker_menu_paste (GtkWidget      *widget,
 }
 
 static void
+gimp_icon_picker_menu_position (GtkMenu  *menu,
+                                gint     *x,
+                                gint     *y,
+                                gboolean *push_in,
+                                gpointer  user_data)
+{
+  gimp_button_menu_position (user_data, menu, GTK_POS_RIGHT, x, y);
+}
+
+static void
 gimp_icon_picker_clicked (GtkWidget      *widget,
                           GdkEventButton *event,
                           gpointer        object)
@@ -598,8 +608,9 @@ gimp_icon_picker_clicked (GtkWidget      *widget,
     gtk_widget_set_sensitive (private->menu_item_copy, FALSE);
 
   gtk_menu_popup (GTK_MENU (private->right_click_menu),
-                  NULL, NULL, NULL,
-                  widget, event->button, event->time);
+                  NULL, NULL,
+                  gimp_icon_picker_menu_position, widget,
+                  event->button, event->time);
 }
 
 static void
