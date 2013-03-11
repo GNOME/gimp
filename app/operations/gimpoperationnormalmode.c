@@ -98,43 +98,45 @@ gimp_operation_normal_parent_process (GeglOperation        *operation,
                                       const GeglRectangle  *result,
                                       gint                  level)
 {
-#if 0
-  /*  this code tries to be smart but is in fact just a too stupid
-   *  copy from gegl's normal mode. to fix it, it needs to take
-   *  mask and opacity into account
-   */
-  const GeglRectangle *in_extent  = NULL;
-  const GeglRectangle *aux_extent = NULL;
-  GObject             *input;
-  GObject             *aux;
+  GimpOperationPointLayerMode *point;
 
-  /* get the raw values this does not increase the reference count */
-  input = gegl_operation_context_get_object (context, "input");
-  aux   = gegl_operation_context_get_object (context, "aux");
+  point = GIMP_OPERATION_POINT_LAYER_MODE (operation);
 
-  /* pass the input/aux buffers directly through if they are not
-   * overlapping
-   */
-  if (input)
-    in_extent = gegl_buffer_get_abyss (GEGL_BUFFER (input));
-
-  if (! input ||
-      (aux && ! gegl_rectangle_intersect (NULL, in_extent, result)))
+  if (point->opacity == 1.0 &&
+      ! gegl_operation_context_get_object (context, "aux2"))
     {
-      gegl_operation_context_set_object (context, "output", aux);
-      return TRUE;
-    }
+      const GeglRectangle *in_extent  = NULL;
+      const GeglRectangle *aux_extent = NULL;
+      GObject             *input;
+      GObject             *aux;
 
-  if (aux)
-    aux_extent = gegl_buffer_get_abyss (GEGL_BUFFER (aux));
+      /* get the raw values this does not increase the reference count */
+      input = gegl_operation_context_get_object (context, "input");
+      aux   = gegl_operation_context_get_object (context, "aux");
 
-  if (! aux ||
-      (input && ! gegl_rectangle_intersect (NULL, aux_extent, result)))
-    {
-      gegl_operation_context_set_object (context, "output", input);
-      return TRUE;
+      /* pass the input/aux buffers directly through if they are not
+       * overlapping
+       */
+      if (input)
+        in_extent = gegl_buffer_get_abyss (GEGL_BUFFER (input));
+
+      if (! input ||
+          (aux && ! gegl_rectangle_intersect (NULL, in_extent, result)))
+        {
+          gegl_operation_context_set_object (context, "output", aux);
+          return TRUE;
+        }
+
+      if (aux)
+        aux_extent = gegl_buffer_get_abyss (GEGL_BUFFER (aux));
+
+      if (! aux ||
+          (input && ! gegl_rectangle_intersect (NULL, aux_extent, result)))
+        {
+          gegl_operation_context_set_object (context, "output", input);
+          return TRUE;
+        }
     }
-#endif
 
   /* chain up, which will create the needed buffers for our actual
    * process function
