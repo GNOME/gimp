@@ -684,7 +684,7 @@ GetCode (FILE     *fd,
       return 0;
     }
 
-  while ((curbit + code_size) >= lastbit)
+  while ((curbit + code_size) > lastbit)
     {
       if (done)
         {
