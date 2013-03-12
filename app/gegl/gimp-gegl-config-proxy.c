@@ -149,6 +149,47 @@ gimp_gegl_config_class_init (GObjectClass *klass,
   g_free (pspecs);
 }
 
+static gboolean
+gimp_gegl_config_equal (GimpConfig *a,
+                        GimpConfig *b)
+{
+  GList    *diff;
+  gboolean  equal = TRUE;
+
+  diff = gimp_config_diff (G_OBJECT (a), G_OBJECT (b),
+                           GIMP_CONFIG_PARAM_SERIALIZE);
+
+  if (G_TYPE_FROM_INSTANCE (a) == G_TYPE_FROM_INSTANCE (b))
+    {
+      GList *list;
+
+      for (list = diff; list; list = g_list_next (list))
+        {
+          GParamSpec *pspec = list->data;
+
+          if (pspec->owner_type == G_TYPE_FROM_INSTANCE (a))
+            {
+              equal = FALSE;
+              break;
+            }
+        }
+    }
+  else if (diff)
+    {
+      equal = FALSE;
+    }
+
+  g_list_free (diff);
+
+  return equal;
+}
+
+static void
+gimp_gegl_config_config_iface_init (GimpConfigInterface *iface)
+{
+  iface->equal = gimp_gegl_config_equal;
+}
+
 GimpObject *
 gimp_gegl_get_config_proxy (const gchar *operation,
                             GType        parent_type)
@@ -188,7 +229,7 @@ gimp_gegl_get_config_proxy (const gchar *operation,
 
         const GInterfaceInfo config_info =
           {
-            NULL, /* interface_init     */
+            (GInterfaceInitFunc) gimp_gegl_config_config_iface_init,
             NULL, /* interface_finalize */
             NULL  /* interface_data     */
           };
