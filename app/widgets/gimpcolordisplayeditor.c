@@ -20,8 +20,11 @@
 
 #include "config.h"
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -347,11 +350,25 @@ gimp_color_display_editor_dispose (GObject *object)
       editor->stack = NULL;
     }
 
+  if (editor->config)
+    {
+      g_object_unref (editor->config);
+      editor->config = NULL;
+    }
+
+  if (editor->managed)
+    {
+      g_object_unref (editor->managed);
+      editor->managed = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 GtkWidget *
-gimp_color_display_editor_new (GimpColorDisplayStack *stack)
+gimp_color_display_editor_new (GimpColorDisplayStack *stack,
+                               GimpColorConfig       *config,
+                               GimpColorManaged      *managed)
 {
   GimpColorDisplayEditor *editor;
   GType                  *display_types;
@@ -360,10 +377,14 @@ gimp_color_display_editor_new (GimpColorDisplayStack *stack)
   GList                  *list;
 
   g_return_val_if_fail (GIMP_IS_COLOR_DISPLAY_STACK (stack), NULL);
+  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), NULL);
+  g_return_val_if_fail (GIMP_IS_COLOR_MANAGED (managed), NULL);
 
   editor = g_object_new (GIMP_TYPE_COLOR_DISPLAY_EDITOR, NULL);
 
-  editor->stack = g_object_ref (stack);
+  editor->stack   = g_object_ref (stack);
+  editor->config  = g_object_ref (config);
+  editor->managed = g_object_ref (managed);
 
   display_types = g_type_children (GIMP_TYPE_COLOR_DISPLAY, &n_display_types);
 
@@ -441,7 +462,10 @@ gimp_color_display_editor_add_clicked (GtkWidget              *widget,
 
       gtk_tree_model_get (model, &iter, SRC_COLUMN_TYPE, &type, -1);
 
-      display = g_object_new (type, NULL);
+      display = g_object_new (type,
+                              "color-config",  editor->config,
+                              "color-managed", editor->managed,
+                              NULL);
 
       if (display)
         {

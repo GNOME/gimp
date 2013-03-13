@@ -37,6 +37,8 @@ struct _GimpColorDisplayEditor
   GtkBox                 parent_instance;
 
   GimpColorDisplayStack *stack;
+  GimpColorConfig       *config;
+  GimpColorManaged      *managed;
 
   GtkListStore          *src;
   GtkListStore          *dest;
@@ -67,7 +69,9 @@ struct _GimpColorDisplayEditorClass
 
 GType       gimp_color_display_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_color_display_editor_new      (GimpColorDisplayStack *stack);
+GtkWidget * gimp_color_display_editor_new      (GimpColorDisplayStack *stack,
+                                                GimpColorConfig       *config,
+                                                GimpColorManaged      *managed);
 
 
 #endif  /*  __GIMP_COLOR_DISPLAY_EDITOR_H__  */
