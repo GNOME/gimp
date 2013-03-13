@@ -152,7 +152,7 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
 
   private->treeview = gimp_container_tree_view_new (NULL, NULL, icon_height, 0);
   gtk_widget_set_size_request (private->treeview, 200, -1);
-  gtk_paned_pack1 (GTK_PANED (editor), private->treeview, FALSE, TRUE);
+  gtk_paned_pack1 (GTK_PANED (editor), private->treeview, TRUE, FALSE);
   gtk_widget_show (private->treeview);
 
   g_signal_connect_object (private->treeview, "select-item",
@@ -171,7 +171,7 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
   gtk_widget_set_sensitive (private->delete_button, FALSE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_paned_pack2 (GTK_PANED (editor), vbox, TRUE, TRUE);
+  gtk_paned_pack2 (GTK_PANED (editor), vbox, TRUE, FALSE);
   gtk_widget_show (vbox);
 
   ebox = gtk_event_box_new ();
