@@ -49,7 +49,6 @@ STOCK_MENU_IMAGES = \
 	stock-display-filter-lcms-16.png		\
 	stock-display-filter-proof-16.png		\
 	stock-dynamics-16.png				\
-	stock-dynamics-22.png				\
 	stock-eye-12.png				\
 	stock-flip-horizontal-16.png			\
 	stock-flip-vertical-16.png			\
@@ -163,6 +162,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-display-filter-lcms-24.png	\
 	stock-display-filter-proof-24.png	\
 	stock-duplicate-16.png			\
+	stock-dynamics-22.png			\
 	stock-edit-16.png			\
 	stock-eye-20.png			\
 	stock-floating-selection-24.png		\
