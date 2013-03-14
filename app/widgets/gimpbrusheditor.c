@@ -255,17 +255,21 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
 
   gimp_view_set_viewable (GIMP_VIEW (editor->view), GIMP_VIEWABLE (data));
 
-  if (editor->data && GIMP_IS_BRUSH_GENERATED (editor->data))
+  if (editor->data)
     {
-      GimpBrushGenerated *brush = GIMP_BRUSH_GENERATED (editor->data);
+      spacing = gimp_brush_get_spacing (GIMP_BRUSH (editor->data));
 
-      shape    = gimp_brush_generated_get_shape        (brush);
-      radius   = gimp_brush_generated_get_radius       (brush);
-      spikes   = gimp_brush_generated_get_spikes       (brush);
-      hardness = gimp_brush_generated_get_hardness     (brush);
-      ratio    = gimp_brush_generated_get_aspect_ratio (brush);
-      angle    = gimp_brush_generated_get_angle        (brush);
-      spacing  = gimp_brush_get_spacing                (GIMP_BRUSH (brush));
+      if (GIMP_IS_BRUSH_GENERATED (editor->data))
+        {
+          GimpBrushGenerated *brush = GIMP_BRUSH_GENERATED (editor->data);
+
+          shape    = gimp_brush_generated_get_shape        (brush);
+          radius   = gimp_brush_generated_get_radius       (brush);
+          spikes   = gimp_brush_generated_get_spikes       (brush);
+          hardness = gimp_brush_generated_get_hardness     (brush);
+          ratio    = gimp_brush_generated_get_aspect_ratio (brush);
+          angle    = gimp_brush_generated_get_angle        (brush);
+        }
     }
 
   gtk_widget_set_sensitive (brush_editor->options_box,
@@ -273,6 +277,7 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
 
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (brush_editor->shape_group),
                                    shape);
+
   gtk_adjustment_set_value (brush_editor->radius_data,       radius);
   gtk_adjustment_set_value (brush_editor->spikes_data,       spikes);
   gtk_adjustment_set_value (brush_editor->hardness_data,     hardness);
