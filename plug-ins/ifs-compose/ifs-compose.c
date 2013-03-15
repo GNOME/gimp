@@ -185,7 +185,7 @@ static void      run    (const gchar      *name,
                          GimpParam       **return_vals);
 
 /*  user interface functions  */
-static gint           ifs_compose_dialog          (GimpDrawable *drawable);
+static gint           ifs_compose_dialog          (gint32        drawable_id);
 static void           ifs_options_dialog          (GtkWidget    *parent);
 static GtkWidget    * ifs_compose_trans_page      (void);
 static GtkWidget    * ifs_compose_color_page      (void);
@@ -224,7 +224,7 @@ static void recompute_center              (gboolean   save_undo);
 static void recompute_center_cb           (GtkWidget *widget,
                                            gpointer   data);
 
-static void ifs_compose                   (GimpDrawable *drawable);
+static void ifs_compose                   (gint32     drawable_id);
 
 static ColorMap *color_map_create         (const gchar  *name,
                                            GimpRGB      *orig_color,
@@ -343,7 +343,7 @@ query (void)
                           "Owen Taylor",
                           "1997",
                           N_("_IFS Fractal..."),
-                          "RGB*, GRAY*",
+                          "*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), nreturn_vals,
                           args, return_vals);
@@ -360,25 +360,26 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam   values[1];
-  GimpDrawable      *drawable;
   GimpRunMode        run_mode;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpPDBStatusType  status   = GIMP_PDB_SUCCESS;
   GimpParasite      *parasite = NULL;
-  guint32            image_id;
+  gint32             image_id;
+  gint32             drawable_id;
   gboolean           found_parasite = FALSE;
 
+  INIT_I18N ();
+  gegl_init (NULL, NULL);
+
   run_mode = param[0].data.d_int32;
+
+  *nreturn_vals = 1;
+  *return_vals  = values;
 
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  *nreturn_vals = 1;
-  *return_vals = values;
-
-  INIT_I18N ();
-
-  image_id = param[1].data.d_image;
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
+  image_id    = param[1].data.d_image;
+  drawable_id = param[2].data.d_drawable;
 
   switch (run_mode)
     {
@@ -386,7 +387,7 @@ run (const gchar      *name,
       /*  Possibly retrieve data; first look for a parasite -
        *  if not found, fall back to global values
        */
-      parasite = gimp_item_get_parasite (drawable->drawable_id,
+      parasite = gimp_item_get_parasite (drawable_id,
                                          PLUG_IN_PARASITE);
       if (parasite)
         {
@@ -413,7 +414,7 @@ run (const gchar      *name,
       count_for_naming = ifsvals.num_elements;
 
       /*  First acquire information with a dialog  */
-      if (! ifs_compose_dialog (drawable))
+      if (! ifs_compose_dialog (drawable_id))
         return;
       break;
 
@@ -445,14 +446,8 @@ run (const gchar      *name,
     }
 
   /*  Render the fractal  */
-  if ((status == GIMP_PDB_SUCCESS) &&
-      (gimp_drawable_is_rgb (drawable->drawable_id) ||
-       gimp_drawable_is_gray (drawable->drawable_id)))
+  if (status == GIMP_PDB_SUCCESS)
     {
-      /*  set the tile cache size so that the operation works well  */
-      gimp_tile_cache_ntiles (2 * (MAX (drawable->width, drawable->height) /
-                                   gimp_tile_width () + 1));
-
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
           gchar        *str;
@@ -461,7 +456,7 @@ run (const gchar      *name,
           gimp_image_undo_group_start (image_id);
 
           /*  run the effect  */
-          ifs_compose (drawable);
+          ifs_compose (drawable_id);
 
           /*  Store data for next invocation - both globally and
            *  as a parasite on this layer
@@ -474,31 +469,23 @@ run (const gchar      *name,
                                         GIMP_PARASITE_PERSISTENT |
                                         GIMP_PARASITE_UNDOABLE,
                                         strlen (str) + 1, str);
-          gimp_item_attach_parasite (drawable->drawable_id, parasite);
+          gimp_item_attach_parasite (drawable_id, parasite);
           gimp_parasite_free (parasite);
 
           g_free (str);
 
           gimp_image_undo_group_end (image_id);
+
+          gimp_displays_flush ();
         }
       else
         {
           /*  run the effect  */
-          ifs_compose (drawable);
+          ifs_compose (drawable_id);
         }
-
-      /*  If the run mode is interactive, flush the displays  */
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_displays_flush ();
-    }
-  else if (status == GIMP_PDB_SUCCESS)
-    {
-      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   values[0].data.d_status = status;
-
-  gimp_drawable_detach (drawable);
 }
 
 static GtkWidget *
@@ -726,7 +713,7 @@ ifs_compose_color_page (void)
 }
 
 static gint
-ifs_compose_dialog (GimpDrawable *drawable)
+ifs_compose_dialog (gint32 drawable_id)
 {
   GtkWidget *dialog;
   GtkWidget *label;
@@ -737,8 +724,8 @@ ifs_compose_dialog (GimpDrawable *drawable)
   GtkWidget *aspect_frame;
   GtkWidget *notebook;
   GtkWidget *page;
-  gint       design_width  = drawable->width;
-  gint       design_height = drawable->height;
+  gint       design_width  = gimp_drawable_width (drawable_id);
+  gint       design_height = gimp_drawable_height (drawable_id);
 
   if (design_width > design_height)
     {
@@ -759,8 +746,8 @@ ifs_compose_dialog (GimpDrawable *drawable)
 
   ifsD = g_new0 (IfsDialog, 1);
 
-  ifsD->drawable_width  = drawable->width;
-  ifsD->drawable_height = drawable->height;
+  ifsD->drawable_width  = gimp_drawable_width (drawable_id);
+  ifsD->drawable_height = gimp_drawable_height (drawable_id);
   ifsD->preview_width   = design_width;
   ifsD->preview_height  = design_height;
 
@@ -1263,21 +1250,28 @@ ifs_options_dialog (GtkWidget *parent)
 }
 
 static void
-ifs_compose (GimpDrawable *drawable)
+ifs_compose (gint32 drawable_id)
 {
-  GimpImageType  type   = gimp_drawable_type (drawable->drawable_id);
-  gint           width  = drawable->width;
-  gint           height = drawable->height;
-  gint           num_bands;
-  gint           band_height;
-  gint           band_y;
-  gint           band_no;
-  gint           i, j;
-  guchar        *data;
-  guchar        *mask = NULL;
-  guchar        *nhits;
-  guchar         rc, gc, bc;
-  GimpRGB        color;
+  GeglBuffer *buffer = gimp_drawable_get_shadow_buffer (drawable_id);
+  gint        width  = gimp_drawable_width (drawable_id);
+  gint        height = gimp_drawable_height (drawable_id);
+  gboolean    alpha  = gimp_drawable_has_alpha (drawable_id);
+  const Babl *format;
+  gint        num_bands;
+  gint        band_height;
+  gint        band_y;
+  gint        band_no;
+  gint        i, j;
+  guchar     *data;
+  guchar     *mask = NULL;
+  guchar     *nhits;
+  guchar      rc, gc, bc;
+  GimpRGB     color;
+
+  if (alpha)
+    format = babl_format ("R'G'B'A u8");
+  else
+    format = babl_format ("R'G'B' u8");
 
   num_bands = ceil ((gdouble) (width * height * SQR (ifsvals.subdivide) * 5)
                    / (1024 * ifsvals.max_memory));
@@ -1295,8 +1289,8 @@ ifs_compose (GimpDrawable *drawable)
 
   for (band_no = 0, band_y = 0; band_no < num_bands; band_no++)
     {
-      GimpPixelRgn  dest_rgn;
-      gpointer      pr;
+      GeglBufferIterator *iter;
+      GeglRectangle      *roi;
 
       gimp_progress_init_printf (_("Rendering IFS (%d/%d)"),
                                  band_no + 1, num_bands);
@@ -1315,22 +1309,22 @@ ifs_compose (GimpDrawable *drawable)
 
       /* transfer the image to the drawable */
 
+      iter = gegl_buffer_iterator_new (buffer,
+                                       GEGL_RECTANGLE (0, band_y,
+                                                       width, band_height), 0,
+                                       format,
+                                       GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+      roi = &iter->roi[0];
 
-      gimp_pixel_rgn_init (&dest_rgn, drawable, 0, band_y,
-                           width, band_height, TRUE, TRUE);
-
-
-      for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
-           pr != NULL;
-           pr = gimp_pixel_rgns_process (pr))
+      while (gegl_buffer_iterator_next (iter))
         {
-          guchar *destrow = dest_rgn.data;
+          guchar *destrow = iter->data[0];
 
-          for (j = dest_rgn.y; j < (dest_rgn.y + dest_rgn.h); j++)
+          for (j = roi->y; j < (roi->y + roi->height); j++)
             {
               guchar *dest = destrow;
 
-              for (i = dest_rgn.x; i < (dest_rgn.x + dest_rgn.w); i++)
+              for (i = roi->x; i < (roi->x + roi->width); i++)
                 {
                   /* Accumulate a reduced pixel */
 
@@ -1374,40 +1368,25 @@ ifs_compose (GimpDrawable *drawable)
                       mtot /= SQR (ifsvals.subdivide);
                     }
 
-                  /* and store it */
-                  switch (type)
+                  if (alpha)
                     {
-                     case GIMP_GRAY_IMAGE:
-                      *dest++ = (mtot * (rtot + btot + gtot) +
-                                 (255 - mtot) * (rc + gc + bc)) / (3 * 255);
-                      break;
-
-                    case GIMP_GRAYA_IMAGE:
-                      *dest++ = (rtot + btot + gtot) / 3;
-                      *dest++ = mtot;
-                      break;
-
-                    case GIMP_RGB_IMAGE:
-                      *dest++ = (mtot * rtot + (255 - mtot) * rc) / 255;
-                      *dest++ = (mtot * gtot + (255 - mtot) * gc) / 255;
-                      *dest++ = (mtot * btot + (255 - mtot) * bc) / 255;
-                      break;
-
-                    case GIMP_RGBA_IMAGE:
                       *dest++ = rtot;
                       *dest++ = gtot;
                       *dest++ = btot;
                       *dest++ = mtot;
-                      break;
-
-                    case GIMP_INDEXED_IMAGE:
-                    case GIMP_INDEXEDA_IMAGE:
-                      g_error ("Indexed images not supported by IFS Fractal");
-                      break;
+                    }
+                  else
+                    {
+                      *dest++ = (mtot * rtot + (255 - mtot) * rc) / 255;
+                      *dest++ = (mtot * gtot + (255 - mtot) * gc) / 255;
+                      *dest++ = (mtot * btot + (255 - mtot) * bc) / 255;
                     }
                 }
 
-              destrow += dest_rgn.rowstride;
+              if (alpha)
+                destrow += roi->width * 4;
+              else
+                destrow += roi->width * 3;
             }
         }
 
@@ -1418,9 +1397,10 @@ ifs_compose (GimpDrawable *drawable)
   g_free (data);
   g_free (nhits);
 
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, 0, 0, width, height);
+  g_object_unref (buffer);
+
+  gimp_drawable_merge_shadow (drawable_id, TRUE);
+  gimp_drawable_update (drawable_id, 0, 0, width, height);
 }
 
 static void
