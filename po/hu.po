@@ -10,19 +10,21 @@
 # Arpad Biro <biro arpad gmail>, 2004, 2007, 2008.
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2007, 2008, 2009, 2012.
 # András Prim <gimme_at_primandras.hu>, 2012.
+# Balázs Úr <urbalazs at gmail dot com>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-8\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-06-26 17:34+0000\n"
-"PO-Revision-Date: 2012-07-06 14:44+0200\n"
-"Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2013-03-14 21:57+0000\n"
+"PO-Revision-Date: 2013-03-16 23:01+0100\n"
+"Last-Translator: Balázs Úr <urbalazs at gmail dot com>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Lokalize 1.2\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../app/about.h:23
@@ -93,7 +95,8 @@ msgstr ""
 #: ../app/batch.c:93 ../app/batch.c:111
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
-msgstr "A(z) „%s” kötegelt módú fordító nem elérhető; a kötegelt mód le lett tiltva."
+msgstr ""
+"A(z) „%s” kötegelt módú fordító nem elérhető; a kötegelt mód le lett tiltva."
 
 #: ../app/main.c:148
 msgid "Show version information and exit"
@@ -171,7 +174,8 @@ msgstr "PDB-kompatibilitási mód (off|on|warn (ki|be|figyelmeztetés))"
 #. don't translate the mode names (never|query|always)
 #: ../app/main.c:240
 msgid "Debug in case of a crash (never|query|always)"
-msgstr "Programleállás esetén hibakeresés (never|query|always (soha|kérdezés|mindig))"
+msgstr ""
+"Programleállás esetén hibakeresés (never|query|always (soha|kérdezés|mindig))"
 
 #: ../app/main.c:245
 msgid "Enable non-fatal debugging signal handlers"
@@ -439,7 +443,7 @@ msgstr "Szövegszerkesztő"
 msgid "Tool Options"
 msgstr "Eszközbeállítások"
 
-#: ../app/actions/actions.c:226 ../app/widgets/gimptoolpalette.c:388
+#: ../app/actions/actions.c:226 ../app/widgets/gimptoolpalette.c:390
 msgid "Tools"
 msgstr "Eszközök"
 
@@ -771,7 +775,7 @@ msgid "New Channel Color"
 msgstr "Új csatornaszín"
 
 #: ../app/actions/channels-commands.c:244 ../app/core/gimpimage-new.c:257
-#: ../app/display/gimpdisplayshell-dnd.c:632
+#: ../app/display/gimpdisplayshell-dnd.c:646
 #: ../app/widgets/gimpchanneltreeview.c:258
 #: ../app/widgets/gimplayertreeview.c:776
 #, c-format
@@ -971,13 +975,13 @@ msgid "Use the composite color of all visible layers"
 msgstr "Az összes látható réteg összesített színe alapján"
 
 #: ../app/actions/data-commands.c:89 ../app/actions/documents-commands.c:344
-#: ../app/actions/file-commands.c:194 ../app/dialogs/file-open-dialog.c:232
+#: ../app/actions/file-commands.c:195 ../app/dialogs/file-open-dialog.c:232
 #: ../app/dialogs/file-open-dialog.c:277
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
-#: ../app/display/gimpdisplayshell-dnd.c:578
-#: ../app/widgets/gimplayertreeview.c:736 ../app/widgets/gimptoolbox-dnd.c:170
-#: ../app/widgets/gimptoolbox.c:833
+#: ../app/display/gimpdisplayshell-dnd.c:592
+#: ../app/widgets/gimplayertreeview.c:736 ../app/widgets/gimptoolbox-dnd.c:168
+#: ../app/widgets/gimptoolbox.c:818
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -990,7 +994,7 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:118
 #: ../app/actions/tool-options-commands.c:72
-#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1519
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1529
 #: ../app/core/gimppalette-import.c:211 ../app/core/gimppalette-load.c:224
 #: ../app/core/gimppalette.c:399 ../app/dialogs/palette-import-dialog.c:771
 #: ../app/widgets/gimpdnd-xds.c:94
@@ -1353,7 +1357,7 @@ msgid "About GIMP"
 msgstr "A GIMP névjegye"
 
 #: ../app/actions/dialogs-actions.c:328
-#: ../app/dialogs/preferences-dialog.c:1944 ../app/widgets/gimptoolbox.c:555
+#: ../app/dialogs/preferences-dialog.c:1944 ../app/widgets/gimptoolbox.c:540
 msgid "Toolbox"
 msgstr "Eszköztár"
 
@@ -1678,7 +1682,8 @@ msgstr "_Eltolás…"
 #: ../app/actions/drawable-actions.c:65
 msgctxt "drawable-action"
 msgid "Shift the pixels, optionally wrapping them at the borders"
-msgstr "A képpontok elmozdítása, igény esetén a kereteknél átgördítés a másik oldalra"
+msgstr ""
+"A képpontok elmozdítása, igény esetén a kereteknél átgördítés a másik oldalra"
 
 #: ../app/actions/drawable-actions.c:73
 msgctxt "drawable-action"
@@ -1760,7 +1765,8 @@ msgstr "Elforgatás +_90 fokkal"
 #: ../app/actions/drawable-actions.c:126
 msgctxt "drawable-action"
 msgid "Rotate 90 degrees to the left"
-msgstr "Elforgatás 90 fokkal balra (az óramutató járásával ellentétes irányban)"
+msgstr ""
+"Elforgatás 90 fokkal balra (az óramutató járásával ellentétes irányban)"
 
 #: ../app/actions/drawable-commands.c:63
 msgid "Equalize does not operate on indexed layers."
@@ -2039,7 +2045,8 @@ msgstr "_Látható másolása név szerint…"
 #: ../app/actions/edit-actions.c:173
 msgctxt "edit-action"
 msgid "Copy what is visible in the selected region to a named buffer"
-msgstr "A kijelölt terület látható objektumainak másolása egy nevesített tárolóba"
+msgstr ""
+"A kijelölt terület látható objektumainak másolása egy nevesített tárolóba"
 
 #: ../app/actions/edit-actions.c:178
 msgctxt "edit-action"
@@ -2391,7 +2398,8 @@ msgstr "_Felülírás"
 #: ../app/actions/file-actions.c:153
 msgctxt "file-action"
 msgid "Export the image back to the imported file in the import format"
-msgstr "A kép exportálása az importált fájlba, az importált formátum használatával"
+msgstr ""
+"A kép exportálása az importált fájlba, az importált formátum használatával"
 
 #: ../app/actions/file-actions.c:158
 msgctxt "file-action"
@@ -2417,49 +2425,49 @@ msgstr "%s _felülírása"
 msgid "Export to"
 msgstr "Exportálás"
 
-#: ../app/actions/file-commands.c:112 ../app/actions/file-commands.c:499
+#: ../app/actions/file-commands.c:113 ../app/actions/file-commands.c:490
 #: ../app/dialogs/file-open-dialog.c:77
 msgid "Open Image"
 msgstr "Kép megnyitása"
 
-#: ../app/actions/file-commands.c:133
+#: ../app/actions/file-commands.c:134
 msgid "Open Image as Layers"
 msgstr "Kép megnyitása rétegekként"
 
-#: ../app/actions/file-commands.c:265
+#: ../app/actions/file-commands.c:266
 msgid "No changes need to be saved"
 msgstr "Nincs elmentendő változás"
 
-#: ../app/actions/file-commands.c:272 ../app/dialogs/file-save-dialog.c:95
+#: ../app/actions/file-commands.c:273 ../app/dialogs/file-save-dialog.c:95
 msgid "Save Image"
 msgstr "Kép mentése"
 
-#: ../app/actions/file-commands.c:278
+#: ../app/actions/file-commands.c:279
 msgid "Save a Copy of the Image"
 msgstr "A kép egy másolatának mentése"
 
-#: ../app/actions/file-commands.c:363
+#: ../app/actions/file-commands.c:364
 msgid "Create New Template"
 msgstr "Új sablon létrehozása"
 
-#: ../app/actions/file-commands.c:367
+#: ../app/actions/file-commands.c:368
 msgid "Enter a name for this template"
 msgstr "Adjon meg egy nevet ehhez a sablonhoz."
 
-#: ../app/actions/file-commands.c:401
+#: ../app/actions/file-commands.c:398
 msgid "Revert failed. No file name associated with this image."
 msgstr "Visszaállítás sikertelen. Nem kapcsolható fájlnév a képhez."
 
-#: ../app/actions/file-commands.c:414
+#: ../app/actions/file-commands.c:410
 msgid "Revert Image"
 msgstr "Kép visszaállítása"
 
-#: ../app/actions/file-commands.c:445
+#: ../app/actions/file-commands.c:436
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Visszaállítja ezt: „%s” erre: „%s”?"
 
-#: ../app/actions/file-commands.c:451
+#: ../app/actions/file-commands.c:442
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -2467,11 +2475,11 @@ msgstr ""
 "A képnek a lemezen tárolt állapotra való visszaállítása esetén minden "
 "változtatás elvész – beleértve a visszavonási információkat is."
 
-#: ../app/actions/file-commands.c:662
+#: ../app/actions/file-commands.c:652
 msgid "(Unnamed Template)"
 msgstr "(Névtelen sablon)"
 
-#: ../app/actions/file-commands.c:713
+#: ../app/actions/file-commands.c:703
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -3045,7 +3053,8 @@ msgstr "Rajzvászon illesztése a ki_jelölésre"
 #: ../app/actions/image-actions.c:86
 msgctxt "image-action"
 msgid "Resize the image to the extents of the selection"
-msgstr "A kép méretének módosítása úgy, hogy a kijelölés határaihoz illeszkedjen"
+msgstr ""
+"A kép méretének módosítása úgy, hogy a kijelölés határaihoz illeszkedjen"
 
 #: ../app/actions/image-actions.c:91
 msgctxt "image-action"
@@ -3105,7 +3114,8 @@ msgstr "_Egy réteggé lapítás"
 #: ../app/actions/image-actions.c:122
 msgctxt "image-action"
 msgid "Merge all layers into one and remove transparency"
-msgstr "Az összes réteg összefésülése egyetlen réteggé az átlátszóság eltávolításával"
+msgstr ""
+"Az összes réteg összefésülése egyetlen réteggé az átlátszóság eltávolításával"
 
 #: ../app/actions/image-actions.c:127
 msgctxt "image-action"
@@ -3229,7 +3239,7 @@ msgstr "Tükrözés"
 
 #: ../app/actions/image-commands.c:403
 #: ../app/pdb/drawable-transform-cmds.c:602
-#: ../app/pdb/drawable-transform-cmds.c:694 ../app/pdb/image-cmds.c:533
+#: ../app/pdb/drawable-transform-cmds.c:694 ../app/pdb/image-cmds.c:534
 #: ../app/pdb/item-transform-cmds.c:433 ../app/pdb/transform-tools-cmds.c:245
 #: ../app/tools/gimprotatetool.c:125
 msgid "Rotating"
@@ -3251,8 +3261,8 @@ msgstr "Kép átméretezése"
 #: ../app/actions/image-commands.c:682 ../app/actions/layers-commands.c:1145
 #: ../app/dialogs/preferences-dialog.c:1899
 #: ../app/pdb/drawable-transform-cmds.c:783
-#: ../app/pdb/drawable-transform-cmds.c:872 ../app/pdb/image-cmds.c:405
-#: ../app/pdb/image-cmds.c:441 ../app/pdb/item-transform-cmds.c:524
+#: ../app/pdb/drawable-transform-cmds.c:872 ../app/pdb/image-cmds.c:406
+#: ../app/pdb/image-cmds.c:442 ../app/pdb/item-transform-cmds.c:524
 #: ../app/pdb/layer-cmds.c:333 ../app/pdb/layer-cmds.c:378
 #: ../app/pdb/transform-tools-cmds.c:334 ../app/tools/gimpscaletool.c:118
 msgid "Scaling"
@@ -3506,7 +3516,8 @@ msgstr "_Egy réteggé lapítás"
 #: ../app/actions/layers-actions.c:169
 msgctxt "layers-action"
 msgid "Merge all layers into one and remove transparency"
-msgstr "Az összes réteg összefésülése egyetlen réteggé az átlátszóság eltávolításával"
+msgstr ""
+"Az összes réteg összefésülése egyetlen réteggé az átlátszóság eltávolításával"
 
 #: ../app/actions/layers-actions.c:174
 msgctxt "layers-action"
@@ -4195,7 +4206,8 @@ msgstr "Leg_utóbbi művelet megismétlése"
 #: ../app/actions/plug-in-actions.c:135
 msgctxt "plug-in-action"
 msgid "Rerun the last used plug-in using the same settings"
-msgstr "A legutóbb használt bővítmény ismételt végrehajtása ugyanazon beállításokkal"
+msgstr ""
+"A legutóbb használt bővítmény ismételt végrehajtása ugyanazon beállításokkal"
 
 #: ../app/actions/plug-in-actions.c:140
 msgctxt "plug-in-action"
@@ -4558,7 +4570,8 @@ msgstr "Sablon törlése"
 
 #: ../app/actions/templates-commands.c:237
 #, c-format
-msgid "Are you sure you want to delete template '%s' from the list and from disk?"
+msgid ""
+"Are you sure you want to delete template '%s' from the list and from disk?"
 msgstr "Biztosan törölni akarja a(z) „%s” sablont a listáról és a lemezről?"
 
 #: ../app/actions/text-editor-actions.c:43
@@ -4608,7 +4621,7 @@ msgstr "Szöveges fájl megnyitása (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:143
 #: ../app/actions/text-tool-commands.c:226 ../app/config/gimpconfig-file.c:58
-#: ../app/core/gimpbrush-load.c:140 ../app/core/gimpbrush-load.c:424
+#: ../app/core/gimpbrush-load.c:142 ../app/core/gimpbrush-load.c:426
 #: ../app/core/gimpbrushgenerated-load.c:73
 #: ../app/core/gimpbrushpipe-load.c:81 ../app/core/gimpcurve-load.c:54
 #: ../app/core/gimpgradient-load.c:63 ../app/core/gimppalette-load.c:77
@@ -5198,7 +5211,8 @@ msgstr "Az ablak ki_töltése"
 #: ../app/actions/view-actions.c:95
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the entire window is used"
-msgstr "A nagyítási arány beállítása úgy, hogy az egész ablak fel legyen használva"
+msgstr ""
+"A nagyítási arány beállítása úgy, hogy az egész ablak fel legyen használva"
 
 #: ../app/actions/view-actions.c:100
 msgctxt "view-action"
@@ -5629,60 +5643,60 @@ msgstr "„%s” képernyő"
 msgid "Move this window to screen %s"
 msgstr "Ezen ablak áthelyezése a(z) „%s” képernyőre"
 
-#: ../app/actions/windows-actions.c:95
+#: ../app/actions/windows-actions.c:93
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "_Ablakok"
 
-#: ../app/actions/windows-actions.c:97
+#: ../app/actions/windows-actions.c:95
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "_Legutóbb bezárt dokkablakok"
 
-#: ../app/actions/windows-actions.c:99
+#: ../app/actions/windows-actions.c:97
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "_Dokkolható párbeszédablakok"
 
-#: ../app/actions/windows-actions.c:102
+#: ../app/actions/windows-actions.c:100
 msgctxt "windows-action"
 msgid "Next Image"
 msgstr "Következő kép"
 
-#: ../app/actions/windows-actions.c:103
+#: ../app/actions/windows-actions.c:101
 msgctxt "windows-action"
 msgid "Switch to the next image"
 msgstr "Váltás a következő képre"
 
-#: ../app/actions/windows-actions.c:108
+#: ../app/actions/windows-actions.c:106
 msgctxt "windows-action"
 msgid "Previous Image"
 msgstr "Előző kép"
 
-#: ../app/actions/windows-actions.c:109
+#: ../app/actions/windows-actions.c:107
 msgctxt "windows-action"
 msgid "Switch to the previous image"
 msgstr "Váltás az előző képre"
 
-#: ../app/actions/windows-actions.c:117
+#: ../app/actions/windows-actions.c:115
 msgctxt "windows-action"
 msgid "Hide Docks"
 msgstr "Dokkablakok elrejtése"
 
-#: ../app/actions/windows-actions.c:118
+#: ../app/actions/windows-actions.c:116
 msgctxt "windows-action"
-msgid "When enabled docks and other dialogs are hidden, leaving only image windows."
+msgid ""
+"When enabled docks and other dialogs are hidden, leaving only image windows."
 msgstr ""
-"Ha be van kapcsolva, akkor csak a kép ablakok jelennek meg, a dokkok és egyéb "
-"párbeszédablakok nem."
+"Ha be van kapcsolva, akkor csak a kép ablakok jelennek meg, a dokkok és "
+"egyéb párbeszédablakok nem."
 
-#: ../app/actions/windows-actions.c:124
+#: ../app/actions/windows-actions.c:122
 msgctxt "windows-action"
 msgid "Single-Window Mode"
 msgstr "Egyablakos mód"
 
-#: ../app/actions/windows-actions.c:125
-#| msgid "When enabled, GIMP will show mnemonics in menus."
+#: ../app/actions/windows-actions.c:123
 msgctxt "windows-action"
 msgid "When enabled GIMP is in a single-window mode."
 msgstr "Ha be van kapcsolva, akkor a GIMP egyablakos módban van."
@@ -6041,11 +6055,13 @@ msgstr "Megadja, hogyan nézzen ki a kép körül levő terület."
 
 #: ../app/config/gimprc-blurbs.h:43
 msgid "How to handle embedded color profiles when opening a file."
-msgstr "Hogyan legyenek kezelve a beágyazott színprofilok egy fájl megnyitásakor."
+msgstr ""
+"Hogyan legyenek kezelve a beágyazott színprofilok egy fájl megnyitásakor."
 
 #: ../app/config/gimprc-blurbs.h:46
 msgid "Ask for confirmation before closing an image without saving."
-msgstr "Megerősítés kérése a mentetlen módosítást tartalmazó képek bezárásakor."
+msgstr ""
+"Megerősítés kérése a mentetlen módosítást tartalmazó képek bezárásakor."
 
 #: ../app/config/gimprc-blurbs.h:49
 msgid "Sets the pixel format to use for mouse pointers."
@@ -6102,8 +6118,9 @@ msgid ""
 "This may affect the way your window manager decorates and handles these "
 "windows."
 msgstr ""
-"A dokkolható ablakokhoz és az eszközablakokhoz használandó ablaktípus-információ. Ez a beállítás "
-"befolyásolhatja, hogy az ablakkezelő hogyan jeleníti meg és kezeli ezeket az ablakokat."
+"A dokkolható ablakokhoz és az eszközablakokhoz használandó ablaktípus-"
+"információ. Ez a beállítás befolyásolhatja, hogy az ablakkezelő hogyan "
+"jeleníti meg és kezeli ezeket az ablakokat."
 
 #: ../app/config/gimprc-blurbs.h:157
 msgid "When enabled, the selected brush will be used for all tools."
@@ -6150,7 +6167,8 @@ msgstr ""
 "mindig 1:1 arányú nagyítással jelenjen meg a kép."
 
 #: ../app/config/gimprc-blurbs.h:204
-msgid "Sets the level of interpolation used for scaling and other transformations."
+msgid ""
+"Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 "Az átméretezéshez és egyéb átalakításokhoz használt interpoláció szintjét "
 "adja meg."
@@ -6228,7 +6246,12 @@ msgid ""
 "painting with large brushes should be more accurate, but it may be slower.  "
 "Conversely, on some X servers enabling this option results in faster "
 "painting."
-msgstr "Ha be van kapcsolva, akkor minden elmozdulás alkalmával le lesz kérdezve az X grafikus környezettől az aktuális egérpozíció, és nem a pozíciótippre épít. Ebben az esetben a nagy ecsetekkel való rajzolás általában pontosabb, viszont lassabb lehet. Emiatt bizonyos X grafikus környezetek esetében gyorsabb működést eredményez a bekapcsolása."
+msgstr ""
+"Ha be van kapcsolva, akkor minden elmozdulás alkalmával le lesz kérdezve az "
+"X grafikus környezettől az aktuális egérpozíció, és nem a pozíciótippre "
+"épít. Ebben az esetben a nagy ecsetekkel való rajzolás általában pontosabb, "
+"viszont lassabb lehet. Emiatt bizonyos X grafikus környezetek esetében "
+"gyorsabb működést eredményez a bekapcsolása."
 
 #: ../app/config/gimprc-blurbs.h:278
 msgid ""
@@ -6275,7 +6298,8 @@ msgstr ""
 "indításakor."
 
 #: ../app/config/gimprc-blurbs.h:301
-msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgid ""
+"Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 "Az aktuális eszköz, minta, szín és ecset megőrzése a programból való "
 "kilépéskor."
@@ -6406,7 +6430,8 @@ msgstr "A GIMP egyablakos módban működjön."
 
 #: ../app/config/gimprc-blurbs.h:373
 msgid "Hide docks and other windows, leaving only image windows."
-msgstr "A dokkok és egyéb párbeszédablakok elrejtése, csak a képablakok maradjanak."
+msgstr ""
+"A dokkok és egyéb párbeszédablakok elrejtése, csak a képablakok maradjanak."
 
 #: ../app/config/gimprc-blurbs.h:376
 msgid "What to do when the space bar is pressed in the image window."
@@ -6447,7 +6472,8 @@ msgstr "Megváltozott gyorsbillentyűk mentése a GIMP-ből történő kilépés
 
 #: ../app/config/gimprc-blurbs.h:398
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
-msgstr "Lementett gyorsbillentyűk visszaállítása a GIMP minden egyes indulásakor."
+msgstr ""
+"Lementett gyorsbillentyűk visszaállítása a GIMP minden egyes indulásakor."
 
 #: ../app/config/gimprc-blurbs.h:401
 msgid ""
@@ -6544,7 +6570,7 @@ msgstr ""
 "Ha be van kapcsolva, akkor az F1 billentyű lenyomására elindul a "
 "súgóböngésző."
 
-#: ../app/config/gimprc-deserialize.c:135 ../app/core/gimp-modules.c:133
+#: ../app/config/gimprc-deserialize.c:135 ../app/core/gimp-modules.c:136
 #: ../app/core/gimp-units.c:167 ../app/gui/session.c:286
 #: ../app/plug-in/plug-in-rc.c:212
 msgid "fatal parse error"
@@ -7031,12 +7057,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Lebegő kijelölés rögzítése"
 
-#: ../app/core/core-enums.c:862 ../app/core/gimp-edit.c:261
+#: ../app/core/core-enums.c:862 ../app/core/gimp-edit.c:293
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Beillesztés"
 
-#: ../app/core/core-enums.c:863 ../app/core/gimp-edit.c:502
+#: ../app/core/core-enums.c:863 ../app/core/gimp-edit.c:534
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Kivágás"
@@ -7212,170 +7238,170 @@ msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Nem vonható vissza"
 
-#: ../app/core/core-enums.c:1185
+#: ../app/core/core-enums.c:1187
 msgctxt "select-criterion"
 msgid "Composite"
 msgstr "Összesített"
 
-#: ../app/core/core-enums.c:1186
+#: ../app/core/core-enums.c:1188
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Vörös"
 
-#: ../app/core/core-enums.c:1187
+#: ../app/core/core-enums.c:1189
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Zöld"
 
-#: ../app/core/core-enums.c:1188
+#: ../app/core/core-enums.c:1190
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Kék"
 
-#: ../app/core/core-enums.c:1189
+#: ../app/core/core-enums.c:1191
 msgctxt "select-criterion"
 msgid "Hue"
 msgstr "Árnyalat"
 
-#: ../app/core/core-enums.c:1190
+#: ../app/core/core-enums.c:1192
 msgctxt "select-criterion"
 msgid "Saturation"
 msgstr "Telítettség"
 
-#: ../app/core/core-enums.c:1191
+#: ../app/core/core-enums.c:1193
 msgctxt "select-criterion"
 msgid "Value"
 msgstr "Érték"
 
-#: ../app/core/core-enums.c:1220
+#: ../app/core/core-enums.c:1222
 msgctxt "message-severity"
 msgid "Message"
 msgstr "Üzenet"
 
-#: ../app/core/core-enums.c:1221
+#: ../app/core/core-enums.c:1223
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "Figyelmeztetés"
 
-#: ../app/core/core-enums.c:1222
+#: ../app/core/core-enums.c:1224
 msgctxt "message-severity"
 msgid "Error"
 msgstr "Hiba"
 
-#: ../app/core/core-enums.c:1251
+#: ../app/core/core-enums.c:1253
 msgctxt "color-profile-policy"
 msgid "Ask what to do"
 msgstr "Kérdezze meg, mi a teendő"
 
-#: ../app/core/core-enums.c:1252
+#: ../app/core/core-enums.c:1254
 msgctxt "color-profile-policy"
 msgid "Keep embedded profile"
 msgstr "Beágyazott profil megtartása"
 
-#: ../app/core/core-enums.c:1253
+#: ../app/core/core-enums.c:1255
 msgctxt "color-profile-policy"
 msgid "Convert to RGB workspace"
 msgstr "Konvertálás RGB munkaterületre"
 
-#: ../app/core/core-enums.c:1290
+#: ../app/core/core-enums.c:1292
 msgctxt "dynamics-output-type"
 msgid "Opacity"
 msgstr "Átlátszatlanság"
 
-#: ../app/core/core-enums.c:1291
+#: ../app/core/core-enums.c:1293
 msgctxt "dynamics-output-type"
 msgid "Size"
 msgstr "Méret"
 
-#: ../app/core/core-enums.c:1292
+#: ../app/core/core-enums.c:1294
 msgctxt "dynamics-output-type"
 msgid "Angle"
 msgstr "Dőlésszög"
 
-#: ../app/core/core-enums.c:1293
+#: ../app/core/core-enums.c:1295
 msgctxt "dynamics-output-type"
 msgid "Color"
 msgstr "Szín"
 
-#: ../app/core/core-enums.c:1294
+#: ../app/core/core-enums.c:1296
 msgctxt "dynamics-output-type"
 msgid "Hardness"
 msgstr "Keménység"
 
-#: ../app/core/core-enums.c:1295
+#: ../app/core/core-enums.c:1297
 msgctxt "dynamics-output-type"
 msgid "Force"
 msgstr "Erő"
 
-#: ../app/core/core-enums.c:1296
+#: ../app/core/core-enums.c:1298
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
 msgstr "Méretarány"
 
-#: ../app/core/core-enums.c:1297
+#: ../app/core/core-enums.c:1299
 msgctxt "dynamics-output-type"
 msgid "Spacing"
 msgstr "Távolság"
 
 # Festékszóro milyen gyorsan tesz egy-egy adagot
-#: ../app/core/core-enums.c:1298
+#: ../app/core/core-enums.c:1300
 msgctxt "dynamics-output-type"
 msgid "Rate"
 msgstr "Sűrűség"
 
 # Festékszóró egy adagja mennyire átlátszatlan
-#: ../app/core/core-enums.c:1299
+#: ../app/core/core-enums.c:1301
 msgctxt "dynamics-output-type"
 msgid "Flow"
 msgstr "Nyomás"
 
-#: ../app/core/core-enums.c:1300
+#: ../app/core/core-enums.c:1302
 msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "Elszórás"
 
 #: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:375
 #: ../app/gui/session.c:399 ../app/menus/menus.c:464
-#: ../app/widgets/gimpdevices.c:206
+#: ../app/widgets/gimpdevices.c:208
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "„%s” törlése sikertelen: %s"
 
-#: ../app/core/gimp-edit.c:189 ../app/core/gimpimage-new.c:309
+#: ../app/core/gimp-edit.c:190 ../app/core/gimpimage-new.c:309
 msgid "Pasted Layer"
 msgstr "Beillesztett réteg"
 
-#: ../app/core/gimp-edit.c:388
+#: ../app/core/gimp-edit.c:420
 msgctxt "undo-type"
 msgid "Clear"
 msgstr "Törlés"
 
-#: ../app/core/gimp-edit.c:407
+#: ../app/core/gimp-edit.c:439
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "Kitöltés az előtérszínnel"
 
-#: ../app/core/gimp-edit.c:411
+#: ../app/core/gimp-edit.c:443
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "Kitöltés a háttérszínnel"
 
-#: ../app/core/gimp-edit.c:415
+#: ../app/core/gimp-edit.c:447
 msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "Kitöltés fehérrel"
 
-#: ../app/core/gimp-edit.c:419
+#: ../app/core/gimp-edit.c:451
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr "Kitöltés átlátszósággal"
 
-#: ../app/core/gimp-edit.c:423
+#: ../app/core/gimp-edit.c:455
 msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "Kitöltés mintával"
 
-#: ../app/core/gimp-edit.c:515
+#: ../app/core/gimp-edit.c:547
 msgid "Global Buffer"
 msgstr "Globális tároló"
 
@@ -7481,59 +7507,61 @@ msgstr "Modulok"
 msgid "Updating tag cache"
 msgstr "Címkegyorsítótár frissítése"
 
-#: ../app/core/gimpbrush-load.c:178
+#: ../app/core/gimpbrush-load.c:180
 #, c-format
 msgid "Could not read %d byte from '%s': %s"
 msgid_plural "Could not read %d bytes from '%s': %s"
 msgstr[0] "Nem lehet %d bájtot beolvasni a(z) „%s” fájlból: %s"
 msgstr[1] "Nem lehet %d bájtot beolvasni a(z) „%s” fájlból: %s"
 
-#: ../app/core/gimpbrush-load.c:200
+#: ../app/core/gimpbrush-load.c:202
 #, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
 msgstr "Végzetes feldolgozási hiba a(z) „%s” ecsetfájlban: a szélesség 0."
 
-#: ../app/core/gimpbrush-load.c:209
+#: ../app/core/gimpbrush-load.c:211
 #, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
 msgstr "Végzetes feldolgozási hiba a(z) „%s” ecsetfájlban: a magasság 0."
 
-#: ../app/core/gimpbrush-load.c:218
+#: ../app/core/gimpbrush-load.c:220
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
 msgstr "Végzetes feldolgozási hiba a(z) „%s” ecsetfájlban: a bájtok száma 0."
 
-#: ../app/core/gimpbrush-load.c:242
+#: ../app/core/gimpbrush-load.c:244
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
-msgstr "Végzetes feldolgozási hiba a(z) „%s” ecsetfájlban: ismeretlen „%d” mélység."
+msgstr ""
+"Végzetes feldolgozási hiba a(z) „%s” ecsetfájlban: ismeretlen „%d” mélység."
 
-#: ../app/core/gimpbrush-load.c:255
+#: ../app/core/gimpbrush-load.c:257
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
-msgstr "Végzetes feldolgozási hiba a(z) „%s” ecsetfájlban: ismeretlen „%d” verzió."
+msgstr ""
+"Végzetes feldolgozási hiba a(z) „%s” ecsetfájlban: ismeretlen „%d” verzió."
 
-#: ../app/core/gimpbrush-load.c:271 ../app/core/gimpbrush-load.c:391
-#: ../app/core/gimpbrush-load.c:725
+#: ../app/core/gimpbrush-load.c:273 ../app/core/gimpbrush-load.c:393
+#: ../app/core/gimpbrush-load.c:727
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr ""
 "Végzetes feldolgozási hiba a(z) „%s” ecsetfájlban: úgy tűnik, a fájl félbe "
 "van szakadva."
 
-#: ../app/core/gimpbrush-load.c:279 ../app/core/gimpbrushgenerated-load.c:128
+#: ../app/core/gimpbrush-load.c:281 ../app/core/gimpbrushgenerated-load.c:128
 #: ../app/core/gimpbrushpipe-load.c:97
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Érvénytelen UTF-8 karakterlánc a(z) „%s” ecsetfájlban."
 
-#: ../app/core/gimpbrush-load.c:286 ../app/core/gimppattern-load.c:146
+#: ../app/core/gimpbrush-load.c:288 ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:83
 #: ../app/tools/gimpvectortool.c:317
 msgid "Unnamed"
 msgstr "Névtelen"
 
-#: ../app/core/gimpbrush-load.c:380
+#: ../app/core/gimpbrush-load.c:382
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -7543,14 +7571,15 @@ msgstr ""
 "ecsetmélység (%d).\n"
 "A GIMP ecsetei GRAY vagy RGBA módúak lehetnek."
 
-#: ../app/core/gimpbrush-load.c:452
+#: ../app/core/gimpbrush-load.c:454 ../app/core/gimpbrush-load.c:854
 #, c-format
-msgid "Fatal parse error in brush file '%s': unable to decode abr format version %d."
+msgid ""
+"Fatal parse error in brush file '%s': unable to decode abr format version %d."
 msgstr ""
 "Végzetes feldolgozási hiba a(z) „%s” ecsetfájlban: az ABR formátum „%d” "
 "verziójának dekódolása nem lehetséges."
 
-#: ../app/core/gimpbrush-load.c:619
+#: ../app/core/gimpbrush-load.c:621
 #, c-format
 msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
 msgstr ""
@@ -7568,14 +7597,16 @@ msgstr "Végzetes feldolgozási hiba a(z) „%s” ecsetfájlban: nem GIMP-ecset
 
 #: ../app/core/gimpbrushgenerated-load.c:104
 #, c-format
-msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
+msgid ""
+"Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
 msgstr ""
 "Végzetes feldolgozási hiba a(z) „%s” ecsetfájlban: ismeretlen GIMP-"
 "ecsetverzió a(z) %d. sorban."
 
 #: ../app/core/gimpbrushgenerated-load.c:150
 #, c-format
-msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
+msgid ""
+"Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
 msgstr ""
 "Végzetes feldolgozási hiba a(z) „%s” ecsetfájlban: ismeretlen GIMP-"
 "ecsetforma a(z) %d. sorban."
@@ -7841,8 +7872,8 @@ msgid ""
 "dialog's 'Folders' section."
 msgstr ""
 "Egy mappát (%s) írhatónak állított be, de ez a mappa nem létezik. Hozza "
-"létre ezt a mappát, vagy javítsa ki ezt a Beállítások párbeszédablak „Mappák” "
-"szakaszában."
+"létre ezt a mappát, vagy javítsa ki ezt a Beállítások párbeszédablak "
+"„Mappák” szakaszában."
 
 #: ../app/core/gimpdatafactory.c:763
 #, c-format
@@ -7957,7 +7988,6 @@ msgid "Not enough points to stroke"
 msgstr "Nincs elég pont a körberajzoláshoz"
 
 #: ../app/core/gimpdrawable-stroke.c:273
-#| msgid "Not enough points to stroke"
 msgid "Not enough points to fill"
 msgstr "Nincs elég pont a kitöltéshez"
 
@@ -8033,13 +8063,14 @@ msgstr ""
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Corrupt segment %d in line %d."
 msgstr ""
-"Végzetes feldolgozási hiba a(z) „%s” színátmenetfájlban: sérült szakasz (%"
-"d) a(z) %d. sorban."
+"Végzetes feldolgozási hiba a(z) „%s” színátmenetfájlban: sérült szakasz (%d) "
+"a(z) %d. sorban."
 
 #: ../app/core/gimpgradient-load.c:242 ../app/core/gimpgradient-load.c:256
 #, c-format
 msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
-msgstr "A(z) „%s” színátmenetfájl sérült: a szakaszok nem a 0-1 tartományban vannak."
+msgstr ""
+"A(z) „%s” színátmenetfájl sérült: a szakaszok nem a 0-1 tartományban vannak."
 
 #: ../app/core/gimpgradient-load.c:336
 #, c-format
@@ -8060,7 +8091,8 @@ msgid "The foreground color of the grid."
 msgstr "A rács előtérszíne."
 
 #: ../app/core/gimpgrid.c:95
-msgid "The background color of the grid; only used in double dashed line style."
+msgid ""
+"The background color of the grid; only used in double dashed line style."
 msgstr "A rács háttérszíne; csak dupla szaggatott vonal esetén érvényes."
 
 #: ../app/core/gimpgrid.c:101
@@ -8072,7 +8104,8 @@ msgid "Vertical spacing of grid lines."
 msgstr "Rácsvonalak függőleges távolsága."
 
 #: ../app/core/gimpgrid.c:115
-msgid "Horizontal offset of the first grid line; this may be a negative number."
+msgid ""
+"Horizontal offset of the first grid line; this may be a negative number."
 msgstr "Az első rácsvonal vízszintes eltolása; lehet negatív szám is."
 
 #: ../app/core/gimpgrid.c:122
@@ -8302,57 +8335,69 @@ msgstr "Kép átméretezése"
 msgid "Can't undo %s"
 msgstr "%s nem visszavonható"
 
-#: ../app/core/gimpimage.c:1804
+#: ../app/core/gimpimage.c:1784
+msgid " (exported)"
+msgstr " (exportálva)"
+
+#: ../app/core/gimpimage.c:1788
+msgid " (overwritten)"
+msgstr " (felülírva)"
+
+#: ../app/core/gimpimage.c:1797
+msgid " (imported)"
+msgstr " (importálva)"
+
+#: ../app/core/gimpimage.c:1922
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Kép felbontásának módosítása"
 
-#: ../app/core/gimpimage.c:1856
+#: ../app/core/gimpimage.c:1974
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Kép mértékegységének módosítása"
 
-#: ../app/core/gimpimage.c:2869
+#: ../app/core/gimpimage.c:2987
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Élősködő hozzáadása a képhez"
 
-#: ../app/core/gimpimage.c:2910
+#: ../app/core/gimpimage.c:3028
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Élősködő eltávolítása a képből"
 
-#: ../app/core/gimpimage.c:3619
+#: ../app/core/gimpimage.c:3737
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Réteg hozzáadása"
 
-#: ../app/core/gimpimage.c:3669 ../app/core/gimpimage.c:3689
+#: ../app/core/gimpimage.c:3787 ../app/core/gimpimage.c:3807
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Réteg eltávolítása"
 
-#: ../app/core/gimpimage.c:3683
+#: ../app/core/gimpimage.c:3801
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Lebegő kijelölés eltávolítása"
 
-#: ../app/core/gimpimage.c:3851
+#: ../app/core/gimpimage.c:3969
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Csatorna hozzáadása"
 
-#: ../app/core/gimpimage.c:3889 ../app/core/gimpimage.c:3902
+#: ../app/core/gimpimage.c:4007 ../app/core/gimpimage.c:4020
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Csatorna eltávolítása"
 
-#: ../app/core/gimpimage.c:3956
+#: ../app/core/gimpimage.c:4074
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Útvonal hozzáadása"
 
-#: ../app/core/gimpimage.c:3987
+#: ../app/core/gimpimage.c:4105
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Útvonal eltávolítása"
@@ -8398,7 +8443,7 @@ msgid_plural "%d × %d pixels"
 msgstr[0] "%d x %d képpont"
 msgstr[1] "%d x %d képpont"
 
-#: ../app/core/gimpimagefile.c:797 ../app/display/gimpdisplayshell-title.c:336
+#: ../app/core/gimpimagefile.c:797 ../app/display/gimpdisplayshell-title.c:317
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -8535,7 +8580,8 @@ msgstr "Nem lehet rétegmaszkot hozzáadni, mert már van egy rétegmaszk."
 
 #: ../app/core/gimplayer.c:1459
 msgid "Cannot add layer mask of different dimensions than specified layer."
-msgstr "Nem lehet a megadott rétegtől eltérő dimenziójú rétegmaszkot hozzáadni."
+msgstr ""
+"Nem lehet a megadott rétegtől eltérő dimenziójú rétegmaszkot hozzáadni."
 
 #: ../app/core/gimplayer.c:1465
 msgctxt "undo-type"
@@ -8624,7 +8670,8 @@ msgstr ""
 #: ../app/core/gimppalette-load.c:96
 #, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
-msgstr "Végzetes feldolgozási hiba a(z) „%s” palettafájlban: hiányzó varázsfejléc."
+msgstr ""
+"Végzetes feldolgozási hiba a(z) „%s” palettafájlban: hiányzó varázsfejléc."
 
 #: ../app/core/gimppalette-load.c:125
 #, c-format
@@ -8643,7 +8690,8 @@ msgstr ""
 #: ../app/core/gimppalette-load.c:185
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
-msgstr "Hiba a(z) „%s” palettafájlban: hiányzó vörös összetevő a(z) %d. sorban."
+msgstr ""
+"Hiba a(z) „%s” palettafájlban: hiányzó vörös összetevő a(z) %d. sorban."
 
 #: ../app/core/gimppalette-load.c:193
 #, c-format
@@ -8682,7 +8730,8 @@ msgstr ""
 
 #: ../app/core/gimppattern-load.c:104
 #, c-format
-msgid "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
+msgid ""
+"Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
 "Végzetes feldolgozási hiba a(z) „%s” mintafájlban: ismeretlen mintaformátum-"
 "verzió: %d."
@@ -8954,7 +9003,8 @@ msgstr "Törli ezt: „%s”?"
 
 #: ../app/dialogs/data-delete-dialog.c:107
 #, c-format
-msgid "Are you sure you want to remove '%s' from the list and delete it on disk?"
+msgid ""
+"Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "Biztos, hogy törölni kívánja ezt: „%s” a listáról és a lemezről?"
 
 #: ../app/dialogs/dialogs-constructors.c:203 ../app/gui/gui.c:161
@@ -9031,7 +9081,7 @@ msgstr "%s halványítása"
 msgid "_Fade"
 msgstr "H_alványítás"
 
-#: ../app/dialogs/fade-dialog.c:156 ../app/widgets/gimpdeviceinfoeditor.c:344
+#: ../app/dialogs/fade-dialog.c:156 ../app/widgets/gimpdeviceinfoeditor.c:346
 msgid "_Mode:"
 msgstr "_Mód:"
 
@@ -9059,7 +9109,7 @@ msgstr "Kép exportálása"
 msgid "_Export"
 msgstr "_Exportálás"
 
-#: ../app/dialogs/file-save-dialog.c:432
+#: ../app/dialogs/file-save-dialog.c:419
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -9070,7 +9120,7 @@ msgstr ""
 "kijelölt fájlformátumhoz, vagy pedig egyáltalán ne adjon meg "
 "fájlkiterjesztést."
 
-#: ../app/dialogs/file-save-dialog.c:559
+#: ../app/dialogs/file-save-dialog.c:546
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
@@ -9079,7 +9129,7 @@ msgstr ""
 "GIMP XCF formátumába szeretne menteni, akkor használja ehelyett a "
 "Fájl→Mentés parancsot."
 
-#: ../app/dialogs/file-save-dialog.c:566
+#: ../app/dialogs/file-save-dialog.c:553
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
@@ -9087,7 +9137,7 @@ msgstr ""
 "Ezzel a párbeszédablakkal a GIMP XCF formátumába mentheti a képet. A "
 "Fájl→Exportálás paranccsal exportálhat más formátumokba."
 
-#: ../app/dialogs/file-save-dialog.c:572
+#: ../app/dialogs/file-save-dialog.c:559
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -9096,23 +9146,24 @@ msgstr ""
 "ismert fájlkiterjesztést vagy válasszon ki egy fájlformátumot a "
 "fájlformátumok listájából."
 
-#: ../app/dialogs/file-save-dialog.c:586
+#: ../app/dialogs/file-save-dialog.c:573
 msgid "Extension Mismatch"
 msgstr "Kiterjesztés nem illeszkedik"
 
-#: ../app/dialogs/file-save-dialog.c:602
+#: ../app/dialogs/file-save-dialog.c:589
 msgid "The given file extension does not match the chosen file type."
-msgstr "A megadott fájlkiterjesztés nem illeszkedik a kiválasztott fájltípushoz."
+msgstr ""
+"A megadott fájlkiterjesztés nem illeszkedik a kiválasztott fájltípushoz."
 
-#: ../app/dialogs/file-save-dialog.c:606
+#: ../app/dialogs/file-save-dialog.c:593
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Mégis szeretné ezzel a névvel menteni a képet?"
 
-#: ../app/dialogs/file-save-dialog.c:664
+#: ../app/dialogs/file-save-dialog.c:651
 msgid "Saving canceled"
 msgstr "Mentés megszakítva"
 
-#: ../app/dialogs/file-save-dialog.c:672 ../app/widgets/gimpdnd-xds.c:186
+#: ../app/dialogs/file-save-dialog.c:659 ../app/widgets/gimpdnd-xds.c:186
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -9238,7 +9289,8 @@ msgstr ""
 "párbeszédablakban (jelenleg %s)."
 
 #: ../app/dialogs/image-scale-dialog.c:260
-msgid "Scaling the image to the chosen size will shrink some layers completely away."
+msgid ""
+"Scaling the image to the chosen size will shrink some layers completely away."
 msgstr ""
 "A képnek a kiválasztott méretre való átméretezése néhány réteget annyira "
 "összezsugorít, hogy azok teljesen eltűnnek."
@@ -9314,31 +9366,31 @@ msgstr "A változtatások érvénybe léptetéséhez újra kell indítania a GIM
 msgid "Module"
 msgstr "Modul"
 
-#: ../app/dialogs/module-dialog.c:465
+#: ../app/dialogs/module-dialog.c:468
 msgid "Only in memory"
 msgstr "Csak a memóriában"
 
-#: ../app/dialogs/module-dialog.c:470
+#: ../app/dialogs/module-dialog.c:473
 msgid "No longer available"
 msgstr "Többé nem elérhető"
 
-#: ../app/dialogs/module-dialog.c:495
+#: ../app/dialogs/module-dialog.c:498
 msgid "Author:"
 msgstr "Szerző:"
 
-#: ../app/dialogs/module-dialog.c:496
+#: ../app/dialogs/module-dialog.c:499
 msgid "Version:"
 msgstr "Verzió:"
 
-#: ../app/dialogs/module-dialog.c:497
+#: ../app/dialogs/module-dialog.c:500
 msgid "Date:"
 msgstr "Dátum:"
 
-#: ../app/dialogs/module-dialog.c:498
+#: ../app/dialogs/module-dialog.c:501
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: ../app/dialogs/module-dialog.c:499
+#: ../app/dialogs/module-dialog.c:502
 msgid "Location:"
 msgstr "Hely:"
 
@@ -9498,7 +9550,8 @@ msgstr "Összes gyorsbillentyű eltávolítása"
 
 #: ../app/dialogs/preferences-dialog.c:569
 msgid "Do you really want to remove all keyboard shortcuts from all menus?"
-msgstr "Valóban szeretné eltávolítani az összes gyorsbillentyűt az összes menüből?"
+msgstr ""
+"Valóban szeretné eltávolítani az összes gyorsbillentyűt az összes menüből?"
 
 #: ../app/dialogs/preferences-dialog.c:610
 msgid ""
@@ -9831,12 +9884,10 @@ msgid "Default Image"
 msgstr "Alapértelmezett kép"
 
 #: ../app/dialogs/preferences-dialog.c:2028
-#| msgid "Edit Quick Mask Color"
 msgid "Set the default Quick Mask color"
 msgstr "Alapértelmezett gyorsmaszkszín beállítása"
 
 #: ../app/dialogs/preferences-dialog.c:2034
-#| msgid "Edit Quick Mask Color"
 msgid "Quick Mask color:"
 msgstr "Gyorsmaszkszín:"
 
@@ -9912,7 +9963,6 @@ msgid "Pointer re_ndering:"
 msgstr "Mutató meg_jelenése:"
 
 #: ../app/dialogs/preferences-dialog.c:2140
-#| msgid "Pointer re_ndering:"
 msgid "Pointer _handedness:"
 msgstr "Mu_tató jobb-/balkezes:"
 
@@ -10105,7 +10155,8 @@ msgstr "Bemeneti eszközök beállításainak me_ntése most"
 
 #: ../app/dialogs/preferences-dialog.c:2589
 msgid "_Reset Saved Input Device Settings to Default Values"
-msgstr "Bemeneti eszközök mentett beállításainak visszaállítása az _alapértékekre"
+msgstr ""
+"Bemeneti eszközök mentett beállításainak visszaállítása az _alapértékekre"
 
 #: ../app/dialogs/preferences-dialog.c:2604
 msgid "Additional Input Controllers"
@@ -10225,7 +10276,6 @@ msgid "Tool Preset Folders"
 msgstr "Elődefiniált eszközbeállítások mappái"
 
 #: ../app/dialogs/preferences-dialog.c:2765
-#| msgid "Select Theme Folders"
 msgid "Select Tool Preset Folders"
 msgstr "Válassza ki az elődefiniált eszközbeállítások mappáit"
 
@@ -10462,7 +10512,8 @@ msgstr "A felhasználói telepítés nem sikerült."
 
 #: ../app/dialogs/user-install-dialog.c:95
 msgid "The GIMP user installation failed; see the log for details."
-msgstr "A GIMP felhasználói telepítése nem sikerült; részletek a naplóban láthatók."
+msgstr ""
+"A GIMP felhasználói telepítése nem sikerült; részletek a naplóban láthatók."
 
 #: ../app/dialogs/user-install-dialog.c:98
 msgid "Installation Log"
@@ -10610,7 +10661,7 @@ msgid "Navigate the image display"
 msgstr "Navigálás a megjelenített képen"
 
 #: ../app/display/gimpdisplayshell.c:746
-#: ../app/display/gimpdisplayshell.c:1325 ../app/widgets/gimptoolbox.c:256
+#: ../app/display/gimpdisplayshell.c:1327 ../app/widgets/gimptoolbox.c:253
 msgid "Drop image files here to open them"
 msgstr "Képfájlok megnyitásához ejtse azokat ide"
 
@@ -10632,7 +10683,8 @@ msgstr "Szeretné elmenteni a(z) „%s” kép változásait a bezárás előtt?
 #: ../app/display/gimpdisplayshell-close.c:270
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
-msgid_plural "If you don't save the image, changes from the last %d hours will be lost."
+msgid_plural ""
+"If you don't save the image, changes from the last %d hours will be lost."
 msgstr[0] ""
 "Ha nem menti a képet, akkor a legutóbbi órában bekövetkezett módosulások "
 "elvesznek."
@@ -10658,7 +10710,8 @@ msgstr[1] ""
 #: ../app/display/gimpdisplayshell-close.c:293
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
-msgid_plural "If you don't save the image, changes from the last %d minutes will be lost."
+msgid_plural ""
+"If you don't save the image, changes from the last %d minutes will be lost."
 msgstr[0] ""
 "Ha nem menti a képet, akkor a legutóbbi percben bekövetkezett módosulások "
 "elvesznek."
@@ -10666,52 +10719,54 @@ msgstr[1] ""
 "Ha nem menti a képet, akkor a legutóbbi %d percben bekövetkezett módosulások "
 "elvesznek."
 
-#: ../app/display/gimpdisplayshell-close.c:305
+#: ../app/display/gimpdisplayshell-close.c:311
 #, c-format
 msgid "The image has been exported to '%s'."
 msgstr "A kép elmentve ide: „%s”"
 
-#: ../app/display/gimpdisplayshell-dnd.c:232
-#: ../app/display/gimpdisplayshell-dnd.c:635
-#: ../app/display/gimpdisplayshell-dnd.c:693
+#: ../app/display/gimpdisplayshell-dnd.c:246
+#: ../app/display/gimpdisplayshell-dnd.c:649
+#: ../app/display/gimpdisplayshell-dnd.c:707
 msgid "Drop New Layer"
 msgstr "Új réteg eldobása"
 
-#: ../app/display/gimpdisplayshell-dnd.c:275
+#: ../app/display/gimpdisplayshell-dnd.c:289
 msgid "Drop New Path"
 msgstr "Új útvonal eldobása"
 
-#: ../app/display/gimpdisplayshell-dnd.c:347
-#: ../app/display/gimpdisplayshell-dnd.c:449 ../app/tools/gimpblendtool.c:173
-#: ../app/tools/gimpbucketfilltool.c:136 ../app/tools/gimpimagemaptool.c:279
+#: ../app/display/gimpdisplayshell-dnd.c:361
+#: ../app/display/gimpdisplayshell-dnd.c:463 ../app/tools/gimpblendtool.c:173
+#: ../app/tools/gimpbucketfilltool.c:136 ../app/tools/gimpimagemaptool.c:280
+#: ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "A rétegcsoportok képpontjai nem módosíthatók."
 
-#: ../app/display/gimpdisplayshell-dnd.c:355
-#: ../app/display/gimpdisplayshell-dnd.c:457 ../app/tools/gimpblendtool.c:180
+#: ../app/display/gimpdisplayshell-dnd.c:369
+#: ../app/display/gimpdisplayshell-dnd.c:471 ../app/tools/gimpblendtool.c:180
 #: ../app/tools/gimpbucketfilltool.c:143 ../app/tools/gimpcroptool.c:325
-#: ../app/tools/gimpimagemaptool.c:286 ../app/tools/gimppainttool.c:266
-#: ../app/tools/gimptransformtool.c:246 ../app/tools/gimptransformtool.c:1066
+#: ../app/tools/gimpimagemaptool.c:287 ../app/tools/gimppainttool.c:266
+#: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:247
+#: ../app/tools/gimptransformtool.c:1067
 msgid "The active layer's pixels are locked."
 msgstr "Az aktív réteg képpontjai zárolva vannak."
 
-#: ../app/display/gimpdisplayshell-dnd.c:535
+#: ../app/display/gimpdisplayshell-dnd.c:549
 #: ../app/widgets/gimplayertreeview.c:725
 msgid "Drop layers"
 msgstr "Rétegek eldobása"
 
 # rétegnév
-#: ../app/display/gimpdisplayshell-dnd.c:668
-#: ../app/display/gimpdisplayshell-dnd.c:685
-#: ../app/widgets/gimplayertreeview.c:802 ../app/widgets/gimptoolbox-dnd.c:266
+#: ../app/display/gimpdisplayshell-dnd.c:682
+#: ../app/display/gimpdisplayshell-dnd.c:699
+#: ../app/widgets/gimplayertreeview.c:802 ../app/widgets/gimptoolbox-dnd.c:264
 msgid "Dropped Buffer"
 msgstr "Eldobott tároló"
 
-#: ../app/display/gimpdisplayshell-filter-dialog.c:78
+#: ../app/display/gimpdisplayshell-filter-dialog.c:83
 msgid "Color Display Filters"
 msgstr "Színmegjelenítési szűrők"
 
-#: ../app/display/gimpdisplayshell-filter-dialog.c:81
+#: ../app/display/gimpdisplayshell-filter-dialog.c:86
 msgid "Configure Color Display Filters"
 msgstr "Színmegjelenítési szűrők beállítása"
 
@@ -10745,31 +10800,19 @@ msgstr "Nagyítás aránya:"
 msgid "Zoom:"
 msgstr "Nagyítás:"
 
-#: ../app/display/gimpdisplayshell-title.c:301
+#: ../app/display/gimpdisplayshell-title.c:282
 msgid "(modified)"
 msgstr "(módosítva)"
 
-#: ../app/display/gimpdisplayshell-title.c:306
+#: ../app/display/gimpdisplayshell-title.c:287
 msgid "(clean)"
 msgstr "(tiszta)"
 
-#: ../app/display/gimpdisplayshell-title.c:357
-#: ../app/display/gimpdisplayshell-title.c:370
+#: ../app/display/gimpdisplayshell-title.c:338
+#: ../app/display/gimpdisplayshell-title.c:351
 #: ../app/widgets/gimpactiongroup.c:860
 msgid "(none)"
 msgstr "(nincs)"
-
-#: ../app/display/gimpdisplayshell-title.c:499
-msgid " (exported)"
-msgstr " (exportálva)"
-
-#: ../app/display/gimpdisplayshell-title.c:501
-msgid " (overwritten)"
-msgstr " (felülírva)"
-
-#: ../app/display/gimpdisplayshell-title.c:507
-msgid " (imported)"
-msgstr " (importálva)"
 
 #: ../app/display/gimpstatusbar.c:356
 #, c-format
@@ -10783,33 +10826,36 @@ msgstr "Nem szabályos fájl"
 #: ../app/file/file-open.c:188
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
-msgstr "A(z) %s bővítmény sikeres lefutást jelzett, viszont nem adott vissza képet"
+msgstr ""
+"A(z) %s bővítmény sikeres lefutást jelzett, viszont nem adott vissza képet"
 
 #: ../app/file/file-open.c:199
 #, c-format
 msgid "%s plug-In could not open image"
 msgstr "A(z) %s bővítmény nem tudta megnyitni a képet"
 
-#: ../app/file/file-open.c:526
+#: ../app/file/file-open.c:530
 msgid "Image doesn't contain any layers"
 msgstr "A kép nem tartalmaz réteget"
 
-#: ../app/file/file-open.c:579
+#: ../app/file/file-open.c:583
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "„%s” megnyitása sikertelen: %s"
 
-#: ../app/file/file-open.c:686
+#: ../app/file/file-open.c:690
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
-msgstr "A színkezelés ki lett kapcsolva. A Beállítások párbeszédablakban bekapcsolható."
+msgstr ""
+"A színkezelés ki lett kapcsolva. A Beállítások párbeszédablakban "
+"bekapcsolható."
 
 #: ../app/file/file-procedure.c:195
 msgid "Unknown file type"
 msgstr "Ismeretlen fájltípus"
 
-#: ../app/file/file-save.c:219
+#: ../app/file/file-save.c:221
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "A(z) %s bővítmény nem tudta menteni a képet"
@@ -10824,7 +10870,6 @@ msgid "Invalid character sequence in URI"
 msgstr "Érvénytelen karaktersorozat az URI-ben"
 
 #: ../app/gegl/gimp-gegl-enums.c:24
-#| msgid "Create a New Image"
 msgctxt "cage-mode"
 msgid "Create or adjust the cage"
 msgstr "Ketrec létrehozása és módosítása"
@@ -10859,7 +10904,6 @@ msgstr ""
 "számára"
 
 #: ../app/gegl/gimpoperationcagetransform.c:128
-#| msgid "Fill with _background color"
 msgid "Fill with plain color"
 msgstr "Kitöltés homogén színnel"
 
@@ -10974,7 +11018,6 @@ msgid "How fade is repeated as you paint"
 msgstr "Hogyan ismétlődik a halványulás a festés során"
 
 #: ../app/paint/gimppaintoptions.c:255
-#| msgid "Hint for other _docks:"
 msgid "Paint smoother strokes"
 msgstr "Simább ecsetvonások festése"
 
@@ -11142,19 +11185,16 @@ msgid "Brush '%s' is not a generated brush"
 msgstr "„%s” ecset nem egy generált ecset"
 
 #: ../app/pdb/gimppdb-utils.c:134
-#| msgid "Invalid empty paint method name"
 msgid "Invalid empty paint dynamics name"
 msgstr "Érvénytelen üres ecsetdinamika-név"
 
 #: ../app/pdb/gimppdb-utils.c:143
 #, c-format
-#| msgid "Pattern '%s' not found"
 msgid "Paint dynamics '%s' not found"
 msgstr "„%s” ecsetdinamika nem található"
 
 #: ../app/pdb/gimppdb-utils.c:148
 #, c-format
-#| msgid "Gradient '%s' is not editable"
 msgid "Paint dynamics '%s' is not editable"
 msgstr "„%s” ecsetdinamika nem szerkeszthető"
 
@@ -11237,7 +11277,8 @@ msgstr "„%s” (%d) elem nem használható, mert hozzá lett adva egy másik k
 msgid ""
 "Item '%s' (%d) cannot be used because it is not a direct child of an item "
 "tree"
-msgstr "„%s” (%d) elem nem használható, mert nem közvetlen gyermeke egy elemfának"
+msgstr ""
+"„%s” (%d) elem nem használható, mert nem közvetlen gyermeke egy elemfának"
 
 #: ../app/pdb/gimppdb-utils.c:420
 #, c-format
@@ -11301,8 +11342,8 @@ msgstr "„%d” vektorobjektum nem tartalmaz „%d” azonosítójú körvonalt
 #: ../app/pdb/gimppdb.c:410
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong type for argument #%d. Expected %"
-"s, got %s."
+"Procedure '%s' has been called with a wrong type for argument #%d. Expected "
+"%s, got %s."
 msgstr ""
 "A(z) „%s” eljárás számára helytelen típusú érték lett megadva a(z) %d. "
 "argumentumban. A várt típus: %s, a kapott típus: %s."
@@ -11330,8 +11371,8 @@ msgstr ""
 #: ../app/pdb/gimpprocedure.c:654
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#%"
-"d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
 "A(z) „%s” eljárás számára helytelen típusú érték lett megadva ezen "
 "argumentumban: „%s” (#%d). A várt típus: %s, a kapott típus: %s."
@@ -11342,8 +11383,8 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"A(z) „%s” eljárás érvénytelen azonosítót adott vissza ezen argumentumra: „%"
-"s”. Valószínűleg egy bővítmény olyan rétegre hivatkozott, amely már nem "
+"A(z) „%s” eljárás érvénytelen azonosítót adott vissza ezen argumentumra: "
+"„%s”. Valószínűleg egy bővítmény olyan rétegre hivatkozott, amely már nem "
 "létezik."
 
 #: ../app/pdb/gimpprocedure.c:700
@@ -11362,8 +11403,8 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"A(z) „%s” eljárás érvénytelen azonosítót adott vissza ezen argumentumra: „%"
-"s”. Valószínűleg egy bővítmény olyan képre hivatkozott, amely már nem "
+"A(z) „%s” eljárás érvénytelen azonosítót adott vissza ezen argumentumra: "
+"„%s”. Valószínűleg egy bővítmény olyan képre hivatkozott, amely már nem "
 "létezik."
 
 #: ../app/pdb/gimpprocedure.c:730
@@ -11382,20 +11423,21 @@ msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr ""
-"A(z) „%s” eljárás „%s” értéket adott vissza ezen visszatérési értékként: „%"
-"s” (#%d, típus: %s). Ez az érték kívül esik az engedélyezett tartományon."
+"A(z) „%s” eljárás „%s” értéket adott vissza ezen visszatérési értékként: "
+"„%s” (#%d, típus: %s). Ez az érték kívül esik az engedélyezett tartományon."
 
 #: ../app/pdb/gimpprocedure.c:765
 #, c-format
 msgid ""
-"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
-"s). This value is out of range."
+"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
+"%s). This value is out of range."
 msgstr ""
 "A(z) „%s” eljárás számára „%s” érték lett megadva ezen argumentumban: „%s” (#"
 "%d, típus: %s). Ez az érték kívül esik az engedélyezett tartományon."
 
-#: ../app/pdb/image-cmds.c:2360
-msgid "Image resolution is out of bounds, using the default resolution instead."
+#: ../app/pdb/image-cmds.c:2365
+msgid ""
+"Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
 "A kép felbontása az engedélyezett tartományon kívül esik, ezért az "
 "alapértelmezett felbontás lesz használva."
@@ -11501,7 +11543,7 @@ msgstr ""
 msgid "Cancelled"
 msgstr "Megszakítva"
 
-#: ../app/plug-in/gimpplugin.c:639
+#: ../app/plug-in/gimpplugin.c:643
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -11551,7 +11593,7 @@ msgstr "Bővítményfordítók"
 msgid "Plug-In Environment"
 msgstr "Bővítménykörnyezet"
 
-#: ../app/plug-in/gimppluginprocedure.c:980
+#: ../app/plug-in/gimppluginprocedure.c:976
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -11560,7 +11602,7 @@ msgstr ""
 "Hívási hiba ennél: „%s”:\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:992
+#: ../app/plug-in/gimppluginprocedure.c:988
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -11608,7 +11650,7 @@ msgstr ""
 "abcdefghijklmnopqrstuvwxyz\n"
 "áÁéÉíÍóÓöÖőŐúÚüÜűŰ"
 
-#: ../app/text/gimptext-compat.c:105 ../app/tools/gimptexttool.c:1401
+#: ../app/text/gimptext-compat.c:105 ../app/tools/gimptexttool.c:1402
 msgid "Add Text Layer"
 msgstr "Szövegréteg hozzáadása"
 
@@ -11715,7 +11757,6 @@ msgid "Reference image object a layer will be aligned on"
 msgstr "Viszonyítási objektum: ehhez lesz a réteg igazítva."
 
 #: ../app/tools/gimpalignoptions.c:98
-#| msgid "Color Balance Tool: Adjust color distribution"
 msgid "Horizontal offset for distribution"
 msgstr "Az elosztás vízszintes eltolása"
 
@@ -11789,7 +11830,8 @@ msgstr "Eltolás:"
 
 #: ../app/tools/gimpaligntool.c:125
 msgid "Alignment Tool: Align or arrange layers and other objects"
-msgstr "Igazítási eszköz: rétegek és egyéb objektumok igazítása vagy elrendezése"
+msgstr ""
+"Igazítási eszköz: rétegek és egyéb objektumok igazítása vagy elrendezése"
 
 #: ../app/tools/gimpaligntool.c:126
 msgid "_Align"
@@ -11826,7 +11868,6 @@ msgid "Click to add this path to the list"
 msgstr "Az útvonal hozzáadása a listához: kattintással"
 
 #: ../app/tools/gimpblendoptions.c:211 ../app/tools/gimppaintoptions-gui.c:346
-#| msgid "Gradients"
 msgid "Gradient"
 msgstr "Színátmenet"
 
@@ -11843,7 +11884,6 @@ msgid "Adaptive supersampling"
 msgstr "Adaptív túlmintavételezés"
 
 #: ../app/tools/gimpblendoptions.c:268
-#| msgid "Max depth:"
 msgid "Max depth"
 msgstr "Max. mélység"
 
@@ -11864,7 +11904,6 @@ msgid "Blend does not operate on indexed layers."
 msgstr "Színátmenet nem használható indexelt rétegeken."
 
 #: ../app/tools/gimpblendtool.c:187
-#| msgid "No patterns available for use with this tool."
 msgid "No gradient available for use with this tool."
 msgstr "Nincs használható színátmenet ehhez az eszközhöz."
 
@@ -12012,7 +12051,7 @@ msgctxt "command"
 msgid "Select by Color"
 msgstr "Kijelölés szín szerint"
 
-#: ../app/tools/gimpcagetool.c:152 ../app/tools/gimpcagetool.c:1154
+#: ../app/tools/gimpcagetool.c:152 ../app/tools/gimpcagetool.c:1155
 msgid "Cage Transform"
 msgstr "Ketrec átalakítás"
 
@@ -12024,15 +12063,15 @@ msgstr "Ketrec átalakítás: a kijelölést deformálja egy ketrec segítségé
 msgid "_Cage Transform"
 msgstr "_Ketrec átalakítás"
 
-#: ../app/tools/gimpcagetool.c:351
+#: ../app/tools/gimpcagetool.c:352
 msgid "Press ENTER to commit the transform"
 msgstr "Az átalakítás véglegesítéséhez nyomja meg az Entert"
 
-#: ../app/tools/gimpcagetool.c:1095
+#: ../app/tools/gimpcagetool.c:1096
 msgid "Computing Cage Coefficients"
 msgstr "Ketrec együtthatók számítása"
 
-#: ../app/tools/gimpcagetool.c:1272
+#: ../app/tools/gimpcagetool.c:1273
 msgid "Cage transform"
 msgstr "Ketrec átalakítás"
 
@@ -12198,7 +12237,6 @@ msgstr "Színpipetta átlagolási sugara"
 #: ../app/tools/gimprectangleselectoptions.c:163
 #: ../app/tools/gimpselectionoptions.c:277
 #: ../app/widgets/gimpbrusheditor.c:155
-#| msgid "Radius:"
 msgid "Radius"
 msgstr "Sugár"
 
@@ -12218,10 +12256,11 @@ msgid "Choose what color picker will do"
 msgstr "Válassza ki, hogy mit tegyen a színpipetta"
 
 #: ../app/tools/gimpcolorpickeroptions.c:80
-msgid "Open a floating dialog to view picked color values in various color models"
+msgid ""
+"Open a floating dialog to view picked color values in various color models"
 msgstr ""
-"Párbeszédablak megnyitása, amely több színmodellben megmutatja a kiválasztott "
-"színt."
+"Párbeszédablak megnyitása, amely több színmodellben megmutatja a "
+"kiválasztott színt."
 
 #. the pick FG/BG frame
 #: ../app/tools/gimpcolorpickeroptions.c:163
@@ -12408,7 +12447,8 @@ msgstr "Kattintson vezérlőpontok felvételéhez minden csatornába"
 
 #: ../app/tools/gimpcurvestool.c:350
 msgid "Click to locate on curve (try Shift, Ctrl)"
-msgstr "Kattintással azonosíthat egy pontot a görbén (Shift, Ctrl is használható)"
+msgstr ""
+"Kattintással azonosíthat egy pontot a görbén (Shift, Ctrl is használható)"
 
 #: ../app/tools/gimpcurvestool.c:463 ../app/tools/gimplevelstool.c:384
 msgid "Cha_nnel:"
@@ -12418,7 +12458,7 @@ msgstr "_Csatorna:"
 msgid "R_eset Channel"
 msgstr "Csatorna v_isszaállítása"
 
-#: ../app/tools/gimpcurvestool.c:583 ../app/widgets/gimpdeviceinfoeditor.c:458
+#: ../app/tools/gimpcurvestool.c:583 ../app/widgets/gimpdeviceinfoeditor.c:461
 msgid "Curve _type:"
 msgstr "Görbe_típus:"
 
@@ -12459,7 +12499,8 @@ msgstr "Fakítás vagy sötétítés"
 
 #: ../app/tools/gimpdodgeburntool.c:74
 msgid "Dodge / Burn Tool: Selectively lighten or darken using a brush"
-msgstr "Fakítási és sötétítési eszköz: szelektív fényesítés vagy sötétítés ecsettel"
+msgstr ""
+"Fakítási és sötétítési eszköz: szelektív fényesítés vagy sötétítés ecsettel"
 
 #: ../app/tools/gimpdodgeburntool.c:75
 msgid "Dod_ge / Burn"
@@ -12503,7 +12544,6 @@ msgid "Range"
 msgstr "Tartomány"
 
 #: ../app/tools/gimpdodgeburntool.c:236
-#| msgid "Exposure:"
 msgid "Exposure"
 msgstr "Kitettség"
 
@@ -12561,7 +12601,6 @@ msgid "Anti erase  (%s)"
 msgstr "Ellen-radír  (%s)"
 
 #: ../app/tools/gimpflipoptions.c:66
-#| msgid "Direction"
 msgid "Direction of flipping"
 msgstr "Tükrözés iránya"
 
@@ -12580,7 +12619,8 @@ msgid "Flip"
 msgstr "Tükrözés"
 
 #: ../app/tools/gimpfliptool.c:85
-msgid "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
+msgid ""
+"Flip Tool: Reverse the layer, selection or path horizontally or vertically"
 msgstr ""
 "Tükrözési eszköz: réteg, kijelölés vagy útvonal vízszintes vagy függőleges "
 "megfordítása"
@@ -12701,27 +12741,28 @@ msgstr ""
 msgid "F_oreground Select"
 msgstr "E_lőtér-kijelölés"
 
-#: ../app/tools/gimpforegroundselecttool.c:302
+#: ../app/tools/gimpforegroundselecttool.c:304
 msgid "Add more strokes or press Enter to accept the selection"
 msgstr ""
 "Vegyen fel további vonalakat, vagy nyomja meg az Entert a kijelölés "
 "elfogadásához"
 
-#: ../app/tools/gimpforegroundselecttool.c:304
+#: ../app/tools/gimpforegroundselecttool.c:306
 msgid "Mark foreground by painting on the object to extract"
 msgstr "Jelölje meg az előtért a kivonandó objektumra való festéssel"
 
-#: ../app/tools/gimpforegroundselecttool.c:309
+#: ../app/tools/gimpforegroundselecttool.c:311
 msgid "Roughly outline the object to extract"
 msgstr "Rajzolja meg hozzávetőlegesen a kijelölendő objektum körvonalát"
 
-#: ../app/tools/gimpforegroundselecttool.c:751
+#: ../app/tools/gimpforegroundselecttool.c:753
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "Előtér-kijelölés"
 
 #: ../app/tools/gimpfreeselecttool.c:197
-msgid "Free Select Tool: Select a hand-drawn region with free and polygonal segments"
+msgid ""
+"Free Select Tool: Select a hand-drawn region with free and polygonal segments"
 msgstr ""
 "Szabadkézi kijelölési eszköz: kézzel körülhatárolt terület kijelölése "
 "szabadkézi rajzolású szakaszokkal, illetve sokszög-szakaszokkal"
@@ -12742,7 +12783,8 @@ msgstr "A szakasz vertexének áthelyezése: kattintás+húzás"
 
 #: ../app/tools/gimpfreeselecttool.c:1039
 msgid "Return commits, Escape cancels, Backspace removes last segment"
-msgstr "Véglegesítés: Return; megszakítás: Escape; utolsó szakasz törlése: Backspace"
+msgstr ""
+"Véglegesítés: Return; megszakítás: Escape; utolsó szakasz törlése: Backspace"
 
 #: ../app/tools/gimpfreeselecttool.c:1043
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
@@ -12761,7 +12803,8 @@ msgstr "Varázspálca-kijelölés"
 
 #: ../app/tools/gimpfuzzyselecttool.c:66
 msgid "Fuzzy Select Tool: Select a contiguous region on the basis of color"
-msgstr "„Varázspálca” kijelölőeszköz: egybefüggő terület kijelölése szín alapján"
+msgstr ""
+"„Varázspálca” kijelölőeszköz: egybefüggő terület kijelölése szín alapján"
 
 #: ../app/tools/gimpfuzzyselecttool.c:67
 msgid "Fu_zzy Select"
@@ -12911,7 +12954,7 @@ msgstr "Előre_definiált:"
 msgid "Settings saved to '%s'"
 msgstr "Beállítások elmentve ide: „%s”"
 
-#: ../app/tools/gimpimagemaptool.c:362
+#: ../app/tools/gimpimagemaptool.c:363
 msgid "_Preview"
 msgstr "Előké_p"
 
@@ -12983,32 +13026,32 @@ msgstr ""
 msgid "Intelligent _Scissors"
 msgstr "_Intelligens olló"
 
-#: ../app/tools/gimpiscissorstool.c:900 ../app/tools/gimpmeasuretool.c:605
+#: ../app/tools/gimpiscissorstool.c:902 ../app/tools/gimpmeasuretool.c:605
 msgid "Click-Drag to move this point"
 msgstr "A pont áthelyezése: kattintás+húzás"
 
-#: ../app/tools/gimpiscissorstool.c:902 ../app/tools/gimpiscissorstool.c:967
+#: ../app/tools/gimpiscissorstool.c:904 ../app/tools/gimpiscissorstool.c:969
 #, c-format
 msgid "%s: disable auto-snap"
 msgstr "%s: automatikus illesztés kikapcsolása"
 
-#: ../app/tools/gimpiscissorstool.c:919
+#: ../app/tools/gimpiscissorstool.c:921
 msgid "Click to close the curve"
 msgstr "A görbe lezárása: kattintással"
 
-#: ../app/tools/gimpiscissorstool.c:925
+#: ../app/tools/gimpiscissorstool.c:927
 msgid "Click to add a point on this segment"
 msgstr "Pont felvétele a szakaszra: kattintással"
 
-#: ../app/tools/gimpiscissorstool.c:939
+#: ../app/tools/gimpiscissorstool.c:941
 msgid "Click or press Enter to convert to a selection"
 msgstr "Kijelöléssé alakítás: kattintás vagy Enter"
 
-#: ../app/tools/gimpiscissorstool.c:949
+#: ../app/tools/gimpiscissorstool.c:951
 msgid "Press Enter to convert to a selection"
 msgstr "Kijelöléssé alakítás: Enter"
 
-#: ../app/tools/gimpiscissorstool.c:964
+#: ../app/tools/gimpiscissorstool.c:966
 msgid "Click or Click-Drag to add a point"
 msgstr "Pont felvétele: kattintás vagy kattintás+húzás"
 
@@ -13094,7 +13137,6 @@ msgstr "Ablakméret automatikus módosítása"
 #. tool toggle
 #: ../app/tools/gimpmagnifyoptions.c:177
 #, c-format
-#| msgid "Direction"
 msgid "Direction  (%s)"
 msgstr "Irány (%s)"
 
@@ -13135,7 +13177,6 @@ msgid "Add Guides"
 msgstr "Segédvonalak hozzáadása"
 
 #: ../app/tools/gimpmeasuretool.c:313
-#| msgid "Click-Drag to create a new selection"
 msgid "Drag to create a line"
 msgstr "Húzza az egeret mérővonal létrehozásához"
 
@@ -13214,7 +13255,8 @@ msgstr "Áthelyezés"
 
 #: ../app/tools/gimpmovetool.c:128
 msgid "Move Tool: Move layers, selections, and other objects"
-msgstr "Áthelyezési eszköz: rétegek, kijelölések és egyéb objektumok áthelyezése"
+msgstr ""
+"Áthelyezési eszköz: rétegek, kijelölések és egyéb objektumok áthelyezése"
 
 #: ../app/tools/gimpmovetool.c:129
 msgid "_Move"
@@ -13252,7 +13294,6 @@ msgid "Mode:"
 msgstr "Mód:"
 
 #: ../app/tools/gimppaintoptions-gui.c:123
-#| msgid "_Brush"
 msgid "Brush"
 msgstr "Ecset"
 
@@ -13269,7 +13310,6 @@ msgid "Reset aspect ratio to brush's native"
 msgstr "Méretarány visszaállítása az ecset kiindulási méretarányára"
 
 #: ../app/tools/gimppaintoptions-gui.c:200
-#| msgid "Reset all Filters"
 msgid "Reset angle to zero"
 msgstr "Dőlésszög visszaállítása nullára"
 
@@ -13286,12 +13326,10 @@ msgid "Dynamics Options"
 msgstr "Ecsetdinamika beállításai"
 
 #: ../app/tools/gimppaintoptions-gui.c:291
-#| msgid "Saved Options"
 msgid "Fade Options"
 msgstr "Halványulás beállításai"
 
 #: ../app/tools/gimppaintoptions-gui.c:305
-#| msgid "Fade out"
 msgid "Fade length"
 msgstr "Halványulás hossza"
 
@@ -13301,12 +13339,10 @@ msgid "Reverse"
 msgstr "Fordított"
 
 #: ../app/tools/gimppaintoptions-gui.c:341
-#| msgid "Tool Options"
 msgid "Color Options"
 msgstr "Színbeállítások"
 
 #: ../app/tools/gimppaintoptions-gui.c:367
-#| msgid "Amount:"
 msgid "Amount"
 msgstr "Mérték"
 
@@ -13319,7 +13355,6 @@ msgid "Smooth stroke"
 msgstr "Sima ecsetvonás"
 
 #: ../app/tools/gimppaintoptions-gui.c:399
-#| msgid "Height"
 msgid "Weight"
 msgstr "Súly"
 
@@ -13394,7 +13429,8 @@ msgstr "Perspektíva"
 
 #: ../app/tools/gimpposterizetool.c:85
 msgid "Posterize Tool: Reduce to a limited set of colors"
-msgstr "Poszter-eszköz: színek számának csökkentése egy korlátozott mennyiségre"
+msgstr ""
+"Poszter-eszköz: színek számának csökkentése egy korlátozott mennyiségre"
 
 #: ../app/tools/gimpposterizetool.c:86
 msgid "_Posterize..."
@@ -13414,7 +13450,8 @@ msgstr "Poszter sz_intjei:"
 
 #: ../app/tools/gimprectangleoptions.c:104
 msgid "Automatically shrink to the nearest rectangular shape in a layer"
-msgstr "Automatikus szűkítés a legközelebbi használható téglalapformára a rétegben"
+msgstr ""
+"Automatikus szűkítés a legközelebbi használható téglalapformára a rétegben"
 
 #: ../app/tools/gimprectangleoptions.c:113
 msgid "Use all visible layers when shrinking the selection"
@@ -13470,7 +13507,6 @@ msgid "Unit of fixed width, height or size"
 msgstr "Rögzített szélesség, magasság vagy méret mértékegysége"
 
 #: ../app/tools/gimprectangleoptions.c:317
-#| msgid "Expand from center"
 msgid "Expand selection from center outwards"
 msgstr "Kijelölés kiterjesztése a középpontból"
 
@@ -13545,7 +13581,6 @@ msgid "Base selection on all visible layers"
 msgstr "A kijelölés az összes látható rétegen alapuljon"
 
 #: ../app/tools/gimpregionselectoptions.c:101
-#| msgid "Selection Editor"
 msgid "Selection criterion"
 msgstr "Kijelölés alapja"
 
@@ -13721,12 +13756,12 @@ msgid "Font size unit"
 msgstr "Betűméret mértékegysége"
 
 #: ../app/tools/gimptextoptions.c:136
-#| msgid "Fonts"
 msgid "Font size"
 msgstr "Betűméret"
 
 #: ../app/tools/gimptextoptions.c:145
-msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
+msgid ""
+"Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "Kis betűméretek esetében a megjelenítési információk (hinting) alapján "
 "módosulnak a betűk körvonalai az olvashatóság javításának érdekében"
@@ -13736,7 +13771,6 @@ msgid "The text language may have an effect on the way the text is rendered."
 msgstr "A szöveg nyelve befolyásolhatja a szöveg megjelenítését."
 
 #: ../app/tools/gimptextoptions.c:164
-#| msgid "Alignment:"
 msgid "Text alignment"
 msgstr "Szöveg igazítása"
 
@@ -13765,7 +13799,6 @@ msgid "Use an external editor window for text entry"
 msgstr "Külön szövegszerkesztő ablak használata"
 
 #: ../app/tools/gimptextoptions.c:510
-#| msgid "Fonts"
 msgid "Font"
 msgstr "Betűkészlet"
 
@@ -13809,19 +13842,19 @@ msgstr "Szövegeszköz: szövegrétegek létrehozása vagy szerkesztése"
 msgid "Te_xt"
 msgstr "Szöve_g"
 
-#: ../app/tools/gimptexttool.c:958
+#: ../app/tools/gimptexttool.c:959
 msgid "Reshape Text Layer"
 msgstr "Szövegréteg átformálása"
 
-#: ../app/tools/gimptexttool.c:1512 ../app/tools/gimptexttool.c:1515
+#: ../app/tools/gimptexttool.c:1513 ../app/tools/gimptexttool.c:1516
 msgid "Confirm Text Editing"
 msgstr "Szövegszerkesztés megerősítése"
 
-#: ../app/tools/gimptexttool.c:1519
+#: ../app/tools/gimptexttool.c:1520
 msgid "Create _New Layer"
 msgstr "Ú_j réteg létrehozása"
 
-#: ../app/tools/gimptexttool.c:1543
+#: ../app/tools/gimptexttool.c:1544
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -13836,13 +13869,14 @@ msgstr ""
 "Szerkesztheti a réteget vagy létrehozhat egy új szövegréteget annak "
 "szövegtulajdonságaival."
 
-#: ../app/tools/gimptexttool-editor.c:1180
+#: ../app/tools/gimptexttool-editor.c:1199
 msgid "GIMP Text Editor"
 msgstr "GIMP szövegszerkesztő"
 
 #: ../app/tools/gimpthresholdtool.c:91
 msgid "Threshold Tool: Reduce image to two colors using a threshold"
-msgstr "Küszöb-eszköz: a kép színeinek kettőre csökkentése egy küszöb használatával"
+msgstr ""
+"Küszöb-eszköz: a kép színeinek kettőre csökkentése egy küszöb használatával"
 
 #: ../app/tools/gimpthresholdtool.c:92
 msgid "_Threshold..."
@@ -13873,17 +13907,14 @@ msgid "Can't work on an empty image, add a layer first"
 msgstr "Nem lehet üres képpel dolgozni, hozzon létre egy réteget előbb"
 
 #: ../app/tools/gimptransformoptions.c:99
-#| msgid "Perspective transformation"
 msgid "Direction of transformation"
 msgstr "Átalakítás iránya"
 
 #: ../app/tools/gimptransformoptions.c:105
-#| msgid "Interpolation:"
 msgid "Interpolation method"
 msgstr "Interpolációs módszer"
 
 #: ../app/tools/gimptransformoptions.c:111
-#| msgid "Show _tooltips"
 msgid "How to clip"
 msgstr "Levágás módja"
 
@@ -13924,7 +13955,6 @@ msgid "Image opacity"
 msgstr "Kép átlátszatlansága"
 
 #: ../app/tools/gimptransformoptions.c:312
-#| msgid "Show image size"
 msgid "Show image preview"
 msgstr "Előnézet megjelenítése"
 
@@ -13951,19 +13981,19 @@ msgstr "Méretarány megtartása  (%s)"
 msgid "Keep the original aspect ratio"
 msgstr "Eredeti méretarány megtartása"
 
-#: ../app/tools/gimptransformtool.c:212
+#: ../app/tools/gimptransformtool.c:213
 msgid "Transforming"
 msgstr "Átalakítás"
 
-#: ../app/tools/gimptransformtool.c:1065
+#: ../app/tools/gimptransformtool.c:1066
 msgid "There is no layer to transform."
 msgstr "Nincs átalakítható réteg."
 
-#: ../app/tools/gimptransformtool.c:1078
+#: ../app/tools/gimptransformtool.c:1079
 msgid "There is no path to transform."
 msgstr "Nincs átalakítható útvonal."
 
-#: ../app/tools/gimptransformtool.c:1079
+#: ../app/tools/gimptransformtool.c:1080
 msgid "The active path's strokes are locked."
 msgstr "Az aktív útvonal vonalai zárolva vannak."
 
@@ -14333,48 +14363,49 @@ msgstr "_Keresés:"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpactionview.c:337
+#: ../app/widgets/gimpactionview.c:338
 #: ../app/widgets/gimpcontrollereditor.c:341
 msgid "Action"
 msgstr "Művelet"
 
-#: ../app/widgets/gimpactionview.c:366
+#: ../app/widgets/gimpactionview.c:367
 msgid "Shortcut"
 msgstr "Gyorsbillentyű"
 
-#: ../app/widgets/gimpactionview.c:392
+#: ../app/widgets/gimpactionview.c:393
 msgid "Name"
 msgstr "Név"
 
-#: ../app/widgets/gimpactionview.c:632 ../app/widgets/gimpactionview.c:832
+#: ../app/widgets/gimpactionview.c:633 ../app/widgets/gimpactionview.c:843
 msgid "Changing shortcut failed."
 msgstr "A gyorsbillentyű módosítása nem sikerült."
 
-#: ../app/widgets/gimpactionview.c:669
+#: ../app/widgets/gimpactionview.c:670
 msgid "Conflicting Shortcuts"
 msgstr "Ütköző gyorsbillentyűk"
 
-#: ../app/widgets/gimpactionview.c:675
+#: ../app/widgets/gimpactionview.c:676
 msgid "_Reassign shortcut"
 msgstr "Gyorsbillentyű hozzárendelésének mó_dosítása"
 
-#: ../app/widgets/gimpactionview.c:690
+#: ../app/widgets/gimpactionview.c:691
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
-msgstr "A(z) „%s” gyorsbillentyű már hozzá van rendelve ehhez: „%s” („%s” csoport)."
+msgstr ""
+"A(z) „%s” gyorsbillentyű már hozzá van rendelve ehhez: „%s” („%s” csoport)."
 
-#: ../app/widgets/gimpactionview.c:694
+#: ../app/widgets/gimpactionview.c:695
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr ""
 "A gyorsbillentyű hozzárendelésének módosítása esetén el lesz távolítva "
 "innen: „%s”."
 
-#: ../app/widgets/gimpactionview.c:767
+#: ../app/widgets/gimpactionview.c:778
 msgid "Invalid shortcut."
 msgstr "Érvénytelen gyorsbillentyű."
 
-#: ../app/widgets/gimpactionview.c:856
+#: ../app/widgets/gimpactionview.c:867
 msgid "Removing shortcut failed."
 msgstr "Nem sikerült eltávolítani a gyorsbillentyűt."
 
@@ -14410,37 +14441,37 @@ msgstr "(Nincs)"
 msgid "Add the current color to the color history"
 msgstr "Jelenlegi szín hozzáadása a színelőzményekhez"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:154
+#: ../app/widgets/gimpcolordisplayeditor.c:157
 msgid "Available Filters"
 msgstr "Elérhető szűrők"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:216
+#: ../app/widgets/gimpcolordisplayeditor.c:219
 msgid "Move the selected filter up"
 msgstr "A kijelölt szűrő feljebb helyezése"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:225
+#: ../app/widgets/gimpcolordisplayeditor.c:228
 msgid "Move the selected filter down"
 msgstr "A kijelölt szűrő lejjebb helyezése"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:271
+#: ../app/widgets/gimpcolordisplayeditor.c:274
 msgid "Active Filters"
 msgstr "Aktív szűrők"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:322
+#: ../app/widgets/gimpcolordisplayeditor.c:325
 msgid "Reset the selected filter to default values"
 msgstr "A kijelölt szűrő visszaállítása az alapértelmezett értékekre"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:503
+#: ../app/widgets/gimpcolordisplayeditor.c:527
 #, c-format
 msgid "Add '%s' to the list of active filters"
 msgstr "„%s” hozzáadása az aktív szűrők listájához"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:540
+#: ../app/widgets/gimpcolordisplayeditor.c:564
 #, c-format
 msgid "Remove '%s' from the list of active filters"
 msgstr "„%s” eltávolítása az aktív szűrők listájából"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:571
+#: ../app/widgets/gimpcolordisplayeditor.c:595
 msgid "No filter selected"
 msgstr "Nincs kijelölve szűrő"
 
@@ -14684,10 +14715,6 @@ msgstr ""
 "Már van egy görgővezérlő az aktív vezérlők listájában."
 
 #: ../app/widgets/gimpcontrollerlist.c:534
-#| msgid ""
-#| "There can only be one active wheel controller.\n"
-#| "\n"
-#| "You already have a wheel controller in your list of active controllers."
 msgid ""
 "There can only be one active mouse controller.\n"
 "\n"
@@ -14788,12 +14815,10 @@ msgid "Button 12"
 msgstr "12. gomb"
 
 #: ../app/widgets/gimpcontrollermouse.c:203
-#| msgid "Mouse Pointers"
 msgid "Mouse Buttons"
 msgstr "Egérgombok"
 
 #: ../app/widgets/gimpcontrollermouse.c:244
-#| msgid "Mouse Wheel Events"
 msgid "Mouse Button Events"
 msgstr "Egérgomb-események"
 
@@ -14881,7 +14906,8 @@ msgid ""
 "The next time this device is plugged, default settings will be used."
 msgstr ""
 "Ezen eszköz beállításainak törlését kérte.\n"
-"Az eszköz következő csatlakoztatásakor az alapértelmezett beállításokat kapja meg."
+"Az eszköz következő csatlakoztatásakor az alapértelmezett beállításokat "
+"kapja meg."
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:140
 #: ../app/widgets/gimpdynamicseditor.c:141
@@ -14897,39 +14923,42 @@ msgstr "X döntés"
 msgid "Y tilt"
 msgstr "Y döntés"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:143
+#. Wheel as in mouse or input device wheel
+#: ../app/widgets/gimpdeviceinfoeditor.c:144
 #: ../app/widgets/gimpdynamicseditor.c:145
 #: ../app/widgets/gimpdynamicsoutputeditor.c:73
 msgid "Wheel"
 msgstr "Egérgörgő"
 
 #. the axes
-#: ../app/widgets/gimpdeviceinfoeditor.c:193
+#. The axes of an input device
+#: ../app/widgets/gimpdeviceinfoeditor.c:195
 msgid "Axes"
 msgstr "Tengelyek"
 
 #. the keys
-#: ../app/widgets/gimpdeviceinfoeditor.c:267
+#: ../app/widgets/gimpdeviceinfoeditor.c:269
 msgid "Keys"
 msgstr "Gombok"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:364
-#: ../app/widgets/gimpdeviceinfoeditor.c:582
+#: ../app/widgets/gimpdeviceinfoeditor.c:366
+#: ../app/widgets/gimpdeviceinfoeditor.c:585
 #, c-format
 msgid "none"
 msgstr "(nincs)"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:412
+#. e.g. "Pressure Curve" for mapping input device axes
+#: ../app/widgets/gimpdeviceinfoeditor.c:415
 #, c-format
 msgid "%s Curve"
 msgstr "%s görbe"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:471
+#: ../app/widgets/gimpdeviceinfoeditor.c:474
 #: ../app/widgets/gimpdynamicsoutputeditor.c:209
 msgid "_Reset Curve"
 msgstr "Görbe _visszaállítása"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:484
+#: ../app/widgets/gimpdeviceinfoeditor.c:487
 #, c-format
 msgid "The axis '%s' has no curve"
 msgstr "A(z) „%s” tengelyhez nem tartozik görbe"
@@ -15001,7 +15030,8 @@ msgid "Auto"
 msgstr "Automatikus"
 
 #: ../app/widgets/gimpdockwindow.c:393
-msgid "When enabled the dialog automatically follows the image you are working on."
+msgid ""
+"When enabled the dialog automatically follows the image you are working on."
 msgstr ""
 "Ha be van kapcsolva, akkor a párbeszédablak automatikusan követi az aktuális "
 "képet."
@@ -15037,28 +15067,42 @@ msgstr "Túl sok hibaüzenet."
 msgid "Messages are redirected to stderr."
 msgstr "Az üzenetek a hibakimenetre (stderr) kerülnek."
 
-#: ../app/widgets/gimperrordialog.c:170
+#. %s is a message domain,
+#. * like "GIMP Message" or
+#. * "PNG Message"
+#.
+#: ../app/widgets/gimperrordialog.c:174
 #, c-format
 msgid "%s Message"
 msgstr "%s-üzenet"
 
-#: ../app/widgets/gimpfiledialog.c:327
+#: ../app/widgets/gimpfiledialog.c:330
 msgid "Automatically Detected"
 msgstr "Automatikusan meghatározva"
 
-#: ../app/widgets/gimpfiledialog.c:344
+#: ../app/widgets/gimpfiledialog.c:347
 msgid "By Extension"
 msgstr "Kiterjesztés szerint"
 
-#: ../app/widgets/gimpfiledialog.c:793
+#: ../app/widgets/gimpfiledialog.c:801
 msgid "All files"
 msgstr "Az összes fájl"
 
-#: ../app/widgets/gimpfiledialog.c:798
+#: ../app/widgets/gimpfiledialog.c:806
 msgid "All images"
 msgstr "Az összes kép"
 
-#: ../app/widgets/gimpfiledialog.c:974
+#: ../app/widgets/gimpfiledialog.c:813
+#| msgid "All images"
+msgid "All XCF images"
+msgstr "Az összes XCF kép"
+
+#: ../app/widgets/gimpfiledialog.c:815
+#| msgid "All images"
+msgid "All export images"
+msgstr "Az összes exportált kép"
+
+#: ../app/widgets/gimpfiledialog.c:999
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Fájltípus ki_választása (%s)"
@@ -15137,7 +15181,6 @@ msgstr "Húzás: áthelyezés"
 #: ../app/widgets/gimpgradienteditor.c:1273
 #: ../app/widgets/gimpgradienteditor.c:1294
 #, c-format
-#| msgid "%s%sClick: extend selection"
 msgid "%s-Click: extend selection"
 msgstr "%s-Kattintás: kijelölés kiterjesztése"
 
@@ -15369,7 +15412,6 @@ msgstr "Alfa csatorna zárolása"
 
 #: ../app/widgets/gimpmessagebox.c:433
 #, c-format
-#| msgid "Message repeated once."
 msgid "Message repeated once."
 msgid_plural "Message repeated %d times."
 msgstr[0] "Az üzenet egyszer ismétlődött."
@@ -15798,7 +15840,6 @@ msgid "Open the brush selection dialog"
 msgstr "Ecsetválasztó párbeszédablak megnyitása"
 
 #: ../app/widgets/gimpviewablebox.c:151
-#| msgid "Open the font selection dialog"
 msgid "Open the dynamics selection dialog"
 msgstr "Ecsetdinamika-választó párbeszédablak megnyitása"
 
@@ -15944,7 +15985,7 @@ msgctxt "tab-style"
 msgid "Undefined"
 msgstr "Nem meghatározott"
 
-#: ../app/xcf/xcf-load.c:336
+#: ../app/xcf/xcf-load.c:339
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -15952,7 +15993,7 @@ msgstr ""
 "Ez az XCF-fájl sérült. A program betöltötte a fájl lehető legnagyobb részét, "
 "de az nem teljes."
 
-#: ../app/xcf/xcf-load.c:347
+#: ../app/xcf/xcf-load.c:350
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -15960,7 +16001,7 @@ msgstr ""
 "Ez az XCF-fájl sérült. Még részleges képadatokat sem sikerült kinyerni "
 "belőle."
 
-#: ../app/xcf/xcf-load.c:420
+#: ../app/xcf/xcf-load.c:423
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -16478,4 +16519,3 @@ msgstr "Képek létrehozása és fotók szerkesztése"
 
 #~ msgid "Empty Path"
 #~ msgstr "Üres útvonal"
-
