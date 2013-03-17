@@ -347,7 +347,7 @@ gimp_get_default_language (const gchar *category)
 GimpUnit
 gimp_get_default_unit (void)
 {
-#ifdef HAVE__NL_MEASUREMENT_MEASUREMENT
+#if defined (HAVE__NL_MEASUREMENT_MEASUREMENT)
   const gchar *measurement = nl_langinfo (_NL_MEASUREMENT_MEASUREMENT);
 
   switch (*((guchar *) measurement))
@@ -357,6 +357,27 @@ gimp_get_default_unit (void)
 
     case 2: /* imperial */
       return GIMP_UNIT_INCH;
+    }
+
+#elif defined (G_OS_WIN32)
+  DWORD measurement;
+  int   ret;
+
+  ret = GetLocaleInfo(LOCALE_USER_DEFAULT,
+                      LOCALE_IMEASURE | LOCALE_RETURN_NUMBER,
+                      (LPTSTR)&measurement,
+                      sizeof(measurement) / sizeof(TCHAR) );
+
+  if (ret != 0) /* GetLocaleInfo succeeded */
+    {
+    switch ((guint) measurement)
+      {
+      case 0: /* metric */
+        return GIMP_UNIT_MM;
+
+      case 1: /* imperial */
+        return GIMP_UNIT_INCH;
+      }
     }
 #endif
 
