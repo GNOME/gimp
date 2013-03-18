@@ -156,7 +156,9 @@ static void
 gimp_statusbar_init (GimpStatusbar *statusbar)
 {
   GtkWidget     *hbox;
+  GtkWidget     *hbox2;
   GtkWidget     *image;
+  GtkWidget     *label;
   GimpUnitStore *store;
   GList         *children;
 
@@ -239,18 +241,30 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->progressbar, TRUE, TRUE, 0);
   /*  don't show the progress bar  */
 
+  /*  construct the cancel button's contents manually because we
+   *  always want image and label regardless of settings, and we want
+   *  a menu size image.
+   */
   statusbar->cancel_button = gtk_button_new ();
   gtk_widget_set_can_focus (statusbar->cancel_button, FALSE);
   gtk_button_set_relief (GTK_BUTTON (statusbar->cancel_button),
                          GTK_RELIEF_NONE);
   gtk_widget_set_sensitive (statusbar->cancel_button, FALSE);
-  gtk_box_pack_start (GTK_BOX (hbox),
-                      statusbar->cancel_button, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (hbox),
+                    statusbar->cancel_button, FALSE, FALSE, 0);
   /*  don't show the cancel button  */
 
+  hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_container_add (GTK_CONTAINER (statusbar->cancel_button), hbox2);
+  gtk_widget_show (hbox2);
+
   image = gtk_image_new_from_stock (GTK_STOCK_CANCEL, GTK_ICON_SIZE_MENU);
-  gtk_container_add (GTK_CONTAINER (statusbar->cancel_button), image);
+  gtk_box_pack_start (GTK_BOX (hbox2), image, FALSE, FALSE, 2);
   gtk_widget_show (image);
+
+  label = gtk_label_new ("Cancel");
+  gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 2);
+  gtk_widget_show (label);
 
   g_signal_connect (statusbar->cancel_button, "clicked",
                     G_CALLBACK (gimp_statusbar_progress_canceled),
