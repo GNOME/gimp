@@ -69,7 +69,12 @@ plug_in_icc_profile_apply_rgb (GimpImage     *image,
   gimp = image->gimp;
 
   if (gimp_image_base_type (image) == GIMP_GRAY)
-    return FALSE;
+    {
+      g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_EXECUTION_FAILED,
+                   _("Can't apply color profile to grayscale image (%s)"),
+                   ICC_PROFILE_APPLY_RGB_PROC);
+      return FALSE;
+    }
 
   procedure = gimp_pdb_lookup_procedure (gimp->pdb, ICC_PROFILE_APPLY_RGB_PROC);
 
