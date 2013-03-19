@@ -7,15 +7,15 @@
 # Fotis Tsamis <ftsamis@gmail.com>, 2009.
 # Βασίλης Κοντογιάνης <vasilisk@ics.forth.gr>, 2011.
 # Evgenia Petoumenou <epetoumenou@gmail.com>, 2011.
-# Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2011, 2012.
+# Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2011, 2012, 2013.
 # Dimitris Spingos (Δημήτρης  Σπίγγος) <dmtrs32@gmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master.el.po\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
 "eywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-10-22 17:06+0000\n"
-"PO-Revision-Date: 2012-10-24 09:28+0300\n"
+"POT-Creation-Date: 2013-03-18 12:50+0000\n"
+"PO-Revision-Date: 2013-03-19 12:04+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@gnome.gr\n"
 "Language: el\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Virtaal 0.7.0\n"
+"X-Generator: Virtaal 0.7.1\n"
 "X-Poedit-Country: GREECE\n"
 "X-Poedit-Language: Greek\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -461,7 +461,7 @@ msgstr "Επεξεργαστής κειμένου"
 msgid "Tool Options"
 msgstr "Επιλογές εργαλείων"
 
-#: ../app/actions/actions.c:226 ../app/widgets/gimptoolpalette.c:388
+#: ../app/actions/actions.c:226 ../app/widgets/gimptoolpalette.c:390
 msgid "Tools"
 msgstr "Εργαλεία"
 
@@ -994,13 +994,13 @@ msgid "Use the composite color of all visible layers"
 msgstr "Χρήση του σύνθετου χρώματος από όλες τις ορατές στρώσεις"
 
 #: ../app/actions/data-commands.c:89 ../app/actions/documents-commands.c:344
-#: ../app/actions/file-commands.c:194 ../app/dialogs/file-open-dialog.c:232
+#: ../app/actions/file-commands.c:195 ../app/dialogs/file-open-dialog.c:232
 #: ../app/dialogs/file-open-dialog.c:277
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:592
-#: ../app/widgets/gimplayertreeview.c:736 ../app/widgets/gimptoolbox-dnd.c:170
-#: ../app/widgets/gimptoolbox.c:833
+#: ../app/widgets/gimplayertreeview.c:736 ../app/widgets/gimptoolbox-dnd.c:168
+#: ../app/widgets/gimptoolbox.c:818
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1376,7 +1376,7 @@ msgid "About GIMP"
 msgstr "Περί GIMP"
 
 #: ../app/actions/dialogs-actions.c:328
-#: ../app/dialogs/preferences-dialog.c:1944 ../app/widgets/gimptoolbox.c:555
+#: ../app/dialogs/preferences-dialog.c:1944 ../app/widgets/gimptoolbox.c:540
 msgid "Toolbox"
 msgstr "Εργαλειοθήκη"
 
@@ -2448,51 +2448,51 @@ msgstr "Αντικατάστασ_η του %s"
 msgid "Export to"
 msgstr "Εξαγωγή σε"
 
-#: ../app/actions/file-commands.c:112 ../app/actions/file-commands.c:489
+#: ../app/actions/file-commands.c:113 ../app/actions/file-commands.c:490
 #: ../app/dialogs/file-open-dialog.c:77
 msgid "Open Image"
 msgstr "Άνοιγμα εικόνας"
 
-#: ../app/actions/file-commands.c:133
+#: ../app/actions/file-commands.c:134
 msgid "Open Image as Layers"
 msgstr "Άνοιγμα εικόνας ως στρώσεις"
 
-#: ../app/actions/file-commands.c:265
+#: ../app/actions/file-commands.c:266
 msgid "No changes need to be saved"
 msgstr "Δεν υπάρχουν αλλαγές για αποθήκευση"
 
-#: ../app/actions/file-commands.c:272 ../app/dialogs/file-save-dialog.c:95
+#: ../app/actions/file-commands.c:273 ../app/dialogs/file-save-dialog.c:95
 msgid "Save Image"
 msgstr "Αποθήκευση εικόνας"
 
-#: ../app/actions/file-commands.c:278
+#: ../app/actions/file-commands.c:279
 msgid "Save a Copy of the Image"
 msgstr "Αποθήκευση ενός αντιγράφου της εικόνας"
 
 #
-#: ../app/actions/file-commands.c:363
+#: ../app/actions/file-commands.c:364
 msgid "Create New Template"
 msgstr "Δημιουργία νέου προτύπου"
 
-#: ../app/actions/file-commands.c:367
+#: ../app/actions/file-commands.c:368
 msgid "Enter a name for this template"
 msgstr "Εισάγετε το όνομα του νέου προτύπου"
 
-#: ../app/actions/file-commands.c:397
+#: ../app/actions/file-commands.c:398
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
 "Η επαναφορά απέτυχε. Δε βρέθηκε όνομα αρχείου συνδεμένου με αυτήν την εικόνα."
 
-#: ../app/actions/file-commands.c:409
+#: ../app/actions/file-commands.c:410
 msgid "Revert Image"
 msgstr "Επαναφορά εικόνας"
 
-#: ../app/actions/file-commands.c:435
+#: ../app/actions/file-commands.c:436
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Επαναφορά του '%s' σε '%s';"
 
-#: ../app/actions/file-commands.c:441
+#: ../app/actions/file-commands.c:442
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -3814,7 +3814,7 @@ msgstr "Επιλογή της στρώσης κάτω από την τρέχου
 #.
 #: ../app/actions/layers-actions.c:442
 msgid "Shortcut: "
-msgstr "Συντόμευση:"
+msgstr "Συντόμευση: "
 
 #. Will be prepended with a modifier key
 #. string, e.g. "Shift"
@@ -7399,7 +7399,7 @@ msgstr "Τρέμουλο"
 
 #: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:375
 #: ../app/gui/session.c:399 ../app/menus/menus.c:464
-#: ../app/widgets/gimpdevices.c:206
+#: ../app/widgets/gimpdevices.c:208
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "Η διαγραφή του \"%s\" απέτυχε: %s"
@@ -9144,7 +9144,7 @@ msgstr "Ξεθώριασμα %s"
 msgid "_Fade"
 msgstr "_Ξεθώριασμα"
 
-#: ../app/dialogs/fade-dialog.c:156 ../app/widgets/gimpdeviceinfoeditor.c:344
+#: ../app/dialogs/fade-dialog.c:156 ../app/widgets/gimpdeviceinfoeditor.c:346
 msgid "_Mode:"
 msgstr "_Κατάσταση:"
 
@@ -9173,7 +9173,7 @@ msgstr "Εξαγωγή εικόνας"
 msgid "_Export"
 msgstr "_Εξαγωγή"
 
-#: ../app/dialogs/file-save-dialog.c:432
+#: ../app/dialogs/file-save-dialog.c:419
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -9183,7 +9183,7 @@ msgstr ""
 "αρχείου από την επέκτασή του. Παρακαλώ εισάγετε την κατάλληλη επέκταση "
 "αρχείου που ταιριάζει στο επιλεγμένο τύπο, ή μην εισάγετε καθόλου επέκταση."
 
-#: ../app/dialogs/file-save-dialog.c:559
+#: ../app/dialogs/file-save-dialog.c:546
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
@@ -9192,7 +9192,7 @@ msgstr ""
 "διαφόρων τύπων. Αν απλά θέλετε να αποθηκεύσετε την εικόνα ως αρχείο XCF του "
 "GIMP, πηγαίνετε αρχείο→αποθήκευση."
 
-#: ../app/dialogs/file-save-dialog.c:566
+#: ../app/dialogs/file-save-dialog.c:553
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
@@ -9200,7 +9200,7 @@ msgstr ""
 "Χρησιμοποιήστε αυτόν το διάλογο για να αποθηκεύσετε την εικόνα ως αρχείο XCF "
 "του GIMP. Για να εξάγετε σε άλλους τύπους αρχείων πηγαίνετε αρχείο→εξαγωγή."
 
-#: ../app/dialogs/file-save-dialog.c:572
+#: ../app/dialogs/file-save-dialog.c:559
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -9209,24 +9209,24 @@ msgstr ""
 "μία γνωστή επέκταση αρχείου ή επιλέξτε έναν τύπο αρχείου από τη λίστα τύπων "
 "αρχείων."
 
-#: ../app/dialogs/file-save-dialog.c:586
+#: ../app/dialogs/file-save-dialog.c:573
 msgid "Extension Mismatch"
 msgstr "Ακατάλληλη επέκταση"
 
-#: ../app/dialogs/file-save-dialog.c:602
+#: ../app/dialogs/file-save-dialog.c:589
 msgid "The given file extension does not match the chosen file type."
 msgstr ""
 "Η δοσμένη επέκταση αρχείου δεν αντιστοιχεί στον επιλεγμένο τύπο αρχείου."
 
-#: ../app/dialogs/file-save-dialog.c:606
+#: ../app/dialogs/file-save-dialog.c:593
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Σίγουρα θέλετε να αποθηκεύσετε την εικόνα οπωσδήποτε με αυτό το όνομα;"
 
-#: ../app/dialogs/file-save-dialog.c:664
+#: ../app/dialogs/file-save-dialog.c:651
 msgid "Saving canceled"
 msgstr "Ακύρωση αποθήκευσης"
 
-#: ../app/dialogs/file-save-dialog.c:672 ../app/widgets/gimpdnd-xds.c:186
+#: ../app/dialogs/file-save-dialog.c:659 ../app/widgets/gimpdnd-xds.c:186
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -10766,7 +10766,7 @@ msgid "Navigate the image display"
 msgstr "Περιήγηση στην οθόνη της εικόνας"
 
 #: ../app/display/gimpdisplayshell.c:746
-#: ../app/display/gimpdisplayshell.c:1325 ../app/widgets/gimptoolbox.c:256
+#: ../app/display/gimpdisplayshell.c:1327 ../app/widgets/gimptoolbox.c:253
 msgid "Drop image files here to open them"
 msgstr "Σύρετε αρχεία εικόνας εδώ για να τα ανοίξετε"
 
@@ -10822,7 +10822,7 @@ msgstr[1] ""
 "Αν δεν αποθηκεύσετε την εικόνα, θα χαθούν οι αλλαγές των τελευταίων %d "
 "λεπτών."
 
-#: ../app/display/gimpdisplayshell-close.c:305
+#: ../app/display/gimpdisplayshell-close.c:311
 #, c-format
 msgid "The image has been exported to '%s'."
 msgstr "Η εικόνα εξάχθηκε στο '%s'."
@@ -10841,6 +10841,7 @@ msgstr "Απόθεση νέου μονοπατιού"
 #: ../app/display/gimpdisplayshell-dnd.c:361
 #: ../app/display/gimpdisplayshell-dnd.c:463 ../app/tools/gimpblendtool.c:173
 #: ../app/tools/gimpbucketfilltool.c:136 ../app/tools/gimpimagemaptool.c:280
+#: ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Δεν επιτρέπεται η τροποποίηση εικονοστοιχείων σε ομάδες στρώσεων."
 
@@ -10848,7 +10849,8 @@ msgstr "Δεν επιτρέπεται η τροποποίηση εικονοστ
 #: ../app/display/gimpdisplayshell-dnd.c:471 ../app/tools/gimpblendtool.c:180
 #: ../app/tools/gimpbucketfilltool.c:143 ../app/tools/gimpcroptool.c:325
 #: ../app/tools/gimpimagemaptool.c:287 ../app/tools/gimppainttool.c:266
-#: ../app/tools/gimptransformtool.c:247 ../app/tools/gimptransformtool.c:1067
+#: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:247
+#: ../app/tools/gimptransformtool.c:1067
 msgid "The active layer's pixels are locked."
 msgstr "Τα εικονοστοιχεία της ενεργής στρώσης είναι κλειδωμένα."
 
@@ -10860,15 +10862,15 @@ msgstr "Απόθεση στρώσεων"
 
 #: ../app/display/gimpdisplayshell-dnd.c:682
 #: ../app/display/gimpdisplayshell-dnd.c:699
-#: ../app/widgets/gimplayertreeview.c:802 ../app/widgets/gimptoolbox-dnd.c:266
+#: ../app/widgets/gimplayertreeview.c:802 ../app/widgets/gimptoolbox-dnd.c:264
 msgid "Dropped Buffer"
 msgstr "Αποτεθείσα μνήμη"
 
-#: ../app/display/gimpdisplayshell-filter-dialog.c:78
+#: ../app/display/gimpdisplayshell-filter-dialog.c:83
 msgid "Color Display Filters"
 msgstr "Φίλτρα έγχρωμης οθόνης"
 
-#: ../app/display/gimpdisplayshell-filter-dialog.c:81
+#: ../app/display/gimpdisplayshell-filter-dialog.c:86
 msgid "Configure Color Display Filters"
 msgstr "Ρύθμιση φίλτρων έγχρωμης οθόνης"
 
@@ -11663,7 +11665,7 @@ msgstr ""
 msgid "Cancelled"
 msgstr "Ακυρώθηκε"
 
-#: ../app/plug-in/gimpplugin.c:639
+#: ../app/plug-in/gimpplugin.c:643
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -11715,7 +11717,7 @@ msgstr "Διερμηνευτές προσθέτων"
 msgid "Plug-In Environment"
 msgstr "Περιβάλλον προσθέτων"
 
-#: ../app/plug-in/gimppluginprocedure.c:980
+#: ../app/plug-in/gimppluginprocedure.c:976
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -11724,7 +11726,7 @@ msgstr ""
 "Σφάλμα κατά την κλήση του '%s':\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:992
+#: ../app/plug-in/gimppluginprocedure.c:988
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -11733,16 +11735,21 @@ msgstr ""
 "Σφάλμα κατά την εκτέλεση του '%s':\n"
 "%s"
 
-#: ../app/plug-in/plug-in-icc-profile.c:112
-#: ../app/plug-in/plug-in-icc-profile.c:187
-#: ../app/plug-in/plug-in-icc-profile.c:246
+#: ../app/plug-in/plug-in-icc-profile.c:74
+#, c-format
+msgid "Can't apply color profile to grayscale image (%s)"
+msgstr "Αδύνατη η εφαρμογή κατατομής χρώματος σε εικόνα γκρίζας κλίμακας (%s)"
+
+#: ../app/plug-in/plug-in-icc-profile.c:117
+#: ../app/plug-in/plug-in-icc-profile.c:192
+#: ../app/plug-in/plug-in-icc-profile.c:251
 #, c-format
 msgid "Error running '%s'"
 msgstr "Σφάλμα κατά την εκτέλεση του '%s'"
 
-#: ../app/plug-in/plug-in-icc-profile.c:136
-#: ../app/plug-in/plug-in-icc-profile.c:197
-#: ../app/plug-in/plug-in-icc-profile.c:256
+#: ../app/plug-in/plug-in-icc-profile.c:141
+#: ../app/plug-in/plug-in-icc-profile.c:202
+#: ../app/plug-in/plug-in-icc-profile.c:261
 #, c-format
 msgid "Plug-In missing (%s)"
 msgstr "Λείπει το πρόσθετο (%s)"
@@ -11772,7 +11779,7 @@ msgstr ""
 "Θα βγει χοροπηδώντας ψηλά\n"
 "και ξεφωνίζοντας άμουσα."
 
-#: ../app/text/gimptext-compat.c:105 ../app/tools/gimptexttool.c:1400
+#: ../app/text/gimptext-compat.c:105 ../app/tools/gimptexttool.c:1402
 msgid "Add Text Layer"
 msgstr "Προσθήκη στρώσης κειμένου"
 
@@ -12045,7 +12052,7 @@ msgstr "%s για μετακίνηση όλης της γραμμής"
 #
 #: ../app/tools/gimpblendtool.c:457
 msgid "Blend: "
-msgstr "Ανάμειξη:"
+msgstr "Ανάμειξη: "
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:111
 msgid "Brightness-Contrast"
@@ -12434,7 +12441,7 @@ msgstr "Πληροφορίες επιλογέα χρωμάτων"
 
 #: ../app/tools/gimpcolortool.c:230 ../app/tools/gimpcolortool.c:403
 msgid "Move Sample Point: "
-msgstr "Μετακίνηση σημείου δειγματοληψίας:"
+msgstr "Μετακίνηση σημείου δειγματοληψίας: "
 
 #: ../app/tools/gimpcolortool.c:395
 msgid "Remove Sample Point"
@@ -12446,7 +12453,7 @@ msgstr "Ακύρωση σημείου δειγματοληψίας"
 
 #: ../app/tools/gimpcolortool.c:404
 msgid "Add Sample Point: "
-msgstr "Προσθήκη σημείου δειγματοληψίας:"
+msgstr "Προσθήκη σημείου δειγματοληψίας: "
 
 #: ../app/tools/gimpconvolvetool.c:73
 msgid "Blur / Sharpen"
@@ -12583,7 +12590,7 @@ msgstr "Κα_νάλι:"
 msgid "R_eset Channel"
 msgstr "_Επαναφορά καναλιού"
 
-#: ../app/tools/gimpcurvestool.c:583 ../app/widgets/gimpdeviceinfoeditor.c:458
+#: ../app/tools/gimpcurvestool.c:583 ../app/widgets/gimpdeviceinfoeditor.c:461
 msgid "Curve _type:"
 msgstr "_Τύπος καμπύλης:"
 
@@ -12682,7 +12689,7 @@ msgstr "Μετακίνηση αιωρούμενης επιλογής"
 #: ../app/tools/gimpeditselectiontool.c:455
 #: ../app/tools/gimpeditselectiontool.c:732
 msgid "Move: "
-msgstr "Μετακίνηση:"
+msgstr "Μετακίνηση: "
 
 #: ../app/tools/gimpellipseselecttool.c:66
 msgid "Ellipse Select"
@@ -13382,7 +13389,7 @@ msgstr "_Μετακίνηση"
 
 #: ../app/tools/gimpmovetool.c:249 ../app/tools/gimpmovetool.c:554
 msgid "Move Guide: "
-msgstr "Μετακίνηση οδηγού:"
+msgstr "Μετακίνηση οδηγού: "
 
 #
 #: ../app/tools/gimpmovetool.c:548
@@ -13395,7 +13402,7 @@ msgstr "Ακύρωση οδηγού"
 
 #: ../app/tools/gimpmovetool.c:554
 msgid "Add Guide: "
-msgstr "Προσθήκη οδηγού:"
+msgstr "Προσθήκη οδηγού: "
 
 #: ../app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush Tool: Paint smooth strokes using a brush"
@@ -13687,7 +13694,7 @@ msgstr "_Ορθογώνια επιλογή"
 
 #: ../app/tools/gimprectangletool.c:1146 ../app/tools/gimprectangletool.c:2016
 msgid "Rectangle: "
-msgstr "Ορθογώνιο:"
+msgstr "Ορθογώνιο: "
 
 #: ../app/tools/gimpregionselectoptions.c:82
 msgid "Allow completely transparent regions to be selected"
@@ -13964,19 +13971,19 @@ msgstr "Εργαλείο κειμένου: Δημιουργήστε ή επεξ�
 msgid "Te_xt"
 msgstr "_Κείμενο"
 
-#: ../app/tools/gimptexttool.c:958
+#: ../app/tools/gimptexttool.c:959
 msgid "Reshape Text Layer"
 msgstr "Επανασχεδίαση στρώσης κειμένου"
 
-#: ../app/tools/gimptexttool.c:1511 ../app/tools/gimptexttool.c:1514
+#: ../app/tools/gimptexttool.c:1513 ../app/tools/gimptexttool.c:1516
 msgid "Confirm Text Editing"
 msgstr "Επιβεβαίωση επεξεργασίας κειμένου"
 
-#: ../app/tools/gimptexttool.c:1518
+#: ../app/tools/gimptexttool.c:1520
 msgid "Create _New Layer"
 msgstr "Δημιουργία _νέας στρώσης"
 
-#: ../app/tools/gimptexttool.c:1542
+#: ../app/tools/gimptexttool.c:1544
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -13991,7 +13998,7 @@ msgstr ""
 "Μπορείτε να επεξεργαστείτε τη στρώση, ή να δημιουργήσετε νέα στρώση κειμένου "
 "από τα ίδια γνωρίσματα του κειμένου."
 
-#: ../app/tools/gimptexttool-editor.c:1179
+#: ../app/tools/gimptexttool-editor.c:1199
 msgid "GIMP Text Editor"
 msgstr "Επεξεργαστής κειμένου GIMP"
 
@@ -14498,7 +14505,7 @@ msgstr "Συντόμευση"
 msgid "Name"
 msgstr "Όνομα"
 
-#: ../app/widgets/gimpactionview.c:633 ../app/widgets/gimpactionview.c:841
+#: ../app/widgets/gimpactionview.c:633 ../app/widgets/gimpactionview.c:843
 msgid "Changing shortcut failed."
 msgstr "Απέτυχε η αλλαγή της συντόμευσης."
 
@@ -14522,11 +14529,11 @@ msgstr ""
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr "Η αλλαγή της συντόμευσης θα αφαιρέσει την υπάρχουσα από \"%s\"."
 
-#: ../app/widgets/gimpactionview.c:776
+#: ../app/widgets/gimpactionview.c:778
 msgid "Invalid shortcut."
 msgstr "Μη έγκυρη συντόμευση."
 
-#: ../app/widgets/gimpactionview.c:865
+#: ../app/widgets/gimpactionview.c:867
 msgid "Removing shortcut failed."
 msgstr "Απέτυχε η αφαίρεση της συντόμευσης."
 
@@ -14563,37 +14570,37 @@ msgstr "(Χωρίς)"
 msgid "Add the current color to the color history"
 msgstr "Προσθήκη του τρέχοντος χρώματος στο ιστορικό χρωμάτων"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:154
+#: ../app/widgets/gimpcolordisplayeditor.c:157
 msgid "Available Filters"
 msgstr "Διαθέσιμα φίλτρα"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:216
+#: ../app/widgets/gimpcolordisplayeditor.c:219
 msgid "Move the selected filter up"
 msgstr "Μετακίνηση του επιλεγμένου φίλτρου προς τα πάνω"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:225
+#: ../app/widgets/gimpcolordisplayeditor.c:228
 msgid "Move the selected filter down"
 msgstr "Μετακίνηση του επιλεγμένου φίλτρου προς τα κάτω"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:271
+#: ../app/widgets/gimpcolordisplayeditor.c:274
 msgid "Active Filters"
 msgstr "Ενεργά φίλτρα"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:322
+#: ../app/widgets/gimpcolordisplayeditor.c:325
 msgid "Reset the selected filter to default values"
 msgstr "Επαναφορά του επιλεγμένου φίλτρου στις προεπιλεγμένες τιμές"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:503
+#: ../app/widgets/gimpcolordisplayeditor.c:527
 #, c-format
 msgid "Add '%s' to the list of active filters"
 msgstr "Προσθήκη του '%s' στη λίστα των ενεργών φίλτρων"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:540
+#: ../app/widgets/gimpcolordisplayeditor.c:564
 #, c-format
 msgid "Remove '%s' from the list of active filters"
 msgstr "Αφαίρεση του '%s' από τη λίστα των ενεργών φίλτρων"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:571
+#: ../app/widgets/gimpcolordisplayeditor.c:595
 msgid "No filter selected"
 msgstr "Χωρίς επιλογή φίλτρου"
 
@@ -15057,39 +15064,42 @@ msgstr "Κλίση X"
 msgid "Y tilt"
 msgstr "Κλίση Y"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:143
+#. Wheel as in mouse or input device wheel
+#: ../app/widgets/gimpdeviceinfoeditor.c:144
 #: ../app/widgets/gimpdynamicseditor.c:145
 #: ../app/widgets/gimpdynamicsoutputeditor.c:73
 msgid "Wheel"
 msgstr "Τροχός"
 
 #. the axes
-#: ../app/widgets/gimpdeviceinfoeditor.c:193
+#. The axes of an input device
+#: ../app/widgets/gimpdeviceinfoeditor.c:195
 msgid "Axes"
 msgstr "Άξονες"
 
 #. the keys
-#: ../app/widgets/gimpdeviceinfoeditor.c:267
+#: ../app/widgets/gimpdeviceinfoeditor.c:269
 msgid "Keys"
 msgstr "Πλήκτρα"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:364
-#: ../app/widgets/gimpdeviceinfoeditor.c:582
+#: ../app/widgets/gimpdeviceinfoeditor.c:366
+#: ../app/widgets/gimpdeviceinfoeditor.c:585
 #, c-format
 msgid "none"
 msgstr "κανένα"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:412
+#. e.g. "Pressure Curve" for mapping input device axes
+#: ../app/widgets/gimpdeviceinfoeditor.c:415
 #, c-format
 msgid "%s Curve"
 msgstr "Καμπύλη %s"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:471
+#: ../app/widgets/gimpdeviceinfoeditor.c:474
 #: ../app/widgets/gimpdynamicsoutputeditor.c:209
 msgid "_Reset Curve"
 msgstr "_Επαναφορά καμπύλης"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:484
+#: ../app/widgets/gimpdeviceinfoeditor.c:487
 #, c-format
 msgid "The axis '%s' has no curve"
 msgstr "Ο άξονας '%s' δεν έχει καμπύλη"
@@ -15201,7 +15211,11 @@ msgstr "Υπερβολικά πολλά μηνύματα σφάλματος!"
 msgid "Messages are redirected to stderr."
 msgstr "Τα μηνύματα θα προωθούνται στο stderr."
 
-#: ../app/widgets/gimperrordialog.c:170
+#. %s is a message domain,
+#. * like "GIMP Message" or
+#. * "PNG Message"
+#.
+#: ../app/widgets/gimperrordialog.c:174
 #, c-format
 msgid "%s Message"
 msgstr "Μήνυμα %s"
@@ -15214,25 +15228,23 @@ msgstr "Αυτόματος εντοπισμός"
 msgid "By Extension"
 msgstr "Κατ' επέκταση"
 
-#: ../app/widgets/gimpfiledialog.c:799
+#: ../app/widgets/gimpfiledialog.c:801
 msgid "All files"
 msgstr "Όλα τα αρχεία"
 
-#: ../app/widgets/gimpfiledialog.c:804
+#: ../app/widgets/gimpfiledialog.c:806
 msgid "All images"
 msgstr "Όλες οι εικόνες"
 
-#: ../app/widgets/gimpfiledialog.c:811
-#| msgid "All images"
+#: ../app/widgets/gimpfiledialog.c:813
 msgid "All XCF images"
 msgstr "Όλες οι εικόνες XCF"
 
-#: ../app/widgets/gimpfiledialog.c:813
-#| msgid "All images"
+#: ../app/widgets/gimpfiledialog.c:815
 msgid "All export images"
 msgstr "Όλες οι εικόνες εξαγωγής"
 
-#: ../app/widgets/gimpfiledialog.c:997
+#: ../app/widgets/gimpfiledialog.c:999
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Επιλογή _τύπου αρχείου (%s)"
