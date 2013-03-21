@@ -36,7 +36,7 @@
     -->
     <!-- <launcher-script>${project}/launcher.sh</launcher-script > -->
     <launcher-script>
-      ${project}/launcher-python.sh
+      ${project}/launcher-2.8.sh
     </launcher-script>
 
     <!-- Not implemented: Optional runtime, could be python or mono

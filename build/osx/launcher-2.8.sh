@@ -28,17 +28,14 @@ bundle_bin="$bundle_res"/bin
 bundle_data="$bundle_res"/share
 bundle_etc="$bundle_res"/etc
 
-export PATH="$bundle_bin:$PATH"
+export PATH="$bundle_bin:$bundle_contents/MacOS:$PATH"
 echo $PATH
 
 # Set $PYTHON to point inside the bundle
 export PYTHON="$bundle_contents/MacOS/python"
+export PYTHONHOME="$bundle_res"
 # Add the bundle's python modules
-PYTHONPATH="$bundle_lib/python2.7:$PYTHONPATH"
-PYTHONPATH="$bundle_lib/python2.7/site-packages:$PYTHONPATH"
 PYTHONPATH="$bundle_lib/gimp/2.0/python:$PYTHONPATH"
-# Add our program's modules to $PYTHONPATH. 
-PYTHONPATH="$bundle_lib/pygtk/2.0:$PYTHONPATH"
 export PYTHONPATH
 
 # Use fallback instead of normal dlyd path, may not be required
