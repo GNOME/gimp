@@ -187,7 +187,6 @@ gimp_gradient_select_run_callback (GimpPdbDialog  *dialog,
                                         G_TYPE_NONE);
 
   gimp_array_free (array);
-  g_free (values);
 
   return return_vals;
 }
