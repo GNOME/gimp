@@ -53,7 +53,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP.  If not, see <http://www.gnu.org/licenses/>."
+"GIMP.  If not, see http://www.gnu.org/licenses/."
 msgstr ""
 "ਜੈਮਪ ਇਕ ਮੁਫਤ/ਮੁਕਤ ਸਾਫਟਵੇਅਰ ਹੈ: ਤੁਸੀਂ ਇਸ ਨੂੰ ਗਨੂ ਜਰਨਲ ਪਬਲਿਕ ਲਾਈਸੈਂਸ, ਜਿਸ ਨੂੰ "
 "ਫਰੀ ਸਾਫਟਵੇਅਰ "
@@ -69,7 +69,7 @@ msgstr ""
 "\n"
 "ਜੈਮਪ ਨਾਲ ਤੁਸੀਂ ਗਨੂ ਜਰਨਲ ਪਬਲਿਕ ਲਾਇਸੈਂਸ ਦੀ ਕਾਪੀ ਪਰਾਪਤ ਕਰੋਗੇ, ਜੇਕਰ ਤੁਹਾਨੂੰ ਨਹੀਂ "
 "ਮਿਲੀ ਹੈ ਤਾਂ "
-"<http://www.gnu.org/licenses/> ਵੇਖੋ।"
+"http://www.gnu.org/licenses/ ਵੇਖੋ।"
 
 #: ../app/app.c:224
 #, c-format

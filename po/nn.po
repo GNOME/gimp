@@ -43,13 +43,13 @@ msgid ""
 "\n"
 "GIMP is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
 "\n"
-"You should have received a copy of the GNU General Public License along with GIMP.  If not, see <http://www.gnu.org/licenses/>."
+"You should have received a copy of the GNU General Public License along with GIMP.  If not, see http://www.gnu.org/licenses/."
 msgstr ""
 "GIMP er fri programvare. Du kan distribuere det vidare og/eller endre det under vilkåra gitt i GNU General Public License som er utgitt av Free Software Foundation, anten versjon 2 av lisensen eller seinare versjon.\n"
 "\n"
 "GIMP blir distribuert i håp om at det kan kome til nytte for noen, men UTAN NOE SOM HELST GARANTI. Ikkje eingong med garanti for å vere MARKNADSDYKTIG eller TILPASSA BESTEMTE BEHOV. Sjå GNU General Public License for nærare informasjon.\n"
 "\n"
-"Du skal ha tatt i mot ein kopi av GNU General Public License saman med dette programmet. Dersom denne manglar, sjå <http://www.gnu.org/licenses/>"
+"Du skal ha tatt i mot ein kopi av GNU General Public License saman med dette programmet. Dersom denne manglar, sjå http://www.gnu.org/licenses/"
 
 #: ../app/app.c:224
 #, c-format

@@ -55,7 +55,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP.  If not, see <http://www.gnu.org/licenses/>."
+"GIMP.  If not, see http://www.gnu.org/licenses/."
 msgstr ""
 "GIMP はフリーソフトウェアです。あなたは、フリーソフトウェア財団 (Free "
 "Software Foundation, Inc.) が定める GNU 一般公衆利用許諾契約書 (GNU General "
@@ -70,7 +70,7 @@ msgstr ""
 "(COPYING という名のファイル) を受け取っているはずですが、もしそうでない場合は"
 "次のウェブページをご覧ください。\n"
 "\n"
-"<http://www.gnu.org/licenses/>"
+"http://www.gnu.org/licenses/"
 
 #: ../app/app.c:224
 #, c-format

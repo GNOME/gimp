@@ -52,13 +52,13 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP.  If not, see <http://www.gnu.org/licenses/>."
+"GIMP.  If not, see http://www.gnu.org/licenses/."
 msgstr ""
 "本程式是自由軟件，你可以遵照自由軟件基金會 (Free Software Foundation) 出版的 GNU 通用公共許可證條款 (GNU General Public License) 第二版來修改和重新發佈這一程式，或者自由選擇使用任何更新的版本。\n"
 "\n"
 "發佈這一程式的目的是希望它有用，但沒有任何擔保。甚至沒有適合特定目的而隱含的擔保。更詳細的情況請參閱 GNU 通用公共許可證。\n"
 "\n"
-"你應該已經和程式一起收到一份 GNU 通用公共許可證的副本。如果還沒有，請查閱<http://www.gnu.org/licenses/>。\n"
+"你應該已經和程式一起收到一份 GNU 通用公共許可證的副本。如果還沒有，請查閱http://www.gnu.org/licenses/。\n"
 
 #: ../app/app.c:220
 #, c-format

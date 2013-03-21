@@ -61,7 +61,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP.  If not, see <http://www.gnu.org/licenses/>."
+"GIMP.  If not, see http://www.gnu.org/licenses/."
 msgstr ""
 "Το GIMP είναι ελεύθερο λογισμικό: μπορείτε να το αναδιανείμετε και/ή να το "
 "τροποποιήσετε υπό τους όρους της γενικής δημόσιας άδειας GNU όπως "
@@ -74,7 +74,7 @@ msgstr ""
 "λεπτομέρειες.\n"
 "\n"
 "Θα πρέπει να έχετε λάβει ένα αντίγραφο της Γενικής Δημόσιας Άδειας GNU μαζί "
-"με αυτό το πρόγραμμα. Αν όχι, δείτε στο  <http://www.gnu.org/licenses/>."
+"με αυτό το πρόγραμμα. Αν όχι, δείτε στο  http://www.gnu.org/licenses/."
 
 #: ../app/app.c:224
 #, c-format

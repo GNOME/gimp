@@ -52,7 +52,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP.  If not, see <http://www.gnu.org/licenses/>."
+"GIMP.  If not, see http://www.gnu.org/licenses/."
 msgstr ""
 "GIMP este software liber; îl puteți redistribui și/sau modifica în "
 "conformitate cu termenii licenței GNU General Public License așa cum este "
@@ -65,7 +65,7 @@ msgstr ""
 "License pentru mai multe detalii.\n"
 "\n"
 "Împreună cu GIMP ar trebui să fi primit o copie a licenței GNU General "
-"Public License; dacă nu, vedeți <http://www.gnu.org/licenses/>."
+"Public License; dacă nu, vedeți http://www.gnu.org/licenses/."
 
 #: ../app/app.c:224
 #, c-format

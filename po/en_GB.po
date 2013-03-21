@@ -52,7 +52,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP.  If not, see <http://www.gnu.org/licenses/>."
+"GIMP.  If not, see http://www.gnu.org/licenses/."
 msgstr ""
 "GIMP is free software: you can redistribute it and/or modify it under the "
 "terms of the GNU General Public Licence as published by the Free Software "
@@ -65,7 +65,7 @@ msgstr ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public Licence along with "
-"GIMP.  If not, see <http://www.gnu.org/licenses/>."
+"GIMP.  If not, see http://www.gnu.org/licenses/."
 
 #: ../app/app.c:224
 #, c-format

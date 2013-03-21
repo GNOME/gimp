@@ -54,13 +54,13 @@ msgid ""
 "\n"
 "GIMP is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
 "\n"
-"You should have received a copy of the GNU General Public License along with GIMP.  If not, see <http://www.gnu.org/licenses/>."
+"You should have received a copy of the GNU General Public License along with GIMP.  If not, see http://www.gnu.org/licenses/."
 msgstr ""
 "GIMP ist freie Software. Sie können es unter den Bedingungen der GNU General Public License, wie von der Free Software Foundation herausgegeben, weitergeben und/oder modifizieren, entweder unter Version 3 der Lizenz oder (wenn Sie es wünschen) jeder späteren Version.\n"
 "\n"
 "Die Veröffentlichung von GIMP erfolgt in der Hoffnung, dass es Ihnen von Nutzen sein wird, aber OHNE JEDE GEWÄHRLEISTUNG - sogar ohne die implizite Gewährleistung der MARKTREIFE oder der EIGNUNG FÜR EINEN BESTIMMTEN ZWECK. Details finden Sie in der GNU General Public License.\n"
 "\n"
-"Sie sollten eine Kopie der GNU General Public License zusammen mit GIMP erhalten haben. Falls nicht, finden Sie sie unter <http://www.gnu.org/licenses/>."
+"Sie sollten eine Kopie der GNU General Public License zusammen mit GIMP erhalten haben. Falls nicht, finden Sie sie unter http://www.gnu.org/licenses/."
 
 #: ../app/app.c:224
 #, c-format

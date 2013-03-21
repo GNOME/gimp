@@ -48,13 +48,13 @@ msgid ""
 "\n"
 "GIMP is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
 "\n"
-"You should have received a copy of the GNU General Public License along with GIMP.  If not, see <http://www.gnu.org/licenses/>."
+"You should have received a copy of the GNU General Public License along with GIMP.  If not, see http://www.gnu.org/licenses/."
 msgstr ""
 "GIMP je prosta programska oprema: lahko jo razširjate in/ali spreminjate pod pogoji Splošne javne licence GNU, ki jo je objavila Free Software Foundation; in sicer tako pod pogoji 3. različice licence kot (če želite) katere koli novejše različice.\n"
 "\n"
 "GIMP razširjamo v upanju, da bo uporaben, vendar BREZ KAKRŠNIH KOLI ZAGOTOVIL ALI GARANCIJE; celo brez implicirane garancije PRODANEGA IZDELKA ali USTREZNOSTI ZA DOLOČEN NAMEN.  Če vas zanima več podrobnosti, si oglejte Splošno javno licenco GNU.\n"
 "\n"
-"Kopijo Splošne javne licence GIMP ste prejeli s programom GIMP; če je niste prejeli, si oglejte <http://www.gnu.org/licenses/>."
+"Kopijo Splošne javne licence GIMP ste prejeli s programom GIMP; če je niste prejeli, si oglejte http://www.gnu.org/licenses/."
 
 #: ../app/app.c:224
 #, c-format

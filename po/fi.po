@@ -60,7 +60,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP.  If not, see <http://www.gnu.org/licenses/>."
+"GIMP.  If not, see http://www.gnu.org/licenses/."
 msgstr ""
 "GIMP on vapaa ohjelma; tätä ohjelmaa on sallittu levittää edelleen ja "
 "muuttaa GNU yleisen lisenssin (GPL lisenssin) ehtojen mukaan sellaisina kuin "
@@ -73,7 +73,7 @@ msgstr ""
 "GPL lisenssistä lisää yksityiskohtia.\n"
 "\n"
 "Tämän ohjelman mukana pitäisi tulla kopio GPL lisenssistä; jos näin ei ole, "
-"katso <http://www.gnu.org/licenses/>."
+"katso http://www.gnu.org/licenses/."
 
 #: ../app/app.c:224
 #, c-format
