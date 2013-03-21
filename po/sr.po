@@ -63,7 +63,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP.  If not, see <http://www.gnu.org/licenses/>."
+"GIMP.  If not, see http://www.gnu.org/licenses/."
 msgstr ""
 "Гимп је слободан софтвер; можете га расподељивати и/или га мењати под "
 "условима ГНУ Опште Јавне Лиценце (GNU GPL) како је објављује Задужбина за "
@@ -75,7 +75,7 @@ msgstr ""
 "НАМЕНИ.  Видите ГНУ Општу Јавну Лиценцу за више детаља.\n"
 "\n"
 "Требали сте да примите примерак ГНУ Опште Јавне Лиценце уз Гимп.  Уколико "
-"нисте, идите на <http://www.gnu.org/licenses/>."
+"нисте, идите на http://www.gnu.org/licenses/."
 
 #: ../app/app.c:224
 #, c-format

@@ -66,7 +66,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP.  If not, see <http://www.gnu.org/licenses/>."
+"GIMP.  If not, see http://www.gnu.org/licenses/."
 msgstr ""
 "A GIMP szabad szoftver: terjesztheti és/vagy módosíthatja a Free Software "
 "Foundation által kiadott GNU General Public License harmadik (vagy bármely "
@@ -78,7 +78,7 @@ msgstr ""
 "tanulmányozza a GNU GPL licencet.\n"
 "\n"
 "A GIMP-hez a GNU General Public License egy példánya is jár, ha nem kapta "
-"meg, tájékozódjon a <http://www.gnu.org/licenses/> oldalon."
+"meg, tájékozódjon a http://www.gnu.org/licenses/ oldalon."
 
 #: ../app/batch.c:75
 #, c-format
