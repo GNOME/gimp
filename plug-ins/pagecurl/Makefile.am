@@ -62,7 +62,7 @@ PAGECURL_IMAGES = \
 
 EXTRA_DIST = $(PAGECURL_IMAGES)
 
-CLEANFILES = $(pagecurl_built_sources) pagecurl-icons.list
+CLEANFILES = $(BUILT_SOURCES) pagecurl-icons.list
 
 pagecurl-icons.list: $(PAGECURL_IMAGES) Makefile.am
 	( rm -f $@; \
