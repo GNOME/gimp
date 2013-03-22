@@ -863,7 +863,12 @@ sample_bi (TileManager  *tm,
    *  out of bounds.
    */
   for (i = 0; i < 4; i++)
-    *(guint*) (&C[i]) = *(guint*) (bg_color);
+    {
+      guint *src = (guint *) bg_color;
+      guint *dst = (guint *) &C[i];
+
+      *dst = *src;
+    }
 
   tile_manager_read_pixel_data_1 (tm, x0, y0, C[0]);
   tile_manager_read_pixel_data_1 (tm, x1, y0, C[2]);
