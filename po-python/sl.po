@@ -1,16 +1,17 @@
+#'gimp/po-python
 # Slovenian translation of gimp-python.
 # Copyright (C) 2004-2007 THE GIMP'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the GIMP package.
 #
-# Martin Srebotnjak <miles@filmsi.net>, 2007.
 # Nedeljko Grabant <nedeljkograbant@gmail.com>, 2007.
+# Martin Srebotnjak <miles@filmsi.net>, 2007 - 2013.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP-Python\n"
+"Project-Id-Version: GIMP-Python master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-11-07 21:59+0000\n"
-"PO-Revision-Date: 2013-01-18 00:50+0100\n"
+"POT-Creation-Date: 2013-03-22 13:00+0000\n"
+"PO-Revision-Date: 2013-03-23 15:38+0100\n"
 "Last-Translator: filmsi\n"
 "Language-Team: Martin Srebotnjak, Nedeljko Grabant <miles@filmsi.net, nedeljkograbant@gmail.com>\n"
 "Language: \n"
@@ -20,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
 "X-Poedit-Language: Slovenian\n"
 "X-Poedit-Country: SLOVENIA\n"
-"X-Poedit-SourceCharset: iso-8859-1\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:394
 msgid "Missing exception information"
@@ -172,7 +173,6 @@ msgid "Blue"
 msgstr "Modra"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:23
-#, fuzzy
 msgid "Luma (Y)"
 msgstr "Luma (Y)"
 
@@ -181,7 +181,6 @@ msgid "Hue"
 msgstr "Obarvanost"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:24
-#| msgid "Green or Saturation"
 msgid "Saturation"
 msgstr "Nasičenost"
 
@@ -198,8 +197,9 @@ msgid "Lightness (HSL)"
 msgstr "Svetlost (HSL)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:26
+#, fuzzy
 msgid "Index"
-msgstr ""
+msgstr "Indeks"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
 msgid "Random"
@@ -218,8 +218,9 @@ msgid "B-color"
 msgstr "B-barva"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:79
+#, fuzzy
 msgid "Chroma (LCHab)"
-msgstr ""
+msgstr "Kroma (LCHab)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:79
 msgid "Hue (LCHab)"
@@ -242,27 +243,30 @@ msgid "All"
 msgstr "Vse"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+#, fuzzy
 msgid "Slice / Array"
-msgstr ""
+msgstr "Rezina / matrika"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+#, fuzzy
 msgid "Autoslice (fg->bg)"
-msgstr ""
+msgstr "Samodejno poreži (spr->zad)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+#, fuzzy
 msgid "Partitioned"
-msgstr ""
+msgstr "Razdeljeno"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:312
+#, fuzzy
 msgid "Slice _expression"
-msgstr ""
+msgstr "_Izraz rezanja"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:313
 msgid "Channel to _sort"
 msgstr "Kanal za _razvrščanje"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:315
-#, fuzzy
 msgid "_Quantization"
 msgstr "_Kvantizacija"
 
@@ -271,12 +275,14 @@ msgid "_Ascending"
 msgstr "N_araščajoče"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:317
+#, fuzzy
 msgid "_Partitioning channel"
-msgstr ""
+msgstr "Kanal raz_deljevanja"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:319
+#, fuzzy
 msgid "Partition q_uantization"
-msgstr ""
+msgstr "K_vantizacija razdelkov"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
