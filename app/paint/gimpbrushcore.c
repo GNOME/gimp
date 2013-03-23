@@ -551,12 +551,14 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
   /* calculate the distance traveled in the coordinate space of the brush */
   temp_vec = core->brush->x_axis;
   gimp_vector2_mul (&temp_vec, core->scale);
+  gimp_vector2_rotate (&temp_vec, core->angle * G_PI * 2);
 
   mag = gimp_vector2_length (&temp_vec);
   xd  = gimp_vector2_inner_product (&delta_vec, &temp_vec) / (mag * mag);
 
   temp_vec = core->brush->y_axis;
   gimp_vector2_mul (&temp_vec, core->scale);
+  gimp_vector2_rotate (&temp_vec, core->angle * G_PI * 2);
 
   mag = gimp_vector2_length (&temp_vec);
   yd  = gimp_vector2_inner_product (&delta_vec, &temp_vec) / (mag * mag);
