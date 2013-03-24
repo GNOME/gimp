@@ -299,11 +299,24 @@ save_image (const gchar  *uri,
                       image_ID,
                       drawable_ID,
                       tmpname,
-                      tmpname) && valid_file (tmpname))
+                      tmpname))
     {
-      if (mapped || uri_backend_save_image (uri, tmpname, run_mode, error))
+      if (mapped)
         {
           status = GIMP_PDB_SUCCESS;
+        }
+      else if (valid_file (tmpname))
+        {
+          if (uri_backend_save_image (uri, tmpname, run_mode, error))
+            {
+              status = GIMP_PDB_SUCCESS;
+            }
+        }
+      else
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Failed to save to temporary file '%s'"),
+                       gimp_filename_to_utf8 (tmpname));
         }
     }
   else
