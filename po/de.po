@@ -11,14 +11,14 @@
 # Jens Seidel <jseidel@cvs.gnome.org>, 2005.
 # Ulf-D. Ehlert <ulfehlert@svn.gnome.org>, 2008-2010.
 # Mario Blättermann <mario.blaettermann@gmail.com>, 2011, 2012.
-# Christian Kirbach <Christian.Kirbach@googlemail.com>, 2011, 2012.
-#
+# Christian Kirbach <Christian.Kirbach@googlemail.com>, 2011, 2012, 2013.
+# Daniel Winzen <d@winzen4.de>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-12 23:56+0100\n"
-"PO-Revision-Date: 2012-11-12 23:57+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2013-03-21 23:12+0000\n"
+"PO-Revision-Date: 2013-03-24 10:29+0100\n"
 "Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -26,8 +26,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Virtaal 0.7.1\n"
 "X-Poedit-Language: German\n"
 "X-Poedit-Country: GERMANY\n"
+"X-Project-Style: gnome\n"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -49,6 +51,19 @@ msgstr ""
 "Spencer Kimball, Peter Mattis und das GIMP-Entwicklerteam"
 
 #: ../app/about.h:34
+#| msgid ""
+#| "GIMP is free software: you can redistribute it and/or modify it under the "
+#| "terms of the GNU General Public License as published by the Free Software "
+#| "Foundation; either version 3 of the License, or (at your option) any "
+#| "later version.\n"
+#| "\n"
+#| "GIMP is distributed in the hope that it will be useful, but WITHOUT ANY "
+#| "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
+#| "FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
+#| "details.\n"
+#| "\n"
+#| "You should have received a copy of the GNU General Public License along "
+#| "with GIMP.  If not, see <http://www.gnu.org/licenses/>."
 msgid ""
 "GIMP is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.\n"
 "\n"
@@ -455,7 +470,7 @@ msgid "Tool Options"
 msgstr "Werkzeugeinstellungen"
 
 #: ../app/actions/actions.c:226
-#: ../app/widgets/gimptoolpalette.c:388
+#: ../app/widgets/gimptoolpalette.c:390
 msgid "Tools"
 msgstr "Werkzeuge"
 
@@ -988,15 +1003,15 @@ msgstr "Das Ergebnis der Komposition aller sichtbaren Ebenen verwenden"
 
 #: ../app/actions/data-commands.c:89
 #: ../app/actions/documents-commands.c:344
-#: ../app/actions/file-commands.c:194
+#: ../app/actions/file-commands.c:195
 #: ../app/dialogs/file-open-dialog.c:232
 #: ../app/dialogs/file-open-dialog.c:277
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:592
 #: ../app/widgets/gimplayertreeview.c:736
-#: ../app/widgets/gimptoolbox-dnd.c:170
-#: ../app/widgets/gimptoolbox.c:833
+#: ../app/widgets/gimptoolbox-dnd.c:168
+#: ../app/widgets/gimptoolbox.c:818
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1376,7 +1391,7 @@ msgstr "Informationen zu GIMP"
 
 #: ../app/actions/dialogs-actions.c:328
 #: ../app/dialogs/preferences-dialog.c:1944
-#: ../app/widgets/gimptoolbox.c:555
+#: ../app/widgets/gimptoolbox.c:540
 msgid "Toolbox"
 msgstr "Werkzeugkasten"
 
@@ -2431,51 +2446,51 @@ msgstr "%s ü_berschreiben"
 msgid "Export to"
 msgstr "Exportieren nach"
 
-#: ../app/actions/file-commands.c:112
-#: ../app/actions/file-commands.c:489
+#: ../app/actions/file-commands.c:113
+#: ../app/actions/file-commands.c:490
 #: ../app/dialogs/file-open-dialog.c:77
 msgid "Open Image"
 msgstr "Bild öffnen"
 
-#: ../app/actions/file-commands.c:133
+#: ../app/actions/file-commands.c:134
 msgid "Open Image as Layers"
 msgstr "Bild als Ebenen öffnen"
 
-#: ../app/actions/file-commands.c:265
+#: ../app/actions/file-commands.c:266
 msgid "No changes need to be saved"
 msgstr "Keine Änderungen zu speichern"
 
-#: ../app/actions/file-commands.c:272
+#: ../app/actions/file-commands.c:273
 #: ../app/dialogs/file-save-dialog.c:95
 msgid "Save Image"
 msgstr "Bild speichern"
 
-#: ../app/actions/file-commands.c:278
+#: ../app/actions/file-commands.c:279
 msgid "Save a Copy of the Image"
 msgstr "Eine Kopie des Bildes speichern"
 
-#: ../app/actions/file-commands.c:363
+#: ../app/actions/file-commands.c:364
 msgid "Create New Template"
 msgstr "Eine neue Vorlage erstellen"
 
-#: ../app/actions/file-commands.c:367
+#: ../app/actions/file-commands.c:368
 msgid "Enter a name for this template"
 msgstr "Bitte geben Sie dieser Vorlage einen Namen"
 
-#: ../app/actions/file-commands.c:397
+#: ../app/actions/file-commands.c:398
 msgid "Revert failed. No file name associated with this image."
 msgstr "Das Bild konnte nicht wiederhergestellt werden, da kein Dateiname mit dem Bild verknüpft ist."
 
-#: ../app/actions/file-commands.c:409
+#: ../app/actions/file-commands.c:410
 msgid "Revert Image"
 msgstr "Bild wiederherstellen"
 
-#: ../app/actions/file-commands.c:435
+#: ../app/actions/file-commands.c:436
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Wollen Sie von »%s« zu »%s« zurückkehren?"
 
-#: ../app/actions/file-commands.c:441
+#: ../app/actions/file-commands.c:442
 msgid "By reverting the image to the state saved on disk, you will lose all changes, including all undo information."
 msgstr "Indem Sie das Bild auf den zuletzt gespeicherten Stand zurücksetzen, werden alle Änderungen einschließlich des Journals verloren gehen."
 
@@ -7174,7 +7189,7 @@ msgstr "Zittern"
 #: ../app/core/gimptooloptions.c:375
 #: ../app/gui/session.c:399
 #: ../app/menus/menus.c:464
-#: ../app/widgets/gimpdevices.c:206
+#: ../app/widgets/gimpdevices.c:208
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "Das Öffnen von »%s« ist fehlgeschlagen: %s"
@@ -8733,7 +8748,8 @@ msgstr ""
 "Axel Wernicke\n"
 "Ulf-D. Ehlert\n"
 "Christian Kirbach\n"
-"Mario Blättermann"
+"Mario Blättermann\n"
+"Daniel Winzen"
 
 #: ../app/dialogs/about-dialog.c:521
 msgid "GIMP is brought to you by"
@@ -8912,39 +8928,39 @@ msgstr "Bild exportieren"
 msgid "_Export"
 msgstr "_Exportieren"
 
-#: ../app/dialogs/file-save-dialog.c:432
+#: ../app/dialogs/file-save-dialog.c:419
 msgid "Saving remote files needs to determine the file format from the file extension. Please enter a file extension that matches the selected file format or enter no file extension at all."
 msgstr "Das Dateiformat entfernter Dateien kann beim Abspeichern nur über die Dateinamenserweiterung erkannt werden. Bitte geben Sie eine Erweiterung an, die dem Typ der gewählten Datei entspricht oder geben Sie gar keine Erweiterung an."
 
-#: ../app/dialogs/file-save-dialog.c:559
+#: ../app/dialogs/file-save-dialog.c:546
 msgid "You can use this dialog to export to various file formats. If you want to save the image to the GIMP XCF format, use File→Save instead."
 msgstr "Sie können diesen Dialog zum Exportieren nach verschiedenen Dateiformaten verwenden. Wenn Sie das Bild als GIMP XCF-Format speichern wollen, so verwenden Sie stattdessen bitte Datei→Speichern."
 
-#: ../app/dialogs/file-save-dialog.c:566
+#: ../app/dialogs/file-save-dialog.c:553
 msgid "You can use this dialog to save to the GIMP XCF format. Use File→Export to export to other file formats."
 msgstr "Sie können diesen Dialog zum Speichern im GIMP XCF-Format verwenden. Verwenden Sie Datei→Exportieren zum Exportieren in andere Dateiformate."
 
-#: ../app/dialogs/file-save-dialog.c:572
+#: ../app/dialogs/file-save-dialog.c:559
 msgid "The given filename does not have any known file extension. Please enter a known file extension or select a file format from the file format list."
 msgstr "Der von Ihnen angegebene Dateiname besitzt keine bekannte Dateinamenserweiterung. Bitte geben Sie eine der bekannten Erweiterungen ein (z.B. .xcf oder .png) oder wählen Sie ein Dateiformat aus der gleichnamigen Liste."
 
-#: ../app/dialogs/file-save-dialog.c:586
+#: ../app/dialogs/file-save-dialog.c:573
 msgid "Extension Mismatch"
 msgstr "Falsche Erweiterung"
 
-#: ../app/dialogs/file-save-dialog.c:602
+#: ../app/dialogs/file-save-dialog.c:589
 msgid "The given file extension does not match the chosen file type."
 msgstr "Die von Ihnen angegebene Dateinamenserweiterung stimmt nicht mit dem gewählten Dateityp überein."
 
-#: ../app/dialogs/file-save-dialog.c:606
+#: ../app/dialogs/file-save-dialog.c:593
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Möchten Sie zum Speichern des Bildes diesen Namen trotzdem verwenden?"
 
-#: ../app/dialogs/file-save-dialog.c:664
+#: ../app/dialogs/file-save-dialog.c:651
 msgid "Saving canceled"
 msgstr "Speichern abgebrochen"
 
-#: ../app/dialogs/file-save-dialog.c:672
+#: ../app/dialogs/file-save-dialog.c:659
 #: ../app/widgets/gimpdnd-xds.c:186
 #, c-format
 msgid ""
@@ -10423,7 +10439,7 @@ msgstr "In der Bildansicht navigieren"
 
 #: ../app/display/gimpdisplayshell.c:746
 #: ../app/display/gimpdisplayshell.c:1327
-#: ../app/widgets/gimptoolbox.c:256
+#: ../app/widgets/gimptoolbox.c:253
 msgid "Drop image files here to open them"
 msgstr "Ziehen Sie Bilddateien hierher, um sie zu öffnen"
 
@@ -10483,6 +10499,7 @@ msgstr "Neuen Pfad ablegen"
 #: ../app/tools/gimpblendtool.c:173
 #: ../app/tools/gimpbucketfilltool.c:136
 #: ../app/tools/gimpimagemaptool.c:280
+#: ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Die Pixel von Ebenengruppen können nicht verändert werden."
 
@@ -10493,6 +10510,7 @@ msgstr "Die Pixel von Ebenengruppen können nicht verändert werden."
 #: ../app/tools/gimpcroptool.c:325
 #: ../app/tools/gimpimagemaptool.c:287
 #: ../app/tools/gimppainttool.c:266
+#: ../app/tools/gimpselectiontool.c:432
 #: ../app/tools/gimptransformtool.c:247
 #: ../app/tools/gimptransformtool.c:1067
 msgid "The active layer's pixels are locked."
@@ -10506,15 +10524,15 @@ msgstr "Ebenen ablegen"
 #: ../app/display/gimpdisplayshell-dnd.c:682
 #: ../app/display/gimpdisplayshell-dnd.c:699
 #: ../app/widgets/gimplayertreeview.c:802
-#: ../app/widgets/gimptoolbox-dnd.c:266
+#: ../app/widgets/gimptoolbox-dnd.c:264
 msgid "Dropped Buffer"
 msgstr "Importierte Ablage"
 
-#: ../app/display/gimpdisplayshell-filter-dialog.c:78
+#: ../app/display/gimpdisplayshell-filter-dialog.c:83
 msgid "Color Display Filters"
 msgstr "Ansichtsfarbfilter"
 
-#: ../app/display/gimpdisplayshell-filter-dialog.c:81
+#: ../app/display/gimpdisplayshell-filter-dialog.c:86
 msgid "Configure Color Display Filters"
 msgstr "Ansichtsfarbfilter konfigurieren"
 
@@ -11325,16 +11343,21 @@ msgstr ""
 "Fehler beim Ausführen von »%s«:\n"
 "%s"
 
-#: ../app/plug-in/plug-in-icc-profile.c:112
-#: ../app/plug-in/plug-in-icc-profile.c:187
-#: ../app/plug-in/plug-in-icc-profile.c:246
+#: ../app/plug-in/plug-in-icc-profile.c:74
+#, c-format
+msgid "Can't apply color profile to grayscale image (%s)"
+msgstr "Farbprofil kann nicht auf Graustufenbild angewendet werden (%s)"
+
+#: ../app/plug-in/plug-in-icc-profile.c:117
+#: ../app/plug-in/plug-in-icc-profile.c:192
+#: ../app/plug-in/plug-in-icc-profile.c:251
 #, c-format
 msgid "Error running '%s'"
 msgstr "Fehler beim Ausführen von »%s«"
 
-#: ../app/plug-in/plug-in-icc-profile.c:136
-#: ../app/plug-in/plug-in-icc-profile.c:197
-#: ../app/plug-in/plug-in-icc-profile.c:256
+#: ../app/plug-in/plug-in-icc-profile.c:141
+#: ../app/plug-in/plug-in-icc-profile.c:202
+#: ../app/plug-in/plug-in-icc-profile.c:261
 #, c-format
 msgid "Plug-In missing (%s)"
 msgstr "Plugin fehlt (%s)"
@@ -11365,7 +11388,7 @@ msgstr ""
 "Taxi quer durch Bayern. 012345689"
 
 #: ../app/text/gimptext-compat.c:105
-#: ../app/tools/gimptexttool.c:1401
+#: ../app/tools/gimptexttool.c:1402
 msgid "Add Text Layer"
 msgstr "Textebene hinzufügen"
 
@@ -13529,16 +13552,16 @@ msgstr "Te_xt"
 msgid "Reshape Text Layer"
 msgstr "Textebene umgestalten"
 
-#: ../app/tools/gimptexttool.c:1512
-#: ../app/tools/gimptexttool.c:1515
+#: ../app/tools/gimptexttool.c:1513
+#: ../app/tools/gimptexttool.c:1516
 msgid "Confirm Text Editing"
 msgstr "Textbearbeitung bestätigen"
 
-#: ../app/tools/gimptexttool.c:1519
+#: ../app/tools/gimptexttool.c:1520
 msgid "Create _New Layer"
 msgstr "_Neue Ebene"
 
-#: ../app/tools/gimptexttool.c:1543
+#: ../app/tools/gimptexttool.c:1544
 msgid ""
 "The layer you selected is a text layer but it has been modified using other tools. Editing the layer with the text tool will discard these modifications.\n"
 "\n"
@@ -14121,37 +14144,37 @@ msgstr "(Keine)"
 msgid "Add the current color to the color history"
 msgstr "Die aktuelle Farbe der Farbliste hinzufügen"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:154
+#: ../app/widgets/gimpcolordisplayeditor.c:157
 msgid "Available Filters"
 msgstr "Verfügbare Filter"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:216
+#: ../app/widgets/gimpcolordisplayeditor.c:219
 msgid "Move the selected filter up"
 msgstr "Den gewählten Filter nach oben verschieben"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:225
+#: ../app/widgets/gimpcolordisplayeditor.c:228
 msgid "Move the selected filter down"
 msgstr "Den gewählten Filter nach unten verschieben"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:271
+#: ../app/widgets/gimpcolordisplayeditor.c:274
 msgid "Active Filters"
 msgstr "Aktive Filter"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:322
+#: ../app/widgets/gimpcolordisplayeditor.c:325
 msgid "Reset the selected filter to default values"
 msgstr "Den gewählten Filter auf die Standardwerte zurücksetzen."
 
-#: ../app/widgets/gimpcolordisplayeditor.c:503
+#: ../app/widgets/gimpcolordisplayeditor.c:527
 #, c-format
 msgid "Add '%s' to the list of active filters"
 msgstr "»%s« zur Liste der aktiven Filter hinzufügen"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:540
+#: ../app/widgets/gimpcolordisplayeditor.c:564
 #, c-format
 msgid "Remove '%s' from the list of active filters"
 msgstr "»%s« aus der Liste der aktiven Filter entfernen"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:571
+#: ../app/widgets/gimpcolordisplayeditor.c:595
 msgid "No filter selected"
 msgstr "Kein Filter ausgewählt"
 
@@ -14756,23 +14779,23 @@ msgstr "Automatisch bestimmen"
 msgid "By Extension"
 msgstr "Nach Endung"
 
-#: ../app/widgets/gimpfiledialog.c:799
+#: ../app/widgets/gimpfiledialog.c:801
 msgid "All files"
 msgstr "Alle Dateien"
 
-#: ../app/widgets/gimpfiledialog.c:804
+#: ../app/widgets/gimpfiledialog.c:806
 msgid "All images"
 msgstr "Alle Bilder"
 
-#: ../app/widgets/gimpfiledialog.c:811
+#: ../app/widgets/gimpfiledialog.c:813
 msgid "All XCF images"
 msgstr "Alle XCF-Bilder"
 
-#: ../app/widgets/gimpfiledialog.c:813
+#: ../app/widgets/gimpfiledialog.c:815
 msgid "All export images"
 msgstr "Alle Export-Bilder"
 
-#: ../app/widgets/gimpfiledialog.c:997
+#: ../app/widgets/gimpfiledialog.c:999
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Datei_typ: %s"
@@ -15725,393 +15748,3 @@ msgstr "Bildeditor"
 msgid "Create images and edit photographs"
 msgstr "Bilder erstellen und Fotografien bearbeiten"
 
-#~ msgctxt "view-action"
-
-#~ msgid "Zoom out"
-#~ msgstr "Verkleinern"
-#~ msgctxt "view-action"
-
-#~ msgid "Zoom in"
-#~ msgstr "Vergrößern"
-#~ msgctxt "windows-action"
-
-#~ msgid ""
-#~ "When enabled GIMP is in a single-window mode. Far from completely "
-#~ "implemented!"
-#~ msgstr ""
-#~ "Bei Aktivierung arbeitet GIMP im Einzelfenster-Modus. Die Implementierung "
-#~ "ist bei weitem noch nicht abgeschlossen."
-#~ msgctxt "undo-type"
-
-#~ msgid "Brightness_Contrast"
-#~ msgstr "Helligkeit/_Kontrast"
-#~ msgctxt "tool"
-
-#~ msgid "_Zoom"
-#~ msgstr "_Vergrößern"
-
-#~ msgid "Opacity:"
-#~ msgstr "Deckkraft:"
-#~ msgctxt "tool-preset-action"
-
-#~ msgid "_Delete Tool Preset"
-#~ msgstr "Werkzeug-Voreinstellung _löschen"
-
-#~ msgid "Message repeated %d times."
-#~ msgstr "Meldung %d mal wiederholt."
-#~ msgctxt "command"
-
-#~ msgid "Flip"
-#~ msgstr "Spiegeln"
-#~ msgctxt "command"
-
-#~ msgid "Perspective"
-#~ msgstr "Perspektive"
-#~ msgctxt "command"
-
-#~ msgid "Rotate"
-#~ msgstr "Drehen"
-#~ msgctxt "command"
-
-#~ msgid "Scale"
-#~ msgstr "Skalieren"
-#~ msgctxt "command"
-
-#~ msgid "Shear"
-#~ msgstr "Scheren"
-
-#~ msgid "Fill from first point"
-#~ msgstr "Ab erstem Punkt füllen"
-
-#~ msgid "Text box resize mode"
-#~ msgstr "Größenänderungsmodus des Textfeldes"
-
-#~ msgid "Preview:"
-#~ msgstr "Vorschau:"
-#~ msgctxt "transform-preview-type"
-
-#~ msgid "Outline"
-#~ msgstr "Umriss"
-#~ msgctxt "transform-preview-type"
-
-#~ msgid "Grid"
-#~ msgstr "Raster"
-#~ msgctxt "transform-preview-type"
-
-#~ msgid "Image"
-#~ msgstr "Bild"
-#~ msgctxt "transform-preview-type"
-
-#~ msgid "Image + Grid"
-#~ msgstr "Bild und Raster"
-
-#~ msgid "Use a running GIMP only, never start a new one"
-#~ msgstr "Nur einen laufenden GIMP-Prozess verwenden, nie einen neuen starten"
-
-#~ msgid "Only check if GIMP is running, then quit"
-#~ msgstr "Nur überprüfen, ob GIMP schon läuft, und danach beenden"
-
-#~ msgid "Print X window ID of GIMP toolbox window, then quit"
-#~ msgstr "X-Window-ID des GIMP-Werkzeugkastens ausgeben und dann beenden"
-
-#~ msgid "Start GIMP without showing the startup window"
-#~ msgstr "GIMP starten, ohne das Startfenster anzuzeigen"
-
-#~ msgid "Could not connect to GIMP."
-#~ msgstr "Es konnte keine Verbindung zu GIMP hergestellt werden."
-
-#~ msgid "Make sure that the Toolbox is visible!"
-#~ msgstr "Bitte stellen Sie sicher, dass der Werkzeugkasten sichtbar ist!"
-
-#~ msgid "Couldn't start '%s': %s"
-#~ msgstr "»%s« konnte nicht gestartet werden: %s"
-
-#~ msgid "Factor"
-#~ msgstr "Faktor"
-
-#~ msgid "Radius:"
-#~ msgstr "Radius:"
-
-#~ msgid "Hardness:"
-#~ msgstr "Härte:"
-
-#~ msgid "Aspect ratio:"
-#~ msgstr "Seitenverhältnis:"
-
-#~ msgid "Spacing:"
-#~ msgstr "Abstand:"
-#~ msgctxt "tool-options-action"
-
-#~ msgid "_Save Options To"
-#~ msgstr "Einstellungen _speichern als"
-#~ msgctxt "tool-options-action"
-
-#~ msgid "_Restore Options From"
-#~ msgstr "Einstellungen l_aden aus"
-#~ msgctxt "tool-options-action"
-
-#~ msgid "Re_name Saved Options"
-#~ msgstr "Gespeicherte Einstellungen _umbenennen"
-#~ msgctxt "tool-options-action"
-
-#~ msgid "_Delete Saved Options"
-#~ msgstr "Gespeicherte Einstellungen _löschen"
-
-# XXX
-#~ msgctxt "tool-options-action"
-#~ msgid "_New Entry..."
-#~ msgstr "_Neuer Eintrag …"
-#~ msgid "Save Tool Options"
-#~ msgstr "Werkzeugeinstellungen speichern"
-#~ msgid "Enter a name for the saved options"
-#~ msgstr "Bitte benennen Sie diese Einstellungen"
-#~ msgid "Rename Saved Tool Options"
-#~ msgstr "Gespeicherte Einstellungen umbenennen"
-#~ msgid "Enter a new name for the saved options"
-#~ msgstr "Bitte benennen Sie diese Einstellungen neu"
-#~ msgid ""
-#~ "Install a private colormap; might be useful on 8-bit (256 colors) "
-#~ "displays."
-#~ msgstr ""
-#~ "Eine private Farbtabelle installieren. Dies ist möglicherweise auf 8-Bit-"
-#~ "Anzeigen (256 Farben) sinnvoll."
-#~ msgid ""
-#~ "Generally only a concern for 8-bit displays, this sets the minimum number "
-#~ "of system colors allocated for GIMP."
-#~ msgstr ""
-#~ "Legt die Mindestanzahl der für GIMP bereitgestellten Systemfarben fest. "
-#~ "Dies ist im Allgemeinen ausschließlich für 8-Bit Anzeigen relevant."
-#, fuzzy
-#~ msgid "Brush Scale"
-#~ msgstr "Pinsel"
-
-#~ msgid "Rate:"
-#~ msgstr "Rate:"
-
-#, fuzzy
-#~ msgid "Flow:"
-#~ msgstr "Gelb:"
-
-#~ msgid "Gradient:"
-#~ msgstr "Farbverlauf:"
-
-#~ msgid "Threshold:"
-#~ msgstr "Schwelle:"
-
-#~ msgid "Tilt:"
-#~ msgstr "Neigung:"
-
-#~ msgid "Type"
-#~ msgstr "Typ"
-
-#~ msgid "Brush:"
-#~ msgstr "Pinsel:"
-
-#~ msgid "Scale:"
-#~ msgstr "Skalieren:"
-
-#~ msgid "Length:"
-#~ msgstr "Länge:"
-
-#~ msgid "Use color from gradient"
-#~ msgstr "Farbe aus Farbverlauf"
-
-#~ msgid "Font:"
-#~ msgstr "Schrift:"
-
-#~ msgid "Instant update"
-#~ msgstr "Sofort auffrischen"
-
-#~ msgid "Save options to..."
-#~ msgstr "Einstellungen speichern als …"
-
-#~ msgid "Restore options from..."
-#~ msgstr "Einstellungen laden von …"
-
-#~ msgid "Delete saved options..."
-#~ msgstr "Einstellungen löschen …"
-
-#~ msgid "Error saving tool options presets: %s"
-#~ msgstr "Fehler beim Schreiben der Werkzeugeinstellungen: %s"
-#~ msgctxt "file-action"
-
-#~ msgid "Save this image with a different name, but keep its current name"
-#~ msgstr ""
-#~ "Dieses Bild unter einem anderen Namen speichern, aber den Namen des "
-#~ "geöffneten Bildes behalten"
-#~ msgctxt "layers-action"
-
-#~ msgid "Te_xt to Selection"
-#~ msgstr "Auswahl aus Te_xt"
-#~ msgctxt "layers-action"
-
-#~ msgid "_Text to Selection"
-#~ msgstr "Auswahl aus _Text"
-#~ msgctxt "layers-action"
-
-#~ msgid "Replace the selection with the text layer's outline"
-#~ msgstr "Die Auswahl mit dem Umriss der Textebene ersetzen"
-#~ msgctxt "layers-action"
-
-#~ msgid "Add the text layer's outline to the current selection"
-#~ msgstr "Den Umriss der Textebene zur aktuellen Auswahl hinzufügen"
-#~ msgctxt "layers-action"
-
-#~ msgid "Subtract the text layer's outline from the current selection"
-#~ msgstr "Den Umriss der Textebene von der aktuellen Auswahl abziehen"
-#~ msgctxt "layers-action"
-
-#~ msgid "Intersect the text layer's outline with the current selection"
-#~ msgstr "Den Umriss der Textebene mit der aktuellen Auswahl schneiden"
-
-#~ msgid "Reset Tool Options"
-#~ msgstr "Werkzeugeinstellungen zurücksetzen"
-
-#~ msgid "Paste"
-#~ msgstr "Einfügen"
-
-#~ msgid "Cut"
-#~ msgstr "Ausschneiden"
-#~ msgctxt "command"
-
-#~ msgid "Rectangle Select"
-#~ msgstr "Rechteckige Auswahl"
-#~ msgctxt "command"
-
-#~ msgid "Ellipse Select"
-#~ msgstr "Elliptische Auswahl"
-#~ msgctxt "command"
-
-#~ msgid "Bucket Fill"
-#~ msgstr "Füllen"
-#~ msgctxt "context-action"
-
-#~ msgid "_Aspect"
-#~ msgstr "P_erspektive"
-#~ msgctxt "dialogs-action"
-
-#~ msgid "T_ools"
-#~ msgstr "_Werkzeuge"
-#~ msgctxt "dialogs-action"
-
-#~ msgid "Open the tools dialog"
-#~ msgstr "Den Dialog »Werkzeuge« anzeigen"
-#~ msgctxt "edit-action"
-
-#~ msgid "Copy the selected region to a named buffer"
-#~ msgstr "Ausgewählten Bereich in eine benannte Ablage kopieren"
-#~ msgctxt "edit-action"
-
-#~ msgid "Fill with P_attern"
-#~ msgstr "Mit _Muster füllen"
-#~ msgctxt "file-action"
-
-#~ msgid "Save as _Template..."
-#~ msgstr "Als _Vorlage speichern …"
-#~ msgctxt "tools-action"
-
-#~ msgid "R_aise Tool"
-#~ msgstr "Werkzeug an_heben"
-#~ msgctxt "tools-action"
-
-#~ msgid "Ra_ise to Top"
-#~ msgstr "Nach ganz _oben"
-#~ msgctxt "tools-action"
-
-#~ msgid "L_ower Tool"
-#~ msgstr "Werkzeug ab_senken"
-#~ msgctxt "tools-action"
-
-#~ msgid "Lo_wer to Bottom"
-#~ msgstr "Nach ganz _unten"
-#~ msgctxt "tools-action"
-
-#~ msgid "_Reset Order & Visibility"
-#~ msgstr "Ordnung und Sichtbarkeit _wiederherstellen"
-#~ msgctxt "tools-action"
-
-#~ msgid "_Show in Toolbox"
-#~ msgstr "Im Werkzeugkasten _anzeigen"
-
-#~ msgid "When enabled, GIMP will show mnemonics in menus."
-#~ msgstr "Wenn ausgewählt, zeigt GIMP Tastenkombinationen in den Menüs an."
-
-#~ msgid ""
-#~ "When enabled, dock windows (the toolbox and palettes) are set to be "
-#~ "transient to the active image window. Most window managers will keep the "
-#~ "dock windows above the image window then, but it may also have other "
-#~ "effects."
-#~ msgstr ""
-#~ "Wenn diese Option ausgewählt ist, werden andockbare Fenster (wie der "
-#~ "Werkzeugkasten oder die Paletten) über dem Bildfenster gehalten. Diese "
-#~ "Funktion ist in den meisten Fenster-Managern vorhanden, allerdings können "
-#~ "auch unerwünschte Nebeneffekte auftreten."
-
-#~ msgid ""
-#~ "The window type hint that is set on the toolbox. This may affect how your "
-#~ "window manager decorates and handles the toolbox window."
-#~ msgstr ""
-#~ "Der für den Werkzeugkasten gesetzte Fenstertyp-Hinweis. Dies beeinflusst "
-#~ "möglicherweise die Art, auf die Ihr Fenster-Manager das Werkzeugkasten-"
-#~ "Fenster darstellt und handhabt."
-
-#~ msgid ""
-#~ "Sets the external web browser to be used.  This can be an absolute path "
-#~ "or the name of an executable to search for in the user's PATH. If the "
-#~ "command contains '%s' it will be replaced with the URL, else the URL will "
-#~ "be appended to the command with a space separating the two."
-#~ msgstr ""
-#~ "Legt den zu benutzenden externen Internet-Browser fest. Dies kann ein "
-#~ "absoluter Pfad oder der Name einer ausführbaren Datei innerhalb der "
-#~ "gesetzten Umgebungsvariable »PATH« sein. Wenn der Befehl das Element »%s« "
-#~ "enthält, wird dieses durch die tatsächliche Internet-Adresse ersetzt - "
-#~ "andernfalls wird die Adresse mit einem vorangehenden Leerzeichen direkt "
-#~ "hinter den Befehl gesetzt."
-#~ msgctxt "undo-type"
-
-#~ msgid "Reposition layer"
-#~ msgstr "Ebene zurücksetzen"
-#~ msgctxt "undo-type"
-
-#~ msgid "Reposition channel"
-#~ msgstr "Kanal verschieben"
-#~ msgctxt "undo-type"
-
-#~ msgid "Reposition path"
-#~ msgstr "Pfad verschieben"
-
-#~ msgid "Show menu _mnemonics (access keys)"
-#~ msgstr "Menü_tastenkombinationen anzeigen"
-
-#~ msgid "Web Browser"
-#~ msgstr "Internet-Browser"
-
-#~ msgid "_Web browser to use:"
-#~ msgstr "Zu verwendender _Internet-Browser:"
-
-#~ msgid "Hint for other _docks:"
-#~ msgstr "Hinweis für andere _Docks:"
-
-#~ msgid "Toolbox and other docks are transient to the active image window"
-#~ msgstr "Werkzeugkasten und andere Docks über dem aktiven Bildfenster halten"
-
-#~ msgid "Do_n't Save"
-#~ msgstr "_Nicht Speichern"
-
-#~ msgid "tool|_Zoom"
-#~ msgstr "_Vergrößerung"
-
-#~ msgid "Direction:"
-#~ msgstr "Richtung:"
-
-#~ msgid "Empty Channel"
-#~ msgstr "Leerer Kanal"
-
-#~ msgid "Pixel dimensions:"
-#~ msgstr "Größe in Pixel:"
-
-#~ msgid "Empty Layer"
-#~ msgstr "Leere Ebene"
-
-#~ msgid "Empty Path"
-#~ msgstr "Leerer Pfad"
