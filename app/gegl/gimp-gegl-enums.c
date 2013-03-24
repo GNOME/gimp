@@ -22,7 +22,7 @@ gimp_cage_mode_get_type (void)
   static const GimpEnumDesc descs[] =
   {
     { GIMP_CAGE_MODE_CAGE_CHANGE, NC_("cage-mode", "Create or adjust the cage"), NULL },
-    { GIMP_CAGE_MODE_DEFORM, NC_("cage-mode", "Deform the cage to deform the image"), NULL },
+    { GIMP_CAGE_MODE_DEFORM, NC_("cage-mode", "Deform the cage\nto deform the image"), NULL },
     { 0, NULL, NULL }
   };
 

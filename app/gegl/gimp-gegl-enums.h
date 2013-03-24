@@ -27,8 +27,8 @@ GType gimp_cage_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_CAGE_MODE_CAGE_CHANGE, /*< desc="Create or adjust the cage"           >*/
-  GIMP_CAGE_MODE_DEFORM       /*< desc="Deform the cage to deform the image" >*/
+  GIMP_CAGE_MODE_CAGE_CHANGE, /*< desc="Create or adjust the cage"            >*/
+  GIMP_CAGE_MODE_DEFORM       /*< desc="Deform the cage\nto deform the image" >*/
 } GimpCageMode;
 
 
