@@ -27,18 +27,20 @@
 
 
 /* Declare local functions. */
-static void        query         (void);
-static void        run           (const gchar      *name,
-                                  gint              nparams,
-                                  const GimpParam  *param,
-                                  gint             *nreturn_vals,
-                                  GimpParam       **return_vals);
 
-static inline gint colours_equal (const guchar     *col1,
-                                  const guchar     *col2,
-                                  gint              bytes);
-static void        do_zcrop      (GimpDrawable     *drawable,
-                                  gint32            image_id);
+static void            query        (void);
+static void            run          (const gchar      *name,
+                                     gint              nparams,
+                                     const GimpParam  *param,
+                                     gint             *nreturn_vals,
+                                     GimpParam       **return_vals);
+
+static inline gboolean colors_equal (const guchar     *col1,
+                                     const guchar     *col2,
+                                     gint              bytes,
+                                     gboolean          has_alpha);
+static void            do_zcrop     (GimpDrawable     *drawable,
+                                     gint32            image_id);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -49,26 +51,8 @@ const GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
-static gint bytes;
-
 
 MAIN ()
-
-static inline gint
-colours_equal (const guchar *col1,
-               const guchar *col2,
-               gint          bytes)
-{
-  gint b;
-
-  for (b = 0; b < bytes; b++)
-    {
-      if (col1[b] != col2[b])
-        return FALSE;
-    }
-
-  return TRUE;
-}
 
 static void
 query (void)
@@ -158,17 +142,45 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
+static inline gboolean
+colors_equal (const guchar *col1,
+              const guchar *col2,
+              gint          bytes,
+              gboolean      has_alpha)
+{
+  if (has_alpha &&
+      col1[bytes - 1] == 0 &&
+      col2[bytes - 1] == 0)
+    {
+      return TRUE;
+    }
+  else
+    {
+      gint b;
+
+      for (b = 0; b < bytes; b++)
+        {
+          if (col1[b] != col2[b])
+            return FALSE;
+        }
+
+      return TRUE;
+    }
+}
+
 static void
 do_zcrop (GimpDrawable *drawable,
           gint32        image_id)
 {
   GimpPixelRgn  srcPR, destPR;
   gint          width, height, x, y;
+  gint          bytes;
   guchar       *buffer;
   gint8        *killrows;
   gint8        *killcols;
   gint32        livingrows, livingcols, destrow, destcol;
   gint          total_area, area;
+  gboolean      has_alpha;
 
   width  = drawable->width;
   height = drawable->height;
@@ -186,6 +198,8 @@ do_zcrop (GimpDrawable *drawable,
   gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
 
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+
   livingrows = 0;
   for (y = 0; y < height; y++)
     {
@@ -195,7 +209,7 @@ do_zcrop (GimpDrawable *drawable,
 
       for (x = 0; x < width * bytes; x += bytes)
         {
-          if (!colours_equal (buffer, &buffer[x], bytes))
+          if (! colors_equal (buffer, &buffer[x], bytes, has_alpha))
             {
               livingrows++;
               killrows[y] = FALSE;
@@ -218,7 +232,7 @@ do_zcrop (GimpDrawable *drawable,
 
       for (y = 0; y < height * bytes; y += bytes)
         {
-          if (!colours_equal(buffer, &buffer[y], bytes))
+          if (! colors_equal (buffer, &buffer[y], bytes, has_alpha))
             {
               livingcols++;
               killcols[x] = FALSE;
