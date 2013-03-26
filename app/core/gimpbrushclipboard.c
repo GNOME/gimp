@@ -201,8 +201,8 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
       TileManager   *tiles = gimp_buffer_get_tiles (gimp->global_buffer);
       GimpImageType  type  = gimp_buffer_get_image_type (gimp->global_buffer);
 
-      width  = MIN (gimp_buffer_get_width  (gimp->global_buffer), 512);
-      height = MIN (gimp_buffer_get_height (gimp->global_buffer), 512);
+      width  = MIN (gimp_buffer_get_width  (gimp->global_buffer), 2048);
+      height = MIN (gimp_buffer_get_height (gimp->global_buffer), 2048);
 
       brush->mask   = temp_buf_new (width, height, 1, 0, 0, NULL);
       brush->pixmap = temp_buf_new (width, height, 3, 0, 0, NULL);
