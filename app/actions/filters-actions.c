@@ -194,6 +194,12 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "The most widely used method for sharpening an image"),
     "gegl:unsharp-mask",
     NULL /* FIXME GIMP_HELP_FILTER_UNSHARP_MASK */ },
+
+  { "filters-vignette", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Vignette..."), NULL,
+    NC_("filters-action", "Applies a vignette to an image"),
+    "gegl:vignette",
+    NULL /* FIXME GIMP_HELP_FILTER_VIGNETTE */ },
 };
 
 void

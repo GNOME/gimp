@@ -649,7 +649,9 @@
 	<menuitem action="filters-photocopy" />
 	<menuitem action="filters-softglow" />
       </menu>
-      <menu action="plug-in-decor-menu" name="Decor" />
+      <menu action="plug-in-decor-menu" name="Decor">
+	<menuitem action="filters-vignette" />
+      </menu>
       <menu action="plug-in-map-menu" name="Map" />
       <menu action="plug-in-render-menu" name="Render">
         <menu action="plug-in-render-clouds-menu" name="Clouds" />

@@ -160,7 +160,8 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:translate", /* pointless */
     "gegl:unsharp-mask", /* in gimp */
     "gegl:value-invert", /* in gimp */
-    "gegl:vector-stroke"
+    "gegl:vector-stroke",
+    "gegl:vignette", /* in gimp */
   };
 
   gchar **categories;
