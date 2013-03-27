@@ -127,7 +127,7 @@ one_line_output (const gchar *program,
 {
   gchar *command = g_strconcat (program, " ", args, NULL);
   FILE  *pipe    = popen (command, "r");
-  gchar  line[1000];
+  gchar  line[4096];
 
   if (pipe == NULL)
     {
