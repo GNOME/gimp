@@ -565,24 +565,35 @@ gimp_levels_config_adjust_by_colors (GimpLevelsConfig     *config,
 
       range = config->high_input[channel] - config->low_input[channel];
       if (range <= 0)
-        return;
+        goto out;
 
       input -= config->low_input[channel];
       if (input < 0)
-        return;
+        goto out;
 
       /* Normalize input and lightness */
       inten = input / range;
-      out_light = lightness/ range;
+      out_light = lightness / range;
 
-      if (out_light <= 0)
-        return;
+      /* See bug 622054: picking pure black or white as gamma doesn't
+       * work. But we cannot compare to 0.0 or 1.0 because cpus and
+       * compilers are shit. If you try to check out_light using
+       * printf() it will give exact 0.0 or 1.0 anyway, probably
+       * because the generated code is different and out_light doesn't
+       * live in a register. That must be why the cpu/compiler mafia
+       * invented epsilon and defined this shit to be the programmer's
+       * responsibility.
+       */
+      if (out_light <= 0.0001 || out_light >= 0.9999)
+        goto out;
 
       /* Map selected color to corresponding lightness */
       config->gamma[channel] = log (inten) / log (out_light);
+      config->gamma[channel] = CLAMP (config->gamma[channel], 0.1, 10.0);
       g_object_notify (G_OBJECT (config), "gamma");
     }
 
+ out:
   g_object_thaw_notify (G_OBJECT (config));
 }
 
