@@ -27,6 +27,8 @@
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 
+#include "operations/gimplevelsconfig.h"
+
 #include "tests.h"
 
 #include "gimp-app-test-utils.h"
@@ -222,6 +224,39 @@ remove_layer (GimpTestFixture *fixture,
   g_assert_cmpint (gimp_image_get_n_layers (image), ==, 0);
 }
 
+/**
+ * white_graypoint_in_red_levels:
+ * @fixture:
+ * @data:
+ *
+ * Makes sure the levels algorithm can handle when the graypoint is
+ * white. It's easy to get a divide by zero problem when trying to
+ * calculate what gamma will give a white graypoint.
+ **/
+static void
+white_graypoint_in_red_levels (GimpTestFixture *fixture,
+                               gconstpointer    data)
+{
+  GimpRGB              black   = { 0, 0, 0, 0 };
+  GimpRGB              gray    = { 1, 1, 1, 1 };
+  GimpRGB              white   = { 1, 1, 1, 1 };
+  GimpHistogramChannel channel = GIMP_HISTOGRAM_RED;
+  GimpLevelsConfig    *config;
+
+  config = g_object_new (GIMP_TYPE_LEVELS_CONFIG, NULL);
+
+  gimp_levels_config_adjust_by_colors (config,
+                                       channel,
+                                       &black,
+                                       &gray,
+                                       &white);
+
+  /* Make sure we didn't end up with an invalid gamma value */
+  g_object_set (config,
+                "gamma", config->gamma[channel],
+                NULL);
+}
+
 int
 main (int    argc,
       char **argv)
@@ -242,6 +277,7 @@ main (int    argc,
   ADD_IMAGE_TEST (add_layer);
   ADD_IMAGE_TEST (remove_layer);
   ADD_IMAGE_TEST (rotate_non_overlapping);
+  ADD_TEST (white_graypoint_in_red_levels);
 
   /* Run the tests */
   result = g_test_run ();
