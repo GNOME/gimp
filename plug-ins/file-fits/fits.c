@@ -723,7 +723,6 @@ load_fits (const gchar *filename,
             break;
         }
     }
-  /* XXX: Needs to be ported to high bit depths */
   else   /* multiple images to compose */
     {
       gint channel;
@@ -734,7 +733,7 @@ load_fits (const gchar *filename,
 
       for (channel = 0; channel < ncompose; channel++)
         {
-          dest = data + tile_height * width * hdulist->bpp * ncompose + channel;
+          dest = data + tile_height * width * hdulist->bpp * ncompose + channel * hdulist->bpp;
           scan_lines = 0;
 
           for (i = 0; i < height; i++)
