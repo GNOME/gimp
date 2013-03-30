@@ -281,7 +281,8 @@ gimp_projection_get_buffer (GimpPickable *pickable)
       proj->buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                                       format);
 
-      proj->validate_handler = gimp_tile_handler_projection_new (graph);
+      proj->validate_handler = gimp_tile_handler_projection_new (graph,
+                                                                 width, height);
       gegl_buffer_add_handler (proj->buffer, proj->validate_handler);
 
       /*  This used to call gimp_tile_handler_projection_invalidate()

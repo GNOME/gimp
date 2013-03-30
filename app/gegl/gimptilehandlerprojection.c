@@ -265,7 +265,9 @@ gimp_tile_handler_projection_command (GeglTileSource  *source,
 }
 
 GeglTileHandler *
-gimp_tile_handler_projection_new (GeglNode *graph)
+gimp_tile_handler_projection_new (GeglNode *graph,
+                                  gint      proj_width,
+                                  gint      proj_height)
 {
   GimpTileHandlerProjection *projection;
 
@@ -273,7 +275,9 @@ gimp_tile_handler_projection_new (GeglNode *graph)
 
   projection = g_object_new (GIMP_TYPE_TILE_HANDLER_PROJECTION, NULL);
 
-  projection->graph = g_object_ref (graph);
+  projection->graph       = g_object_ref (graph);
+  projection->proj_width  = proj_width;
+  projection->proj_height = proj_height;
 
   return GEGL_TILE_HANDLER (projection);
 }
@@ -282,12 +286,14 @@ static void
 gimp_tile_handler_projection_void_pyramid (GeglTileSource *source,
                                            gint            x,
                                            gint            y,
-                                           gint            z)
+                                           gint            z,
+                                           gint            max_z)
 {
   gegl_tile_source_void (source, x, y, z);
 
-  if (x / 2 != x || y / 2 != y)
-    gimp_tile_handler_projection_void_pyramid (source, x / 2, y / 2, z + 1);
+  if (z < max_z)
+    gimp_tile_handler_projection_void_pyramid (source, x / 2, y / 2, z + 1,
+                                               max_z);
 }
 
 void
@@ -298,28 +304,37 @@ gimp_tile_handler_projection_invalidate (GimpTileHandlerProjection *projection,
                                          gint                       height)
 {
   cairo_rectangle_int_t rect = { x, y, width, height };
-  gint                  tile_x1;
-  gint                  tile_y1;
-  gint                  tile_x2;
-  gint                  tile_y2;
-  gint                  tile_x;
-  gint                  tile_y;
+  gint                  n_tiles;
+  gint                  max_z = 0;
 
   g_return_if_fail (GIMP_IS_TILE_HANDLER_PROJECTION (projection));
 
   cairo_region_union_rectangle (projection->dirty_region, &rect);
 
-  tile_x1 = x / projection->tile_width;
-  tile_y1 = y / projection->tile_height;
-  tile_x2 = (x + width  - 1) / projection->tile_width;
-  tile_y2 = (y + height - 1) / projection->tile_height;
+  n_tiles = MAX (projection->proj_width  / projection->tile_width,
+                 projection->proj_height / projection->tile_height) + 1;
 
-  for (tile_y = tile_y1; tile_y <= tile_y2; tile_y++)
+  while (n_tiles >>= 1)
+    max_z++;
+
+  if (max_z > 0)
     {
-      for (tile_x = tile_x1; tile_x <= tile_x2; tile_x++)
+      gint tile_x1 = x / projection->tile_width;
+      gint tile_y1 = y / projection->tile_height;
+      gint tile_x2 = (x + width  - 1) / projection->tile_width;
+      gint tile_y2 = (y + height - 1) / projection->tile_height;
+      gint tile_x;
+      gint tile_y;
+
+      for (tile_y = tile_y1; tile_y <= tile_y2; tile_y++)
         {
-          gimp_tile_handler_projection_void_pyramid (GEGL_TILE_SOURCE (projection),
-                                                     tile_x / 2,  tile_y / 2, 1);
+          for (tile_x = tile_x1; tile_x <= tile_x2; tile_x++)
+            {
+              gimp_tile_handler_projection_void_pyramid (GEGL_TILE_SOURCE (projection),
+                                                         tile_x / 2,
+                                                         tile_y / 2,
+                                                         1, max_z);
+            }
         }
     }
 }

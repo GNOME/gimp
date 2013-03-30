@@ -47,6 +47,8 @@ struct _GimpTileHandlerProjection
   const Babl      *format;
   gint             tile_width;
   gint             tile_height;
+  gint             proj_width;
+  gint             proj_height;
 };
 
 struct _GimpTileHandlerProjectionClass
@@ -56,7 +58,9 @@ struct _GimpTileHandlerProjectionClass
 
 
 GType             gimp_tile_handler_projection_get_type   (void) G_GNUC_CONST;
-GeglTileHandler * gimp_tile_handler_projection_new        (GeglNode                  *graph);
+GeglTileHandler * gimp_tile_handler_projection_new        (GeglNode                  *graph,
+                                                           gint                       proj_width,
+                                                           gint                       proj_height);
 
 void              gimp_tile_handler_projection_invalidate (GimpTileHandlerProjection *projection,
                                                            gint                       x,
