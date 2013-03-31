@@ -51,6 +51,8 @@ static gpointer gimp_tile_handler_projection_command      (GeglTileSource  *sour
                                                            gint             z,
                                                            gpointer         data);
 
+static void     gimp_tile_handler_projection_update_max_z (GimpTileHandlerProjection *projection);
+
 
 G_DEFINE_TYPE (GimpTileHandlerProjection, gimp_tile_handler_projection,
                GEGL_TYPE_TILE_HANDLER)
@@ -126,9 +128,11 @@ gimp_tile_handler_projection_set_property (GObject      *object,
       break;
     case PROP_TILE_WIDTH:
       projection->tile_width = g_value_get_int (value);
+      gimp_tile_handler_projection_update_max_z (projection);
       break;
     case PROP_TILE_HEIGHT:
       projection->tile_height = g_value_get_int (value);
+      gimp_tile_handler_projection_update_max_z (projection);
       break;
 
     default:
@@ -264,6 +268,24 @@ gimp_tile_handler_projection_command (GeglTileSource  *source,
   return retval;
 }
 
+static void
+gimp_tile_handler_projection_update_max_z (GimpTileHandlerProjection *projection)
+{
+  projection->max_z = 0;
+
+  if (projection->proj_width > 0 && projection->proj_height > 0 &&
+      projection->tile_width > 0 && projection->tile_height > 0)
+    {
+      gint n_tiles;
+
+      n_tiles = MAX (projection->proj_width  / projection->tile_width,
+                     projection->proj_height / projection->tile_height) + 1;
+
+      while (n_tiles >>= 1)
+        projection->max_z++;
+    }
+}
+
 GeglTileHandler *
 gimp_tile_handler_projection_new (GeglNode *graph,
                                   gint      proj_width,
@@ -304,20 +326,12 @@ gimp_tile_handler_projection_invalidate (GimpTileHandlerProjection *projection,
                                          gint                       height)
 {
   cairo_rectangle_int_t rect = { x, y, width, height };
-  gint                  n_tiles;
-  gint                  max_z = 0;
 
   g_return_if_fail (GIMP_IS_TILE_HANDLER_PROJECTION (projection));
 
   cairo_region_union_rectangle (projection->dirty_region, &rect);
 
-  n_tiles = MAX (projection->proj_width  / projection->tile_width,
-                 projection->proj_height / projection->tile_height) + 1;
-
-  while (n_tiles >>= 1)
-    max_z++;
-
-  if (max_z > 0)
+  if (projection->max_z > 0)
     {
       gint tile_x1 = x / projection->tile_width;
       gint tile_y1 = y / projection->tile_height;
@@ -333,7 +347,8 @@ gimp_tile_handler_projection_invalidate (GimpTileHandlerProjection *projection,
               gimp_tile_handler_projection_void_pyramid (GEGL_TILE_SOURCE (projection),
                                                          tile_x / 2,
                                                          tile_y / 2,
-                                                         1, max_z);
+                                                         1,
+                                                         projection->max_z);
             }
         }
     }

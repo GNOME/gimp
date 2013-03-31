@@ -49,6 +49,7 @@ struct _GimpTileHandlerProjection
   gint             tile_height;
   gint             proj_width;
   gint             proj_height;
+  gint             max_z;
 };
 
 struct _GimpTileHandlerProjectionClass
