@@ -249,7 +249,7 @@ struct scheme_interface {
 typedef struct scheme_registerable
 {
   foreign_func  f;
-  char *       name;
+  const char *  name;
 }
 scheme_registerable;
 
