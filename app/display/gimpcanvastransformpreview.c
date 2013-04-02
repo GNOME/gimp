@@ -1370,85 +1370,50 @@ gimp_canvas_transform_preview_trace_tri_edge (gint *dest,
                                               gint  x2,
                                               gint  y2)
 {
-  const gint  dy = y2 - y1;
-  gint        dx;
-  gint        xdir;
+  const gint  dx   = x2 - x1;
+  const gint  dy   = y2 - y1;
+  gint        b    = dy;
+  gint       *dptr = dest;
   gint        errorterm;
-  gint        b;
-  gint       *dptr;
 
   if (dy <= 0)
     return;
 
   g_return_if_fail (dest != NULL);
 
-  errorterm = 0;
-  dptr      = dest;
+  if (dx >= 0)
+    {
+      errorterm = 0;
 
-  if (x2 < x1)
-    {
-      dx = x1 - x2;
-      xdir = -1;
-    }
-  else
-    {
-      dx = x2 - x1;
-      xdir = 1;
-    }
-
-  if (dx >= dy)
-    {
-      b = dy;
-      while (b --)
+      while (b--)
         {
-          *dptr = x1;
+          *dptr++ = x1;
+
           errorterm += dx;
 
           while (errorterm > dy)
             {
-              x1 += xdir;
+              x1++;
               errorterm -= dy;
             }
-
-          dptr ++;
         }
     }
-  else if (dy >= dx)
+  else
     {
-      b = dy;
-      while (b --)
-        {
-          *dptr = x1;
-          errorterm += dx;
+      errorterm = dy;
 
-          if (errorterm > dy)
+      while (b--)
+        {
+          while (errorterm > dy)
             {
-              x1 += xdir;
+              x1--;
               errorterm -= dy;
             }
 
-          dptr ++;
-        }
-    }
-  else if (dx == 0)
-    {
-      b = dy;
-      while (b --)
-        {
-          *dptr = x1;
+          /* dx is negative here, so this is effectively an addition: */
+          errorterm -= dx;
 
-          dptr ++;
-        }
-    }
-  else /* dy == dx */
-    {
-      b = dy;
-      while (b --)
-        {
-          *dptr = x1;
-          x1 += xdir;
-
-          dptr ++;
+          *dptr++ = x1;
         }
     }
 }
