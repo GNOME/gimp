@@ -478,11 +478,11 @@ gimp_canvas_transform_preview_draw (GimpCanvasItem   *item,
     gdouble tx1, ty1;                                           \
     gdouble tx2, ty2;                                           \
                                                                 \
-    u[sub][index] = private->x1 + (dx * (col + (index & 1)));   \
-    v[sub][index] = private->y1 + (dy * (row + (index >> 1)));  \
+    tx2 = private->x1 + (dx * (col + (index & 1)));             \
+    ty2 = private->y1 + (dy * (row + (index >> 1)));            \
                                                                 \
     gimp_matrix3_transform_point (&private->transform,          \
-                                  u[sub][index], v[sub][index], \
+                                  tx2, ty2,                     \
                                   &tx1, &ty1);                  \
                                                                 \
     gimp_display_shell_transform_xy_f (shell,                   \
@@ -728,7 +728,7 @@ gimp_canvas_transform_preview_draw_tri (GimpDrawable    *texture,
 
   /* sort vertices in order of y-coordinate */
 
-  for (j = 0; j < 3; j++)
+  for (j = 0; j < 2; j++)
     for (k = j + 1; k < 3; k++)
       if (y[k] < y[j])
         {
