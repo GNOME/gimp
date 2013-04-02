@@ -334,7 +334,7 @@ script_fu_script_get_title (SFScript *script)
   g_return_val_if_fail (script != NULL, NULL);
 
   /* strip mnemonics from the menupath */
-  title = gimp_strip_uline (gettext (script->menu_label));
+  title = gimp_strip_uline (script->menu_label);
 
   /* if this looks like a full menu path, use only the last part */
   if (title[0] == '<' && (tmp = strrchr (title, '/')) && tmp[1])

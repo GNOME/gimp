@@ -287,7 +287,7 @@ script_fu_interface (SFScript  *script,
       /*  we add a colon after the label;
        *  some languages want an extra space here
        */
-      label_text = g_strdup_printf (_("%s:"), gettext (arg->label));
+      label_text = g_strdup_printf (_("%s:"), arg->label);
 
       switch (arg->type)
         {
@@ -350,7 +350,7 @@ script_fu_interface (SFScript  *script,
         case SF_TOGGLE:
           g_free (label_text);
           label_text = NULL;
-          widget = gtk_check_button_new_with_mnemonic (gettext (arg->label));
+          widget = gtk_check_button_new_with_mnemonic (arg->label);
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
                                         arg->value.sfa_toggle);
 
@@ -511,7 +511,7 @@ script_fu_interface (SFScript  *script,
                list = g_slist_next (list))
             {
               gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (widget),
-                                              gettext (list->data));
+                                              list->data);
             }
 
           gtk_combo_box_set_active (GTK_COMBO_BOX (widget),

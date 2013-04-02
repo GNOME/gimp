@@ -506,10 +506,10 @@ script_fu_add_script (scheme  *sc,
     }
 
   {
-    const gchar *key  = gettext (script->menu_label);
-    GList       *list = g_tree_lookup (script_tree, key);
+    GList *list = g_tree_lookup (script_tree, script->menu_label);
 
-    g_tree_insert (script_tree, (gpointer) key, g_list_append (list, script));
+    g_tree_insert (script_tree, (gpointer) script->menu_label,
+                    g_list_append (list, script));
   }
 
   return sc->NIL;
@@ -876,14 +876,14 @@ script_fu_menu_compare (gconstpointer a,
 
   if (menu_a->menu_path && menu_b->menu_path)
     {
-      retval = g_utf8_collate (gettext (menu_a->menu_path),
-                               gettext (menu_b->menu_path));
+      retval = g_utf8_collate (menu_a->menu_path,
+                               menu_b->menu_path);
 
       if (retval == 0 &&
           menu_a->script->menu_label && menu_b->script->menu_label)
         {
-          retval = g_utf8_collate (gettext (menu_a->script->menu_label),
-                                   gettext (menu_b->script->menu_label));
+          retval = g_utf8_collate (menu_a->script->menu_label,
+                                   menu_b->script->menu_label);
         }
     }
 
