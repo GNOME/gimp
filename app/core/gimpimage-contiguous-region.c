@@ -439,9 +439,6 @@ find_contiguous_segment (const gfloat        *col,
                    0, babl_format ("Y float"), &mask_row[*start],
                    GEGL_AUTO_ROWSTRIDE);
 
-  /* XXX this should now be needed and is a performance killer */
-  gegl_buffer_sample_cleanup (mask_buffer);
-
   return TRUE;
 }
 
