@@ -345,6 +345,12 @@ gimp_unit_get_plural (GimpUnit unit)
   return _gimp_unit_vtable.unit_get_plural (unit);
 }
 
+static gint print (gchar       *buf,
+                   gint         len,
+                   gint         start,
+                   const gchar *fmt,
+                   ...) G_GNUC_PRINTF (4, 5);
+
 static gint
 print (gchar       *buf,
        gint         len,

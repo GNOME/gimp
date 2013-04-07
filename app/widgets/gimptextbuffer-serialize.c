@@ -277,6 +277,13 @@ typedef struct
   GSList *tags;
 } TextSpan;
 
+static void set_error (GError              **err,
+                       GMarkupParseContext  *context,
+                       int                   error_domain,
+                       int                   error_code,
+                       const char           *format,
+                       ...) G_GNUC_PRINTF (5, 6);
+
 static void
 set_error (GError              **err,
            GMarkupParseContext  *context,
