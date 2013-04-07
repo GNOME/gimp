@@ -369,13 +369,20 @@ box_blur_line (const gint    box_width,   /* Width of the kernel           */
       /* If the leading edge has gone off the image, but the output and
        * trailing edge are on the image. (The big loop exits when the
        * output goes off the image. */
-      else
+      else if (trail >= 0)
         {
           for (i = 0; i < bpp; i++)
             {
               ac[i] -= src[bpp * trail + i];
               dest[bpp * output + i] = (ac[i] + (coverage >> 1)) / coverage;
             }
+        }
+      /* Leading has gone off the image and trailing isn't yet in it
+       * (small image) */
+      else if (output >= 0)
+        {
+          for (i = 0; i < bpp; i++)
+            dest[bpp * output + i] = (ac[i] + (coverage >> 1)) / coverage;
         }
 
       lead++;
