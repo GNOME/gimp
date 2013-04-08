@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
 "eywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-03-11 19:59+0000\n"
-"PO-Revision-Date: 2013-03-11 23:45+0300\n"
+"POT-Creation-Date: 2013-04-04 19:07+0000\n"
+"PO-Revision-Date: 2013-04-08 10:31+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@gnome.gr\n"
 "Language: el\n"
@@ -304,100 +304,100 @@ msgstr "Χρωματικό πρότυπο _RGB"
 msgid "_HSL color model"
 msgstr "Χρωματικό πρότυπο _HSL"
 
-#: ../plug-ins/common/align-layers.c:128
+#: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
 msgstr "Στοίχιση όλων των ορατών στρώσεων της εικόνας"
 
-#: ../plug-ins/common/align-layers.c:133
+#: ../plug-ins/common/align-layers.c:163
 msgid "Align Visi_ble Layers..."
 msgstr "Στοίχιση ο_ρατών στρώσεων..."
 
-#: ../plug-ins/common/align-layers.c:173
+#: ../plug-ins/common/align-layers.c:207
 msgid "There are not enough layers to align."
 msgstr "Δεν υπάρχουν αρκετές στρώσεις για στοίχιση."
 
-#: ../plug-ins/common/align-layers.c:400
+#: ../plug-ins/common/align-layers.c:627
 msgid "Align Visible Layers"
 msgstr "Στοίχιση ορατών στρώσεων"
 
 #
-#: ../plug-ins/common/align-layers.c:424 ../plug-ins/common/align-layers.c:455
+#: ../plug-ins/common/align-layers.c:651 ../plug-ins/common/align-layers.c:682
 msgctxt "align-style"
 msgid "None"
 msgstr "Καμία"
 
 #
-#: ../plug-ins/common/align-layers.c:425 ../plug-ins/common/align-layers.c:456
+#: ../plug-ins/common/align-layers.c:652 ../plug-ins/common/align-layers.c:683
 msgid "Collect"
 msgstr "Συλλογή"
 
-#: ../plug-ins/common/align-layers.c:426
+#: ../plug-ins/common/align-layers.c:653
 msgid "Fill (left to right)"
 msgstr "Γέμισμα (από αριστερά προς τα δεξιά)"
 
-#: ../plug-ins/common/align-layers.c:427
+#: ../plug-ins/common/align-layers.c:654
 msgid "Fill (right to left)"
 msgstr "Γέμισμα (από δεξιά προς τα αριστερά)"
 
-#: ../plug-ins/common/align-layers.c:428 ../plug-ins/common/align-layers.c:459
+#: ../plug-ins/common/align-layers.c:655 ../plug-ins/common/align-layers.c:686
 msgid "Snap to grid"
 msgstr "Πρόσδεση σε πλέγμα"
 
-#: ../plug-ins/common/align-layers.c:437
+#: ../plug-ins/common/align-layers.c:664
 msgid "_Horizontal style:"
 msgstr "Οριζόντια μορφοποί_ηση:"
 
-#: ../plug-ins/common/align-layers.c:441
+#: ../plug-ins/common/align-layers.c:668
 msgid "Left edge"
 msgstr "Αριστερή άκρη"
 
-#: ../plug-ins/common/align-layers.c:442 ../plug-ins/common/align-layers.c:472
+#: ../plug-ins/common/align-layers.c:669 ../plug-ins/common/align-layers.c:699
 #: ../plug-ins/gradient-flare/gradient-flare.c:2712
 msgid "Center"
 msgstr "Κέντρο"
 
-#: ../plug-ins/common/align-layers.c:443
+#: ../plug-ins/common/align-layers.c:670
 msgid "Right edge"
 msgstr "Δεξιά άκρη"
 
-#: ../plug-ins/common/align-layers.c:452
+#: ../plug-ins/common/align-layers.c:679
 msgid "Ho_rizontal base:"
 msgstr "Ο_ριζόντια βάση:"
 
-#: ../plug-ins/common/align-layers.c:457
+#: ../plug-ins/common/align-layers.c:684
 msgid "Fill (top to bottom)"
 msgstr "Γέμισμα (από πάνω προς τα κάτω)"
 
-#: ../plug-ins/common/align-layers.c:458
+#: ../plug-ins/common/align-layers.c:685
 msgid "Fill (bottom to top)"
 msgstr "Γέμισμα (από κάτω προς τα πάνω)"
 
-#: ../plug-ins/common/align-layers.c:468
+#: ../plug-ins/common/align-layers.c:695
 msgid "_Vertical style:"
 msgstr "Κά_θετη μορφοποίηση:"
 
-#: ../plug-ins/common/align-layers.c:471
+#: ../plug-ins/common/align-layers.c:698
 msgid "Top edge"
 msgstr "Επάνω άκρη"
 
 #
-#: ../plug-ins/common/align-layers.c:473
+#: ../plug-ins/common/align-layers.c:700
 msgid "Bottom edge"
 msgstr "Κάτω άκρη"
 
-#: ../plug-ins/common/align-layers.c:482
+#: ../plug-ins/common/align-layers.c:709
 msgid "Ver_tical base:"
 msgstr "Κάθε_τη βάση:"
 
-#: ../plug-ins/common/align-layers.c:486
+#: ../plug-ins/common/align-layers.c:713
 msgid "_Grid size:"
 msgstr "Μέ_γεθος πλέγματος:"
 
-#: ../plug-ins/common/align-layers.c:495
+#: ../plug-ins/common/align-layers.c:722
 msgid "_Ignore the bottom layer even if visible"
 msgstr "Αγνόη_ση της κατώτατης στρώσης ακόμα κι αν είναι ορατή"
 
-#: ../plug-ins/common/align-layers.c:505
+#: ../plug-ins/common/align-layers.c:732
 msgid "_Use the (invisible) bottom layer as the base"
 msgstr "_Χρήση της (αόρατης) κατώτατης στρώσης ως βάσης"
 
@@ -2240,19 +2240,19 @@ msgstr "Αυτόματη π_ερικοπή στρώσης"
 msgid "Cropping"
 msgstr "Περικοπή"
 
-#: ../plug-ins/common/crop-zealous.c:84
+#: ../plug-ins/common/crop-zealous.c:68
 msgid "Autocrop unused space from edges and middle"
 msgstr "Αυτόματη περικοπή αχρησιμοποίητου χώρου από τα άκρα και τη μέση"
 
-#: ../plug-ins/common/crop-zealous.c:89
+#: ../plug-ins/common/crop-zealous.c:73
 msgid "_Zealous Crop"
 msgstr "Έ_ξυπνη περικοπή"
 
-#: ../plug-ins/common/crop-zealous.c:137
+#: ../plug-ins/common/crop-zealous.c:121
 msgid "Zealous cropping"
 msgstr "Έξυπνη περικοπή"
 
-#: ../plug-ins/common/crop-zealous.c:238
+#: ../plug-ins/common/crop-zealous.c:252
 msgid "Nothing to crop."
 msgstr "Τίποτα για περικοπή."
 
@@ -3560,7 +3560,7 @@ msgstr "Αριθμός κελιών:"
 
 #: ../plug-ins/common/file-gih.c:983
 msgid " Rows of "
-msgstr "Γραμμές του"
+msgstr " Γραμμές του"
 
 #: ../plug-ins/common/file-gih.c:995
 msgid " Columns on each layer"
@@ -3568,11 +3568,11 @@ msgstr "Στήλες σε κάθε στρώση"
 
 #: ../plug-ins/common/file-gih.c:999
 msgid " (Width Mismatch!) "
-msgstr "(Παράταιρο πλάτος!)"
+msgstr " (Παράταιρο πλάτος!)"
 
 #: ../plug-ins/common/file-gih.c:1003
 msgid " (Height Mismatch!) "
-msgstr "(Παράταιρο ύψος!)"
+msgstr " (Παράταιρο ύψος!)"
 
 #
 #: ../plug-ins/common/file-gih.c:1008
@@ -5327,7 +5327,6 @@ msgstr "Αδυναμία αποθήκευσης εικόνων με άλφα κ�
 
 #: ../plug-ins/common/file-xwd.c:1692 ../plug-ins/common/file-xwd.c:1930
 #, c-format
-#| msgid "The file is corrupt!"
 msgid "XWD-file %s is corrupt."
 msgstr "Το αρχείο XWD %s είναι κατεστραμμένο."
 
@@ -9635,6 +9634,12 @@ msgstr "Κατέβασμα άγνωστης ποσότητας δεδομένω�
 msgid "URI"
 msgstr "URI"
 
+#: ../plug-ins/file-uri/uri.c:318
+#, c-format
+#| msgid "Failed to save PPM file '%s': %s"
+msgid "Failed to save to temporary file '%s'"
+msgstr "Αποτυχία αποθήκευσης σε προσωρινό αρχείο '%s'"
+
 #: ../plug-ins/file-xjt/xjt.c:485 ../plug-ins/file-xjt/xjt.c:503
 msgid "GIMP compressed XJT image"
 msgstr "Το GIMP συμπίεσε εικόνα XJT"
@@ -11629,7 +11634,7 @@ msgstr "Περιστροφή απόχρωσης:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3633
 msgid "G_low"
-msgstr "Λ_άμψη"
+msgstr "Λάμ_ψη"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3737
 msgid "# of Spikes:"
