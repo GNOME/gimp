@@ -88,6 +88,15 @@ void   gimp_channel_select_vectors      (GimpChannel         *channel,
                                          gdouble              feather_radius_x,
                                          gdouble              feather_radius_y,
                                          gboolean             push_undo);
+void   gimp_channel_select_buffer       (GimpChannel         *channel,
+                                         const gchar         *undo_desc,
+                                         GeglBuffer          *add_on,
+                                         gint                 offset_x,
+                                         gint                 offset_y,
+                                         GimpChannelOps       op,
+                                         gboolean             feather,
+                                         gdouble              feather_radius_x,
+                                         gdouble              feather_radius_y);
 
 
 /*  select by GimpChannel functions  */

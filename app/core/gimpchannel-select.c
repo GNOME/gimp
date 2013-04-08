@@ -326,6 +326,56 @@ gimp_channel_select_vectors (GimpChannel    *channel,
 /*  select by GimpChannel functions  */
 
 void
+gimp_channel_select_buffer (GimpChannel    *channel,
+                            const gchar    *undo_desc,
+                            GeglBuffer     *add_on,
+                            gint            offset_x,
+                            gint            offset_y,
+                            GimpChannelOps  op,
+                            gboolean        feather,
+                            gdouble         feather_radius_x,
+                            gdouble         feather_radius_y)
+{
+  g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
+  g_return_if_fail (undo_desc != NULL);
+  g_return_if_fail (GEGL_IS_BUFFER (add_on));
+
+  gimp_channel_push_undo (channel, undo_desc);
+
+  /*  if applicable, replace the current selection  */
+  if (op == GIMP_CHANNEL_OP_REPLACE)
+    gimp_channel_clear (channel, NULL, FALSE);
+
+  if (feather || op == GIMP_CHANNEL_OP_INTERSECT)
+    {
+      GimpItem   *item = GIMP_ITEM (channel);
+      GeglBuffer *add_on2;
+
+      add_on2 = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                 gimp_item_get_width  (item),
+                                                 gimp_item_get_height (item)),
+                                 babl_format ("Y float"));
+
+      gimp_gegl_mask_combine_buffer (add_on2, add_on,
+                                     GIMP_CHANNEL_OP_ADD,
+                                     offset_x, offset_y);
+
+      if (feather)
+        gimp_gegl_apply_feather (add_on2, NULL, NULL, add_on2,
+                                 feather_radius_x,
+                                 feather_radius_y);
+
+      gimp_channel_combine_buffer (channel, add_on2, op, 0, 0);
+      g_object_unref (add_on2);
+    }
+  else
+    {
+      gimp_channel_combine_buffer (channel, add_on, op, offset_x, offset_y);
+    }
+}
+
+void
 gimp_channel_select_channel (GimpChannel    *channel,
                              const gchar    *undo_desc,
                              GimpChannel    *add_on,
@@ -341,41 +391,11 @@ gimp_channel_select_channel (GimpChannel    *channel,
   g_return_if_fail (undo_desc != NULL);
   g_return_if_fail (GIMP_IS_CHANNEL (add_on));
 
-  gimp_channel_push_undo (channel, undo_desc);
-
-  /*  if applicable, replace the current selection  */
-  if (op == GIMP_CHANNEL_OP_REPLACE)
-    gimp_channel_clear (channel, NULL, FALSE);
-
-  if (feather || op == GIMP_CHANNEL_OP_INTERSECT)
-    {
-      GimpItem   *item = GIMP_ITEM (channel);
-      GeglBuffer *add_on_buffer;
-      GeglBuffer *add_on2;
-
-      add_on2 = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                 gimp_item_get_width  (item),
-                                                 gimp_item_get_height (item)),
-                                 babl_format ("Y float"));
-
-      add_on_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (add_on));
-
-      gimp_gegl_mask_combine_buffer (add_on2, add_on_buffer,
-                                     GIMP_CHANNEL_OP_ADD,
-                                     offset_x, offset_y);
-
-      if (feather)
-        gimp_gegl_apply_feather (add_on2, NULL, NULL, add_on2,
-                                 feather_radius_x,
-                                 feather_radius_y);
-
-      gimp_channel_combine_buffer (channel, add_on2, op, 0, 0);
-      g_object_unref (add_on2);
-    }
-  else
-    {
-      gimp_channel_combine_mask (channel, add_on, op, offset_x, offset_y);
-    }
+  gimp_channel_select_buffer (channel, undo_desc,
+                              gimp_drawable_get_buffer (GIMP_DRAWABLE (add_on)),
+                              offset_x, offset_y, op,
+                              feather,
+                              feather_radius_x, feather_radius_y);
 }
 
 void
