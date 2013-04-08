@@ -135,17 +135,26 @@ gimp_image_contiguous_region_by_seed (GimpImage           *image,
       select_transparent = FALSE;
     }
 
-  mask = gimp_channel_new_mask (image,
-                                gegl_buffer_get_width  (src_buffer),
-                                gegl_buffer_get_height (src_buffer));
+  mask_buffer = gegl_buffer_new (gegl_buffer_get_extent (src_buffer),
+                                 babl_format ("Y float"));
 
-  mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+  gegl_buffer_clear (mask_buffer, NULL);
 
   find_contiguous_region_helper (src_buffer, mask_buffer,
                                  format, n_components, has_alpha,
                                  select_transparent, select_criterion,
                                  antialias, threshold,
                                  x, y, start_col);
+
+  /* wrap mask_buffer in a drawable and return it */
+  mask = gimp_channel_new_mask (image,
+                                gegl_buffer_get_width  (mask_buffer),
+                                gegl_buffer_get_height (mask_buffer));
+
+  gegl_buffer_copy (mask_buffer, NULL,
+                    gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)), NULL);
+
+  g_object_unref (mask_buffer);
 
   return mask;
 }
