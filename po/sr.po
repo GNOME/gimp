@@ -7485,7 +7485,7 @@ msgid_plural "Could not read %d bytes from '%s': %s"
 msgstr[0] "Не могу да прочитам %d бајт из „%s“: %s"
 msgstr[1] "Не могу да прочитам %d бајта из „%s“: %s"
 msgstr[2] "Не могу да прочитам %d бајтова из „%s“: %s"
-msgstr[3] "Не могу да прочитам бајт из „%s“: %s"
+msgstr[3] "Не могу да прочитам %d бајт из „%s“: %s"
 
 #: ../app/core/gimpbrush-load.c:202
 #, c-format
