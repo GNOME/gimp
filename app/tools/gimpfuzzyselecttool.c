@@ -43,8 +43,8 @@
 #include "gimp-intl.h"
 
 
-static GimpChannel * gimp_fuzzy_select_tool_get_mask (GimpRegionSelectTool *region_select,
-                                                      GimpDisplay          *display);
+static GeglBuffer * gimp_fuzzy_select_tool_get_mask (GimpRegionSelectTool *region_select,
+                                                     GimpDisplay          *display);
 
 
 G_DEFINE_TYPE (GimpFuzzySelectTool, gimp_fuzzy_select_tool,
@@ -90,7 +90,7 @@ gimp_fuzzy_select_tool_init (GimpFuzzySelectTool *fuzzy_select)
                                      GIMP_TOOL_CURSOR_FUZZY_SELECT);
 }
 
-static GimpChannel *
+static GeglBuffer *
 gimp_fuzzy_select_tool_get_mask (GimpRegionSelectTool *region_select,
                                  GimpDisplay          *display)
 {

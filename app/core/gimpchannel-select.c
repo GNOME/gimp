@@ -497,10 +497,10 @@ gimp_channel_select_fuzzy (GimpChannel         *channel,
                            gdouble              feather_radius_x,
                            gdouble              feather_radius_y)
 {
-  GimpItem    *item;
-  GimpChannel *add_on;
-  gint         add_on_x = 0;
-  gint         add_on_y = 0;
+  GimpItem   *item;
+  GeglBuffer *add_on;
+  gint        add_on_x = 0;
+  gint        add_on_y = 0;
 
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
@@ -520,12 +520,12 @@ gimp_channel_select_fuzzy (GimpChannel         *channel,
   if (! sample_merged)
     gimp_item_get_offset (GIMP_ITEM (drawable), &add_on_x, &add_on_y);
 
-  gimp_channel_select_channel (channel, C_("undo-type", "Fuzzy Select"),
-                               add_on, add_on_x, add_on_y,
-                               op,
-                               feather,
-                               feather_radius_x,
-                               feather_radius_y);
+  gimp_channel_select_buffer (channel, C_("undo-type", "Fuzzy Select"),
+                              add_on, add_on_x, add_on_y,
+                              op,
+                              feather,
+                              feather_radius_x,
+                              feather_radius_y);
   g_object_unref (add_on);
 }
 
@@ -543,10 +543,10 @@ gimp_channel_select_by_color (GimpChannel         *channel,
                               gdouble              feather_radius_x,
                               gdouble              feather_radius_y)
 {
-  GimpItem    *item;
-  GimpChannel *add_on;
-  gint         add_on_x = 0;
-  gint         add_on_y = 0;
+  GimpItem   *item;
+  GeglBuffer *add_on;
+  gint        add_on_x = 0;
+  gint        add_on_y = 0;
 
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
@@ -567,11 +567,11 @@ gimp_channel_select_by_color (GimpChannel         *channel,
   if (! sample_merged)
     gimp_item_get_offset (GIMP_ITEM (drawable), &add_on_x, &add_on_y);
 
-  gimp_channel_select_channel (channel, C_("undo-type", "Select by Color"),
-                               add_on, add_on_x, add_on_y,
-                               op,
-                               feather,
-                               feather_radius_x,
-                               feather_radius_y);
+  gimp_channel_select_buffer (channel, C_("undo-type", "Select by Color"),
+                              add_on, add_on_x, add_on_y,
+                              op,
+                              feather,
+                              feather_radius_x,
+                              feather_radius_y);
   g_object_unref (add_on);
 }

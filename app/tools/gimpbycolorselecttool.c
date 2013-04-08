@@ -45,8 +45,8 @@
 #include "gimp-intl.h"
 
 
-static GimpChannel * gimp_by_color_select_tool_get_mask (GimpRegionSelectTool *region_select,
-                                                         GimpDisplay          *display);
+static GeglBuffer * gimp_by_color_select_tool_get_mask (GimpRegionSelectTool *region_select,
+                                                        GimpDisplay          *display);
 
 
 G_DEFINE_TYPE (GimpByColorSelectTool, gimp_by_color_select_tool,
@@ -91,7 +91,7 @@ gimp_by_color_select_tool_init (GimpByColorSelectTool *by_color_select)
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_HAND);
 }
 
-static GimpChannel *
+static GeglBuffer *
 gimp_by_color_select_tool_get_mask (GimpRegionSelectTool *region_select,
                                     GimpDisplay          *display)
 {

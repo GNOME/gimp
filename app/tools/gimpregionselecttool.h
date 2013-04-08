@@ -44,7 +44,7 @@ struct _GimpRegionSelectTool
   gint               x, y;
   gdouble            saved_threshold;
 
-  GimpChannel       *region_mask;
+  GeglBuffer        *region_mask;
   GimpBoundSeg      *segs;
   gint               n_segs;
 };
@@ -55,8 +55,8 @@ struct _GimpRegionSelectToolClass
 
   const gchar * undo_desc;
 
-  GimpChannel * (* get_mask) (GimpRegionSelectTool *region_tool,
-                              GimpDisplay          *display);
+  GeglBuffer * (* get_mask) (GimpRegionSelectTool *region_tool,
+                             GimpDisplay          *display);
 };
 
 

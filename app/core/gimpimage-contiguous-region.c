@@ -30,7 +30,7 @@
 
 #include "gegl/gimp-babl.h"
 
-#include "gimpchannel.h"
+#include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimpimage-contiguous-region.h"
 #include "gimppickable.h"
@@ -81,7 +81,7 @@ static void find_contiguous_region_helper (GeglBuffer          *src_buffer,
 
 /*  public functions  */
 
-GimpChannel *
+GeglBuffer *
 gimp_image_contiguous_region_by_seed (GimpImage           *image,
                                       GimpDrawable        *drawable,
                                       gboolean             sample_merged,
@@ -94,7 +94,6 @@ gimp_image_contiguous_region_by_seed (GimpImage           *image,
 {
   GimpPickable *pickable;
   GeglBuffer   *src_buffer;
-  GimpChannel  *mask;
   GeglBuffer   *mask_buffer;
   const Babl   *format;
   gint          n_components;
@@ -138,28 +137,16 @@ gimp_image_contiguous_region_by_seed (GimpImage           *image,
   mask_buffer = gegl_buffer_new (gegl_buffer_get_extent (src_buffer),
                                  babl_format ("Y float"));
 
-  gegl_buffer_clear (mask_buffer, NULL);
-
   find_contiguous_region_helper (src_buffer, mask_buffer,
                                  format, n_components, has_alpha,
                                  select_transparent, select_criterion,
                                  antialias, threshold,
                                  x, y, start_col);
 
-  /* wrap mask_buffer in a drawable and return it */
-  mask = gimp_channel_new_mask (image,
-                                gegl_buffer_get_width  (mask_buffer),
-                                gegl_buffer_get_height (mask_buffer));
-
-  gegl_buffer_copy (mask_buffer, NULL,
-                    gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)), NULL);
-
-  g_object_unref (mask_buffer);
-
-  return mask;
+  return mask_buffer;
 }
 
-GimpChannel *
+GeglBuffer *
 gimp_image_contiguous_region_by_color (GimpImage            *image,
                                        GimpDrawable         *drawable,
                                        gboolean              sample_merged,
@@ -177,7 +164,6 @@ gimp_image_contiguous_region_by_color (GimpImage            *image,
    */
   GeglBufferIterator *iter;
   GimpPickable       *pickable;
-  GimpChannel        *mask;
   GeglBuffer         *src_buffer;
   GeglBuffer         *mask_buffer;
   const Babl         *format;
@@ -218,11 +204,8 @@ gimp_image_contiguous_region_by_color (GimpImage            *image,
       select_transparent = FALSE;
     }
 
-  mask = gimp_channel_new_mask (image,
-                                gegl_buffer_get_width  (src_buffer),
-                                gegl_buffer_get_height (src_buffer));
-
-  mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+  mask_buffer = gegl_buffer_new (gegl_buffer_get_extent (src_buffer),
+                                 babl_format ("Y float"));
 
   iter = gegl_buffer_iterator_new (src_buffer,
                                    NULL, 0, format,
@@ -253,7 +236,7 @@ gimp_image_contiguous_region_by_color (GimpImage            *image,
         }
     }
 
-  return mask;
+  return mask_buffer;
 }
 
 

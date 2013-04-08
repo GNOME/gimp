@@ -217,15 +217,15 @@ gimp_region_select_tool_button_release (GimpTool              *tool,
               gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
             }
 
-          gimp_channel_select_channel (gimp_image_get_mask (image),
-                                       GIMP_REGION_SELECT_TOOL_GET_CLASS (tool)->undo_desc,
-                                       region_sel->region_mask,
-                                       off_x,
-                                       off_y,
-                                       sel_options->operation,
-                                       sel_options->feather,
-                                       sel_options->feather_radius,
-                                       sel_options->feather_radius);
+          gimp_channel_select_buffer (gimp_image_get_mask (image),
+                                      GIMP_REGION_SELECT_TOOL_GET_CLASS (tool)->undo_desc,
+                                      region_sel->region_mask,
+                                      off_x,
+                                      off_y,
+                                      sel_options->operation,
+                                      sel_options->feather,
+                                      sel_options->feather_radius,
+                                      sel_options->feather_radius);
 
 
           gimp_image_flush (image);
@@ -343,7 +343,6 @@ gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
                                    gint                 *n_segs)
 {
   GimpDisplayShell *shell = gimp_display_get_shell (display);
-  GeglBuffer       *buffer;
   GimpBoundSeg     *segs;
 
   gimp_display_shell_set_override_cursor (shell, GDK_WATCH);
@@ -366,14 +365,12 @@ gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
   /*  calculate and allocate a new segment array which represents the
    *  boundary of the contiguous region
    */
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (region_sel->region_mask));
-
-  segs = gimp_boundary_find (buffer, NULL,
+  segs = gimp_boundary_find (region_sel->region_mask, NULL,
                              babl_format ("Y float"),
                              GIMP_BOUNDARY_WITHIN_BOUNDS,
                              0, 0,
-                             gimp_item_get_width  (GIMP_ITEM (region_sel->region_mask)),
-                             gimp_item_get_height (GIMP_ITEM (region_sel->region_mask)),
+                             gegl_buffer_get_width  (region_sel->region_mask),
+                             gegl_buffer_get_height (region_sel->region_mask),
                              GIMP_BOUNDARY_HALF_WAY,
                              n_segs);
 
