@@ -239,7 +239,7 @@ gimp_image_contiguous_region_by_color (GimpImage            *image,
                                     select_transparent,
                                     select_criterion);
 
-          src  += 4;
+          src  += n_components;
           dest += 1;
         }
     }
