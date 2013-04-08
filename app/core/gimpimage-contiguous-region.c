@@ -113,10 +113,11 @@ gimp_image_contiguous_region_by_seed (GimpImage           *image,
 
   src_buffer = gimp_pickable_get_buffer (pickable);
 
-  mask_buffer = gegl_buffer_new (gegl_buffer_get_extent (src_buffer),
-                                 babl_format ("Y float"));
+  mask = gimp_channel_new_mask (image,
+                                gegl_buffer_get_width  (src_buffer),
+                                gegl_buffer_get_height (src_buffer));
 
-  gegl_buffer_clear (mask_buffer, NULL);
+  mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
   gegl_buffer_sample (src_buffer, x, y, NULL, start_col, src_format,
                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
@@ -143,15 +144,6 @@ gimp_image_contiguous_region_by_seed (GimpImage           *image,
                                  select_transparent, select_criterion,
                                  antialias, threshold,
                                  x, y, start_col);
-
-  /* wrap mask_buffer in a drawable and return it */
-  mask = gimp_channel_new_mask (image,
-                                gegl_buffer_get_width  (mask_buffer),
-                                gegl_buffer_get_height (mask_buffer));
-
-  gimp_drawable_set_buffer (GIMP_DRAWABLE (mask), FALSE, "", mask_buffer);
-
-  g_object_unref (mask_buffer);
 
   return mask;
 }
