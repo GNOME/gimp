@@ -38,6 +38,10 @@
 
 /*  local function prototypes  */
 
+static const Babl * choose_format         (GeglBuffer          *buffer,
+                                           GimpSelectCriterion  select_criterion,
+                                           gint                *n_components,
+                                           gboolean            *has_alpha);
 static gfloat   pixel_difference          (const gfloat        *col1,
                                            const gfloat        *col2,
                                            gboolean             antialias,
@@ -64,6 +68,8 @@ static gboolean find_contiguous_segment   (const gfloat        *col,
 static void find_contiguous_region_helper (GeglBuffer          *src_buffer,
                                            GeglBuffer          *mask_buffer,
                                            const Babl          *format,
+                                           gint                 n_components,
+                                           gboolean             has_alpha,
                                            gboolean             select_transparent,
                                            GimpSelectCriterion  select_criterion,
                                            gboolean             antialias,
@@ -90,7 +96,9 @@ gimp_image_contiguous_region_by_seed (GimpImage           *image,
   GeglBuffer   *src_buffer;
   GimpChannel  *mask;
   GeglBuffer   *mask_buffer;
-  const Babl   *src_format;
+  const Babl   *format;
+  gint          n_components;
+  gboolean      has_alpha;
   gfloat        start_col[MAX_CHANNELS];
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
@@ -103,31 +111,18 @@ gimp_image_contiguous_region_by_seed (GimpImage           *image,
 
   gimp_pickable_flush (pickable);
 
-  src_format = gimp_pickable_get_format (pickable);
-  if (babl_format_is_palette (src_format))
-    src_format = babl_format ("RGBA float");
-  else
-    src_format = gimp_babl_format (gimp_babl_format_get_base_type (src_format),
-                                   GIMP_PRECISION_FLOAT,
-                                   babl_format_has_alpha (src_format));
-
   src_buffer = gimp_pickable_get_buffer (pickable);
 
-  mask = gimp_channel_new_mask (image,
-                                gegl_buffer_get_width  (src_buffer),
-                                gegl_buffer_get_height (src_buffer));
+  format = choose_format (src_buffer, select_criterion,
+                          &n_components, &has_alpha);
 
-  mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
-
-  gegl_buffer_sample (src_buffer, x, y, NULL, start_col, src_format,
+  gegl_buffer_sample (src_buffer, x, y, NULL, start_col, format,
                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
-  if (babl_format_has_alpha (src_format))
+  if (has_alpha)
     {
       if (select_transparent)
         {
-          gint n_components = babl_format_get_n_components (src_format);
-
           /*  don't select transparent regions if the start pixel isn't
            *  fully transparent
            */
@@ -140,7 +135,14 @@ gimp_image_contiguous_region_by_seed (GimpImage           *image,
       select_transparent = FALSE;
     }
 
-  find_contiguous_region_helper (src_buffer, mask_buffer, src_format,
+  mask = gimp_channel_new_mask (image,
+                                gegl_buffer_get_width  (src_buffer),
+                                gegl_buffer_get_height (src_buffer));
+
+  mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+
+  find_contiguous_region_helper (src_buffer, mask_buffer,
+                                 format, n_components, has_alpha,
                                  select_transparent, select_criterion,
                                  antialias, threshold,
                                  x, y, start_col);
@@ -155,7 +157,7 @@ gimp_image_contiguous_region_by_color (GimpImage            *image,
                                        gboolean              antialias,
                                        gfloat                threshold,
                                        gboolean              select_transparent,
-                                       GimpSelectCriterion  select_criterion,
+                                       GimpSelectCriterion   select_criterion,
                                        const GimpRGB        *color)
 {
   /*  Scan over the image's active layer, finding pixels within the
@@ -169,15 +171,14 @@ gimp_image_contiguous_region_by_color (GimpImage            *image,
   GimpChannel        *mask;
   GeglBuffer         *src_buffer;
   GeglBuffer         *mask_buffer;
-  gint                width, height;
+  const Babl         *format;
+  gint                n_components;
   gboolean            has_alpha;
-  gfloat              col[MAX_CHANNELS];
+  gfloat              start_col[MAX_CHANNELS];
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (color != NULL, NULL);
-
-  gimp_rgba_get_pixel (color, babl_format ("RGBA float"), col);
 
   if (sample_merged)
     pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
@@ -186,15 +187,12 @@ gimp_image_contiguous_region_by_color (GimpImage            *image,
 
   gimp_pickable_flush (pickable);
 
-  has_alpha = babl_format_has_alpha (gimp_pickable_get_format (pickable));
-
   src_buffer = gimp_pickable_get_buffer (pickable);
-  width  = gegl_buffer_get_width (src_buffer);
-  height = gegl_buffer_get_height (src_buffer);
 
-  iter = gegl_buffer_iterator_new (src_buffer,
-                                   NULL, 0, babl_format ("RGBA float"),
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+  format = choose_format (src_buffer, select_criterion,
+                          &n_components, &has_alpha);
+
+  gimp_rgba_get_pixel (color, format, start_col);
 
   if (has_alpha)
     {
@@ -202,7 +200,7 @@ gimp_image_contiguous_region_by_color (GimpImage            *image,
         {
           /*  don't select transparancy if "color" isn't fully transparent
            */
-          if (col[3] > 0.0)
+          if (start_col[n_components - 1] > 0.0)
             select_transparent = FALSE;
         }
     }
@@ -211,9 +209,15 @@ gimp_image_contiguous_region_by_color (GimpImage            *image,
       select_transparent = FALSE;
     }
 
-  mask = gimp_channel_new_mask (image, width, height);
+  mask = gimp_channel_new_mask (image,
+                                gegl_buffer_get_width  (src_buffer),
+                                gegl_buffer_get_height (src_buffer));
 
   mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+
+  iter = gegl_buffer_iterator_new (src_buffer,
+                                   NULL, 0, format,
+                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, mask_buffer,
                             NULL, 0, babl_format ("Y float"),
@@ -227,10 +231,10 @@ gimp_image_contiguous_region_by_color (GimpImage            *image,
       while (iter->length--)
         {
           /*  Find how closely the colors match  */
-          *dest = pixel_difference (col, src,
+          *dest = pixel_difference (start_col, src,
                                     antialias,
                                     threshold,
-                                    has_alpha ? 4 : 3,
+                                    n_components,
                                     has_alpha,
                                     select_transparent,
                                     select_criterion);
@@ -245,6 +249,49 @@ gimp_image_contiguous_region_by_color (GimpImage            *image,
 
 
 /*  private functions  */
+
+static const Babl *
+choose_format (GeglBuffer          *buffer,
+               GimpSelectCriterion  select_criterion,
+               gint                *n_components,
+               gboolean            *has_alpha)
+{
+  const Babl *format = gegl_buffer_get_format (buffer);
+
+  *has_alpha = babl_format_has_alpha (format);
+
+  switch (select_criterion)
+    {
+    case GIMP_SELECT_CRITERION_COMPOSITE:
+      if (babl_format_is_palette (format))
+        format = babl_format ("RGBA float");
+      else
+        format = gimp_babl_format (gimp_babl_format_get_base_type (format),
+                                   GIMP_PRECISION_FLOAT,
+                                   *has_alpha);
+      break;
+
+    case GIMP_SELECT_CRITERION_R:
+    case GIMP_SELECT_CRITERION_G:
+    case GIMP_SELECT_CRITERION_B:
+      format = babl_format ("RGBA float");
+      break;
+
+    case GIMP_SELECT_CRITERION_H:
+    case GIMP_SELECT_CRITERION_S:
+    case GIMP_SELECT_CRITERION_V:
+      format = babl_format ("HSVA float");
+      break;
+
+    default:
+      g_return_val_if_reached (NULL);
+      break;
+    }
+
+  *n_components = babl_format_get_n_components (format);
+
+  return format;
+}
 
 static gfloat
 pixel_difference (const gfloat        *col1,
@@ -268,8 +315,8 @@ pixel_difference (const gfloat        *col1,
     }
   else
     {
-      gfloat  diff;
-      gint    b;
+      gfloat diff;
+      gint   b;
 
       if (has_alpha)
         n_components--;
@@ -297,21 +344,13 @@ pixel_difference (const gfloat        *col1,
           max = fabs (col1[2] - col2[2]);
           break;
 
-#if 0
         case GIMP_SELECT_CRITERION_H:
-          av0 = (gint) col1[0];
-          av1 = (gint) col1[1];
-          av2 = (gint) col1[2];
-          bv0 = (gint) col2[0];
-          bv1 = (gint) col2[1];
-          bv2 = (gint) col2[2];
-          gimp_rgb_to_hsv_int (&av0, &av1, &av2);
-          gimp_rgb_to_hsv_int (&bv0, &bv1, &bv2);
-          /* wrap around candidates for the actual distance */
           {
-            gint dist1 = abs (av0 - bv0);
-            gint dist2 = abs (av0 - 360 - bv0);
-            gint dist3 = abs (av0 - bv0 + 360);
+            /* wrap around candidates for the actual distance */
+            gfloat dist1 = fabs (col1[0] - col2[0]);
+            gfloat dist2 = fabs (col1[0] - 1.0 - col2[0]);
+            gfloat dist3 = fabs (col1[0] - col2[0] + 1.0);
+
             max = MIN (dist1, dist2);
             if (max > dist3)
               max = dist3;
@@ -319,29 +358,12 @@ pixel_difference (const gfloat        *col1,
           break;
 
         case GIMP_SELECT_CRITERION_S:
-          av0 = (gint) col1[0];
-          av1 = (gint) col1[1];
-          av2 = (gint) col1[2];
-          bv0 = (gint) col2[0];
-          bv1 = (gint) col2[1];
-          bv2 = (gint) col2[2];
-          gimp_rgb_to_hsv_int (&av0, &av1, &av2);
-          gimp_rgb_to_hsv_int (&bv0, &bv1, &bv2);
-          max = abs (av1 - bv1);
+          max = fabs (col1[1] - col2[1]);
           break;
 
         case GIMP_SELECT_CRITERION_V:
-          av0 = (gint) col1[0];
-          av1 = (gint) col1[1];
-          av2 = (gint) col1[2];
-          bv0 = (gint) col2[0];
-          bv1 = (gint) col2[1];
-          bv2 = (gint) col2[2];
-          gimp_rgb_to_hsv_int (&av0, &av1, &av2);
-          gimp_rgb_to_hsv_int (&bv0, &bv1, &bv2);
-          max = abs (av2 - bv2);
+          max = fabs (col1[2] - col2[2]);
           break;
-#endif
         }
     }
 
@@ -369,7 +391,7 @@ static gboolean
 find_contiguous_segment (const gfloat        *col,
                          GeglBuffer          *src_buffer,
                          GeglBuffer          *mask_buffer,
-                         const Babl          *src_format,
+                         const Babl          *format,
                          gint                 n_components,
                          gboolean             has_alpha,
                          gint                 width,
@@ -386,7 +408,7 @@ find_contiguous_segment (const gfloat        *col,
   gfloat mask_row[width];
   gfloat diff;
 
-  gegl_buffer_sample (src_buffer, initial_x, initial_y, NULL, s, src_format,
+  gegl_buffer_sample (src_buffer, initial_x, initial_y, NULL, s, format,
                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
   diff = pixel_difference (col, s, antialias, threshold,
@@ -403,7 +425,7 @@ find_contiguous_segment (const gfloat        *col,
 
   while (*start >= 0 && diff)
     {
-      gegl_buffer_sample (src_buffer, *start, initial_y, NULL, s, src_format,
+      gegl_buffer_sample (src_buffer, *start, initial_y, NULL, s, format,
                           GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
       diff = pixel_difference (col, s, antialias, threshold,
@@ -421,7 +443,7 @@ find_contiguous_segment (const gfloat        *col,
 
   while (*end < width && diff)
     {
-      gegl_buffer_sample (src_buffer, *end, initial_y, NULL, s, src_format,
+      gegl_buffer_sample (src_buffer, *end, initial_y, NULL, s, format,
                           GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
       diff = pixel_difference (col, s, antialias, threshold,
@@ -446,6 +468,8 @@ static void
 find_contiguous_region_helper (GeglBuffer          *src_buffer,
                                GeglBuffer          *mask_buffer,
                                const Babl          *format,
+                               gint                 n_components,
+                               gboolean             has_alpha,
                                gboolean             select_transparent,
                                GimpSelectCriterion  select_criterion,
                                gboolean             antialias,
@@ -487,8 +511,8 @@ find_contiguous_region_helper (GeglBuffer          *src_buffer,
 
           if (! find_contiguous_segment (col, src_buffer, mask_buffer,
                                          format,
-                                         babl_format_get_n_components (format),
-                                         babl_format_has_alpha (format),
+                                         n_components,
+                                         has_alpha,
                                          gegl_buffer_get_width (src_buffer),
                                          select_transparent, select_criterion,
                                          antialias, threshold, x, y,
