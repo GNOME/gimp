@@ -26,6 +26,8 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-gegl-mask-combine.h"
+
 #include "gimpchannel.h"
 #include "gimpchannel-combine.h"
 
@@ -38,25 +40,20 @@ gimp_channel_combine_rect (GimpChannel    *mask,
                            gint            w,
                            gint            h)
 {
-  GeglColor     *color;
+  GeglBuffer *buffer;
 
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
 
-  if (! gimp_rectangle_intersect (x, y, w, h,
-                                  0, 0,
-                                  gimp_item_get_width  (GIMP_ITEM (mask)),
-                                  gimp_item_get_height (GIMP_ITEM (mask)),
-                                  &x, &y, &w, &h))
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+
+  if (! gimp_gegl_mask_combine_rect (buffer, op, x, y, w, h))
     return;
 
-  if (op == GIMP_CHANNEL_OP_ADD || op == GIMP_CHANNEL_OP_REPLACE)
-    color = gegl_color_new ("#fff");
-  else
-    color = gegl_color_new ("#000");
-
-  gegl_buffer_set_color (gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
-                         GEGL_RECTANGLE (x, y, w, h), color);
-  g_object_unref (color);
+  gimp_rectangle_intersect (x, y, w, h,
+                            0, 0,
+                            gimp_item_get_width  (GIMP_ITEM (mask)),
+                            gimp_item_get_height (GIMP_ITEM (mask)),
+                            &x, &y, &w, &h);
 
   /*  Determine new boundary  */
   if (mask->bounds_known && (op == GIMP_CHANNEL_OP_ADD) && ! mask->empty)
@@ -122,57 +119,6 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
                                      w / 2.0, h / 2.0, antialias);
 }
 
-static void
-gimp_channel_combine_span (gfloat         *data,
-                           GimpChannelOps  op,
-                           gint            x1,
-                           gint            x2,
-                           gfloat          value)
-{
-  if (x2 <= x1)
-    return;
-
-  switch (op)
-    {
-    case GIMP_CHANNEL_OP_ADD:
-    case GIMP_CHANNEL_OP_REPLACE:
-      if (value == 1.0)
-        {
-          while (x1 < x2)
-            data[x1++] = 1.0;
-        }
-      else
-        {
-          while (x1 < x2)
-            {
-              const gfloat val = data[x1] + value;
-              data[x1++] = val > 1.0 ? 1.0 : val;
-            }
-        }
-      break;
-
-    case GIMP_CHANNEL_OP_SUBTRACT:
-      if (value == 1.0)
-        {
-          while (x1 < x2)
-            data[x1++] = 0.0;
-        }
-      else
-        {
-          while (x1 < x2)
-            {
-              const gfloat val = data[x1] - value;
-              data[x1++] = val > 0.0 ? val : 0.0;
-            }
-        }
-      break;
-
-    case GIMP_CHANNEL_OP_INTERSECT:
-      /* Should not happen */
-      break;
-    }
-}
-
 /**
  * gimp_channel_combine_ellipse_rect:
  * @mask:      the channel with which to combine the elliptic rect
@@ -204,205 +150,23 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
                                    gdouble         b,
                                    gboolean        antialias)
 {
-  GeglBuffer         *buffer;
-  GeglBufferIterator *iter;
-  GeglRectangle      *roi;
-  gdouble             a_sqr;
-  gdouble             b_sqr;
-  gdouble             ellipse_center_x;
-  gint                x0, y0;
-  gint                width, height;
+  GeglBuffer *buffer;
 
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
   g_return_if_fail (a >= 0.0 && b >= 0.0);
   g_return_if_fail (op != GIMP_CHANNEL_OP_INTERSECT);
 
-  /* Make sure the elliptic corners fit into the rect */
-  a = MIN (a, w / 2.0);
-  b = MIN (b, h / 2.0);
-
-  a_sqr = SQR (a);
-  b_sqr = SQR (b);
-
-  if (! gimp_rectangle_intersect (x, y, w, h,
-                                  0, 0,
-                                  gimp_item_get_width  (GIMP_ITEM (mask)),
-                                  gimp_item_get_height (GIMP_ITEM (mask)),
-                                  &x0, &y0, &width, &height))
-    return;
-
-  ellipse_center_x = x + a;
-
   buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
-  iter = gegl_buffer_iterator_new (buffer,
-                                   GEGL_RECTANGLE (x0, y0, width, height), 0,
-                                   babl_format ("Y float"),
-                                   GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
-  roi = &iter->roi[0];
+  if (! gimp_gegl_mask_combine_ellipse_rect (buffer, op, x, y, w, h,
+                                             a, b, antialias))
+    return;
 
-  while (gegl_buffer_iterator_next (iter))
-    {
-      gfloat *data = iter->data[0];
-      gint    py;
-
-      for (py = roi->y;
-           py < roi->y + roi->height;
-           py++, data += roi->width)
-        {
-          const gint px = roi->x;
-          gdouble    ellipse_center_y;
-
-          if (py >= y + b && py < y + h - b)
-            {
-              /*  we are on a row without rounded corners  */
-              gimp_channel_combine_span (data, op, 0, roi->width, 1.0);
-              continue;
-            }
-
-          /* Match the ellipse center y with our current y */
-          if (py < y + b)
-            {
-              ellipse_center_y = y + b;
-            }
-          else
-            {
-              ellipse_center_y = y + h - b;
-            }
-
-          /* For a non-antialiased ellipse, use the normal equation
-           * for an ellipse with an arbitrary center
-           * (ellipse_center_x, ellipse_center_y).
-           */
-          if (! antialias)
-            {
-              gdouble half_ellipse_width_at_y;
-              gint    x_start;
-              gint    x_end;
-
-              half_ellipse_width_at_y =
-                sqrt (a_sqr -
-                      a_sqr * SQR (py + 0.5f - ellipse_center_y) / b_sqr);
-
-              x_start = ROUND (ellipse_center_x - half_ellipse_width_at_y);
-              x_end   = ROUND (ellipse_center_x + w - 2 * a +
-                               half_ellipse_width_at_y);
-
-              gimp_channel_combine_span (data, op,
-                                         MAX (x_start - px, 0),
-                                         MIN (x_end   - px, roi->width), 1.0);
-            }
-          else  /* use antialiasing */
-            {
-              /* algorithm changed 7-18-04, because the previous one
-               * did not work well for eccentric ellipses.  The new
-               * algorithm measures the distance to the ellipse in the
-               * X and Y directions, and uses trigonometry to
-               * approximate the distance to the ellipse as the
-               * distance to the hypotenuse of a right triangle whose
-               * legs are the X and Y distances.  (WES)
-               */
-              const gfloat yi       = ABS (py + 0.5 - ellipse_center_y);
-              gfloat       last_val = -1;
-              gint         x_start  = px;
-              gint         cur_x;
-
-              for (cur_x = px; cur_x < (px + roi->width); cur_x++)
-                {
-                  gfloat  xj;
-                  gfloat  xdist;
-                  gfloat  ydist;
-                  gfloat  r;
-                  gfloat  dist;
-                  gfloat  val;
-
-                  if (cur_x < x + w / 2)
-                    {
-                      ellipse_center_x = x + a;
-                    }
-                  else
-                    {
-                      ellipse_center_x = x + w - a;
-                    }
-
-                  xj = ABS (cur_x + 0.5 - ellipse_center_x);
-
-                  if (yi < b)
-                    xdist = xj - a * sqrt (1 - SQR (yi) / b_sqr);
-                  else
-                    xdist = 1000.0;  /* anything large will work */
-
-                  if (xj < a)
-                    ydist = yi - b * sqrt (1 - SQR (xj) / a_sqr);
-                  else
-                    ydist = 1000.0;  /* anything large will work */
-
-                  r = hypot (xdist, ydist);
-
-                  if (r < 0.001)
-                    dist = 0.0;
-                  else
-                    dist = xdist * ydist / r; /* trig formula for distance to
-                                               * hypotenuse
-                                               */
-
-                  if (xdist < 0.0)
-                    dist *= -1;
-
-                  if (dist < -0.5)
-                    val = 1.0;
-                  else if (dist < 0.5)
-                    val = (1.0 - (dist + 0.5));
-                  else
-                    val = 0.0;
-
-                  if (last_val != val)
-                    {
-                      if (last_val != -1)
-                        gimp_channel_combine_span (data, op,
-                                                   MAX (x_start - px, 0),
-                                                   MIN (cur_x   - px, roi->width),
-                                                   last_val);
-
-                      x_start = cur_x;
-                      last_val = val;
-                    }
-
-                  /*  skip ahead if we are on the straight segment
-                   *  between rounded corners
-                   */
-                  if (cur_x >= x + a && cur_x < x + w - a)
-                    {
-                      gimp_channel_combine_span (data, op,
-                                                 MAX (x_start - px, 0),
-                                                 MIN (cur_x   - px, roi->width),
-                                                 last_val);
-
-                      x_start = cur_x;
-                      cur_x = x + w - a;
-                      last_val = val = 1.0;
-                    }
-
-                  /* Time to change center? */
-                  if (cur_x >= x + w / 2)
-                    {
-                      ellipse_center_x = x + w - a;
-                    }
-                }
-
-              gimp_channel_combine_span (data, op,
-                                         MAX (x_start - px, 0),
-                                         MIN (cur_x   - px, roi->width),
-                                         last_val);
-            }
-        }
-    }
-
-  /*  use the intersected values for the boundary calculation  */
-  x = x0;
-  y = y0;
-  w = width;
-  h = height;
+  gimp_rectangle_intersect (x, y, w, h,
+                            0, 0,
+                            gimp_item_get_width  (GIMP_ITEM (mask)),
+                            gimp_item_get_height (GIMP_ITEM (mask)),
+                            &x, &y, &w, &h);
 
   /*  determine new boundary  */
   if (mask->bounds_known && (op == GIMP_CHANNEL_OP_ADD) && ! mask->empty)
@@ -436,103 +200,43 @@ gimp_channel_combine_mask (GimpChannel    *mask,
                            gint            off_x,
                            gint            off_y)
 {
-  GeglBuffer         *mask_buffer;
-  GeglBuffer         *add_on_buffer;
-  GeglBufferIterator *iter;
-  GeglRectangle       rect;
-  gint                x, y, w, h;
+  GeglBuffer *add_on_buffer;
 
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
   g_return_if_fail (GIMP_IS_CHANNEL (add_on));
 
-  if (! gimp_rectangle_intersect (off_x, off_y,
-                                  gimp_item_get_width  (GIMP_ITEM (add_on)),
-                                  gimp_item_get_height (GIMP_ITEM (add_on)),
-                                  0, 0,
-                                  gimp_item_get_width  (GIMP_ITEM (mask)),
-                                  gimp_item_get_height (GIMP_ITEM (mask)),
-                                  &x, &y, &w, &h))
-    return;
-
-  mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
   add_on_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (add_on));
 
-  rect.x      = x;
-  rect.y      = y;
-  rect.width  = w;
-  rect.height = h;
+  gimp_channel_combine_buffer (mask, add_on_buffer,
+                               op, off_x, off_y);
+}
 
-  iter = gegl_buffer_iterator_new (mask_buffer, &rect, 0,
-                                   babl_format ("Y float"),
-                                   GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+void
+gimp_channel_combine_buffer (GimpChannel    *mask,
+                             GeglBuffer     *add_on_buffer,
+                             GimpChannelOps  op,
+                             gint            off_x,
+                             gint            off_y)
+{
+  GeglBuffer *buffer;
+  gint        x, y, w, h;
 
-  rect.x -= off_x;
-  rect.y -= off_y;
+  g_return_if_fail (GIMP_IS_CHANNEL (mask));
+  g_return_if_fail (GEGL_IS_BUFFER (add_on_buffer));
 
-  gegl_buffer_iterator_add (iter, add_on_buffer, &rect, 0,
-                            babl_format ("Y float"),
-                            GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
-  switch (op)
-    {
-    case GIMP_CHANNEL_OP_ADD:
-    case GIMP_CHANNEL_OP_REPLACE:
-      while (gegl_buffer_iterator_next (iter))
-        {
-          gfloat       *mask_data   = iter->data[0];
-          const gfloat *add_on_data = iter->data[1];
+  if (! gimp_gegl_mask_combine_buffer (buffer, add_on_buffer,
+                                       op, off_x, off_y))
+    return;
 
-          while (iter->length--)
-            {
-              const gfloat val = *mask_data + *add_on_data;
-
-              *mask_data = CLAMP (val, 0.0, 1.0);
-
-              add_on_data++;
-              mask_data++;
-            }
-        }
-      break;
-
-    case GIMP_CHANNEL_OP_SUBTRACT:
-      while (gegl_buffer_iterator_next (iter))
-        {
-          gfloat       *mask_data   = iter->data[0];
-          const gfloat *add_on_data = iter->data[1];
-
-          while (iter->length--)
-            {
-              if (*add_on_data > *mask_data)
-                *mask_data = 0.0;
-              else
-                *mask_data -= *add_on_data;
-
-              add_on_data++;
-              mask_data++;
-            }
-        }
-      break;
-
-    case GIMP_CHANNEL_OP_INTERSECT:
-      while (gegl_buffer_iterator_next (iter))
-        {
-          gfloat       *mask_data   = iter->data[0];
-          const gfloat *add_on_data = iter->data[1];
-
-          while (iter->length--)
-            {
-              *mask_data = MIN (*mask_data, *add_on_data);
-
-              add_on_data++;
-              mask_data++;
-            }
-        }
-      break;
-
-    default:
-      g_warning ("%s: unknown operation type", G_STRFUNC);
-      break;
-    }
+  gimp_rectangle_intersect (off_x, off_y,
+                            gegl_buffer_get_width  (add_on_buffer),
+                            gegl_buffer_get_height (add_on_buffer),
+                            0, 0,
+                            gimp_item_get_width  (GIMP_ITEM (mask)),
+                            gimp_item_get_height (GIMP_ITEM (mask)),
+                            &x, &y, &w, &h);
 
   mask->bounds_known = FALSE;
 

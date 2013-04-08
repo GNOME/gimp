@@ -46,6 +46,11 @@ void   gimp_channel_combine_mask         (GimpChannel    *mask,
                                           GimpChannelOps  op,
                                           gint            off_x,
                                           gint            off_y);
+void   gimp_channel_combine_buffer       (GimpChannel    *mask,
+                                          GeglBuffer     *add_on_buffer,
+                                          GimpChannelOps  op,
+                                          gint            off_x,
+                                          gint            off_y);
 
 
 #endif /* __GIMP_CHANNEL_COMBINE_H__ */
