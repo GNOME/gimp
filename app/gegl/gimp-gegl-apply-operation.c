@@ -164,6 +164,28 @@ gimp_gegl_apply_flatten (GeglBuffer    *src_buffer,
 }
 
 void
+gimp_gegl_apply_feather (GeglBuffer   *src_buffer,
+                         GimpProgress *progress,
+                         const gchar  *undo_desc,
+                         GeglBuffer   *dest_buffer,
+                         gdouble       radius_x,
+                         gdouble       radius_y)
+{
+  g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
+
+  /* 3.5 is completely magic and picked to visually match the old
+   * gaussian_blur_region() on a crappy laptop display
+   */
+  gimp_gegl_apply_gaussian_blur (src_buffer,
+                                 progress, undo_desc,
+                                 dest_buffer,
+                                 radius_x / 3.5,
+                                 radius_y / 3.5);
+}
+
+void
 gimp_gegl_apply_gaussian_blur (GeglBuffer   *src_buffer,
                                GimpProgress *progress,
                                const gchar  *undo_desc,

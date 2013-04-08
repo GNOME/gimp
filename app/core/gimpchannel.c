@@ -1270,14 +1270,11 @@ gimp_channel_real_feather (GimpChannel *channel,
   else
     gimp_drawable_invalidate_boundary (drawable);
 
-  /* 3.5 is completely magic and picked to visually match the old
-   * gaussian_blur_region() on a crappy laptop display
-   */
-  gimp_gegl_apply_gaussian_blur (gimp_drawable_get_buffer (drawable),
-                                 NULL, NULL,
-                                 gimp_drawable_get_buffer (drawable),
-                                 radius_x / 3.5,
-                                 radius_y / 3.5);
+  gimp_gegl_apply_feather (gimp_drawable_get_buffer (drawable),
+                           NULL, NULL,
+                           gimp_drawable_get_buffer (drawable),
+                           radius_x,
+                           radius_y);
 
   channel->bounds_known = FALSE;
 
