@@ -31,6 +31,7 @@
 #include "paint/gimppaintoptions.h"
 
 #include "gegl/gimp-gegl-apply-operation.h"
+#include "gegl/gimp-gegl-mask.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
@@ -1094,10 +1095,7 @@ gimp_channel_real_bounds (GimpChannel *channel,
                           gint        *x2,
                           gint        *y2)
 {
-  GeglBuffer         *buffer;
-  GeglBufferIterator *iter;
-  GeglRectangle      *roi;
-  gint                tx1, tx2, ty1, ty2;
+  GeglBuffer *buffer;
 
   /*  if the channel's bounds have already been reliably calculated...  */
   if (channel->bounds_known)
@@ -1110,97 +1108,16 @@ gimp_channel_real_bounds (GimpChannel *channel,
       return ! channel->empty;
     }
 
-  /*  go through and calculate the bounds  */
-  tx1 = gimp_item_get_width  (GIMP_ITEM (channel));
-  ty1 = gimp_item_get_height (GIMP_ITEM (channel));
-  tx2 = 0;
-  ty2 = 0;
-
   buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
 
-  iter = gegl_buffer_iterator_new (buffer, NULL, 0, babl_format ("Y float"),
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
-  roi = &iter->roi[0];
+  channel->empty = ! gimp_gegl_mask_bounds (buffer, x1, y1, x2, y2);
 
-  while (gegl_buffer_iterator_next (iter))
-    {
-      gfloat *data  = iter->data[0];
-      gfloat *data1 = data;
-      gint    ex    = roi->x + roi->width;
-      gint    ey    = roi->y + roi->height;
-      gint    x, y;
-
-      /*  only check the pixels if this tile is not fully within the
-       *  currently computed bounds
-       */
-      if (roi->x < tx1 || ex > tx2 ||
-          roi->y < ty1 || ey > ty2)
-        {
-          /* Check upper left and lower right corners to see if we can
-           * avoid checking the rest of the pixels in this tile
-           */
-          if (data[0] && data[iter->length - 1])
-            {
-              if (roi->x < tx1) tx1 = roi->x;
-              if (ex > tx2)     tx2 = ex;
-
-              if (roi->y < ty1) ty1 = roi->y;
-              if (ey > ty2)     ty2 = ey;
-            }
-          else
-            {
-              for (y = roi->y; y < ey; y++, data1 += roi->width)
-                {
-                  for (x = roi->x, data = data1; x < ex; x++, data++)
-                    {
-                      if (*data)
-                        {
-                          gint minx = x;
-                          gint maxx = x;
-
-                          for (; x < ex; x++, data++)
-                            if (*data)
-                              maxx = x;
-
-                          if (minx < tx1) tx1 = minx;
-                          if (maxx > tx2) tx2 = maxx;
-
-                          if (y < ty1) ty1 = y;
-                          if (y > ty2) ty2 = y;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-  tx2 = CLAMP (tx2 + 1, 0, gimp_item_get_width  (GIMP_ITEM (channel)));
-  ty2 = CLAMP (ty2 + 1, 0, gimp_item_get_height (GIMP_ITEM (channel)));
-
-  if (tx1 == gimp_item_get_width  (GIMP_ITEM (channel)) &&
-      ty1 == gimp_item_get_height (GIMP_ITEM (channel)))
-    {
-      channel->empty = TRUE;
-      channel->x1    = 0;
-      channel->y1    = 0;
-      channel->x2    = gimp_item_get_width  (GIMP_ITEM (channel));
-      channel->y2    = gimp_item_get_height (GIMP_ITEM (channel));
-    }
-  else
-    {
-      channel->empty = FALSE;
-      channel->x1    = tx1;
-      channel->y1    = ty1;
-      channel->x2    = tx2;
-      channel->y2    = ty2;
-    }
+  channel->x1 = *x1;
+  channel->y1 = *y1;
+  channel->x2 = *x2;
+  channel->y2 = *y2;
 
   channel->bounds_known = TRUE;
-
-  *x1 = channel->x1;
-  *x2 = channel->x2;
-  *y1 = channel->y1;
-  *y2 = channel->y2;
 
   return ! channel->empty;
 }
@@ -1208,32 +1125,15 @@ gimp_channel_real_bounds (GimpChannel *channel,
 static gboolean
 gimp_channel_real_is_empty (GimpChannel *channel)
 {
-  GeglBuffer         *buffer;
-  GeglBufferIterator *iter;
+  GeglBuffer *buffer;
 
   if (channel->bounds_known)
     return channel->empty;
 
   buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
 
-  iter = gegl_buffer_iterator_new (buffer, NULL, 0, babl_format ("Y float"),
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
-
-  while (gegl_buffer_iterator_next (iter))
-    {
-      gfloat *data = iter->data[0];
-      gint    i;
-
-      for (i = 0; i < iter->length; i++)
-        {
-          if (data[i])
-            {
-              gegl_buffer_iterator_stop (iter);
-
-              return FALSE;
-            }
-        }
-    }
+  if (! gimp_gegl_mask_is_empty (buffer))
+    return FALSE;
 
   /*  The mask is empty, meaning we can set the bounds as known  */
   if (channel->segs_in)

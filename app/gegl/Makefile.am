@@ -30,6 +30,8 @@ libappgegl_a_sources = \
 	gimp-gegl-config-proxy.h	\
 	gimp-gegl-loops.c		\
 	gimp-gegl-loops.h		\
+	gimp-gegl-mask.c		\
+	gimp-gegl-mask.h		\
 	gimp-gegl-mask-combine.c	\
 	gimp-gegl-mask-combine.h	\
 	gimp-gegl-nodes.c		\
