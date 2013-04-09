@@ -1626,6 +1626,9 @@ gimp_image_window_switch_page (GtkNotebook     *notebook,
             window, shell);
   private->active_shell = shell;
 
+  gimp_window_set_primary_focus_widget (GIMP_WINDOW (window),
+                                        shell->canvas);
+
   active_display = private->active_shell->display;
 
   g_signal_connect (active_display, "notify::image",
