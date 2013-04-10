@@ -168,8 +168,9 @@ gimp_window_set_primary_focus_widget (GimpWindow *window,
                                       GtkWidget  *primary_focus)
 {
   g_return_if_fail (GIMP_IS_WINDOW (window));
-  g_return_if_fail (GTK_IS_WIDGET (primary_focus));
-  g_return_if_fail (gtk_widget_get_toplevel (primary_focus) ==
+  g_return_if_fail (primary_focus == NULL || GTK_IS_WIDGET (primary_focus));
+  g_return_if_fail (primary_focus == NULL ||
+                    gtk_widget_get_toplevel (primary_focus) ==
                     GTK_WIDGET (window));
 
   if (window->primary_focus_widget)
