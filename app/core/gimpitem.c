@@ -1634,7 +1634,7 @@ gimp_item_remove_offset_node (GimpItem *item,
 
   g_return_if_fail (g_list_find (private->offset_nodes, node) != NULL);
 
-  private->offset_nodes = g_list_append (private->offset_nodes, node);
+  private->offset_nodes = g_list_remove (private->offset_nodes, node);
   g_object_unref (node);
 }
 
