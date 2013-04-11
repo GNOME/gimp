@@ -1,9 +1,8 @@
-/* A Bison parser, made by GNU Bison 2.4.3.  */
+/* A Bison parser, made by GNU Bison 2.6.1.  */
 
-/* Skeleton interface for Bison's Yacc-like parsers in C
+/* Bison interface for Yacc-like parsers in C
    
-      Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
-   2009, 2010 Free Software Foundation, Inc.
+      Copyright (C) 1984, 1989-1990, 2000-2012 Free Software Foundation, Inc.
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -31,6 +30,15 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
+#ifndef NCSA_Y_TAB_H
+# define NCSA_Y_TAB_H
+/* Enabling traces.  */
+#ifndef YYDEBUG
+# define YYDEBUG 0
+#endif
+#if YYDEBUG
+extern int ncsa_debug;
+#endif
 
 /* Tokens.  */
 #ifndef YYTOKENTYPE
@@ -66,12 +74,10 @@
 
 
 
-
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
 {
-
-/* Line 1685 of yacc.c  */
+/* Line 2049 of yacc.c  */
 #line 45 "imap_ncsa.y"
 
    int val;
@@ -79,9 +85,8 @@ typedef union YYSTYPE
    char *id;
 
 
-
-/* Line 1685 of yacc.c  */
-#line 85 "y.tab.h"
+/* Line 2049 of yacc.c  */
+#line 90 "y.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -90,4 +95,18 @@ typedef union YYSTYPE
 
 extern YYSTYPE ncsa_lval;
 
+#ifdef YYPARSE_PARAM
+#if defined __STDC__ || defined __cplusplus
+int ncsa_parse (void *YYPARSE_PARAM);
+#else
+int ncsa_parse ();
+#endif
+#else /* ! YYPARSE_PARAM */
+#if defined __STDC__ || defined __cplusplus
+int ncsa_parse (void);
+#else
+int ncsa_parse ();
+#endif
+#endif /* ! YYPARSE_PARAM */
 
+#endif /* !NCSA_Y_TAB_H  */
