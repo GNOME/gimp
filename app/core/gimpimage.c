@@ -1290,7 +1290,6 @@ gimp_image_get_graph (GimpProjectable *projectable)
   GimpImagePrivate  *private = GIMP_IMAGE_GET_PRIVATE (image);
   GeglNode          *layers_node;
   GeglNode          *channels_node;
-  GeglNode          *blend_node;
   GeglNode          *output;
   GimpComponentMask  mask;
 
@@ -1309,14 +1308,8 @@ gimp_image_get_graph (GimpProjectable *projectable)
 
   gegl_node_add_child (private->graph, channels_node);
 
-  blend_node = gegl_node_new_child (private->graph,
-                                    "operation", "gegl:over",
-                                    NULL);
-
   gegl_node_connect_to (layers_node,   "output",
-                        blend_node,    "input");
-  gegl_node_connect_to (channels_node, "output",
-                        blend_node,    "aux");
+                        channels_node, "input");
 
   mask = ~gimp_image_get_visible_mask (image) & GIMP_COMPONENT_ALL;
 
@@ -1326,7 +1319,7 @@ gimp_image_get_graph (GimpProjectable *projectable)
                          "mask",      mask,
                          NULL);
 
-  gegl_node_connect_to (blend_node,            "output",
+  gegl_node_connect_to (channels_node,         "output",
                         private->visible_mask, "input");
 
   output = gegl_node_get_output_proxy (private->graph, "output");
