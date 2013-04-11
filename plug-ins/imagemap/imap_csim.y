@@ -38,6 +38,7 @@
 extern int csim_lex(void);
 extern int csim_restart(FILE *csim_in);
 static void csim_error(char* s);
+static gchar* unescape_text(gchar *);
 
 static enum {UNDEFINED, RECTANGLE, CIRCLE, POLYGON} current_type;
 static Object_t *current_object;
@@ -260,7 +261,7 @@ href_tag	: HREF '=' STRING
 		   if (current_type == UNDEFINED) {
 		      g_strreplace(&_map_info->default_url, $3);
 		   } else {
-		      object_set_url(current_object, $3);
+		      object_set_url(current_object, unescape_text($3));
 		   }
 		   g_free ($3);
 		}
@@ -280,42 +281,42 @@ optional_value	: /* Empty */
 
 alt_tag		: ALT '=' STRING
 		{
-		   object_set_comment(current_object, $3);
+		   object_set_comment(current_object, unescape_text($3));
 		   g_free ($3);
 		}
 		;
 
 target_tag	: TARGET '=' STRING
 		{
-		   object_set_target(current_object, $3);
+		   object_set_target(current_object, unescape_text($3));
 		   g_free ($3);
 		}
 		;
 
 onmouseover_tag	: ONMOUSEOVER '=' STRING
 		{
-		   object_set_mouse_over(current_object, $3);
+		   object_set_mouse_over(current_object, unescape_text($3));
 		   g_free ($3);
 		}
 		;
 
 onmouseout_tag	: ONMOUSEOUT '=' STRING
 		{
-		   object_set_mouse_out(current_object, $3);
+		   object_set_mouse_out(current_object, unescape_text($3));
 		   g_free ($3);
 		}
 		;
 
 onfocus_tag	: ONFOCUS '=' STRING
 		{
-		   object_set_focus(current_object, $3);
+		   object_set_focus(current_object, unescape_text($3));
 		   g_free ($3);
 		}
 		;
 
 onblur_tag	: ONBLUR '=' STRING
 		{
-		   object_set_blur(current_object, $3);
+		   object_set_blur(current_object, unescape_text($3));
 		   g_free ($3);
 		}
 		;
@@ -346,4 +347,39 @@ load_csim (const char* filename)
     status = FALSE;
   }
   return status;
+}
+
+static gchar*
+unescape_text (gchar *input)
+{
+ /*
+  * We "unescape" simple things "in place", knowing that unescaped strings always are
+  * shorter than  the original input.
+  *
+  * It is a shame there is no g_markup_unescape_text() function, but instead you have
+  * to create a full GMarkupParser/Context.
+  */
+  struct token {
+    const char *enc, unenc;
+  };
+  const struct token tab[] = {
+   { "&quot;", '"' },
+   { "&apos;", '\'' },
+   { "&amp;",  '&' },
+   { "&lt;",   '<' },
+   { "&gt;",   '>' }
+  };
+  size_t i;
+
+  for (i = 0; i < sizeof(tab)/sizeof(tab[0]); i++) {
+    char *p;
+    for (p = strstr(input, tab[i].enc); p != NULL; p = strstr(p, tab[i].enc)) {
+      *p++ = tab[i].unenc;
+      strcpy(p, p + strlen(tab[i].enc)-1);
+      if (*p == 0)
+        break;
+    }
+  }
+
+  return input;
 }
