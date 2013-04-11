@@ -952,7 +952,7 @@ gimp_group_layer_get_graph (GimpProjectable *projectable)
   private->graph = gegl_node_new ();
 
   layers_node =
-    gimp_drawable_stack_get_graph (GIMP_DRAWABLE_STACK (private->children));
+    gimp_filter_stack_get_graph (GIMP_FILTER_STACK (private->children));
 
   gegl_node_add_child (private->graph, layers_node);
 

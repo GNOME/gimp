@@ -1300,12 +1300,12 @@ gimp_image_get_graph (GimpProjectable *projectable)
   private->graph = gegl_node_new ();
 
   layers_node =
-    gimp_drawable_stack_get_graph (GIMP_DRAWABLE_STACK (private->layers->container));
+    gimp_filter_stack_get_graph (GIMP_FILTER_STACK (private->layers->container));
 
   gegl_node_add_child (private->graph, layers_node);
 
   channels_node =
-    gimp_drawable_stack_get_graph (GIMP_DRAWABLE_STACK (private->channels->container));
+    gimp_filter_stack_get_graph (GIMP_FILTER_STACK (private->channels->container));
 
   gegl_node_add_child (private->graph, channels_node);
 

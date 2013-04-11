@@ -167,6 +167,8 @@ libappcore_a_sources = \
 	gimpfilter.h				\
 	gimpfilteredcontainer.c			\
 	gimpfilteredcontainer.h			\
+	gimpfilterstack.c			\
+	gimpfilterstack.h			\
 	gimpfloatingselundo.c			\
 	gimpfloatingselundo.h			\
 	gimpgradient.c				\

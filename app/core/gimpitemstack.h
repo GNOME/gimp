@@ -21,7 +21,7 @@
 #ifndef __GIMP_ITEM_STACK_H__
 #define __GIMP_ITEM_STACK_H__
 
-#include "gimplist.h"
+#include "gimpfilterstack.h"
 
 
 #define GIMP_TYPE_ITEM_STACK            (gimp_item_stack_get_type ())
@@ -35,12 +35,12 @@ typedef struct _GimpItemStackClass GimpItemStackClass;
 
 struct _GimpItemStack
 {
-  GimpList  parent_instance;
+  GimpFilterStack  parent_instance;
 };
 
 struct _GimpItemStackClass
 {
-  GimpListClass  parent_class;
+  GimpFilterStackClass  parent_class;
 };
 
 

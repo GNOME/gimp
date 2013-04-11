@@ -40,7 +40,7 @@ static void   gimp_item_stack_remove      (GimpContainer *container,
                                            GimpObject    *object);
 
 
-G_DEFINE_TYPE (GimpItemStack, gimp_item_stack, GIMP_TYPE_LIST)
+G_DEFINE_TYPE (GimpItemStack, gimp_item_stack, GIMP_TYPE_FILTER_STACK)
 
 #define parent_class gimp_item_stack_parent_class
 

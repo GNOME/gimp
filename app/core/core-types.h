@@ -91,6 +91,7 @@ typedef struct _GimpList              GimpList;
 typedef struct _GimpDocumentList      GimpDocumentList;
 typedef struct _GimpDrawableStack     GimpDrawableStack;
 typedef struct _GimpFilteredContainer GimpFilteredContainer;
+typedef struct _GimpFilterStack       GimpFilterStack;
 typedef struct _GimpItemStack         GimpItemStack;
 typedef struct _GimpTaggedContainer   GimpTaggedContainer;
 
