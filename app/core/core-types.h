@@ -77,6 +77,7 @@
 
 typedef struct _GimpObject          GimpObject;
 typedef struct _GimpViewable        GimpViewable;
+typedef struct _GimpFilter          GimpFilter;
 typedef struct _GimpItem            GimpItem;
 
 typedef struct _Gimp                Gimp;

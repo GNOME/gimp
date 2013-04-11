@@ -90,6 +90,8 @@ static gboolean   gimp_drawable_get_size           (GimpViewable      *viewable,
                                                     gint              *width,
                                                     gint              *height);
 
+static GeglNode * gimp_drawable_get_node           (GimpFilter        *filter);
+
 static void       gimp_drawable_removed            (GimpItem          *item);
 static void       gimp_drawable_visibility_changed (GimpItem          *item);
 static GimpItem * gimp_drawable_duplicate          (GimpItem          *item,
@@ -158,7 +160,6 @@ static void       gimp_drawable_real_set_buffer    (GimpDrawable      *drawable,
                                                     GeglBuffer        *buffer,
                                                     gint               offset_x,
                                                     gint               offset_y);
-static GeglNode * gimp_drawable_get_node           (GimpItem          *item);
 
 static void       gimp_drawable_real_push_undo     (GimpDrawable      *drawable,
                                                     const gchar       *undo_desc,
@@ -200,6 +201,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  GimpFilterClass   *filter_class      = GIMP_FILTER_CLASS (klass);
   GimpItemClass     *item_class        = GIMP_ITEM_CLASS (klass);
 
   gimp_drawable_signals[UPDATE] =
@@ -234,6 +236,8 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   viewable_class->get_size           = gimp_drawable_get_size;
   viewable_class->get_new_preview    = gimp_drawable_get_new_preview;
 
+  filter_class->get_node             = gimp_drawable_get_node;
+
   item_class->removed                = gimp_drawable_removed;
   item_class->visibility_changed     = gimp_drawable_visibility_changed;
   item_class->duplicate              = gimp_drawable_duplicate;
@@ -242,7 +246,6 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   item_class->flip                   = gimp_drawable_flip;
   item_class->rotate                 = gimp_drawable_rotate;
   item_class->transform              = gimp_drawable_transform;
-  item_class->get_node               = gimp_drawable_get_node;
 
   klass->update                      = gimp_drawable_real_update;
   klass->alpha_changed               = NULL;
@@ -387,6 +390,42 @@ gimp_drawable_get_size (GimpViewable *viewable,
   return TRUE;
 }
 
+static GeglNode *
+gimp_drawable_get_node (GimpFilter *filter)
+{
+  GimpDrawable *drawable = GIMP_DRAWABLE (filter);
+  GeglNode     *node;
+  GeglNode     *input;
+  GeglNode     *output;
+
+  node = GIMP_FILTER_CLASS (parent_class)->get_node (filter);
+
+  g_warn_if_fail (drawable->private->mode_node == NULL);
+
+  drawable->private->mode_node =
+    gegl_node_new_child (node,
+                         "operation", "gimp:normal-mode",
+                         NULL);
+
+  input  = gegl_node_get_input_proxy  (node, "input");
+  output = gegl_node_get_output_proxy (node, "output");
+
+  if (gimp_item_get_visible (GIMP_ITEM (drawable)))
+    {
+      gegl_node_connect_to (input,                        "output",
+                            drawable->private->mode_node, "input");
+      gegl_node_connect_to (drawable->private->mode_node, "output",
+                            output,                       "input");
+    }
+  else
+    {
+      gegl_node_connect_to (input,  "output",
+                            output, "input");
+    }
+
+  return node;
+}
+
 static void
 gimp_drawable_removed (GimpItem *item)
 {
@@ -404,10 +443,10 @@ gimp_drawable_visibility_changed (GimpItem *item)
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
   GeglNode     *node;
 
-  /*  don't use gimp_item_get_node() because that would create
+  /*  don't use gimp_filter_get_node() because that would create
    *  the node.
    */
-  node = gimp_item_peek_node (item);
+  node = gimp_filter_peek_node (GIMP_FILTER (item));
 
   if (node)
     {
@@ -810,42 +849,6 @@ gimp_drawable_real_set_buffer (GimpDrawable *drawable,
                    NULL);
 }
 
-static GeglNode *
-gimp_drawable_get_node (GimpItem *item)
-{
-  GimpDrawable *drawable = GIMP_DRAWABLE (item);
-  GeglNode     *node;
-  GeglNode     *input;
-  GeglNode     *output;
-
-  node = GIMP_ITEM_CLASS (parent_class)->get_node (item);
-
-  g_warn_if_fail (drawable->private->mode_node == NULL);
-
-  drawable->private->mode_node =
-    gegl_node_new_child (node,
-                         "operation", "gimp:normal-mode",
-                         NULL);
-
-  input  = gegl_node_get_input_proxy  (node, "input");
-  output = gegl_node_get_output_proxy (node, "output");
-
-  if (gimp_item_get_visible (GIMP_ITEM (drawable)))
-    {
-      gegl_node_connect_to (input,                        "output",
-                            drawable->private->mode_node, "input");
-      gegl_node_connect_to (drawable->private->mode_node, "output",
-                            output,                       "input");
-    }
-  else
-    {
-      gegl_node_connect_to (input,  "output",
-                            output, "input");
-    }
-
-  return node;
-}
-
 static void
 gimp_drawable_real_push_undo (GimpDrawable *drawable,
                               const gchar  *undo_desc,
@@ -930,7 +933,7 @@ gimp_drawable_sync_source_node (GimpDrawable *drawable,
           if (fs->layer_offset_node)
             {
               gegl_node_disconnect (fs->layer_offset_node, "input");
-              gegl_node_remove_child (gimp_item_get_node (GIMP_ITEM (fs)),
+              gegl_node_remove_child (gimp_filter_get_node (GIMP_FILTER (fs)),
                                       fs_source);
             }
 
@@ -1008,7 +1011,7 @@ gimp_drawable_sync_source_node (GimpDrawable *drawable,
           /* plug the fs' source node back into its graph */
           if (fs->layer_offset_node)
             {
-              gegl_node_add_child (gimp_item_get_node (GIMP_ITEM (fs)),
+              gegl_node_add_child (gimp_filter_get_node (GIMP_FILTER (fs)),
                                    fs_source);
               gegl_node_connect_to (fs_source,             "output",
                                     fs->layer_offset_node, "input");
@@ -1375,7 +1378,7 @@ gimp_drawable_get_mode_node (GimpDrawable *drawable)
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
   if (! drawable->private->mode_node)
-    gimp_item_get_node (GIMP_ITEM (drawable));
+    gimp_filter_get_node (GIMP_FILTER (drawable));
 
   return drawable->private->mode_node;
 }

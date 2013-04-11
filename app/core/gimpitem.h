@@ -19,7 +19,7 @@
 #define __GIMP_ITEM_H__
 
 
-#include "gimpviewable.h"
+#include "gimpfilter.h"
 
 
 #define GIMP_TYPE_ITEM            (gimp_item_get_type ())
@@ -34,12 +34,12 @@ typedef struct _GimpItemClass GimpItemClass;
 
 struct _GimpItem
 {
-  GimpViewable  parent_instance;
+  GimpFilter  parent_instance;
 };
 
 struct _GimpItemClass
 {
-  GimpViewableClass  parent_class;
+  GimpFilterClass  parent_class;
 
   /*  signals  */
   void            (* removed)               (GimpItem            *item);
@@ -110,8 +110,6 @@ struct _GimpItemClass
                                           gboolean                feather,
                                           gdouble                 feather_radius_x,
                                           gdouble                 feather_radius_y);
-  GeglNode      * (* get_node)           (GimpItem               *item);
-
 
   const gchar *default_name;
   const gchar *rename_desc;
@@ -253,9 +251,6 @@ void            gimp_item_to_selection       (GimpItem           *item,
                                               gboolean            feather,
                                               gdouble             feather_radius_x,
                                               gdouble             feather_radius_y);
-
-GeglNode      * gimp_item_get_node           (GimpItem           *item);
-GeglNode      * gimp_item_peek_node          (GimpItem           *item);
 
 void            gimp_item_add_offset_node    (GimpItem           *item,
                                               GeglNode           *node);

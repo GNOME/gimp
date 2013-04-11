@@ -94,8 +94,6 @@ struct _GimpItemPrivate
 
   guint             removed : 1;        /*  removed from the image?  */
 
-  GeglNode         *node;               /*  the GEGL node to plug
-                                            into the graph           */
   GList            *offset_nodes;       /*  offset nodes to manage   */
 };
 
@@ -149,10 +147,9 @@ static void       gimp_item_real_resize             (GimpItem       *item,
                                                      gint            new_height,
                                                      gint            offset_x,
                                                      gint            offset_y);
-static GeglNode * gimp_item_real_get_node           (GimpItem       *item);
 
 
-G_DEFINE_TYPE (GimpItem, gimp_item, GIMP_TYPE_VIEWABLE)
+G_DEFINE_TYPE (GimpItem, gimp_item, GIMP_TYPE_FILTER)
 
 #define parent_class gimp_item_parent_class
 
@@ -243,7 +240,6 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->transform                 = NULL;
   klass->stroke                    = NULL;
   klass->to_selection              = NULL;
-  klass->get_node                  = gimp_item_real_get_node;
 
   klass->default_name              = NULL;
   klass->rename_desc               = NULL;
@@ -348,12 +344,6 @@ static void
 gimp_item_finalize (GObject *object)
 {
   GimpItemPrivate *private = GET_PRIVATE (object);
-
-  if (private->node)
-    {
-      g_object_unref (private->node);
-      private->node = NULL;
-    }
 
   if (private->offset_nodes)
     {
@@ -461,22 +451,22 @@ gimp_item_get_memsize (GimpObject *object,
 static void
 gimp_item_real_visibility_changed (GimpItem *item)
 {
-  GimpItemPrivate *private = GET_PRIVATE (item);
+  GeglNode *node = gimp_filter_peek_node (GIMP_FILTER (item));
 
-  if (! private->node)
-    return;
-
-  if (gimp_item_get_visible (item))
+  if (node)
     {
-      /* Leave this up to subclasses */
-    }
-  else
-    {
-      GeglNode *input  = gegl_node_get_input_proxy  (private->node, "input");
-      GeglNode *output = gegl_node_get_output_proxy (private->node, "output");
+      if (gimp_item_get_visible (item))
+        {
+          /* Leave this up to subclasses */
+        }
+      else
+        {
+          GeglNode *input  = gegl_node_get_input_proxy  (node, "input");
+          GeglNode *output = gegl_node_get_output_proxy (node, "output");
 
-      gegl_node_connect_to (input,  "output",
-                            output, "input");
+          gegl_node_connect_to (input,  "output",
+                                output, "input");
+        }
     }
 }
 
@@ -656,16 +646,6 @@ gimp_item_real_resize (GimpItem    *item,
   gimp_item_set_offset (item,
                         private->offset_x - offset_x,
                         private->offset_y - offset_y);
-}
-
-static GeglNode *
-gimp_item_real_get_node (GimpItem *item)
-{
-  GimpItemPrivate *private = GET_PRIVATE (item);
-
-  private->node = gegl_node_new ();
-
-  return private->node;
 }
 
 
@@ -1574,29 +1554,6 @@ gimp_item_to_selection (GimpItem       *item,
   if (item_class->to_selection)
     item_class->to_selection (item, op, antialias,
                               feather, feather_radius_x, feather_radius_y);
-}
-
-GeglNode *
-gimp_item_get_node (GimpItem *item)
-{
-  GimpItemPrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
-
-  private = GET_PRIVATE (item);
-
-  if (private->node)
-    return private->node;
-
-  return GIMP_ITEM_GET_CLASS (item)->get_node (item);
-}
-
-GeglNode *
-gimp_item_peek_node (GimpItem *item)
-{
-  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
-
-  return GET_PRIVATE (item)->node;
 }
 
 void

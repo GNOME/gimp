@@ -163,6 +163,8 @@ libappcore_a_sources = \
 	gimperror.h				\
 	gimpfilloptions.c			\
 	gimpfilloptions.h			\
+	gimpfilter.c				\
+	gimpfilter.h				\
 	gimpfilteredcontainer.c			\
 	gimpfilteredcontainer.h			\
 	gimpfloatingselundo.c			\
