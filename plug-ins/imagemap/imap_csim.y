@@ -38,7 +38,7 @@
 extern int csim_lex(void);
 extern int csim_restart(FILE *csim_in);
 static void csim_error(char* s);
-static gchar* unescape_text(gchar *);
+static gchar * unescape_text(gchar *input);
 
 static enum {UNDEFINED, RECTANGLE, CIRCLE, POLYGON} current_type;
 static Object_t *current_object;
@@ -353,33 +353,44 @@ static gchar*
 unescape_text (gchar *input)
 {
  /*
-  * We "unescape" simple things "in place", knowing that unescaped strings always are
-  * shorter than  the original input.
+  * We "unescape" simple things "in place", knowing that unescaped
+  * strings always are shorter than the original input.
   *
-  * It is a shame there is no g_markup_unescape_text() function, but instead you have
-  * to create a full GMarkupParser/Context.
+  * It is a shame there is no g_markup_unescape_text() function, but
+  * instead you have to create a full GMarkupParser/Context.
   */
   struct token {
-    const char *enc, unenc;
+    const char *escaped;
+    const char  unescaped;
   };
   const struct token tab[] = {
-   { "&quot;", '"' },
-   { "&apos;", '\'' },
-   { "&amp;",  '&' },
-   { "&lt;",   '<' },
-   { "&gt;",   '>' }
+    { "&quot;", '"'  },
+    { "&apos;", '\'' },
+    { "&amp;",  '&'  },
+    { "&lt;",   '<'  },
+    { "&gt;",   '>'  }
   };
-  size_t i;
 
-  for (i = 0; i < sizeof(tab)/sizeof(tab[0]); i++) {
-    char *p;
-    for (p = strstr(input, tab[i].enc); p != NULL; p = strstr(p, tab[i].enc)) {
-      *p++ = tab[i].unenc;
-      strcpy(p, p + strlen(tab[i].enc)-1);
-      if (*p == 0)
-        break;
+  size_t i;
+  for (i = 0; i < (sizeof tab / sizeof tab[0]); i++)
+    {
+      const size_t escaped_len = strlen (tab[i].escaped);
+      char *p;
+
+      /* FIXME: The following code does not perform a UTF-8 substring
+         search. */
+      for (p = strstr (input, tab[i].escaped);
+           p != NULL;
+           p = strstr (p, tab[i].escaped))
+        {
+          size_t copy_len;
+          *p++ = tab[i].unescaped;
+          copy_len = strlen (p) - escaped_len + 2;
+          memmove (p, p + escaped_len - 1, copy_len);
+          if (*p == 0)
+            break;
+        }
     }
-  }
 
   return input;
 }
