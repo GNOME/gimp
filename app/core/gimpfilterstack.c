@@ -155,7 +155,9 @@ gimp_filter_stack_get_graph (GimpFilterStack *stack)
 {
   GList    *list;
   GList    *reverse_list = NULL;
+  GeglNode *first        = NULL;
   GeglNode *previous     = NULL;
+  GeglNode *input;
   GeglNode *output;
 
   g_return_val_if_fail (GIMP_IS_FILTER_STACK (stack), NULL);
@@ -182,6 +184,9 @@ gimp_filter_stack_get_graph (GimpFilterStack *stack)
       GimpFilter *filter = list->data;
       GeglNode   *node   = gimp_filter_get_node (filter);
 
+      if (! first)
+        first = node;
+
       gegl_node_add_child (stack->graph, node);
 
       if (previous)
@@ -193,7 +198,12 @@ gimp_filter_stack_get_graph (GimpFilterStack *stack)
 
   g_list_free (reverse_list);
 
+  input  = gegl_node_get_input_proxy  (stack->graph, "input");
   output = gegl_node_get_output_proxy (stack->graph, "output");
+
+  if (first)
+    gegl_node_connect_to (input, "output",
+                          first, "input");
 
   if (previous)
     gegl_node_connect_to (previous, "output",
@@ -212,6 +222,7 @@ gimp_filter_stack_add_node (GimpFilterStack *stack,
   GimpFilter *filter_above = NULL;
   GimpFilter *filter_below;
   GeglNode   *node_above;
+  GeglNode   *node_below;
   GeglNode   *node;
   gint        index;
 
@@ -240,18 +251,20 @@ gimp_filter_stack_add_node (GimpFilterStack *stack,
 
   if (filter_below)
     {
-      GeglNode *node_below = gimp_filter_get_node (filter_below);
-
-      gegl_node_connect_to (node_below, "output",
-                            node,       "input");
+      node_below = gimp_filter_get_node (filter_below);
     }
   else
     {
+      node_below = gegl_node_get_input_proxy (stack->graph, "input");
+
       if (filter_above)
         gimp_filter_set_is_last_node (filter_above, FALSE);
 
       gimp_filter_set_is_last_node (filter, TRUE);
     }
+
+  gegl_node_connect_to (node_below, "output",
+                        node,       "input");
 }
 
 static void
@@ -261,10 +274,13 @@ gimp_filter_stack_remove_node (GimpFilterStack *stack,
   GimpFilter *filter_above = NULL;
   GimpFilter *filter_below;
   GeglNode   *node_above;
+  GeglNode   *node_below;
   GeglNode   *node;
   gint        index;
 
   node = gimp_filter_get_node (filter);
+
+  gegl_node_disconnect (node, "input");
 
   index = gimp_container_get_child_index (GIMP_CONTAINER (stack),
                                           GIMP_OBJECT (filter));
@@ -286,19 +302,18 @@ gimp_filter_stack_remove_node (GimpFilterStack *stack,
 
   if (filter_below)
     {
-      GeglNode *node_below = gimp_filter_get_node (filter_below);
-
-      gegl_node_disconnect (node,       "input");
-      gegl_node_connect_to (node_below, "output",
-                            node_above, "input");
+      node_below = gimp_filter_get_node (filter_below);
     }
   else
     {
-      gegl_node_disconnect (node_above, "input");
+      node_below = gegl_node_get_input_proxy (stack->graph, "input");
 
       gimp_filter_set_is_last_node (filter, FALSE);
 
       if (filter_above)
         gimp_filter_set_is_last_node (filter_above, TRUE);
     }
+
+  gegl_node_connect_to (node_below, "output",
+                        node_above, "input");
 }
