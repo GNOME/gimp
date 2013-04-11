@@ -201,13 +201,18 @@ gimp_filter_stack_get_graph (GimpFilterStack *stack)
   input  = gegl_node_get_input_proxy  (stack->graph, "input");
   output = gegl_node_get_output_proxy (stack->graph, "output");
 
-  if (first)
-    gegl_node_connect_to (input, "output",
-                          first, "input");
-
-  if (previous)
-    gegl_node_connect_to (previous, "output",
-                          output,   "input");
+  if (first && previous)
+    {
+      gegl_node_connect_to (input, "output",
+                            first, "input");
+      gegl_node_connect_to (previous, "output",
+                            output,   "input");
+    }
+  else
+    {
+      gegl_node_connect_to (input,  "output",
+                            output, "input");
+    }
 
   return stack->graph;
 }
