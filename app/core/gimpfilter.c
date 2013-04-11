@@ -176,6 +176,19 @@ gimp_filter_real_get_node (GimpFilter *filter)
   return private->node;
 }
 
+
+/*  public functions  */
+
+GimpFilter *
+gimp_filter_new (const gchar *name)
+{
+  g_return_val_if_fail (name != NULL, NULL);
+
+  return g_object_new (GIMP_TYPE_FILTER,
+                       "name", name,
+                       NULL);
+}
+
 GeglNode *
 gimp_filter_get_node (GimpFilter *filter)
 {

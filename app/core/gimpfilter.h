@@ -47,14 +47,15 @@ struct _GimpFilterClass
 };
 
 
-GType      gimp_filter_get_type         (void) G_GNUC_CONST;
+GType        gimp_filter_get_type         (void) G_GNUC_CONST;
+GimpFilter * gimp_filter_new              (const gchar *name);
 
-GeglNode * gimp_filter_get_node         (GimpFilter *filter);
-GeglNode * gimp_filter_peek_node        (GimpFilter *filter);
+GeglNode   * gimp_filter_get_node         (GimpFilter *filter);
+GeglNode   * gimp_filter_peek_node        (GimpFilter *filter);
 
-void       gimp_filter_set_is_last_node (GimpFilter *filter,
-                                         gboolean    is_last_node);
-gboolean   gimp_filter_get_is_last_node (GimpFilter *filter);
+void         gimp_filter_set_is_last_node (GimpFilter *filter,
+                                           gboolean    is_last_node);
+gboolean     gimp_filter_get_is_last_node (GimpFilter *filter);
 
 
 #endif /* __GIMP_FILTER_H__ */
