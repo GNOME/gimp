@@ -25,8 +25,10 @@ struct _GimpDrawablePrivate
 
   GeglNode      *source_node;
   GeglNode      *buffer_source_node;
+  GimpContainer *filter_stack;
 
   GimpLayer     *floating_selection;
+  GimpFilter    *fs_filter;
   GeglNode      *fs_crop_node;
   GeglNode      *fs_offset_node;
   GeglNode      *fs_mode_node;
