@@ -50,9 +50,9 @@ static void   gimp_drawable_stack_reorder          (GimpContainer     *container
                                                     gint               new_index);
 
 static void   gimp_drawable_stack_add_node         (GimpDrawableStack *stack,
-                                                    GimpDrawable      *drawable);
+                                                    GimpFilter        *filter);
 static void   gimp_drawable_stack_remove_node      (GimpDrawableStack *stack,
-                                                    GimpDrawable      *drawable);
+                                                    GimpFilter        *filter);
 
 static void   gimp_drawable_stack_update           (GimpDrawableStack *stack,
                                                     gint               x,
@@ -150,10 +150,10 @@ gimp_drawable_stack_add (GimpContainer *container,
 
   if (stack->graph)
     {
-      gegl_node_add_child (stack->graph,
-                           gimp_filter_get_node (GIMP_FILTER (object)));
+      GimpFilter *filter = GIMP_FILTER (object);
 
-      gimp_drawable_stack_add_node (stack, GIMP_DRAWABLE (object));
+      gegl_node_add_child (stack->graph, gimp_filter_get_node (filter));
+      gimp_drawable_stack_add_node (stack, filter);
     }
 
   if (gimp_item_get_visible (GIMP_ITEM (object)))
@@ -168,10 +168,10 @@ gimp_drawable_stack_remove (GimpContainer *container,
 
   if (stack->graph)
     {
-      gimp_drawable_stack_remove_node (stack, GIMP_DRAWABLE (object));
+      GimpFilter *filter = GIMP_FILTER (object);
 
-      gegl_node_remove_child (stack->graph,
-                              gimp_filter_get_node (GIMP_FILTER (object)));
+      gimp_drawable_stack_remove_node (stack, filter);
+      gegl_node_remove_child (stack->graph, gimp_filter_get_node (filter));
     }
 
   GIMP_CONTAINER_CLASS (parent_class)->remove (container, object);
@@ -185,15 +185,16 @@ gimp_drawable_stack_reorder (GimpContainer *container,
                              GimpObject    *object,
                              gint           new_index)
 {
-  GimpDrawableStack *stack = GIMP_DRAWABLE_STACK (container);
+  GimpDrawableStack *stack  = GIMP_DRAWABLE_STACK (container);
+  GimpFilter        *filter = GIMP_FILTER (object);
 
   if (stack->graph)
-    gimp_drawable_stack_remove_node (stack, GIMP_DRAWABLE (object));
+    gimp_drawable_stack_remove_node (stack, filter);
 
   GIMP_CONTAINER_CLASS (parent_class)->reorder (container, object, new_index);
 
   if (stack->graph)
-    gimp_drawable_stack_add_node (stack, GIMP_DRAWABLE (object));
+    gimp_drawable_stack_add_node (stack, filter);
 
   if (gimp_item_get_visible (GIMP_ITEM (object)))
     gimp_drawable_stack_drawable_visible (GIMP_ITEM (object), stack);
@@ -271,18 +272,18 @@ gimp_drawable_stack_get_graph (GimpDrawableStack *stack)
 
 static void
 gimp_drawable_stack_add_node (GimpDrawableStack *stack,
-                              GimpDrawable      *drawable)
+                              GimpFilter        *filter)
 {
-  GimpDrawable *drawable_above = NULL;
-  GimpDrawable *drawable_below;
-  GeglNode     *node_above;
-  GeglNode     *node;
-  gint          index;
+  GimpFilter *filter_above = NULL;
+  GimpFilter *filter_below;
+  GeglNode   *node_above;
+  GeglNode   *node;
+  gint        index;
 
-  node = gimp_filter_get_node (GIMP_FILTER (drawable));
+  node = gimp_filter_get_node (filter);
 
   index = gimp_container_get_child_index (GIMP_CONTAINER (stack),
-                                          GIMP_OBJECT (drawable));
+                                          GIMP_OBJECT (filter));
 
   if (index == 0)
     {
@@ -290,48 +291,48 @@ gimp_drawable_stack_add_node (GimpDrawableStack *stack,
     }
   else
     {
-      drawable_above = (GimpDrawable *)
+      filter_above = (GimpFilter *)
         gimp_container_get_child_by_index (GIMP_CONTAINER (stack), index - 1);
 
-      node_above = gimp_filter_get_node (GIMP_FILTER (drawable_above));
+      node_above = gimp_filter_get_node (filter_above);
     }
 
   gegl_node_connect_to (node,       "output",
                         node_above, "input");
 
-  drawable_below = (GimpDrawable *)
+  filter_below = (GimpFilter *)
     gimp_container_get_child_by_index (GIMP_CONTAINER (stack), index + 1);
 
-  if (drawable_below)
+  if (filter_below)
     {
-      GeglNode *node_below = gimp_filter_get_node (GIMP_FILTER (drawable_below));
+      GeglNode *node_below = gimp_filter_get_node (filter_below);
 
       gegl_node_connect_to (node_below, "output",
                             node,       "input");
     }
   else
     {
-      if (drawable_above)
-        gimp_filter_set_is_last_node (GIMP_FILTER (drawable_above), FALSE);
+      if (filter_above)
+        gimp_filter_set_is_last_node (filter_above, FALSE);
 
-      gimp_filter_set_is_last_node (GIMP_FILTER (drawable), TRUE);
+      gimp_filter_set_is_last_node (filter, TRUE);
     }
 }
 
 static void
 gimp_drawable_stack_remove_node (GimpDrawableStack *stack,
-                                 GimpDrawable      *drawable)
+                                 GimpFilter        *filter)
 {
-  GimpDrawable *drawable_above = NULL;
-  GimpDrawable *drawable_below;
-  GeglNode     *node_above;
-  GeglNode     *node;
-  gint          index;
+  GimpFilter *filter_above = NULL;
+  GimpFilter *filter_below;
+  GeglNode   *node_above;
+  GeglNode   *node;
+  gint        index;
 
-  node = gimp_filter_get_node (GIMP_FILTER (drawable));
+  node = gimp_filter_get_node (filter);
 
   index = gimp_container_get_child_index (GIMP_CONTAINER (stack),
-                                          GIMP_OBJECT (drawable));
+                                          GIMP_OBJECT (filter));
 
   if (index == 0)
     {
@@ -339,18 +340,18 @@ gimp_drawable_stack_remove_node (GimpDrawableStack *stack,
     }
   else
     {
-      drawable_above = (GimpDrawable *)
+      filter_above = (GimpFilter *)
         gimp_container_get_child_by_index (GIMP_CONTAINER (stack), index - 1);
 
-      node_above = gimp_filter_get_node (GIMP_FILTER (drawable_above));
+      node_above = gimp_filter_get_node (filter_above);
     }
 
-  drawable_below = (GimpDrawable *)
+  filter_below = (GimpFilter *)
     gimp_container_get_child_by_index (GIMP_CONTAINER (stack), index + 1);
 
-  if (drawable_below)
+  if (filter_below)
     {
-      GeglNode *node_below = gimp_filter_get_node (GIMP_FILTER (drawable_below));
+      GeglNode *node_below = gimp_filter_get_node (filter_below);
 
       gegl_node_disconnect (node,       "input");
       gegl_node_connect_to (node_below, "output",
@@ -360,10 +361,10 @@ gimp_drawable_stack_remove_node (GimpDrawableStack *stack,
     {
       gegl_node_disconnect (node_above, "input");
 
-      gimp_filter_set_is_last_node (GIMP_FILTER (drawable), FALSE);
+      gimp_filter_set_is_last_node (filter, FALSE);
 
-      if (drawable_above)
-        gimp_filter_set_is_last_node (GIMP_FILTER (drawable_above), TRUE);
+      if (filter_above)
+        gimp_filter_set_is_last_node (filter_above, TRUE);
     }
 }
 
