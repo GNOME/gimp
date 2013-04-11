@@ -476,7 +476,7 @@ static GimpLayerModeEffects
 gimp_layer_get_visible_mode (GimpLayer *layer)
 {
   if (layer->mode != GIMP_DISSOLVE_MODE &&
-      gimp_drawable_get_is_last_node (GIMP_DRAWABLE (layer)))
+      gimp_filter_get_is_last_node (GIMP_FILTER (layer)))
     return GIMP_NORMAL_MODE;
 
   return layer->mode;

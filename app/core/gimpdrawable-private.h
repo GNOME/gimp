@@ -32,8 +32,6 @@ struct _GimpDrawablePrivate
   GeglNode      *fs_mode_node;
 
   GeglNode      *mode_node;
-
-  gboolean       is_last_node;
 };
 
 #endif /* __GIMP_DRAWABLE_PRIVATE_H__ */

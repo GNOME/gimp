@@ -180,10 +180,6 @@ void            gimp_drawable_set_buffer_full    (GimpDrawable       *drawable,
 GeglNode      * gimp_drawable_get_source_node    (GimpDrawable       *drawable);
 GeglNode      * gimp_drawable_get_mode_node      (GimpDrawable       *drawable);
 
-void            gimp_drawable_set_is_last_node   (GimpDrawable       *drawable,
-                                                  gboolean            last_node);
-gboolean        gimp_drawable_get_is_last_node   (GimpDrawable       *drawable);
-
 void            gimp_drawable_swap_pixels        (GimpDrawable       *drawable,
                                                   GeglBuffer         *buffer,
                                                   gint                x,

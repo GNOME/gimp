@@ -231,20 +231,20 @@ gimp_drawable_stack_get_graph (GimpDrawableStack *stack)
        list;
        list = g_list_next (list))
     {
-      GimpDrawable *drawable = list->data;
+      GimpFilter *filter = list->data;
 
-      reverse_list = g_list_prepend (reverse_list, drawable);
+      reverse_list = g_list_prepend (reverse_list, filter);
 
       if (! g_list_next (list))
-        gimp_drawable_set_is_last_node (drawable, TRUE);
+        gimp_filter_set_is_last_node (filter, TRUE);
     }
 
   stack->graph = gegl_node_new ();
 
   for (list = reverse_list; list; list = g_list_next (list))
     {
-      GimpDrawable *drawable = list->data;
-      GeglNode     *node     = gimp_filter_get_node (GIMP_FILTER (drawable));
+      GimpFilter *filter = list->data;
+      GeglNode   *node   = gimp_filter_get_node (filter);
 
       gegl_node_add_child (stack->graph, node);
 
@@ -312,9 +312,9 @@ gimp_drawable_stack_add_node (GimpDrawableStack *stack,
   else
     {
       if (drawable_above)
-        gimp_drawable_set_is_last_node (drawable_above, FALSE);
+        gimp_filter_set_is_last_node (GIMP_FILTER (drawable_above), FALSE);
 
-      gimp_drawable_set_is_last_node (drawable, TRUE);
+      gimp_filter_set_is_last_node (GIMP_FILTER (drawable), TRUE);
     }
 }
 
@@ -360,10 +360,10 @@ gimp_drawable_stack_remove_node (GimpDrawableStack *stack,
     {
       gegl_node_disconnect (node_above, "input");
 
-      gimp_drawable_set_is_last_node (drawable, FALSE);
+      gimp_filter_set_is_last_node (GIMP_FILTER (drawable), FALSE);
 
       if (drawable_above)
-        gimp_drawable_set_is_last_node (drawable_above, TRUE);
+        gimp_filter_set_is_last_node (GIMP_FILTER (drawable_above), TRUE);
     }
 }
 
