@@ -979,8 +979,7 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
           drawable->private->fs_filter =
             gimp_drawable_create_fs_filter (drawable, GIMP_DRAWABLE (fs));
 
-          gimp_container_add (drawable->private->filter_stack,
-                              GIMP_OBJECT (drawable->private->fs_filter));
+          gimp_drawable_add_filter (drawable, drawable->private->fs_filter);
 
           g_signal_connect (fs, "notify",
                             G_CALLBACK (gimp_drawable_fs_notify),
@@ -1017,8 +1016,7 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
                                                 gimp_drawable_fs_notify,
                                                 drawable);
 
-          gimp_container_remove (drawable->private->filter_stack,
-                                 GIMP_OBJECT (drawable->private->fs_filter));
+          gimp_drawable_remove_filter (drawable, drawable->private->fs_filter);
 
           fs_source = gimp_drawable_get_source_node (GIMP_DRAWABLE (fs));
 
