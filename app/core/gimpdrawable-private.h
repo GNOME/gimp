@@ -32,6 +32,7 @@ struct _GimpDrawablePrivate
   GeglNode      *fs_crop_node;
   GeglNode      *fs_offset_node;
   GeglNode      *fs_mode_node;
+  GeglNode      *fs_affect_node;
 
   GeglNode      *mode_node;
 };

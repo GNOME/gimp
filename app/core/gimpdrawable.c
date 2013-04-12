@@ -36,6 +36,7 @@
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-combine.h"
+#include "gimpdrawable-filter.h"
 #include "gimpdrawable-preview.h"
 #include "gimpdrawable-private.h"
 #include "gimpdrawable-shadow.h"
@@ -177,6 +178,9 @@ static void       gimp_drawable_sync_fs_filter     (GimpDrawable      *drawable,
                                                     gboolean           detach_fs);
 static void       gimp_drawable_fs_notify          (GimpLayer         *fs,
                                                     const GParamSpec  *pspec,
+                                                    GimpDrawable      *drawable);
+static void       gimp_drawable_fs_image_changed   (GimpImage         *image,
+                                                    GimpChannelType    channel,
                                                     GimpDrawable      *drawable);
 static void       gimp_drawable_fs_update          (GimpLayer         *fs,
                                                     gint               x,
@@ -940,7 +944,18 @@ gimp_drawable_create_fs_filter (GimpDrawable *drawable,
                         drawable->private->fs_mode_node,   "input");
   gegl_node_connect_to (drawable->private->fs_offset_node, "output",
                         drawable->private->fs_mode_node,   "aux");
+
+  drawable->private->fs_affect_node =
+    gegl_node_new_child (node,
+                         "operation", "gimp:mask-components",
+                         "mask",      GIMP_COMPONENT_ALL,
+                         NULL);
+
+  gegl_node_connect_to (input,                             "output",
+                        drawable->private->fs_affect_node, "input");
   gegl_node_connect_to (drawable->private->fs_mode_node,   "output",
+                        drawable->private->fs_affect_node, "aux");
+  gegl_node_connect_to (drawable->private->fs_affect_node, "output",
                         output,                            "input");
 
   return filter;
@@ -950,7 +965,8 @@ static void
 gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
                               gboolean      detach_fs)
 {
-  GimpLayer *fs = gimp_drawable_get_floating_sel (drawable);
+  GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpLayer *fs    = gimp_drawable_get_floating_sel (drawable);
 
   if (! drawable->private->source_node)
     return;
@@ -984,6 +1000,9 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
           g_signal_connect (fs, "notify",
                             G_CALLBACK (gimp_drawable_fs_notify),
                             drawable);
+          g_signal_connect (image, "component-active-changed",
+                            G_CALLBACK (gimp_drawable_fs_image_changed),
+                            drawable);
         }
 
       gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
@@ -1005,6 +1024,10 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
                                gimp_layer_get_mode (fs),
                                gimp_layer_get_opacity (fs),
                                FALSE);
+
+      gegl_node_set (drawable->private->fs_affect_node,
+                     "mask", gimp_drawable_get_active_mask (drawable),
+                     NULL);
     }
   else
     {
@@ -1014,6 +1037,9 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
 
           g_signal_handlers_disconnect_by_func (fs,
                                                 gimp_drawable_fs_notify,
+                                                drawable);
+          g_signal_handlers_disconnect_by_func (image,
+                                                gimp_drawable_fs_image_changed,
                                                 drawable);
 
           gimp_drawable_remove_filter (drawable, drawable->private->fs_filter);
@@ -1038,6 +1064,7 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
           drawable->private->fs_crop_node   = NULL;
           drawable->private->fs_offset_node = NULL;
           drawable->private->fs_mode_node   = NULL;
+          drawable->private->fs_affect_node = NULL;
         }
     }
 }
@@ -1055,6 +1082,14 @@ gimp_drawable_fs_notify (GimpLayer        *fs,
     {
       gimp_drawable_sync_fs_filter (drawable, FALSE);
     }
+}
+
+static void
+gimp_drawable_fs_image_changed (GimpImage       *image,
+                                GimpChannelType  channel,
+                                GimpDrawable    *drawable)
+{
+  gimp_drawable_sync_fs_filter (drawable, FALSE);
 }
 
 static void
