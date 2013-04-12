@@ -510,11 +510,11 @@ gimp_heal_motion (GimpSourceCore   *source_core,
       return;
     }
 
-  src_copy =
-    gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                     src_rect->width,
-                                     src_rect->height),
-                     babl_format ("RGBA float"));
+  /*  heal should work in perceptual space, use R'G'B' instead of RGB  */
+  src_copy = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                              src_rect->width,
+                                              src_rect->height),
+                              babl_format ("R'G'B'A float"));
 
   gegl_buffer_copy (src_buffer,
                     src_rect,
@@ -522,6 +522,9 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                     GEGL_RECTANGLE (0, 0,
                                     src_rect->width,
                                     src_rect->height));
+
+  /*  this is ok because we know that the paint_buffer is "RGBA float"  */
+  gegl_buffer_set_format (paint_buffer, babl_format ("R'G'B'A float"));
 
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
                     GEGL_RECTANGLE (paint_buffer_x, paint_buffer_y,
