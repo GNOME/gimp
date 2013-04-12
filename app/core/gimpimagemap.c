@@ -265,6 +265,7 @@ gimp_image_map_apply (GimpImageMap        *image_map,
     {
       GimpImage   *image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
       GimpChannel *mask  = gimp_image_get_mask (image);
+      GeglBuffer  *mask_buffer;
       GeglNode    *filter_node;
       GeglNode    *filter_output;
       GeglNode    *input;
@@ -332,11 +333,16 @@ gimp_image_map_apply (GimpImageMap        *image_map,
           filter_output = image_map->translate;
         }
 
+      if (gimp_channel_is_empty (mask))
+        mask_buffer = NULL;
+      else
+        mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+
       apply = gimp_gegl_create_apply_node (filter_output,
                                            rect.x,
                                            rect.y,
                                            0, 0, 0, 0,
-                                           gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
+                                           mask_buffer,
                                            -offset_x, -offset_y,
                                            GIMP_OPACITY_OPAQUE,
                                            GIMP_REPLACE_MODE,
