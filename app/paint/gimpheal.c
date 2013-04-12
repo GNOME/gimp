@@ -355,7 +355,7 @@ gimp_heal_laplace_loop (gdouble *matrix,
                         gdouble *solution,
                         guchar  *mask)
 {
-#define EPSILON   0.001
+#define EPSILON   1e-8
 #define MAX_ITER  500
   gint i;
 
