@@ -126,6 +126,8 @@ libappcore_a_sources = \
 	gimpdrawable-combine.h			\
 	gimpdrawable-equalize.c			\
 	gimpdrawable-equalize.h			\
+	gimpdrawable-filter.c			\
+	gimpdrawable-filter.h			\
 	gimpdrawable-foreground-extract.c	\
 	gimpdrawable-foreground-extract.h	\
 	gimpdrawable-histogram.c		\
