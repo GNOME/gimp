@@ -121,13 +121,58 @@ gimp_gegl_create_apply_buffer_node (GeglBuffer           *buffer,
 
 {
   GeglNode *node;
+  GeglNode *buffer_source;
+
+  g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
+  g_return_val_if_fail (mask == NULL || GEGL_IS_BUFFER (mask), NULL);
+
+  buffer_source = gegl_node_new_child (NULL,
+                                       "operation", "gegl:buffer-source",
+                                       "buffer",    buffer,
+                                       NULL);
+
+  node = gimp_gegl_create_apply_node (buffer_source,
+                                      buffer_offset_x,
+                                      buffer_offset_y,
+                                      src_offset_x,
+                                      src_offset_y,
+                                      dest_offset_x,
+                                      dest_offset_y,
+                                      mask,
+                                      mask_offset_x,
+                                      mask_offset_y,
+                                      opacity,
+                                      mode,
+                                      affect);
+
+  gegl_node_add_child (node, buffer_source);
+  g_object_unref (buffer_source);
+
+  return node;
+}
+
+GeglNode *
+gimp_gegl_create_apply_node (GeglNode             *apply,
+                             gint                  apply_offset_x,
+                             gint                  apply_offset_y,
+                             gint                  src_offset_x,
+                             gint                  src_offset_y,
+                             gint                  dest_offset_x,
+                             gint                  dest_offset_y,
+                             GeglBuffer           *mask,
+                             gint                  mask_offset_x,
+                             gint                  mask_offset_y,
+                             gdouble               opacity,
+                             GimpLayerModeEffects  mode,
+                             GimpComponentMask     affect)
+{
+  GeglNode *node;
   GeglNode *input;
   GeglNode *output;
-  GeglNode *buffer_source;
   GeglNode *mask_source;
   GeglNode *mode_node;
 
-  g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
+  g_return_val_if_fail (GEGL_IS_NODE (apply), NULL);
   g_return_val_if_fail (mask == NULL || GEGL_IS_BUFFER (mask), NULL);
 
   node = gegl_node_new ();
@@ -176,10 +221,20 @@ gimp_gegl_create_apply_buffer_node (GeglBuffer           *buffer,
       return node;
     }
 
-  buffer_source = gimp_gegl_add_buffer_source (node, buffer,
-                                               buffer_offset_x,
-                                               buffer_offset_y);
+  if (apply_offset_x != 0 || apply_offset_y != 0)
+    {
+      GeglNode *translate =
+        gegl_node_new_child (node,
+                             "operation", "gegl:translate",
+                             "x",         (gdouble) apply_offset_x,
+                             "y",         (gdouble) apply_offset_y,
+                             NULL);
 
+      gegl_node_connect_to (apply,     "output",
+                            translate, "input");
+
+      apply = translate;
+    }
 
   if (mask)
     mask_source = gimp_gegl_add_buffer_source (node, mask,
@@ -193,8 +248,8 @@ gimp_gegl_create_apply_buffer_node (GeglBuffer           *buffer,
                                    NULL);
   gimp_gegl_mode_node_set (mode_node, mode, opacity, FALSE);
 
-  gegl_node_connect_to (buffer_source, "output",
-                        mode_node,     "aux");
+  gegl_node_connect_to (apply,     "output",
+                        mode_node, "aux");
 
   if (mask_source)
     gegl_node_connect_to (mask_source, "output",
