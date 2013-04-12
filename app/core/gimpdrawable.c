@@ -1682,35 +1682,35 @@ gimp_drawable_get_floating_sel (const GimpDrawable *drawable)
 
 void
 gimp_drawable_attach_floating_sel (GimpDrawable *drawable,
-                                   GimpLayer    *floating_sel)
+                                   GimpLayer    *fs)
 {
   GimpImage *image;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (gimp_drawable_get_floating_sel (drawable) == NULL);
-  g_return_if_fail (GIMP_IS_LAYER (floating_sel));
+  g_return_if_fail (GIMP_IS_LAYER (fs));
 
   GIMP_LOG (FLOATING_SELECTION, "%s", G_STRFUNC);
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  drawable->private->floating_selection = floating_sel;
-  gimp_image_set_floating_selection (image, floating_sel);
+  drawable->private->floating_selection = fs;
+  gimp_image_set_floating_selection (image, fs);
 
   /*  clear the selection  */
-  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (floating_sel));
+  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (fs));
 
   gimp_drawable_sync_fs_filter (drawable, FALSE);
 
-  g_signal_connect (floating_sel, "update",
+  g_signal_connect (fs, "update",
                     G_CALLBACK (gimp_drawable_fs_update),
                     drawable);
 
-  gimp_drawable_fs_update (floating_sel,
+  gimp_drawable_fs_update (fs,
                            0, 0,
-                           gimp_item_get_width  (GIMP_ITEM (floating_sel)),
-                           gimp_item_get_height (GIMP_ITEM (floating_sel)),
+                           gimp_item_get_width  (GIMP_ITEM (fs)),
+                           gimp_item_get_height (GIMP_ITEM (fs)),
                            drawable);
 }
 
@@ -1718,31 +1718,40 @@ void
 gimp_drawable_detach_floating_sel (GimpDrawable *drawable)
 {
   GimpImage *image;
-  GimpLayer *floating_sel;
+  GimpLayer *fs;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_drawable_get_floating_sel (drawable) != NULL);
 
   GIMP_LOG (FLOATING_SELECTION, "%s", G_STRFUNC);
 
-  image        = gimp_item_get_image (GIMP_ITEM (drawable));
-  floating_sel = drawable->private->floating_selection;
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
+  fs    = drawable->private->floating_selection;
 
   gimp_drawable_sync_fs_filter (drawable, TRUE);
 
-  g_signal_handlers_disconnect_by_func (floating_sel,
+  g_signal_handlers_disconnect_by_func (fs,
                                         gimp_drawable_fs_update,
                                         drawable);
 
-  gimp_drawable_fs_update (floating_sel,
+  gimp_drawable_fs_update (fs,
                            0, 0,
-                           gimp_item_get_width  (GIMP_ITEM (floating_sel)),
-                           gimp_item_get_height (GIMP_ITEM (floating_sel)),
+                           gimp_item_get_width  (GIMP_ITEM (fs)),
+                           gimp_item_get_height (GIMP_ITEM (fs)),
                            drawable);
 
   /*  clear the selection  */
-  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (floating_sel));
+  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (fs));
 
   gimp_image_set_floating_selection (image, NULL);
   drawable->private->floating_selection = NULL;
+}
+
+GimpFilter *
+gimp_drawable_get_floating_sel_filter (GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (gimp_drawable_get_floating_sel (drawable) != NULL, NULL);
+
+  return drawable->private->fs_filter;
 }
