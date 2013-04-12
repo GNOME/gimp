@@ -24,6 +24,7 @@
 #include "core-types.h"
 
 #include "gimpboundary.h"
+#include "gimpdrawable-filter.h"
 #include "gimperror.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
@@ -33,11 +34,6 @@
 #include "gimplayermask.h"
 
 #include "gimp-intl.h"
-
-
-/*  local function prototypes  */
-
-static void   floating_sel_composite (GimpLayer *layer);
 
 
 /* public functions  */
@@ -82,7 +78,11 @@ floating_sel_attach (GimpLayer    *layer,
 void
 floating_sel_anchor (GimpLayer *layer)
 {
-  GimpImage *image;
+  GimpImage    *image;
+  GimpDrawable *drawable;
+  GimpFilter   *filter = NULL;
+  gint          off_x, off_y;
+  gint          dr_off_x, dr_off_y;
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
   g_return_if_fail (gimp_layer_is_floating_sel (layer));
@@ -92,10 +92,34 @@ floating_sel_anchor (GimpLayer *layer)
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_FS_ANCHOR,
                                C_("undo-type", "Anchor Floating Selection"));
 
-  /*  Composite the floating selection contents  */
-  floating_sel_composite (layer);
+  drawable = gimp_layer_get_floating_sel_drawable (layer);
 
+  gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
+  gimp_item_get_offset (GIMP_ITEM (drawable), &dr_off_x, &dr_off_y);
+
+  if (gimp_item_get_visible (GIMP_ITEM (layer)) &&
+      gimp_rectangle_intersect (off_x, off_y,
+                                gimp_item_get_width  (GIMP_ITEM (layer)),
+                                gimp_item_get_height (GIMP_ITEM (layer)),
+                                dr_off_x, dr_off_y,
+                                gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                gimp_item_get_height (GIMP_ITEM (drawable)),
+                                NULL, NULL, NULL, NULL))
+    {
+      filter = gimp_drawable_get_floating_sel_filter (drawable);
+      g_object_ref (filter);
+    }
+
+  /*  first remove the filter, then merge it, or we will get warnings
+   *  about already connected nodes
+   */
   gimp_image_remove_layer (image, layer, TRUE, NULL);
+
+  if (filter)
+    {
+      gimp_drawable_merge_filter (drawable, filter, NULL, NULL);
+      g_object_unref (filter);
+    }
 
   gimp_image_undo_group_end (image);
 
@@ -277,70 +301,4 @@ floating_sel_invalidate (GimpLayer *layer)
 
   /*  Invalidate the boundary  */
   layer->fs.boundary_known = FALSE;
-}
-
-
-/*  private functions  */
-
-static void
-floating_sel_composite (GimpLayer *layer)
-{
-  GimpDrawable *drawable;
-  gint          off_x, off_y;
-  gint          dr_off_x, dr_off_y;
-  gint          combine_x, combine_y;
-  gint          combine_width, combine_height;
-
-  g_return_if_fail (GIMP_IS_LAYER (layer));
-  g_return_if_fail (gimp_layer_is_floating_sel (layer));
-
-  drawable = gimp_layer_get_floating_sel_drawable (layer);
-
-  gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
-  gimp_item_get_offset (GIMP_ITEM (drawable), &dr_off_x, &dr_off_y);
-
-  if (gimp_item_get_visible (GIMP_ITEM (layer)) &&
-      gimp_rectangle_intersect (off_x, off_y,
-                                gimp_item_get_width  (GIMP_ITEM (layer)),
-                                gimp_item_get_height (GIMP_ITEM (layer)),
-                                dr_off_x, dr_off_y,
-                                gimp_item_get_width  (GIMP_ITEM (drawable)),
-                                gimp_item_get_height (GIMP_ITEM (drawable)),
-                                &combine_x, &combine_y,
-                                &combine_width, &combine_height))
-    {
-      GeglBuffer *fs_buffer;
-      gboolean    lock_alpha = FALSE;
-
-      /*  a kludge here to prevent the case of the drawable
-       *  underneath having lock alpha on, and disallowing
-       *  the composited floating selection from being shown
-       */
-      if (GIMP_IS_LAYER (drawable))
-        {
-          lock_alpha = gimp_layer_get_lock_alpha (GIMP_LAYER (drawable));
-
-          if (lock_alpha)
-            gimp_layer_set_lock_alpha (GIMP_LAYER (drawable), FALSE, FALSE);
-        }
-
-      /*  composite the area from the layer to the drawable  */
-      fs_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
-
-      gimp_drawable_apply_buffer (drawable, fs_buffer,
-                                  GEGL_RECTANGLE (combine_x - off_x,
-                                                  combine_y - off_y,
-                                                  combine_width,
-                                                  combine_height),
-                                  TRUE, NULL,
-                                  gimp_layer_get_opacity (layer),
-                                  gimp_layer_get_mode (layer),
-                                  NULL,
-                                  combine_x - dr_off_x,
-                                  combine_y - dr_off_y);
-
-      /*  restore lock alpha  */
-      if (lock_alpha)
-        gimp_layer_set_lock_alpha (GIMP_LAYER (drawable), TRUE, FALSE);
-    }
 }
