@@ -333,7 +333,7 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
 
   if (GIMP_IMAGE_MAP_TOOL (tool)->image_map)
     {
-      gimp_image_map_clear (GIMP_IMAGE_MAP_TOOL (tool)->image_map);
+      gimp_image_map_abort (GIMP_IMAGE_MAP_TOOL (tool)->image_map);
       g_object_unref (GIMP_IMAGE_MAP_TOOL (tool)->image_map);
       GIMP_IMAGE_MAP_TOOL (tool)->image_map = NULL;
     }

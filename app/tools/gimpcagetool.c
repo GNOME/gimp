@@ -376,8 +376,7 @@ gimp_cage_tool_options_notify (GimpTool         *tool,
       else
         {
           /* switch to edit mode */
-          gimp_image_map_clear (ct->image_map);
-          gimp_cage_tool_image_map_flush (ct->image_map, tool);
+          gimp_image_map_abort (ct->image_map);
 
           gimp_tool_pop_status (tool, tool->display);
           ct->tool_state = CAGE_STATE_WAIT;
@@ -429,7 +428,8 @@ gimp_cage_tool_key_press (GimpTool    *tool,
         {
           gimp_tool_control_push_preserve (tool->control, TRUE);
 
-          gimp_image_map_commit (ct->image_map);
+          gimp_image_map_commit (ct->image_map,
+                                 GIMP_PROGRESS (tool));
           g_object_unref (ct->image_map);
           ct->image_map = NULL;
 
@@ -1255,8 +1255,7 @@ gimp_cage_tool_image_map_flush (GimpImageMap *image_map,
 {
   GimpImage *image = gimp_display_get_image (tool->display);
 
-  gimp_projection_flush_now (gimp_image_get_projection (image));
-  gimp_display_flush_now (tool->display);
+  gimp_projection_flush (gimp_image_get_projection (image));
 }
 
 static void

@@ -55,8 +55,8 @@ GimpImageMap * gimp_image_map_new      (GimpDrawable        *drawable,
 
 void           gimp_image_map_apply    (GimpImageMap        *image_map,
                                         const GeglRectangle *visible);
-void           gimp_image_map_commit   (GimpImageMap        *image_map);
-void           gimp_image_map_clear    (GimpImageMap        *image_map);
+void           gimp_image_map_commit   (GimpImageMap        *image_map,
+                                        GimpProgress        *progress);
 void           gimp_image_map_abort    (GimpImageMap        *image_map);
 
 

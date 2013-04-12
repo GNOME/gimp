@@ -47,6 +47,7 @@
 #include "core/gimpimagemapconfig.h"
 #include "core/gimplist.h"
 #include "core/gimppickable.h"
+#include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
 #include "core/gimptoolinfo.h"
 
@@ -460,8 +461,6 @@ gimp_image_map_tool_control (GimpTool       *tool,
 
       if (image_map_tool->image_map)
         {
-          GimpImage *image;
-
           gimp_tool_control_push_preserve (tool->control, TRUE);
 
           gimp_image_map_abort (image_map_tool->image_map);
@@ -469,20 +468,6 @@ gimp_image_map_tool_control (GimpTool       *tool,
           image_map_tool->image_map = NULL;
 
           gimp_tool_control_pop_preserve (tool->control);
-
-          /* don't call gimp_image_flush() here, because the tool
-           * might be cancelled from some other place opening an undo
-           * group, so flushing the image would update menus and
-           * whatnot while that other operation is running, with
-           * unforeseeable side effects. Also, flusing the image here
-           * is not needed because we didn't change anything in the
-           * image. Instead, make sure manually that the display is
-           * updated correctly after restoring GimpImageMapTool's
-           * temporary editing.
-           */
-          image = gimp_display_get_image (tool->display);
-          gimp_projection_flush_now (gimp_image_get_projection (image));
-          gimp_display_flush_now (tool->display);
         }
 
       tool->drawable = NULL;
@@ -552,12 +537,9 @@ gimp_image_map_tool_options_notify (GimpTool         *tool,
         {
           gimp_tool_control_push_preserve (tool->control, TRUE);
 
-          gimp_image_map_clear (image_map_tool->image_map);
+          gimp_image_map_abort (image_map_tool->image_map);
 
           gimp_tool_control_pop_preserve (tool->control);
-
-          gimp_image_map_tool_flush (image_map_tool->image_map,
-                                     image_map_tool);
         }
     }
 }
@@ -685,7 +667,7 @@ gimp_image_map_tool_create_map (GimpImageMapTool *tool)
 
   if (tool->image_map)
     {
-      gimp_image_map_clear (tool->image_map);
+      gimp_image_map_abort (tool->image_map);
       g_object_unref (tool->image_map);
     }
 
@@ -707,8 +689,7 @@ gimp_image_map_tool_flush (GimpImageMap     *image_map,
   GimpTool  *tool  = GIMP_TOOL (image_map_tool);
   GimpImage *image = gimp_display_get_image (tool->display);
 
-  gimp_projection_flush_now (gimp_image_get_projection (image));
-  gimp_display_flush_now (tool->display);
+  gimp_projection_flush (gimp_image_get_projection (image));
 }
 
 static void
@@ -737,7 +718,8 @@ gimp_image_map_tool_response (GtkWidget        *widget,
           if (! options->preview)
             gimp_image_map_tool_map (image_map_tool);
 
-          gimp_image_map_commit (image_map_tool->image_map);
+          gimp_image_map_commit (image_map_tool->image_map,
+                                 GIMP_PROGRESS (tool));
           g_object_unref (image_map_tool->image_map);
           image_map_tool->image_map = NULL;
 
