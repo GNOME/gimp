@@ -906,13 +906,14 @@ static GimpFilter *
 gimp_drawable_create_fs_filter (GimpDrawable *drawable,
                                 GimpDrawable *fs)
 {
-  GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
-  GimpChannel *mask  = gimp_image_get_mask (image);
-  GimpFilter  *filter;
-  GeglNode    *node;
-  GeglNode    *input;
-  GeglNode    *output;
-  GeglNode    *fs_source;
+  GimpDrawablePrivate *private = drawable->private;
+  GimpImage           *image   = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpChannel         *mask    = gimp_image_get_mask (image);
+  GimpFilter          *filter;
+  GeglNode            *node;
+  GeglNode            *input;
+  GeglNode            *output;
+  GeglNode            *fs_source;
 
   filter = gimp_filter_new ("Floating Selection");
 
@@ -923,59 +924,59 @@ gimp_drawable_create_fs_filter (GimpDrawable *drawable,
 
   fs_source = gimp_drawable_get_source_node (fs);
 
-  drawable->private->fs_crop_node =
+  private->fs_crop_node =
     gegl_node_new_child (node,
                          "operation", "gegl:crop",
                          NULL);
 
-  gegl_node_connect_to (fs_source,                       "output",
-                        drawable->private->fs_crop_node, "input");
+  gegl_node_connect_to (fs_source,             "output",
+                        private->fs_crop_node, "input");
 
-  drawable->private->fs_offset_node =
+  private->fs_offset_node =
     gegl_node_new_child (node,
                          "operation", "gegl:translate",
                          NULL);
 
-  gegl_node_connect_to (drawable->private->fs_crop_node,   "output",
-                        drawable->private->fs_offset_node, "input");
+  gegl_node_connect_to (private->fs_crop_node,   "output",
+                        private->fs_offset_node, "input");
 
-  drawable->private->fs_mask_node =
+  private->fs_mask_node =
     gegl_node_new_child (node,
                          "operation", "gegl:buffer-source",
                          "buffer",    gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
                          NULL);
 
-  drawable->private->fs_mask_offset_node =
+  private->fs_mask_offset_node =
     gegl_node_new_child (node,
                          "operation", "gegl:translate",
                          NULL);
 
-  gegl_node_connect_to (drawable->private->fs_mask_node,        "output",
-                        drawable->private->fs_mask_offset_node, "input");
+  gegl_node_connect_to (private->fs_mask_node,        "output",
+                        private->fs_mask_offset_node, "input");
 
-  drawable->private->fs_mode_node =
+  private->fs_mode_node =
     gegl_node_new_child (node,
                          "operation", "gimp:normal-mode",
                          NULL);
 
-  gegl_node_connect_to (input,                                  "output",
-                        drawable->private->fs_mode_node,        "input");
-  gegl_node_connect_to (drawable->private->fs_offset_node,      "output",
-                        drawable->private->fs_mode_node,        "aux");
+  gegl_node_connect_to (input,                   "output",
+                        private->fs_mode_node,   "input");
+  gegl_node_connect_to (private->fs_offset_node, "output",
+                        private->fs_mode_node,   "aux");
   /* don't connect the mask, that's done dynamically in sync_fs_filter */
 
-  drawable->private->fs_affect_node =
+  private->fs_affect_node =
     gegl_node_new_child (node,
                          "operation", "gimp:mask-components",
                          "mask",      GIMP_COMPONENT_ALL,
                          NULL);
 
-  gegl_node_connect_to (input,                             "output",
-                        drawable->private->fs_affect_node, "input");
-  gegl_node_connect_to (drawable->private->fs_mode_node,   "output",
-                        drawable->private->fs_affect_node, "aux");
-  gegl_node_connect_to (drawable->private->fs_affect_node, "output",
-                        output,                            "input");
+  gegl_node_connect_to (input,                   "output",
+                        private->fs_affect_node, "input");
+  gegl_node_connect_to (private->fs_mode_node,   "output",
+                        private->fs_affect_node, "aux");
+  gegl_node_connect_to (private->fs_affect_node, "output",
+                        output,                  "input");
 
   return filter;
 }
@@ -984,10 +985,11 @@ static void
 gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
                               gboolean      detach_fs)
 {
-  GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
-  GimpLayer *fs    = gimp_drawable_get_floating_sel (drawable);
+  GimpDrawablePrivate *private = drawable->private;
+  GimpImage           *image   = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpLayer           *fs      = gimp_drawable_get_floating_sel (drawable);
 
-  if (! drawable->private->source_node)
+  if (! private->source_node)
     return;
 
   if (fs && ! detach_fs)
@@ -997,7 +999,7 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
       gint         off_x, off_y;
       gint         fs_off_x, fs_off_y;
 
-      if (! drawable->private->fs_filter)
+      if (! private->fs_filter)
         {
           GeglNode *fs_source;
 
@@ -1011,12 +1013,12 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
                                       fs_source);
             }
 
-          gegl_node_add_child (drawable->private->source_node, fs_source);
+          gegl_node_add_child (private->source_node, fs_source);
 
-          drawable->private->fs_filter =
+          private->fs_filter =
             gimp_drawable_create_fs_filter (drawable, GIMP_DRAWABLE (fs));
 
-          gimp_drawable_add_filter (drawable, drawable->private->fs_filter);
+          gimp_drawable_add_filter (drawable, private->fs_filter);
 
           g_signal_connect (fs, "notify",
                             G_CALLBACK (gimp_drawable_fs_notify),
@@ -1032,45 +1034,45 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
       gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
       gimp_item_get_offset (GIMP_ITEM (fs), &fs_off_x, &fs_off_y);
 
-      gegl_node_set (drawable->private->fs_crop_node,
+      gegl_node_set (private->fs_crop_node,
                      "x",      (gdouble) (off_x - fs_off_x),
                      "y",      (gdouble) (off_y - fs_off_y),
                      "width",  (gdouble) gimp_item_get_width  (GIMP_ITEM (drawable)),
                      "height", (gdouble) gimp_item_get_height (GIMP_ITEM (drawable)),
                      NULL);
 
-      gegl_node_set (drawable->private->fs_offset_node,
+      gegl_node_set (private->fs_offset_node,
                      "x", (gdouble) (fs_off_x - off_x),
                      "y", (gdouble) (fs_off_y - off_y),
                      NULL);
 
-      gegl_node_set (drawable->private->fs_mask_offset_node,
+      gegl_node_set (private->fs_mask_offset_node,
                      "x", (gdouble) - off_x,
                      "y", (gdouble) - off_y,
                      NULL);
 
       if (gimp_channel_is_empty (mask))
         {
-          gegl_node_disconnect (drawable->private->fs_mode_node, "aux2");
+          gegl_node_disconnect (private->fs_mode_node, "aux2");
         }
       else
         {
-          gegl_node_connect_to (drawable->private->fs_mask_offset_node, "output",
-                                drawable->private->fs_mode_node,        "aux2");
+          gegl_node_connect_to (private->fs_mask_offset_node, "output",
+                                private->fs_mode_node,        "aux2");
         }
 
-      gimp_gegl_mode_node_set (drawable->private->fs_mode_node,
+      gimp_gegl_mode_node_set (private->fs_mode_node,
                                gimp_layer_get_mode (fs),
                                gimp_layer_get_opacity (fs),
                                FALSE);
 
-      gegl_node_set (drawable->private->fs_affect_node,
+      gegl_node_set (private->fs_affect_node,
                      "mask", gimp_drawable_get_active_mask (drawable),
                      NULL);
     }
   else
     {
-      if (drawable->private->fs_filter)
+      if (private->fs_filter)
         {
           GeglNode *fs_source;
 
@@ -1084,11 +1086,11 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
                                                 gimp_drawable_fs_mask_changed,
                                                 drawable);
 
-          gimp_drawable_remove_filter (drawable, drawable->private->fs_filter);
+          gimp_drawable_remove_filter (drawable, private->fs_filter);
 
           fs_source = gimp_drawable_get_source_node (GIMP_DRAWABLE (fs));
 
-          gegl_node_remove_child (drawable->private->source_node,
+          gegl_node_remove_child (private->source_node,
                                   fs_source);
 
           /* plug the fs' source node back into its graph */
@@ -1100,15 +1102,15 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
                                     fs->layer_offset_node, "input");
             }
 
-          g_object_unref (drawable->private->fs_filter);
-          drawable->private->fs_filter = NULL;
+          g_object_unref (private->fs_filter);
+          private->fs_filter = NULL;
 
-          drawable->private->fs_crop_node        = NULL;
-          drawable->private->fs_offset_node      = NULL;
-          drawable->private->fs_mask_node        = NULL;
-          drawable->private->fs_mask_offset_node = NULL;
-          drawable->private->fs_mode_node        = NULL;
-          drawable->private->fs_affect_node      = NULL;
+          private->fs_crop_node        = NULL;
+          private->fs_offset_node      = NULL;
+          private->fs_mask_node        = NULL;
+          private->fs_mask_offset_node = NULL;
+          private->fs_mode_node        = NULL;
+          private->fs_affect_node      = NULL;
         }
     }
 }
