@@ -31,6 +31,8 @@ struct _GimpDrawablePrivate
   GimpFilter    *fs_filter;
   GeglNode      *fs_crop_node;
   GeglNode      *fs_offset_node;
+  GeglNode      *fs_mask_node;
+  GeglNode      *fs_mask_offset_node;
   GeglNode      *fs_mode_node;
   GeglNode      *fs_affect_node;
 

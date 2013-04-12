@@ -179,8 +179,10 @@ static void       gimp_drawable_sync_fs_filter     (GimpDrawable      *drawable,
 static void       gimp_drawable_fs_notify          (GimpLayer         *fs,
                                                     const GParamSpec  *pspec,
                                                     GimpDrawable      *drawable);
-static void       gimp_drawable_fs_image_changed   (GimpImage         *image,
+static void       gimp_drawable_fs_affect_changed  (GimpImage         *image,
                                                     GimpChannelType    channel,
+                                                    GimpDrawable      *drawable);
+static void       gimp_drawable_fs_mask_changed    (GimpImage         *image,
                                                     GimpDrawable      *drawable);
 static void       gimp_drawable_fs_update          (GimpLayer         *fs,
                                                     gint               x,
@@ -904,11 +906,13 @@ static GimpFilter *
 gimp_drawable_create_fs_filter (GimpDrawable *drawable,
                                 GimpDrawable *fs)
 {
-  GimpFilter *filter;
-  GeglNode   *node;
-  GeglNode   *input;
-  GeglNode   *output;
-  GeglNode   *fs_source;
+  GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpChannel *mask  = gimp_image_get_mask (image);
+  GimpFilter  *filter;
+  GeglNode    *node;
+  GeglNode    *input;
+  GeglNode    *output;
+  GeglNode    *fs_source;
 
   filter = gimp_filter_new ("Floating Selection");
 
@@ -935,15 +939,30 @@ gimp_drawable_create_fs_filter (GimpDrawable *drawable,
   gegl_node_connect_to (drawable->private->fs_crop_node,   "output",
                         drawable->private->fs_offset_node, "input");
 
+  drawable->private->fs_mask_node =
+    gegl_node_new_child (node,
+                         "operation", "gegl:buffer-source",
+                         "buffer",    gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
+                         NULL);
+
+  drawable->private->fs_mask_offset_node =
+    gegl_node_new_child (node,
+                         "operation", "gegl:translate",
+                         NULL);
+
+  gegl_node_connect_to (drawable->private->fs_mask_node,        "output",
+                        drawable->private->fs_mask_offset_node, "input");
+
   drawable->private->fs_mode_node =
     gegl_node_new_child (node,
                          "operation", "gimp:normal-mode",
                          NULL);
 
-  gegl_node_connect_to (input,                             "output",
-                        drawable->private->fs_mode_node,   "input");
-  gegl_node_connect_to (drawable->private->fs_offset_node, "output",
-                        drawable->private->fs_mode_node,   "aux");
+  gegl_node_connect_to (input,                                  "output",
+                        drawable->private->fs_mode_node,        "input");
+  gegl_node_connect_to (drawable->private->fs_offset_node,      "output",
+                        drawable->private->fs_mode_node,        "aux");
+  /* don't connect the mask, that's done dynamically in sync_fs_filter */
 
   drawable->private->fs_affect_node =
     gegl_node_new_child (node,
@@ -973,8 +992,10 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
 
   if (fs && ! detach_fs)
     {
-      gint off_x, off_y;
-      gint fs_off_x, fs_off_y;
+      GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
+      GimpChannel *mask  = gimp_image_get_mask (image);
+      gint         off_x, off_y;
+      gint         fs_off_x, fs_off_y;
 
       if (! drawable->private->fs_filter)
         {
@@ -1001,7 +1022,10 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
                             G_CALLBACK (gimp_drawable_fs_notify),
                             drawable);
           g_signal_connect (image, "component-active-changed",
-                            G_CALLBACK (gimp_drawable_fs_image_changed),
+                            G_CALLBACK (gimp_drawable_fs_affect_changed),
+                            drawable);
+          g_signal_connect (image, "mask-changed",
+                            G_CALLBACK (gimp_drawable_fs_mask_changed),
                             drawable);
         }
 
@@ -1019,6 +1043,21 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
                      "x", (gdouble) (fs_off_x - off_x),
                      "y", (gdouble) (fs_off_y - off_y),
                      NULL);
+
+      gegl_node_set (drawable->private->fs_mask_offset_node,
+                     "x", (gdouble) - off_x,
+                     "y", (gdouble) - off_y,
+                     NULL);
+
+      if (gimp_channel_is_empty (mask))
+        {
+          gegl_node_disconnect (drawable->private->fs_mode_node, "aux2");
+        }
+      else
+        {
+          gegl_node_connect_to (drawable->private->fs_mask_offset_node, "output",
+                                drawable->private->fs_mode_node,        "aux2");
+        }
 
       gimp_gegl_mode_node_set (drawable->private->fs_mode_node,
                                gimp_layer_get_mode (fs),
@@ -1039,7 +1078,10 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
                                                 gimp_drawable_fs_notify,
                                                 drawable);
           g_signal_handlers_disconnect_by_func (image,
-                                                gimp_drawable_fs_image_changed,
+                                                gimp_drawable_fs_affect_changed,
+                                                drawable);
+          g_signal_handlers_disconnect_by_func (image,
+                                                gimp_drawable_fs_mask_changed,
                                                 drawable);
 
           gimp_drawable_remove_filter (drawable, drawable->private->fs_filter);
@@ -1061,10 +1103,12 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
           g_object_unref (drawable->private->fs_filter);
           drawable->private->fs_filter = NULL;
 
-          drawable->private->fs_crop_node   = NULL;
-          drawable->private->fs_offset_node = NULL;
-          drawable->private->fs_mode_node   = NULL;
-          drawable->private->fs_affect_node = NULL;
+          drawable->private->fs_crop_node        = NULL;
+          drawable->private->fs_offset_node      = NULL;
+          drawable->private->fs_mask_node        = NULL;
+          drawable->private->fs_mask_offset_node = NULL;
+          drawable->private->fs_mode_node        = NULL;
+          drawable->private->fs_affect_node      = NULL;
         }
     }
 }
@@ -1085,9 +1129,23 @@ gimp_drawable_fs_notify (GimpLayer        *fs,
 }
 
 static void
-gimp_drawable_fs_image_changed (GimpImage       *image,
-                                GimpChannelType  channel,
-                                GimpDrawable    *drawable)
+gimp_drawable_fs_affect_changed (GimpImage       *image,
+                                 GimpChannelType  channel,
+                                 GimpDrawable    *drawable)
+{
+  GimpLayer *fs = gimp_drawable_get_floating_sel (drawable);
+
+  gimp_drawable_sync_fs_filter (drawable, FALSE);
+
+  gimp_drawable_update (GIMP_DRAWABLE (fs),
+                        0, 0,
+                        gimp_item_get_width  (GIMP_ITEM (fs)),
+                        gimp_item_get_height (GIMP_ITEM (fs)));
+}
+
+static void
+gimp_drawable_fs_mask_changed (GimpImage       *image,
+                               GimpDrawable    *drawable)
 {
   GimpLayer *fs = gimp_drawable_get_floating_sel (drawable);
 
