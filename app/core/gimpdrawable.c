@@ -1089,7 +1089,14 @@ gimp_drawable_fs_image_changed (GimpImage       *image,
                                 GimpChannelType  channel,
                                 GimpDrawable    *drawable)
 {
+  GimpLayer *fs = gimp_drawable_get_floating_sel (drawable);
+
   gimp_drawable_sync_fs_filter (drawable, FALSE);
+
+  gimp_drawable_update (GIMP_DRAWABLE (fs),
+                        0, 0,
+                        gimp_item_get_width  (GIMP_ITEM (fs)),
+                        gimp_item_get_height (GIMP_ITEM (fs)));
 }
 
 static void
