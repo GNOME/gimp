@@ -37,7 +37,7 @@
 
 #include "core-types.h"
 
-#include "gegl/gimp-gegl-nodes.h"
+#include "gegl/gimpapplicator.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimpdrawable.h"
@@ -61,15 +61,16 @@ enum
 
 struct _GimpImageMap
 {
-  GimpObject     parent_instance;
+  GimpObject      parent_instance;
 
-  GimpDrawable  *drawable;
-  gchar         *undo_desc;
+  GimpDrawable   *drawable;
+  gchar          *undo_desc;
 
-  GimpFilter    *filter;
+  GimpFilter     *filter;
 
-  GeglNode      *operation;
-  GeglNode      *translate;
+  GeglNode       *operation;
+  GeglNode       *translate;
+  GimpApplicator *applicator;
 };
 
 
@@ -166,6 +167,12 @@ gimp_image_map_finalize (GObject *object)
       image_map->filter = NULL;
     }
 
+  if (image_map->applicator)
+    {
+      g_object_unref (image_map->applicator);
+      image_map->applicator = NULL;
+    }
+
   if (image_map->drawable)
     {
       g_object_unref (image_map->drawable);
@@ -247,7 +254,9 @@ void
 gimp_image_map_apply (GimpImageMap        *image_map,
                       const GeglRectangle *visible)
 {
-  GeglRectangle rect;
+  GimpImage     *image;
+  GimpChannel   *mask;
+  GeglRectangle  rect;
 
   g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
 
@@ -263,18 +272,9 @@ gimp_image_map_apply (GimpImageMap        *image_map,
 
   if (! image_map->filter)
     {
-      GimpImage   *image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
-      GimpChannel *mask  = gimp_image_get_mask (image);
-      GeglBuffer  *mask_buffer;
-      GeglNode    *filter_node;
-      GeglNode    *filter_output;
-      GeglNode    *input;
-      GeglNode    *output;
-      GeglNode    *apply;
-      gint         offset_x, offset_y;
-
-      gimp_item_get_offset (GIMP_ITEM (image_map->drawable),
-                            &offset_x, &offset_y);
+      GeglNode *filter_node;
+      GeglNode *filter_output;
+      GeglNode *input;
 
       image_map->filter = gimp_filter_new ("Image Map");
 
@@ -282,12 +282,13 @@ gimp_image_map_apply (GimpImageMap        *image_map,
 
       gegl_node_add_child (filter_node, image_map->operation);
 
+      image_map->applicator = gimp_applicator_new (filter_node);
+
       image_map->translate = gegl_node_new_child (filter_node,
                                                   "operation", "gegl:translate",
                                                   NULL);
 
       input  = gegl_node_get_input_proxy  (filter_node, "input");
-      output = gegl_node_get_output_proxy (filter_node, "output");
 
       if (gegl_node_has_pad (image_map->operation, "input") &&
           gegl_node_has_pad (image_map->operation, "output"))
@@ -333,25 +334,12 @@ gimp_image_map_apply (GimpImageMap        *image_map,
           filter_output = image_map->translate;
         }
 
-      if (gimp_channel_is_empty (mask))
-        mask_buffer = NULL;
-      else
-        mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+      gegl_node_connect_to (filter_output, "output",
+                            filter_node,   "aux");
 
-      apply = gimp_gegl_create_apply_node (filter_output,
-                                           rect.x,
-                                           rect.y,
-                                           0, 0, 0, 0,
-                                           mask_buffer,
-                                           -offset_x, -offset_y,
-                                           GIMP_OPACITY_OPAQUE,
-                                           GIMP_REPLACE_MODE,
-                                           gimp_drawable_get_active_mask (image_map->drawable));
-
-      gegl_node_add_child (filter_node, apply);
-      g_object_unref (apply);
-
-      gegl_node_link_many (input, apply, output, NULL);
+      gimp_applicator_set_mode (image_map->applicator,
+                                GIMP_OPACITY_OPAQUE,
+                                GIMP_REPLACE_MODE);
     }
 
   if (! gimp_drawable_has_filter (image_map->drawable, image_map->filter))
@@ -361,6 +349,33 @@ gimp_image_map_apply (GimpImageMap        *image_map,
                  "x", (gdouble) -rect.x,
                  "y", (gdouble) -rect.y,
                  NULL);
+
+  gimp_applicator_set_apply_offset (image_map->applicator,
+                                    rect.x, rect.y);
+
+  gimp_applicator_set_affect (image_map->applicator,
+                              gimp_drawable_get_active_mask (image_map->drawable));
+
+  image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
+  mask  = gimp_image_get_mask (image);
+
+  if (gimp_channel_is_empty (mask))
+    {
+      gimp_applicator_set_mask_buffer (image_map->applicator, NULL);
+    }
+  else
+    {
+      GeglBuffer *mask_buffer;
+      gint        offset_x, offset_y;
+
+      mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+      gimp_item_get_offset (GIMP_ITEM (image_map->drawable),
+                            &offset_x, &offset_y);
+
+      gimp_applicator_set_mask_buffer (image_map->applicator, mask_buffer);
+      gimp_applicator_set_mask_offset (image_map->applicator,
+                                       offset_x, offset_y);
+    }
 
   gimp_drawable_update (image_map->drawable,
                         rect.x, rect.y,
@@ -393,16 +408,14 @@ gimp_image_map_abort (GimpImageMap *image_map)
 {
   g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
 
-  if (! gimp_item_is_attached (GIMP_ITEM (image_map->drawable)))
-    return;
-
   if (gimp_drawable_has_filter (image_map->drawable, image_map->filter))
     {
       GeglRectangle rect;
 
       gimp_drawable_remove_filter (image_map->drawable, image_map->filter);
 
-      if (gimp_item_mask_intersect (GIMP_ITEM (image_map->drawable),
+      if (gimp_item_is_attached (GIMP_ITEM (image_map->drawable)) &&
+          gimp_item_mask_intersect (GIMP_ITEM (image_map->drawable),
                                     &rect.x, &rect.y,
                                     &rect.width, &rect.height))
         {
