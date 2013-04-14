@@ -1,6 +1,9 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * gimpapplicator.c
+ * Copyright (C) 2012-2013 Michael Natterer <mitch@gimp.org>
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -56,6 +59,7 @@ gimp_applicator_init (GimpApplicator *applicator)
 {
   applicator->opacity    = 1.0;
   applicator->paint_mode = GIMP_NORMAL_MODE;
+  applicator->affect     = GIMP_COMPONENT_ALL;
 }
 
 static void
@@ -101,149 +105,279 @@ gimp_applicator_get_property (GObject    *object,
 }
 
 GimpApplicator *
-gimp_applicator_new (GeglBuffer        *dest_buffer,
-                     GimpComponentMask  affect,
-                     GeglBuffer        *mask_buffer,
-                     gint               mask_offset_x,
-                     gint               mask_offset_y)
+gimp_applicator_new (GeglNode *parent)
 {
   GimpApplicator *applicator;
 
-  g_return_val_if_fail (GEGL_IS_BUFFER (dest_buffer), NULL);
-  g_return_val_if_fail (mask_buffer == NULL || GEGL_IS_BUFFER (mask_buffer),
-                        NULL);
+  g_return_val_if_fail (parent == NULL || GEGL_IS_NODE (parent), NULL);
 
   applicator = g_object_new (GIMP_TYPE_APPLICATOR, NULL);
 
-  applicator->node = gegl_node_new ();
+  if (parent)
+    applicator->node = g_object_ref (parent);
+  else
+    applicator->node = gegl_node_new ();
+
+  applicator->input_node =
+    gegl_node_get_input_proxy  (applicator->node, "input");
+
+  applicator->aux_node =
+    gegl_node_get_input_proxy  (applicator->node, "aux");
+
+  applicator->output_node =
+    gegl_node_get_output_proxy (applicator->node, "output");
 
   applicator->mode_node = gegl_node_new_child (applicator->node,
                                                "operation", "gimp:normal-mode",
                                                NULL);
 
-  applicator->src_node =
-    gegl_node_new_child (applicator->node,
-                         "operation", "gegl:buffer-source",
-                         NULL);
+  gimp_gegl_mode_node_set (applicator->mode_node,
+                           applicator->paint_mode,
+                           applicator->opacity,
+                           FALSE);
 
-  gegl_node_connect_to (applicator->src_node,  "output",
-                        applicator->mode_node, "input");
-
-  applicator->apply_src_node =
-    gegl_node_new_child (applicator->node,
-                         "operation", "gegl:buffer-source",
-                         NULL);
+  gegl_node_connect_to (applicator->input_node, "output",
+                        applicator->mode_node,  "input");
 
   applicator->apply_offset_node =
     gegl_node_new_child (applicator->node,
                          "operation", "gegl:translate",
                          NULL);
 
-  gegl_node_connect_to (applicator->apply_src_node,    "output",
+  gegl_node_connect_to (applicator->aux_node,          "output",
                         applicator->apply_offset_node, "input");
   gegl_node_connect_to (applicator->apply_offset_node, "output",
                         applicator->mode_node,         "aux");
 
-  if (mask_buffer)
-    {
-      GeglNode *mask_src;
-
-      mask_src = gegl_node_new_child (applicator->node,
-                                      "operation", "gegl:buffer-source",
-                                      "buffer",    mask_buffer,
-                                      NULL);
-
-      if (mask_offset_x != 0 || mask_offset_y != 0)
-        {
-          GeglNode *offset;
-
-          offset = gegl_node_new_child (applicator->node,
-                                        "operation", "gegl:translate",
-                                        "x",         (gdouble) mask_offset_x,
-                                        "y",         (gdouble) mask_offset_y,
-                                        NULL);
-
-          gegl_node_connect_to (mask_src,              "output",
-                                offset,                "input");
-          gegl_node_connect_to (offset,                "output",
-                                applicator->mode_node, "aux2");
-        }
-      else
-        {
-          gegl_node_connect_to (mask_src,              "output",
-                                applicator->mode_node, "aux2");
-        }
-    }
-
-  applicator->dest_node =
+  applicator->mask_node =
     gegl_node_new_child (applicator->node,
-                         "operation", "gegl:write-buffer",
-                         "buffer",    dest_buffer,
-                         "flush",     FALSE,
+                         "operation", "gegl:buffer-source",
                          NULL);
 
-  if (affect == GIMP_COMPONENT_ALL)
-    {
-      gegl_node_connect_to (applicator->mode_node, "output",
-                            applicator->dest_node, "input");
-    }
-  else
-    {
-      GeglNode *affect_node;
+  applicator->mask_offset_node =
+    gegl_node_new_child (applicator->node,
+                         "operation", "gegl:translate",
+                         NULL);
 
-      affect_node = gegl_node_new_child (applicator->node,
-                                         "operation", "gimp:mask-components",
-                                         "mask",      affect,
-                                         NULL);
+  gegl_node_connect_to (applicator->mask_node,        "output",
+                        applicator->mask_offset_node, "input");
+  /* don't connect the the mask offset node to mode's aux2 yet */
 
-      gegl_node_connect_to (applicator->src_node,  "output",
-                            affect_node,           "input");
-      gegl_node_connect_to (applicator->mode_node, "output",
-                            affect_node,           "aux");
-      gegl_node_connect_to (affect_node,           "output",
-                            applicator->dest_node, "input");
-    }
+  applicator->affect_node =
+    gegl_node_new_child (applicator->node,
+                         "operation", "gimp:mask-components",
+                         "mask",      applicator->affect,
+                         NULL);
+
+  gegl_node_connect_to (applicator->input_node,  "output",
+                        applicator->affect_node, "input");
+  gegl_node_connect_to (applicator->mode_node,   "output",
+                        applicator->affect_node, "aux");
+  gegl_node_connect_to (applicator->affect_node, "output",
+                        applicator->output_node, "input");
 
   return applicator;
 }
 
 void
-gimp_applicator_apply (GimpApplicator       *applicator,
-                       GeglBuffer           *src_buffer,
-                       GeglBuffer           *apply_buffer,
-                       gint                  apply_buffer_x,
-                       gint                  apply_buffer_y,
-                       gdouble               opacity,
-                       GimpLayerModeEffects  paint_mode)
+gimp_applicator_set_src_buffer (GimpApplicator *applicator,
+                                GeglBuffer     *src_buffer)
 {
-  gint width  = gegl_buffer_get_width  (apply_buffer);
-  gint height = gegl_buffer_get_height (apply_buffer);
+  g_return_if_fail (src_buffer == NULL || GEGL_IS_BUFFER (src_buffer));
 
-  if (applicator->src_buffer != src_buffer)
+  if (src_buffer == applicator->src_buffer)
+    return;
+
+  if (src_buffer)
     {
-      applicator->src_buffer = src_buffer;
+      if (! applicator->src_node)
+        {
+          applicator->src_node =
+            gegl_node_new_child (applicator->node,
+                                 "operation", "gegl:buffer-source",
+                                 "buffer",    src_buffer,
+                                 NULL);
+        }
+      else
+        {
+          gegl_node_set (applicator->src_node,
+                         "buffer", src_buffer,
+                         NULL);
+        }
 
-      gegl_node_set (applicator->src_node,
-                     "buffer", src_buffer,
-                     NULL);
+      if (! applicator->src_buffer)
+        {
+          gegl_node_connect_to (applicator->src_node,    "output",
+                                applicator->mode_node,   "input");
+          gegl_node_connect_to (applicator->src_node,    "output",
+                                applicator->affect_node, "input");
+        }
+    }
+  else if (applicator->src_buffer)
+    {
+      gegl_node_connect_to (applicator->input_node,  "output",
+                            applicator->mode_node,   "input");
+      gegl_node_connect_to (applicator->input_node,  "output",
+                            applicator->affect_node, "input");
     }
 
-  if (applicator->apply_buffer != apply_buffer)
-    {
-      applicator->apply_buffer = apply_buffer;
+  applicator->src_buffer = src_buffer;
+}
 
-      gegl_node_set (applicator->apply_src_node,
-                     "buffer", apply_buffer,
-                     NULL);
+void
+gimp_applicator_set_dest_buffer (GimpApplicator *applicator,
+                                 GeglBuffer     *dest_buffer)
+{
+  g_return_if_fail (dest_buffer == NULL || GEGL_IS_BUFFER (dest_buffer));
+
+  if (dest_buffer == applicator->dest_buffer)
+    return;
+
+  if (dest_buffer)
+    {
+      if (! applicator->dest_node)
+        {
+          applicator->dest_node =
+            gegl_node_new_child (applicator->node,
+                                 "operation", "gegl:write-buffer",
+                                 "buffer",    dest_buffer,
+                                 "flush",     FALSE,
+                                 NULL);
+        }
+      else
+        {
+          gegl_node_set (applicator->dest_node,
+                         "buffer", dest_buffer,
+                         NULL);
+        }
+
+      if (! applicator->dest_buffer)
+        {
+          gegl_node_disconnect (applicator->output_node, "input");
+
+          gegl_node_connect_to (applicator->affect_node, "output",
+                                applicator->dest_node,   "input");
+        }
+    }
+  else if (applicator->dest_buffer)
+    {
+      gegl_node_disconnect (applicator->dest_node, "input");
+
+      gegl_node_connect_to (applicator->affect_node, "output",
+                            applicator->output_node, "input");
     }
 
-  gegl_node_set (applicator->apply_offset_node,
-                 "x", (gdouble) apply_buffer_x,
-                 "y", (gdouble) apply_buffer_y,
+  applicator->dest_buffer = dest_buffer;
+}
+
+void
+gimp_applicator_set_mask_buffer (GimpApplicator *applicator,
+                                 GeglBuffer     *mask_buffer)
+{
+  if (applicator->mask_buffer == mask_buffer)
+    return;
+
+  gegl_node_set (applicator->mask_node,
+                 "buffer", mask_buffer,
                  NULL);
 
-  if ((applicator->opacity    != opacity) ||
-      (applicator->paint_mode != paint_mode))
+  if (mask_buffer)
+    {
+      gegl_node_connect_to (applicator->mask_offset_node, "output",
+                            applicator->mode_node,        "aux2");
+    }
+  else
+    {
+      gegl_node_disconnect (applicator->mode_node, "aux2");
+    }
+
+  applicator->mask_buffer = mask_buffer;
+}
+
+void
+gimp_applicator_set_mask_offset (GimpApplicator *applicator,
+                                 gint            mask_offset_x,
+                                 gint            mask_offset_y)
+{
+  if (applicator->mask_offset_x != mask_offset_x ||
+      applicator->mask_offset_y != mask_offset_y)
+    {
+      applicator->mask_offset_x = mask_offset_x;
+      applicator->mask_offset_y = mask_offset_y;
+
+      gegl_node_set (applicator->mask_offset_node,
+                     "x", (gdouble) mask_offset_x,
+                     "y", (gdouble) mask_offset_y,
+                     NULL);
+    }
+}
+
+void
+gimp_applicator_set_apply_buffer (GimpApplicator *applicator,
+                                  GeglBuffer     *apply_buffer)
+{
+  g_return_if_fail (apply_buffer == NULL || GEGL_IS_BUFFER (apply_buffer));
+
+  if (apply_buffer == applicator->apply_buffer)
+    return;
+
+  if (apply_buffer)
+    {
+      if (! applicator->apply_src_node)
+        {
+          applicator->apply_src_node =
+            gegl_node_new_child (applicator->node,
+                                 "operation", "gegl:buffer-source",
+                                 "buffer",    apply_buffer,
+                                 NULL);
+        }
+      else
+        {
+          gegl_node_set (applicator->apply_src_node,
+                         "buffer", apply_buffer,
+                         NULL);
+        }
+
+      if (! applicator->apply_buffer)
+        {
+          gegl_node_connect_to (applicator->apply_src_node,    "output",
+                                applicator->apply_offset_node, "input");
+        }
+    }
+  else if (applicator->apply_buffer)
+    {
+      gegl_node_connect_to (applicator->aux_node,          "output",
+                            applicator->apply_offset_node, "input");
+    }
+
+  applicator->apply_buffer = apply_buffer;
+}
+
+void
+gimp_applicator_set_apply_offset (GimpApplicator *applicator,
+                                  gint            apply_offset_x,
+                                  gint            apply_offset_y)
+{
+  if (applicator->apply_offset_x != apply_offset_x ||
+      applicator->apply_offset_y != apply_offset_y)
+    {
+      applicator->apply_offset_x = apply_offset_x;
+      applicator->apply_offset_y = apply_offset_y;
+
+      gegl_node_set (applicator->apply_offset_node,
+                     "x", (gdouble) apply_offset_x,
+                     "y", (gdouble) apply_offset_y,
+                     NULL);
+    }
+}
+
+void
+gimp_applicator_set_mode (GimpApplicator       *applicator,
+                          gdouble               opacity,
+                          GimpLayerModeEffects  paint_mode)
+{
+  if (applicator->opacity    != opacity ||
+      applicator->paint_mode != paint_mode)
     {
       applicator->opacity    = opacity;
       applicator->paint_mode = paint_mode;
@@ -251,9 +385,26 @@ gimp_applicator_apply (GimpApplicator       *applicator,
       gimp_gegl_mode_node_set (applicator->mode_node,
                                paint_mode, opacity, FALSE);
     }
+}
 
-  gegl_node_blit (applicator->dest_node, 1.0,
-                  GEGL_RECTANGLE (apply_buffer_x, apply_buffer_y,
-                                  width, height),
+void
+gimp_applicator_set_affect (GimpApplicator    *applicator,
+                            GimpComponentMask  affect)
+{
+  if (applicator->affect != affect)
+    {
+      applicator->affect = affect;
+
+      gegl_node_set (applicator->affect_node,
+                     "mask", affect,
+                     NULL);
+    }
+}
+
+void
+gimp_applicator_blit (GimpApplicator      *applicator,
+                      const GeglRectangle *rect)
+{
+  gegl_node_blit (applicator->dest_node, 1.0, rect,
                   NULL, NULL, 0, GEGL_BLIT_DEFAULT);
 }

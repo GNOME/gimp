@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpapplicator.h
- * Copyright (C) 2012 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2012-2013 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,18 +37,36 @@ struct _GimpApplicator
   GObject               parent_instance;
 
   GeglNode             *node;
-  GeglNode             *mode_node;
-  GeglNode             *src_node;
-  GeglNode             *apply_src_node;
-  GeglNode             *apply_offset_node;
-  GeglNode             *dest_node;
+  GeglNode             *input_node;
+  GeglNode             *aux_node;
+  GeglNode             *output_node;
 
-  GeglBuffer           *src_buffer;
   GeglBuffer           *apply_buffer;
-  gint                  apply_buffer_x;
-  gint                  apply_buffer_y;
+  GeglNode             *apply_src_node;
+
+  gint                  apply_offset_x;
+  gint                  apply_offset_y;
+  GeglNode             *apply_offset_node;
+
   gdouble               opacity;
   GimpLayerModeEffects  paint_mode;
+  GeglNode             *mode_node;
+
+  GimpComponentMask     affect;
+  GeglNode             *affect_node;
+
+  GeglBuffer           *src_buffer;
+  GeglNode             *src_node;
+
+  GeglBuffer           *dest_buffer;
+  GeglNode             *dest_node;
+
+  GeglBuffer           *mask_buffer;
+  GeglNode             *mask_node;
+
+  gint                  mask_offset_x;
+  gint                  mask_offset_y;
+  GeglNode             *mask_offset_node;
 };
 
 struct _GimpApplicatorClass
@@ -57,20 +75,35 @@ struct _GimpApplicatorClass
 };
 
 
-GType            gimp_applicator_get_type (void) G_GNUC_CONST;
+GType   gimp_applicator_get_type         (void) G_GNUC_CONST;
 
-GimpApplicator * gimp_applicator_new      (GeglBuffer           *dest_buffer,
-                                           GimpComponentMask     affect,
-                                           GeglBuffer           *mask_buffer,
-                                           gint                  mask_offset_x,
-                                           gint                  mask_offset_y);
-void             gimp_applicator_apply    (GimpApplicator       *applicator,
-                                           GeglBuffer           *src_buffer,
-                                           GeglBuffer           *apply_buffer,
-                                           gint                  apply_buffer_x,
-                                           gint                  apply_buffer_y,
-                                           gdouble               opacity,
-                                           GimpLayerModeEffects  paint_mode);
+GimpApplicator * gimp_applicator_new     (GeglNode             *parent);
+
+void    gimp_applicator_set_src_buffer   (GimpApplicator       *applicator,
+                                          GeglBuffer           *dest_buffer);
+void    gimp_applicator_set_dest_buffer  (GimpApplicator       *applicator,
+                                          GeglBuffer           *dest_buffer);
+
+void    gimp_applicator_set_mask_buffer  (GimpApplicator       *applicator,
+                                          GeglBuffer           *mask_buffer);
+void    gimp_applicator_set_mask_offset  (GimpApplicator       *applicator,
+                                          gint                  mask_offset_x,
+                                          gint                  mask_offset_y);
+
+void    gimp_applicator_set_apply_buffer (GimpApplicator       *applicator,
+                                          GeglBuffer           *apply_buffer);
+void    gimp_applicator_set_apply_offset (GimpApplicator       *applicator,
+                                          gint                  apply_offset_x,
+                                          gint                  apply_offset_y);
+
+void    gimp_applicator_set_mode         (GimpApplicator       *applicator,
+                                          gdouble               opacity,
+                                          GimpLayerModeEffects  paint_mode);
+void    gimp_applicator_set_affect       (GimpApplicator       *applicator,
+                                          GimpComponentMask     affect);
+
+void    gimp_applicator_blit             (GimpApplicator       *applicator,
+                                          const GeglRectangle  *rect);
 
 
 #endif  /*  __GIMP_APPLICATOR_H__  */
