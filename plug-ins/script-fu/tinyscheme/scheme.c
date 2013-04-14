@@ -1236,14 +1236,14 @@ static pointer mk_sharp_const(scheme *sc, char *name) {
           return (sc->F);
      else if (*name == 'o') {/* #o (octal) */
           snprintf(tmp, STRBUFFSIZE, "0%s", name+1);
-          sscanf(tmp, "%lo", &x);
+          sscanf(tmp, "%lo", (long unsigned *)&x);
           return (mk_integer(sc, x));
      } else if (*name == 'd') {    /* #d (decimal) */
-          sscanf(name+1, "%ld", &x);
+          sscanf(name+1, "%ld", (long int *)&x);
           return (mk_integer(sc, x));
      } else if (*name == 'x') {    /* #x (hex) */
           snprintf(tmp, STRBUFFSIZE, "0x%s", name+1);
-          sscanf(tmp, "%lx", &x);
+          sscanf(tmp, "%lx", (long unsigned *)&x);
           return (mk_integer(sc, x));
      } else if (*name == 'b') {    /* #b (binary) */
           x = binary_decode(name+1);
@@ -1260,7 +1260,7 @@ static pointer mk_sharp_const(scheme *sc, char *name) {
                c='\t';
      } else if(name[1]=='x' && name[2]!=0) {
           int c1=0;
-          if(sscanf(name+2,"%x",&c1)==1 && c1 < UCHAR_MAX) {
+          if(sscanf(name+2,"%x",(unsigned int *)&c1)==1 && c1 < UCHAR_MAX) {
                c=c1;
           } else {
                return sc->NIL;
@@ -2134,7 +2134,7 @@ static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen) {
                    /* r5rs says there must be a '.' (unless 'e'?) */
                    f = strcspn(p, ".e");
                    if (p[f] == 0) {
-                        p[f] = '.'; // not found, so add '.0' at the end
+                        p[f] = '.'; /* not found, so add '.0' at the end */
                         p[f+1] = '0';
                         p[f+2] = 0;
                    }
