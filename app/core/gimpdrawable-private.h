@@ -20,23 +20,19 @@
 
 struct _GimpDrawablePrivate
 {
-  GeglBuffer    *buffer; /* buffer for drawable data */
-  GeglBuffer    *shadow; /* shadow buffer            */
+  GeglBuffer     *buffer; /* buffer for drawable data */
+  GeglBuffer     *shadow; /* shadow buffer            */
 
-  GeglNode      *source_node;
-  GeglNode      *buffer_source_node;
-  GimpContainer *filter_stack;
+  GeglNode       *source_node;
+  GeglNode       *buffer_source_node;
+  GimpContainer  *filter_stack;
 
-  GimpLayer     *floating_selection;
-  GimpFilter    *fs_filter;
-  GeglNode      *fs_crop_node;
-  GeglNode      *fs_offset_node;
-  GeglNode      *fs_mask_node;
-  GeglNode      *fs_mask_offset_node;
-  GeglNode      *fs_mode_node;
-  GeglNode      *fs_affect_node;
+  GimpLayer      *floating_selection;
+  GimpFilter     *fs_filter;
+  GeglNode       *fs_crop_node;
+  GimpApplicator *fs_applicator;
 
-  GeglNode      *mode_node;
+  GeglNode       *mode_node;
 };
 
 #endif /* __GIMP_DRAWABLE_PRIVATE_H__ */
