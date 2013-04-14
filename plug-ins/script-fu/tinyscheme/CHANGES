@@ -1,6 +1,37 @@
 Change Log
 ----------
 
+Version 1.41
+    Bugs fixed:
+        #3020389 - Added makefile section for Mac OS X  (SL)
+        #3286135 - Fixed num_mod routine which caused errors in use of modulo
+        #3290232 - Corrected version number shown on startup  (GM)
+        #3394882 - Added missing #if in opdefines.h around get and put  (DC)
+        #3395547 - Fix for the modulo procedure  (DC)
+        #3400290 - Optimized append to make it an O(n) operation  (DC)
+        #3493926 - Corrected flag used when building shared files on OSX (J)
+
+    R5RS related changes:
+        #2866196 - Parser does not handle delimiters correctly
+        #3395548 - Add a decimal point to inexact numbers in atom2str  (DC)
+        #3399331 - Make min/max return inexact when any argument is inexact
+        #3399332 - Compatability fix for expt.
+        #3399335 - Optional radix for string->number and number->string  (DC)
+        #3400202 - Append with one argument should not return a list  (DC)
+        #3400284 - Compatability fix for integer?
+
+    Other changes:
+        - Added flags to makefile for MinGW/MSYS (TC)
+        - Moved variable declarations to avoid warnings with some compilers
+        - Don't print space after initial #( when printing vectors.
+        - Minor optimization for is_nonneg().
+        - No need to round integers in OP_ROUND (#3400284)
+        - Fixes to code that reports line number with error  (RC)
+
+    Contributors:
+        Kevin Cozens, Gordon McNutt, Doug Currie, Sean Long, Tim Cas, Joey,
+        and Richard Copley, and CMarinier.
+
 Version 1.40
     Bugs fixed:
         #1964950 - Stop core dumps due to bad syntax in LET (and variants)
