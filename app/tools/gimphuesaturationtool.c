@@ -131,9 +131,8 @@ gimp_hue_saturation_tool_initialize (GimpTool     *tool,
                                      GimpDisplay  *display,
                                      GError      **error)
 {
-  GimpHueSaturationTool *hs_tool  = GIMP_HUE_SATURATION_TOOL (tool);
-  GimpImage             *image    = gimp_display_get_image (display);
-  GimpDrawable          *drawable = gimp_image_get_active_drawable (image);
+  GimpImage    *image    = gimp_display_get_image (display);
+  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
   if (! drawable)
     return FALSE;
@@ -144,8 +143,6 @@ gimp_hue_saturation_tool_initialize (GimpTool     *tool,
 			   _("Hue-Saturation operates only on RGB color layers."));
       return FALSE;
     }
-
-  gimp_config_reset (GIMP_CONFIG (hs_tool->config));
 
   return GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 }

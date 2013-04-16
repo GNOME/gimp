@@ -55,10 +55,6 @@
 
 static void        gimp_operation_tool_finalize        (GObject           *object);
 
-static gboolean    gimp_operation_tool_initialize      (GimpTool          *tool,
-                                                        GimpDisplay       *display,
-                                                        GError           **error);
-
 static GeglNode  * gimp_operation_tool_get_operation   (GimpImageMapTool  *im_tool,
                                                         GObject          **config,
                                                         gchar            **undo_desc);
@@ -106,12 +102,9 @@ static void
 gimp_operation_tool_class_init (GimpOperationToolClass *klass)
 {
   GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
-  GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
   object_class->finalize         = gimp_operation_tool_finalize;
-
-  tool_class->initialize         = gimp_operation_tool_initialize;
 
   im_tool_class->dialog_desc     = _("GEGL Operation");
 
@@ -153,31 +146,6 @@ gimp_operation_tool_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static gboolean
-gimp_operation_tool_initialize (GimpTool     *tool,
-                                GimpDisplay  *display,
-                                GError      **error)
-{
-  GimpOperationTool *o_tool   = GIMP_OPERATION_TOOL (tool);
-  GimpImage         *image    = gimp_display_get_image (display);
-  GimpDrawable      *drawable = gimp_image_get_active_drawable (image);
-
-  if (! drawable)
-    return FALSE;
-
-  if (o_tool->config)
-    gimp_config_reset (GIMP_CONFIG (o_tool->config));
-
-  if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
-    {
-      return FALSE;
-    }
-
-  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
-
-  return TRUE;
 }
 
 static GeglNode *
@@ -315,25 +283,16 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
   g_return_if_fail (operation != NULL);
 
   if (tool->operation)
-    {
-      g_free (tool->operation);
-      tool->operation = NULL;
-    }
+    g_free (tool->operation);
 
   if (tool->undo_desc)
-    {
-      g_free (tool->undo_desc);
-      tool->undo_desc = NULL;
-    }
+    g_free (tool->undo_desc);
 
   tool->operation = g_strdup (operation);
   tool->undo_desc = g_strdup (undo_desc);
 
   if (tool->config)
-    {
-      g_object_unref (tool->config);
-      tool->config = NULL;
-    }
+    g_object_unref (tool->config);
 
   tool->config = gimp_gegl_get_config_proxy (tool->operation,
                                              GIMP_TYPE_IMAGE_MAP_CONFIG);

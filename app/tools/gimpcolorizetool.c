@@ -127,9 +127,8 @@ gimp_colorize_tool_initialize (GimpTool     *tool,
                                GimpDisplay  *display,
                                GError      **error)
 {
-  GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (tool);
-  GimpImage        *image    = gimp_display_get_image (display);
-  GimpDrawable     *drawable = gimp_image_get_active_drawable (image);
+  GimpImage    *image    = gimp_display_get_image (display);
+  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
   if (! drawable)
     return FALSE;
@@ -141,14 +140,10 @@ gimp_colorize_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  gimp_config_reset (GIMP_CONFIG (col_tool->config));
-
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
       return FALSE;
     }
-
-  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
 
   return TRUE;
 }

@@ -205,11 +205,6 @@ gimp_levels_tool_initialize (GimpTool     *tool,
   gdouble           step;
   gint              digits;
 
-  if (! drawable)
-    return FALSE;
-
-  gimp_config_reset (GIMP_CONFIG (l_tool->config));
-
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
       return FALSE;

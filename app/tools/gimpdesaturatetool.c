@@ -118,8 +118,6 @@ gimp_desaturate_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  gimp_config_reset (GIMP_CONFIG (desaturate_tool->config));
-
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
       return FALSE;
@@ -127,8 +125,6 @@ gimp_desaturate_tool_initialize (GimpTool     *tool,
 
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (desaturate_tool->button),
                                    desaturate_tool->config->mode);
-
-  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (desaturate_tool));
 
   return TRUE;
 }

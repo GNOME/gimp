@@ -274,6 +274,9 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
   GimpDrawable     *drawable       = gimp_image_get_active_drawable (image);
   GimpDisplayShell *display_shell  = gimp_display_get_shell (display);
 
+  if (! drawable)
+    return FALSE;
+
   if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
@@ -295,6 +298,9 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
 
   /*  set display so the dialog can be hidden on display destruction  */
   tool->display = display;
+
+  if (image_map_tool->config)
+    gimp_config_reset (GIMP_CONFIG (image_map_tool->config));
 
   if (! image_map_tool->dialog)
     {
@@ -424,6 +430,7 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
   image_map_tool->drawable = drawable;
 
   gimp_image_map_tool_create_map (image_map_tool);
+  gimp_image_map_tool_preview (image_map_tool);
 
   return TRUE;
 }

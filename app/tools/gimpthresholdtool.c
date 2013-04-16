@@ -142,11 +142,6 @@ gimp_threshold_tool_initialize (GimpTool     *tool,
   GimpImage         *image    = gimp_display_get_image (display);
   GimpDrawable      *drawable = gimp_image_get_active_drawable (image);
 
-  if (! drawable)
-    return FALSE;
-
-  gimp_config_reset (GIMP_CONFIG (t_tool->config));
-
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
       return FALSE;
@@ -155,8 +150,6 @@ gimp_threshold_tool_initialize (GimpTool     *tool,
   gimp_drawable_calculate_histogram (drawable, t_tool->histogram);
   gimp_histogram_view_set_histogram (t_tool->histogram_box->view,
                                      t_tool->histogram);
-
-  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (t_tool));
 
   return TRUE;
 }

@@ -198,11 +198,6 @@ gimp_curves_tool_initialize (GimpTool     *tool,
   GimpDrawable   *drawable = gimp_image_get_active_drawable (image);
   GimpHistogram  *histogram;
 
-  if (! drawable)
-    return FALSE;
-
-  gimp_config_reset (GIMP_CONFIG (c_tool->config));
-
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
       return FALSE;

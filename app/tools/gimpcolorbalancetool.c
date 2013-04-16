@@ -123,9 +123,8 @@ gimp_color_balance_tool_initialize (GimpTool     *tool,
                                     GimpDisplay  *display,
                                     GError      **error)
 {
-  GimpColorBalanceTool *cb_tool  = GIMP_COLOR_BALANCE_TOOL (tool);
-  GimpImage            *image    = gimp_display_get_image (display);
-  GimpDrawable         *drawable = gimp_image_get_active_drawable (image);
+  GimpImage    *image    = gimp_display_get_image (display);
+  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
   if (! drawable)
     return FALSE;
@@ -136,8 +135,6 @@ gimp_color_balance_tool_initialize (GimpTool     *tool,
 			   _("Color Balance operates only on RGB color layers."));
       return FALSE;
     }
-
-  gimp_config_reset (GIMP_CONFIG (cb_tool->config));
 
   return GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 }

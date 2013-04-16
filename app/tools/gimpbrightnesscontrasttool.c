@@ -48,10 +48,6 @@
 #define SLIDER_WIDTH 200
 
 
-static gboolean gimp_brightness_contrast_tool_initialize   (GimpTool              *tool,
-                                                            GimpDisplay           *display,
-                                                            GError               **error);
-
 static void   gimp_brightness_contrast_tool_button_press   (GimpTool              *tool,
                                                             const GimpCoords      *coords,
                                                             guint32                time,
@@ -117,7 +113,6 @@ gimp_brightness_contrast_tool_class_init (GimpBrightnessContrastToolClass *klass
   GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
-  tool_class->initialize             = gimp_brightness_contrast_tool_initialize;
   tool_class->button_press           = gimp_brightness_contrast_tool_button_press;
   tool_class->button_release         = gimp_brightness_contrast_tool_button_release;
   tool_class->motion                 = gimp_brightness_contrast_tool_motion;
@@ -134,23 +129,6 @@ gimp_brightness_contrast_tool_class_init (GimpBrightnessContrastToolClass *klass
 static void
 gimp_brightness_contrast_tool_init (GimpBrightnessContrastTool *bc_tool)
 {
-}
-
-static gboolean
-gimp_brightness_contrast_tool_initialize (GimpTool     *tool,
-                                          GimpDisplay  *display,
-                                          GError      **error)
-{
-  GimpBrightnessContrastTool *bc_tool  = GIMP_BRIGHTNESS_CONTRAST_TOOL (tool);
-  GimpImage                  *image    = gimp_display_get_image (display);
-  GimpDrawable               *drawable = gimp_image_get_active_drawable (image);
-
-  if (! drawable)
-    return FALSE;
-
-  gimp_config_reset (GIMP_CONFIG (bc_tool->config));
-
-  return GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 }
 
 static GeglNode *
