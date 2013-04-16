@@ -33,6 +33,14 @@
 #include "gimpprogress.h"
 
 
+GimpContainer *
+gimp_drawable_get_filters (GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  return drawable->private->filter_stack;
+}
+
 void
 gimp_drawable_add_filter (GimpDrawable *drawable,
                           GimpFilter   *filter)

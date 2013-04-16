@@ -21,18 +21,20 @@
 #define __GIMP_DRAWABLE_FILTER_H__
 
 
-void       gimp_drawable_add_filter    (GimpDrawable *drawable,
-                                        GimpFilter   *filter);
-void       gimp_drawable_remove_filter (GimpDrawable *drawable,
-                                        GimpFilter   *filter);
+GimpContainer * gimp_drawable_get_filters   (GimpDrawable *drawable);
 
-gboolean   gimp_drawable_has_filter    (GimpDrawable *drawable,
-                                        GimpFilter   *filter);
+void            gimp_drawable_add_filter    (GimpDrawable *drawable,
+                                             GimpFilter   *filter);
+void            gimp_drawable_remove_filter (GimpDrawable *drawable,
+                                             GimpFilter   *filter);
 
-void       gimp_drawable_merge_filter  (GimpDrawable *drawable,
-                                        GimpFilter   *filter,
-                                        GimpProgress *progress,
-                                        const gchar  *undo_desc);
+gboolean        gimp_drawable_has_filter    (GimpDrawable *drawable,
+                                             GimpFilter   *filter);
+
+void            gimp_drawable_merge_filter  (GimpDrawable *drawable,
+                                             GimpFilter   *filter,
+                                             GimpProgress *progress,
+                                             const gchar  *undo_desc);
 
 
 #endif /* __GIMP_DRAWABLE_FILTER_H__ */
