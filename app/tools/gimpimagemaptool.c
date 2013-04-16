@@ -122,10 +122,6 @@ static void      gimp_image_map_tool_response       (GtkWidget        *widget,
 static void      gimp_image_map_tool_dialog_hide    (GimpImageMapTool *im_tool);
 static void      gimp_image_map_tool_dialog_destroy (GimpImageMapTool *im_tool);
 
-static void      gimp_image_map_tool_gegl_notify    (GObject          *config,
-                                                     const GParamSpec *pspec,
-                                                     GimpImageMapTool *im_tool);
-
 
 static GimpColorToolClass *parent_class = NULL;
 
@@ -411,11 +407,6 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
       gimp_image_map_tool_dialog (image_map_tool);
 
       gtk_widget_show (vbox);
-
-      if (image_map_tool->operation)
-        g_signal_connect_object (tool_info->gimp->config, "notify::use-gegl",
-                                 G_CALLBACK (gimp_image_map_tool_gegl_notify),
-                                 image_map_tool, 0);
     }
   else if (GIMP_IS_OVERLAY_DIALOG (image_map_tool->dialog) &&
            ! gtk_widget_get_parent (image_map_tool->dialog))
@@ -806,23 +797,6 @@ gimp_image_map_tool_preview (GimpImageMapTool *image_map_tool)
       gimp_image_map_tool_map (image_map_tool);
 
       gimp_tool_control_pop_preserve (tool->control);
-    }
-}
-
-static void
-gimp_image_map_tool_gegl_notify (GObject          *config,
-                                 const GParamSpec *pspec,
-                                 GimpImageMapTool *im_tool)
-{
-  if (im_tool->image_map)
-    {
-      gimp_tool_control_push_preserve (GIMP_TOOL (im_tool)->control, TRUE);
-
-      gimp_image_map_tool_create_map (im_tool, NULL);
-
-      gimp_tool_control_pop_preserve (GIMP_TOOL (im_tool)->control);
-
-      gimp_image_map_tool_preview (im_tool);
     }
 }
 
