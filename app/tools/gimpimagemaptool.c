@@ -438,7 +438,7 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
 
   image_map_tool->drawable = drawable;
 
-  gimp_image_map_tool_create_map (image_map_tool);
+  gimp_image_map_tool_create_map (image_map_tool, NULL);
 
   return TRUE;
 }
@@ -661,8 +661,11 @@ gimp_image_map_tool_reset (GimpImageMapTool *tool)
 }
 
 void
-gimp_image_map_tool_create_map (GimpImageMapTool *tool)
+gimp_image_map_tool_create_map (GimpImageMapTool *tool,
+                                const gchar      *undo_desc)
 {
+  GimpToolInfo *tool_info;
+
   g_return_if_fail (GIMP_IS_IMAGE_MAP_TOOL (tool));
 
   if (tool->image_map)
@@ -673,9 +676,15 @@ gimp_image_map_tool_create_map (GimpImageMapTool *tool)
 
   g_assert (tool->operation);
 
+  tool_info = GIMP_TOOL (tool)->tool_info;
+
+  if (! undo_desc)
+    undo_desc = tool_info->blurb;
+
   tool->image_map = gimp_image_map_new (tool->drawable,
-                                        GIMP_TOOL (tool)->tool_info->blurb,
-                                        tool->operation);
+                                        undo_desc,
+                                        tool->operation,
+                                        gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info)));
 
   g_signal_connect (tool->image_map, "flush",
                     G_CALLBACK (gimp_image_map_tool_flush),
@@ -809,7 +818,7 @@ gimp_image_map_tool_gegl_notify (GObject          *config,
     {
       gimp_tool_control_push_preserve (GIMP_TOOL (im_tool)->control, TRUE);
 
-      gimp_image_map_tool_create_map (im_tool);
+      gimp_image_map_tool_create_map (im_tool, NULL);
 
       gimp_tool_control_pop_preserve (GIMP_TOOL (im_tool)->control);
 

@@ -1242,7 +1242,8 @@ gimp_cage_tool_create_image_map (GimpCageTool *ct,
 
   ct->image_map = gimp_image_map_new (drawable,
                                       _("Cage transform"),
-                                      ct->render_node);
+                                      ct->render_node,
+                                      GIMP_STOCK_TOOL_CAGE);
 
   g_signal_connect (ct->image_map, "flush",
                     G_CALLBACK (gimp_cage_tool_image_map_flush),

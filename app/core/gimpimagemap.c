@@ -65,10 +65,10 @@ struct _GimpImageMap
 
   GimpDrawable   *drawable;
   gchar          *undo_desc;
+  GeglNode       *operation;
+  gchar          *stock_id;
 
   GimpFilter     *filter;
-
-  GeglNode       *operation;
   GeglNode       *translate;
   GimpApplicator *applicator;
 };
@@ -161,6 +161,12 @@ gimp_image_map_finalize (GObject *object)
       image_map->operation = NULL;
     }
 
+  if (image_map->stock_id)
+    {
+      g_free (image_map->stock_id);
+      image_map->stock_id = NULL;
+    }
+
   if (image_map->filter)
     {
       g_object_unref (image_map->filter);
@@ -230,7 +236,8 @@ gimp_image_map_get_pixel_at (GimpPickable *pickable,
 GimpImageMap *
 gimp_image_map_new (GimpDrawable *drawable,
                     const gchar  *undo_desc,
-                    GeglNode     *operation)
+                    GeglNode     *operation,
+                    const gchar  *stock_id)
 {
   GimpImageMap *image_map;
 
@@ -244,6 +251,7 @@ gimp_image_map_new (GimpDrawable *drawable,
   image_map->undo_desc = g_strdup (undo_desc);
 
   image_map->operation = g_object_ref (operation);
+  image_map->stock_id  = g_strdup (stock_id);
 
   gimp_viewable_preview_freeze (GIMP_VIEWABLE (drawable));
 
@@ -276,7 +284,9 @@ gimp_image_map_apply (GimpImageMap        *image_map,
       GeglNode *filter_output;
       GeglNode *input;
 
-      image_map->filter = gimp_filter_new ("Image Map");
+      image_map->filter = gimp_filter_new (image_map->undo_desc);
+      gimp_viewable_set_stock_id (GIMP_VIEWABLE (image_map->filter),
+                                  image_map->stock_id);
 
       filter_node = gimp_filter_get_node (image_map->filter);
 

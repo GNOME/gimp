@@ -149,10 +149,10 @@ gimp_operation_tool_finalize (GObject *object)
       tool->config = NULL;
     }
 
-  if (tool->dialog_desc)
+  if (tool->undo_desc)
     {
-      g_free (tool->dialog_desc);
-      tool->dialog_desc = NULL;
+      g_free (tool->undo_desc);
+      tool->undo_desc = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -220,9 +220,9 @@ gimp_operation_tool_dialog (GimpImageMapTool *image_map_tool)
       gtk_widget_show (tool->options_table);
     }
 
-  if (tool->dialog_desc)
+  if (tool->undo_desc)
     g_object_set (GIMP_IMAGE_MAP_TOOL (tool)->dialog,
-                  "description", tool->dialog_desc,
+                  "description", tool->undo_desc,
                   NULL);
 }
 
@@ -262,8 +262,8 @@ gimp_operation_tool_get_settings_ui (GimpImageMapTool  *image_map_tool,
   filename = g_build_filename (gimp_directory (), "filters", basename, NULL);
   g_free (basename);
 
-  import_title = g_strdup_printf (_("Import '%s' Settings"), tool->dialog_desc);
-  export_title = g_strdup_printf (_("Export '%s' Settings"), tool->dialog_desc);
+  import_title = g_strdup_printf (_("Import '%s' Settings"), tool->undo_desc);
+  export_title = g_strdup_printf (_("Export '%s' Settings"), tool->undo_desc);
 
   widget =
     GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->get_settings_ui (image_map_tool,
@@ -306,7 +306,7 @@ gimp_operation_tool_config_notify (GObject           *object,
 void
 gimp_operation_tool_set_operation (GimpOperationTool *tool,
                                    const gchar       *operation,
-                                   const gchar       *dialog_desc)
+                                   const gchar       *undo_desc)
 {
   g_return_if_fail (GIMP_IS_OPERATION_TOOL (tool));
   g_return_if_fail (operation != NULL);
@@ -315,6 +315,12 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
     {
       g_free (tool->operation);
       tool->operation = NULL;
+    }
+
+  if (tool->undo_desc)
+    {
+      g_free (tool->undo_desc);
+      tool->undo_desc = NULL;
     }
 
   if (tool->config)
@@ -330,6 +336,7 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
     }
 
   tool->operation = g_strdup (operation);
+  tool->undo_desc = g_strdup (undo_desc);
 
   if (GIMP_IMAGE_MAP_TOOL (tool)->image_map)
     {
@@ -343,7 +350,7 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
                  NULL);
 
   if (GIMP_TOOL (tool)->drawable)
-    gimp_image_map_tool_create_map (GIMP_IMAGE_MAP_TOOL (tool));
+    gimp_image_map_tool_create_map (GIMP_IMAGE_MAP_TOOL (tool), undo_desc);
 
   tool->config = gimp_gegl_get_config_proxy (tool->operation,
                                              GIMP_TYPE_IMAGE_MAP_CONFIG);
@@ -351,7 +358,7 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
 
   GIMP_VIEWABLE_GET_CLASS (tool->config)->default_stock_id = GIMP_STOCK_GEGL;
 
-  if (dialog_desc)
+  if (undo_desc)
     GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->settings_name = "yes"; /* XXX hack */
   else
     GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->settings_name = NULL; /* XXX hack */
@@ -383,21 +390,10 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
         }
     }
 
-  if (tool->dialog_desc)
-    {
-      g_free (tool->dialog_desc);
-      tool->dialog_desc = NULL;
-    }
-
-  if (dialog_desc)
-    {
-      tool->dialog_desc = g_strdup (dialog_desc);
-
-      if (GIMP_IMAGE_MAP_TOOL (tool)->dialog)
-        g_object_set (GIMP_IMAGE_MAP_TOOL (tool)->dialog,
-                      "description", dialog_desc,
-                      NULL);
-    }
+  if (undo_desc && GIMP_IMAGE_MAP_TOOL (tool)->dialog)
+    g_object_set (GIMP_IMAGE_MAP_TOOL (tool)->dialog,
+                  "description", undo_desc,
+                  NULL);
 
   if (GIMP_TOOL (tool)->drawable)
     gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
