@@ -38,9 +38,7 @@
     <xsl:apply-templates />
   </xsl:template>
 
-  <xsl:template match="menu[@action='debug-menu' or
-                            @action='view-use-gegl' or
-			    @action='config-use-gegl']">
+  <xsl:template match="menu[@action='debug-menu']">
     <xsl:if test="$unstable-menus='yes'">
       <xsl:call-template name="identity" />
     </xsl:if>
