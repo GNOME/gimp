@@ -54,7 +54,8 @@ static gboolean   gimp_threshold_tool_initialize      (GimpTool          *tool,
                                                        GError           **error);
 
 static GeglNode * gimp_threshold_tool_get_operation   (GimpImageMapTool  *im_tool,
-                                                       GObject          **config);
+                                                       GObject          **config,
+                                                       gchar            **undo_desc);
 static void       gimp_threshold_tool_dialog          (GimpImageMapTool  *im_tool);
 
 static void       gimp_threshold_tool_config_notify   (GObject           *object,
@@ -162,28 +163,23 @@ gimp_threshold_tool_initialize (GimpTool     *tool,
 
 static GeglNode *
 gimp_threshold_tool_get_operation (GimpImageMapTool  *image_map_tool,
-                                   GObject          **config)
+                                   GObject          **config,
+                                   gchar            **undo_desc)
 {
   GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (image_map_tool);
-  GeglNode          *node;
-
-  node = g_object_new (GEGL_TYPE_NODE,
-                       "operation", "gimp:threshold",
-                       NULL);
 
   t_tool->config = g_object_new (GIMP_TYPE_THRESHOLD_CONFIG, NULL);
-
-  *config = G_OBJECT (t_tool->config);
 
   g_signal_connect_object (t_tool->config, "notify",
                            G_CALLBACK (gimp_threshold_tool_config_notify),
                            G_OBJECT (t_tool), 0);
 
-  gegl_node_set (node,
-                 "config", t_tool->config,
-                 NULL);
+  *config = G_OBJECT (t_tool->config);
 
-  return node;
+  return gegl_node_new_child (NULL,
+                              "operation", "gimp:threshold",
+                              "config",    t_tool->config,
+                              NULL);
 }
 
 
@@ -260,8 +256,6 @@ gimp_threshold_tool_config_notify (GObject           *object,
   gimp_histogram_view_set_range (t_tool->histogram_box->view,
                                  config->low  * 255.999,
                                  config->high * 255.999);
-
-  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (t_tool));
 }
 
 static void

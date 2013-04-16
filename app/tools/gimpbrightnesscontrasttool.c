@@ -72,7 +72,8 @@ static void   gimp_brightness_contrast_tool_motion         (GimpTool            
 
 static GeglNode *
               gimp_brightness_contrast_tool_get_operation  (GimpImageMapTool      *image_map_tool,
-                                                            GObject              **config);
+                                                            GObject              **config,
+                                                            gchar                **undo_desc);
 static void   gimp_brightness_contrast_tool_dialog         (GimpImageMapTool      *image_map_tool);
 
 static void   brightness_contrast_config_notify            (GObject                    *object,
@@ -154,28 +155,23 @@ gimp_brightness_contrast_tool_initialize (GimpTool     *tool,
 
 static GeglNode *
 gimp_brightness_contrast_tool_get_operation (GimpImageMapTool  *im_tool,
-                                             GObject          **config)
+                                             GObject          **config,
+                                             gchar            **undo_desc)
 {
   GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (im_tool);
-  GeglNode                   *node;
-
-  node = g_object_new (GEGL_TYPE_NODE,
-                       "operation", "gimp:brightness-contrast",
-                       NULL);
 
   bc_tool->config = g_object_new (GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG, NULL);
-
-  *config = G_OBJECT (bc_tool->config);
 
   g_signal_connect_object (bc_tool->config, "notify",
                            G_CALLBACK (brightness_contrast_config_notify),
                            G_OBJECT (bc_tool), 0);
 
-  gegl_node_set (node,
-                 "config", bc_tool->config,
-                 NULL);
+  *config = G_OBJECT (bc_tool->config);
 
-  return node;
+  return gegl_node_new_child (NULL,
+                              "operation", "gimp:brightness-contrast",
+                              "config",    bc_tool->config,
+                              NULL);
 }
 
 static void
@@ -322,8 +318,6 @@ brightness_contrast_config_notify (GObject                    *object,
       gtk_adjustment_set_value (bc_tool->contrast_data,
                                 config->contrast * 127.0);
     }
-
-  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (bc_tool));
 }
 
 static void

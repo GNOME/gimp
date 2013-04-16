@@ -50,7 +50,8 @@ static gboolean   gimp_color_balance_tool_initialize    (GimpTool         *tool,
                                                          GError          **error);
 
 static GeglNode * gimp_color_balance_tool_get_operation (GimpImageMapTool *im_tool,
-                                                         GObject         **config);
+                                                         GObject         **config,
+                                                         gchar           **undo_desc);
 static void       gimp_color_balance_tool_dialog        (GimpImageMapTool *im_tool);
 static void       gimp_color_balance_tool_reset         (GimpImageMapTool *im_tool);
 
@@ -143,28 +144,23 @@ gimp_color_balance_tool_initialize (GimpTool     *tool,
 
 static GeglNode *
 gimp_color_balance_tool_get_operation (GimpImageMapTool  *im_tool,
-                                       GObject          **config)
+                                       GObject          **config,
+                                       gchar            **undo_desc)
 {
   GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (im_tool);
-  GeglNode             *node;
-
-  node = g_object_new (GEGL_TYPE_NODE,
-                       "operation", "gimp:color-balance",
-                       NULL);
 
   cb_tool->config = g_object_new (GIMP_TYPE_COLOR_BALANCE_CONFIG, NULL);
-
-  *config = G_OBJECT (cb_tool->config);
 
   g_signal_connect_object (cb_tool->config, "notify",
                            G_CALLBACK (color_balance_config_notify),
                            G_OBJECT (cb_tool), 0);
 
-  gegl_node_set (node,
-                 "config", cb_tool->config,
-                 NULL);
+  *config = G_OBJECT (cb_tool->config);
 
-  return node;
+  return gegl_node_new_child (NULL,
+                              "operation", "gimp:color-balance",
+                              "config",    cb_tool->config,
+                              NULL);
 }
 
 
@@ -365,8 +361,6 @@ color_balance_config_notify (GObject              *object,
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cb_tool->preserve_toggle),
                                     config->preserve_luminosity);
     }
-
-  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (cb_tool));
 }
 
 static void

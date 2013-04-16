@@ -47,7 +47,8 @@ static gboolean   gimp_desaturate_tool_initialize    (GimpTool           *tool,
                                                       GError            **error);
 
 static GeglNode * gimp_desaturate_tool_get_operation (GimpImageMapTool   *im_tool,
-                                                      GObject           **config);
+                                                      GObject           **config,
+                                                      gchar             **undo_desc);
 static void       gimp_desaturate_tool_dialog        (GimpImageMapTool   *im_tool);
 
 static void       gimp_desaturate_tool_config_notify (GObject            *object,
@@ -134,28 +135,23 @@ gimp_desaturate_tool_initialize (GimpTool     *tool,
 
 static GeglNode *
 gimp_desaturate_tool_get_operation (GimpImageMapTool  *image_map_tool,
-                                    GObject          **config)
+                                    GObject          **config,
+                                    gchar            **undo_desc)
 {
   GimpDesaturateTool *desaturate_tool = GIMP_DESATURATE_TOOL (image_map_tool);
-  GeglNode           *node;
-
-  node = g_object_new (GEGL_TYPE_NODE,
-                       "operation", "gimp:desaturate",
-                       NULL);
 
   desaturate_tool->config = g_object_new (GIMP_TYPE_DESATURATE_CONFIG, NULL);
-
-  *config = G_OBJECT (desaturate_tool->config);
 
   g_signal_connect_object (desaturate_tool->config, "notify",
                            G_CALLBACK (gimp_desaturate_tool_config_notify),
                            G_OBJECT (desaturate_tool), 0);
 
-  gegl_node_set (node,
-                 "config", desaturate_tool->config,
-                 NULL);
+  *config = G_OBJECT (desaturate_tool->config);
 
-  return node;
+  return gegl_node_new_child (NULL,
+                              "operation", "gimp:desaturate",
+                              "config",    desaturate_tool->config,
+                              NULL);
 }
 
 
@@ -195,8 +191,6 @@ gimp_desaturate_tool_config_notify (GObject            *object,
 
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (desaturate_tool->button),
                                    config->mode);
-
-  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (desaturate_tool));
 }
 
 static void

@@ -55,7 +55,8 @@ static gboolean   gimp_colorize_tool_initialize    (GimpTool         *tool,
                                                     GError          **error);
 
 static GeglNode * gimp_colorize_tool_get_operation (GimpImageMapTool *im_tool,
-                                                    GObject         **config);
+                                                    GObject         **config,
+                                                    gchar           **undo_desc);
 static void       gimp_colorize_tool_dialog        (GimpImageMapTool *im_tool);
 static void       gimp_colorize_tool_color_picked  (GimpImageMapTool *im_tool,
                                                     gpointer          identifier,
@@ -154,28 +155,23 @@ gimp_colorize_tool_initialize (GimpTool     *tool,
 
 static GeglNode *
 gimp_colorize_tool_get_operation (GimpImageMapTool  *im_tool,
-                                  GObject          **config)
+                                  GObject          **config,
+                                  gchar            **undo_desc)
 {
   GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (im_tool);
-  GeglNode         *node;
-
-  node = g_object_new (GEGL_TYPE_NODE,
-                       "operation", "gimp:colorize",
-                       NULL);
 
   col_tool->config = g_object_new (GIMP_TYPE_COLORIZE_CONFIG, NULL);
-
-  *config = G_OBJECT (col_tool->config);
 
   g_signal_connect_object (col_tool->config, "notify",
                            G_CALLBACK (gimp_colorize_tool_config_notify),
                            G_OBJECT (col_tool), 0);
 
-  gegl_node_set (node,
-                 "config", col_tool->config,
-                 NULL);
+  *config = G_OBJECT (col_tool->config);
 
-  return node;
+  return gegl_node_new_child (NULL,
+                              "operation", "gimp:colorize",
+                              "config",    col_tool->config,
+                              NULL);
 }
 
 
@@ -323,8 +319,6 @@ gimp_colorize_tool_config_notify (GObject          *object,
   gimp_colorize_config_get_color (col_tool->config, &color);
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (col_tool->color_button),
                                &color);
-
-  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (col_tool));
 }
 
 static void

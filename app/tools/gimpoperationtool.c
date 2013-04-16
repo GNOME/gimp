@@ -60,7 +60,8 @@ static gboolean    gimp_operation_tool_initialize      (GimpTool          *tool,
                                                         GError           **error);
 
 static GeglNode  * gimp_operation_tool_get_operation   (GimpImageMapTool  *im_tool,
-                                                        GObject          **config);
+                                                        GObject          **config,
+                                                        gchar            **undo_desc);
 static void        gimp_operation_tool_map             (GimpImageMapTool  *im_tool);
 static void        gimp_operation_tool_dialog          (GimpImageMapTool  *im_tool);
 static void        gimp_operation_tool_reset           (GimpImageMapTool  *im_tool);
@@ -76,10 +77,6 @@ static void        gimp_operation_tool_color_picked    (GimpImageMapTool  *im_to
                                                         gpointer           identifier,
                                                         const Babl        *sample_format,
                                                         const GimpRGB     *color);
-
-static void        gimp_operation_tool_config_notify   (GObject           *object,
-                                                        GParamSpec        *pspec,
-                                                        GimpOperationTool *tool);
 
 
 G_DEFINE_TYPE (GimpOperationTool, gimp_operation_tool,
@@ -185,8 +182,22 @@ gimp_operation_tool_initialize (GimpTool     *tool,
 
 static GeglNode *
 gimp_operation_tool_get_operation (GimpImageMapTool  *im_tool,
-                                   GObject          **config)
+                                   GObject          **config,
+                                   gchar            **undo_desc)
 {
+  GimpOperationTool *tool = GIMP_OPERATION_TOOL (im_tool);
+
+  if (tool->config)
+    *config = g_object_ref (tool->config);
+
+  if (tool->undo_desc)
+    *undo_desc = g_strdup (tool->undo_desc);
+
+  if (tool->operation)
+    return gegl_node_new_child (NULL,
+                                "operation", tool->operation,
+                                NULL);
+
   return g_object_new (GEGL_TYPE_NODE, NULL);
 }
 
@@ -295,14 +306,6 @@ gimp_operation_tool_color_picked (GimpImageMapTool  *im_tool,
                 NULL);
 }
 
-static void
-gimp_operation_tool_config_notify (GObject           *object,
-                                   GParamSpec        *pspec,
-                                   GimpOperationTool *tool)
-{
-  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
-}
-
 void
 gimp_operation_tool_set_operation (GimpOperationTool *tool,
                                    const gchar       *operation,
@@ -323,40 +326,19 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
       tool->undo_desc = NULL;
     }
 
+  tool->operation = g_strdup (operation);
+  tool->undo_desc = g_strdup (undo_desc);
+
   if (tool->config)
     {
       g_object_unref (tool->config);
       tool->config = NULL;
     }
 
-  if (GIMP_IMAGE_MAP_TOOL (tool)->config)
-    {
-      g_object_unref (GIMP_IMAGE_MAP_TOOL (tool)->config);
-      GIMP_IMAGE_MAP_TOOL (tool)->config = NULL;
-    }
-
-  tool->operation = g_strdup (operation);
-  tool->undo_desc = g_strdup (undo_desc);
-
-  if (GIMP_IMAGE_MAP_TOOL (tool)->image_map)
-    {
-      gimp_image_map_abort (GIMP_IMAGE_MAP_TOOL (tool)->image_map);
-      g_object_unref (GIMP_IMAGE_MAP_TOOL (tool)->image_map);
-      GIMP_IMAGE_MAP_TOOL (tool)->image_map = NULL;
-    }
-
-  gegl_node_set (GIMP_IMAGE_MAP_TOOL (tool)->operation,
-                 "operation", tool->operation,
-                 NULL);
-
-  if (GIMP_TOOL (tool)->drawable)
-    gimp_image_map_tool_create_map (GIMP_IMAGE_MAP_TOOL (tool), undo_desc);
-
   tool->config = gimp_gegl_get_config_proxy (tool->operation,
                                              GIMP_TYPE_IMAGE_MAP_CONFIG);
-  GIMP_IMAGE_MAP_TOOL (tool)->config = g_object_ref (tool->config);
 
-  GIMP_VIEWABLE_GET_CLASS (tool->config)->default_stock_id = GIMP_STOCK_GEGL;
+  gimp_image_map_tool_get_operation (GIMP_IMAGE_MAP_TOOL (tool));
 
   if (undo_desc)
     GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->settings_name = "yes"; /* XXX hack */
@@ -371,10 +353,6 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
 
   if (tool->config)
     {
-      g_signal_connect_object (tool->config, "notify",
-                               G_CALLBACK (gimp_operation_tool_config_notify),
-                               G_OBJECT (tool), 0);
-
       tool->options_table =
         gimp_prop_table_new (G_OBJECT (tool->config),
                              G_TYPE_FROM_INSTANCE (tool->config),
