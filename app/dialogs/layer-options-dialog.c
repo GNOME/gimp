@@ -26,12 +26,14 @@
 #include "dialogs-types.h"
 
 #include "core/gimpcontext.h"
+#include "core/gimpdrawable-filter.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 
 #include "text/gimptext.h"
 #include "text/gimptextlayer.h"
 
+#include "widgets/gimpcontainertreeview.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "layer-options-dialog.h"
@@ -109,6 +111,7 @@ layer_options_dialog_new (GimpImage    *image,
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_set_spacing (GTK_BOX (vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (options->dialog))),
                       vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
@@ -210,6 +213,10 @@ layer_options_dialog_new (GimpImage    *image,
     }
   else
     {
+      GimpContainer *filters;
+      GtkWidget     *frame;
+      GtkWidget     *view;
+
       /*  For text layers add a toggle to control "auto-rename"  */
       if (gimp_item_is_text_layer (GIMP_ITEM (layer)))
         {
@@ -227,6 +234,17 @@ layer_options_dialog_new (GimpImage    *image,
                             G_CALLBACK (layer_options_dialog_toggle_rename),
                             options);
         }
+
+      frame = gimp_frame_new ("Active Filters");
+      gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+      gtk_widget_show (frame);
+
+      filters = gimp_drawable_get_filters (GIMP_DRAWABLE (layer));
+
+      view = gimp_container_tree_view_new (filters, context,
+                                           GIMP_VIEW_SIZE_SMALL, 0);
+      gtk_container_add (GTK_CONTAINER (frame), view);
+      gtk_widget_show (view);
     }
 
   return options;
