@@ -23,10 +23,10 @@
 
 #include "core-types.h"
 
+#include "gegl/gimpapplicator.h"
 #include "gegl/gimp-babl-compat.h"
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-loops.h"
-#include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
@@ -50,12 +50,10 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
                                  gint                  base_x,
                                  gint                  base_y)
 {
-  GimpItem          *item        = GIMP_ITEM (drawable);
-  GimpImage         *image       = gimp_item_get_image (item);
-  GimpChannel       *mask        = gimp_image_get_mask (image);
-  GeglBuffer        *mask_buffer = NULL;
-  GeglNode          *apply;
-  GimpComponentMask  affect;
+  GimpItem          *item  = GIMP_ITEM (drawable);
+  GimpImage         *image = gimp_item_get_image (item);
+  GimpChannel       *mask  = gimp_image_get_mask (image);
+  GimpApplicator    *applicator;
   gint               x, y, width, height;
   gint               offset_x, offset_y;
 
@@ -119,31 +117,34 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
         }
     }
 
+  applicator = gimp_applicator_new (NULL);
+
   if (mask)
-    mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+    {
+      GeglBuffer *mask_buffer;
 
-  affect = gimp_drawable_get_active_mask (drawable);
+      mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
-  apply = gimp_gegl_create_apply_buffer_node (buffer,
-                                              base_x - buffer_region->x,
-                                              base_y - buffer_region->y,
-                                              0,
-                                              0,
-                                              0,
-                                              0,
-                                              mask_buffer,
-                                              -offset_x,
-                                              -offset_y,
-                                              opacity,
-                                              mode,
-                                              affect);
+      gimp_applicator_set_mask_buffer (applicator, mask_buffer);
+      gimp_applicator_set_mask_offset (applicator, -offset_x, -offset_y);
+    }
 
-  gimp_gegl_apply_operation (base_buffer, NULL, NULL,
-                             apply,
-                             gimp_drawable_get_buffer (drawable),
-                             GEGL_RECTANGLE (x, y, width, height));
+  gimp_applicator_set_src_buffer (applicator, base_buffer);
+  gimp_applicator_set_dest_buffer (applicator,
+                                   gimp_drawable_get_buffer (drawable));
 
-  g_object_unref (apply);
+  gimp_applicator_set_apply_buffer (applicator, buffer);
+  gimp_applicator_set_apply_offset (applicator,
+                                    base_x - buffer_region->x,
+                                    base_y - buffer_region->y);
+
+  gimp_applicator_set_mode (applicator, opacity, mode);
+  gimp_applicator_set_affect (applicator,
+                              gimp_drawable_get_active_mask (drawable));
+
+  gimp_applicator_blit (applicator, GEGL_RECTANGLE (x, y, width, height));
+
+  g_object_unref (applicator);
 }
 
 /*  Similar to gimp_drawable_apply_region but works in "replace" mode (i.e.
