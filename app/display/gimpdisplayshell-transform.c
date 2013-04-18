@@ -113,7 +113,7 @@ gimp_display_shell_transform_xy (const GimpDisplayShell *shell,
   g_return_if_fail (ny != NULL);
 
   tx = x * shell->scale_x - shell->offset_x;
-  ty = y * shell->scale_y - shell->offset_x;
+  ty = y * shell->scale_y - shell->offset_y;
 
   /* The projected coordinates might overflow a gint in the case of big
      images at high zoom levels, so we clamp them here to avoid problems.  */
