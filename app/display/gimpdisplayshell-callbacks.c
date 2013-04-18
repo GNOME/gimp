@@ -38,6 +38,7 @@
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-draw.h"
+#include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-title.h"
@@ -170,7 +171,7 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
           gint     sw;
           gint     sh;
 
-          gimp_display_shell_draw_get_scaled_image_size (shell, &sw, &sh);
+          gimp_display_shell_scale_get_image_size (shell, &sw, &sh);
 
           center_horizontally = sw <= shell->disp_width;
           center_vertically   = sh <= shell->disp_height;
@@ -487,9 +488,9 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
 
   image_rect.x = - shell->offset_x;
   image_rect.y = - shell->offset_y;
-  gimp_display_shell_draw_get_scaled_image_size (shell,
-                                                 &image_rect.width,
-                                                 &image_rect.height);
+  gimp_display_shell_scale_get_image_size (shell,
+                                           &image_rect.width,
+                                           &image_rect.height);
   image_region = cairo_region_create_rectangle (&image_rect);
 
   cairo_region_subtract (clear_region, image_region);

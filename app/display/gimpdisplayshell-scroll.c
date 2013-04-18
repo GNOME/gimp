@@ -35,7 +35,6 @@
 #include "gimpdisplay.h"
 #include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
@@ -295,7 +294,7 @@ gimp_display_shell_scroll_unoverscrollify (GimpDisplayShell *shell,
   *out_offset_x = in_offset_x;
   *out_offset_y = in_offset_y;
 
-  gimp_display_shell_draw_get_scaled_image_size (shell, &sw, &sh);
+  gimp_display_shell_scale_get_image_size (shell, &sw, &sh);
 
   if (in_offset_x < 0)
     {
@@ -351,7 +350,7 @@ gimp_display_shell_scroll_center_image (GimpDisplayShell *shell,
   target_offset_x = shell->offset_x;
   target_offset_y = shell->offset_y;
 
-  gimp_display_shell_draw_get_scaled_image_size (shell, &sw, &sh);
+  gimp_display_shell_scale_get_image_size (shell, &sw, &sh);
 
   if (horizontally)
     {
@@ -495,7 +494,7 @@ gimp_display_shell_scroll_setup_hscrollbar (GimpDisplayShell *shell,
       ! gimp_display_get_image (shell->display))
     return;
 
-  gimp_display_shell_draw_get_scaled_image_size (shell, &sw, NULL);
+  gimp_display_shell_scale_get_image_size (shell, &sw, NULL);
 
   if (shell->disp_width < sw)
     {
@@ -539,7 +538,7 @@ gimp_display_shell_scroll_setup_vscrollbar (GimpDisplayShell *shell,
       ! gimp_display_get_image (shell->display))
     return;
 
-  gimp_display_shell_draw_get_scaled_image_size (shell, NULL, &sh);
+  gimp_display_shell_scale_get_image_size (shell, NULL, &sh);
 
   if (shell->disp_height < sh)
     {

@@ -28,7 +28,7 @@
 #include "gimpcanvas-style.h"
 #include "gimpcanvaspassepartout.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-draw.h"
+#include "gimpdisplayshell-scale.h"
 
 
 /*  local function prototypes  */
@@ -68,7 +68,7 @@ gimp_canvas_passe_partout_draw (GimpCanvasItem *item,
   GimpDisplayShell *shell = gimp_canvas_item_get_shell (item);
   gint              w, h;
 
-  gimp_display_shell_draw_get_scaled_image_size (shell, &w, &h);
+  gimp_display_shell_scale_get_image_size (shell, &w, &h);
   cairo_rectangle (cr, - shell->offset_x, - shell->offset_y, w, h);
 
   GIMP_CANVAS_ITEM_CLASS (parent_class)->draw (item, cr);
@@ -84,9 +84,9 @@ gimp_canvas_passe_partout_get_extents (GimpCanvasItem *item)
 
   rectangle.x = - shell->offset_x;
   rectangle.y = - shell->offset_y;
-  gimp_display_shell_draw_get_scaled_image_size (shell,
-                                                 &rectangle.width,
-                                                 &rectangle.height);
+  gimp_display_shell_scale_get_image_size (shell,
+                                           &rectangle.width,
+                                           &rectangle.height);
 
   outer = cairo_region_create_rectangle (&rectangle);
 

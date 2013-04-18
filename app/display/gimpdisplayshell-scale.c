@@ -33,11 +33,9 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
-#include "gimpdisplayshell-title.h"
 #include "gimpdisplayshell-transform.h"
 #include "gimpimagewindow.h"
 
@@ -348,6 +346,57 @@ gimp_display_shell_get_screen_resolution (GimpDisplayShell *shell,
 }
 
 /**
+ * gimp_display_shell_scale_get_image_size:
+ * @shell:
+ * @w:
+ * @h:
+ *
+ * Gets the size of the rendered image after it has been scaled.
+ *
+ **/
+void
+gimp_display_shell_scale_get_image_size (GimpDisplayShell *shell,
+                                         gint             *w,
+                                         gint             *h)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  gimp_display_shell_scale_get_image_size_for_scale (shell,
+                                                     gimp_zoom_model_get_factor (shell->zoom),
+                                                     w, h);
+}
+
+/**
+ * gimp_display_shell_scale_get_image_size_for_scale:
+ * @shell:
+ * @scale:
+ * @w:
+ * @h:
+ *
+ **/
+void
+gimp_display_shell_scale_get_image_size_for_scale (GimpDisplayShell *shell,
+                                                   gdouble           scale,
+                                                   gint             *w,
+                                                   gint             *h)
+{
+  GimpImage *image;
+  gdouble    scale_x;
+  gdouble    scale_y;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  image = gimp_display_get_image (shell->display);
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  gimp_display_shell_calculate_scale_x_and_y (shell, scale, &scale_x, &scale_y);
+
+  if (w) *w = scale_x * gimp_image_get_width  (image);
+  if (h) *h = scale_y * gimp_image_get_height (image);
+}
+
+/**
  * gimp_display_shell_scale:
  * @shell:     the #GimpDisplayShell
  * @zoom_type: whether to zoom in, our or to a specific scale
@@ -442,7 +491,7 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
                                                                    image_center_y,
                                                                    &image_center_almost_centered_horiz,
                                                                    &image_center_almost_centered_vert);
-            
+
           gimp_display_shell_scroll_center_image (shell,
                                                   starts_fitting_horiz ||
                                                   (zoom_focus_almost_centered_horiz &&
@@ -517,7 +566,7 @@ gimp_display_shell_scale_image_is_within_viewport (GimpDisplayShell *shell,
   if (! horizontally) horizontally = &horizontally_dummy;
   if (! vertically)   vertically   = &vertically_dummy;
 
-  gimp_display_shell_draw_get_scaled_image_size (shell, &sw, &sh);
+  gimp_display_shell_scale_get_image_size (shell, &sw, &sh);
 
   *horizontally = sw              <= shell->disp_width       &&
                   shell->offset_x <= 0                       &&
@@ -906,15 +955,15 @@ gimp_display_shell_scale_image_starts_to_fit (GimpDisplayShell *shell,
       gint new_scale_width;
       gint new_scale_height;
 
-      gimp_display_shell_draw_get_scaled_image_size_for_scale (shell,
-                                                               current_scale,
-                                                               &current_scale_width,
-                                                               &current_scale_height);
+      gimp_display_shell_scale_get_image_size_for_scale (shell,
+                                                         current_scale,
+                                                         &current_scale_width,
+                                                         &current_scale_height);
 
-      gimp_display_shell_draw_get_scaled_image_size_for_scale (shell,
-                                                               new_scale,
-                                                               &new_scale_width,
-                                                               &new_scale_height);
+      gimp_display_shell_scale_get_image_size_for_scale (shell,
+                                                         new_scale,
+                                                         &new_scale_width,
+                                                         &new_scale_height);
 
       *vertically   = (current_scale_width  >  shell->disp_width &&
                        new_scale_width      <= shell->disp_width);
@@ -979,9 +1028,7 @@ gimp_display_shell_scale_get_image_center_viewport (GimpDisplayShell *shell,
 {
   gint sw, sh;
 
-  gimp_display_shell_draw_get_scaled_image_size (shell,
-                                                 &sw,
-                                                 &sh);
+  gimp_display_shell_scale_get_image_size (shell, &sw, &sh);
 
   if (image_center_x) *image_center_x = -shell->offset_x + sw / 2;
   if (image_center_y) *image_center_y = -shell->offset_y + sh / 2;
