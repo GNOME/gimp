@@ -294,10 +294,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->dot_for_dot = TRUE;
   shell->scale_x     = 1.0;
   shell->scale_y     = 1.0;
-  shell->x_dest_inc  = 1;
-  shell->y_dest_inc  = 1;
-  shell->x_src_dec   = 1;
-  shell->y_src_dec   = 1;
 
   gimp_display_shell_items_init (shell);
 
@@ -1412,27 +1408,11 @@ gimp_display_shell_scale_changed (GimpDisplayShell *shell)
                                                   gimp_zoom_model_get_factor (shell->zoom),
                                                   &shell->scale_x,
                                                   &shell->scale_y);
-
-      shell->x_dest_inc = gimp_image_get_width  (image);
-      shell->y_dest_inc = gimp_image_get_height (image);
-      shell->x_src_dec  = shell->scale_x * shell->x_dest_inc;
-      shell->y_src_dec  = shell->scale_y * shell->y_dest_inc;
-
-      if (shell->x_src_dec < 1)
-        shell->x_src_dec = 1;
-
-      if (shell->y_src_dec < 1)
-        shell->y_src_dec = 1;
     }
   else
     {
       shell->scale_x = 1.0;
       shell->scale_y = 1.0;
-
-      shell->x_dest_inc = 1;
-      shell->y_dest_inc = 1;
-      shell->x_src_dec  = 1;
-      shell->y_src_dec  = 1;
     }
 }
 

@@ -112,11 +112,8 @@ gimp_display_shell_transform_xy (const GimpDisplayShell *shell,
   g_return_if_fail (nx != NULL);
   g_return_if_fail (ny != NULL);
 
-  tx = ((gint64) x * shell->x_src_dec) / shell->x_dest_inc;
-  ty = ((gint64) y * shell->y_src_dec) / shell->y_dest_inc;
-
-  tx -= shell->offset_x;
-  ty -= shell->offset_y;
+  tx = x * shell->scale_x - shell->offset_x;
+  ty = y * shell->scale_y - shell->offset_x;
 
   /* The projected coordinates might overflow a gint in the case of big
      images at high zoom levels, so we clamp them here to avoid problems.  */
@@ -153,17 +150,16 @@ gimp_display_shell_untransform_xy (const GimpDisplayShell *shell,
   g_return_if_fail (nx != NULL);
   g_return_if_fail (ny != NULL);
 
-  tx = (gint64) x + shell->offset_x;
-  ty = (gint64) y + shell->offset_y;
-
-  tx *= shell->x_dest_inc;
-  ty *= shell->y_dest_inc;
-
-  tx += round ? shell->x_dest_inc : shell->x_dest_inc >> 1;
-  ty += round ? shell->y_dest_inc : shell->y_dest_inc >> 1;
-
-  tx /= shell->x_src_dec;
-  ty /= shell->y_src_dec;
+  if (round)
+    {
+      tx = SIGNED_ROUND (((gint64) x + shell->offset_x) / shell->scale_x);
+      ty = SIGNED_ROUND (((gint64) y + shell->offset_y) / shell->scale_y);
+    }
+  else
+    {
+      tx = ((gint64) x + shell->offset_x) / shell->scale_x;
+      ty = ((gint64) y + shell->offset_y) / shell->scale_y;
+    }
 
   *nx = CLAMP (tx, G_MININT, G_MAXINT);
   *ny = CLAMP (ty, G_MININT, G_MAXINT);

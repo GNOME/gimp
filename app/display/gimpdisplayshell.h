@@ -74,11 +74,6 @@ struct _GimpDisplayShell
   gdouble            monitor_yres;
   gboolean           dot_for_dot;      /*  ignore monitor resolution          */
 
-  gint               x_src_dec;        /*  increments for the bresenham style */
-  gint               y_src_dec;        /*  image --> display transformation   */
-  gint               x_dest_inc;
-  gint               y_dest_inc;
-
   GimpZoomModel     *zoom;
 
   gdouble            last_scale;       /*  scale used when reverting zoom     */
