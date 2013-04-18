@@ -32,7 +32,6 @@
 #include "gimpcanvassamplepoint.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-style.h"
-#include "gimpdisplayshell-transform.h"
 
 
 #define GIMP_SAMPLE_POINT_DRAW_SIZE 10
@@ -197,17 +196,16 @@ gimp_canvas_sample_point_get_property (GObject    *object,
 }
 
 static void
-gimp_canvas_sample_point_transform (GimpCanvasItem   *item,
-                                    GimpDisplayShell *shell,
-                                    gdouble          *x,
-                                    gdouble          *y)
+gimp_canvas_sample_point_transform (GimpCanvasItem *item,
+                                    gdouble        *x,
+                                    gdouble        *y)
 {
   GimpCanvasSamplePointPrivate *private = GET_PRIVATE (item);
 
-  gimp_display_shell_transform_xy_f (shell,
-                                     private->x + 0.5,
-                                     private->y + 0.5,
-                                     x, y);
+  gimp_canvas_item_transform_xy_f (item,
+                                   private->x + 0.5,
+                                   private->y + 0.5,
+                                   x, y);
 
   *x = floor (*x) + 0.5;
   *y = floor (*y) + 0.5;
@@ -225,7 +223,7 @@ gimp_canvas_sample_point_draw (GimpCanvasItem   *item,
   gdouble                       x, y;
   gint                          x1, x2, y1, y2;
 
-  gimp_canvas_sample_point_transform (item, shell, &x, &y);
+  gimp_canvas_sample_point_transform (item, &x, &y);
 
   x1 = x - GIMP_SAMPLE_POINT_DRAW_SIZE;
   x2 = x + GIMP_SAMPLE_POINT_DRAW_SIZE;
@@ -265,7 +263,7 @@ gimp_canvas_sample_point_get_extents (GimpCanvasItem   *item,
   gdouble               x, y;
   gint                  x1, x2, y1, y2;
 
-  gimp_canvas_sample_point_transform (item, shell, &x, &y);
+  gimp_canvas_sample_point_transform (item, &x, &y);
 
   x1 = floor (x - GIMP_SAMPLE_POINT_DRAW_SIZE);
   x2 = ceil  (x + GIMP_SAMPLE_POINT_DRAW_SIZE);

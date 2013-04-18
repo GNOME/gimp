@@ -38,7 +38,6 @@
 #include "gimpcanvas.h"
 #include "gimpcanvastransformpreview.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-transform.h"
 
 
 #define INT_MULT(a,b,t)    ((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
@@ -344,7 +343,6 @@ gimp_canvas_transform_preview_get_property (GObject    *object,
 
 static gboolean
 gimp_canvas_transform_preview_transform (GimpCanvasItem        *item,
-                                         GimpDisplayShell      *shell,
                                          cairo_rectangle_int_t *extents)
 {
   GimpCanvasTransformPreviewPrivate *private = GET_PRIVATE (item);
@@ -379,18 +377,18 @@ gimp_canvas_transform_preview_transform (GimpCanvasItem        *item,
       gdouble dx3, dy3;
       gdouble dx4, dy4;
 
-      gimp_display_shell_transform_xy_f (shell,
-                                         tx1, ty1,
-                                         &dx1, &dy1);
-      gimp_display_shell_transform_xy_f (shell,
-                                         tx2, ty2,
-                                         &dx2, &dy2);
-      gimp_display_shell_transform_xy_f (shell,
-                                         tx3, ty3,
-                                         &dx3, &dy3);
-      gimp_display_shell_transform_xy_f (shell,
-                                         tx4, ty4,
-                                         &dx4, &dy4);
+      gimp_canvas_item_transform_xy_f (item,
+                                       tx1, ty1,
+                                       &dx1, &dy1);
+      gimp_canvas_item_transform_xy_f (item,
+                                       tx2, ty2,
+                                       &dx2, &dy2);
+      gimp_canvas_item_transform_xy_f (item,
+                                       tx3, ty3,
+                                       &dx3, &dy3);
+      gimp_canvas_item_transform_xy_f (item,
+                                       tx4, ty4,
+                                       &dx4, &dy4);
 
       extents->x      = (gint) floor (MIN4 (dx1, dx2, dx3, dx4));
       extents->y      = (gint) floor (MIN4 (dy1, dy2, dy3, dy4));
@@ -431,7 +429,7 @@ gimp_canvas_transform_preview_draw (GimpCanvasItem   *item,
   opacity = private->opacity * 255.999;
 
   /* only draw convex polygons */
-  if (! gimp_canvas_transform_preview_transform (item, shell, NULL))
+  if (! gimp_canvas_transform_preview_transform (item, NULL))
     return;
 
   mask      = NULL;
@@ -485,9 +483,9 @@ gimp_canvas_transform_preview_draw (GimpCanvasItem   *item,
                                   tx2, ty2,                     \
                                   &tx1, &ty1);                  \
                                                                 \
-    gimp_display_shell_transform_xy_f (shell,                   \
-                                       tx1, ty1,                \
-                                       &tx2, &ty2);             \
+    gimp_canvas_item_transform_xy_f (item,                      \
+                                     tx1, ty1,                  \
+                                     &tx2, &ty2);               \
     x[sub][index] = (gint) tx2;                                 \
     y[sub][index] = (gint) ty2;                                 \
                                                                 \
@@ -568,7 +566,7 @@ gimp_canvas_transform_preview_get_extents (GimpCanvasItem   *item,
 {
   cairo_rectangle_int_t rectangle;
 
-  if (gimp_canvas_transform_preview_transform (item, shell, &rectangle))
+  if (gimp_canvas_transform_preview_transform (item, &rectangle))
     return cairo_region_create_rectangle (&rectangle);
 
   return NULL;

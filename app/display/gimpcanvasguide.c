@@ -31,7 +31,6 @@
 #include "gimpcanvasguide.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-style.h"
-#include "gimpdisplayshell-transform.h"
 
 
 enum
@@ -176,17 +175,17 @@ gimp_canvas_guide_get_property (GObject    *object,
 
 static void
 gimp_canvas_guide_transform (GimpCanvasItem   *item,
-                             GimpDisplayShell *shell,
                              gdouble          *x1,
                              gdouble          *y1,
                              gdouble          *x2,
                              gdouble          *y2)
 {
   GimpCanvasGuidePrivate *private = GET_PRIVATE (item);
+  GtkWidget              *canvas  = gimp_canvas_item_get_canvas (item);
   GtkAllocation           allocation;
   gint                    x, y;
 
-  gtk_widget_get_allocation (shell->canvas, &allocation);
+  gtk_widget_get_allocation (canvas, &allocation);
 
   *x1 = 0;
   *y1 = 0;
@@ -196,12 +195,12 @@ gimp_canvas_guide_transform (GimpCanvasItem   *item,
   switch (private->orientation)
     {
     case GIMP_ORIENTATION_HORIZONTAL:
-      gimp_display_shell_transform_xy (shell, 0, private->position, &x, &y);
+      gimp_canvas_item_transform_xy (item, 0, private->position, &x, &y);
       *y1 = *y2 = y + 0.5;
       break;
 
     case GIMP_ORIENTATION_VERTICAL:
-      gimp_display_shell_transform_xy (shell, private->position, 0, &x, &y);
+      gimp_canvas_item_transform_xy (item, private->position, 0, &x, &y);
       *x1 = *x2 = x + 0.5;
       break;
 
@@ -218,7 +217,7 @@ gimp_canvas_guide_draw (GimpCanvasItem   *item,
   gdouble x1, y1;
   gdouble x2, y2;
 
-  gimp_canvas_guide_transform (item, shell, &x1, &y1, &x2, &y2);
+  gimp_canvas_guide_transform (item, &x1, &y1, &x2, &y2);
 
   cairo_move_to (cr, x1, y1);
   cairo_line_to (cr, x2, y2);
@@ -234,7 +233,7 @@ gimp_canvas_guide_get_extents (GimpCanvasItem   *item,
   gdouble               x1, y1;
   gdouble               x2, y2;
 
-  gimp_canvas_guide_transform (item, shell, &x1, &y1, &x2, &y2);
+  gimp_canvas_guide_transform (item, &x1, &y1, &x2, &y2);
 
   rectangle.x      = MIN (x1, x2) - 1.5;
   rectangle.y      = MIN (y1, y2) - 1.5;

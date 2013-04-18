@@ -34,7 +34,6 @@
 #include "gimpcanvaspath.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-style.h"
-#include "gimpdisplayshell-transform.h"
 
 
 enum

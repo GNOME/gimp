@@ -34,7 +34,6 @@
 #include "gimpcanvasitem-utils.h"
 #include "gimpcanvasprogress.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-transform.h"
 #include "gimpdisplayshell-style.h"
 
 
@@ -233,17 +232,17 @@ gimp_canvas_progress_get_property (GObject    *object,
 }
 
 static PangoLayout *
-gimp_canvas_progress_transform (GimpCanvasItem   *item,
-                                GimpDisplayShell *shell,
-                                gdouble          *x,
-                                gdouble          *y,
-                                gint             *width,
-                                gint             *height)
+gimp_canvas_progress_transform (GimpCanvasItem *item,
+                                gdouble        *x,
+                                gdouble        *y,
+                                gint           *width,
+                                gint           *height)
 {
   GimpCanvasProgressPrivate *private = GET_PRIVATE (item);
+  GtkWidget                 *canvas  = gimp_canvas_item_get_canvas (item);
   PangoLayout               *layout;
 
-  layout = gimp_canvas_get_layout (GIMP_CANVAS (shell->canvas), "%s",
+  layout = gimp_canvas_get_layout (GIMP_CANVAS (canvas), "%s",
                                    private->text);
 
   pango_layout_get_pixel_size (layout, width, height);
@@ -251,9 +250,9 @@ gimp_canvas_progress_transform (GimpCanvasItem   *item,
   *width  += 2 * BORDER;
   *height += 3 * BORDER + 2 * RADIUS;
 
-  gimp_display_shell_transform_xy_f (shell,
-                                     private->x, private->y,
-                                     x, y);
+  gimp_canvas_item_transform_xy_f (item,
+                                   private->x, private->y,
+                                   x, y);
 
   gimp_canvas_item_shift_to_north_west (private->anchor,
                                         *x, *y,
@@ -273,10 +272,11 @@ gimp_canvas_progress_draw (GimpCanvasItem   *item,
                            cairo_t          *cr)
 {
   GimpCanvasProgressPrivate *private = GET_PRIVATE (item);
+  GtkWidget                 *canvas  = gimp_canvas_item_get_canvas (item);
   gdouble                    x, y;
   gint                       width, height;
 
-  gimp_canvas_progress_transform (item, shell, &x, &y, &width, &height);
+  gimp_canvas_progress_transform (item, &x, &y, &width, &height);
 
   cairo_move_to (cr, x, y);
   cairo_line_to (cr, x + width, y);
@@ -291,7 +291,7 @@ gimp_canvas_progress_draw (GimpCanvasItem   *item,
   cairo_move_to (cr, x + BORDER, y + BORDER);
   cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 1.0);
   pango_cairo_show_layout (cr,
-                           gimp_canvas_get_layout (GIMP_CANVAS (shell->canvas),
+                           gimp_canvas_get_layout (GIMP_CANVAS (canvas),
                                                    "%s", private->text));
 
   gimp_display_shell_set_tool_bg_style (shell, cr);
@@ -314,7 +314,7 @@ gimp_canvas_progress_get_extents (GimpCanvasItem   *item,
   gdouble               x, y;
   gint                  width, height;
 
-  gimp_canvas_progress_transform (item, shell, &x, &y, &width, &height);
+  gimp_canvas_progress_transform (item, &x, &y, &width, &height);
 
   /*  add 1px on each side because fill()'s default impl does the same  */
   rectangle.x      = (gint) x - 1;

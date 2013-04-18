@@ -71,6 +71,9 @@ struct _GimpCanvasItemClass
 
 GType            gimp_canvas_item_get_type         (void) G_GNUC_CONST;
 
+GimpImage      * gimp_canvas_item_get_image        (GimpCanvasItem   *item);
+GtkWidget      * gimp_canvas_item_get_canvas       (GimpCanvasItem   *item);
+
 void             gimp_canvas_item_draw             (GimpCanvasItem   *item,
                                                     cairo_t          *cr);
 cairo_region_t * gimp_canvas_item_get_extents      (GimpCanvasItem   *item);
@@ -98,6 +101,17 @@ void             gimp_canvas_item_resume_stroking  (GimpCanvasItem   *item);
 
 void             gimp_canvas_item_suspend_filling  (GimpCanvasItem   *item);
 void             gimp_canvas_item_resume_filling   (GimpCanvasItem   *item);
+
+void             gimp_canvas_item_transform_xy     (GimpCanvasItem   *item,
+                                                    gdouble           x,
+                                                    gdouble           y,
+                                                    gint             *tx,
+                                                    gint             *ty);
+void             gimp_canvas_item_transform_xy_f   (GimpCanvasItem   *item,
+                                                    gdouble           x,
+                                                    gdouble           y,
+                                                    gdouble          *tx,
+                                                    gdouble          *ty);
 
 
 /*  protected  */

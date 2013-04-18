@@ -30,7 +30,6 @@
 
 #include "gimpcanvasgroup.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-transform.h"
 
 
 enum

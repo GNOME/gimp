@@ -30,7 +30,6 @@
 
 #include "gimpcanvascorner.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-transform.h"
 
 
 enum
@@ -238,12 +237,11 @@ gimp_canvas_corner_get_property (GObject    *object,
 }
 
 static void
-gimp_canvas_corner_transform (GimpCanvasItem   *item,
-                              GimpDisplayShell *shell,
-                              gdouble          *x,
-                              gdouble          *y,
-                              gdouble          *w,
-                              gdouble          *h)
+gimp_canvas_corner_transform (GimpCanvasItem *item,
+                              gdouble        *x,
+                              gdouble        *y,
+                              gdouble        *w,
+                              gdouble        *h)
 {
   GimpCanvasCornerPrivate *private = GET_PRIVATE (item);
   gdouble                  rx, ry;
@@ -251,18 +249,18 @@ gimp_canvas_corner_transform (GimpCanvasItem   *item,
   gint                     top_and_bottom_handle_x_offset;
   gint                     left_and_right_handle_y_offset;
 
-  gimp_display_shell_transform_xy_f (shell,
-                                     MIN (private->x,
-                                          private->x + private->width),
-                                     MIN (private->y,
-                                          private->y + private->height),
-                                     &rx, &ry);
-  gimp_display_shell_transform_xy_f (shell,
-                                     MAX (private->x,
-                                          private->x + private->width),
-                                     MAX (private->y,
-                                          private->y + private->height),
-                                     &rw, &rh);
+  gimp_canvas_item_transform_xy_f (item,
+                                   MIN (private->x,
+                                        private->x + private->width),
+                                   MIN (private->y,
+                                        private->y + private->height),
+                                   &rx, &ry);
+  gimp_canvas_item_transform_xy_f (item,
+                                   MAX (private->x,
+                                        private->x + private->width),
+                                   MAX (private->y,
+                                        private->y + private->height),
+                                   &rw, &rh);
 
   rw -= rx;
   rh -= ry;
@@ -401,7 +399,7 @@ gimp_canvas_corner_draw (GimpCanvasItem   *item,
   gdouble x, y;
   gdouble w, h;
 
-  gimp_canvas_corner_transform (item, shell, &x, &y, &w, &h);
+  gimp_canvas_corner_transform (item, &x, &y, &w, &h);
 
   cairo_rectangle (cr, x, y, w, h);
 
@@ -416,7 +414,7 @@ gimp_canvas_corner_get_extents (GimpCanvasItem   *item,
   gdouble               x, y;
   gdouble               w, h;
 
-  gimp_canvas_corner_transform (item, shell, &x, &y, &w, &h);
+  gimp_canvas_corner_transform (item, &x, &y, &w, &h);
 
   rectangle.x      = floor (x - 1.5);
   rectangle.y      = floor (y - 1.5);

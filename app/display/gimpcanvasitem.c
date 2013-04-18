@@ -30,8 +30,10 @@
 #include "core/gimpmarshal.h"
 
 #include "gimpcanvasitem.h"
+#include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-style.h"
+#include "gimpdisplayshell-transform.h"
 
 
 enum
@@ -334,6 +336,30 @@ gimp_canvas_item_real_hit (GimpCanvasItem   *item,
 
 /*  public functions  */
 
+GimpImage *
+gimp_canvas_item_get_image (GimpCanvasItem *item)
+{
+  GimpCanvasItemPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), NULL);
+
+  private = GET_PRIVATE (item);
+
+  return gimp_display_get_image (private->shell->display);
+}
+
+GtkWidget *
+gimp_canvas_item_get_canvas (GimpCanvasItem *item)
+{
+  GimpCanvasItemPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), NULL);
+
+  private = GET_PRIVATE (item);
+
+  return private->shell->canvas;
+}
+
 void
 gimp_canvas_item_draw (GimpCanvasItem *item,
                        cairo_t        *cr)
@@ -578,6 +604,38 @@ gimp_canvas_item_resume_filling (GimpCanvasItem *item)
   g_return_if_fail (private->suspend_filling > 0);
 
   private->suspend_filling--;
+}
+
+void
+gimp_canvas_item_transform_xy (GimpCanvasItem *item,
+                               gdouble         x,
+                               gdouble         y,
+                               gint           *tx,
+                               gint           *ty)
+{
+  GimpCanvasItemPrivate *private;
+
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+
+  private = GET_PRIVATE (item);
+
+  gimp_display_shell_transform_xy (private->shell, x, y, tx, ty);
+}
+
+void
+gimp_canvas_item_transform_xy_f (GimpCanvasItem *item,
+                                 gdouble         x,
+                                 gdouble         y,
+                                 gdouble        *tx,
+                                 gdouble        *ty)
+{
+  GimpCanvasItemPrivate *private;
+
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+
+  private = GET_PRIVATE (item);
+
+  gimp_display_shell_transform_xy_f (private->shell, x, y, tx, ty);
 }
 
 

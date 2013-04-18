@@ -33,7 +33,6 @@
 #include "gimpcanvashandle.h"
 #include "gimpcanvasitem-utils.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-transform.h"
 
 
 enum
@@ -252,16 +251,15 @@ gimp_canvas_handle_get_property (GObject    *object,
 }
 
 static void
-gimp_canvas_handle_transform (GimpCanvasItem   *item,
-                              GimpDisplayShell *shell,
-                              gdouble          *x,
-                              gdouble          *y)
+gimp_canvas_handle_transform (GimpCanvasItem *item,
+                              gdouble        *x,
+                              gdouble        *y)
 {
   GimpCanvasHandlePrivate *private = GET_PRIVATE (item);
 
-  gimp_display_shell_transform_xy_f (shell,
-                                     private->x, private->y,
-                                     x, y);
+  gimp_canvas_item_transform_xy_f (item,
+                                   private->x, private->y,
+                                   x, y);
 
   switch (private->type)
     {
@@ -302,10 +300,11 @@ gimp_canvas_handle_draw (GimpCanvasItem   *item,
   GimpCanvasHandlePrivate *private = GET_PRIVATE (item);
   gdouble                  x, y, tx, ty;
 
-  gimp_canvas_handle_transform (item, shell, &x, &y);
-  gimp_display_shell_transform_xy_f (shell,
-                                     private->x, private->y,
-                                     &tx, &ty);
+  gimp_canvas_handle_transform (item, &x, &y);
+
+  gimp_canvas_item_transform_xy_f (item,
+                                   private->x, private->y,
+                                   &tx, &ty);
 
   switch (private->type)
     {
@@ -388,7 +387,7 @@ gimp_canvas_handle_get_extents (GimpCanvasItem   *item,
   gdouble                  x, y;
   gdouble                  w, h;
 
-  gimp_canvas_handle_transform (item, shell, &x, &y);
+  gimp_canvas_handle_transform (item, &x, &y);
 
   switch (private->type)
     {
@@ -429,14 +428,15 @@ gimp_canvas_handle_hit (GimpCanvasItem   *item,
   GimpCanvasHandlePrivate *private = GET_PRIVATE (item);
   gdouble                  handle_tx, handle_ty;
   gdouble                  mx, my, tx, ty, mmx, mmy;
-  gdouble                  diamond_offset_x = 0.0, diamond_offset_y = 0.0;
+  gdouble                  diamond_offset_x = 0.0;
+  gdouble                  diamond_offset_y = 0.0;
   gdouble                  angle = -private->start_angle;
 
-  gimp_canvas_handle_transform (item, shell, &handle_tx, &handle_ty);
+  gimp_canvas_handle_transform (item, &handle_tx, &handle_ty);
 
-  gimp_display_shell_transform_xy_f (shell,
-                                     x, y,
-                                     &mx, &my);
+  gimp_canvas_item_transform_xy_f (item,
+                                   x, y,
+                                   &mx, &my);
 
   switch (private->type)
     {
@@ -447,9 +447,9 @@ gimp_canvas_handle_hit (GimpCanvasItem   *item,
       diamond_offset_y = private->height / 2.0;
     case GIMP_HANDLE_SQUARE:
     case GIMP_HANDLE_FILLED_SQUARE:
-      gimp_display_shell_transform_xy_f (shell,
-                                         private->x, private->y,
-                                         &tx, &ty);
+      gimp_canvas_item_transform_xy_f (item,
+                                       private->x, private->y,
+                                       &tx, &ty);
       mmx = mx - tx; mmy = my - ty;
       mx = cos (angle) * mmx - sin (angle) * mmy + tx + diamond_offset_x;
       my = sin (angle) * mmx + cos (angle) * mmy + ty + diamond_offset_y;

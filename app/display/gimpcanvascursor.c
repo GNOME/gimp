@@ -32,7 +32,6 @@
 
 #include "gimpcanvascursor.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-transform.h"
 
 
 #define GIMP_CURSOR_SIZE 7

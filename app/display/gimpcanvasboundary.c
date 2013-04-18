@@ -34,7 +34,6 @@
 
 #include "gimpcanvasboundary.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-transform.h"
 
 
 enum
@@ -217,9 +216,8 @@ gimp_canvas_boundary_get_property (GObject    *object,
 }
 
 static void
-gimp_canvas_boundary_transform (GimpCanvasItem   *item,
-                                GimpDisplayShell *shell,
-                                GimpSegment      *segs)
+gimp_canvas_boundary_transform (GimpCanvasItem *item,
+                                GimpSegment    *segs)
 {
   GimpCanvasBoundaryPrivate *private = GET_PRIVATE (item);
   gint                       i;
@@ -231,32 +229,39 @@ gimp_canvas_boundary_transform (GimpCanvasItem   *item,
           gdouble tx, ty;
 
           gimp_matrix3_transform_point (private->transform,
-                                        private->segs[i].x1, private->segs[i].y1,
+                                        private->segs[i].x1,
+                                        private->segs[i].y1,
                                         &tx, &ty);
-          gimp_display_shell_transform_xy (shell,
-                                           tx + private->offset_x,
-                                           ty + private->offset_y,
-                                           &segs[i].x1, &segs[i].y1);
+          gimp_canvas_item_transform_xy (item,
+                                         tx + private->offset_x,
+                                         ty + private->offset_y,
+                                         &segs[i].x1, &segs[i].y1);
 
           gimp_matrix3_transform_point (private->transform,
-                                        private->segs[i].x2, private->segs[i].y2,
+                                        private->segs[i].x2,
+                                        private->segs[i].y2,
                                         &tx, &ty);
-          gimp_display_shell_transform_xy (shell,
-                                           tx + private->offset_x,
-                                           ty + private->offset_y,
-                                           &segs[i].x2, &segs[i].y2);
+          gimp_canvas_item_transform_xy (item,
+                                         tx + private->offset_x,
+                                         ty + private->offset_y,
+                                         &segs[i].x2, &segs[i].y2);
         }
     }
   else
     {
-      gimp_display_shell_transform_segments (shell,
-                                             private->segs, segs,
-                                             private->n_segs,
-                                             private->offset_x,
-                                             private->offset_y);
-
       for (i = 0; i < private->n_segs; i++)
         {
+          gimp_canvas_item_transform_xy (item,
+                                         private->segs[i].x1 + private->offset_x,
+                                         private->segs[i].y1 + private->offset_y,
+                                         &segs[i].x1,
+                                         &segs[i].y1);
+          gimp_canvas_item_transform_xy (item,
+                                         private->segs[i].x2 + private->offset_x,
+                                         private->segs[i].y2 + private->offset_y,
+                                         &segs[i].x2,
+                                         &segs[i].y2);
+
           /*  If this segment is a closing segment && the segments lie inside
            *  the region, OR if this is an opening segment and the segments
            *  lie outside the region...
@@ -290,7 +295,7 @@ gimp_canvas_boundary_draw (GimpCanvasItem   *item,
 
   segs = g_new0 (GimpSegment, private->n_segs);
 
-  gimp_canvas_boundary_transform (item, shell, segs);
+  gimp_canvas_boundary_transform (item, segs);
 
   gimp_cairo_add_segments (cr, segs, private->n_segs);
 
@@ -311,7 +316,7 @@ gimp_canvas_boundary_get_extents (GimpCanvasItem   *item,
 
   segs = g_new0 (GimpSegment, private->n_segs);
 
-  gimp_canvas_boundary_transform (item, shell, segs);
+  gimp_canvas_boundary_transform (item, segs);
 
   x1 = MIN (segs[0].x1, segs[0].x2);
   y1 = MIN (segs[0].y1, segs[0].y2);

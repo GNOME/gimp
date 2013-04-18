@@ -30,7 +30,6 @@
 
 #include "gimpcanvasrectangleguides.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-transform.h"
 
 
 #define SQRT5 2.236067977
@@ -215,27 +214,26 @@ gimp_canvas_rectangle_guides_get_property (GObject    *object,
 }
 
 static void
-gimp_canvas_rectangle_guides_transform (GimpCanvasItem   *item,
-                                        GimpDisplayShell *shell,
-                                        gdouble          *x1,
-                                        gdouble          *y1,
-                                        gdouble          *x2,
-                                        gdouble          *y2)
+gimp_canvas_rectangle_guides_transform (GimpCanvasItem *item,
+                                        gdouble        *x1,
+                                        gdouble        *y1,
+                                        gdouble        *x2,
+                                        gdouble        *y2)
 {
   GimpCanvasRectangleGuidesPrivate *private = GET_PRIVATE (item);
 
-  gimp_display_shell_transform_xy_f (shell,
-                                     MIN (private->x,
-                                          private->x + private->width),
-                                     MIN (private->y,
-                                          private->y + private->height),
-                                     x1, y1);
-  gimp_display_shell_transform_xy_f (shell,
-                                     MAX (private->x,
-                                          private->x + private->width),
-                                     MAX (private->y,
-                                          private->y + private->height),
-                                     x2, y2);
+  gimp_canvas_item_transform_xy_f (item,
+                                   MIN (private->x,
+                                        private->x + private->width),
+                                   MIN (private->y,
+                                        private->y + private->height),
+                                   x1, y1);
+  gimp_canvas_item_transform_xy_f (item,
+                                   MAX (private->x,
+                                        private->x + private->width),
+                                   MAX (private->y,
+                                        private->y + private->height),
+                                   x2, y2);
 
   *x1 = floor (*x1) + 0.5;
   *y1 = floor (*y1) + 0.5;
@@ -280,7 +278,7 @@ gimp_canvas_rectangle_guides_draw (GimpCanvasItem   *item,
   gdouble                           x2, y2;
   gint                              i;
 
-  gimp_canvas_rectangle_guides_transform (item, shell, &x1, &y1, &x2, &y2);
+  gimp_canvas_rectangle_guides_transform (item, &x1, &y1, &x2, &y2);
 
   switch (private->type)
     {
@@ -371,7 +369,7 @@ gimp_canvas_rectangle_guides_get_extents (GimpCanvasItem   *item,
       gdouble               x1, y1;
       gdouble               x2, y2;
 
-      gimp_canvas_rectangle_guides_transform (item, shell, &x1, &y1, &x2, &y2);
+      gimp_canvas_rectangle_guides_transform (item, &x1, &y1, &x2, &y2);
 
       rectangle.x      = floor (x1 - 1.5);
       rectangle.y      = floor (y1 - 1.5);

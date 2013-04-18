@@ -30,7 +30,6 @@
 
 #include "gimpcanvasline.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-transform.h"
 
 
 enum
@@ -184,21 +183,20 @@ gimp_canvas_line_get_property (GObject    *object,
 }
 
 static void
-gimp_canvas_line_transform (GimpCanvasItem   *item,
-                            GimpDisplayShell *shell,
-                            gdouble          *x1,
-                            gdouble          *y1,
-                            gdouble          *x2,
-                            gdouble          *y2)
+gimp_canvas_line_transform (GimpCanvasItem *item,
+                            gdouble        *x1,
+                            gdouble        *y1,
+                            gdouble        *x2,
+                            gdouble        *y2)
 {
   GimpCanvasLinePrivate *private = GET_PRIVATE (item);
 
-  gimp_display_shell_transform_xy_f (shell,
-                                     private->x1, private->y1,
-                                     x1, y1);
-  gimp_display_shell_transform_xy_f (shell,
-                                     private->x2, private->y2,
-                                     x2, y2);
+  gimp_canvas_item_transform_xy_f (item,
+                                   private->x1, private->y1,
+                                   x1, y1);
+  gimp_canvas_item_transform_xy_f (item,
+                                   private->x2, private->y2,
+                                   x2, y2);
 
   *x1 = floor (*x1) + 0.5;
   *y1 = floor (*y1) + 0.5;
@@ -214,7 +212,7 @@ gimp_canvas_line_draw (GimpCanvasItem   *item,
   gdouble x1, y1;
   gdouble x2, y2;
 
-  gimp_canvas_line_transform (item, shell, &x1, &y1, &x2, &y2);
+  gimp_canvas_line_transform (item, &x1, &y1, &x2, &y2);
 
   cairo_move_to (cr, x1, y1);
   cairo_line_to (cr, x2, y2);
@@ -230,7 +228,7 @@ gimp_canvas_line_get_extents (GimpCanvasItem   *item,
   gdouble               x1, y1;
   gdouble               x2, y2;
 
-  gimp_canvas_line_transform (item, shell, &x1, &y1, &x2, &y2);
+  gimp_canvas_line_transform (item, &x1, &y1, &x2, &y2);
 
   if (x1 == x2 || y1 == y2)
     {
