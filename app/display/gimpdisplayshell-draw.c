@@ -30,8 +30,6 @@
 #include "core/gimp-cairo.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "core/gimppickable.h"
-#include "core/gimpprojection.h"
 
 #include "gimpcanvas.h"
 #include "gimpcanvaspath.h"
@@ -84,11 +82,9 @@ gimp_display_shell_draw_get_scaled_image_size_for_scale (GimpDisplayShell *shell
                                                          gint             *w,
                                                          gint             *h)
 {
-  GimpImage      *image;
-  GimpProjection *proj;
-  GeglBuffer     *buffer;
-  gdouble         scale_x;
-  gdouble         scale_y;
+  GimpImage *image;
+  gdouble    scale_x;
+  gdouble    scale_y;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -96,14 +92,10 @@ gimp_display_shell_draw_get_scaled_image_size_for_scale (GimpDisplayShell *shell
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  proj = gimp_image_get_projection (image);
-
   gimp_display_shell_calculate_scale_x_and_y (shell, scale, &scale_x, &scale_y);
 
-  buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (proj));
-
-  if (w) *w = scale_x * gegl_buffer_get_width (buffer);
-  if (h) *h = scale_y * gegl_buffer_get_height (buffer);
+  if (w) *w = scale_x * gimp_image_get_width  (image);
+  if (h) *h = scale_y * gimp_image_get_height (image);
 }
 
 void
