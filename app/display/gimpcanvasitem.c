@@ -29,10 +29,10 @@
 
 #include "core/gimpmarshal.h"
 
+#include "gimpcanvas-style.h"
 #include "gimpcanvasitem.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-style.h"
 #include "gimpdisplayshell-transform.h"
 
 
@@ -302,10 +302,11 @@ gimp_canvas_item_real_stroke (GimpCanvasItem   *item,
 
   cairo_set_line_cap (cr, private->line_cap);
 
-  gimp_display_shell_set_tool_bg_style (shell, cr);
+  gimp_canvas_set_tool_bg_style (gimp_canvas_item_get_canvas (item), cr);
   cairo_stroke_preserve (cr);
 
-  gimp_display_shell_set_tool_fg_style (shell, cr, private->highlight);
+  gimp_canvas_set_tool_fg_style (gimp_canvas_item_get_canvas (item), cr,
+                                 private->highlight);
   cairo_stroke (cr);
 }
 
@@ -316,11 +317,12 @@ gimp_canvas_item_real_fill (GimpCanvasItem   *item,
 {
   GimpCanvasItemPrivate *private = GET_PRIVATE (item);
 
-  gimp_display_shell_set_tool_bg_style (shell, cr);
+  gimp_canvas_set_tool_bg_style (gimp_canvas_item_get_canvas (item), cr);
   cairo_set_line_width (cr, 2.0);
   cairo_stroke_preserve (cr);
 
-  gimp_display_shell_set_tool_fg_style (shell, cr, private->highlight);
+  gimp_canvas_set_tool_fg_style (gimp_canvas_item_get_canvas (item), cr,
+                                 private->highlight);
   cairo_fill (cr);
 }
 

@@ -32,9 +32,9 @@
 #include "core/gimpcontext.h"
 #include "core/gimpparamspecs.h"
 
+#include "gimpcanvas-style.h"
 #include "gimpcanvaspen.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-style.h"
 
 
 enum
@@ -191,7 +191,8 @@ gimp_canvas_pen_stroke (GimpCanvasItem   *item,
 {
   GimpCanvasPenPrivate *private = GET_PRIVATE (item);
 
-  gimp_display_shell_set_pen_style (shell, cr, &private->color, private->width);
+  gimp_canvas_set_pen_style (gimp_canvas_item_get_canvas (item), cr,
+                             &private->color, private->width);
   cairo_stroke (cr);
 }
 

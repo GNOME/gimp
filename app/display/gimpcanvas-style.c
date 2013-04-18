@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdisplayshell-style.c
+ * gimpcanvas-style.c
  * Copyright (C) 2010  Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -32,8 +32,7 @@
 #include "core/gimpgrid.h"
 #include "core/gimplayer.h"
 
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-style.h"
+#include "gimpcanvas-style.h"
 
 
 static const GimpRGB guide_normal_fg     = { 0.0, 0.0, 0.0, 1.0 };
@@ -78,13 +77,13 @@ static const GimpRGB tool_fg_highlight   = { 1.0, 0.8, 0.2, 0.8 };
 /*  public functions  */
 
 void
-gimp_display_shell_set_guide_style (GimpDisplayShell *shell,
-                                    cairo_t          *cr,
-                                    gboolean          active)
+gimp_canvas_set_guide_style (GtkWidget *canvas,
+                             cairo_t   *cr,
+                             gboolean   active)
 {
   cairo_pattern_t *pattern;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GTK_IS_WIDGET (canvas));
   g_return_if_fail (cr != NULL);
 
   cairo_set_line_width (cr, 1.0);
@@ -103,11 +102,11 @@ gimp_display_shell_set_guide_style (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_set_sample_point_style (GimpDisplayShell *shell,
-                                           cairo_t          *cr,
-                                           gboolean          active)
+gimp_canvas_set_sample_point_style (GtkWidget *canvas,
+                                    cairo_t   *cr,
+                                    gboolean   active)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GTK_IS_WIDGET (canvas));
   g_return_if_fail (cr != NULL);
 
   cairo_set_line_width (cr, 1.0);
@@ -119,11 +118,11 @@ gimp_display_shell_set_sample_point_style (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_set_grid_style (GimpDisplayShell *shell,
-                                   cairo_t          *cr,
-                                   GimpGrid         *grid)
+gimp_canvas_set_grid_style (GtkWidget *canvas,
+                            cairo_t   *cr,
+                            GimpGrid  *grid)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GTK_IS_WIDGET (canvas));
   g_return_if_fail (cr != NULL);
   g_return_if_fail (GIMP_IS_GRID (grid));
 
@@ -163,12 +162,12 @@ gimp_display_shell_set_grid_style (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_set_pen_style (GimpDisplayShell *shell,
-                                  cairo_t          *cr,
-                                  const GimpRGB    *color,
-                                  gint              width)
+gimp_canvas_set_pen_style (GtkWidget     *canvas,
+                           cairo_t       *cr,
+                           const GimpRGB *color,
+                           gint           width)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GTK_IS_WIDGET (canvas));
   g_return_if_fail (cr != NULL);
   g_return_if_fail (color != NULL);
 
@@ -181,13 +180,13 @@ gimp_display_shell_set_pen_style (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_set_layer_style (GimpDisplayShell *shell,
-                                    cairo_t          *cr,
-                                    GimpLayer        *layer)
+gimp_canvas_set_layer_style (GtkWidget *canvas,
+                             cairo_t   *cr,
+                             GimpLayer *layer)
 {
   cairo_pattern_t *pattern;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GTK_IS_WIDGET (canvas));
   g_return_if_fail (cr != NULL);
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
@@ -219,12 +218,12 @@ gimp_display_shell_set_layer_style (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_set_selection_out_style (GimpDisplayShell *shell,
-                                            cairo_t          *cr)
+gimp_canvas_set_selection_out_style (GtkWidget *canvas,
+                                     cairo_t   *cr)
 {
   cairo_pattern_t *pattern;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GTK_IS_WIDGET (canvas));
   g_return_if_fail (cr != NULL);
 
   cairo_set_line_width (cr, 1.0);
@@ -238,13 +237,13 @@ gimp_display_shell_set_selection_out_style (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_set_selection_in_style (GimpDisplayShell *shell,
-                                           cairo_t          *cr,
-                                           gint              index)
+gimp_canvas_set_selection_in_style (GtkWidget *canvas,
+                                    cairo_t   *cr,
+                                    gint       index)
 {
   cairo_pattern_t *pattern;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GTK_IS_WIDGET (canvas));
   g_return_if_fail (cr != NULL);
 
   cairo_set_line_width (cr, 1.0);
@@ -258,11 +257,11 @@ gimp_display_shell_set_selection_in_style (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_set_vectors_bg_style (GimpDisplayShell *shell,
-                                         cairo_t          *cr,
-                                         gboolean          active)
+gimp_canvas_set_vectors_bg_style (GtkWidget *canvas,
+                                  cairo_t   *cr,
+                                  gboolean   active)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GTK_IS_WIDGET (canvas));
   g_return_if_fail (cr != NULL);
 
   cairo_set_line_width (cr, 3.0);
@@ -274,11 +273,11 @@ gimp_display_shell_set_vectors_bg_style (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_set_vectors_fg_style (GimpDisplayShell *shell,
-                                         cairo_t          *cr,
-                                         gboolean          active)
+gimp_canvas_set_vectors_fg_style (GtkWidget *canvas,
+                                  cairo_t   *cr,
+                                  gboolean   active)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GTK_IS_WIDGET (canvas));
   g_return_if_fail (cr != NULL);
 
   cairo_set_line_width (cr, 1.0);
@@ -290,10 +289,10 @@ gimp_display_shell_set_vectors_fg_style (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_set_outline_bg_style (GimpDisplayShell *shell,
-                                         cairo_t          *cr)
+gimp_canvas_set_outline_bg_style (GtkWidget *canvas,
+                                  cairo_t   *cr)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GTK_IS_WIDGET (canvas));
   g_return_if_fail (cr != NULL);
 
   cairo_set_line_width (cr, 1.0);
@@ -301,12 +300,12 @@ gimp_display_shell_set_outline_bg_style (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_set_outline_fg_style (GimpDisplayShell *shell,
-                                         cairo_t          *cr)
+gimp_canvas_set_outline_fg_style (GtkWidget *canvas,
+                                  cairo_t   *cr)
 {
   static const double dashes[] = { 4.0, 4.0 };
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GTK_IS_WIDGET (canvas));
   g_return_if_fail (cr != NULL);
 
   cairo_set_line_width (cr, 1.0);
@@ -315,20 +314,20 @@ gimp_display_shell_set_outline_fg_style (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_set_passe_partout_style (GimpDisplayShell *shell,
-                                            cairo_t          *cr)
+gimp_canvas_set_passe_partout_style (GtkWidget *canvas,
+                                     cairo_t   *cr)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GTK_IS_WIDGET (canvas));
   g_return_if_fail (cr != NULL);
 
   gimp_cairo_set_source_rgba (cr, &passe_partout);
 }
 
 void
-gimp_display_shell_set_tool_bg_style (GimpDisplayShell *shell,
-                                      cairo_t          *cr)
+gimp_canvas_set_tool_bg_style (GtkWidget *canvas,
+                               cairo_t   *cr)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GTK_IS_WIDGET (canvas));
   g_return_if_fail (cr != NULL);
 
   cairo_set_line_width (cr, 3.0);
@@ -338,9 +337,9 @@ gimp_display_shell_set_tool_bg_style (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_set_tool_fg_style (GimpDisplayShell *shell,
-                                      cairo_t          *cr,
-                                      gboolean          highlight)
+gimp_canvas_set_tool_fg_style (GtkWidget *canvas,
+                               cairo_t   *cr,
+                               gboolean   highlight)
 {
   g_return_if_fail (cr != NULL);
 

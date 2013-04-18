@@ -32,9 +32,9 @@
 #include "core/gimpgrid.h"
 #include "core/gimpimage.h"
 
+#include "gimpcanvas-style.h"
 #include "gimpcanvasgrid.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-style.h"
 
 
 enum
@@ -382,7 +382,8 @@ gimp_canvas_grid_stroke (GimpCanvasItem   *item,
   if (private->grid_style)
     {
       cairo_translate (cr, -shell->offset_x, -shell->offset_y);
-      gimp_display_shell_set_grid_style (shell, cr, private->grid);
+      gimp_canvas_set_grid_style (gimp_canvas_item_get_canvas (item), cr,
+                                  private->grid);
       cairo_stroke (cr);
     }
   else

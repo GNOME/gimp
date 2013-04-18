@@ -31,10 +31,10 @@
 #include "core/gimpprogress.h"
 
 #include "gimpcanvas.h"
+#include "gimpcanvas-style.h"
 #include "gimpcanvasitem-utils.h"
 #include "gimpcanvasprogress.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-style.h"
 
 
 #define BORDER   5
@@ -294,7 +294,7 @@ gimp_canvas_progress_draw (GimpCanvasItem   *item,
                            gimp_canvas_get_layout (GIMP_CANVAS (canvas),
                                                    "%s", private->text));
 
-  gimp_display_shell_set_tool_bg_style (shell, cr);
+  gimp_canvas_set_tool_bg_style (gimp_canvas_item_get_canvas (item), cr);
   cairo_arc (cr, x + BORDER + RADIUS, y + height - BORDER - RADIUS,
              RADIUS, - G_PI / 2.0, 2 * G_PI - G_PI / 2.0);
   cairo_fill (cr);

@@ -31,9 +31,9 @@
 #include "core/gimpbezierdesc.h"
 #include "core/gimpparamspecs.h"
 
+#include "gimpcanvas-style.h"
 #include "gimpcanvaspath.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-style.h"
 
 
 enum
@@ -298,6 +298,7 @@ gimp_canvas_path_stroke (GimpCanvasItem   *item,
                          cairo_t          *cr)
 {
   GimpCanvasPathPrivate *private = GET_PRIVATE (item);
+  GtkWidget             *canvas  = gimp_canvas_item_get_canvas (item);
   gboolean               active;
 
   switch (private->path_style)
@@ -305,18 +306,18 @@ gimp_canvas_path_stroke (GimpCanvasItem   *item,
     case GIMP_PATH_STYLE_VECTORS:
       active = gimp_canvas_item_get_highlight (item);
 
-      gimp_display_shell_set_vectors_bg_style (shell, cr, active);
+      gimp_canvas_set_vectors_bg_style (canvas, cr, active);
       cairo_stroke_preserve (cr);
 
-      gimp_display_shell_set_vectors_fg_style (shell, cr, active);
+      gimp_canvas_set_vectors_fg_style (canvas, cr, active);
       cairo_stroke (cr);
       break;
 
     case GIMP_PATH_STYLE_OUTLINE:
-      gimp_display_shell_set_outline_bg_style (shell, cr);
+      gimp_canvas_set_outline_bg_style (canvas, cr);
       cairo_stroke_preserve (cr);
 
-      gimp_display_shell_set_outline_fg_style (shell, cr);
+      gimp_canvas_set_outline_fg_style (canvas, cr);
       cairo_stroke (cr);
       break;
 

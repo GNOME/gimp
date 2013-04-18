@@ -32,6 +32,7 @@
 #include "core/gimpimage.h"
 
 #include "gimpcanvas.h"
+#include "gimpcanvas-style.h"
 #include "gimpcanvaspath.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -39,7 +40,6 @@
 #include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
-#include "gimpdisplayshell-style.h"
 #include "gimpdisplayshell-transform.h"
 #include "gimpdisplayxfer.h"
 
@@ -108,7 +108,7 @@ gimp_display_shell_draw_selection_out (GimpDisplayShell *shell,
   g_return_if_fail (cr != NULL);
   g_return_if_fail (segs != NULL && n_segs > 0);
 
-  gimp_display_shell_set_selection_out_style (shell, cr);
+  gimp_canvas_set_selection_out_style (shell->canvas, cr);
 
   gimp_cairo_add_segments (cr, segs, n_segs);
   cairo_stroke (cr);
@@ -124,7 +124,7 @@ gimp_display_shell_draw_selection_in (GimpDisplayShell   *shell,
   g_return_if_fail (cr != NULL);
   g_return_if_fail (mask != NULL);
 
-  gimp_display_shell_set_selection_in_style (shell, cr, index);
+  gimp_canvas_set_selection_in_style (shell->canvas, cr, index);
 
   cairo_mask (cr, mask);
 }

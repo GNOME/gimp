@@ -34,7 +34,6 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-items.h"
 #include "display/gimpdisplayshell-transform.h"
-#include "display/gimpdisplayshell-style.h"
 
 #include "gimptool.h"
 #include "gimptool-progress.h"

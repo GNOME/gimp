@@ -32,10 +32,9 @@
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
 
-#include "gimpcanvas.h"
+#include "gimpcanvas-style.h"
 #include "gimpcanvaslayerboundary.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-style.h"
 
 
 enum
@@ -194,7 +193,8 @@ gimp_canvas_layer_boundary_stroke (GimpCanvasItem   *item,
   GimpCanvasLayerBoundaryPrivate *private = GET_PRIVATE (item);
 
   cairo_translate (cr, -shell->offset_x, -shell->offset_y);
-  gimp_display_shell_set_layer_style (shell, cr, private->layer);
+  gimp_canvas_set_layer_style (gimp_canvas_item_get_canvas (item), cr,
+                               private->layer);
   cairo_stroke (cr);
 }
 

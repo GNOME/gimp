@@ -29,9 +29,9 @@
 #include "display-types.h"
 
 #include "gimpcanvas.h"
+#include "gimpcanvas-style.h"
 #include "gimpcanvassamplepoint.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-style.h"
 
 
 #define GIMP_SAMPLE_POINT_DRAW_SIZE 10
@@ -291,8 +291,8 @@ gimp_canvas_sample_point_stroke (GimpCanvasItem   *item,
 
   if (private->sample_point_style)
     {
-      gimp_display_shell_set_sample_point_style (shell, cr,
-                                                 gimp_canvas_item_get_highlight (item));
+      gimp_canvas_set_sample_point_style (gimp_canvas_item_get_canvas (item), cr,
+                                          gimp_canvas_item_get_highlight (item));
       cairo_stroke (cr);
     }
   else
@@ -310,8 +310,8 @@ gimp_canvas_sample_point_fill (GimpCanvasItem   *item,
 
   if (private->sample_point_style)
     {
-      gimp_display_shell_set_sample_point_style (shell, cr,
-                                                 gimp_canvas_item_get_highlight (item));
+      gimp_canvas_set_sample_point_style (gimp_canvas_item_get_canvas (item), cr,
+                                          gimp_canvas_item_get_highlight (item));
       cairo_fill (cr);
     }
   else

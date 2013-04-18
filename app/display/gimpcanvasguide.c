@@ -28,9 +28,9 @@
 
 #include "display-types.h"
 
+#include "gimpcanvas-style.h"
 #include "gimpcanvasguide.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-style.h"
 
 
 enum
@@ -253,8 +253,8 @@ gimp_canvas_guide_stroke (GimpCanvasItem   *item,
   if (private->guide_style)
     {
       cairo_translate (cr, -shell->offset_x, -shell->offset_y);
-      gimp_display_shell_set_guide_style (shell, cr,
-                                          gimp_canvas_item_get_highlight (item));
+      gimp_canvas_set_guide_style (gimp_canvas_item_get_canvas (item), cr,
+                                   gimp_canvas_item_get_highlight (item));
       cairo_stroke (cr);
     }
   else

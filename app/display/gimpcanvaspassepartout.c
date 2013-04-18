@@ -25,11 +25,10 @@
 
 #include "display-types.h"
 
-#include "gimpcanvas.h"
+#include "gimpcanvas-style.h"
 #include "gimpcanvaspassepartout.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-draw.h"
-#include "gimpdisplayshell-style.h"
 
 
 /*  local function prototypes  */
@@ -112,7 +111,7 @@ gimp_canvas_passe_partout_fill (GimpCanvasItem   *item,
   cairo_set_fill_rule (cr, CAIRO_FILL_RULE_EVEN_ODD);
   cairo_clip (cr);
 
-  gimp_display_shell_set_passe_partout_style (shell, cr);
+  gimp_canvas_set_passe_partout_style (gimp_canvas_item_get_canvas (item), cr);
   cairo_paint (cr);
 }
 
