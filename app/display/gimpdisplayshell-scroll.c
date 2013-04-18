@@ -124,7 +124,8 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
                                -x_offset, -y_offset);
 
       /*  Update scrollbars and rulers  */
-      gimp_display_shell_update_scrollbars_and_rulers (shell);
+      gimp_display_shell_scale_update_scrollbars (shell);
+      gimp_display_shell_scale_update_rulers (shell);
 
       gimp_display_shell_resume (shell);
 
@@ -258,7 +259,9 @@ void
 gimp_display_shell_scroll_clamp_and_update (GimpDisplayShell *shell)
 {
   gimp_display_shell_scroll_clamp_offsets (shell);
-  gimp_display_shell_update_scrollbars_and_rulers (shell);
+
+  gimp_display_shell_scale_update_scrollbars (shell);
+  gimp_display_shell_scale_update_rulers (shell);
 }
 
 /**

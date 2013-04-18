@@ -19,7 +19,6 @@
 #define __GIMP_DISPLAY_SHELL_SCALE_H__
 
 
-void     gimp_display_shell_update_scrollbars_and_rulers   (GimpDisplayShell *shell);
 void     gimp_display_shell_scale_update_scrollbars        (GimpDisplayShell *shell);
 void     gimp_display_shell_scale_update_rulers            (GimpDisplayShell *shell);
 

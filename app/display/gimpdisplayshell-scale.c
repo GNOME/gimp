@@ -86,20 +86,6 @@ static void      gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shel
 /*  public functions  */
 
 /**
- * gimp_display_shell_update_scrollbars_and_rulers:
- * @shell: the #GimpDisplayShell
- *
- **/
-void
-gimp_display_shell_update_scrollbars_and_rulers (GimpDisplayShell *shell)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  gimp_display_shell_scale_update_scrollbars (shell);
-  gimp_display_shell_scale_update_rulers (shell);
-}
-
-/**
  * gimp_display_shell_scale_update_scrollbars:
  * @shell:
  *
