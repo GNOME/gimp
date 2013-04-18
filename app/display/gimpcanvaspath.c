@@ -250,14 +250,15 @@ gimp_canvas_path_get_extents (GimpCanvasItem   *item,
                               GimpDisplayShell *shell)
 {
   GimpCanvasPathPrivate *private = GET_PRIVATE (item);
+  GtkWidget             *canvas  = gimp_canvas_item_get_canvas (item);
 
-  if (private->path && gtk_widget_get_realized (shell->canvas))
+  if (private->path && gtk_widget_get_realized (canvas))
     {
       cairo_t               *cr;
       cairo_rectangle_int_t  rectangle;
       gdouble                x1, y1, x2, y2;
 
-      cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
+      cr = gdk_cairo_create (gtk_widget_get_window (canvas));
 
       cairo_save (cr);
       cairo_translate (cr, -shell->offset_x, -shell->offset_y);

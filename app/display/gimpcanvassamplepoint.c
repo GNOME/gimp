@@ -219,6 +219,7 @@ gimp_canvas_sample_point_draw (GimpCanvasItem   *item,
                                cairo_t          *cr)
 {
   GimpCanvasSamplePointPrivate *private = GET_PRIVATE (item);
+  GtkWidget                    *canvas  = gimp_canvas_item_get_canvas (item);
   PangoLayout                  *layout;
   gdouble                       x, y;
   gint                          x1, x2, y1, y2;
@@ -246,7 +247,7 @@ gimp_canvas_sample_point_draw (GimpCanvasItem   *item,
 
   _gimp_canvas_item_stroke (item, cr);
 
-  layout = gimp_canvas_get_layout (GIMP_CANVAS (shell->canvas),
+  layout = gimp_canvas_get_layout (GIMP_CANVAS (canvas),
                                    "%d", private->index);
 
   cairo_move_to (cr, x + 2.5, y + 2.5);
