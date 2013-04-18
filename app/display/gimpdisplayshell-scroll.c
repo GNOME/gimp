@@ -62,9 +62,9 @@ typedef struct
  *
  **/
 void
-gimp_display_shell_scroll_center_image_coordinate (GimpDisplayShell       *shell,
-                                                   gdouble                 image_x,
-                                                   gdouble                 image_y)
+gimp_display_shell_scroll_center_image_coordinate (GimpDisplayShell *shell,
+                                                   gdouble           image_x,
+                                                   gdouble           image_y)
 {
   gint scaled_image_x;
   gint scaled_image_y;
