@@ -82,20 +82,18 @@ struct _GimpCanvasTransformPreviewPrivate
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_transform_preview_set_property (GObject          *object,
-                                                                    guint             property_id,
-                                                                    const GValue     *value,
-                                                                    GParamSpec       *pspec);
-static void             gimp_canvas_transform_preview_get_property (GObject          *object,
-                                                                    guint             property_id,
-                                                                    GValue           *value,
-                                                                    GParamSpec       *pspec);
+static void             gimp_canvas_transform_preview_set_property (GObject        *object,
+                                                                    guint           property_id,
+                                                                    const GValue   *value,
+                                                                    GParamSpec     *pspec);
+static void             gimp_canvas_transform_preview_get_property (GObject        *object,
+                                                                    guint           property_id,
+                                                                    GValue         *value,
+                                                                    GParamSpec     *pspec);
 
-static void             gimp_canvas_transform_preview_draw         (GimpCanvasItem   *item,
-                                                                    GimpDisplayShell *shell,
-                                                                    cairo_t          *cr);
-static cairo_region_t * gimp_canvas_transform_preview_get_extents  (GimpCanvasItem   *item,
-                                                                    GimpDisplayShell *shell);
+static void             gimp_canvas_transform_preview_draw         (GimpCanvasItem *item,
+                                                                    cairo_t        *cr);
+static cairo_region_t * gimp_canvas_transform_preview_get_extents  (GimpCanvasItem *item);
 
 static void   gimp_canvas_transform_preview_draw_quad         (GimpDrawable    *texture,
                                                                cairo_t         *cr,
@@ -403,9 +401,8 @@ gimp_canvas_transform_preview_transform (GimpCanvasItem        *item,
 }
 
 static void
-gimp_canvas_transform_preview_draw (GimpCanvasItem   *item,
-                                    GimpDisplayShell *shell,
-                                    cairo_t          *cr)
+gimp_canvas_transform_preview_draw (GimpCanvasItem *item,
+                                    cairo_t        *cr)
 {
   GimpCanvasTransformPreviewPrivate *private = GET_PRIVATE (item);
   GimpChannel                       *mask;
@@ -561,8 +558,7 @@ gimp_canvas_transform_preview_draw (GimpCanvasItem   *item,
 }
 
 static cairo_region_t *
-gimp_canvas_transform_preview_get_extents (GimpCanvasItem   *item,
-                                           GimpDisplayShell *shell)
+gimp_canvas_transform_preview_get_extents (GimpCanvasItem *item)
 {
   cairo_rectangle_int_t rectangle;
 

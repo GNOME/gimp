@@ -59,22 +59,19 @@ struct _GimpCanvasGuidePrivate
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_guide_set_property (GObject          *object,
-                                                        guint             property_id,
-                                                        const GValue     *value,
-                                                        GParamSpec       *pspec);
-static void             gimp_canvas_guide_get_property (GObject          *object,
-                                                        guint             property_id,
-                                                        GValue           *value,
-                                                        GParamSpec       *pspec);
-static void             gimp_canvas_guide_draw         (GimpCanvasItem   *item,
-                                                        GimpDisplayShell *shell,
-                                                        cairo_t          *cr);
-static cairo_region_t * gimp_canvas_guide_get_extents  (GimpCanvasItem   *item,
-                                                        GimpDisplayShell *shell);
-static void             gimp_canvas_guide_stroke       (GimpCanvasItem   *item,
-                                                        GimpDisplayShell *shell,
-                                                        cairo_t          *cr);
+static void             gimp_canvas_guide_set_property (GObject        *object,
+                                                        guint           property_id,
+                                                        const GValue   *value,
+                                                        GParamSpec     *pspec);
+static void             gimp_canvas_guide_get_property (GObject        *object,
+                                                        guint           property_id,
+                                                        GValue         *value,
+                                                        GParamSpec     *pspec);
+static void             gimp_canvas_guide_draw         (GimpCanvasItem *item,
+                                                        cairo_t        *cr);
+static cairo_region_t * gimp_canvas_guide_get_extents  (GimpCanvasItem *item);
+static void             gimp_canvas_guide_stroke       (GimpCanvasItem *item,
+                                                        cairo_t        *cr);
 
 
 G_DEFINE_TYPE (GimpCanvasGuide, gimp_canvas_guide, GIMP_TYPE_CANVAS_ITEM)
@@ -174,11 +171,11 @@ gimp_canvas_guide_get_property (GObject    *object,
 }
 
 static void
-gimp_canvas_guide_transform (GimpCanvasItem   *item,
-                             gdouble          *x1,
-                             gdouble          *y1,
-                             gdouble          *x2,
-                             gdouble          *y2)
+gimp_canvas_guide_transform (GimpCanvasItem *item,
+                             gdouble        *x1,
+                             gdouble        *y1,
+                             gdouble        *x2,
+                             gdouble        *y2)
 {
   GimpCanvasGuidePrivate *private = GET_PRIVATE (item);
   GtkWidget              *canvas  = gimp_canvas_item_get_canvas (item);
@@ -210,9 +207,8 @@ gimp_canvas_guide_transform (GimpCanvasItem   *item,
 }
 
 static void
-gimp_canvas_guide_draw (GimpCanvasItem   *item,
-                        GimpDisplayShell *shell,
-                        cairo_t          *cr)
+gimp_canvas_guide_draw (GimpCanvasItem *item,
+                        cairo_t        *cr)
 {
   gdouble x1, y1;
   gdouble x2, y2;
@@ -226,8 +222,7 @@ gimp_canvas_guide_draw (GimpCanvasItem   *item,
 }
 
 static cairo_region_t *
-gimp_canvas_guide_get_extents (GimpCanvasItem   *item,
-                               GimpDisplayShell *shell)
+gimp_canvas_guide_get_extents (GimpCanvasItem *item)
 {
   cairo_rectangle_int_t rectangle;
   gdouble               x1, y1;
@@ -244,22 +239,20 @@ gimp_canvas_guide_get_extents (GimpCanvasItem   *item,
 }
 
 static void
-gimp_canvas_guide_stroke (GimpCanvasItem   *item,
-                          GimpDisplayShell *shell,
-                          cairo_t          *cr)
+gimp_canvas_guide_stroke (GimpCanvasItem *item,
+                          cairo_t        *cr)
 {
   GimpCanvasGuidePrivate *private = GET_PRIVATE (item);
 
   if (private->guide_style)
     {
-      cairo_translate (cr, -shell->offset_x, -shell->offset_y);
       gimp_canvas_set_guide_style (gimp_canvas_item_get_canvas (item), cr,
                                    gimp_canvas_item_get_highlight (item));
       cairo_stroke (cr);
     }
   else
     {
-      GIMP_CANVAS_ITEM_CLASS (parent_class)->stroke (item, shell, cr);
+      GIMP_CANVAS_ITEM_CLASS (parent_class)->stroke (item, cr);
     }
 }
 

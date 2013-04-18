@@ -70,19 +70,17 @@ struct _GimpCanvasTransformGuidesPrivate
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_transform_guides_set_property (GObject          *object,
-                                                                   guint             property_id,
-                                                                   const GValue     *value,
-                                                                   GParamSpec       *pspec);
-static void             gimp_canvas_transform_guides_get_property (GObject          *object,
-                                                                   guint             property_id,
-                                                                   GValue           *value,
-                                                                   GParamSpec       *pspec);
-static void             gimp_canvas_transform_guides_draw         (GimpCanvasItem   *item,
-                                                                   GimpDisplayShell *shell,
-                                                                   cairo_t          *cr);
-static cairo_region_t * gimp_canvas_transform_guides_get_extents  (GimpCanvasItem   *item,
-                                                                   GimpDisplayShell *shell);
+static void             gimp_canvas_transform_guides_set_property (GObject        *object,
+                                                                   guint           property_id,
+                                                                   const GValue   *value,
+                                                                   GParamSpec     *pspec);
+static void             gimp_canvas_transform_guides_get_property (GObject        *object,
+                                                                   guint           property_id,
+                                                                   GValue         *value,
+                                                                   GParamSpec     *pspec);
+static void             gimp_canvas_transform_guides_draw         (GimpCanvasItem *item,
+                                                                   cairo_t        *cr);
+static cairo_region_t * gimp_canvas_transform_guides_get_extents  (GimpCanvasItem *item);
 
 
 G_DEFINE_TYPE (GimpCanvasTransformGuides, gimp_canvas_transform_guides,
@@ -334,9 +332,8 @@ draw_vline (cairo_t        *cr,
 }
 
 static void
-gimp_canvas_transform_guides_draw (GimpCanvasItem   *item,
-                                   GimpDisplayShell *shell,
-                                   cairo_t          *cr)
+gimp_canvas_transform_guides_draw (GimpCanvasItem *item,
+                                   cairo_t        *cr)
 {
   GimpCanvasTransformGuidesPrivate *private = GET_PRIVATE (item);
   gdouble                           x1, y1;
@@ -523,8 +520,7 @@ gimp_canvas_transform_guides_draw (GimpCanvasItem   *item,
 }
 
 static cairo_region_t *
-gimp_canvas_transform_guides_get_extents (GimpCanvasItem   *item,
-                                          GimpDisplayShell *shell)
+gimp_canvas_transform_guides_get_extents (GimpCanvasItem *item)
 {
   gdouble               x1, y1;
   gdouble               x2, y2;

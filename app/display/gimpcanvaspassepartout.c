@@ -33,14 +33,11 @@
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_passe_partout_draw        (GimpCanvasItem   *item,
-                                                               GimpDisplayShell *shell,
-                                                               cairo_t          *cr);
-static cairo_region_t * gimp_canvas_passe_partout_get_extents (GimpCanvasItem   *item,
-                                                               GimpDisplayShell *shell);
-static void             gimp_canvas_passe_partout_fill        (GimpCanvasItem   *item,
-                                                               GimpDisplayShell *shell,
-                                                               cairo_t          *cr);
+static void             gimp_canvas_passe_partout_draw        (GimpCanvasItem *item,
+                                                               cairo_t        *cr);
+static cairo_region_t * gimp_canvas_passe_partout_get_extents (GimpCanvasItem *item);
+static void             gimp_canvas_passe_partout_fill        (GimpCanvasItem *item,
+                                                               cairo_t        *cr);
 
 
 G_DEFINE_TYPE (GimpCanvasPassePartout, gimp_canvas_passe_partout,
@@ -65,23 +62,22 @@ gimp_canvas_passe_partout_init (GimpCanvasPassePartout *passe_partout)
 }
 
 static void
-gimp_canvas_passe_partout_draw (GimpCanvasItem   *item,
-                                GimpDisplayShell *shell,
-                                cairo_t          *cr)
+gimp_canvas_passe_partout_draw (GimpCanvasItem *item,
+                                cairo_t        *cr)
 {
-  gint w, h;
+  GimpDisplayShell *shell = gimp_canvas_item_get_shell (item);
+  gint              w, h;
 
   gimp_display_shell_draw_get_scaled_image_size (shell, &w, &h);
-
   cairo_rectangle (cr, - shell->offset_x, - shell->offset_y, w, h);
 
-  GIMP_CANVAS_ITEM_CLASS (parent_class)->draw (item, shell, cr);
+  GIMP_CANVAS_ITEM_CLASS (parent_class)->draw (item, cr);
 }
 
 static cairo_region_t *
-gimp_canvas_passe_partout_get_extents (GimpCanvasItem   *item,
-                                       GimpDisplayShell *shell)
+gimp_canvas_passe_partout_get_extents (GimpCanvasItem *item)
 {
+  GimpDisplayShell      *shell = gimp_canvas_item_get_shell (item);
   cairo_rectangle_int_t  rectangle;
   cairo_region_t        *inner;
   cairo_region_t        *outer;
@@ -94,7 +90,7 @@ gimp_canvas_passe_partout_get_extents (GimpCanvasItem   *item,
 
   outer = cairo_region_create_rectangle (&rectangle);
 
-  inner = GIMP_CANVAS_ITEM_CLASS (parent_class)->get_extents (item, shell);
+  inner = GIMP_CANVAS_ITEM_CLASS (parent_class)->get_extents (item);
 
   cairo_region_subtract (outer, inner);
 
@@ -102,12 +98,9 @@ gimp_canvas_passe_partout_get_extents (GimpCanvasItem   *item,
 }
 
 static void
-gimp_canvas_passe_partout_fill (GimpCanvasItem   *item,
-                                GimpDisplayShell *shell,
-                                cairo_t          *cr)
+gimp_canvas_passe_partout_fill (GimpCanvasItem *item,
+                                cairo_t        *cr)
 {
-  cairo_translate (cr, -shell->offset_x, -shell->offset_y);
-
   cairo_set_fill_rule (cr, CAIRO_FILL_RULE_EVEN_ODD);
   cairo_clip (cr);
 

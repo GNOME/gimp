@@ -57,28 +57,25 @@ struct _GimpCanvasGroupPrivate
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_group_dispose      (GObject          *object);
-static void             gimp_canvas_group_set_property (GObject          *object,
-                                                        guint             property_id,
-                                                        const GValue     *value,
-                                                        GParamSpec       *pspec);
-static void             gimp_canvas_group_get_property (GObject          *object,
-                                                        guint             property_id,
-                                                        GValue           *value,
-                                                        GParamSpec       *pspec);
-static void             gimp_canvas_group_draw         (GimpCanvasItem   *item,
-                                                        GimpDisplayShell *shell,
-                                                        cairo_t          *cr);
-static cairo_region_t * gimp_canvas_group_get_extents  (GimpCanvasItem   *item,
-                                                        GimpDisplayShell *shell);
-static gboolean         gimp_canvas_group_hit          (GimpCanvasItem   *item,
-                                                        GimpDisplayShell *shell,
-                                                        gdouble           x,
-                                                        gdouble           y);
+static void             gimp_canvas_group_dispose      (GObject         *object);
+static void             gimp_canvas_group_set_property (GObject         *object,
+                                                        guint            property_id,
+                                                        const GValue    *value,
+                                                        GParamSpec      *pspec);
+static void             gimp_canvas_group_get_property (GObject         *object,
+                                                        guint            property_id,
+                                                        GValue          *value,
+                                                        GParamSpec      *pspec);
+static void             gimp_canvas_group_draw         (GimpCanvasItem  *item,
+                                                        cairo_t         *cr);
+static cairo_region_t * gimp_canvas_group_get_extents  (GimpCanvasItem  *item);
+static gboolean         gimp_canvas_group_hit          (GimpCanvasItem  *item,
+                                                        gdouble          x,
+                                                        gdouble          y);
 
-static void             gimp_canvas_group_child_update (GimpCanvasItem   *item,
-                                                        cairo_region_t   *region,
-                                                        GimpCanvasGroup  *group);
+static void             gimp_canvas_group_child_update (GimpCanvasItem  *item,
+                                                        cairo_region_t  *region,
+                                                        GimpCanvasGroup *group);
 
 
 G_DEFINE_TYPE (GimpCanvasGroup, gimp_canvas_group, GIMP_TYPE_CANVAS_ITEM)
@@ -181,9 +178,8 @@ gimp_canvas_group_get_property (GObject    *object,
 }
 
 static void
-gimp_canvas_group_draw (GimpCanvasItem   *item,
-                        GimpDisplayShell *shell,
-                        cairo_t          *cr)
+gimp_canvas_group_draw (GimpCanvasItem *item,
+                        cairo_t        *cr)
 {
   GimpCanvasGroupPrivate *private = GET_PRIVATE (item);
   GList                  *list;
@@ -203,8 +199,7 @@ gimp_canvas_group_draw (GimpCanvasItem   *item,
 }
 
 static cairo_region_t *
-gimp_canvas_group_get_extents (GimpCanvasItem   *item,
-                               GimpDisplayShell *shell)
+gimp_canvas_group_get_extents (GimpCanvasItem *item)
 {
   GimpCanvasGroupPrivate *private = GET_PRIVATE (item);
   cairo_region_t         *region  = NULL;
@@ -230,10 +225,9 @@ gimp_canvas_group_get_extents (GimpCanvasItem   *item,
 }
 
 static gboolean
-gimp_canvas_group_hit (GimpCanvasItem   *item,
-                       GimpDisplayShell *shell,
-                       gdouble           x,
-                       gdouble           y)
+gimp_canvas_group_hit (GimpCanvasItem *item,
+                       gdouble         x,
+                       gdouble         y)
 {
   GimpCanvasGroupPrivate *private = GET_PRIVATE (item);
   GList                  *list;

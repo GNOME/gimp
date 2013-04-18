@@ -74,34 +74,29 @@ struct _GimpCanvasItemPrivate
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_item_constructed      (GObject          *object);
-static void             gimp_canvas_item_set_property     (GObject          *object,
-                                                           guint             property_id,
-                                                           const GValue     *value,
-                                                           GParamSpec       *pspec);
-static void             gimp_canvas_item_get_property     (GObject          *object,
-                                                           guint             property_id,
-                                                           GValue           *value,
-                                                           GParamSpec       *pspec);
-static void  gimp_canvas_item_dispatch_properties_changed (GObject          *object,
-                                                           guint             n_pspecs,
-                                                           GParamSpec      **pspecs);
+static void             gimp_canvas_item_constructed      (GObject         *object);
+static void             gimp_canvas_item_set_property     (GObject         *object,
+                                                           guint            property_id,
+                                                           const GValue    *value,
+                                                           GParamSpec      *pspec);
+static void             gimp_canvas_item_get_property     (GObject         *object,
+                                                           guint            property_id,
+                                                           GValue          *value,
+                                                           GParamSpec      *pspec);
+static void  gimp_canvas_item_dispatch_properties_changed (GObject         *object,
+                                                           guint            n_pspecs,
+                                                           GParamSpec     **pspecs);
 
-static void             gimp_canvas_item_real_draw        (GimpCanvasItem   *item,
-                                                           GimpDisplayShell *shell,
-                                                           cairo_t          *cr);
-static cairo_region_t * gimp_canvas_item_real_get_extents (GimpCanvasItem   *item,
-                                                           GimpDisplayShell *shell);
-static void             gimp_canvas_item_real_stroke      (GimpCanvasItem   *item,
-                                                           GimpDisplayShell *shell,
-                                                           cairo_t          *cr);
-static void             gimp_canvas_item_real_fill        (GimpCanvasItem   *item,
-                                                           GimpDisplayShell *shell,
-                                                           cairo_t          *cr);
-static gboolean         gimp_canvas_item_real_hit         (GimpCanvasItem   *item,
-                                                           GimpDisplayShell *shell,
-                                                           gdouble           x,
-                                                           gdouble           y);
+static void             gimp_canvas_item_real_draw        (GimpCanvasItem  *item,
+                                                           cairo_t         *cr);
+static cairo_region_t * gimp_canvas_item_real_get_extents (GimpCanvasItem  *item);
+static void             gimp_canvas_item_real_stroke      (GimpCanvasItem  *item,
+                                                           cairo_t         *cr);
+static void             gimp_canvas_item_real_fill        (GimpCanvasItem  *item,
+                                                           cairo_t         *cr);
+static gboolean         gimp_canvas_item_real_hit         (GimpCanvasItem  *item,
+                                                           gdouble          x,
+                                                           gdouble          y);
 
 
 G_DEFINE_TYPE (GimpCanvasItem, gimp_canvas_item,
@@ -279,24 +274,21 @@ gimp_canvas_item_dispatch_properties_changed (GObject     *object,
 }
 
 static void
-gimp_canvas_item_real_draw (GimpCanvasItem   *item,
-                            GimpDisplayShell *shell,
-                            cairo_t          *cr)
+gimp_canvas_item_real_draw (GimpCanvasItem *item,
+                            cairo_t        *cr)
 {
   g_warn_if_reached ();
 }
 
 static cairo_region_t *
-gimp_canvas_item_real_get_extents (GimpCanvasItem   *item,
-                                   GimpDisplayShell *shell)
+gimp_canvas_item_real_get_extents (GimpCanvasItem *item)
 {
   return NULL;
 }
 
 static void
-gimp_canvas_item_real_stroke (GimpCanvasItem   *item,
-                              GimpDisplayShell *shell,
-                              cairo_t          *cr)
+gimp_canvas_item_real_stroke (GimpCanvasItem *item,
+                              cairo_t        *cr)
 {
   GimpCanvasItemPrivate *private = GET_PRIVATE (item);
 
@@ -311,9 +303,8 @@ gimp_canvas_item_real_stroke (GimpCanvasItem   *item,
 }
 
 static void
-gimp_canvas_item_real_fill (GimpCanvasItem   *item,
-                            GimpDisplayShell *shell,
-                            cairo_t          *cr)
+gimp_canvas_item_real_fill (GimpCanvasItem *item,
+                            cairo_t        *cr)
 {
   GimpCanvasItemPrivate *private = GET_PRIVATE (item);
 
@@ -327,16 +318,27 @@ gimp_canvas_item_real_fill (GimpCanvasItem   *item,
 }
 
 static gboolean
-gimp_canvas_item_real_hit (GimpCanvasItem   *item,
-                           GimpDisplayShell *shell,
-                           gdouble           x,
-                           gdouble           y)
+gimp_canvas_item_real_hit (GimpCanvasItem *item,
+                           gdouble         x,
+                           gdouble         y)
 {
   return FALSE;
 }
 
 
 /*  public functions  */
+
+GimpDisplayShell *
+gimp_canvas_item_get_shell (GimpCanvasItem *item)
+{
+  GimpCanvasItemPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), NULL);
+
+  private = GET_PRIVATE (item);
+
+  return private->shell;
+}
 
 GimpImage *
 gimp_canvas_item_get_image (GimpCanvasItem *item)
@@ -376,7 +378,7 @@ gimp_canvas_item_draw (GimpCanvasItem *item,
   if (private->visible)
     {
       cairo_save (cr);
-      GIMP_CANVAS_ITEM_GET_CLASS (item)->draw (item, private->shell, cr);
+      GIMP_CANVAS_ITEM_GET_CLASS (item)->draw (item, cr);
       cairo_restore (cr);
     }
 }
@@ -391,7 +393,7 @@ gimp_canvas_item_get_extents (GimpCanvasItem *item)
   private = GET_PRIVATE (item);
 
   if (private->visible)
-    return GIMP_CANVAS_ITEM_GET_CLASS (item)->get_extents (item, private->shell);
+    return GIMP_CANVAS_ITEM_GET_CLASS (item)->get_extents (item);
 
   return NULL;
 }
@@ -401,13 +403,9 @@ gimp_canvas_item_hit (GimpCanvasItem   *item,
                       gdouble           x,
                       gdouble           y)
 {
-  GimpCanvasItemPrivate *private;
-
   g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), FALSE);
 
-  private = GET_PRIVATE (item);
-
-  return GIMP_CANVAS_ITEM_GET_CLASS (item)->hit (item, private->shell, x, y);
+  return GIMP_CANVAS_ITEM_GET_CLASS (item)->hit (item, x, y);
 }
 
 void
@@ -609,6 +607,21 @@ gimp_canvas_item_resume_filling (GimpCanvasItem *item)
 }
 
 void
+gimp_canvas_item_transform (GimpCanvasItem *item,
+                            cairo_t        *cr)
+{
+  GimpCanvasItemPrivate *private;
+
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+  g_return_if_fail (cr != NULL);
+
+  private = GET_PRIVATE (item);
+
+  cairo_translate (cr, -private->shell->offset_x, -private->shell->offset_y);
+  cairo_scale (cr, private->shell->scale_x, private->shell->scale_y);
+}
+
+void
 gimp_canvas_item_transform_xy (GimpCanvasItem *item,
                                gdouble         x,
                                gdouble         y,
@@ -671,7 +684,7 @@ _gimp_canvas_item_stroke (GimpCanvasItem *item,
 
   if (private->suspend_stroking == 0)
     {
-      GIMP_CANVAS_ITEM_GET_CLASS (item)->stroke (item, private->shell, cr);
+      GIMP_CANVAS_ITEM_GET_CLASS (item)->stroke (item, cr);
     }
   else
     {
@@ -690,7 +703,7 @@ _gimp_canvas_item_fill (GimpCanvasItem   *item,
 
   if (private->suspend_filling == 0)
     {
-      GIMP_CANVAS_ITEM_GET_CLASS (item)->fill (item, private->shell, cr);
+      GIMP_CANVAS_ITEM_GET_CLASS (item)->fill (item, cr);
     }
   else
     {

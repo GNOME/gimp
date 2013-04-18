@@ -50,20 +50,15 @@ struct _GimpCanvasItemClass
 
   /*  virtual functions  */
   void             (* draw)        (GimpCanvasItem   *item,
-                                    GimpDisplayShell *shell,
                                     cairo_t          *cr);
-  cairo_region_t * (* get_extents) (GimpCanvasItem   *item,
-                                    GimpDisplayShell *shell);
+  cairo_region_t * (* get_extents) (GimpCanvasItem   *item);
 
   void             (* stroke)      (GimpCanvasItem   *item,
-                                    GimpDisplayShell *shell,
                                     cairo_t          *cr);
   void             (* fill)        (GimpCanvasItem   *item,
-                                    GimpDisplayShell *shell,
                                     cairo_t          *cr);
 
   gboolean         (* hit)         (GimpCanvasItem   *item,
-                                    GimpDisplayShell *shell,
                                     gdouble           x,
                                     gdouble           y);
 };
@@ -71,6 +66,7 @@ struct _GimpCanvasItemClass
 
 GType            gimp_canvas_item_get_type         (void) G_GNUC_CONST;
 
+GimpDisplayShell * gimp_canvas_item_get_shell      (GimpCanvasItem   *item);
 GimpImage      * gimp_canvas_item_get_image        (GimpCanvasItem   *item);
 GtkWidget      * gimp_canvas_item_get_canvas       (GimpCanvasItem   *item);
 
@@ -102,6 +98,8 @@ void             gimp_canvas_item_resume_stroking  (GimpCanvasItem   *item);
 void             gimp_canvas_item_suspend_filling  (GimpCanvasItem   *item);
 void             gimp_canvas_item_resume_filling   (GimpCanvasItem   *item);
 
+void             gimp_canvas_item_transform        (GimpCanvasItem   *item,
+                                                    cairo_t          *cr);
 void             gimp_canvas_item_transform_xy     (GimpCanvasItem   *item,
                                                     gdouble           x,
                                                     gdouble           y,

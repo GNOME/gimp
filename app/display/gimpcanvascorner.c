@@ -68,19 +68,17 @@ struct _GimpCanvasCornerPrivate
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_corner_set_property (GObject          *object,
-                                                         guint             property_id,
-                                                         const GValue     *value,
-                                                         GParamSpec       *pspec);
-static void             gimp_canvas_corner_get_property (GObject          *object,
-                                                         guint             property_id,
-                                                         GValue           *value,
-                                                         GParamSpec       *pspec);
-static void             gimp_canvas_corner_draw         (GimpCanvasItem   *item,
-                                                         GimpDisplayShell *shell,
-                                                         cairo_t          *cr);
-static cairo_region_t * gimp_canvas_corner_get_extents  (GimpCanvasItem   *item,
-                                                         GimpDisplayShell *shell);
+static void             gimp_canvas_corner_set_property (GObject        *object,
+                                                         guint           property_id,
+                                                         const GValue   *value,
+                                                         GParamSpec     *pspec);
+static void             gimp_canvas_corner_get_property (GObject        *object,
+                                                         guint           property_id,
+                                                         GValue         *value,
+                                                         GParamSpec     *pspec);
+static void             gimp_canvas_corner_draw         (GimpCanvasItem *item,
+                                                         cairo_t        *cr);
+static cairo_region_t * gimp_canvas_corner_get_extents  (GimpCanvasItem *item);
 
 
 G_DEFINE_TYPE (GimpCanvasCorner, gimp_canvas_corner,
@@ -392,9 +390,8 @@ gimp_canvas_corner_transform (GimpCanvasItem *item,
 }
 
 static void
-gimp_canvas_corner_draw (GimpCanvasItem   *item,
-                         GimpDisplayShell *shell,
-                         cairo_t          *cr)
+gimp_canvas_corner_draw (GimpCanvasItem *item,
+                         cairo_t        *cr)
 {
   gdouble x, y;
   gdouble w, h;
@@ -407,8 +404,7 @@ gimp_canvas_corner_draw (GimpCanvasItem   *item,
 }
 
 static cairo_region_t *
-gimp_canvas_corner_get_extents (GimpCanvasItem   *item,
-                                GimpDisplayShell *shell)
+gimp_canvas_corner_get_extents (GimpCanvasItem *item)
 {
   cairo_rectangle_int_t rectangle;
   gdouble               x, y;

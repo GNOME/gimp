@@ -71,23 +71,20 @@ struct _GimpCanvasHandlePrivate
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_handle_set_property (GObject          *object,
-                                                         guint             property_id,
-                                                         const GValue     *value,
-                                                         GParamSpec       *pspec);
-static void             gimp_canvas_handle_get_property (GObject          *object,
-                                                         guint             property_id,
-                                                         GValue           *value,
-                                                         GParamSpec       *pspec);
-static void             gimp_canvas_handle_draw         (GimpCanvasItem   *item,
-                                                         GimpDisplayShell *shell,
-                                                         cairo_t          *cr);
-static cairo_region_t * gimp_canvas_handle_get_extents  (GimpCanvasItem   *item,
-                                                         GimpDisplayShell *shell);
-static gboolean         gimp_canvas_handle_hit          (GimpCanvasItem   *item,
-                                                         GimpDisplayShell *shell,
-                                                         gdouble           x,
-                                                         gdouble           y);
+static void             gimp_canvas_handle_set_property (GObject        *object,
+                                                         guint           property_id,
+                                                         const GValue   *value,
+                                                         GParamSpec     *pspec);
+static void             gimp_canvas_handle_get_property (GObject        *object,
+                                                         guint           property_id,
+                                                         GValue         *value,
+                                                         GParamSpec     *pspec);
+static void             gimp_canvas_handle_draw         (GimpCanvasItem *item,
+                                                         cairo_t        *cr);
+static cairo_region_t * gimp_canvas_handle_get_extents  (GimpCanvasItem *item);
+static gboolean         gimp_canvas_handle_hit          (GimpCanvasItem *item,
+                                                         gdouble         x,
+                                                         gdouble         y);
 
 
 G_DEFINE_TYPE (GimpCanvasHandle, gimp_canvas_handle,
@@ -293,9 +290,8 @@ gimp_canvas_handle_transform (GimpCanvasItem *item,
 }
 
 static void
-gimp_canvas_handle_draw (GimpCanvasItem   *item,
-                         GimpDisplayShell *shell,
-                         cairo_t          *cr)
+gimp_canvas_handle_draw (GimpCanvasItem *item,
+                         cairo_t        *cr)
 {
   GimpCanvasHandlePrivate *private = GET_PRIVATE (item);
   gdouble                  x, y, tx, ty;
@@ -379,8 +375,7 @@ gimp_canvas_handle_draw (GimpCanvasItem   *item,
 }
 
 static cairo_region_t *
-gimp_canvas_handle_get_extents (GimpCanvasItem   *item,
-                                GimpDisplayShell *shell)
+gimp_canvas_handle_get_extents (GimpCanvasItem *item)
 {
   GimpCanvasHandlePrivate *private = GET_PRIVATE (item);
   cairo_rectangle_int_t    rectangle;
@@ -420,17 +415,16 @@ gimp_canvas_handle_get_extents (GimpCanvasItem   *item,
 }
 
 static gboolean
-gimp_canvas_handle_hit (GimpCanvasItem   *item,
-                        GimpDisplayShell *shell,
-                        gdouble           x,
-                        gdouble           y)
+gimp_canvas_handle_hit (GimpCanvasItem *item,
+                        gdouble         x,
+                        gdouble         y)
 {
   GimpCanvasHandlePrivate *private = GET_PRIVATE (item);
   gdouble                  handle_tx, handle_ty;
   gdouble                  mx, my, tx, ty, mmx, mmy;
   gdouble                  diamond_offset_x = 0.0;
   gdouble                  diamond_offset_y = 0.0;
-  gdouble                  angle = -private->start_angle;
+  gdouble                  angle            = -private->start_angle;
 
   gimp_canvas_handle_transform (item, &handle_tx, &handle_ty);
 

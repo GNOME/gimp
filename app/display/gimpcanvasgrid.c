@@ -61,23 +61,20 @@ struct _GimpCanvasGridPrivate
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_grid_finalize     (GObject          *object);
-static void             gimp_canvas_grid_set_property (GObject          *object,
-                                                       guint             property_id,
-                                                       const GValue     *value,
-                                                       GParamSpec       *pspec);
-static void             gimp_canvas_grid_get_property (GObject          *object,
-                                                       guint             property_id,
-                                                       GValue           *value,
-                                                       GParamSpec       *pspec);
-static void             gimp_canvas_grid_draw         (GimpCanvasItem   *item,
-                                                       GimpDisplayShell *shell,
-                                                       cairo_t          *cr);
-static cairo_region_t * gimp_canvas_grid_get_extents  (GimpCanvasItem   *item,
-                                                       GimpDisplayShell *shell);
-static void             gimp_canvas_grid_stroke       (GimpCanvasItem   *item,
-                                                       GimpDisplayShell *shell,
-                                                       cairo_t          *cr);
+static void             gimp_canvas_grid_finalize     (GObject        *object);
+static void             gimp_canvas_grid_set_property (GObject        *object,
+                                                       guint           property_id,
+                                                       const GValue   *value,
+                                                       GParamSpec     *pspec);
+static void             gimp_canvas_grid_get_property (GObject        *object,
+                                                       guint           property_id,
+                                                       GValue         *value,
+                                                       GParamSpec     *pspec);
+static void             gimp_canvas_grid_draw         (GimpCanvasItem *item,
+                                                       cairo_t        *cr);
+static cairo_region_t * gimp_canvas_grid_get_extents  (GimpCanvasItem *item);
+static void             gimp_canvas_grid_stroke       (GimpCanvasItem *item,
+                                                       cairo_t        *cr);
 
 
 G_DEFINE_TYPE (GimpCanvasGrid, gimp_canvas_grid, GIMP_TYPE_CANVAS_ITEM)
@@ -186,11 +183,11 @@ gimp_canvas_grid_get_property (GObject    *object,
 }
 
 static void
-gimp_canvas_grid_draw (GimpCanvasItem   *item,
-                       GimpDisplayShell *shell,
-                       cairo_t          *cr)
+gimp_canvas_grid_draw (GimpCanvasItem *item,
+                       cairo_t        *cr)
 {
   GimpCanvasGridPrivate *private = GET_PRIVATE (item);
+  GimpDisplayShell      *shell   = gimp_canvas_item_get_shell (item);
   GimpImage             *image   = gimp_canvas_item_get_image (item);
   gdouble                x, y;
   gdouble                dx1, dy1, dx2, dy2;
@@ -202,7 +199,8 @@ gimp_canvas_grid_draw (GimpCanvasItem   *item,
 
 #define CROSSHAIR 2
 
-  g_return_if_fail (private->grid->xspacing > 0 && private->grid->yspacing > 0);
+  g_return_if_fail (private->grid->xspacing > 0 &&
+                    private->grid->yspacing > 0);
 
   /*  skip grid drawing when the space between grid lines starts
    *  disappearing, see bug #599267.
@@ -346,8 +344,7 @@ gimp_canvas_grid_draw (GimpCanvasItem   *item,
 }
 
 static cairo_region_t *
-gimp_canvas_grid_get_extents (GimpCanvasItem   *item,
-                              GimpDisplayShell *shell)
+gimp_canvas_grid_get_extents (GimpCanvasItem *item)
 {
   GimpImage             *image = gimp_canvas_item_get_image (item);
   cairo_rectangle_int_t  rectangle;
@@ -373,22 +370,20 @@ gimp_canvas_grid_get_extents (GimpCanvasItem   *item,
 }
 
 static void
-gimp_canvas_grid_stroke (GimpCanvasItem   *item,
-                         GimpDisplayShell *shell,
-                         cairo_t          *cr)
+gimp_canvas_grid_stroke (GimpCanvasItem *item,
+                         cairo_t        *cr)
 {
   GimpCanvasGridPrivate *private = GET_PRIVATE (item);
 
   if (private->grid_style)
     {
-      cairo_translate (cr, -shell->offset_x, -shell->offset_y);
       gimp_canvas_set_grid_style (gimp_canvas_item_get_canvas (item), cr,
                                   private->grid);
       cairo_stroke (cr);
     }
   else
     {
-      GIMP_CANVAS_ITEM_CLASS (parent_class)->stroke (item, shell, cr);
+      GIMP_CANVAS_ITEM_CLASS (parent_class)->stroke (item, cr);
     }
 }
 

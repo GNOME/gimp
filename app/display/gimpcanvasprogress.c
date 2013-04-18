@@ -82,10 +82,8 @@ static void             gimp_canvas_progress_get_property (GObject          *obj
                                                            GValue           *value,
                                                            GParamSpec       *pspec);
 static void             gimp_canvas_progress_draw         (GimpCanvasItem   *item,
-                                                           GimpDisplayShell *shell,
                                                            cairo_t          *cr);
-static cairo_region_t * gimp_canvas_progress_get_extents  (GimpCanvasItem   *item,
-                                                           GimpDisplayShell *shell);
+static cairo_region_t * gimp_canvas_progress_get_extents  (GimpCanvasItem   *item);
 
 static GimpProgress   * gimp_canvas_progress_start        (GimpProgress      *progress,
                                                            const gchar       *message,
@@ -267,9 +265,8 @@ gimp_canvas_progress_transform (GimpCanvasItem *item,
 }
 
 static void
-gimp_canvas_progress_draw (GimpCanvasItem   *item,
-                           GimpDisplayShell *shell,
-                           cairo_t          *cr)
+gimp_canvas_progress_draw (GimpCanvasItem *item,
+                           cairo_t        *cr)
 {
   GimpCanvasProgressPrivate *private = GET_PRIVATE (item);
   GtkWidget                 *canvas  = gimp_canvas_item_get_canvas (item);
@@ -307,8 +304,7 @@ gimp_canvas_progress_draw (GimpCanvasItem   *item,
 }
 
 static cairo_region_t *
-gimp_canvas_progress_get_extents (GimpCanvasItem   *item,
-                                  GimpDisplayShell *shell)
+gimp_canvas_progress_get_extents (GimpCanvasItem *item)
 {
   cairo_rectangle_int_t rectangle;
   gdouble               x, y;

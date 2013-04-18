@@ -60,19 +60,17 @@ struct _GimpCanvasLinePrivate
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_line_set_property (GObject          *object,
-                                                       guint             property_id,
-                                                       const GValue     *value,
-                                                       GParamSpec       *pspec);
-static void             gimp_canvas_line_get_property (GObject          *object,
-                                                       guint             property_id,
-                                                       GValue           *value,
-                                                       GParamSpec       *pspec);
-static void             gimp_canvas_line_draw         (GimpCanvasItem   *item,
-                                                       GimpDisplayShell *shell,
-                                                       cairo_t          *cr);
-static cairo_region_t * gimp_canvas_line_get_extents  (GimpCanvasItem   *item,
-                                                       GimpDisplayShell *shell);
+static void             gimp_canvas_line_set_property (GObject        *object,
+                                                       guint           property_id,
+                                                       const GValue   *value,
+                                                       GParamSpec     *pspec);
+static void             gimp_canvas_line_get_property (GObject        *object,
+                                                       guint           property_id,
+                                                       GValue         *value,
+                                                       GParamSpec     *pspec);
+static void             gimp_canvas_line_draw         (GimpCanvasItem *item,
+                                                       cairo_t        *cr);
+static cairo_region_t * gimp_canvas_line_get_extents  (GimpCanvasItem *item);
 
 
 G_DEFINE_TYPE (GimpCanvasLine, gimp_canvas_line, GIMP_TYPE_CANVAS_ITEM)
@@ -205,9 +203,8 @@ gimp_canvas_line_transform (GimpCanvasItem *item,
 }
 
 static void
-gimp_canvas_line_draw (GimpCanvasItem   *item,
-                       GimpDisplayShell *shell,
-                       cairo_t          *cr)
+gimp_canvas_line_draw (GimpCanvasItem *item,
+                       cairo_t        *cr)
 {
   gdouble x1, y1;
   gdouble x2, y2;
@@ -221,8 +218,7 @@ gimp_canvas_line_draw (GimpCanvasItem   *item,
 }
 
 static cairo_region_t *
-gimp_canvas_line_get_extents (GimpCanvasItem   *item,
-                              GimpDisplayShell *shell)
+gimp_canvas_line_get_extents (GimpCanvasItem *item)
 {
   cairo_rectangle_int_t rectangle;
   gdouble               x1, y1;

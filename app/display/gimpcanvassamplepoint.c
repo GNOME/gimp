@@ -65,25 +65,21 @@ struct _GimpCanvasSamplePointPrivate
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_sample_point_set_property (GObject          *object,
-                                                               guint             property_id,
-                                                               const GValue     *value,
-                                                               GParamSpec       *pspec);
-static void             gimp_canvas_sample_point_get_property (GObject          *object,
-                                                               guint             property_id,
-                                                               GValue           *value,
-                                                               GParamSpec       *pspec);
-static void             gimp_canvas_sample_point_draw         (GimpCanvasItem   *item,
-                                                               GimpDisplayShell *shell,
-                                                               cairo_t          *cr);
-static cairo_region_t * gimp_canvas_sample_point_get_extents  (GimpCanvasItem   *item,
-                                                               GimpDisplayShell *shell);
-static void             gimp_canvas_sample_point_stroke       (GimpCanvasItem   *item,
-                                                               GimpDisplayShell *shell,
-                                                               cairo_t          *cr);
-static void             gimp_canvas_sample_point_fill         (GimpCanvasItem   *item,
-                                                               GimpDisplayShell *shell,
-                                                               cairo_t          *cr);
+static void             gimp_canvas_sample_point_set_property (GObject        *object,
+                                                               guint           property_id,
+                                                               const GValue   *value,
+                                                               GParamSpec     *pspec);
+static void             gimp_canvas_sample_point_get_property (GObject        *object,
+                                                               guint           property_id,
+                                                               GValue         *value,
+                                                               GParamSpec     *pspec);
+static void             gimp_canvas_sample_point_draw         (GimpCanvasItem *item,
+                                                               cairo_t        *cr);
+static cairo_region_t * gimp_canvas_sample_point_get_extents  (GimpCanvasItem *item);
+static void             gimp_canvas_sample_point_stroke       (GimpCanvasItem *item,
+                                                               cairo_t        *cr);
+static void             gimp_canvas_sample_point_fill         (GimpCanvasItem *item,
+                                                               cairo_t        *cr);
 
 
 G_DEFINE_TYPE (GimpCanvasSamplePoint, gimp_canvas_sample_point,
@@ -214,9 +210,8 @@ gimp_canvas_sample_point_transform (GimpCanvasItem *item,
 #define HALF_SIZE (GIMP_SAMPLE_POINT_DRAW_SIZE / 2)
 
 static void
-gimp_canvas_sample_point_draw (GimpCanvasItem   *item,
-                               GimpDisplayShell *shell,
-                               cairo_t          *cr)
+gimp_canvas_sample_point_draw (GimpCanvasItem *item,
+                               cairo_t        *cr)
 {
   GimpCanvasSamplePointPrivate *private = GET_PRIVATE (item);
   GtkWidget                    *canvas  = gimp_canvas_item_get_canvas (item);
@@ -257,8 +252,7 @@ gimp_canvas_sample_point_draw (GimpCanvasItem   *item,
 }
 
 static cairo_region_t *
-gimp_canvas_sample_point_get_extents (GimpCanvasItem   *item,
-                                      GimpDisplayShell *shell)
+gimp_canvas_sample_point_get_extents (GimpCanvasItem *item)
 {
   cairo_rectangle_int_t rectangle;
   gdouble               x, y;
@@ -284,9 +278,8 @@ gimp_canvas_sample_point_get_extents (GimpCanvasItem   *item,
 }
 
 static void
-gimp_canvas_sample_point_stroke (GimpCanvasItem   *item,
-                                 GimpDisplayShell *shell,
-                                 cairo_t          *cr)
+gimp_canvas_sample_point_stroke (GimpCanvasItem *item,
+                                 cairo_t        *cr)
 {
   GimpCanvasSamplePointPrivate *private = GET_PRIVATE (item);
 
@@ -298,14 +291,13 @@ gimp_canvas_sample_point_stroke (GimpCanvasItem   *item,
     }
   else
     {
-      GIMP_CANVAS_ITEM_CLASS (parent_class)->stroke (item, shell, cr);
+      GIMP_CANVAS_ITEM_CLASS (parent_class)->stroke (item, cr);
     }
 }
 
 static void
-gimp_canvas_sample_point_fill (GimpCanvasItem   *item,
-                               GimpDisplayShell *shell,
-                               cairo_t          *cr)
+gimp_canvas_sample_point_fill (GimpCanvasItem *item,
+                               cairo_t        *cr)
 {
   GimpCanvasSamplePointPrivate *private = GET_PRIVATE (item);
 
@@ -317,7 +309,7 @@ gimp_canvas_sample_point_fill (GimpCanvasItem   *item,
     }
   else
     {
-      GIMP_CANVAS_ITEM_CLASS (parent_class)->fill (item, shell, cr);
+      GIMP_CANVAS_ITEM_CLASS (parent_class)->fill (item, cr);
     }
 }
 
