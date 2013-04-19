@@ -454,82 +454,54 @@ static void
 gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
                                       cairo_t          *cr)
 {
-  cairo_rectangle_list_t *clip_rectangles;
-  cairo_region_t         *clear_region;
-  cairo_region_t         *image_region;
-  cairo_region_t         *tmp_region;
-  cairo_rectangle_int_t   image_rect;
-  gint                    n_rects;
-  gint                    i;
-
-  /*  first, clear the exposed part of the region that is outside the
-   *  image, which is the exposed region minus the image rectangle
-   */
-
-  clear_region = cairo_region_create ();
-
-  clip_rectangles = cairo_copy_clip_rectangle_list (cr);
-
-  for (i = 0; i < clip_rectangles->num_rectangles; i++)
-    {
-      cairo_rectangle_int_t rect;
-
-      rect.x      = floor (clip_rectangles->rectangles[i].x);
-      rect.y      = floor (clip_rectangles->rectangles[i].y);
-      rect.width  = ceil (clip_rectangles->rectangles[i].width);
-      rect.height = ceil (clip_rectangles->rectangles[i].height);
-
-      cairo_region_union_rectangle (clear_region, &rect);
-    }
-
-  cairo_rectangle_list_destroy (clip_rectangles);
-
-  tmp_region = cairo_region_copy (clear_region);
+  cairo_rectangle_int_t image_rect;
 
   image_rect.x = - shell->offset_x;
   image_rect.y = - shell->offset_y;
   gimp_display_shell_scale_get_image_size (shell,
                                            &image_rect.width,
                                            &image_rect.height);
-  image_region = cairo_region_create_rectangle (&image_rect);
 
-  cairo_region_subtract (clear_region, image_region);
-  cairo_region_destroy (image_region);
 
-  if (! cairo_region_is_empty (clear_region))
-    {
-      cairo_save (cr);
-
-      n_rects = cairo_region_num_rectangles (clear_region);
-
-      for (i = 0; i < n_rects; i++)
-        {
-          cairo_rectangle_int_t rect;
-
-          cairo_region_get_rectangle (clear_region, i, &rect);
-
-          cairo_rectangle (cr, rect.x, rect.y, rect.width, rect.height);
-        }
-
-      cairo_clip (cr);
-      gimp_display_shell_draw_background (shell, cr);
-
-      cairo_restore (cr);
-    }
-
-  /*  then, draw the exposed part of the region that is inside the
-   *  image, which is the exposed region minus the region used for
-   *  clearing above
+  /*  first, clear the exposed part of the region that is outside the
+   *  image, which is the exposed region minus the image rectangle
    */
 
-  image_region = tmp_region;
-  tmp_region = NULL;
+  cairo_save (cr);
 
-  cairo_region_subtract (image_region, clear_region);
-  cairo_region_destroy (clear_region);
+  cairo_rectangle (cr,
+                   image_rect.x,
+                   image_rect.y,
+                   image_rect.width,
+                   image_rect.height);
 
-  if (! cairo_region_is_empty (image_region))
+  cairo_set_fill_rule (cr, CAIRO_FILL_RULE_EVEN_ODD);
+  cairo_clip (cr);
+
+  if (gdk_cairo_get_clip_rectangle (cr, NULL))
+    gimp_display_shell_draw_background (shell, cr);
+
+  cairo_restore (cr);
+
+
+  /*  then, draw the exposed part of the region that is inside the
+   *  image
+   */
+
+  cairo_save (cr);
+
+  cairo_rectangle (cr,
+                   image_rect.x,
+                   image_rect.y,
+                   image_rect.width,
+                   image_rect.height);
+  cairo_clip (cr);
+
+  if (gdk_cairo_get_clip_rectangle (cr, NULL))
     {
+      cairo_rectangle_list_t *clip_rectangles;
+      gint                    i;
+
       cairo_save (cr);
       gimp_display_shell_draw_checkerboard (shell, cr,
                                             image_rect.x,
@@ -538,28 +510,24 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
                                             image_rect.height);
       cairo_restore (cr);
 
+      clip_rectangles = cairo_copy_clip_rectangle_list (cr);
 
-      cairo_save (cr);
-
-      n_rects = cairo_region_num_rectangles (image_region);
-
-      for (i = 0; i < n_rects; i++)
+      for (i = 0; i < clip_rectangles->num_rectangles; i++)
         {
-          cairo_rectangle_int_t rect;
-
-          cairo_region_get_rectangle (image_region, i, &rect);
+          cairo_rectangle_t rect = clip_rectangles->rectangles[i];
 
           gimp_display_shell_draw_image (shell, cr,
-                                         rect.x,
-                                         rect.y,
-                                         rect.width,
-                                         rect.height);
+                                         floor (rect.x),
+                                         floor (rect.y),
+                                         ceil (rect.width),
+                                         ceil (rect.height));
         }
 
-      cairo_restore (cr);
+      cairo_rectangle_list_destroy (clip_rectangles);
     }
 
-  cairo_region_destroy (image_region);
+  cairo_restore (cr);
+
 
   /*  finally, draw all the remaining image window stuff on top
    */
