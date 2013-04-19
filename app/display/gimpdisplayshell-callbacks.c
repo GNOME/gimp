@@ -454,7 +454,8 @@ static void
 gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
                                       cairo_t          *cr)
 {
-  cairo_rectangle_int_t image_rect;
+  cairo_rectangle_list_t *clip_rectangles;
+  cairo_rectangle_int_t   image_rect;
 
   image_rect.x = - shell->offset_x;
   image_rect.y = - shell->offset_y;
@@ -468,6 +469,9 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
    */
 
   cairo_save (cr);
+
+  if (shell->rotate_transform)
+    cairo_transform (cr, shell->rotate_transform);
 
   cairo_rectangle (cr,
                    image_rect.x,
@@ -489,6 +493,10 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
    */
 
   cairo_save (cr);
+  clip_rectangles = cairo_copy_clip_rectangle_list (cr);
+
+  if (shell->rotate_transform)
+    cairo_transform (cr, shell->rotate_transform);
 
   cairo_rectangle (cr,
                    image_rect.x,
@@ -499,14 +507,11 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
 
   if (gdk_cairo_get_clip_rectangle (cr, NULL))
     {
-      cairo_rectangle_list_t *clip_rectangles;
-      gint                    i;
+      gint i;
 
       cairo_save (cr);
       gimp_display_shell_draw_checkerboard (shell, cr);
       cairo_restore (cr);
-
-      clip_rectangles = cairo_copy_clip_rectangle_list (cr);
 
       for (i = 0; i < clip_rectangles->num_rectangles; i++)
         {
@@ -518,10 +523,9 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
                                          ceil (rect.width),
                                          ceil (rect.height));
         }
-
-      cairo_rectangle_list_destroy (clip_rectangles);
     }
 
+  cairo_rectangle_list_destroy (clip_rectangles);
   cairo_restore (cr);
 
 
@@ -529,6 +533,9 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
    */
 
   /* draw canvas items */
+  if (shell->rotate_transform)
+    cairo_transform (cr, shell->rotate_transform);
+
   gimp_canvas_item_draw (shell->canvas_item, cr);
 
   /* restart (and recalculate) the selection boundaries */

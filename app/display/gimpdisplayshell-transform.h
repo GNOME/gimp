@@ -49,6 +49,25 @@ void  gimp_display_shell_untransform_xy_f     (const GimpDisplayShell *shell,
                                                gdouble                *nx,
                                                gdouble                *ny);
 
+void  gimp_display_shell_transform_bounds     (const GimpDisplayShell *shell,
+                                               gdouble                 x1,
+                                               gdouble                 y1,
+                                               gdouble                 x2,
+                                               gdouble                 y2,
+                                               gdouble                *nx1,
+                                               gdouble                *ny1,
+                                               gdouble                *nx2,
+                                               gdouble                *ny2);
+void  gimp_display_shell_untransform_bounds   (const GimpDisplayShell *shell,
+                                               gdouble                 x1,
+                                               gdouble                 y1,
+                                               gdouble                 x2,
+                                               gdouble                 y2,
+                                               gdouble                *nx1,
+                                               gdouble                *ny1,
+                                               gdouble                *nx2,
+                                               gdouble                *ny2);
+
 void  gimp_display_shell_transform_segments   (const GimpDisplayShell *shell,
                                                const GimpBoundSeg     *src_segs,
                                                GimpSegment            *dest_segs,

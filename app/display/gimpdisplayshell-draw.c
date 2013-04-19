@@ -28,6 +28,7 @@
 #include "display-types.h"
 
 #include "core/gimp-cairo.h"
+#include "core/gimp-utils.h"
 
 #include "gimpcanvas.h"
 #include "gimpcanvas-style.h"
@@ -36,6 +37,8 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-render.h"
+#include "gimpdisplayshell-rotate.h"
+#include "gimpdisplayshell-scale.h"
 #include "gimpdisplayxfer.h"
 
 
@@ -132,22 +135,54 @@ gimp_display_shell_draw_image (GimpDisplayShell *shell,
                                gint              w,
                                gint              h)
 {
-  gint x2, y2;
+  gint x1, y1, x2, y2;
   gint i, j;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (gimp_display_get_image (shell->display));
   g_return_if_fail (cr != NULL);
 
-  x2 = x + w;
-  y2 = y + h;
+  if (shell->rotate_untransform)
+    {
+      gdouble tx1, ty1;
+      gdouble tx2, ty2;
+      gint    image_width;
+      gint    image_height;
+
+      gimp_display_shell_rotate_untransform_bounds (shell,
+                                                    x, y, x + w, y + h,
+                                                    &tx1, &ty1, &tx2, &ty2);
+
+      x1 = floor (tx1 - 0.5);
+      y1 = floor (ty1 - 0.5);
+      x2 = ceil (tx2 + 0.5);
+      y2 = ceil (ty2 + 0.5);
+
+      gimp_display_shell_scale_get_image_size (shell,
+                                               &image_width, &image_height);
+
+      x1 = CLAMP (x1, -shell->offset_x, -shell->offset_x + image_width);
+      y1 = CLAMP (y1, -shell->offset_y, -shell->offset_y + image_height);
+      x2 = CLAMP (x2, -shell->offset_x, -shell->offset_x + image_width);
+      y2 = CLAMP (y2, -shell->offset_y, -shell->offset_y + image_height);
+
+      if (!(x2 > x1) || !(y2 > y1))
+        return;
+    }
+  else
+    {
+      x1 = x;
+      y1 = y;
+      x2 = x + w;
+      y2 = y + h;
+    }
 
   /*  display the image in RENDER_BUF_WIDTH x RENDER_BUF_HEIGHT
    *  sized chunks
    */
-  for (i = y; i < y2; i += GIMP_DISPLAY_RENDER_BUF_HEIGHT)
+  for (i = y1; i < y2; i += GIMP_DISPLAY_RENDER_BUF_HEIGHT)
     {
-      for (j = x; j < x2; j += GIMP_DISPLAY_RENDER_BUF_WIDTH)
+      for (j = x1; j < x2; j += GIMP_DISPLAY_RENDER_BUF_WIDTH)
         {
           gint dx, dy;
 

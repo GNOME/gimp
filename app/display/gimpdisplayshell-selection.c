@@ -292,6 +292,9 @@ selection_render_mask (Selection *selection)
   cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
   cairo_set_line_width (cr, 1.0);
 
+  if (selection->shell->rotate_transform)
+    cairo_transform (cr, selection->shell->rotate_transform);
+
   gimp_cairo_add_segments (cr,
                            selection->segs_in,
                            selection->n_segs_in);
@@ -437,6 +440,9 @@ selection_start_timeout (Selection *selection)
           cairo_t *cr;
 
           cr = gdk_cairo_create (gtk_widget_get_window (selection->shell->canvas));
+
+          if (selection->shell->rotate_transform)
+            cairo_transform (cr, selection->shell->rotate_transform);
 
           gimp_display_shell_draw_selection_out (selection->shell, cr,
                                                  selection->segs_out,

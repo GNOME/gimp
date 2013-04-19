@@ -55,6 +55,7 @@
 #include "gimpdisplayshell-cursor.h"
 #include "gimpdisplayshell-grab.h"
 #include "gimpdisplayshell-layer-select.h"
+#include "gimpdisplayshell-rotate.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-tool-events.h"
@@ -79,6 +80,7 @@ static void       gimp_display_shell_check_device_cursor      (GimpDisplayShell 
 
 static void       gimp_display_shell_start_scrolling          (GimpDisplayShell  *shell,
                                                                const GdkEvent    *event,
+                                                               GdkModifierType    state,
                                                                gint               x,
                                                                gint               y);
 static void       gimp_display_shell_stop_scrolling           (GimpDisplayShell  *shell,
@@ -561,7 +563,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           }
         else if (bevent->button == 2)
           {
-            gimp_display_shell_start_scrolling (shell, NULL,
+            gimp_display_shell_start_scrolling (shell, NULL, state,
                                                 bevent->x, bevent->y);
           }
 
@@ -841,9 +843,24 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                             ? ((GdkEventMotion *) compressed_motion)->y
                             : mevent->y);
 
-            gimp_display_shell_scroll (shell,
-                                       shell->scroll_last_x - x,
-                                       shell->scroll_last_y - y);
+            if (shell->rotating)
+              {
+                gboolean constrain = (state & GDK_CONTROL_MASK) ? TRUE : FALSE;
+
+                gimp_display_shell_rotate_drag (shell,
+                                                shell->scroll_last_x,
+                                                shell->scroll_last_y,
+                                                x,
+                                                y,
+                                                constrain);
+              }
+            else
+              {
+                gimp_display_shell_scroll (shell,
+                                           shell->scroll_last_x - x,
+                                           shell->scroll_last_y - y);
+
+              }
 
             shell->scroll_last_x = x;
             shell->scroll_last_y = y;
@@ -1406,6 +1423,7 @@ gimp_display_shell_check_device_cursor (GimpDisplayShell *shell)
 static void
 gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
                                     const GdkEvent   *event,
+                                    GdkModifierType   state,
                                     gint              x,
                                     gint              y)
 {
@@ -1413,11 +1431,16 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
 
   gimp_display_shell_pointer_grab (shell, event, GDK_POINTER_MOTION_MASK);
 
-  shell->scrolling     = TRUE;
-  shell->scroll_last_x = x;
-  shell->scroll_last_y = y;
+  shell->scrolling         = TRUE;
+  shell->scroll_last_x     = x;
+  shell->scroll_last_y     = y;
+  shell->rotating          = (state & GDK_SHIFT_MASK) ? TRUE : FALSE;
+  shell->rotate_drag_angle = shell->rotate_angle;
 
-  gimp_display_shell_set_override_cursor (shell, GDK_FLEUR);
+  if (shell->rotating)
+    gimp_display_shell_set_override_cursor (shell, GDK_EXCHANGE);
+  else
+    gimp_display_shell_set_override_cursor (shell, GDK_FLEUR);
 }
 
 static void
@@ -1428,9 +1451,11 @@ gimp_display_shell_stop_scrolling (GimpDisplayShell *shell,
 
   gimp_display_shell_unset_override_cursor (shell);
 
-  shell->scrolling     = FALSE;
-  shell->scroll_last_x = 0;
-  shell->scroll_last_y = 0;
+  shell->scrolling         = FALSE;
+  shell->scroll_last_x     = 0;
+  shell->scroll_last_y     = 0;
+  shell->rotating          = FALSE;
+  shell->rotate_drag_angle = 0.0;
 
   gimp_display_shell_pointer_ungrab (shell, event);
 }
@@ -1457,6 +1482,7 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
         GimpDeviceManager *manager;
         GimpDeviceInfo    *current_device;
         GimpCoords         coords;
+        GdkModifierType    state = 0;
 
         manager = gimp_devices_get_manager (gimp);
         current_device = gimp_device_manager_get_current_device (manager);
@@ -1464,8 +1490,9 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
         gimp_device_info_get_device_coords (current_device,
                                             gtk_widget_get_window (shell->canvas),
                                             &coords);
+        gdk_event_get_state (event, &state);
 
-        gimp_display_shell_start_scrolling (shell, event,
+        gimp_display_shell_start_scrolling (shell, event, state,
                                             coords.x, coords.y);
       }
       break;

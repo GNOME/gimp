@@ -27,6 +27,7 @@
 #include "core/gimpboundary.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimp-utils.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -59,6 +60,11 @@ gimp_display_shell_transform_coords (const GimpDisplayShell *shell,
 
   display_coords->x -= shell->offset_x;
   display_coords->y -= shell->offset_y;
+
+  if (shell->rotate_transform)
+    cairo_matrix_transform_point (shell->rotate_transform,
+                                  &display_coords->x,
+                                  &display_coords->y);
 }
 
 /**
@@ -81,8 +87,13 @@ gimp_display_shell_untransform_coords (const GimpDisplayShell *shell,
 
   *image_coords = *display_coords;
 
-  image_coords->x = display_coords->x + shell->offset_x;
-  image_coords->y = display_coords->y + shell->offset_y;
+  if (shell->rotate_untransform)
+    cairo_matrix_transform_point (shell->rotate_untransform,
+                                  &image_coords->x,
+                                  &image_coords->y);
+
+  image_coords->x += shell->offset_x;
+  image_coords->y += shell->offset_y;
 
   image_coords->x /= shell->scale_x;
   image_coords->y /= shell->scale_y;
@@ -114,6 +125,17 @@ gimp_display_shell_transform_xy (const GimpDisplayShell *shell,
 
   tx = x * shell->scale_x - shell->offset_x;
   ty = y * shell->scale_y - shell->offset_y;
+
+  if (shell->rotate_transform)
+    {
+      gdouble fx = tx;
+      gdouble fy = ty;
+
+      cairo_matrix_transform_point (shell->rotate_transform, &fy, &fy);
+
+      tx = fx;
+      ty = fy;
+    }
 
   /* The projected coordinates might overflow a gint in the case of big
      images at high zoom levels, so we clamp them here to avoid problems.  */
@@ -149,6 +171,17 @@ gimp_display_shell_untransform_xy (const GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (nx != NULL);
   g_return_if_fail (ny != NULL);
+
+  if (shell->rotate_untransform)
+    {
+      gdouble fx = x;
+      gdouble fy = y;
+
+      cairo_matrix_transform_point (shell->rotate_untransform, &fy, &fy);
+
+      x = fx;
+      y = fy;
+    }
 
   if (round)
     {
@@ -189,6 +222,9 @@ gimp_display_shell_transform_xy_f  (const GimpDisplayShell *shell,
 
   *nx = SCALEX (shell, x) - shell->offset_x;
   *ny = SCALEY (shell, y) - shell->offset_y;
+
+  if (shell->rotate_transform)
+    cairo_matrix_transform_point (shell->rotate_transform, nx, ny);
 }
 
 /**
@@ -214,8 +250,93 @@ gimp_display_shell_untransform_xy_f (const GimpDisplayShell *shell,
   g_return_if_fail (nx != NULL);
   g_return_if_fail (ny != NULL);
 
+  if (shell->rotate_untransform)
+    cairo_matrix_transform_point (shell->rotate_untransform, &x, &y);
+
   *nx = (x + shell->offset_x) / shell->scale_x;
   *ny = (y + shell->offset_y) / shell->scale_y;
+}
+
+void
+gimp_display_shell_transform_bounds (const GimpDisplayShell *shell,
+                                     gdouble                 x1,
+                                     gdouble                 y1,
+                                     gdouble                 x2,
+                                     gdouble                 y2,
+                                     gdouble                *nx1,
+                                     gdouble                *ny1,
+                                     gdouble                *nx2,
+                                     gdouble                *ny2)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (nx1 != NULL);
+  g_return_if_fail (ny1 != NULL);
+  g_return_if_fail (nx2 != NULL);
+  g_return_if_fail (ny2 != NULL);
+
+  if (shell->rotate_transform)
+    {
+      gdouble tx1, ty1;
+      gdouble tx2, ty2;
+      gdouble tx3, ty3;
+      gdouble tx4, ty4;
+
+      gimp_display_shell_transform_xy_f (shell, x1, y1, &tx1, &ty1);
+      gimp_display_shell_transform_xy_f (shell, x1, y2, &tx2, &ty2);
+      gimp_display_shell_transform_xy_f (shell, x2, y1, &tx3, &ty3);
+      gimp_display_shell_transform_xy_f (shell, x2, y2, &tx4, &ty4);
+
+      *nx1 = MIN4 (tx1, tx2, tx3, tx4);
+      *ny1 = MIN4 (ty1, ty2, ty3, ty4);
+      *nx2 = MAX4 (tx1, tx2, tx3, tx4);
+      *ny2 = MAX4 (ty1, ty2, ty3, ty4);
+    }
+  else
+    {
+      gimp_display_shell_transform_xy_f (shell, x1, y1, nx1, ny1);
+      gimp_display_shell_transform_xy_f (shell, x2, y2, nx2, ny2);
+    }
+}
+
+void
+gimp_display_shell_untransform_bounds (const GimpDisplayShell *shell,
+                                       gdouble                 x1,
+                                       gdouble                 y1,
+                                       gdouble                 x2,
+                                       gdouble                 y2,
+                                       gdouble                *nx1,
+                                       gdouble                *ny1,
+                                       gdouble                *nx2,
+                                       gdouble                *ny2)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (nx1 != NULL);
+  g_return_if_fail (ny1 != NULL);
+  g_return_if_fail (nx2 != NULL);
+  g_return_if_fail (ny2 != NULL);
+
+  if (shell->rotate_untransform)
+    {
+      gdouble tx1, ty1;
+      gdouble tx2, ty2;
+      gdouble tx3, ty3;
+      gdouble tx4, ty4;
+
+      gimp_display_shell_untransform_xy_f (shell, x1, y1, &tx1, &ty1);
+      gimp_display_shell_untransform_xy_f (shell, x1, y2, &tx2, &ty2);
+      gimp_display_shell_untransform_xy_f (shell, x2, y1, &tx3, &ty3);
+      gimp_display_shell_untransform_xy_f (shell, x2, y2, &tx4, &ty4);
+
+      *nx1 = MIN4 (tx1, tx2, tx3, tx4);
+      *ny1 = MIN4 (ty1, ty2, ty3, ty4);
+      *nx2 = MAX4 (tx1, tx2, tx3, tx4);
+      *ny2 = MAX4 (ty1, ty2, ty3, ty4);
+    }
+  else
+    {
+      gimp_display_shell_untransform_xy_f (shell, x1, y1, nx1, ny1);
+      gimp_display_shell_untransform_xy_f (shell, x2, y2, nx2, ny2);
+    }
 }
 
 /**

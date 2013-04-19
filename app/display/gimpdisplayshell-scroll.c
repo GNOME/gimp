@@ -36,6 +36,7 @@
 #include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-expose.h"
+#include "gimpdisplayshell-rotate.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 
@@ -118,6 +119,8 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
       /*  set the offsets back to the new values  */
       shell->offset_x += x_offset;
       shell->offset_y += y_offset;
+
+      gimp_display_shell_rotate_update_transform (shell);
 
       gimp_overlay_box_scroll (GIMP_OVERLAY_BOX (shell->canvas),
                                -x_offset, -y_offset);

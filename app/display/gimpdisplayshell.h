@@ -70,6 +70,10 @@ struct _GimpDisplayShell
   gdouble            scale_x;          /*  horizontal scale factor            */
   gdouble            scale_y;          /*  vertical scale factor              */
 
+  gdouble            rotate_angle;
+  cairo_matrix_t    *rotate_transform;
+  cairo_matrix_t    *rotate_untransform;
+
   gdouble            monitor_xres;
   gdouble            monitor_yres;
   gboolean           dot_for_dot;      /*  ignore monitor resolution          */
@@ -176,6 +180,8 @@ struct _GimpDisplayShell
   gboolean           scrolling;
   gint               scroll_last_x;
   gint               scroll_last_y;
+  gboolean           rotating;
+  gdouble            rotate_drag_angle;
   gpointer           scroll_info;
 
   GimpDrawable      *mask;

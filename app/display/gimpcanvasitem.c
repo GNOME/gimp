@@ -629,12 +629,18 @@ gimp_canvas_item_transform_xy (GimpCanvasItem *item,
                                gint           *ty)
 {
   GimpCanvasItemPrivate *private;
+  gint64                 nx;
+  gint64                 ny;
 
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
   private = GET_PRIVATE (item);
 
-  gimp_display_shell_transform_xy (private->shell, x, y, tx, ty);
+  nx = x * private->shell->scale_x - private->shell->offset_x;
+  ny = y * private->shell->scale_y - private->shell->offset_y;
+
+  *tx = CLAMP (nx, G_MININT, G_MAXINT);
+  *ty = CLAMP (ny, G_MININT, G_MAXINT);
 }
 
 void
@@ -650,7 +656,8 @@ gimp_canvas_item_transform_xy_f (GimpCanvasItem *item,
 
   private = GET_PRIVATE (item);
 
-  gimp_display_shell_transform_xy_f (private->shell, x, y, tx, ty);
+  *tx = SCALEX (private->shell, x) - private->shell->offset_x;
+  *ty = SCALEY (private->shell, y) - private->shell->offset_y;
 }
 
 

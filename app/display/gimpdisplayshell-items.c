@@ -22,6 +22,8 @@
 
 #include <gtk/gtk.h>
 
+#include <libgimpmath/gimpmath.h>
+
 #include "display-types.h"
 
 #include "gimpcanvascursor.h"
@@ -32,6 +34,7 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-items.h"
+#include "gimpdisplayshell-rotate.h"
 
 
 /*  local function prototypes  */
@@ -190,5 +193,38 @@ gimp_display_shell_item_update (GimpCanvasItem   *item,
                                 cairo_region_t   *region,
                                 GimpDisplayShell *shell)
 {
-  gimp_display_shell_expose_region (shell, region);
+  if (shell->rotate_transform)
+    {
+      gint n_rects;
+      gint i;
+
+      n_rects = cairo_region_num_rectangles (region);
+
+      for (i = 0; i < n_rects; i++)
+        {
+          cairo_rectangle_int_t rect;
+          gdouble               tx1, ty1;
+          gdouble               tx2, ty2;
+          gint                  x1, y1, x2, y2;
+
+          cairo_region_get_rectangle (region, i, &rect);
+
+          gimp_display_shell_rotate_transform_bounds (shell,
+                                                      rect.x, rect.y,
+                                                      rect.x + rect.width,
+                                                      rect.y + rect.height,
+                                                      &tx1, &ty1, &tx2, &ty2);
+
+          x1 = floor (tx1 - 0.5);
+          y1 = floor (ty1 - 0.5);
+          x2 = ceil (tx2 + 0.5);
+          y2 = ceil (ty2 + 0.5);
+
+          gimp_display_shell_expose_area (shell, x1, y1, x2 - x1, y2 - y1);
+        }
+    }
+  else
+    {
+      gimp_display_shell_expose_region (shell, region);
+    }
 }
