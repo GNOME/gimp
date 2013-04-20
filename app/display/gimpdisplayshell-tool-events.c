@@ -842,10 +842,11 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                             : mevent->y);
 
             gimp_display_shell_scroll (shell,
-                                       (shell->scroll_start_x - x -
-                                        shell->offset_x),
-                                       (shell->scroll_start_y - y -
-                                        shell->offset_y));
+                                       shell->scroll_last_x - x,
+                                       shell->scroll_last_y - y);
+
+            shell->scroll_last_x = x;
+            shell->scroll_last_y = y;
           }
         else if (state & GDK_BUTTON1_MASK)
           {
@@ -1412,9 +1413,9 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
 
   gimp_display_shell_pointer_grab (shell, event, GDK_POINTER_MOTION_MASK);
 
-  shell->scrolling      = TRUE;
-  shell->scroll_start_x = x + shell->offset_x;
-  shell->scroll_start_y = y + shell->offset_y;
+  shell->scrolling     = TRUE;
+  shell->scroll_last_x = x;
+  shell->scroll_last_y = y;
 
   gimp_display_shell_set_override_cursor (shell, GDK_FLEUR);
 }
@@ -1427,9 +1428,9 @@ gimp_display_shell_stop_scrolling (GimpDisplayShell *shell,
 
   gimp_display_shell_unset_override_cursor (shell);
 
-  shell->scrolling      = FALSE;
-  shell->scroll_start_x = 0;
-  shell->scroll_start_y = 0;
+  shell->scrolling     = FALSE;
+  shell->scroll_last_x = 0;
+  shell->scroll_last_y = 0;
 
   gimp_display_shell_pointer_ungrab (shell, event);
 }

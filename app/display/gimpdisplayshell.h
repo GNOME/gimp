@@ -174,8 +174,8 @@ struct _GimpDisplayShell
   const gchar       *space_shaded_tool;
 
   gboolean           scrolling;
-  gint               scroll_start_x;
-  gint               scroll_start_y;
+  gint               scroll_last_x;
+  gint               scroll_last_y;
   gpointer           scroll_info;
 
   GimpDrawable      *mask;
