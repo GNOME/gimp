@@ -36,6 +36,84 @@
 /*  public functions  */
 
 void
+gimp_display_shell_rotate (GimpDisplayShell *shell,
+                           gdouble           delta)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  gimp_display_shell_rotate_to (shell, shell->rotate_angle + delta);
+}
+
+void
+gimp_display_shell_rotate_to (GimpDisplayShell *shell,
+                              gdouble           value)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  while (value < 0.0)
+    value += 360;
+
+  while (value >= 360.0)
+    value -= 360;
+
+  shell->rotate_angle = value;
+
+  gimp_display_shell_rotate_update_transform (shell);
+  gimp_display_shell_expose_full (shell);
+}
+
+void
+gimp_display_shell_rotate_drag (GimpDisplayShell *shell,
+                                gdouble           last_x,
+                                gdouble           last_y,
+                                gdouble           cur_x,
+                                gdouble           cur_y,
+                                gboolean          constrain)
+{
+  gint    image_width, image_height;
+  gdouble px, py;
+  gdouble x1, y1, x2, y2;
+  gdouble angle1, angle2, angle;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  gimp_display_shell_scale_get_image_size (shell,
+                                           &image_width, &image_height);
+
+  px = -shell->offset_x + image_width  / 2;
+  py = -shell->offset_y + image_height / 2;
+
+  x1 = cur_x  - px;
+  x2 = last_x - px;
+  y1 = py - cur_y;
+  y2 = py - last_y;
+
+  /*  find the first angle  */
+  angle1 = atan2 (y1, x1);
+
+  /*  find the angle  */
+  angle2 = atan2 (y2, x2);
+
+  angle = angle2 - angle1;
+
+  if (angle > G_PI || angle < -G_PI)
+    angle = angle2 - ((angle1 < 0) ? 2.0 * G_PI + angle1 : angle1 - 2.0 * G_PI);
+
+  shell->rotate_drag_angle += (angle * 180.0 / G_PI);
+
+  if (shell->rotate_drag_angle < 0.0)
+    shell->rotate_drag_angle += 360;
+
+  if (shell->rotate_drag_angle >= 360.0)
+    shell->rotate_drag_angle -= 360;
+
+  gimp_display_shell_rotate_to (shell,
+                                constrain ?
+                                (gint) shell->rotate_drag_angle / 15 * 15 :
+                                shell->rotate_drag_angle);
+}
+
+void
 gimp_display_shell_rotate_update_transform (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
@@ -146,62 +224,4 @@ gimp_display_shell_rotate_untransform_bounds (GimpDisplayShell *shell,
   *ny1 = MIN4 (ty1, ty2, ty3, ty4);
   *nx2 = MAX4 (tx1, tx2, tx3, tx4);
   *ny2 = MAX4 (ty1, ty2, ty3, ty4);
-}
-
-void
-gimp_display_shell_rotate_drag (GimpDisplayShell *shell,
-                                gdouble           last_x,
-                                gdouble           last_y,
-                                gdouble           cur_x,
-                                gdouble           cur_y,
-                                gboolean          constrain)
-{
-  gint    image_width, image_height;
-  gdouble px, py;
-  gdouble x1, y1, x2, y2;
-  gdouble angle1, angle2, angle;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  gimp_display_shell_scale_get_image_size (shell,
-                                           &image_width, &image_height);
-
-  px = -shell->offset_x + image_width  / 2;
-  py = -shell->offset_y + image_height / 2;
-
-  x1 = cur_x  - px;
-  x2 = last_x - px;
-  y1 = py - cur_y;
-  y2 = py - last_y;
-
-  /*  find the first angle  */
-  angle1 = atan2 (y1, x1);
-
-  /*  find the angle  */
-  angle2 = atan2 (y2, x2);
-
-  angle = angle2 - angle1;
-
-  if (angle > G_PI || angle < -G_PI)
-    angle = angle2 - ((angle1 < 0) ? 2.0 * G_PI + angle1 : angle1 - 2.0 * G_PI);
-
-  shell->rotate_drag_angle += (angle * 180.0 / G_PI);
-
-  if (shell->rotate_drag_angle < 0.0)
-    shell->rotate_drag_angle += 360;
-
-  if (shell->rotate_drag_angle >= 360.0)
-    shell->rotate_drag_angle -= 360;
-
-  if (constrain)
-    {
-      shell->rotate_angle = (gint) (((gint) shell->rotate_drag_angle / 15) * 15);
-    }
-  else
-    {
-      shell->rotate_angle = shell->rotate_drag_angle;
-    }
-
-  gimp_display_shell_rotate_update_transform (shell);
-  gimp_display_shell_expose_full (shell);
 }
