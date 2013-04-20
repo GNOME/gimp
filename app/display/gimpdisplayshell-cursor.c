@@ -243,8 +243,8 @@ gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
           break;
 
         case GIMP_CURSOR_MODE_TOOL_CROSSHAIR:
-          if (cursor_type < GIMP_CURSOR_CORNER_TOP_LEFT ||
-              cursor_type > GIMP_CURSOR_SIDE_BOTTOM_RIGHT)
+          if (cursor_type < GIMP_CURSOR_CORNER_TOP ||
+              cursor_type > GIMP_CURSOR_SIDE_TOP_LEFT)
             {
               /* the corner and side cursors count as crosshair, so leave
                * them and override everything else
@@ -265,6 +265,8 @@ gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
           break;
         }
     }
+
+  cursor_type = gimp_cursor_rotate (cursor_type, shell->rotate_angle);
 
   cursor_handedness = GIMP_GUI_CONFIG (shell->display->config)->cursor_handedness;
 

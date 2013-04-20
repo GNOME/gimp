@@ -87,10 +87,6 @@ static GimpCursor gimp_cursors[] =
     cursor_color_picker_x_hot, cursor_color_picker_y_hot
   },
   {
-    cursor_corner_top_left,
-    cursor_default_x_hot, cursor_default_y_hot
-  },
-  {
     cursor_corner_top,
     cursor_default_x_hot, cursor_default_y_hot
   },
@@ -99,19 +95,7 @@ static GimpCursor gimp_cursors[] =
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    cursor_corner_left,
-    cursor_default_x_hot, cursor_default_y_hot
-  },
-  {
     cursor_corner_right,
-    cursor_default_x_hot, cursor_default_y_hot
-  },
-  {
-    cursor_corner_bottom_left,
-    cursor_default_x_hot, cursor_default_y_hot
-  },
-  {
-    cursor_corner_bottom,
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
@@ -119,7 +103,19 @@ static GimpCursor gimp_cursors[] =
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    cursor_side_top_left,
+    cursor_corner_bottom,
+    cursor_default_x_hot, cursor_default_y_hot
+  },
+  {
+    cursor_corner_bottom_left,
+    cursor_default_x_hot, cursor_default_y_hot
+  },
+  {
+    cursor_corner_left,
+    cursor_default_x_hot, cursor_default_y_hot
+  },
+  {
+    cursor_corner_top_left,
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
@@ -131,15 +127,11 @@ static GimpCursor gimp_cursors[] =
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    cursor_side_left,
-    cursor_default_x_hot, cursor_default_y_hot
-  },
-  {
     cursor_side_right,
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    cursor_side_bottom_left,
+    cursor_side_bottom_right,
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
@@ -147,7 +139,15 @@ static GimpCursor gimp_cursors[] =
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    cursor_side_bottom_right,
+    cursor_side_bottom_left,
+    cursor_default_x_hot, cursor_default_y_hot
+  },
+  {
+    cursor_side_left,
+    cursor_default_x_hot, cursor_default_y_hot
+  },
+  {
+    cursor_side_top_left,
     cursor_default_x_hot, cursor_default_y_hot
   }
 };
@@ -409,4 +409,32 @@ gimp_cursor_set (GtkWidget          *widget,
                             modifier);
   gdk_window_set_cursor (gtk_widget_get_window (widget), cursor);
   gdk_cursor_unref (cursor);
+}
+
+GimpCursorType
+gimp_cursor_rotate (GimpCursorType  cursor,
+                    gdouble         angle)
+{
+  if (cursor >= GIMP_CURSOR_CORNER_TOP &&
+      cursor <= GIMP_CURSOR_SIDE_TOP_LEFT)
+    {
+      gint offset = (gint) (angle / 45 + 0.5);
+
+      if (cursor < GIMP_CURSOR_SIDE_TOP)
+        {
+          cursor += offset;
+
+          if (cursor > GIMP_CURSOR_CORNER_TOP_LEFT)
+            cursor -= 8;
+        }
+      else
+        {
+          cursor += offset;
+
+          if (cursor > GIMP_CURSOR_SIDE_TOP_LEFT)
+            cursor -= 8;
+        }
+   }
+
+  return cursor;
 }
