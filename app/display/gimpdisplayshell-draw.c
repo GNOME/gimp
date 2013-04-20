@@ -90,6 +90,41 @@ gimp_display_shell_draw_background (GimpDisplayShell *shell,
 }
 
 void
+gimp_display_shell_draw_checkerboard (GimpDisplayShell *shell,
+                                      cairo_t          *cr)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
+
+  if (G_UNLIKELY (! shell->checkerboard))
+    {
+      GimpCheckSize  check_size;
+      GimpCheckType  check_type;
+      guchar         check_light;
+      guchar         check_dark;
+      GimpRGB        light;
+      GimpRGB        dark;
+
+      g_object_get (shell->display->config,
+                    "transparency-size", &check_size,
+                    "transparency-type", &check_type,
+                    NULL);
+
+      gimp_checks_get_shades (check_type, &check_light, &check_dark);
+      gimp_rgb_set_uchar (&light, check_light, check_light, check_light);
+      gimp_rgb_set_uchar (&dark,  check_dark,  check_dark,  check_dark);
+
+      shell->checkerboard =
+        gimp_cairo_checkerboard_create (cr,
+                                        1 << (check_size + 2), &light, &dark);
+    }
+
+  cairo_translate (cr, - shell->offset_x, - shell->offset_y);
+  cairo_set_source (cr, shell->checkerboard);
+  cairo_paint (cr);
+}
+
+void
 gimp_display_shell_draw_image (GimpDisplayShell *shell,
                                cairo_t          *cr,
                                gint              x,
@@ -122,50 +157,4 @@ gimp_display_shell_draw_image (GimpDisplayShell *shell,
           gimp_display_shell_render (shell, cr, j, i, dx, dy);
         }
     }
-}
-
-static cairo_pattern_t *
-gimp_display_shell_create_checkerboard (GimpDisplayShell *shell,
-                                        cairo_t          *cr)
-{
-  GimpCheckSize  check_size;
-  GimpCheckType  check_type;
-  guchar         check_light;
-  guchar         check_dark;
-  GimpRGB        light;
-  GimpRGB        dark;
-
-  g_object_get (shell->display->config,
-                "transparency-size", &check_size,
-                "transparency-type", &check_type,
-                NULL);
-
-  gimp_checks_get_shades (check_type, &check_light, &check_dark);
-  gimp_rgb_set_uchar (&light, check_light, check_light, check_light);
-  gimp_rgb_set_uchar (&dark,  check_dark,  check_dark,  check_dark);
-
-  return gimp_cairo_checkerboard_create (cr,
-                                         1 << (check_size + 2), &light, &dark);
-}
-
-void
-gimp_display_shell_draw_checkerboard (GimpDisplayShell *shell,
-                                      cairo_t          *cr,
-                                      gint              x,
-                                      gint              y,
-                                      gint              w,
-                                      gint              h)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (cr != NULL);
-
-  if (G_UNLIKELY (! shell->checkerboard))
-    shell->checkerboard = gimp_display_shell_create_checkerboard (shell, cr);
-
-  cairo_rectangle (cr, x, y, w, h);
-  cairo_clip (cr);
-
-  cairo_translate (cr, - shell->offset_x, - shell->offset_y);
-  cairo_set_source (cr, shell->checkerboard);
-  cairo_paint (cr);
 }

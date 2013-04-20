@@ -503,11 +503,7 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
       gint                    i;
 
       cairo_save (cr);
-      gimp_display_shell_draw_checkerboard (shell, cr,
-                                            image_rect.x,
-                                            image_rect.y,
-                                            image_rect.width,
-                                            image_rect.height);
+      gimp_display_shell_draw_checkerboard (shell, cr);
       cairo_restore (cr);
 
       clip_rectangles = cairo_copy_clip_rectangle_list (cr);

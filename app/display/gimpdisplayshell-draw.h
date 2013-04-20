@@ -27,15 +27,12 @@ void   gimp_display_shell_draw_selection_in  (GimpDisplayShell   *shell,
                                               cairo_t            *cr,
                                               cairo_pattern_t    *mask,
                                               gint                index);
+
 void   gimp_display_shell_draw_background    (GimpDisplayShell   *shell,
                                               cairo_t            *cr);
-void   gimp_display_shell_draw_image         (GimpDisplayShell   *shell,
-                                              cairo_t            *cr,
-                                              gint                x,
-                                              gint                y,
-                                              gint                w,
-                                              gint                h);
 void   gimp_display_shell_draw_checkerboard  (GimpDisplayShell   *shell,
+                                              cairo_t            *cr);
+void   gimp_display_shell_draw_image         (GimpDisplayShell   *shell,
                                               cairo_t            *cr,
                                               gint                x,
                                               gint                y,
