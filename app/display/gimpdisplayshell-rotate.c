@@ -187,6 +187,12 @@ gimp_display_shell_rotate_drag (GimpDisplayShell *shell,
 
   shell->rotate_drag_angle += (angle * 180.0 / G_PI);
 
+  if (shell->rotate_drag_angle < 0.0)
+    shell->rotate_drag_angle += 360;
+
+  if (shell->rotate_drag_angle >= 360.0)
+    shell->rotate_drag_angle -= 360;
+
   if (constrain)
     {
       shell->rotate_angle = (gint) (((gint) shell->rotate_drag_angle / 15) * 15);
