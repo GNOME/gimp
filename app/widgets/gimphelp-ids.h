@@ -89,6 +89,7 @@
 #define GIMP_HELP_VIEW_ROTATE_90                  "gimp-view-rotate-90"
 #define GIMP_HELP_VIEW_ROTATE_180                 "gimp-view-rotate-180"
 #define GIMP_HELP_VIEW_ROTATE_270                 "gimp-view-rotate-270"
+#define GIMP_HELP_VIEW_ROTATE_OTHER               "gimp-view-rotate-other"
 #define GIMP_HELP_VIEW_SHOW_SELECTION             "gimp-view-show-selection"
 #define GIMP_HELP_VIEW_SHOW_LAYER_BOUNDARY        "gimp-view-show-layer-boundary"
 #define GIMP_HELP_VIEW_SHOW_GUIDES                "gimp-view-show-guides"

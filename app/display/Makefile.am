@@ -115,6 +115,8 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-render.h		\
 	gimpdisplayshell-rotate.c		\
 	gimpdisplayshell-rotate.h		\
+	gimpdisplayshell-rotate-dialog.c	\
+	gimpdisplayshell-rotate-dialog.h	\
 	gimpdisplayshell-scale.c		\
 	gimpdisplayshell-scale.h		\
 	gimpdisplayshell-scale-dialog.c		\

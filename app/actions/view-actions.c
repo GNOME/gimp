@@ -110,6 +110,12 @@ static const GimpActionEntry view_actions[] =
     G_CALLBACK (view_rotate_reset_cmd_callback),
     GIMP_HELP_VIEW_ROTATE_RESET },
 
+  { "view-rotate-other", NULL,
+    NC_("view-action", "Othe_r..."), NULL,
+    NC_("view-action", "Set a custom rotation angle"),
+     G_CALLBACK (view_rotate_other_cmd_callback),
+    GIMP_HELP_VIEW_ROTATE_OTHER },
+
   { "view-navigation-window", GIMP_STOCK_NAVIGATION,
     NC_("view-action", "Na_vigation Window"), NULL,
     NC_("view-action", "Show an overview window for this image"),
@@ -669,6 +675,7 @@ view_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("view-rotate-90",    image);
   SET_SENSITIVE ("view-rotate-180",   image);
   SET_SENSITIVE ("view-rotate-270",   image);
+  SET_SENSITIVE ("view-rotate-other", image);
 
   if (image)
     {

@@ -275,6 +275,8 @@
         <menuitem action="view-rotate-90" />
         <menuitem action="view-rotate-270" />
         <menuitem action="view-rotate-180" />
+        <separator />
+        <menuitem action="view-rotate-other" />
       </menu>
       <separator />
       <menuitem action="view-shrink-wrap" />

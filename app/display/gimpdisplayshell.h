@@ -149,6 +149,7 @@ struct _GimpDisplayShell
 
   GtkWidget         *close_dialog;     /*  close dialog                       */
   GtkWidget         *scale_dialog;     /*  scale (zoom) dialog                */
+  GtkWidget         *rotate_dialog;    /*  rotate dialog                      */
   GtkWidget         *nav_popup;        /*  navigation popup                   */
   GtkWidget         *grid_dialog;      /*  grid configuration dialog          */
 

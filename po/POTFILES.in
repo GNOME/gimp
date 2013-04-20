@@ -218,6 +218,7 @@ app/display/gimpdisplayshell-dnd.c
 app/display/gimpdisplayshell-filter-dialog.c
 app/display/gimpdisplayshell-handlers.c
 app/display/gimpdisplayshell-layer-select.c
+app/display/gimpdisplayshell-rotate-dialog.c
 app/display/gimpdisplayshell-scale-dialog.c
 app/display/gimpdisplayshell-title.c
 app/display/gimpnavigationeditor.c
