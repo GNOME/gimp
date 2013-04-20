@@ -269,6 +269,13 @@
         <separator />
         <menuitem action="view-zoom-other" />
       </menu>
+      <menu action="view-rotate-menu" name="Rotate">
+        <menuitem action="view-rotate-reset" />
+        <separator />
+        <menuitem action="view-rotate-90" />
+        <menuitem action="view-rotate-270" />
+        <menuitem action="view-rotate-180" />
+      </menu>
       <separator />
       <menuitem action="view-shrink-wrap" />
       <menuitem action="view-fullscreen" />

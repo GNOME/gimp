@@ -57,6 +57,8 @@
 
 static void   view_actions_set_zoom          (GimpActionGroup   *group,
                                               GimpDisplayShell  *shell);
+static void   view_actions_set_rotate        (GimpActionGroup   *group,
+                                              GimpDisplayShell  *shell);
 static void   view_actions_check_type_notify (GimpDisplayConfig *config,
                                               GParamSpec        *pspec,
                                               GimpActionGroup   *group);
@@ -66,6 +68,7 @@ static const GimpActionEntry view_actions[] =
 {
   { "view-menu",                NULL, NC_("view-action", "_View")          },
   { "view-zoom-menu",           NULL, NC_("view-action", "_Zoom")          },
+  { "view-rotate-menu",         NULL, NC_("view-action", "_Rotate")        },
   { "view-padding-color-menu",  NULL, NC_("view-action", "_Padding Color") },
   { "view-move-to-screen-menu", GIMP_STOCK_MOVE_TO_SCREEN,
     NC_("view-action", "Move to Screen"), NULL, NULL, NULL,
@@ -100,6 +103,12 @@ static const GimpActionEntry view_actions[] =
     NC_("view-action", "Restore the previous zoom level"),
     G_CALLBACK (view_zoom_revert_cmd_callback),
     GIMP_HELP_VIEW_ZOOM_REVERT },
+
+  { "view-rotate-reset", NULL,
+    NC_("view-action", "_Reset to 0°"), NULL,
+    NC_("view-action", "Reset the angle of rotation to 0°"),
+    G_CALLBACK (view_rotate_reset_cmd_callback),
+    GIMP_HELP_VIEW_ROTATE_RESET },
 
   { "view-navigation-window", GIMP_STOCK_NAVIGATION,
     NC_("view-action", "Na_vigation Window"), NULL,
@@ -379,6 +388,27 @@ static const GimpRadioActionEntry view_zoom_explicit_actions[] =
     GIMP_HELP_VIEW_ZOOM_OTHER }
 };
 
+static const GimpEnumActionEntry view_rotate_actions[] =
+{
+  { "view-rotate-90", GIMP_STOCK_ROTATE_90,
+    NC_("view-action", "Rotate 90° _clockwise"), NULL,
+    NC_("view-action", "Rotate 90 degrees to the right"),
+    GIMP_ROTATE_90, FALSE,
+    GIMP_HELP_VIEW_ROTATE_90 },
+
+  { "view-rotate-180", GIMP_STOCK_ROTATE_180,
+    NC_("view-action", "Rotate _180°"), NULL,
+    NC_("view-action", "Turn upside-down"),
+    GIMP_ROTATE_180, FALSE,
+    GIMP_HELP_VIEW_ROTATE_180 },
+
+  { "view-rotate-270", GIMP_STOCK_ROTATE_270,
+    NC_("view-action", "Rotate 90° counter-clock_wise"), NULL,
+    NC_("view-action", "Rotate 90 degrees to the left"),
+    GIMP_ROTATE_270, FALSE,
+    GIMP_HELP_VIEW_ROTATE_270 }
+};
+
 static const GimpEnumActionEntry view_padding_color_actions[] =
 {
   { "view-padding-color-theme", NULL,
@@ -515,6 +545,11 @@ view_actions_setup (GimpActionGroup *group)
                                        10000,
                                        G_CALLBACK (view_zoom_explicit_cmd_callback));
 
+  gimp_action_group_add_enum_actions (group, "view-rotate-action",
+                                      view_rotate_actions,
+                                      G_N_ELEMENTS (view_rotate_actions),
+                                      G_CALLBACK (view_rotate_cmd_callback));
+
   gimp_action_group_add_enum_actions (group, "view-padding-color",
                                       view_padding_color_actions,
                                       G_N_ELEMENTS (view_padding_color_actions),
@@ -630,8 +665,16 @@ view_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("view-zoom-1-16",  image);
   SET_SENSITIVE ("view-zoom-other", image);
 
+  SET_SENSITIVE ("view-rotate-reset", image);
+  SET_SENSITIVE ("view-rotate-90",    image);
+  SET_SENSITIVE ("view-rotate-180",   image);
+  SET_SENSITIVE ("view-rotate-270",   image);
+
   if (image)
-    view_actions_set_zoom (group, shell);
+    {
+      view_actions_set_zoom (group, shell);
+      view_actions_set_rotate (group, shell);
+    }
 
   SET_SENSITIVE ("view-navigation-window", image);
   SET_SENSITIVE ("view-display-filters",   image);
@@ -762,6 +805,17 @@ view_actions_set_zoom (GimpActionGroup  *group,
   shell->other_scale = - fabs (shell->other_scale);
 
   g_free (str);
+}
+
+static void
+view_actions_set_rotate (GimpActionGroup  *group,
+                         GimpDisplayShell *shell)
+{
+  gchar *label;
+
+  label = g_strdup_printf (_("_Rotate (%d°)"), (gint) shell->rotate_angle);
+  gimp_action_group_set_action_label (group, "view-rotate-menu", label);
+  g_free (label);
 }
 
 static void

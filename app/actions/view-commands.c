@@ -45,6 +45,7 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-filter-dialog.h"
+#include "display/gimpdisplayshell-rotate.h"
 #include "display/gimpdisplayshell-scale.h"
 #include "display/gimpdisplayshell-scale-dialog.h"
 #include "display/gimpdisplayshell-scroll.h"
@@ -279,6 +280,41 @@ view_dot_for_dot_cmd_callback (GtkAction *action,
         SET_ACTIVE (shell->popup_manager, "view-dot-for-dot",
                     shell->dot_for_dot);
     }
+}
+
+void
+view_rotate_reset_cmd_callback (GtkAction *action,
+                                gpointer   data)
+{
+  GimpDisplay      *display;
+  GimpDisplayShell *shell;
+  return_if_no_display (display, data);
+
+  shell = gimp_display_get_shell (display);
+
+  gimp_display_shell_rotate_to (shell, 0.0);
+}
+
+void
+view_rotate_cmd_callback (GtkAction *action,
+                          gint       value,
+                          gpointer   data)
+{
+  GimpDisplay      *display;
+  GimpDisplayShell *shell;
+  gdouble           delta = 0.0;
+  return_if_no_display (display, data);
+
+  shell = gimp_display_get_shell (display);
+
+  switch ((GimpRotationType) value)
+    {
+    case GIMP_ROTATE_90:   delta =  90; break;
+    case GIMP_ROTATE_180:  delta = 180; break;
+    case GIMP_ROTATE_270:  delta = -90; break;
+    }
+
+  gimp_display_shell_rotate (shell, delta);
 }
 
 void

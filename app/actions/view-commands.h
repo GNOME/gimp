@@ -48,6 +48,12 @@ void   view_scroll_vertical_cmd_callback       (GtkAction *action,
                                                 gint       value,
                                                 gpointer   data);
 
+void   view_rotate_reset_cmd_callback          (GtkAction *action,
+                                                gpointer   data);
+void   view_rotate_cmd_callback                (GtkAction *action,
+                                                gint       value,
+                                                gpointer   data);
+
 void   view_navigation_window_cmd_callback     (GtkAction *action,
                                                 gpointer   data);
 void   view_display_filters_cmd_callback       (GtkAction *action,
