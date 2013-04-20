@@ -39,6 +39,9 @@
 #include "gimp-intl.h"
 
 
+#define RESPONSE_RESET 1
+
+
 typedef struct
 {
   GimpDisplayShell *shell;
@@ -101,12 +104,14 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
                               gimp_standard_help_func,
                               GIMP_HELP_VIEW_ROTATE_OTHER,
 
-                              GTK_STOCK_OK, GTK_RESPONSE_OK,
+                              GIMP_STOCK_RESET, RESPONSE_RESET,
+                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                               NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (shell->rotate_dialog),
                                            GTK_RESPONSE_OK,
+                                           RESPONSE_RESET,
                                            -1);
 
   g_object_weak_ref (G_OBJECT (shell->rotate_dialog),
@@ -140,6 +145,7 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
                                0.0, 360.0,
                                1, 15, 0, 1, 2);
   gtk_entry_set_activates_default (GTK_ENTRY (spin), TRUE);
+  gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (spin), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spin, TRUE, TRUE, 0);
   gtk_widget_show (spin);
 
@@ -154,17 +160,13 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
 }
 
 static void
-gimp_display_shell_rotate_dialog_response (GtkWidget       *widget,
-                                           gint             response_id,
+gimp_display_shell_rotate_dialog_response (GtkWidget        *widget,
+                                           gint              response_id,
                                            RotateDialogData *dialog)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  if (response_id == RESPONSE_RESET)
     {
-      gdouble angle;
-
-      angle = gtk_adjustment_get_value (dialog->rotate_adj);
-
-      gimp_display_shell_rotate_to (dialog->shell, angle);
+      gtk_adjustment_set_value (dialog->rotate_adj, 0.0);
     }
 
   gtk_widget_destroy (dialog->shell->rotate_dialog);
