@@ -1016,6 +1016,14 @@ gimp_draw_tool_on_handle (GimpDrawTool     *draw_tool,
                                      handle_x, handle_y,
                                      &handle_tx, &handle_ty);
 
+  if (shell->rotate_untransform)
+    {
+      cairo_matrix_transform_point (shell->rotate_untransform,
+                                    &tx, &ty);
+      cairo_matrix_transform_point (shell->rotate_untransform,
+                                    &handle_tx, &handle_ty);
+    }
+
   switch (type)
     {
     case GIMP_HANDLE_SQUARE:
