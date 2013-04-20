@@ -1,4 +1,5 @@
 EXPORTS
+	gdk_cairo_get_clip_rectangle
 	gdk_event_triggers_context_menu
 	gdk_keymap_get_modifier_mask
 	gimp_aspect_type_get_type
