@@ -85,8 +85,12 @@ open_tag (GimpTextBuffer *buffer,
     {
       if (attribute && attribute_value)
         {
+          gchar *escaped = g_markup_escape_text (attribute_value, -1);
+
           g_string_append_printf (string, "<%s %s=\"%s\">",
-                                  name, attribute, attribute_value);
+                                  name, attribute, escaped);
+
+          g_free (escaped);
           g_free (attribute_value);
         }
       else
