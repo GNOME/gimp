@@ -85,10 +85,23 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                                                  &viewport_offset_y,
                                                  &viewport_width,
                                                  &viewport_height);
-  xfer = gimp_display_xfer_get_surface (shell->xfer,
-					w * window_scale,
-					h * window_scale,
-					&src_x, &src_y);
+  if (shell->rotate_transform)
+    {
+      xfer = cairo_surface_create_similar_image (cairo_get_target (cr),
+                                                 CAIRO_FORMAT_ARGB32,
+                                                 w * window_scale,
+                                                 h * window_scale);
+      cairo_surface_mark_dirty (xfer);
+      src_x = 0;
+      src_y = 0;
+    }
+  else
+    {
+      xfer = gimp_display_xfer_get_surface (shell->xfer,
+                                            w * window_scale,
+                                            h * window_scale,
+                                            &src_x, &src_y);
+    }
 
   stride = cairo_image_surface_get_stride (xfer);
   data = cairo_image_surface_get_data (xfer);
@@ -148,7 +161,6 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   cairo_save (cr);
 
   cairo_rectangle (cr, x, y, w, h);
-  cairo_clip (cr);
 
   cairo_scale (cr, 1.0 / window_scale, 1.0 / window_scale);
 
@@ -156,6 +168,20 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                             (x - src_x) * window_scale,
                             (y - src_y) * window_scale);
 
+  if (shell->rotate_transform)
+    {
+      cairo_pattern_t *pattern;
+
+      pattern = cairo_get_source (cr);
+      cairo_pattern_set_extend (pattern, CAIRO_EXTEND_PAD);
+
+      cairo_set_line_width (cr, 1.0);
+      cairo_stroke_preserve (cr);
+
+      cairo_surface_destroy (xfer);
+    }
+
+  cairo_clip (cr);
   cairo_paint (cr);
 
 #if 0
