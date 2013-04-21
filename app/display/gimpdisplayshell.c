@@ -1332,6 +1332,9 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
   /*  so wilber doesn't flicker  */
   gtk_widget_set_double_buffered (shell->canvas, TRUE);
 
+  shell->rotate_angle = 0.0;
+  gimp_display_shell_rotate_update_transform (shell);
+
   gimp_display_shell_expose_full (shell);
 
   user_context = gimp_get_user_context (shell->display->gimp);
