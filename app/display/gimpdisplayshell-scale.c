@@ -414,7 +414,6 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
 {
   gint    x, y;
   gdouble current_scale;
-  gdouble real_new_scale;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (shell->canvas != NULL);
@@ -422,15 +421,9 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
   current_scale = gimp_zoom_model_get_factor (shell->zoom);
 
   if (zoom_type != GIMP_ZOOM_TO)
-    {
-      real_new_scale = gimp_zoom_model_zoom_step (zoom_type, current_scale);
-    }
-  else
-    {
-      real_new_scale = new_scale;
-    }
+    new_scale = gimp_zoom_model_zoom_step (zoom_type, current_scale);
 
-  if (! SCALE_EQUALS (real_new_scale, current_scale))
+  if (! SCALE_EQUALS (new_scale, current_scale))
     {
       if (shell->display->config->resize_windows_on_zoom)
         {
@@ -439,7 +432,7 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
           /* If the window is resized on zoom, simply do the zoom and
            * get things rolling
            */
-          gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, real_new_scale);
+          gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, new_scale);
           gimp_display_shell_scaled (shell);
 
           if (window && gimp_image_window_get_active_shell (window) == shell)
@@ -459,7 +452,7 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
           gint     image_center_y;
 
           gimp_display_shell_scale_get_zoom_focus (shell,
-                                                   real_new_scale,
+                                                   new_scale,
                                                    current_scale,
                                                    &x,
                                                    &y,
@@ -468,7 +461,7 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
                                                               &image_center_x,
                                                               &image_center_y);
 
-          gimp_display_shell_scale_to (shell, real_new_scale, x, y);
+          gimp_display_shell_scale_to (shell, new_scale, x, y);
 
 
           /* If an image axis started to fit due to zooming out or if
@@ -476,7 +469,7 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
            * that axis
            */
           gimp_display_shell_scale_image_starts_to_fit (shell,
-                                                        real_new_scale,
+                                                        new_scale,
                                                         current_scale,
                                                         &starts_fitting_horiz,
                                                         &starts_fitting_vert);
