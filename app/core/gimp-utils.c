@@ -26,6 +26,12 @@
 #include <langinfo.h>
 #endif
 
+#include <glib.h>
+
+#ifdef G_OS_WIN32
+#include <windows.h>
+#endif
+
 #include <cairo.h>
 #include <glib-object.h>
 #include <gobject/gvaluecollector.h>
