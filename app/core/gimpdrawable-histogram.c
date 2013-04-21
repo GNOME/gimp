@@ -108,7 +108,7 @@ gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
                                     gimp_drawable_get_buffer (drawable),
                                     GEGL_RECTANGLE (x, y, width, height),
                                     gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
-                                    GEGL_RECTANGLE (x - off_x, y - off_y,
+                                    GEGL_RECTANGLE (x + off_x, y + off_y,
                                                     width, height));
         }
       else

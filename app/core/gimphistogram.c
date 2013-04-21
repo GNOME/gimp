@@ -158,7 +158,7 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
           switch (n_components)
             {
             case 1:
-              while (iter->length)
+              while (iter->length--)
                 {
                   const gdouble masked = *mask_data;
 
@@ -240,7 +240,7 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
             case 2:
               while (iter->length--)
                 {
-                  const gdouble weight = data[1] / 255;
+                  const gdouble weight = data[1] / 255.0;
 
                   VALUE (0, data[0]) += weight;
                   VALUE (1, data[1]) += 1.0;
@@ -268,7 +268,7 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
             case 4: /* calculate separate value values */
               while (iter->length--)
                 {
-                  const gdouble weight = data[3] / 255;
+                  const gdouble weight = data[3] / 255.0;
 
                   VALUE (1, data[0]) += weight;
                   VALUE (2, data[1]) += weight;
