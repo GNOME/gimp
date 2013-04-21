@@ -562,26 +562,29 @@ gimp_text_style_editor_list_tags (GimpTextStyleEditor  *editor,
     }
 
   {
-    GtkTextTag  *tag;
-    GList       *list;
-    gdouble      pixels;
-    gdouble      points;
+    GList   *list;
+    gdouble  pixels;
 
     for (list = editor->buffer->size_tags; list; list = g_list_next (list))
       *remove_tags = g_list_prepend (*remove_tags, list->data);
 
     pixels = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (editor->size_entry), 0);
-    points = gimp_units_to_points (pixels,
-                                   GIMP_UNIT_PIXEL,
-                                   editor->resolution_y);
-    tag = gimp_text_buffer_get_size_tag (editor->buffer,
-                                         PANGO_SCALE * points);
 
-    tags = g_list_prepend (tags, tag);
+    if (pixels != 0.0)
+      {
+        GtkTextTag *tag;
+        gdouble     points;
+
+        points = gimp_units_to_points (pixels,
+                                       GIMP_UNIT_PIXEL,
+                                       editor->resolution_y);
+        tag = gimp_text_buffer_get_size_tag (editor->buffer,
+                                             PANGO_SCALE * points);
+        tags = g_list_prepend (tags, tag);
+      }
   }
 
   {
-    GtkTextTag  *tag;
     GList       *list;
     const gchar *font_name;
 
@@ -589,24 +592,33 @@ gimp_text_style_editor_list_tags (GimpTextStyleEditor  *editor,
       *remove_tags = g_list_prepend (*remove_tags, list->data);
 
     font_name = gimp_context_get_font_name (editor->context);
-    tag = gimp_text_buffer_get_font_tag (editor->buffer, font_name);
 
-    tags = g_list_prepend (tags, tag);
+    if (font_name)
+      {
+        GtkTextTag  *tag;
+
+        tag = gimp_text_buffer_get_font_tag (editor->buffer, font_name);
+        tags = g_list_prepend (tags, tag);
+      }
   }
 
   {
-    GtkTextTag *tag;
-    GList      *list;
-    GimpRGB     color;
+    GList   *list;
+    GimpRGB  color;
 
     for (list = editor->buffer->color_tags; list; list = g_list_next (list))
       *remove_tags = g_list_prepend (*remove_tags, list->data);
 
     gimp_color_button_get_color (GIMP_COLOR_BUTTON (editor->color_button),
                                  &color);
-    tag = gimp_text_buffer_get_color_tag (editor->buffer, &color);
 
-    tags = g_list_prepend (tags, tag);
+    if (TRUE) /* FIXME should have "inconsistent" state as for font and size */
+      {
+        GtkTextTag *tag;
+
+        tag = gimp_text_buffer_get_color_tag (editor->buffer, &color);
+        tags = g_list_prepend (tags, tag);
+      }
   }
 
   *remove_tags = g_list_reverse (*remove_tags);
@@ -766,6 +778,8 @@ gimp_text_style_editor_set_color (GimpTextStyleEditor *editor,
 
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (editor->color_button),
                                &color);
+
+  /* FIXME should have "inconsistent" state as for font and size */
 
   g_signal_handlers_unblock_by_func (editor->color_button,
                                      gimp_text_style_editor_color_changed,
