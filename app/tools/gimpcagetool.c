@@ -48,8 +48,6 @@
 #include "widgets/gimphelp-ids.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-transform.h"
 
 #include "gimpcagetool.h"
 #include "gimpcageoptions.h"
@@ -1262,30 +1260,5 @@ gimp_cage_tool_image_map_flush (GimpImageMap *image_map,
 static void
 gimp_cage_tool_image_map_update (GimpCageTool *ct)
 {
-  GimpTool         *tool  = GIMP_TOOL (ct);
-  GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
-  GimpItem         *item  = GIMP_ITEM (tool->drawable);
-  gint              x, y;
-  gint              w, h;
-  gint              off_x, off_y;
-  GeglRectangle     visible;
-
-  gimp_display_shell_untransform_viewport (shell, &x, &y, &w, &h);
-
-  gimp_item_get_offset (item, &off_x, &off_y);
-
-  gimp_rectangle_intersect (x, y, w, h,
-                            off_x,
-                            off_y,
-                            gimp_item_get_width  (item),
-                            gimp_item_get_height (item),
-                            &visible.x,
-                            &visible.y,
-                            &visible.width,
-                            &visible.height);
-
-  visible.x -= off_x;
-  visible.y -= off_y;
-
-  gimp_image_map_apply (ct->image_map, &visible);
+  gimp_image_map_apply (ct->image_map);
 }

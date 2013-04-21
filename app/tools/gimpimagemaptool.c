@@ -59,7 +59,6 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-transform.h"
 #include "display/gimptooldialog.h"
 
 #include "gimpcoloroptions.h"
@@ -581,34 +580,10 @@ gimp_image_map_tool_color_picked (GimpColorTool      *color_tool,
 static void
 gimp_image_map_tool_map (GimpImageMapTool *tool)
 {
-  GimpDisplayShell *shell = gimp_display_get_shell (GIMP_TOOL (tool)->display);
-  GimpItem         *item  = GIMP_ITEM (tool->drawable);
-  gint              x, y;
-  gint              w, h;
-  gint              off_x, off_y;
-  GeglRectangle     visible;
-
   if (GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->map)
     GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->map (tool);
 
-  gimp_display_shell_untransform_viewport (shell, &x, &y, &w, &h);
-
-  gimp_item_get_offset (item, &off_x, &off_y);
-
-  gimp_rectangle_intersect (x, y, w, h,
-                            off_x,
-                            off_y,
-                            gimp_item_get_width  (item),
-                            gimp_item_get_height (item),
-                            &visible.x,
-                            &visible.y,
-                            &visible.width,
-                            &visible.height);
-
-  visible.x -= off_x;
-  visible.y -= off_y;
-
-  gimp_image_map_apply (tool->image_map, &visible);
+  gimp_image_map_apply (tool->image_map);
 }
 
 static void

@@ -259,8 +259,7 @@ gimp_image_map_new (GimpDrawable *drawable,
 }
 
 void
-gimp_image_map_apply (GimpImageMap        *image_map,
-                      const GeglRectangle *visible)
+gimp_image_map_apply (GimpImageMap *image_map)
 {
   GimpImage     *image;
   GimpChannel   *mask;
