@@ -843,6 +843,12 @@ gimp_display_shell_finalize (GObject *object)
 
   g_object_unref (shell->zoom);
 
+  if (shell->rotate_transform)
+    g_free (shell->rotate_transform);
+
+  if (shell->rotate_untransform)
+    g_free (shell->rotate_untransform);
+
   if (shell->options)
     g_object_unref (shell->options);
 
