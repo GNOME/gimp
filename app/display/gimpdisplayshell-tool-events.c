@@ -208,7 +208,7 @@ gimp_display_shell_events (GtkWidget        *widget,
             break;
 
           default:
-            if (shell->space_pressed)
+            if (shell->space_pressed || shell->scrolling)
               return TRUE;
             break;
           }
