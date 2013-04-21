@@ -209,6 +209,8 @@ static void      gimp_image_window_image_notify        (GimpDisplay         *dis
                                                         GimpImageWindow     *window);
 static void      gimp_image_window_shell_scaled        (GimpDisplayShell    *shell,
                                                         GimpImageWindow     *window);
+static void      gimp_image_window_shell_rotated       (GimpDisplayShell    *shell,
+                                                        GimpImageWindow     *window);
 static void      gimp_image_window_shell_title_notify  (GimpDisplayShell    *shell,
                                                         const GParamSpec    *pspec,
                                                         GimpImageWindow     *window);
@@ -1638,6 +1640,9 @@ gimp_image_window_switch_page (GtkNotebook     *notebook,
   g_signal_connect (private->active_shell, "scaled",
                     G_CALLBACK (gimp_image_window_shell_scaled),
                     window);
+  g_signal_connect (private->active_shell, "rotated",
+                    G_CALLBACK (gimp_image_window_shell_rotated),
+                    window);
   g_signal_connect (private->active_shell, "notify::title",
                     G_CALLBACK (gimp_image_window_shell_title_notify),
                     window);
@@ -1695,6 +1700,9 @@ gimp_image_window_disconnect_from_active_shell (GimpImageWindow *window)
 
   g_signal_handlers_disconnect_by_func (private->active_shell,
                                         gimp_image_window_shell_scaled,
+                                        window);
+  g_signal_handlers_disconnect_by_func (private->active_shell,
+                                        gimp_image_window_shell_rotated,
                                         window);
   g_signal_handlers_disconnect_by_func (private->active_shell,
                                         gimp_image_window_shell_title_notify,
@@ -1880,6 +1888,17 @@ gimp_image_window_shell_scaled (GimpDisplayShell *shell,
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
   /* update the <Image>/View/Zoom menu */
+  gimp_ui_manager_update (private->menubar_manager,
+                          shell->display);
+}
+
+static void
+gimp_image_window_shell_rotated (GimpDisplayShell *shell,
+                                 GimpImageWindow  *window)
+{
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  /* update the <Image>/View/Rotate menu */
   gimp_ui_manager_update (private->menubar_manager,
                           shell->display);
 }

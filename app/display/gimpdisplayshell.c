@@ -107,6 +107,7 @@ enum
 {
   SCALED,
   SCROLLED,
+  ROTATED,
   RECONNECT,
   LAST_SIGNAL
 };
@@ -146,6 +147,7 @@ static void      gimp_display_shell_screen_changed (GtkWidget        *widget,
 static gboolean  gimp_display_shell_popup_menu     (GtkWidget        *widget);
 
 static void      gimp_display_shell_real_scaled    (GimpDisplayShell *shell);
+static void      gimp_display_shell_real_rotated   (GimpDisplayShell *shell);
 
 static const guint8 * gimp_display_shell_get_icc_profile
                                                    (GimpColorManaged *managed,
@@ -215,6 +217,15 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  display_shell_signals[ROTATED] =
+    g_signal_new ("rotated",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpDisplayShellClass, rotated),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
   display_shell_signals[RECONNECT] =
     g_signal_new ("reconnect",
                   G_TYPE_FROM_CLASS (klass),
@@ -236,6 +247,7 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
 
   klass->scaled                    = gimp_display_shell_real_scaled;
   klass->scrolled                  = NULL;
+  klass->rotated                   = gimp_display_shell_real_rotated;
   klass->reconnect                 = NULL;
 
   g_object_class_install_property (object_class, PROP_POPUP_MANAGER,
@@ -1010,6 +1022,20 @@ gimp_display_shell_real_scaled (GimpDisplayShell *shell)
     gimp_ui_manager_update (shell->popup_manager, shell->display);
 }
 
+static void
+gimp_display_shell_real_rotated (GimpDisplayShell *shell)
+{
+  GimpContext *user_context;
+
+  if (! shell->display)
+    return;
+
+  user_context = gimp_get_user_context (shell->display->gimp);
+
+  if (shell->display == gimp_context_get_display (user_context))
+    gimp_ui_manager_update (shell->popup_manager, shell->display);
+}
+
 static const guint8 *
 gimp_display_shell_get_icc_profile (GimpColorManaged *managed,
                                     gsize            *len)
@@ -1471,6 +1497,16 @@ gimp_display_shell_scrolled (GimpDisplayShell *shell)
     }
 
   g_signal_emit (shell, display_shell_signals[SCROLLED], 0);
+}
+
+void
+gimp_display_shell_rotated (GimpDisplayShell *shell)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  gimp_display_shell_rotate_update_transform (shell);
+
+  g_signal_emit (shell, display_shell_signals[ROTATED], 0);
 }
 
 void

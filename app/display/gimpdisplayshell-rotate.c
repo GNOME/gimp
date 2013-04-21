@@ -58,7 +58,7 @@ gimp_display_shell_rotate_to (GimpDisplayShell *shell,
 
   shell->rotate_angle = value;
 
-  gimp_display_shell_rotate_update_transform (shell);
+  gimp_display_shell_rotated (shell);
   gimp_display_shell_expose_full (shell);
 }
 
