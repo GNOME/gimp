@@ -131,10 +131,11 @@ gimp_applicator_new (GeglNode *parent)
                                                "operation", "gimp:normal-mode",
                                                NULL);
 
-  gimp_gegl_mode_node_set (applicator->mode_node,
-                           applicator->paint_mode,
-                           applicator->opacity,
-                           FALSE);
+  gimp_gegl_mode_node_set_mode (applicator->mode_node,
+                                applicator->paint_mode,
+                                FALSE);
+  gimp_gegl_mode_node_set_opacity (applicator->mode_node,
+                                   applicator->opacity);
 
   gegl_node_connect_to (applicator->input_node, "output",
                         applicator->mode_node,  "input");
@@ -376,14 +377,20 @@ gimp_applicator_set_mode (GimpApplicator       *applicator,
                           gdouble               opacity,
                           GimpLayerModeEffects  paint_mode)
 {
-  if (applicator->opacity    != opacity ||
-      applicator->paint_mode != paint_mode)
+  if (applicator->opacity != opacity)
     {
-      applicator->opacity    = opacity;
+      applicator->opacity = opacity;
+
+      gimp_gegl_mode_node_set_opacity (applicator->mode_node,
+                                       opacity);
+    }
+
+  if (applicator->paint_mode != paint_mode)
+    {
       applicator->paint_mode = paint_mode;
 
-      gimp_gegl_mode_node_set (applicator->mode_node,
-                               paint_mode, opacity, FALSE);
+      gimp_gegl_mode_node_set_mode (applicator->mode_node,
+                                    paint_mode, FALSE);
     }
 }
 

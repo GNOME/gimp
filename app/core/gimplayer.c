@@ -494,9 +494,9 @@ gimp_layer_notify (GObject    *object,
 
       mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
 
-      gimp_gegl_mode_node_set (mode_node,
-                               gimp_layer_get_visible_mode (layer),
-                               layer->opacity, FALSE);
+      gimp_gegl_mode_node_set_mode (mode_node,
+                                    gimp_layer_get_visible_mode (layer),
+                                    FALSE);
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
                             0, 0,
@@ -594,9 +594,11 @@ gimp_layer_get_node (GimpFilter *filter)
    */
   mode_node = gimp_drawable_get_mode_node (drawable);
 
-  gimp_gegl_mode_node_set (mode_node,
-                           gimp_layer_get_visible_mode (layer),
-                           layer->opacity, FALSE);
+  gimp_gegl_mode_node_set_mode (mode_node,
+                                gimp_layer_get_visible_mode (layer),
+                                FALSE);
+  gimp_gegl_mode_node_set_opacity (mode_node,
+                                   layer->opacity);
 
   /* the layer's offset node */
   layer->layer_offset_node = gegl_node_new_child (node,
@@ -1984,9 +1986,7 @@ gimp_layer_set_opacity (GimpLayer *layer,
 
           mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
 
-          gimp_gegl_mode_node_set (mode_node,
-                                   gimp_layer_get_visible_mode (layer),
-                                   layer->opacity, FALSE);
+          gimp_gegl_mode_node_set_opacity (mode_node, layer->opacity);
         }
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
@@ -2031,9 +2031,9 @@ gimp_layer_set_mode (GimpLayer            *layer,
 
           mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
 
-          gimp_gegl_mode_node_set (mode_node,
-                                   gimp_layer_get_visible_mode (layer),
-                                   layer->opacity, FALSE);
+          gimp_gegl_mode_node_set_mode (mode_node,
+                                        gimp_layer_get_visible_mode (layer),
+                                        FALSE);
         }
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
