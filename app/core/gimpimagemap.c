@@ -293,6 +293,9 @@ gimp_image_map_apply (GimpImageMap *image_map)
 
       image_map->applicator = gimp_applicator_new (filter_node);
 
+      gimp_filter_set_applicator (image_map->filter,
+                                  image_map->applicator);
+
       image_map->translate = gegl_node_new_child (filter_node,
                                                   "operation", "gegl:translate",
                                                   NULL);
