@@ -105,7 +105,7 @@ static const GimpActionEntry view_actions[] =
     GIMP_HELP_VIEW_ZOOM_REVERT },
 
   { "view-rotate-reset", GIMP_STOCK_RESET,
-    NC_("view-action", "_Reset to 0°"), NULL,
+    NC_("view-action", "_Reset to 0°"), "exclam",
     NC_("view-action", "Reset the angle of rotation to 0°"),
     G_CALLBACK (view_rotate_reset_cmd_callback),
     GIMP_HELP_VIEW_ROTATE_RESET },
