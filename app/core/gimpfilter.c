@@ -39,8 +39,10 @@ typedef struct _GimpFilterPrivate GimpFilterPrivate;
 
 struct _GimpFilterPrivate
 {
-  GeglNode *node;
-  gboolean  is_last_node;
+  GeglNode       *node;
+  gboolean        is_last_node;
+
+  GimpApplicator *applicator;
 };
 
 #define GET_PRIVATE(filter) G_TYPE_INSTANCE_GET_PRIVATE (filter, \
@@ -236,4 +238,25 @@ gimp_filter_get_is_last_node (GimpFilter *filter)
   g_return_val_if_fail (GIMP_IS_FILTER (filter), FALSE);
 
   return GET_PRIVATE (filter)->is_last_node;
+}
+
+void
+gimp_filter_set_applicator (GimpFilter     *filter,
+                            GimpApplicator *applicator)
+{
+  GimpFilterPrivate *private;
+
+  g_return_if_fail (GIMP_IS_FILTER (filter));
+
+  private = GET_PRIVATE (filter);
+
+  private->applicator = applicator;
+}
+
+GimpApplicator *
+gimp_filter_get_applicator (GimpFilter *filter)
+{
+  g_return_val_if_fail (GIMP_IS_FILTER (filter), NULL);
+
+  return GET_PRIVATE (filter)->applicator;
 }
