@@ -75,35 +75,38 @@ struct _GimpApplicatorClass
 };
 
 
-GType   gimp_applicator_get_type         (void) G_GNUC_CONST;
+GType        gimp_applicator_get_type         (void) G_GNUC_CONST;
 
-GimpApplicator * gimp_applicator_new     (GeglNode             *parent);
+GimpApplicator * gimp_applicator_new          (GeglNode             *parent);
 
-void    gimp_applicator_set_src_buffer   (GimpApplicator       *applicator,
-                                          GeglBuffer           *dest_buffer);
-void    gimp_applicator_set_dest_buffer  (GimpApplicator       *applicator,
-                                          GeglBuffer           *dest_buffer);
+void         gimp_applicator_set_src_buffer   (GimpApplicator       *applicator,
+                                               GeglBuffer           *dest_buffer);
+void         gimp_applicator_set_dest_buffer  (GimpApplicator       *applicator,
+                                               GeglBuffer           *dest_buffer);
 
-void    gimp_applicator_set_mask_buffer  (GimpApplicator       *applicator,
-                                          GeglBuffer           *mask_buffer);
-void    gimp_applicator_set_mask_offset  (GimpApplicator       *applicator,
-                                          gint                  mask_offset_x,
-                                          gint                  mask_offset_y);
+void         gimp_applicator_set_mask_buffer  (GimpApplicator       *applicator,
+                                               GeglBuffer           *mask_buffer);
+void         gimp_applicator_set_mask_offset  (GimpApplicator       *applicator,
+                                               gint                  mask_offset_x,
+                                               gint                  mask_offset_y);
 
-void    gimp_applicator_set_apply_buffer (GimpApplicator       *applicator,
-                                          GeglBuffer           *apply_buffer);
-void    gimp_applicator_set_apply_offset (GimpApplicator       *applicator,
-                                          gint                  apply_offset_x,
-                                          gint                  apply_offset_y);
+void         gimp_applicator_set_apply_buffer (GimpApplicator       *applicator,
+                                               GeglBuffer           *apply_buffer);
+void         gimp_applicator_set_apply_offset (GimpApplicator       *applicator,
+                                               gint                  apply_offset_x,
+                                               gint                  apply_offset_y);
 
-void    gimp_applicator_set_mode         (GimpApplicator       *applicator,
-                                          gdouble               opacity,
-                                          GimpLayerModeEffects  paint_mode);
-void    gimp_applicator_set_affect       (GimpApplicator       *applicator,
-                                          GimpComponentMask     affect);
+void         gimp_applicator_set_mode         (GimpApplicator       *applicator,
+                                               gdouble               opacity,
+                                               GimpLayerModeEffects  paint_mode);
+void         gimp_applicator_set_affect       (GimpApplicator       *applicator,
+                                               GimpComponentMask     affect);
 
-void    gimp_applicator_blit             (GimpApplicator       *applicator,
-                                          const GeglRectangle  *rect);
+void         gimp_applicator_blit             (GimpApplicator       *applicator,
+                                               const GeglRectangle  *rect);
+
+GeglBuffer * gimp_applicator_dup_apply_buffer (GimpApplicator       *applicator,
+                                               const GeglRectangle  *rect);
 
 
 #endif  /*  __GIMP_APPLICATOR_H__  */

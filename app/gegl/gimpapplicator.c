@@ -408,3 +408,43 @@ gimp_applicator_blit (GimpApplicator      *applicator,
   gegl_node_blit (applicator->dest_node, 1.0, rect,
                   NULL, NULL, 0, GEGL_BLIT_DEFAULT);
 }
+
+GeglBuffer *
+gimp_applicator_dup_apply_buffer (GimpApplicator      *applicator,
+                                  const GeglRectangle *rect)
+{
+  GeglBuffer *buffer;
+  GeglNode   *offset;
+  GeglNode   *dest;
+
+  buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, rect->width, rect->height),
+                            babl_format ("RGBA float"));
+
+  offset = gegl_node_new_child (applicator->node,
+                                "operation", "gegl:translate",
+                                "x",
+                                (gdouble) - applicator->apply_offset_x - rect->x,
+                                "y",
+                                (gdouble) - applicator->apply_offset_y - rect->y,
+                                NULL);
+
+  dest = gegl_node_new_child (applicator->node,
+                              "operation", "gegl:write-buffer",
+                              "buffer",    buffer,
+                              NULL);
+
+  gegl_node_link_many (applicator->apply_offset_node,
+                       offset,
+                       dest,
+                       NULL);
+
+  gegl_node_blit (dest, 1.0, GEGL_RECTANGLE (0, 0, rect->width, rect->height),
+                  NULL, NULL, 0, GEGL_BLIT_DEFAULT);
+
+  gegl_node_disconnect (offset, "input");
+
+  gegl_node_remove_child (applicator->node, offset);
+  gegl_node_remove_child (applicator->node, dest);
+
+  return buffer;
+}
