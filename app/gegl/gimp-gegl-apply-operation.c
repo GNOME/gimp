@@ -43,13 +43,12 @@ gimp_gegl_apply_operation (GeglBuffer          *src_buffer,
                            const GeglRectangle *dest_rect)
 {
   GeglNode      *gegl;
-  GeglNode      *src_node;
   GeglNode      *dest_node;
   GeglRectangle  rect = { 0, };
   gdouble        value;
   gboolean       progress_active = FALSE;
 
-  g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
+  g_return_if_fail (src_buffer == NULL || GEGL_IS_BUFFER (src_buffer));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (GEGL_IS_NODE (operation));
   g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
@@ -66,18 +65,30 @@ gimp_gegl_apply_operation (GeglBuffer          *src_buffer,
 
   gegl = gegl_node_new ();
 
-  src_node = gegl_node_new_child (gegl,
-                                  "operation", "gegl:buffer-source",
-                                  "buffer",    src_buffer,
-                                  NULL);
+  if (! gegl_node_get_parent (operation))
+    gegl_node_add_child (gegl, operation);
+
+  if (src_buffer)
+    {
+      GeglNode *src_node;
+
+      src_node = gegl_node_new_child (gegl,
+                                      "operation", "gegl:buffer-source",
+                                      "buffer",    src_buffer,
+                                      NULL);
+
+      gegl_node_connect_to (src_node,  "output",
+                            operation, "input");
+    }
+
   dest_node = gegl_node_new_child (gegl,
                                    "operation", "gegl:write-buffer",
                                    "buffer",    dest_buffer,
                                    NULL);
 
-  gegl_node_add_child (gegl, operation);
 
-  gegl_node_link_many (src_node, operation, dest_node, NULL);
+  gegl_node_connect_to (operation, "output",
+                        dest_node, "input");
 
   if (progress)
     {
