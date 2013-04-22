@@ -23,13 +23,16 @@
 
 #include "core-types.h"
 
+#include "gegl/gimpapplicator.h"
 #include "gegl/gimp-gegl-apply-operation.h"
 
 #include "gimpdrawable.h"
 #include "gimpdrawable-filter.h"
 #include "gimpdrawable-private.h"
+#include "gimpdrawableundo.h"
 #include "gimpfilter.h"
 #include "gimpfilterstack.h"
+#include "gimpimage-undo.h"
 #include "gimpprogress.h"
 
 
@@ -92,15 +95,52 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
                                 &rect.x, &rect.y,
                                 &rect.width, &rect.height))
     {
+      GimpApplicator *applicator;
+      GeglBuffer     *buffer;
+      GeglNode       *node;
+      GeglNode       *src_node;
+
       gimp_drawable_push_undo (drawable, undo_desc, NULL,
                                rect.x, rect.y,
                                rect.width, rect.height);
 
-      gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
+      node   = gimp_filter_get_node (filter);
+      buffer = gimp_drawable_get_buffer (drawable);
+
+      src_node = gegl_node_new_child (NULL,
+                                      "operation", "gegl:buffer-source",
+                                      "buffer",    buffer,
+                                      NULL);
+
+      gegl_node_connect_to (src_node, "output",
+                            node,     "input");
+
+      applicator = gimp_filter_get_applicator (filter);
+
+      if (applicator)
+        {
+          GimpImage        *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpDrawableUndo *undo;
+
+          undo = GIMP_DRAWABLE_UNDO (gimp_image_undo_get_fadeable (image));
+
+          if (undo)
+            {
+              undo->paint_mode = applicator->paint_mode;
+              undo->opacity    = applicator->opacity;
+
+              undo->applied_buffer =
+                gimp_applicator_dup_apply_buffer (applicator, &rect);
+            }
+        }
+
+      gimp_gegl_apply_operation (NULL,
                                  progress, undo_desc,
-                                 gimp_filter_get_node (filter),
-                                 gimp_drawable_get_buffer (drawable),
+                                 node,
+                                 buffer,
                                  &rect);
+
+      g_object_unref (src_node);
 
       gimp_drawable_update (drawable,
                             rect.x, rect.y,
