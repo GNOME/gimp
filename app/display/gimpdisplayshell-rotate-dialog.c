@@ -56,7 +56,9 @@ static void  gimp_display_shell_rotate_dialog_response (GtkWidget        *widget
                                                         RotateDialogData  *dialog);
 static void  gimp_display_shell_rotate_dialog_free     (RotateDialogData  *dialog);
 
-static void  update_rotate                            (GtkAdjustment    *adj,
+static void  rotate_adjustment_changed                (GtkAdjustment     *adj,
+                                                       RotateDialogData  *dialog);
+static void  display_shell_rotated                    (GimpDisplayShell  *shell,
                                                        RotateDialogData  *dialog);
 
 
@@ -154,7 +156,11 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
   gtk_widget_show (label);
 
   g_signal_connect (data->rotate_adj, "value-changed",
-                    G_CALLBACK (update_rotate), data);
+                    G_CALLBACK (rotate_adjustment_changed),
+                    data);
+  g_signal_connect (shell, "rotated",
+                    G_CALLBACK (display_shell_rotated),
+                    data);
 
   gtk_widget_show (shell->rotate_dialog);
 }
@@ -175,16 +181,41 @@ gimp_display_shell_rotate_dialog_response (GtkWidget        *widget,
 static void
 gimp_display_shell_rotate_dialog_free (RotateDialogData *dialog)
 {
+  g_signal_handlers_disconnect_by_func (dialog->shell,
+                                        display_shell_rotated,
+                                        dialog);
+
   g_slice_free (RotateDialogData, dialog);
 }
 
 static void
-update_rotate (GtkAdjustment    *adj,
-               RotateDialogData *dialog)
+rotate_adjustment_changed (GtkAdjustment    *adj,
+                           RotateDialogData *dialog)
 {
-  gdouble angle;
+  gdouble angle = gtk_adjustment_get_value (dialog->rotate_adj);
 
-  angle = gtk_adjustment_get_value (dialog->rotate_adj);
+  g_signal_handlers_block_by_func (dialog->shell,
+                                   display_shell_rotated,
+                                   dialog);
 
   gimp_display_shell_rotate_to (dialog->shell, angle);
+
+  g_signal_handlers_unblock_by_func (dialog->shell,
+                                     display_shell_rotated,
+                                     dialog);
+}
+
+static void
+display_shell_rotated (GimpDisplayShell  *shell,
+                       RotateDialogData  *dialog)
+{
+  g_signal_handlers_block_by_func (dialog->rotate_adj,
+                                   rotate_adjustment_changed,
+                                   dialog);
+
+  gtk_adjustment_set_value (dialog->rotate_adj, shell->rotate_angle);
+
+  g_signal_handlers_unblock_by_func (dialog->rotate_adj,
+                                     rotate_adjustment_changed,
+                                     dialog);
 }
