@@ -1929,7 +1929,25 @@ gimp_context_real_set_display (GimpContext *context,
   GimpObject *old_display;
 
   if (context->display == display)
-    return;
+    {
+      /*  make sure that setting a display *always* sets the image
+       *  to that display's image, even if the display already
+       *  matches
+       */
+      if (display)
+        {
+          GimpImage *image;
+
+          g_object_get (display, "image", &image, NULL);
+
+          gimp_context_real_set_image (context, image);
+
+          if (image)
+            g_object_unref (image);
+        }
+
+      return;
+    }
 
   old_display = context->display;
 

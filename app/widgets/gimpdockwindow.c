@@ -974,6 +974,15 @@ gimp_dock_window_display_changed (GimpDockWindow *dock_window,
                                   GimpObject     *display,
                                   GimpContext    *context)
 {
+  /*  make sure auto-follow-active works both ways  */
+  if (display && dock_window->p->auto_follow_active)
+    {
+      GimpContext *factory_context =
+        gimp_dialog_factory_get_context (dock_window->p->dialog_factory);
+
+      gimp_context_set_display (factory_context, display);
+    }
+
   gimp_ui_manager_update (dock_window->p->ui_manager,
                           display);
 }
@@ -985,6 +994,15 @@ gimp_dock_window_image_changed (GimpDockWindow *dock_window,
 {
   GimpContainer *image_container   = dock_window->p->image_container;
   GimpContainer *display_container = dock_window->p->display_container;
+
+  /*  make sure auto-follow-active works both ways  */
+  if (image && dock_window->p->auto_follow_active)
+    {
+      GimpContext *factory_context =
+        gimp_dialog_factory_get_context (dock_window->p->dialog_factory);
+
+      gimp_context_set_image (factory_context, image);
+    }
 
   if (image == NULL && ! gimp_container_is_empty (image_container))
     {
