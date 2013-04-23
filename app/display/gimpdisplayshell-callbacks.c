@@ -533,10 +533,16 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
    */
 
   /* draw canvas items */
+  cairo_save (cr);
+
   if (shell->rotate_transform)
     cairo_transform (cr, shell->rotate_transform);
 
   gimp_canvas_item_draw (shell->canvas_item, cr);
+
+  cairo_restore (cr);
+
+  gimp_canvas_item_draw (shell->unrotated_item, cr);
 
   /* restart (and recalculate) the selection boundaries */
   gimp_display_shell_selection_restart (shell);

@@ -118,6 +118,7 @@ struct _GimpDisplayShell
   cairo_pattern_t   *checkerboard;     /*  checkerboard pattern               */
 
   GimpCanvasItem    *canvas_item;      /*  items drawn on the canvas          */
+  GimpCanvasItem    *unrotated_item;   /*  unrotated items for e.g. cursor    */
   GimpCanvasItem    *passe_partout;    /*  item for the highlight             */
   GimpCanvasItem    *preview_items;    /*  item for previews                  */
   GimpCanvasItem    *vectors;          /*  item proxy of vectors              */

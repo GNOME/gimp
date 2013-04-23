@@ -39,9 +39,12 @@
 
 /*  local function prototypes  */
 
-static void   gimp_display_shell_item_update (GimpCanvasItem   *item,
-                                              cairo_region_t   *region,
-                                              GimpDisplayShell *shell);
+static void   gimp_display_shell_item_update           (GimpCanvasItem   *item,
+                                                        cairo_region_t   *region,
+                                                        GimpDisplayShell *shell);
+static void   gimp_display_shell_unrotated_item_update (GimpCanvasItem   *item,
+                                                        cairo_region_t   *region,
+                                                        GimpDisplayShell *shell);
 
 
 /*  public functions  */
@@ -89,13 +92,19 @@ gimp_display_shell_items_init (GimpDisplayShell *shell)
   gimp_display_shell_add_item (shell, shell->tool_items);
   g_object_unref (shell->tool_items);
 
-  shell->cursor = gimp_canvas_cursor_new (shell);
-  gimp_canvas_item_set_visible (shell->cursor, FALSE);
-  gimp_display_shell_add_item (shell, shell->cursor);
-  g_object_unref (shell->cursor);
-
   g_signal_connect (shell->canvas_item, "update",
                     G_CALLBACK (gimp_display_shell_item_update),
+                    shell);
+
+  shell->unrotated_item = gimp_canvas_group_new (shell);
+
+  shell->cursor = gimp_canvas_cursor_new (shell);
+  gimp_canvas_item_set_visible (shell->cursor, FALSE);
+  gimp_display_shell_add_unrotated_item (shell, shell->cursor);
+  g_object_unref (shell->cursor);
+
+  g_signal_connect (shell->unrotated_item, "update",
+                    G_CALLBACK (gimp_display_shell_unrotated_item_update),
                     shell);
 }
 
@@ -121,7 +130,18 @@ gimp_display_shell_items_free (GimpDisplayShell *shell)
       shell->sample_points  = NULL;
       shell->layer_boundary = NULL;
       shell->tool_items     = NULL;
-      shell->cursor         = NULL;
+    }
+
+  if (shell->unrotated_item)
+    {
+      g_signal_handlers_disconnect_by_func (shell->unrotated_item,
+                                            gimp_display_shell_unrotated_item_update,
+                                            shell);
+
+      g_object_unref (shell->unrotated_item);
+      shell->unrotated_item = NULL;
+
+      shell->cursor = NULL;
     }
 }
 
@@ -163,6 +183,26 @@ gimp_display_shell_remove_preview_item (GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
   gimp_canvas_group_remove_item (GIMP_CANVAS_GROUP (shell->preview_items), item);
+}
+
+void
+gimp_display_shell_add_unrotated_item (GimpDisplayShell *shell,
+                                       GimpCanvasItem   *item)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+
+  gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (shell->unrotated_item), item);
+}
+
+void
+gimp_display_shell_remove_unrotated_item (GimpDisplayShell *shell,
+                                          GimpCanvasItem   *item)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+
+  gimp_canvas_group_remove_item (GIMP_CANVAS_GROUP (shell->unrotated_item), item);
 }
 
 void
@@ -227,4 +267,12 @@ gimp_display_shell_item_update (GimpCanvasItem   *item,
     {
       gimp_display_shell_expose_region (shell, region);
     }
+}
+
+static void
+gimp_display_shell_unrotated_item_update (GimpCanvasItem   *item,
+                                          cairo_region_t   *region,
+                                          GimpDisplayShell *shell)
+{
+  gimp_display_shell_expose_region (shell, region);
 }
