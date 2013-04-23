@@ -844,6 +844,9 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
       gint            num_segs_in;
       gint            num_segs_out;
 
+      if (options->direction == GIMP_TRANSFORM_BACKWARD)
+        gimp_matrix3_invert (&matrix);
+
       gimp_channel_boundary (gimp_image_get_mask (image),
                              &orig_in, &orig_out,
                              &num_segs_in, &num_segs_out,
