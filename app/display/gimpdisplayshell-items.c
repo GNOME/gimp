@@ -34,7 +34,7 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-items.h"
-#include "gimpdisplayshell-rotate.h"
+#include "gimpdisplayshell-transform.h"
 
 
 /*  local function prototypes  */
@@ -249,11 +249,11 @@ gimp_display_shell_item_update (GimpCanvasItem   *item,
 
           cairo_region_get_rectangle (region, i, &rect);
 
-          gimp_display_shell_rotate_transform_bounds (shell,
-                                                      rect.x, rect.y,
-                                                      rect.x + rect.width,
-                                                      rect.y + rect.height,
-                                                      &tx1, &ty1, &tx2, &ty2);
+          gimp_display_shell_rotate_bounds (shell,
+                                            rect.x, rect.y,
+                                            rect.x + rect.width,
+                                            rect.y + rect.height,
+                                            &tx1, &ty1, &tx2, &ty2);
 
           x1 = floor (tx1 - 0.5);
           y1 = floor (ty1 - 0.5);

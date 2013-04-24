@@ -1009,20 +1009,12 @@ gimp_draw_tool_on_handle (GimpDrawTool     *draw_tool,
 
   shell = gimp_display_get_shell (display);
 
-  gimp_display_shell_transform_xy_f (shell,
-                                     x, y,
-                                     &tx, &ty);
-  gimp_display_shell_transform_xy_f (shell,
-                                     handle_x, handle_y,
-                                     &handle_tx, &handle_ty);
-
-  if (shell->rotate_untransform)
-    {
-      cairo_matrix_transform_point (shell->rotate_untransform,
-                                    &tx, &ty);
-      cairo_matrix_transform_point (shell->rotate_untransform,
-                                    &handle_tx, &handle_ty);
-    }
+  gimp_display_shell_zoom_xy_f (shell,
+                                x, y,
+                                &tx, &ty);
+  gimp_display_shell_zoom_xy_f (shell,
+                                handle_x, handle_y,
+                                &handle_tx, &handle_ty);
 
   switch (type)
     {

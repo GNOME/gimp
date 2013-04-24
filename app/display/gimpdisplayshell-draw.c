@@ -37,8 +37,8 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-render.h"
-#include "gimpdisplayshell-rotate.h"
 #include "gimpdisplayshell-scale.h"
+#include "gimpdisplayshell-transform.h"
 #include "gimpdisplayxfer.h"
 
 
@@ -149,9 +149,9 @@ gimp_display_shell_draw_image (GimpDisplayShell *shell,
       gint    image_width;
       gint    image_height;
 
-      gimp_display_shell_rotate_untransform_bounds (shell,
-                                                    x, y, x + w, y + h,
-                                                    &tx1, &ty1, &tx2, &ty2);
+      gimp_display_shell_unrotate_bounds (shell,
+                                          x, y, x + w, y + h,
+                                          &tx1, &ty1, &tx2, &ty2);
 
       x1 = floor (tx1 - 0.5);
       y1 = floor (ty1 - 0.5);

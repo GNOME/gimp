@@ -19,37 +19,18 @@
 #define __GIMP_DISPLAY_SHELL_ROTATE_H__
 
 
-void    gimp_display_shell_rotate                     (GimpDisplayShell *shell,
-                                                       gdouble           delta);
-void    gimp_display_shell_rotate_to                  (GimpDisplayShell *shell,
-                                                       gdouble           value);
-void    gimp_display_shell_rotate_drag                (GimpDisplayShell *shell,
-                                                       gdouble           last_x,
-                                                       gdouble           last_y,
-                                                       gdouble           cur_x,
-                                                       gdouble           cur_y,
-                                                       gboolean          constrain);
+void   gimp_display_shell_rotate                  (GimpDisplayShell *shell,
+                                                   gdouble           delta);
+void   gimp_display_shell_rotate_to               (GimpDisplayShell *shell,
+                                                   gdouble           value);
+void   gimp_display_shell_rotate_drag             (GimpDisplayShell *shell,
+                                                   gdouble           last_x,
+                                                   gdouble           last_y,
+                                                   gdouble           cur_x,
+                                                   gdouble           cur_y,
+                                                   gboolean          constrain);
 
-void     gimp_display_shell_rotate_update_transform   (GimpDisplayShell *shell);
-
-void     gimp_display_shell_rotate_transform_bounds   (GimpDisplayShell *shell,
-                                                       gdouble           x1,
-                                                       gdouble           y1,
-                                                       gdouble           x2,
-                                                       gdouble           y2,
-                                                       gdouble          *nx1,
-                                                       gdouble          *ny1,
-                                                       gdouble          *nx2,
-                                                       gdouble          *ny2);
-void     gimp_display_shell_rotate_untransform_bounds (GimpDisplayShell *shell,
-                                                       gdouble           x1,
-                                                       gdouble           y1,
-                                                       gdouble           x2,
-                                                       gdouble           y2,
-                                                       gdouble          *nx1,
-                                                       gdouble          *ny1,
-                                                       gdouble          *nx2,
-                                                       gdouble          *ny2);
+void   gimp_display_shell_rotate_update_transform (GimpDisplayShell *shell);
 
 
 #endif  /*  __GIMP_DISPLAY_SHELL_ROTATE_H__  */

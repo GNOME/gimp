@@ -24,8 +24,6 @@
 
 #include "display-types.h"
 
-#include "core/gimp-utils.h"
-
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-expose.h"
@@ -148,80 +146,4 @@ gimp_display_shell_rotate_update_transform (GimpDisplayShell *shell)
       shell->rotate_transform   = NULL;
       shell->rotate_untransform = NULL;
     }
-}
-
-void
-gimp_display_shell_rotate_transform_bounds (GimpDisplayShell *shell,
-                                            gdouble           x1,
-                                            gdouble           y1,
-                                            gdouble           x2,
-                                            gdouble           y2,
-                                            gdouble          *nx1,
-                                            gdouble          *ny1,
-                                            gdouble          *nx2,
-                                            gdouble          *ny2)
-{
-  gdouble tx1, ty1;
-  gdouble tx2, ty2;
-  gdouble tx3, ty3;
-  gdouble tx4, ty4;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  tx1 = x1;
-  ty1 = y1;
-  tx2 = x1;
-  ty2 = y2;
-  tx3 = x2;
-  ty3 = y1;
-  tx4 = x2;
-  ty4 = y2;
-
-  cairo_matrix_transform_point (shell->rotate_transform, &tx1, &ty1);
-  cairo_matrix_transform_point (shell->rotate_transform, &tx2, &ty2);
-  cairo_matrix_transform_point (shell->rotate_transform, &tx3, &ty3);
-  cairo_matrix_transform_point (shell->rotate_transform, &tx4, &ty4);
-
-  *nx1 = MIN4 (tx1, tx2, tx3, tx4);
-  *ny1 = MIN4 (ty1, ty2, ty3, ty4);
-  *nx2 = MAX4 (tx1, tx2, tx3, tx4);
-  *ny2 = MAX4 (ty1, ty2, ty3, ty4);
-}
-
-void
-gimp_display_shell_rotate_untransform_bounds (GimpDisplayShell *shell,
-                                              gdouble           x1,
-                                              gdouble           y1,
-                                              gdouble           x2,
-                                              gdouble           y2,
-                                              gdouble          *nx1,
-                                              gdouble          *ny1,
-                                              gdouble          *nx2,
-                                              gdouble          *ny2)
-{
-  gdouble tx1, ty1;
-  gdouble tx2, ty2;
-  gdouble tx3, ty3;
-  gdouble tx4, ty4;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  tx1 = x1;
-  ty1 = y1;
-  tx2 = x1;
-  ty2 = y2;
-  tx3 = x2;
-  ty3 = y1;
-  tx4 = x2;
-  ty4 = y2;
-
-  cairo_matrix_transform_point (shell->rotate_untransform, &tx1, &ty1);
-  cairo_matrix_transform_point (shell->rotate_untransform, &tx2, &ty2);
-  cairo_matrix_transform_point (shell->rotate_untransform, &tx3, &ty3);
-  cairo_matrix_transform_point (shell->rotate_untransform, &tx4, &ty4);
-
-  *nx1 = MIN4 (tx1, tx2, tx3, tx4);
-  *ny1 = MIN4 (ty1, ty2, ty3, ty4);
-  *nx2 = MAX4 (tx1, tx2, tx3, tx4);
-  *ny2 = MAX4 (ty1, ty2, ty3, ty4);
 }

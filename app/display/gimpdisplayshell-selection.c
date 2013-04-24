@@ -68,7 +68,7 @@ static void      selection_undraw         (Selection          *selection);
 
 static void      selection_render_mask    (Selection          *selection);
 
-static void      selection_transform_segs (Selection          *selection,
+static void      selection_zoom_segs      (Selection          *selection,
                                            const GimpBoundSeg *src_segs,
                                            GimpSegment        *dest_segs,
                                            gint                n_segs);
@@ -307,18 +307,18 @@ selection_render_mask (Selection *selection)
 }
 
 static void
-selection_transform_segs (Selection          *selection,
-                          const GimpBoundSeg *src_segs,
-                          GimpSegment        *dest_segs,
-                          gint                n_segs)
+selection_zoom_segs (Selection          *selection,
+                     const GimpBoundSeg *src_segs,
+                     GimpSegment        *dest_segs,
+                     gint                n_segs)
 {
   const gint xclamp = selection->shell->disp_width + 1;
   const gint yclamp = selection->shell->disp_height + 1;
   gint       i;
 
-  gimp_display_shell_transform_segments (selection->shell,
-                                         src_segs, dest_segs, n_segs,
-                                         0.0, 0.0);
+  gimp_display_shell_zoom_segments (selection->shell,
+                                    src_segs, dest_segs, n_segs,
+                                    0.0, 0.0);
 
   for (i = 0; i < n_segs; i++)
     {
@@ -368,8 +368,8 @@ selection_generate_segs (Selection *selection)
   if (selection->n_segs_in)
     {
       selection->segs_in = g_new (GimpSegment, selection->n_segs_in);
-      selection_transform_segs (selection, segs_in,
-                                selection->segs_in, selection->n_segs_in);
+      selection_zoom_segs (selection, segs_in,
+                           selection->segs_in, selection->n_segs_in);
 
       selection_render_mask (selection);
     }
@@ -382,8 +382,8 @@ selection_generate_segs (Selection *selection)
   if (selection->n_segs_out)
     {
       selection->segs_out = g_new (GimpSegment, selection->n_segs_out);
-      selection_transform_segs (selection, segs_out,
-                                selection->segs_out, selection->n_segs_out);
+      selection_zoom_segs (selection, segs_out,
+                           selection->segs_out, selection->n_segs_out);
     }
   else
     {
