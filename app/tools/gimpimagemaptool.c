@@ -290,6 +290,13 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
+  if (! gimp_item_is_visible (GIMP_ITEM (drawable)))
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                           _("The active layer is not visible."));
+      return FALSE;
+    }
+
   if (image_map_tool->active_picker)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (image_map_tool->active_picker),
                                   FALSE);

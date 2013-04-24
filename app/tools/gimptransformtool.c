@@ -271,6 +271,13 @@ gimp_transform_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
+  if (! gimp_item_is_visible (GIMP_ITEM (drawable)))
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                           _("The active layer is not visible."));
+      return FALSE;
+    }
+
   if (display != tool->display)
     {
       gint i;
@@ -741,8 +748,9 @@ gimp_transform_tool_cursor_update (GimpTool         *tool,
 
     case GIMP_TRANSFORM_TYPE_LAYER:
       drawable = gimp_image_get_active_drawable (image);
-      if (gimp_item_is_content_locked (GIMP_ITEM (drawable)) ||
-          gimp_item_is_position_locked (GIMP_ITEM (drawable)))
+      if (gimp_item_is_content_locked (GIMP_ITEM (drawable))  ||
+          gimp_item_is_position_locked (GIMP_ITEM (drawable)) ||
+          ! gimp_item_is_visible (GIMP_ITEM (drawable)))
         modifier = GIMP_CURSOR_MODIFIER_BAD;
       break;
 

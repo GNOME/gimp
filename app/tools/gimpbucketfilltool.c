@@ -145,6 +145,13 @@ gimp_bucket_fill_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
+  if (! gimp_item_is_visible (GIMP_ITEM (drawable)))
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                           _("The active layer is not visible."));
+      return FALSE;
+    }
+
   return TRUE;
 }
 
@@ -284,7 +291,8 @@ gimp_bucket_fill_tool_cursor_update (GimpTool         *tool,
       GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
       if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
-          ! gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+          ! gimp_item_is_content_locked (GIMP_ITEM (drawable))    &&
+          gimp_item_is_visible (GIMP_ITEM (drawable)))
         {
           switch (options->fill_mode)
             {

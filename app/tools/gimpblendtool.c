@@ -174,6 +174,13 @@ gimp_blend_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
+  if (! gimp_item_is_visible (GIMP_ITEM (drawable)))
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                           _("The active layer is not visible."));
+      return FALSE;
+    }
+
   if (! gimp_context_get_gradient (GIMP_CONTEXT (options)))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
@@ -363,7 +370,8 @@ gimp_blend_tool_cursor_update (GimpTool         *tool,
   GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_NONE;
 
   if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
-      gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+      gimp_item_is_content_locked (GIMP_ITEM (drawable))    ||
+      ! gimp_item_is_visible (GIMP_ITEM (drawable)))
     {
       modifier = GIMP_CURSOR_MODIFIER_BAD;
     }
