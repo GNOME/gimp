@@ -1,144 +1,143 @@
-# Brazilian Portuguese translation of gimp-plugins
+# translation of pt_BR.po to Brazilian Portuguese
+# translation of pt_BR.po to
+# gimp-plugins: translation to Brazilian Portuguese (pt_BR)
 # Copyright (C) 2000-2003, 2004, 2007, 2008 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
 # Marcia Norie Nakaza <norie@conectiva.com.br>, 2000.
 # Alexandre Folle de Menezes <afmenez@terra.com.br>, 2002-2003.
 # Joao S. O. Bueno <gwidion@gmail.com>, 2004, 2007, 2008, 2012.
-# Enrico Nicoletto <liverig@gmail.com>, 2013.
-# 
 msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-04-08 17:02+0000\n"
-"PO-Revision-Date: 2013-02-21 18:18-0300\n"
-"Last-Translator: Enrico Nicoletto <liverig@gmail.com>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-04-16 00:03-0300\n"
+"PO-Revision-Date: 2012-04-16 11:39-0300\n"
+"Last-Translator: Joao S. O. Bueno <gwidion@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Poedit 1.5.4\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 1.4\n"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:120
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:118
 msgid "Original"
 msgstr "Original"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:138
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:136
 msgid "Rotated"
 msgstr "Rotacionado"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:156
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:154
 msgid "Continuous update"
 msgstr "Atualização contínua"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:169
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:167
 msgid "Area:"
 msgstr "Área"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:173
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:171
 msgid "Entire Layer"
 msgstr "Camada inteira"
 
 #. Create selection
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:174
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:172
 #: ../plug-ins/common/film.c:965 ../plug-ins/imagemap/imap_selection.c:339
 #: ../plug-ins/selection-to-path/selection-to-path.c:434
 msgid "Selection"
 msgstr "Seleção"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:175
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:173
 msgid "Context"
 msgstr "Contexto"
 
 #. spinbutton 1
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:299
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:297
 msgctxt "color-range"
 msgid "From:"
 msgstr "A partir de:"
 
 #. spinbutton 2
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:326
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:323
 msgctxt "color-range"
 msgid "To:"
 msgstr "Para:"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:377
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:375
 msgctxt "color-rotate"
 msgid "From:"
 msgstr "A partir de:"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:378
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:376
 msgctxt "color-rotate"
 msgid "To:"
 msgstr "Para:"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:418
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:416
 #: ../plug-ins/common/file-ps.c:3096 ../plug-ins/imagemap/imap_menu.c:213
 msgid "Gray"
 msgstr "Cinza"
 
 #. Gray: Circle: Spinbutton 1
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:466
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:464
 msgid "Hue:"
 msgstr "Matiz:"
 
 #. Gray: Circle: Spinbutton 2
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:493
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:555
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:491
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:553
 msgid "Saturation:"
 msgstr "Saturação:"
 
 #. * Gray: Operation-Mode *
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:513
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:511
 msgid "Gray Mode"
 msgstr "Modo cinza"
 
 #. Gray: Operation-Mode: two radio buttons
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:522
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:520
 msgid "Treat as this"
 msgstr "Tratar como este"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:534
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:532
 msgid "Change to this"
 msgstr "Mudar para este"
 
 #. * Gray: What is gray? *
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:547
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:545
 msgid "Gray Threshold"
 msgstr "Limiar de cinza"
 
 #. * Misc: Used unit selection *
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:587
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:697
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:585
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:695
 msgid "Units"
 msgstr "Unidades"
 
 #. Misc: Used unit selection: 3 radio buttons
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:596
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:594
 msgid "Radians"
 msgstr "Radianos"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:608
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:606
 msgid "Radians/Pi"
 msgstr "Radianos/Pi"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:620
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:618
 msgid "Degrees"
 msgstr "Graus"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:651
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:649
 msgid "Rotate Colors"
 msgstr "Rotacionar cores"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:691
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:689
 msgid "Main Options"
 msgstr "Opções principais"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:694
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:692
 msgid "Gray Options"
 msgstr "Opções de cinza"
 
@@ -283,97 +282,97 @@ msgstr "Modelo de cores _RGB"
 msgid "_HSL color model"
 msgstr "Modelo de cores _HSL"
 
-#: ../plug-ins/common/align-layers.c:158
+#: ../plug-ins/common/align-layers.c:128
 msgid "Align all visible layers of the image"
 msgstr "Alinha todas as camadas visíveis da imagem"
 
-#: ../plug-ins/common/align-layers.c:163
+#: ../plug-ins/common/align-layers.c:133
 msgid "Align Visi_ble Layers..."
 msgstr "Alinhar camadas _visíveis..."
 
-#: ../plug-ins/common/align-layers.c:207
+#: ../plug-ins/common/align-layers.c:173
 msgid "There are not enough layers to align."
 msgstr "Não há camadas suficientes para alinhar."
 
-#: ../plug-ins/common/align-layers.c:627
+#: ../plug-ins/common/align-layers.c:400
 msgid "Align Visible Layers"
 msgstr "Alinhar camadas visíveis"
 
-#: ../plug-ins/common/align-layers.c:651 ../plug-ins/common/align-layers.c:682
+#: ../plug-ins/common/align-layers.c:424 ../plug-ins/common/align-layers.c:455
 msgctxt "align-style"
 msgid "None"
 msgstr "Nenhum"
 
-#: ../plug-ins/common/align-layers.c:652 ../plug-ins/common/align-layers.c:683
+#: ../plug-ins/common/align-layers.c:425 ../plug-ins/common/align-layers.c:456
 msgid "Collect"
 msgstr "Coletar"
 
-#: ../plug-ins/common/align-layers.c:653
+#: ../plug-ins/common/align-layers.c:426
 msgid "Fill (left to right)"
 msgstr "Preencher (da esquerda para direita)"
 
-#: ../plug-ins/common/align-layers.c:654
+#: ../plug-ins/common/align-layers.c:427
 msgid "Fill (right to left)"
 msgstr "Preencher (da direita para esquerda)"
 
-#: ../plug-ins/common/align-layers.c:655 ../plug-ins/common/align-layers.c:686
+#: ../plug-ins/common/align-layers.c:428 ../plug-ins/common/align-layers.c:459
 msgid "Snap to grid"
 msgstr "Atrair para a grade"
 
-#: ../plug-ins/common/align-layers.c:664
+#: ../plug-ins/common/align-layers.c:437
 msgid "_Horizontal style:"
 msgstr "Estilo _horizontal:"
 
-#: ../plug-ins/common/align-layers.c:668
+#: ../plug-ins/common/align-layers.c:441
 msgid "Left edge"
 msgstr "Extremidade esquerda"
 
-#: ../plug-ins/common/align-layers.c:669 ../plug-ins/common/align-layers.c:699
+#: ../plug-ins/common/align-layers.c:442 ../plug-ins/common/align-layers.c:472
 #: ../plug-ins/gradient-flare/gradient-flare.c:2712
 msgid "Center"
 msgstr "Centro"
 
-#: ../plug-ins/common/align-layers.c:670
+#: ../plug-ins/common/align-layers.c:443
 msgid "Right edge"
 msgstr "Extremidade direita"
 
-#: ../plug-ins/common/align-layers.c:679
+#: ../plug-ins/common/align-layers.c:452
 msgid "Ho_rizontal base:"
 msgstr "Base hori_zontal:"
 
-#: ../plug-ins/common/align-layers.c:684
+#: ../plug-ins/common/align-layers.c:457
 msgid "Fill (top to bottom)"
 msgstr "Preencher (do topo até embaixo)"
 
-#: ../plug-ins/common/align-layers.c:685
+#: ../plug-ins/common/align-layers.c:458
 msgid "Fill (bottom to top)"
 msgstr "Preencher (de baixo até o topo)"
 
-#: ../plug-ins/common/align-layers.c:695
+#: ../plug-ins/common/align-layers.c:468
 msgid "_Vertical style:"
 msgstr "Estilo vertical:"
 
-#: ../plug-ins/common/align-layers.c:698
+#: ../plug-ins/common/align-layers.c:471
 msgid "Top edge"
 msgstr "Extremidade superior"
 
-#: ../plug-ins/common/align-layers.c:700
+#: ../plug-ins/common/align-layers.c:473
 msgid "Bottom edge"
 msgstr "Extremidade inferior"
 
-#: ../plug-ins/common/align-layers.c:709
+#: ../plug-ins/common/align-layers.c:482
 msgid "Ver_tical base:"
 msgstr "Base _vertical:"
 
-#: ../plug-ins/common/align-layers.c:713
+#: ../plug-ins/common/align-layers.c:486
 msgid "_Grid size:"
 msgstr "Tamanho da _grade:"
 
-#: ../plug-ins/common/align-layers.c:722
+#: ../plug-ins/common/align-layers.c:495
 msgid "_Ignore the bottom layer even if visible"
 msgstr "Ignorar a camada do fundo mesmo se for visível"
 
-#: ../plug-ins/common/align-layers.c:732
+#: ../plug-ins/common/align-layers.c:505
 msgid "_Use the (invisible) bottom layer as the base"
 msgstr "_Usar a camada do fundo (invisível) como a base"
 
@@ -608,17 +607,17 @@ msgstr "_Vertical"
 #. * Create the "background" layer to hold the image...
 #.
 #: ../plug-ins/common/blinds.c:279 ../plug-ins/common/compose.c:936
-#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:441
-#: ../plug-ins/common/file-cel.c:444 ../plug-ins/common/file-dicom.c:612
+#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:363
+#: ../plug-ins/common/file-cel.c:366 ../plug-ins/common/file-dicom.c:612
 #: ../plug-ins/common/file-gif-load.c:943
 #: ../plug-ins/common/file-jp2-load.c:354 ../plug-ins/common/file-pcx.c:425
 #: ../plug-ins/common/file-pcx.c:431 ../plug-ins/common/file-pix.c:382
-#: ../plug-ins/common/file-png.c:891 ../plug-ins/common/file-pnm.c:585
+#: ../plug-ins/common/file-png.c:891 ../plug-ins/common/file-pnm.c:583
 #: ../plug-ins/common/file-raw.c:763 ../plug-ins/common/file-sunras.c:977
-#: ../plug-ins/common/file-tga.c:1072 ../plug-ins/common/file-tiff-load.c:1010
+#: ../plug-ins/common/file-tga.c:1064 ../plug-ins/common/file-tiff-load.c:997
 #: ../plug-ins/common/file-xbm.c:897 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:257 ../plug-ins/common/tile.c:262
-#: ../plug-ins/file-bmp/bmp-read.c:391 ../plug-ins/file-bmp/bmp-read.c:658
+#: ../plug-ins/file-bmp/bmp-read.c:380 ../plug-ins/file-bmp/bmp-read.c:647
 #: ../plug-ins/file-faxg3/faxg3.c:474 ../plug-ins/file-fits/fits.c:530
 #: ../plug-ins/file-jpeg/jpeg-load.c:255 ../plug-ins/file-jpeg/jpeg-load.c:819
 #: ../plug-ins/file-psd/psd-image-res-load.c:1001
@@ -798,7 +797,7 @@ msgstr "Desfocagem simples, rápida mas não muito intensa"
 msgid "_Blur"
 msgstr "_Desfocar"
 
-#: ../plug-ins/common/blur.c:177 ../plug-ins/common/unsharp-mask.c:589
+#: ../plug-ins/common/blur.c:177 ../plug-ins/common/unsharp-mask.c:582
 msgid "Blurring"
 msgstr "Desfocando"
 
@@ -1019,23 +1018,22 @@ msgstr "Carregar opções do misturador de canais"
 
 #. stat error (file does not exist)
 #: ../plug-ins/common/channel-mixer.c:980
-#: ../plug-ins/common/cml-explorer.c:2208 ../plug-ins/common/curve-bend.c:891
-#: ../plug-ins/common/file-cel.c:296 ../plug-ins/common/file-cel.c:348
-#: ../plug-ins/common/file-cel.c:579 ../plug-ins/common/file-dicom.c:340
+#: ../plug-ins/common/cml-explorer.c:2208 ../plug-ins/common/curve-bend.c:892
+#: ../plug-ins/common/file-cel.c:312 ../plug-ins/common/file-dicom.c:340
 #: ../plug-ins/common/file-gbr.c:368 ../plug-ins/common/file-gif-load.c:355
 #: ../plug-ins/common/file-gih.c:640 ../plug-ins/common/file-jp2-load.c:194
 #: ../plug-ins/common/file-jp2-load.c:203 ../plug-ins/common/file-mng.c:1156
 #: ../plug-ins/common/file-pat.c:337 ../plug-ins/common/file-pcx.c:361
 #: ../plug-ins/common/file-pix.c:343 ../plug-ins/common/file-png.c:756
-#: ../plug-ins/common/file-pnm.c:496 ../plug-ins/common/file-ps.c:1014
+#: ../plug-ins/common/file-pnm.c:494 ../plug-ins/common/file-ps.c:1014
 #: ../plug-ins/common/file-ps.c:2910 ../plug-ins/common/file-psp.c:1717
 #: ../plug-ins/common/file-raw.c:256 ../plug-ins/common/file-raw.c:711
 #: ../plug-ins/common/file-sunras.c:391 ../plug-ins/common/file-svg.c:333
 #: ../plug-ins/common/file-svg.c:713 ../plug-ins/common/file-tga.c:442
-#: ../plug-ins/common/file-xbm.c:737 ../plug-ins/common/file-xmc.c:655
-#: ../plug-ins/common/file-xmc.c:840 ../plug-ins/common/file-xwd.c:435
-#: ../plug-ins/common/sphere-designer.c:2010
-#: ../plug-ins/file-bmp/bmp-read.c:154 ../plug-ins/file-faxg3/faxg3.c:229
+#: ../plug-ins/common/file-tiff-load.c:291 ../plug-ins/common/file-xbm.c:737
+#: ../plug-ins/common/file-xmc.c:663 ../plug-ins/common/file-xmc.c:848
+#: ../plug-ins/common/file-xwd.c:433 ../plug-ins/common/sphere-designer.c:2010
+#: ../plug-ins/file-bmp/bmp-read.c:153 ../plug-ins/file-faxg3/faxg3.c:229
 #: ../plug-ins/file-fits/fits.c:358 ../plug-ins/file-fli/fli-gimp.c:459
 #: ../plug-ins/file-fli/fli-gimp.c:496 ../plug-ins/file-ico/ico-load.c:651
 #: ../plug-ins/file-ico/ico-load.c:729 ../plug-ins/file-jpeg/jpeg-load.c:117
@@ -1058,20 +1056,20 @@ msgid "Save Channel Mixer Settings"
 msgstr "Salvar opções do misturador de canais"
 
 #: ../plug-ins/common/channel-mixer.c:1058
-#: ../plug-ins/common/cml-explorer.c:2035 ../plug-ins/common/curve-bend.c:839
-#: ../plug-ins/common/file-cel.c:772 ../plug-ins/common/file-csource.c:407
+#: ../plug-ins/common/cml-explorer.c:2035 ../plug-ins/common/curve-bend.c:840
+#: ../plug-ins/common/file-cel.c:585 ../plug-ins/common/file-csource.c:407
 #: ../plug-ins/common/file-dicom.c:1351 ../plug-ins/common/file-gbr.c:663
-#: ../plug-ins/common/file-gif-save.c:792 ../plug-ins/common/file-gih.c:1258
+#: ../plug-ins/common/file-gif-save.c:782 ../plug-ins/common/file-gih.c:1258
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-mng.c:649
 #: ../plug-ins/common/file-mng.c:984 ../plug-ins/common/file-pat.c:486
 #: ../plug-ins/common/file-pcx.c:712 ../plug-ins/common/file-pix.c:526
-#: ../plug-ins/common/file-png.c:1358 ../plug-ins/common/file-pnm.c:1012
+#: ../plug-ins/common/file-png.c:1358 ../plug-ins/common/file-pnm.c:1010
 #: ../plug-ins/common/file-ps.c:1190 ../plug-ins/common/file-raw.c:591
 #: ../plug-ins/common/file-raw.c:619 ../plug-ins/common/file-sunras.c:565
-#: ../plug-ins/common/file-tga.c:1179 ../plug-ins/common/file-tiff-save.c:708
-#: ../plug-ins/common/file-xbm.c:1036 ../plug-ins/common/file-xmc.c:1447
-#: ../plug-ins/common/file-xwd.c:623 ../plug-ins/common/sphere-designer.c:2121
-#: ../plug-ins/file-bmp/bmp-write.c:309 ../plug-ins/file-fits/fits.c:476
+#: ../plug-ins/common/file-tga.c:1171 ../plug-ins/common/file-tiff-save.c:684
+#: ../plug-ins/common/file-xbm.c:1036 ../plug-ins/common/file-xmc.c:1455
+#: ../plug-ins/common/file-xwd.c:619 ../plug-ins/common/sphere-designer.c:2121
+#: ../plug-ins/file-bmp/bmp-write.c:306 ../plug-ins/file-fits/fits.c:476
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1007
 #: ../plug-ins/file-jpeg/jpeg-save.c:332 ../plug-ins/file-psd/psd-save.c:1652
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:166
@@ -1106,7 +1104,7 @@ msgstr "Adicionando xadrez"
 msgid "Checkerboard"
 msgstr "Xadrez"
 
-#: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1154
+#: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1162
 #: ../plug-ins/gimpressionist/sizemap.c:510
 msgid "_Size:"
 msgstr "_Tamanho:"
@@ -1323,7 +1321,7 @@ msgstr "Saturação"
 #: ../plug-ins/common/cml-explorer.c:302 ../plug-ins/common/cml-explorer.c:310
 #: ../plug-ins/common/decompose.c:190
 #: ../plug-ins/gimpressionist/orientation.c:155
-#: ../plug-ins/gimpressionist/size.c:158 ../plug-ins/metadata/interface.c:144
+#: ../plug-ins/gimpressionist/size.c:158
 msgid "Value"
 msgstr "Valor"
 
@@ -2164,19 +2162,19 @@ msgstr "Cortar camada _automaticamente"
 msgid "Cropping"
 msgstr "Cortando"
 
-#: ../plug-ins/common/crop-zealous.c:68
+#: ../plug-ins/common/crop-zealous.c:84
 msgid "Autocrop unused space from edges and middle"
 msgstr "Elimina automaticamente espaços não usados nas bordas e no meio"
 
-#: ../plug-ins/common/crop-zealous.c:73
+#: ../plug-ins/common/crop-zealous.c:89
 msgid "_Zealous Crop"
 msgstr "Cortar Com C_uidado"
 
-#: ../plug-ins/common/crop-zealous.c:121
+#: ../plug-ins/common/crop-zealous.c:137
 msgid "Zealous cropping"
 msgstr "Cortando com cuidado"
 
-#: ../plug-ins/common/crop-zealous.c:252
+#: ../plug-ins/common/crop-zealous.c:238
 msgid "Nothing to crop."
 msgstr "Nada para recortar."
 
@@ -2208,42 +2206,42 @@ msgstr "_Usar cor de fundo"
 msgid "Cubistic transformation"
 msgstr "Transformação cubista"
 
-#: ../plug-ins/common/curve-bend.c:526
+#: ../plug-ins/common/curve-bend.c:527
 msgid "Bend the image using two control curves"
 msgstr "Distorce a imagem usando duas curvas de controle"
 
-#: ../plug-ins/common/curve-bend.c:547
+#: ../plug-ins/common/curve-bend.c:548
 msgid "_Curve Bend..."
 msgstr "_Dobrar em curva..."
 
-#: ../plug-ins/common/curve-bend.c:683 ../plug-ins/common/edge-dog.c:178
+#: ../plug-ins/common/curve-bend.c:684 ../plug-ins/common/edge-dog.c:178
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr ""
 "Dobrar em Curva funciona apenas em camadas (mas foi chamado em um7 canal ou "
 "máscara)"
 
-#: ../plug-ins/common/curve-bend.c:693
+#: ../plug-ins/common/curve-bend.c:694
 msgid "Cannot operate on layers with masks."
 msgstr "Este filtro não pode ser aplicado em camadas com máscaras."
 
-#: ../plug-ins/common/curve-bend.c:705
+#: ../plug-ins/common/curve-bend.c:706
 msgid "Cannot operate on empty selections."
 msgstr "Não é possível operar em seleções vazias"
 
-#: ../plug-ins/common/curve-bend.c:901
+#: ../plug-ins/common/curve-bend.c:902
 #, c-format
 msgid "Error while reading '%s': %s"
 msgstr "Erro ao ler '%s': %s"
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: ../plug-ins/common/curve-bend.c:1224 ../plug-ins/common/curve-bend.c:2955
+#: ../plug-ins/common/curve-bend.c:1225 ../plug-ins/common/curve-bend.c:2956
 msgid "Curve Bend"
 msgstr "Dobrar em curva"
 
 #. Preview area, top of column
 #. preview
-#: ../plug-ins/common/curve-bend.c:1261
+#: ../plug-ins/common/curve-bend.c:1262
 #: ../plug-ins/gimpressionist/orientmap.c:590
 #: ../plug-ins/gimpressionist/sizemap.c:459
 #: ../plug-ins/print/print-page-layout.c:175
@@ -2251,116 +2249,116 @@ msgid "Preview"
 msgstr "Pré-visualização"
 
 #. The preview button
-#: ../plug-ins/common/curve-bend.c:1290
+#: ../plug-ins/common/curve-bend.c:1291
 msgid "_Preview Once"
 msgstr "Pré-visualizar uma vez"
 
 #. The preview toggle
-#: ../plug-ins/common/curve-bend.c:1299
+#: ../plug-ins/common/curve-bend.c:1300
 msgid "Automatic pre_view"
 msgstr "Pré-visualização automática"
 
 #. Options area, bottom of column
 #. Options section
-#: ../plug-ins/common/curve-bend.c:1309 ../plug-ins/common/ripple.c:523
+#: ../plug-ins/common/curve-bend.c:1310 ../plug-ins/common/ripple.c:523
 #: ../plug-ins/gfig/gfig-dialog.c:1243
 msgid "Options"
 msgstr "Opções"
 
 #. Rotate spinbutton
-#: ../plug-ins/common/curve-bend.c:1323
+#: ../plug-ins/common/curve-bend.c:1324
 msgid "Rotat_e:"
 msgstr "Rotacionar:"
 
 #. The smoothing toggle
-#: ../plug-ins/common/curve-bend.c:1342
+#: ../plug-ins/common/curve-bend.c:1343
 msgid "Smoo_thing"
 msgstr "Uniformi_zado"
 
 #. The antialiasing toggle
-#: ../plug-ins/common/curve-bend.c:1352 ../plug-ins/common/mosaic.c:729
+#: ../plug-ins/common/curve-bend.c:1353 ../plug-ins/common/mosaic.c:729
 #: ../plug-ins/common/qbist.c:858 ../plug-ins/common/ripple.c:532
 msgid "_Antialiasing"
 msgstr "_Anti-serrilhamento"
 
 #. The work_on_copy toggle
-#: ../plug-ins/common/curve-bend.c:1362
+#: ../plug-ins/common/curve-bend.c:1363
 msgid "Work on cop_y"
 msgstr "Executa em uma cópia"
 
 #. The curves graph
-#: ../plug-ins/common/curve-bend.c:1372
+#: ../plug-ins/common/curve-bend.c:1373
 msgid "Modify Curves"
 msgstr "Modificar curvas"
 
-#: ../plug-ins/common/curve-bend.c:1400
+#: ../plug-ins/common/curve-bend.c:1401
 msgid "Curve for Border"
 msgstr "Curva para a borda"
 
-#: ../plug-ins/common/curve-bend.c:1404
+#: ../plug-ins/common/curve-bend.c:1405
 msgid "_Upper"
 msgstr "S_uperior"
 
-#: ../plug-ins/common/curve-bend.c:1405
+#: ../plug-ins/common/curve-bend.c:1406
 msgid "_Lower"
 msgstr "_Inferior"
 
-#: ../plug-ins/common/curve-bend.c:1415
+#: ../plug-ins/common/curve-bend.c:1416
 msgid "Curve Type"
 msgstr "_Tipo de curva"
 
-#: ../plug-ins/common/curve-bend.c:1419
+#: ../plug-ins/common/curve-bend.c:1420
 msgid "Smoot_h"
 msgstr "Uni_forme"
 
-#: ../plug-ins/common/curve-bend.c:1420
+#: ../plug-ins/common/curve-bend.c:1421
 msgid "_Free"
 msgstr "_Livre"
 
 #. The Copy button
-#: ../plug-ins/common/curve-bend.c:1435
+#: ../plug-ins/common/curve-bend.c:1436
 msgid "_Copy"
 msgstr "_Copiar"
 
-#: ../plug-ins/common/curve-bend.c:1440
+#: ../plug-ins/common/curve-bend.c:1441
 msgid "Copy the active curve to the other border"
 msgstr "Copia a curva ativa para  a outra borda"
 
 #. The CopyInv button
-#: ../plug-ins/common/curve-bend.c:1447
+#: ../plug-ins/common/curve-bend.c:1448
 msgid "_Mirror"
 msgstr "_Espelhar"
 
-#: ../plug-ins/common/curve-bend.c:1452
+#: ../plug-ins/common/curve-bend.c:1453
 msgid "Mirror the active curve to the other border"
 msgstr "Espelha a curva ativa para a outra borda"
 
 #. The Swap button
-#: ../plug-ins/common/curve-bend.c:1460
+#: ../plug-ins/common/curve-bend.c:1461
 msgid "S_wap"
 msgstr "T_roca"
 
-#: ../plug-ins/common/curve-bend.c:1465
+#: ../plug-ins/common/curve-bend.c:1466
 msgid "Swap the two curves"
 msgstr "Troca as duas curvas"
 
-#: ../plug-ins/common/curve-bend.c:1477
+#: ../plug-ins/common/curve-bend.c:1478
 msgid "Reset the active curve"
 msgstr "Reinicializa a curva ativa"
 
-#: ../plug-ins/common/curve-bend.c:1494
+#: ../plug-ins/common/curve-bend.c:1495
 msgid "Load the curves from a file"
 msgstr "Carregar pontos de curva de um arquivo"
 
-#: ../plug-ins/common/curve-bend.c:1506
+#: ../plug-ins/common/curve-bend.c:1507
 msgid "Save the curves to a file"
 msgstr "Salvar pontos de curva em arquivo"
 
-#: ../plug-ins/common/curve-bend.c:2062
+#: ../plug-ins/common/curve-bend.c:2063
 msgid "Load Curve Points from File"
 msgstr "Carregar pontos de curva de arquivo"
 
-#: ../plug-ins/common/curve-bend.c:2097
+#: ../plug-ins/common/curve-bend.c:2098
 msgid "Save Curve Points to File"
 msgstr "Salvar pontos de curva em arquivo"
 
@@ -2644,9 +2642,9 @@ msgstr "_Adaptativa"
 msgid "R_ecursive"
 msgstr "R_ecursiva"
 
-#: ../plug-ins/common/despeckle.c:510 ../plug-ins/common/edge-neon.c:735
+#: ../plug-ins/common/despeckle.c:510 ../plug-ins/common/edge-neon.c:734
 #: ../plug-ins/common/nl-filter.c:1091 ../plug-ins/common/nova.c:362
-#: ../plug-ins/common/unsharp-mask.c:872 ../plug-ins/common/whirl-pinch.c:591
+#: ../plug-ins/common/unsharp-mask.c:865 ../plug-ins/common/whirl-pinch.c:591
 #: ../plug-ins/gradient-flare/gradient-flare.c:2757
 #: ../plug-ins/imagemap/imap_circle.c:277
 msgid "_Radius:"
@@ -2864,11 +2862,11 @@ msgstr "_Neon..."
 msgid "Neon"
 msgstr "Neon"
 
-#: ../plug-ins/common/edge-neon.c:697
+#: ../plug-ins/common/edge-neon.c:696
 msgid "Neon Detection"
 msgstr "Detecção neon"
 
-#: ../plug-ins/common/edge-neon.c:750 ../plug-ins/common/unsharp-mask.c:885
+#: ../plug-ins/common/edge-neon.c:749 ../plug-ins/common/unsharp-mask.c:878
 msgid "_Amount:"
 msgstr "_Quantidade:"
 
@@ -3015,36 +3013,30 @@ msgstr "Texto"
 msgid "_Format:"
 msgstr "_Formato:"
 
-#: ../plug-ins/common/file-cel.c:114 ../plug-ins/common/file-cel.c:132
+#: ../plug-ins/common/file-cel.c:111 ../plug-ins/common/file-cel.c:129
 msgid "KISS CEL"
 msgstr "KISS CEL"
 
-#: ../plug-ins/common/file-cel.c:202
+#: ../plug-ins/common/file-cel.c:191
 msgid "Load KISS Palette"
 msgstr "Carrega paleta KISS"
-
-#: ../plug-ins/common/file-cel.c:308 ../plug-ins/common/file-cel.c:363
-#: ../plug-ins/common/file-cel.c:383
-#, c-format
-msgid "EOF or error while reading image header"
-msgstr "fim do arquivo ou erro ao ler cabeçalho da imagem"
 
 #. max. rows allocated
 #. column, highest column ever used
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
-#: ../plug-ins/common/file-cel.c:353 ../plug-ins/common/file-dicom.c:345
+#: ../plug-ins/common/file-cel.c:317 ../plug-ins/common/file-dicom.c:345
 #: ../plug-ins/common/file-gbr.c:373 ../plug-ins/common/file-gif-load.c:360
 #: ../plug-ins/common/file-gih.c:645 ../plug-ins/common/file-jp2-load.c:187
 #: ../plug-ins/common/file-pat.c:342 ../plug-ins/common/file-pcx.c:366
 #: ../plug-ins/common/file-pdf-load.c:861 ../plug-ins/common/file-pix.c:348
-#: ../plug-ins/common/file-png.c:763 ../plug-ins/common/file-pnm.c:501
+#: ../plug-ins/common/file-png.c:763 ../plug-ins/common/file-pnm.c:499
 #: ../plug-ins/common/file-ps.c:1020 ../plug-ins/common/file-raw.c:716
 #: ../plug-ins/common/file-sunras.c:487 ../plug-ins/common/file-tga.c:447
-#: ../plug-ins/common/file-tiff-load.c:611 ../plug-ins/common/file-wmf.c:994
-#: ../plug-ins/common/file-xbm.c:742 ../plug-ins/common/file-xmc.c:667
-#: ../plug-ins/common/file-xpm.c:352 ../plug-ins/common/file-xwd.c:526
-#: ../plug-ins/file-bmp/bmp-read.c:159 ../plug-ins/file-faxg3/faxg3.c:213
+#: ../plug-ins/common/file-tiff-load.c:603 ../plug-ins/common/file-wmf.c:994
+#: ../plug-ins/common/file-xbm.c:742 ../plug-ins/common/file-xmc.c:675
+#: ../plug-ins/common/file-xpm.c:352 ../plug-ins/common/file-xwd.c:524
+#: ../plug-ins/file-bmp/bmp-read.c:158 ../plug-ins/file-faxg3/faxg3.c:213
 #: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:644
 #: ../plug-ins/file-jpeg/jpeg-load.c:123 ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-sgi/sgi.c:330 ../plug-ins/file-xjt/xjt.c:3333
@@ -3052,79 +3044,27 @@ msgstr "fim do arquivo ou erro ao ler cabeçalho da imagem"
 msgid "Opening '%s'"
 msgstr "Abrindo '%s'"
 
-#: ../plug-ins/common/file-cel.c:391
-#, c-format
-msgid "is not a CEL image file"
-msgstr "não é um arquivo de imagem CEL"
-
-#: ../plug-ins/common/file-cel.c:405
-#, c-format
-msgid "illegal bpp value in image: %hhu"
-msgstr "valor ilegal de bpp na imagem: %hhu"
-
-#: ../plug-ins/common/file-cel.c:419
-#, c-format
-msgid ""
-"illegal image dimensions: width: %d, horizontal offset: %d, height: %d, "
-"vertical offset: %d"
-msgstr ""
-"dimensões ilegais de imagem: largura: %d, desloc. horizontal: %d, altura: "
-"%d, desloc. vertical: %d"
-
-#: ../plug-ins/common/file-cel.c:432
-#, c-format
+#: ../plug-ins/common/file-cel.c:354
 msgid "Can't create a new image"
 msgstr "Não foi possível criar uma nova imagem"
 
-#: ../plug-ins/common/file-cel.c:470 ../plug-ins/common/file-cel.c:505
-#: ../plug-ins/common/file-cel.c:530
-#, c-format
-msgid "EOF or error while reading image data"
-msgstr "fim do arquivo ou erro ao ler dados da imagem"
-
-#: ../plug-ins/common/file-cel.c:547
+#: ../plug-ins/common/file-cel.c:444
 #, c-format
 msgid "Unsupported bit depth (%d)!"
 msgstr "Profundidade de cores não suportada (%d)!"
 
-#: ../plug-ins/common/file-cel.c:629 ../plug-ins/common/file-cel.c:641
-#, c-format
-msgid "'%s': EOF or error while reading palette header"
-msgstr "\"%s\": fim do arquivo ou erro ao ler o cabeçalho da paleta"
-
-#: ../plug-ins/common/file-cel.c:650
-#, c-format
-msgid "'%s': is not a KCF palette file"
-msgstr "\"%s\": não é um arquivo de paletta KCF"
-
-#: ../plug-ins/common/file-cel.c:659
-#, c-format
-msgid "'%s': illegal bpp value in palette: %hhu"
-msgstr "\"%s\": valor ilegal de bpp na paleta: %hhu"
-
-#: ../plug-ins/common/file-cel.c:668
-#, c-format
-msgid "'%s': illegal number of colors: %u"
-msgstr "\"%s\": número ilegal de cores: %u"
-
-#: ../plug-ins/common/file-cel.c:683 ../plug-ins/common/file-cel.c:700
-#: ../plug-ins/common/file-cel.c:720
-#, c-format
-msgid "'%s': EOF or error while reading palette data"
-msgstr "\"%s\": fim do arquivo ou erro ao ler os dados da paleta"
-
 #. init the progress meter
 #. And let's begin the progress
-#: ../plug-ins/common/file-cel.c:777 ../plug-ins/common/file-gbr.c:668
-#: ../plug-ins/common/file-gif-save.c:799 ../plug-ins/common/file-gih.c:1263
+#: ../plug-ins/common/file-cel.c:590 ../plug-ins/common/file-gbr.c:668
+#: ../plug-ins/common/file-gif-save.c:789 ../plug-ins/common/file-gih.c:1263
 #: ../plug-ins/common/file-html-table.c:257 ../plug-ins/common/file-pat.c:491
 #: ../plug-ins/common/file-pcx.c:644 ../plug-ins/common/file-pix.c:531
-#: ../plug-ins/common/file-png.c:1365 ../plug-ins/common/file-pnm.c:1017
+#: ../plug-ins/common/file-png.c:1365 ../plug-ins/common/file-pnm.c:1015
 #: ../plug-ins/common/file-ps.c:1195 ../plug-ins/common/file-sunras.c:570
-#: ../plug-ins/common/file-tga.c:1184 ../plug-ins/common/file-tiff-save.c:716
-#: ../plug-ins/common/file-xbm.c:1041 ../plug-ins/common/file-xmc.c:1452
-#: ../plug-ins/common/file-xpm.c:638 ../plug-ins/common/file-xwd.c:628
-#: ../plug-ins/file-bmp/bmp-write.c:320 ../plug-ins/file-fits/fits.c:481
+#: ../plug-ins/common/file-tga.c:1176 ../plug-ins/common/file-tiff-save.c:694
+#: ../plug-ins/common/file-xbm.c:1041 ../plug-ins/common/file-xmc.c:1460
+#: ../plug-ins/common/file-xpm.c:638 ../plug-ins/common/file-xwd.c:624
+#: ../plug-ins/file-bmp/bmp-write.c:317 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1001
 #: ../plug-ins/file-jpeg/jpeg-save.c:289 ../plug-ins/file-psd/psd-save.c:1657
 #: ../plug-ins/file-sgi/sgi.c:576 ../plug-ins/file-xjt/xjt.c:1696
@@ -3207,12 +3147,12 @@ msgid "'%s' is not a DICOM file."
 msgstr "'%s': não é um arquivo DICOM."
 
 #: ../plug-ins/common/file-dicom.c:1319 ../plug-ins/common/file-pcx.c:676
-#: ../plug-ins/common/file-pnm.c:1002
+#: ../plug-ins/common/file-pnm.c:1000
 msgid "Cannot save images with alpha channel."
 msgstr "Não é possível salvar imagens com canal alfa."
 
 #: ../plug-ins/common/file-dicom.c:1334 ../plug-ins/common/file-ps.c:1180
-#: ../plug-ins/common/file-ps.c:1212 ../plug-ins/common/file-xwd.c:613
+#: ../plug-ins/common/file-ps.c:1212 ../plug-ins/common/file-xwd.c:609
 #: ../plug-ins/file-fits/fits.c:466 ../plug-ins/file-xjt/xjt.c:1691
 msgid "Cannot operate on unknown image types."
 msgstr "Não é possível operar em tipos de imagens indexados ou desconhecidos"
@@ -3308,12 +3248,12 @@ msgstr ""
 "GIF: Tipo de composição %d, não documentada para GIFs, não é tratada. A "
 "animação pode não ser reproduzida, ou salva novamente, sem alterações."
 
-#: ../plug-ins/common/file-gif-save.c:476
+#: ../plug-ins/common/file-gif-save.c:468
 msgid "Couldn't simply reduce colors further. Saving as opaque."
 msgstr ""
 "Simplesmente não foi  possível reduzir mais as cores. Salvando como opaco."
 
-#: ../plug-ins/common/file-gif-save.c:591
+#: ../plug-ins/common/file-gif-save.c:583
 #, c-format
 msgid ""
 "Unable to save '%s'.  The GIF file format does not support images that are "
@@ -3322,7 +3262,7 @@ msgstr ""
 "Não é possível salvar '%s'. O formato de arquivo GIF não suporta imagens que "
 "tenham mais de %d pixels de largura ou de altura."
 
-#: ../plug-ins/common/file-gif-save.c:704
+#: ../plug-ins/common/file-gif-save.c:694
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -3330,20 +3270,20 @@ msgstr ""
 "O formato GIF suporta comentários apenas em ASCII de 7 bits. Nenhum  "
 "comentário foi salvo."
 
-#: ../plug-ins/common/file-gif-save.c:763
+#: ../plug-ins/common/file-gif-save.c:753
 msgid ""
 "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Não é possível salvar imagens RGB como GIF.  Converter para Cores Indexadas "
 "ou Tons de Cinza antes. "
 
-#: ../plug-ins/common/file-gif-save.c:941
+#: ../plug-ins/common/file-gif-save.c:931
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr ""
 "Atraso inserido para impedir uma terrível animação transgênica sugadora de "
 "CPU do mal."
 
-#: ../plug-ins/common/file-gif-save.c:982
+#: ../plug-ins/common/file-gif-save.c:972
 msgid ""
 "The image you are trying to save as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -3351,7 +3291,7 @@ msgstr ""
 "A imagem que você está tentando salvar como um GIF contém camadas que se "
 "extendem além das bordas reais da imagem."
 
-#: ../plug-ins/common/file-gif-save.c:999
+#: ../plug-ins/common/file-gif-save.c:989
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this save."
@@ -3359,11 +3299,11 @@ msgstr ""
 "O formato GIF não permite isso.Você tem a opção de cortar todas as camadas "
 "paraas bordas da imagem ou cancelar esta gravação."
 
-#: ../plug-ins/common/file-gif-save.c:1135
+#: ../plug-ins/common/file-gif-save.c:1125
 msgid "GIF"
 msgstr "GIF"
 
-#: ../plug-ins/common/file-gif-save.c:1143
+#: ../plug-ins/common/file-gif-save.c:1133
 #, c-format
 msgid ""
 "Error loading UI file '%s':\n"
@@ -3372,19 +3312,19 @@ msgstr ""
 "Erro ao abrir arquivo de Interface '%s':\n"
 "%s"
 
-#: ../plug-ins/common/file-gif-save.c:1197
+#: ../plug-ins/common/file-gif-save.c:1187
 msgid "I don't care"
 msgstr "Não importa"
 
-#: ../plug-ins/common/file-gif-save.c:1199
+#: ../plug-ins/common/file-gif-save.c:1189
 msgid "Cumulative layers (combine)"
 msgstr "Camadas cumulativas (combinar)"
 
-#: ../plug-ins/common/file-gif-save.c:1201
+#: ../plug-ins/common/file-gif-save.c:1191
 msgid "One frame per layer (replace)"
 msgstr "Um quadro por camada (substituir)"
 
-#: ../plug-ins/common/file-gif-save.c:1218
+#: ../plug-ins/common/file-gif-save.c:1208
 msgid ""
 "You can only export as animation when the image has more than one layer. The "
 "image you are trying to export only has one layer."
@@ -3392,12 +3332,12 @@ msgstr ""
 "Só é possível exportar como animação quando a imagem tem mais de uma camada. "
 "A imagem que você está tentando exportar tem apenas uma camada."
 
-#: ../plug-ins/common/file-gif-save.c:2322
+#: ../plug-ins/common/file-gif-save.c:2312
 msgid "Error writing output file."
 msgstr "Erro ao gravar arquivo de saída."
 
 #. translators: the %d is *always* 240 here
-#: ../plug-ins/common/file-gif-save.c:2395
+#: ../plug-ins/common/file-gif-save.c:2385
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "O comentário padrão é limitado em %d caracteres."
@@ -3655,8 +3595,8 @@ msgid ""
 "Image component %d of image '%s' does not have the same size as the image. "
 "This is currently not supported."
 msgstr ""
-"O componente %d da imagem '%s' não tem o mesmo tamanho que a imagem. Essa "
-"configuração não é suportada."
+"O componente %d da imagem '%s' não tem o mesmo tamanho que a imagem. "
+"Essa configuração não é suportada."
 
 #: ../plug-ins/common/file-jp2-load.c:334
 #, c-format
@@ -3694,7 +3634,7 @@ msgstr "Entrelaçar"
 msgid "Save background color"
 msgstr "Salvar cor de fundo"
 
-#: ../plug-ins/common/file-mng.c:1371 ../plug-ins/ui/plug-in-file-png.ui.h:3
+#: ../plug-ins/common/file-mng.c:1371 ../plug-ins/ui/plug-in-file-png.ui.h:9
 msgid "Save gamma"
 msgstr "Salvar gama"
 
@@ -3751,7 +3691,7 @@ msgstr "Disposição padrão dos quadros:"
 msgid "PNG compression level:"
 msgstr "Nível de compressão do PNG:"
 
-#: ../plug-ins/common/file-mng.c:1465 ../plug-ins/ui/plug-in-file-png.ui.h:10
+#: ../plug-ins/common/file-mng.c:1465 ../plug-ins/ui/plug-in-file-png.ui.h:1
 msgid "Choose a high compression level for small file size"
 msgstr "Escolha um nível de compressão alto para um tamanho menor de arquivo"
 
@@ -3775,7 +3715,7 @@ msgstr "Repetir"
 msgid "Default frame delay:"
 msgstr "Duração padrão dos quadros:"
 
-#: ../plug-ins/common/file-mng.c:1542 ../plug-ins/ui/plug-in-file-gif.ui.h:7
+#: ../plug-ins/common/file-mng.c:1542 ../plug-ins/ui/plug-in-file-gif.ui.h:11
 msgid "milliseconds"
 msgstr "milissegundos"
 
@@ -3818,13 +3758,13 @@ msgstr "Não foi possível ler o cabeçalho de  \"%s\""
 msgid "'%s' is not a PCX file"
 msgstr "%s: não é um arquivo PCX"
 
-#: ../plug-ins/common/file-pcx.c:397 ../plug-ins/file-bmp/bmp-read.c:647
+#: ../plug-ins/common/file-pcx.c:397 ../plug-ins/file-bmp/bmp-read.c:636
 #: ../plug-ins/file-psd/psd-load.c:301
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Largura da imagem não suportada ou inválida: %d"
 
-#: ../plug-ins/common/file-pcx.c:403 ../plug-ins/file-bmp/bmp-read.c:653
+#: ../plug-ins/common/file-pcx.c:403 ../plug-ins/file-bmp/bmp-read.c:642
 #: ../plug-ins/file-psd/psd-load.c:293
 #, c-format
 msgid "Unsupported or invalid image height: %d"
@@ -3869,7 +3809,7 @@ msgid "Writing to file '%s' failed: %s"
 msgstr "Erro ao escrever no arquivo  '%s': %s"
 
 #: ../plug-ins/common/file-pdf-load.c:300
-#: ../plug-ins/common/file-pdf-save.c:290
+#: ../plug-ins/common/file-pdf-save.c:289
 msgid "Portable Document Format"
 msgstr "Portable Document Format: PDF"
 
@@ -3894,7 +3834,7 @@ msgid "Import from PDF"
 msgstr "Importar de PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1093 ../plug-ins/common/file-ps.c:2962
-#: ../plug-ins/common/file-tiff-load.c:491
+#: ../plug-ins/common/file-tiff-load.c:483
 msgid "_Import"
 msgstr "_Importar"
 
@@ -3926,18 +3866,18 @@ msgstr "Usar anti-_serrilhamento"
 msgid "pixels/%a"
 msgstr "pixels/%a"
 
-#: ../plug-ins/common/file-pdf-save.c:305
+#: ../plug-ins/common/file-pdf-save.c:304
 msgid "_Create multipage PDF..."
 msgstr "_Criar PDF de múltiplas páginas..."
 
-#: ../plug-ins/common/file-pdf-save.c:412
+#: ../plug-ins/common/file-pdf-save.c:401
 msgid "You must select a file to save!"
 msgstr "Você deve selecionar um arquivo para salvar!"
 
-#: ../plug-ins/common/file-pdf-save.c:422
+#: ../plug-ins/common/file-pdf-save.c:410
 #, c-format
 msgid ""
-"An error occured while creating the PDF file:\n"
+"An error occurred while creating the PDF file:\n"
 "%s\n"
 "Make sure you entered a valid filename and that the selected location isn't "
 "read only!"
@@ -3945,49 +3885,50 @@ msgstr ""
 "Um erro ocorreu ao criar o arquivo PDF:\n"
 "%s\n"
 "Certifique-se de ter entrado um nome de arquivo válido e que você tem "
-"permissão de escrita na pasta de destino."
+"permissão "
+"de escrita na pasta de destino."
 
-#: ../plug-ins/common/file-pdf-save.c:746
-#: ../plug-ins/common/file-pdf-save.c:863
+#: ../plug-ins/common/file-pdf-save.c:733
+#: ../plug-ins/common/file-pdf-save.c:850
 msgid "Omit hidden layers and layers with zero opacity"
 msgstr "Omitir camadas escondidas e camadas com opacidade zero."
 
-#: ../plug-ins/common/file-pdf-save.c:750
-#: ../plug-ins/common/file-pdf-save.c:867
+#: ../plug-ins/common/file-pdf-save.c:737
+#: ../plug-ins/common/file-pdf-save.c:854
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "Converter bitmaps para gráficos vetoriais quando for possível"
 
-#: ../plug-ins/common/file-pdf-save.c:754
-#: ../plug-ins/common/file-pdf-save.c:871
+#: ../plug-ins/common/file-pdf-save.c:741
+#: ../plug-ins/common/file-pdf-save.c:858
 msgid "Apply layer masks before saving"
 msgstr "Aplicar máscaras de camada antes de salvar"
 
-#: ../plug-ins/common/file-pdf-save.c:757
-#: ../plug-ins/common/file-pdf-save.c:874
+#: ../plug-ins/common/file-pdf-save.c:744
+#: ../plug-ins/common/file-pdf-save.c:861
 msgid "Keeping the masks will not change the output"
 msgstr "Manter as máscaras não irá alterar a saída"
 
-#: ../plug-ins/common/file-pdf-save.c:810
+#: ../plug-ins/common/file-pdf-save.c:797
 msgid "Save to:"
 msgstr "Salvar em:"
 
-#: ../plug-ins/common/file-pdf-save.c:814
+#: ../plug-ins/common/file-pdf-save.c:801
 msgid "Browse..."
 msgstr "Procurar..."
 
-#: ../plug-ins/common/file-pdf-save.c:815
+#: ../plug-ins/common/file-pdf-save.c:802
 msgid "Multipage PDF export"
 msgstr "Exportação de PDF de múltiplas páginas"
 
-#: ../plug-ins/common/file-pdf-save.c:848
+#: ../plug-ins/common/file-pdf-save.c:835
 msgid "Remove the selected pages"
 msgstr "Remover as páginas selecionadas"
 
-#: ../plug-ins/common/file-pdf-save.c:858
+#: ../plug-ins/common/file-pdf-save.c:845
 msgid "Add this image"
 msgstr "Adicionar esta imagem"
 
-#: ../plug-ins/common/file-pdf-save.c:971
+#: ../plug-ins/common/file-pdf-save.c:958
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr ""
 "Erro! Para salvar o arquivo, pelo menos uma imagem deve ser adicionada!"
@@ -4052,8 +3993,9 @@ msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
 "to apply this offset to the layer?"
 msgstr ""
-"O arquvo PNG que você está importando especifica um deslocamento de (%d, "
-"%d). Você deseja aplicar este offset à camada?"
+"O arquvo PNG que você está importando especifica um deslocamento de (%d, %d). "
+"Você "
+"deseja aplicar este offset à camada?"
 
 #: ../plug-ins/common/file-png.c:1335
 #, c-format
@@ -4094,58 +4036,58 @@ msgstr "Imagem PGM"
 msgid "PPM image"
 msgstr "Imagem PPM"
 
-#: ../plug-ins/common/file-pnm.c:530 ../plug-ins/common/file-pnm.c:552
-#: ../plug-ins/common/file-pnm.c:561 ../plug-ins/common/file-pnm.c:572
-#: ../plug-ins/common/file-pnm.c:658 ../plug-ins/common/file-pnm.c:740
+#: ../plug-ins/common/file-pnm.c:528 ../plug-ins/common/file-pnm.c:550
+#: ../plug-ins/common/file-pnm.c:559 ../plug-ins/common/file-pnm.c:570
+#: ../plug-ins/common/file-pnm.c:656 ../plug-ins/common/file-pnm.c:738
 msgid "Premature end of file."
 msgstr "Fim prematuro do arquivo."
 
-#: ../plug-ins/common/file-pnm.c:532
+#: ../plug-ins/common/file-pnm.c:530
 msgid "Invalid file."
 msgstr "arquivo inválido."
 
-#: ../plug-ins/common/file-pnm.c:546
+#: ../plug-ins/common/file-pnm.c:544
 msgid "File not in a supported format."
 msgstr "O arquivo não está num formato suportado."
 
-#: ../plug-ins/common/file-pnm.c:555
+#: ../plug-ins/common/file-pnm.c:553
 msgid "Invalid X resolution."
 msgstr "Resolução X inválida."
 
-#: ../plug-ins/common/file-pnm.c:557
+#: ../plug-ins/common/file-pnm.c:555
 msgid "Image width is larger than GIMP can handle."
 msgstr "A largura da imagem é maior do que o que o GIMP suporta."
 
-#: ../plug-ins/common/file-pnm.c:564
+#: ../plug-ins/common/file-pnm.c:562
 msgid "Invalid Y resolution."
 msgstr "Resolução Y inválida."
 
-#: ../plug-ins/common/file-pnm.c:566
+#: ../plug-ins/common/file-pnm.c:564
 msgid "Image height is larger than GIMP can handle."
 msgstr "A altura da imagem é maior do que o que o GIMP suporta."
 
-#: ../plug-ins/common/file-pnm.c:576
+#: ../plug-ins/common/file-pnm.c:574
 msgid "Unsupported maximum value."
 msgstr "Valor máximo não suportado."
 
-#: ../plug-ins/common/file-pnm.c:816
+#: ../plug-ins/common/file-pnm.c:814
 msgid "Error reading file."
 msgstr "Erro ao ler arquivo."
 
-#: ../plug-ins/common/file-pnm.c:1221
+#: ../plug-ins/common/file-pnm.c:1219
 msgid "PNM"
 msgstr "PNM"
 
 #. file save type
-#: ../plug-ins/common/file-pnm.c:1224
+#: ../plug-ins/common/file-pnm.c:1222
 msgid "Data formatting"
 msgstr "Formatação dos dados"
 
-#: ../plug-ins/common/file-pnm.c:1228
+#: ../plug-ins/common/file-pnm.c:1226
 msgid "Raw"
 msgstr "Crú"
 
-#: ../plug-ins/common/file-pnm.c:1229
+#: ../plug-ins/common/file-pnm.c:1227
 msgid "ASCII"
 msgstr "ASCII"
 
@@ -4173,7 +4115,7 @@ msgstr ""
 "A operação de salvar como PostScript  não pode manipular imagens com canais "
 "alfa"
 
-#: ../plug-ins/common/file-ps.c:1804 ../plug-ins/common/file-tiff-load.c:1012
+#: ../plug-ins/common/file-ps.c:1804 ../plug-ins/common/file-tiff-load.c:999
 #, c-format
 msgid "Page %d"
 msgstr "Página %d"
@@ -4459,7 +4401,7 @@ msgid "Type of colormap not supported"
 msgstr "Tipo de mapa de cores não suportado"
 
 #: ../plug-ins/common/file-sunras.c:457 ../plug-ins/common/file-xbm.c:827
-#: ../plug-ins/common/file-xwd.c:491
+#: ../plug-ins/common/file-xwd.c:489
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4469,7 +4411,7 @@ msgstr ""
 "Largura da imagem não especificada"
 
 #: ../plug-ins/common/file-sunras.c:465 ../plug-ins/common/file-xbm.c:834
-#: ../plug-ins/common/file-xwd.c:501
+#: ../plug-ins/common/file-xwd.c:499
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4479,7 +4421,7 @@ msgstr ""
 "A largura da imagem é maior do que a que o GIMP consegue usar"
 
 #: ../plug-ins/common/file-sunras.c:473 ../plug-ins/common/file-xbm.c:841
-#: ../plug-ins/common/file-xwd.c:510
+#: ../plug-ins/common/file-xwd.c:508
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4489,7 +4431,7 @@ msgstr ""
 "Altura da imagem não especificada"
 
 #: ../plug-ins/common/file-sunras.c:481 ../plug-ins/common/file-xbm.c:848
-#: ../plug-ins/common/file-xwd.c:519
+#: ../plug-ins/common/file-xwd.c:517
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4513,9 +4455,9 @@ msgstr "Não é possível operar em tipos de imagens desconhecidas"
 
 #: ../plug-ins/common/file-sunras.c:1084 ../plug-ins/common/file-sunras.c:1175
 #: ../plug-ins/common/file-sunras.c:1256 ../plug-ins/common/file-sunras.c:1351
-#: ../plug-ins/common/file-xwd.c:1361 ../plug-ins/common/file-xwd.c:1462
-#: ../plug-ins/common/file-xwd.c:1620 ../plug-ins/common/file-xwd.c:1832
-#: ../plug-ins/common/file-xwd.c:2095 ../plug-ins/file-fits/fits.c:698
+#: ../plug-ins/common/file-xwd.c:1357 ../plug-ins/common/file-xwd.c:1458
+#: ../plug-ins/common/file-xwd.c:1616 ../plug-ins/common/file-xwd.c:1817
+#: ../plug-ins/common/file-xwd.c:2069 ../plug-ins/file-fits/fits.c:698
 msgid "EOF encountered on reading"
 msgstr "EOF encontrado durante a leitura"
 
@@ -4623,52 +4565,52 @@ msgstr "Não foi possível ler a extensão de  \"%s\""
 msgid "Cannot read header from '%s'"
 msgstr "Não foi possível ler o cabeçalho de  \"%s\""
 
-#: ../plug-ins/common/file-tga.c:1380
+#: ../plug-ins/common/file-tga.c:1372
 msgid "TGA"
 msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1389
+#: ../plug-ins/common/file-tga.c:1381
 msgid "_RLE compression"
 msgstr "Compressão _RLE"
 
-#: ../plug-ins/common/file-tga.c:1403
+#: ../plug-ins/common/file-tga.c:1395
 msgid "Or_igin:"
 msgstr "Ori_gem:"
 
-#: ../plug-ins/common/file-tga.c:1407
+#: ../plug-ins/common/file-tga.c:1399
 msgid "Bottom left"
 msgstr "Inferior esquerda"
 
-#: ../plug-ins/common/file-tga.c:1408
+#: ../plug-ins/common/file-tga.c:1400
 msgid "Top left"
 msgstr "Superior esquerda"
 
-#: ../plug-ins/common/file-tiff-load.c:243
-#: ../plug-ins/common/file-tiff-save.c:186
-#: ../plug-ins/common/file-tiff-save.c:203
+#: ../plug-ins/common/file-tiff-load.c:240
+#: ../plug-ins/common/file-tiff-save.c:183
+#: ../plug-ins/common/file-tiff-save.c:200
 msgid "TIFF image"
 msgstr "Imagem TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:297
+#: ../plug-ins/common/file-tiff-load.c:310
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF: '%s' não contém nenhum diretório"
 
-#: ../plug-ins/common/file-tiff-load.c:486
+#: ../plug-ins/common/file-tiff-load.c:478
 msgid "Import from TIFF"
 msgstr "Importar de TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:818
+#: ../plug-ins/common/file-tiff-load.c:780
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-de-%d-páginas"
 
-#: ../plug-ins/common/file-tiff-load.c:1028
+#: ../plug-ins/common/file-tiff-load.c:1015
 msgid "TIFF Channel"
 msgstr "Canal TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:1037
+#: ../plug-ins/common/file-tiff-load.c:1024
 #: ../plug-ins/file-psd/psd-load.c:333
 msgid ""
 "Warning:\n"
@@ -4681,7 +4623,7 @@ msgstr ""
 "correntemente só pode tratar 8 bits por canal, então a mesma será convertida "
 "para você. Informação será perdida nesta conversão."
 
-#: ../plug-ins/common/file-tiff-save.c:910
+#: ../plug-ins/common/file-tiff-save.c:888
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -4689,48 +4631,48 @@ msgstr ""
 "O formato TIFF só suporta comentários em \n"
 "ASCII de 7 bits. O comentário não foi salvo."
 
-#: ../plug-ins/common/file-tiff-save.c:1083
+#: ../plug-ins/common/file-tiff-save.c:1062
 msgid "TIFF"
 msgstr "TIFF"
 
 #. compression
-#: ../plug-ins/common/file-tiff-save.c:1091
+#: ../plug-ins/common/file-tiff-save.c:1070
 msgid "Compression"
 msgstr "Compressão"
 
-#: ../plug-ins/common/file-tiff-save.c:1095
+#: ../plug-ins/common/file-tiff-save.c:1074
 msgid "_None"
 msgstr "_Nenhum"
 
-#: ../plug-ins/common/file-tiff-save.c:1096
+#: ../plug-ins/common/file-tiff-save.c:1075
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/common/file-tiff-save.c:1097
+#: ../plug-ins/common/file-tiff-save.c:1076
 msgid "_Pack Bits"
 msgstr "Em_pacotar Bits"
 
-#: ../plug-ins/common/file-tiff-save.c:1098
+#: ../plug-ins/common/file-tiff-save.c:1077
 msgid "_Deflate"
 msgstr "_Deflate"
 
-#: ../plug-ins/common/file-tiff-save.c:1099
+#: ../plug-ins/common/file-tiff-save.c:1078
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/common/file-tiff-save.c:1100
+#: ../plug-ins/common/file-tiff-save.c:1079
 msgid "CCITT Group _3 fax"
 msgstr "CCITT group _3 fax"
 
-#: ../plug-ins/common/file-tiff-save.c:1101
+#: ../plug-ins/common/file-tiff-save.c:1080
 msgid "CCITT Group _4 fax"
 msgstr "CCITT group _4 fax"
 
-#: ../plug-ins/common/file-tiff-save.c:1123
+#: ../plug-ins/common/file-tiff-save.c:1102
 msgid "Save _color values from transparent pixels"
 msgstr "Salvar informações de _cor dos pixels transparentes"
 
-#: ../plug-ins/common/file-tiff-save.c:1139 ../plug-ins/common/file-xbm.c:1235
+#: ../plug-ins/common/file-tiff-save.c:1118 ../plug-ins/common/file-xbm.c:1235
 msgid "Comment:"
 msgstr "Comentário:"
 
@@ -4825,7 +4767,7 @@ msgstr "Prefixo _identificador:"
 msgid "_Write hot spot values"
 msgstr "Grava _valores de \"hot spot\""
 
-#: ../plug-ins/common/file-xbm.c:1266 ../plug-ins/common/file-xmc.c:1081
+#: ../plug-ins/common/file-xbm.c:1266 ../plug-ins/common/file-xmc.c:1089
 msgid "Hot spot _X:"
 msgstr "\"Hot Spot\" _X:"
 
@@ -4846,52 +4788,52 @@ msgstr "G_ravar arquivo de máscara extra"
 msgid "_Mask file extension:"
 msgstr "Extensão do arquivo de _máscara:"
 
-#: ../plug-ins/common/file-xmc.c:331 ../plug-ins/common/file-xmc.c:369
-#: ../plug-ins/common/file-xmc.c:1044
+#: ../plug-ins/common/file-xmc.c:333 ../plug-ins/common/file-xmc.c:373
+#: ../plug-ins/common/file-xmc.c:1052
 msgid "X11 Mouse Cursor"
 msgstr "Cursor de mouse X11"
 
-#: ../plug-ins/common/file-xmc.c:473
+#: ../plug-ins/common/file-xmc.c:481
 #, c-format
 msgid ""
 "Cannot set the hot spot!\n"
 "You must arrange layers so that all of them have an intersection."
 msgstr ""
 "Não é possível marcar o o ponto de alvo (hot spot)\n"
-"Você precisa rearranjar as camadas de forma que todas elas tenham uma "
-"intersecção"
+"Você precisa rearranjar as camadas de forma que todas elas tenham "
+"uma intersecção"
 
-#: ../plug-ins/common/file-xmc.c:662
+#: ../plug-ins/common/file-xmc.c:670
 #, c-format
 msgid "'%s' is not a valid X cursor."
 msgstr "'%s' não é um cursor X válido"
 
-#: ../plug-ins/common/file-xmc.c:678
+#: ../plug-ins/common/file-xmc.c:686
 #, c-format
 msgid "Frame %d of '%s' is too wide for an X cursor."
 msgstr "O quadro % de '%s' é muito largo para um cursor X."
 
-#: ../plug-ins/common/file-xmc.c:685
+#: ../plug-ins/common/file-xmc.c:693
 #, c-format
 msgid "Frame %d of '%s' is too high for an X cursor."
 msgstr "O quadro % de '%s' é muito alto para um cursor X."
 
-#: ../plug-ins/common/file-xmc.c:888
+#: ../plug-ins/common/file-xmc.c:896
 #, c-format
 msgid "there is no image chunk in \"%s\"."
 msgstr "não há segmento de imagem em \"%s\""
 
-#: ../plug-ins/common/file-xmc.c:930
+#: ../plug-ins/common/file-xmc.c:938
 #, c-format
 msgid "'%s' is too wide for an X cursor."
 msgstr "' %s' é muito largo para ser um cursor X."
 
-#: ../plug-ins/common/file-xmc.c:937
+#: ../plug-ins/common/file-xmc.c:945
 #, c-format
 msgid "'%s' is too high for an X cursor."
 msgstr "' %s' é muito alto para ser um cursor X."
 
-#: ../plug-ins/common/file-xmc.c:1007
+#: ../plug-ins/common/file-xmc.c:1015
 #, c-format
 msgid "A read error occurred."
 msgstr "Ocorreu um erro de leitura."
@@ -4899,25 +4841,25 @@ msgstr "Ocorreu um erro de leitura."
 #.
 #. * parameter settings
 #.
-#: ../plug-ins/common/file-xmc.c:1049
+#: ../plug-ins/common/file-xmc.c:1057
 msgid "XMC Options"
 msgstr "Opções de XMC"
 
-#: ../plug-ins/common/file-xmc.c:1077
+#: ../plug-ins/common/file-xmc.c:1085
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Entre a  coordenada X do ponto alvo. A origem é o canto superior esquerdo."
 
-#: ../plug-ins/common/file-xmc.c:1095
+#: ../plug-ins/common/file-xmc.c:1103
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Entre a  coordenada Y do ponto alvo. A origem é o canto superior esquerdo."
 
-#: ../plug-ins/common/file-xmc.c:1106
+#: ../plug-ins/common/file-xmc.c:1114
 msgid "_Auto-Crop all frames."
 msgstr "Cortar _automaticamente todas os quadros."
 
-#: ../plug-ins/common/file-xmc.c:1119
+#: ../plug-ins/common/file-xmc.c:1127
 msgid ""
 "Remove the empty borders of all frames.\n"
 "This reduces the file size and may fix the problem that some large cursors "
@@ -4929,7 +4871,7 @@ msgstr ""
 "cursores muito grandes que bagunçam a tela.\n"
 "Desative se você pretende editar o cursor exportado usando outros programas."
 
-#: ../plug-ins/common/file-xmc.c:1142
+#: ../plug-ins/common/file-xmc.c:1150
 msgid ""
 "Choose the nominal size of frames.\n"
 "If you don't have plans to make multi-sized cursor, or you have no idea, "
@@ -4940,65 +4882,64 @@ msgid ""
 "theme-size\"."
 msgstr ""
 "Escolha o tamanho nominal dos quadros.\n"
-"Se você não tem planos de fazer um cursor de multiplos tamanhos, ou não tem "
-"idéia, deixe como \"32px\".\n"
+"Se você não tem planos de fazer um cursor de multiplos tamanhos, "
+"ou não tem idéia, deixe como \"32px\".\n"
 "O tamanho nominal não tem relação com o tamanho real (largura ou altura).\n"
-"Só é usado para determinar qual quadro depende de qual sequência de "
-"animação, e qual sequência é usada depende do valor de \"gtk-cursor-theme-"
-"size\"."
+"Só é usado para determinar qual quadro depende de qual sequência de animação, "
+"e qual sequência é usada depende do valor de \"gtk-cursor-theme-size\"."
 
-#: ../plug-ins/common/file-xmc.c:1159
+#: ../plug-ins/common/file-xmc.c:1167
 msgid "_Use this value only for a frame which size is not specified."
 msgstr ""
 "_Usar este valor apenas para um quadro cujo tamanho não esteja especificado."
 
-#: ../plug-ins/common/file-xmc.c:1162
+#: ../plug-ins/common/file-xmc.c:1170
 msgid "_Replace the size of all frames even if it is specified."
 msgstr "_Sobrescrever o tamanho de todos os quadros."
 
-#: ../plug-ins/common/file-xmc.c:1196
+#: ../plug-ins/common/file-xmc.c:1204
 msgid "Enter time span in milliseconds in which each frame is rendered."
 msgstr "Entre o tempo em milissegundo que cada quadro é mostrado."
 
-#: ../plug-ins/common/file-xmc.c:1199
+#: ../plug-ins/common/file-xmc.c:1207
 msgid "_Delay:"
 msgstr "_Atraso:"
 
-#: ../plug-ins/common/file-xmc.c:1204
+#: ../plug-ins/common/file-xmc.c:1212
 msgid "_Use this value only for a frame which delay is not specified."
 msgstr ""
 "Usar este valor apenas para um quadro cujo atraso não esteja especificado."
 
-#: ../plug-ins/common/file-xmc.c:1207
+#: ../plug-ins/common/file-xmc.c:1215
 msgid "_Replace the delay of all frames even if it is specified."
 msgstr "_Sobrescrever o atraso de todos os quadros."
 
-#: ../plug-ins/common/file-xmc.c:1232
+#: ../plug-ins/common/file-xmc.c:1240
 msgid ""
 "The part of copyright information that exceeded 65535 characters was removed."
 msgstr ""
 "A parte da informação de direito de autor que ultrapassou 65535 bytes foi "
 "removida."
 
-#: ../plug-ins/common/file-xmc.c:1242
+#: ../plug-ins/common/file-xmc.c:1250
 msgid "Enter copyright information."
 msgstr "Entre a informação de direito de autor."
 
-#: ../plug-ins/common/file-xmc.c:1244
+#: ../plug-ins/common/file-xmc.c:1252
 msgid "_Copyright:"
 msgstr "_Direito de autor:"
 
-#: ../plug-ins/common/file-xmc.c:1260
+#: ../plug-ins/common/file-xmc.c:1268
 msgid ""
 "The part of license information that exceeded 65535 characters was removed."
 msgstr ""
 "A parte da informação de licença que ultrapassou 65535 bytes foi removida."
 
-#: ../plug-ins/common/file-xmc.c:1270
+#: ../plug-ins/common/file-xmc.c:1278
 msgid "Enter license information."
 msgstr "Entre a informação de licença de uso e distribuição."
 
-#: ../plug-ins/common/file-xmc.c:1272
+#: ../plug-ins/common/file-xmc.c:1280
 msgid "_License:"
 msgstr "_Licença:"
 
@@ -5007,56 +4948,56 @@ msgstr "_Licença:"
 #.
 #. We use gtk_text_view for "Other" while "Copyright" & "License" is entered
 #. * in gtk_entry because We want allow '\n' for "Other".
-#: ../plug-ins/common/file-xmc.c:1279
+#: ../plug-ins/common/file-xmc.c:1287
 msgid "_Other:"
 msgstr "_Outros:"
 
-#: ../plug-ins/common/file-xmc.c:1313
+#: ../plug-ins/common/file-xmc.c:1321
 msgid "Enter other comment if you want."
 msgstr "Entre o comentárioq ue você quiser."
 
-#: ../plug-ins/common/file-xmc.c:1363
+#: ../plug-ins/common/file-xmc.c:1371
 #, c-format
 msgid "Comment is limited to %d characters."
 msgstr "O comentário é limitado em %d caracteres."
 
-#: ../plug-ins/common/file-xmc.c:1481
+#: ../plug-ins/common/file-xmc.c:1489
 #, c-format
 msgid "This plug-in can only handle RGBA image files with 8bit color depth."
 msgstr ""
 "Este plug-in só trabalha com arquivos de imagem RGBA com 8 bits de cor por "
 "canal."
 
-#: ../plug-ins/common/file-xmc.c:1499
+#: ../plug-ins/common/file-xmc.c:1507
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
 msgstr ""
 "O quadro '%s' é muito largo. Por favor, reduza-o para não mais que %dpx de "
 "largura."
 
-#: ../plug-ins/common/file-xmc.c:1506
+#: ../plug-ins/common/file-xmc.c:1514
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr ""
 "O quadro '%s' é muito alto. Por favor, reduza-o para não mais que %dpx de "
 "altura."
 
-#: ../plug-ins/common/file-xmc.c:1513
+#: ../plug-ins/common/file-xmc.c:1521
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
 msgstr "A largura ou altura do quadro '%s' é zero!"
 
-#: ../plug-ins/common/file-xmc.c:1553
+#: ../plug-ins/common/file-xmc.c:1561
 #, c-format
 msgid ""
 "Cannot save the cursor because the hot spot is not on frame '%s'.\n"
 "Try to change the hot spot position, layer geometry or save without auto-"
 "crop."
 msgstr ""
-"Não foi possível salvar o cursor por que o ponto alvo não está presente no "
-"quadro '%s'. Tente alterar a camada de forma que ela inclua o ponto alvo. "
+"Não foi possível salvar o cursor por que o ponto alvo não está presente "
+"no quadro '%s'. Tente alterar a camada de forma que ela inclua o ponto alvo. "
 
-#: ../plug-ins/common/file-xmc.c:1710
+#: ../plug-ins/common/file-xmc.c:1718
 #, c-format
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose "
@@ -5064,23 +5005,24 @@ msgid ""
 "It will clutter the screen in some environments."
 msgstr ""
 "Seu cursor foi salvo com sucesso, mas ele contém um ou mais quadros cuja "
-"largura o altura é maior que %ipx.\n"
-" Ele vai bagunçar a tela em alguns ambientes."
+"largura o altura é maior que %ipx.\n "
+"Ele vai bagunçar a tela em alguns ambientes."
 
-#: ../plug-ins/common/file-xmc.c:1717
+#: ../plug-ins/common/file-xmc.c:1725
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose "
 "nominal size is not supported by GNOME settings.\n"
 "You can satisfy it by checking \"Replace the size of all frames...\" in the "
 "save dialog, or your cursor may not appear in GNOME settings."
 msgstr ""
-"Seu cursor foi salvo, mas ele contém um ou mais quadros cujo tamanho nominal "
-"não é suportado pelas configurações do GNOME.\n"
+"Seu cursor foi salvo, mas ele contém um ou mais quadros "
+"cujo tamanho nominal não é suportado pelas configurações do GNOME.\n"
 "Você pode satisfazer isso habilitando \"Sobrescrever o tamanho de todos os "
-"quadros\" no diálogo de salvar, ou o seu cursor pode não aparecer nas "
-"configurações do GNOME."
+"quadros\" no "
+"diálogo de salvar, ou o seu cursor pode não aparecer nas configurações do "
+"GNOME."
 
-#: ../plug-ins/common/file-xmc.c:1954
+#: ../plug-ins/common/file-xmc.c:1962
 #, c-format
 msgid ""
 "The parasite \"%s\" is too long for an X cursor comment. It was cut off to "
@@ -5090,7 +5032,7 @@ msgstr ""
 "truncado de forma a caber no arquivo."
 
 #. translators: the %i is *always* 8 here
-#: ../plug-ins/common/file-xmc.c:2157
+#: ../plug-ins/common/file-xmc.c:2165
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
@@ -5120,20 +5062,20 @@ msgstr "XPM"
 msgid "_Alpha threshold:"
 msgstr "Limiar de _alfa:"
 
-#: ../plug-ins/common/file-xwd.c:280 ../plug-ins/common/file-xwd.c:300
+#: ../plug-ins/common/file-xwd.c:278 ../plug-ins/common/file-xwd.c:298
 msgid "X window dump"
 msgstr "Dump de janela X"
 
-#: ../plug-ins/common/file-xwd.c:444
+#: ../plug-ins/common/file-xwd.c:442
 #, c-format
 msgid "Could not read XWD header from '%s'"
 msgstr "Não foi possível ler o cabeçalho XWD de '%s'"
 
-#: ../plug-ins/common/file-xwd.c:482
+#: ../plug-ins/common/file-xwd.c:480
 msgid "Can't read color entries"
 msgstr "Não se pode ler as entradas de cores"
 
-#: ../plug-ins/common/file-xwd.c:579
+#: ../plug-ins/common/file-xwd.c:575
 #, c-format
 msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
@@ -5142,20 +5084,15 @@ msgstr ""
 "O arquivo XWD %s tem formato %d, profundidade %d e %d bits por pixel. "
 "Atualmente isso não é suportado."
 
-#: ../plug-ins/common/file-xwd.c:602
+#: ../plug-ins/common/file-xwd.c:598
 msgid "Cannot save images with alpha channels."
 msgstr "Não pode salvar imagens com canais alfa."
 
-#: ../plug-ins/common/file-xwd.c:1692 ../plug-ins/common/file-xwd.c:1930
-#, c-format
-msgid "XWD-file %s is corrupt."
-msgstr "O arquivo XWD %s está corrompido."
-
-#: ../plug-ins/common/file-xwd.c:2224
+#: ../plug-ins/common/file-xwd.c:2198
 msgid "Error during writing indexed/gray image"
 msgstr "Erro durante a gravação de imagem indexada/cinza"
 
-#: ../plug-ins/common/file-xwd.c:2320
+#: ../plug-ins/common/file-xwd.c:2294
 msgid "Error during writing rgb image"
 msgstr "Erro durante a gravação de imagem RGB"
 
@@ -6860,7 +6797,7 @@ msgid "Red Eye Removal"
 msgstr "Remoção de olho vermelho"
 
 #: ../plug-ins/common/red-eye-removal.c:171
-#: ../plug-ins/common/unsharp-mask.c:898 ../plug-ins/common/wind.c:1006
+#: ../plug-ins/common/unsharp-mask.c:891 ../plug-ins/common/wind.c:1006
 #: ../plug-ins/imagemap/imap_preferences.c:455
 #: ../plug-ins/map-object/map-object-ui.c:539
 msgid "_Threshold:"
@@ -7031,84 +6968,84 @@ msgstr "Analizando amostra"
 msgid "Remap colorized"
 msgstr "Colorizando por remapeamento"
 
-#: ../plug-ins/common/screenshot.c:250
+#: ../plug-ins/common/screenshot.c:240
 msgid "Create an image from an area of the screen"
 msgstr "Cria uma imagem a partir do que é exibido na tela"
 
-#: ../plug-ins/common/screenshot.c:272
+#: ../plug-ins/common/screenshot.c:253
 msgid "_Screenshot..."
 msgstr "Captura de _tela..."
 
-#: ../plug-ins/common/screenshot.c:445
+#: ../plug-ins/common/screenshot.c:418
 msgid "Error selecting the window"
 msgstr "Erro ao selecionar a janela"
 
-#: ../plug-ins/common/screenshot.c:813
+#: ../plug-ins/common/screenshot.c:786
 msgid "Importing screenshot"
 msgstr "Importando imagem"
 
-#: ../plug-ins/common/screenshot.c:839 ../plug-ins/common/screenshot.c:1204
+#: ../plug-ins/common/screenshot.c:812 ../plug-ins/common/screenshot.c:1085
 msgid "Screenshot"
 msgstr "Captura de tela"
 
-#: ../plug-ins/common/screenshot.c:880
+#: ../plug-ins/common/screenshot.c:853
 msgid "Mouse Pointer"
 msgstr "Ponteiro do mouse"
 
-#: ../plug-ins/common/screenshot.c:1014
+#: ../plug-ins/common/screenshot.c:972
 msgid "Specified window not found"
 msgstr "Janela especificada não encontrada"
 
-#: ../plug-ins/common/screenshot.c:1213
+#: ../plug-ins/common/screenshot.c:1094
 msgid "S_nap"
 msgstr "Ca_pturar"
 
-#: ../plug-ins/common/screenshot.c:1243
+#: ../plug-ins/common/screenshot.c:1124
 msgid "After the delay, the screenshot is taken."
 msgstr "Após o atraso, a tela é capturada"
 
-#: ../plug-ins/common/screenshot.c:1245
+#: ../plug-ins/common/screenshot.c:1126
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr ""
 "Após o atraso, clique e arraste para selecionar a região a ser capturada."
 
-#: ../plug-ins/common/screenshot.c:1248
+#: ../plug-ins/common/screenshot.c:1129
 msgid "At the end of the delay, click in a window to snap it."
 msgstr "Ao fim do atraso, clique em uma janela para captura-la"
 
 #. Area
-#: ../plug-ins/common/screenshot.c:1254
+#: ../plug-ins/common/screenshot.c:1135
 msgid "Area"
 msgstr "Área"
 
-#: ../plug-ins/common/screenshot.c:1265
+#: ../plug-ins/common/screenshot.c:1146
 msgid "Take a screenshot of a single _window"
 msgstr "Capt_urar uma única janela"
 
-#: ../plug-ins/common/screenshot.c:1284
+#: ../plug-ins/common/screenshot.c:1165
 msgid "Include window _decoration"
 msgstr "Incluir _decorações da janela"
 
-#: ../plug-ins/common/screenshot.c:1304
+#: ../plug-ins/common/screenshot.c:1185
 msgid "Take a screenshot of the entire _screen"
 msgstr "Capturar a tela _inteira"
 
-#: ../plug-ins/common/screenshot.c:1323
+#: ../plug-ins/common/screenshot.c:1204
 msgid "Include _mouse pointer"
 msgstr "Incluir ponteiro do  _mouse"
 
-#: ../plug-ins/common/screenshot.c:1344
+#: ../plug-ins/common/screenshot.c:1225
 msgid "Select a _region to grab"
 msgstr "Selecionar uma _região da tela"
 
 #. Delay
-#: ../plug-ins/common/screenshot.c:1359
+#: ../plug-ins/common/screenshot.c:1240
 msgid "Delay"
 msgstr "Atraso"
 
 #. this is the unit label of a spinbutton
-#: ../plug-ins/common/screenshot.c:1381
+#: ../plug-ins/common/screenshot.c:1262
 msgid "seconds"
 msgstr "segundos"
 
@@ -8018,11 +7955,11 @@ msgstr "A forma mais usada para realçar uma imagem"
 msgid "_Unsharp Mask..."
 msgstr "Máscara de Desag_uçar..."
 
-#: ../plug-ins/common/unsharp-mask.c:691
+#: ../plug-ins/common/unsharp-mask.c:684
 msgid "Merging"
 msgstr "Combinando"
 
-#: ../plug-ins/common/unsharp-mask.c:835
+#: ../plug-ins/common/unsharp-mask.c:828
 msgid "Unsharp Mask"
 msgstr "Máscara de desaguçar"
 
@@ -8660,42 +8597,37 @@ msgstr "Fo_rça:"
 msgid "Higher values increase the magnitude of the effect"
 msgstr "Valores maiores aumentam a magnitude do efeito"
 
-#: ../plug-ins/file-bmp/bmp-read.c:86
+#: ../plug-ins/file-bmp/bmp-read.c:85
 msgid "Bad colormap"
 msgstr "Mapa de cor inadequado"
 
-#: ../plug-ins/file-bmp/bmp-read.c:170 ../plug-ins/file-bmp/bmp-read.c:181
-#: ../plug-ins/file-bmp/bmp-read.c:188 ../plug-ins/file-bmp/bmp-read.c:197
-#: ../plug-ins/file-bmp/bmp-read.c:212 ../plug-ins/file-bmp/bmp-read.c:427
-#: ../plug-ins/file-bmp/bmp-read.c:448 ../plug-ins/file-bmp/bmp-read.c:459
-#: ../plug-ins/file-bmp/bmp-read.c:467 ../plug-ins/file-bmp/bmp-read.c:475
-#: ../plug-ins/file-bmp/bmp-read.c:487
+#: ../plug-ins/file-bmp/bmp-read.c:169 ../plug-ins/file-bmp/bmp-read.c:180
+#: ../plug-ins/file-bmp/bmp-read.c:187 ../plug-ins/file-bmp/bmp-read.c:196
+#: ../plug-ins/file-bmp/bmp-read.c:211 ../plug-ins/file-bmp/bmp-read.c:416
+#: ../plug-ins/file-bmp/bmp-read.c:437 ../plug-ins/file-bmp/bmp-read.c:448
+#: ../plug-ins/file-bmp/bmp-read.c:456 ../plug-ins/file-bmp/bmp-read.c:464
+#: ../plug-ins/file-bmp/bmp-read.c:476
 #, c-format
 msgid "'%s' is not a valid BMP file"
 msgstr "%s não é um arquivo BMP válido"
 
-#: ../plug-ins/file-bmp/bmp-read.c:226 ../plug-ins/file-bmp/bmp-read.c:253
-#: ../plug-ins/file-bmp/bmp-read.c:281 ../plug-ins/file-bmp/bmp-read.c:356
-#: ../plug-ins/file-bmp/bmp-read.c:406
+#: ../plug-ins/file-bmp/bmp-read.c:225 ../plug-ins/file-bmp/bmp-read.c:252
+#: ../plug-ins/file-bmp/bmp-read.c:280 ../plug-ins/file-bmp/bmp-read.c:345
+#: ../plug-ins/file-bmp/bmp-read.c:395
 #, c-format
 msgid "Error reading BMP file header from '%s'"
 msgstr "Erro ao ler cabeçalho do arquivo BMP de '%s'"
 
-#: ../plug-ins/file-bmp/bmp-read.c:345
-#, c-format
-msgid "Unsupported compression (%lu) in BMP file from '%s'"
-msgstr "Modo de compressão (%lu) não suportado no arquivo BMP de \"%s\""
-
-#: ../plug-ins/file-bmp/bmp-read.c:599
+#: ../plug-ins/file-bmp/bmp-read.c:588
 msgid "Unrecognized or invalid BMP compression format."
 msgstr "Formato de compressão do BMP não reconhecido ou inválido"
 
-#: ../plug-ins/file-bmp/bmp-read.c:641
+#: ../plug-ins/file-bmp/bmp-read.c:630
 msgid "Unsupported or invalid bitdepth."
 msgstr "Profundidade de cores não suportada ou inválida."
 
-#: ../plug-ins/file-bmp/bmp-read.c:829 ../plug-ins/file-bmp/bmp-read.c:870
-#: ../plug-ins/file-bmp/bmp-read.c:920
+#: ../plug-ins/file-bmp/bmp-read.c:818 ../plug-ins/file-bmp/bmp-read.c:859
+#: ../plug-ins/file-bmp/bmp-read.c:909
 msgid "The bitmap ends unexpectedly."
 msgstr "O bitmap termina de forma inesperada."
 
@@ -8709,44 +8641,46 @@ msgid "Alpha channel will be ignored."
 msgstr "O canal alfa será ignorado."
 
 #. Run-Length Encoded
-#: ../plug-ins/file-bmp/bmp-write.c:864
+#: ../plug-ins/file-bmp/bmp-write.c:861
 msgid "_Run-Length Encoded"
 msgstr "Codificação de comprimento de execução (_RLE) "
 
 #. Compatibility Options
-#: ../plug-ins/file-bmp/bmp-write.c:877
+#: ../plug-ins/file-bmp/bmp-write.c:874
 msgid "Co_mpatibility Options"
 msgstr "Opções de co_mpatibilidade"
 
-#: ../plug-ins/file-bmp/bmp-write.c:887
+#: ../plug-ins/file-bmp/bmp-write.c:884
 msgid "_Do not write color space information"
 msgstr "_Não escrever informação do espaço de cores"
 
-#: ../plug-ins/file-bmp/bmp-write.c:889
+#: ../plug-ins/file-bmp/bmp-write.c:886
 msgid ""
 "Some applications can not read BMP images that include color space "
 "information. GIMP writes color space information by default. Enabling this "
 "option will cause GIMP to not write color space information to the file."
 msgstr ""
-"Alumas aplicações não conseguem ler imagens BMP que incluam informação sobre "
-"o espaço de cores. O GIMP escreve essa informação por padrão. Ao habilitar "
-"esta opção, o GIMP não vai escrever a informação sobreo espaço de cores no "
-"arquivo."
+"Alumas aplicações não conseguem ler imagens BMP que incluam "
+"informação sobre o espaço de cores. O GIMP escreve essa informação por padrão."
+" "
+"Ao habilitar esta opção, o GIMP não vai escrever a informação sobreo espaço "
+"de cores "
+"no arquivo."
 
 #. Advanced Options
-#: ../plug-ins/file-bmp/bmp-write.c:905 ../plug-ins/file-jpeg/jpeg-save.c:901
+#: ../plug-ins/file-bmp/bmp-write.c:902 ../plug-ins/file-jpeg/jpeg-save.c:901
 msgid "_Advanced Options"
 msgstr "Configurações _avançadas"
 
-#: ../plug-ins/file-bmp/bmp-write.c:920
+#: ../plug-ins/file-bmp/bmp-write.c:917
 msgid "16 bits"
 msgstr "16 bits"
 
-#: ../plug-ins/file-bmp/bmp-write.c:956
+#: ../plug-ins/file-bmp/bmp-write.c:953
 msgid "24 bits"
 msgstr "24 bits"
 
-#: ../plug-ins/file-bmp/bmp-write.c:973
+#: ../plug-ins/file-bmp/bmp-write.c:970
 msgid "32 bits"
 msgstr "32 bits"
 
@@ -8754,19 +8688,19 @@ msgstr "32 bits"
 msgid "Windows BMP image"
 msgstr "Imagem BMP do Windows"
 
-#: ../plug-ins/file-compressor/file-compressor.c:166
+#: ../plug-ins/file-compressor/file-compressor.c:162
 msgid "gzip archive"
 msgstr "arquivo gzip"
 
-#: ../plug-ins/file-compressor/file-compressor.c:185
+#: ../plug-ins/file-compressor/file-compressor.c:181
 msgid "bzip archive"
 msgstr "arquivo bzip"
 
-#: ../plug-ins/file-compressor/file-compressor.c:392
+#: ../plug-ins/file-compressor/file-compressor.c:388
 msgid "No sensible file extension, saving as compressed XCF."
 msgstr "Extensão desconhecida, salvando como XCF comprimido."
 
-#: ../plug-ins/file-compressor/file-compressor.c:448
+#: ../plug-ins/file-compressor/file-compressor.c:444
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr "Extensão deconhecida, tentando carregar pelo número mágico da imagem."
 
@@ -8993,11 +8927,11 @@ msgstr "Salvar minia_tura"
 msgid "Save _XMP data"
 msgstr "Salvar dados de _XMP"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1058
+#: ../plug-ins/file-jpeg/jpeg-save.c:1055
 msgid "_Use quality settings from original image"
 msgstr "_Utilizar configurações de qualidade da imagem original"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1064
+#: ../plug-ins/file-jpeg/jpeg-save.c:1061
 msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality "
 "settings (quantization tables), enable this option to get almost the same "
@@ -9008,53 +8942,53 @@ msgstr ""
 "obter quase as mesmas qualidade e tamanho do arquivo."
 
 #. Subsampling
-#: ../plug-ins/file-jpeg/jpeg-save.c:1088
+#: ../plug-ins/file-jpeg/jpeg-save.c:1085
 msgid "Su_bsampling:"
 msgstr "Su_b-amostragem:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1095
+#: ../plug-ins/file-jpeg/jpeg-save.c:1092
 msgid "4:4:4 (best quality)"
 msgstr "4:4:4 (melhor qualidade)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1097
+#: ../plug-ins/file-jpeg/jpeg-save.c:1094
 msgid "4:2:2 horizontal (chroma halved)"
 msgstr "4:2:2 horizontal (chroma pela metade)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1099
+#: ../plug-ins/file-jpeg/jpeg-save.c:1096
 msgid "4:2:2 vertical (chroma halved)"
 msgstr "4:2:2 na vertical (chroma pela metade)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1101
+#: ../plug-ins/file-jpeg/jpeg-save.c:1098
 msgid "4:2:0 (chroma quartered)"
 msgstr "4:2:0 (chroma em um quarto)"
 
 #. DCT method
-#: ../plug-ins/file-jpeg/jpeg-save.c:1131
+#: ../plug-ins/file-jpeg/jpeg-save.c:1128
 msgid "_DCT method:"
 msgstr "Método _DCT:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1137
+#: ../plug-ins/file-jpeg/jpeg-save.c:1134
 msgid "Fast Integer"
 msgstr "Inteiro rápido"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1138
+#: ../plug-ins/file-jpeg/jpeg-save.c:1135
 msgid "Integer"
 msgstr "Inteiro"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1139
+#: ../plug-ins/file-jpeg/jpeg-save.c:1136
 msgid "Floating-Point"
 msgstr "Ponto flutuante"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1155
+#: ../plug-ins/file-jpeg/jpeg-save.c:1152
 msgid "Comment"
 msgstr "Comentário"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1192
-#: ../plug-ins/ui/plug-in-file-png.ui.h:11
+#: ../plug-ins/file-jpeg/jpeg-save.c:1189
+#: ../plug-ins/ui/plug-in-file-png.ui.h:12
 msgid "_Load Defaults"
 msgstr "_Carregar configurações padrão"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1201
+#: ../plug-ins/file-jpeg/jpeg-save.c:1198
 msgid "Sa_ve Defaults"
 msgstr "Sal_var Conf. como Padrão"
 
@@ -9334,12 +9268,6 @@ msgstr "Baixando uma quantidade desconhecida dos dados da imagem"
 #: ../plug-ins/file-uri/uri.c:122 ../plug-ins/file-uri/uri.c:143
 msgid "URI"
 msgstr "URI"
-
-#: ../plug-ins/file-uri/uri.c:318
-#, c-format
-#| msgid "Failed to save PPM file '%s': %s"
-msgid "Failed to save to temporary file '%s'"
-msgstr "Falha ao salvar arquivo temporário \"%s\""
 
 #: ../plug-ins/file-xjt/xjt.c:485 ../plug-ins/file-xjt/xjt.c:503
 msgid "GIMP compressed XJT image"
@@ -10948,80 +10876,80 @@ msgstr ""
 "alguma influência"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:1
-msgid "I_nterlace"
-msgstr "E_ntrelaçar"
+msgid "Animated GIF Options"
+msgstr "Opções de GIF animado"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:2
-msgid "_GIF comment:"
-msgstr "Comentário do _GIF:"
-
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:3
 msgid "As _animation"
 msgstr "Como _animação"
 
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:4
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:3
 msgid "GIF Options"
 msgstr "Opções de GIF"
 
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:4
+msgid "I_nterlace"
+msgstr "E_ntrelaçar"
+
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:5
-msgid "_Loop forever"
-msgstr "Repetir _indefinidamente"
+msgid "U_se disposal entered above for all frames"
+msgstr "U_sar a disposição acima para todas as camadas"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:6
 msgid "_Delay between frames where unspecified:"
 msgstr "_Atraso entre os quadros onde não for especificado:"
 
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:8
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:7
 msgid "_Frame disposal where unspecified:"
 msgstr "Disposição do _quadro onde não for especificado:"
 
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:8
+msgid "_GIF comment:"
+msgstr "Comentário do _GIF:"
+
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:9
+msgid "_Loop forever"
+msgstr "Repetir _indefinidamente"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:10
 msgid "_Use delay entered above for all frames"
 msgstr "_Usar o atraso acima para todas as camadas"
 
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:10
-msgid "U_se disposal entered above for all frames"
-msgstr "U_sar a disposição acima para todas as camadas"
-
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:11
-msgid "Animated GIF Options"
-msgstr "Opções de GIF animado"
-
-#: ../plug-ins/ui/plug-in-file-png.ui.h:1
-msgid "_Interlacing (Adam7)"
-msgstr "_Entrelaçar (Adam7)"
-
 #: ../plug-ins/ui/plug-in-file-png.ui.h:2
-msgid "Save _background color"
-msgstr "Salvar cor de _fundo"
+msgid "Co_mpression level:"
+msgstr "Ní_vel de compressão:"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:3
+msgid "S_ave Defaults"
+msgstr "_Salvar Conf. como Padrão"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:4
-msgid "Save layer o_ffset"
-msgstr "Salvar _deslocamento de camada"
+msgid "Save _background color"
+msgstr "Salvar cor de _fundo"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:5
 msgid "Save _resolution"
 msgstr "Salvar _resolução"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:6
-msgid "Save creation _time"
-msgstr "Salvar hora de _criação"
+msgid "Save color _values from transparent pixels"
+msgstr "Salvar informações de _cor dos pixels transparentes"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:7
 msgid "Save comme_nt"
 msgstr "Salvar co_mentário"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:8
-msgid "Save color _values from transparent pixels"
-msgstr "Salvar informações de _cor dos pixels transparentes"
+msgid "Save creation _time"
+msgstr "Salvar hora de _criação"
 
-#: ../plug-ins/ui/plug-in-file-png.ui.h:9
-msgid "Co_mpression level:"
-msgstr "Ní_vel de compressão:"
+#: ../plug-ins/ui/plug-in-file-png.ui.h:10
+msgid "Save layer o_ffset"
+msgstr "Salvar _deslocamento de camada"
 
-#: ../plug-ins/ui/plug-in-file-png.ui.h:12
-msgid "S_ave Defaults"
-msgstr "_Salvar Conf. como Padrão"
+#: ../plug-ins/ui/plug-in-file-png.ui.h:11
+msgid "_Interlacing (Adam7)"
+msgstr "_Entrelaçar (Adam7)"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:552
 msgid "Addition"
@@ -11573,14 +11501,11 @@ msgid "Transformation %s"
 msgstr "Transformação %s"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:2413
-#: ../plug-ins/metadata/interface.c:507 ../plug-ins/metadata/interface.c:517
 msgid "Save failed"
 msgstr "Falha ao salvar"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:2496
 #: ../plug-ins/ifs-compose/ifs-compose.c:2509
-#: ../plug-ins/metadata/interface.c:413 ../plug-ins/metadata/interface.c:423
-#: ../plug-ins/metadata/interface.c:497
 msgid "Open failed"
 msgstr "Falha ao abrir"
 
@@ -12330,7 +12255,6 @@ msgid "Default _URL:"
 msgstr "UR_L padrão:"
 
 #: ../plug-ins/imagemap/imap_settings.c:107
-#: ../plug-ins/metadata/interface.c:247
 msgid "_Description:"
 msgstr "_Descrição:"
 
@@ -12965,92 +12889,6 @@ msgstr "_Labirinto..."
 msgid "Drawing maze"
 msgstr "Desenhando labirinto"
 
-#: ../plug-ins/metadata/interface.c:110
-msgid "Property"
-msgstr "Propriedades"
-
-#: ../plug-ins/metadata/interface.c:204 ../plug-ins/metadata/interface.c:206
-msgid "Description"
-msgstr "Descrição"
-
-#: ../plug-ins/metadata/interface.c:222
-msgid "Image _title:"
-msgstr "_Título da imagem:"
-
-#: ../plug-ins/metadata/interface.c:231
-msgid "_Author:"
-msgstr "A_utor:"
-
-#: ../plug-ins/metadata/interface.c:256
-msgid "Description _writer:"
-msgstr "E_scritor da descrição:"
-
-#: ../plug-ins/metadata/interface.c:272
-msgid "_Keywords:"
-msgstr "_Palavras-chave:"
-
-#. FIXME: add entries, cross-link with XMP model
-#: ../plug-ins/metadata/interface.c:284 ../plug-ins/metadata/interface.c:296
-#: ../plug-ins/metadata/interface.c:308 ../plug-ins/metadata/interface.c:320
-msgid "Empty"
-msgstr "Vazio"
-
-#: ../plug-ins/metadata/interface.c:286
-msgid "Copyright"
-msgstr "Direitos autorais"
-
-#: ../plug-ins/metadata/interface.c:298
-msgid "Origin"
-msgstr "Origem"
-
-#: ../plug-ins/metadata/interface.c:310
-msgid "Camera 1"
-msgstr "Câmera 1"
-
-#: ../plug-ins/metadata/interface.c:322
-msgid "Camera 2"
-msgstr "Câmera 2"
-
-#: ../plug-ins/metadata/interface.c:337
-msgid "Thumbnail"
-msgstr "Miniatura"
-
-#: ../plug-ins/metadata/interface.c:356
-msgid "Advanced"
-msgstr "Avançado"
-
-#: ../plug-ins/metadata/interface.c:447
-msgid "Import XMP from File"
-msgstr "Importar XMP do arquivo"
-
-#: ../plug-ins/metadata/interface.c:498
-msgid "Cannot create file"
-msgstr "Não foi possível criar arquivo"
-
-#: ../plug-ins/metadata/interface.c:508
-msgid "Some error occurred while saving"
-msgstr "Ocorreu um erro ao salvar"
-
-#: ../plug-ins/metadata/interface.c:518
-msgid "Could not close the file"
-msgstr "Não foi possível fechar o arquivo"
-
-#: ../plug-ins/metadata/interface.c:540
-msgid "Export XMP to File"
-msgstr "Exportar XMP para arquivo"
-
-#: ../plug-ins/metadata/interface.c:607
-msgid "Image Properties"
-msgstr "Propriedades da imagem"
-
-#: ../plug-ins/metadata/interface.c:611
-msgid "_Import XMP..."
-msgstr "_Importar XMP..."
-
-#: ../plug-ins/metadata/interface.c:612
-msgid "_Export XMP..."
-msgstr "_Exportar XMP..."
-
 #: ../plug-ins/metadata/metadata.c:185
 msgid "View and edit metadata (EXIF, IPTC, XMP)"
 msgstr "Ver e editar metadados (EXIF, IPTC, XMP)"
@@ -13105,20 +12943,20 @@ msgstr "Elementos (<%s>) aninhados não são permitidos neste contexto"
 msgid "End of element <%s> not expected in this context"
 msgstr "O final do elemento <%s> nao era esperado neste contexto"
 
-#: ../plug-ins/metadata/xmp-parse.c:1139
+#: ../plug-ins/metadata/xmp-parse.c:1140
 #, c-format
 msgid "The current element (<%s>) cannot contain text"
 msgstr "O elemento atual (<%s>) não pode conter texto"
 
-#: ../plug-ins/metadata/xmp-parse.c:1164
+#: ../plug-ins/metadata/xmp-parse.c:1165
 msgid "XMP packets must start with <?xpacket begin=...?>"
 msgstr "Os pacotes XMP devem começar com <?xpacket begin=...?>"
 
-#: ../plug-ins/metadata/xmp-parse.c:1178
+#: ../plug-ins/metadata/xmp-parse.c:1179
 msgid "XMP packets must end with <?xpacket end=...?>"
 msgstr "Os pacotes XMP devem terminar com <?xpacket end=...?>"
 
-#: ../plug-ins/metadata/xmp-parse.c:1191
+#: ../plug-ins/metadata/xmp-parse.c:1192
 msgid "XMP cannot contain XML comments or processing instructions"
 msgstr "XMP não pode conter comentários XML ou instruções de processamento"
 
@@ -13233,31 +13071,23 @@ msgstr "Verticalmente"
 msgid "Both"
 msgstr "Ambos"
 
-#: ../plug-ins/print/print.c:107
+#: ../plug-ins/print/print.c:89
 msgid "Print the image"
 msgstr "Imprime a imagem"
 
-#: ../plug-ins/print/print.c:112
+#: ../plug-ins/print/print.c:94
 msgid "_Print..."
 msgstr "Im_primir..."
 
-#: ../plug-ins/print/print.c:124
-msgid "Adjust page size and orientation for printing"
-msgstr "Ajustar tamanho e orientação para impressão da página"
-
-#: ../plug-ins/print/print.c:130
-msgid "Page Set_up"
-msgstr "Confi_guração da página"
-
-#: ../plug-ins/print/print.c:275
+#: ../plug-ins/print/print.c:216
 msgid "Image Settings"
 msgstr "Configurações da imagem"
 
-#: ../plug-ins/print/print.c:373
+#: ../plug-ins/print/print.c:267
 msgid "An error occurred while trying to print:"
 msgstr "Ocorreu um erro ao tentar imprimir:"
 
-#: ../plug-ins/print/print.c:400
+#: ../plug-ins/print/print.c:294
 msgid "Printing"
 msgstr "Imprimindo"
 
@@ -13480,6 +13310,9 @@ msgstr "Nenhum dado capturado"
 #~ msgid "_Domain:"
 #~ msgstr "_Domínio:"
 
+#~ msgid "_Password:"
+#~ msgstr "_Senha"
+
 #~ msgid "_Forget password immediately"
 #~ msgstr "_Esquecer a senha imediatamente"
 
@@ -13509,3 +13342,9 @@ msgstr "Nenhum dado capturado"
 
 #~ msgid "Send to Back"
 #~ msgstr "Enviar para trás"
+
+#~ msgid "Adjust page size and orientation for printing"
+#~ msgstr "Ajustar tamanho e orientação para impressão da página"
+
+#~ msgid "Page Set_up"
+#~ msgstr "Confi_guração da página"
