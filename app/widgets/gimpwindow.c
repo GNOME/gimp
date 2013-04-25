@@ -86,9 +86,11 @@ gimp_window_key_press_event (GtkWidget   *widget,
    */
 
   /* text widgets get all key events first */
-  if (GTK_IS_EDITABLE (focus)  ||
-      GTK_IS_TEXT_VIEW (focus) ||
-      GIMP_IS_CANVAS (focus))
+  if (focus &&
+      (GTK_IS_EDITABLE (focus)  ||
+       GTK_IS_TEXT_VIEW (focus) ||
+       GIMP_IS_CANVAS (focus)   ||
+       gtk_widget_get_ancestor (focus, GIMP_TYPE_CANVAS)))
     {
       handled = gtk_window_propagate_key_event (window, event);
 
@@ -104,7 +106,8 @@ gimp_window_key_press_event (GtkWidget   *widget,
         geimnum (eb);
     }
 
-  if (event->keyval == GDK_KEY_Escape && gimp_window->primary_focus_widget)
+  if (! handled &&
+      event->keyval == GDK_KEY_Escape && gimp_window->primary_focus_widget)
     {
       if (focus != gimp_window->primary_focus_widget)
         gtk_widget_grab_focus (gimp_window->primary_focus_widget);
