@@ -733,9 +733,12 @@ gimp_image_map_tool_dialog_hide (GimpImageMapTool *image_map_tool)
     }
   else if (GIMP_IS_OVERLAY_DIALOG (dialog))
     {
-      g_object_ref (dialog);
-      gtk_container_remove (GTK_CONTAINER (gtk_widget_get_parent (dialog)),
-                            dialog);
+      if (gtk_widget_get_parent (dialog))
+        {
+          g_object_ref (dialog);
+          gtk_container_remove (GTK_CONTAINER (gtk_widget_get_parent (dialog)),
+                                dialog);
+        }
     }
 }
 
