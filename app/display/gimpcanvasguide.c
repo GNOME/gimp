@@ -180,14 +180,17 @@ gimp_canvas_guide_transform (GimpCanvasItem *item,
   GimpCanvasGuidePrivate *private = GET_PRIVATE (item);
   GtkWidget              *canvas  = gimp_canvas_item_get_canvas (item);
   GtkAllocation           allocation;
+  gint                    max_outside;
   gint                    x, y;
 
   gtk_widget_get_allocation (canvas, &allocation);
 
-  *x1 = 0;
-  *y1 = 0;
-  *x2 = allocation.width;
-  *y2 = allocation.height;
+  max_outside = allocation.width + allocation.height;
+
+  *x1 = -max_outside;
+  *y1 = -max_outside;
+  *x2 = allocation.width  + max_outside;
+  *y2 = allocation.height + max_outside;
 
   switch (private->orientation)
     {
