@@ -1192,6 +1192,11 @@ AM_CONDITIONAL(HAVE_LIBLZMA, test "x$have_liblzma" = xyes)
 have_compressor=no
 if test "x$have_zlib" = xyes && test "x$have_libbzip2" = xyes && test "x$have_liblzma" = xyes; then
    have_compressor=yes
+else
+   AC_MSG_ERROR([
+*** One or more compression libraries are unavailable. zlib, libbzip2
+*** and liblzma are required build dependencies. See the file 'INSTALL'
+*** for help.])
 fi
 
 
