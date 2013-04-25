@@ -255,7 +255,6 @@ gimp_color_tool_button_release (GimpTool              *tool,
 {
   GimpColorTool    *color_tool = GIMP_COLOR_TOOL (tool);
   GimpDisplayShell *shell      = gimp_display_get_shell (display);
-  GimpImage        *image      = gimp_display_get_image (display);
 
   /*  Chain up to halt the tool  */
   GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state,
@@ -266,7 +265,9 @@ gimp_color_tool_button_release (GimpTool              *tool,
 
   if (color_tool->moving_sample_point)
     {
-      gint x, y, width, height;
+      GimpImage *image  = gimp_display_get_image (display);
+      gint       width  = gimp_image_get_width  (image);
+      gint       height = gimp_image_get_height (image);
 
       gimp_tool_pop_status (tool, display);
 
@@ -283,12 +284,12 @@ gimp_color_tool_button_release (GimpTool              *tool,
           return;
         }
 
-      gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
-
-      if ((color_tool->sample_point_x <  x              ||
-           color_tool->sample_point_x > (x + width - 1) ||
-           color_tool->sample_point_y < y               ||
-           color_tool->sample_point_y > (y + height - 1)))
+      if (color_tool->sample_point_x == SAMPLE_POINT_POSITION_INVALID ||
+          color_tool->sample_point_x <  0                             ||
+          color_tool->sample_point_x >= width                         ||
+          color_tool->sample_point_y == SAMPLE_POINT_POSITION_INVALID ||
+          color_tool->sample_point_y <  0                             ||
+          color_tool->sample_point_y >= height)
         {
           if (color_tool->sample_point)
             {
@@ -367,18 +368,17 @@ gimp_color_tool_motion (GimpTool         *tool,
         }
       else
         {
-          gint x, y, width, height;
+          GimpImage *image  = gimp_display_get_image (display);
+          gint       width  = gimp_image_get_width  (image);
+          gint       height = gimp_image_get_height (image);
 
           color_tool->sample_point_x = floor (coords->x);
           color_tool->sample_point_y = floor (coords->y);
 
-          gimp_display_shell_untransform_viewport (shell, &x, &y,
-                                                   &width, &height);
-
-          if ((color_tool->sample_point_x <  x              ||
-               color_tool->sample_point_x > (x + width - 1) ||
-               color_tool->sample_point_y < y               ||
-               color_tool->sample_point_y > (y + height - 1)))
+          if (color_tool->sample_point_x <  0     ||
+              color_tool->sample_point_x >= width ||
+              color_tool->sample_point_y <  0     ||
+              color_tool->sample_point_y >= height)
             {
               delete_point = TRUE;
             }

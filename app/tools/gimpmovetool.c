@@ -409,7 +409,8 @@ gimp_move_tool_button_release (GimpTool              *tool,
   if (move->moving_guide)
     {
       gboolean delete_guide = FALSE;
-      gint     x, y, width, height;
+      gint     width  = gimp_image_get_width  (image);
+      gint     height = gimp_image_get_height (image);
 
       gimp_tool_pop_status (tool, display);
 
@@ -429,19 +430,19 @@ gimp_move_tool_button_release (GimpTool              *tool,
           return;
         }
 
-      gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
-
       switch (move->guide_orientation)
         {
         case GIMP_ORIENTATION_HORIZONTAL:
-          if ((move->guide_position < y) ||
-              (move->guide_position > (y + height)))
+          if (move->guide_position == GUIDE_POSITION_INVALID ||
+              move->guide_position <  0                      ||
+              move->guide_position >= height)
             delete_guide = TRUE;
           break;
 
         case GIMP_ORIENTATION_VERTICAL:
-          if ((move->guide_position < x) ||
-              (move->guide_position > (x + width)))
+          if (move->guide_position == GUIDE_POSITION_INVALID ||
+              move->guide_position <  0                      ||
+              move->guide_position >= width)
             delete_guide = TRUE;
           break;
 
@@ -566,27 +567,26 @@ gimp_move_tool_motion (GimpTool         *tool,
         }
       else
         {
-          gint x, y, width, height;
+          GimpImage *image  = gimp_display_get_image (display);
+          gint       width  = gimp_image_get_width  (image);
+          gint       height = gimp_image_get_height (image);
 
           if (move->guide_orientation == GIMP_ORIENTATION_HORIZONTAL)
             move->guide_position = RINT (coords->y);
           else
             move->guide_position = RINT (coords->x);
 
-          gimp_display_shell_untransform_viewport (shell, &x, &y,
-                                                   &width, &height);
-
           switch (move->guide_orientation)
             {
             case GIMP_ORIENTATION_HORIZONTAL:
-              if ((move->guide_position < y) ||
-                  (move->guide_position > (y + height)))
+              if (move->guide_position <  0 ||
+                  move->guide_position >= height)
                 delete_guide = TRUE;
               break;
 
             case GIMP_ORIENTATION_VERTICAL:
-              if ((move->guide_position < x) ||
-                  (move->guide_position > (x + width)))
+              if (move->guide_position <  0 ||
+                  move->guide_position >= width)
                 delete_guide = TRUE;
               break;
 
