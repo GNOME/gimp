@@ -154,22 +154,24 @@ gimp_heal_sub (GeglBuffer          *top_buffer,
                const GeglRectangle *result_rect)
 {
   GeglBufferIterator *iter;
-  const Babl         *format     = gegl_buffer_get_format (top_buffer);
-  gint                components = babl_format_get_n_components (format);
+  const Babl         *format       = gegl_buffer_get_format (top_buffer);
+  gint                n_components = babl_format_get_n_components (format);
 
-  gegl_buffer_set_format (top_buffer, babl_format_n (babl_type ("float"),
-                                                     components));
-  gegl_buffer_set_format (bottom_buffer, babl_format_n (babl_type ("float"),
-                                                        components));
+  if (n_components == 2)
+    format = babl_format ("Y'A float");
+  else if (n_components == 4)
+    format = babl_format ("R'G'B'A float");
+  else
+    g_return_if_reached ();
 
-  iter = gegl_buffer_iterator_new (top_buffer, top_rect, 0, NULL,
+  iter = gegl_buffer_iterator_new (top_buffer, top_rect, 0, format,
                                    GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
-  gegl_buffer_iterator_add (iter, bottom_buffer, bottom_rect, 0, NULL,
+  gegl_buffer_iterator_add (iter, bottom_buffer, bottom_rect, 0, format,
                             GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, result_buffer, result_rect, 0,
-                            babl_format_n (babl_type ("double"), components),
+                            babl_format_n (babl_type ("double"), n_components),
                             GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
@@ -177,14 +179,11 @@ gimp_heal_sub (GeglBuffer          *top_buffer,
       gfloat  *t      = iter->data[0];
       gfloat  *b      = iter->data[1];
       gdouble *r      = iter->data[2];
-      gint     length = iter->length * components;
+      gint     length = iter->length * n_components;
 
       while (length--)
         *r++ = *t++ - *b++;
     }
-
-  gegl_buffer_set_format (top_buffer, NULL);
-  gegl_buffer_set_format (bottom_buffer, NULL);
 }
 
 /* Add first to second and store in result
@@ -198,23 +197,25 @@ gimp_heal_add (GeglBuffer          *first_buffer,
                const GeglRectangle *result_rect)
 {
   GeglBufferIterator *iter;
-  const Babl         *format = gegl_buffer_get_format (result_buffer);
-  gint                components = babl_format_get_n_components (format);
+  const Babl         *format       = gegl_buffer_get_format (result_buffer);
+  gint                n_components = babl_format_get_n_components (format);
 
-  gegl_buffer_set_format (second_buffer, babl_format_n (babl_type ("float"),
-                                                        components));
-  gegl_buffer_set_format (result_buffer, babl_format_n (babl_type ("float"),
-                                                        components));
+  if (n_components == 2)
+    format = babl_format ("Y'A float");
+  else if (n_components == 4)
+    format = babl_format ("R'G'B'A float");
+  else
+    g_return_if_reached ();
 
   iter = gegl_buffer_iterator_new (first_buffer, first_rect, 0,
                                    babl_format_n (babl_type ("double"),
-                                                  components),
+                                                  n_components),
                                    GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
-  gegl_buffer_iterator_add (iter, second_buffer, second_rect, 0, NULL,
+  gegl_buffer_iterator_add (iter, second_buffer, second_rect, 0, format,
                             GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
-  gegl_buffer_iterator_add (iter, result_buffer, result_rect, 0, NULL,
+  gegl_buffer_iterator_add (iter, result_buffer, result_rect, 0, format,
                             GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
@@ -222,14 +223,11 @@ gimp_heal_add (GeglBuffer          *first_buffer,
       gdouble *f      = iter->data[0];
       gfloat  *s      = iter->data[1];
       gfloat  *r      = iter->data[2];
-      gint     length = iter->length * components;
+      gint     length = iter->length * n_components;
 
       while (length--)
-          *r++ = *f++ + *s++;
+        *r++ = *f++ + *s++;
     }
-
-  gegl_buffer_set_format (second_buffer, NULL);
-  gegl_buffer_set_format (result_buffer, NULL);
 }
 
 /* Perform one iteration of the laplace solver for matrix.  Store the
@@ -522,9 +520,6 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                     GEGL_RECTANGLE (0, 0,
                                     src_rect->width,
                                     src_rect->height));
-
-  /*  this is ok because we know that the paint_buffer is "RGBA float"  */
-  gegl_buffer_set_format (paint_buffer, babl_format ("R'G'B'A float"));
 
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
                     GEGL_RECTANGLE (paint_buffer_x, paint_buffer_y,
