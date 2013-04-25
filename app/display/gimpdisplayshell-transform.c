@@ -113,8 +113,8 @@ gimp_display_shell_zoom_xy (const GimpDisplayShell *shell,
   g_return_if_fail (nx != NULL);
   g_return_if_fail (ny != NULL);
 
-  tx = x * shell->scale_x - shell->offset_x;
-  ty = y * shell->scale_y - shell->offset_y;
+  tx = x * shell->scale_x;
+  ty = y * shell->scale_y;
 
   tx -= shell->offset_x;
   ty -= shell->offset_y;
@@ -626,8 +626,8 @@ gimp_display_shell_transform_xy (const GimpDisplayShell *shell,
   g_return_if_fail (nx != NULL);
   g_return_if_fail (ny != NULL);
 
-  tx = x * shell->scale_x - shell->offset_x;
-  ty = y * shell->scale_y - shell->offset_y;
+  tx = x * shell->scale_x;
+  ty = y * shell->scale_y;
 
   tx -= shell->offset_x;
   ty -= shell->offset_y;
