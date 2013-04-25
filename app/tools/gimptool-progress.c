@@ -84,18 +84,21 @@ gimp_tool_progress_start (GimpProgress *progress,
 {
   GimpTool         *tool = GIMP_TOOL (progress);
   GimpDisplayShell *shell;
-  gint              x, y, w, h;
+  gint              x, y;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY (tool->display), NULL);
   g_return_val_if_fail (tool->progress == NULL, NULL);
 
   shell = gimp_display_get_shell (tool->display);
 
-  gimp_display_shell_untransform_viewport (shell, &x, &y, &w, &h);
+  x = shell->disp_width  / 2;
+  y = shell->disp_height / 2;
+
+  gimp_display_shell_unzoom_xy (shell, x, y, &x, &y, FALSE);
 
   tool->progress = gimp_canvas_progress_new (shell,
                                              GIMP_HANDLE_ANCHOR_CENTER,
-                                             x + w / 2, y + h / 2);
+                                             x, y);
   gimp_display_shell_add_unrotated_item (shell, tool->progress);
   g_object_unref (tool->progress);
 
