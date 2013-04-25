@@ -407,21 +407,23 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
 
       gtk_widget_show (vbox);
     }
-  else if (GIMP_IS_OVERLAY_DIALOG (image_map_tool->dialog) &&
-           ! gtk_widget_get_parent (image_map_tool->dialog))
-    {
-      gimp_overlay_box_add_child (GIMP_OVERLAY_BOX (display_shell->canvas),
-                                  image_map_tool->dialog, 1.0, 1.0);
-      g_object_unref (image_map_tool->dialog);
-    }
 
-  if (! image_map_tool->overlay)
+  if (GIMP_IS_VIEWABLE_DIALOG (image_map_tool->dialog))
     {
       gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (image_map_tool->dialog),
                                          GIMP_VIEWABLE (drawable),
                                          GIMP_CONTEXT (tool_info->tool_options));
       gimp_tool_dialog_set_shell (GIMP_TOOL_DIALOG (image_map_tool->dialog),
                                   display_shell);
+    }
+  else if (GIMP_IS_OVERLAY_DIALOG (image_map_tool->dialog))
+    {
+      if (! gtk_widget_get_parent (image_map_tool->dialog))
+        {
+          gimp_overlay_box_add_child (GIMP_OVERLAY_BOX (display_shell->canvas),
+                                      image_map_tool->dialog, 1.0, 1.0);
+          g_object_unref (image_map_tool->dialog);
+        }
     }
 
   gtk_widget_show (image_map_tool->dialog);
@@ -736,6 +738,7 @@ gimp_image_map_tool_dialog_hide (GimpImageMapTool *image_map_tool)
       if (gtk_widget_get_parent (dialog))
         {
           g_object_ref (dialog);
+          gtk_widget_hide (dialog);
           gtk_container_remove (GTK_CONTAINER (gtk_widget_get_parent (dialog)),
                                 dialog);
         }
