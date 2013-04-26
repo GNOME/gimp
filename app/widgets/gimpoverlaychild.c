@@ -140,6 +140,7 @@ gimp_overlay_child_realize (GimpOverlayBox   *box,
 
   g_return_if_fail (GIMP_IS_OVERLAY_BOX (box));
   g_return_if_fail (child != NULL);
+  g_return_if_fail (child->window == NULL);
 
   widget = GTK_WIDGET (box);
 
@@ -205,6 +206,7 @@ gimp_overlay_child_unrealize (GimpOverlayBox   *box,
 {
   g_return_if_fail (GIMP_IS_OVERLAY_BOX (box));
   g_return_if_fail (child != NULL);
+  g_return_if_fail (child->window != NULL);
 
   gdk_window_set_user_data (child->window, NULL);
   gdk_window_destroy (child->window);
