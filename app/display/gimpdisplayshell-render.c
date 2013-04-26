@@ -129,33 +129,37 @@ gimp_display_shell_render (GimpDisplayShell *shell,
       cairo_surface_destroy (image);
     }
 
-#if 0
   if (shell->mask)
     {
-      GeglBuffer *buffer;
-
       if (! shell->mask_surface)
         {
           shell->mask_surface =
-            cairo_image_surface_create (CAIRO_FORMAT_A8,
-                                        GIMP_DISPLAY_RENDER_BUF_WIDTH,
-                                        GIMP_DISPLAY_RENDER_BUF_HEIGHT);
+            cairo_surface_create_similar_image (cairo_get_target (cr),
+                                                CAIRO_FORMAT_A8,
+                                                GIMP_DISPLAY_RENDER_BUF_WIDTH  *
+                                                GIMP_DISPLAY_RENDER_MAX_SCALE,
+                                                GIMP_DISPLAY_RENDER_BUF_HEIGHT *
+                                                GIMP_DISPLAY_RENDER_MAX_SCALE);
         }
 
       buffer = gimp_drawable_get_buffer (shell->mask);
-      tiles = gimp_gegl_buffer_get_tiles (buffer);
 
-      /* The mask does not (yet) have an image pyramid, use 0 as level, */
-      gimp_display_shell_render_info_init (&info,
-                                           shell, x, y, w, h,
-                                           shell->mask_surface,
-                                           tiles, 0, FALSE);
+      stride = cairo_image_surface_get_stride (shell->mask_surface);
+      data = cairo_image_surface_get_data (shell->mask_surface);
+      data += src_y * stride + src_x * 4;
 
-      render_image_alpha (&info);
+      gegl_buffer_get (buffer,
+                       GEGL_RECTANGLE ((x + viewport_offset_x) * window_scale,
+                                       (y + viewport_offset_y) * window_scale,
+                                       w * window_scale,
+                                       h * window_scale),
+                       shell->scale_x * window_scale,
+                       babl_format ("Y u8"),
+                       data, stride,
+                       GEGL_ABYSS_NONE);
 
       cairo_surface_mark_dirty (shell->mask_surface);
     }
-#endif
 
   /*  put it to the screen  */
   cairo_save (cr);
@@ -184,14 +188,13 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   cairo_clip (cr);
   cairo_paint (cr);
 
-#if 0
   if (shell->mask)
     {
       gimp_cairo_set_source_rgba (cr, &shell->mask_color);
       cairo_mask_surface (cr, shell->mask_surface,
-                          x + disp_xoffset, y + disp_yoffset);
+                          (x - src_x) * window_scale,
+                          (y - src_y) * window_scale);
     }
-#endif
 
   cairo_restore (cr);
 }
