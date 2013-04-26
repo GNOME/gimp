@@ -143,9 +143,25 @@ gimp_operation_mask_components_set_property (GObject      *object,
 static void
 gimp_operation_mask_components_prepare (GeglOperation *operation)
 {
-  gegl_operation_set_format (operation, "input",  babl_format ("RGBA float"));
-  gegl_operation_set_format (operation, "aux",    babl_format ("RGBA float"));
-  gegl_operation_set_format (operation, "output", babl_format ("RGBA float"));
+  const Babl *format = gegl_operation_get_source_format (operation, "input");
+
+  if (format)
+    {
+      const Babl *model = babl_format_get_model (format);
+
+      if (model == babl_model ("R'G'B'A"))
+        format = babl_format ("R'G'B'A float");
+      else
+        format = babl_format ("RGBA float");
+    }
+  else
+    {
+      format = babl_format ("RGBA float");
+    }
+
+  gegl_operation_set_format (operation, "input",  format);
+  gegl_operation_set_format (operation, "aux",    format);
+  gegl_operation_set_format (operation, "output", format);
 }
 
 static gboolean
