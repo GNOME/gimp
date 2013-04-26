@@ -29,7 +29,6 @@
 #include "gimpoperationadditionmode.h"
 
 
-static void gimp_operation_addition_mode_prepare     (GeglOperation       *operation);
 static gboolean gimp_operation_addition_mode_process (GeglOperation       *operation,
                                                       void                *in_buf,
                                                       void                *aux_buf,
@@ -58,24 +57,12 @@ gimp_operation_addition_mode_class_init (GimpOperationAdditionModeClass *klass)
                                  "description", "GIMP addition mode operation",
                                  NULL);
 
-  point_class->process     = gimp_operation_addition_mode_process;
-  operation_class->prepare = gimp_operation_addition_mode_prepare;
+  point_class->process = gimp_operation_addition_mode_process;
 }
 
 static void
 gimp_operation_addition_mode_init (GimpOperationAdditionMode *self)
 {
-}
-
-static void
-gimp_operation_addition_mode_prepare (GeglOperation *operation)
-{
-  const Babl *format = babl_format ("R'G'B'A float");
-
-  gegl_operation_set_format (operation, "input",  format);
-  gegl_operation_set_format (operation, "aux",    format);
-  gegl_operation_set_format (operation, "aux2",   babl_format ("Y float"));
-  gegl_operation_set_format (operation, "output", format);
 }
 
 static gboolean

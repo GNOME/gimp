@@ -33,7 +33,6 @@
 #include "gimpoperationcolormode.h"
 
 
-static void     gimp_operation_color_mode_prepare (GeglOperation       *operation);
 static gboolean gimp_operation_color_mode_process (GeglOperation       *operation,
                                                    void                *in_buf,
                                                    void                *aux_buf,
@@ -62,24 +61,12 @@ gimp_operation_color_mode_class_init (GimpOperationColorModeClass *klass)
                                  "description", "GIMP color mode operation",
                                  NULL);
 
-  operation_class->prepare = gimp_operation_color_mode_prepare;
-  point_class->process     = gimp_operation_color_mode_process;
+  point_class->process = gimp_operation_color_mode_process;
 }
 
 static void
 gimp_operation_color_mode_init (GimpOperationColorMode *self)
 {
-}
-
-static void
-gimp_operation_color_mode_prepare (GeglOperation *operation)
-{
-  const Babl *format = babl_format ("R'G'B'A float");
-
-  gegl_operation_set_format (operation, "input",  format);
-  gegl_operation_set_format (operation, "aux",    format);
-  gegl_operation_set_format (operation, "aux2",   babl_format ("Y float"));
-  gegl_operation_set_format (operation, "output", format);
 }
 
 static gboolean
