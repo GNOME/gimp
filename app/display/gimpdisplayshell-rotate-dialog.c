@@ -155,8 +155,8 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  data->rotate_adj = (GtkAdjustment *)
-    gtk_adjustment_new (shell->rotate_angle, 0.0, 360.0, 1, 15, 0);
+  data->rotate_adj = gtk_adjustment_new (shell->rotate_angle,
+                                         0.0, 360.0, 1, 15, 0);
   spin = gtk_spin_button_new (data->rotate_adj, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spin), TRUE);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (spin), TRUE);
