@@ -185,6 +185,7 @@ gimp_gegl_mode_node_set_mode (GeglNode             *node,
                  NULL);
 }
 
+void
 gimp_gegl_mode_node_set_opacity (GeglNode *node,
                                  gdouble   opacity)
 {
