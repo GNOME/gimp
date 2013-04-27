@@ -1297,5 +1297,23 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
       g_slist_free (tags_off);
     }
 
+  if (editor->context->font_name &&
+      g_strcmp0 (editor->context->font_name,
+                 gimp_object_get_name (gimp_context_get_font (editor->context))))
+    {
+      /* A font is set, but is unavailable; change the help text. */
+      gchar *help_text;
+
+      help_text = g_strdup_printf (_("Font \"%s\" unavailable on this system"),
+                                   editor->context->font_name);
+      gimp_help_set_help_data (editor->font_entry, help_text, NULL);
+      g_free (help_text);
+    }
+  else
+    {
+      gimp_help_set_help_data (editor->font_entry,
+                               _("Change font of selected text"), NULL);
+    }
+
   return FALSE;
 }
