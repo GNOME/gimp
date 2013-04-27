@@ -284,7 +284,22 @@ gimp_container_entry_select_item (GimpContainerView *view,
                                    gimp_container_entry_changed,
                                    view);
 
-  gtk_entry_set_text (entry, iter ? gimp_object_get_name (viewable) : "");
+  if (iter)
+    {
+      gtk_widget_modify_text (GTK_WIDGET (entry), GTK_STATE_NORMAL, NULL);
+    }
+  else
+    {
+      /* The selected item does not exist. */
+      GdkColor     gdk_red;
+
+      gdk_red.red = 65535;
+      gdk_red.green = 0;
+      gdk_red.blue = 0;
+
+      gtk_widget_modify_text (GTK_WIDGET (entry), GTK_STATE_NORMAL, &gdk_red);
+    }
+  gtk_entry_set_text (entry, viewable? gimp_object_get_name (viewable) : "");
 
   g_signal_handlers_unblock_by_func (entry,
                                      gimp_container_entry_changed,
@@ -331,7 +346,21 @@ gimp_container_entry_changed (GtkEntry          *entry,
   object = gimp_container_get_child_by_name (container, text);
 
   if (object)
-    gimp_container_view_item_selected (view, GIMP_VIEWABLE (object));
+    {
+      gtk_widget_modify_text (GTK_WIDGET (entry), GTK_STATE_NORMAL, NULL);
+      gimp_container_view_item_selected (view, GIMP_VIEWABLE (object));
+    }
+  else
+    {
+      /* While editing the entry, contents shows in red for non-existent item. */
+      GdkColor     gdk_red;
+
+      gdk_red.red = 65535;
+      gdk_red.green = 0;
+      gdk_red.blue = 0;
+
+      gtk_widget_modify_text (GTK_WIDGET (entry), GTK_STATE_NORMAL, &gdk_red);
+    }
 }
 
 static void
