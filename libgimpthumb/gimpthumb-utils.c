@@ -141,11 +141,11 @@ gimp_thumb_init (const gchar *creator,
 
 #else
 
-      const gchar *home_dir = g_get_home_dir ();
+      const gchar *cache_dir = g_get_user_cache_dir ();
 
-      if (home_dir && g_file_test (home_dir, G_FILE_TEST_IS_DIR))
+      if (cache_dir && g_file_test (cache_dir, G_FILE_TEST_IS_DIR))
         {
-          thumb_dir = g_build_filename (home_dir, ".thumbnails", NULL);
+          thumb_dir = g_build_filename (cache_dir, "thumbnails", NULL);
         }
 
 #endif
