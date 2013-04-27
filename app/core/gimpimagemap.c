@@ -291,7 +291,9 @@ gimp_image_map_apply (GimpImageMap *image_map)
 
       gegl_node_add_child (filter_node, image_map->operation);
 
-      image_map->applicator = gimp_applicator_new (filter_node);
+      image_map->applicator =
+        gimp_applicator_new (filter_node,
+                             gimp_drawable_get_linear (image_map->drawable));
 
       gimp_filter_set_applicator (image_map->filter,
                                   image_map->applicator);

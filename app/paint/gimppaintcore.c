@@ -405,7 +405,8 @@ gimp_paint_core_start (GimpPaintCore     *core,
   if (GIMP_DRAWABLE (mask) == drawable || gimp_channel_is_empty (mask))
     mask = NULL;
 
-  core->applicator = gimp_applicator_new (NULL);
+  core->applicator = gimp_applicator_new (NULL,
+                                          gimp_drawable_get_linear (drawable));
 
   if (mask)
     {

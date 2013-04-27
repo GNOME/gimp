@@ -491,12 +491,14 @@ gimp_layer_notify (GObject    *object,
     {
       GimpLayer *layer = GIMP_LAYER (object);
       GeglNode  *mode_node;
+      gboolean   linear;
 
       mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
+      linear    = gimp_drawable_get_linear (GIMP_DRAWABLE (layer));
 
       gimp_gegl_mode_node_set_mode (mode_node,
                                     gimp_layer_get_visible_mode (layer),
-                                    FALSE);
+                                    linear);
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
                             0, 0,
@@ -570,6 +572,7 @@ gimp_layer_get_node (GimpFilter *filter)
   GeglNode     *node;
   GeglNode     *source;
   GeglNode     *mode_node;
+  gboolean      linear;
   gboolean      source_node_hijacked = FALSE;
 
   node = GIMP_FILTER_CLASS (parent_class)->get_node (filter);
@@ -593,10 +596,11 @@ gimp_layer_get_node (GimpFilter *filter)
    * the layer and its mask
    */
   mode_node = gimp_drawable_get_mode_node (drawable);
+  linear    = gimp_drawable_get_linear (drawable);
 
   gimp_gegl_mode_node_set_mode (mode_node,
                                 gimp_layer_get_visible_mode (layer),
-                                FALSE);
+                                linear);
   gimp_gegl_mode_node_set_opacity (mode_node,
                                    layer->opacity);
 
@@ -2028,12 +2032,14 @@ gimp_layer_set_mode (GimpLayer            *layer,
       if (gimp_filter_peek_node (GIMP_FILTER (layer)))
         {
           GeglNode *mode_node;
+          gboolean  linear;
 
           mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
+          linear    = gimp_drawable_get_linear (GIMP_DRAWABLE (layer));
 
           gimp_gegl_mode_node_set_mode (mode_node,
                                         gimp_layer_get_visible_mode (layer),
-                                        FALSE);
+                                        linear);
         }
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),

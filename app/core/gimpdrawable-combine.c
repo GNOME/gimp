@@ -117,7 +117,7 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
         }
     }
 
-  applicator = gimp_applicator_new (NULL);
+  applicator = gimp_applicator_new (NULL, gimp_drawable_get_linear (drawable));
 
   if (mask)
     {

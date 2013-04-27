@@ -205,6 +205,7 @@ const Babl    * gimp_drawable_get_format_with_alpha
                                                  (const GimpDrawable *drawable);
 const Babl    * gimp_drawable_get_format_without_alpha
                                                  (const GimpDrawable *drawable);
+gboolean        gimp_drawable_get_linear         (const GimpDrawable *drawable);
 gboolean        gimp_drawable_has_alpha          (const GimpDrawable *drawable);
 GimpImageBaseType gimp_drawable_get_base_type    (const GimpDrawable *drawable);
 GimpPrecision   gimp_drawable_get_precision      (const GimpDrawable *drawable);

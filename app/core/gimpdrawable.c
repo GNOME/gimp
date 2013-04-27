@@ -924,6 +924,7 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
         {
           GeglNode *node;
           GeglNode *fs_source;
+          gboolean  linear;
 
           private->fs_filter = gimp_filter_new ("Floating Selection");
           gimp_viewable_set_stock_id (GIMP_VIEWABLE (private->fs_filter),
@@ -932,6 +933,7 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
           node = gimp_filter_get_node (private->fs_filter);
 
           fs_source = gimp_drawable_get_source_node (GIMP_DRAWABLE (fs));
+          linear    = gimp_drawable_get_linear (GIMP_DRAWABLE (fs));
 
           /* rip the fs' source node out of its graph */
           if (fs->layer_offset_node)
@@ -943,7 +945,7 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
 
           gegl_node_add_child (node, fs_source);
 
-          private->fs_applicator = gimp_applicator_new (node);
+          private->fs_applicator = gimp_applicator_new (node, linear);
 
           private->fs_crop_node =
             gegl_node_new_child (node,
@@ -1589,6 +1591,14 @@ gimp_drawable_get_format_without_alpha (const GimpDrawable *drawable)
                                 gimp_drawable_get_base_type (drawable),
                                 gimp_drawable_get_precision (drawable),
                                 FALSE);
+}
+
+gboolean
+gimp_drawable_get_linear (const GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+
+  return FALSE;
 }
 
 gboolean

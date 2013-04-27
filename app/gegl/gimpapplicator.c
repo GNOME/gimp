@@ -105,13 +105,16 @@ gimp_applicator_get_property (GObject    *object,
 }
 
 GimpApplicator *
-gimp_applicator_new (GeglNode *parent)
+gimp_applicator_new (GeglNode *parent,
+                     gboolean  linear)
 {
   GimpApplicator *applicator;
 
   g_return_val_if_fail (parent == NULL || GEGL_IS_NODE (parent), NULL);
 
   applicator = g_object_new (GIMP_TYPE_APPLICATOR, NULL);
+
+  applicator->linear = linear;
 
   if (parent)
     applicator->node = g_object_ref (parent);
@@ -133,7 +136,7 @@ gimp_applicator_new (GeglNode *parent)
 
   gimp_gegl_mode_node_set_mode (applicator->mode_node,
                                 applicator->paint_mode,
-                                FALSE);
+                                applicator->linear);
   gimp_gegl_mode_node_set_opacity (applicator->mode_node,
                                    applicator->opacity);
 
@@ -390,7 +393,7 @@ gimp_applicator_set_mode (GimpApplicator       *applicator,
       applicator->paint_mode = paint_mode;
 
       gimp_gegl_mode_node_set_mode (applicator->mode_node,
-                                    paint_mode, FALSE);
+                                    paint_mode, applicator->linear);
     }
 }
 
