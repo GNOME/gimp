@@ -738,9 +738,9 @@ gimp_image_map_tool_dialog_hide (GimpImageMapTool *image_map_tool)
       if (gtk_widget_get_parent (dialog))
         {
           g_object_ref (dialog);
-          gtk_widget_hide (dialog);
           gtk_container_remove (GTK_CONTAINER (gtk_widget_get_parent (dialog)),
                                 dialog);
+          gtk_widget_hide (dialog);
         }
     }
 }
