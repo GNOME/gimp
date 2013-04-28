@@ -1435,7 +1435,7 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
   switch (shell->display->config->space_bar_action)
     {
     case GIMP_SPACE_BAR_ACTION_NONE:
-      return;
+      break;
 
     case GIMP_SPACE_BAR_ACTION_PAN:
       {
@@ -1457,22 +1457,23 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
 
     case GIMP_SPACE_BAR_ACTION_MOVE:
       {
-        GimpTool        *active_tool = tool_manager_get_active (gimp);
-        GdkModifierType  state;
+        GimpTool *active_tool = tool_manager_get_active (gimp);
 
-        if (! active_tool || GIMP_IS_MOVE_TOOL (active_tool))
-          return;
+        if (active_tool || ! GIMP_IS_MOVE_TOOL (active_tool))
+          {
+            GdkModifierType state;
 
-        shell->space_shaded_tool =
-          gimp_object_get_name (active_tool->tool_info);
+            shell->space_shaded_tool =
+              gimp_object_get_name (active_tool->tool_info);
 
-        gimp_context_set_tool (gimp_get_user_context (gimp),
-                               gimp_get_tool_info (gimp, "gimp-move-tool"));
+            gimp_context_set_tool (gimp_get_user_context (gimp),
+                                   gimp_get_tool_info (gimp, "gimp-move-tool"));
 
-        gdk_event_get_state (event, &state);
+            gdk_event_get_state (event, &state);
 
-        gimp_display_shell_update_focus (shell, TRUE,
-                                         NULL, state);
+            gimp_display_shell_update_focus (shell, TRUE,
+                                             NULL, state);
+          }
       }
       break;
     }
@@ -1500,27 +1501,28 @@ gimp_display_shell_space_released (GimpDisplayShell *shell,
       break;
 
     case GIMP_SPACE_BAR_ACTION_MOVE:
-      {
-        gimp_context_set_tool (gimp_get_user_context (gimp),
-                               gimp_get_tool_info (gimp,
-                                                   shell->space_shaded_tool));
-        shell->space_shaded_tool = NULL;
+      if (shell->space_shaded_tool)
+        {
+          gimp_context_set_tool (gimp_get_user_context (gimp),
+                                 gimp_get_tool_info (gimp,
+                                                     shell->space_shaded_tool));
+          shell->space_shaded_tool = NULL;
 
-        if (gtk_widget_has_focus (shell->canvas))
-          {
-            GdkModifierType state;
+          if (gtk_widget_has_focus (shell->canvas))
+            {
+              GdkModifierType state;
 
-            gdk_event_get_state (event, &state);
+              gdk_event_get_state (event, &state);
 
-            gimp_display_shell_update_focus (shell, TRUE,
-                                             image_coords, state);
-          }
-        else
-          {
-            gimp_display_shell_update_focus (shell, FALSE,
-                                             image_coords, 0);
-          }
-      }
+              gimp_display_shell_update_focus (shell, TRUE,
+                                               image_coords, state);
+            }
+          else
+            {
+              gimp_display_shell_update_focus (shell, FALSE,
+                                               image_coords, 0);
+            }
+        }
       break;
     }
 
