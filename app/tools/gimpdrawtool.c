@@ -184,7 +184,7 @@ gimp_draw_tool_draw_timeout (GimpDrawTool *draw_tool)
 
   /* keep the timeout running if the last drawing just happened */
   if ((now - draw_tool->last_draw_time) <= MINIMUM_DRAW_INTERVAL)
-    return FALSE;
+    return TRUE;
 
   draw_tool->draw_timeout = 0;
 
