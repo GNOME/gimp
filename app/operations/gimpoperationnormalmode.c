@@ -176,11 +176,13 @@ gimp_operation_normal_mode_process (GeglOperation       *operation,
 
       if (out[ALPHA])
         {
-          gint b;
+          gfloat in_weight       = in[ALPHA] * (1.0f - aux_alpha);
+          gfloat recip_out_alpha = 1.0f / out[ALPHA];
+          gint   b;
 
           for (b = RED; b < ALPHA; b++)
             {
-              out[b] = (aux[b] * aux_alpha + in[b] * in[ALPHA] * (1.0f - aux_alpha)) / out[ALPHA];
+              out[b] = (aux[b] * aux_alpha + in[b] * in_weight) * recip_out_alpha;
             }
         }
       else
