@@ -574,9 +574,6 @@ gimp_display_shell_constructed (GObject *object)
   g_signal_connect (shell->canvas, "expose-event",
                     G_CALLBACK (gimp_display_shell_canvas_expose),
                     shell);
-  g_signal_connect_after (shell->canvas, "expose-event",
-                          G_CALLBACK (gimp_display_shell_canvas_expose_after),
-                          shell);
 
   g_signal_connect (shell->canvas, "enter-notify-event",
                     G_CALLBACK (gimp_display_shell_canvas_tool_events),
@@ -1355,9 +1352,6 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
 
   gimp_statusbar_empty (GIMP_STATUSBAR (shell->statusbar));
 
-  /*  so wilber doesn't flicker  */
-  gtk_widget_set_double_buffered (shell->canvas, TRUE);
-
   shell->rotate_angle = 0.0;
   gimp_display_shell_rotate_update_transform (shell);
 
@@ -1415,9 +1409,6 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
   gimp_display_shell_scroll_center_image_on_next_size_allocate (shell,
                                                                 TRUE,
                                                                 TRUE);
-
-  /*  we double buffer image drawing manually  */
-  gtk_widget_set_double_buffered (shell->canvas, FALSE);
 
   shell->fill_idle_id =
     g_idle_add_full (GIMP_DISPLAY_SHELL_FILL_IDLE_PRIORITY,

@@ -210,25 +210,6 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
     }
 }
 
-static gboolean
-gimp_display_shell_is_double_buffered (GimpDisplayShell *shell)
-{
-  return TRUE; /* FIXME: repair this after cairo tool drawing is done */
-
-  /*  always double-buffer if there are overlay children or a
-   *  transform preview, or they will flicker badly. Also double
-   *  buffer when we are editing paths.
-   */
-#if 0
-  if (GIMP_OVERLAY_BOX (shell->canvas)->children    ||
-      gimp_display_shell_get_show_transform (shell) ||
-      GIMP_IS_VECTOR_TOOL (tool_manager_get_active (shell->display->gimp)))
-    return TRUE;
-#endif
-
-  return FALSE;
-}
-
 gboolean
 gimp_display_shell_canvas_expose (GtkWidget        *widget,
                                   GdkEventExpose   *eevent,
@@ -243,15 +224,6 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
     {
       cairo_t *cr;
 
-      if (gimp_display_get_image (shell->display))
-        {
-          if (gimp_display_shell_is_double_buffered (shell))
-            gdk_window_begin_paint_region (eevent->window, eevent->region);
-        }
-
-      /*  create the cairo_t after enabling double buffering, or we
-       *  will get the wrong window destination surface
-       */
       cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
       gdk_cairo_region (cr, eevent->region);
       cairo_clip (cr);
@@ -266,28 +238,6 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
         }
 
       cairo_destroy (cr);
-    }
-
-  return FALSE;
-}
-
-gboolean
-gimp_display_shell_canvas_expose_after (GtkWidget        *widget,
-                                        GdkEventExpose   *eevent,
-                                        GimpDisplayShell *shell)
-{
-  /*  are we in destruction?  */
-  if (! shell->display || ! gimp_display_get_shell (shell->display))
-    return TRUE;
-
-  /*  ignore events on overlays  */
-  if (eevent->window == gtk_widget_get_window (widget))
-    {
-      if (gimp_display_get_image (shell->display))
-        {
-          if (gimp_display_shell_is_double_buffered (shell))
-            gdk_window_end_paint (eevent->window);
-        }
     }
 
   return FALSE;
