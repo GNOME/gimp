@@ -338,6 +338,10 @@ run (const gchar      *name,
             gimp_pixpipe_params_parse (gimp_parasite_data (pipe_parasite),
                                        &gihparams);
 
+          /* Force default rank to same as number of cells if there is just one dim */
+          if (gihparams.dim == 1)
+            gihparams.rank[0] = gihparams.ncells;
+
           if (!gih_save_dialog (image_ID))
             status = GIMP_PDB_CANCEL;
           break;
