@@ -230,7 +230,6 @@ gimp_overlay_child_size_allocate (GimpOverlayBox   *box,
                                   GimpOverlayChild *child)
 {
   GtkWidget      *widget;
-  GtkAllocation   allocation;
   GtkRequisition  child_requisition;
   GtkAllocation   child_allocation;
   gint            x;
@@ -241,7 +240,7 @@ gimp_overlay_child_size_allocate (GimpOverlayBox   *box,
 
   widget = GTK_WIDGET (box);
 
-  gtk_widget_get_allocation (widget, &allocation);
+  gimp_overlay_child_invalidate (box, child);
 
   gtk_widget_get_child_requisition (child->widget, &child_requisition);
 
@@ -252,30 +251,12 @@ gimp_overlay_child_size_allocate (GimpOverlayBox   *box,
 
   gtk_widget_size_allocate (child->widget, &child_allocation);
 
-  gtk_widget_get_allocation (child->widget, &child_allocation);
-
   if (gtk_widget_get_realized (GTK_WIDGET (widget)))
-    {
-      GdkRectangle old_allocation;
-      GdkRectangle old_bounds;
-
-      gdk_window_get_position (child->window,
-                               &old_allocation.x,
-                               &old_allocation.y);
-      old_allocation.width  = gdk_window_get_width (child->window);
-      old_allocation.height = gdk_window_get_height (child->window);
-
-      gimp_overlay_child_transform_bounds (child, &old_allocation, &old_bounds);
-
-      gdk_window_invalidate_rect (gtk_widget_get_window (widget),
-                                  &old_bounds, FALSE);
-
-      gdk_window_move_resize (child->window,
-                              child_allocation.x,
-                              child_allocation.y,
-                              child_allocation.width,
-                              child_allocation.height);
-    }
+    gdk_window_move_resize (child->window,
+                            child_allocation.x,
+                            child_allocation.y,
+                            child_allocation.width,
+                            child_allocation.height);
 
   cairo_matrix_init_identity (&child->matrix);
 
@@ -289,10 +270,13 @@ gimp_overlay_child_size_allocate (GimpOverlayBox   *box,
     }
   else
     {
-      GdkRectangle bounds;
-      gint         border;
-      gint         available_width;
-      gint         available_height;
+      GtkAllocation allocation;
+      GdkRectangle  bounds;
+      gint          border;
+      gint          available_width;
+      gint          available_height;
+
+      gtk_widget_get_allocation (widget, &allocation);
 
       gimp_overlay_child_transform_bounds (child, &child_allocation, &bounds);
 
@@ -315,6 +299,8 @@ gimp_overlay_child_size_allocate (GimpOverlayBox   *box,
 
   /* local transform */
   cairo_matrix_rotate (&child->matrix, child->angle);
+
+  gimp_overlay_child_invalidate (box, child);
 }
 
 gboolean
@@ -342,8 +328,13 @@ gimp_overlay_child_expose (GimpOverlayBox   *box,
       if (gtk_widget_get_visible (child->widget) &&
           gdk_rectangle_intersect (&event->area, &bounds, NULL))
         {
-          GdkPixmap *pixmap = gdk_offscreen_window_get_pixmap (child->window);
-          cairo_t   *cr     = gdk_cairo_create (gtk_widget_get_window (widget));
+          GdkPixmap *pixmap;
+          cairo_t   *cr;
+
+          gdk_window_process_updates (child->window, FALSE);
+
+          pixmap = gdk_offscreen_window_get_pixmap (child->window);
+          cr     = gdk_cairo_create (gtk_widget_get_window (widget));
 
           gdk_cairo_region (cr, event->region);
           cairo_clip (cr);
