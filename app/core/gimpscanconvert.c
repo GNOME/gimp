@@ -480,7 +480,7 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
   bpp    = babl_format_get_bytes_per_pixel (format);
 
   iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
-                                   GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                                   GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
   roi = &iter->roi[0];
 
   while (gegl_buffer_iterator_next (iter))
@@ -497,14 +497,13 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
        */
       if (roi->width * bpp != stride)
         {
-          const guchar *src = data;
-          guchar       *dest;
-
-          dest = tmp_buf = g_alloca (stride * roi->height);
+          tmp_buf = g_alloca (stride * roi->height);
 
           if (! replace)
             {
-              gint i;
+              const guchar *src  = data;
+              guchar       *dest = tmp_buf;
+              gint          i;
 
               for (i = 0; i < roi->height; i++)
                 {
@@ -574,8 +573,8 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
 
       if (tmp_buf)
         {
-          guchar       *dest = data;
           const guchar *src  = tmp_buf;
+          guchar       *dest = data;
           gint          i;
 
           for (i = 0; i < roi->height; i++)
