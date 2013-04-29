@@ -18,8 +18,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#if 0
-
 #include "config.h"
 
 #include <string.h>
@@ -225,8 +223,10 @@ gimp_foreground_select_tool_finalize (GObject *object)
   if (fg_select->strokes)
     g_warning ("%s: strokes should be NULL at this point", G_STRLOC);
 
+#if 0
   if (fg_select->state)
     g_warning ("%s: state should be NULL at this point", G_STRLOC);
+#endif
 
   if (fg_select->mask)
     g_warning ("%s: mask should be NULL at this point", G_STRLOC);
@@ -264,11 +264,13 @@ gimp_foreground_select_tool_control (GimpTool       *tool,
         g_list_free (fg_select->strokes);
         fg_select->strokes = NULL;
 
+#if 0
         if (fg_select->state)
           {
             gimp_drawable_foreground_extract_siox_done (fg_select->state);
             fg_select->state = NULL;
           }
+#endif
 
         tool->display = NULL;
       }
@@ -376,7 +378,10 @@ gimp_foreground_select_tool_key_press (GimpTool    *tool,
   if (display != tool->display)
     return FALSE;
 
+#if 0
   if (fg_select->state)
+#endif
+  if (fg_select->mask) /* dunno if that's the right condition */
     {
       switch (kevent->keyval)
         {
@@ -650,6 +655,7 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
       for (list = fg_select->strokes; list; list = list->next)
         gimp_foreground_select_tool_stroke (mask, list->data);
 
+#if 0
       if (fg_select->state)
         gimp_drawable_foreground_extract_siox (GIMP_DRAWABLE (mask),
                                                fg_select->state,
@@ -658,6 +664,7 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
                                                options->sensitivity,
                                                ! options->contiguous,
                                                GIMP_PROGRESS (fg_select));
+#endif
 
       fg_select->refinement = SIOX_REFINEMENT_NO_CHANGE;
 
@@ -672,12 +679,14 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
 
       gimp_foreground_select_tool_get_area (mask, &x1, &y1, &x2, &y2);
 
+#if 0
       if (fg_select->state)
         g_warning ("state should be NULL here");
 
       fg_select->state =
         gimp_drawable_foreground_extract_siox_init (drawable,
                                                     x1, y1, x2 - x1, y2 - y1);
+#endif
     }
 
   gimp_foreground_select_tool_set_mask (fg_select, display, mask);
@@ -849,6 +858,7 @@ gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
   if (! fg_select->mask)
     return;
 
+#if 0
   if (strcmp (pspec->name, "smoothness") == 0)
     {
       refinement = SIOX_REFINEMENT_CHANGE_SMOOTHNESS;
@@ -861,6 +871,7 @@ gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
     {
       refinement = SIOX_REFINEMENT_CHANGE_SENSITIVITY;
     }
+#endif
 
   if (refinement && fg_select->strokes)
     {
@@ -889,5 +900,3 @@ gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
         }
     }
 }
-
-#endif

@@ -15,8 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#if 0
-
 #ifndef __GIMP_FOREGROUND_SELECT_OPTIONS_H__
 #define __GIMP_FOREGROUND_SELECT_OPTIONS_H__
 
@@ -58,5 +56,3 @@ void        gimp_foreground_select_options_get_mask_color (GimpForegroundSelectO
 
 
 #endif /* __GIMP_FOREGROUND_SELECT_OPTIONS_H__ */
-
-#endif

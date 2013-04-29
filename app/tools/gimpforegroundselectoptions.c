@@ -15,8 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#if 0
-
 #include "config.h"
 
 #include <gegl.h>
@@ -28,7 +26,9 @@
 
 #include "tools-types.h"
 
+#if 0
 #include "base/siox.h"
+#endif
 
 #include "widgets/gimpwidgets-utils.h"
 
@@ -102,6 +102,7 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
                                 1, 80, 18,
                                 GIMP_PARAM_STATIC_STRINGS);
 
+#if 0
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_SMOOTHNESS,
                                 "smoothness",
                                 N_("Smaller values give a more accurate "
@@ -109,6 +110,7 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
                                   "in the selection"),
                                 0, 8, SIOX_DEFAULT_SMOOTHNESS,
                                 GIMP_PARAM_STATIC_STRINGS);
+#endif
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_MASK_COLOR,
                                  "mask-color",
@@ -122,6 +124,7 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
                                     FALSE,
                                     0);
 
+#if 0
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SENSITIVITY_L,
                                    "sensitivity-l",
                                    N_("Sensitivity for brightness component"),
@@ -139,6 +142,7 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
                                    N_("Sensitivity for yellow/blue component"),
                                    0.0, 10.0, SIOX_DEFAULT_SENSITIVITY_B,
                                    GIMP_PARAM_STATIC_STRINGS);
+#endif
 }
 
 static void
@@ -335,10 +339,12 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
+#if 0
   scale = gimp_prop_hscale_new (config, "smoothness", 0.1, 1.0, 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_RIGHT);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Smoothing:"), 0.0, 0.5, scale, 2, FALSE);
+#endif
 
   /*  mask color */
   menu = gimp_prop_enum_combo_box_new (config, "mask-color",
@@ -346,6 +352,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("Preview color:"), 0.0, 0.5, menu, 2, FALSE);
 
+#if 0
   /*  granularity  */
   frame = gimp_prop_expander_new (config, "expanded", _("Color Sensitivity"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -369,6 +376,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
 
   gimp_prop_opacity_entry_new (config, "sensitivity-b",
                                GTK_TABLE (table), 0, row++, "b");
+#endif
 
   return vbox;
 }
@@ -399,5 +407,3 @@ gimp_foreground_select_options_get_mask_color (GimpForegroundSelectOptions *opti
       break;
     }
 }
-
-#endif

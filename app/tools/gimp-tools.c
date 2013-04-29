@@ -174,8 +174,8 @@ gimp_tools_init (Gimp *gimp)
 
     /*  selection tools */
 
-#if 0
     gimp_foreground_select_tool_register,
+#if 0
     gimp_iscissors_tool_register,
 #endif
     gimp_by_color_select_tool_register,
