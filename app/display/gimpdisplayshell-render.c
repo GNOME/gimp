@@ -61,7 +61,10 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   gint             viewport_width;
   gint             viewport_height;
   cairo_surface_t *xfer;
-  gint             src_x, src_y;
+  gint             src_x;
+  gint             src_y;
+  gint             mask_src_x = 0;
+  gint             mask_src_y = 0;
   gint             stride;
   guchar          *data;
 
@@ -134,19 +137,20 @@ gimp_display_shell_render (GimpDisplayShell *shell,
       if (! shell->mask_surface)
         {
           shell->mask_surface =
-            cairo_surface_create_similar_image (cairo_get_target (cr),
-                                                CAIRO_FORMAT_A8,
-                                                GIMP_DISPLAY_RENDER_BUF_WIDTH  *
-                                                GIMP_DISPLAY_RENDER_MAX_SCALE,
-                                                GIMP_DISPLAY_RENDER_BUF_HEIGHT *
-                                                GIMP_DISPLAY_RENDER_MAX_SCALE);
+            cairo_image_surface_create (CAIRO_FORMAT_A8,
+                                        GIMP_DISPLAY_RENDER_BUF_WIDTH  *
+                                        GIMP_DISPLAY_RENDER_MAX_SCALE,
+                                        GIMP_DISPLAY_RENDER_BUF_HEIGHT *
+                                        GIMP_DISPLAY_RENDER_MAX_SCALE);
         }
+
+      cairo_surface_mark_dirty (shell->mask_surface);
 
       buffer = gimp_drawable_get_buffer (shell->mask);
 
       stride = cairo_image_surface_get_stride (shell->mask_surface);
       data = cairo_image_surface_get_data (shell->mask_surface);
-      data += src_y * stride + src_x * 4;
+      data += mask_src_y * stride + mask_src_x * 4;
 
       gegl_buffer_get (buffer,
                        GEGL_RECTANGLE ((x + viewport_offset_x) * window_scale,
@@ -157,8 +161,6 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                        babl_format ("Y u8"),
                        data, stride,
                        GEGL_ABYSS_NONE);
-
-      cairo_surface_mark_dirty (shell->mask_surface);
     }
 
   /*  put it to the screen  */
@@ -192,8 +194,8 @@ gimp_display_shell_render (GimpDisplayShell *shell,
     {
       gimp_cairo_set_source_rgba (cr, &shell->mask_color);
       cairo_mask_surface (cr, shell->mask_surface,
-                          (x - src_x) * window_scale,
-                          (y - src_y) * window_scale);
+                          (x - mask_src_x) * window_scale,
+                          (y - mask_src_y) * window_scale);
     }
 
   cairo_restore (cr);
