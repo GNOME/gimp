@@ -112,6 +112,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
   {
     "gegl:c2g", /* in gimp */
     "gegl:cartoon", /* in gimp */
+    "gegl:checkerboard", /* in gimp */
     "gegl:color", /* pointless */
     "gegl:color-reduction", /* in gimp */
     "gegl:color-temperature", /* in gimp */

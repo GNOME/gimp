@@ -51,6 +51,12 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:cartoon",
     NULL /* FIXME GIMP_HELP_FILTER_CARTOON */ },
 
+  { "filters-checkerboard", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Checkerboard..."), NULL,
+    NC_("filters-action", "Create a checkerboard pattern"),
+    "gegl:checkerboard",
+    NULL /* FIXME GIMP_HELP_FILTER_CHECKERBOARD */ },
+
   { "filters-color-reduction", GIMP_STOCK_GEGL,
     NC_("filters-action", "Color _Reduction..."), NULL,
     NC_("filters-action", "Reduce the number of colors in the image, with optional dithering"),
@@ -251,6 +257,7 @@ filters_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("filters-c2g",                     writable && !gray);
   SET_SENSITIVE ("filters-cartoon",                 writable);
+  SET_SENSITIVE ("filters-checkerboard",            writable);
   SET_SENSITIVE ("filters-color-reduction",         writable);
   SET_SENSITIVE ("filters-color-temperature",       writable && !gray);
   SET_SENSITIVE ("filters-color-to-alpha",          writable && !gray && alpha);
