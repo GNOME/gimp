@@ -2316,10 +2316,10 @@ gimp_image_get_active_mask (const GimpImage *image)
 
     case GIMP_GRAY:
     case GIMP_INDEXED:
-      mask |= (private->active[GRAY])  ? GIMP_COMPONENT_RED   : 0;
-      mask |= (private->active[GRAY])  ? GIMP_COMPONENT_GREEN : 0;
-      mask |= (private->active[GRAY])  ? GIMP_COMPONENT_BLUE  : 0;
-      mask |= (private->active[ALPHA]) ? GIMP_COMPONENT_ALPHA : 0;
+      mask |= (private->active[GRAY])    ? GIMP_COMPONENT_RED   : 0;
+      mask |= (private->active[GRAY])    ? GIMP_COMPONENT_GREEN : 0;
+      mask |= (private->active[GRAY])    ? GIMP_COMPONENT_BLUE  : 0;
+      mask |= (private->active[ALPHA_G]) ? GIMP_COMPONENT_ALPHA : 0;
       break;
     }
 
