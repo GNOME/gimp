@@ -1596,9 +1596,13 @@ gimp_drawable_get_format_without_alpha (const GimpDrawable *drawable)
 gboolean
 gimp_drawable_get_linear (const GimpDrawable *drawable)
 {
+  const Babl *format;
+
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
-  return FALSE;
+  format = gegl_buffer_get_format (drawable->private->buffer);
+
+  return gimp_babl_format_get_linear (format);
 }
 
 gboolean

@@ -28,6 +28,8 @@ const gchar       * gimp_babl_get_description       (const Babl        *babl);
 
 GimpImageBaseType   gimp_babl_format_get_base_type  (const Babl        *format);
 GimpPrecision       gimp_babl_format_get_precision  (const Babl        *format);
+gboolean            gimp_babl_format_get_linear     (const Babl        *format);
+
 
 const Babl        * gimp_babl_format                (GimpImageBaseType  base_type,
                                                      GimpPrecision      precision,

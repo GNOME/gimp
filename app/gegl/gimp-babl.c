@@ -297,6 +297,37 @@ gimp_babl_format_get_precision (const Babl *format)
   g_return_val_if_reached (-1);
 }
 
+gboolean
+gimp_babl_format_get_linear (const Babl *format)
+{
+  const Babl *model;
+
+  g_return_val_if_fail (format != NULL, FALSE);
+
+  model = babl_format_get_model (format);
+
+  if (model == babl_model ("Y")   ||
+      model == babl_model ("YA")  ||
+      model == babl_model ("RGB") ||
+      model == babl_model ("RGBA"))
+    {
+      return TRUE;
+    }
+  else if (model == babl_model ("Y'")     ||
+           model == babl_model ("Y'A")    ||
+           model == babl_model ("R'G'B'") ||
+           model == babl_model ("R'G'B'A"))
+    {
+      return FALSE;
+    }
+  else if (babl_format_is_palette (format))
+    {
+      return FALSE;
+    }
+
+  g_return_val_if_reached (FALSE);
+}
+
 const Babl *
 gimp_babl_format (GimpImageBaseType  base_type,
                   GimpPrecision      precision,
