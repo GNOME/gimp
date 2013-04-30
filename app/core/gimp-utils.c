@@ -778,7 +778,7 @@ gimp_enum_get_value_name (GType enum_type,
                           gint  value)
 {
   const gchar *value_name = NULL;
-  
+
   gimp_enum_get_value (enum_type,
                        value,
                        &value_name,
@@ -874,4 +874,40 @@ gimp_constrain_line (gdouble  start_x,
           *end_y = constrained_point.y;
         }
     }
+}
+
+
+/*  debug stuff  */
+
+#include "gegl/gimp-babl.h"
+#include "gimpimage.h"
+#include "gimplayer.h"
+
+void
+gimp_create_image_from_buffer (Gimp       *gimp,
+                               GeglBuffer *buffer)
+{
+  GimpImage  *image;
+  GimpLayer  *layer;
+  const Babl *format;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GEGL_IS_BUFFER (buffer));
+
+  format = gegl_buffer_get_format (buffer);
+
+  image = gimp_create_image (gimp,
+                             gegl_buffer_get_width  (buffer),
+                             gegl_buffer_get_height (buffer),
+                             gimp_babl_format_get_base_type (format),
+                             gimp_babl_format_get_precision (format),
+                             FALSE);
+
+  layer = gimp_layer_new_from_buffer (buffer, image, format,
+                                      "Debug Image",
+                                      GIMP_OPACITY_OPAQUE,
+                                      GIMP_NORMAL_MODE);
+  gimp_image_add_layer (image, layer, NULL, -1, FALSE);
+
+  gimp_create_display (gimp, image, GIMP_UNIT_PIXEL, 1.0);
 }

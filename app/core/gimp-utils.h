@@ -94,5 +94,8 @@ void         gimp_constrain_line                   (gdouble          start_x,
                                                     gdouble         *end_y,
                                                     gint             n_snap_lines);
 
+void         gimp_create_image_from_buffer         (Gimp            *gimp,
+                                                    GeglBuffer      *buffer);
+
 
 #endif /* __APP_GIMP_UTILS_H__ */
