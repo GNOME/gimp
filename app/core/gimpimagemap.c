@@ -261,9 +261,10 @@ gimp_image_map_new (GimpDrawable *drawable,
 void
 gimp_image_map_apply (GimpImageMap *image_map)
 {
-  GimpImage     *image;
-  GimpChannel   *mask;
-  GeglRectangle  rect;
+  GimpImage         *image;
+  GimpChannel       *mask;
+  GeglRectangle      rect;
+  GimpComponentMask  active_mask;
 
   g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
 
@@ -367,8 +368,16 @@ gimp_image_map_apply (GimpImageMap *image_map)
   gimp_applicator_set_apply_offset (image_map->applicator,
                                     rect.x, rect.y);
 
-  gimp_applicator_set_affect (image_map->applicator,
-                              gimp_drawable_get_active_mask (image_map->drawable));
+  active_mask = gimp_drawable_get_active_mask (image_map->drawable);
+
+  /*  don't let the filter affect the drawable projection's alpha,
+   *  because it can't affect the drawable buffer's alpha either
+   *  when finally merged (see bug #699279)
+   */
+  if (! gimp_drawable_has_alpha (image_map->drawable))
+    active_mask &= ~GIMP_COMPONENT_ALPHA;
+
+  gimp_applicator_set_affect (image_map->applicator, active_mask);
 
   image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
   mask  = gimp_image_get_mask (image);
