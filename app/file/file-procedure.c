@@ -136,7 +136,7 @@ file_procedure_find (GSList       *procs,
 
       for (list = procs; list; list = g_slist_next (list))
         {
-          file_proc = procs->data;
+          file_proc = list->data;
 
           if (file_proc->magics_list)
             {
