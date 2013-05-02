@@ -1,6 +1,5 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
- * Copyright (C) 2013 Loren Merritt
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +18,6 @@
 #include "config.h"
 
 #include <string.h>
-#include <malloc.h>
 
 #include <gegl.h>
 
@@ -45,14 +43,15 @@
 
 /* NOTES
  *
- * The method used here is similar to the lighting invariant correction
+ * The method used here is similar to the lighting invariant correctin
  * method but slightly different: we do not divide the RGB components,
  * but subtract them I2 = I0 - I1, where I0 is the sample image to be
  * corrected, I1 is the reference pattern. Then we solve DeltaI=0
  * (Laplace) with I2 Dirichlet conditions at the borders of the
- * mask. The solver is a red/black checker Gauss-Seidel with over-relaxation.
- * It could benefit from a multi-grid evaluation of an initial solution
- * before the main iteration loop.
+ * mask. The solver is a unoptimized red/black checker Gauss-Siedel
+ * with an over-relaxation factor of 1.8. It can benefit from a
+ * multi-grid evaluation of an initial solution before the main
+ * iteration loop.
  *
  * I reduced the convergence criteria to 0.1% (0.001) as we are
  * dealing here with RGB integer components, more is overkill.
@@ -144,7 +143,7 @@ gimp_heal_start (GimpPaintCore     *paint_core,
   return TRUE;
 }
 
-/* Subtract bottom from top and store in result as a float
+/* Subtract bottom from top and store in result as a double
  */
 static void
 gimp_heal_sub (GeglBuffer          *top_buffer,
@@ -172,15 +171,15 @@ gimp_heal_sub (GeglBuffer          *top_buffer,
                             GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, result_buffer, result_rect, 0,
-                            babl_format_n (babl_type ("float"), n_components),
+                            babl_format_n (babl_type ("double"), n_components),
                             GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
     {
-      gfloat *t      = iter->data[0];
-      gfloat *b      = iter->data[1];
-      gfloat *r      = iter->data[2];
-      gint    length = iter->length * n_components;
+      gfloat  *t      = iter->data[0];
+      gfloat  *b      = iter->data[1];
+      gdouble *r      = iter->data[2];
+      gint     length = iter->length * n_components;
 
       while (length--)
         *r++ = *t++ - *b++;
@@ -209,7 +208,7 @@ gimp_heal_add (GeglBuffer          *first_buffer,
     g_return_if_reached ();
 
   iter = gegl_buffer_iterator_new (first_buffer, first_rect, 0,
-                                   babl_format_n (babl_type ("float"),
+                                   babl_format_n (babl_type ("double"),
                                                   n_components),
                                    GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
@@ -221,148 +220,158 @@ gimp_heal_add (GeglBuffer          *first_buffer,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      gfloat *f      = iter->data[0];
-      gfloat *s      = iter->data[1];
-      gfloat *r      = iter->data[2];
-      gint    length = iter->length * n_components;
+      gdouble *f      = iter->data[0];
+      gfloat  *s      = iter->data[1];
+      gfloat  *r      = iter->data[2];
+      gint     length = iter->length * n_components;
 
       while (length--)
         *r++ = *f++ + *s++;
     }
 }
 
-#if defined(__SSE__) && defined(__GNUC__) && __GNUC__ >= 4
-static float
-gimp_heal_laplace_iteration_sse (gfloat *pixels,
-                                 gfloat *Adiag,
-                                 gint   *Aidx,
-                                 gfloat  w,
-                                 gint    nmask)
-{
-  typedef float v4sf __attribute__((vector_size(16)));
-  gint i;
-  v4sf wv = {w,w,w,w};
-  v4sf err = {0,0,0,0};
-  union { v4sf v; float f[4]; } erru;
-#define Xv(j) (*(v4sf*)&pixels[Aidx[i*5+j]])
-  for (i = 0; i < nmask; i++)
-    {
-      v4sf a = {Adiag[i], Adiag[i], Adiag[i], Adiag[i]};
-      v4sf diff = a * Xv(0) - wv * (Xv(1) + Xv(2) + Xv(3) + Xv(4));
-      Xv(0) -= diff;
-      err += diff * diff;
-    }
-  erru.v = err;
-  return erru.f[0] + erru.f[1] + erru.f[2] + erru.f[3];
-}
-#endif
-
-/* Perform one iteration of Gauss-Seidel, and return the sum squared residual.
+/* Perform one iteration of the laplace solver for matrix.  Store the
+ * result in solution and return the square of the cummulative error
+ * of the solution.
  */
-static float
-gimp_heal_laplace_iteration (gfloat *pixels,
-                             gfloat *Adiag,
-                             gint   *Aidx,
-                             gfloat  w,
-                             gint    nmask,
-                             gint    depth)
+static gdouble
+gimp_heal_laplace_iteration (gdouble *matrix,
+                             gint     height,
+                             gint     depth,
+                             gint     width,
+                             gdouble *solution,
+                             guchar  *mask)
 {
-  gint i, k;
-  gfloat err = 0;
-#if defined(__SSE__) && defined(__GNUC__) && __GNUC__ >= 4
-  if (depth == 4)
-    return gimp_heal_laplace_iteration_sse (pixels, Adiag, Aidx, w, nmask);
-#endif
-  for (i = 0; i < nmask; i++)
+  const gint    rowstride = width * depth;
+  gint          i, j, k, off, offm, offm0, off0;
+  gdouble       tmp, diff;
+  gdouble       err       = 0.0;
+  const gdouble w         = 1.80 * 0.25; /* Over-relaxation = 1.8 */
+
+  /* we use a red/black checker model of the discretization grid */
+
+  /* do reds */
+  for (i = 0; i < height; i++)
     {
-      gint j0 = Aidx[i*5+0];
-      gint j1 = Aidx[i*5+1];
-      gint j2 = Aidx[i*5+2];
-      gint j3 = Aidx[i*5+3];
-      gint j4 = Aidx[i*5+4];
-      gfloat a = Adiag[i];
-      for (k = 0; k < depth; k++)
+      off0  = i * rowstride;
+      offm0 = i * width;
+
+      for (j = i % 2; j < width; j += 2)
         {
-          gfloat diff = a * pixels[j0+k] - w * (pixels[j1+k] + pixels[j2+k] + pixels[j3+k] + pixels[j4+k]);
-          pixels[j0+k] -= diff;
-          err += diff * diff;
+          off  = off0 + j * depth;
+          offm = offm0 + j;
+
+          if ((0 == mask[offm]) ||
+              (i == 0) || (i == (height - 1)) ||
+              (j == 0) || (j == (width - 1)))
+            {
+              /* do nothing at the boundary or outside mask */
+              for (k = 0; k < depth; k++)
+                solution[off + k] = matrix[off + k];
+            }
+          else
+            {
+              /* Use Gauss Siedel to get the correction factor then
+               * over-relax it
+               */
+              for (k = 0; k < depth; k++)
+                {
+                  tmp = solution[off + k];
+                  solution[off + k] = (matrix[off + k] +
+                                       w *
+                                       (matrix[off - depth + k] +     /* west */
+                                        matrix[off + depth + k] +     /* east */
+                                        matrix[off - rowstride + k] + /* north */
+                                        matrix[off + rowstride + k] - 4.0 *
+                                        matrix[off+k]));              /* south */
+
+                  diff = solution[off + k] - tmp;
+                  err += diff * diff;
+                }
+            }
         }
     }
+
+
+  /* Do blacks
+   *
+   * As we've done the reds earlier, we can use them right now to
+   * accelerate the convergence. So we have "solution" in the solver
+   * instead of "matrix" above
+   */
+  for (i = 0; i < height; i++)
+    {
+      off0 =  i * rowstride;
+      offm0 = i * width;
+
+      for (j = (i % 2) ? 0 : 1; j < width; j += 2)
+        {
+          off = off0 + j * depth;
+          offm = offm0 + j;
+
+          if ((0 == mask[offm]) ||
+              (i == 0) || (i == (height - 1)) ||
+              (j == 0) || (j == (width - 1)))
+            {
+              /* do nothing at the boundary or outside mask */
+              for (k = 0; k < depth; k++)
+                solution[off + k] = matrix[off + k];
+            }
+          else
+            {
+              /* Use Gauss Siedel to get the correction factor then
+               * over-relax it
+               */
+              for (k = 0; k < depth; k++)
+                {
+                  tmp = solution[off + k];
+                  solution[off + k] = (matrix[off + k] +
+                                       w *
+                                       (solution[off - depth + k] +     /* west */
+                                        solution[off + depth + k] +     /* east */
+                                        solution[off - rowstride + k] + /* north */
+                                        solution[off + rowstride + k] - 4.0 *
+                                        matrix[off+k]));                /* south */
+
+                  diff = solution[off + k] - tmp;
+                  err += diff*diff;
+                }
+            }
+        }
+    }
+
   return err;
 }
 
-/* Solve the laplace equation for pixels and store the result in-place.
+/* Solve the laplace equation for matrix and store the result in solution.
  */
 static void
-gimp_heal_laplace_loop (gfloat *pixels,
-                        gint    height,
-                        gint    depth,
-                        gint    width,
-                        guchar *mask)
+gimp_heal_laplace_loop (gdouble *matrix,
+                        gint     height,
+                        gint     depth,
+                        gint     width,
+                        gdouble *solution,
+                        guchar  *mask)
 {
-  /* Tolerate a total deviation-from-smoothness of 0.1 LSBs at 8bit depth. */
-#define EPSILON  (0.1/255)
-#define MAX_ITER 500
+#define EPSILON   1e-8
+#define MAX_ITER  500
+  gint i;
 
-  gint i, j, iter, parity, nmask, zero;
-  gfloat *Adiag;
-  gint *Aidx;
-  gfloat w;
-
-  Adiag = g_new (gfloat, width*height);
-  Aidx = g_new (gint, 5*width*height);
-
-  /* All off-diagonal elements of A are either -1 or 0. We could store it as a
-   * general-purpose sparse matrix, but that adds some unnecessary overhead to
-   * the inner loop. Instead, assume exactly 4 off-diagonal elements in each
-   * row, all of which have value -1. Any row that in fact wants less than 4
-   * coefs can put them in a dummy column to be multiplied by an empty pixel.
-   */
-  zero = depth*width*height;
-  memset (pixels+zero, 0, depth*sizeof(gfloat));
-
-  /* Construct the system of equations.
-   * Arrange Aidx in checkerboard order, so that a single linear pass over that
-   * array results updating all of the red cells and then all of the black cells.
-   */
-  nmask = 0;
-  for (parity = 0; parity < 2; parity++)
-    for (i = 0; i < height; i++)
-      for (j = (i&1)^parity; j < width; j+=2)
-        if (mask[j+i*width])
-          {
-#define A_NEIGHBOR(o,di,dj)\
-            if ((dj<0 && j==0) || (dj>0 && j==width-1) || (di<0 && i==0) || (di>0 && i==height-1))\
-              Aidx[o+nmask*5] = zero;\
-            else\
-              Aidx[o+nmask*5] = ((i+di)*width + (j+dj))*depth;
-            /* Omit Dirichlet conditions for any neighbors off the edge of the canvas. */
-            Adiag[nmask] = 4 - (i==0) - (j==0) - (i==height-1) - (j==width-1);
-            A_NEIGHBOR(0, 0, 0);
-            A_NEIGHBOR(1, 0, 1);
-            A_NEIGHBOR(2, 1, 0);
-            A_NEIGHBOR(3, 0, -1);
-            A_NEIGHBOR(4, -1, 0);
-            nmask++;
-          }
-
-  /* Empirically optimal over-relaxation factor.
-   * (Benchmarked on round brushes, at least. I don't know whether aspect ratio affects it.) */
-  w = 2.0 - 1.0 / (0.1575 * sqrt(nmask) + 0.8);
-  w *= 0.25;
-  for (i = 0; i < nmask; i++)
-    Adiag[i] *= w;
-
-  /* Gauss-Seidel with successive over-relaxation */
-  for (iter = 0; iter < MAX_ITER; iter++)
+  /* repeat until convergence or max iterations */
+  for (i = 0; i < MAX_ITER; i++)
     {
-      gfloat err = gimp_heal_laplace_iteration (pixels, Adiag, Aidx, w, nmask, depth);
-      if (err < EPSILON*EPSILON*w*w)
+      gdouble sqr_err;
+
+      /* do one iteration and store the amount of error */
+      sqr_err = gimp_heal_laplace_iteration (matrix, height, depth, width,
+                                             solution, mask);
+
+      /* copy solution to matrix */
+      memcpy (matrix, solution, width * height * depth * sizeof (double));
+
+      if (sqr_err < EPSILON)
         break;
     }
-
-  g_free (Adiag);
-  g_free (Aidx);
 }
 
 /* Original Algorithm Design:
@@ -384,8 +393,10 @@ gimp_heal (GeglBuffer          *src_buffer,
   gint        dest_components;
   gint        width;
   gint        height;
-  gfloat     *i_1;
+  gdouble    *i_1;
+  gdouble    *i_2;
   GeglBuffer *i_1_buffer;
+  GeglBuffer *i_2_buffer;
   guchar     *mask;
 
   src_format  = gegl_buffer_get_format (src_buffer);
@@ -399,17 +410,25 @@ gimp_heal (GeglBuffer          *src_buffer,
 
   g_return_if_fail (src_components == dest_components);
 
-  i_1 = memalign (16, (width * height + 1) * src_components * sizeof(gfloat));
+  i_1  = g_new (gdouble, width * height * src_components);
+  i_2  = g_new (gdouble, width * height * src_components);
 
   i_1_buffer =
     gegl_buffer_linear_new_from_data (i_1,
-                                      babl_format_n (babl_type ("float"),
+                                      babl_format_n (babl_type ("double"),
                                                      src_components),
                                       GEGL_RECTANGLE (0, 0, width, height),
                                       GEGL_AUTO_ROWSTRIDE,
-                                      (GDestroyNotify) free, i_1);
+                                      (GDestroyNotify) g_free, i_1);
+  i_2_buffer =
+    gegl_buffer_linear_new_from_data (i_2,
+                                      babl_format_n (babl_type ("double"),
+                                                     src_components),
+                                      GEGL_RECTANGLE (0, 0, width, height),
+                                      GEGL_AUTO_ROWSTRIDE,
+                                      (GDestroyNotify) g_free, i_2);
 
-  /* subtract pattern from image and store the result as a float in i_1 */
+  /* subtract pattern from image and store the result as a double in i_1 */
   gimp_heal_sub (dest_buffer, dest_rect,
                  src_buffer, src_rect,
                  i_1_buffer, GEGL_RECTANGLE (0, 0, width, height));
@@ -419,16 +438,18 @@ gimp_heal (GeglBuffer          *src_buffer,
   gegl_buffer_get (mask_buffer, mask_rect, 1.0, babl_format ("Y u8"),
                    mask, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-  gimp_heal_laplace_loop (i_1, height, src_components, width, mask);
+  /* FIXME: is a faster implementation needed? */
+  gimp_heal_laplace_loop (i_1, height, src_components, width, i_2, mask);
 
   g_free (mask);
 
   /* add solution to original image and store in dest */
-  gimp_heal_add (i_1_buffer, GEGL_RECTANGLE (0, 0, width, height),
+  gimp_heal_add (i_2_buffer, GEGL_RECTANGLE (0, 0, width, height),
                  src_buffer, src_rect,
                  dest_buffer, dest_rect);
 
   g_object_unref (i_1_buffer);
+  g_object_unref (i_2_buffer);
 }
 
 static void
