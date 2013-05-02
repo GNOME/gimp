@@ -290,15 +290,20 @@ file_proc_find_by_extension (GSList      *procs,
   GSList      *p;
   const gchar *ext;
 
-  ext = strrchr (uri, '.');
+  ext = file_utils_uri_get_ext (uri);
 
-  if (ext)
-    ext++;
+  if (! (ext && *ext == '.'))
+    return NULL;
+
+  ext++;
 
   for (p = procs; p; p = g_slist_next (p))
     {
       GimpPlugInProcedure *proc = p->data;
       GSList              *extensions;
+
+      if (skip_magic && proc->magics_list)
+        continue;
 
       for (extensions = proc->extensions_list;
            ext && extensions;
@@ -306,9 +311,6 @@ file_proc_find_by_extension (GSList      *procs,
         {
           const gchar *p1 = ext;
           const gchar *p2 = extensions->data;
-
-          if (skip_magic && proc->magics_list)
-            continue;
 
           while (*p1 && *p2)
             {
