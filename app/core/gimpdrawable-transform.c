@@ -80,7 +80,6 @@ gimp_drawable_transform_buffer_affine (GimpDrawable           *drawable,
 {
   GeglBuffer  *new_buffer;
   GimpMatrix3  m;
-  GimpMatrix3  inv;
   gint         u1, v1, u2, v2;  /* source bounding box */
   gint         x1, y1, x2, y2;  /* target bounding box */
   GimpMatrix3  gegl_matrix;
@@ -94,17 +93,9 @@ gimp_drawable_transform_buffer_affine (GimpDrawable           *drawable,
   g_return_val_if_fail (new_offset_y != NULL, NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
 
-  m   = *matrix;
-  inv = *matrix;
+  m = *matrix;
 
   if (direction == GIMP_TRANSFORM_BACKWARD)
-    {
-      /*  keep the original matrix here, so we dont need to recalculate
-       *  the inverse later
-       */
-      gimp_matrix3_invert (&inv);
-    }
-  else
     {
       /*  Find the inverse of the transformation matrix  */
       gimp_matrix3_invert (&m);
@@ -121,7 +112,7 @@ gimp_drawable_transform_buffer_affine (GimpDrawable           *drawable,
     clip_result = GIMP_TRANSFORM_RESIZE_CLIP;
 
   /*  Find the bounding coordinates of target */
-  gimp_transform_resize_boundary (&inv, clip_result,
+  gimp_transform_resize_boundary (&m, clip_result,
                                   u1, v1, u2, v2,
                                   &x1, &y1, &x2, &y2);
 
@@ -131,7 +122,7 @@ gimp_drawable_transform_buffer_affine (GimpDrawable           *drawable,
 
   gimp_matrix3_identity (&gegl_matrix);
   gimp_matrix3_translate (&gegl_matrix, u1, v1);
-  gimp_matrix3_mult (&inv, &gegl_matrix);
+  gimp_matrix3_mult (&m, &gegl_matrix);
   gimp_matrix3_translate (&gegl_matrix, -x1, -y1);
 
   gimp_gegl_apply_transform (orig_buffer, progress, NULL,
