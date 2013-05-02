@@ -43,12 +43,10 @@
 #include "gimp-intl.h"
 
 
-static gchar *      file_utils_unescape_uri  (const gchar *escaped,
-                                              gint         len,
-                                              const gchar *illegal_escaped_characters,
-                                              gboolean     ascii_must_not_be_escaped);
-static const gchar *file_utils_get_ext_start (const gchar *uri);
-
+static gchar * file_utils_unescape_uri  (const gchar *escaped,
+                                         gint         len,
+                                         const gchar *illegal_escaped_characters,
+                                         gboolean     ascii_must_not_be_escaped);
 
 
 gboolean
@@ -237,8 +235,8 @@ gchar *
 file_utils_uri_with_new_ext (const gchar *uri,
                              const gchar *ext_uri)
 {
-  const gchar *uri_ext      = file_utils_get_ext_start (uri);
-  const gchar *ext_uri_ext  = ext_uri ? file_utils_get_ext_start (ext_uri) : NULL;
+  const gchar *uri_ext      = file_utils_uri_get_ext (uri);
+  const gchar *ext_uri_ext  = ext_uri ? file_utils_uri_get_ext (ext_uri) : NULL;
   gchar *uri_without_ext    = g_strndup (uri, uri_ext - uri);
   gchar *ret                = g_strconcat (uri_without_ext, ext_uri_ext, NULL);
   g_free (uri_without_ext);
@@ -247,17 +245,17 @@ file_utils_uri_with_new_ext (const gchar *uri,
 
 
 /**
- * file_utils_get_ext_start:
+ * file_utils_uri_get_ext:
  * @uri:
  *
- * Returns the position of the extension (after the .) for an URI. If
+ * Returns the position of the extension (including the .) for an URI. If
  * there is no extension the returned position is right after the
  * string, at the terminating NULL character.
  *
  * Returns:
  **/
-static const gchar *
-file_utils_get_ext_start (const gchar *uri)
+const gchar *
+file_utils_uri_get_ext (const gchar *uri)
 {
   const gchar *ext        = NULL;
   int          uri_len    = strlen (uri);
@@ -267,6 +265,8 @@ file_utils_get_ext_start (const gchar *uri)
     search_len = uri_len - 3;
   else if (g_strrstr (uri, ".bz2"))
     search_len = uri_len - 4;
+  else if (g_strrstr (uri, ".xz"))
+    search_len = uri_len - 3;
   else
     search_len = uri_len;
 

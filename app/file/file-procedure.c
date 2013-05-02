@@ -307,9 +307,9 @@ file_proc_find_by_extension (GSList      *procs,
   GSList      *p;
   const gchar *ext;
 
-  ext = strrchr (uri, '.');
+  ext = file_utils_uri_get_ext (uri);
 
-  if (! ext)
+  if (! (ext && *ext == '.'))
     return NULL;
 
   ext++;
@@ -322,15 +322,15 @@ file_proc_find_by_extension (GSList      *procs,
       if (uri_procs_only && ! proc->handles_uri)
         continue;
 
+      if (skip_magic && proc->magics_list)
+        continue;
+
       for (extensions = proc->extensions_list;
            extensions;
            extensions = g_slist_next (extensions))
         {
           const gchar *p1 = ext;
           const gchar *p2 = extensions->data;
-
-          if (skip_magic && proc->magics_list)
-            continue;
 
           while (*p1 && *p2)
             {
