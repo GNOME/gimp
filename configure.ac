@@ -64,7 +64,7 @@ m4_define([exif_required_version], [0.6.15])
 m4_define([lcms_required_version], [2.2])
 m4_define([libpng_required_version], [1.2.37])
 m4_define([liblzma_required_version], [5.0.0])
-m4_define([openexr_required_version], [1.7.1])
+m4_define([openexr_required_version], [1.6.1])
 
 
 AC_INIT([GIMP], [gimp_version],
