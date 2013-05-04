@@ -72,6 +72,7 @@ static void             gimp_canvas_layer_boundary_get_property (GObject        
                                                                  guint             property_id,
                                                                  GValue           *value,
                                                                  GParamSpec       *pspec);
+static void             gimp_canvas_layer_boundary_finalize     (GObject          *object);
 static void             gimp_canvas_layer_boundary_draw         (GimpCanvasItem   *item,
                                                                  GimpDisplayShell *shell,
                                                                  cairo_t          *cr);
@@ -96,6 +97,7 @@ gimp_canvas_layer_boundary_class_init (GimpCanvasLayerBoundaryClass *klass)
 
   object_class->set_property = gimp_canvas_layer_boundary_set_property;
   object_class->get_property = gimp_canvas_layer_boundary_get_property;
+  object_class->finalize     = gimp_canvas_layer_boundary_finalize;
 
   item_class->draw           = gimp_canvas_layer_boundary_draw;
   item_class->get_extents    = gimp_canvas_layer_boundary_get_extents;
@@ -120,6 +122,17 @@ gimp_canvas_layer_boundary_init (GimpCanvasLayerBoundary *layer_boundary)
 }
 
 static void
+gimp_canvas_layer_boundary_finalize (GObject *object)
+{
+  GimpCanvasLayerBoundaryPrivate *private = GET_PRIVATE (object);
+
+  if (private->layer)
+    g_object_remove_weak_pointer (G_OBJECT (private->layer), (gpointer)&private->layer);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
 gimp_canvas_layer_boundary_set_property (GObject      *object,
                                          guint         property_id,
                                          const GValue *value,
@@ -130,7 +143,11 @@ gimp_canvas_layer_boundary_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_LAYER:
+      if (private->layer)
+        g_object_remove_weak_pointer (G_OBJECT (private->layer), (gpointer)&private->layer);
       private->layer = g_value_get_object (value); /* don't ref */
+      if (private->layer)
+        g_object_add_weak_pointer (G_OBJECT (private->layer), (gpointer)&private->layer);
       break;
     case PROP_EDIT_MASK:
       private->edit_mask = g_value_get_boolean (value);
