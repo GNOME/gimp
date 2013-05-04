@@ -64,6 +64,7 @@ m4_define([exif_required_version], [0.6.15])
 m4_define([lcms_required_version], [2.2])
 m4_define([libpng_required_version], [1.2.37])
 m4_define([liblzma_required_version], [5.0.0])
+m4_define([openexr_required_version], [1.7.1])
 
 
 AC_INIT([GIMP], [gimp_version],
@@ -158,6 +159,9 @@ AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",
 # Determine a C compiler to use
 AC_PROG_CC
 AM_PROG_CC_C_O
+
+# Determine a C++ compiler to use
+AC_PROG_CXX
 
 # Initialize libtool
 LT_PREREQ([2.2])
@@ -1357,6 +1361,31 @@ AC_SUBST(FILE_XPM)
 AC_SUBST(XPM_LIBS)
 
 
+###################
+# Check for OpenEXR
+###################
+
+AC_ARG_WITH(openexr, [  --without-openexr       build without OpenEXR support])
+
+have_openexr=no
+if test "x$with_openexr" != xno; then
+  have_openexr=yes
+  PKG_CHECK_MODULES(OPENEXR, OpenEXR >= openexr_required_version,
+    FILE_EXR='file-exr$(EXEEXT)',
+    [have_openexr="no (OpenEXR not found)"])
+fi
+
+if test "x$have_openexr" = xyes; then
+  MIME_TYPES="$MIME_TYPES;image/x-exr"
+fi
+
+AC_SUBST(OPENEXR_CFLAGS)
+AC_SUBST(OPENEXR_LIBS)
+AC_SUBST(FILE_EXR)
+
+AM_CONDITIONAL(HAVE_OPENEXR, test "x$have_openexr" = xyes)
+
+
 ##################
 # Check for webkit
 ##################
@@ -2214,6 +2243,7 @@ plug-ins/color-rotate/Makefile
 plug-ins/color-rotate/images/Makefile
 plug-ins/file-bmp/Makefile
 plug-ins/file-compressor/Makefile
+plug-ins/file-exr/Makefile
 plug-ins/file-faxg3/Makefile
 plug-ins/file-fits/Makefile
 plug-ins/file-fli/Makefile
@@ -2366,6 +2396,7 @@ Optional Plug-Ins:
   JPEG:                $jpeg_ok
   JPEG 2000:           $have_jp2
   MNG:                 $have_libmng
+  OpenEXR:             $have_openexr
   PDF (import):        $have_poppler
   PDF (export):        $have_cairo_pdf
   PNG:                 $have_libpng

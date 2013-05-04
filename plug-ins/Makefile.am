@@ -4,6 +4,10 @@ if HAVE_WEBKIT
 help_browser = help-browser
 endif
 
+if HAVE_OPENEXR
+file_exr = file-exr
+endif
+
 if BUILD_JPEG
 file_jpeg = file-jpeg
 file_psd = file-psd
@@ -58,6 +62,7 @@ SUBDIRS = \
 	color-rotate		\
 	file-bmp		\
 	$(file_compressor)	\
+	$(file_exr)		\
 	file-faxg3		\
 	file-fits		\
 	file-fli		\
