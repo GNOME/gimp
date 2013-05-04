@@ -297,7 +297,8 @@ load_image (const gchar  *filename,
   if (pixels)
     g_free (pixels);
 
-  exr_loader_unref (loader);
+  if (loader)
+    exr_loader_unref (loader);
 
   return status;
 }
