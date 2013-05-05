@@ -201,7 +201,7 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_ROTATE_90,                NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_ROTATE_180,               NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_ROTATE_270,               NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_RESIZE,         N_("_Resize"),         0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_RESIZE,         N_("Re_size"),         0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_SCALE,          N_("_Scale"),          0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_FLIP_HORIZONTAL,          NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_FLIP_VERTICAL,            NULL,        0, 0, LIBGIMP_DOMAIN },
