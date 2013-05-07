@@ -211,6 +211,29 @@ gimp_layer_mask_new (GimpImage     *image,
   return layer_mask;
 }
 
+GimpLayerMask *
+gimp_layer_mask_new_from_buffer (GeglBuffer    *buffer,
+                                 GimpImage     *image,
+                                 const gchar   *name,
+                                 const GimpRGB *color)
+{
+  GimpLayerMask *layer_mask;
+  GeglBuffer    *dest;
+
+  g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  layer_mask = gimp_layer_mask_new (image,
+                                    gegl_buffer_get_width  (buffer),
+                                    gegl_buffer_get_height (buffer),
+                                    name, color);
+
+  dest = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer_mask));
+  gegl_buffer_copy (buffer, NULL, dest, NULL);
+
+  return layer_mask;
+}
+
 void
 gimp_layer_mask_set_layer (GimpLayerMask *layer_mask,
                            GimpLayer     *layer)
