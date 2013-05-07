@@ -22,13 +22,12 @@
 #include "gimpfreeselecttool.h"
 
 
-typedef enum  /*< pdb-skip, skip >*/
+typedef enum
 {
-  SIOX_REFINEMENT_NO_CHANGE          = 0,
-  SIOX_REFINEMENT_ADD_FOREGROUND     = (1 << 0),
-  SIOX_REFINEMENT_ADD_BACKGROUND     = (1 << 1),
-  SIOX_REFINEMENT_RECALCULATE        = 0xFF
-} SioxRefinementType;
+  MATTING_STATE_FREE_SELECT = 0,
+  MATTING_STATE_PAINT_TRIMAP,
+  MATTING_STATE_PREVIEW_MASK,
+} MattingState;
 
 
 #define GIMP_TYPE_FOREGROUND_SELECT_TOOL            (gimp_foreground_select_tool_get_type ())
@@ -49,14 +48,10 @@ struct _GimpForegroundSelectTool
   GimpFreeSelectTool  parent_instance;
 
   GimpCoords          last_coords;
-  guint               idle_id;
   GArray             *stroke;
-  GList              *strokes;
+  GimpChannel        *trimap;
   GimpChannel        *mask;
-#if 0
-  SioxState          *state;
-#endif
-  SioxRefinementType  refinement;
+  MattingState        state;
 };
 
 struct _GimpForegroundSelectToolClass

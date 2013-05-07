@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 #ifndef __GIMP_FOREGROUND_SELECT_OPTIONS_H__
 #define __GIMP_FOREGROUND_SELECT_OPTIONS_H__
 
@@ -30,20 +31,35 @@
 #define GIMP_FOREGROUND_SELECT_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FOREGROUND_SELECT_OPTIONS, GimpForegroundSelectOptionsClass))
 
 
-typedef struct _GimpForegroundSelectOptions  GimpForegroundSelectOptions;
-typedef GimpSelectionOptionsClass  GimpForegroundSelectOptionsClass;
+typedef struct _GimpForegroundSelectOptions      GimpForegroundSelectOptions;
+typedef struct _GimpForegroundSelectOptionsClass GimpForegroundSelectOptionsClass;
+
+typedef struct _GimpMattingDynamicWidgets  GimpMattingDynamicWidgets;
+
+struct _GimpMattingDynamicWidgets
+{
+  GObject *levels;
+  GObject *active_levels;
+  GObject *iterations;
+};
 
 struct _GimpForegroundSelectOptions
 {
   GimpSelectionOptions  parent_instance;
 
-  gboolean              contiguous;
-  gboolean              background;
-  gint                  stroke_width;
-  gint                  smoothness;
-  GimpChannelType       mask_color;
-  gboolean              expanded;
-  gdouble               sensitivity[3];
+  GimpMattingDrawMode       draw_mode;
+  gint                      stroke_width;
+  GimpChannelType           mask_color;
+  GimpMattingEngine         engine;
+  gint                      levels;
+  gint                      active_levels;
+  gint                      iterations;
+  GimpMattingDynamicWidgets dynamic_widgets;
+};
+
+struct _GimpForegroundSelectOptionsClass
+{
+  GimpSelectionOptionsClass  parent_class;
 };
 
 
@@ -53,6 +69,8 @@ GtkWidget * gimp_foreground_select_options_gui            (GimpToolOptions      
 
 void        gimp_foreground_select_options_get_mask_color (GimpForegroundSelectOptions *options,
                                                            GimpRGB                     *color);
+gdouble     gimp_foreground_select_options_get_opacity    (GimpForegroundSelectOptions *options);
 
 
 #endif /* __GIMP_FOREGROUND_SELECT_OPTIONS_H__ */
+
