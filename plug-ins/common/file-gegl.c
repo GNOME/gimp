@@ -70,21 +70,6 @@ static gboolean save_image (const gchar      *filename,
 static const FileFormat file_formats[] =
 {
   {
-    N_("EXR image"),
-    "image/x-exr",
-    "exr,hdr",
-    "",
-
-    "file-exr-load",
-    "Loads EXR images using GEGL",
-    "This procedure loads images in EXR format, using gegl:load",
-
-    "file-exr-save",
-    "Save EXR images using GEGL",
-    "This procedure saves images in EXR format, using gegl:save"
-  },
-
-  {
     N_("NEF image"),
     "image/x-nikon-nef",
     "nef",
