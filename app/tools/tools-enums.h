@@ -131,6 +131,29 @@ typedef enum
 } GimpToolAction;
 
 
+#define GIMP_TYPE_MATTING_DRAW_MODE (gimp_matting_draw_mode_get_type ())
+
+GType gimp_matting_draw_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+ GIMP_MATTING_DRAW_MODE_FOREGROUND,   /*< desc="Draw foreground" >*/
+ GIMP_MATTING_DRAW_MODE_BACKGROUND,   /*< desc="Draw background" >*/
+ GIMP_MATTING_DRAW_MODE_UNKNOWN,      /*< desc="Draw unknown" >*/
+} GimpMattingDrawMode;
+
+
+#define GIMP_TYPE_MATTING_ENGINE (gimp_matting_engine_get_type ())
+
+GType gimp_matting_engine_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+ GIMP_MATTING_ENGINE_MATTING_GLOBAL,  /*< desc="Matting Global" >*/
+ GIMP_MATTING_ENGINE_MATTING_LEVIN,   /*< desc="Matting Levin" >*/
+} GimpMattingEngine;
+
+
 /*
  * non-registered enums; register them if needed
  */

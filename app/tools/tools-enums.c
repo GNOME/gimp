@@ -290,6 +290,66 @@ gimp_tool_action_get_type (void)
   return type;
 }
 
+GType
+gimp_matting_draw_mode_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_MATTING_DRAW_MODE_FOREGROUND, "GIMP_MATTING_DRAW_MODE_FOREGROUND", "foreground" },
+    { GIMP_MATTING_DRAW_MODE_BACKGROUND, "GIMP_MATTING_DRAW_MODE_BACKGROUND", "background" },
+    { GIMP_MATTING_DRAW_MODE_UNKNOWN, "GIMP_MATTING_DRAW_MODE_UNKNOWN", "unknown" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_MATTING_DRAW_MODE_FOREGROUND, NC_("matting-draw-mode", "Draw foreground"), NULL },
+    { GIMP_MATTING_DRAW_MODE_BACKGROUND, NC_("matting-draw-mode", "Draw background"), NULL },
+    { GIMP_MATTING_DRAW_MODE_UNKNOWN, NC_("matting-draw-mode", "Draw unknown"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpMattingDrawMode", values);
+      gimp_type_set_translation_context (type, "matting-draw-mode");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_matting_engine_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_MATTING_ENGINE_MATTING_GLOBAL, "GIMP_MATTING_ENGINE_MATTING_GLOBAL", "global" },
+    { GIMP_MATTING_ENGINE_MATTING_LEVIN, "GIMP_MATTING_ENGINE_MATTING_LEVIN", "levin" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_MATTING_ENGINE_MATTING_GLOBAL, NC_("matting-engine", "Matting Global"), NULL },
+    { GIMP_MATTING_ENGINE_MATTING_LEVIN, NC_("matting-engine", "Matting Levin"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpMattingEngine", values);
+      gimp_type_set_translation_context (type, "matting-engine");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
 
 /* Generated data ends here */
 
