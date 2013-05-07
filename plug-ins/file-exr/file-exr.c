@@ -217,7 +217,7 @@ load_image (const gchar  *filename,
       layer_type = has_alpha ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
       break;
     case IMAGE_TYPE_GRAY:
-      image_precision = GIMP_GRAY;
+      image_type = GIMP_GRAY;
       layer_type = has_alpha ? GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE;
       break;
     default:
