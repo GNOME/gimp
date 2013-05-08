@@ -515,7 +515,8 @@ gimp_seamless_clone_tool_key_press (GimpTool    *tool,
            *       rectangle each time (in the update function) or by
            *       invalidating and re-rendering all now (expensive and
            *       perhaps useless */
-          gimp_image_map_commit (sct->image_map);
+          gimp_image_map_commit (sct->image_map
+                                 NULL);
           g_object_unref (sct->image_map);
           sct->image_map = NULL;
 
@@ -815,7 +816,8 @@ gimp_seamless_clone_tool_create_image_map (GimpSeamlessCloneTool *sc,
 
   sc->image_map = gimp_image_map_new (drawable,
                                       _("Seamless Clone"),
-                                      sc->render_node);
+                                      sc->render_node
+				      GIMP_STOCK_TOOL_SEAMLESS_CLONE);
 
   g_signal_connect (sc->image_map, "flush",
                     G_CALLBACK (gimp_seamless_clone_tool_image_map_flush),
@@ -886,5 +888,5 @@ gimp_seamless_clone_tool_image_map_update (GimpSeamlessCloneTool *sc)
   gegl_operation_invalidate (op, &visible, TRUE);
   
   /* Now update the image map and show this area */
-  gimp_image_map_apply (sc->image_map, &visible);
+  gimp_image_map_apply (sc->image_map);
 }
