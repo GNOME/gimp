@@ -450,6 +450,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
         }
     }
   else if (g_str_has_prefix (menu_path, "<Brushes>")   ||
+           g_str_has_prefix (menu_path, "<Dynamics>")  ||
            g_str_has_prefix (menu_path, "<Gradients>") ||
            g_str_has_prefix (menu_path, "<Palettes>")  ||
            g_str_has_prefix (menu_path, "<Patterns>")  ||
@@ -474,8 +475,8 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
                    "Use either \"<Toolbox>\", \"<Image>\", "
                    "\"<Layers>\", \"<Channels>\", \"<Vectors>\", "
                    "\"<Colormap>\", \"<Load>\", \"<Save>\", "
-                   "\"<Brushes>\", \"<Gradients>\", \"<Palettes>\", "
-                   "\"<Patterns>\" or \"<Buffers>\".",
+                   "\"<Brushes>\", \"<Dynamics>\", \"<Gradients>\", "
+                   "\"<Palettes>\", \"<Patterns>\" or \"<Buffers>\".",
                    basename, gimp_filename_to_utf8 (proc->prog),
                    gimp_object_get_name (proc),
                    menu_path);
