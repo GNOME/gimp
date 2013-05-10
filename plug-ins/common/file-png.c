@@ -693,9 +693,6 @@ load_image (const gchar  *filename,
   int i,                        /* Looping var */
     trns,                       /* Transparency present */
     bpp,                        /* Bytes per pixel */
-    image_type,                 /* Type of image */
-    image_precision,            /* Precision of image */
-    layer_type,                 /* Type of drawable/layer */
     width,                      /* image width */
     height,                     /* image height */
     empty,                      /* Number of fully transparent indices */
@@ -705,6 +702,9 @@ load_image (const gchar  *filename,
     begin,                      /* Beginning tile row */
     end,                        /* Ending tile row */
     num;                        /* Number of rows to load */
+  GimpImageBaseType image_type; /* Type of image */
+  GimpPrecision image_precision;/* Precision of image */
+  GimpImageType layer_type;     /* Type of drawable/layer */
   FILE *fp;                     /* File pointer */
   volatile gint32 image = -1;   /* Image -- preserved against setjmp() */
   gint32 layer;                 /* Layer */
