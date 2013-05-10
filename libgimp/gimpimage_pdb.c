@@ -730,7 +730,9 @@ gimp_image_get_layers (gint32  image_ID,
  *
  * This procedure returns the list of channels contained in the
  * specified image. This does not include the selection mask, or layer
- * masks. The order is from topmost to bottommost.
+ * masks. The order is from topmost to bottommost. Note that
+ * \"channels\" are custom channels and do not include the image's
+ * color components.
  *
  * Returns: The list of channels contained in the image. The returned
  * value must be freed with g_free().
