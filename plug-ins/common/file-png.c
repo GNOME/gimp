@@ -1139,7 +1139,8 @@ load_image (const gchar  *filename,
 
   {
     png_uint_32 proflen;
-    png_charp   profname, profile;
+    png_charp   profname;
+    png_bytep   profile;
     int         profcomp;
 
     if (png_get_iCCP (pp, info, &profname, &profcomp, &profile, &proflen))
@@ -1545,9 +1546,11 @@ save_image (const gchar  *filename,
                                     gimp_parasite_data_size (parasite),
                                     "UTF-8", "ISO-8859-1", NULL, NULL, NULL);
 
-        png_set_iCCP (pp, info,
-                      profile_name ? profile_name : "ICC profile", 0,
-                      (gchar *) gimp_parasite_data (profile_parasite),
+        png_set_iCCP (pp,
+                      info,
+                      profile_name ? profile_name : "ICC profile",
+                      0,
+                      (guchar *) gimp_parasite_data (profile_parasite),
                       gimp_parasite_data_size (profile_parasite));
 
         g_free (profile_name);
