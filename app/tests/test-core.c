@@ -27,7 +27,7 @@
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 
-#include "operations/gimplevelsconfig.h"
+#include "gegl/gimplevelsconfig.h"
 
 #include "tests.h"
 
