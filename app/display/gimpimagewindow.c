@@ -527,11 +527,17 @@ static gboolean
 gimp_image_window_delete_event (GtkWidget   *widget,
                                 GdkEventAny *event)
 {
-  GimpImageWindow  *window = GIMP_IMAGE_WINDOW (widget);
-  GimpDisplayShell *shell  = gimp_image_window_get_active_shell (window);
+  GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (widget);
+  GimpDisplayShell       *shell   = gimp_image_window_get_active_shell (window);
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  GimpGuiConfig          *config;
 
-  /* FIXME multiple shells */
-  if (shell)
+  config = GIMP_GUI_CONFIG (gimp_dialog_factory_get_context (private->dialog_factory)->gimp->config);
+
+  if (config->single_window_mode)
+    gimp_ui_manager_activate_action (gimp_image_window_get_ui_manager (window),
+                                     "file", "file-quit");
+  else if (shell)
     gimp_display_shell_close (shell, FALSE);
 
   return TRUE;
