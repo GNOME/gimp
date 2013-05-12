@@ -510,6 +510,82 @@ tool_manager_cursor_update_active (Gimp             *gimp,
     }
 }
 
+const gchar *
+tool_manager_get_undo_desc_active (Gimp        *gimp,
+                                   GimpDisplay *display)
+{
+  GimpToolManager *tool_manager;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  tool_manager = tool_manager_get (gimp);
+
+  if (tool_manager->active_tool)
+    {
+      return gimp_tool_get_undo_desc (tool_manager->active_tool,
+                                      display);
+    }
+
+  return NULL;
+}
+
+const gchar *
+tool_manager_get_redo_desc_active (Gimp        *gimp,
+                                   GimpDisplay *display)
+{
+  GimpToolManager *tool_manager;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  tool_manager = tool_manager_get (gimp);
+
+  if (tool_manager->active_tool)
+    {
+      return gimp_tool_get_redo_desc (tool_manager->active_tool,
+                                      display);
+    }
+
+  return NULL;
+}
+
+gboolean
+tool_manager_undo_active (Gimp        *gimp,
+                          GimpDisplay *display)
+{
+  GimpToolManager *tool_manager;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+
+  tool_manager = tool_manager_get (gimp);
+
+  if (tool_manager->active_tool)
+    {
+      return gimp_tool_undo (tool_manager->active_tool,
+                             display);
+    }
+
+  return FALSE;
+}
+
+gboolean
+tool_manager_redo_active (Gimp        *gimp,
+                          GimpDisplay *display)
+{
+  GimpToolManager *tool_manager;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+
+  tool_manager = tool_manager_get (gimp);
+
+  if (tool_manager->active_tool)
+    {
+      return gimp_tool_redo (tool_manager->active_tool,
+                             display);
+    }
+
+  return FALSE;
+}
+
 GimpUIManager *
 tool_manager_get_popup_active (Gimp             *gimp,
                                const GimpCoords *coords,

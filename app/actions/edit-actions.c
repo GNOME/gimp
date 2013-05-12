@@ -38,6 +38,8 @@
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
 
+#include "tools/tool_manager.h"
+
 #include "actions.h"
 #include "edit-actions.h"
 #include "edit-commands.h"
@@ -268,6 +270,7 @@ edit_actions_update (GimpActionGroup *group,
                      gpointer         data)
 {
   GimpImage    *image        = action_data_get_image (data);
+  GimpDisplay  *display      = action_data_get_display (data);
   GimpDrawable *drawable     = NULL;
   gchar        *undo_name    = NULL;
   gchar        *redo_name    = NULL;
@@ -297,20 +300,28 @@ edit_actions_update (GimpActionGroup *group,
           GimpUndoStack *redo_stack = gimp_image_get_redo_stack (image);
           GimpUndo      *undo       = gimp_undo_stack_peek (undo_stack);
           GimpUndo      *redo       = gimp_undo_stack_peek (redo_stack);
+          const gchar   *tool_undo  = NULL;
+          const gchar   *tool_redo  = NULL;
 
-          if (undo)
+          if (display)
             {
-              undo_name =
-                g_strdup_printf (_("_Undo %s"),
-                                 gimp_object_get_name (undo));
+              tool_undo = tool_manager_get_undo_desc_active (image->gimp,
+                                                             display);
+              tool_redo = tool_manager_get_redo_desc_active (image->gimp,
+                                                             display);
             }
 
-          if (redo)
-            {
-              redo_name =
-                g_strdup_printf (_("_Redo %s"),
-                                 gimp_object_get_name (redo));
-            }
+          if (tool_undo)
+            undo_name = g_strdup_printf (_("_Undo %s"), tool_undo);
+          else if (undo)
+            undo_name = g_strdup_printf (_("_Undo %s"),
+                                         gimp_object_get_name (undo));
+
+          if (tool_redo)
+            redo_name = g_strdup_printf (_("_Redo %s"), tool_redo);
+          else if (redo)
+            redo_name = g_strdup_printf (_("_Redo %s"),
+                                         gimp_object_get_name (redo));
 
           undo = gimp_image_undo_get_fadeable (image);
 

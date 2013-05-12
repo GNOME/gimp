@@ -80,6 +80,15 @@ void       tool_manager_cursor_update_active       (Gimp             *gimp,
                                                     GdkModifierType   state,
                                                     GimpDisplay      *display);
 
+const gchar   * tool_manager_get_undo_desc_active  (Gimp             *gimp,
+                                                    GimpDisplay      *display);
+const gchar   * tool_manager_get_redo_desc_active  (Gimp             *gimp,
+                                                    GimpDisplay      *display);
+gboolean        tool_manager_undo_active           (Gimp             *gimp,
+                                                    GimpDisplay      *display);
+gboolean        tool_manager_redo_active           (Gimp             *gimp,
+                                                    GimpDisplay      *display);
+
 GimpUIManager * tool_manager_get_popup_active      (Gimp             *gimp,
                                                     const GimpCoords *coords,
                                                     GdkModifierType   state,

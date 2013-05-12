@@ -134,6 +134,15 @@ struct _GimpToolClass
                                            GdkModifierType        state,
                                            GimpDisplay           *display);
 
+  const gchar   * (* get_undo_desc)       (GimpTool              *tool,
+                                           GimpDisplay           *display);
+  const gchar   * (* get_redo_desc)       (GimpTool              *tool,
+                                           GimpDisplay           *display);
+  gboolean        (* undo)                (GimpTool              *tool,
+                                           GimpDisplay           *display);
+  gboolean        (* redo)                (GimpTool              *tool,
+                                           GimpDisplay           *display);
+
   GimpUIManager * (* get_popup)           (GimpTool              *tool,
                                            const GimpCoords      *coords,
                                            GdkModifierType        state,
@@ -202,6 +211,15 @@ void              gimp_tool_oper_update         (GimpTool            *tool,
 void              gimp_tool_cursor_update       (GimpTool            *tool,
                                                  const GimpCoords    *coords,
                                                  GdkModifierType      state,
+                                                 GimpDisplay         *display);
+
+const gchar     * gimp_tool_get_undo_desc       (GimpTool            *tool,
+                                                 GimpDisplay         *display);
+const gchar     * gimp_tool_get_redo_desc       (GimpTool            *tool,
+                                                 GimpDisplay         *display);
+gboolean          gimp_tool_undo                (GimpTool            *tool,
+                                                 GimpDisplay         *display);
+gboolean          gimp_tool_redo                (GimpTool            *tool,
                                                  GimpDisplay         *display);
 
 GimpUIManager   * gimp_tool_get_popup           (GimpTool            *tool,

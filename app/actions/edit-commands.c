@@ -50,6 +50,8 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
 
+#include "tools/tool_manager.h"
+
 #include "dialogs/fade-dialog.h"
 
 #include "actions.h"
@@ -79,22 +81,32 @@ void
 edit_undo_cmd_callback (GtkAction *action,
                         gpointer   data)
 {
-  GimpImage *image;
+  GimpImage   *image;
+  GimpDisplay *display;
   return_if_no_image (image, data);
+  return_if_no_display (display, data);
 
-  if (gimp_image_undo (image))
-    gimp_image_flush (image);
+  if (tool_manager_undo_active (image->gimp, display) ||
+      gimp_image_undo (image))
+    {
+      gimp_image_flush (image);
+    }
 }
 
 void
 edit_redo_cmd_callback (GtkAction *action,
                         gpointer   data)
 {
-  GimpImage *image;
+  GimpImage   *image;
+  GimpDisplay *display;
   return_if_no_image (image, data);
+  return_if_no_display (display, data);
 
-  if (gimp_image_redo (image))
-    gimp_image_flush (image);
+  if (tool_manager_redo_active (image->gimp, display) ||
+      gimp_image_redo (image))
+    {
+      gimp_image_flush (image);
+    }
 }
 
 void
