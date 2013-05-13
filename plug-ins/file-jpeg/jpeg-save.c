@@ -796,12 +796,6 @@ destroy_preview (void)
       g_source_remove (id);
     }
 
-  if (drawable_global)
-    {
-      gimp_drawable_detach (drawable_global);
-      drawable_global = NULL;
-    }
-
   if (gimp_image_is_valid (preview_image_ID) &&
       gimp_item_is_valid (preview_layer_ID))
     {

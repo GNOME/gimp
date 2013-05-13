@@ -53,7 +53,6 @@ typedef enum
 
 extern gint32 volatile  preview_image_ID;
 extern gint32           preview_layer_ID;
-extern GimpDrawable    *drawable_global;
 extern gboolean         undo_touched;
 extern gboolean         load_interactive;
 extern gint32           display_ID;
