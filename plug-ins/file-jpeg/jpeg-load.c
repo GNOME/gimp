@@ -671,7 +671,7 @@ load_thumbnail_image (const gchar   *filename,
   guchar         **rowbuf;
   GimpImageBaseType image_type;
   GimpImageType    layer_type;
-  GeglBuffer      *buffer;
+  GeglBuffer      *buffer = NULL;
   gint             tile_height;
   gint             scanlines;
   gint             i, start, end;
@@ -711,6 +711,9 @@ load_thumbnail_image (const gchar   *filename,
           exif_data_unref (exif_data);
           exif_data = NULL;
         }
+
+      if (buffer)
+        g_object_unref (buffer);
 
       return -1;
     }
