@@ -643,6 +643,12 @@ save_image (const gchar  *filename,
     case GIMP_INDEXEDA_IMAGE:
       format = gegl_buffer_get_format (buffer);
       break;
+
+    default:
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Unsupported drawable type"));
+      g_object_unref (buffer);
+      return FALSE;
     }
 
   /* allocate buffer making the assumption that ibuff is 32 bit aligned... */
