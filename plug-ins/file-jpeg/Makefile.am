@@ -64,6 +64,7 @@ file_jpeg_LDADD = \
 	$(JPEG_LIBS)		\
 	$(LCMS_LIBS)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_jpeg_RC)
