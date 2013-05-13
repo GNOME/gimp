@@ -397,7 +397,7 @@ gimp_image_map_apply (GimpImageMap *image_map)
 
       gimp_applicator_set_mask_buffer (image_map->applicator, mask_buffer);
       gimp_applicator_set_mask_offset (image_map->applicator,
-                                       offset_x, offset_y);
+                                       -offset_x, -offset_y);
     }
 
   gimp_drawable_update (image_map->drawable,
