@@ -1382,6 +1382,7 @@ file_ps_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(GS_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\

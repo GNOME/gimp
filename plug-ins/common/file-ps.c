@@ -201,9 +201,7 @@ static gint32 create_new_image (const gchar       *filename,
                                 guint              width,
                                 guint              height,
                                 GimpImageBaseType  type,
-                                gint32            *layer_ID,
-                                GimpDrawable     **drawable,
-                                GimpPixelRgn      *pixel_rgn);
+                                gint32            *layer_ID);
 
 static void   check_load_vals  (void);
 static void   check_save_vals  (void);
@@ -753,6 +751,7 @@ run (const gchar      *name,
   l_run_mode = run_mode = param[0].data.d_int32;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -1782,9 +1781,7 @@ create_new_image (const gchar        *filename,
                   guint               width,
                   guint               height,
                   GimpImageBaseType   type,
-                  gint32             *layer_ID,
-                  GimpDrawable      **drawable,
-                  GimpPixelRgn       *pixel_rgn)
+                  gint32             *layer_ID)
 {
   gint32         image_ID;
   GimpImageType  gdtype;
@@ -1816,10 +1813,6 @@ create_new_image (const gchar        *filename,
   g_free (tmp);
 
   gimp_image_insert_layer (image_ID, *layer_ID, -1, 0);
-
-  *drawable = gimp_drawable_get (*layer_ID);
-  gimp_pixel_rgn_init (pixel_rgn, *drawable, 0, 0, (*drawable)->width,
-                       (*drawable)->height, TRUE, FALSE);
 
   return image_ID;
 }
@@ -1879,8 +1872,7 @@ load_ps (const gchar *filename,
   int i, j, pnmtype, maxval, bpp, nread;
   GimpImageBaseType imagetype;
   gint32 layer_ID, image_ID;
-  GimpPixelRgn pixel_rgn;
-  GimpDrawable *drawable;
+  GeglBuffer *buffer = NULL;
   int err = 0, e;
 
   pnmtype = read_pnmraw_type (ifp, &width, &height, &maxval);
@@ -1930,7 +1922,8 @@ load_ps (const gchar *filename,
 
   image_ID = create_new_image (filename, pagenum,
                                image_width, image_height, imagetype,
-                               &layer_ID, &drawable, &pixel_rgn);
+                               &layer_ID);
+  buffer = gimp_drawable_get_buffer (layer_ID);
 
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * image_width * bpp);
@@ -1947,9 +1940,11 @@ load_ps (const gchar *filename,
       for (i = 0; i < height; i++)
         {
           e = (fread (bitline, 1, nread, ifp) != nread);
-          if (total_scan_lines >= image_height) continue;
+          if (total_scan_lines >= image_height)
+            continue;
           err |= e;
-          if (err) break;
+          if (err)
+            break;
 
           j = width;   /* Map 1 byte of bitimage to 8 bytes of indexed image */
           temp = bitline;
@@ -1968,17 +1963,24 @@ load_ps (const gchar *filename,
           scan_lines++;
           total_scan_lines++;
 
-          if ((i % 20) == 0)
-            gimp_progress_update ((double)(i+1) / (double)image_height);
-
           if ((scan_lines == tile_height) || ((i+1) == image_height))
             {
-              gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
-                                       image_width, scan_lines);
+              gegl_buffer_set (buffer,
+                               GEGL_RECTANGLE (0, i-scan_lines+1,
+                                               image_width, scan_lines),
+                               0,
+                               NULL,
+                               data,
+                               GEGL_AUTO_ROWSTRIDE);
               scan_lines = 0;
               dest = data;
             }
-          if (err) break;
+
+          if ((i % 20) == 0)
+            gimp_progress_update ((double)(i+1) / (double)image_height);
+
+          if (err)
+            break;
         }
     }
   else   /* Read gray/rgb-image */
@@ -1986,26 +1988,35 @@ load_ps (const gchar *filename,
       for (i = 0; i < height; i++)
         {
           e = (fread (byteline, bpp, width, ifp) != width);
-          if (total_scan_lines >= image_height) continue;
+          if (total_scan_lines >= image_height)
+            continue;
           err |= e;
-          if (err) break;
+          if (err)
+            break;
 
           memcpy (dest, byteline+skip_left*bpp, image_width*bpp);
           dest += image_width*bpp;
           scan_lines++;
           total_scan_lines++;
 
-          if ((i % 20) == 0)
-            gimp_progress_update ((double)(i+1) / (double)image_height);
-
           if ((scan_lines == tile_height) || ((i+1) == image_height))
             {
-              gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
-                                       image_width, scan_lines);
+              gegl_buffer_set (buffer,
+                               GEGL_RECTANGLE (0, i-scan_lines+1,
+                                               image_width, scan_lines),
+                               0,
+                               NULL,
+                               data,
+                               GEGL_AUTO_ROWSTRIDE);
               scan_lines = 0;
               dest = data;
             }
-          if (err) break;
+
+          if ((i % 20) == 0)
+            gimp_progress_update ((double)(i+1) / (double)image_height);
+
+          if (err)
+            break;
         }
     }
   gimp_progress_update (1.0);
@@ -2017,7 +2028,7 @@ load_ps (const gchar *filename,
   if (err)
     g_message ("EOF encountered on reading");
 
-  gimp_drawable_flush (drawable);
+  g_object_unref (buffer);
 
   return (err ? -1 : image_ID);
 }
