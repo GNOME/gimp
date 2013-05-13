@@ -1511,6 +1511,7 @@ file_tiff_save_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(TIFF_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\

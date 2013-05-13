@@ -226,6 +226,7 @@ run (const gchar      *name,
   run_mode = param[0].data.d_int32;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -658,6 +659,7 @@ save_image (const gchar  *filename,
             gint32        orig_image,  /* the export function might have */
             GError      **error)       /* created a duplicate            */
 {
+  gboolean       status = FALSE;
   TIFF          *tif;
   gushort        red[256];
   gushort        grn[256];
@@ -672,13 +674,14 @@ save_image (const gchar  *filename,
   gshort         samplesperpixel;
   gshort         bitspersample;
   gint           bytesperrow;
-  guchar        *t, *src, *data;
+  guchar        *t;
+  guchar        *src = NULL;
+  guchar        *data = NULL;
   guchar        *cmap;
   gint           num_colors;
   gint           success;
-  GimpDrawable  *drawable;
   GimpImageType  drawable_type;
-  GimpPixelRgn   pixel_rgn;
+  GeglBuffer    *buffer = NULL;
   gint           tile_height;
   gint           y, yend;
   gboolean       is_bw    = FALSE;
@@ -707,7 +710,7 @@ save_image (const gchar  *filename,
         g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                      _("Could not open '%s' for writing: %s"),
                      gimp_filename_to_utf8 (filename), g_strerror (errno));
-      return FALSE;
+      goto out;
     }
 
   TIFFSetWarningHandler (tiff_warning);
@@ -716,15 +719,11 @@ save_image (const gchar  *filename,
   gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));
 
-  drawable = gimp_drawable_get (layer);
   drawable_type = gimp_drawable_type (layer);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable,
-                       0, 0, drawable->width, drawable->height, FALSE, FALSE);
+  buffer = gimp_drawable_get_buffer (layer);
 
-  cols = drawable->width;
-  rows = drawable->height;
-
-  gimp_tile_cache_ntiles (1 + drawable->width / gimp_tile_width ());
+  cols = gegl_buffer_get_width (buffer);
+  rows = gegl_buffer_get_height (buffer);
 
   switch (drawable_type)
     {
@@ -808,7 +807,7 @@ save_image (const gchar  *filename,
                    _("TIFF save cannot handle indexed images with "
                      "an alpha channel."));
     default:
-      return FALSE;
+      goto out;
     }
 
   if (compression == COMPRESSION_CCITTFAX3 ||
@@ -818,7 +817,7 @@ save_image (const gchar  *filename,
         {
           g_message (_("Only monochrome pictures can be compressed with "
                        "\"CCITT Group 4\" or \"CCITT Group 3\"."));
-          return FALSE;
+          goto out;
         }
     }
 
@@ -969,7 +968,13 @@ save_image (const gchar  *filename,
       yend = y + tile_height;
       yend = MIN (yend, rows);
 
-      gimp_pixel_rgn_get_rect (&pixel_rgn, src, 0, y, cols, yend - y);
+      gegl_buffer_get (buffer,
+                       GEGL_RECTANGLE (0, y, cols, yend - y),
+                       1.0,
+                       NULL,
+                       src,
+                       GEGL_AUTO_ROWSTRIDE,
+                       GEGL_ABYSS_NONE);
 
       for (row = y; row < yend; row++)
         {
@@ -1047,7 +1052,7 @@ save_image (const gchar  *filename,
           if (!success)
             {
               g_message (_("Failed a scanline write on row %d"), row);
-              return FALSE;
+              goto out;
             }
         }
 
@@ -1060,11 +1065,16 @@ save_image (const gchar  *filename,
 
   gimp_progress_update (1.0);
 
-  gimp_drawable_detach (drawable);
+  status = TRUE;
+
+ out:
+  if (buffer)
+    g_object_unref (buffer);
+
   g_free (data);
   g_free (src);
 
-  return TRUE;
+  return status;
 }
 
 static gboolean
