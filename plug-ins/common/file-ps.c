@@ -1790,9 +1790,18 @@ create_new_image (const gchar        *filename,
   GimpImageType  gdtype;
   gchar         *tmp;
 
-  if (type == GIMP_GRAY) gdtype = GIMP_GRAY_IMAGE;
-  else if (type == GIMP_INDEXED) gdtype = GIMP_INDEXED_IMAGE;
-  else gdtype = GIMP_RGB_IMAGE;
+  switch (type)
+    {
+    case GIMP_GRAY:
+      gdtype = GIMP_GRAY_IMAGE;
+      break;
+    case GIMP_INDEXED:
+      gdtype = GIMP_INDEXED_IMAGE;
+      break;
+    case GIMP_RGB:
+    default:
+      gdtype = GIMP_RGB_IMAGE;
+    }
 
   image_ID = gimp_image_new (width, height, type);
   gimp_image_undo_disable (image_ID);
