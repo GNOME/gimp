@@ -805,8 +805,8 @@ save_image (const gchar  *filename,
 
     case GIMP_INDEXEDA_IMAGE:
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   "%s",
-                   "TIFF save cannot handle indexed images with alpha channel.");
+                   _("TIFF save cannot handle indexed images with "
+                     "an alpha channel."));
     default:
       return FALSE;
     }
@@ -816,7 +816,8 @@ save_image (const gchar  *filename,
     {
       if (bitspersample != 1 || samplesperpixel != 1)
         {
-          g_message ("Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT Group 3\".");
+          g_message (_("Only monochrome pictures can be compressed with "
+                       "\"CCITT Group 4\" or \"CCITT Group 3\"."));
           return FALSE;
         }
     }
@@ -1045,7 +1046,7 @@ save_image (const gchar  *filename,
 
           if (!success)
             {
-              g_message ("Failed a scanline write on row %d", row);
+              g_message (_("Failed a scanline write on row %d"), row);
               return FALSE;
             }
         }
