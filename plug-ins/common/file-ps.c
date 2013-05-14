@@ -1800,7 +1800,8 @@ create_new_image (const gchar        *filename,
       gdtype = GIMP_RGB_IMAGE;
     }
 
-  image_ID = gimp_image_new (width, height, type);
+  image_ID = gimp_image_new_with_precision (width, height, type,
+                                            GIMP_PRECISION_U8);
   gimp_image_undo_disable (image_ID);
 
   tmp = g_strdup_printf ("%s-%d", filename, pagenum);
