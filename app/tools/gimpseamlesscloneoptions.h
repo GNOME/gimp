@@ -37,9 +37,9 @@ typedef struct _GimpSeamlessCloneOptionsClass GimpSeamlessCloneOptionsClass;
 
 struct _GimpSeamlessCloneOptions
 {
-  GimpToolOptions        parent_instance;
+  GimpToolOptions parent_instance;
 
-  gboolean               temp;
+  gboolean        temp;
 };
 
 struct _GimpSeamlessCloneOptionsClass

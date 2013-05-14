@@ -33,8 +33,6 @@
 
 #include "tools-types.h"
 
-//#include "base/tile-manager.h"
-
 #include "core/gimp.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpchannel.h"
@@ -58,6 +56,7 @@
 
 #include "gimp-intl.h"
 
+
 #define SC_DEBUG TRUE
 
 #ifdef SC_DEBUG
@@ -67,6 +66,13 @@
 #define sc_debug_fstart()
 #define sc_debug_fend()
 #endif
+
+#define gimp_seamless_clone_tool_is_in_paste(sc,x0,y0)          \
+  (   ((sc)->xoff <= (x0) && (x0) < (sc)->xoff + (sc)->width)   \
+   && ((sc)->yoff <= (y0) && (y0) < (sc)->yoff + (sc)->height)) \
+
+#define gimp_seamless_clone_tool_is_in_paste_c(sc,coords)       \
+  gimp_seamless_clone_tool_is_in_paste((sc),(coords)->x,(coords)->y)
 
 
 /*  init ----------> preprocess
@@ -85,7 +91,7 @@
  *
  * INIT:       Wait for click on canvas
  *             have a paste ? -> PREPROCESS : -> QUIT
- * 
+ *
  * PREPROCESS: Do the preprocessing
  *             -> RENDER
  *
@@ -118,40 +124,40 @@ static void       gimp_seamless_clone_tool_stop               (GimpSeamlessClone
 static void       gimp_seamless_clone_tool_options_notify     (GimpTool              *tool,
                                                                GimpToolOptions       *options,
                                                                const GParamSpec      *pspec);
-                                                              
+
 static void       gimp_seamless_clone_tool_button_press       (GimpTool              *tool,
                                                                const GimpCoords      *coords,
                                                                guint32                time,
                                                                GdkModifierType        state,
                                                                GimpButtonPressType    press_type,
                                                                GimpDisplay           *display);
-                                                               
+
 static void       gimp_seamless_clone_tool_button_release     (GimpTool              *tool,
                                                                const GimpCoords      *coords,
                                                                guint32                time,
                                                                GdkModifierType        state,
                                                                GimpButtonReleaseType  release_type,
                                                                GimpDisplay           *display);
-                                                               
+
 static gboolean   gimp_seamless_clone_tool_key_press          (GimpTool              *tool,
                                                                GdkEventKey           *kevent,
                                                                GimpDisplay           *display);
-                                                               
+
 static void       gimp_seamless_clone_tool_motion             (GimpTool              *tool,
                                                                const GimpCoords      *coords,
                                                                guint32                time,
                                                                GdkModifierType        state,
                                                                GimpDisplay           *display);
-                                                               
+
 static void       gimp_seamless_clone_tool_control            (GimpTool              *tool,
                                                                GimpToolAction         action,
                                                                GimpDisplay           *display);
-                                                               
+
 static void       gimp_seamless_clone_tool_cursor_update      (GimpTool              *tool,
                                                                const GimpCoords      *coords,
                                                                GdkModifierType        state,
                                                                GimpDisplay           *display);
-                                                               
+
 static void       gimp_seamless_clone_tool_oper_update        (GimpTool              *tool,
                                                                const GimpCoords      *coords,
                                                                GdkModifierType        state,
@@ -162,10 +168,10 @@ static void       gimp_seamless_clone_tool_draw               (GimpDrawTool     
 
 static void       gimp_seamless_clone_tool_create_image_map   (GimpSeamlessCloneTool *sc,
                                                                GimpDrawable          *drawable);
-                                                               
+
 static void       gimp_seamless_clone_tool_image_map_flush    (GimpImageMap          *image_map,
                                                                GimpTool              *tool);
-                                                               
+
 static void       gimp_seamless_clone_tool_image_map_update   (GimpSeamlessCloneTool *sc);
 
 static void       gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc);
@@ -238,7 +244,7 @@ gimp_seamless_clone_tool_init (GimpSeamlessCloneTool *self)
 
   /* TODO: We do need click events, but so do all tools. What's this? */
   gimp_tool_control_set_wants_click (tool->control, TRUE);
-  
+
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_MOVE);
 
@@ -249,7 +255,7 @@ gimp_seamless_clone_tool_init (GimpSeamlessCloneTool *self)
   gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_COMPRESS);
 
   self->paste           = NULL;
-  
+
   self->render_node     = NULL;
   self->sc_node  = NULL;
 
@@ -362,7 +368,7 @@ gimp_seamless_clone_tool_start (GimpSeamlessCloneTool *sc,
   if (sc->paste == NULL)
     {
       sc->paste = paste_to_gegl_buf (GIMP_TOOL (sc));
-      
+
       if (sc->paste == NULL)
         {
           /* TODO: prompt for some error message */
@@ -374,7 +380,7 @@ gimp_seamless_clone_tool_start (GimpSeamlessCloneTool *sc,
           sc->height = gegl_buffer_get_height (sc->paste);
         }
     }
-  
+
   /* Free resources which are relevant only for the previous display */
   gimp_seamless_clone_tool_stop (sc, TRUE);
 
@@ -497,7 +503,7 @@ gimp_seamless_clone_tool_key_press (GimpTool    *tool,
 {
   GimpSeamlessCloneTool *sct    = GIMP_SEAMLESS_CLONE_TOOL (tool);
   gboolean               retval = TRUE;
-  
+
   if (sct->tool_state == SC_STATE_RENDER_MOTION
       || sct->tool_state == SC_STATE_RENDER_WAIT)
     {
@@ -515,8 +521,7 @@ gimp_seamless_clone_tool_key_press (GimpTool    *tool,
            *       rectangle each time (in the update function) or by
            *       invalidating and re-rendering all now (expensive and
            *       perhaps useless */
-          gimp_image_map_commit (sct->image_map
-                                 NULL);
+          gimp_image_map_commit (sct->image_map, NULL);
           g_object_unref (sct->image_map);
           sct->image_map = NULL;
 
@@ -687,7 +692,7 @@ gimp_seamless_clone_tool_cursor_update (GimpTool         *tool,
     {
       if (sc->tool_state == SC_STATE_RENDER_MOTION)
         modifier = GIMP_CURSOR_MODIFIER_MOVE;
-        
+
       else if (sc->tool_state == SC_STATE_RENDER_WAIT
                && gimp_seamless_clone_tool_is_in_paste_c (sc, coords))
         modifier = GIMP_CURSOR_MODIFIER_NONE;
@@ -721,7 +726,7 @@ gimp_seamless_clone_tool_draw (GimpDrawTool *draw_tool)
  * which will receive the drawable on which the preview is applied, and
  * it should also have an "output" pad to which the final result will be
  * rendered
- */ 
+ */
 static void
 gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc)
 {
@@ -745,16 +750,16 @@ gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc)
   GeglNode *node;
   GeglNode *op, *paste, *overlay;
   GeglNode *input, *output;
-  
+
   node = gegl_node_new ();
 
   input  = gegl_node_get_input_proxy  (node, "input");
   output = gegl_node_get_output_proxy (node, "output");
 
-  paste     = gegl_node_new_child (node,
-                                   "operation", "gegl:buffer-source",
-                                   "buffer",    sc->paste,
-                                   NULL);
+  paste = gegl_node_new_child (node,
+                               "operation", "gegl:buffer-source",
+                               "buffer",    sc->paste,
+                               NULL);
 
   op = gegl_node_new_child (node,
                             "operation", "gegl:seamless-clone",
@@ -764,23 +769,23 @@ gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc)
                                  "operation", "svg:dst-over",
                                  NULL);
 
-  gegl_node_connect_to (input,     "output",
-                        op,        "input");
+  gegl_node_connect_to (input,   "output",
+                        op,      "input");
 
-  gegl_node_connect_to (paste,     "output",
-                        op,        "aux");
+  gegl_node_connect_to (paste,   "output",
+                        op,      "aux");
 
-  gegl_node_connect_to (op,        "output",
-                        overlay,   "input");
+  gegl_node_connect_to (op,      "output",
+                        overlay, "input");
 
-  gegl_node_connect_to (input,     "output",
-                        overlay,   "aux");
+  gegl_node_connect_to (input,   "output",
+                        overlay, "aux");
 
-  gegl_node_connect_to (overlay,   "output",
-                        output,    "input");
+  gegl_node_connect_to (overlay, "output",
+                        output,  "input");
 
   sc->render_node = node;
-  sc->sc_node = op;
+  sc->sc_node     = op;
 
   gimp_seamless_clone_tool_render_node_update (sc);
 }
@@ -789,7 +794,7 @@ static void
 gimp_seamless_clone_tool_render_node_update (GimpSeamlessCloneTool *sc)
 {
   GimpDrawable *bg = GIMP_TOOL (sc)->drawable;
-  gint xoff, yoff;
+  gint          xoff, yoff;
 
   /* Now we should also take into consideration the fact that
    * we should work with coordinates relative to the background
@@ -816,7 +821,7 @@ gimp_seamless_clone_tool_create_image_map (GimpSeamlessCloneTool *sc,
 
   sc->image_map = gimp_image_map_new (drawable,
                                       _("Seamless Clone"),
-                                      sc->render_node
+                                      sc->render_node,
 				      GIMP_STOCK_TOOL_SEAMLESS_CLONE);
 
   g_signal_connect (sc->image_map, "flush",
@@ -886,7 +891,7 @@ gimp_seamless_clone_tool_image_map_update (GimpSeamlessCloneTool *sc)
    * We need to clear the cache in the sc_node, since that is
    * where the previous paste was located */
   gegl_operation_invalidate (op, &visible, TRUE);
-  
+
   /* Now update the image map and show this area */
   gimp_image_map_apply (sc->image_map);
 }

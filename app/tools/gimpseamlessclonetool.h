@@ -47,7 +47,7 @@ struct _GimpSeamlessCloneTool
 
   GeglNode       *render_node;    /* The parent of the Gegl graph that
                                    * renders the seamless cloning */
-                                   
+
   GeglNode       *sc_node;        /* A Gegl node to do the seamless
                                    * cloning live with translation of
                                    * the paste */
@@ -58,7 +58,7 @@ struct _GimpSeamlessCloneTool
   GimpImageMap   *image_map;      /* The image map object which renders
                                    * the live preview, and commits it
                                    * when at the end */
-                                   
+
   gint width, height;             /* The width and height of the paste.
                                    * Needed for mouse hit detection */
 
@@ -82,11 +82,5 @@ void    gimp_seamless_clone_tool_register (GimpToolRegisterCallback  callback,
 
 GType   gimp_seamless_clone_tool_get_type (void) G_GNUC_CONST;
 
-#define gimp_seamless_clone_tool_is_in_paste(sc,x0,y0)          \
-  (   ((sc)->xoff <= (x0) && (x0) < (sc)->xoff + (sc)->width)   \
-   && ((sc)->yoff <= (y0) && (y0) < (sc)->yoff + (sc)->height)) \
-
-#define gimp_seamless_clone_tool_is_in_paste_c(sc,coords)       \
-  gimp_seamless_clone_tool_is_in_paste((sc),(coords)->x,(coords)->y)
 
 #endif  /*  __GIMP_SEAMLESS_CLONE_TOOL_H__  */

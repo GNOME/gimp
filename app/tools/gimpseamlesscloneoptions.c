@@ -120,7 +120,6 @@ gimp_seamless_clone_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
-  GtkWidget *mode;
   GtkWidget *button;
 
   button = gimp_prop_check_button_new (config, "temp",

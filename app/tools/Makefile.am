@@ -162,8 +162,8 @@ libapptools_a_sources = \
 	gimprotatetool.h		\
 	gimpscaletool.c			\
 	gimpscaletool.h			\
-	gimpseamlesscloneoptions.c		\
-	gimpseamlesscloneoptions.h		\
+	gimpseamlesscloneoptions.c	\
+	gimpseamlesscloneoptions.h	\
 	gimpseamlessclonetool.c		\
 	gimpseamlessclonetool.h		\
 	gimpselectionoptions.c		\
