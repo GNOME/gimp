@@ -86,6 +86,7 @@ typedef struct
   guchar       *data;
   guchar       *src;
   GeglBuffer   *buffer;
+  const Babl   *format;
   const gchar  *file_name;
   gboolean      abort_me;
   guint         source_id;
@@ -235,7 +236,7 @@ background_jpeg_save (PreviewPersistent *pp)
                                            pp->cinfo.image_width,
                                            (yend - pp->cinfo.next_scanline)),
                            1.0,
-                           NULL,
+                           pp->format,
                            pp->data,
                            GEGL_AUTO_ROWSTRIDE,
                            GEGL_ABYSS_NONE);
@@ -271,6 +272,7 @@ save_image (const gchar  *filename,
 {
   GimpImageType  drawable_type;
   GeglBuffer    *buffer = NULL;
+  const Babl    *format;
   GimpParasite  *parasite;
   static struct jpeg_compress_struct cinfo;
   static struct my_error_mgr         jerr;
@@ -345,24 +347,28 @@ save_image (const gchar  *filename,
       /* # of color components per pixel */
       cinfo.input_components = 3;
       has_alpha = FALSE;
+      format = babl_format ("R'G'B' u8");
       break;
 
     case GIMP_GRAY_IMAGE:
       /* # of color components per pixel */
       cinfo.input_components = 1;
       has_alpha = FALSE;
+      format = babl_format ("Y' u8");
       break;
 
     case GIMP_RGBA_IMAGE:
       /* # of color components per pixel (minus the GIMP alpha channel) */
       cinfo.input_components = 4 - 1;
       has_alpha = TRUE;
+      format = babl_format ("R'G'B'A u8");
       break;
 
     case GIMP_GRAYA_IMAGE:
       /* # of color components per pixel (minus the GIMP alpha channel) */
       cinfo.input_components = 2 - 1;
       has_alpha = TRUE;
+      format = babl_format ("Y'A u8");
       break;
 
     case GIMP_INDEXED_IMAGE:
@@ -684,6 +690,7 @@ save_image (const gchar  *filename,
       pp->temp        = temp;
       pp->data        = data;
       pp->buffer      = buffer;
+      pp->format      = format;
       pp->src         = NULL;
       pp->file_name   = filename;
       pp->abort_me    = FALSE;
@@ -714,7 +721,7 @@ save_image (const gchar  *filename,
                                            cinfo.image_width,
                                            (yend - cinfo.next_scanline)),
                            1.0,
-                           NULL,
+                           format,
                            data,
                            GEGL_AUTO_ROWSTRIDE,
                            GEGL_ABYSS_NONE);
