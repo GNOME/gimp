@@ -2403,22 +2403,25 @@ save_gray  (FILE   *ofp,
             gint32  image_ID,
             gint32  drawable_ID)
 {
+  GeglBuffer    *buffer = NULL;
+  const Babl    *format;
+  int            bpp;
   int height, width, i, j;
   int tile_height;
   unsigned char *data, *src;
   unsigned char *packb = NULL;
-  GimpPixelRgn pixel_rgn;
-  GimpDrawable *drawable;
   int level2 = (psvals.level > 1);
 
-  drawable = gimp_drawable_get (drawable_ID);
-  width = drawable->width;
-  height = drawable->height;
+  buffer = gimp_drawable_get_buffer (drawable_ID);
+  format = babl_format ("Y' u8");
+  bpp = babl_format_get_bytes_per_pixel (format);
+  width = gegl_buffer_get_width (buffer);
+  height = gegl_buffer_get_height (buffer);
+
   tile_height = gimp_tile_height ();
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, FALSE, FALSE);
 
   /* allocate a buffer for retrieving information from the pixel region  */
-  src = data = (guchar *)g_malloc (tile_height * width * drawable->bpp);
+  src = data = (guchar *) g_malloc (tile_height * width * bpp);
 
   /* Set up transformation in PostScript */
   save_ps_setup (ofp, drawable_ID, width, height, 1*8);
@@ -2441,7 +2444,9 @@ save_gray  (FILE   *ofp,
 #define GET_GRAY_TILE(begin) \
   {int scan_lines; \
     scan_lines = (i+tile_height-1 < height) ? tile_height : (height-i); \
-    gimp_pixel_rgn_get_rect (&pixel_rgn, begin, 0, i, width, scan_lines); \
+    gegl_buffer_get (buffer, GEGL_RECTANGLE (0, i, width, scan_lines),  \
+                     1.0, format, begin,                                \
+                     GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);             \
     src = begin; }
 
   for (i = 0; i < height; i++)
@@ -2483,7 +2488,7 @@ save_gray  (FILE   *ofp,
   if (packb)
     g_free (packb);
 
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
 
   if (ferror (ofp))
     {
@@ -2781,22 +2786,25 @@ save_rgb (FILE   *ofp,
           gint32  image_ID,
           gint32  drawable_ID)
 {
+  GeglBuffer    *buffer = NULL;
+  const Babl    *format;
+  int            bpp;
   int height, width, tile_height;
   int i, j;
   guchar *data, *src;
   guchar *packb = NULL, *plane = NULL;
-  GimpPixelRgn pixel_rgn;
-  GimpDrawable *drawable;
   int level2 = (psvals.level > 1);
 
-  drawable = gimp_drawable_get (drawable_ID);
-  width = drawable->width;
-  height = drawable->height;
+  buffer = gimp_drawable_get_buffer (drawable_ID);
+  format = babl_format ("R'G'B' u8");
+  bpp = babl_format_get_bytes_per_pixel (format);
+  width = gegl_buffer_get_width (buffer);
+  height = gegl_buffer_get_height (buffer);
+
   tile_height = gimp_tile_height ();
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, FALSE, FALSE);
 
   /* allocate a buffer for retrieving information from the pixel region  */
-  src = data = g_new (guchar, tile_height * width * drawable->bpp);
+  src = data = g_new (guchar, tile_height * width * bpp);
 
   /* Set up transformation in PostScript */
   save_ps_setup (ofp, drawable_ID, width, height, 3*8);
@@ -2833,7 +2841,9 @@ save_rgb (FILE   *ofp,
 #define GET_RGB_TILE(begin) \
   { int scan_lines;                                                     \
     scan_lines = (i+tile_height-1 < height) ? tile_height : (height-i); \
-    gimp_pixel_rgn_get_rect (&pixel_rgn, begin, 0, i, width, scan_lines); \
+    gegl_buffer_get (buffer, GEGL_RECTANGLE (0, i, width, scan_lines),  \
+                     1.0, format, begin,                                \
+                     GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);             \
     src = begin; }
 
   for (i = 0; i < height; i++)
@@ -2887,7 +2897,7 @@ save_rgb (FILE   *ofp,
   g_free (packb);
   g_free (plane);
 
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
 
   if (ferror (ofp))
     {
