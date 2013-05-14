@@ -339,6 +339,16 @@ gimp_spin_scale_expose (GtkWidget      *widget,
       PangoRectangle logical;
       gint           layout_offset_x;
       gint           layout_offset_y;
+      GtkStateType   state;
+      GdkColor       text_color;
+      GdkColor       bar_text_color;
+      gint           window_width;
+      gint           window_height;
+      gdouble        progress_fraction;
+      gint           progress_x;
+      gint           progress_y;
+      gint           progress_width;
+      gint           progress_height;
 
       GTK_WIDGET_CLASS (parent_class)->size_request (widget, &requisition);
       gtk_widget_get_allocation (widget, &allocation);
@@ -364,11 +374,55 @@ gimp_spin_scale_expose (GtkWidget      *widget,
 
       layout_offset_x -= logical.x;
 
+      state = GTK_STATE_SELECTED;
+      if (! gtk_widget_get_sensitive (widget))
+        state = GTK_STATE_INSENSITIVE;
+      text_color     = style->text[gtk_widget_get_state (widget)];
+      bar_text_color = style->fg[state];
+
+      window_width  = gdk_window_get_width  (event->window);
+      window_height = gdk_window_get_height (event->window);
+
+      progress_fraction = gtk_entry_get_progress_fraction (GTK_ENTRY (widget));
+
+      if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
+        {
+          progress_fraction = 1.0 - progress_fraction;
+
+          progress_x      = window_width * progress_fraction;
+          progress_y      = 0;
+          progress_width  = window_width - progress_x;
+          progress_height = window_height;
+        }
+      else
+        {
+          progress_x      = 0;
+          progress_y      = 0;
+          progress_width  = window_width * progress_fraction;
+          progress_height = window_height;
+        }
+
+      cairo_save (cr);
+
+      cairo_set_fill_rule (cr, CAIRO_FILL_RULE_EVEN_ODD);
+      cairo_rectangle (cr, 0, 0, window_width, window_height);
+      cairo_rectangle (cr, progress_x, progress_y,
+                       progress_width, progress_height);
+      cairo_clip (cr);
+      cairo_set_fill_rule (cr, CAIRO_FILL_RULE_WINDING);
+
       cairo_move_to (cr, layout_offset_x, layout_offset_y);
+      gdk_cairo_set_source_color (cr, &text_color);
+      pango_cairo_show_layout (cr, private->layout);
 
-      gdk_cairo_set_source_color (cr,
-                                  &style->text[gtk_widget_get_state (widget)]);
+      cairo_restore (cr);
 
+      cairo_rectangle (cr, progress_x, progress_y,
+                       progress_width, progress_height);
+      cairo_clip (cr);
+
+      cairo_move_to (cr, layout_offset_x, layout_offset_y);
+      gdk_cairo_set_source_color (cr, &bar_text_color);
       pango_cairo_show_layout (cr, private->layout);
     }
 
