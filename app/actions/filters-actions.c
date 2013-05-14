@@ -41,7 +41,7 @@ static const GimpStringActionEntry filters_actions[] =
 {
   { "filters-box-blur", GIMP_STOCK_GEGL,
     NC_("filters-action", "B_ox Blur..."), NULL,
-    NC_("filters-action", "Radius of square pixel region, (width and height will be radius*2+1)"),
+    NC_("filters-action", "Performs an averaging of a square box of pixels"),
     "gegl:box-blur",
     NULL /* FIXME GIMP_HELP_FILTER_BOX_BLUR */ },
 
@@ -81,17 +81,23 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:color-to-alpha",
     NULL /* FIXME GIMP_HELP_FILTER_COLOR_TO_ALPHA */ },
 
+  { "filters-difference-of-gaussians", GIMP_STOCK_GEGL,
+    NC_("filters-action", "Difference of Gaussians..."), NULL,
+    NC_("filters-action", "Edge detection with control of edge thickness"),
+    "gegl:difference-of-gaussians",
+    NULL /* FIXME GIMP_HELP_FILTER_DIFFERENCE_OF_GAUSSIANS */ },
+
   { "filters-dot", GIMP_STOCK_GEGL,
     NC_("filters-action", "Dots..."), NULL,
     NC_("filters-action", "Simplify image into an array of solid-colored dots"),
     "gegl:dot",
     NULL /* FIXME GIMP_HELP_FILTER_DOT */ },
 
-  { "filters-difference-of-gaussians", GIMP_STOCK_GEGL,
-    NC_("filters-action", "Difference of Gaussians..."), NULL,
-    NC_("filters-action", "Edge detection with control of edge thickness"),
-    "gegl:difference-of-gaussians",
-    NULL /* FIXME GIMP_HELP_FILTER_DIFFERENCE_OF_GAUSSIANS */ },
+  { "filters-exposure", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_E_xposure..."), NULL,
+    NC_("filters-action", "Changes Exposure and Contrast, mainly for use with high dynamic range images"),
+    "gegl:exposure",
+    NULL /* FIXME GIMP_HELP_FILTER_EXPOSURE */ },
 
   { "filters-gaussian-blur", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Gaussian Blur..."), NULL,
@@ -270,6 +276,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-color-to-alpha",          writable && !gray && alpha);
   SET_SENSITIVE ("filters-difference-of-gaussians", writable);
   SET_SENSITIVE ("filters-dot",                     writable);
+  SET_SENSITIVE ("filters-exposure",                writable);
   SET_SENSITIVE ("filters-gaussian-blur",           writable);
   SET_SENSITIVE ("filters-laplace",                 writable);
   SET_SENSITIVE ("filters-mono-mixer",              writable && !gray);
