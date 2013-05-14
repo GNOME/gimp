@@ -389,7 +389,8 @@ compress_packbits (int nin,
                    int *nout,
                    unsigned char *dst)
 
-{register unsigned char c;
+{
+ unsigned char c;
  int nrepeat, nliteral;
  unsigned char *run_start;
  unsigned char *start_dst = dst;
@@ -1718,7 +1719,7 @@ read_pnmraw_type (FILE *ifp,
                   gint *height,
                   gint *maxval)
 {
-  register int frst, scnd, thrd;
+  int frst, scnd, thrd;
   gint  pnmtype;
   gchar line[1024];
 
@@ -1864,7 +1865,7 @@ load_ps (const gchar *filename,
          gint         urx,
          gint         ury)
 {
-  register guchar *dest;
+  guchar *dest;
   guchar *data, *bitline = NULL, *byteline = NULL, *byteptr, *temp;
   guchar bit2byte[256*8];
   int width, height, tile_height, scan_lines, total_scan_lines;
@@ -2197,9 +2198,9 @@ dither_grey (const guchar *grey,
   static gint  south_error[256];
   static gint  swest_error[256];
 
-  register const guchar *greyptr;
-  register guchar *bwptr, mask;
-  register gint *fse;
+  const guchar *greyptr;
+  guchar *bwptr, mask;
+  gint *fse;
   gint x, greyval, fse_inline;
 
   if (linecount <= 0)
