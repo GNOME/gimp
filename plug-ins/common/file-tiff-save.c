@@ -742,7 +742,6 @@ save_image (const gchar  *filename,
         format        = babl_format ("R'G'B' u8");
       else
         format        = babl_format ("R'G'B' u16");
-      bytesperrow     = cols * babl_format_get_bytes_per_pixel (format);
       break;
 
     case GIMP_GRAY_IMAGE:
@@ -753,7 +752,6 @@ save_image (const gchar  *filename,
         format        = babl_format ("Y' u8");
       else
         format        = babl_format ("Y' u16");
-      bytesperrow     = cols * babl_format_get_bytes_per_pixel (format);
       break;
 
     case GIMP_RGBA_IMAGE:
@@ -765,7 +763,6 @@ save_image (const gchar  *filename,
         format        = babl_format ("R'G'B'A u8");
       else
         format        = babl_format ("R'G'B'A u16");
-      bytesperrow     = cols * babl_format_get_bytes_per_pixel (format);
       break;
 
     case GIMP_GRAYA_IMAGE:
@@ -776,7 +773,6 @@ save_image (const gchar  *filename,
         format        = babl_format ("Y'A u8");
       else
         format        = babl_format ("Y'A u16");
-      bytesperrow     = cols * babl_format_get_bytes_per_pixel (format);
       break;
 
     case GIMP_INDEXED_IMAGE:
@@ -816,7 +812,7 @@ save_image (const gchar  *filename,
       samplesperpixel = 1;
       bytesperrow     = cols;
       alpha           = FALSE;
-      format          = NULL;
+      format          = gimp_drawable_get_format (layer);
 
       g_free (cmap);
       break;
@@ -828,6 +824,8 @@ save_image (const gchar  *filename,
     default:
       goto out;
     }
+
+  bytesperrow = cols * babl_format_get_bytes_per_pixel (format);
 
   if (compression == COMPRESSION_CCITTFAX3 ||
       compression == COMPRESSION_CCITTFAX4)
