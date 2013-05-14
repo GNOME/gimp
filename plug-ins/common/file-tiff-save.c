@@ -682,6 +682,7 @@ save_image (const gchar  *filename,
   gint           success;
   GimpImageType  drawable_type;
   GeglBuffer    *buffer = NULL;
+  const Babl    *format;
   gint           tile_height;
   gint           y, yend;
   gboolean       is_bw    = FALSE;
@@ -734,6 +735,7 @@ save_image (const gchar  *filename,
       photometric     = PHOTOMETRIC_RGB;
       bytesperrow     = cols * 3;
       alpha           = FALSE;
+      format          = babl_format ("R'G'B' u8");
       break;
 
     case GIMP_GRAY_IMAGE:
@@ -742,6 +744,7 @@ save_image (const gchar  *filename,
       photometric     = PHOTOMETRIC_MINISBLACK;
       bytesperrow     = cols;
       alpha           = FALSE;
+      format          = babl_format ("Y' u8");
       break;
 
     case GIMP_RGBA_IMAGE:
@@ -751,6 +754,7 @@ save_image (const gchar  *filename,
       photometric     = PHOTOMETRIC_RGB;
       bytesperrow     = cols * 4;
       alpha           = TRUE;
+      format          = babl_format ("R'G'B'A u8");
       break;
 
     case GIMP_GRAYA_IMAGE:
@@ -759,6 +763,7 @@ save_image (const gchar  *filename,
       photometric     = PHOTOMETRIC_MINISBLACK;
       bytesperrow     = cols * 2;
       alpha           = TRUE;
+      format          = babl_format ("Y'A u8");
       break;
 
     case GIMP_INDEXED_IMAGE:
@@ -798,6 +803,7 @@ save_image (const gchar  *filename,
       samplesperpixel = 1;
       bytesperrow     = cols;
       alpha           = FALSE;
+      format          = NULL;
 
       g_free (cmap);
       break;
@@ -971,7 +977,7 @@ save_image (const gchar  *filename,
       gegl_buffer_get (buffer,
                        GEGL_RECTANGLE (0, y, cols, yend - y),
                        1.0,
-                       NULL,
+                       format,
                        src,
                        GEGL_AUTO_ROWSTRIDE,
                        GEGL_ABYSS_NONE);
