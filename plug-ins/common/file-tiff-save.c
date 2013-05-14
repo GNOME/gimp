@@ -720,6 +720,11 @@ save_image (const gchar  *filename,
   gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));
 
+  if (gimp_image_get_precision (image) == GIMP_PRECISION_U8)
+    bitspersample = 8;
+  else
+    bitspersample = 16;
+
   drawable_type = gimp_drawable_type (layer);
   buffer = gimp_drawable_get_buffer (layer);
 
@@ -731,39 +736,47 @@ save_image (const gchar  *filename,
     case GIMP_RGB_IMAGE:
       predictor       = 2;
       samplesperpixel = 3;
-      bitspersample   = 8;
       photometric     = PHOTOMETRIC_RGB;
-      bytesperrow     = cols * 3;
       alpha           = FALSE;
-      format          = babl_format ("R'G'B' u8");
+      if (bitspersample == 8)
+        format        = babl_format ("R'G'B' u8");
+      else
+        format        = babl_format ("R'G'B' u16");
+      bytesperrow     = cols * babl_format_get_bytes_per_pixel (format);
       break;
 
     case GIMP_GRAY_IMAGE:
       samplesperpixel = 1;
-      bitspersample   = 8;
       photometric     = PHOTOMETRIC_MINISBLACK;
-      bytesperrow     = cols;
       alpha           = FALSE;
-      format          = babl_format ("Y' u8");
+      if (bitspersample == 8)
+        format        = babl_format ("Y' u8");
+      else
+        format        = babl_format ("Y' u16");
+      bytesperrow     = cols * babl_format_get_bytes_per_pixel (format);
       break;
 
     case GIMP_RGBA_IMAGE:
       predictor       = 2;
       samplesperpixel = 4;
-      bitspersample   = 8;
       photometric     = PHOTOMETRIC_RGB;
-      bytesperrow     = cols * 4;
       alpha           = TRUE;
-      format          = babl_format ("R'G'B'A u8");
+      if (bitspersample == 8)
+        format        = babl_format ("R'G'B'A u8");
+      else
+        format        = babl_format ("R'G'B'A u16");
+      bytesperrow     = cols * babl_format_get_bytes_per_pixel (format);
       break;
 
     case GIMP_GRAYA_IMAGE:
       samplesperpixel = 2;
-      bitspersample   = 8;
       photometric     = PHOTOMETRIC_MINISBLACK;
-      bytesperrow     = cols * 2;
       alpha           = TRUE;
-      format          = babl_format ("Y'A u8");
+      if (bitspersample == 8)
+        format        = babl_format ("Y'A u8");
+      else
+        format        = babl_format ("Y'A u16");
+      bytesperrow     = cols * babl_format_get_bytes_per_pixel (format);
       break;
 
     case GIMP_INDEXED_IMAGE:
