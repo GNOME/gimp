@@ -39,6 +39,12 @@
 
 static const GimpStringActionEntry filters_actions[] =
 {
+  { "filters-box-blur", GIMP_STOCK_GEGL,
+    NC_("filters-action", "B_ox Blur..."), NULL,
+    NC_("filters-action", "Radius of square pixel region, (width and height will be radius*2+1)"),
+    "gegl:box-blur",
+    NULL /* FIXME GIMP_HELP_FILTER_BOX_BLUR */ },
+
   { "filters-c2g", GIMP_STOCK_GEGL,
     NC_("filters-action", "Color to Gray..."), NULL,
     NC_("filters-action", "Color to grayscale conversion"),
@@ -255,6 +261,7 @@ filters_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
+  SET_SENSITIVE ("filters-box-blur",                writable);
   SET_SENSITIVE ("filters-c2g",                     writable && !gray);
   SET_SENSITIVE ("filters-cartoon",                 writable);
   SET_SENSITIVE ("filters-checkerboard",            writable);

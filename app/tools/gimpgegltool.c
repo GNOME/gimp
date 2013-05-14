@@ -110,6 +110,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
   };
   static const gchar * const name_blacklist[] =
   {
+    "gegl:box-blur", /* in gimp */
     "gegl:c2g", /* in gimp */
     "gegl:cartoon", /* in gimp */
     "gegl:checkerboard", /* in gimp */
