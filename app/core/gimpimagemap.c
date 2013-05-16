@@ -68,6 +68,9 @@ struct _GimpImageMap
   GeglNode       *operation;
   gchar          *stock_id;
 
+  gboolean        filtering;
+  GeglRectangle   filter_area;
+
   GimpFilter     *filter;
   GeglNode       *translate;
   GimpApplicator *applicator;
@@ -76,19 +79,23 @@ struct _GimpImageMap
 
 static void   gimp_image_map_pickable_iface_init (GimpPickableInterface *iface);
 
-static void            gimp_image_map_dispose         (GObject             *object);
-static void            gimp_image_map_finalize        (GObject             *object);
+static void            gimp_image_map_dispose         (GObject      *object);
+static void            gimp_image_map_finalize        (GObject      *object);
 
-static GimpImage     * gimp_image_map_get_image       (GimpPickable        *pickable);
-static const Babl    * gimp_image_map_get_format      (GimpPickable        *pickable);
+static GimpImage     * gimp_image_map_get_image       (GimpPickable *pickable);
+static const Babl    * gimp_image_map_get_format      (GimpPickable *pickable);
 static const Babl    * gimp_image_map_get_format_with_alpha
-                                                      (GimpPickable        *pickable);
-static GeglBuffer    * gimp_image_map_get_buffer      (GimpPickable        *pickable);
-static gboolean        gimp_image_map_get_pixel_at    (GimpPickable        *pickable,
-                                                       gint                 x,
-                                                       gint                 y,
-                                                       const Babl          *format,
-                                                       gpointer             pixel);
+                                                      (GimpPickable *pickable);
+static GeglBuffer    * gimp_image_map_get_buffer      (GimpPickable *pickable);
+static gboolean        gimp_image_map_get_pixel_at    (GimpPickable *pickable,
+                                                       gint          x,
+                                                       gint          y,
+                                                       const Babl   *format,
+                                                       gpointer      pixel);
+
+static gboolean        gimp_image_map_add_filter      (GimpImageMap *image_map);
+static gboolean        gimp_image_map_remove_filter   (GimpImageMap *image_map);
+
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpImageMap, gimp_image_map, GIMP_TYPE_OBJECT,
@@ -263,20 +270,27 @@ gimp_image_map_apply (GimpImageMap *image_map)
 {
   GimpImage         *image;
   GimpChannel       *mask;
-  GeglRectangle      rect;
   GimpComponentMask  active_mask;
 
   g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
 
   /*  Make sure the drawable is still valid  */
   if (! gimp_item_is_attached (GIMP_ITEM (image_map->drawable)))
-    return;
+    {
+      gimp_image_map_remove_filter (image_map);
+      return;
+    }
 
   /*  The application should occur only within selection bounds  */
   if (! gimp_item_mask_intersect (GIMP_ITEM (image_map->drawable),
-                                  &rect.x, &rect.y,
-                                  &rect.width, &rect.height))
-    return;
+                                  &image_map->filter_area.x,
+                                  &image_map->filter_area.y,
+                                  &image_map->filter_area.width,
+                                  &image_map->filter_area.height))
+    {
+      gimp_image_map_remove_filter (image_map);
+      return;
+    }
 
   if (! image_map->filter)
     {
@@ -357,16 +371,16 @@ gimp_image_map_apply (GimpImageMap *image_map)
                                 GIMP_REPLACE_MODE);
     }
 
-  if (! gimp_drawable_has_filter (image_map->drawable, image_map->filter))
-    gimp_drawable_add_filter (image_map->drawable, image_map->filter);
+  gimp_image_map_add_filter (image_map);
 
   gegl_node_set (image_map->translate,
-                 "x", (gdouble) -rect.x,
-                 "y", (gdouble) -rect.y,
+                 "x", (gdouble) -image_map->filter_area.x,
+                 "y", (gdouble) -image_map->filter_area.y,
                  NULL);
 
   gimp_applicator_set_apply_offset (image_map->applicator,
-                                    rect.x, rect.y);
+                                    image_map->filter_area.x,
+                                    image_map->filter_area.y);
 
   active_mask = gimp_drawable_get_active_mask (image_map->drawable);
 
@@ -401,8 +415,10 @@ gimp_image_map_apply (GimpImageMap *image_map)
     }
 
   gimp_drawable_update (image_map->drawable,
-                        rect.x, rect.y,
-                        rect.width, rect.height);
+                        image_map->filter_area.x,
+                        image_map->filter_area.y,
+                        image_map->filter_area.width,
+                        image_map->filter_area.height);
 
   g_signal_emit (image_map, image_map_signals[FLUSH], 0);
 }
@@ -414,10 +430,8 @@ gimp_image_map_commit (GimpImageMap *image_map,
   g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  if (gimp_drawable_has_filter (image_map->drawable, image_map->filter))
+  if (gimp_image_map_remove_filter (image_map))
     {
-      gimp_drawable_remove_filter (image_map->drawable, image_map->filter);
-
       gimp_drawable_merge_filter (image_map->drawable, image_map->filter,
                                   progress,
                                   image_map->undo_desc);
@@ -431,22 +445,52 @@ gimp_image_map_abort (GimpImageMap *image_map)
 {
   g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
 
-  if (gimp_drawable_has_filter (image_map->drawable, image_map->filter))
+  if (gimp_image_map_remove_filter (image_map))
     {
-      GeglRectangle rect;
+      gimp_drawable_update (image_map->drawable,
+                            image_map->filter_area.x,
+                            image_map->filter_area.y,
+                            image_map->filter_area.width,
+                            image_map->filter_area.height);
 
+      g_signal_emit (image_map, image_map_signals[FLUSH], 0);
+    }
+}
+
+
+/*  private functions  */
+
+static gboolean
+gimp_image_map_add_filter (GimpImageMap *image_map)
+{
+  if (image_map->filter &&
+      ! gimp_drawable_has_filter (image_map->drawable, image_map->filter))
+    {
+      gimp_drawable_add_filter (image_map->drawable, image_map->filter);
+
+      image_map->filtering = TRUE;
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+gimp_image_map_remove_filter (GimpImageMap *image_map)
+{
+  if (image_map->filter &&
+      gimp_drawable_has_filter (image_map->drawable, image_map->filter))
+    {
       gimp_drawable_remove_filter (image_map->drawable, image_map->filter);
 
-      if (gimp_item_is_attached (GIMP_ITEM (image_map->drawable)) &&
-          gimp_item_mask_intersect (GIMP_ITEM (image_map->drawable),
-                                    &rect.x, &rect.y,
-                                    &rect.width, &rect.height))
+      if (image_map->filtering)
         {
-          gimp_drawable_update (image_map->drawable,
-                                rect.x, rect.y,
-                                rect.width, rect.height);
+          image_map->filtering = FALSE;
 
-          g_signal_emit (image_map, image_map_signals[FLUSH], 0);
+          return TRUE;
         }
     }
+
+  return FALSE;
 }
