@@ -379,6 +379,8 @@ app/tools/gimpregionselectoptions.c
 app/tools/gimpregionselecttool.c
 app/tools/gimprotatetool.c
 app/tools/gimpscaletool.c
+app/tools/gimpseamlesscloneoptions.c
+app/tools/gimpseamlessclonetool.c
 app/tools/gimpselectionoptions.c
 app/tools/gimpselectiontool.c
 app/tools/gimpsheartool.c
