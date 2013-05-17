@@ -118,6 +118,7 @@ gimp_tool_palette_class_init (GimpToolPaletteClass *klass)
 static void
 gimp_tool_palette_init (GimpToolPalette *palette)
 {
+  gtk_tool_palette_set_style (GTK_TOOL_PALETTE (palette), GTK_TOOLBAR_ICONS);
 }
 
 static void
