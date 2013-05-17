@@ -38,15 +38,12 @@
 #include "core-types.h"
 
 #include "gegl/gimpapplicator.h"
-#include "gegl/gimp-gegl-utils.h"
 
-#include "gimpdrawable.h"
+#include "gimpchannel.h"
 #include "gimpdrawable-filter.h"
-#include "gimpfilter.h"
 #include "gimpimage.h"
 #include "gimpimagemap.h"
 #include "gimpmarshal.h"
-#include "gimpchannel.h"
 #include "gimpprogress.h"
 
 
@@ -75,11 +72,12 @@ struct _GimpImageMap
 };
 
 
-static void       gimp_image_map_dispose       (GObject      *object);
-static void       gimp_image_map_finalize      (GObject      *object);
+static void       gimp_image_map_dispose         (GObject      *object);
+static void       gimp_image_map_finalize        (GObject      *object);
 
-static gboolean   gimp_image_map_add_filter    (GimpImageMap *image_map);
-static gboolean   gimp_image_map_remove_filter (GimpImageMap *image_map);
+static gboolean   gimp_image_map_add_filter      (GimpImageMap *image_map);
+static gboolean   gimp_image_map_remove_filter   (GimpImageMap *image_map);
+static void       gimp_image_map_update_drawable (GimpImageMap *image_map);
 
 
 
@@ -87,7 +85,7 @@ G_DEFINE_TYPE (GimpImageMap, gimp_image_map, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_image_map_parent_class
 
-static guint image_map_signals[LAST_SIGNAL] = { 0 };
+static guint image_map_signals[LAST_SIGNAL] = { 0, };
 
 
 static void
@@ -245,7 +243,7 @@ gimp_image_map_apply (GimpImageMap *image_map)
                                                   "operation", "gegl:translate",
                                                   NULL);
 
-      input  = gegl_node_get_input_proxy  (filter_node, "input");
+      input = gegl_node_get_input_proxy (filter_node, "input");
 
       if (gegl_node_has_pad (image_map->operation, "input") &&
           gegl_node_has_pad (image_map->operation, "output"))
@@ -299,8 +297,6 @@ gimp_image_map_apply (GimpImageMap *image_map)
                                 GIMP_REPLACE_MODE);
     }
 
-  gimp_image_map_add_filter (image_map);
-
   gegl_node_set (image_map->translate,
                  "x", (gdouble) -image_map->filter_area.x,
                  "y", (gdouble) -image_map->filter_area.y,
@@ -342,13 +338,8 @@ gimp_image_map_apply (GimpImageMap *image_map)
                                        -offset_x, -offset_y);
     }
 
-  gimp_drawable_update (image_map->drawable,
-                        image_map->filter_area.x,
-                        image_map->filter_area.y,
-                        image_map->filter_area.width,
-                        image_map->filter_area.height);
-
-  g_signal_emit (image_map, image_map_signals[FLUSH], 0);
+  gimp_image_map_add_filter (image_map);
+  gimp_image_map_update_drawable (image_map);
 }
 
 void
@@ -375,13 +366,7 @@ gimp_image_map_abort (GimpImageMap *image_map)
 
   if (gimp_image_map_remove_filter (image_map))
     {
-      gimp_drawable_update (image_map->drawable,
-                            image_map->filter_area.x,
-                            image_map->filter_area.y,
-                            image_map->filter_area.width,
-                            image_map->filter_area.height);
-
-      g_signal_emit (image_map, image_map_signals[FLUSH], 0);
+      gimp_image_map_update_drawable (image_map);
     }
 }
 
@@ -421,4 +406,16 @@ gimp_image_map_remove_filter (GimpImageMap *image_map)
     }
 
   return FALSE;
+}
+
+static void
+gimp_image_map_update_drawable (GimpImageMap *image_map)
+{
+  gimp_drawable_update (image_map->drawable,
+                        image_map->filter_area.x,
+                        image_map->filter_area.y,
+                        image_map->filter_area.width,
+                        image_map->filter_area.height);
+
+  g_signal_emit (image_map, image_map_signals[FLUSH], 0);
 }
