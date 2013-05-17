@@ -592,7 +592,7 @@ gimp_image_map_tool_map (GimpImageMapTool *tool)
   if (GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->map)
     GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->map (tool);
 
-  gimp_image_map_apply (tool->image_map);
+  gimp_image_map_apply (tool->image_map, NULL);
 }
 
 static void

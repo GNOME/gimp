@@ -49,16 +49,17 @@ struct _GimpImageMapClass
 
 GType          gimp_image_map_get_type (void) G_GNUC_CONST;
 
-GimpImageMap * gimp_image_map_new      (GimpDrawable *drawable,
-                                        const gchar  *undo_desc,
-                                        GeglNode     *operation,
-                                        const gchar  *stock_id);
+GimpImageMap * gimp_image_map_new      (GimpDrawable        *drawable,
+                                        const gchar         *undo_desc,
+                                        GeglNode            *operation,
+                                        const gchar         *stock_id);
 
-void           gimp_image_map_apply    (GimpImageMap *image_map);
+void           gimp_image_map_apply    (GimpImageMap        *image_map,
+                                        const GeglRectangle *area);
 
-void           gimp_image_map_commit   (GimpImageMap *image_map,
-                                        GimpProgress *progress);
-void           gimp_image_map_abort    (GimpImageMap *image_map);
+void           gimp_image_map_commit   (GimpImageMap        *image_map,
+                                        GimpProgress        *progress);
+void           gimp_image_map_abort    (GimpImageMap        *image_map);
 
 
 #endif /* __GIMP_IMAGE_MAP_H__ */

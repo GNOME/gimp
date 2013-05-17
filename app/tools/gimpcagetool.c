@@ -1260,5 +1260,5 @@ gimp_cage_tool_image_map_flush (GimpImageMap *image_map,
 static void
 gimp_cage_tool_image_map_update (GimpCageTool *ct)
 {
-  gimp_image_map_apply (ct->image_map);
+  gimp_image_map_apply (ct->image_map, NULL);
 }

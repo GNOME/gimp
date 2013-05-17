@@ -776,5 +776,5 @@ gimp_seamless_clone_tool_image_map_update (GimpSeamlessCloneTool *sc)
   g_object_unref (op);
 
   /* Now update the image map and show this area */
-  gimp_image_map_apply (sc->image_map);
+  gimp_image_map_apply (sc->image_map, NULL);
 }

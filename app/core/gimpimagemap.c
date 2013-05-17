@@ -35,6 +35,8 @@
 
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
 #include "gegl/gimpapplicator.h"
@@ -72,12 +74,13 @@ struct _GimpImageMap
 };
 
 
-static void       gimp_image_map_dispose         (GObject      *object);
-static void       gimp_image_map_finalize        (GObject      *object);
+static void       gimp_image_map_dispose         (GObject             *object);
+static void       gimp_image_map_finalize        (GObject             *object);
 
-static gboolean   gimp_image_map_add_filter      (GimpImageMap *image_map);
-static gboolean   gimp_image_map_remove_filter   (GimpImageMap *image_map);
-static void       gimp_image_map_update_drawable (GimpImageMap *image_map);
+static gboolean   gimp_image_map_add_filter      (GimpImageMap        *image_map);
+static gboolean   gimp_image_map_remove_filter   (GimpImageMap        *image_map);
+static void       gimp_image_map_update_drawable (GimpImageMap        *image_map,
+                                                  const GeglRectangle *area);
 
 
 
@@ -192,10 +195,12 @@ gimp_image_map_new (GimpDrawable *drawable,
 }
 
 void
-gimp_image_map_apply (GimpImageMap *image_map)
+gimp_image_map_apply (GimpImageMap        *image_map,
+                      const GeglRectangle *area)
 {
   GimpImage         *image;
   GimpChannel       *mask;
+  GeglRectangle      update_area;
   GimpComponentMask  active_mask;
 
   g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
@@ -216,6 +221,29 @@ gimp_image_map_apply (GimpImageMap *image_map)
     {
       gimp_image_map_remove_filter (image_map);
       return;
+    }
+
+  /* Only update "area" because only that has changed */
+  if (area &&
+      ! gimp_rectangle_intersect (area->x,
+                                  area->y,
+                                  area->width,
+                                  area->height,
+                                  image_map->filter_area.x,
+                                  image_map->filter_area.y,
+                                  image_map->filter_area.width,
+                                  image_map->filter_area.height,
+                                  &update_area.x,
+                                  &update_area.y,
+                                  &update_area.width,
+                                  &update_area.height))
+    {
+      /* Bail out, but don't remove the filter */
+      return;
+    }
+  else
+    {
+      update_area = image_map->filter_area;
     }
 
   if (! image_map->filter)
@@ -339,7 +367,7 @@ gimp_image_map_apply (GimpImageMap *image_map)
     }
 
   gimp_image_map_add_filter (image_map);
-  gimp_image_map_update_drawable (image_map);
+  gimp_image_map_update_drawable (image_map, &update_area);
 }
 
 void
@@ -366,7 +394,7 @@ gimp_image_map_abort (GimpImageMap *image_map)
 
   if (gimp_image_map_remove_filter (image_map))
     {
-      gimp_image_map_update_drawable (image_map);
+      gimp_image_map_update_drawable (image_map, &image_map->filter_area);
     }
 }
 
@@ -409,13 +437,14 @@ gimp_image_map_remove_filter (GimpImageMap *image_map)
 }
 
 static void
-gimp_image_map_update_drawable (GimpImageMap *image_map)
+gimp_image_map_update_drawable (GimpImageMap        *image_map,
+                                const GeglRectangle *area)
 {
   gimp_drawable_update (image_map->drawable,
-                        image_map->filter_area.x,
-                        image_map->filter_area.y,
-                        image_map->filter_area.width,
-                        image_map->filter_area.height);
+                        area->x,
+                        area->y,
+                        area->width,
+                        area->height);
 
   g_signal_emit (image_map, image_map_signals[FLUSH], 0);
 }
