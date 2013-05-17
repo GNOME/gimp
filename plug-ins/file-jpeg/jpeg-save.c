@@ -82,7 +82,6 @@ typedef struct
   FILE         *outfile;
   gboolean      has_alpha;
   gint          rowstride;
-  guchar       *temp;
   guchar       *data;
   guchar       *src;
   GeglBuffer   *buffer;
@@ -167,9 +166,6 @@ background_error_exit (j_common_ptr cinfo)
 static gboolean
 background_jpeg_save (PreviewPersistent *pp)
 {
-  guchar *t;
-  guchar *s;
-  gint    i, j;
   gint    yend;
 
   if (pp->abort_me || (pp->cinfo.next_scanline >= pp->cinfo.image_height))
@@ -187,7 +183,6 @@ background_jpeg_save (PreviewPersistent *pp)
       fclose (pp->outfile);
       jpeg_destroy_compress (&(pp->cinfo));
 
-      g_free (pp->temp);
       g_free (pp->data);
 
       if (pp->buffer)
@@ -243,20 +238,8 @@ background_jpeg_save (PreviewPersistent *pp)
           pp->src = pp->data;
         }
 
-      t = pp->temp;
-      s = pp->src;
-      i = pp->cinfo.image_width;
-
-      while (i--)
-        {
-          for (j = 0; j < pp->cinfo.input_components; j++)
-            *t++ = *s++;
-          if (pp->has_alpha)  /* ignore alpha channel */
-            s++;
-        }
-
+      jpeg_write_scanlines (&(pp->cinfo), (JSAMPARRAY) &(pp->src), 1);
       pp->src += pp->rowstride;
-      jpeg_write_scanlines (&(pp->cinfo), (JSAMPARRAY) &(pp->temp), 1);
 
       return TRUE;
     }
@@ -278,12 +261,10 @@ save_image (const gchar  *filename,
   static struct my_error_mgr         jerr;
   JpegSubsampling             subsampling;
   FILE     * volatile outfile;
-  guchar   *temp, *t;
   guchar   *data;
-  guchar   *src, *s;
+  guchar   *src;
   gboolean  has_alpha;
   gint      rowstride, yend;
-  gint      i, j;
 
   drawable_type = gimp_drawable_type (drawable_ID);
   buffer = gimp_drawable_get_buffer (drawable_ID);
@@ -361,14 +342,14 @@ save_image (const gchar  *filename,
       /* # of color components per pixel (minus the GIMP alpha channel) */
       cinfo.input_components = 4 - 1;
       has_alpha = TRUE;
-      format = babl_format ("R'G'B'A u8");
+      format = babl_format ("R'G'B' u8");
       break;
 
     case GIMP_GRAYA_IMAGE:
       /* # of color components per pixel (minus the GIMP alpha channel) */
       cinfo.input_components = 2 - 1;
       has_alpha = TRUE;
-      format = babl_format ("Y'A u8");
+      format = babl_format ("Y' u8");
       break;
 
     case GIMP_INDEXED_IMAGE:
@@ -664,7 +645,6 @@ save_image (const gchar  *filename,
    */
   /* JSAMPLEs per row in image_buffer */
   rowstride = cinfo.input_components * cinfo.image_width;
-  temp = g_new (guchar, rowstride);
   data = g_new (guchar, rowstride * gimp_tile_height ());
 
   /* fault if cinfo.next_scanline isn't initially a multiple of
@@ -687,7 +667,6 @@ save_image (const gchar  *filename,
       pp->outfile     = outfile;
       pp->has_alpha   = has_alpha;
       pp->rowstride   = rowstride;
-      pp->temp        = temp;
       pp->data        = data;
       pp->buffer      = buffer;
       pp->format      = format;
@@ -728,20 +707,8 @@ save_image (const gchar  *filename,
           src = data;
         }
 
-      t = temp;
-      s = src;
-      i = cinfo.image_width;
-
-      while (i--)
-        {
-          for (j = 0; j < cinfo.input_components; j++)
-            *t++ = *s++;
-          if (has_alpha)  /* ignore alpha channel */
-            s++;
-        }
-
+      jpeg_write_scanlines (&cinfo, (JSAMPARRAY) &src, 1);
       src += rowstride;
-      jpeg_write_scanlines (&cinfo, (JSAMPARRAY) &temp, 1);
 
       if ((cinfo.next_scanline % 32) == 0)
         gimp_progress_update ((gdouble) cinfo.next_scanline /
@@ -759,7 +726,6 @@ save_image (const gchar  *filename,
   jpeg_destroy_compress (&cinfo);
 
   /* free the temporary buffer */
-  g_free (temp);
   g_free (data);
 
   /* And we're done! */
