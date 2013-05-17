@@ -86,6 +86,7 @@ load_image (const gchar  *filename,
   GimpImageBaseType image_type;
   GimpImageType    layer_type;
   GeglBuffer      *buffer = NULL;
+  const Babl      *format;
   gint             tile_height;
   gint             scanlines;
   gint             i, start, end;
@@ -415,6 +416,7 @@ load_image (const gchar  *filename,
    */
 
   buffer = gimp_drawable_get_buffer (layer_ID);
+  format = babl_format (image_type == GIMP_RGB ? "R'G'B' u8" : "Y' u8");
 
   while (cinfo.output_scanline < cinfo.output_height)
     {
@@ -434,7 +436,7 @@ load_image (const gchar  *filename,
       gegl_buffer_set (buffer,
                        GEGL_RECTANGLE (0, start, cinfo.output_width, scanlines),
                        0,
-                       NULL,
+                       format,
                        buf,
                        GEGL_AUTO_ROWSTRIDE);
 
