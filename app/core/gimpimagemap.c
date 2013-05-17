@@ -46,8 +46,6 @@
 #include "gimpimage.h"
 #include "gimpimagemap.h"
 #include "gimpmarshal.h"
-#include "gimppickable.h"
-#include "gimpviewable.h"
 #include "gimpchannel.h"
 #include "gimpprogress.h"
 
@@ -77,30 +75,15 @@ struct _GimpImageMap
 };
 
 
-static void   gimp_image_map_pickable_iface_init (GimpPickableInterface *iface);
+static void       gimp_image_map_dispose       (GObject      *object);
+static void       gimp_image_map_finalize      (GObject      *object);
 
-static void            gimp_image_map_dispose         (GObject      *object);
-static void            gimp_image_map_finalize        (GObject      *object);
-
-static GimpImage     * gimp_image_map_get_image       (GimpPickable *pickable);
-static const Babl    * gimp_image_map_get_format      (GimpPickable *pickable);
-static const Babl    * gimp_image_map_get_format_with_alpha
-                                                      (GimpPickable *pickable);
-static GeglBuffer    * gimp_image_map_get_buffer      (GimpPickable *pickable);
-static gboolean        gimp_image_map_get_pixel_at    (GimpPickable *pickable,
-                                                       gint          x,
-                                                       gint          y,
-                                                       const Babl   *format,
-                                                       gpointer      pixel);
-
-static gboolean        gimp_image_map_add_filter      (GimpImageMap *image_map);
-static gboolean        gimp_image_map_remove_filter   (GimpImageMap *image_map);
+static gboolean   gimp_image_map_add_filter    (GimpImageMap *image_map);
+static gboolean   gimp_image_map_remove_filter (GimpImageMap *image_map);
 
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpImageMap, gimp_image_map, GIMP_TYPE_OBJECT,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
-                                                gimp_image_map_pickable_iface_init))
+G_DEFINE_TYPE (GimpImageMap, gimp_image_map, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_image_map_parent_class
 
@@ -123,16 +106,6 @@ gimp_image_map_class_init (GimpImageMapClass *klass)
 
   object_class->dispose  = gimp_image_map_dispose;
   object_class->finalize = gimp_image_map_finalize;
-}
-
-static void
-gimp_image_map_pickable_iface_init (GimpPickableInterface *iface)
-{
-  iface->get_image             = gimp_image_map_get_image;
-  iface->get_format            = gimp_image_map_get_format;
-  iface->get_format_with_alpha = gimp_image_map_get_format_with_alpha;
-  iface->get_buffer            = gimp_image_map_get_buffer;
-  iface->get_pixel_at          = gimp_image_map_get_pixel_at;
 }
 
 static void
@@ -193,51 +166,6 @@ gimp_image_map_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static GimpImage *
-gimp_image_map_get_image (GimpPickable *pickable)
-{
-  GimpImageMap *image_map = GIMP_IMAGE_MAP (pickable);
-
-  return gimp_pickable_get_image (GIMP_PICKABLE (image_map->drawable));
-}
-
-static const Babl *
-gimp_image_map_get_format (GimpPickable *pickable)
-{
-  GimpImageMap *image_map = GIMP_IMAGE_MAP (pickable);
-
-  return gimp_pickable_get_format (GIMP_PICKABLE (image_map->drawable));
-}
-
-static const Babl *
-gimp_image_map_get_format_with_alpha (GimpPickable *pickable)
-{
-  GimpImageMap *image_map = GIMP_IMAGE_MAP (pickable);
-
-  return gimp_pickable_get_format_with_alpha (GIMP_PICKABLE (image_map->drawable));
-}
-
-static GeglBuffer *
-gimp_image_map_get_buffer (GimpPickable *pickable)
-{
-  GimpImageMap *image_map = GIMP_IMAGE_MAP (pickable);
-
-  return gimp_pickable_get_buffer (GIMP_PICKABLE (image_map->drawable));
-}
-
-static gboolean
-gimp_image_map_get_pixel_at (GimpPickable *pickable,
-                             gint          x,
-                             gint          y,
-                             const Babl   *format,
-                             gpointer      pixel)
-{
-  GimpImageMap *image_map = GIMP_IMAGE_MAP (pickable);
-
-  return gimp_pickable_get_pixel_at (GIMP_PICKABLE (image_map->drawable),
-                                     x, y, format, pixel);
 }
 
 GimpImageMap *

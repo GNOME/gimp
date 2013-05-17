@@ -559,7 +559,7 @@ gimp_image_map_tool_pick_color (GimpColorTool  *color_tool,
 
   *sample_format = gimp_drawable_get_format (tool->drawable);
 
-  return gimp_pickable_pick_color (GIMP_PICKABLE (tool->image_map),
+  return gimp_pickable_pick_color (GIMP_PICKABLE (tool->drawable),
                                    x - off_x,
                                    y - off_y,
                                    color_tool->options->sample_average,
