@@ -179,7 +179,7 @@ gimp_warp_tool_control (GimpTool       *tool,
     case GIMP_TOOL_ACTION_HALT:
       if (wt->coords_buffer)
         {
-          gegl_buffer_destroy (wt->coords_buffer);
+          g_object_unref (wt->coords_buffer);
           wt->coords_buffer = NULL;
         }
 
@@ -216,7 +216,7 @@ gimp_warp_tool_start (GimpWarpTool *wt,
   GimpTool      *tool     = GIMP_TOOL (wt);
   GimpImage     *image    = gimp_display_get_image (display);
   GimpDrawable  *drawable = gimp_image_get_active_drawable (image);
-  Babl          *format;
+  const Babl    *format;
   gint           x1, x2, y1, y2;
   GeglRectangle  bbox;
 
@@ -226,7 +226,7 @@ gimp_warp_tool_start (GimpWarpTool *wt,
 
   if (wt->coords_buffer)
     {
-      gegl_buffer_destroy (wt->coords_buffer);
+      g_object_unref (wt->coords_buffer);
       wt->coords_buffer = NULL;
     }
 
@@ -253,7 +253,8 @@ gimp_warp_tool_start (GimpWarpTool *wt,
   bbox.width  = ABS (x1 - x2);
   bbox.height = ABS (y1 - y2);
 
-  printf ("Initialize coordinate buffer (%d,%d) at %d,%d\n", bbox.width, bbox.height, bbox.x, bbox.y);
+  printf ("Initialize coordinate buffer (%d,%d) at %d,%d\n",
+          bbox.width, bbox.height, bbox.x, bbox.y);
   wt->coords_buffer = gegl_buffer_new (&bbox, format);
 
   gegl_rectangle_set (&wt->last_region, 0, 0, 0, 0);
@@ -279,7 +280,7 @@ gimp_warp_tool_key_press (GimpTool    *tool,
     case GDK_KEY_ISO_Enter:
       gimp_tool_control_set_preserve (tool->control, TRUE);
 
-      gimp_image_map_commit (wt->image_map);
+      gimp_image_map_commit (wt->image_map, GIMP_PROGRESS (tool));
       g_object_unref (wt->image_map);
       wt->image_map = NULL;
 
@@ -492,14 +493,13 @@ static void
 gimp_warp_tool_create_image_map (GimpWarpTool *wt,
                                  GimpDrawable *drawable)
 {
-  if (!wt->graph)
+  if (! wt->graph)
     gimp_warp_tool_create_graph (wt);
 
   wt->image_map = gimp_image_map_new (drawable,
                                       _("Warp transform"),
                                       wt->graph,
-                                      NULL,
-                                      NULL);
+                                      GIMP_STOCK_TOOL_WARP);
 
   g_object_set (wt->image_map, "gegl-caching", TRUE, NULL);
 
@@ -526,7 +526,7 @@ gimp_warp_tool_image_map_update (GimpWarpTool *wt)
 
   printf("update rect: (%d,%d), %dx%d\n", to_update.x, to_update.y, to_update.width, to_update.height);
 
-  gimp_image_map_apply_region (wt->image_map, &to_update);
+  gimp_image_map_apply (wt->image_map, &to_update);
 }
 
 static void
@@ -601,7 +601,7 @@ gimp_warp_tool_undo (GimpWarpTool *wt)
     bbox.height = max_y - min_y + size;
 
     gimp_image_map_abort (wt->image_map);
-    gimp_image_map_apply_region (wt->image_map, &bbox);
+    gimp_image_map_apply (wt->image_map, &bbox);
   }
 
   g_object_unref (stroke);
