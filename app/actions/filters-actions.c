@@ -75,6 +75,12 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:color-to-alpha",
     NULL /* FIXME GIMP_HELP_FILTER_COLOR_TO_ALPHA */ },
 
+  { "filters-cubism", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Cubism..."), NULL,
+    NC_("filters-action", "Convert the image into randomly rotated square blobs, somehow resembling a cubist painting style"),
+    "gegl:cubism",
+    NULL /* FIXME GIMP_HELP_FILTER_CUBISM */ },
+
   { "filters-difference-of-gaussians", GIMP_STOCK_GEGL,
     NC_("filters-action", "Difference of Gaussians..."), NULL,
     NC_("filters-action", "Edge detection with control of edge thickness"),
@@ -273,6 +279,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-color-reduction",         writable);
   SET_SENSITIVE ("filters-color-temperature",       writable && !gray);
   SET_SENSITIVE ("filters-color-to-alpha",          writable && !gray && alpha);
+  SET_SENSITIVE ("filters-cubism",                  writable);
   SET_SENSITIVE ("filters-difference-of-gaussians", writable);
   SET_SENSITIVE ("filters-dot",                     writable);
   SET_SENSITIVE ("filters-exposure",                writable);

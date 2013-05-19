@@ -119,6 +119,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:color-temperature", /* in gimp */
     "gegl:color-to-alpha", /* in gimp */
     "gegl:colorize", /* in gimp */
+    "gegl:cubism", /* in gimp */
     "gegl:contrast-curve",
     "gegl:convert-format",
     "gegl:difference-of-gaussians", /* in gimp */

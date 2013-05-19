@@ -657,6 +657,7 @@
       <menu action="plug-in-combine-menu" name="Combine" />
       <menu action="plug-in-artistic-menu" name="Artistic">
 	<menuitem action="filters-cartoon" />
+	<menuitem action="filters-cubism" />
 	<menuitem action="filters-photocopy" />
 	<menuitem action="filters-softglow" />
       </menu>
