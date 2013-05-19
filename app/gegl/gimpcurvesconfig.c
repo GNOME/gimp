@@ -240,7 +240,14 @@ gimp_curves_config_serialize (GimpConfig       *config,
     {
       c_config->channel = channel;
 
-      success = gimp_config_serialize_properties (config, writer);
+      /*  Serialize the channel properties manually (not using
+       *  gimp_config_serialize_properties()), so the parent class'
+       *  "time" property doesn't end up in the config file once per
+       *  channel. See bug #700653.
+       */
+      success =
+        (gimp_config_serialize_property_by_name (config, "channel", writer) &&
+         gimp_config_serialize_property_by_name (config, "curve",   writer));
 
       if (! success)
         break;

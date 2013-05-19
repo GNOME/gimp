@@ -258,7 +258,18 @@ gimp_levels_config_serialize (GimpConfig       *config,
     {
       l_config->channel = channel;
 
-      success = gimp_config_serialize_properties (config, writer);
+      /*  serialize the channel properties manually (not using
+       *  gimp_config_serialize_properties()), so the parent class'
+       *  "time" property doesn't end up in the config file one per
+       *  channel. See bug #700653.
+       */
+      success =
+        (gimp_config_serialize_property_by_name (config, "channel",     writer) &&
+         gimp_config_serialize_property_by_name (config, "gamma",       writer) &&
+         gimp_config_serialize_property_by_name (config, "low-input",   writer) &&
+         gimp_config_serialize_property_by_name (config, "high-input",  writer) &&
+         gimp_config_serialize_property_by_name (config, "low-output",  writer) &&
+         gimp_config_serialize_property_by_name (config, "high-output", writer));
 
       if (! success)
         break;
