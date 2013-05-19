@@ -224,6 +224,12 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "Applies a vignette to an image"),
     "gegl:vignette",
     NULL /* FIXME GIMP_HELP_FILTER_VIGNETTE */ },
+
+  { "filters-whirl-pinch", GIMP_STOCK_GEGL,
+    NC_("filters-action", "W_hirl and Pinch..."), NULL,
+    NC_("filters-action", "Distort an image by whirling and pinching"),
+    "gegl:whirl-pinch",
+    NULL /* FIXME GIMP_HELP_FILTER_WHIRL_PINCH */ },
 };
 
 void
@@ -303,6 +309,8 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-semi-flatten",            writable && alpha);
   SET_SENSITIVE ("filters-threshold-alpha",         writable && alpha);
   SET_SENSITIVE ("filters-unsharp-mask",            writable);
+  SET_SENSITIVE ("filters-vignette",                writable);
+  SET_SENSITIVE ("filters-whirl-pinch",             writable);
 
 #undef SET_SENSITIVE
 }

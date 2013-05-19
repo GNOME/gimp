@@ -632,6 +632,7 @@
       	<menuitem action="filters-polar-coordinates" />
         <menuitem action="filters-ripple" />
         <menuitem action="filters-lens-distortion" />
+        <menuitem action="filters-whirl-pinch" />
       </menu>
       <menu action="plug-in-light-shadow-menu" name="Light and Shadow">
         <placeholder name="Light" />
