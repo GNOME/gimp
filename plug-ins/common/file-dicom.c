@@ -18,7 +18,7 @@
 
 /*
  * The dicom reading and writing code was written from scratch
- * by Dov Grobgeld.  (dov@imagic.weizman.ac.il).
+ * by Dov Grobgeld.  (dov.grobgeld@gmail.com).
  */
 
 #include "config.h"
@@ -1222,12 +1222,17 @@ dicom_ensure_required_elements_present (GSList *elements,
     /* 0002, 0001 - File Meta Information Version */
     { 0x0002, 0x0001, "OB", 2, (guint8 *) "\0\1" },
     /* 0002, 0010 - Transfer syntax uid */
-    { 0x0002, 0x0001, "UI",
+    { 0x0002, 0x0010, "UI",
       strlen ("1.2.840.10008.1.2.1"), (guint8 *) "1.2.840.10008.1.2.1"},
     /* 0002, 0013 - Implementation version name */
     { 0x0002, 0x0013, "SH",
       strlen ("GIMP Dicom Plugin 1.0"), (guint8 *) "GIMP Dicom Plugin 1.0" },
     /* Identifying group */
+    /* ImageType */
+    { 0x0008, 0x0008, "CS",
+      strlen ("ORIGINAL\\PRIMARY"), (guint8 *) "ORIGINAL\\PRIMARY" },
+    { 0x0008, 0x0016, "UI",
+      strlen ("1.2.840.10008.5.1.4.1.1.7"), (guint8 *) "1.2.840.10008.5.1.4.1.1.7" },
     /* Study date */
     { 0x0008, 0x0020, "DA",
       strlen (today_string), (guint8 *) today_string },
@@ -1240,14 +1245,23 @@ dicom_ensure_required_elements_present (GSList *elements,
     /* Content Date */
     { 0x0008, 0x0023, "DA",
       strlen (today_string), (guint8 *) today_string},
-    /* Modality - I have to add something.. */
+    /* Content Time */
+    { 0x0008, 0x0030, "TM",
+      strlen ("000000.000000"), (guint8 *) "000000.000000"},
+    /* AccessionNumber */
+    { 0x0008, 0x0050, "SH", strlen (""), (guint8 *) "" },
+    /* Modality */
     { 0x0008, 0x0060, "CS", strlen ("MR"), (guint8 *) "MR" },
+    /* ConversionType */
+    { 0x0008, 0x0064, "CS", strlen ("WSD"), (guint8 *) "WSD" },
+    /* ReferringPhysiciansName */
+    { 0x0008, 0x0090, "PN", strlen (""), (guint8 *) "" },
     /* Patient group */
     /* Patient name */
     { 0x0010,  0x0010, "PN",
       strlen ("DOE^WILBER"), (guint8 *) "DOE^WILBER" },
     /* Patient ID */
-    { 0x0010,  0x0020, "CS",
+    { 0x0010,  0x0020, "LO",
       strlen ("314159265"), (guint8 *) "314159265" },
     /* Patient Birth date */
     { 0x0010,  0x0030, "DA",
@@ -1255,6 +1269,12 @@ dicom_ensure_required_elements_present (GSList *elements,
     /* Patient sex */
     { 0x0010,  0x0040, "CS", strlen (""), (guint8 *) "" /* unknown */ },
     /* Relationship group */
+    /* StudyId */
+    { 0x0020, 0x0010, "IS", strlen ("1"), (guint8 *) "1" },
+    /* SeriesNumber */
+    { 0x0020, 0x0011, "IS", strlen ("1"), (guint8 *) "1" },
+    /* AcquisitionNumber */
+    { 0x0020, 0x0012, "IS", strlen ("1"), (guint8 *) "1" },
     /* Instance number */
     { 0x0020, 0x0013, "IS", strlen ("1"), (guint8 *) "1" },
 
@@ -1574,7 +1594,7 @@ add_tag_pointer (GByteArray   *group_stream,
         */
       if (strstr ("UI|OB", value_rep) != NULL)
         {
-          g_byte_array_append (group_stream, (guint8 *) 0x0000, 1);
+          g_byte_array_append (group_stream, (guint8 *) "\0", 1);
         }
       else
         {
