@@ -110,7 +110,6 @@
     'plugin-browser' => { ui => 1 },
     'procedure-browser' => { ui => 1 },
     'qbist' => { ui => 1 },
-    'red-eye-removal' => { ui => 1 },
     'ripple' => { ui => 1 },
     'rotate' => {},
     'sample-colorize' => { ui => 1 },

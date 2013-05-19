@@ -109,7 +109,6 @@ plasma_RC = plasma.rc.o
 plugin_browser_RC = plugin-browser.rc.o
 procedure_browser_RC = procedure-browser.rc.o
 qbist_RC = qbist.rc.o
-red_eye_removal_RC = red-eye-removal.rc.o
 ripple_RC = ripple.rc.o
 rotate_RC = rotate.rc.o
 sample_colorize_RC = sample-colorize.rc.o

@@ -117,7 +117,6 @@ plug-ins/common/plasma.c
 plug-ins/common/plugin-browser.c
 plug-ins/common/procedure-browser.c
 plug-ins/common/qbist.c
-plug-ins/common/red-eye-removal.c
 plug-ins/common/ripple.c
 plug-ins/common/rotate.c
 plug-ins/common/sample-colorize.c

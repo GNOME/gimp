@@ -155,7 +155,6 @@ libexec_PROGRAMS = \
 	plugin-browser \
 	procedure-browser \
 	qbist \
-	red-eye-removal \
 	ripple \
 	rotate \
 	sample-colorize \
@@ -2134,23 +2133,6 @@ qbist_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(qbist_RC)
-
-red_eye_removal_SOURCES = \
-	red-eye-removal.c
-
-red_eye_removal_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(red_eye_removal_RC)
 
 ripple_SOURCES = \
 	ripple.c
