@@ -515,15 +515,13 @@ gimp_prop_spin_scale_new (GObject     *config,
                                         gspec->ui_minimum, gspec->ui_maximum);
       gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (scale), gspec->ui_gamma);
     }
-
-  if (GEGL_IS_PARAM_SPEC_INT (param_spec))
+  else if (GEGL_IS_PARAM_SPEC_INT (param_spec))
     {
       GeglParamSpecInt *gspec = GEGL_PARAM_SPEC_INT (param_spec);
       gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale),
                                         gspec->ui_minimum, gspec->ui_maximum);
       gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (scale), gspec->ui_gamma);
     }
-
 
   g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (gimp_prop_adjustment_callback),
@@ -1605,8 +1603,25 @@ gimp_prop_table_new (GObject              *config,
           gint           digits = (G_IS_PARAM_SPEC_FLOAT (pspec) ||
                                    G_IS_PARAM_SPEC_DOUBLE (pspec)) ? 2 : 0;
 
-          get_numeric_values (config, pspec,
-                              &value, &lower, &upper, G_STRFUNC);
+          if (GEGL_IS_PARAM_SPEC_DOUBLE (pspec))
+            {
+              GeglParamSpecDouble *gspec = GEGL_PARAM_SPEC_DOUBLE (pspec);
+
+              lower = gspec->ui_minimum;
+              upper = gspec->ui_maximum;
+            }
+          else if (GEGL_IS_PARAM_SPEC_INT (pspec))
+            {
+              GeglParamSpecInt *gspec = GEGL_PARAM_SPEC_INT (pspec);
+
+              lower = gspec->ui_minimum;
+              upper = gspec->ui_maximum;
+            }
+          else
+            {
+              get_numeric_values (config, pspec,
+                                  &value, &lower, &upper, G_STRFUNC);
+            }
 
           if ((upper - lower < 10.0) &&
               (G_IS_PARAM_SPEC_FLOAT (pspec) ||
