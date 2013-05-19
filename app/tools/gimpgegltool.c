@@ -156,6 +156,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:sdl-display", /* useless */
     "gegl:seamless-clone",
     "gegl:shear", /* in gimp */
+    "gegl:softglow", /* in gimp */
     "gegl:text",
     "gegl:threshold", /* in gimp */
     "gegl:tile", /* useless */
