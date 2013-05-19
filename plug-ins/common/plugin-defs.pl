@@ -28,7 +28,6 @@
     'contrast-stretch-hsv' => {},
     'convolution-matrix' => { ui => 1 },
     'crop-zealous' => {},
-    'cubism' => { ui => 1 },
     'curve-bend' => { ui => 1 },
     'decompose' => { ui => 1 },
     'deinterlace' => { ui => 1 },

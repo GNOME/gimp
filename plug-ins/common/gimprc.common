@@ -27,7 +27,6 @@ contrast_stretch_RC = contrast-stretch.rc.o
 contrast_stretch_hsv_RC = contrast-stretch-hsv.rc.o
 convolution_matrix_RC = convolution-matrix.rc.o
 crop_zealous_RC = crop-zealous.rc.o
-cubism_RC = cubism.rc.o
 curve_bend_RC = curve-bend.rc.o
 decompose_RC = decompose.rc.o
 deinterlace_RC = deinterlace.rc.o

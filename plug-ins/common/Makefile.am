@@ -73,7 +73,6 @@ libexec_PROGRAMS = \
 	contrast-stretch-hsv \
 	convolution-matrix \
 	crop-zealous \
-	cubism \
 	curve-bend \
 	decompose \
 	deinterlace \
@@ -696,23 +695,6 @@ crop_zealous_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(crop_zealous_RC)
-
-cubism_SOURCES = \
-	cubism.c
-
-cubism_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(cubism_RC)
 
 curve_bend_SOURCES = \
 	curve-bend.c

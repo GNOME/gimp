@@ -35,7 +35,6 @@ plug-ins/common/contrast-stretch.c
 plug-ins/common/contrast-stretch-hsv.c
 plug-ins/common/convolution-matrix.c
 plug-ins/common/crop-zealous.c
-plug-ins/common/cubism.c
 plug-ins/common/curve-bend.c
 plug-ins/common/decompose.c
 plug-ins/common/deinterlace.c
