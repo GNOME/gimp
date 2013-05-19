@@ -171,6 +171,12 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:polar-coordinates",
     NULL /* FIXME GIMP_HELP_FILTER_POLAR_COORDINATES */ },
 
+  { "filters-red-eye-removal", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Red Eye Removal..."), NULL,
+    NC_("filters-action", "Remove the red eye effect caused by camera flashes"),
+    "gegl:red-eye-removal",
+    NULL /* FIXME GIMP_HELP_FILTER_RED_EYE_REMOVAL */ },
+
   { "filters-ripple", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Ripple..."), NULL,
     NC_("filters-action", "Displace pixels in a ripple pattern"),
@@ -283,6 +289,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-photocopy",               writable);
   SET_SENSITIVE ("filters-pixelize",                writable);
   SET_SENSITIVE ("filters-polar-coordinates",       writable);
+  SET_SENSITIVE ("filters-red-eye-removal",         writable && !gray);
   SET_SENSITIVE ("filters-ripple",                  writable);
   SET_SENSITIVE ("filters-sobel",                   writable);
   SET_SENSITIVE ("filters-softglow",                writable);

@@ -625,6 +625,7 @@
       	<menuitem action="filters-pixelize" />
       </menu>
       <menu action="plug-in-enhance-menu" name="Enhance">
+        <menuitem action="filters-red-eye-removal" />
         <menuitem action="filters-unsharp-mask" />
       </menu>
       <menu action="plug-in-distorts-menu" name="Distorts">

@@ -150,6 +150,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:pixelize", /* in gimp */
     "gegl:polar-coordinates", /* in gimp */
     "gegl:posterize", /* in gimp */
+    "gegl:red-eye-removal", /* in gimp */
     "gegl:ripple", /* in gimp */
     "gegl:rotate", /* in gimp */
     "gegl:scale", /* in gimp */
