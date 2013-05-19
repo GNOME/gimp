@@ -1577,7 +1577,7 @@ gimp_prop_table_new (GObject              *config,
 
           scale = gimp_prop_spin_scale_new (config, pspec->name,
                                             g_param_spec_get_nick (pspec),
-                                            1.0, 1.0, 0);
+                                            1.0, 10.0, 0);
           gtk_box_pack_start (GTK_BOX (widget), scale, TRUE, TRUE, 0);
           gtk_widget_show (scale);
 
@@ -1597,12 +1597,29 @@ gimp_prop_table_new (GObject              *config,
                G_IS_PARAM_SPEC_DOUBLE (pspec))
         {
           GtkAdjustment *adj;
+          gdouble        value;
+          gdouble        lower;
+          gdouble        upper;
+          gdouble        step   = 1.0;
+          gdouble        page   = 10.0;
           gint           digits = (G_IS_PARAM_SPEC_FLOAT (pspec) ||
                                    G_IS_PARAM_SPEC_DOUBLE (pspec)) ? 2 : 0;
 
+          get_numeric_values (config, pspec,
+                              &value, &lower, &upper, G_STRFUNC);
+
+          if ((upper - lower < 10.0) &&
+              (G_IS_PARAM_SPEC_FLOAT (pspec) ||
+               G_IS_PARAM_SPEC_DOUBLE (pspec)))
+            {
+              step   = 0.1;
+              page   = 1.0;
+              digits = 3;
+            }
+
           widget = gimp_prop_spin_scale_new (config, pspec->name,
                                              g_param_spec_get_nick (pspec),
-                                             1.0, 1.0, digits);
+                                             step, page, digits);
 
           adj = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (widget));
 
