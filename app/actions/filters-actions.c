@@ -219,27 +219,13 @@ filters_actions_setup (GimpActionGroup *group)
   for (i = 0; i < G_N_ELEMENTS (filters_actions); i++)
     {
       const GimpStringActionEntry *entry = &filters_actions[i];
-      GtkAction                   *action;
-      GType                        op_type;
+      const gchar                 *description;
 
-      action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                            entry->name);
+      description = gegl_operation_get_key (entry->value, "description");
 
-      op_type = gegl_operation_gtype_from_name (entry->value);
-
-      if (action && op_type)
-        {
-          GeglOperationClass *op_class;
-          const gchar        *description;
-
-          op_class = g_type_class_ref (op_type);
-
-          description = gegl_operation_class_get_key (op_class, "description");
-
-          gtk_action_set_tooltip (action, description);
-
-          g_type_class_unref (op_class);
-        }
+      if (description)
+        gimp_action_group_set_action_tooltip (group, entry->name,
+                                              description);
     }
 }
 
