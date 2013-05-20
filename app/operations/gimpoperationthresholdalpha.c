@@ -29,6 +29,8 @@
 
 #include "gimpoperationthresholdalpha.h"
 
+#include "gimp-intl.h"
+
 
 enum
 {
@@ -74,7 +76,9 @@ gimp_operation_threshold_alpha_class_init (GimpOperationThresholdAlphaClass *kla
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:threshold-alpha",
                                  "categories",  "color",
-                                 "description", "Threshold a buffer's alpha channel to a value",
+                                 "description",
+                                 _("Make transparency all-or-nothing, by "
+                                   "thresholding the alpha channel to a value"),
                                  NULL);
 
   operation_class->prepare = gimp_operation_threshold_alpha_prepare;

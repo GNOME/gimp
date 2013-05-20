@@ -236,6 +236,8 @@ app/operations/gimpcurvesconfig.c
 app/operations/gimplevelsconfig.c
 app/operations/gimpoperationcagecoefcalc.c
 app/operations/gimpoperationcagetransform.c
+app/operations/gimpoperationsemiflatten.c
+app/operations/gimpoperationthresholdalpha.c
 
 app/gui/gui.c
 app/gui/gui-message.c
