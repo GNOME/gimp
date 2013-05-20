@@ -39,6 +39,7 @@ struct _GimpGeglTool
 
   /* dialog */
   GtkWidget         *operation_combo;
+  GtkWidget         *description_label;
 };
 
 struct _GimpGeglToolClass

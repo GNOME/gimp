@@ -344,6 +344,13 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
 
   tool->operation_combo = combo;
 
+  tool->description_label = gtk_label_new ("");
+  gtk_label_set_line_wrap (GTK_LABEL (tool->description_label), TRUE);
+  gtk_misc_set_alignment (GTK_MISC (tool->description_label), 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), tool->description_label,
+                      FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (main_vbox), tool->description_label, 1);
+
   /*  The options vbox  */
   o_tool->options_table =
     gtk_label_new (_("Select an operation from the list above"));
@@ -375,6 +382,20 @@ gimp_gegl_tool_operation_changed (GtkWidget    *widget,
 
   if (operation)
     {
+      const gchar *description;
+
+      description = gegl_operation_get_key (operation, "description");
+
+      if (description)
+        {
+          gtk_label_set_text (GTK_LABEL (tool->description_label), description);
+          gtk_widget_show (tool->description_label);
+        }
+      else
+        {
+          gtk_widget_hide (tool->description_label);
+        }
+
       gimp_operation_tool_set_operation (GIMP_OPERATION_TOOL (tool),
                                          operation, NULL);
       g_free (operation);
