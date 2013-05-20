@@ -18,6 +18,7 @@
 #include "config.h"
 
 #include <gegl.h>
+#include <gegl-plugin.h>
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -40,200 +41,167 @@
 static const GimpStringActionEntry filters_actions[] =
 {
   { "filters-c2g", GIMP_STOCK_GEGL,
-    NC_("filters-action", "Color to Gray..."), NULL,
-    NC_("filters-action", "Color to grayscale conversion"),
+    NC_("filters-action", "Color to Gray..."), NULL, NULL,
     "gegl:c2g",
     NULL /* FIXME GIMP_HELP_FILTER_C2G */ },
 
   { "filters-cartoon", GIMP_STOCK_GEGL,
-    NC_("filters-action", "Ca_rtoon..."), NULL,
-    NC_("filters-action", "Simulate a cartoon by enhancing edges"),
+    NC_("filters-action", "Ca_rtoon..."), NULL, NULL,
     "gegl:cartoon",
     NULL /* FIXME GIMP_HELP_FILTER_CARTOON */ },
 
   { "filters-checkerboard", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Checkerboard..."), NULL,
-    NC_("filters-action", "Create a checkerboard pattern"),
+    NC_("filters-action", "_Checkerboard..."), NULL, NULL,
     "gegl:checkerboard",
     NULL /* FIXME GIMP_HELP_FILTER_CHECKERBOARD */ },
 
   { "filters-color-reduction", GIMP_STOCK_GEGL,
-    NC_("filters-action", "Color _Reduction..."), NULL,
-    NC_("filters-action", "Reduce the number of colors in the image, with optional dithering"),
+    NC_("filters-action", "Color _Reduction..."), NULL, NULL,
     "gegl:color-reduction",
     NULL /* FIXME GIMP_HELP_FILTER_COLOR_TEMPERATURE */ },
 
   { "filters-color-temperature", GIMP_STOCK_GEGL,
-    NC_("filters-action", "Color T_emperature..."), NULL,
-    NC_("filters-action", "Change the color temperature of the image"),
+    NC_("filters-action", "Color T_emperature..."), NULL, NULL,
     "gegl:color-temperature",
     NULL /* FIXME GIMP_HELP_FILTER_COLOR_TEMPERATURE */ },
 
   { "filters-color-to-alpha", GIMP_STOCK_GEGL,
-    NC_("filters-action", "Color to _Alpha..."), NULL,
-    NC_("filters-action", "Convert a specified color to transparency"),
+    NC_("filters-action", "Color to _Alpha..."), NULL, NULL,
     "gegl:color-to-alpha",
     NULL /* FIXME GIMP_HELP_FILTER_COLOR_TO_ALPHA */ },
 
   { "filters-cubism", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Cubism..."), NULL,
-    NC_("filters-action", "Convert the image into randomly rotated square blobs, somehow resembling a cubist painting style"),
+    NC_("filters-action", "_Cubism..."), NULL, NULL,
     "gegl:cubism",
     NULL /* FIXME GIMP_HELP_FILTER_CUBISM */ },
 
   { "filters-difference-of-gaussians", GIMP_STOCK_GEGL,
-    NC_("filters-action", "Difference of Gaussians..."), NULL,
-    NC_("filters-action", "Edge detection with control of edge thickness"),
+    NC_("filters-action", "Difference of Gaussians..."), NULL, NULL,
     "gegl:difference-of-gaussians",
     NULL /* FIXME GIMP_HELP_FILTER_DIFFERENCE_OF_GAUSSIANS */ },
 
   { "filters-dot", GIMP_STOCK_GEGL,
-    NC_("filters-action", "Dots..."), NULL,
-    NC_("filters-action", "Simplify image into an array of solid-colored dots"),
+    NC_("filters-action", "Dots..."), NULL, NULL,
     "gegl:dot",
     NULL /* FIXME GIMP_HELP_FILTER_DOT */ },
 
   { "filters-emboss", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Emboss..."), NULL,
-    NC_("filters-action", "Simulate an image created by embossing"),
+    NC_("filters-action", "_Emboss..."), NULL, NULL,
     "gegl:emboss",
     NULL /* FIXME GIMP_HELP_FILTER_EMBOSS */ },
 
   { "filters-exposure", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_E_xposure..."), NULL,
-    NC_("filters-action", "Changes Exposure and Contrast, mainly for use with high dynamic range images"),
+    NC_("filters-action", "_E_xposure..."), NULL, NULL,
     "gegl:exposure",
     NULL /* FIXME GIMP_HELP_FILTER_EXPOSURE */ },
 
   { "filters-gaussian-blur", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Gaussian Blur..."), NULL,
-    NC_("filters-action", "Apply a gaussian blur"),
+    NC_("filters-action", "_Gaussian Blur..."), NULL, NULL,
     "gegl:gaussian-blur",
     NULL /* FIXME GIMP_HELP_FILTER_GAUSSIAN_BLUR */ },
 
   { "filters-laplace", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Laplace"), NULL,
-    NC_("filters-action", "High-resolution edge detection"),
+    NC_("filters-action", "_Laplace"), NULL, NULL,
     "gegl:edge-laplace",
     NULL /* FIXME GIMP_HELP_FILTER_LAPLACE */ },
 
   { "filters-lens-distortion", GIMP_STOCK_GEGL,
-    NC_("filters-action", "Lens Distortion..."), NULL,
-    NC_("filters-action", "Corrects lens distortion"),
+    NC_("filters-action", "Lens Distortion..."), NULL, NULL,
     "gegl:lens-distortion",
     NULL /* FIXME GIMP_HELP_FILTER_LENS_DISTORTION */ },
 
   { "filters-mono-mixer", GIMP_STOCK_GEGL,
-    NC_("filters-action", "Mono Mixer..."), NULL,
-    NC_("filters-action", "Monochrome channel mixer"),
+    NC_("filters-action", "Mono Mixer..."), NULL, NULL,
     "gegl:mono-mixer",
     NULL /* FIXME GIMP_HELP_FILTER_MONO_MIXER */ },
 
   { "filters-noise-cie-lch", GIMP_STOCK_GEGL,
-    NC_("filters-action", "CIE lch Noise..."), NULL,
-    NC_("filters-action", "Randomize lightness, chroma and hue independently"),
+    NC_("filters-action", "CIE lch Noise..."), NULL, NULL,
     "gegl:noise-CIE_lch",
     NULL /* FIXME GIMP_HELP_FILTER_NOISE_CIE_LCH */ },
 
   { "filters-noise-hsv", GIMP_STOCK_GEGL,
-    NC_("filters-action", "HSV Noise..."), NULL,
-    NC_("filters-action", "Scattering pixel values in HSV space"),
+    NC_("filters-action", "HSV Noise..."), NULL, NULL,
     "gegl:noise-hsv",
     NULL /* FIXME GIMP_HELP_FILTER_NOISE_HSV */ },
 
   { "filters-noise-hurl", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Hurl..."), NULL,
-    NC_("filters-action", "Completely randomize a fraction of pixels"),
+    NC_("filters-action", "_Hurl..."), NULL, NULL,
     "gegl:noise-hurl",
     NULL /* FIXME GIMP_HELP_FILTER_NOISE_HURL */ },
 
   { "filters-noise-pick", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Pick..."), NULL,
-    NC_("filters-action", "Randomly interchange some pixels with neighbors"),
+    NC_("filters-action", "_Pick..."), NULL, NULL,
     "gegl:noise-pick",
     NULL /* FIXME GIMP_HELP_FILTER_NOISE_PICK */ },
 
   { "filters-noise-rgb", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_RGB Noise..."), NULL,
-    NC_("filters-action", "Distort colors by random amounts"),
+    NC_("filters-action", "_RGB Noise..."), NULL, NULL,
     "gegl:noise-rgb",
     NULL /* FIXME GIMP_HELP_FILTER_NOISE_RGB */ },
 
   { "filters-noise-slur", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Slur..."), NULL,
-    NC_("filters-action", "Randomly slide some pixels downward (similar to melting)"),
+    NC_("filters-action", "_Slur..."), NULL, NULL,
     "gegl:noise-slur",
     NULL /* FIXME GIMP_HELP_FILTER_NOISE_SLUR */ },
 
   { "filters-photocopy", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Photocopy..."), NULL,
-    NC_("filters-action", "Simulate color distortion produced by a copy machine"),
+    NC_("filters-action", "_Photocopy..."), NULL, NULL,
     "gegl:photocopy",
     NULL /* FIXME GIMP_HELP_FILTER_PHOTOCOPY */ },
 
   { "filters-pixelize", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Pixelize..."), NULL,
-    NC_("filters-action", "Simplify image into an array of solid-colored squares"),
+    NC_("filters-action", "_Pixelize..."), NULL, NULL,
     "gegl:pixelize",
     NULL /* FIXME GIMP_HELP_FILTER_PIXELIZE */ },
 
   { "filters-polar-coordinates", GIMP_STOCK_GEGL,
-    NC_("filters-action", "P_olar Coordinates..."), NULL,
-    NC_("filters-action", "Convert image to or from polar coordinates"),
+    NC_("filters-action", "P_olar Coordinates..."), NULL, NULL,
     "gegl:polar-coordinates",
     NULL /* FIXME GIMP_HELP_FILTER_POLAR_COORDINATES */ },
 
   { "filters-red-eye-removal", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Red Eye Removal..."), NULL,
-    NC_("filters-action", "Remove the red eye effect caused by camera flashes"),
+    NC_("filters-action", "_Red Eye Removal..."), NULL, NULL,
     "gegl:red-eye-removal",
     NULL /* FIXME GIMP_HELP_FILTER_RED_EYE_REMOVAL */ },
 
   { "filters-ripple", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Ripple..."), NULL,
-    NC_("filters-action", "Displace pixels in a ripple pattern"),
+    NC_("filters-action", "_Ripple..."), NULL, NULL,
     "gegl:ripple",
     NULL /* FIXME GIMP_HELP_FILTER_RIPPLE */ },
 
   { "filters-semi-flatten", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Semi-Flatten..."), NULL,
-    NC_("filters-action", "Replace partial transparency with a color"),
+    NC_("filters-action", "_Semi-Flatten..."), NULL, NULL,
     "gimp:semi-flatten",
     NULL /* FIXME GIMP_HELP_FILTER_POLAR_COORDINATES */ },
 
   { "filters-sobel", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Sobel..."), NULL,
-    NC_("filters-action", "Specialized direction-dependent edge-detection"),
+    NC_("filters-action", "_Sobel..."), NULL, NULL,
     "gegl:edge-sobel",
     NULL /* FIXME GIMP_HELP_FILTER_SOBEL */ },
 
   { "filters-softglow", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Softglow..."), NULL,
-    NC_("filters-action", "Simulate glow by making highlights intense and fuzzy"),
+    NC_("filters-action", "_Softglow..."), NULL, NULL,
     "gegl:softglow",
     NULL /* FIXME GIMP_HELP_FILTER_SOFTGLOW */ },
 
   { "filters-threshold-alpha", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Threshold Alpha..."), NULL,
-    NC_("filters-action", "Make transparency all-or-nothing"),
+    NC_("filters-action", "_Threshold Alpha..."), NULL, NULL,
     "gimp:threshold-alpha",
     NULL /* FIXME GIMP_HELP_FILTER_POLAR_COORDINATES */ },
 
   { "filters-unsharp-mask", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Unsharp Mask..."), NULL,
-    NC_("filters-action", "The most widely used method for sharpening an image"),
+    NC_("filters-action", "_Unsharp Mask..."), NULL, NULL,
     "gegl:unsharp-mask",
     NULL /* FIXME GIMP_HELP_FILTER_UNSHARP_MASK */ },
 
   { "filters-vignette", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Vignette..."), NULL,
-    NC_("filters-action", "Applies a vignette to an image"),
+    NC_("filters-action", "_Vignette..."), NULL, NULL,
     "gegl:vignette",
     NULL /* FIXME GIMP_HELP_FILTER_VIGNETTE */ },
 
   { "filters-whirl-pinch", GIMP_STOCK_GEGL,
-    NC_("filters-action", "W_hirl and Pinch..."), NULL,
-    NC_("filters-action", "Distort an image by whirling and pinching"),
+    NC_("filters-action", "W_hirl and Pinch..."), NULL, NULL,
     "gegl:whirl-pinch",
     NULL /* FIXME GIMP_HELP_FILTER_WHIRL_PINCH */ },
 };
@@ -241,10 +209,38 @@ static const GimpStringActionEntry filters_actions[] =
 void
 filters_actions_setup (GimpActionGroup *group)
 {
+  gint i;
+
   gimp_action_group_add_string_actions (group, "filters-action",
                                         filters_actions,
                                         G_N_ELEMENTS (filters_actions),
                                         G_CALLBACK (filters_filter_cmd_callback));
+
+  for (i = 0; i < G_N_ELEMENTS (filters_actions); i++)
+    {
+      const GimpStringActionEntry *entry = &filters_actions[i];
+      GtkAction                   *action;
+      GType                        op_type;
+
+      action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                            entry->name);
+
+      op_type = gegl_operation_gtype_from_name (entry->value);
+
+      if (action && op_type)
+        {
+          GeglOperationClass *op_class;
+          const gchar        *description;
+
+          op_class = g_type_class_ref (op_type);
+
+          description = gegl_operation_class_get_key (op_class, "description");
+
+          gtk_action_set_tooltip (action, description);
+
+          g_type_class_unref (op_class);
+        }
+    }
 }
 
 void
