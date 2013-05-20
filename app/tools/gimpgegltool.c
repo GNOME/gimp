@@ -125,6 +125,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:difference-of-gaussians", /* in gimp */
     "gegl:display",
     "gegl:dot", /* in gimp */
+    "gegl:emboss", /* in gimp */
     "gegl:edge-laplace", /* in gimp */
     "gegl:edge-sobel", /* in gimp */
     "gegl:exposure", /* in gimp */

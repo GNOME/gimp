@@ -629,9 +629,10 @@
         <menuitem action="filters-unsharp-mask" />
       </menu>
       <menu action="plug-in-distorts-menu" name="Distorts">
+      	<menuitem action="filters-emboss" />
+        <menuitem action="filters-lens-distortion" />
       	<menuitem action="filters-polar-coordinates" />
         <menuitem action="filters-ripple" />
-        <menuitem action="filters-lens-distortion" />
         <menuitem action="filters-whirl-pinch" />
       </menu>
       <menu action="plug-in-light-shadow-menu" name="Light and Shadow">

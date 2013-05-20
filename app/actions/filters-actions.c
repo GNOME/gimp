@@ -93,6 +93,12 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:dot",
     NULL /* FIXME GIMP_HELP_FILTER_DOT */ },
 
+  { "filters-emboss", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Emboss..."), NULL,
+    NC_("filters-action", "Simulate an image created by embossing"),
+    "gegl:emboss",
+    NULL /* FIXME GIMP_HELP_FILTER_EMBOSS */ },
+
   { "filters-exposure", GIMP_STOCK_GEGL,
     NC_("filters-action", "_E_xposure..."), NULL,
     NC_("filters-action", "Changes Exposure and Contrast, mainly for use with high dynamic range images"),
@@ -288,6 +294,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-cubism",                  writable);
   SET_SENSITIVE ("filters-difference-of-gaussians", writable);
   SET_SENSITIVE ("filters-dot",                     writable);
+  SET_SENSITIVE ("filters-emboss",                  writable);
   SET_SENSITIVE ("filters-exposure",                writable);
   SET_SENSITIVE ("filters-gaussian-blur",           writable);
   SET_SENSITIVE ("filters-laplace",                 writable);
