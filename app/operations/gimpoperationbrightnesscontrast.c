@@ -83,17 +83,14 @@ gimp_operation_brightness_contrast_init (GimpOperationBrightnessContrast *self)
 static inline gfloat
 gimp_operation_brightness_contrast_map (gfloat  value,
                                         gdouble brightness,
-                                        gdouble contrast)
+                                        gdouble slant)
 {
-  gdouble slant;
-
   /* apply brightness */
   if (brightness < 0.0)
     value = value * (1.0 + brightness);
   else
     value = value + ((1.0 - value) * brightness);
 
-  slant = tan ((contrast + 1) * G_PI_4);
   value = (value - 0.5) * slant + 0.5;
 
   return value;
@@ -112,23 +109,25 @@ gimp_operation_brightness_contrast_process (GeglOperation       *operation,
   gfloat                       *src    = in_buf;
   gfloat                       *dest   = out_buf;
   gdouble                       brightness;
+  gdouble                       slant;
 
   if (! config)
     return FALSE;
 
   brightness = config->brightness / 2.0;
+  slant = tan ((config->contrast + 1) * G_PI_4);
 
   while (samples--)
     {
       dest[RED] = gimp_operation_brightness_contrast_map (src[RED],
                                                           brightness,
-                                                          config->contrast);
+                                                          slant);
       dest[GREEN] = gimp_operation_brightness_contrast_map (src[GREEN],
                                                             brightness,
-                                                            config->contrast);
+                                                            slant);
       dest[BLUE] = gimp_operation_brightness_contrast_map (src[BLUE],
                                                            brightness,
-                                                           config->contrast);
+                                                           slant);
       dest[ALPHA] = src[ALPHA];
 
       src  += 4;
