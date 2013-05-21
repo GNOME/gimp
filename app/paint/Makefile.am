@@ -55,6 +55,8 @@ libapppaint_a_sources = \
 	gimpinkundo.h			\
 	gimppaintcore.c			\
 	gimppaintcore.h			\
+	gimppaintcore-loops.c		\
+	gimppaintcore-loops.h		\
 	gimppaintcore-stroke.c		\
 	gimppaintcore-stroke.h		\
 	gimppaintcoreundo.c		\

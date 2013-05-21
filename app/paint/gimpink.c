@@ -220,9 +220,15 @@ gimp_ink_get_paint_buffer (GimpPaintCore    *paint_core,
   if ((x2 - x1) && (y2 - y1))
     {
       GimpTempBuf *temp_buf;
+      const Babl  *format;
+
+      if (gimp_drawable_get_linear (drawable))
+        format = babl_format ("RGBA float");
+      else
+        format = babl_format ("R'G'B'A float");
 
       temp_buf = gimp_temp_buf_new ((x2 - x1), (y2 - y1),
-                                    babl_format ("RGBA float"));
+                                    format);
 
       *paint_buffer_x = x1;
       *paint_buffer_y = y1;
@@ -332,11 +338,9 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
 
   /*  draw the paint_area using the just rendered canvas_buffer as mask */
   gimp_paint_core_paste (paint_core,
-                         paint_core->canvas_buffer,
-                         GEGL_RECTANGLE (paint_core->paint_buffer_x,
-                                         paint_core->paint_buffer_y,
-                                         gegl_buffer_get_width  (paint_core->paint_buffer),
-                                         gegl_buffer_get_height (paint_core->paint_buffer)),
+                         NULL,
+                         paint_core->paint_buffer_x,
+                         paint_core->paint_buffer_y,
                          drawable,
                          GIMP_OPACITY_OPAQUE,
                          gimp_context_get_opacity (context),

@@ -58,14 +58,18 @@ struct _GimpPaintCore
   GeglBuffer  *undo_buffer;       /*  pixels which have been modified     */
   GeglBuffer  *saved_proj_buffer; /*  proj tiles which have been modified */
   GeglBuffer  *canvas_buffer;     /*  the buffer to paint the mask to     */
+  GeglBuffer  *comp_buffer;       /*  scratch buffer used when masking components */
+  gboolean     linear_mode;       /*  if painting to a linear surface     */
 
   GeglBuffer  *paint_buffer;      /*  the buffer to paint pixels to       */
   gint         paint_buffer_x;
   gint         paint_buffer_y;
 
-  GArray      *stroke_buffer;
+  GeglBuffer  *mask_buffer;       /*  the target drawable's mask          */
+  gint         mask_x_offset;
+  gint         mask_y_offset;
 
-  GimpApplicator *applicator;
+  GArray      *stroke_buffer;
 };
 
 struct _GimpPaintCoreClass
@@ -168,16 +172,20 @@ GeglBuffer * gimp_paint_core_get_orig_image         (GimpPaintCore    *core);
 GeglBuffer * gimp_paint_core_get_orig_proj          (GimpPaintCore    *core);
 
 void      gimp_paint_core_paste             (GimpPaintCore            *core,
-                                             GeglBuffer               *paint_mask,
-                                             const GeglRectangle      *paint_mask_rect,
+                                             const GimpTempBuf        *paint_mask,
+                                             gint                      paint_mask_offset_x,
+                                             gint                      paint_mask_offset_y,
                                              GimpDrawable             *drawable,
                                              gdouble                   paint_opacity,
                                              gdouble                   image_opacity,
                                              GimpLayerModeEffects      paint_mode,
                                              GimpPaintApplicationMode  mode);
+
+
 void      gimp_paint_core_replace           (GimpPaintCore            *core,
-                                             GeglBuffer               *paint_mask,
-                                             const GeglRectangle      *paint_mask_rect,
+                                             const GimpTempBuf        *paint_mask,
+                                             gint                      paint_mask_offset_x,
+                                             gint                      paint_mask_offset_y,
                                              GimpDrawable             *drawable,
                                              gdouble                   paint_opacity,
                                              gdouble                   image_opacity,

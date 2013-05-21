@@ -822,10 +822,17 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
   if ((x2 - x1) && (y2 - y1))
     {
       GimpTempBuf *temp_buf;
+      const Babl  *format;
+
+      if (gimp_drawable_get_linear (drawable))
+        format = babl_format ("RGBA float");
+      else
+        format = babl_format ("R'G'B'A float");
 
       if (paint_core->paint_buffer                                       &&
           gegl_buffer_get_width  (paint_core->paint_buffer) == (x2 - x1) &&
-          gegl_buffer_get_height (paint_core->paint_buffer) == (y2 - y1))
+          gegl_buffer_get_height (paint_core->paint_buffer) == (y2 - y1) &&
+          gegl_buffer_get_format (paint_core->paint_buffer) == format )
         {
           *paint_buffer_x = x1;
           *paint_buffer_y = y1;
@@ -834,7 +841,7 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
         }
 
       temp_buf = gimp_temp_buf_new ((x2 - x1), (y2 - y1),
-                                    babl_format ("RGBA float"));
+                                    format);
 
       *paint_buffer_x = x1;
       *paint_buffer_y = y1;
@@ -939,7 +946,6 @@ gimp_brush_core_paste_canvas (GimpBrushCore            *core,
   if (brush_mask)
     {
       GimpPaintCore *paint_core = GIMP_PAINT_CORE (core);
-      GeglBuffer    *paint_mask;
       gint           x;
       gint           y;
       gint           off_x;
@@ -951,18 +957,12 @@ gimp_brush_core_paste_canvas (GimpBrushCore            *core,
       off_x = (x < 0) ? -x : 0;
       off_y = (y < 0) ? -y : 0;
 
-      paint_mask = gimp_temp_buf_create_buffer ((GimpTempBuf *) brush_mask);
-
-      gimp_paint_core_paste (paint_core, paint_mask,
-                             GEGL_RECTANGLE (off_x, off_y,
-                                             gegl_buffer_get_width  (paint_core->paint_buffer),
-                                             gegl_buffer_get_height (paint_core->paint_buffer)),
+      gimp_paint_core_paste (paint_core, brush_mask,
+                             off_x, off_y,
                              drawable,
                              brush_opacity,
                              image_opacity, paint_mode,
                              mode);
-
-      g_object_unref (paint_mask);
     }
 }
 
@@ -989,7 +989,6 @@ gimp_brush_core_replace_canvas (GimpBrushCore            *core,
   if (brush_mask)
     {
       GimpPaintCore *paint_core = GIMP_PAINT_CORE (core);
-      GeglBuffer    *paint_mask;
       gint           x;
       gint           y;
       gint           off_x;
@@ -1001,18 +1000,12 @@ gimp_brush_core_replace_canvas (GimpBrushCore            *core,
       off_x = (x < 0) ? -x : 0;
       off_y = (y < 0) ? -y : 0;
 
-      paint_mask = gimp_temp_buf_create_buffer ((GimpTempBuf *) brush_mask);
-
-      gimp_paint_core_replace (paint_core, paint_mask,
-                               GEGL_RECTANGLE (off_x, off_y,
-                                               gegl_buffer_get_width  (paint_core->paint_buffer),
-                                               gegl_buffer_get_height (paint_core->paint_buffer)),
+      gimp_paint_core_replace (paint_core, brush_mask,
+                               off_x, off_y,
                                drawable,
                                brush_opacity,
                                image_opacity,
                                mode);
-
-      g_object_unref (paint_mask);
     }
 }
 
