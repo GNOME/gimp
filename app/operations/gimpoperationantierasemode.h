@@ -51,4 +51,13 @@ struct _GimpOperationAntiEraseModeClass
 GType   gimp_operation_anti_erase_mode_get_type (void) G_GNUC_CONST;
 
 
+gboolean gimp_operation_anti_erase_mode_process_pixels (gfloat              *in,
+                                                        gfloat              *layer,
+                                                        gfloat              *mask,
+                                                        gfloat              *out,
+                                                        gdouble              opacity,
+                                                        glong                samples,
+                                                        const GeglRectangle *roi,
+                                                        gint                 level);
+
 #endif /* __GIMP_OPERATION_ANTI_ERASE_MODE_H__ */

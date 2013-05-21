@@ -156,13 +156,22 @@ gimp_operation_normal_mode_process (GeglOperation       *operation,
                                     const GeglRectangle *roi,
                                     gint                 level)
 {
-  GimpOperationPointLayerMode *point    = GIMP_OPERATION_POINT_LAYER_MODE (operation);
-  gdouble                      opacity  = point->opacity;
-  gfloat                      *in       = in_buf;
-  gfloat                      *aux      = aux_buf;
-  gfloat                      *mask     = aux2_buf;
-  gfloat                      *out      = out_buf;
-  const gboolean               has_mask = mask != NULL;
+  gdouble opacity = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
+
+  return gimp_operation_normal_mode_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
+}
+
+gboolean
+gimp_operation_normal_mode_process_pixels (gfloat              *in,
+                                           gfloat              *aux,
+                                           gfloat              *mask,
+                                           gfloat              *out,
+                                           gdouble              opacity,
+                                           glong                samples,
+                                           const GeglRectangle *roi,
+                                           gint                 level)
+{
+  const gboolean has_mask = mask != NULL;
 
   while (samples--)
     {

@@ -91,13 +91,23 @@ gimp_operation_dissolve_mode_process (GeglOperation       *operation,
                                       const GeglRectangle *result,
                                       gint                 level)
 {
-  gdouble         opacity  = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
-  gfloat         *in       = in_buf;
-  gfloat         *out      = out_buf;
-  gfloat         *aux      = aux_buf;
-  gfloat         *mask     = aux2_buf;
-  const gboolean  has_mask = mask != NULL;
-  gint            x, y;
+  gdouble opacity = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
+
+  return gimp_operation_dissolve_mode_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, result, level);
+}
+
+gboolean
+gimp_operation_dissolve_mode_process_pixels (gfloat              *in,
+                                             gfloat              *aux,
+                                             gfloat              *mask,
+                                             gfloat              *out,
+                                             gdouble              opacity,
+                                             glong                samples,
+                                             const GeglRectangle *result,
+                                             gint                 level)
+{
+  const gboolean has_mask = mask != NULL;
+  gint           x, y;
 
   for (y = result->y; y < result->y + result->height; y++)
     {

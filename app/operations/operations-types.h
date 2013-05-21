@@ -21,6 +21,7 @@
 #define __OPERATIONS_TYPES_H__
 
 
+#include <gegl-types.h>
 #include "gegl/gimp-gegl-types.h"
 
 
@@ -48,5 +49,15 @@ typedef struct _GimpThresholdConfig             GimpThresholdConfig;
 
 typedef struct _GimpCagePoint                   GimpCagePoint;
 
+/*  functions  */
+
+typedef gboolean (*GimpLayerModeFunction)(gfloat              *in,
+                                          gfloat              *aux,
+                                          gfloat              *mask,
+                                          gfloat              *out,
+                                          gdouble              opacity,
+                                          glong                samples,
+                                          const GeglRectangle *roi,
+                                          gint                 level);
 
 #endif /* __OPERATIONS_TYPES_H__ */

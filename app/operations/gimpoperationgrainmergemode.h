@@ -50,5 +50,13 @@ struct _GimpOperationGrainMergeModeClass
 
 GType   gimp_operation_grain_merge_mode_get_type (void) G_GNUC_CONST;
 
+gboolean gimp_operation_grain_merge_mode_process_pixels (gfloat              *in,
+                                                         gfloat              *layer,
+                                                         gfloat              *mask,
+                                                         gfloat              *out,
+                                                         gdouble              opacity,
+                                                         glong                samples,
+                                                         const GeglRectangle *roi,
+                                                         gint                 level);
 
 #endif /* __GIMP_OPERATION_GRAIN_MERGE_MODE_H__ */

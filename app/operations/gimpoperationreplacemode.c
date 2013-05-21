@@ -74,13 +74,21 @@ gimp_operation_replace_mode_process (GeglOperation       *operation,
                                      const GeglRectangle *roi,
                                      gint                 level)
 {
-  GimpOperationPointLayerMode *point   = GIMP_OPERATION_POINT_LAYER_MODE (operation);
-  gfloat                       opacity = point->opacity;
-  gfloat                      *in      = in_buf;
-  gfloat                      *layer   = aux_buf;
-  gfloat                      *mask    = aux2_buf;
-  gfloat                      *out     = out_buf;
+  gdouble opacity = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
 
+  return gimp_operation_replace_mode_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
+}
+
+gboolean
+gimp_operation_replace_mode_process_pixels (gfloat              *in,
+                                            gfloat              *layer,
+                                            gfloat              *mask,
+                                            gfloat              *out,
+                                            gdouble              opacity,
+                                            glong                samples,
+                                            const GeglRectangle *roi,
+                                            gint                 level)
+{
   while (samples--)
     {
       gint   b;

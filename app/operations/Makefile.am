@@ -141,6 +141,9 @@ libappoperations_a_sources = \
 	gimpoperationreplacemode.c      	\
 	gimpoperationreplacemode.h      	\
 	gimpoperationantierasemode.c    	\
-	gimpoperationantierasemode.h
+	gimpoperationantierasemode.h		\
+	\
+	gimplayermodefunctions.c		\
+	gimplayermodefunctions.h
 
 libappoperations_a_SOURCES = $(libappoperations_a_sources)

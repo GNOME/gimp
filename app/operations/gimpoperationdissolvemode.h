@@ -50,5 +50,13 @@ struct _GimpOperationDissolveMode
 
 GType   gimp_operation_dissolve_mode_get_type (void) G_GNUC_CONST;
 
+gboolean gimp_operation_dissolve_mode_process_pixels (gfloat              *in,
+                                                      gfloat              *layer,
+                                                      gfloat              *mask,
+                                                      gfloat              *out,
+                                                      gdouble              opacity,
+                                                      glong                samples,
+                                                      const GeglRectangle *result,
+                                                      gint                 level);
 
 #endif /* __GIMP_OPERATION_DISSOLVE_MODE_H__ */
