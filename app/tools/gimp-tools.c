@@ -154,6 +154,7 @@ gimp_tools_init (Gimp *gimp)
 
     /*  transform tools  */
 
+    gimp_warp_tool_register,
     gimp_cage_tool_register,
     gimp_flip_tool_register,
     gimp_perspective_tool_register,
@@ -164,7 +165,6 @@ gimp_tools_init (Gimp *gimp)
     gimp_crop_tool_register,
     gimp_align_tool_register,
     gimp_move_tool_register,
-    gimp_warp_tool_register,
 
     /*  non-modifying tools  */
 
