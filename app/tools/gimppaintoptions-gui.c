@@ -112,6 +112,17 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
+  /*  temp debug foo  */
+  if (g_type_is_a (tool_type, GIMP_TYPE_PAINT_TOOL))
+    {
+      GtkWidget *button;
+
+      button = gimp_prop_check_button_new (config, "use-applicator",
+                                           "Use GimpApplicator");
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
+    }
+
   /*  the brush  */
   if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
     {

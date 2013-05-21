@@ -69,6 +69,8 @@ struct _GimpPaintCore
   gint         mask_x_offset;
   gint         mask_y_offset;
 
+  GimpApplicator *applicator;
+
   GArray      *stroke_buffer;
 };
 
@@ -180,7 +182,6 @@ void      gimp_paint_core_paste             (GimpPaintCore            *core,
                                              gdouble                   image_opacity,
                                              GimpLayerModeEffects      paint_mode,
                                              GimpPaintApplicationMode  mode);
-
 
 void      gimp_paint_core_replace           (GimpPaintCore            *core,
                                              const GimpTempBuf        *paint_mask,

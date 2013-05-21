@@ -72,6 +72,8 @@ enum
 
   PROP_PAINT_INFO,
 
+  PROP_USE_APPLICATOR, /* temp debug */
+
   PROP_BRUSH_SIZE,
   PROP_BRUSH_ASPECT_RATIO,
   PROP_BRUSH_ANGLE,
@@ -140,6 +142,13 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                                         GIMP_TYPE_PAINT_INFO,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_USE_APPLICATOR,
+                                   g_param_spec_boolean ("use-applicator",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_SIZE,
                                    "brush-size", _("Brush Size"),
@@ -325,6 +334,10 @@ gimp_paint_options_set_property (GObject      *object,
       options->paint_info = g_value_dup_object (value);
       break;
 
+    case PROP_USE_APPLICATOR:
+      options->use_applicator = g_value_get_boolean (value);
+      break;
+
     case PROP_BRUSH_SIZE:
       options->brush_size = g_value_get_double (value);
       break;
@@ -443,6 +456,10 @@ gimp_paint_options_get_property (GObject    *object,
     {
     case PROP_PAINT_INFO:
       g_value_set_object (value, options->paint_info);
+      break;
+
+    case PROP_USE_APPLICATOR:
+      g_value_set_boolean (value, options->use_applicator);
       break;
 
     case PROP_BRUSH_SIZE:

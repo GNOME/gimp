@@ -80,6 +80,8 @@ struct _GimpPaintOptions
 
   GimpPaintInfo            *paint_info;
 
+  gboolean                  use_applicator;
+
   gdouble                   brush_size;
   gdouble                   brush_angle;
   gdouble                   brush_aspect_ratio;
