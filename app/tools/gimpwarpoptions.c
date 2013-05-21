@@ -39,10 +39,10 @@
 enum
 {
   PROP_0,
+  PROP_BEHAVIOR,
   PROP_EFFECT_STRENGTH,
   PROP_EFFECT_SIZE,
-  PROP_EFFECT_HARDNESS,
-  PROP_BEHAVIOR
+  PROP_EFFECT_HARDNESS
 };
 
 
@@ -70,6 +70,13 @@ gimp_warp_options_class_init (GimpWarpOptionsClass *klass)
   object_class->set_property = gimp_warp_options_set_property;
   object_class->get_property = gimp_warp_options_get_property;
 
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BEHAVIOR,
+                                 "behavior",
+                                 N_("Behavior"),
+                                 GIMP_TYPE_WARP_BEHAVIOR,
+                                 GIMP_WARP_BEHAVIOR_MOVE,
+                                 GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_EFFECT_STRENGTH,
                                    "effect-strength", _("Effect Strength"),
                                    1.0, 100.0, 50.0,
@@ -84,13 +91,6 @@ gimp_warp_options_class_init (GimpWarpOptionsClass *klass)
                                    "effect-hardness", _("Effect Hardness"),
                                    0.0, 1.0, 0.5,
                                    GIMP_PARAM_STATIC_STRINGS);
-
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BEHAVIOR,
-                                 "behavior",
-                                 N_("Behavior"),
-                                 GIMP_TYPE_WARP_BEHAVIOR,
-                                 GIMP_WARP_BEHAVIOR_MOVE,
-                                 GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -108,6 +108,9 @@ gimp_warp_options_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_BEHAVIOR:
+      options->behavior = g_value_get_enum (value);
+      break;
     case PROP_EFFECT_STRENGTH:
       options->effect_strength = g_value_get_double (value);
       break;
@@ -116,9 +119,6 @@ gimp_warp_options_set_property (GObject      *object,
       break;
     case PROP_EFFECT_HARDNESS:
       options->effect_hardness = g_value_get_double (value);
-      break;
-    case PROP_BEHAVIOR:
-      options->behavior = g_value_get_enum (value);
       break;
 
     default:
@@ -137,6 +137,9 @@ gimp_warp_options_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_BEHAVIOR:
+      g_value_set_enum (value, options->behavior);
+      break;
     case PROP_EFFECT_STRENGTH:
       g_value_set_double (value, options->effect_strength);
       break;
@@ -145,9 +148,6 @@ gimp_warp_options_get_property (GObject    *object,
       break;
     case PROP_EFFECT_HARDNESS:
       g_value_set_double (value, options->effect_hardness);
-      break;
-    case PROP_BEHAVIOR:
-      g_value_set_enum (value, options->behavior);
       break;
 
     default:

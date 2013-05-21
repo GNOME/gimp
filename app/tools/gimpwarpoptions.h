@@ -39,10 +39,10 @@ struct _GimpWarpOptions
 {
   GimpToolOptions  parent_instance;
 
+  GimpWarpBehavior behavior;
   gdouble          effect_strength;
   gdouble          effect_size;
   gdouble          effect_hardness;
-  GimpWarpBehavior behavior;
 };
 
 struct _GimpWarpOptionsClass
