@@ -233,7 +233,9 @@ gimp_warp_tool_button_release (GimpTool              *tool,
   g_source_remove (wt->stroke_timer);
   wt->stroke_timer = 0;
 
-  printf ("%s\n", gegl_path_to_string (wt->current_stroke));
+#ifdef WARP_DEBUG
+  g_printerr ("%s\n", gegl_path_to_string (wt->current_stroke));
+#endif
 
   if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
     {
@@ -393,8 +395,11 @@ gimp_warp_tool_start (GimpWarpTool *wt,
   bbox.width  = ABS (x1 - x2);
   bbox.height = ABS (y1 - y2);
 
-  printf ("Initialize coordinate buffer (%d,%d) at %d,%d\n",
-          bbox.width, bbox.height, bbox.x, bbox.y);
+#ifdef WARP_DEBUG
+  g_printerr ("Initialize coordinate buffer (%d,%d) at %d,%d\n",
+              bbox.width, bbox.height, bbox.x, bbox.y);
+#endif
+
   wt->coords_buffer = gegl_buffer_new (&bbox, format);
 
   gegl_rectangle_set (&wt->last_region, 0, 0, 0, 0);
@@ -504,7 +509,9 @@ gimp_warp_tool_create_image_map (GimpWarpTool *wt,
                                       wt->graph,
                                       GIMP_STOCK_TOOL_WARP);
 
+#if 0
   g_object_set (wt->image_map, "gegl-caching", TRUE, NULL);
+#endif
 
   g_signal_connect (wt->image_map, "flush",
                     G_CALLBACK (gimp_warp_tool_image_map_flush),
@@ -527,8 +534,10 @@ gimp_warp_tool_image_map_update (GimpWarpTool *wt)
 
   gegl_rectangle_copy (&wt->last_region, &region);
 
-  printf ("update rect: (%d,%d), %dx%d\n",
-          to_update.x, to_update.y, to_update.width, to_update.height);
+#ifdef WARP_DEBUG
+  g_printerr ("update rect: (%d,%d), %dx%d\n",
+              to_update.x, to_update.y, to_update.width, to_update.height);
+#endif
 
   gimp_image_map_apply (wt->image_map, &to_update);
 }
