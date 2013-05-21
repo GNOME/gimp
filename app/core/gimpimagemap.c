@@ -224,26 +224,25 @@ gimp_image_map_apply (GimpImageMap        *image_map,
     }
 
   /* Only update "area" because only that has changed */
-  if (area &&
-      ! gimp_rectangle_intersect (area->x,
-                                  area->y,
-                                  area->width,
-                                  area->height,
-                                  image_map->filter_area.x,
-                                  image_map->filter_area.y,
-                                  image_map->filter_area.width,
-                                  image_map->filter_area.height,
-                                  &update_area.x,
-                                  &update_area.y,
-                                  &update_area.width,
-                                  &update_area.height))
+  if (! area)
+    {
+      update_area = image_map->filter_area;
+    }
+  else if (! gimp_rectangle_intersect (area->x,
+                                       area->y,
+                                       area->width,
+                                       area->height,
+                                       image_map->filter_area.x,
+                                       image_map->filter_area.y,
+                                       image_map->filter_area.width,
+                                       image_map->filter_area.height,
+                                       &update_area.x,
+                                       &update_area.y,
+                                       &update_area.width,
+                                       &update_area.height))
     {
       /* Bail out, but don't remove the filter */
       return;
-    }
-  else
-    {
-      update_area = image_map->filter_area;
     }
 
   if (! image_map->filter)
