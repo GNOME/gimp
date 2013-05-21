@@ -535,8 +535,7 @@ gimp_warp_tool_image_map_flush (GimpImageMap *image_map,
 {
   GimpImage *image = gimp_display_get_image (tool->display);
 
-  gimp_projection_flush_now (gimp_image_get_projection (image));
-  gimp_display_flush_now (tool->display);
+  gimp_projection_flush (gimp_image_get_projection (image));
 }
 
 static void
