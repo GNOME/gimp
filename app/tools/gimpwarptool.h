@@ -41,20 +41,19 @@ struct _GimpWarpTool
 {
   GimpDrawTool    parent_instance;
 
-  gdouble         cursor_x; /* Hold the cursor x position */
-  gdouble         cursor_y; /* Hold the cursor y position */
+  gdouble         cursor_x;      /* Hold the cursor x position */
+  gdouble         cursor_y;      /* Hold the cursor y position */
 
   GeglBuffer     *coords_buffer; /* Gegl buffer where coordinates are stored */
 
-  GeglNode       *graph; /* Top level GeglNode. All others node are child of it */
-  GeglNode       *read_coords_buffer_node; /* Gegl node that read in the coords buffer */
-  GeglNode       *render_node; /* Gegl node to render the transformation */
+  GeglNode       *graph;         /* Top level GeglNode */
+  GeglNode       *render_node;   /* Gegl node to render the transformation */
 
   GeglPath       *current_stroke;
 
   guint           stroke_timer;
 
-  GimpImageMap   *image_map; /* For preview */
+  GimpImageMap   *image_map;
   GeglRectangle   last_region;
 };
 

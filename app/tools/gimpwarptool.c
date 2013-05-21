@@ -55,6 +55,9 @@
 #include "gimp-intl.h"
 
 
+#define STROKE_PERIOD 100
+
+
 static void       gimp_warp_tool_start              (GimpWarpTool          *wt,
                                                      GimpDisplay           *display);
 
@@ -103,11 +106,11 @@ static void       gimp_warp_tool_image_map_flush    (GimpImageMap          *imag
 static void       gimp_warp_tool_add_op             (GimpWarpTool          *wt);
 static void       gimp_warp_tool_undo               (GimpWarpTool          *wt);
 
+
 G_DEFINE_TYPE (GimpWarpTool, gimp_warp_tool, GIMP_TYPE_DRAW_TOOL)
 
 #define parent_class gimp_warp_tool_parent_class
 
-#define STROKE_PERIOD 100
 
 void
 gimp_warp_tool_register (GimpToolRegisterCallback  callback,
@@ -157,10 +160,6 @@ gimp_warp_tool_init (GimpWarpTool *self)
   gimp_tool_control_set_wants_click (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_PERSPECTIVE);
-
-  self->coords_buffer   = NULL;
-  self->render_node     = NULL;
-  self->image_map       = NULL;
 }
 
 static void
@@ -187,6 +186,7 @@ gimp_warp_tool_control (GimpTool       *tool,
         {
           g_object_unref (wt->graph);
           wt->graph = NULL;
+          wt->render_node = NULL;
         }
 
       if (wt->image_map)
@@ -234,6 +234,7 @@ gimp_warp_tool_start (GimpWarpTool *wt,
     {
       g_object_unref (wt->graph);
       wt->graph = NULL;
+      wt->render_node = NULL;
     }
 
   if (wt->image_map)
@@ -260,6 +261,7 @@ gimp_warp_tool_start (GimpWarpTool *wt,
   gegl_rectangle_set (&wt->last_region, 0, 0, 0, 0);
 
   gimp_warp_tool_create_image_map (wt, drawable);
+
   gimp_draw_tool_start (GIMP_DRAW_TOOL (wt), display);
 }
 
@@ -309,7 +311,7 @@ gimp_warp_tool_motion (GimpTool         *tool,
                        GdkModifierType   state,
                        GimpDisplay      *display)
 {
-  GimpWarpTool    *wt       = GIMP_WARP_TOOL (tool);
+  GimpWarpTool *wt = GIMP_WARP_TOOL (tool);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
@@ -329,7 +331,7 @@ gimp_warp_tool_oper_update (GimpTool         *tool,
   GimpWarpTool *wt        = GIMP_WARP_TOOL (tool);
   GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
 
-  if (!gimp_draw_tool_is_active (draw_tool))
+  if (! gimp_draw_tool_is_active (draw_tool))
     {
       gimp_warp_tool_start (wt, display);
     }
@@ -339,8 +341,8 @@ gimp_warp_tool_oper_update (GimpTool         *tool,
         {
           gimp_draw_tool_pause (draw_tool);
 
-          wt->cursor_x        = coords->x;
-          wt->cursor_y        = coords->y;
+          wt->cursor_x = coords->x;
+          wt->cursor_y = coords->y;
 
           gimp_draw_tool_resume (draw_tool);
         }
@@ -355,7 +357,7 @@ gimp_warp_tool_button_press (GimpTool            *tool,
                              GimpButtonPressType  press_type,
                              GimpDisplay         *display)
 {
-  GimpWarpTool    *wt        = GIMP_WARP_TOOL (tool);
+  GimpWarpTool *wt = GIMP_WARP_TOOL (tool);
 
   if (display != tool->display)
     gimp_warp_tool_start (wt, display);
@@ -368,7 +370,9 @@ gimp_warp_tool_button_press (GimpTool            *tool,
 
   gimp_warp_tool_image_map_update (wt);
 
-  wt->stroke_timer = g_timeout_add (STROKE_PERIOD, gimp_warp_tool_stroke_timer, wt);
+  wt->stroke_timer = g_timeout_add (STROKE_PERIOD,
+                                    gimp_warp_tool_stroke_timer,
+                                    wt);
 
   gimp_tool_control_activate (tool->control);
 }
@@ -381,13 +385,14 @@ gimp_warp_tool_button_release (GimpTool              *tool,
                                GimpButtonReleaseType  release_type,
                                GimpDisplay           *display)
 {
-  GimpWarpTool    *wt      = GIMP_WARP_TOOL (tool);
+  GimpWarpTool *wt = GIMP_WARP_TOOL (tool);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (wt));
 
   gimp_tool_control_halt (tool->control);
 
   g_source_remove (wt->stroke_timer);
+  wt->stroke_timer = 0;
 
   printf ("%s\n", gegl_path_to_string (wt->current_stroke));
 
@@ -411,7 +416,7 @@ gimp_warp_tool_cursor_update (GimpTool         *tool,
                               GdkModifierType   state,
                               GimpDisplay      *display)
 {
-  GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_PLUS;
+  GimpCursorModifier modifier = GIMP_CURSOR_MODIFIER_PLUS;
 
   if (tool->display)
     {
@@ -426,7 +431,7 @@ gimp_warp_tool_cursor_update (GimpTool         *tool,
 static gboolean
 gimp_warp_tool_stroke_timer (gpointer data)
 {
-  GimpWarpTool    *wt        = GIMP_WARP_TOOL (data);
+  GimpWarpTool *wt = GIMP_WARP_TOOL (data);
 
   gegl_path_append (wt->current_stroke,
                     'L', wt->cursor_x, wt->cursor_y);
@@ -454,12 +459,12 @@ gimp_warp_tool_draw (GimpDrawTool *draw_tool)
 static void
 gimp_warp_tool_create_graph (GimpWarpTool *wt)
 {
-  GeglNode        *coords, *render; /* Render nodes */
-  GeglNode        *input, *output; /* Proxy nodes*/
-  GeglNode        *graph; /* wraper to be returned */
+  GeglNode *graph;           /* Wraper to be returned */
+  GeglNode *input, *output;  /* Proxy nodes */
+  GeglNode *coords, *render; /* Render nodes */
 
-  g_return_if_fail (wt->graph == NULL);
   /* render_node is not supposed to be recreated */
+  g_return_if_fail (wt->graph == NULL);
 
   graph = gegl_node_new ();
 
@@ -475,7 +480,7 @@ gimp_warp_tool_create_graph (GimpWarpTool *wt)
                                 "operation", "gegl:map-relative",
                                 NULL);
 
-  gegl_node_connect_to (input, "output",
+  gegl_node_connect_to (input,  "output",
                         render, "input");
 
   gegl_node_connect_to (coords, "output",
@@ -484,9 +489,8 @@ gimp_warp_tool_create_graph (GimpWarpTool *wt)
   gegl_node_connect_to (render, "output",
                         output, "input");
 
-  wt->graph = graph;
+  wt->graph       = graph;
   wt->render_node = render;
-  wt->read_coords_buffer_node = coords;
 }
 
 static void
@@ -511,20 +515,21 @@ gimp_warp_tool_create_image_map (GimpWarpTool *wt,
 static void
 gimp_warp_tool_image_map_update (GimpWarpTool *wt)
 {
-  GimpWarpOptions  *options = GIMP_WARP_TOOL_GET_OPTIONS (wt);
-  GeglRectangle     region;
-  GeglRectangle     to_update;
+  GimpWarpOptions *options = GIMP_WARP_TOOL_GET_OPTIONS (wt);
+  GeglRectangle    region;
+  GeglRectangle    to_update;
 
-  region.x = wt->cursor_x - options->effect_size * 0.5;
-  region.y = wt->cursor_y - options->effect_size * 0.5;
-  region.width = options->effect_size;
+  region.x      = wt->cursor_x - options->effect_size * 0.5;
+  region.y      = wt->cursor_y - options->effect_size * 0.5;
+  region.width  = options->effect_size;
   region.height = options->effect_size;
 
   gegl_rectangle_bounding_box (&to_update, &region, &wt->last_region);
 
   gegl_rectangle_copy (&wt->last_region, &region);
 
-  printf("update rect: (%d,%d), %dx%d\n", to_update.x, to_update.y, to_update.width, to_update.height);
+  printf ("update rect: (%d,%d), %dx%d\n",
+          to_update.x, to_update.y, to_update.width, to_update.height);
 
   gimp_image_map_apply (wt->image_map, &to_update);
 }
@@ -542,25 +547,27 @@ static void
 gimp_warp_tool_add_op (GimpWarpTool *wt)
 {
   GimpWarpOptions *options = GIMP_WARP_TOOL_GET_OPTIONS (wt);
-  GeglNode *new_op, *last_op;
+  GeglNode        *new_op;
+  GeglNode        *last_op;
 
   g_return_if_fail (GEGL_IS_NODE (wt->render_node));
 
   new_op = gegl_node_new_child (wt->graph,
                                 "operation", "gegl:warp",
-                                "behavior", options->behavior,
-                                "strength", options->effect_strength,
-                                "size", options->effect_size,
-                                "hardness", options->effect_hardness,
-                                "stroke", wt->current_stroke,
+                                "behavior",  options->behavior,
+                                "strength",  options->effect_strength,
+                                "size",      options->effect_size,
+                                "hardness",  options->effect_hardness,
+                                "stroke",    wt->current_stroke,
                                 NULL);
 
   last_op = gegl_node_get_producer (wt->render_node, "aux", NULL);
 
   gegl_node_disconnect (wt->render_node, "aux");
-
-  gegl_node_connect_to (last_op, "output", new_op, "input");
-  gegl_node_connect_to (new_op, "output", wt->render_node, "aux");
+  gegl_node_connect_to (last_op,         "output",
+                        new_op,          "input");
+  gegl_node_connect_to (new_op,          "output",
+                        wt->render_node, "aux");
 }
 
 static void
@@ -578,30 +585,32 @@ gimp_warp_tool_undo (GimpWarpTool *wt)
   GeglRectangle  bbox;
 
   to_delete = gegl_node_get_producer (wt->render_node, "aux", NULL);
-  type = gegl_node_get_operation(to_delete);
+  type = gegl_node_get_operation (to_delete);
 
   if (strcmp (type, "gegl:warp"))
     return;
 
   previous = gegl_node_get_producer (to_delete, "input", NULL);
 
-  gegl_node_disconnect (to_delete, "input");
-  gegl_node_connect_to (previous, "output", wt->render_node, "aux");
+  gegl_node_disconnect (to_delete,       "input");
+  gegl_node_connect_to (previous,        "output",
+                        wt->render_node, "aux");
 
   gegl_node_get (to_delete, "stroke", &stroke, NULL);
-  gegl_node_get (to_delete, "size", &size, NULL);
+  gegl_node_get (to_delete, "size",   &size,   NULL);
 
   if (stroke)
-  {
-    gegl_path_get_bounds (stroke, &min_x, &max_x, &min_y, &max_y);
-    bbox.x      = min_x - size * 0.5;
-    bbox.y      = min_y - size * 0.5;
-    bbox.width  = max_x - min_x + size;
-    bbox.height = max_y - min_y + size;
+    {
+      gegl_path_get_bounds (stroke, &min_x, &max_x, &min_y, &max_y);
 
-    gimp_image_map_abort (wt->image_map);
-    gimp_image_map_apply (wt->image_map, &bbox);
-  }
+      bbox.x      = min_x - size * 0.5;
+      bbox.y      = min_y - size * 0.5;
+      bbox.width  = max_x - min_x + size;
+      bbox.height = max_y - min_y + size;
+
+      gimp_image_map_abort (wt->image_map);
+      gimp_image_map_apply (wt->image_map, &bbox);
+    }
 
   g_object_unref (stroke);
   g_object_unref (to_delete);
