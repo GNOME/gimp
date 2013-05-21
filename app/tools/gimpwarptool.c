@@ -58,9 +58,9 @@
 #define STROKE_PERIOD 100
 
 
-static void       gimp_warp_tool_start              (GimpWarpTool          *wt,
+static void       gimp_warp_tool_control            (GimpTool              *tool,
+                                                     GimpToolAction         action,
                                                      GimpDisplay           *display);
-
 static void       gimp_warp_tool_button_press       (GimpTool              *tool,
                                                      const GimpCoords      *coords,
                                                      guint32                time,
@@ -81,9 +81,6 @@ static void       gimp_warp_tool_motion             (GimpTool              *tool
                                                      guint32                time,
                                                      GdkModifierType        state,
                                                      GimpDisplay           *display);
-static void       gimp_warp_tool_control            (GimpTool              *tool,
-                                                     GimpToolAction         action,
-                                                     GimpDisplay           *display);
 static void       gimp_warp_tool_cursor_update      (GimpTool              *tool,
                                                      const GimpCoords      *coords,
                                                      GdkModifierType        state,
@@ -93,6 +90,10 @@ static void       gimp_warp_tool_oper_update        (GimpTool              *tool
                                                      GdkModifierType        state,
                                                      gboolean               proximity,
                                                      GimpDisplay           *display);
+
+static void       gimp_warp_tool_start              (GimpWarpTool          *wt,
+                                                     GimpDisplay           *display);
+static void       gimp_warp_tool_halt               (GimpWarpTool          *wt);
 
 static gboolean   gimp_warp_tool_stroke_timer       (gpointer               data);
 static void       gimp_warp_tool_draw               (GimpDrawTool          *draw_tool);
@@ -135,11 +136,11 @@ gimp_warp_tool_class_init (GimpWarpToolClass *klass)
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
+  tool_class->control        = gimp_warp_tool_control;
   tool_class->button_press   = gimp_warp_tool_button_press;
   tool_class->button_release = gimp_warp_tool_button_release;
   tool_class->key_press      = gimp_warp_tool_key_press;
   tool_class->motion         = gimp_warp_tool_motion;
-  tool_class->control        = gimp_warp_tool_control;
   tool_class->cursor_update  = gimp_warp_tool_cursor_update;
   tool_class->oper_update    = gimp_warp_tool_oper_update;
 
@@ -176,33 +177,7 @@ gimp_warp_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      if (wt->coords_buffer)
-        {
-          g_object_unref (wt->coords_buffer);
-          wt->coords_buffer = NULL;
-        }
-
-      if (wt->graph)
-        {
-          g_object_unref (wt->graph);
-          wt->graph = NULL;
-          wt->render_node = NULL;
-        }
-
-      if (wt->image_map)
-        {
-          gimp_tool_control_set_preserve (tool->control, TRUE);
-
-          gimp_image_map_abort (wt->image_map);
-          g_object_unref (wt->image_map);
-          wt->image_map = NULL;
-
-          gimp_tool_control_set_preserve (tool->control, FALSE);
-
-          gimp_image_flush (gimp_display_get_image (tool->display));
-        }
-
-      tool->display = NULL;
+      gimp_warp_tool_halt (wt);
       break;
     }
 
@@ -220,29 +195,7 @@ gimp_warp_tool_start (GimpWarpTool *wt,
   gint           x1, x2, y1, y2;
   GeglRectangle  bbox;
 
-  gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
-
   tool->display = display;
-
-  if (wt->coords_buffer)
-    {
-      g_object_unref (wt->coords_buffer);
-      wt->coords_buffer = NULL;
-    }
-
-  if (wt->graph)
-    {
-      g_object_unref (wt->graph);
-      wt->graph = NULL;
-      wt->render_node = NULL;
-    }
-
-  if (wt->image_map)
-    {
-      gimp_image_map_abort (wt->image_map);
-      g_object_unref (wt->image_map);
-      wt->image_map = NULL;
-    }
 
   /* Create the coords buffer, with the size of the selection */
   format = babl_format_n (babl_type ("float"), 2);
@@ -262,7 +215,45 @@ gimp_warp_tool_start (GimpWarpTool *wt,
 
   gimp_warp_tool_create_image_map (wt, drawable);
 
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (wt), display);
+  if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (wt)))
+    gimp_draw_tool_start (GIMP_DRAW_TOOL (wt), display);
+}
+
+static void
+gimp_warp_tool_halt (GimpWarpTool *wt)
+{
+  GimpTool *tool = GIMP_TOOL (wt);
+
+  if (wt->coords_buffer)
+    {
+      g_object_unref (wt->coords_buffer);
+      wt->coords_buffer = NULL;
+    }
+
+  if (wt->graph)
+    {
+      g_object_unref (wt->graph);
+      wt->graph       = NULL;
+      wt->render_node = NULL;
+    }
+
+  if (wt->image_map)
+    {
+      gimp_tool_control_set_preserve (tool->control, TRUE);
+
+      gimp_image_map_abort (wt->image_map);
+      g_object_unref (wt->image_map);
+      wt->image_map = NULL;
+
+      gimp_tool_control_set_preserve (tool->control, FALSE);
+
+      gimp_image_flush (gimp_display_get_image (tool->display));
+    }
+
+  tool->display = NULL;
+
+  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (wt)))
+    gimp_draw_tool_stop (GIMP_DRAW_TOOL (wt));
 }
 
 static gboolean
@@ -280,18 +271,19 @@ gimp_warp_tool_key_press (GimpTool    *tool,
     case GDK_KEY_Return:
     case GDK_KEY_KP_Enter:
     case GDK_KEY_ISO_Enter:
-      gimp_tool_control_set_preserve (tool->control, TRUE);
+      if (wt->image_map)
+        {
+          gimp_tool_control_set_preserve (tool->control, TRUE);
 
-      gimp_image_map_commit (wt->image_map, GIMP_PROGRESS (tool));
-      g_object_unref (wt->image_map);
-      wt->image_map = NULL;
+          gimp_image_map_commit (wt->image_map, GIMP_PROGRESS (tool));
+          g_object_unref (wt->image_map);
+          wt->image_map = NULL;
 
-      gimp_tool_control_set_preserve (tool->control, FALSE);
+          gimp_tool_control_set_preserve (tool->control, FALSE);
 
-      gimp_image_flush (gimp_display_get_image (display));
-
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
-      return TRUE;
+          gimp_image_flush (gimp_display_get_image (display));
+        }
+      /* fall thru */
 
     case GDK_KEY_Escape:
       gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
@@ -331,21 +323,24 @@ gimp_warp_tool_oper_update (GimpTool         *tool,
   GimpWarpTool *wt        = GIMP_WARP_TOOL (tool);
   GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
 
-  if (! gimp_draw_tool_is_active (draw_tool))
+  if (proximity)
     {
-      gimp_warp_tool_start (wt, display);
-    }
-  else
-    {
-      if (display == tool->display)
-        {
-          gimp_draw_tool_pause (draw_tool);
+      gimp_draw_tool_pause (draw_tool);
 
+      if (! tool->display || display == tool->display)
+        {
           wt->cursor_x = coords->x;
           wt->cursor_y = coords->y;
-
-          gimp_draw_tool_resume (draw_tool);
         }
+
+      if (! gimp_draw_tool_is_active (draw_tool))
+        gimp_draw_tool_start (draw_tool, display);
+
+      gimp_draw_tool_resume (draw_tool);
+    }
+  else if (gimp_draw_tool_is_active (draw_tool))
+    {
+      gimp_draw_tool_stop (draw_tool);
     }
 }
 
@@ -359,7 +354,10 @@ gimp_warp_tool_button_press (GimpTool            *tool,
 {
   GimpWarpTool *wt = GIMP_WARP_TOOL (tool);
 
-  if (display != tool->display)
+  if (tool->display && display != tool->display)
+    gimp_warp_tool_halt (wt);
+
+  if (! tool->display)
     gimp_warp_tool_start (wt, display);
 
   wt->current_stroke = gegl_path_new ();
