@@ -587,6 +587,7 @@
         <menuitem action="tools-unified-transform" />
         <menuitem action="tools-flip" />
         <menuitem action="tools-cage" />
+        <menuitem action="tools-warp" />
       </menu>
       <menu action="tools-color-menu" name="Color Tools">
         <menuitem action="tools-color-balance" />
