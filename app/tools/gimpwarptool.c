@@ -19,34 +19,25 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <stdlib.h>
-
 #include <gegl.h>
 #include "gegl-utils.h"
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
-#include "core/gimpdrawable-shadow.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
-#include "core/gimplayer.h"
 #include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
 
 #include "widgets/gimphelp-ids.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-transform.h"
 
 #include "gimpwarptool.h"
 #include "gimpwarpoptions.h"
