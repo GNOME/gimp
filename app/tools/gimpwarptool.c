@@ -603,12 +603,15 @@ gimp_warp_tool_undo (GimpWarpTool *wt)
   gegl_node_connect_to (previous,        "output",
                         wt->render_node, "aux");
 
-  gegl_node_get (to_delete, "stroke", &stroke, NULL);
-  gegl_node_get (to_delete, "size",   &size,   NULL);
+  gegl_node_get (to_delete,
+                 "stroke", &stroke,
+                 "size",   &size,
+                 NULL);
 
   if (stroke)
     {
       gegl_path_get_bounds (stroke, &min_x, &max_x, &min_y, &max_y);
+      g_object_unref (stroke);
 
       bbox.x      = min_x - size * 0.5;
       bbox.y      = min_y - size * 0.5;
@@ -619,6 +622,5 @@ gimp_warp_tool_undo (GimpWarpTool *wt)
       gimp_image_map_apply (wt->image_map, &bbox);
     }
 
-  g_object_unref (stroke);
-  g_object_unref (to_delete);
+  gegl_node_remove_child (wt->graph, to_delete);
 }
