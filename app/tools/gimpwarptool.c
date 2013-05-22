@@ -384,11 +384,25 @@ gimp_warp_tool_cursor_update (GimpTool         *tool,
                               GdkModifierType   state,
                               GimpDisplay      *display)
 {
-  GimpCursorModifier modifier = GIMP_CURSOR_MODIFIER_PLUS;
+  GimpWarpOptions    *options  = GIMP_WARP_TOOL_GET_OPTIONS (tool);
+  GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_PLUS;
 
   if (tool->display)
     {
-      modifier = GIMP_CURSOR_MODIFIER_MOVE;
+      /* FIXME have better cursors  */
+
+      switch (options->behavior)
+        {
+        case GIMP_WARP_BEHAVIOR_MOVE:
+        case GEGL_WARP_BEHAVIOR_GROW:
+        case GEGL_WARP_BEHAVIOR_SHRINK:
+        case GEGL_WARP_BEHAVIOR_SWIRL_CW:
+        case GEGL_WARP_BEHAVIOR_SWIRL_CCW:
+        case GEGL_WARP_BEHAVIOR_ERASE:
+        case GEGL_WARP_BEHAVIOR_SMOOTH:
+          modifier = GIMP_CURSOR_MODIFIER_MOVE;
+          break;
+        }
     }
 
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);
