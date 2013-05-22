@@ -228,6 +228,9 @@ gimp_warp_tool_button_release (GimpTool              *tool,
   g_printerr ("%s\n", gegl_path_to_string (wt->current_stroke));
 #endif
 
+  g_object_unref (wt->current_stroke);
+  wt->current_stroke = NULL;
+
   if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
     {
       gimp_warp_tool_undo (wt);
