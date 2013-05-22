@@ -101,6 +101,8 @@ static gboolean   gimp_warp_tool_stroke_timer       (GimpWarpTool          *wt);
 static void       gimp_warp_tool_create_graph       (GimpWarpTool          *wt);
 static void       gimp_warp_tool_create_image_map   (GimpWarpTool          *wt,
                                                      GimpDrawable          *drawable);
+static void       gimp_warp_tool_update_stroke      (GimpWarpTool          *wt,
+                                                     GeglNode              *node);
 static void       gimp_warp_tool_stroke_changed     (GeglPath              *stroke,
                                                      const GeglRectangle   *roi,
                                                      GimpWarpTool          *wt);
@@ -270,6 +272,16 @@ gimp_warp_tool_button_release (GimpTool              *tool,
   if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
     {
       gimp_warp_tool_undo (tool, display);
+
+      /*  the just undone stroke has no business on the redo stack  */
+      g_object_unref (wt->redo_stack->data);
+      wt->redo_stack = g_list_remove_link (wt->redo_stack, wt->redo_stack);
+    }
+  else if (wt->redo_stack)
+    {
+      /*  the redo stack becomes invalid by actually doing a stroke  */
+      g_list_free_full (wt->redo_stack, (GDestroyNotify) g_object_unref);
+      wt->redo_stack = NULL;
     }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
@@ -424,8 +436,6 @@ gimp_warp_tool_undo (GimpTool    *tool,
   GeglNode     *to_delete;
   GeglNode     *previous;
   const gchar  *type;
-  GeglPath     *stroke;
-  gdouble       size;
 
   if (! wt->render_node)
     return FALSE;
@@ -442,33 +452,11 @@ gimp_warp_tool_undo (GimpTool    *tool,
   gegl_node_connect_to (previous,        "output",
                         wt->render_node, "aux");
 
-  gegl_node_get (to_delete,
-                 "stroke", &stroke,
-                 "size",   &size,
-                 NULL);
-
-  if (stroke)
-    {
-      gdouble        min_x;
-      gdouble        max_x;
-      gdouble        min_y;
-      gdouble        max_y;
-      GeglRectangle  bbox;
-
-      gegl_path_get_bounds (stroke, &min_x, &max_x, &min_y, &max_y);
-      g_object_unref (stroke);
-
-      bbox.x      = min_x - size * 0.5;
-      bbox.y      = min_y - size * 0.5;
-      bbox.width  = max_x - min_x + size;
-      bbox.height = max_y - min_y + size;
-
-      gimp_image_map_apply (wt->image_map, &bbox);
-    }
-
   wt->redo_stack = g_list_prepend (wt->redo_stack, g_object_ref (to_delete));
 
   gegl_node_remove_child (wt->graph, to_delete);
+
+  gimp_warp_tool_update_stroke (wt, to_delete);
 
   return TRUE;
 }
@@ -479,8 +467,6 @@ gimp_warp_tool_redo (GimpTool    *tool,
 {
   GimpWarpTool *wt = GIMP_WARP_TOOL (tool);
   GeglNode     *to_add;
-  GeglPath     *stroke;
-  gdouble       size;
 
   if (! wt->render_node || ! wt->redo_stack)
     return FALSE;
@@ -492,29 +478,7 @@ gimp_warp_tool_redo (GimpTool    *tool,
 
   wt->redo_stack = g_list_remove_link (wt->redo_stack, wt->redo_stack);
 
-  gegl_node_get (to_add,
-                 "stroke", &stroke,
-                 "size",   &size,
-                 NULL);
-
-  if (stroke)
-    {
-      gdouble        min_x;
-      gdouble        max_x;
-      gdouble        min_y;
-      gdouble        max_y;
-      GeglRectangle  bbox;
-
-      gegl_path_get_bounds (stroke, &min_x, &max_x, &min_y, &max_y);
-      g_object_unref (stroke);
-
-      bbox.x      = min_x - size * 0.5;
-      bbox.y      = min_y - size * 0.5;
-      bbox.width  = max_x - min_x + size;
-      bbox.height = max_y - min_y + size;
-
-      gimp_image_map_apply (wt->image_map, &bbox);
-    }
+  gimp_warp_tool_update_stroke (wt, to_add);
 
   return TRUE;
 }
@@ -685,6 +649,38 @@ gimp_warp_tool_create_image_map (GimpWarpTool *wt,
   g_signal_connect (wt->image_map, "flush",
                     G_CALLBACK (gimp_warp_tool_image_map_flush),
                     wt);
+}
+
+static void
+gimp_warp_tool_update_stroke (GimpWarpTool *wt,
+                              GeglNode     *node)
+{
+  GeglPath *stroke;
+  gdouble   size;
+
+  gegl_node_get (node,
+                 "stroke", &stroke,
+                 "size",   &size,
+                 NULL);
+
+  if (stroke)
+    {
+      gdouble        min_x;
+      gdouble        max_x;
+      gdouble        min_y;
+      gdouble        max_y;
+      GeglRectangle  bbox;
+
+      gegl_path_get_bounds (stroke, &min_x, &max_x, &min_y, &max_y);
+      g_object_unref (stroke);
+
+      bbox.x      = min_x - size * 0.5;
+      bbox.y      = min_y - size * 0.5;
+      bbox.width  = max_x - min_x + size;
+      bbox.height = max_y - min_y + size;
+
+      gimp_image_map_apply (wt->image_map, &bbox);
+    }
 }
 
 static void
