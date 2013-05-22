@@ -37,8 +37,12 @@
 
 
 /*  halfway between G_PRIORITY_HIGH_IDLE and G_PRIORITY_DEFAULT_IDLE  */
-#define GIMP_PROJECTION_IDLE_PRIORITY \
-        ((G_PRIORITY_HIGH_IDLE + G_PRIORITY_DEFAULT_IDLE) / 2)
+#define GIMP_PROJECTION_IDLE_PRIORITY     ((G_PRIORITY_HIGH_IDLE + \
+                                            G_PRIORITY_DEFAULT_IDLE) / 2)
+
+/*  chunk size for one iteration of the idle renderer  */
+#define GIMP_PROJECTION_IDLE_CHUNK_WIDTH  512
+#define GIMP_PROJECTION_IDLE_CHUNK_HEIGHT 256
 
 
 enum
@@ -551,11 +555,8 @@ gimp_projection_idle_render_callback (gpointer data)
   gint            workx, worky;
   gint            workw, workh;
 
-#define CHUNK_WIDTH  256
-#define CHUNK_HEIGHT 128
-
-  workw = CHUNK_WIDTH;
-  workh = CHUNK_HEIGHT;
+  workw = GIMP_PROJECTION_IDLE_CHUNK_WIDTH;
+  workh = GIMP_PROJECTION_IDLE_CHUNK_HEIGHT;
   workx = proj->idle_render.x;
   worky = proj->idle_render.y;
 
@@ -572,13 +573,13 @@ gimp_projection_idle_render_callback (gpointer data)
   gimp_projection_paint_area (proj, TRUE /* sic! */,
                               workx, worky, workw, workh);
 
-  proj->idle_render.x += CHUNK_WIDTH;
+  proj->idle_render.x += GIMP_PROJECTION_IDLE_CHUNK_WIDTH;
 
   if (proj->idle_render.x >=
       proj->idle_render.base_x + proj->idle_render.width)
     {
       proj->idle_render.x = proj->idle_render.base_x;
-      proj->idle_render.y += CHUNK_HEIGHT;
+      proj->idle_render.y += GIMP_PROJECTION_IDLE_CHUNK_HEIGHT;
 
       if (proj->idle_render.y >=
           proj->idle_render.base_y + proj->idle_render.height)
