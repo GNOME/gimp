@@ -50,10 +50,11 @@ struct _GimpWarpTool
   GeglNode       *render_node;   /* Gegl node to render the transformation */
 
   GeglPath       *current_stroke;
-
   guint           stroke_timer;
 
   GimpImageMap   *image_map;
+
+  GList          *redo_stack;
 };
 
 struct _GimpWarpToolClass
