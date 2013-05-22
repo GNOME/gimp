@@ -374,7 +374,8 @@ gimp_warp_tool_start (GimpWarpTool *wt,
   gint           x1, x2, y1, y2;
   GeglRectangle  bbox;
 
-  tool->display = display;
+  tool->display  = display;
+  tool->drawable = drawable;
 
   /* Create the coords buffer, with the size of the selection */
   format = babl_format_n (babl_type ("float"), 2);
@@ -432,7 +433,8 @@ gimp_warp_tool_halt (GimpWarpTool *wt)
       gimp_image_flush (gimp_display_get_image (tool->display));
     }
 
-  tool->display = NULL;
+  tool->display  = NULL;
+  tool->drawable = NULL;
 
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (wt)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (wt));
@@ -441,10 +443,17 @@ gimp_warp_tool_halt (GimpWarpTool *wt)
 static gboolean
 gimp_warp_tool_stroke_timer (gpointer data)
 {
-  GimpWarpTool *wt = GIMP_WARP_TOOL (data);
+  GimpTool     *tool = GIMP_TOOL (data);
+  GimpWarpTool *wt   = GIMP_WARP_TOOL (data);
+  gint          off_x, off_y;
+  gdouble       x, y;
+
+  gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
+  x = wt->cursor_x - off_x;
+  y = wt->cursor_y - off_y;
 
   gegl_path_append (wt->current_stroke,
-                    'L', wt->cursor_x, wt->cursor_y);
+                    'L', x, y);
 
   gimp_warp_tool_image_map_update (wt);
 
@@ -512,12 +521,19 @@ gimp_warp_tool_create_image_map (GimpWarpTool *wt,
 static void
 gimp_warp_tool_image_map_update (GimpWarpTool *wt)
 {
+  GimpTool        *tool    = GIMP_TOOL (wt);
   GimpWarpOptions *options = GIMP_WARP_TOOL_GET_OPTIONS (wt);
   GeglRectangle    region;
   GeglRectangle    to_update;
+  gint             off_x, off_y;
+  gdouble          x, y;
 
-  region.x      = wt->cursor_x - options->effect_size * 0.5;
-  region.y      = wt->cursor_y - options->effect_size * 0.5;
+  gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
+  x = wt->cursor_x - off_x;
+  y = wt->cursor_y - off_y;
+
+  region.x      = x - options->effect_size * 0.5;
+  region.y      = y - options->effect_size * 0.5;
   region.width  = options->effect_size;
   region.height = options->effect_size;
 
