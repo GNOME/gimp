@@ -221,6 +221,7 @@ gimp_warp_tool_button_press (GimpTool            *tool,
                                 NULL);
 
   gimp_warp_tool_add_op (wt, new_op);
+  g_object_unref (new_op);
 
   g_signal_connect (wt->current_stroke, "changed",
                     G_CALLBACK (gimp_warp_tool_stroke_changed),
@@ -462,7 +463,6 @@ gimp_warp_tool_undo (GimpTool    *tool,
       bbox.width  = max_x - min_x + size;
       bbox.height = max_y - min_y + size;
 
-      gimp_image_map_abort (wt->image_map);
       gimp_image_map_apply (wt->image_map, &bbox);
     }
 
@@ -513,7 +513,6 @@ gimp_warp_tool_redo (GimpTool    *tool,
       bbox.width  = max_x - min_x + size;
       bbox.height = max_y - min_y + size;
 
-      gimp_image_map_abort (wt->image_map);
       gimp_image_map_apply (wt->image_map, &bbox);
     }
 
