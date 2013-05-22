@@ -81,6 +81,14 @@ static void       gimp_warp_tool_cursor_update      (GimpTool              *tool
                                                      const GimpCoords      *coords,
                                                      GdkModifierType        state,
                                                      GimpDisplay           *display);
+const gchar     * gimp_warp_tool_get_undo_desc       (GimpTool             *tool,
+                                                      GimpDisplay          *display);
+const gchar     * gimp_warp_tool_get_redo_desc       (GimpTool             *tool,
+                                                      GimpDisplay          *display);
+gboolean          gimp_warp_tool_undo                (GimpTool             *tool,
+                                                      GimpDisplay          *display);
+gboolean          gimp_warp_tool_redo                (GimpTool             *tool,
+                                                      GimpDisplay          *display);
 
 static void       gimp_warp_tool_draw               (GimpDrawTool          *draw_tool);
 
@@ -99,7 +107,6 @@ static void       gimp_warp_tool_stroke_changed     (GeglPath              *stro
 static void       gimp_warp_tool_image_map_flush    (GimpImageMap          *image_map,
                                                      GimpTool              *tool);
 static void       gimp_warp_tool_add_op             (GimpWarpTool          *wt);
-static void       gimp_warp_tool_undo               (GimpWarpTool          *wt);
 
 
 G_DEFINE_TYPE (GimpWarpTool, gimp_warp_tool, GIMP_TYPE_DRAW_TOOL)
@@ -137,6 +144,10 @@ gimp_warp_tool_class_init (GimpWarpToolClass *klass)
   tool_class->key_press      = gimp_warp_tool_key_press;
   tool_class->oper_update    = gimp_warp_tool_oper_update;
   tool_class->cursor_update  = gimp_warp_tool_cursor_update;
+  tool_class->get_undo_desc  = gimp_warp_tool_get_undo_desc;
+  tool_class->get_redo_desc  = gimp_warp_tool_get_redo_desc;
+  tool_class->undo           = gimp_warp_tool_undo;
+  tool_class->redo           = gimp_warp_tool_redo;
 
   draw_tool_class->draw      = gimp_warp_tool_draw;
 }
@@ -245,7 +256,7 @@ gimp_warp_tool_button_release (GimpTool              *tool,
 
   if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
     {
-      gimp_warp_tool_undo (wt);
+      gimp_warp_tool_undo (tool, display);
     }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
@@ -355,6 +366,95 @@ gimp_warp_tool_cursor_update (GimpTool         *tool,
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
+}
+
+const gchar *
+gimp_warp_tool_get_undo_desc (GimpTool    *tool,
+                              GimpDisplay *display)
+{
+  GimpWarpTool *wt = GIMP_WARP_TOOL (tool);
+  GeglNode     *to_delete;
+  const gchar  *type;
+
+  if (! wt->render_node)
+    return NULL;
+
+  to_delete = gegl_node_get_producer (wt->render_node, "aux", NULL);
+  type = gegl_node_get_operation (to_delete);
+
+  if (strcmp (type, "gegl:warp"))
+    return NULL;
+
+  return _("Warp Tool Stroke");
+}
+
+const gchar *
+gimp_warp_tool_get_redo_desc (GimpTool    *tool,
+                              GimpDisplay *display)
+{
+  return NULL;
+}
+
+gboolean
+gimp_warp_tool_undo (GimpTool    *tool,
+                     GimpDisplay *display)
+{
+  GimpWarpTool  *wt = GIMP_WARP_TOOL (tool);
+  GeglNode      *to_delete;
+  GeglNode      *previous;
+  const gchar   *type;
+  GeglPath      *stroke;
+  gdouble        min_x;
+  gdouble        max_x;
+  gdouble        min_y;
+  gdouble        max_y;
+  gdouble        size;
+  GeglRectangle  bbox;
+
+  if (! wt->render_node)
+    return FALSE;
+
+  to_delete = gegl_node_get_producer (wt->render_node, "aux", NULL);
+  type = gegl_node_get_operation (to_delete);
+
+  if (strcmp (type, "gegl:warp"))
+    return FALSE;
+
+  previous = gegl_node_get_producer (to_delete, "input", NULL);
+
+  gegl_node_disconnect (to_delete,       "input");
+  gegl_node_connect_to (previous,        "output",
+                        wt->render_node, "aux");
+
+  gegl_node_get (to_delete,
+                 "stroke", &stroke,
+                 "size",   &size,
+                 NULL);
+
+  if (stroke)
+    {
+      gegl_path_get_bounds (stroke, &min_x, &max_x, &min_y, &max_y);
+      g_object_unref (stroke);
+
+      bbox.x      = min_x - size * 0.5;
+      bbox.y      = min_y - size * 0.5;
+      bbox.width  = max_x - min_x + size;
+      bbox.height = max_y - min_y + size;
+
+      gimp_image_map_abort (wt->image_map);
+      gimp_image_map_apply (wt->image_map, &bbox);
+    }
+
+  gegl_node_remove_child (wt->graph, to_delete);
+
+  return TRUE;
+}
+
+gboolean
+gimp_warp_tool_redo (GimpTool    *tool,
+                     GimpDisplay *display)
+{
+  return FALSE;
 }
 
 static void
@@ -575,52 +675,7 @@ gimp_warp_tool_add_op (GimpWarpTool *wt)
                         new_op,          "input");
   gegl_node_connect_to (new_op,          "output",
                         wt->render_node, "aux");
-}
 
-static void
-gimp_warp_tool_undo (GimpWarpTool *wt)
-{
-  GeglNode      *to_delete;
-  GeglNode      *previous;
-  const gchar   *type;
-  GeglPath      *stroke;
-  gdouble        min_x;
-  gdouble        max_x;
-  gdouble        min_y;
-  gdouble        max_y;
-  gdouble        size;
-  GeglRectangle  bbox;
-
-  to_delete = gegl_node_get_producer (wt->render_node, "aux", NULL);
-  type = gegl_node_get_operation (to_delete);
-
-  if (strcmp (type, "gegl:warp"))
-    return;
-
-  previous = gegl_node_get_producer (to_delete, "input", NULL);
-
-  gegl_node_disconnect (to_delete,       "input");
-  gegl_node_connect_to (previous,        "output",
-                        wt->render_node, "aux");
-
-  gegl_node_get (to_delete,
-                 "stroke", &stroke,
-                 "size",   &size,
-                 NULL);
-
-  if (stroke)
-    {
-      gegl_path_get_bounds (stroke, &min_x, &max_x, &min_y, &max_y);
-      g_object_unref (stroke);
-
-      bbox.x      = min_x - size * 0.5;
-      bbox.y      = min_y - size * 0.5;
-      bbox.width  = max_x - min_x + size;
-      bbox.height = max_y - min_y + size;
-
-      gimp_image_map_abort (wt->image_map);
-      gimp_image_map_apply (wt->image_map, &bbox);
-    }
-
-  gegl_node_remove_child (wt->graph, to_delete);
+  /*  update the undo actions / menu items  */
+  gimp_image_flush (gimp_display_get_image (GIMP_TOOL (wt)->display));
 }
