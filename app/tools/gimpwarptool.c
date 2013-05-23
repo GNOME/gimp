@@ -520,7 +520,6 @@ gimp_warp_tool_start (GimpWarpTool *wt,
   GimpImage     *image    = gimp_display_get_image (display);
   GimpDrawable  *drawable = gimp_image_get_active_drawable (image);
   const Babl    *format;
-  gint           x1, x2, y1, y2;
   GeglRectangle  bbox;
 
   tool->display  = display;
@@ -529,12 +528,8 @@ gimp_warp_tool_start (GimpWarpTool *wt,
   /* Create the coords buffer, with the size of the selection */
   format = babl_format_n (babl_type ("float"), 2);
 
-  gimp_channel_bounds (gimp_image_get_mask (image), &x1, &y1, &x2, &y2);
-
-  bbox.x      = MIN (x1, x2);
-  bbox.y      = MIN (y1, y2);
-  bbox.width  = ABS (x1 - x2);
-  bbox.height = ABS (y1 - y2);
+  gimp_item_mask_intersect (GIMP_ITEM (drawable), &bbox.x, &bbox.y,
+                            &bbox.width, &bbox.height);
 
 #ifdef WARP_DEBUG
   g_printerr ("Initialize coordinate buffer (%d,%d) at %d,%d\n",
