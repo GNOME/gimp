@@ -19,27 +19,21 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <stdlib.h>
-
 #include <gegl.h>
 #include <gegl-plugin.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpbuffer.h"
-#include "core/gimpchannel.h"
-#include "core/gimpdrawable-shadow.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
-#include "core/gimplayer.h"
+#include "core/gimpitem.h"
 #include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
 #include "core/gimptoolinfo.h"
@@ -389,7 +383,7 @@ gimp_seamless_clone_tool_button_press (GimpTool            *tool,
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (sc));
 
-      /* Record previous location, in case the user cancel's the
+      /* Record previous location, in case the user cancels the
        * movement
        */
       sc->xoff_p = sc->xoff;
@@ -427,6 +421,7 @@ gimp_seamless_clone_tool_button_release (GimpTool              *tool,
   if (sc->tool_state == SC_STATE_RENDER_MOTION)
     {
       gimp_tool_control_halt (tool->control);
+
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (sc));
 
       if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
@@ -441,6 +436,7 @@ gimp_seamless_clone_tool_button_release (GimpTool              *tool,
         }
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+
       gimp_seamless_clone_tool_render_node_update (sc);
       gimp_seamless_clone_tool_image_map_update (sc);
 
@@ -457,8 +453,6 @@ gimp_seamless_clone_tool_motion (GimpTool         *tool,
 {
   GimpSeamlessCloneTool *sc = GIMP_SEAMLESS_CLONE_TOOL (tool);
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
-
   if (sc->tool_state == SC_STATE_RENDER_MOTION)
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (sc));
@@ -467,11 +461,10 @@ gimp_seamless_clone_tool_motion (GimpTool         *tool,
       sc->yoff = sc->yoff_p + (gint) (coords->y - sc->yclick);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+
       gimp_seamless_clone_tool_render_node_update (sc);
       gimp_seamless_clone_tool_image_map_update (sc);
     }
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
 static gboolean
@@ -479,18 +472,17 @@ gimp_seamless_clone_tool_key_press (GimpTool    *tool,
                                     GdkEventKey *kevent,
                                     GimpDisplay *display)
 {
-  GimpSeamlessCloneTool *sct    = GIMP_SEAMLESS_CLONE_TOOL (tool);
-  gboolean               retval = TRUE;
+  GimpSeamlessCloneTool *sct = GIMP_SEAMLESS_CLONE_TOOL (tool);
 
-  if (sct->tool_state == SC_STATE_RENDER_MOTION
-      || sct->tool_state == SC_STATE_RENDER_WAIT)
+  if (sct->tool_state == SC_STATE_RENDER_MOTION ||
+      sct->tool_state == SC_STATE_RENDER_WAIT)
     {
       switch (kevent->keyval)
         {
         case GDK_KEY_Return:
         case GDK_KEY_KP_Enter:
         case GDK_KEY_ISO_Enter:
-          // gimp_tool_control_set_preserve (tool->control, TRUE);
+          gimp_tool_control_set_preserve (tool->control, TRUE);
 
           /* TODO: there may be issues with committing the image map
            *       result after some changes were made and the preview
@@ -503,26 +495,25 @@ gimp_seamless_clone_tool_key_press (GimpTool    *tool,
           g_object_unref (sct->image_map);
           sct->image_map = NULL;
 
-          // gimp_tool_control_set_preserve (tool->control, FALSE);
+          gimp_tool_control_set_preserve (tool->control, FALSE);
 
           gimp_image_flush (gimp_display_get_image (display));
 
           gimp_seamless_clone_tool_control (tool, GIMP_TOOL_ACTION_HALT,
                                             display);
-          break;
+          return TRUE;
 
         case GDK_KEY_Escape:
           gimp_seamless_clone_tool_control (tool, GIMP_TOOL_ACTION_HALT,
                                             display);
-          break;
+          return TRUE;
 
         default:
-          retval = FALSE;
           break;
         }
     }
 
-  return retval;
+  return FALSE;
 }
 
 static void
@@ -597,10 +588,10 @@ gimp_seamless_clone_tool_draw (GimpDrawTool *draw_tool)
 
   if (sc->tool_state == SC_STATE_RENDER_WAIT ||
       sc->tool_state == SC_STATE_RENDER_MOTION)
-  {
-    gimp_draw_tool_add_rectangle (draw_tool, FALSE,
-                                  sc->xoff, sc->yoff, sc->width, sc->height);
-  }
+    {
+      gimp_draw_tool_add_rectangle (draw_tool, FALSE,
+                                    sc->xoff, sc->yoff, sc->width, sc->height);
+    }
 }
 
 /**
@@ -680,17 +671,13 @@ static void
 gimp_seamless_clone_tool_render_node_update (GimpSeamlessCloneTool *sc)
 {
   GimpDrawable *bg = GIMP_TOOL (sc)->drawable;
-  gint          xoff, yoff;
+  gint          off_x, off_y;
 
-  /* Now we should also take into consideration the fact that
-   * we should work with coordinates relative to the background
-   * buffer
-   */
-  gimp_item_get_offset (GIMP_ITEM (bg), &xoff, &yoff);
+  gimp_item_get_offset (GIMP_ITEM (bg), &off_x, &off_y);
 
   gegl_node_set (sc->sc_node,
-                 "xoff", (gint) sc->xoff - xoff,
-                 "yoff", (gint) sc->yoff - yoff,
+                 "xoff", (gint) sc->xoff - off_y,
+                 "yoff", (gint) sc->yoff - off_x,
                  NULL);
 }
 
@@ -705,6 +692,8 @@ gimp_seamless_clone_tool_create_image_map (GimpSeamlessCloneTool *sc,
                                       _("Seamless Clone"),
                                       sc->render_node,
 				      GIMP_STOCK_TOOL_SEAMLESS_CLONE);
+
+  gimp_image_map_set_region (sc->image_map, GIMP_IMAGE_MAP_REGION_DRAWABLE);
 
   g_signal_connect (sc->image_map, "flush",
                     G_CALLBACK (gimp_seamless_clone_tool_image_map_flush),
@@ -761,7 +750,8 @@ gimp_seamless_clone_tool_image_map_update (GimpSeamlessCloneTool *sc)
   g_object_get (sc->sc_node, "gegl-operation", &op, NULL);
   /* If any cache of the visible area was present, clear it!
    * We need to clear the cache in the sc_node, since that is
-   * where the previous paste was located */
+   * where the previous paste was located
+   */
   gegl_operation_invalidate (op, &visible, TRUE);
   g_object_unref (op);
 
