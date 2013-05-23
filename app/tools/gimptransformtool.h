@@ -49,8 +49,11 @@ typedef enum
   TRANSFORM_HANDLE_NUM /* keep this last so *handles[] is the right size */
 } TransformAction;
 
-/* This is not the number of items in the enum above, but the max size of the
- * enums at the top of each transformation tool, stored in trans_info and related */
+
+/* This is not the number of items in the enum above, but the max size
+ * of the enums at the top of each transformation tool, stored in
+ * trans_info and related
+ */
 #define TRANS_INFO_SIZE 10
 
 typedef gdouble TransInfo[TRANS_INFO_SIZE];
@@ -153,9 +156,9 @@ struct _GimpTransformToolClass
 };
 
 
-GType   gimp_transform_tool_get_type      (void) G_GNUC_CONST;
+GType   gimp_transform_tool_get_type           (void) G_GNUC_CONST;
 
-void    gimp_transform_tool_recalc_matrix (GimpTransformTool *tr_tool);
+void    gimp_transform_tool_recalc_matrix      (GimpTransformTool *tr_tool);
 void    gimp_transform_tool_push_internal_undo (GimpTransformTool *tr_tool);
 
 
