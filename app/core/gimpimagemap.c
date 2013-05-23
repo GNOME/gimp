@@ -58,19 +58,20 @@ enum
 
 struct _GimpImageMap
 {
-  GimpObject      parent_instance;
+  GimpObject          parent_instance;
 
-  GimpDrawable   *drawable;
-  gchar          *undo_desc;
-  GeglNode       *operation;
-  gchar          *stock_id;
+  GimpDrawable       *drawable;
+  gchar              *undo_desc;
+  GeglNode           *operation;
+  gchar              *stock_id;
+  GimpImageMapRegion  region;
 
-  gboolean        filtering;
-  GeglRectangle   filter_area;
+  gboolean            filtering;
+  GeglRectangle       filter_area;
 
-  GimpFilter     *filter;
-  GeglNode       *translate;
-  GimpApplicator *applicator;
+  GimpFilter         *filter;
+  GeglNode           *translate;
+  GimpApplicator     *applicator;
 };
 
 
@@ -112,6 +113,7 @@ gimp_image_map_class_init (GimpImageMapClass *klass)
 static void
 gimp_image_map_init (GimpImageMap *image_map)
 {
+  image_map->region = GIMP_IMAGE_MAP_REGION_SELECTION;
 }
 
 static void
@@ -192,6 +194,15 @@ gimp_image_map_new (GimpDrawable *drawable,
   gimp_viewable_preview_freeze (GIMP_VIEWABLE (drawable));
 
   return image_map;
+}
+
+void
+gimp_image_map_set_region (GimpImageMap       *image_map,
+                           GimpImageMapRegion  region)
+{
+  g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
+
+  image_map->region = region;
 }
 
 void
@@ -324,14 +335,17 @@ gimp_image_map_apply (GimpImageMap        *image_map,
                                 GIMP_REPLACE_MODE);
     }
 
-  gegl_node_set (image_map->translate,
-                 "x", (gdouble) -image_map->filter_area.x,
-                 "y", (gdouble) -image_map->filter_area.y,
-                 NULL);
+  if (image_map->region == GIMP_IMAGE_MAP_REGION_SELECTION)
+    {
+      gegl_node_set (image_map->translate,
+                     "x", (gdouble) -image_map->filter_area.x,
+                     "y", (gdouble) -image_map->filter_area.y,
+                     NULL);
 
-  gimp_applicator_set_apply_offset (image_map->applicator,
-                                    image_map->filter_area.x,
-                                    image_map->filter_area.y);
+      gimp_applicator_set_apply_offset (image_map->applicator,
+                                        image_map->filter_area.x,
+                                        image_map->filter_area.y);
+    }
 
   active_mask = gimp_drawable_get_active_mask (image_map->drawable);
 

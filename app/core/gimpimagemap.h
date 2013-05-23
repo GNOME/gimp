@@ -22,6 +22,13 @@
 #include "gimpobject.h"
 
 
+typedef enum
+{
+  GIMP_IMAGE_MAP_REGION_SELECTION,
+  GIMP_IMAGE_MAP_REGION_DRAWABLE
+} GimpImageMapRegion;
+
+
 #define GIMP_TYPE_IMAGE_MAP            (gimp_image_map_get_type ())
 #define GIMP_IMAGE_MAP(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGE_MAP, GimpImageMap))
 #define GIMP_IMAGE_MAP_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_IMAGE_MAP, GimpImageMapClass))
@@ -47,19 +54,22 @@ struct _GimpImageMapClass
  *  The image map is no longer valid after a call to commit or abort.
  */
 
-GType          gimp_image_map_get_type (void) G_GNUC_CONST;
+GType          gimp_image_map_get_type   (void) G_GNUC_CONST;
 
-GimpImageMap * gimp_image_map_new      (GimpDrawable        *drawable,
-                                        const gchar         *undo_desc,
-                                        GeglNode            *operation,
-                                        const gchar         *stock_id);
+GimpImageMap * gimp_image_map_new        (GimpDrawable        *drawable,
+                                          const gchar         *undo_desc,
+                                          GeglNode            *operation,
+                                          const gchar         *stock_id);
 
-void           gimp_image_map_apply    (GimpImageMap        *image_map,
-                                        const GeglRectangle *area);
+void           gimp_image_map_set_region (GimpImageMap        *image_map,
+                                          GimpImageMapRegion   region);
 
-void           gimp_image_map_commit   (GimpImageMap        *image_map,
-                                        GimpProgress        *progress);
-void           gimp_image_map_abort    (GimpImageMap        *image_map);
+void           gimp_image_map_apply      (GimpImageMap        *image_map,
+                                          const GeglRectangle *area);
+
+void           gimp_image_map_commit     (GimpImageMap        *image_map,
+                                          GimpProgress        *progress);
+void           gimp_image_map_abort      (GimpImageMap        *image_map);
 
 
 #endif /* __GIMP_IMAGE_MAP_H__ */
