@@ -116,16 +116,9 @@ enum
 };
 
 
-static void       gimp_seamless_clone_tool_start              (GimpSeamlessCloneTool *sc,
+static void       gimp_seamless_clone_tool_control            (GimpTool              *tool,
+                                                               GimpToolAction         action,
                                                                GimpDisplay           *display);
-
-static void       gimp_seamless_clone_tool_stop               (GimpSeamlessCloneTool *sc,
-                                                               gboolean               display_change_only);
-
-static void       gimp_seamless_clone_tool_options_notify     (GimpTool              *tool,
-                                                               GimpToolOptions       *options,
-                                                               const GParamSpec      *pspec);
-
 static void       gimp_seamless_clone_tool_button_press       (GimpTool              *tool,
                                                                const GimpCoords      *coords,
                                                                guint32                time,
@@ -139,45 +132,42 @@ static void       gimp_seamless_clone_tool_button_release     (GimpTool         
                                                                GdkModifierType        state,
                                                                GimpButtonReleaseType  release_type,
                                                                GimpDisplay           *display);
-
-static gboolean   gimp_seamless_clone_tool_key_press          (GimpTool              *tool,
-                                                               GdkEventKey           *kevent,
-                                                               GimpDisplay           *display);
-
 static void       gimp_seamless_clone_tool_motion             (GimpTool              *tool,
                                                                const GimpCoords      *coords,
                                                                guint32                time,
                                                                GdkModifierType        state,
                                                                GimpDisplay           *display);
-
-static void       gimp_seamless_clone_tool_control            (GimpTool              *tool,
-                                                               GimpToolAction         action,
+static gboolean   gimp_seamless_clone_tool_key_press          (GimpTool              *tool,
+                                                               GdkEventKey           *kevent,
                                                                GimpDisplay           *display);
-
-static void       gimp_seamless_clone_tool_cursor_update      (GimpTool              *tool,
-                                                               const GimpCoords      *coords,
-                                                               GdkModifierType        state,
-                                                               GimpDisplay           *display);
-
 static void       gimp_seamless_clone_tool_oper_update        (GimpTool              *tool,
                                                                const GimpCoords      *coords,
                                                                GdkModifierType        state,
                                                                gboolean               proximity,
                                                                GimpDisplay           *display);
+static void       gimp_seamless_clone_tool_cursor_update      (GimpTool              *tool,
+                                                               const GimpCoords      *coords,
+                                                               GdkModifierType        state,
+                                                               GimpDisplay           *display);
+static void       gimp_seamless_clone_tool_options_notify     (GimpTool              *tool,
+                                                               GimpToolOptions       *options,
+                                                               const GParamSpec      *pspec);
 
 static void       gimp_seamless_clone_tool_draw               (GimpDrawTool          *draw_tool);
 
-static void       gimp_seamless_clone_tool_create_image_map   (GimpSeamlessCloneTool *sc,
-                                                               GimpDrawable          *drawable);
+static void       gimp_seamless_clone_tool_start              (GimpSeamlessCloneTool *sc,
+                                                               GimpDisplay           *display);
 
-static void       gimp_seamless_clone_tool_image_map_flush    (GimpImageMap          *image_map,
-                                                               GimpTool              *tool);
-
-static void       gimp_seamless_clone_tool_image_map_update   (GimpSeamlessCloneTool *sc);
+static void       gimp_seamless_clone_tool_stop               (GimpSeamlessCloneTool *sc,
+                                                               gboolean               display_change_only);
 
 static void       gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc);
-
 static void       gimp_seamless_clone_tool_render_node_update (GimpSeamlessCloneTool *sc);
+static void       gimp_seamless_clone_tool_create_image_map   (GimpSeamlessCloneTool *sc,
+                                                               GimpDrawable          *drawable);
+static void       gimp_seamless_clone_tool_image_map_flush    (GimpImageMap          *image_map,
+                                                               GimpTool              *tool);
+static void       gimp_seamless_clone_tool_image_map_update   (GimpSeamlessCloneTool *sc);
 
 
 G_DEFINE_TYPE (GimpSeamlessCloneTool, gimp_seamless_clone_tool,
@@ -209,14 +199,14 @@ gimp_seamless_clone_tool_class_init (GimpSeamlessCloneToolClass *klass)
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  tool_class->options_notify = gimp_seamless_clone_tool_options_notify;
+  tool_class->control        = gimp_seamless_clone_tool_control;
   tool_class->button_press   = gimp_seamless_clone_tool_button_press;
   tool_class->button_release = gimp_seamless_clone_tool_button_release;
-  tool_class->key_press      = gimp_seamless_clone_tool_key_press;
   tool_class->motion         = gimp_seamless_clone_tool_motion;
-  tool_class->control        = gimp_seamless_clone_tool_control;
-  tool_class->cursor_update  = gimp_seamless_clone_tool_cursor_update;
+  tool_class->key_press      = gimp_seamless_clone_tool_key_press;
   tool_class->oper_update    = gimp_seamless_clone_tool_oper_update;
+  tool_class->cursor_update  = gimp_seamless_clone_tool_cursor_update;
+  tool_class->options_notify = gimp_seamless_clone_tool_options_notify;
 
   draw_tool_class->draw      = gimp_seamless_clone_tool_draw;
 }
@@ -376,114 +366,6 @@ gimp_seamless_clone_tool_stop (GimpSeamlessCloneTool *sc,
 }
 
 static void
-gimp_seamless_clone_tool_options_notify (GimpTool         *tool,
-                                         GimpToolOptions  *options,
-                                         const GParamSpec *pspec)
-{
-  GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
-
-  if (! tool->display)
-    return;
-
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
-
-  /* TODO: Modify data here */
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
-}
-
-static gboolean
-gimp_seamless_clone_tool_key_press (GimpTool    *tool,
-                                    GdkEventKey *kevent,
-                                    GimpDisplay *display)
-{
-  GimpSeamlessCloneTool *sct    = GIMP_SEAMLESS_CLONE_TOOL (tool);
-  gboolean               retval = TRUE;
-
-  if (sct->tool_state == SC_STATE_RENDER_MOTION
-      || sct->tool_state == SC_STATE_RENDER_WAIT)
-    {
-      switch (kevent->keyval)
-        {
-        case GDK_KEY_Return:
-        case GDK_KEY_KP_Enter:
-        case GDK_KEY_ISO_Enter:
-          // gimp_tool_control_set_preserve (tool->control, TRUE);
-
-          /* TODO: there may be issues with committing the image map
-           *       result after some changes were made and the preview
-           *       was scrolled. We can fix these by either invalidating
-           *       the area which is a union of the previous paste
-           *       rectangle each time (in the update function) or by
-           *       invalidating and re-rendering all now (expensive and
-           *       perhaps useless */
-          gimp_image_map_commit (sct->image_map, GIMP_PROGRESS (tool));
-          g_object_unref (sct->image_map);
-          sct->image_map = NULL;
-
-          // gimp_tool_control_set_preserve (tool->control, FALSE);
-
-          gimp_image_flush (gimp_display_get_image (display));
-
-          gimp_seamless_clone_tool_control (tool, GIMP_TOOL_ACTION_HALT,
-                                            display);
-          break;
-
-        case GDK_KEY_Escape:
-          gimp_seamless_clone_tool_control (tool, GIMP_TOOL_ACTION_HALT,
-                                            display);
-          break;
-
-        default:
-          retval = FALSE;
-          break;
-        }
-    }
-
-  return retval;
-}
-
-static void
-gimp_seamless_clone_tool_motion (GimpTool         *tool,
-                                 const GimpCoords *coords,
-                                 guint32           time,
-                                 GdkModifierType   state,
-                                 GimpDisplay      *display)
-{
-  GimpSeamlessCloneTool *sc = GIMP_SEAMLESS_CLONE_TOOL (tool);
-
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
-
-  if (sc->tool_state == SC_STATE_RENDER_MOTION)
-    {
-      gimp_draw_tool_pause (GIMP_DRAW_TOOL (sc));
-
-      sc->xoff = sc->xoff_p + (gint) (coords->x - sc->xclick);
-      sc->yoff = sc->yoff_p + (gint) (coords->y - sc->yclick);
-
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
-      gimp_seamless_clone_tool_render_node_update (sc);
-      gimp_seamless_clone_tool_image_map_update (sc);
-    }
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
-}
-
-static void
-gimp_seamless_clone_tool_oper_update (GimpTool         *tool,
-                                      const GimpCoords *coords,
-                                      GdkModifierType   state,
-                                      gboolean          proximity,
-                                      GimpDisplay      *display)
-{
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
-
-  /* TODO: Modify data here */
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
-}
-
-static void
 gimp_seamless_clone_tool_button_press (GimpTool            *tool,
                                        const GimpCoords    *coords,
                                        guint32              time,
@@ -566,6 +448,97 @@ gimp_seamless_clone_tool_button_release (GimpTool              *tool,
     }
 }
 
+static void
+gimp_seamless_clone_tool_motion (GimpTool         *tool,
+                                 const GimpCoords *coords,
+                                 guint32           time,
+                                 GdkModifierType   state,
+                                 GimpDisplay      *display)
+{
+  GimpSeamlessCloneTool *sc = GIMP_SEAMLESS_CLONE_TOOL (tool);
+
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+  if (sc->tool_state == SC_STATE_RENDER_MOTION)
+    {
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (sc));
+
+      sc->xoff = sc->xoff_p + (gint) (coords->x - sc->xclick);
+      sc->yoff = sc->yoff_p + (gint) (coords->y - sc->yclick);
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+      gimp_seamless_clone_tool_render_node_update (sc);
+      gimp_seamless_clone_tool_image_map_update (sc);
+    }
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+}
+
+static gboolean
+gimp_seamless_clone_tool_key_press (GimpTool    *tool,
+                                    GdkEventKey *kevent,
+                                    GimpDisplay *display)
+{
+  GimpSeamlessCloneTool *sct    = GIMP_SEAMLESS_CLONE_TOOL (tool);
+  gboolean               retval = TRUE;
+
+  if (sct->tool_state == SC_STATE_RENDER_MOTION
+      || sct->tool_state == SC_STATE_RENDER_WAIT)
+    {
+      switch (kevent->keyval)
+        {
+        case GDK_KEY_Return:
+        case GDK_KEY_KP_Enter:
+        case GDK_KEY_ISO_Enter:
+          // gimp_tool_control_set_preserve (tool->control, TRUE);
+
+          /* TODO: there may be issues with committing the image map
+           *       result after some changes were made and the preview
+           *       was scrolled. We can fix these by either invalidating
+           *       the area which is a union of the previous paste
+           *       rectangle each time (in the update function) or by
+           *       invalidating and re-rendering all now (expensive and
+           *       perhaps useless */
+          gimp_image_map_commit (sct->image_map, GIMP_PROGRESS (tool));
+          g_object_unref (sct->image_map);
+          sct->image_map = NULL;
+
+          // gimp_tool_control_set_preserve (tool->control, FALSE);
+
+          gimp_image_flush (gimp_display_get_image (display));
+
+          gimp_seamless_clone_tool_control (tool, GIMP_TOOL_ACTION_HALT,
+                                            display);
+          break;
+
+        case GDK_KEY_Escape:
+          gimp_seamless_clone_tool_control (tool, GIMP_TOOL_ACTION_HALT,
+                                            display);
+          break;
+
+        default:
+          retval = FALSE;
+          break;
+        }
+    }
+
+  return retval;
+}
+
+static void
+gimp_seamless_clone_tool_oper_update (GimpTool         *tool,
+                                      const GimpCoords *coords,
+                                      GdkModifierType   state,
+                                      gboolean          proximity,
+                                      GimpDisplay      *display)
+{
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+  /* TODO: Modify data here */
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+}
+
 /* Mouse cursor policy:
  * - Always use the move cursor
  * - While dragging the paste, use a move modified
@@ -598,6 +571,23 @@ gimp_seamless_clone_tool_cursor_update (GimpTool         *tool,
     }
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
+}
+
+static void
+gimp_seamless_clone_tool_options_notify (GimpTool         *tool,
+                                         GimpToolOptions  *options,
+                                         const GParamSpec *pspec)
+{
+  GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
+
+  if (! tool->display)
+    return;
+
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+  /* TODO: Modify data here */
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
 static void
