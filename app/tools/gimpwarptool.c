@@ -651,6 +651,8 @@ gimp_warp_tool_create_image_map (GimpWarpTool *wt,
                                       wt->graph,
                                       GIMP_STOCK_TOOL_WARP);
 
+  gimp_image_map_set_region (wt->image_map, GIMP_IMAGE_MAP_REGION_DRAWABLE);
+
 #if 0
   g_object_set (wt->image_map, "gegl-caching", TRUE, NULL);
 #endif
