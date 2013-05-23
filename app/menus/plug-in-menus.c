@@ -292,11 +292,6 @@ plug_in_menus_menu_path_added (GimpPlugInProcedure *plug_in_proc,
           plug_in_menus_add_proc (manager, "/dummy-menubar/image-popup",
                                   plug_in_proc, menu_path);
         }
-      else if (! strcmp (manager->name, "<Toolbox>"))
-        {
-          plug_in_menus_add_proc (manager, "/toolbox-menubar",
-                                  plug_in_proc, menu_path);
-        }
       else if (! strcmp (manager->name, "<Layers>"))
         {
           plug_in_menus_add_proc (manager, "/layers-popup",
