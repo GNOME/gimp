@@ -3,6 +3,7 @@
  *
  * GimpDBusService
  * Copyright (C) 2007, 2008 Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2013       Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,11 +21,8 @@
 
 #include "config.h"
 
-#if HAVE_DBUS_GLIB
-
 #include <gegl.h>
 #include <gtk/gtk.h>
-#include <dbus/dbus-glib.h>
 
 #include "gui-types.h"
 
@@ -37,14 +35,7 @@
 #include "display/gimpdisplayshell.h"
 
 #include "gimpdbusservice.h"
-#include "gimpdbusservice-glue.h"
 
-
-enum
-{
-  OPENED,
-  LAST_SIGNAL
-};
 
 typedef struct
 {
@@ -53,32 +44,42 @@ typedef struct
 } OpenData;
 
 
-static void       gimp_dbus_service_class_init (GimpDBusServiceClass *klass);
+static void       gimp_dbus_service_ui_iface_init  (GimpDBusServiceUIIface *iface);
 
-static void       gimp_dbus_service_init           (GimpDBusService  *service);
-static void       gimp_dbus_service_dispose        (GObject          *object);
-static void       gimp_dbus_service_finalize       (GObject          *object);
+static void       gimp_dbus_service_dispose        (GObject               *object);
+static void       gimp_dbus_service_finalize       (GObject               *object);
 
-static void       gimp_dbus_service_gimp_opened    (Gimp             *gimp,
-						    const gchar      *uri,
-						    GimpDBusService  *service);
+static gboolean   gimp_dbus_service_activate       (GimpDBusServiceUI     *service,
+                                                    GDBusMethodInvocation *invocation);
+static gboolean   gimp_dbus_service_open           (GimpDBusServiceUI     *service,
+                                                    GDBusMethodInvocation *invocation,
+                                                    const gchar           *uri);
 
-static gboolean   gimp_dbus_service_queue_open     (GimpDBusService  *service,
-                                                    const gchar      *uri,
-                                                    gboolean          as_new);
+static gboolean   gimp_dbus_service_open_as_new    (GimpDBusServiceUI     *service,
+                                                    GDBusMethodInvocation *invocation,
+                                                    const gchar           *uri);
 
-static gboolean   gimp_dbus_service_open_idle      (GimpDBusService  *service);
-static OpenData * gimp_dbus_service_open_data_new  (GimpDBusService  *service,
-                                                    const gchar      *uri,
-                                                    gboolean          as_new);
-static void       gimp_dbus_service_open_data_free (OpenData         *data);
+static void       gimp_dbus_service_gimp_opened    (Gimp                  *gimp,
+						    const gchar           *uri,
+						    GimpDBusService       *service);
+
+static gboolean   gimp_dbus_service_queue_open     (GimpDBusService       *service,
+                                                    const gchar           *uri,
+                                                    gboolean               as_new);
+
+static gboolean   gimp_dbus_service_open_idle      (GimpDBusService       *service);
+static OpenData * gimp_dbus_service_open_data_new  (GimpDBusService       *service,
+                                                    const gchar           *uri,
+                                                    gboolean               as_new);
+static void       gimp_dbus_service_open_data_free (OpenData              *data);
 
 
-G_DEFINE_TYPE (GimpDBusService, gimp_dbus_service, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_CODE (GimpDBusService, gimp_dbus_service,
+                         GIMP_DBUS_SERVICE_TYPE_UI_SKELETON,
+                         G_IMPLEMENT_INTERFACE (GIMP_DBUS_SERVICE_TYPE_UI,
+                                                gimp_dbus_service_ui_iface_init))
 
 #define parent_class gimp_dbus_service_parent_class
-
-static guint gimp_dbus_service_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
@@ -86,26 +87,22 @@ gimp_dbus_service_class_init (GimpDBusServiceClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  gimp_dbus_service_signals[OPENED] =
-    g_signal_new ("opened",
-		  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpDBusServiceClass, opened),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__STRING,
-                  G_TYPE_NONE, 1, G_TYPE_STRING);
-
   object_class->dispose  = gimp_dbus_service_dispose;
   object_class->finalize = gimp_dbus_service_finalize;
-
-  dbus_g_object_type_install_info (G_TYPE_FROM_CLASS (klass),
-                                   &dbus_glib_gimp_object_info);
 }
 
 static void
 gimp_dbus_service_init (GimpDBusService *service)
 {
   service->queue = g_queue_new ();
+}
+
+static void
+gimp_dbus_service_ui_iface_init (GimpDBusServiceUIIface *iface)
+{
+  iface->handle_activate    = gimp_dbus_service_activate;
+  iface->handle_open        = gimp_dbus_service_open;
+  iface->handle_open_as_new = gimp_dbus_service_open_as_new;
 }
 
 GObject *
@@ -160,53 +157,55 @@ gimp_dbus_service_finalize (GObject *object)
 }
 
 gboolean
-gimp_dbus_service_open (GimpDBusService  *service,
-                        const gchar      *uri,
-                        gboolean         *success,
-                        GError          **dbus_error)
+gimp_dbus_service_activate (GimpDBusServiceUI     *service,
+                            GDBusMethodInvocation *invocation)
 {
-  g_return_val_if_fail (GIMP_IS_DBUS_SERVICE (service), FALSE);
-  g_return_val_if_fail (uri != NULL, FALSE);
-  g_return_val_if_fail (success != NULL, FALSE);
-
-  *success = gimp_dbus_service_queue_open (service, uri, FALSE);
-
-  return TRUE;
-}
-
-gboolean
-gimp_dbus_service_open_as_new (GimpDBusService  *service,
-                               const gchar      *uri,
-                               gboolean         *success,
-                               GError          **dbus_error)
-{
-  g_return_val_if_fail (GIMP_IS_DBUS_SERVICE (service), FALSE);
-  g_return_val_if_fail (uri != NULL, FALSE);
-  g_return_val_if_fail (success != NULL, FALSE);
-
-  *success = gimp_dbus_service_queue_open (service, uri, TRUE);
-
-  return TRUE;
-}
-
-gboolean
-gimp_dbus_service_activate (GimpDBusService  *service,
-                            GError          **dbus_error)
-{
-  GimpObject *display;
-
-  g_return_val_if_fail (GIMP_IS_DBUS_SERVICE (service), FALSE);
+  Gimp *gimp = GIMP_DBUS_SERVICE (service)->gimp;
 
   /*  We want to be called again later in case that GIMP is not fully
    *  started yet.
    */
-  if (! gimp_is_restored (service->gimp))
-    return TRUE;
+  if (gimp_is_restored (gimp))
+    {
+      GimpObject *display;
 
-  display = gimp_container_get_first_child (service->gimp->displays);
+      display = gimp_container_get_first_child (gimp->displays);
 
-  if (display)
-    gimp_display_shell_present (gimp_display_get_shell (GIMP_DISPLAY (display)));
+      if (display)
+        gimp_display_shell_present (gimp_display_get_shell (GIMP_DISPLAY (display)));
+    }
+
+  gimp_dbus_service_ui_complete_activate (service, invocation);
+
+  return TRUE;
+}
+
+gboolean
+gimp_dbus_service_open (GimpDBusServiceUI     *service,
+                        GDBusMethodInvocation *invocation,
+                        const gchar           *uri)
+{
+  gboolean success;
+
+  success = gimp_dbus_service_queue_open (GIMP_DBUS_SERVICE (service),
+                                          uri, FALSE);
+
+  gimp_dbus_service_ui_complete_open (service, invocation, success);
+
+  return TRUE;
+}
+
+gboolean
+gimp_dbus_service_open_as_new (GimpDBusServiceUI     *service,
+                               GDBusMethodInvocation *invocation,
+                               const gchar           *uri)
+{
+  gboolean success;
+
+  success = gimp_dbus_service_queue_open (GIMP_DBUS_SERVICE (service),
+                                          uri, TRUE);
+
+  gimp_dbus_service_ui_complete_open_as_new (service, invocation, success);
 
   return TRUE;
 }
@@ -216,7 +215,7 @@ gimp_dbus_service_gimp_opened (Gimp            *gimp,
 			       const gchar     *uri,
 			       GimpDBusService *service)
 {
-  g_signal_emit (service, gimp_dbus_service_signals[OPENED], 0, uri);
+  g_signal_emit_by_name (service, "opened", uri);
 }
 
 /*
@@ -297,6 +296,3 @@ gimp_dbus_service_open_data_free (OpenData *data)
   g_free (data->uri);
   g_slice_free (OpenData, data);
 }
-
-
-#endif /* HAVE_DBUS_GLIB */

@@ -9,6 +9,7 @@ INCLUDES = \
 	-I$(top_srcdir)		\
 	-I$(top_builddir)/app	\
 	-I$(top_srcdir)/app	\
+	$(GIO_UNIX_CFLAGS)	\
 	$(GEGL_CFLAGS)		\
 	$(GTK_CFLAGS)		\
 	$(DBUS_GLIB_CFLAGS)	\
@@ -41,7 +42,9 @@ libappgui_a_sources = \
 	ige-mac-menu.c		\
 	ige-mac-menu.h
 
-libappgui_a_built_sources = gimpdbusservice-glue.h 
+libappgui_a_built_sources = \
+	gimpdbusservice-generated.c	\
+	gimpdbusservice-generated.h
 
 libappgui_a_SOURCES = $(libappgui_a_built_sources) $(libappgui_a_sources)
 
@@ -52,10 +55,13 @@ EXTRA_DIST = \
 # rules to generate built sources
 #
 # setup autogeneration dependencies
-gen_sources = gimpdbusservice-glue.h
+gen_sources = $(libappgui_a_built_sources)
 CLEANFILES = $(gen_sources)
 
-$(srcdir)/gimpdbusservice.c: gimpdbusservice-glue.h
+$(srcdir)/gimpdbusservice.c: $(libappgui_a_built_sources)
 
-gimpdbusservice-glue.h: $(srcdir)/dbus-service.xml
-	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=gimp $< > $(@F)
+$(libappgui_a_built_sources): $(srcdir)/dbus-service.xml
+	$(GDBUS_CODEGEN) --interface-prefix org.gimp.GIMP. \
+			 --generate-c-code gimpdbusservice-generated \
+			 --c-namespace GimpDBusService \
+			 $(srcdir)/dbus-service.xml

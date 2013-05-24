@@ -58,7 +58,6 @@ m4_define([wmf_required_version], [0.2.8])
 m4_define([pygtk_required_version], [2.10.4])
 m4_define([poppler_required_version], [0.12.4])
 m4_define([libcurl_required_version], [7.15.1])
-m4_define([dbus_glib_required_version], [0.70])
 m4_define([libgudev_required_version], [167])
 m4_define([exif_required_version], [0.6.15])
 m4_define([lcms_required_version], [2.2])
@@ -495,6 +494,15 @@ AM_PATH_GLIB_2_0(glib_required_version, :,
 PKG_CHECK_MODULES(GMODULE_NO_EXPORT, gmodule-no-export-2.0)
 
 PKG_CHECK_MODULES(GIO, gio-2.0)
+
+if test "$os_win32" != "yes"; then
+  PKG_CHECK_MODULES(GIO_UNIX, gio-unix-2.0)
+fi
+
+AC_PATH_PROG(GDBUS_CODEGEN, gdbus-codegen, no)
+if test "x$GDBUS_CODEGEN" = xno; then
+  AC_MSG_ERROR([Could not find gdbus-codegen in your PATH])
+fi
 
 AC_MSG_CHECKING([if GLib is version 2.31.0 or newer])
 if $PKG_CONFIG --atleast-version=2.31.0 glib-2.0; then
@@ -1692,35 +1700,6 @@ if test "x$os_win32" = xyes; then
 fi
 
 AM_CONDITIONAL(HAVE_DX_DINPUT, test "x$have_dx_dinput" = xyes)
-
-
-###############################
-# Check for D-Bus GLib bindings
-###############################
-
-AC_ARG_WITH(dbus,  [  --without-dbus          build without D-Bus support])
-
-have_dbus_glib="no (disabled)"
-
-if test "x$with_dbus" != xno; then
-  PKG_CHECK_MODULES(DBUS_GLIB, dbus-glib-1 >= dbus_glib_required_version,
-    have_dbus_glib=yes,
-    have_dbus_glib=no)
-fi
-
-if test "x$have_dbus_glib" = xyes; then
-  AC_PATH_PROG(DBUS_BINDING_TOOL, dbus-binding-tool, no)
-  if test "x$DBUS_BINDING_TOOL" = xno; then
-    AC_MSG_WARN([Could not find dbus-binding-tool in your PATH])
-    have_dbus_glib="no (dbus-binding-tool not found)"
-  fi
-fi
-
-if test "x$have_dbus_glib" = xyes; then
-  AC_DEFINE(HAVE_DBUS_GLIB, 1,
-            [Define to 1 if D-Bus GLib bindings are available])
-  GIMP_COMMAND='gimp-gimp_app_version'
-fi
 
 
 ####################

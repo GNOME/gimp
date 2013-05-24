@@ -57,10 +57,7 @@ header files installed.
      and fontconfig 2.2.0 or newer. Older versions are known to have
      bugs that seriously affect the stability of GIMP.
 
-  7. We use dbus-glib if available. Grab it from
-     http://dbus.freedesktop.org/releases/dbus-glib/
-
-  8. Access of remote files is implemented in the URI plug-in. There
+  7. Access of remote files is implemented in the URI plug-in. There
      are several possible implementations for this. The implementation
      used is determined when you configure GIMP. By default the
      GIO/GVfs backend is used. If you don't have GVfs support on your
@@ -68,27 +65,27 @@ header files installed.
      configure. The configure script will then try to detect another
      method for accessing remote files.
 
-  9. The file-compressor plug-in requires zlib, libbzip2, and liblzma to
+  8. The file-compressor plug-in requires zlib, libbzip2, and liblzma to
      be installed. All these libraries are required dependencies.
 
- 10. You may want to install other third party libraries or programs
+  9. You may want to install other third party libraries or programs
      that are needed for some of the available plug-ins. We recommend to
      check that the following libraries are installed: lcms, libpng,
      libjpeg, libpoppler, libtiff, webkit, libmng, librsvg, libwmf,
      libgs (Ghostscript), libaa and libjasper.
 
- 11. The Python extension requires Python development headers to be
+ 10. The Python extension requires Python development headers to be
      present. You will also need PyGTK and the respective development
      headers.
 
- 12. Configure GIMP by running the `configure' script. You may want
+ 11. Configure GIMP by running the `configure' script. You may want
      to pass some options to it, see below.
 
- 13. Build GIMP by running `make'. The use of GNU make is recommended.
+ 12. Build GIMP by running `make'. The use of GNU make is recommended.
      If you need to tweak the build to make it work with other flavours
      of make, we'd appreciate if you'd send us a patch with the changes.
 
- 14. Install GIMP by running `make install'. In order to avoid clashes
+ 13. Install GIMP by running `make install'. In order to avoid clashes
      with other versions of GIMP, we install a binary called gimp-2.8.
      By default there's also a link created so that you can type 'gimp'
      to start gimp-2.8.
@@ -203,9 +200,6 @@ These are:
 
   --without-alsa.  If you don't want to compile ALSA support into the
      MIDI input controller module, you can use the --without-alsa option.
-
-  --without-dbus.  If you want to build without D-Bus support, you can
-     pass --without-dbus to the configure script.
 
   --without-linux-input.  If you don't want to compile the Linux Input
      controller module, you can use the --without-linux-input option.

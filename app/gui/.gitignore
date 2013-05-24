@@ -3,6 +3,7 @@
 /.deps
 /.libs
 /*.lo
-/gimpdbusservice-glue.h
+/gimpdbusservice-generated.c
+/gimpdbusservice-generated.h
 /libappgui.a
 /libappgui.la

@@ -3,6 +3,7 @@
  *
  * GimpDBusService
  * Copyright (C) 2007, 2008 Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2013       Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,12 +22,16 @@
 #ifndef __GIMP_DBUS_SERVICE_H__
 #define __GIMP_DBUS_SERVICE_H__
 
-G_BEGIN_DECLS
 
+#include "gimpdbusservice-generated.h"
 
-#define GIMP_DBUS_SERVICE_NAME       "org.gimp.GIMP.UI"
-#define GIMP_DBUS_SERVICE_PATH       "/org/gimp/GIMP/UI"
-#define GIMP_DBUS_SERVICE_INTERFACE  "org.gimp.GIMP.UI"
+/* service name and path should really be org.gimp.GIMP and
+ * /org/gimp/GIMP and only the interface be called UI.
+ */
+#define GIMP_DBUS_SERVICE_NAME   "org.gimp.GIMP.UI"
+#define GIMP_DBUS_SERVICE_PATH   "/org/gimp/GIMP/UI"
+#define GIMP_DBUS_INTERFACE_NAME "org.gimp.GIMP.UI"
+#define GIMP_DBUS_INTERFACE_PATH "/org/gimp/GIMP/UI"
 
 
 #define GIMP_TYPE_DBUS_SERVICE            (gimp_dbus_service_get_type ())
@@ -42,7 +47,7 @@ typedef struct _GimpDBusServiceClass GimpDBusServiceClass;
 
 struct _GimpDBusService
 {
-  GObject  parent_instance;
+  GimpDBusServiceUISkeleton  parent_instance;
 
   Gimp    *gimp;
   GQueue  *queue;
@@ -51,30 +56,13 @@ struct _GimpDBusService
 
 struct _GimpDBusServiceClass
 {
-  GObjectClass  parent_class;
-
-  /*  signals  */
-  void (* opened) (GimpDBusService *service,
-		   const gchar     *uri);
+  GimpDBusServiceUISkeletonClass  parent_class;
 };
 
 
-GType     gimp_dbus_service_get_type    (void) G_GNUC_CONST;
+GType     gimp_dbus_service_get_type (void) G_GNUC_CONST;
 
-GObject * gimp_dbus_service_new         (Gimp            *gimp);
+GObject * gimp_dbus_service_new      (Gimp *gimp);
 
-gboolean  gimp_dbus_service_open        (GimpDBusService  *service,
-                                         const gchar      *uri,
-                                         gboolean         *success,
-                                         GError          **dbus_error);
-gboolean  gimp_dbus_service_open_as_new (GimpDBusService  *service,
-                                         const gchar      *uri,
-                                         gboolean         *success,
-                                         GError          **dbus_error);
-gboolean  gimp_dbus_service_activate    (GimpDBusService  *service,
-                                         GError          **dbus_error);
-
-
-G_END_DECLS
 
 #endif /* __GIMP_DBUS_SERVICE_H__ */

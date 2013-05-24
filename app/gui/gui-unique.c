@@ -29,12 +29,6 @@
 #include <sys/param.h>
 #endif
 
-#if HAVE_DBUS_GLIB
-#define DBUS_API_SUBJECT_TO_CHANGE
-#include <dbus/dbus-glib.h>
-#include <dbus/dbus-glib-lowlevel.h>
-#endif
-
 #include "gui/gui-types.h"
 
 #include "core/gimp.h"
@@ -48,27 +42,30 @@
 #include "gui-unique.h"
 
 
-#if HAVE_DBUS_GLIB
-static void  gui_dbus_service_init (Gimp *gimp);
-static void  gui_dbus_service_exit (void);
-
-static DBusGConnection *dbus_connection  = NULL;
-#endif
-
 #ifdef G_OS_WIN32
+
 static void  gui_unique_win32_init (Gimp *gimp);
 static void  gui_unique_win32_exit (void);
 
-static Gimp            *unique_gimp      = NULL;
-static HWND             proxy_window     = NULL;
-#endif
+static Gimp *unique_gimp  = NULL;
+static HWND  proxy_window = NULL;
 
-#ifdef GDK_WINDOWING_QUARTZ
+#elifdef GDK_WINDOWING_QUARTZ
+
 static void  gui_unique_mac_init (Gimp *gimp);
 static void  gui_unique_mac_exit (void);
 
-static Gimp            *unique_gimp      = NULL;
-AEEventHandlerUPP       open_document_callback_proc;
+static Gimp       *unique_gimp = NULL;
+AEEventHandlerUPP  open_document_callback_proc;
+
+#else
+
+static void  gui_dbus_service_init (Gimp *gimp);
+static void  gui_dbus_service_exit (void);
+
+static GDBusObjectManagerServer *dbus_manager = NULL;
+static guint                     dbus_name_id = 0;
+
 #endif
 
 
@@ -77,12 +74,10 @@ gui_unique_init (Gimp *gimp)
 {
 #ifdef G_OS_WIN32
   gui_unique_win32_init (gimp);
-#elif HAVE_DBUS_GLIB
-  gui_dbus_service_init (gimp);
-#endif
-
-#ifdef GDK_WINDOWING_QUARTZ
+#elifdef GDK_WINDOWING_QUARTZ
   gui_unique_mac_init (gimp);
+#else
+  gui_dbus_service_init (gimp);
 #endif
 }
 
@@ -91,56 +86,12 @@ gui_unique_exit (void)
 {
 #ifdef G_OS_WIN32
   gui_unique_win32_exit ();
-#elif HAVE_DBUS_GLIB
+#elifdef GDK_WINDOWING_QUARTZ
+  gui_unique_mac_exit ();
+#else
   gui_dbus_service_exit ();
 #endif
-
-#ifdef GDK_WINDOWING_QUARTZ
-  gui_unique_mac_exit ();
-#endif
 }
-
-
-#if HAVE_DBUS_GLIB
-
-static void
-gui_dbus_service_init (Gimp *gimp)
-{
-  GError  *error = NULL;
-
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (dbus_connection == NULL);
-
-  dbus_connection = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
-
-  if (dbus_connection)
-    {
-      GObject *service = gimp_dbus_service_new (gimp);
-
-      dbus_bus_request_name (dbus_g_connection_get_connection (dbus_connection),
-                             GIMP_DBUS_SERVICE_NAME, 0, NULL);
-
-      dbus_g_connection_register_g_object (dbus_connection,
-                                           GIMP_DBUS_SERVICE_PATH, service);
-    }
-  else
-    {
-      g_printerr ("%s\n", error->message);
-      g_error_free (error);
-    }
-}
-
-static void
-gui_dbus_service_exit (void)
-{
-  if (dbus_connection)
-    {
-      dbus_g_connection_unref (dbus_connection);
-      dbus_connection = NULL;
-    }
-}
-
-#endif  /* HAVE_DBUS_GLIB */
 
 
 #ifdef G_OS_WIN32
@@ -275,10 +226,7 @@ gui_unique_win32_exit (void)
   DestroyWindow (proxy_window);
 }
 
-#endif  /* G_OS_WIN32 */
-
-
-#ifdef GDK_WINDOWING_QUARTZ
+#elifdef GDK_WINDOWING_QUARTZ
 
 static gboolean
 gui_unique_mac_idle_open (gchar *data)
@@ -379,4 +327,66 @@ gui_unique_mac_exit (void)
   DisposeAEEventHandlerUPP(open_document_callback_proc);
 }
 
-#endif /* GDK_WINDOWING_QUARTZ */
+#else
+
+static void
+gui_dbus_bus_acquired (GDBusConnection *connection,
+                       const gchar     *name,
+                       Gimp            *gimp)
+{
+  GDBusObjectSkeleton *object;
+  GObject             *service;
+
+  /* this should use GIMP_DBUS_SERVICE_PATH, but that's historically wrong */
+  dbus_manager = g_dbus_object_manager_server_new ("/org/gimp/GIMP");
+
+  object = g_dbus_object_skeleton_new (GIMP_DBUS_INTERFACE_PATH);
+
+  service = gimp_dbus_service_new (gimp);
+  g_dbus_object_skeleton_add_interface (object,
+                                        G_DBUS_INTERFACE_SKELETON (service));
+  g_object_unref (service);
+
+  g_dbus_object_manager_server_export (dbus_manager, object);
+  g_object_unref (object);
+
+  g_dbus_object_manager_server_set_connection (dbus_manager, connection);
+}
+
+static void
+gui_dbus_name_acquired (GDBusConnection *connection,
+                        const gchar     *name,
+                        Gimp            *gimp)
+{
+}
+
+static void
+gui_dbus_name_lost (GDBusConnection *connection,
+                    const gchar     *name,
+                    Gimp            *gimp)
+{
+}
+
+static void
+gui_dbus_service_init (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (dbus_name_id == 0);
+
+  dbus_name_id = g_bus_own_name (G_BUS_TYPE_SESSION,
+                                 GIMP_DBUS_SERVICE_NAME,
+                                 G_BUS_NAME_OWNER_FLAGS_NONE,
+                                 (GBusAcquiredCallback) gui_dbus_bus_acquired,
+                                 (GBusNameAcquiredCallback) gui_dbus_name_acquired,
+                                 (GBusNameLostCallback) gui_dbus_name_lost,
+                                 gimp, NULL);
+}
+
+static void
+gui_dbus_service_exit (void)
+{
+  g_bus_unown_name (dbus_name_id);
+  g_object_unref (dbus_manager);
+}
+
+#endif
