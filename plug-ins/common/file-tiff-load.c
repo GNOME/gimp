@@ -684,13 +684,13 @@ load_image (const gchar        *filename,
               image_type = GIMP_GRAY;
               layer_type = (alpha) ? GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE;
               if (bps == 8 && alpha)
-                base_format = babl_format ("Y u8");
+                base_format = babl_format ("Y'A u8");
               else if (bps == 8 && !alpha)
-                base_format = babl_format ("Y u8");
+                base_format = babl_format ("Y' u8");
               else if (bps == 16 && alpha)
-                base_format = babl_format ("Y u16");
+                base_format = babl_format ("Y'A u16");
               else if (bps == 16 && !alpha)
-                base_format = babl_format ("Y u16");
+                base_format = babl_format ("Y' u16");
             }
           break;
 
@@ -755,9 +755,9 @@ load_image (const gchar        *filename,
           image_type = GIMP_RGB;
           layer_type = GIMP_RGBA_IMAGE;
           if (bps == 8)
-            base_format = babl_format ("RGBA u8");
+            base_format = babl_format ("R'G'B'A u8");
           else if (bps == 16)
-            base_format = babl_format ("RGBA u16");
+            base_format = babl_format ("R'G'B'A u16");
         }
 
       if (target == GIMP_PAGE_SELECTOR_TARGET_LAYERS)
