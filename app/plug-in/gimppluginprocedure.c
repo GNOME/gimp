@@ -449,12 +449,13 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
           goto failure;
         }
     }
-  else if (g_str_has_prefix (menu_path, "<Brushes>")   ||
-           g_str_has_prefix (menu_path, "<Dynamics>")  ||
-           g_str_has_prefix (menu_path, "<Gradients>") ||
-           g_str_has_prefix (menu_path, "<Palettes>")  ||
-           g_str_has_prefix (menu_path, "<Patterns>")  ||
-           g_str_has_prefix (menu_path, "<Fonts>")     ||
+  else if (g_str_has_prefix (menu_path, "<Brushes>")     ||
+           g_str_has_prefix (menu_path, "<Dynamics>")    ||
+           g_str_has_prefix (menu_path, "<Gradients>")   ||
+           g_str_has_prefix (menu_path, "<Palettes>")    ||
+           g_str_has_prefix (menu_path, "<Patterns>")    ||
+           g_str_has_prefix (menu_path, "<ToolPresets>") ||
+           g_str_has_prefix (menu_path, "<Fonts>")       ||
            g_str_has_prefix (menu_path, "<Buffers>"))
     {
       if ((procedure->num_args < 1) ||
@@ -472,11 +473,11 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
                    "Plug-In \"%s\"\n(%s)\n"
                    "attempted to install procedure \"%s\" "
                    "in the invalid menu location \"%s\".\n"
-                   "Use either \"<Toolbox>\", \"<Image>\", "
+                   "Use either \"<Image>\", "
                    "\"<Layers>\", \"<Channels>\", \"<Vectors>\", "
-                   "\"<Colormap>\", \"<Load>\", \"<Save>\", "
-                   "\"<Brushes>\", \"<Dynamics>\", \"<Gradients>\", "
-                   "\"<Palettes>\", \"<Patterns>\" or \"<Buffers>\".",
+                   "\"<Colormap>\", \"<Brushes>\", \"<Dynamics>\", "
+                   "\"<Gradients>\", \"<Palettes>\", \"<Patterns>\", "
+                   "\"<ToolPresets>\", \"<Fonts>\" or \"<Buffers>\".",
                    basename, gimp_filename_to_utf8 (proc->prog),
                    gimp_object_get_name (proc),
                    menu_path);
