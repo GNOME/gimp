@@ -760,9 +760,19 @@ save_image (const gchar  *filename,
       photometric     = PHOTOMETRIC_RGB;
       alpha           = TRUE;
       if (bitspersample == 8)
-        format        = babl_format ("R'G'B'A u8");
+        {
+          if (tsvals.save_transp_pixels)
+            format    = babl_format ("R'G'B'A u8");
+          else
+            format    = babl_format ("R'aG'aB'aA u8");
+        }
       else
-        format        = babl_format ("R'G'B'A u16");
+        {
+          if (tsvals.save_transp_pixels)
+            format    = babl_format ("R'G'B'A u16");
+          else
+            format    = babl_format ("R'aG'aB'aA u16");
+        }
       break;
 
     case GIMP_GRAYA_IMAGE:
@@ -770,9 +780,19 @@ save_image (const gchar  *filename,
       photometric     = PHOTOMETRIC_MINISBLACK;
       alpha           = TRUE;
       if (bitspersample == 8)
-        format        = babl_format ("Y'A u8");
+        {
+          if (tsvals.save_transp_pixels)
+            format    = babl_format ("Y'A u8");
+          else
+            format    = babl_format ("Y'aA u8");
+        }
       else
-        format        = babl_format ("Y'A u16");
+        {
+          if (tsvals.save_transp_pixels)
+            format    = babl_format ("Y'A u16");
+          else
+            format    = babl_format ("Y'aA u16");
+        }
       break;
 
     case GIMP_INDEXED_IMAGE:
@@ -1012,53 +1032,10 @@ save_image (const gchar  *filename,
               break;
 
             case GIMP_GRAY_IMAGE:
-              success = (TIFFWriteScanline (tif, t, row, 0) >= 0);
-              break;
-
             case GIMP_GRAYA_IMAGE:
-              for (col = 0; col < cols*samplesperpixel; col+=samplesperpixel)
-                {
-                  if (tsvals.save_transp_pixels)
-                    {
-                      data[col + 0] = t[col + 0];
-                    }
-                  else
-                    {
-                      /* pre-multiply gray by alpha */
-                      data[col + 0] = (t[col + 0] * t[col + 1]) / 255;
-                    }
-
-                  data[col + 1] = t[col + 1];  /* alpha channel */
-                }
-
-              success = (TIFFWriteScanline (tif, data, row, 0) >= 0);
-              break;
-
             case GIMP_RGB_IMAGE:
-              success = (TIFFWriteScanline (tif, t, row, 0) >= 0);
-              break;
-
             case GIMP_RGBA_IMAGE:
-              for (col = 0; col < cols*samplesperpixel; col+=samplesperpixel)
-                {
-                  if (tsvals.save_transp_pixels)
-                    {
-                      data[col+0] = t[col + 0];
-                      data[col+1] = t[col + 1];
-                      data[col+2] = t[col + 2];
-                    }
-                  else
-                    {
-                      /* pre-multiply rgb by alpha */
-                      data[col+0] = t[col + 0] * t[col + 3] / 255;
-                      data[col+1] = t[col + 1] * t[col + 3] / 255;
-                      data[col+2] = t[col + 2] * t[col + 3] / 255;
-                    }
-
-                  data[col+3] = t[col + 3];  /* alpha channel */
-                }
-
-              success = (TIFFWriteScanline (tif, data, row, 0) >= 0);
+              success = (TIFFWriteScanline (tif, t, row, 0) >= 0);
               break;
 
             default:
