@@ -36,9 +36,9 @@
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
-#include "core/gimpimagemapconfig.h"
 #include "core/gimplist.h"
 #include "core/gimpparamspecs-duplicate.h"
+#include "core/gimpsettings.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimppropwidgets.h"
@@ -235,7 +235,7 @@ gimp_operation_tool_get_settings_ui (GimpImageMapTool  *image_map_tool,
   settings = gimp_gegl_get_config_container (type);
   if (! gimp_list_get_sort_func (GIMP_LIST (settings)))
     gimp_list_set_sort_func (GIMP_LIST (settings),
-                             (GCompareFunc) gimp_image_map_config_compare);
+                             (GCompareFunc) gimp_settings_compare);
 
   basename = g_strconcat (G_OBJECT_TYPE_NAME (tool->config), ".settings", NULL);
   filename = g_build_filename (gimp_directory (), "filters", basename, NULL);
@@ -295,7 +295,7 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
     g_object_unref (tool->config);
 
   tool->config = gimp_gegl_get_config_proxy (tool->operation,
-                                             GIMP_TYPE_IMAGE_MAP_CONFIG);
+                                             GIMP_TYPE_SETTINGS);
 
   gimp_image_map_tool_get_operation (GIMP_IMAGE_MAP_TOOL (tool));
 

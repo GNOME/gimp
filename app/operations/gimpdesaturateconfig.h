@@ -22,7 +22,7 @@
 #define __GIMP_DESATURATE_CONFIG_H__
 
 
-#include "core/gimpimagemapconfig.h"
+#include "core/gimpsettings.h"
 
 
 #define GIMP_TYPE_DESATURATE_CONFIG            (gimp_desaturate_config_get_type ())
@@ -37,14 +37,14 @@ typedef struct _GimpDesaturateConfigClass GimpDesaturateConfigClass;
 
 struct _GimpDesaturateConfig
 {
-  GimpImageMapConfig  parent_instance;
+  GimpSettings        parent_instance;
 
   GimpDesaturateMode  mode;
 };
 
 struct _GimpDesaturateConfigClass
 {
-  GimpImageMapConfigClass  parent_class;
+  GimpSettingsClass  parent_class;
 };
 
 

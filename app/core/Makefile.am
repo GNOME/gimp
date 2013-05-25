@@ -252,8 +252,6 @@ libappcore_a_sources = \
 	gimpimagefile.h				\
 	gimpimagemap.c				\
 	gimpimagemap.h				\
-	gimpimagemapconfig.c			\
-	gimpimagemapconfig.h			\
 	gimpitem.c				\
 	gimpitem.h				\
 	gimpitem-exclusive.c			\
@@ -335,6 +333,8 @@ libappcore_a_sources = \
 	gimpscanconvert.h			\
 	gimpselection.c				\
 	gimpselection.h				\
+	gimpsettings.c				\
+	gimpsettings.h				\
 	gimpstrokeoptions.c			\
 	gimpstrokeoptions.h			\
 	gimpsubprogress.c			\

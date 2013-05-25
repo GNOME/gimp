@@ -22,7 +22,7 @@
 #define __GIMP_COLORIZE_CONFIG_H__
 
 
-#include "core/gimpimagemapconfig.h"
+#include "core/gimpsettings.h"
 
 
 #define GIMP_TYPE_COLORIZE_CONFIG            (gimp_colorize_config_get_type ())
@@ -37,16 +37,16 @@ typedef struct _GimpColorizeConfigClass GimpColorizeConfigClass;
 
 struct _GimpColorizeConfig
 {
-  GimpImageMapConfig  parent_instance;
+  GimpSettings  parent_instance;
 
-  gdouble             hue;
-  gdouble             saturation;
-  gdouble             lightness;
+  gdouble       hue;
+  gdouble       saturation;
+  gdouble       lightness;
 };
 
 struct _GimpColorizeConfigClass
 {
-  GimpImageMapConfigClass  parent_class;
+  GimpSettingsClass  parent_class;
 };
 
 

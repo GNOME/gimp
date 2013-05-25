@@ -22,7 +22,7 @@
 #define __GIMP_POSTERIZE_CONFIG_H__
 
 
-#include "core/gimpimagemapconfig.h"
+#include "core/gimpsettings.h"
 
 
 #define GIMP_TYPE_POSTERIZE_CONFIG            (gimp_posterize_config_get_type ())
@@ -37,14 +37,14 @@ typedef struct _GimpPosterizeConfigClass GimpPosterizeConfigClass;
 
 struct _GimpPosterizeConfig
 {
-  GimpImageMapConfig  parent_instance;
+  GimpSettings  parent_instance;
 
-  gint                levels;
+  gint          levels;
 };
 
 struct _GimpPosterizeConfigClass
 {
-  GimpImageMapConfigClass  parent_class;
+  GimpSettingsClass  parent_class;
 };
 
 

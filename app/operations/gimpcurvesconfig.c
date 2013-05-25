@@ -80,7 +80,7 @@ static void     gimp_curves_config_curve_dirty  (GimpCurve        *curve,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpCurvesConfig, gimp_curves_config,
-                         GIMP_TYPE_IMAGE_MAP_CONFIG,
+                         GIMP_TYPE_SETTINGS,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_curves_config_iface_init))
 

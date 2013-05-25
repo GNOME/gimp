@@ -21,7 +21,7 @@
 #define __GIMP_CAGE_CONFIG_H__
 
 
-#include "core/gimpimagemapconfig.h"
+#include "core/gimpsettings.h"
 
 
 struct _GimpCagePoint
@@ -46,18 +46,18 @@ typedef struct _GimpCageConfigClass GimpCageConfigClass;
 
 struct _GimpCageConfig
 {
-  GimpImageMapConfig  parent_instance;
+  GimpSettings  parent_instance;
 
-  GArray             *cage_points;
+  GArray       *cage_points;
 
-  gdouble             displacement_x;
-  gdouble             displacement_y;
-  GimpCageMode        cage_mode;  /* Cage mode, used to commit displacement */
+  gdouble       displacement_x;
+  gdouble       displacement_y;
+  GimpCageMode  cage_mode;  /* Cage mode, used to commit displacement */
 };
 
 struct _GimpCageConfigClass
 {
-  GimpImageMapConfigClass  parent_class;
+  GimpSettingsClass  parent_class;
 };
 
 

@@ -22,7 +22,7 @@
 #define __GIMP_HUE_SATURATION_CONFIG_H__
 
 
-#include "core/gimpimagemapconfig.h"
+#include "core/gimpsettings.h"
 
 
 #define GIMP_TYPE_HUE_SATURATION_CONFIG            (gimp_hue_saturation_config_get_type ())
@@ -37,20 +37,20 @@ typedef struct _GimpHueSaturationConfigClass GimpHueSaturationConfigClass;
 
 struct _GimpHueSaturationConfig
 {
-  GimpImageMapConfig  parent_instance;
+  GimpSettings  parent_instance;
 
-  GimpHueRange        range;
+  GimpHueRange  range;
 
-  gdouble             hue[7];
-  gdouble             saturation[7];
-  gdouble             lightness[7];
+  gdouble       hue[7];
+  gdouble       saturation[7];
+  gdouble       lightness[7];
 
-  gdouble             overlap;
+  gdouble       overlap;
 };
 
 struct _GimpHueSaturationConfigClass
 {
-  GimpImageMapConfigClass  parent_class;
+  GimpSettingsClass  parent_class;
 };
 
 

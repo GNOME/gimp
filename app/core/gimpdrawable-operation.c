@@ -31,8 +31,8 @@
 #include "gimpdrawable.h"
 #include "gimpdrawable-operation.h"
 #include "gimpdrawable-shadow.h"
-#include "gimpimagemapconfig.h"
 #include "gimpprogress.h"
+#include "gimpsettings.h"
 
 
 /*  public functions  */
@@ -87,7 +87,7 @@ gimp_drawable_apply_operation_by_name (GimpDrawable *drawable,
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (undo_desc != NULL);
   g_return_if_fail (operation_type != NULL);
-  g_return_if_fail (config == NULL || GIMP_IS_IMAGE_MAP_CONFIG (config));
+  g_return_if_fail (config == NULL || GIMP_IS_SETTINGS (config));
 
   node = g_object_new (GEGL_TYPE_NODE,
                        "operation", operation_type,

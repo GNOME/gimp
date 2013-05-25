@@ -44,11 +44,11 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-pick-color.h"
 #include "core/gimpimagemap.h"
-#include "core/gimpimagemapconfig.h"
 #include "core/gimplist.h"
 #include "core/gimppickable.h"
 #include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
+#include "core/gimpsettings.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpdialogfactory.h"
@@ -195,9 +195,9 @@ gimp_image_map_tool_class_init (GimpImageMapToolClass *klass)
 static void
 gimp_image_map_tool_base_init (GimpImageMapToolClass *klass)
 {
-  klass->recent_settings = gimp_list_new (GIMP_TYPE_IMAGE_MAP_CONFIG, TRUE);
+  klass->recent_settings = gimp_list_new (GIMP_TYPE_SETTINGS, TRUE);
   gimp_list_set_sort_func (GIMP_LIST (klass->recent_settings),
-                           (GCompareFunc) gimp_image_map_config_compare);
+                           (GCompareFunc) gimp_settings_compare);
 }
 
 static void

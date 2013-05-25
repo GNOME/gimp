@@ -53,7 +53,7 @@ static void   gimp_cage_config_compute_edges_normal   (GimpCageConfig *gcc);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpCageConfig, gimp_cage_config,
-                         GIMP_TYPE_IMAGE_MAP_CONFIG,
+                         GIMP_TYPE_SETTINGS,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 NULL))
 
