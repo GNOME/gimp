@@ -683,28 +683,62 @@ load_image (const gchar        *filename,
             {
               image_type = GIMP_GRAY;
               layer_type = (alpha) ? GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE;
-              if (bps == 8 && alpha)
-                base_format = babl_format ("Y'A u8");
-              else if (bps == 8 && !alpha)
-                base_format = babl_format ("Y' u8");
-              else if (bps == 16 && alpha)
-                base_format = babl_format ("Y'A u16");
-              else if (bps == 16 && !alpha)
-                base_format = babl_format ("Y' u16");
+
+              if (alpha)
+                {
+                  if (bps == 8)
+                    {
+                      if (tsvals.save_transp_pixels)
+                        base_format = babl_format ("Y'A u8");
+                      else
+                        base_format = babl_format ("Y'aA u8");
+                    }
+                  else if (bps == 16)
+                    {
+                      if (tsvals.save_transp_pixels)
+                        base_format = babl_format ("Y'A u16");
+                      else
+                        base_format = babl_format ("Y'aA u16");
+                    }
+                }
+              else
+                {
+                  if (bps == 8)
+                    base_format     = babl_format ("Y' u8");
+                  else if (bps == 16)
+                    base_format     = babl_format ("Y' u16");
+                }
             }
           break;
 
         case PHOTOMETRIC_RGB:
           image_type = GIMP_RGB;
           layer_type = (alpha) ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
-          if (bps == 8 && alpha)
-            base_format = babl_format ("R'G'B'A u8");
-          else if (bps == 8 && !alpha)
-            base_format = babl_format ("R'G'B' u8");
-          else if (bps == 16 && alpha)
-            base_format = babl_format ("R'G'B'A u16");
-          else if (bps == 16 && !alpha)
-            base_format = babl_format ("R'G'B' u16");
+
+          if (alpha)
+            {
+              if (bps == 8)
+                {
+                  if (tsvals.save_transp_pixels)
+                    base_format = babl_format ("R'G'B'A u8");
+                  else
+                    base_format = babl_format ("R'aG'aB'aA u8");
+                }
+              else if (bps == 16)
+                {
+                  if (tsvals.save_transp_pixels)
+                    base_format = babl_format ("R'G'B'A u16");
+                  else
+                    base_format = babl_format ("R'aG'aB'aA u16");
+                }
+            }
+          else
+            {
+              if (bps == 8)
+                base_format     = babl_format ("R'G'B' u8");
+              else if (bps == 16)
+                base_format     = babl_format ("R'G'B' u16");
+            }
           break;
 
 #if 0
@@ -755,9 +789,9 @@ load_image (const gchar        *filename,
           image_type = GIMP_RGB;
           layer_type = GIMP_RGBA_IMAGE;
           if (bps == 8)
-            base_format = babl_format ("R'G'B'A u8");
+            base_format = babl_format ("R'aG'aB'aA u8");
           else if (bps == 16)
-            base_format = babl_format ("R'G'B'A u16");
+            base_format = babl_format ("R'aG'aB'aA u16");
         }
 
       if (target == GIMP_PAGE_SELECTOR_TARGET_LAYERS)
