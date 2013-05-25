@@ -828,51 +828,6 @@ gimp_tool_modifier_key (GimpTool        *tool,
   GIMP_TOOL_GET_CLASS (tool)->modifier_key (tool, key, press, state, display);
 }
 
-void
-gimp_tool_set_modifier_state (GimpTool        *tool,
-                              GdkModifierType  state,
-                              GimpDisplay     *display)
-{
-  g_return_if_fail (GIMP_IS_TOOL (tool));
-  g_return_if_fail (GIMP_IS_DISPLAY (display));
-  g_return_if_fail (gimp_tool_control_is_active (tool->control) == FALSE);
-
-  GIMP_LOG (TOOL_FOCUS, "tool: %p  display: %p  tool->focus_display: %p",
-            tool, display, tool->focus_display);
-
-  g_return_if_fail (display == tool->focus_display);
-
-  if ((tool->modifier_state & GDK_SHIFT_MASK) != (state & GDK_SHIFT_MASK))
-    {
-      gimp_tool_modifier_key (tool, GDK_SHIFT_MASK,
-                              (state & GDK_SHIFT_MASK) ? TRUE : FALSE, state,
-                              display);
-    }
-
-  if ((tool->modifier_state & GDK_CONTROL_MASK) != (state & GDK_CONTROL_MASK))
-    {
-      gimp_tool_modifier_key (tool, GDK_CONTROL_MASK,
-                              (state & GDK_CONTROL_MASK) ? TRUE : FALSE, state,
-                              display);
-    }
-
-  if ((tool->modifier_state & GDK_MOD1_MASK) != (state & GDK_MOD1_MASK))
-    {
-      gimp_tool_modifier_key (tool, GDK_MOD1_MASK,
-                              (state & GDK_MOD1_MASK) ? TRUE : FALSE, state,
-                              display);
-    }
-
-  if ((tool->modifier_state & GDK_MOD2_MASK) != (state & GDK_MOD2_MASK))
-    {
-      gimp_tool_modifier_key (tool, GDK_MOD2_MASK,
-                              (state & GDK_MOD2_MASK) ? TRUE : FALSE, state,
-                              display);
-    }
-
-  tool->modifier_state = state;
-}
-
 static void
 gimp_tool_active_modifier_key (GimpTool        *tool,
                                GdkModifierType  key,
@@ -888,11 +843,76 @@ gimp_tool_active_modifier_key (GimpTool        *tool,
                                                    display);
 }
 
+static gboolean
+state_changed (GdkModifierType  old_state,
+               GdkModifierType  new_state,
+               GdkModifierType  modifier,
+               gboolean        *press)
+{
+  if ((old_state & modifier) != (new_state & modifier))
+    {
+      *press = (new_state & modifier) ? TRUE : FALSE;
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+void
+gimp_tool_set_modifier_state (GimpTool        *tool,
+                              GdkModifierType  state,
+                              GimpDisplay     *display)
+{
+  gboolean press;
+
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+  g_return_if_fail (GIMP_IS_DISPLAY (display));
+  g_return_if_fail (gimp_tool_control_is_active (tool->control) == FALSE);
+
+  GIMP_LOG (TOOL_FOCUS, "tool: %p  display: %p  tool->focus_display: %p",
+            tool, display, tool->focus_display);
+
+  g_return_if_fail (display == tool->focus_display);
+
+  if (state_changed (tool->modifier_state, state, GDK_SHIFT_MASK, &press))
+    {
+      gimp_tool_modifier_key (tool, GDK_SHIFT_MASK,
+                              press, state,
+                              display);
+    }
+
+  if (state_changed (tool->modifier_state, state, GDK_CONTROL_MASK, &press))
+    {
+      gimp_tool_modifier_key (tool, GDK_CONTROL_MASK,
+                              press, state,
+                              display);
+    }
+
+  if (state_changed (tool->modifier_state, state, GDK_MOD1_MASK, &press))
+    {
+      gimp_tool_modifier_key (tool, GDK_MOD1_MASK,
+                              press, state,
+                              display);
+    }
+
+  if (state_changed (tool->modifier_state, state, GDK_MOD2_MASK, &press))
+    {
+      gimp_tool_modifier_key (tool, GDK_MOD2_MASK,
+                              press, state,
+                              display);
+    }
+
+  tool->modifier_state = state;
+}
+
 void
 gimp_tool_set_active_modifier_state (GimpTool        *tool,
                                      GdkModifierType  state,
                                      GimpDisplay     *display)
 {
+  gboolean press;
+
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
   g_return_if_fail (gimp_tool_control_is_active (tool->control) == TRUE);
@@ -902,11 +922,9 @@ gimp_tool_set_active_modifier_state (GimpTool        *tool,
 
   g_return_if_fail (display == tool->focus_display);
 
-  if ((tool->active_modifier_state & GDK_SHIFT_MASK) !=
-      (state & GDK_SHIFT_MASK))
+  if (state_changed (tool->active_modifier_state, state, GDK_SHIFT_MASK,
+                     &press))
     {
-      gboolean press = state & GDK_SHIFT_MASK;
-
 #ifdef DEBUG_ACTIVE_STATE
       g_printerr ("%s: SHIFT %s\n", G_STRFUNC,
                   press ? "pressed" : "released");
@@ -924,11 +942,9 @@ gimp_tool_set_active_modifier_state (GimpTool        *tool,
         }
     }
 
-  if ((tool->active_modifier_state & GDK_CONTROL_MASK) !=
-      (state & GDK_CONTROL_MASK))
+  if (state_changed (tool->active_modifier_state, state, GDK_CONTROL_MASK,
+                     &press))
     {
-      gboolean press = state & GDK_CONTROL_MASK;
-
 #ifdef DEBUG_ACTIVE_STATE
       g_printerr ("%s: CONTROL %s\n", G_STRFUNC,
                   press ? "pressed" : "released");
@@ -946,11 +962,9 @@ gimp_tool_set_active_modifier_state (GimpTool        *tool,
         }
     }
 
-  if ((tool->active_modifier_state & GDK_MOD1_MASK) !=
-      (state & GDK_MOD1_MASK))
+  if (state_changed (tool->active_modifier_state, state, GDK_MOD1_MASK,
+                     &press))
     {
-      gboolean press = state & GDK_MOD1_MASK;
-
 #ifdef DEBUG_ACTIVE_STATE
       g_printerr ("%s: ALT %s\n", G_STRFUNC,
                   press ? "pressed" : "released");
@@ -968,11 +982,9 @@ gimp_tool_set_active_modifier_state (GimpTool        *tool,
         }
     }
 
-  if ((tool->active_modifier_state & GDK_MOD2_MASK) !=
-      (state & GDK_MOD2_MASK))
+  if (state_changed (tool->active_modifier_state, state, GDK_MOD2_MASK,
+                     &press))
     {
-      gboolean press = state & GDK_MOD2_MASK;
-
 #ifdef DEBUG_ACTIVE_STATE
       g_printerr ("%s: MOD2 %s\n", G_STRFUNC,
                   press ? "pressed" : "released");
