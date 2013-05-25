@@ -59,7 +59,6 @@ gint64       gimp_parasite_get_memsize             (GimpParasite    *parasite,
                                                     gint64          *gui_size);
 
 gint         gimp_get_pid                          (void);
-gint         gimp_get_number_of_processors         (void);
 guint64      gimp_get_physical_memory_size         (void);
 gchar      * gimp_get_backtrace                    (void);
 gchar      * gimp_get_default_language             (const gchar     *category);

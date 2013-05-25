@@ -128,7 +128,7 @@ gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
 
-  num_processors = gimp_get_number_of_processors ();
+  num_processors = g_get_num_processors ();
 
 #ifdef GIMP_UNSTABLE
   num_processors = num_processors * 2;

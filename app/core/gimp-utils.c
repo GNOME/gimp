@@ -330,27 +330,6 @@ gimp_get_pid (void)
   return (gint) getpid ();
 }
 
-gint
-gimp_get_number_of_processors (void)
-{
-  gint retval = NUM_PROCESSORS_DEFAULT;
-
-#ifdef G_OS_UNIX
-#if defined(HAVE_UNISTD_H) && defined(_SC_NPROCESSORS_ONLN)
-  retval = sysconf (_SC_NPROCESSORS_ONLN);
-#endif
-#endif
-#ifdef G_OS_WIN32
-  SYSTEM_INFO system_info;
-
-  GetSystemInfo (&system_info);
-
-  retval = system_info.dwNumberOfProcessors;
-#endif
-
-  return retval;
-}
-
 guint64
 gimp_get_physical_memory_size (void)
 {
