@@ -115,7 +115,7 @@ gimp_image_map_config_set_property (GObject      *object,
 
           t = config->time;
           tm = *localtime (&t);
-          strftime (buf, sizeof (buf), "%Y-%m-%d %T", &tm);
+          strftime (buf, sizeof (buf), "%Y-%m-%d %H:%M:%S", &tm);
 
           name = g_locale_to_utf8 (buf, -1, NULL, NULL, NULL);
           gimp_object_set_name (GIMP_OBJECT (config), name);
