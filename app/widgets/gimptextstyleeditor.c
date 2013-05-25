@@ -297,6 +297,7 @@ static void
 gimp_text_style_editor_constructed (GObject *object)
 {
   GimpTextStyleEditor *editor = GIMP_TEXT_STYLE_EDITOR (object);
+  GimpUnitAdjustment  *adjustment;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -311,8 +312,9 @@ gimp_text_style_editor_constructed (GObject *object)
                     G_CALLBACK (gimp_text_style_editor_font_changed),
                     editor);
 
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (editor->size_entry), 0,
-                                  editor->resolution_y, TRUE);
+  adjustment =
+    gimp_unit_entry_get_adjustment (GIMP_UNIT_ENTRY (editor->unit_entry));
+  gimp_unit_adjustment_set_resolution (adjustment, editor->resolution_y);
 
   /* use the global user context so we get the global FG/BG colors */
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (editor->color_button),
@@ -462,9 +464,12 @@ gimp_text_style_editor_set_property (GObject      *object,
       break;
     case PROP_RESOLUTION_Y:
       editor->resolution_y = g_value_get_double (value);
-      if (editor->size_entry)
-        gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (editor->size_entry), 0,
-                                        editor->resolution_y, TRUE);
+      if (editor->unit_entry)
+        {
+          GimpUnitAdjustment *adjustment =
+            gimp_unit_entry_get_adjustment (GIMP_UNIT_ENTRY (editor->unit_entry));
+          gimp_unit_adjustment_set_resolution (adjustment, editor->resolution_y);
+        }
       break;
 
     default:
@@ -568,7 +573,7 @@ gimp_text_style_editor_list_tags (GimpTextStyleEditor  *editor,
     for (list = editor->buffer->size_tags; list; list = g_list_next (list))
       *remove_tags = g_list_prepend (*remove_tags, list->data);
 
-    pixels = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (editor->size_entry), 0);
+    pixels = gimp_unit_entry_get_pixels (GIMP_UNIT_ENTRY (editor->unit_entry));
 
     if (pixels != 0.0)
       {

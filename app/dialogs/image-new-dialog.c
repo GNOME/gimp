@@ -80,10 +80,12 @@ static void   image_new_create_image     (ImageNewDialog *dialog);
 GtkWidget *
 image_new_dialog_new (GimpContext *context)
 {
-  ImageNewDialog      *dialog;
-  GtkWidget           *main_vbox;
-  GtkWidget           *table;
-  GimpUnitEntries     *unit_entries;
+  ImageNewDialog  *dialog;
+  GtkWidget       *main_vbox;
+  GtkWidget       *hbox;
+  GtkWidget       *label;
+  GtkWidget       *table;
+  GimpUnitEntries *unit_entries;
 
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 

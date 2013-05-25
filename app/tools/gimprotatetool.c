@@ -226,9 +226,9 @@ gimp_rotate_tool_dialog_update (GimpTransformTool *tr_tool)
                                    rotate_center_changed,
                                    tr_tool);
 
-  gimp_unit_entries_set_pixels (rotate->unit_entries, 
-                                "center_x", (gdouble) tr_tool->trans_info[CENTER_X],
-                                "center_y", (gdouble) tr_tool->trans_info[CENTER_Y],
+  gimp_unit_entries_set_pixels (rotate->unit_entries,
+                                "center_x", (gdouble) tr_tool->trans_info[PIVOT_X],
+                                "center_y", (gdouble) tr_tool->trans_info[PIVOT_Y],
                                 NULL);
 
   g_signal_handlers_unblock_by_func (rotate->unit_entries,
@@ -397,8 +397,8 @@ rotate_center_changed (GObject           *entries,
                        GtkWidget         *widget,
                        GimpTransformTool *tr_tool)
 {
-  gdouble cx = gimp_unit_entries_get_pixels (GIMP_UNIT_ENTRIES (entries), "center_x");
-  gdouble cy = gimp_unit_entries_get_pixels (GIMP_UNIT_ENTRIES (entries), "center_y");
+  gdouble px = gimp_unit_entries_get_pixels (GIMP_UNIT_ENTRIES (entries), "center_x");
+  gdouble py = gimp_unit_entries_get_pixels (GIMP_UNIT_ENTRIES (entries), "center_y");
 
   if ((px != tr_tool->trans_info[PIVOT_X]) ||
       (py != tr_tool->trans_info[PIVOT_Y]))
