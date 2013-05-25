@@ -207,9 +207,6 @@ to get the name of the desired C compiler.
 .B CFLAGS
 to get the preferred flags to pass to the C compiler for plug-in building.
 .TP 8
-.B DESTDIR
-to add a prefix to the install/uninstall path.
-.TP 8
 .B LDFLAGS
 to get the preferred flags for passing to the linker.
 .TP 8
