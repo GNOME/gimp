@@ -62,7 +62,6 @@ gimp_init_for_testing (void)
 {
   Gimp *gimp;
 
-  g_type_init();
   gimp_log_init ();
   gegl_init (NULL, NULL);
 
@@ -91,7 +90,6 @@ gimp_init_for_gui_testing_internal (gboolean     show_gui,
   Gimp                 *gimp;
 
   /* from main() */
-  g_type_init();
   gimp_log_init ();
   gegl_init (NULL, NULL);
 

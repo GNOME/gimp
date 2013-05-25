@@ -264,7 +264,6 @@ main (int    argc,
   Gimp *gimp;
   int   result;
 
-  g_type_init ();
   g_test_init (&argc, &argv, NULL);
 
   gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",

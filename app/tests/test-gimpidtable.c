@@ -185,7 +185,7 @@ remove (GimpTestFixture *f,
   void    *ret_data          = gimp_id_table_lookup (f->id_table, ret_id);
   gboolean remove_successful = gimp_id_table_remove (f->id_table, ret_id);
   void    *ret_data2         = gimp_id_table_lookup (f->id_table, ret_id);
-  
+
   g_assert (remove_successful);
   g_assert (ret_data == data1);
   g_assert (ret_data2 == NULL);
@@ -205,14 +205,13 @@ remove_non_existing (GimpTestFixture *f,
 
   gboolean remove_successful = gimp_id_table_remove (f->id_table, id);
   void    *ret_data          = gimp_id_table_lookup (f->id_table, id);
-  
+
   g_assert (! remove_successful);
   g_assert (ret_data == NULL);
 }
 
 int main(int argc, char **argv)
 {
-  g_type_init ();
   g_test_init (&argc, &argv, NULL);
 
   ADD_TEST (insert_and_lookup);

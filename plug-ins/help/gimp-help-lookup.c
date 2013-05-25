@@ -100,8 +100,6 @@ main (gint   argc,
       return EXIT_FAILURE;
     }
 
-  g_type_init ();
-
   if (help_base)
     uri = g_strdup (help_base);
   else

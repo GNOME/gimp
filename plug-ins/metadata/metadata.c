@@ -375,7 +375,6 @@ run (const gchar      *name,
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
   INIT_I18N();
-  g_type_init();
 
   if (! strcmp (name, EDITOR_PROC))
     image_ID = param[1].data.d_image;

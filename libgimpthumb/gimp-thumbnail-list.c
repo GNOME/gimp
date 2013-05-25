@@ -63,8 +63,6 @@ main (gint   argc,
   const gchar    *folder;
   GError         *error = NULL;
 
-  g_type_init ();
-
   context = g_option_context_new (NULL);
   g_option_context_add_main_entries (context, main_entries, NULL);
 

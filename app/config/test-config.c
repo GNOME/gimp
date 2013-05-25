@@ -69,8 +69,6 @@ main (int   argc,
         }
     }
 
-  g_type_init ();
-
   units_init ();
 
   g_print ("\nTesting GimpConfig ...\n");

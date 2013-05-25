@@ -186,9 +186,6 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  /* MUST call this before any RSVG funcs */
-  g_type_init ();
-
   if (strcmp (name, LOAD_PROC) == 0)
     {
       gimp_get_data (LOAD_PROC, &load_vals);

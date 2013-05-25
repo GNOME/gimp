@@ -131,9 +131,6 @@ run (const gchar      *name,
   *return_vals  = values;
   values[0].type = GIMP_PDB_STATUS;
 
-  /* MUST call this before any RSVG funcs */
-  g_type_init ();
-
   gimp_get_data (PLUG_IN_PROC, &save);
 
   webpagevals.url = g_strdup (save.url);

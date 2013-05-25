@@ -418,7 +418,6 @@ gimp_main (const GimpPlugInInfo *info,
   gimp_wire_set_writer (gimp_write);
   gimp_wire_set_flusher (gimp_flush);
 
-  g_type_init ();
   gimp_enums_init ();
 
   /*  initialize units  */

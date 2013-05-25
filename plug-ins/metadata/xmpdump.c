@@ -173,7 +173,7 @@ main (int   argc,
       char *argv[])
 {
   g_set_prgname ("xmpdump");
-  g_type_init();
+
   if (argc > 1)
     {
       for (argv++, argc--; argc; argv++, argc--)
