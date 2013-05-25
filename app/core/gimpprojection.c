@@ -41,8 +41,8 @@
                                             G_PRIORITY_DEFAULT_IDLE) / 2)
 
 /*  chunk size for one iteration of the idle renderer  */
-#define GIMP_PROJECTION_IDLE_CHUNK_WIDTH  512
-#define GIMP_PROJECTION_IDLE_CHUNK_HEIGHT 256
+#define GIMP_PROJECTION_IDLE_CHUNK_WIDTH  256
+#define GIMP_PROJECTION_IDLE_CHUNK_HEIGHT 128
 
 
 enum
