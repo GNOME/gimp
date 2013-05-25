@@ -44,7 +44,7 @@ header files installed.
        git://git.gnome.org/gegl
 
   4. You need to have installed GTK+ version 2.24.10 or newer.
-     GIMP also need a recent versions of GLib (>= 2.30.2), GDK-Pixbuf
+     GIMP also need a recent versions of GLib (>= 2.36.1), GDK-Pixbuf
      (>= 2.24.1), and Pango (>= 1.29.4). Sources for these can be grabbed
      from ftp://ftp.gtk.org/.
 
