@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-18 23:11+0100\n"
-"PO-Revision-Date: 2013-03-18 23:12+0100\n"
+"POT-Creation-Date: 2013-05-25 18:28+0200\n"
+"PO-Revision-Date: 2013-05-25 18:30+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -464,7 +464,7 @@ msgstr "Edytor tekstowy"
 msgid "Tool Options"
 msgstr "Opcje narzędzia"
 
-#: ../app/actions/actions.c:226 ../app/widgets/gimptoolpalette.c:390
+#: ../app/actions/actions.c:226 ../app/widgets/gimptoolpalette.c:391
 msgid "Tools"
 msgstr "Narzędzia"
 
@@ -5174,13 +5174,13 @@ msgstr "Tworzy nowy widok tego obrazu"
 
 #: ../app/actions/view-actions.c:82
 msgctxt "view-action"
-msgid "_Close"
-msgstr "Za_mknij"
+msgid "_Close View"
+msgstr "Za_mknij widok"
 
 #: ../app/actions/view-actions.c:83
 msgctxt "view-action"
-msgid "Close this image window"
-msgstr "Zamyka to okno obrazu"
+msgid "Close the active image view"
+msgstr "Zamyka aktywny widok obrazu"
 
 #: ../app/actions/view-actions.c:88
 msgctxt "view-action"
@@ -5612,11 +5612,11 @@ msgstr "I_nne (%s) ..."
 msgid "_Zoom (%s)"
 msgstr "_Powiększenie (%s)"
 
-#: ../app/actions/view-commands.c:585
+#: ../app/actions/view-commands.c:605
 msgid "Set Canvas Padding Color"
 msgstr "Ustawienie koloru wyściółki płótna"
 
-#: ../app/actions/view-commands.c:587
+#: ../app/actions/view-commands.c:607
 msgid "Set Custom Canvas Padding Color"
 msgstr "Ustawienie dowolnego koloru wyściółki płótna"
 
@@ -7340,7 +7340,7 @@ msgid "Jitter"
 msgstr "Drganie"
 
 #: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:375
-#: ../app/gui/session.c:399 ../app/menus/menus.c:464
+#: ../app/gui/session.c:399 ../app/menus/menus.c:466
 #: ../app/widgets/gimpdevices.c:208
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
@@ -10753,7 +10753,7 @@ msgstr "Nie można zmodyfikować pikseli grup warstw."
 #: ../app/tools/gimpbucketfilltool.c:143 ../app/tools/gimpcroptool.c:325
 #: ../app/tools/gimpimagemaptool.c:287 ../app/tools/gimppainttool.c:266
 #: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:247
-#: ../app/tools/gimptransformtool.c:1067
+#: ../app/tools/gimptransformtool.c:1070
 msgid "The active layer's pixels are locked."
 msgstr "Aktywne piksele warstwy są zablokowane."
 
@@ -10865,12 +10865,12 @@ msgstr "Nieznany typ pliku"
 msgid "%s plug-in could not save image"
 msgstr "Wtyczka %s nie może zapisać obrazu"
 
-#: ../app/file/file-utils.c:74
+#: ../app/file/file-utils.c:72
 #, c-format
 msgid "'%s:' is not a valid URI scheme"
 msgstr "\"%s:\" nie jest prawidłowym schematem URI"
 
-#: ../app/file/file-utils.c:90 ../app/file/file-utils.c:126
+#: ../app/file/file-utils.c:88 ../app/file/file-utils.c:124
 msgid "Invalid character sequence in URI"
 msgstr "Nieprawidłowa sekwencja znaków w adresie URI"
 
@@ -10884,15 +10884,15 @@ msgctxt "cage-mode"
 msgid "Deform the cage to deform the image"
 msgstr "Zniekształca klatkę, aby zniekształcić obraz"
 
-#: ../app/gegl/gimpcurvesconfig.c:388
+#: ../app/gegl/gimpcurvesconfig.c:395
 msgid "not a GIMP Curves file"
 msgstr "nie jest plikiem krzywych programu GIMP"
 
-#: ../app/gegl/gimpcurvesconfig.c:403 ../app/gegl/gimplevelsconfig.c:789
+#: ../app/gegl/gimpcurvesconfig.c:410 ../app/gegl/gimplevelsconfig.c:811
 msgid "parse error"
 msgstr "błąd podczas przetwarzania"
 
-#: ../app/gegl/gimplevelsconfig.c:742
+#: ../app/gegl/gimplevelsconfig.c:764
 msgid "not a GIMP Levels file"
 msgstr "nie jest plikiem poziomów programu GIMP"
 
@@ -11611,7 +11611,7 @@ msgstr "Interpreter wtyczek"
 msgid "Plug-In Environment"
 msgstr "Środowisko wtyczek"
 
-#: ../app/plug-in/gimppluginprocedure.c:976
+#: ../app/plug-in/gimppluginprocedure.c:978
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -11620,7 +11620,7 @@ msgstr ""
 "Błąd wywołania dla \"%s\":\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:988
+#: ../app/plug-in/gimppluginprocedure.c:990
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -13993,15 +13993,15 @@ msgstr "Utrzymywanie pierwotnych proporcji"
 msgid "Transforming"
 msgstr "Przekształcanie"
 
-#: ../app/tools/gimptransformtool.c:1066
+#: ../app/tools/gimptransformtool.c:1069
 msgid "There is no layer to transform."
 msgstr "Brak warstwy do przekształcenia."
 
-#: ../app/tools/gimptransformtool.c:1079
+#: ../app/tools/gimptransformtool.c:1082
 msgid "There is no path to transform."
 msgstr "Brak ścieżki do przekształcenia."
 
-#: ../app/tools/gimptransformtool.c:1080
+#: ../app/tools/gimptransformtool.c:1083
 msgid "The active path's strokes are locked."
 msgstr "Rysowanie wzdłuż ścieżki jest zablokowane."
 
@@ -15032,11 +15032,11 @@ msgid "Configure this tab"
 msgstr "Konfiguruje tę kartę"
 
 #. Auto button
-#: ../app/widgets/gimpdockwindow.c:382
+#: ../app/widgets/gimpdockwindow.c:386
 msgid "Auto"
 msgstr "Autom."
 
-#: ../app/widgets/gimpdockwindow.c:393
+#: ../app/widgets/gimpdockwindow.c:397
 msgid ""
 "When enabled the dialog automatically follows the image you are working on."
 msgstr ""
@@ -15601,12 +15601,12 @@ msgstr "%d × %d ppi, %s"
 msgid "%d ppi, %s"
 msgstr "%d ppi, %s"
 
-#: ../app/widgets/gimptextbuffer-serialize.c:340
+#: ../app/widgets/gimptextbuffer-serialize.c:344
 #, c-format
 msgid "Attribute \"%s\" is invalid on <%s> element in this context"
 msgstr "Atrybut \"%s\" jest nieprawidłowy dla elementu <%s> w tym kontekście"
 
-#: ../app/widgets/gimptextbuffer-serialize.c:412
+#: ../app/widgets/gimptextbuffer-serialize.c:416
 #, c-format
 msgid "Outermost element in text must be <markup> not <%s>"
 msgstr "Zewnętrzny element w tekście musi być <markup>, a nie <%s>"
