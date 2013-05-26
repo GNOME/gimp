@@ -55,30 +55,32 @@ struct _GimpImagefileClass
 
 GType           gimp_imagefile_get_type              (void) G_GNUC_CONST;
 
-GimpImagefile * gimp_imagefile_new                   (Gimp          *gimp,
-                                                      const gchar   *uri);
+GimpImagefile * gimp_imagefile_new                   (Gimp           *gimp,
+                                                      const gchar    *uri);
 
-GimpThumbnail * gimp_imagefile_get_thumbnail         (GimpImagefile *imagefile);
-GIcon         * gimp_imagefile_get_gicon             (GimpImagefile *imagefile);
+GimpThumbnail * gimp_imagefile_get_thumbnail         (GimpImagefile  *imagefile);
+GIcon         * gimp_imagefile_get_gicon             (GimpImagefile  *imagefile);
 
-void            gimp_imagefile_set_mime_type         (GimpImagefile *imagefile,
-                                                      const gchar   *mime_type);
-void            gimp_imagefile_update                (GimpImagefile *imagefile);
-void            gimp_imagefile_create_thumbnail      (GimpImagefile *imagefile,
-                                                      GimpContext   *context,
-                                                      GimpProgress  *progress,
-                                                      gint           size,
-                                                      gboolean       replace);
-void            gimp_imagefile_create_thumbnail_weak (GimpImagefile *imagefile,
-                                                      GimpContext   *context,
-                                                      GimpProgress  *progress,
-                                                      gint           size,
-                                                      gboolean       replace);
-gboolean        gimp_imagefile_check_thumbnail       (GimpImagefile *imagefile);
-gboolean        gimp_imagefile_save_thumbnail        (GimpImagefile *imagefile,
-                                                      const gchar   *mime_type,
-                                                      GimpImage     *image);
-const gchar   * gimp_imagefile_get_desc_string       (GimpImagefile *imagefile);
+void            gimp_imagefile_set_mime_type         (GimpImagefile  *imagefile,
+                                                      const gchar    *mime_type);
+void            gimp_imagefile_update                (GimpImagefile  *imagefile);
+gboolean        gimp_imagefile_create_thumbnail      (GimpImagefile  *imagefile,
+                                                      GimpContext    *context,
+                                                      GimpProgress   *progress,
+                                                      gint            size,
+                                                      gboolean        replace,
+                                                      GError        **error);
+void            gimp_imagefile_create_thumbnail_weak (GimpImagefile  *imagefile,
+                                                      GimpContext    *context,
+                                                      GimpProgress   *progress,
+                                                      gint            size,
+                                                      gboolean        replace);
+gboolean        gimp_imagefile_check_thumbnail       (GimpImagefile  *imagefile);
+gboolean        gimp_imagefile_save_thumbnail        (GimpImagefile  *imagefile,
+                                                      const gchar    *mime_type,
+                                                      GimpImage      *image,
+                                                      GError        **error);
+const gchar   * gimp_imagefile_get_desc_string       (GimpImagefile  *imagefile);
 
 
 #endif /* __GIMP_IMAGEFILE_H__ */

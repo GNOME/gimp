@@ -267,10 +267,18 @@ documents_recreate_preview_cmd_callback (GtkAction *action,
 
   if (imagefile && gimp_container_have (container, GIMP_OBJECT (imagefile)))
     {
-      gimp_imagefile_create_thumbnail (imagefile,
-                                       context, NULL,
-                                       context->gimp->config->thumbnail_size,
-                                       FALSE);
+      GError *error = NULL;
+
+      if (! gimp_imagefile_create_thumbnail (imagefile,
+                                             context, NULL,
+                                             context->gimp->config->thumbnail_size,
+                                             FALSE, &error))
+        {
+          gimp_message_literal (context->gimp,
+				NULL , GIMP_MESSAGE_ERROR,
+				error->message);
+          g_clear_error (&error);
+        }
     }
 }
 

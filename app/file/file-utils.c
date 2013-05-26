@@ -464,7 +464,8 @@ file_utils_save_thumbnail (GimpImage   *image,
               GimpImagefile *imagefile;
 
               imagefile = gimp_imagefile_new (image->gimp, uri);
-              success = gimp_imagefile_save_thumbnail (imagefile, NULL, image);
+              success = gimp_imagefile_save_thumbnail (imagefile, NULL, image,
+                                                       NULL);
               g_object_unref (imagefile);
             }
 

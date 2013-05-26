@@ -498,7 +498,8 @@ file_open_with_proc_and_display (Gimp                *gimp,
               /*  no need to save a thumbnail if there's a good one already  */
               if (! gimp_imagefile_check_thumbnail (imagefile))
                 {
-                  gimp_imagefile_save_thumbnail (imagefile, mime_type, image);
+                  gimp_imagefile_save_thumbnail (imagefile, mime_type, image,
+                                                 NULL);
                 }
             }
         }

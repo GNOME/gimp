@@ -693,10 +693,17 @@ gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
       (gimp_thumbnail_peek_thumb (thumb, size) < GIMP_THUMB_STATE_FAILED &&
        ! gimp_thumbnail_has_failed (thumb)))
     {
-      gimp_imagefile_create_thumbnail (box->imagefile, box->context,
-                                       progress,
-                                       size,
-                                       !force);
+      GError *error = NULL;
+
+      if (! gimp_imagefile_create_thumbnail (box->imagefile, box->context,
+                                             progress,
+                                             size, ! force, &error))
+        {
+          gimp_message_literal (box->context->gimp,
+				G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+				error->message);
+          g_clear_error (&error);
+        }
     }
 }
 

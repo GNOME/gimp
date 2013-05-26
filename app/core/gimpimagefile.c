@@ -317,23 +317,26 @@ gimp_imagefile_update (GimpImagefile *imagefile)
     }
 }
 
-void
-gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
-                                 GimpContext   *context,
-                                 GimpProgress  *progress,
-                                 gint           size,
-                                 gboolean       replace)
+gboolean
+gimp_imagefile_create_thumbnail (GimpImagefile  *imagefile,
+                                 GimpContext    *context,
+                                 GimpProgress   *progress,
+                                 gint            size,
+                                 gboolean        replace,
+                                 GError        **error)
 {
   GimpImagefilePrivate *private;
   GimpThumbnail        *thumbnail;
   GimpThumbState        image_state;
 
-  g_return_if_fail (GIMP_IS_IMAGEFILE (imagefile));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_val_if_fail (GIMP_IS_IMAGEFILE (imagefile), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
+  /* thumbnailing is disabled, we successfully did nothing */
   if (size < 1)
-    return;
+    return TRUE;
 
   private = GET_PRIVATE (imagefile);
 
@@ -352,12 +355,14 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
       gint           width      = 0;
       gint           height     = 0;
       const gchar   *mime_type  = NULL;
-      GError        *error      = NULL;
       const Babl    *format     = NULL;
       gint           num_layers = -1;
 
       g_object_ref (imagefile);
 
+      /* don't pass the error, we're only interested in errors from
+       * actual thumbnail saving
+       */
       image = file_open_thumbnail (private->gimp, context, progress,
                                    thumbnail->image_uri, size,
                                    &mime_type, &width, &height,
@@ -373,6 +378,9 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
         {
           GimpPDBStatusType  status;
 
+          /* don't pass the error, we're only interested in errors
+           * from actual thumbnail saving
+           */
           image = file_open_image (private->gimp, context, progress,
                                    thumbnail->image_uri,
                                    thumbnail->image_uri,
@@ -388,7 +396,7 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
         {
           success = gimp_imagefile_save_thumb (imagefile,
                                                image, size, replace,
-                                               &error);
+                                               error);
 
           g_object_unref (image);
         }
@@ -396,20 +404,16 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
         {
           success = gimp_thumbnail_save_failure (thumbnail,
                                                  "GIMP " GIMP_VERSION,
-                                                 &error);
+                                                 error);
           gimp_imagefile_update (imagefile);
         }
 
       g_object_unref (imagefile);
 
-      if (! success)
-        {
-          gimp_message_literal (private->gimp,
-				G_OBJECT (progress), GIMP_MESSAGE_ERROR,
-				error->message);
-          g_clear_error (&error);
-        }
+      return success;
     }
+
+  return TRUE;
 }
 
 /*  The weak version doesn't ref the imagefile but deals gracefully
@@ -443,7 +447,8 @@ gimp_imagefile_create_thumbnail_weak (GimpImagefile *imagefile,
 
   g_object_add_weak_pointer (G_OBJECT (imagefile), (gpointer) &imagefile);
 
-  gimp_imagefile_create_thumbnail (local, context, progress, size, replace);
+  gimp_imagefile_create_thumbnail (local, context, progress, size, replace,
+                                   NULL);
 
   if (imagefile)
     {
@@ -487,17 +492,18 @@ gimp_imagefile_check_thumbnail (GimpImagefile *imagefile)
 }
 
 gboolean
-gimp_imagefile_save_thumbnail (GimpImagefile *imagefile,
-                               const gchar   *mime_type,
-                               GimpImage     *image)
+gimp_imagefile_save_thumbnail (GimpImagefile  *imagefile,
+                               const gchar    *mime_type,
+                               GimpImage      *image,
+                               GError        **error)
 {
   GimpImagefilePrivate *private;
   gint                  size;
   gboolean              success = TRUE;
-  GError               *error   = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGEFILE (imagefile), FALSE);
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   private = GET_PRIVATE (imagefile);
 
@@ -510,13 +516,7 @@ gimp_imagefile_save_thumbnail (GimpImagefile *imagefile,
 
       success = gimp_imagefile_save_thumb (imagefile,
                                            image, size, FALSE,
-                                           &error);
-      if (! success)
-        {
-          gimp_message_literal (private->gimp, NULL, GIMP_MESSAGE_ERROR,
-				error->message);
-          g_clear_error (&error);
-        }
+                                           error);
     }
 
   return success;
