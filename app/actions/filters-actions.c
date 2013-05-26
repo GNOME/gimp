@@ -185,6 +185,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gimp:semi-flatten",
     NULL /* FIXME GIMP_HELP_FILTER_POLAR_COORDINATES */ },
 
+  { "filters-shift", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Shift..."), NULL, NULL,
+    "gegl:shift",
+    NULL /* FIXME GIMP_HELP_FILTER_SHIFT */ },
+
   { "filters-sobel", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Sobel..."), NULL, NULL,
     "gegl:edge-sobel",
@@ -305,9 +310,10 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-polar-coordinates",       writable);
   SET_SENSITIVE ("filters-red-eye-removal",         writable && !gray);
   SET_SENSITIVE ("filters-ripple",                  writable);
+  SET_SENSITIVE ("filters-semi-flatten",            writable && alpha);
+  SET_SENSITIVE ("filters-shift",                   writable);
   SET_SENSITIVE ("filters-sobel",                   writable);
   SET_SENSITIVE ("filters-softglow",                writable);
-  SET_SENSITIVE ("filters-semi-flatten",            writable && alpha);
   SET_SENSITIVE ("filters-threshold-alpha",         writable && alpha);
   SET_SENSITIVE ("filters-unsharp-mask",            writable);
   SET_SENSITIVE ("filters-vignette",                writable);
