@@ -130,6 +130,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:edge-sobel", /* in gimp */
     "gegl:exposure", /* in gimp */
     "gegl:fill-path",
+    "gegl:fractal-trace", /* in gimp */
     "gegl:gaussian-blur", /* in gimp */
     "gegl:grey", /* in gimp */
     "gegl:hstack",

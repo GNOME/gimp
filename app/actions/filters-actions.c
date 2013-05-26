@@ -100,6 +100,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:exposure",
     NULL /* FIXME GIMP_HELP_FILTER_EXPOSURE */ },
 
+  { "filters-fractal-trace", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Fractal Trace..."), NULL, NULL,
+    "gegl:fractal-trace",
+    NULL /* FIXME GIMP_HELP_FILTER_FRACTAL_TRACE */ },
+
   { "filters-gaussian-blur", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Gaussian Blur..."), NULL, NULL,
     "gegl:gaussian-blur",
@@ -284,6 +289,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-dot",                     writable);
   SET_SENSITIVE ("filters-emboss",                  writable);
   SET_SENSITIVE ("filters-exposure",                writable);
+  SET_SENSITIVE ("filters-fractal-trace",           writable);
   SET_SENSITIVE ("filters-gaussian-blur",           writable);
   SET_SENSITIVE ("filters-laplace",                 writable);
   SET_SENSITIVE ("filters-mono-mixer",              writable && !gray);
