@@ -50,7 +50,7 @@ static void  gui_unique_win32_exit (void);
 static Gimp *unique_gimp  = NULL;
 static HWND  proxy_window = NULL;
 
-#elifdef GDK_WINDOWING_QUARTZ
+#elif defined (GDK_WINDOWING_QUARTZ)
 
 static void  gui_unique_mac_init (Gimp *gimp);
 static void  gui_unique_mac_exit (void);
@@ -74,7 +74,7 @@ gui_unique_init (Gimp *gimp)
 {
 #ifdef G_OS_WIN32
   gui_unique_win32_init (gimp);
-#elifdef GDK_WINDOWING_QUARTZ
+#elif defined (GDK_WINDOWING_QUARTZ)
   gui_unique_mac_init (gimp);
 #else
   gui_dbus_service_init (gimp);
@@ -86,7 +86,7 @@ gui_unique_exit (void)
 {
 #ifdef G_OS_WIN32
   gui_unique_win32_exit ();
-#elifdef GDK_WINDOWING_QUARTZ
+#elif defined (GDK_WINDOWING_QUARTZ)
   gui_unique_mac_exit ();
 #else
   gui_dbus_service_exit ();
@@ -101,7 +101,6 @@ typedef struct
   gchar    *name;
   gboolean  as_new;
 } IdleOpenData;
-
 
 static IdleOpenData *
 idle_open_data_new (const gchar *name,
@@ -226,7 +225,7 @@ gui_unique_win32_exit (void)
   DestroyWindow (proxy_window);
 }
 
-#elifdef GDK_WINDOWING_QUARTZ
+#elif defined (GDK_WINDOWING_QUARTZ)
 
 static gboolean
 gui_unique_mac_idle_open (gchar *data)
