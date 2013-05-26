@@ -504,13 +504,13 @@ if test "x$GDBUS_CODEGEN" = xno; then
   AC_MSG_ERROR([Could not find gdbus-codegen in your PATH])
 fi
 
-AC_MSG_CHECKING([if GLib is version 2.31.0 or newer])
-if $PKG_CONFIG --atleast-version=2.31.0 glib-2.0; then
-  have_glib_2_31=yes
+AC_MSG_CHECKING([if GLib is version 2.39.0 or newer])
+if $PKG_CONFIG --atleast-version=2.39.0 glib-2.0; then
+  have_glib_2_39=yes
 else
-  have_glib_2_31=no
+  have_glib_2_39=no
 fi
-AC_MSG_RESULT($have_glib_2_31)
+AC_MSG_RESULT($have_glib_2_39)
 
 
 # Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
@@ -545,13 +545,13 @@ if test "x$GDK_PIXBUF_CSOURCE" = xno; then
   AC_MSG_ERROR(Could not find gdk-pixbuf-csource in your PATH)
 fi
 
-AC_MSG_CHECKING([if GdkPixbuf is version 2.26.0 or newer])
-if $PKG_CONFIG --atleast-version=2.26.0 gdk-pixbuf-2.0; then
-  have_gdk_pixbuf_2_26=yes
+AC_MSG_CHECKING([if GdkPixbuf is version 2.31.0 or newer])
+if $PKG_CONFIG --atleast-version=2.31.0 gdk-pixbuf-2.0; then
+  have_gdk_pixbuf_2_31=yes
 else
-  have_gdk_pixbuf_2_26=no
+  have_gdk_pixbuf_2_31=no
 fi
-AC_MSG_RESULT($have_gdk_pixbuf_2_26)
+AC_MSG_RESULT($have_gdk_pixbuf_2_31)
 
 PKG_CHECK_MODULES(CAIRO, cairo >= cairo_required_version)
 
@@ -2043,7 +2043,7 @@ CPPFLAGS="${CPPFLAGS} -DGIMP_DISABLE_DEPRECATED -DBABL_DISABLE_DEPRECATED -DGSEA
 # We must build without problems with future releases of libraries
 # and disabling deprecated API risks breaking the build
 
-if test "x$have_glib_2_31" != "xyes"; then
+if test "x$have_glib_2_39" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED"
 fi
 
@@ -2051,7 +2051,7 @@ if test "x$have_gtk_2_26" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
 fi
 
-if test "x$have_gdk_pixbuf_2_26" != "xyes"; then
+if test "x$have_gdk_pixbuf_2_31" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DGDK_PIXBUF_DISABLE_DEPRECATED"
 fi
 
