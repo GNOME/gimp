@@ -75,6 +75,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:cubism",
     NULL /* FIXME GIMP_HELP_FILTER_CUBISM */ },
 
+  { "filters-deinterlace", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Deinterlace..."), NULL, NULL,
+    "gegl:deinterlace",
+    NULL /* FIXME GIMP_HELP_FILTER_DEINTERLACE */ },
+
   { "filters-difference-of-gaussians", GIMP_STOCK_GEGL,
     NC_("filters-action", "Difference of Gaussians..."), NULL, NULL,
     "gegl:difference-of-gaussians",
@@ -274,6 +279,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-color-temperature",       writable && !gray);
   SET_SENSITIVE ("filters-color-to-alpha",          writable && !gray && alpha);
   SET_SENSITIVE ("filters-cubism",                  writable);
+  SET_SENSITIVE ("filters-deinterlace",             writable);
   SET_SENSITIVE ("filters-difference-of-gaussians", writable);
   SET_SENSITIVE ("filters-dot",                     writable);
   SET_SENSITIVE ("filters-emboss",                  writable);
