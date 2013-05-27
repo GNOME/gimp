@@ -1714,8 +1714,7 @@ if test "x$with_gudev" = xno; then
   have_libgudev="no (disabled)"
 fi
 
-if test "x$have_linux_input" = xyes && test "x$have_dbus_glib" = xyes &&
-   test "x$with_gudev" != xno; then
+if test "x$have_linux_input" = xyes && test "x$with_gudev" != xno; then
   PKG_CHECK_MODULES(GUDEV, gudev-1.0 >= libgudev_required_version,
     have_libgudev=yes,
     have_libgudev="no (libgudev not found)")
