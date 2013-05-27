@@ -56,11 +56,6 @@
 /* uncomment the line below for a little debugging info */
 /* #define GIFDEBUG yesplease */
 
-/* Does the version of GIMP we're compiling for support
-   data attachments to images?  ('Parasites') */
-#define FACEHUGGERS aieee
-/* PS: I know that technically facehuggers aren't parasites,
-   the pupal-forms are.  But facehuggers are ky00te. */
 
 enum
 {
@@ -112,12 +107,9 @@ static gboolean save_dialog            (gint32            image_ID);
 static void     comment_entry_callback (GtkTextBuffer    *buffer);
 
 
-static gboolean comment_was_edited = FALSE;
-
-static GimpRunMode run_mode;
-#ifdef FACEHUGGERS
-static GimpParasite * comment_parasite = NULL;
-#endif
+static GimpRunMode   run_mode;
+static GimpParasite *comment_parasite   = NULL;
+static gboolean      comment_was_edited = FALSE;
 
 /* For compression code */
 static gint Interlace;
@@ -368,13 +360,7 @@ typedef int (*ifunptr) (int, int);
  */
 typedef int code_int;
 
-#ifdef SIGNED_COMPARE_SLOW
-typedef unsigned long int count_int;
-typedef unsigned short int count_short;
-#else /*SIGNED_COMPARE_SLOW */
 typedef long int count_int;
-#endif /*SIGNED_COMPARE_SLOW */
-
 
 
 static gint find_unused_ia_colour   (const guchar *pixels,
@@ -677,8 +663,6 @@ save_image (const gchar *filename,
   guchar         bgindex = 0;
   guint          best_error = 0xFFFFFFFF;
 
-
-#ifdef FACEHUGGERS
   /* Save the comment back to the ImageID, if appropriate */
   if (globalcomment != NULL && comment_was_edited)
     {
@@ -690,7 +674,6 @@ save_image (const gchar *filename,
       gimp_parasite_free (comment_parasite);
       comment_parasite = NULL;
     }
-#endif
 
   /* The GIF spec says 7bit ASCII for the comment block. */
   if (gsvals.save_comment && globalcomment)
@@ -1125,9 +1108,7 @@ save_dialog (gint32 image_ID)
   GtkTextBuffer *text_buffer;
   GtkWidget     *toggle;
   GtkWidget     *frame;
-#ifdef FACEHUGGERS
   GimpParasite  *GIF2_CMNT;
-#endif
   gint32         nlayers;
   gboolean       animation_supported = FALSE;
   gboolean       run;
@@ -1166,18 +1147,17 @@ save_dialog (gint32 image_ID)
   if (globalcomment)
     g_free (globalcomment);
 
-#ifdef FACEHUGGERS
   GIF2_CMNT = gimp_image_get_parasite (image_ID, "gimp-comment");
   if (GIF2_CMNT)
-    globalcomment = g_strndup (gimp_parasite_data (GIF2_CMNT),
-                               gimp_parasite_data_size (GIF2_CMNT));
+    {
+      globalcomment = g_strndup (gimp_parasite_data (GIF2_CMNT),
+                                 gimp_parasite_data_size (GIF2_CMNT));
+      gimp_parasite_free (GIF2_CMNT);
+    }
   else
-#endif
-    globalcomment = gimp_get_default_comment ();
-
-#ifdef FACEHUGGERS
-  gimp_parasite_free (GIF2_CMNT);
-#endif
+    {
+      globalcomment = gimp_get_default_comment ();
+    }
 
   if (globalcomment)
     gtk_text_buffer_set_text (text_buffer, globalcomment, -1);
@@ -1741,11 +1721,7 @@ put_word (int   w,
 
 #define HSIZE  5003                /* 80% occupancy */
 
-#ifdef NO_UCHAR
-typedef char char_type;
-#else /*NO_UCHAR */
 typedef unsigned char char_type;
-#endif /*NO_UCHAR */
 
 /*
 
@@ -1902,14 +1878,8 @@ no_compress (int      init_bits,
   output ((code_int) ClearCode);
 
 
-#ifdef SIGNED_COMPARE_SLOW
-  while ((c = gif_next_pixel (ReadValue)) != (unsigned) EOF)
-    {
-#else /*SIGNED_COMPARE_SLOW */
   while ((c = gif_next_pixel (ReadValue)) != EOF)
-    {                                /* } */
-#endif /*SIGNED_COMPARE_SLOW */
-
+    {
       ++in_count;
 
       fcode = (long) (((long) c << maxbits) + ent);
@@ -1918,13 +1888,9 @@ no_compress (int      init_bits,
       output ((code_int) ent);
       ++out_count;
       ent = c;
-#ifdef SIGNED_COMPARE_SLOW
-      if ((unsigned) free_ent < (unsigned) maxmaxcode)
-        {
-#else /*SIGNED_COMPARE_SLOW */
+
       if (free_ent < maxmaxcode)
-        {                        /* } */
-#endif /*SIGNED_COMPARE_SLOW */
+        {
           CodeTabOf (i) = free_ent++;        /* code -> hashtable */
           HashTabOf (i) = fcode;
         }
@@ -2001,14 +1967,8 @@ rle_compress (int      init_bits,
 
 
 
-#ifdef SIGNED_COMPARE_SLOW
-  while ((c = gif_next_pixel (ReadValue)) != (unsigned) EOF)
-    {
-#else /*SIGNED_COMPARE_SLOW */
   while ((c = gif_next_pixel (ReadValue)) != EOF)
-    {                                /* } */
-#endif /*SIGNED_COMPARE_SLOW */
-
+    {
       ++in_count;
 
       fcode = (long) (((long) c << maxbits) + ent);
@@ -2042,13 +2002,8 @@ rle_compress (int      init_bits,
       output ((code_int) ent);
       ++out_count;
       last = ent = c;
-#ifdef SIGNED_COMPARE_SLOW
-      if ((unsigned) free_ent < (unsigned) maxmaxcode)
-        {
-#else /*SIGNED_COMPARE_SLOW */
       if (free_ent < maxmaxcode)
-        {                        /* } */
-#endif /*SIGNED_COMPARE_SLOW */
+        {
           CodeTabOf (i) = free_ent++;        /* code -> hashtable */
           HashTabOf (i) = fcode;
         }
@@ -2108,7 +2063,6 @@ normal_compress (int      init_bits,
   maxcode = MAXCODE (n_bits);
 
 
-
   char_init ();
 
   ent = gif_next_pixel (ReadValue);
@@ -2124,15 +2078,8 @@ normal_compress (int      init_bits,
   output ((code_int) ClearCode);
 
 
-
-#ifdef SIGNED_COMPARE_SLOW
-  while ((c = gif_next_pixel (ReadValue)) != (unsigned) EOF)
-    {
-#else /*SIGNED_COMPARE_SLOW */
   while ((c = gif_next_pixel (ReadValue)) != EOF)
-    {                                /* } */
-#endif /*SIGNED_COMPARE_SLOW */
-
+    {
       ++in_count;
 
       fcode = (long) (((long) c << maxbits) + ent);
@@ -2163,13 +2110,8 @@ normal_compress (int      init_bits,
       output ((code_int) ent);
       ++out_count;
       ent = c;
-#ifdef SIGNED_COMPARE_SLOW
-      if ((unsigned) free_ent < (unsigned) maxmaxcode)
-        {
-#else /*SIGNED_COMPARE_SLOW */
       if (free_ent < maxmaxcode)
-        {                        /* } */
-#endif /*SIGNED_COMPARE_SLOW */
+        {
           CodeTabOf (i) = free_ent++;        /* code -> hashtable */
           HashTabOf (i) = fcode;
         }
