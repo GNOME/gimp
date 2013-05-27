@@ -31,6 +31,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpprogress.h"
+#include "core/gimpcontainer.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpdialogfactory.h"
@@ -196,6 +197,10 @@ static void      gimp_image_window_switch_page         (GtkNotebook         *not
                                                         gint                 page_num,
                                                         GimpImageWindow     *window);
 static void      gimp_image_window_page_removed        (GtkNotebook         *notebook,
+                                                        GtkWidget           *widget,
+                                                        gint                 page_num,
+                                                        GimpImageWindow     *window);
+static void      gimp_image_window_page_reordered      (GtkNotebook         *notebook,
                                                         GtkWidget           *widget,
                                                         gint                 page_num,
                                                         GimpImageWindow     *window);
@@ -411,6 +416,9 @@ gimp_image_window_constructed (GObject *object)
                     window);
   g_signal_connect (private->notebook, "page-removed",
                     G_CALLBACK (gimp_image_window_page_removed),
+                    window);
+  g_signal_connect (private->notebook, "page-reordered",
+                    G_CALLBACK (gimp_image_window_page_reordered),
                     window);
   gtk_widget_show (private->notebook);
 
@@ -1055,6 +1063,8 @@ gimp_image_window_add_shell (GimpImageWindow  *window,
 
   gtk_notebook_append_page (GTK_NOTEBOOK (private->notebook),
                             GTK_WIDGET (shell), tab_label);
+  gtk_notebook_set_tab_reorderable (GTK_NOTEBOOK (private->notebook),
+                                    GTK_WIDGET (shell), TRUE);
 
   gtk_widget_show (GTK_WIDGET (shell));
 }
@@ -1716,6 +1726,20 @@ gimp_image_window_page_removed (GtkNotebook     *notebook,
       gimp_image_window_disconnect_from_active_shell (window);
       private->active_shell = NULL;
     }
+}
+
+static void
+gimp_image_window_page_reordered (GtkNotebook     *notebook,
+                                  GtkWidget       *widget,
+                                  gint             page_num,
+                                  GimpImageWindow *window)
+{
+  GimpImageWindowPrivate *private  = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  GimpContainer          *displays = private->gimp->displays;
+
+  /* We need to reorder the displays as well in order to update the
+   * numbered accelerators (alt-1, alt-2, etc.). */
+  gimp_container_reorder (displays, GIMP_OBJECT (GIMP_DISPLAY_SHELL (widget)->display), page_num);
 }
 
 static void

@@ -55,6 +55,10 @@ static void  windows_actions_display_add               (GimpContainer     *conta
 static void  windows_actions_display_remove            (GimpContainer     *container,
                                                         GimpDisplay       *display,
                                                         GimpActionGroup   *group);
+static void  windows_actions_display_reorder           (GimpContainer     *container,
+                                                        GimpDisplay       *display,
+                                                        gint               position,
+                                                        GimpActionGroup   *group);
 static void  windows_actions_image_notify              (GimpDisplay       *display,
                                                         const GParamSpec  *unused,
                                                         GimpActionGroup   *group);
@@ -147,6 +151,9 @@ windows_actions_setup (GimpActionGroup *group)
                            group, 0);
   g_signal_connect_object (group->gimp->displays, "remove",
                            G_CALLBACK (windows_actions_display_remove),
+                           group, 0);
+  g_signal_connect_object (group->gimp->displays, "reorder",
+                           G_CALLBACK (windows_actions_display_reorder),
                            group, 0);
 
   for (list = gimp_get_display_iter (group->gimp);
@@ -251,6 +258,15 @@ windows_actions_display_remove (GimpContainer   *container,
 
   g_free (action_name);
 
+  windows_actions_update_display_accels (group);
+}
+
+static void
+windows_actions_display_reorder (GimpContainer   *container,
+                                 GimpDisplay     *display,
+                                 gint             new_index,
+                                 GimpActionGroup *group)
+{
   windows_actions_update_display_accels (group);
 }
 
