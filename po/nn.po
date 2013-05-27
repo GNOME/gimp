@@ -7228,7 +7228,7 @@ msgstr "Forgrunn til gjennomsikt"
 #.
 #: ../app/core/gimp-tags.c:88
 msgid "tags-locale:C"
-msgstr "tips-locale:nn"
+msgstr "tags-locale:nn"
 
 #: ../app/core/gimp-user-install.c:159
 #, c-format
