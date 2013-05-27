@@ -1725,26 +1725,6 @@ if test "x$have_libgudev" = xyes; then
 fi
 
 
-############################################################
-# GIF compression: Allow builder to specify at compile time
-# which compression style she wants to use for GIFs.
-# LZW: Unisys patented Lempel-Ziff encoding.
-# RLE: Runlength encoding (produces files about twice as big
-#			   as the LZW compressed equivalent).
-# None: Raw data.
-############################################################
-
-AC_ARG_WITH(gif-compression,
-            [  --with-gif-compression=lzw|rle|none     GIF compression style (default=lzw)])
-
-case x"$with_gif_compression" in
-  xnone)
-    AC_DEFINE(GIF_UN, 1, [Define to 1 for no GIF compression]) ;;
-  xrle)
-    AC_DEFINE(GIF_RLE, 1, [Define to 1 for RLE GIF compression]) ;;
-esac
-
-
 ####################
 # Check for sendmail
 ####################
