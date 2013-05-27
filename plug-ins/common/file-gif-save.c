@@ -44,15 +44,6 @@
 #define PLUG_IN_ROLE   "gimp-file-gif-save"
 
 
-/* Define only one of these to determine which kind of gif's you would like.
- * GIF_UN means use uncompressed gifs.  These will be large, but no
- * patent problems.
- * GIF_RLE uses Run-length-encoding, which should not be covered by the
- * patent, but this is not legal advice.
- */
-/* #define GIF_UN */
-/* #define GIF_RLE */
-
 /* uncomment the line below for a little debugging info */
 /* #define GIFDEBUG yesplease */
 
@@ -110,9 +101,8 @@ static void     comment_entry_callback (GtkTextBuffer    *buffer);
 static GimpRunMode   run_mode;
 static GimpParasite *comment_parasite   = NULL;
 static gboolean      comment_was_edited = FALSE;
-
-/* For compression code */
-static gint Interlace;
+static gchar        *globalcomment      = NULL;
+static gint          Interlace; /* For compression code */
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -322,9 +312,6 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
-static gchar * globalcomment = NULL;
-
-
 
 /* ppmtogif.c - read a portable pixmap and produce a GIF file
 **
@@ -355,13 +342,6 @@ static gchar * globalcomment = NULL;
  */
 typedef int (*ifunptr) (int, int);
 
-/*
- * a code_int must be able to hold 2**BITS values of type int, and also -1
- */
-typedef int code_int;
-
-typedef long int count_int;
-
 
 static gint find_unused_ia_colour   (const guchar *pixels,
                                      gint          numpixels,
@@ -371,11 +351,11 @@ static gint find_unused_ia_colour   (const guchar *pixels,
 static void special_flatten_indexed_alpha (guchar *pixels,
                                            gint    transparent,
                                            gint    numpixels);
-static int colors_to_bpp  (int);
-static int bpp_to_colors  (int);
-static int get_pixel      (int, int);
-static int gif_next_pixel (ifunptr);
-static void bump_pixel    (void);
+static gint colors_to_bpp  (int);
+static gint bpp_to_colors  (int);
+static gint get_pixel      (int, int);
+static gint gif_next_pixel (ifunptr);
+static void bump_pixel     (void);
 
 static void gif_encode_header              (FILE *, gboolean, int, int, int, int,
                                             int *, int *, int *, ifunptr);
@@ -392,20 +372,26 @@ static guchar  *pixels;
 static gint     cur_progress;
 static gint     max_progress;
 
-static void compress        (int, FILE *, ifunptr);
-static void no_compress     (int, FILE *, ifunptr);
-static void rle_compress    (int, FILE *, ifunptr);
-static void normal_compress (int, FILE *, ifunptr);
+static void compress        (int      init_bits,
+                             FILE    *outfile,
+                             ifunptr  ReadValue);
+static void no_compress     (int      init_bits,
+                             FILE    *outfile,
+                             ifunptr  ReadValue);
+static void rle_compress    (int      init_bits,
+                             FILE    *outfile,
+                             ifunptr  ReadValue);
+static void normal_compress (int      init_bits,
+                             FILE    *outfile,
+                             ifunptr  ReadValue);
 
-static void put_word   (int, FILE *);
-static void output     (code_int);
-static void cl_block   (void);
-static void cl_hash    (count_int);
-static void write_err  (void);
-static void char_init  (void);
-static void char_out   (int);
-static void flush_char (void);
-
+static void put_word        (int, FILE *);
+static void output          (gint);
+static void cl_block        (void);
+static void cl_hash         (glong);
+static void char_init       (void);
+static void char_out        (int);
+static void flush_char      (void);
 
 
 static gint
@@ -415,7 +401,7 @@ find_unused_ia_colour (const guchar *pixels,
                        gint         *colors)
 {
   gboolean ix_used[256];
-  gint i;
+  gint     i;
 
 #ifdef GIFDEBUG
   g_printerr ("GIF: fuiac: Image claims to use %d/%d indices - finding free "
@@ -496,11 +482,11 @@ special_flatten_indexed_alpha (guchar *pixels,
 static gint
 parse_ms_tag (const gchar *str)
 {
-  gint sum = 0;
+  gint sum    = 0;
   gint offset = 0;
   gint length;
 
-  length = strlen(str);
+  length = strlen (str);
 
 find_another_bra:
 
@@ -1212,11 +1198,10 @@ save_dialog (gint32 image_ID)
   return run;
 }
 
-
 static int
 colors_to_bpp (int colors)
 {
-  int bpp;
+  gint bpp;
 
   if (colors <= 2)
     bpp = 1;
@@ -1243,13 +1228,12 @@ colors_to_bpp (int colors)
   return bpp;
 }
 
-
 static int
 bpp_to_colors (int bpp)
 {
-  int colors;
+  gint colors;
 
-  if (bpp>8)
+  if (bpp > 8)
     {
       g_warning ("GIF: bpp_to_colors - Eep! bpp==%d !\n", bpp);
       return 256;
@@ -1257,7 +1241,7 @@ bpp_to_colors (int bpp)
 
   colors = 1 << bpp;
 
-  return (colors);
+  return colors;
 }
 
 
@@ -1716,10 +1700,7 @@ put_word (int   w,
 
 #define HSIZE  5003                /* 80% occupancy */
 
-typedef unsigned char char_type;
-
 /*
-
  * GIF Image compression - modified 'compress'
  *
  * Based on: compress.c - File compression ala IEEE Computer, June 1984.
@@ -1735,25 +1716,25 @@ typedef unsigned char char_type;
 
 static int n_bits;                /* number of bits/code */
 static int maxbits = GIF_BITS;        /* user settable max # bits/code */
-static code_int maxcode;        /* maximum code, given n_bits */
-static code_int maxmaxcode = (code_int) 1 << GIF_BITS;        /* should NEVER generate this code */
+static gint maxcode;        /* maximum code, given n_bits */
+static gint maxmaxcode = (gint) 1 << GIF_BITS;        /* should NEVER generate this code */
 #ifdef COMPATIBLE                /* But wrong! */
-#define MAXCODE(Mn_bits)        ((code_int) 1 << (Mn_bits) - 1)
+#define MAXCODE(Mn_bits)        ((gint) 1 << (Mn_bits) - 1)
 #else /*COMPATIBLE */
-#define MAXCODE(Mn_bits)        (((code_int) 1 << (Mn_bits)) - 1)
+#define MAXCODE(Mn_bits)        (((gint) 1 << (Mn_bits)) - 1)
 #endif /*COMPATIBLE */
 
-static count_int htab[HSIZE];
+static glong htab[HSIZE];
 static unsigned short codetab[HSIZE];
 #define HashTabOf(i)       htab[i]
 #define CodeTabOf(i)    codetab[i]
 
-static const code_int hsize = HSIZE; /* the original reason for this being
-                                        variable was "for dynamic table sizing",
-                                        but since it was never actually changed
-                                        I made it const   --Adam. */
+static const gint hsize = HSIZE; /* the original reason for this being
+                                    variable was "for dynamic table sizing",
+                                    but since it was never actually changed
+                                    I made it const   --Adam. */
 
-static code_int free_ent = 0;        /* first unused entry */
+static gint free_ent = 0;        /* first unused entry */
 
 /*
  * block compression parameters -- after all codes are used up,
@@ -1781,22 +1762,24 @@ static long int out_count = 0;        /* # of codes output (for debugging) */
  * questions about this implementation to ames!jaw.
  */
 
-static int g_init_bits;
+static gint  g_init_bits;
 static FILE *g_outfile;
 
 static int ClearCode;
 static int EOFCode;
 
 
-static unsigned long cur_accum;
-static int cur_bits;
+static gulong cur_accum;
+static gint   cur_bits;
 
-static unsigned long masks[] =
-{0x0000, 0x0001, 0x0003, 0x0007,
- 0x000F, 0x001F, 0x003F, 0x007F,
- 0x00FF, 0x01FF, 0x03FF, 0x07FF,
- 0x0FFF, 0x1FFF, 0x3FFF, 0x7FFF,
- 0xFFFF};
+static gulong masks[] =
+{
+  0x0000, 0x0001, 0x0003, 0x0007,
+  0x000F, 0x001F, 0x003F, 0x007F,
+  0x00FF, 0x01FF, 0x03FF, 0x07FF,
+  0x0FFF, 0x1FFF, 0x3FFF, 0x7FFF,
+  0xFFFF
+};
 
 
 static void
@@ -1818,10 +1801,10 @@ no_compress (int      init_bits,
              ifunptr  ReadValue)
 {
   register long fcode;
-  register code_int i /* = 0 */ ;
+  register gint i /* = 0 */ ;
   register int c;
-  register code_int ent;
-  register code_int hsize_reg;
+  register gint ent;
+  register gint hsize_reg;
   register int hshift;
 
 
@@ -1853,7 +1836,6 @@ no_compress (int      init_bits,
   maxcode = MAXCODE (n_bits);
 
 
-
   char_init ();
 
   ent = gif_next_pixel (ReadValue);
@@ -1864,9 +1846,9 @@ no_compress (int      init_bits,
   hshift = 8 - hshift;                /* set hash code range bound */
 
   hsize_reg = hsize;
-  cl_hash ((count_int) hsize_reg);        /* clear hash table */
+  cl_hash ((glong) hsize_reg);        /* clear hash table */
 
-  output ((code_int) ClearCode);
+  output ((gint) ClearCode);
 
 
   while ((c = gif_next_pixel (ReadValue)) != EOF)
@@ -1874,9 +1856,9 @@ no_compress (int      init_bits,
       ++in_count;
 
       fcode = (long) (((long) c << maxbits) + ent);
-      i = (((code_int) c << hshift) ^ ent);        /* xor hashing */
+      i = (((gint) c << hshift) ^ ent);        /* xor hashing */
 
-      output ((code_int) ent);
+      output ((gint) ent);
       ++out_count;
       ent = c;
 
@@ -1892,9 +1874,9 @@ no_compress (int      init_bits,
   /*
    * Put out the final code.
    */
-  output ((code_int) ent);
+  output ((gint) ent);
   ++out_count;
-  output ((code_int) EOFCode);
+  output ((gint) EOFCode);
 }
 
 static void
@@ -1903,11 +1885,11 @@ rle_compress (int      init_bits,
               ifunptr  ReadValue)
 {
   register long fcode;
-  register code_int i /* = 0 */ ;
+  register gint i /* = 0 */ ;
   register int c, last;
-  register code_int ent;
-  register code_int disp;
-  register code_int hsize_reg;
+  register gint ent;
+  register gint disp;
+  register gint hsize_reg;
   register int hshift;
 
 
@@ -1939,7 +1921,6 @@ rle_compress (int      init_bits,
   maxcode = MAXCODE (n_bits);
 
 
-
   char_init ();
 
   last = ent = gif_next_pixel (ReadValue);
@@ -1950,9 +1931,9 @@ rle_compress (int      init_bits,
   hshift = 8 - hshift;                /* set hash code range bound */
 
   hsize_reg = hsize;
-  cl_hash ((count_int) hsize_reg);        /* clear hash table */
+  cl_hash ((glong) hsize_reg);        /* clear hash table */
 
-  output ((code_int) ClearCode);
+  output ((gint) ClearCode);
 
 
 
@@ -1961,7 +1942,7 @@ rle_compress (int      init_bits,
       ++in_count;
 
       fcode = (long) (((long) c << maxbits) + ent);
-      i = (((code_int) c << hshift) ^ ent);        /* xor hashing */
+      i = (((gint) c << hshift) ^ ent);        /* xor hashing */
 
 
       if (last == c) {
@@ -1988,7 +1969,7 @@ rle_compress (int      init_bits,
           goto probe;
         }
     nomatch:
-      output ((code_int) ent);
+      output ((gint) ent);
       ++out_count;
       last = ent = c;
       if (free_ent < maxmaxcode)
@@ -2003,9 +1984,9 @@ rle_compress (int      init_bits,
   /*
    * Put out the final code.
    */
-  output ((code_int) ent);
+  output ((gint) ent);
   ++out_count;
-  output ((code_int) EOFCode);
+  output ((gint) EOFCode);
 }
 
 static void
@@ -2014,11 +1995,11 @@ normal_compress (int      init_bits,
                  ifunptr  ReadValue)
 {
   register long fcode;
-  register code_int i /* = 0 */ ;
+  register gint i /* = 0 */ ;
   register int c;
-  register code_int ent;
-  register code_int disp;
-  register code_int hsize_reg;
+  register gint ent;
+  register gint disp;
+  register gint hsize_reg;
   register int hshift;
 
 
@@ -2060,9 +2041,9 @@ normal_compress (int      init_bits,
   hshift = 8 - hshift;                /* set hash code range bound */
 
   hsize_reg = hsize;
-  cl_hash ((count_int) hsize_reg);        /* clear hash table */
+  cl_hash ((glong) hsize_reg);        /* clear hash table */
 
-  output ((code_int) ClearCode);
+  output ((gint) ClearCode);
 
 
   while ((c = gif_next_pixel (ReadValue)) != EOF)
@@ -2070,7 +2051,7 @@ normal_compress (int      init_bits,
       ++in_count;
 
       fcode = (long) (((long) c << maxbits) + ent);
-      i = (((code_int) c << hshift) ^ ent);        /* xor hashing */
+      i = (((gint) c << hshift) ^ ent);        /* xor hashing */
 
       if (HashTabOf (i) == fcode)
         {
@@ -2094,7 +2075,7 @@ normal_compress (int      init_bits,
       if ((long) HashTabOf (i) > 0)
         goto probe;
     nomatch:
-      output ((code_int) ent);
+      output ((gint) ent);
       ++out_count;
       ent = c;
       if (free_ent < maxmaxcode)
@@ -2109,9 +2090,9 @@ normal_compress (int      init_bits,
   /*
    * Put out the final code.
    */
-  output ((code_int) ent);
+  output ((gint) ent);
   ++out_count;
-  output ((code_int) EOFCode);
+  output ((gint) EOFCode);
 }
 
 
@@ -2133,7 +2114,7 @@ normal_compress (int      init_bits,
  */
 
 static void
-output (code_int code)
+output (gint code)
 {
   cur_accum &= masks[cur_bits];
 
@@ -2192,7 +2173,7 @@ output (code_int code)
       fflush (g_outfile);
 
       if (ferror (g_outfile))
-        write_err ();
+        g_message (_("Error writing output file."));
     }
 }
 
@@ -2202,18 +2183,18 @@ output (code_int code)
 static void
 cl_block (void)                        /* table clear for block compress */
 {
-  cl_hash ((count_int) hsize);
+  cl_hash ((glong) hsize);
   free_ent = ClearCode + 2;
   clear_flg = 1;
 
-  output ((code_int) ClearCode);
+  output ((gint) ClearCode);
 }
 
 static void
-cl_hash (count_int hsize)        /* reset code table */
+cl_hash (glong hsize)        /* reset code table */
 {
 
-  register count_int *htab_p = htab + hsize;
+  register glong *htab_p = htab + hsize;
 
   register long i;
   register long m1 = -1;
@@ -2245,12 +2226,6 @@ cl_hash (count_int hsize)        /* reset code table */
     *--htab_p = m1;
 }
 
-static void
-write_err (void)
-{
-  g_message (_("Error writing output file."));
-  return;
-}
 
 /******************************************************************************
  *
