@@ -692,6 +692,57 @@ CODE
     );
 }
 
+sub plug_in_shift {
+    $blurb = 'Shift each row or column of pixels by a random amount';
+
+    $help = <<'HELP';
+Shifts the pixels of the specified drawable. Each row or column will
+be displaced a random value of pixels.
+HELP
+
+    &std_pdb_compat('gegl:shift');
+    $date = '2013';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'shift_amount', type => '0 <= int32 <= 200',
+	  desc => 'Shift amount' },
+	{ name => 'orientation', type => '0 <= int32 <= 1',
+	  desc => 'Orientation { ORIENTATION-VERTICAL (0), ORIENTATION-HORIZONTAL (1) }' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node =
+        gegl_node_new_child (NULL,
+                             "operation", "gegl:shift",
+                             "shift",     shift_amount / 2,
+                             "direction", orientation ? 0 : 1,
+                             NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Shift"),
+                                     node);
+
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_threshold_alpha {
     $blurb = 'Make transparency all-or-nothing';
 
@@ -813,6 +864,7 @@ CODE
             plug_in_randomize_pick
             plug_in_randomize_slur
             plug_in_semiflatten
+            plug_in_shift
             plug_in_threshold_alpha
             plug_in_vinvert);
 

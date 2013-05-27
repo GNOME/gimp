@@ -113,7 +113,6 @@ rotate_RC = rotate.rc.o
 sample_colorize_RC = sample-colorize.rc.o
 screenshot_RC = screenshot.rc.o
 sharpen_RC = sharpen.rc.o
-shift_RC = shift.rc.o
 sinus_RC = sinus.rc.o
 smooth_palette_RC = smooth-palette.rc.o
 softglow_RC = softglow.rc.o
