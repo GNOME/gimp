@@ -392,17 +392,12 @@ static guchar  *pixels;
 static gint     cur_progress;
 static gint     max_progress;
 
-#ifdef GIF_UN
+static void compress        (int, FILE *, ifunptr);
 static void no_compress     (int, FILE *, ifunptr);
-#else
-#ifdef GIF_RLE
 static void rle_compress    (int, FILE *, ifunptr);
-#else
 static void normal_compress (int, FILE *, ifunptr);
-#endif
-#endif
+
 static void put_word   (int, FILE *);
-static void compress   (int, FILE *, ifunptr);
 static void output     (code_int);
 static void cl_block   (void);
 static void cl_hash    (count_int);
@@ -1809,18 +1804,14 @@ compress (int      init_bits,
           FILE    *outfile,
           ifunptr  ReadValue)
 {
-#ifdef GIF_UN
-        no_compress(init_bits, outfile, ReadValue);
-#else
-#ifdef GIF_RLE
-        rle_compress(init_bits, outfile, ReadValue);
-#else
-        normal_compress(init_bits, outfile, ReadValue);
-#endif
-#endif
+  if (FALSE)
+    no_compress (init_bits, outfile, ReadValue);
+  else if (FALSE)
+    rle_compress (init_bits, outfile, ReadValue);
+  else
+    normal_compress (init_bits, outfile, ReadValue);
 }
 
-#ifdef GIF_UN
 static void
 no_compress (int      init_bits,
              FILE    *outfile,
@@ -1905,8 +1896,6 @@ no_compress (int      init_bits,
   ++out_count;
   output ((code_int) EOFCode);
 }
-#else
-#ifdef GIF_RLE
 
 static void
 rle_compress (int      init_bits,
@@ -2019,8 +2008,6 @@ rle_compress (int      init_bits,
   output ((code_int) EOFCode);
 }
 
-#else
-
 static void
 normal_compress (int      init_bits,
                  FILE    *outfile,
@@ -2126,9 +2113,6 @@ normal_compress (int      init_bits,
   ++out_count;
   output ((code_int) EOFCode);
 }
-#endif
-#endif
-
 
 
 /*****************************************************************
