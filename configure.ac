@@ -2362,7 +2362,6 @@ Extra Binaries:
   gimp-console:        $enable_gimp_console
 
 Optional Features:
-  D-Bus service:       $have_dbus_glib
   Language selection:  $have_iso_codes
 
 Optional Plug-Ins:
