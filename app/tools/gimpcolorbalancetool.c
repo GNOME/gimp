@@ -59,11 +59,7 @@ static void     color_balance_config_notify        (GObject              *object
                                                     GParamSpec           *pspec,
                                                     GimpColorBalanceTool *cb_tool);
 
-static void     color_balance_range_callback       (GtkWidget            *widget,
-                                                    GimpColorBalanceTool *cb_tool);
 static void     color_balance_range_reset_callback (GtkWidget            *widget,
-                                                    GimpColorBalanceTool *cb_tool);
-static void     color_balance_preserve_toggled     (GtkWidget            *widget,
                                                     GimpColorBalanceTool *cb_tool);
 static void     color_balance_cr_changed           (GtkAdjustment        *adj,
                                                     GimpColorBalanceTool *cb_tool);
@@ -220,13 +216,9 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *image_map_tool)
 
   main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
 
-  frame = gimp_enum_radio_frame_new (GIMP_TYPE_TRANSFER_MODE,
-                                     gtk_label_new (_("Select Range to Adjust")),
-                                     G_CALLBACK (color_balance_range_callback),
-                                     cb_tool,
-                                     &cb_tool->range_radio);
-  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (cb_tool->range_radio),
-                                   config->range);
+  frame = gimp_prop_enum_radio_frame_new (image_map_tool->config, "range",
+                                          _("Select Range to Adjust"),
+                                          0, 0);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -284,17 +276,11 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *image_map_tool)
                     G_CALLBACK (color_balance_range_reset_callback),
                     cb_tool);
 
-  cb_tool->preserve_toggle =
-    gtk_check_button_new_with_mnemonic (_("Preserve _luminosity"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cb_tool->preserve_toggle),
-                                config->preserve_luminosity);
-  gtk_box_pack_end (GTK_BOX (main_vbox), cb_tool->preserve_toggle,
-                    FALSE, FALSE, 0);
-  gtk_widget_show (cb_tool->preserve_toggle);
-
-  g_signal_connect (cb_tool->preserve_toggle, "toggled",
-                    G_CALLBACK (color_balance_preserve_toggled),
-                    cb_tool);
+  button = gimp_prop_check_button_new (image_map_tool->config,
+                                       "preserve-luminosity",
+                                       _("Preserve _luminosity"));
+  gtk_box_pack_end (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 }
 
 static void
@@ -333,12 +319,7 @@ color_balance_config_notify (GObject              *object,
   if (! cb_tool->cyan_red_adj)
     return;
 
-  if (! strcmp (pspec->name, "range"))
-    {
-      gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (cb_tool->range_radio),
-                                       config->range);
-    }
-  else if (! strcmp (pspec->name, "cyan-red"))
+  if (! strcmp (pspec->name, "cyan-red"))
     {
       gtk_adjustment_set_value (cb_tool->cyan_red_adj,
                                 config->cyan_red[config->range] * 100.0);
@@ -353,26 +334,6 @@ color_balance_config_notify (GObject              *object,
       gtk_adjustment_set_value (cb_tool->yellow_blue_adj,
                                 config->yellow_blue[config->range] * 100.0);
     }
-  else if (! strcmp (pspec->name, "preserve-luminosity"))
-    {
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cb_tool->preserve_toggle),
-                                    config->preserve_luminosity);
-    }
-}
-
-static void
-color_balance_range_callback (GtkWidget            *widget,
-                              GimpColorBalanceTool *cb_tool)
-{
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
-    {
-      GimpTransferMode range;
-
-      gimp_radio_button_update (widget, &range);
-      g_object_set (cb_tool->config,
-                    "range", range,
-                    NULL);
-    }
 }
 
 static void
@@ -380,20 +341,6 @@ color_balance_range_reset_callback (GtkWidget            *widget,
                                     GimpColorBalanceTool *cb_tool)
 {
   gimp_color_balance_config_reset_range (cb_tool->config);
-}
-
-static void
-color_balance_preserve_toggled (GtkWidget            *widget,
-                                GimpColorBalanceTool *cb_tool)
-{
-  gboolean active = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
-
-  if (cb_tool->config->preserve_luminosity != active)
-    {
-      g_object_set (cb_tool->config,
-                    "preserve-luminosity", active,
-                    NULL);
-    }
 }
 
 static void
