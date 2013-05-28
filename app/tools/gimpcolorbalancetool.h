@@ -39,11 +39,6 @@ struct _GimpColorBalanceTool
   GimpImageMapTool        parent_instance;
 
   GimpColorBalanceConfig *config;
-
-  /*  dialog  */
-  GtkAdjustment          *cyan_red_adj;
-  GtkAdjustment          *magenta_green_adj;
-  GtkAdjustment          *yellow_blue_adj;
 };
 
 struct _GimpColorBalanceToolClass
