@@ -35,6 +35,8 @@
 
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimppropwidgets.h"
+#include "widgets/gimpspinscale.h"
 
 #include "display/gimpdisplay.h"
 
@@ -42,10 +44,6 @@
 #include "gimpcoloroptions.h"
 
 #include "gimp-intl.h"
-
-
-#define SLIDER_WIDTH  200
-#define SPINNER_WIDTH 4
 
 
 /*  local function prototypes  */
@@ -67,12 +65,6 @@ static void       gimp_colorize_tool_config_notify (GObject          *object,
                                                     GParamSpec       *pspec,
                                                     GimpColorizeTool *col_tool);
 
-static void       colorize_hue_changed             (GtkAdjustment    *adj,
-                                                    GimpColorizeTool *col_tool);
-static void       colorize_saturation_changed      (GtkAdjustment    *adj,
-                                                    GimpColorizeTool *col_tool);
-static void       colorize_lightness_changed       (GtkAdjustment    *adj,
-                                                    GimpColorizeTool *col_tool);
 static void       colorize_color_changed           (GtkWidget        *button,
                                                     GimpColorizeTool *col_tool);
 
@@ -140,12 +132,7 @@ gimp_colorize_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
-    {
-      return FALSE;
-    }
-
-  return TRUE;
+  return GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 }
 
 static GeglNode *
@@ -179,12 +166,11 @@ gimp_colorize_tool_dialog (GimpImageMapTool *image_map_tool)
 {
   GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (image_map_tool);
   GtkWidget        *main_vbox;
-  GtkWidget        *table;
   GtkWidget        *frame;
   GtkWidget        *vbox;
+  GtkWidget        *scale;
   GtkWidget        *hbox;
   GtkWidget        *button;
-  GtkObject        *data;
   GimpRGB           color;
 
   main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
@@ -193,55 +179,30 @@ gimp_colorize_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  /*  The table containing sliders  */
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
-
   /*  Create the hue scale widget  */
-  data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                               _("_Hue:"), SLIDER_WIDTH, SPINNER_WIDTH,
-                               col_tool->config->hue * 360.0,
-                               0.0, 359.99, 1.0, 15.0, 0,
-                               TRUE, 0.0, 0.0,
-                               NULL, NULL);
-  col_tool->hue_data = GTK_ADJUSTMENT (data);
-
-  g_signal_connect (data, "value-changed",
-                    G_CALLBACK (colorize_hue_changed),
-                    col_tool);
+  scale = gimp_prop_spin_scale_new (image_map_tool->config, "hue",
+                                    _("_Hue"), 1.0 / 230.0, 15.0 / 360.0, 0);
+  gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 360.0);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
 
   /*  Create the saturation scale widget  */
-  data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                               _("_Saturation:"), SLIDER_WIDTH, SPINNER_WIDTH,
-                               col_tool->config->saturation * 100.0,
-                               0.0, 100.0, 1.0, 10.0, 0,
-                               TRUE, 0.0, 0.0,
-                               NULL, NULL);
-  col_tool->saturation_data = GTK_ADJUSTMENT (data);
-
-  g_signal_connect (data, "value-changed",
-                    G_CALLBACK (colorize_saturation_changed),
-                    col_tool);
+  scale = gimp_prop_spin_scale_new (image_map_tool->config, "saturation",
+                                    _("_Saturation"), 0.01, 0.1, 0);
+  gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 100.0);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
 
   /*  Create the lightness scale widget  */
-  data = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-                               _("_Lightness:"), SLIDER_WIDTH, SPINNER_WIDTH,
-                               col_tool->config->lightness * 100.0,
-                               -100.0, 100.0, 1.0, 10.0, 0,
-                               TRUE, 0.0, 0.0,
-                               NULL, NULL);
-  col_tool->lightness_data = GTK_ADJUSTMENT (data);
-
-  g_signal_connect (data, "value-changed",
-                    G_CALLBACK (colorize_lightness_changed),
-                    col_tool);
+  scale = gimp_prop_spin_scale_new (image_map_tool->config, "lightness",
+                                    _("_Lightness"), 0.01, 0.1, 0);
+  gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 100.0);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
 
   /*  Create the color button  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
@@ -289,73 +250,14 @@ gimp_colorize_tool_config_notify (GObject          *object,
                                   GParamSpec       *pspec,
                                   GimpColorizeTool *col_tool)
 {
-  GimpColorizeConfig *config = GIMP_COLORIZE_CONFIG (object);
-  GimpRGB             color;
+  GimpRGB color;
 
-  if (! col_tool->hue_data)
+  if (! col_tool->color_button)
     return;
-
-  if (! strcmp (pspec->name, "hue"))
-    {
-      gtk_adjustment_set_value (col_tool->hue_data,
-                                config->hue * 360.0);
-    }
-  else if (! strcmp (pspec->name, "saturation"))
-    {
-      gtk_adjustment_set_value (col_tool->saturation_data,
-                                config->saturation * 100.0);
-    }
-  else if (! strcmp (pspec->name, "lightness"))
-    {
-      gtk_adjustment_set_value (col_tool->lightness_data,
-                                config->lightness * 100.0);
-    }
 
   gimp_colorize_config_get_color (col_tool->config, &color);
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (col_tool->color_button),
                                &color);
-}
-
-static void
-colorize_hue_changed (GtkAdjustment    *adjustment,
-                      GimpColorizeTool *col_tool)
-{
-  gdouble value = gtk_adjustment_get_value (adjustment) / 360.0;
-
-  if (col_tool->config->hue != value)
-    {
-      g_object_set (col_tool->config,
-                    "hue", value,
-                    NULL);
-    }
-}
-
-static void
-colorize_saturation_changed (GtkAdjustment    *adjustment,
-                             GimpColorizeTool *col_tool)
-{
-  gdouble value = gtk_adjustment_get_value (adjustment) / 100.0;
-
-  if (col_tool->config->saturation != value)
-    {
-      g_object_set (col_tool->config,
-                    "saturation", value,
-                    NULL);
-    }
-}
-
-static void
-colorize_lightness_changed (GtkAdjustment    *adjustment,
-                            GimpColorizeTool *col_tool)
-{
-  gdouble value = gtk_adjustment_get_value (adjustment) / 100.0;
-
-  if (col_tool->config->lightness != value)
-    {
-      g_object_set (col_tool->config,
-                    "lightness", value,
-                    NULL);
-    }
 }
 
 static void

@@ -40,9 +40,6 @@ struct _GimpColorizeTool
   GimpColorizeConfig *config;
 
   /*  dialog  */
-  GtkAdjustment      *hue_data;
-  GtkAdjustment      *saturation_data;
-  GtkAdjustment      *lightness_data;
   GtkWidget          *color_button;
 };
 
