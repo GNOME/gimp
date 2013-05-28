@@ -35,12 +35,7 @@ typedef struct _GimpDesaturateToolClass GimpDesaturateToolClass;
 
 struct _GimpDesaturateTool
 {
-  GimpImageMapTool       parent_instance;
-
-  GimpDesaturateConfig  *config;
-
-  /*  dialog  */
-  GtkWidget             *button;
+  GimpImageMapTool  parent_instance;
 };
 
 struct _GimpDesaturateToolClass
