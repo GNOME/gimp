@@ -35,6 +35,7 @@
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimppropwidgets.h"
+#include "widgets/gimpspinscale.h"
 
 #include "display/gimpdisplay.h"
 
@@ -166,7 +167,8 @@ create_levels_scale (GObject     *config,
   gtk_widget_show (label);
 
   scale = gimp_prop_spin_scale_new (config, property_name,
-                                    NULL, 0.01, 0.1, 2);
+                                    NULL, 0.01, 0.1, 0);
+  gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 100.0);
   gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, col, col + 1);
   gtk_widget_show (scale);
 
