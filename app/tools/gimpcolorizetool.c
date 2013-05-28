@@ -61,13 +61,6 @@ static void       gimp_colorize_tool_color_picked  (GimpImageMapTool *im_tool,
                                                     const Babl       *sample_format,
                                                     const GimpRGB    *color);
 
-static void       gimp_colorize_tool_config_notify (GObject          *object,
-                                                    GParamSpec       *pspec,
-                                                    GimpColorizeTool *col_tool);
-
-static void       colorize_color_changed           (GtkWidget        *button,
-                                                    GimpColorizeTool *col_tool);
-
 
 G_DEFINE_TYPE (GimpColorizeTool, gimp_colorize_tool, GIMP_TYPE_IMAGE_MAP_TOOL)
 
@@ -140,19 +133,11 @@ gimp_colorize_tool_get_operation (GimpImageMapTool  *im_tool,
                                   GObject          **config,
                                   gchar            **undo_desc)
 {
-  GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (im_tool);
-
-  col_tool->config = g_object_new (GIMP_TYPE_COLORIZE_CONFIG, NULL);
-
-  g_signal_connect_object (col_tool->config, "notify",
-                           G_CALLBACK (gimp_colorize_tool_config_notify),
-                           G_OBJECT (col_tool), 0);
-
-  *config = G_OBJECT (col_tool->config);
+  *config = g_object_new (GIMP_TYPE_COLORIZE_CONFIG, NULL);
 
   return gegl_node_new_child (NULL,
                               "operation", "gimp:colorize",
-                              "config",    col_tool->config,
+                              "config",    *config,
                               NULL);
 }
 
@@ -171,7 +156,6 @@ gimp_colorize_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkWidget        *scale;
   GtkWidget        *hbox;
   GtkWidget        *button;
-  GimpRGB           color;
 
   main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
 
@@ -209,22 +193,15 @@ gimp_colorize_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  gimp_colorize_config_get_color (col_tool->config, &color);
-
-  col_tool->color_button = gimp_color_panel_new (_("Colorize Color"),
-                                                 &color,
-                                                 GIMP_COLOR_AREA_FLAT,
-                                                 128, 24);
-  gimp_color_button_set_update (GIMP_COLOR_BUTTON (col_tool->color_button),
-                                TRUE);
-  gimp_color_panel_set_context (GIMP_COLOR_PANEL (col_tool->color_button),
+  button = gimp_prop_color_button_new (image_map_tool->config, "color",
+                                       _("Colorize Color"),
+                                       128, 24,
+                                       GIMP_COLOR_AREA_FLAT);
+  gimp_color_button_set_update (GIMP_COLOR_BUTTON (button), TRUE);
+  gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                 GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (col_tool)));
-  gtk_box_pack_start (GTK_BOX (hbox), col_tool->color_button, TRUE, TRUE, 0);
-  gtk_widget_show (col_tool->color_button);
-
-  g_signal_connect (col_tool->color_button, "color-changed",
-                    G_CALLBACK (colorize_color_changed),
-                    col_tool);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
 
   button = gimp_image_map_tool_add_color_picker (image_map_tool,
                                                  "colorize",
@@ -240,32 +217,5 @@ gimp_colorize_tool_color_picked (GimpImageMapTool *im_tool,
                                  const Babl       *sample_format,
                                  const GimpRGB    *color)
 {
-  GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (im_tool);
-
-  gimp_colorize_config_set_color (col_tool->config, color);
-}
-
-static void
-gimp_colorize_tool_config_notify (GObject          *object,
-                                  GParamSpec       *pspec,
-                                  GimpColorizeTool *col_tool)
-{
-  GimpRGB color;
-
-  if (! col_tool->color_button)
-    return;
-
-  gimp_colorize_config_get_color (col_tool->config, &color);
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (col_tool->color_button),
-                               &color);
-}
-
-static void
-colorize_color_changed (GtkWidget        *button,
-                        GimpColorizeTool *col_tool)
-{
-  GimpRGB color;
-
-  gimp_color_button_get_color (GIMP_COLOR_BUTTON (button), &color);
-  gimp_colorize_config_set_color (col_tool->config, &color);
+  g_object_set (im_tool->config, "color", color, NULL);
 }
