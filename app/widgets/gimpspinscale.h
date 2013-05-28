@@ -66,5 +66,12 @@ void          gimp_spin_scale_set_gamma          (GimpSpinScale *scale,
                                                   gdouble        gamma);
 gdouble       gimp_spin_scale_get_gamma          (GimpSpinScale *scale);
 
+/* note: after calling set_factor(), gtk_spin_button_get_adjustment()
+ * will return a different adjustment!
+ */
+void          gimp_spin_scale_set_factor         (GimpSpinScale *scale,
+                                                  gdouble        factor);
+gdouble       gimp_spin_scale_get_factor         (GimpSpinScale *scale);
+
 
 #endif  /*  __GIMP_SPIN_SCALE_H__  */
