@@ -42,10 +42,6 @@ struct _GimpHueSaturationTool
   /*  dialog  */
   GtkWidget               *range_radio;
   GtkWidget               *hue_range_color_area[6];
-  GtkAdjustment           *overlap_data;
-  GtkAdjustment           *hue_data;
-  GtkAdjustment           *lightness_data;
-  GtkAdjustment           *saturation_data;
 };
 
 struct _GimpHueSaturationToolClass

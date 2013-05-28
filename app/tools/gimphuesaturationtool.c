@@ -35,6 +35,8 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimppropwidgets.h"
+#include "widgets/gimpspinscale.h"
 
 #include "display/gimpdisplay.h"
 
@@ -44,9 +46,8 @@
 #include "gimp-intl.h"
 
 
-#define SLIDER_WIDTH  200
-#define DA_WIDTH       40
-#define DA_HEIGHT      20
+#define DA_WIDTH  40
+#define DA_HEIGHT 20
 
 
 /*  local function prototypes  */
@@ -70,14 +71,6 @@ static void       hue_saturation_update_color_areas      (GimpHueSaturationTool 
 static void       hue_saturation_range_callback          (GtkWidget             *widget,
                                                           GimpHueSaturationTool *hs_tool);
 static void       hue_saturation_range_reset_callback    (GtkWidget             *widget,
-                                                          GimpHueSaturationTool *hs_tool);
-static void       hue_saturation_hue_changed             (GtkAdjustment         *adjustment,
-                                                          GimpHueSaturationTool *hs_tool);
-static void       hue_saturation_lightness_changed       (GtkAdjustment         *adjustment,
-                                                          GimpHueSaturationTool *hs_tool);
-static void       hue_saturation_saturation_changed      (GtkAdjustment         *adjustment,
-                                                          GimpHueSaturationTool *hs_tool);
-static void       hue_saturation_overlap_changed         (GtkAdjustment         *adjustment,
                                                           GimpHueSaturationTool *hs_tool);
 
 
@@ -179,15 +172,13 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
   GimpHueSaturationTool   *hs_tool = GIMP_HUE_SATURATION_TOOL (image_map_tool);
   GimpHueSaturationConfig *config  = hs_tool->config;
   GtkWidget               *main_vbox;
+  GtkWidget               *frame;
   GtkWidget               *vbox;
   GtkWidget               *abox;
   GtkWidget               *table;
+  GtkWidget               *scale;
   GtkWidget               *button;
-  GtkWidget               *frame;
   GtkWidget               *hbox;
-  GtkObject               *data;
-  GtkSizeGroup            *label_group;
-  GtkSizeGroup            *spinner_group;
   GSList                  *group = NULL;
   gint                     i;
 
@@ -292,32 +283,12 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
 
   gtk_widget_show (table);
 
-  label_group  = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-  spinner_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-
   /* Create the 'Overlap' option slider */
-  table = gtk_table_new (3, 1, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
-
-  data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                               _("_Overlap:"), SLIDER_WIDTH, -1,
-                               config->overlap * 100.0,
-                               0.0, 100.0, 1.0, 15.0, 0,
-                               TRUE, 0.0, 0.0,
-                               NULL, NULL);
-  hs_tool->overlap_data = GTK_ADJUSTMENT (data);
-
-  gtk_size_group_add_widget (label_group, GIMP_SCALE_ENTRY_LABEL (data));
-  gtk_size_group_add_widget (spinner_group, GIMP_SCALE_ENTRY_SPINBUTTON (data));
-  g_object_unref (label_group);
-  g_object_unref (spinner_group);
-
-  g_signal_connect (data, "value-changed",
-                    G_CALLBACK (hue_saturation_overlap_changed),
-                    hs_tool);
+  scale = gimp_prop_spin_scale_new (image_map_tool->config, "overlap",
+                                    _("_Overlap"), 0.01, 0.1, 0);
+  gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 100.0);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
 
   frame = gimp_frame_new (_("Adjust Selected Color"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -328,59 +299,26 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
-
   /*  Create the hue scale widget  */
-  data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                               _("_Hue:"), SLIDER_WIDTH, -1,
-                               config->hue[config->range] * 180.0,
-                               -180.0, 180.0, 1.0, 15.0, 0,
-                               TRUE, 0.0, 0.0,
-                               NULL, NULL);
-  hs_tool->hue_data = GTK_ADJUSTMENT (data);
-
-  gtk_size_group_add_widget (label_group, GIMP_SCALE_ENTRY_LABEL (data));
-  gtk_size_group_add_widget (spinner_group, GIMP_SCALE_ENTRY_SPINBUTTON (data));
-
-  g_signal_connect (data, "value-changed",
-                    G_CALLBACK (hue_saturation_hue_changed),
-                    hs_tool);
+  scale = gimp_prop_spin_scale_new (image_map_tool->config, "hue",
+                                    _("_Hue"), 1.0 / 180.0, 15.0 / 180.0, 0);
+  gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 180.0);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
 
   /*  Create the lightness scale widget  */
-  data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                               _("_Lightness:"), SLIDER_WIDTH, -1,
-                               config->lightness[config->range]  * 100.0,
-                               -100.0, 100.0, 1.0, 10.0, 0,
-                               TRUE, 0.0, 0.0,
-                               NULL, NULL);
-  hs_tool->lightness_data = GTK_ADJUSTMENT (data);
-
-  gtk_size_group_add_widget (label_group, GIMP_SCALE_ENTRY_LABEL (data));
-  gtk_size_group_add_widget (spinner_group, GIMP_SCALE_ENTRY_SPINBUTTON (data));
-
-  g_signal_connect (data, "value-changed",
-                    G_CALLBACK (hue_saturation_lightness_changed),
-                    hs_tool);
+  scale = gimp_prop_spin_scale_new (image_map_tool->config, "lightness",
+                                    _("_Lightness"), 0.01, 0.1, 0);
+  gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 180.0);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
 
   /*  Create the saturation scale widget  */
-  data = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-                               _("_Saturation:"), SLIDER_WIDTH, -1,
-                               config->saturation[config->range] * 100.0,
-                               -100.0, 100.0, 1.0, 10.0, 0,
-                               TRUE, 0.0, 0.0,
-                               NULL, NULL);
-  hs_tool->saturation_data = GTK_ADJUSTMENT (data);
-
-  gtk_size_group_add_widget (label_group, GIMP_SCALE_ENTRY_LABEL (data));
-  gtk_size_group_add_widget (spinner_group, GIMP_SCALE_ENTRY_SPINBUTTON (data));
-
-  g_signal_connect (hs_tool->saturation_data, "value-changed",
-                    G_CALLBACK (hue_saturation_saturation_changed),
-                    hs_tool);
+  scale = gimp_prop_spin_scale_new (image_map_tool->config, "saturation",
+                                    _("_Saturation"), 0.01, 0.1, 0);
+  gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 180.0);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -433,33 +371,13 @@ hue_saturation_config_notify (GObject               *object,
 {
   GimpHueSaturationConfig *config = GIMP_HUE_SATURATION_CONFIG (object);
 
-  if (! hs_tool->hue_data)
+  if (! hs_tool->range_radio)
     return;
 
   if (! strcmp (pspec->name, "range"))
     {
       gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (hs_tool->range_radio),
                                        config->range);
-    }
-  else if (! strcmp (pspec->name, "hue"))
-    {
-      gtk_adjustment_set_value (hs_tool->hue_data,
-                                config->hue[config->range] * 180.0);
-    }
-  else if (! strcmp (pspec->name, "lightness"))
-    {
-      gtk_adjustment_set_value (hs_tool->lightness_data,
-                                config->lightness[config->range] * 100.0);
-    }
-  else if (! strcmp (pspec->name, "saturation"))
-    {
-      gtk_adjustment_set_value (hs_tool->saturation_data,
-                                config->saturation[config->range] * 100.0);
-    }
-  else if (! strcmp (pspec->name, "overlap"))
-    {
-      gtk_adjustment_set_value (hs_tool->overlap_data,
-                                config->overlap * 100.0);
     }
 
   hue_saturation_update_color_areas (hs_tool);
@@ -512,60 +430,4 @@ hue_saturation_range_reset_callback (GtkWidget             *widget,
                                      GimpHueSaturationTool *hs_tool)
 {
   gimp_hue_saturation_config_reset_range (hs_tool->config);
-}
-
-static void
-hue_saturation_hue_changed (GtkAdjustment         *adjustment,
-                            GimpHueSaturationTool *hs_tool)
-{
-  gdouble value = gtk_adjustment_get_value (adjustment) / 180.0;
-
-  if (hs_tool->config->hue[hs_tool->config->range] != value)
-    {
-      g_object_set (hs_tool->config,
-                    "hue", value,
-                    NULL);
-    }
-}
-
-static void
-hue_saturation_lightness_changed (GtkAdjustment         *adjustment,
-                                  GimpHueSaturationTool *hs_tool)
-{
-  gdouble value = gtk_adjustment_get_value (adjustment) / 100.0;
-
-  if (hs_tool->config->lightness[hs_tool->config->range] != value)
-    {
-      g_object_set (hs_tool->config,
-                    "lightness", value,
-                    NULL);
-    }
-}
-
-static void
-hue_saturation_saturation_changed (GtkAdjustment         *adjustment,
-                                   GimpHueSaturationTool *hs_tool)
-{
-  gdouble value = gtk_adjustment_get_value (adjustment) / 100.0;
-
-  if (hs_tool->config->saturation[hs_tool->config->range] != value)
-    {
-      g_object_set (hs_tool->config,
-                    "saturation", value,
-                    NULL);
-    }
-}
-
-static void
-hue_saturation_overlap_changed (GtkAdjustment         *adjustment,
-                                GimpHueSaturationTool *hs_tool)
-{
-  gdouble value = gtk_adjustment_get_value (adjustment) / 100.0;
-
-  if (hs_tool->config->overlap != value)
-    {
-      g_object_set (hs_tool->config,
-                    "overlap", value,
-                    NULL);
-    }
 }
