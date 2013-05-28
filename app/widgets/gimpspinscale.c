@@ -22,6 +22,7 @@
 #include "config.h"
 
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
 #include "libgimpmath/gimpmath.h"
@@ -52,6 +53,12 @@ typedef struct _GimpSpinScalePrivate GimpSpinScalePrivate;
 struct _GimpSpinScalePrivate
 {
   gchar       *label;
+  gchar       *label_text;
+  gchar       *label_pattern;
+
+  GtkWindow   *mnemonic_window;
+  guint        mnemonic_keyval;
+  gboolean     mnemonics_visible;
 
   gboolean     scale_limits_set;
   gdouble      scale_lower;
@@ -70,33 +77,46 @@ struct _GimpSpinScalePrivate
                                                        GimpSpinScalePrivate))
 
 
-static void       gimp_spin_scale_dispose        (GObject          *object);
-static void       gimp_spin_scale_finalize       (GObject          *object);
-static void       gimp_spin_scale_set_property   (GObject          *object,
-                                                  guint             property_id,
-                                                  const GValue     *value,
-                                                  GParamSpec       *pspec);
-static void       gimp_spin_scale_get_property   (GObject          *object,
-                                                  guint             property_id,
-                                                  GValue           *value,
-                                                  GParamSpec       *pspec);
+static void       gimp_spin_scale_dispose           (GObject          *object);
+static void       gimp_spin_scale_finalize          (GObject          *object);
+static void       gimp_spin_scale_set_property      (GObject          *object,
+                                                     guint             property_id,
+                                                     const GValue     *value,
+                                                     GParamSpec       *pspec);
+static void       gimp_spin_scale_get_property      (GObject          *object,
+                                                     guint             property_id,
+                                                     GValue           *value,
+                                                     GParamSpec       *pspec);
 
-static void       gimp_spin_scale_size_request   (GtkWidget        *widget,
-                                                  GtkRequisition   *requisition);
-static void       gimp_spin_scale_style_set      (GtkWidget        *widget,
-                                                  GtkStyle         *prev_style);
-static gboolean   gimp_spin_scale_expose         (GtkWidget        *widget,
-                                                  GdkEventExpose   *event);
-static gboolean   gimp_spin_scale_button_press   (GtkWidget        *widget,
-                                                  GdkEventButton   *event);
-static gboolean   gimp_spin_scale_button_release (GtkWidget        *widget,
-                                                  GdkEventButton   *event);
-static gboolean   gimp_spin_scale_motion_notify  (GtkWidget        *widget,
-                                                  GdkEventMotion   *event);
-static gboolean   gimp_spin_scale_leave_notify   (GtkWidget        *widget,
-                                                  GdkEventCrossing *event);
+static void       gimp_spin_scale_size_request      (GtkWidget        *widget,
+                                                     GtkRequisition   *requisition);
+static void       gimp_spin_scale_style_set         (GtkWidget        *widget,
+                                                     GtkStyle         *prev_style);
+static gboolean   gimp_spin_scale_expose            (GtkWidget        *widget,
+                                                     GdkEventExpose   *event);
+static gboolean   gimp_spin_scale_button_press      (GtkWidget        *widget,
+                                                     GdkEventButton   *event);
+static gboolean   gimp_spin_scale_button_release    (GtkWidget        *widget,
+                                                     GdkEventButton   *event);
+static gboolean   gimp_spin_scale_motion_notify     (GtkWidget        *widget,
+                                                     GdkEventMotion   *event);
+static gboolean   gimp_spin_scale_leave_notify      (GtkWidget        *widget,
+                                                     GdkEventCrossing *event);
+static void       gimp_spin_scale_hierarchy_changed (GtkWidget        *widget,
+                                                     GtkWidget        *old_toplevel);
+static void       gimp_spin_scale_screen_changed    (GtkWidget        *widget,
+                                                     GdkScreen        *old_screen);
 
-static void       gimp_spin_scale_value_changed  (GtkSpinButton    *spin_button);
+static void       gimp_spin_scale_value_changed     (GtkSpinButton    *spin_button);
+
+static void       gimp_spin_scale_settings_notify   (GtkSettings      *settings,
+                                                     const GParamSpec *pspec,
+                                                     GimpSpinScale    *scale);
+static void       gimp_spin_scale_mnemonics_notify  (GtkWindow        *window,
+                                                     const GParamSpec *pspec,
+                                                     GimpSpinScale    *scale);
+static void       gimp_spin_scale_setup_mnemonic    (GimpSpinScale    *scale,
+                                                     guint             previous_keyval);
 
 
 G_DEFINE_TYPE (GimpSpinScale, gimp_spin_scale, GTK_TYPE_SPIN_BUTTON);
@@ -123,6 +143,8 @@ gimp_spin_scale_class_init (GimpSpinScaleClass *klass)
   widget_class->button_release_event = gimp_spin_scale_button_release;
   widget_class->motion_notify_event  = gimp_spin_scale_motion_notify;
   widget_class->leave_notify_event   = gimp_spin_scale_leave_notify;
+  widget_class->hierarchy_changed    = gimp_spin_scale_hierarchy_changed;
+  widget_class->screen_changed       = gimp_spin_scale_screen_changed;
 
   spin_button_class->value_changed   = gimp_spin_scale_value_changed;
 
@@ -157,6 +179,12 @@ static void
 gimp_spin_scale_dispose (GObject *object)
 {
   GimpSpinScalePrivate *private = GET_PRIVATE (object);
+  guint                 keyval;
+
+  keyval = private->mnemonic_keyval;
+  private->mnemonic_keyval = 0;
+
+  gimp_spin_scale_setup_mnemonic (GIMP_SPIN_SCALE (object), keyval);
 
   if (private->layout)
     {
@@ -176,6 +204,18 @@ gimp_spin_scale_finalize (GObject *object)
     {
       g_free (private->label);
       private->label = NULL;
+    }
+
+  if (private->label_text)
+    {
+      g_free (private->label_text);
+      private->label_text = NULL;
+    }
+
+  if (private->label_pattern)
+    {
+      g_free (private->label_pattern);
+      private->label_pattern = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -273,6 +313,45 @@ gimp_spin_scale_style_set (GtkWidget *widget,
     }
 }
 
+static PangoAttrList *
+pattern_to_attrs (const gchar *text,
+                  const gchar *pattern)
+{
+  PangoAttrList *attrs = pango_attr_list_new ();
+  const char    *p     = text;
+  const char    *q     = pattern;
+  const char    *start;
+
+  while (TRUE)
+    {
+      while (*p && *q && *q != '_')
+        {
+          p = g_utf8_next_char (p);
+          q++;
+        }
+      start = p;
+      while (*p && *q && *q == '_')
+        {
+          p = g_utf8_next_char (p);
+          q++;
+        }
+
+      if (p > start)
+        {
+          PangoAttribute *attr = pango_attr_underline_new (PANGO_UNDERLINE_LOW);
+
+          attr->start_index = start - text;
+          attr->end_index   = p - text;
+
+          pango_attr_list_insert (attrs, attr);
+        }
+      else
+        break;
+    }
+
+  return attrs;
+}
+
 static gboolean
 gimp_spin_scale_expose (GtkWidget      *widget,
                         GdkEventExpose *event)
@@ -356,8 +435,21 @@ gimp_spin_scale_expose (GtkWidget      *widget,
       if (! private->layout)
         {
           private->layout = gtk_widget_create_pango_layout (widget,
-                                                            private->label);
+                                                            private->label_text);
           pango_layout_set_ellipsize (private->layout, PANGO_ELLIPSIZE_END);
+
+          if (private->mnemonics_visible)
+            {
+              PangoAttrList *attrs;
+
+              attrs = pattern_to_attrs (private->label_text,
+                                        private->label_pattern);
+              if (attrs)
+                {
+                  pango_layout_set_attributes (private->layout, attrs);
+                  pango_attr_list_unref (attrs);
+                }
+            }
         }
 
       pango_layout_set_width (private->layout,
@@ -644,13 +736,61 @@ gimp_spin_scale_leave_notify (GtkWidget        *widget,
 }
 
 static void
+gimp_spin_scale_hierarchy_changed (GtkWidget *widget,
+                                   GtkWidget *old_toplevel)
+{
+  GimpSpinScalePrivate *private = GET_PRIVATE (widget);
+
+  gimp_spin_scale_setup_mnemonic (GIMP_SPIN_SCALE (widget),
+                                  private->mnemonic_keyval);
+}
+
+static void
+gimp_spin_scale_screen_changed (GtkWidget *widget,
+                                GdkScreen *old_screen)
+{
+  GimpSpinScale        *scale   = GIMP_SPIN_SCALE (widget);
+  GimpSpinScalePrivate *private = GET_PRIVATE (scale);
+  GtkSettings          *settings;
+
+  if (private->layout)
+    {
+      g_object_unref (private->layout);
+      private->layout = NULL;
+    }
+
+  if (old_screen)
+    {
+      settings = gtk_settings_get_for_screen (old_screen);
+
+      g_signal_handlers_disconnect_by_func (settings,
+                                            gimp_spin_scale_settings_notify,
+                                            scale);
+    }
+
+  if (! gtk_widget_has_screen (widget))
+    return;
+
+  settings = gtk_widget_get_settings (widget);
+
+  g_signal_connect (settings, "notify::gtk-enable-mnemonics",
+                    G_CALLBACK (gimp_spin_scale_settings_notify),
+                    scale);
+  g_signal_connect (settings, "notify::gtk-enable-accels",
+                    G_CALLBACK (gimp_spin_scale_settings_notify),
+                    scale);
+
+  gimp_spin_scale_settings_notify (settings, NULL, scale);
+}
+
+static void
 gimp_spin_scale_value_changed (GtkSpinButton *spin_button)
 {
-  GtkAdjustment *adjustment = gtk_spin_button_get_adjustment (spin_button);
-  GimpSpinScalePrivate *private = GET_PRIVATE (spin_button);
-  gdouble        lower;
-  gdouble        upper;
-  gdouble        value;
+  GimpSpinScalePrivate *private    = GET_PRIVATE (spin_button);
+  GtkAdjustment        *adjustment = gtk_spin_button_get_adjustment (spin_button);
+  gdouble               lower;
+  gdouble               upper;
+  gdouble               value;
 
   gimp_spin_scale_get_limits (GIMP_SPIN_SCALE (spin_button), &lower, &upper);
 
@@ -659,6 +799,91 @@ gimp_spin_scale_value_changed (GtkSpinButton *spin_button)
   gtk_entry_set_progress_fraction (GTK_ENTRY (spin_button),
                                    pow ((value - lower) / (upper - lower),
                                         1.0 / private->gamma));
+}
+
+static void
+gimp_spin_scale_settings_notify (GtkSettings      *settings,
+                                 const GParamSpec *pspec,
+                                 GimpSpinScale    *scale)
+{
+  GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (scale));
+
+  if (GTK_IS_WINDOW (toplevel))
+    gimp_spin_scale_mnemonics_notify (GTK_WINDOW (toplevel), NULL, scale);
+}
+
+static void
+gimp_spin_scale_mnemonics_notify (GtkWindow        *window,
+                                  const GParamSpec *pspec,
+                                  GimpSpinScale    *scale)
+{
+  GimpSpinScalePrivate *private           = GET_PRIVATE (scale);
+  gboolean              mnemonics_visible = FALSE;
+  gboolean              enable_mnemonics;
+  gboolean              auto_mnemonics;
+
+  g_object_get (gtk_widget_get_settings (GTK_WIDGET (scale)),
+                "gtk-enable-mnemonics", &enable_mnemonics,
+                "gtk-auto-mnemonics",   &auto_mnemonics,
+                NULL);
+
+  if (enable_mnemonics &&
+      (! auto_mnemonics ||
+       gtk_widget_is_sensitive (GTK_WIDGET (scale))))
+    {
+      g_object_get (window,
+                    "mnemonics-visible", &mnemonics_visible,
+                    NULL);
+    }
+
+  if (private->mnemonics_visible != mnemonics_visible)
+    {
+      private->mnemonics_visible = mnemonics_visible;
+
+      if (private->layout)
+        {
+          g_object_unref (private->layout);
+          private->layout = NULL;
+        }
+
+      gtk_widget_queue_draw (GTK_WIDGET (scale));
+    }
+}
+
+static void
+gimp_spin_scale_setup_mnemonic (GimpSpinScale *scale,
+                                guint          previous_keyval)
+{
+  GimpSpinScalePrivate *private = GET_PRIVATE (scale);
+  GtkWidget            *widget  = GTK_WIDGET (scale);
+  GtkWidget            *toplevel;
+
+  if (private->mnemonic_window)
+    {
+      g_signal_handlers_disconnect_by_func (private->mnemonic_window,
+                                            gimp_spin_scale_mnemonics_notify,
+                                            scale);
+
+      gtk_window_remove_mnemonic (private->mnemonic_window,
+                                  previous_keyval,
+                                  widget);
+      private->mnemonic_window = NULL;
+    }
+
+  toplevel = gtk_widget_get_toplevel (widget);
+
+  if (gtk_widget_is_toplevel (toplevel) &&
+      private->mnemonic_keyval != GDK_KEY_VoidSymbol)
+    {
+      gtk_window_add_mnemonic (GTK_WINDOW (toplevel),
+                               private->mnemonic_keyval,
+                               widget);
+      private->mnemonic_window = GTK_WINDOW (toplevel);
+
+      g_signal_connect (toplevel, "notify::mnemonics-visible",
+                        G_CALLBACK (gimp_spin_scale_mnemonics_notify),
+                        scale);
+     }
 }
 
 
@@ -678,11 +903,90 @@ gimp_spin_scale_new (GtkAdjustment *adjustment,
                        NULL);
 }
 
+static gboolean
+separate_uline_pattern (const gchar  *str,
+                        guint        *accel_key,
+                        gchar       **new_str,
+                        gchar       **pattern)
+{
+  gboolean underscore;
+  const gchar *src;
+  gchar *dest;
+  gchar *pattern_dest;
+
+  *accel_key = GDK_KEY_VoidSymbol;
+  *new_str = g_new (gchar, strlen (str) + 1);
+  *pattern = g_new (gchar, g_utf8_strlen (str, -1) + 1);
+
+  underscore = FALSE;
+
+  src = str;
+  dest = *new_str;
+  pattern_dest = *pattern;
+
+  while (*src)
+    {
+      gunichar c;
+      const gchar *next_src;
+
+      c = g_utf8_get_char (src);
+      if (c == (gunichar)-1)
+        {
+          g_warning ("Invalid input string");
+          g_free (*new_str);
+          g_free (*pattern);
+
+          return FALSE;
+        }
+      next_src = g_utf8_next_char (src);
+
+      if (underscore)
+        {
+          if (c == '_')
+            *pattern_dest++ = ' ';
+          else
+            {
+              *pattern_dest++ = '_';
+              if (*accel_key == GDK_KEY_VoidSymbol)
+                *accel_key = gdk_keyval_to_lower (gdk_unicode_to_keyval (c));
+            }
+
+          while (src < next_src)
+            *dest++ = *src++;
+
+          underscore = FALSE;
+        }
+      else
+        {
+          if (c == '_')
+            {
+              underscore = TRUE;
+              src = next_src;
+            }
+          else
+            {
+              while (src < next_src)
+                *dest++ = *src++;
+
+              *pattern_dest++ = ' ';
+            }
+        }
+    }
+
+  *dest = 0;
+  *pattern_dest = 0;
+
+  return TRUE;
+}
+
 void
 gimp_spin_scale_set_label (GimpSpinScale *scale,
                            const gchar   *label)
 {
   GimpSpinScalePrivate *private;
+  guint                 accel_key = GDK_KEY_VoidSymbol;
+  gchar                *text      = NULL;
+  gchar                *pattern   = NULL;
 
   g_return_if_fail (GIMP_IS_SPIN_SCALE (scale));
 
@@ -691,8 +995,26 @@ gimp_spin_scale_set_label (GimpSpinScale *scale,
   if (label == private->label)
     return;
 
+  if (label && ! separate_uline_pattern (label, &accel_key, &text, &pattern))
+    return;
+
   g_free (private->label);
   private->label = g_strdup (label);
+
+  g_free (private->label_text);
+  private->label_text = g_strdup (text);
+
+  g_free (private->label_pattern);
+  private->label_pattern = g_strdup (pattern);
+
+  if (private->mnemonic_keyval != accel_key)
+    {
+      guint previous = private->mnemonic_keyval;
+
+      private->mnemonic_keyval = accel_key;
+
+      gimp_spin_scale_setup_mnemonic (scale, previous);
+    }
 
   if (private->layout)
     {
