@@ -172,7 +172,8 @@ gimp_spin_scale_init (GimpSpinScale *scale)
   gtk_entry_set_has_frame (GTK_ENTRY (scale), FALSE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (scale), TRUE);
 
-  private->gamma = 1.0;
+  private->mnemonic_keyval = GDK_KEY_VoidSymbol;
+  private->gamma           = 1.0;
 }
 
 static void
@@ -182,7 +183,7 @@ gimp_spin_scale_dispose (GObject *object)
   guint                 keyval;
 
   keyval = private->mnemonic_keyval;
-  private->mnemonic_keyval = 0;
+  private->mnemonic_keyval = GDK_KEY_VoidSymbol;
 
   gimp_spin_scale_setup_mnemonic (GIMP_SPIN_SCALE (object), keyval);
 
