@@ -35,12 +35,7 @@ typedef struct _GimpPosterizeToolClass GimpPosterizeToolClass;
 
 struct _GimpPosterizeTool
 {
-  GimpImageMapTool     parent_instance;
-
-  GimpPosterizeConfig *config;
-
-  /*  dialog  */
-  GtkAdjustment       *levels_data;
+  GimpImageMapTool  parent_instance;
 };
 
 struct _GimpPosterizeToolClass
