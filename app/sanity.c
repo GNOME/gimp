@@ -131,7 +131,7 @@ sanity_check_glib (void)
 {
 #define GLIB_REQUIRED_MAJOR 2
 #define GLIB_REQUIRED_MINOR 36
-#define GLIB_REQUIRED_MICRO 1
+#define GLIB_REQUIRED_MICRO 0
 
   const gchar *mismatch = glib_check_version (GLIB_REQUIRED_MAJOR,
                                               GLIB_REQUIRED_MINOR,
