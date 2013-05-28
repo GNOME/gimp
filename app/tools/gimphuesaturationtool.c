@@ -294,7 +294,6 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  /*  The table containing sliders  */
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
@@ -309,14 +308,14 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
   /*  Create the lightness scale widget  */
   scale = gimp_prop_spin_scale_new (image_map_tool->config, "lightness",
                                     _("_Lightness"), 0.01, 0.1, 0);
-  gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 180.0);
+  gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 100.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   /*  Create the saturation scale widget  */
   scale = gimp_prop_spin_scale_new (image_map_tool->config, "saturation",
                                     _("_Saturation"), 0.01, 0.1, 0);
-  gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 180.0);
+  gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 100.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
