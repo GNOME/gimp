@@ -712,33 +712,6 @@ gimp_spin_scale_set_scale_limits (GimpSpinScale *scale,
 }
 
 void
-gimp_spin_scale_set_gamma (GimpSpinScale *scale,
-                           gdouble        gamma)
-{
-  GimpSpinScalePrivate *private;
-
-  g_return_if_fail (GIMP_IS_SPIN_SCALE (scale));
-
-  private = GET_PRIVATE (scale);
-
-  private->gamma = gamma;
-
-  gimp_spin_scale_value_changed (GTK_SPIN_BUTTON (scale));
-}
-
-gdouble
-gimp_spin_scale_get_gamma (GimpSpinScale *scale)
-{
-  GimpSpinScalePrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_SPIN_SCALE (scale), 1.0);
-
-  private = GET_PRIVATE (scale);
-
-  return private->gamma;
-}
-
-void
 gimp_spin_scale_unset_scale_limits (GimpSpinScale *scale)
 {
   GimpSpinScalePrivate *private;
@@ -772,4 +745,31 @@ gimp_spin_scale_get_scale_limits (GimpSpinScale *scale,
     *upper = private->scale_upper;
 
   return private->scale_limits_set;
+}
+
+void
+gimp_spin_scale_set_gamma (GimpSpinScale *scale,
+                           gdouble        gamma)
+{
+  GimpSpinScalePrivate *private;
+
+  g_return_if_fail (GIMP_IS_SPIN_SCALE (scale));
+
+  private = GET_PRIVATE (scale);
+
+  private->gamma = gamma;
+
+  gimp_spin_scale_value_changed (GTK_SPIN_BUTTON (scale));
+}
+
+gdouble
+gimp_spin_scale_get_gamma (GimpSpinScale *scale)
+{
+  GimpSpinScalePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_SPIN_SCALE (scale), 1.0);
+
+  private = GET_PRIVATE (scale);
+
+  return private->gamma;
 }
