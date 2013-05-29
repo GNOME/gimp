@@ -1754,8 +1754,9 @@ gimp_transform_tool_response (GtkWidget         *widget,
                               gint               response_id,
                               GimpTransformTool *tr_tool)
 {
-  GimpTool *tool = GIMP_TOOL (tr_tool);
-  gint      i;
+  GimpTool    *tool    = GIMP_TOOL (tr_tool);
+  GimpDisplay *display = tool->display;
+  gint         i;
 
   switch (response_id)
     {
@@ -1783,7 +1784,7 @@ gimp_transform_tool_response (GtkWidget         *widget,
         }
 
       /*  reget the selection bounds  */
-      gimp_transform_tool_bounds (tr_tool, tool->display);
+      gimp_transform_tool_bounds (tr_tool, display);
 
       /*  recalculate the tool's transformation matrix  */
       gimp_transform_tool_recalc_matrix (tr_tool);
@@ -1791,19 +1792,19 @@ gimp_transform_tool_response (GtkWidget         *widget,
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
       /*  update the undo actions / menu items  */
-      gimp_image_flush (gimp_display_get_image (tool->display));
+      gimp_image_flush (gimp_display_get_image (display));
       break;
 
     case GTK_RESPONSE_OK:
-      g_return_if_fail (tool->display != NULL);
-      gimp_transform_tool_transform (tr_tool, tool->display);
+      g_return_if_fail (display != NULL);
+      gimp_transform_tool_transform (tr_tool, display);
       break;
 
     default:
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
 
       /*  update the undo actions / menu items  */
-      gimp_image_flush (gimp_display_get_image (tool->display));
+      gimp_image_flush (gimp_display_get_image (display));
       break;
     }
 }
