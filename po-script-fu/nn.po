@@ -6,17 +6,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2012-05-06 16:49+0000\n"
-"PO-Revision-Date: 2012-06-05 17:35+0100\n"
+"PO-Revision-Date: 2013-05-27 23:19+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <i18n-no@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Norwegian Nynorsk\n"
-"X-Poedit-Country: NORWAY\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: nn_NO\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #: ../plug-ins/script-fu/script-fu.c:110
 msgid "Interactive console for Script-Fu development"
@@ -91,8 +92,12 @@ msgid "_Refresh Scripts"
 msgstr "_Oppdater skript"
 
 #: ../plug-ins/script-fu/script-fu.c:357
-msgid "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  Please close all Script-Fu windows and try again."
-msgstr "Du kan ikkje bruke «oppdater skript» når du har ein open Script-Fu dialog. Lukk alle Script-Fu vindauge og prøv igjen."
+msgid ""
+"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
+"Please close all Script-Fu windows and try again."
+msgstr ""
+"Du kan ikkje bruka «oppdater skript» når du har eit ope Script-Fu "
+"dialogvindauge. Lukk alle Script-Fu-vindauge og prøv igjen."
 
 #: ../plug-ins/script-fu/script-fu-console.c:130
 #: ../plug-ins/script-fu/script-fu-console.c:197
@@ -126,11 +131,11 @@ msgstr "Prosedyrelesaren for Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-eval.c:60
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
-msgstr "Script-Fu evalueringsmodus tillet bare ikkje-interaktiv køyring"
+msgstr "Script-Fu evalueringsmodus tillét berre ikkje-interaktiv køyring"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:194
 msgid "Script-Fu cannot process two scripts at the same time."
-msgstr "Script-Fu kan ikkje køyre to skript samstundes."
+msgstr "Script-Fu kan ikkje køyra to skript samtidig."
 
 #: ../plug-ins/script-fu/script-fu-interface.c:196
 #, c-format
@@ -660,8 +665,8 @@ msgstr "IIR"
 #~ "The Burn-In script needs two layers in total. A foreground layer with "
 #~ "transparency and a background layer."
 #~ msgstr ""
-#~ "Filteret «brenn inn» treng totalt to lag, eit forgrunnslag med gjennomsikt "
-#~ "og eit bakgrunnslag"
+#~ "Filteret «brenn inn» treng totalt to lag, eit forgrunnslag med "
+#~ "gjennomsikt og eit bakgrunnslag"
 
 #~ msgid "Color 1"
 #~ msgstr "Farge 1"

@@ -6,35 +6,36 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-05-06 16:48+0000\n"
-"PO-Revision-Date: 2012-06-06 18:43+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2013-05-25 16:32+0000\n"
+"PO-Revision-Date: 2013-05-27 23:10+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <i18n-no@lister.ping.uio.no>\n"
+"Language: nn_NO\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Norwegian Nynorsk\n"
-"X-Poedit-Country: NORWAY\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1077
+#: ../libgimp/gimp.c:1097
 msgid "success"
 msgstr "vellukka"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1081
+#: ../libgimp/gimp.c:1101
 msgid "execution error"
 msgstr "utføringsfeil"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1085
+#: ../libgimp/gimp.c:1105
 msgid "calling error"
 msgstr "oppkallsfeil"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1089
+#: ../libgimp/gimp.c:1109
 msgid "cancelled"
 msgstr "avbrote"
 
@@ -47,37 +48,32 @@ msgstr "Penselval"
 msgid "_Browse..."
 msgstr "_Bla gjennom …"
 
-#: ../libgimp/gimpexport.c:243
-#: ../libgimp/gimpexport.c:279
+#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:279
 #, c-format
 msgid "%s plug-in can't handle layers"
-msgstr "Programtillegget %s  kan ikkje handtere lag"
+msgstr "Programtillegget %s  kan ikkje handtera lag"
 
-#: ../libgimp/gimpexport.c:244
-#: ../libgimp/gimpexport.c:253
-#: ../libgimp/gimpexport.c:262
-#: ../libgimp/gimpexport.c:280
+#: ../libgimp/gimpexport.c:244 ../libgimp/gimpexport.c:253
+#: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:280
 msgid "Merge Visible Layers"
 msgstr "Flett saman synlege lag"
 
 #: ../libgimp/gimpexport.c:252
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
-msgstr "Programtillegget %s kan ikkje handtere lagforskyving, storleik og dekkevne"
+msgstr ""
+"Programtillegget %s kan ikkje handtera lagforskyving, storleik og dekkevne"
 
-#: ../libgimp/gimpexport.c:261
-#: ../libgimp/gimpexport.c:270
+#: ../libgimp/gimpexport.c:261 ../libgimp/gimpexport.c:270
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr "Programtillegget %s kan bare handtere lag som animasjonsrammer"
+msgstr "Programtillegget %s kan berre handtera lag som animasjonsrammer"
 
-#: ../libgimp/gimpexport.c:262
-#: ../libgimp/gimpexport.c:271
+#: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:271
 msgid "Save as Animation"
 msgstr "Lagra som animasjon"
 
-#: ../libgimp/gimpexport.c:271
-#: ../libgimp/gimpexport.c:280
+#: ../libgimp/gimpexport.c:271 ../libgimp/gimpexport.c:280
 #: ../libgimp/gimpexport.c:289
 msgid "Flatten Image"
 msgstr "Flat ut biletet"
@@ -85,12 +81,12 @@ msgstr "Flat ut biletet"
 #: ../libgimp/gimpexport.c:288
 #, c-format
 msgid "%s plug-in can't handle transparency"
-msgstr "Programtillegget %s kan ikkje handtere gjennomsikt"
+msgstr "Programtillegget %s kan ikkje handtera gjennomsikt"
 
 #: ../libgimp/gimpexport.c:297
 #, c-format
 msgid "%s plug-in can't handle layer masks"
-msgstr "Programtillegget %s kan ikkje handtere lagmasker"
+msgstr "Programtillegget %s kan ikkje handtera lagmasker"
 
 #: ../libgimp/gimpexport.c:298
 msgid "Apply Layer Masks"
@@ -99,10 +95,9 @@ msgstr "Legg til lagmasker"
 #: ../libgimp/gimpexport.c:306
 #, c-format
 msgid "%s plug-in can only handle RGB images"
-msgstr "Programtillegget %s kan bare handtere RGB-bilete"
+msgstr "Programtillegget %s kan berre handtera RGB-bilete"
 
-#: ../libgimp/gimpexport.c:307
-#: ../libgimp/gimpexport.c:345
+#: ../libgimp/gimpexport.c:307 ../libgimp/gimpexport.c:345
 #: ../libgimp/gimpexport.c:354
 msgid "Convert to RGB"
 msgstr "Konverter til RGB"
@@ -110,10 +105,9 @@ msgstr "Konverter til RGB"
 #: ../libgimp/gimpexport.c:315
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
-msgstr "Programtillegget %s kan bare handtere gråtonebilete"
+msgstr "Programtillegget %s kan berre handtera gråtonebilete"
 
-#: ../libgimp/gimpexport.c:316
-#: ../libgimp/gimpexport.c:345
+#: ../libgimp/gimpexport.c:316 ../libgimp/gimpexport.c:345
 #: ../libgimp/gimpexport.c:366
 msgid "Convert to Grayscale"
 msgstr "Konverter til gråtoner"
@@ -121,10 +115,9 @@ msgstr "Konverter til gråtoner"
 #: ../libgimp/gimpexport.c:324
 #, c-format
 msgid "%s plug-in can only handle indexed images"
-msgstr "Programtillegget %s kan bare handtere indekserte bilete"
+msgstr "Programtillegget %s kan berre handtera indekserte bilete"
 
-#: ../libgimp/gimpexport.c:325
-#: ../libgimp/gimpexport.c:354
+#: ../libgimp/gimpexport.c:325 ../libgimp/gimpexport.c:354
 #: ../libgimp/gimpexport.c:364
 msgid ""
 "Convert to Indexed using default settings\n"
@@ -136,7 +129,8 @@ msgstr ""
 #: ../libgimp/gimpexport.c:334
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr "Programtillegget %s kan bare handtere indekserte punktbilet (to fargar)"
+msgstr ""
+"Programtillegget %s kan berre handtera indekserte punktbilet (to fargar)"
 
 #: ../libgimp/gimpexport.c:335
 msgid ""
@@ -149,17 +143,17 @@ msgstr ""
 #: ../libgimp/gimpexport.c:344
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
-msgstr "Programtillegget %s kan bare handtere RGB- og gråskalabilete"
+msgstr "Programtillegget %s kan berre handtera RGB- og gråskalabilete"
 
 #: ../libgimp/gimpexport.c:353
 #, c-format
 msgid "%s plug-in  can only handle RGB or indexed images"
-msgstr "Programtillegget %s kan bare handtere RGB og indekserte bilete"
+msgstr "Programtillegget %s kan berre handtera RGB og indekserte bilete"
 
 #: ../libgimp/gimpexport.c:363
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
-msgstr "Programtillegget %s kan bare handtere gråskala og indekserte bilete"
+msgstr "Programtillegget %s kan berre handtera gråskala og indekserte bilete"
 
 #: ../libgimp/gimpexport.c:374
 #, c-format
@@ -186,21 +180,23 @@ msgstr "Eksporter fil"
 msgid "_Ignore"
 msgstr "_Ignorer"
 
-#: ../libgimp/gimpexport.c:518
-#: ../libgimp/gimpexport.c:988
+#: ../libgimp/gimpexport.c:518 ../libgimp/gimpexport.c:988
 msgid "_Export"
 msgstr "_Eksporter"
 
 #. the headline
 #: ../libgimp/gimpexport.c:548
 #, c-format
-msgid "Your image should be exported before it can be saved as %s for the following reasons:"
+msgid ""
+"Your image should be exported before it can be saved as %s for the following "
+"reasons:"
 msgstr "Du bør eksportera biletet før du lagrar det som %s fordi:"
 
 #. the footline
 #: ../libgimp/gimpexport.c:622
 msgid "The export conversion won't modify your original image."
-msgstr "Endringane gjort for å eksportera biletet vil ikkje endra originalbiletet."
+msgstr ""
+"Endringane gjort for å eksportera biletet vil ikkje endra originalbiletet."
 
 #: ../libgimp/gimpexport.c:725
 #, c-format
@@ -239,8 +235,7 @@ msgstr "Val av fargeovergang"
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
 #.
-#: ../libgimp/gimpmenu.c:461
-#: ../libgimpwidgets/gimpintstore.c:241
+#: ../libgimp/gimpmenu.c:461 ../libgimpwidgets/gimpintstore.c:259
 msgid "(Empty)"
 msgstr "(Tom)"
 
@@ -282,8 +277,7 @@ msgstr "etter type"
 
 #. count label
 #: ../libgimp/gimpprocbrowserdialog.c:394
-#: ../libgimp/gimpprocbrowserdialog.c:545
-#: ../libgimpwidgets/gimpbrowser.c:139
+#: ../libgimp/gimpprocbrowserdialog.c:545 ../libgimpwidgets/gimpbrowser.c:139
 msgid "No matches"
 msgstr "Ingen treff"
 
@@ -422,7 +416,7 @@ msgstr "Forgrunn til gjennomsikt"
 #: ../libgimpbase/gimpbaseenums.c:68
 msgctxt "blend-mode"
 msgid "Custom gradient"
-msgstr "Eigendefinert fargeovergang"
+msgstr "Sjølvvald fargeovergang"
 
 #: ../libgimpbase/gimpbaseenums.c:98
 msgctxt "bucket-fill-mode"
@@ -894,8 +888,7 @@ msgctxt "text-justification"
 msgid "Filled"
 msgstr "Blokkjustert"
 
-#: ../libgimpbase/gimputils.c:178
-#: ../libgimpbase/gimputils.c:183
+#: ../libgimpbase/gimputils.c:178 ../libgimpbase/gimputils.c:183
 #: ../modules/color-selector-cmyk-lcms.c:424
 #: ../modules/color-selector-cmyk-lcms.c:430
 #: ../modules/display-filter-lcms.c:178
@@ -918,8 +911,14 @@ msgid "The color profile of your (primary) monitor."
 msgstr "Fargeprofilen for (primær)skjermen"
 
 #: ../libgimpconfig/gimpcolorconfig.c:56
-msgid "When enabled, GIMP will try to use the display color profile from the windowing system.  The configured monitor profile is then only used as a fallback."
-msgstr "Dersom denne er aktivert, vil GIMP prøve å bruke fargevisingsprofilen frå vindaugesystemet. Skjermprofilen blir då bare brukt for å ha noe å falle tilbake på."
+msgid ""
+"When enabled, GIMP will try to use the display color profile from the "
+"windowing system.  The configured monitor profile is then only used as a "
+"fallback."
+msgstr ""
+"Dersom denne er slått på, vil GIMP prøva å bruka fargevisingsprofilen frå "
+"vindaugesystemet. Skjermprofilen vert då berre brukt for å ha noko å falla "
+"tilbake på."
 
 #: ../libgimpconfig/gimpcolorconfig.c:60
 msgid "The default RGB working space color profile."
@@ -927,27 +926,37 @@ msgstr "Det førehandsinnstilte arbeidsområdet for RGB-fargeprofilen"
 
 #: ../libgimpconfig/gimpcolorconfig.c:62
 msgid "The CMYK color profile used to convert between RGB and CMYK."
-msgstr "Fargeprofilen CMYK blir brukt for å omforma mellom RGB og CMYK"
+msgstr "Fargeprofilen CMYK vert brukt for å omforma mellom RGB og CMYK"
 
 #: ../libgimpconfig/gimpcolorconfig.c:64
 msgid "The color profile used for simulating a printed version (softproof)."
-msgstr "Fargeprofilen som blir brukt for å simulera ein utskriven versjon (softproof)"
+msgstr ""
+"Fargeprofilen som vert brukt for å simulera ein utskriven versjon (softproof)"
 
 #: ../libgimpconfig/gimpcolorconfig.c:66
 msgid "Sets how colors are mapped for your display."
-msgstr "Bestemmer korleis fargane blir vist på skjermen"
+msgstr "Bestemmer korleis fargane vert viste på skjermen"
 
 #: ../libgimpconfig/gimpcolorconfig.c:68
-msgid "Sets how colors are converted from RGB working space to the print simulation device."
-msgstr "Bestemmer korleis fargane blir omforma frå RGB-arbeidsområdet til utskriftsimuleringsutstyret."
+msgid ""
+"Sets how colors are converted from RGB working space to the print simulation "
+"device."
+msgstr ""
+"Bestemmer korleis fargane vert omforma frå RGB-arbeidsområdet til "
+"utskriftsimuleringsutstyret."
 
 #: ../libgimpconfig/gimpcolorconfig.c:71
-msgid "When enabled, the print simulation will mark colors which can not be represented in the target color space."
-msgstr "Utskriftsimuleringa vil gi dei fargane som ikkje finst i fargeområdet for utskrifta den fargen du har vald i ruta til høgre.."
+msgid ""
+"When enabled, the print simulation will mark colors which can not be "
+"represented in the target color space."
+msgstr ""
+"Dersom denne er slått på, vil utskriftsimuleringa gi dei fargane som ikkje "
+"finst i fargeområdet for utskrifta den fargen du har vald i ruta til høgre."
 
 #: ../libgimpconfig/gimpcolorconfig.c:74
 msgid "The color to use for marking colors which are out of gamut."
-msgstr "Fargen som skal brukast for å merke fargar som ikkje finst i fargeområdet."
+msgstr ""
+"Fargen som skal brukast for å merke fargar som ikkje finst i fargeområdet."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgctxt "color-management-mode"
@@ -984,41 +993,40 @@ msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "Absolutt kolometrisk"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:106
+#: ../libgimpconfig/gimpconfig-deserialize.c:109
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "verdien for teiknet %s er ikkje ein gyldig UTF-8-streng"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:444
+#: ../libgimpconfig/gimpconfig-deserialize.c:451
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "venta «ja» eller «nei» for bolsk teikn %s, men fekk «%s»"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:518
+#: ../libgimpconfig/gimpconfig-deserialize.c:525
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "ugyldig verdi «%s» for teiknet %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:533
+#: ../libgimpconfig/gimpconfig-deserialize.c:540
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "ugyldig verdi «%ld» for teiknet %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:602
+#: ../libgimpconfig/gimpconfig-deserialize.c:609
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "under tolking av «%s»: %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:482
-#: ../libgimpconfig/gimpconfig-iface.c:495
-#: ../libgimpconfig/gimpscanner.c:559
+#: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:559
 #: ../libgimpconfig/gimpscanner.c:641
 #: ../libgimpwidgets/gimpcolorprofilestore.c:656
 msgid "fatal parse error"
 msgstr "fatal tolkingsfeil"
 
-#: ../libgimpconfig/gimpconfig-path.c:387
+#: ../libgimpconfig/gimpconfig-path.c:389
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Kan ikkje utvida $(%s)"
@@ -1032,12 +1040,12 @@ msgstr "Feil under skriving av «%s»: %s"
 #: ../libgimpconfig/gimpconfigwriter.c:145
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
-msgstr "Kunne ikkje oppretta ei mellombels fil for «%s»: %s"
+msgstr "Klarte ikkje oppretta ei mellombels fil for «%s»: %s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:158
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Kan ikkje opna «%s» for skriving: %s"
+msgstr "Klarrte ikkje opna «%s» for skriving: %s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:689
 #: ../libgimpconfig/gimpconfigwriter.c:709
@@ -1061,7 +1069,7 @@ msgstr ""
 #: ../libgimpconfig/gimpconfigwriter.c:741
 #, c-format
 msgid "Could not create '%s': %s"
-msgstr "Kunne ikkje oppretta «%s»: %s"
+msgstr "Klarte ikkje oppretta «%s»: %s"
 
 #: ../libgimpconfig/gimpscanner.c:268
 #, c-format
@@ -1081,10 +1089,8 @@ msgstr ""
 "Feil ved tolking av «%s» i linje %d:\n"
 " %s"
 
-#: ../libgimpmodule/gimpmodule.c:163
-#: ../libgimpmodule/gimpmodule.c:181
-#: ../libgimpmodule/gimpmodule.c:290
-#: ../libgimpmodule/gimpmodule.c:317
+#: ../libgimpmodule/gimpmodule.c:163 ../libgimpmodule/gimpmodule.c:181
+#: ../libgimpmodule/gimpmodule.c:290 ../libgimpmodule/gimpmodule.c:317
 #: ../libgimpmodule/gimpmodule.c:443
 #, c-format
 msgid "Module '%s' load error: %s"
@@ -1106,7 +1112,7 @@ msgstr "Lastinga mislukka"
 msgid "Not loaded"
 msgstr "Ikkje lasta"
 
-#: ../libgimpthumb/gimpthumb-utils.c:131
+#: ../libgimpthumb/gimpthumb-utils.c:157
 #, c-format
 msgid ""
 "Cannot determine a valid home directory.\n"
@@ -1115,11 +1121,10 @@ msgstr ""
 "Fann ikkje ein gyldig heimekatalog.\n"
 "Miniatyrane blei lagra i mappa for temporære filer (%s) i staden."
 
-#: ../libgimpthumb/gimpthumb-utils.c:255
-#: ../libgimpthumb/gimpthumb-utils.c:323
+#: ../libgimpthumb/gimpthumb-utils.c:281 ../libgimpthumb/gimpthumb-utils.c:349
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr "Kunne ikkje oppretta miniatyrbiletmappa «%s.»"
+msgstr "Greidde ikkje å oppretta miniatyrbiletmappa «%s.»"
 
 #: ../libgimpthumb/gimpthumbnail.c:508
 #, c-format
@@ -1129,7 +1134,7 @@ msgstr "Miniatyren inneheld ingen «Thumb::URI»-tag"
 #: ../libgimpthumb/gimpthumbnail.c:904
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
-msgstr "Kunne ikkje oppretta miniatyrbilete for %s: %s"
+msgstr "Klarte ikkje oppretta miniatyrbilete for %s: %s"
 
 #: ../libgimpwidgets/gimpbrowser.c:112
 msgid "_Search:"
@@ -1173,8 +1178,12 @@ msgid "Old:"
 msgstr "Gammal:"
 
 #: ../libgimpwidgets/gimpcolorselection.c:314
-msgid "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts CSS color names."
-msgstr "Hexadesimal fargenotasjon slik som brukt i HTML og CSS. Du kan også bruke CSS fargenamn."
+msgid ""
+"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
+"CSS color names."
+msgstr ""
+"Hexadesimal fargenotasjon slik som brukt i HTML og CSS. Du kan også bruka "
+"CSS fargenamn."
 
 #: ../libgimpwidgets/gimpcolorselection.c:320
 msgid "HTML _notation:"
@@ -1213,39 +1222,35 @@ msgid "Gigabytes"
 msgstr "Gigabyte"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:282
-#: ../libgimpwidgets/gimppageselector.c:1178
+#: ../libgimpwidgets/gimppageselector.c:269
+#: ../libgimpwidgets/gimppageselector.c:1067
 msgid "Nothing selected"
 msgstr "Ingenting er vald"
 
-#: ../libgimpwidgets/gimppageselector.c:300
+#: ../libgimpwidgets/gimppageselector.c:287
 msgid "Select _All"
 msgstr "Vel _alt"
 
-#: ../libgimpwidgets/gimppageselector.c:320
+#: ../libgimpwidgets/gimppageselector.c:307
 msgid "Select _range:"
 msgstr "Vel _område"
 
-#: ../libgimpwidgets/gimppageselector.c:332
+#: ../libgimpwidgets/gimppageselector.c:319
 msgid "Open _pages as"
 msgstr "Opna _sider som"
 
-#: ../libgimpwidgets/gimppageselector.c:433
-msgid "Page 000"
-msgstr "Side 000"
-
-#: ../libgimpwidgets/gimppageselector.c:521
-#: ../libgimpwidgets/gimppageselector.c:758
+#: ../libgimpwidgets/gimppageselector.c:449
+#: ../libgimpwidgets/gimppageselector.c:647
 #, c-format
 msgid "Page %d"
 msgstr "Side %d"
 
-#: ../libgimpwidgets/gimppageselector.c:1183
+#: ../libgimpwidgets/gimppageselector.c:1072
 msgid "One page selected"
 msgstr "Ei side vald"
 
-#: ../libgimpwidgets/gimppageselector.c:1190
-#: ../libgimpwidgets/gimppageselector.c:1194
+#: ../libgimpwidgets/gimppageselector.c:1079
+#: ../libgimpwidgets/gimppageselector.c:1083
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
@@ -1261,8 +1266,12 @@ msgid "Folder"
 msgstr "Mappe"
 
 #: ../libgimpwidgets/gimppickbutton.c:127
-msgid "Click the eyedropper, then click a color anywhere on your screen to select that color."
-msgstr "Klikk på fargeplukkaren. Deretter kan du klikka kvar som helst på skjermen for å velje farge."
+msgid ""
+"Click the eyedropper, then click a color anywhere on your screen to select "
+"that color."
+msgstr ""
+"Klikk på fargeplukkaren. Deretter kan du klikka kvar som helst på skjermen "
+"for å velja farge."
 
 #. toggle button to (de)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:290
@@ -1320,8 +1329,7 @@ msgstr "_Tilbakestill"
 msgid "Visible"
 msgstr "Synleg"
 
-#: ../libgimpwidgets/gimpstock.c:171
-#: ../libgimpwidgets/gimpstock.c:175
+#: ../libgimpwidgets/gimpstock.c:171 ../libgimpwidgets/gimpstock.c:175
 msgid "_Stroke"
 msgstr "_Strek opp"
 
@@ -1337,8 +1345,7 @@ msgstr "_Linjeavstand"
 msgid "_Resize"
 msgstr "_Nytt format"
 
-#: ../libgimpwidgets/gimpstock.c:205
-#: ../libgimpwidgets/gimpstock.c:340
+#: ../libgimpwidgets/gimpstock.c:205 ../libgimpwidgets/gimpstock.c:340
 msgid "_Scale"
 msgstr "_Skaler"
 
@@ -1375,8 +1382,12 @@ msgid "Factor"
 msgstr "Faktor"
 
 #: ../libgimpwidgets/gimpwidgets.c:516
-msgid "Use this value for random number generator seed - this allows you to repeat a given \"random\" operation"
-msgstr "Bruk denne verdien som startverdi for generering av tilfeldige tal - dette lar deg gjenta ein bestemt «tilfeldig» operasjon"
+msgid ""
+"Use this value for random number generator seed - this allows you to repeat "
+"a given \"random\" operation"
+msgstr ""
+"Bruk denne verdien som startverdi for generering av tilfeldige tal - dette "
+"lar deg gjenta ein bestemt «tilfeldig» operasjon"
 
 #: ../libgimpwidgets/gimpwidgets.c:520
 msgid "_New Seed"
@@ -1384,7 +1395,8 @@ msgstr "_Nytt frø"
 
 #: ../libgimpwidgets/gimpwidgets.c:533
 msgid "Seed random number generator with a generated random number"
-msgstr "Gi generator for tilfeldige tal eit generert tilfeldig tall som startverdi"
+msgstr ""
+"Gi generator for tilfeldige tal eit generert tilfeldig tall som startverdi"
 
 #: ../libgimpwidgets/gimpwidgets.c:537
 msgid "_Randomize"
@@ -1602,8 +1614,7 @@ msgid "DirectX DirectInput event controller"
 msgstr "DirectX hendingskontrollar for direkteinngang"
 
 #: ../modules/controller-dx-dinput.c:195
-#: ../modules/controller-linux-input.c:217
-#: ../modules/controller-midi.c:211
+#: ../modules/controller-linux-input.c:217 ../modules/controller-midi.c:211
 msgid "Device:"
 msgstr "_Eining:"
 
@@ -1716,8 +1727,7 @@ msgid "DirectInput Events"
 msgstr "DirectInput hendingar"
 
 #: ../modules/controller-dx-dinput.c:1092
-#: ../modules/controller-linux-input.c:524
-#: ../modules/controller-midi.c:504
+#: ../modules/controller-linux-input.c:524 ../modules/controller-midi.c:504
 msgid "No device configured"
 msgstr "Inga eining er konfigurert"
 
@@ -1870,24 +1880,20 @@ msgstr "Linux Input"
 msgid "Linux Input Events"
 msgstr "Linux Input Events"
 
-#: ../modules/controller-linux-input.c:550
-#: ../modules/controller-midi.c:453
+#: ../modules/controller-linux-input.c:550 ../modules/controller-midi.c:453
 #: ../modules/controller-midi.c:479
 #, c-format
 msgid "Reading from %s"
 msgstr "Les frå %s"
 
 #: ../modules/controller-linux-input.c:568
-#: ../modules/controller-linux-input.c:622
-#: ../modules/controller-midi.c:435
-#: ../modules/controller-midi.c:496
-#: ../modules/controller-midi.c:567
+#: ../modules/controller-linux-input.c:622 ../modules/controller-midi.c:435
+#: ../modules/controller-midi.c:496 ../modules/controller-midi.c:567
 #, c-format
 msgid "Device not available: %s"
 msgstr "Eininga er ikkje tilgjengeleg: %s"
 
-#: ../modules/controller-linux-input.c:631
-#: ../modules/controller-midi.c:576
+#: ../modules/controller-linux-input.c:631 ../modules/controller-midi.c:576
 msgid "End of file"
 msgstr "Filslutt"
 
@@ -1901,15 +1907,19 @@ msgstr "Namnet på utstyret som inneheld MIDI-hendingane"
 
 #: ../modules/controller-midi.c:205
 msgid "Enter 'alsa' to use the ALSA sequencer."
-msgstr "Skriv inn  «alsa» for å bruke ALSA-sekvenser."
+msgstr "Skriv inn  «alsa» for å bruka ALSA-sekvenser."
 
 #: ../modules/controller-midi.c:220
 msgid "Channel:"
 msgstr "Kanal:"
 
 #: ../modules/controller-midi.c:221
-msgid "The MIDI channel to read events from. Set to -1 for reading from all MIDI channels."
-msgstr "Namnet på utstyret som inneheld MIDI-hendingane. Sett til -1 for å lesa frå alle MIDI-kanalane."
+msgid ""
+"The MIDI channel to read events from. Set to -1 for reading from all MIDI "
+"channels."
+msgstr ""
+"Namnet på utstyret som inneheld MIDI-hendingane. Sett til -1 for å lesa frå "
+"alle MIDI-kanalane."
 
 #: ../modules/controller-midi.c:225
 msgid "MIDI"
@@ -1956,7 +1966,8 @@ msgstr "Tritanopi (blåblind)"
 
 #: ../modules/display-filter-color-blind.c:194
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr "Simuleringsfilter for avvikande fargesyn (Brettel-Vienot-Mollon-algoritmen)"
+msgstr ""
+"Simuleringsfilter for avvikande fargesyn (Brettel-Vienot-Mollon-algoritmen)"
 
 #: ../modules/display-filter-color-blind.c:257
 msgid "Color Deficient Vision"
@@ -2003,8 +2014,12 @@ msgid "None"
 msgstr "Ingen"
 
 #: ../modules/display-filter-lcms.c:207
-msgid "This filter takes its configuration from the Color Management section in the Preferences dialog."
-msgstr "Filteret hentar innstillingane sine frå seksjonen fargestyring i brukarinnstillingane."
+msgid ""
+"This filter takes its configuration from the Color Management section in the "
+"Preferences dialog."
+msgstr ""
+"Filteret hentar innstillingane sine frå seksjonen fargestyring i "
+"brukarinnstillingane."
 
 #: ../modules/display-filter-lcms.c:221
 msgid "Mode of operation:"
@@ -2054,3 +2069,5 @@ msgstr "_Føremål:"
 msgid "_Black Point Compensation"
 msgstr "_Svartpunktkompensering"
 
+#~ msgid "Page 000"
+#~ msgstr "Side 000"
