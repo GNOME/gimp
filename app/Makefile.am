@@ -114,7 +114,8 @@ INCLUDES = \
 	$(GTK_CFLAGS)		\
 	$(PANGOCAIRO_CFLAGS)	\
 	$(GEGL_CFLAGS)		\
-	-I$(includedir)
+	-I$(includedir)		\
+	-I$(builddir)/gui
 
 # FIXME: core should not depend on xcf
 workaround_that_core_depends_on_xcf = \
