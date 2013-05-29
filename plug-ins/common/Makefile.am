@@ -146,7 +146,6 @@ libexec_PROGRAMS = \
 	noise-hsv \
 	noise-rgb \
 	noise-solid \
-	noise-spread \
 	nova \
 	oilify \
 	photocopy \
@@ -1978,23 +1977,6 @@ noise_solid_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(noise_solid_RC)
-
-noise_spread_SOURCES = \
-	noise-spread.c
-
-noise_spread_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(noise_spread_RC)
 
 nova_SOURCES = \
 	nova.c

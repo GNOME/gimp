@@ -108,7 +108,6 @@ plug-ins/common/nl-filter.c
 plug-ins/common/noise-hsv.c
 plug-ins/common/noise-rgb.c
 plug-ins/common/noise-solid.c
-plug-ins/common/noise-spread.c
 plug-ins/common/nova.c
 plug-ins/common/oilify.c
 plug-ins/common/photocopy.c

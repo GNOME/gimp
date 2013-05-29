@@ -100,7 +100,6 @@ nl_filter_RC = nl-filter.rc.o
 noise_hsv_RC = noise-hsv.rc.o
 noise_rgb_RC = noise-rgb.rc.o
 noise_solid_RC = noise-solid.rc.o
-noise_spread_RC = noise-spread.rc.o
 nova_RC = nova.rc.o
 oilify_RC = oilify.rc.o
 photocopy_RC = photocopy.rc.o

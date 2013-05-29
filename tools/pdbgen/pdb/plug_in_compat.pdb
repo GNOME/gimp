@@ -743,6 +743,59 @@ CODE
     );
 }
 
+sub plug_in_spread {
+    $blurb = 'Move pixels around randomly';
+
+    $help = <<'HELP';
+Spreads the pixels of the specified drawable.  Pixels are randomly
+moved to another location whose distance varies from the original by
+the horizontal and vertical spread amounts.
+HELP
+
+    &std_pdb_compat('gegl:noise-spread');
+    $date = '2013';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'spread_amount_x', type => '0 <= float <= 200',
+	  desc => 'Horizontal spread amount' },
+	{ name => 'spread_amount_y', type => '0 <= float <= 200',
+	  desc => 'Vertical spread amount' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node =
+        gegl_node_new_child (NULL,
+                             "operation", "gegl:noise-spread",
+                             "amount-x",  (gint) spread_amount_x,
+                             "amount-y",  (gint) spread_amount_y,
+                             "seed",      (guint) g_random_int (),
+                             NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Spread"),
+                                     node);
+
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_threshold_alpha {
     $blurb = 'Make transparency all-or-nothing';
 
@@ -865,6 +918,7 @@ CODE
             plug_in_randomize_slur
             plug_in_semiflatten
             plug_in_shift
+	    plug_in_spread
             plug_in_threshold_alpha
             plug_in_vinvert);
 
