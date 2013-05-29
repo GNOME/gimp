@@ -1804,7 +1804,8 @@ gimp_transform_tool_response (GtkWidget         *widget,
       gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
 
       /*  update the undo actions / menu items  */
-      gimp_image_flush (gimp_display_get_image (display));
+      if (display)
+        gimp_image_flush (gimp_display_get_image (display));
       break;
     }
 }
