@@ -105,6 +105,7 @@ static void      gimp_data_get_property      (GObject             *object,
                                               GValue              *value,
                                               GParamSpec          *pspec);
 
+static void      gimp_data_name_changed      (GimpObject          *object);
 static gint64    gimp_data_get_memsize       (GimpObject          *object,
                                               gint64              *gui_size);
 
@@ -183,6 +184,7 @@ gimp_data_class_init (GimpDataClass *klass)
   object_class->set_property      = gimp_data_set_property;
   object_class->get_property      = gimp_data_get_property;
 
+  gimp_object_class->name_changed = gimp_data_name_changed;
   gimp_object_class->get_memsize  = gimp_data_get_memsize;
 
   klass->dirty                    = gimp_data_real_dirty;
@@ -350,6 +352,17 @@ gimp_data_get_property (GObject    *object,
     }
 }
 
+static void
+gimp_data_name_changed (GimpObject *object)
+{
+  GimpDataPrivate *private = GIMP_DATA_GET_PRIVATE (object);
+
+  private->dirty = TRUE;
+
+  if (GIMP_OBJECT_CLASS (parent_class)->name_changed)
+    GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
+}
+
 static gint64
 gimp_data_get_memsize (GimpObject *object,
                        gint64     *gui_size)
@@ -366,13 +379,11 @@ gimp_data_get_memsize (GimpObject *object,
 static void
 gimp_data_real_dirty (GimpData *data)
 {
-  GimpDataPrivate *private = GIMP_DATA_GET_PRIVATE (data);
-
-  private->dirty = TRUE;
-
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (data));
 
-  /* Emit the "name-changed" to signal general dirtiness */
+  /* Emit the "name-changed" to signal general dirtiness, our name
+   * changed implementation will also set the "dirty" flag to TRUE.
+   */
   gimp_object_name_changed (GIMP_OBJECT (data));
 }
 
