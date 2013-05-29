@@ -147,6 +147,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:noise-pick", /* in gimp */
     "gegl:noise-rgb", /* in gimp */
     "gegl:noise-slur", /* in gimp */
+    "gegl:noise-spread", /* in gimp */
     "gegl:opacity", /* pointless */
     "gegl:path",
     "gegl:photocopy", /* in gimp */

@@ -652,6 +652,7 @@
         <menuitem action="filters-noise-pick" />
         <menuitem action="filters-noise-rgb" />
         <menuitem action="filters-noise-slur" />
+        <menuitem action="filters-noise-spread" />
       </menu>
       <menu action="plug-in-edge-detect-menu" name="Edge-Detect">
         <menuitem action="filters-difference-of-gaussians" />
