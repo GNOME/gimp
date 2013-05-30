@@ -88,6 +88,7 @@ GtkWidget * gimp_prop_number_pair_entry_new
                                            gdouble      min_valid_value,
                                            gdouble      max_valid_value);
 
+
 /*  GParamString  */
 
 GtkWidget * gimp_prop_language_combo_box_new (GObject      *config,
@@ -98,18 +99,15 @@ GtkWidget * gimp_prop_language_entry_new     (GObject      *config,
 GtkWidget * gimp_prop_icon_picker_new        (GimpViewable *viewable,
                                               Gimp         *gimp);
 
-/*  A view on all of an object's properties  */
 
-typedef GtkWidget * (* GimpCreatePickerFunc) (gpointer     creator,
-                                              const gchar *property_name,
-                                              const gchar *stock_id,
-                                              const gchar *help_id);
+/*  Utility functions  */
 
-GtkWidget * gimp_prop_table_new (GObject              *config,
-                                 GType                 owner_type,
-                                 GimpContext          *context,
-                                 GimpCreatePickerFunc  create_picker_fnc,
-                                 gpointer              picker_creator);
+gboolean _gimp_prop_widgets_get_numeric_values (GObject     *object,
+                                                GParamSpec  *param_spec,
+                                                gdouble     *value,
+                                                gdouble     *lower,
+                                                gdouble     *upper,
+                                                const gchar *strloc);
 
 
 #endif /* __GIMP_APP_PROP_WIDGETS_H__ */

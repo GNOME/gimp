@@ -41,7 +41,7 @@
 #include "core/gimpsettings.h"
 
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimppropwidgets.h"
+#include "widgets/gimpproptable.h"
 
 #include "display/gimpdisplay.h"
 
