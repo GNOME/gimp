@@ -1800,12 +1800,12 @@ no_compress (int      init_bits,
              FILE    *outfile,
              ifunptr  ReadValue)
 {
-  register long fcode;
-  register gint i /* = 0 */ ;
-  register int c;
-  register gint ent;
-  register gint hsize_reg;
-  register int hshift;
+  long fcode;
+  gint i /* = 0 */ ;
+  int c;
+  gint ent;
+  gint hsize_reg;
+  int hshift;
 
 
   /*
@@ -1884,13 +1884,13 @@ rle_compress (int      init_bits,
               FILE    *outfile,
               ifunptr  ReadValue)
 {
-  register long fcode;
-  register gint i /* = 0 */ ;
-  register int c, last;
-  register gint ent;
-  register gint disp;
-  register gint hsize_reg;
-  register int hshift;
+  long fcode;
+  gint i /* = 0 */ ;
+  int c, last;
+  gint ent;
+  gint disp;
+  gint hsize_reg;
+  int hshift;
 
 
   /*
@@ -1994,13 +1994,13 @@ normal_compress (int      init_bits,
                  FILE    *outfile,
                  ifunptr  ReadValue)
 {
-  register long fcode;
-  register gint i /* = 0 */ ;
-  register int c;
-  register gint ent;
-  register gint disp;
-  register gint hsize_reg;
-  register int hshift;
+  long fcode;
+  gint i /* = 0 */ ;
+  int c;
+  gint ent;
+  gint disp;
+  gint hsize_reg;
+  int hshift;
 
 
   /*
@@ -2194,10 +2194,10 @@ static void
 cl_hash (glong hsize)        /* reset code table */
 {
 
-  register glong *htab_p = htab + hsize;
+  glong *htab_p = htab + hsize;
 
-  register long i;
-  register long m1 = -1;
+  long i;
+  long m1 = -1;
 
   i = hsize - 16;
   do
