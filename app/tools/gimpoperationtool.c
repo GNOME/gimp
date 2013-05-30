@@ -271,11 +271,94 @@ gimp_operation_tool_color_picked (GimpImageMapTool  *im_tool,
                                   const Babl        *sample_format,
                                   const GimpRGB     *color)
 {
-  GimpOperationTool *tool = GIMP_OPERATION_TOOL (im_tool);
+  GimpOperationTool  *tool = GIMP_OPERATION_TOOL (im_tool);
+  gchar             **pspecs;
 
-  g_object_set (tool->config,
-                identifier, color,
-                NULL);
+  pspecs = g_strsplit (identifier, ":", 2);
+
+  if (pspecs[1])
+    {
+      GimpDrawable *drawable     = GIMP_TOOL (im_tool)->drawable;
+      GObjectClass *object_class = G_OBJECT_GET_CLASS (tool->config);
+      GParamSpec   *pspec_x;
+      GParamSpec   *pspec_y;
+
+      /* the operation's coordinate system is the selection bounds of
+       * the drawable
+       */
+      if (drawable)
+        {
+          gint off_x, off_y;
+
+          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+
+          x -= off_x;
+          y -= off_y;
+
+          if (gimp_item_mask_intersect (GIMP_ITEM (drawable),
+                                        &off_x, &off_y, NULL, NULL))
+            {
+              x -= off_x;
+              y -= off_y;
+            }
+        }
+
+      pspec_x = g_object_class_find_property (object_class, pspecs[0]);
+      pspec_y = g_object_class_find_property (object_class, pspecs[1]);
+
+      if (pspec_x && pspec_y &&
+          G_PARAM_SPEC_TYPE (pspec_x) == G_PARAM_SPEC_TYPE (pspec_y))
+        {
+          GValue value_x = G_VALUE_INIT;
+          GValue value_y = G_VALUE_INIT;
+
+          g_value_init (&value_x, G_PARAM_SPEC_VALUE_TYPE (pspec_x));
+          g_value_init (&value_y, G_PARAM_SPEC_VALUE_TYPE (pspec_y));
+
+          if (G_IS_PARAM_SPEC_INT (pspec_x))
+            {
+              g_value_set_int (&value_x, x);
+              g_value_set_int (&value_y, y);
+
+              g_param_value_validate (pspec_x, &value_x);
+              g_param_value_validate (pspec_y, &value_y);
+
+              g_object_set (tool->config,
+                            pspecs[0], g_value_get_int (&value_x),
+                            pspecs[1], g_value_get_int (&value_y),
+                            NULL);
+            }
+          else if (G_IS_PARAM_SPEC_DOUBLE (pspec_x))
+            {
+              g_value_set_double (&value_x, x);
+              g_value_set_double (&value_y, y);
+
+              g_param_value_validate (pspec_x, &value_x);
+              g_param_value_validate (pspec_y, &value_y);
+
+              g_object_set (tool->config,
+                            pspecs[0], g_value_get_double (&value_x),
+                            pspecs[1], g_value_get_double (&value_y),
+                            NULL);
+            }
+          else
+            {
+              g_warning ("%s: unhandled param spec of type %s",
+                         G_STRFUNC, G_PARAM_SPEC_TYPE_NAME (pspec_x));
+            }
+
+          g_value_unset (&value_x);
+          g_value_unset (&value_y);
+        }
+    }
+  else
+    {
+      g_object_set (tool->config,
+                    pspecs[0], color,
+                    NULL);
+    }
+
+  g_strfreev (pspecs);
 }
 
 void
