@@ -177,7 +177,6 @@ libexec_PROGRAMS = \
 	waves \
 	web-browser \
 	$(WEB_PAGE) \
-	whirl-pinch \
 	wind
 
 EXTRA_PROGRAMS = \
@@ -2507,23 +2506,6 @@ web_page_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(web_page_RC)
-
-whirl_pinch_SOURCES = \
-	whirl-pinch.c
-
-whirl_pinch_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(whirl_pinch_RC)
 
 wind_SOURCES = \
 	wind.c
