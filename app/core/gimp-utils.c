@@ -64,7 +64,6 @@
 #include "gimpparamspecs.h"
 
 
-#define NUM_PROCESSORS_DEFAULT 1
 #define MAX_FUNC               100
 
 
