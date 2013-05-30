@@ -933,7 +933,7 @@ GtkWidget *
 gimp_image_map_tool_add_color_picker (GimpImageMapTool *tool,
                                       gpointer          identifier,
                                       const gchar      *stock_id,
-                                      const gchar      *help_id)
+                                      const gchar      *tooltip)
 {
   GtkWidget *button;
   GtkWidget *image;
@@ -950,8 +950,8 @@ gimp_image_map_tool_add_color_picker (GimpImageMapTool *tool,
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
-  if (help_id)
-    gimp_help_set_help_data (button, help_id, NULL);
+  if (tooltip)
+    gimp_help_set_help_data (button, tooltip, NULL);
 
   g_object_set_data (G_OBJECT (button), "picker-identifier", identifier);
 

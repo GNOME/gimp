@@ -117,7 +117,7 @@ GtkSizeGroup * gimp_image_map_tool_dialog_get_label_group (GimpImageMapTool *too
 GtkWidget    * gimp_image_map_tool_add_color_picker       (GimpImageMapTool *tool,
                                                            gpointer          identifier,
                                                            const gchar      *stock_id,
-                                                           const gchar      *help_id);
+                                                           const gchar      *tooltip);
 
 
 #endif  /*  __GIMP_IMAGE_MAP_TOOL_H__  */
