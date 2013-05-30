@@ -51,7 +51,6 @@ struct _GimpPDBContext
   GimpInterpolationType   interpolation;
   GimpTransformDirection  transform_direction;
   GimpTransformResize     transform_resize;
-  gint                    transform_recursion;
 
   GimpContainer          *paint_options_list;
 };

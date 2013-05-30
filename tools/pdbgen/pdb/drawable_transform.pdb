@@ -64,7 +64,7 @@ $assemble_matrix
         {
           if (! gimp_drawable_transform_affine (drawable, context,
                                                 &matrix, transform_direction,
-                                                interpolation, recursion_level,
+                                                interpolation,
                                                 clip_result, progress))
             {
               success = FALSE;
@@ -74,7 +74,7 @@ $assemble_matrix
         {
           gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                transform_direction,
-                               interpolation, recursion_level,
+                               interpolation,
                                clip_result, progress);
         }
 
@@ -131,7 +131,7 @@ $assemble_matrix
         {
           if (! gimp_drawable_transform_affine (drawable, context,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, 3,
+                                                interpolation_type,
                                                 clip_result, progress))
             {
               success = FALSE;
@@ -141,7 +141,7 @@ $assemble_matrix
         {
           gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                GIMP_TRANSFORM_FORWARD,
-                               interpolation_type, 3,
+                               interpolation_type,
                                clip_result, progress);
         }
     
@@ -235,9 +235,9 @@ sub drawable_transform_flip {
 	{ name => 'interpolation', type => 'enum GimpInterpolationType',
 	  desc => 'Type of interpolation' },
 	{ name => 'supersample', type => 'boolean', dead => 1,
-	  desc => 'This parameter is ignored, supersampling is performed based on the interpolation type' },
-	{ name => 'recursion_level', type => '1 <= int32',
-	  desc => 'Maximum recursion level used for supersampling (3 is a nice value)' },
+	  desc => 'This parameter is ignored' },
+	{ name => 'recursion_level', type => '1 <= int32', dead => 1,
+	  desc => 'This parameter is ignored' },
 	{ name => 'clip_result', type => 'boolean',
 	  desc => 'Whether to clip results' }
     );
@@ -325,9 +325,9 @@ sub drawable_transform_perspective {
 	{ name => 'interpolation', type => 'enum GimpInterpolationType',
 	  desc => 'Type of interpolation' },
 	{ name => 'supersample', type => 'boolean', dead => 1,
-	  desc => 'This parameter is ignored, supersampling is performed based on the interpolation type' },
-	{ name => 'recursion_level', type => '1 <= int32',
-	  desc => 'Maximum recursion level used for supersampling (3 is a nice value)' },
+	  desc => 'This parameter is ignored' },
+	{ name => 'recursion_level', type => '1 <= int32', dead => 1,
+	  desc => 'This parameter is ignored' },
 	{ name => 'clip_result', type => 'enum GimpTransformResize',
 	  desc => 'How to clip results' }
     );
@@ -483,9 +483,9 @@ sub drawable_transform_rotate {
 	{ name => 'interpolation', type => 'enum GimpInterpolationType',
 	  desc => 'Type of interpolation' },
 	{ name => 'supersample', type => 'boolean', dead => 1,
-	  desc => 'This parameter is ignored, supersampling is performed based on the interpolation type' },
-	{ name => 'recursion_level', type => '1 <= int32',
-	  desc => 'Maximum recursion level used for supersampling (3 is a nice value)' },
+	  desc => 'This parameter is ignored' },
+	{ name => 'recursion_level', type => '1 <= int32', dead => 1,
+	  desc => 'This parameter is ignored' },
 	{ name => 'clip_result', type => 'enum GimpTransformResize',
 	  desc => 'How to clip results' }
     );
@@ -569,9 +569,9 @@ sub drawable_transform_scale {
 	{ name => 'interpolation', type => 'enum GimpInterpolationType',
 	  desc => 'Type of interpolation' },
 	{ name => 'supersample', type => 'boolean', dead => 1,
-	  desc => 'This parameter is ignored, supersampling is performed based on the interpolation type' },
-	{ name => 'recursion_level', type => '1 <= int32',
-	  desc => 'Maximum recursion level used for supersampling (3 is a nice value)' },
+	  desc => 'This parameter is ignored' },
+	{ name => 'recursion_level', type => '1 <= int32', dead => 1,
+	  desc => 'This parameter is ignored' },
 	{ name => 'clip_result', type => 'enum GimpTransformResize',
 	  desc => 'How to clip results' }
     );
@@ -646,9 +646,9 @@ sub drawable_transform_shear {
 	{ name => 'interpolation', type => 'enum GimpInterpolationType',
 	  desc => 'Type of interpolation' },
 	{ name => 'supersample', type => 'boolean', dead => 1,
-	  desc => 'This parameter is ignored, supersampling is performed based on the interpolation type' },
-	{ name => 'recursion_level', type => '1 <= int32',
-	  desc => 'Maximum recursion level used for supersampling (3 is a nice value)' },
+	  desc => 'This parameter is ignored' },
+	{ name => 'recursion_level', type => '1 <= int32', dead => 1,
+	  desc => 'This parameter is ignored' },
 	{ name => 'clip_result', type => 'enum GimpTransformResize',
 	  desc => 'How to clip results' }
     );
@@ -725,9 +725,9 @@ sub drawable_transform_2d {
 	{ name => 'interpolation', type => 'enum GimpInterpolationType',
 	  desc => 'Type of interpolation' },
 	{ name => 'supersample', type => 'boolean', dead => 1,
-	  desc => 'This parameter is ignored, supersampling is performed based on the interpolation type' },
-	{ name => 'recursion_level', type => '1 <= int32',
-	  desc => 'Maximum recursion level used for supersampling (3 is a nice value)' },
+	  desc => 'This parameter is ignored' },
+	{ name => 'recursion_level', type => '1 <= int32', dead => 1,
+	  desc => 'This parameter is ignored' },
 	{ name => 'clip_result', type => 'enum GimpTransformResize',
 	  desc => 'How to clip results' }
     );
@@ -819,9 +819,9 @@ sub drawable_transform_matrix {
 	{ name => 'interpolation', type => 'enum GimpInterpolationType',
 	  desc => 'Type of interpolation' },
 	{ name => 'supersample', type => 'boolean', dead => 1,
-	  desc => 'This parameter is ignored, supersampling is performed based on the interpolation type' },
-	{ name => 'recursion_level', type => '1 <= int32',
-	  desc => 'Maximum recursion level used for supersampling (3 is a nice value)' },
+	  desc => 'This parameter is ignored' },
+	{ name => 'recursion_level', type => '1 <= int32', dead => 1,
+	  desc => 'This parameter is ignored' },
 	{ name => 'clip_result', type => 'enum GimpTransformResize',
 	  desc => 'How to clip results' }
     );

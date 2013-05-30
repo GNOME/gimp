@@ -126,7 +126,6 @@ static void       gimp_drawable_transform          (GimpItem          *item,
                                                     const GimpMatrix3 *matrix,
                                                     GimpTransformDirection direction,
                                                     GimpInterpolationType interpolation_type,
-                                                    gint               recursion_level,
                                                     GimpTransformResize clip_result,
                                                     GimpProgress      *progress);
 
@@ -672,7 +671,6 @@ gimp_drawable_transform (GimpItem               *item,
                          const GimpMatrix3      *matrix,
                          GimpTransformDirection  direction,
                          GimpInterpolationType   interpolation_type,
-                         gint                    recursion_level,
                          GimpTransformResize     clip_result,
                          GimpProgress           *progress)
 {
@@ -688,7 +686,6 @@ gimp_drawable_transform (GimpItem               *item,
                                                   off_x, off_y,
                                                   matrix, direction,
                                                   interpolation_type,
-                                                  recursion_level,
                                                   clip_result,
                                                   &new_off_x, &new_off_y,
                                                   progress);

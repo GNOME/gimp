@@ -119,7 +119,6 @@ gimp_image_item_list_transform (GimpImage              *image,
                                 const GimpMatrix3      *matrix,
                                 GimpTransformDirection  direction,
                                 GimpInterpolationType   interpolation_type,
-                                gint                    recursion_level,
                                 GimpTransformResize     clip_result,
                                 GimpProgress           *progress)
 {
@@ -137,7 +136,7 @@ gimp_image_item_list_transform (GimpImage              *image,
       for (l = list; l; l = g_list_next (l))
         gimp_item_transform (GIMP_ITEM (l->data), context,
                              matrix, direction,
-                             interpolation_type, recursion_level,
+                             interpolation_type,
                              clip_result, progress);
 
       gimp_image_undo_group_end (image);

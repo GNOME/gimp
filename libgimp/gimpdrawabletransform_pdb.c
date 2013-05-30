@@ -85,8 +85,8 @@ gimp_drawable_transform_flip_simple (gint32              drawable_ID,
  * @y1: vert. coord. of other end of axis.
  * @transform_direction: Direction of transformation.
  * @interpolation: Type of interpolation.
- * @supersample: This parameter is ignored, supersampling is performed based on the interpolation type.
- * @recursion_level: Maximum recursion level used for supersampling (3 is a nice value).
+ * @supersample: This parameter is ignored.
+ * @recursion_level: This parameter is ignored.
  * @clip_result: Whether to clip results.
  *
  * Deprecated: Use gimp_item_transform_flip() instead.
@@ -194,8 +194,8 @@ gimp_drawable_transform_flip_default (gint32   drawable_ID,
  * @y3: The new y coordinate of lower-right corner of original bounding box.
  * @transform_direction: Direction of transformation.
  * @interpolation: Type of interpolation.
- * @supersample: This parameter is ignored, supersampling is performed based on the interpolation type.
- * @recursion_level: Maximum recursion level used for supersampling (3 is a nice value).
+ * @supersample: This parameter is ignored.
+ * @recursion_level: This parameter is ignored.
  * @clip_result: How to clip results.
  *
  * Deprecated: Use gimp_item_transform_perspective() instead.
@@ -364,8 +364,8 @@ gimp_drawable_transform_rotate_simple (gint32           drawable_ID,
  * @center_y: The vert. coordinate of the center of rotation.
  * @transform_direction: Direction of transformation.
  * @interpolation: Type of interpolation.
- * @supersample: This parameter is ignored, supersampling is performed based on the interpolation type.
- * @recursion_level: Maximum recursion level used for supersampling (3 is a nice value).
+ * @supersample: This parameter is ignored.
+ * @recursion_level: This parameter is ignored.
  * @clip_result: How to clip results.
  *
  * Deprecated: Use gimp_item_transform_rotate() instead.
@@ -469,8 +469,8 @@ gimp_drawable_transform_rotate_default (gint32              drawable_ID,
  * @y1: The new y coordinate of the lower-right corner of the scaled region.
  * @transform_direction: Direction of transformation.
  * @interpolation: Type of interpolation.
- * @supersample: This parameter is ignored, supersampling is performed based on the interpolation type.
- * @recursion_level: Maximum recursion level used for supersampling (3 is a nice value).
+ * @supersample: This parameter is ignored.
+ * @recursion_level: This parameter is ignored.
  * @clip_result: How to clip results.
  *
  * Deprecated: Use gimp_item_transform_scale() instead.
@@ -572,8 +572,8 @@ gimp_drawable_transform_scale_default (gint32              drawable_ID,
  * @magnitude: The magnitude of the shear.
  * @transform_direction: Direction of transformation.
  * @interpolation: Type of interpolation.
- * @supersample: This parameter is ignored, supersampling is performed based on the interpolation type.
- * @recursion_level: Maximum recursion level used for supersampling (3 is a nice value).
+ * @supersample: This parameter is ignored.
+ * @recursion_level: This parameter is ignored.
  * @clip_result: How to clip results.
  *
  * Deprecated: Use gimp_item_transform_shear() instead.
@@ -670,8 +670,8 @@ gimp_drawable_transform_shear_default (gint32              drawable_ID,
  * @dest_y: Y coordinate of where the center goes.
  * @transform_direction: Direction of transformation.
  * @interpolation: Type of interpolation.
- * @supersample: This parameter is ignored, supersampling is performed based on the interpolation type.
- * @recursion_level: Maximum recursion level used for supersampling (3 is a nice value).
+ * @supersample: This parameter is ignored.
+ * @recursion_level: This parameter is ignored.
  * @clip_result: How to clip results.
  *
  * Deprecated: Use gimp_item_transform_2d() instead.
@@ -795,8 +795,8 @@ gimp_drawable_transform_2d_default (gint32              drawable_ID,
  * @coeff_2_2: coefficient (2,2) of the transformation matrix.
  * @transform_direction: Direction of transformation.
  * @interpolation: Type of interpolation.
- * @supersample: This parameter is ignored, supersampling is performed based on the interpolation type.
- * @recursion_level: Maximum recursion level used for supersampling (3 is a nice value).
+ * @supersample: This parameter is ignored.
+ * @recursion_level: This parameter is ignored.
  * @clip_result: How to clip results.
  *
  * Deprecated: Use gimp_item_transform_matrix() instead.

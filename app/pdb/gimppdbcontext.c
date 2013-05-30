@@ -52,8 +52,7 @@ enum
   PROP_SAMPLE_TRANSPARENT,
   PROP_INTERPOLATION,
   PROP_TRANSFORM_DIRECTION,
-  PROP_TRANSFORM_RESIZE,
-  PROP_TRANSFORM_RECURSION
+  PROP_TRANSFORM_RESIZE
 };
 
 
@@ -143,11 +142,6 @@ gimp_pdb_context_class_init (GimpPDBContextClass *klass)
                                  GIMP_TYPE_TRANSFORM_RESIZE,
                                  GIMP_TRANSFORM_RESIZE_ADJUST,
                                  GIMP_PARAM_STATIC_STRINGS);
-
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_TRANSFORM_RECURSION,
-                                "transform-recursion", NULL,
-                                1, G_MAXINT32, 3,
-                                GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -259,10 +253,6 @@ gimp_pdb_context_set_property (GObject      *object,
       options->transform_resize = g_value_get_enum (value);
       break;
 
-    case PROP_TRANSFORM_RECURSION:
-      options->transform_recursion = g_value_get_int (value);
-      break;
-
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -321,10 +311,6 @@ gimp_pdb_context_get_property (GObject    *object,
 
     case PROP_TRANSFORM_RESIZE:
       g_value_set_enum (value, options->transform_resize);
-      break;
-
-    case PROP_TRANSFORM_RECURSION:
-      g_value_set_int (value, options->transform_recursion);
       break;
 
     default:

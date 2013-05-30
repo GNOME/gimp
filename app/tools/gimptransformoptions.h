@@ -40,7 +40,6 @@ struct _GimpTransformOptions
   GimpTransformType         type;
   GimpTransformDirection    direction;
   GimpInterpolationType     interpolation;
-  gint                      recursion_level;
   GimpTransformResize       clip;
   gboolean                  show_preview;
   gdouble                   preview_opacity;

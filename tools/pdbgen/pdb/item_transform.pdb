@@ -66,7 +66,6 @@ $assemble_matrix
                                                      context, &matrix,
                                                      pdb_context->transform_direction,
                                                      pdb_context->interpolation,
-                                                     pdb_context->transform_recursion,
                                                      pdb_context->transform_resize,
                                                      progress);
 
@@ -80,7 +79,6 @@ $assemble_matrix
           gimp_item_transform (item, context, &matrix,
                                pdb_context->transform_direction,
                                pdb_context->interpolation,
-                               pdb_context->transform_recursion,
                                pdb_context->transform_resize,
                                progress);
         }
@@ -201,7 +199,7 @@ Otherwise, this will be the newly created and flipped drawable.
 
 This procedure is affected by the following context setters:
 gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
-gimp_context_set_transform_resize(), gimp_context_set_transform_recursion().
+gimp_context_set_transform_resize().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -256,7 +254,7 @@ have been projected via a perspective transform.
 
 This procedure is affected by the following context setters:
 gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
-gimp_context_set_transform_resize(), gimp_context_set_transform_recursion().
+gimp_context_set_transform_resize().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -413,7 +411,7 @@ input. Otherwise, this will be the newly created and rotated drawable.
 
 This procedure is affected by the following context setters:
 gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
-gimp_context_set_transform_resize(), gimp_context_set_transform_recursion().
+gimp_context_set_transform_resize().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -462,7 +460,7 @@ input. Otherwise, this will be the newly created and scaled drawable.
 
 This procedure is affected by the following context setters:
 gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
-gimp_context_set_transform_resize(), gimp_context_set_transform_recursion().
+gimp_context_set_transform_resize().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -517,7 +515,7 @@ positive or negative and indicates the extent (in pixels) to shear by.
 
 This procedure is affected by the following context setters:
 gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
-gimp_context_set_transform_resize(), gimp_context_set_transform_recursion().
+gimp_context_set_transform_resize().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -564,7 +562,7 @@ and transformed drawable.
 
 This procedure is affected by the following context setters:
 gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
-gimp_context_set_transform_resize(), gimp_context_set_transform_recursion().
+gimp_context_set_transform_resize().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -619,7 +617,7 @@ drawable.
 
 This procedure is affected by the following context setters:
 gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
-gimp_context_set_transform_resize(), gimp_context_set_transform_recursion().
+gimp_context_set_transform_resize().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');

@@ -1284,7 +1284,6 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                 &tr_tool->transform,
                                 options->direction,
                                 options->interpolation,
-                                options->recursion_level,
                                 clip,
                                 progress);
 
@@ -1309,7 +1308,6 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                                    &tr_tool->transform,
                                                    options->direction,
                                                    options->interpolation,
-                                                   options->recursion_level,
                                                    clip,
                                                    new_offset_x,
                                                    new_offset_y,
@@ -1328,7 +1326,6 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                            &tr_tool->transform,
                            options->direction,
                            options->interpolation,
-                           options->recursion_level,
                            clip,
                            progress);
     }

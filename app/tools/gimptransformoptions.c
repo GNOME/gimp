@@ -199,7 +199,6 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
 static void
 gimp_transform_options_init (GimpTransformOptions *options)
 {
-  options->recursion_level = 3;
 }
 
 static void

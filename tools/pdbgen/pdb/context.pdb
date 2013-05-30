@@ -1656,59 +1656,33 @@ CODE
 }
 
 sub context_get_transform_recursion {
-    $blurb = 'Get the transform supersampling recursion.';
-
-    $help = <<'HELP';
-This procedure returns the transform supersampling recursion level.
-HELP
-
-    &mitch_pdb_misc('2010', '2.8');
+    &std_pdb_deprecated();
 
     @outargs = (
         { name => 'transform_recursion', type => '1 <= int32',
-          desc => 'The transform recursion level' }
+          desc => 'This returns always 3 and is meaningless' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  g_object_get (context,
-                "transform-recursion", &transform_recursion,
-                NULL);
+  transform_recursion = 3;
 }
 CODE
     );
 }
 
 sub context_set_transform_recursion {
-    $blurb = 'Set the transform supersampling recursion.';
-
-    $help = <<'HELP';
-This procedure modifies the transform supersampling recursion level
-setting. Whether or not a transformation does supersampling is
-determined by the interplolation type. The recursion level defaults
-to 3, which is a nice default value.
-
-This setting affects affects the following procedures:
-gimp_item_transform_flip(), gimp_item_transform_perspective(),
-gimp_item_transform_rotate(), gimp_item_transform_scale(),
-gimp_item_transform_shear(), gimp_item_transform_2d(),
-gimp_item_transform_matrix().
-HELP
-
-    &mitch_pdb_misc('2010', '2.8');
+    &std_pdb_deprecated();
 
     @inargs = (
-        { name => 'transform_recursion', type => '1 <= int32',
-          desc => 'The transform recursion level' }
+        { name => 'transform_recursion', type => '1 <= int32', dead => 1,
+          desc => 'This parameter is ignored' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  g_object_set (context,
-                "transform-recursion", transform_recursion,
-                NULL);
 }
 CODE
     );

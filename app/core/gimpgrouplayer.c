@@ -125,7 +125,6 @@ static void            gimp_group_layer_transform    (GimpItem        *item,
                                                       const GimpMatrix3 *matrix,
                                                       GimpTransformDirection direction,
                                                       GimpInterpolationType  interpolation_type,
-                                                      gint             recursion_level,
                                                       GimpTransformResize clip_result,
                                                       GimpProgress    *progress);
 
@@ -769,7 +768,6 @@ gimp_group_layer_transform (GimpItem               *item,
                             const GimpMatrix3      *matrix,
                             GimpTransformDirection  direction,
                             GimpInterpolationType   interpolation_type,
-                            gint                    recursion_level,
                             GimpTransformResize     clip_result,
                             GimpProgress           *progress)
 {
@@ -788,7 +786,7 @@ gimp_group_layer_transform (GimpItem               *item,
 
       gimp_item_transform (child, context,
                            matrix, direction,
-                           interpolation_type, recursion_level,
+                           interpolation_type,
                            clip_result, progress);
     }
 
@@ -797,7 +795,7 @@ gimp_group_layer_transform (GimpItem               *item,
   if (mask)
     gimp_item_transform (GIMP_ITEM (mask), context,
                          matrix, direction,
-                         interpolation_type, recursion_level,
+                         interpolation_type,
                          clip_result, progress);
 
   gimp_group_layer_resume_resize (group, TRUE);

@@ -176,7 +176,7 @@ perspective_invoker (GimpProcedure         *procedure,
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix,
                                                     GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, 3,
+                                                    interpolation_type,
                                                     FALSE, progress))
                 {
                   success = FALSE;
@@ -186,7 +186,7 @@ perspective_invoker (GimpProcedure         *procedure,
             {
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    GIMP_TRANSFORM_FORWARD,
-                                   interpolation, 3,
+                                   interpolation,
                                    FALSE, progress);
             }
 
@@ -260,7 +260,7 @@ rotate_invoker (GimpProcedure         *procedure,
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix,
                                                     GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, 3,
+                                                    interpolation_type,
                                                     FALSE, progress))
                 {
                   success = FALSE;
@@ -270,7 +270,7 @@ rotate_invoker (GimpProcedure         *procedure,
             {
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    GIMP_TRANSFORM_FORWARD,
-                                   interpolation, 3,
+                                   interpolation,
                                    FALSE, progress);
             }
 
@@ -351,7 +351,7 @@ scale_invoker (GimpProcedure         *procedure,
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix,
                                                     GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, 3,
+                                                    interpolation_type,
                                                     FALSE, progress))
                 {
                   success = FALSE;
@@ -361,7 +361,7 @@ scale_invoker (GimpProcedure         *procedure,
             {
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    GIMP_TRANSFORM_FORWARD,
-                                   interpolation, 3,
+                                   interpolation,
                                    FALSE, progress);
             }
 
@@ -437,7 +437,7 @@ shear_invoker (GimpProcedure         *procedure,
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix,
                                                     GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, 3,
+                                                    interpolation_type,
                                                     FALSE, progress))
                 {
                   success = FALSE;
@@ -447,7 +447,7 @@ shear_invoker (GimpProcedure         *procedure,
             {
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    GIMP_TRANSFORM_FORWARD,
-                                   interpolation, 3,
+                                   interpolation,
                                    FALSE, progress);
             }
 
@@ -527,7 +527,7 @@ transform_2d_invoker (GimpProcedure         *procedure,
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, 3,
+                                                    interpolation_type,
                                                     FALSE, progress))
                 {
                   success = FALSE;
@@ -537,7 +537,7 @@ transform_2d_invoker (GimpProcedure         *procedure,
             {
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    GIMP_TRANSFORM_FORWARD,
-                                   interpolation, 3,
+                                   interpolation,
                                    FALSE, progress);
             }
 

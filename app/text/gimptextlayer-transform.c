@@ -143,7 +143,6 @@ gimp_text_layer_transform (GimpItem               *item,
                            GimpTransformDirection  direction,
                            GimpInterpolationType   interpolation_type,
                            gboolean                supersample,
-                           gint                    recursion_level,
                            GimpTransformResize     clip_result,
                            GimpProgress           *progress)
 {

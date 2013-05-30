@@ -95,7 +95,6 @@ struct _GimpItemClass
                                           const GimpMatrix3      *matrix,
                                           GimpTransformDirection  direction,
                                           GimpInterpolationType   interpolation_type,
-                                          gint                    recursion_level,
                                           GimpTransformResize     clip_result,
                                           GimpProgress           *progress);
   gboolean        (* stroke)             (GimpItem               *item,
@@ -232,7 +231,6 @@ void            gimp_item_transform          (GimpItem           *item,
                                               const GimpMatrix3  *matrix,
                                               GimpTransformDirection direction,
                                               GimpInterpolationType interpolation_type,
-                                              gint                recursion_level,
                                               GimpTransformResize clip_result,
                                               GimpProgress       *progress);
 

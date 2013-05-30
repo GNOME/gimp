@@ -106,7 +106,6 @@ static void       gimp_vectors_transform     (GimpItem          *item,
                                               const GimpMatrix3 *matrix,
                                               GimpTransformDirection direction,
                                               GimpInterpolationType interp_type,
-                                              gint               recursion_level,
                                               GimpTransformResize   clip_result,
                                               GimpProgress      *progress);
 static gboolean   gimp_vectors_stroke        (GimpItem          *item,
@@ -511,7 +510,6 @@ gimp_vectors_transform (GimpItem               *item,
                         const GimpMatrix3      *matrix,
                         GimpTransformDirection  direction,
                         GimpInterpolationType   interpolation_type,
-                        gint                    recursion_level,
                         GimpTransformResize     clip_result,
                         GimpProgress           *progress)
 {

@@ -126,7 +126,6 @@ drawable_transform_flip_invoker (GimpProcedure         *procedure,
   gdouble y1;
   gint32 transform_direction;
   gint32 interpolation;
-  gint32 recursion_level;
   gboolean clip_result;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
@@ -136,7 +135,6 @@ drawable_transform_flip_invoker (GimpProcedure         *procedure,
   y1 = g_value_get_double (gimp_value_array_index (args, 4));
   transform_direction = g_value_get_enum (gimp_value_array_index (args, 5));
   interpolation = g_value_get_enum (gimp_value_array_index (args, 6));
-  recursion_level = g_value_get_int (gimp_value_array_index (args, 8));
   clip_result = g_value_get_boolean (gimp_value_array_index (args, 9));
 
   if (success)
@@ -172,7 +170,7 @@ drawable_transform_flip_invoker (GimpProcedure         *procedure,
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, transform_direction,
-                                                    interpolation, recursion_level,
+                                                    interpolation,
                                                     clip_result, progress))
                 {
                   success = FALSE;
@@ -182,7 +180,7 @@ drawable_transform_flip_invoker (GimpProcedure         *procedure,
             {
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    transform_direction,
-                                   interpolation, recursion_level,
+                                   interpolation,
                                    clip_result, progress);
             }
 
@@ -262,7 +260,7 @@ drawable_transform_flip_default_invoker (GimpProcedure         *procedure,
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, 3,
+                                                    interpolation_type,
                                                     clip_result, progress))
                 {
                   success = FALSE;
@@ -272,7 +270,7 @@ drawable_transform_flip_default_invoker (GimpProcedure         *procedure,
             {
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    GIMP_TRANSFORM_FORWARD,
-                                   interpolation_type, 3,
+                                   interpolation_type,
                                    clip_result, progress);
             }
 
@@ -311,7 +309,6 @@ drawable_transform_perspective_invoker (GimpProcedure         *procedure,
   gdouble y3;
   gint32 transform_direction;
   gint32 interpolation;
-  gint32 recursion_level;
   gint32 clip_result;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
@@ -325,7 +322,6 @@ drawable_transform_perspective_invoker (GimpProcedure         *procedure,
   y3 = g_value_get_double (gimp_value_array_index (args, 8));
   transform_direction = g_value_get_enum (gimp_value_array_index (args, 9));
   interpolation = g_value_get_enum (gimp_value_array_index (args, 10));
-  recursion_level = g_value_get_int (gimp_value_array_index (args, 12));
   clip_result = g_value_get_enum (gimp_value_array_index (args, 13));
 
   if (success)
@@ -363,7 +359,7 @@ drawable_transform_perspective_invoker (GimpProcedure         *procedure,
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, transform_direction,
-                                                    interpolation, recursion_level,
+                                                    interpolation,
                                                     clip_result, progress))
                 {
                   success = FALSE;
@@ -373,7 +369,7 @@ drawable_transform_perspective_invoker (GimpProcedure         *procedure,
             {
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    transform_direction,
-                                   interpolation, recursion_level,
+                                   interpolation,
                                    clip_result, progress);
             }
 
@@ -463,7 +459,7 @@ drawable_transform_perspective_default_invoker (GimpProcedure         *procedure
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, 3,
+                                                    interpolation_type,
                                                     clip_result, progress))
                 {
                   success = FALSE;
@@ -473,7 +469,7 @@ drawable_transform_perspective_default_invoker (GimpProcedure         *procedure
             {
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    GIMP_TRANSFORM_FORWARD,
-                                   interpolation_type, 3,
+                                   interpolation_type,
                                    clip_result, progress);
             }
 
@@ -577,7 +573,6 @@ drawable_transform_rotate_invoker (GimpProcedure         *procedure,
   gint32 center_y;
   gint32 transform_direction;
   gint32 interpolation;
-  gint32 recursion_level;
   gint32 clip_result;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
@@ -587,7 +582,6 @@ drawable_transform_rotate_invoker (GimpProcedure         *procedure,
   center_y = g_value_get_int (gimp_value_array_index (args, 4));
   transform_direction = g_value_get_enum (gimp_value_array_index (args, 5));
   interpolation = g_value_get_enum (gimp_value_array_index (args, 6));
-  recursion_level = g_value_get_int (gimp_value_array_index (args, 8));
   clip_result = g_value_get_enum (gimp_value_array_index (args, 9));
 
   if (success)
@@ -627,7 +621,7 @@ drawable_transform_rotate_invoker (GimpProcedure         *procedure,
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, transform_direction,
-                                                    interpolation, recursion_level,
+                                                    interpolation,
                                                     clip_result, progress))
                 {
                   success = FALSE;
@@ -637,7 +631,7 @@ drawable_transform_rotate_invoker (GimpProcedure         *procedure,
             {
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    transform_direction,
-                                   interpolation, recursion_level,
+                                   interpolation,
                                    clip_result, progress);
             }
 
@@ -721,7 +715,7 @@ drawable_transform_rotate_default_invoker (GimpProcedure         *procedure,
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, 3,
+                                                    interpolation_type,
                                                     clip_result, progress))
                 {
                   success = FALSE;
@@ -731,7 +725,7 @@ drawable_transform_rotate_default_invoker (GimpProcedure         *procedure,
             {
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    GIMP_TRANSFORM_FORWARD,
-                                   interpolation_type, 3,
+                                   interpolation_type,
                                    clip_result, progress);
             }
 
@@ -766,7 +760,6 @@ drawable_transform_scale_invoker (GimpProcedure         *procedure,
   gdouble y1;
   gint32 transform_direction;
   gint32 interpolation;
-  gint32 recursion_level;
   gint32 clip_result;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
@@ -776,7 +769,6 @@ drawable_transform_scale_invoker (GimpProcedure         *procedure,
   y1 = g_value_get_double (gimp_value_array_index (args, 4));
   transform_direction = g_value_get_enum (gimp_value_array_index (args, 5));
   interpolation = g_value_get_enum (gimp_value_array_index (args, 6));
-  recursion_level = g_value_get_int (gimp_value_array_index (args, 8));
   clip_result = g_value_get_enum (gimp_value_array_index (args, 9));
 
   if (success)
@@ -812,7 +804,7 @@ drawable_transform_scale_invoker (GimpProcedure         *procedure,
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, transform_direction,
-                                                    interpolation, recursion_level,
+                                                    interpolation,
                                                     clip_result, progress))
                 {
                   success = FALSE;
@@ -822,7 +814,7 @@ drawable_transform_scale_invoker (GimpProcedure         *procedure,
             {
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    transform_direction,
-                                   interpolation, recursion_level,
+                                   interpolation,
                                    clip_result, progress);
             }
 
@@ -903,7 +895,7 @@ drawable_transform_scale_default_invoker (GimpProcedure         *procedure,
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, 3,
+                                                    interpolation_type,
                                                     clip_result, progress))
                 {
                   success = FALSE;
@@ -913,7 +905,7 @@ drawable_transform_scale_default_invoker (GimpProcedure         *procedure,
             {
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    GIMP_TRANSFORM_FORWARD,
-                                   interpolation_type, 3,
+                                   interpolation_type,
                                    clip_result, progress);
             }
 
@@ -946,7 +938,6 @@ drawable_transform_shear_invoker (GimpProcedure         *procedure,
   gdouble magnitude;
   gint32 transform_direction;
   gint32 interpolation;
-  gint32 recursion_level;
   gint32 clip_result;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
@@ -954,7 +945,6 @@ drawable_transform_shear_invoker (GimpProcedure         *procedure,
   magnitude = g_value_get_double (gimp_value_array_index (args, 2));
   transform_direction = g_value_get_enum (gimp_value_array_index (args, 3));
   interpolation = g_value_get_enum (gimp_value_array_index (args, 4));
-  recursion_level = g_value_get_int (gimp_value_array_index (args, 6));
   clip_result = g_value_get_enum (gimp_value_array_index (args, 7));
 
   if (success)
@@ -991,7 +981,7 @@ drawable_transform_shear_invoker (GimpProcedure         *procedure,
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, transform_direction,
-                                                    interpolation, recursion_level,
+                                                    interpolation,
                                                     clip_result, progress))
                 {
                   success = FALSE;
@@ -1001,7 +991,7 @@ drawable_transform_shear_invoker (GimpProcedure         *procedure,
             {
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    transform_direction,
-                                   interpolation, recursion_level,
+                                   interpolation,
                                    clip_result, progress);
             }
 
@@ -1078,7 +1068,7 @@ drawable_transform_shear_default_invoker (GimpProcedure         *procedure,
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, 3,
+                                                    interpolation_type,
                                                     clip_result, progress))
                 {
                   success = FALSE;
@@ -1088,7 +1078,7 @@ drawable_transform_shear_default_invoker (GimpProcedure         *procedure,
             {
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    GIMP_TRANSFORM_FORWARD,
-                                   interpolation_type, 3,
+                                   interpolation_type,
                                    clip_result, progress);
             }
 
@@ -1126,7 +1116,6 @@ drawable_transform_2d_invoker (GimpProcedure         *procedure,
   gdouble dest_y;
   gint32 transform_direction;
   gint32 interpolation;
-  gint32 recursion_level;
   gint32 clip_result;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
@@ -1139,7 +1128,6 @@ drawable_transform_2d_invoker (GimpProcedure         *procedure,
   dest_y = g_value_get_double (gimp_value_array_index (args, 7));
   transform_direction = g_value_get_enum (gimp_value_array_index (args, 8));
   interpolation = g_value_get_enum (gimp_value_array_index (args, 9));
-  recursion_level = g_value_get_int (gimp_value_array_index (args, 11));
   clip_result = g_value_get_enum (gimp_value_array_index (args, 12));
 
   if (success)
@@ -1177,7 +1165,7 @@ drawable_transform_2d_invoker (GimpProcedure         *procedure,
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, transform_direction,
-                                                    interpolation, recursion_level,
+                                                    interpolation,
                                                     clip_result, progress))
                 {
                   success = FALSE;
@@ -1187,7 +1175,7 @@ drawable_transform_2d_invoker (GimpProcedure         *procedure,
             {
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    transform_direction,
-                                   interpolation, recursion_level,
+                                   interpolation,
                                    clip_result, progress);
             }
 
@@ -1275,7 +1263,7 @@ drawable_transform_2d_default_invoker (GimpProcedure         *procedure,
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, 3,
+                                                    interpolation_type,
                                                     clip_result, progress))
                 {
                   success = FALSE;
@@ -1285,7 +1273,7 @@ drawable_transform_2d_default_invoker (GimpProcedure         *procedure,
             {
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    GIMP_TRANSFORM_FORWARD,
-                                   interpolation_type, 3,
+                                   interpolation_type,
                                    clip_result, progress);
             }
 
@@ -1325,7 +1313,6 @@ drawable_transform_matrix_invoker (GimpProcedure         *procedure,
   gdouble coeff_2_2;
   gint32 transform_direction;
   gint32 interpolation;
-  gint32 recursion_level;
   gint32 clip_result;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
@@ -1340,7 +1327,6 @@ drawable_transform_matrix_invoker (GimpProcedure         *procedure,
   coeff_2_2 = g_value_get_double (gimp_value_array_index (args, 9));
   transform_direction = g_value_get_enum (gimp_value_array_index (args, 10));
   interpolation = g_value_get_enum (gimp_value_array_index (args, 11));
-  recursion_level = g_value_get_int (gimp_value_array_index (args, 13));
   clip_result = g_value_get_enum (gimp_value_array_index (args, 14));
 
   if (success)
@@ -1382,7 +1368,7 @@ drawable_transform_matrix_invoker (GimpProcedure         *procedure,
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, transform_direction,
-                                                    interpolation, recursion_level,
+                                                    interpolation,
                                                     clip_result, progress))
                 {
                   success = FALSE;
@@ -1392,7 +1378,7 @@ drawable_transform_matrix_invoker (GimpProcedure         *procedure,
             {
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    transform_direction,
-                                   interpolation, recursion_level,
+                                   interpolation,
                                    clip_result, progress);
             }
 
@@ -1488,7 +1474,7 @@ drawable_transform_matrix_default_invoker (GimpProcedure         *procedure,
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, 3,
+                                                    interpolation_type,
                                                     clip_result, progress))
                 {
                   success = FALSE;
@@ -1498,7 +1484,7 @@ drawable_transform_matrix_default_invoker (GimpProcedure         *procedure,
             {
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    GIMP_TRANSFORM_FORWARD,
-                                   interpolation_type, 3,
+                                   interpolation_type,
                                    clip_result, progress);
             }
 
@@ -1638,13 +1624,13 @@ register_drawable_transform_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("supersample",
                                                      "supersample",
-                                                     "This parameter is ignored, supersampling is performed based on the interpolation type",
+                                                     "This parameter is ignored",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("recursion-level",
                                                       "recursion level",
-                                                      "Maximum recursion level used for supersampling (3 is a nice value)",
+                                                      "This parameter is ignored",
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1812,13 +1798,13 @@ register_drawable_transform_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("supersample",
                                                      "supersample",
-                                                     "This parameter is ignored, supersampling is performed based on the interpolation type",
+                                                     "This parameter is ignored",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("recursion-level",
                                                       "recursion level",
-                                                      "Maximum recursion level used for supersampling (3 is a nice value)",
+                                                      "This parameter is ignored",
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -2048,13 +2034,13 @@ register_drawable_transform_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("supersample",
                                                      "supersample",
-                                                     "This parameter is ignored, supersampling is performed based on the interpolation type",
+                                                     "This parameter is ignored",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("recursion-level",
                                                       "recursion level",
-                                                      "Maximum recursion level used for supersampling (3 is a nice value)",
+                                                      "This parameter is ignored",
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -2200,13 +2186,13 @@ register_drawable_transform_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("supersample",
                                                      "supersample",
-                                                     "This parameter is ignored, supersampling is performed based on the interpolation type",
+                                                     "This parameter is ignored",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("recursion-level",
                                                       "recursion level",
-                                                      "Maximum recursion level used for supersampling (3 is a nice value)",
+                                                      "This parameter is ignored",
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -2343,13 +2329,13 @@ register_drawable_transform_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("supersample",
                                                      "supersample",
-                                                     "This parameter is ignored, supersampling is performed based on the interpolation type",
+                                                     "This parameter is ignored",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("recursion-level",
                                                       "recursion level",
-                                                      "Maximum recursion level used for supersampling (3 is a nice value)",
+                                                      "This parameter is ignored",
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -2504,13 +2490,13 @@ register_drawable_transform_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("supersample",
                                                      "supersample",
-                                                     "This parameter is ignored, supersampling is performed based on the interpolation type",
+                                                     "This parameter is ignored",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("recursion-level",
                                                       "recursion level",
-                                                      "Maximum recursion level used for supersampling (3 is a nice value)",
+                                                      "This parameter is ignored",
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -2704,13 +2690,13 @@ register_drawable_transform_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("supersample",
                                                      "supersample",
-                                                     "This parameter is ignored, supersampling is performed based on the interpolation type",
+                                                     "This parameter is ignored",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("recursion-level",
                                                       "recursion level",
-                                                      "Maximum recursion level used for supersampling (3 is a nice value)",
+                                                      "This parameter is ignored",
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,

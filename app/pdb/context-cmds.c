@@ -1452,9 +1452,7 @@ context_get_transform_recursion_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   gint32 transform_recursion = 0;
 
-  g_object_get (context,
-                "transform-recursion", &transform_recursion,
-                NULL);
+  transform_recursion = 3;
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
   g_value_set_int (gimp_value_array_index (return_vals, 1), transform_recursion);
@@ -1471,17 +1469,9 @@ context_set_transform_recursion_invoker (GimpProcedure         *procedure,
                                          GError               **error)
 {
   gboolean success = TRUE;
-  gint32 transform_recursion;
-
-  transform_recursion = g_value_get_int (gimp_value_array_index (args, 0));
-
   if (success)
     {
-      g_object_set (context,
-                    "transform-recursion", transform_recursion,
-                    NULL);
     }
-
   return gimp_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
@@ -3326,16 +3316,16 @@ register_context_procs (GimpPDB *pdb)
                                "gimp-context-get-transform-recursion");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-get-transform-recursion",
-                                     "Get the transform supersampling recursion.",
-                                     "This procedure returns the transform supersampling recursion level.",
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "Deprecated: There is no replacement for this procedure.",
+                                     "Deprecated: There is no replacement for this procedure.",
+                                     "",
+                                     "",
+                                     "",
+                                     "NONE");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("transform-recursion",
                                                           "transform recursion",
-                                                          "The transform recursion level",
+                                                          "This returns always 3 and is meaningless",
                                                           1, G_MAXINT32, 1,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -3349,16 +3339,16 @@ register_context_procs (GimpPDB *pdb)
                                "gimp-context-set-transform-recursion");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-set-transform-recursion",
-                                     "Set the transform supersampling recursion.",
-                                     "This procedure modifies the transform supersampling recursion level setting. Whether or not a transformation does supersampling is determined by the interplolation type. The recursion level defaults to 3, which is a nice default value. This setting affects affects the following procedures: 'gimp-item-transform-flip', 'gimp-item-transform-perspective', 'gimp-item-transform-rotate', 'gimp-item-transform-scale', 'gimp-item-transform-shear', 'gimp-item-transform-2d', 'gimp-item-transform-matrix'.",
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "Deprecated: There is no replacement for this procedure.",
+                                     "Deprecated: There is no replacement for this procedure.",
+                                     "",
+                                     "",
+                                     "",
+                                     "NONE");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("transform-recursion",
                                                       "transform recursion",
-                                                      "The transform recursion level",
+                                                      "This parameter is ignored",
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

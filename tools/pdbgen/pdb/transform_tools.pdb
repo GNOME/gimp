@@ -148,7 +148,7 @@ sub perspective {
           if (! gimp_drawable_transform_affine (drawable, context,
                                                 &matrix,
                                                 GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, 3,
+                                                interpolation_type,
                                                 FALSE, progress))
             {
               success = FALSE;
@@ -158,7 +158,7 @@ sub perspective {
         {
           gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                GIMP_TRANSFORM_FORWARD,
-                               interpolation, 3,
+                               interpolation,
                                FALSE, progress);
         }
 
@@ -226,7 +226,7 @@ sub rotate {
           if (! gimp_drawable_transform_affine (drawable, context,
                                                 &matrix,
                                                 GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, 3,
+                                                interpolation_type,
                                                 FALSE, progress))
             {
               success = FALSE;
@@ -236,7 +236,7 @@ sub rotate {
         {
           gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                GIMP_TRANSFORM_FORWARD,
-                               interpolation, 3,
+                               interpolation,
                                FALSE, progress);
         }
 
@@ -315,7 +315,7 @@ sub scale {
           if (! gimp_drawable_transform_affine (drawable, context,
                                                 &matrix,
                                                 GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, 3,
+                                                interpolation_type,
                                                 FALSE, progress))
             {
               success = FALSE;
@@ -325,7 +325,7 @@ sub scale {
         {
           gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                GIMP_TRANSFORM_FORWARD,
-                               interpolation, 3,
+                               interpolation,
                                FALSE, progress);
         }
 
@@ -396,7 +396,7 @@ sub shear {
           if (! gimp_drawable_transform_affine (drawable, context,
                                                 &matrix,
                                                 GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, 3,
+                                                interpolation_type,
                                                 FALSE, progress))
             {
               success = FALSE;
@@ -406,7 +406,7 @@ sub shear {
         {
           gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                GIMP_TRANSFORM_FORWARD,
-                               interpolation, 3,
+                               interpolation,
                                FALSE, progress);
         }
 
@@ -480,7 +480,7 @@ sub transform_2d {
         {
           if (! gimp_drawable_transform_affine (drawable, context,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, 3,
+                                                interpolation_type,
                                                 FALSE, progress))
             {
               success = FALSE;
@@ -490,7 +490,7 @@ sub transform_2d {
         {
           gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                GIMP_TRANSFORM_FORWARD,
-                               interpolation, 3,
+                               interpolation,
                                FALSE, progress);
         }
 

@@ -1461,7 +1461,6 @@ gimp_item_transform (GimpItem               *item,
                      const GimpMatrix3      *matrix,
                      GimpTransformDirection  direction,
                      GimpInterpolationType   interpolation,
-                     gint                    recursion_level,
                      GimpTransformResize     clip_result,
                      GimpProgress           *progress)
 {
@@ -1483,7 +1482,7 @@ gimp_item_transform (GimpItem               *item,
   g_object_freeze_notify (G_OBJECT (item));
 
   item_class->transform (item, context, matrix, direction, interpolation,
-                         recursion_level, clip_result, progress);
+                         clip_result, progress);
 
   g_object_thaw_notify (G_OBJECT (item));
 

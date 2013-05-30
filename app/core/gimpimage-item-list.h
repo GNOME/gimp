@@ -43,7 +43,6 @@ void    gimp_image_item_list_transform (GimpImage              *image,
                                         const GimpMatrix3      *matrix,
                                         GimpTransformDirection  direction,
                                         GimpInterpolationType   interpolation_type,
-                                        gint                    recursion_level,
                                         GimpTransformResize     clip_result,
                                         GimpProgress           *progress);
 

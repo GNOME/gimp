@@ -113,7 +113,6 @@ static void       gimp_channel_transform     (GimpItem          *item,
                                               const GimpMatrix3 *matrix,
                                               GimpTransformDirection direction,
                                               GimpInterpolationType interpolation_type,
-                                              gint               recursion_level,
                                               GimpTransformResize clip_result,
                                               GimpProgress      *progress);
 static gboolean   gimp_channel_stroke        (GimpItem          *item,
@@ -750,7 +749,6 @@ gimp_channel_transform (GimpItem               *item,
                         const GimpMatrix3      *matrix,
                         GimpTransformDirection  direction,
                         GimpInterpolationType   interpolation_type,
-                        gint                    recursion_level,
                         GimpTransformResize     clip_result,
                         GimpProgress           *progress)
 {
@@ -759,7 +757,6 @@ gimp_channel_transform (GimpItem               *item,
 
   GIMP_ITEM_CLASS (parent_class)->transform (item, context, matrix, direction,
                                              interpolation_type,
-                                             recursion_level,
                                              clip_result,
                                              progress);
 }

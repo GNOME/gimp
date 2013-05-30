@@ -165,7 +165,6 @@ gimp_item_linked_transform (GimpItem               *item,
                             const GimpMatrix3      *matrix,
                             GimpTransformDirection  direction,
                             GimpInterpolationType   interpolation_type,
-                            gint                    recursion_level,
                             GimpTransformResize     clip_result,
                             GimpProgress           *progress)
 {
@@ -185,7 +184,7 @@ gimp_item_linked_transform (GimpItem               *item,
 
   gimp_image_item_list_transform (gimp_item_get_image (item), list, context,
                                   matrix, direction,
-                                  interpolation_type, recursion_level,
+                                  interpolation_type,
                                   clip_result, progress);
 
   g_list_free (list);

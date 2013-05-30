@@ -143,7 +143,6 @@ static void       gimp_layer_transform          (GimpItem           *item,
                                                  const GimpMatrix3  *matrix,
                                                  GimpTransformDirection direction,
                                                  GimpInterpolationType  interpolation_type,
-                                                 gint                recursion_level,
                                                  GimpTransformResize clip_result,
                                                  GimpProgress       *progress);
 static void       gimp_layer_to_selection       (GimpItem           *item,
@@ -936,7 +935,6 @@ gimp_layer_transform (GimpItem               *item,
                       const GimpMatrix3      *matrix,
                       GimpTransformDirection  direction,
                       GimpInterpolationType   interpolation_type,
-                      gint                    recursion_level,
                       GimpTransformResize     clip_result,
                       GimpProgress           *progress)
 {
@@ -949,14 +947,13 @@ gimp_layer_transform (GimpItem               *item,
 
   GIMP_ITEM_CLASS (parent_class)->transform (item, context, matrix, direction,
                                              interpolation_type,
-                                             recursion_level,
                                              clip_result,
                                              progress);
 
   if (layer->mask)
     gimp_item_transform (GIMP_ITEM (layer->mask), context,
                          matrix, direction,
-                         interpolation_type, recursion_level,
+                         interpolation_type,
                          clip_result, progress);
 }
 

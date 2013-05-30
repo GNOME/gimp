@@ -106,8 +106,7 @@ gimp_item_transform_flip_simple (gint32              item_ID,
  * drawable. This procedure is affected by the following context
  * setters: gimp_context_set_interpolation(),
  * gimp_context_set_transform_direction(),
- * gimp_context_set_transform_resize(),
- * gimp_context_set_transform_recursion().
+ * gimp_context_set_transform_resize().
  *
  * Returns: The flipped item.
  *
@@ -173,8 +172,7 @@ gimp_item_transform_flip (gint32  item_ID,
  * projected via a perspective transform. This procedure is affected by
  * the following context setters: gimp_context_set_interpolation(),
  * gimp_context_set_transform_direction(),
- * gimp_context_set_transform_resize(),
- * gimp_context_set_transform_recursion().
+ * gimp_context_set_transform_resize().
  *
  * Returns: The newly mapped item.
  *
@@ -290,8 +288,7 @@ gimp_item_transform_rotate_simple (gint32           item_ID,
  * rotated drawable. This procedure is affected by the following
  * context setters: gimp_context_set_interpolation(),
  * gimp_context_set_transform_direction(),
- * gimp_context_set_transform_resize(),
- * gimp_context_set_transform_recursion().
+ * gimp_context_set_transform_resize().
  *
  * Returns: The rotated item.
  *
@@ -345,8 +342,7 @@ gimp_item_transform_rotate (gint32   item_ID,
  * drawable. This procedure is affected by the following context
  * setters: gimp_context_set_interpolation(),
  * gimp_context_set_transform_direction(),
- * gimp_context_set_transform_resize(),
- * gimp_context_set_transform_recursion().
+ * gimp_context_set_transform_resize().
  *
  * Returns: The scaled item.
  *
@@ -402,8 +398,7 @@ gimp_item_transform_scale (gint32  item_ID,
  * by. This procedure is affected by the following context setters:
  * gimp_context_set_interpolation(),
  * gimp_context_set_transform_direction(),
- * gimp_context_set_transform_resize(),
- * gimp_context_set_transform_recursion().
+ * gimp_context_set_transform_resize().
  *
  * Returns: The sheared item.
  *
@@ -459,8 +454,7 @@ gimp_item_transform_shear (gint32              item_ID,
  * and transformed drawable. This procedure is affected by the
  * following context setters: gimp_context_set_interpolation(),
  * gimp_context_set_transform_direction(),
- * gimp_context_set_transform_resize(),
- * gimp_context_set_transform_recursion().
+ * gimp_context_set_transform_resize().
  *
  * Returns: The transformed item.
  *
@@ -526,8 +520,7 @@ gimp_item_transform_2d (gint32  item_ID,
  * and transformed drawable. This procedure is affected by the
  * following context setters: gimp_context_set_interpolation(),
  * gimp_context_set_transform_direction(),
- * gimp_context_set_transform_resize(),
- * gimp_context_set_transform_recursion().
+ * gimp_context_set_transform_resize().
  *
  * Returns: The transformed item.
  *

@@ -27,7 +27,6 @@ GeglBuffer  * gimp_drawable_transform_buffer_affine (GimpDrawable           *dra
                                                      const GimpMatrix3      *matrix,
                                                      GimpTransformDirection  direction,
                                                      GimpInterpolationType   interpolation_type,
-                                                     gint                    recursion_level,
                                                      GimpTransformResize     clip_result,
                                                      gint                   *new_offset_x,
                                                      gint                   *new_offset_y,
@@ -60,7 +59,6 @@ GimpDrawable * gimp_drawable_transform_affine       (GimpDrawable           *dra
                                                      const GimpMatrix3      *matrix,
                                                      GimpTransformDirection  direction,
                                                      GimpInterpolationType   interpolation_type,
-                                                     gint                    recursion_level,
                                                      GimpTransformResize     clip_result,
                                                      GimpProgress           *progress);
 
