@@ -97,6 +97,7 @@ gimp_prop_table_new (GObject              *config,
   guint          n_param_specs;
   gint           i;
   gint           row = 0;
+  GParamSpec    *last_pspec = NULL;
   GtkAdjustment *last_x_adj = NULL;
   gint           last_x_row = 0;
 
@@ -244,11 +245,13 @@ gimp_prop_table_new (GObject              *config,
           if (g_str_has_suffix (pspec->name, "x") ||
               g_str_has_suffix (pspec->name, "width"))
             {
+              last_pspec = pspec;
               last_x_adj = adj;
               last_x_row = row;
             }
           else if ((g_str_has_suffix (pspec->name, "y") ||
                     g_str_has_suffix (pspec->name, "height")) &&
+                   last_pspec != NULL &&
                    last_x_adj != NULL &&
                    last_x_row == row - 1)
             {
@@ -279,6 +282,28 @@ gimp_prop_table_new (GObject              *config,
                                 last_x_adj);
 
               g_object_set_data (G_OBJECT (last_x_adj), "y-adjustment", adj);
+
+              if (create_picker_func)
+                {
+                  GtkWidget *button;
+                  gchar     *pspec_name;
+
+                  pspec_name = g_strconcat (last_pspec->name, ":",
+                                            pspec->name, NULL);
+
+                  button = create_picker_func (picker_creator,
+                                               pspec_name,
+                                               GIMP_STOCK_CURSOR,
+                                               _("Pick coordinates from the image"));
+                  gtk_table_attach (GTK_TABLE (table), button,
+                                    4, 5, last_x_row, row + 1,
+                                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL,
+                                    0, 0);
+                  gtk_widget_show (button);
+
+                  g_object_weak_ref (G_OBJECT (button),
+                                     (GWeakNotify) g_free, pspec_name);
+                }
             }
         }
       else if (GIMP_IS_PARAM_SPEC_RGB (pspec))
@@ -296,12 +321,15 @@ gimp_prop_table_new (GObject              *config,
           gtk_box_pack_start (GTK_BOX (widget), button, TRUE, TRUE, 0);
           gtk_widget_show (button);
 
-          button = create_picker_func (picker_creator,
-                                       pspec->name,
-                                       GIMP_STOCK_COLOR_PICKER_GRAY,
-                                       _("Pick color from image"));
-          gtk_box_pack_start (GTK_BOX (widget), button, FALSE, FALSE, 0);
-          gtk_widget_show (button);
+          if (create_picker_func)
+            {
+              button = create_picker_func (picker_creator,
+                                           pspec->name,
+                                           GIMP_STOCK_COLOR_PICKER_GRAY,
+                                           _("Pick color from the image"));
+              gtk_box_pack_start (GTK_BOX (widget), button, FALSE, FALSE, 0);
+              gtk_widget_show (button);
+            }
 
           label = g_param_spec_get_nick (pspec);
         }
