@@ -125,6 +125,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:mono-mixer",
     NULL /* FIXME GIMP_HELP_FILTER_MONO_MIXER */ },
 
+  { "filters-motion-blur", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Motion Blur..."), NULL, NULL,
+    "gegl:motion-blur",
+    NULL /* FIXME GIMP_HELP_FILTER_MOTION_BLUR */ },
+
   { "filters-noise-cie-lch", GIMP_STOCK_GEGL,
     NC_("filters-action", "CIE lch Noise..."), NULL, NULL,
     "gegl:noise-CIE_lch",
@@ -303,6 +308,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-gaussian-blur",           writable);
   SET_SENSITIVE ("filters-laplace",                 writable);
   SET_SENSITIVE ("filters-mono-mixer",              writable && !gray);
+  SET_SENSITIVE ("filters-motion-blur",             writable);
   SET_SENSITIVE ("filters-noise-cie-lch",           writable);
   SET_SENSITIVE ("filters-noise-hsv",               writable && !gray);
   SET_SENSITIVE ("filters-noise-hurl",              writable);

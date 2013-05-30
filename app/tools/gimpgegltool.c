@@ -141,6 +141,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:lens-distortion", /* in gimp */
     "gegl:matting-global", /* useless */
     "gegl:mono-mixer", /* in gimp */
+    "gegl:motion-blur", /* in gimp */
     "gegl:noise-CIE_lch", /* in gimp */
     "gegl:noise-hsv", /* in gimp */
     "gegl:noise-hurl", /* in gimp */

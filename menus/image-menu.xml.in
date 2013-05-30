@@ -623,6 +623,7 @@
       <menu action="plug-in-blur-menu" name="Blur">
       	<menuitem action="filters-gaussian-blur" />
       	<menuitem action="filters-dot" />
+      	<menuitem action="filters-motion-blur" />
       	<menuitem action="filters-pixelize" />
       </menu>
       <menu action="plug-in-enhance-menu" name="Enhance">
