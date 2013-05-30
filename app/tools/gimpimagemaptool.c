@@ -101,6 +101,8 @@ static gboolean  gimp_image_map_tool_pick_color     (GimpColorTool    *color_too
                                                      gint             *color_index);
 static void      gimp_image_map_tool_color_picked   (GimpColorTool    *color_tool,
                                                      GimpColorPickState pick_state,
+                                                     gdouble           x,
+                                                     gdouble           y,
                                                      const Babl       *sample_format,
                                                      const GimpRGB    *color,
                                                      gint              color_index);
@@ -570,6 +572,8 @@ gimp_image_map_tool_pick_color (GimpColorTool  *color_tool,
 static void
 gimp_image_map_tool_color_picked (GimpColorTool      *color_tool,
                                   GimpColorPickState  pick_state,
+                                  gdouble             x,
+                                  gdouble             y,
                                   const Babl         *sample_format,
                                   const GimpRGB      *color,
                                   gint                color_index)
@@ -582,6 +586,7 @@ gimp_image_map_tool_color_picked (GimpColorTool      *color_tool,
 
   GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->color_picked (tool,
                                                       identifier,
+                                                      x, y,
                                                       sample_format,
                                                       color);
 }

@@ -58,6 +58,8 @@ static GeglNode * gimp_colorize_tool_get_operation (GimpImageMapTool *im_tool,
 static void       gimp_colorize_tool_dialog        (GimpImageMapTool *im_tool);
 static void       gimp_colorize_tool_color_picked  (GimpImageMapTool *im_tool,
                                                     gpointer          identifier,
+                                                    gdouble           x,
+                                                    gdouble           y,
                                                     const Babl       *sample_format,
                                                     const GimpRGB    *color);
 
@@ -214,6 +216,8 @@ gimp_colorize_tool_dialog (GimpImageMapTool *image_map_tool)
 static void
 gimp_colorize_tool_color_picked (GimpImageMapTool *im_tool,
                                  gpointer          identifier,
+                                 gdouble           x,
+                                 gdouble           y,
                                  const Babl       *sample_format,
                                  const GimpRGB    *color)
 {

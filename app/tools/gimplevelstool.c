@@ -86,6 +86,8 @@ static gboolean   gimp_levels_tool_settings_export(GimpImageMapTool  *im_tool,
                                                    GError           **error);
 static void       gimp_levels_tool_color_picked   (GimpImageMapTool  *im_tool,
                                                    gpointer           identifier,
+                                                   gdouble            x,
+                                                   gdouble            y,
                                                    const Babl        *sample_format,
                                                    const GimpRGB     *color);
 
@@ -1161,6 +1163,8 @@ levels_input_adjust_by_color (GimpLevelsConfig     *config,
 static void
 gimp_levels_tool_color_picked (GimpImageMapTool *color_tool,
                                gpointer          identifier,
+                               gdouble           x,
+                               gdouble           y,
                                const Babl       *sample_format,
                                const GimpRGB    *color)
 {

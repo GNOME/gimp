@@ -82,6 +82,8 @@ static void       gimp_curves_tool_oper_update    (GimpTool             *tool,
 
 static void       gimp_curves_tool_color_picked   (GimpColorTool        *color_tool,
                                                    GimpColorPickState    pick_state,
+                                                   gdouble               x,
+                                                   gdouble               y,
                                                    const Babl           *sample_format,
                                                    const GimpRGB        *color,
                                                    gint                  color_index);
@@ -325,6 +327,8 @@ gimp_curves_tool_oper_update (GimpTool         *tool,
 static void
 gimp_curves_tool_color_picked (GimpColorTool      *color_tool,
                                GimpColorPickState  pick_state,
+                               gdouble             x,
+                               gdouble             y,
                                const Babl         *sample_format,
                                const GimpRGB      *color,
                                gint                color_index)

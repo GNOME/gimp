@@ -61,6 +61,8 @@ static void   gimp_color_picker_tool_oper_update   (GimpTool            *tool,
 
 static void   gimp_color_picker_tool_picked        (GimpColorTool       *color_tool,
                                                     GimpColorPickState   pick_state,
+                                                    gdouble              x,
+                                                    gdouble              y,
                                                     const Babl          *sample_format,
                                                     const GimpRGB       *color,
                                                     gint                 color_index);
@@ -271,6 +273,8 @@ gimp_color_picker_tool_oper_update (GimpTool         *tool,
 static void
 gimp_color_picker_tool_picked (GimpColorTool      *color_tool,
                                GimpColorPickState  pick_state,
+                               gdouble             x,
+                               gdouble             y,
                                const Babl         *sample_format,
                                const GimpRGB      *color,
                                gint                color_index)
@@ -288,6 +292,7 @@ gimp_color_picker_tool_picked (GimpColorTool      *color_tool,
                                         color, color_index);
 
   GIMP_COLOR_TOOL_CLASS (parent_class)->picked (color_tool, pick_state,
+                                                x, y,
                                                 sample_format, color,
                                                 color_index);
 }

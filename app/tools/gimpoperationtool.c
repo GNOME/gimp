@@ -71,6 +71,8 @@ static GtkWidget * gimp_operation_tool_get_settings_ui (GimpImageMapTool  *image
                                                         GtkWidget        **settings_box);
 static void        gimp_operation_tool_color_picked    (GimpImageMapTool  *im_tool,
                                                         gpointer           identifier,
+                                                        gdouble            x,
+                                                        gdouble            y,
                                                         const Babl        *sample_format,
                                                         const GimpRGB     *color);
 
@@ -264,6 +266,8 @@ gimp_operation_tool_get_settings_ui (GimpImageMapTool  *image_map_tool,
 static void
 gimp_operation_tool_color_picked (GimpImageMapTool  *im_tool,
                                   gpointer           identifier,
+                                  gdouble            x,
+                                  gdouble            y,
                                   const Babl        *sample_format,
                                   const GimpRGB     *color)
 {

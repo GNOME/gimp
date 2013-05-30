@@ -66,6 +66,8 @@ struct _GimpColorToolClass
   /*  signals  */
   void     (* picked) (GimpColorTool      *tool,
                        GimpColorPickState  pick_state,
+                       gdouble             x,
+                       gdouble             y,
                        const Babl         *sample_format,
                        const GimpRGB      *color,
                        gint                color_index);

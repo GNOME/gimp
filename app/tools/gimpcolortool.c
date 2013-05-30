@@ -113,6 +113,8 @@ static void   gimp_color_tool_pick           (GimpColorTool         *tool,
                                               gint                   y);
 static void   gimp_color_tool_real_picked    (GimpColorTool         *color_tool,
                                               GimpColorPickState     pick_state,
+                                              gdouble                x,
+                                              gdouble                y,
                                               const Babl            *sample_format,
                                               const GimpRGB         *color,
                                               gint                   color_index);
@@ -138,10 +140,12 @@ gimp_color_tool_class_init (GimpColorToolClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColorToolClass, picked),
                   NULL, NULL,
-                  gimp_marshal_VOID__ENUM_POINTER_BOXED_INT,
-                  G_TYPE_NONE, 4,
+                  gimp_marshal_VOID__ENUM_DOUBLE_DOUBLE_POINTER_BOXED_INT,
+                  G_TYPE_NONE, 6,
                   GIMP_TYPE_COLOR_PICK_STATE,
                   G_TYPE_POINTER,
+                  G_TYPE_DOUBLE,
+                  G_TYPE_DOUBLE,
                   GIMP_TYPE_RGB | G_SIGNAL_TYPE_STATIC_SCOPE,
                   G_TYPE_INT);
 
@@ -595,6 +599,8 @@ gimp_color_tool_real_pick (GimpColorTool  *color_tool,
 static void
 gimp_color_tool_real_picked (GimpColorTool      *color_tool,
                              GimpColorPickState  pick_state,
+                             gdouble             x,
+                             gdouble             y,
                              const Babl         *sample_format,
                              const GimpRGB      *color,
                              gint                color_index)
@@ -714,7 +720,9 @@ gimp_color_tool_pick (GimpColorTool      *tool,
       klass->pick (tool, x, y, &sample_format, &color, &color_index))
     {
       g_signal_emit (tool, gimp_color_tool_signals[PICKED], 0,
-                     pick_state, sample_format, &color, color_index);
+                     pick_state,
+                     (gdouble) x, (gdouble) y,
+                     sample_format, &color, color_index);
     }
 }
 

@@ -93,6 +93,8 @@ struct _GimpImageMapToolClass
 
   void        (* color_picked)    (GimpImageMapTool  *image_map_tool,
                                    gpointer           identifier,
+                                   gdouble            x,
+                                   gdouble            y,
                                    const Babl        *sample_format,
                                    const GimpRGB     *color);
 };
