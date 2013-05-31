@@ -657,8 +657,8 @@
       </menu>
       <menu action="plug-in-edge-detect-menu" name="Edge-Detect">
         <menuitem action="filters-difference-of-gaussians" />
-        <menuitem action="filters-laplace" />
-        <menuitem action="filters-sobel" />
+        <menuitem action="filters-edge-laplace" />
+        <menuitem action="filters-edge-sobel" />
       </menu>
       <menu action="plug-in-generic-menu" name="Generic" />
       <menu action="plug-in-combine-menu" name="Combine" />

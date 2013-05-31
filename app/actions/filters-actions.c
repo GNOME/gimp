@@ -90,6 +90,16 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:dot",
     NULL /* FIXME GIMP_HELP_FILTER_DOT */ },
 
+  { "filters-edge-laplace", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Laplace"), NULL, NULL,
+    "gegl:edge-laplace",
+    NULL /* FIXME GIMP_HELP_FILTER_EDGE_LAPLACE */ },
+
+  { "filters-edge-sobel", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Sobel..."), NULL, NULL,
+    "gegl:edge-sobel",
+    NULL /* FIXME GIMP_HELP_FILTER_EDGE_SOBEL */ },
+
   { "filters-emboss", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Emboss..."), NULL, NULL,
     "gegl:emboss",
@@ -109,11 +119,6 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "_Gaussian Blur..."), NULL, NULL,
     "gegl:gaussian-blur",
     NULL /* FIXME GIMP_HELP_FILTER_GAUSSIAN_BLUR */ },
-
-  { "filters-laplace", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Laplace"), NULL, NULL,
-    "gegl:edge-laplace",
-    NULL /* FIXME GIMP_HELP_FILTER_LAPLACE */ },
 
   { "filters-lens-distortion", GIMP_STOCK_GEGL,
     NC_("filters-action", "Lens Distortion..."), NULL, NULL,
@@ -199,11 +204,6 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "_Shift..."), NULL, NULL,
     "gegl:shift",
     NULL /* FIXME GIMP_HELP_FILTER_SHIFT */ },
-
-  { "filters-sobel", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Sobel..."), NULL, NULL,
-    "gegl:edge-sobel",
-    NULL /* FIXME GIMP_HELP_FILTER_SOBEL */ },
 
   { "filters-softglow", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Softglow..."), NULL, NULL,
@@ -302,11 +302,12 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-deinterlace",             writable);
   SET_SENSITIVE ("filters-difference-of-gaussians", writable);
   SET_SENSITIVE ("filters-dot",                     writable);
+  SET_SENSITIVE ("filters-edge-laplace",            writable);
+  SET_SENSITIVE ("filters-edge-sobel",              writable);
   SET_SENSITIVE ("filters-emboss",                  writable);
   SET_SENSITIVE ("filters-exposure",                writable);
   SET_SENSITIVE ("filters-fractal-trace",           writable);
   SET_SENSITIVE ("filters-gaussian-blur",           writable);
-  SET_SENSITIVE ("filters-laplace",                 writable);
   SET_SENSITIVE ("filters-mono-mixer",              writable && !gray);
   SET_SENSITIVE ("filters-motion-blur",             writable);
   SET_SENSITIVE ("filters-noise-cie-lch",           writable);
@@ -324,7 +325,6 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-ripple",                  writable);
   SET_SENSITIVE ("filters-semi-flatten",            writable && alpha);
   SET_SENSITIVE ("filters-shift",                   writable);
-  SET_SENSITIVE ("filters-sobel",                   writable);
   SET_SENSITIVE ("filters-softglow",                writable);
   SET_SENSITIVE ("filters-threshold-alpha",         writable && alpha);
   SET_SENSITIVE ("filters-unsharp-mask",            writable);
