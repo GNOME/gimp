@@ -581,6 +581,8 @@ gimp_image_map_tool_color_picked (GimpColorTool      *color_tool,
   GimpImageMapTool *tool = GIMP_IMAGE_MAP_TOOL (color_tool);
   gpointer          identifier;
 
+  g_return_if_fail (GTK_IS_WIDGET (tool->active_picker));
+
   identifier = g_object_get_data (G_OBJECT (tool->active_picker),
                                   "picker-identifier");
 

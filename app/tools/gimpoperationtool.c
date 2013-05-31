@@ -396,7 +396,11 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
       gtk_widget_destroy (tool->options_table);
       tool->options_table = NULL;
 
-      GIMP_IMAGE_MAP_TOOL (tool)->active_picker = NULL;
+      if (GIMP_IMAGE_MAP_TOOL (tool)->active_picker)
+        {
+          GIMP_IMAGE_MAP_TOOL (tool)->active_picker = NULL;
+          gimp_color_tool_disable (GIMP_COLOR_TOOL (tool));
+        }
     }
 
   if (tool->config)
