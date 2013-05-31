@@ -110,65 +110,68 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
   };
   static const gchar * const name_blacklist[] =
   {
-    "gegl:c2g", /* in gimp */
-    "gegl:cartoon", /* in gimp */
-    "gegl:checkerboard", /* in gimp */
-    "gegl:color", /* pointless */
-    "gegl:color-reduction", /* in gimp */
-    "gegl:color-temperature", /* in gimp */
-    "gegl:color-to-alpha", /* in gimp */
-    "gegl:colorize", /* in gimp */
-    "gegl:cubism", /* in gimp */
+    /* these ops are already added to the menus via
+     * filter-actions ordrawable-actions
+     */
+    "gegl:c2g",
+    "gegl:cartoon",
+    "gegl:checkerboard",
+    "gegl:color",
+    "gegl:color-reduction",
+    "gegl:color-temperature",
+    "gegl:color-to-alpha",
+    "gegl:cubism",
+    "gegl:deinterlace",
+    "gegl:difference-of-gaussians",
+    "gegl:dot",
+    "gegl:edge-laplace",
+    "gegl:edge-sobel",
+    "gegl:emboss",
+    "gegl:exposure",
+    "gegl:fractal-trace",
+    "gegl:gaussian-blur",
+    "gegl:invert",
+    "gegl:lens-distortion",
+    "gegl:mono-mixer",
+    "gegl:motion-blur",
+    "gegl:noise-CIE_lch",
+    "gegl:noise-hsv",
+    "gegl:noise-hurl",
+    "gegl:noise-pick",
+    "gegl:noise-rgb",
+    "gegl:noise-slur",
+    "gegl:noise-spread",
+    "gegl:photocopy",
+    "gegl:pixelize",
+    "gegl:polar-coordinates",
+    "gegl:red-eye-removal",
+    "gegl:ripple",
+    "gegl:shift",
+    "gegl:softglow",
+    "gegl:unsharp-mask",
+    "gegl:value-invert",
+    "gegl:vignette",
+    "gegl:whirl-pinch",
+
+    /* these ops are blacklisted for other reasons */
     "gegl:contrast-curve",
-    "gegl:convert-format",
-    "gegl:deinterlace", /* in gimp */
-    "gegl:difference-of-gaussians", /* in gimp */
-    "gegl:display",
-    "gegl:dot", /* in gimp */
-    "gegl:emboss", /* in gimp */
-    "gegl:edge-laplace", /* in gimp */
-    "gegl:edge-sobel", /* in gimp */
-    "gegl:exposure", /* in gimp */
+    "gegl:convert-format", /* pointless */
+    "gegl:display", /* pointless */
     "gegl:fill-path",
-    "gegl:fractal-trace", /* in gimp */
-    "gegl:gaussian-blur", /* in gimp */
-    "gegl:grey", /* in gimp */
-    "gegl:hstack",
-    "gegl:introspect",
-    "gegl:invert", /* in gimp */
-    "gegl:layer",
-    "gegl:lens-correct",
-    "gegl:lens-distortion", /* in gimp */
-    "gegl:matting-global", /* useless */
-    "gegl:mono-mixer", /* in gimp */
-    "gegl:motion-blur", /* in gimp */
-    "gegl:noise-CIE_lch", /* in gimp */
-    "gegl:noise-hsv", /* in gimp */
-    "gegl:noise-hurl", /* in gimp */
-    "gegl:noise-pick", /* in gimp */
-    "gegl:noise-rgb", /* in gimp */
-    "gegl:noise-slur", /* in gimp */
-    "gegl:noise-spread", /* in gimp */
-    "gegl:opacity", /* pointless */
+    "gegl:grey", /* we use gimp's op */
+    "gegl:hstack", /* pointless */
+    "gegl:introspect", /* pointless */
+    "gegl:layer", /* we use gimp's ops */
+    "gegl:matting-global", /* used in the foreground select tool */
+    "gegl:opacity", /* poinless */
     "gegl:path",
-    "gegl:photocopy", /* in gimp */
-    "gegl:pixelize", /* in gimp */
-    "gegl:polar-coordinates", /* in gimp */
-    "gegl:posterize", /* in gimp */
-    "gegl:red-eye-removal", /* in gimp */
-    "gegl:ripple", /* in gimp */
-    "gegl:sdl-display", /* useless */
-    "gegl:seamless-clone",
-    "gegl:shift", /* in gimp */
-    "gegl:softglow", /* in gimp */
-    "gegl:text",
-    "gegl:threshold", /* in gimp */
-    "gegl:tile", /* useless */
-    "gegl:unsharp-mask", /* in gimp */
-    "gegl:value-invert", /* in gimp */
+    "gegl:posterize", /* we use gimp's op */
+    "gegl:sdl-display", /* pointless */
+    "gegl:seamless-clone", /* used in the seamless clone tool */
+    "gegl:text", /* we use gimp's text rendering */
+    "gegl:threshold", /* we use gimp's op */
+    "gegl:tile", /* pointless */
     "gegl:vector-stroke",
-    "gegl:vignette", /* in gimp */
-    "gegl:whirl-pinch", /* in gimp */
   };
 
   gchar **categories;
