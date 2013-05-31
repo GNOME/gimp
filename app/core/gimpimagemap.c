@@ -71,6 +71,7 @@ struct _GimpImageMap
 
   GimpFilter         *filter;
   GeglNode           *translate;
+  GeglNode           *crop;
   GimpApplicator     *applicator;
 };
 
@@ -280,6 +281,9 @@ gimp_image_map_apply (GimpImageMap        *image_map,
       image_map->translate = gegl_node_new_child (filter_node,
                                                   "operation", "gegl:translate",
                                                   NULL);
+      image_map->crop = gegl_node_new_child (filter_node,
+                                             "operation", "gegl:crop",
+                                             NULL);
 
       input = gegl_node_get_input_proxy (filter_node, "input");
 
@@ -291,6 +295,7 @@ gimp_image_map_apply (GimpImageMap        *image_map,
            */
           gegl_node_link_many (input,
                                image_map->translate,
+                               image_map->crop,
                                image_map->operation,
                                NULL);
 
@@ -308,6 +313,7 @@ gimp_image_map_apply (GimpImageMap        *image_map,
 
           gegl_node_link_many (input,
                                image_map->translate,
+                               image_map->crop,
                                over,
                                NULL);
 
@@ -322,9 +328,10 @@ gimp_image_map_apply (GimpImageMap        *image_map,
            */
           gegl_node_link_many (input,
                                image_map->translate,
+                               image_map->crop,
                                NULL);
 
-          filter_output = image_map->translate;
+          filter_output = image_map->crop;
         }
 
       gegl_node_connect_to (filter_output, "output",
@@ -340,6 +347,11 @@ gimp_image_map_apply (GimpImageMap        *image_map,
       gegl_node_set (image_map->translate,
                      "x", (gdouble) -image_map->filter_area.x,
                      "y", (gdouble) -image_map->filter_area.y,
+                     NULL);
+
+      gegl_node_set (image_map->crop,
+                     "width",  (gdouble) image_map->filter_area.width,
+                     "height", (gdouble) image_map->filter_area.height,
                      NULL);
 
       gimp_applicator_set_apply_offset (image_map->applicator,
