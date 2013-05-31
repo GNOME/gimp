@@ -157,18 +157,13 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:posterize", /* in gimp */
     "gegl:red-eye-removal", /* in gimp */
     "gegl:ripple", /* in gimp */
-    "gegl:rotate", /* in gimp */
-    "gegl:scale", /* in gimp */
     "gegl:sdl-display", /* useless */
     "gegl:seamless-clone",
-    "gegl:shear", /* in gimp */
     "gegl:shift", /* in gimp */
     "gegl:softglow", /* in gimp */
     "gegl:text",
     "gegl:threshold", /* in gimp */
     "gegl:tile", /* useless */
-    "gegl:transform", /* in gimp */
-    "gegl:translate", /* pointless */
     "gegl:unsharp-mask", /* in gimp */
     "gegl:value-invert", /* in gimp */
     "gegl:vector-stroke",
