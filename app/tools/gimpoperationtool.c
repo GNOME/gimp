@@ -282,6 +282,8 @@ gimp_operation_tool_color_picked (GimpImageMapTool  *im_tool,
       GObjectClass *object_class = G_OBJECT_GET_CLASS (tool->config);
       GParamSpec   *pspec_x;
       GParamSpec   *pspec_y;
+      gint          width        = 1;
+      gint          height       = 1;
 
       /* the operation's coordinate system is the selection bounds of
        * the drawable
@@ -296,7 +298,7 @@ gimp_operation_tool_color_picked (GimpImageMapTool  *im_tool,
           y -= off_y;
 
           if (gimp_item_mask_intersect (GIMP_ITEM (drawable),
-                                        &off_x, &off_y, NULL, NULL))
+                                        &off_x, &off_y, &width, &height))
             {
               x -= off_x;
               y -= off_y;
@@ -330,6 +332,31 @@ gimp_operation_tool_color_picked (GimpImageMapTool  *im_tool,
             }
           else if (G_IS_PARAM_SPEC_DOUBLE (pspec_x))
             {
+              GParamSpecDouble *dspec_x = G_PARAM_SPEC_DOUBLE (pspec_x);
+              GParamSpecDouble *dspec_y = G_PARAM_SPEC_DOUBLE (pspec_y);
+
+              /* handle what certain well known ops use as extent,
+               * this is by no measure proper code...
+               */
+              if (dspec_x->minimum == 0.0 && dspec_x->maximum == 1.0 &&
+                  dspec_y->minimum == 0.0 && dspec_y->maximum == 1.0)
+                {
+                  x /= width;
+                  y /= height;
+                }
+              else if (dspec_x->minimum == -1.0 && dspec_x->maximum == 2.0 &&
+                       dspec_y->minimum == -1.0 && dspec_y->maximum == 2.0)
+                {
+                  x /= width;
+                  y /= height;
+                }
+              else if (dspec_x->minimum == -1.0 && dspec_x->maximum == 1.0 &&
+                       dspec_y->minimum == -1.0 && dspec_y->maximum == 1.0)
+                {
+                  x = x * 2.0 / width  - 1.0;
+                  y = y * 2.0 / height - 1.0;
+                }
+
               g_value_set_double (&value_x, x);
               g_value_set_double (&value_y, y);
 
