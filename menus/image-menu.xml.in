@@ -642,7 +642,10 @@
       <menu action="plug-in-light-shadow-menu" name="Light and Shadow">
         <placeholder name="Light" />
         <separator />
-        <placeholder name="Shadow" />
+        <placeholder name="Shadow">
+	  <menuitem action="filters-dropshadow" />
+	  <menuitem action="filters-vignette" />
+	</placeholder>
         <separator />
         <placeholder name="Glass" />
       </menu>
@@ -668,9 +671,7 @@
 	<menuitem action="filters-photocopy" />
 	<menuitem action="filters-softglow" />
       </menu>
-      <menu action="plug-in-decor-menu" name="Decor">
-	<menuitem action="filters-vignette" />
-      </menu>
+      <menu action="plug-in-decor-menu" name="Decor" />
       <menu action="plug-in-map-menu" name="Map">
         <menuitem action="filters-fractal-trace" />
       </menu>
