@@ -125,6 +125,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:gaussian-blur",
     NULL /* FIXME GIMP_HELP_FILTER_GAUSSIAN_BLUR */ },
 
+  { "filters-grid", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Grid..."), NULL, NULL,
+    "gegl:grid",
+    NULL /* FIXME GIMP_HELP_FILTER_GAUSSIAN_GRID */ },
+
   { "filters-lens-distortion", GIMP_STOCK_GEGL,
     NC_("filters-action", "Lens Distortion..."), NULL, NULL,
     "gegl:lens-distortion",
@@ -314,6 +319,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-exposure",                writable);
   SET_SENSITIVE ("filters-fractal-trace",           writable);
   SET_SENSITIVE ("filters-gaussian-blur",           writable);
+  SET_SENSITIVE ("filters-grid",                    writable);
   SET_SENSITIVE ("filters-mono-mixer",              writable && !gray);
   SET_SENSITIVE ("filters-motion-blur",             writable);
   SET_SENSITIVE ("filters-noise-cie-lch",           writable);
