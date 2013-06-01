@@ -136,7 +136,6 @@ plug-ins/common/value-propagate.c
 plug-ins/common/van-gogh-lic.c
 plug-ins/common/video.c
 plug-ins/common/warp.c
-plug-ins/common/waves.c
 plug-ins/common/web-browser.c
 plug-ins/common/web-page.c
 plug-ins/common/wind.c

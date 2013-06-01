@@ -174,7 +174,6 @@ libexec_PROGRAMS = \
 	van-gogh-lic \
 	video \
 	warp \
-	waves \
 	web-browser \
 	$(WEB_PAGE) \
 	wind
@@ -2452,23 +2451,6 @@ warp_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(warp_RC)
-
-waves_SOURCES = \
-	waves.c
-
-waves_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(waves_RC)
 
 web_browser_SOURCES = \
 	web-browser.c

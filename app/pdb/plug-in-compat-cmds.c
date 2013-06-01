@@ -27,6 +27,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "libgimpbase/gimpbase.h"
 
@@ -802,6 +803,70 @@ plug_in_vinvert_invoker (GimpProcedure         *procedure,
 
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Value Invert"),
+                                         node);
+
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_waves_invoker (GimpProcedure         *procedure,
+                       Gimp                  *gimp,
+                       GimpContext           *context,
+                       GimpProgress          *progress,
+                       const GimpValueArray  *args,
+                       GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble amplitude;
+  gdouble phase;
+  gdouble wavelength;
+  gboolean type;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  amplitude = g_value_get_double (gimp_value_array_index (args, 3));
+  phase = g_value_get_double (gimp_value_array_index (args, 4));
+  wavelength = g_value_get_double (gimp_value_array_index (args, 5));
+  type = g_value_get_boolean (gimp_value_array_index (args, 6));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node;
+          gdouble   width  = gimp_item_get_width  (GIMP_ITEM (drawable));
+          gdouble   height = gimp_item_get_height (GIMP_ITEM (drawable));
+          gdouble   aspect;
+
+          while (phase < 0)
+            phase += 360.0;
+
+          phase = fmod (phase, 360.0);
+
+          aspect = CLAMP (width / height, 0.1, 10.0);
+
+          node = gegl_node_new_child (NULL,
+                                     "operation", "gegl:waves",
+                                     "x",         width  / 2.0,
+                                     "y",         height / 2.0,
+                                     "amplitude", amplitude,
+                                     "phi",       (phase - 180.0) / 180.0,
+                                     "period",    wavelength * 2.0,
+                                     "aspect",    aspect,
+                                     "clamp",     ! type,
+                                     NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Waves"),
                                          node);
 
           g_object_unref (node);
@@ -1620,6 +1685,72 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             "Input drawable",
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-waves
+   */
+  procedure = gimp_procedure_new (plug_in_waves_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-waves");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-waves",
+                                     "Distort the image with waves",
+                                     "Distort the image with waves.",
+                                     "Compatibility procedure. Please see 'gegl:waves' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:waves' for credits.",
+                                     "2013",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("amplitude",
+                                                    "amplitude",
+                                                    "The Amplitude of the Waves",
+                                                    0, 101, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("phase",
+                                                    "phase",
+                                                    "The Phase of the Waves",
+                                                    -360, 360, -360,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("wavelength",
+                                                    "wavelength",
+                                                    "The Wavelength of the Waves",
+                                                    0.1, 50, 0.1,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("type",
+                                                     "type",
+                                                     "Type of waves: { 0 = smeared, 1 = black }",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("reflective",
+                                                     "reflective",
+                                                     "Use Reflection (not implemented)",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
