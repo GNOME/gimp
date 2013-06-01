@@ -358,6 +358,17 @@ gimp_image_map_apply (GimpImageMap        *image_map,
                                         image_map->filter_area.x,
                                         image_map->filter_area.y);
     }
+  else
+    {
+      GimpItem *item   = GIMP_ITEM (image_map->drawable);
+      gdouble   width  = gimp_item_get_width (item);
+      gdouble   height = gimp_item_get_height (item);
+
+      gegl_node_set (image_map->crop,
+                     "width",  width,
+                     "height", height,
+                     NULL);
+    }
 
   active_mask = gimp_drawable_get_active_mask (image_map->drawable);
 
