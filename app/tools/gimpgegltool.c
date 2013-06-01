@@ -153,6 +153,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:unsharp-mask",
     "gegl:value-invert",
     "gegl:vignette",
+    "gegl:waves",
     "gegl:whirl-pinch",
 
     /* these ops are blacklisted for other reasons */

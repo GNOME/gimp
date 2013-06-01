@@ -235,6 +235,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:vignette",
     NULL /* FIXME GIMP_HELP_FILTER_VIGNETTE */ },
 
+  { "filters-waves", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Waves..."), NULL, NULL,
+    "gegl:waves",
+    NULL /* FIXME GIMP_HELP_FILTER_WAVES */ },
+
   { "filters-whirl-pinch", GIMP_STOCK_GEGL,
     NC_("filters-action", "W_hirl and Pinch..."), NULL, NULL,
     "gegl:whirl-pinch",
@@ -341,6 +346,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-threshold-alpha",         writable && alpha);
   SET_SENSITIVE ("filters-unsharp-mask",            writable);
   SET_SENSITIVE ("filters-vignette",                writable);
+  SET_SENSITIVE ("filters-waves",                   writable);
   SET_SENSITIVE ("filters-whirl-pinch",             writable);
 
 #undef SET_SENSITIVE
