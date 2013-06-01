@@ -1304,6 +1304,7 @@ init_frames (void)
   gchar           *layer_name;
   gint             layer_offx, layer_offy;
   gboolean         preview_quality;
+  gint             frame_spin_size;
 
   if (total_frames <= 0)
     {
@@ -1648,14 +1649,11 @@ init_frames (void)
     }
 
   /* Update the UI. */
-  start_frame = gtk_adjustment_get_value (startframe_adjust);
-  if (start_frame < frame_number_min || start_frame > frame_number_max)
-    start_frame = frame_number_min;
-  gtk_adjustment_configure (startframe_adjust, start_frame, frame_number_min, frame_number_max, 1.0, 5.0, 0.0);
+  frame_spin_size = (gint) (log10 (frame_number_max - (frame_number_max % 10))) + 1;
+  gtk_entry_set_width_chars (GTK_ENTRY (startframe_spin), frame_spin_size);
+  gtk_entry_set_width_chars (GTK_ENTRY (endframe_spin), frame_spin_size);
 
-  end_frame = gtk_adjustment_get_value (endframe_adjust);
-  if (end_frame < frame_number_min || end_frame > frame_number_max || end_frame < start_frame)
-    end_frame = frame_number_max;
+  gtk_adjustment_configure (startframe_adjust, start_frame, frame_number_min, frame_number_max, 1.0, 5.0, 0.0);
   gtk_adjustment_configure (endframe_adjust, end_frame, start_frame, frame_number_max, 1.0, 5.0, 0.0);
 
   animated = end_frame - start_frame >= 1;
@@ -2525,22 +2523,29 @@ parse_ms_tag (const gchar *str)
 static void
 set_total_frames (void)
 {
-  gint max = G_MININT;
-  gint min = G_MAXINT;
-  gint i, j;
-  gchar* layer_name;
-  gchar* nospace_name;
-  GMatchInfo* match_info;
+  gchar        *layer_name;
+  gchar        *nospace_name;
+  GMatchInfo   *match_info;
+  gint          max                 = G_MININT;
+  gint          min                 = G_MAXINT;
+  gboolean      start_from_first    = FALSE;
+  gboolean      end_at_last         = FALSE;
+  gint          i, j;
+
+  /* As a special exception, when we start or end at first or last frames,
+   * we want to stay that way, even with different first and last frames. */
+  if (start_frame == frame_number_min)
+    start_from_first = TRUE;
+  if (end_frame == frame_number_max)
+    end_at_last = TRUE;
 
   if (settings.default_frame_disposal != DISPOSE_TAGS)
     {
       total_frames = total_layers;
       frame_number_min = 1;
       frame_number_max = frame_number_min + total_frames - 1;
-      return;
     }
-
-  for (i = 0; i < total_layers; i++)
+  else for (i = 0; i < total_layers; i++)
     {
       layer_name = gimp_item_get_name (layers[i]);
       nospace_name = g_regex_replace_literal (nospace_reg, layer_name, -1, 0, "", 0, NULL);
@@ -2582,6 +2587,25 @@ set_total_frames (void)
       frame_number_min = min;
       frame_number_max = max;
     }
+
+  /* Update frame counting UI widgets. */
+  if (startframe_adjust)
+    {
+      start_frame = gtk_adjustment_get_value (startframe_adjust);
+      if (start_from_first || start_frame < frame_number_min || start_frame > frame_number_max)
+        start_frame = frame_number_min;
+    }
+  else
+    start_frame = frame_number_min;
+
+  if (endframe_adjust)
+    {
+      end_frame = gtk_adjustment_get_value (endframe_adjust);
+      if (end_at_last || end_frame < frame_number_min || end_frame > frame_number_max || end_frame < start_frame)
+        end_frame = frame_number_max;
+    }
+  else
+    end_frame = frame_number_max;
 }
 
 static gboolean
