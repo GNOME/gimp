@@ -453,10 +453,13 @@ N_("Sets an upper limit to the memory that is used per image to keep " \
 #define UNDO_PREVIEW_SIZE_BLURB \
 N_("Sets the size of the previews in the Undo History.")
 
-#define USE_HELP_BLURB  \
+#define USE_HELP_BLURB \
 N_("When enabled, pressing F1 will open the help browser.")
 
-#define USER_MANUAL_ONLINE_BLURB  \
+#define USE_OPENCL_BLURB \
+N_("When enabled, uses OpenCL for some operations.")
+
+#define USER_MANUAL_ONLINE_BLURB \
 "When enabled, the online user manual will be used by the help system. " \
 "Otherwise the locally installed copy is used."
 

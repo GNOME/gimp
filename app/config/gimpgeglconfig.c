@@ -51,6 +51,7 @@ enum
   PROP_SWAP_PATH,
   PROP_NUM_PROCESSORS,
   PROP_TILE_CACHE_SIZE,
+  PROP_USE_OPENCL,
 
   /* ignored, only for backward compatibility: */
   PROP_STINGY_MEMORY_USE
@@ -158,6 +159,11 @@ gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
                                     GIMP_PARAM_STATIC_STRINGS |
                                     GIMP_CONFIG_PARAM_CONFIRM);
 
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_OPENCL,
+                                    "use-opencl", USE_OPENCL_BLURB,
+                                    TRUE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+
   /*  only for backward compatibility:  */
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_STINGY_MEMORY_USE,
                                     "stingy-memory-use", NULL,
@@ -209,6 +215,9 @@ gimp_gegl_config_set_property (GObject      *object,
     case PROP_TILE_CACHE_SIZE:
       gegl_config->tile_cache_size = g_value_get_uint64 (value);
       break;
+    case PROP_USE_OPENCL:
+      gegl_config->use_opencl = g_value_get_boolean (value);
+      break;
 
     case PROP_STINGY_MEMORY_USE:
       /* ignored */
@@ -241,6 +250,9 @@ gimp_gegl_config_get_property (GObject    *object,
       break;
     case PROP_TILE_CACHE_SIZE:
       g_value_set_uint64 (value, gegl_config->tile_cache_size);
+      break;
+    case PROP_USE_OPENCL:
+      g_value_set_boolean (value, gegl_config->use_opencl);
       break;
 
     case PROP_STINGY_MEMORY_USE:

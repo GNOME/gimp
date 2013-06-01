@@ -36,6 +36,7 @@
 
 static void  gimp_gegl_notify_tile_cache_size (GimpGeglConfig *config);
 static void  gimp_gegl_notify_num_processors  (GimpGeglConfig *config);
+static void  gimp_gegl_notify_use_opencl      (GimpGeglConfig *config);
 
 
 void
@@ -57,8 +58,9 @@ gimp_gegl_init (Gimp *gimp)
       g_object_set (gegl_config (),
                     "tile-cache-size", (guint64) config->tile_cache_size,
 #if 0
-                    "threads",    config->num_processors,
+                    "threads",         config->num_processors,
 #endif
+                    "use-opencl",      config->use_opencl,
                     NULL);
     }
   else
@@ -72,6 +74,7 @@ gimp_gegl_init (Gimp *gimp)
 #if 0
                     "threads",    config->num_processors,
 #endif
+                    "use-opencl", config->use_opencl,
                     NULL);
     }
 
@@ -88,6 +91,9 @@ gimp_gegl_init (Gimp *gimp)
                     NULL);
   g_signal_connect (config, "notify::num-processors",
                     G_CALLBACK (gimp_gegl_notify_num_processors),
+                    NULL);
+  g_signal_connect (config, "notify::use-opencl",
+                    G_CALLBACK (gimp_gegl_notify_use_opencl),
                     NULL);
 
   gimp_babl_init ();
@@ -121,4 +127,12 @@ gimp_gegl_notify_num_processors (GimpGeglConfig *config)
                 "threads", config->num_processors,
                 NULL);
 #endif
+}
+
+static void
+gimp_gegl_notify_use_opencl (GimpGeglConfig *config)
+{
+  g_object_set (gegl_config (),
+                "use-opencl", config->use_opencl,
+                NULL);
 }
