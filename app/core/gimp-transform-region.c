@@ -331,8 +331,13 @@ gimp_transform_region_nearest (TileManager        *orig_tiles,
               /*  normalize homogeneous coords  */
               normalize_coords (1, &tu, &tv, &tw, &u, &v);
 
-              iu = RINT (u);
-              iv = RINT (v);
+              /* EPSILON here is useful to make floating point arithmetic
+               * rounding errors consistent when the exact computation
+               * results in a 'integer and a half'
+               */
+#define EPSILON 1.e-5
+              iu = floor (u + 0.5 + EPSILON);
+              iv = floor (v + 0.5 + EPSILON);
 
               /*  Set the destination pixels  */
               if (iu >= u1 && iu < u2 &&
