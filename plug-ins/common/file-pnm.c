@@ -482,7 +482,7 @@ load_image (const gchar  *filename,
   gint32 volatile image_ID = -1;
   gint32          layer_ID;
   int             fd;           /* File descriptor */
-  char            buf[BUFLEN];  /* buffer for random things like scanning */
+  char            buf[BUFLEN + 4];  /* buffer for random things like scanning */
   PNMInfo        *pnminfo;
   PNMScanner * volatile scan;
   int             ctr;
