@@ -3,7 +3,7 @@
  *
  * (c) Adam D. Moss : 1997-2000 : adam@gimp.org : adam@foxbox.org
  * (c) Mircea Purdea : 2009 : someone_else@exhalus.net
- * (c) Jehan : 2012 : jehan at girinstud.io
+ * (c) Jehan : 2012-2013 : jehan at girinstud.io
  *
  * GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
@@ -908,6 +908,10 @@ refresh_dialog (gchar *imagename)
   screen_width = gdk_screen_get_width (screen);
   gtk_window_get_size (GTK_WINDOW (window), &window_width, &window_height);
 
+  /* Update the presence of quality checkbox. */
+  init_quality_checkbox ();
+  quality_checkbox_toggled (GTK_TOGGLE_BUTTON (quality_checkbox), NULL);
+
   /* if the *window* size is bigger than the screen size,
    * diminish the drawing area by as much, then compute the corresponding scale. */
   if (window_width + 50 > screen_width || window_height + 50 > screen_height)
@@ -1101,6 +1105,7 @@ build_dialog (gchar             *imagename)
 
   /* Degraded quality animation preview. */
   quality_checkbox = gtk_check_button_new_with_label (_("Preview Quality"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (quality_checkbox), FALSE);
   gtk_box_pack_end (GTK_BOX (config_hbox), quality_checkbox, FALSE, FALSE, 0);
   gtk_widget_show (quality_checkbox);
 
@@ -1272,13 +1277,18 @@ init_quality_checkbox (void)
   screen_height = gdk_screen_get_height (screen);
   screen_width = gdk_screen_get_width (screen);
 
-  /* We will set a lower quality as default if image is more than half the screen size
+  gtk_widget_show (quality_checkbox);
+  /* Small resolution, no need for this button. */
+  if (screen_width / 2 >= width && screen_height / 2 >= height)
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (quality_checkbox), FALSE);
+      gtk_widget_hide (quality_checkbox);
+    }
+  /* We will set a lower quality as default if image is more than the screen size
    * and there are more than a given limit of frames. */
-  if (total_frames > lower_quality_frame_limit &&
-      (width > screen_width || height > screen_height))
+  else if (total_frames > lower_quality_frame_limit &&
+          (width > screen_width || height > screen_height))
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (quality_checkbox), TRUE);
-  else
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (quality_checkbox), FALSE);
 }
 
 static void
