@@ -623,8 +623,12 @@
       <menu action="plug-in-blur-menu" name="Blur">
       	<menuitem action="filters-gaussian-blur" />
       	<menuitem action="filters-dot" />
-      	<menuitem action="filters-motion-blur" />
       	<menuitem action="filters-pixelize" />
+	<placeholder name="Motion">
+	  <menuitem action="filters-motion-blur-circular" />
+	  <menuitem action="filters-motion-blur-linear" />
+	  <menuitem action="filters-motion-blur-zoom" />
+	</placeholder>
       </menu>
       <menu action="plug-in-enhance-menu" name="Enhance">
         <menuitem action="filters-deinterlace" />

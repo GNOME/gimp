@@ -140,10 +140,20 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:mono-mixer",
     NULL /* FIXME GIMP_HELP_FILTER_MONO_MIXER */ },
 
-  { "filters-motion-blur", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Motion Blur..."), NULL, NULL,
-    "gegl:motion-blur",
-    NULL /* FIXME GIMP_HELP_FILTER_MOTION_BLUR */ },
+  { "filters-motion-blur-circular", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Circular Motion Blur..."), NULL, NULL,
+    "gegl:motion-blur-circular",
+    NULL /* FIXME GIMP_HELP_FILTER_MOTION_BLUR_CIRCULAR */ },
+
+  { "filters-motion-blur-linear", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Linear Motion Blur..."), NULL, NULL,
+    "gegl:motion-blur-linear",
+    NULL /* FIXME GIMP_HELP_FILTER_MOTION_BLUR_LINEAR */ },
+
+  { "filters-motion-blur-zoom", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Zoom Motion Blur..."), NULL, NULL,
+    "gegl:motion-blur-zoom",
+    NULL /* FIXME GIMP_HELP_FILTER_MOTION_BLUR_ZOOM */ },
 
   { "filters-noise-cie-lch", GIMP_STOCK_GEGL,
     NC_("filters-action", "CIE lch Noise..."), NULL, NULL,
@@ -326,7 +336,9 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-gaussian-blur",           writable);
   SET_SENSITIVE ("filters-grid",                    writable);
   SET_SENSITIVE ("filters-mono-mixer",              writable && !gray);
-  SET_SENSITIVE ("filters-motion-blur",             writable);
+  SET_SENSITIVE ("filters-motion-blur-circular",    writable);
+  SET_SENSITIVE ("filters-motion-blur-linear",      writable);
+  SET_SENSITIVE ("filters-motion-blur-zoom",        writable);
   SET_SENSITIVE ("filters-noise-cie-lch",           writable);
   SET_SENSITIVE ("filters-noise-hsv",               writable && !gray);
   SET_SENSITIVE ("filters-noise-hurl",              writable);
