@@ -122,7 +122,9 @@ static void        render_frame              (guint            whichframe);
 static void        show_playing_progress     (void);
 static void        show_loading_progress     (gint             layer_nb);
 static void        show_goto_progress        (guint            frame_nb);
-static void        total_alpha_preview       (void);
+static void        total_alpha_preview       (guchar *da_data,
+                                              guint da_width,
+                                              guint da_height);
 static void        update_alpha_preview      (void);
 static void        update_combobox           (void);
 static gdouble     get_duration_factor       (gint             index);
@@ -447,7 +449,7 @@ da_size_callback (GtkWidget *widget,
   else
     {
       /* Set "alpha grid" background. */
-      total_alpha_preview ();
+      total_alpha_preview (drawing_area_data, drawing_area_width, drawing_area_height);
       repaint_da(drawing_area, NULL, NULL);
     }
 }
@@ -745,7 +747,7 @@ detach_callback (GtkToggleAction *action)
       gdk_window_set_back_pixmap (gtk_widget_get_window (shape_drawing_area), NULL, TRUE);
 
       /* Set "alpha grid" background. */
-      total_alpha_preview ();
+      total_alpha_preview (drawing_area_data, drawing_area_width, drawing_area_height);
       repaint_da (drawing_area, NULL, NULL);
     }
   else
@@ -1516,13 +1518,6 @@ init_frames (void)
   DisposeType      disposal = settings.default_frame_disposal;
   gint             frame_spin_size;
 
-  if (total_frames <= 0)
-    {
-      gimp_message (_("This animation has no frame."));
-      clean_exit ();
-      return;
-    }
-
   if (playing)
     gtk_action_activate (gtk_ui_manager_get_action (ui_manager,
                                                     "/anim-play-toolbar/play"));
@@ -1557,6 +1552,8 @@ init_frames (void)
   gtk_action_set_sensitive (action, FALSE);
 
   gtk_widget_set_sensitive (GTK_WIDGET (zoomcombo), FALSE);
+  gtk_widget_set_sensitive (GTK_WIDGET (fpscombo), FALSE);
+  gtk_widget_set_sensitive (GTK_WIDGET (speedcombo), FALSE);
   gtk_widget_set_sensitive (GTK_WIDGET (frame_disposal_combo), FALSE);
   gtk_widget_set_sensitive (GTK_WIDGET (quality_checkbox), FALSE);
   gtk_widget_set_sensitive (GTK_WIDGET (startframe_spin), FALSE);
@@ -1573,6 +1570,7 @@ init_frames (void)
       GList *idx;
 
       gimp_image_delete (frames_image_id);
+      frames_image_id = 0;
 
       /* Freeing previous frames only once. */
       for (idx = g_list_first (previous_frames); idx != NULL; idx = g_list_next (idx))
@@ -1588,6 +1586,15 @@ init_frames (void)
 
       g_free (frames);
       g_free (frame_durations);
+      frames = NULL;
+      frame_durations = NULL;
+    }
+
+  if (total_frames <= 0)
+    {
+      gtk_widget_set_sensitive (GTK_WIDGET (frame_disposal_combo), TRUE);
+      frames_lock = FALSE;
+      return;
     }
 
   frames = g_try_malloc0_n (total_frames, sizeof (Frame*));
@@ -1732,6 +1739,8 @@ init_frames (void)
   gtk_action_set_sensitive (action, TRUE);
 
   gtk_widget_set_sensitive (GTK_WIDGET (zoomcombo), TRUE);
+  gtk_widget_set_sensitive (GTK_WIDGET (fpscombo), TRUE);
+  gtk_widget_set_sensitive (GTK_WIDGET (speedcombo), TRUE);
   gtk_widget_set_sensitive (GTK_WIDGET (frame_disposal_combo), TRUE);
   gtk_widget_set_sensitive (GTK_WIDGET (quality_checkbox), TRUE);
   gtk_widget_set_sensitive (GTK_WIDGET (startframe_spin), TRUE);
@@ -1807,7 +1816,7 @@ render_frame (guint whichframe)
   /* Unless we are in a case where we always want to redraw
    * (after a zoom, preview mode change, reinitialization, and such),
    * we don't redraw if the same frame was already drawn. */
-  if ((! force_render) && last_frame_index > -1 &&
+  if ((! force_render) && total_frames > 0 && last_frame_index > -1 &&
       g_list_find (frames[last_frame_index]->indexes, GINT_TO_POINTER (whichframe - frame_number_min)))
     {
       show_playing_progress ();
@@ -1816,7 +1825,7 @@ render_frame (guint whichframe)
 
   frames_lock = TRUE;
 
-  g_assert (whichframe >= start_frame && whichframe <= end_frame);
+  g_assert (total_frames < 1 || (whichframe >= start_frame && whichframe <= end_frame));
 
   if (detached)
     {
@@ -1825,6 +1834,9 @@ render_frame (guint whichframe)
       drawing_width = shape_drawing_area_width;
       drawing_height = shape_drawing_area_height;
       drawing_scale = shape_scale;
+
+      if (total_frames < 1)
+        total_alpha_preview (preview_data, drawing_width, drawing_height);
     }
   else
     {
@@ -1835,55 +1847,67 @@ render_frame (guint whichframe)
       drawing_scale = scale;
 
       /* Set "alpha grid" background. */
-      total_alpha_preview ();
+      total_alpha_preview (preview_data, drawing_width, drawing_height);
     }
 
-  buffer = gimp_drawable_get_buffer (frames[whichframe - frame_number_min]->drawable_id);
-
-  /* Fetch and scale the whole raw new frame */
-  gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, drawing_width, drawing_height),
-                   drawing_scale, babl_format ("R'G'B'A u8"),
-                   rawframe, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_CLAMP);
-
-  /* Number of pixels. */
-  i = drawing_width * drawing_height;
-  destptr = preview_data;
-  srcptr  = rawframe;
-  while (i--)
+  /* When there is no frame to show, we simply display the alpha background and return. */
+  if (total_frames > 0)
     {
-      if (! (srcptr[3] & 128))
+      buffer = gimp_drawable_get_buffer (frames[whichframe - frame_number_min]->drawable_id);
+
+      /* Fetch and scale the whole raw new frame */
+      gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, drawing_width, drawing_height),
+                       drawing_scale, babl_format ("R'G'B'A u8"),
+                       rawframe, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_CLAMP);
+
+      /* Number of pixels. */
+      i = drawing_width * drawing_height;
+      destptr = preview_data;
+      srcptr  = rawframe;
+      while (i--)
         {
-          srcptr  += 4;
-          destptr += 3;
-          continue;
-        }
-
-      *(destptr++) = *(srcptr++);
-      *(destptr++) = *(srcptr++);
-      *(destptr++) = *(srcptr++);
-
-      srcptr++;
-    }
-
-  /* calculate the shape mask */
-  if (detached)
-    {
-      memset (shape_preview_mask, 0, (drawing_width * drawing_height) / 8 + drawing_height);
-      srcptr = rawframe + 3;
-
-      for (j = 0; j < drawing_height; j++)
-        {
-          k = j * ((7 + drawing_width) / 8);
-
-          for (i = 0; i < drawing_width; i++)
+          if (! (srcptr[3] & 128))
             {
-              if ((*srcptr) & 128)
-                shape_preview_mask[k + i/8] |= (1 << (i&7));
-
-              srcptr += 4;
+              srcptr  += 4;
+              destptr += 3;
+              continue;
             }
+
+          *(destptr++) = *(srcptr++);
+          *(destptr++) = *(srcptr++);
+          *(destptr++) = *(srcptr++);
+
+          srcptr++;
         }
-      reshape_from_bitmap (shape_preview_mask);
+
+      /* calculate the shape mask */
+      if (detached)
+        {
+          memset (shape_preview_mask, 0, (drawing_width * drawing_height) / 8 + drawing_height);
+          srcptr = rawframe + 3;
+
+          for (j = 0; j < drawing_height; j++)
+            {
+              k = j * ((7 + drawing_width) / 8);
+
+              for (i = 0; i < drawing_width; i++)
+                {
+                  if ((*srcptr) & 128)
+                    shape_preview_mask[k + i/8] |= (1 << (i&7));
+
+                  srcptr += 4;
+                }
+            }
+          reshape_from_bitmap (shape_preview_mask);
+        }
+
+      /* clean up */
+      g_object_unref (buffer);
+
+      /* Update UI. */
+      show_playing_progress ();
+
+      last_frame_index = whichframe - frame_number_min;
     }
 
   /* Display the preview buffer. */
@@ -1896,15 +1920,7 @@ render_frame (guint whichframe)
                        GDK_RGB_DITHER_MAX : DITHERTYPE),
                       preview_data, drawing_width * 3);
 
-  /* clean up */
-  g_object_unref (buffer);
-
-  /* Update UI. */
-  show_playing_progress ();
-
-  last_frame_index = whichframe - frame_number_min;
   force_render = FALSE;
-
   frames_lock = FALSE;
 }
 
@@ -1998,16 +2014,16 @@ update_alpha_preview (void)
 }
 
 static void
-total_alpha_preview (void)
+total_alpha_preview (guchar *da_data, guint da_width, guint da_height)
 {
   gint i;
 
-  for (i = 0; i < drawing_area_height; i++)
+  for (i = 0; i < da_height; i++)
     {
       if (i & 8)
-        memcpy (&drawing_area_data[i * 3 * drawing_area_width], preview_alpha1_data, 3 * drawing_area_width);
+        memcpy (&da_data[i * 3 * da_width], preview_alpha1_data, 3 * da_width);
       else
-        memcpy (&drawing_area_data[i * 3 * drawing_area_width], preview_alpha2_data, 3 * drawing_area_width);
+        memcpy (&da_data[i * 3 * da_width], preview_alpha2_data, 3 * da_width);
     }
 }
 
