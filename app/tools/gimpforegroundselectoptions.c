@@ -55,8 +55,6 @@ enum
 };
 
 
-
-
 static void   gimp_foreground_select_options_set_property (GObject      *object,
                                                            guint         property_id,
                                                            const GValue *value,
@@ -89,13 +87,6 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
                                  GIMP_MATTING_DRAW_MODE_FOREGROUND,
                                  GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ENGINE,
-                                 "engine",
-                                 N_("Matting engine to use"),
-                                 GIMP_TYPE_MATTING_ENGINE,
-                                 GIMP_MATTING_ENGINE_MATTING_GLOBAL,
-                                 GIMP_PARAM_STATIC_STRINGS);
-
   GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_STROKE_WIDTH,
                                  "stroke-width",
                                  N_("Size of the brush used for refinements"),
@@ -109,16 +100,25 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
                                  GIMP_BLUE_CHANNEL,
                                  GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ENGINE,
+                                 "engine",
+                                 N_("Matting engine to use"),
+                                 GIMP_TYPE_MATTING_ENGINE,
+                                 GIMP_MATTING_ENGINE_GLOBAL,
+                                 GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_LEVELS,
                                  "levels",
                                  N_("Parameter for matting-levin"),
                                  1, 10, 2,
                                  GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_ACTIVE_LEVELS,
                                  "active-levels",
                                  N_("Parameter for matting-levin"),
                                  1, 10, 2,
                                  GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_ITERATIONS,
                                  "iterations",
                                  N_("Parameter for matting-global"),
@@ -140,13 +140,9 @@ gimp_foreground_select_options_set_property (GObject      *object,
   GimpForegroundSelectOptions *options = GIMP_FOREGROUND_SELECT_OPTIONS (object);
 
   switch (property_id)
-  {
+    {
     case PROP_DRAW_MODE:
       options->draw_mode = g_value_get_enum (value);
-      break;
-
-    case PROP_ENGINE:
-      options->engine = g_value_get_enum (value);
       break;
 
     case PROP_STROKE_WIDTH:
@@ -155,6 +151,10 @@ gimp_foreground_select_options_set_property (GObject      *object,
 
     case PROP_MASK_COLOR:
       options->mask_color = g_value_get_enum (value);
+      break;
+
+    case PROP_ENGINE:
+      options->engine = g_value_get_enum (value);
       break;
 
     case PROP_LEVELS:
@@ -172,7 +172,7 @@ gimp_foreground_select_options_set_property (GObject      *object,
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
-  }
+    }
 }
 
 static void
@@ -184,14 +184,9 @@ gimp_foreground_select_options_get_property (GObject    *object,
   GimpForegroundSelectOptions *options = GIMP_FOREGROUND_SELECT_OPTIONS (object);
 
   switch (property_id)
-  {
-
+    {
     case PROP_DRAW_MODE:
       g_value_set_enum (value, options->draw_mode);
-      break;
-
-    case PROP_ENGINE:
-      g_value_set_enum (value, options->engine);
       break;
 
     case PROP_STROKE_WIDTH:
@@ -202,7 +197,11 @@ gimp_foreground_select_options_get_property (GObject    *object,
       g_value_set_enum (value, options->mask_color);
       break;
 
-    case PROP_LEVELS:
+    case PROP_ENGINE:
+      g_value_set_enum (value, options->engine);
+      break;
+
+     case PROP_LEVELS:
       g_value_set_int (value, options->levels);
       break;
 
@@ -217,7 +216,7 @@ gimp_foreground_select_options_get_property (GObject    *object,
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
-  }
+    }
 }
 
 static void
@@ -319,7 +318,8 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
                                G_BINDING_SYNC_CREATE,
                                gimp_foreground_select_options_sync_engine,
                                NULL,
-                               GINT_TO_POINTER (GIMP_MATTING_ENGINE_MATTING_LEVIN), NULL);
+                               GINT_TO_POINTER (GIMP_MATTING_ENGINE_LEVIN),
+                               NULL);
 
   scale = gimp_prop_spin_scale_new (config, "active-levels",
                                     _("Active levels"),
@@ -331,7 +331,8 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
                                G_BINDING_SYNC_CREATE,
                                gimp_foreground_select_options_sync_engine,
                                NULL,
-                               GINT_TO_POINTER (GIMP_MATTING_ENGINE_MATTING_LEVIN), NULL);
+                               GINT_TO_POINTER (GIMP_MATTING_ENGINE_LEVIN),
+                               NULL);
 
   scale = gimp_prop_spin_scale_new (config, "iterations",
                                     _("Iterations"),
@@ -343,7 +344,8 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
                                G_BINDING_SYNC_CREATE,
                                gimp_foreground_select_options_sync_engine,
                                NULL,
-                               GINT_TO_POINTER (GIMP_MATTING_ENGINE_MATTING_GLOBAL), NULL);
+                               GINT_TO_POINTER (GIMP_MATTING_ENGINE_GLOBAL),
+                               NULL);
 
   return vbox;
 }

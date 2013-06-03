@@ -326,15 +326,15 @@ gimp_matting_engine_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_MATTING_ENGINE_MATTING_GLOBAL, "GIMP_MATTING_ENGINE_MATTING_GLOBAL", "global" },
-    { GIMP_MATTING_ENGINE_MATTING_LEVIN, "GIMP_MATTING_ENGINE_MATTING_LEVIN", "levin" },
+    { GIMP_MATTING_ENGINE_GLOBAL, "GIMP_MATTING_ENGINE_GLOBAL", "global" },
+    { GIMP_MATTING_ENGINE_LEVIN, "GIMP_MATTING_ENGINE_LEVIN", "levin" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_MATTING_ENGINE_MATTING_GLOBAL, NC_("matting-engine", "Matting Global"), NULL },
-    { GIMP_MATTING_ENGINE_MATTING_LEVIN, NC_("matting-engine", "Matting Levin"), NULL },
+    { GIMP_MATTING_ENGINE_GLOBAL, NC_("matting-engine", "Matting Global"), NULL },
+    { GIMP_MATTING_ENGINE_LEVIN, NC_("matting-engine", "Matting Levin"), NULL },
     { 0, NULL, NULL }
   };
 

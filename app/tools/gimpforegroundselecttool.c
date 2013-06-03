@@ -768,7 +768,7 @@ gimp_foreground_select_tool_preview (GimpForegroundSelectTool *fg_select,
                                      "format",    NULL,
                                      NULL);
 
-  if (options->engine == GIMP_MATTING_ENGINE_MATTING_GLOBAL)
+  if (options->engine == GIMP_MATTING_ENGINE_GLOBAL)
     {
       matting_node = gegl_node_new_child (gegl,
                                           "operation",  "gegl:matting-global",

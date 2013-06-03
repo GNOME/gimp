@@ -149,8 +149,8 @@ GType gimp_matting_engine_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
- GIMP_MATTING_ENGINE_MATTING_GLOBAL,  /*< desc="Matting Global" >*/
- GIMP_MATTING_ENGINE_MATTING_LEVIN,   /*< desc="Matting Levin" >*/
+ GIMP_MATTING_ENGINE_GLOBAL,  /*< desc="Matting Global" >*/
+ GIMP_MATTING_ENGINE_LEVIN,   /*< desc="Matting Levin" >*/
 } GimpMattingEngine;
 
 
