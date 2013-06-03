@@ -85,6 +85,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   /*  the paint mode menu  */
   menu = gimp_prop_paint_mode_menu_new (config, "paint-mode", TRUE, FALSE);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (menu), _("Mode"));
+  g_object_set (menu, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 
@@ -321,6 +322,7 @@ dynamics_options_gui (GimpPaintOptions *paint_options,
   /*  the repeat type  */
   combo = gimp_prop_enum_combo_box_new (config, "fade-repeat", 0, 0);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Repeat"));
+  g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (inner_vbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 

@@ -280,6 +280,7 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
 
   combo = gimp_prop_enum_combo_box_new (config, "align-reference", 0, 0);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Relative to"));
+  g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (align_vbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
 

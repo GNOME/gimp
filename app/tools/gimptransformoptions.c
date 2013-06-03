@@ -400,12 +400,14 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   /*  the interpolation menu  */
   combo = gimp_prop_enum_combo_box_new (config, "interpolation", 0, 0);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Interpolation"));
+  g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
 
   /*  the clipping menu  */
   combo = gimp_prop_enum_combo_box_new (config, "clip", 0, 0);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Clipping"));
+  g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
 
@@ -426,6 +428,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   /*  the guides type menu  */
   combo = gimp_prop_enum_combo_box_new (config, "grid-type", 0, 0);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Guides"));
+  g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_frame_set_label_widget (GTK_FRAME (frame), combo);
   gtk_widget_show (combo);
 
