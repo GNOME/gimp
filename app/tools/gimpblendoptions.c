@@ -200,7 +200,6 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_paint_options_gui (tool_options);
-  GtkWidget *table;
   GtkWidget *vbox2;
   GtkWidget *frame;
   GtkWidget *scale;
@@ -217,27 +216,21 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
-
   /*  the gradient type menu  */
   combo = gimp_prop_enum_combo_box_new (config, "gradient-type", 0, 0);
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Shape"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gimp_enum_combo_box_set_stock_prefix (GIMP_ENUM_COMBO_BOX (combo),
                                         "gimp-gradient");
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Shape:"), 0.0, 0.5,
-                             combo, 2, FALSE);
+  gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
+  gtk_widget_show (combo);
 
   /*  the repeat option  */
   combo = gimp_prop_enum_combo_box_new (config, "gradient-repeat", 0, 0);
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Repeat"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Repeat:"), 0.0, 0.5,
-                             combo, 2, FALSE);
+  gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
+  gtk_widget_show (combo);
 
   g_signal_connect (config, "notify::gradient-type",
                     G_CALLBACK (blend_options_gradient_type_notify),

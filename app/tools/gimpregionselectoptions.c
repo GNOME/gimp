@@ -196,8 +196,6 @@ gimp_region_select_options_gui (GimpToolOptions *tool_options)
   GtkWidget *vbox    = gimp_selection_options_gui (tool_options);
   GtkWidget *button;
   GtkWidget *scale;
-  GtkWidget *hbox;
-  GtkWidget *label;
   GtkWidget *combo;
 
   /*  the select transparent areas toggle  */
@@ -220,16 +218,9 @@ gimp_region_select_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (scale);
 
   /*  the select criterion combo  */
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new (_("Select by:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
   combo = gimp_prop_enum_combo_box_new (config, "select-criterion", 0, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Select by"));
+  gtk_box_pack_start (GTK_BOX (vbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
   return vbox;

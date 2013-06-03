@@ -398,21 +398,15 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (frame);
 
   /*  the interpolation menu  */
-  frame = gimp_frame_new (_("Interpolation:"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   combo = gimp_prop_enum_combo_box_new (config, "interpolation", 0, 0);
-  gtk_container_add (GTK_CONTAINER (frame), combo);
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Interpolation"));
+  gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
 
   /*  the clipping menu  */
-  frame = gimp_frame_new (_("Clipping:"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   combo = gimp_prop_enum_combo_box_new (config, "clip", 0, 0);
-  gtk_container_add (GTK_CONTAINER (frame), combo);
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Clipping"));
+  gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
 
   /*  the preview frame  */
@@ -425,24 +419,20 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (frame);
 
   /*  the guides frame  */
-  frame = gimp_frame_new (_("Guides"));
+  frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  grid_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-  gtk_container_add (GTK_CONTAINER (frame), grid_box);
-  gtk_widget_show (grid_box);
-
   /*  the guides type menu  */
   combo = gimp_prop_enum_combo_box_new (config, "grid-type", 0, 0);
-  gtk_box_pack_start (GTK_BOX (grid_box), combo, FALSE, FALSE, 0);
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Guides"));
+  gtk_frame_set_label_widget (GTK_FRAME (frame), combo);
   gtk_widget_show (combo);
 
   /*  the grid density scale  */
   scale = gimp_prop_spin_scale_new (config, "grid-size", NULL,
                                     1.8, 8.0, 0);
-  gtk_box_pack_start (GTK_BOX (grid_box), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
+  gtk_container_add (GTK_CONTAINER (frame), scale);
 
   g_object_bind_property_full (config, "grid-type",
                                scale,  "visible",

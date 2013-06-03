@@ -46,6 +46,8 @@ libapptools_a_sources = \
 	gimpcageoptions.h		\
 	gimpcagetool.c			\
 	gimpcagetool.h			\
+	gimpcloneoptions-gui.c		\
+	gimpcloneoptions-gui.h		\
 	gimpclonetool.c			\
 	gimpclonetool.h			\
 	gimpcoloroptions.c		\

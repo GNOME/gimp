@@ -76,25 +76,16 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   GObject          *config  = G_OBJECT (tool_options);
   GimpPaintOptions *options = GIMP_PAINT_OPTIONS (tool_options);
   GtkWidget        *vbox    = gimp_tool_options_gui (tool_options);
-  GtkWidget        *hbox;
   GtkWidget        *menu;
-  GtkWidget        *label;
   GtkWidget        *scale;
   GType             tool_type;
 
   tool_type = tool_options->tool_info->tool_type;
 
   /*  the paint mode menu  */
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new (_("Mode:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
   menu = gimp_prop_paint_mode_menu_new (config, "paint-mode", TRUE, FALSE);
-  gtk_box_pack_start (GTK_BOX (hbox), menu, TRUE, TRUE, 0);
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (menu), _("Mode"));
+  gtk_box_pack_start (GTK_BOX (vbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 
   if (tool_type == GIMP_TYPE_ERASER_TOOL     ||
@@ -103,7 +94,6 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
       gtk_widget_set_sensitive (menu, FALSE);
-      gtk_widget_set_sensitive (label, FALSE);
     }
 
   /*  the opacity scale  */
@@ -283,7 +273,6 @@ dynamics_options_gui (GimpPaintOptions *paint_options,
   GObject   *config = G_OBJECT (paint_options);
   GtkWidget *frame;
   GtkWidget *inner_frame;
-  GtkWidget *label;
   GtkWidget *scale;
   GtkWidget *menu;
   GtkWidget *combo;
@@ -330,16 +319,9 @@ dynamics_options_gui (GimpPaintOptions *paint_options,
 #endif
 
   /*  the repeat type  */
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
-  gtk_box_pack_start (GTK_BOX (inner_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new (_("Repeat:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
   combo = gimp_prop_enum_combo_box_new (config, "fade-repeat", 0, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Repeat"));
+  gtk_box_pack_start (GTK_BOX (inner_vbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
   checkbox = gimp_prop_check_button_new (config, "fade-reverse",

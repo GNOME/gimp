@@ -278,16 +278,9 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gtk_container_add (GTK_CONTAINER (frame), align_vbox);
   gtk_widget_show (align_vbox);
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (align_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  frame = gimp_frame_new (_("Relative to:"));
-  gtk_box_pack_start (GTK_BOX (align_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   combo = gimp_prop_enum_combo_box_new (config, "align-reference", 0, 0);
-  gtk_container_add (GTK_CONTAINER (frame), combo);
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Relative to"));
+  gtk_box_pack_start (GTK_BOX (align_vbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);

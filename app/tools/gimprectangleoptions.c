@@ -859,8 +859,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     gtk_frame_set_label_widget (GTK_FRAME (frame), hbox);
     gtk_widget_show (hbox);
 
-    button = gimp_prop_check_button_new (config, "fixed-rule-active",
-                                         _("Fixed:"));
+    button = gimp_prop_check_button_new (config, "fixed-rule-active", NULL);
     gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, TRUE, 0);
     gtk_widget_show (button);
 
@@ -869,6 +868,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                       private);
 
     combo = gimp_prop_enum_combo_box_new (config, "fixed-rule", 0, 0);
+    gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Fixed"));
     gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
     gtk_widget_show (combo);
 

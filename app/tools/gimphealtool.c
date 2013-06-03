@@ -92,8 +92,6 @@ gimp_heal_options_gui (GimpToolOptions *tool_options)
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_paint_options_gui (tool_options);
   GtkWidget *button;
-  GtkWidget *hbox;
-  GtkWidget *label;
   GtkWidget *combo;
 
   /* the sample merged checkbox */
@@ -103,16 +101,9 @@ gimp_heal_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (button);
 
   /* the alignment combo */
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new (_("Alignment:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
   combo = gimp_prop_enum_combo_box_new (config, "align-mode", 0, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Alignment"));
+  gtk_box_pack_start (GTK_BOX (vbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
   return vbox;

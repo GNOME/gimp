@@ -215,7 +215,6 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   GObject         *config = G_OBJECT (tool_options);
   GtkWidget       *vbox   = gimp_paint_options_gui (tool_options);
   GtkWidget       *vbox2;
-  GtkWidget       *table;
   GtkWidget       *frame;
   GtkWidget       *hbox;
   GtkWidget       *button;
@@ -289,15 +288,10 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (scale);
 
   /*  the fill criterion combo  */
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
-
   combo = gimp_prop_enum_combo_box_new (config, "fill-criterion", 0, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Fill by:"), 0.0, 0.5,
-                             combo, 2, FALSE);
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Fill by"));
+  gtk_box_pack_start (GTK_BOX (vbox2), combo, FALSE, FALSE, 0);
+  gtk_widget_show (combo);
 
   return vbox;
 }

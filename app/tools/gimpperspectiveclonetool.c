@@ -39,7 +39,7 @@
 #include "display/gimpdisplay.h"
 
 #include "gimpperspectiveclonetool.h"
-#include "gimppaintoptions-gui.h"
+#include "gimpcloneoptions-gui.h"
 #include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
@@ -869,53 +869,14 @@ static GtkWidget *
 gimp_perspective_clone_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox;
-  GtkWidget *paint_options;
-  GtkWidget *frame;
+  GtkWidget *vbox   = gimp_clone_options_gui (tool_options);
   GtkWidget *mode;
-  GtkWidget *button;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkWidget *combo;
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  paint_options = gimp_paint_options_gui (tool_options);
 
   /* radio buttons to set if you are modifying perspe plane or painting */
   mode = gimp_prop_enum_radio_box_new (config, "clone-mode", 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), mode, FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (vbox), mode, 0);
   gtk_widget_show (mode);
-
-  gtk_box_pack_start (GTK_BOX (vbox), paint_options, FALSE, FALSE, 0);
-  gtk_widget_show (paint_options);
-
-  frame = gimp_prop_enum_radio_frame_new (config, "clone-type",
-                                          _("Source"), 0, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  button = gimp_prop_check_button_new (config, "sample-merged",
-                                       _("Sample merged"));
-  gimp_enum_radio_frame_add (GTK_FRAME (frame), button,
-                             GIMP_IMAGE_CLONE, TRUE);
-
-  hbox = gimp_prop_pattern_box_new (NULL, GIMP_CONTEXT (tool_options),
-                                    NULL, 2,
-                                    "pattern-view-type", "pattern-view-size");
-  gimp_enum_radio_frame_add (GTK_FRAME (frame), hbox,
-                             GIMP_PATTERN_CLONE, TRUE);
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new (_("Alignment:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  combo = gimp_prop_enum_combo_box_new (config, "align-mode", 0, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
-  gtk_widget_show (combo);
 
   return vbox;
 }
