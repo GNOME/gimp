@@ -164,12 +164,14 @@ EXPORTS
 	gimp_int_combo_box_append
 	gimp_int_combo_box_connect
 	gimp_int_combo_box_get_active
+	gimp_int_combo_box_get_label
 	gimp_int_combo_box_get_type
 	gimp_int_combo_box_new
 	gimp_int_combo_box_new_array
 	gimp_int_combo_box_new_valist
 	gimp_int_combo_box_prepend
 	gimp_int_combo_box_set_active
+	gimp_int_combo_box_set_label
 	gimp_int_combo_box_set_sensitivity
 	gimp_int_option_menu_new
 	gimp_int_option_menu_set_history

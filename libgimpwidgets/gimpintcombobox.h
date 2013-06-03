@@ -63,37 +63,41 @@ typedef  gboolean (* GimpIntSensitivityFunc) (gint      value,
 
 
 
-GType       gimp_int_combo_box_get_type        (void) G_GNUC_CONST;
+GType         gimp_int_combo_box_get_type        (void) G_GNUC_CONST;
 
-GtkWidget * gimp_int_combo_box_new             (const gchar     *first_label,
-                                                gint             first_value,
-                                                ...) G_GNUC_NULL_TERMINATED;
-GtkWidget * gimp_int_combo_box_new_valist      (const gchar     *first_label,
-                                                gint             first_value,
-                                                va_list          values);
+GtkWidget   * gimp_int_combo_box_new             (const gchar     *first_label,
+                                                  gint             first_value,
+                                                  ...) G_GNUC_NULL_TERMINATED;
+GtkWidget   * gimp_int_combo_box_new_valist      (const gchar     *first_label,
+                                                  gint             first_value,
+                                                  va_list          values);
 
-GtkWidget * gimp_int_combo_box_new_array       (gint             n_values,
-                                                const gchar     *labels[]);
+GtkWidget   * gimp_int_combo_box_new_array       (gint             n_values,
+                                                  const gchar     *labels[]);
 
-void        gimp_int_combo_box_prepend         (GimpIntComboBox *combo_box,
-                                                ...);
-void        gimp_int_combo_box_append          (GimpIntComboBox *combo_box,
-                                                ...);
+void          gimp_int_combo_box_prepend         (GimpIntComboBox *combo_box,
+                                                  ...);
+void          gimp_int_combo_box_append          (GimpIntComboBox *combo_box,
+                                                  ...);
 
-gboolean    gimp_int_combo_box_set_active      (GimpIntComboBox *combo_box,
-                                                gint             value);
-gboolean    gimp_int_combo_box_get_active      (GimpIntComboBox *combo_box,
-                                                gint            *value);
+gboolean      gimp_int_combo_box_set_active      (GimpIntComboBox *combo_box,
+                                                  gint             value);
+gboolean      gimp_int_combo_box_get_active      (GimpIntComboBox *combo_box,
+                                                  gint            *value);
 
-gulong      gimp_int_combo_box_connect         (GimpIntComboBox *combo_box,
-                                                gint             value,
-                                                GCallback        callback,
-                                                gpointer         data);
+gulong        gimp_int_combo_box_connect         (GimpIntComboBox *combo_box,
+                                                  gint             value,
+                                                  GCallback        callback,
+                                                  gpointer         data);
 
-void        gimp_int_combo_box_set_sensitivity (GimpIntComboBox        *combo_box,
-                                                GimpIntSensitivityFunc  func,
-                                                gpointer                data,
-                                                GDestroyNotify          destroy);
+void          gimp_int_combo_box_set_label       (GimpIntComboBox *combo_box,
+                                                  const gchar     *label);
+const gchar * gimp_int_combo_box_get_label       (GimpIntComboBox *combo_box);
+
+void          gimp_int_combo_box_set_sensitivity (GimpIntComboBox        *combo_box,
+                                                  GimpIntSensitivityFunc  func,
+                                                  gpointer                data,
+                                                  GDestroyNotify          destroy);
 
 
 G_END_DECLS
