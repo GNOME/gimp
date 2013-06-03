@@ -66,14 +66,6 @@ static void   gimp_foreground_select_options_get_property (GObject      *object,
                                                            GValue       *value,
                                                            GParamSpec   *pspec);
 
-static void   gimp_foreground_select_options_gui_reset_stroke_width (GtkWidget  *button,
-                                                                     GimpToolOptions *tool_options);
-
-
-static void   gimp_foreground_select_notify_engine (GimpToolOptions *tool_options,
-                                           GParamSpec      *pspec,
-                                           GtkWidget       *table);
-
 
 G_DEFINE_TYPE (GimpForegroundSelectOptions, gimp_foreground_select_options,
                GIMP_TYPE_SELECTION_OPTIONS)
@@ -228,19 +220,38 @@ gimp_foreground_select_options_get_property (GObject    *object,
   }
 }
 
+static void
+gimp_foreground_select_options_reset_stroke_width (GtkWidget       *button,
+                                                   GimpToolOptions *tool_options)
+{
+  g_object_set (tool_options, "stroke-width", 10, NULL);
+}
+
+static gboolean
+gimp_foreground_select_options_sync_engine (GBinding     *binding,
+                                            const GValue *source_value,
+                                            GValue       *target_value,
+                                            gpointer      user_data)
+{
+  gint type = g_value_get_enum (source_value);
+
+  g_value_set_boolean (target_value,
+                       type == GPOINTER_TO_INT (user_data));
+
+  return TRUE;
+}
+
 GtkWidget *
 gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
 {
-  GObject         *config = G_OBJECT (tool_options);
-  GtkWidget       *vbox   = gimp_selection_options_gui (tool_options);
-  GtkWidget       *hbox;
-  GtkWidget       *button;
-  GtkWidget       *frame;
-  GtkWidget       *scale;
-  GtkWidget       *combo;
-  GtkWidget       *table;
-  gint             row = 0;
-  GimpForegroundSelectOptions *options = GIMP_FOREGROUND_SELECT_OPTIONS (config);
+  GObject   *config = G_OBJECT (tool_options);
+  GtkWidget *vbox   = gimp_selection_options_gui (tool_options);
+  GtkWidget *hbox;
+  GtkWidget *button;
+  GtkWidget *frame;
+  GtkWidget *scale;
+  GtkWidget *combo;
+  GtkWidget *inner_vbox;
 
   frame = gimp_prop_enum_radio_frame_new (config, "draw-mode", _("Draw Mode"),
                                           0,0);
@@ -268,123 +279,73 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
-                        G_CALLBACK (gimp_foreground_select_options_gui_reset_stroke_width),
-                        tool_options);
+                    G_CALLBACK (gimp_foreground_select_options_reset_stroke_width),
+                    tool_options);
 
   gimp_help_set_help_data (button,
                            _("Reset stroke width native size"), NULL);
 
   /*  mask color */
-  frame = gimp_frame_new (_("Preview color:"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   combo = gimp_prop_enum_combo_box_new (config, "mask-color",
                                         GIMP_RED_CHANNEL, GIMP_GRAY_CHANNEL);
-  gtk_container_add (GTK_CONTAINER (frame), combo);
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Preview color"));
+  g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
 
   /* engine */
-  frame = gimp_frame_new (_("Engine:"));
+  frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   combo = gimp_prop_enum_combo_box_new (config, "engine", 0, 0);
-  gtk_container_add (GTK_CONTAINER (frame), combo);
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Engine"));
+  g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
+  gtk_frame_set_label_widget (GTK_FRAME (frame), combo);
   gtk_widget_show (combo);
 
+  inner_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  gtk_container_add (GTK_CONTAINER (frame), inner_vbox);
+  gtk_widget_show (inner_vbox);
 
-  /*  parameters  */
+  /*  engine parameters  */
+  scale = gimp_prop_spin_scale_new (config, "levels",
+                                    _("Levels"),
+                                    1.0, 1.0, 0);
+  gtk_box_pack_start (GTK_BOX (inner_vbox), scale, FALSE, FALSE, 0);
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  g_object_bind_property_full (config, "engine",
+                               scale,  "visible",
+                               G_BINDING_SYNC_CREATE,
+                               gimp_foreground_select_options_sync_engine,
+                               NULL,
+                               GINT_TO_POINTER (GIMP_MATTING_ENGINE_MATTING_LEVIN), NULL);
 
-  options->dynamic_widgets.levels = (GObject *)
-    gimp_prop_scale_entry_new (config, "levels",
-                               GTK_TABLE (table), 0, row++,
-                               "Levels", 1, 1, 0, FALSE, 0, 0);
+  scale = gimp_prop_spin_scale_new (config, "active-levels",
+                                    _("Active levels"),
+                                    1.0, 1.0, 0);
+  gtk_box_pack_start (GTK_BOX (inner_vbox), scale, FALSE, FALSE, 0);
 
-  options->dynamic_widgets.active_levels = (GObject *)
-    gimp_prop_scale_entry_new (config, "active-levels",
-                               GTK_TABLE (table), 0, row++,
-                               "Act. Levels", 1, 1, 0, FALSE, 0, 0);
+  g_object_bind_property_full (config, "engine",
+                               scale,  "visible",
+                               G_BINDING_SYNC_CREATE,
+                               gimp_foreground_select_options_sync_engine,
+                               NULL,
+                               GINT_TO_POINTER (GIMP_MATTING_ENGINE_MATTING_LEVIN), NULL);
 
-  options->dynamic_widgets.iterations = (GObject *)
-    gimp_prop_scale_entry_new (config, "iterations",
-                               GTK_TABLE (table), 0, row++,
-                               "Iterations", 1, 1, 0, FALSE, 0, 0);
+  scale = gimp_prop_spin_scale_new (config, "iterations",
+                                    _("Iterations"),
+                                    1.0, 1.0, 0);
+  gtk_box_pack_start (GTK_BOX (inner_vbox), scale, FALSE, FALSE, 0);
 
-  g_signal_connect_object (config, "notify::engine",
-                           G_CALLBACK (gimp_foreground_select_notify_engine),
-                           NULL, 0);
-  gimp_foreground_select_notify_engine (tool_options, NULL, NULL);
+  g_object_bind_property_full (config, "engine",
+                               scale,  "visible",
+                               G_BINDING_SYNC_CREATE,
+                               gimp_foreground_select_options_sync_engine,
+                               NULL,
+                               GINT_TO_POINTER (GIMP_MATTING_ENGINE_MATTING_GLOBAL), NULL);
 
   return vbox;
-}
-
-static void
-gimp_foreground_select_options_gui_reset_stroke_width (GtkWidget       *button,
-                                                       GimpToolOptions *tool_options)
-{
-  g_object_set (tool_options, "stroke-width", 10, NULL);
-}
-
-static void
-gimp_foreground_select_show_scale (GObject *object)
-{
-  GtkWidget *spin;
-  GtkWidget *label;
-  GtkWidget *scale;
-
-  label = g_object_get_data (object, "label");
-  spin = g_object_get_data (object, "spinbutton");
-  scale = g_object_get_data (object, "scale");
-
-  gtk_widget_show (label);
-  gtk_widget_show (spin);
-  gtk_widget_show (scale);
-}
-
-static void
-gimp_foreground_select_hide_scale (GObject *object)
-{
-  GtkWidget *spin;
-  GtkWidget *label;
-  GtkWidget *scale;
-
-  label = g_object_get_data (object, "label");
-  spin = g_object_get_data (object, "spinbutton");
-  scale = g_object_get_data (object, "scale");
-
-  gtk_widget_hide (label);
-  gtk_widget_hide (spin);
-  gtk_widget_hide (scale);
-}
-
-static void
-gimp_foreground_select_notify_engine (GimpToolOptions *tool_options,
-                                      GParamSpec      *pspec,
-                                      GtkWidget       *widget)
-{
-  GimpForegroundSelectOptions *options = GIMP_FOREGROUND_SELECT_OPTIONS (tool_options);
-
-  switch (options->engine)
-    {
-    case GIMP_MATTING_ENGINE_MATTING_GLOBAL:
-      gimp_foreground_select_show_scale (options->dynamic_widgets.iterations);
-      gimp_foreground_select_hide_scale (options->dynamic_widgets.levels);
-      gimp_foreground_select_hide_scale (options->dynamic_widgets.active_levels);
-      break;
-
-    case GIMP_MATTING_ENGINE_MATTING_LEVIN:
-      gimp_foreground_select_hide_scale (options->dynamic_widgets.iterations);
-      gimp_foreground_select_show_scale (options->dynamic_widgets.levels);
-      gimp_foreground_select_show_scale (options->dynamic_widgets.active_levels);
-      break;
-    }
 }
 
 gdouble

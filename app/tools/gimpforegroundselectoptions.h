@@ -34,27 +34,17 @@
 typedef struct _GimpForegroundSelectOptions      GimpForegroundSelectOptions;
 typedef struct _GimpForegroundSelectOptionsClass GimpForegroundSelectOptionsClass;
 
-typedef struct _GimpMattingDynamicWidgets  GimpMattingDynamicWidgets;
-
-struct _GimpMattingDynamicWidgets
-{
-  GObject *levels;
-  GObject *active_levels;
-  GObject *iterations;
-};
-
 struct _GimpForegroundSelectOptions
 {
   GimpSelectionOptions  parent_instance;
 
-  GimpMattingDrawMode       draw_mode;
-  gint                      stroke_width;
-  GimpChannelType           mask_color;
-  GimpMattingEngine         engine;
-  gint                      levels;
-  gint                      active_levels;
-  gint                      iterations;
-  GimpMattingDynamicWidgets dynamic_widgets;
+  GimpMattingDrawMode   draw_mode;
+  gint                  stroke_width;
+  GimpChannelType       mask_color;
+  GimpMattingEngine     engine;
+  gint                  levels;
+  gint                  active_levels;
+  gint                  iterations;
 };
 
 struct _GimpForegroundSelectOptionsClass
