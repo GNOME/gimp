@@ -673,7 +673,7 @@ gimp_int_combo_box_create_cells (GimpIntComboBox *combo_box)
 
   priv->text_renderer = gtk_cell_renderer_text_new ();
   g_object_set (priv->text_renderer,
-                "ellipsize", PANGO_ELLIPSIZE_END,
+                "ellipsize", priv->ellipsize,
                 NULL);
 
   if (priv->label && ! shown)
