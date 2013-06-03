@@ -157,7 +157,7 @@ static const GimpStringActionEntry filters_actions[] =
 
   { "filters-noise-cie-lch", GIMP_STOCK_GEGL,
     NC_("filters-action", "CIE lch Noise..."), NULL, NULL,
-    "gegl:noise-CIE_lch",
+    "gegl:noise-cie-lch",
     NULL /* FIXME GIMP_HELP_FILTER_NOISE_CIE_LCH */ },
 
   { "filters-noise-hsv", GIMP_STOCK_GEGL,

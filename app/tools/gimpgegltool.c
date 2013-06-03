@@ -138,7 +138,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:motion-blur-circular",
     "gegl:motion-blur-linear",
     "gegl:motion-blur-zoom",
-    "gegl:noise-CIE_lch",
+    "gegl:noise-cie-lch",
     "gegl:noise-hsv",
     "gegl:noise-hurl",
     "gegl:noise-pick",
@@ -159,7 +159,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:whirl-pinch",
 
     /* these ops are blacklisted for other reasons */
-    //"gegl:contrast-curve",
+    "gegl:contrast-curve",
     "gegl:convert-format", /* pointless */
     "gegl:display", /* pointless */
     "gegl:fill-path",
