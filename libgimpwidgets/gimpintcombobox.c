@@ -632,7 +632,7 @@ gimp_int_combo_box_set_sensitivity (GimpIntComboBox        *combo_box,
 }
 
 
-/*  pruvate functions  */
+/*  private functions  */
 
 static void
 queue_resize_cell_view (GtkContainer *container)
