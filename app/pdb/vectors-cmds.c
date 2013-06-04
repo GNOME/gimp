@@ -365,7 +365,9 @@ vectors_stroke_close_invoker (GimpProcedure         *procedure,
                                               _("Close path stroke"),
                                               vectors);
 
+          gimp_vectors_freeze (vectors);
           gimp_stroke_close (stroke);
+          gimp_vectors_thaw (vectors);
         }
       else
         success = FALSE;
@@ -408,7 +410,9 @@ vectors_stroke_translate_invoker (GimpProcedure         *procedure,
                                               _("Translate path stroke"),
                                               vectors);
 
+          gimp_vectors_freeze (vectors);
           gimp_stroke_translate (stroke, off_x, off_y);
+          gimp_vectors_thaw (vectors);
         }
       else
         success = FALSE;
@@ -451,7 +455,9 @@ vectors_stroke_scale_invoker (GimpProcedure         *procedure,
                                               _("Scale path stroke"),
                                               vectors);
 
+          gimp_vectors_freeze (vectors);
           gimp_stroke_scale (stroke, scale_x, scale_y);
+          gimp_vectors_thaw (vectors);
         }
       else
         success = FALSE;
@@ -496,7 +502,9 @@ vectors_stroke_rotate_invoker (GimpProcedure         *procedure,
                                               _("Rotate path stroke"),
                                               vectors);
 
+          gimp_vectors_freeze (vectors);
           gimp_stroke_rotate (stroke, center_x, center_y, angle);
+          gimp_vectors_thaw (vectors);
         }
       else
         success = FALSE;
@@ -539,7 +547,9 @@ vectors_stroke_flip_invoker (GimpProcedure         *procedure,
                                               _("Flip path stroke"),
                                               vectors);
 
+          gimp_vectors_freeze (vectors);
           gimp_stroke_flip (stroke, flip_type, axis);
+          gimp_vectors_thaw (vectors);
         }
       else
         success = FALSE;
@@ -586,7 +596,9 @@ vectors_stroke_flip_free_invoker (GimpProcedure         *procedure,
                                               _("Flip path stroke"),
                                               vectors);
 
+          gimp_vectors_freeze (vectors);
           gimp_stroke_flip_free (stroke, x1, y1, x2, y2);
+          gimp_vectors_thaw (vectors);
         }
       else
         success = FALSE;
@@ -893,7 +905,9 @@ vectors_bezier_stroke_lineto_invoker (GimpProcedure         *procedure,
                                              _("Extend path stroke"),
                                              vectors);
 
+          gimp_vectors_freeze (vectors);
           gimp_bezier_stroke_lineto (stroke, &coord0);
+          gimp_vectors_thaw (vectors);
         }
       else
         success = FALSE;
@@ -947,7 +961,9 @@ vectors_bezier_stroke_conicto_invoker (GimpProcedure         *procedure,
                                              _("Extend path stroke"),
                                              vectors);
 
+          gimp_vectors_freeze (vectors);
           gimp_bezier_stroke_conicto (stroke, &coord0, &coord1);
+          gimp_vectors_thaw (vectors);
         }
       else
         success = FALSE;
@@ -1009,7 +1025,9 @@ vectors_bezier_stroke_cubicto_invoker (GimpProcedure         *procedure,
                                              _("Extend path stroke"),
                                              vectors);
 
+          gimp_vectors_freeze (vectors);
           gimp_bezier_stroke_cubicto (stroke, &coord0, &coord1, &coord2);
+          gimp_vectors_thaw (vectors);
         }
       else
         success = FALSE;
