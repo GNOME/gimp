@@ -326,6 +326,7 @@ app/tools/gimpbucketfilltool.c
 app/tools/gimpbycolorselecttool.c
 app/tools/gimpcageoptions.c
 app/tools/gimpcagetool.c
+app/tools/gimpcloneoptions-gui.c
 app/tools/gimpclonetool.c
 app/tools/gimpcolorbalancetool.c
 app/tools/gimpcolorizetool.c
