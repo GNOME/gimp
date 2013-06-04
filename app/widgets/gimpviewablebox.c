@@ -279,7 +279,7 @@ gradient_box_new (GimpContainer *container,
     container = gimp_data_factory_get_container (context->gimp->gradient_factory);
 
   hbox = gimp_viewable_box_new (container, context, label, spacing,
-                                view_type, GIMP_VIEW_SIZE_LARGE, view_size,
+                                view_type, GIMP_VIEW_SIZE_SMALL, view_size,
                                 "gimp-gradient-list|gimp-gradient-grid",
                                 GIMP_STOCK_GRADIENT,
                                 _("Open the gradient selection dialog"),
@@ -293,27 +293,22 @@ gradient_box_new (GimpContainer *container,
 
   if (reverse_prop)
     {
-      GtkWidget *vbox;
       GtkWidget *toggle;
       GtkWidget *view;
       GtkWidget *image;
       gchar     *signal_name;
 
-      vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-      gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-      gtk_widget_show (vbox);
-
       toggle = gimp_prop_check_button_new (G_OBJECT (context), reverse_prop,
                                            NULL);
       gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (toggle), FALSE);
-      gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+      gtk_box_reorder_child (GTK_BOX (hbox), toggle, 1);
       gtk_widget_show (toggle);
 
       gimp_help_set_help_data (toggle, _("Reverse"), NULL);
 
       image = gtk_image_new_from_stock (GIMP_STOCK_FLIP_HORIZONTAL,
                                         GTK_ICON_SIZE_MENU);
-      gtk_misc_set_alignment (GTK_MISC (image), 0.5, 1.0);
       gtk_container_add (GTK_CONTAINER (toggle), image);
       gtk_widget_show (image);
 
@@ -528,6 +523,7 @@ gimp_viewable_box_new (GimpContainer *container,
   GtkWidget *button;
   GtkWidget *vbox;
   GtkWidget *l;
+  GtkWidget *entry_hbox = NULL;
   GtkWidget *entry;
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, spacing);
@@ -538,6 +534,9 @@ gimp_viewable_box_new (GimpContainer *container,
                                      dialog_identifier,
                                      dialog_stock_id,
                                      dialog_tooltip);
+
+  gimp_view_renderer_set_size_full (GIMP_VIEW (GIMP_VIEWABLE_BUTTON (button)->view)->renderer,
+                                    button_view_size, button_view_size, 1);
 
   g_object_set_data (G_OBJECT (hbox), "viewable-button", button);
 
@@ -556,28 +555,35 @@ gimp_viewable_box_new (GimpContainer *container,
       gtk_widget_show (l);
     }
 
+  if (editor_id)
+    {
+      entry_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, spacing);
+      gtk_box_pack_end (GTK_BOX (vbox), entry_hbox, FALSE, FALSE, 0);
+      gtk_widget_show (entry_hbox);
+    }
+
   entry = gimp_container_entry_new (container, context, view_size, 1);
 
   /*  set a silly smally size request on the entry to disable
    *  GtkEntry's minimal width of 150 pixels.
    */
   gtk_entry_set_width_chars (GTK_ENTRY (entry), 4);
-  gtk_box_pack_start (GTK_BOX (vbox), entry, label ? FALSE: TRUE, FALSE, 0);
+
+  if (entry_hbox)
+    gtk_box_pack_start (GTK_BOX (entry_hbox), entry, TRUE, TRUE, 0);
+  else
+    gtk_box_pack_end (GTK_BOX (vbox), entry, label ? FALSE : TRUE, FALSE, 0);
+
   gtk_widget_show (entry);
 
   if (editor_id)
     {
-      GtkWidget *edit_vbox;
       GtkWidget *edit_button;
       GtkWidget *image;
 
-      edit_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-      gtk_box_pack_end (GTK_BOX (hbox), edit_vbox, FALSE, FALSE, 0);
-      gtk_widget_show (edit_vbox);
-
       edit_button = gtk_button_new ();
       gtk_button_set_relief (GTK_BUTTON (edit_button), GTK_RELIEF_NONE);
-      gtk_box_pack_end (GTK_BOX (edit_vbox), edit_button, FALSE, FALSE, 0);
+      gtk_box_pack_end (GTK_BOX (entry_hbox), edit_button, FALSE, FALSE, 0);
       gtk_widget_show (edit_button);
 
       image = gtk_image_new_from_stock (GIMP_STOCK_EDIT,
