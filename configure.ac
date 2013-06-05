@@ -41,7 +41,7 @@ m4_define([gimp_full_name], [GNU Image Manipulation Program])
 
 # required versions of other packages
 m4_define([babl_required_version], [0.1.11])
-m4_define([gegl_required_version], [0.2.1])
+m4_define([gegl_required_version], [0.3.0])
 m4_define([glib_required_version], [2.36.0])
 m4_define([atk_required_version], [2.2.0])
 m4_define([gtk_required_version], [2.24.10])
@@ -484,7 +484,7 @@ AC_SUBST(ISO_CODES_LOCALEDIR)
 ###############################
 
 PKG_CHECK_MODULES(BABL, babl >= babl_required_version)
-PKG_CHECK_MODULES(GEGL, gegl-0.2 >= gegl_required_version)
+PKG_CHECK_MODULES(GEGL, gegl-0.3 >= gegl_required_version)
 PKG_CHECK_MODULES(ATK, atk >= atk_required_version)
 
 AM_PATH_GLIB_2_0(glib_required_version, :,
