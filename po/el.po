@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: gimp.master.el.po\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
 "eywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-03-18 12:50+0000\n"
-"PO-Revision-Date: 2013-03-19 12:04+0300\n"
+"POT-Creation-Date: 2013-06-04 14:53+0000\n"
+"PO-Revision-Date: 2013-06-05 15:13+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@gnome.gr\n"
 "Language: el\n"
@@ -461,7 +461,7 @@ msgstr "Επεξεργαστής κειμένου"
 msgid "Tool Options"
 msgstr "Επιλογές εργαλείων"
 
-#: ../app/actions/actions.c:226 ../app/widgets/gimptoolpalette.c:390
+#: ../app/actions/actions.c:226 ../app/widgets/gimptoolpalette.c:391
 msgid "Tools"
 msgstr "Εργαλεία"
 
@@ -5208,14 +5208,18 @@ msgid "Create another view on this image"
 msgstr "Δημιουργία άλλης προβολής σε αυτή την εικόνα"
 
 #: ../app/actions/view-actions.c:82
+#| msgctxt "view-action"
+#| msgid "_Close"
 msgctxt "view-action"
-msgid "_Close"
-msgstr "_Κλείσιμο"
+msgid "_Close View"
+msgstr "_Κλείσιμο προβολής"
 
 #: ../app/actions/view-actions.c:83
+#| msgctxt "view-action"
+#| msgid "Close this image window"
 msgctxt "view-action"
-msgid "Close this image window"
-msgstr "Κλείσιμο αυτού του παραθύρου εικόνας"
+msgid "Close the active image view"
+msgstr "Κλείσιμο της προβολής ενεργής εικόνας"
 
 #: ../app/actions/view-actions.c:88
 msgctxt "view-action"
@@ -5647,11 +5651,11 @@ msgstr "Ά_λλη (%s)..."
 msgid "_Zoom (%s)"
 msgstr "_Εστίαση (%s)"
 
-#: ../app/actions/view-commands.c:585
+#: ../app/actions/view-commands.c:605
 msgid "Set Canvas Padding Color"
 msgstr "Ορισμός χρώματος καμβά υπόβαθρου"
 
-#: ../app/actions/view-commands.c:587
+#: ../app/actions/view-commands.c:607
 msgid "Set Custom Canvas Padding Color"
 msgstr "Ορισμός προσαρμοσμένου χρώματος υπόβαθρου καμβά"
 
@@ -7398,7 +7402,7 @@ msgid "Jitter"
 msgstr "Τρέμουλο"
 
 #: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:375
-#: ../app/gui/session.c:399 ../app/menus/menus.c:464
+#: ../app/gui/session.c:399 ../app/menus/menus.c:466
 #: ../app/widgets/gimpdevices.c:208
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
@@ -7877,7 +7881,7 @@ msgstr "Αδιαφάνεια"
 msgid "Paint Mode"
 msgstr "Κατάσταση ζωγραφικής"
 
-#: ../app/core/gimpdata.c:670
+#: ../app/core/gimpdata.c:681
 #, c-format
 msgid "Could not delete '%s': %s"
 msgstr "Αδυναμία διαγραφής '%s': %s"
@@ -10850,7 +10854,7 @@ msgstr "Δεν επιτρέπεται η τροποποίηση εικονοστ
 #: ../app/tools/gimpbucketfilltool.c:143 ../app/tools/gimpcroptool.c:325
 #: ../app/tools/gimpimagemaptool.c:287 ../app/tools/gimppainttool.c:266
 #: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:247
-#: ../app/tools/gimptransformtool.c:1067
+#: ../app/tools/gimptransformtool.c:1070
 msgid "The active layer's pixels are locked."
 msgstr "Τα εικονοστοιχεία της ενεργής στρώσης είναι κλειδωμένα."
 
@@ -10965,12 +10969,12 @@ msgstr "Άγνωστος τύπος αρχείου"
 msgid "%s plug-in could not save image"
 msgstr "Το πρόσθετο %s δεν μπόρεσε να αποθηκεύσει την εικόνα"
 
-#: ../app/file/file-utils.c:74
+#: ../app/file/file-utils.c:72
 #, c-format
 msgid "'%s:' is not a valid URI scheme"
 msgstr "'%s:' μη έγκυρη μορφή σχήματος URI"
 
-#: ../app/file/file-utils.c:90 ../app/file/file-utils.c:126
+#: ../app/file/file-utils.c:88 ../app/file/file-utils.c:124
 msgid "Invalid character sequence in URI"
 msgstr "Άκυρη ακολουθία χαρακτήρων στο URI"
 
@@ -10984,16 +10988,16 @@ msgctxt "cage-mode"
 msgid "Deform the cage to deform the image"
 msgstr "Παραμορφώστε τον κλωβό για να παραμορφωθεί η εικόνα"
 
-#: ../app/gegl/gimpcurvesconfig.c:388
+#: ../app/gegl/gimpcurvesconfig.c:395
 msgid "not a GIMP Curves file"
 msgstr "δεν είναι αρχείο καμπύλων GIMP"
 
-#: ../app/gegl/gimpcurvesconfig.c:403 ../app/gegl/gimplevelsconfig.c:789
+#: ../app/gegl/gimpcurvesconfig.c:410 ../app/gegl/gimplevelsconfig.c:811
 msgid "parse error"
 msgstr "σφάλμα ανάλυσης"
 
 #
-#: ../app/gegl/gimplevelsconfig.c:742
+#: ../app/gegl/gimplevelsconfig.c:764
 msgid "not a GIMP Levels file"
 msgstr "δεν είναι αρχείο επιπέδων GIMP"
 
@@ -11597,29 +11601,29 @@ msgstr "Αφαίρεση πινελιάς μονοπατιού"
 msgid "Close path stroke"
 msgstr "Κλείσιμο πινελιάς μονοπατιού"
 
-#: ../app/pdb/vectors-cmds.c:399
+#: ../app/pdb/vectors-cmds.c:401
 msgid "Translate path stroke"
 msgstr "Μετάφραση πινελιάς μονοπατιού"
 
-#: ../app/pdb/vectors-cmds.c:439
+#: ../app/pdb/vectors-cmds.c:443
 msgid "Scale path stroke"
 msgstr "Κλιμάκωση πινελιάς μονοπατιού"
 
-#: ../app/pdb/vectors-cmds.c:481
+#: ../app/pdb/vectors-cmds.c:487
 msgid "Rotate path stroke"
 msgstr "Περιστροφή πινελιάς μονοπατιού"
 
-#: ../app/pdb/vectors-cmds.c:521 ../app/pdb/vectors-cmds.c:565
+#: ../app/pdb/vectors-cmds.c:529 ../app/pdb/vectors-cmds.c:575
 msgid "Flip path stroke"
 msgstr "Αναστροφή πινελιάς μονοπατιού"
 
-#: ../app/pdb/vectors-cmds.c:694 ../app/pdb/vectors-cmds.c:817
-#: ../app/pdb/vectors-cmds.c:1037
+#: ../app/pdb/vectors-cmds.c:706 ../app/pdb/vectors-cmds.c:829
+#: ../app/pdb/vectors-cmds.c:1055
 msgid "Add path stroke"
 msgstr "Προσθήκη πινελιάς μονοπατιού"
 
-#: ../app/pdb/vectors-cmds.c:870 ../app/pdb/vectors-cmds.c:923
-#: ../app/pdb/vectors-cmds.c:984
+#: ../app/pdb/vectors-cmds.c:882 ../app/pdb/vectors-cmds.c:937
+#: ../app/pdb/vectors-cmds.c:1000
 msgid "Extend path stroke"
 msgstr "Επέκταση πινελιάς μονοπατιού"
 
@@ -11717,7 +11721,7 @@ msgstr "Διερμηνευτές προσθέτων"
 msgid "Plug-In Environment"
 msgstr "Περιβάλλον προσθέτων"
 
-#: ../app/plug-in/gimppluginprocedure.c:976
+#: ../app/plug-in/gimppluginprocedure.c:978
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -11726,7 +11730,7 @@ msgstr ""
 "Σφάλμα κατά την κλήση του '%s':\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:988
+#: ../app/plug-in/gimppluginprocedure.c:990
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -14114,15 +14118,15 @@ msgstr "Διατήρηση του αρχικού λόγου θέασης"
 msgid "Transforming"
 msgstr "Μετασχηματισμός"
 
-#: ../app/tools/gimptransformtool.c:1066
+#: ../app/tools/gimptransformtool.c:1069
 msgid "There is no layer to transform."
 msgstr "Δεν υπάρχει στρώση για να μετασχηματιστεί."
 
-#: ../app/tools/gimptransformtool.c:1079
+#: ../app/tools/gimptransformtool.c:1082
 msgid "There is no path to transform."
 msgstr "Δεν υπάρχει μονοπάτι για να μετασχηματιστεί."
 
-#: ../app/tools/gimptransformtool.c:1080
+#: ../app/tools/gimptransformtool.c:1083
 msgid "The active path's strokes are locked."
 msgstr "Οι πινελιές του ενεργού μονοπατιού είναι κλειδωμένες."
 
@@ -15168,11 +15172,11 @@ msgid "Configure this tab"
 msgstr "Ρύθμιση αυτής της καρτέλας"
 
 #. Auto button
-#: ../app/widgets/gimpdockwindow.c:382
+#: ../app/widgets/gimpdockwindow.c:386
 msgid "Auto"
 msgstr "Αυτόματα"
 
-#: ../app/widgets/gimpdockwindow.c:393
+#: ../app/widgets/gimpdockwindow.c:397
 msgid ""
 "When enabled the dialog automatically follows the image you are working on."
 msgstr ""
@@ -15755,13 +15759,13 @@ msgstr "%d × %d ppi, %s"
 msgid "%d ppi, %s"
 msgstr "%d ppi, %s"
 
-#: ../app/widgets/gimptextbuffer-serialize.c:340
+#: ../app/widgets/gimptextbuffer-serialize.c:344
 #, c-format
 msgid "Attribute \"%s\" is invalid on <%s> element in this context"
 msgstr ""
 "Το γνώρισμα \"%s\" είναι άκυρο στο στοιχείο <%s> σε αυτό το περιεχόμενο"
 
-#: ../app/widgets/gimptextbuffer-serialize.c:412
+#: ../app/widgets/gimptextbuffer-serialize.c:416
 #, c-format
 msgid "Outermost element in text must be <markup> not <%s>"
 msgstr "Το εξώτερο στοιχείο πρέπει να είναι <markup> και όχι <%s>"
