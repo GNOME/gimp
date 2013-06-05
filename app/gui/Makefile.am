@@ -1,18 +1,16 @@
 ## Process this file with automake to produce Makefile.in
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-GUI\"	\
-	-DGIMP_COMMAND=\"@GIMP_COMMAND@\"
-
-INCLUDES = \
-	-I$(top_builddir)	\
-	-I$(top_srcdir)		\
-	-I$(top_builddir)/app	\
-	-I$(top_srcdir)/app	\
-	$(GIO_UNIX_CFLAGS)	\
-	$(GEGL_CFLAGS)		\
-	$(GTK_CFLAGS)		\
-	$(DBUS_GLIB_CFLAGS)	\
+	-DG_LOG_DOMAIN=\"Gimp-GUI\"		\
+	-DGIMP_COMMAND=\"@GIMP_COMMAND@\"	\
+	-I$(top_builddir)			\
+	-I$(top_srcdir)				\
+	-I$(top_builddir)/app			\
+	-I$(top_srcdir)/app			\
+	$(GIO_UNIX_CFLAGS)			\
+	$(GEGL_CFLAGS)				\
+	$(GTK_CFLAGS)				\
+	$(DBUS_GLIB_CFLAGS)			\
 	-I$(includedir)
 
 noinst_LIBRARIES = libappgui.a

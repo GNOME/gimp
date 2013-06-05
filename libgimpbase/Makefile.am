@@ -58,18 +58,16 @@ AM_CPPFLAGS = \
 	-DGIMP_SYSCONF_VERSION=\"$(GIMP_SYSCONF_VERSION)\"	\
 	-DGIMP_PLUGIN_VERSION=\"$(GIMP_PLUGIN_VERSION)\"	\
 	-DG_LOG_DOMAIN=\"LibGimpBase\"				\
-	-DGIMP_BASE_COMPILATION
+	-DGIMP_BASE_COMPILATION					\
+	-I$(top_srcdir)						\
+	$(GLIB_CFLAGS)						\
+	$(BINRELOC_CFLAGS)					\
+	-I$(includedir)						\
+	$(xobjective_c)
 
 AM_CCASFLAGS = \
 	-I$(top_builddir)	\
 	-I$(top_srcdir)
-
-INCLUDES = \
-	-I$(top_srcdir)		\
-	$(GLIB_CFLAGS)		\
-	$(BINRELOC_CFLAGS)	\
-	-I$(includedir)		\
-	$(xobjective_c)
 
 EXTRA_DIST = \
 	gimpbase.def

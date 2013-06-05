@@ -88,7 +88,7 @@ EXTRA_DIST = \\
 	plugin-defs.pl$extra	\\
 	$rcfile
 
-INCLUDES = \\
+AM_CPPFLAGS = \\
 	-I\$(top_srcdir)	\\
 	\$(GTK_CFLAGS)	\\
 	\$(GEGL_CFLAGS)	\\

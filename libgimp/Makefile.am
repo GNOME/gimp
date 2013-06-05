@@ -64,13 +64,11 @@ gimpincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimp
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimp\"	\
-	-DGIMP_COMPILATION
-
-INCLUDES = \
-	-I$(top_srcdir)	\
-	$(GTK_CFLAGS)	\
-	$(GEGL_CFLAGS)	\
-	-I$(includedir)	\
+	-DGIMP_COMPILATION		\
+	-I$(top_srcdir)			\
+	$(GTK_CFLAGS)			\
+	$(GEGL_CFLAGS)			\
+	-I$(includedir)			\
 	$(xobjective_c)
 
 lib_LTLIBRARIES = libgimp-@GIMP_API_VERSION@.la libgimpui-@GIMP_API_VERSION@.la

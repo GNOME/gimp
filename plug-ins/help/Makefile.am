@@ -16,7 +16,14 @@ include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
 help_RC = help.rc.o
 endif
 
-AM_CPPFLAGS = -DDATADIR=\""$(gimpdatadir)"\"
+AM_CPPFLAGS = \
+	-DDATADIR=\""$(gimpdatadir)"\"	\
+	-I$(top_srcdir)			\
+	$(CAIRO_CFLAGS)			\
+	$(GIO_CFLAGS)			\
+	$(GEGL_CFLAGS)			\
+	$(GDK_PIXBUF_CFLAGS)		\
+	-I$(includedir)
 
 AM_LDFLAGS = $(mwindows)
 
@@ -41,14 +48,6 @@ libexecdir = $(gimpplugindir)/plug-ins
 libexec_PROGRAMS = help
 
 help_SOURCES = help.c
-
-INCLUDES = \
-	-I$(top_srcdir)		\
-	$(CAIRO_CFLAGS)		\
-	$(GIO_CFLAGS)		\
-	$(GEGL_CFLAGS) \
-	$(GDK_PIXBUF_CFLAGS)	\
-	-I$(includedir)
 
 LDADD = \
 	$(libgimphelp)		\

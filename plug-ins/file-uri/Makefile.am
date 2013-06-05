@@ -44,7 +44,7 @@ file_uri_SOURCES = \
 	uri-backend.h		\
 	$(backend_sources)
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-I$(top_srcdir)		\
 	$(backend_cflags)	\
 	$(GTK_CFLAGS)		\

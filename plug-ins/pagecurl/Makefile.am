@@ -30,7 +30,7 @@ nodist_pagecurl_SOURCES = pagecurl-icons.h
 
 BUILT_SOURCES = pagecurl-icons.h
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
 	$(GEGL_CFLAGS) \

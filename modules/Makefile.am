@@ -12,7 +12,7 @@ endif
 
 libdir = $(gimpplugindir)/modules
 
-INCLUDES = \
+AM_CPPFLAGS = \
         -I$(top_srcdir)	\
 	$(GEGL_CFLAGS)	\
         $(GTK_CFLAGS)	\

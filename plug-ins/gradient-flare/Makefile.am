@@ -29,7 +29,7 @@ libexec_PROGRAMS = gradient-flare
 
 gradient_flare_SOURCES = gradient-flare.c
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
 	$(GEGL_CFLAGS) \

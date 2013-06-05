@@ -28,7 +28,7 @@ file_faxg3_SOURCES = \
 	g3.c		\
 	g3.h
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-I$(top_srcdir)		\
 	$(CAIRO_CFLAGS)		\
 	$(GDK_PIXBUF_CFLAGS)	\

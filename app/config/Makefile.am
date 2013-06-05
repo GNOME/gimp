@@ -8,17 +8,15 @@ libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).
 libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Config\"	\
-	-DGIMP_APP_VERSION_STRING=\"$(GIMP_APP_VERSION)\"
-
-INCLUDES = \
-	-I$(top_builddir)	\
-	-I$(top_srcdir)		\
-	-I$(top_builddir)/app	\
-	-I$(top_srcdir)/app	\
-	$(GEGL_CFLAGS)		\
-	$(CAIRO_CFLAGS)		\
-	$(GDK_PIXBUF_CFLAGS)	\
+	-DG_LOG_DOMAIN=\"Gimp-Config\"				\
+	-DGIMP_APP_VERSION_STRING=\"$(GIMP_APP_VERSION)\"	\
+	-I$(top_builddir)					\
+	-I$(top_srcdir)						\
+	-I$(top_builddir)/app					\
+	-I$(top_srcdir)/app					\
+	$(GEGL_CFLAGS)						\
+	$(CAIRO_CFLAGS)						\
+	$(GDK_PIXBUF_CFLAGS)					\
 	-I$(includedir)
 
 noinst_LIBRARIES = libappconfig.a

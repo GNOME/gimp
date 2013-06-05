@@ -2,16 +2,14 @@
 SUBDIRS = tests
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Operations\"
-
-INCLUDES = \
-	-I$(top_builddir)	\
-	-I$(top_srcdir)		\
-	-I$(top_builddir)/app	\
-	-I$(top_srcdir)/app	\
-	$(CAIRO_CFLAGS)		\
-	$(GEGL_CFLAGS)		\
-	$(GDK_PIXBUF_CFLAGS)	\
+	-DG_LOG_DOMAIN=\"Gimp-Operations\"	\
+	-I$(top_builddir)			\
+	-I$(top_srcdir)				\
+	-I$(top_builddir)/app			\
+	-I$(top_srcdir)/app			\
+	$(CAIRO_CFLAGS)				\
+	$(GEGL_CFLAGS)				\
+	$(GDK_PIXBUF_CFLAGS)			\
 	-I$(includedir)
 
 noinst_LIBRARIES = libappoperations.a

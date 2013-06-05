@@ -28,7 +28,7 @@ file_sgi_SOURCES = \
 	sgi-lib.c	\
 	sgi-lib.h
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
 	$(GEGL_CFLAGS) \

@@ -46,13 +46,11 @@ libgimpthumbincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimpthumb
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimpThumb\"	\
-	-DGIMP_THUMB_COMPILATION
-
-INCLUDES = \
-	-I$(top_srcdir)		\
-	$(GDK_PIXBUF_CFLAGS)	\
-	$(GLIB_CFLAGS)		\
-	-I$(includedir)		\
+	-DGIMP_THUMB_COMPILATION	\
+	-I$(top_srcdir)			\
+	$(GDK_PIXBUF_CFLAGS)		\
+	$(GLIB_CFLAGS)			\
+	-I$(includedir)			\
 	$(xobjective_c)
 
 EXTRA_DIST = \

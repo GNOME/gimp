@@ -28,7 +28,7 @@ file_fli_SOURCES = \
 	fli.c	\
 	fli-gimp.c
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
 	$(GEGL_CFLAGS) \

@@ -1,15 +1,13 @@
 ## Process this file with automake to produce Makefile.in
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Actions\"
-
-INCLUDES = \
-	-I$(top_builddir)	\
-	-I$(top_srcdir)		\
-	-I$(top_builddir)/app	\
-	-I$(top_srcdir)/app	\
-	$(GEGL_CFLAGS)		\
-	$(GTK_CFLAGS)		\
+	-DG_LOG_DOMAIN=\"Gimp-Actions\"	\
+	-I$(top_builddir)		\
+	-I$(top_srcdir)			\
+	-I$(top_builddir)/app		\
+	-I$(top_srcdir)/app		\
+	$(GEGL_CFLAGS)			\
+	$(GTK_CFLAGS)			\
 	-I$(includedir)
 
 noinst_LIBRARIES = libappactions.a

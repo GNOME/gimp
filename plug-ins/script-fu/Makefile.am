@@ -33,7 +33,7 @@ AM_CFLAGS = \
 	-DUSE_INTERFACE=1	\
 	-DUSE_STRLWR=0
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
 	$(GEGL_CFLAGS)	\

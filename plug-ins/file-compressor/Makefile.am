@@ -19,7 +19,7 @@ libexec_PROGRAMS = file-compressor
 file_compressor_SOURCES = \
 	file-compressor.c
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
 	$(GEGL_CFLAGS) \

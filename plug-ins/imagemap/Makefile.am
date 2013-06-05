@@ -131,7 +131,7 @@ imagemap_SOURCES = \
 	imap_taglist.c			\
 	imap_taglist.h
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
 	$(GEGL_CFLAGS) \

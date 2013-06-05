@@ -29,7 +29,7 @@ file_fits_SOURCES = \
 	fits-io.c	\
 	fits-io.h
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
 	$(GEGL_CFLAGS) \

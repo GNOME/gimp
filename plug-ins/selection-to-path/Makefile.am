@@ -51,7 +51,7 @@ EXTRA_DIST = \
 	README		\
 	README.limn
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
 	$(GEGL_CFLAGS) \

@@ -53,10 +53,10 @@ EXTRA_DIST = \
 	tw_win.c	\
 	tw_mac.c
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
-	$(GEGL_CFLAGS) \
+	$(GEGL_CFLAGS)	\
 	-I$(includedir)
 
 LDADD = \

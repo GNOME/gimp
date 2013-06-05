@@ -45,13 +45,11 @@ libgimpconfigincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimpconfig
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimpConfig\"	\
-	-DGIMP_CONFIG_COMPILATION
-
-INCLUDES = \
-	-I$(top_srcdir)		\
-	$(GEGL_CFLAGS)		\
-	$(CAIRO_CFLAGS)		\
-	$(GDK_PIXBUF_CFLAGS)	\
+	-DGIMP_CONFIG_COMPILATION		\
+	-I$(top_srcdir)				\
+	$(GEGL_CFLAGS)				\
+	$(CAIRO_CFLAGS)				\
+	$(GDK_PIXBUF_CFLAGS)			\
 	-I$(includedir)
 
 EXTRA_DIST = \

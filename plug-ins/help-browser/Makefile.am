@@ -25,7 +25,7 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = help-browser
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-I$(top_srcdir)		\
 	$(WEBKIT_CFLAGS)	\
 	$(GEGL_CFLAGS) \

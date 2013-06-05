@@ -107,14 +107,12 @@ endif
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp\"		\
-	-DGIMP_APP_GLUE_COMPILATION
-
-INCLUDES = \
-	-I$(top_srcdir)		\
-	$(GTK_CFLAGS)		\
-	$(PANGOCAIRO_CFLAGS)	\
-	$(GEGL_CFLAGS)		\
-	-I$(includedir)		\
+	-DGIMP_APP_GLUE_COMPILATION	\
+	-I$(top_srcdir)			\
+	$(GTK_CFLAGS)			\
+	$(PANGOCAIRO_CFLAGS)		\
+	$(GEGL_CFLAGS)			\
+	-I$(includedir)			\
 	-I$(builddir)/gui
 
 # FIXME: core should not depend on xcf

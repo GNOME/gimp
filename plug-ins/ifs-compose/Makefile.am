@@ -33,7 +33,7 @@ ifs_compose_SOURCES = \
 
 EXTRA_DIST = README.ifscompose
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
 	$(GEGL_CFLAGS) \

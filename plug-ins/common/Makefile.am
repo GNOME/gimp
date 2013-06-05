@@ -37,7 +37,7 @@ EXTRA_DIST = \
 	plugin-defs.pl	\
 	gimprc.common
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
 	$(GEGL_CFLAGS)	\

@@ -50,12 +50,10 @@ libgimpwidgetsincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimpwidgets
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimpWidgets\"	\
-	-DGIMP_WIDGETS_COMPILATION
-
-INCLUDES = \
-	-I$(top_srcdir)	\
-	$(GEGL_CFLAGS)	\
-	$(GTK_CFLAGS)	\
+	-DGIMP_WIDGETS_COMPILATION		\
+	-I$(top_srcdir)				\
+	$(GEGL_CFLAGS)				\
+	$(GTK_CFLAGS)				\
 	-I$(includedir)
 
 lib_LTLIBRARIES = libgimpwidgets-@GIMP_API_VERSION@.la
