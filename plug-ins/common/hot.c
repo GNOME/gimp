@@ -19,13 +19,13 @@
 /*
  * hot.c - Scan an image for pixels with RGB values that will give
  *      "unsafe" values of chrominance signal or composite signal
- *      amplitude when encoded into an NTSC or PAL colour signal.
- *      (This happens for certain high-intensity high-saturation colours
+ *      amplitude when encoded into an NTSC or PAL color signal.
+ *      (This happens for certain high-intensity high-saturation colors
  *      that are rare in real scenes, but can easily be present
  *      in synthetic images.)
  *
  *      Such pixels can be flagged so the user may then choose other
- *      colours.  Or, the offending pixels can be made "safe"
+ *      colors.  Or, the offending pixels can be made "safe"
  *      in a manner that preserves hue.
  *
  *      There are two reasonable ways to make a pixel "safe":
@@ -58,7 +58,7 @@
  *      monochrome white, and is always safe.  120 is the absolute
  *      limit for NTSC broadcasting, since the transmitter's carrier
  *      goes to zero with 120 IRE input signal.  Generally, 110
- *      is a good compromise - it allows somewhat brighter colours
+ *      is a good compromise - it allows somewhat brighter colors
  *      than 100, while staying safely away from the hard limit.
  */
 

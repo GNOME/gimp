@@ -3,7 +3,7 @@ Load
 Photoshop 2.0 and lower files are not supported due to lack of 
 file specs and test files.
 
-Add text names for colour modes
+Add text names for color modes
 
 Parasite for layer blending ranges per channel?
 
@@ -33,7 +33,7 @@ Image resources:
   width and height units dropped.
 
 1007 - Display info
-  save colour space & colour as parasite if unable to display.
+  save color space & color as parasite if unable to display.
 
 1008 - caption - Add to XMP data block.
 

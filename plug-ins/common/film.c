@@ -971,7 +971,7 @@ create_selection_tab (GtkWidget *notebook,
 
   group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
-  /* Film height/colour */
+  /* Film height/color */
   frame = gimp_frame_new (_("Filmstrip"));
   gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -1033,7 +1033,7 @@ create_selection_tab (GtkWidget *notebook,
                     G_CALLBACK (gimp_color_button_get_color),
                     &filmvals.film_color);
 
-  /* Film numbering: Startindex/Font/colour */
+  /* Film numbering: Startindex/Font/color */
   frame = gimp_frame_new (_("Numbering"));
   gtk_box_pack_start (GTK_BOX (vbox2), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);

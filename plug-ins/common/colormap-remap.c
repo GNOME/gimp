@@ -23,7 +23,7 @@
  * to another while keeping the original image visually unmodified.
  *
  * Such functionality is useful for creating graphics files for applications
- * which expect certain indices to contain some specific colours.
+ * which expect certain indices to contain some specific colors.
  *
  */
 

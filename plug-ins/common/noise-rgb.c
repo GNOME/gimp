@@ -147,7 +147,7 @@ query (void)
                           "to image channels.  Noise may be additive "
                           "(uncorrelated) or multiplicative (correlated - "
                           "also known as speckle noise). "
-                          "For colour images colour channels may be treated "
+                          "For color images color channels may be treated "
                           "together or independently.",
                           "Torsten Martinsen",
                           "Torsten Martinsen",
@@ -163,8 +163,8 @@ query (void)
   gimp_install_procedure (NOISIFY_PROC,
                           "Adds random noise to image channels ",
                           "Add normally distributed random values to "
-                          "image channels. For colour images each "
-                          "colour channel may be treated together or "
+                          "image channels. For color images each "
+                          "color channel may be treated together or "
                           "independently.",
                           "Torsten Martinsen",
                           "Torsten Martinsen",

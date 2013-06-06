@@ -25,19 +25,19 @@
 
   PSD_PS2_IMAGE_INFO    = 1000,    Dropped    * 0x03e8 - Obsolete - ps 2.0 image info *
   PSD_MAC_PRINT_INFO    = 1001,    PS Only    * 0x03e9 - Optional - Mac print manager print info record *
-  PSD_PS2_COLOR_TAB     = 1003,    Dropped    * 0x03eb - Obsolete - ps 2.0 indexed colour table *
+  PSD_PS2_COLOR_TAB     = 1003,    Dropped    * 0x03eb - Obsolete - ps 2.0 indexed color table *
   PSD_RESN_INFO         = 1005,    Loaded     * 0x03ed - ResolutionInfo structure *
   PSD_ALPHA_NAMES       = 1006,    Loaded     * 0x03ee - Alpha channel names *
   PSD_DISPLAY_INFO      = 1007,    Loaded     * 0x03ef - DisplayInfo structure *
   PSD_CAPTION           = 1008,    Loaded     * 0x03f0 - Optional - Caption string *
   PSD_BORDER_INFO       = 1009,               * 0x03f1 - Border info *
-  PSD_BACKGROUND_COL    = 1010,               * 0x03f2 - Background colour *
+  PSD_BACKGROUND_COL    = 1010,               * 0x03f2 - Background color *
   PSD_PRINT_FLAGS       = 1011,               * 0x03f3 - Print flags *
   PSD_GREY_HALFTONE     = 1012,               * 0x03f4 - Greyscale and multichannel halftoning info *
-  PSD_COLOR_HALFTONE    = 1013,               * 0x03f5 - Colour halftoning info *
+  PSD_COLOR_HALFTONE    = 1013,               * 0x03f5 - Color halftoning info *
   PSD_DUOTONE_HALFTONE  = 1014,               * 0x03f6 - Duotone halftoning info *
   PSD_GREY_XFER         = 1015,               * 0x03f7 - Greyscale and multichannel transfer functions *
-  PSD_COLOR_XFER        = 1016,               * 0x03f8 - Colour transfer functions *
+  PSD_COLOR_XFER        = 1016,               * 0x03f8 - Color transfer functions *
   PSD_DUOTONE_XFER      = 1017,               * 0x03f9 - Duotone transfer functions *
   PSD_DUOTONE_INFO      = 1018,               * 0x03fa - Duotone image information *
   PSD_EFFECTIVE_BW      = 1019,               * 0x03fb - Effective black & white values for dot range *
@@ -58,7 +58,7 @@
   PSD_URL               = 1035,               * 0x040b - URL string *
   PSD_THUMB_RES2        = 1036,    Special    * 0x040c - Thumbnail resource *
   PSD_GLOBAL_ANGLE      = 1037,               * 0x040d - Global angle *
-  PSD_COLOR_SAMPLER     = 1038,               * 0x040e - Colour samplers resource *
+  PSD_COLOR_SAMPLER     = 1038,               * 0x040e - Color samplers resource *
   PSD_ICC_PROFILE       = 1039,    Loaded     * 0x040f - ICC Profile *
   PSD_WATERMARK         = 1040,               * 0x0410 - Watermark *
   PSD_ICC_UNTAGGED      = 1041,               * 0x0411 - Do not use ICC profile flag *
@@ -66,8 +66,8 @@
   PSD_SPOT_HALFTONE     = 1043,               * 0x0413 - Spot halftone *
   PSD_DOC_IDS           = 1044,               * 0x0414 - Document specific IDs *
   PSD_ALPHA_NAMES_UNI   = 1045,    Loaded     * 0x0415 - Unicode alpha names *
-  PSD_IDX_COL_TAB_CNT   = 1046,    Loaded     * 0x0416 - Indexed colour table count *
-  PSD_IDX_TRANSPARENT   = 1047,               * 0x0417 - Index of transparent colour (if any) *
+  PSD_IDX_COL_TAB_CNT   = 1046,    Loaded     * 0x0416 - Indexed color table count *
+  PSD_IDX_TRANSPARENT   = 1047,               * 0x0417 - Index of transparent color (if any) *
   PSD_GLOBAL_ALT        = 1049,               * 0x0419 - Global altitude *
   PSD_SLICES            = 1050,               * 0x041a - Slices *
   PSD_WORKFLOW_URL_UNI  = 1051,               * 0x041b - Workflow URL - Unicode string *

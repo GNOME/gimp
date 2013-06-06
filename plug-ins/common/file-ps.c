@@ -125,7 +125,7 @@ static PSLoadVals plvals =
   826, 1170,   /* default width/height (A4)      */
   TRUE,        /* try to use BoundingBox         */
   "1",         /* pages to load                  */
-  6,           /* use ppm (colour)               */
+  6,           /* use ppm (color)               */
   1,           /* dont use text antialiasing     */
   1            /* dont use graphics antialiasing */
 };
@@ -535,7 +535,7 @@ query (void)
     { GIMP_PDB_INT32,  "height",     "Desired height"                          },
     { GIMP_PDB_INT32,  "check-bbox", "0: Use width/height, 1: Use BoundingBox" },
     { GIMP_PDB_STRING, "pages",      "Pages to load (e.g.: 1,3,5-7)"           },
-    { GIMP_PDB_INT32,  "coloring",   "4: b/w, 5: grey, 6: colour image, 7: automatic" },
+    { GIMP_PDB_INT32,  "coloring",   "4: b/w, 5: grey, 6: color image, 7: automatic" },
     { GIMP_PDB_INT32,  "text-alpha-bits",    "1, 2, or 4" },
     { GIMP_PDB_INT32,  "graphic-alpha-bits", "1, 2, or 4" }
   };
@@ -1001,7 +1001,7 @@ load_image (const gchar  *filename,
   g_print ("load_image:\n resolution = %d\n", plvals.resolution);
   g_print (" %dx%d pixels\n", plvals.width, plvals.height);
   g_print (" BoundingBox: %d\n", plvals.use_bbox);
-  g_print (" Colouring: %d\n", plvals.pnm_type);
+  g_print (" Coloring: %d\n", plvals.pnm_type);
   g_print (" TextAlphaBits: %d\n", plvals.textalpha);
   g_print (" GraphicsAlphaBits: %d\n", plvals.graphicsalpha);
 #endif
@@ -2180,7 +2180,7 @@ save_ps_trailer (FILE *ofp)
   fprintf (ofp, "end\n%%%%EOF\n");
 }
 
-/* Do a Floyd-Steinberg dithering on a greyscale scanline. */
+/* Do a Floyd-Steinberg dithering on a grayscale scanline. */
 /* linecount must keep the counter for the actual scanline (0, 1, 2, ...). */
 /* If linecount is less than zero, all used memory is freed. */
 
@@ -2374,7 +2374,7 @@ save_ps_preview (FILE   *ofp,
           for (x = 0; x < width; x++)
             {
               src_ptr = src_row + ((x * gegl_buffer_get_width (buffer)) / width);
-              cind = *src_ptr;   /* Get colour index and convert to grey */
+              cind = *src_ptr;   /* Get color index and convert to grey */
               src_ptr = (cind >= ncols) ? cmap : (cmap + 3*cind);
               *(greyptr++) = (3*src_ptr[0] + 6*src_ptr[1] + src_ptr[2]) / 10;
             }
@@ -2385,7 +2385,7 @@ save_ps_preview (FILE   *ofp,
             *(greyptr++) = *(src_row + ((x * gegl_buffer_get_width (buffer)) / width));
         }
 
-      /* Now we have a greyscale line for the desired width. */
+      /* Now we have a grayscale line for the desired width. */
       /* Dither it to b/w */
       dither_grey (grey, bw, width, y);
 
@@ -3150,7 +3150,7 @@ load_dialog (const gchar *filename,
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
 
-  /* Colouring */
+  /* Coloring */
   frame = gimp_int_radio_group_new (TRUE, _("Coloring"),
                                     G_CALLBACK (gimp_radio_button_update),
                                     &plvals.pnm_type, plvals.pnm_type,

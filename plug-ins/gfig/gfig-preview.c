@@ -142,7 +142,7 @@ gfig_preview_realize (GtkWidget *widget)
 
   gdk_window_set_cursor (gtk_widget_get_window (gfig_context->preview),
                          gdk_cursor_new_for_display (display, GDK_CROSSHAIR));
-  gfig_grid_colours (widget);
+  gfig_grid_colors (widget);
 }
 
 static void

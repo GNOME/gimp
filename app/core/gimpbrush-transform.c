@@ -373,7 +373,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
  *
  * The algorithm used is exactly the same as for the brush mask
  * (gimp_brush_real_transform_mask) except it accounts for 3 color channels
- *  instead of 1 greyscale channel.
+ *  instead of 1 grayscale channel.
  *
  * Rather than calculating the inverse transform for each point in the
  * transformed image, this algorithm uses the inverse transformed

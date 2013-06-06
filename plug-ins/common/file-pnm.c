@@ -904,7 +904,7 @@ pnmsaverow_ascii_pbm (PNMRowInfo   *ri,
   write (ri->fd, ri->rowbuf, len);
 }
 
-/* Writes out RGB and greyscale raw rows */
+/* Writes out RGB and grayscale raw rows */
 static void
 pnmsaverow_raw (PNMRowInfo   *ri,
                 const guchar *data)
@@ -930,7 +930,7 @@ pnmsaverow_raw_indexed (PNMRowInfo   *ri,
   write (ri->fd, ri->rowbuf, ri->xres * 3);
 }
 
-/* Writes out RGB and greyscale ascii rows */
+/* Writes out RGB and grayscale ascii rows */
 static void
 pnmsaverow_ascii (PNMRowInfo   *ri,
                   const guchar *data)
@@ -947,7 +947,7 @@ pnmsaverow_ascii (PNMRowInfo   *ri,
   write (ri->fd, ri->rowbuf, strlen ((gchar *) ri->rowbuf));
 }
 
-/* Writes out RGB and greyscale ascii rows */
+/* Writes out RGB and grayscale ascii rows */
 static void
 pnmsaverow_ascii_indexed (PNMRowInfo   *ri,
                           const guchar *data)

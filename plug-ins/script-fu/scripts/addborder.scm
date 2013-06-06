@@ -18,14 +18,14 @@
 ;
 ; Version 0.2 10.6.97 Changed to new script-fu interface in 0.99.10
 
-; Delta the colour by the given amount. Check for boundary conditions
+; Delta the color by the given amount. Check for boundary conditions
 ; If < 0 set to zero
 ; If > 255 set to 255
 ; Return the new value
 
-(define (script-fu-addborder aimg adraw xsize ysize colour dvalue)
+(define (script-fu-addborder aimg adraw xsize ysize color dvalue)
 
-  (define (deltacolour col delta)
+  (define (deltacolor col delta)
     (let* ((newcol (+ col delta)))
       (if (< newcol 0) (set! newcol 0))
       (if (> newcol 255) (set! newcol 255))
@@ -33,8 +33,8 @@
     )
   )
 
-  (define (adjcolour col delta)
-    (mapcar (lambda (x) (deltacolour x delta)) col)
+  (define (adjcolor col delta)
+    (mapcar (lambda (x) (deltacolor x delta)) col)
   )
 
   (define (gen_top_array xsize ysize owidth oheight width height)
@@ -122,26 +122,26 @@
     (gimp-image-insert-layer img layer 0 0)
     (gimp-drawable-fill layer TRANSPARENT-FILL)
 
-    (gimp-context-set-background (adjcolour colour dvalue))
+    (gimp-context-set-background (adjcolor color dvalue))
     (gimp-image-select-polygon img
                                CHANNEL-OP-REPLACE
                                10
                                (gen_top_array xsize ysize owidth oheight width height))
     (gimp-edit-fill layer BACKGROUND-FILL)
-    (gimp-context-set-background (adjcolour colour (/ dvalue 2)))
+    (gimp-context-set-background (adjcolor color (/ dvalue 2)))
     (gimp-image-select-polygon img
                                CHANNEL-OP-REPLACE
                                10
                                (gen_left_array xsize ysize owidth oheight width height))
     (gimp-edit-fill layer BACKGROUND-FILL)
-    (gimp-context-set-background (adjcolour colour (- 0 (/ dvalue 2))))
+    (gimp-context-set-background (adjcolor color (- 0 (/ dvalue 2))))
     (gimp-image-select-polygon img
                                CHANNEL-OP-REPLACE
                                10
                                (gen_right_array xsize ysize owidth oheight width height))
 
     (gimp-edit-fill layer BACKGROUND-FILL)
-    (gimp-context-set-background (adjcolour colour (- 0 dvalue)))
+    (gimp-context-set-background (adjcolor color (- 0 dvalue)))
     (gimp-image-select-polygon img
                                CHANNEL-OP-REPLACE
                                10

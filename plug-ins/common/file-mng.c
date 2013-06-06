@@ -200,7 +200,7 @@ static mng_bool  mywritedata   (mng_handle  handle,
 static gint32    parse_chunks_type_from_layer_name   (const gchar *str);
 static gint32    parse_disposal_type_from_layer_name (const gchar *str);
 static gint32    parse_ms_tag_from_layer_name        (const gchar *str);
-static gint      find_unused_ia_colour               (guchar      *pixels,
+static gint      find_unused_ia_color               (guchar      *pixels,
                                                       gint         numpixels,
                                                       gint        *colors);
 static gboolean  ia_has_transparent_pixels           (guchar      *pixels,
@@ -364,11 +364,11 @@ parse_ms_tag_from_layer_name (const gchar *str)
 }
 
 
-/* Try to find a colour in the palette which isn't actually
+/* Try to find a color in the palette which isn't actually
  * used in the image, so that we can use it as the transparency
  * index. Taken from png.c */
 static gint
-find_unused_ia_colour (guchar *pixels,
+find_unused_ia_color (guchar *pixels,
                        gint    numpixels,
                        gint   *colors)
 {
@@ -383,7 +383,7 @@ find_unused_ia_colour (guchar *pixels,
 
   for (i = 0; i < numpixels; i++)
     {
-      /* If alpha is over a threshold, the colour index in the
+      /* If alpha is over a threshold, the color index in the
        * palette is taken. Otherwise, this pixel is transparent. */
       if (pixels[i * 2 + 1] > 127)
         ix_used[pixels[i * 2]] = TRUE;
@@ -403,9 +403,9 @@ find_unused_ia_colour (guchar *pixels,
         }
     }
 
-  /* Couldn't find an unused colour index within the number of
+  /* Couldn't find an unused color index within the number of
      bits per pixel we wanted.  Will have to increment the number
-     of colours in the image and assign a transparent pixel there. */
+     of colors in the image and assign a transparent pixel there. */
   if ((*colors) < 256)
     {
       (*colors)++;
@@ -487,7 +487,7 @@ respin_cmap (png_structp  pp,
 
   if (ia_has_transparent_pixels (pixels, numpixels))
     {
-      transparent = find_unused_ia_colour (pixels, numpixels, &colors);
+      transparent = find_unused_ia_color (pixels, numpixels, &colors);
 
       if (transparent != -1)
         {

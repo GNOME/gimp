@@ -60,7 +60,7 @@
  *
  * - PDB stuff for comments
  *
- * - Remove unused colourmap entries for GRAYSCALE images.
+ * - Remove unused colormap entries for GRAYSCALE images.
  */
 
 #include "config.h"
@@ -219,8 +219,8 @@ run (const gchar      *name,
            * So if we're not careful, repeated load/save of a transparent GIF
            *  without intermediate indexed->RGB->indexed pumps up the number of
            *  bits used, as we add an index each time for the transparent
-           *  colour.  Ouch.  We either do some heavier analysis at save-time,
-           *  or trim down the number of GIMP colours at load-time.  We do the
+           *  color.  Ouch.  We either do some heavier analysis at save-time,
+           *  or trim down the number of GIMP colors at load-time.  We do the
            *  latter for now.
            */
 #ifdef GIFDEBUG
@@ -970,7 +970,7 @@ ReadImage (FILE        *fd,
                                      frame_number);
       gimp_progress_pulse ();
 
-       /* If the colourmap is now different, we have to promote to RGB! */
+       /* If the colormap is now different, we have to promote to RGB! */
       if (! promote_to_rgb)
         {
           for (i = 0; i < ncols; i++)

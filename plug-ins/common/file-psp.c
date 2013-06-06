@@ -515,7 +515,7 @@ typedef struct
   guchar metric;
   guint16 compression;
   guint16 depth;
-  guchar greyscale;
+  guchar grayscale;
   guint32 active_layer;
   guint16 layer_count;
 } PSPimage;
@@ -787,8 +787,8 @@ read_general_image_attribute_block (FILE     *f,
       || fread (&ia->metric, 1, 1, f) < 1
       || fread (&ia->compression, 2, 1, f) < 1
       || fread (&ia->depth, 2, 1, f) < 1
-      || fread (buf, 2+4, 1, f) < 1 /* Skip plane and colour count */
-      || fread (&ia->greyscale, 1, 1, f) < 1
+      || fread (buf, 2+4, 1, f) < 1 /* Skip plane and color count */
+      || fread (&ia->grayscale, 1, 1, f) < 1
       || fread (buf, 4, 1, f) < 1 /* Skip total image size */
       || fread (&ia->active_layer, 4, 1, f) < 1
       || fread (&ia->layer_count, 2, 1, f) < 1
@@ -1442,7 +1442,7 @@ read_layer_block (FILE     *f,
           null_layer = TRUE;
         }
 
-      if (ia->greyscale)
+      if (ia->grayscale)
         if (!null_layer && bitmap_count == 1)
           drawable_type = GIMP_GRAY_IMAGE, bytespp = 1;
         else
@@ -1787,7 +1787,7 @@ load_image (const gchar  *filename,
                               compression_name (ia.compression));
 
           image_ID = gimp_image_new (ia.width, ia.height,
-                                     ia.greyscale ? GIMP_GRAY : GIMP_RGB);
+                                     ia.grayscale ? GIMP_GRAY : GIMP_RGB);
           if (image_ID == -1)
             {
               goto error;

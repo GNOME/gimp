@@ -1,7 +1,7 @@
 ;
 ; fuzzy-border
 ;
-; Do a cool fade to a given colour at the border of an image (optional shadow)
+; Do a cool fade to a given color at the border of an image (optional shadow)
 ; Will make image RGB if it isn't already.
 ;
 ; Chris Gutteridge (cjg@ecs.soton.ac.uk)

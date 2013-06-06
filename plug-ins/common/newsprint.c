@@ -79,7 +79,7 @@
 #define BARTLETT(x,y)   (((oversample/2)+1-ABS(x)) * ((oversample/2)+1-ABS(y)))
 #define WGT(x,y)        wgt[((y+oversample/2)*oversample) + x+oversample/2]
 
-/* colourspaces we can separate to: */
+/* colorspaces we can separate to: */
 #define CS_GREY         0
 #define CS_RGB          1
 #define CS_CMYK         2
@@ -184,10 +184,10 @@ typedef struct
   gint    cell_width;
 
   /* screening section: */
-  gint    colourspace;  /* 0: RGB, 1: CMYK, 2: Luminance */
+  gint    colorspace;  /* 0: RGB, 1: CMYK, 2: Luminance */
   gint    k_pullout;    /* percentage of black to pull out */
 
-  /* grey screen (only used if greyscale drawable) */
+  /* grey screen (only used if grayscale drawable) */
   gdouble gry_ang;
   gint    gry_spotfn;
 
@@ -254,7 +254,7 @@ typedef struct
   /* Notebook for the channels (one per colorspace) */
   GtkWidget  *channel_notebook[NUM_CS];
 
-  /* room for up to 4 channels per colourspace */
+  /* room for up to 4 channels per colorspace */
   channel_st *chst[NUM_CS][4];
 } NewsprintDialog_st;
 
@@ -409,8 +409,8 @@ static const chan_tmpl luminance_tmpl[] =
   { NULL, NULL, NULL, NULL, NULL }
 };
 
-/* cspace_chan_tmpl is indexed by colourspace, and gives an array of
- * channel templates for that colourspace */
+/* cspace_chan_tmpl is indexed by colorspace, and gives an array of
+ * channel templates for that colorspace */
 static const chan_tmpl *cspace_chan_tmpl[] =
 {
   grey_tmpl,
@@ -422,7 +422,7 @@ static const chan_tmpl *cspace_chan_tmpl[] =
 #define NCHANS(x) ((sizeof(x) / sizeof(chan_tmpl)) - 1)
 
 /* cspace_nchans gives a quick way of finding the number of channels
- * in a colourspace.  Alternatively, if you're walking the channel
+ * in a colorspace.  Alternatively, if you're walking the channel
  * template, you can use the NULL entry at the end to stop. */
 static const gint cspace_nchans[] =
 {
@@ -576,7 +576,7 @@ run (const gchar      *name,
         }
 
       pvals.cell_width  = param[3].data.d_int32;
-      pvals.colourspace = param[4].data.d_int32;
+      pvals.colorspace = param[4].data.d_int32;
       pvals.k_pullout   = param[5].data.d_int32;
       pvals.gry_ang     = param[6].data.d_float;
       pvals.gry_spotfn  = param[7].data.d_int32;
@@ -593,7 +593,7 @@ run (const gchar      *name,
           !VALID_SPOTFN (pvals.red_spotfn) ||
           !VALID_SPOTFN (pvals.grn_spotfn) ||
           !VALID_SPOTFN (pvals.blu_spotfn) ||
-          !VALID_CS (pvals.colourspace) ||
+          !VALID_CS (pvals.colorspace) ||
           pvals.k_pullout < 0 || pvals.k_pullout > 100)
         {
           status = GIMP_PDB_CALLING_ERROR;
@@ -927,13 +927,13 @@ newsprint_defaults_callback (GtkWidget *widget,
   saved_lock = pvals_ui.lock_channels;
   pvals_ui.lock_channels = FALSE;
 
-  /* for each colourspace, reset its channel info */
+  /* for each colorspace, reset its channel info */
   for (cspace = 0; cspace < NUM_CS; cspace++)
     {
       chst = st->chst[cspace];
       ct = cspace_chan_tmpl[cspace];
 
-      /* skip this colourspace if we haven't used it yet */
+      /* skip this colorspace if we haven't used it yet */
       if (!chst[0])
         continue;
 
@@ -1087,11 +1087,11 @@ new_channel (const chan_tmpl *ct, GtkWidget *preview)
 }
 
 
-/* Make all the channels needed for "colourspace", and fill in
+/* Make all the channels needed for "colorspace", and fill in
  * the respective channel state fields in "st". */
 static void
 gen_channels (NewsprintDialog_st *st,
-              gint                colourspace,
+              gint                colorspace,
               GtkWidget          *preview)
 {
   const chan_tmpl  *ct;
@@ -1099,16 +1099,16 @@ gen_channels (NewsprintDialog_st *st,
   channel_st       *base = NULL;
   gint              i;
 
-  chst = st->chst[colourspace];
-  ct   = cspace_chan_tmpl[colourspace];
+  chst = st->chst[colorspace];
+  ct   = cspace_chan_tmpl[colorspace];
   i    = 0;
 
-  st->channel_notebook[colourspace] = gtk_notebook_new ();
-  gtk_box_pack_start (GTK_BOX (st->vbox), st->channel_notebook[colourspace],
+  st->channel_notebook[colorspace] = gtk_notebook_new ();
+  gtk_box_pack_start (GTK_BOX (st->vbox), st->channel_notebook[colorspace],
                       FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (st->vbox),
-                         st->channel_notebook[colourspace], 3);
-  gtk_widget_show (st->channel_notebook[colourspace]);
+                         st->channel_notebook[colorspace], 3);
+  gtk_widget_show (st->channel_notebook[colorspace]);
 
   while (ct->name)
     {
@@ -1119,7 +1119,7 @@ gen_channels (NewsprintDialog_st *st,
       else
         base = chst[i];
 
-      gtk_notebook_append_page (GTK_NOTEBOOK (st->channel_notebook[colourspace]),
+      gtk_notebook_append_page (GTK_NOTEBOOK (st->channel_notebook[colorspace]),
                                 chst[i]->vbox,
                                 gtk_label_new_with_mnemonic (gettext (ct->name)));
       gtk_widget_show (chst[i]->vbox);
@@ -1165,15 +1165,15 @@ newsprint_dialog (GimpDrawable *drawable)
   if (gimp_drawable_has_alpha (drawable->drawable_id))
     bpp--;
 
-  /* force greyscale if it's the only thing we can do */
+  /* force grayscale if it's the only thing we can do */
   if (bpp == 1)
     {
-      pvals.colourspace = CS_GREY;
+      pvals.colorspace = CS_GREY;
     }
   else
     {
-      if (pvals.colourspace == CS_GREY)
-        pvals.colourspace = CS_RGB;
+      if (pvals.colorspace == CS_GREY)
+        pvals.colorspace = CS_RGB;
     }
 
   dialog = gimp_dialog_new (_("Newsprint"), PLUG_IN_ROLE,
@@ -1312,7 +1312,7 @@ newsprint_dialog (GimpDrawable *drawable)
                                       0, 100, 1, 10, 0,
                                       TRUE, 0, 0,
                                       NULL, NULL);
-      gtk_widget_set_sensitive (st.pull_table, (pvals.colourspace == CS_CMYK));
+      gtk_widget_set_sensitive (st.pull_table, (pvals.colorspace == CS_CMYK));
       gtk_widget_show (st.pull_table);
 
       g_signal_connect (st.pull, "value-changed",
@@ -1337,7 +1337,7 @@ newsprint_dialog (GimpDrawable *drawable)
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                    (pvals.colourspace == CS_RGB));
+                                    (pvals.colorspace == CS_RGB));
       gtk_widget_show (toggle);
 
       g_object_set_data (G_OBJECT (toggle), "dialog", &st);
@@ -1354,7 +1354,7 @@ newsprint_dialog (GimpDrawable *drawable)
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                    (pvals.colourspace == CS_CMYK));
+                                    (pvals.colorspace == CS_CMYK));
       gtk_widget_show (toggle);
 
       g_object_set_data (G_OBJECT (toggle), "dialog", &st);
@@ -1371,7 +1371,7 @@ newsprint_dialog (GimpDrawable *drawable)
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                    (pvals.colourspace == CS_LUMINANCE));
+                                    (pvals.colorspace == CS_LUMINANCE));
       gtk_widget_show (toggle);
 
       g_object_set_data (G_OBJECT (toggle), "dialog", &st);
@@ -1417,14 +1417,14 @@ newsprint_dialog (GimpDrawable *drawable)
                                 preview);
     }
 
-  /*  Make the channels appropriate for this colourspace and
+  /*  Make the channels appropriate for this colorspace and
    *  currently selected defaults.  They may have already been
    *  created as a result of callbacks to cspace_update from
    *  gtk_toggle_button_set_active().
    */
-  if (!st.chst[pvals.colourspace][0])
+  if (!st.chst[pvals.colorspace][0])
     {
-      gen_channels (&st, pvals.colourspace, preview);
+      gen_channels (&st, pvals.colorspace, preview);
     }
 
   gtk_widget_show (st.vbox);
@@ -1456,7 +1456,7 @@ newsprint_dialog (GimpDrawable *drawable)
 
   gtk_widget_show (dialog);
 
-  preview_update(st.chst[pvals.colourspace][0]);
+  preview_update(st.chst[pvals.colorspace][0]);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
@@ -1473,7 +1473,7 @@ newsprint_cspace_update (GtkWidget *widget,
 {
   NewsprintDialog_st *st;
   gint                new_cs = GPOINTER_TO_INT (data);
-  gint                old_cs = pvals.colourspace;
+  gint                old_cs = pvals.colorspace;
   GtkWidget          *preview;
 
   st = g_object_get_data (G_OBJECT (widget), "dialog");
@@ -1496,10 +1496,10 @@ newsprint_cspace_update (GtkWidget *widget,
       if (! active)
         return;
 
-      pvals.colourspace = new_cs;
+      pvals.colorspace = new_cs;
 
       /* make sure we have the necessary channels for the new
-       * colourspace */
+       * colorspace */
       if (!st->chst[new_cs][0])
         gen_channels (st, new_cs, preview);
 
@@ -1527,7 +1527,7 @@ newsprint_cspace_update (GtkWidget *widget,
 
 
 /* Spot functions define the order in which pixels should be whitened
- * as a cell lightened in colour.  They are defined over the entire
+ * as a cell lightened in color.  They are defined over the entire
  * cell, and are called over each pixel in the cell.  The cell
  * co-ordinate space ranges from -1.0 .. +1.0 inclusive, in both x- and
  * y-axes.
@@ -1663,7 +1663,7 @@ order_cmp (const void *va,
  * as pre-balanced is bad: you'll end up with dark areas becoming too
  * dark or too light, and vice versa for light areas.  This is most
  * easily checked by halftoning an area, then bluring it back - you
- * should get the same colour back again.  The only way of getting a
+ * should get the same color back again.  The only way of getting a
  * correctly balanced function is by getting a formula for the spot's
  * area as a function of x and y - this can be fairly tough (ie
  * possiblly an integral in two dimensions that must be solved
@@ -1753,7 +1753,7 @@ newsprint (GimpDrawable *drawable,
   gdouble       r;
   gdouble       theta;
   gdouble       rot[4];
-  gint          bpp, colour_bpp;
+  gint          bpp, color_bpp;
   gint          has_alpha;
   gint          b;
   gint          tile_width;
@@ -1766,7 +1766,7 @@ newsprint (GimpDrawable *drawable,
   gint          rx, ry;
   gint          progress, max_progress;
   gint          oversample;
-  gint          colourspace;
+  gint          colorspace;
   gpointer      pr;
   gint          w002;
   guchar       *preview_buffer = NULL;
@@ -1805,16 +1805,16 @@ newsprint (GimpDrawable *drawable,
     }
 
   has_alpha  = gimp_drawable_has_alpha (drawable->drawable_id);
-  colour_bpp = has_alpha ? bpp-1 : bpp;
-  colourspace= pvals.colourspace;
-  if (colour_bpp == 1)
+  color_bpp = has_alpha ? bpp-1 : bpp;
+  colorspace= pvals.colorspace;
+  if (color_bpp == 1)
     {
-      colourspace = CS_GREY;
+      colorspace = CS_GREY;
     }
   else
     {
-      if (colourspace == CS_GREY)
-        colourspace = CS_RGB;
+      if (colorspace == CS_GREY)
+        colorspace = CS_RGB;
     }
 
   /* Bartlett window matrix optimisation */
@@ -1838,7 +1838,7 @@ do {                                                            \
 } while(0)
 
   /* calculate the RGB / CMYK rotations and threshold matrices */
-  if (colour_bpp == 1 || colourspace == CS_LUMINANCE)
+  if (color_bpp == 1 || colorspace == CS_LUMINANCE)
     {
       rot[0]    = DEG2RAD (pvals.gry_ang);
       thresh[0] = spot2thresh (pvals.gry_spotfn, width);
@@ -1866,7 +1866,7 @@ do {                                                            \
       spotfn_list[bf].thresh = spot2thresh (bf, width);
       thresh[2] = spotfn_list[bf].thresh;
 
-      if (colourspace == CS_CMYK)
+      if (colorspace == CS_CMYK)
         {
           rot[3] = DEG2RAD (pvals.gry_ang);
           gf = pvals.gry_spotfn;
@@ -1925,11 +1925,11 @@ do {                                                            \
                       r = sqrt (((double)rx)*rx + ((double)ry)*ry);
                       theta = atan2 (((gdouble)ry), ((gdouble)rx));
 
-                      for (b = 0; b < colour_bpp; b++)
+                      for (b = 0; b < color_bpp; b++)
                         data[b] = src[b];
 
-                      /* do colour space conversion */
-                      switch (colourspace)
+                      /* do color space conversion */
+                      switch (colorspace)
                         {
                         case CS_CMYK:
                           {
@@ -1960,7 +1960,7 @@ do {                                                            \
                           break;
                         }
 
-                      for (b = 0; b < cspace_nchans[colourspace]; b++)
+                      for (b = 0; b < cspace_nchans[colorspace]; b++)
                         {
                           rx = RINT (r * cos (theta + rot[b]));
                           ry = RINT (r * sin (theta + rot[b]));
@@ -1996,10 +1996,10 @@ do {                                                            \
                           }
                         }
                       if (has_alpha)
-                        dest[colour_bpp] = src[colour_bpp];
+                        dest[color_bpp] = src[color_bpp];
 
-                      /* re-pack the colours into RGB */
-                      switch (colourspace)
+                      /* re-pack the colors into RGB */
+                      switch (colorspace)
                         {
                         case CS_CMYK:
                           data[0] = CLAMPED_ADD (data[0], data[3]);
@@ -2013,7 +2013,7 @@ do {                                                            \
                         case CS_LUMINANCE:
                           if (has_alpha)
                             {
-                              dest[colour_bpp] = data[0];
+                              dest[color_bpp] = data[0];
                               data[0] = 0xff;
                             }
                           data[1] = data[1] * data[0] / 0xff;
@@ -2026,7 +2026,7 @@ do {                                                            \
                           break;
                         }
 
-                      for (b = 0; b < colour_bpp; b++)
+                      for (b = 0; b < color_bpp; b++)
                         dest[b] = data[b];
 
                       src  += src_rgn.bpp;

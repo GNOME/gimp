@@ -45,7 +45,7 @@ Control points can be hidden.
 To aid alignment of objects a "grid" can be placed on the drawing area.
 This can be either a normal rectangular grid or a polar type grid centered 
 in the drawing area. 
-The spacings of the grid can be changed as well as the colours used to draw the
+The spacings of the grid can be changed as well as the colors used to draw the
 grid lines. When "Snap to grid" is checked then all operations will be 
 constrained to fall on a grid intersection. (Fun when using the polar grid).
 Additionally the third mouse button will constrain the point movement to be
@@ -67,13 +67,13 @@ There are three possible mode when painting.
 Brush
 ~~~~~
 When the paint button is pressed each object will be rendered/drawn onto 
-the image using the currently selected ink colour. The objects can be drawn 
+the image using the currently selected ink color. The objects can be drawn 
 onto the original layer or onto a new layer (either a single layer or 
 multiple layers - latter is good for animations). When new layers are 
 created the background can either be:-
 	
 Transparent.
-Background (the current BG colour).
+Background (the current BG color).
 White.
 Copy.
 

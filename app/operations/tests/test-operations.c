@@ -70,7 +70,7 @@ cie94 (gfloat* src1,
 }
 
 /*
- * CIE 2000 delta E colour comparison
+ * CIE 2000 delta E color comparison
  */
 static gdouble
 delta_e (gfloat* src1,

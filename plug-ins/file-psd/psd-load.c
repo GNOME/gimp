@@ -141,8 +141,8 @@ load_image (const gchar  *filename,
     goto load_error;
   gimp_progress_update (0.1);
 
-  /* ----- Read the PSD file Colour Mode block ----- */
-  IFDBG(2) g_debug ("Read colour mode block");
+  /* ----- Read the PSD file Color Mode block ----- */
+  IFDBG(2) g_debug ("Read color mode block");
   if (read_color_mode_block (&img_a, f, &error) < 0)
     goto load_error;
   gimp_progress_update (0.2);
@@ -173,7 +173,7 @@ load_image (const gchar  *filename,
     goto load_error;
   gimp_progress_update (0.6);
 
-  /* ----- Add colour map ----- */
+  /* ----- Add color map ----- */
   IFDBG(2) g_debug ("Add color map");
   if (add_color_map (image_id, &img_a) < 0)
     goto load_error;
@@ -428,7 +428,7 @@ read_color_mode_block (PSDimage  *img_a,
       memcpy (img_a->color_map, cmap, img_a->color_map_len);
       img_a->color_map_entries = 2;
     }
-  IFDBG(2) g_debug ("Colour map data length %d", img_a->color_map_len);
+  IFDBG(2) g_debug ("Color map data length %d", img_a->color_map_len);
 
   return 0;
 }

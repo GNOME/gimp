@@ -108,7 +108,7 @@ static  GimpImageBaseType imagetype;
 static  GimpImageType     drawabletype_alpha;
 static  guchar            pixelstep;
 static  guchar           *palette;
-static  gint              ncolours;
+static  gint              ncolors;
 static  operatingMode     opmode;
 
 
@@ -467,8 +467,8 @@ do_optimizations (GimpRunMode run_mode,
 
   if (imagetype == GIMP_INDEXED)
     {
-      palette = gimp_image_get_colormap (image_id, &ncolours);
-      gimp_image_set_colormap (new_image_id, palette, ncolours);
+      palette = gimp_image_get_colormap (image_id, &ncolors);
+      gimp_image_set_colormap (new_image_id, palette, ncolors);
     }
 
 #if 1
@@ -483,7 +483,7 @@ do_optimizations (GimpRunMode run_mode,
       guchar **green;
       guchar **blue;
       guint  **count;
-      guint   *num_colours;
+      guint   *num_colors;
 
       these_rows = g_new (guchar *, total_frames);
       red =        g_new (guchar *, total_frames);
@@ -491,7 +491,7 @@ do_optimizations (GimpRunMode run_mode,
       blue =       g_new (guchar *, total_frames);
       count =      g_new (guint *, total_frames);
 
-      num_colours = g_new (guint, width);
+      num_colors = g_new (guint, width);
 
       for (this_frame_num=0; this_frame_num<total_frames; this_frame_num++)
         {
@@ -506,7 +506,7 @@ do_optimizations (GimpRunMode run_mode,
 
       for (row = 0; row < height; row++)
         {
-          memset(num_colours, 0, width * sizeof(guint));
+          memset(num_colors, 0, width * sizeof(guint));
 
           for (this_frame_num=0; this_frame_num<total_frames; this_frame_num++)
             {
@@ -534,7 +534,7 @@ do_optimizations (GimpRunMode run_mode,
                   if (these_rows[this_frame_num][i * pixelstep + pixelstep -1]
                       >= 128)
                     {
-                      for (j=0; j<num_colours[i]; j++)
+                      for (j=0; j<num_colors[i]; j++)
                         {
 
                           switch (pixelstep)
@@ -565,17 +565,17 @@ do_optimizations (GimpRunMode run_mode,
                             }
                         }
 
-                      count[num_colours[i]][i] = 1;
-                      red[num_colours[i]][i] =
+                      count[num_colors[i]][i] = 1;
+                      red[num_colors[i]][i] =
                         these_rows[this_frame_num][i * pixelstep];
                       if (pixelstep == 4)
                         {
-                          green[num_colours[i]][i] =
+                          green[num_colors[i]][i] =
                             these_rows[this_frame_num][i * 4 +1];
-                          blue[num_colours[i]][i] =
+                          blue[num_colors[i]][i] =
                             these_rows[this_frame_num][i * 4 +2];
                         }
-                      num_colours[i]++;
+                      num_colors[i]++;
                     }
                 same:
                   /* nop */;
@@ -587,7 +587,7 @@ do_optimizations (GimpRunMode run_mode,
               guint  best_count = 0;
               guchar best_r = 255, best_g = 0, best_b = 255;
 
-              for (j=0; j<num_colours[i]; j++)
+              for (j=0; j<num_colors[i]; j++)
                 {
                   if (count[j][i] > best_count)
                     {
@@ -631,7 +631,7 @@ do_optimizations (GimpRunMode run_mode,
       g_free (green);
       g_free (blue);
       g_free (count);
-      g_free (num_colours);
+      g_free (num_colors);
     }
 #endif
 
@@ -802,7 +802,7 @@ do_optimizations (GimpRunMode run_mode,
                           goto decided;
                         }
                       /* If 'last' and 'this' are opaque, we have
-                       *  to check if they're the same colour - we
+                       *  to check if they're the same color - we
                        *  only have to keep the pixel if 'last' or
                        *  'this' are opaque and different.
                        */

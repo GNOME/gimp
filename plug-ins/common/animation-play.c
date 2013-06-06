@@ -159,7 +159,7 @@ static gint32            *layers                    = NULL;
 static gint32             total_layers              = 0;
 static GimpImageBaseType  imagetype;
 static guchar            *palette                   = NULL;
-static gint               ncolours;
+static gint               ncolors;
 
 static GtkWidget         *drawing_area              = NULL;
 static guchar            *drawing_area_data         = NULL;
@@ -1098,7 +1098,7 @@ initialize (void)
 
   if (imagetype == GIMP_INDEXED)
     {
-      palette = gimp_image_get_colormap (image_id, &ncolours);
+      palette = gimp_image_get_colormap (image_id, &ncolors);
     }
   else if (imagetype == GIMP_GRAY)
     {
@@ -1109,7 +1109,7 @@ initialize (void)
       for (i = 0; i < 256; i++)
         palette[i * 3] = palette[i * 3 + 1] = palette[i * 3 + 2] = i;
 
-      ncolours = 256;
+      ncolors = 256;
     }
 
   if (!window)

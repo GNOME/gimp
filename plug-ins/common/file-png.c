@@ -1133,7 +1133,7 @@ load_image (const gchar  *filename,
 
 #if defined(PNG_iCCP_SUPPORTED)
   /*
-   * Get the iCCP (colour profile) chunk, if any, and attach it as
+   * Get the iCCP (color profile) chunk, if any, and attach it as
    * a parasite
    */
 

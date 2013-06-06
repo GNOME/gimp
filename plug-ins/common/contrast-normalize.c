@@ -22,10 +22,10 @@
 
 
 /* This plugin performs almost the same operation as the 'contrast
- * autostretch' plugin, except that it won't allow the colour channels
+ * autostretch' plugin, except that it won't allow the color channels
  * to normalize independently.  This is actually what most people probably
  * want instead of contrast-autostretch; use c-a only if you wish to remove
- * an undesirable colour-tint from a source image which is supposed to
+ * an undesirable color-tint from a source image which is supposed to
  * contain pure-white and pure-black.
  */
 

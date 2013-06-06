@@ -23,7 +23,7 @@
 ;
 ; Tiny-Fu first successfully ran this script at 2:07am on March 6, 2004.
 
-(define (script-fu-helloworld text font size colour)
+(define (script-fu-helloworld text font size color)
   (let* (
         (width 10)
         (height 10)
@@ -34,7 +34,7 @@
     (gimp-context-push)
 
     (gimp-image-undo-disable img)
-    (gimp-context-set-foreground colour)
+    (gimp-context-set-foreground color)
 
     (set! text-layer (car (gimp-text-fontname img -1 0 0 text 10 TRUE size PIXELS font)))
     (set! width (car (gimp-drawable-width text-layer)))

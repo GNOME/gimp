@@ -38,7 +38,7 @@
 
 extern gint grid_gc_type;
 
-void gfig_grid_colours (GtkWidget *widget);
+void gfig_grid_colors (GtkWidget *widget);
 void find_grid_pos     (GdkPoint  *p,
                         GdkPoint  *gp,
                         guint      state);

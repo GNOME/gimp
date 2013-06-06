@@ -343,7 +343,7 @@ run (const gchar      *name,
 typedef int (*ifunptr) (int, int);
 
 
-static gint find_unused_ia_colour   (const guchar *pixels,
+static gint find_unused_ia_color   (const guchar *pixels,
                                      gint          numpixels,
                                      gint          num_indices,
                                      gint         *colors);
@@ -395,7 +395,7 @@ static void flush_char      (void);
 
 
 static gint
-find_unused_ia_colour (const guchar *pixels,
+find_unused_ia_color (const guchar *pixels,
                        gint          numpixels,
                        gint          num_indices,
                        gint         *colors)
@@ -422,21 +422,21 @@ find_unused_ia_colour (const guchar *pixels,
       if (! ix_used[i])
         {
 #ifdef GIFDEBUG
-          g_printerr ("GIF: Found unused colour index %d.\n", (int) i);
+          g_printerr ("GIF: Found unused color index %d.\n", (int) i);
 #endif
           return i;
         }
     }
 
-  /* Couldn't find an unused colour index within the number of
+  /* Couldn't find an unused color index within the number of
      bits per pixel we wanted.  Will have to increment the number
-     of colours in the image and assign a transparent pixel there. */
+     of colors in the image and assign a transparent pixel there. */
   if (*colors < 256)
     {
       (*colors)++;
 
       g_printerr ("GIF: 2nd pass "
-                  "- Increasing bounds and using colour index %d.\n",
+                  "- Increasing bounds and using color index %d.\n",
                   *colors - 1);
       return ((*colors) - 1);
     }
@@ -455,7 +455,7 @@ special_flatten_indexed_alpha (guchar *pixels,
   guint32 i;
 
   /* Each transparent pixel in the image is mapped to a uniform value for
-     encoding, if image already has <=255 colours */
+     encoding, if image already has <=255 colors */
 
   if (transparent == -1) /* tough, no indices left for the trans. index */
     {
@@ -737,7 +737,7 @@ save_image (const gchar *filename,
 
 
   /* find earliest index in palette which is closest to the background
-     colour, and ATTEMPT to use that as the GIF's default background colour. */
+     color, and ATTEMPT to use that as the GIF's default background color. */
   for (i = 255; i >= 0; --i)
     {
       guint local_error = 0;
@@ -787,7 +787,7 @@ save_image (const gchar *filename,
 
       if (drawable_type == GIMP_INDEXEDA_IMAGE)
         {
-          g_printerr ("GIF: Too many colours?\n");
+          g_printerr ("GIF: Too many colors?\n");
         }
     }
 
@@ -841,7 +841,7 @@ save_image (const gchar *filename,
              image, for a transparency index. */
 
           transparent =
-            find_unused_ia_colour (pixels,
+            find_unused_ia_color (pixels,
                                    cols * rows,
                                    bpp_to_colors (colors_to_bpp (colors)),
                                    &colors);
@@ -1221,7 +1221,7 @@ colors_to_bpp (int colors)
     bpp = 8;
   else
     {
-      g_warning ("GIF: colors_to_bpp - Eep! too many colours: %d\n", colors);
+      g_warning ("GIF: colors_to_bpp - Eep! too many colors: %d\n", colors);
       return 8;
     }
 
@@ -1409,7 +1409,7 @@ gif_encode_header (FILE     *fp,
   put_word (RHeight, fp);
 
   /*
-   * Indicate that there is a global colour map
+   * Indicate that there is a global color map
    */
   B = 0x80;                        /* Yes, there is a color map */
 
@@ -1429,7 +1429,7 @@ gif_encode_header (FILE     *fp,
   fputc (B, fp);
 
   /*
-   * Write out the Background colour
+   * Write out the Background color
    */
   fputc (Background, fp);
 
@@ -1439,7 +1439,7 @@ gif_encode_header (FILE     *fp,
   fputc (0, fp);
 
   /*
-   * Write out the Global Colour Map
+   * Write out the Global Color Map
    */
   for (i = 0; i < ColorMapSize; i++)
     {
@@ -1480,7 +1480,7 @@ gif_encode_graphic_control_ext (FILE    *fp,
   curx = cury = 0;
 
   /*
-   * Write out extension for transparent colour index, if necessary.
+   * Write out extension for transparent color index, if necessary.
    */
   if ( (Transparent >= 0) || (NumFramesInImage > 1) )
     {

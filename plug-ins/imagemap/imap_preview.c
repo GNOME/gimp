@@ -130,7 +130,7 @@ render_indexed_image(Preview_t *preview_base, GimpPixelRgn *srcrgn)
    gint          dwidth, dheight, pwidth, pheight;
    gint          *src_col;
    gint          bpp, alpha, has_alpha;
-   guchar        *cmap, *colour;
+   guchar        *cmap, *color;
    gint          ncols;
    gboolean      gray = get_map_info()->show_gray;
    GtkWidget    *preview = preview_base->preview;
@@ -162,18 +162,18 @@ render_indexed_image(Preview_t *preview_base, GimpPixelRgn *srcrgn)
 
       for (col = 0; col < pwidth; col++) {
          src = &src_row[src_col[col]];
-         colour = cmap + 3 * (int)(*src);
+         color = cmap + 3 * (int)(*src);
 
          if (gray) {
-            guchar avg = (299 * colour[0] + 587 * colour[1] +
-                          114 * colour[2]) / 1000;
+            guchar avg = (299 * color[0] + 587 * color[1] +
+                          114 * color[2]) / 1000;
             *dest++ = avg;
             *dest++ = avg;
             *dest++ = avg;
          } else {
-            *dest++ = colour[0];
-            *dest++ = colour[1];
-            *dest++ = colour[2];
+            *dest++ = color[0];
+            *dest++ = color[1];
+            *dest++ = color[2];
          }
       }
    }

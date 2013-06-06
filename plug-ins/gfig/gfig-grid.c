@@ -187,7 +187,7 @@ find_grid_pos_polar (GdkPoint *p,
 /* return the new position in the passed point */
 
 void
-gfig_grid_colours (GtkWidget *widget)
+gfig_grid_colors (GtkWidget *widget)
 {
 }
 

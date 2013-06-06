@@ -1,9 +1,9 @@
 ; Set Colormap v1.1  September 29, 2004
 ; by Kevin Cozens <kcozens@interlog.com>
 ;
-; Change the colourmap of an image to the colours in a specified palette.
+; Change the colormap of an image to the colors in a specified palette.
 ; Included is script-fu-make-cmap-array (available for use in scripts) which
-; returns an INT8ARRAY containing the colours from a specified palette.
+; returns an INT8ARRAY containing the colors from a specified palette.
 ; This array can be used as the cmap argument for gimp-image-set-colormap.
 
 ; GIMP - The GNU Image Manipulation Program
@@ -24,17 +24,17 @@
 
 (define (script-fu-make-cmap-array palette)
   (let* (
-        (num-colours (car (gimp-palette-get-info palette)))
-        (cmap (cons-array (* num-colours 3) 'byte))
-        (colour 0)
+        (num-colors (car (gimp-palette-get-info palette)))
+        (cmap (cons-array (* num-colors 3) 'byte))
+        (color 0)
         (i 0)
         )
 
-    (while (< i num-colours)
-      (set! colour (car (gimp-palette-entry-get-color palette i)))
-      (aset cmap (* i 3) (car colour))
-      (aset cmap (+ (* i 3) 1) (cadr colour))
-      (aset cmap (+ (* i 3) 2) (caddr colour))
+    (while (< i num-colors)
+      (set! color (car (gimp-palette-entry-get-color palette i)))
+      (aset cmap (* i 3) (car color))
+      (aset cmap (+ (* i 3) 1) (cadr color))
+      (aset cmap (+ (* i 3) 2) (caddr color))
       (set! i (+ i 1))
     )
 

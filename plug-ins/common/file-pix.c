@@ -36,7 +36,7 @@
  *    - 8-bit (.matte, .alpha, or .mask) images
  *
  * NOTE: pix and matte files do not support alpha channels or indexed
- *       colour, so neither does this plug-in
+ *       color, so neither does this plug-in
  */
 
 #include "config.h"

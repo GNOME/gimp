@@ -420,7 +420,7 @@ load_image (const gchar  *filename,
       gimp_quit ();
     }
 
-  /* Is there a RGB colourmap ? */
+  /* Is there a RGB colormap ? */
   if ((sunhdr.l_ras_maptype == 1) && (sunhdr.l_ras_maplength > 0))
     {
       suncolmap = g_new (guchar, sunhdr.l_ras_maplength);
@@ -493,7 +493,7 @@ load_image (const gchar  *filename,
       image_ID = load_sun_d1 (filename, ifp, &sunhdr, suncolmap);
       break;
 
-    case 8:    /* 256 colours */
+    case 8:    /* 256 colors */
       image_ID = load_sun_d8 (filename, ifp, &sunhdr, suncolmap);
       break;
 
@@ -876,7 +876,7 @@ write_sun_header (FILE            *ofp,
 }
 
 
-/* Read the sun colourmap */
+/* Read the sun colormap */
 
 static void
 read_sun_cols (FILE            *ifp,
@@ -896,7 +896,7 @@ read_sun_cols (FILE            *ifp,
 }
 
 
-/* Write a sun colourmap */
+/* Write a sun colormap */
 
 static void
 write_sun_cols (FILE            *ofp,
@@ -910,7 +910,7 @@ write_sun_cols (FILE            *ofp,
 }
 
 
-/* Set a GIMP colourtable using the sun colourmap */
+/* Set a GIMP colortable using the sun colormap */
 
 static void
 set_color_table (gint32           image_ID,
@@ -1014,12 +1014,12 @@ load_sun_d1 (const gchar     *filename,
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * width);
 
-  if (suncolmap != NULL)   /* Set up the specified colour map */
+  if (suncolmap != NULL)   /* Set up the specified color map */
     {
       set_color_table (image_ID, sunhdr, suncolmap);
     }
-  else   /* No colourmap available. Set up a dummy b/w-colourmap */
-    {      /* Copy the original header and simulate b/w-colourmap */
+  else   /* No colormap available. Set up a dummy b/w-colormap */
+    {      /* Copy the original header and simulate b/w-colormap */
       memcpy ((char *)&sun_bwhdr,(char *)sunhdr,sizeof (L_SUNFILEHEADER));
       sun_bwhdr.l_ras_maptype = 2;
       sun_bwhdr.l_ras_maplength = 6;
@@ -1098,7 +1098,7 @@ load_sun_d8 (const gchar     *filename,
              guchar          *suncolmap)
 {
   int width, height, linepad, i, j;
-  int greyscale, ncols;
+  int grayscale, ncols;
   int scan_lines, tile_height;
   guchar *dest, *data;
   gint32 layer_ID, image_ID;
@@ -1109,10 +1109,10 @@ load_sun_d8 (const gchar     *filename,
   width = sunhdr->l_ras_width;
   height = sunhdr->l_ras_height;
 
-  /* This could also be a greyscale image. Check it */
+  /* This could also be a grayscale image. Check it */
   ncols = sunhdr->l_ras_maplength / 3;
 
-  greyscale = 1;  /* Also greyscale if no colourmap present */
+  grayscale = 1;  /* Also grayscale if no colormap present */
 
   if ((ncols > 0) && (suncolmap != NULL))
     {
@@ -1122,20 +1122,20 @@ load_sun_d8 (const gchar     *filename,
                  || (suncolmap[j+ncols] != j)
                  || (suncolmap[j+2*ncols] != j))
             {
-              greyscale = 0;
+              grayscale = 0;
               break;
             }
         }
     }
 
   image_ID = create_new_image (filename, width, height,
-                               greyscale ? GIMP_GRAY : GIMP_INDEXED,
+                               grayscale ? GIMP_GRAY : GIMP_INDEXED,
                                &layer_ID, &drawable, &pixel_rgn);
 
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * width);
 
-  if (!greyscale)
+  if (!grayscale)
     set_color_table (image_ID, sunhdr, suncolmap);
 
   linepad = (sunhdr->l_ras_width % 2);
@@ -1411,7 +1411,7 @@ save_index (FILE    *ofp,
         }
     }
 
-  bw = (ncols == 2);   /* Maybe this is a two-colour image */
+  bw = (ncols == 2);   /* Maybe this is a two-color image */
   if (bw)
     {
       bwline = g_malloc ((width+7)/8);
@@ -1420,7 +1420,7 @@ save_index (FILE    *ofp,
 
   is_bw = is_wb = 0;
   if (bw)    /* The Sun-OS imagetool generates index 0 for white and */
-    {          /* index 1 for black. Do the same without colourtable. */
+    {          /* index 1 for black. Do the same without colortable. */
       is_bw = (memcmp (suncolmap, sun_bwmap, 6) == 0);
       is_wb = (memcmp (suncolmap, sun_wbmap, 6) == 0);
     }
@@ -1436,15 +1436,15 @@ save_index (FILE    *ofp,
   sunhdr.l_ras_depth = bw ? 1 : 8;
   sunhdr.l_ras_length = (bpl+linepad) * height;
   sunhdr.l_ras_type = (rle) ? RAS_TYPE_RLE : RAS_TYPE_STD;
-  if (is_bw || is_wb)   /* No colourtable for real b/w images */
+  if (is_bw || is_wb)   /* No colortable for real b/w images */
     {
-      sunhdr.l_ras_maptype = 0;   /* No colourmap */
-      sunhdr.l_ras_maplength = 0; /* Length of colourmap */
+      sunhdr.l_ras_maptype = 0;   /* No colormap */
+      sunhdr.l_ras_maplength = 0; /* Length of colormap */
     }
   else
     {
-      sunhdr.l_ras_maptype = 1;   /* RGB colourmap */
-      sunhdr.l_ras_maplength = ncols*3; /* Length of colourmap */
+      sunhdr.l_ras_maptype = 1;   /* RGB colormap */
+      sunhdr.l_ras_maplength = ncols*3; /* Length of colormap */
     }
 
   write_sun_header (ofp, &sunhdr);
@@ -1461,7 +1461,7 @@ save_index (FILE    *ofp,
   if (rle) { write_fun = (WRITE_FUN *)&rle_fwrite; rle_startwrite (ofp); }
   else write_fun = (WRITE_FUN *)&my_fwrite;
 
-  if (bw)  /* Two colour image */
+  if (bw)  /* Two color image */
     {
       for (i = 0; i < height; i++)
         {
@@ -1475,7 +1475,7 @@ save_index (FILE    *ofp,
             gimp_progress_update ((double) i / (double) height);
         }
     }
-  else   /* Colour or grey-image */
+  else   /* Color or grey-image */
     {
       for (i = 0; i < height; i++)
         {
@@ -1546,8 +1546,8 @@ save_rgb (FILE   *ofp,
   sunhdr.l_ras_depth = 8 * bpp;
   sunhdr.l_ras_length = (width*bpp + linepad)*height;
   sunhdr.l_ras_type = (rle) ? RAS_TYPE_RLE : RAS_TYPE_STD;
-  sunhdr.l_ras_maptype = 0;   /* No colourmap */
-  sunhdr.l_ras_maplength = 0; /* Length of colourmap */
+  sunhdr.l_ras_maptype = 0;   /* No colormap */
+  sunhdr.l_ras_maplength = 0; /* Length of colormap */
 
   write_sun_header (ofp, &sunhdr);
 

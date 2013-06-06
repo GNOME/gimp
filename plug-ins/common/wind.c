@@ -600,8 +600,8 @@ render_wind_row (guchar *sb,
   gint i, j;
   gint bleed_length;
   gint blend_amt_R, blend_amt_G, blend_amt_B, blend_amt_A = 0 ;
-  gint blend_colour_R, blend_colour_G, blend_colour_B, blend_colour_A = 0 ;
-  gint target_colour_R, target_colour_G, target_colour_B, target_colour_A = 0;
+  gint blend_color_R, blend_color_G, blend_color_B, blend_color_A = 0 ;
+  gint target_color_R, target_color_G, target_color_B, target_color_A = 0;
   gint bleed_variation;
   gint n;
   gint sbi;  /* starting bleed index */
@@ -629,17 +629,17 @@ render_wind_row (guchar *sb,
 
           /* we have found an edge, do bleeding */
           sbi = Ri + comp_stride;
-          blend_colour_R = sb[Ri];
-          blend_colour_G = sb[Gi];
-          blend_colour_B = sb[Bi];
-          target_colour_R = sb[sbi];
-          target_colour_G = sb[sbi+1];
-          target_colour_B = sb[sbi+2];
+          blend_color_R = sb[Ri];
+          blend_color_G = sb[Gi];
+          blend_color_B = sb[Bi];
+          target_color_R = sb[sbi];
+          target_color_G = sb[sbi+1];
+          target_color_B = sb[sbi+2];
 
           if (bytes > 3)
             {
-              blend_colour_A = sb[Ai];
-              target_colour_A = sb[sbi+3];
+              blend_color_A = sb[Ai];
+              target_color_A = sb[sbi+3];
             }
 
           if (g_random_int_range (0, 3)) /* introduce weighted randomness */
@@ -661,19 +661,19 @@ render_wind_row (guchar *sb,
 
           bleed_length = bleed_variation;
 
-          blend_amt_R = target_colour_R - blend_colour_R;
-          blend_amt_G = target_colour_G - blend_colour_G;
-          blend_amt_B = target_colour_B - blend_colour_B;
+          blend_amt_R = target_color_R - blend_color_R;
+          blend_amt_G = target_color_G - blend_color_G;
+          blend_amt_B = target_color_B - blend_color_B;
           if (bytes > 3)
             {
-              blend_amt_A = target_colour_A - blend_colour_A;
+              blend_amt_A = target_color_A - blend_color_A;
             }
           denominator = bleed_length * bleed_length + bleed_length;
           denominator = 2.0 / denominator;
           n = bleed_length;
           for (i = sbi; i < lbi; i += bytes)
             {
-              /* check against original colour */
+              /* check against original color */
               if (!threshold_exceeded (sb + Ri,
                                        sb + i,
                                        edge,
@@ -684,40 +684,40 @@ render_wind_row (guchar *sb,
                   break;
                 }
 
-              blend_colour_R += blend_amt_R * n * denominator;
-              blend_colour_G += blend_amt_G * n * denominator;
-              blend_colour_B += blend_amt_B * n * denominator;
+              blend_color_R += blend_amt_R * n * denominator;
+              blend_color_G += blend_amt_G * n * denominator;
+              blend_color_B += blend_amt_B * n * denominator;
 
               if (bytes > 3)
                 {
-                  blend_colour_A += blend_amt_A * n * denominator;
-                  if (blend_colour_A > 255)
-                    blend_colour_A = 255;
-                  else if (blend_colour_A < 0)
-                    blend_colour_A = 0;
+                  blend_color_A += blend_amt_A * n * denominator;
+                  if (blend_color_A > 255)
+                    blend_color_A = 255;
+                  else if (blend_color_A < 0)
+                    blend_color_A = 0;
                 }
 
-              if (blend_colour_R > 255)
-                blend_colour_R = 255;
-              else if (blend_colour_R < 0)
-                blend_colour_R = 0;
+              if (blend_color_R > 255)
+                blend_color_R = 255;
+              else if (blend_color_R < 0)
+                blend_color_R = 0;
 
-              if (blend_colour_G > 255)
-                blend_colour_G = 255;
-              else if (blend_colour_G < 0)
-                blend_colour_G = 0;
+              if (blend_color_G > 255)
+                blend_color_G = 255;
+              else if (blend_color_G < 0)
+                blend_color_G = 0;
 
-              if (blend_colour_B > 255)
-                blend_colour_B = 255;
-              else if (blend_colour_B < 0)
-                blend_colour_B = 0;
+              if (blend_color_B > 255)
+                blend_color_B = 255;
+              else if (blend_color_B < 0)
+                blend_color_B = 0;
 
-              sb[i + 0] = (blend_colour_R * 2 + sb[i + 0]) / 3;
-              sb[i + 1] = (blend_colour_G * 2 + sb[i + 1]) / 3;
-              sb[i + 2] = (blend_colour_B * 2 + sb[i + 2]) / 3;
+              sb[i + 0] = (blend_color_R * 2 + sb[i + 0]) / 3;
+              sb[i + 1] = (blend_color_G * 2 + sb[i + 1]) / 3;
+              sb[i + 2] = (blend_color_B * 2 + sb[i + 2]) / 3;
 
               if (bytes > 3)
-                sb[i + 3] = (blend_colour_A * 2 + sb[i + 3]) / 3;
+                sb[i + 3] = (blend_color_A * 2 + sb[i + 3]) / 3;
 
               if (threshold_exceeded (sb + i,
                                       sb + i + comp_stride,
@@ -725,16 +725,16 @@ render_wind_row (guchar *sb,
                                       threshold,
                                       bytes > 3))
                 {
-                  target_colour_R = sb[i + comp_stride + 0];
-                  target_colour_G = sb[i + comp_stride + 1];
-                  target_colour_B = sb[i + comp_stride + 2];
+                  target_color_R = sb[i + comp_stride + 0];
+                  target_color_G = sb[i + comp_stride + 1];
+                  target_color_B = sb[i + comp_stride + 2];
                   if (bytes > 3)
-                    target_colour_A = sb[i + comp_stride + 3];
-                  blend_amt_R = target_colour_R - blend_colour_R;
-                  blend_amt_G = target_colour_G - blend_colour_G;
-                  blend_amt_B = target_colour_B - blend_colour_B;
+                    target_color_A = sb[i + comp_stride + 3];
+                  blend_amt_R = target_color_R - blend_color_R;
+                  blend_amt_G = target_color_G - blend_color_G;
+                  blend_amt_B = target_color_B - blend_color_B;
                   if (bytes > 3)
-                    blend_amt_A = target_colour_A - blend_colour_A;
+                    blend_amt_A = target_color_A - blend_color_A;
                   denominator = n * n + n;
                   denominator = 2.0 / denominator;
                 }

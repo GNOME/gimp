@@ -897,7 +897,7 @@ create_fits_header (FitsFile *ofp,
 }
 
 
-/* Save direct colours (GRAY, GRAYA, RGB, RGBA) */
+/* Save direct colors (GRAY, GRAYA, RGB, RGBA) */
 static gint
 save_fits (FitsFile *ofp,
            gint32    image_ID,

@@ -175,7 +175,7 @@ load_image (const gchar  *filename,
   gint               width;
   gint               height;
   gint               num_components;
-  gint               colourspace_family;
+  gint               colorspace_family;
   GeglBuffer        *buffer;
   gint               i, j, k;
   guchar            *pixels;
@@ -223,8 +223,8 @@ load_image (const gchar  *filename,
   height = jas_image_height (image);
 
   /* determine image type */
-  colourspace_family = jas_clrspc_fam (jas_image_clrspc (image));
-  switch (colourspace_family)
+  colorspace_family = jas_clrspc_fam (jas_image_clrspc (image));
+  switch (colorspace_family)
     {
     case JAS_CLRSPC_FAM_GRAY:
       base_type = GIMP_GRAY;

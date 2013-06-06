@@ -125,7 +125,7 @@ query (void)
                           "including Lines, Circles, Ellipses, Curves, Polygons, "
                           "pointed stars, Bezier curves, and Spirals.  "
                           "Objects can be painted using Brushes or other tools"
-                          "or filled using colours or patterns.  "
+                          "or filled using colors or patterns.  "
                           "Gfig objects can also be used to create selections.  ",
                           "Andy Thomas",
                           "Andy Thomas",

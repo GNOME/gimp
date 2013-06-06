@@ -134,7 +134,7 @@
 
 /* PSD spec enums */
 
-/* Image colour modes */
+/* Image color modes */
 typedef enum {
   PSD_BITMAP       = 0,                 /* Bitmap image */
   PSD_GRAYSCALE    = 1,                 /* Greyscale image */
@@ -146,13 +146,13 @@ typedef enum {
   PSD_LAB          = 9                  /* L*a*b image */
 } PSDColorMode;
 
-/* Image colour spaces */
+/* Image color spaces */
 typedef enum {
   PSD_CS_RGB       = 0,                 /* RGB */
   PSD_CS_HSB       = 1,                 /* Hue, Saturation, Brightness */
   PSD_CS_CMYK      = 2,                 /* CMYK */
   PSD_CS_PANTONE   = 3,                 /* Pantone matching system (Lab)*/
-  PSD_CS_FOCOLTONE = 4,                 /* Focoltone colour system (CMYK)*/
+  PSD_CS_FOCOLTONE = 4,                 /* Focoltone color system (CMYK)*/
   PSD_CS_TRUMATCH  = 5,                 /* Trumatch color (CMYK)*/
   PSD_CS_TOYO      = 6,                 /* Toyo 88 colorfinder 1050 (Lab)*/
   PSD_CS_LAB       = 7,                 /* L*a*b*/
@@ -166,19 +166,19 @@ typedef enum {
 typedef enum {
   PSD_PS2_IMAGE_INFO    = 1000,         /* 0x03e8 - Obsolete - ps 2.0 image info */
   PSD_MAC_PRINT_INFO    = 1001,         /* 0x03e9 - Optional - Mac print manager print info record */
-  PSD_PS2_COLOR_TAB     = 1003,         /* 0x03eb - Obsolete - ps 2.0 indexed colour table */
+  PSD_PS2_COLOR_TAB     = 1003,         /* 0x03eb - Obsolete - ps 2.0 indexed color table */
   PSD_RESN_INFO         = 1005,         /* 0x03ed - ResolutionInfo structure */
   PSD_ALPHA_NAMES       = 1006,         /* 0x03ee - Alpha channel names */
   PSD_DISPLAY_INFO      = 1007,         /* 0x03ef - DisplayInfo structure */
   PSD_CAPTION           = 1008,         /* 0x03f0 - Optional - Caption string */
   PSD_BORDER_INFO       = 1009,         /* 0x03f1 - Border info */
-  PSD_BACKGROUND_COL    = 1010,         /* 0x03f2 - Background colour */
+  PSD_BACKGROUND_COL    = 1010,         /* 0x03f2 - Background color */
   PSD_PRINT_FLAGS       = 1011,         /* 0x03f3 - Print flags */
   PSD_GREY_HALFTONE     = 1012,         /* 0x03f4 - Greyscale and multichannel halftoning info */
-  PSD_COLOR_HALFTONE    = 1013,         /* 0x03f5 - Colour halftoning info */
+  PSD_COLOR_HALFTONE    = 1013,         /* 0x03f5 - Color halftoning info */
   PSD_DUOTONE_HALFTONE  = 1014,         /* 0x03f6 - Duotone halftoning info */
   PSD_GREY_XFER         = 1015,         /* 0x03f7 - Greyscale and multichannel transfer functions */
-  PSD_COLOR_XFER        = 1016,         /* 0x03f8 - Colour transfer functions */
+  PSD_COLOR_XFER        = 1016,         /* 0x03f8 - Color transfer functions */
   PSD_DUOTONE_XFER      = 1017,         /* 0x03f9 - Duotone transfer functions */
   PSD_DUOTONE_INFO      = 1018,         /* 0x03fa - Duotone image information */
   PSD_EFFECTIVE_BW      = 1019,         /* 0x03fb - Effective black & white values for dot range */
@@ -199,7 +199,7 @@ typedef enum {
   PSD_URL               = 1035,         /* 0x040b - URL string */
   PSD_THUMB_RES2        = 1036,         /* 0x040c - Thumbnail resource */
   PSD_GLOBAL_ANGLE      = 1037,         /* 0x040d - Global angle */
-  PSD_COLOR_SAMPLER     = 1038,         /* 0x040e - Colour samplers resource */
+  PSD_COLOR_SAMPLER     = 1038,         /* 0x040e - Color samplers resource */
   PSD_ICC_PROFILE       = 1039,         /* 0x040f - ICC Profile */
   PSD_WATERMARK         = 1040,         /* 0x0410 - Watermark */
   PSD_ICC_UNTAGGED      = 1041,         /* 0x0411 - Do not use ICC profile flag */
@@ -207,8 +207,8 @@ typedef enum {
   PSD_SPOT_HALFTONE     = 1043,         /* 0x0413 - Spot halftone */
   PSD_DOC_IDS           = 1044,         /* 0x0414 - Document specific IDs */
   PSD_ALPHA_NAMES_UNI   = 1045,         /* 0x0415 - Unicode alpha names */
-  PSD_IDX_COL_TAB_CNT   = 1046,         /* 0x0416 - Indexed colour table count */
-  PSD_IDX_TRANSPARENT   = 1047,         /* 0x0417 - Index of transparent colour (if any) */
+  PSD_IDX_COL_TAB_CNT   = 1046,         /* 0x0416 - Indexed color table count */
+  PSD_IDX_TRANSPARENT   = 1047,         /* 0x0417 - Index of transparent color (if any) */
   PSD_GLOBAL_ALT        = 1049,         /* 0x0419 - Global altitude */
   PSD_SLICES            = 1050,         /* 0x041a - Slices */
   PSD_WORKFLOW_URL_UNI  = 1051,         /* 0x041b - Workflow URL - Unicode string */
@@ -294,7 +294,7 @@ typedef enum {
 typedef gint32  Fixed;                  /* Represents a fixed point implied decimal */
 
 
-/* Apple colour space data structures */
+/* Apple color space data structures */
 
 /* RGB Color Value
    A color value expressed in the RGB color space is composed of red, green,
@@ -412,7 +412,7 @@ typedef struct {
 
 /* Channel display info data */
 typedef struct {
-  gint16        colorSpace;             /* Colour space from  PSDColorSpace */
+  gint16        colorSpace;             /* Color space from  PSDColorSpace */
   guint16       color[4];               /* 4 * 16 bit color components */
   gint16        opacity;                /* Opacity 0 to 100 */
   gchar         kind;                   /* Selected = 0, Protected = 1 */
@@ -451,9 +451,9 @@ typedef struct
   gint32                left;                   /* Layer left */
   gint32                bottom;                 /* Layer bottom */
   gint32                right;                  /* Layer right */
-  guchar                def_color;              /* Default background colour */
+  guchar                def_color;              /* Default background color */
   guchar                flags;                  /* Layer flags */
-  guchar                extra_def_color;        /* Real default background colour */
+  guchar                extra_def_color;        /* Real default background color */
   guchar                extra_flags;            /* Real layer flags */
   MaskFlags             mask_flags;             /* Flags */
 } LayerMask;
@@ -509,8 +509,8 @@ typedef struct
   GimpRGB       gimp_color;             /* Gimp RGB color */
   gint16        opacity;                /* Opacity */
   guchar        ps_kind;                /* PS type flag */
-  gint16        ps_cspace;              /* PS colour space */
-  CMColor       ps_color;               /* PS colour */
+  gint16        ps_cspace;              /* PS color space */
+  CMColor       ps_color;               /* PS color */
 } PSDchanneldata;
 
 /* PSD Image Resource data structure */
@@ -540,12 +540,12 @@ typedef struct
   guint32               rows;                   /* Number of rows: 1 - 30000 */
   guint32               columns;                /* Number of columns: 1 - 30000 */
   guint16               bps;                    /* Bits per channel: 1, 8 or 16 */
-  guint16               color_mode;             /* Image colour mode: {PSDColorMode} */
-  GimpImageBaseType     base_type;              /* Image base colour mode: (GIMP) */
+  guint16               color_mode;             /* Image color mode: {PSDColorMode} */
+  GimpImageBaseType     base_type;              /* Image base color mode: (GIMP) */
   guint16               comp_mode;              /* Merged image compression mode */
-  guchar               *color_map;              /* Colour map data */
-  guint32               color_map_len;          /* Colour map data length */
-  guint32               color_map_entries;      /* Colour map number of entries */
+  guchar               *color_map;              /* Color map data */
+  guint32               color_map_len;          /* Color map data length */
+  guint32               color_map_entries;      /* Color map number of entries */
   guint32               image_res_start;        /* Image resource block start address */
   guint32               image_res_len;          /* Image resource block length */
   guint32               mask_layer_start;       /* Mask & layer block start address */

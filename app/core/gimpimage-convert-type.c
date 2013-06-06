@@ -22,17 +22,17 @@
  *  worse or better depending on what you enjoy...).  [adam@gimp.org]
  *
  * 2004-12-12 - Use a slower but much nicer technique for finding the
- *  two best colours to dither between when using fixed/positional
+ *  two best colors to dither between when using fixed/positional
  *  dither methods.  Makes positional dither much less lame.  [adam@gimp.org]
  *
  * 2002-02-10 - Quantizer version 3.0 (the rest of the commit started
- *  a year ago -- whoops).  Divide colours within CIE L*a*b* space using
- *  CPercep module (cpercep.[ch]), colour-match and dither likewise,
+ *  a year ago -- whoops).  Divide colors within CIE L*a*b* space using
+ *  CPercep module (cpercep.[ch]), color-match and dither likewise,
  *  change the underlying box selection criteria and division point
  *  logic, bump luminance precision upwards, etc.etc.  Generally
- *  chooses a much richer colour set, especially for low numbers of
- *  colours.  n.b.: Less luminance-sloppy in straight remapping which is
- *  good for colour but a bit worse for high-frequency detail (that's
+ *  chooses a much richer color set, especially for low numbers of
+ *  colors.  n.b.: Less luminance-sloppy in straight remapping which is
+ *  good for color but a bit worse for high-frequency detail (that's
  *  partly what fs-dithering is for -- use it).  [adam@gimp.org]
  *
  * 2001-03-25 - Define accessor function/macro for histogram reads and
@@ -40,7 +40,7 @@
  *  dirty tricks we used when we knew that the histogram was a straight
  *  3d array, so I've recovered some of the speed loss by implementing
  *  a 5d accessor function with good locality of reference.  This change
- *  is the first step towards quantizing in a more interesting colourspace
+ *  is the first step towards quantizing in a more interesting colorspace
  *  than frumpy old RGB.  [Adam]
  *
  * 2000/01/30 - Use palette_selector instead of option_menu for custom
@@ -48,14 +48,14 @@
  *
  * 99/09/01 - Created a low-bleed FS-dither option.  [Adam]
  *
- * 99/08/29 - Deterministic colour dithering to arbitrary palettes.
+ * 99/08/29 - Deterministic color dithering to arbitrary palettes.
  *  Ideal for animations that are going to be delta-optimized or simply
  *  don't want to look 'busy' in static areas.  Also a bunch of bugfixes
  *  and tweaks.  [Adam]
  *
  * 99/08/28 - Deterministic alpha dithering over layers, reduced bleeding
  *  of transparent values into opaque values, added optional stage to
- *  remove duplicate or unused colour entries from final colourmap. [Adam]
+ *  remove duplicate or unused color entries from final colormap. [Adam]
  *
  * 99/02/24 - Many revisions to the box-cut quantizer used in RGB->INDEXED
  *  conversion.  Box to be cut is chosen on the basis of possessing an axis
@@ -71,7 +71,7 @@
  * 98/07/25 - Convert-to-indexed now remembers the last invocation's
  *  settings.  Also, GRAY->INDEXED is more flexible.  [Adam]
  *
- * 98/07/05 - Sucked the warning about quantizing to too many colours into
+ * 98/07/05 - Sucked the warning about quantizing to too many colors into
  *  a text widget embedded in the dialog, improved intelligence of dialog
  *  to default 'custom palette' selection to 'Web' if available, and
  *  in this case not bother to present the native WWW-palette radio
@@ -86,10 +86,10 @@
  * 97/11/14 - added a proper pdb interface and support for dithering
  *  to custom palettes (based on a patch by Eric Hernes) [Yosh]
  *
- * 97/11/04 - fixed the accidental use of the colour-counting case
+ * 97/11/04 - fixed the accidental use of the color-counting case
  *  when palette_type is WEB or MONO. [Adam]
  *
- * 97/10/25 - colour-counting implemented (could use some hashing, but
+ * 97/10/25 - color-counting implemented (could use some hashing, but
  *  performance actually seems okay) - now RGB->INDEXED conversion isn't
  *  destructive if it doesn't have to be. [Adam]
  *
@@ -848,9 +848,9 @@ gimp_image_convert_type (GimpImage               *image,
           else
             zero_histogram_rgb (quantobj->histogram);
 
-          /* To begin, assume that there are fewer colours in
+          /* To begin, assume that there are fewer colors in
            *  the image than the user actually asked for.  In that
-           *  case, we don't need to quantize or colour-dither.
+           *  case, we don't need to quantize or color-dither.
            */
           needs_quantize = FALSE;
           num_found_cols = 0;
@@ -871,7 +871,7 @@ gimp_image_convert_type (GimpImage               *image,
                                         progress, nth_layer, n_layers);
 
               /* Note: generate_histogram_rgb may set needs_quantize if
-               *  the image contains more colours than the limit specified
+               *  the image contains more colors than the limit specified
                *  by the user.
                */
             }
@@ -886,7 +886,7 @@ gimp_image_convert_type (GimpImage               *image,
           palette_type == GIMP_MAKE_PALETTE)
         {
           /* If this is an RGB image, and the user wanted a custom-built
-           *  generated palette, and this image has no more colours than
+           *  generated palette, and this image has no more colors than
            *  the user asked for, we don't need the first pass (quantization).
            *
            * There's also no point in dithering, since there's no error to
@@ -1333,26 +1333,26 @@ generate_histogram_rgb (CFHistogram   histogram,
                             goto already_found;
                         }
 
-                      /* Colour was not in the table of
-                       * existing colours
+                      /* Color was not in the table of
+                       * existing colors
                        */
 
                       num_found_cols++;
 
                       if (num_found_cols > col_limit)
                         {
-                          /* There are more colours in the image
+                          /* There are more colors in the image
                            *  than were allowed.  We switch to plain
                            *  histogram calculation with a view to
                            *  quantizing at a later stage.
                            */
                           needs_quantize = TRUE;
-                          /* g_print ("\nmax colours exceeded - needs quantize.\n");*/
+                          /* g_print ("\nmax colors exceeded - needs quantize.\n");*/
                           goto already_found;
                         }
                       else
                         {
-                          /* Remember the new colour we just found.
+                          /* Remember the new color we just found.
                            */
                           found_cols[num_found_cols-1][0] = data[RED];
                           found_cols[num_found_cols-1][1] = data[GREEN];
@@ -1399,14 +1399,14 @@ find_split_candidate (const boxptr  boxlist,
   *which_axis = AXIS_UNDEF;
 
   /* we only perform the initial L-split bias /at all/ if the final
-     number of desired colours is quite low, otherwise it all comes
+     number of desired colors is quite low, otherwise it all comes
      out in the wash anyway and this initial bias generally only hurts
      us in the long run. */
   if (desired_colors <= 16)
     {
 #define BIAS_FACTOR 2.66F
 #define BIAS_NUMBER 2 /* 0 */
-      /* we bias towards splitting across L* for first few colours */
+      /* we bias towards splitting across L* for first few colors */
       Lbias = (numboxes > BIAS_NUMBER) ? 1.0F : ((double)(BIAS_NUMBER+1) -
                                                  ((double)numboxes)) /
         ((double)BIAS_NUMBER / BIAS_FACTOR);
@@ -2113,7 +2113,7 @@ compute_color_gray (QuantizeObj *quantobj,
     }
    else /* The only situation where total==0 is if the image was null or
         *  all-transparent.  In that case we just put a dummy value in
-        *  the colourmap.
+        *  the colormap.
         */
     {
       quantobj->cmap[icolor].red =
@@ -2180,7 +2180,7 @@ compute_color_rgb (QuantizeObj *quantobj,
     }
   else /* The only situation where total==0 is if the image was null or
         *  all-transparent.  In that case we just put a dummy value in
-        *  the colourmap.
+        *  the colormap.
         */
     {
       quantobj->cmap[icolor].red   = 0;
@@ -2237,7 +2237,7 @@ compute_color_lin8 (QuantizeObj *quantobj,
     }
   else /* The only situation where total==0 is if the image was null or
         *  all-transparent.  In that case we just put a dummy value in
-        *  the colourmap.
+        *  the colormap.
         */
     {
       g_warning("eep.");
@@ -3019,16 +3019,16 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
                 }
               else
                 {
-                  /* not enough colours to bother looking for an 'alternative'
-                     colour (we may fail to do so anyway), so decide that
-                     the alternative colour is simply the other cmap entry. */
+                  /* not enough colors to bother looking for an 'alternative'
+                     color (we may fail to do so anyway), so decide that
+                     the alternative color is simply the other cmap entry. */
                   pixval2 = (pixval1 + 1) %
                     (quantobj->actual_number_of_colors);
                 }
 
               /* always deterministically sort pixval1 and pixval2, to
                  avoid artifacts in the dither range due to inverting our
-                 relative colour viewpoint -- most obvious in 1-bit dither. */
+                 relative color viewpoint -- most obvious in 1-bit dither. */
               if (pixval1 > pixval2)
                 {
                   gint tmpval = pixval1;
@@ -3333,12 +3333,12 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
               if (*cachep == 0)
                 fill_inverse_cmap_rgb (quantobj, histogram, R, G, B);
 
-              /* We now try to find a colour which, when mixed in some fashion
+              /* We now try to find a color which, when mixed in some fashion
                  with the closest match, yields something closer to the
-                 desired colour.  We do this by repeatedly extrapolating the
-                 colour vector from one to the other until we find another
-                 colour cell.  Then we assess the distance of both mixer
-                 colours from the intended colour to determine their relative
+                 desired color.  We do this by repeatedly extrapolating the
+                 color vector from one to the other until we find another
+                 color cell.  Then we assess the distance of both mixer
+                 colors from the intended color to determine their relative
                  probabilities of being chosen. */
               pixval1 = *cachep - 1;
               color1 = &quantobj->cmap[pixval1];
@@ -3376,16 +3376,16 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
 
               if (quantobj->actual_number_of_colors <= 2
                   /* || pixval1 == pixval2 */) {
-                /* not enough colours to bother looking for an 'alternative'
-                   colour (we may fail to do so anyway), so decide that
-                   the alternative colour is simply the other cmap entry. */
+                /* not enough colors to bother looking for an 'alternative'
+                   color (we may fail to do so anyway), so decide that
+                   the alternative color is simply the other cmap entry. */
                 pixval2 = (pixval1 + 1) %
                   (quantobj->actual_number_of_colors);
               }
 
               /* always deterministically sort pixval1 and pixval2, to
                  avoid artifacts in the dither range due to inverting our
-                 relative colour viewpoint -- most obvious in 1-bit dither. */
+                 relative color viewpoint -- most obvious in 1-bit dither. */
               if (pixval1 > pixval2)
                 {
                   gint tmpval = pixval1;
@@ -3525,7 +3525,7 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
                       (lastgreen == src[green_pix]) &&
                       (lastblue  == src[blue_pix]))
                     {
-                      /*  same pixel colour as last time  */
+                      /*  same pixel color as last time  */
                       dest[INDEXED] = lastindex;
                       if (has_alpha)
                         dest[ALPHA_I] = 255;
@@ -3547,12 +3547,12 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
                             lastblue  = src[blue_pix];
                             lastindex = i;
 
-                            goto got_colour;
+                            goto got_color;
                           }
                         }
-                      g_error ("Non-existant colour was expected to "
-                               "be in non-destructive colourmap.");
-                    got_colour:
+                      g_error ("Non-existant color was expected to "
+                               "be in non-destructive colormap.");
+                    got_color:
                       dest[INDEXED] = lastindex;
                       if (has_alpha)
                         dest[ALPHA_I] = 255;
@@ -3890,7 +3890,7 @@ median_cut_pass2_rgb_init (QuantizeObj *quantobj)
   /* Mark all indices as currently unused */
   memset (quantobj->index_used_count, 0, 256 * sizeof (unsigned long));
 
-  /* Make a version of our discovered colourmap in linear space */
+  /* Make a version of our discovered colormap in linear space */
   for (i = 0; i < quantobj->actual_number_of_colors; i++)
     {
       rgb_to_unshifted_lin (quantobj->cmap[i].red,
@@ -3980,7 +3980,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
   error_limiter = init_error_limit (quantobj->error_freedom);
   range_limiter = range_array + 256;
 
-  /* find the bounding box of the palette colours --
+  /* find the bounding box of the palette colors --
      we use this for hard-clamping our error-corrected
      values so that we can't continuously accelerate outside
      of our attainable gamut, which looks icky. */
@@ -4194,7 +4194,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
             }
           else
             {
-              /* colour pretty much undefined now; nullify error. */
+              /* color pretty much undefined now; nullify error. */
               re = ge = be = 0;
             }
 #endif

@@ -354,7 +354,7 @@ blindsapply (guchar *srow,
   /* The angle is the conceptual 'rotation' of each of these segments */
 
   /* Note the row is considered to be made up of a two dim array actual
-   * pixel locations and the RGB colour at these locations.
+   * pixel locations and the RGB color at these locations.
    */
 
   /* In the process copy the src row to the destination row */

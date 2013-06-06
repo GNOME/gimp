@@ -322,7 +322,7 @@ load_image (const gchar  *file,
               bpp;           /* Bits per pixel */
   gint        height, width, /* Dimensions of image */
               offx, offy,    /* Layer offets */
-              colours;       /* Number of colours */
+              colors;       /* Number of colors */
 
   gint32      image,         /* Image */
               layer;         /* Layer */
@@ -361,7 +361,7 @@ load_image (const gchar  *file,
 
   if (strncmp ((const gchar *) header, "KiSS", 4))
     {
-      colours= 16;
+      colors= 16;
       bpp = 4;
       width = header[0] + (256 * header[1]);
       height = header[2] + (256 * header[3]);
@@ -393,7 +393,7 @@ load_image (const gchar  *file,
         case 4:
         case 8:
         case 32:
-          colours = (1 << bpp);
+          colors = (1 << bpp);
           break;
         default:
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
@@ -579,20 +579,20 @@ load_image (const gchar  *file,
 
       if (fp != NULL)
         {
-          colours = load_palette (palette_file, fp, palette, error);
+          colors = load_palette (palette_file, fp, palette, error);
           fclose (fp);
-          if (colours < 0 || *error)
+          if (colors < 0 || *error)
             return -1;
         }
       else
         {
-          for (i= 0; i < colours; ++i)
+          for (i= 0; i < colors; ++i)
             {
-              palette[i * 3] = palette[i * 3 + 1] = palette[i * 3 + 2]= i * 256 / colours;
+              palette[i * 3] = palette[i * 3 + 1] = palette[i * 3 + 2]= i * 256 / colors;
             }
         }
 
-      gimp_image_set_colormap (image, palette + 3, colours - 1);
+      gimp_image_set_colormap (image, palette + 3, colors - 1);
     }
 
   /* Now get everything redrawn and hand back the finished image */
@@ -613,7 +613,7 @@ load_palette (const gchar *file,
   guchar        header[32];     /* File header */
   guchar        buffer[2];
   guchar        file_mark, bpp;
-  gint          i, colours = 0;
+  gint          i, colors = 0;
   size_t        n_read;
 
   n_read = fread (header, 4, 1, fp);
@@ -656,19 +656,19 @@ load_palette (const gchar *file,
           return -1;
         }
 
-      colours = header[8] + header[9] * 256;
-      if (colours != 16 && colours != 256)
+      colors = header[8] + header[9] * 256;
+      if (colors != 16 && colors != 256)
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("'%s': illegal number of colors: %u"),
-                       gimp_filename_to_utf8 (file), colours);
+                       gimp_filename_to_utf8 (file), colors);
           return -1;
         }
 
       switch (bpp)
         {
         case 12:
-          for (i = 0; i < colours; ++i)
+          for (i = 0; i < colors; ++i)
             {
               n_read = fread (buffer, 1, 2, fp);
 
@@ -687,7 +687,7 @@ load_palette (const gchar *file,
             }
           break;
         case 24:
-          n_read = fread (palette, colours, 3, fp);
+          n_read = fread (palette, colors, 3, fp);
 
           if (n_read < 3)
             {
@@ -703,9 +703,9 @@ load_palette (const gchar *file,
     }
   else
     {
-      colours = 16;
+      colors = 16;
       fseek (fp, 0, SEEK_SET);
-      for (i= 0; i < colours; ++i)
+      for (i= 0; i < colors; ++i)
         {
           n_read = fread (buffer, 1, 2, fp);
 
@@ -723,7 +723,7 @@ load_palette (const gchar *file,
         }
     }
 
-  return colours;
+  return colors;
 }
 
 static gboolean
@@ -739,7 +739,7 @@ save_image (const gchar  *file,
   gint           height;
   guchar         header[32];    /* File header */
   gint           bpp;           /* Bit per pixel */
-  gint           colours, type; /* Number of colours, type of layer */
+  gint           colors, type; /* Number of colors, type of layer */
   gint           offx, offy;    /* Layer offsets */
   guchar        *buf;           /* Temporary buffer */
   guchar        *line;          /* Pixel data */
@@ -789,9 +789,9 @@ save_image (const gchar  *file,
   /* Work out whether to save as 8bit or 4bit */
   if (bpp < 32)
     {
-      g_free (gimp_image_get_colormap (image, &colours));
+      g_free (gimp_image_get_colormap (image, &colors));
 
-      if (colours > 15)
+      if (colors > 15)
         {
           header[5] = 8;
         }
@@ -841,7 +841,7 @@ save_image (const gchar  *file,
 
           fwrite (buf, width, 4, fp);
         }
-      else if (colours > 16)
+      else if (colors > 16)
         {
           for (j = 0, k = 0; j < width * 2; j += 2, ++k)
             {
