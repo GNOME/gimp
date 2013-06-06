@@ -231,7 +231,7 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
           clone->transform_node =
             gegl_node_new_child (clone->node,
                                  "operation", "gegl:transform",
-                                 "filter",    gimp_interpolation_to_gegl_filter (GIMP_INTERPOLATION_LINEAR),
+                                 "sampler",    GIMP_INTERPOLATION_LINEAR,
                                  NULL);
 
           clone->dest_node =

@@ -29,23 +29,6 @@
 #include "gimp-gegl-utils.h"
 
 
-const gchar *
-gimp_interpolation_to_gegl_filter (GimpInterpolationType interpolation)
-{
-  switch (interpolation)
-    {
-    case GIMP_INTERPOLATION_NONE:    return "nearest";
-    case GIMP_INTERPOLATION_LINEAR:  return "linear";
-    case GIMP_INTERPOLATION_CUBIC:   return "cubic";
-    case GIMP_INTERPOLATION_NOHALO:  return "nohalo";
-    case GIMP_INTERPOLATION_LOHALO:  return "lohalo";
-    default:
-      break;
-    }
-
-  return "nearest";
-}
-
 GType
 gimp_gegl_get_op_enum_type (const gchar *operation,
                             const gchar *property)

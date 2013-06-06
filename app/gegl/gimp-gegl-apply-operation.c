@@ -289,7 +289,7 @@ gimp_gegl_apply_scale (GeglBuffer            *src_buffer,
                               "operation", "gegl:scale",
                               "origin-x",   0.0,
                               "origin-y",   0.0,
-                              "filter",     gimp_interpolation_to_gegl_filter (interpolation_type),
+                              "sampler",    interpolation_type,
                               "x",          x,
                               "y",          y,
                               NULL);
@@ -361,7 +361,7 @@ gimp_gegl_apply_transform (GeglBuffer            *src_buffer,
 
   node = gegl_node_new_child (NULL,
                               "operation", "gegl:transform",
-                              "filter",     gimp_interpolation_to_gegl_filter (interpolation_type),
+                              "sampler",   interpolation_type,
                               NULL);
 
   gimp_gegl_node_set_matrix (node, transform);

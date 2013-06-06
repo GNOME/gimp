@@ -22,8 +22,6 @@
 #define __GIMP_GEGL_UTILS_H__
 
 
-const gchar * gimp_interpolation_to_gegl_filter (GimpInterpolationType  interpolation) G_GNUC_CONST;
-
 GType         gimp_gegl_get_op_enum_type        (const gchar           *operation,
                                                  const gchar           *property);
 
