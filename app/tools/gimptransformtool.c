@@ -385,6 +385,7 @@ gimp_transform_tool_push_internal_undo (GimpTransformTool *tr_tool)
   gint i;
 
   g_return_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool));
+  g_return_if_fail (tr_tool->prev_trans_info != NULL);
 
   /* push current state on the undo list and set this state as the
    * current state, but avoid doing this if there were no changes
@@ -437,6 +438,7 @@ gimp_transform_tool_button_release (GimpTool              *tool,
       if (! tr_tool->use_grid)
         {
           gimp_transform_tool_response (NULL, GTK_RESPONSE_OK, tr_tool);
+          return;
         }
 
       /* We're done with an interaction, save it on the undo list */
