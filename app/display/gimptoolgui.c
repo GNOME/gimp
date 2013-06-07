@@ -391,6 +391,49 @@ gimp_tool_gui_hide (GimpToolGui *gui)
 }
 
 void
+gimp_tool_gui_set_overlay (GimpToolGui *gui,
+                           gboolean     overlay)
+{
+  GimpToolGuiPrivate *private;
+  gboolean            visible;
+
+  g_return_if_fail (GIMP_IS_TOOL_GUI (gui));
+
+  private = GET_PRIVATE (gui);
+
+  if (private->overlay == overlay)
+    return;
+
+  visible = gtk_widget_get_visible (private->dialog);
+
+  if (visible)
+    gimp_tool_gui_hide (gui);
+
+  gtk_container_remove (GTK_CONTAINER (gtk_widget_get_parent (private->vbox)),
+                        private->vbox);
+
+  if (private->overlay)
+    g_object_unref (private->dialog);
+  else
+    gtk_widget_destroy (private->dialog);
+
+  private->overlay = overlay ? TRUE : FALSE;
+
+  gimp_tool_gui_create_dialog (gui);
+
+  if (visible)
+    gimp_tool_gui_show (gui);
+}
+
+gboolean
+gimp_tool_gui_get_overlay (GimpToolGui *gui)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_GUI (gui), FALSE);
+
+  return GET_PRIVATE (gui)->overlay;
+}
+
+void
 gimp_tool_gui_set_default_response (GimpToolGui *gui,
                                     gint         response_id)
 {
