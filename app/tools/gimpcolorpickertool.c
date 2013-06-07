@@ -310,7 +310,6 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool)
   g_return_if_fail (tool->drawable != NULL);
 
   picker_tool->gui = gimp_tool_gui_new (tool->tool_info,
-                                        gimp_display_get_shell (tool->display),
                                         _("Color Picker Information"),
                                         FALSE,
 

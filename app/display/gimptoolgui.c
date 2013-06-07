@@ -121,7 +121,6 @@ gimp_tool_gui_finalize (GObject *object)
 /**
  * gimp_tool_gui_new:
  * @tool_info: a #GimpToolInfo
- * @shell:     the parent display shell this gui
  * @desc:      a string to use in the gui header or %NULL to use the help
  *             field from #GimpToolInfo
  * @...:       a %NULL-terminated valist of button parameters as described in
@@ -133,10 +132,9 @@ gimp_tool_gui_finalize (GObject *object)
  * Return value: a new #GimpToolGui
  **/
 GimpToolGui *
-gimp_tool_gui_new (GimpToolInfo     *tool_info,
-                   GimpDisplayShell *shell,
-                   const gchar      *desc,
-                   gboolean          overlay,
+gimp_tool_gui_new (GimpToolInfo *tool_info,
+                   const gchar  *desc,
+                   gboolean      overlay,
                    ...)
 {
   GimpToolGui        *gui;
@@ -144,7 +142,6 @@ gimp_tool_gui_new (GimpToolInfo     *tool_info,
   va_list             args;
 
   g_return_val_if_fail (GIMP_IS_TOOL_INFO (tool_info), NULL);
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
   gui = g_object_new (GIMP_TYPE_TOOL_GUI, NULL);
 
@@ -173,7 +170,7 @@ gimp_tool_gui_new (GimpToolInfo     *tool_info,
     }
   else
     {
-      private->dialog = gimp_tool_dialog_new (tool_info, shell, desc, NULL);
+      private->dialog = gimp_tool_dialog_new (tool_info, desc, NULL);
 
       va_start (args, overlay);
       gimp_dialog_add_buttons_valist (GIMP_DIALOG (private->dialog), args);
@@ -185,8 +182,6 @@ gimp_tool_gui_new (GimpToolInfo     *tool_info,
                           private->vbox, TRUE, TRUE, 0);
       gtk_widget_show (private->vbox);
     }
-
-  gimp_tool_gui_set_shell (GIMP_TOOL_GUI (gui), shell);
 
   return gui;
 }
@@ -256,6 +251,8 @@ gimp_tool_gui_show (GimpToolGui *gui)
   g_return_if_fail (GIMP_IS_TOOL_GUI (gui));
 
   private = GET_PRIVATE (gui);
+
+  g_return_if_fail (private->shell != NULL);
 
   if (private->overlay)
     {

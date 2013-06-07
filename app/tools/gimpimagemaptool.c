@@ -327,7 +327,6 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
 
       image_map_tool->gui =
         gimp_tool_gui_new (tool_info,
-                           display_shell,
                            klass->dialog_desc,
                            image_map_tool->overlay,
 

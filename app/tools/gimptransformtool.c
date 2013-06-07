@@ -1692,7 +1692,6 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
   tr_tool->overlay = FALSE;
 
   tr_tool->gui = gimp_tool_gui_new (tool_info,
-                                    gimp_display_get_shell (tool->display),
                                     tool_info->blurb,
                                     tr_tool->overlay,
 

@@ -90,7 +90,6 @@ gimp_tool_dialog_dispose (GObject *object)
 /**
  * gimp_tool_dialog_new:
  * @tool_info: a #GimpToolInfo
- * @shell:     the parent display shell this dialog
  * @desc:      a string to use in the dialog header or %NULL to use the help
  *             field from #GimpToolInfo
  * @...:       a %NULL-terminated valist of button parameters as described in
@@ -103,9 +102,8 @@ gimp_tool_dialog_dispose (GObject *object)
  * Return value: a new #GimpViewableDialog
  **/
 GtkWidget *
-gimp_tool_dialog_new (GimpToolInfo     *tool_info,
-                      GimpDisplayShell *shell,
-                      const gchar      *desc,
+gimp_tool_dialog_new (GimpToolInfo *tool_info,
+                      const gchar  *desc,
                       ...)
 {
   GtkWidget   *dialog;
@@ -114,7 +112,6 @@ gimp_tool_dialog_new (GimpToolInfo     *tool_info,
   va_list      args;
 
   g_return_val_if_fail (GIMP_IS_TOOL_INFO (tool_info), NULL);
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
   stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
 
@@ -126,8 +123,6 @@ gimp_tool_dialog_new (GimpToolInfo     *tool_info,
                          "stock-id",     stock_id,
                          "description",  desc ? desc : tool_info->help,
                          NULL);
-
-  gimp_tool_dialog_set_shell (GIMP_TOOL_DIALOG (dialog), shell);
 
   va_start (args, desc);
   gimp_dialog_add_buttons_valist (GIMP_DIALOG (dialog), args);

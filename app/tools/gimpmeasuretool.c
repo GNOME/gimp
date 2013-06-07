@@ -1045,7 +1045,6 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
   GtkWidget   *label;
 
   gui = gimp_tool_gui_new (tool->tool_info,
-                           gimp_display_get_shell (tool->display),
                            _("Measure Distances and Angles"),
                            FALSE,
 
