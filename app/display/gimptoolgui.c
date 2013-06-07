@@ -259,7 +259,7 @@ gimp_tool_gui_show (GimpToolGui *gui)
       if (! gtk_widget_get_parent (private->dialog))
         {
           gimp_overlay_box_add_child (GIMP_OVERLAY_BOX (private->shell->canvas),
-                                      private->dialog, 1.0, 1.0);
+                                      private->dialog, 1.0, 0.0);
           gtk_widget_show (private->dialog);
         }
     }
