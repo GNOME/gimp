@@ -151,7 +151,7 @@ gimp_tool_dialog_set_shell (GimpToolDialog   *tool_dialog,
   GimpToolDialogPrivate *private = GET_PRIVATE (tool_dialog);
 
   g_return_if_fail (GIMP_IS_TOOL_DIALOG (tool_dialog));
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (shell == NULL || GIMP_IS_DISPLAY_SHELL (shell));
 
   if (shell == private->shell)
     return;
