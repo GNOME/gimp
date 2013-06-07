@@ -43,6 +43,10 @@ struct _GimpToolGui
 struct _GimpToolGuiClass
 {
   GimpObjectClass  parent_instance;
+
+  void (* response) (GimpToolGui *gui,
+                     gint         response_id);
+
 };
 
 

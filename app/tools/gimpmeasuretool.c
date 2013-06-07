@@ -1058,9 +1058,9 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
   if (GTK_IS_DIALOG (dialog))
     gtk_window_set_focus_on_map (GTK_WINDOW (dialog), FALSE);
 
-  g_signal_connect_swapped (dialog, "response",
-                            G_CALLBACK (g_object_unref),
-                            gui);
+  g_signal_connect (gui, "response",
+                    G_CALLBACK (g_object_unref),
+                    NULL);
 
   table = gtk_table_new (4, 5, TRUE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);

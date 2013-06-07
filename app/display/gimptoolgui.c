@@ -28,6 +28,7 @@
 #include "display-types.h"
 
 #include "core/gimpcontext.h"
+#include "core/gimpmarshal.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpdialogfactory.h"
@@ -37,6 +38,13 @@
 #include "gimpdisplayshell.h"
 #include "gimptooldialog.h"
 #include "gimptoolgui.h"
+
+
+enum
+{
+  RESPONSE,
+  LAST_SIGNAL
+};
 
 
 typedef struct _ResponseEntry ResponseEntry;
@@ -80,6 +88,10 @@ static void   gimp_tool_gui_update_buttons  (GimpToolGui   *gui);
 static void   gimp_tool_gui_update_shell    (GimpToolGui   *gui);
 static void   gimp_tool_gui_update_viewable (GimpToolGui   *gui);
 
+static void   gimp_tool_gui_dialog_response (GtkWidget     *dialog,
+                                             gint           response_id,
+                                             GimpToolGui   *gui);
+
 static ResponseEntry * response_entry_new   (gint           response_id,
                                              const gchar   *stock_id);
 static void            response_entry_free  (ResponseEntry *entry);
@@ -89,6 +101,10 @@ static ResponseEntry * response_entry_find  (GList         *entries,
 
 G_DEFINE_TYPE (GimpToolGui, gimp_tool_gui, GIMP_TYPE_OBJECT)
 
+static guint signals[LAST_SIGNAL] = { 0, };
+
+#define parent_class gimp_tool_gui_parent_class
+
 
 static void
 gimp_tool_gui_class_init (GimpToolGuiClass *klass)
@@ -97,6 +113,16 @@ gimp_tool_gui_class_init (GimpToolGuiClass *klass)
 
   object_class->dispose  = gimp_tool_gui_dispose;
   object_class->finalize = gimp_tool_gui_finalize;
+
+  signals[RESPONSE] =
+    g_signal_new ("response",
+                  G_OBJECT_CLASS_TYPE (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpToolGuiClass, response),
+                  NULL, NULL,
+                  gimp_marshal_VOID__INT,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_INT);
 
   g_type_class_add_private (klass, sizeof (GimpToolGuiPrivate));
 }
@@ -142,7 +168,7 @@ gimp_tool_gui_dispose (GObject *object)
       private->dialog = NULL;
     }
 
-  G_OBJECT_CLASS (gimp_tool_gui_parent_class)->dispose (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -163,7 +189,7 @@ gimp_tool_gui_finalize (GObject *object)
       private->response_entries = NULL;
     }
 
-  G_OBJECT_CLASS (gimp_tool_gui_parent_class)->finalize (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 
@@ -533,6 +559,10 @@ gimp_tool_gui_create_dialog (GimpToolGui *gui)
 
   if (private->viewable)
     gimp_tool_gui_update_viewable (gui);
+
+  g_signal_connect_object (private->dialog, "response",
+                           G_CALLBACK (gimp_tool_gui_dialog_response),
+                           G_OBJECT (gui), 0);
 }
 
 static void
@@ -596,6 +626,15 @@ gimp_tool_gui_update_viewable (GimpToolGui *gui)
                                          private->viewable,
                                          GIMP_CONTEXT (private->tool_info->tool_options));
     }
+}
+
+static void
+gimp_tool_gui_dialog_response (GtkWidget   *dialog,
+                               gint         response_id,
+                               GimpToolGui *gui)
+{
+  g_signal_emit (gui, signals[RESPONSE], 0,
+                 response_id);
 }
 
 static ResponseEntry *

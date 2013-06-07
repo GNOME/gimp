@@ -162,7 +162,7 @@ static void      gimp_transform_tool_handles_recalc         (GimpTransformTool  
                                                              GimpDisplay           *display,
                                                              gint                  *handle_w,
                                                              gint                  *handle_h);
-static void      gimp_transform_tool_response               (GtkWidget             *widget,
+static void      gimp_transform_tool_response               (GimpToolGui           *gui,
                                                              gint                   response_id,
                                                              GimpTransformTool     *tr_tool);
 
@@ -1709,7 +1709,7 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
                                               GTK_RESPONSE_CANCEL,
                                               -1);
 
-  g_signal_connect (gimp_tool_gui_get_dialog (tr_tool->gui), "response",
+  g_signal_connect (tr_tool->gui, "response",
                     G_CALLBACK (gimp_transform_tool_response),
                     tr_tool);
 
@@ -1750,7 +1750,7 @@ gimp_transform_tool_recalc_matrix (GimpTransformTool *tr_tool)
 }
 
 static void
-gimp_transform_tool_response (GtkWidget         *widget,
+gimp_transform_tool_response (GimpToolGui       *gui,
                               gint               response_id,
                               GimpTransformTool *tr_tool)
 {

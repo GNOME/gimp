@@ -68,7 +68,7 @@ static void   gimp_color_picker_tool_picked        (GimpColorTool       *color_t
                                                     gint                 color_index);
 
 static void   gimp_color_picker_tool_info_create   (GimpColorPickerTool *picker_tool);
-static void   gimp_color_picker_tool_info_response (GtkWidget           *widget,
+static void   gimp_color_picker_tool_info_response (GimpToolGui         *gui,
                                                     gint                 response_id,
                                                     GimpColorPickerTool *picker_tool);
 static void   gimp_color_picker_tool_info_update   (GimpColorPickerTool *picker_tool,
@@ -327,7 +327,7 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool)
   gimp_tool_gui_set_viewable (picker_tool->gui,
                               GIMP_VIEWABLE (tool->drawable));
 
-  g_signal_connect (dialog, "response",
+  g_signal_connect (picker_tool->gui, "response",
                     G_CALLBACK (gimp_color_picker_tool_info_response),
                     picker_tool);
 
@@ -368,7 +368,7 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool)
 }
 
 static void
-gimp_color_picker_tool_info_response (GtkWidget           *widget,
+gimp_color_picker_tool_info_response (GimpToolGui         *gui,
                                       gint                 response_id,
                                       GimpColorPickerTool *picker_tool)
 {

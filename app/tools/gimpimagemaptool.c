@@ -117,7 +117,7 @@ static void      gimp_image_map_tool_config_notify  (GObject          *object,
                                                      const GParamSpec *pspec,
                                                      GimpImageMapTool *im_tool);
 
-static void      gimp_image_map_tool_response       (GtkWidget        *widget,
+static void      gimp_image_map_tool_response       (GimpToolGui      *gui,
                                                      gint              response_id,
                                                      GimpImageMapTool *im_tool);
 
@@ -316,7 +316,6 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
   if (! image_map_tool->gui)
     {
       GimpImageMapToolClass *klass;
-      GtkWidget             *dialog;
       GtkWidget             *vbox;
       GtkWidget             *toggle;
 
@@ -344,10 +343,9 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
                                                   GTK_RESPONSE_CANCEL,
                                                   -1);
 
-      dialog = gimp_tool_gui_get_dialog (image_map_tool->gui);
-      vbox   = gimp_tool_gui_get_vbox   (image_map_tool->gui);
+      vbox = gimp_tool_gui_get_vbox (image_map_tool->gui);
 
-      g_signal_connect_object (dialog, "response",
+      g_signal_connect_object (image_map_tool->gui, "response",
                                G_CALLBACK (gimp_image_map_tool_response),
                                G_OBJECT (image_map_tool), 0);
 
@@ -448,26 +446,24 @@ gimp_image_map_tool_key_press (GimpTool    *tool,
 
   if (image_map_tool->gui && display == tool->display)
     {
-      GtkWidget *dialog = gimp_tool_gui_get_dialog (image_map_tool->gui);
-
       switch (kevent->keyval)
         {
         case GDK_KEY_Return:
         case GDK_KEY_KP_Enter:
         case GDK_KEY_ISO_Enter:
-          gimp_image_map_tool_response (dialog,
+          gimp_image_map_tool_response (image_map_tool->gui,
                                         GTK_RESPONSE_OK,
                                         image_map_tool);
           return TRUE;
 
         case GDK_KEY_BackSpace:
-          gimp_image_map_tool_response (dialog,
+          gimp_image_map_tool_response (image_map_tool->gui,
                                         RESPONSE_RESET,
                                         image_map_tool);
           return TRUE;
 
         case GDK_KEY_Escape:
-          gimp_image_map_tool_response (dialog,
+          gimp_image_map_tool_response (image_map_tool->gui,
                                         GTK_RESPONSE_CANCEL,
                                         image_map_tool);
           return TRUE;
@@ -651,7 +647,7 @@ gimp_image_map_tool_config_notify (GObject          *object,
 }
 
 static void
-gimp_image_map_tool_response (GtkWidget        *widget,
+gimp_image_map_tool_response (GimpToolGui      *gui,
                               gint              response_id,
                               GimpImageMapTool *image_map_tool)
 {
