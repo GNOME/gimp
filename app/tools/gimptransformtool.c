@@ -68,6 +68,7 @@
 
 
 #define RESPONSE_RESET  1
+#define RESPONSE_EEK    2
 #define MIN_HANDLE_SIZE 6
 
 
@@ -1695,6 +1696,7 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
                                     tool_info->blurb,
                                     tr_tool->overlay,
 
+                                    GIMP_STOCK_WILBER_EEK, RESPONSE_EEK,
                                     GIMP_STOCK_RESET, RESPONSE_RESET,
                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                     stock_id,         GTK_RESPONSE_OK,
@@ -1704,6 +1706,7 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
   gimp_tool_gui_set_default_response (tr_tool->gui, GTK_RESPONSE_OK);
 
   gimp_tool_gui_set_alternative_button_order (tr_tool->gui,
+                                              RESPONSE_EEK,
                                               RESPONSE_RESET,
                                               GTK_RESPONSE_OK,
                                               GTK_RESPONSE_CANCEL,
@@ -1760,6 +1763,14 @@ gimp_transform_tool_response (GimpToolGui       *gui,
 
   switch (response_id)
     {
+    case RESPONSE_EEK:
+      if (tr_tool->gui)
+        {
+          gimp_tool_gui_set_overlay (tr_tool->gui,
+                                     ! gimp_tool_gui_get_overlay (tr_tool->gui));
+        }
+      break;
+
     case RESPONSE_RESET:
       /* Move all undo events to redo, and pop off the first
        * one as that's the current one, which always sits on
