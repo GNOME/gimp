@@ -46,7 +46,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
-#include "display/gimptooldialog.h"
+#include "display/gimptoolgui.h"
 
 #include "gimpmeasureoptions.h"
 #include "gimpmeasuretool.h"
@@ -105,7 +105,7 @@ static gdouble  gimp_measure_tool_get_angle       (gint                   dx,
                                                    gdouble                xres,
                                                    gdouble                yres);
 
-static GtkWidget * gimp_measure_tool_dialog_new   (GimpMeasureTool       *measure);
+static GimpToolGui * gimp_measure_tool_dialog_new (GimpMeasureTool       *measure);
 static void     gimp_measure_tool_dialog_update   (GimpMeasureTool       *measure,
                                                    GimpDisplay           *display);
 
@@ -180,8 +180,8 @@ gimp_measure_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      if (measure->dialog)
-        gtk_widget_destroy (measure->dialog);
+      if (measure->gui)
+        g_object_unref (measure->gui);
       break;
     }
 
@@ -318,23 +318,21 @@ gimp_measure_tool_button_press (GimpTool            *tool,
   gimp_tool_control_activate (tool->control);
 
   /*  create the info window if necessary  */
-  if (! measure->dialog)
+  if (! measure->gui)
     {
       if (options->use_info_window ||
           ! gimp_display_shell_get_show_statusbar (shell))
         {
-          measure->dialog = gimp_measure_tool_dialog_new (measure);
-          g_object_add_weak_pointer (G_OBJECT (measure->dialog),
-                                     (gpointer) &measure->dialog);
+          measure->gui = gimp_measure_tool_dialog_new (measure);
+          g_object_add_weak_pointer (G_OBJECT (measure->gui),
+                                     (gpointer) &measure->gui);
         }
     }
 
-  if (measure->dialog)
+  if (measure->gui)
     {
-      gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (measure->dialog),
-                                         GIMP_VIEWABLE (image),
-                                         GIMP_CONTEXT (options));
-      gimp_tool_dialog_set_shell (GIMP_TOOL_DIALOG (measure->dialog), shell);
+      gimp_tool_gui_set_shell (measure->gui, shell);
+      gimp_tool_gui_set_viewable (measure->gui, GIMP_VIEWABLE (image));
 
       gimp_measure_tool_dialog_update (measure, display);
     }
@@ -954,7 +952,7 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
     }
   measure->status_help = FALSE;
 
-  if (measure->dialog)
+  if (measure->gui)
     {
       gchar buf[128];
 
@@ -1032,41 +1030,43 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
           gtk_label_set_text (GTK_LABEL (measure->unit_label[3]), NULL);
         }
 
-      if (gtk_widget_get_visible (measure->dialog))
-        gdk_window_show (gtk_widget_get_window (measure->dialog));
-      else
-        gtk_widget_show (measure->dialog);
+      gimp_tool_gui_show (measure->gui);
     }
 }
 
-static GtkWidget *
+static GimpToolGui *
 gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
 {
-  GimpTool  *tool = GIMP_TOOL (measure);
-  GtkWidget *dialog;
-  GtkWidget *table;
-  GtkWidget *label;
+  GimpTool    *tool = GIMP_TOOL (measure);
+  GimpToolGui *gui;
+  GtkWidget   *dialog;
+  GtkWidget   *vbox;
+  GtkWidget   *table;
+  GtkWidget   *label;
 
-  dialog = gimp_tool_dialog_new (tool->tool_info,
-                                 gimp_display_get_shell (tool->display),
-                                 _("Measure Distances and Angles"),
+  gui = gimp_tool_gui_new (tool->tool_info,
+                           gimp_display_get_shell (tool->display),
+                           _("Measure Distances and Angles"),
+                           FALSE,
 
-                                 GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+                           GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
-                                 NULL);
+                           NULL);
 
-  gtk_window_set_focus_on_map (GTK_WINDOW (dialog), FALSE);
+  dialog = gimp_tool_gui_get_dialog (gui);
+  vbox   = gimp_tool_gui_get_vbox (gui);
 
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (gtk_widget_destroy),
-                    NULL);
+  if (GTK_IS_DIALOG (dialog))
+    gtk_window_set_focus_on_map (GTK_WINDOW (dialog), FALSE);
+
+  g_signal_connect_swapped (dialog, "response",
+                            G_CALLBACK (g_object_unref),
+                            gui);
 
   table = gtk_table_new (4, 5, TRUE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      table, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
 
@@ -1181,5 +1181,5 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
   gtk_table_attach_defaults (GTK_TABLE (table), label, 4, 5, 3, 4);
   gtk_widget_show (label);
 
-  return dialog;
+  return gui;
 }

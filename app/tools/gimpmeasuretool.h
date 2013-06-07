@@ -66,7 +66,7 @@ struct _GimpMeasureTool
 
   GimpCanvasItem  *handles[3];
 
-  GtkWidget       *dialog;
+  GimpToolGui     *gui;
   GtkWidget       *distance_label[2];
   GtkWidget       *angle_label[2];
   GtkWidget       *width_label[2];
