@@ -44,6 +44,7 @@
 #include "widgets/gimpproptable.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimptoolgui.h"
 
 #include "gimpcoloroptions.h"
 #include "gimpoperationtool.h"
@@ -202,9 +203,8 @@ gimp_operation_tool_dialog (GimpImageMapTool *image_map_tool)
     }
 
   if (tool->undo_desc)
-    g_object_set (GIMP_IMAGE_MAP_TOOL (tool)->gui,
-                  "description", tool->undo_desc,
-                  NULL);
+    gimp_tool_gui_set_description (GIMP_IMAGE_MAP_TOOL (tool)->gui,
+                                   tool->undo_desc);
 }
 
 static void
@@ -448,9 +448,8 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
     }
 
   if (undo_desc && GIMP_IMAGE_MAP_TOOL (tool)->gui)
-    g_object_set (GIMP_IMAGE_MAP_TOOL (tool)->gui,
-                  "description", undo_desc,
-                  NULL);
+    gimp_tool_gui_set_description (GIMP_IMAGE_MAP_TOOL (tool)->gui,
+                                   undo_desc);
 
   if (GIMP_TOOL (tool)->drawable)
     gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));

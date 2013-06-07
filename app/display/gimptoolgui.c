@@ -44,7 +44,7 @@ typedef struct _GimpToolGuiPrivate GimpToolGuiPrivate;
 struct _GimpToolGuiPrivate
 {
   GimpToolInfo     *tool_info;
-  gchar            *desc;
+  gchar            *description;
 
   gboolean          overlay;
 
@@ -124,10 +124,10 @@ gimp_tool_gui_finalize (GObject *object)
 {
   GimpToolGuiPrivate *private = GET_PRIVATE (object);
 
-  if (private->desc)
+  if (private->description)
     {
-      g_free (private->desc);
-      private->desc = NULL;
+      g_free (private->description);
+      private->description = NULL;
     }
 
   G_OBJECT_CLASS (gimp_tool_gui_parent_class)->finalize (object);
@@ -136,11 +136,11 @@ gimp_tool_gui_finalize (GObject *object)
 
 /**
  * gimp_tool_gui_new:
- * @tool_info: a #GimpToolInfo
- * @desc:      a string to use in the gui header or %NULL to use the help
- *             field from #GimpToolInfo
- * @...:       a %NULL-terminated valist of button parameters as described in
- *             gtk_gui_new_with_buttons().
+ * @tool_info:   a #GimpToolInfo
+ * @description: a string to use in the gui header or %NULL to use the help
+ *               field from #GimpToolInfo
+ * @...:         a %NULL-terminated valist of button parameters as described in
+ *               gtk_gui_new_with_buttons().
  *
  * This function creates a #GimpToolGui using the information stored
  * in @tool_info.
@@ -149,7 +149,7 @@ gimp_tool_gui_finalize (GObject *object)
  **/
 GimpToolGui *
 gimp_tool_gui_new (GimpToolInfo *tool_info,
-                   const gchar  *desc,
+                   const gchar  *description,
                    gboolean      overlay,
                    ...)
 {
@@ -163,14 +163,13 @@ gimp_tool_gui_new (GimpToolInfo *tool_info,
 
   private = GET_PRIVATE (gui);
 
-  private->tool_info = g_object_ref (tool_info);
-  private->desc      = g_strdup (desc);
-
-  private->overlay   = overlay;
+  private->tool_info   = g_object_ref (tool_info);
+  private->description = g_strdup (description);
+  private->overlay     = overlay;
 
   if (overlay)
     {
-      private->dialog = gimp_overlay_dialog_new (tool_info, desc, NULL);
+      private->dialog = gimp_overlay_dialog_new (tool_info, description, NULL);
       g_object_ref_sink (private->dialog);
 
       va_start (args, overlay);
@@ -186,7 +185,7 @@ gimp_tool_gui_new (GimpToolInfo *tool_info,
     }
   else
     {
-      private->dialog = gimp_tool_dialog_new (tool_info, desc, NULL);
+      private->dialog = gimp_tool_dialog_new (tool_info, description, NULL);
 
       va_start (args, overlay);
       gimp_dialog_add_buttons_valist (GIMP_DIALOG (private->dialog), args);
@@ -199,6 +198,35 @@ gimp_tool_gui_new (GimpToolInfo *tool_info,
     }
 
   return gui;
+}
+
+void
+gimp_tool_gui_set_description (GimpToolGui *gui,
+                               const gchar *description)
+{
+  GimpToolGuiPrivate *private;
+
+  g_return_if_fail (GIMP_IS_TOOL_GUI (gui));
+
+  private = GET_PRIVATE (gui);
+
+  if (description == private->description)
+    return;
+
+  g_free (private->description);
+  private->description = g_strdup (description);
+
+  if (! description)
+    description = private->tool_info->help;
+
+  if (private->overlay)
+    {
+      /* TODO */
+    }
+  else
+    {
+      g_object_set (private->dialog, "description", description, NULL);
+    }
 }
 
 void

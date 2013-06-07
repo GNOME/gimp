@@ -49,9 +49,12 @@ struct _GimpToolGuiClass
 GType         gimp_tool_gui_get_type               (void) G_GNUC_CONST;
 
 GimpToolGui * gimp_tool_gui_new                    (GimpToolInfo     *tool_info,
-                                                    const gchar      *desc,
+                                                    const gchar      *description,
                                                     gboolean          overlay,
                                                     ...) G_GNUC_NULL_TERMINATED;
+
+void          gimp_tool_gui_set_description        (GimpToolGui      *gui,
+                                                    const gchar      *description);
 
 void          gimp_tool_gui_set_shell              (GimpToolGui      *gui,
                                                     GimpDisplayShell *shell);
