@@ -65,6 +65,8 @@ GtkWidget   * gimp_tool_gui_get_vbox               (GimpToolGui      *gui);
 void          gimp_tool_gui_show                   (GimpToolGui      *gui);
 void          gimp_tool_gui_hide                   (GimpToolGui      *gui);
 
+void          gimp_tool_gui_set_default_response   (GimpToolGui      *gui,
+                                                    gint              response_id);
 void          gimp_tool_gui_set_response_sensitive (GimpToolGui      *gui,
                                                     gint              response_id,
                                                     gboolean          sensitive);
