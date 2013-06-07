@@ -69,6 +69,8 @@ void          gimp_tool_gui_set_default_response   (GimpToolGui      *gui,
 void          gimp_tool_gui_set_response_sensitive (GimpToolGui      *gui,
                                                     gint              response_id,
                                                     gboolean          sensitive);
+void    gimp_tool_gui_set_alternative_button_order (GimpToolGui      *gui,
+                                                    ...);
 
 
 #endif /* __GIMP_TOOL_GUI_H__ */

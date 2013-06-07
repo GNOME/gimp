@@ -336,14 +336,13 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
 
                            NULL);
 
-      /* FIXME */
-#if 0
-      gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                               RESPONSE_RESET,
-                                               GTK_RESPONSE_OK,
-                                               GTK_RESPONSE_CANCEL,
-                                               -1);
-#endif
+      gimp_tool_gui_set_default_response (image_map_tool->gui, GTK_RESPONSE_OK);
+
+      gimp_tool_gui_set_alternative_button_order (image_map_tool->gui,
+                                                  RESPONSE_RESET,
+                                                  GTK_RESPONSE_OK,
+                                                  GTK_RESPONSE_CANCEL,
+                                                  -1);
 
       dialog = gimp_tool_gui_get_dialog (image_map_tool->gui);
       vbox   = gimp_tool_gui_get_vbox   (image_map_tool->gui);

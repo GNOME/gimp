@@ -1703,14 +1703,11 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
 
   gimp_tool_gui_set_default_response (tr_tool->gui, GTK_RESPONSE_OK);
 
-  /* FIXME */
-#if 0
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (tr_tool->dialog),
-                                           RESPONSE_RESET,
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-#endif
+  gimp_tool_gui_set_alternative_button_order (tr_tool->gui,
+                                              RESPONSE_RESET,
+                                              GTK_RESPONSE_OK,
+                                              GTK_RESPONSE_CANCEL,
+                                              -1);
 
   g_signal_connect (gimp_tool_gui_get_dialog (tr_tool->gui), "response",
                     G_CALLBACK (gimp_transform_tool_response),

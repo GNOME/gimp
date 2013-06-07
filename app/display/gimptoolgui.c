@@ -43,10 +43,11 @@ typedef struct _GimpToolGuiPrivate GimpToolGuiPrivate;
 
 struct _GimpToolGuiPrivate
 {
-  gboolean          overlay;
+  GimpToolInfo     *tool_info;
   gchar            *desc;
 
-  GimpToolInfo     *tool_info;
+  gboolean          overlay;
+
   GimpDisplayShell *shell;
 
   GtkWidget        *dialog;
@@ -79,6 +80,10 @@ gimp_tool_gui_class_init (GimpToolGuiClass *klass)
 static void
 gimp_tool_gui_init (GimpToolGui *gui)
 {
+  GimpToolGuiPrivate *private = GET_PRIVATE (gui);
+
+  private->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  g_object_ref_sink (private->vbox);
 }
 
 static void
@@ -86,8 +91,20 @@ gimp_tool_gui_dispose (GObject *object)
 {
   GimpToolGuiPrivate *private = GET_PRIVATE (object);
 
+  if (private->tool_info)
+    {
+      g_object_unref (private->tool_info);
+      private->tool_info = NULL;
+    }
+
   if (private->shell)
     gimp_tool_gui_set_shell (GIMP_TOOL_GUI (object), NULL);
+
+  if (private->vbox)
+    {
+      g_object_unref (private->vbox);
+      private->vbox = NULL;
+    }
 
   if (private->dialog)
     {
@@ -97,7 +114,6 @@ gimp_tool_gui_dispose (GObject *object)
         gtk_widget_destroy (private->dialog);
 
       private->dialog = NULL;
-      private->vbox   = NULL;
     }
 
   G_OBJECT_CLASS (gimp_tool_gui_parent_class)->dispose (object);
@@ -147,10 +163,10 @@ gimp_tool_gui_new (GimpToolInfo *tool_info,
 
   private = GET_PRIVATE (gui);
 
-  private->overlay   = overlay;
+  private->tool_info = g_object_ref (tool_info);
   private->desc      = g_strdup (desc);
 
-  private->tool_info = tool_info;
+  private->overlay   = overlay;
 
   if (overlay)
     {
@@ -164,7 +180,7 @@ gimp_tool_gui_new (GimpToolInfo *tool_info,
 
       gtk_container_set_border_width (GTK_CONTAINER (private->dialog), 6);
 
-      private->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+      gtk_container_set_border_width (GTK_CONTAINER (private->vbox), 0);
       gtk_container_add (GTK_CONTAINER (private->dialog), private->vbox);
       gtk_widget_show (private->vbox);
     }
@@ -176,7 +192,6 @@ gimp_tool_gui_new (GimpToolInfo *tool_info,
       gimp_dialog_add_buttons_valist (GIMP_DIALOG (private->dialog), args);
       va_end (args);
 
-      private->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
       gtk_container_set_border_width (GTK_CONTAINER (private->vbox), 6);
       gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (private->dialog))),
                           private->vbox, TRUE, TRUE, 0);
@@ -344,4 +359,55 @@ gimp_tool_gui_set_response_sensitive (GimpToolGui *gui,
       gtk_dialog_set_response_sensitive (GTK_DIALOG (private->dialog),
                                          response_id, sensitive);
     }
+}
+
+void
+gimp_tool_gui_set_alternative_button_order (GimpToolGui *gui,
+                                            ...)
+{
+  GimpToolGuiPrivate *private;
+  va_list             args;
+  gint                response_id;
+  GList              *id_list = NULL;
+  GList              *list;
+  gint               *ids;
+  gint                n_ids;
+  gint                i;
+
+  g_return_if_fail (GIMP_IS_TOOL_GUI (gui));
+
+  private = GET_PRIVATE (gui);
+
+  va_start (args, gui);
+
+  for (response_id = va_arg (args, gint);
+       response_id != -1;
+       response_id = va_arg (args, gint))
+    {
+      id_list = g_list_append (id_list, GINT_TO_POINTER (response_id));
+    }
+
+  va_end (args);
+
+  n_ids = g_list_length (id_list);
+  ids   = g_new0 (gint, n_ids);
+
+  for (list = id_list, i = 0; list; list = g_list_next (list), i++)
+    {
+      ids[i] = GPOINTER_TO_INT (list->data);
+    }
+
+  g_list_free (id_list);
+
+  if (private->overlay)
+    {
+      /* TODO */
+    }
+  else
+    {
+      gtk_dialog_set_alternative_button_order_from_array (GTK_DIALOG (private->dialog),
+                                                          n_ids, ids);
+    }
+
+  g_free (ids);
 }
