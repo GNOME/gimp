@@ -325,13 +325,13 @@ gimp_warp_tool_key_press (GimpTool    *tool,
     case GDK_KEY_ISO_Enter:
       if (wt->image_map)
         {
-          gimp_tool_control_set_preserve (tool->control, TRUE);
+          gimp_tool_control_push_preserve (tool->control, TRUE);
 
           gimp_image_map_commit (wt->image_map, GIMP_PROGRESS (tool));
           g_object_unref (wt->image_map);
           wt->image_map = NULL;
 
-          gimp_tool_control_set_preserve (tool->control, FALSE);
+          gimp_tool_control_pop_preserve (tool->control);
 
           gimp_image_flush (gimp_display_get_image (display));
         }
