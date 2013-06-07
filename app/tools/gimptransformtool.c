@@ -55,7 +55,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
-#include "display/gimptooldialog.h"
+#include "display/gimptoolgui.h"
 
 #include "gimptoolcontrol.h"
 #include "gimpperspectivetool.h"
@@ -242,11 +242,11 @@ gimp_transform_tool_finalize (GObject *object)
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (object);
 
-  if (tr_tool->dialog)
+  if (tr_tool->gui)
     {
-      gtk_widget_destroy (tr_tool->dialog);
-      tr_tool->dialog = NULL;
-    }
+      g_object_unref (tr_tool->gui);
+      tr_tool->gui = NULL;
+     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -297,7 +297,7 @@ gimp_transform_tool_initialize (GimpTool     *tool,
       tool->drawable = drawable;
 
       /*  Initialize the transform tool dialog */
-      if (! tr_tool->dialog)
+      if (! tr_tool->gui)
         gimp_transform_tool_dialog (tr_tool);
 
       /*  Find the transform bounds for some tools (like scale,
@@ -1255,7 +1255,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 static void
 gimp_transform_tool_dialog_update (GimpTransformTool *tr_tool)
 {
-  if (tr_tool->dialog &&
+  if (tr_tool->gui &&
       GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog_update)
     {
       GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog_update (tr_tool);
@@ -1407,8 +1407,8 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
       return;
     }
 
-  if (tr_tool->dialog)
-    gimp_dialog_factory_hide_dialog (tr_tool->dialog);
+  if (tr_tool->gui)
+    gimp_tool_gui_hide (tr_tool->gui);
 
   gimp_set_busy (display->gimp);
 
@@ -1520,8 +1520,8 @@ gimp_transform_tool_halt (GimpTransformTool *tr_tool)
 
   tr_tool->function = TRANSFORM_CREATING;
 
-  if (tr_tool->dialog)
-    gimp_dialog_factory_hide_dialog (tr_tool->dialog);
+  if (tr_tool->gui)
+    gimp_tool_gui_hide (tr_tool->gui);
 
   if (tr_tool->redo_list)
     {
@@ -1689,22 +1689,31 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
 
   stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
 
-  tr_tool->dialog = gimp_tool_dialog_new (tool_info,
-                                          gimp_display_get_shell (tool->display),
-                                          tool_info->blurb,
-                                          GIMP_STOCK_RESET, RESPONSE_RESET,
-                                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                          stock_id,         GTK_RESPONSE_OK,
-                                          NULL);
-  gtk_dialog_set_default_response (GTK_DIALOG (tr_tool->dialog),
-                                   GTK_RESPONSE_OK);
+  tr_tool->overlay = FALSE;
+
+  tr_tool->gui = gimp_tool_gui_new (tool_info,
+                                    gimp_display_get_shell (tool->display),
+                                    tool_info->blurb,
+                                    tr_tool->overlay,
+
+                                    GIMP_STOCK_RESET, RESPONSE_RESET,
+                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                    stock_id,         GTK_RESPONSE_OK,
+
+                                    NULL);
+
+  gimp_tool_gui_set_default_response (tr_tool->gui, GTK_RESPONSE_OK);
+
+  /* FIXME */
+#if 0
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (tr_tool->dialog),
                                            RESPONSE_RESET,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
+#endif
 
-  g_signal_connect (tr_tool->dialog, "response",
+  g_signal_connect (gimp_tool_gui_get_dialog (tr_tool->gui), "response",
                     G_CALLBACK (gimp_transform_tool_response),
                     tr_tool);
 
@@ -1715,17 +1724,13 @@ static void
 gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
                              GimpDisplay       *display)
 {
-  if (tr_tool->dialog)
+  if (tr_tool->gui)
     {
-      GimpTransformOptions *options  = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
-      GimpImage            *image    = gimp_display_get_image (display);
-      GimpDrawable         *drawable = gimp_image_get_active_drawable (image);
+      GimpImage    *image    = gimp_display_get_image (display);
+      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
-      gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (tr_tool->dialog),
-                                         GIMP_VIEWABLE (drawable),
-                                         GIMP_CONTEXT (options));
-      gimp_tool_dialog_set_shell (GIMP_TOOL_DIALOG (tr_tool->dialog),
-                                  gimp_display_get_shell (display));
+      gimp_tool_gui_set_shell (tr_tool->gui, gimp_display_get_shell (display));
+      gimp_tool_gui_set_viewable (tr_tool->gui, GIMP_VIEWABLE (drawable));
     }
 
   if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->prepare)
@@ -1744,8 +1749,8 @@ gimp_transform_tool_recalc_matrix (GimpTransformTool *tr_tool)
 
   gimp_transform_tool_dialog_update (tr_tool);
 
-  if (tr_tool->dialog)
-    gtk_widget_show (tr_tool->dialog);
+  if (tr_tool->gui)
+    gimp_tool_gui_show (tr_tool->gui);
 }
 
 static void
@@ -1818,9 +1823,9 @@ gimp_transform_tool_free_trans (gpointer data)
 static void
 gimp_transform_tool_update_sensitivity (GimpTransformTool *tr_tool)
 {
-  if (!tr_tool->dialog)
+  if (! tr_tool->gui)
     return;
 
-  gtk_dialog_set_response_sensitive (GTK_DIALOG (tr_tool->dialog), RESPONSE_RESET,
-                                     g_list_next (tr_tool->undo_list) != NULL);
+  gimp_tool_gui_set_response_sensitive (tr_tool->gui, RESPONSE_RESET,
+                                        g_list_next (tr_tool->undo_list) != NULL);
 }

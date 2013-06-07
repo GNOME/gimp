@@ -36,6 +36,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimptoolgui.h"
 
 #include "gimpscaletool.h"
 #include "gimptoolcontrol.h"
@@ -181,8 +182,7 @@ gimp_scale_tool_prepare (GimpTransformTool *tr_tool)
                   "yresolution", yres,
                   NULL);
 
-  gtk_container_set_border_width (GTK_CONTAINER (scale->box), 6);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (tr_tool->dialog))),
+  gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (tr_tool->gui)),
                       scale->box, FALSE, FALSE, 0);
   gtk_widget_show (scale->box);
 

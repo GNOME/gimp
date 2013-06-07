@@ -34,6 +34,7 @@
 #include "widgets/gimphelp-ids.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimptoolgui.h"
 
 #include "gimpperspectivetool.h"
 #include "gimptoolcontrol.h"
@@ -121,16 +122,13 @@ static void
 gimp_perspective_tool_dialog (GimpTransformTool *tr_tool)
 {
   GimpPerspectiveTool *perspective = GIMP_PERSPECTIVE_TOOL (tr_tool);
-  GtkWidget           *content_area;
   GtkWidget           *frame;
   GtkWidget           *table;
   gint                 x, y;
 
-  content_area = gtk_dialog_get_content_area (GTK_DIALOG (tr_tool->dialog));
-
   frame = gimp_frame_new (_("Transformation Matrix"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (content_area), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (tr_tool->gui)), frame,
+                      FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (3, 3, FALSE);
