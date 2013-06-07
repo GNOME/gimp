@@ -39,7 +39,7 @@ struct _GimpColorPickerTool
 {
   GimpColorTool  parent_instance;
 
-  GtkWidget     *dialog;
+  GimpToolGui   *gui;
   GtkWidget     *color_area;
   GtkWidget     *color_frame1;
   GtkWidget     *color_frame2;
