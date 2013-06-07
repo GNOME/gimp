@@ -268,7 +268,10 @@ gimp_tool_gui_show (GimpToolGui *gui)
     }
   else
     {
-      gtk_widget_show (private->dialog);
+      if (gtk_widget_get_visible (private->dialog))
+        gdk_window_show (gtk_widget_get_window (private->dialog));
+      else
+        gtk_widget_show (private->dialog);
     }
 }
 
