@@ -146,7 +146,9 @@ libappdisplay_a_sources = \
 	gimpstatusbar.c				\
 	gimpstatusbar.h				\
 	gimptooldialog.c			\
-	gimptooldialog.h
+	gimptooldialog.h			\
+	gimptoolgui.c				\
+	gimptoolgui.h
 
 libappdisplay_a_built_sources = display-enums.c
 

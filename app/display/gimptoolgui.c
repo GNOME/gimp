@@ -1,0 +1,304 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * gimptoolgui.c
+ * Copyright (C) 2013  Michael Natterer <mitch@gimp.org>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include "config.h"
+
+#include <gegl.h>
+#include <gtk/gtk.h>
+
+#include "libgimpwidgets/gimpwidgets.h"
+
+#include "display-types.h"
+
+#include "core/gimpcontext.h"
+#include "core/gimptoolinfo.h"
+
+#include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpoverlaybox.h"
+#include "widgets/gimpoverlaydialog.h"
+
+#include "gimpdisplayshell.h"
+#include "gimptooldialog.h"
+#include "gimptoolgui.h"
+
+
+typedef struct _GimpToolGuiPrivate GimpToolGuiPrivate;
+
+struct _GimpToolGuiPrivate
+{
+  gboolean          overlay;
+  gchar            *desc;
+
+  GimpToolInfo     *tool_info;
+  GimpDisplayShell *shell;
+
+  GtkWidget        *dialog;
+  GtkWidget        *vbox;
+};
+
+#define GET_PRIVATE(gui) G_TYPE_INSTANCE_GET_PRIVATE (gui, \
+                                                      GIMP_TYPE_TOOL_GUI, \
+                                                      GimpToolGuiPrivate)
+
+
+static void   gimp_tool_gui_dispose  (GObject *object);
+static void   gimp_tool_gui_finalize (GObject *object);
+
+
+G_DEFINE_TYPE (GimpToolGui, gimp_tool_gui, GIMP_TYPE_OBJECT)
+
+
+static void
+gimp_tool_gui_class_init (GimpToolGuiClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->dispose  = gimp_tool_gui_dispose;
+  object_class->finalize = gimp_tool_gui_finalize;
+
+  g_type_class_add_private (klass, sizeof (GimpToolGuiPrivate));
+}
+
+static void
+gimp_tool_gui_init (GimpToolGui *gui)
+{
+}
+
+static void
+gimp_tool_gui_dispose (GObject *object)
+{
+  GimpToolGuiPrivate *private = GET_PRIVATE (object);
+
+  if (private->shell)
+    gimp_tool_gui_set_shell (GIMP_TOOL_GUI (object), NULL);
+
+  if (private->dialog)
+    {
+      if (private->overlay)
+        g_object_unref (private->dialog);
+      else
+        gtk_widget_destroy (private->dialog);
+
+      private->dialog = NULL;
+      private->vbox   = NULL;
+    }
+
+  G_OBJECT_CLASS (gimp_tool_gui_parent_class)->dispose (object);
+}
+
+static void
+gimp_tool_gui_finalize (GObject *object)
+{
+  GimpToolGuiPrivate *private = GET_PRIVATE (object);
+
+  if (private->desc)
+    {
+      g_free (private->desc);
+      private->desc = NULL;
+    }
+
+  G_OBJECT_CLASS (gimp_tool_gui_parent_class)->finalize (object);
+}
+
+
+/**
+ * gimp_tool_gui_new:
+ * @tool_info: a #GimpToolInfo
+ * @shell:     the parent display shell this gui
+ * @desc:      a string to use in the gui header or %NULL to use the help
+ *             field from #GimpToolInfo
+ * @...:       a %NULL-terminated valist of button parameters as described in
+ *             gtk_gui_new_with_buttons().
+ *
+ * This function creates a #GimpToolGui using the information stored
+ * in @tool_info.
+ *
+ * Return value: a new #GimpToolGui
+ **/
+GimpToolGui *
+gimp_tool_gui_new (GimpToolInfo     *tool_info,
+                   GimpDisplayShell *shell,
+                   const gchar      *desc,
+                   gboolean          overlay,
+                   ...)
+{
+  GimpToolGui        *gui;
+  GimpToolGuiPrivate *private;
+  va_list             args;
+
+  g_return_val_if_fail (GIMP_IS_TOOL_INFO (tool_info), NULL);
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+
+  gui = g_object_new (GIMP_TYPE_TOOL_GUI, NULL);
+
+  private = GET_PRIVATE (gui);
+
+  private->overlay   = overlay;
+  private->desc      = g_strdup (desc);
+
+  private->tool_info = tool_info;
+
+  if (overlay)
+    {
+      private->dialog = gimp_overlay_dialog_new (tool_info, desc, NULL);
+      g_object_ref_sink (private->dialog);
+
+      va_start (args, overlay);
+      gimp_overlay_dialog_add_buttons_valist (GIMP_OVERLAY_DIALOG (private->dialog),
+                                              args);
+      va_end (args);
+
+      gtk_container_set_border_width (GTK_CONTAINER (private->dialog), 6);
+
+      private->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+      gtk_container_add (GTK_CONTAINER (private->dialog), private->vbox);
+      gtk_widget_show (private->vbox);
+    }
+  else
+    {
+      private->dialog = gimp_tool_dialog_new (tool_info, shell, desc, NULL);
+
+      va_start (args, overlay);
+      gimp_dialog_add_buttons_valist (GIMP_DIALOG (private->dialog), args);
+      va_end (args);
+
+      private->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+      gtk_container_set_border_width (GTK_CONTAINER (private->vbox), 6);
+      gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (private->dialog))),
+                          private->vbox, TRUE, TRUE, 0);
+      gtk_widget_show (private->vbox);
+    }
+
+  gimp_tool_gui_set_shell (GIMP_TOOL_GUI (gui), shell);
+
+  return gui;
+}
+
+void
+gimp_tool_gui_set_shell (GimpToolGui      *gui,
+                         GimpDisplayShell *shell)
+{
+  GimpToolGuiPrivate *private;
+
+  g_return_if_fail (GIMP_IS_TOOL_GUI (gui));
+  g_return_if_fail (shell == NULL || GIMP_IS_DISPLAY_SHELL (shell));
+
+  private = GET_PRIVATE (gui);
+
+  if (shell == private->shell)
+    return;
+
+  if (! private->overlay)
+    {
+      gimp_tool_dialog_set_shell (GIMP_TOOL_DIALOG (private->dialog), shell);
+    }
+
+  private->shell = shell;
+}
+
+void
+gimp_tool_gui_set_viewable (GimpToolGui  *gui,
+                            GimpViewable *viewable)
+{
+  GimpToolGuiPrivate *private;
+
+  g_return_if_fail (GIMP_IS_TOOL_GUI (gui));
+  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+
+  private = GET_PRIVATE (gui);
+
+  if (! private->overlay)
+    {
+      gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (private->dialog),
+                                         viewable,
+                                         GIMP_CONTEXT (private->tool_info->tool_options));
+    }
+}
+
+GtkWidget *
+gimp_tool_gui_get_dialog (GimpToolGui *gui)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_GUI (gui), NULL);
+
+  return GET_PRIVATE (gui)->dialog;
+}
+
+GtkWidget *
+gimp_tool_gui_get_vbox (GimpToolGui *gui)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_GUI (gui), NULL);
+
+  return GET_PRIVATE (gui)->vbox;
+}
+
+void
+gimp_tool_gui_show (GimpToolGui *gui)
+{
+  GimpToolGuiPrivate *private;
+
+  g_return_if_fail (GIMP_IS_TOOL_GUI (gui));
+
+  private = GET_PRIVATE (gui);
+
+  if (private->overlay)
+    {
+      if (! gtk_widget_get_parent (private->dialog))
+        {
+          gimp_overlay_box_add_child (GIMP_OVERLAY_BOX (private->shell->canvas),
+                                      private->dialog, 1.0, 1.0);
+          gtk_widget_show (private->dialog);
+        }
+    }
+  else
+    {
+      gtk_widget_show (private->dialog);
+    }
+}
+
+void
+gimp_tool_gui_hide (GimpToolGui *gui)
+{
+  GimpToolGuiPrivate *private;
+
+  g_return_if_fail (GIMP_IS_TOOL_GUI (gui));
+
+  private = GET_PRIVATE (gui);
+
+  if (private->overlay)
+    {
+      if (gtk_widget_get_parent (private->dialog))
+        {
+          gtk_container_remove (GTK_CONTAINER (gtk_widget_get_parent (private->dialog)),
+                                private->dialog);
+          gtk_widget_hide (private->dialog);
+        }
+    }
+  else
+    {
+      if (gimp_dialog_factory_from_widget (private->dialog, NULL))
+        {
+          gimp_dialog_factory_hide_dialog (private->dialog);
+        }
+      else
+        {
+          gtk_widget_hide (private->dialog);
+        }
+    }
+}
