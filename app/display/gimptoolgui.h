@@ -46,24 +46,28 @@ struct _GimpToolGuiClass
 };
 
 
-GType         gimp_tool_gui_get_type     (void) G_GNUC_CONST;
+GType         gimp_tool_gui_get_type               (void) G_GNUC_CONST;
 
-GimpToolGui * gimp_tool_gui_new          (GimpToolInfo     *tool_info,
-                                          GimpDisplayShell *shell,
-                                          const gchar      *desc,
-                                          gboolean          overlay,
-                                          ...) G_GNUC_NULL_TERMINATED;
+GimpToolGui * gimp_tool_gui_new                    (GimpToolInfo     *tool_info,
+                                                    GimpDisplayShell *shell,
+                                                    const gchar      *desc,
+                                                    gboolean          overlay,
+                                                    ...) G_GNUC_NULL_TERMINATED;
 
-void          gimp_tool_gui_set_shell    (GimpToolGui      *gui,
-                                          GimpDisplayShell *shell);
-void          gimp_tool_gui_set_viewable (GimpToolGui      *gui,
-                                          GimpViewable     *viewable);
+void          gimp_tool_gui_set_shell              (GimpToolGui      *gui,
+                                                    GimpDisplayShell *shell);
+void          gimp_tool_gui_set_viewable           (GimpToolGui      *gui,
+                                                    GimpViewable     *viewable);
 
-GtkWidget   * gimp_tool_gui_get_dialog   (GimpToolGui      *gui);
-GtkWidget   * gimp_tool_gui_get_vbox     (GimpToolGui      *gui);
+GtkWidget   * gimp_tool_gui_get_dialog             (GimpToolGui      *gui);
+GtkWidget   * gimp_tool_gui_get_vbox               (GimpToolGui      *gui);
 
-void          gimp_tool_gui_show         (GimpToolGui      *gui);
-void          gimp_tool_gui_hide         (GimpToolGui      *gui);
+void          gimp_tool_gui_show                   (GimpToolGui      *gui);
+void          gimp_tool_gui_hide                   (GimpToolGui      *gui);
+
+void          gimp_tool_gui_set_response_sensitive (GimpToolGui      *gui,
+                                                    gint              response_id,
+                                                    gboolean          sensitive);
 
 
 #endif /* __GIMP_TOOL_GUI_H__ */

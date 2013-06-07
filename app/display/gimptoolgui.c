@@ -302,3 +302,25 @@ gimp_tool_gui_hide (GimpToolGui *gui)
         }
     }
 }
+
+void
+gimp_tool_gui_set_response_sensitive (GimpToolGui *gui,
+                                      gint         response_id,
+                                      gboolean     sensitive)
+{
+  GimpToolGuiPrivate *private;
+
+  g_return_if_fail (GIMP_IS_TOOL_GUI (gui));
+
+  private = GET_PRIVATE (gui);
+
+  if (private->overlay)
+    {
+      /* TODO */
+    }
+  else
+    {
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (private->dialog),
+                                         response_id, sensitive);
+    }
+}
