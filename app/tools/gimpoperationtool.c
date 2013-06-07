@@ -202,7 +202,7 @@ gimp_operation_tool_dialog (GimpImageMapTool *image_map_tool)
     }
 
   if (tool->undo_desc)
-    g_object_set (GIMP_IMAGE_MAP_TOOL (tool)->dialog,
+    g_object_set (GIMP_IMAGE_MAP_TOOL (tool)->gui,
                   "description", tool->undo_desc,
                   NULL);
 }
@@ -447,8 +447,8 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
         }
     }
 
-  if (undo_desc && GIMP_IMAGE_MAP_TOOL (tool)->dialog)
-    g_object_set (GIMP_IMAGE_MAP_TOOL (tool)->dialog,
+  if (undo_desc && GIMP_IMAGE_MAP_TOOL (tool)->gui)
+    g_object_set (GIMP_IMAGE_MAP_TOOL (tool)->gui,
                   "description", undo_desc,
                   NULL);
 

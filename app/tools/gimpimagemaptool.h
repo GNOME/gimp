@@ -49,8 +49,7 @@ struct _GimpImageMapTool
 
   /* dialog */
   gboolean               overlay;
-  GtkWidget             *dialog;
-  GtkWidget             *main_vbox;
+  GimpToolGui           *gui;
   GtkWidget             *settings_box;
   GtkSizeGroup          *label_group;
   GtkWidget             *active_picker;
