@@ -166,7 +166,8 @@ gimp_prop_table_new (GObject              *config,
       else if (G_IS_PARAM_SPEC_ENUM (pspec))
         {
           widget = gimp_prop_enum_combo_box_new (config, pspec->name, 0, 0);
-          label = g_param_spec_get_nick (pspec);
+          gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (widget),
+                                        g_param_spec_get_nick (pspec));
         }
       else if (GEGL_IS_PARAM_SPEC_SEED (pspec))
         {
