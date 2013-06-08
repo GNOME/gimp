@@ -89,8 +89,8 @@ widget "*GimpContainerGridView*GtkViewport*" style "gimp-grid-view-style"
 style "gimp-dockable-style" = "gimp-default-style"
 {
   GimpFrame::label-bold       = 0
-  GtkButton::focus-line_width = 1
-  GtkButton::focus-padding    = 0
+  GtkWidget::focus-line_width = 1
+  GtkWidget::focus-padding    = 0
 }
 
 widget "*GimpDockable.*" style "gimp-dockable-style"
@@ -103,16 +103,8 @@ style "gimp-display-style" = "gimp-default-style"
   GimpScaleComboBox::label-scale = 0.8333
   GtkComboBox::arrow-size        = 8
   GtkButton::inner-border        = { 0, 0, 0, 0 }
-  GtkButton::focus-line-width    = 0
-  GtkButton::focus-padding       = 0
+  GtkWidget::focus-line-width    = 1
+  GtkWidget::focus-padding       = 0
 }
 
 widget "*GimpDisplayShell.*" style "gimp-display-style"
-
-
-style "gimp-overlay-style" = "gimp-display-style"
-{
-  GtkButton::focus-line_width = 1
-}
-
-widget_class "*<GimpOverlayFrame>*" style "gimp-overlay-style"
