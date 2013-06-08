@@ -1039,8 +1039,6 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
 {
   GimpTool    *tool = GIMP_TOOL (measure);
   GimpToolGui *gui;
-  GtkWidget   *dialog;
-  GtkWidget   *vbox;
   GtkWidget   *table;
   GtkWidget   *label;
 
@@ -1052,11 +1050,7 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
 
                            NULL);
 
-  dialog = gimp_tool_gui_get_dialog (gui);
-  vbox   = gimp_tool_gui_get_vbox (gui);
-
-  if (GTK_IS_DIALOG (dialog))
-    gtk_window_set_focus_on_map (GTK_WINDOW (dialog), FALSE);
+  gimp_tool_gui_set_focus_on_map (gui, FALSE);
 
   g_signal_connect (gui, "response",
                     G_CALLBACK (g_object_unref),
@@ -1065,7 +1059,8 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
   table = gtk_table_new (4, 5, TRUE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (gui)), table,
+                      TRUE, TRUE, 0);
   gtk_widget_show (table);
 
 

@@ -65,6 +65,7 @@ struct _GimpToolGuiPrivate
   gchar            *description;
   GList            *response_entries;
   gint              default_response;
+  gboolean          focus_on_map;
 
   gboolean          overlay;
 
@@ -133,6 +134,7 @@ gimp_tool_gui_init (GimpToolGui *gui)
   GimpToolGuiPrivate *private = GET_PRIVATE (gui);
 
   private->default_response = -1;
+  private->focus_on_map     = TRUE;
 
   private->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   g_object_ref_sink (private->vbox);
@@ -434,6 +436,36 @@ gimp_tool_gui_get_overlay (GimpToolGui *gui)
 }
 
 void
+gimp_tool_gui_set_focus_on_map (GimpToolGui *gui,
+                                gboolean     focus_on_map)
+{
+  GimpToolGuiPrivate *private;
+
+  g_return_if_fail (GIMP_IS_TOOL_GUI (gui));
+
+  private = GET_PRIVATE (gui);
+
+  if (private->focus_on_map == focus_on_map)
+    return;
+
+  private->focus_on_map = focus_on_map ? TRUE : FALSE;
+
+  if (! private->overlay)
+    {
+      gtk_window_set_focus_on_map (GTK_WINDOW (private->dialog),
+                                   private->focus_on_map);
+    }
+}
+
+gboolean
+gimp_tool_gui_get_focus_on_map (GimpToolGui *gui)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_GUI (gui), FALSE);
+
+  return GET_PRIVATE (gui)->focus_on_map;
+}
+
+void
 gimp_tool_gui_set_default_response (GimpToolGui *gui,
                                     gint         response_id)
 {
@@ -588,6 +620,9 @@ gimp_tool_gui_create_dialog (GimpToolGui *gui)
       if (private->default_response != -1)
         gtk_dialog_set_default_response (GTK_DIALOG (private->dialog),
                                          private->default_response);
+
+      gtk_window_set_focus_on_map (GTK_WINDOW (private->dialog),
+                                   private->focus_on_map);
 
       gtk_container_set_border_width (GTK_CONTAINER (private->vbox), 6);
       gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (private->dialog))),
