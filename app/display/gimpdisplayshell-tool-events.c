@@ -195,6 +195,7 @@ gimp_display_shell_events (GtkWidget        *widget,
           case GDK_KEY_space:
           case GDK_KEY_KP_Space:
           case GDK_KEY_Tab:
+          case GDK_KEY_KP_Tab:
           case GDK_KEY_ISO_Left_Tab:
           case GDK_KEY_Alt_L:     case GDK_KEY_Alt_R:
           case GDK_KEY_Shift_L:   case GDK_KEY_Shift_R:
@@ -278,7 +279,8 @@ gimp_display_shell_canvas_no_image_events (GtkWidget        *canvas,
       {
         GdkEventKey *kevent = (GdkEventKey *) event;
 
-        if (kevent->keyval == GDK_KEY_Tab ||
+        if (kevent->keyval == GDK_KEY_Tab    ||
+            kevent->keyval == GDK_KEY_KP_Tab ||
             kevent->keyval == GDK_KEY_ISO_Left_Tab)
           {
             return gimp_display_shell_tab_pressed (shell, kevent);
@@ -1077,9 +1079,22 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 break;
 
               case GDK_KEY_Tab:
+              case GDK_KEY_KP_Tab:
               case GDK_KEY_ISO_Left_Tab:
-                gimp_display_shell_tab_pressed (shell, kevent);
-                return_val = TRUE;
+                if (! gtk_widget_has_focus (shell->canvas))
+                  {
+                    /*  The event was in an overlay widget and not
+                     *  handled there, make sure the overlay widgets
+                     *  are keyboard navigatable by letting the generic
+                     *  focus handler deal with tabs.
+                     */
+                    return FALSE;
+                  }
+                else
+                  {
+                    gimp_display_shell_tab_pressed (shell, kevent);
+                    return_val = TRUE;
+                  }
                 break;
 
                 /*  Update the state based on modifiers being pressed  */
@@ -1586,7 +1601,8 @@ gimp_display_shell_tab_pressed (GimpDisplayShell  *shell,
     {
       if (image && ! gimp_image_is_empty (image))
         {
-          if (kevent->keyval == GDK_KEY_Tab)
+          if (kevent->keyval == GDK_KEY_Tab ||
+              kevent->keyval == GDK_KEY_KP_Tab)
             gimp_display_shell_layer_select_init (shell,
                                                   1, kevent->time);
           else
@@ -1600,7 +1616,8 @@ gimp_display_shell_tab_pressed (GimpDisplayShell  *shell,
     {
       if (image)
         {
-          if (kevent->keyval == GDK_KEY_Tab)
+          if (kevent->keyval == GDK_KEY_Tab ||
+              kevent->keyval == GDK_KEY_KP_Tab)
             gimp_ui_manager_activate_action (manager, "windows",
                                              "windows-show-display-next");
           else
