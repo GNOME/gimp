@@ -1039,6 +1039,16 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                   }
               }
 
+            if (! gtk_widget_has_focus (shell->canvas))
+              {
+                /*  The event was in an overlay widget and not handled
+                 *  there, make sure the overlay widgets are keyboard
+                 *  navigatable by letting the generic widget handlers
+                 *  deal with the event.
+                 */
+                return FALSE;
+              }
+
             switch (kevent->keyval)
               {
               case GDK_KEY_Left:
@@ -1081,20 +1091,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               case GDK_KEY_Tab:
               case GDK_KEY_KP_Tab:
               case GDK_KEY_ISO_Left_Tab:
-                if (! gtk_widget_has_focus (shell->canvas))
-                  {
-                    /*  The event was in an overlay widget and not
-                     *  handled there, make sure the overlay widgets
-                     *  are keyboard navigatable by letting the generic
-                     *  focus handler deal with tabs.
-                     */
-                    return FALSE;
-                  }
-                else
-                  {
-                    gimp_display_shell_tab_pressed (shell, kevent);
-                    return_val = TRUE;
-                  }
+                gimp_display_shell_tab_pressed (shell, kevent);
+                return_val = TRUE;
                 break;
 
                 /*  Update the state based on modifiers being pressed  */
@@ -1168,6 +1166,16 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
                     return TRUE;
                   }
+              }
+
+            if (! gtk_widget_has_focus (shell->canvas))
+              {
+                /*  The event was in an overlay widget and not handled
+                 *  there, make sure the overlay widgets are keyboard
+                 *  navigatable by letting the generic widget handlers
+                 *  deal with the event.
+                 */
+                return FALSE;
               }
 
             switch (kevent->keyval)
