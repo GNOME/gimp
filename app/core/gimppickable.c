@@ -206,21 +206,21 @@ gimp_pickable_pick_color (GimpPickable *pickable,
                           gint         *color_index)
 {
   const Babl *format;
-  guchar      pixel[4];
+  gdouble     pixel[4];
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), FALSE);
 
-  format = babl_format ("R'G'B'A u8");
+  format = babl_format ("RGBA double");
 
   if (! gimp_pickable_get_pixel_at (pickable, x, y, format, pixel))
     return FALSE;
 
   if (sample_average)
     {
-      gint count        = 0;
-      gint color_avg[4] = { 0, 0, 0, 0 };
-      gint radius       = (gint) average_radius;
-      gint i, j;
+      gint    count        = 0;
+      gdouble color_avg[4] = { 0.0, 0.0, 0.0, 0.0 };
+      gint    radius       = (gint) average_radius;
+      gint    i, j;
 
       for (i = x - radius; i <= x + radius; i++)
         for (j = y - radius; j <= y + radius; j++)
@@ -234,17 +234,13 @@ gimp_pickable_pick_color (GimpPickable *pickable,
               color_avg[ALPHA] += pixel[ALPHA];
             }
 
-      pixel[RED]   = (guchar) ((color_avg[RED]   + count / 2) / count);
-      pixel[GREEN] = (guchar) ((color_avg[GREEN] + count / 2) / count);
-      pixel[BLUE]  = (guchar) ((color_avg[BLUE]  + count / 2) / count);
-      pixel[ALPHA] = (guchar) ((color_avg[ALPHA] + count / 2) / count);
+      pixel[RED]   = color_avg[RED]   / count;
+      pixel[GREEN] = color_avg[GREEN] / count;
+      pixel[BLUE]  = color_avg[BLUE]  / count;
+      pixel[ALPHA] = color_avg[ALPHA] / count;
     }
 
-  gimp_rgba_set_uchar (color,
-                       pixel[RED],
-                       pixel[GREEN],
-                       pixel[BLUE],
-                       pixel[ALPHA]);
+  gimp_rgba_set_pixel (color, format, pixel);
 
   if (color_index)
     {
@@ -252,7 +248,9 @@ gimp_pickable_pick_color (GimpPickable *pickable,
 
       if (babl_format_is_palette (format) && ! sample_average)
         {
-          gimp_pickable_get_pixel_at (pickable, x, y, format, pixel);
+          guchar indexed_pixel[4];
+
+          gimp_pickable_get_pixel_at (pickable, x, y, format, indexed_pixel);
 
           *color_index = pixel[0];
         }
