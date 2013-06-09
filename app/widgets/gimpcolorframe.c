@@ -486,19 +486,15 @@ gimp_color_frame_menu_callback (GtkWidget      *widget,
 static void
 gimp_color_frame_update (GimpColorFrame *frame)
 {
-  const gchar *names[GIMP_COLOR_FRAME_ROWS]  = { NULL, };
-  gchar       *values[GIMP_COLOR_FRAME_ROWS] = { NULL, };
-  gboolean     has_alpha;
-  gint         alpha_row = 3;
-  guchar       r, g, b, a;
-  gint         i;
+  const gchar  *names[GIMP_COLOR_FRAME_ROWS]  = { NULL, };
+  gchar       **values = NULL;
+  gboolean      has_alpha;
+  gint          i;
 
   has_alpha = babl_format_has_alpha (frame->sample_format);
 
   if (frame->sample_valid)
     {
-      gimp_rgba_get_uchar (&frame->color, &r, &g, &b, &a);
-
       gimp_color_area_set_color (GIMP_COLOR_AREA (frame->color_area),
                                  &frame->color);
     }
@@ -506,44 +502,82 @@ gimp_color_frame_update (GimpColorFrame *frame)
   switch (frame->frame_mode)
     {
     case GIMP_COLOR_FRAME_MODE_PIXEL:
-      if (gimp_babl_format_get_base_type (frame->sample_format) == GIMP_GRAY)
-        {
-          names[0]  = _("Value:");
+      {
+        GimpImageBaseType base_type;
 
-          if (frame->sample_valid)
-            values[0] = g_strdup_printf ("%d", r);
+        base_type = gimp_babl_format_get_base_type (frame->sample_format);
 
-          alpha_row = 1;
-        }
-      else
-        {
-          names[0] = _("Red:");
-          names[1] = _("Green:");
-          names[2] = _("Blue:");
+        if (frame->sample_valid)
+          {
+            const Babl *print_format = NULL;
+            gpointer    pixel        = g_alloca (5 * 64);
 
-          if (frame->sample_valid)
-            {
-              values[0] = g_strdup_printf ("%d", r);
-              values[1] = g_strdup_printf ("%d", g);
-              values[2] = g_strdup_printf ("%d", b);
-            }
+            switch (gimp_babl_format_get_precision (frame->sample_format))
+              {
+              case GIMP_PRECISION_U8:
+                if (babl_format_is_palette (frame->sample_format))
+                  {
+                    print_format = gimp_babl_format (GIMP_RGB,
+                                                     GIMP_PRECISION_U8,
+                                                     has_alpha);
+                    break;
+                  }
 
-          alpha_row = 3;
+              case GIMP_PRECISION_U16:
+              case GIMP_PRECISION_U32:
+                print_format = frame->sample_format;
+                break;
 
-          if (babl_format_is_palette (frame->sample_format))
-            {
-              names[4] = _("Index:");
+              case GIMP_PRECISION_HALF:
+              case GIMP_PRECISION_FLOAT:
+                print_format = gimp_babl_format (base_type,
+                                                 GIMP_PRECISION_FLOAT,
+                                                 has_alpha);
+                break;
+              }
 
-              if (frame->sample_valid)
-                {
-                  /* color_index will be -1 for an averaged sample */
-                  if (frame->color_index < 0)
-                    names[4] = NULL;
-                  else
-                    values[4] = g_strdup_printf ("%d", frame->color_index);
-                }
-            }
-        }
+            gimp_rgba_get_pixel (&frame->color, print_format, pixel);
+
+            values = gimp_babl_print_pixel (print_format, pixel);
+          }
+
+        if (base_type == GIMP_GRAY)
+          {
+            names[0] = _("Value:");
+
+            if (has_alpha)
+              names[1] = _("Alpha:");
+          }
+        else
+          {
+            names[0] = _("Red:");
+            names[1] = _("Green:");
+            names[2] = _("Blue:");
+
+            if (has_alpha)
+              names[3] = _("Alpha:");
+
+            if (babl_format_is_palette (frame->sample_format))
+              {
+                names[4] = _("Index:");
+
+                if (frame->sample_valid)
+                  {
+                    gchar **v   = g_new0 (gchar *, 6);
+                    gchar **tmp = values;
+
+                    memcpy (v, values, 4 * sizeof (gchar *));
+                    values = v;
+
+                    g_free (tmp);
+
+                    /* color_index will be -1 for an averaged sample */
+                    if (frame->color_index >= 0)
+                      values[4] = g_strdup_printf ("%d", frame->color_index);
+                  }
+              }
+          }
+      }
       break;
 
     case GIMP_COLOR_FRAME_MODE_RGB:
@@ -551,19 +585,29 @@ gimp_color_frame_update (GimpColorFrame *frame)
       names[1] = _("Green:");
       names[2] = _("Blue:");
 
+      if (has_alpha)
+        names[3] = _("Alpha:");
+
       if (frame->sample_valid)
         {
+          values = g_new0 (gchar *, 6);
+
           values[0] = g_strdup_printf ("%d %%", ROUND (frame->color.r * 100.0));
           values[1] = g_strdup_printf ("%d %%", ROUND (frame->color.g * 100.0));
           values[2] = g_strdup_printf ("%d %%", ROUND (frame->color.b * 100.0));
+          values[3] = g_strdup_printf ("%d %%", ROUND (frame->color.a * 100.0));
         }
 
-      alpha_row = 3;
-
-      names[4]  = _("Hex:");
+      names[4] = _("Hex:");
 
       if (frame->sample_valid)
-        values[4] = g_strdup_printf ("%.2x%.2x%.2x", r, g, b);
+        {
+          guchar r, g, b;
+
+          gimp_rgb_get_uchar (&frame->color, &r, &g, &b);
+
+          values[4] = g_strdup_printf ("%.2x%.2x%.2x", r, g, b);
+        }
       break;
 
     case GIMP_COLOR_FRAME_MODE_HSV:
@@ -571,18 +615,23 @@ gimp_color_frame_update (GimpColorFrame *frame)
       names[1] = _("Sat.:");
       names[2] = _("Value:");
 
+      if (has_alpha)
+        names[3] = _("Alpha:");
+
       if (frame->sample_valid)
         {
           GimpHSV hsv;
 
           gimp_rgb_to_hsv (&frame->color, &hsv);
+          hsv.a = frame->color.a;
+
+          values = g_new0 (gchar *, 5);
 
           values[0] = g_strdup_printf ("%d \302\260", ROUND (hsv.h * 360.0));
           values[1] = g_strdup_printf ("%d %%",       ROUND (hsv.s * 100.0));
           values[2] = g_strdup_printf ("%d %%",       ROUND (hsv.v * 100.0));
+          values[3] = g_strdup_printf ("%d %%",       ROUND (hsv.a * 100.0));
         }
-
-      alpha_row = 3;
       break;
 
     case GIMP_COLOR_FRAME_MODE_CMYK:
@@ -591,34 +640,25 @@ gimp_color_frame_update (GimpColorFrame *frame)
       names[2] = _("Yellow:");
       names[3] = _("Black:");
 
+      if (has_alpha)
+        names[4] = _("Alpha:");
+
       if (frame->sample_valid)
         {
           GimpCMYK cmyk;
 
           gimp_rgb_to_cmyk (&frame->color, 1.0, &cmyk);
+          cmyk.a = frame->color.a;
+
+          values = g_new0 (gchar *, 6);
 
           values[0] = g_strdup_printf ("%d %%", ROUND (cmyk.c * 100.0));
           values[1] = g_strdup_printf ("%d %%", ROUND (cmyk.m * 100.0));
           values[2] = g_strdup_printf ("%d %%", ROUND (cmyk.y * 100.0));
           values[3] = g_strdup_printf ("%d %%", ROUND (cmyk.k * 100.0));
+          values[4] = g_strdup_printf ("%d %%", ROUND (cmyk.a * 100.0));
         }
-
-      alpha_row = 4;
       break;
-    }
-
-  if (has_alpha)
-    {
-      names[alpha_row] = _("Alpha:");
-
-      if (frame->sample_valid)
-        {
-          if (frame->frame_mode == GIMP_COLOR_FRAME_MODE_PIXEL)
-            values[alpha_row] = g_strdup_printf ("%d", a);
-          else
-            values[alpha_row] = g_strdup_printf ("%d %%",
-                                                 (gint) (frame->color.a * 100.0));
-        }
     }
 
   for (i = 0; i < GIMP_COLOR_FRAME_ROWS; i++)
@@ -627,7 +667,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
         {
           gtk_label_set_text (GTK_LABEL (frame->name_labels[i]), names[i]);
 
-          if (frame->sample_valid)
+          if (frame->sample_valid && values[i])
             gtk_label_set_text (GTK_LABEL (frame->value_labels[i]), values[i]);
           else
             gtk_label_set_text (GTK_LABEL (frame->value_labels[i]), _("n/a"));
@@ -637,7 +677,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
           gtk_label_set_text (GTK_LABEL (frame->name_labels[i]),  " ");
           gtk_label_set_text (GTK_LABEL (frame->value_labels[i]), " ");
         }
-
-      g_free (values[i]);
     }
+
+  g_strfreev (values);
 }
