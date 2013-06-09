@@ -574,3 +574,90 @@ gimp_babl_component_format (GimpImageBaseType base_type,
 
   g_return_val_if_reached (NULL);
 }
+
+gchar **
+gimp_babl_print_pixel (const Babl *format,
+                       gpointer    pixel)
+{
+  GimpPrecision   precision;
+  gint            n_components;
+  guchar          tmp_pixel[32];
+  gchar         **strings;
+
+  g_return_val_if_fail (format != NULL, NULL);
+  g_return_val_if_fail (pixel != NULL, NULL);
+
+  precision = gimp_babl_format_get_precision (format);
+
+  if (babl_format_is_palette (format))
+    {
+      const Babl *f = gimp_babl_format (GIMP_RGB, precision,
+                                        babl_format_has_alpha (format));
+
+      babl_process (babl_fish (format, f), pixel, tmp_pixel, 1);
+
+      format = f;
+      pixel  = tmp_pixel;
+    }
+
+  n_components = babl_format_get_n_components (format);
+
+  strings = g_new0 (gchar *, n_components + 1);
+
+  switch (gimp_babl_format_get_precision (format))
+    {
+    case GIMP_PRECISION_U8:
+      {
+        guchar *color = pixel;
+        gint    i;
+
+        for (i = 0; i < n_components; i++)
+          strings[i] = g_strdup_printf ("%d", color[i]);
+      }
+      break;
+
+    case GIMP_PRECISION_U16:
+      {
+        guint16 *color = pixel;
+        gint     i;
+
+        for (i = 0; i < n_components; i++)
+          strings[i] = g_strdup_printf ("%u", color[i]);
+      }
+      break;
+
+    case GIMP_PRECISION_U32:
+      {
+        guint32 *color = pixel;
+        gint     i;
+
+        for (i = 0; i < n_components; i++)
+          strings[i] = g_strdup_printf ("%u", color[i]);
+      }
+      break;
+
+    case GIMP_PRECISION_HALF:
+      {
+        const Babl *f = gimp_babl_format (gimp_babl_format_get_base_type (format),
+                                          GIMP_PRECISION_FLOAT,
+                                          babl_format_has_alpha (format));
+
+        babl_process (babl_fish (format, f), pixel, tmp_pixel, 1);
+
+        pixel = tmp_pixel;
+      }
+      /* fall through */
+
+    case GIMP_PRECISION_FLOAT:
+      {
+        gfloat *color = pixel;
+        gint    i;
+
+        for (i = 0; i < n_components; i++)
+          strings[i] = g_strdup_printf ("%0.6f", color[i]);
+      }
+      break;
+    }
+
+  return strings;
+}

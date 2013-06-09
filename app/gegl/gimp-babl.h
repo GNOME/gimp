@@ -39,5 +39,8 @@ const Babl        * gimp_babl_component_format      (GimpImageBaseType  base_typ
                                                      GimpPrecision      precision,
                                                      gint               index);
 
+gchar            ** gimp_babl_print_pixel           (const Babl        *format,
+                                                     gpointer           pixel);
+
 
 #endif /* __GIMP_BABL_H__ */
