@@ -286,7 +286,7 @@ gimp_gegl_apply_scale (GeglBuffer            *src_buffer,
   g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
 
   node = gegl_node_new_child (NULL,
-                              "operation", "gegl:scale",
+                              "operation", "gegl:scale-ratio",
                               "origin-x",   0.0,
                               "origin-y",   0.0,
                               "sampler",    interpolation_type,
