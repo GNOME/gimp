@@ -510,7 +510,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
         if (frame->sample_valid)
           {
             const Babl *print_format = NULL;
-            gpointer    pixel        = g_alloca (5 * 64);
+            guchar      print_pixel[32];
 
             switch (gimp_babl_format_get_precision (frame->sample_format))
               {
@@ -536,9 +536,9 @@ gimp_color_frame_update (GimpColorFrame *frame)
                 break;
               }
 
-            gimp_rgba_get_pixel (&frame->color, print_format, pixel);
+            gimp_rgba_get_pixel (&frame->color, print_format, print_pixel);
 
-            values = gimp_babl_print_pixel (print_format, pixel);
+            values = gimp_babl_print_pixel (print_format, print_pixel);
           }
 
         if (base_type == GIMP_GRAY)
