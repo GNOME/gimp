@@ -252,7 +252,7 @@ gimp_pickable_pick_color (GimpPickable *pickable,
 
           gimp_pickable_get_pixel_at (pickable, x, y, format, indexed_pixel);
 
-          *color_index = pixel[0];
+          *color_index = indexed_pixel[0];
         }
       else
         {
