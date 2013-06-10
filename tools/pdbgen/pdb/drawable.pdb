@@ -939,11 +939,11 @@ HELP
     $since     = '2.4';
 
     @inargs = (
-	{ name => 'drawable', type => 'drawable',
+	{ name => 'drawable', type => 'drawable', dead => 1,
 	  desc => 'The drawable' },
-        { name => 'mode', type => 'enum GimpForegroundExtractMode',
+        { name => 'mode', type => 'enum GimpForegroundExtractMode', dead => 1,
 	  desc => 'The algorithm to use' },
-        { name => 'mask', type => 'drawable', desc => 'Tri-Map' }
+        { name => 'mask', type => 'drawable', dead => 1, desc => 'Tri-Map' }
     );
 
     %invoke = (
