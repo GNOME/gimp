@@ -926,14 +926,6 @@ drawable_foreground_extract_invoker (GimpProcedure         *procedure,
                                      GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
-  gint32 mode;
-  GimpDrawable *mask;
-
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
-  mode = g_value_get_enum (gimp_value_array_index (args, 1));
-  mask = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
-
   if (success)
     {
     /*
@@ -944,7 +936,6 @@ drawable_foreground_extract_invoker (GimpProcedure         *procedure,
     */
       success = FALSE;
     }
-
   return gimp_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
