@@ -1056,7 +1056,10 @@ levels_low_input_changed (GtkAdjustment  *adjustment,
                           GimpLevelsTool *tool)
 {
   GimpLevelsConfig *config = tool->config;
-  gint              value  = ROUND (gtk_adjustment_get_value (adjustment));
+  gdouble           value  = gtk_adjustment_get_value (adjustment);
+
+  if (tool->ui_scale_factor == 255.0)
+    value = ROUND (value);
 
   gtk_adjustment_set_lower (tool->high_input, value);
   gtk_adjustment_set_lower (tool->gamma_linear, value);
@@ -1093,7 +1096,10 @@ levels_high_input_changed (GtkAdjustment  *adjustment,
                            GimpLevelsTool *tool)
 {
   GimpLevelsConfig *config = tool->config;
-  gint              value  = ROUND (gtk_adjustment_get_value (adjustment));
+  gdouble           value  = gtk_adjustment_get_value (adjustment);
+
+  if (tool->ui_scale_factor == 255.0)
+    value = ROUND (value);
 
   gtk_adjustment_set_upper (tool->low_input, value);
   gtk_adjustment_set_upper (tool->gamma_linear, value);
@@ -1113,7 +1119,10 @@ levels_low_output_changed (GtkAdjustment  *adjustment,
                            GimpLevelsTool *tool)
 {
   GimpLevelsConfig *config = tool->config;
-  gint              value  = ROUND (gtk_adjustment_get_value (adjustment));
+  gdouble           value  = gtk_adjustment_get_value (adjustment);
+
+  if (tool->ui_scale_factor == 255.0)
+    value = ROUND (value);
 
   if (config->low_output[config->channel] != value / tool->ui_scale_factor)
     {
@@ -1128,7 +1137,10 @@ levels_high_output_changed (GtkAdjustment  *adjustment,
                             GimpLevelsTool *tool)
 {
   GimpLevelsConfig *config = tool->config;
-  gint              value  = ROUND (gtk_adjustment_get_value (adjustment));
+  gdouble           value  = gtk_adjustment_get_value (adjustment);
+
+  if (tool->ui_scale_factor == 255.0)
+    value = ROUND (value);
 
   if (config->high_output[config->channel] != value / tool->ui_scale_factor)
     {
