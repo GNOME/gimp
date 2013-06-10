@@ -36,6 +36,7 @@ struct _GimpHistogram
 {
   gint     ref_count;
   gint     n_channels;
+  gint     n_bins;
   gdouble *values;
 };
 
@@ -43,7 +44,7 @@ struct _GimpHistogram
 /*  local function prototypes  */
 
 static void   gimp_histogram_alloc_values (GimpHistogram *histogram,
-                                           gint           bytes);
+                                           gint           n_components);
 
 
 /*  public functions  */
@@ -54,6 +55,7 @@ gimp_histogram_new (void)
   GimpHistogram *histogram = g_slice_new0 (GimpHistogram);
 
   histogram->ref_count = 1;
+  histogram->n_bins    = 256;
 
   return histogram;
 }
@@ -101,8 +103,9 @@ gimp_histogram_duplicate (GimpHistogram *histogram)
   dup = gimp_histogram_new ();
 
   dup->n_channels = histogram->n_channels;
+  dup->n_bins     = histogram->n_bins;
   dup->values     = g_memdup (histogram->values,
-                              sizeof (gdouble) * dup->n_channels * 256);
+                              sizeof (gdouble) * dup->n_channels * dup->n_bins);
 
   return dup;
 }
@@ -125,12 +128,53 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
   format = gegl_buffer_get_format (buffer);
 
   if (babl_format_is_palette (format))
-    format = gimp_babl_format (GIMP_RGB, GIMP_PRECISION_U8,
-                               babl_format_has_alpha (format));
+    {
+      if (babl_format_has_alpha (format))
+        format = babl_format ("R'G'B'A float");
+      else
+        format = babl_format ("R'G'B' float");
+    }
   else
-    format = gimp_babl_format (gimp_babl_format_get_base_type (format),
-                               GIMP_PRECISION_U8,
-                               babl_format_has_alpha (format));
+    {
+      const Babl *model = babl_format_get_model (format);
+
+      if (model == babl_model ("Y"))
+        {
+          format = babl_format ("Y float");
+        }
+      else if (model == babl_model ("Y'"))
+        {
+          format = babl_format ("Y' float");
+        }
+      else if (model == babl_model ("YA"))
+        {
+          format = babl_format ("YA float");
+        }
+      else if (model == babl_model ("Y'A"))
+        {
+          format = babl_format ("Y'A float");
+        }
+      else if (model == babl_model ("RGB"))
+        {
+          format = babl_format ("RGB float");
+        }
+      else if (model == babl_model ("R'G'B'"))
+        {
+          format = babl_format ("R'G'B' float");
+        }
+      else if (model == babl_model ("RGBA"))
+        {
+          format = babl_format ("RGBA float");
+        }
+      else if (model == babl_model ("R'G'B'A"))
+        {
+          format = babl_format ("R'G'B'A float");
+        }
+      else
+        {
+          g_return_if_reached ();
+        }
+    }
 
   n_components = babl_format_get_n_components (format);
 
@@ -144,12 +188,12 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
                               babl_format ("Y float"),
                               GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
-#define VALUE(c,i) (histogram->values[(c) * 256 + (i)])
+#define VALUE(c,i) (histogram->values[(c) * histogram->n_bins + (gint) ((i) * (histogram->n_bins - 0.0001))])
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *data = iter->data[0];
-      gint          max;
+      const gfloat *data = iter->data[0];
+      gfloat        max;
 
       if (mask)
         {
@@ -173,7 +217,7 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
               while (iter->length--)
                 {
                   const gdouble masked = *mask_data;
-                  const gdouble weight = data[1] / 255.0;
+                  const gdouble weight = data[1];
 
                   VALUE (0, data[0]) += weight * masked;
                   VALUE (1, data[1]) += masked;
@@ -206,7 +250,7 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
               while (iter->length--)
                 {
                   const gdouble masked = *mask_data;
-                  const gdouble weight = data[3] / 255.0;
+                  const gdouble weight = data[3];
 
                   VALUE (1, data[0]) += weight * masked;
                   VALUE (2, data[1]) += weight * masked;
@@ -240,7 +284,7 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
             case 2:
               while (iter->length--)
                 {
-                  const gdouble weight = data[1] / 255.0;
+                  const gdouble weight = data[1];
 
                   VALUE (0, data[0]) += weight;
                   VALUE (1, data[1]) += 1.0;
@@ -268,7 +312,7 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
             case 4: /* calculate separate value values */
               while (iter->length--)
                 {
-                  const gdouble weight = data[3] / 255.0;
+                  const gdouble weight = data[3];
 
                   VALUE (1, data[0]) += weight;
                   VALUE (2, data[1]) += weight;
@@ -305,7 +349,7 @@ gimp_histogram_clear_values (GimpHistogram *histogram)
 }
 
 
-#define HISTOGRAM_VALUE(c,i) (histogram->values[(c) * 256 + (i)])
+#define HISTOGRAM_VALUE(c,i) (histogram->values[(c) * histogram->n_bins + (i)])
 
 
 gdouble
@@ -326,17 +370,21 @@ gimp_histogram_get_maximum (GimpHistogram        *histogram,
     return 0.0;
 
   if (channel == GIMP_HISTOGRAM_RGB)
-    for (x = 0; x < 256; x++)
-      {
-        max = MAX (max, HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED,   x));
-        max = MAX (max, HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, x));
-        max = MAX (max, HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE,  x));
-      }
+    {
+      for (x = 0; x < histogram->n_bins; x++)
+        {
+          max = MAX (max, HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED,   x));
+          max = MAX (max, HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, x));
+          max = MAX (max, HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE,  x));
+        }
+    }
   else
-    for (x = 0; x < 256; x++)
-      {
-        max = MAX (max, HISTOGRAM_VALUE (channel, x));
-      }
+    {
+      for (x = 0; x < histogram->n_bins; x++)
+        {
+          max = MAX (max, HISTOGRAM_VALUE (channel, x));
+        }
+    }
 
   return max;
 }
@@ -353,7 +401,7 @@ gimp_histogram_get_value (GimpHistogram        *histogram,
     channel = 1;
 
   if (! histogram->values ||
-      bin < 0 || bin >= 256 ||
+      bin < 0 || bin >= histogram->n_bins ||
       (channel == GIMP_HISTOGRAM_RGB && histogram->n_channels < 4) ||
       (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
     return 0.0;
@@ -393,6 +441,14 @@ gimp_histogram_n_channels (GimpHistogram *histogram)
   return histogram->n_channels - 1;
 }
 
+gint
+gimp_histogram_n_bins (GimpHistogram *histogram)
+{
+  g_return_val_if_fail (histogram != NULL, 0);
+
+  return histogram->n_bins;
+}
+
 gdouble
 gimp_histogram_get_count (GimpHistogram        *histogram,
                           GimpHistogramChannel  channel,
@@ -421,8 +477,8 @@ gimp_histogram_get_count (GimpHistogram        *histogram,
       channel >= histogram->n_channels)
     return 0.0;
 
-  start = CLAMP (start, 0, 255);
-  end   = CLAMP (end, 0, 255);
+  start = CLAMP (start, 0, histogram->n_bins - 1);
+  end   = CLAMP (end,   0, histogram->n_bins - 1);
 
   for (i = start; i <= end; i++)
     count += HISTOGRAM_VALUE (channel, i);
@@ -452,8 +508,8 @@ gimp_histogram_get_mean (GimpHistogram        *histogram,
       (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
     return 0.0;
 
-  start = CLAMP (start, 0, 255);
-  end = CLAMP (end, 0, 255);
+  start = CLAMP (start, 0, histogram->n_bins - 1);
+  end   = CLAMP (end,   0, histogram->n_bins - 1);
 
   if (channel == GIMP_HISTOGRAM_RGB)
     {
@@ -498,29 +554,33 @@ gimp_histogram_get_median (GimpHistogram         *histogram,
       (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
     return 0;
 
-  start = CLAMP (start, 0, 255);
-  end = CLAMP (end, 0, 255);
+  start = CLAMP (start, 0, histogram->n_bins - 1);
+  end   = CLAMP (end,   0, histogram->n_bins - 1);
 
   count = gimp_histogram_get_count (histogram, channel, start, end);
 
   if (channel == GIMP_HISTOGRAM_RGB)
-    for (i = start; i <= end; i++)
-      {
-        sum += (HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED,   i) +
-                HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, i) +
-                HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE,  i));
+    {
+      for (i = start; i <= end; i++)
+        {
+          sum += (HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED,   i) +
+                  HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, i) +
+                  HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE,  i));
 
-        if (sum * 2 > count)
-          return i;
-      }
+          if (sum * 2 > count)
+            return i;
+        }
+    }
   else
-    for (i = start; i <= end; i++)
-      {
-        sum += HISTOGRAM_VALUE (channel, i);
+    {
+      for (i = start; i <= end; i++)
+        {
+          sum += HISTOGRAM_VALUE (channel, i);
 
-        if (sum * 2 > count)
-          return i;
-      }
+          if (sum * 2 > count)
+            return i;
+        }
+    }
 
   return -1;
 }
@@ -560,8 +620,8 @@ gimp_histogram_get_threshold (GimpHistogram        *histogram,
       (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
     return 0;
 
-  start = CLAMP (start, 0, 255);
-  end = CLAMP (end, 0, 255);
+  start = CLAMP (start, 0, histogram->n_bins - 1);
+  end   = CLAMP (end,   0, histogram->n_bins - 1);
 
   maxval = end - start;
 
@@ -600,22 +660,24 @@ gimp_histogram_get_threshold (GimpHistogram        *histogram,
   bvar_max = 0;
 
   for (i = 0; i < maxval; ++i)
-    if (chist[i] > 0 && chist[i] < chist_max)
-      {
-	gdouble bvar;
+    {
+      if (chist[i] > 0 && chist[i] < chist_max)
+        {
+          gdouble bvar;
 
-	bvar = (gdouble) cmom[i] / chist[i];
-	bvar -= (cmom_max - cmom[i]) / (chist_max - chist[i]);
-	bvar *= bvar;
-	bvar *= chist[i];
-	bvar *= chist_max - chist[i];
+          bvar = (gdouble) cmom[i] / chist[i];
+          bvar -= (cmom_max - cmom[i]) / (chist_max - chist[i]);
+          bvar *= bvar;
+          bvar *= chist[i];
+          bvar *= chist_max - chist[i];
 
-	if (bvar > bvar_max)
-	  {
-	    bvar_max = bvar;
-	    threshold = start + i;
-	  }
-      }
+          if (bvar > bvar_max)
+            {
+              bvar_max = bvar;
+              threshold = start + i;
+            }
+        }
+    }
 
   return threshold;
 }
@@ -675,19 +737,20 @@ gimp_histogram_get_std_dev (GimpHistogram        *histogram,
 
 static void
 gimp_histogram_alloc_values (GimpHistogram *histogram,
-                             gint           bytes)
+                             gint           n_components)
 {
-  if (bytes + 1 != histogram->n_channels)
+  if (n_components + 1 != histogram->n_channels)
     {
       gimp_histogram_clear_values (histogram);
 
-      histogram->n_channels = bytes + 1;
+      histogram->n_channels = n_components + 1;
 
-      histogram->values = g_new0 (gdouble, histogram->n_channels * 256);
+      histogram->values = g_new0 (gdouble,
+                                  histogram->n_channels * histogram->n_bins);
     }
   else
     {
-      memset (histogram->values,
-              0, histogram->n_channels * 256 * sizeof (gdouble));
+      memset (histogram->values, 0,
+              histogram->n_channels * histogram->n_bins * sizeof (gdouble));
     }
 }
