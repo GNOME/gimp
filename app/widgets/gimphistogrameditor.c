@@ -516,11 +516,14 @@ gimp_histogram_editor_info_update (GimpHistogramEditor *editor)
 
   if (hist)
     {
+      gint    n_bins;
       gdouble pixels;
       gdouble count;
       gchar   text[12];
 
-      pixels = gimp_histogram_get_count (hist, view->channel, 0, 255);
+      n_bins = gimp_histogram_n_bins (hist);
+
+      pixels = gimp_histogram_get_count (hist, view->channel, 0, n_bins - 1);
       count  = gimp_histogram_get_count (hist, view->channel,
                                          view->start, view->end);
 
