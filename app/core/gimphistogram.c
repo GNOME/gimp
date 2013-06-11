@@ -44,7 +44,8 @@ struct _GimpHistogram
 /*  local function prototypes  */
 
 static void   gimp_histogram_alloc_values (GimpHistogram *histogram,
-                                           gint           n_components);
+                                           gint           n_components,
+                                           gint           n_bins);
 
 
 /*  public functions  */
@@ -120,12 +121,18 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
   GeglBufferIterator *iter;
   const Babl         *format;
   gint                n_components;
+  gint                n_bins;
 
   g_return_if_fail (histogram != NULL);
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
   g_return_if_fail (buffer_rect != NULL);
 
   format = gegl_buffer_get_format (buffer);
+
+  if (babl_format_get_type (format, 0) == babl_type ("u8"))
+    n_bins = 256;
+  else
+    n_bins = 1024;
 
   if (babl_format_is_palette (format))
     {
@@ -178,7 +185,7 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
 
   n_components = babl_format_get_n_components (format);
 
-  gimp_histogram_alloc_values (histogram, n_components);
+  gimp_histogram_alloc_values (histogram, n_components, n_bins);
 
   iter = gegl_buffer_iterator_new (buffer, buffer_rect, 0, format,
                                    GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
@@ -737,13 +744,16 @@ gimp_histogram_get_std_dev (GimpHistogram        *histogram,
 
 static void
 gimp_histogram_alloc_values (GimpHistogram *histogram,
-                             gint           n_components)
+                             gint           n_components,
+                             gint           n_bins)
 {
-  if (n_components + 1 != histogram->n_channels)
+  if (n_components + 1 != histogram->n_channels ||
+      n_bins != histogram->n_bins)
     {
       gimp_histogram_clear_values (histogram);
 
       histogram->n_channels = n_components + 1;
+      histogram->n_bins     = n_bins;
 
       histogram->values = g_new0 (gdouble,
                                   histogram->n_channels * histogram->n_bins);
