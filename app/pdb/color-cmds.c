@@ -623,7 +623,7 @@ histogram_invoker (GimpProcedure         *procedure,
 
       if (success)
         {
-          GimpHistogram *histogram = gimp_histogram_new ();
+          GimpHistogram *histogram = gimp_histogram_new (TRUE);
 
           gimp_drawable_calculate_histogram (drawable, histogram);
 

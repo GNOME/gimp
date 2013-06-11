@@ -42,6 +42,7 @@ enum
 
 struct _GimpHistogramPrivate
 {
+  gboolean gamma_correct;
   gint     n_channels;
   gint     n_bins;
   gdouble *values;
@@ -185,9 +186,13 @@ gimp_histogram_get_memsize (GimpObject *object,
 /*  public functions  */
 
 GimpHistogram *
-gimp_histogram_new (void)
+gimp_histogram_new (gboolean gamma_correct)
 {
-  return g_object_new (GIMP_TYPE_HISTOGRAM, NULL);
+  GimpHistogram *histogram = g_object_new (GIMP_TYPE_HISTOGRAM, NULL);
+
+  histogram->priv->gamma_correct = gamma_correct;
+
+  return histogram;
 }
 
 /**
@@ -206,7 +211,7 @@ gimp_histogram_duplicate (GimpHistogram *histogram)
 
   g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), NULL);
 
-  dup = gimp_histogram_new ();
+  dup = gimp_histogram_new (histogram->priv->gamma_correct);
 
   dup->priv->n_channels = histogram->priv->n_channels;
   dup->priv->n_bins     = histogram->priv->n_bins;
@@ -257,7 +262,10 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
 
       if (model == babl_model ("Y"))
         {
-          format = babl_format ("Y float");
+          if (priv->gamma_correct)
+            format = babl_format ("Y' float");
+          else
+            format = babl_format ("Y float");
         }
       else if (model == babl_model ("Y'"))
         {
@@ -265,7 +273,10 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
         }
       else if (model == babl_model ("YA"))
         {
-          format = babl_format ("YA float");
+          if (priv->gamma_correct)
+            format = babl_format ("Y'A float");
+          else
+            format = babl_format ("YA float");
         }
       else if (model == babl_model ("Y'A"))
         {
@@ -273,7 +284,10 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
         }
       else if (model == babl_model ("RGB"))
         {
-          format = babl_format ("RGB float");
+          if (priv->gamma_correct)
+            format = babl_format ("R'G'B' float");
+          else
+            format = babl_format ("RGB float");
         }
       else if (model == babl_model ("R'G'B'"))
         {
@@ -281,7 +295,10 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
         }
       else if (model == babl_model ("RGBA"))
         {
-          format = babl_format ("RGBA float");
+          if (priv->gamma_correct)
+            format = babl_format ("R'G'B'A float");
+          else
+            format = babl_format ("RGBA float");
         }
       else if (model == babl_model ("R'G'B'A"))
         {

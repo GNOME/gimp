@@ -40,7 +40,7 @@ gimp_drawable_equalize (GimpDrawable *drawable,
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
 
-  hist = gimp_histogram_new ();
+  hist = gimp_histogram_new (TRUE);
   gimp_drawable_calculate_histogram (drawable, hist);
 
   equalize = gegl_node_new_child (NULL,

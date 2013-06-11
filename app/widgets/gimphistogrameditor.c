@@ -280,7 +280,7 @@ gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
 
   if (image)
     {
-      editor->histogram = gimp_histogram_new ();
+      editor->histogram = gimp_histogram_new (TRUE);
 
       gimp_histogram_view_set_histogram (view, editor->histogram);
 
