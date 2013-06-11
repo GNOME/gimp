@@ -284,6 +284,7 @@ gimp_histogram_view_expose (GtkWidget      *widget,
   GtkStyle          *style = gtk_widget_get_style (widget);
   GtkAllocation      allocation;
   cairo_t           *cr;
+  gint               n_bins = 256;
   gint               x;
   gint               x1, x2;
   gint               border;
@@ -328,8 +329,11 @@ gimp_histogram_view_expose (GtkWidget      *widget,
       return FALSE;
     }
 
-  x1 = CLAMP (MIN (view->start, view->end), 0, 255);
-  x2 = CLAMP (MAX (view->start, view->end), 0, 255);
+  if (view->histogram)
+    n_bins = gimp_histogram_n_bins (view->histogram);
+
+  x1 = CLAMP (MIN (view->start, view->end), 0, n_bins - 1);
+  x2 = CLAMP (MAX (view->start, view->end), 0, n_bins - 1);
 
   if (view->histogram)
     max = gimp_histogram_view_get_maximum (view, view->histogram,
@@ -360,10 +364,10 @@ gimp_histogram_view_expose (GtkWidget      *widget,
     {
       gboolean  in_selection = FALSE;
 
-      gint  i = (x * 256) / width;
-      gint  j = ((x + 1) * 256) / width;
+      gint  i = (x * n_bins) / width;
+      gint  j = ((x + 1) * n_bins) / width;
 
-      if (! (x1 == 0 && x2 == 255))
+      if (! (x1 == 0 && x2 == (n_bins - 1)))
         {
           gint k = i;
 
@@ -527,6 +531,7 @@ gimp_histogram_view_button_press (GtkWidget      *widget,
     {
       GtkAllocation allocation;
       gint          width;
+      gint          n_bins = 256;
 
       gtk_grab_add (widget);
 
@@ -534,8 +539,11 @@ gimp_histogram_view_button_press (GtkWidget      *widget,
 
       width = allocation.width - 2 * view->border_width;
 
-      view->start = CLAMP ((((bevent->x - view->border_width) * 256) / width),
-                           0, 255);
+      if (view->histogram)
+        n_bins = gimp_histogram_n_bins (view->histogram);
+
+      view->start = CLAMP ((((bevent->x - view->border_width) * n_bins) / width),
+                           0, n_bins - 1);
       view->end   = view->start;
 
       gtk_widget_queue_draw (widget);
@@ -576,13 +584,17 @@ gimp_histogram_view_motion_notify (GtkWidget      *widget,
   GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (widget);
   GtkAllocation      allocation;
   gint               width;
+  gint               n_bins = 256;
 
   gtk_widget_get_allocation (widget, &allocation);
 
   width = allocation.width - 2 * view->border_width;
 
-  view->start = CLAMP ((((mevent->x - view->border_width) * 256) / width),
-                       0, 255);
+  if (view->histogram)
+    n_bins = gimp_histogram_n_bins (view->histogram);
+
+  view->start = CLAMP ((((mevent->x - view->border_width) * n_bins) / width),
+                       0, n_bins - 1);
 
   gtk_widget_queue_draw (widget);
 
