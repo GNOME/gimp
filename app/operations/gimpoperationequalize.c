@@ -168,7 +168,7 @@ gimp_operation_equalize_set_property (GObject      *object,
                 {
                   gdouble histi;
 
-                  histi = gimp_histogram_get_channel (self->histogram, k, i);
+                  histi = gimp_histogram_get_component (self->histogram, k, i);
 
                   sum += histi;
 

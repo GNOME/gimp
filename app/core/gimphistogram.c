@@ -558,16 +558,16 @@ gimp_histogram_get_value (GimpHistogram        *histogram,
 }
 
 gdouble
-gimp_histogram_get_channel (GimpHistogram        *histogram,
-                            GimpHistogramChannel  channel,
-                            gint                  bin)
+gimp_histogram_get_component (GimpHistogram *histogram,
+                              gint           component,
+                              gint           bin)
 {
   g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), 0.0);
 
   if (histogram->priv->n_channels > 3)
-    channel++;
+    component++;
 
-  return gimp_histogram_get_value (histogram, channel, bin);
+  return gimp_histogram_get_value (histogram, component, bin);
 }
 
 gint
