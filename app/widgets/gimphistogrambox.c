@@ -227,6 +227,8 @@ gimp_histogram_box_histogram_range (GimpHistogramView *view,
                                     GimpHistogramBox  *box)
 {
   gtk_adjustment_set_lower (box->high_adj, start);
+  gtk_adjustment_set_upper (box->high_adj, view->n_bins - 1);
+
   gtk_adjustment_set_upper (box->low_adj,  end);
 
   gtk_adjustment_set_value (box->low_adj,  start);

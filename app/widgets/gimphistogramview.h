@@ -37,6 +37,7 @@ struct _GimpHistogramView
   GimpHistogram         *bg_histogram;
   GimpHistogramChannel   channel;
   GimpHistogramScale     scale;
+  gint                   n_bins;
   gint                   start;
   gint                   end;
 
