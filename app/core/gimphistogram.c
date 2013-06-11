@@ -307,7 +307,9 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
                               babl_format ("Y float"),
                               GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
-#define VALUE(c,i) (priv->values[(c) * priv->n_bins + (gint) ((i) * (priv->n_bins - 0.0001))])
+#define VALUE(c,i) (priv->values[(c) * priv->n_bins + \
+                                 (gint) (CLAMP ((i), 0.0, 1.0) * \
+                                         (priv->n_bins - 0.0001))])
 
   while (gegl_buffer_iterator_next (iter))
     {
