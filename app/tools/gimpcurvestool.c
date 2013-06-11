@@ -216,7 +216,7 @@ gimp_curves_tool_initialize (GimpTool     *tool,
   gimp_drawable_calculate_histogram (drawable, histogram);
   gimp_histogram_view_set_background (GIMP_HISTOGRAM_VIEW (c_tool->graph),
                                       histogram);
-  gimp_histogram_unref (histogram);
+  g_object_unref (histogram);
 
   return TRUE;
 }

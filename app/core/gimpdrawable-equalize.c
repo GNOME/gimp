@@ -53,6 +53,5 @@ gimp_drawable_equalize (GimpDrawable *drawable,
                                  equalize);
 
   g_object_unref (equalize);
-
-  gimp_histogram_unref (hist);
+  g_object_unref (hist);
 }

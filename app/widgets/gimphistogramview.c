@@ -168,13 +168,13 @@ gimp_histogram_view_finalize (GObject *object)
 
   if (view->histogram)
     {
-      gimp_histogram_unref (view->histogram);
+      g_object_unref (view->histogram);
       view->histogram = NULL;
     }
 
   if (view->bg_histogram)
     {
-      gimp_histogram_unref (view->bg_histogram);
+      g_object_unref (view->bg_histogram);
       view->bg_histogram = NULL;
     }
 
@@ -630,13 +630,13 @@ gimp_histogram_view_set_histogram (GimpHistogramView *view,
   if (view->histogram != histogram)
     {
       if (view->histogram)
-        gimp_histogram_unref (view->histogram);
+        g_object_unref (view->histogram);
 
       view->histogram = histogram;
 
       if (histogram)
         {
-          gimp_histogram_ref (histogram);
+          g_object_ref (histogram);
 
           if (view->channel >= gimp_histogram_n_channels (histogram))
             gimp_histogram_view_set_channel (view, GIMP_HISTOGRAM_VALUE);
@@ -669,13 +669,13 @@ gimp_histogram_view_set_background (GimpHistogramView *view,
   if (view->bg_histogram != histogram)
     {
       if (view->bg_histogram)
-        gimp_histogram_unref (view->bg_histogram);
+        g_object_unref (view->bg_histogram);
 
       view->bg_histogram = histogram;
 
       if (histogram)
         {
-          gimp_histogram_ref (histogram);
+          g_object_ref (histogram);
 
           if (view->channel >= gimp_histogram_n_channels (histogram))
             gimp_histogram_view_set_channel (view, GIMP_HISTOGRAM_VALUE);

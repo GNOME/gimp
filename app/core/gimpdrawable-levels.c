@@ -58,7 +58,7 @@ gimp_drawable_levels_stretch (GimpDrawable *drawable,
   gimp_levels_config_stretch (config, histogram,
                               gimp_drawable_is_rgb (drawable));
 
-  gimp_histogram_unref (histogram);
+  g_object_unref (histogram);
 
   levels = g_object_new (GEGL_TYPE_NODE,
                          "operation", "gimp:levels",

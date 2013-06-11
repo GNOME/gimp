@@ -85,11 +85,12 @@ gimp_operation_equalize_class_init (GimpOperationEqualizeClass *klass)
   point_class->process = gimp_operation_equalize_process;
 
   g_object_class_install_property (object_class, PROP_HISTOGRAM,
-                                   g_param_spec_pointer ("histogram",
-                                                         "Histogram",
-                                                         "The histogram",
-                                                         G_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT_ONLY));
+                                   g_param_spec_object ("histogram",
+                                                        "Histogram",
+                                                        "The histogram",
+                                                        GIMP_TYPE_HISTOGRAM,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -104,7 +105,7 @@ gimp_operation_equalize_finalize (GObject *object)
 
   if (self->histogram)
     {
-      gimp_histogram_unref (self->histogram);
+      g_object_unref (self->histogram);
       self->histogram = NULL;
     }
 }
@@ -141,15 +142,13 @@ gimp_operation_equalize_set_property (GObject      *object,
     {
     case PROP_HISTOGRAM:
       if (self->histogram)
-        gimp_histogram_unref (self->histogram);
-      self->histogram = g_value_get_pointer (value);
+        g_object_unref (self->histogram);
+      self->histogram = g_value_dup_object (value);
       if (self->histogram)
         {
           gdouble pixels;
           gint    max;
           gint    k;
-
-          gimp_histogram_ref (self->histogram);
 
           pixels = gimp_histogram_get_count (self->histogram,
                                              GIMP_HISTOGRAM_VALUE, 0, 255);

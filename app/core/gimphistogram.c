@@ -32,9 +32,16 @@
 #include "gimphistogram.h"
 
 
-struct _GimpHistogram
+enum
 {
-  gint     ref_count;
+  PROP_0,
+  PROP_N_CHANNELS,
+  PROP_N_BINS,
+  PROP_VALUES
+};
+
+struct _GimpHistogramPrivate
+{
   gint     n_channels;
   gint     n_bins;
   gdouble *values;
@@ -43,46 +50,144 @@ struct _GimpHistogram
 
 /*  local function prototypes  */
 
-static void   gimp_histogram_alloc_values (GimpHistogram *histogram,
-                                           gint           n_components,
-                                           gint           n_bins);
+static void     gimp_histogram_finalize     (GObject       *object);
+static void     gimp_histogram_set_property (GObject       *object,
+                                             guint          property_id,
+                                             const GValue  *value,
+                                             GParamSpec    *pspec);
+static void     gimp_histogram_get_property (GObject       *object,
+                                             guint          property_id,
+                                             GValue        *value,
+                                             GParamSpec    *pspec);
 
+static gint64   gimp_histogram_get_memsize  (GimpObject    *object,
+                                             gint64        *gui_size);
+
+static void     gimp_histogram_alloc_values (GimpHistogram *histogram,
+                                             gint           n_components,
+                                             gint           n_bins);
+
+
+G_DEFINE_TYPE (GimpHistogram, gimp_histogram, GIMP_TYPE_OBJECT)
+
+#define parent_class gimp_histogram_parent_class
+
+
+static void
+gimp_histogram_class_init (GimpHistogramClass *klass)
+{
+  GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+
+  object_class->finalize         = gimp_histogram_finalize;
+  object_class->set_property     = gimp_histogram_set_property;
+  object_class->get_property     = gimp_histogram_get_property;
+
+  gimp_object_class->get_memsize = gimp_histogram_get_memsize;
+
+  g_object_class_install_property (object_class, PROP_N_CHANNELS,
+                                   g_param_spec_int ("n-channels", NULL, NULL,
+                                                     0, 5, 0,
+                                                     GIMP_PARAM_READABLE));
+
+  g_object_class_install_property (object_class, PROP_N_BINS,
+                                   g_param_spec_int ("n-bins", NULL, NULL,
+                                                     256, 1024, 1024,
+                                                     GIMP_PARAM_READABLE));
+
+  /* this is just for notifications */
+  g_object_class_install_property (object_class, PROP_VALUES,
+                                   g_param_spec_boolean ("values", NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READABLE));
+
+  g_type_class_add_private (klass, sizeof (GimpHistogramPrivate));
+}
+
+static void
+gimp_histogram_init (GimpHistogram *histogram)
+{
+  histogram->priv = G_TYPE_INSTANCE_GET_PRIVATE (histogram,
+                                                 GIMP_TYPE_HISTOGRAM,
+                                                 GimpHistogramPrivate);
+
+  histogram->priv->n_bins = 256;
+}
+
+static void
+gimp_histogram_finalize (GObject *object)
+{
+  GimpHistogram *histogram = GIMP_HISTOGRAM (object);
+
+  gimp_histogram_clear_values (histogram);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_histogram_set_property (GObject      *object,
+                             guint         property_id,
+                             const GValue *value,
+                             GParamSpec   *pspec)
+{
+  switch (property_id)
+    {
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_histogram_get_property (GObject    *object,
+                             guint       property_id,
+                             GValue     *value,
+                             GParamSpec *pspec)
+{
+  GimpHistogram *histogram = GIMP_HISTOGRAM (object);
+
+  switch (property_id)
+    {
+    case PROP_N_CHANNELS:
+      g_value_set_int (value, histogram->priv->n_channels);
+      break;
+
+    case PROP_N_BINS:
+      g_value_set_int (value, histogram->priv->n_bins);
+      break;
+
+    case PROP_VALUES:
+      /* return a silly boolean */
+      g_value_set_boolean (value, histogram->priv->values != NULL);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static gint64
+gimp_histogram_get_memsize (GimpObject *object,
+                            gint64     *gui_size)
+{
+  GimpHistogram *histogram = GIMP_HISTOGRAM (object);
+  gint64         memsize   = 0;
+
+  if (histogram->priv->values)
+    memsize += (histogram->priv->n_channels *
+                histogram->priv->n_bins * sizeof (gdouble));
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
+}
 
 /*  public functions  */
 
 GimpHistogram *
 gimp_histogram_new (void)
 {
-  GimpHistogram *histogram = g_slice_new0 (GimpHistogram);
-
-  histogram->ref_count = 1;
-  histogram->n_bins    = 256;
-
-  return histogram;
-}
-
-GimpHistogram *
-gimp_histogram_ref (GimpHistogram *histogram)
-{
-  g_return_val_if_fail (histogram != NULL, NULL);
-
-  histogram->ref_count++;
-
-  return histogram;
-}
-
-void
-gimp_histogram_unref (GimpHistogram *histogram)
-{
-  g_return_if_fail (histogram != NULL);
-
-  histogram->ref_count--;
-
-  if (histogram->ref_count == 0)
-    {
-      gimp_histogram_clear_values (histogram);
-      g_slice_free (GimpHistogram, histogram);
-    }
+  return g_object_new (GIMP_TYPE_HISTOGRAM, NULL);
 }
 
 /**
@@ -99,14 +204,16 @@ gimp_histogram_duplicate (GimpHistogram *histogram)
 {
   GimpHistogram *dup;
 
-  g_return_val_if_fail (histogram != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), NULL);
 
   dup = gimp_histogram_new ();
 
-  dup->n_channels = histogram->n_channels;
-  dup->n_bins     = histogram->n_bins;
-  dup->values     = g_memdup (histogram->values,
-                              sizeof (gdouble) * dup->n_channels * dup->n_bins);
+  dup->priv->n_channels = histogram->priv->n_channels;
+  dup->priv->n_bins     = histogram->priv->n_bins;
+  dup->priv->values     = g_memdup (histogram->priv->values,
+                                    sizeof (gdouble) *
+                                    dup->priv->n_channels *
+                                    dup->priv->n_bins);
 
   return dup;
 }
@@ -118,14 +225,17 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
                           GeglBuffer          *mask,
                           const GeglRectangle *mask_rect)
 {
-  GeglBufferIterator *iter;
-  const Babl         *format;
-  gint                n_components;
-  gint                n_bins;
+  GimpHistogramPrivate *priv;
+  GeglBufferIterator   *iter;
+  const Babl           *format;
+  gint                  n_components;
+  gint                  n_bins;
 
-  g_return_if_fail (histogram != NULL);
+  g_return_if_fail (GIMP_IS_HISTOGRAM (histogram));
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
   g_return_if_fail (buffer_rect != NULL);
+
+  priv = histogram->priv;
 
   format = gegl_buffer_get_format (buffer);
 
@@ -185,6 +295,8 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
 
   n_components = babl_format_get_n_components (format);
 
+  g_object_freeze_notify (G_OBJECT (histogram));
+
   gimp_histogram_alloc_values (histogram, n_components, n_bins);
 
   iter = gegl_buffer_iterator_new (buffer, buffer_rect, 0, format,
@@ -195,7 +307,7 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
                               babl_format ("Y float"),
                               GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
-#define VALUE(c,i) (histogram->values[(c) * histogram->n_bins + (gint) ((i) * (histogram->n_bins - 0.0001))])
+#define VALUE(c,i) (priv->values[(c) * priv->n_bins + (gint) ((i) * (priv->n_bins - 0.0001))])
 
   while (gegl_buffer_iterator_next (iter))
     {
@@ -338,47 +450,61 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
         }
     }
 
+  g_object_notify (G_OBJECT (histogram), "values");
+
+  g_object_thaw_notify (G_OBJECT (histogram));
+
 #undef VALUE
 }
 
 void
 gimp_histogram_clear_values (GimpHistogram *histogram)
 {
-  g_return_if_fail (histogram != NULL);
+  g_return_if_fail (GIMP_IS_HISTOGRAM (histogram));
 
-  if (histogram->values)
+  if (histogram->priv->values)
     {
-      g_free (histogram->values);
-      histogram->values = NULL;
+      g_free (histogram->priv->values);
+      histogram->priv->values = NULL;
+
+      g_object_notify (G_OBJECT (histogram), "values");
     }
 
-  histogram->n_channels = 0;
+  if (histogram->priv->n_channels)
+    {
+      histogram->priv->n_channels = 0;
+
+      g_object_notify (G_OBJECT (histogram), "n-channels");
+    }
 }
 
 
-#define HISTOGRAM_VALUE(c,i) (histogram->values[(c) * histogram->n_bins + (i)])
+#define HISTOGRAM_VALUE(c,i) (priv->values[(c) * priv->n_bins + (i)])
 
 
 gdouble
 gimp_histogram_get_maximum (GimpHistogram        *histogram,
                             GimpHistogramChannel  channel)
 {
-  gdouble max = 0.0;
-  gint    x;
+  GimpHistogramPrivate *priv;
+  gdouble               max = 0.0;
+  gint                  x;
 
-  g_return_val_if_fail (histogram != NULL, 0.0);
+  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), 0.0);
+
+  priv = histogram->priv;
 
   /*  the gray alpha channel is in slot 1  */
-  if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
+  if (priv->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
 
-  if (! histogram->values ||
-      (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
+  if (! priv->values ||
+      (channel != GIMP_HISTOGRAM_RGB && channel >= priv->n_channels))
     return 0.0;
 
   if (channel == GIMP_HISTOGRAM_RGB)
     {
-      for (x = 0; x < histogram->n_bins; x++)
+      for (x = 0; x < priv->n_bins; x++)
         {
           max = MAX (max, HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED,   x));
           max = MAX (max, HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, x));
@@ -387,7 +513,7 @@ gimp_histogram_get_maximum (GimpHistogram        *histogram,
     }
   else
     {
-      for (x = 0; x < histogram->n_bins; x++)
+      for (x = 0; x < priv->n_bins; x++)
         {
           max = MAX (max, HISTOGRAM_VALUE (channel, x));
         }
@@ -401,16 +527,20 @@ gimp_histogram_get_value (GimpHistogram        *histogram,
                           GimpHistogramChannel  channel,
                           gint                  bin)
 {
-  g_return_val_if_fail (histogram != NULL, 0.0);
+  GimpHistogramPrivate *priv;
+
+  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), 0.0);
+
+  priv = histogram->priv;
 
   /*  the gray alpha channel is in slot 1  */
-  if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
+  if (priv->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
 
-  if (! histogram->values ||
-      bin < 0 || bin >= histogram->n_bins ||
-      (channel == GIMP_HISTOGRAM_RGB && histogram->n_channels < 4) ||
-      (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
+  if (! priv->values ||
+      bin < 0 || bin >= priv->n_bins ||
+      (channel == GIMP_HISTOGRAM_RGB && priv->n_channels < 4) ||
+      (channel != GIMP_HISTOGRAM_RGB && channel >= priv->n_channels))
     return 0.0;
 
   if (channel == GIMP_HISTOGRAM_RGB)
@@ -432,9 +562,9 @@ gimp_histogram_get_channel (GimpHistogram        *histogram,
                             GimpHistogramChannel  channel,
                             gint                  bin)
 {
-  g_return_val_if_fail (histogram != NULL, 0.0);
+  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), 0.0);
 
-  if (histogram->n_channels > 3)
+  if (histogram->priv->n_channels > 3)
     channel++;
 
   return gimp_histogram_get_value (histogram, channel, bin);
@@ -443,17 +573,17 @@ gimp_histogram_get_channel (GimpHistogram        *histogram,
 gint
 gimp_histogram_n_channels (GimpHistogram *histogram)
 {
-  g_return_val_if_fail (histogram != NULL, 0);
+  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), 0);
 
-  return histogram->n_channels - 1;
+  return histogram->priv->n_channels - 1;
 }
 
 gint
 gimp_histogram_n_bins (GimpHistogram *histogram)
 {
-  g_return_val_if_fail (histogram != NULL, 0);
+  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), 0);
 
-  return histogram->n_bins;
+  return histogram->priv->n_bins;
 }
 
 gdouble
@@ -462,13 +592,16 @@ gimp_histogram_get_count (GimpHistogram        *histogram,
                           gint                  start,
                           gint                  end)
 {
-  gint    i;
-  gdouble count = 0.0;
+  GimpHistogramPrivate *priv;
+  gint                  i;
+  gdouble               count = 0.0;
 
-  g_return_val_if_fail (histogram != NULL, 0.0);
+  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), 0.0);
+
+  priv = histogram->priv;
 
   /*  the gray alpha channel is in slot 1  */
-  if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
+  if (priv->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
 
   if (channel == GIMP_HISTOGRAM_RGB)
@@ -479,13 +612,13 @@ gimp_histogram_get_count (GimpHistogram        *histogram,
             gimp_histogram_get_count (histogram,
                                       GIMP_HISTOGRAM_BLUE, start, end));
 
-  if (! histogram->values ||
+  if (! priv->values ||
       start > end ||
-      channel >= histogram->n_channels)
+      channel >= priv->n_channels)
     return 0.0;
 
-  start = CLAMP (start, 0, histogram->n_bins - 1);
-  end   = CLAMP (end,   0, histogram->n_bins - 1);
+  start = CLAMP (start, 0, priv->n_bins - 1);
+  end   = CLAMP (end,   0, priv->n_bins - 1);
 
   for (i = start; i <= end; i++)
     count += HISTOGRAM_VALUE (channel, i);
@@ -499,24 +632,27 @@ gimp_histogram_get_mean (GimpHistogram        *histogram,
                          gint                  start,
                          gint                  end)
 {
-  gint    i;
-  gdouble mean = 0.0;
-  gdouble count;
+  GimpHistogramPrivate *priv;
+  gint                  i;
+  gdouble               mean = 0.0;
+  gdouble               count;
 
-  g_return_val_if_fail (histogram != NULL, 0.0);
+  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), 0.0);
+
+  priv = histogram->priv;
 
   /*  the gray alpha channel is in slot 1  */
-  if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
+  if (priv->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
 
-  if (! histogram->values ||
+  if (! priv->values ||
       start > end ||
-      (channel == GIMP_HISTOGRAM_RGB && histogram->n_channels < 4) ||
-      (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
+      (channel == GIMP_HISTOGRAM_RGB && priv->n_channels < 4) ||
+      (channel != GIMP_HISTOGRAM_RGB && channel >= priv->n_channels))
     return 0.0;
 
-  start = CLAMP (start, 0, histogram->n_bins - 1);
-  end   = CLAMP (end,   0, histogram->n_bins - 1);
+  start = CLAMP (start, 0, priv->n_bins - 1);
+  end   = CLAMP (end,   0, priv->n_bins - 1);
 
   if (channel == GIMP_HISTOGRAM_RGB)
     {
@@ -545,24 +681,27 @@ gimp_histogram_get_median (GimpHistogram         *histogram,
                            gint                   start,
                            gint                   end)
 {
-  gint    i;
-  gdouble sum = 0.0;
-  gdouble count;
+  GimpHistogramPrivate *priv;
+  gint                  i;
+  gdouble               sum = 0.0;
+  gdouble               count;
 
-  g_return_val_if_fail (histogram != NULL, -1);
+  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), -1);
+
+  priv = histogram->priv;
 
   /*  the gray alpha channel is in slot 1  */
-  if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
+  if (priv->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
 
-  if (! histogram->values ||
+  if (! priv->values ||
       start > end ||
-      (channel == GIMP_HISTOGRAM_RGB && histogram->n_channels < 4) ||
-      (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
+      (channel == GIMP_HISTOGRAM_RGB && priv->n_channels < 4) ||
+      (channel != GIMP_HISTOGRAM_RGB && channel >= priv->n_channels))
     return 0;
 
-  start = CLAMP (start, 0, histogram->n_bins - 1);
-  end   = CLAMP (end,   0, histogram->n_bins - 1);
+  start = CLAMP (start, 0, priv->n_bins - 1);
+  end   = CLAMP (end,   0, priv->n_bins - 1);
 
   count = gimp_histogram_get_count (histogram, channel, start, end);
 
@@ -604,31 +743,34 @@ gimp_histogram_get_threshold (GimpHistogram        *histogram,
                               gint                  start,
                               gint                  end)
 {
-  gint     i;
-  gint     maxval;
-  gdouble *hist      = NULL;
-  gdouble *chist     = NULL;
-  gdouble *cmom      = NULL;
-  gdouble  hist_max  = 0.0;
-  gdouble  chist_max = 0.0;
-  gdouble  cmom_max  = 0.0;
-  gdouble  bvar_max  = 0.0;
-  gint     threshold = 127;
+  GimpHistogramPrivate *priv;
+  gint                 i;
+  gint                 maxval;
+  gdouble             *hist      = NULL;
+  gdouble             *chist     = NULL;
+  gdouble             *cmom      = NULL;
+  gdouble              hist_max  = 0.0;
+  gdouble              chist_max = 0.0;
+  gdouble              cmom_max  = 0.0;
+  gdouble              bvar_max  = 0.0;
+  gint                 threshold = 127;
 
-  g_return_val_if_fail (histogram != NULL, -1);
+  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), -1);
+
+  priv = histogram->priv;
 
   /*  the gray alpha channel is in slot 1  */
-  if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
+  if (priv->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
 
-  if (! histogram->values ||
+  if (! priv->values ||
       start > end ||
-      (channel == GIMP_HISTOGRAM_RGB && histogram->n_channels < 4) ||
-      (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
+      (channel == GIMP_HISTOGRAM_RGB && priv->n_channels < 4) ||
+      (channel != GIMP_HISTOGRAM_RGB && channel >= priv->n_channels))
     return 0;
 
-  start = CLAMP (start, 0, histogram->n_bins - 1);
-  end   = CLAMP (end,   0, histogram->n_bins - 1);
+  start = CLAMP (start, 0, priv->n_bins - 1);
+  end   = CLAMP (end,   0, priv->n_bins - 1);
 
   maxval = end - start;
 
@@ -695,21 +837,24 @@ gimp_histogram_get_std_dev (GimpHistogram        *histogram,
                             gint                  start,
                             gint                  end)
 {
-  gint    i;
-  gdouble dev = 0.0;
-  gdouble count;
-  gdouble mean;
+  GimpHistogramPrivate *priv;
+  gint                  i;
+  gdouble               dev = 0.0;
+  gdouble               count;
+  gdouble               mean;
 
-  g_return_val_if_fail (histogram != NULL, 0.0);
+  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), 0.0);
+
+  priv = histogram->priv;
 
   /*  the gray alpha channel is in slot 1  */
-  if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
+  if (priv->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
 
-  if (! histogram->values ||
+  if (! priv->values ||
       start > end ||
-      (channel == GIMP_HISTOGRAM_RGB && histogram->n_channels < 4) ||
-      (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
+      (channel == GIMP_HISTOGRAM_RGB && priv->n_channels < 4) ||
+      (channel != GIMP_HISTOGRAM_RGB && channel >= priv->n_channels))
     return 0.0;
 
   mean  = gimp_histogram_get_mean  (histogram, channel, start, end);
@@ -747,20 +892,32 @@ gimp_histogram_alloc_values (GimpHistogram *histogram,
                              gint           n_components,
                              gint           n_bins)
 {
-  if (n_components + 1 != histogram->n_channels ||
-      n_bins != histogram->n_bins)
+  GimpHistogramPrivate *priv = histogram->priv;
+
+  if (n_components + 1 != priv->n_channels ||
+      n_bins           != priv->n_bins)
     {
       gimp_histogram_clear_values (histogram);
 
-      histogram->n_channels = n_components + 1;
-      histogram->n_bins     = n_bins;
+      if (n_components + 1 != priv->n_channels)
+        {
+          priv->n_channels = n_components + 1;
 
-      histogram->values = g_new0 (gdouble,
-                                  histogram->n_channels * histogram->n_bins);
+          g_object_notify (G_OBJECT (histogram), "n-channels");
+        }
+
+      if (n_bins != priv->n_bins)
+        {
+          priv->n_bins = n_bins;
+
+          g_object_notify (G_OBJECT (histogram), "n-bins");
+        }
+
+      priv->values = g_new0 (gdouble, priv->n_channels * priv->n_bins);
     }
   else
     {
-      memset (histogram->values, 0,
-              histogram->n_channels * histogram->n_bins * sizeof (gdouble));
+      memset (priv->values, 0,
+              priv->n_channels * priv->n_bins * sizeof (gdouble));
     }
 }

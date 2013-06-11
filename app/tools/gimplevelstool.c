@@ -187,7 +187,7 @@ gimp_levels_tool_finalize (GObject *object)
 
   if (tool->histogram)
     {
-      gimp_histogram_unref (tool->histogram);
+      g_object_unref (tool->histogram);
       tool->histogram = NULL;
     }
 

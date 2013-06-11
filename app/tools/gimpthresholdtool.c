@@ -126,7 +126,7 @@ gimp_threshold_tool_finalize (GObject *object)
 
   if (t_tool->histogram)
     {
-      gimp_histogram_unref (t_tool->histogram);
+      g_object_unref (t_tool->histogram);
       t_tool->histogram = NULL;
     }
 

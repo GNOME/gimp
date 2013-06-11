@@ -21,10 +21,36 @@
 #define __GIMP_HISTOGRAM_H__
 
 
-GimpHistogram * gimp_histogram_new           (void);
+#include "gimpobject.h"
 
-GimpHistogram * gimp_histogram_ref           (GimpHistogram        *histogram);
-void            gimp_histogram_unref         (GimpHistogram        *histogram);
+
+#define GIMP_TYPE_HISTOGRAM            (gimp_histogram_get_type ())
+#define GIMP_HISTOGRAM(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_HISTOGRAM, GimpHistogram))
+#define GIMP_HISTOGRAM_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_HISTOGRAM, GimpHistogramClass))
+#define GIMP_IS_HISTOGRAM(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_HISTOGRAM))
+#define GIMP_IS_HISTOGRAM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_HISTOGRAM))
+#define GIMP_HISTOGRAM_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_HISTOGRAM, GimpHistogramClass))
+
+
+typedef struct _GimpHistogramPrivate GimpHistogramPrivate;
+typedef struct _GimpHistogramClass   GimpHistogramClass;
+
+struct _GimpHistogram
+{
+  GimpObject            parent_instance;
+
+  GimpHistogramPrivate *priv;
+};
+
+struct _GimpHistogramClass
+{
+  GimpObjectClass  parent_class;
+};
+
+
+GType           gimp_histogram_get_type      (void) G_GNUC_CONST;
+
+GimpHistogram * gimp_histogram_new           (void);
 
 GimpHistogram * gimp_histogram_duplicate     (GimpHistogram        *histogram);
 

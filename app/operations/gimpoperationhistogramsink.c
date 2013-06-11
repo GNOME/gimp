@@ -96,10 +96,11 @@ gimp_operation_histogram_sink_class_init (GimpOperationHistogramSinkClass *klass
                                                         GEGL_PARAM_PAD_INPUT));
 
   g_object_class_install_property (object_class, PROP_HISTOGRAM,
-                                   g_param_spec_pointer ("histogram",
-                                                         "Histogram",
-                                                         "The result histogram",
-                                                         G_PARAM_READWRITE));
+                                   g_param_spec_object ("histogram",
+                                                        "Histogram",
+                                                        "The result histogram",
+                                                        GIMP_TYPE_HISTOGRAM,
+                                                        G_PARAM_READWRITE));
 }
 
 static void
@@ -114,7 +115,7 @@ gimp_operation_histogram_sink_finalize (GObject *object)
 
   if (sink->histogram)
     {
-      gimp_histogram_unref (sink->histogram);
+      g_object_unref (sink->histogram);
       sink->histogram = NULL;
     }
 
@@ -159,10 +160,8 @@ gimp_operation_histogram_sink_set_property (GObject      *object,
 
     case PROP_HISTOGRAM:
       if (sink->histogram)
-        gimp_histogram_unref (sink->histogram);
-      sink->histogram = g_value_get_pointer (value);
-      if (sink->histogram)
-        gimp_histogram_ref (sink->histogram);
+        g_object_unref (sink->histogram);
+      sink->histogram = g_value_dup_object (value);
       break;
 
     default:
