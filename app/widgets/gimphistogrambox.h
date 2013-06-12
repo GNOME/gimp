@@ -37,8 +37,13 @@ struct _GimpHistogramBox
   GtkWidget         *color_bar;
   GtkWidget         *slider_bar;
 
+  gint               n_bins;
+
   GtkAdjustment     *low_adj;
   GtkAdjustment     *high_adj;
+
+  GtkWidget         *low_spinbutton;
+  GtkWidget         *high_spinbutton;
 };
 
 struct _GimpHistogramBoxClass
