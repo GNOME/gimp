@@ -676,14 +676,22 @@ gimp_histogram_get_mean (GimpHistogram        *histogram,
   if (channel == GIMP_HISTOGRAM_RGB)
     {
       for (i = start; i <= end; i++)
-        mean += (i * HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED,   i) +
-                 i * HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, i) +
-                 i * HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE,  i));
+        {
+          gdouble factor = (gdouble) i / (gdouble)  (priv->n_bins - 1);
+
+          mean += (factor * HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED,   i) +
+                   factor * HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, i) +
+                   factor * HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE,  i));
+        }
     }
   else
     {
       for (i = start; i <= end; i++)
-        mean += i * HISTOGRAM_VALUE (channel, i);
+        {
+          gdouble factor = (gdouble) i / (gdouble)  (priv->n_bins - 1);
+
+          mean += factor * HISTOGRAM_VALUE (channel, i);
+        }
     }
 
   count = gimp_histogram_get_count (histogram, channel, start, end);
@@ -694,7 +702,7 @@ gimp_histogram_get_mean (GimpHistogram        *histogram,
   return mean;
 }
 
-gint
+gdouble
 gimp_histogram_get_median (GimpHistogram         *histogram,
                            GimpHistogramChannel   channel,
                            gint                   start,
@@ -705,7 +713,7 @@ gimp_histogram_get_median (GimpHistogram         *histogram,
   gdouble               sum = 0.0;
   gdouble               count;
 
-  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), -1);
+  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), -1.0);
 
   priv = histogram->priv;
 
@@ -717,7 +725,7 @@ gimp_histogram_get_median (GimpHistogram         *histogram,
       start > end ||
       (channel == GIMP_HISTOGRAM_RGB && priv->n_channels < 4) ||
       (channel != GIMP_HISTOGRAM_RGB && channel >= priv->n_channels))
-    return 0;
+    return 0.0;
 
   start = CLAMP (start, 0, priv->n_bins - 1);
   end   = CLAMP (end,   0, priv->n_bins - 1);
@@ -733,7 +741,7 @@ gimp_histogram_get_median (GimpHistogram         *histogram,
                   HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE,  i));
 
           if (sum * 2 > count)
-            return i;
+            return ((gdouble) i / (gdouble)  (priv->n_bins - 1));
         }
     }
   else
@@ -743,11 +751,11 @@ gimp_histogram_get_median (GimpHistogram         *histogram,
           sum += HISTOGRAM_VALUE (channel, i);
 
           if (sum * 2 > count)
-            return i;
+            return ((gdouble) i / (gdouble)  (priv->n_bins - 1));
         }
     }
 
-  return -1;
+  return -1.0;
 }
 
 /*
@@ -897,7 +905,7 @@ gimp_histogram_get_std_dev (GimpHistogram        *histogram,
           value = gimp_histogram_get_value (histogram, channel, i);
         }
 
-      dev += value * SQR (i - mean);
+      dev += value * SQR (((gdouble) i / (gdouble)  (priv->n_bins - 1)) - mean);
     }
 
   return sqrt (dev / count);

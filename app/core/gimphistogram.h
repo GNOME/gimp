@@ -72,7 +72,7 @@ gdouble         gimp_histogram_get_mean      (GimpHistogram        *histogram,
                                               GimpHistogramChannel  channel,
                                               gint                  start,
                                               gint                  end);
-gint            gimp_histogram_get_median    (GimpHistogram        *histogram,
+gdouble         gimp_histogram_get_median    (GimpHistogram        *histogram,
                                               GimpHistogramChannel  channel,
                                               gint                  start,
                                               gint                  end);

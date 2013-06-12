@@ -527,20 +527,20 @@ gimp_histogram_editor_info_update (GimpHistogramEditor *editor)
       count  = gimp_histogram_get_count (hist, view->channel,
                                          view->start, view->end);
 
-      g_snprintf (text, sizeof (text), "%.1f",
+      g_snprintf (text, sizeof (text), "%.3f",
                   gimp_histogram_get_mean (hist, view->channel,
                                            view->start, view->end));
       gtk_label_set_text (GTK_LABEL (editor->labels[0]), text);
 
-      g_snprintf (text, sizeof (text), "%.1f",
+      g_snprintf (text, sizeof (text), "%.3f",
                   gimp_histogram_get_std_dev (hist, view->channel,
                                               view->start, view->end));
       gtk_label_set_text (GTK_LABEL (editor->labels[1]), text);
 
-      g_snprintf (text, sizeof (text), "%.1f",
-                  (gdouble) gimp_histogram_get_median  (hist, view->channel,
-                                                        view->start,
-                                                        view->end));
+      g_snprintf (text, sizeof (text), "%.3f",
+                  gimp_histogram_get_median  (hist, view->channel,
+                                              view->start,
+                                              view->end));
       gtk_label_set_text (GTK_LABEL (editor->labels[2]), text);
 
       g_snprintf (text, sizeof (text), "%d", (gint) pixels);

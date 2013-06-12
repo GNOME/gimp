@@ -23,10 +23,13 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "libgimpbase/gimpbase.h"
 
 #include "pdb-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpdrawable-equalize.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimpdrawable-levels.h"
@@ -43,6 +46,8 @@
 #include "operations/gimplevelsconfig.h"
 #include "operations/gimpposterizeconfig.h"
 #include "operations/gimpthresholdconfig.h"
+#include "plug-in/gimpplugin.h"
+#include "plug-in/gimppluginmanager.h"
 
 #include "gimppdb.h"
 #include "gimppdb-utils.h"
@@ -614,7 +619,6 @@ histogram_invoker (GimpProcedure         *procedure,
   if (success)
     {
       if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, 0, error) ||
-          gimp_drawable_is_indexed (drawable) ||
           (! gimp_drawable_has_alpha (drawable) &&
            channel == GIMP_HISTOGRAM_ALPHA) ||
           (gimp_drawable_is_gray (drawable) &&
@@ -624,21 +628,41 @@ histogram_invoker (GimpProcedure         *procedure,
       if (success)
         {
           GimpHistogram *histogram = gimp_histogram_new (TRUE);
+          gint           start     = start_range;
+          gint           end       = end_range;
+          gint           n_bins;
 
           gimp_drawable_calculate_histogram (drawable, histogram);
 
+          n_bins = gimp_histogram_n_bins (histogram);
+
+          if (n_bins != 256)
+            {
+              start = ROUND ((gdouble) start * (n_bins - 1) / 255);
+              end   = ROUND ((gdouble) end   * (n_bins - 1) / 255);
+            }
+
           mean       = gimp_histogram_get_mean (histogram, channel,
-                                                 start_range, end_range);
+                                                 start, end);
           std_dev    = gimp_histogram_get_std_dev (histogram, channel,
-                                                   start_range, end_range);
+                                                   start, end);
           median     = gimp_histogram_get_median (histogram, channel,
-                                                  start_range, end_range);
-          pixels     = gimp_histogram_get_count (histogram, channel, 0, 255);
+                                                  start, end);
+          pixels     = gimp_histogram_get_count (histogram, channel, 0, n_bins - 1);
           count      = gimp_histogram_get_count (histogram, channel,
-                                                 start_range, end_range);
+                                                 start, end);
           percentile = count / pixels;
 
           g_object_unref (histogram);
+
+          if (n_bins == 256 ||
+              ! gimp->plug_in_manager->current_plug_in ||
+              ! gimp_plug_in_precision_enabled (gimp->plug_in_manager->current_plug_in))
+            {
+              mean    *= 255;
+              std_dev *= 255;
+              median  *= 255;
+            }
         }
     }
 
@@ -1217,7 +1241,7 @@ register_color_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-histogram",
                                      "Returns information on the intensity histogram for the specified drawable.",
-                                     "This tool makes it possible to gather information about the intensity histogram of a drawable. A channel to examine is first specified. This can be either value, red, green, or blue, depending on whether the drawable is of type color or grayscale. The drawable may not be indexed. Second, a range of intensities are specified. The 'gimp-histogram' function returns statistics based on the pixels in the drawable that fall under this range of values. Mean, standard deviation, median, number of pixels, and percentile are all returned. Additionally, the total count of pixels in the image is returned. Counts of pixels are weighted by any associated alpha values and by the current selection mask. That is, pixels that lie outside an active selection mask will not be counted. Similarly, pixels with transparent alpha values will not be counted.",
+                                     "This tool makes it possible to gather information about the intensity histogram of a drawable. A channel to examine is first specified. This can be either value, red, green, or blue, depending on whether the drawable is of type color or grayscale. Second, a range of intensities are specified. The 'gimp-histogram' function returns statistics based on the pixels in the drawable that fall under this range of values. Mean, standard deviation, median, number of pixels, and percentile are all returned. Additionally, the total count of pixels in the image is returned. Counts of pixels are weighted by any associated alpha values and by the current selection mask. That is, pixels that lie outside an active selection mask will not be counted. Similarly, pixels with transparent alpha values will not be counted. The returned mean, std_dev and median are in the range (0..255) for 8-bit images, or if the plug-in is not precision-aware, and in the range (0.0..1.0) otherwise.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
