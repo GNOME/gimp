@@ -165,7 +165,6 @@ gimp_handle_bar_expose (GtkWidget      *widget,
     }
 
   cr = gdk_cairo_create (gtk_widget_get_window (widget));
-
   gdk_cairo_region (cr, eevent->region);
   cairo_clip (cr);
 
@@ -178,9 +177,9 @@ gimp_handle_bar_expose (GtkWidget      *widget,
 
       if (bar->slider_adj[i])
         {
-          bar->slider_pos[i] = ROUND ((gdouble) width *
+          bar->slider_pos[i] = ROUND ((gdouble) (width - 1) *
                                       (gtk_adjustment_get_value (bar->slider_adj[i]) - bar->lower) /
-                                      (bar->upper - bar->lower + 1));
+                                      (bar->upper - bar->lower));
 
           cairo_set_source_rgb (cr, 0.5 * i, 0.5 * i, 0.5 * i);
 
@@ -244,9 +243,12 @@ gimp_handle_bar_button_press (GtkWidget      *widget,
           }
       }
 
-  value = ((gdouble) (bevent->x - border) /
-           (gdouble) width *
-           (bar->upper - bar->lower + 1));
+  if (width == 1)
+    value = 0;
+  else
+    value = ((gdouble) (bevent->x - border) /
+             (gdouble) (width - 1) *
+             (bar->upper - bar->lower));
 
   gtk_adjustment_set_value (bar->slider_adj[bar->active_slider], value);
 
@@ -278,9 +280,12 @@ gimp_handle_bar_motion_notify (GtkWidget      *widget,
   if (width < 1)
     return FALSE;
 
-  value = ((gdouble) (mevent->x - border) /
-           (gdouble) width *
-           (bar->upper - bar->lower + 1));
+  if (width == 1)
+    value = 0;
+  else
+    value = ((gdouble) (mevent->x - border) /
+             (gdouble) (width - 1) *
+             (bar->upper - bar->lower));
 
   gtk_adjustment_set_value (bar->slider_adj[bar->active_slider], value);
 
@@ -324,8 +329,8 @@ gimp_handle_bar_set_adjustment (GimpHandleBar  *bar,
       g_signal_handlers_disconnect_by_func (bar->slider_adj[handle_no],
                                             gimp_handle_bar_adjustment_changed,
                                             bar);
+
       g_object_unref (bar->slider_adj[handle_no]);
-      bar->slider_adj[handle_no] = NULL;
     }
 
   bar->slider_adj[handle_no] = adjustment;
