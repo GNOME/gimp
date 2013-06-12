@@ -218,6 +218,17 @@ gimp_curves_tool_initialize (GimpTool     *tool,
                                       histogram);
   g_object_unref (histogram);
 
+  if (gimp_drawable_get_precision (drawable) == GIMP_PRECISION_U8)
+    {
+      gimp_curve_view_set_range_x (GIMP_CURVE_VIEW (c_tool->graph), 0, 255);
+      gimp_curve_view_set_range_y (GIMP_CURVE_VIEW (c_tool->graph), 0, 255);
+    }
+  else
+    {
+      gimp_curve_view_set_range_x (GIMP_CURVE_VIEW (c_tool->graph), 0.0, 1.0);
+      gimp_curve_view_set_range_y (GIMP_CURVE_VIEW (c_tool->graph), 0.0, 1.0);
+    }
+
   return TRUE;
 }
 
