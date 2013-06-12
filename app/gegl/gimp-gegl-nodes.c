@@ -144,6 +144,7 @@ gimp_gegl_mode_node_set_mode (GeglNode             *node,
                               gboolean              linear)
 {
   const gchar *operation = "gimp:normal-mode";
+  gdouble      opacity;
 
   g_return_if_fail (GEGL_IS_NODE (node));
 
@@ -179,9 +180,14 @@ gimp_gegl_mode_node_set_mode (GeglNode             *node,
       break;
     }
 
+  gegl_node_get (node,
+                 "opacity", &opacity,
+                 NULL);
+
   gegl_node_set (node,
                  "operation", operation,
                  "linear",    linear,
+                 "opacity",   opacity,
                  NULL);
 }
 
