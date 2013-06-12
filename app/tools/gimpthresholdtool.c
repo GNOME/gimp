@@ -191,6 +191,7 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkWidget           *menu;
   GtkWidget           *box;
   GtkWidget           *button;
+  gint                 n_bins;
 
   main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
 
@@ -210,9 +211,11 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
 
   t_tool->histogram_box = GIMP_HISTOGRAM_BOX (box);
 
+  n_bins = gimp_histogram_n_bins (t_tool->histogram);
+
   gimp_histogram_view_set_range (t_tool->histogram_box->view,
-                                 config->low  * 255.999,
-                                 config->high * 255.999);
+                                 config->low  * (n_bins - 0.0001),
+                                 config->high * (n_bins - 0.0001));
 
   g_signal_connect (t_tool->histogram_box->view, "range-changed",
                     G_CALLBACK (gimp_threshold_tool_histogram_range),
@@ -242,13 +245,16 @@ gimp_threshold_tool_config_notify (GObject           *object,
                                    GimpThresholdTool *t_tool)
 {
   GimpThresholdConfig *config = GIMP_THRESHOLD_CONFIG (object);
+  gint                 n_bins;
 
   if (! t_tool->histogram_box)
     return;
 
+  n_bins = gimp_histogram_n_bins (t_tool->histogram);
+
   gimp_histogram_view_set_range (t_tool->histogram_box->view,
-                                 config->low  * 255.999,
-                                 config->high * 255.999);
+                                 config->low  * (n_bins - 0.0001),
+                                 config->high * (n_bins - 0.0001));
 }
 
 static void
@@ -257,8 +263,9 @@ gimp_threshold_tool_histogram_range (GimpHistogramView *widget,
                                      gint               end,
                                      GimpThresholdTool *t_tool)
 {
-  gdouble low  = start / 255.0;
-  gdouble high = end   / 255.0;
+  gint    n_bins = gimp_histogram_n_bins (t_tool->histogram);
+  gdouble low    = (gdouble) start / (n_bins - 1);
+  gdouble high   = (gdouble) end   / (n_bins - 1);
 
   if (low  != t_tool->config->low ||
       high != t_tool->config->high)
@@ -275,14 +282,15 @@ gimp_threshold_tool_auto_clicked (GtkWidget         *button,
                                   GimpThresholdTool *t_tool)
 {
   GimpDrawable *drawable = GIMP_IMAGE_MAP_TOOL (t_tool)->drawable;
+  gint          n_bins   = gimp_histogram_n_bins (t_tool->histogram);
   gdouble       low;
 
   low = gimp_histogram_get_threshold (t_tool->histogram,
                                       gimp_drawable_is_rgb (drawable) ?
                                       GIMP_HISTOGRAM_RGB :
                                       GIMP_HISTOGRAM_VALUE,
-                                      0, 255);
+                                      0, n_bins - 1);
 
   gimp_histogram_view_set_range (t_tool->histogram_box->view,
-                                 low, 255.0);
+                                 low, n_bins - 1);
 }
