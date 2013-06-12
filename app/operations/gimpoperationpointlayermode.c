@@ -40,20 +40,27 @@ enum
 };
 
 
-static void     gimp_operation_point_layer_mode_set_property (GObject       *object,
-                                                              guint          property_id,
-                                                              const GValue  *value,
-                                                              GParamSpec    *pspec);
-static void     gimp_operation_point_layer_mode_get_property (GObject       *object,
-                                                              guint          property_id,
-                                                              GValue        *value,
-                                                              GParamSpec    *pspec);
+static void     gimp_operation_point_layer_mode_set_property (GObject              *object,
+                                                              guint                 property_id,
+                                                              const GValue         *value,
+                                                              GParamSpec           *pspec);
+static void     gimp_operation_point_layer_mode_get_property (GObject              *object,
+                                                              guint                 property_id,
+                                                              GValue               *value,
+                                                              GParamSpec           *pspec);
 
-static void     gimp_operation_point_layer_mode_prepare      (GeglOperation *operation);
+static void     gimp_operation_point_layer_mode_prepare      (GeglOperation        *operation);
+static gboolean gimp_operation_point_layer_mode_process      (GeglOperation        *operation,
+                                                              GeglOperationContext *context,
+                                                              const gchar          *output_prop,
+                                                              const GeglRectangle  *result,
+                                                              gint                  level);
 
 
 G_DEFINE_TYPE (GimpOperationPointLayerMode, gimp_operation_point_layer_mode,
                GEGL_TYPE_OPERATION_POINT_COMPOSER3)
+
+#define parent_class gimp_operation_point_layer_mode_parent_class
 
 
 static void
@@ -66,6 +73,7 @@ gimp_operation_point_layer_mode_class_init (GimpOperationPointLayerModeClass *kl
   object_class->get_property = gimp_operation_point_layer_mode_get_property;
 
   operation_class->prepare   = gimp_operation_point_layer_mode_prepare;
+  operation_class->process   = gimp_operation_point_layer_mode_process;
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:point-layer-mode",
@@ -156,4 +164,38 @@ gimp_operation_point_layer_mode_prepare (GeglOperation *operation)
   gegl_operation_set_format (operation, "output", format);
   gegl_operation_set_format (operation, "aux",    format);
   gegl_operation_set_format (operation, "aux2",   babl_format ("Y float"));
+}
+
+static gboolean
+gimp_operation_point_layer_mode_process (GeglOperation        *operation,
+                                         GeglOperationContext *context,
+                                         const gchar          *output_prop,
+                                         const GeglRectangle  *result,
+                                         gint                  level)
+{
+  GimpOperationPointLayerMode *point;
+
+  point = GIMP_OPERATION_POINT_LAYER_MODE (operation);
+
+  if (point->opacity == 0.0 ||
+      ! gegl_operation_context_get_object (context, "aux"))
+    {
+      GObject *input;
+
+      /* get the raw values this does not increase the reference count */
+      input = gegl_operation_context_get_object (context, "input");
+
+      if (input)
+        {
+          gegl_operation_context_set_object (context, "output", input);
+          return TRUE;
+        }
+    }
+
+  /* chain up, which will create the needed buffers for our actual
+   * process function
+   */
+  return GEGL_OPERATION_CLASS (parent_class)->process (operation, context,
+                                                       output_prop, result,
+                                                       level);
 }
