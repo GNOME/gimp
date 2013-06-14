@@ -50,6 +50,9 @@
 #define SLIDER_WIDTH 200
 
 
+static gboolean   gimp_brightness_contrast_tool_initialize (GimpTool              *tool,
+                                                            GimpDisplay           *display,
+                                                            GError               **error);
 static void   gimp_brightness_contrast_tool_button_press   (GimpTool              *tool,
                                                             const GimpCoords      *coords,
                                                             guint32                time,
@@ -106,6 +109,7 @@ gimp_brightness_contrast_tool_class_init (GimpBrightnessContrastToolClass *klass
   GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
+  tool_class->initialize             = gimp_brightness_contrast_tool_initialize;
   tool_class->button_press           = gimp_brightness_contrast_tool_button_press;
   tool_class->button_release         = gimp_brightness_contrast_tool_button_release;
   tool_class->motion                 = gimp_brightness_contrast_tool_motion;
@@ -122,6 +126,45 @@ gimp_brightness_contrast_tool_class_init (GimpBrightnessContrastToolClass *klass
 static void
 gimp_brightness_contrast_tool_init (GimpBrightnessContrastTool *bc_tool)
 {
+}
+
+static gboolean
+gimp_brightness_contrast_tool_initialize (GimpTool     *tool,
+                                          GimpDisplay  *display,
+                                          GError      **error)
+{
+  GimpBrightnessContrastTool *bc_tool  = GIMP_BRIGHTNESS_CONTRAST_TOOL (tool);
+  GimpImage                  *image    = gimp_display_get_image (display);
+  GimpDrawable               *drawable = gimp_image_get_active_drawable (image);
+  GtkWidget                  *scale;
+
+  if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
+    {
+      return FALSE;
+    }
+
+  if (gimp_drawable_get_precision (drawable) == GIMP_PRECISION_U8)
+    {
+      scale = bc_tool->brightness_scale;
+      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (scale), 0);
+      gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 127.0);
+
+      scale = bc_tool->contrast_scale;
+      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (scale), 0);
+      gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 127.0);
+    }
+  else
+    {
+      scale = bc_tool->brightness_scale;
+      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (scale), 3);
+      gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 0.5);
+
+      scale = bc_tool->contrast_scale;
+      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (scale), 3);
+      gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 0.5);
+    }
+
+  return TRUE;
 }
 
 static GeglNode *
@@ -208,9 +251,10 @@ gimp_brightness_contrast_tool_motion (GimpTool         *tool,
 static void
 gimp_brightness_contrast_tool_dialog (GimpImageMapTool *image_map_tool)
 {
-  GtkWidget *main_vbox;
-  GtkWidget *scale;
-  GtkWidget *button;
+  GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (image_map_tool);
+  GtkWidget                  *main_vbox;
+  GtkWidget                  *scale;
+  GtkWidget                  *button;
 
   main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
 
@@ -222,6 +266,8 @@ gimp_brightness_contrast_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (main_vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
+  bc_tool->brightness_scale = scale;
+
   /*  Create the contrast scale widget  */
   scale = gimp_prop_spin_scale_new (image_map_tool->config, "contrast",
                                     _("_Contrast"), 1.0 / 127.0, 10.0 / 127.0,
@@ -229,6 +275,8 @@ gimp_brightness_contrast_tool_dialog (GimpImageMapTool *image_map_tool)
   gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 127.0);
   gtk_box_pack_start (GTK_BOX (main_vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
+
+  bc_tool->contrast_scale = scale;
 
   button = gimp_stock_button_new (GIMP_STOCK_TOOL_LEVELS,
                                   _("Edit these Settings as Levels"));

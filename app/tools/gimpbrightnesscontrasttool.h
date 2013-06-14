@@ -41,6 +41,10 @@ struct _GimpBrightnessContrastTool
 
   gdouble                       x, y;
   gdouble                       dx, dy;
+
+  /* dialog */
+  GtkWidget                    *brightness_scale;
+  GtkWidget                    *contrast_scale;
 };
 
 struct _GimpBrightnessContrastToolClass
