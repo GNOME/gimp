@@ -528,58 +528,51 @@ gimp_prop_spin_scale_new (GObject     *config,
   return scale;
 }
 
-/**
- * gimp_prop_opacity_spin_scale_new:
- * @config:        #GimpConfig object to which property is attached.
- * @property_name: Name of gdouble property
- *
- * Creates a #GimpSpinScale to set and display the value of a
- * gdouble property in a very space-efficient way.
- *
- * Return value:  A new #GimpSpinScale widget.
- *
- * Since GIMP 2.8
- */
-GtkWidget *
-gimp_prop_opacity_spin_scale_new (GObject     *config,
-                                  const gchar *property_name,
-                                  const gchar *label)
+void
+gimp_prop_widget_set_factor (GtkWidget *widget,
+                             gdouble    factor,
+                             gint       digits)
 {
-  GParamSpec *param_spec;
-  GtkObject  *adjustment;
-  GtkWidget  *scale;
-  gdouble     value;
-  gdouble     lower;
-  gdouble     upper;
+  GtkAdjustment *adjustment;
+  gdouble       *factor_store;
+  gdouble        old_factor = 1.0;
+  gdouble        f;
 
-  param_spec = check_param_spec_w (config, property_name,
-                                   G_TYPE_PARAM_DOUBLE, G_STRFUNC);
-  if (! param_spec)
-    return NULL;
+  g_return_if_fail (GTK_IS_SPIN_BUTTON (widget));
+  g_return_if_fail (factor != 0.0);
+  g_return_if_fail (digits >= 0);
 
-  g_object_get (config, property_name, &value, NULL);
+  adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (widget));
 
-  value *= 100.0;
-  lower = G_PARAM_SPEC_DOUBLE (param_spec)->minimum * 100.0;
-  upper = G_PARAM_SPEC_DOUBLE (param_spec)->maximum * 100.0;
+  g_return_if_fail (get_param_spec (G_OBJECT (adjustment)) != NULL);
 
-  adjustment = gtk_adjustment_new (value, lower, upper, 1.0, 10.0, 0.0);
+  factor_store = g_object_get_data (G_OBJECT (adjustment),
+                                    "gimp-prop-adjustment-factor");
+  if (factor_store)
+    {
+      old_factor = *factor_store;
+    }
+  else
+    {
+      factor_store = g_new (gdouble, 1);
+      g_object_set_data_full (G_OBJECT (adjustment),
+                              "gimp-prop-adjustment-factor",
+                              factor_store, (GDestroyNotify) g_free);
+    }
 
-  scale = gimp_spin_scale_new (GTK_ADJUSTMENT (adjustment), label, 1);
+  *factor_store = factor;
 
-  set_param_spec (G_OBJECT (adjustment), scale, param_spec);
-  g_object_set_data (G_OBJECT (adjustment),
-                     "opacity-scale", GINT_TO_POINTER (TRUE));
+  f = factor / old_factor;
 
-  g_signal_connect (adjustment, "value-changed",
-                    G_CALLBACK (gimp_prop_adjustment_callback),
-                    config);
+  gtk_adjustment_configure (adjustment,
+                            f * gtk_adjustment_get_value (adjustment),
+                            f * gtk_adjustment_get_lower (adjustment),
+                            f * gtk_adjustment_get_upper (adjustment),
+                            f * gtk_adjustment_get_step_increment (adjustment),
+                            f * gtk_adjustment_get_page_increment (adjustment),
+                            f * gtk_adjustment_get_page_size (adjustment));
 
-  connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_adjustment_notify),
-                  adjustment);
-
-  return scale;
+  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (widget), digits);
 }
 
 static void
@@ -588,6 +581,7 @@ gimp_prop_adjustment_callback (GtkAdjustment *adjustment,
 {
   GParamSpec *param_spec;
   gdouble     value;
+  gdouble    *factor;
 
   param_spec = get_param_spec (G_OBJECT (adjustment));
   if (! param_spec)
@@ -595,48 +589,37 @@ gimp_prop_adjustment_callback (GtkAdjustment *adjustment,
 
   value = gtk_adjustment_get_value (adjustment);
 
+  factor = g_object_get_data (G_OBJECT (adjustment),
+                              "gimp-prop-adjustment-factor");
+  if (factor)
+    value /= *factor;
+
   if (G_IS_PARAM_SPEC_INT (param_spec))
     {
-      g_object_set (config,
-                    param_spec->name, (gint) value,
-                    NULL);
+      g_object_set (config, param_spec->name, (gint) value, NULL);
     }
   else if (G_IS_PARAM_SPEC_UINT (param_spec))
     {
-      g_object_set (config,
-                    param_spec->name, (guint) value,
-                    NULL);
+      g_object_set (config, param_spec->name, (guint) value, NULL);
     }
   else if (G_IS_PARAM_SPEC_LONG (param_spec))
     {
-      g_object_set (config,
-                    param_spec->name, (glong) value,
-                    NULL);
+      g_object_set (config, param_spec->name, (glong) value, NULL);
     }
   else if (G_IS_PARAM_SPEC_ULONG (param_spec))
     {
-      g_object_set (config,
-                    param_spec->name, (gulong) value,
-                    NULL);
+      g_object_set (config, param_spec->name, (gulong) value, NULL);
     }
   else if (G_IS_PARAM_SPEC_INT64 (param_spec))
     {
-      g_object_set (config,
-                    param_spec->name, (gint64) value,
-                    NULL);
+      g_object_set (config, param_spec->name, (gint64) value, NULL);
     }
   else if (G_IS_PARAM_SPEC_UINT64 (param_spec))
     {
-      g_object_set (config,
-                    param_spec->name, (guint64) value,
-                    NULL);
+      g_object_set (config, param_spec->name, (guint64) value, NULL);
     }
   else if (G_IS_PARAM_SPEC_DOUBLE (param_spec))
     {
-      if (GPOINTER_TO_INT (g_object_get_data (G_OBJECT (adjustment),
-                                              "opacity-scale")))
-        value /= 100.0;
-
       g_object_set (config, param_spec->name, value, NULL);
     }
 }
@@ -646,7 +629,8 @@ gimp_prop_adjustment_notify (GObject       *config,
                              GParamSpec    *param_spec,
                              GtkAdjustment *adjustment)
 {
-  gdouble value;
+  gdouble  value;
+  gdouble *factor;
 
   if (G_IS_PARAM_SPEC_INT (param_spec))
     {
@@ -703,10 +687,6 @@ gimp_prop_adjustment_notify (GObject       *config,
   else if (G_IS_PARAM_SPEC_DOUBLE (param_spec))
     {
       g_object_get (config, param_spec->name, &value, NULL);
-
-      if (GPOINTER_TO_INT (g_object_get_data (G_OBJECT (adjustment),
-                                              "opacity-scale")))
-        value *= 100.0;
     }
   else
     {
@@ -714,6 +694,11 @@ gimp_prop_adjustment_notify (GObject       *config,
                  G_STRFUNC, G_PARAM_SPEC_TYPE_NAME (param_spec));
       return;
     }
+
+  factor = g_object_get_data (G_OBJECT (adjustment),
+                              "gimp-prop-adjustment-factor");
+  if (factor)
+    value *= *factor;
 
   if (gtk_adjustment_get_value (adjustment) != value)
     {
