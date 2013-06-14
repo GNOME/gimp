@@ -1199,6 +1199,22 @@ gimp_spin_scale_set_factor (GimpSpinScale *scale,
                                    gimp_spin_scale_unapply_factor,
                                    scale, NULL);
     }
+  else
+    {
+      GtkAdjustment *original;
+      GtkAdjustment *adjustment;
+
+      original   = private->original_adjustment;
+      adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (scale));
+
+      gtk_adjustment_configure (adjustment,
+                                factor * gtk_adjustment_get_value (original),
+                                factor * gtk_adjustment_get_lower (original),
+                                factor * gtk_adjustment_get_upper (original),
+                                factor * gtk_adjustment_get_step_increment (original),
+                                factor * gtk_adjustment_get_page_increment (original),
+                                factor * gtk_adjustment_get_page_size (original));
+    }
 
   gimp_spin_scale_value_changed (GTK_SPIN_BUTTON (scale));
 }
