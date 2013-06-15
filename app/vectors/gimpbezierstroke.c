@@ -936,13 +936,6 @@ gimp_bezier_stroke_segment_nearest_tangent_get (const GimpCoords *beziercoords,
 
       if (ori * ori2 <= 0)
         {
-#if 0
-          if (ori2 == 0)
-            /* Kandidat finden */;
-          else
-            /* ret_coords[i] ist der Kandidat */;
-#endif
-
           gimp_coords_difference (&g_array_index (ret_coords, GimpCoords, i),
                                   coord1,
                                   &dcoord);
