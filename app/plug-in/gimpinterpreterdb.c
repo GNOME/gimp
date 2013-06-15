@@ -733,7 +733,7 @@ gimp_interpreter_db_resolve (GimpInterpreterDB  *db,
     return resolve_extension (db, program_path);
 
   memset (buffer, 0, sizeof (buffer));
-  len = read (fd, buffer, sizeof (buffer));
+  len = read (fd, buffer, sizeof (buffer) - 1); /* leave one nul at the end */
   close (fd);
 
   if (len <= 0)
