@@ -52,26 +52,24 @@ typedef struct _GimpSpinScalePrivate GimpSpinScalePrivate;
 
 struct _GimpSpinScalePrivate
 {
-  gchar         *label;
-  gchar         *label_text;
-  gchar         *label_pattern;
+  gchar       *label;
+  gchar       *label_text;
+  gchar       *label_pattern;
 
-  GtkWindow     *mnemonic_window;
-  guint          mnemonic_keyval;
-  gboolean       mnemonics_visible;
+  GtkWindow   *mnemonic_window;
+  guint        mnemonic_keyval;
+  gboolean     mnemonics_visible;
 
-  gboolean       scale_limits_set;
-  gdouble        scale_lower;
-  gdouble        scale_upper;
-  gdouble        gamma;
-  gdouble        factor;
-  GtkAdjustment *original_adjustment;
+  gboolean     scale_limits_set;
+  gdouble      scale_lower;
+  gdouble      scale_upper;
+  gdouble      gamma;
 
-  PangoLayout   *layout;
-  gboolean       changing_value;
-  gboolean       relative_change;
-  gdouble        start_x;
-  gdouble        start_value;
+  PangoLayout *layout;
+  gboolean     changing_value;
+  gboolean     relative_change;
+  gdouble      start_x;
+  gdouble      start_value;
 };
 
 #define GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), \
@@ -176,7 +174,6 @@ gimp_spin_scale_init (GimpSpinScale *scale)
 
   private->mnemonic_keyval = GDK_KEY_VoidSymbol;
   private->gamma           = 1.0;
-  private->factor          = 1.0;
 }
 
 static void
@@ -194,12 +191,6 @@ gimp_spin_scale_dispose (GObject *object)
     {
       g_object_unref (private->layout);
       private->layout = NULL;
-    }
-
-  if (private->original_adjustment)
-    {
-      g_object_unref (private->original_adjustment);
-      private->original_adjustment = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -1128,101 +1119,4 @@ gimp_spin_scale_get_gamma (GimpSpinScale *scale)
   g_return_val_if_fail (GIMP_IS_SPIN_SCALE (scale), 1.0);
 
   return GET_PRIVATE (scale)->gamma;
-}
-
-static gboolean
-gimp_spin_scale_apply_factor (GBinding     *binding,
-                              const GValue *source_value,
-                              GValue       *target_value,
-                              gpointer      user_data)
-{
-  GimpSpinScalePrivate *private = GET_PRIVATE (user_data);
-  gdouble               value;
-
-  value = g_value_get_double (source_value);
-  g_value_set_double (target_value, value * private->factor);
-
-  return TRUE;
-}
-
-static gboolean
-gimp_spin_scale_unapply_factor (GBinding     *binding,
-                                const GValue *source_value,
-                                GValue       *target_value,
-                                gpointer      user_data)
-{
-  GimpSpinScalePrivate *private = GET_PRIVATE (user_data);
-  gdouble               value;
-
-  value = g_value_get_double (source_value);
-  g_value_set_double (target_value, value / private->factor);
-
-  return TRUE;
-}
-
-void
-gimp_spin_scale_set_factor (GimpSpinScale *scale,
-                            gdouble        factor)
-{
-  GimpSpinScalePrivate *private;
-
-  g_return_if_fail (GIMP_IS_SPIN_SCALE (scale));
-  g_return_if_fail (factor != 0.0);
-
-  private = GET_PRIVATE (scale);
-
-  private->factor = factor;
-
-  if (! private->original_adjustment)
-    {
-      GtkAdjustment *original;
-      GtkAdjustment *adjustment;
-
-      original = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (scale));
-
-      private->original_adjustment = g_object_ref (original);
-
-      adjustment = (GtkAdjustment *)
-        gtk_adjustment_new (factor * gtk_adjustment_get_value (original),
-                            factor * gtk_adjustment_get_lower (original),
-                            factor * gtk_adjustment_get_upper (original),
-                            factor * gtk_adjustment_get_step_increment (original),
-                            factor * gtk_adjustment_get_page_increment (original),
-                            factor * gtk_adjustment_get_page_size (original));
-
-      gtk_spin_button_set_adjustment (GTK_SPIN_BUTTON (scale), adjustment);
-
-      g_object_bind_property_full (original,   "value",
-                                   adjustment, "value",
-                                   G_BINDING_BIDIRECTIONAL,
-                                   gimp_spin_scale_apply_factor,
-                                   gimp_spin_scale_unapply_factor,
-                                   scale, NULL);
-    }
-  else
-    {
-      GtkAdjustment *original;
-      GtkAdjustment *adjustment;
-
-      original   = private->original_adjustment;
-      adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (scale));
-
-      gtk_adjustment_configure (adjustment,
-                                factor * gtk_adjustment_get_value (original),
-                                factor * gtk_adjustment_get_lower (original),
-                                factor * gtk_adjustment_get_upper (original),
-                                factor * gtk_adjustment_get_step_increment (original),
-                                factor * gtk_adjustment_get_page_increment (original),
-                                factor * gtk_adjustment_get_page_size (original));
-    }
-
-  gimp_spin_scale_value_changed (GTK_SPIN_BUTTON (scale));
-}
-
-gdouble
-gimp_spin_scale_get_factor (GimpSpinScale *scale)
-{
-  g_return_val_if_fail (GIMP_IS_SPIN_SCALE (scale), 1.0);
-
-  return GET_PRIVATE (scale)->factor;
 }
