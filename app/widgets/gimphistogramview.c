@@ -688,6 +688,9 @@ gimp_histogram_view_set_background (GimpHistogramView *view,
         {
           g_object_ref (histogram);
 
+          if (view->n_bins != gimp_histogram_n_bins (histogram))
+            gimp_histogram_view_update_bins (view);
+
           if (view->channel >= gimp_histogram_n_channels (histogram))
             gimp_histogram_view_set_channel (view, GIMP_HISTOGRAM_VALUE);
         }
@@ -792,7 +795,12 @@ gimp_histogram_view_notify (GimpHistogram     *histogram,
 static void
 gimp_histogram_view_update_bins (GimpHistogramView *view)
 {
-  gint new_bins = gimp_histogram_n_bins (view->histogram);
+  gint new_bins;
+
+  if (view->histogram)
+    new_bins = gimp_histogram_n_bins (view->histogram);
+  else if (view->bg_histogram)
+    new_bins = gimp_histogram_n_bins (view->bg_histogram);
 
   view->start = ROUND (((gdouble) view->start *
                         (new_bins - 1) /
