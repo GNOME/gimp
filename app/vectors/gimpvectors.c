@@ -904,9 +904,7 @@ gimp_vectors_real_stroke_get_length (const GimpVectors *vectors,
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), 0.0);
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), 0.0);
 
-  return (gimp_stroke_get_length (stroke, vectors->precision));
-
-  return 0.0;
+  return gimp_stroke_get_length (stroke, vectors->precision);
 }
 
 
