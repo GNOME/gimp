@@ -1252,10 +1252,8 @@ find_widget_under_pointer (GdkWindow *window,
     }
 
   /* We return (x, y) relative to the allocation of event_widget. */
-  if (x)
-    *x = child_loc.x;
-  if (y)
-    *y = child_loc.y;
+  *x = child_loc.x;
+  *y = child_loc.y;
 
   return event_widget;
 }

@@ -300,7 +300,7 @@ gimp_session_info_dock_restore (GimpSessionInfoDock *dock_info,
   /* Note that if it is a toolbox, we will get here even though we
    * don't have any books
    */
-  for (iter = dock_info ? dock_info->books : NULL;
+  for (iter = dock_info->books;
        iter;
        iter = g_list_next (iter))
     {
@@ -330,7 +330,7 @@ gimp_session_info_dock_restore (GimpSessionInfoDock *dock_info,
    * gimp_session_info_book_restore() which explains why the dock
    * can contain empty dockbooks at all
    */
-  if (dock_info && dock_info->books)
+  if (dock_info->books)
     {
       GList *books;
 
@@ -360,7 +360,7 @@ gimp_session_info_dock_restore (GimpSessionInfoDock *dock_info,
     }
 
   /*  if we removed all books again, the dock was destroyed, so bail out  */
-  if (dock_info && dock_info->books && n_books == 0)
+  if (dock_info->books && n_books == 0)
     {
       return NULL;
     }

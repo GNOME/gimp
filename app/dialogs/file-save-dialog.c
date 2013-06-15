@@ -229,12 +229,10 @@ file_save_dialog_response (GtkWidget *save_dialog,
       g_free (uri);
       g_free (basename);
 
-      if (dialog)
-        gimp_file_dialog_set_sensitive (dialog, TRUE);
+      gimp_file_dialog_set_sensitive (dialog, TRUE);
     }
 
-  if (dialog)
-    g_signal_handler_disconnect (dialog, handler_id);
+  g_signal_handler_disconnect (dialog, handler_id);
 }
 
 /*

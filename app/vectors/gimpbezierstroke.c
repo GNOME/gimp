@@ -570,7 +570,7 @@ gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,
   min_dist = -1;
 
   for (anchorlist = stroke->anchors;
-       anchorlist && GIMP_ANCHOR (anchorlist->data)->type != GIMP_ANCHOR_ANCHOR;
+       GIMP_ANCHOR (anchorlist->data)->type != GIMP_ANCHOR_ANCHOR;
        anchorlist = g_list_next (anchorlist));
 
   segment_start = anchorlist->data;
@@ -806,7 +806,7 @@ gimp_bezier_stroke_nearest_tangent_get (const GimpStroke  *stroke,
   min_dist = -1;
 
   for (anchorlist = stroke->anchors;
-       anchorlist && GIMP_ANCHOR (anchorlist->data)->type != GIMP_ANCHOR_ANCHOR;
+       GIMP_ANCHOR (anchorlist->data)->type != GIMP_ANCHOR_ANCHOR;
        anchorlist = g_list_next (anchorlist));
 
   segment_start = anchorlist->data;

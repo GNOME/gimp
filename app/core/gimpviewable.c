@@ -526,8 +526,6 @@ gimp_viewable_deserialize_property (GimpConfig *config,
 
                 if (pixbuf)
                   {
-                    if (icon_pixbuf)
-                      g_object_unref (icon_pixbuf);
                     icon_pixbuf = pixbuf;
                   }
 
