@@ -168,7 +168,7 @@ create_levels_scale (GObject     *config,
 
   scale = gimp_prop_spin_scale_new (config, property_name,
                                     NULL, 0.01, 0.1, 0);
-  gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 100.0);
+  gimp_prop_widget_set_factor (scale, 100.0, 1);
   gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, col, col + 1);
   gtk_widget_show (scale);
 

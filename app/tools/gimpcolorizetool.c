@@ -172,21 +172,21 @@ gimp_colorize_tool_dialog (GimpImageMapTool *image_map_tool)
   /*  Create the hue scale widget  */
   scale = gimp_prop_spin_scale_new (image_map_tool->config, "hue",
                                     _("_Hue"), 1.0 / 230.0, 15.0 / 360.0, 0);
-  gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 360.0);
+  gimp_prop_widget_set_factor (scale, 360.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   /*  Create the saturation scale widget  */
   scale = gimp_prop_spin_scale_new (image_map_tool->config, "saturation",
                                     _("_Saturation"), 0.01, 0.1, 0);
-  gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 100.0);
+  gimp_prop_widget_set_factor (scale, 100.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   /*  Create the lightness scale widget  */
   scale = gimp_prop_spin_scale_new (image_map_tool->config, "lightness",
                                     _("_Lightness"), 0.01, 0.1, 0);
-  gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 100.0);
+  gimp_prop_widget_set_factor (scale, 100.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 

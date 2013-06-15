@@ -136,7 +136,6 @@ gimp_brightness_contrast_tool_initialize (GimpTool     *tool,
   GimpBrightnessContrastTool *bc_tool  = GIMP_BRIGHTNESS_CONTRAST_TOOL (tool);
   GimpImage                  *image    = gimp_display_get_image (display);
   GimpDrawable               *drawable = gimp_image_get_active_drawable (image);
-  GtkWidget                  *scale;
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
@@ -145,23 +144,13 @@ gimp_brightness_contrast_tool_initialize (GimpTool     *tool,
 
   if (gimp_drawable_get_precision (drawable) == GIMP_PRECISION_U8)
     {
-      scale = bc_tool->brightness_scale;
-      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (scale), 0);
-      gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 127.0);
-
-      scale = bc_tool->contrast_scale;
-      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (scale), 0);
-      gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 127.0);
+      gimp_prop_widget_set_factor (bc_tool->brightness_scale, 127.0, 0);
+      gimp_prop_widget_set_factor (bc_tool->contrast_scale,   127.0, 0);
     }
   else
     {
-      scale = bc_tool->brightness_scale;
-      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (scale), 3);
-      gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 0.5);
-
-      scale = bc_tool->contrast_scale;
-      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (scale), 3);
-      gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 0.5);
+      gimp_prop_widget_set_factor (bc_tool->brightness_scale, 0.5, 3);
+      gimp_prop_widget_set_factor (bc_tool->contrast_scale,   0.5, 3);
     }
 
   return TRUE;
@@ -262,7 +251,6 @@ gimp_brightness_contrast_tool_dialog (GimpImageMapTool *image_map_tool)
   scale = gimp_prop_spin_scale_new (image_map_tool->config, "brightness",
                                     _("_Brightness"), 1.0 / 127.0, 10.0 / 127.0,
                                     0);
-  gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 127.0);
   gtk_box_pack_start (GTK_BOX (main_vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
@@ -272,7 +260,6 @@ gimp_brightness_contrast_tool_dialog (GimpImageMapTool *image_map_tool)
   scale = gimp_prop_spin_scale_new (image_map_tool->config, "contrast",
                                     _("_Contrast"), 1.0 / 127.0, 10.0 / 127.0,
                                     0);
-  gimp_spin_scale_set_factor (GIMP_SPIN_SCALE (scale), 127.0);
   gtk_box_pack_start (GTK_BOX (main_vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
