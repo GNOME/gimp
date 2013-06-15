@@ -40,6 +40,8 @@ void    gimp_hsl_set        (GimpHSL *hsl,
                              gdouble  h,
                              gdouble  s,
                              gdouble  l);
+void    gimp_hsl_set_alpha  (GimpHSL *hsl,
+                             gdouble  a);
 
 
 G_END_DECLS

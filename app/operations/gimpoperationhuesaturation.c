@@ -162,6 +162,7 @@ gimp_operation_hue_saturation_process (GeglOperation       *operation,
       rgb.r = src[RED];
       rgb.g = src[GREEN];
       rgb.b = src[BLUE];
+      rgb.a = src[ALPHA];
 
       gimp_rgb_to_hsl (&rgb, &hsl);
 
@@ -253,7 +254,7 @@ gimp_operation_hue_saturation_process (GeglOperation       *operation,
       dest[RED]   = rgb.r;
       dest[GREEN] = rgb.g;
       dest[BLUE]  = rgb.b;
-      dest[ALPHA] = src[ALPHA];
+      dest[ALPHA] = rgb.a;
 
       src  += 4;
       dest += 4;

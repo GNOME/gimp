@@ -98,6 +98,7 @@ gimp_operation_colorize_process (GeglOperation       *operation,
 
   hsl.h = config->hue;
   hsl.s = config->saturation;
+  hsl.a = src[ALPHA];
 
   while (samples--)
     {
@@ -129,7 +130,7 @@ gimp_operation_colorize_process (GeglOperation       *operation,
       dest[RED]   = rgb.r; /* * lum; */
       dest[GREEN] = rgb.g; /* * lum; */
       dest[BLUE]  = rgb.b; /* * lum */;
-      dest[ALPHA] = src[ALPHA];
+      dest[ALPHA] = rgb.a;
 
       src  += 4;
       dest += 4;

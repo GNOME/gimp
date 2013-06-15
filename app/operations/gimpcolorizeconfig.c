@@ -88,8 +88,8 @@ gimp_colorize_config_class_init (GimpColorizeConfigClass *klass)
                                    -1.0, 1.0, 0.0, 0);
 
   gimp_hsl_set (&hsl, 0.5, 0.5, 0.5);
+  gimp_hsl_set_alpha (&hsl, 1.0);
   gimp_hsl_to_rgb (&hsl, &rgb);
-  gimp_rgb_set_alpha (&rgb, 1.0);
 
   g_object_class_install_property (object_class, PROP_COLOR,
                                    gimp_param_spec_rgb ("color",
@@ -135,8 +135,8 @@ gimp_colorize_config_get_property (GObject    *object,
                       self->hue,
                       self->saturation,
                       (self->lightness + 1.0) / 2.0);
+        gimp_hsl_set_alpha (&hsl, 1.0);
         gimp_hsl_to_rgb (&hsl, &rgb);
-        gimp_rgb_set_alpha (&rgb, 1.0);
         gimp_value_set_rgb (value, &rgb);
       }
       break;

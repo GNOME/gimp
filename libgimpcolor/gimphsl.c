@@ -75,3 +75,19 @@ gimp_hsl_set (GimpHSL *hsl,
   hsl->s = s;
   hsl->l = l;
 }
+
+/**
+ * gimp_hsl_set_alpha:
+ * @hsl:
+ * @a:
+ *
+ * Since: GIMP 2.10
+ **/
+void
+gimp_hsl_set_alpha (GimpHSL *hsl,
+                    gdouble a)
+{
+  g_return_if_fail (hsl != NULL);
+
+  hsl->a = a;
+}
