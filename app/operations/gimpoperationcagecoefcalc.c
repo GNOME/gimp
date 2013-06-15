@@ -201,7 +201,7 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
   GimpOperationCageCoefCalc *occc   = GIMP_OPERATION_CAGE_COEF_CALC (operation);
   GimpCageConfig            *config = GIMP_CAGE_CONFIG (occc->config);
 
-  const Babl *format = babl_format_n (babl_type ("float"), 2 * gimp_cage_config_get_n_points (config));
+  const Babl *format;
 
   GeglBufferIterator *it;
   guint               n_cage_vertices;
@@ -209,6 +209,8 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
 
   if (! config)
     return FALSE;
+
+  format = babl_format_n (babl_type ("float"), 2 * gimp_cage_config_get_n_points (config));
 
   n_cage_vertices   = gimp_cage_config_get_n_points (config);
 
