@@ -45,6 +45,7 @@
 #include "widgets/gimphandlebar.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimphistogramview.h"
+#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-constructors.h"
 
 #include "display/gimpdisplay.h"
@@ -111,17 +112,8 @@ static gboolean   levels_menu_sensitivity         (gint               value,
 
 static void       levels_stretch_callback         (GtkWidget         *widget,
                                                    GimpLevelsTool    *tool);
-static void       levels_low_input_changed        (GtkAdjustment     *adjustment,
-                                                   GimpLevelsTool    *tool);
-static void       levels_gamma_changed            (GtkAdjustment     *adjustment,
-                                                   GimpLevelsTool    *tool);
+static void       levels_linear_gamma_update      (GimpLevelsTool    *tool);
 static void       levels_linear_gamma_changed     (GtkAdjustment     *adjustment,
-                                                   GimpLevelsTool    *tool);
-static void       levels_high_input_changed       (GtkAdjustment     *adjustment,
-                                                   GimpLevelsTool    *tool);
-static void       levels_low_output_changed       (GtkAdjustment     *adjustment,
-                                                   GimpLevelsTool    *tool);
-static void       levels_high_output_changed      (GtkAdjustment     *adjustment,
                                                    GimpLevelsTool    *tool);
 
 static void       levels_to_curves_callback       (GtkWidget         *widget,
@@ -202,9 +194,7 @@ gimp_levels_tool_initialize (GimpTool     *tool,
   GimpLevelsTool   *l_tool   = GIMP_LEVELS_TOOL (tool);
   GimpImage        *image    = gimp_display_get_image (display);
   GimpDrawable     *drawable = gimp_image_get_active_drawable (image);
-  GimpLevelsConfig *config   = l_tool->config;
   gdouble           scale_factor;
-  gdouble           step;
   gint              digits;
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
@@ -222,58 +212,26 @@ gimp_levels_tool_initialize (GimpTool     *tool,
   if (gimp_drawable_get_precision (drawable) == GIMP_PRECISION_U8)
     {
       scale_factor = 255.0;
-      step         = 1.0;
       digits       = 0;
     }
   else
     {
       scale_factor = 100.0;
-      step         = 0.1;
       digits       = 1;
     }
 
-  l_tool->ui_scale_factor = scale_factor;
-
-  g_object_freeze_notify (G_OBJECT (l_tool->low_input));
-  g_object_freeze_notify (G_OBJECT (l_tool->high_input));
-  g_object_freeze_notify (G_OBJECT (l_tool->gamma_linear));
-  g_object_freeze_notify (G_OBJECT (l_tool->low_output));
-  g_object_freeze_notify (G_OBJECT (l_tool->high_output));
-
-  gtk_adjustment_configure (l_tool->low_input,
-                            config->low_input[config->channel] * scale_factor,
-                            0, scale_factor, step, 10, 0);
-
-  gtk_adjustment_configure (l_tool->high_input,
-                            config->high_input[config->channel] * scale_factor,
-                            0, scale_factor, step, 10, 0);
+  gimp_prop_widget_set_factor (l_tool->low_input_spinbutton,
+                               scale_factor, digits);
+  gimp_prop_widget_set_factor (l_tool->high_input_spinbutton,
+                               scale_factor, digits);
+  gimp_prop_widget_set_factor (l_tool->low_output_spinbutton,
+                               scale_factor, digits);
+  gimp_prop_widget_set_factor (l_tool->high_output_spinbutton,
+                               scale_factor, digits);
 
   gtk_adjustment_configure (l_tool->gamma_linear,
                             scale_factor / 2.0,
                             0, scale_factor, 0.1, 1.0, 0);
-
-  gtk_adjustment_configure (l_tool->low_output,
-                            config->low_output[config->channel] * scale_factor,
-                            0, scale_factor, step, 10, 0);
-
-  gtk_adjustment_configure (l_tool->high_output,
-                            config->high_output[config->channel] * scale_factor,
-                            0, scale_factor, step, 10, 0);
-
-  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (l_tool->low_input_spinbutton),
-                              digits);
-  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (l_tool->high_input_spinbutton),
-                              digits);
-  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (l_tool->low_output_spinbutton),
-                              digits);
-  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (l_tool->high_output_spinbutton),
-                              digits);
-
-  g_object_thaw_notify (G_OBJECT (l_tool->low_input));
-  g_object_thaw_notify (G_OBJECT (l_tool->high_input));
-  g_object_thaw_notify (G_OBJECT (l_tool->gamma_linear));
-  g_object_thaw_notify (G_OBJECT (l_tool->low_output));
-  g_object_thaw_notify (G_OBJECT (l_tool->high_output));
 
   return TRUE;
 }
@@ -355,8 +313,9 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkWidget        *hbbox;
   GtkWidget        *button;
   GtkWidget        *spinbutton;
+  GtkAdjustment    *adjustment;
   GtkWidget        *bar;
-  GtkObject        *data;
+  GtkWidget        *handle_bar;
   gint              border;
 
   g_signal_connect (image_map_tool->settings_box, "file-dialog-setup",
@@ -451,34 +410,34 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (vbox3), bar, FALSE, FALSE, 0);
   gtk_widget_show (bar);
 
-  tool->input_sliders = g_object_new (GIMP_TYPE_HANDLE_BAR, NULL);
-  gtk_widget_set_size_request (tool->input_sliders, -1, CONTROL_HEIGHT);
-  gtk_box_pack_start (GTK_BOX (vbox3), tool->input_sliders, FALSE, FALSE, 0);
-  gtk_widget_show (tool->input_sliders);
+  handle_bar = g_object_new (GIMP_TYPE_HANDLE_BAR, NULL);
+  gtk_widget_set_size_request (handle_bar, -1, CONTROL_HEIGHT);
+  gtk_box_pack_start (GTK_BOX (vbox3), handle_bar, FALSE, FALSE, 0);
+  gtk_widget_show (handle_bar);
 
   g_signal_connect_swapped (tool->input_bar, "button-press-event",
-                            G_CALLBACK (GTK_WIDGET_GET_CLASS (tool->input_sliders)->button_press_event),
-                            tool->input_sliders);
+                            G_CALLBACK (GTK_WIDGET_GET_CLASS (handle_bar)->button_press_event),
+                            handle_bar);
 
   g_signal_connect_swapped (tool->input_bar, "button-release-event",
-                            G_CALLBACK (GTK_WIDGET_GET_CLASS (tool->input_sliders)->button_release_event),
-                            tool->input_sliders);
+                            G_CALLBACK (GTK_WIDGET_GET_CLASS (handle_bar)->button_release_event),
+                            handle_bar);
 
   g_signal_connect_swapped (tool->input_bar, "motion-notify-event",
-                            G_CALLBACK (GTK_WIDGET_GET_CLASS (tool->input_sliders)->motion_notify_event),
-                            tool->input_sliders);
+                            G_CALLBACK (GTK_WIDGET_GET_CLASS (handle_bar)->motion_notify_event),
+                            handle_bar);
 
   g_signal_connect_swapped (bar, "button-press-event",
-                            G_CALLBACK (GTK_WIDGET_GET_CLASS (tool->input_sliders)->button_press_event),
-                            tool->input_sliders);
+                            G_CALLBACK (GTK_WIDGET_GET_CLASS (handle_bar)->button_press_event),
+                            handle_bar);
 
   g_signal_connect_swapped (bar, "button-release-event",
-                            G_CALLBACK (GTK_WIDGET_GET_CLASS (tool->input_sliders)->button_release_event),
-                            tool->input_sliders);
+                            G_CALLBACK (GTK_WIDGET_GET_CLASS (handle_bar)->button_release_event),
+                            handle_bar);
 
   g_signal_connect_swapped (bar, "motion-notify-event",
-                            G_CALLBACK (GTK_WIDGET_GET_CLASS (tool->input_sliders)->motion_notify_event),
-                            tool->input_sliders);
+                            G_CALLBACK (GTK_WIDGET_GET_CLASS (handle_bar)->motion_notify_event),
+                            handle_bar);
 
   /*  Horizontal box for input levels spinbuttons  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
@@ -494,33 +453,24 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  spinbutton = gimp_spin_button_new (&data,
-                                     config->low_input[config->channel] * 255.0,
-                                     0, 255, 1, 10, 0, 0.5, 0);
+  tool->low_input_spinbutton = spinbutton =
+    gimp_prop_spin_button_new (image_map_tool->config, "low-input",
+                               0.01, 0.1, 1);
   gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
-  tool->low_input_spinbutton = spinbutton;
 
-  tool->low_input = GTK_ADJUSTMENT (data);
-  g_signal_connect (tool->low_input, "value-changed",
-                    G_CALLBACK (levels_low_input_changed),
-                    tool);
-
-  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (tool->input_sliders), 0,
+  tool->low_input = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
+  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (handle_bar), 0,
                                   tool->low_input);
 
   /*  input gamma spin  */
-  spinbutton = gimp_spin_button_new (&data,
-                                     config->gamma[config->channel],
-                                     0.1, 10, 0.01, 0.1, 0, 0.5, 2);
+  spinbutton = gimp_prop_spin_button_new (image_map_tool->config, "gamma",
+                                          0.01, 0.1, 2);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, TRUE, FALSE, 0);
   gimp_help_set_help_data (spinbutton, _("Gamma"), NULL);
   gtk_widget_show (spinbutton);
 
-  tool->gamma = GTK_ADJUSTMENT (data);
-  g_signal_connect (tool->gamma, "value-changed",
-                    G_CALLBACK (levels_gamma_changed),
-                    tool);
+  tool->gamma = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
 
   tool->gamma_linear = GTK_ADJUSTMENT (gtk_adjustment_new (127, 0, 255,
                                                            0.1, 1.0, 0.0));
@@ -528,7 +478,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                     G_CALLBACK (levels_linear_gamma_changed),
                     tool);
 
-  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (tool->input_sliders), 1,
+  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (handle_bar), 1,
                                   tool->gamma_linear);
   g_object_unref (tool->gamma_linear);
 
@@ -541,19 +491,14 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  spinbutton = gimp_spin_button_new (&data,
-                                     config->high_input[config->channel] * 255.0,
-                                     0, 255, 1, 10, 0, 0.5, 0);
+  spinbutton = gimp_prop_spin_button_new (image_map_tool->config, "high-input",
+                                          0.01, 0.1, 1);
   gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
   tool->high_input_spinbutton = spinbutton;
 
-  tool->high_input = GTK_ADJUSTMENT (data);
-  g_signal_connect (tool->high_input, "value-changed",
-                    G_CALLBACK (levels_high_input_changed),
-                    tool);
-
-  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (tool->input_sliders), 2,
+  tool->high_input = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
+  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (handle_bar), 2,
                                   tool->high_input);
 
   /*  Output levels frame  */
@@ -580,22 +525,22 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (vbox2), tool->output_bar, FALSE, FALSE, 0);
   gtk_widget_show (tool->output_bar);
 
-  tool->output_sliders = g_object_new (GIMP_TYPE_HANDLE_BAR, NULL);
-  gtk_widget_set_size_request (tool->output_sliders, -1, CONTROL_HEIGHT);
-  gtk_box_pack_start (GTK_BOX (vbox2), tool->output_sliders, FALSE, FALSE, 0);
-  gtk_widget_show (tool->output_sliders);
+  handle_bar = g_object_new (GIMP_TYPE_HANDLE_BAR, NULL);
+  gtk_widget_set_size_request (handle_bar, -1, CONTROL_HEIGHT);
+  gtk_box_pack_start (GTK_BOX (vbox2), handle_bar, FALSE, FALSE, 0);
+  gtk_widget_show (handle_bar);
 
   g_signal_connect_swapped (tool->output_bar, "button-press-event",
-                            G_CALLBACK (GTK_WIDGET_GET_CLASS (tool->output_sliders)->button_press_event),
-                            tool->output_sliders);
+                            G_CALLBACK (GTK_WIDGET_GET_CLASS (handle_bar)->button_press_event),
+                            handle_bar);
 
   g_signal_connect_swapped (tool->output_bar, "button-release-event",
-                            G_CALLBACK (GTK_WIDGET_GET_CLASS (tool->output_sliders)->button_release_event),
-                            tool->output_sliders);
+                            G_CALLBACK (GTK_WIDGET_GET_CLASS (handle_bar)->button_release_event),
+                            handle_bar);
 
   g_signal_connect_swapped (tool->output_bar, "motion-notify-event",
-                            G_CALLBACK (GTK_WIDGET_GET_CLASS (tool->output_sliders)->motion_notify_event),
-                            tool->output_sliders);
+                            G_CALLBACK (GTK_WIDGET_GET_CLASS (handle_bar)->motion_notify_event),
+                            handle_bar);
 
   /*  Horizontal box for levels spin widgets  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
@@ -603,36 +548,24 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (hbox);
 
   /*  low output spin  */
-  spinbutton = gimp_spin_button_new (&data,
-                                     config->low_output[config->channel] * 255.0,
-                                     0, 255, 1, 10, 0, 0.5, 0);
+  tool->low_output_spinbutton = spinbutton =
+    gimp_prop_spin_button_new (image_map_tool->config, "low-output",
+                               0.01, 0.1, 1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
-  tool->low_output_spinbutton = spinbutton;
 
-  tool->low_output = GTK_ADJUSTMENT (data);
-  g_signal_connect (tool->low_output, "value-changed",
-                    G_CALLBACK (levels_low_output_changed),
-                    tool);
-
-  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (tool->output_sliders), 0,
-                                  tool->low_output);
+  adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
+  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (handle_bar), 0, adjustment);
 
   /*  high output spin  */
-  spinbutton = gimp_spin_button_new (&data,
-                                     config->high_output[config->channel] * 255.0,
-                                     0, 255, 1, 10, 0, 0.5, 0);
+  tool->high_output_spinbutton = spinbutton =
+    gimp_prop_spin_button_new (image_map_tool->config, "high-output",
+                               0.01, 0.1, 1);
   gtk_box_pack_end (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
-  tool->high_output_spinbutton = spinbutton;
 
-  tool->high_output = GTK_ADJUSTMENT (data);
-  g_signal_connect (tool->high_output, "value-changed",
-                    G_CALLBACK (levels_high_output_changed),
-                    tool);
-
-  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (tool->output_sliders), 2,
-                                  tool->high_output);
+  adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
+  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (handle_bar), 2, adjustment);
 
 
   /*  all channels frame  */
@@ -823,8 +756,7 @@ gimp_levels_tool_config_notify (GObject        *object,
                                 GParamSpec     *pspec,
                                 GimpLevelsTool *tool)
 {
-  GimpLevelsConfig *config       = GIMP_LEVELS_CONFIG (object);
-  gdouble           scale_factor = tool->ui_scale_factor;
+  GimpLevelsConfig *config = GIMP_LEVELS_CONFIG (object);
 
   if (! tool->low_input)
     return;
@@ -842,52 +774,17 @@ gimp_levels_tool_config_notify (GObject        *object,
            ! strcmp (pspec->name, "low-input") ||
            ! strcmp (pspec->name, "high-input"))
     {
-      g_object_freeze_notify (G_OBJECT (tool->low_input));
-      g_object_freeze_notify (G_OBJECT (tool->high_input));
-      g_object_freeze_notify (G_OBJECT (tool->gamma_linear));
+      gdouble low  = gtk_adjustment_get_value (tool->low_input);
+      gdouble high = gtk_adjustment_get_value (tool->high_input);
 
-      gtk_adjustment_set_upper (tool->low_input,  scale_factor);
-      gtk_adjustment_set_lower (tool->high_input, 0);
+      gtk_adjustment_set_lower (tool->high_input,   low);
+      gtk_adjustment_set_lower (tool->gamma_linear, low);
 
-      gtk_adjustment_set_lower (tool->gamma_linear, 0);
-      gtk_adjustment_set_upper (tool->gamma_linear, scale_factor);
-
-      gtk_adjustment_set_value (tool->low_input,
-                                config->low_input[config->channel]  *
-                                scale_factor);
-      gtk_adjustment_set_value (tool->gamma,
-                                config->gamma[config->channel]);
-      gtk_adjustment_set_value (tool->high_input,
-                                config->high_input[config->channel] *
-                                scale_factor);
-
-      gtk_adjustment_set_upper (tool->low_input,
-                                gtk_adjustment_get_value (tool->high_input));
-      gtk_adjustment_set_lower (tool->high_input,
-                                gtk_adjustment_get_value (tool->low_input));
-
-      gtk_adjustment_set_lower (tool->gamma_linear,
-                                gtk_adjustment_get_value (tool->low_input));
-      gtk_adjustment_set_upper (tool->gamma_linear,
-                                gtk_adjustment_get_value (tool->high_input));
-
-      g_object_thaw_notify (G_OBJECT (tool->low_input));
-      g_object_thaw_notify (G_OBJECT (tool->high_input));
-      g_object_thaw_notify (G_OBJECT (tool->gamma_linear));
+      gtk_adjustment_set_upper (tool->low_input,    high);
+      gtk_adjustment_set_upper (tool->gamma_linear, high);
 
       levels_update_input_bar (tool);
-    }
-  else if (! strcmp (pspec->name, "low-output"))
-    {
-      gtk_adjustment_set_value (tool->low_output,
-                                config->low_output[config->channel] *
-                                scale_factor);
-    }
-  else if (! strcmp (pspec->name, "high-output"))
-    {
-      gtk_adjustment_set_value (tool->high_output,
-                                config->high_output[config->channel] *
-                                scale_factor);
+      levels_linear_gamma_update (tool);
     }
 }
 
@@ -1048,105 +945,6 @@ levels_linear_gamma_changed (GtkAdjustment  *adjustment,
       value = floor (value * 100 + 0.5) / 100.0;
 
       gtk_adjustment_set_value (tool->gamma, value);
-    }
-}
-
-static void
-levels_low_input_changed (GtkAdjustment  *adjustment,
-                          GimpLevelsTool *tool)
-{
-  GimpLevelsConfig *config = tool->config;
-  gdouble           value  = gtk_adjustment_get_value (adjustment);
-
-  if (tool->ui_scale_factor == 255.0)
-    value = ROUND (value);
-
-  gtk_adjustment_set_lower (tool->high_input, value);
-  gtk_adjustment_set_lower (tool->gamma_linear, value);
-
-  if (config->low_input[config->channel] != value / tool->ui_scale_factor)
-    {
-      g_object_set (config,
-                    "low-input", value / tool->ui_scale_factor,
-                    NULL);
-    }
-
-  levels_linear_gamma_update (tool);
-}
-
-static void
-levels_gamma_changed (GtkAdjustment  *adjustment,
-                      GimpLevelsTool *tool)
-{
-  GimpLevelsConfig *config = tool->config;
-  gdouble           value  = gtk_adjustment_get_value (adjustment);
-
-  if (config->gamma[config->channel] != value)
-    {
-      g_object_set (config,
-                    "gamma", value,
-                    NULL);
-    }
-
-  levels_linear_gamma_update (tool);
-}
-
-static void
-levels_high_input_changed (GtkAdjustment  *adjustment,
-                           GimpLevelsTool *tool)
-{
-  GimpLevelsConfig *config = tool->config;
-  gdouble           value  = gtk_adjustment_get_value (adjustment);
-
-  if (tool->ui_scale_factor == 255.0)
-    value = ROUND (value);
-
-  gtk_adjustment_set_upper (tool->low_input, value);
-  gtk_adjustment_set_upper (tool->gamma_linear, value);
-
-  if (config->high_input[config->channel] != value / tool->ui_scale_factor)
-    {
-      g_object_set (config,
-                    "high-input", value / tool->ui_scale_factor,
-                    NULL);
-    }
-
-  levels_linear_gamma_update (tool);
-}
-
-static void
-levels_low_output_changed (GtkAdjustment  *adjustment,
-                           GimpLevelsTool *tool)
-{
-  GimpLevelsConfig *config = tool->config;
-  gdouble           value  = gtk_adjustment_get_value (adjustment);
-
-  if (tool->ui_scale_factor == 255.0)
-    value = ROUND (value);
-
-  if (config->low_output[config->channel] != value / tool->ui_scale_factor)
-    {
-      g_object_set (config,
-                    "low-output", value / tool->ui_scale_factor,
-                    NULL);
-    }
-}
-
-static void
-levels_high_output_changed (GtkAdjustment  *adjustment,
-                            GimpLevelsTool *tool)
-{
-  GimpLevelsConfig *config = tool->config;
-  gdouble           value  = gtk_adjustment_get_value (adjustment);
-
-  if (tool->ui_scale_factor == 255.0)
-    value = ROUND (value);
-
-  if (config->high_output[config->channel] != value / tool->ui_scale_factor)
-    {
-      g_object_set (config,
-                    "high-output", value / tool->ui_scale_factor,
-                    NULL);
     }
 }
 

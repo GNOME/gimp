@@ -35,33 +35,28 @@ typedef struct _GimpLevelsToolClass GimpLevelsToolClass;
 
 struct _GimpLevelsTool
 {
-  GimpImageMapTool      parent_instance;
+  GimpImageMapTool  parent_instance;
 
-  GimpLevelsConfig     *config;
+  GimpLevelsConfig *config;
 
   /* dialog */
-  GimpHistogram        *histogram;
+  GimpHistogram    *histogram;
 
-  GtkWidget            *channel_menu;
+  GtkWidget        *channel_menu;
 
-  GtkWidget            *histogram_view;
+  GtkWidget        *histogram_view;
 
-  gdouble               ui_scale_factor;
-  GtkWidget            *input_bar;
-  GtkWidget            *input_sliders;
-  GtkWidget            *low_input_spinbutton;
-  GtkWidget            *high_input_spinbutton;
-  GtkWidget            *low_output_spinbutton;
-  GtkWidget            *high_output_spinbutton;
-  GtkAdjustment        *low_input;
-  GtkAdjustment        *gamma;
-  GtkAdjustment        *gamma_linear;
-  GtkAdjustment        *high_input;
+  GtkWidget        *input_bar;
+  GtkWidget        *low_input_spinbutton;
+  GtkWidget        *high_input_spinbutton;
+  GtkWidget        *low_output_spinbutton;
+  GtkWidget        *high_output_spinbutton;
+  GtkAdjustment    *low_input;
+  GtkAdjustment    *gamma;
+  GtkAdjustment    *gamma_linear;
+  GtkAdjustment    *high_input;
 
-  GtkWidget            *output_bar;
-  GtkWidget            *output_sliders;
-  GtkAdjustment        *low_output;
-  GtkAdjustment        *high_output;
+  GtkWidget        *output_bar;
 
   /* export dialog */
   gboolean              export_old_format;
