@@ -151,8 +151,8 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
   gtk_widget_show (label);
 
   if (! constrain &&
-           unconstrained_lower <= lower &&
-           unconstrained_upper >= upper)
+      unconstrained_lower <= lower &&
+      unconstrained_upper >= upper)
     {
       GtkObject *constrained_adj;
 
@@ -237,8 +237,6 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
   g_object_set_data (G_OBJECT (return_adj), "label",      label);
   g_object_set_data (G_OBJECT (return_adj), "scale",      scale);
   g_object_set_data (G_OBJECT (return_adj), "spinbutton", spinbutton);
-
-
 
   return return_adj;
 }
