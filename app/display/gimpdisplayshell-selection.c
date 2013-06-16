@@ -116,34 +116,33 @@ void
 gimp_display_shell_selection_free (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (shell->selection != NULL);
 
-  if (shell->selection)
-    {
-      Selection *selection = shell->selection;
+  Selection *selection = shell->selection;
 
-      selection_stop (selection);
+  selection_stop (selection);
 
-      g_signal_handlers_disconnect_by_func (shell,
-                                            selection_window_state_event,
-                                            selection);
-      g_signal_handlers_disconnect_by_func (shell,
-                                            selection_visibility_notify_event,
-                                            selection);
+  g_signal_handlers_disconnect_by_func (shell,
+                                        selection_window_state_event,
+                                        selection);
+  g_signal_handlers_disconnect_by_func (shell,
+                                        selection_visibility_notify_event,
+                                        selection);
 
-      selection_free_segs (selection);
+  selection_free_segs (selection);
 
-      g_slice_free (Selection, selection);
+  g_slice_free (Selection, selection);
 
-      shell->selection = NULL;
-    }
+  shell->selection = NULL;
 }
 
 void
 gimp_display_shell_selection_undraw (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (shell->selection != NULL);
 
-  if (shell->selection && gimp_display_get_image (shell->display))
+  if (gimp_display_get_image (shell->display))
     {
       selection_undraw (shell->selection);
     }
@@ -158,8 +157,9 @@ void
 gimp_display_shell_selection_restart (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (shell->selection != NULL);
 
-  if (shell->selection && gimp_display_get_image (shell->display))
+  if (gimp_display_get_image (shell->display))
     {
       selection_start (shell->selection);
     }
@@ -169,8 +169,9 @@ void
 gimp_display_shell_selection_pause (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (shell->selection != NULL);
 
-  if (shell->selection && gimp_display_get_image (shell->display))
+  if (gimp_display_get_image (shell->display))
     {
       if (shell->selection->paused == 0)
         selection_stop (shell->selection);
@@ -183,8 +184,9 @@ void
 gimp_display_shell_selection_resume (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (shell->selection != NULL);
 
-  if (shell->selection && gimp_display_get_image (shell->display))
+  if (gimp_display_get_image (shell->display))
     {
       shell->selection->paused--;
 
@@ -198,8 +200,9 @@ gimp_display_shell_selection_set_show (GimpDisplayShell *shell,
                                        gboolean          show)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (shell->selection != NULL);
 
-  if (shell->selection && gimp_display_get_image (shell->display))
+  if (gimp_display_get_image (shell->display))
     {
       Selection *selection = shell->selection;
 

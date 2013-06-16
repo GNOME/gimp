@@ -773,7 +773,8 @@ gimp_display_shell_dispose (GObject *object)
 
   shell->popup_manager = NULL;
 
-  gimp_display_shell_selection_free (shell);
+  if (shell->selection)
+    gimp_display_shell_selection_free (shell);
 
   if (shell->filter_stack)
     gimp_display_shell_filter_set (shell, NULL);

@@ -1312,7 +1312,7 @@ gimp_dockbook_recreate_tab_widgets (GimpDockbook *dockbook,
       GtkWidget *tab_widget;
 
       if (only_auto &&
-          gimp_dockable_get_tab_style (dockable) != GIMP_TAB_STYLE_AUTOMATIC)
+          ! (gimp_dockable_get_tab_style (dockable) == GIMP_TAB_STYLE_AUTOMATIC))
         continue;
 
       tab_widget = gimp_dockbook_create_tab_widget (dockbook, dockable);
