@@ -795,7 +795,7 @@ gimp_histogram_view_notify (GimpHistogram     *histogram,
 static void
 gimp_histogram_view_update_bins (GimpHistogramView *view)
 {
-  gint new_bins;
+  gint new_bins = 256;
 
   if (view->histogram)
     new_bins = gimp_histogram_n_bins (view->histogram);
