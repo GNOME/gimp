@@ -57,5 +57,8 @@ void        gimp_handle_bar_set_adjustment (GimpHandleBar  *bar,
                                             gint            handle_no,
                                             GtkAdjustment  *adjustment);
 
+void        gimp_handle_bar_connect_events (GimpHandleBar  *bar,
+                                            GtkWidget      *event_source);
+
 
 #endif  /*  __GIMP_HANDLE_BAR_H__  */

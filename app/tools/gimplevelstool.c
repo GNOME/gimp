@@ -414,29 +414,10 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (vbox3), handle_bar, FALSE, FALSE, 0);
   gtk_widget_show (handle_bar);
 
-  g_signal_connect_swapped (tool->input_bar, "button-press-event",
-                            G_CALLBACK (GTK_WIDGET_GET_CLASS (handle_bar)->button_press_event),
-                            handle_bar);
-
-  g_signal_connect_swapped (tool->input_bar, "button-release-event",
-                            G_CALLBACK (GTK_WIDGET_GET_CLASS (handle_bar)->button_release_event),
-                            handle_bar);
-
-  g_signal_connect_swapped (tool->input_bar, "motion-notify-event",
-                            G_CALLBACK (GTK_WIDGET_GET_CLASS (handle_bar)->motion_notify_event),
-                            handle_bar);
-
-  g_signal_connect_swapped (bar, "button-press-event",
-                            G_CALLBACK (GTK_WIDGET_GET_CLASS (handle_bar)->button_press_event),
-                            handle_bar);
-
-  g_signal_connect_swapped (bar, "button-release-event",
-                            G_CALLBACK (GTK_WIDGET_GET_CLASS (handle_bar)->button_release_event),
-                            handle_bar);
-
-  g_signal_connect_swapped (bar, "motion-notify-event",
-                            G_CALLBACK (GTK_WIDGET_GET_CLASS (handle_bar)->motion_notify_event),
-                            handle_bar);
+  gimp_handle_bar_connect_events (GIMP_HANDLE_BAR (handle_bar),
+                                  tool->input_bar);
+  gimp_handle_bar_connect_events (GIMP_HANDLE_BAR (handle_bar),
+                                  bar);
 
   /*  Horizontal box for input levels spinbuttons  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
@@ -529,17 +510,8 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (vbox2), handle_bar, FALSE, FALSE, 0);
   gtk_widget_show (handle_bar);
 
-  g_signal_connect_swapped (tool->output_bar, "button-press-event",
-                            G_CALLBACK (GTK_WIDGET_GET_CLASS (handle_bar)->button_press_event),
-                            handle_bar);
-
-  g_signal_connect_swapped (tool->output_bar, "button-release-event",
-                            G_CALLBACK (GTK_WIDGET_GET_CLASS (handle_bar)->button_release_event),
-                            handle_bar);
-
-  g_signal_connect_swapped (tool->output_bar, "motion-notify-event",
-                            G_CALLBACK (GTK_WIDGET_GET_CLASS (handle_bar)->motion_notify_event),
-                            handle_bar);
+  gimp_handle_bar_connect_events (GIMP_HANDLE_BAR (handle_bar),
+                                  tool->output_bar);
 
   /*  Horizontal box for levels spin widgets  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);

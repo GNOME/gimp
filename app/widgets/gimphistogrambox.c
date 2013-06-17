@@ -133,17 +133,8 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   gtk_box_pack_start (GTK_BOX (vbox2), bar, FALSE, FALSE, 0);
   gtk_widget_show (bar);
 
-  g_signal_connect_swapped (box->color_bar, "button-press-event",
-                            G_CALLBACK (GTK_WIDGET_GET_CLASS (box->slider_bar)->button_press_event),
-                            box->slider_bar);
-
-  g_signal_connect_swapped (box->color_bar, "button-release-event",
-                            G_CALLBACK (GTK_WIDGET_GET_CLASS (box->slider_bar)->button_release_event),
-                            box->slider_bar);
-
-  g_signal_connect_swapped (box->color_bar, "motion-notify-event",
-                            G_CALLBACK (GTK_WIDGET_GET_CLASS (box->slider_bar)->motion_notify_event),
-                            box->slider_bar);
+  gimp_handle_bar_connect_events (GIMP_HANDLE_BAR (box->slider_bar),
+                                  box->color_bar);
 
   /*  The range selection */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);

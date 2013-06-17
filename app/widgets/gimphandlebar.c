@@ -350,6 +350,30 @@ gimp_handle_bar_set_adjustment (GimpHandleBar  *bar,
   gimp_handle_bar_adjustment_changed (bar->slider_adj[handle_no], bar);
 }
 
+void
+gimp_handle_bar_connect_events (GimpHandleBar *bar,
+                                GtkWidget     *event_source)
+{
+  GtkWidgetClass *widget_class;
+
+  g_return_if_fail (GIMP_IS_HANDLE_BAR (bar));
+  g_return_if_fail (GTK_IS_WIDGET (event_source));
+
+  widget_class = GTK_WIDGET_GET_CLASS (bar);
+
+  g_signal_connect_object (event_source, "button-press-event",
+                           G_CALLBACK (widget_class->button_press_event),
+                           bar, G_CONNECT_SWAPPED);
+
+  g_signal_connect_object (event_source, "button-release-event",
+                           G_CALLBACK (widget_class->button_release_event),
+                           bar, G_CONNECT_SWAPPED);
+
+  g_signal_connect_object (event_source, "motion-notify-event",
+                           G_CALLBACK (widget_class->motion_notify_event),
+                           bar, G_CONNECT_SWAPPED);
+}
+
 
 /*  private functions  */
 
