@@ -112,7 +112,6 @@ static gboolean   levels_menu_sensitivity         (gint               value,
 
 static void       levels_stretch_callback         (GtkWidget         *widget,
                                                    GimpLevelsTool    *tool);
-static void       levels_linear_gamma_update      (GimpLevelsTool    *tool);
 static void       levels_linear_gamma_changed     (GtkAdjustment     *adjustment,
                                                    GimpLevelsTool    *tool);
 
@@ -730,6 +729,76 @@ gimp_levels_tool_settings_export (GimpImageMapTool  *image_map_tool,
 }
 
 static void
+levels_input_adjust_by_color (GimpLevelsConfig     *config,
+                              guint                 value,
+                              GimpHistogramChannel  channel,
+                              const GimpRGB        *color)
+{
+  switch (value & 0xF)
+    {
+    case PICK_LOW_INPUT:
+      gimp_levels_config_adjust_by_colors (config, channel, color, NULL, NULL);
+      break;
+    case PICK_GAMMA:
+      gimp_levels_config_adjust_by_colors (config, channel, NULL, color, NULL);
+      break;
+    case PICK_HIGH_INPUT:
+      gimp_levels_config_adjust_by_colors (config, channel, NULL, NULL, color);
+      break;
+    default:
+      break;
+    }
+}
+
+static void
+gimp_levels_tool_color_picked (GimpImageMapTool *color_tool,
+                               gpointer          identifier,
+                               gdouble           x,
+                               gdouble           y,
+                               const Babl       *sample_format,
+                               const GimpRGB    *color)
+{
+  GimpLevelsTool *tool  = GIMP_LEVELS_TOOL (color_tool);
+  guint           value = GPOINTER_TO_UINT (identifier);
+
+  if (value & PICK_ALL_CHANNELS &&
+      gimp_babl_format_get_base_type (sample_format) == GIMP_RGB)
+    {
+      GimpHistogramChannel  channel;
+
+      /*  first reset the value channel  */
+      switch (value & 0xF)
+        {
+        case PICK_LOW_INPUT:
+          tool->config->low_input[GIMP_HISTOGRAM_VALUE] = 0.0;
+          break;
+        case PICK_GAMMA:
+          tool->config->gamma[GIMP_HISTOGRAM_VALUE] = 1.0;
+          break;
+        case PICK_HIGH_INPUT:
+          tool->config->high_input[GIMP_HISTOGRAM_VALUE] = 1.0;
+          break;
+        default:
+          break;
+        }
+
+      /*  then adjust all color channels  */
+      for (channel = GIMP_HISTOGRAM_RED;
+           channel <= GIMP_HISTOGRAM_BLUE;
+           channel++)
+        {
+          levels_input_adjust_by_color (tool->config,
+                                        value, channel, color);
+        }
+    }
+  else
+    {
+      levels_input_adjust_by_color (tool->config,
+                                    value, tool->config->channel, color);
+    }
+}
+
+static void
 gimp_levels_tool_export_setup (GimpSettingsBox      *settings_box,
                                GtkFileChooserDialog *dialog,
                                gboolean              export,
@@ -776,6 +845,7 @@ gimp_levels_tool_config_notify (GObject        *object,
     {
       gdouble low  = gtk_adjustment_get_value (tool->low_input);
       gdouble high = gtk_adjustment_get_value (tool->high_input);
+      gdouble delta, mid, tmp, value;
 
       gtk_adjustment_set_lower (tool->high_input,   low);
       gtk_adjustment_set_lower (tool->gamma_linear, low);
@@ -784,7 +854,13 @@ gimp_levels_tool_config_notify (GObject        *object,
       gtk_adjustment_set_upper (tool->gamma_linear, high);
 
       levels_update_input_bar (tool);
-      levels_linear_gamma_update (tool);
+
+      delta = (high - low) / 2.0;
+      mid   = low + delta;
+      tmp   = log10 (1.0 / tool->config->gamma[tool->config->channel]);
+      value = mid + delta * tmp;
+
+      gtk_adjustment_set_value (tool->gamma_linear, value);
     }
 }
 
@@ -911,21 +987,6 @@ levels_stretch_callback (GtkWidget      *widget,
 }
 
 static void
-levels_linear_gamma_update (GimpLevelsTool *tool)
-{
-  gdouble low_input  = gtk_adjustment_get_value (tool->low_input);
-  gdouble high_input = gtk_adjustment_get_value (tool->high_input);
-  gdouble delta, mid, tmp, value;
-
-  delta = (high_input - low_input) / 2.0;
-  mid   = low_input + delta;
-  tmp   = log10 (1.0 / tool->config->gamma[tool->config->channel]);
-  value = mid + delta * tmp;
-
-  gtk_adjustment_set_value (tool->gamma_linear, value);
-}
-
-static void
 levels_linear_gamma_changed (GtkAdjustment  *adjustment,
                              GimpLevelsTool *tool)
 {
@@ -945,76 +1006,6 @@ levels_linear_gamma_changed (GtkAdjustment  *adjustment,
       value = floor (value * 100 + 0.5) / 100.0;
 
       gtk_adjustment_set_value (tool->gamma, value);
-    }
-}
-
-static void
-levels_input_adjust_by_color (GimpLevelsConfig     *config,
-                              guint                 value,
-                              GimpHistogramChannel  channel,
-                              const GimpRGB        *color)
-{
-  switch (value & 0xF)
-    {
-    case PICK_LOW_INPUT:
-      gimp_levels_config_adjust_by_colors (config, channel, color, NULL, NULL);
-      break;
-    case PICK_GAMMA:
-      gimp_levels_config_adjust_by_colors (config, channel, NULL, color, NULL);
-      break;
-    case PICK_HIGH_INPUT:
-      gimp_levels_config_adjust_by_colors (config, channel, NULL, NULL, color);
-      break;
-    default:
-      break;
-    }
-}
-
-static void
-gimp_levels_tool_color_picked (GimpImageMapTool *color_tool,
-                               gpointer          identifier,
-                               gdouble           x,
-                               gdouble           y,
-                               const Babl       *sample_format,
-                               const GimpRGB    *color)
-{
-  GimpLevelsTool *tool  = GIMP_LEVELS_TOOL (color_tool);
-  guint           value = GPOINTER_TO_UINT (identifier);
-
-  if (value & PICK_ALL_CHANNELS &&
-      gimp_babl_format_get_base_type (sample_format) == GIMP_RGB)
-    {
-      GimpHistogramChannel  channel;
-
-      /*  first reset the value channel  */
-      switch (value & 0xF)
-        {
-        case PICK_LOW_INPUT:
-          tool->config->low_input[GIMP_HISTOGRAM_VALUE] = 0.0;
-          break;
-        case PICK_GAMMA:
-          tool->config->gamma[GIMP_HISTOGRAM_VALUE] = 1.0;
-          break;
-        case PICK_HIGH_INPUT:
-          tool->config->high_input[GIMP_HISTOGRAM_VALUE] = 1.0;
-          break;
-        default:
-          break;
-        }
-
-      /*  then adjust all color channels  */
-      for (channel = GIMP_HISTOGRAM_RED;
-           channel <= GIMP_HISTOGRAM_BLUE;
-           channel++)
-        {
-          levels_input_adjust_by_color (tool->config,
-                                        value, channel, color);
-        }
-    }
-  else
-    {
-      levels_input_adjust_by_color (tool->config,
-                                    value, tool->config->channel, color);
     }
 }
 
