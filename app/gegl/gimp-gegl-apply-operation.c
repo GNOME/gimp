@@ -72,10 +72,20 @@ gimp_gegl_apply_operation (GeglBuffer          *src_buffer,
     {
       GeglNode *src_node;
 
+      /* dup() because reading and writing the same buffer doesn't
+       * work with area ops when using a processor. See bug #701875.
+       */
+      if (progress && (src_buffer == dest_buffer))
+        src_buffer = gegl_buffer_dup (src_buffer);
+      else
+        g_object_ref (src_buffer);
+
       src_node = gegl_node_new_child (gegl,
                                       "operation", "gegl:buffer-source",
                                       "buffer",    src_buffer,
                                       NULL);
+
+      g_object_unref (src_buffer);
 
       gegl_node_connect_to (src_node,  "output",
                             operation, "input");
