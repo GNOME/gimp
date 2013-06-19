@@ -77,9 +77,37 @@
   PSD_VERSION_INFO      = 1057,               * 0x0421 - Version info *
   PSD_EXIF_DATA         = 1058,    Loaded     * 0x0422 - Exif data block *
   PSD_XMP_DATA          = 1060,    Loaded     * 0x0424 - XMP data block *
+  PSD_CAPTION_DIGEST    = 1061,               * 0x0425 - Caption digest *
+  PSD_PRINT_SCALE       = 1062,               * 0x0426 - Print scale *
+  PSD_PIXEL_AR          = 1064,               * 0x0428 - Pixel aspect ratio *
+  PSD_LAYER_COMPS       = 1065,               * 0x0429 - Layer comps *
+  PSD_ALT_DUOTONE_COLOR = 1066,               * 0x042A - Alternative Duotone colors *
+  PSD_ALT_SPOT_COLOR    = 1067,               * 0x042B - Alternative Spot colors *
+  PSD_LAYER_SELECT_ID   = 1069,               * 0x042D - Layer selection ID *
+  PSD_HDR_TONING_INFO   = 1070,               * 0x042E - HDR toning information *
+  PSD_PRINT_INFO_SCALE  = 1071,               * 0x042F - Print scale *
+  PSD_LAYER_GROUP_E_ID  = 1072,               * 0x0430 - Layer group(s) enabled ID *
+  PSD_COLOR_SAMPLER_NEW = 1073,               * 0x0431 - Color sampler resource for ps CS3 and higher PSD files *
+  PSD_MEASURE_SCALE     = 1074,               * 0x0432 - Measurement scale *
+  PSD_TIMELINE_INFO     = 1075,               * 0x0433 - Timeline information *
+  PSD_SHEET_DISCLOSE    = 1076,               * 0x0434 - Sheet discloser *
+  PSD_DISPLAY_INFO_NEW  = 1077,               * 0x0435 - DisplayInfo structure for ps CS3 and higher PSD files *
+  PSD_ONION_SKINS       = 1078,               * 0x0436 - Onion skins *
+  PSD_COUNT_INFO        = 1080,               * 0x0438 - Count information*
+  PSD_PRINT_INFO        = 1082,               * 0x043A - Print information added in ps CS5*
+  PSD_PRINT_STYLE       = 1083,               * 0x043B - Print style *
+  PSD_MAC_NSPRINTINFO   = 1084,               * 0x043C - Mac NSPrintInfo*
+  PSD_WIN_DEVMODE       = 1085,               * 0x043D - Windows DEVMODE *
+  PSD_AUTO_SAVE_PATH    = 1086,               * 0x043E - Auto save file path *
+  PSD_AUTO_SAVE_FORMAT  = 1087,               * 0x043F - Auto save format *
   PSD_PATH_INFO_FIRST   = 2000,    Loaded     * 0x07d0 - First path info block *
   PSD_PATH_INFO_LAST    = 2998,    Loaded     * 0x0bb6 - Last path info block *
   PSD_CLIPPING_PATH     = 2999,               * 0x0bb7 - Name of clipping path *
+  PSD_PLUGIN_R_FIRST    = 4000,               * 0x0FA0 - First plugin resource *
+  PSD_PLUGIN_R_LAST     = 4999,               * 0x1387 - Last plugin resource *
+  PSD_IMAGEREADY_VARS   = 7000,               * 0x1B58 - Name of clipping path *
+  PSD_IMAGEREADY_DATA   = 7001,               * 0x1B59 - Name of clipping path *
+  PSD_LIGHTROOM_WORK    = 8000,               * 0x1F40 - Lightroom workflow *
   PSD_PRINT_FLAGS_2     = 10000               * 0x2710 - Print flags *
 */
 
@@ -254,7 +282,7 @@ load_image_resource (PSDimageres   *res_a,
       return -1;
     }
 
-   /* Process image resource blocks */
+  /* Process image resource blocks */
   if (memcmp (res_a->type, "8BIM", 4) != 0 &&
       memcmp (res_a->type, "MeSa", 4) !=0)
     {
@@ -265,6 +293,7 @@ load_image_resource (PSDimageres   *res_a,
     {
       switch (res_a->id)
         {
+<<<<<<< HEAD
           case PSD_PS2_IMAGE_INFO:
           case PSD_PS2_COLOR_TAB:
           case PSD_OBSOLETE_01:
@@ -355,6 +384,98 @@ load_image_resource (PSDimageres   *res_a,
               load_resource_2000 (res_a, image_id, f, error);
             else
               load_resource_unknown (res_a, image_id, f, error);
+=======
+	case PSD_PS2_IMAGE_INFO:
+	case PSD_PS2_COLOR_TAB:
+	case PSD_OBSOLETE_01:
+	case PSD_OBSOLETE_02:
+	case PSD_OBSOLETE_03:
+	  /* Drop obsolete image resource blocks */
+	  IFDBG(2) g_debug ("Obsolete image resource block: %d",
+			    res_a->id);
+	  break;
+
+	case PSD_THUMB_RES:
+	case PSD_THUMB_RES2:
+	  /* Drop thumbnails from standard file load */
+	  IFDBG(2) g_debug ("Thumbnail resource block: %d",
+			    res_a->id);
+	  break;
+
+	case PSD_MAC_PRINT_INFO:
+	case PSD_JPEG_QUAL:
+	  /* Save photoshop resources with no meaning for GIMP
+	     as image parasites */
+	  load_resource_ps_only (res_a, image_id, f, error);
+	  break;
+
+	case PSD_RESN_INFO:
+	  load_resource_1005 (res_a, image_id, f, error);
+	  break;
+
+	case PSD_ALPHA_NAMES:
+	  load_resource_1006 (res_a, image_id, img_a, f, error);
+	  break;
+
+	case PSD_DISPLAY_INFO:
+	  load_resource_1007 (res_a, image_id, img_a, f, error);
+	  break;
+
+	case PSD_CAPTION:
+	  load_resource_1008 (res_a, image_id, f, error);
+	  break;
+
+	case PSD_QUICK_MASK:
+	  load_resource_1022 (res_a, image_id, img_a, f, error);
+	  break;
+
+	case PSD_LAYER_STATE:
+	  load_resource_1024 (res_a, image_id, img_a, f, error);
+	  break;
+
+	case PSD_WORKING_PATH:
+	  load_resource_2000 (res_a, image_id, f, error);
+	  break;
+
+	case PSD_IPTC_NAA_DATA:
+	  load_resource_1028 (res_a, image_id, f, error);
+	  break;
+
+	case PSD_GRID_GUIDE:
+	  load_resource_1032 (res_a, image_id, f, error);
+	  break;
+
+	case PSD_ICC_PROFILE:
+	  load_resource_1039 (res_a, image_id, f, error);
+	  break;
+
+	case PSD_ALPHA_NAMES_UNI:
+	  load_resource_1045 (res_a, image_id, img_a, f, error);
+	  break;
+
+	case PSD_IDX_COL_TAB_CNT:
+	  load_resource_1046 (res_a, image_id, f, error);
+	  break;
+
+	case PSD_ALPHA_ID:
+	  load_resource_1053 (res_a, image_id, img_a, f, error);
+	  break;
+
+	case PSD_EXIF_DATA:
+	  load_resource_1058 (res_a, image_id, f, error);
+	  break;
+
+	case PSD_XMP_DATA:
+	  load_resource_1060 (res_a, image_id, f, error);
+	  break;
+
+	default:
+	  if (res_a->id >= 2000 &&
+	      res_a->id <  2999)
+	    load_resource_2000 (res_a, image_id, f, error);
+	  else
+	    load_resource_unknown (res_a, image_id, f, error);
+>>>>>>> plug-ins: Initial branch creation and updated documentation.
         }
     }
 
@@ -390,14 +511,14 @@ load_thumbnail_resource (PSDimageres   *res_a,
       return -1;
     }
 
-   /* Process image resource blocks */
- if (res_a->id == PSD_THUMB_RES
-     || res_a->id == PSD_THUMB_RES2)
-   {
-        /* Load thumbnails from standard file load */
-        load_resource_1033 (res_a, image_id, f, error);
-        rtn = 1;
-   }
+  /* Process image resource blocks */
+  if (res_a->id == PSD_THUMB_RES
+      || res_a->id == PSD_THUMB_RES2)
+    {
+      /* Load thumbnails from standard file load */
+      load_resource_1033 (res_a, image_id, f, error);
+      rtn = 1;
+    }
 
   /* Image blocks are null padded to even length */
   if (res_a->data_len % 2 == 0)
@@ -439,7 +560,7 @@ load_resource_unknown (const PSDimageres  *res_a,
     }
 
   name = g_strdup_printf ("psd-image-resource-%.4s-%.4x",
-                            res_a->type, res_a->id);
+			  res_a->type, res_a->id);
   IFDBG(2) g_debug ("Parasite name: %s", name);
 
   parasite = gimp_parasite_new (name, 0, res_a->data_len, data);
@@ -474,7 +595,7 @@ load_resource_ps_only (const PSDimageres  *res_a,
     }
 
   name = g_strdup_printf ("psd-image-resource-%.4s-%.4x",
-                            res_a->type, res_a->id);
+			  res_a->type, res_a->id);
   IFDBG(2) g_debug ("Parasite name: %s", name);
 
   parasite = gimp_parasite_new (name, 0, res_a->data_len, data);
@@ -519,12 +640,12 @@ load_resource_1005 (const PSDimageres  *res_a,
   res_info.heightUnit = GINT16_FROM_BE (res_info.heightUnit);
 
   IFDBG(3) g_debug ("Resolution: %d, %d, %d, %d, %d, %d",
-                      res_info.hRes,
-                      res_info.hResUnit,
-                      res_info.widthUnit,
-                      res_info.vRes,
-                      res_info.vResUnit,
-                      res_info.heightUnit);
+		    res_info.hRes,
+		    res_info.hResUnit,
+		    res_info.widthUnit,
+		    res_info.vRes,
+		    res_info.vResUnit,
+		    res_info.heightUnit);
 
   /* Resolution always recorded as pixels / inch in a fixed point implied
      decimal int32 with 16 bits before point and 16 after (i.e. cast as
@@ -535,14 +656,14 @@ load_resource_1005 (const PSDimageres  *res_a,
   /* GIMP only has one display unit so use ps horizontal resolution unit */
   switch (res_info.hResUnit)
     {
-      case PSD_RES_INCH:
-        image_unit = GIMP_UNIT_INCH;
-        break;
-      case PSD_RES_CM:
-        image_unit = GIMP_UNIT_MM;
-        break;
-      default:
-        image_unit = GIMP_UNIT_INCH;
+    case PSD_RES_INCH:
+      image_unit = GIMP_UNIT_INCH;
+      break;
+    case PSD_RES_CM:
+      image_unit = GIMP_UNIT_MM;
+      break;
+    default:
+      image_unit = GIMP_UNIT_INCH;
     }
 
   gimp_image_set_unit (image_id, image_unit);
@@ -636,58 +757,58 @@ load_resource_1007 (const PSDimageres  *res_a,
 
       switch (dsp_info.colorSpace)
         {
-          case PSD_CS_RGB:
-            gimp_rgb_set (&gimp_rgb, ps_color.rgb.red / 65535.0,
-                          ps_color.rgb.green / 65535.0,
-                          ps_color.rgb.blue / 65535.0);
-            break;
+	case PSD_CS_RGB:
+	  gimp_rgb_set (&gimp_rgb, ps_color.rgb.red / 65535.0,
+			ps_color.rgb.green / 65535.0,
+			ps_color.rgb.blue / 65535.0);
+	  break;
 
-          case PSD_CS_HSB:
-            gimp_hsv_set (&gimp_hsv, ps_color.hsv.hue / 65535.0,
-                          ps_color.hsv.saturation / 65535.0,
-                          ps_color.hsv.value / 65535.0);
-            gimp_hsv_to_rgb (&gimp_hsv, &gimp_rgb);
-            break;
+	case PSD_CS_HSB:
+	  gimp_hsv_set (&gimp_hsv, ps_color.hsv.hue / 65535.0,
+			ps_color.hsv.saturation / 65535.0,
+			ps_color.hsv.value / 65535.0);
+	  gimp_hsv_to_rgb (&gimp_hsv, &gimp_rgb);
+	  break;
 
-          case PSD_CS_CMYK:
-            gimp_cmyk_set (&gimp_cmyk, 1.0 - ps_color.cmyk.cyan / 65535.0,
-                           1.0 - ps_color.cmyk.magenta / 65535.0,
-                           1.0 - ps_color.cmyk.yellow / 65535.0,
-                           1.0 - ps_color.cmyk.black / 65535.0);
-            gimp_cmyk_to_rgb (&gimp_cmyk, &gimp_rgb);
-            break;
+	case PSD_CS_CMYK:
+	  gimp_cmyk_set (&gimp_cmyk, 1.0 - ps_color.cmyk.cyan / 65535.0,
+			 1.0 - ps_color.cmyk.magenta / 65535.0,
+			 1.0 - ps_color.cmyk.yellow / 65535.0,
+			 1.0 - ps_color.cmyk.black / 65535.0);
+	  gimp_cmyk_to_rgb (&gimp_cmyk, &gimp_rgb);
+	  break;
 
-          case PSD_CS_GRAYSCALE:
-            gimp_rgb_set (&gimp_rgb, ps_color.gray.gray / 10000.0,
-                          ps_color.gray.gray / 10000.0,
-                          ps_color.gray.gray / 10000.0);
-            break;
+	case PSD_CS_GRAYSCALE:
+	  gimp_rgb_set (&gimp_rgb, ps_color.gray.gray / 10000.0,
+			ps_color.gray.gray / 10000.0,
+			ps_color.gray.gray / 10000.0);
+	  break;
 
-          case PSD_CS_FOCOLTONE:
-          case PSD_CS_TRUMATCH:
-          case PSD_CS_HKS:
-          case PSD_CS_LAB:
-          case PSD_CS_PANTONE:
-          case PSD_CS_TOYO:
-          case PSD_CS_DIC:
-          case PSD_CS_ANPA:
-          default:
-            if (CONVERSION_WARNINGS)
-              g_message ("Unsupported color space: %d",
-                         dsp_info.colorSpace);
-            gimp_rgb_set (&gimp_rgb, 1.0, 0.0, 0.0);
+	case PSD_CS_FOCOLTONE:
+	case PSD_CS_TRUMATCH:
+	case PSD_CS_HKS:
+	case PSD_CS_LAB:
+	case PSD_CS_PANTONE:
+	case PSD_CS_TOYO:
+	case PSD_CS_DIC:
+	case PSD_CS_ANPA:
+	default:
+	  if (CONVERSION_WARNINGS)
+	    g_message ("Unsupported color space: %d",
+		       dsp_info.colorSpace);
+	  gimp_rgb_set (&gimp_rgb, 1.0, 0.0, 0.0);
         }
 
       gimp_rgb_set_alpha (&gimp_rgb, 1.0);
 
       IFDBG(2) g_debug ("PS cSpace: %d, col: %d %d %d %d, opacity: %d, kind: %d",
-             dsp_info.colorSpace, ps_color.cmyk.cyan, ps_color.cmyk.magenta,
-             ps_color.cmyk.yellow, ps_color.cmyk.black, dsp_info.opacity,
-             dsp_info.kind);
+			dsp_info.colorSpace, ps_color.cmyk.cyan, ps_color.cmyk.magenta,
+			ps_color.cmyk.yellow, ps_color.cmyk.black, dsp_info.opacity,
+			dsp_info.kind);
 
       IFDBG(2) g_debug ("cSpace: %d, col: %g %g %g, opacity: %d, kind: %d",
-             dsp_info.colorSpace, gimp_rgb.r * 255 , gimp_rgb.g * 255,
-             gimp_rgb.b * 255, dsp_info.opacity, dsp_info.kind);
+			dsp_info.colorSpace, gimp_rgb.r * 255 , gimp_rgb.g * 255,
+			gimp_rgb.b * 255, dsp_info.opacity, dsp_info.kind);
 
       img_a->alpha_display_info[cidx] = g_malloc (sizeof (PSDchanneldata));
       img_a->alpha_display_info[cidx]->gimp_color = gimp_rgb;
@@ -748,8 +869,8 @@ load_resource_1022 (const PSDimageres  *res_a,
   img_a->quick_mask_id = GUINT16_FROM_BE (img_a->quick_mask_id);
 
   IFDBG(3) g_debug ("Quick mask channel: %d, empty: %d",
-                      img_a->quick_mask_id,
-                      quick_mask_empty);
+		    img_a->quick_mask_id,
+		    quick_mask_empty);
 
   return 0;
 }
@@ -828,7 +949,7 @@ load_resource_1028 (const PSDimageres  *res_a,
   /* Store resource data as a standard psd parasite */
   IFDBG (2) g_debug ("Processing IPTC data as psd parasite");
   name = g_strdup_printf ("psd-image-resource-%.4s-%.4x",
-                           res_a->type, res_a->id);
+			  res_a->type, res_a->id);
   IFDBG(3) g_debug ("Parasite name: %s", name);
 
   parasite = gimp_parasite_new (name, 0, res_a->data_len, res_data);
@@ -872,10 +993,10 @@ load_resource_1032 (const PSDimageres  *res_a,
   hdr.fGuideCount = GUINT32_FROM_BE (hdr.fGuideCount);
 
   IFDBG(3) g_debug ("Grids & Guides: %d, %d, %d, %d",
-                     hdr.fVersion,
-                     hdr.fGridCycleV,
-                     hdr.fGridCycleH,
-                     hdr.fGuideCount);
+		    hdr.fVersion,
+		    hdr.fGridCycleV,
+		    hdr.fGridCycleH,
+		    hdr.fGuideCount);
 
   for (i = 0; i < hdr.fGuideCount; ++i)
     {
@@ -889,8 +1010,8 @@ load_resource_1032 (const PSDimageres  *res_a,
       guide.fLocation /= 32;
 
       IFDBG(3) g_debug ("Guide: %d px, %d",
-                         guide.fLocation,
-                         guide.fDirection);
+			guide.fLocation,
+			guide.fDirection);
 
       if (guide.fDirection == PSD_VERTICAL)
         gimp_image_add_vguide (image_id, guide.fLocation);
@@ -948,9 +1069,9 @@ load_resource_1033 (const PSDimageres  *res_a,
   IFDBG(2) g_debug ("\nThumbnail:\n"
                     "\tFormat: %d\n"
                     "\tDimensions: %d x %d\n",
-                      thumb_info.format,
-                      thumb_info.width,
-                      thumb_info.height);
+		    thumb_info.format,
+		    thumb_info.width,
+		    thumb_info.height);
 
   if (thumb_info.format != 1)
     {
@@ -1220,7 +1341,7 @@ load_resource_1058 (const PSDimageres  *res_a,
   /* Store resource data as a standard psd parasite */
   IFDBG (2) g_debug ("Processing exif data as psd parasite");
   name = g_strdup_printf ("psd-image-resource-%.4s-%.4x",
-                           res_a->type, res_a->id);
+			  res_a->type, res_a->id);
   IFDBG(3) g_debug ("Parasite name: %s", name);
 
   parasite = gimp_parasite_new (name, 0, res_a->data_len, res_data);
@@ -1377,11 +1498,11 @@ load_resource_2000 (const PSDimageres  *res_a,
                   || type == PSD_PATH_OP_UNLNK)
                 {
                   if (fread (&y[0], 4, 1, f) < 1
-                    || fread (&x[0], 4, 1, f) < 1
-                    || fread (&y[1], 4, 1, f) < 1
-                    || fread (&x[1], 4, 1, f) < 1
-                    || fread (&y[2], 4, 1, f) < 1
-                    || fread (&x[2], 4, 1, f) < 1)
+		      || fread (&x[0], 4, 1, f) < 1
+		      || fread (&y[1], 4, 1, f) < 1
+		      || fread (&x[1], 4, 1, f) < 1
+		      || fread (&y[2], 4, 1, f) < 1
+		      || fread (&x[2], 4, 1, f) < 1)
                     {
                       psd_set_error (feof (f), errno, error);
                       return -1;
@@ -1429,5 +1550,5 @@ load_resource_2000 (const PSDimageres  *res_a,
       path_rec--;
     }
 
- return 0;
+  return 0;
 }
