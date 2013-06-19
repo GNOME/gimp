@@ -64,6 +64,7 @@ LDADD = \
 	$(libgimpbase)		\
 	$(JPEG_LIBS)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(EXIF_LIBS)		\
 	$(IPTCDATA_LIBS)	\
 	$(RT_LIBS)		\

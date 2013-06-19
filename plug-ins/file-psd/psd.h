@@ -31,7 +31,7 @@
 /* Set to the level of debugging output you want, 0 for none.
  *   Setting higher than 2 will result in a very large amount of debug
  *   output being produced. */
-#define PSD_DEBUG 0
+#define PSD_DEBUG 3
 #define IFDBG(level) if (PSD_DEBUG >= level)
 
 /* Set to FALSE to suppress pop-up warnings about lossy file conversions */
@@ -83,6 +83,8 @@
 #define PSD_LADJ_INVERT         "nvrt"          /* Adjustment layer - invert (PS4) */
 #define PSD_LADJ_THRESHOLD      "thrs"          /* Adjustment layer - threshold (PS4) */
 #define PSD_LADJ_POSTERIZE      "post"          /* Adjustment layer - posterize (PS4) */
+#define PSD_LADJ_VIBRANCE       "vibA"          /* Adjustment layer - vibrance (PS10) */
+#define PSD_LADJ_COLOR_LOOKUP   "clrL"          /* Adjustment layer - color lookup (PS13) */
 
 /* Fill Layer IDs */
 #define PSD_LFIL_SOLID          "SoCo"          /* Solid color sheet setting (PS6) */
@@ -117,12 +119,22 @@
 /* Other */
 #define PSD_LOTH_SECTION        "lsct"          /* Section divider setting - Layer groups (PS6) */
 #define PSD_LOTH_PATTERN        "Patt"          /* Patterns (PS6) */
+#define PSD_LOTH_PATTERN_2      "Pat2"          /* Patterns 2nd key (PS6) */
+#define PSD_LOTH_PATTERN_3      "Pat3"          /* Patterns 3rd key (PS6) */
 #define PSD_LOTH_GRADIENT       "grdm"          /* Gradient settings (PS6) */
 #define PSD_LOTH_RESTRICT       "brst"          /* Channel blending restriction setting (PS6) */
 #define PSD_LOTH_FOREIGN_FX     "ffxi"          /* Foreign effect ID (PS6) */
 #define PSD_LOTH_PATT_DATA      "shpa"          /* Pattern data (PS6) */
 #define PSD_LOTH_META_DATA      "shmd"          /* Meta data setting (PS6) */
 #define PSD_LOTH_LAYER_DATA     "layr"          /* Layer data (PS6) */
+#define PSD_LOTH_CONTENT_GEN    "CgEd"          /* Content generator extra data (PS12) */
+#define PSD_LOTH_TEXT_ENGINE    "Txt2"          /* Text engine data (PS10) */
+#define PSD_LOTH_PATH_NAME      "pths"          /* Unicode path name (PS13) */
+#define PSD_LOTH_ANIMATION_FX   "anFX"          /* Animation effects (PS13) */
+#define PSD_LOTH_FILTER_MASK    "FMsk"          /* Filter mask (PS10) */
+#define PSD_LOTH_VECTOR_STROKE  "vscg"          /* Vector stroke data (PS13) */
+#define PSD_LOTH_ALIGN_RENDER   "sn2P"          /* Aligned rendering flag (?) */
+#define PSD_LOTH_USER_MASK      "LMsk"          /* User mask (?) */
 
 /* Effects layer resource IDs */
 #define PSD_LFX_COMMON          "cmnS"          /* Effects layer - common state (PS5) */
@@ -131,6 +143,24 @@
 #define PSD_LFX_OUTER_GLW       "oglw"          /* Effects layer - outer glow (PS5) */
 #define PSD_LFX_INNER_GLW       "iglw"          /* Effects layer - inner glow (PS5) */
 #define PSD_LFX_BEVEL           "bevl"          /* Effects layer - bevel (PS5) */
+
+/* Placed Layer */
+#define PSD_LPL_PLACE_LAYER     "plLd"          /* Placed layer (?) */
+#define PSD_LPL_PLACE_LAYER_NEW "SoLd"          /* Placed layer (PS10) */
+
+/* Linked Layer */
+#define PSD_LLL_LINKED_LAYER    "lnkD"          /* Linked layer (?) */
+#define PSD_LLL_LINKED_LAYER_2  "lnk2"          /* Linked layer 2nd key */
+#define PSD_LLL_LINKED_LAYER_3  "lnk3"          /* Linked layer 3rd key */
+
+/* Merged Transparency */
+#define PSD_LMT_MERGE_TRANS     "Mtrn"          /* Merged transperency save flag (?) */
+#define PSD_LMT_MERGE_TRANS_16  "Mt16"          /* Merged transperency save flag 2 */
+#define PSD_LMT_MERGE_TRANS_32  "Mt32"          /* Merged transperency save flag 3 */
+
+/* Filter Effects */
+#define PSD_LFFX_FILTER_FX      "FXid"          /* Filter effects (?) */
+#define PSD_LFFX_FILTER_FX_2    "FEid"          /* Filter effects 2 */
 
 /* PSD spec enums */
 
@@ -169,7 +199,7 @@ typedef enum {
   PSD_PS2_COLOR_TAB     = 1003,         /* 0x03eb - Obsolete - ps 2.0 indexed color table */
   PSD_RESN_INFO         = 1005,         /* 0x03ed - ResolutionInfo structure */
   PSD_ALPHA_NAMES       = 1006,         /* 0x03ee - Alpha channel names */
-  PSD_DISPLAY_INFO      = 1007,         /* 0x03ef - DisplayInfo structure */
+  PSD_DISPLAY_INFO      = 1007,         /* 0x03ef - Superceded by PSD_DISPLAY_INFO_NEW for ps CS3 and higher - DisplayInfo structure */
   PSD_CAPTION           = 1008,         /* 0x03f0 - Optional - Caption string */
   PSD_BORDER_INFO       = 1009,         /* 0x03f1 - Border info */
   PSD_BACKGROUND_COL    = 1010,         /* 0x03f2 - Background color */
@@ -198,8 +228,8 @@ typedef enum {
   PSD_COPYRIGHT_FLG     = 1034,         /* 0x040a - Copyright flag */
   PSD_URL               = 1035,         /* 0x040b - URL string */
   PSD_THUMB_RES2        = 1036,         /* 0x040c - Thumbnail resource */
-  PSD_GLOBAL_ANGLE      = 1037,         /* 0x040d - Global angle */
-  PSD_COLOR_SAMPLER     = 1038,         /* 0x040e - Color samplers resource */
+  PSD_GLOBAL_ANGLE      = 1037,         /* 0x040d - Superceded by PSD_NEW_COLOR_SAMPLER for ps CS3 and higher - Global angle */
+  PSD_COLOR_SAMPLER     = 1038,         /* 0x040e - Superceded by PSD_NEW_COLOR_SAMPLER for ps CS3 and higher - Color samplers resource */
   PSD_ICC_PROFILE       = 1039,         /* 0x040f - ICC Profile */
   PSD_WATERMARK         = 1040,         /* 0x0410 - Watermark */
   PSD_ICC_UNTAGGED      = 1041,         /* 0x0411 - Do not use ICC profile flag */
@@ -216,11 +246,40 @@ typedef enum {
   PSD_ALPHA_ID          = 1053,         /* 0x041d - Alpha IDs */
   PSD_URL_LIST_UNI      = 1054,         /* 0x041e - URL list - unicode */
   PSD_VERSION_INFO      = 1057,         /* 0x0421 - Version info */
-  PSD_EXIF_DATA         = 1058,         /* 0x0422 - Exif data block */
+  PSD_EXIF_DATA         = 1058,         /* 0x0422 - Exif data block 1 */
+  PSD_EXIF_DATA_3       = 1059,         /* 0X0423 - Exif data block 3 (?) */
   PSD_XMP_DATA          = 1060,         /* 0x0424 - XMP data block */
+  PSD_CAPTION_DIGEST    = 1061,         /* 0x0425 - Caption digest */
+  PSD_PRINT_SCALE       = 1062,         /* 0x0426 - Print scale */
+  PSD_PIXEL_AR          = 1064,         /* 0x0428 - Pixel aspect ratio */
+  PSD_LAYER_COMPS       = 1065,         /* 0x0429 - Layer comps */
+  PSD_ALT_DUOTONE_COLOR = 1066,         /* 0x042A - Alternative Duotone colors */
+  PSD_ALT_SPOT_COLOR    = 1067,         /* 0x042B - Alternative Spot colors */
+  PSD_LAYER_SELECT_ID   = 1069,         /* 0x042D - Layer selection ID */
+  PSD_HDR_TONING_INFO   = 1070,         /* 0x042E - HDR toning information */
+  PSD_PRINT_INFO_SCALE  = 1071,         /* 0x042F - Print scale */
+  PSD_LAYER_GROUP_E_ID  = 1072,         /* 0x0430 - Layer group(s) enabled ID */
+  PSD_COLOR_SAMPLER_NEW = 1073,         /* 0x0431 - Color sampler resource for ps CS3 and higher PSD files */
+  PSD_MEASURE_SCALE     = 1074,         /* 0x0432 - Measurement scale */
+  PSD_TIMELINE_INFO     = 1075,         /* 0x0433 - Timeline information */
+  PSD_SHEET_DISCLOSE    = 1076,         /* 0x0434 - Sheet discloser */
+  PSD_DISPLAY_INFO_NEW  = 1077,         /* 0x0435 - DisplayInfo structure for ps CS3 and higher PSD files */
+  PSD_ONION_SKINS       = 1078,         /* 0x0436 - Onion skins */
+  PSD_COUNT_INFO        = 1080,         /* 0x0438 - Count information*/
+  PSD_PRINT_INFO        = 1082,         /* 0x043A - Print information added in ps CS5*/
+  PSD_PRINT_STYLE       = 1083,         /* 0x043B - Print style */
+  PSD_MAC_NSPRINTINFO   = 1084,         /* 0x043C - Mac NSPrintInfo*/
+  PSD_WIN_DEVMODE       = 1085,         /* 0x043D - Windows DEVMODE */
+  PSD_AUTO_SAVE_PATH    = 1086,         /* 0x043E - Auto save file path */
+  PSD_AUTO_SAVE_FORMAT  = 1087,         /* 0x043F - Auto save format */
   PSD_PATH_INFO_FIRST   = 2000,         /* 0x07d0 - First path info block */
   PSD_PATH_INFO_LAST    = 2998,         /* 0x0bb6 - Last path info block */
   PSD_CLIPPING_PATH     = 2999,         /* 0x0bb7 - Name of clipping path */
+  PSD_PLUGIN_R_FIRST    = 4000,         /* 0x0FA0 - First plugin resource */
+  PSD_PLUGIN_R_LAST     = 4999,         /* 0x1387 - Last plugin resource */
+  PSD_IMAGEREADY_VARS   = 7000,         /* 0x1B58 - Imageready variables */
+  PSD_IMAGEREADY_DATA   = 7001,         /* 0x1B59 - Imageready data sets */
+  PSD_LIGHTROOM_WORK    = 8000,         /* 0x1F40 - Lightroom workflow */
   PSD_PRINT_FLAGS_2     = 10000         /* 0x2710 - Print flags */
 } PSDImageResID;
 
@@ -306,7 +365,7 @@ typedef struct
   guint16       red;
   guint16       green;
   guint16       blue;
-}CMRGBColor;
+} CMRGBColor;
 
 /*  HSV Color Value
     A color value expressed in the HSV color space is composed of hue,
@@ -321,7 +380,7 @@ typedef struct
   guint16       hue;
   guint16       saturation;
   guint16       value;
-}CMHSVColor;
+} CMHSVColor;
 
 /* CMYK Color Value
   A color value expressed in the CMYK color space is composed of cyan, magenta,
@@ -336,7 +395,7 @@ typedef struct
   guint16       magenta;
   guint16       yellow;
   guint16       black;
-}CMCMYKColor;
+} CMCMYKColor;
 
 /* L*a*b* Color Value
    The first three values in the color data are, respectively, the colors
@@ -363,16 +422,15 @@ typedef struct
 } CMGrayColor ;
 
 /* The color union is defined by the CMColor type definition.
-*/
+ */
 typedef union
 {
-   CMRGBColor        rgb;
-   CMHSVColor        hsv;
-   CMLabColor        Lab;
-   CMCMYKColor       cmyk;
-   CMGrayColor       gray;
+  CMRGBColor        rgb;
+  CMHSVColor        hsv;
+  CMLabColor        Lab;
+  CMCMYKColor       cmyk;
+  CMGrayColor       gray;
 } CMColor;
-
 
 /* Image resolution data */
 typedef struct {
@@ -410,14 +468,23 @@ typedef struct {
   gint16        planes;                 /* Number of planes (always 1) */
 } ThumbnailInfo;
 
-/* Channel display info data */
+/* Channel display info data for Adobe Photoshop CS2 and lower */
 typedef struct {
-  gint16        colorSpace;             /* Color space from  PSDColorSpace */
+  gint16        colorSpace;             /* Color space from PSDColorSpace */
   guint16       color[4];               /* 4 * 16 bit color components */
   gint16        opacity;                /* Opacity 0 to 100 */
   gchar         kind;                   /* Selected = 0, Protected = 1 */
   gchar         padding;                /* Padding */
 } DisplayInfo;
+
+/* Channel display info data for Adobe Photoshop CS3 and higher to support floating point colors */
+typedef struct {
+  gint16        colorSpace;             /* Color space from PSDColorSpace */
+  guint16       color[4];               /* 4 * 16 bit color components */
+  gint16        opacity;                /* Opacity 0 to 100 */
+  gchar         kind;                   /* Selected = 0, Protected = 1 */
+  gchar         mode;                   /* Alpha = 0, Inverted alpha = 1, Spot = 2 */
+} DisplayInfoNew;
 
 /* PSD Channel length info data structure */
 typedef struct
@@ -444,6 +511,33 @@ typedef struct
   gboolean      invert;                 /* Invert mask on blending */
 } MaskFlags;
 
+/* PSD Slices */
+typedef struct
+{
+  gint32        id;                     /* ID */
+  gint32        groupid;                /* Group ID */
+  gint32        origin;                 /* Origin */
+  gint32        associatedid;           /* Associated Layer ID */
+  gchar         *name;                  /* Name */
+  gint32        type;                   /* Type */
+  gint32        left;                   /* Position coordinates */
+  gint32        top;
+  gint32        right;
+  gint32        bottom;
+  gchar         *url;                   /* URL */
+  gchar         *target;                /* Target */
+  gchar         *message;               /* Message */
+  gchar         *alttag;                /* Alt Tag */
+  gchar         html;                   /* Boolean for if cell text is HTML */
+  gchar         *celltext;              /* Cell text */
+  gint32        horizontal;             /* Horizontal alignment */
+  gint32        vertical;               /* Vertical alignment */
+  gchar         alpha;                  /* Alpha */
+  gchar         red;                    /* Red */
+  gchar         green;                  /* Green */
+  gchar         blue;                   /* Blue */
+} PSDSlice;
+
 /* PSD Layer mask data (length 20) */
 typedef struct
 {
@@ -467,6 +561,18 @@ typedef struct
   gint32                right;                  /* Layer right */
 } LayerMaskExtra;
 
+/* PSD text reading */
+typedef struct
+{
+  gdouble               xx; /* Transform information */
+  gdouble               xy;
+  gdouble               yx;
+  gdouble               yy;
+  gdouble               tx;
+  gdouble               ty;
+  gchar                 *info; /* Text information */
+} PSDText;
+
 /* PSD Layer data structure */
 typedef struct
 {
@@ -489,6 +595,7 @@ typedef struct
   LayerMask             layer_mask;             /* Layer mask data */
   LayerMaskExtra        layer_mask_extra;       /* Layer mask extra data */
   LayerFlags            layer_flags;            /* Layer flags */
+  PSDText               text;                   /* PSD text */
   guint32               id;                     /* Layer ID (Tattoo) */
   guchar                group_type;             /* 0 -> not a group; 1 -> open folder; 2 -> closed folder; 3 -> end of group */
 } PSDlayer;
@@ -508,6 +615,7 @@ typedef struct
 {
   GimpRGB       gimp_color;             /* Gimp RGB color */
   gint16        opacity;                /* Opacity */
+  guchar        ps_mode;                /* PS mode flag */
   guchar        ps_kind;                /* PS type flag */
   gint16        ps_cspace;              /* PS color space */
   CMColor       ps_color;               /* PS color */
@@ -539,7 +647,7 @@ typedef struct
   gboolean              transparency;           /* Image has merged transparency alpha channel */
   guint32               rows;                   /* Number of rows: 1 - 30000 */
   guint32               columns;                /* Number of columns: 1 - 30000 */
-  guint16               bps;                    /* Bits per channel: 1, 8 or 16 */
+  guint16               bps;                    /* Bits per sample: 1, 8, 16, or 32 */
   guint16               color_mode;             /* Image color mode: {PSDColorMode} */
   GimpImageBaseType     base_type;              /* Image base color mode: (GIMP) */
   guint16               comp_mode;              /* Merged image compression mode */
