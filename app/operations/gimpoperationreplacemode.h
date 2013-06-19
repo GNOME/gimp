@@ -40,9 +40,6 @@ typedef struct _GimpOperationReplaceModeClass GimpOperationReplaceModeClass;
 struct _GimpOperationReplaceMode
 {
   GimpOperationPointLayerMode parent_instance;
-
-  gdouble  opacity;
-  gboolean premultiplied;
 };
 
 struct _GimpOperationReplaceModeClass
