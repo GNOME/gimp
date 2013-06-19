@@ -54,7 +54,7 @@ gboolean gimp_operation_lighten_only_mode_process_pixels (gfloat              *i
                                                           gfloat              *layer,
                                                           gfloat              *mask,
                                                           gfloat              *out,
-                                                          gdouble              opacity,
+                                                          gfloat               opacity,
                                                           glong                samples,
                                                           const GeglRectangle *roi,
                                                           gint                 level);

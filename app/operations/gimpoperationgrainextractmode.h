@@ -54,7 +54,7 @@ gboolean gimp_operation_grain_extract_mode_process_pixels (gfloat              *
                                                            gfloat              *layer,
                                                            gfloat              *mask,
                                                            gfloat              *out,
-                                                           gdouble              opacity,
+                                                           gfloat               opacity,
                                                            glong                samples,
                                                            const GeglRectangle *roi,
                                                            gint                 level);

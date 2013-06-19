@@ -55,7 +55,7 @@ gboolean gimp_operation_anti_erase_mode_process_pixels (gfloat              *in,
                                                         gfloat              *layer,
                                                         gfloat              *mask,
                                                         gfloat              *out,
-                                                        gdouble              opacity,
+                                                        gfloat               opacity,
                                                         glong                samples,
                                                         const GeglRectangle *roi,
                                                         gint                 level);

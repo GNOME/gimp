@@ -55,7 +55,7 @@ typedef gboolean (*GimpLayerModeFunction)(gfloat              *in,
                                           gfloat              *aux,
                                           gfloat              *mask,
                                           gfloat              *out,
-                                          gdouble              opacity,
+                                          gfloat               opacity,
                                           glong                samples,
                                           const GeglRectangle *roi,
                                           gint                 level);
