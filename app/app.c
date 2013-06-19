@@ -176,9 +176,12 @@ app_run (const gchar         *full_prog_name,
                    no_fonts,
                    no_interface,
                    use_shm,
+                   use_cpu_accel,
                    console_messages,
                    stack_trace_mode,
                    pdb_compat_mode);
+
+  gimp_cpu_accel_set_use (use_cpu_accel);
 
   errors_init (gimp, full_prog_name, use_debug_handler, stack_trace_mode);
 

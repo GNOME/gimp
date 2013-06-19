@@ -198,6 +198,7 @@ gimp_init (Gimp *gimp)
   gimp->no_interface     = FALSE;
   gimp->show_gui         = TRUE;
   gimp->use_shm          = FALSE;
+  gimp->use_cpu_accel    = TRUE;
   gimp->message_handler  = GIMP_CONSOLE;
   gimp->stack_trace_mode = GIMP_STACK_TRACE_NEVER;
   gimp->pdb_compat_mode  = GIMP_PDB_COMPAT_OFF;
@@ -759,6 +760,7 @@ gimp_new (const gchar       *name,
           gboolean           no_fonts,
           gboolean           no_interface,
           gboolean           use_shm,
+          gboolean           use_cpu_accel,
           gboolean           console_messages,
           GimpStackTraceMode stack_trace_mode,
           GimpPDBCompatMode  pdb_compat_mode)
@@ -778,6 +780,7 @@ gimp_new (const gchar       *name,
   gimp->no_fonts         = no_fonts         ? TRUE : FALSE;
   gimp->no_interface     = no_interface     ? TRUE : FALSE;
   gimp->use_shm          = use_shm          ? TRUE : FALSE;
+  gimp->use_cpu_accel    = use_cpu_accel    ? TRUE : FALSE;
   gimp->console_messages = console_messages ? TRUE : FALSE;
   gimp->stack_trace_mode = stack_trace_mode;
   gimp->pdb_compat_mode  = pdb_compat_mode;

@@ -189,10 +189,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       config.check_type       = display_config->transparency_type;
       config.show_help_button = (gui_config->use_help &&
                                  gui_config->show_help_button);
-#ifdef __GNUC__
-#warning FIXME what to do with config.use_cpu_accel
-#endif
-      config.use_cpu_accel    = FALSE;
+      config.use_cpu_accel    = manager->gimp->use_cpu_accel;
       config.gimp_reserved_5  = 0;
       config.gimp_reserved_6  = 0;
       config.gimp_reserved_7  = 0;

@@ -66,7 +66,7 @@ gimp_init_for_testing (void)
   gegl_init (NULL, NULL);
 
   gimp = gimp_new ("Unit Tested GIMP", NULL, NULL, FALSE, TRUE, TRUE, TRUE,
-                   FALSE, TRUE, TRUE, FALSE);
+                   FALSE, FALSE, TRUE, TRUE, FALSE);
 
   units_init (gimp);
 
@@ -99,7 +99,7 @@ gimp_init_for_gui_testing_internal (gboolean     show_gui,
 
   /* from app_run() */
   gimp = gimp_new ("Unit Tested GIMP", NULL, NULL, FALSE, TRUE, TRUE, !show_gui,
-                   FALSE, TRUE, TRUE, FALSE);
+                   FALSE, FALSE, TRUE, TRUE, FALSE);
   gimp_set_show_gui (gimp, show_gui);
   units_init (gimp);
   gimp_load_config (gimp, gimprc, NULL);
