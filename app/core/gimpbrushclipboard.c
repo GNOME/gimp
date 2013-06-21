@@ -196,8 +196,8 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
       const Babl *format = gegl_buffer_get_format (buffer);
       GeglBuffer *dest_buffer;
 
-      width  = MIN (gimp_buffer_get_width  (gimp->global_buffer), 2048);
-      height = MIN (gimp_buffer_get_height (gimp->global_buffer), 2048);
+      width  = MIN (gimp_buffer_get_width  (gimp->global_buffer), 1024);
+      height = MIN (gimp_buffer_get_height (gimp->global_buffer), 1024);
 
       brush->mask   = gimp_temp_buf_new (width, height,
                                          babl_format ("Y u8"));

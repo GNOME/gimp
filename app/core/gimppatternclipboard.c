@@ -188,8 +188,8 @@ gimp_pattern_clipboard_buffer_changed (Gimp        *gimp,
       gint        width;
       gint        height;
 
-      width  = MIN (gimp_buffer_get_width  (buffer), 2048);
-      height = MIN (gimp_buffer_get_height (buffer), 2048);
+      width  = MIN (gimp_buffer_get_width  (buffer), 1024);
+      height = MIN (gimp_buffer_get_height (buffer), 1024);
 
       pattern->mask = gimp_temp_buf_new (width, height,
                                          gimp_buffer_get_format (buffer));
