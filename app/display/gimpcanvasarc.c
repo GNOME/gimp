@@ -257,8 +257,8 @@ gimp_canvas_arc_transform (GimpCanvasItem   *item,
 
   if (! private->filled)
     {
-      *radius_x -= 0.5;
-      *radius_y -= 0.5;
+      *radius_x = MAX (*radius_x - 0.5, 0.0);
+      *radius_y = MAX (*radius_y - 0.5, 0.0);
     }
 }
 
