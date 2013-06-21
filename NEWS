@@ -7,6 +7,53 @@ This is the stable branch of GIMP. No new features are being added
 here, just bug-fixes.
 
 
+Overview of Changes from GIMP 2.8.4 to GIMP 2.8.6
+=================================================
+
+
+Core:
+
+ - Fix saving to URIs, it was broken to only allow exporting, and fix
+   save/export of compressed files
+ - Fix brush spacing for drawing in any direction
+ - Increase the maximum size of clipboard brushes and patterns to 1024x1024
+ - Make sure data objects are saved when only their name was changed
+
+
+GUI:
+
+ - Don't allow single-window docks to shrink smaller than their requisition
+ - Make sure a single-window's right docks keep their size across sessions
+ - Allow to change the spacing of non-generated brushes again
+ - In single-window mode, make Escape move the focus to the canvas,
+   and beep if the focus is already there
+ - Be smarter about unavailable fonts, and don't crash
+ - Make clicking the single-window's close button quit GIMP
+ - Make view-close (Ctrl+W) only close image windows and tabs, not docks
+
+
+Plug-ins:
+
+ - Make GIMP_PLUGIN_DEBUG work again after GLib changed logging
+ - Fix zealous crop for transparent borders
+
+
+Installer:
+
+ - Add Hungarian translation
+
+
+Data:
+
+ - Add a default "Color from Gradient" dynamics and tool preset
+
+
+General:
+
+ - Lots of bug fixes
+ - Lots of translation updates
+
+
 Overview of Changes from GIMP 2.8.2 to GIMP 2.8.4
 =================================================
 
