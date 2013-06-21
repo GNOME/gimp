@@ -17,7 +17,7 @@ Core:
    save/export of compressed files
  - Fix brush spacing for drawing in any direction
  - Increase the maximum size of clipboard brushes and patterns to 1024x1024
- - Make sure data objects are saved when only their name were changed
+ - Make sure data objects are saved when only their name was changed
 
 
 GUI:
