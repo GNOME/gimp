@@ -195,8 +195,8 @@ gimp_pattern_clipboard_buffer_changed (Gimp        *gimp,
       PixelRegion  bufferPR;
       PixelRegion  maskPR;
 
-      width  = MIN (gimp_buffer_get_width  (gimp->global_buffer), 2048);
-      height = MIN (gimp_buffer_get_height (gimp->global_buffer), 2048);
+      width  = MIN (gimp_buffer_get_width  (gimp->global_buffer), 1024);
+      height = MIN (gimp_buffer_get_height (gimp->global_buffer), 1024);
       bytes  = gimp_buffer_get_bytes (gimp->global_buffer);
 
       pattern->mask = temp_buf_new (width, height, bytes, 0, 0, NULL);
