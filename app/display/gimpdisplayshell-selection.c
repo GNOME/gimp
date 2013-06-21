@@ -115,10 +115,12 @@ gimp_display_shell_selection_init (GimpDisplayShell *shell)
 void
 gimp_display_shell_selection_free (GimpDisplayShell *shell)
 {
+  Selection *selection;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (shell->selection != NULL);
 
-  Selection *selection = shell->selection;
+  selection = shell->selection;
 
   selection_stop (selection);
 
