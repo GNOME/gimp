@@ -17,7 +17,7 @@ Core:
    save/export of compressed files
  - Fix brush spacing for drawing in any direction
  - Increase the maximum size of clipboard brushes and patterns to 1024x1024
- - Make sure data objects are saved when only their name was changed
+ - Make sure data objects are saved when only their name were changed
 
 
 GUI:
@@ -30,6 +30,11 @@ GUI:
  - Be smarter about unavailable fonts, and don't crash
  - Make clicking the single-window's close button quit GIMP
  - Make view-close (Ctrl+W) only close image windows and tabs, not docks
+
+
+Libgimp:
+
+ - Add SIGNED_ROUND() which also rounds negative values correctly
 
 
 Plug-ins:
