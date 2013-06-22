@@ -49,8 +49,8 @@ struct _GimpForegroundSelectTool
 
   GimpCoords          last_coords;
   GArray             *stroke;
-  GimpChannel        *trimap;
-  GimpChannel        *mask;
+  GeglBuffer         *trimap;
+  GeglBuffer         *mask;
   MattingState        state;
 };
 

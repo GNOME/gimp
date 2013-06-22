@@ -1823,13 +1823,11 @@ gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
  **/
 void
 gimp_display_shell_set_mask (GimpDisplayShell *shell,
-                             GimpDrawable     *mask,
+                             GeglBuffer       *mask,
                              const GimpRGB    *color)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (mask == NULL ||
-                    (GIMP_IS_DRAWABLE (mask) &&
-                     babl_format_get_bytes_per_pixel (gimp_drawable_get_format (mask)) == 1));
+  g_return_if_fail (mask == NULL || GEGL_IS_BUFFER (mask));
   g_return_if_fail (mask == NULL || color != NULL);
 
   if (mask)

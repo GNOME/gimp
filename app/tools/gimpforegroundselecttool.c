@@ -32,9 +32,9 @@
 
 #include "tools-types.h"
 
+#include "gegl/gimp-gegl-mask.h"
+
 #include "core/gimp.h"
-#include "core/gimpchannel-combine.h"
-#include "core/gimpchannel-select.h"
 #include "core/gimpdrawable-foreground-extract.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
@@ -223,13 +223,13 @@ gimp_foreground_select_tool_finalize (GObject *object)
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (object);
 
   if (fg_select->stroke)
-      g_warning ("%s: stroke should be NULL at this point", G_STRLOC);
+    g_warning ("%s: stroke should be NULL at this point", G_STRLOC);
 
   if (fg_select->mask)
-      g_warning ("%s: mask should be NULL at this point", G_STRLOC);
+    g_warning ("%s: mask should be NULL at this point", G_STRLOC);
 
   if (fg_select->trimap)
-      g_warning ("%s: mask should be NULL at this point", G_STRLOC);
+    g_warning ("%s: mask should be NULL at this point", G_STRLOC);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -510,16 +510,16 @@ gimp_foreground_select_tool_motion (GimpTool         *tool,
 }
 
 static void
-gimp_foreground_select_tool_get_area (GimpChannel *mask,
-                                      gint        *x1,
-                                      gint        *y1,
-                                      gint        *x2,
-                                      gint        *y2)
+gimp_foreground_select_tool_get_area (GeglBuffer *mask,
+                                      gint       *x1,
+                                      gint       *y1,
+                                      gint       *x2,
+                                      gint       *y2)
 {
   gint width;
   gint height;
 
-  gimp_channel_bounds (mask, x1, y1, x2, y2);
+  gimp_gegl_mask_bounds (mask, x1, y1, x2, y2);
 
   width  = *x2 - *x1;
   height = *y2 - *y1;
@@ -618,13 +618,12 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
                                       points,
                                       TRUE);
 
-      fg_select->trimap  = gimp_channel_new (image,
-                                             gimp_image_get_width  (image),
-                                             gimp_image_get_height (image),
-                                             "foreground-extraction",NULL);
+      fg_select->trimap = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                           gimp_image_get_width  (image),
+                                                           gimp_image_get_height (image)),
+                                           gimp_image_get_mask_format (image));
 
-      gimp_scan_convert_render_value (scan_convert,
-                                      gimp_drawable_get_buffer (GIMP_DRAWABLE (fg_select->trimap)),
+      gimp_scan_convert_render_value (scan_convert, fg_select->trimap,
                                       0, 0, 1.0);
       gimp_scan_convert_free (scan_convert);
 
@@ -646,7 +645,7 @@ gimp_foreground_select_tool_set_trimap (GimpForegroundSelectTool *fg_select,
 
   gimp_foreground_select_options_get_mask_color (options, &color);
   gimp_display_shell_set_mask (gimp_display_get_shell (display),
-                               GIMP_DRAWABLE (fg_select->trimap), &color);
+                               fg_select->trimap, &color);
 
   gimp_tool_control_set_tool_cursor        (tool->control,
                                             GIMP_TOOL_CURSOR_PAINTBRUSH);
@@ -674,7 +673,7 @@ gimp_foreground_select_tool_set_preview (GimpForegroundSelectTool *fg_select,
   gimp_foreground_select_options_get_mask_color (options, &color);
   gimp_rgb_set_alpha (&color, 1.0);
   gimp_display_shell_set_mask (gimp_display_get_shell (display),
-                               GIMP_DRAWABLE (fg_select->mask), &color);
+                               fg_select->mask, &color);
 
   gimp_tool_control_set_tool_cursor        (tool->control,
                                             GIMP_TOOL_CURSOR_PAINTBRUSH);
@@ -749,7 +748,7 @@ gimp_foreground_select_tool_preview (GimpForegroundSelectTool *fg_select,
                                   _("Computing alpha of unknown pixels"),
                                   FALSE);
 
-  trimap_buffer   = gimp_drawable_get_buffer (GIMP_DRAWABLE (fg_select->trimap));
+  trimap_buffer   = fg_select->trimap;
   drawable_buffer = gimp_drawable_get_buffer (drawable);
 
   gegl = gegl_node_new ();
@@ -804,15 +803,11 @@ gimp_foreground_select_tool_preview (GimpForegroundSelectTool *fg_select,
 
   g_object_unref (processor);
 
-  fg_select->mask = gimp_channel_new_from_buffer (buffer, image,
-                                                  "preview-mask", NULL);
+  fg_select->mask = buffer;
 
   gimp_foreground_select_tool_set_preview (fg_select, display);
 
   g_object_unref (gegl);
-
-  if (buffer)
-    g_object_unref (buffer);
 }
 
 static void
@@ -822,15 +817,12 @@ gimp_foreground_select_tool_apply (GimpForegroundSelectTool *fg_select,
   GimpTool      *tool    = GIMP_TOOL (fg_select);
   GimpImage     *image   = gimp_display_get_image (display);
   GimpLayer     *layer   = gimp_image_get_active_layer (image);
-  GeglBuffer    *buffer;
   GimpLayerMask *layer_mask;
   GimpRGB        color   = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
 
   g_return_if_fail (fg_select->mask != NULL);
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (fg_select->mask));
-
-  layer_mask = gimp_layer_mask_new_from_buffer (buffer, image,
+  layer_mask = gimp_layer_mask_new_from_buffer (fg_select->mask, image,
                                                 "mask", &color);
 
   gimp_layer_add_mask (layer, layer_mask, TRUE, NULL);
@@ -878,8 +870,7 @@ gimp_foreground_select_tool_stroke_paint (GimpForegroundSelectTool    *fg_select
                             GIMP_JOIN_ROUND, GIMP_CAP_ROUND, 10.0,
                             0.0, NULL);
 
-  gimp_scan_convert_compose_value (scan_convert,
-                                   gimp_drawable_get_buffer (GIMP_DRAWABLE (fg_select->trimap)),
+  gimp_scan_convert_compose_value (scan_convert, fg_select->trimap,
                                    0, 0,
                                    gimp_foreground_select_options_get_opacity (options));
 

@@ -186,7 +186,7 @@ struct _GimpDisplayShell
   gdouble            rotate_drag_angle;
   gpointer           scroll_info;
 
-  GimpDrawable      *mask;
+  GeglBuffer        *mask;
   GimpRGB            mask_color;
 
   GimpMotionBuffer  *motion_buffer;
@@ -272,7 +272,7 @@ void              gimp_display_shell_resume        (GimpDisplayShell   *shell);
 void              gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
                                                     const GdkRectangle *highlight);
 void              gimp_display_shell_set_mask      (GimpDisplayShell   *shell,
-                                                    GimpDrawable       *mask,
+                                                    GeglBuffer         *mask,
                                                     const GimpRGB      *color);
 
 

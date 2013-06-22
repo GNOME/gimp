@@ -146,13 +146,11 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
       cairo_surface_mark_dirty (shell->mask_surface);
 
-      buffer = gimp_drawable_get_buffer (shell->mask);
-
       stride = cairo_image_surface_get_stride (shell->mask_surface);
       data = cairo_image_surface_get_data (shell->mask_surface);
       data += mask_src_y * stride + mask_src_x * 4;
 
-      gegl_buffer_get (buffer,
+      gegl_buffer_get (shell->mask,
                        GEGL_RECTANGLE ((x + viewport_offset_x) * window_scale,
                                        (y + viewport_offset_y) * window_scale,
                                        w * window_scale,
