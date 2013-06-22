@@ -1349,15 +1349,15 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   GimpImage            *image          = gimp_display_get_image (display);
   GimpItem             *active_item    = NULL;
   GeglBuffer           *orig_buffer    = NULL;
-  gint                  orig_offset_x;
-  gint                  orig_offset_y;
+  gint                  orig_offset_x  = 0;
+  gint                  orig_offset_y  = 0;
   GeglBuffer           *new_buffer;
   gint                  new_offset_x;
   gint                  new_offset_y;
   const gchar          *null_message   = NULL;
   const gchar          *locked_message = NULL;
   gchar                *undo_desc      = NULL;
-  gboolean              new_layer;
+  gboolean              new_layer      = FALSE;
 
   switch (options->type)
     {
@@ -1439,8 +1439,6 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
       orig_buffer = g_object_ref (gimp_drawable_get_buffer (GIMP_DRAWABLE (active_item)));
-      orig_offset_x = 0;
-      orig_offset_y = 0;
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
