@@ -546,7 +546,7 @@ gimp_layer_set_offsets (gint32 layer_ID,
  * @layer_ID: The layer to which to add the mask.
  * @mask_type: The type of mask.
  *
- * Create a layer mask for the specified specified layer.
+ * Create a layer mask for the specified layer.
  *
  * This procedure creates a layer mask for the specified layer. Layer
  * masks serve as an additional alpha channel for a layer. A number of

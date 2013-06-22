@@ -282,7 +282,7 @@ CODE
 }
 
 sub layer_create_mask {
-    $blurb = 'Create a layer mask for the specified specified layer.';
+    $blurb = 'Create a layer mask for the specified layer.';
 
     $help = <<'HELP';
 This procedure creates a layer mask for the specified layer. Layer masks serve
