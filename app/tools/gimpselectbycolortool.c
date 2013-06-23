@@ -1,0 +1,151 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * gimpselectbycolortool.c
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include "config.h"
+
+#include <string.h>
+
+#include <gegl.h>
+#include <gtk/gtk.h>
+
+#include "libgimpcolor/gimpcolor.h"
+#include "libgimpwidgets/gimpwidgets.h"
+
+#include "tools-types.h"
+
+#include "core/gimpimage.h"
+#include "core/gimpimage-contiguous-region.h"
+#include "core/gimpitem.h"
+#include "core/gimppickable.h"
+
+#include "widgets/gimphelp-ids.h"
+
+#include "display/gimpdisplay.h"
+
+#include "gimpselectbycolortool.h"
+#include "gimpregionselectoptions.h"
+#include "gimptoolcontrol.h"
+
+#include "gimp-intl.h"
+
+
+static GeglBuffer * gimp_select_by_color_tool_get_mask (GimpRegionSelectTool *region_select,
+                                                        GimpDisplay          *display);
+
+
+G_DEFINE_TYPE (GimpSelectByColorTool, gimp_select_by_color_tool,
+               GIMP_TYPE_REGION_SELECT_TOOL)
+
+#define parent_class gimp_select_by_color_tool_parent_class
+
+
+void
+gimp_select_by_color_tool_register (GimpToolRegisterCallback  callback,
+                                    gpointer                  data)
+{
+  (* callback) (GIMP_TYPE_SELECT_BY_COLOR_TOOL,
+                GIMP_TYPE_REGION_SELECT_OPTIONS,
+                gimp_region_select_options_gui,
+                0,
+                "gimp-select_by_color-tool",
+                _("Select by Color"),
+                _("Select by Color Tool: Select regions with similar colors; Both Over Continous and Closed Place"),
+                N_("_Select By Color"), "<shift>X",
+                NULL, GIMP_HELP_TOOL_SELECT_BY_COLOR,
+                GIMP_STOCK_TOOL_SELECT_BY_COLOR,
+                data);
+}
+
+static void
+gimp_select_by_color_tool_class_init (GimpSelectByColorToolClass *klass)
+{
+  GimpRegionSelectToolClass *region_class;
+
+  region_class = GIMP_REGION_SELECT_TOOL_CLASS (klass);
+
+  region_class->undo_desc = C_("command", "Select by Color");
+  region_class->get_mask  = gimp_select_by_color_tool_get_mask;
+}
+
+static void
+gimp_select_by_color_tool_init (GimpSelectByColorTool *select_by_color)
+{
+  GimpTool *tool = GIMP_TOOL (select_by_color);
+
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_HAND);
+}
+
+static GeglBuffer *
+gimp_select_by_color_tool_get_mask (GimpRegionSelectTool *region_select,
+                                    GimpDisplay          *display)
+{
+  GimpTool                *tool        = GIMP_TOOL (region_select);
+  GimpSelectionOptions    *sel_options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+  GimpRegionSelectOptions *options     = GIMP_REGION_SELECT_TOOL_GET_OPTIONS (tool);
+  GimpImage               *image       = gimp_display_get_image (display);
+  GimpDrawable            *drawable    = gimp_image_get_active_drawable (image);
+  GimpPickable            *pickable;
+  GimpRGB                  color;
+  gint                     x, y;
+
+  x = region_select->x;
+  y = region_select->y;
+
+  if (! options->sample_merged)
+    {
+      gint off_x, off_y;
+
+      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+
+      x -= off_x;
+      y -= off_y;
+
+      pickable = GIMP_PICKABLE (drawable);
+    }
+  else
+    {
+      pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
+    }
+
+  gimp_pickable_flush (pickable);
+  
+  if(! options->continuous)
+    {
+	    return gimp_image_contiguous_region_by_seed (image, drawable,
+                                               options->sample_merged,
+                                               sel_options->antialias,
+                                               options->threshold / 255.0,
+                                               options->select_transparent,
+                                               options->select_criterion,
+                                               x, y);
+    }
+  else
+    {
+	    if (gimp_pickable_get_color_at (pickable, x, y, &color))
+            return gimp_image_contiguous_region_by_color (image, drawable,
+                                                    options->sample_merged,
+                                                    sel_options->antialias,
+                                                    options->threshold / 255.0,
+                                                    options->select_transparent,
+                                                    options->select_criterion,
+                                                    &color);
+
+        return NULL;
+    }
+}	
