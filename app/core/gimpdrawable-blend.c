@@ -1007,7 +1007,7 @@ gradient_fill_region (GimpImage           *image,
               for (y = roi->y; y < endy; y++)
                 for (x = roi->x; x < endx; x++)
                   {
-                    GimpRGB  color;
+                    GimpRGB  color = { 0.0, 0.0, 0.0, 1.0 };
                     gint     i = g_rand_int (dither_rand);
 
                     gradient_render_pixel (x, y, &color, &rbd);
@@ -1025,7 +1025,7 @@ gradient_fill_region (GimpImage           *image,
               for (y = roi->y; y < endy; y++)
                 for (x = roi->x; x < endx; x++)
                   {
-                    GimpRGB  color;
+                    GimpRGB  color = { 0.0, 0.0, 0.0, 1.0 };
 
                     gradient_render_pixel (x, y, &color, &rbd);
 
