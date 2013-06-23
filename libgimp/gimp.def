@@ -69,6 +69,7 @@ EXPORTS
 	gimp_clone_default
 	gimp_color_balance
 	gimp_colorize
+	gimp_component_type_get_type
 	gimp_context_get_antialias
 	gimp_context_get_background
 	gimp_context_get_brush
