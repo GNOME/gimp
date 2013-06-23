@@ -334,22 +334,26 @@ file_open_thumbnail (Gimp           *gimp,
                   switch (value)
                     {
                     case GIMP_RGB_IMAGE:
-                      *format = gimp_babl_format (GIMP_RGB, GIMP_PRECISION_U8,
+                      *format = gimp_babl_format (GIMP_RGB,
+                                                  GIMP_PRECISION_U8_GAMMA,
                                                   FALSE);
                       break;
 
                     case GIMP_RGBA_IMAGE:
-                      *format = gimp_babl_format (GIMP_RGB, GIMP_PRECISION_U8,
+                      *format = gimp_babl_format (GIMP_RGB,
+                                                  GIMP_PRECISION_U8_GAMMA,
                                                   TRUE);
                       break;
 
                     case GIMP_GRAY_IMAGE:
-                      *format = gimp_babl_format (GIMP_GRAY, GIMP_PRECISION_U8,
+                      *format = gimp_babl_format (GIMP_GRAY,
+                                                  GIMP_PRECISION_U8_GAMMA,
                                                   FALSE);
                       break;
 
                     case GIMP_GRAYA_IMAGE:
-                      *format = gimp_babl_format (GIMP_GRAY, GIMP_PRECISION_U8,
+                      *format = gimp_babl_format (GIMP_GRAY,
+                                                  GIMP_PRECISION_U8_GAMMA,
                                                   TRUE);
                       break;
 

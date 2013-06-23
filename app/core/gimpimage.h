@@ -111,6 +111,7 @@ GimpImage     * gimp_image_new                   (Gimp               *gimp,
                                                   GimpPrecision       precision);
 
 GimpImageBaseType  gimp_image_get_base_type      (const GimpImage    *image);
+GimpComponentType  gimp_image_get_component_type (const GimpImage    *image);
 GimpPrecision      gimp_image_get_precision      (const GimpImage    *image);
 
 const Babl    * gimp_image_get_format            (const GimpImage    *image,

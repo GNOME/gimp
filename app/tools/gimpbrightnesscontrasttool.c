@@ -142,7 +142,7 @@ gimp_brightness_contrast_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  if (gimp_drawable_get_precision (drawable) == GIMP_PRECISION_U8)
+  if (gimp_drawable_get_component_type (drawable) == GIMP_COMPONENT_TYPE_U8)
     {
       gimp_prop_widget_set_factor (bc_tool->brightness_scale, 127.0, 0);
       gimp_prop_widget_set_factor (bc_tool->contrast_scale,   127.0, 0);

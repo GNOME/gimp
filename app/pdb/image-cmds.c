@@ -160,7 +160,7 @@ image_new_invoker (GimpProcedure         *procedure,
   if (success)
     {
       image = gimp_create_image (gimp, width, height, type,
-                                 GIMP_PRECISION_U8, FALSE);
+                                 GIMP_PRECISION_U8_GAMMA, FALSE);
 
       if (! image)
         success = FALSE;
@@ -201,7 +201,7 @@ image_new_with_precision_invoker (GimpProcedure         *procedure,
       if (gimp->plug_in_manager->current_plug_in)
         gimp_plug_in_enable_precision (gimp->plug_in_manager->current_plug_in);
 
-      if (type != GIMP_INDEXED || precision == GIMP_PRECISION_U8)
+      if (type != GIMP_INDEXED || precision == GIMP_PRECISION_U8_GAMMA)
         {
           image = gimp_create_image (gimp, width, height, type,
                                      precision, FALSE);
@@ -2986,7 +2986,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-new-with-precision",
                                      "Creates a new image with the specified width, height, type and precision.",
-                                     "Creates a new image, undisplayed with the specified extents, type and precision. Indexed images can only be created at GIMP_PRECISION_U8 precision. See 'gimp-image-new' for further details.",
+                                     "Creates a new image, undisplayed with the specified extents, type and precision. Indexed images can only be created at GIMP_PRECISION_U8_GAMMA precision. See 'gimp-image-new' for further details.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2012",
@@ -3015,7 +3015,7 @@ register_image_procs (GimpPDB *pdb)
                                                   "precision",
                                                   "The precision",
                                                   GIMP_TYPE_PRECISION,
-                                                  GIMP_PRECISION_U8,
+                                                  GIMP_PRECISION_U8_LINEAR,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_image_id ("image",
@@ -3133,7 +3133,7 @@ register_image_procs (GimpPDB *pdb)
                                                       "precision",
                                                       "The image's precision",
                                                       GIMP_TYPE_PRECISION,
-                                                      GIMP_PRECISION_U8,
+                                                      GIMP_PRECISION_U8_LINEAR,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

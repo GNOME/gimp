@@ -52,21 +52,23 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
   src_format = gegl_buffer_get_format (src_buffer);
 
   if (babl_format_is_palette (src_format))
-    src_format = gimp_babl_format (GIMP_RGB, GIMP_PRECISION_FLOAT,
+    src_format = gimp_babl_format (GIMP_RGB,
+                                   GIMP_PRECISION_FLOAT_LINEAR,
                                    babl_format_has_alpha (src_format));
   else
     src_format = gimp_babl_format (gimp_babl_format_get_base_type (src_format),
-                                   GIMP_PRECISION_FLOAT,
+                                   GIMP_PRECISION_FLOAT_LINEAR,
                                    babl_format_has_alpha (src_format));
 
   dest_format = gegl_buffer_get_format (dest_buffer);
 
   if (babl_format_is_palette (dest_format))
-    dest_format = gimp_babl_format (GIMP_RGB, GIMP_PRECISION_FLOAT,
+    dest_format = gimp_babl_format (GIMP_RGB,
+                                    GIMP_PRECISION_FLOAT_LINEAR,
                                     babl_format_has_alpha (dest_format));
   else
     dest_format = gimp_babl_format (gimp_babl_format_get_base_type (dest_format),
-                                    GIMP_PRECISION_FLOAT,
+                                    GIMP_PRECISION_FLOAT_LINEAR,
                                     babl_format_has_alpha (dest_format));
 
   src_components  = babl_format_get_n_components (src_format);

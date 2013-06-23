@@ -215,8 +215,8 @@ xcf_save_choose_format (XcfInfo   *info,
         save_version = MAX (3, save_version);
     }
 
-  if (gimp_image_get_precision (image) != GIMP_PRECISION_U8)
-    save_version = MAX (4, save_version);
+  if (gimp_image_get_precision (image) != GIMP_PRECISION_U8_GAMMA)
+    save_version = MAX (5, save_version);
 
   info->file_version = save_version;
 }

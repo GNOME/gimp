@@ -570,31 +570,31 @@ load_fits (const gchar *filename,
   switch (hdulist->bitpix)
     {
     case 8:
-      iprecision = GIMP_PRECISION_U8;
+      iprecision = GIMP_PRECISION_U8_GAMMA;
       type = babl_type ("u8");
       datamax = 255.0;
       replacetransform = 1.0;
       break;
     case 16:
-      iprecision = GIMP_PRECISION_U16;
+      iprecision = GIMP_PRECISION_U16_GAMMA; /* FIXME precision */
       type = babl_type ("u16");
       datamax = 65535.0;
       replacetransform = 257;
       break;
     case 32:
-      iprecision = GIMP_PRECISION_U32;
+      iprecision = GIMP_PRECISION_U32_LINEAR;
       type = babl_type ("u32");
       datamax = 4294967295.0;
       replacetransform = 16843009;
       break;
     case -32:
-      iprecision = GIMP_PRECISION_FLOAT;
+      iprecision = GIMP_PRECISION_FLOAT_LINEAR;
       type = babl_type ("float");
       datamax = 1.0;
       replacetransform = 1.0 / 255.0;
       break;
     case -64:
-      iprecision = GIMP_PRECISION_FLOAT;
+      iprecision = GIMP_PRECISION_FLOAT_LINEAR;
       type = babl_type ("double");
       datamax = 1.0;
       replacetransform = 1.0 / 255.0;

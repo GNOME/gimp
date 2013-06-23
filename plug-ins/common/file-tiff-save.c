@@ -720,7 +720,7 @@ save_image (const gchar  *filename,
   gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));
 
-  if (gimp_image_get_precision (image) == GIMP_PRECISION_U8)
+  if (gimp_image_get_precision (image) == GIMP_PRECISION_U8_GAMMA)
     bitspersample = 8;
   else
     bitspersample = 16;

@@ -208,7 +208,7 @@ gimp_levels_tool_initialize (GimpTool     *tool,
   gimp_histogram_view_set_histogram (GIMP_HISTOGRAM_VIEW (l_tool->histogram_view),
                                      l_tool->histogram);
 
-  if (gimp_drawable_get_precision (drawable) == GIMP_PRECISION_U8)
+  if (gimp_drawable_get_component_type (drawable) == GIMP_COMPONENT_TYPE_U8)
     {
       scale_factor = 255.0;
       digits       = 0;

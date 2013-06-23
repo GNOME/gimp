@@ -44,6 +44,41 @@ gimp_component_mask_get_type (void)
 }
 
 GType
+gimp_component_type_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_COMPONENT_TYPE_U8, "GIMP_COMPONENT_TYPE_U8", "u8" },
+    { GIMP_COMPONENT_TYPE_U16, "GIMP_COMPONENT_TYPE_U16", "u16" },
+    { GIMP_COMPONENT_TYPE_U32, "GIMP_COMPONENT_TYPE_U32", "u32" },
+    { GIMP_COMPONENT_TYPE_HALF, "GIMP_COMPONENT_TYPE_HALF", "half" },
+    { GIMP_COMPONENT_TYPE_FLOAT, "GIMP_COMPONENT_TYPE_FLOAT", "float" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_COMPONENT_TYPE_U8, NC_("component-type", "8-bit integer"), NULL },
+    { GIMP_COMPONENT_TYPE_U16, NC_("component-type", "16-bit integer"), NULL },
+    { GIMP_COMPONENT_TYPE_U32, NC_("component-type", "32-bit integer"), NULL },
+    { GIMP_COMPONENT_TYPE_HALF, NC_("component-type", "16-bit floating point"), NULL },
+    { GIMP_COMPONENT_TYPE_FLOAT, NC_("component-type", "32-bit floating point"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpComponentType", values);
+      gimp_type_set_translation_context (type, "component-type");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_container_policy_get_type (void)
 {
   static const GEnumValue values[] =
@@ -753,21 +788,31 @@ gimp_precision_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_PRECISION_U8, "GIMP_PRECISION_U8", "u8" },
-    { GIMP_PRECISION_U16, "GIMP_PRECISION_U16", "u16" },
-    { GIMP_PRECISION_U32, "GIMP_PRECISION_U32", "u32" },
-    { GIMP_PRECISION_HALF, "GIMP_PRECISION_HALF", "half" },
-    { GIMP_PRECISION_FLOAT, "GIMP_PRECISION_FLOAT", "float" },
+    { GIMP_PRECISION_U8_LINEAR, "GIMP_PRECISION_U8_LINEAR", "u8-linear" },
+    { GIMP_PRECISION_U8_GAMMA, "GIMP_PRECISION_U8_GAMMA", "u8-gamma" },
+    { GIMP_PRECISION_U16_LINEAR, "GIMP_PRECISION_U16_LINEAR", "u16-linear" },
+    { GIMP_PRECISION_U16_GAMMA, "GIMP_PRECISION_U16_GAMMA", "u16-gamma" },
+    { GIMP_PRECISION_U32_LINEAR, "GIMP_PRECISION_U32_LINEAR", "u32-linear" },
+    { GIMP_PRECISION_U32_GAMMA, "GIMP_PRECISION_U32_GAMMA", "u32-gamma" },
+    { GIMP_PRECISION_HALF_LINEAR, "GIMP_PRECISION_HALF_LINEAR", "half-linear" },
+    { GIMP_PRECISION_HALF_GAMMA, "GIMP_PRECISION_HALF_GAMMA", "half-gamma" },
+    { GIMP_PRECISION_FLOAT_LINEAR, "GIMP_PRECISION_FLOAT_LINEAR", "float-linear" },
+    { GIMP_PRECISION_FLOAT_GAMMA, "GIMP_PRECISION_FLOAT_GAMMA", "float-gamma" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_PRECISION_U8, NC_("precision", "8-bit integer"), NULL },
-    { GIMP_PRECISION_U16, NC_("precision", "16-bit integer"), NULL },
-    { GIMP_PRECISION_U32, NC_("precision", "32-bit integer"), NULL },
-    { GIMP_PRECISION_HALF, NC_("precision", "16-bit floating point"), NULL },
-    { GIMP_PRECISION_FLOAT, NC_("precision", "32-bit floating point"), NULL },
+    { GIMP_PRECISION_U8_LINEAR, NC_("precision", "8-bit linear integer"), NULL },
+    { GIMP_PRECISION_U8_GAMMA, NC_("precision", "8-bit gamma integer"), NULL },
+    { GIMP_PRECISION_U16_LINEAR, NC_("precision", "16-bit linear integer"), NULL },
+    { GIMP_PRECISION_U16_GAMMA, NC_("precision", "16-bit gamma integer"), NULL },
+    { GIMP_PRECISION_U32_LINEAR, NC_("precision", "32-bit linear integer"), NULL },
+    { GIMP_PRECISION_U32_GAMMA, NC_("precision", "32-bit gamma integer"), NULL },
+    { GIMP_PRECISION_HALF_LINEAR, NC_("precision", "16-bit linear floating point"), NULL },
+    { GIMP_PRECISION_HALF_GAMMA, NC_("precision", "16-bit gamma floating point"), NULL },
+    { GIMP_PRECISION_FLOAT_LINEAR, NC_("precision", "32-bit linear floating point"), NULL },
+    { GIMP_PRECISION_FLOAT_GAMMA, NC_("precision", "32-bit gamma floating point"), NULL },
     { 0, NULL, NULL }
   };
 

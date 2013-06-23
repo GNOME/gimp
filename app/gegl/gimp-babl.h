@@ -22,25 +22,29 @@
 #define __GIMP_BABL_H__
 
 
-void                gimp_babl_init                  (void);
+void                gimp_babl_init                      (void);
 
-const gchar       * gimp_babl_get_description       (const Babl        *babl);
+const gchar       * gimp_babl_get_description           (const Babl *format);
 
-GimpImageBaseType   gimp_babl_format_get_base_type  (const Babl        *format);
-GimpPrecision       gimp_babl_format_get_precision  (const Babl        *format);
-gboolean            gimp_babl_format_get_linear     (const Babl        *format);
+GimpImageBaseType   gimp_babl_format_get_base_type      (const Babl *format);
+GimpComponentType   gimp_babl_format_get_component_type (const Babl *format);
+GimpPrecision       gimp_babl_format_get_precision      (const Babl *format);
+gboolean            gimp_babl_format_get_linear         (const Babl *format);
 
+GimpComponentType   gimp_babl_component_type   (GimpPrecision      precision);
+GimpPrecision       gimp_babl_precision        (GimpComponentType  component,
+                                                gboolean           linear);
 
-const Babl        * gimp_babl_format                (GimpImageBaseType  base_type,
-                                                     GimpPrecision      precision,
-                                                     gboolean           with_alpha);
-const Babl        * gimp_babl_mask_format           (GimpPrecision      precision);
-const Babl        * gimp_babl_component_format      (GimpImageBaseType  base_type,
-                                                     GimpPrecision      precision,
-                                                     gint               index);
+const Babl        * gimp_babl_format           (GimpImageBaseType  base_type,
+                                                GimpPrecision      precision,
+                                                gboolean           with_alpha);
+const Babl        * gimp_babl_mask_format      (GimpPrecision      precision);
+const Babl        * gimp_babl_component_format (GimpImageBaseType  base_type,
+                                                GimpPrecision      precision,
+                                                gint               index);
 
-gchar            ** gimp_babl_print_pixel           (const Babl        *format,
-                                                     gpointer           pixel);
+gchar            ** gimp_babl_print_pixel      (const Babl        *format,
+                                                gpointer           pixel);
 
 
 #endif /* __GIMP_BABL_H__ */

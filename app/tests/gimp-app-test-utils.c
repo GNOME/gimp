@@ -119,7 +119,7 @@ gimp_test_utils_create_image (Gimp *gimp,
   GimpLayer *layer;
 
   image = gimp_image_new (gimp, width, height,
-                          GIMP_RGB, GIMP_PRECISION_U8);
+                          GIMP_RGB, GIMP_PRECISION_U8_GAMMA);
 
   layer = gimp_layer_new (image,
                           width,

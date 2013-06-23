@@ -162,7 +162,7 @@ gimp_template_class_init (GimpTemplateClass *klass)
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PRECISION,
                                  "precision",
                                  NULL,
-                                 GIMP_TYPE_PRECISION, GIMP_PRECISION_U8,
+                                 GIMP_TYPE_PRECISION, GIMP_PRECISION_U8_GAMMA,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FILL_TYPE,
@@ -461,7 +461,7 @@ gimp_template_get_base_type (GimpTemplate *template)
 GimpPrecision
 gimp_template_get_precision (GimpTemplate *template)
 {
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), GIMP_PRECISION_U8);
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), GIMP_PRECISION_U8_GAMMA);
 
   return GET_PRIVATE (template)->precision;
 }

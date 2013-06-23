@@ -591,7 +591,7 @@ gimp_image_class_init (GimpImageClass *klass)
   g_object_class_install_property (object_class, PROP_PRECISION,
                                    g_param_spec_enum ("precision", NULL, NULL,
                                                       GIMP_TYPE_PRECISION,
-                                                      GIMP_PRECISION_U8,
+                                                      GIMP_PRECISION_U8_GAMMA,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
@@ -632,7 +632,7 @@ gimp_image_init (GimpImage *image)
   private->yresolution         = 1.0;
   private->resolution_unit     = GIMP_UNIT_INCH;
   private->base_type           = GIMP_RGB;
-  private->precision           = GIMP_PRECISION_U8;
+  private->precision           = GIMP_PRECISION_U8_GAMMA;
 
   private->colormap            = NULL;
   private->n_colors            = 0;
@@ -1456,7 +1456,7 @@ gimp_image_new (Gimp              *gimp,
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (base_type != GIMP_INDEXED ||
-                        precision == GIMP_PRECISION_U8, NULL);
+                        precision == GIMP_PRECISION_U8_GAMMA, NULL);
 
   return g_object_new (GIMP_TYPE_IMAGE,
                        "gimp",      gimp,
@@ -1473,6 +1473,14 @@ gimp_image_get_base_type (const GimpImage *image)
   g_return_val_if_fail (GIMP_IS_IMAGE (image), -1);
 
   return GIMP_IMAGE_GET_PRIVATE (image)->base_type;
+}
+
+GimpComponentType
+gimp_image_get_component_type (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), -1);
+
+  return gimp_babl_component_type (GIMP_IMAGE_GET_PRIVATE (image)->precision);
 }
 
 GimpPrecision
@@ -1498,7 +1506,7 @@ gimp_image_get_format (const GimpImage   *image,
       return gimp_babl_format (base_type, precision, with_alpha);
 
     case GIMP_INDEXED:
-      if (precision == GIMP_PRECISION_U8)
+      if (precision == GIMP_PRECISION_U8_GAMMA)
         {
           if (with_alpha)
             return gimp_image_colormap_get_rgba_format (image);

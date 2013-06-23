@@ -415,6 +415,18 @@ package Gimp::CodeGen::enums;
 	  symbols => [ qw(GIMP_VECTORS_STROKE_TYPE_BEZIER) ],
 	  mapping => { GIMP_VECTORS_STROKE_TYPE_BEZIER => '0' }
 	},
+    GimpComponentType =>
+	{ contig => 0,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_COMPONENT_TYPE_U8 GIMP_COMPONENT_TYPE_U16
+			  GIMP_COMPONENT_TYPE_U32 GIMP_COMPONENT_TYPE_HALF
+			  GIMP_COMPONENT_TYPE_FLOAT) ],
+	  mapping => { GIMP_COMPONENT_TYPE_U8 => '100',
+		       GIMP_COMPONENT_TYPE_U16 => '200',
+		       GIMP_COMPONENT_TYPE_U32 => '300',
+		       GIMP_COMPONENT_TYPE_HALF => '400',
+		       GIMP_COMPONENT_TYPE_FLOAT => '500' }
+	},
     GimpConvertDitherType =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
@@ -542,16 +554,25 @@ package Gimp::CodeGen::enums;
 		       GIMP_ORIENTATION_UNKNOWN => '2' }
 	},
     GimpPrecision =>
-	{ contig => 1,
+	{ contig => 0,
 	  header => 'core/core-enums.h',
-	  symbols => [ qw(GIMP_PRECISION_U8 GIMP_PRECISION_U16
-			  GIMP_PRECISION_U32 GIMP_PRECISION_HALF
-			  GIMP_PRECISION_FLOAT) ],
-	  mapping => { GIMP_PRECISION_U8 => '0',
-		       GIMP_PRECISION_U16 => '1',
-		       GIMP_PRECISION_U32 => '2',
-		       GIMP_PRECISION_HALF => '3',
-		       GIMP_PRECISION_FLOAT => '4' }
+	  symbols => [ qw(GIMP_PRECISION_U8_LINEAR GIMP_PRECISION_U8_GAMMA
+			  GIMP_PRECISION_U16_LINEAR GIMP_PRECISION_U16_GAMMA
+			  GIMP_PRECISION_U32_LINEAR GIMP_PRECISION_U32_GAMMA
+			  GIMP_PRECISION_HALF_LINEAR
+			  GIMP_PRECISION_HALF_GAMMA
+			  GIMP_PRECISION_FLOAT_LINEAR
+			  GIMP_PRECISION_FLOAT_GAMMA) ],
+	  mapping => { GIMP_PRECISION_U8_LINEAR => '100',
+		       GIMP_PRECISION_U8_GAMMA => '150',
+		       GIMP_PRECISION_U16_LINEAR => '200',
+		       GIMP_PRECISION_U16_GAMMA => '250',
+		       GIMP_PRECISION_U32_LINEAR => '300',
+		       GIMP_PRECISION_U32_GAMMA => '350',
+		       GIMP_PRECISION_HALF_LINEAR => '400',
+		       GIMP_PRECISION_HALF_GAMMA => '450',
+		       GIMP_PRECISION_FLOAT_LINEAR => '500',
+		       GIMP_PRECISION_FLOAT_GAMMA => '550' }
 	},
     GimpRotationType =>
 	{ contig => 1,

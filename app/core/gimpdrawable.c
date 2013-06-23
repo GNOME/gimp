@@ -1626,6 +1626,18 @@ gimp_drawable_get_base_type (const GimpDrawable *drawable)
   return gimp_babl_format_get_base_type (format);
 }
 
+GimpComponentType
+gimp_drawable_get_component_type (const GimpDrawable *drawable)
+{
+  const Babl *format;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
+
+  format = gegl_buffer_get_format (drawable->private->buffer);
+
+  return gimp_babl_format_get_component_type (format);
+}
+
 GimpPrecision
 gimp_drawable_get_precision (const GimpDrawable *drawable)
 {

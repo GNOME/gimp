@@ -112,7 +112,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 
   format = gimp_projectable_get_format (GIMP_PROJECTABLE (image));
   format = gimp_babl_format (gimp_babl_format_get_base_type (format),
-                             GIMP_PRECISION_U8,
+                             GIMP_PRECISION_U8_GAMMA,
                              babl_format_has_alpha (format));
 
   buf = gimp_temp_buf_new (width, height, format);

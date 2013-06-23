@@ -289,8 +289,6 @@ load_image (const gchar  *filename,
   GeglBuffer        *src_buf  = NULL;
   GeglBuffer        *dest_buf = NULL;
   const Babl        *format;
-  const Babl        *model;
-  const Babl        *type;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
@@ -327,21 +325,7 @@ load_image (const gchar  *filename,
   height = gegl_buffer_get_height (src_buf);
   format = gegl_buffer_get_format (src_buf);
 
-  model = babl_format_get_model (format);
-
-  if (model == babl_model ("Y")  ||
-      model == babl_model ("Y'") ||
-      model == babl_model ("YA") ||
-      model == babl_model ("Y'A"))
-    {
-      base_type = GIMP_GRAY;
-
-      if (babl_format_has_alpha (format))
-        image_type = GIMP_GRAYA_IMAGE;
-      else
-        image_type = GIMP_GRAY_IMAGE;
-    }
-  else if (babl_format_is_palette (format))
+  if (babl_format_is_palette (format))
     {
       base_type = GIMP_INDEXED;
 
@@ -349,29 +333,73 @@ load_image (const gchar  *filename,
         image_type = GIMP_INDEXEDA_IMAGE;
       else
         image_type = GIMP_INDEXED_IMAGE;
+
+      precision = GIMP_PRECISION_U8_GAMMA;
     }
   else
     {
-      base_type = GIMP_RGB;
+      const Babl *model  = babl_format_get_model (format);
+      const Babl *type   = babl_format_get_type (format, 0);
+      gboolean    linear = TRUE;
 
-      if (babl_format_has_alpha (format))
-        image_type = GIMP_RGBA_IMAGE;
+      if (model == babl_model ("Y")  ||
+          model == babl_model ("Y'") ||
+          model == babl_model ("YA") ||
+          model == babl_model ("Y'A"))
+        {
+          base_type = GIMP_GRAY;
+
+          if (babl_format_has_alpha (format))
+            image_type = GIMP_GRAYA_IMAGE;
+          else
+            image_type = GIMP_GRAY_IMAGE;
+
+          if (model == babl_model ("Y'") ||
+              model == babl_model ("Y'A"))
+            linear = FALSE;
+        }
       else
-        image_type = GIMP_RGB_IMAGE;
+        {
+          base_type = GIMP_RGB;
+
+          if (babl_format_has_alpha (format))
+            image_type = GIMP_RGBA_IMAGE;
+          else
+            image_type = GIMP_RGB_IMAGE;
+
+          if (model == babl_model ("R'G'B'") ||
+              model == babl_model ("R'G'B'A"))
+            linear = FALSE;
+        }
+
+      if (linear)
+        {
+          if (type == babl_type ("u8"))
+            precision = GIMP_PRECISION_U8_LINEAR;
+          else if (type == babl_type ("u16"))
+            precision = GIMP_PRECISION_U16_LINEAR;
+          else if (type == babl_type ("u32"))
+            precision = GIMP_PRECISION_U32_LINEAR;
+          else if (type == babl_type ("half"))
+            precision = GIMP_PRECISION_HALF_LINEAR;
+          else
+            precision = GIMP_PRECISION_FLOAT_LINEAR;
+        }
+      else
+        {
+          if (type == babl_type ("u8"))
+            precision = GIMP_PRECISION_U8_GAMMA;
+          else if (type == babl_type ("u16"))
+            precision = GIMP_PRECISION_U16_GAMMA;
+          else if (type == babl_type ("u32"))
+            precision = GIMP_PRECISION_U32_GAMMA;
+          else if (type == babl_type ("half"))
+            precision = GIMP_PRECISION_HALF_GAMMA;
+          else
+            precision = GIMP_PRECISION_FLOAT_GAMMA;
+        }
     }
 
-  type = babl_format_get_type (format, 0);
-
-  if (type == babl_type ("u8"))
-    precision = GIMP_PRECISION_U8;
-  else if (type == babl_type ("u16"))
-    precision = GIMP_PRECISION_U16;
-  else if (type == babl_type ("u32"))
-    precision = GIMP_PRECISION_U32;
-  else if (type == babl_type ("half"))
-    precision = GIMP_PRECISION_HALF;
-  else
-    precision = GIMP_PRECISION_FLOAT;
 
   image_ID = gimp_image_new_with_precision (width, height,
                                             base_type, precision);

@@ -514,24 +514,35 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
             switch (gimp_babl_format_get_precision (frame->sample_format))
               {
-              case GIMP_PRECISION_U8:
+              case GIMP_PRECISION_U8_GAMMA:
                 if (babl_format_is_palette (frame->sample_format))
                   {
                     print_format = gimp_babl_format (GIMP_RGB,
-                                                     GIMP_PRECISION_U8,
+                                                     GIMP_PRECISION_U8_GAMMA,
                                                      has_alpha);
                     break;
                   }
+                /* else fall thru */
 
-              case GIMP_PRECISION_U16:
-              case GIMP_PRECISION_U32:
+              case GIMP_PRECISION_U8_LINEAR:
+              case GIMP_PRECISION_U16_LINEAR:
+              case GIMP_PRECISION_U16_GAMMA:
+              case GIMP_PRECISION_U32_LINEAR:
+              case GIMP_PRECISION_U32_GAMMA:
+              case GIMP_PRECISION_FLOAT_LINEAR:
+              case GIMP_PRECISION_FLOAT_GAMMA:
                 print_format = frame->sample_format;
                 break;
 
-              case GIMP_PRECISION_HALF:
-              case GIMP_PRECISION_FLOAT:
+              case GIMP_PRECISION_HALF_GAMMA:
                 print_format = gimp_babl_format (base_type,
-                                                 GIMP_PRECISION_FLOAT,
+                                                 GIMP_PRECISION_FLOAT_GAMMA,
+                                                 has_alpha);
+                break;
+
+              case GIMP_PRECISION_HALF_LINEAR:
+                print_format = gimp_babl_format (base_type,
+                                                 GIMP_PRECISION_FLOAT_LINEAR,
                                                  has_alpha);
                 break;
               }

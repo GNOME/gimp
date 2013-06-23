@@ -114,7 +114,7 @@ HELP
         code => <<'CODE'
 {
   image = gimp_create_image (gimp, width, height, type,
-                             GIMP_PRECISION_U8, FALSE);
+                             GIMP_PRECISION_U8_GAMMA, FALSE);
 
   if (! image)
     success = FALSE;
@@ -128,7 +128,7 @@ sub image_new_with_precision {
 
     $help = <<'HELP';
 Creates a new image, undisplayed with the specified extents, type
-and precision. Indexed images can only be created at GIMP_PRECISION_U8
+and precision. Indexed images can only be created at GIMP_PRECISION_U8_GAMMA
 precision. See gimp_image_new() for further details.
 HELP
 
@@ -156,7 +156,7 @@ HELP
   if (gimp->plug_in_manager->current_plug_in)
     gimp_plug_in_enable_precision (gimp->plug_in_manager->current_plug_in);
 
-  if (type != GIMP_INDEXED || precision == GIMP_PRECISION_U8)
+  if (type != GIMP_INDEXED || precision == GIMP_PRECISION_U8_GAMMA)
     {
       image = gimp_create_image (gimp, width, height, type,
                                  precision, FALSE);

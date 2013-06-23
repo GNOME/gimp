@@ -774,9 +774,9 @@ load_image (const gchar  *filename,
    */
 
   if (png_get_bit_depth (pp, info) == 16)
-    image_precision = GIMP_PRECISION_U16;
+    image_precision = GIMP_PRECISION_U16_GAMMA;
   else
-    image_precision = GIMP_PRECISION_U8;
+    image_precision = GIMP_PRECISION_U8_GAMMA;
 
   if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
     png_set_swap (pp);
@@ -839,7 +839,7 @@ load_image (const gchar  *filename,
     case PNG_COLOR_TYPE_RGB:           /* RGB */
       image_type = GIMP_RGB;
       layer_type = GIMP_RGB_IMAGE;
-      if (image_precision == GIMP_PRECISION_U8)
+      if (image_precision == GIMP_PRECISION_U8_GAMMA)
         file_format = babl_format ("R'G'B' u8");
       else
         file_format = babl_format ("R'G'B' u16");
@@ -848,7 +848,7 @@ load_image (const gchar  *filename,
     case PNG_COLOR_TYPE_RGB_ALPHA:     /* RGBA */
       image_type = GIMP_RGB;
       layer_type = GIMP_RGBA_IMAGE;
-      if (image_precision == GIMP_PRECISION_U8)
+      if (image_precision == GIMP_PRECISION_U8_GAMMA)
         file_format = babl_format ("R'G'B'A u8");
       else
         file_format = babl_format ("R'G'B'A u16");
@@ -857,7 +857,7 @@ load_image (const gchar  *filename,
     case PNG_COLOR_TYPE_GRAY:          /* Grayscale */
       image_type = GIMP_GRAY;
       layer_type = GIMP_GRAY_IMAGE;
-      if (image_precision == GIMP_PRECISION_U8)
+      if (image_precision == GIMP_PRECISION_U8_GAMMA)
         file_format = babl_format ("Y' u8");
       else
         file_format = babl_format ("Y' u16");
@@ -866,7 +866,7 @@ load_image (const gchar  *filename,
     case PNG_COLOR_TYPE_GRAY_ALPHA:    /* Grayscale + alpha */
       image_type = GIMP_GRAY;
       layer_type = GIMP_GRAYA_IMAGE;
-      if (image_precision == GIMP_PRECISION_U8)
+      if (image_precision == GIMP_PRECISION_U8_GAMMA)
         file_format = babl_format ("Y'A u8");
       else
         file_format = babl_format ("Y'A u16");
@@ -1330,7 +1330,7 @@ save_image (const gchar  *filename,
 
   png_textp  text = NULL;
 
-  if (gimp_image_get_precision (image_ID) == GIMP_PRECISION_U8)
+  if (gimp_image_get_precision (image_ID) == GIMP_PRECISION_U8_GAMMA)
     bit_depth = 8;
   else
     bit_depth = 16;

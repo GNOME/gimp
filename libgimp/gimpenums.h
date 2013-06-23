@@ -47,6 +47,20 @@ typedef enum
 } GimpBrushGeneratedShape;
 
 
+#define GIMP_TYPE_COMPONENT_TYPE (gimp_component_type_get_type ())
+
+GType gimp_component_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_COMPONENT_TYPE_U8 = 100,
+  GIMP_COMPONENT_TYPE_U16 = 200,
+  GIMP_COMPONENT_TYPE_U32 = 300,
+  GIMP_COMPONENT_TYPE_HALF = 400,
+  GIMP_COMPONENT_TYPE_FLOAT = 500
+} GimpComponentType;
+
+
 #define GIMP_TYPE_CONVERT_DITHER_TYPE (gimp_convert_dither_type_get_type ())
 
 GType gimp_convert_dither_type_get_type (void) G_GNUC_CONST;
@@ -264,11 +278,16 @@ GType gimp_precision_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_PRECISION_U8,
-  GIMP_PRECISION_U16,
-  GIMP_PRECISION_U32,
-  GIMP_PRECISION_HALF,
-  GIMP_PRECISION_FLOAT
+  GIMP_PRECISION_U8_LINEAR = 100,
+  GIMP_PRECISION_U8_GAMMA = 150,
+  GIMP_PRECISION_U16_LINEAR = 200,
+  GIMP_PRECISION_U16_GAMMA = 250,
+  GIMP_PRECISION_U32_LINEAR = 300,
+  GIMP_PRECISION_U32_GAMMA = 350,
+  GIMP_PRECISION_HALF_LINEAR = 400,
+  GIMP_PRECISION_HALF_GAMMA = 450,
+  GIMP_PRECISION_FLOAT_LINEAR = 500,
+  GIMP_PRECISION_FLOAT_GAMMA = 550
 } GimpPrecision;
 
 

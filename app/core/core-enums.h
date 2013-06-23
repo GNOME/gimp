@@ -54,6 +54,20 @@ typedef enum /*< pdb-skip >*/
 } GimpComponentMask;
 
 
+#define GIMP_TYPE_COMPONENT_TYPE (gimp_component_type_get_type ())
+
+GType gimp_component_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_COMPONENT_TYPE_U8    = 100, /*< desc="8-bit integer"         >*/
+  GIMP_COMPONENT_TYPE_U16   = 200, /*< desc="16-bit integer"        >*/
+  GIMP_COMPONENT_TYPE_U32   = 300, /*< desc="32-bit integer"        >*/
+  GIMP_COMPONENT_TYPE_HALF  = 400, /*< desc="16-bit floating point" >*/
+  GIMP_COMPONENT_TYPE_FLOAT = 500  /*< desc="32-bit floating point" >*/
+} GimpComponentType;
+
+
 #define GIMP_TYPE_CONTAINER_POLICY (gimp_container_policy_get_type ())
 
 GType gimp_container_policy_get_type (void) G_GNUC_CONST;
@@ -348,11 +362,16 @@ GType gimp_precision_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_PRECISION_U8,    /*< desc="8-bit integer"         >*/
-  GIMP_PRECISION_U16,   /*< desc="16-bit integer"        >*/
-  GIMP_PRECISION_U32,   /*< desc="32-bit integer"        >*/
-  GIMP_PRECISION_HALF,  /*< desc="16-bit floating point" >*/
-  GIMP_PRECISION_FLOAT  /*< desc="32-bit floating point" >*/
+  GIMP_PRECISION_U8_LINEAR    = 100, /*< desc="8-bit linear integer"         >*/
+  GIMP_PRECISION_U8_GAMMA     = 150, /*< desc="8-bit gamma integer"          >*/
+  GIMP_PRECISION_U16_LINEAR   = 200, /*< desc="16-bit linear integer"        >*/
+  GIMP_PRECISION_U16_GAMMA    = 250, /*< desc="16-bit gamma integer"         >*/
+  GIMP_PRECISION_U32_LINEAR   = 300, /*< desc="32-bit linear integer"        >*/
+  GIMP_PRECISION_U32_GAMMA    = 350, /*< desc="32-bit gamma integer"         >*/
+  GIMP_PRECISION_HALF_LINEAR  = 400, /*< desc="16-bit linear floating point" >*/
+  GIMP_PRECISION_HALF_GAMMA   = 450, /*< desc="16-bit gamma floating point"  >*/
+  GIMP_PRECISION_FLOAT_LINEAR = 500, /*< desc="32-bit linear floating point" >*/
+  GIMP_PRECISION_FLOAT_GAMMA  = 550  /*< desc="32-bit gamma floating point"  >*/
 } GimpPrecision;
 
 

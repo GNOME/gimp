@@ -328,11 +328,16 @@
         <separator />
       </menu>
       <menu action="image-precision-menu" name="Precision">
-        <menuitem action="image-convert-u8" />
-        <menuitem action="image-convert-u16" />
-        <menuitem action="image-convert-u32" />
-        <menuitem action="image-convert-half" />
-        <menuitem action="image-convert-float" />
+        <menuitem action="image-convert-u8-linear" />
+        <menuitem action="image-convert-u8-gamma" />
+        <menuitem action="image-convert-u16-linear" />
+        <menuitem action="image-convert-u16-gamma" />
+        <menuitem action="image-convert-u32-linear" />
+        <menuitem action="image-convert-u32-gamma" />
+        <menuitem action="image-convert-half-linear" />
+        <menuitem action="image-convert-half-gamma" />
+        <menuitem action="image-convert-float-linear" />
+        <menuitem action="image-convert-float-gamma" />
         <separator />
       </menu>
       <menu action="image-transform-menu" name="Transform">

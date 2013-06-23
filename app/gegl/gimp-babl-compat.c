@@ -78,6 +78,6 @@ gimp_babl_compat_u8_format (const Babl *format)
     return format;
 
   return gimp_babl_format (gimp_babl_format_get_base_type (format),
-                           GIMP_PRECISION_U8,
+                           GIMP_PRECISION_U8_GAMMA,
                            babl_format_has_alpha (format));
 }

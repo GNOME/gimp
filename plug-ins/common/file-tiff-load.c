@@ -804,8 +804,12 @@ load_image (const gchar        *filename,
 
       if ((target == GIMP_PAGE_SELECTOR_TARGET_IMAGES) || (! image))
         {
-          if ((image = gimp_image_new_with_precision (cols, rows, image_type,
-                                                      bps <= 8 ? GIMP_PRECISION_U8 : GIMP_PRECISION_U16)) == -1)
+          image = gimp_image_new_with_precision (cols, rows, image_type,
+                                                 bps <= 8 ?
+                                                 GIMP_PRECISION_U8_GAMMA :
+                                                 GIMP_PRECISION_U16_GAMMA);
+
+          if (image < 1)
             {
               g_message ("Could not create a new image: %s",
                          gimp_get_pdb_error ());

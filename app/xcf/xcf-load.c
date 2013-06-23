@@ -139,14 +139,14 @@ xcf_load_image (Gimp     *gimp,
                 XcfInfo  *info,
                 GError  **error)
 {
-  GimpImage          *image;
+  GimpImage          *image = NULL;
   const GimpParasite *parasite;
   guint32             saved_pos;
   guint32             offset;
   gint                width;
   gint                height;
   gint                image_type;
-  gint                precision = GIMP_PRECISION_U8;
+  GimpPrecision       precision = GIMP_PRECISION_U8_GAMMA;
   gint                num_successful_elements = 0;
 
   /* read in the image width, height and type */
@@ -155,7 +155,29 @@ xcf_load_image (Gimp     *gimp,
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &image_type, 1);
 
   if (info->file_version >= 4)
-    info->cp += xcf_read_int32 (info->fp, (guint32 *) &precision, 1);
+    {
+      gint p;
+
+      info->cp += xcf_read_int32 (info->fp, (guint32 *) &p, 1);
+
+      if (info->file_version == 4)
+        {
+          switch (p)
+            {
+            case 0: precision = GIMP_PRECISION_U8_GAMMA;     break;
+            case 1: precision = GIMP_PRECISION_U16_GAMMA;    break;
+            case 2: precision = GIMP_PRECISION_U32_LINEAR;   break;
+            case 3: precision = GIMP_PRECISION_HALF_LINEAR;  break;
+            case 4: precision = GIMP_PRECISION_FLOAT_LINEAR; break;
+            default:
+              goto hard_error;
+            }
+        }
+      else
+        {
+          precision = p;
+        }
+    }
 
   image = gimp_create_image (gimp, width, height, image_type, precision,
                              FALSE);
@@ -358,7 +380,8 @@ xcf_load_image (Gimp     *gimp,
 		       _("This XCF file is corrupt!  I could not even "
 			 "salvage any partial image data from it."));
 
-  g_object_unref (image);
+  if (image)
+    g_object_unref (image);
 
   return NULL;
 }

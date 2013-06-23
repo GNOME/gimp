@@ -259,7 +259,7 @@ choose_format (GeglBuffer          *buffer,
         format = babl_format ("RGBA float");
       else
         format = gimp_babl_format (gimp_babl_format_get_base_type (format),
-                                   GIMP_PRECISION_FLOAT,
+                                   GIMP_PRECISION_FLOAT_LINEAR,
                                    *has_alpha);
       break;
 
