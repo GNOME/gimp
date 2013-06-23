@@ -26,6 +26,8 @@
 
 #include "config/gimpcoreconfig.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "core/core-enums.h"
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
@@ -246,7 +248,8 @@ image_convert_precision_cmd_callback (GtkAction *action,
   if (value == gimp_image_get_precision (image))
     return;
 
-  if (value < gimp_image_get_precision (image))
+  if ((value < gimp_image_get_precision (image)) ||
+      (gimp_babl_component_type (value) == gimp_image_get_component_type (image)))
     {
       GtkWidget *dialog;
 
