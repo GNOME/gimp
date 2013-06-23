@@ -82,7 +82,7 @@ gimp_test_image_setup (GimpTestFixture *fixture,
                                    GIMP_TEST_IMAGE_SIZE,
                                    GIMP_TEST_IMAGE_SIZE,
                                    GIMP_RGB,
-                                   GIMP_PRECISION_FLOAT);
+                                   GIMP_PRECISION_FLOAT_LINEAR);
 }
 
 /**
