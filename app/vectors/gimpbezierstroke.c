@@ -555,7 +555,7 @@ gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,
                                       gdouble              *ret_pos)
 {
   gdouble     min_dist, dist, pos;
-  GimpCoords  point;
+  GimpCoords  point = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
   GimpCoords  segmentcoords[4];
   GList      *anchorlist;
   GimpAnchor *segment_start;
@@ -569,7 +569,6 @@ gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,
   count = 0;
   min_dist = -1;
   pos = 0;
-  point = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
 
   for (anchorlist = stroke->anchors;
        GIMP_ANCHOR (anchorlist->data)->type != GIMP_ANCHOR_ANCHOR;
