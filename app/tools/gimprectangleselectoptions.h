@@ -39,6 +39,7 @@ struct _GimpRectangleSelectOptions
 
   gboolean              round_corners;
   gdouble               corner_radius;
+  gboolean              shape_options;
 };
 
 

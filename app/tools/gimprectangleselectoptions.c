@@ -33,6 +33,7 @@
 #include "gimprectangleselectoptions.h"
 #include "gimprectangleselecttool.h"
 #include "gimptooloptions-gui.h"
+#include "gimpselectbyshapetool.h"
 
 #include "gimp-intl.h"
 
@@ -40,7 +41,8 @@
 enum
 {
   PROP_ROUND_CORNERS = GIMP_RECTANGLE_OPTIONS_PROP_LAST + 1,
-  PROP_CORNER_RADIUS
+  PROP_CORNER_RADIUS,
+  PROP_SHAPE_OPTIONS
 };
 
 
@@ -91,6 +93,12 @@ gimp_rectangle_select_options_class_init (GimpRectangleSelectOptionsClass *klass
                                    0.0, 100.0, 5.0,
                                    GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHAPE_OPTIONS,
+                                   "shape-options",
+                                   N_("Shape Options"),
+                                   FALSE,
+                                   GIMP_PARAM_STATIC_STRINGS);
+
   gimp_rectangle_options_install_properties (object_class);
 }
 
@@ -115,6 +123,10 @@ gimp_rectangle_select_options_set_property (GObject      *object,
 
     case PROP_CORNER_RADIUS:
       options->corner_radius = g_value_get_double (value);
+      break;
+    
+    case PROP_SHAPE_OPTIONS:
+      options->shape_options = g_value_get_boolean (value);
       break;
 
     default:
@@ -141,6 +153,10 @@ gimp_rectangle_select_options_get_property (GObject    *object,
       g_value_set_double (value, options->corner_radius);
       break;
 
+    case PROP_SHAPE_OPTIONS:
+      g_value_set_boolean (value, options->shape_options);
+      break;  
+
     default:
       gimp_rectangle_options_get_property (object, property_id, value, pspec);
       break;
@@ -152,13 +168,15 @@ gimp_rectangle_select_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_selection_options_gui (tool_options);
-
+  GtkWidget *button;
+  
   /*  the round corners frame  */
   if (tool_options->tool_info->tool_type == GIMP_TYPE_RECTANGLE_SELECT_TOOL)
     {
       GtkWidget *frame;
       GtkWidget *scale;
       GtkWidget *toggle;
+      
 
       scale = gimp_prop_spin_scale_new (config, "corner-radius",
                                         _("Radius"),
@@ -176,6 +194,17 @@ gimp_rectangle_select_options_gui (GimpToolOptions *tool_options)
                               toggle, "sensitive",
                               G_BINDING_SYNC_CREATE);
     }
+
+  /* for select by shape tool */
+  if (tool_options->tool_info->tool_type == GIMP_TYPE_SELECT_BY_SHAPE_TOOL)  
+   {
+
+      button = gimp_prop_check_button_new (config, "shape-options",
+                                        _("Shape options"));
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
+
+   }
 
   /*  the rectangle options  */
   {
