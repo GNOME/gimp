@@ -385,7 +385,7 @@ invert_invoker (GimpProcedure         *procedure,
         {
           gimp_drawable_apply_operation_by_name (drawable, progress,
                                                  _("Invert"),
-                                                 "gegl:invert",
+                                                 "gegl:invert-gamma",
                                                  NULL);
         }
       else

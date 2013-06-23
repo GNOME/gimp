@@ -232,10 +232,10 @@ gimp_gegl_apply_gaussian_blur (GeglBuffer   *src_buffer,
 }
 
 void
-gimp_gegl_apply_invert (GeglBuffer    *src_buffer,
-                        GimpProgress  *progress,
-                        const gchar   *undo_desc,
-                        GeglBuffer    *dest_buffer)
+gimp_gegl_apply_invert_gamma (GeglBuffer    *src_buffer,
+                              GimpProgress  *progress,
+                              const gchar   *undo_desc,
+                              GeglBuffer    *dest_buffer)
 {
   GeglNode *node;
 
@@ -244,7 +244,7 @@ gimp_gegl_apply_invert (GeglBuffer    *src_buffer,
   g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
 
   node = gegl_node_new_child (NULL,
-                              "operation", "gegl:invert",
+                              "operation", "gegl:invert-gamma",
                               NULL);
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
@@ -252,6 +252,26 @@ gimp_gegl_apply_invert (GeglBuffer    *src_buffer,
   g_object_unref (node);
 }
 
+void
+gimp_gegl_apply_invert_linear (GeglBuffer    *src_buffer,
+                               GimpProgress  *progress,
+                               const gchar   *undo_desc,
+                               GeglBuffer    *dest_buffer)
+{
+  GeglNode *node;
+
+  g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
+
+  node = gegl_node_new_child (NULL,
+                              "operation", "gegl:invert-linear",
+                              NULL);
+
+  gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
+                             node, dest_buffer, NULL);
+  g_object_unref (node);
+}
 
 void
 gimp_gegl_apply_opacity (GeglBuffer    *src_buffer,

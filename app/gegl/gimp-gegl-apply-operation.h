@@ -63,7 +63,12 @@ void   gimp_gegl_apply_gaussian_blur   (GeglBuffer            *src_buffer,
                                         gdouble                std_dev_x,
                                         gdouble                std_dev_y);
 
-void   gimp_gegl_apply_invert          (GeglBuffer            *src_buffer,
+void   gimp_gegl_apply_invert_gamma    (GeglBuffer            *src_buffer,
+                                        GimpProgress          *progress,
+                                        const gchar           *undo_desc,
+                                        GeglBuffer            *dest_buffer);
+
+void   gimp_gegl_apply_invert_linear   (GeglBuffer            *src_buffer,
                                         GimpProgress          *progress,
                                         const gchar           *undo_desc,
                                         GeglBuffer            *dest_buffer);

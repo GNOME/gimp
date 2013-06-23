@@ -430,7 +430,7 @@ gimp_channel_get_node (GimpFilter *filter)
   g_warn_if_fail (channel->invert_node == NULL);
 
   channel->invert_node = gegl_node_new_child (node,
-                                              "operation", "gegl:invert",
+                                              "operation", "gegl:invert-linear",
                                               NULL);
 
   if (channel->show_masked)
@@ -1299,9 +1299,9 @@ gimp_channel_real_invert (GimpChannel *channel,
     }
   else
     {
-      gimp_gegl_apply_invert (gimp_drawable_get_buffer (drawable),
-                              NULL, NULL,
-                              gimp_drawable_get_buffer (drawable));
+      gimp_gegl_apply_invert_linear (gimp_drawable_get_buffer (drawable),
+                                     NULL, NULL,
+                                     gimp_drawable_get_buffer (drawable));
 
       channel->bounds_known = FALSE;
 

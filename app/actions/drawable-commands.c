@@ -67,8 +67,9 @@ drawable_invert_cmd_callback (GtkAction *action,
   return_if_no_drawable (image, drawable, data);
   return_if_no_display (display, data);
 
+  /* FIXME invert masks? */
   gimp_drawable_apply_operation_by_name (drawable, GIMP_PROGRESS (display),
-                                         _("Invert"), "gegl:invert",
+                                         _("Invert"), "gegl:invert-gamma",
                                          NULL);
   gimp_image_flush (image);
 }
