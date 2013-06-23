@@ -35,6 +35,9 @@
 
 #include "gimpregionselectoptions.h"
 #include "gimpregionselecttool.h"
+#include "gimpselectbycolortool.h"
+
+
 
 #include "gimp-intl.h"
 
@@ -45,7 +48,10 @@ enum
   PROP_SELECT_TRANSPARENT,
   PROP_SAMPLE_MERGED,
   PROP_THRESHOLD,
-  PROP_SELECT_CRITERION
+  PROP_CONTINUOUS, //continuous
+  PROP_SELECT_CRITERION,
+  PROP_MULTIPLE_COLOR,
+  PROP_BRUSH_SIZE
 };
 
 
@@ -96,6 +102,12 @@ gimp_region_select_options_class_init (GimpRegionSelectOptionsClass *klass)
                                    N_("Maximum color difference"),
                                    0.0, 255.0, 15.0,
                                    GIMP_PARAM_STATIC_STRINGS);
+								   
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONTINUOUS,
+                                    "continuous",
+                                    N_("Select only continuous region"),
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);								   
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_SELECT_CRITERION,
                                  "select-criterion",
@@ -103,6 +115,18 @@ gimp_region_select_options_class_init (GimpRegionSelectOptionsClass *klass)
                                  GIMP_TYPE_SELECT_CRITERION,
                                  GIMP_SELECT_CRITERION_COMPOSITE,
                                  GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MULTIPLE_COLOR,
+                                    "multiple-color",
+                                    N_("Allows multiple color"),
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_SIZE,
+                                   "brush-size",
+                                   N_("Radius of Brush"),
+                                   0.0, 6000.0, 10.0,
+                                   GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -131,10 +155,22 @@ gimp_region_select_options_set_property (GObject      *object,
     case PROP_THRESHOLD:
       options->threshold = g_value_get_double (value);
       break;
+	  
+    case PROP_CONTINUOUS:
+      options->continuous = g_value_get_boolean (value);
+      break;	  
 
     case PROP_SELECT_CRITERION:
       options->select_criterion = g_value_get_enum (value);
       break;
+
+    case PROP_MULTIPLE_COLOR:
+      options->multiple_color = g_value_get_boolean (value);
+      break;
+      
+    case PROP_BRUSH_SIZE:
+      options->brush_size = g_value_get_double (value);
+      break;  
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -163,10 +199,22 @@ gimp_region_select_options_get_property (GObject    *object,
     case PROP_THRESHOLD:
       g_value_set_double (value, options->threshold);
       break;
+	  
+    case PROP_CONTINUOUS:
+      g_value_set_boolean (value, options->continuous);
+      break;	  
 
     case PROP_SELECT_CRITERION:
       g_value_set_enum (value, options->select_criterion);
       break;
+
+    case PROP_MULTIPLE_COLOR:
+      g_value_set_boolean (value, options->multiple_color);
+      break;
+
+    case PROP_BRUSH_SIZE:
+      g_value_set_double (value, options->brush_size);
+      break; 
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -197,6 +245,9 @@ gimp_region_select_options_gui (GimpToolOptions *tool_options)
   GtkWidget *button;
   GtkWidget *scale;
   GtkWidget *combo;
+  GType             tool_type;
+
+  tool_type = tool_options->tool_info->tool_type;
 
   /*  the select transparent areas toggle  */
   button = gimp_prop_check_button_new (config, "select-transparent",
@@ -216,12 +267,46 @@ gimp_region_select_options_gui (GimpToolOptions *tool_options)
                                     1.0, 16.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
+ 
+  if (g_type_is_a (tool_type, GIMP_TYPE_SELECT_BY_COLOR_TOOL))
+   { 
+      GtkWidget *frame;
+      GtkWidget *scale;
+      GtkWidget *toggle;
+      
+      /*  the continuous toggle  */
+      button = gimp_prop_check_button_new (config, "continuous",
+                                       _("Continuous"));
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);  
+    
+      /*multiple color*/
+
+      scale = gimp_prop_spin_scale_new (config, "brush-size",
+                                        _("Brush Size"),
+                                        1.0, 10.0, 1);
+
+      frame = gimp_prop_expanding_frame_new (config, "multiple-color",
+                                             _("Multiple Color"),
+                                             scale, NULL);
+      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
+
+
+      g_object_bind_property (config, "multiple-color",
+                              toggle, "sensitive",
+                              G_BINDING_SYNC_CREATE);
+
+    } 
+
 
   /*  the select criterion combo  */
   combo = gimp_prop_enum_combo_box_new (config, "select-criterion", 0, 0);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Select by"));
   gtk_box_pack_start (GTK_BOX (vbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
+
+ 
 
   return vbox;
 }
