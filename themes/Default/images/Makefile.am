@@ -337,14 +337,14 @@ STOCK_TOOL_IMAGES = \
 	tools/stock-tool-rect-select-22.png		\
 	tools/stock-tool-rotate-16.png			\
 	tools/stock-tool-rotate-22.png			\
+	tools/stock-tool-scale-16.png			\
+	tools/stock-tool-scale-22.png			\
 	tools/stock-tool-select-by-color-16.png		\
 	tools/stock-tool-select-by-color-22.png		\
 	tools/stock-tool-select-by-content-16.png		\
 	tools/stock-tool-select-by-content-22.png		\
     tools/stock-tool-select-by-shape-16.png		\
-	tools/stock-tool-select-by-shape-22.png	
-	tools/stock-tool-scale-16.png			\
-	tools/stock-tool-scale-22.png			\
+	tools/stock-tool-select-by-shape-22.png		\
 	tools/stock-tool-shear-16.png			\
 	tools/stock-tool-shear-22.png			\
 	tools/stock-tool-smudge-16.png			\
