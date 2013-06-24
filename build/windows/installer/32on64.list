@@ -35,6 +35,7 @@ bin\libxml2-*.dll
 bin\libtiff-*.dll
 bin\zlib1.dll
 bin\libgcc_s_sjlj-1.dll
+bin\libharfbuzz-0.dll
 !GIMP
 bin\libgimp-*.dll
 bin\libgimpbase-*.dll
