@@ -37,8 +37,6 @@
 #include "gimpregionselecttool.h"
 #include "gimpselectbycolortool.h"
 
-
-
 #include "gimp-intl.h"
 
 
@@ -245,6 +243,7 @@ gimp_region_select_options_gui (GimpToolOptions *tool_options)
   GtkWidget *button;
   GtkWidget *scale;
   GtkWidget *combo;
+ 
   GType             tool_type;
 
   tool_type = tool_options->tool_info->tool_type;
@@ -271,8 +270,6 @@ gimp_region_select_options_gui (GimpToolOptions *tool_options)
   if (g_type_is_a (tool_type, GIMP_TYPE_SELECT_BY_COLOR_TOOL))
    { 
       GtkWidget *frame;
-      GtkWidget *scale;
-      GtkWidget *toggle;
       
       /*  the continuous toggle  */
       button = gimp_prop_check_button_new (config, "continuous",
@@ -290,12 +287,7 @@ gimp_region_select_options_gui (GimpToolOptions *tool_options)
                                              _("Multiple Color"),
                                              scale, NULL);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
-
-
-      g_object_bind_property (config, "multiple-color",
-                              toggle, "sensitive",
-                              G_BINDING_SYNC_CREATE);
+      gtk_widget_show (frame);;
 
     } 
 
