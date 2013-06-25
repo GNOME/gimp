@@ -25,9 +25,12 @@
 
 #include "tools-types.h"
 
+#include "core/gimp.h"
 #include "core/gimptoolinfo.h"
+#include "config/gimpcoreconfig.h"
 
 #include "widgets/gimppropwidgets.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimprectangleoptions.h"
 #include "gimprectangleselectoptions.h"
@@ -42,7 +45,8 @@ enum
 {
   PROP_ROUND_CORNERS = GIMP_RECTANGLE_OPTIONS_PROP_LAST + 1,
   PROP_CORNER_RADIUS,
-  PROP_SHAPE_OPTIONS
+  PROP_SHAPE_OPTIONS,
+  PROP_SHAPE_TYPE
 };
 
 
@@ -98,6 +102,12 @@ gimp_rectangle_select_options_class_init (GimpRectangleSelectOptionsClass *klass
                                    N_("Shape Options"),
                                    FALSE,
                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_SHAPE_TYPE,
+                                 "shape-type",
+                                 N_("Select shape of the selection"),
+                                 GIMP_TYPE_SHAPE_TYPE,
+                                 GIMP_SHAPE_RECTANGLE,
+                                 GIMP_PARAM_STATIC_STRINGS);
 
   gimp_rectangle_options_install_properties (object_class);
 }
@@ -129,6 +139,10 @@ gimp_rectangle_select_options_set_property (GObject      *object,
       options->shape_options = g_value_get_boolean (value);
       break;
 
+    case PROP_SHAPE_TYPE:
+      options->shape_type = g_value_get_enum (value);
+      break; 
+
     default:
       gimp_rectangle_options_set_property (object, property_id, value, pspec);
       break;
@@ -155,7 +169,11 @@ gimp_rectangle_select_options_get_property (GObject    *object,
 
     case PROP_SHAPE_OPTIONS:
       g_value_set_boolean (value, options->shape_options);
-      break;  
+      break;
+
+    case PROP_SHAPE_TYPE:
+      g_value_set_enum (value, options->shape_type);
+      break; 
 
     default:
       gimp_rectangle_options_get_property (object, property_id, value, pspec);
@@ -169,7 +187,8 @@ gimp_rectangle_select_options_gui (GimpToolOptions *tool_options)
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_selection_options_gui (tool_options);
   GtkWidget *button;
-  
+  GtkWidget *combo;
+
   /*  the round corners frame  */
   if (tool_options->tool_info->tool_type == GIMP_TYPE_RECTANGLE_SELECT_TOOL)
     {
@@ -203,6 +222,11 @@ gimp_rectangle_select_options_gui (GimpToolOptions *tool_options)
                                         _("Shape options"));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
+
+      combo = gimp_prop_enum_combo_box_new (config, "shape-type", 0, 0);
+      gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Shape"));
+      gtk_box_pack_start (GTK_BOX (vbox), combo, TRUE, TRUE, 0);
+      gtk_widget_show (combo);
 
    }
 
