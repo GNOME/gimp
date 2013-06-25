@@ -45,8 +45,9 @@ enum
 {
   PROP_ROUND_CORNERS = GIMP_RECTANGLE_OPTIONS_PROP_LAST + 1,
   PROP_CORNER_RADIUS,
-  PROP_SHAPE_OPTIONS,
-  PROP_SHAPE_TYPE
+  PROP_SHAPE_TYPE,
+  PROP_HORIZONTAL,
+  PROP_N_SIDES
 };
 
 
@@ -97,17 +98,24 @@ gimp_rectangle_select_options_class_init (GimpRectangleSelectOptionsClass *klass
                                    0.0, 100.0, 5.0,
                                    GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHAPE_OPTIONS,
-                                   "shape-options",
-                                   N_("Shape Options"),
-                                   FALSE,
-                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_SHAPE_TYPE,
                                  "shape-type",
                                  N_("Select shape of the selection"),
                                  GIMP_TYPE_SHAPE_TYPE,
                                  GIMP_SHAPE_RECTANGLE,
                                  GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HORIZONTAL,
+                                    "horizontal",
+                                    N_("Choice between horizontal and vertical"),
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_N_SIDES,
+                                   "n-sides",
+                                   N_("Number of sides, in the polygon"),
+                                   0, 10, 1,
+                                   GIMP_PARAM_STATIC_STRINGS);
 
   gimp_rectangle_options_install_properties (object_class);
 }
@@ -134,13 +142,17 @@ gimp_rectangle_select_options_set_property (GObject      *object,
     case PROP_CORNER_RADIUS:
       options->corner_radius = g_value_get_double (value);
       break;
-    
-    case PROP_SHAPE_OPTIONS:
-      options->shape_options = g_value_get_boolean (value);
-      break;
 
     case PROP_SHAPE_TYPE:
       options->shape_type = g_value_get_enum (value);
+      break; 
+
+    case PROP_HORIZONTAL:
+      options->horizontal = g_value_get_boolean (value);
+      break;   
+    
+    case PROP_N_SIDES:
+      options->n_sides = g_value_get_int (value);
       break; 
 
     default:
@@ -167,13 +179,17 @@ gimp_rectangle_select_options_get_property (GObject    *object,
       g_value_set_double (value, options->corner_radius);
       break;
 
-    case PROP_SHAPE_OPTIONS:
-      g_value_set_boolean (value, options->shape_options);
-      break;
-
     case PROP_SHAPE_TYPE:
       g_value_set_enum (value, options->shape_type);
-      break; 
+      break;
+
+    case PROP_HORIZONTAL:
+      g_value_set_enum (value, options->horizontal);
+      break;  
+    
+    case PROP_N_SIDES:
+      g_value_set_int (value, options->n_sides);
+      break;
 
     default:
       gimp_rectangle_options_get_property (object, property_id, value, pspec);
@@ -181,13 +197,30 @@ gimp_rectangle_select_options_get_property (GObject    *object,
     }
 }
 
+static gboolean
+gimp_select_by_shape_options_shape_type(GBinding     *binding,
+                                            const GValue *source_value,
+                                            GValue       *target_value,
+                                            gpointer      user_data)
+{
+  gint type = g_value_get_enum (source_value);
+
+  g_value_set_boolean (target_value,
+                       type == GPOINTER_TO_INT (user_data));
+
+  return TRUE;
+}
+
 GtkWidget *
 gimp_rectangle_select_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_selection_options_gui (tool_options);
-  GtkWidget *button;
   GtkWidget *combo;
+  GtkWidget *button;
+  GtkWidget *frame;
+  GtkWidget *scale;
+  GtkWidget *inner_vbox;
 
   /*  the round corners frame  */
   if (tool_options->tool_info->tool_type == GIMP_TYPE_RECTANGLE_SELECT_TOOL)
@@ -216,28 +249,70 @@ gimp_rectangle_select_options_gui (GimpToolOptions *tool_options)
 
   /* for select by shape tool */
   if (tool_options->tool_info->tool_type == GIMP_TYPE_SELECT_BY_SHAPE_TOOL)  
-   {
+   {  
 
-      button = gimp_prop_check_button_new (config, "shape-options",
-                                        _("Shape options"));
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
+      frame = gimp_frame_new (NULL);
+      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
 
       combo = gimp_prop_enum_combo_box_new (config, "shape-type", 0, 0);
       gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Shape"));
+      g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
       gtk_box_pack_start (GTK_BOX (vbox), combo, TRUE, TRUE, 0);
+      gtk_frame_set_label_widget (GTK_FRAME (frame), combo);
       gtk_widget_show (combo);
 
-   }
+      inner_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+      gtk_container_add (GTK_CONTAINER (frame), inner_vbox);
+      gtk_widget_show (inner_vbox);
+  
+      scale = gimp_prop_spin_scale_new (config, "corner-radius",
+                                        _("Radius"),
+                                        1.0, 10.0, 1);
+      gtk_box_pack_start (GTK_BOX (inner_vbox), scale, FALSE, FALSE, 0);
 
-  /*  the rectangle options  */
-  {
-    GtkWidget *vbox_rectangle;
+      g_object_bind_property_full (config, "shape-type",
+                               scale,  "visible",
+                               G_BINDING_SYNC_CREATE,
+                               gimp_select_by_shape_options_shape_type,
+                               NULL,
+                               GINT_TO_POINTER (GIMP_SHAPE_ROUNDED_RECT),
+                               NULL);
+      
+      scale = gimp_prop_spin_scale_new (config, "n-sides",
+                                       _("Number of Sides in Polygon ?"),
+                                      1.0, 10.0, 1);
+      gtk_box_pack_start (GTK_BOX (inner_vbox), scale, FALSE, FALSE, 0);
 
-    vbox_rectangle = gimp_rectangle_options_gui (tool_options);
-    gtk_box_pack_start (GTK_BOX (vbox), vbox_rectangle, FALSE, FALSE, 0);
-    gtk_widget_show (vbox_rectangle);
-  }
+      g_object_bind_property_full (config, "shape-type",
+                               scale,  "visible",
+                               G_BINDING_SYNC_CREATE,
+                               gimp_select_by_shape_options_shape_type,
+                               NULL,
+                               GINT_TO_POINTER (GIMP_SHAPE_N_POLYGON),
+                               NULL);
+      
+      button = gimp_prop_check_button_new (config, "horizontal",
+                                           _("Horizontal Line ?"));
+      gtk_box_pack_start (GTK_BOX (inner_vbox), button, FALSE, FALSE, 0);
 
-  return vbox;
+      g_object_bind_property_full (config, "shep-type",
+                               button,  "visible",
+                               G_BINDING_SYNC_CREATE,
+                               gimp_select_by_shape_options_shape_type,
+                               NULL,
+                               GINT_TO_POINTER (GIMP_SHAPE_SINGLE_ROW),
+                               NULL);
+    }
+
+    /*  the rectangle options  */
+     {
+       GtkWidget *vbox_rectangle;
+
+       vbox_rectangle = gimp_rectangle_options_gui (tool_options);
+       gtk_box_pack_start (GTK_BOX (vbox), vbox_rectangle, FALSE, FALSE, 0);
+       gtk_widget_show (vbox_rectangle);
+     }
+
+   return vbox;
 }
