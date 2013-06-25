@@ -23,9 +23,13 @@
 
 #include <gegl-plugin.h>
 
+#include <libgimpbase/gimpbase.h>
+
 #include "operations-types.h"
 
 #include "gimpoperationnormalmode.h"
+
+GimpLayerModeFunction gimp_operation_normal_mode_process_pixels = NULL;
 
 
 static gboolean gimp_operation_normal_parent_process (GeglOperation        *operation,
@@ -84,6 +88,18 @@ gimp_operation_normal_mode_class_init (GimpOperationNormalModeClass *klass)
   operation_class->process     = gimp_operation_normal_parent_process;
 
   point_class->process         = gimp_operation_normal_mode_process;
+
+  gimp_operation_normal_mode_process_pixels = gimp_operation_normal_mode_process_pixels_core;
+
+#if COMPILE_SSE2_INTRINISICS
+  if (gimp_cpu_accel_get_support() & GIMP_CPU_ACCEL_X86_SSE2)
+    gimp_operation_normal_mode_process_pixels = gimp_operation_normal_mode_process_pixels_sse2;
+#endif /* COMPILE_SSE2_INTRINISICS */
+
+#if COMPILE_SSE4_1_INTRINISICS
+  if (gimp_cpu_accel_get_support() & GIMP_CPU_ACCEL_X86_SSE4_1)
+    gimp_operation_normal_mode_process_pixels = gimp_operation_normal_mode_process_pixels_sse4;
+#endif /* COMPILE_SSE4_1_INTRINISICS */
 }
 
 static void
@@ -162,14 +178,14 @@ gimp_operation_normal_mode_process (GeglOperation       *operation,
 }
 
 gboolean
-gimp_operation_normal_mode_process_pixels (gfloat              *in,
-                                           gfloat              *aux,
-                                           gfloat              *mask,
-                                           gfloat              *out,
-                                           gfloat               opacity,
-                                           glong                samples,
-                                           const GeglRectangle *roi,
-                                           gint                 level)
+gimp_operation_normal_mode_process_pixels_core (gfloat              *in,
+                                                gfloat              *aux,
+                                                gfloat              *mask,
+                                                gfloat              *out,
+                                                gfloat               opacity,
+                                                glong                samples,
+                                                const GeglRectangle *roi,
+                                                gint                 level)
 {
   const gboolean has_mask = mask != NULL;
 

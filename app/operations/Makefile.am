@@ -12,9 +12,12 @@ AM_CPPFLAGS = \
 	$(GDK_PIXBUF_CFLAGS)			\
 	-I$(includedir)
 
-noinst_LIBRARIES = libappoperations.a
+noinst_LIBRARIES = libappoperations-generic.a \
+                   libappoperations-sse2.a \
+                   libappoperations-sse4.a \
+                   libappoperations.a
 
-libappoperations_a_sources = \
+libappoperations_generic_a_sources = \
 	operations-types.h			\
 	gimp-operations.c			\
 	gimp-operations.h			\
@@ -144,4 +147,28 @@ libappoperations_a_sources = \
 	gimplayermodefunctions.c		\
 	gimplayermodefunctions.h
 
-libappoperations_a_SOURCES = $(libappoperations_a_sources)
+libappoperations_sse2_a_sources = \
+	gimpoperationnormalmode-sse2.c
+
+libappoperations_sse4_a_sources = \
+	gimpoperationnormalmode-sse4.c
+
+libappoperations_sse2_a_SOURCES = $(libappoperations_sse2_a_sources)
+
+libappoperations_sse2_a_CFLAGS = $(SSE2_EXTRA_CFLAGS)
+
+libappoperations_sse4_a_SOURCES = $(libappoperations_sse4_a_sources)
+
+libappoperations_sse4_a_CFLAGS = $(SSE4_1_EXTRA_CFLAGS)
+
+libappoperations_generic_a_SOURCES = $(libappoperations_generic_a_sources)
+
+libappoperations.a: libappoperations-generic.a \
+                    libappoperations-sse2.a \
+                    libappoperations-sse4.a
+	$(AR) $(ARFLAGS) libappoperations.a \
+	  $(libappoperations_generic_a_OBJECTS) \
+	  $(libappoperations_sse2_a_OBJECTS) \
+	  $(libappoperations_sse4_a_OBJECTS)
+	$(RANLIB) libappoperations.a
+

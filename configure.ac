@@ -686,6 +686,42 @@ LIBS=$gimp_save_LIBS
 
 AC_SUBST(SOCKET_LIBS)
 
+###################################
+# Check for Intel vector intrinsics
+###################################
+intrinsics_save_CFLAGS="$CFLAGS"
+#FIXME: Check the CFLAGS separatly
+GIMP_DETECT_CFLAGS(SSE_MATH_CFLAG, '-mfpmath=sse')
+GIMP_DETECT_CFLAGS(SSE2_CFLAG, '-msse2')
+SSE2_EXTRA_CFLAGS="$SSE_MATH_CFLAG $SSE2_CFLAG"
+CFLAGS="$intrinsics_save_CFLAGS $SSE2_EXTRA_CFLAGS"
+
+AC_MSG_CHECKING(whether we can compile SSE2 intrinsics)
+AC_LINK_IFELSE([AC_LANG_PROGRAM([#include <emmintrin.h>],[__m128i one = _mm_set1_epi32 (1);])],
+  AC_DEFINE(COMPILE_SSE2_INTRINISICS, 1, [Define to 1 if SSE2 intrinsics are available.])
+  AC_SUBST(SSE2_EXTRA_CFLAGS)
+  AC_MSG_RESULT(yes)
+,
+  AC_MSG_RESULT(no)
+  AC_MSG_WARN([SSE2 intrinsics not available.])
+)
+
+
+GIMP_DETECT_CFLAGS(SSE4_1_CFLAG, '-msse4.1')
+SSE4_1_EXTRA_CFLAGS="$SSE_MATH_CFLAG $SSE4_1_CFLAG"
+CFLAGS="$intrinsics_save_CFLAGS $SSE4_1_EXTRA_CFLAGS"
+
+AC_MSG_CHECKING(whether we can compile SSE4.1 intrinsics)
+AC_LINK_IFELSE([AC_LANG_PROGRAM([#include <smmintrin.h>],[__v4sf a, b, c; c = _mm_blend_ps(a, b, 0x08);])],
+  AC_DEFINE(COMPILE_SSE4_1_INTRINISICS, 1, [Define to 1 if SSE4.1 intrinsics are available.])
+  AC_SUBST(SSE4_1_EXTRA_CFLAGS)
+  AC_MSG_RESULT(yes)
+,
+  AC_MSG_RESULT(no)
+  AC_MSG_WARN([SSE4.1 intrinsics not available.])
+)
+CFLAGS="$intrinsics_save_CFLAGS"
+
 
 ########################
 # Check for MMX assembly

@@ -50,15 +50,33 @@ struct _GimpOperationNormalModeClass
 
 GType   gimp_operation_normal_mode_get_type (void) G_GNUC_CONST;
 
+extern GimpLayerModeFunction gimp_operation_normal_mode_process_pixels;
 
-gboolean gimp_operation_normal_mode_process_pixels (gfloat              *in,
-                                                    gfloat              *aux,
-                                                    gfloat              *mask,
-                                                    gfloat              *out,
-                                                    gfloat               opacity,
-                                                    glong                samples,
-                                                    const GeglRectangle *roi,
-                                                    gint                 level);
+gboolean gimp_operation_normal_mode_process_pixels_core (gfloat              *in,
+                                                         gfloat              *aux,
+                                                         gfloat              *mask,
+                                                         gfloat              *out,
+                                                         gfloat               opacity,
+                                                         glong                samples,
+                                                         const GeglRectangle *roi,
+                                                         gint                 level);
 
+gboolean gimp_operation_normal_mode_process_pixels_sse2 (gfloat              *in,
+                                                         gfloat              *aux,
+                                                         gfloat              *mask,
+                                                         gfloat              *out,
+                                                         gfloat               opacity,
+                                                         glong                samples,
+                                                         const GeglRectangle *roi,
+                                                         gint                 level);
+
+gboolean gimp_operation_normal_mode_process_pixels_sse4 (gfloat              *in,
+                                                         gfloat              *aux,
+                                                         gfloat              *mask,
+                                                         gfloat              *out,
+                                                         gfloat               opacity,
+                                                         glong                samples,
+                                                         const GeglRectangle *roi,
+                                                         gint                 level);
 
 #endif /* __GIMP_OPERATION_NORMAL_MODE_H__ */
