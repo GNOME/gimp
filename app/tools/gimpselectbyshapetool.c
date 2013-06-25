@@ -126,19 +126,20 @@ gimp_select_by_shape_tool_select (GimpRectangleSelectTool *rect_tool,
   GimpImage                  *image   = gimp_display_get_image (tool->display);
   GimpRectangleSelectOptions *sel_options     = GIMP_RECTANGLE_SELECT_TOOL_GET_OPTIONS (tool);
 
-  if(sel_options->shape_type == GIMP_SHAPE_RECTANGLE)
+  switch(sel_options->shape_type)
    {
-     gimp_channel_select_rectangle (gimp_image_get_mask (image),
+     case GIMP_SHAPE_RECTANGLE :
+      gimp_channel_select_rectangle (gimp_image_get_mask (image),
                                      x, y, w, h,
                                      operation,
                                      options->feather,
                                      options->feather_radius,
                                      options->feather_radius,
                                      TRUE);
-   }
-   else 
-   {   
-     gimp_channel_select_ellipse (gimp_image_get_mask (image),
+      break;
+    
+     case GIMP_SHAPE_ELLIPSE :  
+      gimp_channel_select_ellipse (gimp_image_get_mask (image),
                                    x, y, w, h,
                                    operation,
                                    options->antialias,
@@ -146,5 +147,33 @@ gimp_select_by_shape_tool_select (GimpRectangleSelectTool *rect_tool,
                                    options->feather_radius,
                                    options->feather_radius,
                                    TRUE);
-   }  
+      break;
+    
+     case GIMP_SHAPE_ROUNDED_RECT :
+      {
+       gdouble max    = MIN (w / 2.0, h / 2.0);
+       gdouble radius = MIN (sel_options->corner_radius, max);
+
+       gimp_channel_select_round_rect (gimp_image_get_mask (image),
+                                      x, y, w, h,
+                                      radius, 
+                                      radius,
+                                      operation,
+                                      options->antialias,
+                                      options->feather,
+                                      options->feather_radius,
+                                      options->feather_radius,
+                                      TRUE);
+       break;
+     }
+      default :
+       gimp_channel_select_rectangle (gimp_image_get_mask (image),
+                                     x, y, w, h,
+                                     operation,
+                                     options->feather,
+                                     options->feather_radius,
+                                     options->feather_radius,
+                                     TRUE);
+       break;
+   } 
 }
