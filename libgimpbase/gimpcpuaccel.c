@@ -123,7 +123,11 @@ enum
 
 enum
 {
-  ARCH_X86_INTEL_FEATURE_PNI      = 1 << 0
+  ARCH_X86_INTEL_FEATURE_PNI      = 1 << 0,
+  ARCH_X86_INTEL_FEATURE_SSSE3    = 1 << 9,
+  ARCH_X86_INTEL_FEATURE_SSE4_1   = 1 << 19,
+  ARCH_X86_INTEL_FEATURE_SSE4_2   = 1 << 20,
+  ARCH_X86_INTEL_FEATURE_AVX      = 1 << 28
 };
 
 #if !defined(ARCH_X86_64) && (defined(PIC) || defined(__PIC__))
@@ -245,6 +249,18 @@ arch_accel_intel (void)
 
     if (ecx & ARCH_X86_INTEL_FEATURE_PNI)
       caps |= GIMP_CPU_ACCEL_X86_SSE3;
+
+    if (ecx & ARCH_X86_INTEL_FEATURE_SSSE3)
+      caps |= GIMP_CPU_ACCEL_X86_SSSE3;
+
+    if (ecx & ARCH_X86_INTEL_FEATURE_SSE4_1)
+      caps |= GIMP_CPU_ACCEL_X86_SSE4_1;
+
+    if (ecx & ARCH_X86_INTEL_FEATURE_SSE4_2)
+      caps |= GIMP_CPU_ACCEL_X86_SSE4_2;
+
+    if (ecx & ARCH_X86_INTEL_FEATURE_AVX)
+      caps |= GIMP_CPU_ACCEL_X86_AVX;
 #endif /* USE_SSE */
   }
 #endif /* USE_MMX */
