@@ -78,6 +78,7 @@ GimpOffsetType
 GimpOrientationType
 GimpRotationType
 GimpSelectCriterion
+GimpShapeType
 gimp_enums_get_type_names
 <SUBSECTION Standard>
 GIMP_TYPE_BRUSH_APPLICATION_MODE
@@ -99,6 +100,7 @@ GIMP_TYPE_OFFSET_TYPE
 GIMP_TYPE_ORIENTATION_TYPE
 GIMP_TYPE_ROTATION_TYPE
 GIMP_TYPE_SELECT_CRITERION
+GIMP_TYPE_SHAPE_TYPE
 gimp_brush_application_mode_get_type
 gimp_brush_generated_shape_get_type
 gimp_convert_dither_type_get_type
@@ -118,6 +120,7 @@ gimp_offset_type_get_type
 gimp_orientation_type_get_type
 gimp_rotation_type_get_type
 gimp_select_criterion_get_type
+gimp_shape_type_get_type
 </SECTION>
 
 <SECTION>
