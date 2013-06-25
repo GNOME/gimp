@@ -225,8 +225,6 @@ gimp_rectangle_select_options_gui (GimpToolOptions *tool_options)
   /*  the round corners frame  */
   if (tool_options->tool_info->tool_type == GIMP_TYPE_RECTANGLE_SELECT_TOOL)
     {
-      GtkWidget *frame;
-      GtkWidget *scale;
       GtkWidget *toggle;
       
 
@@ -250,17 +248,15 @@ gimp_rectangle_select_options_gui (GimpToolOptions *tool_options)
   /* for select by shape tool */
   if (tool_options->tool_info->tool_type == GIMP_TYPE_SELECT_BY_SHAPE_TOOL)  
    {  
-
-      frame = gimp_frame_new (NULL);
-      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
-
       combo = gimp_prop_enum_combo_box_new (config, "shape-type", 0, 0);
       gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Shape"));
       g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
       gtk_box_pack_start (GTK_BOX (vbox), combo, TRUE, TRUE, 0);
-      gtk_frame_set_label_widget (GTK_FRAME (frame), combo);
       gtk_widget_show (combo);
+
+      frame = gimp_frame_new (NULL);
+      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
 
       inner_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
       gtk_container_add (GTK_CONTAINER (frame), inner_vbox);
@@ -293,10 +289,10 @@ gimp_rectangle_select_options_gui (GimpToolOptions *tool_options)
                                NULL);
       
       button = gimp_prop_check_button_new (config, "horizontal",
-                                           _("Horizontal Line ?"));
+                                           _("Horizontal Line"));
       gtk_box_pack_start (GTK_BOX (inner_vbox), button, FALSE, FALSE, 0);
 
-      g_object_bind_property_full (config, "shep-type",
+      g_object_bind_property_full (config, "shape-type",
                                button,  "visible",
                                G_BINDING_SYNC_CREATE,
                                gimp_select_by_shape_options_shape_type,
