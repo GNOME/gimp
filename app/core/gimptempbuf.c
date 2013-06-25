@@ -21,6 +21,7 @@
 
 #include <cairo.h>
 #include <gegl.h>
+#include <gegl-utils.h>
 #include <glib/gstdio.h>
 
 #include "core-types.h"
@@ -54,9 +55,8 @@ gimp_temp_buf_new (gint        width,
   temp->width     = width;
   temp->height    = height;
   temp->format    = format;
-  temp->data      = g_new (guchar,
-                           width * height *
-                           babl_format_get_bytes_per_pixel (format));
+  temp->data      = gegl_malloc (width * height *
+                                 babl_format_get_bytes_per_pixel (format));
 
   return temp;
 }
@@ -98,7 +98,7 @@ gimp_temp_buf_unref (GimpTempBuf *buf)
   if (buf->ref_count < 1)
     {
       if (buf->data)
-        g_free (buf->data);
+        gegl_free (buf->data);
 
       g_slice_free (GimpTempBuf, buf);
     }
