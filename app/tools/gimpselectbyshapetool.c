@@ -126,19 +126,8 @@ gimp_select_by_shape_tool_select (GimpRectangleSelectTool *rect_tool,
   GimpImage                  *image   = gimp_display_get_image (tool->display);
   GimpRectangleSelectOptions *sel_options     = GIMP_RECTANGLE_SELECT_TOOL_GET_OPTIONS (tool);
 
-  if(! sel_options->shape_options)
+  if(sel_options->shape_type == GIMP_SHAPE_RECTANGLE)
    {
-     gimp_channel_select_ellipse (gimp_image_get_mask (image),
-                               x, y, w, h,
-                               operation,
-                               options->antialias,
-                               options->feather,
-                               options->feather_radius,
-                               options->feather_radius,
-                               TRUE);
-   }
-   else 
-   {   
      gimp_channel_select_rectangle (gimp_image_get_mask (image),
                                      x, y, w, h,
                                      operation,
@@ -146,5 +135,16 @@ gimp_select_by_shape_tool_select (GimpRectangleSelectTool *rect_tool,
                                      options->feather_radius,
                                      options->feather_radius,
                                      TRUE);
+   }
+   else 
+   {   
+     gimp_channel_select_ellipse (gimp_image_get_mask (image),
+                                   x, y, w, h,
+                                   operation,
+                                   options->antialias,
+                                   options->feather,
+                                   options->feather_radius,
+                                   options->feather_radius,
+                                   TRUE);
    }  
 }
