@@ -21,15 +21,8 @@
 
 #include "config.h"
 
-#include <sys/types.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #include <gegl.h>
 #include <gtk/gtk.h>
-#include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -330,29 +323,35 @@ static void
 gimp_image_prop_view_label_set_filesize (GtkWidget *label,
                                          GimpImage *image)
 {
-  const gchar *uri      = gimp_image_get_any_uri (image);
-  gchar       *filename = NULL;
+  const gchar *uri  = gimp_image_get_any_uri (image);
+  GFile       *file = NULL;
 
   if (uri)
-    filename = g_filename_from_uri (uri, NULL, NULL);
+    file = g_file_new_for_uri (uri);
 
-  if (filename)
+  if (file)
     {
-      struct stat  buf;
+      GFileInfo *info = g_file_query_info (file,
+                                           G_FILE_ATTRIBUTE_STANDARD_SIZE,
+                                           G_FILE_QUERY_INFO_NONE,
+                                           NULL, NULL);
 
-      if (g_stat (filename, &buf) == 0)
+      if (info)
         {
-          gchar *str = g_format_size (buf.st_size);
+          goffset  size = g_file_info_get_size (info);
+          gchar   *str  = g_format_size (size);
 
           gtk_label_set_text (GTK_LABEL (label), str);
           g_free (str);
+
+          g_object_unref (info);
         }
       else
         {
           gtk_label_set_text (GTK_LABEL (label), NULL);
         }
 
-      g_free (filename);
+      g_object_unref (file);
     }
   else
     {
