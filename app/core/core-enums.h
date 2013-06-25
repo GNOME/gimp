@@ -34,7 +34,18 @@
 /*
  * these enums are registered with the type system
  */
+#define GIMP_TYPE_SHAPE_TYPE (gimp_shape_type_get_type ())
 
+GType gimp_shape_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{       
+  GIMP_SHAPE_RECTANGLE,        
+  GIMP_SHAPE_ELLIPSE,        
+  GIMP_SHAPE_ROUNDED_RECT,     
+  GIMP_SHAPE_N_POLYGON,       
+  GIMP_SHAPE_SINGLE_ROW       
+} GimpShapeType;
 
 #define GIMP_TYPE_COMPONENT_MASK (gimp_component_mask_get_type ())
 

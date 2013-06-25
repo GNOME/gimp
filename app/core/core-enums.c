@@ -8,6 +8,42 @@
 #include "gimp-intl.h"
 
 /* enumerations from "./core-enums.h" */
+
+GType
+gimp_shape_type_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_SHAPE_RECTANGLE, "GIMP_SHAPE_RECTANGLE", "rectangle" },
+    { GIMP_SHAPE_ELLIPSE, "GIMP_SHAPE_ELLIPSE", "ellipse" },
+    { GIMP_SHAPE_ROUNDED_RECT, "GIMP_SHAPE_ROUNDED_RECT", "rounded-rect" },
+    { GIMP_SHAPE_N_POLYGON, "GIMP_SHAPE_N_POLYGON", "n-polygon" },
+    { GIMP_SHAPE_SINGLE_ROW, "GIMP_SHAPE_SINGLE_ROW", "single-row" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_SHAPE_RECTANGLE, NC_("shape-type", "Rectnagle"), NULL },
+    { GIMP_SHAPE_ELLIPSE, NC_("shape-type", "Ellipse"), NULL },
+    { GIMP_SHAPE_ROUNDED_RECT, NC_("shape-type", "Rounded Rectangle"), NULL },
+    { GIMP_SHAPE_N_POLYGON, NC_("shape-type", "n Polygon"), NULL },
+    { GIMP_SHAPE_SINGLE_ROW, NC_("shaoe-type", "Single Row"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpShapeType", values);
+      gimp_type_set_translation_context (type, "shape-type");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
 GType
 gimp_component_mask_get_type (void)
 {
