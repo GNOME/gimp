@@ -12,10 +12,11 @@ AM_CPPFLAGS = \
 	$(GDK_PIXBUF_CFLAGS)			\
 	-I$(includedir)
 
-noinst_LIBRARIES = libappoperations-generic.a \
-                   libappoperations-sse2.a \
-                   libappoperations-sse4.a \
-                   libappoperations.a
+noinst_LIBRARIES = \
+	libappoperations-generic.a		\
+	libappoperations-sse2.a			\
+	libappoperations-sse4.a			\
+	libappoperations.a
 
 libappoperations_generic_a_sources = \
 	operations-types.h			\
@@ -171,4 +172,3 @@ libappoperations.a: libappoperations-generic.a \
 	  $(libappoperations_sse2_a_OBJECTS) \
 	  $(libappoperations_sse4_a_OBJECTS)
 	$(RANLIB) libappoperations.a
-
