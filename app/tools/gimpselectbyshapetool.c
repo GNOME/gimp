@@ -152,7 +152,8 @@ gimp_select_by_shape_tool_select (GimpRectangleSelectTool *rect_tool,
      case GIMP_SHAPE_ROUNDED_RECT :
       {
        gdouble max    = MIN (w / 2.0, h / 2.0);
-       gdouble radius = MIN (sel_options->corner_radius, max);
+       //gdouble radius = MIN (sel_options->corner_radius, max);
+       gdouble radius = sel_options->corner_radius*max/100;
 
        gimp_channel_select_round_rect (gimp_image_get_mask (image),
                                       x, y, w, h,
