@@ -46,7 +46,7 @@ enum
   PROP_ROUND_CORNERS = GIMP_RECTANGLE_OPTIONS_PROP_LAST + 1,
   PROP_CORNER_RADIUS,
   PROP_SHAPE_TYPE,
-  PROP_HORIZONTAL,
+  PROP_LINE_ORIENTATION,
   PROP_N_SIDES
 };
 
@@ -105,10 +105,11 @@ gimp_rectangle_select_options_class_init (GimpRectangleSelectOptionsClass *klass
                                  GIMP_SHAPE_RECTANGLE,
                                  GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HORIZONTAL,
-                                    "horizontal",
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_LINE_ORIENTATION,
+                                    "line-orientation",
                                     N_("Choice between horizontal and vertical"),
-                                    FALSE,
+                                    GIMP_TYPE_ORIENTATION_TYPE,
+                                    GIMP_ORIENTATION_HORIZONTAL,
                                     GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_N_SIDES,
@@ -147,8 +148,8 @@ gimp_rectangle_select_options_set_property (GObject      *object,
       options->shape_type = g_value_get_enum (value);
       break; 
 
-    case PROP_HORIZONTAL:
-      options->horizontal = g_value_get_boolean (value);
+    case PROP_LINE_ORIENTATION:
+      options->line_orientation = g_value_get_boolean (value);
       break;   
     
     case PROP_N_SIDES:
@@ -183,8 +184,8 @@ gimp_rectangle_select_options_get_property (GObject    *object,
       g_value_set_enum (value, options->shape_type);
       break;
 
-    case PROP_HORIZONTAL:
-      g_value_set_enum (value, options->horizontal);
+    case PROP_LINE_ORIENTATION:
+      g_value_set_enum (value, options->line_orientation);
       break;  
     
     case PROP_N_SIDES:
@@ -217,7 +218,6 @@ gimp_rectangle_select_options_gui (GimpToolOptions *tool_options)
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_selection_options_gui (tool_options);
   GtkWidget *combo;
-  GtkWidget *button;
   GtkWidget *frame;
   GtkWidget *scale;
   GtkWidget *inner_vbox;
@@ -288,12 +288,14 @@ gimp_rectangle_select_options_gui (GimpToolOptions *tool_options)
                                GINT_TO_POINTER (GIMP_SHAPE_N_POLYGON),
                                NULL);
       
-      button = gimp_prop_check_button_new (config, "horizontal",
-                                           _("Horizontal Line"));
-      gtk_box_pack_start (GTK_BOX (inner_vbox), button, FALSE, FALSE, 0);
+      combo = gimp_prop_enum_combo_box_new (config, "line_orientation", 0, 0);
+      gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Line Orientation"));
+      g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
+      gtk_box_pack_start (GTK_BOX (vbox), combo, TRUE, TRUE, 0);
+      gtk_widget_show (combo);   
 
       g_object_bind_property_full (config, "shape-type",
-                               button,  "visible",
+                               combo,  "visible",
                                G_BINDING_SYNC_CREATE,
                                gimp_select_by_shape_options_shape_type,
                                NULL,
