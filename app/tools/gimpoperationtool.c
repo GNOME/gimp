@@ -393,8 +393,12 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
                                    const gchar       *operation,
                                    const gchar       *undo_desc)
 {
+  GimpImageMapTool *im_tool;
+
   g_return_if_fail (GIMP_IS_OPERATION_TOOL (tool));
   g_return_if_fail (operation != NULL);
+
+  im_tool = GIMP_IMAGE_MAP_TOOL (tool);
 
   if (tool->operation)
     g_free (tool->operation);
@@ -411,7 +415,7 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
   tool->config = gimp_gegl_get_config_proxy (tool->operation,
                                              GIMP_TYPE_SETTINGS);
 
-  gimp_image_map_tool_get_operation (GIMP_IMAGE_MAP_TOOL (tool));
+  gimp_image_map_tool_get_operation (im_tool);
 
   if (undo_desc)
     GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->settings_name = "yes"; /* XXX hack */
@@ -423,9 +427,9 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
       gtk_widget_destroy (tool->options_table);
       tool->options_table = NULL;
 
-      if (GIMP_IMAGE_MAP_TOOL (tool)->active_picker)
+      if (im_tool->active_picker)
         {
-          GIMP_IMAGE_MAP_TOOL (tool)->active_picker = NULL;
+          im_tool->active_picker = NULL;
           gimp_color_tool_disable (GIMP_COLOR_TOOL (tool));
         }
     }
@@ -447,10 +451,9 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
         }
     }
 
-  if (undo_desc && GIMP_IMAGE_MAP_TOOL (tool)->gui)
-    gimp_tool_gui_set_description (GIMP_IMAGE_MAP_TOOL (tool)->gui,
-                                   undo_desc);
+  if (undo_desc && im_tool->gui)
+    gimp_tool_gui_set_description (im_tool->gui, undo_desc);
 
   if (GIMP_TOOL (tool)->drawable)
-    gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
+    gimp_image_map_tool_preview (im_tool);
 }
