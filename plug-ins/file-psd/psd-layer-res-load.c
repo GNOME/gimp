@@ -191,7 +191,7 @@ get_layer_resource_header (PSDlayerres  *res_a,
   res_a->data_start = ftell (f);
 
   IFDBG(2) g_debug ("Sig: %.4s, key: %.4s, start: %d, len: %d",
-		    res_a->sig, res_a->key, res_a->data_start, res_a->data_len);
+		     res_a->sig, res_a->key, res_a->data_start, res_a->data_len);
 
   return 0;
 }
@@ -501,4 +501,3 @@ load_resource_lsct (const PSDlayerres  *res_a,
   lyr_a->group_type = type;
   return 0;
 }
-

@@ -31,7 +31,7 @@
 /* Set to the level of debugging output you want, 0 for none.
  *   Setting higher than 2 will result in a very large amount of debug
  *   output being produced. */
-#define PSD_DEBUG 0
+#define PSD_DEBUG 3
 #define IFDBG(level) if (PSD_DEBUG >= level)
 
 /* Set to FALSE to suppress pop-up warnings about lossy file conversions */
@@ -248,7 +248,8 @@ typedef enum {
   PSD_ALPHA_ID          = 1053,         /* 0x041d - Alpha IDs */
   PSD_URL_LIST_UNI      = 1054,         /* 0x041e - URL list - unicode */
   PSD_VERSION_INFO      = 1057,         /* 0x0421 - Version info */
-  PSD_EXIF_DATA         = 1058,         /* 0x0422 - Exif data block */
+  PSD_EXIF_DATA         = 1058,         /* 0x0422 - Exif data block 1 */
+  PSD_EXIF_DATA_3       = 1059,         /* 0X0423 - Exif data block 3 (?) */
   PSD_XMP_DATA          = 1060,         /* 0x0424 - XMP data block */
   PSD_CAPTION_DIGEST    = 1061,         /* 0x0425 - Caption digest */
   PSD_PRINT_SCALE       = 1062,         /* 0x0426 - Print scale */
@@ -278,8 +279,8 @@ typedef enum {
   PSD_CLIPPING_PATH     = 2999,         /* 0x0bb7 - Name of clipping path */
   PSD_PLUGIN_R_FIRST    = 4000,         /* 0x0FA0 - First plugin resource */
   PSD_PLUGIN_R_LAST     = 4999,         /* 0x1387 - Last plugin resource */
-  PSD_IMAGEREADY_VARS   = 7000,         /* 0x1B58 - Name of clipping path */
-  PSD_IMAGEREADY_DATA   = 7001,         /* 0x1B59 - Name of clipping path */
+  PSD_IMAGEREADY_VARS   = 7000,         /* 0x1B58 - Imageready variables */
+  PSD_IMAGEREADY_DATA   = 7001,         /* 0x1B59 - Imageready data sets */
   PSD_LIGHTROOM_WORK    = 8000,         /* 0x1F40 - Lightroom workflow */
   PSD_PRINT_FLAGS_2     = 10000         /* 0x2710 - Print flags */
 } PSDImageResID;
@@ -472,23 +473,21 @@ typedef struct {
 
 /* Channel display info data for Adobe Photoshop CS2 and lower */
 typedef struct {
-  gint16        colorSpace;             /* Color space from  PSDColorSpace */
+  gint16        colorSpace;             /* Color space from PSDColorSpace */
   guint16       color[4];               /* 4 * 16 bit color components */
   gint16        opacity;                /* Opacity 0 to 100 */
   gchar         kind;                   /* Selected = 0, Protected = 1 */
   gchar         padding;                /* Padding */
 } DisplayInfo;
 
-/* Channel display info data for Adobe Photoshop CS3 and higher to support floating point colors
---Note-- There are an additional 4 bytes at the beginning of the block, that contain the version number 
-(which seems to be 1). */
-  typedef struct {
-    gint16        colorSpace;             /* Color space from  PSDColorSpace */
-    guint16       color[4];               /* 4 * 16 bit color components */
-    gint16        opacity;                /* Opacity 0 to 100 */
-    gchar         kind;                   /* Selected = 0, Protected = 1 */
-    gchar         mode;                   /* Alpha = 0, Inverted alpha = 1, Spot = 2 */
-  } DisplayInfoNew;
+/* Channel display info data for Adobe Photoshop CS3 and higher to support floating point colors */
+typedef struct {
+  gint16        colorSpace;             /* Color space from PSDColorSpace */
+  guint16       color[4];               /* 4 * 16 bit color components */
+  gint16        opacity;                /* Opacity 0 to 100 */
+  gchar         kind;                   /* Selected = 0, Protected = 1 */
+  gchar         mode;                   /* Alpha = 0, Inverted alpha = 1, Spot = 2 */
+} DisplayInfoNew;
 
 
 /* PSD Channel length info data structure */
@@ -580,6 +579,7 @@ typedef struct
 {
   GimpRGB       gimp_color;             /* Gimp RGB color */
   gint16        opacity;                /* Opacity */
+  guchar        ps_mode;                /* PS mode flag */
   guchar        ps_kind;                /* PS type flag */
   gint16        ps_cspace;              /* PS color space */
   CMColor       ps_color;               /* PS color */

@@ -1092,24 +1092,30 @@ add_layers (const gint32  image_id,
         }
       else
         {
-          if (lyr_a[lidx]->group_type != 0)
+          switch (lyr_a[lidx]->group_type)
             {
-              if (lyr_a[lidx]->group_type == 3)
-                {
-                  /* the </Layer group> marker layers are used to
-                     assemble the layer structure in a single pass */
-                  layer_id = gimp_layer_group_new (image_id);
-                }
-              else /* group-type == 1 || group_type == 2 */
-                {
-                  layer_id = g_array_index (parent_group_stack, gint32,
-                                            parent_group_stack->len-1);
-                  /* since the layers are stored in reverse, the group
+	      case 1:
+	      case 2:
+		layer_id = g_array_index (parent_group_stack, gint32,
+					  parent_group_stack->len-1);
+		/* since the layers are stored in reverse, the group
                      layer start marker actually means we're done with
                      that layer group */
-                  g_array_remove_index (parent_group_stack,
-                                        parent_group_stack->len-1);
-                }
+		g_array_remove_index (parent_group_stack,
+				      parent_group_stack->len-1);
+                g_message("Case 1 and 2");
+                break;
+	      case 3:
+                /* the </Layer group> marker layers are used to
+                   assemble the layer structure in a single pass */
+                layer_id = gimp_layer_group_new (image_id);
+                g_message("Case 3");
+                break;
+	      default:
+                /* Type 0 and non-marked layers are not touched
+                   and they are their own layer */
+                g_message("Case 0");
+                break;
             }
 
           /* Empty layer */
