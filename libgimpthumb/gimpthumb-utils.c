@@ -28,15 +28,11 @@
 #include <string.h>
 #include <sys/types.h>
 
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #ifdef PLATFORM_OSX
 #include <AppKit/AppKit.h>
 #endif
 
-#include <glib-object.h>
+#include <gio/gio.h>
 #include <glib/gstdio.h>
 
 #ifdef G_OS_WIN32
@@ -515,33 +511,62 @@ gimp_thumb_file_test (const gchar *filename,
                       gint64      *size,
                       gint        *err_no)
 {
-  struct stat s;
+  GimpThumbFileType  type = GIMP_THUMB_FILE_TYPE_NONE;
+  GFile             *file;
+  GFileInfo         *info;
 
   g_return_val_if_fail (filename != NULL, FALSE);
 
-  if (g_stat (filename, &s) == 0)
+  file = g_file_new_for_path (filename);
+
+  info = g_file_query_info (file,
+                            G_FILE_ATTRIBUTE_STANDARD_TYPE ","
+                            G_FILE_ATTRIBUTE_STANDARD_SIZE ","
+                            G_FILE_ATTRIBUTE_TIME_MODIFIED,
+                            G_FILE_QUERY_INFO_NONE,
+                            NULL, NULL);
+
+  if (info)
     {
-      if (mtime)  *mtime  = s.st_mtime;
-      if (size)   *size   = s.st_size;
-      if (err_no) *err_no = 0;
+      if (mtime)
+        *mtime =
+          g_file_info_get_attribute_uint64 (info,
+                                            G_FILE_ATTRIBUTE_TIME_MODIFIED);
 
-      if (S_ISREG (s.st_mode))
+      if (size)
+        *size = g_file_info_get_size (info);
+
+      if (err_no)
+        *err_no = 0;
+
+      switch (g_file_info_get_attribute_uint32 (info,
+                                                G_FILE_ATTRIBUTE_STANDARD_TYPE))
         {
-          return GIMP_THUMB_FILE_TYPE_REGULAR;
-        }
-      else if (S_ISDIR (s.st_mode))
-        {
-          return GIMP_THUMB_FILE_TYPE_FOLDER;
+        case G_FILE_TYPE_REGULAR:
+          type = GIMP_THUMB_FILE_TYPE_REGULAR;
+          break;
+
+        case G_FILE_TYPE_DIRECTORY:
+          type = GIMP_THUMB_FILE_TYPE_FOLDER;
+          break;
+
+        default:
+          type = GIMP_THUMB_FILE_TYPE_SPECIAL;
+          break;
         }
 
-      return GIMP_THUMB_FILE_TYPE_SPECIAL;
+      g_object_unref (info);
+    }
+  else
+    {
+      if (mtime)  *mtime  = 0;
+      if (size)   *size   = 0;
+      if (err_no) *err_no = ENOENT;
     }
 
-  if (mtime)  *mtime  = 0;
-  if (size)   *size   = 0;
-  if (err_no) *err_no = errno;
+  g_object_unref (file);
 
-  return GIMP_THUMB_FILE_TYPE_NONE;
+  return type;
 }
 
 /**
