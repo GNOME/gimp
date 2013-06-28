@@ -123,13 +123,15 @@ gimp_select_by_shape_tool_select (GimpRectangleSelectTool *rect_tool,
 {
   GimpTool                   *tool    = GIMP_TOOL (rect_tool);
   GimpSelectionOptions       *options = GIMP_SELECTION_TOOL_GET_OPTIONS (rect_tool);
-  GimpImage                  *image   = gimp_display_get_image (tool->display);
   GimpRectangleSelectOptions *sel_options     = GIMP_RECTANGLE_SELECT_TOOL_GET_OPTIONS (tool);
+  GimpChannel                *channel;
+  
+  channel = gimp_image_get_mask (gimp_display_get_image (tool->display));
 
   switch(sel_options->shape_type)
    {
      case GIMP_SHAPE_RECTANGLE :
-      gimp_channel_select_rectangle (gimp_image_get_mask (image),
+      gimp_channel_select_rectangle (channel,
                                      x, y, w, h,
                                      operation,
                                      options->feather,
@@ -139,7 +141,7 @@ gimp_select_by_shape_tool_select (GimpRectangleSelectTool *rect_tool,
       break;
     
      case GIMP_SHAPE_ELLIPSE :  
-      gimp_channel_select_ellipse (gimp_image_get_mask (image),
+      gimp_channel_select_ellipse (channel,
                                    x, y, w, h,
                                    operation,
                                    options->antialias,
@@ -155,7 +157,7 @@ gimp_select_by_shape_tool_select (GimpRectangleSelectTool *rect_tool,
        //gdouble radius = MIN (sel_options->corner_radius, max);
        gdouble radius = sel_options->corner_radius*max/100;
 
-       gimp_channel_select_round_rect (gimp_image_get_mask (image),
+       gimp_channel_select_round_rect (channel,
                                       x, y, w, h,
                                       radius, 
                                       radius,
@@ -168,7 +170,7 @@ gimp_select_by_shape_tool_select (GimpRectangleSelectTool *rect_tool,
        break;
      }
       default :
-       gimp_channel_select_rectangle (gimp_image_get_mask (image),
+       gimp_channel_select_rectangle (channel,
                                      x, y, w, h,
                                      operation,
                                      options->feather,
