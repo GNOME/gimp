@@ -32,6 +32,9 @@
 
 #include "gegl/gimp-gegl-config-proxy.h"
 
+#include "core/gimpchannel.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
@@ -40,6 +43,8 @@
 #include "core/gimpparamspecs-duplicate.h"
 #include "core/gimpsettings.h"
 
+#include "widgets/gimpcontainercombobox.h"
+#include "widgets/gimpcontainerview.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpproptable.h"
 
@@ -55,6 +60,13 @@
 /*  local function prototypes  */
 
 static void        gimp_operation_tool_finalize        (GObject           *object);
+
+static gboolean    gimp_operation_tool_initialize      (GimpTool          *tool,
+                                                        GimpDisplay       *display,
+                                                        GError           **error);
+static void        gimp_operation_tool_control         (GimpTool          *tool,
+                                                        GimpToolAction     action,
+                                                        GimpDisplay       *display);
 
 static GeglNode  * gimp_operation_tool_get_operation   (GimpImageMapTool  *im_tool,
                                                         GObject          **config,
@@ -105,9 +117,13 @@ static void
 gimp_operation_tool_class_init (GimpOperationToolClass *klass)
 {
   GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
+  GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
   object_class->finalize         = gimp_operation_tool_finalize;
+
+  tool_class->initialize         = gimp_operation_tool_initialize;
+  tool_class->control            = gimp_operation_tool_control;
 
   im_tool_class->dialog_desc     = _("GEGL Operation");
 
@@ -151,6 +167,52 @@ gimp_operation_tool_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+static gboolean
+gimp_operation_tool_initialize (GimpTool     *tool,
+                                GimpDisplay  *display,
+                                GError      **error)
+{
+  GimpOperationTool *op_tool = GIMP_OPERATION_TOOL (tool);
+
+  if (GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
+    {
+      if (op_tool->aux_input_combo)
+        {
+          GimpImage *image = gimp_item_get_image (GIMP_ITEM (tool->drawable));
+
+          gimp_container_view_set_container (GIMP_CONTAINER_VIEW (op_tool->aux_input_combo),
+                                             gimp_image_get_channels (image));
+        }
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static void
+gimp_operation_tool_control (GimpTool       *tool,
+                             GimpToolAction  action,
+                             GimpDisplay    *display)
+{
+  GimpOperationTool *op_tool = GIMP_OPERATION_TOOL (tool);
+
+  switch (action)
+    {
+    case GIMP_TOOL_ACTION_PAUSE:
+    case GIMP_TOOL_ACTION_RESUME:
+      break;
+
+    case GIMP_TOOL_ACTION_HALT:
+      if (op_tool->aux_input_combo)
+        gimp_container_view_set_container (GIMP_CONTAINER_VIEW (op_tool->aux_input_combo),
+                                           NULL);
+      break;
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
+}
+
 static GeglNode *
 gimp_operation_tool_get_operation (GimpImageMapTool  *im_tool,
                                    GObject          **config,
@@ -190,15 +252,22 @@ gimp_operation_tool_dialog (GimpImageMapTool *image_map_tool)
   main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
 
   /*  The options vbox  */
-  tool->options_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  tool->options_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), tool->options_box,
                       FALSE, FALSE, 0);
   gtk_widget_show (tool->options_box);
 
+  if (tool->aux_input_combo)
+    {
+      gtk_box_pack_start (GTK_BOX (tool->options_box), tool->aux_input_combo,
+                          FALSE, FALSE, 0);
+      gtk_widget_show (tool->aux_input_combo);
+    }
+
   if (tool->options_table)
     {
-      gtk_container_add (GTK_CONTAINER (tool->options_box),
-                         tool->options_table);
+      gtk_box_pack_start (GTK_BOX (tool->options_box), tool->options_table,
+                          FALSE, FALSE, 0);
       gtk_widget_show (tool->options_table);
     }
 
@@ -388,6 +457,24 @@ gimp_operation_tool_color_picked (GimpImageMapTool  *im_tool,
   g_strfreev (pspecs);
 }
 
+static gboolean
+gimp_operation_tool_aux_selected (GimpContainerView  *view,
+                                  GimpViewable       *viewable,
+                                  gpointer            insert_data,
+                                  GeglNode           *operation)
+{
+  GeglBuffer *buffer = NULL;
+
+  if (viewable)
+    buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (viewable));
+
+  gegl_node_set (operation,
+                 "buffer", buffer,
+                 NULL);
+
+  return TRUE;
+}
+
 void
 gimp_operation_tool_set_operation (GimpOperationTool *tool,
                                    const gchar       *operation,
@@ -422,6 +509,12 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
   else
     GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->settings_name = NULL; /* XXX hack */
 
+  if (tool->aux_input_combo)
+    {
+      gtk_widget_destroy (tool->aux_input_combo);
+      tool->aux_input_combo = NULL;
+    }
+
   if (tool->options_table)
     {
       gtk_widget_destroy (tool->options_table);
@@ -432,6 +525,50 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
           im_tool->active_picker = NULL;
           gimp_color_tool_disable (GIMP_COLOR_TOOL (tool));
         }
+    }
+
+  if (gegl_node_has_pad (im_tool->operation, "aux"))
+    {
+      GimpImage     *image;
+      GimpContext   *context;
+      GimpContainer *channels;
+      GimpChannel   *channel;
+      GeglNode      *source;
+
+      source = gegl_node_new_child (im_tool->operation,
+                                    "operation", "gegl:buffer-source",
+                                    NULL);
+
+      gegl_node_connect_to (source,             "output",
+                            im_tool->operation, "aux");
+
+      image = gimp_item_get_image (GIMP_ITEM (GIMP_TOOL (tool)->drawable));
+
+      context  = GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (tool));
+      channels = gimp_image_get_channels (image);
+
+      tool->aux_input_combo =
+        gimp_container_combo_box_new (channels, context,
+                                      GIMP_VIEW_SIZE_SMALL, 1);
+
+      if (tool->options_box)
+        {
+          gtk_box_pack_start (GTK_BOX (tool->options_box), tool->aux_input_combo,
+                              FALSE, FALSE, 0);
+          gtk_widget_show (tool->aux_input_combo);
+        }
+
+      g_signal_connect_object (tool->aux_input_combo, "select-item",
+                               G_CALLBACK (gimp_operation_tool_aux_selected),
+                               source, 0);
+
+      channel = gimp_image_get_active_channel (image);
+
+      if (! channel)
+        channel = GIMP_CHANNEL (gimp_container_get_first_child (channels));
+
+      gimp_container_view_select_item (GIMP_CONTAINER_VIEW (tool->aux_input_combo),
+                                       GIMP_VIEWABLE (channel));
     }
 
   if (tool->config)
@@ -445,8 +582,8 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
 
       if (tool->options_box)
         {
-          gtk_container_add (GTK_CONTAINER (tool->options_box),
-                             tool->options_table);
+          gtk_box_pack_start (GTK_BOX (tool->options_box), tool->options_table,
+                              FALSE, FALSE, 0);
           gtk_widget_show (tool->options_table);
         }
     }
