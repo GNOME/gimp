@@ -372,6 +372,41 @@ gimp_scanner_parse_int (GScanner *scanner,
 }
 
 /**
+ * gimp_scanner_parse_int64:
+ * @scanner: A #GScanner created by gimp_scanner_new_file() or
+ *           gimp_scanner_new_string()
+ * @dest: Return location for the parsed integer
+ *
+ * Return value: %TRUE on success
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_scanner_parse_int64 (GScanner *scanner,
+                          gint64   *dest)
+{
+  gboolean negate = FALSE;
+
+  if (g_scanner_peek_next_token (scanner) == '-')
+    {
+      negate = TRUE;
+      g_scanner_get_next_token (scanner);
+    }
+
+  if (g_scanner_peek_next_token (scanner) != G_TOKEN_INT)
+    return FALSE;
+
+  g_scanner_get_next_token (scanner);
+
+  if (negate)
+    *dest = -scanner->value.v_int64;
+  else
+    *dest = scanner->value.v_int64;
+
+  return TRUE;
+}
+
+/**
  * gimp_scanner_parse_float:
  * @scanner: A #GScanner created by gimp_scanner_new_file() or
  *           gimp_scanner_new_string()

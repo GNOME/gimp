@@ -48,6 +48,8 @@ gboolean   gimp_scanner_parse_data               (GScanner     *scanner,
                                                   guint8      **dest);
 gboolean   gimp_scanner_parse_int                (GScanner     *scanner,
                                                   gint         *dest);
+gboolean   gimp_scanner_parse_int64              (GScanner     *scanner,
+                                                  gint64       *dest);
 gboolean   gimp_scanner_parse_float              (GScanner     *scanner,
                                                   gdouble      *dest);
 gboolean   gimp_scanner_parse_boolean            (GScanner     *scanner,

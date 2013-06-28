@@ -60,6 +60,7 @@ EXPORTS
 	gimp_scanner_parse_float
 	gimp_scanner_parse_identifier
 	gimp_scanner_parse_int
+	gimp_scanner_parse_int64
 	gimp_scanner_parse_matrix2
 	gimp_scanner_parse_string
 	gimp_scanner_parse_string_no_validate
