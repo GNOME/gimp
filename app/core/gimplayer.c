@@ -168,6 +168,12 @@ static void    gimp_layer_get_active_components (const GimpDrawable *drawable,
                                                  gboolean           *active);
 static GimpComponentMask
                gimp_layer_get_active_mask       (const GimpDrawable *drawable);
+static void    gimp_layer_set_buffer            (GimpDrawable       *drawable,
+                                                 gboolean            push_undo,
+                                                 const gchar        *undo_desc,
+                                                 GeglBuffer         *buffer,
+                                                 gint                offset_x,
+                                                 gint                offset_y);
 
 static gdouble gimp_layer_get_opacity_at        (GimpPickable       *pickable,
                                                  gint                x,
@@ -314,6 +320,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   drawable_class->invalidate_boundary   = gimp_layer_invalidate_boundary;
   drawable_class->get_active_components = gimp_layer_get_active_components;
   drawable_class->get_active_mask       = gimp_layer_get_active_mask;
+  drawable_class->set_buffer            = gimp_layer_set_buffer;
 
   klass->opacity_changed              = NULL;
   klass->mode_changed                 = NULL;
@@ -1093,6 +1100,39 @@ gimp_layer_get_active_mask (const GimpDrawable *drawable)
     mask &= ~GIMP_COMPONENT_ALPHA;
 
   return mask;
+}
+
+static void
+gimp_layer_set_buffer (GimpDrawable *drawable,
+                       gboolean      push_undo,
+                       const gchar  *undo_desc,
+                       GeglBuffer   *buffer,
+                       gint          offset_x,
+                       gint          offset_y)
+{
+  gboolean old_linear = gimp_drawable_get_linear (drawable);
+
+  GIMP_DRAWABLE_CLASS (parent_class)->set_buffer (drawable,
+                                                  push_undo, undo_desc,
+                                                  buffer,
+                                                  offset_x, offset_y);
+
+  if (gimp_filter_peek_node (GIMP_FILTER (drawable)))
+    {
+      gboolean new_linear = gimp_drawable_get_linear (drawable);
+
+      if (old_linear != new_linear)
+        {
+          GimpLayer *layer = GIMP_LAYER (drawable);
+          GeglNode  *mode_node;
+
+          mode_node = gimp_drawable_get_mode_node (drawable);
+
+          gimp_gegl_mode_node_set_mode (mode_node,
+                                        gimp_layer_get_visible_mode (layer),
+                                        new_linear);
+        }
+    }
 }
 
 static gdouble
