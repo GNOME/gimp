@@ -49,7 +49,7 @@ AM_CPPFLAGS = \
 	-DGIMP_THUMB_COMPILATION	\
 	-I$(top_srcdir)			\
 	$(GDK_PIXBUF_CFLAGS)		\
-	$(GLIB_CFLAGS)			\
+	$(GIO_CFLAGS)			\
 	-I$(includedir)			\
 	$(xobjective_c)
 
@@ -86,7 +86,7 @@ libgimpthumb_@GIMP_API_VERSION@_la_LDFLAGS = \
 
 libgimpthumb_@GIMP_API_VERSION@_la_LIBADD = \
 	$(GDK_PIXBUF_LIBS)	\
-	$(GLIB_LIBS) 
+	$(GIO_LIBS) 
 
 
 noinst_PROGRAMS = gimp-thumbnail-list
