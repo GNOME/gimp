@@ -164,6 +164,8 @@ libappoperations_sse4_a_CFLAGS = $(SSE4_1_EXTRA_CFLAGS)
 
 libappoperations_generic_a_SOURCES = $(libappoperations_generic_a_sources)
 
+libappoperations_a_SOURCES =
+
 libappoperations.a: libappoperations-generic.a \
                     libappoperations-sse2.a \
                     libappoperations-sse4.a
