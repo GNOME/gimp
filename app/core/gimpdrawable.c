@@ -793,11 +793,6 @@ gimp_drawable_real_convert_type (GimpDrawable      *drawable,
 static GeglBuffer *
 gimp_drawable_real_get_buffer (GimpDrawable *drawable)
 {
-#if 0
-  gegl_buffer_flush (drawable->private->buffer);
-  gimp_gegl_buffer_refetch_tiles (drawable->private->buffer);
-#endif
-
   return drawable->private->buffer;
 }
 
