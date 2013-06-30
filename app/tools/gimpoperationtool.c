@@ -152,16 +152,22 @@ gimp_operation_tool_finalize (GObject *object)
       tool->operation = NULL;
     }
 
+  if (tool->undo_desc)
+    {
+      g_free (tool->undo_desc);
+      tool->undo_desc = NULL;
+    }
+
   if (tool->config)
     {
       g_object_unref (tool->config);
       tool->config = NULL;
     }
 
-  if (tool->undo_desc)
+  if (tool->aux_input)
     {
-      g_free (tool->undo_desc);
-      tool->undo_desc = NULL;
+      g_object_unref (tool->aux_input);
+      tool->aux_input = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -461,14 +467,14 @@ static gboolean
 gimp_operation_tool_aux_selected (GimpContainerView  *view,
                                   GimpViewable       *viewable,
                                   gpointer            insert_data,
-                                  GeglNode           *operation)
+                                  GimpOperationTool  *tool)
 {
   GeglBuffer *buffer = NULL;
 
   if (viewable)
     buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (viewable));
 
-  gegl_node_set (operation,
+  gegl_node_set (tool->aux_input,
                  "buffer", buffer,
                  NULL);
 
@@ -502,6 +508,12 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
   tool->config = gimp_gegl_get_config_proxy (tool->operation,
                                              GIMP_TYPE_SETTINGS);
 
+  if (tool->aux_input)
+    {
+      g_object_unref (tool->aux_input);
+      tool->aux_input = NULL;
+    }
+
   gimp_image_map_tool_get_operation (im_tool);
 
   if (undo_desc)
@@ -533,13 +545,12 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
       GimpContext   *context;
       GimpContainer *channels;
       GimpChannel   *channel;
-      GeglNode      *source;
 
-      source = gegl_node_new_child (im_tool->operation,
-                                    "operation", "gegl:buffer-source",
-                                    NULL);
+      tool->aux_input = gegl_node_new_child (NULL,
+                                             "operation", "gegl:buffer-source",
+                                             NULL);
 
-      gegl_node_connect_to (source,             "output",
+      gegl_node_connect_to (tool->aux_input,    "output",
                             im_tool->operation, "aux");
 
       image = gimp_item_get_image (GIMP_ITEM (GIMP_TOOL (tool)->drawable));
@@ -560,7 +571,7 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
 
       g_signal_connect_object (tool->aux_input_combo, "select-item",
                                G_CALLBACK (gimp_operation_tool_aux_selected),
-                               source, 0);
+                               tool, 0);
 
       channel = gimp_image_get_active_channel (image);
 
