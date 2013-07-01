@@ -386,9 +386,9 @@ app/tools/gimpseamlesscloneoptions.c
 app/tools/gimpseamlessclonetool.c
 app/tools/gimpselectionoptions.c
 app/tools/gimpselectiontool.c
-app/tools/gimpselectbycontent.c
-app/tools/gimpselectbyshape.c
-app/tools/gimpselectbycolor.c
+app/tools/gimpselectbycontenttool.c
+app/tools/gimpselectbyshapetool.c
+app/tools/gimpselectbycolortool.c
 app/tools/gimpsheartool.c
 app/tools/gimpsmudgetool.c
 app/tools/gimptextoptions.c
