@@ -83,7 +83,8 @@ gimp_translation_store_init (GimpTranslationStore *store)
 static void
 gimp_translation_store_constructed (GObject *object)
 {
-  GimpTranslationStore *store = GIMP_TRANSLATION_STORE (object);
+  const gchar          *current_lang = g_getenv ("LANGUAGE");
+  GimpTranslationStore *store        = GIMP_TRANSLATION_STORE (object);
   gchar                *label;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -94,11 +95,20 @@ gimp_translation_store_constructed (GObject *object)
   g_hash_table_unref (store->map);
   store->map = NULL;
 
-  /*  add special entries for system locale and for "C"  */
+  /*  add special entries for system locale and for "C".
+   *  We want the system locale to be localized in itself. */
+  g_setenv ("LANGUAGE", setlocale (LC_ALL, NULL), TRUE);
+  setlocale (LC_ALL, "");
+  label = g_strdup_printf ("%s [%s]", _("System Language"),
+                           setlocale (LC_ALL, NULL));
+  g_setenv ("LANGUAGE", current_lang, TRUE);
+  setlocale (LC_ALL, "");
   GIMP_LANGUAGE_STORE_CLASS (parent_class)->add (GIMP_LANGUAGE_STORE (store),
-                                                 _("System Language"),
+                                                 label,
                                                  NULL);
-  label = g_strdup_printf ("%s [%s]", _("English"), "en_US");
+  g_free (label);
+
+  label = g_strdup_printf ("%s [%s]", "English", "en_US");
   GIMP_LANGUAGE_STORE_CLASS (parent_class)->add (GIMP_LANGUAGE_STORE (store),
                                                  label, "en_US");
   g_free (label);

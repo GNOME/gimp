@@ -67,6 +67,10 @@ static void  iso_codes_parser_end_element   (GMarkupParseContext  *context,
 static void  iso_codes_parser_start_unknown (IsoCodesParser       *parser);
 static void  iso_codes_parser_end_unknown   (IsoCodesParser       *parser);
 
+static void  gimp_language_store_self_l10n  (GimpLanguageStore *store,
+                                             const gchar       *lang,
+                                             const gchar       *code);
+
 
 static void
 iso_codes_parser_init (void)
@@ -160,11 +164,58 @@ iso_codes_parser_entry (IsoCodesParser  *parser,
       values++;
     }
 
+  /* This is a hack for some special exception.
+   * It seems localization won't work for the base language "zh". Probably because
+   * written locale dialect are too different. So we have to be accurate and localize
+   * separately each Chinese dialect we support.
+   *
+   * There was unfortunately no cleaner way to achieve this since there is no standardized
+   * link between regions in iso-3166 and base languages in iso-639, which would allow
+   * automatization for generating locale dialects codes.
+   */
+  if (g_strcmp0 (code, "zh") == 0)
+    {
+      gimp_language_store_self_l10n (parser->store, "Chinese", "zh_CN");
+      gimp_language_store_self_l10n (parser->store, "Chinese", "zh_TW");
+      gimp_language_store_self_l10n (parser->store, "Chinese", "zh_HK");
+    }
+  else
+    gimp_language_store_self_l10n (parser->store, lang, code);
+}
+
+/* If possible, we want to localize a language in itself.
+ * If it fails, fallback to the currently selected language, then to system lang.
+ * Only fallback to C (en_US) as a last resort.
+ */
+static void
+gimp_language_store_self_l10n (GimpLanguageStore *store,
+                               const gchar       *lang,
+                               const gchar       *code)
+{
   if (lang && *lang && code && *code)
     {
       const gchar *semicolon;
+      const gchar *current_lang = g_getenv ("LANGUAGE");
 
-      lang = dgettext ("iso_639", lang);
+      /* English does not need localization. */
+      if (g_strcmp0 (code, "en") != 0)
+        {
+          gchar       *temp_lang;
+
+          if (current_lang)
+            temp_lang = g_strdup_printf ("%s:%s:%s", code, current_lang, setlocale (LC_ALL, NULL));
+          else
+            temp_lang = g_strdup (code);
+
+          /* Temporarily change the localization language. */
+          g_setenv ("LANGUAGE", temp_lang, TRUE);
+          setlocale (LC_ALL, "");
+          lang = dgettext ("iso_639", lang);
+          g_setenv ("LANGUAGE", current_lang, TRUE);
+          setlocale (LC_ALL, "");
+
+          g_free (temp_lang);
+        }
 
       /*  there might be several language names; use the first one  */
       semicolon = strchr (lang, ';');
@@ -173,12 +224,12 @@ iso_codes_parser_entry (IsoCodesParser  *parser,
         {
           gchar *first = g_strndup (lang, semicolon - lang);
 
-          gimp_language_store_add (parser->store, first, code);
+          gimp_language_store_add (store, first, code);
           g_free (first);
         }
       else
         {
-          gimp_language_store_add (parser->store, lang, code);
+          gimp_language_store_add (store, lang, code);
         }
     }
 }
