@@ -100,15 +100,13 @@ view_close_cmd_callback (GtkAction *action,
   GimpDisplay      *display;
   GimpDisplayShell *shell;
   GimpImage        *image;
-
   return_if_no_display (display, data);
-  shell  = gimp_display_get_shell(display);
+
+  shell = gimp_display_get_shell (display);
   image = gimp_display_get_image (display);
 
-  /* Check for active image so we don't close the last display. */
-  if (! GIMP_IS_IMAGE (image) || ! gimp_image_get_active_drawable (image))
-    return;
-  if (shell)
+  /* Check for the image so we don't close the last display. */
+  if (image)
     gimp_display_shell_close (shell, FALSE);
 }
 
