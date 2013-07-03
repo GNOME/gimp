@@ -83,8 +83,8 @@ gimp_translation_store_init (GimpTranslationStore *store)
 static void
 gimp_translation_store_constructed (GObject *object)
 {
-  const gchar          *current_lang = g_getenv ("LANGUAGE");
   GimpTranslationStore *store        = GIMP_TRANSLATION_STORE (object);
+  gchar                *current_lang = g_strdup (g_getenv ("LANGUAGE"));
   gchar                *label;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -103,6 +103,8 @@ gimp_translation_store_constructed (GObject *object)
                            setlocale (LC_ALL, NULL));
   g_setenv ("LANGUAGE", current_lang, TRUE);
   setlocale (LC_ALL, "");
+  g_free (current_lang);
+
   GIMP_LANGUAGE_STORE_CLASS (parent_class)->add (GIMP_LANGUAGE_STORE (store),
                                                  label,
                                                  NULL);

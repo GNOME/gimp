@@ -195,12 +195,12 @@ gimp_language_store_self_l10n (GimpLanguageStore *store,
   if (lang && *lang && code && *code)
     {
       const gchar *semicolon;
-      const gchar *current_lang = g_getenv ("LANGUAGE");
 
       /* English does not need localization. */
       if (g_strcmp0 (code, "en") != 0)
         {
-          gchar       *temp_lang;
+          gchar *current_lang = g_strdup (g_getenv ("LANGUAGE"));
+          gchar *temp_lang;
 
           if (current_lang)
             temp_lang = g_strdup_printf ("%s:%s:%s", code, current_lang, setlocale (LC_ALL, NULL));
@@ -214,6 +214,7 @@ gimp_language_store_self_l10n (GimpLanguageStore *store,
           g_setenv ("LANGUAGE", current_lang, TRUE);
           setlocale (LC_ALL, "");
 
+          g_free (current_lang);
           g_free (temp_lang);
         }
 
