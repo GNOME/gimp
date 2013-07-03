@@ -1051,12 +1051,6 @@ gimp_image_window_add_shell (GimpImageWindow  *window,
 
   private->shells = g_list_append (private->shells, shell);
 
-  if (g_list_length (private->shells) > 1)
-    {
-      gimp_image_window_keep_canvas_pos (window);
-      gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), TRUE);
-    }
-
   tab_label = gimp_image_window_create_tab_label (window, shell);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (private->notebook),
@@ -1095,12 +1089,6 @@ gimp_image_window_remove_shell (GimpImageWindow  *window,
 
   gtk_container_remove (GTK_CONTAINER (private->notebook),
                         GTK_WIDGET (shell));
-
-  if (g_list_length (private->shells) == 1)
-    {
-      gimp_image_window_keep_canvas_pos (window);
-      gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), FALSE);
-    }
 }
 
 gint
@@ -1509,6 +1497,38 @@ gimp_image_window_keep_canvas_pos (GimpImageWindow *window)
 }
 
 
+/**
+ * gimp_image_window_update_tabs:
+ * @window: the Image Window to update.
+ *
+ * Holds the logics of whether shell tabs are to be shown or not in the
+ * Image Window @window. This function should be called after every
+ * change to @window where one might expect tab visibility to change.
+ *
+ * No direct call to gtk_notebook_set_show_tabs() should ever be made.
+ * If we change the logics of tab hiding, we should only change this
+ * procedure instead.
+ **/
+void
+gimp_image_window_update_tabs (GimpImageWindow  *window)
+{
+  GimpImageWindowPrivate *private;
+  GimpGuiConfig          *config;
+
+  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  config = GIMP_GUI_CONFIG (private->gimp->config);
+
+  gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook),
+                              config->single_window_mode &&
+                              ! config->hide_docks       &&
+                              ((private->active_shell          &&
+                                private->active_shell->display &&
+                                gimp_display_get_image (private->active_shell->display)) ||
+                               g_list_length (private->shells) > 1));
+}
+
 /*  private functions  */
 
 static void
@@ -1545,6 +1565,7 @@ gimp_image_window_config_notify (GimpImageWindow *window,
       gimp_image_window_keep_canvas_pos (window);
       gtk_widget_set_visible (private->left_docks, show_docks);
       gtk_widget_set_visible (private->right_docks, show_docks);
+      gimp_image_window_update_tabs (window);
     }
 
   /* Session management */

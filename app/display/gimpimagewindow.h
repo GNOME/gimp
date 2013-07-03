@@ -92,4 +92,6 @@ GtkWidget        * gimp_image_window_get_default_dockbook (GimpImageWindow  *win
 
 void               gimp_image_window_keep_canvas_pos      (GimpImageWindow  *window);
 
+void               gimp_image_window_update_tabs          (GimpImageWindow  *window);
+
 #endif /* __GIMP_IMAGE_WINDOW_H__ */
