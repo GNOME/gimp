@@ -69,12 +69,12 @@
 
 /*  local prototypes  */
 
-static void       app_init_update_noop    (const gchar *text1,
-                                           const gchar *text2,
-                                           gdouble      percentage);
-static gboolean   app_exit_after_callback (Gimp        *gimp,
-                                           gboolean     kill_it,
-                                           GMainLoop   *loop);
+static void       app_init_update_noop    (const gchar  *text1,
+                                           const gchar  *text2,
+                                           gdouble       percentage);
+static gboolean   app_exit_after_callback (Gimp         *gimp,
+                                           gboolean      kill_it,
+                                           GMainLoop   **loop);
 
 
 /*  public functions  */
@@ -143,6 +143,7 @@ app_run (const gchar         *full_prog_name,
   GimpInitStatusFunc  update_status_func = NULL;
   Gimp               *gimp;
   GMainLoop          *loop;
+  GMainLoop          *run_loop;
   gchar              *default_folder = NULL;
 
   if (filenames && filenames[0] && ! filenames[1] &&
@@ -235,6 +236,12 @@ app_run (const gchar         *full_prog_name,
    */
   gimp_rc_set_autosave (GIMP_RC (gimp->edit_config), TRUE);
 
+  loop = run_loop = g_main_loop_new (NULL, FALSE);
+
+  g_signal_connect_after (gimp, "exit",
+                          G_CALLBACK (app_exit_after_callback),
+                          &run_loop);
+
   /*  Load the images given on the command-line.
    */
   if (filenames)
@@ -242,20 +249,21 @@ app_run (const gchar         *full_prog_name,
       gint i;
 
       for (i = 0; filenames[i] != NULL; i++)
-        file_open_from_command_line (gimp, filenames[i], as_new);
+        {
+          if (run_loop)
+            file_open_from_command_line (gimp, filenames[i], as_new);
+        }
     }
 
-  batch_run (gimp, batch_interpreter, batch_commands);
+  if (run_loop)
+    batch_run (gimp, batch_interpreter, batch_commands);
 
-  loop = g_main_loop_new (NULL, FALSE);
-
-  g_signal_connect_after (gimp, "exit",
-                          G_CALLBACK (app_exit_after_callback),
-                          loop);
-
-  gimp_threads_leave (gimp);
-  g_main_loop_run (loop);
-  gimp_threads_enter (gimp);
+  if (run_loop)
+    {
+      gimp_threads_leave (gimp);
+      g_main_loop_run (loop);
+      gimp_threads_enter (gimp);
+    }
 
   g_main_loop_unref (loop);
 
@@ -279,9 +287,9 @@ app_init_update_noop (const gchar *text1,
 }
 
 static gboolean
-app_exit_after_callback (Gimp      *gimp,
-                         gboolean   kill_it,
-                         GMainLoop *loop)
+app_exit_after_callback (Gimp       *gimp,
+                         gboolean    kill_it,
+                         GMainLoop **loop)
 {
   if (gimp->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
@@ -297,7 +305,10 @@ app_exit_after_callback (Gimp      *gimp,
 
 #ifdef GIMP_UNSTABLE
 
-  g_main_loop_quit (loop);
+  if (g_main_loop_is_running (*loop))
+    g_main_loop_quit (*loop);
+
+  *loop = NULL;
 
 #else
 
