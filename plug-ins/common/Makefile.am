@@ -54,7 +54,6 @@ libexec_PROGRAMS = \
 	blur \
 	blur-gauss \
 	blur-gauss-selective \
-	blur-motion \
 	border-average \
 	bump-map \
 	cartoon \
@@ -376,23 +375,6 @@ blur_gauss_selective_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(blur_gauss_selective_RC)
-
-blur_motion_SOURCES = \
-	blur-motion.c
-
-blur_motion_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(blur_motion_RC)
 
 border_average_SOURCES = \
 	border-average.c
@@ -722,7 +704,6 @@ decompose_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
-	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(decompose_RC)

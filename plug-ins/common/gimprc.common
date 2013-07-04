@@ -8,7 +8,6 @@ blinds_RC = blinds.rc.o
 blur_RC = blur.rc.o
 blur_gauss_RC = blur-gauss.rc.o
 blur_gauss_selective_RC = blur-gauss-selective.rc.o
-blur_motion_RC = blur-motion.rc.o
 border_average_RC = border-average.rc.o
 bump_map_RC = bump-map.rc.o
 cartoon_RC = cartoon.rc.o

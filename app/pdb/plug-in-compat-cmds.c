@@ -260,6 +260,164 @@ plug_in_cubism_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_mblur_invoker (GimpProcedure         *procedure,
+                       Gimp                  *gimp,
+                       GimpContext           *context,
+                       GimpProgress          *progress,
+                       const GimpValueArray  *args,
+                       GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 type;
+  gdouble length;
+  gdouble angle;
+  gdouble center_x;
+  gdouble center_y;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  type = g_value_get_int (gimp_value_array_index (args, 3));
+  length = g_value_get_double (gimp_value_array_index (args, 4));
+  angle = g_value_get_double (gimp_value_array_index (args, 5));
+  center_x = g_value_get_double (gimp_value_array_index (args, 6));
+  center_y = g_value_get_double (gimp_value_array_index (args, 7));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node = NULL;
+
+          if (type == 0)
+            {
+              node =  gegl_node_new_child (NULL,
+                                           "operation", "gegl:motion-blur-linear",
+                                           "length",    length,
+                                           "angle",     angle,
+                                            NULL);
+            }
+          else if (type == 1)
+            {
+              node =  gegl_node_new_child (NULL,
+                                           "operation", "gegl:motion-blur-circular",
+                                           "center-x",  center_x,
+                                           "center-y",  center_y,
+                                           "angle",     angle,
+                                            NULL);
+            }
+          else if (type == 2)
+            {
+              gdouble factor = CLAMP (length / 256.0, 0.0, 1.0);
+              node =  gegl_node_new_child (NULL,
+                                           "operation", "gegl:motion-blur-zoom",
+                                           "center-x",  center_x,
+                                           "center-y",  center_y,
+                                           "factor",    factor,
+                                            NULL);
+            }
+
+          if (node != NULL)
+            {
+              gimp_drawable_apply_operation (drawable, progress,
+                                             C_("undo-type", "Motion Blur"),
+                                             node);
+
+              g_object_unref (node);
+            }
+          else
+            success = FALSE;
+
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_mblur_inward_invoker (GimpProcedure         *procedure,
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 type;
+  gdouble length;
+  gdouble angle;
+  gdouble center_x;
+  gdouble center_y;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  type = g_value_get_int (gimp_value_array_index (args, 3));
+  length = g_value_get_double (gimp_value_array_index (args, 4));
+  angle = g_value_get_double (gimp_value_array_index (args, 5));
+  center_x = g_value_get_double (gimp_value_array_index (args, 6));
+  center_y = g_value_get_double (gimp_value_array_index (args, 7));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node = NULL;
+
+          if (type == 0)
+            {
+              node =  gegl_node_new_child (NULL,
+                                           "operation", "gegl:motion-blur-linear",
+                                           "length",    length,
+                                           "angle",     angle,
+                                            NULL);
+            }
+          else if (type == 1)
+            {
+              node =  gegl_node_new_child (NULL,
+                                           "operation", "gegl:motion-blur-circular",
+                                           "center-x",  center_x,
+                                           "center-y",  center_y,
+                                           "angle",     angle,
+                                            NULL);
+            }
+          else if (type == 2)
+            {
+              gdouble factor = CLAMP (-length / (256.0 - length), -10.0, 0.0);
+              node =  gegl_node_new_child (NULL,
+                                           "operation", "gegl:motion-blur-zoom",
+                                           "center-x",  center_x,
+                                           "center-y",  center_y,
+                                           "factor",    factor,
+                                            NULL);
+            }
+
+          if (node != NULL)
+            {
+              gimp_drawable_apply_operation (drawable, progress,
+                                             C_("undo-type", "Motion Blur"),
+                                             node);
+
+              g_object_unref (node);
+            }
+          else
+            success = FALSE;
+
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_pixelize_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
@@ -1097,6 +1255,138 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                       "Background color { BLACK (0), BG (1) }",
                                                       0, 1, 0,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-mblur
+   */
+  procedure = gimp_procedure_new (plug_in_mblur_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-mblur");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-mblur",
+                                     "Simulate movement using directional blur",
+                                     "This plug-in simulates the effect seen when photographing a moving object at a slow shutter speed. Done by adding multiple displaced copies.",
+                                     "Compatibility procedure. Please see 'gegl:motion-blur-linear, -zoom, -cirular' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:motion-blur-linear, -zoom, -cirular' for credits.",
+                                     "2013",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("type",
+                                                      "type",
+                                                      "Type of motion blur { LINEAR (0), RADIAL (1), ZOOM (2) }",
+                                                      0, 2, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("length",
+                                                    "length",
+                                                    "Length",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("angle",
+                                                    "angle",
+                                                    "Angle",
+                                                    0, 360, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("center-x",
+                                                    "center x",
+                                                    "Center X",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("center-y",
+                                                    "center y",
+                                                    "Center Y",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-mblur-inward
+   */
+  procedure = gimp_procedure_new (plug_in_mblur_inward_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-mblur-inward");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-mblur-inward",
+                                     "Simulate movement using directional blur",
+                                     "This procedure is equivalent to plug-in-mblur but performs the zoom blur inward instead of outward.",
+                                     "Compatibility procedure. Please see 'gegl:motion-blur-linear, -zoom, -cirular' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:motion-blur-linear, -zoom, -cirular' for credits.",
+                                     "2013",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("type",
+                                                      "type",
+                                                      "Type of motion blur { LINEAR (0), RADIAL (1), ZOOM (2) }",
+                                                      0, 2, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("length",
+                                                    "length",
+                                                    "Length",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("angle",
+                                                    "angle",
+                                                    "Angle",
+                                                    0, 360, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("center-x",
+                                                    "center x",
+                                                    "Center X",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("center-y",
+                                                    "center y",
+                                                    "Center Y",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
