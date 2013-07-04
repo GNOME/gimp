@@ -554,6 +554,7 @@ do_install_nogimpui (const gchar *what)
 static gchar *
 get_sys_plugin_dir (gboolean forward_slashes)
 {
+#ifdef G_OS_WIN32
   const gchar *rprefix;
 
   rprefix = get_runtime_prefix (forward_slashes ? '/' : G_DIR_SEPARATOR);
@@ -564,6 +565,14 @@ get_sys_plugin_dir (gboolean forward_slashes)
                        GIMP_PLUGIN_VERSION,
                        "plug-ins",
                        NULL);
+#else
+  return g_build_path (forward_slashes ? "/" : G_DIR_SEPARATOR_S,
+                       LIBDIR,
+                       "gimp",
+                       GIMP_PLUGIN_VERSION,
+                       "plug-ins",
+                       NULL);
+#endif
 }
 
 static void
