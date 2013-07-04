@@ -562,6 +562,8 @@ file_open_from_command_line (Gimp        *gimp,
       GimpObject        *display = gimp_get_empty_display (gimp);
       GimpPDBStatusType  status;
 
+      g_object_add_weak_pointer (G_OBJECT (display), (gpointer) &display);
+
       image = file_open_with_display (gimp,
                                       gimp_get_user_context (gimp),
                                       GIMP_PROGRESS (display),
@@ -575,7 +577,7 @@ file_open_from_command_line (Gimp        *gimp,
           g_object_set_data_full (G_OBJECT (gimp), GIMP_FILE_OPEN_LAST_URI_KEY,
                                   uri, (GDestroyNotify) g_free);
         }
-      else if (status != GIMP_PDB_CANCEL)
+      else if (status != GIMP_PDB_CANCEL && display)
         {
           gchar *filename = file_utils_uri_display_name (uri);
 
@@ -587,6 +589,9 @@ file_open_from_command_line (Gimp        *gimp,
           g_free (filename);
           g_free (uri);
         }
+
+      if (display)
+        g_object_remove_weak_pointer (G_OBJECT (display), (gpointer) &display);
     }
   else
     {
