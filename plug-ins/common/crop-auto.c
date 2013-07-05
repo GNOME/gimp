@@ -95,8 +95,10 @@ query (void)
   gimp_plugin_menu_register (AUTOCROP_PROC, "<Image>/Image/Crop");
 
   gimp_install_procedure (AUTOCROP_LAYER_PROC,
-                          N_("Remove empty borders from the layer"),
-                          "",
+                          N_("Crop the active layer based on empty borders of the input drawable"),
+                          _("Crop the active layer of the input \"image\" based on empty borders of the input \"drawable\".\n\n"
+                            "The input drawable serves as a base for detecting cropping extents (transparency or background color), "
+                            "and is not necessarily the cropped layer (the current active layer)."),
                           "Tim Newsome",
                           "Tim Newsome",
                           "1997",
