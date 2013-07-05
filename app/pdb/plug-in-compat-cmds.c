@@ -975,8 +975,8 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                "plug-in-autocrop-layer");
   gimp_procedure_set_static_strings (procedure,
                                      "plug-in-autocrop-layer",
-                                     "Remove empty borders from the layer",
-                                     "Remove empty borders from the layer.",
+                                     "Crop the active layer based on empty borders of the input drawable",
+                                     "Crop the active layer of the input \"image\" based on empty borders of the input \"drawable\". \n\nThe input drawable serves as a base for detecting cropping extents (transparency or background color), and is not necessarily the cropped layer (the current active layer).",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1997",

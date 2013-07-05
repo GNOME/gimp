@@ -73,10 +73,11 @@ CODE
 }
 
 sub plug_in_autocrop_layer {
-    $blurb = 'Remove empty borders from the layer';
+    $blurb = 'Crop the active layer based on empty borders of the input drawable';
 
     $help = <<'HELP';
-Remove empty borders from the layer.
+Crop the active layer of the input "image" based on empty borders of the input "drawable".
+\n\nThe input drawable serves as a base for detecting cropping extents (transparency or background color), and is not necessarily the cropped layer (the current active layer).
 HELP
 
     &std_pdb_misc;
