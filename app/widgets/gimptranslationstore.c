@@ -99,8 +99,7 @@ gimp_translation_store_constructed (GObject *object)
    *  We want the system locale to be localized in itself. */
   g_setenv ("LANGUAGE", setlocale (LC_ALL, NULL), TRUE);
   setlocale (LC_ALL, "");
-  label = g_strdup_printf ("%s [%s]", _("System Language"),
-                           setlocale (LC_ALL, NULL));
+  label = g_strdup_printf ("%s", _("System Language"));
   g_setenv ("LANGUAGE", current_lang, TRUE);
   setlocale (LC_ALL, "");
   g_free (current_lang);
