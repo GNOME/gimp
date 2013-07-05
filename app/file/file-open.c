@@ -562,7 +562,8 @@ file_open_from_command_line (Gimp        *gimp,
       GimpObject        *display = gimp_get_empty_display (gimp);
       GimpPDBStatusType  status;
 
-      g_object_add_weak_pointer (G_OBJECT (display), (gpointer) &display);
+      if (display)
+        g_object_add_weak_pointer (G_OBJECT (display), (gpointer) &display);
 
       image = file_open_with_display (gimp,
                                       gimp_get_user_context (gimp),
