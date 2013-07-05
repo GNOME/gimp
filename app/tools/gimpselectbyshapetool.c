@@ -169,14 +169,61 @@ gimp_select_by_shape_tool_select (GimpRectangleSelectTool *rect_tool,
                                       TRUE);
        break;
      }
-      default :
-       gimp_channel_select_rectangle (channel,
-                                     x, y, w, h,
+
+     case GIMP_SHAPE_SINGLE_ROW :
+      {
+        gdouble w1 = gimp_image_width (channel);
+        gdouble h1 = gimp_image_height (channel);
+       switch(sel_options->line_orientation)
+        {
+          case GIMP_ORIENTATION_HORIZONTAL :
+          gimp_channel_select_rectangle (channel,
+                                        0, 0, w1, h1,
+                                        operation,
+                                        options->feather,
+                                        options->feather_radius,
+                                        options->feather_radius,
+                                        TRUE);
+          break;
+    
+         case GIMP_ORIENTATION_VERTICAL :  
+         gimp_channel_select_ellipse (channel,
+                                     0, 0, w1, h1,
                                      operation,
+                                     options->antialias,
                                      options->feather,
                                      options->feather_radius,
                                      options->feather_radius,
                                      TRUE);
+          break;
+
+         case GIMP_ORIENTATION_UNKNOWN :  
+         gimp_channel_select_ellipse (channel,
+                                     0, 0, w1, h1,
+                                     operation,
+                                     options->antialias,
+                                     options->feather,
+                                     options->feather_radius,
+                                     options->feather_radius,
+                                     TRUE);
+          break; 
+       }
+
        break;
+     }
+     
+     case GIMP_SHAPE_N_POLYGON :
+      {
+       gimp_channel_select_ellipse (channel,
+                                   x, y, w, h,
+                                   operation,
+                                   options->antialias,
+                                   options->feather,
+                                   options->feather_radius,
+                                   options->feather_radius,
+                                   TRUE);
+       break;
+     }
+
    } 
 }
