@@ -245,7 +245,6 @@ gimp_applicator_set_dest_buffer (GimpApplicator *applicator,
             gegl_node_new_child (applicator->node,
                                  "operation", "gegl:write-buffer",
                                  "buffer",    dest_buffer,
-                                 "flush",     FALSE,
                                  NULL);
         }
       else
