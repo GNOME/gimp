@@ -974,7 +974,7 @@ gimp_image_window_new (Gimp              *gimp,
                          GTK_WIN_POS_CENTER,
                          NULL);
 
-  gimp->image_windows = g_list_prepend (gimp->image_windows, window);
+  gimp->image_windows = g_list_append (gimp->image_windows, window);
 
   return window;
 }
