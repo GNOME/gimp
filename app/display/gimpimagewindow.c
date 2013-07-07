@@ -1737,9 +1737,19 @@ gimp_image_window_page_reordered (GtkNotebook     *notebook,
   GimpImageWindowPrivate *private  = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
   GimpContainer          *displays = private->gimp->displays;
 
+  gint                    index    = g_list_index (private->shells, GIMP_DISPLAY_SHELL (widget));
+
+  if (index != page_num)
+  {
+      private->shells = g_list_remove (private->shells, widget);
+      private->shells = g_list_insert (private->shells, widget, page_num);
+  }
+
   /* We need to reorder the displays as well in order to update the
    * numbered accelerators (alt-1, alt-2, etc.). */
   gimp_container_reorder (displays, GIMP_OBJECT (GIMP_DISPLAY_SHELL (widget)->display), page_num);
+
+  gtk_notebook_reorder_child (notebook, widget, page_num);
 }
 
 static void
