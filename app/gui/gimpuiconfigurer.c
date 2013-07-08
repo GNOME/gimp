@@ -494,12 +494,12 @@ gimp_ui_configurer_configure_for_single_window (GimpUIConfigurer *ui_configurer)
       gimp_ui_configurer_move_shells (ui_configurer,
                                       image_window,
                                       uber_image_window);
-      /* Ensure the context shell remains active after mode switch. */
-      gimp_image_window_set_active_shell (uber_image_window, active_shell);
-
       /* Destroy the window */
       gimp_image_window_destroy (image_window);
     }
+
+  /* Ensure the context shell remains active after mode switch. */
+  gimp_image_window_set_active_shell (uber_image_window, active_shell);
 
   g_list_free (windows);
 }
