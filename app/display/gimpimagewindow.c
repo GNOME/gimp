@@ -113,7 +113,6 @@ struct _GimpImageWindowPrivate
 
 typedef struct
 {
-  GimpImageWindow *window;
   gint             x;
   gint             y;
 } PosCorrectionData;
@@ -1468,12 +1467,12 @@ gimp_image_window_get_default_dockbook (GimpImageWindow  *window)
  * gimp_image_window_keep_canvas_pos:
  * @window:
  *
- * Stores the coordinate of the current shell image origin in
- * GtkWindow coordinates and on the first size-allocate sets the
- * offsets in the shell so the image origin remains the same in
- * GtkWindow coordinates.
+ * Stores the coordinates of the current image canvas origin relatively
+ * its GtkWindow; and on the first size-allocate sets the offsets in
+ * the shell so that the image origin remains the same (even on another
+ * GtkWindow).
  *
- * Exampe use case: The user hides docks attached to the side of image
+ * Example use case: The user hides docks attached to the side of image
  * windows. You want the image to remain fixed on the screen though,
  * so you use this function to keep the image fixed after the docks
  * have been hidden.
@@ -1501,7 +1500,6 @@ gimp_image_window_keep_canvas_pos (GimpImageWindow *window)
     {
       PosCorrectionData *data = g_new0 (PosCorrectionData, 1);
 
-      data->window = window;
       data->x      = image_origin_window_x;
       data->y      = image_origin_window_y;
 
@@ -1589,23 +1587,24 @@ gimp_image_window_shell_size_allocate (GimpDisplayShell  *shell,
                                        GtkAllocation     *allocation,
                                        PosCorrectionData *data)
 {
-  GimpImageWindow *window               = data->window;
+  GimpImageWindow *window               = gimp_display_shell_get_window (shell);
   gint             image_origin_shell_x = -1;
   gint             image_origin_shell_y = -1;
 
-  gtk_widget_translate_coordinates (GTK_WIDGET (window),
-                                    GTK_WIDGET (shell->canvas),
-                                    data->x, data->y,
-                                    &image_origin_shell_x,
-                                    &image_origin_shell_y);
-
-  /* Note that the shell offset isn't the offset of the image into the
-   * shell, but the offset of the shell relative to the image,
-   * therefore we need to negate
-   */
-  gimp_display_shell_scroll_set_offset (shell,
-                                        -image_origin_shell_x,
-                                        -image_origin_shell_y);
+  if (gtk_widget_translate_coordinates (GTK_WIDGET (window),
+                                        GTK_WIDGET (shell->canvas),
+                                        data->x, data->y,
+                                        &image_origin_shell_x,
+                                        &image_origin_shell_y))
+    {
+      /* Note that the shell offset isn't the offset of the image into the
+       * shell, but the offset of the shell relative to the image,
+       * therefore we need to negate
+       */
+      gimp_display_shell_scroll_set_offset (shell,
+                                            -image_origin_shell_x,
+                                            -image_origin_shell_y);
+    }
 
   g_signal_handlers_disconnect_by_func (shell,
                                         gimp_image_window_shell_size_allocate,
