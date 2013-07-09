@@ -26,6 +26,7 @@
 #include "gimp.h"
 #include "gimpcontainer.h"
 #include "gimpguide.h"
+#include "gimpgrouplayer.h"
 #include "gimpimage.h"
 #include "gimpimage-guides.h"
 #include "gimpimage-item-list.h"
@@ -155,7 +156,10 @@ gimp_image_scale (GimpImage             *image,
 
       /*  group layers are updated automatically  */
       if (gimp_viewable_get_children (GIMP_VIEWABLE (item)))
-        continue;
+        {
+          gimp_group_layer_suspend_resize (GIMP_GROUP_LAYER (item), FALSE);
+          continue;
+        }
 
       if (! gimp_item_scale_by_factors (item,
                                         img_scale_w, img_scale_h,
@@ -169,6 +173,11 @@ gimp_image_scale (GimpImage             *image,
           gimp_image_remove_layer (image, GIMP_LAYER (item), TRUE, NULL);
         }
     }
+
+  for (list = all_layers; list; list = g_list_next (list))
+    if (gimp_viewable_get_children (list->data))
+      gimp_group_layer_resume_resize (list->data, FALSE);
+
 
   /*  Scale all Guides  */
   for (list = gimp_image_get_guides (image);
