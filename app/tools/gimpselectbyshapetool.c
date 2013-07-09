@@ -172,13 +172,14 @@ gimp_select_by_shape_tool_select (GimpRectangleSelectTool *rect_tool,
 
      case GIMP_SHAPE_SINGLE_ROW :
       {
-        gdouble w1 = gimp_image_width (channel);
-        gdouble h1 = gimp_image_height (channel);
+        gdouble w1 = gimp_image_get_width (operation);
+        gdouble h1 = gimp_image_get_height (operation);
+
        switch(sel_options->line_orientation)
         {
           case GIMP_ORIENTATION_HORIZONTAL :
           gimp_channel_select_rectangle (channel,
-                                        0, 0, w1, h1,
+                                        x, 0, w1, 1,
                                         operation,
                                         options->feather,
                                         options->feather_radius,
@@ -187,10 +188,9 @@ gimp_select_by_shape_tool_select (GimpRectangleSelectTool *rect_tool,
           break;
     
          case GIMP_ORIENTATION_VERTICAL :  
-         gimp_channel_select_ellipse (channel,
-                                     0, 0, w1, h1,
+         gimp_channel_select_rectangle (channel,
+                                     0, y, 1, h1,
                                      operation,
-                                     options->antialias,
                                      options->feather,
                                      options->feather_radius,
                                      options->feather_radius,
@@ -198,10 +198,9 @@ gimp_select_by_shape_tool_select (GimpRectangleSelectTool *rect_tool,
           break;
 
          case GIMP_ORIENTATION_UNKNOWN :  
-         gimp_channel_select_ellipse (channel,
-                                     0, 0, w1, h1,
+         gimp_channel_select_rectangle (channel,
+                                     x, y, 1, 1,
                                      operation,
-                                     options->antialias,
                                      options->feather,
                                      options->feather_radius,
                                      options->feather_radius,
