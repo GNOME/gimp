@@ -125,8 +125,10 @@ gimp_select_by_shape_tool_select (GimpRectangleSelectTool *rect_tool,
   GimpSelectionOptions       *options = GIMP_SELECTION_TOOL_GET_OPTIONS (rect_tool);
   GimpRectangleSelectOptions *sel_options     = GIMP_RECTANGLE_SELECT_TOOL_GET_OPTIONS (tool);
   GimpChannel                *channel;
+  GimpImage                *image;
   
   channel = gimp_image_get_mask (gimp_display_get_image (tool->display));
+  image = gimp_display_get_image (tool->display);
 
   switch(sel_options->shape_type)
    {
@@ -172,14 +174,14 @@ gimp_select_by_shape_tool_select (GimpRectangleSelectTool *rect_tool,
 
      case GIMP_SHAPE_SINGLE_ROW :
       {
-        gdouble w1 = gimp_image_get_width (operation);
-        gdouble h1 = gimp_image_get_height (operation);
+        gdouble w1 = gimp_image_get_width (image);
+        gdouble h1 = gimp_image_get_height (image);
 
        switch(sel_options->line_orientation)
         {
           case GIMP_ORIENTATION_HORIZONTAL :
           gimp_channel_select_rectangle (channel,
-                                        x, 0, w1, 1,
+                                        x, 0, 1, 1000,
                                         operation,
                                         options->feather,
                                         options->feather_radius,
