@@ -21,8 +21,6 @@
 #define __GIMP_PLUG_IN_DEF_H__
 
 
-#include <time.h>
-
 #include "core/gimpobject.h"
 
 
@@ -45,7 +43,7 @@ struct _GimpPlugInDef
   gchar      *locale_domain_path;
   gchar      *help_domain_name;
   gchar      *help_domain_uri;
-  time_t      mtime;
+  gint64      mtime;
   gboolean    needs_query;  /* Does the plug-in need to be queried ?     */
   gboolean    has_init;     /* Does the plug-in need to be initialized ? */
 };
@@ -74,7 +72,7 @@ void   gimp_plug_in_def_set_help_domain   (GimpPlugInDef       *plug_in_def,
                                            const gchar         *domain_uri);
 
 void   gimp_plug_in_def_set_mtime         (GimpPlugInDef       *plug_in_def,
-                                           time_t               mtime);
+                                           gint64               mtime);
 void   gimp_plug_in_def_set_needs_query   (GimpPlugInDef       *plug_in_def,
                                            gboolean             needs_query);
 void   gimp_plug_in_def_set_has_init      (GimpPlugInDef       *plug_in_def,

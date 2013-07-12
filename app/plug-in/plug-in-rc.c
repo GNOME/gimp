@@ -261,7 +261,7 @@ plug_in_def_deserialize (Gimp      *gimp,
   GimpPlugInProcedure *proc = NULL;
   gchar               *name;
   gchar               *path;
-  gint                 mtime;
+  gint64               mtime;
   GTokenType           token;
 
   if (! gimp_scanner_parse_string (scanner, &name))
@@ -273,7 +273,7 @@ plug_in_def_deserialize (Gimp      *gimp,
   plug_in_def = gimp_plug_in_def_new (path);
   g_free (path);
 
-  if (! gimp_scanner_parse_int (scanner, &mtime))
+  if (! gimp_scanner_parse_int64 (scanner, &mtime))
     {
       g_object_unref (plug_in_def);
       return G_TOKEN_INT;
@@ -829,7 +829,8 @@ plug_in_rc_write (GSList       *plug_in_defs,
 
           gimp_config_writer_open (writer, "plug-in-def");
           gimp_config_writer_string (writer, utf8);
-          gimp_config_writer_printf (writer, "%ld", plug_in_def->mtime);
+          gimp_config_writer_printf (writer, "%"G_GINT64_FORMAT,
+                                     plug_in_def->mtime);
 
           g_free (utf8);
 

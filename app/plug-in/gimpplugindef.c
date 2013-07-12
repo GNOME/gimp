@@ -199,7 +199,7 @@ gimp_plug_in_def_set_help_domain (GimpPlugInDef *plug_in_def,
 
 void
 gimp_plug_in_def_set_mtime (GimpPlugInDef *plug_in_def,
-                            time_t         mtime)
+                            gint64         mtime)
 {
   GSList *list;
 

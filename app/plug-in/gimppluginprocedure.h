@@ -20,7 +20,6 @@
 #ifndef __GIMP_PLUG_IN_PROCEDURE_H__
 #define __GIMP_PLUG_IN_PROCEDURE_H__
 
-#include <time.h>      /* time_t */
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
@@ -53,7 +52,7 @@ struct _GimpPlugInProcedure
   guint8              *icon_data;
   gchar               *image_types;
   GimpPlugInImageType  image_types_val;
-  time_t               mtime;
+  gint64               mtime;
   gboolean             installed_during_init;
 
   /*  file proc specific members  */
