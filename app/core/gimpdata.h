@@ -21,7 +21,6 @@
 #ifndef __GIMP_DATA_H__
 #define __GIMP_DATA_H__
 
-#include <time.h>      /* time_t */
 
 #include "gimpviewable.h"
 
@@ -100,8 +99,8 @@ gboolean      gimp_data_is_writable      (GimpData     *data);
 gboolean      gimp_data_is_deletable     (GimpData     *data);
 
 void          gimp_data_set_mtime        (GimpData     *data,
-                                          time_t        mtime);
-time_t        gimp_data_get_mtime        (GimpData     *data);
+                                          gint64        mtime);
+gint64        gimp_data_get_mtime        (GimpData     *data);
 
 GimpData    * gimp_data_duplicate        (GimpData     *data);
 

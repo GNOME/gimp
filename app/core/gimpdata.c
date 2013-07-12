@@ -74,7 +74,7 @@ struct _GimpDataPrivate
   guint   dirty     : 1;
   guint   internal  : 1;
   gint    freeze_count;
-  time_t  mtime;
+  gint64  mtime;
 
   /* Identifies the GimpData object across sessions. Used when there
    * is not a filename associated with the object.
@@ -981,7 +981,7 @@ gimp_data_is_deletable (GimpData *data)
 
 void
 gimp_data_set_mtime (GimpData *data,
-                     time_t    mtime)
+                     gint64    mtime)
 {
   GimpDataPrivate *private;
 
@@ -992,7 +992,7 @@ gimp_data_set_mtime (GimpData *data,
   private->mtime = mtime;
 }
 
-time_t
+gint64
 gimp_data_get_mtime (GimpData *data)
 {
   GimpDataPrivate *private;
