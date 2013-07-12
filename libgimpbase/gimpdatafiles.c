@@ -21,20 +21,9 @@
 
 #include "config.h"
 
-#include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
 
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
-#include <glib-object.h>
-#include <glib/gstdio.h>
-
-#ifdef G_OS_WIN32
-#include "gimpwin32-io.h"
-#endif /* G_OS_WIN32 */
+#include <gio/gio.h>
 
 #include "gimpbasetypes.h"
 
@@ -106,56 +95,80 @@ gimp_datafiles_read_directories (const gchar            *path_str,
 
           while ((dir_ent = g_dir_read_name (dir)))
             {
-              struct stat  filestat;
-              gchar       *filename;
+              gchar     *filename;
+              GFile     *file;
+              GFileInfo *info;
 
               if (is_hidden (dir_ent))
                 continue;
 
               filename = g_build_filename (dirname, dir_ent, NULL);
+              file = g_file_new_for_path (filename);
 
-              if (! g_stat (filename, &filestat))
+              info = g_file_query_info (file,
+                                        G_FILE_ATTRIBUTE_STANDARD_TYPE      ","
+                                        G_FILE_ATTRIBUTE_ACCESS_CAN_EXECUTE ","
+                                        "time::*",
+                                        G_FILE_QUERY_INFO_NONE,
+                                        NULL, NULL);
+
+              if (info)
                 {
                   GimpDatafileData  file_data;
+                  GFileType         file_type;
 
                   file_data.filename = filename;
                   file_data.dirname  = dirname;
                   file_data.basename = dir_ent;
-                  file_data.atime    = filestat.st_atime;
-                  file_data.mtime    = filestat.st_mtime;
-                  file_data.ctime    = filestat.st_ctime;
+
+                  file_data.atime =
+                    g_file_info_get_attribute_uint64 (info,
+                                                      G_FILE_ATTRIBUTE_TIME_ACCESS);
+
+                  file_data.mtime =
+                    g_file_info_get_attribute_uint64 (info,
+                                                      G_FILE_ATTRIBUTE_TIME_MODIFIED);
+
+                  file_data.ctime =
+                    g_file_info_get_attribute_uint64 (info,
+                                                      G_FILE_ATTRIBUTE_TIME_CREATED);
+
+                  file_type =
+                    g_file_info_get_attribute_uint32 (info,
+                                                      G_FILE_ATTRIBUTE_STANDARD_TYPE);
 
                   if (flags & G_FILE_TEST_EXISTS)
                     {
                       (* loader_func) (&file_data, user_data);
                     }
                   else if ((flags & G_FILE_TEST_IS_REGULAR) &&
-                           S_ISREG (filestat.st_mode))
+                           (file_type == G_FILE_TYPE_REGULAR))
                     {
                       (* loader_func) (&file_data, user_data);
                     }
                   else if ((flags & G_FILE_TEST_IS_DIR) &&
-                           S_ISDIR (filestat.st_mode))
+                           (file_type == G_FILE_TYPE_DIRECTORY))
                     {
                       (* loader_func) (&file_data, user_data);
                     }
-#ifndef G_OS_WIN32
                   else if ((flags & G_FILE_TEST_IS_SYMLINK) &&
-                           S_ISLNK (filestat.st_mode))
+                           (file_type == G_FILE_TYPE_SYMBOLIC_LINK))
                     {
                       (* loader_func) (&file_data, user_data);
                     }
-#endif
                   else if ((flags & G_FILE_TEST_IS_EXECUTABLE) &&
-                           (((filestat.st_mode & S_IXUSR) &&
-                             !S_ISDIR (filestat.st_mode)) ||
-                            (S_ISREG (filestat.st_mode) &&
+                           (g_file_info_get_attribute_boolean (info,
+                                                               G_FILE_ATTRIBUTE_ACCESS_CAN_EXECUTE) ||
+                            ((file_type == G_FILE_TYPE_REGULAR) &&
                              is_script (filename))))
                     {
                       (* loader_func) (&file_data, user_data);
                     }
+
+                  g_object_unref (info);
                 }
 
+              g_object_unref (file);
               g_free (filename);
             }
 

@@ -66,7 +66,7 @@ AM_CCASFLAGS = \
 
 INCLUDES = \
 	-I$(top_srcdir)		\
-	$(GLIB_CFLAGS)		\
+	$(GIO_CFLAGS)		\
 	$(BINRELOC_CFLAGS)	\
 	-I$(includedir)		\
 	$(xobjective_c)
@@ -158,7 +158,7 @@ libgimpbase_2_0_la_LDFLAGS = \
 
 libgimpbase_2_0_la_DEPENDENCIES = $(gimpbase_def)
 
-libgimpbase_2_0_la_LIBADD = $(GLIB_LIBS) $(ole32_lib)
+libgimpbase_2_0_la_LIBADD = $(GIO_LIBS) $(ole32_lib)
 
 
 install-data-local: install-ms-lib install-libtool-import-lib
