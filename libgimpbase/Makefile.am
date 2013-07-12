@@ -60,7 +60,7 @@ AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimpBase\"				\
 	-DGIMP_BASE_COMPILATION					\
 	-I$(top_srcdir)						\
-	$(GLIB_CFLAGS)						\
+	$(GIO_CFLAGS)						\
 	$(BINRELOC_CFLAGS)					\
 	-I$(includedir)						\
 	$(xobjective_c)
@@ -162,7 +162,7 @@ libgimpbase_@GIMP_API_VERSION@_la_LDFLAGS = \
 libgimpbase_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpbase_def)
 
 libgimpbase_@GIMP_API_VERSION@_la_LIBADD = \
-	$(GLIB_LIBS)	\
+	$(GIO_LIBS)	\
 	$(ole32_lib)
 
 
