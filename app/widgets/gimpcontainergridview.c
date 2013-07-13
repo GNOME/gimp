@@ -703,9 +703,8 @@ gimp_container_grid_view_viewport_resized (GtkWidget             *widget,
               grid_view->columns = columns;
 
               gtk_widget_set_size_request (grid_view->wrap_box,
-                                           columns * view_requisition.width,
-                                           rows    * view_requisition.height);
-
+                                           view_requisition.width,
+                                           rows * view_requisition.height);
             }
 
           grid_view->visible_rows = (allocation->height /
