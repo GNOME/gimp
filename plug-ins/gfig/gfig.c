@@ -93,7 +93,6 @@ static gint       load_options            (GFigObj *gfig,
 GfigObjectClass dobj_class[10];
 GFigContext  *gfig_context;
 GtkWidget    *top_level_dlg;
-GimpDrawable *gfig_drawable;
 GList        *gfig_list;
 gdouble       org_scale_x_factor, org_scale_y_factor;
 
@@ -147,7 +146,7 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam   values[1];
-  GimpDrawable      *drawable;
+  gint32             drawable_id;
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint               pwidth, pheight;
@@ -158,10 +157,12 @@ run (const gchar      *name,
   gfig_context->show_background = TRUE;
   gfig_context->selected_obj = NULL;
 
+  drawable_id = param[2].data.d_drawable;
+
   run_mode = param[0].data.d_int32;
 
   gfig_context->image_id = param[1].data.d_image;
-  gfig_context->drawable_id = param[2].data.d_drawable;
+  gfig_context->drawable_id = drawable_id;
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -173,13 +174,11 @@ run (const gchar      *name,
 
   gimp_context_push ();
 
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
-
   /* TMP Hack - clear any selections */
   if (! gimp_selection_is_empty (gfig_context->image_id))
     gimp_selection_none (gfig_context->image_id);
 
-  gimp_drawable_mask_bounds (drawable->drawable_id,
+  gimp_drawable_mask_bounds (drawable_id,
                              &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   sel_width  = sel_x2 - sel_x1;
@@ -208,11 +207,6 @@ run (const gchar      *name,
   org_scale_y_factor = scale_y_factor =
     (gdouble) sel_height / (gdouble) preview_height;
 
-  gimp_tile_cache_ntiles ((drawable->width + gimp_tile_width () - 1) /
-                          gimp_tile_width ());
-
-  gimp_drawable_detach (drawable);
-
   /* initialize */
   gfig_init_object_classes ();
 
@@ -223,7 +217,6 @@ run (const gchar      *name,
       /*gimp_get_data (PLUG_IN_PROC, &selvals);*/
       if (! gfig_dialog ())
         {
-          gimp_drawable_detach (gfig_drawable);
           gimp_image_undo_group_end (gfig_context->image_id);
 
           return;
@@ -255,8 +248,6 @@ run (const gchar      *name,
     }
 
   values[0].data.d_status = status;
-
-  /* gimp_drawable_detach (drawable) already done above, don't do it twice */
 }
 
 /*

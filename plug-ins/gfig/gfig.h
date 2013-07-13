@@ -239,7 +239,6 @@ void       paint_layer_fill        (gdouble x1,
 
 
 extern GtkWidget    *top_level_dlg;
-extern GimpDrawable *gfig_drawable;
 extern GList        *gfig_list;
 extern gdouble       org_scale_x_factor, org_scale_y_factor;
 

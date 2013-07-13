@@ -254,8 +254,6 @@ gfig_dialog (void)
       gfig_context->using_new_layer = TRUE;
     }
 
-  gfig_drawable = gimp_drawable_get (gfig_context->drawable_id);
-
   gfig_stock_init ();
 
   path = gimp_gimprc_query ("gfig-path");
