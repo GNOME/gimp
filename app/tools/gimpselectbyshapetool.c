@@ -95,23 +95,100 @@ gimp_select_by_shape_tool_init (GimpSelectByShapeTool *select_by_shape)
 static void
 gimp_select_by_shape_tool_draw (GimpDrawTool *draw_tool)
 {
+  GimpSelectByShapeTool        *rect_sel_tool;
+  GimpSelectByShape            *priv;
+  GimpCanvasGroup                *stroke_group = NULL;
+
   gint x1, y1, x2, y2;
 
   GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
+  
+  shp_sel_tool = GIMP_SELECT_BY_SHAPE_TOOL (draw_tool);
+  priv          = GIMP_SELECT_BY_SHAPE_TOOL_GET (shp_sel_tool);
+ 
+  switch(priv->shape_type)
+  {
+    case GIMP_SHAPE_RECTANGLE : 
+    gimp_rectangle_tool_draw (draw_tool, stroke_group);
+    break;
 
-  g_object_get (draw_tool,
+    case GIMP_SHAPE_ELLIPSE :
+    {
+     g_object_get (draw_tool,
                 "x1", &x1,
                 "y1", &y1,
                 "x2", &x2,
                 "y2", &y2,
                 NULL);
 
-  gimp_draw_tool_add_arc (draw_tool,
+     gimp_draw_tool_add_arc (draw_tool,
                           FALSE,
                           x1, y1,
                           x2 - x1, y2 - y1,
                           0.0, 2 * G_PI);
+     break;
+    }
+
+    case GIMP_SHAPE_ROUNDED_RECT :
+    {
+      GimpCanvasItem *item;
+      gint            x1, y1, x2, y2;
+      gdouble         radius;
+      gint            square_size;
+
+      g_object_get (rect_sel_tool,
+                    "x1", &x1,
+                    "y1", &y1,
+                    "x2", &x2,
+                    "y2", &y2,
+                    NULL);
+
+      radius = MIN (priv->corner_radius,
+                    MIN ((x2 - x1) / 2.0, (y2 - y1) / 2.0));
+
+      square_size = (int) (radius * 2);
+
+      stroke_group =
+        GIMP_CANVAS_GROUP (gimp_draw_tool_add_stroke_group (draw_tool));
+
+      item = gimp_draw_tool_add_arc (draw_tool, FALSE,
+                                     x1, y1,
+                                     square_size, square_size,
+                                     G_PI / 2.0, G_PI / 2.0);
+      gimp_canvas_group_add_item (stroke_group, item);
+      gimp_draw_tool_remove_item (draw_tool, item);
+
+      item = gimp_draw_tool_add_arc (draw_tool, FALSE,
+                                     x2 - square_size, y1,
+                                     square_size, square_size,
+                                     0.0, G_PI / 2.0);
+      gimp_canvas_group_add_item (stroke_group, item);
+      gimp_draw_tool_remove_item (draw_tool, item);
+
+      item = gimp_draw_tool_add_arc (draw_tool, FALSE,
+                                     x2 - square_size, y2 - square_size,
+                                     square_size, square_size,
+                                     G_PI * 1.5, G_PI / 2.0);
+      gimp_canvas_group_add_item (stroke_group, item);
+      gimp_draw_tool_remove_item (draw_tool, item);
+
+      item = gimp_draw_tool_add_arc (draw_tool, FALSE,
+                                     x1, y2 - square_size,
+                                     square_size, square_size,
+                                     G_PI, G_PI / 2.0);
+      gimp_canvas_group_add_item (stroke_group, item);
+      gimp_draw_tool_remove_item (draw_tool, item);
+      break;
+    }
+    default
+     {
+      gimp_rectangle_tool_draw (draw_tool, stroke_group);
+      break;
+     }
+  }  
 }
+
+
 
 static void
 gimp_select_by_shape_tool_select (GimpRectangleSelectTool *rect_tool,
@@ -181,7 +258,7 @@ gimp_select_by_shape_tool_select (GimpRectangleSelectTool *rect_tool,
         {
           case GIMP_ORIENTATION_HORIZONTAL :
           gimp_channel_select_rectangle (channel,
-                                        x, 0, 1, 1000,
+                                        0, y, h1, 1,
                                         operation,
                                         options->feather,
                                         options->feather_radius,
@@ -189,24 +266,24 @@ gimp_select_by_shape_tool_select (GimpRectangleSelectTool *rect_tool,
                                         TRUE);
           break;
     
-         case GIMP_ORIENTATION_VERTICAL :  
-         gimp_channel_select_rectangle (channel,
-                                     0, y, 1, h1,
-                                     operation,
-                                     options->feather,
-                                     options->feather_radius,
-                                     options->feather_radius,
-                                     TRUE);
+          case GIMP_ORIENTATION_VERTICAL :  
+          gimp_channel_select_rectangle (channel,
+                                       x, 0, 1, w1,
+                                       operation,
+                                       options->feather,
+                                       options->feather_radius,
+                                       options->feather_radius,
+                                       TRUE);
           break;
 
          case GIMP_ORIENTATION_UNKNOWN :  
          gimp_channel_select_rectangle (channel,
-                                     x, y, 1, 1,
-                                     operation,
-                                     options->feather,
-                                     options->feather_radius,
-                                     options->feather_radius,
-                                     TRUE);
+                                        x, y, 1, 1,
+                                        operation,
+                                        options->feather,
+                                        options->feather_radius,
+                                        options->feather_radius,
+                                        TRUE);
           break; 
        }
 
