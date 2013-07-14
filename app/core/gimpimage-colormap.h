@@ -34,6 +34,8 @@ void           gimp_image_set_colormap         (GimpImage       *image,
                                                 const guchar    *colormap,
                                                 gint             n_colors,
                                                 gboolean         push_undo);
+void           gimp_image_unset_colormap       (GimpImage       *image,
+                                                gboolean         push_undo);
 
 void           gimp_image_get_colormap_entry   (GimpImage       *image,
                                                 gint             color_index,

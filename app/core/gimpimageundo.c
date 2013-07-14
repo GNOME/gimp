@@ -415,9 +415,12 @@ gimp_image_undo_pop (GimpUndo            *undo,
         colormap   = g_memdup (gimp_image_get_colormap (image),
                                GIMP_IMAGE_COLORMAP_SIZE);
 
-        gimp_image_set_colormap (image,
-                                 image_undo->colormap, image_undo->num_colors,
-                                 FALSE);
+        if (image_undo->colormap)
+          gimp_image_set_colormap (image,
+                                   image_undo->colormap, image_undo->num_colors,
+                                   FALSE);
+        else
+          gimp_image_unset_colormap (image, FALSE);
 
         if (image_undo->colormap)
           g_free (image_undo->colormap);

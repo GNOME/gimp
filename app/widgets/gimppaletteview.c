@@ -433,7 +433,7 @@ gimp_palette_view_find_entry (GimpPaletteView *view,
   palette  = GIMP_PALETTE (GIMP_VIEW (view)->renderer->viewable);
   renderer = GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (view)->renderer);
 
-  if (! palette)
+  if (! palette || ! gimp_palette_get_n_colors (palette))
     return NULL;
 
   col = x / renderer->cell_width;

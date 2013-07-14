@@ -40,8 +40,8 @@
 
 /*  local function prototype  */
 
-void   gimp_image_colormap_set_palette_entry (GimpImage *image,
-                                              gint       index);
+static void   gimp_image_colormap_set_palette_entry (GimpImage *image,
+                                                     gint       index);
 
 
 /*  public functions  */
@@ -173,11 +173,6 @@ gimp_image_set_colormap (GimpImage    *image,
 
       memcpy (private->colormap, colormap, n_colors * 3);
     }
-  else if (private->colormap)
-    {
-      gimp_image_colormap_dispose (image);
-      gimp_image_colormap_free (image);
-    }
 
   private->n_colors = n_colors;
 
@@ -196,6 +191,31 @@ gimp_image_set_colormap (GimpImage    *image,
 
       gimp_data_thaw (GIMP_DATA (private->palette));
     }
+
+  gimp_image_colormap_changed (image, -1);
+}
+
+void
+gimp_image_unset_colormap (GimpImage *image,
+                           gboolean   push_undo)
+{
+  GimpImagePrivate *private;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (push_undo)
+    gimp_image_undo_push_image_colormap (image,
+                                         C_("undo-type", "Unset Colormap"));
+
+  if (private->colormap)
+    {
+      gimp_image_colormap_dispose (image);
+      gimp_image_colormap_free (image);
+    }
+
+  private->n_colors = 0;
 
   gimp_image_colormap_changed (image, -1);
 }
@@ -286,7 +306,7 @@ gimp_image_add_colormap_entry (GimpImage     *image,
 
 /*  private functions  */
 
-void
+static void
 gimp_image_colormap_set_palette_entry (GimpImage *image,
                                        gint       index)
 {
