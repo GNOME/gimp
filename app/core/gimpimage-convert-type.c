@@ -1030,7 +1030,7 @@ gimp_image_convert_type (GimpImage               *image,
     case GIMP_RGB:
     case GIMP_GRAY:
       if (old_type == GIMP_INDEXED)
-        gimp_image_set_colormap (image, NULL, 0, TRUE);
+        gimp_image_unset_colormap (image, TRUE);
       break;
 
     case GIMP_INDEXED:

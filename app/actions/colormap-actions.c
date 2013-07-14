@@ -109,7 +109,7 @@ colormap_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_color (group, action, color, FALSE);
 
   SET_SENSITIVE ("colormap-edit-color",
-                 image && indexed);
+                 image && indexed && num_colors > 0);
   SET_SENSITIVE ("colormap-add-color-from-fg",
                  image && indexed && num_colors < 256);
   SET_SENSITIVE ("colormap-add-color-from-bg",

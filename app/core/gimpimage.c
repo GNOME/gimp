@@ -1171,7 +1171,7 @@ gimp_image_real_colormap_changed (GimpImage *image,
 {
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  if (private->colormap)
+  if (private->colormap && private->n_colors > 0)
     {
       babl_palette_set_palette (private->babl_palette_rgb,
                                 gimp_babl_format (GIMP_RGB,
