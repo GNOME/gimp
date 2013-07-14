@@ -488,9 +488,9 @@ xcf_load_image_props (XcfInfo   *info,
                 info->cp += xcf_read_int8 (info->fp, cmap, n_colors * 3);
               }
 
-            /* only set color map if image is not indexed, this is
-             * just sanity checking to make sure gimp doesn't end up
-             * with an image state that is impossible.
+            /* only set color map if image is indexed, this is just
+             * sanity checking to make sure gimp doesn't end up with
+             * an image state that is impossible.
              */
             if (gimp_image_get_base_type (image) == GIMP_INDEXED)
               gimp_image_set_colormap (image, cmap, n_colors, FALSE);
