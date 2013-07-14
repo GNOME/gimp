@@ -27,6 +27,8 @@
 #include "libgimpmodule/gimpmodule.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
+#include "gimpcolorwheel.h"
+
 #include "libgimp/libgimp-intl.h"
 
 
@@ -53,16 +55,12 @@ struct _ColorselWheelClass
 };
 
 
-GType         colorsel_wheel_get_type      (void);
+static GType  colorsel_wheel_get_type      (void);
 
 static void   colorsel_wheel_set_color     (GimpColorSelector *selector,
                                             const GimpRGB     *rgb,
                                             const GimpHSV     *hsv);
-
-static void   colorsel_wheel_size_allocate (GtkWidget         *frame,
-                                            GtkAllocation     *allocation,
-                                            ColorselWheel     *wheel);
-static void   colorsel_wheel_changed       (GtkHSV            *hsv,
+static void   colorsel_wheel_changed       (GimpColorWheel    *hsv,
                                             GimpColorSelector *selector);
 
 static const GimpModuleInfo colorsel_wheel_info =
@@ -89,6 +87,7 @@ gimp_module_query (GTypeModule *module)
 G_MODULE_EXPORT gboolean
 gimp_module_register (GTypeModule *module)
 {
+  color_wheel_register_type (module);
   colorsel_wheel_register_type (module);
 
   return TRUE;
@@ -120,11 +119,7 @@ colorsel_wheel_init (ColorselWheel *wheel)
   gtk_box_pack_start (GTK_BOX (wheel), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  g_signal_connect (frame, "size-allocate",
-                    G_CALLBACK (colorsel_wheel_size_allocate),
-                    wheel);
-
-  wheel->hsv = gtk_hsv_new ();
+  wheel->hsv = gimp_color_wheel_new ();
   gtk_container_add (GTK_CONTAINER (frame), wheel->hsv);
   gtk_widget_show (wheel->hsv);
 
@@ -140,39 +135,18 @@ colorsel_wheel_set_color (GimpColorSelector *selector,
 {
   ColorselWheel *wheel = COLORSEL_WHEEL (selector);
 
-  gtk_hsv_set_color (GTK_HSV (wheel->hsv), hsv->h, hsv->s, hsv->v);
+  gimp_color_wheel_set_color (GIMP_COLOR_WHEEL (wheel->hsv),
+                              hsv->h, hsv->s, hsv->v);
 }
 
 static void
-colorsel_wheel_size_allocate (GtkWidget     *frame,
-                              GtkAllocation *allocation,
-                              ColorselWheel *wheel)
-{
-  GtkStyle *style = gtk_widget_get_style (frame);
-  gint      focus_width;
-  gint      focus_padding;
-  gint      size;
-
-  gtk_widget_style_get (frame,
-                        "focus-line-width", &focus_width,
-                        "focus-padding",    &focus_padding,
-                        NULL);
-
-  size = (MIN (allocation->width, allocation->height) -
-          2 * MAX (style->xthickness, style->ythickness) -
-          2 * (focus_width + focus_padding));
-
-  gtk_hsv_set_metrics (GTK_HSV (wheel->hsv), size, size / 10);
-}
-
-static void
-colorsel_wheel_changed (GtkHSV            *hsv,
+colorsel_wheel_changed (GimpColorWheel    *hsv,
                         GimpColorSelector *selector)
 {
-  gtk_hsv_get_color (hsv,
-                     &selector->hsv.h,
-                     &selector->hsv.s,
-                     &selector->hsv.v);
+  gimp_color_wheel_get_color (hsv,
+                              &selector->hsv.h,
+                              &selector->hsv.s,
+                              &selector->hsv.v);
   gimp_hsv_to_rgb (&selector->hsv, &selector->rgb);
 
   gimp_color_selector_color_changed (selector);

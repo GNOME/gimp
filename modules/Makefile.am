@@ -70,7 +70,7 @@ libcolor_selector_water_la_SOURCES = color-selector-water.c
 libcolor_selector_water_la_LDFLAGS = -avoid-version -module $(no_undefined)
 libcolor_selector_water_la_LIBADD = $(color_selector_libadd)
 
-libcolor_selector_wheel_la_SOURCES = color-selector-wheel.c
+libcolor_selector_wheel_la_SOURCES = color-selector-wheel.c gimpcolorwheel.c gimpcolorwheel.h
 libcolor_selector_wheel_la_LDFLAGS = -avoid-version -module $(no_undefined)
 libcolor_selector_wheel_la_LIBADD = $(color_selector_libadd)
 
