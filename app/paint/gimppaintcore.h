@@ -40,7 +40,7 @@ struct _GimpPaintCore
 
   gchar       *undo_desc;        /*  undo description                    */
 
-  GimpCoords   start_coords;     /*  starting coords (for undo only)     */
+  GimpCoords   start_coords;     /*  the last stroke's endpoint for undo */
 
   GimpCoords   cur_coords;       /*  current coords                      */
   GimpCoords   last_coords;      /*  last coords                         */

@@ -300,13 +300,16 @@ gimp_paint_tool_button_press (GimpTool            *tool,
 
   if ((display != tool->display) || ! paint_tool->draw_line)
     {
-      /*  if this is a new image, reinit the core vals  */
+      /* if this is a new display, resest the "last stroke's endpoint"
+       * because there is none
+       */
+      if (display != tool->display)
+        core->start_coords = core->cur_coords;
 
-      core->start_coords = core->cur_coords;
-      core->last_coords  = core->cur_coords;
+      core->last_coords = core->cur_coords;
 
-      core->distance     = 0.0;
-      core->pixel_dist   = 0.0;
+      core->distance    = 0.0;
+      core->pixel_dist  = 0.0;
     }
   else if (paint_tool->draw_line)
     {
@@ -315,8 +318,6 @@ gimp_paint_tool_button_press (GimpTool            *tool,
       /*  If shift is down and this is not the first paint
        *  stroke, then draw a line from the last coords to the pointer
        */
-      core->start_coords = core->last_coords;
-
       gimp_paint_core_round_line (core, paint_options, constrain);
     }
 

@@ -370,6 +370,9 @@ gimp_paint_core_start (GimpPaintCore     *core,
                                            sizeof (GimpCoords),
                                            STROKE_BUFFER_INIT_SIZE);
 
+  /* remember the last stroke's endpoint for later undo */
+  core->start_coords = core->last_coords;
+
   core->cur_coords = *coords;
 
   if (! GIMP_PAINT_CORE_GET_CLASS (core)->start (core, drawable,
@@ -636,7 +639,6 @@ gimp_paint_core_get_current_coords (GimpPaintCore    *core,
   g_return_if_fail (coords != NULL);
 
   *coords = core->cur_coords;
-
 }
 
 void

@@ -68,8 +68,7 @@ gimp_paint_core_stroke (GimpPaintCore     *core,
     {
       gint i;
 
-      core->start_coords = strokes[0];
-      core->last_coords  = strokes[0];
+      core->last_coords = strokes[0];
 
       gimp_paint_core_paint (core, drawable, paint_options,
                              GIMP_PAINT_STATE_INIT, 0);
@@ -179,9 +178,8 @@ gimp_paint_core_stroke_boundary (GimpPaintCore     *core,
 
           initialized = TRUE;
 
-          core->cur_coords   = coords[0];
-          core->start_coords = coords[0];
-          core->last_coords  = coords[0];
+          core->cur_coords  = coords[0];
+          core->last_coords = coords[0];
 
           gimp_paint_core_paint (core, drawable, paint_options,
                                  GIMP_PAINT_STATE_INIT, 0);
@@ -283,9 +281,8 @@ gimp_paint_core_stroke_vectors (GimpPaintCore     *core,
             {
               initialized = TRUE;
 
-              core->cur_coords   = g_array_index (coords, GimpCoords, 0);
-              core->start_coords = g_array_index (coords, GimpCoords, 0);
-              core->last_coords  = g_array_index (coords, GimpCoords, 0);
+              core->cur_coords  = g_array_index (coords, GimpCoords, 0);
+              core->last_coords = g_array_index (coords, GimpCoords, 0);
 
               gimp_paint_core_paint (core, drawable, paint_options,
                                      GIMP_PAINT_STATE_INIT, 0);
