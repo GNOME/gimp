@@ -262,7 +262,7 @@ render_image_alpha (RenderInfo *info)
 
       for (x = info->x; x < xe; x++, src++, dest++)
         {
-          *dest = *src;
+          *dest = 255 - *src;
         }
 
       if (++y == ye)
