@@ -134,6 +134,8 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
   if (shell->mask)
     {
+      gint mask_height;
+
       if (! shell->mask_surface)
         {
           shell->mask_surface =
@@ -159,6 +161,23 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                        babl_format ("Y u8"),
                        data, stride,
                        GEGL_ABYSS_NONE);
+
+      /* invert the mask so what is *not* the foreground object is masked */
+      mask_height = h * window_scale;
+      while (mask_height--)
+        {
+          gint    mask_width = w * window_scale;
+          guchar *d          = data;
+
+          while (mask_width--)
+            {
+              guchar inv = 255 - *d;
+
+              *d++ = inv;
+            }
+
+          data += stride;
+        }
     }
 
   /*  put it to the screen  */
