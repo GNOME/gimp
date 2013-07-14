@@ -88,6 +88,7 @@ gimp_module_query (GTypeModule *module)
 G_MODULE_EXPORT gboolean
 gimp_module_register (GTypeModule *module)
 {
+  color_wheel_register_type (module);
   colorsel_wheel_register_type (module);
 
   return TRUE;

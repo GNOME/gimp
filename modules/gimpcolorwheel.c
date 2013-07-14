@@ -115,10 +115,16 @@ static void     gimp_color_wheel_move           (GimpColorWheel     *wheel,
 
 static guint wheel_signals[LAST_SIGNAL];
 
-G_DEFINE_TYPE (GimpColorWheel, gimp_color_wheel, GTK_TYPE_WIDGET)
+G_DEFINE_DYNAMIC_TYPE (GimpColorWheel, gimp_color_wheel, GTK_TYPE_WIDGET)
 
 #define parent_class gimp_color_wheel_parent_class
 
+
+void
+color_wheel_register_type (GTypeModule *module)
+{
+  gimp_color_wheel_register_type (module);
+}
 
 static void
 gimp_color_wheel_class_init (GimpColorWheelClass *class)
@@ -194,6 +200,11 @@ gimp_color_wheel_class_init (GimpColorWheelClass *class)
                                 G_TYPE_ENUM, GTK_DIR_LEFT);
 
   g_type_class_add_private (object_class, sizeof (GimpColorWheelPrivate));
+}
+
+static void
+gimp_color_wheel_class_finalize (GimpColorWheelClass *klass)
+{
 }
 
 static void
