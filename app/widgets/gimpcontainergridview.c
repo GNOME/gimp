@@ -195,6 +195,11 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
   gimp_editor_set_show_name (GIMP_EDITOR (grid_view), TRUE);
 
   grid_view->wrap_box = gtk_hwrap_box_new (FALSE);
+
+  /* set a silly small and random size request so it doesn't initially
+   * request too much and breaks dock geometry deserialization
+   */
+  gtk_widget_set_size_request (grid_view->wrap_box, 16, 16);
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (box->scrolled_win),
                                          grid_view->wrap_box);
   viewport = gtk_widget_get_parent (grid_view->wrap_box);
