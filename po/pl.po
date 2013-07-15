@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-25 18:28+0200\n"
-"PO-Revision-Date: 2013-05-25 18:30+0200\n"
+"POT-Creation-Date: 2013-07-15 22:29+0200\n"
+"PO-Revision-Date: 2013-07-15 22:30+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -87,7 +87,7 @@ msgstr ""
 "Powszechnej Licencji Publicznej GNU (GNU General Public License); jeśli nie "
 "- proszę odwiedzić stronę internetową http://www.gnu.org/licenses/."
 
-#: ../app/app.c:224
+#: ../app/app.c:225
 #, c-format
 msgid ""
 "Unable to open a test swap file.\n"
@@ -5612,11 +5612,11 @@ msgstr "I_nne (%s) ..."
 msgid "_Zoom (%s)"
 msgstr "_Powiększenie (%s)"
 
-#: ../app/actions/view-commands.c:605
+#: ../app/actions/view-commands.c:603
 msgid "Set Canvas Padding Color"
 msgstr "Ustawienie koloru wyściółki płótna"
 
-#: ../app/actions/view-commands.c:607
+#: ../app/actions/view-commands.c:605
 msgid "Set Custom Canvas Padding Color"
 msgstr "Ustawienie dowolnego koloru wyściółki płótna"
 
@@ -7828,7 +7828,7 @@ msgstr "Krycie"
 msgid "Paint Mode"
 msgstr "Tryb rysowania"
 
-#: ../app/core/gimpdata.c:670
+#: ../app/core/gimpdata.c:681
 #, c-format
 msgid "Could not delete '%s': %s"
 msgstr "Nie można usunąć \"%s\": %s"
@@ -7974,7 +7974,7 @@ msgid "Posterize"
 msgstr "Redukcja kolorów"
 
 #: ../app/core/gimpdrawable-stroke.c:272
-#: ../app/paint/gimppaintcore-stroke.c:333 ../app/vectors/gimpvectors.c:556
+#: ../app/paint/gimppaintcore-stroke.c:330 ../app/vectors/gimpvectors.c:556
 msgid "Not enough points to stroke"
 msgstr "Niewystarczająca ilość punktów do narysowania"
 
@@ -8160,12 +8160,17 @@ msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Ustawienie palety kolorów"
 
-#: ../app/core/gimpimage-colormap.c:243
+#: ../app/core/gimpimage-colormap.c:210
+msgctxt "undo-type"
+msgid "Unset Colormap"
+msgstr "Cofnięcie ustawienia palety kolorów"
+
+#: ../app/core/gimpimage-colormap.c:263
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Zmiana elementu palety kolorów"
 
-#: ../app/core/gimpimage-colormap.c:271
+#: ../app/core/gimpimage-colormap.c:291
 msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Dodanie koloru do palety kolorów"
@@ -8320,7 +8325,7 @@ msgctxt "undo-type"
 msgid "Move Sample Point"
 msgstr "Przesunięcie punktu wzorcowego"
 
-#: ../app/core/gimpimage-scale.c:87
+#: ../app/core/gimpimage-scale.c:88
 msgctxt "undo-type"
 msgid "Scale Image"
 msgstr "Skalowanie obrazu"
@@ -8430,7 +8435,7 @@ msgid "(Preview may be out of date)"
 msgstr "(Podgląd może być nieaktualny)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:774 ../app/widgets/gimpimagepropview.c:441
+#: ../app/core/gimpimagefile.c:774 ../app/widgets/gimpimagepropview.c:440
 #: ../app/widgets/gimpsizebox.c:427 ../app/widgets/gimptemplateeditor.c:565
 #, c-format
 msgid "%d × %d pixel"
@@ -10048,7 +10053,7 @@ msgid "Vertical"
 msgstr "Pionowo"
 
 #: ../app/dialogs/preferences-dialog.c:2350
-#: ../app/widgets/gimpimagepropview.c:470
+#: ../app/widgets/gimpimagepropview.c:469
 msgid "ppi"
 msgstr "ppi"
 
@@ -10843,12 +10848,12 @@ msgstr "Wtyczka %s nie może otworzyć obrazu"
 msgid "Image doesn't contain any layers"
 msgstr "Obraz nie zawiera żadnych warstw"
 
-#: ../app/file/file-open.c:583
+#: ../app/file/file-open.c:586
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Otwarcie pliku \"%s\" się nie powiodło: %s"
 
-#: ../app/file/file-open.c:690
+#: ../app/file/file-open.c:696
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -11492,29 +11497,29 @@ msgid "Close path stroke"
 msgstr "Zamknięcie rysowania wzdłuż ścieżki"
 
 # TO NIE JEST MIEJSCE NA WPISYWANIE TŁUMACZY!
-#: ../app/pdb/vectors-cmds.c:399
+#: ../app/pdb/vectors-cmds.c:401
 msgid "Translate path stroke"
 msgstr "Przemieszczenie rysowania wzdłuż ścieżki"
 
-#: ../app/pdb/vectors-cmds.c:439
+#: ../app/pdb/vectors-cmds.c:443
 msgid "Scale path stroke"
 msgstr "Skalowanie rysowania wzdłuż ścieżki"
 
-#: ../app/pdb/vectors-cmds.c:481
+#: ../app/pdb/vectors-cmds.c:487
 msgid "Rotate path stroke"
 msgstr "Obrót rysowania wzdłuż ścieżki"
 
-#: ../app/pdb/vectors-cmds.c:521 ../app/pdb/vectors-cmds.c:565
+#: ../app/pdb/vectors-cmds.c:529 ../app/pdb/vectors-cmds.c:575
 msgid "Flip path stroke"
 msgstr "Odbicie rysowania wzdłuż ścieżki"
 
-#: ../app/pdb/vectors-cmds.c:694 ../app/pdb/vectors-cmds.c:817
-#: ../app/pdb/vectors-cmds.c:1037
+#: ../app/pdb/vectors-cmds.c:706 ../app/pdb/vectors-cmds.c:829
+#: ../app/pdb/vectors-cmds.c:1055
 msgid "Add path stroke"
 msgstr "Dodanie rysowania wzdłuż ścieżki"
 
-#: ../app/pdb/vectors-cmds.c:870 ../app/pdb/vectors-cmds.c:923
-#: ../app/pdb/vectors-cmds.c:984
+#: ../app/pdb/vectors-cmds.c:882 ../app/pdb/vectors-cmds.c:937
+#: ../app/pdb/vectors-cmds.c:1000
 msgid "Extend path stroke"
 msgstr "Rozszerzenie rysowania wzdłuż ścieżki"
 
@@ -11931,7 +11936,7 @@ msgstr "Gradient nie pracuje na warstwach indeksowanych."
 msgid "No gradient available for use with this tool."
 msgstr "Brak dostępnych gradientów dla tego narzędzia."
 
-#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:623
+#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:624
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s dla wymuszonych kątów"
@@ -12076,7 +12081,7 @@ msgctxt "command"
 msgid "Select by Color"
 msgstr "Zaznaczenie według koloru"
 
-#: ../app/tools/gimpcagetool.c:152 ../app/tools/gimpcagetool.c:1155
+#: ../app/tools/gimpcagetool.c:152 ../app/tools/gimpcagetool.c:1156
 msgid "Cage Transform"
 msgstr "Przekształcenie klatki"
 
@@ -12088,15 +12093,15 @@ msgstr "Przekształcenie klatki: zniekształca zaznaczenie za pomocą klatki"
 msgid "_Cage Transform"
 msgstr "Przekształcenie _klatki"
 
-#: ../app/tools/gimpcagetool.c:352
+#: ../app/tools/gimpcagetool.c:353
 msgid "Press ENTER to commit the transform"
 msgstr "Naciśnięcie klawisza Enter zatwierdzi przekształcenie"
 
-#: ../app/tools/gimpcagetool.c:1096
+#: ../app/tools/gimpcagetool.c:1097
 msgid "Computing Cage Coefficients"
 msgstr "Obliczanie współrzędnych klatki"
 
-#: ../app/tools/gimpcagetool.c:1273
+#: ../app/tools/gimpcagetool.c:1274
 msgid "Cage transform"
 msgstr "Przekształcenie klatki"
 
@@ -12312,11 +12317,11 @@ msgstr "Po_branie koloru"
 msgid "Click in any image to view its color"
 msgstr "Kliknięcie na obraz wyświetli jego kolor"
 
-#: ../app/tools/gimpcolorpickertool.c:238 ../app/tools/gimppainttool.c:477
+#: ../app/tools/gimpcolorpickertool.c:238 ../app/tools/gimppainttool.c:478
 msgid "Click in any image to pick the foreground color"
 msgstr "Kliknięcie na dowolny obraz pobierze jego kolor pierwszoplanowy"
 
-#: ../app/tools/gimpcolorpickertool.c:246 ../app/tools/gimppainttool.c:483
+#: ../app/tools/gimpcolorpickertool.c:246 ../app/tools/gimppainttool.c:484
 msgid "Click in any image to pick the background color"
 msgstr "Kliknięcie na dowolny obraz pobierze jego kolor tła"
 
@@ -13215,7 +13220,7 @@ msgstr "Kliknięcie i przeciągnięcie przemieści wszystkie punkty"
 
 #: ../app/tools/gimpmeasuretool.c:939 ../app/tools/gimpmeasuretool.c:1084
 #: ../app/tools/gimpmeasuretool.c:1140 ../app/tools/gimpmeasuretool.c:1168
-#: ../app/tools/gimppainttool.c:632
+#: ../app/tools/gimppainttool.c:633
 msgid "pixels"
 msgstr "piksele"
 
@@ -13386,7 +13391,7 @@ msgstr "%s wybiera kolor"
 msgid "Cannot paint on layer groups."
 msgstr "Nie można narysować grup warstw."
 
-#: ../app/tools/gimppainttool.c:678
+#: ../app/tools/gimppainttool.c:679
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s rysuje prostą linię"
@@ -15332,79 +15337,79 @@ msgstr ""
 msgid "Querying..."
 msgstr "Odpytywanie..."
 
-#: ../app/widgets/gimpimagepropview.c:120
+#: ../app/widgets/gimpimagepropview.c:113
 msgid "Size in pixels:"
 msgstr "Rozmiar w pikselach:"
 
-#: ../app/widgets/gimpimagepropview.c:123
+#: ../app/widgets/gimpimagepropview.c:116
 msgid "Print size:"
 msgstr "Rozmiar wydruku:"
 
-#: ../app/widgets/gimpimagepropview.c:126
+#: ../app/widgets/gimpimagepropview.c:119
 msgid "Resolution:"
 msgstr "Rozdzielczość:"
 
-#: ../app/widgets/gimpimagepropview.c:129
+#: ../app/widgets/gimpimagepropview.c:122
 msgid "Color space:"
 msgstr "Przestrzeń kolorów:"
 
-#: ../app/widgets/gimpimagepropview.c:134
+#: ../app/widgets/gimpimagepropview.c:127
 msgid "File Name:"
 msgstr "Nazwa pliku:"
 
-#: ../app/widgets/gimpimagepropview.c:140
+#: ../app/widgets/gimpimagepropview.c:133
 msgid "File Size:"
 msgstr "Rozmiar pliku:"
 
-#: ../app/widgets/gimpimagepropview.c:143
+#: ../app/widgets/gimpimagepropview.c:136
 msgid "File Type:"
 msgstr "Typ pliku:"
 
-#: ../app/widgets/gimpimagepropview.c:148
+#: ../app/widgets/gimpimagepropview.c:141
 msgid "Size in memory:"
 msgstr "Rozmiar w pamięci:"
 
-#: ../app/widgets/gimpimagepropview.c:151
+#: ../app/widgets/gimpimagepropview.c:144
 msgid "Undo steps:"
 msgstr "Kroki cofnięcia:"
 
-#: ../app/widgets/gimpimagepropview.c:154
+#: ../app/widgets/gimpimagepropview.c:147
 msgid "Redo steps:"
 msgstr "Kroki ponowienia:"
 
-#: ../app/widgets/gimpimagepropview.c:159
+#: ../app/widgets/gimpimagepropview.c:152
 msgid "Number of pixels:"
 msgstr "Liczba pikseli:"
 
-#: ../app/widgets/gimpimagepropview.c:162
+#: ../app/widgets/gimpimagepropview.c:155
 msgid "Number of layers:"
 msgstr "Liczba warstw:"
 
-#: ../app/widgets/gimpimagepropview.c:165
+#: ../app/widgets/gimpimagepropview.c:158
 msgid "Number of channels:"
 msgstr "Liczba kanałów:"
 
-#: ../app/widgets/gimpimagepropview.c:168
+#: ../app/widgets/gimpimagepropview.c:161
 msgid "Number of paths:"
 msgstr "Liczba ścieżek:"
 
 #. no undo (or redo) steps available
-#: ../app/widgets/gimpimagepropview.c:411
+#: ../app/widgets/gimpimagepropview.c:410
 msgid "None"
 msgstr "Brak"
 
-#: ../app/widgets/gimpimagepropview.c:465
+#: ../app/widgets/gimpimagepropview.c:464
 #: ../app/widgets/gimptemplateeditor.c:331
 #, c-format
 msgid "pixels/%s"
 msgstr "pikseli/%s"
 
-#: ../app/widgets/gimpimagepropview.c:467
+#: ../app/widgets/gimpimagepropview.c:466
 #, c-format
 msgid "%g × %g %s"
 msgstr "%g × %g %s"
 
-#: ../app/widgets/gimpimagepropview.c:488
+#: ../app/widgets/gimpimagepropview.c:487
 msgid "colors"
 msgstr "kolory"
 
