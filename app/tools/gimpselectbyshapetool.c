@@ -95,7 +95,9 @@ gimp_select_by_shape_tool_init (GimpSelectByShapeTool *select_by_shape)
 static void
 gimp_select_by_shape_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpSelectByShapeTool        *rect_sel_tool;
+  GimpCanvasGroup                *stroke_group = NULL;
+
+  /*GimpSelectByShapeTool        *rect_sel_tool;
   GimpSelectByShape            *priv;
   GimpCanvasGroup                *stroke_group = NULL;
 
@@ -185,8 +187,10 @@ gimp_select_by_shape_tool_draw (GimpDrawTool *draw_tool)
       gimp_rectangle_tool_draw (draw_tool, stroke_group);
       break;
      }
-  }  
+  }*/  
+  gimp_rectangle_tool_draw (draw_tool, stroke_group);
 }
+
 
 
 
