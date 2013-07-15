@@ -40,14 +40,14 @@ static void      run    (const gchar      *name,
                          GimpParam       **return_vals);
 
 
-static void      borderaverage        (GimpDrawable *drawable,
+static void      borderaverage        (GeglBuffer   *buffer,
+                                       gint32        drawable_id,
                                        GimpRGB      *result);
 
 static gboolean  borderaverage_dialog (gint32        image_ID,
-                                       GimpDrawable *drawable);
+                                       gint32        drawable_id);
 
-static void      add_new_color        (gint          bytes,
-                                       const guchar *buffer,
+static void      add_new_color        (const guchar *buffer,
                                        gint         *cube,
                                        gint          bucket_expo);
 
@@ -119,19 +119,21 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam   values[3];
-  GimpDrawable      *drawable;
   gint32             image_ID;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpRGB            result_color;
   GimpRunMode        run_mode;
+  gint32             drawable_id;
+  GeglBuffer        *buffer;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   run_mode = param[0].data.d_int32;
   image_ID = param[1].data.d_int32;
+  drawable_id = param[2].data.d_drawable;
 
-  /*    Get the specified drawable      */
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
+  buffer = gimp_drawable_get_buffer (drawable_id);
 
   switch (run_mode)
     {
@@ -139,7 +141,7 @@ run (const gchar      *name,
       gimp_get_data (PLUG_IN_PROC, &borderaverage_data);
       borderaverage_thickness       = borderaverage_data.thickness;
       borderaverage_bucket_exponent = borderaverage_data.bucket_exponent;
-      if (! borderaverage_dialog (image_ID, drawable))
+      if (! borderaverage_dialog (image_ID, drawable_id))
         status = GIMP_PDB_EXECUTION_ERROR;
       break;
 
@@ -166,10 +168,10 @@ run (const gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is RGB color  */
-      if (gimp_drawable_is_rgb (drawable->drawable_id))
+      if (gimp_drawable_is_rgb (drawable_id))
         {
           gimp_progress_init ( _("Border Average"));
-          borderaverage (drawable, &result_color);
+          borderaverage (buffer, drawable_id, &result_color);
 
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
             {
@@ -197,53 +199,28 @@ run (const gchar      *name,
   values[1].type         = GIMP_PDB_COLOR;
   values[1].data.d_color = result_color;
 
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
 }
 
-typedef struct {
-  gint x1, x2, y1, y2;
-  gint bucket_expo;
-  gint *cube;
-} BorderAverageParam_t;
 
 static void
-borderaverage_func (gint x,
-                    gint y,
-                    const guchar *src,
-                    gint bpp,
-                    gpointer data)
-{
-  BorderAverageParam_t *param = (BorderAverageParam_t*) data;
-
-  if (x <  param->x1 + borderaverage_thickness ||
-      x >= param->x2 - borderaverage_thickness ||
-      y <  param->y1 + borderaverage_thickness ||
-      y >= param->y2 - borderaverage_thickness)
-    {
-      add_new_color (bpp, src, param->cube, param->bucket_expo);
-    }
-}
-
-static void
-borderaverage (GimpDrawable *drawable,
+borderaverage (GeglBuffer   *buffer,
+               gint32        drawable_id,
                GimpRGB      *result)
 {
-  gint    x1, x2, y1, y2;
-  gint    bytes;
-  gint    max;
-  guchar  r, g, b;
-  guchar *buffer;
-  gint    bucket_num, bucket_expo, bucket_rexpo;
-  gint   *cube;
-  gint    i, j, k; /* index variables */
-  GimpRgnIterator *iter;
-
-  BorderAverageParam_t     param;
+  gint            x1, x2, y1, y2;
+  gint            x, y, width, height;
+  gint            max;
+  guchar          r, g, b;
+  gint            bucket_num, bucket_expo, bucket_rexpo;
+  gint           *cube;
+  gint            i, j, k;
+  GeglRectangle   border[4];
 
   /* allocate and clear the cube before */
   bucket_expo = borderaverage_bucket_exponent;
   bucket_rexpo = 8 - bucket_expo;
-  param.cube = cube = g_new (gint, 1 << (bucket_rexpo * 3));
+  cube = g_new (gint, 1 << (bucket_rexpo * 3));
   bucket_num = 1 << bucket_rexpo;
 
   for (i = 0; i < bucket_num; i++)
@@ -257,26 +234,64 @@ borderaverage (GimpDrawable *drawable,
         }
     }
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  param.x1 = x1;
-  param.y1 = y1;
-  param.x2 = x2;
-  param.y2 = y2;
-  param.bucket_expo = bucket_expo;
+  gimp_drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
 
-  /*  Get the size of the input image. (This will/must be the same
-   *  as the size of the output image.
-   */
-  bytes = drawable->bpp;
+  x = x1;
+  y = y1;
 
-  gimp_tile_cache_ntiles (2 * ((x2 - x1) / gimp_tile_width () + 1));
+  width  = x2 - x1;
+  height = y2 - y1;
 
-  /*  allocate row buffer  */
-  buffer = g_new (guchar, (x2 - x1) * bytes);
+  /* Top */
+  border[0].x =       x;
+  border[0].y =       y;
+  border[0].width =   width;
+  border[0].height =  borderaverage_thickness;
 
-  iter = gimp_rgn_iterator_new (drawable, 0);
-  gimp_rgn_iterator_src (iter, borderaverage_func, &param);
-  gimp_rgn_iterator_free (iter);
+  /* Bottom */
+  border[1].x =       x;
+  border[1].y =       y + height - borderaverage_thickness;
+  border[1].width =   width;
+  border[1].height =  borderaverage_thickness;
+
+  /* Left */
+  border[2].x =       x;
+  border[2].y =       y + borderaverage_thickness;
+  border[2].width =   borderaverage_thickness;
+  border[2].height =  height - 2 * borderaverage_thickness;
+
+  /* Right */
+  border[3].x =       x + width - borderaverage_thickness;
+  border[3].y =       y + borderaverage_thickness;
+  border[3].width =   borderaverage_thickness;
+  border[3].height =  height - 2 * borderaverage_thickness;
+
+  /* Fill the cube */
+  for (i = 0; i < 4; i++)
+    {
+      if (border[i].width > 0 && border[i].height > 0)
+        {
+          GeglBufferIterator *gi;
+
+          gi = gegl_buffer_iterator_new (buffer, &border[i], 0, babl_format ("R'G'B' u8"),
+                                         GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+
+          while (gegl_buffer_iterator_next (gi))
+            {
+              guint   k;
+              guchar *data;
+
+              data = (guchar*) gi->data[0];
+
+              for (k = 0; k < gi->length; k++)
+                {
+                  add_new_color (data + k * 3,
+                                 cube,
+                                 bucket_expo);
+                }
+            }
+        }
+    }
 
   max = 0; r = 0; g = 0; b = 0;
 
@@ -291,7 +306,7 @@ borderaverage (GimpDrawable *drawable,
                       (j << bucket_rexpo) + k] > max)
                 {
                   max = cube[(i << (bucket_rexpo << 1)) +
-                            (j << bucket_rexpo) + k];
+                             (j << bucket_rexpo) + k];
                   r = (i<<bucket_expo) + (1<<(bucket_expo - 1));
                   g = (j<<bucket_expo) + (1<<(bucket_expo - 1));
                   b = (k<<bucket_expo) + (1<<(bucket_expo - 1));
@@ -303,13 +318,11 @@ borderaverage (GimpDrawable *drawable,
   /* return the color */
   gimp_rgb_set_uchar (result, r, g, b);
 
-  g_free (buffer);
   g_free (cube);
 }
 
 static void
-add_new_color (gint          bytes,
-               const guchar *buffer,
+add_new_color (const guchar *buffer,
                gint         *cube,
                gint          bucket_expo)
 {
@@ -318,14 +331,14 @@ add_new_color (gint          bytes,
 
   bucket_rexpo = 8 - bucket_expo;
   r = buffer[0] >> bucket_expo;
-  g = (bytes > 1) ? buffer[1] >> bucket_expo : 0;
-  b = (bytes > 2) ? buffer[2] >> bucket_expo : 0;
+  g = buffer[1] >> bucket_expo;
+  b = buffer[2] >> bucket_expo;
   cube[(r << (bucket_rexpo << 1)) + (g << bucket_rexpo) + b]++;
 }
 
 static gboolean
 borderaverage_dialog (gint32        image_ID,
-                      GimpDrawable *drawable)
+                      gint32        drawable_id)
 {
   GtkWidget    *dialog;
   GtkWidget    *frame;
@@ -338,6 +351,7 @@ borderaverage_dialog (gint32        image_ID,
   GtkSizeGroup *group;
   gboolean      run;
   gdouble       xres, yres;
+  gint          width, height;
 
   const gchar *labels[] =
     { "1", "2", "4", "8", "16", "32", "64", "128", "256" };
@@ -394,9 +408,16 @@ borderaverage_dialog (gint32        image_ID,
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (size_entry), GIMP_UNIT_PIXEL);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_entry), 0, xres, TRUE);
 
+  {
+    gint x1, x2, y1, y2;
+    gimp_drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
+    width  = x2 - x1;
+    height = y2 - y1;
+  }
+
   /*  set the size (in pixels) that will be treated as 0% and 100%  */
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size_entry), 0, 0.0,
-                            drawable->width);
+                            MIN (width, height));
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size_entry), 0,
                                          1.0, 256.0);
