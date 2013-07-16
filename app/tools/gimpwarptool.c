@@ -207,7 +207,10 @@ gimp_warp_tool_button_press (GimpTool            *tool,
   gint             off_x, off_y;
 
   if (tool->display && display != tool->display)
-    gimp_warp_tool_halt (wt);
+    {
+      gimp_tool_pop_status (tool, tool->display);
+      gimp_warp_tool_halt (wt);
+    }
 
   if (! tool->display)
     gimp_warp_tool_start (wt, display);
@@ -278,11 +281,16 @@ gimp_warp_tool_button_release (GimpTool              *tool,
       g_object_unref (wt->redo_stack->data);
       wt->redo_stack = g_list_remove_link (wt->redo_stack, wt->redo_stack);
     }
-  else if (wt->redo_stack)
+  else
     {
-      /*  the redo stack becomes invalid by actually doing a stroke  */
-      g_list_free_full (wt->redo_stack, (GDestroyNotify) g_object_unref);
-      wt->redo_stack = NULL;
+      if (wt->redo_stack)
+        {
+          /*  the redo stack becomes invalid by actually doing a stroke  */
+          g_list_free_full (wt->redo_stack, (GDestroyNotify) g_object_unref);
+          wt->redo_stack = NULL;
+        }
+      gimp_tool_push_status (tool, tool->display,
+                             _("Press ENTER to commit the transform"));
     }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
