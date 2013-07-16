@@ -1140,6 +1140,45 @@ prefs_display_options_frame_add (Gimp         *gimp,
 }
 
 static void
+prefs_behavior_options_frame_add (Gimp         *gimp,
+                                 GObject      *object,
+                                 const gchar  *label,
+                                 GtkContainer *parent)
+{
+  GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *checks_vbox;
+
+  vbox = prefs_frame_new (label, parent, FALSE);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  checks_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  gtk_box_pack_start (GTK_BOX (hbox), checks_vbox, TRUE, TRUE, 0);
+  gtk_widget_show (checks_vbox);
+
+  prefs_check_button_add (object, "snap-to-guides",
+                          _("Snap to Guides"),
+                          GTK_BOX (checks_vbox));
+  prefs_check_button_add (object, "snap-to-grid",
+                          _("Snap to Grid"),
+                          GTK_BOX (checks_vbox));
+
+  checks_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  gtk_box_pack_start (GTK_BOX (hbox), checks_vbox, TRUE, TRUE, 0);
+  gtk_widget_show (checks_vbox);
+
+  prefs_check_button_add (object, "snap-to-canvas",
+                          _("Snap to Canvas Edges"),
+                          GTK_BOX (checks_vbox));
+  prefs_check_button_add (object, "snap-to-path",
+                          _("Snap to Active Path"),
+                          GTK_BOX (checks_vbox));
+}
+
+static void
 prefs_help_func (const gchar *help_id,
                  gpointer     help_data)
 {
@@ -2071,6 +2110,28 @@ prefs_dialog_new (Gimp       *gimp,
                           entry);
       }
   }
+
+  /********************************/
+  /*  Image Windows / Behavior  */
+  /********************************/
+  pixbuf = prefs_get_pixbufs (gimp, "tool-options", &small_pixbuf);
+  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  _("Image Window Drawing Behavior"),
+                                  pixbuf,
+                                  _("Behavior"),
+                                  small_pixbuf,
+                                  GIMP_HELP_PREFS_IMAGE_WINDOW_APPEARANCE,
+                                  &top_iter,
+                                  &child_iter);
+
+  prefs_behavior_options_frame_add (gimp,
+                                   G_OBJECT (display_config->default_view),
+                                   _("Default Behavior in Normal Mode"),
+                                   GTK_CONTAINER (vbox));
+  prefs_behavior_options_frame_add (gimp,
+                                   G_OBJECT (display_config->default_fullscreen_view),
+                                   _("Default Behavior in Fullscreen Mode"),
+                                   GTK_CONTAINER (vbox));
 
 
   /*************/

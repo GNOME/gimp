@@ -362,14 +362,13 @@ void
 gimp_display_shell_set_snap_to_grid (GimpDisplayShell *shell,
                                      gboolean          snap)
 {
+  GimpDisplayOptions *options;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (snap != shell->snap_to_grid)
-    {
-      shell->snap_to_grid = snap ? TRUE : FALSE;
+  options = appearance_get_options (shell);
 
-      appearance_set_action_active (shell, "view-snap-to-grid", snap);
-    }
+  g_object_set (options, "snap-to-grid", snap, NULL);
 }
 
 gboolean
@@ -377,21 +376,20 @@ gimp_display_shell_get_snap_to_grid (GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
-  return shell->snap_to_grid;
+  return appearance_get_options (shell)->snap_to_grid;
 }
 
 void
 gimp_display_shell_set_snap_to_guides (GimpDisplayShell *shell,
                                        gboolean          snap)
 {
+  GimpDisplayOptions *options;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (snap != shell->snap_to_guides)
-    {
-      shell->snap_to_guides = snap ? TRUE : FALSE;
+  options = appearance_get_options (shell);
 
-      appearance_set_action_active (shell, "view-snap-to-guides", snap);
-    }
+  g_object_set (options, "snap-to-guides", snap, NULL);
 }
 
 gboolean
@@ -399,21 +397,20 @@ gimp_display_shell_get_snap_to_guides (GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
-  return shell->snap_to_guides;
+  return appearance_get_options (shell)->snap_to_guides;
 }
 
 void
 gimp_display_shell_set_snap_to_canvas (GimpDisplayShell *shell,
                                        gboolean          snap)
 {
+  GimpDisplayOptions *options;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (snap != shell->snap_to_canvas)
-    {
-      shell->snap_to_canvas = snap ? TRUE : FALSE;
+  options = appearance_get_options (shell);
 
-      appearance_set_action_active (shell, "view-snap-to-canvas", snap);
-    }
+  g_object_set (options, "snap-to-canvas", snap, NULL);
 }
 
 gboolean
@@ -421,21 +418,20 @@ gimp_display_shell_get_snap_to_canvas (GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
-  return shell->snap_to_canvas;
+  return appearance_get_options (shell)->snap_to_canvas;
 }
 
 void
 gimp_display_shell_set_snap_to_vectors (GimpDisplayShell *shell,
                                         gboolean          snap)
 {
+  GimpDisplayOptions *options;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (snap != shell->snap_to_vectors)
-    {
-      shell->snap_to_vectors = snap ? TRUE : FALSE;
+  options = appearance_get_options (shell);
 
-      appearance_set_action_active (shell, "view-snap-to-vectors", snap);
-    }
+  g_object_set (options, "snap-to-path", snap, NULL);
 }
 
 gboolean
@@ -443,7 +439,7 @@ gimp_display_shell_get_snap_to_vectors (GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
-  return shell->snap_to_vectors;
+  return appearance_get_options (shell)->snap_to_path;
 }
 
 void

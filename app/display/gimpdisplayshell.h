@@ -57,11 +57,6 @@ struct _GimpDisplayShell
   GimpDisplayOptions *fullscreen_options;
   GimpDisplayOptions *no_image_options;
 
-  gboolean           snap_to_guides;   /*  should the guides be snapped to?   */
-  gboolean           snap_to_grid;     /*  should the grid be snapped to?     */
-  gboolean           snap_to_canvas;   /*  should the canvas be snapped to?   */
-  gboolean           snap_to_vectors;  /*  should the active path be snapped  */
-
   GimpUnit           unit;
 
   gint               offset_x;         /*  offset of display image            */

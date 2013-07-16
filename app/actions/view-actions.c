@@ -698,13 +698,13 @@ view_actions_update (GimpActionGroup *group,
   SET_ACTIVE    ("view-show-sample-points",  display && options->show_sample_points);
 
   SET_SENSITIVE ("view-snap-to-guides",      image);
-  SET_ACTIVE    ("view-snap-to-guides",      display && shell->snap_to_guides);
+  SET_ACTIVE    ("view-snap-to-guides",      display && options->snap_to_guides);
   SET_SENSITIVE ("view-snap-to-grid",        image);
-  SET_ACTIVE    ("view-snap-to-grid",        display && shell->snap_to_grid);
+  SET_ACTIVE    ("view-snap-to-grid",        display && options->snap_to_grid);
   SET_SENSITIVE ("view-snap-to-canvas",      image);
-  SET_ACTIVE    ("view-snap-to-canvas",      display && shell->snap_to_canvas);
+  SET_ACTIVE    ("view-snap-to-canvas",      display && options->snap_to_canvas);
   SET_SENSITIVE ("view-snap-to-vectors",     image);
-  SET_ACTIVE    ("view-snap-to-vectors",     display && shell->snap_to_vectors);
+  SET_ACTIVE    ("view-snap-to-vectors",     display && options->snap_to_path);
 
   SET_SENSITIVE ("view-padding-color-theme",       image);
   SET_SENSITIVE ("view-padding-color-light-check", image);

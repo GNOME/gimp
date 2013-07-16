@@ -66,16 +66,16 @@ enum
   PROP_NAV_PREVIEW_SIZE,
   PROP_DEFAULT_VIEW,
   PROP_DEFAULT_FULLSCREEN_VIEW,
-  PROP_DEFAULT_SNAP_TO_GUIDES,
-  PROP_DEFAULT_SNAP_TO_GRID,
-  PROP_DEFAULT_SNAP_TO_CANVAS,
-  PROP_DEFAULT_SNAP_TO_PATH,
   PROP_ACTIVATE_ON_FOCUS,
   PROP_SPACE_BAR_ACTION,
   PROP_ZOOM_QUALITY,
   PROP_USE_EVENT_HISTORY,
 
   /* ignored, only for backward compatibility: */
+  PROP_DEFAULT_SNAP_TO_GUIDES,
+  PROP_DEFAULT_SNAP_TO_GRID,
+  PROP_DEFAULT_SNAP_TO_CANVAS,
+  PROP_DEFAULT_SNAP_TO_PATH,
   PROP_CONFIRM_ON_CLOSE,
   PROP_XOR_COLOR
 };
@@ -219,26 +219,6 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                    GIMP_TYPE_DISPLAY_OPTIONS,
                                    GIMP_PARAM_STATIC_STRINGS |
                                    GIMP_CONFIG_PARAM_AGGREGATE);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_GUIDES,
-                                    "default-snap-to-guides",
-                                    DEFAULT_SNAP_TO_GUIDES_BLURB,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_GRID,
-                                    "default-snap-to-grid",
-                                    DEFAULT_SNAP_TO_GRID_BLURB,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_CANVAS,
-                                    "default-snap-to-canvas",
-                                    DEFAULT_SNAP_TO_CANVAS_BLURB,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_PATH,
-                                    "default-snap-to-path",
-                                    DEFAULT_SNAP_TO_PATH_BLURB,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ACTIVATE_ON_FOCUS,
                                     "activate-on-focus",
                                     ACTIVATE_ON_FOCUS_BLURB,
@@ -264,6 +244,26 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                     GIMP_PARAM_STATIC_STRINGS);
 
   /*  only for backward compatibility:  */
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_GUIDES,
+                                    "default-snap-to-guides", NULL,
+                                    TRUE,
+                                    GIMP_PARAM_STATIC_STRINGS |
+                                    GIMP_CONFIG_PARAM_IGNORE);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_GRID,
+                                    "default-snap-to-grid", NULL,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS |
+                                    GIMP_CONFIG_PARAM_IGNORE);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_CANVAS,
+                                    "default-snap-to-canvas", NULL,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS |
+                                    GIMP_CONFIG_PARAM_IGNORE);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_PATH,
+                                    "default-snap-to-path", NULL,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS |
+                                    GIMP_CONFIG_PARAM_IGNORE);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONFIRM_ON_CLOSE,
                                     "confirm-on-close", NULL,
                                     TRUE,
@@ -391,18 +391,6 @@ gimp_display_config_set_property (GObject      *object,
                           G_OBJECT (display_config->default_fullscreen_view),
                           0);
       break;
-    case PROP_DEFAULT_SNAP_TO_GUIDES:
-      display_config->default_snap_to_guides = g_value_get_boolean (value);
-      break;
-    case PROP_DEFAULT_SNAP_TO_GRID:
-      display_config->default_snap_to_grid = g_value_get_boolean (value);
-      break;
-    case PROP_DEFAULT_SNAP_TO_CANVAS:
-      display_config->default_snap_to_canvas = g_value_get_boolean (value);
-      break;
-    case PROP_DEFAULT_SNAP_TO_PATH:
-      display_config->default_snap_to_path = g_value_get_boolean (value);
-      break;
     case PROP_ACTIVATE_ON_FOCUS:
       display_config->activate_on_focus = g_value_get_boolean (value);
       break;
@@ -416,6 +404,10 @@ gimp_display_config_set_property (GObject      *object,
       display_config->use_event_history = g_value_get_boolean (value);
       break;
 
+    case PROP_DEFAULT_SNAP_TO_GUIDES:
+    case PROP_DEFAULT_SNAP_TO_GRID:
+    case PROP_DEFAULT_SNAP_TO_CANVAS:
+    case PROP_DEFAULT_SNAP_TO_PATH:
     case PROP_CONFIRM_ON_CLOSE:
     case PROP_XOR_COLOR:
       /* ignored */
@@ -500,18 +492,6 @@ gimp_display_config_get_property (GObject    *object,
     case PROP_DEFAULT_FULLSCREEN_VIEW:
       g_value_set_object (value, display_config->default_fullscreen_view);
       break;
-    case PROP_DEFAULT_SNAP_TO_GUIDES:
-      g_value_set_boolean (value, display_config->default_snap_to_guides);
-      break;
-    case PROP_DEFAULT_SNAP_TO_GRID:
-      g_value_set_boolean (value, display_config->default_snap_to_grid);
-      break;
-    case PROP_DEFAULT_SNAP_TO_CANVAS:
-      g_value_set_boolean (value, display_config->default_snap_to_canvas);
-      break;
-    case PROP_DEFAULT_SNAP_TO_PATH:
-      g_value_set_boolean (value, display_config->default_snap_to_path);
-      break;
     case PROP_ACTIVATE_ON_FOCUS:
       g_value_set_boolean (value, display_config->activate_on_focus);
       break;
@@ -525,6 +505,10 @@ gimp_display_config_get_property (GObject    *object,
       g_value_set_boolean (value, display_config->use_event_history);
       break;
 
+    case PROP_DEFAULT_SNAP_TO_GUIDES:
+    case PROP_DEFAULT_SNAP_TO_GRID:
+    case PROP_DEFAULT_SNAP_TO_CANVAS:
+    case PROP_DEFAULT_SNAP_TO_PATH:
     case PROP_CONFIRM_ON_CLOSE:
     case PROP_XOR_COLOR:
       /* ignored */

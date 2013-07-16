@@ -1079,31 +1079,6 @@ gimp_display_shell_sync_config (GimpDisplayShell  *shell,
                     G_OBJECT (shell->options), 0);
   gimp_config_sync (G_OBJECT (config->default_fullscreen_view),
                     G_OBJECT (shell->fullscreen_options), 0);
-
-  if (shell->display && gimp_display_get_shell (shell->display))
-    {
-      /*  if the shell is already fully constructed, use proper API
-       *  so the actions are updated accordingly.
-       */
-      gimp_display_shell_set_snap_to_guides  (shell,
-                                              config->default_snap_to_guides);
-      gimp_display_shell_set_snap_to_grid    (shell,
-                                              config->default_snap_to_grid);
-      gimp_display_shell_set_snap_to_canvas  (shell,
-                                              config->default_snap_to_canvas);
-      gimp_display_shell_set_snap_to_vectors (shell,
-                                              config->default_snap_to_path);
-    }
-  else
-    {
-      /*  otherwise the shell is currently being constructed and
-       *  display->shell is NULL.
-       */
-      shell->snap_to_guides  = config->default_snap_to_guides;
-      shell->snap_to_grid    = config->default_snap_to_grid;
-      shell->snap_to_canvas  = config->default_snap_to_canvas;
-      shell->snap_to_vectors = config->default_snap_to_path;
-    }
 }
 
 static void

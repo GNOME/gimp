@@ -50,6 +50,10 @@ enum
   PROP_SHOW_GUIDES,
   PROP_SHOW_GRID,
   PROP_SHOW_SAMPLE_POINTS,
+  PROP_SNAP_TO_GUIDES,
+  PROP_SNAP_TO_GRID,
+  PROP_SNAP_TO_CANVAS,
+  PROP_SNAP_TO_PATH,
   PROP_PADDING_MODE,
   PROP_PADDING_COLOR
 };
@@ -138,6 +142,22 @@ gimp_display_options_class_init (GimpDisplayOptionsClass *klass)
                                     "show-sample-points", SHOW_SAMPLE_POINTS_BLURB,
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SNAP_TO_GUIDES,
+                                    "snap-to-guides", SNAP_TO_GUIDES_BLURB,
+                                    TRUE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SNAP_TO_GRID,
+                                    "snap-to-grid", SNAP_TO_GRID_BLURB,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SNAP_TO_CANVAS,
+                                    "snap-to-canvas", SNAP_TO_CANVAS_BLURB,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SNAP_TO_PATH,
+                                    "snap-to-path", SNAP_TO_PATH_BLURB,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PADDING_MODE,
                                  "padding-mode", CANVAS_PADDING_MODE_BLURB,
                                  GIMP_TYPE_CANVAS_PADDING_MODE,
@@ -196,6 +216,22 @@ gimp_display_options_fullscreen_class_init (GimpDisplayOptionsFullscreenClass *k
                                     "show-sample-points", SHOW_SAMPLE_POINTS_BLURB,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SNAP_TO_GUIDES,
+                                    "snap-to-guides", SNAP_TO_GUIDES_BLURB,
+                                    TRUE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SNAP_TO_GRID,
+                                    "snap-to-grid", SHOW_SCROLLBARS_BLURB,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SNAP_TO_CANVAS,
+                                    "snap-to-canvas", SNAP_TO_CANVAS_BLURB,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SNAP_TO_PATH,
+                                    "snap-to-path", SNAP_TO_PATH_BLURB,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PADDING_MODE,
                                  "padding-mode", CANVAS_PADDING_MODE_BLURB,
                                  GIMP_TYPE_CANVAS_PADDING_MODE,
@@ -243,6 +279,22 @@ gimp_display_options_no_image_class_init (GimpDisplayOptionsNoImageClass *klass)
                                     "show-sample-points", SHOW_SAMPLE_POINTS_BLURB,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SNAP_TO_GUIDES,
+                                    "snap-to-guides", SNAP_TO_GUIDES_BLURB,
+                                    TRUE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SNAP_TO_GRID,
+                                    "snap-to-grid", SHOW_SCROLLBARS_BLURB,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SNAP_TO_CANVAS,
+                                    "snap-to-canvas", SNAP_TO_CANVAS_BLURB,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SNAP_TO_PATH,
+                                    "snap-to-path", SNAP_TO_PATH_BLURB,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -287,6 +339,18 @@ gimp_display_options_set_property (GObject      *object,
       break;
     case PROP_SHOW_SAMPLE_POINTS:
       options->show_sample_points = g_value_get_boolean (value);
+      break;
+    case PROP_SNAP_TO_GUIDES:
+      options->snap_to_guides = g_value_get_boolean (value);
+      break;
+    case PROP_SNAP_TO_GRID:
+      options->snap_to_grid = g_value_get_boolean (value);
+      break;
+    case PROP_SNAP_TO_CANVAS:
+      options->snap_to_canvas = g_value_get_boolean (value);
+      break;
+    case PROP_SNAP_TO_PATH:
+      options->snap_to_path = g_value_get_boolean (value);
       break;
     case PROP_PADDING_MODE:
       options->padding_mode = g_value_get_enum (value);
@@ -337,6 +401,18 @@ gimp_display_options_get_property (GObject    *object,
       break;
     case PROP_SHOW_SAMPLE_POINTS:
       g_value_set_boolean (value, options->show_sample_points);
+      break;
+    case PROP_SNAP_TO_GUIDES:
+      g_value_set_boolean (value, options->snap_to_guides);
+      break;
+    case PROP_SNAP_TO_GRID:
+      g_value_set_boolean (value, options->snap_to_grid);
+      break;
+    case PROP_SNAP_TO_CANVAS:
+      g_value_set_boolean (value, options->snap_to_canvas);
+      break;
+    case PROP_SNAP_TO_PATH:
+      g_value_set_boolean (value, options->snap_to_path);
       break;
     case PROP_PADDING_MODE:
       g_value_set_enum (value, options->padding_mode);

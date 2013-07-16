@@ -46,13 +46,17 @@ struct _GimpDisplayOptions
   /*  GimpDisplayShell options  */
   gboolean               show_rulers;
   gboolean               show_scrollbars;
-
-  /*  GimpCanvas options  */
   gboolean               show_selection;
   gboolean               show_layer_boundary;
   gboolean               show_guides;
   gboolean               show_grid;
   gboolean               show_sample_points;
+
+  gboolean               snap_to_guides;
+  gboolean               snap_to_grid;
+  gboolean               snap_to_canvas;
+  gboolean               snap_to_path;
+
   GimpCanvasPaddingMode  padding_mode;
   GimpRGB                padding_color;
   gboolean               padding_mode_set;
