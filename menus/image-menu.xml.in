@@ -540,6 +540,7 @@
       <menu action="colors-map-menu" name="Map">
         <placeholder name="Colormap" />
         <separator />
+	<menuitem action="filters-alien-map" />
       </menu>
       <menu action="colors-info-menu" name="Info">
         <menuitem action="dialogs-histogram" />
