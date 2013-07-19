@@ -100,7 +100,10 @@ gimp_translation_store_constructed (GObject *object)
   g_setenv ("LANGUAGE", setlocale (LC_ALL, NULL), TRUE);
   setlocale (LC_ALL, "");
   label = g_strdup_printf ("%s", _("System Language"));
-  g_setenv ("LANGUAGE", current_lang, TRUE);
+  if (current_lang)
+    g_setenv ("LANGUAGE", current_lang, TRUE);
+  else
+    g_unsetenv ("LANGUAGE");
   setlocale (LC_ALL, "");
   g_free (current_lang);
 
