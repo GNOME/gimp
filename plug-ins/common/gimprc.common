@@ -1,4 +1,3 @@
-alien_map_RC = alien-map.rc.o
 align_layers_RC = align-layers.rc.o
 animation_optimize_RC = animation-optimize.rc.o
 animation_play_RC = animation-play.rc.o

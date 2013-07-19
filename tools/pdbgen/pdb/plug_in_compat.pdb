@@ -16,6 +16,80 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
+sub plug_in_alienmap2 {
+    $blurb = 'Alter colors in various psychedelic ways';
+
+    $help = <<'HELP';
+No help yet. Just try it and you'll see!
+HELP
+
+    &std_pdb_compat('gegl:alien-map');
+    $date = '2013';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'redfrequency', type => '0 <= float <= 20',
+	  desc => 'Red/hue component frequency factor' },
+	{ name => 'redangle', type => '0 <= float <= 360',
+	  desc => 'Red/hue component angle factor (0-360)' },
+	{ name => 'greenfrequency', type => '0 <= float <= 20',
+	  desc => 'Green/saturation component frequency factor' },
+	{ name => 'greenangle', type => '0 <= float <= 360',
+	  desc => 'Green/saturation component angle factor (0-360)' },
+	{ name => 'bluefrequency', type => '0 <= float <= 20',
+	  desc => 'Blue/luminance component frequency factor' },
+	{ name => 'blueangle', type => '0 <= float <= 360',
+	  desc => 'Blue/luminance component angle factor (0-360)' },
+	{ name => 'colormodel', type => '0 <= int8 <= 1',
+	  desc => 'Color model { RGB-MODEL (0), HSL-MODEL (1) }' },
+	{ name => 'redmode', type => '0 <= int8 <= 1',
+	  desc => 'Red/hue application mode { TRUE, FALSE }' },
+	{ name => 'greenmode', type => '0 <= int8 <= 1',
+	  desc => 'Green/saturation application mode { TRUE, FALSE }' },
+	{ name => 'bluemode', type => '0 <= int8 <= 1',
+	  desc => 'Blue/luminance application mode { TRUE, FALSE }' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node =
+        gegl_node_new_child (NULL,
+                             "operation", "gegl:alien-map",
+			     "color_representation", (gint) colormodel,
+                             "cpn-1-frequency",  (gdouble)  redfrequency,
+                             "cpn-2-frequency",  (gdouble)  greenfrequency,
+                             "cpn-3-frequency",  (gdouble)  bluefrequency,
+                             "cpn-1-phaseshift", (gdouble)  redangle,
+                             "cpn-2-phaseshift", (gdouble)  greenangle,
+                             "cpn-3-phaseshift", (gdouble)  blueangle,
+                             "cpn-1-keep",       (gboolean) !redmode,
+                             "cpn-2-keep",       (gboolean) !greenmode,
+                             "cpn-3-keep",       (gboolean) !bluemode,
+                             NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Alien Map"),
+                                     node);
+
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_autocrop {
     $blurb = 'Remove empty borders from the image';
 
@@ -1209,7 +1283,8 @@ CODE
               "gimppdb-utils.h"
               "gimp-intl.h");
 
-@procs = qw(plug_in_autocrop
+@procs = qw(plug_in_alienmap2
+            plug_in_autocrop
             plug_in_autocrop_layer
             plug_in_colortoalpha
 	    plug_in_cubism

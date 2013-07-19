@@ -44,7 +44,6 @@ AM_CPPFLAGS = \
 	-I$(includedir)
 
 libexec_PROGRAMS = \
-	alien-map \
 	align-layers \
 	animation-optimize \
 	animation-play \
@@ -208,23 +207,6 @@ install-%: %
 	  echo " $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(INSTALL_PROGRAM) $$p $(DESTDIR)$(libexecdir)/$$f"; \
 	  $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(INSTALL_PROGRAM) $$p $(DESTDIR)$(libexecdir)/$$f || exit 1; \
 	else :; fi
-
-alien_map_SOURCES = \
-	alien-map.c
-
-alien_map_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(alien_map_RC)
 
 align_layers_SOURCES = \
 	align-layers.c

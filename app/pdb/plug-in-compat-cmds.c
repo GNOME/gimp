@@ -53,6 +53,74 @@
 
 
 static GimpValueArray *
+plug_in_alienmap2_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble redfrequency;
+  gdouble redangle;
+  gdouble greenfrequency;
+  gdouble greenangle;
+  gdouble bluefrequency;
+  gdouble blueangle;
+  guint8 colormodel;
+  guint8 redmode;
+  guint8 greenmode;
+  guint8 bluemode;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  redfrequency = g_value_get_double (gimp_value_array_index (args, 3));
+  redangle = g_value_get_double (gimp_value_array_index (args, 4));
+  greenfrequency = g_value_get_double (gimp_value_array_index (args, 5));
+  greenangle = g_value_get_double (gimp_value_array_index (args, 6));
+  bluefrequency = g_value_get_double (gimp_value_array_index (args, 7));
+  blueangle = g_value_get_double (gimp_value_array_index (args, 8));
+  colormodel = g_value_get_uint (gimp_value_array_index (args, 9));
+  redmode = g_value_get_uint (gimp_value_array_index (args, 10));
+  greenmode = g_value_get_uint (gimp_value_array_index (args, 11));
+  bluemode = g_value_get_uint (gimp_value_array_index (args, 12));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node =
+            gegl_node_new_child (NULL,
+                                 "operation", "gegl:alien-map",
+                                 "color_representation", (gint) colormodel,
+                                 "cpn-1-frequency",  (gdouble)  redfrequency,
+                                 "cpn-2-frequency",  (gdouble)  greenfrequency,
+                                 "cpn-3-frequency",  (gdouble)  bluefrequency,
+                                 "cpn-1-phaseshift", (gdouble)  redangle,
+                                 "cpn-2-phaseshift", (gdouble)  greenangle,
+                                 "cpn-3-phaseshift", (gdouble)  blueangle,
+                                 "cpn-1-keep",       (gboolean) !redmode,
+                                 "cpn-2-keep",       (gboolean) !greenmode,
+                                 "cpn-3-keep",       (gboolean) !bluemode,
+                                 NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Alien Map"),
+                                         node);
+
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_autocrop_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
@@ -1088,6 +1156,102 @@ void
 register_plug_in_compat_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
+
+  /*
+   * gimp-plug-in-alienmap2
+   */
+  procedure = gimp_procedure_new (plug_in_alienmap2_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-alienmap2");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-alienmap2",
+                                     "Alter colors in various psychedelic ways",
+                                     "No help yet. Just try it and you'll see!",
+                                     "Compatibility procedure. Please see 'gegl:alien-map' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:alien-map' for credits.",
+                                     "2013",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("redfrequency",
+                                                    "redfrequency",
+                                                    "Red/hue component frequency factor",
+                                                    0, 20, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("redangle",
+                                                    "redangle",
+                                                    "Red/hue component angle factor (0-360)",
+                                                    0, 360, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("greenfrequency",
+                                                    "greenfrequency",
+                                                    "Green/saturation component frequency factor",
+                                                    0, 20, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("greenangle",
+                                                    "greenangle",
+                                                    "Green/saturation component angle factor (0-360)",
+                                                    0, 360, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("bluefrequency",
+                                                    "bluefrequency",
+                                                    "Blue/luminance component frequency factor",
+                                                    0, 20, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("blueangle",
+                                                    "blueangle",
+                                                    "Blue/luminance component angle factor (0-360)",
+                                                    0, 360, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int8 ("colormodel",
+                                                     "colormodel",
+                                                     "Color model { RGB-MODEL (0), HSL-MODEL (1) }",
+                                                     0, 1, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int8 ("redmode",
+                                                     "redmode",
+                                                     "Red/hue application mode { TRUE, FALSE }",
+                                                     0, 1, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int8 ("greenmode",
+                                                     "greenmode",
+                                                     "Green/saturation application mode { TRUE, FALSE }",
+                                                     0, 1, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int8 ("bluemode",
+                                                     "bluemode",
+                                                     "Blue/luminance application mode { TRUE, FALSE }",
+                                                     0, 1, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-plug-in-autocrop

@@ -1,5 +1,4 @@
 %plugins = (
-    'alien-map' => { ui => 1 },
     'align-layers' => { ui => 1 },
     'animation-optimize' => {},
     'animation-play' => { ui => 1, gegl => 1 },

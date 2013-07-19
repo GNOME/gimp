@@ -2,8 +2,6 @@
 /.libs
 /Makefile
 /Makefile.in
-/alien-map
-/alien-map.exe
 /align-layers
 /align-layers.exe
 /animation-optimize
