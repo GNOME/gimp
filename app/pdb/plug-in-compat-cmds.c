@@ -94,7 +94,7 @@ plug_in_alienmap2_invoker (GimpProcedure         *procedure,
           GeglNode *node =
             gegl_node_new_child (NULL,
                                  "operation", "gegl:alien-map",
-                                 "color_representation", (gint) colormodel,
+                                 "color-model",      (gint)     colormodel,
                                  "cpn-1-frequency",  (gdouble)  redfrequency,
                                  "cpn-2-frequency",  (gdouble)  greenfrequency,
                                  "cpn-3-frequency",  (gdouble)  bluefrequency,
