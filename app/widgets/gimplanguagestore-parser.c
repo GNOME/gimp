@@ -211,7 +211,10 @@ gimp_language_store_self_l10n (GimpLanguageStore *store,
           g_setenv ("LANGUAGE", temp_lang, TRUE);
           setlocale (LC_ALL, "");
           lang = dgettext ("iso_639", lang);
-          g_setenv ("LANGUAGE", current_lang, TRUE);
+          if (current_lang)
+            g_setenv ("LANGUAGE", current_lang, TRUE);
+          else
+            g_unsetenv("LANGUAGE");
           setlocale (LC_ALL, "");
 
           g_free (current_lang);
