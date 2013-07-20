@@ -62,10 +62,4 @@ gboolean       gimp_language_store_lookup   (GimpLanguageStore *store,
                                              const gchar       *code,
                                              GtkTreeIter       *iter);
 
-/*  used from gimplanguagestore-parser.c  */
-void           gimp_language_store_add      (GimpLanguageStore *store,
-                                             const gchar       *label,
-                                             const gchar       *code);
-
-
 #endif  /* __GIMP_LANGUAGE_STORE_H__ */

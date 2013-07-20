@@ -60,6 +60,7 @@
 #include "widgets/gimpsessioninfo.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
+#include "widgets/gimplanguagestore-parser.h"
 
 #include "actions/actions.h"
 #include "actions/windows-commands.h"
@@ -199,6 +200,7 @@ gui_init (Gimp     *gimp,
   the_gui_gimp = gimp;
 
   gui_unique_init (gimp);
+  gimp_language_store_parser_init ();
 
   gimp_widgets_init (gui_help_func,
                      gui_get_foreground_func,
@@ -600,6 +602,8 @@ gui_exit_callback (Gimp     *gimp,
 
   gimp_tools_save (gimp, gui_config->save_tool_options, FALSE);
   gimp_tools_exit (gimp);
+
+  gimp_language_store_parser_clean ();
 
   return FALSE; /* continue exiting */
 }

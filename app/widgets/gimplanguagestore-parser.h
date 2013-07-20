@@ -3,6 +3,7 @@
  *
  * gimplanguagestore-parser.h
  * Copyright (C) 2008, 2009  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2013  Jehan <jehan at girinstud.io>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,8 +23,10 @@
 #define __GIMP_LANGUAGE_STORE_PARSER_H__
 
 
-gboolean  gimp_language_store_parse_iso_codes (GimpLanguageStore  *store,
-                                               GError            **error);
+void        gimp_language_store_parser_init          (void);
 
+void        gimp_language_store_parser_clean         (void);
+
+GHashTable* gimp_language_store_parser_get_languages (gboolean localization_only);
 
 #endif  /* __GIMP_LANGUAGE_STORE_PARSER_H__ */
