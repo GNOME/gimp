@@ -315,6 +315,7 @@ gimp_image_window_constructed (GObject *object)
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
   GimpGuiConfig          *config;
 
+  g_assert (GIMP_IS_GIMP (private->gimp));
   g_assert (GIMP_IS_UI_MANAGER (private->menubar_manager));
 
   g_signal_connect_object (private->dialog_factory, "dock-window-added",
@@ -334,7 +335,7 @@ gimp_image_window_constructed (GObject *object)
                     G_CALLBACK (gimp_image_window_hide_tooltip),
                     window);
 
-  config = GIMP_GUI_CONFIG (gimp_dialog_factory_get_context (private->dialog_factory)->gimp->config);
+  config = GIMP_GUI_CONFIG (private->gimp->config);
 
   /* Create the window toplevel container */
   private->main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
@@ -536,9 +537,7 @@ gimp_image_window_delete_event (GtkWidget   *widget,
   GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (widget);
   GimpDisplayShell       *shell   = gimp_image_window_get_active_shell (window);
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
-  GimpGuiConfig          *config;
-
-  config = GIMP_GUI_CONFIG (gimp_dialog_factory_get_context (private->dialog_factory)->gimp->config);
+  GimpGuiConfig          *config  = GIMP_GUI_CONFIG (private->gimp->config);
 
   if (config->single_window_mode)
     gimp_ui_manager_activate_action (gimp_image_window_get_ui_manager (window),
@@ -625,7 +624,7 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
 
       if (iconified)
         {
-          if (gimp_displays_get_num_visible (shell->display->gimp) == 0)
+          if (gimp_displays_get_num_visible (private->gimp) == 0)
             {
               GIMP_LOG (WM, "No displays visible any longer");
 
@@ -814,8 +813,7 @@ gimp_image_window_get_aux_info (GimpSessionManaged *session_managed)
   g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (session_managed), NULL);
 
   private = GIMP_IMAGE_WINDOW_GET_PRIVATE (session_managed);
-
-  config = GIMP_GUI_CONFIG (gimp_dialog_factory_get_context (private->dialog_factory)->gimp->config);
+  config  = GIMP_GUI_CONFIG (private->gimp->config);
 
   if (config->single_window_mode)
     {
