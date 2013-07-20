@@ -155,6 +155,18 @@ iso_codes_parser_entry (IsoCodesParser  *parser,
         {
           lang = *values;
         }
+      else if (strcmp (*names, "iso_639_2B_code") == 0 && code == NULL)
+        {
+          /* 2-letter ISO 639-1 codes have priority.
+           * But some languages have no 2-letter code.
+           * Ex: Asturian (ast).
+           */
+          code = *values;
+        }
+      else if (strcmp (*names, "iso_639_2T_code") == 0 && code == NULL)
+        {
+          code = *values;
+        }
       else if (strcmp (*names, "iso_639_1_code") == 0)
         {
           code = *values;
