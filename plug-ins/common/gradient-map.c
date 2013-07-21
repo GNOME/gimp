@@ -27,13 +27,11 @@
 
 
 /* Some useful macros */
-
 #define GRADMAP_PROC    "plug-in-gradmap"
 #define PALETTEMAP_PROC "plug-in-palettemap"
 #define PLUG_IN_BINARY  "gradient-map"
 #define PLUG_IN_ROLE    "gimp-gradient-map"
-#define NSAMPLES        256
-#define LUMINOSITY(X)   (GIMP_RGB_LUMINANCE (X[0], X[1], X[2]) + 0.5)
+#define NSAMPLES         2048
 
 typedef enum
   {
@@ -41,23 +39,18 @@ typedef enum
     PALETTE_MODE
   } MapMode;
 
-/* Declare a local function.
- */
-static void     query       (void);
-static void     run         (const gchar      *name,
-                             gint              nparams,
-                             const GimpParam  *param,
-                             gint             *nreturn_vals,
-                             GimpParam       **return_vals);
-
-static void     map                  (GimpDrawable     *drawable,
-                                      MapMode           mode);
-static guchar * get_samples_gradient (GimpDrawable     *drawable);
-static guchar * get_samples_palette  (GimpDrawable     *drawable);
-static void     map_func             (const guchar     *src,
-                                      guchar           *dest,
-                                      gint              bpp,
-                                      gpointer          data);
+static void     query                 (void);
+static void     run                   (const gchar      *name,
+                                       gint              nparams,
+                                       const GimpParam  *param,
+                                       gint             *nreturn_vals,
+                                       GimpParam       **return_vals);
+static void     map                   (GeglBuffer       *buffer,
+                                       GeglBuffer       *shadow_buffer,
+                                       gint32            drawable_id,
+                                       MapMode           mode);
+static gdouble * get_samples_gradient (gint32            drawable_id);
+static gdouble * get_samples_palette  (gint32            drawable_id);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -133,13 +126,17 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam   values[1];
-  GimpDrawable      *drawable;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpRunMode        run_mode;
+  gint32             drawable_id;
+  GeglBuffer        *shadow_buffer;
+  GeglBuffer        *buffer;
 
-  run_mode = param[0].data.d_int32;
+  run_mode    = param[0].data.d_int32;
+  drawable_id = param[2].data.d_drawable;
 
-  INIT_I18N();
+  INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -148,11 +145,12 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 
   /*  Get the specified drawable  */
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
+  shadow_buffer = gimp_drawable_get_shadow_buffer (drawable_id);
+  buffer        = gimp_drawable_get_buffer (drawable_id);
 
   /*  Make sure that the drawable is gray or RGB color  */
-  if (gimp_drawable_is_rgb (drawable->drawable_id) ||
-      gimp_drawable_is_gray (drawable->drawable_id))
+  if (gimp_drawable_is_rgb  (drawable_id) ||
+      gimp_drawable_is_gray (drawable_id))
     {
       MapMode mode = 0;
 
@@ -174,10 +172,7 @@ run (const gchar      *name,
       if (status == GIMP_PDB_SUCCESS)
         {
           if (mode)
-            map (drawable, mode);
-
-          if (run_mode != GIMP_RUN_NONINTERACTIVE)
-            gimp_displays_flush ();
+            map (buffer, shadow_buffer, drawable_id, mode);
         }
     }
   else
@@ -185,163 +180,233 @@ run (const gchar      *name,
       status = GIMP_PDB_EXECUTION_ERROR;
     }
 
+  g_object_unref (buffer);
+  g_object_unref (shadow_buffer);
+
+  gimp_drawable_merge_shadow (drawable_id, TRUE);
+
+  gimp_drawable_update (drawable_id, 0, 0,
+                        gimp_drawable_width (drawable_id),
+                        gimp_drawable_height (drawable_id));
+
   values[0].data.d_status = status;
 
-  gimp_drawable_detach (drawable);
-}
-
-typedef struct
-{
-  guchar   *samples;
-  gboolean  is_rgb;
-  gboolean  has_alpha;
-  MapMode   mode;
-} MapParam;
-
-static void
-map_func (const guchar *src,
-          guchar       *dest,
-          gint          bpp,
-          gpointer      data)
-{
-  MapParam *param = data;
-  gint      lum;
-  gint      b;
-  guchar   *samp;
-
-  lum = (param->is_rgb) ? LUMINOSITY (src) : src[0];
-  samp = &param->samples[lum * bpp];
-
-  if (param->has_alpha)
-    {
-      for (b = 0; b < bpp - 1; b++)
-        dest[b] = samp[b];
-      dest[b] = ((guint)samp[b] * (guint)src[b]) / 255;
-    }
-  else
-    {
-      for (b = 0; b < bpp; b++)
-        dest[b] = samp[b];
-    }
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
+    gimp_displays_flush ();
 }
 
 static void
-map (GimpDrawable *drawable,
+map (GeglBuffer   *buffer,
+     GeglBuffer   *shadow_buffer,
+     gint32        drawable_id,
      MapMode       mode)
 {
-  MapParam param;
+  GeglBufferIterator *gi;
+  gint                nb_color_chan;
+  gint                nb_chan;
+  gint                nb_chan2;
+  gint                nb_chan_samp;
+  gint                index_iter;
+  gboolean            interpolate;
+  gdouble            *samples;
+  gboolean            is_rgb;
+  gboolean            has_alpha;
+  const Babl         *format_shadow;
+  const Babl         *format_buffer;
 
-  param.is_rgb = gimp_drawable_is_rgb (drawable->drawable_id);
-  param.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+  is_rgb = gimp_drawable_is_rgb (drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable_id);
 
   switch (mode)
     {
     case GRADIENT_MODE:
-      param.samples = get_samples_gradient (drawable);
+      samples = get_samples_gradient (drawable_id);
+      interpolate = TRUE;
       break;
     case PALETTE_MODE:
-      param.samples = get_samples_palette (drawable);
+      samples = get_samples_palette (drawable_id);
+      interpolate = FALSE;
       break;
     default:
       g_error ("plug_in_gradmap: invalid mode");
     }
 
-  gimp_rgn_iterate2 (drawable, 0 /* unused */, map_func, &param);
+  if (is_rgb)
+    {
+      nb_color_chan = 3;
+      nb_chan_samp = 4;
+      if (has_alpha)
+        format_shadow = babl_format ("R'G'B'A float");
+      else
+        format_shadow = babl_format ("R'G'B' float");
+    }
+  else
+    {
+      nb_color_chan = 1;
+      nb_chan_samp = 2;
+      if (has_alpha)
+        format_shadow = babl_format ("Y'A float");
+      else
+        format_shadow = babl_format ("Y' float");
+    }
+
+
+  if (has_alpha)
+    {
+      nb_chan = nb_color_chan + 1;
+      nb_chan2 = 2;
+      format_buffer = babl_format ("Y'A float");
+    }
+  else
+    {
+      nb_chan = nb_color_chan;
+      nb_chan2 = 1;
+      format_buffer = babl_format ("Y' float");
+    }
+
+  gi = gegl_buffer_iterator_new (shadow_buffer, NULL, 0, format_shadow,
+                                 GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+
+  index_iter = gegl_buffer_iterator_add (gi, buffer, NULL,
+                                         0, format_buffer,
+                                         GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+
+  while (gegl_buffer_iterator_next (gi))
+    {
+      guint   k;
+      gfloat *data;
+      gfloat *data2;
+
+      data  = (gfloat*) gi->data[0];
+      data2 = (gfloat*) gi->data[index_iter];
+
+      if (interpolate)
+        {
+          for (k = 0; k < gi->length; k++)
+            {
+              gint      b, ind1, ind2;
+              gdouble  *samp1, *samp2;
+              gfloat    c1, c2, val;
+
+              val = data2[0] * (NSAMPLES-1);
+
+              ind1 = CLAMP (floor (val), 0, NSAMPLES-1);
+              ind2 = CLAMP (ceil  (val), 0, NSAMPLES-1);
+
+              c1 = 1.0 - (val - ind1);
+              c2 = 1.0 - c1;
+
+              samp1 = &(samples[ind1 * nb_chan_samp]);
+              samp2 = &(samples[ind2 * nb_chan_samp]);
+
+              for (b = 0; b < nb_color_chan; b++)
+                data[b] = (samp1[b] * c1 + samp2[b] * c2);
+
+              if (has_alpha)
+                {
+                  float alpha = (samp1[b] * c1 + samp2[b] * c2);
+                  data[b] = alpha * data2[1];
+                }
+
+              data += nb_chan;
+              data2 += nb_chan2;
+            }
+        }
+      else
+        {
+          for (k = 0; k < gi->length; k++)
+            {
+              gint     b, ind;
+              gdouble *samp;
+              ind = CLAMP (data2[0] * (NSAMPLES-1), 0, NSAMPLES-1);
+
+              samp = &(samples[ind * nb_chan_samp]);
+
+              for (b = 0; b < nb_color_chan; b++)
+                data[b] = samp[b];
+
+              if (has_alpha)
+                {
+                  data[b] = samp[b] * data2[1];
+                }
+
+              data += nb_chan;
+              data2 += nb_chan2;
+            }
+        }
+    }
+
+  g_free (samples);
 }
 
 /*
-  Returns 256 samples of active gradient.
-  Each sample has (gimp_drawable_bpp (drawable->drawable_id)) bytes.
+  Returns 2048 samples of the gradient.
+  Each sample is (R'G'B'A float) or (Y'A float), depending on the drawable
  */
-static guchar *
-get_samples_gradient (GimpDrawable *drawable)
+static gdouble *
+get_samples_gradient (gint32 drawable_id)
 {
   gchar   *gradient_name;
-  gint     n_f_samples;
-  gdouble *f_samples, *f_samp;  /* float samples */
-  guchar  *byte_samples, *b_samp;  /* byte samples */
-  gint     bpp, color, has_alpha, alpha;
-  gint     i, j;
+  gint     n_d_samples;
+  gdouble *d_samples = NULL;
 
   gradient_name = gimp_context_get_gradient ();
 
   /* FIXME: "reverse" hardcoded to FALSE. */
   gimp_gradient_get_uniform_samples (gradient_name, NSAMPLES, FALSE,
-                                     &n_f_samples, &f_samples);
-
+                                     &n_d_samples, &d_samples);
   g_free (gradient_name);
 
-  bpp       = gimp_drawable_bpp (drawable->drawable_id);
-  color     = gimp_drawable_is_rgb (drawable->drawable_id);
-  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-  alpha     = (has_alpha ? bpp - 1 : bpp);
-
-  byte_samples = g_new (guchar, NSAMPLES * bpp);
-
-  for (i = 0; i < NSAMPLES; i++)
+  if (!gimp_drawable_is_rgb (drawable_id))
     {
-      b_samp = &byte_samples[i * bpp];
-      f_samp = &f_samples[i * 4];
-      if (color)
-        for (j = 0; j < 3; j++)
-          b_samp[j] = f_samp[j] * 255;
-      else
-        b_samp[0] = LUMINOSITY (f_samp) * 255;
-
-      if (has_alpha)
-        b_samp[alpha] = f_samp[3] * 255;
+      const Babl *format_src = babl_format ("R'G'B'A double");
+      const Babl *format_dst = babl_format ("Y'A double");
+      const Babl *fish = babl_fish (format_src, format_dst);
+      babl_process (fish, d_samples, d_samples, NSAMPLES);
     }
 
-  g_free (f_samples);
-
-  return byte_samples;
+  return d_samples;
 }
 
 /*
-  Returns 256 samples of the palette.
-  Each sample has (gimp_drawable_bpp (drawable->drawable_id)) bytes.
+  Returns 2048 samples of the palette.
+  Each sample is (R'G'B'A float) or (Y'A float), depending on the drawable
  */
-static guchar *
-get_samples_palette (GimpDrawable *drawable)
+static gdouble *
+get_samples_palette (gint32 drawable_id)
 {
-  gchar   *palette_name;
-  GimpRGB  color_sample;
-  guchar  *byte_samples;
-  guchar  *b_samp;
-  gint     bpp, color, has_alpha, alpha;
-  gint     i;
-  gint     num_colors;
-  gfloat   factor;
-  gint     pal_entry;
+  gchar      *palette_name;
+  GimpRGB     color_sample;
+  gdouble    *d_samples, *d_samp;
+  gboolean    is_rgb;
+  gdouble     factor;
+  gint        pal_entry, num_colors;
+  gint        nb_color_chan, nb_chan, i;
+  const Babl *format;
 
   palette_name = gimp_context_get_palette ();
   gimp_palette_get_info (palette_name, &num_colors);
 
-  bpp       = gimp_drawable_bpp (drawable->drawable_id);
-  color     = gimp_drawable_is_rgb (drawable->drawable_id);
-  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-  alpha     = (has_alpha ? bpp - 1 : bpp);
+  is_rgb = gimp_drawable_is_rgb (drawable_id);
 
-  byte_samples = g_new (guchar, NSAMPLES * bpp);
-  factor = ( (float) num_colors) / NSAMPLES;
+  factor = ((double) num_colors) / NSAMPLES;
+  format = is_rgb ? babl_format ("R'G'B'A double") : babl_format ("Y'A double");
+  nb_color_chan = is_rgb ? 3 : 1;
+  nb_chan = nb_color_chan + 1;
+
+  d_samples = g_new (gdouble, NSAMPLES * nb_chan);
 
   for (i = 0; i < NSAMPLES; i++)
     {
-      b_samp = &byte_samples[i * bpp];
+      d_samp = &d_samples[i * nb_chan];
+      pal_entry = CLAMP ((int)(i * factor), 0, num_colors - 1);
 
-      pal_entry = CLAMP( (int)(i * factor), 0, num_colors);
       gimp_palette_entry_get_color (palette_name, pal_entry, &color_sample);
-
-      if (color)
-        gimp_rgb_get_uchar (&color_sample,
-                            b_samp, b_samp + 1, b_samp + 2);
-      else
-        *b_samp = gimp_rgb_luminance_uchar (&color_sample);
-
-      if (has_alpha)
-        b_samp[alpha] = 255;
-
+      gimp_rgb_get_pixel (&color_sample,
+                          format,
+                          d_samp);
     }
 
-  return byte_samples;
+  g_free (palette_name);
+  return d_samples;
 }

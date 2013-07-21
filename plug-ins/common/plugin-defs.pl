@@ -80,7 +80,7 @@
     'filter-pack' => { ui => 1 },
     'fractal-trace' => { ui => 1 },
     'goat-exercise' => { gegl => 1 },
-    'gradient-map' => {},
+    'gradient-map' => { gegl => 1 },
     'grid' => { ui => 1 },
     'guillotine' => {},
     'hot' => { ui => 1 },
