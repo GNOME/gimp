@@ -650,6 +650,7 @@ gimp_tool_gui_update_buttons (GimpToolGui *gui)
   GList              *list;
   gint               *ids;
   gint                n_ids;
+  gint                n_alternatives = 0;
   gint                i;
 
   n_ids = g_list_length (private->response_entries);
@@ -665,17 +666,21 @@ gimp_tool_gui_update_buttons (GimpToolGui *gui)
           entry->alternative_position < n_ids)
         {
           ids[entry->alternative_position] = entry->response_id;
+          n_alternatives++;
         }
     }
 
-  if (private->overlay)
+  if (n_ids == n_alternatives)
     {
-      /* TODO */
-    }
-  else
-    {
-      gtk_dialog_set_alternative_button_order_from_array (GTK_DIALOG (private->dialog),
-                                                          n_ids, ids);
+      if (private->overlay)
+        {
+          /* TODO */
+        }
+      else
+        {
+          gtk_dialog_set_alternative_button_order_from_array (GTK_DIALOG (private->dialog),
+                                                              n_ids, ids);
+        }
     }
 
   g_free (ids);
