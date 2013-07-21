@@ -96,15 +96,13 @@ static void
 gimp_select_by_shape_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpCanvasGroup                *stroke_group = NULL;
-
-  /*GimpSelectByShapeTool        *rect_sel_tool;
-  GimpSelectByShape            *priv;
-  GimpCanvasGroup                *stroke_group = NULL;
+  /*GimpSelectByShapeTool          *shp_sel_tool;
+  GimpSelectByShapeTool           *priv;
+  
 
   gint x1, y1, x2, y2;
 
   GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
-  
   shp_sel_tool = GIMP_SELECT_BY_SHAPE_TOOL (draw_tool);
   priv          = GIMP_SELECT_BY_SHAPE_TOOL_GET (shp_sel_tool);
  
@@ -190,8 +188,6 @@ gimp_select_by_shape_tool_draw (GimpDrawTool *draw_tool)
   }*/  
   gimp_rectangle_tool_draw (draw_tool, stroke_group);
 }
-
-
 
 
 static void
