@@ -20,6 +20,7 @@
 
 #include "config.h"
 
+#include <locale.h>
 #include <string.h>
 
 #include <gtk/gtk.h>
