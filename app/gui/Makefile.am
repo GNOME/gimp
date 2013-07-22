@@ -46,6 +46,8 @@ libappgui_a_built_sources = \
 
 libappgui_a_SOURCES = $(libappgui_a_built_sources) $(libappgui_a_sources)
 
+BUILT_SOURCES = $(libappgui_a_built_sources)
+
 EXTRA_DIST = \
 	dbus-service.xml
 
