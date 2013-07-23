@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: gimp.master.el.po\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
 "eywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-06-04 14:53+0000\n"
-"PO-Revision-Date: 2013-06-05 15:13+0300\n"
+"POT-Creation-Date: 2013-07-22 11:46+0000\n"
+"PO-Revision-Date: 2013-07-23 17:20+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@gnome.gr\n"
 "Language: el\n"
@@ -76,7 +76,7 @@ msgstr ""
 "Θα πρέπει να έχετε λάβει ένα αντίγραφο της Γενικής Δημόσιας Άδειας GNU μαζί "
 "με αυτό το πρόγραμμα. Αν όχι, δείτε στο  http://www.gnu.org/licenses/."
 
-#: ../app/app.c:224
+#: ../app/app.c:225
 #, c-format
 msgid ""
 "Unable to open a test swap file.\n"
@@ -5208,15 +5208,11 @@ msgid "Create another view on this image"
 msgstr "Δημιουργία άλλης προβολής σε αυτή την εικόνα"
 
 #: ../app/actions/view-actions.c:82
-#| msgctxt "view-action"
-#| msgid "_Close"
 msgctxt "view-action"
 msgid "_Close View"
 msgstr "_Κλείσιμο προβολής"
 
 #: ../app/actions/view-actions.c:83
-#| msgctxt "view-action"
-#| msgid "Close this image window"
 msgctxt "view-action"
 msgid "Close the active image view"
 msgstr "Κλείσιμο της προβολής ενεργής εικόνας"
@@ -5651,11 +5647,11 @@ msgstr "Ά_λλη (%s)..."
 msgid "_Zoom (%s)"
 msgstr "_Εστίαση (%s)"
 
-#: ../app/actions/view-commands.c:605
+#: ../app/actions/view-commands.c:603
 msgid "Set Canvas Padding Color"
 msgstr "Ορισμός χρώματος καμβά υπόβαθρου"
 
-#: ../app/actions/view-commands.c:607
+#: ../app/actions/view-commands.c:605
 msgid "Set Custom Canvas Padding Color"
 msgstr "Ορισμός προσαρμοσμένου χρώματος υπόβαθρου καμβά"
 
@@ -8034,7 +8030,7 @@ msgid "Posterize"
 msgstr "Αφίσα"
 
 #: ../app/core/gimpdrawable-stroke.c:272
-#: ../app/paint/gimppaintcore-stroke.c:333 ../app/vectors/gimpvectors.c:556
+#: ../app/paint/gimppaintcore-stroke.c:330 ../app/vectors/gimpvectors.c:556
 msgid "Not enough points to stroke"
 msgstr "Δεν επαρκούν τα σημεία για πινελιά"
 
@@ -8226,12 +8222,19 @@ msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Ορισμός χρωματολογίου"
 
-#: ../app/core/gimpimage-colormap.c:243
+#: ../app/core/gimpimage-colormap.c:210
+#| msgctxt "undo-type"
+#| msgid "Set Colormap"
+msgctxt "undo-type"
+msgid "Unset Colormap"
+msgstr "Αναίρεση χρωματολογίου"
+
+#: ../app/core/gimpimage-colormap.c:263
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Αλλαγή εισόδου του χρωματολογίου"
 
-#: ../app/core/gimpimage-colormap.c:271
+#: ../app/core/gimpimage-colormap.c:291
 msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Προσθήκη χρώματος στο χρωματολόγιο"
@@ -8386,7 +8389,7 @@ msgctxt "undo-type"
 msgid "Move Sample Point"
 msgstr "Μετακίνηση σημείου δειγματοληψίας"
 
-#: ../app/core/gimpimage-scale.c:87
+#: ../app/core/gimpimage-scale.c:88
 msgctxt "undo-type"
 msgid "Scale Image"
 msgstr "Κλιμάκωση εικόνας"
@@ -8496,7 +8499,7 @@ msgid "(Preview may be out of date)"
 msgstr "(Η προεπισκόπηση μπορεί να μην είναι ενημερωμένη)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:774 ../app/widgets/gimpimagepropview.c:441
+#: ../app/core/gimpimagefile.c:774 ../app/widgets/gimpimagepropview.c:440
 #: ../app/widgets/gimpsizebox.c:427 ../app/widgets/gimptemplateeditor.c:565
 #, c-format
 msgid "%d × %d pixel"
@@ -10144,7 +10147,7 @@ msgid "Vertical"
 msgstr "Κάθετη"
 
 #: ../app/dialogs/preferences-dialog.c:2350
-#: ../app/widgets/gimpimagepropview.c:470
+#: ../app/widgets/gimpimagepropview.c:469
 msgid "ppi"
 msgstr "ppi"
 
@@ -10495,8 +10498,8 @@ msgstr "Αν κλείσετε αυτές τις εικόνες τώρα, οι α
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
-msgstr[0] "Υπάρχει μια εικόνα με μη αποθηκευμένες αλλαγές:"
-msgstr[1] "Υπάρχουν %d εικόνες με μη αποθηκευμένες αλλαγές:"
+msgstr[0] "Υπάρχει μια εικόνα με αναποθήκευτες αλλαγές:"
+msgstr[1] "Υπάρχουν %d εικόνες με αναποθήκευτες αλλαγές:"
 
 #: ../app/dialogs/quit-dialog.c:235
 msgid "_Discard Changes"
@@ -10947,12 +10950,12 @@ msgstr "Το πρόσθετο %s δεν μπόρεσε να ανοίξει τη�
 msgid "Image doesn't contain any layers"
 msgstr "Η εικόνα δεν περιέχει στρώσεις"
 
-#: ../app/file/file-open.c:583
+#: ../app/file/file-open.c:586
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Το άνοιγμα του '%s' απέτυχε: %s"
 
-#: ../app/file/file-open.c:690
+#: ../app/file/file-open.c:696
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -12043,7 +12046,7 @@ msgstr "Η ανάμειξη δεν λειτουργεί για στρώσεις 
 msgid "No gradient available for use with this tool."
 msgstr "Δεν υπάρχουν διαβαθμίσεις για χρήση με αυτό το εργαλείο."
 
-#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:623
+#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:624
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s για περιορισμένες γωνίες"
@@ -12189,7 +12192,7 @@ msgctxt "command"
 msgid "Select by Color"
 msgstr "Επιλογή κατά χρώμα"
 
-#: ../app/tools/gimpcagetool.c:152 ../app/tools/gimpcagetool.c:1155
+#: ../app/tools/gimpcagetool.c:152 ../app/tools/gimpcagetool.c:1156
 msgid "Cage Transform"
 msgstr "Μετασχηματισμός κλωβού"
 
@@ -12201,15 +12204,15 @@ msgstr "Μετασχηματισμός κλωβού: Παραμορφώστε τ
 msgid "_Cage Transform"
 msgstr "_Μετασχηματισμός κλωβού"
 
-#: ../app/tools/gimpcagetool.c:352
+#: ../app/tools/gimpcagetool.c:353
 msgid "Press ENTER to commit the transform"
 msgstr "Πατήστε ENTER για εφαρμογή του μετασχηματισμού"
 
-#: ../app/tools/gimpcagetool.c:1096
+#: ../app/tools/gimpcagetool.c:1097
 msgid "Computing Cage Coefficients"
 msgstr "Υπολογισμός συντελεστών κλωβού"
 
-#: ../app/tools/gimpcagetool.c:1273
+#: ../app/tools/gimpcagetool.c:1274
 msgid "Cage transform"
 msgstr "Μετασχηματισμός κλωβού"
 
@@ -12427,11 +12430,11 @@ msgstr "Επιλο_γέας χρωμάτων"
 msgid "Click in any image to view its color"
 msgstr "Κλικ σε εικόνα για να δείτε το χρώμα της"
 
-#: ../app/tools/gimpcolorpickertool.c:238 ../app/tools/gimppainttool.c:477
+#: ../app/tools/gimpcolorpickertool.c:238 ../app/tools/gimppainttool.c:478
 msgid "Click in any image to pick the foreground color"
 msgstr "Κλικ σε εικόνα για επιλογή νέου χρώματος προσκηνίου"
 
-#: ../app/tools/gimpcolorpickertool.c:246 ../app/tools/gimppainttool.c:483
+#: ../app/tools/gimpcolorpickertool.c:246 ../app/tools/gimppainttool.c:484
 msgid "Click in any image to pick the background color"
 msgstr "Κλικ σε εικόνα για επιλογή χρώματος παρασκηνίου"
 
@@ -13332,7 +13335,7 @@ msgstr "Κλικ και σύρσιμο για μετακίνηση όλων τω
 #
 #: ../app/tools/gimpmeasuretool.c:939 ../app/tools/gimpmeasuretool.c:1084
 #: ../app/tools/gimpmeasuretool.c:1140 ../app/tools/gimpmeasuretool.c:1168
-#: ../app/tools/gimppainttool.c:632
+#: ../app/tools/gimppainttool.c:633
 msgid "pixels"
 msgstr "εικονοστοιχεία"
 
@@ -13505,7 +13508,7 @@ msgstr "%s για επιλογή χρώματος"
 msgid "Cannot paint on layer groups."
 msgstr "Δεν επιτρέπεται το ζωγράφισμα ομάδων στρώσεων."
 
-#: ../app/tools/gimppainttool.c:678
+#: ../app/tools/gimppainttool.c:679
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s για ευθεία γραμμή"
@@ -15478,83 +15481,83 @@ msgstr ""
 msgid "Querying..."
 msgstr "Υποβολή ερωτημάτων..."
 
-#: ../app/widgets/gimpimagepropview.c:120
+#: ../app/widgets/gimpimagepropview.c:113
 msgid "Size in pixels:"
 msgstr "Μέγεθος σε εικονοστοιχεία:"
 
 #
-#: ../app/widgets/gimpimagepropview.c:123
+#: ../app/widgets/gimpimagepropview.c:116
 msgid "Print size:"
 msgstr "Μέγεθος εκτύπωσης:"
 
 #
-#: ../app/widgets/gimpimagepropview.c:126
+#: ../app/widgets/gimpimagepropview.c:119
 msgid "Resolution:"
 msgstr "Ανάλυση:"
 
-#: ../app/widgets/gimpimagepropview.c:129
+#: ../app/widgets/gimpimagepropview.c:122
 msgid "Color space:"
 msgstr "Χρωματικός χώρος:"
 
-#: ../app/widgets/gimpimagepropview.c:134
+#: ../app/widgets/gimpimagepropview.c:127
 msgid "File Name:"
 msgstr "Όνομα αρχείου:"
 
-#: ../app/widgets/gimpimagepropview.c:140
+#: ../app/widgets/gimpimagepropview.c:133
 msgid "File Size:"
 msgstr "Μέγεθος αρχείου:"
 
-#: ../app/widgets/gimpimagepropview.c:143
+#: ../app/widgets/gimpimagepropview.c:136
 msgid "File Type:"
 msgstr "Τύπος αρχείου:"
 
-#: ../app/widgets/gimpimagepropview.c:148
+#: ../app/widgets/gimpimagepropview.c:141
 msgid "Size in memory:"
 msgstr "Δεσμευμένη μνήμη:"
 
-#: ../app/widgets/gimpimagepropview.c:151
+#: ../app/widgets/gimpimagepropview.c:144
 msgid "Undo steps:"
 msgstr "Βήματα αναιρέσεων:"
 
-#: ../app/widgets/gimpimagepropview.c:154
+#: ../app/widgets/gimpimagepropview.c:147
 msgid "Redo steps:"
 msgstr "Βήματα ακυρώσεων αναιρέσεων:"
 
-#: ../app/widgets/gimpimagepropview.c:159
+#: ../app/widgets/gimpimagepropview.c:152
 msgid "Number of pixels:"
 msgstr "Αριθμός εικονοστοιχείων:"
 
-#: ../app/widgets/gimpimagepropview.c:162
+#: ../app/widgets/gimpimagepropview.c:155
 msgid "Number of layers:"
 msgstr "Αριθμός στρώσεων:"
 
-#: ../app/widgets/gimpimagepropview.c:165
+#: ../app/widgets/gimpimagepropview.c:158
 msgid "Number of channels:"
 msgstr "Αριθμός καναλιών:"
 
-#: ../app/widgets/gimpimagepropview.c:168
+#: ../app/widgets/gimpimagepropview.c:161
 msgid "Number of paths:"
 msgstr "Αριθμός μονοπατιών:"
 
 #. no undo (or redo) steps available
-#: ../app/widgets/gimpimagepropview.c:411
+#: ../app/widgets/gimpimagepropview.c:410
 msgid "None"
 msgstr "Κανένα"
 
 #
-#: ../app/widgets/gimpimagepropview.c:465
+#: ../app/widgets/gimpimagepropview.c:464
 #: ../app/widgets/gimptemplateeditor.c:331
 #, c-format
 msgid "pixels/%s"
 msgstr "εικονοστοιχεία/%s"
 
-#: ../app/widgets/gimpimagepropview.c:467
+#: ../app/widgets/gimpimagepropview.c:466
 #, c-format
 msgid "%g × %g %s"
 msgstr "%g × %g %s"
 
 #
-#: ../app/widgets/gimpimagepropview.c:488
+#: ../app/widgets/gimpimagepropview.c:487
 msgid "colors"
 msgstr "χρώματα"
 
