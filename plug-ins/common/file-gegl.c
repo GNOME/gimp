@@ -196,7 +196,7 @@ run (const gchar      *name,
     {
       const FileFormat *format = &file_formats[i];
 
-      if (! strcmp (name, format->load_proc))
+      if (format->load_proc && !strcmp (name, format->load_proc))
         {
           image_ID = load_image (param[1].data.d_string, &error);
 
@@ -213,7 +213,7 @@ run (const gchar      *name,
 
           break;
         }
-      else if (! strcmp (name, format->save_proc))
+      else if (format->save_proc && !strcmp (name, format->save_proc))
         {
           GimpExportReturn export = GIMP_EXPORT_CANCEL;
 
