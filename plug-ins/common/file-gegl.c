@@ -80,6 +80,19 @@ static const FileFormat file_formats[] =
     "This procedure loads images in NEF format, using gegl:load",
 
     NULL, NULL, NULL /* no NEF saving */
+  },
+
+  {
+    N_("WebP image"),
+    "image/webp",
+    "webp",
+    "",
+
+    "file-webp-load",
+    "Loads WebP images using GEGL",
+    "This procedure loads images in WebP format, using gegl:load",
+
+    NULL, NULL, NULL /* no WebP saving */
   }
 };
 
