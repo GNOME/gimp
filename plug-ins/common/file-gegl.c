@@ -92,7 +92,9 @@ static const FileFormat file_formats[] =
     "Loads WebP images using GEGL",
     "This procedure loads images in WebP format, using gegl:load",
 
-    NULL, NULL, NULL /* no WebP saving */
+    "file-webp-save",
+    "Saves WebP images using GEGL",
+    "This procedure saves images in WebP format, using gegl:save"
   }
 };
 
