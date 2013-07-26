@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-03-18 12:50+0000\n"
-"PO-Revision-Date: 2013-03-18 16:24+0100\n"
+"POT-Creation-Date: 2013-06-29 16:15+0000\n"
+"PO-Revision-Date: 2013-06-30 10:24+0100\n"
 "Last-Translator: filmsi\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: \n"
@@ -449,7 +449,7 @@ msgid "Tool Options"
 msgstr "Možnosti orodja"
 
 #: ../app/actions/actions.c:226
-#: ../app/widgets/gimptoolpalette.c:390
+#: ../app/widgets/gimptoolpalette.c:391
 msgid "Tools"
 msgstr "Orodja"
 
@@ -5194,14 +5194,18 @@ msgid "Create another view on this image"
 msgstr "Ustvari nov pogled slike"
 
 #: ../app/actions/view-actions.c:82
+#| msgctxt "view-action"
+#| msgid "_Close"
 msgctxt "view-action"
-msgid "_Close"
-msgstr "_Zapri"
+msgid "_Close View"
+msgstr "_Zapri pogled"
 
 #: ../app/actions/view-actions.c:83
+#| msgctxt "view-action"
+#| msgid "Close this image window"
 msgctxt "view-action"
-msgid "Close this image window"
-msgstr "Zapri to okno s sliko"
+msgid "Close the active image view"
+msgstr "Zapri aktivni pogled slike"
 
 #: ../app/actions/view-actions.c:88
 msgctxt "view-action"
@@ -5644,11 +5648,11 @@ msgstr "D_rugo (%s) ..."
 msgid "_Zoom (%s)"
 msgstr "_Povečava (%s)"
 
-#: ../app/actions/view-commands.c:585
+#: ../app/actions/view-commands.c:605
 msgid "Set Canvas Padding Color"
 msgstr "Nastavite barvo polnila platna"
 
-#: ../app/actions/view-commands.c:587
+#: ../app/actions/view-commands.c:607
 msgid "Set Custom Canvas Padding Color"
 msgstr "Izberi lastne barve polnila platna oz. podlage"
 
@@ -7160,7 +7164,7 @@ msgstr "Razgibanost"
 #: ../app/core/gimp-contexts.c:154
 #: ../app/core/gimptooloptions.c:375
 #: ../app/gui/session.c:399
-#: ../app/menus/menus.c:464
+#: ../app/menus/menus.c:466
 #: ../app/widgets/gimpdevices.c:208
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
@@ -7632,7 +7636,7 @@ msgstr "Prekrivnost"
 msgid "Paint Mode"
 msgstr "Način slikanja"
 
-#: ../app/core/gimpdata.c:670
+#: ../app/core/gimpdata.c:681
 #, c-format
 msgid "Could not delete '%s': %s"
 msgstr "Ni mogoče izbrisati '%s': %s"
@@ -8226,7 +8230,7 @@ msgstr "(predogled je morda zastarel)"
 
 #. pixel size
 #: ../app/core/gimpimagefile.c:774
-#: ../app/widgets/gimpimagepropview.c:441
+#: ../app/widgets/gimpimagepropview.c:440
 #: ../app/widgets/gimpsizebox.c:427
 #: ../app/widgets/gimptemplateeditor.c:565
 #, c-format
@@ -9771,7 +9775,7 @@ msgid "Vertical"
 msgstr "Navpično"
 
 #: ../app/dialogs/preferences-dialog.c:2350
-#: ../app/widgets/gimpimagepropview.c:470
+#: ../app/widgets/gimpimagepropview.c:469
 msgid "ppi"
 msgstr "ppi"
 
@@ -10474,7 +10478,7 @@ msgstr "Slikovnih točk skupin plasti ni mogoče spremeniti."
 #: ../app/tools/gimppainttool.c:266
 #: ../app/tools/gimpselectiontool.c:432
 #: ../app/tools/gimptransformtool.c:247
-#: ../app/tools/gimptransformtool.c:1067
+#: ../app/tools/gimptransformtool.c:1070
 msgid "The active layer's pixels are locked."
 msgstr "Slikovne točke aktivne plasti so zaklenjene."
 
@@ -10584,13 +10588,13 @@ msgstr "Neznana vrsta datoteke"
 msgid "%s plug-in could not save image"
 msgstr "Z vtičnikom %s ni mogoče shraniti slike"
 
-#: ../app/file/file-utils.c:74
+#: ../app/file/file-utils.c:72
 #, c-format
 msgid "'%s:' is not a valid URI scheme"
 msgstr "'%s:' ni veljaven zapis URI"
 
-#: ../app/file/file-utils.c:90
-#: ../app/file/file-utils.c:126
+#: ../app/file/file-utils.c:88
+#: ../app/file/file-utils.c:124
 msgid "Invalid character sequence in URI"
 msgstr "Neveljavno zaporedje znakov v naslovu URI"
 
@@ -10604,16 +10608,16 @@ msgctxt "cage-mode"
 msgid "Deform the cage to deform the image"
 msgstr "Deformirajte kletko in s tem deformirate sliko"
 
-#: ../app/gegl/gimpcurvesconfig.c:388
+#: ../app/gegl/gimpcurvesconfig.c:395
 msgid "not a GIMP Curves file"
 msgstr "ni datoteka krivulj GIMP"
 
-#: ../app/gegl/gimpcurvesconfig.c:403
-#: ../app/gegl/gimplevelsconfig.c:789
+#: ../app/gegl/gimpcurvesconfig.c:410
+#: ../app/gegl/gimplevelsconfig.c:811
 msgid "parse error"
 msgstr "napaka razčlenjevanja"
 
-#: ../app/gegl/gimplevelsconfig.c:742
+#: ../app/gegl/gimplevelsconfig.c:764
 msgid "not a GIMP Levels file"
 msgstr "ni datoteka ravni GIMP"
 
@@ -11166,32 +11170,32 @@ msgstr "Odstrani potezo poti"
 msgid "Close path stroke"
 msgstr "Zapri potezo poti"
 
-#: ../app/pdb/vectors-cmds.c:399
+#: ../app/pdb/vectors-cmds.c:401
 msgid "Translate path stroke"
 msgstr "Premakni potezo poti"
 
-#: ../app/pdb/vectors-cmds.c:439
+#: ../app/pdb/vectors-cmds.c:443
 msgid "Scale path stroke"
 msgstr "Spremeni merilo poteze poti"
 
-#: ../app/pdb/vectors-cmds.c:481
+#: ../app/pdb/vectors-cmds.c:487
 msgid "Rotate path stroke"
 msgstr "Zasukaj potezo poti"
 
-#: ../app/pdb/vectors-cmds.c:521
-#: ../app/pdb/vectors-cmds.c:565
+#: ../app/pdb/vectors-cmds.c:529
+#: ../app/pdb/vectors-cmds.c:575
 msgid "Flip path stroke"
 msgstr "Prezrcali potezo poti"
 
-#: ../app/pdb/vectors-cmds.c:694
-#: ../app/pdb/vectors-cmds.c:817
-#: ../app/pdb/vectors-cmds.c:1037
+#: ../app/pdb/vectors-cmds.c:706
+#: ../app/pdb/vectors-cmds.c:829
+#: ../app/pdb/vectors-cmds.c:1055
 msgid "Add path stroke"
 msgstr "Dodaj potezo poti"
 
-#: ../app/pdb/vectors-cmds.c:870
-#: ../app/pdb/vectors-cmds.c:923
-#: ../app/pdb/vectors-cmds.c:984
+#: ../app/pdb/vectors-cmds.c:882
+#: ../app/pdb/vectors-cmds.c:937
+#: ../app/pdb/vectors-cmds.c:1000
 msgid "Extend path stroke"
 msgstr "Razširi potezo poti"
 
@@ -11285,7 +11289,7 @@ msgstr "Prevajalniki vtičnikov"
 msgid "Plug-In Environment"
 msgstr "Okolje vtičnikov"
 
-#: ../app/plug-in/gimppluginprocedure.c:976
+#: ../app/plug-in/gimppluginprocedure.c:978
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -11294,7 +11298,7 @@ msgstr ""
 "Napaka klica pri '%s':\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:988
+#: ../app/plug-in/gimppluginprocedure.c:990
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -11752,7 +11756,7 @@ msgid "Select by Color"
 msgstr "Izbor po barvi"
 
 #: ../app/tools/gimpcagetool.c:152
-#: ../app/tools/gimpcagetool.c:1155
+#: ../app/tools/gimpcagetool.c:1156
 msgid "Cage Transform"
 msgstr "Preoblikovanje kletke"
 
@@ -11764,15 +11768,15 @@ msgstr "Preoblikovanje kletke: deformirajte izbor s kletko"
 msgid "_Cage Transform"
 msgstr "Preo_blikovanje kletke"
 
-#: ../app/tools/gimpcagetool.c:352
+#: ../app/tools/gimpcagetool.c:353
 msgid "Press ENTER to commit the transform"
 msgstr "Pritisnite Enter za potrditev preoblikovanja"
 
-#: ../app/tools/gimpcagetool.c:1096
+#: ../app/tools/gimpcagetool.c:1097
 msgid "Computing Cage Coefficients"
 msgstr "Računanje koeficientov kletke"
 
-#: ../app/tools/gimpcagetool.c:1273
+#: ../app/tools/gimpcagetool.c:1274
 msgid "Cage transform"
 msgstr "Preoblikovanje kletke"
 
@@ -13645,15 +13649,15 @@ msgstr "Ohrani izvorno razmerje stranic"
 msgid "Transforming"
 msgstr "Preoblikovanje"
 
-#: ../app/tools/gimptransformtool.c:1066
+#: ../app/tools/gimptransformtool.c:1069
 msgid "There is no layer to transform."
 msgstr "Ni plasti za preoblikovanje."
 
-#: ../app/tools/gimptransformtool.c:1079
+#: ../app/tools/gimptransformtool.c:1082
 msgid "There is no path to transform."
 msgstr "Ni poti za preoblikovanje."
 
-#: ../app/tools/gimptransformtool.c:1080
+#: ../app/tools/gimptransformtool.c:1083
 msgid "The active path's strokes are locked."
 msgstr "Poteze aktivne poti so zaklenjene."
 
@@ -14681,11 +14685,11 @@ msgid "Configure this tab"
 msgstr "Prilagodi ta zavihek"
 
 #. Auto button
-#: ../app/widgets/gimpdockwindow.c:382
+#: ../app/widgets/gimpdockwindow.c:386
 msgid "Auto"
 msgstr "Samodejno"
 
-#: ../app/widgets/gimpdockwindow.c:393
+#: ../app/widgets/gimpdockwindow.c:397
 msgid "When enabled the dialog automatically follows the image you are working on."
 msgstr "Če je vključeno, bodo pogovorna okna samodejno sledila aktivnim slikam."
 
@@ -14967,79 +14971,79 @@ msgstr "Zamenjaj trenutni komentar k sliki s privzetim komentarjem, kot je nasta
 msgid "Querying..."
 msgstr "Povpraševanje ..."
 
-#: ../app/widgets/gimpimagepropview.c:120
+#: ../app/widgets/gimpimagepropview.c:113
 msgid "Size in pixels:"
 msgstr "Velikost v slik. točkah:"
 
-#: ../app/widgets/gimpimagepropview.c:123
+#: ../app/widgets/gimpimagepropview.c:116
 msgid "Print size:"
 msgstr "Velikost za tiskanje:"
 
-#: ../app/widgets/gimpimagepropview.c:126
+#: ../app/widgets/gimpimagepropview.c:119
 msgid "Resolution:"
 msgstr "Ločljivost:"
 
-#: ../app/widgets/gimpimagepropview.c:129
+#: ../app/widgets/gimpimagepropview.c:122
 msgid "Color space:"
 msgstr "Barvni prostor:"
 
-#: ../app/widgets/gimpimagepropview.c:134
+#: ../app/widgets/gimpimagepropview.c:127
 msgid "File Name:"
 msgstr "Ime datoteke:"
 
-#: ../app/widgets/gimpimagepropview.c:140
+#: ../app/widgets/gimpimagepropview.c:133
 msgid "File Size:"
 msgstr "Velikost datoteke:"
 
-#: ../app/widgets/gimpimagepropview.c:143
+#: ../app/widgets/gimpimagepropview.c:136
 msgid "File Type:"
 msgstr "Vrsta datoteke:"
 
-#: ../app/widgets/gimpimagepropview.c:148
+#: ../app/widgets/gimpimagepropview.c:141
 msgid "Size in memory:"
 msgstr "Velikost v spominu:"
 
-#: ../app/widgets/gimpimagepropview.c:151
+#: ../app/widgets/gimpimagepropview.c:144
 msgid "Undo steps:"
 msgstr "Koraki razveljavitve:"
 
-#: ../app/widgets/gimpimagepropview.c:154
+#: ../app/widgets/gimpimagepropview.c:147
 msgid "Redo steps:"
 msgstr "Koraki ponovitve:"
 
-#: ../app/widgets/gimpimagepropview.c:159
+#: ../app/widgets/gimpimagepropview.c:152
 msgid "Number of pixels:"
 msgstr "Število slikovnih točk:"
 
-#: ../app/widgets/gimpimagepropview.c:162
+#: ../app/widgets/gimpimagepropview.c:155
 msgid "Number of layers:"
 msgstr "Število plasti:"
 
-#: ../app/widgets/gimpimagepropview.c:165
+#: ../app/widgets/gimpimagepropview.c:158
 msgid "Number of channels:"
 msgstr "Število kanalov:"
 
-#: ../app/widgets/gimpimagepropview.c:168
+#: ../app/widgets/gimpimagepropview.c:161
 msgid "Number of paths:"
 msgstr "Število poti:"
 
 #. no undo (or redo) steps available
-#: ../app/widgets/gimpimagepropview.c:411
+#: ../app/widgets/gimpimagepropview.c:410
 msgid "None"
 msgstr "brez"
 
-#: ../app/widgets/gimpimagepropview.c:465
+#: ../app/widgets/gimpimagepropview.c:464
 #: ../app/widgets/gimptemplateeditor.c:331
 #, c-format
 msgid "pixels/%s"
 msgstr "slik. točk/%s"
 
-#: ../app/widgets/gimpimagepropview.c:467
+#: ../app/widgets/gimpimagepropview.c:466
 #, c-format
 msgid "%g × %g %s"
 msgstr "%g × %g %s"
 
-#: ../app/widgets/gimpimagepropview.c:488
+#: ../app/widgets/gimpimagepropview.c:487
 msgid "colors"
 msgstr "barve"
 
@@ -15237,12 +15241,12 @@ msgstr "%d × %d ppi, %s"
 msgid "%d ppi, %s"
 msgstr "%d ppi, %s"
 
-#: ../app/widgets/gimptextbuffer-serialize.c:340
+#: ../app/widgets/gimptextbuffer-serialize.c:344
 #, c-format
 msgid "Attribute \"%s\" is invalid on <%s> element in this context"
 msgstr "Lastnost \"%s\" je neveljavna za element <%s> v tem kontekstu"
 
-#: ../app/widgets/gimptextbuffer-serialize.c:412
+#: ../app/widgets/gimptextbuffer-serialize.c:416
 #, c-format
 msgid "Outermost element in text must be <markup> not <%s>"
 msgstr "Najbolj zunanji element v besedilu mora biti <markup> in ne <%s>"
