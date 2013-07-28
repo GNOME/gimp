@@ -37,12 +37,12 @@
 
 
 /*  halfway between G_PRIORITY_HIGH_IDLE and G_PRIORITY_DEFAULT_IDLE  */
-#define GIMP_PROJECTION_IDLE_PRIORITY     ((G_PRIORITY_HIGH_IDLE + \
-                                            G_PRIORITY_DEFAULT_IDLE) / 2)
+#define GIMP_PROJECTION_IDLE_PRIORITY ((G_PRIORITY_HIGH_IDLE + \
+                                        G_PRIORITY_DEFAULT_IDLE) / 2)
 
-/*  chunk size for one iteration of the idle renderer  */
-#define GIMP_PROJECTION_IDLE_CHUNK_WIDTH  256
-#define GIMP_PROJECTION_IDLE_CHUNK_HEIGHT 128
+/*  chunk size for one iteration of the chunk renderer  */
+#define GIMP_PROJECTION_CHUNK_WIDTH  256
+#define GIMP_PROJECTION_CHUNK_HEIGHT 128
 
 
 enum
@@ -82,9 +82,12 @@ static void        gimp_projection_add_update_area       (GimpProjection  *proj,
                                                           gint             h);
 static void        gimp_projection_flush_whenever        (GimpProjection  *proj,
                                                           gboolean         now);
-static void        gimp_projection_idle_render_init      (GimpProjection  *proj);
-static gboolean    gimp_projection_idle_render_callback  (gpointer         data);
-static gboolean    gimp_projection_idle_render_next_area (GimpProjection  *proj);
+static void        gimp_projection_chunk_render_start    (GimpProjection  *proj);
+static void        gimp_projection_chunk_render_stop     (GimpProjection  *proj);
+static gboolean    gimp_projection_chunk_render_callback (gpointer         data);
+static void        gimp_projection_chunk_render_init     (GimpProjection  *proj);
+static gboolean    gimp_projection_chunk_render_iteration(GimpProjection  *proj);
+static gboolean    gimp_projection_chunk_render_next_area(GimpProjection  *proj);
 static void        gimp_projection_paint_area            (GimpProjection  *proj,
                                                           gboolean         now,
                                                           gint             x,
@@ -166,17 +169,14 @@ gimp_projection_finalize (GObject *object)
 {
   GimpProjection *proj = GIMP_PROJECTION (object);
 
-  if (proj->idle_render.idle_id)
-    {
-      g_source_remove (proj->idle_render.idle_id);
-      proj->idle_render.idle_id = 0;
-    }
+  if (proj->chunk_render.running)
+    gimp_projection_chunk_render_stop (proj);
 
   gimp_area_list_free (proj->update_areas);
   proj->update_areas = NULL;
 
-  gimp_area_list_free (proj->idle_render.update_areas);
-  proj->idle_render.update_areas = NULL;
+  gimp_area_list_free (proj->chunk_render.update_areas);
+  proj->chunk_render.update_areas = NULL;
 
   gimp_projection_free_buffer (proj);
 
@@ -362,7 +362,7 @@ gimp_projection_flush (GimpProjection *proj)
 {
   g_return_if_fail (GIMP_IS_PROJECTION (proj));
 
-  /* Construct on idle time */
+  /* Construct in chunks */
   gimp_projection_flush_whenever (proj, FALSE);
 }
 
@@ -380,12 +380,11 @@ gimp_projection_finish_draw (GimpProjection *proj)
 {
   g_return_if_fail (GIMP_IS_PROJECTION (proj));
 
-  if (proj->idle_render.idle_id)
+  if (proj->chunk_render.running)
     {
-      g_source_remove (proj->idle_render.idle_id);
-      proj->idle_render.idle_id = 0;
+      gimp_projection_chunk_render_stop (proj);
 
-      while (gimp_projection_idle_render_callback (proj));
+      while (gimp_projection_chunk_render_iteration (proj));
     }
 }
 
@@ -468,7 +467,7 @@ gimp_projection_flush_whenever (GimpProjection *proj,
         }
       else  /* Asynchronous */
         {
-          gimp_projection_idle_render_init (proj);
+          gimp_projection_chunk_render_init (proj);
         }
 
       /*  Free the update lists  */
@@ -487,108 +486,137 @@ gimp_projection_flush_whenever (GimpProjection *proj,
 }
 
 static void
-gimp_projection_idle_render_init (GimpProjection *proj)
+gimp_projection_chunk_render_start (GimpProjection *proj)
+{
+  g_return_if_fail (proj->chunk_render.running == FALSE);
+
+  proj->chunk_render_idle_id =
+    g_idle_add_full (GIMP_PROJECTION_IDLE_PRIORITY,
+                     gimp_projection_chunk_render_callback, proj,
+                     NULL);
+
+  proj->chunk_render.running = TRUE;
+}
+
+static void
+gimp_projection_chunk_render_stop (GimpProjection *proj)
+{
+  g_return_if_fail (proj->chunk_render.running == TRUE);
+
+  g_source_remove (proj->chunk_render_idle_id);
+  proj->chunk_render_idle_id = 0;
+
+  proj->chunk_render.running = FALSE;
+}
+
+static gboolean
+gimp_projection_chunk_render_callback (gpointer data)
+{
+  GimpProjection *proj = data;
+
+  if (! gimp_projection_chunk_render_iteration (proj))
+    {
+      gimp_projection_chunk_render_stop (proj);
+
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+static void
+gimp_projection_chunk_render_init (GimpProjection *proj)
 {
   GSList *list;
 
-  /* We need to merge the IdleRender's and the GimpProjection's update_areas
-   * list to keep track of which of the updates have been flushed and hence
-   * need to be drawn.
+  /* We need to merge the ChunkRender's and the GimpProjection's
+   * update_areas list to keep track of which of the updates have been
+   * flushed and hence need to be drawn.
    */
   for (list = proj->update_areas; list; list = g_slist_next (list))
     {
       GimpArea *area = list->data;
 
-      proj->idle_render.update_areas =
-        gimp_area_list_process (proj->idle_render.update_areas,
+      proj->chunk_render.update_areas =
+        gimp_area_list_process (proj->chunk_render.update_areas,
                                 gimp_area_new (area->x1, area->y1,
                                                area->x2, area->y2));
     }
 
-  /* If an idlerender was already running, merge the remainder of its
-   * unrendered area with the update_areas list, and make it start work
-   * on the next unrendered area in the list.
+  /* If a chunk renderer was already running, merge the remainder of
+   * its unrendered area with the update_areas list, and make it start
+   * work on the next unrendered area in the list.
    */
-  if (proj->idle_render.idle_id)
+  if (proj->chunk_render.running)
     {
       GimpArea *area =
-        gimp_area_new (proj->idle_render.base_x,
-                       proj->idle_render.y,
-                       proj->idle_render.base_x + proj->idle_render.width,
-                       proj->idle_render.y + (proj->idle_render.height -
-                                               (proj->idle_render.y -
-                                                proj->idle_render.base_y)));
+        gimp_area_new (proj->chunk_render.base_x,
+                       proj->chunk_render.y,
+                       proj->chunk_render.base_x + proj->chunk_render.width,
+                       proj->chunk_render.y + (proj->chunk_render.height -
+                                               (proj->chunk_render.y -
+                                                proj->chunk_render.base_y)));
 
-      proj->idle_render.update_areas =
-        gimp_area_list_process (proj->idle_render.update_areas, area);
+      proj->chunk_render.update_areas =
+        gimp_area_list_process (proj->chunk_render.update_areas, area);
 
-      gimp_projection_idle_render_next_area (proj);
+      gimp_projection_chunk_render_next_area (proj);
     }
   else
     {
-      if (proj->idle_render.update_areas == NULL)
+      if (proj->chunk_render.update_areas == NULL)
         {
-          g_warning ("%s: wanted to start idle render with no update_areas",
+          g_warning ("%s: wanted to start chunk render with no update_areas",
                      G_STRFUNC);
           return;
         }
 
-      gimp_projection_idle_render_next_area (proj);
+      gimp_projection_chunk_render_next_area (proj);
 
-      proj->idle_render.idle_id =
-        g_idle_add_full (GIMP_PROJECTION_IDLE_PRIORITY,
-                         gimp_projection_idle_render_callback, proj,
-                         NULL);
+      gimp_projection_chunk_render_start (proj);
     }
 }
 
 /* Unless specified otherwise, projection re-rendering is organised by
- * IdleRender, which amalgamates areas to be re-rendered and breaks
- * them into bite-sized chunks which are chewed on in a low- priority
- * idle thread.  This greatly improves responsiveness for many GIMP
+ * ChunkRender, which amalgamates areas to be re-rendered and breaks
+ * them into bite-sized chunks which are chewed on in an idle
+ * function. This greatly improves responsiveness for many GIMP
  * operations.  -- Adam
  */
 static gboolean
-gimp_projection_idle_render_callback (gpointer data)
+gimp_projection_chunk_render_iteration (GimpProjection *proj)
 {
-  GimpProjection *proj = data;
-  gint            workx, worky;
-  gint            workw, workh;
+  gint workx = proj->chunk_render.x;
+  gint worky = proj->chunk_render.y;
+  gint workw = GIMP_PROJECTION_CHUNK_WIDTH;
+  gint workh = GIMP_PROJECTION_CHUNK_HEIGHT;
 
-  workw = GIMP_PROJECTION_IDLE_CHUNK_WIDTH;
-  workh = GIMP_PROJECTION_IDLE_CHUNK_HEIGHT;
-  workx = proj->idle_render.x;
-  worky = proj->idle_render.y;
-
-  if (workx + workw > proj->idle_render.base_x + proj->idle_render.width)
+  if (workx + workw > proj->chunk_render.base_x + proj->chunk_render.width)
     {
-      workw = proj->idle_render.base_x + proj->idle_render.width - workx;
+      workw = proj->chunk_render.base_x + proj->chunk_render.width - workx;
     }
 
-  if (worky + workh > proj->idle_render.base_y + proj->idle_render.height)
+  if (worky + workh > proj->chunk_render.base_y + proj->chunk_render.height)
     {
-      workh = proj->idle_render.base_y + proj->idle_render.height - worky;
+      workh = proj->chunk_render.base_y + proj->chunk_render.height - worky;
     }
 
   gimp_projection_paint_area (proj, TRUE /* sic! */,
                               workx, worky, workw, workh);
 
-  proj->idle_render.x += GIMP_PROJECTION_IDLE_CHUNK_WIDTH;
+  proj->chunk_render.x += GIMP_PROJECTION_CHUNK_WIDTH;
 
-  if (proj->idle_render.x >=
-      proj->idle_render.base_x + proj->idle_render.width)
+  if (proj->chunk_render.x >=
+      proj->chunk_render.base_x + proj->chunk_render.width)
     {
-      proj->idle_render.x = proj->idle_render.base_x;
-      proj->idle_render.y += GIMP_PROJECTION_IDLE_CHUNK_HEIGHT;
+      proj->chunk_render.x = proj->chunk_render.base_x;
+      proj->chunk_render.y += GIMP_PROJECTION_CHUNK_HEIGHT;
 
-      if (proj->idle_render.y >=
-          proj->idle_render.base_y + proj->idle_render.height)
+      if (proj->chunk_render.y >=
+          proj->chunk_render.base_y + proj->chunk_render.height)
         {
-          if (! gimp_projection_idle_render_next_area (proj))
+          if (! gimp_projection_chunk_render_next_area (proj))
             {
-              /* FINISHED */
-              proj->idle_render.idle_id = 0;
-
               if (proj->invalidate_preview)
                 {
                   /* invalidate the preview here since it is constructed from
@@ -599,6 +627,7 @@ gimp_projection_idle_render_callback (gpointer data)
                   gimp_projectable_invalidate_preview (proj->projectable);
                 }
 
+              /* FINISHED */
               return FALSE;
             }
         }
@@ -609,22 +638,22 @@ gimp_projection_idle_render_callback (gpointer data)
 }
 
 static gboolean
-gimp_projection_idle_render_next_area (GimpProjection *proj)
+gimp_projection_chunk_render_next_area (GimpProjection *proj)
 {
   GimpArea *area;
 
-  if (! proj->idle_render.update_areas)
+  if (! proj->chunk_render.update_areas)
     return FALSE;
 
-  area = proj->idle_render.update_areas->data;
+  area = proj->chunk_render.update_areas->data;
 
-  proj->idle_render.update_areas =
-    g_slist_remove (proj->idle_render.update_areas, area);
+  proj->chunk_render.update_areas =
+    g_slist_remove (proj->chunk_render.update_areas, area);
 
-  proj->idle_render.x      = proj->idle_render.base_x = area->x1;
-  proj->idle_render.y      = proj->idle_render.base_y = area->y1;
-  proj->idle_render.width  = area->x2 - area->x1;
-  proj->idle_render.height = area->y2 - area->y1;
+  proj->chunk_render.x      = proj->chunk_render.base_x = area->x1;
+  proj->chunk_render.y      = proj->chunk_render.base_y = area->y1;
+  proj->chunk_render.width  = area->x2 - area->x1;
+  proj->chunk_render.height = area->y2 - area->y1;
 
   gimp_area_free (area);
 
@@ -710,11 +739,8 @@ gimp_projection_projectable_changed (GimpProjectable *projectable,
   gint off_x, off_y;
   gint width, height;
 
-  if (proj->idle_render.idle_id)
-    {
-      g_source_remove (proj->idle_render.idle_id);
-      proj->idle_render.idle_id = 0;
-    }
+  if (proj->chunk_render.running)
+    gimp_projection_chunk_render_stop (proj);
 
   gimp_area_list_free (proj->update_areas);
   proj->update_areas = NULL;

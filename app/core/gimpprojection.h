@@ -22,18 +22,18 @@
 #include "gimpobject.h"
 
 
-typedef struct _GimpProjectionIdleRender GimpProjectionIdleRender;
+typedef struct _GimpProjectionChunkRender GimpProjectionChunkRender;
 
-struct _GimpProjectionIdleRender
+struct _GimpProjectionChunkRender
 {
-  gint    width;
-  gint    height;
-  gint    x;
-  gint    y;
-  gint    base_x;
-  gint    base_y;
-  guint   idle_id;
-  GSList *update_areas;   /*  flushed update areas */
+  gboolean running;
+  gint     width;
+  gint     height;
+  gint     x;
+  gint     y;
+  gint     base_x;
+  gint     base_y;
+  GSList  *update_areas;   /*  flushed update areas */
 };
 
 
@@ -50,17 +50,18 @@ typedef struct _GimpProjectionClass GimpProjectionClass;
 
 struct _GimpProjection
 {
-  GimpObject                parent_instance;
+  GimpObject                 parent_instance;
 
-  GimpProjectable          *projectable;
+  GimpProjectable           *projectable;
 
-  GeglBuffer               *buffer;
-  gpointer                  validate_handler;
+  GeglBuffer                *buffer;
+  gpointer                   validate_handler;
 
-  GSList                   *update_areas;
-  GimpProjectionIdleRender  idle_render;
+  GSList                    *update_areas;
+  GimpProjectionChunkRender  chunk_render;
+  guint                      chunk_render_idle_id;
 
-  gboolean                  invalidate_preview;
+  gboolean                   invalidate_preview;
 };
 
 struct _GimpProjectionClass
