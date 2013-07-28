@@ -128,8 +128,10 @@ gimp_language_store_parser_init (void)
                                               NULL);
           if (g_file_test (filename, G_FILE_TEST_EXISTS))
             {
-              gchar *delimiter = strchr (locale, '_');
+              gchar *delimiter = NULL;
               gchar *base_code = NULL;
+
+              delimiter = strchr (locale, '_');
 
               if (delimiter)
                 base_code = g_strndup (locale, delimiter - locale);
@@ -164,10 +166,13 @@ gimp_language_store_parser_init (void)
   g_hash_table_iter_init (&lang_iter, l10n_lang_list);
   while (g_hash_table_iter_next (&lang_iter, &key, NULL))
     {
-      gchar *code = GINT_TO_POINTER (key);
-      gchar *english_name;
-      gchar *delimiter = strchr (code, '_');
-      gchar *base_code;
+      gchar *code           = (gchar*) key;
+      gchar *localized_name = NULL;
+      gchar *english_name   = NULL;
+      gchar *delimiter      = NULL;
+      gchar *base_code      = NULL;
+
+      delimiter = strchr (code, '_');
 
       if (delimiter)
         base_code = g_strndup (code, delimiter - code);
@@ -183,11 +188,10 @@ gimp_language_store_parser_init (void)
           g_free (temp);
         }
 
-      english_name = GINT_TO_POINTER (g_hash_table_lookup (base_lang_list, base_code));
+      english_name = (gchar*) (g_hash_table_lookup (base_lang_list, base_code));
 
       if (english_name)
         {
-          gchar *localized_name;
           gchar *semicolon;
 
           /* If possible, we want to localize a language in itself.
@@ -221,15 +225,14 @@ gimp_language_store_parser_init (void)
               localized_name = g_strndup (localized_name, semicolon - localized_name);
               g_free (temp);
             }
-
-          g_hash_table_replace (l10n_lang_list, g_strdup(code),
-                                g_strdup_printf ("%s [%s]",
-                                                 localized_name ?
-                                                 localized_name : "???",
-                                                 code));
-          g_free (localized_name);
         }
 
+      g_hash_table_replace (l10n_lang_list, g_strdup(code),
+                            g_strdup_printf ("%s [%s]",
+                                             localized_name ?
+                                             localized_name : "???",
+                                             code));
+      g_free (localized_name);
       g_free (base_code);
     }
 

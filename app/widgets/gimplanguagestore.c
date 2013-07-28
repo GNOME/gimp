@@ -84,12 +84,13 @@ gimp_language_store_constructed (GObject *object)
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   lang_list = gimp_language_store_parser_get_languages (FALSE);
+  g_return_if_fail (lang_list != NULL);
+
   g_hash_table_iter_init (&lang_iter, lang_list);
 
   while (g_hash_table_iter_next (&lang_iter, &code, &name))
     GIMP_LANGUAGE_STORE_GET_CLASS (object)->add (GIMP_LANGUAGE_STORE (object),
-                                                 GINT_TO_POINTER (name),
-                                                 GINT_TO_POINTER (code));
+                                                 name, code);
 }
 
 static void

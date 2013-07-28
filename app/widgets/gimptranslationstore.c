@@ -27,6 +27,7 @@
 
 #include "widgets-types.h"
 
+#include "gimplanguagestore-parser.h"
 #include "gimptranslationstore.h"
 
 
@@ -72,12 +73,13 @@ gimp_translation_store_constructed (GObject *object)
   gpointer        name;
 
   lang_list = gimp_language_store_parser_get_languages (TRUE);
+  g_return_if_fail (lang_list != NULL);
+
   g_hash_table_iter_init (&lang_iter, lang_list);
 
   while (g_hash_table_iter_next (&lang_iter, &code, &name))
     GIMP_LANGUAGE_STORE_GET_CLASS (object)->add (GIMP_LANGUAGE_STORE (object),
-                                                 GINT_TO_POINTER (name),
-                                                 GINT_TO_POINTER (code));
+                                                 name, code);
 }
 
 GtkListStore *
