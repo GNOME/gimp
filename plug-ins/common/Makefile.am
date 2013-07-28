@@ -164,7 +164,6 @@ libexec_PROGRAMS = \
 	tile \
 	tile-glass \
 	tile-paper \
-	tile-seamless \
 	tile-small \
 	unit-editor \
 	unsharp-mask \
@@ -2285,21 +2284,6 @@ tile_paper_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(tile_paper_RC)
-
-tile_seamless_SOURCES = \
-	tile-seamless.c
-
-tile_seamless_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(CAIRO_LIBS)		\
-	$(GDK_PIXBUF_LIBS)	\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(tile_seamless_RC)
 
 tile_small_SOURCES = \
 	tile-small.c

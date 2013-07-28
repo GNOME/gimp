@@ -119,7 +119,6 @@
     'tile' => { ui => 1 },
     'tile-glass' => { ui => 1 },
     'tile-paper' => { ui => 1 },
-    'tile-seamless' => {},
     'tile-small' => { ui => 1 },
     'unit-editor' => { ui => 1 },
     'unsharp-mask' => { ui => 1 },
