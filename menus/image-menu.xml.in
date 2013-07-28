@@ -685,6 +685,7 @@
       <menu action="plug-in-decor-menu" name="Decor" />
       <menu action="plug-in-map-menu" name="Map">
         <menuitem action="filters-fractal-trace" />
+        <menuitem action="filters-tile-seamless" />
       </menu>
       <menu action="plug-in-render-menu" name="Render">
         <menu action="plug-in-render-clouds-menu" name="Clouds" />
