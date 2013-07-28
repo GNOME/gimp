@@ -223,5 +223,7 @@ gimp_progress_dialog_new (void)
                        "skip-taskbar-hint", TRUE,
                        "skip-pager-hint",   TRUE,
                        "resizable",         FALSE,
+                       "focus-on-map",      FALSE,
+                       "window-position",   GTK_WIN_POS_CENTER,
                        NULL);
 }
