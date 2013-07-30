@@ -75,12 +75,6 @@ gimp_operation_point_layer_mode_class_init (GimpOperationPointLayerModeClass *kl
   operation_class->prepare   = gimp_operation_point_layer_mode_prepare;
   operation_class->process   = gimp_operation_point_layer_mode_process;
 
-  gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:point-layer-mode",
-                                 "description", "GIMP point layer mode operation",
-                                 "categories",  "compositors",
-                                 NULL);
-
   g_object_class_install_property (object_class, PROP_LINEAR,
                                    g_param_spec_boolean ("linear",
                                                          NULL, NULL,
