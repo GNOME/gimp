@@ -75,8 +75,10 @@ sanity_check (void)
   if (! abort_message)
     abort_message = sanity_check_gegl ();
 
+#if 0
   if (! abort_message)
     abort_message = sanity_check_gegl_ops ();
+#endif
 
   if (! abort_message)
     abort_message = sanity_check_filename_encoding ();
