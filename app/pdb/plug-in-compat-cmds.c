@@ -508,7 +508,7 @@ plug_in_pixelize_invoker (GimpProcedure         *procedure,
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
-                                 "operation", "gegl:pixelise",
+                                 "operation", "gegl:pixelize",
                                  "size-x",    pixel_width,
                                  "size-y",    pixel_width,
                                  NULL);
@@ -552,7 +552,7 @@ plug_in_pixelize2_invoker (GimpProcedure         *procedure,
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
-                                 "operation", "gegl:pixelise",
+                                 "operation", "gegl:pixelize",
                                  "size-x",    pixel_width,
                                  "size-y",    pixel_height,
                                  NULL);
@@ -602,7 +602,7 @@ plug_in_polar_coords_invoker (GimpProcedure         *procedure,
         {
           GeglNode *node =
             gegl_node_new_child (NULL,
-                                 "operation", "gegl:polar-coords",
+                                 "operation", "gegl:polar-coordinates",
                                  "depth",     circle,
                                  "angle",     angle,
                                  "bw",        backwards, /* XXX name */
