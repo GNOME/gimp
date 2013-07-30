@@ -70,6 +70,7 @@
 #include "gimpmagnifytool.h"
 #include "gimpmeasuretool.h"
 #include "gimpmovetool.h"
+#include "gimpnpointdeformationtool.h"
 #include "gimppaintbrushtool.h"
 #include "gimppenciltool.h"
 #include "gimpperspectiveclonetool.h"
@@ -154,6 +155,7 @@ gimp_tools_init (Gimp *gimp)
 
     /*  transform tools  */
 
+    gimp_n_point_deformation_tool_register,
     gimp_warp_tool_register,
     gimp_cage_tool_register,
     gimp_flip_tool_register,

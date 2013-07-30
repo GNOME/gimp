@@ -132,6 +132,10 @@ libapptools_a_sources = \
 	gimpmoveoptions.h		\
 	gimpmovetool.c			\
 	gimpmovetool.h			\
+	gimpnpointdeformationoptions.c	\
+	gimpnpointdeformationoptions.h	\
+	gimpnpointdeformationtool.c	\
+	gimpnpointdeformationtool.h	\
 	gimppaintbrushtool.c		\
 	gimppaintbrushtool.h		\
 	gimppaintoptions-gui.c		\
