@@ -40,6 +40,7 @@ static gchar * sanity_check_freetype          (void);
 static gchar * sanity_check_gdk_pixbuf        (void);
 static gchar * sanity_check_babl              (void);
 static gchar * sanity_check_gegl              (void);
+static gchar * sanity_check_gegl_ops          (void);
 static gchar * sanity_check_filename_encoding (void);
 
 
@@ -73,6 +74,9 @@ sanity_check (void)
 
   if (! abort_message)
     abort_message = sanity_check_gegl ();
+
+  if (! abort_message)
+    abort_message = sanity_check_gegl_ops ();
 
   if (! abort_message)
     abort_message = sanity_check_filename_encoding ();
@@ -415,6 +419,43 @@ sanity_check_gegl (void)
 #undef GEGL_REQUIRED_MINOR
 #undef GEGL_REQUIRED_MICRO
 
+  return NULL;
+}
+
+static gchar *
+sanity_check_gegl_ops (void)
+{
+  gchar **operations;
+  guint   n_operations;
+  gint i, j;
+
+  static const gchar* required_ops[] = {
+    "gegl:buffer-sink",
+    "gegl:buffer-source"
+  };
+
+  operations = gegl_list_operations (&n_operations);
+  for (i = 0; i < G_N_ELEMENTS (required_ops); i++)
+    {
+      gboolean present = FALSE;
+      for (j = 0; j < n_operations; j++)
+        {
+          if (!strcmp (required_ops[i], operations[j]))
+            {
+              present = TRUE;
+              break;
+            }
+        }
+      if (!present)
+        return g_strdup_printf
+          ("GEGL operation missing!\n\n"
+           "GIMP requires the GEGL operation \"%s\". \n"
+           "This operation cannot be found. Check your \n"
+           "GEGL install and ensure it has been compiled \n"
+           "with any dependencies required for GIMP.\n",
+           required_ops [i]);
+    }
+  g_free (operations);
   return NULL;
 }
 
