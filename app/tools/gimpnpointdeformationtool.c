@@ -49,7 +49,7 @@
 
 #include "gimp-intl.h"
 
-//#include <npd/npd_common.h>
+#include <npd/npd_common.h>
 
 void            gimp_n_point_deformation_tool_start                   (GimpNPointDeformationTool *npd_tool,
                                                                        GimpDisplay               *display);
@@ -83,8 +83,8 @@ static void     gimp_n_point_deformation_tool_cursor_update           (GimpTool 
                                                                        GimpDisplay               *display);
 static void     gimp_n_point_deformation_tool_draw                    (GimpDrawTool              *draw_tool);
 
-//static void     gimp_n_point_deformation_add_handle                   (GimpNPointDeformationTool *npd_tool,
-//                                                                       NPDPoint                  *coords);
+static void     gimp_n_point_deformation_add_handle                   (GimpNPointDeformationTool *npd_tool,
+                                                                       NPDPoint                  *coords);
 static void     gimp_n_point_deformation_tool_control                 (GimpTool                  *tool,
                                                                        GimpToolAction             action,
                                                                        GimpDisplay               *display);
@@ -160,8 +160,8 @@ gimp_n_point_deformation_tool_init (GimpNPointDeformationTool *npd_tool)
                                       GIMP_DIRTY_ACTIVE_DRAWABLE);
   
   npd_tool->active = FALSE;
-//  npd_tool->selected_cp = NULL;
-//  npd_tool->hovering_cp = NULL;
+  npd_tool->selected_cp = NULL;
+  npd_tool->hovering_cp = NULL;
   npd_tool->selected_cps = NULL;
   npd_tool->previous_cp_positions = NULL;
 }
@@ -202,7 +202,7 @@ gimp_n_point_deformation_tool_start (GimpNPointDeformationTool *npd_tool,
   GimpDrawable  *drawable;
   GeglBuffer    *buf;
   GeglBuffer    *shadow;
-//  NPDModel      *model;
+  NPDModel      *model;
   
   g_return_if_fail (GIMP_IS_N_POINT_DEFORMATION_TOOL (npd_tool));
   
@@ -234,17 +234,17 @@ gimp_n_point_deformation_tool_start (GimpNPointDeformationTool *npd_tool,
   
   gegl_node_process (sink);
   
-//  gegl_node_get (node, "model", &model, NULL);
-  gegl_node_set (node, "rigidity", 2000, NULL);
+  gegl_node_get (node, "model", &model, NULL);
   
   npd_tool->buf = buf;
   npd_tool->drawable = drawable;
   npd_tool->graph = graph;
-//  npd_tool->model = model;
+  npd_tool->model = model;
   npd_tool->node = node;
   npd_tool->shadow = shadow;
   npd_tool->sink = sink;
-//  npd_tool->selected_cp = NULL;
+  npd_tool->selected_cp = NULL;
+  
 }
 
 void
@@ -315,48 +315,48 @@ gimp_n_point_deformation_tool_button_press (GimpTool            *tool,
                                             GimpDisplay         *display)
 {
   GimpNPointDeformationTool *npd_tool = GIMP_N_POINT_DEFORMATION_TOOL (tool);
-//  NPDModel                  *model;
-//  NPDPoint                   p;
-//  NPDControlPoint           *cp;
-//  GSList                   **selected_cps = &npd_tool->selected_cps;
-//  GSList                   **previous_cp_positions = &npd_tool->previous_cp_positions;
+  NPDModel                  *model;
+  NPDPoint                   p;
+  NPDControlPoint           *cp;
+  GSList                   **selected_cps = &npd_tool->selected_cps;
+  GSList                   **previous_cp_positions = &npd_tool->previous_cp_positions;
   
   if (display != tool->display)
     {
       gimp_n_point_deformation_tool_start (npd_tool, display);
     }
   
-//  model = npd_tool->model;
+  model = npd_tool->model;
   
   gimp_tool_control_activate (tool->control);
   
-//  npd_tool->selected_cp = NULL;
+  npd_tool->selected_cp = NULL;
   
   if (press_type == GIMP_BUTTON_PRESS_NORMAL)
     {
-//      p.x = coords->x; p.y = coords->y;
-//      cp = npd_get_control_point_at (model, &p);
+      p.x = coords->x; p.y = coords->y;
+      cp = npd_get_control_point_at (model, &p);
       
-//      if (cp == NULL || (cp != NULL && !g_slist_find (*selected_cps, cp) && !(state & GDK_SHIFT_MASK)))
-//        {
-//          g_slist_free (*selected_cps);
-//          *selected_cps = NULL;
-//          g_slist_free_full (*previous_cp_positions, g_free);
-//          *previous_cp_positions = NULL;
-//        }
-//      
-//      
-//      if (cp != NULL)
-//        {
-//          NPDPoint *cp_point_copy = g_new (NPDPoint, 1);
-//          *cp_point_copy = cp->point;
+      if (cp == NULL || (cp != NULL && !g_slist_find (*selected_cps, cp) && !(state & GDK_SHIFT_MASK)))
+        {
+          g_slist_free (*selected_cps);
+          *selected_cps = NULL;
+          g_slist_free_full (*previous_cp_positions, g_free);
+          *previous_cp_positions = NULL;
+        }
+      
+      
+      if (cp != NULL)
+        {
+          NPDPoint *cp_point_copy = g_new (NPDPoint, 1);
+          *cp_point_copy = cp->point;
         
-//          npd_tool->selected_cp = cp;
-//          npd_tool->delta_x = cp->point.x - coords->x;
-//          npd_tool->delta_y = cp->point.y - coords->y;
-//          *selected_cps = g_slist_append (*selected_cps, cp);
-//          *previous_cp_positions = g_slist_append (*previous_cp_positions, cp_point_copy);
-//        }
+          npd_tool->selected_cp = cp;
+          npd_tool->delta_x = cp->point.x - coords->x;
+          npd_tool->delta_y = cp->point.y - coords->y;
+          *selected_cps = g_slist_append (*selected_cps, cp);
+          *previous_cp_positions = g_slist_append (*previous_cp_positions, cp_point_copy);
+        }
       
       
       npd_tool->movement_start_x = coords->x;
@@ -373,9 +373,9 @@ gimp_n_point_deformation_tool_button_release (GimpTool             *tool,
                                               GimpDisplay           *display)
 {
   GimpNPointDeformationTool *npd_tool = GIMP_N_POINT_DEFORMATION_TOOL (tool);
-//  NPDModel                  *model = npd_tool->model;
-//  NPDPoint                   p;
-//  NPDControlPoint           *cp;
+  NPDModel                  *model = npd_tool->model;
+  NPDPoint                   p;
+  NPDControlPoint           *cp;
   GeglBuffer                *buffer;
   
   gimp_tool_control_halt (tool->control);
@@ -384,12 +384,12 @@ gimp_n_point_deformation_tool_button_release (GimpTool             *tool,
   
   if (release_type == GIMP_BUTTON_RELEASE_CLICK)
     {
-//      p.x = coords->x; p.y = coords->y;
-//      cp = npd_get_control_point_at (model, &p);
-//      if (cp != NULL)
-//        {
-//          gimp_n_point_deformation_add_handle (npd_tool, &p);
-//        }
+      p.x = coords->x; p.y = coords->y;
+      cp = npd_get_control_point_at (model, &p);
+      if (cp == NULL)
+        {
+          gimp_n_point_deformation_add_handle (npd_tool, &p);
+        }
     }
   else
   if (release_type == GIMP_BUTTON_RELEASE_NORMAL)
@@ -404,7 +404,7 @@ gimp_n_point_deformation_tool_button_release (GimpTool             *tool,
   
   gegl_node_invalidated (npd_tool->node, NULL, FALSE);
 
-  gegl_node_process (npd_tool->sink);  
+  gegl_node_process (npd_tool->sink);
   gegl_buffer_copy (npd_tool->shadow, NULL,
                     npd_tool->buf, NULL);
   gimp_drawable_update (npd_tool->drawable,
@@ -413,7 +413,7 @@ gimp_n_point_deformation_tool_button_release (GimpTool             *tool,
                         gegl_buffer_get_width (buffer),
                         gegl_buffer_get_height (buffer));
   gimp_image_flush (gimp_display_get_image (display));
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (npd_tool));  
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (npd_tool));
 }
 
 static void
@@ -428,10 +428,10 @@ gimp_n_point_deformation_tool_oper_update (GimpTool         *tool,
   
   if (npd_tool->active)
     {
-//      NPDModel *model = npd_tool->model;
-//      NPDPoint p;
-//      p.x = coords->x; p.y = coords->y;
-//      npd_tool->hovering_cp = npd_get_control_point_at (model, &p);
+      NPDModel *model = npd_tool->model;
+      NPDPoint p;
+      p.x = coords->x; p.y = coords->y;
+      npd_tool->hovering_cp = npd_get_control_point_at (model, &p);
     }
   
   gimp_draw_tool_pause (draw_tool);
@@ -442,53 +442,53 @@ gimp_n_point_deformation_tool_oper_update (GimpTool         *tool,
   gimp_draw_tool_resume (draw_tool);  
 }
 
-//static void
-//gimp_n_point_deformation_add_handle (GimpNPointDeformationTool *npd_tool,
-//                                     NPDPoint *coords)
-//{
-//  NPDModel *model = npd_tool->model;
-//  npd_add_control_point (model, coords);
-//}
+static void
+gimp_n_point_deformation_add_handle (GimpNPointDeformationTool *npd_tool,
+                                     NPDPoint *coords)
+{
+  NPDModel *model = npd_tool->model;
+  npd_add_control_point (model, coords);
+}
 
 static void
 gimp_n_point_deformation_tool_draw (GimpDrawTool *draw_tool)
 {
-//  GimpNPointDeformationTool *npd_tool = GIMP_N_POINT_DEFORMATION_TOOL (draw_tool);
-//  NPDModel                  *model = npd_tool->model;
-//  gint                       i;
-//  NPDControlPoint           *cp;
-//  GimpHandleType             handle_type;
+  GimpNPointDeformationTool *npd_tool = GIMP_N_POINT_DEFORMATION_TOOL (draw_tool);
+  NPDModel                  *model = npd_tool->model;
+  gint                       i;
+  NPDControlPoint           *cp;
+  GimpHandleType             handle_type;
 
-//  g_return_if_fail (model != NULL);
+  g_return_if_fail (model != NULL);
   
-//  for (i = 0; i < model->control_points->len; i++)
-//    {
-//      cp = &g_array_index (model->control_points, NPDControlPoint, i);
-//      
-//      if (cp == npd_tool->hovering_cp)
-//        handle_type = GIMP_HANDLE_FILLED_CIRCLE;
-//      else
-//        handle_type = GIMP_HANDLE_CIRCLE;
-//
-//      gimp_draw_tool_add_handle (draw_tool,
-//                                 handle_type,
-//                                 cp->point.x,
-//                                 cp->point.y,
-//                                 GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-//                                 GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-//                                 GIMP_HANDLE_ANCHOR_CENTER);
-//
-//      if (g_slist_find (npd_tool->selected_cps, cp) != NULL)
-//        {
-//          gimp_draw_tool_add_handle (draw_tool,
-//                                     GIMP_HANDLE_SQUARE,
-//                                     cp->point.x,
-//                                     cp->point.y,
-//                                     GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-//                                     GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-//                                     GIMP_HANDLE_ANCHOR_CENTER);
-//        }
-//    }
+  for (i = 0; i < model->control_points->len; i++)
+    {
+      cp = &g_array_index (model->control_points, NPDControlPoint, i);
+      
+      if (cp == npd_tool->hovering_cp)
+        handle_type = GIMP_HANDLE_FILLED_CIRCLE;
+      else
+        handle_type = GIMP_HANDLE_CIRCLE;
+
+      gimp_draw_tool_add_handle (draw_tool,
+                                 handle_type,
+                                 cp->point.x,
+                                 cp->point.y,
+                                 GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                                 GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                                 GIMP_HANDLE_ANCHOR_CENTER);
+
+      if (g_slist_find (npd_tool->selected_cps, cp) != NULL)
+        {
+          gimp_draw_tool_add_handle (draw_tool,
+                                     GIMP_HANDLE_SQUARE,
+                                     cp->point.x,
+                                     cp->point.y,
+                                     GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                                     GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                                     GIMP_HANDLE_ANCHOR_CENTER);
+        }
+    }
 
 }
 
@@ -500,28 +500,28 @@ gimp_n_point_deformation_tool_motion (GimpTool         *tool,
                                       GimpDisplay      *display)
 {
   GimpNPointDeformationTool *npd_tool = GIMP_N_POINT_DEFORMATION_TOOL (tool);
-//  NPDControlPoint           *selected_cp = npd_tool->selected_cp;
-//  GSList                    *selected_cps = npd_tool->selected_cps;
-//  GSList                    *previous_cp_positions = npd_tool->previous_cp_positions;
-//  gdouble                    movement_x = coords->x - npd_tool->movement_start_x;
-//  gdouble                    movement_y = coords->y - npd_tool->movement_start_y;
+  NPDControlPoint           *selected_cp = npd_tool->selected_cp;
+  GSList                    *selected_cps = npd_tool->selected_cps;
+  GSList                    *previous_cp_positions = npd_tool->previous_cp_positions;
+  gdouble                    movement_x = coords->x - npd_tool->movement_start_x;
+  gdouble                    movement_y = coords->y - npd_tool->movement_start_y;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-//  if (selected_cp != NULL)
-//    {
-//      while (selected_cps != NULL)
-//        {
-//          NPDControlPoint *cp = selected_cps->data;
-//          NPDPoint *p = &cp->point;
-//          NPDPoint *prev = previous_cp_positions->data;
-//          p->x = prev->x + movement_x;
-//          p->y = prev->y + movement_y;
-//          
-//          selected_cps = g_slist_next (selected_cps);
-//          previous_cp_positions = g_slist_next (previous_cp_positions);
-//        }
-//    }
+  if (selected_cp != NULL)
+    {
+      while (selected_cps != NULL)
+        {
+          NPDControlPoint *cp = selected_cps->data;
+          NPDPoint *p = &cp->point;
+          NPDPoint *prev = previous_cp_positions->data;
+          p->x = prev->x + movement_x;
+          p->y = prev->y + movement_y;
+          
+          selected_cps = g_slist_next (selected_cps);
+          previous_cp_positions = g_slist_next (previous_cp_positions);
+        }
+    }
   
   npd_tool->cursor_x = coords->x;
   npd_tool->cursor_y = coords->y;

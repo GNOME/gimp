@@ -22,7 +22,7 @@
 
 
 #include "gimpdrawtool.h"
-//#include <npd/npd_common.h>
+#include <npd/npd_common.h>
 
 
 #define GIMP_TYPE_N_POINT_DEFORMATION_TOOL            (gimp_n_point_deformation_tool_get_type ())
@@ -40,32 +40,33 @@ typedef struct _GimpNPointDeformationToolClass GimpNPointDeformationToolClass;
 
 struct _GimpNPointDeformationTool
 {
-  GimpDrawTool     parent_instance;
+  GimpDrawTool parent_instance;
   
-  GeglNode        *graph;
-  GeglNode        *node;
-  GeglNode        *sink;
+  GeglNode     *graph;
+  GeglNode     *node;
+  GeglNode     *sink;
   
-  GeglBuffer      *shadow, *buf;
+  GeglBuffer   *shadow, *buf;
   
-  GimpDrawable    *drawable;
+  GimpDrawable *drawable;
   
-//  NPDModel        *model;
-//  NPDControlPoint *selected_cp; /* last selected control point */
-  GSList          *selected_cps;   /* list of selected control points */
-//  NPDControlPoint *hovering_cp;
-  GSList          *previous_cp_positions; /* list of NPDPoints holding previous control points positions */
+  NPDModel     *model;
+  NPDControlPoint *selected_cp; /* last selected control point */
+  GSList       *selected_cps;   /* list of selected control points */
+  NPDControlPoint *hovering_cp;
 
-  gdouble          movement_start_x;
-  gdouble          movement_start_y;
+  gdouble       cursor_x;
+  gdouble       cursor_y;
   
-  gdouble          cursor_x;
-  gdouble          cursor_y;
+  gdouble       delta_x;
+  gdouble       delta_y;
   
-//  gdouble        delta_x;
-//  gdouble        delta_y;
+  gdouble       movement_start_x;
+  gdouble       movement_start_y;
   
-  gboolean         active;
+  GSList       *previous_cp_positions; /* list of NPDPoints holding previous control points positions */
+  
+  gboolean active;
 };
 
 struct _GimpNPointDeformationToolClass
