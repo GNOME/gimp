@@ -173,6 +173,10 @@ static gint     load_resource_lsct    (const PSDlayerres     *res_a,
                                        FILE                  *f,
                                        GError               **error);
 
+static gint     load_resource_lrfx    (const PSDlayerres  *res_a,
+				       PSDlayer           *lyr_a,
+				       FILE               *f,
+				       GError            **error);
 
 /* Public Functions */
 gint
@@ -255,6 +259,8 @@ load_layer_resource (PSDlayerres  *res_a,
       else if (memcmp (res_a->key, PSD_LOTH_SECTION, 4) == 0)
 	load_resource_lsct (res_a, lyr_a, f, error);
 
+      else if (memcmp (res_a->key, PSD_LFX_FX, 4) == 0)
+	load_resource_lrfx (res_a, lyr_a, f, error);
       else
         load_resource_unknown (res_a, lyr_a, f, error);
     }
@@ -359,18 +365,15 @@ load_resource_ltyp (const PSDlayerres  *res_a,
   gint16            version;
   gint16            text_desc_vers;
   gint32            desc_version;
+  gint32            read_len;
+  gint32            write_len;
   guint64           t_xx;
   guint64           t_xy;
   guint64           t_yx;
   guint64           t_yy;
   guint64           t_tx;
   guint64           t_ty;
-  gdouble           transform_xx;
-  gdouble           transform_xy;
-  gdouble           transform_yx;
-  gdouble           transform_yy;
-  gdouble           transform_tx;
-  gdouble           transform_ty;
+  gchar            *classID;
 
   static gboolean   msg_flag = FALSE;
 
@@ -411,24 +414,23 @@ load_resource_ltyp (const PSDlayerres  *res_a,
       //      t_tx = GUINT64_FROM_BE (t_tx);
       //      t_ty = GUINT64_FROM_BE (t_ty);
 
-      transform_xx = t_xx >> 11;
-      transform_xy = t_xy >> 11;
-      transform_yx = t_yx >> 11;
-      transform_yy = t_yy >> 11;
-      transform_tx = t_tx >> 11;
-      transform_ty = t_ty >> 11;
+      lyr_a->text.xx = t_xx >> 11;
+      lyr_a->text.xy = t_xy >> 11;
+      lyr_a->text.yx = t_yx >> 11;
+      lyr_a->text.yy = t_yy >> 11;
+      lyr_a->text.tx = t_tx >> 11;
+      lyr_a->text.ty = t_ty >> 11;
 
       IFDBG(2) g_debug ("Version: %d, Text desc. vers.: %d, Desc. vers.: %d",
                         version, text_desc_vers, desc_version);
 
       IFDBG(2) g_debug ("Transform\n\txx: %f\n\txy: %f\n\tyx: %f"
                         "\n\tyy: %f\n\ttx: %f\n\tty: %f",
-                        transform_xx, transform_xy, transform_yx,
-                        transform_yy, transform_tx, transform_ty);
+                        lyr_a->text.xx, lyr_a->text.xy, lyr_a->text.yx,
+                        lyr_a->text.yy, lyr_a->text.tx, lyr_a->text.ty);
 
-      //      classID = fread_unicode_string (&read_len, &write_len, 4, f);
-      //      IFDBG(2) g_debug ("Unicode name: %s", classID);
-
+      classID = fread_unicode_string (&read_len, &write_len, 4, f, error);
+      IFDBG(2) g_debug ("Unicode name: %s", classID);
     }
 
   return 0;
@@ -499,5 +501,345 @@ load_resource_lsct (const PSDlayerres  *res_a,
   IFDBG(3) g_debug ("Section divider type: %i", type);
 
   lyr_a->group_type = type;
+  return 0;
+}
+
+static gint
+load_resource_lrfx (const PSDlayerres  *res_a,
+                    PSDlayer           *lyr_a,
+                    FILE               *f,
+                    GError            **error)
+{
+  gint16    version;
+  gint16    count;
+  gchar     signature[4];
+  gchar     effectname[4];
+  gint      i;
+
+  IFDBG(2) g_debug ("Process layer resource block %.4s: Layer effects", res_a->key);
+
+  if (fread (&version, 2, 1, f) < 1
+      || fread (&count, 2, 1, f) < 1)
+    {
+      psd_set_error (feof (f), errno, error);
+      return -1;
+    }
+
+  for (i = 0; i < count; i++)
+    {
+      if (fread (&signature, 4, 1, f) < 1
+          || fread(&effectname, 4, 1, f) < 1)
+        {
+          psd_set_error (feof (f), errno, error);
+          return -1;
+        }
+
+      if (memcmp (signature, "8BIM", 4) != 0)
+        {
+          IFDBG(1) g_debug ("Unknown layer resource signature %.4s", signature);
+        }
+      else
+        {
+          if (memcmp (effectname, "cmnS", 4) == 0)
+            {
+              gint32    size;
+              gint32    ver;
+              gchar     visible;
+              gint16    unused;
+
+              if (fread (&size, 4, 1, f) < 1
+                  || fread(&ver, 4, 1, f) < 1
+                  || fread(&visible, 1, 1, f) < 1
+                  || fread(&unused, 2, 1, f) < 1)
+		{
+		  psd_set_error (feof (f), errno, error);
+		  return -1;
+		}
+            }
+          else if (memcmp (effectname, "dsdw", 4) == 0
+		   || memcmp (effectname, "isdw", 4) == 0)
+            {
+              gint32    size;
+              gint32    ver;
+              gint32    blur;
+              gint32    intensity;
+              gint32    angle;
+              gint32    distance;
+              gint16    color[5];
+              gint32    blendsig;
+              gint32    effect;
+              gchar     effecton;
+              gchar     anglefx;
+              gchar     opacity;
+              gint16    natcolor[5];
+
+              if (fread (&size, 4, 1, f) < 1
+                  || fread(&ver, 4, 1, f) < 1
+                  || fread(&blur, 4, 1, f) < 1
+                  || fread(&intensity, 4, 1, f) < 1
+                  || fread(&angle, 4, 1, f) < 1
+                  || fread(&distance, 4, 1, f) < 1
+                  || fread(&color[0], 2, 1, f) < 1
+                  || fread(&color[1], 2, 1, f) < 1
+                  || fread(&color[2], 2, 1, f) < 1
+                  || fread(&color[3], 2, 1, f) < 1
+                  || fread(&color[4], 2, 1, f) < 1
+                  || fread(&blendsig, 4, 1, f) < 1
+                  || fread(&effect, 4, 1, f) < 1
+                  || fread(&effecton, 1, 1, f) < 1
+                  || fread(&anglefx, 1, 1, f) < 1
+                  || fread(&opacity, 1, 1, f) < 1
+                  || fread(&natcolor[0], 2, 1, f) < 1
+                  || fread(&natcolor[1], 2, 1, f) < 1
+                  || fread(&natcolor[2], 2, 1, f) < 1
+                  || fread(&natcolor[3], 2, 1, f) < 1
+                  || fread(&natcolor[4], 2, 1, f) < 1)
+                {
+                  psd_set_error (feof (f), errno, error);
+                  return -1;
+                }
+            }
+          else if (memcmp (effectname, "oglw", 4) == 0)
+            {
+              gint32    size;
+              gint32    ver;
+              gint32    blur;
+              gint32    intensity;
+              gint16    color[5];
+              gint32    blendsig;
+              gint32    effect;
+              gchar     effecton;
+              gchar     opacity;
+              gint16    natcolor[5];
+
+              if (fread (&size, 4, 1, f) < 1
+                  || fread(&ver, 4, 1, f) < 1
+                  || fread(&blur, 4, 1, f) < 1
+                  || fread(&intensity, 4, 1, f) < 1
+                  || fread(&color[0], 2, 1, f) < 1
+                  || fread(&color[1], 2, 1, f) < 1
+                  || fread(&color[2], 2, 1, f) < 1
+                  || fread(&color[3], 2, 1, f) < 1
+                  || fread(&color[4], 2, 1, f) < 1
+                  || fread(&blendsig, 4, 1, f) < 1
+                  || fread(&effect, 4, 1, f) < 1
+                  || fread(&effecton, 1, 1, f) < 1
+                  || fread(&opacity, 1, 1, f) < 1)
+                {
+                  psd_set_error (feof (f), errno, error);
+                  return -1;
+                }
+
+              if (ver == 42)
+                {
+                  if (fread(&natcolor[0], 2, 1, f) < 1
+                      || fread(&natcolor[1], 2, 1, f) < 1
+                      || fread(&natcolor[2], 2, 1, f) < 1
+                      || fread(&natcolor[3], 2, 1, f) < 1
+                      || fread(&natcolor[4], 2, 1, f) < 1)
+                    {
+                      psd_set_error (feof (f), errno, error);
+                      return -1;
+                    }
+                }
+            }
+          else if (memcmp (effectname, "iglw", 4) == 0)
+            {
+              gint32    size;
+              gint32    ver;
+              gint32    blur;
+              gint32    intensity;
+              gint32    angle;
+              gint32    distance;
+              gint16    color[5];
+              gint32    blendsig;
+              gint32    effect;
+              gchar     effecton;
+              gchar     anglefx;
+              gchar     opacity;
+              gint16    natcolor[5];
+
+              if (fread (&size, 4, 1, f) < 1
+                  || fread(&ver, 4, 1, f) < 1
+                  || fread(&blur, 4, 1, f) < 1
+                  || fread(&intensity, 4, 1, f) < 1
+                  || fread(&angle, 4, 1, f) < 1
+                  || fread(&distance, 4, 1, f) < 1
+                  || fread(&color[0], 2, 1, f) < 1
+                  || fread(&color[1], 2, 1, f) < 1
+                  || fread(&color[2], 2, 1, f) < 1
+                  || fread(&color[3], 2, 1, f) < 1
+                  || fread(&color[4], 2, 1, f) < 1
+                  || fread(&blendsig, 4, 1, f) < 1
+                  || fread(&effect, 4, 1, f) < 1
+                  || fread(&effecton, 1, 1, f) < 1
+                  || fread(&anglefx, 1, 1, f) < 1
+                  || fread(&opacity, 1, 1, f) < 1
+                  || fread(&natcolor[0], 2, 1, f) < 1
+                  || fread(&natcolor[1], 2, 1, f) < 1
+                  || fread(&natcolor[2], 2, 1, f) < 1
+                  || fread(&natcolor[3], 2, 1, f) < 1
+                  || fread(&natcolor[4], 2, 1, f) < 1)
+                {
+                  psd_set_error (feof (f), errno, error);
+                  return -1;
+                }
+            }
+          else if (memcmp (effectname, "oglw", 4) == 0)
+            {
+              gint32    size;
+              gint32    ver;
+              gint32    blur;
+              gint32    intensity;
+              gint16    color[5];
+              gint32    blendsig;
+              gint32    effect;
+              gchar     effecton;
+              gchar     opacity;
+              gchar     invert;
+              gint16    natcolor[5];
+
+              if (fread (&size, 4, 1, f) < 1
+                  || fread(&ver, 4, 1, f) < 1
+                  || fread(&blur, 4, 1, f) < 1
+                  || fread(&intensity, 4, 1, f) < 1
+                  || fread(&color[0], 2, 1, f) < 1
+                  || fread(&color[1], 2, 1, f) < 1
+                  || fread(&color[2], 2, 1, f) < 1
+                  || fread(&color[3], 2, 1, f) < 1
+                  || fread(&color[4], 2, 1, f) < 1
+                  || fread(&blendsig, 4, 1, f) < 1
+                  || fread(&effect, 4, 1, f) < 1
+                  || fread(&effecton, 1, 1, f) < 1
+                  || fread(&opacity, 1, 1, f) < 1)
+                {
+                  psd_set_error (feof (f), errno, error);
+                  return -1;
+                }
+
+              if (ver == 43)
+                {
+                  if (fread (&invert, 1, 1, f) < 1
+                      || fread(&natcolor[0], 2, 1, f) < 1
+                      || fread(&natcolor[0], 2, 1, f) < 1
+                      || fread(&natcolor[1], 2, 1, f) < 1
+                      || fread(&natcolor[2], 2, 1, f) < 1
+                      || fread(&natcolor[3], 2, 1, f) < 1
+                      || fread(&natcolor[4], 2, 1, f) < 1)
+                    {
+                      psd_set_error (feof (f), errno, error);
+                      return -1;
+                    }
+                }
+            }
+          else if (memcmp (effectname, "bevl", 4) == 0)
+            {
+              gint32    size;
+              gint32    ver;
+              gint32    angle;
+              gint32    strength;
+              gint32    blur;
+              gint32    highlightsig;
+              gint32    highlighteffect;
+              gint32    shadowsig;
+              gint32    shadoweffect;
+              gint16    highlightcolor[5];
+              gint16    shadowcolor[5];
+              gchar     style;
+              gchar     highlightopacity;
+              gchar     shadowopacity;
+              gchar     enabled;
+              gchar     global;
+              gchar     direction;
+              gint16    highlightnatcolor[5];
+              gint16    shadownatcolor[5];
+
+              if (fread (&size, 4, 1, f) < 1
+                  || fread(&ver, 4, 1, f) < 1
+                  || fread(&angle, 4, 1, f) < 1
+                  || fread(&strength, 4, 1, f) < 1
+                  || fread(&blur, 4, 1, f) < 1
+                  || fread(&highlightsig, 4, 1, f) < 1
+                  || fread(&highlighteffect, 4, 1, f) < 1
+                  || fread(&shadowsig, 4, 1, f) < 1
+                  || fread(&highlightcolor[0], 2, 1, f) < 1
+                  || fread(&shadoweffect, 4, 1, f) < 1
+                  || fread(&highlightcolor[1], 2, 1, f) < 1
+                  || fread(&highlightcolor[2], 2, 1, f) < 1
+                  || fread(&highlightcolor[3], 2, 1, f) < 1
+                  || fread(&highlightcolor[4], 2, 1, f) < 1
+                  || fread(&shadowcolor[0], 2, 1, f) < 1
+                  || fread(&shadowcolor[1], 2, 1, f) < 1
+                  || fread(&shadowcolor[2], 2, 1, f) < 1
+                  || fread(&shadowcolor[3], 2, 1, f) < 1
+                  || fread(&shadowcolor[4], 2, 1, f) < 1
+                  || fread(&style, 1, 1, f) < 1
+                  || fread(&highlightopacity, 1, 1, f) < 1
+                  || fread(&shadowopacity, 1, 1, f) < 1
+                  || fread(&enabled, 1, 1, f) < 1
+                  || fread(&global, 1, 1, f) < 1
+                  || fread(&direction, 1, 1, f) < 1)
+                {
+                  psd_set_error (feof (f), errno, error);
+                  return -1;
+                }
+
+              if (ver == 78)
+                {
+                  if (fread(&highlightnatcolor[0], 2, 1, f) < 1
+                      || fread(&highlightnatcolor[0], 2, 1, f) < 1
+                      || fread(&highlightnatcolor[1], 2, 1, f) < 1
+                      || fread(&highlightnatcolor[2], 2, 1, f) < 1
+                      || fread(&highlightnatcolor[3], 2, 1, f) < 1
+                      || fread(&highlightnatcolor[4], 2, 1, f) < 1
+                      || fread(&shadownatcolor[0], 2, 1, f) < 1
+                      || fread(&shadownatcolor[0], 2, 1, f) < 1
+                      || fread(&shadownatcolor[1], 2, 1, f) < 1
+                      || fread(&shadownatcolor[2], 2, 1, f) < 1
+                      || fread(&shadownatcolor[3], 2, 1, f) < 1
+                      || fread(&shadownatcolor[4], 2, 1, f) < 1)
+                    {
+                      psd_set_error (feof (f), errno, error);
+                      return -1;
+                    }
+                }
+            }
+          else if (memcmp (effectname, "sofi", 4) == 0)
+            {
+              gint32    size;
+              gint32    ver;
+              gint32    key;
+              gint16    color[5];
+              gchar     opacity;
+              gchar     enabled;
+              gint16    natcolor[5];
+
+              if (fread (&size, 4, 1, f) < 1
+                  || fread(&ver, 4, 1, f) < 1
+                  || fread(&key, 4, 1, f) < 1
+                  || fread(&color[0], 2, 1, f) < 1
+                  || fread(&color[1], 2, 1, f) < 1
+                  || fread(&color[2], 2, 1, f) < 1
+                  || fread(&color[3], 2, 1, f) < 1
+                  || fread(&color[4], 2, 1, f) < 1
+                  || fread(&opacity, 1, 1, f) < 1
+                  || fread(&enabled, 1, 1, f) < 1
+                  || fread(&natcolor[0], 2, 1, f) < 1
+                  || fread(&natcolor[1], 2, 1, f) < 1
+                  || fread(&natcolor[2], 2, 1, f) < 1
+                  || fread(&natcolor[3], 2, 1, f) < 1
+                  || fread(&natcolor[4], 2, 1, f) < 1)
+                {
+                  psd_set_error (feof (f), errno, error);
+                  return -1;
+                }
+            }
+          else
+            {
+              IFDBG(1) g_debug ("Unknown layer effect signature %.4s", effectname);
+            }
+        }
+    }
+
   return 0;
 }

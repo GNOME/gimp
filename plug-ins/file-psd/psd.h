@@ -434,7 +434,6 @@ typedef union
   CMGrayColor       gray;
 } CMColor;
 
-
 /* Image resolution data */
 typedef struct {
   Fixed         hRes;                   /* Horizontal resolution pixels/inch */
@@ -489,7 +488,6 @@ typedef struct {
   gchar         mode;                   /* Alpha = 0, Inverted alpha = 1, Spot = 2 */
 } DisplayInfoNew;
 
-
 /* PSD Channel length info data structure */
 typedef struct
 {
@@ -515,6 +513,33 @@ typedef struct
   gboolean      invert;                 /* Invert mask on blending */
 } MaskFlags;
 
+/* PSD Slices */
+typedef struct
+{
+  gint32        id;                     /* ID */
+  gint32        groupid;                /* Group ID */
+  gint32        origin;                 /* Origin */
+  gint32        associatedid;           /* Associated Layer ID */
+  gchar         *name;                  /* Name */
+  gint32        type;                   /* Type */
+  gint32        left;                   /* Position coordinates */
+  gint32        top;
+  gint32        right;
+  gint32        bottom;
+  gchar         *url;                   /* URL */
+  gchar         *target;                /* Target */
+  gchar         *message;               /* Message */
+  gchar         *alttag;                /* Alt Tag */
+  gchar         html;                   /* Boolean for if cell text is HTML */
+  gchar         *celltext;              /* Cell text */
+  gint32        horizontal;             /* Horizontal alignment */
+  gint32        vertical;               /* Vertical alignment */
+  gchar         alpha;                  /* Alpha */
+  gchar         red;                    /* Red */
+  gchar         green;                  /* Green */
+  gchar         blue;                   /* Blue */
+} PSDSlice;
+
 /* PSD Layer mask data (length 20) */
 typedef struct
 {
@@ -538,6 +563,18 @@ typedef struct
   gint32                right;                  /* Layer right */
 } LayerMaskExtra;
 
+/* PSD text reading */
+typedef struct
+{
+  gdouble               xx; /* Transform information */
+  gdouble               xy;
+  gdouble               yx;
+  gdouble               yy;
+  gdouble               tx;
+  gdouble               ty;
+  gchar                 *info; /* Text information */
+} PSDText;
+
 /* PSD Layer data structure */
 typedef struct
 {
@@ -560,6 +597,7 @@ typedef struct
   LayerMask             layer_mask;             /* Layer mask data */
   LayerMaskExtra        layer_mask_extra;       /* Layer mask extra data */
   LayerFlags            layer_flags;            /* Layer flags */
+  PSDText               text;                   /* PSD text */
   guint32               id;                     /* Layer ID (Tattoo) */
   guchar                group_type;             /* 0 -> not a group; 1 -> open folder; 2 -> closed folder; 3 -> end of group */
 } PSDlayer;
