@@ -29,7 +29,7 @@
 #include <process.h>
 #endif
 
-#ifdef G_OS_UNIX
+#if defined(G_OS_UNIX) && defined(HAVE_EXECINFO_H)
 /* For get_backtrace() */
 #include <stdlib.h>
 #include <string.h>
@@ -112,7 +112,7 @@ get_physical_memory_size (void)
 char *
 get_backtrace (void)
 {
-#ifdef G_OS_UNIX
+#if defined(G_OS_UNIX) && defined(HAVE_EXECINFO_H)
   void     *functions[MAX_FUNC];
   char    **function_names;
   int       n_functions;
