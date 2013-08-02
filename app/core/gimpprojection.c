@@ -36,9 +36,8 @@
 #include "gimpprojection.h"
 
 
-/*  halfway between G_PRIORITY_HIGH_IDLE and G_PRIORITY_DEFAULT_IDLE  */
-#define GIMP_PROJECTION_IDLE_PRIORITY ((G_PRIORITY_HIGH_IDLE + \
-                                        G_PRIORITY_DEFAULT_IDLE) / 2)
+/*  just a bit less than GDK_PRIORITY_REDRAW  */
+#define GIMP_PROJECTION_IDLE_PRIORITY (G_PRIORITY_HIGH_IDLE + 20 + 1)
 
 /*  chunk size for one iteration of the chunk renderer  */
 #define GIMP_PROJECTION_CHUNK_WIDTH  256
@@ -94,11 +93,6 @@ static void        gimp_projection_paint_area            (GimpProjection  *proj,
                                                           gint             y,
                                                           gint             w,
                                                           gint             h);
-static void        gimp_projection_invalidate            (GimpProjection  *proj,
-                                                          guint            x,
-                                                          guint            y,
-                                                          guint            w,
-                                                          guint            h);
 
 static void        gimp_projection_projectable_invalidate(GimpProjectable *projectable,
                                                           gint             x,
@@ -681,7 +675,23 @@ gimp_projection_paint_area (GimpProjection *proj,
   x2 = CLAMP (x + w, 0, width);
   y2 = CLAMP (y + h, 0, height);
 
-  gimp_projection_invalidate (proj, x1, y1, x2 - x1, y2 - y1);
+  if (now)
+    {
+      GeglNode *graph = gimp_projectable_get_graph (proj->projectable);
+
+      if (proj->validate_handler)
+        gimp_tile_handler_projection_undo_invalidate (proj->validate_handler,
+                                                      x1, y1, x2 - x1, y2 - y1);
+
+      gegl_node_blit_buffer (graph, proj->buffer,
+                             GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1));
+    }
+  else
+    {
+      if (proj->validate_handler)
+        gimp_tile_handler_projection_invalidate (proj->validate_handler,
+                                                 x1, y1, x2 - x1, y2 - y1);
+    }
 
   /*  add the projectable's offsets because the list of update areas
    *  is in tile-pyramid coordinates, but our external API is always
@@ -693,18 +703,6 @@ gimp_projection_paint_area (GimpProjection *proj,
                  y1 + off_y,
                  x2 - x1,
                  y2 - y1);
-}
-
-static void
-gimp_projection_invalidate (GimpProjection *proj,
-                            guint           x,
-                            guint           y,
-                            guint           w,
-                            guint           h)
-{
-  if (proj->validate_handler)
-    gimp_tile_handler_projection_invalidate (proj->validate_handler,
-                                             x, y, w, h);
 }
 
 
