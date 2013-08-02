@@ -68,6 +68,11 @@ void              gimp_tile_handler_projection_invalidate (GimpTileHandlerProjec
                                                            gint                       y,
                                                            gint                       width,
                                                            gint                       height);
+void         gimp_tile_handler_projection_undo_invalidate (GimpTileHandlerProjection *projection,
+                                                           gint                       x,
+                                                           gint                       y,
+                                                           gint                       width,
+                                                           gint                       height);
 
 
 G_END_DECLS

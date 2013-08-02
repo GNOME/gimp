@@ -353,3 +353,17 @@ gimp_tile_handler_projection_invalidate (GimpTileHandlerProjection *projection,
         }
     }
 }
+
+void
+gimp_tile_handler_projection_undo_invalidate (GimpTileHandlerProjection *projection,
+                                              gint                       x,
+                                              gint                       y,
+                                              gint                       width,
+                                              gint                       height)
+{
+  cairo_rectangle_int_t rect = { x, y, width, height };
+
+  g_return_if_fail (GIMP_IS_TILE_HANDLER_PROJECTION (projection));
+
+  cairo_region_subtract_rectangle (projection->dirty_region, &rect);
+}
