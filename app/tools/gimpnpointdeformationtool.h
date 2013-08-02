@@ -43,6 +43,7 @@ struct _GimpNPointDeformationTool
   GimpDrawTool parent_instance;
   
   GeglNode     *graph;
+  GeglNode     *source;
   GeglNode     *node;
   GeglNode     *sink;
   
@@ -52,7 +53,7 @@ struct _GimpNPointDeformationTool
   
   NPDModel     *model;
   NPDControlPoint *selected_cp; /* last selected control point */
-  GSList       *selected_cps;   /* list of selected control points */
+  GList       *selected_cps;   /* list of selected control points */
   NPDControlPoint *hovering_cp;
 
   gdouble       cursor_x;
@@ -64,9 +65,11 @@ struct _GimpNPointDeformationTool
   gdouble       movement_start_x;
   gdouble       movement_start_y;
   
-  GSList       *previous_cp_positions; /* list of NPDPoints holding previous control points positions */
+  GList       *previous_cp_positions; /* list of NPDPoints holding previous control points positions */
   
   gboolean active;
+  
+  GimpImageMap *image_map;
 };
 
 struct _GimpNPointDeformationToolClass
