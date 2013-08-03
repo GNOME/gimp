@@ -358,6 +358,29 @@ gimp_overlay_dialog_add_button (GimpOverlayDialog *dialog,
   return button;
 }
 
+void
+gimp_overlay_dialog_set_alternative_button_order (GimpOverlayDialog *overlay,
+                                                  gint               n_ids,
+                                                  gint              *ids)
+{
+  /* TODO */
+}
+
+void
+gimp_overlay_dialog_set_default_response (GimpOverlayDialog *overlay,
+                                          gint               response_id)
+{
+  /* TODO */
+}
+
+void
+gimp_overlay_dialog_set_response_sensitive (GimpOverlayDialog *overlay,
+                                            gint               response_id,
+                                            gboolean           sensitive)
+{
+  /* TODO */
+}
+
 static void
 response_data_free (gpointer data)
 {

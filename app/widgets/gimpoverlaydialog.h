@@ -54,19 +54,28 @@ struct _GimpOverlayDialogClass
 };
 
 
-GType       gimp_overlay_dialog_get_type           (void) G_GNUC_CONST;
+GType       gimp_overlay_dialog_get_type               (void) G_GNUC_CONST;
 
-GtkWidget * gimp_overlay_dialog_new                (GimpToolInfo    *tool_info,
-                                                    const gchar     *desc,
-                                                    ...) G_GNUC_NULL_TERMINATED;
+GtkWidget * gimp_overlay_dialog_new                    (GimpToolInfo      *tool_info,
+                                                        const gchar       *desc,
+                                                        ...) G_GNUC_NULL_TERMINATED;
 
-void        gimp_overlay_dialog_response           (GimpOverlayDialog *overlay,
-                                                    gint             response_id);
-void        gimp_overlay_dialog_add_buttons_valist (GimpOverlayDialog *overlay,
-                                                    va_list          args);
-GtkWidget * gimp_overlay_dialog_add_button         (GimpOverlayDialog *overlay,
-                                                    const gchar     *button_text,
-                                                    gint             response_id);
+void        gimp_overlay_dialog_response               (GimpOverlayDialog *overlay,
+                                                        gint               response_id);
+void        gimp_overlay_dialog_add_buttons_valist     (GimpOverlayDialog *overlay,
+                                                        va_list            args);
+GtkWidget * gimp_overlay_dialog_add_button             (GimpOverlayDialog *overlay,
+                                                        const gchar       *button_text,
+                                                        gint               response_id);
+void        gimp_overlay_dialog_set_alternative_button_order
+                                                       (GimpOverlayDialog *overlay,
+                                                        gint               n_ids,
+                                                        gint              *ids);
+void        gimp_overlay_dialog_set_default_response   (GimpOverlayDialog *overlay,
+                                                        gint               response_id);
+void        gimp_overlay_dialog_set_response_sensitive (GimpOverlayDialog *overlay,
+                                                        gint               response_id,
+                                                        gboolean           sensitive);
 
 
 #endif /* __GIMP_OVERLAY_DIALOG_H__ */
