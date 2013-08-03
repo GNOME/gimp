@@ -60,6 +60,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:cartoon",
     NULL /* FIXME GIMP_HELP_FILTER_CARTOON */ },
 
+  { "filters-channel-mixer", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Channel Mixer..."), NULL, NULL,
+    "gegl:channel-mixer",
+    NULL /* FIXME GIMP_HELP_FILTER_CHANNEL_MIXER */ },
+
   { "filters-checkerboard", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Checkerboard..."), NULL, NULL,
     "gegl:checkerboard",

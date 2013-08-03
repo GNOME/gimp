@@ -531,7 +531,9 @@
         <menuitem action="drawable-equalize" />
         <menuitem action="drawable-levels-stretch" />
       </menu>
-      <menu action="colors-components-menu" name="Components" />
+      <menu action="colors-components-menu" name="Components">
+	<menuitem action="filters-channel-mixer" />
+      </menu>
       <menu action="colors-desaturate-menu" name="Desaturate">
 	<menuitem action="filters-mono-mixer" />
 	<menuitem action="filters-c2g" />
