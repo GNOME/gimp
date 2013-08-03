@@ -637,6 +637,7 @@
 	</placeholder>
       </menu>
       <menu action="plug-in-enhance-menu" name="Enhance">
+        <menuitem action="filters-antialias" />
         <menuitem action="filters-deinterlace" />
         <menuitem action="filters-red-eye-removal" />
         <menuitem action="filters-unsharp-mask" />

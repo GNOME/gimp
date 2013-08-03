@@ -114,6 +114,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
      * filter-actions ordrawable-actions
      */
     "gegl:alien-map",
+    "gegl:antialias",
     "gegl:c2g",
     "gegl:cartoon",
     "gegl:checkerboard",

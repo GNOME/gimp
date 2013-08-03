@@ -45,6 +45,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:alien-map",
     NULL /* FIXME GIMP_HELP_FILTER_ALIEN_MAP */ },
 
+  { "filters-antialias", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Antialias..."), NULL, NULL,
+    "gegl:antialias",
+    NULL /* FIXME GIMP_HELP_FILTER_ANTIALIAS */ },
+
   { "filters-c2g", GIMP_STOCK_GEGL,
     NC_("filters-action", "Color to Gray..."), NULL, NULL,
     "gegl:c2g",
@@ -328,6 +333,7 @@ filters_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
   SET_SENSITIVE ("filters-alien-map",               writable);
+  SET_SENSITIVE ("filters-antialias",               writable);
   SET_SENSITIVE ("filters-c2g",                     writable && !gray);
   SET_SENSITIVE ("filters-cartoon",                 writable);
   SET_SENSITIVE ("filters-checkerboard",            writable);
