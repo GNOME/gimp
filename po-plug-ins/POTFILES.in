@@ -9,7 +9,6 @@ plug-ins/color-rotate/color-rotate.c
 plug-ins/common/align-layers.c
 plug-ins/common/animation-optimize.c
 plug-ins/common/animation-play.c
-plug-ins/common/antialias.c
 plug-ins/common/apply-canvas.c
 plug-ins/common/blinds.c
 plug-ins/common/blur.c

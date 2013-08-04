@@ -47,7 +47,6 @@ libexec_PROGRAMS = \
 	align-layers \
 	animation-optimize \
 	animation-play \
-	antialias \
 	apply-canvas \
 	blinds \
 	blur \
@@ -256,21 +255,6 @@ animation_play_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(animation_play_RC)
-
-antialias_SOURCES = \
-	antialias.c
-
-antialias_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(CAIRO_LIBS)		\
-	$(GDK_PIXBUF_LIBS)	\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(antialias_RC)
 
 apply_canvas_SOURCES = \
 	apply-canvas.c

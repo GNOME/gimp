@@ -90,6 +90,50 @@ CODE
     );
 }
 
+sub plug_in_antialias {
+    $blurb = 'Antialias using the Scale3X edge-extrapolation algorithm';
+
+    $help = <<'HELP';
+No more help.
+HELP
+
+    &std_pdb_compat('gegl:antialias');
+    $date = '2013';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node =
+        gegl_node_new_child (NULL,
+                             "operation", "gegl:antialias",
+                             NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Antialias"),
+                                     node);
+
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_autocrop {
     $blurb = 'Remove empty borders from the image';
 
@@ -1328,6 +1372,7 @@ CODE
               "gimp-intl.h");
 
 @procs = qw(plug_in_alienmap2
+            plug_in_antialias
             plug_in_autocrop
             plug_in_autocrop_layer
             plug_in_colortoalpha
