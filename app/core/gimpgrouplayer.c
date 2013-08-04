@@ -894,6 +894,7 @@ gimp_group_layer_convert_type (GimpDrawable      *drawable,
                                                    new_base_type,
                                                    new_precision);
   gimp_projectable_structure_changed (GIMP_PROJECTABLE (drawable));
+  gimp_pickable_flush (GIMP_PICKABLE (private->projection));
 
   buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (private->projection));
 
@@ -1168,6 +1169,7 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
           private->reallocate_height = height;
 
           gimp_projectable_structure_changed (GIMP_PROJECTABLE (group));
+          gimp_pickable_flush (GIMP_PICKABLE (private->projection));
 
           buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (private->projection));
 
