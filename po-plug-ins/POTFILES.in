@@ -17,7 +17,6 @@ plug-ins/common/blur-gauss-selective.c
 plug-ins/common/border-average.c
 plug-ins/common/bump-map.c
 plug-ins/common/cartoon.c
-plug-ins/common/channel-mixer.c
 plug-ins/common/checkerboard.c
 plug-ins/common/cml-explorer.c
 plug-ins/common/color-cube-analyze.c

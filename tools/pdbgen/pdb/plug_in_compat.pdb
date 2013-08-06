@@ -242,6 +242,80 @@ CODE
     );
 }
 
+sub plug_in_colors_channel_mixer {
+    $blurb = 'Alter colors by mixing RGB Channels';
+
+    $help = <<'HELP';
+This plug-in mixes the RGB channels.
+HELP
+
+    &std_pdb_compat('gegl:channel-mixer');
+    $date = '2013';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'monochrome', type => '0 <= int32 <= 1',
+	  desc => 'Monochrome { TRUE, FALSE }' },
+	{ name => 'rr_gain', type => '-2 <= float <= 2',
+	  desc => 'Set the red gain for the red channel' },
+	{ name => 'rg_gain', type => '-2 <= float <= 2',
+	  desc => 'Set the green gain for the red channel' },
+	{ name => 'rb_gain', type => '-2 <= float <= 2',
+	  desc => 'Set the blue gain for the red channel' },
+	{ name => 'gr_gain', type => '-2 <= float <= 2',
+	  desc => 'Set the red gain for the green channel' },
+	{ name => 'gg_gain', type => '-2 <= float <= 2',
+	  desc => 'Set the green gain for the green channel' },
+	{ name => 'gb_gain', type => '-2 <= float <= 2',
+	  desc => 'Set the blue gain for the green channel' },
+	{ name => 'br_gain', type => '-2 <= float <= 2',
+	  desc => 'Set the red gain for the blue channel' },
+	{ name => 'bg_gain', type => '-2 <= float <= 2',
+	  desc => 'Set the green gain for the blue channel' },
+	{ name => 'bb_gain', type => '-2 <= float <= 2',
+	  desc => 'Set the blue gain for the blue channel' },
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node =
+        gegl_node_new_child (NULL,
+                             "operation", "gegl:channel-mixer",
+			     "monochrome", (gboolean) monochrome,
+                             "rr-gain", (gdouble) rr_gain,
+                             "rg-gain", (gdouble) rg_gain,
+                             "rb-gain", (gdouble) rb_gain,
+                             "gr-gain", (gdouble) gr_gain,
+                             "gg-gain", (gdouble) gg_gain,
+                             "gb-gain", (gdouble) gb_gain,
+                             "br-gain", (gdouble) br_gain,
+                             "bg-gain", (gdouble) bg_gain,
+                             "bb-gain", (gdouble) bb_gain,
+                             NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Channel Mixer"),
+                                     node);
+
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_colortoalpha {
     $blurb = 'Convert a specified color to transparency';
 
@@ -1375,6 +1449,7 @@ CODE
             plug_in_antialias
             plug_in_autocrop
             plug_in_autocrop_layer
+            plug_in_colors_channel_mixer
             plug_in_colortoalpha
 	    plug_in_cubism
             plug_in_mblur

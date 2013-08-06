@@ -55,7 +55,6 @@ libexec_PROGRAMS = \
 	border-average \
 	bump-map \
 	cartoon \
-	channel-mixer \
 	checkerboard \
 	cml-explorer \
 	color-cube-analyze \
@@ -392,23 +391,6 @@ cartoon_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(cartoon_RC)
-
-channel_mixer_SOURCES = \
-	channel-mixer.c
-
-channel_mixer_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(channel_mixer_RC)
 
 checkerboard_SOURCES = \
 	checkerboard.c

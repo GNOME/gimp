@@ -258,6 +258,74 @@ plug_in_autocrop_layer_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_colors_channel_mixer_invoker (GimpProcedure         *procedure,
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 monochrome;
+  gdouble rr_gain;
+  gdouble rg_gain;
+  gdouble rb_gain;
+  gdouble gr_gain;
+  gdouble gg_gain;
+  gdouble gb_gain;
+  gdouble br_gain;
+  gdouble bg_gain;
+  gdouble bb_gain;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  monochrome = g_value_get_int (gimp_value_array_index (args, 3));
+  rr_gain = g_value_get_double (gimp_value_array_index (args, 4));
+  rg_gain = g_value_get_double (gimp_value_array_index (args, 5));
+  rb_gain = g_value_get_double (gimp_value_array_index (args, 6));
+  gr_gain = g_value_get_double (gimp_value_array_index (args, 7));
+  gg_gain = g_value_get_double (gimp_value_array_index (args, 8));
+  gb_gain = g_value_get_double (gimp_value_array_index (args, 9));
+  br_gain = g_value_get_double (gimp_value_array_index (args, 10));
+  bg_gain = g_value_get_double (gimp_value_array_index (args, 11));
+  bb_gain = g_value_get_double (gimp_value_array_index (args, 12));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node =
+            gegl_node_new_child (NULL,
+                                 "operation", "gegl:channel-mixer",
+                                 "monochrome", (gboolean) monochrome,
+                                 "rr-gain", (gdouble) rr_gain,
+                                 "rg-gain", (gdouble) rg_gain,
+                                 "rb-gain", (gdouble) rb_gain,
+                                 "gr-gain", (gdouble) gr_gain,
+                                 "gg-gain", (gdouble) gg_gain,
+                                 "gb-gain", (gdouble) gb_gain,
+                                 "br-gain", (gdouble) br_gain,
+                                 "bg-gain", (gdouble) bg_gain,
+                                 "bb-gain", (gdouble) bb_gain,
+                                 NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Channel Mixer"),
+                                         node);
+
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_colortoalpha_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
@@ -1434,6 +1502,102 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             "Input drawable",
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-colors-channel-mixer
+   */
+  procedure = gimp_procedure_new (plug_in_colors_channel_mixer_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-colors-channel-mixer");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-colors-channel-mixer",
+                                     "Alter colors by mixing RGB Channels",
+                                     "This plug-in mixes the RGB channels.",
+                                     "Compatibility procedure. Please see 'gegl:channel-mixer' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:channel-mixer' for credits.",
+                                     "2013",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("monochrome",
+                                                      "monochrome",
+                                                      "Monochrome { TRUE, FALSE }",
+                                                      0, 1, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("rr-gain",
+                                                    "rr gain",
+                                                    "Set the red gain for the red channel",
+                                                    -2, 2, -2,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("rg-gain",
+                                                    "rg gain",
+                                                    "Set the green gain for the red channel",
+                                                    -2, 2, -2,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("rb-gain",
+                                                    "rb gain",
+                                                    "Set the blue gain for the red channel",
+                                                    -2, 2, -2,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("gr-gain",
+                                                    "gr gain",
+                                                    "Set the red gain for the green channel",
+                                                    -2, 2, -2,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("gg-gain",
+                                                    "gg gain",
+                                                    "Set the green gain for the green channel",
+                                                    -2, 2, -2,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("gb-gain",
+                                                    "gb gain",
+                                                    "Set the blue gain for the green channel",
+                                                    -2, 2, -2,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("br-gain",
+                                                    "br gain",
+                                                    "Set the red gain for the blue channel",
+                                                    -2, 2, -2,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("bg-gain",
+                                                    "bg gain",
+                                                    "Set the green gain for the blue channel",
+                                                    -2, 2, -2,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("bb-gain",
+                                                    "bb gain",
+                                                    "Set the blue gain for the blue channel",
+                                                    -2, 2, -2,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
