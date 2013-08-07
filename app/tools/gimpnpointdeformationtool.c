@@ -331,6 +331,17 @@ gimp_n_point_deformation_tool_cursor_update (GimpTool         *tool,
                                              GdkModifierType   state,
                                              GimpDisplay      *display)
 {
+  GimpNPointDeformationTool *npd_tool       = GIMP_N_POINT_DEFORMATION_TOOL (tool);
+  GimpCursorModifier         modifier       = GIMP_CURSOR_MODIFIER_PLUS;
+
+  if (npd_tool->hovering_cp != NULL)
+    {
+        modifier = GIMP_CURSOR_MODIFIER_MOVE;
+    }
+
+  gimp_tool_control_set_cursor_modifier (tool->control, modifier);
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
 #define gimp_n_point_deformation_tool_clear_selected_points_list()             \
@@ -561,7 +572,7 @@ gimp_n_point_deformation_tool_motion (GimpTool         *tool,
   gdouble                    shift_x      = coords->x - npd_tool->movement_start_x;
   gdouble                    shift_y      = coords->y - npd_tool->movement_start_y;
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+  gimp_draw_tool_pause (draw_tool);
 
   if (selected_cp != NULL)
     {
@@ -582,5 +593,5 @@ gimp_n_point_deformation_tool_motion (GimpTool         *tool,
   npd_tool->cursor_x = coords->x;
   npd_tool->cursor_y = coords->y;
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+  gimp_draw_tool_resume (draw_tool);
 }
