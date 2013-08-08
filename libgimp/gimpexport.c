@@ -762,7 +762,7 @@ gimp_export_image (gint32                 *image_ID,
           /*  If this is the last layer, it's visible and has no alpha
            *  channel, then the image has a "flat" background
            */
-                if (i == n_layers - 1 && gimp_item_get_visible (layers[i]))
+          if (i == n_layers - 1 && gimp_item_get_visible (layers[i]))
             background_has_alpha = FALSE;
 
           if (capabilities & GIMP_EXPORT_NEEDS_ALPHA)
