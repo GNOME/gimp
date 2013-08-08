@@ -30,8 +30,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-07 22:23+0200\n"
-"PO-Revision-Date: 2013-06-07 22:25+0200\n"
+"POT-Creation-Date: 2013-08-08 15:58+0200\n"
+"PO-Revision-Date: 2013-08-08 15:59+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: \n"
@@ -85,7 +85,7 @@ msgstr ""
 "Dovresti aver ricevuto una copia della GNU General Public License con GIMP. "
 "Se così non fosse, vedere http://www.gnu.org/licenses/."
 
-#: ../app/app.c:224
+#: ../app/app.c:225
 #, c-format
 msgid ""
 "Unable to open a test swap file.\n"
@@ -5616,11 +5616,11 @@ msgstr "Alt_ro (%s)..."
 msgid "_Zoom (%s)"
 msgstr "_Zoom (%s)"
 
-#: ../app/actions/view-commands.c:605
+#: ../app/actions/view-commands.c:603
 msgid "Set Canvas Padding Color"
 msgstr "Seleziona colore di riempimento superficie"
 
-#: ../app/actions/view-commands.c:607
+#: ../app/actions/view-commands.c:605
 msgid "Set Custom Canvas Padding Color"
 msgstr "Imposta colore personalizzato di riempimento superficie"
 
@@ -7829,7 +7829,7 @@ msgstr "Opacità"
 msgid "Paint Mode"
 msgstr "Modalità disegno"
 
-#: ../app/core/gimpdata.c:681
+#: ../app/core/gimpdata.c:690
 #, c-format
 msgid "Could not delete '%s': %s"
 msgstr "Impossibile cancellare '%s': %s"
@@ -7976,7 +7976,7 @@ msgid "Posterize"
 msgstr "Posterizza"
 
 #: ../app/core/gimpdrawable-stroke.c:272
-#: ../app/paint/gimppaintcore-stroke.c:333 ../app/vectors/gimpvectors.c:556
+#: ../app/paint/gimppaintcore-stroke.c:330 ../app/vectors/gimpvectors.c:556
 msgid "Not enough points to stroke"
 msgstr "Non ci sono abbastanza punti da tracciare"
 
@@ -8165,12 +8165,17 @@ msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Imposta mappa colore"
 
-#: ../app/core/gimpimage-colormap.c:243
+#: ../app/core/gimpimage-colormap.c:210
+msgctxt "undo-type"
+msgid "Unset Colormap"
+msgstr "Rimuovi mappa colore"
+
+#: ../app/core/gimpimage-colormap.c:263
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Cambia voce mappa colore"
 
-#: ../app/core/gimpimage-colormap.c:271
+#: ../app/core/gimpimage-colormap.c:291
 msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Aggiungi colore alla mappa colore"
@@ -8324,7 +8329,7 @@ msgctxt "undo-type"
 msgid "Move Sample Point"
 msgstr "Sposta punto di campionamento"
 
-#: ../app/core/gimpimage-scale.c:87
+#: ../app/core/gimpimage-scale.c:88
 msgctxt "undo-type"
 msgid "Scale Image"
 msgstr "Scala immagine"
@@ -8434,7 +8439,7 @@ msgid "(Preview may be out of date)"
 msgstr "(l'anteprima potrebbe non essere aggiornata)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:774 ../app/widgets/gimpimagepropview.c:441
+#: ../app/core/gimpimagefile.c:774 ../app/widgets/gimpimagepropview.c:440
 #: ../app/widgets/gimpsizebox.c:427 ../app/widgets/gimptemplateeditor.c:565
 #, c-format
 msgid "%d × %d pixel"
@@ -10045,7 +10050,7 @@ msgid "Vertical"
 msgstr "Verticale"
 
 #: ../app/dialogs/preferences-dialog.c:2350
-#: ../app/widgets/gimpimagepropview.c:470
+#: ../app/widgets/gimpimagepropview.c:469
 msgid "ppi"
 msgstr "ppi"
 
@@ -10829,12 +10834,12 @@ msgstr "Il plug-in %s non può aprire l'immagine"
 msgid "Image doesn't contain any layers"
 msgstr "L'immagine non contiene nessun livello"
 
-#: ../app/file/file-open.c:583
+#: ../app/file/file-open.c:586
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "L'apertura di \"%s\" è fallita: %s"
 
-#: ../app/file/file-open.c:690
+#: ../app/file/file-open.c:696
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -11620,7 +11625,8 @@ msgstr ""
 #: ../app/plug-in/plug-in-icc-profile.c:74
 #, c-format
 msgid "Can't apply color profile to grayscale image (%s)"
-msgstr "Impossibile applicare il profilo colore all'immagine in scala di grigi (%s)"
+msgstr ""
+"Impossibile applicare il profilo colore all'immagine in scala di grigi (%s)"
 
 #: ../app/plug-in/plug-in-icc-profile.c:117
 #: ../app/plug-in/plug-in-icc-profile.c:192
@@ -11921,7 +11927,7 @@ msgstr "Sfumatura non agisce su livelli indicizzati."
 msgid "No gradient available for use with this tool."
 msgstr "Nessun motivo disponibile con questo strumento."
 
-#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:623
+#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:624
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s per gli angoli bloccati"
@@ -12065,7 +12071,7 @@ msgctxt "command"
 msgid "Select by Color"
 msgstr "Selezione per colore"
 
-#: ../app/tools/gimpcagetool.c:152 ../app/tools/gimpcagetool.c:1155
+#: ../app/tools/gimpcagetool.c:152 ../app/tools/gimpcagetool.c:1156
 msgid "Cage Transform"
 msgstr "Trasformazione gabbia"
 
@@ -12077,15 +12083,15 @@ msgstr "Trasformazione gabbia: deforma una selezione all'interno di una gabbia"
 msgid "_Cage Transform"
 msgstr "_Trasformazione gabbia"
 
-#: ../app/tools/gimpcagetool.c:352
+#: ../app/tools/gimpcagetool.c:353
 msgid "Press ENTER to commit the transform"
 msgstr "Premere INVIO per confermare la trasformazione"
 
-#: ../app/tools/gimpcagetool.c:1096
+#: ../app/tools/gimpcagetool.c:1097
 msgid "Computing Cage Coefficients"
 msgstr "Calcolo coefficienti gabbia"
 
-#: ../app/tools/gimpcagetool.c:1273
+#: ../app/tools/gimpcagetool.c:1274
 msgid "Cage transform"
 msgstr "Trasformazione gabbia"
 
@@ -12302,11 +12308,11 @@ msgstr "Prelievo c_olore"
 msgid "Click in any image to view its color"
 msgstr "Fare clic sull'immagine per visualizzare il colore"
 
-#: ../app/tools/gimpcolorpickertool.c:238 ../app/tools/gimppainttool.c:477
+#: ../app/tools/gimpcolorpickertool.c:238 ../app/tools/gimppainttool.c:478
 msgid "Click in any image to pick the foreground color"
 msgstr "Fare clic sull'immagine per prelevare il colore di primo piano"
 
-#: ../app/tools/gimpcolorpickertool.c:246 ../app/tools/gimppainttool.c:483
+#: ../app/tools/gimpcolorpickertool.c:246 ../app/tools/gimppainttool.c:484
 msgid "Click in any image to pick the background color"
 msgstr "Fare clic sull'immagine per prelevare il colore di sfondo"
 
@@ -13213,7 +13219,7 @@ msgstr "Fare clic e trascinare per spostare tutti i punti"
 
 #: ../app/tools/gimpmeasuretool.c:939 ../app/tools/gimpmeasuretool.c:1084
 #: ../app/tools/gimpmeasuretool.c:1140 ../app/tools/gimpmeasuretool.c:1168
-#: ../app/tools/gimppainttool.c:632
+#: ../app/tools/gimppainttool.c:633
 msgid "pixels"
 msgstr "pixel"
 
@@ -13384,7 +13390,7 @@ msgstr "%s per prelevare un colore"
 msgid "Cannot paint on layer groups."
 msgstr "Impossibile disegnare sui gruppi livello."
 
-#: ../app/tools/gimppainttool.c:678
+#: ../app/tools/gimppainttool.c:679
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s per una riga diritta"
@@ -15338,79 +15344,79 @@ msgstr ""
 msgid "Querying..."
 msgstr "Interrogazione in corso..."
 
-#: ../app/widgets/gimpimagepropview.c:120
+#: ../app/widgets/gimpimagepropview.c:113
 msgid "Size in pixels:"
 msgstr "Dimensione in pixel:"
 
-#: ../app/widgets/gimpimagepropview.c:123
+#: ../app/widgets/gimpimagepropview.c:116
 msgid "Print size:"
 msgstr "Dimensioni di stampa:"
 
-#: ../app/widgets/gimpimagepropview.c:126
+#: ../app/widgets/gimpimagepropview.c:119
 msgid "Resolution:"
 msgstr "Risoluzione:"
 
-#: ../app/widgets/gimpimagepropview.c:129
+#: ../app/widgets/gimpimagepropview.c:122
 msgid "Color space:"
 msgstr "Spazio colore:"
 
-#: ../app/widgets/gimpimagepropview.c:134
+#: ../app/widgets/gimpimagepropview.c:127
 msgid "File Name:"
 msgstr "Nome file:"
 
-#: ../app/widgets/gimpimagepropview.c:140
+#: ../app/widgets/gimpimagepropview.c:133
 msgid "File Size:"
 msgstr "Dimensione file:"
 
-#: ../app/widgets/gimpimagepropview.c:143
+#: ../app/widgets/gimpimagepropview.c:136
 msgid "File Type:"
 msgstr "Tipo file:"
 
-#: ../app/widgets/gimpimagepropview.c:148
+#: ../app/widgets/gimpimagepropview.c:141
 msgid "Size in memory:"
 msgstr "Dimensione in memoria:"
 
-#: ../app/widgets/gimpimagepropview.c:151
+#: ../app/widgets/gimpimagepropview.c:144
 msgid "Undo steps:"
 msgstr "Azioni annullabili:"
 
-#: ../app/widgets/gimpimagepropview.c:154
+#: ../app/widgets/gimpimagepropview.c:147
 msgid "Redo steps:"
 msgstr "Azioni ripetibili:"
 
-#: ../app/widgets/gimpimagepropview.c:159
+#: ../app/widgets/gimpimagepropview.c:152
 msgid "Number of pixels:"
 msgstr "Numero di pixel:"
 
-#: ../app/widgets/gimpimagepropview.c:162
+#: ../app/widgets/gimpimagepropview.c:155
 msgid "Number of layers:"
 msgstr "Numero di livelli:"
 
-#: ../app/widgets/gimpimagepropview.c:165
+#: ../app/widgets/gimpimagepropview.c:158
 msgid "Number of channels:"
 msgstr "Numero di canali:"
 
-#: ../app/widgets/gimpimagepropview.c:168
+#: ../app/widgets/gimpimagepropview.c:161
 msgid "Number of paths:"
 msgstr "Numero di tracciati:"
 
 #. no undo (or redo) steps available
-#: ../app/widgets/gimpimagepropview.c:411
+#: ../app/widgets/gimpimagepropview.c:410
 msgid "None"
 msgstr "Nessuna"
 
-#: ../app/widgets/gimpimagepropview.c:465
+#: ../app/widgets/gimpimagepropview.c:464
 #: ../app/widgets/gimptemplateeditor.c:331
 #, c-format
 msgid "pixels/%s"
 msgstr "punti/%s"
 
-#: ../app/widgets/gimpimagepropview.c:467
+#: ../app/widgets/gimpimagepropview.c:466
 #, c-format
 msgid "%g × %g %s"
 msgstr "%g × %g %s"
 
-#: ../app/widgets/gimpimagepropview.c:488
+#: ../app/widgets/gimpimagepropview.c:487
 msgid "colors"
 msgstr "colori"
 
