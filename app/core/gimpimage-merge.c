@@ -171,39 +171,45 @@ gimp_image_flatten (GimpImage   *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  gimp_set_busy (image->gimp);
-
-  gimp_image_undo_group_start (image,
-                               GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE,
-                               C_("undo-type", "Flatten Image"));
-
-  /* if there's a floating selection, anchor it */
-  if (gimp_image_get_floating_selection (image))
-    floating_sel_anchor (gimp_image_get_floating_selection (image));
-
   for (list = gimp_image_get_layer_iter (image);
        list;
        list = g_list_next (list))
     {
       layer = list->data;
 
+      if (gimp_layer_is_floating_sel (layer))
+        continue;
+
       if (gimp_item_get_visible (GIMP_ITEM (layer)))
         merge_list = g_slist_append (merge_list, layer);
     }
 
-  layer = gimp_image_merge_layers (image,
-                                   gimp_image_get_layers (image),
-                                   merge_list, context,
-                                   GIMP_FLATTEN_IMAGE);
-  g_slist_free (merge_list);
+  if (merge_list)
+    {
+      gimp_set_busy (image->gimp);
 
-  gimp_image_alpha_changed (image);
+      gimp_image_undo_group_start (image,
+                                   GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE,
+                                   C_("undo-type", "Flatten Image"));
 
-  gimp_image_undo_group_end (image);
+      /* if there's a floating selection, anchor it */
+      if (gimp_image_get_floating_selection (image))
+        floating_sel_anchor (gimp_image_get_floating_selection (image));
 
-  gimp_unset_busy (image->gimp);
+      layer = gimp_image_merge_layers (image,
+                                       gimp_image_get_layers (image),
+                                       merge_list, context,
+                                       GIMP_FLATTEN_IMAGE);
+      g_slist_free (merge_list);
 
-  return layer;
+      gimp_image_alpha_changed (image);
+
+      gimp_image_undo_group_end (image);
+
+      gimp_unset_busy (image->gimp);
+    }
+
+  return gimp_image_get_active_layer (image);
 }
 
 GimpLayer *
