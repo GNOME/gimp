@@ -39,7 +39,8 @@ typedef enum
   GIMP_LOG_AUTO_TAB_STYLE     = 1 << 15,
   GIMP_LOG_INSTANCES          = 1 << 16,
   GIMP_LOG_RECTANGLE_TOOL     = 1 << 17,
-  GIMP_LOG_BRUSH_CACHE        = 1 << 18
+  GIMP_LOG_BRUSH_CACHE        = 1 << 18,
+  GIMP_LOG_PROJECTION         = 1 << 19
 } GimpLogFlags;
 
 
@@ -99,6 +100,7 @@ void   gimp_logv     (GimpLogFlags  flags,
 #define INSTANCES          GIMP_LOG_INSTANCES
 #define RECTANGLE_TOOL     GIMP_LOG_RECTANGLE_TOOL
 #define BRUSH_CACHE        GIMP_LOG_BRUSH_CACHE
+#define PROJECTION         GIMP_LOG_PROJECTION
 
 #if 0 /* last resort */
 #  define GIMP_LOG /* nothing => no varargs, no log */

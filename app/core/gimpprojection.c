@@ -35,6 +35,8 @@
 #include "gimpprojectable.h"
 #include "gimpprojection.h"
 
+#include "gimp-log.h"
+
 
 /*  just a bit less than GDK_PRIORITY_REDRAW  */
 #define GIMP_PROJECTION_IDLE_PRIORITY (G_PRIORITY_HIGH_IDLE + 20 + 1)
@@ -42,6 +44,9 @@
 /*  chunk size for one iteration of the chunk renderer  */
 #define GIMP_PROJECTION_CHUNK_WIDTH  256
 #define GIMP_PROJECTION_CHUNK_HEIGHT 128
+
+/*  how much time, in seconds, do we allow chunk rendering to take  */
+#define GIMP_PROJECTION_CHUNK_TIME 0.01
 
 
 enum
@@ -506,16 +511,31 @@ gimp_projection_chunk_render_stop (GimpProjection *proj)
 static gboolean
 gimp_projection_chunk_render_callback (gpointer data)
 {
-  GimpProjection *proj = data;
+  GimpProjection *proj   = data;
+  GTimer         *timer  = g_timer_new ();
+  gint            chunks = 0;
+  gboolean        retval = TRUE;
 
-  if (! gimp_projection_chunk_render_iteration (proj))
+  do
     {
-      gimp_projection_chunk_render_stop (proj);
+      if (! gimp_projection_chunk_render_iteration (proj))
+        {
+          gimp_projection_chunk_render_stop (proj);
 
-      return FALSE;
+          retval = FALSE;
+
+          break;
+        }
+
+      chunks++;
     }
+  while (g_timer_elapsed (timer, NULL) < GIMP_PROJECTION_CHUNK_TIME);
 
-  return TRUE;
+  GIMP_LOG (PROJECTION, "%d chunks in %f seconds\n",
+            chunks, g_timer_elapsed (timer, NULL));
+  g_timer_destroy (timer);
+
+  return retval;
 }
 
 static void

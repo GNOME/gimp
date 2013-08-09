@@ -43,7 +43,8 @@ static const GDebugKey log_keys[] =
   { "auto-tab-style",     GIMP_LOG_AUTO_TAB_STYLE     },
   { "instances",          GIMP_LOG_INSTANCES          },
   { "rectangle-tool",     GIMP_LOG_RECTANGLE_TOOL     },
-  { "brush-cache",        GIMP_LOG_BRUSH_CACHE        }
+  { "brush-cache",        GIMP_LOG_BRUSH_CACHE        },
+  { "projection",         GIMP_LOG_PROJECTION         }
 };
 
 
