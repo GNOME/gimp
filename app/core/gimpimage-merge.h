@@ -33,7 +33,8 @@ GimpLayer   * gimp_image_merge_group_layer     (GimpImage      *image,
                                                 GimpGroupLayer *group);
 
 GimpLayer   * gimp_image_flatten               (GimpImage      *image,
-                                                GimpContext    *context);
+                                                GimpContext    *context,
+                                                GError        **error);
 
 GimpVectors * gimp_image_merge_visible_vectors (GimpImage      *image,
                                                 GError        **error);

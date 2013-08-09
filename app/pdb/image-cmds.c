@@ -1404,7 +1404,7 @@ image_flatten_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      layer = gimp_image_flatten (image, context);
+      layer = gimp_image_flatten (image, context, error);
 
       if (! layer)
         success = FALSE;
