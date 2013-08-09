@@ -161,8 +161,9 @@ gimp_image_merge_visible_layers (GimpImage     *image,
 }
 
 GimpLayer *
-gimp_image_flatten (GimpImage   *image,
-                    GimpContext *context)
+gimp_image_flatten (GimpImage    *image,
+                    GimpContext  *context,
+                    GError      **error)
 {
   GList     *list;
   GSList    *merge_list = NULL;
@@ -170,6 +171,7 @@ gimp_image_flatten (GimpImage   *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   for (list = gimp_image_get_layer_iter (image);
        list;
@@ -207,9 +209,13 @@ gimp_image_flatten (GimpImage   *image,
       gimp_image_undo_group_end (image);
 
       gimp_unset_busy (image->gimp);
+
+      return layer;
     }
 
-  return gimp_image_get_active_layer (image);
+  g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                       _("Cannot flatten an image without any visible layer."));
+  return NULL;
 }
 
 GimpLayer *
