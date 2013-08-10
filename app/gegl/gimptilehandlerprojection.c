@@ -304,20 +304,6 @@ gimp_tile_handler_projection_new (GeglNode *graph,
   return GEGL_TILE_HANDLER (projection);
 }
 
-static void
-gimp_tile_handler_projection_void_pyramid (GeglTileSource *source,
-                                           gint            x,
-                                           gint            y,
-                                           gint            z,
-                                           gint            max_z)
-{
-  gegl_tile_source_void (source, x, y, z);
-
-  if (z < max_z)
-    gimp_tile_handler_projection_void_pyramid (source, x / 2, y / 2, z + 1,
-                                               max_z);
-}
-
 void
 gimp_tile_handler_projection_invalidate (GimpTileHandlerProjection *projection,
                                          gint                       x,
@@ -333,23 +319,25 @@ gimp_tile_handler_projection_invalidate (GimpTileHandlerProjection *projection,
 
   if (projection->max_z > 0)
     {
+      GeglTileSource *source = GEGL_TILE_SOURCE (projection);
       gint tile_x1 = x / projection->tile_width;
       gint tile_y1 = y / projection->tile_height;
-      gint tile_x2 = (x + width  - 1) / projection->tile_width;
-      gint tile_y2 = (y + height - 1) / projection->tile_height;
+      gint tile_x2 = (x + width  - 1) / projection->tile_width + 1;
+      gint tile_y2 = (y + height - 1) / projection->tile_height + 1;
       gint tile_x;
       gint tile_y;
+      gint tile_z;
 
-      for (tile_y = tile_y1; tile_y <= tile_y2; tile_y++)
+      for (tile_z = 1; tile_z < projection->max_z; tile_z++)
         {
-          for (tile_x = tile_x1; tile_x <= tile_x2; tile_x++)
-            {
-              gimp_tile_handler_projection_void_pyramid (GEGL_TILE_SOURCE (projection),
-                                                         tile_x / 2,
-                                                         tile_y / 2,
-                                                         1,
-                                                         projection->max_z);
-            }
+          tile_y1 = tile_y1 / 2;
+          tile_y2 = (tile_y2 + 1) / 2;
+          tile_x1 = tile_x1 / 2;
+          tile_x2 = (tile_x2 + 1) / 2;
+
+          for (tile_y = tile_y1; tile_y < tile_y2; tile_y++)
+            for (tile_x = tile_x1; tile_x < tile_x2; tile_x++)
+              gegl_tile_source_void (source, tile_x, tile_y, tile_z);
         }
     }
 }
