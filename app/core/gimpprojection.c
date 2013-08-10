@@ -697,7 +697,7 @@ gimp_projection_paint_area (GimpProjection *proj,
 
   if (proj->validate_handler)
     gimp_tile_handler_projection_invalidate (proj->validate_handler,
-                                             x, y, width, height);
+                                             x1, y1, x2 - x1, y2 - y1);
   if (now)
     {
       GeglNode *graph = gimp_projectable_get_graph (proj->projectable);
