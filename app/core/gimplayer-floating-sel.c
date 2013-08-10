@@ -87,6 +87,9 @@ floating_sel_anchor (GimpLayer *layer)
   g_return_if_fail (GIMP_IS_LAYER (layer));
   g_return_if_fail (gimp_layer_is_floating_sel (layer));
 
+  /* Don't let gimp_image_remove_layer free the layer while we still need it */
+  g_object_ref (layer);
+
   image = gimp_item_get_image (GIMP_ITEM (layer));
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_FS_ANCHOR,
@@ -125,6 +128,8 @@ floating_sel_anchor (GimpLayer *layer)
 
   /*  invalidate the boundaries  */
   gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (gimp_image_get_mask (image)));
+
+  g_object_unref (layer);
 }
 
 gboolean
