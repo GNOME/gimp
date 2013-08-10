@@ -1762,5 +1762,12 @@ gimp_drawable_get_floating_sel_filter (GimpDrawable *drawable)
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_drawable_get_floating_sel (drawable) != NULL, NULL);
 
+  /*
+   * Ensure that the graph is construced before the filter is used.
+   * Otherwise, we rely on the projection to cause the graph to be constructed,
+   * which fails for images that aren't displayed.
+   */
+  gimp_filter_get_node (GIMP_FILTER (drawable));
+
   return drawable->private->fs_filter;
 }
