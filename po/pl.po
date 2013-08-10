@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-15 22:29+0200\n"
-"PO-Revision-Date: 2013-07-15 22:30+0200\n"
+"POT-Creation-Date: 2013-08-11 01:04+0200\n"
+"PO-Revision-Date: 2013-08-11 01:05+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -3226,7 +3226,7 @@ msgid "Set Image Canvas Size"
 msgstr "Ustawienie wymiarów płótna obrazu"
 
 #: ../app/actions/image-commands.c:266 ../app/actions/image-commands.c:290
-#: ../app/actions/image-commands.c:583
+#: ../app/actions/image-commands.c:594
 msgid "Resizing"
 msgstr "Zmienianie wymiarów"
 
@@ -3253,16 +3253,16 @@ msgstr "Obracanie"
 msgid "Cannot crop because the current selection is empty."
 msgstr "Nie można wykadrować, ponieważ bieżące zaznaczenie jest puste."
 
-#: ../app/actions/image-commands.c:630
+#: ../app/actions/image-commands.c:641
 msgid "Change Print Size"
 msgstr "Zmień rozmiar wydruku"
 
-#: ../app/actions/image-commands.c:671
+#: ../app/actions/image-commands.c:682
 msgid "Scale Image"
 msgstr "Skalowanie obrazu"
 
 #. Scaling
-#: ../app/actions/image-commands.c:682 ../app/actions/layers-commands.c:1145
+#: ../app/actions/image-commands.c:693 ../app/actions/layers-commands.c:1145
 #: ../app/dialogs/preferences-dialog.c:1899
 #: ../app/pdb/drawable-transform-cmds.c:783
 #: ../app/pdb/drawable-transform-cmds.c:872 ../app/pdb/image-cmds.c:406
@@ -7828,7 +7828,7 @@ msgstr "Krycie"
 msgid "Paint Mode"
 msgstr "Tryb rysowania"
 
-#: ../app/core/gimpdata.c:681
+#: ../app/core/gimpdata.c:690
 #, c-format
 msgid "Could not delete '%s': %s"
 msgstr "Nie można usunąć \"%s\": %s"
@@ -8258,39 +8258,43 @@ msgctxt "undo-type"
 msgid "Merge Visible Layers"
 msgstr "Połączenie widocznych warstw"
 
-#: ../app/core/gimpimage-merge.c:178
+#: ../app/core/gimpimage-merge.c:195
 msgctxt "undo-type"
 msgid "Flatten Image"
 msgstr "Spłaszczenie obrazu"
 
-#: ../app/core/gimpimage-merge.c:248
+#: ../app/core/gimpimage-merge.c:217
+msgid "Cannot flatten an image without any visible layer."
+msgstr "Nie można spłaszczyć obrazu bez żadnej widocznej warstwy."
+
+#: ../app/core/gimpimage-merge.c:260
 msgid "Cannot merge down to a layer group."
 msgstr "Nie można połączyć w dół do grupy warstw."
 
-#: ../app/core/gimpimage-merge.c:255
+#: ../app/core/gimpimage-merge.c:267
 msgid "The layer to merge down to is locked."
 msgstr "Warstwa do połączenia w dół jest zablokowana."
 
-#: ../app/core/gimpimage-merge.c:267
+#: ../app/core/gimpimage-merge.c:279
 msgid "There is no visible layer to merge down to."
 msgstr "Nie ma widocznych warstw do połączenia w dół."
 
-#: ../app/core/gimpimage-merge.c:277
+#: ../app/core/gimpimage-merge.c:289
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Połączenie w dół"
 
-#: ../app/core/gimpimage-merge.c:305
+#: ../app/core/gimpimage-merge.c:317
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Połączenie grupy warstw"
 
-#: ../app/core/gimpimage-merge.c:358
+#: ../app/core/gimpimage-merge.c:370
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Połączenie widocznych ścieżek"
 
-#: ../app/core/gimpimage-merge.c:394
+#: ../app/core/gimpimage-merge.c:406
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "Niewystarczająca liczba widocznych ścieżek do połączenia. Potrzebne są co "
