@@ -74,6 +74,7 @@ gimp_operation_point_layer_mode_class_init (GimpOperationPointLayerModeClass *kl
 
   operation_class->prepare   = gimp_operation_point_layer_mode_prepare;
   operation_class->process   = gimp_operation_point_layer_mode_process;
+  operation_class->no_cache  = FALSE;
 
   g_object_class_install_property (object_class, PROP_LINEAR,
                                    g_param_spec_boolean ("linear",
