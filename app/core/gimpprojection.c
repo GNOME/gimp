@@ -702,12 +702,12 @@ gimp_projection_paint_area (GimpProjection *proj,
     {
       GeglNode *graph = gimp_projectable_get_graph (proj->projectable);
 
-      gegl_node_blit_buffer (graph, proj->buffer,
-                             GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1));
-
       if (proj->validate_handler)
         gimp_tile_handler_projection_undo_invalidate (proj->validate_handler,
                                                       x1, y1, x2 - x1, y2 - y1);
+
+      gegl_node_blit_buffer (graph, proj->buffer,
+                             GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1));
     }
 
   /*  add the projectable's offsets because the list of update areas
