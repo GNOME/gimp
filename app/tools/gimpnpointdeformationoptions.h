@@ -38,6 +38,12 @@ typedef struct _GimpNPointDeformationOptionsClass GimpNPointDeformationOptionsCl
 struct _GimpNPointDeformationOptions
 {
   GimpToolOptions  parent_instance;
+
+  gdouble          square_size;
+  gdouble          rigidity;
+  gboolean         ASAP_deformation;
+  gboolean         MLS_weights;
+  gdouble          MLS_weights_alpha;
 };
 
 struct _GimpNPointDeformationOptionsClass

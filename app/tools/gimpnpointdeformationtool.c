@@ -57,6 +57,8 @@
 void            gimp_n_point_deformation_tool_start                   (GimpNPointDeformationTool *npd_tool,
                                                                        GimpDisplay               *display);
 void            gimp_n_point_deformation_tool_halt                    (GimpNPointDeformationTool *npd_tool);
+static void     gimp_n_point_deformation_tool_set_options             (GeglNode                  *npd_node,
+                                                                       GimpNPointDeformationOptions *npd_options);
 static void     gimp_n_point_deformation_tool_options_notify          (GimpTool                  *tool,
                                                                        GimpToolOptions           *options,
                                                                        const GParamSpec          *pspec);
@@ -234,9 +236,12 @@ gimp_n_point_deformation_tool_start (GimpNPointDeformationTool *npd_tool,
   sink     = gegl_node_new_child (graph, "operation", "gegl:write-buffer",
                                       "buffer", shadow,
                                       NULL);
-
-  gegl_node_link_many (source, node, sink, NULL);
   
+  gegl_node_link_many (source, node, sink, NULL);
+
+  gimp_n_point_deformation_tool_set_options (node,
+                                             GIMP_N_POINT_DEFORMATION_TOOL_GET_OPTIONS (npd_tool));
+
   gegl_node_process (sink);
   
   gegl_node_get (node, "model", &model, NULL);
@@ -268,10 +273,37 @@ gimp_n_point_deformation_tool_halt (GimpNPointDeformationTool *npd_tool)
 }
 
 static void
+gimp_n_point_deformation_tool_set_options (GeglNode                     *npd_node,
+                                           GimpNPointDeformationOptions *npd_options)
+{
+  gegl_node_set (npd_node,
+                 "square size",       (int) npd_options->square_size,
+                 "rigidity",          (int) npd_options->rigidity,
+                 "ASAP deformation",  npd_options->ASAP_deformation,
+                 "MLS weights",       npd_options->MLS_weights,
+                 "MLS weights alpha", npd_options->MLS_weights_alpha,
+                 NULL);
+}
+
+static void
 gimp_n_point_deformation_tool_options_notify (GimpTool         *tool,
                                               GimpToolOptions  *options,
                                               const GParamSpec *pspec)
 {
+  GimpNPointDeformationTool    *npd_tool    = GIMP_N_POINT_DEFORMATION_TOOL (tool);
+  GimpDrawTool                 *draw_tool   = GIMP_DRAW_TOOL (tool);
+  GimpNPointDeformationOptions *npd_options = GIMP_N_POINT_DEFORMATION_OPTIONS (options);
+
+  GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
+
+  if (!npd_tool->active) return;
+
+  gimp_draw_tool_pause (draw_tool);
+
+  gimp_npd_debug (("npd options notify\n"));
+  gimp_n_point_deformation_tool_set_options (npd_tool->node, npd_options);
+
+  gimp_draw_tool_resume (draw_tool);
 }
 
 static gboolean
