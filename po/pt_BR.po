@@ -17,8 +17,8 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-08-04 16:00+0000\n"
-"PO-Revision-Date: 2013-08-06 09:04-0300\n"
+"POT-Creation-Date: 2013-08-14 12:11+0000\n"
+"PO-Revision-Date: 2013-08-14 12:29-0300\n"
 "Last-Translator: Enrico Nicoletto <liverig@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
@@ -34,7 +34,7 @@ msgstr "GIMP"
 
 #: ../app/about.h:26 ../desktop/gimp.desktop.in.in.h:1
 msgid "GNU Image Manipulation Program"
-msgstr "GNU Image Manipulation Program"
+msgstr "Programa de manipulação de imagem do GNU"
 
 #. The year of the last commit (UTC) will be inserted into this string.
 #: ../app/about.h:30
@@ -43,7 +43,7 @@ msgid ""
 "Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
-"Copyright © 1995-%s\n"
+"Direitos autorais © 1995-%s\n"
 "Spencer Kimball, Peter Mattis e a equipe de desenvolvedores do GIMP"
 
 #: ../app/about.h:34
@@ -61,17 +61,16 @@ msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "GIMP.  If not, see http://www.gnu.org/licenses/."
 msgstr ""
-"O GIMP é software livre; você pode redistribuí-lo e/ou modificá-lo sob os "
-"termos da Licença Pública Geral da GNU (GNU General Public License), "
-"conforme publicada pela Free Software Foundation; quer a versão 3 da "
-"Licença, ou (se você preferir) qualquer versão posterior.\n"
+"O GIMP é um software livre; você pode redistribuí-lo e/ou modificá-lo sob os "
+"termos da Licença Pública Geral GNU (GNU General Public License), conforme "
+"publicada pela Free Software Foundation; quer a versão 3 da Licença, ou (a "
+"seu critério) qualquer versão posterior.\n"
 "\n"
-"O GIMP é distribuído com esperanças de que seja útil, porém SEM NENHUMA "
-"GARANTIA; nem mesmo garantia implícita de MERCANTIBILIDADE ou SERVENTIA PARA "
-"UM PROPÓSITO PARTICULAR. Veja a Licença Pública Geral da GNU para maiores "
-"detalhes.\n"
+"O GIMP é distribuído na expectativa de que seja útil, porém SEM NENHUMA "
+"GARANTIA; sem mesmo implicar garantias de COMERCIALIZAÇÃO ou ADEQUAÇÃO A UM "
+"FIM ESPECÍFICO. Veja a Licença Pública Geral GNU para maiores detalhes.\n"
 "\n"
-"Você deve ter recebido uma cópia da Licença Pública Geral da GNU junto com o "
+"Você deve ter recebido uma cópia da Licença Pública Geral GNU junto com o "
 "GIMP; senão, veja http://www.gnu.org/licenses/."
 
 #: ../app/app.c:225
@@ -3218,7 +3217,7 @@ msgid "Set Image Canvas Size"
 msgstr "Ajusta tamanho da tela de imagem"
 
 #: ../app/actions/image-commands.c:266 ../app/actions/image-commands.c:290
-#: ../app/actions/image-commands.c:583
+#: ../app/actions/image-commands.c:594
 msgid "Resizing"
 msgstr "Redimensionando"
 
@@ -3245,16 +3244,16 @@ msgstr "Rotacionando"
 msgid "Cannot crop because the current selection is empty."
 msgstr "Impossível cortar porque a seleção atual está vazia."
 
-#: ../app/actions/image-commands.c:630
+#: ../app/actions/image-commands.c:641
 msgid "Change Print Size"
 msgstr "Alterar tamanho para a impressão"
 
-#: ../app/actions/image-commands.c:671
+#: ../app/actions/image-commands.c:682
 msgid "Scale Image"
 msgstr "Redimensionar imagem"
 
 #. Scaling
-#: ../app/actions/image-commands.c:682 ../app/actions/layers-commands.c:1145
+#: ../app/actions/image-commands.c:693 ../app/actions/layers-commands.c:1145
 #: ../app/dialogs/preferences-dialog.c:1899
 #: ../app/pdb/drawable-transform-cmds.c:783
 #: ../app/pdb/drawable-transform-cmds.c:872 ../app/pdb/image-cmds.c:406
@@ -8278,40 +8277,44 @@ msgctxt "undo-type"
 msgid "Merge Visible Layers"
 msgstr "Combinar camadas visíveis."
 
-#: ../app/core/gimpimage-merge.c:178
+#: ../app/core/gimpimage-merge.c:195
 msgctxt "undo-type"
 msgid "Flatten Image"
 msgstr "Achatar imagem"
 
-#: ../app/core/gimpimage-merge.c:248
+#: ../app/core/gimpimage-merge.c:217
+msgid "Cannot flatten an image without any visible layer."
+msgstr "Não é possível achatar uma imagem sem qualquer camada visível."
+
+#: ../app/core/gimpimage-merge.c:260
 msgid "Cannot merge down to a layer group."
 msgstr ""
 "Não é possível combinar camadas tendo como destino um grupo de camadas."
 
-#: ../app/core/gimpimage-merge.c:255
+#: ../app/core/gimpimage-merge.c:267
 msgid "The layer to merge down to is locked."
 msgstr "A camada a ser combinada está travada."
 
-#: ../app/core/gimpimage-merge.c:267
+#: ../app/core/gimpimage-merge.c:279
 msgid "There is no visible layer to merge down to."
 msgstr "Não há nenhuma camada visível para a qual combinar."
 
-#: ../app/core/gimpimage-merge.c:277
+#: ../app/core/gimpimage-merge.c:289
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Combinar com a de baixo"
 
-#: ../app/core/gimpimage-merge.c:305
+#: ../app/core/gimpimage-merge.c:317
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Combinar grupo de camadas"
 
-#: ../app/core/gimpimage-merge.c:358
+#: ../app/core/gimpimage-merge.c:370
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Combinar vetores visíveis"
 
-#: ../app/core/gimpimage-merge.c:394
+#: ../app/core/gimpimage-merge.c:406
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "Não há vetores visíveis suficientes para combinar. Deve haver no mínimo dois."
