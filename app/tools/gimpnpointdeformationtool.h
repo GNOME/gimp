@@ -42,6 +42,8 @@ struct _GimpNPointDeformationTool
 {
   GimpDrawTool     parent_instance;
   
+  GimpDisplay     *display;
+  
   GeglNode        *graph;
   GeglNode        *source;
   GeglNode        *node;

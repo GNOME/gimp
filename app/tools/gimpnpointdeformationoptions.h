@@ -44,6 +44,7 @@ struct _GimpNPointDeformationOptions
   gboolean         ASAP_deformation;
   gboolean         MLS_weights;
   gdouble          MLS_weights_alpha;
+  gboolean         mesh_visible;
 };
 
 struct _GimpNPointDeformationOptionsClass

@@ -42,7 +42,8 @@ enum
     PROP_RIGIDITY,
     PROP_ASAP_DEFORMATION,
     PROP_MLS_WEIGHTS,
-    PROP_MLS_WEIGHTS_ALPHA
+    PROP_MLS_WEIGHTS_ALPHA,
+    PROP_MESH_VISIBLE
 };
 
 
@@ -94,6 +95,11 @@ gimp_n_point_deformation_options_class_init (GimpNPointDeformationOptionsClass *
                                     "MLS-weights-alpha", _("MLS Weights Alpha"),
                                     0.1, 2.0, 1.0,
                                     GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MESH_VISIBLE,
+                                    "mesh-visible", _("Mesh Visible"),
+                                    TRUE,
+                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -126,6 +132,9 @@ gimp_n_point_deformation_options_set_property (GObject      *object,
       case PROP_MLS_WEIGHTS_ALPHA:
         options->square_size = g_value_get_double (value);
         break;
+      case PROP_MESH_VISIBLE:
+        options->mesh_visible = g_value_get_boolean (value);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
         break;
@@ -157,6 +166,9 @@ gimp_n_point_deformation_options_get_property (GObject    *object,
       case PROP_MLS_WEIGHTS_ALPHA:
         g_value_set_double (value, options->square_size);
         break;
+      case PROP_MESH_VISIBLE:
+        g_value_set_boolean (value, options->mesh_visible);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
         break;
@@ -168,8 +180,11 @@ gimp_n_point_deformation_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
-  GtkWidget *combo;
-  GtkWidget *scale;
+  GtkWidget *combo, *scale, *check;
+
+  check = gimp_prop_check_button_new (config, "mesh-visible", _("Show Mesh"));
+  gtk_box_pack_start (GTK_BOX (vbox), check, FALSE, FALSE, 0);
+  gtk_widget_show (check);
 
   scale = gimp_prop_spin_scale_new (config, "square-size", _("Square Size"), 1.0, 10.0, 0);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 5.0, 1000.0);

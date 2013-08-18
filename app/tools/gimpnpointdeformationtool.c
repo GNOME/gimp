@@ -216,6 +216,7 @@ gimp_n_point_deformation_tool_start (GimpNPointDeformationTool *npd_tool,
   gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
   
   tool->display = display;
+  npd_tool->display = display;
   gimp_draw_tool_start (draw_tool, display);
   
   npd_tool->active = TRUE;  
@@ -243,9 +244,9 @@ gimp_n_point_deformation_tool_start (GimpNPointDeformationTool *npd_tool,
                                              GIMP_N_POINT_DEFORMATION_TOOL_GET_OPTIONS (npd_tool));
 
   gegl_node_process (sink);
-  
+
   gegl_node_get (node, "model", &model, NULL);
-  
+
   npd_tool->buf = buf;
   npd_tool->drawable = drawable;
   npd_tool->graph = graph;
@@ -262,13 +263,15 @@ gimp_n_point_deformation_tool_halt (GimpNPointDeformationTool *npd_tool)
 {
   GimpTool     *tool      = GIMP_TOOL (npd_tool);
   GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (npd_tool);
+
+  npd_tool->active = FALSE;
   
   if (gimp_draw_tool_is_active (draw_tool))
     gimp_draw_tool_stop (draw_tool);
   
   if (gimp_tool_control_is_active (tool->control))
     gimp_tool_control_halt (tool->control);  
-  
+
   tool->display = NULL;
 }
 
@@ -282,6 +285,7 @@ gimp_n_point_deformation_tool_set_options (GeglNode                     *npd_nod
                  "ASAP deformation",  npd_options->ASAP_deformation,
                  "MLS weights",       npd_options->MLS_weights,
                  "MLS weights alpha", npd_options->MLS_weights_alpha,
+                 "mesh visible",      npd_options->mesh_visible,
                  NULL);
 }
 
