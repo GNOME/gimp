@@ -68,6 +68,7 @@ struct _GimpNPointDeformationTool
                                             * positions of control points */
   
   gboolean         active;
+  gboolean         rubber_band;
 };
 
 struct _GimpNPointDeformationToolClass
