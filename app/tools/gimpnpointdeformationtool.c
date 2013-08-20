@@ -334,27 +334,42 @@ gimp_n_point_deformation_tool_key_press (GimpTool    *tool,
   NPDModel                  *model = npd_tool->model;
   NPDControlPoint           *cp;
   GArray                    *cps = model->control_points;
-  
+
   switch (kevent->keyval)
     {
     case GDK_KEY_BackSpace:
-      /* if there is at least one control point,
-       * remove last added control point */
-      if (cps->len > 0)
+      if (npd_tool->selected_cps == NULL)
         {
-          cp = &g_array_index (cps, NPDControlPoint, cps->len - 1);
-          gimp_npd_debug (("removing cp %p\n", cp));
-          gimp_n_point_deformation_tool_remove_cp_from_selection (npd_tool, cp);
-          npd_remove_control_point (model, cp);
+          /* if there isn't any selected control point and if there is at least
+           * one control point, remove last added control point */
+          if (cps->len > 0)
+            {
+              cp = &g_array_index (cps, NPDControlPoint, cps->len - 1);
+              gimp_npd_debug (("removing last cp %p\n", cp));
+              gimp_n_point_deformation_tool_remove_cp_from_selection (npd_tool, cp);
+              npd_remove_control_point (model, cp);
+            }
+        }
+      /* break is omitted intentionally */
+    case GDK_KEY_Delete:
+      if (npd_tool->selected_cps != NULL)
+        {
+          /* if there is at least one selected control point, remove it */
+          npd_remove_control_points (model, npd_tool->selected_cps);
+          gimp_n_point_deformation_tool_clear_selected_points_list (npd_tool);
         }
       break;
-    case GDK_KEY_Delete:
-      
-      break;
+
     case GDK_KEY_Return:
     case GDK_KEY_KP_Enter:
     case GDK_KEY_ISO_Enter:
+      break;
+
     case GDK_KEY_Escape:
+      break;
+
+    case GDK_KEY_KP_Space:
+    case GDK_KEY_space:
       break;
 
     default:
@@ -727,7 +742,7 @@ gimp_n_point_deformation_tool_motion (GimpTool         *tool,
     }
   else
     {
-      /* rubber band */
+      /* activate a rubber band selection */
       npd_tool->rubber_band = TRUE;
     }
 
