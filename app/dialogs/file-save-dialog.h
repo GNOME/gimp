@@ -19,6 +19,9 @@
 #define __FILE_SAVE_DIALOG_H__
 
 
+#define FILE_SAVE_RESPONSE_OTHER_DIALOG -23
+
+
 GtkWidget * file_save_dialog_new        (Gimp                *gimp,
                                          gboolean             export);
 
