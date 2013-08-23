@@ -601,12 +601,12 @@ gimp_select_by_shape_tool_real_select (GimpSelectByShapeTool *rect_sel_tool,
 {
   GimpTool                   *tool    = GIMP_TOOL (rect_sel_tool);
   GimpSelectionOptions       *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
-  GimpRectangleOptions       *shape_select_options;
+  GimpRectangleSelectOptions *shape_select_options;
   GimpChannel                *channel;
   GimpImage                  *image;
 
-  shape_select_options = GIMP_SELECT_BY_SHAPE_TOOL_GET_OPTIONS (tool);
-
+  shape_select_options = GIMP_SELECT_BY_SHAPE_TOOL_GET_OPTIONS (tool); //Error
+  image = gimp_display_get_image (tool->display);
   channel = gimp_image_get_mask (gimp_display_get_image (tool->display));           
   
   switch(shape_select_options->shape_type)
@@ -989,7 +989,7 @@ gimp_select_by_shape_tool_rectangle_change_complete (GimpRectangleTool *rectangl
 }
 
 static void
-gimp_select_by_shape_tool_round_corners_notify (GimpRectangleOptions *options,
+gimp_select_by_shape_tool_round_corners_notify (GimpRectangleSelectOptions *options,
                                                  GParamSpec                 *pspec,
                                                  GimpSelectByShapeTool    *rect_sel_tool)
 {
@@ -1004,7 +1004,7 @@ gimp_select_by_shape_tool_round_corners_notify (GimpRectangleOptions *options,
   priv->round_corners = options->round_corners;
   priv->corner_radius = options->corner_radius;
 
-  gimp_select__by_shape_tool_rectangle_change_complete (rect_tool);
+  gimp_select_by_shape_tool_rectangle_change_complete (rect_tool);
 
   gimp_draw_tool_resume (draw_tool);
 }  
