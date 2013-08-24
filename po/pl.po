@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-11 01:04+0200\n"
-"PO-Revision-Date: 2013-08-11 01:05+0200\n"
+"POT-Creation-Date: 2013-08-24 02:18+0200\n"
+"PO-Revision-Date: 2013-08-24 02:19+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -993,7 +993,7 @@ msgid "Use the composite color of all visible layers"
 msgstr "Używa połączonych kolorów wszystkich widocznych warstw"
 
 #: ../app/actions/data-commands.c:89 ../app/actions/documents-commands.c:344
-#: ../app/actions/file-commands.c:195 ../app/dialogs/file-open-dialog.c:232
+#: ../app/actions/file-commands.c:201 ../app/dialogs/file-open-dialog.c:232
 #: ../app/dialogs/file-open-dialog.c:277
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
@@ -2431,49 +2431,50 @@ msgstr "_Zastąp %s"
 msgid "Export to"
 msgstr "Wyeksportuj do"
 
-#: ../app/actions/file-commands.c:113 ../app/actions/file-commands.c:490
+#: ../app/actions/file-commands.c:119 ../app/actions/file-commands.c:496
 #: ../app/dialogs/file-open-dialog.c:77
 msgid "Open Image"
 msgstr "Otwarcie obrazu"
 
-#: ../app/actions/file-commands.c:134
+#: ../app/actions/file-commands.c:140
 msgid "Open Image as Layers"
 msgstr "Otwiera obraz jako warstwy"
 
-#: ../app/actions/file-commands.c:266
+#: ../app/actions/file-commands.c:272
 msgid "No changes need to be saved"
 msgstr "Brak niezapisanych zmian"
 
-#: ../app/actions/file-commands.c:273 ../app/dialogs/file-save-dialog.c:95
+#: ../app/actions/file-commands.c:279 ../app/actions/file-commands.c:700
+#: ../app/dialogs/file-save-dialog.c:103
 msgid "Save Image"
 msgstr "Zapis obrazu"
 
-#: ../app/actions/file-commands.c:279
+#: ../app/actions/file-commands.c:285
 msgid "Save a Copy of the Image"
 msgstr "Zapis kopii obrazu"
 
-#: ../app/actions/file-commands.c:364
+#: ../app/actions/file-commands.c:370
 msgid "Create New Template"
 msgstr "Utworzenie nowego szablonu"
 
-#: ../app/actions/file-commands.c:368
+#: ../app/actions/file-commands.c:374
 msgid "Enter a name for this template"
 msgstr "Proszę wprowadzić nazwę tego szablonu"
 
-#: ../app/actions/file-commands.c:398
+#: ../app/actions/file-commands.c:404
 msgid "Revert failed. No file name associated with this image."
 msgstr "Przywrócenie się nie powiodło. Obrazowi nie nadano nazwy."
 
-#: ../app/actions/file-commands.c:410
+#: ../app/actions/file-commands.c:416
 msgid "Revert Image"
 msgstr "Przywrócenie obrazu"
 
-#: ../app/actions/file-commands.c:436
+#: ../app/actions/file-commands.c:442
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Przywrócić \"%s\" do wersji \"%s\"?"
 
-#: ../app/actions/file-commands.c:442
+#: ../app/actions/file-commands.c:448
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -2481,11 +2482,11 @@ msgstr ""
 "Przywrócenie obrazu do stanu zapisanego w pliku spowoduje utratę wszystkich "
 "dokonanych w nim zmian, wraz z informacjami o historii działań."
 
-#: ../app/actions/file-commands.c:652
+#: ../app/actions/file-commands.c:730
 msgid "(Unnamed Template)"
 msgstr "(Szablon bez nazwy)"
 
-#: ../app/actions/file-commands.c:703
+#: ../app/actions/file-commands.c:781
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -9114,15 +9115,15 @@ msgstr "Otwarcie położenia"
 msgid "Enter location (URI):"
 msgstr "Położenie (adres URI):"
 
-#: ../app/dialogs/file-save-dialog.c:105
+#: ../app/dialogs/file-save-dialog.c:113
 msgid "Export Image"
 msgstr "Eksport obrazu"
 
-#: ../app/dialogs/file-save-dialog.c:106
+#: ../app/dialogs/file-save-dialog.c:114
 msgid "_Export"
 msgstr "Wy_eksportuj"
 
-#: ../app/dialogs/file-save-dialog.c:419
+#: ../app/dialogs/file-save-dialog.c:458
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -9132,7 +9133,11 @@ msgstr ""
 "podstawie jego rozszerzenia. Proszę wpisać rozszerzenie pliku, które pasuje "
 "do podanego pliku lub nie wpisywać żadnego."
 
-#: ../app/dialogs/file-save-dialog.c:546
+#: ../app/dialogs/file-save-dialog.c:605
+msgid "The given filename cannot be used for exporting"
+msgstr "Podana nazwa pliku nie może być używana do eksportowania"
+
+#: ../app/dialogs/file-save-dialog.c:606
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
@@ -9141,7 +9146,15 @@ msgstr ""
 "Należy użyć polecenia \"Plik→Zapisz\", aby zapisać plik w formacie XCF "
 "programu GIMP."
 
-#: ../app/dialogs/file-save-dialog.c:553
+#: ../app/dialogs/file-save-dialog.c:609
+msgid "Take me to the Save dialog"
+msgstr "Przejdź do okna dialogowego zapisywania"
+
+#: ../app/dialogs/file-save-dialog.c:613
+msgid "The given filename cannot be used for saving"
+msgstr "Podana nazwa pliku nie może być używana do zapisywania"
+
+#: ../app/dialogs/file-save-dialog.c:614
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
@@ -9150,7 +9163,15 @@ msgstr ""
 "Należy użyć polecenia \"Plik→Wyeksportuj\", aby wyeksportować obraz do "
 "innych formatów."
 
-#: ../app/dialogs/file-save-dialog.c:559
+#: ../app/dialogs/file-save-dialog.c:616
+msgid "Take me to the Export dialog"
+msgstr "Przejdź do okna dialogowego eksportowania"
+
+#: ../app/dialogs/file-save-dialog.c:619 ../app/dialogs/file-save-dialog.c:694
+msgid "Extension Mismatch"
+msgstr "Niezgodność rozszerzeń"
+
+#: ../app/dialogs/file-save-dialog.c:678
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -9158,23 +9179,19 @@ msgstr ""
 "Podany plik nie ma żadnego znanego rozszerzenia. Proszę wpisać lub wybrać "
 "rozszerzenie z listy."
 
-#: ../app/dialogs/file-save-dialog.c:573
-msgid "Extension Mismatch"
-msgstr "Niezgodność rozszerzeń"
-
-#: ../app/dialogs/file-save-dialog.c:589
+#: ../app/dialogs/file-save-dialog.c:710
 msgid "The given file extension does not match the chosen file type."
 msgstr "Podane rozszerzenie nie pasuje do wybranego typu pliku."
 
-#: ../app/dialogs/file-save-dialog.c:593
+#: ../app/dialogs/file-save-dialog.c:714
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Zapisać obraz pod tą nazwą mimo to?"
 
-#: ../app/dialogs/file-save-dialog.c:651
+#: ../app/dialogs/file-save-dialog.c:776
 msgid "Saving canceled"
 msgstr "Anulowano zapisywanie"
 
-#: ../app/dialogs/file-save-dialog.c:659 ../app/widgets/gimpdnd-xds.c:186
+#: ../app/dialogs/file-save-dialog.c:784 ../app/widgets/gimpdnd-xds.c:186
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
