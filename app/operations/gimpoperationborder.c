@@ -199,8 +199,8 @@ gimp_operation_border_set_property (GObject      *object,
 static void
 gimp_operation_border_prepare (GeglOperation *operation)
 {
-  gegl_operation_set_format (operation, "input",  babl_format ("Y u8"));
-  gegl_operation_set_format (operation, "output", babl_format ("Y u8"));
+  gegl_operation_set_format (operation, "input",  babl_format ("Y float"));
+  gegl_operation_set_format (operation, "output", babl_format ("Y float"));
 }
 
 static GeglRectangle
@@ -219,11 +219,11 @@ gimp_operation_border_get_cached_region (GeglOperation       *self,
 }
 
 static inline void
-rotate_pointers (guchar  **p,
+rotate_pointers (gfloat  **p,
                  guint32   n)
 {
   guint32  i;
-  guchar  *tmp;
+  gfloat  *tmp;
 
   tmp = p[0];
 
@@ -236,8 +236,8 @@ rotate_pointers (guchar  **p,
 /* Computes whether pixels in `buf[1]', if they are selected, have neighbouring
    pixels that are unselected. Put result in `transition'. */
 static void
-compute_transition (guchar    *transition,
-                    guchar   **buf,
+compute_transition (gfloat    *transition,
+                    gfloat   **buf,
                     gint32     width,
                     gboolean   edge_lock)
 {
@@ -245,84 +245,84 @@ compute_transition (guchar    *transition,
 
   if (width == 1)
     {
-      if (buf[1][0] > 127 && (buf[0][0] < 128 || buf[2][0] < 128))
-        transition[0] = 255;
+      if (buf[1][0] >= 0.5 && (buf[0][0] < 0.5 || buf[2][0] < 0.5))
+        transition[0] = 1.0;
       else
-        transition[0] = 0;
+        transition[0] = 0.0;
       return;
     }
 
-  if (buf[1][0] > 127 && edge_lock)
+  if (buf[1][0] >= 0.5 && edge_lock)
     {
       /* The pixel to the left (outside of the canvas) is considered selected,
          so we check if there are any unselected pixels in neighbouring pixels
          _on_ the canvas. */
-      if (buf[0][x] < 128 || buf[0][x + 1] < 128 ||
-                             buf[1][x + 1] < 128 ||
-          buf[2][x] < 128 || buf[2][x + 1] < 128 )
+      if (buf[0][x] < 0.5 || buf[0][x + 1] < 0.5 ||
+                             buf[1][x + 1] < 0.5 ||
+          buf[2][x] < 0.5 || buf[2][x + 1] < 0.5 )
         {
-          transition[x] = 255;
+          transition[x] = 1.0;
         }
       else
         {
-          transition[x] = 0;
+          transition[x] = 0.0;
         }
     }
-  else if (buf[1][0] > 127 && !edge_lock)
+  else if (buf[1][0] >= 0.5 && !edge_lock)
     {
       /* We must not care about neighbouring pixels on the image canvas since
          there always are unselected pixels to the left (which is outside of
          the image canvas). */
-      transition[x] = 255;
+      transition[x] = 1.0;
     }
   else
     {
-      transition[x] = 0;
+      transition[x] = 0.0;
     }
 
   for (x = 1; x < width - 1; x++)
     {
-      if (buf[1][x] >= 128)
+      if (buf[1][x] >= 0.5)
         {
-          if (buf[0][x - 1] < 128 || buf[0][x] < 128 || buf[0][x + 1] < 128 ||
-              buf[1][x - 1] < 128 ||                    buf[1][x + 1] < 128 ||
-              buf[2][x - 1] < 128 || buf[2][x] < 128 || buf[2][x + 1] < 128)
-            transition[x] = 255;
+          if (buf[0][x - 1] < 0.5 || buf[0][x] < 0.5 || buf[0][x + 1] < 0.5 ||
+              buf[1][x - 1] < 0.5 ||                    buf[1][x + 1] < 0.5 ||
+              buf[2][x - 1] < 0.5 || buf[2][x] < 0.5 || buf[2][x + 1] < 0.5)
+            transition[x] = 1.0;
           else
-            transition[x] = 0;
+            transition[x] = 0.0;
         }
       else
         {
-          transition[x] = 0;
+          transition[x] = 0.0;
         }
     }
 
-  if (buf[1][width - 1] >= 128 && edge_lock)
+  if (buf[1][width - 1] >= 0.5 && edge_lock)
     {
       /* The pixel to the right (outside of the canvas) is considered selected,
          so we check if there are any unselected pixels in neighbouring pixels
          _on_ the canvas. */
-      if ( buf[0][x - 1] < 128 || buf[0][x] < 128 ||
-           buf[1][x - 1] < 128 ||
-           buf[2][x - 1] < 128 || buf[2][x] < 128)
+      if ( buf[0][x - 1] < 0.5 || buf[0][x] < 0.5 ||
+           buf[1][x - 1] < 0.5 ||
+           buf[2][x - 1] < 0.5 || buf[2][x] < 0.5)
         {
-          transition[width - 1] = 255;
+          transition[width - 1] = 1.0;
         }
       else
         {
-          transition[width - 1] = 0;
+          transition[width - 1] = 0.0;
         }
     }
-  else if (buf[1][width - 1] >= 128 && !edge_lock)
+  else if (buf[1][width - 1] >= 0.5 && !edge_lock)
     {
       /* We must not care about neighbouring pixels on the image canvas since
          there always are unselected pixels to the right (which is outside of
          the image canvas). */
-      transition[width - 1] = 255;
+      transition[width - 1] = 1.0;
     }
   else
     {
-      transition[width - 1] = 0;
+      transition[width - 1] = 0.0;
     }
 }
 
@@ -337,47 +337,55 @@ gimp_operation_border_process (GeglOperation       *operation,
    * them on jaycox@gimp.org
    */
   GimpOperationBorder *self          = GIMP_OPERATION_BORDER (operation);
-  const Babl          *input_format  = babl_format ("Y u8");
-  const Babl          *output_format = babl_format ("Y u8");
+  const Babl          *input_format  = babl_format ("Y float");
+  const Babl          *output_format = babl_format ("Y float");
 
   gint32 i, j, x, y;
 
   /* A cache used in the algorithm as it works its way down. `buf[1]' is the
      current row. Thus, at algorithm initialization, `buf[0]' represents the
      row 'above' the first row of the region. */
-  guchar  *buf[3];
+  gfloat  *buf[3];
 
   /* The resulting selection is calculated row by row, and this buffer holds the
      output for each individual row, on each iteration. */
-  guchar  *out;
+  gfloat  *out;
 
   /* Keeps track of transitional pixels (pixels that are selected and have
      unselected neighbouring pixels). */
-  guchar **transition;
+  gfloat **transition;
 
   /* TODO: Figure out role clearly in algorithm. */
   gint16  *max;
 
   /* TODO: Figure out role clearly in algorithm. */
-  guchar **density;
+  gfloat **density;
 
   gint16   last_index;
 
   /* optimize this case specifically */
   if (self->radius_x == 1 && self->radius_y == 1)
     {
-      guchar *transition;
-      guchar *source[3];
+      gfloat *transition;
+      gfloat *source[3];
 
       for (i = 0; i < 3; i++)
-        source[i] = g_new (guchar, roi->width);
+        source[i] = g_new (gfloat, roi->width);
 
-      transition = g_new (guchar, roi->width);
+      transition = g_new (gfloat, roi->width);
 
       /* With `self->edge_lock', initialize row above image as
        * selected, otherwise, initialize as unselected.
        */
-      memset (source[0], self->edge_lock ? 255 : 0, roi->width);
+      if (self->edge_lock)
+        {
+          for (i = 0; i < roi->width; i++)
+            source[0][i] = 1.0;
+        }
+      else
+        {
+          memset (source[0], 0, roi->width * sizeof (gfloat));
+        }
 
       gegl_buffer_get (input,
                        GEGL_RECTANGLE (roi->x, roi->y + 0,
@@ -392,7 +400,7 @@ gimp_operation_border_process (GeglOperation       *operation,
                          1.0, input_format, source[2],
                          GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
       else
-        memcpy (source[2], source[1], roi->width);
+        memcpy (source[2], source[1], roi->width * sizeof (gfloat));
 
       compute_transition (transition, source, roi->width, self->edge_lock);
       gegl_buffer_set (output,
@@ -418,7 +426,15 @@ gimp_operation_border_process (GeglOperation       *operation,
               /* Depending on `self->edge_lock', set the row below the
                * image as either selected or non-selected.
                */
-              memset(source[2], self->edge_lock ? 255 : 0, roi->width);
+              if (self->edge_lock)
+                {
+                  for (i = 0; i < roi->width; i++)
+                    source[2][i] = 1.0;
+                }
+              else
+                {
+                  memset (source[2], 0, roi->width * sizeof (gfloat));
+                }
             }
 
           compute_transition (transition, source, roi->width, self->edge_lock);
@@ -446,26 +462,27 @@ gimp_operation_border_process (GeglOperation       *operation,
   max += self->radius_x;
 
   for (i = 0; i < 3; i++)
-    buf[i] = g_new (guchar, roi->width);
+    buf[i] = g_new (gfloat, roi->width);
 
-  transition = g_new (guchar *, self->radius_y + 1);
+  transition = g_new (gfloat *, self->radius_y + 1);
 
   for (i = 0; i < self->radius_y + 1; i++)
     {
-      transition[i] = g_new (guchar, roi->width + 2 * self->radius_x);
-      memset(transition[i], 0, roi->width + 2 * self->radius_x);
+      transition[i] = g_new (gfloat, roi->width + 2 * self->radius_x);
+      memset (transition[i], 0,
+              (roi->width + 2 * self->radius_x) * sizeof (gfloat));
       transition[i] += self->radius_x;
     }
 
-  out = g_new (guchar, roi->width);
+  out = g_new (gfloat, roi->width);
 
-  density = g_new (guchar *, 2 * self->radius_x + 1);
+  density = g_new (gfloat *, 2 * self->radius_x + 1);
   density += self->radius_x;
 
-   /* allocate density[][] */
+  /* allocate density[][] */
   for (x = 0; x < (self->radius_x + 1); x++)
     {
-      density[ x]  = g_new (guchar, 2 * self->radius_y + 1);
+      density[ x]  = g_new (gfloat, 2 * self->radius_y + 1);
       density[ x] += self->radius_y;
       density[-x]  = density[x];
     }
@@ -473,8 +490,8 @@ gimp_operation_border_process (GeglOperation       *operation,
   /* compute density[][] */
   for (x = 0; x < (self->radius_x + 1); x++)
     {
-      register gdouble tmpx, tmpy, dist;
-      guchar a;
+      gdouble tmpx, tmpy, dist;
+      gfloat  a;
 
       if (x > 0)
         tmpx = x - 0.5;
@@ -498,13 +515,13 @@ gimp_operation_border_process (GeglOperation       *operation,
           if (dist < 1.0)
             {
               if (self->feather)
-                a = 255 * (1.0 - sqrt (dist));
+                a = 1.0 - sqrt (dist);
               else
-                a = 255;
+                a = 1.0;
             }
           else
             {
-              a = 0;
+              a = 0.0;
             }
 
           density[ x][ y] = a;
@@ -520,7 +537,16 @@ gimp_operation_border_process (GeglOperation       *operation,
    * 'self->edge_lock', initialize the first row to 'selected'. Refer
    * to bug #350009.
    */
-  memset (buf[0], self->edge_lock ? 255 : 0, roi->width);
+  if (self->edge_lock)
+    {
+      for (i = 0; i < roi->width; i++)
+        buf[0][i] = 1.0;
+    }
+  else
+    {
+      memset (buf[0], 0, roi->width * sizeof (gfloat));
+    }
+
   gegl_buffer_get (input,
                    GEGL_RECTANGLE (roi->x, roi->y + 0,
                                    roi->width, 1),
@@ -534,7 +560,7 @@ gimp_operation_border_process (GeglOperation       *operation,
                      1.0, input_format, buf[2],
                      GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
   else
-    memcpy (buf[2], buf[1], roi->width);
+    memcpy (buf[2], buf[1], roi->width * sizeof (gfloat));
 
   compute_transition (transition[1], buf, roi->width, self->edge_lock);
 
@@ -583,14 +609,14 @@ gimp_operation_border_process (GeglOperation       *operation,
         {
           if (self->edge_lock)
             {
-              memcpy (transition[self->radius_y], transition[self->radius_y - 1], roi->width);
+              memcpy (transition[self->radius_y], transition[self->radius_y - 1], roi->width * sizeof (gfloat));
             }
           else
             {
               /* No edge lock, set everything 'below canvas' as seen
                * from the algorithm as unselected.
                */
-              memset (buf[2], 0, roi->width);
+              memset (buf[2], 0, roi->width * sizeof (gfloat));
               compute_transition (transition[self->radius_y], buf, roi->width, self->edge_lock);
             }
         }
@@ -631,13 +657,13 @@ gimp_operation_border_process (GeglOperation       *operation,
        /* render scan line */
       for (x = 0 ; x < roi->width; x++)
         {
-          guchar last_max;
+          gfloat last_max;
 
           last_index--;
 
           if (last_index >= 0)
             {
-              last_max = 0;
+              last_max = 0.0;
 
               for (i = self->radius_x; i >= 0; i--)
                 if (max[x + i] <= self->radius_y && max[x + i] >= -self->radius_y &&
@@ -651,7 +677,7 @@ gimp_operation_border_process (GeglOperation       *operation,
             }
           else
             {
-              last_max = 0;
+              last_max = 0.0;
 
               for (i = self->radius_x; i >= -self->radius_x; i--)
                 if (max[x + i] <= self->radius_y && max[x + i] >= -self->radius_y &&
@@ -664,7 +690,7 @@ gimp_operation_border_process (GeglOperation       *operation,
               out[x] = last_max;
             }
 
-          if (last_max == 0)
+          if (last_max <= 0.0)
             {
               for (i = x + 1; i < roi->width; i++)
                 {
