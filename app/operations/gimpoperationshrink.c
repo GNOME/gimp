@@ -183,8 +183,8 @@ gimp_operation_shrink_set_property (GObject      *object,
 static void
 gimp_operation_shrink_prepare (GeglOperation *operation)
 {
-  gegl_operation_set_format (operation, "input",  babl_format ("Y u8"));
-  gegl_operation_set_format (operation, "output", babl_format ("Y u8"));
+  gegl_operation_set_format (operation, "input",  babl_format ("Y float"));
+  gegl_operation_set_format (operation, "output", babl_format ("Y float"));
 }
 
 static GeglRectangle
@@ -226,11 +226,11 @@ compute_border (gint16  *circ,
 }
 
 static inline void
-rotate_pointers (guchar  **p,
+rotate_pointers (gfloat  **p,
                  guint32   n)
 {
   guint32  i;
-  guchar  *tmp;
+  gfloat  *tmp;
 
   tmp = p[0];
 
@@ -247,38 +247,44 @@ gimp_operation_shrink_process (GeglOperation       *operation,
                                const GeglRectangle *roi,
                                gint                 level)
 {
-  /* pretty much the same as fatten_region only different blame all
-   * bugs in this function on jaycox@gimp.org
+  /* Pretty much the same as fatten_region only different.
+   * Blame all bugs in this function on jaycox@gimp.org
    *
    * If edge_lock is true we assume that pixels outside the region we
    * are passed are identical to the edge pixels.  If edge_lock is
    * false, we assume that pixels outside the region are 0
    */
   GimpOperationShrink *self          = GIMP_OPERATION_SHRINK (operation);
-  const Babl          *input_format  = babl_format ("Y u8");
-  const Babl          *output_format = babl_format ("Y u8");
+  const Babl          *input_format  = babl_format ("Y float");
+  const Babl          *output_format = babl_format ("Y float");
   gint32               i, j, x, y;
-  guchar             **buf;  /* caches the the region's pixels */
-  guchar              *out;  /* holds the new scan line we are computing */
-  guchar             **max;  /* caches the smallest values for each column */
+  gfloat             **buf;  /* caches the the region's pixels */
+  gfloat              *out;  /* holds the new scan line we are computing */
+  gfloat             **max;  /* caches the smallest values for each column */
   gint16              *circ; /* holds the y coords of the filter's mask */
-  gint16               last_max, last_index;
-  guchar              *buffer;
+  gfloat               last_max;
+  gint16               last_index;
+  gfloat              *buffer;
   gint                 buffer_size;
 
-  max = g_new (guchar *, roi->width + 2 * self->radius_x);
-  buf = g_new (guchar *, self->radius_y + 1);
+  max = g_new (gfloat *, roi->width + 2 * self->radius_x);
+  buf = g_new (gfloat *, self->radius_y + 1);
 
   for (i = 0; i < self->radius_y + 1; i++)
-    buf[i] = g_new (guchar, roi->width);
+    buf[i] = g_new (gfloat, roi->width);
 
   buffer_size = (roi->width+ 2 * self->radius_x + 1) * (self->radius_y + 1);
-  buffer = g_new (guchar, buffer_size);
+  buffer = g_new (gfloat, buffer_size);
 
   if (self->edge_lock)
-    memset(buffer, 255, buffer_size);
+    {
+      for (i = 0; i < buffer_size; i++)
+        buffer[i] = 1.0;
+    }
   else
-    memset(buffer, 0, buffer_size);
+    {
+      memset (buffer, 0, buffer_size * sizeof (gfloat));
+    }
 
   for (i = 0; i < roi->width + 2 * self->radius_x; i++)
     {
@@ -304,14 +310,14 @@ gimp_operation_shrink_process (GeglOperation       *operation,
 
   if (! self->edge_lock)
     for (j = 0 ; j < self->radius_x + 1; j++)
-      max[0][j] = 0;
+      max[0][j] = 0.0;
 
   /* offset the max pointer by self->radius_x so the range of the
    * array is [-self->radius_x] to [roi->width + self->radius_x]
    */
   max += self->radius_x;
 
-  out = g_new (guchar, roi->width);
+  out = g_new (gfloat, roi->width);
 
   circ = g_new (gint16, 2 * self->radius_x + 1);
   compute_border (circ, self->radius_x, self->radius_y);
@@ -329,17 +335,16 @@ gimp_operation_shrink_process (GeglOperation       *operation,
                      GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
   if (self->edge_lock)
-    memcpy (buf[0], buf[1], roi->width);
+    memcpy (buf[0], buf[1], roi->width * sizeof (gfloat));
   else
-    memset (buf[0], 0, roi->width);
-
+    memset (buf[0], 0, roi->width * sizeof (gfloat));
 
   for (x = 0; x < roi->width; x++) /* set up max for top of image */
     {
       max[x][0] = buf[0][x];
 
       for (j = 1; j < self->radius_y + 1; j++)
-        max[x][j] = MIN(buf[j][x], max[x][j-1]);
+        max[x][j] = MIN (buf[j][x], max[x][j - 1]);
     }
 
   for (y = 0; y < roi->height; y++)
@@ -352,10 +357,12 @@ gimp_operation_shrink_process (GeglOperation       *operation,
                                          roi->width, 1),
                          1.0, input_format, buf[self->radius_y],
                          GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
       else if (self->edge_lock)
-        memcpy (buf[self->radius_y], buf[self->radius_y - 1], roi->width);
+        memcpy (buf[self->radius_y], buf[self->radius_y - 1],
+                roi->width * sizeof (gfloat));
       else
-        memset (buf[self->radius_y], 0, roi->width);
+        memset (buf[self->radius_y], 0, roi->width * sizeof (gfloat));
 
       for (x = 0 ; x < roi->width; x++) /* update max array */
         {
@@ -374,13 +381,13 @@ gimp_operation_shrink_process (GeglOperation       *operation,
 
           if (last_index >= 0)
             {
-              if (last_max == 0)
+              if (last_max <= 0.0)
                 {
-                  out[x] = 0;
+                  out[x] = 0.0;
                 }
               else
                 {
-                  last_max = 255;
+                  last_max = 1.0;
 
                   for (i = self->radius_x; i >= 0; i--)
                     if (last_max > max[x + i][circ[i]])
