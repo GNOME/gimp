@@ -1045,8 +1045,7 @@ add_layers (const gint32  image_id,
   gboolean              user_mask;
   gboolean              empty;
   gboolean              empty_mask;
-  GimpDrawable         *drawable;
-  GimpPixelRgn          pixel_rgn;
+  GeglBuffer           *buffer;
   GimpImageType         image_type;
   GimpLayerModeEffects  layer_mode;
 
@@ -1092,31 +1091,25 @@ add_layers (const gint32  image_id,
         }
       else
         {
-          switch (lyr_a[lidx]->group_type)
-            {
-	      case 1:
-	      case 2:
-		layer_id = g_array_index (parent_group_stack, gint32,
-					  parent_group_stack->len-1);
-		/* since the layers are stored in reverse, the group
-                     layer start marker actually means we're done with
-                     that layer group */
-		g_array_remove_index (parent_group_stack,
-				      parent_group_stack->len-1);
-                g_message("Case 1 and 2");
-                break;
-	      case 3:
-                /* the </Layer group> marker layers are used to
-                   assemble the layer structure in a single pass */
-                layer_id = gimp_layer_group_new (image_id);
-                g_message("Case 3");
-                break;
-	      default:
-                /* Type 0 and non-marked layers are not touched
-                   and they are their own layer */
-                g_message("Case 0");
-                break;
-            }
+	  if (lyr_a[lidx]->group_type != 0)
+	    {
+	      if (lyr_a[lidx]->group_type == 3)
+	        {
+		/* the </Layer group> marker layers are used to
+		   assemble the layer structure in a single pass */
+		layer_id = gimp_layer_group_new (image_id);
+	        }
+	      else /* group-type == 1 || group_type == 2 */
+	        {
+		  layer_id = g_array_index (parent_group_stack, gint32,
+					    parent_group_stack->len-1);
+		  /* since the layers are stored in reverse, the group
+		     layer start marker actually means we're done with
+		     that layer group */
+		  g_array_remove_index (parent_group_stack,
+					parent_group_stack->len-1);
+		}
+	    }
 
           /* Empty layer */
           if (lyr_a[lidx]->bottom - lyr_a[lidx]->top == 0
@@ -1298,20 +1291,15 @@ add_layers (const gint32  image_id,
               else
                 {
                   IFDBG(2) g_debug ("End group layer id %d.", layer_id);
-                  drawable = gimp_drawable_get (layer_id);
                   layer_mode = psd_to_gimp_blend_mode (lyr_a[lidx]->blend_mode);
                   gimp_layer_set_mode (layer_id, layer_mode);
                   gimp_layer_set_opacity (layer_id, 
                                           lyr_a[lidx]->opacity * 100 / 255);
-                  gimp_item_set_name (drawable->drawable_id, lyr_a[lidx]->name);
+                  gimp_item_set_name (layer_id, lyr_a[lidx]->name);
                   g_free (lyr_a[lidx]->name);
-                  gimp_item_set_visible (drawable->drawable_id,
-                                         lyr_a[lidx]->layer_flags.visible);
+                  gimp_item_set_visible (layer_id, lyr_a[lidx]->layer_flags.visible);
                   if (lyr_a[lidx]->id)
-                    gimp_item_set_tattoo (drawable->drawable_id,
-                                          lyr_a[lidx]->id);
-                  gimp_drawable_flush (drawable);
-                  gimp_drawable_detach (drawable);
+                    gimp_item_set_tattoo (layer_id, lyr_a[lidx]->id);
                 }
             }
           else if (empty)
@@ -1323,15 +1311,12 @@ add_layers (const gint32  image_id,
                                          image_type, 0, GIMP_NORMAL_MODE);
               g_free (lyr_a[lidx]->name);
               gimp_image_insert_layer (image_id, layer_id, parent_group_id, -1);
-              drawable = gimp_drawable_get (layer_id);
-              gimp_drawable_fill (drawable->drawable_id, GIMP_TRANSPARENT_FILL);
-              gimp_item_set_visible (drawable->drawable_id, lyr_a[lidx]->layer_flags.visible);
+              gimp_drawable_fill (layer_id, GIMP_TRANSPARENT_FILL);
+              gimp_item_set_visible (layer_id, lyr_a[lidx]->layer_flags.visible);
               if (lyr_a[lidx]->id)
-                gimp_item_set_tattoo (drawable->drawable_id, lyr_a[lidx]->id);
+                gimp_item_set_tattoo (layer_id, lyr_a[lidx]->id);
               if (lyr_a[lidx]->layer_flags.irrelevant)
-                gimp_item_set_visible (drawable->drawable_id, FALSE);
-              gimp_drawable_flush (drawable);
-              gimp_drawable_detach (drawable);
+                gimp_item_set_visible (layer_id, FALSE);
             }
           else
             {
@@ -1362,16 +1347,13 @@ add_layers (const gint32  image_id,
               gimp_image_insert_layer (image_id, layer_id, parent_group_id, -1);
               gimp_layer_set_offsets (layer_id, l_x, l_y);
               gimp_layer_set_lock_alpha  (layer_id, lyr_a[lidx]->layer_flags.trans_prot);
-              drawable = gimp_drawable_get (layer_id);
-              gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
-                                   drawable->width, drawable->height, TRUE, FALSE);
-              gimp_pixel_rgn_set_rect (&pixel_rgn, pixels,
-                                       0, 0, drawable->width, drawable->height);
-              gimp_item_set_visible (drawable->drawable_id, lyr_a[lidx]->layer_flags.visible);
+	      buffer = gimp_drawable_get_buffer (layer_id);
+	      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, gegl_buffer_get_width (buffer), gegl_buffer_get_height (buffer)),
+			       0, NULL, pixels, GEGL_AUTO_ROWSTRIDE);
+              gimp_item_set_visible (layer_id, lyr_a[lidx]->layer_flags.visible);
               if (lyr_a[lidx]->id)
-                gimp_item_set_tattoo (drawable->drawable_id, lyr_a[lidx]->id);
-              gimp_drawable_flush (drawable);
-              gimp_drawable_detach (drawable);
+                gimp_item_set_tattoo (layer_id, lyr_a[lidx]->id);
+              g_object_unref (buffer);
               g_free (pixels);
             }
 
@@ -1469,12 +1451,10 @@ add_layers (const gint32  image_id,
 
                   IFDBG(3) g_debug ("New layer mask %d", mask_id);
                   gimp_layer_add_mask (layer_id, mask_id);
-                  drawable = gimp_drawable_get (mask_id);
-                  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0 , 0,
-                                       drawable->width, drawable->height, TRUE, FALSE);
-                  gimp_pixel_rgn_set_rect (&pixel_rgn, pixels, lm_x, lm_y, lm_w, lm_h);
-                  gimp_drawable_flush (drawable);
-                  gimp_drawable_detach (drawable);
+		  buffer = gimp_drawable_get_buffer (mask_id);
+		  gegl_buffer_set (buffer, GEGL_RECTANGLE (lm_x, lm_y, lm_w, lm_h), 0,
+				  NULL, pixels, GEGL_AUTO_ROWSTRIDE);
+                  g_object_unref (buffer);
                   gimp_layer_set_apply_mask (layer_id,
                     ! lyr_a[lidx]->layer_mask.mask_flags.disabled);
                   g_free (pixels);
@@ -1520,8 +1500,7 @@ add_merged_image (const gint32  image_id,
   gint                  offset;
   gint                  i;
   gboolean              alpha_visible;
-  GimpDrawable         *drawable;
-  GimpPixelRgn          pixel_rgn;
+  GeglBuffer           *buffer;
   GimpImageType         image_type;
   GimpRGB               alpha_rgb;
 
@@ -1649,13 +1628,10 @@ add_merged_image (const gint32  image_id,
                                  image_type,
                                  100, GIMP_NORMAL_MODE);
       gimp_image_insert_layer (image_id, layer_id, -1, 0);
-      drawable = gimp_drawable_get (layer_id);
-      gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
-                           drawable->width, drawable->height, TRUE, FALSE);
-      gimp_pixel_rgn_set_rect (&pixel_rgn, pixels,
-                               0, 0, drawable->width, drawable->height);
-      gimp_drawable_flush (drawable);
-      gimp_drawable_detach (drawable);
+      buffer = gimp_drawable_get_buffer (layer_id);
+      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, gegl_buffer_get_width (buffer), gegl_buffer_get_height (buffer)),
+		       0, NULL, pixels, GEGL_AUTO_ROWSTRIDE);
+      g_object_unref (buffer);
       g_free (pixels);
     }
   else
@@ -1740,18 +1716,14 @@ add_merged_image (const gint32  image_id,
                                          alpha_opacity, &alpha_rgb);
           gimp_image_insert_channel (image_id, channel_id, -1, 0);
           g_free (alpha_name);
-          drawable = gimp_drawable_get (channel_id);
+          buffer = gimp_drawable_get_buffer (channel_id);
           if (alpha_id)
-            gimp_item_set_tattoo (drawable->drawable_id, alpha_id);
-          gimp_item_set_visible (drawable->drawable_id, alpha_visible);
-          gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
-                                drawable->width, drawable->height,
-                                TRUE, FALSE);
-          gimp_pixel_rgn_set_rect (&pixel_rgn, pixels,
-                                   0, 0, drawable->width,
-                                   drawable->height);
-          gimp_drawable_flush (drawable);
-          gimp_drawable_detach (drawable);
+            gimp_item_set_tattoo (channel_id, alpha_id);
+          gimp_item_set_visible (channel_id, alpha_visible);
+	  gegl_buffer_set (buffer,
+			   GEGL_RECTANGLE (0, 0, gegl_buffer_get_width (buffer), gegl_buffer_get_height (buffer)),
+			   0, NULL, pixels, GEGL_AUTO_ROWSTRIDE);
+          g_object_unref (buffer);
           g_free (chn_a[cidx].data);
         }
 

@@ -1079,8 +1079,7 @@ load_resource_1033 (const PSDimageres  *res_a,
   struct jpeg_error_mgr         jerr;
 
   ThumbnailInfo         thumb_info;
-  GimpDrawable         *drawable;
-  GimpPixelRgn          pixel_rgn;
+  GeglBuffer           *buffer;
   gint32                layer_id;
   guchar               *buf;
   guchar               *rgb_buf;
@@ -1161,9 +1160,7 @@ load_resource_1033 (const PSDimageres  *res_a,
                              cinfo.output_width,
                              cinfo.output_height,
                              GIMP_RGB_IMAGE, 100, GIMP_NORMAL_MODE);
-  drawable = gimp_drawable_get (layer_id);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
-                       drawable->width, drawable->height, TRUE, FALSE);
+  buffer = gimp_drawable_get_buffer (layer_id);
 
   /* Step 6: while (scan lines remain to be read) */
   /*           jpeg_read_scanlines(...); */
@@ -1177,7 +1174,7 @@ load_resource_1033 (const PSDimageres  *res_a,
           guchar *dst = rgb_buf;
           guchar *src = buf;
 
-          for (i = 0; i < drawable->width * drawable->height; ++i)
+          for (i = 0; i < gegl_buffer_get_width (buffer) * gegl_buffer_get_height (buffer); ++i)
             {
               guchar r, g, b;
 
@@ -1189,8 +1186,8 @@ load_resource_1033 (const PSDimageres  *res_a,
               *(dst++) = r;
             }
         }
-      gimp_pixel_rgn_set_rect (&pixel_rgn, rgb_buf ? rgb_buf : buf,
-                               0, 0, drawable->width, drawable->height);
+      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, gegl_buffer_get_width (buffer), gegl_buffer_get_height (buffer)),
+		       0, NULL, rgb_buf ? rgb_buf : buf, GEGL_AUTO_ROWSTRIDE);
     }
 
   /* Step 7: Finish decompression */
@@ -1212,7 +1209,7 @@ load_resource_1033 (const PSDimageres  *res_a,
    * jerr.num_warnings is nonzero).
    */
   gimp_image_insert_layer (image_id, layer_id, -1, 0);
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
 
   return 0;
 }
