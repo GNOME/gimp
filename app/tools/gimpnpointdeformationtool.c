@@ -203,7 +203,9 @@ gimp_n_point_deformation_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      gimp_n_point_deformation_tool_halt (npd_tool);
+      /* stop the tool only when it has been started */
+      if (npd_tool->active)
+        gimp_n_point_deformation_tool_halt (npd_tool);
       break;
     }
 
@@ -462,9 +464,12 @@ gimp_n_point_deformation_tool_button_press (GimpTool            *tool,
 
   if (display != tool->display)
     {
+      /* this is the first click on the drawable - just start the tool */
       gimp_n_point_deformation_tool_start (npd_tool, display);
+      return;
     }
 
+  /* this is at least second click on the drawable - do usual work */
   gimp_tool_control_activate (tool->control);
   npd_tool->selected_cp = NULL;
   
