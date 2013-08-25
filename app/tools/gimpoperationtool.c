@@ -467,14 +467,14 @@ static gboolean
 gimp_operation_tool_aux_selected (GimpContainerView  *view,
                                   GimpViewable       *viewable,
                                   gpointer            insert_data,
-                                  GimpOperationTool  *tool)
+                                  GeglNode           *aux_input)
 {
   GeglBuffer *buffer = NULL;
 
   if (viewable)
     buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (viewable));
 
-  gegl_node_set (tool->aux_input,
+  gegl_node_set (aux_input,
                  "buffer", buffer,
                  NULL);
 
@@ -571,7 +571,7 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
 
       g_signal_connect_object (tool->aux_input_combo, "select-item",
                                G_CALLBACK (gimp_operation_tool_aux_selected),
-                               tool, 0);
+                               tool->aux_input, 0);
 
       channel = gimp_image_get_active_channel (image);
 
