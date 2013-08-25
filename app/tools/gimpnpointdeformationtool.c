@@ -166,20 +166,20 @@ gimp_n_point_deformation_tool_init (GimpNPointDeformationTool *npd_tool)
 {
   GimpTool      *tool       = GIMP_TOOL (npd_tool);
 
-  gimp_tool_control_set_tool_cursor  (tool->control,
-                                      GIMP_TOOL_CURSOR_PERSPECTIVE);
-  gimp_tool_control_set_preserve     (tool->control, FALSE);
-  gimp_tool_control_set_wants_click  (tool->control, TRUE);
-  gimp_tool_control_set_wants_double_click  (tool->control, TRUE);
-  gimp_tool_control_set_scroll_lock  (tool->control, TRUE);
-  gimp_tool_control_set_handle_empty_image (tool->control, FALSE);
-  gimp_tool_control_set_dirty_mask   (tool->control,
-                                      GIMP_DIRTY_IMAGE           |
-                                      GIMP_DIRTY_IMAGE_STRUCTURE |
-                                      GIMP_DIRTY_DRAWABLE        |
-                                      GIMP_DIRTY_SELECTION       |
-                                      GIMP_DIRTY_ACTIVE_DRAWABLE);
-  
+  gimp_tool_control_set_tool_cursor          (tool->control,
+                                              GIMP_TOOL_CURSOR_PERSPECTIVE);
+  gimp_tool_control_set_preserve             (tool->control, FALSE);
+  gimp_tool_control_set_wants_click          (tool->control, TRUE);
+  gimp_tool_control_set_wants_all_key_events (tool->control, TRUE);
+  gimp_tool_control_set_scroll_lock          (tool->control, TRUE);
+  gimp_tool_control_set_handle_empty_image   (tool->control, FALSE);
+  gimp_tool_control_set_dirty_mask           (tool->control,
+                                              GIMP_DIRTY_IMAGE           |
+                                              GIMP_DIRTY_IMAGE_STRUCTURE |
+                                              GIMP_DIRTY_DRAWABLE        |
+                                              GIMP_DIRTY_SELECTION       |
+                                              GIMP_DIRTY_ACTIVE_DRAWABLE);
+
   npd_tool->active = FALSE;
   npd_tool->selected_cp = NULL;
   npd_tool->hovering_cp = NULL;
@@ -280,7 +280,7 @@ gimp_n_point_deformation_tool_halt (GimpNPointDeformationTool *npd_tool)
   GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (npd_tool);
 
   npd_tool->active = FALSE;
-  
+
   if (gimp_draw_tool_is_active (draw_tool))
     gimp_draw_tool_stop (draw_tool);
   
@@ -295,8 +295,8 @@ gimp_n_point_deformation_tool_set_options (GeglNode                     *npd_nod
                                            GimpNPointDeformationOptions *npd_options)
 {
   gegl_node_set (npd_node,
-                 "square size",       (int) npd_options->square_size,
-                 "rigidity",          (int) npd_options->rigidity,
+                 "square size",       (gint) npd_options->square_size,
+                 "rigidity",          (gint) npd_options->rigidity,
                  "ASAP deformation",  npd_options->ASAP_deformation,
                  "MLS weights",       npd_options->MLS_weights,
                  "MLS weights alpha", npd_options->MLS_weights_alpha,
@@ -338,19 +338,16 @@ gimp_n_point_deformation_tool_key_press (GimpTool    *tool,
   switch (kevent->keyval)
     {
     case GDK_KEY_BackSpace:
-      if (npd_tool->selected_cps == NULL)
+      /* if there is at least one control point, remove last added control point */
+      if (cps->len > 0)
         {
-          /* if there isn't any selected control point and if there is at least
-           * one control point, remove last added control point */
-          if (cps->len > 0)
-            {
-              cp = &g_array_index (cps, NPDControlPoint, cps->len - 1);
-              gimp_npd_debug (("removing last cp %p\n", cp));
-              gimp_n_point_deformation_tool_remove_cp_from_selection (npd_tool, cp);
-              npd_remove_control_point (model, cp);
-            }
+          cp = &g_array_index (cps, NPDControlPoint, cps->len - 1);
+          gimp_npd_debug (("removing last cp %p\n", cp));
+          gimp_n_point_deformation_tool_remove_cp_from_selection (npd_tool, cp);
+          npd_remove_control_point (model, cp);
         }
-      /* break is omitted intentionally */
+      break;
+
     case GDK_KEY_Delete:
       if (npd_tool->selected_cps != NULL)
         {
@@ -397,6 +394,11 @@ gimp_n_point_deformation_tool_cursor_update (GimpTool         *tool,
   GimpNPointDeformationTool *npd_tool       = GIMP_N_POINT_DEFORMATION_TOOL (tool);
   GimpCursorModifier         modifier       = GIMP_CURSOR_MODIFIER_PLUS;
 
+  if (!npd_tool->active)
+    {
+      modifier = GIMP_CURSOR_MODIFIER_NONE;
+    }
+  else
   if (npd_tool->hovering_cp != NULL)
     {
       modifier = GIMP_CURSOR_MODIFIER_MOVE;
@@ -454,20 +456,16 @@ gimp_n_point_deformation_tool_button_press (GimpTool            *tool,
                                             GimpDisplay         *display)
 {
   GimpNPointDeformationTool *npd_tool = GIMP_N_POINT_DEFORMATION_TOOL (tool);
-//  NPDModel                  *model;
   NPDControlPoint           *cp;
   GList                    **selected_cps = &npd_tool->selected_cps;
   GList                    **previous_cps_positions = &npd_tool->previous_cps_positions;
-  
+
   if (display != tool->display)
     {
       gimp_n_point_deformation_tool_start (npd_tool, display);
     }
-  
-//  model = npd_tool->model;
-  
+
   gimp_tool_control_activate (tool->control);
-  
   npd_tool->selected_cp = NULL;
   
   if (press_type == GIMP_BUTTON_PRESS_NORMAL)
