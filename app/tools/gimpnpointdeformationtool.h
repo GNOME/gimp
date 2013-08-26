@@ -41,18 +41,18 @@ typedef struct _GimpNPointDeformationToolClass GimpNPointDeformationToolClass;
 struct _GimpNPointDeformationTool
 {
   GimpDrawTool     parent_instance;
-  
+
   GimpDisplay     *display;
-  
+
   GeglNode        *graph;
   GeglNode        *source;
   GeglNode        *node;
   GeglNode        *sink;
-  
+
   GeglBuffer      *shadow, *buf;
-  
+
   GimpDrawable    *drawable;
-  
+
   NPDModel        *model;
   NPDControlPoint *selected_cp;    /* last selected control point */
   GList           *selected_cps;   /* list of selected control points */
@@ -60,13 +60,16 @@ struct _GimpNPointDeformationTool
 
   gdouble          cursor_x;
   gdouble          cursor_y;
-  
+
   gdouble          movement_start_x;
   gdouble          movement_start_y;
-  
+
+  gfloat           cp_scaled_radius;       /* radius of a control point scaled
+                                            * according to display shell's scale */
+
   GList           *previous_cps_positions; /* list of NPDPoints holding previous
                                             * positions of control points */
-  
+
   gboolean         active;
   gboolean         rubber_band;
 };
