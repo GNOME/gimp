@@ -691,7 +691,9 @@
         <menuitem action="filters-tile-seamless" />
       </menu>
       <menu action="plug-in-render-menu" name="Render">
-        <menu action="plug-in-render-clouds-menu" name="Clouds" />
+        <menu action="plug-in-render-clouds-menu" name="Clouds">
+	  <menuitem action="filters-plasma" />
+	</menu>
         <menu action="plug-in-render-nature-menu" name="Nature" />
         <menu action="plug-in-render-pattern-menu" name="Pattern">
 	  <menuitem action="filters-checkerboard" />

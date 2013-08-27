@@ -215,6 +215,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:pixelize",
     NULL /* FIXME GIMP_HELP_FILTER_PIXELIZE */ },
 
+  { "filters-plasma", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Plasma..."), NULL, NULL,
+    "gegl:plasma",
+    NULL /* FIXME GIMP_HELP_FILTER_PLASMA */ },
+
   { "filters-polar-coordinates", GIMP_STOCK_GEGL,
     NC_("filters-action", "P_olar Coordinates..."), NULL, NULL,
     "gegl:polar-coordinates",
@@ -371,6 +376,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-lens-distortion",         writable);
   SET_SENSITIVE ("filters-photocopy",               writable);
   SET_SENSITIVE ("filters-pixelize",                writable);
+  SET_SENSITIVE ("filters-plasma",                  writable);
   SET_SENSITIVE ("filters-polar-coordinates",       writable);
   SET_SENSITIVE ("filters-red-eye-removal",         writable && !gray);
   SET_SENSITIVE ("filters-ripple",                  writable);
