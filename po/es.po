@@ -17,16 +17,16 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-08-10 23:06+0000\n"
-"PO-Revision-Date: 2013-08-14 13:34+0200\n"
+"POT-Creation-Date: 2013-08-23 19:32+0000\n"
+"PO-Revision-Date: 2013-08-27 19:01+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: Español <gnome-es-list@gnome.org>\n"
+"Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.5\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Generator: Gtranslator 2.91.6\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -98,8 +98,8 @@ msgstr ""
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
-"El intérprete del proceso por lotes «%s» no está disponible, el modo de lotes "
-"se desactivará."
+"El intérprete del proceso por lotes «%s» no está disponible, el modo de "
+"lotes se desactivará."
 
 #: ../app/main.c:148
 msgid "Show version information and exit"
@@ -978,7 +978,7 @@ msgid "Use the composite color of all visible layers"
 msgstr "Usar el color compuesto de todas las capas visibles"
 
 #: ../app/actions/data-commands.c:89 ../app/actions/documents-commands.c:344
-#: ../app/actions/file-commands.c:195 ../app/dialogs/file-open-dialog.c:232
+#: ../app/actions/file-commands.c:201 ../app/dialogs/file-open-dialog.c:232
 #: ../app/dialogs/file-open-dialog.c:277
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
@@ -2428,50 +2428,51 @@ msgstr "_Sobreescribir %s"
 msgid "Export to"
 msgstr "Exportar a"
 
-#: ../app/actions/file-commands.c:113 ../app/actions/file-commands.c:490
+#: ../app/actions/file-commands.c:119 ../app/actions/file-commands.c:496
 #: ../app/dialogs/file-open-dialog.c:77
 msgid "Open Image"
 msgstr "Abrir imagen"
 
-#: ../app/actions/file-commands.c:134
+#: ../app/actions/file-commands.c:140
 msgid "Open Image as Layers"
 msgstr "Abrir imagen como capas"
 
-#: ../app/actions/file-commands.c:266
+#: ../app/actions/file-commands.c:272
 msgid "No changes need to be saved"
 msgstr "No es necesario guardar ningún cambio"
 
-#: ../app/actions/file-commands.c:273 ../app/dialogs/file-save-dialog.c:95
+#: ../app/actions/file-commands.c:279 ../app/actions/file-commands.c:700
+#: ../app/dialogs/file-save-dialog.c:103
 msgid "Save Image"
 msgstr "Guardar imagen"
 
-#: ../app/actions/file-commands.c:279
+#: ../app/actions/file-commands.c:285
 msgid "Save a Copy of the Image"
 msgstr "Guardar una copia de la imagen"
 
-#: ../app/actions/file-commands.c:364
+#: ../app/actions/file-commands.c:370
 msgid "Create New Template"
 msgstr "Crear una plantilla nueva"
 
-#: ../app/actions/file-commands.c:368
+#: ../app/actions/file-commands.c:374
 msgid "Enter a name for this template"
 msgstr "Introduzca un nombre para esta plantilla"
 
-#: ../app/actions/file-commands.c:398
+#: ../app/actions/file-commands.c:404
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
 "Falló al revertir. No hay un nombre de archivo asociado con esta imagen."
 
-#: ../app/actions/file-commands.c:410
+#: ../app/actions/file-commands.c:416
 msgid "Revert Image"
 msgstr "Revertir imagen"
 
-#: ../app/actions/file-commands.c:436
+#: ../app/actions/file-commands.c:442
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "¿Quiere revertir «%s» a «%s»?"
 
-#: ../app/actions/file-commands.c:442
+#: ../app/actions/file-commands.c:448
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -2479,11 +2480,11 @@ msgstr ""
 "Al revertir la imagen al estado guardado en el disco, perderá todos sus "
 "cambios, incluyendo toda la información de deshacer."
 
-#: ../app/actions/file-commands.c:652
+#: ../app/actions/file-commands.c:730
 msgid "(Unnamed Template)"
 msgstr "(Plantilla sin nombre)"
 
-#: ../app/actions/file-commands.c:703
+#: ../app/actions/file-commands.c:781
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -6106,11 +6107,12 @@ msgid ""
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
 msgstr ""
-"Las herramientas como «Selección difusa» y «Relleno» buscan regiones basándose "
-"en un algoritmo de búsqueda de semilla.  El relleno de semilla arranca en el "
-"píxel seleccionado inicialmente y avanza en todas direcciones hasta que la "
-"diferencia de la intensidad del píxel del original es más grande que el "
-"umbral especificado. Este valor representa el umbral predeterminado."
+"Las herramientas como «Selección difusa» y «Relleno» buscan regiones "
+"basándose en un algoritmo de búsqueda de semilla.  El relleno de semilla "
+"arranca en el píxel seleccionado inicialmente y avanza en todas direcciones "
+"hasta que la diferencia de la intensidad del píxel del original es más "
+"grande que el umbral especificado. Este valor representa el umbral "
+"predeterminado."
 
 #: ../app/config/gimprc-blurbs.h:125
 msgid ""
@@ -6401,8 +6403,8 @@ msgid ""
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
 "Cuando está activado el límite de la capa es visible de forma "
-"predeterminada. Esto también puede activarse con la instrucción «Ver->Mostrar "
-"el límite de la capa»."
+"predeterminada. Esto también puede activarse con la instrucción «Ver-"
+">Mostrar el límite de la capa»."
 
 #: ../app/config/gimprc-blurbs.h:355
 msgid ""
@@ -6426,8 +6428,8 @@ msgid ""
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
 "Cuando está activado los puntos de muestra están visibles de forma "
-"predeterminada. Esto también puede activarse con la instrucción «Ver->Mostrar "
-"puntos de muestra»."
+"predeterminada. Esto también puede activarse con la instrucción «Ver-"
+">Mostrar puntos de muestra»."
 
 #: ../app/config/gimprc-blurbs.h:367
 msgid "Show a tooltip when the pointer hovers over an item."
@@ -7456,8 +7458,8 @@ msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
 "settings to '%s'."
 msgstr ""
-"Parece que ha usado GIMP %s antes.  GIMP migrará sus ajustes de usuario a «%"
-"s»."
+"Parece que ha usado GIMP %s antes.  GIMP migrará sus ajustes de usuario a "
+"«%s»."
 
 #: ../app/core/gimp-user-install.c:178
 #, c-format
@@ -7548,8 +7550,8 @@ msgstr "Error fatal de análisis en el archivo de pincel «%s»: bytes = 0."
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
 msgstr ""
-"Error fatal de análisis en el archivo de pincel «%s»: profundidad desconocida "
-"%d."
+"Error fatal de análisis en el archivo de pincel «%s»: profundidad "
+"desconocida %d."
 
 #: ../app/core/gimpbrush-load.c:257
 #, c-format
@@ -7562,8 +7564,8 @@ msgstr ""
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr ""
-"Error fatal de análisis en el archivo de pincel «%s»: el archivo parece estar "
-"truncado."
+"Error fatal de análisis en el archivo de pincel «%s»: el archivo parece "
+"estar truncado."
 
 #: ../app/core/gimpbrush-load.c:281 ../app/core/gimpbrushgenerated-load.c:128
 #: ../app/core/gimpbrushpipe-load.c:97
@@ -7599,8 +7601,8 @@ msgstr ""
 #, c-format
 msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
 msgstr ""
-"Error fatal de análisis en el archivo de pincel «%s»: no están soportados los "
-"pinceles anchos."
+"Error fatal de análisis en el archivo de pincel «%s»: no están soportados "
+"los pinceles anchos."
 
 #: ../app/core/gimpbrush.c:148
 msgid "Brush Spacing"
@@ -7626,8 +7628,8 @@ msgstr ""
 msgid ""
 "Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
 msgstr ""
-"Error fatal de análisis en el archivo de pincel «%s»: forma de pincel de GIMP "
-"desconocida en la línea %d."
+"Error fatal de análisis en el archivo de pincel «%s»: forma de pincel de "
+"GIMP desconocida en la línea %d."
 
 #: ../app/core/gimpbrushgenerated-load.c:226
 #, c-format
@@ -8708,7 +8710,8 @@ msgstr ""
 #, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
 msgstr ""
-"Error fatal de análisis en el archivo de paleta «%s»: cabecera mágica perdida."
+"Error fatal de análisis en el archivo de paleta «%s»: cabecera mágica "
+"perdida."
 
 #: ../app/core/gimppalette-load.c:125
 #, c-format
@@ -8721,8 +8724,8 @@ msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 msgstr ""
-"Leyendo el archivo de paleta «%s»: número no válido de columnas en la línea %"
-"d. Usando el valor predeterminado."
+"Leyendo el archivo de paleta «%s»: número no válido de columnas en la línea "
+"%d. Usando el valor predeterminado."
 
 #: ../app/core/gimppalette-load.c:185
 #, c-format
@@ -8763,8 +8766,8 @@ msgstr "Error fatal de análisis en el archivo de paleta «%s»"
 #, c-format
 msgid "Fatal parse error in pattern file '%s': File appears truncated."
 msgstr ""
-"Error fatal de análisis en el archivo de patrón «%s»: el archivo parece estar "
-"truncado."
+"Error fatal de análisis en el archivo de patrón «%s»: el archivo parece "
+"estar truncado."
 
 #: ../app/core/gimppattern-load.c:104
 #, c-format
@@ -9142,15 +9145,15 @@ msgstr "Abrir dirección"
 msgid "Enter location (URI):"
 msgstr "Introduzca dirección (URI):"
 
-#: ../app/dialogs/file-save-dialog.c:105
+#: ../app/dialogs/file-save-dialog.c:113
 msgid "Export Image"
 msgstr "Exportar la imagen"
 
-#: ../app/dialogs/file-save-dialog.c:106
+#: ../app/dialogs/file-save-dialog.c:114
 msgid "_Export"
 msgstr "_Exportar"
 
-#: ../app/dialogs/file-save-dialog.c:419
+#: ../app/dialogs/file-save-dialog.c:458
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -9160,7 +9163,12 @@ msgstr ""
 "desde la extensión del archivo. Introduzca una extensión que coincida con el "
 "formato de archivo seleccionado o no introduzca ninguna extensión de archivo."
 
-#: ../app/dialogs/file-save-dialog.c:546
+#: ../app/dialogs/file-save-dialog.c:605
+#| msgid "The given filename does not have any known file extension."
+msgid "The given filename cannot be used for exporting"
+msgstr "El nombre de archivo dado no se puede usar para exportar"
+
+#: ../app/dialogs/file-save-dialog.c:606
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
@@ -9169,7 +9177,18 @@ msgstr ""
 "quiere guardar la imagen en el formato XCF de GIMP, use Archivo→Guardar en "
 "su lugar."
 
-#: ../app/dialogs/file-save-dialog.c:553
+#: ../app/dialogs/file-save-dialog.c:609
+#| msgctxt "dialogs-action"
+#| msgid "Open the layers dialog"
+msgid "Take me to the Save dialog"
+msgstr "Ir al diálogo de guardar"
+
+#: ../app/dialogs/file-save-dialog.c:613
+#| msgid "The given filename does not have any known file extension."
+msgid "The given filename cannot be used for saving"
+msgstr "El nombre de archivo dado no se puede usar para guardar"
+
+#: ../app/dialogs/file-save-dialog.c:614
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
@@ -9177,7 +9196,17 @@ msgstr ""
 "Puede usar este diálogo para guardar en el formato XCF de GIMP. Use "
 "Archivo→Exportar para exportar a otros formatos de archivo."
 
-#: ../app/dialogs/file-save-dialog.c:559
+#: ../app/dialogs/file-save-dialog.c:616
+#| msgctxt "dialogs-action"
+#| msgid "Open the paths dialog"
+msgid "Take me to the Export dialog"
+msgstr "Ir al diálogo de exportar"
+
+#: ../app/dialogs/file-save-dialog.c:619 ../app/dialogs/file-save-dialog.c:694
+msgid "Extension Mismatch"
+msgstr "Incongruencia de la extensión"
+
+#: ../app/dialogs/file-save-dialog.c:678
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -9186,24 +9215,20 @@ msgstr ""
 "introduzca una extensión de archivo conocida o seleccione un formato de "
 "archivo de la lista de formatos de archivo."
 
-#: ../app/dialogs/file-save-dialog.c:573
-msgid "Extension Mismatch"
-msgstr "Incongruencia de la extensión"
-
-#: ../app/dialogs/file-save-dialog.c:589
+#: ../app/dialogs/file-save-dialog.c:710
 msgid "The given file extension does not match the chosen file type."
 msgstr ""
 "La extensión de archivo dada no concuerda con el tipo de archivo elegido."
 
-#: ../app/dialogs/file-save-dialog.c:593
+#: ../app/dialogs/file-save-dialog.c:714
 msgid "Do you want to save the image using this name anyway?"
 msgstr "¿Seguro que quiere guardar la imagen con este nombre?"
 
-#: ../app/dialogs/file-save-dialog.c:651
+#: ../app/dialogs/file-save-dialog.c:776
 msgid "Saving canceled"
 msgstr "Guardado cancelado"
 
-#: ../app/dialogs/file-save-dialog.c:659 ../app/widgets/gimpdnd-xds.c:186
+#: ../app/dialogs/file-save-dialog.c:784 ../app/widgets/gimpdnd-xds.c:186
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -9288,7 +9313,8 @@ msgid ""
 "\"Maximum Image Size\" in the Preferences dialog (currently %s)."
 msgstr ""
 "Una imagen del tamaño elegido usará más memoria de la que está configurada "
-"como «Tamaño máximo de la imagen» en el diálogo Preferencias (actualmente %s)."
+"como «Tamaño máximo de la imagen» en el diálogo Preferencias (actualmente "
+"%s)."
 
 #: ../app/dialogs/image-properties-dialog.c:60
 #: ../app/dialogs/image-properties-dialog.c:63
@@ -11358,7 +11384,8 @@ msgstr "Intentando añadir el elemento «%s» (%d) a la imagen equivocada"
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgstr ""
-"No se puede modificar el elemento «%s» (%d) porque su contenido está bloqueado"
+"No se puede modificar el elemento «%s» (%d) porque su contenido está "
+"bloqueado"
 
 #: ../app/pdb/gimppdb-utils.c:516
 #, c-format
@@ -11381,7 +11408,8 @@ msgstr "No se puede usar la capa «%s» (%d) porque no es una capa de texto"
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr ""
-"La imagen «%s» (%d) es del tipo «%s», pero se esperaba una imagen del tipo «%s»"
+"La imagen «%s» (%d) es del tipo «%s», pero se esperaba una imagen del tipo "
+"«%s»"
 
 #: ../app/pdb/gimppdb-utils.c:621
 #, c-format
@@ -11396,8 +11424,8 @@ msgstr "El objeto de vectores %d no contiene un trazo con el ID %d"
 #: ../app/pdb/gimppdb.c:410
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong type for argument #%d. Expected %"
-"s, got %s."
+"Procedure '%s' has been called with a wrong type for argument #%d. Expected "
+"%s, got %s."
 msgstr ""
 "Se ha llamado al procedimiento «%s» con un valor con un tipo erróneo para el "
 "argumento #%d. Se esperaba %s pero se obtuvo %s."
@@ -11426,8 +11454,8 @@ msgstr ""
 #: ../app/pdb/gimpprocedure.c:654
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#%"
-"d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
 "El procedimiento «%s» se ha llamado con un valor con un tipo erróneo para el "
 "argumento «%s» (#%d). Se esperaba %s pero se obtuvo %s."
@@ -11438,9 +11466,9 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"El procedimiento «%s» ha devuelto un ID no válido para el argumento «%s». Con "
-"toda probabilidad un complemento está tratando de operar sobre una capa que "
-"ya no existe."
+"El procedimiento «%s» ha devuelto un ID no válido para el argumento «%s». "
+"Con toda probabilidad un complemento está tratando de operar sobre una capa "
+"que ya no existe."
 
 #: ../app/pdb/gimpprocedure.c:700
 #, c-format
@@ -11448,8 +11476,8 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"El procedimiento «%s» se ha llamado con un ID incorrecto para el argumento «%"
-"s». Con toda probabilidad un complemento está tratando de operar sobre una "
+"El procedimiento «%s» se ha llamado con un ID incorrecto para el argumento "
+"«%s». Con toda probabilidad un complemento está tratando de operar sobre una "
 "capa que ya no existe."
 
 #: ../app/pdb/gimpprocedure.c:717
@@ -11458,9 +11486,9 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"El procedimiento «%s» ha devuelto un ID no válido para el argumento «%s». Con "
-"toda probabilidad un complemento está tratando de operar sobre una capa que "
-"ya no existe."
+"El procedimiento «%s» ha devuelto un ID no válido para el argumento «%s». "
+"Con toda probabilidad un complemento está tratando de operar sobre una capa "
+"que ya no existe."
 
 #: ../app/pdb/gimpprocedure.c:730
 #, c-format
@@ -11468,8 +11496,8 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"El procedimiento «%s» se ha llamado con un ID no válido para el argumento «%"
-"s». Con toda probabilidad un complemento está tratando de operar sobre una "
+"El procedimiento «%s» se ha llamado con un ID no válido para el argumento "
+"«%s». Con toda probabilidad un complemento está tratando de operar sobre una "
 "capa que ya no existe."
 
 #: ../app/pdb/gimpprocedure.c:751
@@ -11478,17 +11506,17 @@ msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr ""
-"El procedimiento «%s» ha devuelto «%s» como valor de retorno «%s» (#%d, tipo %"
-"s). Este valor está fuera de los límites."
+"El procedimiento «%s» ha devuelto «%s» como valor de retorno «%s» (#%d, tipo "
+"%s). Este valor está fuera de los límites."
 
 #: ../app/pdb/gimpprocedure.c:765
 #, c-format
 msgid ""
-"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
-"s). This value is out of range."
+"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
+"%s). This value is out of range."
 msgstr ""
-"El procedimiento «%s» se ha llamado con un valor «%s» para el argumento «%s» (#%"
-"d, tipo %s). Este valor está fuera de los límites."
+"El procedimiento «%s» se ha llamado con un valor «%s» para el argumento "
+"«%s» (#%d, tipo %s). Este valor está fuera de los límites."
 
 #: ../app/pdb/image-cmds.c:2365
 msgid ""
