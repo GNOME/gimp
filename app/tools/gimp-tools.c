@@ -191,9 +191,7 @@ gimp_tools_init (Gimp *gimp)
     gimp_ellipse_select_tool_register,
     gimp_rectangle_select_tool_register,
     gimp_select_by_color_tool_register,
-#if 0
     gimp_select_by_content_tool_register,
-#endif
     gimp_select_by_shape_tool_register
   };
 
