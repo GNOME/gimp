@@ -278,17 +278,47 @@ gimp_select_by_shape_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpSelectByShapeTool        *rect_sel_tool;
   GimpSelectByShapeToolPrivate *priv;
+  GimpRectangleSelectOptions *options;
   GimpCanvasGroup                *stroke_group = NULL;
 
   rect_sel_tool = GIMP_SELECT_BY_SHAPE_TOOL (draw_tool);
   priv          = GIMP_SELECT_BY_SHAPE_TOOL_GET_PRIVATE (rect_sel_tool);
+  options       = GIMP_SELECT_BY_SHAPE_TOOL_GET_OPTIONS (rect_sel_tool);
 
-  if (priv->round_corners)
+  switch(options->shape_type)
+  {
+    case GIMP_SHAPE_RECTANGLE : 
+    gimp_rectangle_tool_draw (draw_tool, stroke_group);
+    break;
+
+    case GIMP_SHAPE_ELLIPSE :
+    {
+     gint            x1, y1, x2, y2;
+
+     g_object_get (draw_tool,
+                "x1", &x1,
+                "y1", &y1,
+                "x2", &x2,
+                "y2", &y2,
+                NULL);
+
+     gimp_draw_tool_add_arc (draw_tool,
+                          FALSE,
+                          x1, y1,
+                          x2 - x1, y2 - y1,
+                          0.0, 2 * G_PI);
+     break;
+    }
+
+    case GIMP_SHAPE_ROUNDED_RECT :
     {
       GimpCanvasItem *item;
       gint            x1, y1, x2, y2;
       gdouble         radius;
       gint            square_size;
+      gint            w;
+      gint            h;
+      gdouble         max;
 
       g_object_get (rect_sel_tool,
                     "x1", &x1,
@@ -297,8 +327,11 @@ gimp_select_by_shape_tool_draw (GimpDrawTool *draw_tool)
                     "y2", &y2,
                     NULL);
 
-      radius = MIN (priv->corner_radius,
-                    MIN ((x2 - x1) / 2.0, (y2 - y1) / 2.0));
+      w = x2-x1;
+      h = y2-y1;
+
+      max    = MIN (w / 2.0, h / 2.0);
+      radius = priv->corner_radius*max/100;
 
       square_size = (int) (radius * 2);
 
@@ -332,10 +365,24 @@ gimp_select_by_shape_tool_draw (GimpDrawTool *draw_tool)
                                      G_PI, G_PI / 2.0);
       gimp_canvas_group_add_item (stroke_group, item);
       gimp_draw_tool_remove_item (draw_tool, item);
+      break;
     }
 
+    case GIMP_SHAPE_N_POLYGON :
+    {
+      gimp_rectangle_tool_draw (draw_tool, stroke_group);
+      break;
+    }
+
+     case GIMP_SHAPE_SINGLE_ROW :
+    {
+      gimp_rectangle_tool_draw (draw_tool, stroke_group);
+      break;
+    }
+  }
+  
   gimp_rectangle_tool_draw (draw_tool, stroke_group);
-} //Need to edit this.
+}
 
 static void
 gimp_select_by_shape_tool_button_press (GimpTool            *tool,               
@@ -605,7 +652,7 @@ gimp_select_by_shape_tool_real_select (GimpSelectByShapeTool *rect_sel_tool,
   GimpChannel                *channel;
   GimpImage                  *image;
 
-  shape_select_options = GIMP_SELECT_BY_SHAPE_TOOL_GET_OPTIONS (tool); //Error
+  shape_select_options = GIMP_SELECT_BY_SHAPE_TOOL_GET_OPTIONS (tool);
   image = gimp_display_get_image (tool->display);
   channel = gimp_image_get_mask (gimp_display_get_image (tool->display));           
   
@@ -1008,107 +1055,3 @@ gimp_select_by_shape_tool_round_corners_notify (GimpRectangleSelectOptions *opti
 
   gimp_draw_tool_resume (draw_tool);
 }  
-
-
-
-
-
-/*
-static void
-gimp_select_by_shape_tool_draw (GimpDrawTool *draw_tool)
-{
-  GimpCanvasGroup                *stroke_group = NULL;
-  GimpSelectByShapeTool          *shp_sel_tool;
-  GimpSelectByShapeTool           *priv;
-  
-
-  gint x1, y1, x2, y2;
-
-  GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
-  shp_sel_tool = GIMP_SELECT_BY_SHAPE_TOOL (draw_tool);
-  priv          = GIMP_SELECT_BY_SHAPE_TOOL_GET (shp_sel_tool);
- 
-  switch(priv->shape_type)
-  {
-    case GIMP_SHAPE_RECTANGLE : 
-    gimp_rectangle_tool_draw (draw_tool, stroke_group);
-    break;
-
-    case GIMP_SHAPE_ELLIPSE :
-    {
-     g_object_get (draw_tool,
-                "x1", &x1,
-                "y1", &y1,
-                "x2", &x2,
-                "y2", &y2,
-                NULL);
-
-     gimp_draw_tool_add_arc (draw_tool,
-                          FALSE,
-                          x1, y1,
-                          x2 - x1, y2 - y1,
-                          0.0, 2 * G_PI);
-     break;
-    }
-
-    case GIMP_SHAPE_ROUNDED_RECT :
-    {
-      GimpCanvasItem *item;
-      gint            x1, y1, x2, y2;
-      gdouble         radius;
-      gint            square_size;
-
-      g_object_get (rect_sel_tool,
-                    "x1", &x1,
-                    "y1", &y1,
-                    "x2", &x2,
-                    "y2", &y2,
-                    NULL);
-
-      radius = MIN (priv->corner_radius,
-                    MIN ((x2 - x1) / 2.0, (y2 - y1) / 2.0));
-
-      square_size = (int) (radius * 2);
-
-      stroke_group =
-        GIMP_CANVAS_GROUP (gimp_draw_tool_add_stroke_group (draw_tool));
-
-      item = gimp_draw_tool_add_arc (draw_tool, FALSE,
-                                     x1, y1,
-                                     square_size, square_size,
-                                     G_PI / 2.0, G_PI / 2.0);
-      gimp_canvas_group_add_item (stroke_group, item);
-      gimp_draw_tool_remove_item (draw_tool, item);
-
-      item = gimp_draw_tool_add_arc (draw_tool, FALSE,
-                                     x2 - square_size, y1,
-                                     square_size, square_size,
-                                     0.0, G_PI / 2.0);
-      gimp_canvas_group_add_item (stroke_group, item);
-      gimp_draw_tool_remove_item (draw_tool, item);
-
-      item = gimp_draw_tool_add_arc (draw_tool, FALSE,
-                                     x2 - square_size, y2 - square_size,
-                                     square_size, square_size,
-                                     G_PI * 1.5, G_PI / 2.0);
-      gimp_canvas_group_add_item (stroke_group, item);
-      gimp_draw_tool_remove_item (draw_tool, item);
-
-      item = gimp_draw_tool_add_arc (draw_tool, FALSE,
-                                     x1, y2 - square_size,
-                                     square_size, square_size,
-                                     G_PI, G_PI / 2.0);
-      gimp_canvas_group_add_item (stroke_group, item);
-      gimp_draw_tool_remove_item (draw_tool, item);
-      break;
-    }
-    default
-     {
-      gimp_rectangle_tool_draw (draw_tool, stroke_group);
-      break;
-     }
-  }*/ /* 
-  gimp_rectangle_tool_draw (draw_tool, stroke_group);
-}
-*/
-

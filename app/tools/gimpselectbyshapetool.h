@@ -29,7 +29,7 @@
 #define GIMP_IS_SELECT_BY_SHAPE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SELECT_BY_SHAPE_TOOL))
 #define GIMP_SELECT_BY_SHAPE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SELECT_BY_SHAPE_TOOL, GimpSelectByShapeToolClass))
 
-#define GIMP_SELECT_BY_SHAPE_TOOL_GET_OPTIONS(t)  (GIMP_RECTANGLE_SELECT_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t)))) //Not sure whether GIMP_RECTANGLE_SELECT_OPTIONS or anything else.
+#define GIMP_SELECT_BY_SHAPE_TOOL_GET_OPTIONS(t)  (GIMP_RECTANGLE_SELECT_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
 
 
 typedef struct _GimpSelectByShapeTool      GimpSelectByShapeTool;
