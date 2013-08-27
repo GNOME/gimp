@@ -1281,42 +1281,57 @@ write_pixel_data (FILE   *fd,
                   glong  *ChanLenPosition,
                   gint32  ltable_offset)
 {
-  GimpPixelRgn region;      /* Image region */
-  guchar *data;             /* Temporary copy of pixel data */
-
-  gint32 tile_height = gimp_tile_height();
-
-  GimpDrawable *drawable = gimp_drawable_get (drawableID);
-
-  gint32 height = drawable->height;
-  gint32 width  = drawable->width;
-  gint32 bytes  = drawable->bpp;
-  gint32 colors = bytes;    /* fixed up down below */
-  gint32 y;
-
-  gint32   len;                  /* Length of compressed data */
-  gint16 *LengthsTable;         /* Lengths of every compressed row */
-  guchar *rledata;              /* Compressed data from a region */
-  glong  length_table_pos;      /* position in file of the length table */
-  int i, j;
+  GeglBuffer   *buffer = gimp_drawable_get_buffer (drawableID);
+  const Babl   *format = NULL;
+  gint32        tile_height = gimp_tile_height();
+  gint32        height = gegl_buffer_get_height (buffer);
+  gint32        width  = gegl_buffer_get_width (buffer);
+  gint32        bytes;
+  gint32        colors;               /* fixed up down below */
+  gint32        y;
+  gint32        len;                  /* Length of compressed data */
+  gint16       *LengthsTable;         /* Lengths of every compressed row */
+  guchar       *rledata;              /* Compressed data from a region */
+  guchar       *data;                 /* Temporary copy of pixel data */
+  glong         length_table_pos;     /* position in file of the length table */
+  int           i, j;
 
   IFDBG printf (" Function: write_pixel_data, drw %d, lto %d\n",
                 drawableID, ltable_offset);
 
+  switch (gimp_drawable_type (drawableID)
+    {
+    case GIMP_GREY_IMAGE:
+      format = babl_format ("Y' u8");
+      break;
+
+    case GIMP_GREYA_IMAGE:
+      format = babl_format ("Y'A u8");
+      break;
+
+    case GIMP_RGB_IMAGE:
+    case GIMP_INDEXED_IMAGE:
+      format = babl_format ("R'G'B' u8");
+      break;
+
+    case GIMP_RGBA_IMAGE:
+    case GIMP_INDEXEDA_IMAGE:
+      format = babl_format ("R'G'B'A u8");
+      break;
+    }
+
+  bytes = babl_format_get_bytes_per_pixel (format);
+  colors = bytes;
+
   if ( gimp_drawable_has_alpha  (drawableID) &&
       !gimp_drawable_is_indexed (drawableID))
     colors -= 1;
-
-  gimp_tile_cache_ntiles (2* (drawable->width / gimp_tile_width () + 1));
 
   LengthsTable = g_new (gint16, height);
   rledata = g_new (guchar, (MIN (height, tile_height) *
                             (width + 10 + (width / 100))));
 
   data = g_new (guchar, MIN(height, tile_height) * width * bytes);
-
-  gimp_pixel_rgn_init (&region, drawable, 0, 0,
-                       width, height, FALSE, FALSE);
 
   for (i = 0; i < bytes; i++)
     {
@@ -1363,8 +1378,8 @@ write_pixel_data (FILE   *fd,
       for (y = 0; y < height; y += tile_height)
         {
           int tlen;
-            gimp_pixel_rgn_get_rect (&region, data, 0, y,
-                                   width, MIN(height - y, tile_height));
+	  gegl_buffer_get (buffer, GEGL_RECTANGLE (0, y, width, MIN (height - y, tile_height)),
+			   format, data, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
           tlen = get_compress_channel_data (&data[chan],
                                              width,
                                              MIN(height - y, tile_height),
@@ -1398,11 +1413,8 @@ write_pixel_data (FILE   *fd,
 
       if (maskID != -1)
         {
-          GimpDrawable *mdrawable = gimp_drawable_get (maskID);
+          GeglBuffer *mbuffer = gimp_drawable_get_buffer (maskID);
           len = 0;
-
-          gimp_pixel_rgn_init (&region, mdrawable, 0, 0,
-                               width, height, FALSE, FALSE);
 
           if (ChanLenPosition)
             {
@@ -1431,8 +1443,8 @@ write_pixel_data (FILE   *fd,
           for (y = 0; y < height; y += tile_height)
             {
               int tlen;
-              gimp_pixel_rgn_get_rect (&region, data, 0, y,
-                                       width, MIN(height - y, tile_height));
+	      gegl_buffer_get (mbuffer, GEGL_RECTANGLE (0, y, width, MIN (height - y, tile_height)),
+			       format, data, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
               tlen = get_compress_channel_data (&data[0],
                                                 width,
                                                 MIN(height - y, tile_height),
@@ -1462,11 +1474,11 @@ write_pixel_data (FILE   *fd,
           fseek (fd, 0, SEEK_END);
           IF_DEEP_DBG printf ("\t\t\t\t. Cur pos %ld\n", ftell(fd));
 
-          gimp_drawable_detach (mdrawable);
+          g_object_unref (mbuffer);
         }
     }
 
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
 
   g_free (data);
   g_free (rledata);
@@ -1528,50 +1540,68 @@ create_merged_image (gint32 image_id)
 
   if (gimp_image_base_type (image_id) != GIMP_INDEXED)
     {
-      GimpDrawable *drawable = gimp_drawable_get (projection);
-      GimpPixelRgn  region;
-      gboolean      transparency_found = FALSE;
-      gpointer      pr;
+      GeglBuffer           *buffer = gimp_drawable_get_buffer (projection);
+      GeglBufferIterator   *iter;
+      const Babl           *format = NULL;
+      gboolean              transparency_found = FALSE;
+      gpointer              pr;
+      gint                  n_components;
+      int                   bpp;
 
-      gimp_pixel_rgn_init (&region, drawable,
-                           0, 0, drawable->width, drawable->height,
-                           TRUE, FALSE);
+      iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
+				       GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
-      for (pr = gimp_pixel_rgns_register (1, &region);
-           pr != NULL;
-           pr = gimp_pixel_rgns_process (pr))
-        {
-          guchar *data = region.data;
-          gint    y;
+      switch (gimp_drawable_type (drawableID)
+	{
+	case GIMP_GREY_IMAGE:
+	  format = babl_format ("Y' u8");
+	  break;
 
-          for (y = 0; y < region.h; y++)
-            {
-              guchar *d = data;
-              gint    x;
+	case GIMP_GREYA_IMAGE:
+	  format = babl_format ("Y'A u8");
+	  break;
 
-              for (x = 0; x < region.w; x++)
-                {
-                  guint32 alpha = d[region.bpp - 1];
+	case GIMP_RGB_IMAGE:
+	case GIMP_INDEXED_IMAGE:
+	  format = babl_format ("R'G'B' u8");
+	  break;
 
-                  if (alpha < 255)
-                    {
-                      gint i;
+	case GIMP_RGBA_IMAGE:
+	case GIMP_INDEXEDA_IMAGE:
+	  format = babl_format ("R'G'B'A u8");
+	  break;
+	}
 
-                      transparency_found = TRUE;
+      bpp = babl_format_get_bytes_per_pixel (format);
+      n_components = babl_format_get_n_components (format);
 
-                      /* blend against white, photoshop does this. */
-                      for (i = 0; i < region.bpp - 1; i++)
-                        d[i] = ((guint32) d[i] * alpha) / 255 + 255 - alpha;
-                    }
+      while (gegl_buffer_iterator_next (iter))
+	{
+	  guchar *data = iter->data[0];
 
-                  d += region.bpp;
-                }
+	  while (iter->length--)
+	    {
+	      guchar *d = data;
+	      gint32 alpha = d[bpp - 1];
 
-              data += region.rowstride;
-            }
-        }
+	      if (alpha < 255)
+		{
+		  gint i;
 
-      gimp_drawable_detach (drawable);
+		  transparency_found = TRUE;
+
+		  /* blend against white, photoshop does this. */
+		  for (i = 0; i < bpp - 1; i++)
+		    d[i] = ((guint32) d[i] * alpha) / 255 + 255 - alpha;
+		}
+
+	      d += bpp;
+	    }
+
+	  data += n_components;
+	}
+
+      g_object_unref (buffer);
 
       if (! transparency_found)
         gimp_layer_flatten (projection);
@@ -1620,11 +1650,11 @@ save_image (const gchar  *filename,
             gint32        image_id,
             GError      **error)
 {
-  FILE   *fd;
-  gint32 *layers;
-  gint    nlayers;
-  gint    i;
-  GimpDrawable *drawable;
+  FILE         *fd;
+  gint32       *layers;
+  gint          nlayers;
+  gint          i;
+  GeglBuffer   *buffer;
 
   IFDBG printf (" Function: save_image\n");
 
@@ -1643,8 +1673,8 @@ save_image (const gchar  *filename,
   layers = gimp_image_get_layers (image_id, &nlayers);
   for (i = 0; i < nlayers; i++)
     {
-      drawable = gimp_drawable_get (layers[i]);
-      if (drawable->width > 30000 || drawable->height > 30000)
+      buffer = gimp_drawable_get_buffer (layers[i]);
+      if (gegl_buffer_get_width (buffer) > 30000 || gegl_buffer_get_height (buffer) > 30000)
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Unable to save '%s'.  The PSD file format does not "
@@ -1654,6 +1684,7 @@ save_image (const gchar  *filename,
           g_free (layers);
           return FALSE;
         }
+      g_object_unref (buffer);
     }
   g_free (layers);
 
