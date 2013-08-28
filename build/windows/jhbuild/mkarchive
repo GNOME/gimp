@@ -1,0 +1,83 @@
+#!/bin/bash
+
+dll_loc=${DLL_LOC:-/usr/lib/gcc/i686-w64-mingw32/4.6}
+
+add_dll (){
+	cp --reflink=auto $dll_loc/$1 ./bin/
+}
+
+dostuff (){
+	f=$1-i686-`date +%Y-%m-%d`
+
+	mkdir -p combined/$f
+	cp -R -d -L --reflink=auto ./gimp-common$3/* combined/$f
+	cp -R -d -L --reflink=auto ./$1/* combined/$f
+
+	pushd combined
+	pushd $f
+
+	mv lib/libicu*.dll bin/
+
+	rm -rf _jhbuild
+	rm -rf man
+	rm -rf share/doc
+	rm -rf share/gtk-doc
+	rm -rf share/gtk-2.0/demo
+	rm -rf share/icons
+	rm -rf share/applications
+	rm -rf share/info
+	rm -rf share/man
+	rm -rf share/gdb
+	rm -rf share/gettext
+
+	rm -f etc/gconf/2/path.jhbuild
+
+	rm -f `find -name *.exe | sed -e /gimp/d -e /gspawn/d -e /gdb.exe/d`
+
+	add_dll libstdc++-6.dll
+	add_dll libgcc_s_sjlj-1.dll
+
+	pushd bin
+	rm -f `ls | sed -e /.exe/d -e /.dll/d`
+	popd
+
+	rm -f `find -name *.html`
+	rm -f `find -name *.htm`
+	rm -f `find -name *.a`
+	rm -f `find -name *.def`
+	rm -f `find -name *.sh`
+	rm -f `find -name *.h`
+	rm -f `find -name *.c`
+	rm -f `find -name *.hxx`
+	rm -f `find -name *.pc`
+	rm -f `find -name *.m4`
+	rm -f `find -name *.manifest`
+
+	find -depth -type d -empty -exec rmdir {} \;
+
+	echo "@echo off
+SET PATH=%~dp0bin\\
+start $2" | unix2dos > run_gimp.bat
+
+	popd
+
+	if [ -e $f/bin/gimp-2.*.exe ]; then
+		7z a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on $f.7z $f
+		cat ~/bin/7z.sfx $f.7z > $f.exe
+		rm -f $f.7z
+	else
+		echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+		echo "!!            GIMP EXECUTABLE NOT FOUND                !!"
+		echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+	fi
+
+	rm -rf $f
+
+	popd
+}
+
+cd targets
+dostuff gimp-stable gimp-2.8.exe ""
+dostuff gimp-dev gimp-2.9.exe ""
+dostuff gimp-stable-dbg gimp-2.8.exe "-dbg"
+dostuff gimp-dev-dbg gimp-2.9.exe "-dbg"

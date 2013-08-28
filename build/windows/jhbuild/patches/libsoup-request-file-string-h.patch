@@ -1,0 +1,13 @@
+--- a/libsoup/soup-request-file.c	2013-03-10 12:57:01.000000000 -0400
++++ b/libsoup/soup-request-file.c	2013-06-27 14:38:43.857078461 -0400
+@@ -30,6 +30,10 @@
+ #include "soup-directory-input-stream.h"
+ #include "soup-requester.h"
+ 
++#ifdef G_OS_WIN32
++#include <string.h>
++#endif
++
+ /**
+  * SECTION:soup-request-file
+  * @short_description: SoupRequest support for "file" and "resource" URIs

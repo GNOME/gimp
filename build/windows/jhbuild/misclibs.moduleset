@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<moduleset>
+	<repository type="tarball" name="gnome.org"
+		href="http://ftp.gnome.org/pub/gnome/sources/" />
+	<repository type="tarball" name="sf.net"
+		href="http://downloads.sourceforge.net/project/" />
+	<repository type="tarball" name="pkg-isocodes"
+		href="http://pkg-isocodes.alioth.debian.org/downloads/" />
+	<repository type="tarball" name="poppler"
+		href="http://poppler.freedesktop.org/" />
+
+	<include href="gtk+.moduleset"/>
+
+<autotools id="libcroco" autogen-sh="configure">
+	<branch version="0.6.8" repo="gnome.org"
+			module="libcroco/0.6/libcroco-0.6.8.tar.xz"
+			hash="sha256:ea6e1b858c55219cefd7109756bff5bc1a774ba7a55f7d3ccd734d6b871b8570">
+	</branch>
+	<dependencies>
+		<dep package="glib2"/>
+		<dep package="libxml2"/>
+	</dependencies>
+</autotools>
+
+<autotools id="librsvg" autogen-sh="configure">
+	<branch version="2.37.0" repo="gnome.org"
+			module="librsvg/2.37/librsvg-2.37.0.tar.xz"
+			hash="sha256:06c57dbcb29369d147b4e6ff4257c42ae5120c504c30fb567a27034ee30fd835">
+	</branch>
+	<dependencies>
+		<dep package="glib2"/>
+		<dep package="gdk-pixbuf2"/>
+		<dep package="libxml2"/>
+		<dep package="cairo"/>
+		<dep package="pango"/>
+		<dep package="libcroco"/>
+	</dependencies>
+</autotools>
+
+<autotools id="lcms" autogen-sh="configure">
+	<branch version="1.19" repo="sf.net"
+			module="lcms/lcms/1.19/lcms-1.19.tar.gz"
+			hash="sha256:80ae32cb9f568af4dc7ee4d3c05a4c31fc513fc3e31730fed0ce7378237273a9">
+	</branch>
+</autotools>
+
+<autotools id="lcms2" autogen-sh="configure">
+	<branch version="2.5" repo="sf.net"
+			module="lcms/lcms/2.5/lcms2-2.5.tar.gz"
+			hash="sha256:6727772b44470a2111dba53b9ce4c952b87e7d1b72a31c5ebdf44ba6eb0aa72b">
+	</branch>
+</autotools>
+
+<autotools id="libexif" autogen-sh="configure">
+	<branch version="0.6.21" repo="sf.net"
+			module="libexif/libexif/0.6.21/libexif-0.6.21.tar.bz2"
+			hash="sha1:a52219b12dbc8d33fc096468591170fda71316c0">
+	</branch>
+</autotools>
+
+<autotools id="iso-codes" autogen-sh="configure">
+	<branch version="3.44" repo="pkg-isocodes"
+			module="iso-codes-3.44.tar.xz"
+			hash="sha1:628300675948a637ebd69b21673df73a0fbe1cf4">
+	</branch>
+</autotools>
+
+<autotools id="libwmf" autogen-sh=" || (make clean || true); ./configure">
+	<branch version="0.2.8.4" repo="sf.net"
+			module="wvware/libwmf/0.2.8.4/libwmf-0.2.8.4.tar.gz"
+			hash="sha1:822ab3bd0f5e8f39ad732f2774a8e9f18fc91e89">
+		<!-- sigh... upstream practically gone... so many patches. -->
+		<!-- from OBS -->
+		<patch file="libwmf/libwmf-0.2.8.3-nodocs.patch" strip="1"/>
+		<patch file="libwmf/libwmf-0.2.8.3-relocatablefonts.patch" strip="1"/>
+		<patch file="libwmf/libwmf-0.2.8.4-intoverflow.patch" strip="1"/>
+		<patch file="libwmf/libwmf-0.2.8.4-multiarchdevel.patch" strip="1"/>
+		<patch file="libwmf/libwmf-0.2.8.4-deps.patch" strip="1"/>
+		<patch file="libwmf/libwmf-0.2.8.4-reducesymbols.patch" strip="1"/>
+		<patch file="libwmf/libwmf-0.2.8.4-fallbackfont.patch" strip="1"/>
+		<patch file="libwmf/libwmf-0.2.8.4-useafterfree.patch" strip="1"/>
+		<!-- from archlinux -->
+		<patch file="libwmf/libwmf-0.2.8.4-libpng-1.5.patch" strip="1"/>
+	</branch>
+	<dependencies>
+		<dep package="freetype2"/>
+		<dep package="zlib"/>
+		<dep package="libpng"/>
+		<dep package="libjpeg-turbo"/>
+	</dependencies>
+</autotools>
+
+<autotools id="ghostscript" makeargs="so" makeinstallargs="soinstall">
+	<branch version="8.71" repo="sf.net"
+			module="ghostscript/GPL%20Ghostscript/8.71/ghostscript-8.71.tar.xz"
+			hash="sha1:aa2df7ba23abdfe95d36acec7333eac51768c47d">
+		<!-- From OBS -->
+		<patch file="ghostscript-8.71-windows.patch" strip="1"/>
+		<!-- Local patch: -->
+		<patch file="ghostscript-change-install-paths.patch" strip="1"/>
+	</branch>
+	<dependencies>
+		<dep package="libtiff"/>
+	</dependencies>
+</autotools>
+
+<autotools id="poppler" autogen-sh="configure">
+	<branch version="0.22.5" repo="poppler"
+			module="poppler-0.22.5.tar.gz"
+			hash="sha1:9491bb33788d7f0ee67da572dc4798004f98323a">
+	</branch>
+	<dependencies>
+		<dep package="freetype2"/>
+		<dep package="imglibs"/>
+		<dep package="cairo"/>
+	</dependencies>
+</autotools>
+
+</moduleset>

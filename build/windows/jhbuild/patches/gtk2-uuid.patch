@@ -1,0 +1,30 @@
+From be65810b445b429e5db935c8cf8cb1639dcd9356 Mon Sep 17 00:00:00 2001
+From: Hib Eris <hib@hiberis.nl>
+Date: Mon, 13 May 2013 15:45:18 +0200
+Subject: [PATCH] Define INITGUID only for mingw.org compiler
+
+Defining INITGUID causes a build failure with mingw-w64 > r5589.
+
+https://bugzilla.gnome.org/show_bug.cgi?id=699673
+---
+ gdk/win32/gdkdnd-win32.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/gdk/win32/gdkdnd-win32.c b/gdk/win32/gdkdnd-win32.c
+index 35ab204..6b35059 100644
+--- a/gdk/win32/gdkdnd-win32.c
++++ b/gdk/win32/gdkdnd-win32.c
+@@ -68,7 +68,11 @@
+  *
+  */
+  
++/* The mingw.org compiler does not export GUIDS in it's import library. To work
++ * around that, define INITGUID to have the GUIDS declared. */
++#if defined(__MINGW32__) && !defined(__MINGW64_VERSION_MAJOR)
+ #define INITGUID
++#endif
+ 
+ #include "gdkdnd.h"
+ #include "gdkproperty.h"
+-- 
+1.8.1.2

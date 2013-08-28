@@ -1,0 +1,31 @@
+--- a/autogen.sh	2012-12-28 01:35:14.039456371 -0500
++++ b/autogen.sh	2012-12-28 20:52:50.687399680 -0500
+@@ -0,0 +1,28 @@
++#! /bin/sh
++
++# Allow invocation from a separate build directory; in that case, we change
++# to the source directory to run the auto*, then change back before running configure
++srcdir=`dirname $0`
++test -z "$srcdir" && srcdir=.
++
++ORIGDIR=`pwd`
++cd $srcdir
++
++rm -f $top_srcdir/autom4te.cache
++
++touch README INSTALL
++
++Tools/gtk/override-feature-defines $ORIGDIR
++
++if test -z `which autoreconf`; then
++    echo "Error: autoreconf not found, please install it."
++    exit 1
++fi
++autoreconf --verbose --install -I Source/autotools $ACLOCAL_FLAGS|| exit $?
++
++cd $ORIGDIR || exit 1
++
++if test -z "$NOCONFIGURE"; then
++    $srcdir/configure $AUTOGEN_CONFIGURE_ARGS "$@" || exit $?
++fi
++

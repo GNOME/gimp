@@ -1,0 +1,6 @@
+ac_cv_alignof_guint32=${ac_cv_alignof_guint32=4}
+ac_cv_alignof_guint64=${ac_cv_alignof_guint64=8}
+ac_cv_alignof_unsigned_long=${ac_cv_alignof_unsigned_long=4}
+
+glib_cv_long_long_format=I64
+glib_cv_stack_grows=no

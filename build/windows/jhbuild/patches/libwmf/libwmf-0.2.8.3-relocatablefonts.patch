@@ -1,0 +1,36 @@
+diff -r -u libwmf-0.2.8.3.old/configure.in libwmf-0.2.8.3/configure.in
+--- libwmf-0.2.8.3.old/configure.in	2004-02-10 12:47:44.000000000 +0000
++++ libwmf-0.2.8.3/configure.in	2004-05-20 14:16:15.804198513 +0100
+@@ -764,14 +764,15 @@
+ 	fi
+ ])
+ 
+-AC_ARG_WITH(fontdir,[  --with-fontdir=DIR      install Type1 fonts in DIR],[
+-	WMF_FONTDIR=$withval
+-],[	if test "x$prefix" = "xNONE"; then
+-		WMF_FONTDIR=$ac_default_prefix/share/$PACKAGE/fonts
+-	else
+-		WMF_FONTDIR=$prefix/share/$PACKAGE/fonts
+-	fi
+-])
++#AC_ARG_WITH(fontdir,[  --with-fontdir=DIR      install Type1 fonts in DIR],[
++#	WMF_FONTDIR=$withval
++#],[	if test "x$prefix" = "xNONE"; then
++#		WMF_FONTDIR=$ac_default_prefix/share/$PACKAGE/fonts
++#	else
++#		WMF_FONTDIR=$prefix/share/$PACKAGE/fonts
++#	fi
++#])
++WMF_FONTDIR=$datadir/$PACKAGE/fonts
+ 
+ AC_ARG_WITH(sysfontmap,[  --with-sysfontmap=FILE  [default is /usr/share/fonts/fontmap]],[
+ 	WMF_SYS_FONTMAP=$withval
+diff -r -u libwmf-0.2.8.3.old/fonts/Makefile.am libwmf-0.2.8.3/fonts/Makefile.am
+--- libwmf-0.2.8.3.old/fonts/Makefile.am	2001-08-11 15:49:27.000000000 +0100
++++ libwmf-0.2.8.3/fonts/Makefile.am	2004-05-20 14:17:22.970701362 +0100
+@@ -1,4 +1,4 @@
+-fontdir = @WMF_FONTDIR@
++fontdir = $(datadir)/libwmf/fonts/
+ 
+ bin_SCRIPTS = libwmf-fontmap
+ 

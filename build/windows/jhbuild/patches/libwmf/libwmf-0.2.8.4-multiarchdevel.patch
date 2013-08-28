@@ -1,0 +1,130 @@
+--- libwmf-0.2.8.4.orig/configure.in	2006-05-02 09:08:35.000000000 +0100
++++ libwmf-0.2.8.4/configure.in	2006-05-02 09:21:10.000000000 +0100
+@@ -884,7 +884,7 @@
+ src/extra/gd/Makefile
+ src/ipa/Makefile
+ src/convert/Makefile
+-libwmf-config
++libwmf.pc
+ libwmf.spec
+ ])
+ 
+--- /dev/null	2006-04-29 13:38:37.035974750 +0100
++++ libwmf-0.2.8.4/libwmf-config	2006-05-02 09:20:49.000000000 +0100
+@@ -0,0 +1,91 @@
++#!/bin/sh
++
++exec_prefix_set=no
++
++prefix=`pkg-config --variable=prefix libwmf`
++exec_prefix=`pkg-config --variable=exec_prefix libwmf`
++
++usage()
++{
++	cat <<EOF
++Usage: libwmf-config [OPTIONS] [LIBRARIES]
++Options:
++	[--prefix[=DIR]]
++	[--exec-prefix[=DIR]]
++	[--version]
++	[--libs]
++	[--cflags]
++Libraries/Headers:
++	gd
++	wmf
++EOF
++	exit $1
++}
++
++if test $# -eq 0; then
++	usage 1 1>&2
++fi
++
++lib_gd=no
++lib_wmf=yes
++
++while test $# -gt 0; do
++  case "$1" in
++  -*=*) optarg=`echo "$1" | sed 's/[-_a-zA-Z0-9]*=//'` ;;
++  *) optarg= ;;
++  esac
++
++  case $1 in
++    --prefix=*)
++      prefix=$optarg
++      if test $exec_prefix_set = no ; then
++        exec_prefix=$optarg
++      fi
++      ;;
++    --prefix)
++      echo_prefix=yes
++      ;;
++    --exec-prefix=*)
++      exec_prefix=$optarg
++      exec_prefix_set=yes
++      ;;
++    --exec-prefix)
++      echo_exec_prefix=yes
++      ;;
++    --version)
++      pkg-config --modversion libwmf
++      ;;
++    --cflags)
++      echo_cflags=yes
++      ;;
++    --libs)
++      echo_libs=yes
++      ;;
++    gd)
++      lib_gd=yes
++      ;;
++    wmf)
++      lib_wmf=yes
++      ;;
++    *)
++      usage 1 1>&2
++      ;;
++  esac
++  shift
++done
++
++if test "$echo_prefix" = "yes"; then
++	echo $prefix
++fi
++
++if test "$echo_exec_prefix" = "yes"; then
++	echo $exec_prefix
++fi
++
++if test "$echo_cflags" = "yes"; then
++    pkg-config --cflags libwmf
++fi
++
++if test "$echo_libs" = "yes"; then
++    pkg-config --libs libwmf
++fi      
+--- /dev/null	2006-04-29 13:38:37.035974750 +0100
++++ libwmf-0.2.8.4/libwmf.pc.in	2006-05-02 09:21:24.000000000 +0100
+@@ -0,0 +1,10 @@
++prefix=@prefix@
++exec_prefix=@exec_prefix@
++libdir=@libdir@
++includedir=@includedir@
++
++Name: libwmf
++Description: A library for reading and converting Windows MetaFile vector graphics (WMF)
++Version: @LIBWMF_VERSION@
++Libs: -lwmf -lwmflite @WMF_LIBFLAGS@
++Cflags: @WMF_CONFIG_CFLAGS@
+--- libwmf-0.2.8.4.orig/Makefile.am	2006-05-02 09:08:35.000000000 +0100
++++ libwmf-0.2.8.4/Makefile.am	2006-05-02 09:28:34.000000000 +0100
+@@ -10,6 +10,9 @@
+ 
+ bin_SCRIPTS = libwmf-config
+ 
++pkgconfigdir = $(libdir)/pkgconfig
++pkgconfig_DATA = libwmf.pc
++
+ WMFEXAMPLES = \
+ 	examples/2doorvan.wmf \
+ 	examples/Eg.wmf \

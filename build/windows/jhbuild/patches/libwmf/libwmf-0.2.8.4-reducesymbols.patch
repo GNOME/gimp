@@ -1,0 +1,520 @@
+diff -ru libwmf-0.2.8.4/src/extra/gd/gd.c libwmf-0.2.8.4.symbols/src/extra/gd/gd.c
+--- libwmf-0.2.8.4/src/extra/gd/gd.c	2005-07-27 21:35:05.000000000 +0100
++++ libwmf-0.2.8.4.symbols/src/extra/gd/gd.c	2006-11-16 12:27:05.000000000 +0000
+@@ -249,6 +249,7 @@
+   }
+ HWBType;
+ 
++#if 0
+ static HWBType *
+ RGB_to_HWB (RGBType RGB, HWBType * HWB)
+ {
+@@ -308,7 +309,6 @@
+   return diff;
+ }
+ 
+-#if 0
+ /*
+  * This is not actually used, but is here for completeness, in case someone wants to
+  * use the HWB stuff for anything else...
+@@ -355,6 +355,7 @@
+ }
+ #endif
+ 
++#if 0
+ int
+ gdImageColorClosestHWB (gdImagePtr im, int r, int g, int b)
+ {
+@@ -384,6 +385,7 @@
+     }
+   return ct;
+ }
++#endif
+ 
+ int
+ gdImageColorExact (gdImagePtr im, int r, int g, int b)
+@@ -677,7 +679,7 @@
+     }
+ }
+ 
+-int
++static int
+ gdImageGetTrueColorPixel (gdImagePtr im, int x, int y)
+ {
+   int p = gdImageGetPixel (im, x, y);
+@@ -1286,11 +1288,11 @@
+   return len;
+ }
+ 
+-#ifndef HAVE_LSQRT
++#if 0
+ /* If you don't have a nice square root function for longs, you can use
+    ** this hack
+  */
+-long
++static long
+ lsqrt (long n)
+ {
+   long result = (long) sqrt ((double) n);
+@@ -2250,7 +2252,7 @@
+     }
+ }
+ 
+-int gdCompareInt (const void *a, const void *b);
++static int gdCompareInt (const void *a, const void *b);
+ 
+ /* THANKS to Kirsten Schulz for the polygon fixes! */
+ 
+diff -ru libwmf-0.2.8.4/src/extra/gd/gdcache.h libwmf-0.2.8.4.symbols/src/extra/gd/gdcache.h
+--- libwmf-0.2.8.4/src/extra/gd/gdcache.h	2001-08-21 15:40:33.000000000 +0100
++++ libwmf-0.2.8.4.symbols/src/extra/gd/gdcache.h	2006-11-16 12:13:40.000000000 +0000
+@@ -41,6 +41,9 @@
+ /*********************************************************/
+ 
+ /* #include <malloc.h> */
++
++#pragma GCC visibility push(hidden)
++
+ #ifndef NULL
+ #define NULL (void *)0
+ #endif
+@@ -81,3 +84,5 @@
+ 
+ void *
+ gdCacheGet( gdCache_head_t *head, void *keydata );
++
++#pragma GCC visibility pop
+diff -ru libwmf-0.2.8.4/src/extra/gd/gd_clip.h libwmf-0.2.8.4.symbols/src/extra/gd/gd_clip.h
+--- libwmf-0.2.8.4/src/extra/gd/gd_clip.h	2001-03-28 10:37:30.000000000 +0100
++++ libwmf-0.2.8.4.symbols/src/extra/gd/gd_clip.h	2006-11-16 12:11:49.000000000 +0000
+@@ -1,6 +1,8 @@
+ #ifndef GD_CLIP_H
+ #define GD_CLIP_H 1
+ 
++#pragma GCC visibility push(hidden)
++
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
+@@ -23,4 +25,6 @@
+ }
+ #endif
+ 
++#pragma GCC visibility pop
++
+ #endif /* GD_CLIP_H */
+diff -ru libwmf-0.2.8.4/src/extra/gd/gdfontg.h libwmf-0.2.8.4.symbols/src/extra/gd/gdfontg.h
+--- libwmf-0.2.8.4/src/extra/gd/gdfontg.h	2001-03-28 10:37:30.000000000 +0100
++++ libwmf-0.2.8.4.symbols/src/extra/gd/gdfontg.h	2006-11-16 12:12:03.000000000 +0000
+@@ -2,6 +2,8 @@
+ #ifndef _GDFONTG_H_
+ #define _GDFONTG_H_ 1
+ 
++#pragma GCC visibility push(hidden)
++
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
+@@ -25,5 +27,7 @@
+ }
+ #endif
+ 
++#pragma GCC visibility pop
++
+ #endif
+ 
+diff -ru libwmf-0.2.8.4/src/extra/gd/gdfontl.h libwmf-0.2.8.4.symbols/src/extra/gd/gdfontl.h
+--- libwmf-0.2.8.4/src/extra/gd/gdfontl.h	2001-03-28 10:37:30.000000000 +0100
++++ libwmf-0.2.8.4.symbols/src/extra/gd/gdfontl.h	2006-11-16 12:12:11.000000000 +0000
+@@ -2,6 +2,8 @@
+ #ifndef _GDFONTL_H_
+ #define _GDFONTL_H_ 1
+ 
++#pragma GCC visibility push(hidden)
++
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
+@@ -26,5 +28,7 @@
+ }
+ #endif
+ 
++#pragma GCC visibility pop
++
+ #endif
+ 
+diff -ru libwmf-0.2.8.4/src/extra/gd/gdfontmb.h libwmf-0.2.8.4.symbols/src/extra/gd/gdfontmb.h
+--- libwmf-0.2.8.4/src/extra/gd/gdfontmb.h	2001-03-28 10:37:30.000000000 +0100
++++ libwmf-0.2.8.4.symbols/src/extra/gd/gdfontmb.h	2006-11-16 12:12:19.000000000 +0000
+@@ -2,6 +2,8 @@
+ #ifndef _GDFONTMB_H_
+ #define _GDFONTMB_H_ 1
+ 
++#pragma GCC visibility push(hidden)
++
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
+@@ -24,5 +26,7 @@
+ }
+ #endif
+ 
++#pragma GCC visibility pop
++
+ #endif
+ 
+diff -ru libwmf-0.2.8.4/src/extra/gd/gdfonts.h libwmf-0.2.8.4.symbols/src/extra/gd/gdfonts.h
+--- libwmf-0.2.8.4/src/extra/gd/gdfonts.h	2001-03-28 10:37:30.000000000 +0100
++++ libwmf-0.2.8.4.symbols/src/extra/gd/gdfonts.h	2006-11-16 12:12:28.000000000 +0000
+@@ -2,6 +2,8 @@
+ #ifndef _GDFONTS_H_
+ #define _GDFONTS_H_ 1
+ 
++#pragma GCC visibility push(hidden)
++
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
+@@ -24,5 +26,7 @@
+ }
+ #endif
+ 
++#pragma GCC visibility pop
++
+ #endif
+ 
+diff -ru libwmf-0.2.8.4/src/extra/gd/gdfontt.h libwmf-0.2.8.4.symbols/src/extra/gd/gdfontt.h
+--- libwmf-0.2.8.4/src/extra/gd/gdfontt.h	2001-03-28 10:37:30.000000000 +0100
++++ libwmf-0.2.8.4.symbols/src/extra/gd/gdfontt.h	2006-11-16 12:12:36.000000000 +0000
+@@ -2,6 +2,8 @@
+ #ifndef _GDFONTT_H_
+ #define _GDFONTT_H_ 1
+ 
++#pragma GCC visibility push(hidden)
++
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
+@@ -25,5 +27,7 @@
+ }
+ #endif
+ 
++#pragma GCC visibility pop
++
+ #endif
+ 
+diff -ru libwmf-0.2.8.4/src/extra/gd/gdft.c libwmf-0.2.8.4.symbols/src/extra/gd/gdft.c
+--- libwmf-0.2.8.4/src/extra/gd/gdft.c	2005-07-27 21:35:05.000000000 +0100
++++ libwmf-0.2.8.4.symbols/src/extra/gd/gdft.c	2006-11-16 12:24:50.000000000 +0000
+@@ -533,7 +533,7 @@
+ }
+ 
+ /* draw_bitmap - transfers glyph bitmap to GD image */
+-/* static */ char *
++static char *
+ gdft_draw_bitmap (gdImage * im, int fg, FT_Bitmap bitmap, int pen_x, int pen_y)
+ {
+   unsigned char *pixel = 0;
+@@ -643,7 +643,7 @@
+   return (char *) NULL;
+ }
+ 
+-int
++static int
+ gdroundupdown (FT_F26Dot6 v1, int updown)
+ {
+   return (!updown)
+@@ -651,7 +651,9 @@
+     : (v1 > 0 ? ((v1 + 63) >> 6) : v1 >> 6);
+ }
+ 
++#pragma GCC visibility push(hidden)
+ extern int any2eucjp (char *, char *, unsigned int);
++#pragma GCC visibility pop
+ 
+ /********************************************************************/
+ /* gdImageStringFT -  render a utf8 string onto a gd image          */
+diff -ru libwmf-0.2.8.4/src/extra/gd/gd_gd2.c libwmf-0.2.8.4.symbols/src/extra/gd/gd_gd2.c
+--- libwmf-0.2.8.4/src/extra/gd/gd_gd2.c	2005-07-27 21:35:05.000000000 +0100
++++ libwmf-0.2.8.4.symbols/src/extra/gd/gd_gd2.c	2006-11-16 12:21:28.000000000 +0000
+@@ -34,8 +34,10 @@
+   }
+ t_chunk_info;
+ 
++#pragma GCC visibility push(hidden)
+ extern int _gdGetColors (gdIOCtx * in, gdImagePtr im, int gd2xFlag);
+ extern void _gdPutColors (gdImagePtr im, gdIOCtx * out);
++#pragma GCC visibility pop
+ 
+ /* */
+ /* Read the extra info in the gd2 header. */
+diff -ru libwmf-0.2.8.4/src/extra/gd/gd_gd.c libwmf-0.2.8.4.symbols/src/extra/gd/gd_gd.c
+--- libwmf-0.2.8.4/src/extra/gd/gd_gd.c	2005-07-27 21:35:05.000000000 +0100
++++ libwmf-0.2.8.4.symbols/src/extra/gd/gd_gd.c	2006-11-16 12:21:43.000000000 +0000
+@@ -11,6 +11,11 @@
+ /* Exported functions: */
+ extern void gdImageGd (gdImagePtr im, FILE * out);
+ 
++#pragma GCC visibility push(hidden)
++int _gdGetColors (gdIOCtx * in, gdImagePtr im, int gd2xFlag);
++void _gdPutColors (gdImagePtr im, gdIOCtx * out);
++#pragma GCC visibility pop
++
+ 
+ /* Use this for commenting out debug-print statements. */
+ /* Just use the first '#define' to allow all the prints... */
+diff -ru libwmf-0.2.8.4/src/extra/gd/gd.h libwmf-0.2.8.4.symbols/src/extra/gd/gd.h
+--- libwmf-0.2.8.4/src/extra/gd/gd.h	2002-12-05 20:09:11.000000000 +0000
++++ libwmf-0.2.8.4.symbols/src/extra/gd/gd.h	2006-11-16 12:14:11.000000000 +0000
+@@ -25,6 +25,8 @@
+ #include <gd_io.h>
+ #include <gd_clip.h>
+ 
++#pragma GCC visibility push(hidden)
++
+ /* The maximum number of palette entries in palette-based images.
+ 	In the wonderful new world of gd 2.0, you can of course have
+ 	many more colors when using truecolor mode. */
+@@ -497,6 +499,8 @@
+ /* resolution affects ttf font rendering, particularly hinting */
+ #define GD_RESOLUTION           96      /* pixels per inch */
+ 
++#pragma GCC visibility pop
++
+ #ifdef __cplusplus
+ }
+ #endif
+diff -ru libwmf-0.2.8.4/src/extra/gd/gdhelpers.h libwmf-0.2.8.4.symbols/src/extra/gd/gdhelpers.h
+--- libwmf-0.2.8.4/src/extra/gd/gdhelpers.h	2001-03-28 10:37:31.000000000 +0100
++++ libwmf-0.2.8.4.symbols/src/extra/gd/gdhelpers.h	2006-11-16 12:12:55.000000000 +0000
+@@ -1,6 +1,8 @@
+ #ifndef GDHELPERS_H 
+ #define GDHELPERS_H 1
+ 
++#pragma GCC visibility push(hidden)
++
+ /* TBB: strtok_r is not universal; provide an implementation of it. */
+ 
+ extern char *gd_strtok_r(char *s, char *sep, char **state);
+@@ -13,5 +15,7 @@
+ void *gdMalloc(size_t size);
+ void *gdRealloc(void *ptr, size_t size);
+ 
++#pragma GCC visibility pop
++
+ #endif /* GDHELPERS_H */
+ 
+diff -ru libwmf-0.2.8.4/src/extra/gd/gd_io.h libwmf-0.2.8.4.symbols/src/extra/gd/gd_io.h
+--- libwmf-0.2.8.4/src/extra/gd/gd_io.h	2001-03-28 10:37:30.000000000 +0100
++++ libwmf-0.2.8.4.symbols/src/extra/gd/gd_io.h	2006-11-16 12:13:08.000000000 +0000
+@@ -2,6 +2,8 @@
+ #define GD_IO_H 1
+ 
+ #include <stdio.h>
++
++#pragma GCC visibility push(hidden)
+  
+ typedef struct gdIOCtx {
+ 	int	(*getC)(struct gdIOCtx*);
+@@ -36,4 +38,6 @@
+ int gdSeek(gdIOCtx *ctx, const int);
+ long gdTell(gdIOCtx *ctx);
+ 
++#pragma GCC visibility pop
++
+ #endif
+diff -ru libwmf-0.2.8.4/src/extra/gd/gd_jpeg.c libwmf-0.2.8.4.symbols/src/extra/gd/gd_jpeg.c
+--- libwmf-0.2.8.4/src/extra/gd/gd_jpeg.c	2005-07-27 21:35:06.000000000 +0100
++++ libwmf-0.2.8.4.symbols/src/extra/gd/gd_jpeg.c	2006-11-16 12:28:13.000000000 +0000
+@@ -99,7 +99,7 @@
+   return rv;
+ }
+ 
+-void jpeg_gdIOCtx_dest (j_compress_ptr cinfo, gdIOCtx * outfile);
++static void jpeg_gdIOCtx_dest (j_compress_ptr cinfo, gdIOCtx * outfile);
+ 
+ void
+ gdImageJpegCtx (gdImagePtr im, gdIOCtx * outfile, int quality)
+@@ -266,7 +266,7 @@
+   return im;
+ }
+ 
+-void
++static void
+   jpeg_gdIOCtx_src (j_decompress_ptr cinfo,
+ 		    gdIOCtx * infile);
+ 
+@@ -511,7 +511,7 @@
+  * before any data is actually read.
+  */
+ 
+-void
++static void
+ init_source (j_decompress_ptr cinfo)
+ {
+   my_src_ptr src = (my_src_ptr) cinfo->src;
+@@ -559,7 +559,7 @@
+ 
+ #define END_JPEG_SEQUENCE "\r\n[*]--:END JPEG:--[*]\r\n"
+ 
+-safeboolean
++static safeboolean
+ fill_input_buffer (j_decompress_ptr cinfo)
+ {
+   my_src_ptr src = (my_src_ptr) cinfo->src;
+@@ -627,7 +627,7 @@
+  * buffer is the application writer's problem.
+  */
+ 
+-void
++static void
+ skip_input_data (j_decompress_ptr cinfo, long num_bytes)
+ {
+   my_src_ptr src = (my_src_ptr) cinfo->src;
+@@ -669,7 +669,7 @@
+  * for error exit.
+  */
+ 
+-void
++static void
+ term_source (j_decompress_ptr cinfo)
+ {
+   
+@@ -742,7 +742,7 @@
+  * before any data is actually written.
+  */
+ 
+-void
++static void
+ init_destination (j_compress_ptr cinfo)
+ {
+   my_dest_ptr dest = (my_dest_ptr) cinfo->dest;
+@@ -780,7 +780,7 @@
+  * write it out when emptying the buffer externally.
+  */
+ 
+-safeboolean
++static safeboolean
+ empty_output_buffer (j_compress_ptr cinfo)
+ {
+   my_dest_ptr dest = (my_dest_ptr) cinfo->dest;
+@@ -805,7 +805,7 @@
+  * for error exit.
+  */
+ 
+-void
++static void
+ term_destination (j_compress_ptr cinfo)
+ {
+   my_dest_ptr dest = (my_dest_ptr) cinfo->dest;
+diff -ru libwmf-0.2.8.4/src/extra/gd/gdkanji.c libwmf-0.2.8.4.symbols/src/extra/gd/gdkanji.c
+--- libwmf-0.2.8.4/src/extra/gd/gdkanji.c	2001-05-19 14:09:34.000000000 +0100
++++ libwmf-0.2.8.4.symbols/src/extra/gd/gdkanji.c	2006-11-16 12:29:42.000000000 +0000
+@@ -555,6 +555,11 @@
+   return kanji;
+ }
+ 
++#pragma GCC visibility push(hidden)
++int
++any2eucjp (unsigned char *dest, unsigned char *src, unsigned int dest_max);
++#pragma GCC visibility pop
++
+ int
+ any2eucjp (unsigned char *dest, unsigned char *src, unsigned int dest_max)
+ {
+diff -ru libwmf-0.2.8.4/src/extra/gd/gd_topal.c libwmf-0.2.8.4.symbols/src/extra/gd/gd_topal.c
+--- libwmf-0.2.8.4/src/extra/gd/gd_topal.c	2005-07-27 21:35:06.000000000 +0100
++++ libwmf-0.2.8.4.symbols/src/extra/gd/gd_topal.c	2006-11-16 12:25:45.000000000 +0000
+@@ -1129,7 +1129,7 @@
+  * Map some rows of pixels to the output colormapped representation.
+  */
+ 
+-void
++static void
+ pass2_no_dither (gdImagePtr im, my_cquantize_ptr cquantize)
+ /* This version performs no dithering */
+ {
+@@ -1217,7 +1217,7 @@
+ #endif
+ 
+ 
+-void
++static void
+ pass2_fs_dither (gdImagePtr im, my_cquantize_ptr cquantize)
+ 
+ /* This version performs Floyd-Steinberg dithering */
+diff -ru libwmf-0.2.8.4/src/extra/gd/gd_wbmp.c libwmf-0.2.8.4.symbols/src/extra/gd/gd_wbmp.c
+--- libwmf-0.2.8.4/src/extra/gd/gd_wbmp.c	2001-05-19 14:09:34.000000000 +0100
++++ libwmf-0.2.8.4.symbols/src/extra/gd/gd_wbmp.c	2006-11-16 12:28:33.000000000 +0000
+@@ -67,7 +67,7 @@
+    ** Wrapper around gdPutC for use with writewbmp
+    **
+  */
+-void
++static void
+ gd_putout (int i, void *out)
+ {
+   gdPutC (i, (gdIOCtx *) out);
+@@ -79,7 +79,7 @@
+    ** Wrapper around gdGetC for use with readwbmp
+    **
+  */
+-int
++static int
+ gd_getin (void *in)
+ {
+   return (gdGetC ((gdIOCtx *) in));
+diff -ru libwmf-0.2.8.4/src/extra/gd/gdxpm.c libwmf-0.2.8.4.symbols/src/extra/gd/gdxpm.c
+--- libwmf-0.2.8.4/src/extra/gd/gdxpm.c	2001-05-19 14:09:34.000000000 +0100
++++ libwmf-0.2.8.4.symbols/src/extra/gd/gdxpm.c	2006-11-16 12:18:29.000000000 +0000
+@@ -10,6 +10,7 @@
+ #include "gd.h"
+ #include "gdhelpers.h"
+ 
++#if 0
+ #ifndef HAVE_XPM
+ gdImagePtr
+ gdImageCreateFromXpm (char *filename)
+@@ -146,3 +147,4 @@
+   return (im);
+ }
+ #endif
++#endif
+diff -ru libwmf-0.2.8.4/src/extra/gd/jisx0208.h libwmf-0.2.8.4.symbols/src/extra/gd/jisx0208.h
+--- libwmf-0.2.8.4/src/extra/gd/jisx0208.h	2001-03-28 10:37:35.000000000 +0100
++++ libwmf-0.2.8.4.symbols/src/extra/gd/jisx0208.h	2006-11-16 12:13:19.000000000 +0000
+@@ -1,5 +1,8 @@
+ #ifndef JISX0208_H
+ #define JISX0208_H
++
++#pragma GCC visibility push(hidden)
++
+ /* This file was derived from "src/VF_Ftype.c" in VFlib2-2.24.2
+    by Dr. Kakugawa */
+ 
+@@ -1202,4 +1205,6 @@
+ 0x2170, 0x2171, 0x2172, 0x2173, 0x2174, 0x2175, 0x2176, 0x2177,
+ 0x2178, 0x2179, 0xFFE2, 0xFFE4, 0xFF07, 0xFF02}};
+ 
++#pragma GCC visibility pop
++
+ #endif /* JISX0208_H */
+diff -ru libwmf-0.2.8.4/src/extra/gd/wbmp.h libwmf-0.2.8.4.symbols/src/extra/gd/wbmp.h
+--- libwmf-0.2.8.4/src/extra/gd/wbmp.h	2001-03-28 10:37:37.000000000 +0100
++++ libwmf-0.2.8.4.symbols/src/extra/gd/wbmp.h	2006-11-16 12:14:19.000000000 +0000
+@@ -12,6 +12,8 @@
+ #ifndef __WBMP_H
+ #define __WBMP_H	1
+ 
++#pragma GCC visibility push(hidden)
++
+ 
+ /* WBMP struct
+ ** -----------
+@@ -44,4 +46,6 @@
+ void    freewbmp( Wbmp *wbmp );
+ void    printwbmp( Wbmp *wbmp );  
+ 
++#pragma GCC visibility pop
++
+ #endif

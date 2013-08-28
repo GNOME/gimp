@@ -1,0 +1,29 @@
+diff -ru libwmf-0.2.8.3.orig/Makefile.am libwmf-0.2.8.3/Makefile.am
+--- libwmf-0.2.8.3.orig/Makefile.am	2002-12-05 17:09:53.000000000 +0000
++++ libwmf-0.2.8.3/Makefile.am	2004-06-11 13:28:56.149819830 +0100
+@@ -1,10 +1,10 @@
+ if LIBWMF_BUILD_ALL
+-DIRHEAVY = . src include fonts doc
++DIRHEAVY = . src include fonts
+ else
+ DIRHEAVY = . src include
+ endif
+ 
+-DIST_SUBDIRS = . src include fonts doc
++DIST_SUBDIRS = . src include fonts
+ 
+ SUBDIRS = $(DIRHEAVY)
+
+--- libwmf-0.2.8.4.orig/Makefile.in	2005-07-28 09:46:20.000000000 +0100
++++ libwmf-0.2.8.4/Makefile.in	2005-07-28 09:46:29.000000000 +0100
+@@ -231,8 +231,8 @@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+ @LIBWMF_BUILD_ALL_FALSE@DIRHEAVY = . src include
+-@LIBWMF_BUILD_ALL_TRUE@DIRHEAVY = . src include fonts doc
+-DIST_SUBDIRS = . src include fonts doc
++@LIBWMF_BUILD_ALL_TRUE@DIRHEAVY = . src include fonts
++DIST_SUBDIRS = . src include fonts
+ SUBDIRS = $(DIRHEAVY)
+ bin_SCRIPTS = libwmf-config
+ WMFEXAMPLES = \

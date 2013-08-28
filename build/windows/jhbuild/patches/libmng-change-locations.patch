@@ -1,0 +1,19 @@
+--- a/makefiles/makefile.mingwdll	2013-01-06 19:22:47.420140000 -0500
++++ b/makefiles/makefile.mingwdll	2013-01-06 19:23:21.192600233 -0500
+@@ -12,14 +12,14 @@
+ # outputs
+ LIBMNG_A   = libmng.dll.a
+ LIBMNG_DLL   = libmng-1.dll
+-INSTALL_PREFIX = C:/MinGW/
++INSTALL_PREFIX = $(DESTDIR)/$(PREFIX)
+ # maybe you sould replace with anti-slashes
+ 
+ # default build options
+ OPTIONS = -DMNG_BUILD_DLL -DMNG_ACCESS_CHUNKS -DMNG_STORE_CHUNKS
+ 
+ # Where the zlib library and include files are located
+-ZLIBLIB=-lz
++ZLIBLIB=-L$(PREFIX)/lib -lz
+ #ZLIBLIB=-L../zlib -lz
+ #ZLIBINC=-I../zlib
+ 

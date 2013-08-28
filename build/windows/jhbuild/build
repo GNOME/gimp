@@ -1,0 +1,6 @@
+#!/bin/sh
+set -e
+
+chmod a-w win32.cache
+jhbuild --file=build.jhbuildrc $*
+chmod u+w win32.cache

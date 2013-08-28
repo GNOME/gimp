@@ -1,0 +1,11 @@
+--- a/source/Makefile.in	2012-12-17 13:17:16.000000000 -0500
++++ b/source/Makefile.in	2012-12-28 14:16:07.628294189 -0500
+@@ -21,6 +21,8 @@
+ docsrchdir = $(docfilesdir)/search
+ docsrchfiles = $(docsrchdir)/*
+ 
++unexport TARGET
++
+ ##
+ 
+ ## Build directory information

@@ -1,0 +1,10 @@
+--- libwmf-0.2.8.4/src/extra/gd/gd_clip.c.CVE-2009-1364-im-clip-list	2009-04-24 04:06:44.000000000 -0400
++++ libwmf-0.2.8.4/src/extra/gd/gd_clip.c	2009-04-24 04:08:30.000000000 -0400
+@@ -70,6 +70,7 @@ void gdClipSetAdd(gdImagePtr im,gdClipRe
+ 	{	more = gdRealloc (im->clip->list,(im->clip->max + 8) * sizeof (gdClipRectangle));
+ 		if (more == 0) return;
+ 		im->clip->max += 8;
++                im->clip->list = more;
+ 	}
+ 	im->clip->list[im->clip->count] = (*rect);
+ 	im->clip->count++;

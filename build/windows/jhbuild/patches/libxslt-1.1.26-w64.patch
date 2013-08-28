@@ -1,0 +1,24 @@
+diff -ur libxslt-1.1.26/configure.in libxslt-1.1.26/configure.in
+--- libxslt-1.1.26/configure.in	2009-09-24 16:27:30.000000000 +0200
++++ libxslt-1.1.26/configure.in	2009-11-11 17:51:06.000000000 +0100
+@@ -627,7 +627,7 @@
+  WIN32_EXTRA_LDFLAGS="-no-undefined"
+  ;;
+  *-*-mingw*)
+- WIN32_EXTRA_LIBADD="-lwsock32"
++ WIN32_EXTRA_LIBADD="-lws2_32 -lmswsock"
+  WIN32_EXTRA_LDFLAGS="-no-undefined"
+  AC_DEFINE([_WINSOCKAPI_],1,[Using the Win32 Socket implementation])
+  AC_DEFINE([snprintf],[_snprintf],[Win32 Std C name mangling work-around])
+Only in libxslt-1.1.26: configure.in.orig
+diff -ur libxslt-1.1.26/libxslt/security.c libxslt-1.1.26/libxslt/security.c
+--- libxslt-1.1.26/libxslt/security.c	2009-08-13 15:04:24.000000000 +0200
++++ libxslt-1.1.26/libxslt/security.c	2009-11-11 17:51:06.000000000 +0100
+@@ -39,6 +39,7 @@
+ #ifndef INVALID_FILE_ATTRIBUTES
+ #define INVALID_FILE_ATTRIBUTES ((DWORD)-1)
+ #endif
++#define mkdir(d,m) _mkdir(d)
+ #endif
+ 
+ #ifndef HAVE_STAT

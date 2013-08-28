@@ -1,0 +1,10 @@
+#!/bin/bash
+
+pushd checkout
+rm -rf *-*/
+popd
+
+if [[ "$1" != "--skip-targets" ]]; then
+	echo "Cleaning targets"
+	rm -rf targets/*
+fi

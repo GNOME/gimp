@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<moduleset>
+	<include href="glib.moduleset"/>
+	<include href="imglibs.moduleset"/>
+	<include href="compresslibs.moduleset"/>
+
+	<repository type="tarball" name="cairographics.org"
+		href="http://cairographics.org/releases/" />
+	<repository type="tarball" name="freedesktop.org"
+		href="http://www.freedesktop.org/software/" />
+	<repository type="tarball" name="gnome.org"
+		href="http://ftp.gnome.org/pub/gnome/sources/" />
+	<repository type="tarball" name="savannah.gnu.org"
+		href="http://download.savannah.gnu.org/releases/" />
+	<repository type="tarball" name="xmlsoft.org"
+		href="ftp://xmlsoft.org/" />
+	<repository type="git" name="anongit.freedesktop.org"
+		href="git://anongit.freedesktop.org/"/>
+	<repository type="tarball" name="icu-project.org"
+		href="http://download.icu-project.org/files/" />
+
+<autotools id="cairo">
+	<branch module="cairo" repo="anongit.freedesktop.org"
+		revision="fb8881e84bb24b2a54ee5aa449b6f5638de36404"/>
+	<dependencies>
+		<dep package="zlib"/>
+		<dep package="libpng"/>
+		<dep package="pixman"/>
+		<dep package="fontconfig"/>
+		<dep package="glib2"/>
+	</dependencies>
+</autotools>
+
+<autotools id="pixman" autogen-sh="configure">
+	<branch version="0.30.0" repo="cairographics.org"
+			module="pixman-0.30.0.tar.gz"
+			hash="sha1:9c25dd0efa2023216e82033b71fcfe1bae9ebaac">
+	</branch>
+</autotools>
+
+<autotools id="pango" autogen-sh="configure">
+	<branch version="1.34.1" repo="gnome.org"
+			module="pango/1.34/pango-1.34.1.tar.xz"
+			hash="sha256:1aea30df34a8ae4fcce71afd22aa5b57224b52916d46e3ea81ff9f1eb130e64c">
+	</branch>
+	<dependencies>
+		<dep package="cairo"/>
+		<dep package="pixman"/>
+		<dep package="glib2"/>
+		<dep package="fontconfig"/>
+		<dep package="harfbuzz"/>
+	</dependencies>
+</autotools>
+
+<autotools id="atk" autogen-sh="configure" makeinstallargs="install -j1">
+	<branch version="2.8.0" repo="gnome.org"
+			module="atk/2.8/atk-2.8.0.tar.xz"
+			hash="sha256:b22519176226f3e07cf6d932b77852e6b6be4780977770704b32d0f4e0686df4">
+	</branch>
+	<dependencies>
+		<dep package="glib2"/>
+	</dependencies>
+</autotools>
+
+<autotools id="fontconfig" autogen-sh="configure" makeinstallargs="install -j1">
+	<branch version="2.10.93" repo="freedesktop.org"
+			module="fontconfig/release/fontconfig-2.10.93.tar.bz2"
+			hash="sha256:ea901f278848829ed9937d76fb0ce63ad362d7d5b9e75aa6a6b78bfef42e529c">
+		<!-- local config patch -->
+		<patch file="fontconfig-fix-config-dir.patch" strip="0"/>
+	</branch>
+	<dependencies>
+		<dep package="freetype2"/>
+	</dependencies>
+</autotools>
+
+<autotools id="freetype2" autogen-sh="configure">
+	<branch version="2.4.10" repo="savannah.gnu.org"
+			module="freetype/freetype-2.4.10.tar.bz2"
+			hash="sha256:0c8e242c33c45928de560d7d595db06feb41d1b22167e37260ceabe72f9e992f">
+	</branch>
+	<dependencies>
+		<dep package="bzip2"/>
+		<dep package="libxml2"/>
+	</dependencies>
+</autotools>
+
+<autotools id="icu" autogen-sh="source/runConfigureICU MinGW ">
+	<branch version="51.2" repo="icu-project.org"
+			checkoutdir="icu-mingw"
+			module="icu4c/51.2/icu4c-51_2-src.tgz"
+			hash="md5:072e501b87065f3a0ca888f1b5165709">
+		<patch file="icu-unexport-target.patch" strip="1"/>
+		<patch file="icu-fix-library-names.patch" strip="1"/>
+	</branch>
+	<dependencies>
+		<dep package="icu-native"/>
+	</dependencies>
+</autotools>
+
+<autotools id="icu-native" autogen-sh=" || env -i source/runConfigureICU Linux ; true " makeinstallargs=" -f ../../fake.mk ">
+	<branch version="51.2" repo="icu-project.org"
+			checkoutdir="icu-native"
+			module="icu4c/51.2/icu4c-51_2-src.tgz"
+			hash="md5:072e501b87065f3a0ca888f1b5165709">
+		<patch file="icu-unexport-target.patch" strip="1"/>
+	</branch>
+</autotools>
+
+<autotools id="harfbuzz">
+	<branch version="0.9.19" repo="freedesktop.org"
+			module="harfbuzz/release/harfbuzz-0.9.19.tar.bz2"
+			hash="sha256:d2da0f060d47f6ad9de8c8781bb21fa4b9eae8ea1cd1e956b814095baa002f35">
+	</branch>
+	<dependencies>
+		<dep package="cairo"/>
+		<dep package="icu"/>
+		<dep package="freetype2"/>
+	</dependencies>
+</autotools>
+
+<autotools id="libxml2" autogen-sh="configure">
+	<branch version="2.9.1" repo="xmlsoft.org"
+			module="libxml2/libxml2-2.9.1.tar.gz"
+			hash="sha256:fd3c64cb66f2c4ea27e934d275904d92cec494a8e8405613780cbc8a71680fdb">
+	</branch>
+	<dependencies>
+		<dep package="iconv"/>
+	</dependencies>
+</autotools>
+
+<autotools id="libxslt" autogen-sh="configure">
+	<branch version="1.1.28" repo="xmlsoft.org"
+			module="libxslt/libxslt-1.1.28.tar.gz"
+			hash="sha256:5fc7151a57b89c03d7b825df5a0fae0a8d5f05674c0e7cf2937ecec4d54a028c">
+		<!-- From: OBS -->
+		<patch file="libxslt-1.1.26-w64.patch" strip="1"/>
+	</branch>
+	<dependencies>
+		<dep package="iconv"/>
+		<dep package="libxml2"/>
+		<dep package="zlib"/>
+	</dependencies>
+</autotools>
+
+<autotools id="gdk-pixbuf2" autogen-sh="configure">
+	<branch version="2.28.2" repo="gnome.org"
+			module="gdk-pixbuf/2.28/gdk-pixbuf-2.28.2.tar.xz"
+			hash="sha256:183113c2eb2232963e88864a6a54fd963dbfeb1a3679fb0d3456f9e0b79e4617">
+	</branch>
+	<dependencies>
+		<dep package="glib2"/>
+		<dep package="imglibs"/>
+	</dependencies>
+</autotools>
+
+<autotools id="gtk2" autogen-sh="configure" makeinstallargs="install -j1">
+	<branch version="2.24.20" repo="gnome.org"
+			module="gtk+/2.24/gtk+-2.24.20.tar.xz"
+			hash="sha256:cc66bcbf9239a7d9861175c681ba95894b55c70dc0b37aad8345c46ecfda0da3">
+		<!-- https://bug699673.bugzilla-attachments.gnome.org/attachment.cgi?id=244107 -->
+		<patch file="gtk2-uuid.patch" strip="1"/>
+	</branch>
+	<dependencies>
+		<dep package="glib2"/>
+		<dep package="gdk-pixbuf2"/>
+		<dep package="cairo"/>
+		<dep package="atk"/>
+		<dep package="pango"/>
+	</dependencies>
+</autotools>
+
+<autotools id="gtk3" autogen-sh="configure" makeinstallargs="install -j1">
+	<branch version="3.8.2" repo="gnome.org"
+			module="gtk+/3.8/gtk+-3.8.2.tar.xz"
+			hash="sha256:1ca80c9c15a1df95d74cefb8c2afe4682ba272a4b489106f04877be2a7aff297">
+	</branch>
+	<dependencies>
+		<dep package="glib2"/>
+		<dep package="gdk-pixbuf2"/>
+		<dep package="cairo"/>
+		<dep package="atk"/>
+		<dep package="pango"/>
+	</dependencies>
+</autotools>
+
+</moduleset>

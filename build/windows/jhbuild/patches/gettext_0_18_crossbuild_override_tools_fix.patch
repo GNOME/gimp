@@ -1,0 +1,11 @@
+--- Makefile.in.orig	2010-05-09 20:59:19.000000000 +0200
++++ Makefile.in	2010-10-02 00:59:46.000000000 +0200
+@@ -211,7 +211,7 @@
+ top_srcdir = @top_srcdir@
+ AUTOMAKE_OPTIONS = 1.5 gnu no-dependencies
+ ACLOCAL_AMFLAGS = -I m4
+-SUBDIRS = gnulib-local gettext-runtime gettext-tools
++SUBDIRS = gnulib-local gettext-runtime
+ 
+ # DJGPP port.
+ 

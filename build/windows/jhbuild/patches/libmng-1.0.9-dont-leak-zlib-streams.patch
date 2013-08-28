@@ -1,0 +1,14 @@
+diff -ur libmng-orig/libmng_zlib.c libmng-1.0.10/libmng_zlib.c
+--- libmng_zlib.c	2005-12-15 00:53:13.000000000 +0100
++++ libmng_zlib.c	2007-07-19 13:17:44.000000000 +0200
+@@ -162,6 +162,9 @@
+ #ifdef MNG_SUPPORT_TRACE
+   MNG_TRACE (pData, MNG_FN_ZLIB_INFLATEINIT, MNG_LC_START);
+ #endif
++
++  if (pData->bInflating)               /* free the old zlib structures */
++     inflateEnd(&pData->sZlib);
+                                        /* initialize zlib structures and such */
+   iZrslt = inflateInit (&pData->sZlib);
+ 
+

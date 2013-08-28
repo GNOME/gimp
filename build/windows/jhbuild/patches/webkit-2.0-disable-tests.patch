@@ -1,0 +1,15 @@
+--- a/Tools/GNUmakefile.am	2013-06-28 11:37:12.433956926 -0400
++++ b/Tools/GNUmakefile.am	2013-06-28 11:40:42.681835206 -0400
+@@ -1,12 +1,6 @@
+ noinst_PROGRAMS += \
+ 	Programs/ImageDiff
+ 
+-if ENABLE_WEBKIT1
+-noinst_PROGRAMS += \
+-	Programs/DumpRenderTree \
+-	Programs/GtkLauncher
+-endif
+-
+ # GtkLauncher
+ Programs_GtkLauncher_CPPFLAGS = \
+ 	-I$(srcdir)/Source/WebKit/gtk \

@@ -1,0 +1,27 @@
+--- libwmf-0.2.8.3/libwmf-config.in.noextras-2	2004-02-10 06:41:26.000000000 -0600
++++ libwmf-0.2.8.3/libwmf-config.in	2005-07-06 15:18:26.000000000 -0500
+@@ -105,7 +105,7 @@
+ 
+ libwmf_buildstyle=@LIBWMF_BUILDSTYLE@
+ if test $libwmf_buildstyle = heavy; then
+-	wmf_libs="-lwmf -lwmflite $wmf_liblflags"
++	wmf_libs="-lwmf -lwmflite"
+ else
+ 	wmf_libs="-lwmflite"
+ fi
+@@ -116,7 +116,7 @@
+ 		includes="$includes -I@includedir@/libwmf/gd"
+ 	fi
+ 	if test "$lib_wmf" = "yes"; then
+-		includes="$includes -I@includedir@"
++		includes="$includes"
+ 	fi
+ 	echo $includes
+ fi
+@@ -134,5 +134,5 @@
+ 		fi
+ 	done
+ 
+-	echo $libdirs $my_wmf_libs
++	echo $my_wmf_libs
+ fi      

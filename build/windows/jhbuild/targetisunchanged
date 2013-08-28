@@ -1,0 +1,10 @@
+#!/bin/bash
+
+sort targets/$1/_jhbuild/packagedb.xml > /tmp/packagedb.xml.a
+sort targets/$2/_jhbuild/packagedb.xml > /tmp/packagedb.xml.b
+
+COUNT=`diff -u  /tmp/packagedb.xml.a /tmp/packagedb.xml.b | grep "^-" --count --max-count 2`
+
+rm /tmp/packagedb.xml.{a,b}
+
+exit $((COUNT - 1))

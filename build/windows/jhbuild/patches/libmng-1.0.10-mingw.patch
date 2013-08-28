@@ -1,0 +1,44 @@
+diff -u -r libmng-1.0.10/makefiles/makefile.mingwdll libmng-1.0.10/makefiles/makefile.mingwdll
+--- libmng-1.0.10/makefiles/makefile.mingwdll	2005-01-30 11:28:00.000000000 +0100
++++ libmng-1.0.10/makefiles/makefile.mingwdll	2009-12-08 09:35:23.000000000 +0100
+@@ -10,8 +10,8 @@
+ #
+ 
+ # outputs
+-LIBMNG_A   = libmng.a
+-LIBMNG_DLL   = libmng.1.dll
++LIBMNG_A   = libmng.dll.a
++LIBMNG_DLL   = libmng-1.dll
+ INSTALL_PREFIX = C:/MinGW/
+ # maybe you sould replace with anti-slashes
+ 
+@@ -51,7 +51,7 @@
+ # for i386:
+ #ALIGN=-malign-loops=2 -malign-functions=2
+ 
+-CFLAGS=$(ZLIBINC) $(JPEGINC) $(LCMSINC) -Wall -O3 -funroll-loops $(OPTIONS) $(ALIGN) -s
++CFLAGS+=$(ZLIBINC) $(JPEGINC) $(OPTIONS) $(ALIGN) -s
+ LDFLAGS=-L. -lmng $(ZLIBLIB) $(JPEGLIB) $(LCMSLIB) -lm -s
+ 
+ INCPATH=$(prefix)/include
+@@ -88,9 +88,11 @@
+ $(LIBMNG_A): $(LIBMNG_DLL)
+ 
+ $(LIBMNG_DLL) : $(OBJS)
+-	dllwrap --implib=$(LIBMNG_A) --dllname=$(LIBMNG_DLL) $(OBJS) $(LDFLAGS)
++	$(CC) --shared -o $(LIBMNG_DLL) $(OBJS) -Wl,--out-implib,$(LIBMNG_A) -Wl,--kill-at $(JPEGLIB) $(ZLIBLIB)
+    
+ install : $(LIBMNG_A)
++	$(MKDIR)                 $(INSTALL_PREFIX)bin
++	$(COPY)  $(LIBMNG_DLL)   $(INSTALL_PREFIX)bin
+ 	$(MKDIR)                 $(INSTALL_PREFIX)include	
+ 	$(COPY)  libmng.h        $(INSTALL_PREFIX)include
+ 	$(COPY)  libmng_conf.h   $(INSTALL_PREFIX)include
+@@ -99,7 +101,7 @@
+ 	$(COPY)  $(LIBMNG_A)     $(INSTALL_PREFIX)lib
+ 
+ clean:
+-	$(RM) *.o
++	$(RM) *.o $(LIBMNG_DLL) $(LIBMNG_A)
+ 
+ # DO NOT DELETE THIS LINE -- make depend depends on it.

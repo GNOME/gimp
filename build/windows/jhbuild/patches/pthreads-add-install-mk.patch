@@ -1,0 +1,8 @@
+--- a/install.mk	2012-12-30 01:59:23.989187337 -0500
++++ b/install.mk	2012-12-30 15:13:26.126841253 -0500
+@@ -0,0 +1,5 @@
++install:
++	mkdir -p $(DESTDIR)/$(PREFIX)/bin
++	mkdir -p $(DESTDIR)/$(PREFIX)/lib
++	$(INSTALL) pthreadGC2.dll $(DESTDIR)/$(PREFIX)/bin/pthreadGC2.dll
++	$(INSTALL) libpthreadGC2.a $(DESTDIR)/$(PREFIX)/lib/libpthread.a

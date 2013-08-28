@@ -1,0 +1,12 @@
+diff -urN libwmf-0.2.8.4.old/src/ipa/ipa/bmp.h libwmf-0.2.8.4/src/ipa/ipa/bmp.h
+--- libwmf-0.2.8.4.old/src/ipa/ipa/bmp.h	2011-05-23 19:14:23.000000000 +0200
++++ libwmf-0.2.8.4/src/ipa/ipa/bmp.h	2011-05-23 19:15:11.000000000 +0200
+@@ -66,7 +66,7 @@
+		return;
+	}
+
+-	if (setjmp (png_ptr->jmpbuf))
++	if (setjmp(png_jmpbuf(png_ptr)))
+	{	WMF_DEBUG (API,"Failed to write bitmap as PNG! (setjmp failed)");
+		png_destroy_write_struct (&png_ptr,&info_ptr);
+		wmf_free (API,buffer);

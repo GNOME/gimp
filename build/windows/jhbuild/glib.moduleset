@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<moduleset>
+	<repository type="tarball" name="gnu.org"
+		href="http://ftp.gnu.org/pub/gnu/" />
+	<repository type="tarball" name="gnome.org"
+		href="http://ftp.gnome.org/pub/gnome/sources/" />
+	<repository type="tarball" name="sourceware.org"
+		href="ftp://sourceware.org/pub/" />
+
+<autotools id="iconv" autogen-sh="configure">
+	<branch version="1.14" repo="gnu.org"
+			module="libiconv/libiconv-1.14.tar.gz"
+			hash="sha256:72b24ded17d687193c3366d0ebe7cde1e6b18f0df8c55438ac95be39e8a30613">
+	</branch>
+</autotools>
+
+<autotools id="gettext" autogen-sh="configure">
+	<branch version="0.18.1.1" repo="gnu.org"
+			module="gettext/gettext-0.18.1.1.tar.gz"
+			hash="sha256:93ac71a7afa5b70c1b1032516663658c51e653087f42a3fc8044752c026443e9">
+		<patch file="gettext_0_18_crossbuild_override_tools_fix.patch"/>
+	</branch>
+	<dependencies>
+		<dep package="iconv"/>
+	</dependencies>
+</autotools>
+
+<autotools id="libffi" autogen-sh="configure">
+	<branch version="3.0.13" repo="sourceware.org"
+			module="libffi/libffi-3.0.13.tar.gz"
+			hash="md5:45f3b6dbc9ee7c7dfbbbc5feba571529">
+	</branch>
+</autotools>
+
+<autotools id="glib2">
+	<branch version="2.36.3" repo="gnome.org"
+			module="glib/2.36/glib-2.36.3.tar.xz"
+			hash="sha256:5ec433bf6ce02e4c436619c3d0b9cecdd1898469398a636bad27c1f5804c761e">
+	</branch>
+	<dependencies>
+		<dep package="gettext"/>
+		<dep package="iconv"/>
+		<dep package="zlib"/>
+		<dep package="libffi"/>
+	</dependencies>
+</autotools>
+
+</moduleset>

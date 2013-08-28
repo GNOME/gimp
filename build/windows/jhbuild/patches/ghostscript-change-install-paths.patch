@@ -1,0 +1,24 @@
+--- a/base/unix-dll.mak	2013-01-26 13:47:45.112366000 -0500
++++ b/base/unix-dll.mak	2013-01-26 14:03:08.292073462 -0500
+@@ -127,13 +127,14 @@
+ 	-mkdir -p $(DESTDIR)$(bindir)
+ 	-mkdir -p $(DESTDIR)$(libdir)
+ 	-mkdir -p $(DESTDIR)$(gsincludedir)
+-	$(INSTALL_PROGRAM) $(GSSOC) $(DESTDIR)$(bindir)/$(GSSOC_XENAME)
+-	$(INSTALL_PROGRAM) $(GSSOX) $(DESTDIR)$(bindir)/$(GSSOX_XENAME)
+-	$(INSTALL_PROGRAM) $(BINDIR)/$(SOBINRELDIR)/$(GS_SONAME_MAJOR_MINOR) $(DESTDIR)$(libdir)/$(GS_SONAME_MAJOR_MINOR)
+-	$(RM_) $(DESTDIR)$(libdir)/$(GS_SONAME)
+-	ln -s $(GS_SONAME_MAJOR_MINOR) $(DESTDIR)$(libdir)/$(GS_SONAME)
+-	$(RM_) $(DESTDIR)$(libdir)/$(GS_SONAME_MAJOR)
+-	ln -s $(GS_SONAME_MAJOR_MINOR) $(DESTDIR)$(libdir)/$(GS_SONAME_MAJOR)
++	#$(INSTALL_PROGRAM) $(GSSOC) $(DESTDIR)$(bindir)/$(GSSOC_XENAME)
++	#$(INSTALL_PROGRAM) $(GSSOX) $(DESTDIR)$(bindir)/$(GSSOX_XENAME)
++	$(INSTALL_PROGRAM) $(BINDIR)/$(SOBINRELDIR)/$(GS_SONAME_MAJOR_MINOR) $(DESTDIR)$(bindir)/$(GS_SONAME_MAJOR_MINOR)
++	$(INSTALL_PROGRAM) $(BINDIR)/$(SOBINRELDIR)/$(GS_SONAME_BASE).dll.a $(DESTDIR)$(libdir)/$(GS_SONAME_BASE).dll.a
++	#$(RM_) $(DESTDIR)$(libdir)/$(GS_SONAME)
++	#ln -s $(GS_SONAME_MAJOR_MINOR) $(DESTDIR)$(libdir)/$(GS_SONAME)
++	#$(RM_) $(DESTDIR)$(libdir)/$(GS_SONAME_MAJOR)
++	#ln -s $(GS_SONAME_MAJOR_MINOR) $(DESTDIR)$(libdir)/$(GS_SONAME_MAJOR)
+ 	$(INSTALL_DATA) $(PSSRC)iapi.h $(DESTDIR)$(gsincludedir)iapi.h
+ 	$(INSTALL_DATA) $(PSSRC)ierrors.h $(DESTDIR)$(gsincludedir)ierrors.h
+ 	$(INSTALL_DATA) $(GLSRC)gdevdsp.h $(DESTDIR)$(gsincludedir)gdevdsp.h

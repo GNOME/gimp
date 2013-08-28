@@ -1,0 +1,18 @@
+diff -ru libwmf-0.2.8.4.orig/src/font.c libwmf-0.2.8.4/src/font.c
+--- libwmf-0.2.8.4.orig/src/font.c	2005-07-27 21:35:06.000000000 +0100
++++ libwmf-0.2.8.4/src/font.c	2006-01-03 12:53:38.000000000 +0000
+@@ -1429,11 +1429,9 @@
+ 	if (GS->len == 0) return (0);
+ 
+ 	name = font->lfFaceName;
+-	if (name == 0)
+-	{	WMF_DEBUG (API,"No font name?");
+-		API->err = wmf_E_Glitch;
+-		return (0);
+-	}
++
++	if (name == 0 || name[0] == 0)
++		name = "Times";
+ 
+ 	/* Find first white-space character or eol
+ 	 */
