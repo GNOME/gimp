@@ -1299,13 +1299,13 @@ write_pixel_data (FILE   *fd,
   IFDBG printf (" Function: write_pixel_data, drw %d, lto %d\n",
                 drawableID, ltable_offset);
 
-  switch (gimp_drawable_type (drawableID)
+  switch (gimp_drawable_type (drawableID))
     {
-    case GIMP_GREY_IMAGE:
+    case GIMP_GRAY_IMAGE:
       format = babl_format ("Y' u8");
       break;
 
-    case GIMP_GREYA_IMAGE:
+    case GIMP_GRAYA_IMAGE:
       format = babl_format ("Y'A u8");
       break;
 
@@ -1379,7 +1379,7 @@ write_pixel_data (FILE   *fd,
         {
           int tlen;
 	  gegl_buffer_get (buffer, GEGL_RECTANGLE (0, y, width, MIN (height - y, tile_height)),
-			   format, data, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+			   0, format, data, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
           tlen = get_compress_channel_data (&data[chan],
                                              width,
                                              MIN(height - y, tile_height),
@@ -1444,7 +1444,7 @@ write_pixel_data (FILE   *fd,
             {
               int tlen;
 	      gegl_buffer_get (mbuffer, GEGL_RECTANGLE (0, y, width, MIN (height - y, tile_height)),
-			       format, data, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+			       0, format, data, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
               tlen = get_compress_channel_data (&data[0],
                                                 width,
                                                 MIN(height - y, tile_height),
@@ -1544,20 +1544,19 @@ create_merged_image (gint32 image_id)
       GeglBufferIterator   *iter;
       const Babl           *format = NULL;
       gboolean              transparency_found = FALSE;
-      gpointer              pr;
       gint                  n_components;
       int                   bpp;
 
       iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
 				       GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
-      switch (gimp_drawable_type (drawableID)
+      switch (gimp_drawable_type (projection))
 	{
-	case GIMP_GREY_IMAGE:
+	case GIMP_GRAY_IMAGE:
 	  format = babl_format ("Y' u8");
 	  break;
 
-	case GIMP_GREYA_IMAGE:
+	case GIMP_GRAYA_IMAGE:
 	  format = babl_format ("Y'A u8");
 	  break;
 
@@ -1574,6 +1573,9 @@ create_merged_image (gint32 image_id)
 
       bpp = babl_format_get_bytes_per_pixel (format);
       n_components = babl_format_get_n_components (format);
+
+      iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
+                                       GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
       while (gegl_buffer_iterator_next (iter))
 	{
