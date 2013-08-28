@@ -364,7 +364,7 @@ CFLAGS="$CFLAGS $extra_warnings"
 GIMP_DETECT_CFLAGS(extra_warnings, '-Wformat-security')
 CFLAGS="$CFLAGS $extra_warnings"
 
-GIMP_DETECT_CFLAGS(extra_warnings, '-Wformat-non-literal')
+GIMP_DETECT_CFLAGS(extra_warnings, '-Wformat-nonliteral')
 CFLAGS="$CFLAGS $extra_warnings"
 
 GIMP_DETECT_CFLAGS(extra_warnings, '-fno-common')
