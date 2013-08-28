@@ -317,7 +317,6 @@ file_proc_find_by_extension (GSList      *procs,
   for (p = procs; p; p = g_slist_next (p))
     {
       GimpPlugInProcedure *proc = p->data;
-      GSList              *extensions;
 
       if (uri_procs_only && ! proc->handles_uri)
         continue;
@@ -325,24 +324,11 @@ file_proc_find_by_extension (GSList      *procs,
       if (skip_magic && proc->magics_list)
         continue;
 
-      for (extensions = proc->extensions_list;
-           extensions;
-           extensions = g_slist_next (extensions))
+      if (g_slist_find_custom (proc->extensions_list,
+                               ext,
+                               (GCompareFunc) g_ascii_strcasecmp))
         {
-          const gchar *p1 = ext;
-          const gchar *p2 = extensions->data;
-
-          while (*p1 && *p2)
-            {
-              if (g_ascii_tolower (*p1) != g_ascii_tolower (*p2))
-                break;
-
-              p1++;
-              p2++;
-            }
-
-          if (!(*p1) && !(*p2))
-            return proc;
+          return proc;
         }
     }
 
