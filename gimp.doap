@@ -16,10 +16,19 @@
       <gnome:userid>neo</gnome:userid>
     </foaf:Person>
   </maintainer>
+
   <maintainer>
     <foaf:Person>
       <foaf:name>Michael Natterer</foaf:name>
       <gnome:userid>mitch</gnome:userid>
     </foaf:Person>
   </maintainer>
+
+  <maintainer>
+    <foaf:Person>
+      <foaf:name>Michael Schumacher</foaf:name>
+      <gnome:userid>schumaml</gnome:userid>
+    </foaf:Person>
+  </maintainer>
+
 </Project>
