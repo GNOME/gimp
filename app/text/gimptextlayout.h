@@ -39,7 +39,8 @@ GType            gimp_text_layout_get_type             (void) G_GNUC_CONST;
 
 GimpTextLayout * gimp_text_layout_new                  (GimpText       *text,
                                                         gdouble         xres,
-                                                        gdouble         yres);
+                                                        gdouble         yres,
+                                                        GError        **error);
 gboolean         gimp_text_layout_get_size             (GimpTextLayout *layout,
                                                         gint           *width,
                                                         gint           *heigth);
