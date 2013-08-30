@@ -174,6 +174,7 @@ run (const gchar      *name,
   gint               height   = 0;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   run_mode = param[0].data.d_int32;
 
@@ -975,21 +976,14 @@ load_image (const gchar  *filename,
 {
   gint32        image;
   gint32        layer;
-  GimpDrawable *drawable;
+  GeglBuffer   *buffer;
   guchar       *pixels;
-  GimpPixelRgn  pixel_rgn;
   guint         width, height;
-  guint         rowstride;
-  guint         count = 0;
-  guint         done  = 0;
-  gpointer      pr;
 
   pixels = wmf_load_file (filename, &width, &height, error);
 
   if (! pixels)
     return -1;
-
-  rowstride = width * 4;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
@@ -1004,42 +998,19 @@ load_image (const gchar  *filename,
                           width, height,
                           GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
 
-  drawable = gimp_drawable_get (layer);
+  buffer = gimp_drawable_get_buffer (layer);
 
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, TRUE, FALSE);
+  gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
+                   babl_format ("R'G'B'A u8"),
+                   pixels, GEGL_AUTO_ROWSTRIDE);
 
-  for (pr = gimp_pixel_rgns_register (1, &pixel_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
-    {
-      const guchar *src  = pixels + pixel_rgn.y * rowstride + pixel_rgn.x * 4;
-      guchar       *dest = pixel_rgn.data;
-      gint          y;
-
-      for (y = 0; y < pixel_rgn.h; y++)
-        {
-          memcpy (dest, src, pixel_rgn.w * pixel_rgn.bpp);
-
-          src  += rowstride;
-          dest += pixel_rgn.rowstride;
-        }
-
-      done += pixel_rgn.h * pixel_rgn.w;
-
-      if (count++ % 16 == 0)
-        gimp_progress_update ((gdouble) done / (width * height));
-    }
+  g_object_unref (buffer);
 
   g_free (pixels);
 
-  gimp_drawable_detach (drawable);
+  gimp_image_insert_layer (image, layer, -1, 0);
 
   gimp_progress_update (1.0);
-
-  /* Tell GIMP to display the image.
-   */
-  gimp_image_insert_layer (image, layer, -1, 0);
-  gimp_drawable_flush (drawable);
 
   return image;
 }

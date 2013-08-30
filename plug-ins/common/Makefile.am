@@ -1441,6 +1441,7 @@ file_wmf_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(WMF_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
