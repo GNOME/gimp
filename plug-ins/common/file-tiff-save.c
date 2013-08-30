@@ -664,7 +664,7 @@ save_image (const gchar  *filename,
   gushort        red[256];
   gushort        grn[256];
   gushort        blu[256];
-  gint           cols, col, rows, row, i;
+  gint           cols, rows, row, i;
   glong          rowsperstrip;
   gushort        compression;
   gushort        extra_samples[1];

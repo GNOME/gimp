@@ -525,9 +525,7 @@ load_image (const gchar        *filename,
   gushort       extra, *extra_types;
   channel_data *channel = NULL;
 
-  gushort      *redmap, *greenmap, *bluemap;
   GimpRGB       color;
-  guchar        cmap[768];
 
   uint16  planar = PLANARCONFIG_CONTIG;
 
@@ -968,6 +966,8 @@ load_image (const gchar        *filename,
       /* Install colormap for INDEXED images only */
       if (image_type == GIMP_INDEXED)
         {
+          guchar cmap[768];
+
           if (is_bw)
             {
               if (photomet == PHOTOMETRIC_MINISWHITE)
@@ -983,6 +983,8 @@ load_image (const gchar        *filename,
             }
           else
             {
+              gushort *redmap, *greenmap, *bluemap;
+
               if (!TIFFGetField (tif, TIFFTAG_COLORMAP,
                                  &redmap, &greenmap, &bluemap))
                 {
