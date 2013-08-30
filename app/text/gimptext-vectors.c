@@ -26,6 +26,7 @@
 
 #include "text-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpimage.h"
 
 #include "vectors/gimpbezierstroke.h"
@@ -69,6 +70,7 @@ gimp_text_vectors_new (GimpImage *image,
       cairo_t         *cr;
       gdouble          xres;
       gdouble          yres;
+      GError          *error = NULL;
 
       if (text->text)
         gimp_object_set_name_safe (GIMP_OBJECT (vectors), text->text);
@@ -80,7 +82,12 @@ gimp_text_vectors_new (GimpImage *image,
 
       gimp_image_get_resolution (image, &xres, &yres);
 
-      layout = gimp_text_layout_new (text, xres, yres);
+      layout = gimp_text_layout_new (text, xres, yres, &error);
+      if (error)
+        {
+          gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
+          g_error_free (error);
+        }
       gimp_text_layout_render (layout, cr, text->base_dir, TRUE);
       g_object_unref (layout);
 

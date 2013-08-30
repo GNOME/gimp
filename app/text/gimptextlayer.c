@@ -567,6 +567,7 @@ gimp_text_layer_render (GimpTextLayer *layer)
   gdouble         yres;
   gint            width;
   gint            height;
+  GError         *error = NULL;
 
   if (! layer->text)
     return FALSE;
@@ -585,7 +586,12 @@ gimp_text_layer_render (GimpTextLayer *layer)
 
   gimp_image_get_resolution (image, &xres, &yres);
 
-  layout = gimp_text_layout_new (layer->text, xres, yres);
+  layout = gimp_text_layout_new (layer->text, xres, yres, &error);
+  if (error)
+    {
+      gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
+      g_error_free (error);
+    }
 
   g_object_freeze_notify (G_OBJECT (drawable));
 
@@ -645,7 +651,8 @@ gimp_text_layer_render (GimpTextLayer *layer)
         }
     }
 
-  gimp_text_layer_render_layout (layer, layout);
+  if (width > 0 && height > 0)
+    gimp_text_layer_render_layout (layer, layout);
 
   g_object_unref (layout);
 
@@ -671,6 +678,7 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
   gint             width;
   gint             height;
   gpointer         pr;
+  cairo_status_t   status;
 
   g_return_if_fail (gimp_drawable_has_alpha (drawable));
 
@@ -678,6 +686,18 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
   height = gimp_item_get_height (item);
 
   surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
+  status = cairo_surface_status (surface);
+
+  if (status != CAIRO_STATUS_SUCCESS)
+    {
+      GimpImage *image = gimp_item_get_image (item);
+
+      gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_ERROR,
+                            _("Your text cannot be rendered. It is likely too big. "
+                              "Please make it shorter or use a smaller font."));
+      cairo_surface_destroy (surface);
+      return;
+    }
 
   cr = cairo_create (surface);
   gimp_text_layout_render (layout, cr, layer->text->base_dir, FALSE);

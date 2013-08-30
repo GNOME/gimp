@@ -31,9 +31,12 @@
 
 #include "text-types.h"
 
+#include "core/gimperror.h"
+
 #include "gimptext.h"
 #include "gimptextlayout.h"
 
+#include "gimp-intl.h"
 
 struct _GimpTextLayout
 {
@@ -50,7 +53,8 @@ struct _GimpTextLayout
 static void           gimp_text_layout_finalize   (GObject        *object);
 
 static void           gimp_text_layout_position   (GimpTextLayout *layout);
-static void           gimp_text_layout_set_markup (GimpTextLayout *layout);
+static void           gimp_text_layout_set_markup (GimpTextLayout *layout,
+                                                   GError        **error);
 
 static PangoContext * gimp_text_get_pango_context (GimpText       *text,
                                                    gdouble         xres,
@@ -100,7 +104,8 @@ gimp_text_layout_finalize (GObject *object)
 GimpTextLayout *
 gimp_text_layout_new (GimpText  *text,
                       gdouble    xres,
-                      gdouble    yres)
+                      gdouble    yres,
+                      GError   **error)
 {
   GimpTextLayout       *layout;
   PangoContext         *context;
@@ -135,7 +140,7 @@ gimp_text_layout_new (GimpText  *text,
   pango_layout_set_font_description (layout->layout, font_desc);
   pango_font_description_free (font_desc);
 
-  gimp_text_layout_set_markup (layout);
+  gimp_text_layout_set_markup (layout, error);
 
   switch (text->justify)
     {
@@ -509,7 +514,8 @@ gimp_text_layout_apply_tags (GimpTextLayout *layout,
 }
 
 static void
-gimp_text_layout_set_markup (GimpTextLayout *layout)
+gimp_text_layout_set_markup (GimpTextLayout  *layout,
+                             GError         **error)
 {
   GimpText *text      = layout->text;
   gchar    *open_tag  = NULL;
@@ -549,7 +555,32 @@ gimp_text_layout_set_markup (GimpTextLayout *layout)
   g_free (tagged);
   g_free (close_tag);
 
-  pango_layout_set_markup (layout->layout, markup, -1);
+  if (pango_parse_markup (markup, -1, 0, NULL, NULL, NULL, error) == FALSE)
+    {
+      if (error && *error                       &&
+          (*error)->domain == G_MARKUP_ERROR    &&
+          (*error)->code == G_MARKUP_ERROR_INVALID_CONTENT)
+        {
+          /* Errors from pango lib are not accurate enough.
+           * Other possible error codes are: G_MARKUP_ERROR_UNKNOWN_ELEMENT
+           * and G_MARKUP_ERROR_UNKNOWN_ATTRIBUTE, which likely indicate a bug
+           * in GIMP code or a pango library version issue.
+           * G_MARKUP_ERROR_INVALID_CONTENT on the other hand likely indicates
+           * size/color/style/weight/variant/etc. value issue. Font size is the
+           * only free text in GIMP GUI so we assume that must be it.
+           * Also we output a custom message because pango's error->message is
+           * too technical (telling of <span> tags, not using user's font size
+           * unit, and such). */
+          g_error_free (*error);
+          *error = NULL;
+          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                               _("The new text layout cannot be generated. "
+                                 "Most likely the font size is too big."));
+        }
+    }
+  else
+    pango_layout_set_markup (layout->layout, markup, -1);
+
   g_free (markup);
 }
 
