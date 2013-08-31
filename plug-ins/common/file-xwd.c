@@ -156,8 +156,7 @@ static gint32 create_new_image    (const gchar      *filename,
                                    GimpImageBaseType type,
                                    GimpImageType     gdtype,
                                    gint32           *layer_ID,
-                                   GimpDrawable    **drawable,
-                                   GimpPixelRgn     *pixel_rgn);
+                                   GeglBuffer      **buffer);
 
 static int      set_pixelmap      (gint,
                                    L_XWDCOLOR *,
@@ -227,7 +226,7 @@ static void write_xwd_cols   (FILE *,
 static gint save_index       (FILE *,
                               gint32,
                               gint32,
-                              gint);
+                              gboolean gray);
 static gint save_rgb         (FILE *,
                               gint32,
                               gint32);
@@ -331,6 +330,7 @@ run (const gchar      *name,
   l_run_mode = run_mode = param[0].data.d_int32;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -640,10 +640,10 @@ save_image (const gchar  *filename,
   switch (drawable_type)
     {
     case GIMP_INDEXED_IMAGE:
-      retval = save_index (ofp, image_ID, drawable_ID, 0);
+      retval = save_index (ofp, image_ID, drawable_ID, FALSE);
       break;
     case GIMP_GRAY_IMAGE:
-      retval = save_index (ofp, image_ID, drawable_ID, 1);
+      retval = save_index (ofp, image_ID, drawable_ID, TRUE);
       break;
     case GIMP_RGB_IMAGE:
       retval = save_rgb (ofp, image_ID, drawable_ID);
@@ -1197,10 +1197,9 @@ create_new_image (const gchar         *filename,
                   GimpImageBaseType    type,
                   GimpImageType        gdtype,
                   gint32              *layer_ID,
-                  GimpDrawable       **drawable,
-                  GimpPixelRgn        *pixel_rgn)
+                  GeglBuffer         **buffer)
 {
-  gint32        image_ID;
+  gint32 image_ID;
 
   image_ID = gimp_image_new (width, height, type);
   gimp_image_set_filename (image_ID, filename);
@@ -1209,9 +1208,7 @@ create_new_image (const gchar         *filename,
                               gdtype, 100, GIMP_NORMAL_MODE);
   gimp_image_insert_layer (image_ID, *layer_ID, -1, 0);
 
-  *drawable = gimp_drawable_get (*layer_ID);
-  gimp_pixel_rgn_init (pixel_rgn, *drawable, 0, 0, (*drawable)->width,
-                       (*drawable)->height, TRUE, FALSE);
+  *buffer = gimp_drawable_get_buffer (*layer_ID);
 
   return image_ID;
 }
@@ -1235,8 +1232,7 @@ load_xwd_f2_d1_b1 (const gchar     *filename,
   guchar          *data, *scanline;
   gint             err = 0;
   gint32           layer_ID, image_ID;
-  GimpPixelRgn     pixel_rgn;
-  GimpDrawable    *drawable;
+  GeglBuffer      *buffer;
 
 #ifdef XWD_DEBUG
   printf ("load_xwd_f2_d1_b1 (%s)\n", filename);
@@ -1246,8 +1242,7 @@ load_xwd_f2_d1_b1 (const gchar     *filename,
   height = xwdhdr->l_pixmap_height;
 
   image_ID = create_new_image (filename, width, height, GIMP_INDEXED,
-                               GIMP_INDEXED_IMAGE, &layer_ID, &drawable,
-                               &pixel_rgn);
+                               GIMP_INDEXED_IMAGE, &layer_ID, &buffer);
 
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * width);
@@ -1340,8 +1335,10 @@ load_xwd_f2_d1_b1 (const gchar     *filename,
 
       if ((scan_lines == tile_height) || ((i+1) == height))
         {
-          gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
-                                   width, scan_lines);
+          gegl_buffer_set (buffer, GEGL_RECTANGLE (0, i - scan_lines + 1,
+                                                   width, scan_lines), 0,
+                           NULL, data, GEGL_AUTO_ROWSTRIDE);
+
           scan_lines = 0;
           dest = data;
         }
@@ -1354,7 +1351,7 @@ load_xwd_f2_d1_b1 (const gchar     *filename,
   if (err)
     g_message (_("EOF encountered on reading"));
 
-  gimp_drawable_flush (drawable);
+  g_object_unref (buffer);
 
   return err ? -1 : image_ID;
 }
@@ -1368,14 +1365,13 @@ load_xwd_f2_d8_b8 (const gchar     *filename,
                    L_XWDFILEHEADER *xwdhdr,
                    L_XWDCOLOR      *xwdcolmap)
 {
-  gint          width, height, linepad, tile_height, scan_lines;
-  gint          i, j, ncols;
-  gint          grayscale;
-  guchar       *dest, *data;
-  gint          err = 0;
-  gint32        layer_ID, image_ID;
-  GimpPixelRgn  pixel_rgn;
-  GimpDrawable *drawable;
+  gint        width, height, linepad, tile_height, scan_lines;
+  gint        i, j, ncols;
+  gint        grayscale;
+  guchar     *dest, *data;
+  gint        err = 0;
+  gint32      layer_ID, image_ID;
+  GeglBuffer *buffer;
 
 #ifdef XWD_DEBUG
   printf ("load_xwd_f2_d8_b8 (%s)\n", filename);
@@ -1403,7 +1399,7 @@ load_xwd_f2_d8_b8 (const gchar     *filename,
   image_ID = create_new_image (filename, width, height,
                                grayscale ? GIMP_GRAY : GIMP_INDEXED,
                                grayscale ? GIMP_GRAY_IMAGE : GIMP_INDEXED_IMAGE,
-                               &layer_ID, &drawable, &pixel_rgn);
+                               &layer_ID, &buffer);
 
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * width);
@@ -1444,8 +1440,10 @@ load_xwd_f2_d8_b8 (const gchar     *filename,
 
       if ((scan_lines == tile_height) || ((i+1) == height))
         {
-          gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
-                                   width, scan_lines);
+          gegl_buffer_set (buffer, GEGL_RECTANGLE (0, i - scan_lines + 1,
+                                                   width, scan_lines), 0,
+                           NULL, data, GEGL_AUTO_ROWSTRIDE);
+
           scan_lines = 0;
           dest = data;
         }
@@ -1456,7 +1454,7 @@ load_xwd_f2_d8_b8 (const gchar     *filename,
   if (err)
     g_message (_("EOF encountered on reading"));
 
-  gimp_drawable_flush (drawable);
+  g_object_unref (buffer);
 
   return err ? -1 : image_ID;
 }
@@ -1481,8 +1479,7 @@ load_xwd_f2_d16_b16 (const gchar     *filename,
   guchar          *ColorMap, *cm, *data;
   gint             err = 0;
   gint32           layer_ID, image_ID;
-  GimpPixelRgn     pixel_rgn;
-  GimpDrawable    *drawable;
+  GeglBuffer      *buffer;
 
 #ifdef XWD_DEBUG
   printf ("load_xwd_f2_d16_b16 (%s)\n", filename);
@@ -1492,8 +1489,7 @@ load_xwd_f2_d16_b16 (const gchar     *filename,
   height = xwdhdr->l_pixmap_height;
 
   image_ID = create_new_image (filename, width, height, GIMP_RGB,
-                               GIMP_RGB_IMAGE, &layer_ID, &drawable,
-                               &pixel_rgn);
+                               GIMP_RGB_IMAGE, &layer_ID, &buffer);
 
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * width * 3);
@@ -1603,8 +1599,10 @@ load_xwd_f2_d16_b16 (const gchar     *filename,
 
       if ((scan_lines == tile_height) || ((i+1) == height))
         {
-          gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
-                                   width, scan_lines);
+          gegl_buffer_set (buffer, GEGL_RECTANGLE (0, i - scan_lines + 1,
+                                                   width, scan_lines), 0,
+                           NULL, data, GEGL_AUTO_ROWSTRIDE);
+
           scan_lines = 0;
           dest = data;
         }
@@ -1615,7 +1613,7 @@ load_xwd_f2_d16_b16 (const gchar     *filename,
   if (err)
     g_message (_("EOF encountered on reading"));
 
-  gimp_drawable_flush (drawable);
+  g_object_unref (buffer);
 
   return err ? -1 : image_ID;
 }
@@ -1643,8 +1641,7 @@ load_xwd_f2_d24_b32 (const gchar      *filename,
   PIXEL_MAP        pixel_map;
   gint             err = 0;
   gint32           layer_ID, image_ID;
-  GimpPixelRgn     pixel_rgn;
-  GimpDrawable    *drawable;
+  GeglBuffer      *buffer;
 
 #ifdef XWD_DEBUG
   printf ("load_xwd_f2_d24_b32 (%s)\n", filename);
@@ -1691,8 +1688,7 @@ load_xwd_f2_d24_b32 (const gchar      *filename,
     }
 
   image_ID = create_new_image (filename, width, height, GIMP_RGB,
-                               GIMP_RGB_IMAGE, &layer_ID, &drawable,
-                               &pixel_rgn);
+                               GIMP_RGB_IMAGE, &layer_ID, &buffer);
 
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * width * 3);
@@ -1765,8 +1761,10 @@ load_xwd_f2_d24_b32 (const gchar      *filename,
 
           if ((scan_lines == tile_height) || ((i+1) == height))
             {
-              gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
-                                       width, scan_lines);
+              gegl_buffer_set (buffer, GEGL_RECTANGLE (0, i - scan_lines + 1,
+                                                       width, scan_lines), 0,
+                               NULL, data, GEGL_AUTO_ROWSTRIDE);
+
               scan_lines = 0;
               dest = data;
             }
@@ -1815,8 +1813,10 @@ load_xwd_f2_d24_b32 (const gchar      *filename,
 
           if ((scan_lines == tile_height) || ((i+1) == height))
             {
-              gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
-                                       width, scan_lines);
+              gegl_buffer_set (buffer, GEGL_RECTANGLE (0, i - scan_lines + 1,
+                                                       width, scan_lines), 0,
+                               NULL, data, GEGL_AUTO_ROWSTRIDE);
+
               scan_lines = 0;
               dest = data;
             }
@@ -1828,7 +1828,7 @@ load_xwd_f2_d24_b32 (const gchar      *filename,
   if (err)
     g_message (_("EOF encountered on reading"));
 
-  gimp_drawable_flush (drawable);
+  g_object_unref (buffer);
 
   return err ? -1 : image_ID;
 }
@@ -1854,8 +1854,7 @@ load_xwd_f2_d32_b32 (const gchar     *filename,
   PIXEL_MAP        pixel_map;
   gint             err = 0;
   gint32           layer_ID, image_ID;
-  GimpPixelRgn     pixel_rgn;
-  GimpDrawable    *drawable;
+  GeglBuffer      *buffer;
 
 #ifdef XWD_DEBUG
   printf ("load_xwd_f2_d32_b32 (%s)\n", filename);
@@ -1865,8 +1864,7 @@ load_xwd_f2_d32_b32 (const gchar     *filename,
   height = xwdhdr->l_pixmap_height;
 
   image_ID = create_new_image (filename, width, height, GIMP_RGB,
-                               GIMP_RGBA_IMAGE, &layer_ID, &drawable,
-                               &pixel_rgn);
+                               GIMP_RGBA_IMAGE, &layer_ID, &buffer);
 
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * width * 4);
@@ -1974,8 +1972,10 @@ load_xwd_f2_d32_b32 (const gchar     *filename,
 
       if ((scan_lines == tile_height) || ((i+1) == height))
         {
-          gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
-                                   width, scan_lines);
+          gegl_buffer_set (buffer, GEGL_RECTANGLE (0, i - scan_lines + 1,
+                                                   width, scan_lines), 0,
+                           NULL, data, GEGL_AUTO_ROWSTRIDE);
+
           scan_lines = 0;
           dest = data;
         }
@@ -1986,7 +1986,7 @@ load_xwd_f2_d32_b32 (const gchar     *filename,
   if (err)
     g_message (_("EOF encountered on reading"));
 
-  gimp_drawable_flush (drawable);
+  g_object_unref (buffer);
 
   return err ? -1 : image_ID;
 }
@@ -2017,8 +2017,7 @@ load_xwd_f1_d24_b1 (const gchar      *filename,
   PIXEL_MAP        pixel_map;
   gint             err = 0;
   gint32           layer_ID, image_ID;
-  GimpPixelRgn     pixel_rgn;
-  GimpDrawable    *drawable;
+  GeglBuffer      *buffer;
 
 #ifdef XWD_DEBUG
   printf ("load_xwd_f1_d24_b1 (%s)\n", filename);
@@ -2098,7 +2097,7 @@ load_xwd_f1_d24_b1 (const gchar      *filename,
   image_ID = create_new_image (filename, width, height,
                                indexed ? GIMP_INDEXED : GIMP_RGB,
                                indexed ? GIMP_INDEXED_IMAGE : GIMP_RGB_IMAGE,
-                               &layer_ID, &drawable, &pixel_rgn);
+                               &layer_ID, &buffer);
 
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * width * bytes_per_pixel);
@@ -2239,8 +2238,9 @@ load_xwd_f1_d24_b1 (const gchar      *filename,
 
       gimp_progress_update ((gdouble) tile_end / (gdouble) height);
 
-      gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, tile_start,
-                               width, tile_end-tile_start+1);
+      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, tile_start,
+                                               width, tile_end-tile_start+1), 0,
+                       NULL, data, GEGL_AUTO_ROWSTRIDE);
     }
 
   g_free (data);
@@ -2249,7 +2249,7 @@ load_xwd_f1_d24_b1 (const gchar      *filename,
   if (err)
     g_message (_("EOF encountered on reading"));
 
-  gimp_drawable_flush (drawable);
+  g_object_unref (buffer);
 
   return err ? -1 : image_ID;
 }
@@ -2259,7 +2259,7 @@ static gint
 save_index (FILE    *ofp,
             gint32   image_ID,
             gint32   drawable_ID,
-            gint     gray)
+            gboolean gray)
 {
   gint             height, width, linepad, tile_height, i, j;
   gint             ncolors, vclass;
@@ -2267,22 +2267,27 @@ save_index (FILE    *ofp,
   guchar          *data, *src, *cmap;
   L_XWDFILEHEADER  xwdhdr;
   L_XWDCOLOR       xwdcolmap[256];
-  GimpPixelRgn     pixel_rgn;
-  GimpDrawable    *drawable;
+  const Babl      *format;
+  GeglBuffer      *buffer;
 
 #ifdef XWD_DEBUG
   printf ("save_index ()\n");
 #endif
 
-  drawable      = gimp_drawable_get (drawable_ID);
-  width         = drawable->width;
-  height        = drawable->height;
+  buffer        = gimp_drawable_get_buffer (drawable_ID);
+  width         = gegl_buffer_get_width  (buffer);
+  height        = gegl_buffer_get_height (buffer);
   tile_height   = gimp_tile_height ();
 
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, FALSE, FALSE);
+  if (gray)
+    format = babl_format ("Y' u8");
+  else
+    format = gegl_buffer_get_format (buffer);
 
   /* allocate a buffer for retrieving information from the pixel region  */
-  src = data = g_new (guchar, tile_height * width * drawable->bpp);
+  src = data = g_new (guchar,
+                      tile_height * width *
+                      babl_format_get_bytes_per_pixel (format));
 
   linepad = width % 4;
   if (linepad) linepad = 4 - linepad;
@@ -2355,7 +2360,10 @@ save_index (FILE    *ofp,
         {
           gint scan_lines = (i + tile_height - 1 < height) ? tile_height : (height - i);
 
-          gimp_pixel_rgn_get_rect (&pixel_rgn, data, 0, i, width, scan_lines);
+          gegl_buffer_get (buffer, GEGL_RECTANGLE (0, i, width, scan_lines), 1.0,
+                           format, data,
+                           GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
           src = data;
         }
 
@@ -2372,7 +2380,7 @@ save_index (FILE    *ofp,
 
   g_free (data);
 
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
 
   if (ferror (ofp))
     {
@@ -2393,22 +2401,23 @@ save_rgb (FILE   *ofp,
   glong            tmp = 0;
   guchar          *data, *src;
   L_XWDFILEHEADER  xwdhdr;
-  GimpPixelRgn     pixel_rgn;
-  GimpDrawable    *drawable;
+  const Babl      *format;
+  GeglBuffer      *buffer;
 
 #ifdef XWD_DEBUG
   printf ("save_rgb ()\n");
 #endif
 
-  drawable      = gimp_drawable_get (drawable_ID);
-  width         = drawable->width;
-  height        = drawable->height;
+  buffer        = gimp_drawable_get_buffer (drawable_ID);
+  width         = gegl_buffer_get_width  (buffer);
+  height        = gegl_buffer_get_height (buffer);
   tile_height   = gimp_tile_height ();
-
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, FALSE, FALSE);
+  format        = babl_format ("R'G'B' u8");
 
   /* allocate a buffer for retrieving information from the pixel region  */
-  src = data = g_new (guchar, tile_height * width * drawable->bpp);
+  src = data = g_new (guchar,
+                      tile_height * width *
+                      babl_format_get_bytes_per_pixel (format));
 
   linepad = (width * 3) % 4;
   if (linepad)
@@ -2451,7 +2460,10 @@ save_rgb (FILE   *ofp,
         {
           gint scan_lines = (i + tile_height - 1 < height) ? tile_height : (height - i);
 
-          gimp_pixel_rgn_get_rect (&pixel_rgn, data, 0, i, width, scan_lines);
+          gegl_buffer_get (buffer, GEGL_RECTANGLE (0, i, width, scan_lines), 1.0,
+                           format, data,
+                           GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
           src = data;
         }
 
@@ -2468,7 +2480,7 @@ save_rgb (FILE   *ofp,
 
   g_free (data);
 
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
 
   if (ferror (ofp))
     {

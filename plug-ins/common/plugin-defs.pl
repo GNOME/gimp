@@ -73,7 +73,7 @@
     'file-xbm' => { ui => 1, gegl => 1 },
     'file-xmc' => { ui => 1, optional => 1, libs => 'XMC_LIBS' },
     'file-xpm' => { ui => 1, gegl => 1, optional => 1, libs => 'XPM_LIBS' },
-    'file-xwd' => {  ui => 1 },
+    'file-xwd' => {  ui => 1, gegl => 1 },
     'film' => { ui => 1 },
     'filter-pack' => { ui => 1 },
     'fractal-trace' => { ui => 1 },
