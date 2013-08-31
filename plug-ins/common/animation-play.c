@@ -195,6 +195,8 @@ static AnimationSettings settings =
   100 /* ms */
 };
 
+static gint32 frames_image_id = 0;
+
 MAIN ()
 
 static void
@@ -263,6 +265,9 @@ run (const gchar      *name,
 
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
+
+  gimp_image_delete (frames_image_id);
+  gegl_exit ();
 }
 
 static void
@@ -994,7 +999,6 @@ static void
 init_frames (void)
 {
   /* Frames are associated to an unused image. */
-  static gint32 frames_image_id;
   gint          i;
   gint32        new_frame, previous_frame, new_layer;
   gboolean      animated;
