@@ -141,7 +141,7 @@ gimp_n_point_deformation_tool_register (GimpToolRegisterCallback  callback,
                 0,
                 "gimp-n-point-deformation-tool",
                 _("N-Point Deformation"),
-                _("N-Point Deformation Tool: Deform image using points"),
+                _("N-Point Deformation Tool: Rubber-like deformation of an image using points"),
                 N_("_N-Point Deformation"), "<shift>N",
                 NULL, GIMP_HELP_TOOL_N_POINT_DEFORMATION,
                 GIMP_STOCK_TOOL_N_POINT_DEFORMATION,
@@ -186,12 +186,7 @@ gimp_n_point_deformation_tool_init (GimpNPointDeformationTool *npd_tool)
                                               GIMP_DIRTY_SELECTION       |
                                               GIMP_DIRTY_ACTIVE_DRAWABLE);
 
-  npd_tool->active                 = FALSE;
-  npd_tool->selected_cp            = NULL;
-  npd_tool->hovering_cp            = NULL;
-  npd_tool->selected_cps           = NULL;
-  npd_tool->previous_cps_positions = NULL;
-  npd_tool->rubber_band            = FALSE;
+  npd_tool->active = FALSE;
 }
 
 static void
@@ -234,52 +229,61 @@ gimp_n_point_deformation_tool_start (GimpNPointDeformationTool *npd_tool,
   GeglBuffer    *shadow;
   NPDModel      *model;
   GThread       *deform_thread;
+  GimpNPointDeformationOptions *npd_options;
 
   g_return_if_fail (GIMP_IS_N_POINT_DEFORMATION_TOOL (npd_tool));
-  
+
   gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
-  
-  tool->display = display;
-  npd_tool->display = display;
+
+  tool->display = npd_tool->display = display;
   gimp_draw_tool_start (draw_tool, display);
-  
-  npd_tool->active = TRUE;  
+
+  npd_tool->active = TRUE;
 
   image    = gimp_display_get_image (display);
   drawable = gimp_image_get_active_drawable (image);
   buf      = drawable->private->buffer;
-  
+
   shadow   = gegl_buffer_new (gegl_buffer_get_extent (buf), gegl_buffer_get_format(buf));
-  
+
   graph    = gegl_node_new ();
 
-  source   = gegl_node_new_child (graph, "operation", "gegl:buffer-source",
-                                       "buffer", buf,
-                                       NULL);
-  node     = gegl_node_new_child (graph, "operation", "gegl:npd", NULL);
+  source   = gegl_node_new_child (graph,
+                                  "operation", "gegl:buffer-source",
+                                  "buffer", buf,
+                                  NULL);
+  node     = gegl_node_new_child (graph,
+                                  "operation", "gegl:npd",
+                                  NULL);
+  sink     = gegl_node_new_child (graph,
+                                  "operation", "gegl:write-buffer",
+                                  "buffer", shadow,
+                                  NULL);
 
-  sink     = gegl_node_new_child (graph, "operation", "gegl:write-buffer",
-                                      "buffer", shadow,
-                                      NULL);
-  
   gegl_node_link_many (source, node, sink, NULL);
+  
+  /* initialize some options */
+  npd_options = GIMP_N_POINT_DEFORMATION_TOOL_GET_OPTIONS (npd_tool);
+  npd_options->mesh_visible = TRUE;
+  gimp_n_point_deformation_tool_set_options (node, npd_options);
 
-  gimp_n_point_deformation_tool_set_options (node,
-                                             GIMP_N_POINT_DEFORMATION_TOOL_GET_OPTIONS (npd_tool));
-
+  /* compute and get model */
   gegl_node_process (sink);
-
   gegl_node_get (node, "model", &model, NULL);
 
-  npd_tool->buf = buf;
-  npd_tool->drawable = drawable;
-  npd_tool->graph = graph;
-  npd_tool->model = model;
-  npd_tool->node = node;
-  npd_tool->source = source;
-  npd_tool->shadow = shadow;
-  npd_tool->sink = sink;
-  npd_tool->selected_cp = NULL;
+  npd_tool->buf                    = buf;
+  npd_tool->drawable               = drawable;
+  npd_tool->graph                  = graph;
+  npd_tool->model                  = model;
+  npd_tool->node                   = node;
+  npd_tool->source                 = source;
+  npd_tool->shadow                 = shadow;
+  npd_tool->sink                   = sink;
+  npd_tool->selected_cp            = NULL;
+  npd_tool->hovering_cp            = NULL;
+  npd_tool->selected_cps           = NULL;
+  npd_tool->previous_cps_positions = NULL;
+  npd_tool->rubber_band            = FALSE;
 
   /* start deformation thread */
   deform_thread = g_thread_new ("deform thread",
@@ -302,6 +306,9 @@ gimp_n_point_deformation_tool_halt (GimpNPointDeformationTool *npd_tool)
 
   if (gimp_tool_control_is_active (tool->control))
     gimp_tool_control_halt (tool->control);  
+  
+  gimp_n_point_deformation_tool_clear_selected_points_list (npd_tool);
+  npd_destroy_model (npd_tool->model);
 
   tool->display = NULL;
 }
@@ -725,6 +732,32 @@ gimp_n_point_deformation_tool_draw (GimpDrawTool *draw_tool)
                                     x1 - x0,
                                     y1 - y0);
     }
+
+  
+  /* draw preview test */
+  {
+//    GimpCanvasItem *item = g_object_new (GIMP_TYPE_CANVAS_TRANSFORM_PREVIEW,
+//                       "shell",       shell,
+//                       "drawable",    drawable,
+//                       "transform",   transform,
+//                       "x1",          x1,
+//                       "y1",          y1,
+//                       "x2",          x2,
+//                       "y2",          y2,
+//                       "perspective", perspective,
+//                       "opacity",     CLAMP (opacity, 0.0, 1.0),
+//                       NULL);
+//    
+//    gimp_draw_tool_add_preview (draw_tool, item);
+//    g_object_unref (item);
+    
+////    cairo_surface_t *area;
+////    GimpDisplayShell *shell;
+////    shell = gimp_display_get_shell (npd_tool->display);
+////    area = cairo_image_surface_create (CAIRO_FORMAT_ARGB_32, 500, 500);
+//    
+//    cairo_surface_destroy (area);
+  }
 }
 
 static void
