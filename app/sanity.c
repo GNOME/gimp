@@ -497,19 +497,9 @@ sanity_check_gegl_ops (void)
     "gegl:write-buffer"
   };
 
-  operations = gegl_list_operations (&n_operations);
   for (i = 0; i < G_N_ELEMENTS (required_ops); i++)
     {
-      gboolean present = FALSE;
-      for (j = 0; j < n_operations; j++)
-        {
-          if (!strcmp (required_ops[i], operations[j]))
-            {
-              present = TRUE;
-              break;
-            }
-        }
-      if (!present)
+      if (!gegl_has_operation (required_ops[i]))
         return g_strdup_printf
           ("GEGL operation missing!\n\n"
            "GIMP requires the GEGL operation \"%s\". \n"
@@ -518,7 +508,7 @@ sanity_check_gegl_ops (void)
            "with any dependencies required for GIMP.\n",
            required_ops [i]);
     }
-  g_free (operations);
+
   return NULL;
 }
 
