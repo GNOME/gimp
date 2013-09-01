@@ -1,4 +1,4 @@
-/* Raw image loader (and saver) plugin 3.4
+/* Raw data image loader (and saver) plugin 3.4
  *
  * by tim copperfield [timecop@japan.co.jp]
  * http://www.ne.jp/asahi/linux/timecop
@@ -48,8 +48,8 @@
 
 #define LOAD_PROC      "file-raw-load"
 #define SAVE_PROC      "file-raw-save"
-#define PLUG_IN_BINARY "file-raw"
-#define PLUG_IN_ROLE   "gimp-file-raw"
+#define PLUG_IN_BINARY "file-raw-data"
+#define PLUG_IN_ROLE   "gimp-file-raw-data"
 #define PREVIEW_SIZE   350
 
 

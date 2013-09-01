@@ -108,7 +108,7 @@ libexec_PROGRAMS = \
 	file-pnm \
 	$(FILE_PS) \
 	$(FILE_PSP) \
-	file-raw \
+	file-raw-data \
 	file-sunras \
 	$(FILE_SVG) \
 	file-tga \
@@ -1316,10 +1316,10 @@ file_psp_LDADD = \
 	$(INTLLIBS)		\
 	$(file_psp_RC)
 
-file_raw_SOURCES = \
-	file-raw.c
+file_raw_data_SOURCES = \
+	file-raw-data.c
 
-file_raw_LDADD = \
+file_raw_data_LDADD = \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimpmodule)	\
@@ -1332,7 +1332,7 @@ file_raw_LDADD = \
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
-	$(file_raw_RC)
+	$(file_raw_data_RC)
 
 file_sunras_SOURCES = \
 	file-sunras.c
