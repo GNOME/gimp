@@ -90,8 +90,7 @@ typedef struct
 typedef struct
 {
   FILE         *fp;        /* pointer to the already open file */
-  GimpDrawable *drawable;  /* gimp drawable                    */
-  GimpPixelRgn  region;    /* gimp pixel region                */
+  GeglBuffer   *buffer;    /* gimp drawable buffer             */
   gint32        image_id;  /* gimp image id                    */
   guchar        cmap[768]; /* color map for indexed images     */
 } RawGimpData;
@@ -237,6 +236,7 @@ run (const gchar      *name,
   gint32             drawable_id;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   run_mode = param[0].data.d_int32;
 
@@ -411,10 +411,15 @@ raw_load_standard (RawGimpData *data,
     return FALSE;
 
   raw_read_row (data->fp, row, runtime->file_offset,
-                (runtime->image_width * runtime->image_height * bpp));
-  gimp_pixel_rgn_set_rect (&data->region, row,
-                           0, 0, runtime->image_width, runtime->image_height);
+                runtime->image_width * runtime->image_height * bpp);
+
+  gegl_buffer_set (data->buffer, GEGL_RECTANGLE (0, 0,
+                                                 runtime->image_width,
+                                                 runtime->image_height), 0,
+                   NULL, row, GEGL_AUTO_ROWSTRIDE);
+
   g_free (row);
+
   return TRUE;
 }
 
@@ -490,8 +495,11 @@ raw_load_gray (RawGimpData *data,
         }
     }
 
-  gimp_pixel_rgn_set_rect (&data->region, out_raw,
-                           0, 0, runtime->image_width, runtime->image_height);
+  gegl_buffer_set (data->buffer, GEGL_RECTANGLE (0, 0,
+                                                 runtime->image_width,
+                                                 runtime->image_height), 0,
+                   NULL, out_raw, GEGL_AUTO_ROWSTRIDE);
+
   g_free (in_raw);
   g_free (out_raw);
 
@@ -510,8 +518,11 @@ raw_load_rgb565 (RawGimpData *data,
   raw_read_row (data->fp, (guchar *)in, runtime->file_offset, num_pixels * 2);
   rgb_565_to_888 (in, row, num_pixels, type);
 
-  gimp_pixel_rgn_set_rect (&data->region, row,
-                           0, 0, runtime->image_width, runtime->image_height);
+  gegl_buffer_set (data->buffer, GEGL_RECTANGLE (0, 0,
+                                                 runtime->image_width,
+                                                 runtime->image_height), 0,
+                   NULL, row, GEGL_AUTO_ROWSTRIDE);
+
   g_free (in);
   g_free (row);
 
@@ -616,9 +627,13 @@ raw_load_planar (RawGimpData *data)
           row[k++] = b_row[j];
         }
 
-      gimp_pixel_rgn_set_row (&data->region, row, 0, i, runtime->image_width);
+      gegl_buffer_set (data->buffer,
+                       GEGL_RECTANGLE (0, i, runtime->image_width, 1), 0,
+                       NULL, row, GEGL_AUTO_ROWSTRIDE);
+
       gimp_progress_update ((gfloat) i / (gfloat) runtime->image_height);
     }
+
   gimp_progress_update (1.0);
 
   g_free (row);
@@ -688,9 +703,9 @@ save_image (const gchar  *filename,
             gint32        drawable_id,
             GError      **error)
 {
-  GimpDrawable     *drawable;
-  GimpPixelRgn      pixel_rgn;
-  guchar           *cmap = NULL;  /* colormap for indexed images */
+  GeglBuffer       *buffer;
+  const Babl       *format = NULL;
+  guchar           *cmap   = NULL;  /* colormap for indexed images */
   guchar           *buf;
   guchar           *red, *green, *blue, *alpha = NULL;
   gint32            width, height, bpp = 0;
@@ -701,24 +716,48 @@ save_image (const gchar  *filename,
   GimpPDBStatusType ret = GIMP_PDB_EXECUTION_ERROR;
 
   /* get info about the current image */
-  drawable = gimp_drawable_get (drawable_id);
+  buffer = gimp_drawable_get_buffer (drawable_id);
 
-  bpp        = gimp_drawable_bpp (drawable_id);
-  have_alpha = gimp_drawable_has_alpha (drawable_id);
+  switch (gimp_drawable_type (drawable_id))
+    {
+    case GIMP_RGB_IMAGE:
+      format = babl_format ("R'G'B' u8");
+      break;
+
+    case GIMP_RGBA_IMAGE:
+      format = babl_format ("R'G'B'A u8");
+      break;
+
+    case GIMP_GRAY_IMAGE:
+      format = babl_format ("Y' u8");
+      break;
+
+    case GIMP_GRAYA_IMAGE:
+      format = babl_format ("Y'A u8");
+      break;
+
+    case GIMP_INDEXED_IMAGE:
+    case GIMP_INDEXEDA_IMAGE:
+      format = gimp_drawable_get_format (drawable_id);
+      break;
+    }
+
+  bpp        = babl_format_get_bytes_per_pixel (format);
+  have_alpha = babl_format_has_alpha (format);
 
   if (gimp_drawable_is_indexed (drawable_id))
     cmap = gimp_image_get_colormap (image_id, &palsize);
 
-  width  = drawable->width;
-  height = drawable->height;
-
-  gimp_pixel_rgn_init (&pixel_rgn, drawable,
-                       0, 0, drawable->width, drawable->height,
-                       FALSE, FALSE);
+  width  = gegl_buffer_get_width  (buffer);
+  height = gegl_buffer_get_height (buffer);
 
   buf = g_new (guchar, width * height * bpp);
 
-  gimp_pixel_rgn_get_rect (&pixel_rgn, buf, 0, 0, width, height);
+  gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, width, height), 1.0,
+                   format, buf,
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+  g_object_unref (buffer);
 
   fp = g_fopen (filename, "wb");
 
@@ -930,11 +969,7 @@ load_image (const gchar  *filename,
                              100, GIMP_NORMAL_MODE);
   gimp_image_insert_layer (data->image_id, layer_id, -1, 0);
 
-  data->drawable = gimp_drawable_get (layer_id);
-
-  gimp_pixel_rgn_init (&data->region, data->drawable,
-                       0, 0, runtime->image_width, runtime->image_height,
-                       TRUE, FALSE);
+  data->buffer = gimp_drawable_get_buffer (layer_id);
 
   switch (runtime->image_type)
     {
@@ -976,8 +1011,7 @@ load_image (const gchar  *filename,
 
   fclose (data->fp);
 
-  gimp_drawable_flush (data->drawable);
-  gimp_drawable_detach (data->drawable);
+  g_object_unref (data->buffer);
 
   return data->image_id;
 }
