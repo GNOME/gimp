@@ -20,8 +20,10 @@
 		href="http://download.icu-project.org/files/" />
 
 <autotools id="cairo">
-	<branch module="cairo" repo="anongit.freedesktop.org"
-		revision="fb8881e84bb24b2a54ee5aa449b6f5638de36404"/>
+	<branch version="1.12.16" repo="cairographics.org"
+			module="cairo-1.12.16.tar.xz"
+			hash="sha1:4f6e337d5d3edd7ea79d1426f575331552b003ec">
+	</branch>
 	<dependencies>
 		<dep package="zlib"/>
 		<dep package="libpng"/>
