@@ -233,7 +233,6 @@
       <xi:include href="xml/gimpitemstack.xml" />
       <xi:include href="xml/gimpdrawablestack.xml" />
       <xi:include href="xml/gimpdocumentlist.xml" />
-      <xi:include href="xml/gimptoolpresets.xml" />
       <xi:include href="xml/gimpitemtree.xml" />
       <xi:include href="xml/gimptreehandler.xml" />
     </chapter>
