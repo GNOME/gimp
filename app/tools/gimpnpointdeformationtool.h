@@ -62,6 +62,9 @@ struct _GimpNPointDeformationTool
   gdouble           cursor_x;
   gdouble           cursor_y;
 
+  gdouble           offset_x;
+  gdouble           offset_y;
+
   gdouble           movement_start_x;
   gdouble           movement_start_y;
 

@@ -111,6 +111,8 @@ gboolean        gimp_n_point_deformation_tool_is_cp_in_area           (NPDContro
                                                                        gfloat                     y0,
                                                                        gfloat                     x1,
                                                                        gfloat                     y1,
+                                                                       gfloat                     offset_x,
+                                                                       gfloat                     offset_y,
                                                                        gfloat                     cp_radius);
 static void     gimp_n_point_deformation_tool_remove_cp_from_selection
                                                                       (GimpNPointDeformationTool *npd_tool,
@@ -230,13 +232,13 @@ gimp_n_point_deformation_tool_start (GimpNPointDeformationTool *npd_tool,
   NPDModel      *model;
   GThread       *deform_thread;
   GimpNPointDeformationOptions *npd_options;
+  gint           offset_x, offset_y;
 
   g_return_if_fail (GIMP_IS_N_POINT_DEFORMATION_TOOL (npd_tool));
 
   gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
 
   tool->display = npd_tool->display = display;
-  gimp_draw_tool_start (draw_tool, display);
 
   npd_tool->active = TRUE;
 
@@ -285,6 +287,16 @@ gimp_n_point_deformation_tool_start (GimpNPointDeformationTool *npd_tool,
   npd_tool->selected_cps           = NULL;
   npd_tool->previous_cps_positions = NULL;
   npd_tool->rubber_band            = FALSE;
+
+  /* get drawable's offset */
+  gimp_item_get_offset (GIMP_ITEM (drawable),
+                        &offset_x, &offset_y);
+  npd_tool->offset_x = offset_x;
+  npd_tool->offset_y = offset_y;
+  gimp_npd_debug (("offset: %f %f\n", npd_tool->offset_x, npd_tool->offset_y));
+
+  /* start draw tool */
+  gimp_draw_tool_start (draw_tool, display);
 
   /* start deformation thread */
   deform_thread = g_thread_new ("deform thread",
@@ -574,10 +586,16 @@ gimp_n_point_deformation_tool_is_cp_in_area (NPDControlPoint  *cp,
                                              gfloat            y0,
                                              gfloat            x1,
                                              gfloat            y1,
+                                             gfloat            offset_x,
+                                             gfloat            offset_y,
                                              gfloat            cp_radius)
 {
-  return cp->point.x >= x0 - cp_radius && cp->point.x <= x1 + cp_radius &&
-         cp->point.y >= y0 - cp_radius && cp->point.y <= y1 + cp_radius;
+  NPDPoint p = cp->point;
+  p.x += offset_x;
+  p.y += offset_y;
+
+  return p.x >= x0 - cp_radius && p.x <= x1 + cp_radius &&
+         p.y >= y0 - cp_radius && p.y <= y1 + cp_radius;
 }
 
 static void
@@ -607,7 +625,8 @@ gimp_n_point_deformation_tool_button_release (GimpTool             *tool,
       if (npd_tool->hovering_cp == NULL)
         {
           gimp_npd_debug (("cp doesn't exist, adding\n"));
-          p.x = coords->x; p.y = coords->y;
+          p.x = coords->x - npd_tool->offset_x;
+          p.y = coords->y - npd_tool->offset_y;
           npd_add_control_point (model, &p);
         }
     }
@@ -633,6 +652,7 @@ gimp_n_point_deformation_tool_button_release (GimpTool             *tool,
               if (gimp_n_point_deformation_tool_is_cp_in_area (cp,
                                                                x0, y0,
                                                                x1, y1,
+                                                               npd_tool->offset_x, npd_tool->offset_y,
                                                                npd_tool->cp_scaled_radius))
                 {
                   /* control point is situated in an area defined by rubber band */
@@ -671,8 +691,8 @@ gimp_n_point_deformation_tool_oper_update (GimpTool         *tool,
       NPDPoint          p;
 
       npd_tool->cp_scaled_radius = model->control_point_radius / shell->scale_x;
-      p.x = coords->x;
-      p.y = coords->y;
+      p.x = coords->x - npd_tool->offset_x;
+      p.y = coords->y - npd_tool->offset_y;
       npd_tool->hovering_cp = npd_get_control_point_with_radius_at (model,
                                                                    &p,
                                                                     npd_tool->cp_scaled_radius);
@@ -690,6 +710,7 @@ gimp_n_point_deformation_tool_draw (GimpDrawTool *draw_tool)
   GimpNPointDeformationTool *npd_tool = GIMP_N_POINT_DEFORMATION_TOOL (draw_tool);
   NPDModel                  *model = npd_tool->model;
   NPDControlPoint           *cp;
+  NPDPoint                   p;
   GimpHandleType             handle_type;
   gint                       i, x0, y0, x1, y1;
 
@@ -702,7 +723,10 @@ gimp_n_point_deformation_tool_draw (GimpDrawTool *draw_tool)
   
   for (i = 0; i < model->control_points->len; i++)
     {
-      cp = &g_array_index (model->control_points, NPDControlPoint, i);
+      cp   = &g_array_index (model->control_points, NPDControlPoint, i);
+      p    = cp->point;
+      p.x += npd_tool->offset_x;
+      p.y += npd_tool->offset_y;
       
       handle_type = GIMP_HANDLE_CIRCLE;
 
@@ -713,6 +737,7 @@ gimp_n_point_deformation_tool_draw (GimpDrawTool *draw_tool)
           gimp_n_point_deformation_tool_is_cp_in_area (cp,
                                                        x0, y0,
                                                        x1, y1,
+                                                       npd_tool->offset_x, npd_tool->offset_y,
                                                        npd_tool->cp_scaled_radius)))
         {
           handle_type = GIMP_HANDLE_FILLED_CIRCLE;
@@ -720,8 +745,8 @@ gimp_n_point_deformation_tool_draw (GimpDrawTool *draw_tool)
 
       gimp_draw_tool_add_handle (draw_tool,
                                  handle_type,
-                                 cp->point.x,
-                                 cp->point.y,
+                                 p.x,
+                                 p.y,
                                  GIMP_TOOL_HANDLE_SIZE_CIRCLE,
                                  GIMP_TOOL_HANDLE_SIZE_CIRCLE,
                                  GIMP_HANDLE_ANCHOR_CENTER);
@@ -730,8 +755,8 @@ gimp_n_point_deformation_tool_draw (GimpDrawTool *draw_tool)
         {
           gimp_draw_tool_add_handle (draw_tool,
                                      GIMP_HANDLE_SQUARE,
-                                     cp->point.x,
-                                     cp->point.y,
+                                     p.x,
+                                     p.y,
                                      GIMP_TOOL_HANDLE_SIZE_CIRCLE,
                                      GIMP_TOOL_HANDLE_SIZE_CIRCLE,
                                      GIMP_HANDLE_ANCHOR_CENTER);
