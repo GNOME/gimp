@@ -45,6 +45,9 @@ struct _GimpNPointDeformationOptions
   gboolean         MLS_weights;
   gdouble          MLS_weights_alpha;
   gboolean         mesh_visible;
+  gboolean         deformation_is_paused;
+
+  GtkWidget       *check_pause_deformation;
 };
 
 struct _GimpNPointDeformationOptionsClass
@@ -57,5 +60,9 @@ GType       gimp_n_point_deformation_options_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_n_point_deformation_options_gui      (GimpToolOptions *tool_options);
 
+gboolean    gimp_n_point_deformation_options_is_deformation_paused    (GimpNPointDeformationOptions *npd_options);
+void        gimp_n_point_deformation_options_set_pause_deformation    (GimpNPointDeformationOptions *npd_options,
+                                                                       gboolean                      is_active);
+void        gimp_n_point_deformation_options_toggle_pause_deformation (GimpNPointDeformationOptions *npd_options);
 
 #endif  /*  __GIMP_N_POINT_DEFORMATION_OPTIONS_H__  */

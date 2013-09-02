@@ -43,7 +43,8 @@ enum
     PROP_ASAP_DEFORMATION,
     PROP_MLS_WEIGHTS,
     PROP_MLS_WEIGHTS_ALPHA,
-    PROP_MESH_VISIBLE
+    PROP_MESH_VISIBLE,
+    PROP_PAUSE_DEFORMATION
 };
 
 
@@ -100,6 +101,11 @@ gimp_n_point_deformation_options_class_init (GimpNPointDeformationOptionsClass *
                                     "mesh-visible", _("Mesh Visible"),
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PAUSE_DEFORMATION,
+                                    "pause-deformation", _("Pause Deformation"),
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -135,6 +141,9 @@ gimp_n_point_deformation_options_set_property (GObject      *object,
       case PROP_MESH_VISIBLE:
         options->mesh_visible = g_value_get_boolean (value);
         break;
+      case PROP_PAUSE_DEFORMATION:
+        options->deformation_is_paused = g_value_get_boolean (value);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
         break;
@@ -168,6 +177,9 @@ gimp_n_point_deformation_options_get_property (GObject    *object,
         break;
       case PROP_MESH_VISIBLE:
         g_value_set_boolean (value, options->mesh_visible);
+        break;
+      case PROP_PAUSE_DEFORMATION:
+        g_value_set_boolean (value, options->deformation_is_paused);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -209,5 +221,32 @@ gimp_n_point_deformation_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
+  check = gimp_prop_check_button_new (config, "pause-deformation", _("Pause Deformation"));
+  GIMP_N_POINT_DEFORMATION_OPTIONS (tool_options)->check_pause_deformation = check;
+  gtk_box_pack_start (GTK_BOX (vbox), check, FALSE, FALSE, 0);
+  gtk_widget_show (check);
+
   return vbox;
+}
+
+gboolean
+gimp_n_point_deformation_options_is_deformation_paused (GimpNPointDeformationOptions *npd_options)
+{
+  return npd_options->deformation_is_paused;
+}
+
+void
+gimp_n_point_deformation_options_set_pause_deformation (GimpNPointDeformationOptions *npd_options,
+                                                        gboolean                      is_active)
+{
+  GtkToggleButton *check = GTK_TOGGLE_BUTTON (npd_options->check_pause_deformation);
+  gtk_toggle_button_set_active (check, is_active);
+  npd_options->deformation_is_paused = is_active;
+}
+
+void
+gimp_n_point_deformation_options_toggle_pause_deformation (GimpNPointDeformationOptions *npd_options)
+{
+  gimp_n_point_deformation_options_set_pause_deformation (npd_options,
+                                                          !npd_options->deformation_is_paused);
 }

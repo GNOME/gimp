@@ -40,39 +40,39 @@ typedef struct _GimpNPointDeformationToolClass GimpNPointDeformationToolClass;
 
 struct _GimpNPointDeformationTool
 {
-  GimpDrawTool     parent_instance;
+  GimpDrawTool      parent_instance;
 
-  GimpDisplay     *display;
-  GThread         *deform_thread;
+  GimpDisplay      *display;
+  GThread          *deform_thread;
 
-  GeglNode        *graph;
-  GeglNode        *source;
-  GeglNode        *node;
-  GeglNode        *sink;
+  GeglNode         *graph;
+  GeglNode         *source;
+  GeglNode         *node;
+  GeglNode         *sink;
 
-  GeglBuffer      *shadow, *buf;
+  GeglBuffer       *shadow, *buf;
 
-  GimpDrawable    *drawable;
+  GimpDrawable     *drawable;
 
-  NPDModel        *model;
-  NPDControlPoint *selected_cp;    /* last selected control point */
-  GList           *selected_cps;   /* list of selected control points */
-  NPDControlPoint *hovering_cp;
+  NPDModel         *model;
+  NPDControlPoint  *selected_cp;    /* last selected control point */
+  GList            *selected_cps;   /* list of selected control points */
+  NPDControlPoint  *hovering_cp;
 
-  gdouble          cursor_x;
-  gdouble          cursor_y;
+  gdouble           cursor_x;
+  gdouble           cursor_y;
 
-  gdouble          movement_start_x;
-  gdouble          movement_start_y;
+  gdouble           movement_start_x;
+  gdouble           movement_start_y;
 
-  gfloat           cp_scaled_radius;       /* radius of a control point scaled
-                                            * according to display shell's scale */
+  gfloat            cp_scaled_radius;       /* radius of a control point scaled
+                                             * according to display shell's scale */
 
-  GList           *previous_cps_positions; /* list of NPDPoints holding previous
-                                            * positions of control points */
+  GList            *previous_cps_positions; /* list of NPDPoints holding previous
+                                             * positions of control points */
 
-  gboolean         active;
-  gboolean         rubber_band;
+  volatile gboolean active;
+  gboolean          rubber_band;
 };
 
 struct _GimpNPointDeformationToolClass
