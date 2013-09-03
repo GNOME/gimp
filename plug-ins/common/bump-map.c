@@ -935,7 +935,7 @@ bumpmap_dialog (void)
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
                           _("_X offset:"), SCALE_WIDTH, 6,
                           bmvals.xofs, -1000.0, 1001.0, 1.0, 10.0, 0,
-                          TRUE, 0, 0,
+                          FALSE, -10000.0, 10001.0,
                           _("The offset can be adjusted by dragging the "
                             "preview using the middle mouse button."), NULL);
   g_signal_connect (adj, "value-changed",
@@ -949,7 +949,7 @@ bumpmap_dialog (void)
     gimp_scale_entry_new (GTK_TABLE (table), 0, row,
                           _("_Y offset:"), SCALE_WIDTH, 6,
                           bmvals.yofs, -1000.0, 1001.0, 1.0, 10.0, 0,
-                          TRUE, 0, 0,
+                          FALSE, -10000.0, 10001.0,
                           _("The offset can be adjusted by dragging the "
                             "preview using the middle mouse button."), NULL);
   g_signal_connect (adj, "value-changed",
@@ -1065,7 +1065,7 @@ dialog_preview_events (GtkWidget   *area,
         switch (bmint.drag_mode)
           {
           case DRAG_BUMPMAP:
-            bmvals.xofs = CLAMP (bmvals.xofs - dx, -1000, 1000);
+            bmvals.xofs = CLAMP (bmvals.xofs - dx, -10000, 10000);
             g_signal_handlers_block_by_func (bmint.offset_adj_x,
                                              gimp_int_adjustment_update,
                                              &bmvals.xofs);
@@ -1075,7 +1075,7 @@ dialog_preview_events (GtkWidget   *area,
                                                gimp_int_adjustment_update,
                                                &bmvals.xofs);
 
-            bmvals.yofs = CLAMP (bmvals.yofs - dy, -1000, 1000);
+            bmvals.yofs = CLAMP (bmvals.yofs - dy, -10000, 10000);
             g_signal_handlers_block_by_func (bmint.offset_adj_y,
                                              gimp_int_adjustment_update,
                                              &bmvals.yofs);
