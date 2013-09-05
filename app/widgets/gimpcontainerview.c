@@ -406,6 +406,9 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 
   if (private->container)
     {
+      if (private->context)
+        gimp_container_view_disconnect_context (view);
+
       gimp_container_view_select_item (view, NULL);
 
       /* freeze/thaw is only supported for the toplevel container */
@@ -418,9 +421,6 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 
       if (! gimp_container_frozen (private->container))
         gimp_container_view_remove_container (view, private->container);
-
-      if (private->context)
-        gimp_container_view_disconnect_context (view);
     }
 
   private->container = container;
