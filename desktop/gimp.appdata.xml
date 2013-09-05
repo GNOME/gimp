@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+<id type="desktop">gimp.desktop</id>
+<licence>CC0</licence>
+<description>
+<p>
+GIMP is an acronym for GNU Image Manipulation Program. It is a freely distributed
+program for such tasks as photo retouching, image composition and image authoring.
+</p>
+<p>
+It has many capabilities. It can be used as a simple paint program, an expert
+quality photo retouching program, an online batch processing system, a mass
+production image renderer, an image format converter, etc.
+</p>
+<p>
+GIMP is expandable and extensible. It is designed to be augmented with plug-ins
+and extensions to do just about anything. The advanced scripting interface allows
+everything from the simplest task to the most complex image manipulation
+procedures to be easily scripted.
+GIMP is also available for Microsoft Windows and OS X.
+</p>
+</description>
+<url type="homepage">http://www.gimp.org/</url>
+<screenshots>
+<screenshot type="default">http://www.gimp.org/screenshots/linux_mixer.jpg</screenshot>
+</screenshots>
+<updatecontact>gimp-developer-list_at_gnome.org</updatecontact>
+</application>

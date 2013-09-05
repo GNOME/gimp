@@ -35,8 +35,11 @@ install-data-hook:
 
 endif
 
+appdatadir = $(datadir)/appdata
+appdata_files = gimp.appdata.xml
 
 EXTRA_DIST = \
+	$(appdata_files)	\
 	gimp.desktop.in.in	\
 	16x16/gimp.png		\
 	22x22/gimp.png		\
