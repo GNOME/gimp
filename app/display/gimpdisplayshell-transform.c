@@ -282,7 +282,7 @@ gimp_display_shell_rotate_coords (const GimpDisplayShell *shell,
   g_return_if_fail (unrotated_coords != NULL);
   g_return_if_fail (rotated_coords != NULL);
 
-  *rotated_coords = *rotated_coords;
+  *rotated_coords = *unrotated_coords;
 
   if (shell->rotate_transform)
     cairo_matrix_transform_point (shell->rotate_transform,
