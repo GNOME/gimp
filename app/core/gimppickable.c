@@ -39,6 +39,9 @@
 #include "gimppickable.h"
 
 
+static void   gimp_pickable_interface_base_init (GimpPickableInterface *iface);
+
+
 GType
 gimp_pickable_interface_get_type (void)
 {
@@ -49,7 +52,7 @@ gimp_pickable_interface_get_type (void)
       const GTypeInfo pickable_iface_info =
       {
         sizeof (GimpPickableInterface),
-        (GBaseInitFunc)     NULL,
+        (GBaseInitFunc)     gimp_pickable_interface_base_init,
         (GBaseFinalizeFunc) NULL,
       };
 
@@ -62,6 +65,23 @@ gimp_pickable_interface_get_type (void)
     }
 
   return pickable_iface_type;
+}
+
+static void
+gimp_pickable_interface_base_init (GimpPickableInterface *iface)
+{
+  static gboolean initialized = FALSE;
+
+  if (! initialized)
+    {
+      g_object_interface_install_property (iface,
+                                           g_param_spec_object ("buffer",
+                                                                NULL, NULL,
+                                                                GEGL_TYPE_BUFFER,
+                                                                GIMP_PARAM_READABLE));
+
+      initialized = TRUE;
+    }
 }
 
 void

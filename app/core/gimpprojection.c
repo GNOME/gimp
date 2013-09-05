@@ -55,12 +55,26 @@ enum
   LAST_SIGNAL
 };
 
+enum
+{
+  PROP_0,
+  PROP_BUFFER
+};
+
 
 /*  local function prototypes  */
 
 static void   gimp_projection_pickable_iface_init (GimpPickableInterface  *iface);
 
 static void        gimp_projection_finalize              (GObject         *object);
+static void        gimp_projection_set_property          (GObject         *object,
+                                                          guint            property_id,
+                                                          const GValue    *value,
+                                                          GParamSpec      *pspec);
+static void        gimp_projection_get_property          (GObject         *object,
+                                                          guint            property_id,
+                                                          GValue          *value,
+                                                          GParamSpec      *pspec);
 
 static gint64      gimp_projection_get_memsize           (GimpObject      *object,
                                                           gint64          *gui_size);
@@ -142,8 +156,12 @@ gimp_projection_class_init (GimpProjectionClass *klass)
                   G_TYPE_INT);
 
   object_class->finalize         = gimp_projection_finalize;
+  object_class->set_property     = gimp_projection_set_property;
+  object_class->get_property     = gimp_projection_get_property;
 
   gimp_object_class->get_memsize = gimp_projection_get_memsize;
+
+  g_object_class_override_property (object_class, PROP_BUFFER, "buffer");
 }
 
 static void
@@ -180,6 +198,41 @@ gimp_projection_finalize (GObject *object)
   gimp_projection_free_buffer (proj);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_projection_set_property (GObject      *object,
+                              guint         property_id,
+                              const GValue *value,
+                              GParamSpec   *pspec)
+{
+  switch (property_id)
+    {
+    case PROP_BUFFER:
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_projection_get_property (GObject    *object,
+                              guint       property_id,
+                              GValue     *value,
+                              GParamSpec *pspec)
+{
+  GimpProjection *projection = GIMP_PROJECTION (object);
+
+  switch (property_id)
+    {
+    case PROP_BUFFER:
+      g_value_set_object (value, projection->buffer);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static gint64
@@ -298,6 +351,8 @@ gimp_projection_get_buffer (GimpPickable *pickable)
       gimp_projection_add_update_area (proj, 0, 0, width, height);
       proj->invalidate_preview = TRUE;
       gimp_projection_flush (proj);
+
+      g_object_notify (G_OBJECT (pickable), "buffer");
     }
 
   return proj->buffer;

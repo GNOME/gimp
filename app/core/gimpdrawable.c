@@ -65,7 +65,8 @@ enum
 
 enum
 {
-  PROP_0
+  PROP_0,
+  PROP_BUFFER
 };
 
 
@@ -266,6 +267,8 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   klass->push_undo                   = gimp_drawable_real_push_undo;
   klass->swap_pixels                 = gimp_drawable_real_swap_pixels;
 
+  g_object_class_override_property (object_class, PROP_BUFFER, "buffer");
+
   g_type_class_add_private (klass, sizeof (GimpDrawablePrivate));
 }
 
@@ -338,6 +341,7 @@ gimp_drawable_set_property (GObject      *object,
 {
   switch (property_id)
     {
+    case PROP_BUFFER:
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -350,8 +354,14 @@ gimp_drawable_get_property (GObject    *object,
                             GValue     *value,
                             GParamSpec *pspec)
 {
+  GimpDrawable *drawable = GIMP_DRAWABLE (object);
+
   switch (property_id)
     {
+    case PROP_BUFFER:
+      g_value_set_object (value, drawable->private->buffer);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -835,6 +845,8 @@ gimp_drawable_real_set_buffer (GimpDrawable *drawable,
     gegl_node_set (drawable->private->buffer_source_node,
                    "buffer", gimp_drawable_get_buffer (drawable),
                    NULL);
+
+  g_object_notify (G_OBJECT (drawable), "buffer");
 }
 
 static void
