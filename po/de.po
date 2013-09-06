@@ -13,13 +13,14 @@
 # Mario Blättermann <mario.blaettermann@gmail.com>, 2011, 2012.
 # Daniel Winzen <d@winzen4.de>, 2013.
 # Christian Kirbach <christian.kirbach@gmail.com>, 2011, 2012, 2013.
+# Sven Claussner <sclaussner@src.gnome.org>, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-03-25 10:59+0100\n"
-"PO-Revision-Date: 2013-06-28 07:09+0100\n"
+"PO-Revision-Date: 2013-09-06 19:53+0100\n"
 "Last-Translator: Sven Claussner <<sclaussner@src.gnome.org>>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -553,12 +554,12 @@ msgstr "Diesen Pinsel löschen"
 #: ../app/actions/brushes-actions.c:76
 msgctxt "brushes-action"
 msgid "_Refresh Brushes"
-msgstr "Pinsel n_eu laden"
+msgstr "Die Pinsel n_eu laden"
 
 #: ../app/actions/brushes-actions.c:77
 msgctxt "brushes-action"
 msgid "Refresh brushes"
-msgstr "Pinsel neu laden"
+msgstr "Die Pinsel neu laden"
 
 #: ../app/actions/brushes-actions.c:85
 msgctxt "brushes-action"
@@ -593,7 +594,7 @@ msgstr "Ablage ein_fügen in"
 #: ../app/actions/buffers-actions.c:52
 msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection"
-msgstr "Fügt die gewählte Ablage in die Auswahl ein"
+msgstr "Die gewählte Ablage in die Auswahl einfügen"
 
 #: ../app/actions/buffers-actions.c:57
 msgctxt "buffers-action"
@@ -613,7 +614,7 @@ msgstr "Ablage _löschen"
 #: ../app/actions/buffers-actions.c:64
 msgctxt "buffers-action"
 msgid "Delete the selected buffer"
-msgstr "Die gewählten Ablage löschen"
+msgstr "Die gewählte Ablage löschen"
 
 #: ../app/actions/channels-actions.c:44
 msgctxt "channels-action"
@@ -1632,12 +1633,12 @@ msgstr "Alle Vorschaubilder neu laden"
 #: ../app/actions/documents-actions.c:93
 msgctxt "documents-action"
 msgid "Remove Dangling E_ntries"
-msgstr "_Hängende Einträge entfernen"
+msgstr "_Defekte Einträge entfernen"
 
 #: ../app/actions/documents-actions.c:95
 msgctxt "documents-action"
 msgid "Remove entries for which the corresponding file is not available"
-msgstr "Einträge entfernen, für die die dazugehörige Datei nicht existiert"
+msgstr "Einträge entfernen, deren dazugehörige Datei nicht existiert"
 
 #: ../app/actions/documents-commands.c:192
 msgid "Clear Document History"
@@ -1796,62 +1797,62 @@ msgstr "Zeichendynamik-Menü"
 #: ../app/actions/dynamics-actions.c:46
 msgctxt "dynamics-action"
 msgid "_New Dynamics"
-msgstr "_Neue Dynamik"
+msgstr "_Neue Zeichendynamik"
 
 #: ../app/actions/dynamics-actions.c:47
 msgctxt "dynamics-action"
 msgid "Create a new dynamics"
-msgstr "Eine neue Dynamik erstellen"
+msgstr "Eine neue Zeichendynamik erstellen"
 
 #: ../app/actions/dynamics-actions.c:52
 msgctxt "dynamics-action"
 msgid "D_uplicate Dynamics"
-msgstr "Dynamik _duplizieren"
+msgstr "Zeichendynamik _duplizieren"
 
 #: ../app/actions/dynamics-actions.c:53
 msgctxt "dynamics-action"
 msgid "Duplicate this dynamics"
-msgstr "Diese Dynamik duplizieren"
+msgstr "Diese Zeichendynamik duplizieren"
 
 #: ../app/actions/dynamics-actions.c:58
 msgctxt "dynamics-action"
 msgid "Copy Dynamics _Location"
-msgstr "Speicher_ort der Dynamik kopieren"
+msgstr "Speicher_ort der Zeichendynamik kopieren"
 
 #: ../app/actions/dynamics-actions.c:59
 msgctxt "dynamics-action"
 msgid "Copy dynamics file location to clipboard"
-msgstr "Den Speicherort der Dynamikdatei in die Zwischenablage kopieren"
+msgstr "Den Speicherort der Zeichendynamikdatei in die Zwischenablage kopieren"
 
 #: ../app/actions/dynamics-actions.c:64
 msgctxt "dynamics-action"
 msgid "_Delete Dynamics"
-msgstr "Dynamik _löschen"
+msgstr "Zeichendynamik _löschen"
 
 #: ../app/actions/dynamics-actions.c:65
 msgctxt "dynamics-action"
 msgid "Delete this dynamics"
-msgstr "Diese Dynamik löschen"
+msgstr "Diese Zeichendynamik löschen"
 
 #: ../app/actions/dynamics-actions.c:70
 msgctxt "dynamics-action"
 msgid "_Refresh Dynamics"
-msgstr "Dynamik _auffrischen"
+msgstr "Zeichendynamik _auffrischen"
 
 #: ../app/actions/dynamics-actions.c:71
 msgctxt "dynamics-action"
 msgid "Refresh dynamics"
-msgstr "Dynamik auffrischen"
+msgstr "Zeichendynamik auffrischen"
 
 #: ../app/actions/dynamics-actions.c:79
 msgctxt "dynamics-action"
 msgid "_Edit Dynamics..."
-msgstr "Dynamik _bearbeiten …"
+msgstr "Zeichendynamik _bearbeiten …"
 
 #: ../app/actions/dynamics-actions.c:80
 msgctxt "dynamics-action"
 msgid "Edit dynamics"
-msgstr "_Dynamik bearbeiten"
+msgstr "Zeichendynamik bearbeiten"
 
 #: ../app/actions/dynamics-editor-actions.c:42
 msgctxt "dynamics-editor-action"
@@ -1861,7 +1862,7 @@ msgstr "Editormenü für Zeichendynamik"
 #: ../app/actions/dynamics-editor-actions.c:50
 msgctxt "dynamics-editor-action"
 msgid "Edit Active Dynamics"
-msgstr "Aktive Dynamik bearbeiten"
+msgstr "Aktive Zeichendynamik bearbeiten"
 
 #: ../app/actions/edit-actions.c:63
 msgctxt "edit-action"
@@ -2212,7 +2213,7 @@ msgstr "_Leeren"
 #: ../app/actions/error-console-actions.c:44
 msgctxt "error-console-action"
 msgid "Clear error console"
-msgstr "Fehlerkonsole leeren"
+msgstr "Fehlerausgabe leeren"
 
 #: ../app/actions/error-console-actions.c:49
 msgctxt "error-console-action"
@@ -2890,7 +2891,7 @@ msgstr "_Neuer Farbverlauf"
 #: ../app/actions/gradients-actions.c:48
 msgctxt "gradients-action"
 msgid "Create a new gradient"
-msgstr "Ein neues Bild erstellen"
+msgstr "Einen neuen Farbverlauf erstellen"
 
 #: ../app/actions/gradients-actions.c:53
 msgctxt "gradients-action"
@@ -2935,12 +2936,12 @@ msgstr "Diesen Farbverlauf löschen"
 #: ../app/actions/gradients-actions.c:77
 msgctxt "gradients-action"
 msgid "_Refresh Gradients"
-msgstr "Farbverläufe n_eu laden"
+msgstr "Die Farbverläufe n_eu laden"
 
 #: ../app/actions/gradients-actions.c:78
 msgctxt "gradients-action"
 msgid "Refresh gradients"
-msgstr "Farbverläufe neu laden"
+msgstr "Die Farbverläufe neu laden"
 
 #: ../app/actions/gradients-actions.c:86
 msgctxt "gradients-action"
@@ -4003,12 +4004,12 @@ msgstr "Diese Palette löschen"
 #: ../app/actions/palettes-actions.c:83
 msgctxt "palettes-action"
 msgid "_Refresh Palettes"
-msgstr "Paletten n_eu laden"
+msgstr "Die Paletten n_eu laden"
 
 #: ../app/actions/palettes-actions.c:84
 msgctxt "palettes-action"
 msgid "Refresh palettes"
-msgstr "Paletten neu laden"
+msgstr "Die Paletten neu laden"
 
 #: ../app/actions/palettes-actions.c:92
 msgctxt "palettes-action"
@@ -4086,12 +4087,12 @@ msgstr "Dieses Muster löschen"
 #: ../app/actions/patterns-actions.c:76
 msgctxt "patterns-action"
 msgid "_Refresh Patterns"
-msgstr "Muster n_eu laden"
+msgstr "Die Muster n_eu laden"
 
 #: ../app/actions/patterns-actions.c:77
 msgctxt "patterns-action"
 msgid "Refresh patterns"
-msgstr "Muster neu laden"
+msgstr "Die Muster neu laden"
 
 #: ../app/actions/patterns-actions.c:85
 msgctxt "patterns-action"
@@ -4829,12 +4830,12 @@ msgstr "Diese Werkzeug-Voreinstellung löschen"
 #: ../app/actions/tool-presets-actions.c:72
 msgctxt "tool-presets-action"
 msgid "_Refresh Tool Presets"
-msgstr "Werkzeug-Voreinstellungen n_eu laden"
+msgstr "Die Werkzeug-Voreinstellungen n_eu laden"
 
 #: ../app/actions/tool-presets-actions.c:73
 msgctxt "tool-presets-action"
 msgid "Refresh tool presets"
-msgstr "Werkzeug-Voreinstellungen neu laden"
+msgstr "Die Werkzeug-Voreinstellungen neu laden"
 
 #: ../app/actions/tool-presets-actions.c:81
 msgctxt "tool-presets-action"
@@ -4929,7 +4930,7 @@ msgstr "_Neuer Pfad …"
 #: ../app/actions/vectors-actions.c:60
 msgctxt "vectors-action"
 msgid "Create a new path..."
-msgstr "Eine neue Vorlage erstellen"
+msgstr "Einen neuen Pfad erstellen"
 
 #: ../app/actions/vectors-actions.c:65
 msgctxt "vectors-action"
@@ -4939,7 +4940,7 @@ msgstr "Neuer Pfad mit den aktuellen Werten"
 #: ../app/actions/vectors-actions.c:66
 msgctxt "vectors-action"
 msgid "Create a new path with last used values"
-msgstr "Eine neue Ebene mit den zuletzt verwendeten Werten erstellen"
+msgstr "Einen neuen Pfad mit den zuletzt verwendeten Werten erstellen"
 
 #: ../app/actions/vectors-actions.c:71
 msgctxt "vectors-action"
@@ -6141,8 +6142,8 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:160
 msgid "When enabled, the selected dynamics will be used for all tools."
 msgstr ""
-"Wenn diese Option ausgewählt ist, wird die ausgewählte Dynamik bei allen "
-"Werkzeugen verwendet."
+"Wenn diese Option ausgewählt ist, wird die ausgewählte Zeichendynamik bei "
+"allen Werkzeugen verwendet."
 
 #: ../app/config/gimprc-blurbs.h:166
 msgid "When enabled, the selected gradient will be used for all tools."
@@ -7512,7 +7513,7 @@ msgstr "Parasiten"
 #: ../app/core/gimp.c:956 ../app/dialogs/preferences-dialog.c:2743
 #: ../app/tools/gimppaintoptions-gui.c:203
 msgid "Dynamics"
-msgstr "Dynamik"
+msgstr "Zeichendynamiken"
 
 #. initialize the list of fonts
 #: ../app/core/gimp.c:976
@@ -9897,7 +9898,7 @@ msgstr "_Pinsel"
 
 #: ../app/dialogs/preferences-dialog.c:1917
 msgid "_Dynamics"
-msgstr "_Dynamik"
+msgstr "_Zeichendynamik"
 
 #: ../app/dialogs/preferences-dialog.c:1920
 msgid "_Pattern"
@@ -13396,7 +13397,7 @@ msgstr "Harte Kanten"
 
 #: ../app/tools/gimppaintoptions-gui.c:285
 msgid "Dynamics Options"
-msgstr "Optionen der Dynamik"
+msgstr "Optionen der Zeichendynamik"
 
 #: ../app/tools/gimppaintoptions-gui.c:291
 msgid "Fade Options"
@@ -15868,7 +15869,7 @@ msgstr "Gespeicherten Pinsel anwenden"
 
 #: ../app/widgets/gimptoolpreseteditor.c:171
 msgid "Apply stored dynamics"
-msgstr "Gespeicherte Dynamik anwenden"
+msgstr "Gespeicherte Zeichendynamik anwenden"
 
 #: ../app/widgets/gimptoolpreseteditor.c:177
 msgid "Apply stored gradient"
