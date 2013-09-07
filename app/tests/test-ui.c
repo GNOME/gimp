@@ -435,6 +435,61 @@ paintbrush_is_standard_tool (gconstpointer data)
                    "gimp-tool-paintbrush");
 }
 
+
+/**
+ * swap_tools:
+ * @data:
+ *
+ * Testing switchback to last used tool <shift>X. Tools are taken from gimp->tool_info_list.
+ * Not all possible combinations of available tools are tested though.
+ **/
+static void
+swap_tools (gconstpointer data)
+{
+  Gimp         *gimp                  = GIMP (data);
+  GimpContext  *user_context          = gimp_get_user_context (gimp);
+  GimpToolInfo *first_tool_info       = NULL;
+  GimpToolInfo *second_tool_info      = NULL;
+  GList        *tool_info_list        = NULL;
+  guint         i, j                  = 0;
+
+  /* Arbitrarily testing only the first 10 available tools from gimp->tool_info_list
+   * because there are tools which aren't settable within the reduced framework of
+   * gimp_init_for_gui_testing's environment!
+   */
+  guint         tool_info_list_length = 10;  /* Value should actually be g_list_length (tool_info_list) */
+
+  tool_info_list = gimp_get_tool_info_iter (gimp);
+
+  for (i = 0; i < tool_info_list_length; i++)
+    {
+      /* Getting the first reference tool */
+      first_tool_info = g_list_nth_data (tool_info_list, i);
+
+      for (j = 0; j < tool_info_list_length; j++)
+        {
+          /* Now get the second tool. Set both one after another and loop the second tool through
+           * all available tools to test switchback.
+           */
+          second_tool_info = g_list_nth_data (tool_info_list, j);
+
+          if (first_tool_info != second_tool_info)
+            {
+              gimp_context_set_tool (user_context, first_tool_info);
+              g_assert (gimp_context_get_tool (user_context) == first_tool_info);
+
+              gimp_context_set_tool (user_context, second_tool_info);
+              g_assert (gimp_context_get_tool (user_context) == second_tool_info);
+              g_assert (gimp_context_get_last_tool (user_context) == first_tool_info);
+
+              gimp_context_swap_tools (user_context);
+              g_assert (gimp_context_get_tool (user_context) == first_tool_info);
+              g_assert (gimp_context_get_last_tool (user_context) == second_tool_info);
+            }
+        }
+    }
+}
+
 /**
  * gimp_ui_synthesize_delete_event:
  * @widget:
@@ -553,6 +608,7 @@ int main(int argc, char **argv)
   ADD_TEST (switch_back_to_multi_window_mode);
   ADD_TEST (close_image);
   ADD_TEST (window_roles);
+  ADD_TEST (swap_tools);
 
   /* Run the tests and return status */
   g_application_run (gimp->app, 0, NULL);

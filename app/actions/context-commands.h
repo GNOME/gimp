@@ -24,6 +24,9 @@ void   context_colors_default_cmd_callback        (GimpAction *action,
 void   context_colors_swap_cmd_callback           (GimpAction *action,
                                                    GVariant   *value,
                                                    gpointer    data);
+void   context_tools_swap_cmd_callback            (GimpAction *action,
+                                                   GVariant   *value,
+                                                   gpointer    data);
 
 void   context_palette_foreground_cmd_callback    (GimpAction *action,
                                                    GVariant   *value,

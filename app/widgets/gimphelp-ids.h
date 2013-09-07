@@ -511,6 +511,7 @@
 #define GIMP_HELP_TOOLBOX_INDICATOR_AREA          "gimp-toolbox-indicator-area"
 #define GIMP_HELP_TOOLBOX_DEFAULT_COLORS          "gimp-toolbox-default-colors"
 #define GIMP_HELP_TOOLBOX_SWAP_COLORS             "gimp-toolbox-swap-colors"
+#define GIMP_HELP_TOOLBOX_SWAP_TOOLS              "gimp-toolbox-swap-tools"
 
 #define GIMP_HELP_BRUSH_DIALOG                    "gimp-brush-dialog"
 #define GIMP_HELP_BRUSH_EDIT                      "gimp-brush-edit"

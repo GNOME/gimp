@@ -104,6 +104,17 @@ context_colors_swap_cmd_callback (GimpAction *action,
   gimp_context_swap_colors (context);
 }
 
+void
+context_tools_swap_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
+                                 gpointer    data)
+{
+  GimpContext *context;
+  return_if_no_context (context, data);
+
+  gimp_context_swap_tools (context);
+}
+
 #define SELECT_COLOR_CMD_CALLBACK(name, fgbg, use_colormap, use_palette) \
 void \
 context_##name##_##fgbg##ground_cmd_callback (GimpAction *action, \
