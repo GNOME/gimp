@@ -741,8 +741,18 @@ gimp_select_by_shape_tool_real_select (GimpSelectByShapeTool *rect_sel_tool,
      
      case GIMP_SHAPE_N_POLYGON :
       {
-        gdouble array1[6] = {x+(w/2),y,x+w,y+h,x,y+h} ; 
+       gdouble array1[6] = {x+(w/2),y,x+w,y+h,x,y+h} ; 
 
+       /*gimp_channel_select_polygon  (channel,
+                                   #const gchar    *undo_desc,
+                                   #gint            n_points,
+                                   #GimpVector2    *points,
+                                   operation,
+                                   options->antialias,
+                                   options->feather,
+                                   options->feather_radius,
+                                   options->feather_radius,
+                                   TRUE);*/
         gimp_channel_select_polygon  (channel,
                                    NULL,
                                    6,
