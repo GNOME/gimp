@@ -701,7 +701,7 @@ gimp_select_by_shape_tool_real_select (GimpSelectByShapeTool *rect_sel_tool,
       {
         gdouble w1 = gimp_image_get_width (image);
         gdouble h1 = gimp_image_get_height (image);
-
+        
        switch(shape_select_options->line_orientation)
         {
           case GIMP_ORIENTATION_HORIZONTAL :
@@ -724,8 +724,9 @@ gimp_select_by_shape_tool_real_select (GimpSelectByShapeTool *rect_sel_tool,
                                        TRUE);
           break;
 
-         case GIMP_ORIENTATION_UNKNOWN :  
-         gimp_channel_select_rectangle (channel,
+          case GIMP_ORIENTATION_UNKNOWN :  
+
+          gimp_channel_select_rectangle (channel,
                                         x, y, 1, 1,
                                         operation,
                                         options->feather,
@@ -740,14 +741,18 @@ gimp_select_by_shape_tool_real_select (GimpSelectByShapeTool *rect_sel_tool,
      
      case GIMP_SHAPE_N_POLYGON :
       {
-       gimp_channel_select_ellipse (channel,
-                                   x, y, w, h,
+        gdouble array1[6] = {x+(w/2),y,x+w,y+h,x,y+h} ; 
+
+        gimp_channel_select_polygon  (channel,
+                                   NULL,
+                                   6,
+                                   array1,
                                    operation,
                                    options->antialias,
                                    options->feather,
                                    options->feather_radius,
                                    options->feather_radius,
-                                   TRUE);
+                                   TRUE);                           
        break;
      }
 
