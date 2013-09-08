@@ -25,10 +25,16 @@
 
 #include "tools-types.h"
 
+#include "config/gimpcoreconfig.h"
+
+#include "core/gimp.h"
+#include "core/gimptoolinfo.h"
+
 #include "widgets/gimppropwidgets.h"
 
 #include "gimpiscissorstool.h"
 #include "gimpiscissorsoptions.h"
+#include "gimpselectbycontenttool.h"
 
 #include "gimp-intl.h"
 
@@ -36,7 +42,8 @@
 enum
 {
   PROP_0,
-  PROP_INTERACTIVE
+  PROP_INTERACTIVE,
+  PROP_MAGNETIC
 };
 
 
@@ -70,6 +77,13 @@ gimp_iscissors_options_class_init (GimpIscissorsOptionsClass *klass)
                                        "as you drag a control node"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MAGNETIC,
+                                    "magnetic",
+                                    N_("Make the selection magnetic "
+                                       "as you drag a control node"),
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -91,6 +105,10 @@ gimp_iscissors_options_set_property (GObject      *object,
       options->interactive = g_value_get_boolean (value);
       break;
 
+    case PROP_MAGNETIC:
+      options->magnetic = g_value_get_boolean (value);
+      break;  
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -111,6 +129,10 @@ gimp_iscissors_options_get_property (GObject    *object,
       g_value_set_boolean (value, options->interactive);
       break;
 
+    case PROP_MAGNETIC:
+      options->magnetic = g_value_get_boolean (value);
+      break;   
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -123,11 +145,25 @@ gimp_iscissors_options_gui (GimpToolOptions *tool_options)
   GObject   *config  = G_OBJECT (tool_options);
   GtkWidget *vbox    = gimp_selection_options_gui (tool_options);
   GtkWidget *button;
+  GtkWidget *frame;
 
-  button = gimp_prop_check_button_new (config, "interactive",
+  GType             tool_type;
+
+  tool_type = tool_options->tool_info->tool_type;
+  
+  if (g_type_is_a (tool_type, GIMP_TYPE_SELECT_BY_CONTENT_TOOL))
+  {
+
+    button = gimp_prop_check_button_new (config, "interactive",
                                        _("Interactive boundary"));
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+
+    frame = gimp_prop_expanding_frame_new (config, "magnetic",
+                                             _("Magnetic Path"),
+                                             button, NULL);
+
+    gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+    gtk_widget_show (frame);
+  }
 
   return vbox;
 }
