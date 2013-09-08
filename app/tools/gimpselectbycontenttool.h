@@ -20,6 +20,7 @@
 
 
 #include "gimpselectiontool.h"
+#include "gimpiscissorsoptions.h"
 
 
 #define GIMP_TYPE_SELECT_BY_CONTENT_TOOL            (gimp_select_by_content_tool_get_type ())

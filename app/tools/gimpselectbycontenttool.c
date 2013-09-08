@@ -43,6 +43,7 @@
 #include "display/gimpcanvasgroup.h"
 #include "display/gimpdisplay.h"
 
+#include "gimpiscissorsoptions.h"
 #include "gimpselectbycontenttool.h"
 #include "gimpselectionoptions.h"
 #include "gimptoolcontrol.h"
