@@ -38,6 +38,7 @@ struct _GimpIscissorsOptions
   GimpSelectionOptions  parent_instance;
 
   gboolean              interactive;
+  gboolean              magnetic;
 };
 
 
