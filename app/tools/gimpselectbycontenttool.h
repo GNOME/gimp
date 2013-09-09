@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SELECT_BY_SHAPE_TOOL_H__
-#define __GIMP_SELECT_BY_SHAPE_TOOL_H__
+#ifndef __GIMP_SELECT_BY_CONTENT_TOOL_H__
+#define __GIMP_SELECT_BY_CONTENT_TOOL_H__
 
 
 #include "gimpselectiontool.h"
@@ -53,7 +53,7 @@ typedef struct _ICurve ICurve;
 #define GIMP_SELECT_BY_CONTENT_TOOL_GET_OPTIONS(t)  (GIMP_SELECT_BY_CONTENT_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
 
 
-typedef struct _GimpSelectByContentTool      GimpISelectByContentTool;
+typedef struct _GimpSelectByContentTool      GimpSelectByContentTool;
 typedef struct _GimpSelectByContentToolClass GimpSelectByContentToolClass;
 
 struct _GimpSelectByContentTool
