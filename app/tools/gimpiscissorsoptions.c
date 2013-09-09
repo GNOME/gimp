@@ -151,7 +151,7 @@ gimp_iscissors_options_gui (GimpToolOptions *tool_options)
 
   tool_type = tool_options->tool_info->tool_type;
   
-  if (g_type_is_a (tool_type, GIMP_TYPE_SELECT_BY_CONTENT_TOOL))
+/*if (g_type_is_a (tool_type, GIMP_TYPE_SELECT_BY_CONTENT_TOOL))
   {
 
     button = gimp_prop_check_button_new (config, "interactive",
@@ -163,7 +163,10 @@ gimp_iscissors_options_gui (GimpToolOptions *tool_options)
 
     gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
     gtk_widget_show (frame);
-  }
+  }*/
+
+    button = gimp_prop_check_button_new (config, "interactive",
+                                       _("Interactive boundary"));
 
   return vbox;
 }
