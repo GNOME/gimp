@@ -15,6 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#if 0
+
 #ifndef __GIMP_SELECT_BY_CONTENT_TOOL_H__
 #define __GIMP_SELECT_BY_CONTENT_TOOL_H__
 
@@ -108,3 +110,5 @@ void    gimp_select_by_content_tool_get_points (GimpSelectByContentTool       *f
 
 
 #endif  /*  __GIMP_SELECT_BY_CONTENT_TOOL_H__  */
+
+#endif

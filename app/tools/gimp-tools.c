@@ -184,6 +184,7 @@ gimp_tools_init (Gimp *gimp)
     gimp_foreground_select_tool_register,
 #if 0
     gimp_iscissors_tool_register,
+    gimp_select_by_content_tool_register,
 #endif
     gimp_by_color_select_tool_register,
     gimp_fuzzy_select_tool_register,
@@ -191,7 +192,6 @@ gimp_tools_init (Gimp *gimp)
     gimp_ellipse_select_tool_register,
     gimp_rectangle_select_tool_register,
     gimp_select_by_color_tool_register,
-    gimp_select_by_content_tool_register,
     gimp_select_by_shape_tool_register
   };
 
