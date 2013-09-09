@@ -15,13 +15,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SELECT_BY_CONTENT_TOOL_H__
-#define __GIMP_SELECT_BY_CONTENT_TOOL_H__
+#ifndef __GIMP_SELECT_BY_SHAPE_TOOL_H__
+#define __GIMP_SELECT_BY_SHAPE_TOOL_H__
 
 
 #include "gimpselectiontool.h"
-#include "gimpiscissorsoptions.h"
 
+/*  The possible states...  */
+typedef enum
+{
+  NO_ACTION,
+  SEED_PLACEMENT,
+  SEED_ADJUSTMENT,
+  WAITING
+} SelectByContentState;
+
+/*  For oper_update & cursor_update  */
+typedef enum
+{
+  ISCISSORS_OP_NONE,
+  ISCISSORS_OP_SELECT,
+  ISCISSORS_OP_MOVE_POINT,
+  ISCISSORS_OP_ADD_POINT,
+  ISCISSORS_OP_CONNECT,
+  ISCISSORS_OP_IMPOSSIBLE
+} SelectByContentOps;
+
+typedef struct _ICurve ICurve;
 
 #define GIMP_TYPE_SELECT_BY_CONTENT_TOOL            (gimp_select_by_content_tool_get_type ())
 #define GIMP_SELECT_BY_CONTENT_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SELECT_BY_CONTENT_TOOL, GimpSelectByContentTool))
@@ -30,38 +50,61 @@
 #define GIMP_IS_SELECT_BY_CONTENT_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SELECT_BY_CONTENT_TOOL))
 #define GIMP_SELECT_BY_CONTENT_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SELECT_BY_CONTENT_TOOL, GimpSelectByContentToolClass))
 
+#define GIMP_SELECT_BY_CONTENT_TOOL_GET_OPTIONS(t)  (GIMP_SELECT_BY_CONTENT_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
 
-typedef struct _GimpSelectByContentTool      GimpSelectByContentTool;
+
+typedef struct _GimpSelectByContentTool      GimpISelectByContentTool;
 typedef struct _GimpSelectByContentToolClass GimpSelectByContentToolClass;
 
 struct _GimpSelectByContentTool
 {
   GimpSelectionTool  parent_instance;
+
+  SelectByContentOps    op;
+
+  gint            x, y;         /*  upper left hand coordinate            */
+  gint            ix, iy;       /*  initial coordinates                   */
+  gint            nx, ny;       /*  new coordinates                       */
+
+  TempBuf        *dp_buf;       /*  dynamic programming buffer            */
+
+  ICurve         *livewire;     /*  livewire boundary curve               */
+
+  ICurve         *curve1;       /*  1st curve connected to current point  */
+  ICurve         *curve2;       /*  2nd curve connected to current point  */
+
+  GQueue         *curves;       /*  the list of curves                    */
+
+  gboolean        first_point;  /*  is this the first point?              */
+  gboolean        connected;    /*  is the region closed?                 */
+
+  SelectByContentState  state;        /*  state of iscissors                    */
+
+  /* XXX might be useful */
+  GimpChannel    *mask;         /*  selection mask                        */
+  TileManager    *gradient_map; /*  lazily filled gradient map            */
 };
 
 struct _GimpSelectByContentToolClass
 {
-  GimpSelectionToolClass  parent_class;
-
-  /*  virtual function  */
-
+  GimpSelectionToolClass parent_class;
+  
   void (* select) (GimpSelectByContentTool *select_by_content_tool,
                    GimpDisplay        *display);
 };
 
 
-void    gimp_select_by_content_tool_register   (GimpToolRegisterCallback  callback,
-                                          gpointer                  data);
+void    gimp_select_by_content_tool_register (GimpToolRegisterCallback  callback,
+                                      gpointer                  data);
 
-GType   gimp_select_by_content_tool_get_type   (void) G_GNUC_CONST;
+GType   gimp_select_by_content_tool_get_type (void) G_GNUC_CONST;
 
-void    gimp_select_by_content_tool_select     (GimpSelectByContentTool       *content_sel,
+void    gimp_select_by_content_tool_select     (GimpSelectByContentTool       *free_sel,
                                           GimpDisplay              *display);
 
-void    gimp_select_by_content_tool_get_points (GimpSelectByContentTool       *content_sel,
+void    gimp_select_by_content_tool_get_points (GimpSelectByContentTool       *free_sel,
                                           const GimpVector2       **points,
                                           gint                     *n_points);
 
 
 #endif  /*  __GIMP_SELECT_BY_CONTENT_TOOL_H__  */
-
