@@ -115,7 +115,7 @@ gimp_rectangle_select_options_class_init (GimpRectangleSelectOptionsClass *klass
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_N_SIDES,
                                    "n-sides",
                                    N_("Number of sides, in the polygon"),
-                                   0, 10, 1,
+                                   0, 8, 1,
                                    GIMP_PARAM_STATIC_STRINGS);
 
   gimp_rectangle_options_install_properties (object_class);
@@ -278,7 +278,7 @@ gimp_rectangle_select_options_gui (GimpToolOptions *tool_options)
       scale = gimp_prop_spin_scale_new (config, "n-sides",
                                        _("Number of Sides in Polygon ?"),
                                       1.0, 10.0, 1);
-      gtk_box_pack_start (GTK_BOX (inner_vbox), scale, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (inner_vbox), scale, TRUE, TRUE, 0);
 
       g_object_bind_property_full (config, "shape-type",
                                scale,  "visible",
