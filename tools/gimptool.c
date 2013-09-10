@@ -263,7 +263,8 @@ find_out_env_flags (void)
   else
     env_cc = CC;
 
-  if (g_ascii_strncasecmp (env_cc, "cl", 2) == 0)
+  if (g_ascii_strncasecmp (env_cc, "cl", 2)    == 0 &&
+      g_ascii_strncasecmp (env_cc, "clang", 5) != 0)
     msvc_syntax = TRUE;
 
   if ((p = getenv ("CFLAGS")) != NULL)
