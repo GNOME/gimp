@@ -43,14 +43,14 @@ struct _GimpNPointDeformationTool
   GimpDrawTool      parent_instance;
 
   GimpDisplay      *display;
+  guint             draw_timeout_id;
   GThread          *deform_thread;
 
   GeglNode         *graph;
-  GeglNode         *source;
   GeglNode         *node;
   GeglNode         *sink;
 
-  GeglBuffer       *shadow, *buf;
+  GeglBuffer       *preview_buffer;
 
   GimpDrawable     *drawable;
 
