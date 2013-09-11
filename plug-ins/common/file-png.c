@@ -1561,9 +1561,7 @@ save_image (const gchar  *filename,
   if (pngvals.comment)
     {
       GimpParasite *parasite;
-#ifndef PNG_iTXt_SUPPORTED
       gsize text_length = 0;
-#endif /* PNG_iTXt_SUPPORTED */
 
       parasite = gimp_image_get_parasite (orig_image_ID, "gimp-comment");
       if (parasite)
@@ -1573,30 +1571,64 @@ save_image (const gchar  *filename,
 
           gimp_parasite_free (parasite);
 
-          text = g_new0 (png_text, 1);
-          text->key         = "Comment";
+          if (comment && strlen (comment) > 0)
+            {
+              text = g_new0 (png_text, 1);
+
+              text[0].key = "Comment";
 
 #ifdef PNG_iTXt_SUPPORTED
 
-          text->compression = PNG_ITXT_COMPRESSION_NONE;
-          text->text        = comment;
-          text->itxt_length = strlen (comment);
+              text[0].text = g_convert (comment, -1,
+                                        "ISO-8859-1",
+                                        "UTF-8",
+                                        NULL,
+                                        &text_length,
+                                        NULL);
 
-#else
+              if (text[0].text == NULL || strlen (text[0].text) == 0)
+                {
+                  /* We can't convert to ISO-8859-1 without loss.
+                     Save the comment as iTXt (UTF-8). */
+                  g_free (text[0].text);
 
-          text->compression = PNG_TEXT_COMPRESSION_NONE;
-          text->text        = g_convert (comment, -1,
-                                         "ISO-8859-1", "UTF-8",
-                                         NULL, &text_length,
-                                         NULL);
-          text->text_length = text_length;
+                  text[0].text        = g_strdup (comment);
+                  text[0].itxt_length = strlen (text[0].text);
 
+                  text[0].compression = PNG_ITXT_COMPRESSION_NONE;
+                }
+              else
+                  /* The comment is ISO-8859-1 compatible, so we use tEXt
+                     even if there is iTXt support for compatibility to more
+                     png reading programs. */
+#endif /* PNG_iTXt_SUPPORTED */
+                {
+#ifndef PNG_iTXt_SUPPORTED
+                  /* No iTXt support, so we are forced to use tEXt (ISO-8859-1).
+                     A broken comment is better than no comment at all, so the
+                     conversion does not fail on unknown character.
+                     They are simply ignored. */
+                  text[0].text = g_convert_with_fallback (comment, -1,
+                                                          "ISO-8859-1",
+                                                          "UTF-8",
+                                                          "",
+                                                          NULL,
+                                                          &text_length,
+                                                          NULL);
 #endif
 
-          if (!text->text)
-            {
-              g_free (text);
-              text = NULL;
+                  text[0].compression = PNG_TEXT_COMPRESSION_NONE;
+                  text[0].text_length = text_length;
+                 }
+
+              if (! text[0].text || strlen (text[0].text) == 0)
+                {
+                  g_free (text[0].text);
+                  g_free (text);
+                  text = NULL;
+                }
+
+              g_free (comment);
             }
         }
     }
@@ -1744,7 +1776,7 @@ save_image (const gchar  *filename,
 
   if (text)
     {
-      g_free (text->text);
+      g_free (text[0].text);
       g_free (text);
     }
 
