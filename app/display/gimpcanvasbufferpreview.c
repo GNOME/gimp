@@ -105,9 +105,9 @@ gimp_canvas_buffer_preview_init (GimpCanvasBufferPreview *transform_preview)
 
 static void
 gimp_canvas_buffer_preview_set_property (GObject      *object,
-                                            guint         property_id,
-                                            const GValue *value,
-                                            GParamSpec   *pspec)
+                                         guint         property_id,
+                                         const GValue *value,
+                                         GParamSpec   *pspec)
 {
   GimpCanvasBufferPreviewPrivate *private = GET_PRIVATE (object);
 
@@ -125,9 +125,9 @@ gimp_canvas_buffer_preview_set_property (GObject      *object,
 
 static void
 gimp_canvas_buffer_preview_get_property (GObject    *object,
-                                            guint       property_id,
-                                            GValue     *value,
-                                            GParamSpec *pspec)
+                                         guint       property_id,
+                                         GValue     *value,
+                                         GParamSpec *pspec)
 {
   GimpCanvasBufferPreviewPrivate *private = GET_PRIVATE (object);
 
@@ -147,13 +147,18 @@ static void
 gimp_canvas_buffer_preview_draw (GimpCanvasItem *item,
                                  cairo_t        *cr)
 {
-  GimpDisplayShell      *shell  = gimp_canvas_item_get_shell (item);
-  GeglBuffer            *buffer = GET_PRIVATE (item)->buffer;
+  GimpDisplayShell      *shell;
+  GeglBuffer            *buffer;
   cairo_surface_t       *area;
   guchar                *data;
   cairo_rectangle_int_t  rectangle;
   gint                   viewport_offset_x, viewport_offset_y;
   gint                   viewport_width,    viewport_height;
+
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+  shell = gimp_canvas_item_get_shell (item);
+  buffer = GET_PRIVATE (item)->buffer;
+  g_return_if_fail (GEGL_IS_BUFFER (buffer) && buffer != NULL);
 
   gimp_display_shell_scroll_get_scaled_viewport (shell,
                                                  &viewport_offset_x,
@@ -174,7 +179,7 @@ gimp_canvas_buffer_preview_draw (GimpCanvasItem *item,
                                    rectangle.width,
                                    rectangle.height),
                    shell->scale_x,
-                   gegl_buffer_get_format (buffer), /* has to be cairo-ARGB32 */
+                   babl_format ("cairo-ARGB32"),
                    data,
                    cairo_image_surface_get_stride (area),
                    GEGL_ABYSS_NONE);
@@ -193,13 +198,18 @@ static void
 gimp_canvas_buffer_preview_compute_bounds (GimpCanvasItem *item,
                                            cairo_rectangle_int_t *bounds)
 {
-  GimpDisplayShell *shell  = gimp_canvas_item_get_shell (item);
-  GeglBuffer       *buffer = GET_PRIVATE (item)->buffer;
+  GimpDisplayShell *shell;
+  GeglBuffer       *buffer;
   gint              x_from, x_to;
   gint              y_from, y_to;
   gint              viewport_offset_x, viewport_offset_y;
   gint              viewport_width,    viewport_height;
   gint              width, height;
+
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+  shell = gimp_canvas_item_get_shell (item);
+  buffer = GET_PRIVATE (item)->buffer;
+  g_return_if_fail (GEGL_IS_BUFFER (buffer) && buffer != NULL);
 
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);

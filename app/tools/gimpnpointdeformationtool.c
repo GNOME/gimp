@@ -28,6 +28,8 @@
 
 #include "tools-types.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "display/gimpdisplay.h"
 
 #include "core/gimp.h"
@@ -59,6 +61,7 @@
 #define GIMP_NPD_DEBUG
 #define GIMP_NPD_MAXIMUM_DEFORMATION_DELAY 100000 /* 100000 microseconds == 10 FPS */
 #define GIMP_NPD_DRAW_INTERVAL                 50 /*     50 milliseconds == 20 FPS */
+#define GIMP_NPD_STRING "N-Point Deformation"
 
 void            gimp_n_point_deformation_tool_start                   (GimpNPointDeformationTool *npd_tool,
                                                                        GimpDisplay               *display);
@@ -108,9 +111,9 @@ static void     gimp_n_point_deformation_tool_motion                  (GimpTool 
                                                                        GimpDisplay               *display);
 static void     gimp_n_point_deformation_tool_clear_selected_points_list
                                                                       (GimpNPointDeformationTool *npd_tool);
-gboolean        gimp_n_point_deformation_tool_add_cp_to_selection     (GimpNPointDeformationTool *npd_tool,
+static gboolean gimp_n_point_deformation_tool_add_cp_to_selection     (GimpNPointDeformationTool *npd_tool,
                                                                        NPDControlPoint           *cp);
-gboolean        gimp_n_point_deformation_tool_is_cp_in_area           (NPDControlPoint           *cp,
+static gboolean gimp_n_point_deformation_tool_is_cp_in_area           (NPDControlPoint           *cp,
                                                                        gfloat                     x0,
                                                                        gfloat                     y0,
                                                                        gfloat                     x1,
@@ -127,6 +130,7 @@ gboolean        gimp_n_point_deformation_tool_canvas_update_thread_func
 static void     gimp_n_point_deformation_tool_perform_deformation     (GimpNPointDeformationTool *npd_tool);
 static void     gimp_n_point_deformation_tool_halt_threads            (GimpNPointDeformationTool *npd_tool);
 GimpCanvasItem *gimp_n_point_deformation_tool_add_preview             (GimpNPointDeformationTool *npd_tool);
+static void     gimp_n_point_deformation_tool_apply_deformation       (GimpNPointDeformationTool *npd_tool);
 
 #ifdef GIMP_NPD_DEBUG
 #define gimp_npd_debug(x) g_printf x
@@ -148,7 +152,7 @@ gimp_n_point_deformation_tool_register (GimpToolRegisterCallback  callback,
                 gimp_n_point_deformation_options_gui,
                 0,
                 "gimp-n-point-deformation-tool",
-                _("N-Point Deformation"),
+                _(GIMP_NPD_STRING),
                 _("N-Point Deformation Tool: Rubber-like deformation of an image using points"),
                 N_("_N-Point Deformation"), "<shift>N",
                 NULL, GIMP_HELP_TOOL_N_POINT_DEFORMATION,
@@ -185,7 +189,6 @@ gimp_n_point_deformation_tool_init (GimpNPointDeformationTool *npd_tool)
   gimp_tool_control_set_preserve             (tool->control, FALSE);
   gimp_tool_control_set_wants_click          (tool->control, TRUE);
   gimp_tool_control_set_wants_all_key_events (tool->control, TRUE);
-  gimp_tool_control_set_scroll_lock          (tool->control, TRUE);
   gimp_tool_control_set_handle_empty_image   (tool->control, FALSE);
   gimp_tool_control_set_dirty_mask           (tool->control,
                                               GIMP_DIRTY_IMAGE           |
@@ -194,7 +197,8 @@ gimp_n_point_deformation_tool_init (GimpNPointDeformationTool *npd_tool)
                                               GIMP_DIRTY_SELECTION       |
                                               GIMP_DIRTY_ACTIVE_DRAWABLE);
 
-  npd_tool->active    = FALSE;
+  npd_tool->active             = FALSE;
+  npd_tool->deformation_active = FALSE;
 }
 
 static void
@@ -243,12 +247,13 @@ gimp_n_point_deformation_tool_start (GimpNPointDeformationTool *npd_tool,
 
   npd_tool->active = TRUE;
 
-  image         = gimp_display_get_image (display);
-  drawable      = gimp_image_get_active_drawable (image);
-  source_buffer = gimp_drawable_get_buffer (drawable);
+  /* create GEGL graph */
+  image          = gimp_display_get_image (display);
+  drawable       = gimp_image_get_active_drawable (image);
+  source_buffer  = gegl_buffer_dup (gimp_drawable_get_buffer (drawable));
 
-  preview_buffer  = gegl_buffer_new (gegl_buffer_get_extent (source_buffer),
-                                     babl_format ("cairo-ARGB32"));
+  preview_buffer = gegl_buffer_new (gegl_buffer_get_extent (source_buffer),
+                                    babl_format ("cairo-ARGB32"));
 
   graph    = gegl_node_new ();
 
@@ -279,8 +284,10 @@ gimp_n_point_deformation_tool_start (GimpNPointDeformationTool *npd_tool,
   npd_tool->drawable               = drawable;
   npd_tool->graph                  = graph;
   npd_tool->model                  = model;
-  npd_tool->node                   = node;
+  npd_tool->source                 = source;
+  npd_tool->npd_node               = node;
   npd_tool->sink                   = sink;
+  npd_tool->source_buffer          = source_buffer;
   npd_tool->preview_buffer         = preview_buffer;
   npd_tool->selected_cp            = NULL;
   npd_tool->hovering_cp            = NULL;
@@ -321,6 +328,8 @@ gimp_n_point_deformation_tool_halt (GimpNPointDeformationTool *npd_tool)
 
   gimp_n_point_deformation_tool_halt_threads (npd_tool);
 
+  npd_tool->active = FALSE;
+
   if (gimp_draw_tool_is_active (draw_tool))
     gimp_draw_tool_stop (draw_tool);
 
@@ -328,6 +337,11 @@ gimp_n_point_deformation_tool_halt (GimpNPointDeformationTool *npd_tool)
     gimp_tool_control_halt (tool->control);  
   
   gimp_n_point_deformation_tool_clear_selected_points_list (npd_tool);
+
+  g_object_unref (npd_tool->graph);
+  g_object_unref (npd_tool->source_buffer);
+  g_object_unref (npd_tool->preview_buffer);
+  npd_tool->preview_buffer = NULL;
   
   if (npd_tool->model != NULL)
     npd_destroy_model (npd_tool->model);
@@ -365,7 +379,7 @@ gimp_n_point_deformation_tool_options_notify (GimpTool         *tool,
   gimp_draw_tool_pause (draw_tool);
 
   gimp_npd_debug (("npd options notify\n"));
-  gimp_n_point_deformation_tool_set_options (npd_tool->node, npd_options);
+  gimp_n_point_deformation_tool_set_options (npd_tool->npd_node, npd_options);
 
   gimp_draw_tool_resume (draw_tool);
 }
@@ -408,9 +422,10 @@ gimp_n_point_deformation_tool_key_press (GimpTool    *tool,
     case GDK_KEY_ISO_Enter:
       gimp_n_point_deformation_tool_halt_threads (npd_tool);
 
-      npd_options->mesh_visible = FALSE;
-      gimp_n_point_deformation_tool_set_options (npd_tool->node,
-                                                 npd_options);
+      gimp_tool_control_push_preserve (tool->control, TRUE);
+      gimp_n_point_deformation_tool_apply_deformation (npd_tool);
+      gimp_tool_control_pop_preserve (tool->control);
+
       gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
       break;
 
@@ -672,6 +687,7 @@ gimp_n_point_deformation_tool_button_release (GimpTool             *tool,
   else
   if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
     {
+      gimp_npd_debug (("gimp_button_release_cancel\n"));
     }
   
   npd_tool->rubber_band = FALSE;
@@ -840,7 +856,7 @@ gimp_n_point_deformation_tool_canvas_update_thread_func (GimpNPointDeformationTo
           gtk_widget_get_window (gimp_display_get_shell (npd_tool->display)->canvas),
           FALSE);
   gimp_npd_debug (("canvas update thread stop\n"));
-  
+
   return TRUE;
 }
 
@@ -851,7 +867,9 @@ gimp_n_point_deformation_tool_deform_thread_func (gpointer data)
   GimpNPointDeformationOptions *npd_options = GIMP_N_POINT_DEFORMATION_TOOL_GET_OPTIONS (npd_tool);
   guint64                       start, duration;
 
-  while (npd_tool->active) {
+  npd_tool->deformation_active = TRUE;
+
+  while (npd_tool->deformation_active) {
     start = g_get_monotonic_time ();
 
     /* perform the deformation only if the tool hasn't been paused */
@@ -876,7 +894,7 @@ static void
 gimp_n_point_deformation_tool_perform_deformation (GimpNPointDeformationTool *npd_tool)
 {
   gimp_npd_debug (("gegl_node_invalidated\n"));
-  gegl_node_invalidated (npd_tool->node, NULL, FALSE);
+  gegl_node_invalidated (npd_tool->npd_node, NULL, FALSE);
 
   gimp_npd_debug (("gegl_node_process\n"));
   gegl_node_process (npd_tool->sink);
@@ -885,8 +903,10 @@ gimp_n_point_deformation_tool_perform_deformation (GimpNPointDeformationTool *np
 static void
 gimp_n_point_deformation_tool_halt_threads (GimpNPointDeformationTool *npd_tool)
 {
+  if (!npd_tool->deformation_active) return;
+
   gimp_npd_debug (("waiting for deform thread to finish\n"));
-  npd_tool->active = FALSE;
+  npd_tool->deformation_active = FALSE;
 
   /* wait for deformation thread to finish its work */
   g_thread_join (npd_tool->deform_thread);
@@ -902,6 +922,8 @@ gimp_n_point_deformation_tool_add_preview  (GimpNPointDeformationTool *npd_tool)
   GimpCanvasItem *item;
   GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (npd_tool);
 
+  if (!npd_tool->preview_buffer) return;
+
   item = gimp_canvas_buffer_preview_new (gimp_display_get_shell (draw_tool->display),
                                          npd_tool->preview_buffer);
 
@@ -909,4 +931,34 @@ gimp_n_point_deformation_tool_add_preview  (GimpNPointDeformationTool *npd_tool)
   g_object_unref (item);
 
   return item;
+}
+
+static void
+gimp_n_point_deformation_tool_apply_deformation (GimpNPointDeformationTool *npd_tool)
+{
+  GimpNPointDeformationOptions *npd_options = GIMP_N_POINT_DEFORMATION_TOOL_GET_OPTIONS (npd_tool);
+  GeglBuffer                   *buffer      = gimp_drawable_get_buffer(npd_tool->drawable);
+  GimpImage                    *image       = gimp_display_get_image (npd_tool->display);
+  gint                          width, height;
+
+  width  = gegl_buffer_get_width  (buffer);
+  height = gegl_buffer_get_height (buffer);
+
+  npd_options->mesh_visible = FALSE;
+  gimp_n_point_deformation_tool_set_options (npd_tool->npd_node,
+                                             npd_options);
+
+  gimp_drawable_push_undo (npd_tool->drawable, _(GIMP_NPD_STRING), NULL,
+                           0, 0, width, height);
+
+
+  gimp_gegl_apply_operation (NULL, NULL, _(GIMP_NPD_STRING),
+                             npd_tool->npd_node,
+                             gimp_drawable_get_buffer (npd_tool->drawable),
+                             NULL);
+
+  gimp_drawable_update (npd_tool->drawable,
+                        0, 0, width, height);
+
+  gimp_projection_flush (gimp_image_get_projection (image));
 }

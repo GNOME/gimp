@@ -47,10 +47,12 @@ struct _GimpNPointDeformationTool
   GThread          *deform_thread;
 
   GeglNode         *graph;
-  GeglNode         *node;
+  GeglNode         *source;
+  GeglNode         *npd_node;
   GeglNode         *sink;
 
   GeglBuffer       *preview_buffer;
+  GeglBuffer       *source_buffer;
 
   GimpDrawable     *drawable;
 
@@ -74,7 +76,8 @@ struct _GimpNPointDeformationTool
   GList            *previous_cps_positions; /* list of NPDPoints holding previous
                                              * positions of control points */
 
-  volatile gboolean active;
+  gboolean          active;
+  volatile gboolean deformation_active;
   gboolean          rubber_band;
 };
 
