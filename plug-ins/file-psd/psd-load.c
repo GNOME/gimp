@@ -97,14 +97,12 @@ static gint             read_channel_data          (PSDchannel     *channel,
                                                     FILE           *f,
                                                     GError        **error);
 
-static void             convert_16_bit             (const gchar *src,
-                                                    gchar       *dst,
-                                                    guint32      len);
-
 static void             convert_1_bit              (const gchar *src,
                                                     gchar       *dst,
                                                     guint32      rows,
                                                     guint32      columns);
+
+static const Babl*      get_psd_pixel_format       (PSDimage    *img_a);
 
 
 /* Main file load function */
@@ -329,13 +327,12 @@ read_header_block (PSDimage  *img_a,
   /* Warnings for format conversions */
   switch (img_a->bps)
     {
+      case 32:
+        IFDBG(3) g_debug ("32 Bit Data");
+        break;
+
       case 16:
         IFDBG(3) g_debug ("16 Bit Data");
-        if (CONVERSION_WARNINGS)
-          g_message (_("Warning:\n"
-                       "The image you are loading has 16 bits per channel. GIMP "
-                       "can only handle 8 bit, so it will be converted for you. "
-                       "Information will be lost because of this conversion."));
         break;
 
       case 8:
@@ -1349,7 +1346,7 @@ add_layers (const gint32  image_id,
               gimp_layer_set_lock_alpha  (layer_id, lyr_a[lidx]->layer_flags.trans_prot);
 	      buffer = gimp_drawable_get_buffer (layer_id);
 	      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, gegl_buffer_get_width (buffer), gegl_buffer_get_height (buffer)),
-			       0, NULL, pixels, GEGL_AUTO_ROWSTRIDE);
+			       0, get_psd_pixel_format (img_a), pixels, GEGL_AUTO_ROWSTRIDE);
               gimp_item_set_visible (layer_id, lyr_a[lidx]->layer_flags.visible);
               if (lyr_a[lidx]->id)
                 gimp_item_set_tattoo (layer_id, lyr_a[lidx]->id);
@@ -1453,7 +1450,7 @@ add_layers (const gint32  image_id,
                   gimp_layer_add_mask (layer_id, mask_id);
 		  buffer = gimp_drawable_get_buffer (mask_id);
 		  gegl_buffer_set (buffer, GEGL_RECTANGLE (lm_x, lm_y, lm_w, lm_h), 0,
-				  NULL, pixels, GEGL_AUTO_ROWSTRIDE);
+				   get_psd_pixel_format (img_a), pixels, GEGL_AUTO_ROWSTRIDE);
                   g_object_unref (buffer);
                   gimp_layer_set_apply_mask (layer_id,
                     ! lyr_a[lidx]->layer_mask.mask_flags.disabled);
@@ -1630,7 +1627,7 @@ add_merged_image (const gint32  image_id,
       gimp_image_insert_layer (image_id, layer_id, -1, 0);
       buffer = gimp_drawable_get_buffer (layer_id);
       gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, gegl_buffer_get_width (buffer), gegl_buffer_get_height (buffer)),
-		       0, NULL, pixels, GEGL_AUTO_ROWSTRIDE);
+		       0, get_psd_pixel_format (img_a), pixels, GEGL_AUTO_ROWSTRIDE);
       g_object_unref (buffer);
       g_free (pixels);
     }
@@ -1722,7 +1719,7 @@ add_merged_image (const gint32  image_id,
           gimp_item_set_visible (channel_id, alpha_visible);
 	  gegl_buffer_set (buffer,
 			   GEGL_RECTANGLE (0, 0, gegl_buffer_get_width (buffer), gegl_buffer_get_height (buffer)),
-			   0, NULL, pixels, GEGL_AUTO_ROWSTRIDE);
+			   0, get_psd_pixel_format (img_a), pixels, GEGL_AUTO_ROWSTRIDE);
           g_object_unref (buffer);
           g_free (chn_a[cidx].data);
         }
@@ -1906,46 +1903,20 @@ read_channel_data (PSDchannel     *channel,
   /* Convert channel data to GIMP format */
   switch (bps)
     {
-      case 16:
-        channel->data = (gchar *) g_malloc (channel->rows * channel->columns);
-        convert_16_bit (raw_data, channel->data, (channel->rows * channel->columns) << 1);
-        break;
-
-      case 8:
-        channel->data = (gchar *) g_malloc (channel->rows * channel->columns);
-        memcpy (channel->data, raw_data, (channel->rows * channel->columns));
-        break;
-
       case 1:
         channel->data = (gchar *) g_malloc (channel->rows * channel->columns);
         convert_1_bit (raw_data, channel->data, channel->rows, channel->columns);
+        break;
+
+      default:
+	channel->data = (gchar *) g_malloc (channel->rows * channel->columns);
+        memcpy (channel->data, raw_data, (channel->rows * channel->columns));
         break;
     }
 
   g_free (raw_data);
 
   return 1;
-}
-
-static void
-convert_16_bit (const gchar *src,
-                gchar       *dst,
-                guint32     len)
-{
-/* Convert 16 bit to 8 bit dropping low byte
-*/
-  gint      i;
-
-  IFDBG(3)  g_debug ("Start 16 bit conversion");
-
-  for (i = 0; i < len >> 1; ++i)
-    {
-      *dst = *src;
-      dst++;
-      src += 2;
-    }
-
-  IFDBG(3)  g_debug ("End 16 bit conversion");
 }
 
 static void
@@ -1979,4 +1950,97 @@ convert_1_bit (const gchar *src,
       src++;
     }
   IFDBG(3)  g_debug ("End 1 bit conversion");
+}
+
+static const Babl*
+get_psd_pixel_format(PSDimage *img_a)
+{
+  const Babl *format;
+
+  switch (get_gimp_image_type (img_a->base_type, img_a->transparency))
+    {
+    case GIMP_GRAY_IMAGE:
+      switch (img_a->bps)
+	{
+        case 32:
+	  format = babl_format ("Y' float");
+	  break;
+        case 16:
+          format = babl_format ("Y' u16");
+	  break;
+        case 8:
+        case 1:
+          format = babl_format ("Y' u8");
+	  break;
+        default:
+	  return NULL;
+	  break;
+	}
+      break;
+
+    case GIMP_GRAYA_IMAGE:
+      switch (img_a->bps)
+	{
+        case 32:
+	  format = babl_format ("Y'A float");
+          break;
+        case 16:
+          format = babl_format ("Y'A u16");
+          break;
+        case 8:
+        case 1:
+          format = babl_format ("Y'A u8");
+          break;
+        default:
+	  return NULL;
+	  break;
+	}
+      break;
+
+    case GIMP_RGB_IMAGE:
+    case GIMP_INDEXED_IMAGE:
+      switch (img_a->bps)
+	{
+        case 32:
+	  format = babl_format ("R'G'B' float");
+          break;
+        case 16:
+          format = babl_format ("R'G'B' u16");
+          break;
+        case 8:
+        case 1:
+          format = babl_format ("R'G'B' u8");
+          break;
+        default:
+	  return NULL;
+	  break;
+	}
+      break;
+
+    case GIMP_RGBA_IMAGE:
+    case GIMP_INDEXEDA_IMAGE:
+      switch (img_a->bps)
+	{
+        case 32:
+	  format = babl_format ("R'G'B'A float");
+          break;
+        case 16:
+          format = babl_format ("R'G'B'A u16");
+          break;
+        case 8:
+        case 1:
+          format = babl_format ("R'G'B'A u8");
+          break;
+        default:
+	  return NULL;
+	  break;
+	}
+      break;
+
+    default:
+      return NULL;
+      break;
+    }
+
+  return format;
 }

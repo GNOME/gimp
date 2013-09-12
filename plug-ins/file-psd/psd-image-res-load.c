@@ -1080,6 +1080,7 @@ load_resource_1033 (const PSDimageres  *res_a,
 
   ThumbnailInfo         thumb_info;
   GeglBuffer           *buffer;
+  const Babl           *format;
   gint32                layer_id;
   guchar               *buf;
   guchar               *rgb_buf;
@@ -1161,6 +1162,7 @@ load_resource_1033 (const PSDimageres  *res_a,
                              cinfo.output_height,
                              GIMP_RGB_IMAGE, 100, GIMP_NORMAL_MODE);
   buffer = gimp_drawable_get_buffer (layer_id);
+  format = babl_format("R'G'B'A u8");
 
   /* Step 6: while (scan lines remain to be read) */
   /*           jpeg_read_scanlines(...); */
@@ -1187,7 +1189,7 @@ load_resource_1033 (const PSDimageres  *res_a,
             }
         }
       gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, gegl_buffer_get_width (buffer), gegl_buffer_get_height (buffer)),
-		       0, NULL, rgb_buf ? rgb_buf : buf, GEGL_AUTO_ROWSTRIDE);
+		       0, format, rgb_buf ? rgb_buf : buf, GEGL_AUTO_ROWSTRIDE);
     }
 
   /* Step 7: Finish decompression */

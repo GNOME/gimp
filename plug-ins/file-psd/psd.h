@@ -144,8 +144,6 @@
 #define PSD_LFX_INNER_GLW       "iglw"          /* Effects layer - inner glow (PS5) */
 #define PSD_LFX_BEVEL           "bevl"          /* Effects layer - bevel (PS5) */
 
-/* New stuff temporarily until I can get them sorted out */
-
 /* Placed Layer */
 #define PSD_LPL_PLACE_LAYER     "plLd"          /* Placed layer (?) */
 #define PSD_LPL_PLACE_LAYER_NEW "SoLd"          /* Placed layer (PS10) */
@@ -367,7 +365,7 @@ typedef struct
   guint16       red;
   guint16       green;
   guint16       blue;
-}CMRGBColor;
+} CMRGBColor;
 
 /*  HSV Color Value
     A color value expressed in the HSV color space is composed of hue,
@@ -382,7 +380,7 @@ typedef struct
   guint16       hue;
   guint16       saturation;
   guint16       value;
-}CMHSVColor;
+} CMHSVColor;
 
 /* CMYK Color Value
   A color value expressed in the CMYK color space is composed of cyan, magenta,
@@ -397,7 +395,7 @@ typedef struct
   guint16       magenta;
   guint16       yellow;
   guint16       black;
-}CMCMYKColor;
+} CMCMYKColor;
 
 /* L*a*b* Color Value
    The first three values in the color data are, respectively, the colors
@@ -649,7 +647,7 @@ typedef struct
   gboolean              transparency;           /* Image has merged transparency alpha channel */
   guint32               rows;                   /* Number of rows: 1 - 30000 */
   guint32               columns;                /* Number of columns: 1 - 30000 */
-  guint16               bps;                    /* Bits per channel: 1, 8 or 16 */
+  guint16               bps;                    /* Bits per channel: 1, 8, 16, or 32 */
   guint16               color_mode;             /* Image color mode: {PSDColorMode} */
   GimpImageBaseType     base_type;              /* Image base color mode: (GIMP) */
   guint16               comp_mode;              /* Merged image compression mode */
