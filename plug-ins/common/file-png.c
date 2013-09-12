@@ -1558,6 +1558,12 @@ save_image (const gchar  *filename,
   }
 #endif
 
+#ifdef PNG_zTXt_SUPPORTED
+/* Small texts are not worth compressing and will be even bigger if compressed.
+   Empirical length limit of a text being worth compressing. */
+#define COMPRESSION_WORTHY_LENGTH 200
+#endif
+
   if (pngvals.comment)
     {
       GimpParasite *parasite;
@@ -1595,7 +1601,12 @@ save_image (const gchar  *filename,
                   text[0].text        = g_strdup (comment);
                   text[0].itxt_length = strlen (text[0].text);
 
+#ifdef PNG_zTXt_SUPPORTED
+                  text[0].compression = strlen (text[0].text) > COMPRESSION_WORTHY_LENGTH ?
+                                        PNG_ITXT_COMPRESSION_zTXt : PNG_ITXT_COMPRESSION_NONE;
+#else
                   text[0].compression = PNG_ITXT_COMPRESSION_NONE;
+#endif /* PNG_zTXt_SUPPORTED */
                 }
               else
                   /* The comment is ISO-8859-1 compatible, so we use tEXt
@@ -1617,7 +1628,13 @@ save_image (const gchar  *filename,
                                                           NULL);
 #endif
 
+#ifdef PNG_zTXt_SUPPORTED
+                  text[0].compression = strlen (text[0].text) > COMPRESSION_WORTHY_LENGTH ?
+                                        PNG_TEXT_COMPRESSION_zTXt : PNG_TEXT_COMPRESSION_NONE;
+#else
                   text[0].compression = PNG_TEXT_COMPRESSION_NONE;
+#endif /* PNG_zTXt_SUPPORTED */
+
                   text[0].text_length = text_length;
                  }
 
@@ -1632,6 +1649,10 @@ save_image (const gchar  *filename,
             }
         }
     }
+
+#ifdef PNG_zTXt_SUPPORTED
+#undef COMPRESSION_WORTHY_LENGTH
+#endif
 
   if (text)
     png_set_text (pp, info, text, 1);
