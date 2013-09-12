@@ -678,6 +678,66 @@ plug_in_pixelize2_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_plasma_invoker (GimpProcedure         *procedure,
+                        Gimp                  *gimp,
+                        GimpContext           *context,
+                        GimpProgress          *progress,
+                        const GimpValueArray  *args,
+                        GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 seed;
+  gdouble turbulence;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  seed = g_value_get_int (gimp_value_array_index (args, 3));
+  turbulence = g_value_get_double (gimp_value_array_index (args, 4));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          gint x, y, width, height;
+          GeglNode *plasma, *over, *node;
+
+          gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
+
+          node = gegl_node_new ();
+
+          plasma = gegl_node_new_child (node,
+                                        "operation", "gegl:plasma",
+                                        "seed", seed,
+                                        "turbulence", turbulence,
+                                        "x", x,
+                                        "y", y,
+                                        "width", width,
+                                        "height", height,
+                                        NULL);
+
+          over = gegl_node_new_child (node,
+                                      "operation", "svg:src-over",
+                                      NULL);
+
+          gegl_node_connect_to (plasma, "output",  over, "aux");
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Plasma"),
+                                         over);
+
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_polar_coords_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
@@ -1917,6 +1977,54 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                       "Pixel height (the decrease in vertical resolution)",
                                                       1, GIMP_MAX_IMAGE_SIZE, 1,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-plasma
+   */
+  procedure = gimp_procedure_new (plug_in_plasma_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-plasma");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-plasma",
+                                     "Create a random plasma texture",
+                                     "This plug-in produces plasma fractal images.",
+                                     "Compatibility procedure. Please see 'gegl:plasma' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:plasma' for credits.",
+                                     "2013",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("seed",
+                                                      "seed",
+                                                      "Random seed",
+                                                      -1, G_MAXINT, -1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("turbulence",
+                                                    "turbulence",
+                                                    "The value of the turbulence",
+                                                    0.0, 7.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

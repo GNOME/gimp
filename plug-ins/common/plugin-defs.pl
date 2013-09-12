@@ -100,7 +100,6 @@
     'nova' => { ui => 1 },
     'oilify' => { ui => 1 },
     'photocopy' => { ui => 1 },
-    'plasma' => { ui => 1 },
     'plugin-browser' => { ui => 1 },
     'procedure-browser' => { ui => 1 },
     'qbist' => { ui => 1 },

@@ -99,7 +99,6 @@ noise_solid_RC = noise-solid.rc.o
 nova_RC = nova.rc.o
 oilify_RC = oilify.rc.o
 photocopy_RC = photocopy.rc.o
-plasma_RC = plasma.rc.o
 plugin_browser_RC = plugin-browser.rc.o
 procedure_browser_RC = procedure-browser.rc.o
 qbist_RC = qbist.rc.o

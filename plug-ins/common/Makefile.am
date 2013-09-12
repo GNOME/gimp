@@ -145,7 +145,6 @@ libexec_PROGRAMS = \
 	nova \
 	oilify \
 	photocopy \
-	plasma \
 	plugin-browser \
 	procedure-browser \
 	qbist \
@@ -1962,23 +1961,6 @@ photocopy_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(photocopy_RC)
-
-plasma_SOURCES = \
-	plasma.c
-
-plasma_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(plasma_RC)
 
 plugin_browser_SOURCES = \
 	plugin-browser.c

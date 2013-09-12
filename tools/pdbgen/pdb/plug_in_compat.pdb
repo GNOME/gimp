@@ -710,6 +710,72 @@ CODE
     );
 }
 
+sub plug_in_plasma {
+    $blurb = 'Create a random plasma texture';
+
+    $help = <<'HELP';
+This plug-in produces plasma fractal images.
+HELP
+
+    &std_pdb_compat('gegl:plasma');
+    $date = '2013';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'seed', type => '-1 <= int32 <= G_MAXINT',
+	  desc => 'Random seed' },
+	{ name => 'turbulence', type => '0.0 <= float <= 7.0',
+	  desc => 'The value of the turbulence' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      gint x, y, width, height;
+      GeglNode *plasma, *over, *node;
+
+      gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
+
+      node = gegl_node_new ();
+
+      plasma = gegl_node_new_child (node,
+                                    "operation", "gegl:plasma",
+                                    "seed", seed,
+                                    "turbulence", turbulence,
+				    "x", x,
+				    "y", y,
+                                    "width", width,
+                                    "height", height,
+                                    NULL);
+
+      over = gegl_node_new_child (node,
+                                  "operation", "svg:src-over",
+                                  NULL);
+
+      gegl_node_connect_to (plasma, "output",  over, "aux");
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Plasma"),
+                                     over);
+
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_polar_coords {
     $blurb = 'Convert image to or from polar coordinates';
 
@@ -1456,6 +1522,7 @@ CODE
             plug_in_mblur_inward
             plug_in_pixelize
             plug_in_pixelize2
+            plug_in_plasma
             plug_in_polar_coords
 	    plug_in_red_eye_removal
             plug_in_randomize_hurl
