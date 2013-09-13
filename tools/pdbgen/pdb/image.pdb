@@ -1892,7 +1892,7 @@ sub image_set_active_channel {
 
     $help = <<'HELP';
 If the channel exists, it is set as the active channel in the
-image. Any previous active channel or channel is set to inactive. An
+image. Any previous active channel or layer is set to inactive. An
 exception is a previously existing floating selection, in which case
 this procedure will return an execution error.
 HELP

@@ -2034,7 +2034,7 @@ gimp_image_get_active_channel (gint32 image_ID)
  * Sets the specified image's active channel.
  *
  * If the channel exists, it is set as the active channel in the image.
- * Any previous active channel or channel is set to inactive. An
+ * Any previous active channel or layer is set to inactive. An
  * exception is a previously existing floating selection, in which case
  * this procedure will return an execution error.
  *
