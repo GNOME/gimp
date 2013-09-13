@@ -129,7 +129,8 @@ enum
   PROP_WIDTH,
   PROP_HEIGHT,
   PROP_BASE_TYPE,
-  PROP_PRECISION
+  PROP_PRECISION,
+  PROP_BUFFER
 };
 
 
@@ -137,6 +138,7 @@ enum
 
 static void     gimp_color_managed_iface_init    (GimpColorManagedInterface *iface);
 static void     gimp_projectable_iface_init      (GimpProjectableInterface  *iface);
+static void     gimp_pickable_iface_init         (GimpPickableInterface     *iface);
 
 static void     gimp_image_constructed           (GObject           *object);
 static void     gimp_image_set_property          (GObject           *object,
@@ -181,6 +183,17 @@ static GeglNode   * gimp_image_get_graph         (GimpProjectable   *projectable
 static GimpImage  * gimp_image_get_image         (GimpProjectable   *projectable);
 static const Babl * gimp_image_get_proj_format   (GimpProjectable   *projectable);
 
+static void         gimp_image_pickable_flush    (GimpPickable      *pickable);
+static GeglBuffer * gimp_image_get_buffer        (GimpPickable      *pickable);
+static gboolean     gimp_image_get_pixel_at      (GimpPickable      *pickable,
+                                                  gint               x,
+                                                  gint               y,
+                                                  const Babl        *format,
+                                                  gpointer           pixel);
+static gdouble      gimp_image_get_opacity_at    (GimpPickable      *pickable,
+                                                  gint               x,
+                                                  gint               y);
+
 static void     gimp_image_mask_update           (GimpDrawable      *drawable,
                                                   gint               x,
                                                   gint               y,
@@ -214,7 +227,9 @@ G_DEFINE_TYPE_WITH_CODE (GimpImage, gimp_image, GIMP_TYPE_VIEWABLE,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
                                                 gimp_color_managed_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROJECTABLE,
-                                                gimp_projectable_iface_init))
+                                                gimp_projectable_iface_init)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
+                                                gimp_pickable_iface_init))
 
 #define parent_class gimp_image_parent_class
 
@@ -595,6 +610,8 @@ gimp_image_class_init (GimpImageClass *klass)
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
+  g_object_class_override_property (object_class, PROP_BUFFER, "buffer");
+
   g_type_class_add_private (klass, sizeof (GimpImagePrivate));
 }
 
@@ -613,6 +630,18 @@ gimp_projectable_iface_init (GimpProjectableInterface *iface)
   iface->get_size           = (void (*) (GimpProjectable*, gint*, gint*)) gimp_image_get_size;
   iface->get_graph          = gimp_image_get_graph;
   iface->invalidate_preview = (void (*) (GimpProjectable*)) gimp_viewable_invalidate_preview;
+}
+
+static void
+gimp_pickable_iface_init (GimpPickableInterface *iface)
+{
+  iface->flush                 = gimp_image_pickable_flush;
+  iface->get_image             = (GimpImage  * (*) (GimpPickable *pickable)) gimp_image_get_image;
+  iface->get_format            = (const Babl * (*) (GimpPickable *pickable)) gimp_image_get_proj_format;
+  iface->get_format_with_alpha = (const Babl * (*) (GimpPickable *pickable)) gimp_image_get_proj_format;
+  iface->get_buffer            = gimp_image_get_buffer;
+  iface->get_pixel_at          = gimp_image_get_pixel_at;
+  iface->get_opacity_at        = gimp_image_get_opacity_at;
 }
 
 static void
@@ -808,6 +837,7 @@ gimp_image_set_property (GObject      *object,
     case PROP_PRECISION:
       private->precision = g_value_get_enum (value);
       break;
+    case PROP_BUFFER:
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -842,6 +872,9 @@ gimp_image_get_property (GObject    *object,
       break;
     case PROP_PRECISION:
       g_value_set_enum (value, private->precision);
+      break;
+    case PROP_BUFFER:
+      g_value_set_object (value, gimp_image_get_buffer (GIMP_PICKABLE (image)));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -1281,6 +1314,46 @@ gimp_image_get_proj_format (GimpProjectable *projectable)
   g_assert_not_reached ();
 
   return NULL;
+}
+
+static void
+gimp_image_pickable_flush (GimpPickable *pickable)
+{
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (pickable);
+
+  return gimp_pickable_flush (GIMP_PICKABLE (private->projection));
+}
+
+static GeglBuffer *
+gimp_image_get_buffer (GimpPickable *pickable)
+{
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (pickable);
+
+  return gimp_pickable_get_buffer (GIMP_PICKABLE (private->projection));
+}
+
+static gboolean
+gimp_image_get_pixel_at (GimpPickable *pickable,
+                         gint          x,
+                         gint          y,
+                         const Babl   *format,
+                         gpointer      pixel)
+{
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (pickable);
+
+  return gimp_pickable_get_pixel_at (GIMP_PICKABLE (private->projection),
+                                     x, y, format, pixel);
+}
+
+static gdouble
+gimp_image_get_opacity_at (GimpPickable *pickable,
+                           gint          x,
+                           gint          y)
+{
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (pickable);
+
+  return gimp_pickable_get_opacity_at (GIMP_PICKABLE (private->projection),
+                                       x, y);
 }
 
 static GeglNode *
