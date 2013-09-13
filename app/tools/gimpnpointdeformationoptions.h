@@ -48,6 +48,7 @@ struct _GimpNPointDeformationOptions
   gboolean         deformation_is_paused;
 
   GtkWidget       *check_pause_deformation;
+  GtkWidget       *check_mesh_visible;
 };
 
 struct _GimpNPointDeformationOptionsClass

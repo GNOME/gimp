@@ -140,9 +140,17 @@ gimp_n_point_deformation_options_set_property (GObject      *object,
         break;
       case PROP_MESH_VISIBLE:
         options->mesh_visible = g_value_get_boolean (value);
+
+        if (options->check_mesh_visible)
+          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->check_mesh_visible),
+                                        options->mesh_visible);
         break;
       case PROP_PAUSE_DEFORMATION:
         options->deformation_is_paused = g_value_get_boolean (value);
+
+        if (options->check_pause_deformation)
+          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->check_pause_deformation),
+                                        options->deformation_is_paused);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -190,41 +198,47 @@ gimp_n_point_deformation_options_get_property (GObject    *object,
 GtkWidget *
 gimp_n_point_deformation_options_gui (GimpToolOptions *tool_options)
 {
+  GimpNPointDeformationOptions *npd_options = GIMP_N_POINT_DEFORMATION_OPTIONS (tool_options);
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
-  GtkWidget *combo, *scale, *check;
+  GtkWidget *widget;
 
-  check = gimp_prop_check_button_new (config, "mesh-visible", _("Show Mesh"));
-  gtk_box_pack_start (GTK_BOX (vbox), check, FALSE, FALSE, 0);
-  gtk_widget_show (check);
+  widget = gtk_label_new ("Note: These options are temporary.");
+  gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
 
-  scale = gimp_prop_spin_scale_new (config, "square-size", _("Square Size"), 1.0, 10.0, 0);
-  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 5.0, 1000.0);
-  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
+  widget = gimp_prop_check_button_new (config, "mesh-visible", _("Show Mesh"));
+  npd_options->check_mesh_visible = widget;
+  gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
 
-  scale = gimp_prop_spin_scale_new (config, "rigidity", _("Rigidity"), 1.0, 10.0, 0);
-  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 10000.0);
-  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
+  widget = gimp_prop_spin_scale_new (config, "square-size", _("Square Size"), 1.0, 10.0, 0);
+  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget), 5.0, 1000.0);
+  gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
 
-  combo = gimp_prop_boolean_combo_box_new (config, "ASAP-deformation", _("ASAP"), _("ARAP"));
-  gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
+  widget = gimp_prop_spin_scale_new (config, "rigidity", _("Rigidity"), 1.0, 10.0, 0);
+  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget), 1.0, 10000.0);
+  gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
 
-  combo = gimp_prop_boolean_combo_box_new (config, "MLS-weights", _("Enabled"), _("Disabled"));
-  gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
+  widget = gimp_prop_boolean_combo_box_new (config, "ASAP-deformation", _("ASAP"), _("ARAP"));
+  gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
 
-  scale = gimp_prop_spin_scale_new (config, "MLS-weights-alpha", _("MLS Weights Alpha"), 0.1, 0.1, 1);
-  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 0.1, 2.0);
-  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
+  widget = gimp_prop_boolean_combo_box_new (config, "MLS-weights", _("Enabled"), _("Disabled"));
+  gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
 
-  check = gimp_prop_check_button_new (config, "pause-deformation", _("Pause Deformation"));
-  GIMP_N_POINT_DEFORMATION_OPTIONS (tool_options)->check_pause_deformation = check;
-  gtk_box_pack_start (GTK_BOX (vbox), check, FALSE, FALSE, 0);
-  gtk_widget_show (check);
+  widget = gimp_prop_spin_scale_new (config, "MLS-weights-alpha", _("MLS Weights Alpha"), 0.1, 0.1, 1);
+  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget), 0.1, 2.0);
+  gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
+
+  widget = gimp_prop_check_button_new (config, "pause-deformation", _("Pause Deformation"));
+  npd_options->check_pause_deformation = widget;
+  gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
 
   return vbox;
 }
@@ -239,9 +253,7 @@ void
 gimp_n_point_deformation_options_set_pause_deformation (GimpNPointDeformationOptions *npd_options,
                                                         gboolean                      is_active)
 {
-  GtkToggleButton *check = GTK_TOGGLE_BUTTON (npd_options->check_pause_deformation);
-  gtk_toggle_button_set_active (check, is_active);
-  npd_options->deformation_is_paused = is_active;
+  g_object_set (G_OBJECT (npd_options), "pause-deformation", is_active, NULL);
 }
 
 void

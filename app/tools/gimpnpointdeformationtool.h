@@ -79,6 +79,7 @@ struct _GimpNPointDeformationTool
   gboolean          active;
   volatile gboolean deformation_active;
   gboolean          rubber_band;
+  gboolean          apply_deformation;
 };
 
 struct _GimpNPointDeformationToolClass
