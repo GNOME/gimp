@@ -700,32 +700,24 @@ plug_in_plasma_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          gint x, y, width, height;
-          GeglNode *plasma, *over, *node;
+          GeglNode *node;
+          gint      x, y, width, height;
 
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
 
-          node = gegl_node_new ();
-
-          plasma = gegl_node_new_child (node,
-                                        "operation", "gegl:plasma",
-                                        "seed", seed,
-                                        "turbulence", turbulence,
-                                        "x", x,
-                                        "y", y,
-                                        "width", width,
-                                        "height", height,
-                                        NULL);
-
-          over = gegl_node_new_child (node,
-                                      "operation", "svg:src",
+          node = gegl_node_new_child (NULL,
+                                      "operation",  "gegl:plasma",
+                                      "seed",       seed,
+                                      "turbulence", turbulence,
+                                      "x",          x,
+                                      "y",          y,
+                                      "width",      width,
+                                      "height",     height,
                                       NULL);
-
-          gegl_node_connect_to (plasma, "output",  over, "aux");
 
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Plasma"),
-                                         over);
+                                         node);
 
           g_object_unref (node);
         }
