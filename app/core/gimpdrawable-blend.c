@@ -631,9 +631,10 @@ gradient_precalc_shapeburst (GimpImage           *image,
 
       while (gegl_buffer_iterator_next (iter))
         {
-          gfloat *data = iter->data[0];
+          gint    count = iter->length;
+          gfloat *data  = iter->data[0];
 
-          while (iter->length--)
+          while (count--)
             *data++ /= max_iteration;
         }
     }

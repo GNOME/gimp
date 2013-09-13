@@ -311,11 +311,12 @@ gimp_palette_import_extract (GimpImage     *image,
     {
       const guchar *data      = iter->data[0];
       const guchar *mask_data = NULL;
+      gint          length    = iter->length;
 
       if (mask_roi)
         mask_data = iter->data[1];
 
-      while (iter->length--)
+      while (length--)
         {
           /*  ignore unselected, and completely transparent pixels  */
           if ((! mask_data || *mask_data) && data[ALPHA])

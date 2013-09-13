@@ -217,10 +217,11 @@ gimp_image_contiguous_region_by_color (GimpImage            *image,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const gfloat *src  = iter->data[0];
-      gfloat       *dest = iter->data[1];
+      const gfloat *src   = iter->data[0];
+      gfloat       *dest  = iter->data[1];
+      gint          count = iter->length;
 
-      while (iter->length--)
+      while (count--)
         {
           /*  Find how closely the colors match  */
           *dest = pixel_difference (start_col, src,

@@ -1206,9 +1206,10 @@ load_image (const gchar  *filename,
 
       while (gegl_buffer_iterator_next (iter))
         {
-          guchar *data = iter->data[0];
+          guchar *data   = iter->data[0];
+          gint    length = iter->length;
 
-          while (iter->length--)
+          while (length--)
             {
               data[1] = alpha[data[0]];
               data[0] -= empty;
@@ -1824,9 +1825,10 @@ ia_has_transparent_pixels (GeglBuffer *buffer)
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *data = iter->data[0];
+      const guchar *data   = iter->data[0];
+      gint          length = iter->length;
 
-      while (iter->length--)
+      while (length--)
         {
           if (data[1] <= 127)
             {
@@ -1866,9 +1868,10 @@ find_unused_ia_color (GeglBuffer *buffer,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *data = iter->data[0];
+      const guchar *data   = iter->data[0];
+      gint          length = iter->length;
 
-      while (iter->length--)
+      while (length--)
         {
           if (data[1] > 127)
             ix_used[data[0]] = TRUE;

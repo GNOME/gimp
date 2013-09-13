@@ -690,11 +690,12 @@ remap_indexed_layer (GimpLayer    *layer,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      guchar *data = iter->data[0];
+      guchar *data   = iter->data[0];
+      gint    length = iter->length;
 
       if (has_alpha)
         {
-          while (iter->length--)
+          while (length--)
             {
               if (data[ALPHA_I])
                 data[INDEXED] = remap_table[data[INDEXED]];
@@ -704,7 +705,7 @@ remap_indexed_layer (GimpLayer    *layer,
         }
       else
         {
-          while (iter->length--)
+          while (length--)
             {
               data[INDEXED] = remap_table[data[INDEXED]];
 
@@ -1152,11 +1153,12 @@ generate_histogram_gray (CFHistogram  histogram,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *data = iter->data[0];
+      const guchar *data   = iter->data[0];
+      gint          length = iter->length;
 
       if (has_alpha)
         {
-          while (iter->length--)
+          while (length--)
             {
               if (data[ALPHA_G] > 127)
                 histogram[*data]++;
@@ -1166,7 +1168,7 @@ generate_histogram_gray (CFHistogram  histogram,
         }
       else
         {
-          while (iter->length--)
+          while (length--)
             {
               histogram[*data]++;
 
@@ -1224,9 +1226,10 @@ generate_histogram_rgb (CFHistogram   histogram,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *data = iter->data[0];
+      const guchar *data   = iter->data[0];
+      gint          length = iter->length;
 
-      total_size += iter->length;
+      total_size += length;
 
       /* g_printerr (" [%d,%d - %d,%d]", srcPR.x, src_roi->y, offsetx, offsety); */
 
@@ -1241,7 +1244,7 @@ generate_histogram_rgb (CFHistogram   histogram,
               coledge = col + roi->width;
               row = roi->y + offsety;
 
-              while (iter->length--)
+              while (length--)
                 {
                   gboolean transparent = FALSE;
 
@@ -1271,7 +1274,7 @@ generate_histogram_rgb (CFHistogram   histogram,
             }
           else
             {
-              while (iter->length--)
+              while (length--)
                 {
                   if ((has_alpha && ((data[ALPHA] > 127)))
                       || (!has_alpha))
@@ -1294,7 +1297,7 @@ generate_histogram_rgb (CFHistogram   histogram,
           coledge = col + roi->width;
           row = roi->y + offsety;
 
-          while (iter->length--)
+          while (length--)
             {
 	      gboolean transparent = FALSE;
 

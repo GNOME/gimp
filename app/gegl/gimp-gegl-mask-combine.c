@@ -413,8 +413,9 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
         {
           gfloat       *mask_data   = iter->data[0];
           const gfloat *add_on_data = iter->data[1];
+          gint          count       = iter->length;
 
-          while (iter->length--)
+          while (count--)
             {
               const gfloat val = *mask_data + *add_on_data;
 
@@ -431,8 +432,9 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
         {
           gfloat       *mask_data   = iter->data[0];
           const gfloat *add_on_data = iter->data[1];
+          gint          count       = iter->length;
 
-          while (iter->length--)
+          while (count--)
             {
               if (*add_on_data > *mask_data)
                 *mask_data = 0.0;
@@ -450,8 +452,9 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
         {
           gfloat       *mask_data   = iter->data[0];
           const gfloat *add_on_data = iter->data[1];
+          gint          count       = iter->length;
 
-          while (iter->length--)
+          while (count--)
             {
               *mask_data = MIN (*mask_data, *add_on_data);
 

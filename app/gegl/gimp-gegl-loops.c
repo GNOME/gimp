@@ -235,10 +235,11 @@ gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
 
       while (gegl_buffer_iterator_next (iter))
         {
-          gfloat *src  = iter->data[0];
-          gfloat *dest = iter->data[1];
+          gfloat *src   = iter->data[0];
+          gfloat *dest  = iter->data[1];
+          gint    count = iter->length;
 
-          while (iter->length--)
+          while (count--)
             {
               *dest++ = *src++ * factor;
               *dest++ = *src++ * factor;
@@ -257,10 +258,11 @@ gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
 
       while (gegl_buffer_iterator_next (iter))
         {
-          gfloat *src  = iter->data[0];
-          gfloat *dest = iter->data[1];
+          gfloat *src   = iter->data[0];
+          gfloat *dest  = iter->data[1];
+          gint    count = iter->length;
 
-          while (iter->length--)
+          while (count--)
             {
               *dest++ = pow (*src++, factor);
               *dest++ = pow (*src++, factor);
@@ -279,10 +281,11 @@ gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
 
       while (gegl_buffer_iterator_next (iter))
         {
-          gfloat *src  = iter->data[0];
-          gfloat *dest = iter->data[1];
+          gfloat *src   = iter->data[0];
+          gfloat *dest  = iter->data[1];
+          gint    count = iter->length;
 
-          while (iter->length--)
+          while (count--)
             {
               if (exposure >= 0)
                 {
@@ -357,10 +360,11 @@ gimp_gegl_smudge_blend (GeglBuffer          *top_buffer,
       const gfloat *top    = iter->data[0];
       const gfloat *bottom = iter->data[1];
       gfloat       *dest   = iter->data[2];
+      gint          count  = iter->length;
       const gfloat  blend1 = 1.0 - blend;
       const gfloat  blend2 = blend;
 
-      while (iter->length--)
+      while (count--)
         {
           const gfloat a1 = blend1 * bottom[3];
           const gfloat a2 = blend2 * top[3];
@@ -407,10 +411,11 @@ gimp_gegl_apply_mask (GeglBuffer          *mask_buffer,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const gfloat *mask = iter->data[0];
-      gfloat       *dest = iter->data[1];
+      const gfloat *mask  = iter->data[0];
+      gfloat       *dest  = iter->data[1];
+      gint          count = iter->length;
 
-      while (iter->length--)
+      while (count--)
         {
           dest[3] *= *mask * opacity;
 
@@ -439,10 +444,11 @@ gimp_gegl_combine_mask (GeglBuffer          *mask_buffer,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const gfloat *mask = iter->data[0];
-      gfloat       *dest = iter->data[1];
+      const gfloat *mask  = iter->data[0];
+      gfloat       *dest  = iter->data[1];
+      gint          count = iter->length;
 
-      while (iter->length--)
+      while (count--)
         {
           *dest *= *mask * opacity;
 
@@ -472,12 +478,13 @@ gimp_gegl_combine_mask_weird (GeglBuffer          *mask_buffer,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const gfloat *mask = iter->data[0];
-      gfloat       *dest = iter->data[1];
+      const gfloat *mask  = iter->data[0];
+      gfloat       *dest  = iter->data[1];
+      gint          count = iter->length;
 
       if (stipple)
         {
-          while (iter->length--)
+          while (count--)
             {
               dest[0] += (1.0 - dest[0]) * *mask * opacity;
 
@@ -487,7 +494,7 @@ gimp_gegl_combine_mask_weird (GeglBuffer          *mask_buffer,
         }
       else
         {
-          while (iter->length--)
+          while (count--)
             {
               if (opacity > dest[0])
                 dest[0] += (opacity - dest[0]) * *mask * opacity;
@@ -535,8 +542,9 @@ gimp_gegl_replace (GeglBuffer          *top_buffer,
       const gfloat *bottom = iter->data[1];
       const gfloat *mask   = iter->data[2];
       gfloat       *dest   = iter->data[3];
+      gint          count  = iter->length;
 
-      while (iter->length--)
+      while (count--)
         {
           gint    b;
           gdouble mask_val = *mask * opacity;
