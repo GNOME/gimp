@@ -68,7 +68,7 @@ gimp_gegl_apply_operation (GeglBuffer          *src_buffer,
   if (! gegl_node_get_parent (operation))
     gegl_node_add_child (gegl, operation);
 
-  if (src_buffer)
+  if (src_buffer && gegl_node_has_pad (operation, "input"))
     {
       GeglNode *src_node;
 
