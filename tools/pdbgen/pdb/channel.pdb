@@ -22,11 +22,13 @@ sub channel_new {
     $help = <<'HELP';
 This procedure creates a new channel with the specified width, height,
 name, opacity and color.
-\n\nThe new channel still needs to be added to the image, as this is not
+
+The new channel still needs to be added to the image, as this is not
 automatic. Add the new channel with gimp_image_insert_channel(). Other
 attributes, such as channel visibility, should be set with explicit
 procedure calls.
-\nThe channel's contents are undefined initially.
+
+The channel's contents are undefined initially.
 HELP
 
     &std_pdb_misc;
@@ -72,7 +74,8 @@ sub channel_copy {
 
     $help = <<'HELP';
 This procedure copies the specified channel and returns the copy.
-\n\nThe new channel still needs to be added to the image, as this is not
+
+The new channel still needs to be added to the image, as this is not
 automatic. Add the new channel with gimp_image_insert_channel().
 HELP
 
@@ -142,7 +145,8 @@ sub channel_new_from_component {
 
     $help = <<'HELP';
 This procedure creates a new channel from a color component.
-\n\nThe new channel still needs to be added to the image, as this is not
+
+The new channel still needs to be added to the image, as this is not
 automatic. Add the new channel with gimp_image_insert_channel(). Other
 attributes, such as channel visibility, should be set with explicit
 procedure calls.
