@@ -718,7 +718,7 @@ plug_in_plasma_invoker (GimpProcedure         *procedure,
                                         NULL);
 
           over = gegl_node_new_child (node,
-                                      "operation", "svg:src-over",
+                                      "operation", "svg:src",
                                       NULL);
 
           gegl_node_connect_to (plasma, "output",  over, "aux");
