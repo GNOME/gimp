@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-03-16 22:02+0000\n"
-"PO-Revision-Date: 2013-03-17 18:12+0200\n"
+"POT-Creation-Date: 2013-09-13 16:06+0000\n"
+"PO-Revision-Date: 2013-09-13 22:25+0300\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -72,7 +72,7 @@ msgstr ""
 "Jūs turėjote gauti GNU Bendrosios viešosios licencijos kopiją kartu su "
 "programa GIMP. Jei negavote, žr. http://www.gnu.org/licenses/."
 
-#: ../app/app.c:224
+#: ../app/app.c:225
 #, c-format
 msgid ""
 "Unable to open a test swap file.\n"
@@ -444,7 +444,7 @@ msgstr "Teksto rengyklė"
 msgid "Tool Options"
 msgstr "Įrankių parinktys"
 
-#: ../app/actions/actions.c:226 ../app/widgets/gimptoolpalette.c:390
+#: ../app/actions/actions.c:226 ../app/widgets/gimptoolpalette.c:391
 msgid "Tools"
 msgstr "Įrankinė"
 
@@ -974,7 +974,7 @@ msgid "Use the composite color of all visible layers"
 msgstr "Naudoti sudėtinę visų matomų sluoksnių spalvą sluoksniais"
 
 #: ../app/actions/data-commands.c:89 ../app/actions/documents-commands.c:344
-#: ../app/actions/file-commands.c:195 ../app/dialogs/file-open-dialog.c:232
+#: ../app/actions/file-commands.c:201 ../app/dialogs/file-open-dialog.c:232
 #: ../app/dialogs/file-open-dialog.c:277
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
@@ -2416,50 +2416,51 @@ msgstr "_Perrašyti %s"
 msgid "Export to"
 msgstr "Eksportuoti į"
 
-#: ../app/actions/file-commands.c:113 ../app/actions/file-commands.c:490
+#: ../app/actions/file-commands.c:119 ../app/actions/file-commands.c:496
 #: ../app/dialogs/file-open-dialog.c:77
 msgid "Open Image"
 msgstr "Atverti paveikslėlį"
 
-#: ../app/actions/file-commands.c:134
+#: ../app/actions/file-commands.c:140
 msgid "Open Image as Layers"
 msgstr "Atverti paveikslėlį kaip sluoksnius"
 
-#: ../app/actions/file-commands.c:266
+#: ../app/actions/file-commands.c:272
 msgid "No changes need to be saved"
 msgstr "Nėra įrašytinų pakeitimų"
 
-#: ../app/actions/file-commands.c:273 ../app/dialogs/file-save-dialog.c:95
+#: ../app/actions/file-commands.c:279 ../app/actions/file-commands.c:700
+#: ../app/dialogs/file-save-dialog.c:103
 msgid "Save Image"
 msgstr "Įrašyti paveikslėlį"
 
-#: ../app/actions/file-commands.c:279
+#: ../app/actions/file-commands.c:285
 msgid "Save a Copy of the Image"
 msgstr "Įrašyti paveikslėlio kopiją"
 
-#: ../app/actions/file-commands.c:364
+#: ../app/actions/file-commands.c:370
 msgid "Create New Template"
 msgstr "Sukurti naują šabloną"
 
-#: ../app/actions/file-commands.c:368
+#: ../app/actions/file-commands.c:374
 msgid "Enter a name for this template"
 msgstr "Įveskite pavadinimą šiam šablonui"
 
-#: ../app/actions/file-commands.c:398
+#: ../app/actions/file-commands.c:404
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
 "Atstatyti nepavyko. Su šiuo paveikslėliu nesusietas joks failo pavadinimas."
 
-#: ../app/actions/file-commands.c:410
+#: ../app/actions/file-commands.c:416
 msgid "Revert Image"
 msgstr "Atstatyti paveikslėlį"
 
-#: ../app/actions/file-commands.c:436
+#: ../app/actions/file-commands.c:442
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Atstatyti „%s“ į „%s“?"
 
-#: ../app/actions/file-commands.c:442
+#: ../app/actions/file-commands.c:448
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -2467,11 +2468,11 @@ msgstr ""
 "Atstatydami paveikslėlį į būseną išsaugotą diske, prarasite visus "
 "pakeitimus, įskaitant ir visą atšaukimų informaciją."
 
-#: ../app/actions/file-commands.c:652
+#: ../app/actions/file-commands.c:730
 msgid "(Unnamed Template)"
 msgstr "(Nepavadintas šablonas)"
 
-#: ../app/actions/file-commands.c:703
+#: ../app/actions/file-commands.c:781
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -3215,7 +3216,7 @@ msgid "Set Image Canvas Size"
 msgstr "Nustatyti paveikslėlio matomosios srities dydį"
 
 #: ../app/actions/image-commands.c:266 ../app/actions/image-commands.c:290
-#: ../app/actions/image-commands.c:583
+#: ../app/actions/image-commands.c:594
 msgid "Resizing"
 msgstr "Keičiamas dydis"
 
@@ -3242,16 +3243,16 @@ msgstr "Sukama"
 msgid "Cannot crop because the current selection is empty."
 msgstr "Nepavyko apkirpti, kadangi dabartinis pažymėjimas yra tuščias."
 
-#: ../app/actions/image-commands.c:630
+#: ../app/actions/image-commands.c:641
 msgid "Change Print Size"
 msgstr "Keisti spaudinio dydį"
 
-#: ../app/actions/image-commands.c:671
+#: ../app/actions/image-commands.c:682
 msgid "Scale Image"
 msgstr "Keisti paveikslėlio dydį"
 
 #. Scaling
-#: ../app/actions/image-commands.c:682 ../app/actions/layers-commands.c:1145
+#: ../app/actions/image-commands.c:693 ../app/actions/layers-commands.c:1145
 #: ../app/dialogs/preferences-dialog.c:1899
 #: ../app/pdb/drawable-transform-cmds.c:783
 #: ../app/pdb/drawable-transform-cmds.c:872 ../app/pdb/image-cmds.c:406
@@ -5164,14 +5165,18 @@ msgid "Create another view on this image"
 msgstr "Sukurti naują šio paveikslėlio rodinį"
 
 #: ../app/actions/view-actions.c:82
+#| msgctxt "view-action"
+#| msgid "_Close"
 msgctxt "view-action"
-msgid "_Close"
-msgstr "_Užverti"
+msgid "_Close View"
+msgstr "_Užverti vaizdą"
 
 #: ../app/actions/view-actions.c:83
+#| msgctxt "view-action"
+#| msgid "Close this image window"
 msgctxt "view-action"
-msgid "Close this image window"
-msgstr "Užverti šį paveikslėlio langą"
+msgid "Close the active image view"
+msgstr "Užverti aktyvų paveikslėlio vaizdą"
 
 #: ../app/actions/view-actions.c:88
 msgctxt "view-action"
@@ -5409,7 +5414,6 @@ msgid "Zoom _Out"
 msgstr "Su_mažinti"
 
 #: ../app/actions/view-actions.c:264 ../app/actions/view-actions.c:276
-#| msgid "Zoom out"
 msgctxt "view-zoom-action"
 msgid "Zoom out"
 msgstr "Atitraukti"
@@ -5420,7 +5424,6 @@ msgid "Zoom _In"
 msgstr "Pa_didinti"
 
 #: ../app/actions/view-actions.c:270 ../app/actions/view-actions.c:282
-#| msgid "Zoom in"
 msgctxt "view-zoom-action"
 msgid "Zoom in"
 msgstr "Pritraukti"
@@ -5604,11 +5607,11 @@ msgstr "Kit_a (%s) ..."
 msgid "_Zoom (%s)"
 msgstr "_Mastelis (%s)"
 
-#: ../app/actions/view-commands.c:585
+#: ../app/actions/view-commands.c:603
 msgid "Set Canvas Padding Color"
 msgstr "Nustatyti piešimo erdvės užpildo spalvą"
 
-#: ../app/actions/view-commands.c:587
+#: ../app/actions/view-commands.c:605
 msgid "Set Custom Canvas Padding Color"
 msgstr "Nustatyti kitą piešimo erdvės užpildo spalvą"
 
@@ -5676,7 +5679,6 @@ msgid "Single-Window Mode"
 msgstr "Vieno lango veiksena"
 
 #: ../app/actions/windows-actions.c:123
-#| msgid "Use GIMP in a single-window mode."
 msgctxt "windows-action"
 msgid "When enabled GIMP is in a single-window mode."
 msgstr "Kai įjungta, GIMP veiks vieno lango veiksena."
@@ -7320,7 +7322,7 @@ msgid "Jitter"
 msgstr "Virpėjimas"
 
 #: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:375
-#: ../app/gui/session.c:399 ../app/menus/menus.c:464
+#: ../app/gui/session.c:399 ../app/menus/menus.c:466
 #: ../app/widgets/gimpdevices.c:208
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
@@ -7795,7 +7797,7 @@ msgstr "Nepermatomumas"
 msgid "Paint Mode"
 msgstr "Piešimo veiksena"
 
-#: ../app/core/gimpdata.c:670
+#: ../app/core/gimpdata.c:690
 #, c-format
 msgid "Could not delete '%s': %s"
 msgstr "Nepavyko ištrinti „%s“: %s"
@@ -7943,7 +7945,7 @@ msgid "Posterize"
 msgstr "Sumažinti spalvų kiekį"
 
 #: ../app/core/gimpdrawable-stroke.c:272
-#: ../app/paint/gimppaintcore-stroke.c:333 ../app/vectors/gimpvectors.c:556
+#: ../app/paint/gimppaintcore-stroke.c:330 ../app/vectors/gimpvectors.c:556
 msgid "Not enough points to stroke"
 msgstr "Nepakanka taškų potėpiui atlikti"
 
@@ -8126,12 +8128,19 @@ msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Nustatyti spalvų lentelę"
 
-#: ../app/core/gimpimage-colormap.c:243
+#: ../app/core/gimpimage-colormap.c:210
+#| msgctxt "undo-type"
+#| msgid "Set Colormap"
+msgctxt "undo-type"
+msgid "Unset Colormap"
+msgstr "Atstatyti spalvų lentelę"
+
+#: ../app/core/gimpimage-colormap.c:263
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Keisti spalvų lentelės įrašą"
 
-#: ../app/core/gimpimage-colormap.c:271
+#: ../app/core/gimpimage-colormap.c:291
 msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Įtraukti spalvą į spalvų lentelę"
@@ -8218,39 +8227,43 @@ msgctxt "undo-type"
 msgid "Merge Visible Layers"
 msgstr "Sujungti matomus sluoksnius"
 
-#: ../app/core/gimpimage-merge.c:178
+#: ../app/core/gimpimage-merge.c:195
 msgctxt "undo-type"
 msgid "Flatten Image"
 msgstr "Suploti paveikslėlį"
 
-#: ../app/core/gimpimage-merge.c:248
+#: ../app/core/gimpimage-merge.c:217
+msgid "Cannot flatten an image without any visible layer."
+msgstr "Negalima suplokštinti paveikslėlio be jokio matomo sluoksnio."
+
+#: ../app/core/gimpimage-merge.c:260
 msgid "Cannot merge down to a layer group."
 msgstr "Negalima sujungti su žemesne sluoksnių grupe."
 
-#: ../app/core/gimpimage-merge.c:255
+#: ../app/core/gimpimage-merge.c:267
 msgid "The layer to merge down to is locked."
 msgstr "Sluoksnis sujungimu su žemesniu yra užrakintas."
 
-#: ../app/core/gimpimage-merge.c:267
+#: ../app/core/gimpimage-merge.c:279
 msgid "There is no visible layer to merge down to."
 msgstr "Nėra matomo sluoksnio sujungimui su žemesniu."
 
-#: ../app/core/gimpimage-merge.c:277
+#: ../app/core/gimpimage-merge.c:289
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Sujungti su žemesniu"
 
-#: ../app/core/gimpimage-merge.c:305
+#: ../app/core/gimpimage-merge.c:317
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Sujungti sluoksnių grupę"
 
-#: ../app/core/gimpimage-merge.c:358
+#: ../app/core/gimpimage-merge.c:370
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Sujungti matomus kontūrus"
 
-#: ../app/core/gimpimage-merge.c:394
+#: ../app/core/gimpimage-merge.c:406
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr "Sujungimui neužtenka matomų kontūrų, kurių turi būti bent du."
 
@@ -8283,7 +8296,7 @@ msgctxt "undo-type"
 msgid "Move Sample Point"
 msgstr "Perkelti mėginio tašką"
 
-#: ../app/core/gimpimage-scale.c:87
+#: ../app/core/gimpimage-scale.c:88
 msgctxt "undo-type"
 msgid "Scale Image"
 msgstr "Keisti paveikslėlio dydį"
@@ -8393,7 +8406,7 @@ msgid "(Preview may be out of date)"
 msgstr "(Peržiūra gali būti pasenusi)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:774 ../app/widgets/gimpimagepropview.c:441
+#: ../app/core/gimpimagefile.c:774 ../app/widgets/gimpimagepropview.c:440
 #: ../app/widgets/gimpsizebox.c:427 ../app/widgets/gimptemplateeditor.c:565
 #, c-format
 msgid "%d × %d pixel"
@@ -8435,7 +8448,6 @@ msgid "Set Item Exclusive Visible"
 msgstr "Nustatyti elementą išimtinai matomą"
 
 #: ../app/core/gimpitem-exclusive.c:172
-#| msgid "Set Item Exclusive Visible"
 msgid "Set Item Exclusive Linked"
 msgstr "Nustatyti elementą išskirtinai susietą"
 
@@ -9059,15 +9071,15 @@ msgstr "Atverti vietą"
 msgid "Enter location (URI):"
 msgstr "Įveskite vietą (URI):"
 
-#: ../app/dialogs/file-save-dialog.c:105
+#: ../app/dialogs/file-save-dialog.c:113
 msgid "Export Image"
 msgstr "Eksportuoti paveikslėlį"
 
-#: ../app/dialogs/file-save-dialog.c:106
+#: ../app/dialogs/file-save-dialog.c:114
 msgid "_Export"
 msgstr "_Eksportuoti"
 
-#: ../app/dialogs/file-save-dialog.c:419
+#: ../app/dialogs/file-save-dialog.c:458
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -9077,7 +9089,12 @@ msgstr ""
 "plėtinį. Įveskite failo plėtinį, atitinkantį pasirinkto failo formatą arba "
 "iš viso nenurodykite failo plėtinio."
 
-#: ../app/dialogs/file-save-dialog.c:546
+#: ../app/dialogs/file-save-dialog.c:605
+#| msgid "The given filename does not have any known file extension."
+msgid "The given filename cannot be used for exporting"
+msgstr "Nurodytas failo pavadinimas negali būti naudojamas eksportavimui"
+
+#: ../app/dialogs/file-save-dialog.c:606
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
@@ -9085,7 +9102,18 @@ msgstr ""
 "Galite naudoti šį dialogą eksportavimui įvairiais failų formatais. Jei "
 "norite išsaugoti paveikslėlį GIMP XCF formatų, naudokite Failas→Įrašyti."
 
-#: ../app/dialogs/file-save-dialog.c:553
+#: ../app/dialogs/file-save-dialog.c:609
+#| msgctxt "dialogs-action"
+#| msgid "Open the layers dialog"
+msgid "Take me to the Save dialog"
+msgstr "Pereiti į įrašymo dialogą"
+
+#: ../app/dialogs/file-save-dialog.c:613
+#| msgid "The given filename does not have any known file extension."
+msgid "The given filename cannot be used for saving"
+msgstr "Nurodytas failo pavadinimas negali būti naudojamas įrašymui"
+
+#: ../app/dialogs/file-save-dialog.c:614
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
@@ -9093,7 +9121,17 @@ msgstr ""
 "Galite naudoti šį dialogą įrašymui GIMP XCF formatu. Eksportavimui kitais "
 "failų formatais naudokite Failas→Eksportuoti."
 
-#: ../app/dialogs/file-save-dialog.c:559
+#: ../app/dialogs/file-save-dialog.c:616
+#| msgctxt "dialogs-action"
+#| msgid "Open the paths dialog"
+msgid "Take me to the Export dialog"
+msgstr "Pereiti į eksporto dialogą"
+
+#: ../app/dialogs/file-save-dialog.c:619 ../app/dialogs/file-save-dialog.c:694
+msgid "Extension Mismatch"
+msgstr "Plėtinių neatitikimas"
+
+#: ../app/dialogs/file-save-dialog.c:678
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -9101,24 +9139,20 @@ msgstr ""
 "Nurodyto failo pavadinimo plėtinys nežinomas. Įveskite failo plėtinį arba "
 "failų formatų sąraše pasirinkite failo formatą."
 
-#: ../app/dialogs/file-save-dialog.c:573
-msgid "Extension Mismatch"
-msgstr "Plėtinių neatitikimas"
-
-#: ../app/dialogs/file-save-dialog.c:589
+#: ../app/dialogs/file-save-dialog.c:710
 msgid "The given file extension does not match the chosen file type."
 msgstr "Nurodytas failo plėtinys neatitinka pasirinkto failo tipo."
 
-#: ../app/dialogs/file-save-dialog.c:593
+#: ../app/dialogs/file-save-dialog.c:714
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Ar vis tiek norite įrašyti paveikslėlį šiuo pavadinimu?"
 
 #  File Saving
-#: ../app/dialogs/file-save-dialog.c:651
+#: ../app/dialogs/file-save-dialog.c:776
 msgid "Saving canceled"
 msgstr "Išsaugojimas atšauktas"
 
-#: ../app/dialogs/file-save-dialog.c:659 ../app/widgets/gimpdnd-xds.c:186
+#: ../app/dialogs/file-save-dialog.c:784 ../app/widgets/gimpdnd-xds.c:186
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -9835,12 +9869,10 @@ msgid "Default Image"
 msgstr "Numatytasis paveikslėlis"
 
 #: ../app/dialogs/preferences-dialog.c:2028
-#| msgid "Edit Quick Mask Color"
 msgid "Set the default Quick Mask color"
 msgstr "Nustatyti numatytąją greitosios kaukės spalvą"
 
 #: ../app/dialogs/preferences-dialog.c:2034
-#| msgid "Edit Quick Mask Color"
 msgid "Quick Mask color:"
 msgstr "Greitosios kaukės spalva:"
 
@@ -10005,7 +10037,7 @@ msgid "Vertical"
 msgstr "Vertikaliai"
 
 #: ../app/dialogs/preferences-dialog.c:2350
-#: ../app/widgets/gimpimagepropview.c:470
+#: ../app/widgets/gimpimagepropview.c:469
 msgid "ppi"
 msgstr "taškų colyje"
 
@@ -10684,7 +10716,6 @@ msgstr[2] ""
 
 #: ../app/display/gimpdisplayshell-close.c:311
 #, c-format
-#| msgid "Image exported to '%s'"
 msgid "The image has been exported to '%s'."
 msgstr "Paveikslėlis eksportuotas į „%s“."
 
@@ -10710,7 +10741,7 @@ msgstr "Negalima keisti sluoksnių grupių pikselių."
 #: ../app/tools/gimpbucketfilltool.c:143 ../app/tools/gimpcroptool.c:325
 #: ../app/tools/gimpimagemaptool.c:287 ../app/tools/gimppainttool.c:266
 #: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:247
-#: ../app/tools/gimptransformtool.c:1067
+#: ../app/tools/gimptransformtool.c:1070
 msgid "The active layer's pixels are locked."
 msgstr "Aktyvaus sluoksnio pikseliai yra užrakinti."
 
@@ -10800,12 +10831,12 @@ msgstr "Įskiepiui %s nepavyko atverti paveikslėlio"
 msgid "Image doesn't contain any layers"
 msgstr "Paveikslėlyje nėra sluoksnių"
 
-#: ../app/file/file-open.c:583
+#: ../app/file/file-open.c:586
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Nepavyko atverti „%s“: %s"
 
-#: ../app/file/file-open.c:690
+#: ../app/file/file-open.c:696
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -10821,12 +10852,12 @@ msgstr "Nežinomas failo tipas"
 msgid "%s plug-in could not save image"
 msgstr "Įskiepiui %s nepavyko įrašyti paveikslėlio"
 
-#: ../app/file/file-utils.c:74
+#: ../app/file/file-utils.c:72
 #, c-format
 msgid "'%s:' is not a valid URI scheme"
 msgstr "„%s:“ nėra tinkama URI schema"
 
-#: ../app/file/file-utils.c:90 ../app/file/file-utils.c:126
+#: ../app/file/file-utils.c:88 ../app/file/file-utils.c:124
 msgid "Invalid character sequence in URI"
 msgstr "URI yra netinkama simbolių seka"
 
@@ -10840,15 +10871,15 @@ msgctxt "cage-mode"
 msgid "Deform the cage to deform the image"
 msgstr "Deformuoti narvą deformuojant paveikslėlį"
 
-#: ../app/gegl/gimpcurvesconfig.c:388
+#: ../app/gegl/gimpcurvesconfig.c:395
 msgid "not a GIMP Curves file"
 msgstr "tai ne GIMP kreivių failas"
 
-#: ../app/gegl/gimpcurvesconfig.c:403 ../app/gegl/gimplevelsconfig.c:789
+#: ../app/gegl/gimpcurvesconfig.c:410 ../app/gegl/gimplevelsconfig.c:811
 msgid "parse error"
 msgstr "apdorojimo klaida"
 
-#: ../app/gegl/gimplevelsconfig.c:742
+#: ../app/gegl/gimplevelsconfig.c:764
 msgid "not a GIMP Levels file"
 msgstr "tai ne GIMP lygių failas"
 
@@ -11439,29 +11470,29 @@ msgstr "Pašalinti kontūro brūkšnį"
 msgid "Close path stroke"
 msgstr "Sujungti kontūro brūkšnius"
 
-#: ../app/pdb/vectors-cmds.c:399
+#: ../app/pdb/vectors-cmds.c:401
 msgid "Translate path stroke"
 msgstr "Išversti kontūro brūkšnį"
 
-#: ../app/pdb/vectors-cmds.c:439
+#: ../app/pdb/vectors-cmds.c:443
 msgid "Scale path stroke"
 msgstr "Keisti kontūro dydį"
 
-#: ../app/pdb/vectors-cmds.c:481
+#: ../app/pdb/vectors-cmds.c:487
 msgid "Rotate path stroke"
 msgstr "Pasukti kontūrą"
 
-#: ../app/pdb/vectors-cmds.c:521 ../app/pdb/vectors-cmds.c:565
+#: ../app/pdb/vectors-cmds.c:529 ../app/pdb/vectors-cmds.c:575
 msgid "Flip path stroke"
 msgstr "Apsukti kontūrą"
 
-#: ../app/pdb/vectors-cmds.c:694 ../app/pdb/vectors-cmds.c:817
-#: ../app/pdb/vectors-cmds.c:1037
+#: ../app/pdb/vectors-cmds.c:706 ../app/pdb/vectors-cmds.c:829
+#: ../app/pdb/vectors-cmds.c:1055
 msgid "Add path stroke"
 msgstr "Pridėti kontūro brūkšnį"
 
-#: ../app/pdb/vectors-cmds.c:870 ../app/pdb/vectors-cmds.c:923
-#: ../app/pdb/vectors-cmds.c:984
+#: ../app/pdb/vectors-cmds.c:882 ../app/pdb/vectors-cmds.c:937
+#: ../app/pdb/vectors-cmds.c:1000
 msgid "Extend path stroke"
 msgstr "Išplėsti kontūro brūkšnį"
 
@@ -11557,7 +11588,7 @@ msgstr "Įskiepių interpretatoriai"
 msgid "Plug-In Environment"
 msgstr "Įskiepių aplinka"
 
-#: ../app/plug-in/gimppluginprocedure.c:976
+#: ../app/plug-in/gimppluginprocedure.c:978
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -11566,7 +11597,7 @@ msgstr ""
 "Kvietimo klaida procedūrai „%s“:\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:988
+#: ../app/plug-in/gimppluginprocedure.c:990
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -11575,16 +11606,21 @@ msgstr ""
 "Vykdymo klaida procedūrai „%s“:\n"
 "%s"
 
-#: ../app/plug-in/plug-in-icc-profile.c:112
-#: ../app/plug-in/plug-in-icc-profile.c:187
-#: ../app/plug-in/plug-in-icc-profile.c:246
+#: ../app/plug-in/plug-in-icc-profile.c:74
+#, c-format
+msgid "Can't apply color profile to grayscale image (%s)"
+msgstr "Negalima pritaikyti spalvų profilio juodai-baltam paveikslėliui (%s)"
+
+#: ../app/plug-in/plug-in-icc-profile.c:117
+#: ../app/plug-in/plug-in-icc-profile.c:192
+#: ../app/plug-in/plug-in-icc-profile.c:251
 #, c-format
 msgid "Error running '%s'"
 msgstr "Klaida vykdant „%s“"
 
-#: ../app/plug-in/plug-in-icc-profile.c:136
-#: ../app/plug-in/plug-in-icc-profile.c:197
-#: ../app/plug-in/plug-in-icc-profile.c:256
+#: ../app/plug-in/plug-in-icc-profile.c:141
+#: ../app/plug-in/plug-in-icc-profile.c:202
+#: ../app/plug-in/plug-in-icc-profile.c:261
 #, c-format
 msgid "Plug-In missing (%s)"
 msgstr "Nėra įskiepio (%s)"
@@ -11870,7 +11906,7 @@ msgstr "Perėjimas neveikia indeksuotose sluoksniuose."
 msgid "No gradient available for use with this tool."
 msgstr "Šiam įrankiui nėra naudotinų gradientų."
 
-#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:623
+#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:624
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s suvaržytiems kampams"
@@ -12013,7 +12049,7 @@ msgctxt "command"
 msgid "Select by Color"
 msgstr "Pažymėti pagal spalvą"
 
-#: ../app/tools/gimpcagetool.c:152 ../app/tools/gimpcagetool.c:1155
+#: ../app/tools/gimpcagetool.c:152 ../app/tools/gimpcagetool.c:1156
 msgid "Cage Transform"
 msgstr "Transformavimas narvu"
 
@@ -12025,15 +12061,15 @@ msgstr "Transformavimas narvu: deformuokite pažymėtą sritį naudodami narvą"
 msgid "_Cage Transform"
 msgstr "_Transformavimas narvu"
 
-#: ../app/tools/gimpcagetool.c:352
+#: ../app/tools/gimpcagetool.c:353
 msgid "Press ENTER to commit the transform"
 msgstr "Paspauskite ENTER norėdami atlikti transformaciją"
 
-#: ../app/tools/gimpcagetool.c:1096
+#: ../app/tools/gimpcagetool.c:1097
 msgid "Computing Cage Coefficients"
 msgstr "Skaičiuojami narvo koeficientai"
 
-#: ../app/tools/gimpcagetool.c:1273
+#: ../app/tools/gimpcagetool.c:1274
 msgid "Cage transform"
 msgstr "Transformavimas narvu"
 
@@ -12250,13 +12286,13 @@ msgstr "S_palvų parinkiklis"
 msgid "Click in any image to view its color"
 msgstr "Spustelėkite bet kokiame paveikslėlyje norėdami pamatyti jo spalvą"
 
-#: ../app/tools/gimpcolorpickertool.c:238 ../app/tools/gimppainttool.c:477
+#: ../app/tools/gimpcolorpickertool.c:238 ../app/tools/gimppainttool.c:478
 msgid "Click in any image to pick the foreground color"
 msgstr ""
 "Spustelėkite bet kokiame paveikslėlyje norėdami pasirinkti priekinio plano "
 "spalvą"
 
-#: ../app/tools/gimpcolorpickertool.c:246 ../app/tools/gimppainttool.c:483
+#: ../app/tools/gimpcolorpickertool.c:246 ../app/tools/gimppainttool.c:484
 msgid "Click in any image to pick the background color"
 msgstr "Spustelėkite bet kokiame paveikslėlyje norėdami pasirinkti fono spalvą"
 
@@ -13110,8 +13146,6 @@ msgid "Zoom Tool: Adjust the zoom level"
 msgstr "Mastelio įrankis: keisti mastelį"
 
 #: ../app/tools/gimpmagnifytool.c:93
-#| msgctxt "view-action"
-#| msgid "_Zoom"
 msgid "_Zoom"
 msgstr "_Mastelis"
 
@@ -13165,7 +13199,7 @@ msgstr "Spustelėkite ir vilkite norėdami perkelti visus taškus"
 
 #: ../app/tools/gimpmeasuretool.c:939 ../app/tools/gimpmeasuretool.c:1084
 #: ../app/tools/gimpmeasuretool.c:1140 ../app/tools/gimpmeasuretool.c:1168
-#: ../app/tools/gimppainttool.c:632
+#: ../app/tools/gimppainttool.c:633
 msgid "pixels"
 msgstr "pikseliai"
 
@@ -13337,7 +13371,7 @@ msgstr "%s norėdami pasirinkti spalvą"
 msgid "Cannot paint on layer groups."
 msgstr "Negalima piešti ant sluoksnių grupių."
 
-#: ../app/tools/gimppainttool.c:678
+#: ../app/tools/gimppainttool.c:679
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s tiesiai linijai"
@@ -13949,15 +13983,15 @@ msgstr "Išlaikyti pradines proporcijas"
 msgid "Transforming"
 msgstr "Transformuojama"
 
-#: ../app/tools/gimptransformtool.c:1066
+#: ../app/tools/gimptransformtool.c:1069
 msgid "There is no layer to transform."
 msgstr "Nėra transformuotino sluoksnio."
 
-#: ../app/tools/gimptransformtool.c:1079
+#: ../app/tools/gimptransformtool.c:1082
 msgid "There is no path to transform."
 msgstr "Nėra transformuotino kontūro."
 
-#: ../app/tools/gimptransformtool.c:1080
+#: ../app/tools/gimptransformtool.c:1083
 msgid "The active path's strokes are locked."
 msgstr "Suaktyvinto kontūro potėpiai yra užrakinti."
 
@@ -14986,11 +15020,11 @@ msgid "Configure this tab"
 msgstr "Konfigūruoti šią kortelę"
 
 #. Auto button
-#: ../app/widgets/gimpdockwindow.c:382
+#: ../app/widgets/gimpdockwindow.c:386
 msgid "Auto"
 msgstr "Auto"
 
-#: ../app/widgets/gimpdockwindow.c:393
+#: ../app/widgets/gimpdockwindow.c:397
 msgid ""
 "When enabled the dialog automatically follows the image you are working on."
 msgstr "Kai įjungta, dialogas automatiškai seka paveikslėlį, kuriame dirbate."
@@ -15052,12 +15086,10 @@ msgid "All images"
 msgstr "Visi paveikslėliai"
 
 #: ../app/widgets/gimpfiledialog.c:813
-#| msgid "All images"
 msgid "All XCF images"
 msgstr "Visi XCF paveikslėliai"
 
 #: ../app/widgets/gimpfiledialog.c:815
-#| msgid "All images"
 msgid "All export images"
 msgstr "Visi eksportuojami paveikslėliai"
 
@@ -15285,79 +15317,79 @@ msgstr ""
 msgid "Querying..."
 msgstr "Užklausiama..."
 
-#: ../app/widgets/gimpimagepropview.c:120
+#: ../app/widgets/gimpimagepropview.c:113
 msgid "Size in pixels:"
 msgstr "Dydis pikseliais:"
 
-#: ../app/widgets/gimpimagepropview.c:123
+#: ../app/widgets/gimpimagepropview.c:116
 msgid "Print size:"
 msgstr "Spaudinio dydis:"
 
-#: ../app/widgets/gimpimagepropview.c:126
+#: ../app/widgets/gimpimagepropview.c:119
 msgid "Resolution:"
 msgstr "Raiška:"
 
-#: ../app/widgets/gimpimagepropview.c:129
+#: ../app/widgets/gimpimagepropview.c:122
 msgid "Color space:"
 msgstr "Spalvų erdvė:"
 
-#: ../app/widgets/gimpimagepropview.c:134
+#: ../app/widgets/gimpimagepropview.c:127
 msgid "File Name:"
 msgstr "Failo vardas:"
 
-#: ../app/widgets/gimpimagepropview.c:140
+#: ../app/widgets/gimpimagepropview.c:133
 msgid "File Size:"
 msgstr "Failo dydis:"
 
-#: ../app/widgets/gimpimagepropview.c:143
+#: ../app/widgets/gimpimagepropview.c:136
 msgid "File Type:"
 msgstr "Failo tipas:"
 
-#: ../app/widgets/gimpimagepropview.c:148
+#: ../app/widgets/gimpimagepropview.c:141
 msgid "Size in memory:"
 msgstr "Dydis atmintyje:"
 
-#: ../app/widgets/gimpimagepropview.c:151
+#: ../app/widgets/gimpimagepropview.c:144
 msgid "Undo steps:"
 msgstr "Atšaukiami žingsniai:"
 
-#: ../app/widgets/gimpimagepropview.c:154
+#: ../app/widgets/gimpimagepropview.c:147
 msgid "Redo steps:"
 msgstr "Pakartojami žingsniai:"
 
-#: ../app/widgets/gimpimagepropview.c:159
+#: ../app/widgets/gimpimagepropview.c:152
 msgid "Number of pixels:"
 msgstr "Pikselių skaičius:"
 
-#: ../app/widgets/gimpimagepropview.c:162
+#: ../app/widgets/gimpimagepropview.c:155
 msgid "Number of layers:"
 msgstr "Sluoksnių skaičius:"
 
-#: ../app/widgets/gimpimagepropview.c:165
+#: ../app/widgets/gimpimagepropview.c:158
 msgid "Number of channels:"
 msgstr "Kanalų skaičius:"
 
-#: ../app/widgets/gimpimagepropview.c:168
+#: ../app/widgets/gimpimagepropview.c:161
 msgid "Number of paths:"
 msgstr "Kontūrų skaičius:"
 
 #. no undo (or redo) steps available
-#: ../app/widgets/gimpimagepropview.c:411
+#: ../app/widgets/gimpimagepropview.c:410
 msgid "None"
 msgstr "Nėra"
 
-#: ../app/widgets/gimpimagepropview.c:465
+#: ../app/widgets/gimpimagepropview.c:464
 #: ../app/widgets/gimptemplateeditor.c:331
 #, c-format
 msgid "pixels/%s"
 msgstr "pikseliai/%s"
 
-#: ../app/widgets/gimpimagepropview.c:467
+#: ../app/widgets/gimpimagepropview.c:466
 #, c-format
 msgid "%g × %g %s"
 msgstr "%g × %g %s"
 
-#: ../app/widgets/gimpimagepropview.c:488
+#: ../app/widgets/gimpimagepropview.c:487
 msgid "colors"
 msgstr "spalvos"
 
@@ -15554,12 +15586,12 @@ msgstr "%d × %d taškų colyje, %s"
 msgid "%d ppi, %s"
 msgstr "%d taškų colyje, %s"
 
-#: ../app/widgets/gimptextbuffer-serialize.c:340
+#: ../app/widgets/gimptextbuffer-serialize.c:344
 #, c-format
 msgid "Attribute \"%s\" is invalid on <%s> element in this context"
 msgstr "Šiame kontekste požymis „%s“ yra netinkamas elemente <%s>"
 
-#: ../app/widgets/gimptextbuffer-serialize.c:412
+#: ../app/widgets/gimptextbuffer-serialize.c:416
 #, c-format
 msgid "Outermost element in text must be <markup> not <%s>"
 msgstr "Išoriškiausias elementas tekste turi būti <markup>, o ne <%s>"
@@ -16027,4 +16059,3 @@ msgstr "Paveikslėlių rengyklė"
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Create images and edit photographs"
 msgstr "Kurti paveikslėlius ir redaguoti fotografijas"
-
