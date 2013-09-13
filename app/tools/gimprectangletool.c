@@ -2524,7 +2524,7 @@ gimp_rectangle_tool_auto_shrink (GimpRectangleTool *rect_tool)
 
   if (shrink_merged)
     {
-      pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
+      pickable = GIMP_PICKABLE (image);
 
       x1 = private->x1;
       y1 = private->y1;

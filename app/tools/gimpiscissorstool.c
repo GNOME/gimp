@@ -1681,7 +1681,7 @@ gradmap_tile_validate (TileManager *tm,
   dw = tile_ewidth (tile);
   dh = tile_eheight (tile);
 
-  pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
+  pickable = GIMP_PICKABLE (image);
 
   gimp_pickable_flush (pickable);
 

@@ -186,7 +186,7 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
                 src_image    = gimp_pickable_get_image (src_pickable);
 
                 if (options->sample_merged)
-                  src_pickable = GIMP_PICKABLE (gimp_image_get_projection (src_image));
+                  src_pickable = GIMP_PICKABLE (src_image);
 
                 dest_image = gimp_item_get_image (GIMP_ITEM (drawable));
 

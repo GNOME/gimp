@@ -58,7 +58,7 @@ gimp_image_pick_color (GimpImage     *image,
 
   if (sample_merged)
     {
-      pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
+      pickable = GIMP_PICKABLE (image);
     }
   else
     {

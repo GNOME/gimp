@@ -1616,13 +1616,12 @@ gimp_channel_new_from_component (GimpImage       *image,
                                  const gchar     *name,
                                  const GimpRGB   *color)
 {
-  GimpProjection *projection;
-  GimpChannel    *channel;
-  GeglBuffer     *src_buffer;
-  GeglBuffer     *dest_buffer;
-  gint            width;
-  gint            height;
-  const Babl     *format;
+  GimpChannel *channel;
+  GeglBuffer  *src_buffer;
+  GeglBuffer  *dest_buffer;
+  gint         width;
+  gint         height;
+  const Babl  *format;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -1630,11 +1629,9 @@ gimp_channel_new_from_component (GimpImage       *image,
 
   g_return_val_if_fail (format != NULL, NULL);
 
-  projection = gimp_image_get_projection (image);
+  gimp_pickable_flush (GIMP_PICKABLE (image));
 
-  gimp_pickable_flush (GIMP_PICKABLE (projection));
-
-  src_buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (projection));
+  src_buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (image));
   width  = gegl_buffer_get_width  (src_buffer);
   height = gegl_buffer_get_height (src_buffer);
 

@@ -919,7 +919,7 @@ image_pick_color_invoker (GimpProcedure         *procedure,
       if (success)
         {
           if (sample_merged)
-            gimp_pickable_flush (GIMP_PICKABLE (gimp_image_get_projection (image)));
+            gimp_pickable_flush (GIMP_PICKABLE (image));
           else
             gimp_pickable_flush (GIMP_PICKABLE (drawable));
 
@@ -1796,7 +1796,7 @@ image_thumbnail_invoker (GimpProcedure         *procedure,
       else
         width  = MAX (1, (height * dwidth) / dheight);
 
-      gimp_pickable_flush (GIMP_PICKABLE (gimp_image_get_projection (image)));
+      gimp_pickable_flush (GIMP_PICKABLE (image));
 
       buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (image), context,
                                            width, height);

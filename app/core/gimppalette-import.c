@@ -354,10 +354,9 @@ gimp_palette_import_from_image (GimpImage   *image,
                                 gint         threshold,
                                 gboolean     selection_only)
 {
-  GimpProjection *projection;
-  GHashTable     *colors;
-  gint            x, y;
-  gint            width, height;
+  GHashTable *colors;
+  gint        x, y;
+  gint        width, height;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -365,9 +364,7 @@ gimp_palette_import_from_image (GimpImage   *image,
   g_return_val_if_fail (n_colors > 1, NULL);
   g_return_val_if_fail (threshold > 0, NULL);
 
-  projection = gimp_image_get_projection (image);
-
-  gimp_pickable_flush (GIMP_PICKABLE (projection));
+  gimp_pickable_flush (GIMP_PICKABLE (image));
 
   if (selection_only)
     {
@@ -386,7 +383,7 @@ gimp_palette_import_from_image (GimpImage   *image,
     }
 
   colors = gimp_palette_import_extract (image,
-                                        GIMP_PICKABLE (projection),
+                                        GIMP_PICKABLE (image),
                                         0, 0,
                                         selection_only,
                                         x, y, width, height,

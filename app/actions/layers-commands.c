@@ -348,7 +348,7 @@ layers_new_from_visible_cmd_callback (GtkAction *action,
   GimpPickable *pickable;
   return_if_no_image (image, data);
 
-  pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
+  pickable = GIMP_PICKABLE (image);
 
   gimp_pickable_flush (pickable);
 

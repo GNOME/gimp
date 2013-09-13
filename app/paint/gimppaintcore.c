@@ -380,8 +380,7 @@ gimp_paint_core_start (GimpPaintCore     *core,
 
   if (core->use_saved_proj)
     {
-      GimpPickable *pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
-      GeglBuffer   *buffer   = gimp_pickable_get_buffer (pickable);
+      GeglBuffer *buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (image));
 
       core->saved_proj_buffer = gegl_buffer_dup (buffer);
     }

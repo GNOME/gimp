@@ -160,7 +160,7 @@ layer_new_from_visible_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpPickable *pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
+      GimpPickable *pickable = GIMP_PICKABLE (image);
 
       gimp_pickable_flush (pickable);
 

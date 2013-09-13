@@ -517,7 +517,7 @@ image_crop_to_content_cmd_callback (GtkAction *action,
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  if (! gimp_pickable_auto_shrink (GIMP_PICKABLE (gimp_image_get_projection (image)),
+  if (! gimp_pickable_auto_shrink (GIMP_PICKABLE (image),
                                    0, 0,
                                    gimp_image_get_width  (image),
                                    gimp_image_get_height (image),

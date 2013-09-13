@@ -100,12 +100,11 @@ gimp_image_get_new_preview (GimpViewable *viewable,
                             gint          width,
                             gint          height)
 {
-  GimpImage      *image      = GIMP_IMAGE (viewable);
-  GimpProjection *projection = gimp_image_get_projection (image);
-  const Babl     *format;
-  GimpTempBuf    *buf;
-  gdouble         scale_x;
-  gdouble         scale_y;
+  GimpImage   *image = GIMP_IMAGE (viewable);
+  const Babl  *format;
+  GimpTempBuf *buf;
+  gdouble      scale_x;
+  gdouble      scale_y;
 
   scale_x = (gdouble) width  / (gdouble) gimp_image_get_width  (image);
   scale_y = (gdouble) height / (gdouble) gimp_image_get_height (image);
@@ -117,7 +116,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 
   buf = gimp_temp_buf_new (width, height, format);
 
-  gegl_buffer_get (gimp_pickable_get_buffer (GIMP_PICKABLE (projection)),
+  gegl_buffer_get (gimp_pickable_get_buffer (GIMP_PICKABLE (image)),
                    GEGL_RECTANGLE (0, 0, width, height),
                    MIN (scale_x, scale_y),
                    gimp_temp_buf_get_format (buf),

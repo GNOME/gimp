@@ -120,7 +120,7 @@ gimp_by_color_select_tool_get_mask (GimpRegionSelectTool *region_select,
     }
   else
     {
-      pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
+      pickable = GIMP_PICKABLE (image);
     }
 
   gimp_pickable_flush (pickable);
