@@ -41,11 +41,11 @@
 #include "core/gimpimagemap.h"
 #include "core/gimplist.h"
 #include "core/gimpparamspecs-duplicate.h"
+#include "core/gimppickable.h"
 #include "core/gimpsettings.h"
 
-#include "widgets/gimpcontainercombobox.h"
-#include "widgets/gimpcontainerview.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimppickablebutton.h"
 #include "widgets/gimpproptable.h"
 
 #include "display/gimpdisplay.h"
@@ -178,18 +178,8 @@ gimp_operation_tool_initialize (GimpTool     *tool,
                                 GimpDisplay  *display,
                                 GError      **error)
 {
-  GimpOperationTool *op_tool = GIMP_OPERATION_TOOL (tool);
-
   if (GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
-      if (op_tool->aux_input_combo)
-        {
-          GimpImage *image = gimp_item_get_image (GIMP_ITEM (tool->drawable));
-
-          gimp_container_view_set_container (GIMP_CONTAINER_VIEW (op_tool->aux_input_combo),
-                                             gimp_image_get_channels (image));
-        }
-
       return TRUE;
     }
 
@@ -210,8 +200,8 @@ gimp_operation_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      if (op_tool->aux_input_combo)
-        gimp_container_view_set_container (GIMP_CONTAINER_VIEW (op_tool->aux_input_combo),
+      if (op_tool->aux_input_button)
+        gimp_pickable_button_set_pickable (GIMP_PICKABLE_BUTTON (op_tool->aux_input_button),
                                            NULL);
       break;
     }
@@ -263,11 +253,11 @@ gimp_operation_tool_dialog (GimpImageMapTool *image_map_tool)
                       FALSE, FALSE, 0);
   gtk_widget_show (tool->options_box);
 
-  if (tool->aux_input_combo)
+  if (tool->aux_input_button)
     {
-      gtk_box_pack_start (GTK_BOX (tool->options_box), tool->aux_input_combo,
+      gtk_box_pack_start (GTK_BOX (tool->options_box), tool->aux_input_button,
                           FALSE, FALSE, 0);
-      gtk_widget_show (tool->aux_input_combo);
+      gtk_widget_show (tool->aux_input_button);
     }
 
   if (tool->options_table)
@@ -464,15 +454,15 @@ gimp_operation_tool_color_picked (GimpImageMapTool  *im_tool,
 }
 
 static gboolean
-gimp_operation_tool_aux_selected (GimpContainerView  *view,
-                                  GimpViewable       *viewable,
-                                  gpointer            insert_data,
-                                  GeglNode           *aux_input)
+gimp_operation_tool_aux_notify (GimpPickableButton *button,
+                                const GParamSpec   *pspec,
+                                GeglNode           *aux_input)
 {
-  GeglBuffer *buffer = NULL;
+  GimpPickable *pickable = gimp_pickable_button_get_pickable (button);
+  GeglBuffer   *buffer   = NULL;
 
-  if (viewable)
-    buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (viewable));
+  if (pickable)
+    buffer = gimp_pickable_get_buffer (pickable);
 
   gegl_node_set (aux_input,
                  "buffer", buffer,
@@ -521,10 +511,10 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
   else
     GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->settings_name = NULL; /* XXX hack */
 
-  if (tool->aux_input_combo)
+  if (tool->aux_input_button)
     {
-      gtk_widget_destroy (tool->aux_input_combo);
-      tool->aux_input_combo = NULL;
+      gtk_widget_destroy (tool->aux_input_button);
+      tool->aux_input_button = NULL;
     }
 
   if (tool->options_table)
@@ -541,10 +531,7 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
 
   if (gegl_node_has_pad (im_tool->operation, "aux"))
     {
-      GimpImage     *image;
-      GimpContext   *context;
-      GimpContainer *channels;
-      GimpChannel   *channel;
+      GimpContext *context;
 
       tool->aux_input = gegl_node_new_child (NULL,
                                              "operation", "gegl:buffer-source",
@@ -553,33 +540,21 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
       gegl_node_connect_to (tool->aux_input,    "output",
                             im_tool->operation, "aux");
 
-      image = gimp_item_get_image (GIMP_ITEM (GIMP_TOOL (tool)->drawable));
+      context = GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (tool));
 
-      context  = GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (tool));
-      channels = gimp_image_get_channels (image);
-
-      tool->aux_input_combo =
-        gimp_container_combo_box_new (channels, context,
-                                      GIMP_VIEW_SIZE_SMALL, 1);
+      tool->aux_input_button =
+        gimp_pickable_button_new (context, GIMP_VIEW_SIZE_LARGE, 1);
 
       if (tool->options_box)
         {
-          gtk_box_pack_start (GTK_BOX (tool->options_box), tool->aux_input_combo,
+          gtk_box_pack_start (GTK_BOX (tool->options_box), tool->aux_input_button,
                               FALSE, FALSE, 0);
-          gtk_widget_show (tool->aux_input_combo);
+          gtk_widget_show (tool->aux_input_button);
         }
 
-      g_signal_connect_object (tool->aux_input_combo, "select-item",
-                               G_CALLBACK (gimp_operation_tool_aux_selected),
+      g_signal_connect_object (tool->aux_input_button, "notify::pickable",
+                               G_CALLBACK (gimp_operation_tool_aux_notify),
                                tool->aux_input, 0);
-
-      channel = gimp_image_get_active_channel (image);
-
-      if (! channel)
-        channel = GIMP_CHANNEL (gimp_container_get_first_child (channels));
-
-      gimp_container_view_select_item (GIMP_CONTAINER_VIEW (tool->aux_input_combo),
-                                       GIMP_VIEWABLE (channel));
     }
 
   if (tool->config)

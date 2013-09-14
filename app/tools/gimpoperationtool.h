@@ -45,7 +45,7 @@ struct _GimpOperationTool
   /* dialog */
   GtkWidget        *options_box;
   GtkWidget        *options_table;
-  GtkWidget        *aux_input_combo;
+  GtkWidget        *aux_input_button;
 };
 
 struct _GimpOperationToolClass
