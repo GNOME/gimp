@@ -163,7 +163,7 @@ gimp_controllers_restore (Gimp          *gimp,
                                               filename, NULL, &error))
             {
               gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR,
-				    error->message);
+                                    error->message);
             }
         }
       else

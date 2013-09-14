@@ -275,8 +275,8 @@ documents_recreate_preview_cmd_callback (GtkAction *action,
                                              FALSE, &error))
         {
           gimp_message_literal (context->gimp,
-				NULL , GIMP_MESSAGE_ERROR,
-				error->message);
+                                NULL , GIMP_MESSAGE_ERROR,
+                                error->message);
           g_clear_error (&error);
         }
     }

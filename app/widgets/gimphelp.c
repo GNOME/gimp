@@ -327,7 +327,7 @@ gimp_help_browser (Gimp         *gimp,
       if (error)
         {
           gimp_message_literal (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
-				error->message);
+                                error->message);
           g_error_free (error);
         }
      }

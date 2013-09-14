@@ -132,7 +132,7 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
       if (! plug_in_rc_write (manager->plug_in_defs, pluginrc, &error))
         {
           gimp_message_literal (gimp,
-				NULL, GIMP_MESSAGE_ERROR, error->message);
+                                NULL, GIMP_MESSAGE_ERROR, error->message);
           g_clear_error (&error);
         }
 
@@ -302,7 +302,7 @@ gimp_plug_in_manager_read_pluginrc (GimpPlugInManager  *manager,
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
         gimp_message_literal (manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-			      error->message);
+                              error->message);
 
       g_clear_error (&error);
     }
@@ -464,7 +464,7 @@ gimp_plug_in_manager_run_extensions (GimpPlugInManager  *manager,
           if (error)
             {
               gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR,
-				    error->message);
+                                    error->message);
               g_clear_error (&error);
             }
         }
@@ -713,7 +713,7 @@ gimp_plug_in_manager_add_to_db (GimpPlugInManager   *manager,
       if (error)
         {
           gimp_message_literal (manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-			        error->message);
+                                error->message);
           g_error_free (error);
         }
     }

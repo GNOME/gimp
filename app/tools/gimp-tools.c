@@ -389,7 +389,7 @@ gimp_tools_save (Gimp     *gimp,
       if (! gimp_contexts_save (gimp, &error))
         {
           gimp_message_literal (gimp, NULL, GIMP_MESSAGE_WARNING,
-				error->message);
+                                error->message);
           g_clear_error (&error);
         }
 

@@ -319,7 +319,7 @@ convert_dialog_response (GtkWidget     *widget,
                                      progress, &error))
         {
           gimp_message_literal (dialog->image->gimp, G_OBJECT (dialog->dialog),
-				GIMP_MESSAGE_WARNING, error->message);
+                                GIMP_MESSAGE_WARNING, error->message);
           g_clear_error (&error);
 
           if (progress)

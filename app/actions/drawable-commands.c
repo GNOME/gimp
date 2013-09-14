@@ -105,8 +105,8 @@ drawable_levels_stretch_cmd_callback (GtkAction *action,
   if (! gimp_drawable_is_rgb (drawable))
     {
       gimp_message_literal (image->gimp,
-			    G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-			    _("White Balance operates only on RGB color layers."));
+                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                            _("White Balance operates only on RGB color layers."));
       return;
     }
 

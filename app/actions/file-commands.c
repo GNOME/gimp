@@ -268,8 +268,8 @@ file_save_cmd_callback (GtkAction *action,
       else
         {
           gimp_message_literal (image->gimp,
-				G_OBJECT (display), GIMP_MESSAGE_INFO,
-				_("No changes need to be saved"));
+                                G_OBJECT (display), GIMP_MESSAGE_INFO,
+                                _("No changes need to be saved"));
           saved = TRUE;
           break;
         }
@@ -400,9 +400,9 @@ file_revert_cmd_callback (GtkAction *action,
   if (! uri)
     {
       gimp_message_literal (image->gimp,
-			    G_OBJECT (display), GIMP_MESSAGE_ERROR,
-			    _("Revert failed. "
-			      "No file name associated with this image."));
+                            G_OBJECT (display), GIMP_MESSAGE_ERROR,
+                            _("Revert failed. "
+                              "No file name associated with this image."));
     }
   else if (dialog)
     {

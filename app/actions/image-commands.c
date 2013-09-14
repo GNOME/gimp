@@ -187,8 +187,8 @@ image_convert_base_type_cmd_callback (GtkAction *action,
                                      NULL, &error))
         {
           gimp_message_literal (image->gimp,
-				G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-				error->message);
+                                G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                                error->message);
           g_clear_error (&error);
           return;
         }
@@ -497,8 +497,8 @@ image_crop_to_selection_cmd_callback (GtkAction *action,
                              &x1, &y1, &x2, &y2))
     {
       gimp_message_literal (image->gimp,
-			    G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-			    _("Cannot crop because the current selection is empty."));
+                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                            _("Cannot crop because the current selection is empty."));
       return;
     }
 
@@ -524,8 +524,8 @@ image_crop_to_content_cmd_callback (GtkAction *action,
                                    &x1, &y1, &x2, &y2))
     {
       gimp_message_literal (image->gimp,
-			    G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-			    _("Cannot crop because the image has no content."));
+                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                            _("Cannot crop because the image has no content."));
       return;
     }
 

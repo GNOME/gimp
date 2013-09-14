@@ -700,8 +700,8 @@ gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
                                              size, ! force, &error))
         {
           gimp_message_literal (box->context->gimp,
-				G_OBJECT (progress), GIMP_MESSAGE_ERROR,
-				error->message);
+                                G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+                                error->message);
           g_clear_error (&error);
         }
     }

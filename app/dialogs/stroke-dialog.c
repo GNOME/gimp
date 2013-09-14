@@ -277,9 +277,9 @@ stroke_dialog_response (GtkWidget  *widget,
         if (! drawable)
           {
             gimp_message_literal (context->gimp, G_OBJECT (widget),
-				  GIMP_MESSAGE_WARNING,
-				  _("There is no active layer or channel "
-				    "to stroke to."));
+                                  GIMP_MESSAGE_WARNING,
+                                  _("There is no active layer or channel "
+                                    "to stroke to."));
             return;
           }
 

@@ -289,8 +289,8 @@ vectors_merge_visible_cmd_callback (GtkAction *action,
   if (! gimp_image_merge_visible_vectors (image, &error))
     {
       gimp_message_literal (image->gimp,
-			    G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-			    error->message);
+                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                            error->message);
       g_clear_error (&error);
       return;
     }
@@ -337,8 +337,8 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
   if (! procedure)
     {
       gimp_message_literal (image->gimp,
-			    G_OBJECT (widget), GIMP_MESSAGE_ERROR,
-			    "Selection to path procedure lookup failed.");
+                            G_OBJECT (widget), GIMP_MESSAGE_ERROR,
+                            "Selection to path procedure lookup failed.");
       return;
     }
 
@@ -362,8 +362,8 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
   if (error)
     {
       gimp_message_literal (image->gimp,
-			    G_OBJECT (widget), GIMP_MESSAGE_ERROR,
-			    error->message);
+                            G_OBJECT (widget), GIMP_MESSAGE_ERROR,
+                            error->message);
       g_error_free (error);
     }
 }
@@ -385,8 +385,8 @@ vectors_stroke_cmd_callback (GtkAction *action,
   if (! drawable)
     {
       gimp_message_literal (image->gimp,
-			    G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-			    _("There is no active layer or channel to stroke to."));
+                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                            _("There is no active layer or channel to stroke to."));
       return;
     }
 
@@ -419,8 +419,8 @@ vectors_stroke_last_vals_cmd_callback (GtkAction *action,
   if (! drawable)
     {
       gimp_message_literal (image->gimp,
-			    G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-			    _("There is no active layer or channel to stroke to."));
+                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                            _("There is no active layer or channel to stroke to."));
       return;
     }
 
@@ -436,7 +436,7 @@ vectors_stroke_last_vals_cmd_callback (GtkAction *action,
                           TRUE, NULL, &error))
     {
       gimp_message_literal (image->gimp, G_OBJECT (widget),
-			    GIMP_MESSAGE_WARNING, error->message);
+                            GIMP_MESSAGE_WARNING, error->message);
       g_clear_error (&error);
     }
   else

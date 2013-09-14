@@ -132,8 +132,8 @@ select_float_cmd_callback (GtkAction *action,
   else
     {
       gimp_message_literal (image->gimp,
-			    G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-			    error->message);
+                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                            error->message);
       g_clear_error (&error);
     }
 }
@@ -341,8 +341,8 @@ select_stroke_cmd_callback (GtkAction *action,
   if (! drawable)
     {
       gimp_message_literal (image->gimp,
-			    G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-			    _("There is no active layer or channel to stroke to."));
+                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                            _("There is no active layer or channel to stroke to."));
       return;
     }
 
@@ -374,8 +374,8 @@ select_stroke_last_vals_cmd_callback (GtkAction *action,
   if (! drawable)
     {
       gimp_message_literal (image->gimp,
-			    G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-			    _("There is no active layer or channel to stroke to."));
+                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                            _("There is no active layer or channel to stroke to."));
       return;
     }
 
@@ -390,8 +390,8 @@ select_stroke_last_vals_cmd_callback (GtkAction *action,
                           drawable, context, options, FALSE, TRUE, NULL, &error))
     {
       gimp_message_literal (image->gimp,
-			    G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-			    error->message);
+                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                            error->message);
       g_clear_error (&error);
     }
   else

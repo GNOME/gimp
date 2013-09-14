@@ -692,8 +692,8 @@ gimp_edit_selection_tool_update_motion (GimpEditSelectionTool *edit_select,
             {
               /* no region to float, abort safely */
               gimp_message_literal (display->gimp, G_OBJECT (display),
-				    GIMP_MESSAGE_WARNING,
-				    error->message);
+                                    GIMP_MESSAGE_WARNING,
+                                    error->message);
               g_clear_error (&error);
               gimp_draw_tool_resume (draw_tool);
 

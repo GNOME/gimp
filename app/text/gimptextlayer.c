@@ -625,8 +625,8 @@ gimp_text_layer_render (GimpTextLayer *layer)
   if (gimp_container_is_empty (image->gimp->fonts))
     {
       gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_ERROR,
-			    _("Due to lack of any fonts, "
-			      "text functionality is not available."));
+                            _("Due to lack of any fonts, "
+                              "text functionality is not available."));
       return FALSE;
     }
 

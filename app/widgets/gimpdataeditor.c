@@ -640,8 +640,8 @@ gimp_data_editor_save_dirty (GimpDataEditor *editor)
         {
           gimp_message_literal (gimp_data_factory_get_gimp (editor->data_factory),
                                 G_OBJECT (editor),
-				GIMP_MESSAGE_ERROR,
-				error->message);
+                                GIMP_MESSAGE_ERROR,
+                                error->message);
           g_clear_error (&error);
         }
     }

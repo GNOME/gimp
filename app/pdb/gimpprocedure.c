@@ -197,7 +197,7 @@ gimp_procedure_real_execute_async (GimpProcedure  *procedure,
   if (error)
     {
       gimp_message_literal (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
-			    error->message);
+                            error->message);
       g_error_free (error);
     }
 }

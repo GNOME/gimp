@@ -629,8 +629,8 @@ gimp_action_view_conflict_response (GtkWidget   *dialog,
                                         TRUE))
         {
           gimp_message_literal (confirm_data->manager->gimp, G_OBJECT (dialog),
-				GIMP_MESSAGE_ERROR,
-				_("Changing shortcut failed."));
+                                GIMP_MESSAGE_ERROR,
+                                _("Changing shortcut failed."));
         }
     }
 
@@ -786,15 +786,15 @@ gimp_action_view_accel_edited (GtkCellRendererAccel *accel,
       accel_key == GDK_KEY_KP_Space)
     {
       gimp_message_literal (view->manager->gimp,
-			    G_OBJECT (view), GIMP_MESSAGE_ERROR,
-			    _("Invalid shortcut."));
+                            G_OBJECT (view), GIMP_MESSAGE_ERROR,
+                            _("Invalid shortcut."));
     }
   else if (accel_key        == GDK_KEY_F1 ||
            action_accel_key == GDK_KEY_F1)
     {
       gimp_message_literal (view->manager->gimp,
-			    G_OBJECT (view), GIMP_MESSAGE_ERROR,
-			    _("F1 cannot be remapped."));
+                            G_OBJECT (view), GIMP_MESSAGE_ERROR,
+                            _("F1 cannot be remapped."));
     }
   else if (! gtk_accel_map_change_entry (accel_path,
                                          accel_key, accel_mask, FALSE))
@@ -858,8 +858,8 @@ gimp_action_view_accel_edited (GtkCellRendererAccel *accel,
           else
             {
               gimp_message_literal (view->manager->gimp,
-				    G_OBJECT (view), GIMP_MESSAGE_ERROR,
-				    _("Changing shortcut failed."));
+                                    G_OBJECT (view), GIMP_MESSAGE_ERROR,
+                                    _("Changing shortcut failed."));
             }
         }
     }
@@ -886,15 +886,15 @@ gimp_action_view_accel_cleared (GtkCellRendererAccel *accel,
   if (action_accel_key == GDK_KEY_F1)
     {
       gimp_message_literal (view->manager->gimp,
-			    G_OBJECT (view), GIMP_MESSAGE_ERROR,
-			    _("F1 cannot be remapped."));
+                            G_OBJECT (view), GIMP_MESSAGE_ERROR,
+                            _("F1 cannot be remapped."));
       return;
     }
 
   if (! gtk_accel_map_change_entry (accel_path, 0, 0, FALSE))
     {
       gimp_message_literal (view->manager->gimp,
-			    G_OBJECT (view), GIMP_MESSAGE_ERROR,
-			    _("Removing shortcut failed."));
+                            G_OBJECT (view), GIMP_MESSAGE_ERROR,
+                            _("Removing shortcut failed."));
     }
 }

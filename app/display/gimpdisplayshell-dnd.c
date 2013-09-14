@@ -323,8 +323,8 @@ gimp_display_shell_drop_svg (GtkWidget     *widget,
                                     NULL, &error))
     {
       gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
-			    GIMP_MESSAGE_ERROR,
-			    error->message);
+                            GIMP_MESSAGE_ERROR,
+                            error->message);
       g_clear_error (&error);
     }
   else

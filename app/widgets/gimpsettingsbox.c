@@ -489,7 +489,7 @@ gimp_settings_box_deserialize (GimpSettingsBox *box)
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
         gimp_message_literal (private->gimp, NULL, GIMP_MESSAGE_ERROR,
-			      error->message);
+                              error->message);
 
       g_clear_error (&error);
     }
@@ -515,7 +515,7 @@ gimp_settings_box_serialize (GimpSettingsBox *box)
                                        NULL, &error))
     {
       gimp_message_literal (private->gimp, NULL, GIMP_MESSAGE_ERROR,
-			    error->message);
+                            error->message);
       g_clear_error (&error);
     }
 

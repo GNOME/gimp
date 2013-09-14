@@ -309,8 +309,8 @@ plug_in_procedure_execute (GimpPlugInProcedure *procedure,
   if (error)
     {
       gimp_message_literal (gimp,
-			    G_OBJECT (display), GIMP_MESSAGE_ERROR,
-			    error->message);
+                            G_OBJECT (display), GIMP_MESSAGE_ERROR,
+                            error->message);
       g_error_free (error);
     }
   else

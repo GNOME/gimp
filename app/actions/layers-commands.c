@@ -236,8 +236,8 @@ layers_new_cmd_callback (GtkAction *action,
       if (! floating_sel_to_layer (floating_sel, &error))
         {
           gimp_message_literal (image->gimp,
-				G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-				error->message);
+                                G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                                error->message);
           g_clear_error (&error);
           return;
         }
@@ -289,7 +289,7 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
       if (! floating_sel_to_layer (floating_sel, &error))
         {
           gimp_message_literal (image->gimp, G_OBJECT (widget),
-				GIMP_MESSAGE_WARNING, error->message);
+                                GIMP_MESSAGE_WARNING, error->message);
           g_clear_error (&error);
           return;
         }
@@ -689,8 +689,8 @@ layers_crop_to_selection_cmd_callback (GtkAction *action,
                              &x1, &y1, &x2, &y2))
     {
       gimp_message_literal (image->gimp,
-			    G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-			    _("Cannot crop because the current selection is empty."));
+                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                            _("Cannot crop because the current selection is empty."));
       return;
     }
 
@@ -728,8 +728,8 @@ layers_crop_to_content_cmd_callback (GtkAction *action,
                                    &x1, &y1, &x2, &y2))
     {
       gimp_message_literal (image->gimp,
-			    G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-			    _("Cannot crop because the active layer has no content."));
+                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                            _("Cannot crop because the active layer has no content."));
       return;
     }
 
@@ -1076,8 +1076,8 @@ layers_edit_layer_response (GtkWidget          *widget,
           else
             {
               gimp_message_literal (dialog->image->gimp,
-				    G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-				    error->message);
+                                    G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                                    error->message);
               g_clear_error (&error);
 
               return;
@@ -1112,8 +1112,8 @@ layers_add_mask_response (GtkWidget          *widget,
           ! dialog->channel)
         {
           gimp_message_literal (image->gimp,
-				G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-				_("Please select a channel first"));
+                                G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                                _("Please select a channel first"));
           return;
         }
 
