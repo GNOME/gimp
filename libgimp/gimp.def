@@ -746,6 +746,7 @@ EXPORTS
 	gimp_selection_shrink
 	gimp_selection_translate
 	gimp_selection_value
+	gimp_shape_type_get_type
 	gimp_shear
 	gimp_shm_ID
 	gimp_shm_addr
