@@ -79,9 +79,9 @@ os.environ['RC'] = os.environ['WINDRES']
 
 #Exporting tool flags enviroment variables
 os.environ['LDFLAGS']  = '-L'+searchprefix+'/lib'
-os.environ['CFLAGS']   = '-mms-bitfields -march=i686 -I'+searchprefix+'/include -DLIBXML_STATIC '
+os.environ['CFLAGS']   = '-mms-bitfields -I'+searchprefix+'/include -DLIBXML_STATIC '
 os.environ['CPPFLAGS'] = '-I'+searchprefix+'/include'
-os.environ['CXXFLAGS'] = '-mms-bitfields -march=i686'
+os.environ['CXXFLAGS'] = '-mms-bitfields'
 
 os.environ['CFLAGS']  += os.environ.get('MINGW_CFLAGS', '')
 
@@ -225,7 +225,7 @@ module_extra_env.update (
  'libmng': 
 	{'PREFIX': prefix, 'CFLAGS': os.environ['CFLAGS'] + os.environ['LDFLAGS']},
  'ghostscript':
-	{'CFLAGS': os.environ['CFLAGS'].replace ("-march=i686", "").replace ("-O0", "").replace ("-mms-bitfields", ""), 'ac_cv_lib_pthread_pthread_create': 'no', 'CC': os.environ['CC'] + " -mms-bitfields"},
+	{'CFLAGS': os.environ['CFLAGS'].replace ("-O0", "").replace ("-mms-bitfields", ""), 'ac_cv_lib_pthread_pthread_create': 'no', 'CC': os.environ['CC'] + " -mms-bitfields"},
   'icu-native': {},
 
 # Ensure that gimp doesn't get the host machine's freetype-config
