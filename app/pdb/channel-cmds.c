@@ -370,7 +370,9 @@ register_channel_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-channel-new",
                                      "Create a new channel.",
-                                     "This procedure creates a new channel with the specified width, height, name, opacity and color. The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'gimp-image-insert-channel'. Other attributes, such as channel visibility, should be set with explicit procedure calls. The channel's contents are undefined initially.",
+                                     "This procedure creates a new channel with the specified width, height, name, opacity and color.\n"
+                                     "The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'gimp-image-insert-channel'. Other attributes, such as channel visibility, should be set with explicit procedure calls.\n"
+                                     "The channel's contents are undefined initially.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -431,7 +433,8 @@ register_channel_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-channel-new-from-component",
                                      "Create a new channel from a color component",
-                                     "This procedure creates a new channel from a color component. The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'gimp-image-insert-channel'. Other attributes, such as channel visibility, should be set with explicit procedure calls.",
+                                     "This procedure creates a new channel from a color component.\n"
+                                     "The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'gimp-image-insert-channel'. Other attributes, such as channel visibility, should be set with explicit procedure calls.",
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
                                      "2005",
@@ -474,7 +477,8 @@ register_channel_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-channel-copy",
                                      "Copy a channel.",
-                                     "This procedure copies the specified channel and returns the copy. The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'gimp-image-insert-channel'.",
+                                     "This procedure copies the specified channel and returns the copy.\n"
+                                     "The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'gimp-image-insert-channel'.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",

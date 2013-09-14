@@ -1928,7 +1928,8 @@ register_gradient_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gradient-segment-set-left-pos",
                                      "Sets the left endpoint position of the specified segment",
-                                     "This procedure sets the left endpoint position of the specified segment of the specified gradient. The final position will be between the position of the middle point to the left to the middle point of the current segement. This procedure returns the final position.",
+                                     "This procedure sets the left endpoint position of the specified segment of the specified gradient. The final position will be between the position of the middle point to the left to the middle point of the current segement.\n"
+                                     "This procedure returns the final position.",
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
                                      "2003",
@@ -2006,7 +2007,8 @@ register_gradient_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gradient-segment-set-middle-pos",
                                      "Sets the middle point position of the specified segment",
-                                     "This procedure sets the middle point position of the specified segment of the specified gradient. The final position will be between the two endpoints of the segment. This procedure returns the final position.",
+                                     "This procedure sets the middle point position of the specified segment of the specified gradient. The final position will be between the two endpoints of the segment.\n"
+                                     "This procedure returns the final position.",
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
                                      "2003",
@@ -2084,7 +2086,8 @@ register_gradient_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gradient-segment-set-right-pos",
                                      "Sets the right endpoint position of the specified segment",
-                                     "This procedure sets the right endpoint position of the specified segment of the specified gradient. The final position will be between the position of the middle point of the current segment and the middle point of the segment to the right. This procedure returns the final position.",
+                                     "This procedure sets the right endpoint position of the specified segment of the specified gradient. The final position will be between the position of the middle point of the current segment and the middle point of the segment to the right.\n"
+                                     "This procedure returns the final position.",
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
                                      "2003",

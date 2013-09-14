@@ -30,12 +30,15 @@ $builddir = "$main::builddir/app/pdb";
 use Text::Wrap qw(wrap);
 
 sub quotewrap {
-    my ($str, $indent) = @_;
+    my ($str, $indent, $subsequent_indent) = @_;
     my $leading = ' ' x $indent . '"';
+    my $subsequent_leading = ' ' x $subsequent_indent . '"';
     $Text::Wrap::columns = 1000;
-    $str = wrap($leading, $leading, $str);
+    $Text::Wrap::unexpand = 0;
+    $str = wrap($leading, $subsequent_leading, $str);
     $str =~ s/^\s*//s;
-    $str =~ s/(.)$/$1"/mg;
+    $str =~ s/(.)\n(.)/$1\\n"\n$2/g;
+    $str =~ s/(.)$/$1"/s;
     $str;
 }
 
@@ -598,8 +601,8 @@ sub generate {
                                "$procedure_name");
   gimp_procedure_set_static_strings (procedure,
                                      "$procedure_name",
-                                     @{[ &quotewrap($proc->{blurb}, 2) ]},
-                                     @{[ &quotewrap($help,  2) ]},
+                                     @{[ &quotewrap($proc->{blurb}, 2, 37) ]},
+                                     @{[ &quotewrap($help,  2, 37) ]},
                                      "$proc->{author}",
                                      "$proc->{copyright}",
                                      "$proc->{date}",

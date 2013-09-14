@@ -581,8 +581,8 @@ gimp_gradient_segment_get_left_pos (const gchar *name,
  * This procedure sets the left endpoint position of the specified
  * segment of the specified gradient. The final position will be
  * between the position of the middle point to the left to the middle
- * point of the current segement. This procedure returns the final
- * position.
+ * point of the current segement.
+ * This procedure returns the final position.
  *
  * Returns: TRUE on success.
  *
@@ -670,8 +670,8 @@ gimp_gradient_segment_get_middle_pos (const gchar *name,
  *
  * This procedure sets the middle point position of the specified
  * segment of the specified gradient. The final position will be
- * between the two endpoints of the segment. This procedure returns the
- * final position.
+ * between the two endpoints of the segment.
+ * This procedure returns the final position.
  *
  * Returns: TRUE on success.
  *
@@ -760,8 +760,8 @@ gimp_gradient_segment_get_right_pos (const gchar *name,
  * This procedure sets the right endpoint position of the specified
  * segment of the specified gradient. The final position will be
  * between the position of the middle point of the current segment and
- * the middle point of the segment to the right. This procedure returns
- * the final position.
+ * the middle point of the segment to the right.
+ * This procedure returns the final position.
  *
  * Returns: TRUE on success.
  *

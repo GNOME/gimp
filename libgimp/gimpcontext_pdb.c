@@ -1221,7 +1221,8 @@ gimp_context_get_antialias (void)
  * turned on, the edges of selected region will contain intermediate
  * values which give the appearance of a sharper, less pixelized edge.
  * This should be set as TRUE most of the time unless a binary-only
- * selection is wanted. This settings affects the following procedures:
+ * selection is wanted.
+ * This settings affects the following procedures:
  * gimp_image_select_color(), gimp_image_select_contiguous_color(),
  * gimp_image_select_round_rectangle(), gimp_image_select_ellipse(),
  * gimp_image_select_polygon(), gimp_image_select_item().
@@ -1288,11 +1289,12 @@ gimp_context_get_feather (void)
  * This procedure modifies the feather setting. If the feather option
  * is enabled, selections will be blurred before combining. The blur is
  * a gaussian blur; its radii can be controlled using
- * gimp_context_set_feather_radius(). This setting affects the
- * following procedures: gimp_image_select_color(),
- * gimp_image_select_contiguous_color(), gimp_image_select_rectangle(),
- * gimp_image_select_round_rectangle(), gimp_image_select_ellipse(),
- * gimp_image_select_polygon(), gimp_image_select_item().
+ * gimp_context_set_feather_radius().
+ * This setting affects the following procedures:
+ * gimp_image_select_color(), gimp_image_select_contiguous_color(),
+ * gimp_image_select_rectangle(), gimp_image_select_round_rectangle(),
+ * gimp_image_select_ellipse(), gimp_image_select_polygon(),
+ * gimp_image_select_item().
  *
  * Returns: TRUE on success.
  *
@@ -1365,8 +1367,8 @@ gimp_context_get_feather_radius (gdouble *feather_radius_x,
  *
  * Set the feather radius setting.
  *
- * This procedure modifies the feather radius setting. This setting
- * affects all procedures that are affected by
+ * This procedure modifies the feather radius setting.
+ * This setting affects all procedures that are affected by
  * gimp_context_set_feather().
  *
  * Returns: TRUE on success.
@@ -1436,7 +1438,8 @@ gimp_context_get_sample_merged (void)
  * the specified drawable is used ('sample-merged' is FALSE), or the
  * pixel data from the composite image ('sample-merged' is TRUE. This
  * is equivalent to sampling for colors after merging all visible
- * layers). This setting affects the following procedures:
+ * layers).
+ * This setting affects the following procedures:
  * gimp_image_select_color(), gimp_image_select_contiguous_color().
  *
  * Returns: TRUE on success.
@@ -1502,7 +1505,8 @@ gimp_context_get_sample_criterion (void)
  * operation depends on the colors of the pixels present in a drawable,
  * like when doing a seed fill, this setting controls how color
  * similarity is determined. SELECT_CRITERION_COMPOSITE is the default
- * value. This setting affects the following procedures:
+ * value.
+ * This setting affects the following procedures:
  * gimp_image_select_color(), gimp_image_select_contiguous_color().
  *
  * Returns: TRUE on success.
@@ -1569,9 +1573,9 @@ gimp_context_get_sample_threshold (void)
  * like when doing a seed fill, this setting controls what is
  * \"sufficiently close\" to be considered a similar color. If the
  * sample threshold has not been set explicitly, the default threshold
- * set in gimprc will be used. This setting affects the following
- * procedures: gimp_image_select_color(),
- * gimp_image_select_contiguous_color().
+ * set in gimprc will be used.
+ * This setting affects the following procedures:
+ * gimp_image_select_color(), gimp_image_select_contiguous_color().
  *
  * Returns: TRUE on success.
  *
@@ -1766,8 +1770,8 @@ gimp_context_get_interpolation (void)
  *
  * Set the interpolation type.
  *
- * This procedure modifies the interpolation setting. This setting
- * affects affects the following procedures:
+ * This procedure modifies the interpolation setting.
+ * This setting affects affects the following procedures:
  * gimp_item_transform_flip(), gimp_item_transform_perspective(),
  * gimp_item_transform_rotate(), gimp_item_transform_scale(),
  * gimp_item_transform_shear(), gimp_item_transform_2d(),
@@ -1835,8 +1839,8 @@ gimp_context_get_transform_direction (void)
  *
  * Set the transform direction.
  *
- * This procedure modifies the transform direction setting. This
- * setting affects affects the following procedures:
+ * This procedure modifies the transform direction setting.
+ * This setting affects affects the following procedures:
  * gimp_item_transform_flip(), gimp_item_transform_perspective(),
  * gimp_item_transform_rotate(), gimp_item_transform_scale(),
  * gimp_item_transform_shear(), gimp_item_transform_2d(),
@@ -1906,9 +1910,9 @@ gimp_context_get_transform_resize (void)
  * This procedure modifies the transform resize setting. When
  * transforming pixels, if the result of a transform operation has a
  * different size than the original area, this setting determines how
- * the resulting area is sized. This setting affects affects the
- * following procedures: gimp_item_transform_flip(),
- * gimp_item_transform_flip_simple(),
+ * the resulting area is sized.
+ * This setting affects affects the following procedures:
+ * gimp_item_transform_flip(), gimp_item_transform_flip_simple(),
  * gimp_item_transform_perspective(), gimp_item_transform_rotate(),
  * gimp_item_transform_rotate_simple(), gimp_item_transform_scale(),
  * gimp_item_transform_shear(), gimp_item_transform_2d(),

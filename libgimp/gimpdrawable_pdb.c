@@ -491,9 +491,9 @@ gimp_drawable_mask_bounds (gint32  drawable_ID,
  *
  * This procedure returns whether there is an intersection between the
  * drawable and the selection. Unlike gimp_drawable_mask_bounds(), the
- * intersection's bounds are returned as x, y, width, height. If there
- * is no selection this function returns TRUE and the returned bounds
- * are the extents of the whole drawable.
+ * intersection's bounds are returned as x, y, width, height.
+ * If there is no selection this function returns TRUE and the returned
+ * bounds are the extents of the whole drawable.
  *
  * Returns: TRUE if the returned area is not empty.
  *
@@ -748,11 +748,11 @@ gimp_drawable_set_pixel (gint32        drawable_ID,
  * is white, then white is used. Transparent fill only affects layers
  * with an alpha channel, in which case the alpha channel is set to
  * transparent. If the drawable has no alpha channel, it is filled to
- * white. No fill leaves the drawable's contents undefined. This
- * procedure is unlike gimp_edit_fill() or the bucket fill tool because
- * it fills regardless of a selection. Its main purpose is to fill a
- * newly created drawable before adding it to the image. This operation
- * cannot be undone.
+ * white. No fill leaves the drawable's contents undefined.
+ * This procedure is unlike gimp_edit_fill() or the bucket fill tool
+ * because it fills regardless of a selection. Its main purpose is to
+ * fill a newly created drawable before adding it to the image. This
+ * operation cannot be undone.
  *
  * Returns: TRUE on success.
  **/
