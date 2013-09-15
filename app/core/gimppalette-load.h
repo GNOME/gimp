@@ -34,26 +34,36 @@ typedef enum
 } GimpPaletteFileFormat;
 
 
+GList               * gimp_startup_palette_load        (GimpContext  *context,
+                                                        const gchar  *filename,
+                                                        GError      **error);
 GList               * gimp_palette_load               (GimpContext  *context,
                                                        const gchar  *filename,
+                                                       FILE         *file,
                                                        GError      **error);
 GList               * gimp_palette_load_act           (GimpContext  *context,
                                                        const gchar  *filename,
+                                                       FILE         *file,
                                                        GError      **error);
 GList               * gimp_palette_load_riff          (GimpContext  *context,
                                                        const gchar  *filename,
+                                                       FILE         *file,
                                                        GError      **error);
 GList               * gimp_palette_load_psp           (GimpContext  *context,
                                                        const gchar  *filename,
+                                                       FILE         *file,
                                                        GError      **error);
 GList               * gimp_palette_load_aco           (GimpContext  *context,
                                                        const gchar  *filename,
+                                                       FILE         *file,
                                                        GError      **error);
 GList               * gimp_palette_load_css           (GimpContext  *context,
                                                        const gchar  *filename,
+                                                       FILE         *file,
                                                        GError      **error);
 
-GimpPaletteFileFormat gimp_palette_load_detect_format (const gchar  *filename);
+GimpPaletteFileFormat gimp_palette_load_detect_format (const gchar  *filename,
+                                                       FILE *file);
 
 
 #endif /* __GIMP_PALETTE_H__ */
