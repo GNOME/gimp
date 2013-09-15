@@ -96,7 +96,7 @@ gimp_operation_grow_class_init (GimpOperationGrowClass *klass)
   g_object_class_install_property (object_class, PROP_RADIUS_X,
                                    g_param_spec_int ("radius-x",
                                                      "Radius X",
-                                                     "Grow radius in X diection",
+                                                     "Grow radius in X direction",
                                                      1, 2342, 1,
                                                      G_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
@@ -104,7 +104,7 @@ gimp_operation_grow_class_init (GimpOperationGrowClass *klass)
   g_object_class_install_property (object_class, PROP_RADIUS_Y,
                                    g_param_spec_int ("radius-y",
                                                      "Radius Y",
-                                                     "Grow radius in Y diection",
+                                                     "Grow radius in Y direction",
                                                      1, 2342, 1,
                                                      G_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
