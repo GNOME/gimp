@@ -754,7 +754,7 @@ gimp_select_by_shape_tool_real_select (GimpSelectByShapeTool *rect_sel_tool,
                                    options->feather_radius,
                                    TRUE);*/
         
-        gimp_channel_select_polygon  (channel,
+      gimp_channel_select_polygon  (channel,
                                    NULL,
                                    6,
                                    array1,
