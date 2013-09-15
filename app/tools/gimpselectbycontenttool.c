@@ -41,6 +41,7 @@
  */
 
 /* Livewire boundary implementation done by Laramie Leavitt */
+#if 0
 
 #include "config.h"
 
@@ -3270,3 +3271,5 @@ gimp_select_by_content_tool_get_points (GimpSelectByContentTool  *sbc,
   *points   = priv->points;
   *n_points = priv->n_points;
 }
+
+#endif
