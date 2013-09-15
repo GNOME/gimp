@@ -112,8 +112,8 @@
 #define INVALID_INDEX           (-1)
 #define NO_CLICK_TIME_AVAILABLE 0
 
-#define GET_PRIVATE(fst)  \
-   (G_TYPE_INSTANCE_GET_PRIVATE ((fst), \
+#define GET_PRIVATE(sbc)  \
+   (G_TYPE_INSTANCE_GET_PRIVATE ((sbc), \
     GIMP_TYPE_SELECT_BY_CONTENT_TOOL, GimpSelectByContentToolPrivate))
 
 
@@ -383,7 +383,7 @@ gimp_select_by_content_tool_register (GimpToolRegisterCallback  callback,
 }
 
 static void
-gimp_select_by_content_tool_class_init (GimpIscissorsToolClass *klass)
+gimp_select_by_content_tool_class_init (GimpSelectByContentToolClass *klass)
 {
   GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
@@ -478,7 +478,7 @@ static void
 gimp_select_by_content_tool_finalize (GObject *object)
 {
   GimpSelectByContentTool *sbc = GIMP_ISCISSORS_TOOL (object);
-  GimpFreeSelectToolPrivate *priv = GET_PRIVATE (sbc);
+  GimpSelectByContentToolPrivate *priv = GET_PRIVATE (sbc);
 
   g_queue_free (sbc->curves);
   
@@ -671,9 +671,9 @@ gimp_select_by_content_tool_button_press (GimpTool            *tool,
 
   gimp_draw_tool_pause (draw_tool);
 
-  if (gimp_select_by_content_is_point_grabbed (fst))
+  if (gimp_select_by_content_is_point_grabbed (sbc))
     {
-      gimp_select_by_content_prepare_for_move (fst);
+      gimp_select_by_content_prepare_for_move (sbc);
     }
   else
     {
@@ -2476,7 +2476,7 @@ gimp_select_by_content_tool_should_close (GimpSelectByContentTool *sbc,
       click_time_passed = time - priv->last_click_time;
 
       dist_from_last_point =
-        gimp_draw_tool_calc_distance_square (GIMP_DRAW_TOOL (fst),
+        gimp_draw_tool_calc_distance_square (GIMP_DRAW_TOOL (sbc),
                                              display,
                                              coords->x,
                                              coords->y,
@@ -2560,19 +2560,19 @@ gimp_select_by_content_tool_remove_last_segment (GimpSelectByContentTool *sbc)
 
   if (priv->n_segment_indices <= 0)
     {
-      gimp_tool_control (GIMP_TOOL (fst), GIMP_TOOL_ACTION_HALT,
-                         GIMP_TOOL (fst)->display);
+      gimp_tool_control (GIMP_TOOL (sbc), GIMP_TOOL_ACTION_HALT,
+                         GIMP_TOOL (sbc)->display);
     }
   else
     {
-      gimp_select_by_content_tool_revert_to_last_segment (fst);
+      gimp_select_by_content_tool_revert_to_last_segment (sbc);
     }
 
   gimp_draw_tool_resume (draw_tool);
 }
 
 static void
-gimp_free_select_tool_add_point (GimpSelectByContentTool *sbc,
+gimp_select_by_content_tool_add_point (GimpSelectByContentTool *sbc,
                                  gdouble             x,
                                  gdouble             y)
 {
@@ -2810,7 +2810,7 @@ gimp_select_by_content_tool_finish_line_segment (GimpSelectByContentTool *sbc)
 
 /**
  * gimp_free_select_tool_finish_free_segment:
- * @fst:
+ * @sbc:
  *
  * Finnishes off the creation of a free segment.
  **/
@@ -2848,14 +2848,14 @@ gimp_select_by_content_tool_revert_to_saved_state (GimpSelectByContentTool *sbc)
   /* Without a point grab we have no sensible information to fall back
    * on, bail out
    */
-  if (! gimp_free_select_tool_is_point_grabbed (sbc))
+  if (! gimp_select_by_content_tool_is_point_grabbed (sbc))
     {
       return;
     }
 
   if (priv->grabbed_segment_index > 0)
     {
-      gimp_free_select_tool_get_segment (fst,
+      gimp_select_by_content_tool_get_segment (sbc,
                                          &dest,
                                          &n_points,
                                          priv->grabbed_segment_index - 1,
@@ -2868,7 +2868,7 @@ gimp_select_by_content_tool_revert_to_saved_state (GimpSelectByContentTool *sbc)
 
   if (priv->grabbed_segment_index < priv->n_segment_indices - 1)
     {
-      gimp_free_select_tool_get_segment (sbc,
+      gimp_select_by_content_tool_get_segment (sbc,
                                          &dest,
                                          &n_points,
                                          priv->grabbed_segment_index,
@@ -2900,7 +2900,7 @@ gimp_select_by_content_tool_handle_click (GimpSelectByContentTool *sbc,
     {
       floating_sel_anchor (gimp_image_get_floating_selection (image));
 
-      gimp_tool_control (GIMP_TOOL (fst), GIMP_TOOL_ACTION_HALT, display);
+      gimp_tool_control (GIMP_TOOL (sbc), GIMP_TOOL_ACTION_HALT, display);
     }
   else
     {
@@ -3117,7 +3117,7 @@ gimp_select_by_content_tool_status_update (GimpSelectByContentTool *sbc,
                                      gboolean            proximity)
 {
   GimpTool                  *tool = GIMP_TOOL (sbc);
-  GimpFreeSelectToolPrivate *priv = GET_PRIVATE (sbc);
+  GimpSelectByContentToolPrivate *priv = GET_PRIVATE (sbc);
 
   gimp_tool_pop_status (tool, display);
 
@@ -3241,7 +3241,7 @@ gimp_select_by_content_tool_real_select (GimpSelectByContentTool *sbc,
                                    GimpDisplay        *display)
 {
   GimpSelectionOptions      *options = GIMP_SELECTION_TOOL_GET_OPTIONS (sbc);
-  GimpFreeSelectToolPrivate *priv    = GET_PRIVATE (sbc);
+  GimpSelectByContentToolPrivate *priv    = GET_PRIVATE (sbc);
   GimpImage                 *image   = gimp_display_get_image (display);
 
   gimp_channel_select_polygon (gimp_image_get_mask (image),
@@ -3255,7 +3255,7 @@ gimp_select_by_content_tool_real_select (GimpSelectByContentTool *sbc,
                                options->feather_radius,
                                TRUE);
 
-  gimp_tool_control (GIMP_TOOL (fst), GIMP_TOOL_ACTION_HALT, display);
+  gimp_tool_control (GIMP_TOOL (sbc), GIMP_TOOL_ACTION_HALT, display);
 }
 
 void
