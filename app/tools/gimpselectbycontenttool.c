@@ -782,12 +782,16 @@ gimp_select_by_content_tool_button_release (GimpTool              *tool,
                                     GimpDisplay           *display)
 {
   GimpSelectByContentTool *sbc = GIMP_SELECT_BY_CONTENT_TOOL (tool);
+  GimpSelectByContentToolPrivate *priv = GET_PRIVATE (sbc);
 
   gimp_tool_control_halt (tool->control);
 
   /* Make sure X didn't skip the button release event -- as it's known
    * to do
    */
+  
+  if (sbc->magnetic)
+  {
   if (sbc->state == WAITING)
     return;
 
@@ -869,6 +873,46 @@ gimp_select_by_content_tool_button_release (GimpTool              *tool,
     }
 
   sbc->state = WAITING;
+  }
+
+  else
+  {
+     gimp_draw_tool_pause (GIMP_DRAW_TOOL (sbc));
+
+  switch (release_type)
+    {
+    case GIMP_BUTTON_RELEASE_CLICK:
+    case GIMP_BUTTON_RELEASE_NO_MOTION:
+      /* If a click was made, we don't consider the polygon modified */
+      priv->polygon_modified = FALSE;
+
+      gimp_select_by_content_tool_handle_click (sbc,
+                                          coords,
+                                          time,
+                                          display);
+      break;
+
+    case GIMP_BUTTON_RELEASE_NORMAL:
+      gimp_select_by_content_tool_handle_normal_release (sbc,
+                                                   coords,
+                                                   display);
+      break;
+
+    case GIMP_BUTTON_RELEASE_CANCEL:
+      gimp_select_by_content_tool_handle_cancel (sbc);
+      break;
+
+    default:
+      break;
+    }
+
+  /* Reset */
+  priv->polygon_modified = FALSE;
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (sbc));
+  }
+
+  }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
@@ -886,7 +930,11 @@ gimp_select_by_content_tool_motion (GimpTool         *tool,
 {
   GimpSelectByContentTool *sbc = GIMP_SELECT_BY_CONTENT_TOOL (tool);
   GimpImage         *image     = gimp_display_get_image (display);
+  GimpSelectByContentToolPrivate *priv      = GET_PRIVATE (sbc);
+  GimpDrawTool              *draw_tool = GIMP_DRAW_TOOL (tool);
 
+  if (sbc->magnetic)
+  {
   if (sbc->state == NO_ACTION)
     return;
 
@@ -929,16 +977,44 @@ gimp_select_by_content_tool_motion (GimpTool         *tool,
     default:
       break;
     }
+   } 
+
+   else
+   {
+    priv->last_coords.x = coords->x;
+    priv->last_coords.y = coords->y;
+
+    gimp_select_by_content_tool_update_motion (sbc,
+                                       coords->x,
+                                       coords->y);
+   }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
+
+/**
+ * gimp_free_select_tool_draw:
+ * @draw_tool:
+ *
+ * Draw the line segments and handles around segment vertices, the
+ * latter if the they are in proximity to cursor.
+ **/
 
 static void
 gimp_select_by_content_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpSelectByContentTool    *sbc = GIMP_SELECT_BY_CONTENT_TOOL (draw_tool);
   GimpIscissorsOptions *options   = GIMP_SELECT_BY_CONTENT_TOOL_GET_OPTIONS (draw_tool);
-
+  GimpSelectByContentToolPrivate *priv                  = GET_PRIVATE (sbc);
+  GimpTool                  *tool                  = GIMP_TOOL (draw_tool);
+  GimpCanvasGroup           *stroke_group;
+  gboolean                   hovering_first_point  = FALSE;
+  gboolean                   handles_wants_to_show = FALSE;
+  GimpCoords                 coords                = { priv->last_coords.x,
+                                                       priv->last_coords.y,
+                                                       /* pad with 0 */ };
+  if (sbc->magnetic)
+  {  
   if (sbc->state == SEED_PLACEMENT)
     {
       /*  Draw the crosshairs target if we're placing a seed  */
@@ -1075,6 +1151,104 @@ gimp_select_by_content_tool_draw (GimpDrawTool *draw_tool)
                                  GIMP_TOOL_HANDLE_SIZE_CIRCLE,
                                  GIMP_HANDLE_ANCHOR_CENTER);
     }
+  }
+  
+  else
+  {
+     if (! tool->display)
+    return;
+
+  hovering_first_point =
+    gimp_select_by_content_tool_should_close (sbc,
+                                        tool->display,
+                                        NO_CLICK_TIME_AVAILABLE,
+                                        &coords);
+
+  stroke_group = gimp_draw_tool_add_stroke_group (draw_tool);
+
+  gimp_draw_tool_push_group (draw_tool, stroke_group);
+  gimp_draw_tool_add_lines (draw_tool,
+                            priv->points, priv->n_points,
+                            FALSE);
+  gimp_draw_tool_pop_group (draw_tool);
+
+  /* We always show the handle for the first point, even with button1
+   * down, since releasing the button on the first point will close
+   * the polygon, so it's a significant state which we must give
+   * feedback for
+   */
+  handles_wants_to_show = (hovering_first_point ||
+                           ! gimp_tool_control_is_active (tool->control));
+
+  if (handles_wants_to_show &&
+      ! priv->supress_handles)
+    {
+      gint i = 0;
+      gint n = 0;
+
+      /* If the first point is hovered while button1 is held down,
+       * only draw the first handle, the other handles are not
+       * relevant (see comment a few lines up)
+       */
+      if (gimp_tool_control_is_active (tool->control) && hovering_first_point)
+        n = MIN (priv->n_segment_indices, 1);
+      else
+        n = priv->n_segment_indices;
+
+      for (i = 0; i < n; i++)
+        {
+          GimpVector2   *point       = NULL;
+          gdouble        dist        = 0.0;
+          GimpHandleType handle_type = -1;
+
+          point = &priv->points[priv->segment_indices[i]];
+
+          dist  = gimp_draw_tool_calc_distance_square (draw_tool,
+                                                       tool->display,
+                                                       priv->last_coords.x,
+                                                       priv->last_coords.y,
+                                                       point->x,
+                                                       point->y);
+
+          /* If the cursor is over the point, fill, if it's just
+           * close, draw an outline
+           */
+          if (dist < POINT_GRAB_THRESHOLD_SQ)
+            handle_type = GIMP_HANDLE_FILLED_CIRCLE;
+          else if (dist < POINT_SHOW_THRESHOLD_SQ)
+            handle_type = GIMP_HANDLE_CIRCLE;
+
+          if (handle_type != -1)
+            {
+              GimpCanvasItem *item;
+
+              item = gimp_draw_tool_add_handle (draw_tool, handle_type,
+                                                point->x,
+                                                point->y,
+                                                GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                                                GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                                                GIMP_HANDLE_ANCHOR_CENTER);
+
+              if (dist < POINT_GRAB_THRESHOLD_SQ)
+                gimp_canvas_item_set_highlight (item, TRUE);
+            }
+        }
+    }
+
+  if (priv->show_pending_point)
+    {
+      GimpVector2 last = priv->points[priv->n_points - 1];
+
+      gimp_draw_tool_push_group (draw_tool, stroke_group);
+      gimp_draw_tool_add_line (draw_tool,
+                               last.x,
+                               last.y,
+                               priv->pending_point.x,
+                               priv->pending_point.y);
+      gimp_draw_tool_pop_group (draw_tool);
+    }
+
+  }  
 }
 
 
@@ -1114,11 +1288,14 @@ gimp_select_by_content_tool_oper_update (GimpTool         *tool,
                                  GimpDisplay      *display)
 {
   GimpSelectByContentTool *sbc = GIMP_SELECT_BY_CONTENT_TOOL (tool);
+  GimpSelectByContentToolPrivate *priv = GET_PRIVATE (sbc);
+  gboolean                   hovering_first_point;
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
                                                display);
   /* parent sets a message in the status bar, but it will be replaced here */
-
+  if (sbc->magnetic)
+  {
   if (mouse_over_vertex (sbc, coords->x, coords->y) > 1)
     {
       gchar *status;
@@ -1204,6 +1381,62 @@ gimp_select_by_content_tool_oper_update (GimpTool         *tool,
           break;
         }
     }
+  }
+  else 
+  {
+  gimp_select_by_content_tool_handle_segment_selection (sbc,
+                                                  display,
+                                                  coords);
+  hovering_first_point =
+    gimp_select_by_content_tool_should_close (sbc,
+                                        display,
+                                        NO_CLICK_TIME_AVAILABLE,
+                                        coords);
+
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+  priv->last_coords.x = coords->x;
+  priv->last_coords.y = coords->y;
+
+  if (priv->n_points == 0 ||
+      (gimp_select_by_content_tool_is_point_grabbed (sbc) &&
+       ! hovering_first_point) ||
+      ! proximity)
+    {
+      priv->show_pending_point = FALSE;
+    }
+  else
+    {
+      priv->show_pending_point = TRUE;
+
+      if (hovering_first_point)
+        {
+          priv->pending_point = priv->points[0];
+        }
+      else
+        {
+          priv->pending_point.x = coords->x;
+          priv->pending_point.y = coords->y;
+
+          if (priv->constrain_angle && priv->n_points > 0)
+            {
+              gdouble start_point_x;
+              gdouble start_point_y;
+
+              gimp_select_by_content_tool_get_last_point (sbc,
+                                                    &start_point_x,
+                                                    &start_point_y);
+
+              gimp_constrain_line (start_point_x, start_point_y,
+                                   &priv->pending_point.x,
+                                   &priv->pending_point.y,
+                                   GIMP_CONSTRAIN_LINE_15_DEGREES);
+            }
+        }
+    }
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool)); 
+  }  
 }
 
 static void
@@ -1316,20 +1549,34 @@ gimp_select_by_content_tool_key_press (GimpTool    *tool,
     case GDK_KEY_Return:
     case GDK_KEY_KP_Enter:
     case GDK_KEY_ISO_Enter:
+    if (sbc->magnetic)
+    {
       if (sbc->connected && sbc->mask)
         {
           gimp_select_by_content_tool_apply (sbc, display);
           return TRUE;
         }
       return FALSE;
+    }
+
+    else
+    {
+      gimp_select_by_content_tool_commit (sbc, display);
+      return TRUE; 
+    }  
 
     case GDK_KEY_Escape:
       gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
       return TRUE;
 
+    case GDK_KEY_BackSpace:
+      gimp_select_by_content_tool_remove_last_segment (sbc);
+      return TRUE;  
+
     default:
       return FALSE;
     }
+    return FALSE;
 }
 
 static void
@@ -2908,69 +3155,6 @@ gimp_select_by_content_tool_status_update (GimpSelectByContentTool *sbc,
     }
 }
 
-static void
-gimp_select_by_content_tool_oper_update (GimpTool         *tool,
-                                   const GimpCoords *coords,
-                                   GdkModifierType   state,
-                                   gboolean          proximity,
-                                   GimpDisplay      *display)
-{
-  GimpSelectByContentTool        *sbc  = GIMP_SELECT_BY_CONTENT_TOOL (tool);
-  GimpSelectByContentToolPrivate *priv = GET_PRIVATE (sbc);
-  gboolean                   hovering_first_point;
-
-  gimp_select_by_content_tool_handle_segment_selection (sbc,
-                                                  display,
-                                                  coords);
-  hovering_first_point =
-    gimp_select_by_content_tool_should_close (sbc,
-                                        display,
-                                        NO_CLICK_TIME_AVAILABLE,
-                                        coords);
-
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
-
-  priv->last_coords.x = coords->x;
-  priv->last_coords.y = coords->y;
-
-  if (priv->n_points == 0 ||
-      (gimp_select_by_content_tool_is_point_grabbed (sbc) &&
-       ! hovering_first_point) ||
-      ! proximity)
-    {
-      priv->show_pending_point = FALSE;
-    }
-  else
-    {
-      priv->show_pending_point = TRUE;
-
-      if (hovering_first_point)
-        {
-          priv->pending_point = priv->points[0];
-        }
-      else
-        {
-          priv->pending_point.x = coords->x;
-          priv->pending_point.y = coords->y;
-
-          if (priv->constrain_angle && priv->n_points > 0)
-            {
-              gdouble start_point_x;
-              gdouble start_point_y;
-
-              gimp_select_by_content_tool_get_last_point (sbc,
-                                                    &start_point_x,
-                                                    &start_point_y);
-
-              gimp_constrain_line (start_point_x, start_point_y,
-                                   &priv->pending_point.x,
-                                   &priv->pending_point.y,
-                                   GIMP_CONSTRAIN_LINE_15_DEGREES);
-            }
-        }
-    }
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
   if (tool->display == NULL)
     {
@@ -2984,107 +3168,6 @@ gimp_select_by_content_tool_oper_update (GimpTool         *tool,
     {
       gimp_select_by_content_tool_status_update (sbc, display, coords, proximity);
     }
-}
-
-static void
-gimp_select_by_content_tool_button_release (GimpTool              *tool,
-                                      const GimpCoords      *coords,
-                                      guint32                time,
-                                      GdkModifierType        state,
-                                      GimpButtonReleaseType  release_type,
-                                      GimpDisplay           *display)
-{
-  GimpSelectByContentTool        *sbc = GIMP_FREE_SELECT_TOOL (tool);
-  GimpSelectByContentToolPrivate *priv = GET_PRIVATE (sbc);
-
-  gimp_tool_control_halt (tool->control);
-
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (sbc));
-
-  switch (release_type)
-    {
-    case GIMP_BUTTON_RELEASE_CLICK:
-    case GIMP_BUTTON_RELEASE_NO_MOTION:
-      /* If a click was made, we don't consider the polygon modified */
-      priv->polygon_modified = FALSE;
-
-      gimp_select_by_content_tool_handle_click (sbc,
-                                          coords,
-                                          time,
-                                          display);
-      break;
-
-    case GIMP_BUTTON_RELEASE_NORMAL:
-      gimp_select_by_content_tool_handle_normal_release (sbc,
-                                                   coords,
-                                                   display);
-      break;
-
-    case GIMP_BUTTON_RELEASE_CANCEL:
-      gimp_select_by_content_tool_handle_cancel (sbc);
-      break;
-
-    default:
-      break;
-    }
-
-  /* Reset */
-  priv->polygon_modified = FALSE;
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (sbc));
-}
-
-static void
-gimp_select_by_content_tool_motion (GimpTool         *tool,
-                              const GimpCoords *coords,
-                              guint32           time,
-                              GdkModifierType   state,
-                              GimpDisplay      *display)
-{
-  GimpSelectByContentTool        *sbc       = GIMP_SELECT_BY_CONTENT_TOOL (tool);
-  GimpSelectByContentToolPrivate *priv      = GET_PRIVATE (sbc);
-  GimpDrawTool              *draw_tool = GIMP_DRAW_TOOL (tool);
-
-  gimp_draw_tool_pause (draw_tool);
-
-  priv->last_coords.x = coords->x;
-  priv->last_coords.y = coords->y;
-
-  gimp_select_by_content_tool_update_motion (sbc,
-                                       coords->x,
-                                       coords->y);
-
-  gimp_draw_tool_resume (draw_tool);
-}
-
-static gboolean
-gimp_select_by_content_tool_key_press (GimpTool    *tool,
-                                 GdkEventKey *kevent,
-                                 GimpDisplay *display)
-{
-  GimpSelectByContentTool *sbc = GIMP_SELECT_BY_CONTENT_TOOL (tool);
-
-  switch (kevent->keyval)
-    {
-    case GDK_KEY_BackSpace:
-      gimp_select_by_content_tool_remove_last_segment (sbc);
-      return TRUE;
-
-    case GDK_KEY_Return:
-    case GDK_KEY_KP_Enter:
-    case GDK_KEY_ISO_Enter:
-      gimp_select_by_content_tool_commit (sbc, display);
-      return TRUE;
-
-    case GDK_KEY_Escape:
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
-      return TRUE;
-
-    default:
-      break;
-    }
-
-  return FALSE;
 }
 
 static void
@@ -3151,119 +3234,6 @@ gimp_select_by_content_tool_active_modifier_key (GimpTool        *tool,
                                                        press,
                                                        state,
                                                        display);
-}
-
-/**
- * gimp_free_select_tool_draw:
- * @draw_tool:
- *
- * Draw the line segments and handles around segment vertices, the
- * latter if the they are in proximity to cursor.
- **/
-static void
-gimp_select_by_content_tool_draw (GimpDrawTool *draw_tool)
-{
-  GimpSelectByContentTool        *sbc                   = GIMP_SELECT_BY_CONTENT_TOOL (draw_tool);
-  GimpSelectByContentToolPrivate *priv                  = GET_PRIVATE (sbc);
-  GimpTool                  *tool                  = GIMP_TOOL (draw_tool);
-  GimpCanvasGroup           *stroke_group;
-  gboolean                   hovering_first_point  = FALSE;
-  gboolean                   handles_wants_to_show = FALSE;
-  GimpCoords                 coords                = { priv->last_coords.x,
-                                                       priv->last_coords.y,
-                                                       /* pad with 0 */ };
-  if (! tool->display)
-    return;
-
-  hovering_first_point =
-    gimp_select_by_content_tool_should_close (sbc,
-                                        tool->display,
-                                        NO_CLICK_TIME_AVAILABLE,
-                                        &coords);
-
-  stroke_group = gimp_draw_tool_add_stroke_group (draw_tool);
-
-  gimp_draw_tool_push_group (draw_tool, stroke_group);
-  gimp_draw_tool_add_lines (draw_tool,
-                            priv->points, priv->n_points,
-                            FALSE);
-  gimp_draw_tool_pop_group (draw_tool);
-
-  /* We always show the handle for the first point, even with button1
-   * down, since releasing the button on the first point will close
-   * the polygon, so it's a significant state which we must give
-   * feedback for
-   */
-  handles_wants_to_show = (hovering_first_point ||
-                           ! gimp_tool_control_is_active (tool->control));
-
-  if (handles_wants_to_show &&
-      ! priv->supress_handles)
-    {
-      gint i = 0;
-      gint n = 0;
-
-      /* If the first point is hovered while button1 is held down,
-       * only draw the first handle, the other handles are not
-       * relevant (see comment a few lines up)
-       */
-      if (gimp_tool_control_is_active (tool->control) && hovering_first_point)
-        n = MIN (priv->n_segment_indices, 1);
-      else
-        n = priv->n_segment_indices;
-
-      for (i = 0; i < n; i++)
-        {
-          GimpVector2   *point       = NULL;
-          gdouble        dist        = 0.0;
-          GimpHandleType handle_type = -1;
-
-          point = &priv->points[priv->segment_indices[i]];
-
-          dist  = gimp_draw_tool_calc_distance_square (draw_tool,
-                                                       tool->display,
-                                                       priv->last_coords.x,
-                                                       priv->last_coords.y,
-                                                       point->x,
-                                                       point->y);
-
-          /* If the cursor is over the point, fill, if it's just
-           * close, draw an outline
-           */
-          if (dist < POINT_GRAB_THRESHOLD_SQ)
-            handle_type = GIMP_HANDLE_FILLED_CIRCLE;
-          else if (dist < POINT_SHOW_THRESHOLD_SQ)
-            handle_type = GIMP_HANDLE_CIRCLE;
-
-          if (handle_type != -1)
-            {
-              GimpCanvasItem *item;
-
-              item = gimp_draw_tool_add_handle (draw_tool, handle_type,
-                                                point->x,
-                                                point->y,
-                                                GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                                GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                                GIMP_HANDLE_ANCHOR_CENTER);
-
-              if (dist < POINT_GRAB_THRESHOLD_SQ)
-                gimp_canvas_item_set_highlight (item, TRUE);
-            }
-        }
-    }
-
-  if (priv->show_pending_point)
-    {
-      GimpVector2 last = priv->points[priv->n_points - 1];
-
-      gimp_draw_tool_push_group (draw_tool, stroke_group);
-      gimp_draw_tool_add_line (draw_tool,
-                               last.x,
-                               last.y,
-                               priv->pending_point.x,
-                               priv->pending_point.y);
-      gimp_draw_tool_pop_group (draw_tool);
-    }
 }
 
 static void
