@@ -58,24 +58,29 @@ struct _GimpPickableButtonPrivate
 };
 
 
-static void     gimp_pickable_button_constructed   (GObject      *object);
-static void     gimp_pickable_button_finalize      (GObject      *object);
-static void     gimp_pickable_button_set_property  (GObject      *object,
-                                                    guint         property_id,
-                                                    const GValue *value,
-                                                    GParamSpec   *pspec);
-static void     gimp_pickable_button_get_property  (GObject      *object,
-                                                    guint         property_id,
-                                                    GValue       *value,
-                                                    GParamSpec   *pspec);
+static void     gimp_pickable_button_constructed   (GObject            *object);
+static void     gimp_pickable_button_dispose       (GObject            *object);
+static void     gimp_pickable_button_finalize      (GObject            *object);
+static void     gimp_pickable_button_set_property  (GObject            *object,
+                                                    guint               property_id,
+                                                    const GValue       *value,
+                                                    GParamSpec         *pspec);
+static void     gimp_pickable_button_get_property  (GObject            *object,
+                                                    guint               property_id,
+                                                    GValue             *value,
+                                                    GParamSpec         *pspec);
 
-static void     gimp_pickable_button_clicked       (GtkButton    *button);
+static void     gimp_pickable_button_clicked       (GtkButton          *button);
 
-static void     gimp_pickable_button_drop_pickable (GtkWidget    *widget,
-                                                    gint          x,
-                                                    gint          y,
-                                                    GimpViewable *viewable,
-                                                    gpointer      data);
+static void     gimp_pickable_button_drop_pickable (GtkWidget          *widget,
+                                                    gint                x,
+                                                    gint                y,
+                                                    GimpViewable       *viewable,
+                                                    gpointer            data);
+static void     gimp_pickable_button_notify_buffer (GimpPickable       *pickable,
+                                                    const GParamSpec   *pspec,
+                                                    GimpPickableButton *button);
+
 
 G_DEFINE_TYPE (GimpPickableButton, gimp_pickable_button, GIMP_TYPE_BUTTON)
 
@@ -89,6 +94,7 @@ gimp_pickable_button_class_init (GimpPickableButtonClass *klass)
   GtkButtonClass *button_class = GTK_BUTTON_CLASS (klass);
 
   object_class->constructed  = gimp_pickable_button_constructed;
+  object_class->dispose      = gimp_pickable_button_dispose;
   object_class->finalize     = gimp_pickable_button_finalize;
   object_class->get_property = gimp_pickable_button_get_property;
   object_class->set_property = gimp_pickable_button_set_property;
@@ -154,6 +160,16 @@ gimp_pickable_button_constructed (GObject *object)
 }
 
 static void
+gimp_pickable_button_dispose (GObject *object)
+{
+  GimpPickableButton *button = GIMP_PICKABLE_BUTTON (object);
+
+  gimp_pickable_button_set_pickable (button, NULL);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
 gimp_pickable_button_finalize (GObject *object)
 {
   GimpPickableButton *button = GIMP_PICKABLE_BUTTON (object);
@@ -162,12 +178,6 @@ gimp_pickable_button_finalize (GObject *object)
     {
       g_object_unref (button->private->context);
       button->private->context = NULL;
-    }
-
-  if (button->private->pickable)
-    {
-      g_object_unref (button->private->pickable);
-      button->private->pickable = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -237,6 +247,19 @@ gimp_pickable_button_drop_pickable (GtkWidget    *widget,
                                      GIMP_PICKABLE (viewable));
 }
 
+static void
+gimp_pickable_button_notify_buffer (GimpPickable       *pickable,
+                                    const GParamSpec   *pspec,
+                                    GimpPickableButton *button)
+{
+  GeglBuffer *buffer = gimp_pickable_get_buffer (pickable);
+
+  if (buffer)
+    g_object_notify (G_OBJECT (button), "pickable");
+  else
+    gimp_pickable_button_set_pickable (button, NULL);
+}
+
 
 /*  public functions  */
 
@@ -281,12 +304,24 @@ gimp_pickable_button_set_pickable (GimpPickableButton *button,
   if (pickable != button->private->pickable)
     {
       if (button->private->pickable)
-        g_object_unref (button->private->pickable);
+        {
+          g_signal_handlers_disconnect_by_func (button->private->pickable,
+                                                gimp_pickable_button_notify_buffer,
+                                                button);
+
+          g_object_unref (button->private->pickable);
+        }
 
       button->private->pickable = pickable;
 
       if (button->private->pickable)
-        g_object_ref (button->private->pickable);
+        {
+          g_object_ref (button->private->pickable);
+
+          g_signal_connect (button->private->pickable, "notify::buffer",
+                            G_CALLBACK (gimp_pickable_button_notify_buffer),
+                            button);
+        }
 
       gimp_view_set_viewable (GIMP_VIEW (button->private->view),
                               GIMP_VIEWABLE (pickable));
