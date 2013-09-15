@@ -409,6 +409,8 @@ gimp_image_window_constructed (GObject *object)
   gtk_notebook_set_scrollable (GTK_NOTEBOOK (private->notebook), TRUE);
   gtk_notebook_set_show_border (GTK_NOTEBOOK (private->notebook), FALSE);
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), FALSE);
+  gtk_notebook_set_tab_pos (GTK_NOTEBOOK (private->notebook), GTK_POS_TOP);
+
   gtk_paned_pack1 (GTK_PANED (private->right_hpane), private->notebook,
                    TRUE, TRUE);
   g_signal_connect (private->notebook, "switch-page",
@@ -435,6 +437,9 @@ gimp_image_window_constructed (GObject *object)
                            G_CALLBACK (gimp_image_window_config_notify),
                            window, G_CONNECT_SWAPPED);
   g_signal_connect_object (config, "notify::hide-docks",
+                           G_CALLBACK (gimp_image_window_config_notify),
+                           window, G_CONNECT_SWAPPED);
+  g_signal_connect_object (config, "notify::tabs-position",
                            G_CALLBACK (gimp_image_window_config_notify),
                            window, G_CONNECT_SWAPPED);
 
@@ -1524,12 +1529,14 @@ gimp_image_window_update_tabs (GimpImageWindow  *window)
 {
   GimpImageWindowPrivate *private;
   GimpGuiConfig          *config;
+  GtkPositionType         position;
 
   g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
 
   private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
   config = GIMP_GUI_CONFIG (private->gimp->config);
 
+  /* Tab visibility. */
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook),
                               config->single_window_mode &&
                               ! config->hide_docks       &&
@@ -1537,6 +1544,28 @@ gimp_image_window_update_tabs (GimpImageWindow  *window)
                                 private->active_shell->display &&
                                 gimp_display_get_image (private->active_shell->display)) ||
                                g_list_length (private->shells) > 1));
+
+  /* Tab position. */
+  switch (config->tabs_position)
+    {
+    case GIMP_POSITION_TOP:
+      position = GTK_POS_TOP;
+      break;
+    case GIMP_POSITION_BOTTOM:
+      position = GTK_POS_BOTTOM;
+      break;
+    case GIMP_POSITION_LEFT:
+      position = GTK_POS_LEFT;
+      break;
+    case GIMP_POSITION_RIGHT:
+      position = GTK_POS_RIGHT;
+      break;
+    default:
+      /* If we have any strange value, just reset to default. */
+      position = GTK_POS_TOP;
+      break;
+    }
+  gtk_notebook_set_tab_pos (GTK_NOTEBOOK (private->notebook), position);
 }
 
 /*  private functions  */
@@ -1567,14 +1596,20 @@ gimp_image_window_config_notify (GimpImageWindow *window,
 
   /* Dock column visibility */
   if (strcmp (pspec->name, "single-window-mode") == 0 ||
-      strcmp (pspec->name, "hide-docks")         == 0)
+      strcmp (pspec->name, "hide-docks")         == 0 ||
+      strcmp (pspec->name, "tabs-position")      == 0)
     {
-      gboolean show_docks = (config->single_window_mode &&
-                             ! config->hide_docks);
+      if (strcmp (pspec->name, "single-window-mode") == 0 ||
+          strcmp (pspec->name, "hide-docks")         == 0)
+        {
+          gboolean show_docks = (config->single_window_mode &&
+                                 ! config->hide_docks);
 
-      gimp_image_window_keep_canvas_pos (window);
-      gtk_widget_set_visible (private->left_docks, show_docks);
-      gtk_widget_set_visible (private->right_docks, show_docks);
+          gimp_image_window_keep_canvas_pos (window);
+          gtk_widget_set_visible (private->left_docks, show_docks);
+          gtk_widget_set_visible (private->right_docks, show_docks);
+        }
+
       gimp_image_window_update_tabs (window);
     }
 

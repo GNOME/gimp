@@ -110,7 +110,10 @@ static const GimpActionEntry windows_actions[] =
     NC_("windows-action", "Previous Image"), "<alt><shift>Tab",
     NC_("windows-action", "Switch to the previous image"),
     G_CALLBACK (windows_show_display_previous_cmd_callback),
-    NULL }
+    NULL },
+
+  { "windows-tab-position",        NULL, NC_("windows-action",
+                                             "_Tabs Position")   },
 };
 
 static const GimpToggleActionEntry windows_toggle_actions[] =
@@ -130,6 +133,28 @@ static const GimpToggleActionEntry windows_toggle_actions[] =
     GIMP_HELP_WINDOWS_USE_SINGLE_WINDOW_MODE }
 };
 
+static const GimpRadioActionEntry windows_tabs_position_actions[] =
+{
+  { "windows-tabs-position-top", GTK_STOCK_GOTO_TOP,
+    NC_("windows-tabs-position-action", "_Top"), NULL,
+    NC_("windows-tabs-position-action", "Position the tabs to the top"),
+    GIMP_POSITION_TOP, GIMP_HELP_WINDOWS_TABS_POSITION_TOP },
+
+  { "windows-tabs-position-bottom", GTK_STOCK_GOTO_BOTTOM,
+    NC_("windows-tabs-position-action", "_Bottom"), NULL,
+    NC_("windows-tabs-position-action", "Position the tabs to the bottom"),
+    GIMP_POSITION_BOTTOM, GIMP_HELP_WINDOWS_TABS_POSITION_BOTTOM },
+
+  { "windows-tabs-position-left", GTK_STOCK_GOTO_FIRST,
+    NC_("windows-tabs-position-action", "_Left"), NULL,
+    NC_("windows-tabs-position-action", "Position the tabs to the left"),
+    GIMP_POSITION_LEFT, GIMP_HELP_WINDOWS_TABS_POSITION_LEFT },
+
+  { "windows-tabs-position-right", GTK_STOCK_GOTO_LAST,
+    NC_("windows-tabs-position-action", "_Right"), NULL,
+    NC_("windows-tabs-position-action", "Position the tabs to the right"),
+    GIMP_POSITION_RIGHT, GIMP_HELP_WINDOWS_TABS_POSITION_RIGHT },
+};
 
 void
 windows_actions_setup (GimpActionGroup *group)
@@ -143,6 +168,12 @@ windows_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_toggle_actions (group, "windows-action",
                                         windows_toggle_actions,
                                         G_N_ELEMENTS (windows_toggle_actions));
+
+  gimp_action_group_add_radio_actions (group, "windows-tabs-position-action",
+                                       windows_tabs_position_actions,
+                                       G_N_ELEMENTS (windows_tabs_position_actions),
+                                       NULL, 0,
+                                       G_CALLBACK (windows_set_tabs_position_cmd_callback));
 
   gimp_action_group_set_action_hide_empty (group, "windows-docks-menu", FALSE);
 
@@ -210,12 +241,34 @@ windows_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
   GimpGuiConfig *config = GIMP_GUI_CONFIG (group->gimp->config);
+  const gchar   *action = NULL;
 
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
   SET_ACTIVE ("windows-use-single-window-mode", config->single_window_mode);
   SET_ACTIVE ("windows-hide-docks", config->hide_docks);
+
+  switch (config->tabs_position)
+    {
+    case GIMP_POSITION_TOP:
+      action = "windows-tabs-position-top";
+      break;
+    case GIMP_POSITION_BOTTOM:
+      action = "windows-tabs-position-bottom";
+      break;
+    case GIMP_POSITION_LEFT:
+      action = "windows-tabs-position-left";
+      break;
+    case GIMP_POSITION_RIGHT:
+      action = "windows-tabs-position-right";
+      break;
+    default:
+      action = "windows-tabs-position-top";
+      break;
+    }
+
+  gimp_action_group_set_action_active (group, action, TRUE);
 
 #undef SET_ACTIVE
 }

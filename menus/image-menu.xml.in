@@ -733,6 +733,12 @@
       </placeholder>
       <separator />
       <menuitem action="windows-hide-docks" />
+      <menu action="windows-tab-position" name="Position">
+        <menuitem action="windows-tabs-position-top" />
+        <menuitem action="windows-tabs-position-bottom" />
+        <menuitem action="windows-tabs-position-left" />
+        <menuitem action="windows-tabs-position-right" />
+      </menu>
       <menuitem action="windows-use-single-window-mode" />
       <separator />
     </menu>

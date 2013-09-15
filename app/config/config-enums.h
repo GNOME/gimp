@@ -112,5 +112,16 @@ typedef enum
   GIMP_HANDEDNESS_RIGHT /*< desc="Right-handed" >*/
 } GimpHandedness;
 
+#define GIMP_TYPE_POSITION (gimp_position_get_type ())
+
+GType gimp_position_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_POSITION_TOP,    /*< desc="Top" >*/
+  GIMP_POSITION_BOTTOM, /*< desc="Bottom" >*/
+  GIMP_POSITION_LEFT,   /*< desc="Left"  >*/
+  GIMP_POSITION_RIGHT   /*< desc="Right" >*/
+} GimpPosition;
 
 #endif /* __CONFIG_ENUMS_H__ */

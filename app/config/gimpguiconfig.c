@@ -74,6 +74,7 @@ enum
 
   PROP_HIDE_DOCKS,
   PROP_SINGLE_WINDOW_MODE,
+  PROP_TABS_POSITION,
   PROP_LAST_TIP_SHOWN,
 
   /* ignored, only for backward compatibility: */
@@ -266,6 +267,11 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT |
                                                          GIMP_PARAM_STATIC_STRINGS));
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TABS_POSITION,
+                                 "tabs-position", WINDOWS_TABS_POSITION,
+                                 GIMP_TYPE_POSITION,
+                                 GIMP_POSITION_TOP,
+                                 GIMP_PARAM_STATIC_STRINGS);
   g_object_class_install_property (object_class, PROP_LAST_TIP_SHOWN,
                                    g_param_spec_int ("last-tip-shown",
                                                      NULL, NULL,
@@ -445,6 +451,9 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_SINGLE_WINDOW_MODE:
       gui_config->single_window_mode = g_value_get_boolean (value);
       break;
+    case PROP_TABS_POSITION:
+      gui_config->tabs_position = g_value_get_enum (value);
+      break;
     case PROP_LAST_TIP_SHOWN:
       gui_config->last_tip_shown = g_value_get_int (value);
       break;
@@ -566,6 +575,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_SINGLE_WINDOW_MODE:
       g_value_set_boolean (value, gui_config->single_window_mode);
+      break;
+    case PROP_TABS_POSITION:
+      g_value_set_enum (value, gui_config->tabs_position);
       break;
     case PROP_LAST_TIP_SHOWN:
       g_value_set_int (value, gui_config->last_tip_shown);

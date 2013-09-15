@@ -250,6 +250,39 @@ gimp_handedness_get_type (void)
   return type;
 }
 
+GType
+gimp_position_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_POSITION_TOP, "GIMP_POSITION_TOP", "top" },
+    { GIMP_POSITION_BOTTOM, "GIMP_POSITION_BOTTOM", "bottom" },
+    { GIMP_POSITION_LEFT, "GIMP_POSITION_LEFT", "left" },
+    { GIMP_POSITION_RIGHT, "GIMP_POSITION_RIGHT", "right" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_POSITION_TOP, NC_("position", "Top"), NULL },
+    { GIMP_POSITION_BOTTOM, NC_("position", "Bottom"), NULL },
+    { GIMP_POSITION_LEFT, NC_("position", "Left"), NULL },
+    { GIMP_POSITION_RIGHT, NC_("position", "Right"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpPosition", values);
+      gimp_type_set_translation_context (type, "position");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
 
 /* Generated data ends here */
 

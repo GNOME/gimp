@@ -66,6 +66,23 @@ windows_hide_docks_cmd_callback (GtkAction *action,
 }
 
 void
+windows_set_tabs_position_cmd_callback (GtkAction *action,
+                                        GtkAction *current,
+                                        gpointer   data)
+{
+  GimpPosition value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  Gimp     *gimp;
+  return_if_no_gimp (gimp, data);
+
+  if (GIMP_GUI_CONFIG (gimp->config)->tabs_position == value)
+    return;
+
+  g_object_set (gimp->config,
+                "tabs-position", value,
+                NULL);
+}
+
+void
 windows_use_single_window_mode_cmd_callback (GtkAction *action,
                                              gpointer   data)
 {
