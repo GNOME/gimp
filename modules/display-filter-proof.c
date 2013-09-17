@@ -19,7 +19,12 @@
 
 #include <glib.h>  /* lcms.h uses the "inline" keyword */
 
+#ifdef HAVE_LCMS1
 #include <lcms.h>
+typedef DWORD cmsUInt32Number;
+#else
+#include <lcms2.h>
+#endif
 
 #include <gtk/gtk.h>
 
@@ -146,7 +151,9 @@ cdisplay_proof_class_init (CdisplayProofClass *klass)
   display_class->configure       = cdisplay_proof_configure;
   display_class->changed         = cdisplay_proof_changed;
 
+#ifdef HAVE_LCMS1
   cmsErrorAction (LCMS_ERROR_IGNORE);
+#endif
 }
 
 static void
@@ -298,9 +305,45 @@ cdisplay_proof_combo_box_set_active (GimpColorProfileComboBox *combo,
 
   if (profile)
     {
+#ifdef HAVE_LCMS1
       label = gimp_any_to_utf8 (cmsTakeProductDesc (profile), -1, NULL);
+#else
+      cmsUInt32Number  descSize;
+      gchar           *descData;
+
+      descSize = cmsGetProfileInfoASCII(profile, cmsInfoDescription,
+                                        "en", "US", NULL, 0);
+      if (descSize > 0)
+        {
+          descData = g_new (gchar, descSize + 1);
+          descSize = cmsGetProfileInfoASCII (profile, cmsInfoDescription,
+                                             "en", "US", descData, descSize);
+          if (descSize > 0)
+            label = gimp_any_to_utf8 (descData, -1, NULL);
+
+          g_free (descData);
+        }
+#endif
+
       if (! label)
+#ifdef HAVE_LCMS1
         label = gimp_any_to_utf8 (cmsTakeProductName (profile), -1, NULL);
+#else
+        {
+          descSize = cmsGetProfileInfoASCII (profile, cmsInfoModel,
+                                             "en", "US", NULL, 0);
+          if (descSize > 0)
+            {
+              descData = g_new (gchar, descSize + 1);
+              descSize = cmsGetProfileInfoASCII (profile, cmsInfoModel,
+                                                 "en", "US", descData, descSize);
+              if (descSize > 0)
+                label = gimp_any_to_utf8 (descData, -1, NULL);
+
+              g_free (descData);
+            }
+#endif
+        }
 
       cmsCloseProfile (profile);
     }
@@ -465,7 +508,7 @@ cdisplay_proof_changed (GimpColorDisplay *display)
 
   if (proofProfile)
     {
-      DWORD flags = cmsFLAGS_SOFTPROOFING;
+      cmsUInt32Number flags = cmsFLAGS_SOFTPROOFING;
 
       if (proof->bpc)
         flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;

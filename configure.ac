@@ -61,7 +61,8 @@ m4_define([libcurl_required_version], [7.15.1])
 m4_define([dbus_glib_required_version], [0.70])
 m4_define([libgudev_required_version], [167])
 m4_define([exif_required_version], [0.6.15])
-m4_define([lcms_required_version], [1.16])
+m4_define([lcms1_required_version], [1.16])
+m4_define([lcms2_required_version], [2.2])
 m4_define([libpng_required_version], [1.2.37])
 
 
@@ -1539,19 +1540,51 @@ AC_SUBST(JP2_LIBS)
 # Check for lcms
 ################
 
-AC_ARG_WITH(lcms, [  --without-lcms          build without lcms support])
+AC_ARG_WITH(lcms, [  --with-lcms             build with lcms support (check, lcms1, lcms2)],
+  [],
+  [with_lcms=check])
 
 have_lcms="no (lcms support disabled)"
 if test "x$with_lcms" != xno; then
-  have_lcms=yes
-  PKG_CHECK_MODULES(LCMS, lcms >= lcms_required_version,
-    AC_DEFINE(HAVE_LCMS, 1, [Define to 1 if lcms is available])
-    LCMS='lcms$(EXEEXT)',
-    have_lcms="no (lcms not found or unusable)")
+  if test "x$with_lcms" == x1 || \
+      test "x$with_lcms" == xlcms1 || \
+      test "x$with_lcms" == xcheck; then
+    PKG_CHECK_MODULES(LCMS1, lcms >= lcms1_required_version,
+      [have_lcms="yes (lcms1)"
+       AC_DEFINE(HAVE_LCMS, 1, [Define to 1 if lcms is available])
+       AC_DEFINE(HAVE_LCMS1, 1, [Define to 1 if lcms1 is available])
+       LCMS_CFLAGS="$LCMS1_CFLAGS"
+       LCMS_LIBS="$LCMS1_LIBS"
+       LCMS='lcms$(EXEEXT)'],
+      [have_lcms="no (lcms1 not found)"])
+  fi
+
+  if test "x$have_lcms" != "xyes (lcms1)"; then
+    if test "x$with_lcms" == x2 || \
+        test "x$with_lcms" == xlcms2 || \
+        test "x$with_lcms" == xcheck; then
+      PKG_CHECK_MODULES(LCMS2, lcms2 >= lcms2_required_version,
+        [have_lcms="yes (lcms2)"
+         AC_DEFINE(HAVE_LCMS, 1, [Define to 1 if lcms is available])
+         AC_DEFINE(HAVE_LCMS2, 1, [Define to 1 if lcms2 is available])
+         LCMS_CFLAGS="$LCMS2_CFLAGS"
+         LCMS_LIBS="$LCMS2_LIBS"
+         LCMS='lcms$(EXEEXT)'],
+        [if test "x$with_lcms" == xcheck; then
+           have_lcms="no (lcms not found)"
+         else
+           have_lcms="no (lcms2 not found)"
+         fi])
+    fi
+  fi
 fi
 
+AC_SUBST(LCMS_CFLAGS)
+AC_SUBST(LCMS_LIBS)
 AC_SUBST(LCMS)
-AM_CONDITIONAL(HAVE_LCMS, test "x$have_lcms" = xyes)
+AM_CONDITIONAL(HAVE_LCMS,
+               [test "x$have_lcms" = "xyes (lcms1)" || \
+                test "x$have_lcms" == "xyes (lcms2)"])
 
 
 ######################

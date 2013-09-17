@@ -27,7 +27,12 @@
 #define LCMS_WIN_TYPES_ALREADY_DEFINED
 #endif
 
+#ifdef HAVE_LCMS1
 #include <lcms.h>
+typedef DWORD cmsUInt32Number;
+#else
+#include <lcms2.h>
+#endif
 
 #include <gtk/gtk.h>
 
@@ -136,7 +141,9 @@ cdisplay_lcms_class_init (CdisplayLcmsClass *klass)
   display_class->convert_surface = cdisplay_lcms_convert_surface;
   display_class->changed         = cdisplay_lcms_changed;
 
+#ifdef HAVE_LCMS1
   cmsErrorAction (LCMS_ERROR_IGNORE);
+#endif
 }
 
 static void
@@ -164,28 +171,101 @@ cdisplay_lcms_finalize (GObject *object)
   G_OBJECT_CLASS (cdisplay_lcms_parent_class)->finalize (object);
 }
 
+#ifdef HAVE_LCMS1
 static void
 cdisplay_lcms_profile_get_info (cmsHPROFILE   profile,
                                 const gchar **name,
                                 const gchar **info)
+#else
+static void
+cdisplay_lcms_profile_get_info (cmsHPROFILE   profile,
+                                gchar       **name,
+                                gchar       **info)
+#endif
 {
   if (profile)
     {
+#ifdef HAVE_LCMS1
       *name = cmsTakeProductDesc (profile);
+#else
+      cmsUInt32Number  descSize;
+      gchar           *descData;
+
+      descSize = cmsGetProfileInfoASCII (profile, cmsInfoDescription,
+                                         "en", "US", NULL, 0);
+      if (descSize > 0)
+        {
+          descData = g_new (gchar, descSize + 1);
+          descSize = cmsGetProfileInfoASCII (profile, cmsInfoDescription,
+                                             "en", "US", descData, descSize);
+          if (descSize > 0)
+            *name = descData;
+          else
+            g_free (descData);
+        }
+#endif
 
       if (! *name)
+#ifdef HAVE_LCMS1
         *name = cmsTakeProductName (profile);
+#else
+        {
+          descSize = cmsGetProfileInfoASCII (profile, cmsInfoModel,
+                                             "en", "US", NULL, 0);
+          if (descSize > 0)
+            {
+              descData = g_new (gchar, descSize + 1);
+              descSize = cmsGetProfileInfoASCII(profile, cmsInfoModel,
+                                                "en", "US", descData, descSize);
+              if (descSize > 0)
+                *name = descData;
+              else
+                g_free (descData);
+            }
+#endif
+        }
 
+#ifdef HAVE_LCMS1
       if (*name && ! g_utf8_validate (*name, -1, NULL))
         *name = _("(invalid UTF-8 string)");
 
       *info = cmsTakeProductInfo (profile);
       if (*name && ! g_utf8_validate (*info, -1, NULL))
         *info = NULL;
+#else
+      if (*name && ! g_utf8_validate (*name, -1, NULL))
+        {
+          g_free (*name);
+          *name = g_strdup (_("(invalid UTF-8 string)"));
+        }
+
+      descSize = cmsGetProfileInfoASCII (profile, cmsInfoManufacturer,
+                                         "en", "US", NULL, 0);
+      if (descSize > 0)
+        {
+          descData = g_new (gchar, descSize + 1);
+          descSize = cmsGetProfileInfoASCII (profile, cmsInfoManufacturer,
+                                             "en", "US", descData, descSize);
+          if (descSize > 0)
+            *info = descData;
+          else
+            g_free (descData);
+        }
+
+      if (*info && ! g_utf8_validate (*info, -1, NULL))
+        {
+          g_free (*info);
+          *info = NULL;
+        }
+#endif
     }
   else
     {
+#ifdef HAVE_LCMS1
       *name = _("None");
+#else
+      *name = g_strdup (_("None"));
+#endif
       *info = NULL;
     }
 }
@@ -315,7 +395,10 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
   cmsHPROFILE      src_profile   = NULL;
   cmsHPROFILE      dest_profile  = NULL;
   cmsHPROFILE      proof_profile = NULL;
-  DWORD            flags         = 0;
+  cmsUInt32Number  flags         = 0;
+#ifdef HAVE_LCMS2
+  cmsUInt16Number  alarmCodes[cmsMAXCHANNELS] = { 0 };
+#endif
 
   if (lcms->transform)
     {
@@ -365,7 +448,15 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
 
           gimp_rgb_get_uchar (&config->out_of_gamut_color, &r, &g, &b);
 
+#ifdef HAVE_LCMS1
           cmsSetAlarmCodes (r, g, b);
+#else
+          alarmCodes[0] = (cmsUInt16Number) r;
+          alarmCodes[1] = (cmsUInt16Number) g;
+          alarmCodes[2] = (cmsUInt16Number) b;
+
+          cmsSetAlarmCodes (alarmCodes);
+#endif
         }
 
       lcms->transform = cmsCreateProofingTransform (src_profile, TYPE_ARGB_8,
@@ -400,7 +491,11 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
 static gboolean
 cdisplay_lcms_profile_is_rgb (cmsHPROFILE profile)
 {
+#ifdef HAVE_LCMS1
   return (cmsGetColorSpace (profile) == icSigRgbData);
+#else
+  return (cmsGetColorSpace (profile) == cmsSigRgbData);
+#endif
 }
 
 static cmsHPROFILE
@@ -621,8 +716,13 @@ cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
 {
   GtkWidget   *label;
   cmsHPROFILE  profile = NULL;
+#ifdef HAVE_LCMS1
   const gchar *text;
   const gchar *tooltip;
+#else
+  gchar       *text    = NULL;
+  gchar       *tooltip = NULL;
+#endif
 
   label = g_object_get_data (G_OBJECT (lcms), name);
 
@@ -650,6 +750,11 @@ cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
 
   gtk_label_set_text (GTK_LABEL (label), text);
   gimp_help_set_help_data (label, tooltip, NULL);
+
+#ifdef HAVE_LCMS2
+  g_free (text);
+  g_free (tooltip);
+#endif
 
   if (profile)
     cmsCloseProfile (profile);

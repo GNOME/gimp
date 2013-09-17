@@ -19,7 +19,12 @@
 
 #include <glib.h>  /* lcms.h uses the "inline" keyword */
 
+#ifdef HAVE_LCMS1
 #include <lcms.h>
+typedef DWORD cmsUInt32Number;
+#else
+#include <lcms2.h>
+#endif
 
 #include <gtk/gtk.h>
 
@@ -152,7 +157,9 @@ colorsel_cmyk_class_init (ColorselCmykClass *klass)
   selector_class->set_color  = colorsel_cmyk_set_color;
   selector_class->set_config = colorsel_cmyk_set_config;
 
+#ifdef HAVE_LCMS1
   cmsErrorAction (LCMS_ERROR_IGNORE);
+#endif
 }
 
 static void
@@ -391,10 +398,16 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (module);
   GimpColorConfig   *config   = module->config;
-  DWORD              flags    = 0;
+  cmsUInt32Number    flags    = 0;
+#ifdef HAVE_LCMS2
+  cmsUInt32Number    descSize = 0;
+#endif
   cmsHPROFILE        rgb_profile;
   cmsHPROFILE        cmyk_profile;
-  const gchar       *name;
+#ifdef HAVE_LCMS2
+  gchar             *descData;
+#endif
+  const gchar       *name     = NULL;
   gchar             *text;
 
   if (module->rgb2cmyk)
@@ -419,13 +432,55 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
       ! (cmyk_profile = cmsOpenProfileFromFile (config->cmyk_profile, "r")))
     goto out;
 
+#ifdef HAVE_LCMS1
   name = cmsTakeProductDesc (cmyk_profile);
+#else
+  descSize = cmsGetProfileInfoASCII (cmyk_profile, cmsInfoDescription,
+                                     "en", "US", NULL, 0);
+  if (descSize > 0)
+    {
+      descData = g_new (gchar, descSize + 1);
+      descSize = cmsGetProfileInfoASCII (cmyk_profile, cmsInfoDescription,
+                                         "en", "US", descData, descSize);
+      if (descSize > 0)
+        {
+          name = descData;
+        }
+      else
+        {
+          g_free (descData);
+          descData = NULL;
+        }
+    }
+#endif
+
   if (name && ! g_utf8_validate (name, -1, NULL))
     name = _("(invalid UTF-8 string)");
 
   if (! name)
     {
+#ifdef HAVE_LCMS1
       name = cmsTakeProductName (cmyk_profile);
+#else
+      descSize = cmsGetProfileInfoASCII (cmyk_profile, cmsInfoModel,
+                                         "en", "US", NULL, 0);
+      if (descSize > 0)
+        {
+          descData = g_new (gchar, descSize + 1);
+          descSize = cmsGetProfileInfoASCII (cmyk_profile, cmsInfoModel,
+                                             "en", "US", descData, descSize);
+          if (descSize > 0)
+            {
+              name = descData;
+            }
+          else
+            {
+              g_free (descData);
+              descData = NULL;
+            }
+        }
+#endif
+
       if (name && ! g_utf8_validate (name, -1, NULL))
         name = _("(invalid UTF-8 string)");
     }
@@ -434,6 +489,11 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
   gtk_label_set_text (GTK_LABEL (module->name_label), text);
   gimp_help_set_help_data (module->name_label, text, NULL);
   g_free (text);
+
+#ifdef HAVE_LCMS2
+  if (descData)
+    g_free (descData);
+#endif
 
   rgb_profile = color_config_get_rgb_profile (config);
 

@@ -24,7 +24,12 @@
 
 #include <glib.h>  /* lcms.h uses the "inline" keyword */
 
+#ifdef HAVE_LCMS1
 #include <lcms.h>
+typedef DWORD cmsUInt32Number;
+#else
+#include <lcms2.h>
+#endif
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -428,7 +433,9 @@ run (const gchar      *name,
         }
     }
 
+#ifdef HAVE_LCMS1
   cmsErrorAction (LCMS_ERROR_SHOW);
+#endif
 
   switch (proc)
     {
@@ -459,7 +466,9 @@ run (const gchar      *name,
         gchar *desc = NULL;
         gchar *info = NULL;
 
+#ifdef HAVE_LCMS1
         cmsErrorAction (LCMS_ERROR_IGNORE);
+#endif
 
         if (proc == PROC_INFO)
           status = lcms_icc_info (config, image, &name, &desc, &info);
@@ -496,25 +505,92 @@ run (const gchar      *name,
 static gchar *
 lcms_icc_profile_get_name (cmsHPROFILE profile)
 {
+#ifdef HAVE_LCMS1
   return gimp_any_to_utf8 (cmsTakeProductName (profile), -1, NULL);
+#else
+  cmsUInt32Number  descSize;
+  gchar           *descData;
+  gchar           *name = NULL;
+
+  descSize = cmsGetProfileInfoASCII (profile, cmsInfoModel,
+                                     "en", "US", NULL, 0);
+  if (descSize > 0)
+    {
+      descData = g_new (gchar, descSize + 1);
+      descSize = cmsGetProfileInfoASCII (profile, cmsInfoModel,
+                                         "en", "US", descData, descSize);
+      if (descSize > 0)
+        name = gimp_any_to_utf8 (descData, -1, NULL);
+
+      g_free (descData);
+    }
+
+  return name;
+#endif
 }
 
 static gchar *
 lcms_icc_profile_get_desc (cmsHPROFILE profile)
 {
+#ifdef HAVE_LCMS1
   return gimp_any_to_utf8 (cmsTakeProductDesc (profile), -1, NULL);
+#else
+  cmsUInt32Number  descSize;
+  gchar           *descData;
+  gchar           *desc = NULL;
+
+  descSize = cmsGetProfileInfoASCII (profile, cmsInfoDescription,
+                                     "en", "US", NULL, 0);
+  if (descSize > 0)
+    {
+      descData = g_new (gchar, descSize + 1);
+      descSize = cmsGetProfileInfoASCII (profile, cmsInfoDescription,
+                                         "en", "US", descData, descSize);
+      if (descSize > 0)
+        desc = gimp_any_to_utf8 (descData, -1, NULL);
+
+      g_free (descData);
+    }
+
+  return desc;
+#endif
 }
 
 static gchar *
 lcms_icc_profile_get_info (cmsHPROFILE profile)
 {
+#ifdef HAVE_LCMS1
   return gimp_any_to_utf8 (cmsTakeProductInfo (profile), -1, NULL);
+#else
+  cmsUInt32Number  descSize;
+  gchar           *descData;
+  gchar           *info = NULL;
+
+  descSize = cmsGetProfileInfoASCII (profile, cmsInfoModel,
+                                     "en", "US", NULL, 0);
+  if (descSize > 0)
+    {
+      descData = g_new (gchar, descSize + 1);
+      descSize = cmsGetProfileInfoASCII (profile, cmsInfoModel,
+                                         "en", "US", descData, descSize);
+      if (descSize > 0)
+        info = gimp_any_to_utf8 (descData, -1, NULL);
+
+      g_free (descData);
+    }
+
+  return info;
+#endif
 }
 
 static gboolean
 lcms_icc_profile_is_rgb (cmsHPROFILE profile)
 {
+#ifdef HAVE_LCMS1
   return (cmsGetColorSpace (profile) == icSigRgbData);
+#else
+  return (cmsGetColorSpace (profile) == cmsSigRgbData);
+#endif
 }
 
 static GimpPDBStatusType
@@ -737,9 +813,15 @@ lcms_calculate_checksum (const gchar *data,
     {
       GChecksum *md5 = g_checksum_new (G_CHECKSUM_MD5);
 
+#ifdef HAVE_LCMS1
       g_checksum_update (md5,
                          (const guchar *) data + sizeof (icHeader),
                          len - sizeof (icHeader));
+#else
+      g_checksum_update (md5,
+                         (const guchar *) data + sizeof (cmsICCHeader),
+                         len - sizeof (cmsICCHeader));
+#endif
 
       len = 16;
       g_checksum_get_digest (md5, digest, &len);
@@ -934,18 +1016,18 @@ lcms_image_transform_rgb (gint32                    image,
                           GimpColorRenderingIntent  intent,
                           gboolean                  bpc)
 {
-  cmsHTRANSFORM  transform   = NULL;
-  DWORD          last_format = 0;
-  gint          *layers;
-  gint           num_layers;
-  gint           i;
+  cmsHTRANSFORM    transform   = NULL;
+  cmsUInt32Number  last_format = 0;
+  gint            *layers;
+  gint             num_layers;
+  gint             i;
 
   layers = gimp_image_get_layers (image, &num_layers);
 
   for (i = 0; i < num_layers; i++)
     {
-      GimpDrawable *drawable = gimp_drawable_get (layers[i]);
-      DWORD         format;
+      GimpDrawable    *drawable = gimp_drawable_get (layers[i]);
+      cmsUInt32Number  format;
 
       switch (drawable->bpp)
         {
