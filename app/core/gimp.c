@@ -585,8 +585,8 @@ gimp_real_initialize (Gimp               *gimp,
 
   static const GimpDataFactoryLoaderEntry palette_loader_entries[] =
   {
-    { gimp_startup_palette_load,         GIMP_PALETTE_FILE_EXTENSION,         TRUE  },
-    { gimp_startup_palette_load,         NULL /* legacy loader */,            TRUE  }
+    { gimp_palette_load,         GIMP_PALETTE_FILE_EXTENSION,         TRUE  },
+    { gimp_palette_load,         NULL /* legacy loader */,            TRUE  }
   };
 
   static const GimpDataFactoryLoaderEntry tool_preset_loader_entries[] =

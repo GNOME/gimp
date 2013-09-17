@@ -46,11 +46,10 @@
 
 #include "gimp-intl.h"
 
-
 GList *
-gimp_startup_palette_load (GimpContext  *context,
-                           const gchar  *filename,
-                           GError      **error)
+gimp_palette_load (GimpContext  *context,
+                   const gchar  *filename,
+                   GError      **error)
 {
   FILE  *file;
   GList *glist;
@@ -68,17 +67,17 @@ gimp_startup_palette_load (GimpContext  *context,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return NULL;
     }
-  glist = gimp_palette_load (context, filename, file, error);
+  glist = gimp_palette_load_gpl (context, filename, file, error);
   fclose (file);
   return glist;
 }
 
 
 GList *
-gimp_palette_load (GimpContext  *context,
-                   const gchar  *filename,
-                   FILE         *file,
-                   GError      **error)
+gimp_palette_load_gpl (GimpContext  *context,
+                       const gchar  *filename,
+                       FILE         *file,
+                       GError      **error)
 {
   GimpPalette      *palette;
   GimpPaletteEntry *entry;

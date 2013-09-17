@@ -34,10 +34,10 @@ typedef enum
 } GimpPaletteFileFormat;
 
 
-GList               * gimp_startup_palette_load        (GimpContext  *context,
-                                                        const gchar  *filename,
-                                                        GError      **error);
 GList               * gimp_palette_load               (GimpContext  *context,
+                                                       const gchar  *filename,
+                                                       GError      **error);
+GList               * gimp_palette_load_gpl           (GimpContext  *context,
                                                        const gchar  *filename,
                                                        FILE         *file,
                                                        GError      **error);
