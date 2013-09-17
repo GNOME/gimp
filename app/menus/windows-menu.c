@@ -187,31 +187,32 @@ windows_menu_display_remove (GimpContainer *container,
 
 static void
 windows_menu_display_reorder (GimpContainer *container,
-                              GimpDisplay    *display,
-                              gint            new_index,
-                              GimpUIManager  *manager)
+                              GimpDisplay   *display,
+                              gint           new_index,
+                              GimpUIManager *manager)
 {
-    gint n_display = gimp_container_get_n_children (container);
-    gint i;
+  gint n_display = gimp_container_get_n_children (container);
+  gint i;
 
-    for (i = new_index; i < n_display; i++)
-      {
-        GimpObject *d = gimp_container_get_child_by_index (container, i);
+  for (i = new_index; i < n_display; i++)
+    {
+      GimpObject *d = gimp_container_get_child_by_index (container, i);
 
-        windows_menu_display_remove (container, GIMP_DISPLAY (d), manager);
-      }
+      windows_menu_display_remove (container, GIMP_DISPLAY (d), manager);
+    }
 
-    /* If I don't ensure the menu items are effectively removed, adding
-     * the same ones may simply cancel the effect of the removal, hence
-     * losing the menu reordering. */
-    gtk_ui_manager_ensure_update (manager);
+  /* If I don't ensure the menu items are effectively removed, adding
+   * the same ones may simply cancel the effect of the removal, hence
+   * losing the menu reordering.
+   */
+  gtk_ui_manager_ensure_update (GTK_UI_MANAGER (manager));
 
-    for (i = new_index; i < n_display; i++)
-      {
-        GimpObject *d = gimp_container_get_child_by_index (container, i);
+  for (i = new_index; i < n_display; i++)
+    {
+      GimpObject *d = gimp_container_get_child_by_index (container, i);
 
-        windows_menu_display_add (container, GIMP_DISPLAY (d), manager);
-      }
+      windows_menu_display_add (container, GIMP_DISPLAY (d), manager);
+    }
 }
 
 static void
