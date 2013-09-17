@@ -253,11 +253,11 @@ gimp_operation_tool_dialog (GimpImageMapTool *image_map_tool)
                       FALSE, FALSE, 0);
   gtk_widget_show (tool->options_box);
 
-  if (tool->aux_input_button)
+  if (tool->aux_input_box)
     {
-      gtk_box_pack_start (GTK_BOX (tool->options_box), tool->aux_input_button,
+      gtk_box_pack_start (GTK_BOX (tool->options_box), tool->aux_input_box,
                           FALSE, FALSE, 0);
-      gtk_widget_show (tool->aux_input_button);
+      gtk_widget_show (tool->aux_input_box);
     }
 
   if (tool->options_table)
@@ -511,10 +511,11 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
   else
     GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->settings_name = NULL; /* XXX hack */
 
-  if (tool->aux_input_button)
+  if (tool->aux_input_box)
     {
-      gtk_widget_destroy (tool->aux_input_button);
+      gtk_widget_destroy (tool->aux_input_box);
       tool->aux_input_button = NULL;
+      tool->aux_input_box    = NULL;
     }
 
   if (tool->options_table)
@@ -532,6 +533,7 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
   if (gegl_node_has_pad (im_tool->operation, "aux"))
     {
       GimpContext *context;
+      GtkWidget   *label;
 
       tool->aux_input = gegl_node_new_child (NULL,
                                              "operation", "gegl:buffer-source",
@@ -542,14 +544,27 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
 
       context = GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (tool));
 
+      tool->aux_input_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
+
+      label = gtk_label_new_with_mnemonic (_("_Aux Input"));
+      gtk_box_pack_start (GTK_BOX (tool->aux_input_box), label,
+                          FALSE, FALSE, 0);
+      gtk_widget_show (label);
+
       tool->aux_input_button =
         gimp_pickable_button_new (context, GIMP_VIEW_SIZE_LARGE, 1);
+      gtk_box_pack_start (GTK_BOX (tool->aux_input_box),
+                          tool->aux_input_button, FALSE, FALSE, 0);
+      gtk_widget_show (tool->aux_input_button);
+
+      gtk_label_set_mnemonic_widget (GTK_LABEL (label),
+                                     tool->aux_input_button);
 
       if (tool->options_box)
         {
-          gtk_box_pack_start (GTK_BOX (tool->options_box), tool->aux_input_button,
+          gtk_box_pack_start (GTK_BOX (tool->options_box), tool->aux_input_box,
                               FALSE, FALSE, 0);
-          gtk_widget_show (tool->aux_input_button);
+          gtk_widget_show (tool->aux_input_box);
         }
 
       g_signal_connect_object (tool->aux_input_button, "notify::pickable",
