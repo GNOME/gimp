@@ -647,7 +647,7 @@ typedef struct
   gboolean              transparency;           /* Image has merged transparency alpha channel */
   guint32               rows;                   /* Number of rows: 1 - 30000 */
   guint32               columns;                /* Number of columns: 1 - 30000 */
-  guint16               bps;                    /* Bits per channel: 1, 8, 16, or 32 */
+  guint16               bps;                    /* Bits per sample: 1, 8, 16, or 32 */
   guint16               color_mode;             /* Image color mode: {PSDColorMode} */
   GimpImageBaseType     base_type;              /* Image base color mode: (GIMP) */
   guint16               comp_mode;              /* Merged image compression mode */
