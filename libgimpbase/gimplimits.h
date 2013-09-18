@@ -54,7 +54,7 @@ G_BEGIN_DECLS
  * pixel sizes is needed; for example to give a spin button an upper
  * limit.
  **/
-#define GIMP_MAX_IMAGE_SIZE  262144    /*  2^18  */
+#define GIMP_MAX_IMAGE_SIZE  524288    /*  2^18  */
 
 
 /**
