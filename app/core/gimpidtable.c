@@ -127,8 +127,11 @@ gint
 gimp_id_table_insert (GimpIdTable *id_table, gpointer data)
 {
   gint new_id;
+  gint start_id;
 
   g_return_val_if_fail (GIMP_IS_ID_TABLE (id_table), 0);
+
+  start_id = id_table->priv->next_id;
 
   do
     {
@@ -136,6 +139,15 @@ gimp_id_table_insert (GimpIdTable *id_table, gpointer data)
 
       if (id_table->priv->next_id == GIMP_ID_TABLE_END_ID)
         id_table->priv->next_id = GIMP_ID_TABLE_START_ID;
+
+      if (start_id == id_table->priv->next_id)
+        {
+          /* We looped once over all used ids. Very unlikely to happen.
+             And if it does, there is probably not much to be done.
+             It is just good design not to allow a theoretical infinite loop. */
+          g_error ("%s: out of ids!", G_STRFUNC);
+          break;
+        }
     }
   while (gimp_id_table_lookup (id_table, new_id));
 
