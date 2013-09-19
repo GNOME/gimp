@@ -342,8 +342,8 @@ cdisplay_proof_combo_box_set_active (GimpColorProfileComboBox *combo,
 
               g_free (descData);
             }
-#endif
         }
+#endif
 
       cmsCloseProfile (profile);
     }

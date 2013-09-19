@@ -222,8 +222,8 @@ cdisplay_lcms_profile_get_info (cmsHPROFILE   profile,
               else
                 g_free (descData);
             }
-#endif
         }
+#endif
 
 #ifdef HAVE_LCMS1
       if (*name && ! g_utf8_validate (*name, -1, NULL))
