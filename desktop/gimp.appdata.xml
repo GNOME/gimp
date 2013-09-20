@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application>
 <id type="desktop">gimp.desktop</id>
+<!--
+The tag 'licence' means the licence of this file, not the whole product;
+see http://people.freedesktop.org/~hughsient/appdata/ as of 20.09.2013.
+The CC0 licence is GPL compatible, see 
+http://www.gnu.org/licenses/license-list.html#GPLCompatibleLicenses
+as of 20.09.2013
+-->
 <licence>CC0</licence>
 <description>
 <p>
