@@ -415,6 +415,18 @@ package Gimp::CodeGen::enums;
 	  symbols => [ qw(GIMP_VECTORS_STROKE_TYPE_BEZIER) ],
 	  mapping => { GIMP_VECTORS_STROKE_TYPE_BEZIER => '0' }
 	},
+    GimpShapeType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_SHAPE_RECTANGLE GIMP_SHAPE_ELLIPSE
+			  GIMP_SHAPE_ROUNDED_RECT GIMP_SHAPE_N_POLYGON
+			  GIMP_SHAPE_SINGLE_ROW) ],
+	  mapping => { GIMP_SHAPE_RECTANGLE => '0',
+		       GIMP_SHAPE_ELLIPSE => '1',
+		       GIMP_SHAPE_ROUNDED_RECT => '2',
+		       GIMP_SHAPE_N_POLYGON => '3',
+		       GIMP_SHAPE_SINGLE_ROW => '4' }
+	},
     GimpComponentType =>
 	{ contig => 0,
 	  header => 'core/core-enums.h',

@@ -319,6 +319,20 @@ typedef enum
 } GimpSelectCriterion;
 
 
+#define GIMP_TYPE_SHAPE_TYPE (gimp_shape_type_get_type ())
+
+GType gimp_shape_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_SHAPE_RECTANGLE,
+  GIMP_SHAPE_ELLIPSE,
+  GIMP_SHAPE_ROUNDED_RECT,
+  GIMP_SHAPE_N_POLYGON,
+  GIMP_SHAPE_SINGLE_ROW
+} GimpShapeType;
+
+
 void           gimp_enums_init           (void);
 
 const gchar ** gimp_enums_get_type_names (gint *n_type_names);
