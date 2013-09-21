@@ -56,6 +56,11 @@
 #include "gimp-intl.h"
 
 
+/* XXX: if this state list is updated, in particular if for some reason,
+   a new CAGE_STATE_* was to be inserted after CAGE_STATE_CLOSING, check
+   if the function gimp_cage_tool_is_complete() has to be updated.
+   Current algorithm is that all DEFORM_* states are complete states,
+   and all CAGE_* states are incomplete states. */
 enum
 {
   CAGE_STATE_INIT,
@@ -121,6 +126,7 @@ static gint       gimp_cage_tool_is_on_edge         (GimpCageTool          *ct,
                                                      gdouble                y,
                                                      gint                   handle_size);
 
+static gboolean   gimp_cage_tool_is_complete        (GimpCageTool          *ct);
 static void       gimp_cage_tool_remove_last_handle (GimpCageTool          *ct);
 static void       gimp_cage_tool_compute_coef       (GimpCageTool          *ct);
 static void       gimp_cage_tool_create_image_map   (GimpCageTool          *ct,
@@ -191,7 +197,6 @@ gimp_cage_tool_init (GimpCageTool *self)
 
   self->config          = g_object_new (GIMP_TYPE_CAGE_CONFIG, NULL);
   self->hovering_handle = -1;
-  self->cage_complete   = FALSE;
   self->tool_state      = CAGE_STATE_INIT;
 
   self->coef            = NULL;
@@ -304,7 +309,6 @@ gimp_cage_tool_start (GimpCageTool *ct,
   ct->config          = g_object_new (GIMP_TYPE_CAGE_CONFIG, NULL);
   ct->hovering_handle = -1;
   ct->hovering_edge   = -1;
-  ct->cage_complete   = FALSE;
   ct->tool_state      = CAGE_STATE_INIT;
 
   /* Setting up cage offset to convert the cage point coords to
@@ -344,7 +348,6 @@ gimp_cage_tool_options_notify (GimpTool         *tool,
         {
           /* switch to deform mode */
 
-          ct->cage_complete = TRUE;
           gimp_cage_config_reset_displacement (ct->config);
           gimp_cage_config_reverse_cage_if_needed (ct->config);
           gimp_tool_push_status (tool, tool->display,
@@ -400,18 +403,17 @@ gimp_cage_tool_key_press (GimpTool    *tool,
   switch (kevent->keyval)
     {
     case GDK_KEY_BackSpace:
-      if (! ct->cage_complete && ct->tool_state == CAGE_STATE_WAIT)
+      if (ct->tool_state == CAGE_STATE_WAIT)
         {
           gimp_cage_tool_remove_last_handle (ct);
         }
-      else if (ct->cage_complete && ct->tool_state == DEFORM_STATE_WAIT)
+      else if (ct->tool_state == DEFORM_STATE_WAIT)
         {
           gimp_cage_config_remove_selected_points(ct->config);
 
           /* if the cage have less than 3 handles, we reopen it */
           if (gimp_cage_config_get_n_points(ct->config) <= 2)
             {
-              ct->cage_complete = FALSE;
               ct->tool_state = CAGE_STATE_WAIT;
             }
 
@@ -423,7 +425,7 @@ gimp_cage_tool_key_press (GimpTool    *tool,
     case GDK_KEY_Return:
     case GDK_KEY_KP_Enter:
     case GDK_KEY_ISO_Enter:
-      if (ct->cage_complete == FALSE && gimp_cage_config_get_n_points (ct->config) > 2)
+      if (! gimp_cage_tool_is_complete (ct) && gimp_cage_config_get_n_points (ct->config) > 2)
         {
           g_object_set (gimp_tool_get_options (tool),
                         "cage-mode", GIMP_CAGE_MODE_DEFORM,
@@ -569,103 +571,56 @@ gimp_cage_tool_button_press (GimpTool            *tool,
         break;
 
       case CAGE_STATE_WAIT:
-        if (ct->cage_complete == FALSE)
+        if (handle == -1 && edge <= 0)
           {
-            if (handle == -1 && edge <= 0)
-              {
-                /* User clicked on the background, we add a new handle
-                 * and move it
-                 */
-                gimp_cage_config_add_cage_point (ct->config,
-                                                 coords->x - ct->offset_x,
-                                                 coords->y - ct->offset_y);
-                gimp_cage_config_select_point (ct->config,
-                                               gimp_cage_config_get_n_points (ct->config) - 1);
-                ct->tool_state = CAGE_STATE_MOVE_HANDLE;
-              }
-            else if (handle == 0 && gimp_cage_config_get_n_points (ct->config) > 2)
-              {
-                /* User clicked on the first handle, we wait for
-                 * release for closing the cage and switching to
-                 * deform if possible
-                 */
-                gimp_cage_config_select_point (ct->config, 0);
-                ct->tool_state = CAGE_STATE_CLOSING;
-              }
-            else if (handle >= 0)
-              {
-                /* User clicked on a handle, so we move it */
-
-                if (state & GDK_SHIFT_MASK)
-                  {
-                    /* Multiple selection */
-
-                    gimp_cage_config_toggle_point_selection (ct->config, handle);
-                  }
-                else
-                  {
-                    /* New selection */
-
-                    if (! gimp_cage_config_point_is_selected (ct->config, handle))
-                      {
-                        gimp_cage_config_select_point (ct->config, handle);
-                      }
-                  }
-
-                ct->tool_state = CAGE_STATE_MOVE_HANDLE;
-              }
-            else if (edge > 0)
-              {
-                /* User clicked on an edge, we add a new handle here and select it */
-
-                gimp_cage_config_insert_cage_point (ct->config, edge, coords->x, coords->y);
-                gimp_cage_config_select_point (ct->config, edge);
-                ct->tool_state = CAGE_STATE_MOVE_HANDLE;
-              }
+            /* User clicked on the background, we add a new handle
+             * and move it
+             */
+            gimp_cage_config_add_cage_point (ct->config,
+                                             coords->x - ct->offset_x,
+                                             coords->y - ct->offset_y);
+            gimp_cage_config_select_point (ct->config,
+                                           gimp_cage_config_get_n_points (ct->config) - 1);
+            ct->tool_state = CAGE_STATE_MOVE_HANDLE;
           }
-        else
+        else if (handle == 0 && gimp_cage_config_get_n_points (ct->config) > 2)
           {
-            /* Cage already closed */
+            /* User clicked on the first handle, we wait for
+             * release for closing the cage and switching to
+             * deform if possible
+             */
+            gimp_cage_config_select_point (ct->config, 0);
+            ct->tool_state = CAGE_STATE_CLOSING;
+          }
+        else if (handle >= 0)
+          {
+            /* User clicked on a handle, so we move it */
 
-            if (handle == -1 && edge == -1)
+            if (state & GDK_SHIFT_MASK)
               {
-                /* User clicked on the background, we start a rubber
-                 * band selection
-                 */
-                ct->selection_start_x = coords->x;
-                ct->selection_start_y = coords->y;
-                ct->tool_state = CAGE_STATE_SELECTING;
+                /* Multiple selection */
+
+                gimp_cage_config_toggle_point_selection (ct->config, handle);
               }
-            else if (handle >= 0)
+            else
               {
-                /* User clicked on a handle, so we move it */
+                /* New selection */
 
-                if (state & GDK_SHIFT_MASK)
+                if (! gimp_cage_config_point_is_selected (ct->config, handle))
                   {
-                    /* Multiple selection */
-
-                    gimp_cage_config_toggle_point_selection (ct->config, handle);
+                    gimp_cage_config_select_point (ct->config, handle);
                   }
-                else
-                  {
-                    /* New selection */
-
-                    if (! gimp_cage_config_point_is_selected (ct->config, handle))
-                      {
-                        gimp_cage_config_select_point (ct->config, handle);
-                      }
-                  }
-
-                ct->tool_state = CAGE_STATE_MOVE_HANDLE;
               }
-            else if (edge >= 0)
-              {
-                /* User clicked on an edge, we add a new handle here and select it */
 
-                gimp_cage_config_insert_cage_point (ct->config, edge, coords->x, coords->y);
-                gimp_cage_config_select_point (ct->config, edge);
-                ct->tool_state = CAGE_STATE_MOVE_HANDLE;
-              }
+            ct->tool_state = CAGE_STATE_MOVE_HANDLE;
+          }
+        else if (edge > 0)
+          {
+            /* User clicked on an edge, we add a new handle here and select it */
+
+            gimp_cage_config_insert_cage_point (ct->config, edge, coords->x, coords->y);
+            gimp_cage_config_select_point (ct->config, edge);
+            ct->tool_state = CAGE_STATE_MOVE_HANDLE;
           }
         break;
 
@@ -851,7 +806,7 @@ gimp_cage_tool_cursor_update (GimpTool         *tool,
         }
       else
         {
-          if (ct->cage_complete)
+          if (gimp_cage_tool_is_complete (ct))
             modifier = GIMP_CURSOR_MODIFIER_BAD;
         }
     }
@@ -885,7 +840,7 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
   gimp_draw_tool_push_group (draw_tool, stroke_group);
 
   /* If needed, draw line to the cursor. */
-  if (! ct->cage_complete)
+  if (! gimp_cage_tool_is_complete (ct))
     {
       GimpVector2 last_point;
 
@@ -913,7 +868,7 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
       point1.x += ct->offset_x;
       point1.y += ct->offset_y;
 
-      if (i > 0 || ct->cage_complete)
+      if (i > 0 || gimp_cage_tool_is_complete (ct))
         {
           gint index_point2;
 
@@ -1070,6 +1025,12 @@ gimp_cage_tool_is_on_edge (GimpCageTool *ct,
     }
 
   return -1;
+}
+
+static gboolean
+gimp_cage_tool_is_complete (GimpCageTool *ct)
+{
+  return (ct->tool_state > CAGE_STATE_CLOSING);
 }
 
 static void
