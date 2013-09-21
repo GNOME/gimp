@@ -10865,6 +10865,7 @@ GimpOffsetType
 GimpOrientationType
 GimpRotationType
 GimpSelectCriterion
+GimpShapeType
 GimpStrokeMethod
 GimpThumbnailSize
 GimpUndoEvent
@@ -10899,6 +10900,7 @@ GIMP_TYPE_OFFSET_TYPE
 GIMP_TYPE_ORIENTATION_TYPE
 GIMP_TYPE_ROTATION_TYPE
 GIMP_TYPE_SELECT_CRITERION
+GIMP_TYPE_SHAPE_TYPE
 GIMP_TYPE_STROKE_METHOD
 GIMP_TYPE_THUMBNAIL_SIZE
 GIMP_TYPE_UNDO_EVENT
@@ -10932,6 +10934,7 @@ gimp_offset_type_get_type
 gimp_orientation_type_get_type
 gimp_rotation_type_get_type
 gimp_select_criterion_get_type
+gimp_shape_type_get_type
 gimp_stroke_method_get_type
 gimp_thumbnail_size_get_type
 gimp_undo_event_get_type

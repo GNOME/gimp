@@ -427,6 +427,7 @@ package Gimp::CodeGen::enums;
 		       GIMP_SHAPE_N_POLYGON => '3',
 		       GIMP_SHAPE_SINGLE_ROW => '4' }
 	},
+<<<<<<< HEAD
     GimpComponentType =>
 	{ contig => 0,
 	  header => 'core/core-enums.h',
@@ -439,6 +440,8 @@ package Gimp::CodeGen::enums;
 		       GIMP_COMPONENT_TYPE_HALF => '400',
 		       GIMP_COMPONENT_TYPE_FLOAT => '500' }
 	},
+=======
+>>>>>>> 6e1ba8af48bac3f951ab71ff3a73ad57634fad3f
     GimpConvertDitherType =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
