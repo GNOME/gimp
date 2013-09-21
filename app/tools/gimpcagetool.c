@@ -404,13 +404,19 @@ gimp_cage_tool_key_press (GimpTool    *tool,
         {
           gimp_cage_tool_remove_last_handle (ct);
         }
-      else if (ct->cage_complete && ct->tool_state == CAGE_STATE_WAIT)
+      else if (ct->cage_complete && ct->tool_state == DEFORM_STATE_WAIT)
         {
           gimp_cage_config_remove_selected_points(ct->config);
 
           /* if the cage have less than 3 handles, we reopen it */
           if (gimp_cage_config_get_n_points(ct->config) <= 2)
-            ct->cage_complete = FALSE;
+            {
+              ct->cage_complete = FALSE;
+              ct->tool_state = CAGE_STATE_WAIT;
+            }
+
+          gimp_cage_tool_compute_coef (ct);
+          gimp_cage_tool_render_node_update (ct);
         }
       return TRUE;
 
