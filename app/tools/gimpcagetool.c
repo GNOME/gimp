@@ -440,7 +440,7 @@ gimp_cage_tool_key_press (GimpTool    *tool,
 
           gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
         }
-      break;
+      return TRUE;
 
     case GDK_KEY_Escape:
       gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
