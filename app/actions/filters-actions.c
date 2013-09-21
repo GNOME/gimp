@@ -160,6 +160,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:mono-mixer",
     NULL /* FIXME GIMP_HELP_FILTER_MONO_MIXER */ },
 
+  { "filters-mosaic", GIMP_STOCK_GEGL,
+    NC_("filters-action", "Mosaic..."), NULL, NULL,
+    "gegl:mosaic",
+    NULL /* FIXME GIMP_HELP_FILTER_MOSAIC */ },
+
   { "filters-motion-blur-circular", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Circular Motion Blur..."), NULL, NULL,
     "gegl:motion-blur-circular",
@@ -369,6 +374,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-gaussian-blur",           writable);
   SET_SENSITIVE ("filters-grid",                    writable);
   SET_SENSITIVE ("filters-mono-mixer",              writable && !gray);
+  SET_SENSITIVE ("filters-mosaic",                  writable);
   SET_SENSITIVE ("filters-motion-blur-circular",    writable);
   SET_SENSITIVE ("filters-motion-blur-linear",      writable);
   SET_SENSITIVE ("filters-motion-blur-zoom",        writable);

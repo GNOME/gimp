@@ -647,6 +647,7 @@
       <menu action="plug-in-distorts-menu" name="Distorts">
       	<menuitem action="filters-emboss" />
         <menuitem action="filters-lens-distortion" />
+        <menuitem action="filters-mosaic" />
       	<menuitem action="filters-polar-coordinates" />
         <menuitem action="filters-ripple" />
         <menuitem action="filters-shift" />
