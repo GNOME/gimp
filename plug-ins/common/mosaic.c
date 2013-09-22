@@ -74,6 +74,7 @@ typedef struct
 typedef struct
 {
   gdouble base_x, base_y;
+  gdouble base_x2, base_y2;
   gdouble norm_x, norm_y;
   gdouble light;
 } SpecVec;
@@ -250,6 +251,9 @@ static void      fill_poly_image       (Polygon      *poly,
                                         gint          y2,
                                         guchar       *dest);
 
+static gfloat    distance              (SpecVec      *vec,
+                                        gfloat        x,
+                                        gfloat        y);
 static void      calc_spec_vec         (SpecVec      *vec,
                                         gint          xs,
                                         gint          ys,
@@ -2605,6 +2609,8 @@ calc_spec_vec (SpecVec *vec,
 
   vec->base_x = x1;
   vec->base_y = y1;
+  vec->base_x2 = x2;
+  vec->base_y2 = y2;
 
   r = sqrt (SQR (x2 - x1) + SQR (y2 - y1));
 
@@ -2622,6 +2628,44 @@ calc_spec_vec (SpecVec *vec,
   vec->light = vec->norm_x * light_x + vec->norm_y * light_y;
 }
 
+static gfloat
+distance (SpecVec *vec,
+          gfloat   x,
+          gfloat   y)
+{
+  gfloat l2, t;
+  gfloat pv_x, pv_y;
+  gfloat pw_x, pw_y;
+  gfloat wv_x, wv_y;
+  gfloat proj_x, proj_y;
+
+  l2 = SQR (vec->base_x - vec->base_x2) + SQR (vec->base_y - vec->base_y2);
+
+  if (l2 < 1e-5)
+    return sqrt (SQR (vec->base_x - x) + SQR (vec->base_y - y));
+
+  pv_x = x - vec->base_x;
+  pv_y = y - vec->base_y;
+
+  pw_x = x - vec->base_x2;
+  pw_y = y - vec->base_y2;
+
+  wv_x = vec->base_x2 - vec->base_x;
+  wv_y = vec->base_y2 - vec->base_y;
+
+  t = (pv_x * wv_x + pv_y * wv_y) / l2;
+
+  if (t < 0.0)
+    return sqrt (SQR (pv_x) + SQR (pv_y));
+
+  else if (t > 1.0)
+    return sqrt (SQR (pw_x) + SQR (pw_y));
+
+  proj_x = vec->base_x + t * wv_x;
+  proj_y = vec->base_y + t * wv_y;
+
+  return sqrt (SQR (x - proj_x) + SQR (y - proj_y));
+}
 
 static double
 calc_spec_contrib (SpecVec *vecs,
@@ -2634,13 +2678,9 @@ calc_spec_contrib (SpecVec *vecs,
 
   for (i = 0; i < n; i++)
     {
-      gdouble x_p, y_p;
       gdouble dist;
 
-      x_p = x - vecs[i].base_x;
-      y_p = y - vecs[i].base_y;
-
-      dist = fabs (x_p * vecs[i].norm_x + y_p * vecs[i].norm_y);
+      dist = distance (vecs + i, x, y);
 
       if (mvals.tile_surface == ROUGH)
         {
