@@ -333,11 +333,6 @@ read_header_block (PSDimage  *img_a,
 
       case 16:
         IFDBG(3) g_debug ("16 Bit Data");
-	if (CONVERSION_WARNINGS)
-          g_message (_("Warning:\n"
-                       "The image you are loading has 16 bits per channel. GIMP "
-                       "can only handle 8 bit, so it will be converted for you. "
-                       "Information will be lost because of this conversion."));
         break;
 
       case 8:
@@ -1266,7 +1261,7 @@ add_layers (const gint32  image_id,
                         g_free (rle_pack_len);
                         break;
 
-                      case PSD_COMP_ZIP:                 /* ? */
+		      case PSD_COMP_ZIP:                 /* ? */
                       case PSD_COMP_ZIP_PRED:
                       default:
                         g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
