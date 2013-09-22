@@ -2,27 +2,29 @@
 # Copyright (C) 2001, 2003, 2004, 2007, 2008, 2012 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp-python package.
 #
+# Arpad Biro .
 # Andras Timar <timar@gnome.hu>, 2001, 2003.
 # Emese Kovacs <emese@gnome.hu>, 2001.
 # Laszlo Dvornik <dvornik@gnome.hu>, 2004.
 # Arpad Biro <biro arpad gmail>, 2004, 2007, 2008.
 # Gabor Kelemen <kelemeng@gnome.hu>, 2007, 2008, 2012.
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2012.
-# Arpad Biro .
+# Balázs Úr <urbalazs at gmail dot com>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python.gimp-2-6\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-05-31 17:53+0000\n"
-"PO-Revision-Date: 2012-06-04 21:54+0200\n"
-"Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2013-07-18 21:05+0000\n"
+"PO-Revision-Date: 2013-09-22 10:56+0200\n"
+"Last-Translator: Balázs Úr <urbalazs at gmail dot com>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Lokalize 1.2\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
-"Language: hu\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:394
 msgid "Missing exception information"
@@ -148,7 +150,7 @@ msgid "_Offset Palette..."
 msgstr "Paletta _eltolása…"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:56
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:309
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
@@ -158,45 +160,122 @@ msgstr "Paletta"
 msgid "Off_set"
 msgstr "_Eltolás"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:48
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:22
+msgid "Red"
+msgstr "Vörös"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:22
+msgid "Green"
+msgstr "Zöld"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:22
+msgid "Blue"
+msgstr "Kék"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:23
+msgid "Luma (Y)"
+msgstr "Fényesség (Y)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:24
+msgid "Hue"
+msgstr "Árnyalat"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:24
+#| msgid "Green or Saturation"
+msgid "Saturation"
+msgstr "Telítettség"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:24
+msgid "Value"
+msgstr "Érték"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+msgid "Saturation (HSL)"
+msgstr "Telítettség (HSL)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+msgid "Lightness (HSL)"
+msgstr "Fényesség (HSL)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:26
+msgid "Index"
+msgstr "Index"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+msgid "Random"
+msgstr "Véletlen"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:78
+msgid "Lightness (LAB)"
+msgstr "Fényesség (LAB)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:78
+msgid "A-color"
+msgstr "A-szín"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:78
+msgid "B-color"
+msgstr "B-szín"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:79
+msgid "Chroma (LCHab)"
+msgstr "Színesség (LCHab)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:79
+msgid "Hue (LCHab)"
+msgstr "Árnyalat (LCHab)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:300
 msgid "Sort the colors in a palette"
 msgstr "Paletta színeinek rendezése"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:53
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:306
 msgid "_Sort Palette..."
 msgstr "Paletta _rendezése…"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
-msgid "Color _model"
-msgstr "Szí_nmodell"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:310
+msgid "Se_lections"
+msgstr "_Kijelölések"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
-msgid "RGB"
-msgstr "RGB"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+msgid "All"
+msgstr "Összes"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
-msgid "HSV"
-msgstr "HSV"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+msgid "Slice / Array"
+msgstr "Szelet / Tömb"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+msgid "Autoslice (fg->bg)"
+msgstr "Automatikus szeletelés (fg->bg)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+msgid "Partitioned"
+msgstr "Felosztott"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:312
+msgid "Slice _expression"
+msgstr "Szeletelés ki_fejezés"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:313
 msgid "Channel to _sort"
 msgstr "Rendezendő _csatorna"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
-msgid "Red or Hue"
-msgstr "Vörös vagy árnyalat"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:315
+msgid "_Quantization"
+msgstr "_Kvantálás"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
-msgid "Green or Saturation"
-msgstr "Zöld vagy telítettség"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
-msgid "Blue or Value"
-msgstr "Kék vagy érték"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:316
 msgid "_Ascending"
 msgstr "Nö_vekvő"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:317
+msgid "_Partitioning channel"
+msgstr "Csatorna _felosztása"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:319
+msgid "Partition q_uantization"
+msgstr "Felosztás k_vantálása"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
@@ -328,24 +407,33 @@ msgstr "Vetett árnyék _X-eltolása"
 msgid "Drop shadow _Y displacement"
 msgstr "Vetett árnyék _Y-eltolása"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:75
-msgid "Create a new brush with characters from a text sequence"
-msgstr "Új ecset létrehozása egy szöveg karaktereiből"
+#~ msgid "Color _model"
+#~ msgstr "Szí_nmodell"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:81
-msgid "New Brush from _Text..."
-msgstr "Új _ecset szövegből…"
+#~ msgid "RGB"
+#~ msgstr "RGB"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:84
-msgid "Font"
-msgstr "Betűkészlet"
+#~ msgid "HSV"
+#~ msgstr "HSV"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:85
-msgid "Pixel Size"
-msgstr "Képpontméret"
+#~ msgid "Red or Hue"
+#~ msgstr "Vörös vagy árnyalat"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:86
-#| msgid "Text file"
-msgid "Text"
-msgstr "Szöveg"
+#~ msgid "Blue or Value"
+#~ msgstr "Kék vagy érték"
 
+#~ msgid "Create a new brush with characters from a text sequence"
+#~ msgstr "Új ecset létrehozása egy szöveg karaktereiből"
+
+#~ msgid "New Brush from _Text..."
+#~ msgstr "Új _ecset szövegből…"
+
+#~ msgid "Font"
+#~ msgstr "Betűkészlet"
+
+#~ msgid "Pixel Size"
+#~ msgstr "Képpontméret"
+
+#~| msgid "Text file"
+#~ msgid "Text"
+#~ msgstr "Szöveg"
