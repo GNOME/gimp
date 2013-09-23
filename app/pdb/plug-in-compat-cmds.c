@@ -592,6 +592,103 @@ plug_in_mblur_inward_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_mosaic_invoker (GimpProcedure         *procedure,
+                        Gimp                  *gimp,
+                        GimpContext           *context,
+                        GimpProgress          *progress,
+                        const GimpValueArray  *args,
+                        GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble tile_size;
+  gdouble tile_height;
+  gdouble tile_spacing;
+  gdouble tile_neatness;
+  gint32 tile_allow_split;
+  gdouble light_dir;
+  gdouble color_variation;
+  gint32 antialiasing;
+  gint32 color_averaging;
+  gint32 tile_type;
+  gint32 tile_surface;
+  gint32 grout_color;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  tile_size = g_value_get_double (gimp_value_array_index (args, 3));
+  tile_height = g_value_get_double (gimp_value_array_index (args, 4));
+  tile_spacing = g_value_get_double (gimp_value_array_index (args, 5));
+  tile_neatness = g_value_get_double (gimp_value_array_index (args, 6));
+  tile_allow_split = g_value_get_int (gimp_value_array_index (args, 7));
+  light_dir = g_value_get_double (gimp_value_array_index (args, 8));
+  color_variation = g_value_get_double (gimp_value_array_index (args, 9));
+  antialiasing = g_value_get_int (gimp_value_array_index (args, 10));
+  color_averaging = g_value_get_int (gimp_value_array_index (args, 11));
+  tile_type = g_value_get_int (gimp_value_array_index (args, 12));
+  tile_surface = g_value_get_int (gimp_value_array_index (args, 13));
+  grout_color = g_value_get_int (gimp_value_array_index (args, 14));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglColor *fg_color;
+          GeglColor *bg_color;
+          GeglNode  *node;
+
+          if (grout_color)
+            {
+              GimpRGB fgcolor, bgcolor;
+
+              gimp_context_get_background (context, &bgcolor);
+              bg_color = gimp_gegl_color_new (&bgcolor);
+
+              gimp_context_get_foreground (context, &fgcolor);
+              fg_color = gimp_gegl_color_new (&fgcolor);
+            }
+          else
+            {
+              /* sic */
+              fg_color = gegl_color_new ("white");
+              bg_color = gegl_color_new ("black");
+            }
+
+          node = gegl_node_new_child (NULL,
+                     "operation",        "gegl:mosaic",
+                     "tile-size",        (gdouble)  tile_size,
+                     "tile-height",      (gdouble)  tile_height,
+                     "tile-spacing",     (gdouble)  tile_spacing,
+                     "tile-neatness",    (gdouble)  tile_neatness,
+                     "tile-allow-split", (gboolean) tile_allow_split,
+                     "light-dir",        (gdouble)  light_dir,
+                     "color-variation",  (gfloat)   color_variation,
+                     "antialiasing",     (gboolean) antialiasing,
+                     "color-averaging",  (gboolean) color_averaging,
+                     "tile-type",        (gint)     tile_type,
+                     "tile-surface",     (gboolean) tile_surface,
+                     "light-color",      fg_color,
+                     "joints-color",     bg_color,
+                     NULL);
+
+          g_object_unref (fg_color);
+          g_object_unref (bg_color);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Mosaic"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_pixelize_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
@@ -1879,6 +1976,114 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     "Center Y",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-mosaic
+   */
+  procedure = gimp_procedure_new (plug_in_mosaic_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-mosaic");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-mosaic",
+                                     "Convert the image into irregular tiles",
+                                     "Mosaic is a filter which transforms an image into what appears to be a mosaic, composed of small primitives, each of constant color and of an approximate size.",
+                                     "Compatibility procedure. Please see 'gegl:mosaic' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:mosaic' for credits.",
+                                     "2013",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("tile-size",
+                                                    "tile size",
+                                                    "Average diameter of each tile (in pixels)",
+                                                    1, 1000, 1,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("tile-height",
+                                                    "tile height",
+                                                    "Apparent height of each tile (in pixels)",
+                                                    1, 1000, 1,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("tile-spacing",
+                                                    "tile spacing",
+                                                    "Inter_tile spacing (in pixels)",
+                                                    0.1, 1000, 0.1,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("tile-neatness",
+                                                    "tile neatness",
+                                                    "Deviation from perfectly formed tiles",
+                                                    0, 1.0, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("tile-allow-split",
+                                                      "tile allow split",
+                                                      "Allows splitting tiles at hard edges",
+                                                      0, 1, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("light-dir",
+                                                    "light dir",
+                                                    "Direction of light_source (in degrees)",
+                                                    0, 360, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("color-variation",
+                                                    "color variation",
+                                                    "Magnitude of random color variations",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("antialiasing",
+                                                      "antialiasing",
+                                                      "Enables smoother tile output at the cost of speed",
+                                                      0, 1, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("color-averaging",
+                                                      "color averaging",
+                                                      "Tile color based on average of subsumed pixels",
+                                                      0, 1, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("tile-type",
+                                                      "tile type",
+                                                      "Tile geometry { SQUARES (0), HEXAGONS (1), OCTAGONS (2), TRIANGLES (3) }",
+                                                      0, 3, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("tile-surface",
+                                                      "tile surface",
+                                                      "Surface characteristics { SMOOTH (0), ROUGH (1) }",
+                                                      0, 1, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("grout-color",
+                                                      "grout color",
+                                                      "Grout color (black/white or fore/background) { BW (0), FG-BG (1) }",
+                                                      0, 1, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

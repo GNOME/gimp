@@ -91,7 +91,6 @@
     'lens-flare' => { ui => 1 },
     'mail' => { ui => 1, optional => 1 },
     'max-rgb' => { ui => 1 },
-    'mosaic' => { ui => 1 },
     'newsprint' => { ui => 1 },
     'nl-filter' => { ui => 1 },
     'noise-hsv' => { ui => 1 },

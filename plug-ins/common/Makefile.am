@@ -136,7 +136,6 @@ libexec_PROGRAMS = \
 	lens-flare \
 	$(MAIL) \
 	max-rgb \
-	mosaic \
 	newsprint \
 	nl-filter \
 	noise-hsv \
@@ -1808,23 +1807,6 @@ max_rgb_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(max_rgb_RC)
-
-mosaic_SOURCES = \
-	mosaic.c
-
-mosaic_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(mosaic_RC)
 
 newsprint_SOURCES = \
 	newsprint.c

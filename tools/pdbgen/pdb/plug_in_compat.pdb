@@ -610,6 +610,111 @@ CODE
     );
 }
 
+sub plug_in_mosaic {
+    $blurb = 'Convert the image into irregular tiles';
+
+    $help = <<'HELP';
+Mosaic is a filter which transforms an image into
+what appears to be a mosaic, composed of small primitives,
+each of constant color and of an approximate size.
+HELP
+
+    &std_pdb_compat('gegl:mosaic');
+    $date = '2013';
+
+    @inargs = (
+        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+          desc => 'The run mode' },
+        { name => 'image', type => 'image', dead => 1,
+          desc => 'Input image (unused)' },
+        { name => 'drawable', type => 'drawable',
+          desc => 'Input drawable' },
+        { name => 'tile_size', type => '1 <= float <= 1000',
+          desc => 'Average diameter of each tile (in pixels)' },
+        { name => 'tile_height', type => '1 <= float <= 1000',
+          desc => 'Apparent height of each tile (in pixels)' },
+        { name => 'tile_spacing', type => '0.1 <= float <= 1000',
+          desc => 'Inter_tile spacing (in pixels)' },
+        { name => 'tile_neatness', type => '0 <= float <= 1.0',
+          desc => 'Deviation from perfectly formed tiles' },
+        { name => 'tile_allow_split', type => '0 <= int32 <= 1',
+          desc => 'Allows splitting tiles at hard edges' },
+        { name => 'light_dir', type => '0 <= float <= 360',
+          desc => 'Direction of light_source (in degrees)' },
+        { name => 'color_variation', type => '0.0 <= float <= 1.0',
+          desc => 'Magnitude of random color variations' },
+        { name => 'antialiasing', type => '0 <= int32 <= 1',
+          desc => 'Enables smoother tile output at the cost of speed' },
+        { name => 'color_averaging', type => '0 <= int32 <= 1',
+          desc => 'Tile color based on average of subsumed pixels' },
+        { name => 'tile_type', type => '0 <= int32 <= 3',
+          desc => 'Tile geometry { SQUARES (0), HEXAGONS (1), OCTAGONS (2), TRIANGLES (3) }' },
+        { name => 'tile_surface', type => '0 <= int32 <= 1',
+          desc => 'Surface characteristics { SMOOTH (0), ROUGH (1) }' },
+        { name => 'grout_color', type => '0 <= int32 <= 1',
+          desc => 'Grout color (black/white or fore/background) { BW (0), FG-BG (1) }' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglColor *fg_color;
+      GeglColor *bg_color;
+      GeglNode  *node;
+
+      if (grout_color)
+        {
+          GimpRGB fgcolor, bgcolor;
+
+          gimp_context_get_background (context, &bgcolor);
+          bg_color = gimp_gegl_color_new (&bgcolor);
+
+          gimp_context_get_foreground (context, &fgcolor);
+          fg_color = gimp_gegl_color_new (&fgcolor);
+        }
+      else
+        {
+          /* sic */
+          fg_color = gegl_color_new ("white");
+          bg_color = gegl_color_new ("black");
+        }
+
+      node = gegl_node_new_child (NULL,
+                 "operation",        "gegl:mosaic",
+                 "tile-size",        (gdouble)  tile_size,
+                 "tile-height",      (gdouble)  tile_height,
+                 "tile-spacing",     (gdouble)  tile_spacing,
+                 "tile-neatness",    (gdouble)  tile_neatness,
+                 "tile-allow-split", (gboolean) tile_allow_split,
+                 "light-dir",        (gdouble)  light_dir,
+                 "color-variation",  (gfloat)   color_variation,
+                 "antialiasing",     (gboolean) antialiasing,
+                 "color-averaging",  (gboolean) color_averaging,
+                 "tile-type",        (gint)     tile_type,
+                 "tile-surface",     (gboolean) tile_surface,
+                 "light-color",      fg_color,
+                 "joints-color",     bg_color,
+                 NULL);
+
+      g_object_unref (fg_color);
+      g_object_unref (bg_color);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Mosaic"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_pixelize {
     $blurb = 'Simplify image into an array of solid-colored squares';
 
@@ -1512,6 +1617,7 @@ CODE
 	    plug_in_cubism
             plug_in_mblur
             plug_in_mblur_inward
+            plug_in_mosaic
             plug_in_pixelize
             plug_in_pixelize2
             plug_in_plasma

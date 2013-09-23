@@ -98,7 +98,6 @@ plug-ins/common/lens-distortion.c
 plug-ins/common/lens-flare.c
 plug-ins/common/mail.c
 plug-ins/common/max-rgb.c
-plug-ins/common/mosaic.c
 plug-ins/common/newsprint.c
 plug-ins/common/nl-filter.c
 plug-ins/common/noise-hsv.c

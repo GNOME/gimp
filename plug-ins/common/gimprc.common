@@ -90,7 +90,6 @@ lens_distortion_RC = lens-distortion.rc.o
 lens_flare_RC = lens-flare.rc.o
 mail_RC = mail.rc.o
 max_rgb_RC = max-rgb.rc.o
-mosaic_RC = mosaic.rc.o
 newsprint_RC = newsprint.rc.o
 nl_filter_RC = nl-filter.rc.o
 noise_hsv_RC = noise-hsv.rc.o
