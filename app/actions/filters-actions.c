@@ -211,7 +211,7 @@ static const GimpStringActionEntry filters_actions[] =
     NULL /* FIXME GIMP_HELP_FILTER_NOISE_SLUR */ },
 
   { "filters-noise-spread", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Sp_read..."), NULL, NULL,
+    NC_("filters-action", "Sp_read..."), NULL, NULL,
     "gegl:noise-spread",
     NULL /* FIXME GIMP_HELP_FILTER_NOISE_SPREAD */ },
 
