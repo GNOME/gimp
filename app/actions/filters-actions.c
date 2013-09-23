@@ -161,7 +161,7 @@ static const GimpStringActionEntry filters_actions[] =
     NULL /* FIXME GIMP_HELP_FILTER_MONO_MIXER */ },
 
   { "filters-mosaic", GIMP_STOCK_GEGL,
-    NC_("filters-action", "Mosaic..."), NULL, NULL,
+    NC_("filters-action", "_Mosaic..."), NULL, NULL,
     "gegl:mosaic",
     NULL /* FIXME GIMP_HELP_FILTER_MOSAIC */ },
 
