@@ -67,8 +67,10 @@ gimp_palette_load (GimpContext  *context,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return NULL;
     }
+
   glist = gimp_palette_load_gpl (context, filename, file, error);
   fclose (file);
+
   return glist;
 }
 
@@ -614,7 +616,8 @@ gimp_palette_load_css (GimpContext  *context,
 }
 
 GimpPaletteFileFormat
-gimp_palette_load_detect_format (const gchar *filename, FILE *file)
+gimp_palette_load_detect_format (const gchar *filename,
+                                 FILE        *file)
 {
   GimpPaletteFileFormat format = GIMP_PALETTE_FILE_FORMAT_UNKNOWN;
   gint                  fd = fileno (file);
@@ -665,6 +668,6 @@ gimp_palette_load_detect_format (const gchar *filename, FILE *file)
     }
 
   rewind (file);
+
   return format;
 }
-
