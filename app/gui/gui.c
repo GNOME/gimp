@@ -61,6 +61,7 @@
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 #include "widgets/gimplanguagestore-parser.h"
+#include "widgets/gimpaction-history.h"
 
 #include "actions/actions.h"
 #include "actions/windows-commands.h"
@@ -492,6 +493,7 @@ gui_restore_after_callback (Gimp               *gimp,
                                                     gimp,
                                                     gui_config->tearoff_menus);
   gimp_ui_manager_update (image_ui_manager, gimp);
+  gimp_action_history_init (gui_config);
 
 #ifdef GDK_WINDOWING_QUARTZ
   {
@@ -660,6 +662,7 @@ gui_exit_after_callback (Gimp     *gimp,
                                         gui_show_tooltips_notify,
                                         gimp);
 
+  gimp_action_history_exit (GIMP_GUI_CONFIG (gimp->config));
   g_object_unref (image_ui_manager);
   image_ui_manager = NULL;
 

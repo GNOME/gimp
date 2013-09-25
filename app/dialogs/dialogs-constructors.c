@@ -133,6 +133,15 @@ dialogs_file_export_new (GimpDialogFactory *factory,
 }
 
 GtkWidget *
+dialogs_action_search_get (GimpDialogFactory *factory,
+                           GimpContext       *context,
+                           GimpUIManager     *ui_manager,
+                           gint               view_size)
+{
+  return action_search_dialog_create (context->gimp);
+}
+
+GtkWidget *
 dialogs_preferences_get (GimpDialogFactory *factory,
                          GimpContext       *context,
                          GimpUIManager     *ui_manager,
@@ -193,15 +202,6 @@ dialogs_about_get (GimpDialogFactory *factory,
                    gint               view_size)
 {
   return about_dialog_create (context);
-}
-
-GtkWidget *
-dialogs_action_search_get (GimpDialogFactory *factory,
-                           GimpContext       *context,
-                           GimpUIManager     *ui_manager,
-                           gint               view_size)
-{
-  return action_search_dialog_create ();
 }
 
 GtkWidget *

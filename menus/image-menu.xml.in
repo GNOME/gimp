@@ -750,7 +750,7 @@
       <menuitem action="dialogs-tips" />
       <menuitem action="dialogs-about" />
       <separator />
-      <menuitem action="dialogs-action-search" />
+      <menuitem action="help-action-search" />
       <separator />
       <placeholder name="Programming" />
       <separator />

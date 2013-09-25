@@ -53,6 +53,7 @@
 #include "widgets/gimptooleditor.h"
 #include "widgets/gimpwidgets-constructors.h"
 #include "widgets/gimpwidgets-utils.h"
+#include "widgets/gimpaction-history.h"
 
 #include "menus/menus.h"
 
@@ -113,6 +114,8 @@ static void   prefs_devices_save_callback         (GtkWidget  *widget,
                                                    Gimp       *gimp);
 static void   prefs_devices_clear_callback        (GtkWidget  *widget,
                                                    Gimp       *gimp);
+static void   prefs_search_empty_callback         (GtkWidget  *widget,
+                                                   gpointer    user_data);
 static void   prefs_tool_options_save_callback    (GtkWidget  *widget,
                                                    Gimp       *gimp);
 static void   prefs_tool_options_clear_callback   (GtkWidget  *widget,
@@ -643,6 +646,13 @@ prefs_devices_clear_callback (GtkWidget *widget,
                      _("Your input device settings will be reset to "
                        "default values the next time you start GIMP."));
     }
+}
+
+static void
+prefs_search_empty_callback (GtkWidget  *widget,
+                             gpointer    user_data)
+{
+  gimp_action_history_empty ();
 }
 
 static void
@@ -1670,9 +1680,26 @@ prefs_dialog_new (Gimp       *gimp,
                             _("H_elp browser to use:"),
                             GTK_TABLE (table), 0, size_group);
 
+  /* Action Search */
+  vbox2 = prefs_frame_new (_("Action Search"), GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+
+  prefs_check_button_add (object, "search-show-unavailable-actions",
+                          _("Show _unavailable actions"),
+                          GTK_BOX (vbox2));
+  prefs_spin_button_add (object, "action-history-size", 1.0, 10.0, 0,
+                         _("Maximum History Size:"),
+                         GTK_TABLE (table), 0, size_group);
+
+  button = prefs_button_add (GTK_STOCK_CLEAR,
+                             _("Clear Action History"),
+                             GTK_BOX (vbox2));
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (prefs_search_empty_callback),
+                    NULL);
+
   g_object_unref (size_group);
   size_group = NULL;
-
 
   /******************/
   /*  Tool Options  */

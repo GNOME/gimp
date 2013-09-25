@@ -474,4 +474,10 @@ N_("When enabled, uses OpenCL for some operations.")
 "Bugs in event history buffer are frequent so in case of cursor " \
 "offset problems turning it off helps."
 
+#define SEARCH_SHOW_UNAVAILABLE_BLURB \
+"When enabled, a search of actions will also return inactive actions."
+
+#define ACTION_HISTORY_SIZE_BLURB \
+"The maximum number of actions saved in history."
+
 #endif  /* __GIMP_RC_BLURBS_H__ */

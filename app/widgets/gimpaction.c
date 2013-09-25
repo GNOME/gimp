@@ -37,6 +37,7 @@
 #include "core/gimpviewable.h"
 
 #include "gimpaction.h"
+#include "gimpaction-history.h"
 #include "gimpview.h"
 #include "gimpviewrenderer.h"
 
@@ -52,6 +53,7 @@ enum
 };
 
 
+static void   gimp_action_constructed       (GObject          *object);
 static void   gimp_action_finalize          (GObject          *object);
 static void   gimp_action_set_property      (GObject          *object,
                                              guint             prop_id,
@@ -85,6 +87,7 @@ gimp_action_class_init (GimpActionClass *klass)
   GtkActionClass *action_class = GTK_ACTION_CLASS (klass);
   GimpRGB         black;
 
+  object_class->constructed   = gimp_action_constructed;
   object_class->finalize      = gimp_action_finalize;
   object_class->set_property  = gimp_action_set_property;
   object_class->get_property  = gimp_action_get_property;
@@ -135,6 +138,16 @@ gimp_action_init (GimpAction *action)
 
   g_signal_connect (action, "notify::tooltip",
                     G_CALLBACK (gimp_action_tooltip_notify),
+                    NULL);
+}
+
+static void
+gimp_action_constructed (GObject *object)
+{
+  GimpAction *action = GIMP_ACTION (object);
+
+  g_signal_connect (action, "activate",
+                    (GCallback) gimp_action_history_activate_callback,
                     NULL);
 }
 

@@ -47,7 +47,13 @@ static const GimpActionEntry help_actions[] =
     NC_("help-action", "_Context Help"), "<shift>F1",
     NC_("help-action", "Show the help for a specific user interface item"),
     G_CALLBACK (help_context_help_cmd_callback),
-    GIMP_HELP_HELP_CONTEXT }
+    GIMP_HELP_HELP_CONTEXT },
+
+  { "help-action-search", GTK_STOCK_FIND,
+    NC_("help-action", "_Search and Run a Command"), "slash",
+    NC_("help-action", "Search commands by keyword, and run them"),
+    G_CALLBACK (help_search_actions_cmd_callback),
+    GIMP_HELP_ACTION_SEARCH_DIALOG }
 };
 
 
