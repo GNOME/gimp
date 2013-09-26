@@ -592,7 +592,7 @@ ui_manager_new (GtkWidget *window)
   static GtkActionEntry actions[] =
   {
     { "step-back", GTK_STOCK_MEDIA_PREVIOUS,
-      N_("_Step_back"), "d", N_("Step back to previous frame"),
+      N_("Step _back"), "d", N_("Step back to previous frame"),
       G_CALLBACK (step_back_callback) },
 
     { "step", GTK_STOCK_MEDIA_NEXT,
