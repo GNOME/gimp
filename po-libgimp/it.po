@@ -1,7 +1,7 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000-2002
-# Marco Ciampa <ciampix@libero.it>, 2003-2012
+# Marco Ciampa <ciampix@libero.it>, 2003-2013
 # Alessandro Falappa <alessandro@falappa.net>, 2007
 # Luca Ferretti <elle.uca@libero.it>, 2006, 2009.
 #
@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-03 20:28+0100\n"
-"PO-Revision-Date: 2012-12-03 20:29+0100\n"
+"POT-Creation-Date: 2013-09-26 12:01+0200\n"
+"PO-Revision-Date: 2013-09-26 12:02+0200\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -40,22 +40,22 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1080
+#: ../libgimp/gimp.c:1096
 msgid "success"
 msgstr "azione riuscita"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1084
+#: ../libgimp/gimp.c:1100
 msgid "execution error"
 msgstr "errore di esecuzione"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1088
+#: ../libgimp/gimp.c:1104
 msgid "calling error"
 msgstr "errore di chiamata"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1092
+#: ../libgimp/gimp.c:1108
 msgid "cancelled"
 msgstr "annullato"
 
@@ -589,344 +589,349 @@ msgctxt "dodge-burn-type"
 msgid "Burn"
 msgstr "Brucia"
 
-#: ../libgimpbase/gimpbaseenums.c:400
+#: ../libgimpbase/gimpbaseenums.c:402
 msgctxt "gradient-type"
 msgid "Linear"
 msgstr "Lineare"
 
-#: ../libgimpbase/gimpbaseenums.c:401
+#: ../libgimpbase/gimpbaseenums.c:403
 msgctxt "gradient-type"
 msgid "Bi-linear"
 msgstr "Bi-lineare"
 
-#: ../libgimpbase/gimpbaseenums.c:402
+#: ../libgimpbase/gimpbaseenums.c:404
 msgctxt "gradient-type"
 msgid "Radial"
 msgstr "Radiale"
 
-#: ../libgimpbase/gimpbaseenums.c:403
+#: ../libgimpbase/gimpbaseenums.c:405
 msgctxt "gradient-type"
 msgid "Square"
 msgstr "Quadrangolare"
 
-#: ../libgimpbase/gimpbaseenums.c:404
+#: ../libgimpbase/gimpbaseenums.c:406
 msgctxt "gradient-type"
 msgid "Conical (sym)"
 msgstr "Conica (simm.)"
 
-#: ../libgimpbase/gimpbaseenums.c:405
+#: ../libgimpbase/gimpbaseenums.c:407
 msgctxt "gradient-type"
 msgid "Conical (asym)"
 msgstr "Conica (asimm.)"
 
 # era "Conformata", ma mi pare errato...
-#: ../libgimpbase/gimpbaseenums.c:406
+#: ../libgimpbase/gimpbaseenums.c:408
 msgctxt "gradient-type"
 msgid "Shaped (angular)"
 msgstr "Sagomata (angolare)"
 
-#: ../libgimpbase/gimpbaseenums.c:407
+#: ../libgimpbase/gimpbaseenums.c:409
 msgctxt "gradient-type"
 msgid "Shaped (spherical)"
 msgstr "Sagomata (sferica)"
 
-#: ../libgimpbase/gimpbaseenums.c:408
+#: ../libgimpbase/gimpbaseenums.c:410
 msgctxt "gradient-type"
 msgid "Shaped (dimpled)"
 msgstr "Sagomata (curvata)"
 
-#: ../libgimpbase/gimpbaseenums.c:409
+#: ../libgimpbase/gimpbaseenums.c:411
 msgctxt "gradient-type"
 msgid "Spiral (cw)"
 msgstr "Spiraliforme (orario)"
 
-#: ../libgimpbase/gimpbaseenums.c:410
+#: ../libgimpbase/gimpbaseenums.c:412
 msgctxt "gradient-type"
 msgid "Spiral (ccw)"
 msgstr "Spiraliforme (antiorario)"
 
-#: ../libgimpbase/gimpbaseenums.c:442
+#: ../libgimpbase/gimpbaseenums.c:444
 msgctxt "grid-style"
 msgid "Intersections (dots)"
 msgstr "Intersezioni (punti)"
 
-#: ../libgimpbase/gimpbaseenums.c:443
+#: ../libgimpbase/gimpbaseenums.c:445
 msgctxt "grid-style"
 msgid "Intersections (crosshairs)"
 msgstr "Intersezioni (crocini)"
 
 # Tratteggiata? nel senso linea?
-#: ../libgimpbase/gimpbaseenums.c:444
+#: ../libgimpbase/gimpbaseenums.c:446
 msgctxt "grid-style"
 msgid "Dashed"
 msgstr "Tratteggio"
 
 # vedi sopra
-#: ../libgimpbase/gimpbaseenums.c:445
+#: ../libgimpbase/gimpbaseenums.c:447
 msgctxt "grid-style"
 msgid "Double dashed"
 msgstr "Doppio tratteggio"
 
 # vedi sopra
-#: ../libgimpbase/gimpbaseenums.c:446
+#: ../libgimpbase/gimpbaseenums.c:448
 msgctxt "grid-style"
 msgid "Solid"
 msgstr "Continuo"
 
 # enumer. per tipo di icona
-#: ../libgimpbase/gimpbaseenums.c:476
+#: ../libgimpbase/gimpbaseenums.c:478
 msgctxt "icon-type"
 msgid "Stock ID"
 msgstr "Stock ID"
 
-#: ../libgimpbase/gimpbaseenums.c:477
+#: ../libgimpbase/gimpbaseenums.c:479
 msgctxt "icon-type"
 msgid "Inline pixbuf"
 msgstr "Pixbuf incorporata"
 
-#: ../libgimpbase/gimpbaseenums.c:478
+#: ../libgimpbase/gimpbaseenums.c:480
 msgctxt "icon-type"
 msgid "Image file"
 msgstr "File immagine"
 
-#: ../libgimpbase/gimpbaseenums.c:508
+#: ../libgimpbase/gimpbaseenums.c:510
 msgctxt "image-base-type"
 msgid "RGB color"
 msgstr "Colore RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:509
+#: ../libgimpbase/gimpbaseenums.c:511
 msgctxt "image-base-type"
 msgid "Grayscale"
 msgstr "Scala di grigi"
 
-#: ../libgimpbase/gimpbaseenums.c:510
+#: ../libgimpbase/gimpbaseenums.c:512
 msgctxt "image-base-type"
 msgid "Indexed color"
 msgstr "Colore indicizzato"
 
-#: ../libgimpbase/gimpbaseenums.c:543
+#: ../libgimpbase/gimpbaseenums.c:545
 msgctxt "image-type"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:544
+#: ../libgimpbase/gimpbaseenums.c:546
 msgctxt "image-type"
 msgid "RGB-alpha"
 msgstr "RGB-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:545
+#: ../libgimpbase/gimpbaseenums.c:547
 msgctxt "image-type"
 msgid "Grayscale"
 msgstr "Scala di grigi"
 
-#: ../libgimpbase/gimpbaseenums.c:546
+#: ../libgimpbase/gimpbaseenums.c:548
 msgctxt "image-type"
 msgid "Grayscale-alpha"
 msgstr "Scala di grigi-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:547
+#: ../libgimpbase/gimpbaseenums.c:549
 msgctxt "image-type"
 msgid "Indexed"
 msgstr "Indicizzata"
 
-#: ../libgimpbase/gimpbaseenums.c:548
+#: ../libgimpbase/gimpbaseenums.c:550
 msgctxt "image-type"
 msgid "Indexed-alpha"
 msgstr "Indicizzata-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:579
+#: ../libgimpbase/gimpbaseenums.c:582
 msgctxt "interpolation-type"
 msgid "None"
 msgstr "Nessuna"
 
-#: ../libgimpbase/gimpbaseenums.c:580
+#: ../libgimpbase/gimpbaseenums.c:583
 msgctxt "interpolation-type"
 msgid "Linear"
 msgstr "Lineare"
 
-#: ../libgimpbase/gimpbaseenums.c:581
+#: ../libgimpbase/gimpbaseenums.c:584
 msgctxt "interpolation-type"
 msgid "Cubic"
 msgstr "Cubica"
 
-#: ../libgimpbase/gimpbaseenums.c:582
+#: ../libgimpbase/gimpbaseenums.c:585
+msgctxt "interpolation-type"
+msgid "NoHalo"
+msgstr "NoHalo"
+
+#: ../libgimpbase/gimpbaseenums.c:586
 msgctxt "interpolation-type"
 msgid "LoHalo"
 msgstr "LoHalo"
 
 # paint-application-mode
-#: ../libgimpbase/gimpbaseenums.c:611
+#: ../libgimpbase/gimpbaseenums.c:615
 msgctxt "paint-application-mode"
 msgid "Constant"
 msgstr "Costante"
 
 # paint-application-mode
-#: ../libgimpbase/gimpbaseenums.c:612
+#: ../libgimpbase/gimpbaseenums.c:616
 msgctxt "paint-application-mode"
 msgid "Incremental"
 msgstr "Incrementale"
 
 # repeat-mode
-#: ../libgimpbase/gimpbaseenums.c:642
+#: ../libgimpbase/gimpbaseenums.c:646
 msgctxt "repeat-mode"
 msgid "None"
 msgstr "Nessuna"
 
 # repeat-mode
-#: ../libgimpbase/gimpbaseenums.c:643
+#: ../libgimpbase/gimpbaseenums.c:647
 msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "Onda a dente di sega"
 
 # repeat-mode
-#: ../libgimpbase/gimpbaseenums.c:644
+#: ../libgimpbase/gimpbaseenums.c:648
 msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "Onda triangolare"
 
-#: ../libgimpbase/gimpbaseenums.c:674
+#: ../libgimpbase/gimpbaseenums.c:678
 msgctxt "run-mode"
 msgid "Run interactively"
 msgstr "Esegui interattivamente"
 
-#: ../libgimpbase/gimpbaseenums.c:675
+#: ../libgimpbase/gimpbaseenums.c:679
 msgctxt "run-mode"
 msgid "Run non-interactively"
 msgstr "Esegui non-interattivamente"
 
-#: ../libgimpbase/gimpbaseenums.c:676
+#: ../libgimpbase/gimpbaseenums.c:680
 msgctxt "run-mode"
 msgid "Run with last used values"
 msgstr "Esegui con gli ultimi parametri usati"
 
-#: ../libgimpbase/gimpbaseenums.c:705
+#: ../libgimpbase/gimpbaseenums.c:709
 msgctxt "size-type"
 msgid "Pixels"
 msgstr "Pixel"
 
-#: ../libgimpbase/gimpbaseenums.c:706
+#: ../libgimpbase/gimpbaseenums.c:710
 msgctxt "size-type"
 msgid "Points"
 msgstr "Punti"
 
-#: ../libgimpbase/gimpbaseenums.c:736
+#: ../libgimpbase/gimpbaseenums.c:740
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Ombre"
 
-#: ../libgimpbase/gimpbaseenums.c:737
+#: ../libgimpbase/gimpbaseenums.c:741
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Mezzitoni"
 
-#: ../libgimpbase/gimpbaseenums.c:738
+#: ../libgimpbase/gimpbaseenums.c:742
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Alteluci"
 
-#: ../libgimpbase/gimpbaseenums.c:767
+#: ../libgimpbase/gimpbaseenums.c:771
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Normale (avanti)"
 
-#: ../libgimpbase/gimpbaseenums.c:768
+#: ../libgimpbase/gimpbaseenums.c:772
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Correttiva (indietro)"
 
-#: ../libgimpbase/gimpbaseenums.c:799
+#: ../libgimpbase/gimpbaseenums.c:803
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Regola"
 
-#: ../libgimpbase/gimpbaseenums.c:800
+#: ../libgimpbase/gimpbaseenums.c:804
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Taglia"
 
-#: ../libgimpbase/gimpbaseenums.c:801
+#: ../libgimpbase/gimpbaseenums.c:805
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Ritaglia al risultato"
 
-#: ../libgimpbase/gimpbaseenums.c:802
+#: ../libgimpbase/gimpbaseenums.c:806
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Ritaglia all'aspetto"
 
-#: ../libgimpbase/gimpbaseenums.c:935
+#: ../libgimpbase/gimpbaseenums.c:939
 msgctxt "pdb-proc-type"
 msgid "Internal GIMP procedure"
 msgstr "Procedura interna di GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:936
+#: ../libgimpbase/gimpbaseenums.c:940
 msgctxt "pdb-proc-type"
 msgid "GIMP Plug-In"
 msgstr "Plug-in di GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:937
+#: ../libgimpbase/gimpbaseenums.c:941
 msgctxt "pdb-proc-type"
 msgid "GIMP Extension"
 msgstr "Estensione di GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:938
+#: ../libgimpbase/gimpbaseenums.c:942
 msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
 msgstr "Procedura temporanea"
 
-#: ../libgimpbase/gimpbaseenums.c:1105
+#: ../libgimpbase/gimpbaseenums.c:1109
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "Da sinistra a destra"
 
-#: ../libgimpbase/gimpbaseenums.c:1106
+#: ../libgimpbase/gimpbaseenums.c:1110
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "Da destra a sinistra"
 
-#: ../libgimpbase/gimpbaseenums.c:1137
+#: ../libgimpbase/gimpbaseenums.c:1141
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Nessuno"
 
-#: ../libgimpbase/gimpbaseenums.c:1138
+#: ../libgimpbase/gimpbaseenums.c:1142
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Leggero"
 
-#: ../libgimpbase/gimpbaseenums.c:1139
+#: ../libgimpbase/gimpbaseenums.c:1143
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Medio"
 
-#: ../libgimpbase/gimpbaseenums.c:1140
+#: ../libgimpbase/gimpbaseenums.c:1144
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "Pieno"
 
-#: ../libgimpbase/gimpbaseenums.c:1171
+#: ../libgimpbase/gimpbaseenums.c:1175
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Allineato a sinistra"
 
-#: ../libgimpbase/gimpbaseenums.c:1172
+#: ../libgimpbase/gimpbaseenums.c:1176
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Allineato a destra"
 
-#: ../libgimpbase/gimpbaseenums.c:1173
+#: ../libgimpbase/gimpbaseenums.c:1177
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Centrato"
 
-#: ../libgimpbase/gimpbaseenums.c:1174
+#: ../libgimpbase/gimpbaseenums.c:1178
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Giustificato"
 
 #: ../libgimpbase/gimputils.c:178 ../libgimpbase/gimputils.c:183
-#: ../modules/color-selector-cmyk-lcms.c:442
-#: ../modules/color-selector-cmyk-lcms.c:465
+#: ../modules/color-selector-cmyk-lcms.c:417
+#: ../modules/color-selector-cmyk-lcms.c:440
 #: ../modules/display-filter-lcms.c:209
 msgid "(invalid UTF-8 string)"
 msgstr "(stringa UTF-8 non valida)"
@@ -1056,8 +1061,8 @@ msgid "while parsing token '%s': %s"
 msgstr "durante l'analisi del token \"%s\": %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:482
-#: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:560
-#: ../libgimpconfig/gimpscanner.c:642
+#: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:595
+#: ../libgimpconfig/gimpscanner.c:677
 #: ../libgimpwidgets/gimpcolorprofilestore.c:655
 msgid "fatal parse error"
 msgstr "errore di analisi irrimediabile"
@@ -1113,12 +1118,12 @@ msgid "invalid UTF-8 string"
 msgstr "stringa UTF-8 non valida"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpscanner.c:432
+#: ../libgimpconfig/gimpscanner.c:467
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "atteso \"yes\" o \"no\" per il token booleano, ottenuto \"%s\""
 
-#: ../libgimpconfig/gimpscanner.c:669
+#: ../libgimpconfig/gimpscanner.c:704
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Errore durante l'analisi di \"%s\" alla riga %d: %s"
@@ -1146,7 +1151,7 @@ msgstr "Caricamento non riuscito"
 msgid "Not loaded"
 msgstr "Non caricato"
 
-#: ../libgimpthumb/gimpthumb-utils.c:157
+#: ../libgimpthumb/gimpthumb-utils.c:153
 #, c-format
 msgid ""
 "Cannot determine a valid home directory.\n"
@@ -1156,7 +1161,7 @@ msgstr ""
 "Le miniature saranno perciò memorizzate nella cartella per i file temporanei "
 "(%s)."
 
-#: ../libgimpthumb/gimpthumb-utils.c:281 ../libgimpthumb/gimpthumb-utils.c:349
+#: ../libgimpthumb/gimpthumb-utils.c:277 ../libgimpthumb/gimpthumb-utils.c:345
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Creazione della cartella \"%s\" per le miniature non riuscita."
@@ -1326,7 +1331,7 @@ msgstr "Dimensione scacco"
 msgid "Check Style"
 msgstr "Stile scacchi"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1879
+#: ../libgimpwidgets/gimppropwidgets.c:1893
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -1382,8 +1387,8 @@ msgid "L_ine Spacing"
 msgstr "Spaziatura r_ighe"
 
 #: ../libgimpwidgets/gimpstock.c:204
-msgid "_Resize"
-msgstr "_Ridimensiona"
+msgid "Re_size"
+msgstr "Ridimen_siona"
 
 #: ../libgimpwidgets/gimpstock.c:205 ../libgimpwidgets/gimpstock.c:340
 msgid "_Scale"
@@ -1393,7 +1398,7 @@ msgstr "_Scala"
 msgid "Cr_op"
 msgstr "Rita_glia"
 
-#: ../libgimpwidgets/gimpstock.c:335 ../libgimpwidgets/gimpstock.c:345
+#: ../libgimpwidgets/gimpstock.c:335 ../libgimpwidgets/gimpstock.c:346
 msgid "_Transform"
 msgstr "_Trasforma"
 
@@ -1401,7 +1406,7 @@ msgstr "_Trasforma"
 msgid "_Rotate"
 msgstr "_Ruota"
 
-#: ../libgimpwidgets/gimpstock.c:341
+#: ../libgimpwidgets/gimpstock.c:342
 msgid "_Shear"
 msgstr "_Inclina"
 
@@ -1554,64 +1559,64 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Riduci ingrandimento"
 
-#: ../modules/color-selector-cmyk-lcms.c:87
+#: ../modules/color-selector-cmyk-lcms.c:86
 msgid "CMYK color selector (using color profile)"
 msgstr "Selettore colore CMYK (che usa i profili di colore)"
 
-#: ../modules/color-selector-cmyk-lcms.c:150
+#: ../modules/color-selector-cmyk-lcms.c:120
 #: ../modules/color-selector-cmyk.c:102
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/color-selector-cmyk-lcms.c:167
+#: ../modules/color-selector-cmyk-lcms.c:142
 #: ../modules/color-selector-cmyk.c:125
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/color-selector-cmyk-lcms.c:169
+#: ../modules/color-selector-cmyk-lcms.c:144
 #: ../modules/color-selector-cmyk.c:127
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/color-selector-cmyk-lcms.c:171
+#: ../modules/color-selector-cmyk-lcms.c:146
 #: ../modules/color-selector-cmyk.c:129
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/color-selector-cmyk-lcms.c:173
+#: ../modules/color-selector-cmyk-lcms.c:148
 #: ../modules/color-selector-cmyk.c:131
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/color-selector-cmyk-lcms.c:177
+#: ../modules/color-selector-cmyk-lcms.c:152
 #: ../modules/color-selector-cmyk.c:135
 msgid "Cyan"
 msgstr "Ciano"
 
-#: ../modules/color-selector-cmyk-lcms.c:178
+#: ../modules/color-selector-cmyk-lcms.c:153
 #: ../modules/color-selector-cmyk.c:136
 msgid "Magenta"
 msgstr "Magenta"
 
-#: ../modules/color-selector-cmyk-lcms.c:179
+#: ../modules/color-selector-cmyk-lcms.c:154
 #: ../modules/color-selector-cmyk.c:137
 msgid "Yellow"
 msgstr "Giallo"
 
-#: ../modules/color-selector-cmyk-lcms.c:180
+#: ../modules/color-selector-cmyk-lcms.c:155
 #: ../modules/color-selector-cmyk.c:138
 msgid "Black"
 msgstr "Nero"
 
-#: ../modules/color-selector-cmyk-lcms.c:413
+#: ../modules/color-selector-cmyk-lcms.c:388
 msgid "Profile: (none)"
 msgstr "Profilo: (nessuno)"
 
-#: ../modules/color-selector-cmyk-lcms.c:468
+#: ../modules/color-selector-cmyk-lcms.c:443
 #, c-format
 msgid "Profile: %s"
 msgstr "Profilo: %s"
@@ -1640,11 +1645,11 @@ msgstr "Acquerelli"
 msgid "Pressure"
 msgstr "Pressione"
 
-#: ../modules/color-selector-wheel.c:72
+#: ../modules/color-selector-wheel.c:70
 msgid "HSV color wheel"
 msgstr "Ruota di colori HSV"
 
-#: ../modules/color-selector-wheel.c:103
+#: ../modules/color-selector-wheel.c:102
 msgid "Wheel"
 msgstr "Ruota"
 
@@ -2025,11 +2030,11 @@ msgstr "Tipo di _deficit di colore:"
 msgid "Gamma color display filter"
 msgstr "Filtro di visualizzazione gamma dei colori"
 
-#: ../modules/display-filter-gamma.c:126
+#: ../modules/display-filter-gamma.c:127
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../modules/display-filter-gamma.c:238
+#: ../modules/display-filter-gamma.c:239
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
@@ -2037,11 +2042,11 @@ msgstr "_Gamma:"
 msgid "High Contrast color display filter"
 msgstr "Filtro di visualizzazione colore a contrasto elevato"
 
-#: ../modules/display-filter-high-contrast.c:126
+#: ../modules/display-filter-high-contrast.c:127
 msgid "Contrast"
 msgstr "Contrasto"
 
-#: ../modules/display-filter-high-contrast.c:238
+#: ../modules/display-filter-high-contrast.c:239
 msgid "Contrast c_ycles:"
 msgstr "_Cicli di contrasto:"
 
@@ -2092,33 +2097,30 @@ msgstr "Profilo di simulazione di stampa:"
 msgid "Color proof filter using ICC color profile"
 msgstr "Filtro a prova di colore usando i profili di colore ICC"
 
-#: ../modules/display-filter-proof.c:142
+#: ../modules/display-filter-proof.c:144
 msgid "Color Proof"
 msgstr "Prova di colore"
 
-#: ../modules/display-filter-proof.c:365
+#: ../modules/display-filter-proof.c:367
 msgid "Choose an ICC Color Profile"
 msgstr "Scegliere un profilo di colore ICC"
 
-#: ../modules/display-filter-proof.c:392
+#: ../modules/display-filter-proof.c:394
 msgid "All files (*.*)"
 msgstr "Tutti i file (*.*)"
 
-#: ../modules/display-filter-proof.c:397
+#: ../modules/display-filter-proof.c:399
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Profilo colore ICC (*.icc, *.icm)"
 
-#: ../modules/display-filter-proof.c:455
+#: ../modules/display-filter-proof.c:457
 msgid "_Profile:"
 msgstr "_Profilo:"
 
-#: ../modules/display-filter-proof.c:461
+#: ../modules/display-filter-proof.c:463
 msgid "_Intent:"
 msgstr "_Intento:"
 
-#: ../modules/display-filter-proof.c:466
+#: ../modules/display-filter-proof.c:468
 msgid "_Black Point Compensation"
 msgstr "Compensazione del punto _nero"
-
-#~ msgid "Page 000"
-#~ msgstr "Pagina 000"
