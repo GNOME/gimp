@@ -67,7 +67,7 @@ sub declare_args {
     local $result = "";
 
     foreach (@_) {
-	my @args = @{$proc->{$_}} if exists $proc->{$_};
+	my @args = @{$proc->{$_}} if (defined $proc->{$_});
 
 	foreach (@args) {
 	    my ($type, $name) = &arg_parse($_->{type});
@@ -104,7 +104,7 @@ sub marshal_inargs {
     my $result = "";
     my %decls;
 
-    my @inargs = @{$proc->{inargs}} if exists $proc->{inargs};
+    my @inargs = @{$proc->{inargs}} if (defined $proc->{inargs});
 
     foreach (@inargs) {
 	my($pdbtype, @typeinfo) = &arg_parse($_->{type});
@@ -132,7 +132,7 @@ sub marshal_outargs {
     my $proc = shift;
     my $result;
     my $argc = 0;
-    my @outargs = @{$proc->{outargs}} if exists $proc->{outargs};
+    my @outargs = @{$proc->{outargs}} if (defined $proc->{outargs});
 
     if ($success) {
 	$result = <<CODE;
@@ -569,8 +569,8 @@ sub generate {
 	my $proc = $main::pdb{$name};
 	my $out = \%{$out{$proc->{group}}};
 
-	my @inargs = @{$proc->{inargs}} if exists $proc->{inargs};
-	my @outargs = @{$proc->{outargs}} if exists $proc->{outargs};
+	my @inargs = @{$proc->{inargs}} if (defined $proc->{inargs});
+	my @outargs = @{$proc->{outargs}} if (defined $proc->{outargs});
 
 	my $help = $proc->{help};
 

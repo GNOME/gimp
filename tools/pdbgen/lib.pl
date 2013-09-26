@@ -78,8 +78,8 @@ sub generate {
 	my $proc = $main::pdb{$name};
 	my $out = \%{$out{$proc->{group}}};
 
-	my @inargs = @{$proc->{inargs}} if exists $proc->{inargs};
-	my @outargs = @{$proc->{outargs}} if exists $proc->{outargs};
+	my @inargs = @{$proc->{inargs}} if (defined $proc->{inargs});
+	my @outargs = @{$proc->{outargs}} if (defined $proc->{outargs});
 
 	my $funcname = "gimp_$name"; my $wrapped = "";
 	my %usednames;
