@@ -138,7 +138,6 @@ libexec_PROGRAMS = \
 	max-rgb \
 	newsprint \
 	nl-filter \
-	noise-hsv \
 	noise-rgb \
 	noise-solid \
 	nova \
@@ -1841,23 +1840,6 @@ nl_filter_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(nl_filter_RC)
-
-noise_hsv_SOURCES = \
-	noise-hsv.c
-
-noise_hsv_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(noise_hsv_RC)
 
 noise_rgb_SOURCES = \
 	noise-rgb.c

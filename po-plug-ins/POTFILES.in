@@ -100,7 +100,6 @@ plug-ins/common/mail.c
 plug-ins/common/max-rgb.c
 plug-ins/common/newsprint.c
 plug-ins/common/nl-filter.c
-plug-ins/common/noise-hsv.c
 plug-ins/common/noise-rgb.c
 plug-ins/common/noise-solid.c
 plug-ins/common/nova.c

@@ -93,7 +93,6 @@
     'max-rgb' => { ui => 1 },
     'newsprint' => { ui => 1 },
     'nl-filter' => { ui => 1 },
-    'noise-hsv' => { ui => 1 },
     'noise-rgb' => { ui => 1 },
     'noise-solid' => { ui => 1 },
     'nova' => { ui => 1 },

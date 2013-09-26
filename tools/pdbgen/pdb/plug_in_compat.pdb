@@ -437,6 +437,67 @@ CODE
     );
 }
 
+sub plug_in_hsv_noise {
+    $blurb = 'Randomize hue, saturation and value independently';
+
+    $help = <<'HELP';
+Scattering pixel values in HSV space
+HELP
+
+    &std_pdb_compat('gegl:noise-hsv');
+    $date = '2013';
+
+    @inargs = (
+        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+          desc => 'The run mode' },
+        { name => 'image', type => 'image', dead => 1,
+          desc => 'Input image (unused)' },
+        { name => 'drawable', type => 'drawable',
+          desc => 'Input drawable' },
+        { name => 'holdness', type => '1 <= int32 <= 8',
+          desc => 'Convolution strength' },
+        { name => 'hue_distance', type => '0 <= int32 <= 180',
+          desc => 'Scattering of hue angle' },
+        { name => 'saturation_distance', type => '0 <= int32 <= 255',
+          desc => 'Distribution distance on saturation axis' },
+        { name => 'value_distance', type => '0 <= int32 <= 255',
+          desc => 'Distribution distance on value axis' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode  *node;
+
+      gdouble saturation = saturation_distance / 255.0;
+      gdouble value = value_distance / 255.0;
+
+
+      node = gegl_node_new_child (NULL,
+                                  "operation",           "gegl:noise-hsv",
+                                  "holdness",            (gint)    holdness,
+                                  "hue-distance",        (gdouble) hue_distance,
+                                  "saturation-distance", (gdouble) saturation,
+                                  "value-distance",      (gdouble) value,
+                                  NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Noise HSV"),
+                                     node);
+
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_mblur {
     $blurb = 'Simulate movement using directional blur';
 
@@ -1615,6 +1676,7 @@ CODE
             plug_in_colors_channel_mixer
             plug_in_colortoalpha
 	    plug_in_cubism
+	    plug_in_hsv_noise
             plug_in_mblur
             plug_in_mblur_inward
             plug_in_mosaic

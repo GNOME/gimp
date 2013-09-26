@@ -434,6 +434,60 @@ plug_in_cubism_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_hsv_noise_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 holdness;
+  gint32 hue_distance;
+  gint32 saturation_distance;
+  gint32 value_distance;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  holdness = g_value_get_int (gimp_value_array_index (args, 3));
+  hue_distance = g_value_get_int (gimp_value_array_index (args, 4));
+  saturation_distance = g_value_get_int (gimp_value_array_index (args, 5));
+  value_distance = g_value_get_int (gimp_value_array_index (args, 6));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode  *node;
+
+          gdouble saturation = saturation_distance / 255.0;
+          gdouble value = value_distance / 255.0;
+
+          node = gegl_node_new_child (NULL,
+                                      "operation",           "gegl:noise-hsv",
+                                      "holdness",            (gint)    holdness,
+                                      "hue-distance",        (gdouble) hue_distance,
+                                      "saturation-distance", (gdouble) saturation,
+                                      "value-distance",      (gdouble) value,
+                                      NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Noise HSV"),
+                                         node);
+
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_mblur_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
@@ -1843,6 +1897,66 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                       "bg color",
                                                       "Background color { BLACK (0), BG (1) }",
                                                       0, 1, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-hsv-noise
+   */
+  procedure = gimp_procedure_new (plug_in_hsv_noise_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-hsv-noise");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-hsv-noise",
+                                     "Randomize hue, saturation and value independently",
+                                     "Scattering pixel values in HSV space",
+                                     "Compatibility procedure. Please see 'gegl:noise-hsv' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:noise-hsv' for credits.",
+                                     "2013",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("holdness",
+                                                      "holdness",
+                                                      "Convolution strength",
+                                                      1, 8, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("hue-distance",
+                                                      "hue distance",
+                                                      "Scattering of hue angle",
+                                                      0, 180, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("saturation-distance",
+                                                      "saturation distance",
+                                                      "Distribution distance on saturation axis",
+                                                      0, 255, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("value-distance",
+                                                      "value distance",
+                                                      "Distribution distance on value axis",
+                                                      0, 255, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
