@@ -8,7 +8,6 @@
 #include "gimp-intl.h"
 
 /* enumerations from "./core-enums.h" */
-
 GType
 gimp_shape_type_get_type (void)
 {
@@ -24,11 +23,11 @@ gimp_shape_type_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_SHAPE_RECTANGLE, NC_("shape-type", "Rectnagle"), NULL },
-    { GIMP_SHAPE_ELLIPSE, NC_("shape-type", "Ellipse"), NULL },
-    { GIMP_SHAPE_ROUNDED_RECT, NC_("shape-type", "Rounded Rectangle"), NULL },
-    { GIMP_SHAPE_N_POLYGON, NC_("shape-type", "n Polygon"), NULL },
-    { GIMP_SHAPE_SINGLE_ROW, NC_("shaoe-type", "Single Row"), NULL },
+    { GIMP_SHAPE_RECTANGLE, "GIMP_SHAPE_RECTANGLE", NULL },
+    { GIMP_SHAPE_ELLIPSE, "GIMP_SHAPE_ELLIPSE", NULL },
+    { GIMP_SHAPE_ROUNDED_RECT, "GIMP_SHAPE_ROUNDED_RECT", NULL },
+    { GIMP_SHAPE_N_POLYGON, "GIMP_SHAPE_N_POLYGON", NULL },
+    { GIMP_SHAPE_SINGLE_ROW, "GIMP_SHAPE_SINGLE_ROW", NULL },
     { 0, NULL, NULL }
   };
 

@@ -149,7 +149,7 @@ gimp_rectangle_select_options_set_property (GObject      *object,
       break; 
 
     case PROP_LINE_ORIENTATION:
-      options->line_orientation = g_value_get_boolean (value);
+      options->line_orientation = g_value_get_enum (value);
       break;   
     
     case PROP_N_SIDES:
