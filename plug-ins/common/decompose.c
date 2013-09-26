@@ -193,7 +193,7 @@ static const EXTRACT extract[] =
     { N_("CMY"),     "CMY", TRUE,  3, FALSE, {CPN_CMY_C, CPN_CMY_M, CPN_CMY_Y} },
     { N_("Cyan"),    "CMY", FALSE, 1, FALSE, {CPN_CMY_C} },
     { N_("Magenta"), "CMY", FALSE, 1, FALSE, {CPN_CMY_M} },
-    { N_("Yellow"),  "CMY", FALSE, 1, FALSE, {CPN_CMY_Y} },
+    { N_("Yeallow"), "CMY", FALSE, 1, FALSE, {CPN_CMY_Y} },
 
     { N_("CMYK"),      "CMYK", TRUE,  4, FALSE, {CPN_CMYK_C, CPN_CMYK_M, CPN_CMYK_Y, CPN_CMYK_K} },
     { N_("Cyan_K"),    "CMYK", FALSE, 1, FALSE, {CPN_CMYK_C} },
