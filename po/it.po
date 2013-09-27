@@ -1,7 +1,7 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000-2002
-# Marco Ciampa <ciampix@libero.it>, 2003-2012
+# Marco Ciampa <ciampix@libero.it>, 2003-2013
 # Alessandro Falappa <alessandro@falappa.net>, 2007-2008
 #
 # Convenzioni adottate per GIMP:
@@ -30,8 +30,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-23 21:49+0200\n"
-"PO-Revision-Date: 2013-09-23 23:18+0200\n"
+"POT-Creation-Date: 2013-09-27 14:47+0200\n"
+"PO-Revision-Date: 2013-09-27 14:47+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -992,7 +992,7 @@ msgstr ""
 #: ../app/actions/tool-options-commands.c:73
 #: ../app/core/gimpbrushgenerated-load.c:123 ../app/core/gimpimage.c:1669
 #: ../app/core/gimppalette.c:399 ../app/core/gimppalette-import.c:213
-#: ../app/core/gimppalette-load.c:232
+#: ../app/core/gimppalette-load.c:234
 #: ../app/dialogs/palette-import-dialog.c:771 ../app/widgets/gimpdnd-xds.c:94
 msgid "Untitled"
 msgstr "Senzanome"
@@ -9179,28 +9179,28 @@ msgstr "Indice %d"
 msgid "Unknown type of palette file: %s"
 msgstr "Tipo file tavolozza sconosciuto: %s"
 
-#: ../app/core/gimppalette-load.c:99 ../app/core/gimppalette-load.c:123
-#: ../app/core/gimppalette-load.c:143 ../app/core/gimppalette-load.c:171
-#: ../app/core/gimppalette-load.c:246
+#: ../app/core/gimppalette-load.c:101 ../app/core/gimppalette-load.c:125
+#: ../app/core/gimppalette-load.c:145 ../app/core/gimppalette-load.c:173
+#: ../app/core/gimppalette-load.c:248
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
 msgstr ""
 "Errore fatale di analisi caricamento tavolozza '%s': errore di lettura alla "
 "riga %d."
 
-#: ../app/core/gimppalette-load.c:108
+#: ../app/core/gimppalette-load.c:110
 #, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
 msgstr ""
 "Errore fatale di analisi nel file tavolozza '%s': manca l'intestazione "
 "magica."
 
-#: ../app/core/gimppalette-load.c:135
+#: ../app/core/gimppalette-load.c:137
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Stringa UTF-8 non valida nel file tavolozza '%s'"
 
-#: ../app/core/gimppalette-load.c:158
+#: ../app/core/gimppalette-load.c:160
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -9209,33 +9209,33 @@ msgstr ""
 "Caricamento file tavolozza '%s': numero di colonne non valido alla riga %d. "
 "Uso il valore predefinito."
 
-#: ../app/core/gimppalette-load.c:193
+#: ../app/core/gimppalette-load.c:195
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "Caricamento tavolozza '%s': manca componente ROSSA alla riga %d."
 
-#: ../app/core/gimppalette-load.c:201
+#: ../app/core/gimppalette-load.c:203
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr ""
 "Caricamento file tavolozza '%s': manca la componente VERDE alla riga %d."
 
-#: ../app/core/gimppalette-load.c:209
+#: ../app/core/gimppalette-load.c:211
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "Caricamento tavolozza '%s': manca componente BLU alla riga %d."
 
-#: ../app/core/gimppalette-load.c:219
+#: ../app/core/gimppalette-load.c:221
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr "Caricamento tavolozza '%s': valori RGB fuori range alla riga %d."
 
-#: ../app/core/gimppalette-load.c:437
+#: ../app/core/gimppalette-load.c:439
 #, c-format
 msgid "Could not read header from palette file '%s'"
 msgstr "Impossibile leggere l'intestazione dal file tavolozza \"%s\""
 
-#: ../app/core/gimppalette-load.c:459 ../app/core/gimppalette-load.c:546
+#: ../app/core/gimppalette-load.c:461 ../app/core/gimppalette-load.c:548
 #, c-format
 msgid "Fatal parse error in palette file '%s'"
 msgstr "Errore fatale di analisi nel file tavolozza \"%s\""
@@ -11717,7 +11717,9 @@ msgstr "Sostituisce una parziale trasparenza con un colore"
 msgid ""
 "Make transparency all-or-nothing, by thresholding the alpha channel to a "
 "value"
-msgstr "Rendi la transparenza tutto-o-niente, sottoponendo il canale alfa ad un valore di soglia "
+msgstr ""
+"Rendi la transparenza tutto-o-niente, sottoponendo il canale alfa ad un "
+"valore di soglia "
 
 #. initialize the document history
 #: ../app/gui/gui.c:423
@@ -12362,87 +12364,92 @@ msgctxt "undo-type"
 msgid "Cubism"
 msgstr "Cubismo"
 
-#: ../app/pdb/plug-in-compat-cmds.c:498 ../app/pdb/plug-in-compat-cmds.c:577
+#: ../app/pdb/plug-in-compat-cmds.c:477
+msgctxt "undo-type"
+msgid "Noise HSV"
+msgstr "Disturbo HSV"
+
+#: ../app/pdb/plug-in-compat-cmds.c:552 ../app/pdb/plug-in-compat-cmds.c:631
 msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Sfocatura movimento"
 
-#: ../app/pdb/plug-in-compat-cmds.c:679
+#: ../app/pdb/plug-in-compat-cmds.c:733
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "Mosaico"
 
-#: ../app/pdb/plug-in-compat-cmds.c:720 ../app/pdb/plug-in-compat-cmds.c:764
+#: ../app/pdb/plug-in-compat-cmds.c:774 ../app/pdb/plug-in-compat-cmds.c:818
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Effetto pixel"
 
-#: ../app/pdb/plug-in-compat-cmds.c:816
+#: ../app/pdb/plug-in-compat-cmds.c:870
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "Plasma"
 
-#: ../app/pdb/plug-in-compat-cmds.c:869
+#: ../app/pdb/plug-in-compat-cmds.c:923
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Coordinate polari"
 
-#: ../app/pdb/plug-in-compat-cmds.c:910
+#: ../app/pdb/plug-in-compat-cmds.c:964
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "Rimozione occhi rossi"
 
-#: ../app/pdb/plug-in-compat-cmds.c:964
+#: ../app/pdb/plug-in-compat-cmds.c:1018
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Casuale"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1018
+#: ../app/pdb/plug-in-compat-cmds.c:1072
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Prelievo casuale"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1072
+#: ../app/pdb/plug-in-compat-cmds.c:1126
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Macchia"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1117
+#: ../app/pdb/plug-in-compat-cmds.c:1171
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Semi-appiattisci"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1161
+#: ../app/pdb/plug-in-compat-cmds.c:1215
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Spostamento"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1206
+#: ../app/pdb/plug-in-compat-cmds.c:1260
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Dispersione"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1248
+#: ../app/pdb/plug-in-compat-cmds.c:1302
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Soglia alfa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1286
+#: ../app/pdb/plug-in-compat-cmds.c:1340
 msgctxt "undo-type"
 msgid "Tile Seamless"
 msgstr "Piastrella senza giunte"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1324
+#: ../app/pdb/plug-in-compat-cmds.c:1378
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Inverti valore"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1388
+#: ../app/pdb/plug-in-compat-cmds.c:1442
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Onde"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1435
+#: ../app/pdb/plug-in-compat-cmds.c:1489
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Vortice e pizzico"
@@ -12610,7 +12617,8 @@ msgstr "Annullato"
 #: ../app/plug-in/plug-in-icc-profile.c:76
 #, c-format
 msgid "Can't apply color profile to grayscale image (%s)"
-msgstr "Impossibile applicare un profilo colore ad un'immagine in scala di grigi (%s)"
+msgstr ""
+"Impossibile applicare un profilo colore ad un'immagine in scala di grigi (%s)"
 
 #: ../app/plug-in/plug-in-icc-profile.c:119
 #: ../app/plug-in/plug-in-icc-profile.c:194
@@ -13737,7 +13745,9 @@ msgstr "Prim_o piano"
 #: ../app/tools/gimpforegroundselecttool.c:283
 msgid ""
 "Paint trimap, (background, foreground and unknown) or press Enter to preview"
-msgstr "Trimappa di disegno, (sfondo, primo piano e sconosciuto) o premere Invio per l'anteprima"
+msgstr ""
+"Trimappa di disegno, (sfondo, primo piano e sconosciuto) o premere Invio per "
+"l'anteprima"
 
 #: ../app/tools/gimpforegroundselecttool.c:288
 msgid "Roughly outline the object to extract"
