@@ -28,7 +28,8 @@
 void  gimp_cairo_draw_toolbox_wilber    (GtkWidget *widget,
                                          cairo_t   *cr);
 void  gimp_cairo_draw_drop_wilber       (GtkWidget *widget,
-                                         cairo_t   *cr);
+                                         cairo_t   *cr,
+                                         gboolean   blink);
 
 void  gimp_cairo_wilber                 (cairo_t   *cr,
                                          gdouble    x,
