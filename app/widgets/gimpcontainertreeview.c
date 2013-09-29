@@ -294,6 +294,9 @@ gimp_container_tree_view_constructed (GObject *object)
                     G_CALLBACK (gimp_container_tree_view_selection_changed),
                     tree_view);
 
+  g_signal_connect (tree_view->view, "drag-failed",
+                    G_CALLBACK (gimp_container_tree_view_drag_failed),
+                    tree_view);
   g_signal_connect (tree_view->view, "drag-leave",
                     G_CALLBACK (gimp_container_tree_view_drag_leave),
                     tree_view);
