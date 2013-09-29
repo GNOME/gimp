@@ -255,6 +255,21 @@ gimp_container_tree_view_scroll_timeout (gpointer data)
 }
 
 void
+gimp_container_tree_view_drag_failed (GtkWidget             *widget,
+                                      GdkDragContext        *context,
+                                      GtkDragResult          result,
+                                      GimpContainerTreeView *tree_view)
+{
+  if (tree_view->priv->scroll_timeout_id)
+    {
+      g_source_remove (tree_view->priv->scroll_timeout_id);
+      tree_view->priv->scroll_timeout_id = 0;
+    }
+
+  gtk_tree_view_set_drag_dest_row (tree_view->view, NULL, 0);
+}
+
+void
 gimp_container_tree_view_drag_leave (GtkWidget             *widget,
                                      GdkDragContext        *context,
                                      guint                  time,

@@ -22,6 +22,10 @@
 #define __GIMP_CONTAINER_TREE_VIEW_DND_H__
 
 
+void     gimp_container_tree_view_drag_failed (GtkWidget             *widget,
+                                               GdkDragContext        *context,
+                                               GtkDragResult          result,
+                                               GimpContainerTreeView *tree_view);
 void     gimp_container_tree_view_drag_leave  (GtkWidget             *widget,
                                                GdkDragContext        *context,
                                                guint                  time,
