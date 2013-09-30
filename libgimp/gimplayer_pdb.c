@@ -548,16 +548,26 @@ gimp_layer_set_offsets (gint32 layer_ID,
  *
  * Create a layer mask for the specified layer.
  *
- * This procedure creates a layer mask for the specified layer. Layer
- * masks serve as an additional alpha channel for a layer. A number of
- * different types of masks are allowed for initialisation: completely
- * white masks (which will leave the layer fully visible), completely
- * black masks (which will give the layer complete transparency, the
- * layer's already existing alpha channel (which will leave the layer
- * fully visible, but which may be more useful than a white mask), the
- * current selection or a grayscale copy of the layer. The layer mask
- * still needs to be added to the layer. This can be done with a call
- * to gimp_layer_add_mask().
+ * This procedure creates a layer mask for the specified layer.
+ * Layer masks serve as an additional alpha channel for a layer.
+ * Different types of masks are allowed for initialisation:
+ * - white mask (leaves the layer fully visible);
+ * - black mask (gives the layer complete transparency);
+ * - the layer's alpha channel (either a copy, or a transfer, which
+ * leaves the layer fully visible, but which may be more useful than a
+ * white mask);
+ * - the current selection;
+ * - a grayscale copy of the layer;
+ * - or a copy of the active channel.
+ * 
+ * The layer mask still needs to be added to the layer. This can be
+ * done with a call to gimp_layer_add_mask().
+ * 
+ * gimp_layer_create_mask() will fail if there are no active channels
+ * on the image, when called with 'ADD-CHANNEL-MASK'. It will return a
+ * black mask when called with 'ADD-ALPHA-MASK' or
+ * 'ADD-ALPHA-TRANSFER-MASK' on a layer with no alpha channels, or with
+ * 'ADD-SELECTION-MASK' when there is no selection on the image.
  *
  * Returns: The newly created mask.
  **/
