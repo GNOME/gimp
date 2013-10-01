@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-09-10 10:10+0000\n"
-"PO-Revision-Date: 2013-09-11 20:51+0100\n"
+"POT-Creation-Date: 2013-09-28 16:01+0000\n"
+"PO-Revision-Date: 2013-09-29 22:07+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl_SI\n"
@@ -973,9 +973,9 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:119
 #: ../app/actions/tool-options-commands.c:73
-#: ../app/core/gimpbrushgenerated-load.c:123 ../app/core/gimpimage.c:1596
-#: ../app/core/gimppalette.c:399 ../app/core/gimppalette-import.c:210
-#: ../app/core/gimppalette-load.c:225
+#: ../app/core/gimpbrushgenerated-load.c:123 ../app/core/gimpimage.c:1669
+#: ../app/core/gimppalette.c:399 ../app/core/gimppalette-import.c:213
+#: ../app/core/gimppalette-load.c:234
 #: ../app/dialogs/palette-import-dialog.c:771 ../app/widgets/gimpdnd-xds.c:94
 msgid "Untitled"
 msgstr "Neimenovano"
@@ -2485,7 +2485,6 @@ msgid "_Alien Map..."
 msgstr "Poslikaj _napis …"
 
 #: ../app/actions/filters-actions.c:49
-#| msgid "_Antialiasing"
 msgctxt "filters-action"
 msgid "_Antialias..."
 msgstr "_Zgladi robove …"
@@ -2506,8 +2505,6 @@ msgid "Ca_rtoon..."
 msgstr "S_trip ..."
 
 #: ../app/actions/filters-actions.c:69
-#| msgctxt "channels-action"
-#| msgid "_New Channel..."
 msgctxt "filters-action"
 msgid "_Channel Mixer..."
 msgstr "Mešalec _kanalov …"
@@ -2538,7 +2535,6 @@ msgid "_Cubism..."
 msgstr "_Kubizem ..."
 
 #: ../app/actions/filters-actions.c:99
-#| msgid "_Desaturate..."
 msgctxt "filters-action"
 msgid "_Deinterlace..."
 msgstr "_Razpleti …"
@@ -2554,8 +2550,6 @@ msgid "Dots..."
 msgstr "Pike ..."
 
 #: ../app/actions/filters-actions.c:114
-#| msgctxt "select-action"
-#| msgid "_Grow..."
 msgctxt "filters-action"
 msgid "_Drop Shadow..."
 msgstr "Vrzi sen_co …"
@@ -2577,14 +2571,11 @@ msgstr "_Reliefno okrasi …"
 
 #: ../app/actions/filters-actions.c:134
 #, fuzzy
-#| msgid "Exposure"
 msgctxt "filters-action"
 msgid "_E_xposure..."
 msgstr "_Osvet_litev …"
 
 #: ../app/actions/filters-actions.c:139
-#| msgctxt "image-action"
-#| msgid "_Scale Image..."
 msgctxt "filters-action"
 msgid "_Fractal Trace..."
 msgstr "_Sledenje fraktala …"
@@ -2595,7 +2586,6 @@ msgid "_Gaussian Blur..."
 msgstr "_Gaussova zabrisanost ..."
 
 #: ../app/actions/filters-actions.c:149
-#| msgid "Grid"
 msgctxt "filters-action"
 msgid "_Grid..."
 msgstr "_Mreža …"
@@ -2611,140 +2601,132 @@ msgid "Mono Mixer..."
 msgstr "Mono mešalec ..."
 
 #: ../app/actions/filters-actions.c:164
-#, fuzzy
-#| msgctxt "tools-action"
-#| msgid "_Arbitrary Rotation..."
 msgctxt "filters-action"
-msgid "_Circular Motion Blur..."
-msgstr "_Krožna zabrisanost …"
+msgid "_Mosaic..."
+msgstr "_Mozaik ..."
 
 #: ../app/actions/filters-actions.c:169
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "_Gaussian Blur..."
 msgctxt "filters-action"
-msgid "_Linear Motion Blur..."
-msgstr "_Linearna zabrisanost …"
+msgid "_Circular Motion Blur..."
+msgstr "_Krožna zabrisanost v gibanju …"
 
 #: ../app/actions/filters-actions.c:174
 msgctxt "filters-action"
-msgid "_Zoom Motion Blur..."
-msgstr ""
+msgid "_Linear Motion Blur..."
+msgstr "_Linearna zabrisanost v gibanju …"
 
 #: ../app/actions/filters-actions.c:179
-#| msgctxt "filters-action"
-#| msgid "HSV Noise..."
+msgctxt "filters-action"
+msgid "_Zoom Motion Blur..."
+msgstr "_Zabrisanost v gibanju s približevanjem ..."
+
+#: ../app/actions/filters-actions.c:184
 msgctxt "filters-action"
 msgid "CIE lch Noise..."
 msgstr "Šum CIE Ich …"
 
-#: ../app/actions/filters-actions.c:184
+#: ../app/actions/filters-actions.c:189
 msgctxt "filters-action"
 msgid "HSV Noise..."
 msgstr "Šum HSV ..."
 
-#: ../app/actions/filters-actions.c:189
+#: ../app/actions/filters-actions.c:194
 msgctxt "filters-action"
 msgid "_Hurl..."
 msgstr "_Vrženo ..."
 
-#: ../app/actions/filters-actions.c:194
+#: ../app/actions/filters-actions.c:199
 msgctxt "filters-action"
 msgid "_Pick..."
 msgstr "_Naberi ..."
 
-#: ../app/actions/filters-actions.c:199
+#: ../app/actions/filters-actions.c:204
 msgctxt "filters-action"
 msgid "_RGB Noise..."
 msgstr "Šum R_GB ..."
 
-#: ../app/actions/filters-actions.c:204
+#: ../app/actions/filters-actions.c:209
 msgctxt "filters-action"
 msgid "_Slur..."
 msgstr "_Nerazločno ..."
 
-#: ../app/actions/filters-actions.c:209
-msgctxt "filters-action"
-msgid "_Sp_read..."
-msgstr "_Razširi …"
-
 #: ../app/actions/filters-actions.c:214
+msgctxt "filters-action"
+msgid "Sp_read..."
+msgstr "Raz_širi …"
+
+#: ../app/actions/filters-actions.c:219
 msgctxt "filters-action"
 msgid "_Photocopy..."
 msgstr "_Fotokopiraj ..."
 
-#: ../app/actions/filters-actions.c:219
+#: ../app/actions/filters-actions.c:224
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "_Pikseliziraj ..."
 
-#: ../app/actions/filters-actions.c:224
+#: ../app/actions/filters-actions.c:229
 msgctxt "filters-action"
 msgid "_Plasma..."
 msgstr "_Plazma …"
 
-#: ../app/actions/filters-actions.c:229
+#: ../app/actions/filters-actions.c:234
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
 msgstr "P_olarne koordinate ..."
 
-#: ../app/actions/filters-actions.c:234
+#: ../app/actions/filters-actions.c:239
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "Odstrani _rdeče oči …"
 
-#: ../app/actions/filters-actions.c:239
+#: ../app/actions/filters-actions.c:244
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "_Valovanje ..."
 
-#: ../app/actions/filters-actions.c:244
+#: ../app/actions/filters-actions.c:249
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "_Napol splošči ..."
 
-#: ../app/actions/filters-actions.c:249
-#| msgctxt "drawable-action"
-#| msgid "_Offset..."
+#: ../app/actions/filters-actions.c:254
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "_Zamakni …"
 
-#: ../app/actions/filters-actions.c:254
+#: ../app/actions/filters-actions.c:259
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "_Mehko žarenje ..."
 
-#: ../app/actions/filters-actions.c:259
+#: ../app/actions/filters-actions.c:264
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "_Prag alfe ..."
 
-#: ../app/actions/filters-actions.c:264
-#, fuzzy
+#: ../app/actions/filters-actions.c:269
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "_Tlakuj neopazno …"
 
-#: ../app/actions/filters-actions.c:269
+#: ../app/actions/filters-actions.c:274
 msgctxt "filters-action"
 msgid "_Unsharp Mask..."
 msgstr "Maska ne_ostrine ..."
 
-#: ../app/actions/filters-actions.c:274
-#| msgctxt "palettes-action"
-#| msgid "_Edit Palette..."
+#: ../app/actions/filters-actions.c:279
+#, fuzzy
 msgctxt "filters-action"
 msgid "_Vignette..."
-msgstr ""
+msgstr "_Vinjetiranje …"
 
-#: ../app/actions/filters-actions.c:279
-#| msgid "_Curves..."
+#: ../app/actions/filters-actions.c:284
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Valovanje …"
 
-#: ../app/actions/filters-actions.c:284
+#: ../app/actions/filters-actions.c:289
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "_Vrtinči in odščipni …"
@@ -3450,141 +3432,101 @@ msgid "Convert the image to indexed colors"
 msgstr "Pretvori sliko v barvno indeksirano"
 
 #: ../app/actions/image-actions.c:168
-#| msgctxt "image-convert-action"
-#| msgid "8 bit integer"
 msgctxt "image-convert-action"
 msgid "8 bit integer (linear)"
 msgstr "8-bitna celoštevilska (linearna)"
 
 #: ../app/actions/image-actions.c:170
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 8 bit integer"
 msgctxt "image-convert-action"
 msgid "Convert the image to 8 bit linear integer"
 msgstr "Pretvori sliko v 8-bitno celoštevilsko linearno"
 
 #: ../app/actions/image-actions.c:174
-#| msgctxt "image-convert-action"
-#| msgid "8 bit integer"
 msgctxt "image-convert-action"
 msgid "8 bit integer (gamma)"
 msgstr "8-bitna celoštevilska (gama)"
 
 #: ../app/actions/image-actions.c:176
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 8 bit integer"
 msgctxt "image-convert-action"
 msgid "Convert the image to 8 bit gamma-corrected integer"
 msgstr "Pretvori sliko v 8-bitno celoštevilsko s popravljeno gamo"
 
 #: ../app/actions/image-actions.c:180
-#| msgctxt "image-convert-action"
-#| msgid "16 bit integer"
 msgctxt "image-convert-action"
 msgid "16 bit integer (linear)"
 msgstr "16-bitna celoštevilska (linearna)"
 
 #: ../app/actions/image-actions.c:182
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 16 bit integer"
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit linear integer"
 msgstr "Pretvori sliko v 16-bitno celoštevilsko linearno"
 
 #: ../app/actions/image-actions.c:186
-#| msgctxt "image-convert-action"
-#| msgid "16 bit integer"
 msgctxt "image-convert-action"
 msgid "16 bit integer (gamma)"
 msgstr "16-bitna celoštevilska (gama)"
 
 #: ../app/actions/image-actions.c:188
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 16 bit integer"
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit gamma-corrected integer"
 msgstr "Pretvori sliko v 16-bitno celoštevilsko s popravljeno gamo"
 
 #: ../app/actions/image-actions.c:192
-#| msgctxt "image-convert-action"
-#| msgid "32 bit integer"
 msgctxt "image-convert-action"
 msgid "32 bit integer (linear)"
 msgstr "32-bitna celoštevilska (linearna)"
 
 #: ../app/actions/image-actions.c:194
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 32 bit integer"
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit linear integer"
 msgstr "Pretvori sliko v 32-bitno celoštevilsko linearno"
 
 #: ../app/actions/image-actions.c:198
-#| msgctxt "image-convert-action"
-#| msgid "32 bit integer"
 msgctxt "image-convert-action"
 msgid "32 bit integer (gamma)"
 msgstr "32-bitna celoštevilska (gama)"
 
 #: ../app/actions/image-actions.c:200
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 32 bit integer"
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit gamma-corrected integer"
 msgstr "Pretvori sliko v 32-bitno celoštevilsko s popravljeno gamo"
 
 #: ../app/actions/image-actions.c:204
-#| msgctxt "image-convert-action"
-#| msgid "16 bit floating point"
 msgctxt "image-convert-action"
 msgid "16 bit floating point (linear)"
 msgstr "16-bitna s plavajočo vejico (linearna)"
 
 #: ../app/actions/image-actions.c:206
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 16 bit floating point"
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit linear floating point"
 msgstr "Pretvori sliko v 16-bitno s plavajočo vejico linearno"
 
 #: ../app/actions/image-actions.c:210
-#| msgctxt "image-convert-action"
-#| msgid "16 bit floating point"
 msgctxt "image-convert-action"
 msgid "16 bit floating point (gamma)"
 msgstr "16-bitna s plavajočo vejico (gama)"
 
 #: ../app/actions/image-actions.c:212
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 16 bit floating point"
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit gamma-corrected floating point"
 msgstr "Pretvori sliko v 16-bitno s plavajočo vejico s popravljeno gamo"
 
 #: ../app/actions/image-actions.c:216
-#| msgctxt "image-convert-action"
-#| msgid "32 bit floating point"
 msgctxt "image-convert-action"
 msgid "32 bit floating point (linear)"
 msgstr "32-bitna s plavajočo vejico (linearna)"
 
 #: ../app/actions/image-actions.c:218
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 32 bit floating point"
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit linear floating point"
 msgstr "Pretvori sliko v 32-bitno s plavajočo vejico linearno"
 
 #: ../app/actions/image-actions.c:222
-#| msgctxt "image-convert-action"
-#| msgid "32 bit floating point"
 msgctxt "image-convert-action"
 msgid "32 bit floating point (gamma)"
 msgstr "32-bitna s plavajočo vejico (gama)"
 
 #: ../app/actions/image-actions.c:224
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to 32 bit floating point"
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit gamma-corrected floating point"
 msgstr "Pretvori sliko v 32-bitno s plavajočo vejico s popravljeno gamo"
@@ -3825,8 +3767,6 @@ msgid "Create a new layer from what is visible in this image"
 msgstr "Ustvari novo plast iz vidnega na tej sliki"
 
 #: ../app/actions/layers-actions.c:101
-#| msgctxt "layers-action"
-#| msgid "New Layer _Group..."
 msgctxt "layers-action"
 msgid "New Layer _Group"
 msgstr "Nova s_kupina plasti …"
@@ -5061,9 +5001,7 @@ msgstr "Odpri datoteko z besedilom (UTF-8)"
 #: ../app/core/gimpbrushgenerated-load.c:71 ../app/core/gimpbrush-load.c:141
 #: ../app/core/gimpbrush-load.c:426 ../app/core/gimpbrushpipe-load.c:79
 #: ../app/core/gimpcurve-load.c:54 ../app/core/gimpgradient-load.c:64
-#: ../app/core/gimppalette-load.c:78 ../app/core/gimppalette-load.c:275
-#: ../app/core/gimppalette-load.c:321 ../app/core/gimppalette-load.c:378
-#: ../app/core/gimppalette-load.c:468 ../app/core/gimppalette-load.c:635
+#: ../app/core/gimppalette-import.c:515 ../app/core/gimppalette-load.c:66
 #: ../app/core/gimppattern-load.c:81 ../app/tools/gimpcurvestool.c:609
 #: ../app/tools/gimplevelstool.c:632 ../app/xcf/xcf.c:331
 #, c-format
@@ -5601,7 +5539,6 @@ msgid "_Zoom"
 msgstr "_Povečava"
 
 #: ../app/actions/view-actions.c:71
-#| msgid "_Rotate"
 msgctxt "view-action"
 msgid "_Rotate"
 msgstr "_Zasukaj"
@@ -5672,22 +5609,16 @@ msgid "_Reset to 0°"
 msgstr "Ponas_tavi na 0°"
 
 #: ../app/actions/view-actions.c:109
-#| msgid "Reset angle to zero"
 msgctxt "view-action"
 msgid "Reset the angle of rotation to 0°"
 msgstr "Ponastavi kot sukanja na 0°"
 
 #: ../app/actions/view-actions.c:114
-#| msgctxt "view-zoom-action"
-#| msgid "Othe_r..."
 msgctxt "view-action"
 msgid "Othe_r..."
 msgstr "D_rugo …"
 
 #: ../app/actions/view-actions.c:115
-#, fuzzy
-#| msgctxt "view-zoom-action"
-#| msgid "Set a custom zoom factor"
 msgctxt "view-action"
 msgid "Set a custom rotation angle"
 msgstr "Nastavite kot sukanja po meri"
@@ -6013,43 +5944,31 @@ msgid "Set a custom zoom factor"
 msgstr "Nastavite faktor povečave po meri"
 
 #: ../app/actions/view-actions.c:400
-#| msgctxt "drawable-action"
-#| msgid "Rotate 90° _clockwise"
 msgctxt "view-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Zasukaj za 90° v _SUK"
 
 #: ../app/actions/view-actions.c:401
-#| msgctxt "drawable-action"
-#| msgid "Rotate 90 degrees to the right"
 msgctxt "view-action"
 msgid "Rotate 90 degrees to the right"
 msgstr "Zasukaj za 90 stopinj v smeri urinega kazalca"
 
 #: ../app/actions/view-actions.c:406
-#| msgctxt "drawable-action"
-#| msgid "Rotate _180°"
 msgctxt "view-action"
 msgid "Rotate _180°"
 msgstr "Zasukaj za _180°"
 
 #: ../app/actions/view-actions.c:407
-#| msgctxt "drawable-action"
-#| msgid "Turn upside-down"
 msgctxt "view-action"
 msgid "Turn upside-down"
 msgstr "Postavi na glavo"
 
 #: ../app/actions/view-actions.c:412
-#| msgctxt "drawable-action"
-#| msgid "Rotate 90° counter-clock_wise"
 msgctxt "view-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Zasukaj za 90° v _NSUK"
 
 #: ../app/actions/view-actions.c:413
-#| msgctxt "drawable-action"
-#| msgid "Rotate 90 degrees to the left"
 msgctxt "view-action"
 msgid "Rotate 90 degrees to the left"
 msgstr "Zasukaj za 90° v nasprotni smeri urinega kazalca"
@@ -6125,7 +6044,6 @@ msgstr "_Povečava (%s)"
 
 #: ../app/actions/view-actions.c:823
 #, c-format
-#| msgid "_Rotate"
 msgid "_Rotate (%d°)"
 msgstr "_Zasukaj (%d°)"
 
@@ -6869,7 +6787,6 @@ msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Če je vključeno, bo tipka F1 odprla brskalnik po pomoči."
 
 #: ../app/config/gimprc-blurbs.h:460
-#| msgid "When enabled, menus can be torn off."
 msgid "When enabled, uses OpenCL for some operations."
 msgstr "Če je vključeno, uporabi OpenCL za določene operacije."
 
@@ -6885,36 +6802,26 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "vrednost za žeton %s ni veljaven niz UTF-8"
 
 #: ../app/core/core-enums.c:61
-#| msgctxt "precision"
-#| msgid "8-bit integer"
 msgctxt "component-type"
 msgid "8-bit integer"
 msgstr "8-bitna celoštevilska"
 
 #: ../app/core/core-enums.c:62
-#| msgctxt "precision"
-#| msgid "16-bit integer"
 msgctxt "component-type"
 msgid "16-bit integer"
 msgstr "16-bitna celoštevilska"
 
 #: ../app/core/core-enums.c:63
-#| msgctxt "precision"
-#| msgid "32-bit integer"
 msgctxt "component-type"
 msgid "32-bit integer"
 msgstr "32-bitna celoštevilska"
 
 #: ../app/core/core-enums.c:64
-#| msgctxt "precision"
-#| msgid "16-bit floating point"
 msgctxt "component-type"
 msgid "16-bit floating point"
 msgstr "16-bitna s plavajočo vejico"
 
 #: ../app/core/core-enums.c:65
-#| msgctxt "precision"
-#| msgid "32-bit floating point"
 msgctxt "component-type"
 msgid "32-bit floating point"
 msgstr "32-bitna s plavajočo vejico"
@@ -7325,71 +7232,51 @@ msgid "Unknown"
 msgstr "Neznano"
 
 #: ../app/core/core-enums.c:806
-#| msgctxt "precision"
-#| msgid "8-bit integer"
 msgctxt "precision"
 msgid "8-bit linear integer"
 msgstr "8-bitna celoštevilska, linearna"
 
 #: ../app/core/core-enums.c:807
-#| msgctxt "precision"
-#| msgid "8-bit integer"
 msgctxt "precision"
 msgid "8-bit gamma integer"
 msgstr "8-bitna celoštevilska, gama"
 
 #: ../app/core/core-enums.c:808
-#| msgctxt "precision"
-#| msgid "16-bit integer"
 msgctxt "precision"
 msgid "16-bit linear integer"
 msgstr "16-bitna celoštevilska, linearna"
 
 #: ../app/core/core-enums.c:809
-#| msgctxt "precision"
-#| msgid "16-bit integer"
 msgctxt "precision"
 msgid "16-bit gamma integer"
 msgstr "16-bitna celoštevilska, gama"
 
 #: ../app/core/core-enums.c:810
-#| msgctxt "precision"
-#| msgid "32-bit integer"
 msgctxt "precision"
 msgid "32-bit linear integer"
 msgstr "32-bitna celoštevilska, linearna"
 
 #: ../app/core/core-enums.c:811
-#| msgctxt "precision"
-#| msgid "32-bit integer"
 msgctxt "precision"
 msgid "32-bit gamma integer"
 msgstr "32-bitna celoštevilska, gama"
 
 #: ../app/core/core-enums.c:812
-#| msgctxt "precision"
-#| msgid "16-bit floating point"
 msgctxt "precision"
 msgid "16-bit linear floating point"
 msgstr "16-bitna s plavajočo vejico, linearna"
 
 #: ../app/core/core-enums.c:813
-#| msgctxt "precision"
-#| msgid "16-bit floating point"
 msgctxt "precision"
 msgid "16-bit gamma floating point"
 msgstr "16-bitna s plavajočo vejico, gama"
 
 #: ../app/core/core-enums.c:814
-#| msgctxt "precision"
-#| msgid "32-bit floating point"
 msgctxt "precision"
 msgid "32-bit linear floating point"
 msgstr "32-bitna s plavajočo vejico, linearna"
 
 #: ../app/core/core-enums.c:815
-#| msgctxt "precision"
-#| msgid "32-bit floating point"
 msgctxt "precision"
 msgid "32-bit gamma floating point"
 msgstr "32-bitna s plavajočo vejico, gama"
@@ -7635,12 +7522,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Zasidraj plavajoči izbor"
 
-#: ../app/core/core-enums.c:1194 ../app/core/gimp-edit.c:288
+#: ../app/core/core-enums.c:1194 ../app/core/gimp-edit.c:285
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Prilepi"
 
-#: ../app/core/core-enums.c:1195 ../app/core/gimp-edit.c:608
+#: ../app/core/core-enums.c:1195 ../app/core/gimp-edit.c:602
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Izreži"
@@ -8272,17 +8159,17 @@ msgstr "Skrči kanal"
 msgid "Cannot stroke empty channel."
 msgstr "Risanje potez po praznem kanalu ni mogoče."
 
-#: ../app/core/gimpchannel.c:1674
+#: ../app/core/gimpchannel.c:1671
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Nastavi barvo kanala"
 
-#: ../app/core/gimpchannel.c:1733
+#: ../app/core/gimpchannel.c:1730
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Nastavi prekrivnost kanala"
 
-#: ../app/core/gimpchannel.c:1835 ../app/core/gimpselection.c:160
+#: ../app/core/gimpchannel.c:1832 ../app/core/gimpselection.c:160
 msgid "Selection Mask"
 msgstr "Maska izbora"
 
@@ -8412,7 +8299,7 @@ msgstr "Zlij"
 msgid "Calculating distance map"
 msgstr "Računanje zemljevida oddaljenosti"
 
-#: ../app/core/gimpdrawable-blend.c:940 ../app/pdb/edit-cmds.c:783
+#: ../app/core/gimpdrawable-blend.c:941 ../app/pdb/edit-cmds.c:783
 #: ../app/tools/gimpblendtool.c:249
 msgid "Blending"
 msgstr "Zlivanje ..."
@@ -8488,41 +8375,41 @@ msgstr "Preoblikovanje"
 msgid "Output type"
 msgstr "Vrsta izhoda"
 
-#: ../app/core/gimp-edit.c:185 ../app/core/gimpimage-new.c:305
+#: ../app/core/gimp-edit.c:182 ../app/core/gimpimage-new.c:305
 msgid "Pasted Layer"
 msgstr "Prilepljena plast"
 
-#: ../app/core/gimp-edit.c:425
+#: ../app/core/gimp-edit.c:419
 msgctxt "undo-type"
 msgid "Clear"
 msgstr "Počisti"
 
-#: ../app/core/gimp-edit.c:449
+#: ../app/core/gimp-edit.c:443
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "Zapolni z barvo ospredja"
 
-#: ../app/core/gimp-edit.c:454
+#: ../app/core/gimp-edit.c:448
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "Zapolni z barvo ozadja"
 
-#: ../app/core/gimp-edit.c:459
+#: ../app/core/gimp-edit.c:453
 msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "Zapolni z belo"
 
-#: ../app/core/gimp-edit.c:464
+#: ../app/core/gimp-edit.c:458
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr "Zapolni s prosojnostjo"
 
-#: ../app/core/gimp-edit.c:469
+#: ../app/core/gimp-edit.c:463
 msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "Zapolni z vzorcem"
 
-#: ../app/core/gimp-edit.c:621
+#: ../app/core/gimp-edit.c:615
 msgid "Global Buffer"
 msgstr "Splošni medpomnilnik"
 
@@ -8671,69 +8558,69 @@ msgctxt "undo-type"
 msgid "Arrange Objects"
 msgstr "Razporedi predmete"
 
-#: ../app/core/gimpimage.c:1851
+#: ../app/core/gimpimage.c:1924
 msgid " (exported)"
 msgstr " (izvožena)"
 
-#: ../app/core/gimpimage.c:1855
+#: ../app/core/gimpimage.c:1928
 msgid " (overwritten)"
 msgstr " (prepisana)"
 
-#: ../app/core/gimpimage.c:1864
+#: ../app/core/gimpimage.c:1937
 msgid " (imported)"
 msgstr " (uvožena)"
 
-#: ../app/core/gimpimage.c:1989
+#: ../app/core/gimpimage.c:2062
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Spremeni ločljivost slike"
 
-#: ../app/core/gimpimage.c:2041
+#: ../app/core/gimpimage.c:2114
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Spremeni enoto slike"
 
-#: ../app/core/gimpimage.c:2909
+#: ../app/core/gimpimage.c:2982
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Sliki dodaj zajedalca"
 
-#: ../app/core/gimpimage.c:2950
+#: ../app/core/gimpimage.c:3023
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Odstrani zajedalca s slike"
 
-#: ../app/core/gimpimage.c:3659
+#: ../app/core/gimpimage.c:3732
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Dodaj plast"
 
-#: ../app/core/gimpimage.c:3709 ../app/core/gimpimage.c:3729
+#: ../app/core/gimpimage.c:3782 ../app/core/gimpimage.c:3802
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Odstrani plast"
 
-#: ../app/core/gimpimage.c:3723
+#: ../app/core/gimpimage.c:3796
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Odstrani plavajoči izbor"
 
-#: ../app/core/gimpimage.c:3891
+#: ../app/core/gimpimage.c:3964
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Dodaj kanal"
 
-#: ../app/core/gimpimage.c:3929 ../app/core/gimpimage.c:3942
+#: ../app/core/gimpimage.c:4002 ../app/core/gimpimage.c:4015
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Odstrani kanal"
 
-#: ../app/core/gimpimage.c:3996
+#: ../app/core/gimpimage.c:4069
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Dodaj pot"
 
-#: ../app/core/gimpimage.c:4027
+#: ../app/core/gimpimage.c:4100
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Odstrani pot"
@@ -8749,8 +8636,6 @@ msgid "Set Colormap"
 msgstr "Nastavi katalog barv"
 
 #: ../app/core/gimpimage-colormap.c:244
-#| msgctxt "undo-type"
-#| msgid "Set Colormap"
 msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "Prekliči nastavitev katalog barv"
@@ -8766,99 +8651,79 @@ msgid "Add Color to Colormap"
 msgstr "Dodaj barvo v katalog barv"
 
 #: ../app/core/gimpimage-convert-precision.c:68
-#| msgctxt "undo-type"
-#| msgid "Convert Image to 8 bit integer"
 msgctxt "undo-type"
 msgid "Convert Image to 8 bit linear integer"
 msgstr "Pretvori sliko v 8-bitno celoštevilsko (linearno)"
 
 #: ../app/core/gimpimage-convert-precision.c:71
-#| msgctxt "undo-type"
-#| msgid "Convert Image to 8 bit integer"
 msgctxt "undo-type"
 msgid "Convert Image to 8 bit gamma integer"
 msgstr "Pretvori sliko v 8-bitno celoštevilsko (gama)"
 
 #: ../app/core/gimpimage-convert-precision.c:74
-#| msgctxt "undo-type"
-#| msgid "Convert Image to 16 bit integer"
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit linear integer"
 msgstr "Pretvori sliko v 16-bitno celoštevilsko (linearno)"
 
 #: ../app/core/gimpimage-convert-precision.c:77
-#| msgctxt "undo-type"
-#| msgid "Convert Image to 16 bit integer"
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit gamma integer"
 msgstr "Pretvori sliko v 16-bitno celoštevilsko (gama)"
 
 #: ../app/core/gimpimage-convert-precision.c:80
-#| msgctxt "undo-type"
-#| msgid "Convert Image to 32 bit integer"
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit linear integer"
 msgstr "Pretvori sliko v 32-bitno celoštevilsko (linearno)"
 
 #: ../app/core/gimpimage-convert-precision.c:83
-#| msgctxt "undo-type"
-#| msgid "Convert Image to 32 bit integer"
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit gamma integer"
 msgstr "Pretvori sliko v 32-bitno celoštevilsko (gama)"
 
 #: ../app/core/gimpimage-convert-precision.c:86
-#| msgctxt "undo-type"
-#| msgid "Convert Image to 16 bit floating point"
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit linear floating point"
 msgstr "Pretvori sliko v 16-bitno s plavajočo vejico (linearno)"
 
 #: ../app/core/gimpimage-convert-precision.c:89
-#| msgctxt "undo-type"
-#| msgid "Convert Image to 16 bit floating point"
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit gamma floating point"
 msgstr "Pretvori sliko v 16-bitno s plavajočo vejico (gama)"
 
 #: ../app/core/gimpimage-convert-precision.c:92
-#| msgctxt "undo-type"
-#| msgid "Convert Image to 32 bit floating point"
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit linear floating point"
 msgstr "Pretvori sliko v 32-bitno s plavajočo vejico (linearno)"
 
 #: ../app/core/gimpimage-convert-precision.c:95
-#| msgctxt "undo-type"
-#| msgid "Convert Image to 32 bit floating point"
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit gamma floating point"
 msgstr "Pretvori sliko v 32-bitno s plavajočo vejico (gama)"
 
-#: ../app/core/gimpimage-convert-type.c:777
+#: ../app/core/gimpimage-convert-type.c:778
 msgid "Cannot convert image: palette is empty."
 msgstr "Slike ni mogoče pretvoriti: paleta je prazna."
 
-#: ../app/core/gimpimage-convert-type.c:793
+#: ../app/core/gimpimage-convert-type.c:794
 msgctxt "undo-type"
 msgid "Convert Image to RGB"
 msgstr "Pretvori sliko v RGB"
 
-#: ../app/core/gimpimage-convert-type.c:797
+#: ../app/core/gimpimage-convert-type.c:798
 msgctxt "undo-type"
 msgid "Convert Image to Grayscale"
 msgstr "Pretvori sliko v sivinsko"
 
-#: ../app/core/gimpimage-convert-type.c:801
+#: ../app/core/gimpimage-convert-type.c:802
 msgctxt "undo-type"
 msgid "Convert Image to Indexed"
 msgstr "Pretvori sliko v indeksirano"
 
-#: ../app/core/gimpimage-convert-type.c:882
+#: ../app/core/gimpimage-convert-type.c:883
 msgid "Converting to indexed colors (stage 2)"
 msgstr "Pretvarjanje slike v indeksirano (2. korak)"
 
-#: ../app/core/gimpimage-convert-type.c:927
+#: ../app/core/gimpimage-convert-type.c:928
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Pretvarjanje slike v indeksirano (3. korak)"
 
@@ -9245,37 +9110,37 @@ msgstr "Maska plasti v izbor"
 msgid "Cannot rename layer masks."
 msgstr "Mask plasti ni mogoče preimenovati."
 
-#: ../app/core/gimppalette-import.c:426
+#: ../app/core/gimppalette-import.c:427
 #, c-format
 msgid "Index %d"
 msgstr "Števec %d"
 
-#: ../app/core/gimppalette-import.c:536
+#: ../app/core/gimppalette-import.c:549
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Neznana vrsta datoteke palete: %s"
 
-#: ../app/core/gimppalette-load.c:87 ../app/core/gimppalette-load.c:113
-#: ../app/core/gimppalette-load.c:134 ../app/core/gimppalette-load.c:163
-#: ../app/core/gimppalette-load.c:239
+#: ../app/core/gimppalette-load.c:101 ../app/core/gimppalette-load.c:125
+#: ../app/core/gimppalette-load.c:145 ../app/core/gimppalette-load.c:173
+#: ../app/core/gimppalette-load.c:248
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
 msgstr ""
 "Usodna napaka pri razčlenjevanju datoteke palete '%s': Napaka pri branju "
 "vrstice %d."
 
-#: ../app/core/gimppalette-load.c:97
+#: ../app/core/gimppalette-load.c:110
 #, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
 msgstr ""
 "Usodna napaka pri razčlenjevanju datoteke palete '%s': Manjka čarobna glava."
 
-#: ../app/core/gimppalette-load.c:126
+#: ../app/core/gimppalette-load.c:137
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Neveljaven niz UTF-8 v datoteki palete '%s'"
 
-#: ../app/core/gimppalette-load.c:150
+#: ../app/core/gimppalette-load.c:160
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -9284,36 +9149,36 @@ msgstr ""
 "Branje datoteke palete '%s': Nepravilno število stolpcev v vrstici %d. "
 "Uporabljena bo privzeta vrednost."
 
-#: ../app/core/gimppalette-load.c:186
+#: ../app/core/gimppalette-load.c:195
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr ""
 "Branje datoteke palete '%s': V vrstici %d manjka rdeča komponenta (RED)."
 
-#: ../app/core/gimppalette-load.c:194
+#: ../app/core/gimppalette-load.c:203
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr ""
 "Branje datoteke palete '%s': V vrstici %d manjka zelena komponenta (GREEN)."
 
-#: ../app/core/gimppalette-load.c:202
+#: ../app/core/gimppalette-load.c:211
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr ""
 "Branje datoteke palete '%s': V vrstici %d manjka modra komponenta (BLUE)."
 
-#: ../app/core/gimppalette-load.c:212
+#: ../app/core/gimppalette-load.c:221
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr ""
 "Branje datoteke palete '%s': V vrstici %d je vrednost RGB izven dosega."
 
-#: ../app/core/gimppalette-load.c:479
+#: ../app/core/gimppalette-load.c:439
 #, c-format
 msgid "Could not read header from palette file '%s'"
 msgstr "Ni mogoče brati glave iz datoteke palete '%s'"
 
-#: ../app/core/gimppalette-load.c:502 ../app/core/gimppalette-load.c:590
+#: ../app/core/gimppalette-load.c:461 ../app/core/gimppalette-load.c:548
 #, c-format
 msgid "Fatal parse error in palette file '%s'"
 msgstr "Usodna napaka pri razčlenjevanju datoteke palete '%s'"
@@ -9792,7 +9657,6 @@ msgstr ""
 "datoteke ali pa ne vnesite nobene končnice."
 
 #: ../app/dialogs/file-save-dialog.c:605
-#| msgid "The given filename does not have any known file extension."
 msgid "The given filename cannot be used for exporting"
 msgstr "Podanega imena datoteke ni mogoče uporabiti za izvoz."
 
@@ -9805,13 +9669,10 @@ msgstr ""
 "Datoteka→Shrani za izvoz v zapisu XCF GIMP."
 
 #: ../app/dialogs/file-save-dialog.c:609
-#| msgctxt "dialogs-action"
-#| msgid "Open the layers dialog"
 msgid "Take me to the Save dialog"
 msgstr "Popelji me v pogovorno okno Shrani"
 
 #: ../app/dialogs/file-save-dialog.c:613
-#| msgid "The given filename does not have any known file extension."
 msgid "The given filename cannot be used for saving"
 msgstr "Podanega imena datoteke ni mogoče uporabiti za shranjevanje."
 
@@ -9824,8 +9685,6 @@ msgstr ""
 "Datoteka→Izvozi za izvoz v druge vrste datotek."
 
 #: ../app/dialogs/file-save-dialog.c:616
-#| msgctxt "dialogs-action"
-#| msgid "Open the paths dialog"
 msgid "Take me to the Export dialog"
 msgstr "Popelji me v pogovorno okno Izvozi"
 
@@ -10357,26 +10216,18 @@ msgid "Select Custom Canvas Padding Color"
 msgstr "Izberite želeno barvo za zapolnjevanje platna"
 
 #: ../app/dialogs/preferences-dialog.c:1163
-#| msgctxt "view-action"
-#| msgid "Sn_ap to Guides"
 msgid "Snap to Guides"
 msgstr "Pripni na vodila"
 
 #: ../app/dialogs/preferences-dialog.c:1166
-#| msgctxt "view-action"
-#| msgid "Sna_p to Grid"
 msgid "Snap to Grid"
 msgstr "Pripni na mrežo"
 
 #: ../app/dialogs/preferences-dialog.c:1174
-#| msgctxt "view-action"
-#| msgid "Snap to _Canvas Edges"
 msgid "Snap to Canvas Edges"
 msgstr "Pripni na rob platna"
 
 #: ../app/dialogs/preferences-dialog.c:1177
-#| msgctxt "view-action"
-#| msgid "Snap t_o Active Path"
 msgid "Snap to Active Path"
 msgstr "Pripni na aktivno pot"
 
@@ -10776,22 +10627,18 @@ msgstr "Oblika vrstice stanja"
 
 #: ../app/dialogs/preferences-dialog.c:2119
 #, fuzzy
-#| msgid "Image Window Appearance"
 msgid "Image Window Drawing Behavior"
 msgstr "Vedenje risanja okna slike"
 
 #: ../app/dialogs/preferences-dialog.c:2121 ../app/tools/gimpwarpoptions.c:75
-#| msgid "Edge Behavior"
 msgid "Behavior"
 msgstr "Vedenje"
 
 #: ../app/dialogs/preferences-dialog.c:2129
-#| msgid "Default Appearance in Normal Mode"
 msgid "Default Behavior in Normal Mode"
 msgstr "Privzeto vedenje v navadnem načinu"
 
 #: ../app/dialogs/preferences-dialog.c:2133
-#| msgid "Default Appearance in Fullscreen Mode"
 msgid "Default Behavior in Fullscreen Mode"
 msgstr "Privzeto vedenje v celozaslonskem načinu"
 
@@ -11447,7 +11294,7 @@ msgid "Navigate the image display"
 msgstr "Krmari po prikazu slike"
 
 #: ../app/display/gimpdisplayshell.c:755
-#: ../app/display/gimpdisplayshell.c:1330 ../app/widgets/gimptoolbox.c:252
+#: ../app/display/gimpdisplayshell.c:1358 ../app/widgets/gimptoolbox.c:252
 msgid "Drop image files here to open them"
 msgstr "Semkaj spustite datoteke slik, ki jih želite odpreti."
 
@@ -11582,17 +11429,12 @@ msgid "Layer Select"
 msgstr "Izberi plast"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:102
-#| msgctxt "undo-type"
-#| msgid "Rotate image"
 msgid "Rotate View"
 msgstr "Zasukaj pogled"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:104
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select _Bottom Layer"
 msgid "Select Rotation Angle"
-msgstr "Izberi kot sukanja"
+msgstr "Izberite kot sukanja po meri"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:141
 #: ../app/tools/gimpmeasuretool.c:1095
@@ -11600,7 +11442,6 @@ msgid "Angle:"
 msgstr "Kot:"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:154
-#| msgid "15 degrees  (%s)"
 msgid "degrees"
 msgstr "stopinj"
 
@@ -11766,8 +11607,6 @@ msgid "Create or adjust the cage"
 msgstr "Ustvari ali prilagodi kletko"
 
 #: ../app/gegl/gimp-gegl-enums.c:25
-#| msgctxt "cage-mode"
-#| msgid "Deform the cage to deform the image"
 msgctxt "cage-mode"
 msgid ""
 "Deform the cage\n"
@@ -11810,8 +11649,6 @@ msgid "Fill the original position of the cage with a plain color"
 msgstr "Zapolni izvorni položaj kletke z enakomerno barvo"
 
 #: ../app/operations/gimpoperationsemiflatten.c:84
-#| msgctxt "filters-action"
-#| msgid "Replace partial transparency with a color"
 msgid "Replace partial transparency with a color"
 msgstr "Zamenjaj delno prosojnost z barvo"
 
@@ -11820,6 +11657,7 @@ msgid ""
 "Make transparency all-or-nothing, by thresholding the alpha channel to a "
 "value"
 msgstr ""
+"Prosojnost naj bo polna ali ničelna, uporabi vrednost kanala alfa kot prag"
 
 #. initialize the document history
 #: ../app/gui/gui.c:423
@@ -12420,7 +12258,6 @@ msgid "Alien Map"
 msgstr "Poslikaj napis"
 
 #: ../app/pdb/plug-in-compat-cmds.c:148
-#| msgid "Antialiasing"
 msgctxt "undo-type"
 msgid "Antialias"
 msgstr "Zgladi robove"
@@ -12434,8 +12271,6 @@ msgid "Autocrop layer"
 msgstr "Samoobreži plast"
 
 #: ../app/pdb/plug-in-compat-cmds.c:315
-#| msgctxt "channels-action"
-#| msgid "Channels Menu"
 msgctxt "undo-type"
 msgid "Channel Mixer"
 msgstr "Mešalec kanalov"
@@ -12450,80 +12285,92 @@ msgctxt "undo-type"
 msgid "Cubism"
 msgstr "Kubizem"
 
-#: ../app/pdb/plug-in-compat-cmds.c:498 ../app/pdb/plug-in-compat-cmds.c:577
-#| msgid "Motion only"
+#: ../app/pdb/plug-in-compat-cmds.c:477
+msgctxt "undo-type"
+msgid "Noise HSV"
+msgstr "Šum HSV"
+
+#: ../app/pdb/plug-in-compat-cmds.c:552 ../app/pdb/plug-in-compat-cmds.c:631
 msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Zabriši kot pri gibanju"
 
-#: ../app/pdb/plug-in-compat-cmds.c:623 ../app/pdb/plug-in-compat-cmds.c:667
+#: ../app/pdb/plug-in-compat-cmds.c:733
+msgctxt "undo-type"
+msgid "Mosaic"
+msgstr "Mozaik"
+
+#: ../app/pdb/plug-in-compat-cmds.c:774 ../app/pdb/plug-in-compat-cmds.c:818
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Pikseliziraj"
 
-#: ../app/pdb/plug-in-compat-cmds.c:720
+#: ../app/pdb/plug-in-compat-cmds.c:870
+msgctxt "undo-type"
+msgid "Plasma"
+msgstr "Plazma"
+
+#: ../app/pdb/plug-in-compat-cmds.c:923
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Polarne koordinate"
 
-#: ../app/pdb/plug-in-compat-cmds.c:761
+#: ../app/pdb/plug-in-compat-cmds.c:964
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "Odstrani rdeče oči"
 
-#: ../app/pdb/plug-in-compat-cmds.c:815
+#: ../app/pdb/plug-in-compat-cmds.c:1018
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Naključno vrženo"
 
-#: ../app/pdb/plug-in-compat-cmds.c:869
+#: ../app/pdb/plug-in-compat-cmds.c:1072
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Naključno naberi"
 
-#: ../app/pdb/plug-in-compat-cmds.c:923
+#: ../app/pdb/plug-in-compat-cmds.c:1126
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Naključno nerazločno"
 
-#: ../app/pdb/plug-in-compat-cmds.c:968
+#: ../app/pdb/plug-in-compat-cmds.c:1171
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Napol splošči"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1012
+#: ../app/pdb/plug-in-compat-cmds.c:1215
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Zamakni"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1057
+#: ../app/pdb/plug-in-compat-cmds.c:1260
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Razširi"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1099
+#: ../app/pdb/plug-in-compat-cmds.c:1302
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Prag alfe"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1137
-#, fuzzy
-#| msgid "File Name:"
+#: ../app/pdb/plug-in-compat-cmds.c:1340
 msgctxt "undo-type"
 msgid "Tile Seamless"
 msgstr "Tlakuj neopazno"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1175
+#: ../app/pdb/plug-in-compat-cmds.c:1378
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Preobrni vrednost"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1239
+#: ../app/pdb/plug-in-compat-cmds.c:1442
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Valovanje"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1286
+#: ../app/pdb/plug-in-compat-cmds.c:1489
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Vrtinči in odščipni"
@@ -12849,7 +12696,6 @@ msgid "Align"
 msgstr "Poravnaj"
 
 #: ../app/tools/gimpalignoptions.c:282
-#| msgid "Relative to:"
 msgid "Relative to"
 msgstr "Relativno glede na"
 
@@ -12957,7 +12803,6 @@ msgid "Shape"
 msgstr "Oblika"
 
 #: ../app/tools/gimpblendoptions.c:230 ../app/tools/gimppaintoptions-gui.c:326
-#| msgid "Repeat:"
 msgid "Repeat"
 msgstr "Ponovi"
 
@@ -12984,7 +12829,6 @@ msgstr "_Zlij"
 #: ../app/tools/gimpblendtool.c:180 ../app/tools/gimpbucketfilltool.c:151
 #: ../app/tools/gimpimagemaptool.c:302 ../app/tools/gimppainttool.c:272
 #: ../app/tools/gimptransformtool.c:286
-#| msgid "The active layer's position is locked."
 msgid "The active layer is not visible."
 msgstr "Aktivna plast je nevidna."
 
@@ -13031,12 +12875,10 @@ msgid "Export Brightness-Contrast settings"
 msgstr "Izvozi nastavitve svetlosti-kontrasta"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:252
-#| msgid "_Brightness:"
 msgid "_Brightness"
 msgstr "_Svetlost"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:261
-#| msgid "Con_trast:"
 msgid "_Contrast"
 msgstr "Kon_trast"
 
@@ -13101,7 +12943,6 @@ msgid "Sample merged"
 msgstr "Vzorči spojeno"
 
 #: ../app/tools/gimpbucketfilloptions.c:292
-#| msgid "Fill by:"
 msgid "Fill by"
 msgstr "Zapolni z"
 
@@ -13136,7 +12977,6 @@ msgid "Select by Color"
 msgstr "Izbor po barvi"
 
 #: ../app/tools/gimpcageoptions.c:144
-#| msgid "Fill the original position of the cage with a plain color"
 msgid ""
 "Fill the original position\n"
 "of the cage with a color"
@@ -13144,27 +12984,27 @@ msgstr ""
 "Zapolni izvorni položaj\n"
 "kletke z barvo"
 
-#: ../app/tools/gimpcagetool.c:150 ../app/tools/gimpcagetool.c:1192
+#: ../app/tools/gimpcagetool.c:156 ../app/tools/gimpcagetool.c:1159
 msgid "Cage Transform"
 msgstr "Preoblikovanje kletke"
 
-#: ../app/tools/gimpcagetool.c:151
+#: ../app/tools/gimpcagetool.c:157
 msgid "Cage Transform: Deform a selection with a cage"
 msgstr "Preoblikovanje kletke: deformirajte izbor s kletko"
 
-#: ../app/tools/gimpcagetool.c:152
+#: ../app/tools/gimpcagetool.c:158
 msgid "_Cage Transform"
 msgstr "Preo_blikovanje kletke"
 
-#: ../app/tools/gimpcagetool.c:351 ../app/tools/gimpwarptool.c:293
+#: ../app/tools/gimpcagetool.c:354 ../app/tools/gimpwarptool.c:293
 msgid "Press ENTER to commit the transform"
 msgstr "Pritisnite Enter za potrditev preoblikovanja"
 
-#: ../app/tools/gimpcagetool.c:1095
+#: ../app/tools/gimpcagetool.c:1062
 msgid "Computing Cage Coefficients"
 msgstr "Računanje koeficientov kletke"
 
-#: ../app/tools/gimpcagetool.c:1243
+#: ../app/tools/gimpcagetool.c:1210
 msgid "Cage transform"
 msgstr "Preoblikovanje kletke"
 
@@ -13173,7 +13013,6 @@ msgid "Source"
 msgstr "Vir"
 
 #: ../app/tools/gimpcloneoptions-gui.c:103 ../app/tools/gimphealtool.c:105
-#| msgid "Alignment:"
 msgid "Alignment"
 msgstr "Poravnava"
 
@@ -13308,19 +13147,16 @@ msgstr "Izberite barvo"
 
 #: ../app/tools/gimpcolorizetool.c:174
 #: ../app/tools/gimphuesaturationtool.c:303
-#| msgid "_Hue:"
 msgid "_Hue"
 msgstr "_Obarvanost"
 
 #: ../app/tools/gimpcolorizetool.c:181
 #: ../app/tools/gimphuesaturationtool.c:317
-#| msgid "_Saturation:"
 msgid "_Saturation"
 msgstr "_Nasičenost"
 
 #: ../app/tools/gimpcolorizetool.c:188
 #: ../app/tools/gimphuesaturationtool.c:310
-#| msgid "_Lightness:"
 msgid "_Lightness"
 msgstr "_Svetlost"
 
@@ -13777,36 +13613,31 @@ msgid "Parameter for matting-global"
 msgstr "Parameter za matting-global"
 
 #: ../app/tools/gimpforegroundselectoptions.c:255
-#| msgid "Paint Mode"
 msgid "Draw Mode"
 msgstr "Način risanja"
 
 #: ../app/tools/gimpforegroundselectoptions.c:266
-#| msgid "Stroke Path"
 msgid "Stroke width"
 msgstr "Širina poteze"
 
 #: ../app/tools/gimpforegroundselectoptions.c:285
-#| msgid "Reset size to brush's native size"
 msgid "Reset stroke width native size"
 msgstr "Ponastavi širino poteze na osnovno"
 
 #: ../app/tools/gimpforegroundselectoptions.c:290
-#| msgid "Preview color:"
 msgid "Preview color"
 msgstr "Predogledna barva"
 
 #: ../app/tools/gimpforegroundselectoptions.c:301
+#, fuzzy
 msgid "Engine"
-msgstr ""
+msgstr "Pogon"
 
 #: ../app/tools/gimpforegroundselectoptions.c:325
-#| msgid "Active Filters"
 msgid "Active levels"
 msgstr "Dejavne ravni"
 
 #: ../app/tools/gimpforegroundselectoptions.c:338
-#| msgid "Interpolation:"
 msgid "Iterations"
 msgstr "Ponovitve"
 
@@ -13903,7 +13734,7 @@ msgstr "Orodje GEGL: Uporabite poljubno operacijo GEGL"
 msgid "_GEGL Operation..."
 msgstr "Operacija _GEGL ..."
 
-#: ../app/tools/gimpgegltool.c:370
+#: ../app/tools/gimpgegltool.c:371
 msgid "Select an operation from the list above"
 msgstr "Izberite dejanje z zgornjega seznama"
 
@@ -13995,7 +13826,6 @@ msgid "Select Primary Color to Adjust"
 msgstr "Izberite osnovno barvo za prilagajanje"
 
 #: ../app/tools/gimphuesaturationtool.c:288
-#| msgid "_Overlap:"
 msgid "_Overlap"
 msgstr "_Prekrivanje"
 
@@ -14350,15 +14180,19 @@ msgstr "Dodaj vodilo: "
 msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr "Orodje Operacija: Uporabite poljubno operacijo GEGL"
 
-#: ../app/tools/gimpoperationtool.c:321
+#: ../app/tools/gimpoperationtool.c:311
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Uvozi nastavitve '%s'"
 
-#: ../app/tools/gimpoperationtool.c:322
+#: ../app/tools/gimpoperationtool.c:312
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Izvozi nastavitve '%s'"
+
+#: ../app/tools/gimpoperationtool.c:549
+msgid "_Aux Input"
+msgstr ""
 
 #: ../app/tools/gimppaintbrushtool.c:52
 msgid "Paintbrush Tool: Paint smooth strokes using a brush"
@@ -14369,7 +14203,6 @@ msgid "_Paintbrush"
 msgstr "Slikarski _čopič"
 
 #: ../app/tools/gimppaintoptions-gui.c:87
-#| msgid "Mode:"
 msgid "Mode"
 msgstr "Način"
 
@@ -14518,7 +14351,6 @@ msgid "Posterize (Reduce Number of Colors)"
 msgstr "Posterizacija (zmanjšanje števila barv)"
 
 #: ../app/tools/gimpposterizetool.c:110
-#| msgid "Posterize _levels:"
 msgid "Posterize _levels"
 msgstr "_Ravni posterizacije"
 
@@ -14593,8 +14425,6 @@ msgid "Expand from center"
 msgstr "Razširi iz središča"
 
 #: ../app/tools/gimprectangleoptions.c:871
-#| msgctxt "source-align-mode"
-#| msgid "Fixed"
 msgid "Fixed"
 msgstr "Nespremenljivo"
 
@@ -14665,7 +14495,6 @@ msgstr "Izberi prosojna področja"
 
 #: ../app/tools/gimpregionselectoptions.c:222
 #, fuzzy
-#| msgid "Select by:"
 msgid "Select by"
 msgstr "Izbor po"
 
@@ -14722,9 +14551,6 @@ msgid "Scale to %d x %d"
 msgstr "Spremeni merilo na %d x %d"
 
 #: ../app/tools/gimpseamlesscloneoptions.c:126
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Item properties"
 msgid "Temp property"
 msgstr "Začasna lastnost"
 
@@ -15049,12 +14875,10 @@ msgid "Direction"
 msgstr "Smer"
 
 #: ../app/tools/gimptransformoptions.c:402
-#| msgid "Interpolation:"
 msgid "Interpolation"
 msgstr "Interpolacija"
 
 #: ../app/tools/gimptransformoptions.c:409
-#| msgid "Clipping:"
 msgid "Clipping"
 msgstr "Odrezanost"
 
@@ -15097,9 +14921,6 @@ msgid "The active layer's position and size are locked."
 msgstr "Položaj in velikost aktivne plasti sta zaklenjena."
 
 #: ../app/tools/gimptransformtool.c:801 ../app/tools/gimptransformtool.c:814
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Transform Items"
 msgid "Transform Step"
 msgstr "Korak preoblikovanja"
 
@@ -15320,7 +15141,6 @@ msgid "Effect Size"
 msgstr "Velikost učinka"
 
 #: ../app/tools/gimpwarpoptions.c:91
-#| msgid "Hardness"
 msgid "Effect Hardness"
 msgstr "Trdota učinka"
 
@@ -15333,19 +15153,14 @@ msgid "Hardness"
 msgstr "Trdota"
 
 #: ../app/tools/gimpwarptool.c:129
-#, fuzzy
-#| msgid "Cage Transform"
 msgid "Warp Transform"
 msgstr "Preoblikovanje z ukrivljanjem"
 
 #: ../app/tools/gimpwarptool.c:130
-#, fuzzy
 msgid "Warp Transform: Deform with different tools"
 msgstr "Preoblikovanje z ukrivljanjem: popači z različnimi orodji"
 
 #: ../app/tools/gimpwarptool.c:131
-#, fuzzy
-#| msgid "_Cage Transform"
 msgid "_Warp Transform"
 msgstr "Preo_blikovanje z ukrivljanjem"
 
@@ -15356,7 +15171,6 @@ msgstr "Poteza orodja Ukrivi"
 
 #: ../app/tools/gimpwarptool.c:655
 #, fuzzy
-#| msgid "Cage transform"
 msgid "Warp transform"
 msgstr "Preoblikovanje z ukrivljanjem"
 
@@ -15426,20 +15240,16 @@ msgid "Move"
 msgstr "Premakni"
 
 #: ../app/tools/tools-enums.c:306
-#| msgid "Mark foreground"
 msgctxt "matting-draw-mode"
 msgid "Draw foreground"
 msgstr "Nariši ospredje"
 
 #: ../app/tools/tools-enums.c:307
-#| msgid "Mark background"
 msgctxt "matting-draw-mode"
 msgid "Draw background"
 msgstr "Nariši ozadje"
 
 #: ../app/tools/tools-enums.c:308
-#| msgctxt "orientation-type"
-#| msgid "Unknown"
 msgctxt "matting-draw-mode"
 msgid "Draw unknown"
 msgstr "Nariši neznano"
@@ -15455,47 +15265,36 @@ msgid "Matting Levin"
 msgstr ""
 
 #: ../app/tools/tools-enums.c:370
-#| msgid "Lock pixels"
 msgctxt "warp-behavior"
 msgid "Move pixels"
 msgstr "Premakni slikovne točke"
 
 #: ../app/tools/tools-enums.c:371
-#| msgctxt "undo-type"
-#| msgid "Grow Channel"
 msgctxt "warp-behavior"
 msgid "Grow area"
 msgstr "Razširi območje"
 
 #: ../app/tools/tools-enums.c:372
-#| msgctxt "view-action"
-#| msgid "Shrink _Wrap"
 msgctxt "warp-behavior"
 msgid "Shrink area"
 msgstr "Skrči območje"
 
 #: ../app/tools/tools-enums.c:373
-#| msgctxt "gradient-editor-coloring"
-#| msgid "HSV (clockwise _hue)"
 msgctxt "warp-behavior"
 msgid "Swirl clockwise"
 msgstr "Vrtinči v smeri ur. kaz."
 
 #: ../app/tools/tools-enums.c:374
-#| msgctxt "gradient-editor-coloring"
-#| msgid "HSV (_counter-clockwise hue)"
 msgctxt "warp-behavior"
 msgid "Swirl counter-clockwise"
 msgstr "Vrtinči v nasp. smeri ur. kaz."
 
 #: ../app/tools/tools-enums.c:375
-#| msgid "Eraser"
 msgctxt "warp-behavior"
 msgid "Erase warping"
 msgstr "Pobriši ukrivljanje"
 
 #: ../app/tools/tools-enums.c:376
-#| msgid "Smoothing:"
 msgctxt "warp-behavior"
 msgid "Smooth warping"
 msgstr "Gladko ukrivljanje"
@@ -16744,14 +16543,10 @@ msgid "New Seed"
 msgstr "Novo sejanje"
 
 #: ../app/widgets/gimpproptable.c:298
-#, fuzzy
-#| msgid "Pick color from image"
 msgid "Pick coordinates from the image"
 msgstr "Izberite koordinate s slike"
 
 #: ../app/widgets/gimpproptable.c:330
-#, fuzzy
-#| msgid "Pick color from image"
 msgid "Pick color from the image"
 msgstr "Izberite barvo s slike"
 
@@ -17379,156 +17174,3 @@ msgstr "zaobljeno"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "nejasno"
-
-#~ msgctxt "filters-action"
-#~ msgid "Color to grayscale conversion"
-#~ msgstr "Pretvorba iz barve v sivino"
-
-#~ msgctxt "filters-action"
-#~ msgid "Simulate a cartoon by enhancing edges"
-#~ msgstr "Oponaša stripovsko risbo z zaljšanjem robov"
-
-#~ msgctxt "filters-action"
-#~ msgid "Reduce the number of colors in the image, with optional dithering"
-#~ msgstr "Zmanjša število barv v sliki, z možnostjo stresanja"
-
-#~ msgctxt "filters-action"
-#~ msgid "Change the color temperature of the image"
-#~ msgstr "Spremeni barvno temperaturo slike"
-
-#~ msgctxt "filters-action"
-#~ msgid "Convert a specified color to transparency"
-#~ msgstr "Pretvori določeno barvo v prosojnost"
-
-#~| msgctxt "filters-action"
-#~| msgid "Simplify image into an array of solid-colored squares"
-#~ msgctxt "filters-action"
-#~ msgid "Simplify image into an array of solid-colored dots"
-#~ msgstr "Poenostavi sliko v matriko enakomerno obarvanih pik"
-
-#~ msgctxt "filters-action"
-#~ msgid "Edge detection with control of edge thickness"
-#~ msgstr "Razpoznava robov z nadzorom debeline robov"
-
-#~ msgctxt "filters-action"
-#~ msgid "Apply a gaussian blur"
-#~ msgstr "Uveljavi gaussovo zabrisanost"
-
-#~ msgctxt "filters-action"
-#~ msgid "High-resolution edge detection"
-#~ msgstr "Visoko ločljivostna zaznava robov"
-
-#~ msgctxt "filters-action"
-#~ msgid "Corrects lens distortion"
-#~ msgstr "Popravi popačenje leč"
-
-#~ msgctxt "filters-action"
-#~ msgid "Monochrome channel mixer"
-#~ msgstr "Mešalec monokromatskih kanalov"
-
-#, fuzzy
-#~ msgctxt "filters-action"
-#~ msgid "Randomize lightness, chroma and hue independently"
-#~ msgstr "Naključno in neodvisno določi svetlost, kromo in obarvanost"
-
-#~ msgctxt "filters-action"
-#~ msgid "Scattering pixel values in HSV space"
-#~ msgstr "Raztresanje vrednosti slik. točk v prostoru HSV"
-
-#~ msgctxt "filters-action"
-#~ msgid "Completely randomize a fraction of pixels"
-#~ msgstr "Povsem naključno določi del slik. točk"
-
-#~ msgctxt "filters-action"
-#~ msgid "Randomly interchange some pixels with neighbors"
-#~ msgstr "Naključno izmenjaj nekaj slik. točk s sosednjimi"
-
-#~ msgctxt "filters-action"
-#~ msgid "Distort colors by random amounts"
-#~ msgstr "Popačenje barv za naključne količine"
-
-#~ msgctxt "filters-action"
-#~ msgid "Randomly slide some pixels downward (similar to melting)"
-#~ msgstr "Naključno zamakni nekaj slik. točk navzdol (podobno taljenju)"
-
-#~ msgctxt "filters-action"
-#~ msgid "Simulate color distortion produced by a copy machine"
-#~ msgstr "Oponaša popačenje barv, ki jo povzroči kopirni stroj"
-
-#~ msgctxt "filters-action"
-#~ msgid "Simplify image into an array of solid-colored squares"
-#~ msgstr "Poenostavi sliko v matriko enakomerno obarvanih kvadratov"
-
-#~ msgctxt "filters-action"
-#~ msgid "Convert image to or from polar coordinates"
-#~ msgstr "Pretvori sliko iz ali v polarne koordinate"
-
-#~ msgctxt "filters-action"
-#~ msgid "Displace pixels in a ripple pattern"
-#~ msgstr "Razmesti slik. točke v vzorcu valovanja"
-
-#~ msgctxt "filters-action"
-#~ msgid "Specialized direction-dependent edge-detection"
-#~ msgstr "Posebna, od smeri odvisna zaznava robov"
-
-#~ msgctxt "filters-action"
-#~ msgid "Simulate glow by making highlights intense and fuzzy"
-#~ msgstr "Oponaša žarenje z intenziviranjem in zabrisanjem svetlih delov"
-
-#~ msgctxt "filters-action"
-#~ msgid "Make transparency all-or-nothing"
-#~ msgstr "Naredi prosojno vse ali nič"
-
-#~ msgctxt "filters-action"
-#~ msgid "The most widely used method for sharpening an image"
-#~ msgstr "Najpogosteje uporabljena metoda ostrenja slike"
-
-#~ msgid "Select a single contiguous area"
-#~ msgstr "Izberite posamezno neprekinjeno področje"
-
-#~ msgid ""
-#~ "Smaller values give a more accurate selection border but may introduce "
-#~ "holes in the selection"
-#~ msgstr ""
-#~ "Manjše vrednosti podajo bolj natančen rob izbora, vendar lahko tudi "
-#~ "povzročijo luknje v izboru"
-
-#~ msgid "Sensitivity for brightness component"
-#~ msgstr "Občutljivost za komponento svetlosti"
-
-#~ msgid "Sensitivity for red/green component"
-#~ msgstr "Občutljivost za rdečo/zeleno komponento"
-
-#~ msgid "Sensitivity for yellow/blue component"
-#~ msgstr "Občutljivost za rumeno/modro komponento"
-
-#~ msgid "Contiguous"
-#~ msgstr "Zvezno"
-
-#~ msgid "Interactive refinement  (%s)"
-#~ msgstr "Interaktivno izboljševanje (%s)"
-
-#~ msgid "Small brush"
-#~ msgstr "Majhen čopič"
-
-#~ msgid "Large brush"
-#~ msgstr "Velik čopič"
-
-#~ msgid "Color Sensitivity"
-#~ msgstr "Barvna občutljivost"
-
-#~ msgid "Add more strokes or press Enter to accept the selection"
-#~ msgstr "Dodajte več potez ali pritisnite Enter za sprejem izbora"
-
-#~ msgid "Mark foreground by painting on the object to extract"
-#~ msgstr "Označi ospredje s slikanjem na predmet za izluščenje"
-
-#~ msgctxt "command"
-#~ msgid "Foreground Select"
-#~ msgstr "Izbor ospredja"
-
-#~ msgid "Fixed:"
-#~ msgstr "Nespremenljivo:"
-
-#~ msgid "English"
-#~ msgstr "angleščina"
