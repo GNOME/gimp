@@ -79,7 +79,6 @@ libexec_PROGRAMS = \
 	displace \
 	edge \
 	edge-dog \
-	edge-laplace \
 	edge-neon \
 	edge-sobel \
 	emboss \
@@ -790,21 +789,6 @@ edge_dog_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(edge_dog_RC)
-
-edge_laplace_SOURCES = \
-	edge-laplace.c
-
-edge_laplace_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(CAIRO_LIBS)		\
-	$(GDK_PIXBUF_LIBS)	\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(edge_laplace_RC)
 
 edge_neon_SOURCES = \
 	edge-neon.c

@@ -34,7 +34,6 @@
     'displace' => { ui => 1 },
     'edge' => { ui => 1 },
     'edge-dog' => { ui => 1 },
-    'edge-laplace' => {},
     'edge-neon' => { ui => 1 },
     'edge-sobel' => { ui => 1 },
     'emboss' => { ui => 1 },
