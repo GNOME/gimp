@@ -1964,7 +1964,7 @@ if test "x$with_xvfb_run" != "xno"; then
     have_xvfb_run="no (not found)"
   fi
 fi
-AM_CONDITIONAL(HAVE_XVFB_RUN, test "x$have_xvfb_run" == "xyes")
+AM_CONDITIONAL(HAVE_XVFB_RUN, test "x$have_xvfb_run" = "xyes")
 
 
 ######################################
