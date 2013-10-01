@@ -1546,9 +1546,9 @@ AC_ARG_WITH(lcms, [  --with-lcms             build with lcms support (check, lcm
 
 have_lcms="no (lcms support disabled)"
 if test "x$with_lcms" != xno; then
-  if test "x$with_lcms" == x1 || \
-      test "x$with_lcms" == xlcms1 || \
-      test "x$with_lcms" == xcheck; then
+  if test "x$with_lcms" = x1 || \
+      test "x$with_lcms" = xlcms1 || \
+      test "x$with_lcms" = xcheck; then
     PKG_CHECK_MODULES(LCMS1, lcms >= lcms1_required_version,
       [have_lcms="yes (lcms1)"
        AC_DEFINE(HAVE_LCMS, 1, [Define to 1 if lcms is available])
@@ -1560,9 +1560,9 @@ if test "x$with_lcms" != xno; then
   fi
 
   if test "x$have_lcms" != "xyes (lcms1)"; then
-    if test "x$with_lcms" == x2 || \
-        test "x$with_lcms" == xlcms2 || \
-        test "x$with_lcms" == xcheck; then
+    if test "x$with_lcms" = x2 || \
+        test "x$with_lcms" = xlcms2 || \
+        test "x$with_lcms" = xcheck; then
       PKG_CHECK_MODULES(LCMS2, lcms2 >= lcms2_required_version,
         [have_lcms="yes (lcms2)"
          AC_DEFINE(HAVE_LCMS, 1, [Define to 1 if lcms is available])
@@ -1570,7 +1570,7 @@ if test "x$with_lcms" != xno; then
          LCMS_CFLAGS="$LCMS2_CFLAGS"
          LCMS_LIBS="$LCMS2_LIBS"
          LCMS='lcms$(EXEEXT)'],
-        [if test "x$with_lcms" == xcheck; then
+        [if test "x$with_lcms" = xcheck; then
            have_lcms="no (lcms not found)"
          else
            have_lcms="no (lcms2 not found)"
@@ -1584,7 +1584,7 @@ AC_SUBST(LCMS_LIBS)
 AC_SUBST(LCMS)
 AM_CONDITIONAL(HAVE_LCMS,
                [test "x$have_lcms" = "xyes (lcms1)" || \
-                test "x$have_lcms" == "xyes (lcms2)"])
+                test "x$have_lcms" = "xyes (lcms2)"])
 
 
 ######################
@@ -1957,7 +1957,7 @@ if test "x$with_xvfb_run" != "xno"; then
     have_xvfb_run="no (not found)"
   fi
 fi
-AM_CONDITIONAL(HAVE_XVFB_RUN, test "x$have_xvfb_run" == "xyes")
+AM_CONDITIONAL(HAVE_XVFB_RUN, test "x$have_xvfb_run" = "xyes")
 
 
 ######################################
