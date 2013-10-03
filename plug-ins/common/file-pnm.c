@@ -68,18 +68,22 @@
 /* Declare local data types
  */
 
-typedef struct _PNMScanner
-{
-  gint    fd;                 /* The file descriptor of the file being read */
-  gchar   cur;                /* The current character in the input stream */
-  gint    eof;                /* Have we reached end of file? */
-  gchar  *inbuf;              /* Input buffer - initially 0 */
-  gint    inbufsize;          /* Size of input buffer */
-  gint    inbufvalidsize;     /* Size of input buffer with valid data */
-  gint    inbufpos;           /* Position in input buffer */
-} PNMScanner;
+typedef struct _PNMScanner PNMScanner;
 
-typedef struct _PNMInfo
+struct _PNMScanner
+{
+  GInputStream *input;          /* The input stream of the file being read */
+  gchar         cur;            /* The current character in the input stream */
+  gint          eof;            /* Have we reached end of file? */
+  gchar        *inbuf;          /* Input buffer - initially 0 */
+  gint          inbufsize;      /* Size of input buffer */
+  gint          inbufvalidsize; /* Size of input buffer with valid data */
+  gint          inbufpos;       /* Position in input buffer */
+};
+
+typedef struct _PNMInfo PNMInfo;
+
+struct _PNMInfo
 {
   gint       xres, yres;        /* The size of the image */
   gint       maxval;            /* For ascii image files, the max value
@@ -87,9 +91,12 @@ typedef struct _PNMInfo
   gint       np;                /* Number of image planes (0 for pbm) */
   gboolean   asciibody;         /* 1 if ascii body, 0 if raw body */
   jmp_buf    jmpbuf;            /* Where to jump to on an error loading */
+
   /* Routine to use to load the pnm body */
-  void    (* loader) (PNMScanner *, struct _PNMInfo *, GeglBuffer *);
-} PNMInfo;
+  void    (* loader) (PNMScanner *scanner,
+                      PNMInfo    *info,
+                      GeglBuffer *buffer);
+};
 
 /* Contains the information needed to write out PNM rows */
 typedef struct _PNMRowInfo
@@ -126,7 +133,7 @@ static void   run        (const gchar      *name,
                           const GimpParam  *param,
                           gint             *nreturn_vals,
                           GimpParam       **return_vals);
-static gint32 load_image (const gchar      *filename,
+static gint32 load_image (GFile            *file,
                           GError          **error);
 static gint   save_image (const gchar      *filename,
                           gint32            image_ID,
@@ -170,16 +177,16 @@ static void   pnmscanner_gettoken      (PNMScanner   *s,
 static void   pnmscanner_getsmalltoken (PNMScanner   *s,
                                         gchar        *buf);
 
-static PNMScanner * pnmscanner_create  (gint          fd);
+static PNMScanner * pnmscanner_create  (GInputStream *input);
 
 
-#define pnmscanner_eof(s) ((s)->eof)
-#define pnmscanner_fd(s)  ((s)->fd)
+#define pnmscanner_eof(s)   ((s)->eof)
+#define pnmscanner_input(s) ((s)->input)
 
 /* Checks for a fatal error */
-#define CHECK_FOR_ERROR(predicate, jmpbuf, errmsg) \
+#define CHECK_FOR_ERROR(predicate, jmpbuf, ...) \
         if ((predicate)) \
-        { g_message ((errmsg)); longjmp ((jmpbuf), 1); }
+          { g_message (__VA_ARGS__); longjmp ((jmpbuf), 1); }
 
 static const struct struct_pnm_types
 {
@@ -187,7 +194,7 @@ static const struct struct_pnm_types
   gint  np;
   gint  asciibody;
   gint  maxval;
-  void (* loader) (PNMScanner *, struct _PNMInfo *, GeglBuffer *buffer);
+  void (* loader) (PNMScanner *, PNMInfo *, GeglBuffer *buffer);
 } pnm_types[] =
 {
   { '1', 0, 1,   1, pnm_load_ascii  },  /* ASCII PBM */
@@ -253,6 +260,7 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_register_file_handler_mime (LOAD_PROC, "image/x-portable-anymap");
+  gimp_register_file_handler_uri (LOAD_PROC);
   gimp_register_magic_load_handler (LOAD_PROC,
                                     "pnm,ppm,pgm,pbm",
                                     "",
@@ -311,6 +319,7 @@ query (void)
   gimp_register_file_handler_mime (PBM_SAVE_PROC, "image/x-portable-bitmap");
   gimp_register_file_handler_mime (PGM_SAVE_PROC, "image/x-portable-graymap");
   gimp_register_file_handler_mime (PPM_SAVE_PROC, "image/x-portable-pixmap");
+
   gimp_register_save_handler (PNM_SAVE_PROC, "pnm", "");
   gimp_register_save_handler (PBM_SAVE_PROC, "pbm", "");
   gimp_register_save_handler (PGM_SAVE_PROC, "pgm", "");
@@ -345,7 +354,8 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      image_ID = load_image (param[1].data.d_string, &error);
+      image_ID = load_image (g_file_new_for_uri (param[1].data.d_string),
+                             &error);
 
       if (image_ID != -1)
         {
@@ -475,31 +485,25 @@ run (const gchar      *name,
 }
 
 static gint32
-load_image (const gchar  *filename,
-            GError      **error)
+load_image (GFile   *file,
+            GError **error)
 {
-  GeglBuffer     *buffer;
-  gint32 volatile image_ID = -1;
-  gint32          layer_ID;
-  int             fd;           /* File descriptor */
-  char            buf[BUFLEN + 4];  /* buffer for random things like scanning */
-  PNMInfo        *pnminfo;
-  PNMScanner * volatile scan;
+  GInputStream    *input;
+  GeglBuffer      *buffer;
+  gint32 volatile  image_ID = -1;
+  gint32           layer_ID;
+  char             buf[BUFLEN + 4];  /* buffer for random things like scanning */
+  PNMInfo         *pnminfo;
+  PNMScanner      *volatile scan;
   int             ctr;
 
   /* open the file */
-  fd = g_open (filename, O_RDONLY | _O_BINARY, 0);
-
-  if (fd == -1)
-    {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
-      return -1;
-    }
+  input = G_INPUT_STREAM (g_file_read (file, NULL, error));
+  if (! input)
+    return -1;
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             g_file_get_parse_name (file));
 
   /* allocate the necessary structures */
   pnminfo = g_new (PNMInfo, 1);
@@ -512,7 +516,7 @@ load_image (const gchar  *filename,
       if (scan)
         pnmscanner_destroy (scan);
 
-      close (fd);
+      g_object_unref (input);
       g_free (pnminfo);
 
       if (image_ID != -1)
@@ -521,7 +525,7 @@ load_image (const gchar  *filename,
       return -1;
     }
 
-  if (! (scan = pnmscanner_create (fd)))
+  if (! (scan = pnmscanner_create (input)))
     longjmp (pnminfo->jmpbuf, 1);
 
   /* Get magic number */
@@ -580,7 +584,7 @@ load_image (const gchar  *filename,
    */
   image_ID = gimp_image_new (pnminfo->xres, pnminfo->yres,
                              (pnminfo->np >= 3) ? GIMP_RGB : GIMP_GRAY);
-  gimp_image_set_filename (image_ID, filename);
+  gimp_image_set_filename (image_ID, g_file_get_uri (file));
 
   layer_ID = gimp_layer_new (image_ID, _("Background"),
                              pnminfo->xres, pnminfo->yres,
@@ -598,7 +602,7 @@ load_image (const gchar  *filename,
 
   g_object_unref (buffer);
   g_free (pnminfo);
-  close (fd);
+  g_object_unref (input);
 
   return image_ID;
 }
@@ -698,11 +702,11 @@ pnm_load_raw (PNMScanner *scan,
               PNMInfo    *info,
               GeglBuffer *buffer)
 {
-  gint    bpc;
-  guchar *data, *bdata, *d, *b;
-  gint    x, y, i;
-  gint    start, end, scanlines;
-  gint    fd;
+  GInputStream *input;
+  gint          bpc;
+  guchar       *data, *bdata, *d, *b;
+  gint          x, y, i;
+  gint          start, end, scanlines;
 
   if (info->maxval > 255)
     bpc = 2;
@@ -715,7 +719,7 @@ pnm_load_raw (PNMScanner *scan,
   if (bpc > 1)
     bdata = g_new (guchar, gimp_tile_height () * info->xres * info->np);
 
-  fd = pnmscanner_fd (scan);
+  input = pnmscanner_input (scan);
 
   for (y = 0; y < info->yres; y += scanlines)
     {
@@ -728,10 +732,20 @@ pnm_load_raw (PNMScanner *scan,
 
       for (i = 0; i < scanlines; i++)
         {
-          CHECK_FOR_ERROR ((info->xres * info->np * bpc
-                            != read (fd, d, info->xres * info->np * bpc)),
-                           info->jmpbuf,
-                           _("Premature end of file."));
+          gsize   bytes_read;
+          GError *error = NULL;
+
+          if (g_input_stream_read_all (input, d, info->xres * info->np * bpc,
+                                       &bytes_read, NULL, &error))
+            {
+              CHECK_FOR_ERROR (info->xres * info->np * bpc != bytes_read,
+                               info->jmpbuf,
+                               _("Premature end of file."));
+            }
+          else
+            {
+              CHECK_FOR_ERROR (FALSE, info->jmpbuf, "%s", error->message);
+            }
 
           if (bpc > 1)
             {
@@ -789,15 +803,16 @@ pnm_load_rawpbm (PNMScanner *scan,
                  PNMInfo    *info,
                  GeglBuffer *buffer)
 {
-  guchar *buf;
-  guchar  curbyte;
-  guchar *data, *d;
-  gint    x, y, i;
-  gint    start, end, scanlines;
-  gint    fd;
-  gint    rowlen, bufpos;
+  GInputStream *input;
+  guchar       *buf;
+  guchar        curbyte;
+  guchar       *data, *d;
+  gint          x, y, i;
+  gint          start, end, scanlines;
+  gint          rowlen, bufpos;
 
-  fd = pnmscanner_fd (scan);
+  input = pnmscanner_input (scan);
+
   rowlen = (int)ceil ((double)(info->xres)/8.0);
   data = g_new (guchar, gimp_tile_height () * info->xres);
   buf = g_new (guchar, rowlen);
@@ -812,8 +827,21 @@ pnm_load_rawpbm (PNMScanner *scan,
 
       for (i = 0; i < scanlines; i++)
         {
-          CHECK_FOR_ERROR ((rowlen != read (fd, buf, rowlen)),
-                           info->jmpbuf, _("Error reading file."));
+          gsize   bytes_read;
+          GError *error = NULL;
+
+          if (g_input_stream_read_all (input, buf, rowlen,
+                                       &bytes_read, NULL, &error))
+            {
+              CHECK_FOR_ERROR (rowlen != bytes_read,
+                               info->jmpbuf,
+                               _("Premature end of file."));
+            }
+          else
+            {
+              CHECK_FOR_ERROR (FALSE, info->jmpbuf, "%s", error->message);
+            }
+
           bufpos = 0;
           curbyte = buf[0];
 
@@ -1265,15 +1293,23 @@ save_dialog (void)
  *    look ahead buffer is one character initially.
  */
 static PNMScanner *
-pnmscanner_create (gint fd)
+pnmscanner_create (GInputStream *input)
 {
   PNMScanner *s;
+  gsize       bytes_read;
 
   s = g_new (PNMScanner, 1);
 
-  s->fd    = fd;
+  s->input = input;
   s->inbuf = NULL;
-  s->eof   = !read (s->fd, &(s->cur), 1);
+  s->eof   = FALSE;
+
+  if (! g_input_stream_read_all (input, &s->cur, 1,
+                                 &bytes_read, NULL, NULL) ||
+      bytes_read != 1)
+    {
+      s->eof = TRUE;
+    }
 
   return s;
 }
@@ -1297,10 +1333,17 @@ static void
 pnmscanner_createbuffer (PNMScanner *s,
                          gint        bufsize)
 {
+  gsize bytes_read;
+
   s->inbuf          = g_new (gchar, bufsize);
   s->inbufsize      = bufsize;
   s->inbufpos       = 0;
-  s->inbufvalidsize = read (s->fd, s->inbuf, bufsize);
+  s->inbufvalidsize = 0;
+
+  g_input_stream_read_all (s->input, s->inbuf, bufsize,
+                           &bytes_read, NULL, NULL);
+
+  s->inbufvalidsize = bytes_read;
 }
 
 /* pnmscanner_gettoken ---
@@ -1356,16 +1399,34 @@ pnmscanner_getchar (PNMScanner *s)
       if (s->inbufpos >= s->inbufvalidsize)
         {
           if (s->inbufpos > s->inbufvalidsize)
-            s->eof = 1;
+            {
+              s->eof = 1;
+            }
           else
-            s->inbufvalidsize = read (s->fd, s->inbuf, s->inbufsize);
+            {
+              gsize bytes_read;
+
+              g_input_stream_read_all (s->input, s->inbuf, s->inbufsize,
+                                       &bytes_read, NULL, NULL);
+
+              s->inbufvalidsize = bytes_read;
+            }
 
           s->inbufpos = 0;
         }
     }
   else
     {
-      s->eof = !read (s->fd, &(s->cur), 1);
+      gsize bytes_read;
+
+      s->eof = FALSE;
+
+      if (! g_input_stream_read_all (s->input, &s->cur, 1,
+                                     &bytes_read, NULL, NULL) ||
+          bytes_read != 1)
+        {
+          s->eof = TRUE;
+        }
     }
 }
 
