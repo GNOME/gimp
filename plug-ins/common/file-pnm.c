@@ -1,5 +1,6 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
  * PNM reading and writing code Copyright (C) 1996 Erik Nygren
  *
  * This program is free software: you can redistribute it and/or modify
@@ -48,6 +49,15 @@
  */
 
 typedef struct _PNMScanner PNMScanner;
+typedef struct _PNMInfo    PNMInfo;
+typedef struct _PNMRowInfo PNMRowInfo;
+
+typedef void     (* PNMLoaderFunc)  (PNMScanner    *scanner,
+                                     PNMInfo       *info,
+                                     GeglBuffer    *buffer);
+typedef gboolean (* PNMSaverowFunc) (PNMRowInfo    *info,
+                                     const guchar  *data,
+                                     GError       **error);
 
 struct _PNMScanner
 {
@@ -60,25 +70,20 @@ struct _PNMScanner
   gint          inbufpos;       /* Position in input buffer */
 };
 
-typedef struct _PNMInfo PNMInfo;
-
 struct _PNMInfo
 {
-  gint       xres, yres;        /* The size of the image */
-  gint       maxval;            /* For ascii image files, the max value
+  gint          xres, yres;     /* The size of the image */
+  gint          maxval;         /* For ascii image files, the max value
                                  * which we need to normalize to */
-  gint       np;                /* Number of image planes (0 for pbm) */
-  gboolean   asciibody;         /* 1 if ascii body, 0 if raw body */
-  jmp_buf    jmpbuf;            /* Where to jump to on an error loading */
+  gint          np;             /* Number of image planes (0 for pbm) */
+  gboolean      asciibody;      /* 1 if ascii body, 0 if raw body */
+  jmp_buf       jmpbuf;         /* Where to jump to on an error loading */
 
-  /* Routine to use to load the pnm body */
-  void    (* loader) (PNMScanner *scanner,
-                      PNMInfo    *info,
-                      GeglBuffer *buffer);
+  PNMLoaderFunc loader;         /* Routine to use to load the pnm body */
 };
 
 /* Contains the information needed to write out PNM rows */
-typedef struct _PNMRowInfo
+struct _PNMRowInfo
 {
   GOutputStream *output;        /* Output stream               */
   gchar         *rowbuf;        /* Buffer for writing out rows */
@@ -88,7 +93,7 @@ typedef struct _PNMRowInfo
   guchar        *grn;           /* Colormap green              */
   guchar        *blu;           /* Colormap blue               */
   gboolean       zero_is_black; /* index zero is black (PBM only) */
-} PNMRowInfo;
+};
 
 /* Save info  */
 typedef struct
@@ -103,6 +108,7 @@ typedef struct
                                  * be an issue. */
 
 #define SAVE_COMMENT_STRING "# CREATOR: GIMP PNM Filter Version 1.1\n"
+
 
 /* Declare some local functions.
  */
@@ -120,7 +126,7 @@ static gint       save_image (GFile            *file,
                               gboolean          pbm,
                               GError          **error);
 
-static gint       save_dialog              (void);
+static gboolean   save_dialog              (void);
 
 static void       pnm_load_ascii           (PNMScanner    *scan,
                                             PNMInfo       *info,
@@ -173,13 +179,13 @@ static PNMScanner * pnmscanner_create      (GInputStream  *input);
         if ((predicate)) \
           { g_message (__VA_ARGS__); longjmp ((jmpbuf), 1); }
 
-static const struct struct_pnm_types
+static const struct
 {
-  gchar name;
-  gint  np;
-  gint  asciibody;
-  gint  maxval;
-  void (* loader) (PNMScanner *, PNMInfo *, GeglBuffer *buffer);
+  gchar         name;
+  gint          np;
+  gint          asciibody;
+  gint          maxval;
+  PNMLoaderFunc loader;
 } pnm_types[] =
 {
   { '1', 0, 1,   1, pnm_load_ascii  },  /* ASCII PBM */
@@ -228,7 +234,7 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save"             },
     { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
     { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },
-    { GIMP_PDB_INT32,    "raw",          "Specify non-zero for raw output, zero for ascii output" }
+    { GIMP_PDB_INT32,    "raw",          "TRUE for raw output, FALSE for ascii output" }
   };
 
   gimp_install_procedure (LOAD_PROC,
@@ -1026,16 +1032,16 @@ save_image (GFile     *file,
   const gchar   *header_string = NULL;
   GimpImageType  drawable_type;
   PNMRowInfo     rowinfo;
-  gboolean (*saverow) (PNMRowInfo *, const guchar *, GError **) = NULL;
+  PNMSaverowFunc saverow = NULL;
   guchar         red[256];
   guchar         grn[256];
   guchar         blu[256];
-  guchar        *data, *d;
+  guchar        *data;
+  guchar        *d;
   gchar         *rowbuf;
   gchar          buf[BUFLEN];
   gint           np = 0;
   gint           xres, yres;
-  gint           bpp;
   gint           ypos, yend;
   gint           rowbufsize = 0;
 
@@ -1113,7 +1119,7 @@ save_image (GFile     *file,
           header_string = "P4\n";
           format = babl_format ("Y' u8");
           np = 0;
-          rowbufsize = (int)ceil ((double)(xres)/8.0);
+          rowbufsize = (gint) ceil ((gdouble) xres / 8.0);
           saverow = pnmsaverow_raw_pbm;
         }
       else
@@ -1212,11 +1218,6 @@ save_image (GFile     *file,
       g_free (cmap);
     }
 
-  bpp = babl_format_get_bytes_per_pixel (format);
-
-  /* allocate a buffer for retrieving information from the pixel region  */
-  data = g_new (guchar, gimp_tile_height () * xres * bpp);
-
   /* write out comment string */
   if (! output_write (output, SAVE_COMMENT_STRING, strlen (SAVE_COMMENT_STRING),
                       error))
@@ -1238,6 +1239,11 @@ save_image (GFile     *file,
       g_object_unref (buffer);
       return FALSE;
     }
+
+  /* allocate a buffer for retrieving information from the pixel region  */
+  data = g_new (guchar,
+                gimp_tile_height () * xres *
+                babl_format_get_bytes_per_pixel (format));
 
   rowbuf = g_new (gchar, rowbufsize + 1);
 
@@ -1266,6 +1272,8 @@ save_image (GFile     *file,
 
       if (! saverow (&rowinfo, d, error))
         {
+          g_free (rowbuf);
+          g_free (data);
           g_object_unref (output);
           g_object_unref (buffer);
           return FALSE;
@@ -1288,7 +1296,7 @@ save_image (GFile     *file,
   return TRUE;
 }
 
-static gint
+static gboolean
 save_dialog (void)
 {
   GtkWidget *dialog;
@@ -1414,7 +1422,7 @@ pnmscanner_getsmalltoken (PNMScanner *s,
 {
   pnmscanner_eatwhitespace (s);
 
-  if (!(s->eof) && !g_ascii_isspace (s->cur) && (s->cur != '#'))
+  if (! s->eof && ! g_ascii_isspace (s->cur) && (s->cur != '#'))
     {
       *buf = s->cur;
       pnmscanner_getchar (s);
@@ -1484,7 +1492,7 @@ pnmscanner_eatwhitespace (PNMScanner *s)
               state = 1;  /* goto comment */
               pnmscanner_getchar (s);
             }
-          else if (!g_ascii_isspace (s->cur))
+          else if (! g_ascii_isspace (s->cur))
             {
               state = -1;
             }
