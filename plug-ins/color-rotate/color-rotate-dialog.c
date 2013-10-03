@@ -121,13 +121,13 @@ rcm_create_previews (void)
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  frame = rcm_create_one_preview (&Current.Bna->before, ORIGINAL,
-                                  Current.reduced->width,
-                                  Current.reduced->height);
+  frame = rcm_create_one_preview (&Current_c.Bna->before, ORIGINAL,
+                                  Current_c.reduced->width,
+                                  Current_c.reduced->height);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  g_signal_connect_after (Current.Bna->before, "size-allocate",
+  g_signal_connect_after (Current_c.Bna->before, "size-allocate",
                           G_CALLBACK (rcm_render_preview),
                           NULL);
 
@@ -139,13 +139,13 @@ rcm_create_previews (void)
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  frame = rcm_create_one_preview (&Current.Bna->after, CURRENT,
-                                  Current.reduced->width,
-                                  Current.reduced->height);
+  frame = rcm_create_one_preview (&Current_c.Bna->after, CURRENT,
+                                  Current_c.reduced->width,
+                                  Current_c.reduced->height);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  g_signal_connect_after (Current.Bna->after, "size-allocate",
+  g_signal_connect_after (Current_c.Bna->after, "size-allocate",
                           G_CALLBACK (rcm_render_preview),
                           NULL);
 
@@ -155,12 +155,12 @@ rcm_create_previews (void)
 
   button = gtk_check_button_new_with_label (_("Continuous update"));
   gtk_box_pack_start(GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), Current.RealTime);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), Current_c.RealTime);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (rcm_preview_as_you_drag),
-                    &(Current.RealTime));
+                    &(Current_c.RealTime));
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -174,7 +174,7 @@ rcm_create_previews (void)
                                   _("Selection"),    SELECTION,
                                   _("Context"),      SELECTION_IN_CONTEXT,
                                   NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), Current.Slctn);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), Current_c.Slctn);
 
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
@@ -315,7 +315,7 @@ rcm_create_one_circle (gint         height,
                     st);
 
   /* label */
-  st->alpha_units_label = gtk_label_new (rcm_units_string (Current.Units));
+  st->alpha_units_label = gtk_label_new (rcm_units_string (Current_c.Units));
   gtk_widget_show (st->alpha_units_label);
 
   gtk_table_attach (GTK_TABLE (legend_table),
@@ -341,7 +341,7 @@ rcm_create_one_circle (gint         height,
                     st);
 
   /* label */
-  st->beta_units_label = gtk_label_new (rcm_units_string (Current.Units));
+  st->beta_units_label = gtk_label_new (rcm_units_string (Current_c.Units));
   gtk_widget_show (st->beta_units_label);
 
   gtk_table_attach (GTK_TABLE (legend_table), st->beta_units_label, 5,6, 0,1,
@@ -374,16 +374,16 @@ rcm_create_main (void)
 {
   GtkWidget *vbox;
 
-  Current.From = rcm_create_one_circle (SUM, C_("color-rotate", "From:"));
-  Current.To   = rcm_create_one_circle (SUM, C_("color-rotate", "To:"));
+  Current_c.From = rcm_create_one_circle (SUM, C_("color-rotate", "From:"));
+  Current_c.To   = rcm_create_one_circle (SUM, C_("color-rotate", "To:"));
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_widget_show (vbox);
 
-  gtk_box_pack_start (GTK_BOX (vbox), Current.From->frame,
+  gtk_box_pack_start (GTK_BOX (vbox), Current_c.From->frame,
 		      FALSE, FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), Current.To->frame,
+  gtk_box_pack_start (GTK_BOX (vbox), Current_c.To->frame,
 		      FALSE, FALSE, 0);
 
   return vbox;
@@ -407,7 +407,7 @@ rcm_create_gray (void)
   RcmGray   *st;
   GtkAdjustment *adj;
 
-  Current.Gray = st = g_new (RcmGray, 1);
+  Current_c.Gray = st = g_new (RcmGray, 1);
   st->hue   = 0;
   st->satur = 0;
 
@@ -483,7 +483,7 @@ rcm_create_gray (void)
                     st);
 
   /* Gray: Circle: units label */
-  st->hue_units_label = gtk_label_new (rcm_units_string (Current.Units));
+  st->hue_units_label = gtk_label_new (rcm_units_string (Current_c.Units));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), st->hue_units_label, 2, 3, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
@@ -524,24 +524,24 @@ rcm_create_gray (void)
   gtk_box_pack_start (GTK_BOX (radio_box), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  if (Current.Gray_to_from == GRAY_FROM)
+  if (Current_c.Gray_to_from == GRAY_FROM)
     gtk_button_clicked (GTK_BUTTON (button));
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (rcm_switch_to_gray_from),
-                    &(Current.Gray_to_from));
+                    &(Current_c.Gray_to_from));
 
   button = gtk_radio_button_new_with_label (group, _("Change to this"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_box_pack_start (GTK_BOX (radio_box), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  if (Current.Gray_to_from == GRAY_TO)
+  if (Current_c.Gray_to_from == GRAY_TO)
     gtk_button_clicked (GTK_BUTTON (button));
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (rcm_switch_to_gray_to),
-                    &(Current.Gray_to_from));
+                    &(Current_c.Gray_to_from));
 
   /** Gray: What is gray? **/
   frame = gimp_frame_new (_("Gray Threshold"));
@@ -598,7 +598,7 @@ rcm_create_units (void)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  if (Current.Units == RADIANS)
+  if (Current_c.Units == RADIANS)
     gtk_button_clicked (GTK_BUTTON (button));
 
   g_signal_connect (button, "clicked",
@@ -610,7 +610,7 @@ rcm_create_units (void)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  if (Current.Units == RADIANS_OVER_PI)
+  if (Current_c.Units == RADIANS_OVER_PI)
     gtk_button_clicked (GTK_BUTTON (button));
 
   g_signal_connect (button, "clicked",
@@ -621,7 +621,7 @@ rcm_create_units (void)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  if (Current.Units == DEGREES)
+  if (Current_c.Units == DEGREES)
     gtk_button_clicked (GTK_BUTTON (button));
 
   g_signal_connect (button, "clicked",
@@ -643,7 +643,7 @@ color_rotate_dialog (void)
   GtkWidget *previews;
   gboolean   run;
 
-  Current.Bna = g_new (RcmBna, 1);
+  Current_c.Bna = g_new (RcmBna, 1);
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
   color_rotate_stock_init ();
@@ -664,13 +664,13 @@ color_rotate_dialog (void)
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
-  Current.Bna->dlg = dialog;
+  Current_c.Bna->dlg = dialog;
 
   /* Create sub-dialogs */
-  Current.reduced = rcm_reduce_image (Current.drawable, Current.mask,
-                                      MAX_PREVIEW_SIZE, Current.Slctn);
+  Current_c.reduced = rcm_reduce_image (Current_c.drawable, Current_c.mask,
+                                      MAX_PREVIEW_SIZE, Current_c.Slctn);
 
-  Current.Bna->bna_frame = previews = rcm_create_previews ();
+  Current_c.Bna->bna_frame = previews = rcm_create_previews ();
 
   /* H-Box */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
@@ -698,9 +698,9 @@ color_rotate_dialog (void)
 
   gtk_widget_show (dialog);
 
-  rcm_render_circle (Current.From->preview, SUM, MARGIN);
-  rcm_render_circle (Current.To->preview, SUM, MARGIN);
-  rcm_render_circle (Current.Gray->preview, GRAY_SUM, GRAY_MARGIN);
+  rcm_render_circle (Current_c.From->preview, SUM, MARGIN);
+  rcm_render_circle (Current_c.To->preview, SUM, MARGIN);
+  rcm_render_circle (Current_c.Gray->preview, GRAY_SUM, GRAY_MARGIN);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 

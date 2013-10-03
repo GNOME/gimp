@@ -87,7 +87,7 @@ rcm_360_degrees (GtkWidget *button,
 
   circle->angle->beta = circle->angle->alpha-circle->angle->cw_ccw * 0.001;
 
-  rcm_render_preview (Current.Bna->after);
+  rcm_render_preview (Current_c.Bna->after);
 }
 
 void
@@ -115,7 +115,7 @@ rcm_a_to_b (GtkWidget *button,
 
   SWAP (circle->angle->alpha, circle->angle->beta);
 
-  rcm_render_preview (Current.Bna->after);
+  rcm_render_preview (Current_c.Bna->after);
 }
 
 
@@ -131,14 +131,14 @@ rcm_spinbutton_to_degrees (GtkWidget *button,
   adj = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (button));
 
   gtk_adjustment_configure (adj,
-                            value * rcm_units_factor (Current.Units),
+                            value * rcm_units_factor (Current_c.Units),
                             gtk_adjustment_get_lower (adj), 360.0,
                             0.01, 1.0,
                             gtk_adjustment_get_page_size (adj));
 
   gtk_spin_button_set_digits (GTK_SPIN_BUTTON (button), 2);
 
-  gtk_label_set_text (GTK_LABEL (label), rcm_units_string (Current.Units));
+  gtk_label_set_text (GTK_LABEL (label), rcm_units_string (Current_c.Units));
 }
 
 void
@@ -147,27 +147,27 @@ rcm_switch_to_degrees (GtkWidget *button,
 {
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
     {
-      Current.Units = DEGREES;
+      Current_c.Units = DEGREES;
 
-      rcm_spinbutton_to_degrees (Current.From->alpha_entry,
-                                 Current.From->angle->alpha,
-                                 Current.From->alpha_units_label);
+      rcm_spinbutton_to_degrees (Current_c.From->alpha_entry,
+                                 Current_c.From->angle->alpha,
+                                 Current_c.From->alpha_units_label);
 
-      rcm_spinbutton_to_degrees (Current.From->beta_entry,
-                                 Current.From->angle->beta,
-                                 Current.From->beta_units_label);
+      rcm_spinbutton_to_degrees (Current_c.From->beta_entry,
+                                 Current_c.From->angle->beta,
+                                 Current_c.From->beta_units_label);
 
-      rcm_spinbutton_to_degrees (Current.To->alpha_entry,
-                                 Current.To->angle->alpha,
-                                 Current.To->alpha_units_label);
+      rcm_spinbutton_to_degrees (Current_c.To->alpha_entry,
+                                 Current_c.To->angle->alpha,
+                                 Current_c.To->alpha_units_label);
 
-      rcm_spinbutton_to_degrees (Current.To->beta_entry,
-                                 Current.To->angle->beta,
-                                 Current.To->beta_units_label);
+      rcm_spinbutton_to_degrees (Current_c.To->beta_entry,
+                                 Current_c.To->angle->beta,
+                                 Current_c.To->beta_units_label);
 
-      rcm_spinbutton_to_degrees (Current.Gray->hue_entry,
-                                 Current.Gray->hue,
-                                 Current.Gray->hue_units_label);
+      rcm_spinbutton_to_degrees (Current_c.Gray->hue_entry,
+                                 Current_c.Gray->hue,
+                                 Current_c.Gray->hue_units_label);
     }
 }
 
@@ -181,14 +181,14 @@ rcm_spinbutton_to_radians (GtkWidget *button,
   adj = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (button));
 
   gtk_adjustment_configure (adj,
-                            value * rcm_units_factor (Current.Units),
+                            value * rcm_units_factor (Current_c.Units),
                             gtk_adjustment_get_lower (adj), TP,
                             0.0001, 0.001,
                             gtk_adjustment_get_page_size (adj));
 
   gtk_spin_button_set_digits (GTK_SPIN_BUTTON (button), 4);
 
-  gtk_label_set_text (GTK_LABEL (label), rcm_units_string (Current.Units));
+  gtk_label_set_text (GTK_LABEL (label), rcm_units_string (Current_c.Units));
 }
 
 void
@@ -197,27 +197,27 @@ rcm_switch_to_radians (GtkWidget *button,
 {
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
     {
-      Current.Units = RADIANS;
+      Current_c.Units = RADIANS;
 
-      rcm_spinbutton_to_radians (Current.From->alpha_entry,
-                                 Current.From->angle->alpha,
-                                 Current.From->alpha_units_label);
+      rcm_spinbutton_to_radians (Current_c.From->alpha_entry,
+                                 Current_c.From->angle->alpha,
+                                 Current_c.From->alpha_units_label);
 
-      rcm_spinbutton_to_radians (Current.From->beta_entry,
-                                 Current.From->angle->beta,
-                                 Current.From->beta_units_label);
+      rcm_spinbutton_to_radians (Current_c.From->beta_entry,
+                                 Current_c.From->angle->beta,
+                                 Current_c.From->beta_units_label);
 
-      rcm_spinbutton_to_radians (Current.To->alpha_entry,
-                                 Current.To->angle->alpha,
-                                 Current.To->alpha_units_label);
+      rcm_spinbutton_to_radians (Current_c.To->alpha_entry,
+                                 Current_c.To->angle->alpha,
+                                 Current_c.To->alpha_units_label);
 
-      rcm_spinbutton_to_radians (Current.To->beta_entry,
-                                 Current.To->angle->beta,
-                                 Current.To->beta_units_label);
+      rcm_spinbutton_to_radians (Current_c.To->beta_entry,
+                                 Current_c.To->angle->beta,
+                                 Current_c.To->beta_units_label);
 
-      rcm_spinbutton_to_radians (Current.Gray->hue_entry,
-                                 Current.Gray->hue,
-                                 Current.Gray->hue_units_label);
+      rcm_spinbutton_to_radians (Current_c.Gray->hue_entry,
+                                 Current_c.Gray->hue,
+                                 Current_c.Gray->hue_units_label);
     }
 }
 
@@ -231,14 +231,14 @@ rcm_spinbutton_to_radians_over_PI (GtkWidget *button,
   adj = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (button));
 
   gtk_adjustment_configure (adj,
-                            value * rcm_units_factor (Current.Units),
+                            value * rcm_units_factor (Current_c.Units),
                             gtk_adjustment_get_lower (adj), 2.0,
                             0.0001, 0.001,
                             gtk_adjustment_get_page_size (adj));
 
   gtk_spin_button_set_digits (GTK_SPIN_BUTTON (button), 4);
 
-  gtk_label_set_text (GTK_LABEL (label), rcm_units_string (Current.Units));
+  gtk_label_set_text (GTK_LABEL (label), rcm_units_string (Current_c.Units));
 }
 
 void
@@ -247,27 +247,27 @@ rcm_switch_to_radians_over_PI (GtkWidget *button,
 {
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
     {
-      Current.Units = RADIANS_OVER_PI;
+      Current_c.Units = RADIANS_OVER_PI;
 
-      rcm_spinbutton_to_radians_over_PI (Current.From->alpha_entry,
-                                         Current.From->angle->alpha,
-                                         Current.From->alpha_units_label);
+      rcm_spinbutton_to_radians_over_PI (Current_c.From->alpha_entry,
+                                         Current_c.From->angle->alpha,
+                                         Current_c.From->alpha_units_label);
 
-      rcm_spinbutton_to_radians_over_PI (Current.From->beta_entry,
-                                         Current.From->angle->beta,
-                                         Current.From->beta_units_label);
+      rcm_spinbutton_to_radians_over_PI (Current_c.From->beta_entry,
+                                         Current_c.From->angle->beta,
+                                         Current_c.From->beta_units_label);
 
-      rcm_spinbutton_to_radians_over_PI (Current.To->alpha_entry,
-                                         Current.To->angle->alpha,
-                                         Current.To->alpha_units_label);
+      rcm_spinbutton_to_radians_over_PI (Current_c.To->alpha_entry,
+                                         Current_c.To->angle->alpha,
+                                         Current_c.To->alpha_units_label);
 
-      rcm_spinbutton_to_radians_over_PI (Current.To->beta_entry,
-                                         Current.To->angle->beta,
-                                         Current.To->beta_units_label);
+      rcm_spinbutton_to_radians_over_PI (Current_c.To->beta_entry,
+                                         Current_c.To->angle->beta,
+                                         Current_c.To->beta_units_label);
 
-      rcm_spinbutton_to_radians_over_PI (Current.Gray->hue_entry,
-                                         Current.Gray->hue,
-                                         Current.Gray->hue_units_label);
+      rcm_spinbutton_to_radians_over_PI (Current_c.Gray->hue_entry,
+                                         Current_c.Gray->hue,
+                                         Current_c.Gray->hue_units_label);
     }
 }
 
@@ -280,9 +280,9 @@ rcm_switch_to_gray_to (GtkWidget *button,
 {
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
     {
-      Current.Gray_to_from = GRAY_TO;
+      Current_c.Gray_to_from = GRAY_TO;
 
-      rcm_render_preview (Current.Bna->after);
+      rcm_render_preview (Current_c.Bna->after);
     }
 }
 
@@ -292,9 +292,9 @@ rcm_switch_to_gray_from (GtkWidget *button,
 {
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
     {
-      Current.Gray_to_from = GRAY_FROM;
+      Current_c.Gray_to_from = GRAY_FROM;
 
-      rcm_render_preview (Current.Bna->after);
+      rcm_render_preview (Current_c.Bna->after);
     }
 }
 
@@ -305,7 +305,7 @@ void
 rcm_preview_as_you_drag (GtkWidget *button,
 			 gpointer  *value)
 {
-  Current.RealTime = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
+  Current_c.RealTime = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
 }
 
 void
@@ -316,15 +316,15 @@ rcm_combo_callback (GtkWidget *widget,
 
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value);
 
-  Current.reduced = rcm_reduce_image (Current.drawable, Current.mask,
+  Current_c.reduced = rcm_reduce_image (Current_c.drawable, Current_c.mask,
                                       MAX_PREVIEW_SIZE, value);
 
-  gtk_widget_set_size_request (Current.Bna->before,
-                               Current.reduced->width,
-                               Current.reduced->height);
-  gtk_widget_set_size_request (Current.Bna->after,
-                               Current.reduced->width,
-                               Current.reduced->height);
+  gtk_widget_set_size_request (Current_c.Bna->before,
+                               Current_c.reduced->width,
+                               Current_c.reduced->height);
+  gtk_widget_set_size_request (Current_c.Bna->after,
+                               Current_c.reduced->width,
+                               Current_c.reduced->height);
 }
 
 
@@ -375,14 +375,14 @@ rcm_button_press_event (GtkWidget      *widget,
 
           gtk_spin_button_set_value (GTK_SPIN_BUTTON (circle->alpha_entry),
                                      circle->angle->alpha *
-                                     rcm_units_factor(Current.Units));
+                                     rcm_units_factor(Current_c.Units));
 
           gtk_spin_button_set_value (GTK_SPIN_BUTTON (circle->beta_entry),
                                      circle->angle->beta *
-                                     rcm_units_factor(Current.Units));
+                                     rcm_units_factor(Current_c.Units));
 
-          if (Current.RealTime)
-            rcm_render_preview (Current.Bna->after);
+          if (Current_c.RealTime)
+            rcm_render_preview (Current_c.Bna->after);
         }
     }
   else
@@ -396,7 +396,7 @@ rcm_release_event (GtkWidget      *widget,
 		   GdkEventButton *event,
 		   RcmCircle      *circle)
 {
-  rcm_render_preview (Current.Bna->after);
+  rcm_render_preview (Current_c.Bna->after);
 
   return TRUE;
 }
@@ -430,14 +430,14 @@ rcm_motion_notify_event (GtkWidget      *widget,
 
       gtk_spin_button_set_value (GTK_SPIN_BUTTON (circle->alpha_entry),
                                  circle->angle->alpha *
-                                 rcm_units_factor(Current.Units));
+                                 rcm_units_factor(Current_c.Units));
 
       gtk_spin_button_set_value (GTK_SPIN_BUTTON (circle->beta_entry),
                                  circle->angle->beta *
-                                 rcm_units_factor(Current.Units));
+                                 rcm_units_factor(Current_c.Units));
 
-      if (Current.RealTime)
-        rcm_render_preview (Current.Bna->after);
+      if (Current_c.RealTime)
+        rcm_render_preview (Current_c.Bna->after);
     }
 
   gdk_event_request_motions (event);
@@ -484,13 +484,13 @@ rcm_gray_button_press_event (GtkWidget      *widget,
   gtk_widget_queue_draw (circle->preview);
 
   gtk_spin_button_set_value (GTK_SPIN_BUTTON (circle->hue_entry),
-                             circle->hue * rcm_units_factor (Current.Units));
+                             circle->hue * rcm_units_factor (Current_c.Units));
 
   gtk_spin_button_set_value (GTK_SPIN_BUTTON (circle->satur_entry),
                              circle->satur);
 
-  if (Current.RealTime)
-    rcm_render_preview (Current.Bna->after);
+  if (Current_c.RealTime)
+    rcm_render_preview (Current_c.Bna->after);
 
   return TRUE;
 }
@@ -500,7 +500,7 @@ rcm_gray_release_event (GtkWidget      *widget,
 			GdkEventButton *event,
 			RcmGray        *circle)
 {
-  rcm_render_preview (Current.Bna->after);
+  rcm_render_preview (Current_c.Bna->after);
 
   return TRUE;
 }
@@ -524,13 +524,13 @@ rcm_gray_motion_notify_event (GtkWidget      *widget,
     circle->satur = 1;
 
   gtk_spin_button_set_value (GTK_SPIN_BUTTON (circle->hue_entry),
-                             circle->hue * rcm_units_factor(Current.Units));
+                             circle->hue * rcm_units_factor(Current_c.Units));
 
   gtk_spin_button_set_value (GTK_SPIN_BUTTON (circle->satur_entry),
                              circle->satur);
 
-  if (Current.RealTime)
-    rcm_render_preview (Current.Bna->after);
+  if (Current_c.RealTime)
+    rcm_render_preview (Current_c.Bna->after);
 
   gdk_event_request_motions (event);
 
@@ -545,11 +545,11 @@ rcm_set_alpha (GtkWidget *entry,
                RcmCircle *circle)
 {
   circle->angle->alpha = (gtk_spin_button_get_value (GTK_SPIN_BUTTON (entry)) /
-                          rcm_units_factor (Current.Units));
+                          rcm_units_factor (Current_c.Units));
 
   gtk_widget_queue_draw (circle->preview);
 
-  rcm_render_preview (Current.Bna->after);
+  rcm_render_preview (Current_c.Bna->after);
 }
 
 void
@@ -557,11 +557,11 @@ rcm_set_beta (GtkWidget *entry,
               RcmCircle *circle)
 {
   circle->angle->beta = (gtk_spin_button_get_value (GTK_SPIN_BUTTON (entry)) /
-                         rcm_units_factor(Current.Units));
+                         rcm_units_factor(Current_c.Units));
 
   gtk_widget_queue_draw (circle->preview);
 
-  rcm_render_preview (Current.Bna->after);
+  rcm_render_preview (Current_c.Bna->after);
 }
 
 void
@@ -569,11 +569,11 @@ rcm_set_hue (GtkWidget *entry,
              RcmGray   *circle)
 {
   circle->hue = (gtk_spin_button_get_value (GTK_SPIN_BUTTON (entry)) /
-                 rcm_units_factor(Current.Units));
+                 rcm_units_factor(Current_c.Units));
 
   gtk_widget_queue_draw (circle->preview);
 
-  rcm_render_preview (Current.Bna->after);
+  rcm_render_preview (Current_c.Bna->after);
 }
 
 void
@@ -584,7 +584,7 @@ rcm_set_satur (GtkWidget *entry,
 
   gtk_widget_queue_draw (circle->preview);
 
-  rcm_render_preview (Current.Bna->after);
+  rcm_render_preview (Current_c.Bna->after);
 }
 
 void
@@ -595,5 +595,5 @@ rcm_set_gray_sat (GtkWidget *entry,
 
   gtk_widget_queue_draw (circle->preview);
 
-  rcm_render_preview (Current.Bna->after);
+  rcm_render_preview (Current_c.Bna->after);
 }

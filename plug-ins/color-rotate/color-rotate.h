@@ -133,4 +133,4 @@ typedef struct
 
 /* Global variables */
 
-extern RcmParams Current;
+extern RcmParams Current_c;

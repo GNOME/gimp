@@ -169,7 +169,7 @@ rcm_angle_inside_slice (float     angle,
 gboolean
 rcm_is_gray (float s)
 {
-  return (s <= Current.Gray->gray_sat);
+  return (s <= Current_c.Gray->gray_sat);
 }
 
 
@@ -328,10 +328,10 @@ rcm_render_preview (GtkWidget *preview)
 
   version = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (preview), "mode"));
 
-  reduced   = Current.reduced;
+  reduced   = Current_c.reduced;
   RW        = reduced->width;
   RH        = reduced->height;
-  bytes     = Current.drawable->bpp;
+  bytes     = Current_c.drawable->bpp;
   hsv_array = reduced->hsv;
   rgb_array = reduced->rgb;
 
@@ -355,14 +355,14 @@ rcm_render_preview (GtkWidget *preview)
 
               if (rcm_is_gray(S) && (reduced->mask[i*RW+j] != 0))
                 {
-                  switch (Current.Gray_to_from)
+                  switch (Current_c.Gray_to_from)
                     {
                     case GRAY_FROM:
-                      if (rcm_angle_inside_slice (Current.Gray->hue,
-                                                  Current.From->angle) <= 1)
+                      if (rcm_angle_inside_slice (Current_c.Gray->hue,
+                                                  Current_c.From->angle) <= 1)
                         {
-                          H = Current.Gray->hue/TP;
-                          S = Current.Gray->satur;
+                          H = Current_c.Gray->hue/TP;
+                          S = Current_c.Gray->satur;
                         }
                       else
                         skip = TRUE;
@@ -372,8 +372,8 @@ rcm_render_preview (GtkWidget *preview)
                       unchanged = FALSE;
                       skip = TRUE;
                       gimp_hsv_to_rgb4 (rgb,
-                                        Current.Gray->hue/TP,
-                                        Current.Gray->satur,
+                                        Current_c.Gray->hue/TP,
+                                        Current_c.Gray->satur,
                                         V);
                       break;
 
@@ -385,10 +385,10 @@ rcm_render_preview (GtkWidget *preview)
               if (!skip)
                 {
                   unchanged = FALSE;
-                  H = rcm_linear (rcm_left_end (Current.From->angle),
-                                  rcm_right_end (Current.From->angle),
-                                  rcm_left_end (Current.To->angle),
-                                  rcm_right_end (Current.To->angle),
+                  H = rcm_linear (rcm_left_end (Current_c.From->angle),
+                                  rcm_right_end (Current_c.From->angle),
+                                  rcm_left_end (Current_c.To->angle),
+                                  rcm_right_end (Current_c.To->angle),
                                   H * TP);
 
                   H = angle_mod_2PI(H) / TP;

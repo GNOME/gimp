@@ -62,7 +62,7 @@ static void  color_rotate (GimpDrawable     *drawable);
 
 /* Global variables */
 
-RcmParams Current =
+RcmParams Current_c =
 {
   SELECTION,           /* SELECTION ONLY */
   TRUE,                /* REAL TIME */
@@ -129,18 +129,18 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  Current.drawable = gimp_drawable_get (param[2].data.d_drawable);
-  Current.mask = gimp_drawable_get (gimp_image_get_selection (param[1].data.d_image));
+  Current_c.drawable = gimp_drawable_get (param[2].data.d_drawable);
+  Current_c.mask = gimp_drawable_get (gimp_image_get_selection (param[1].data.d_image));
 
-  if (gimp_drawable_is_rgb (Current.drawable->drawable_id))
+  if (gimp_drawable_is_rgb (Current_c.drawable->drawable_id))
     {
       if (color_rotate_dialog ())
         {
           gimp_progress_init (_("Rotating the colors"));
 
-          gimp_tile_cache_ntiles (2 * (Current.drawable->width /
+          gimp_tile_cache_ntiles (2 * (Current_c.drawable->width /
                                        gimp_tile_width () + 1));
-          color_rotate (Current.drawable);
+          color_rotate (Current_c.drawable);
           gimp_displays_flush ();
         }
       else
@@ -156,7 +156,7 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 
   if (status == GIMP_PDB_SUCCESS)
-    gimp_drawable_detach (Current.drawable);
+    gimp_drawable_detach (Current_c.drawable);
 }
 
 
@@ -185,13 +185,13 @@ color_rotate_row (const guchar *src_row,
 
       if (rcm_is_gray (S))
         {
-          if (Current.Gray_to_from == GRAY_FROM)
+          if (Current_c.Gray_to_from == GRAY_FROM)
             {
-              if (rcm_angle_inside_slice (Current.Gray->hue,
-                                          Current.From->angle) <= 1)
+              if (rcm_angle_inside_slice (Current_c.Gray->hue,
+                                          Current_c.From->angle) <= 1)
                 {
-                  H = Current.Gray->hue / TP;
-                  S = Current.Gray->satur;
+                  H = Current_c.Gray->hue / TP;
+                  S = Current_c.Gray->satur;
                 }
               else
                 {
@@ -201,17 +201,17 @@ color_rotate_row (const guchar *src_row,
           else
             {
               skip = TRUE;
-              gimp_hsv_to_rgb4 (rgb, Current.Gray->hue / TP,
-                                Current.Gray->satur, V);
+              gimp_hsv_to_rgb4 (rgb, Current_c.Gray->hue / TP,
+                                Current_c.Gray->satur, V);
             }
         }
 
       if (! skip)
         {
-          H = rcm_linear (rcm_left_end (Current.From->angle),
-                          rcm_right_end (Current.From->angle),
-                          rcm_left_end (Current.To->angle),
-                          rcm_right_end (Current.To->angle),
+          H = rcm_linear (rcm_left_end (Current_c.From->angle),
+                          rcm_right_end (Current_c.From->angle),
+                          rcm_left_end (Current_c.To->angle),
+                          rcm_right_end (Current_c.To->angle),
                           H * TP);
 
           H = angle_mod_2PI (H) / TP;
