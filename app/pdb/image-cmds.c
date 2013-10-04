@@ -2944,7 +2944,9 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-new",
                                      "Creates a new image with the specified width, height, and type.",
-                                     "Creates a new image, undisplayed with the specified extents and type. A layer should be created and added before this image is displayed, or subsequent calls to 'gimp-display-new' with this image as an argument will fail. Layers can be created using the 'gimp-layer-new' commands. They can be added to an image using the 'gimp-image-insert-layer' command.",
+                                     "Creates a new image, undisplayed, with the specified extents and type. A layer should be created and added before this image is displayed, or subsequent calls to 'gimp-display-new' with this image as an argument will fail. Layers can be created using the 'gimp-layer-new' commands. They can be added to an image using the 'gimp-image-insert-layer' command.\n"
+                                     "\n"
+                                     "If your image's type if INDEXED, a colormap must also be added with 'gimp-image-set-colormap'. An indexed image without a colormap will output unexpected colors.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
