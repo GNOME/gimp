@@ -425,11 +425,8 @@ sanity_check_gegl (void)
 static gchar *
 sanity_check_gegl_ops (void)
 {
-  gchar **operations;
-  guint   n_operations;
-  gint i, j;
-
-  static const gchar* required_ops [] = {
+  static const gchar *required_ops[] =
+  {
     "gegl:alien-map",
     "gegl:buffer-sink",
     "gegl:buffer-source",
@@ -497,16 +494,20 @@ sanity_check_gegl_ops (void)
     "gegl:write-buffer"
   };
 
+  gint i;
+
   for (i = 0; i < G_N_ELEMENTS (required_ops); i++)
     {
-      if (!gegl_has_operation (required_ops[i]))
-        return g_strdup_printf
-          ("GEGL operation missing!\n\n"
-           "GIMP requires the GEGL operation \"%s\". \n"
-           "This operation cannot be found. Check your \n"
-           "GEGL install and ensure it has been compiled \n"
-           "with any dependencies required for GIMP.\n",
-           required_ops [i]);
+      if (! gegl_has_operation (required_ops[i]))
+        {
+          return g_strdup_printf
+            ("GEGL operation missing!\n\n"
+             "GIMP requires the GEGL operation \"%s\".\n"
+             "This operation cannot be found. Check your\n"
+             "GEGL install and ensure it has been compiled\n"
+             "with any dependencies required for GIMP.",
+             required_ops [i]);
+        }
     }
 
   return NULL;
