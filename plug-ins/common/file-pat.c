@@ -569,7 +569,7 @@ save_image (GFile   *file,
           return FALSE;
         }
 
-      gimp_progress_update ((gdouble) line / (gdouble) ph.height);
+      gimp_progress_update ((gdouble) line / (gdouble) height);
     }
 
   g_object_unref (buffer);
