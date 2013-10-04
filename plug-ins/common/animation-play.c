@@ -158,8 +158,6 @@ static guint              width                     = -1,
 static gint32            *layers                    = NULL;
 static gint32             total_layers              = 0;
 static GimpImageBaseType  imagetype;
-static guchar            *palette                   = NULL;
-static gint               ncolors;
 
 static GtkWidget         *drawing_area              = NULL;
 static guchar            *drawing_area_data         = NULL;
@@ -1085,7 +1083,6 @@ initialize (void)
 {
   /* Freeing existing data after a refresh. */
   g_free (layers);
-  g_free (palette);
 
   /* Catch the case when the user has closed the image in the meantime. */
   if (! gimp_image_is_valid (image_id))
@@ -1099,22 +1096,6 @@ initialize (void)
   height    = gimp_image_height (image_id);
   layers    = gimp_image_get_layers (image_id, &total_layers);
   imagetype = gimp_image_base_type (image_id);
-
-  if (imagetype == GIMP_INDEXED)
-    {
-      palette = gimp_image_get_colormap (image_id, &ncolors);
-    }
-  else if (imagetype == GIMP_GRAY)
-    {
-      gint i;
-
-      palette = g_new (guchar, 768);
-
-      for (i = 0; i < 256; i++)
-        palette[i * 3] = palette[i * 3 + 1] = palette[i * 3 + 2] = i;
-
-      ncolors = 256;
-    }
 
   if (!window)
     build_dialog (gimp_image_get_name (image_id));
