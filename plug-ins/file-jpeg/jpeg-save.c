@@ -196,19 +196,42 @@ background_jpeg_save (PreviewPersistent *pp)
       /* display the preview stuff */
       if (!pp->abort_me)
         {
-          struct stat  buf;
-          gchar       *text;
-          gchar       *size_text;
+          GFile *file = g_file_new_for_path (pp->file_name);
 
-          g_stat (pp->file_name, &buf);
+          if (file)
+            {
+              GFileInfo *info = g_file_query_info (file,
+                                                   G_FILE_ATTRIBUTE_STANDARD_SIZE,
+                                                   G_FILE_QUERY_INFO_NONE,
+                                                   NULL, NULL);
 
-          size_text = g_format_size (buf.st_size);
-          text = g_strdup_printf (_("File size: %s"), size_text);
+              if (info)
+                {
+                  goffset  size = g_file_info_get_size (info);
+                  gchar   *size_text;
+                  gchar   *text;
 
-          gtk_label_set_text (GTK_LABEL (preview_size), text);
+                  size_text = g_format_size (size);
+                  text = g_strdup_printf (_("File size: %s"), size_text);
+                  gtk_label_set_text (GTK_LABEL (preview_size), text);
+                  g_free (text);
+                  g_free (size_text);
 
-          g_free (text);
-          g_free (size_text);
+                  g_object_unref (info);
+                }
+              else
+                {
+                  gtk_label_set_text (GTK_LABEL (preview_size),
+                                      _("File size: unknown"));
+                }
+
+              g_object_unref (file);
+            }
+          else
+            {
+              gtk_label_set_text (GTK_LABEL (preview_size),
+                                  _("File size: unknown"));
+            }
 
           /* and load the preview */
           load_image (pp->file_name, GIMP_RUN_NONINTERACTIVE, TRUE, NULL);
