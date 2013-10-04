@@ -157,7 +157,6 @@ static guint              width                     = -1,
                           height                    = -1;
 static gint32            *layers                    = NULL;
 static gint32             total_layers              = 0;
-static GimpImageBaseType  imagetype;
 
 static GtkWidget         *drawing_area              = NULL;
 static guchar            *drawing_area_data         = NULL;
@@ -1023,7 +1022,10 @@ init_frames (void)
       gimp_quit ();
       return;
     }
-  frames_image_id = gimp_image_new (width, height, imagetype);
+  /* We only use RGB images for display because indexed images would somehow
+     render terrible colors. Layers from other types will be automatically
+     converted. */
+  frames_image_id = gimp_image_new (width, height, GIMP_RGB);
   /* Save processing time and memory by not saving history and merged frames. */
   gimp_image_undo_disable (frames_image_id);
 
@@ -1095,7 +1097,6 @@ initialize (void)
   width     = gimp_image_width (image_id);
   height    = gimp_image_height (image_id);
   layers    = gimp_image_get_layers (image_id, &total_layers);
-  imagetype = gimp_image_base_type (image_id);
 
   if (!window)
     build_dialog (gimp_image_get_name (image_id));
