@@ -33,11 +33,15 @@ use Text::Wrap qw(wrap);
 sub desc_wrap {
     my ($str) = @_;
     my $leading = ' * ';
+    my $wrapped;
+
     $str =~ s/&/&amp\;/g;
     $str =~ s/\</&lt\;/g;
     $str =~ s/\>/&gt\;/g;
     $Text::Wrap::columns = 72;
-    wrap($leading, $leading, $str);
+    $wrapped = wrap($leading, $leading, $str);
+    $wrapped =~ s/[ \t]+\n/\n/g;
+    return $wrapped;
 }
 
 sub generate {

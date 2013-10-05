@@ -122,7 +122,7 @@ gimp_image_list (gint *num_images)
  * as an argument will fail. Layers can be created using the
  * gimp_layer_new() commands. They can be added to an image using the
  * gimp_image_insert_layer() command.
- * 
+ *
  * If your image's type if INDEXED, a colormap must also be added with
  * gimp_image_set_colormap(). An indexed image without a colormap will
  * output unexpected colors.

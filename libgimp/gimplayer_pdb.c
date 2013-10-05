@@ -559,10 +559,10 @@ gimp_layer_set_offsets (gint32 layer_ID,
  * - the current selection;
  * - a grayscale copy of the layer;
  * - or a copy of the active channel.
- * 
+ *
  * The layer mask still needs to be added to the layer. This can be
  * done with a call to gimp_layer_add_mask().
- * 
+ *
  * gimp_layer_create_mask() will fail if there are no active channels
  * on the image, when called with 'ADD-CHANNEL-MASK'. It will return a
  * black mask when called with 'ADD-ALPHA-MASK' or
