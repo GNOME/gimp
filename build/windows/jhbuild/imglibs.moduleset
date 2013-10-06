@@ -21,9 +21,9 @@
 </autotools>
 
 <autotools id="libpng" autogen-sh="configure">
-	<branch version="1.6.3" repo="sf.net"
-			module="libpng/libpng16/1.6.3/libpng-1.6.3.tar.xz"
-			hash="sha1:adc60a2c117a0929e18bf357e0a1e6115a9e3b76">
+	<branch version="1.6.6" repo="sf.net"
+			module="libpng/libpng16/1.6.6/libpng-1.6.6.tar.xz"
+			hash="sha1:4c90b5f648e18c285f64f63dfb82665cadefcdb6">
 	</branch>
 	<dependencies>
 		<dep package="zlib"/>
