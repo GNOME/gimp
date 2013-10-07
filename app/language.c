@@ -37,7 +37,11 @@ void
 language_init (const gchar *language)
 {
 #ifdef G_OS_WIN32
-  if (! language)
+  if (! language                       &&
+      g_getenv ("LANG")        == NULL &&
+      g_getenv ("LC_MESSAGES") == NULL &&
+      g_getenv ("LC_ALL")      == NULL &&
+      g_getenv ("LANGUAGE")    == NULL)
     {
       /* FIXME: This is a hack. gettext doesn't pick the right language
        * by default on Windows, so we enforce the right one. The
