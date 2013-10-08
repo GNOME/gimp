@@ -17,10 +17,7 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <errno.h>
-
-#include <glib-object.h>
+#include <gio/gio.h>
 
 #include "core/core-types.h"
 
@@ -36,15 +33,19 @@ xcf_seek_pos (XcfInfo  *info,
 {
   if (info->cp != pos)
     {
-      info->cp = pos;
-      if (fseek (info->fp, info->cp, SEEK_SET) == -1)
-        {
-          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                       _("Could not seek in XCF file: %s"),
-                       g_strerror (errno));
+      GError *my_error = NULL;
 
+      info->cp = pos;
+
+      if (! g_seekable_seek (info->seekable, info->cp, G_SEEK_SET,
+                             NULL, &my_error))
+        {
+          g_propagate_prefixed_error (error, my_error,
+                                      _("Could not seek in XCF file: "));
           return FALSE;
         }
+
+      g_assert (info->cp == g_seekable_tell (info->seekable));
     }
 
   return TRUE;
@@ -54,25 +55,17 @@ gboolean
 xcf_seek_end (XcfInfo  *info,
               GError  **error)
 {
-  if (fseek (info->fp, 0, SEEK_END) == -1)
-    {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Could not seek in XCF file: %s"),
-                   g_strerror (errno));
+  GError *my_error = NULL;
 
+  if (! g_seekable_seek (info->seekable, 0, G_SEEK_END,
+                         NULL, &my_error))
+    {
+      g_propagate_prefixed_error (error, my_error,
+                                  _("Could not seek in XCF file: "));
       return FALSE;
     }
 
-  info->cp = ftell (info->fp);
-
-  if (fseek (info->fp, 0, SEEK_END) == -1)
-    {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Could not seek in XCF file: %s"),
-                   g_strerror (errno));
-
-      return FALSE;
-    }
+  info->cp = g_seekable_tell (info->seekable);
 
   return TRUE;
 }

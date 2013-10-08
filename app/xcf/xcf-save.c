@@ -17,7 +17,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <string.h>
 
 #include <cairo.h>
@@ -124,40 +123,40 @@ static gboolean xcf_save_vectors       (XcfInfo           *info,
 
 
 /* private convenience macros */
-#define xcf_write_int32_check_error(info, data, count) G_STMT_START { \
-  info->cp += xcf_write_int32 (info->fp, data, count, &tmp_error); \
-  if (tmp_error)                                                   \
-    {                                                              \
-      g_propagate_error (error, tmp_error);                        \
-      return FALSE;                                                \
-    }                                                              \
+#define xcf_write_int32_check_error(info, data, count) G_STMT_START {  \
+  info->cp += xcf_write_int32 (info->output, data, count, &tmp_error); \
+  if (tmp_error)                                                       \
+    {                                                                  \
+      g_propagate_error (error, tmp_error);                            \
+      return FALSE;                                                    \
+    }                                                                  \
   } G_STMT_END
 
-#define xcf_write_int8_check_error(info, data, count) G_STMT_START { \
-  info->cp += xcf_write_int8 (info->fp, data, count, &tmp_error); \
-  if (tmp_error)                                                  \
-    {                                                             \
-      g_propagate_error (error, tmp_error);                       \
-      return FALSE;                                               \
-    }                                                             \
+#define xcf_write_int8_check_error(info, data, count) G_STMT_START {  \
+  info->cp += xcf_write_int8 (info->output, data, count, &tmp_error); \
+  if (tmp_error)                                                      \
+    {                                                                 \
+      g_propagate_error (error, tmp_error);                           \
+      return FALSE;                                                   \
+    }                                                                 \
   } G_STMT_END
 
-#define xcf_write_float_check_error(info, data, count) G_STMT_START { \
-  info->cp += xcf_write_float (info->fp, data, count, &tmp_error); \
-  if (tmp_error)                                                   \
-    {                                                              \
-      g_propagate_error (error, tmp_error);                        \
-      return FALSE;                                                \
-    }                                                              \
+#define xcf_write_float_check_error(info, data, count) G_STMT_START {  \
+  info->cp += xcf_write_float (info->output, data, count, &tmp_error); \
+  if (tmp_error)                                                       \
+    {                                                                  \
+      g_propagate_error (error, tmp_error);                            \
+      return FALSE;                                                    \
+    }                                                                  \
   } G_STMT_END
 
-#define xcf_write_string_check_error(info, data, count) G_STMT_START { \
-  info->cp += xcf_write_string (info->fp, data, count, &tmp_error); \
-  if (tmp_error)                                                    \
-    {                                                               \
-      g_propagate_error (error, tmp_error);                         \
-      return FALSE;                                                 \
-    }                                                               \
+#define xcf_write_string_check_error(info, data, count) G_STMT_START {  \
+  info->cp += xcf_write_string (info->output, data, count, &tmp_error); \
+  if (tmp_error)                                                        \
+    {                                                                   \
+      g_propagate_error (error, tmp_error);                             \
+      return FALSE;                                                     \
+    }                                                                   \
   } G_STMT_END
 
 #define xcf_write_prop_type_check_error(info, prop_type) G_STMT_START { \
@@ -383,7 +382,7 @@ xcf_save_image (XcfInfo    *info,
   xcf_write_int32_check_error (info, &offset, 1);
   saved_pos = info->cp;
 
-  return !ferror (info->fp);
+  return ! g_output_stream_is_closed (info->output);
 }
 
 static gboolean
@@ -997,7 +996,7 @@ xcf_save_prop (XcfInfo    *info,
             length = info->cp - base;
             /* go back to the saved position and write the length */
             xcf_check_error (xcf_seek_pos (info, pos, error));
-            xcf_write_int32 (info->fp, &length, 1, &tmp_error);
+            xcf_write_int32 (info->output, &length, 1, &tmp_error);
             if (tmp_error)
               {
                 g_propagate_error (error, tmp_error);
@@ -1044,7 +1043,7 @@ xcf_save_prop (XcfInfo    *info,
 
         /* go back to the saved position and write the length */
         xcf_check_error (xcf_seek_pos (info, pos, error));
-        xcf_write_int32 (info->fp, &length, 1, &tmp_error);
+        xcf_write_int32 (info->output, &length, 1, &tmp_error);
         if (tmp_error)
           {
             g_propagate_error (error, tmp_error);
@@ -1110,7 +1109,7 @@ xcf_save_prop (XcfInfo    *info,
 
         /* go back to the saved position and write the length */
         xcf_check_error (xcf_seek_pos (info, pos, error));
-        xcf_write_int32 (info->fp, &length, 1, &tmp_error);
+        xcf_write_int32 (info->output, &length, 1, &tmp_error);
         if (tmp_error)
           {
             g_propagate_error (error, tmp_error);

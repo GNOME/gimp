@@ -17,11 +17,9 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <string.h> /* strlen */
-#include <errno.h>
+#include <string.h>
 
-#include <glib.h>
+#include <gio/gio.h>
 
 #include "xcf-write.h"
 
@@ -29,7 +27,7 @@
 #include "gimp-intl.h"
 
 guint
-xcf_write_int32 (FILE           *fp,
+xcf_write_int32 (GOutputStream  *output,
                  const guint32  *data,
                  gint            count,
                  GError        **error)
@@ -43,7 +41,7 @@ xcf_write_int32 (FILE           *fp,
         {
           guint32  tmp = g_htonl (data[i]);
 
-          xcf_write_int8 (fp, (const guint8 *) &tmp, 4, &tmp_error);
+          xcf_write_int8 (output, (const guint8 *) &tmp, 4, &tmp_error);
 
           if (tmp_error)
             {
@@ -58,48 +56,40 @@ xcf_write_int32 (FILE           *fp,
 }
 
 guint
-xcf_write_float (FILE           *fp,
+xcf_write_float (GOutputStream  *output,
                  const gfloat   *data,
                  gint            count,
                  GError        **error)
 {
-  return xcf_write_int32 (fp,
+  return xcf_write_int32 (output,
                           (const guint32 *)((gconstpointer) data), count,
                           error);
 }
 
 guint
-xcf_write_int8 (FILE           *fp,
+xcf_write_int8 (GOutputStream  *output,
                 const guint8   *data,
                 gint            count,
                 GError        **error)
 {
-  guint total = count;
+  GError *my_error = NULL;
+  gsize   bytes_written;
 
-  while (count > 0)
+  if (! g_output_stream_write_all (output, data, count,
+                                   &bytes_written, NULL, &my_error))
     {
-      gint bytes = fwrite ((const gchar*) data, sizeof (gchar), count, fp);
-
-      if (bytes == 0)
-        {
-          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                       _("Error writing XCF: %s"), g_strerror (errno));
-
-          return total;
-        }
-
-      count -= bytes;
-      data += bytes;
+      g_propagate_prefixed_error (error, my_error,
+                                  _("Error writing XCF: "));
     }
 
-  return total;
+  return bytes_written;
 }
 
 guint
-xcf_write_string (FILE     *fp,
-                  gchar   **data,
-                  gint      count,
-                  GError  **error)
+xcf_write_string (GOutputStream  *output,
+                  gchar         **data,
+                  gint            count,
+                  GError        **error)
 {
   GError  *tmp_error = NULL;
   guint    total     = 0;
@@ -114,7 +104,7 @@ xcf_write_string (FILE     *fp,
       else
         tmp = 0;
 
-      xcf_write_int32 (fp, &tmp, 1, &tmp_error);
+      xcf_write_int32 (output, &tmp, 1, &tmp_error);
 
       if (tmp_error)
         {
@@ -123,7 +113,7 @@ xcf_write_string (FILE     *fp,
         }
 
       if (tmp > 0)
-        xcf_write_int8 (fp, (const guint8 *) data[i], tmp, &tmp_error);
+        xcf_write_int8 (output, (const guint8 *) data[i], tmp, &tmp_error);
 
       if (tmp_error)
         {

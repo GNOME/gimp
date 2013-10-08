@@ -17,7 +17,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <string.h>
 
 #include <cairo.h>
@@ -150,15 +149,15 @@ xcf_load_image (Gimp     *gimp,
   gint                num_successful_elements = 0;
 
   /* read in the image width, height and type */
-  info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32 *) &image_type, 1);
+  info->cp += xcf_read_int32 (info->input, (guint32 *) &width, 1);
+  info->cp += xcf_read_int32 (info->input, (guint32 *) &height, 1);
+  info->cp += xcf_read_int32 (info->input, (guint32 *) &image_type, 1);
 
   if (info->file_version >= 4)
     {
       gint p;
 
-      info->cp += xcf_read_int32 (info->fp, (guint32 *) &p, 1);
+      info->cp += xcf_read_int32 (info->input, (guint32 *) &p, 1);
 
       if (info->file_version == 4)
         {
@@ -217,7 +216,7 @@ xcf_load_image (Gimp     *gimp,
       GList     *item_path = NULL;
 
       /* read in the offset of the next layer */
-      info->cp += xcf_read_int32 (info->fp, &offset, 1);
+      info->cp += xcf_read_int32 (info->input, &offset, 1);
 
       /* if the offset is 0 then we are at the end
        *  of the layer list.
@@ -301,7 +300,7 @@ xcf_load_image (Gimp     *gimp,
       GimpChannel *channel;
 
       /* read in the offset of the next channel */
-      info->cp += xcf_read_int32 (info->fp, &offset, 1);
+      info->cp += xcf_read_int32 (info->input, &offset, 1);
 
       /* if the offset is 0 then we are at the end
        *  of the channel list.
@@ -452,7 +451,7 @@ xcf_load_image_props (XcfInfo   *info,
             guint32 n_colors;
             guchar  cmap[GIMP_IMAGE_COLORMAP_SIZE];
 
-            info->cp += xcf_read_int32 (info->fp, &n_colors, 1);
+            info->cp += xcf_read_int32 (info->input, &n_colors, 1);
 
             if (n_colors > (GIMP_IMAGE_COLORMAP_SIZE / 3))
               {
@@ -485,7 +484,7 @@ xcf_load_image_props (XcfInfo   *info,
               }
             else
               {
-                info->cp += xcf_read_int8 (info->fp, cmap, n_colors * 3);
+                info->cp += xcf_read_int8 (info->input, cmap, n_colors * 3);
               }
 
             /* only set color map if image is indexed, this is just
@@ -501,7 +500,7 @@ xcf_load_image_props (XcfInfo   *info,
           {
             guint8 compression;
 
-            info->cp += xcf_read_int8 (info->fp, (guint8 *) &compression, 1);
+            info->cp += xcf_read_int8 (info->input, (guint8 *) &compression, 1);
 
             if ((compression != COMPRESS_NONE) &&
                 (compression != COMPRESS_RLE) &&
@@ -529,9 +528,9 @@ xcf_load_image_props (XcfInfo   *info,
             nguides = prop_size / (4 + 1);
             for (i = 0; i < nguides; i++)
               {
-                info->cp += xcf_read_int32 (info->fp,
+                info->cp += xcf_read_int32 (info->input,
                                             (guint32 *) &position, 1);
-                info->cp += xcf_read_int8 (info->fp,
+                info->cp += xcf_read_int8 (info->input,
                                            (guint8 *) &orientation, 1);
 
                 /*  skip -1 guides from old XCFs  */
@@ -572,8 +571,8 @@ xcf_load_image_props (XcfInfo   *info,
             n_sample_points = prop_size / (4 + 4);
             for (i = 0; i < n_sample_points; i++)
               {
-                info->cp += xcf_read_int32 (info->fp, (guint32 *) &x, 1);
-                info->cp += xcf_read_int32 (info->fp, (guint32 *) &y, 1);
+                info->cp += xcf_read_int32 (info->input, (guint32 *) &x, 1);
+                info->cp += xcf_read_int32 (info->input, (guint32 *) &y, 1);
 
                 gimp_image_add_sample_point_at_pos (image, x, y, FALSE);
               }
@@ -584,8 +583,8 @@ xcf_load_image_props (XcfInfo   *info,
           {
             gfloat xres, yres;
 
-            info->cp += xcf_read_float (info->fp, &xres, 1);
-            info->cp += xcf_read_float (info->fp, &yres, 1);
+            info->cp += xcf_read_float (info->input, &xres, 1);
+            info->cp += xcf_read_float (info->input, &yres, 1);
 
             if (xres < GIMP_MIN_RESOLUTION || xres > GIMP_MAX_RESOLUTION ||
                 yres < GIMP_MIN_RESOLUTION || yres > GIMP_MAX_RESOLUTION)
@@ -605,7 +604,7 @@ xcf_load_image_props (XcfInfo   *info,
 
         case PROP_TATTOO:
           {
-            info->cp += xcf_read_int32 (info->fp, &info->tattoo_state, 1);
+            info->cp += xcf_read_int32 (info->input, &info->tattoo_state, 1);
           }
           break;
 
@@ -635,7 +634,7 @@ xcf_load_image_props (XcfInfo   *info,
           {
             guint32 unit;
 
-            info->cp += xcf_read_int32 (info->fp, &unit, 1);
+            info->cp += xcf_read_int32 (info->input, &unit, 1);
 
             if ((unit <= GIMP_UNIT_PIXEL) ||
                 (unit >= gimp_unit_get_number_of_built_in_units ()))
@@ -664,9 +663,9 @@ xcf_load_image_props (XcfInfo   *info,
             gint      num_units;
             gint      i;
 
-            info->cp += xcf_read_float (info->fp, &factor, 1);
-            info->cp += xcf_read_int32 (info->fp, &digits, 1);
-            info->cp += xcf_read_string (info->fp, unit_strings, 5);
+            info->cp += xcf_read_float (info->input, &factor, 1);
+            info->cp += xcf_read_int32 (info->input, &digits, 1);
+            info->cp += xcf_read_string (info->input, unit_strings, 5);
 
             for (i = 0; i < 5; i++)
               if (unit_strings[i] == NULL)
@@ -774,7 +773,7 @@ xcf_load_layer_props (XcfInfo    *info,
         case PROP_FLOATING_SELECTION:
           info->floating_sel = *layer;
           info->cp +=
-            xcf_read_int32 (info->fp,
+            xcf_read_int32 (info->input,
                             (guint32 *) &info->floating_sel_offset, 1);
           break;
 
@@ -782,7 +781,7 @@ xcf_load_layer_props (XcfInfo    *info,
           {
             guint32 opacity;
 
-            info->cp += xcf_read_int32 (info->fp, &opacity, 1);
+            info->cp += xcf_read_int32 (info->input, &opacity, 1);
             gimp_layer_set_opacity (*layer, (gdouble) opacity / 255.0, FALSE);
           }
           break;
@@ -791,7 +790,7 @@ xcf_load_layer_props (XcfInfo    *info,
           {
             gboolean visible;
 
-            info->cp += xcf_read_int32 (info->fp, (guint32 *) &visible, 1);
+            info->cp += xcf_read_int32 (info->input, (guint32 *) &visible, 1);
             gimp_item_set_visible (GIMP_ITEM (*layer), visible, FALSE);
           }
           break;
@@ -800,7 +799,7 @@ xcf_load_layer_props (XcfInfo    *info,
           {
             gboolean linked;
 
-            info->cp += xcf_read_int32 (info->fp, (guint32 *) &linked, 1);
+            info->cp += xcf_read_int32 (info->input, (guint32 *) &linked, 1);
             gimp_item_set_linked (GIMP_ITEM (*layer), linked, FALSE);
           }
           break;
@@ -809,7 +808,7 @@ xcf_load_layer_props (XcfInfo    *info,
           {
             gboolean lock_content;
 
-            info->cp += xcf_read_int32 (info->fp, (guint32 *) &lock_content, 1);
+            info->cp += xcf_read_int32 (info->input, (guint32 *) &lock_content, 1);
 
             if (gimp_item_can_lock_content (GIMP_ITEM (*layer)))
               gimp_item_set_lock_content (GIMP_ITEM (*layer),
@@ -821,7 +820,7 @@ xcf_load_layer_props (XcfInfo    *info,
           {
             gboolean lock_alpha;
 
-            info->cp += xcf_read_int32 (info->fp, (guint32 *) &lock_alpha, 1);
+            info->cp += xcf_read_int32 (info->input, (guint32 *) &lock_alpha, 1);
 
             if (gimp_layer_can_lock_alpha (*layer))
               gimp_layer_set_lock_alpha (*layer, lock_alpha, FALSE);
@@ -832,7 +831,7 @@ xcf_load_layer_props (XcfInfo    *info,
           {
             gboolean lock_position;
 
-            info->cp += xcf_read_int32 (info->fp, (guint32 *) &lock_position, 1);
+            info->cp += xcf_read_int32 (info->input, (guint32 *) &lock_position, 1);
 
             if (gimp_item_can_lock_position (GIMP_ITEM (*layer)))
               gimp_item_set_lock_position (GIMP_ITEM (*layer),
@@ -841,15 +840,15 @@ xcf_load_layer_props (XcfInfo    *info,
           break;
 
         case PROP_APPLY_MASK:
-          info->cp += xcf_read_int32 (info->fp, (guint32 *) apply_mask, 1);
+          info->cp += xcf_read_int32 (info->input, (guint32 *) apply_mask, 1);
           break;
 
         case PROP_EDIT_MASK:
-          info->cp += xcf_read_int32 (info->fp, (guint32 *) edit_mask, 1);
+          info->cp += xcf_read_int32 (info->input, (guint32 *) edit_mask, 1);
           break;
 
         case PROP_SHOW_MASK:
-          info->cp += xcf_read_int32 (info->fp, (guint32 *) show_mask, 1);
+          info->cp += xcf_read_int32 (info->input, (guint32 *) show_mask, 1);
           break;
 
         case PROP_OFFSETS:
@@ -857,8 +856,8 @@ xcf_load_layer_props (XcfInfo    *info,
             guint32 offset_x;
             guint32 offset_y;
 
-            info->cp += xcf_read_int32 (info->fp, &offset_x, 1);
-            info->cp += xcf_read_int32 (info->fp, &offset_y, 1);
+            info->cp += xcf_read_int32 (info->input, &offset_x, 1);
+            info->cp += xcf_read_int32 (info->input, &offset_y, 1);
 
             gimp_item_set_offset (GIMP_ITEM (*layer), offset_x, offset_y);
           }
@@ -868,7 +867,7 @@ xcf_load_layer_props (XcfInfo    *info,
           {
             guint32 mode;
 
-            info->cp += xcf_read_int32 (info->fp, &mode, 1);
+            info->cp += xcf_read_int32 (info->input, &mode, 1);
             gimp_layer_set_mode (*layer, (GimpLayerModeEffects) mode, FALSE);
           }
           break;
@@ -877,7 +876,7 @@ xcf_load_layer_props (XcfInfo    *info,
           {
             GimpTattoo tattoo;
 
-            info->cp += xcf_read_int32 (info->fp, (guint32 *) &tattoo, 1);
+            info->cp += xcf_read_int32 (info->input, (guint32 *) &tattoo, 1);
             gimp_item_set_tattoo (GIMP_ITEM (*layer), tattoo);
           }
           break;
@@ -905,7 +904,7 @@ xcf_load_layer_props (XcfInfo    *info,
           break;
 
         case PROP_TEXT_LAYER_FLAGS:
-          info->cp += xcf_read_int32 (info->fp, text_layer_flags, 1);
+          info->cp += xcf_read_int32 (info->input, text_layer_flags, 1);
           break;
 
         case PROP_GROUP_ITEM:
@@ -932,7 +931,7 @@ xcf_load_layer_props (XcfInfo    *info,
               {
                 guint32 index;
 
-                info->cp += xcf_read_int32 (info->fp, &index, 1);
+                info->cp += xcf_read_int32 (info->input, &index, 1);
 
                 path = g_list_append (path, GUINT_TO_POINTER (index));
               }
@@ -942,7 +941,7 @@ xcf_load_layer_props (XcfInfo    *info,
           break;
 
         case PROP_GROUP_ITEM_FLAGS:
-          info->cp += xcf_read_int32 (info->fp, group_layer_flags, 1);
+          info->cp += xcf_read_int32 (info->input, group_layer_flags, 1);
           break;
 
         default:
@@ -1006,7 +1005,7 @@ xcf_load_channel_props (XcfInfo      *info,
           {
             guint32 opacity;
 
-            info->cp += xcf_read_int32 (info->fp, &opacity, 1);
+            info->cp += xcf_read_int32 (info->input, &opacity, 1);
             gimp_channel_set_opacity (*channel, opacity / 255.0, FALSE);
           }
           break;
@@ -1015,7 +1014,7 @@ xcf_load_channel_props (XcfInfo      *info,
           {
             gboolean visible;
 
-            info->cp += xcf_read_int32 (info->fp, (guint32 *) &visible, 1);
+            info->cp += xcf_read_int32 (info->input, (guint32 *) &visible, 1);
             gimp_item_set_visible (GIMP_ITEM (*channel),
                                    visible ? TRUE : FALSE, FALSE);
           }
@@ -1025,7 +1024,7 @@ xcf_load_channel_props (XcfInfo      *info,
           {
             gboolean linked;
 
-            info->cp += xcf_read_int32 (info->fp, (guint32 *) &linked, 1);
+            info->cp += xcf_read_int32 (info->input, (guint32 *) &linked, 1);
             gimp_item_set_linked (GIMP_ITEM (*channel),
                                   linked ? TRUE : FALSE, FALSE);
           }
@@ -1035,7 +1034,7 @@ xcf_load_channel_props (XcfInfo      *info,
           {
             gboolean lock_content;
 
-            info->cp += xcf_read_int32 (info->fp, (guint32 *) &lock_content, 1);
+            info->cp += xcf_read_int32 (info->input, (guint32 *) &lock_content, 1);
             gimp_item_set_lock_content (GIMP_ITEM (*channel),
                                         lock_content ? TRUE : FALSE, FALSE);
           }
@@ -1045,7 +1044,7 @@ xcf_load_channel_props (XcfInfo      *info,
           {
             gboolean lock_position;
 
-            info->cp += xcf_read_int32 (info->fp, (guint32 *) &lock_position, 1);
+            info->cp += xcf_read_int32 (info->input, (guint32 *) &lock_position, 1);
             gimp_item_set_lock_position (GIMP_ITEM (*channel),
                                          lock_position ? TRUE : FALSE, FALSE);
           }
@@ -1055,7 +1054,7 @@ xcf_load_channel_props (XcfInfo      *info,
           {
             gboolean show_masked;
 
-            info->cp += xcf_read_int32 (info->fp, (guint32 *) &show_masked, 1);
+            info->cp += xcf_read_int32 (info->input, (guint32 *) &show_masked, 1);
             gimp_channel_set_show_masked (*channel, show_masked);
           }
           break;
@@ -1064,7 +1063,7 @@ xcf_load_channel_props (XcfInfo      *info,
           {
             guchar col[3];
 
-            info->cp += xcf_read_int8 (info->fp, (guint8 *) col, 3);
+            info->cp += xcf_read_int8 (info->input, (guint8 *) col, 3);
             gimp_rgb_set_uchar (&(*channel)->color, col[0], col[1], col[2]);
           }
           break;
@@ -1073,7 +1072,7 @@ xcf_load_channel_props (XcfInfo      *info,
           {
             GimpTattoo tattoo;
 
-            info->cp += xcf_read_int32 (info->fp, (guint32 *) &tattoo, 1);
+            info->cp += xcf_read_int32 (info->input, (guint32 *) &tattoo, 1);
             gimp_item_set_tattoo (GIMP_ITEM (*channel), tattoo);
           }
           break;
@@ -1119,12 +1118,12 @@ xcf_load_prop (XcfInfo  *info,
                PropType *prop_type,
                guint32  *prop_size)
 {
-  if (G_UNLIKELY (xcf_read_int32 (info->fp, (guint32 *) prop_type, 1) != 4))
+  if (G_UNLIKELY (xcf_read_int32 (info->input, (guint32 *) prop_type, 1) != 4))
     return FALSE;
 
   info->cp += 4;
 
-  if (G_UNLIKELY (xcf_read_int32 (info->fp, (guint32 *) prop_size, 1) != 4))
+  if (G_UNLIKELY (xcf_read_int32 (info->input, (guint32 *) prop_size, 1) != 4))
     return FALSE;
 
   info->cp += 4;
@@ -1163,10 +1162,10 @@ xcf_load_layer (XcfInfo    *info,
   is_fs_drawable = (info->cp == info->floating_sel_offset);
 
   /* read in the layer width, height, type and name */
-  info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32 *) &type, 1);
-  info->cp += xcf_read_string (info->fp, &name, 1);
+  info->cp += xcf_read_int32 (info->input, (guint32 *) &width, 1);
+  info->cp += xcf_read_int32 (info->input, (guint32 *) &height, 1);
+  info->cp += xcf_read_int32 (info->input, (guint32 *) &type, 1);
+  info->cp += xcf_read_string (info->input, &name, 1);
 
   switch (type)
     {
@@ -1242,8 +1241,8 @@ xcf_load_layer (XcfInfo    *info,
     }
 
   /* read the hierarchy and layer mask offsets */
-  info->cp += xcf_read_int32 (info->fp, &hierarchy_offset, 1);
-  info->cp += xcf_read_int32 (info->fp, &layer_mask_offset, 1);
+  info->cp += xcf_read_int32 (info->input, &hierarchy_offset, 1);
+  info->cp += xcf_read_int32 (info->input, &layer_mask_offset, 1);
 
   /* read in the hierarchy (ignore it for group layers, both as an
    * optimization and because the hierarchy's extents don't match
@@ -1323,9 +1322,9 @@ xcf_load_channel (XcfInfo   *info,
   is_fs_drawable = (info->cp == info->floating_sel_offset);
 
   /* read in the layer width, height and name */
-  info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
-  info->cp += xcf_read_string (info->fp, &name, 1);
+  info->cp += xcf_read_int32 (info->input, (guint32 *) &width, 1);
+  info->cp += xcf_read_int32 (info->input, (guint32 *) &height, 1);
+  info->cp += xcf_read_string (info->input, &name, 1);
 
   /* create a new channel */
   channel = gimp_channel_new (image, width, height, name, &color);
@@ -1340,7 +1339,7 @@ xcf_load_channel (XcfInfo   *info,
   xcf_progress_update (info);
 
   /* read the hierarchy and layer mask offsets */
-  info->cp += xcf_read_int32 (info->fp, &hierarchy_offset, 1);
+  info->cp += xcf_read_int32 (info->input, &hierarchy_offset, 1);
 
   /* read in the hierarchy */
   if (!xcf_seek_pos (info, hierarchy_offset, NULL))
@@ -1381,9 +1380,9 @@ xcf_load_layer_mask (XcfInfo   *info,
   is_fs_drawable = (info->cp == info->floating_sel_offset);
 
   /* read in the layer width, height and name */
-  info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
-  info->cp += xcf_read_string (info->fp, &name, 1);
+  info->cp += xcf_read_int32 (info->input, (guint32 *) &width, 1);
+  info->cp += xcf_read_int32 (info->input, (guint32 *) &height, 1);
+  info->cp += xcf_read_string (info->input, &name, 1);
 
   /* create a new layer mask */
   layer_mask = gimp_layer_mask_new (image, width, height, name, &color);
@@ -1399,7 +1398,7 @@ xcf_load_layer_mask (XcfInfo   *info,
   xcf_progress_update (info);
 
   /* read the hierarchy and layer mask offsets */
-  info->cp += xcf_read_int32 (info->fp, &hierarchy_offset, 1);
+  info->cp += xcf_read_int32 (info->input, &hierarchy_offset, 1);
 
   /* read in the hierarchy */
   if (! xcf_seek_pos (info, hierarchy_offset, NULL))
@@ -1436,9 +1435,9 @@ xcf_load_buffer (XcfInfo    *info,
 
   format = gegl_buffer_get_format (buffer);
 
-  info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32 *) &bpp, 1);
+  info->cp += xcf_read_int32 (info->input, (guint32 *) &width, 1);
+  info->cp += xcf_read_int32 (info->input, (guint32 *) &height, 1);
+  info->cp += xcf_read_int32 (info->input, (guint32 *) &bpp, 1);
 
   /* make sure the values in the file correspond to the values
    *  calculated when the TileManager was created.
@@ -1453,13 +1452,13 @@ xcf_load_buffer (XcfInfo    *info,
    *  as the number of levels found in the file.
    */
 
-  info->cp += xcf_read_int32 (info->fp, &offset, 1); /* top level */
+  info->cp += xcf_read_int32 (info->input, &offset, 1); /* top level */
 
   /* discard offsets for layers below first, if any.
    */
   do
     {
-      info->cp += xcf_read_int32 (info->fp, &junk, 1);
+      info->cp += xcf_read_int32 (info->input, &junk, 1);
     }
   while (junk != 0);
 
@@ -1505,8 +1504,8 @@ xcf_load_level (XcfInfo    *info,
   format = gegl_buffer_get_format (buffer);
   bpp    = babl_format_get_bytes_per_pixel (format);
 
-  info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
+  info->cp += xcf_read_int32 (info->input, (guint32 *) &width, 1);
+  info->cp += xcf_read_int32 (info->input, (guint32 *) &height, 1);
 
   if (width  != gegl_buffer_get_width (buffer) ||
       height != gegl_buffer_get_height (buffer))
@@ -1516,7 +1515,7 @@ xcf_load_level (XcfInfo    *info,
    *  if it is '0', then this tile level is empty
    *  and we can simply return.
    */
-  info->cp += xcf_read_int32 (info->fp, &offset, 1);
+  info->cp += xcf_read_int32 (info->input, &offset, 1);
   if (offset == 0)
     return TRUE;
 
@@ -1545,7 +1544,7 @@ xcf_load_level (XcfInfo    *info,
 
       /* read in the offset of the next tile so we can calculate the amount
          of data needed for this tile*/
-      info->cp += xcf_read_int32 (info->fp, &offset2, 1);
+      info->cp += xcf_read_int32 (info->input, &offset2, 1);
 
       /* if the offset is 0 then we need to read in the maximum possible
          allowing for negative compression */
@@ -1595,7 +1594,7 @@ xcf_load_level (XcfInfo    *info,
         return FALSE;
 
       /* read in the offset of the next tile */
-      info->cp += xcf_read_int32 (info->fp, &offset, 1);
+      info->cp += xcf_read_int32 (info->input, &offset, 1);
     }
 
   if (offset != 0)
@@ -1618,7 +1617,7 @@ xcf_load_tile (XcfInfo       *info,
   gint    tile_size = bpp * tile_rect->width * tile_rect->height;
   guchar *tile_data = g_alloca (tile_size);
 
-  info->cp += xcf_read_int8 (info->fp, tile_data, tile_size);
+  info->cp += xcf_read_int8 (info->input, tile_data, tile_size);
 
   gegl_buffer_set (buffer, tile_rect, 0, format, tile_data,
                    GEGL_AUTO_ROWSTRIDE);
@@ -1637,7 +1636,7 @@ xcf_load_tile_rle (XcfInfo       *info,
   gint    tile_size = bpp * tile_rect->width * tile_rect->height;
   guchar *tile_data = g_alloca (tile_size);
   gint    i;
-  gint    nmemb_read_successfully;
+  gsize   nmemb_read_successfully;
   guchar *xcfdata;
   guchar *xcfodata;
   guchar *xcfdatalimit;
@@ -1653,11 +1652,15 @@ xcf_load_tile_rle (XcfInfo       *info,
 
   xcfdata = xcfodata = g_alloca (data_length);
 
-  /* we have to use fread instead of xcf_read_* because we may be
+  /* we have to read directly instead of xcf_read_* because we may be
    * reading past the end of the file here
    */
-  nmemb_read_successfully = fread ((gchar *) xcfdata, sizeof (gchar),
-                                   data_length, info->fp);
+  g_input_stream_read_all (info->input, xcfdata, data_length,
+                           &nmemb_read_successfully, NULL, NULL);
+
+  if (nmemb_read_successfully == 0)
+    return TRUE;
+
   info->cp += nmemb_read_successfully;
 
   xcfdatalimit = &xcfodata[nmemb_read_successfully - 1];
@@ -1770,9 +1773,9 @@ xcf_load_parasite (XcfInfo *info)
   guint32       size;
   gpointer      data;
 
-  info->cp += xcf_read_string (info->fp, &name, 1);
-  info->cp += xcf_read_int32  (info->fp, &flags, 1);
-  info->cp += xcf_read_int32  (info->fp, &size, 1);
+  info->cp += xcf_read_string (info->input, &name, 1);
+  info->cp += xcf_read_int32  (info->input, &flags, 1);
+  info->cp += xcf_read_int32  (info->input, &size, 1);
 
   if (size > MAX_XCF_PARASITE_DATA_LEN)
     {
@@ -1783,7 +1786,7 @@ xcf_load_parasite (XcfInfo *info)
     }
 
   data = g_new (gchar, size);
-  info->cp += xcf_read_int8 (info->fp, data, size);
+  info->cp += xcf_read_int8 (info->input, data, size);
 
   parasite = gimp_parasite_new (name, flags, size, data);
 
@@ -1801,8 +1804,8 @@ xcf_load_old_paths (XcfInfo   *info,
   guint32      last_selected_row;
   GimpVectors *active_vectors;
 
-  info->cp += xcf_read_int32 (info->fp, &last_selected_row, 1);
-  info->cp += xcf_read_int32 (info->fp, &num_paths, 1);
+  info->cp += xcf_read_int32 (info->input, &last_selected_row, 1);
+  info->cp += xcf_read_int32 (info->input, &num_paths, 1);
 
   while (num_paths-- > 0)
     xcf_load_old_path (info, image);
@@ -1832,27 +1835,27 @@ xcf_load_old_path (XcfInfo   *info,
   GimpVectorsCompatPoint *points;
   gint                    i;
 
-  info->cp += xcf_read_string (info->fp, &name, 1);
-  info->cp += xcf_read_int32  (info->fp, &locked, 1);
-  info->cp += xcf_read_int8   (info->fp, &state, 1);
-  info->cp += xcf_read_int32  (info->fp, &closed, 1);
-  info->cp += xcf_read_int32  (info->fp, &num_points, 1);
-  info->cp += xcf_read_int32  (info->fp, &version, 1);
+  info->cp += xcf_read_string (info->input, &name, 1);
+  info->cp += xcf_read_int32  (info->input, &locked, 1);
+  info->cp += xcf_read_int8   (info->input, &state, 1);
+  info->cp += xcf_read_int32  (info->input, &closed, 1);
+  info->cp += xcf_read_int32  (info->input, &num_points, 1);
+  info->cp += xcf_read_int32  (info->input, &version, 1);
 
   if (version == 2)
     {
       guint32 dummy;
 
       /* Had extra type field and points are stored as doubles */
-      info->cp += xcf_read_int32 (info->fp, (guint32 *) &dummy, 1);
+      info->cp += xcf_read_int32 (info->input, (guint32 *) &dummy, 1);
     }
   else if (version == 3)
     {
       guint32 dummy;
 
       /* Has extra tatto field */
-      info->cp += xcf_read_int32 (info->fp, (guint32 *) &dummy,  1);
-      info->cp += xcf_read_int32 (info->fp, (guint32 *) &tattoo, 1);
+      info->cp += xcf_read_int32 (info->input, (guint32 *) &dummy,  1);
+      info->cp += xcf_read_int32 (info->input, (guint32 *) &tattoo, 1);
     }
   else if (version != 1)
     {
@@ -1877,9 +1880,9 @@ xcf_load_old_path (XcfInfo   *info,
           gint32 x;
           gint32 y;
 
-          info->cp += xcf_read_int32 (info->fp, &points[i].type, 1);
-          info->cp += xcf_read_int32 (info->fp, (guint32 *) &x,  1);
-          info->cp += xcf_read_int32 (info->fp, (guint32 *) &y,  1);
+          info->cp += xcf_read_int32 (info->input, &points[i].type, 1);
+          info->cp += xcf_read_int32 (info->input, (guint32 *) &x,  1);
+          info->cp += xcf_read_int32 (info->input, (guint32 *) &y,  1);
 
           points[i].x = x;
           points[i].y = y;
@@ -1889,9 +1892,9 @@ xcf_load_old_path (XcfInfo   *info,
           gfloat x;
           gfloat y;
 
-          info->cp += xcf_read_int32 (info->fp, &points[i].type, 1);
-          info->cp += xcf_read_float (info->fp, &x,              1);
-          info->cp += xcf_read_float (info->fp, &y,              1);
+          info->cp += xcf_read_int32 (info->input, &points[i].type, 1);
+          info->cp += xcf_read_float (info->input, &x,              1);
+          info->cp += xcf_read_float (info->input, &y,              1);
 
           points[i].x = x;
           points[i].y = y;
@@ -1929,7 +1932,7 @@ xcf_load_vectors (XcfInfo   *info,
   g_printerr ("xcf_load_vectors\n");
 #endif
 
-  info->cp += xcf_read_int32  (info->fp, &version, 1);
+  info->cp += xcf_read_int32  (info->input, &version, 1);
 
   if (version != 1)
     {
@@ -1939,8 +1942,8 @@ xcf_load_vectors (XcfInfo   *info,
       return FALSE;
     }
 
-  info->cp += xcf_read_int32 (info->fp, &active_index, 1);
-  info->cp += xcf_read_int32 (info->fp, &num_paths,    1);
+  info->cp += xcf_read_int32 (info->input, &active_index, 1);
+  info->cp += xcf_read_int32 (info->input, &num_paths,    1);
 
 #ifdef GIMP_XCF_PATH_DEBUG
   g_printerr ("%d paths (active: %d)\n", num_paths, active_index);
@@ -1981,12 +1984,12 @@ xcf_load_vector (XcfInfo   *info,
   g_printerr ("xcf_load_vector\n");
 #endif
 
-  info->cp += xcf_read_string (info->fp, &name,          1);
-  info->cp += xcf_read_int32  (info->fp, &tattoo,        1);
-  info->cp += xcf_read_int32  (info->fp, &visible,       1);
-  info->cp += xcf_read_int32  (info->fp, &linked,        1);
-  info->cp += xcf_read_int32  (info->fp, &num_parasites, 1);
-  info->cp += xcf_read_int32  (info->fp, &num_strokes,   1);
+  info->cp += xcf_read_string (info->input, &name,          1);
+  info->cp += xcf_read_int32  (info->input, &tattoo,        1);
+  info->cp += xcf_read_int32  (info->input, &visible,       1);
+  info->cp += xcf_read_int32  (info->input, &linked,        1);
+  info->cp += xcf_read_int32  (info->input, &num_parasites, 1);
+  info->cp += xcf_read_int32  (info->input, &num_strokes,   1);
 
 #ifdef GIMP_XCF_PATH_DEBUG
   g_printerr ("name: %s, tattoo: %d, visible: %d, linked: %d, "
@@ -2032,10 +2035,10 @@ xcf_load_vector (XcfInfo   *info,
 
       g_value_init (&value, GIMP_TYPE_ANCHOR);
 
-      info->cp += xcf_read_int32 (info->fp, &stroke_type_id,     1);
-      info->cp += xcf_read_int32 (info->fp, &closed,             1);
-      info->cp += xcf_read_int32 (info->fp, &num_axes,           1);
-      info->cp += xcf_read_int32 (info->fp, &num_control_points, 1);
+      info->cp += xcf_read_int32 (info->input, &stroke_type_id,     1);
+      info->cp += xcf_read_int32 (info->input, &closed,             1);
+      info->cp += xcf_read_int32 (info->input, &num_axes,           1);
+      info->cp += xcf_read_int32 (info->input, &num_control_points, 1);
 
 #ifdef GIMP_XCF_PATH_DEBUG
       g_printerr ("stroke_type: %d, closed: %d, num_axes %d, len %d\n",
@@ -2068,8 +2071,8 @@ xcf_load_vector (XcfInfo   *info,
 
       for (j = 0; j < num_control_points; j++)
         {
-          info->cp += xcf_read_int32 (info->fp, &type, 1);
-          info->cp += xcf_read_float (info->fp, coords, num_axes);
+          info->cp += xcf_read_int32 (info->input, &type, 1);
+          info->cp += xcf_read_float (info->input, coords, num_axes);
 
           anchor.type              = type;
           anchor.position.x        = coords[0];
@@ -2119,11 +2122,11 @@ xcf_skip_unknown_prop (XcfInfo *info,
 
   while (size > 0)
     {
-      if (feof (info->fp))
+      if (g_input_stream_is_closed (info->input))
         return FALSE;
 
       amount = MIN (16, size);
-      info->cp += xcf_read_int8 (info->fp, buf, amount);
+      info->cp += xcf_read_int8 (info->input, buf, amount);
       size -= MIN (16, amount);
     }
 

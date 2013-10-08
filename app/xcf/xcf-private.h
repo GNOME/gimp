@@ -90,7 +90,9 @@ struct _XcfInfo
 {
   Gimp               *gimp;
   GimpProgress       *progress;
-  FILE               *fp;
+  GInputStream       *input;
+  GOutputStream      *output;
+  GSeekable          *seekable;
   guint               cp;
   const gchar        *filename;
   GimpTattoo          tattoo_state;

@@ -17,9 +17,7 @@
 
 #include "config.h"
 
-#include <stdio.h>
-
-#include <glib-object.h>
+#include <gio/gio.h>
 
 #include "libgimpbase/gimpbase.h"
 
@@ -27,18 +25,20 @@
 
 #include "gimp-intl.h"
 
+
 #define MAX_XCF_STRING_LEN (16L * 1024 * 1024)
 
+
 guint
-xcf_read_int32 (FILE    *fp,
-                guint32 *data,
-                gint     count)
+xcf_read_int32 (GInputStream *input,
+                guint32      *data,
+                gint          count)
 {
   guint total = 0;
 
   if (count > 0)
     {
-      total += xcf_read_int8 (fp, (guint8 *) data, count * 4);
+      total += xcf_read_int8 (input, (guint8 *) data, count * 4);
 
       while (count--)
         {
@@ -51,40 +51,30 @@ xcf_read_int32 (FILE    *fp,
 }
 
 guint
-xcf_read_float (FILE   *fp,
-                gfloat *data,
-                gint    count)
+xcf_read_float (GInputStream *input,
+                gfloat       *data,
+                gint          count)
 {
-  return xcf_read_int32 (fp, (guint32 *) ((void *) data), count);
+  return xcf_read_int32 (input, (guint32 *) ((void *) data), count);
 }
 
 guint
-xcf_read_int8 (FILE   *fp,
-               guint8 *data,
-               gint    count)
+xcf_read_int8 (GInputStream *input,
+               guint8       *data,
+               gint          count)
 {
-  guint total = 0;
+  gsize bytes_read;
 
-  while (count > 0)
-    {
-      gint bytes = fread ((char *) data, sizeof (char), count, fp);
+  g_input_stream_read_all (input, data, count,
+                           &bytes_read, NULL, NULL);
 
-      if (bytes <= 0) /* something bad happened */
-        break;
-
-      total += bytes;
-
-      count -= bytes;
-      data += bytes;
-    }
-
-  return total;
+  return bytes_read;
 }
 
 guint
-xcf_read_string (FILE   *fp,
-                 gchar **data,
-                 gint    count)
+xcf_read_string (GInputStream  *input,
+                 gchar        **data,
+                 gint           count)
 {
   guint total = 0;
   gint  i;
@@ -93,7 +83,7 @@ xcf_read_string (FILE   *fp,
     {
       guint32 tmp;
 
-      total += xcf_read_int32 (fp, &tmp, 1);
+      total += xcf_read_int32 (input, &tmp, 1);
 
       if (tmp > MAX_XCF_STRING_LEN)
         {
@@ -106,7 +96,7 @@ xcf_read_string (FILE   *fp,
           gchar *str;
 
           str = g_new (gchar, tmp);
-          total += xcf_read_int8 (fp, (guint8*) str, tmp);
+          total += xcf_read_int8 (input, (guint8*) str, tmp);
 
           if (str[tmp - 1] != '\0')
             str[tmp - 1] = '\0';
