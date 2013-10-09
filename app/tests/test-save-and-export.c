@@ -124,7 +124,8 @@ opened_xcf_file_uris (gconstpointer data)
                            NULL /*mime_type*/,
                            NULL /*error*/);
 
-  g_assert_cmpstr (gimp_image_get_uri (image), ==, uri);
+  g_assert (g_file_equal (g_file_new_for_uri (gimp_image_get_uri (image)),
+                          g_file_new_for_uri (uri)));
   g_assert (gimp_image_get_imported_uri (image) == NULL);
   g_assert (gimp_image_get_exported_uri (image) == NULL);
 
@@ -165,7 +166,8 @@ imported_file_uris (gconstpointer data)
                            NULL /*error*/);
 
   g_assert (gimp_image_get_uri (image) == NULL);
-  g_assert_cmpstr (gimp_image_get_imported_uri (image), ==, uri);
+  g_assert (g_file_equal (g_file_new_for_uri (gimp_image_get_imported_uri (image)),
+                          g_file_new_for_uri (uri)));
   g_assert (gimp_image_get_exported_uri (image) == NULL);
 }
 
@@ -224,7 +226,8 @@ saved_imported_file_uris (gconstpointer data)
              NULL /*error*/);
 
   /* Assert */
-  g_assert_cmpstr (gimp_image_get_uri (image), ==, save_uri);
+  g_assert (g_file_equal (g_file_new_for_uri (gimp_image_get_uri (image)),
+                          g_file_new_for_uri (save_uri)));
   g_assert (gimp_image_get_imported_uri (image) == NULL);
   g_assert (gimp_image_get_exported_uri (image) == NULL);
 
@@ -266,7 +269,8 @@ exported_file_uris (gconstpointer data)
 
   g_assert (gimp_image_get_uri (image) == NULL);
   g_assert (gimp_image_get_imported_uri (image) == NULL);
-  g_assert_cmpstr (gimp_image_get_exported_uri (image), ==, save_uri);
+  g_assert (g_file_equal (g_file_new_for_uri (gimp_image_get_exported_uri (image)),
+                          g_file_new_for_uri (save_uri)));
 
   g_unlink (save_filename);
 }
@@ -309,7 +313,8 @@ clear_import_uri_after_export (gconstpointer data)
                            NULL /*error*/);
 
   g_assert (gimp_image_get_uri (image) == NULL);
-  g_assert_cmpstr (gimp_image_get_imported_uri (image), ==, uri);
+  g_assert (g_file_equal (g_file_new_for_uri (gimp_image_get_imported_uri (image)),
+                          g_file_new_for_uri (uri)));
   g_assert (gimp_image_get_exported_uri (image) == NULL);
 
   save_filename = g_build_filename (g_get_tmp_dir (), "gimp-test.png", NULL);
@@ -331,7 +336,8 @@ clear_import_uri_after_export (gconstpointer data)
 
   g_assert (gimp_image_get_uri (image) == NULL);
   g_assert (gimp_image_get_imported_uri (image) == NULL);
-  g_assert_cmpstr (gimp_image_get_exported_uri (image), ==, save_uri);
+  g_assert (g_file_equal (g_file_new_for_uri (gimp_image_get_exported_uri (image)),
+                          g_file_new_for_uri (save_uri)));
 
   g_unlink (save_filename);
 }
