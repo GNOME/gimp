@@ -1953,6 +1953,7 @@ if test "x$with_xvfb_run" != "xno"; then
   AC_PATH_PROG(XVFB_RUN, xvfb-run, no)
   if test "x$XVFB_RUN" != "xno"; then
     have_xvfb_run="yes"
+    AC_DEFINE(HAVE_XVFB_RUN, 1, [Define to 1 if xvfb-run is available])
   else
     have_xvfb_run="no (not found)"
   fi
