@@ -393,7 +393,7 @@ gimp_dock_window_constructed (GObject *object)
                         dock_window);
 
       gimp_help_set_help_data (dock_window->p->auto_button,
-                               _("When enabled the dialog automatically "
+                               _("When enabled, the dialog automatically "
                                  "follows the image you are working on."),
                                GIMP_HELP_DOCK_AUTO_BUTTON);
     }
