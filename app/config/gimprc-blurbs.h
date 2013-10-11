@@ -366,9 +366,6 @@ N_("Show a tooltip when the pointer hovers over an item.")
 #define SINGLE_WINDOW_MODE_BLURB \
 N_("Use GIMP in a single-window mode.")
 
-#define WINDOWS_TABS_POSITION \
-N_("Choose the position of the tabs.")
-
 #define HIDE_DOCKS_BLURB \
 N_("Hide docks and other windows, leaving only image windows.")
 
