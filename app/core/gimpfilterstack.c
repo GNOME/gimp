@@ -156,33 +156,42 @@ gimp_filter_stack_reorder (GimpContainer *container,
   GimpFilterStack *stack  = GIMP_FILTER_STACK (container);
   GimpFilter      *filter = GIMP_FILTER (object);
   gint             n_children;
-  gint             index;
+  gint             old_index;
 
   n_children = gimp_container_get_n_children (container);
-
-  index = gimp_container_get_child_index (container, object);
+  old_index  = gimp_container_get_child_index (container, object);
 
   if (stack->graph)
     gimp_filter_stack_remove_node (stack, filter);
 
-  if (index == n_children - 1)
-    gimp_filter_set_is_last_node (filter, FALSE);
+  if (old_index == n_children -1)
+    {
+      gimp_filter_set_is_last_node (filter, FALSE);
+    }
+  else if (new_index == n_children - 1)
+    {
+      GimpFilter *last_node = (GimpFilter *)
+        gimp_container_get_child_by_index (container, n_children - 1);
+
+      gimp_filter_set_is_last_node (last_node, FALSE);
+    }
 
   GIMP_CONTAINER_CLASS (parent_class)->reorder (container, object, new_index);
 
   if (new_index == n_children - 1)
-    gimp_filter_set_is_last_node (filter, TRUE);
-
-  if (stack->graph)
-    gimp_filter_stack_add_node (stack, filter);
-
-  if (new_index != n_children - 1)
+    {
+      gimp_filter_set_is_last_node (filter, TRUE);
+    }
+  else if (old_index == n_children - 1)
     {
       GimpFilter *last_node = (GimpFilter *)
         gimp_container_get_child_by_index (container, n_children - 1);
 
       gimp_filter_set_is_last_node (last_node, TRUE);
     }
+
+  if (stack->graph)
+    gimp_filter_stack_add_node (stack, filter);
 }
 
 
