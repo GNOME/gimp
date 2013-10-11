@@ -357,7 +357,8 @@ gimp_pick_button_pick (GdkScreen      *screen,
                        gint            y_root,
                        GimpPickButton *button)
 {
-  #ifndef GDK_WINDOWING_QUARTZ
+#ifndef GDK_WINDOWING_QUARTZ
+
   GdkWindow       *root_window = gdk_screen_get_root_window (screen);
   cairo_surface_t *image;
   cairo_t         *cr;
@@ -381,7 +382,8 @@ gimp_pick_button_pick (GdkScreen      *screen,
 
   gimp_rgba_set_uchar (&rgb, color[0], color[1], color[2], 1.0);
 
-  #else /* GDK_WINDOWING_QUARTZ */
+#else /* GDK_WINDOWING_QUARTZ */
+
   CGImageRef    root_image_ref;
   CFDataRef     pixel_data;
   const guchar *data;
@@ -395,11 +397,12 @@ gimp_pick_button_pick (GdkScreen      *screen,
   pixel_data = CGDataProviderCopyData(CGImageGetDataProvider(root_image_ref));
   data = CFDataGetBytePtr(pixel_data);
 
-  gimp_rgba_set_uchar (&rgb, data[2], data[1], data[0], 1.0);
+  gimp_rgba_set_uchar (&rgb, data[2], data[1], data[0], 255);
 
   CGImageRelease (root_image_ref);
   CFRelease (pixel_data);
-  #endif /* GDK_WINDOWING_QUARTZ */
+
+#endif /* GDK_WINDOWING_QUARTZ */
 
   g_signal_emit (button, pick_button_signals[COLOR_PICKED], 0, &rgb);
 }
