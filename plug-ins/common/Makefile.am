@@ -131,7 +131,6 @@ libexec_PROGRAMS = \
 	jigsaw \
 	$(LCMS) \
 	lens-apply \
-	lens-distortion \
 	lens-flare \
 	$(MAIL) \
 	max-rgb \
@@ -1722,23 +1721,6 @@ lens_apply_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(lens_apply_RC)
-
-lens_distortion_SOURCES = \
-	lens-distortion.c
-
-lens_distortion_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(lens_distortion_RC)
 
 lens_flare_SOURCES = \
 	lens-flare.c
