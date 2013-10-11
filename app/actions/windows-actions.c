@@ -137,22 +137,22 @@ static const GimpRadioActionEntry windows_tabs_position_actions[] =
 {
   { "windows-tabs-position-top", GTK_STOCK_GOTO_TOP,
     NC_("windows-tabs-position-action", "_Top"), NULL,
-    NC_("windows-tabs-position-action", "Position the tabs to the top"),
+    NC_("windows-tabs-position-action", "Position the tabs on the top"),
     GIMP_POSITION_TOP, GIMP_HELP_WINDOWS_TABS_POSITION },
 
   { "windows-tabs-position-bottom", GTK_STOCK_GOTO_BOTTOM,
     NC_("windows-tabs-position-action", "_Bottom"), NULL,
-    NC_("windows-tabs-position-action", "Position the tabs to the bottom"),
+    NC_("windows-tabs-position-action", "Position the tabs on the bottom"),
     GIMP_POSITION_BOTTOM, GIMP_HELP_WINDOWS_TABS_POSITION },
 
   { "windows-tabs-position-left", GTK_STOCK_GOTO_FIRST,
     NC_("windows-tabs-position-action", "_Left"), NULL,
-    NC_("windows-tabs-position-action", "Position the tabs to the left"),
+    NC_("windows-tabs-position-action", "Position the tabs on the left"),
     GIMP_POSITION_LEFT, GIMP_HELP_WINDOWS_TABS_POSITION },
 
   { "windows-tabs-position-right", GTK_STOCK_GOTO_LAST,
     NC_("windows-tabs-position-action", "_Right"), NULL,
-    NC_("windows-tabs-position-action", "Position the tabs to the right"),
+    NC_("windows-tabs-position-action", "Position the tabs on the right"),
     GIMP_POSITION_RIGHT, GIMP_HELP_WINDOWS_TABS_POSITION },
 };
 
