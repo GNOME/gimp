@@ -258,8 +258,7 @@ gimp_list_reorder (GimpContainer *container,
 
   list->list = g_list_remove (list->list, object);
 
-  if (new_index == -1 ||
-      new_index == gimp_container_get_n_children (container) - 1)
+  if (new_index == gimp_container_get_n_children (container) - 1)
     list->list = g_list_append (list->list, object);
   else
     list->list = g_list_insert (list->list, object, new_index);
