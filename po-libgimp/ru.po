@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-26 11:18+0400\n"
+"POT-Creation-Date: 2013-08-17 14:24+0300\n"
 "PO-Revision-Date: 2011-11-15 00:23+0300\n"
 "Last-Translator: Yuri Myasoedov <omerta13@yandex.ru>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
@@ -24,22 +24,22 @@ msgstr ""
 "%100>=20) ? 1 : 2);\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1081
+#: ../libgimp/gimp.c:1097
 msgid "success"
 msgstr "успешно"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1085
+#: ../libgimp/gimp.c:1101
 msgid "execution error"
 msgstr "ошибка выполнения"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1089
+#: ../libgimp/gimp.c:1105
 msgid "calling error"
 msgstr "ошибка вызова"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1093
+#: ../libgimp/gimp.c:1109
 msgid "cancelled"
 msgstr "отменено"
 
@@ -1134,7 +1134,7 @@ msgstr "Сбой при загрузке"
 msgid "Not loaded"
 msgstr "Не загружен"
 
-#: ../libgimpthumb/gimpthumb-utils.c:157
+#: ../libgimpthumb/gimpthumb-utils.c:153
 #, c-format
 msgid ""
 "Cannot determine a valid home directory.\n"
@@ -1144,7 +1144,7 @@ msgstr ""
 "Файлы предварительного просмотра будут храниться в каталоге для временных "
 "файлов (%s)."
 
-#: ../libgimpthumb/gimpthumb-utils.c:281 ../libgimpthumb/gimpthumb-utils.c:349
+#: ../libgimpthumb/gimpthumb-utils.c:277 ../libgimpthumb/gimpthumb-utils.c:345
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Не удалось создать каталог файлов предварительного просмотра '%s'."
@@ -1625,11 +1625,11 @@ msgstr "Акварель"
 msgid "Pressure"
 msgstr "Давление"
 
-#: ../modules/color-selector-wheel.c:71
+#: ../modules/color-selector-wheel.c:69
 msgid "HSV color wheel"
 msgstr "Цветовой круг HSV"
 
-#: ../modules/color-selector-wheel.c:102
+#: ../modules/color-selector-wheel.c:101
 msgid "Wheel"
 msgstr "Круг"
 
