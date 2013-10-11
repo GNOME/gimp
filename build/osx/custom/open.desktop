@@ -1,0 +1,7 @@
+[Desktop Entry]
+Version=1.0
+Name=Open
+Exec=open %U
+Terminal=false
+Type=Application
+MimeType=x-scheme-handler/http;x-scheme-handler/https

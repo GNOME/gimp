@@ -118,12 +118,23 @@
 
   <!-- Copy in mime data -->
   <!-- Used for opening up help in browser -->
-  <data>${prefix}/share/applications/*</data>
+  <data dest="${bundle}/Contents/Resources/share/applications/gimp.desktop">
+    ${project}/custom/gimp.desktop
+  </data>
+  <data dest="${bundle}/Contents/Resources/share/applications/gimp.desktop">
+    ${project}/custom/open.desktop
+  </data>
+  <data dest="${bundle}/Contents/Resources/share/applications/gimp.desktop">
+    ${project}/custom/mimeinfo.cache
+  </data>
 
   <!-- Copy in dbus Launch session support -->
-  <data>${prefix}/etc/dbus-1/*</data>
+  <data>${prefix}/etc/dbus-1/system.conf</data>
   <data>${prefix}/etc/dbus-1/session.d/</data>
   <data>${prefix}/etc/dbus-1/system.d/</data>
+  <data dest="${bundle}/Contents/Resources/etc/dbus-1/session.conf">
+    ${project}/custom/session.conf
+  </data>
   <binary>${prefix}/bin/dbus-launch</binary>
 
   <!-- Copy in gvfs file support -->
@@ -150,17 +161,17 @@
 
   <!-- Change default theme -->
   <data dest="${bundle}/Contents/Resources/etc/${gtkdir}/gtkrc">
-    ${project}/gtkrc
+    ${project}/custom/gtkrc
   </data>
 
   <!-- Copy in better defaults -->
   <data dest="${bundle}/Contents/Resources/etc/gimp/2.0/gimprc">
-    ${project}/gimprc
+    ${project}/custom/gimprc
   </data>
 
   <!-- Copy in better fontconfig defaults -->
   <data dest="${bundle}/Contents/Resources/etc/fonts/fonts.conf">
-    ${project}/fonts.conf
+    ${project}/custom/fonts.conf
   </data>
 
   <!-- Copy in icons -->

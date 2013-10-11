@@ -1,0 +1,14 @@
+# Include Zukitwo path to fix plugins not applying theme
+include "../../share/themes/Zukitwo/gtk-2.0/gtkrc"
+# Set default theme to Zukitwo
+gtk-theme-name = "Zukitwo"
+
+# Include Elementary path to fix plugins not applying theme
+# include "../../share/themes/Elementary/gtk-2.0/gtkrc"
+# Set default theme to Elementary
+# gtk-theme-name = "Elementary"
+
+# Include Mac path to fix plugins not applying key-bindings
+include "../../share/themes/Mac/gtk-2.0-key/gtkrc"
+# Set default key-bindings to Mac
+gtk-key-theme-name = "Mac"
