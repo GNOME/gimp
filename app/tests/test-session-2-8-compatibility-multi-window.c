@@ -31,6 +31,10 @@
   g_test_add_func ("/gimp-session-2-8-compatibility-multi-window/" #function, \
                    function);
 
+#define SKIP_TEST(function) \
+  g_test_add_func ("/gimp-session-2-8-compatibility-multi-window/subprocess/" #function, \
+                   function);
+
 
 /**
  * Tests that a single-window sessionrc in GIMP 2.8 format is loaded
@@ -51,8 +55,16 @@ int main(int argc, char **argv)
   gimp_test_bail_if_no_display ();
   gtk_test_init (&argc, &argv, NULL);
 
+#ifdef HAVE_XVFB_RUN
   ADD_TEST (read_and_write_session_files);
+#else
+  SKIP_TEST (read_and_write_session_files);
+#endif
 
   /* Don't bother freeing stuff, the process is short-lived */
+#ifdef HAVE_XVFB_RUN
   return g_test_run ();
+#else
+  return GIMP_EXIT_TEST_SKIPPED;
+#endif
 }

@@ -18,6 +18,16 @@
 #ifndef __TESTS_H__
 #define __TESTS_H__
 
+/* Automake doc says:
+   "When no test protocol is in use, an exit status of 0 from a test
+   script will denote a success, an exit status of 77 a skipped test,
+   an exit status of 99 an hard error, and any other exit status will
+   denote a failure."
+
+   Unfortunately glib returns a SUCCESS when you skip tests, which is
+   not a reliable test feedback. So we hard-code the SKIPPED return
+   value. */
+#define GIMP_EXIT_TEST_SKIPPED 77
 
 Gimp * gimp_init_for_testing             (void);
 Gimp * gimp_init_for_gui_testing         (gboolean     show_gui);
