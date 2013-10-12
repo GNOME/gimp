@@ -191,42 +191,37 @@ background_jpeg_save (PreviewPersistent *pp)
       /* display the preview stuff */
       if (!pp->abort_me)
         {
-          GFile *file = g_file_new_for_path (pp->file_name);
+          GFile     *file = g_file_new_for_path (pp->file_name);
+          GFileInfo *info;
+          gchar     *text;
+          GError    *error = NULL;
 
-          if (file)
+          info = g_file_query_info (file,
+                                    G_FILE_ATTRIBUTE_STANDARD_SIZE,
+                                    G_FILE_QUERY_INFO_NONE,
+                                    NULL, &error);
+
+          if (info)
             {
-              GFileInfo *info = g_file_query_info (file,
-                                                   G_FILE_ATTRIBUTE_STANDARD_SIZE,
-                                                   G_FILE_QUERY_INFO_NONE,
-                                                   NULL, NULL);
+              goffset  size = g_file_info_get_size (info);
+              gchar   *size_text;
 
-              if (info)
-                {
-                  goffset  size = g_file_info_get_size (info);
-                  gchar   *size_text;
-                  gchar   *text;
+              size_text = g_format_size (size);
+              text = g_strdup_printf (_("File size: %s"), size_text);
+              g_free (size_text);
 
-                  size_text = g_format_size (size);
-                  text = g_strdup_printf (_("File size: %s"), size_text);
-                  gtk_label_set_text (GTK_LABEL (preview_size), text);
-                  g_free (text);
-                  g_free (size_text);
-
-                  g_object_unref (info);
-                }
-              else
-                {
-                  gtk_label_set_text (GTK_LABEL (preview_size),
-                                      _("File size: unknown"));
-                }
-
-              g_object_unref (file);
+              g_object_unref (info);
             }
           else
             {
-              gtk_label_set_text (GTK_LABEL (preview_size),
-                                  _("File size: unknown"));
+              text = g_strdup_printf (_("File size: %s"), error->message);
+              g_clear_error (&error);
             }
+
+          gtk_label_set_text (GTK_LABEL (preview_size), text);
+          g_free (text);
+
+         g_object_unref (file);
 
           /* and load the preview */
           load_image (pp->file_name, GIMP_RUN_NONINTERACTIVE, TRUE, NULL);
@@ -879,6 +874,7 @@ save_dialog (void)
 
   preview_size = gtk_label_new (_("File size: unknown"));
   gtk_misc_set_alignment (GTK_MISC (preview_size), 0.0, 0.5);
+  gtk_label_set_ellipsize (GTK_LABEL (preview_size), PANGO_ELLIPSIZE_END);
   gimp_label_set_attributes (GTK_LABEL (preview_size),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
