@@ -687,3 +687,36 @@ gimp_units_to_points (gdouble  value,
   return (value *
           gimp_unit_get_factor (GIMP_UNIT_POINT) / gimp_unit_get_factor (unit));
 }
+
+/**
+ * gimp_unit_is_metric:
+ * @unit: The unit
+ *
+ * Checks if the given @unit is metric. A simplistic test is used
+ * that looks at the unit's factor and checks if it is 2.54 multiplied
+ * by some common powers of 10. Currently it checks for mm, cm, dm, m.
+ *
+ * See also: gimp_unit_get_factor()
+ *
+ * Returns: %TRUE if the @unit is metric.
+ *
+ * Since: GIMP 2.10
+ **/
+gboolean
+gimp_unit_is_metric (GimpUnit unit)
+{
+  gdouble factor;
+
+  if (unit == GIMP_UNIT_MM)
+    return TRUE;
+
+  factor = gimp_unit_get_factor (unit);
+
+  if (factor == 0.0)
+    return FALSE;
+
+  return (factor == 25.4  ||
+          factor == 2.54  ||
+          factor == 0.254 ||
+          factor == 0.0254);
+}

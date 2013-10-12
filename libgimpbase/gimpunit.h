@@ -100,6 +100,8 @@ gdouble       gimp_units_to_points          (gdouble      value,
                                              GimpUnit     unit,
                                              gdouble      resolution);
 
+gboolean      gimp_unit_is_metric           (GimpUnit     unit);
+
 
 G_END_DECLS
 
