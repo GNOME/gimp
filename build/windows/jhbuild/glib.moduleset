@@ -33,9 +33,9 @@
 </autotools>
 
 <autotools id="glib2">
-	<branch version="2.36.4" repo="gnome.org"
-			module="glib/2.36/glib-2.36.4.tar.xz"
-			hash="sha256:f654d2542329012d8475736a165dfbf82fadf3ee940c2e0e6ddd4b2fde5cad7e">
+	<branch version="2.38.0" repo="gnome.org"
+			module="glib/2.38/glib-2.38.0.tar.xz"
+			hash="sha256:7513a7de5e814ccb48206340a8773ea523d6a7bf04dc74565de69b899bc2ff32">
 	</branch>
 	<dependencies>
 		<dep package="gettext"/>
