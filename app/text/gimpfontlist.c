@@ -24,9 +24,10 @@
 
 #include <string.h>
 
-#include <gegl.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <pango/pangocairo.h>
 #include <pango/pangofc-fontmap.h>
+#include <gegl.h>
 
 #include "text-types.h"
 

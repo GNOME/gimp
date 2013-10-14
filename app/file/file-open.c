@@ -32,8 +32,9 @@
 #include <unistd.h>
 #endif
 
-#include <gegl.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <glib/gstdio.h>
+#include <gegl.h>
 
 #ifdef G_OS_WIN32
 #include <io.h>

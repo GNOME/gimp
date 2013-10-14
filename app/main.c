@@ -31,7 +31,7 @@
 
 #include <locale.h>
 
-#include <glib-object.h>
+#include <gio/gio.h>
 
 #ifdef G_OS_WIN32
 #include <io.h> /* get_osfhandle */

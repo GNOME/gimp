@@ -24,8 +24,6 @@
 
 #include "gimpobject.h"
 
-#include <gdk-pixbuf/gdk-pixbuf.h>
-
 
 #define GIMP_VIEWABLE_MAX_PREVIEW_SIZE 2048
 #define GIMP_VIEWABLE_MAX_POPUP_SIZE    256

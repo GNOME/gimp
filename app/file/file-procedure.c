@@ -34,7 +34,7 @@
 #include <unistd.h>
 #endif
 
-#include <glib-object.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"

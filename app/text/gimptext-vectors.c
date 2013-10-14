@@ -20,9 +20,9 @@
 
 #include "config.h"
 
-#include <gegl.h>
-
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <pango/pangocairo.h>
+#include <gegl.h>
 
 #include "text-types.h"
 

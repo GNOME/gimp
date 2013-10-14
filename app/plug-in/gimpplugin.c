@@ -40,6 +40,7 @@
 #include <sys/param.h>
 #endif
 
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
 #if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)

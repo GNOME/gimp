@@ -21,8 +21,9 @@
 #include <string.h>
 #include <sys/types.h>
 
-#include <gegl.h>
 #include <gobject/gvaluecollector.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 

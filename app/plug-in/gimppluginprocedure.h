@@ -21,8 +21,6 @@
 #define __GIMP_PLUG_IN_PROCEDURE_H__
 
 
-#include <gdk-pixbuf/gdk-pixbuf.h>
-
 #include "pdb/gimpprocedure.h"
 
 

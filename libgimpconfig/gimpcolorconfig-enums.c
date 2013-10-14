@@ -2,7 +2,7 @@
 /* Generated data (by gimp-mkenums) */
 
 #include "config.h"
-#include <glib-object.h>
+#include <gio/gio.h>
 #include "libgimpbase/gimpbase.h"
 #include "gimpcolorconfig-enums.h"
 #include "libgimp/libgimp-intl.h"

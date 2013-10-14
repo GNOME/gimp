@@ -27,6 +27,7 @@
 #include <unistd.h>
 #endif
 
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 #include <glib/gstdio.h>
 

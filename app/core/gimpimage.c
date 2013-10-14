@@ -21,8 +21,8 @@
 #include <time.h>
 
 #include <cairo.h>
-#include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gegl.h>
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"

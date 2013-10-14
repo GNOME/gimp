@@ -23,7 +23,7 @@
 #include <errno.h>
 #include <sys/types.h>
 
-#include <glib-object.h>
+#include <gio/gio.h>
 #include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"

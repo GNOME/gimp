@@ -22,7 +22,7 @@
 
 #include <string.h>
 
-#include <glib-object.h>
+#include <gio/gio.h>
 
 #define GIMP_DISABLE_DEPRECATION_WARNINGS
 

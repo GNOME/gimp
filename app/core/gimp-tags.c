@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <gio/gio.h>
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"

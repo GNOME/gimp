@@ -17,7 +17,7 @@
 
 #include "config.h"
 
-#include <gio/gio.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
 #ifdef G_OS_WIN32
 #include <windows.h>

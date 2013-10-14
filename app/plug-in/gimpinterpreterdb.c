@@ -44,7 +44,7 @@
 
 #include <fcntl.h>
 
-#include <glib-object.h>
+#include <gio/gio.h>
 #include <glib/gstdio.h>
 
 #ifdef G_OS_WIN32

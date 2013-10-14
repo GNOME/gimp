@@ -21,13 +21,15 @@
 
 #include "config.h"
 
+#include <gio/gio.h>
 #include <gegl-plugin.h>
 
-#include <libgimpbase/gimpbase.h>
+#include "libgimpbase/gimpbase.h"
 
 #include "operations-types.h"
 
 #include "gimpoperationnormalmode.h"
+
 
 GimpLayerModeFunction gimp_operation_normal_mode_process_pixels = NULL;
 

@@ -21,6 +21,7 @@
 #include <unistd.h>
 #endif
 
+#include <gio/gio.h>
 #include <gegl.h>
 
 #ifdef G_OS_WIN32
