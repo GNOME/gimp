@@ -23,9 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <glib-object.h>
-
-#include "libgimpbase/gimpbase.h"
+#include "libgimp/gimp.h"
 
 #include "gimphelp.h"
 
