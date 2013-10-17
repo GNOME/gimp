@@ -402,6 +402,7 @@ gimp_channel_get_node (GimpFilter *filter)
   GeglNode     *source;
   GeglNode     *mode_node;
   GeglColor    *color;
+  const Babl   *color_format;
 
   node = GIMP_FILTER_CLASS (parent_class)->get_node (filter);
 
@@ -412,9 +413,15 @@ gimp_channel_get_node (GimpFilter *filter)
 
   g_warn_if_fail (channel->color_node == NULL);
 
+  if (gimp_drawable_get_linear (drawable))
+    color_format = babl_format ("RGBA float");
+  else
+    color_format = babl_format ("R'G'B'A float");
+
   channel->color_node = gegl_node_new_child (node,
                                              "operation", "gegl:color",
                                              "value",     color,
+                                             "format",    color_format,
                                              NULL);
 
   g_object_unref (color);
@@ -969,12 +976,28 @@ gimp_channel_set_buffer (GimpDrawable *drawable,
                          gint          offset_x,
                          gint          offset_y)
 {
+  GimpChannel *channel = GIMP_CHANNEL (drawable);
+
   GIMP_DRAWABLE_CLASS (parent_class)->set_buffer (drawable,
                                                   push_undo, undo_desc,
                                                   buffer,
                                                   offset_x, offset_y);
 
-  GIMP_CHANNEL (drawable)->bounds_known = FALSE;
+  channel->bounds_known = FALSE;
+
+  if (gimp_filter_peek_node (GIMP_FILTER (channel)))
+    {
+      const Babl *color_format;
+
+      if (gimp_drawable_get_linear (drawable))
+        color_format = babl_format ("RGBA float");
+      else
+        color_format = babl_format ("R'G'B'A float");
+
+      gegl_node_set (channel->color_node,
+                     "format", color_format,
+                     NULL);
+    }
 }
 
 static void
