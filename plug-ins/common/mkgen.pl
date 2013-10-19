@@ -152,10 +152,8 @@ foreach (sort keys %plugins) {
 
     my $optlib = "";
 
-    if (exists $plugins{$_}->{optional}) {
-	if (exists $plugins{$_}->{libs}) {
+    if (exists $plugins{$_}->{libs}) {
 		$optlib = "\n\t\$(" . $plugins{$_}->{libs} . ")\t\t\\";
-	}
     }
 
     if (exists $plugins{$_}->{cflags}) {
