@@ -84,6 +84,14 @@ void
 app_libs_init (GOptionContext *context,
                gboolean        no_interface)
 {
+  /* disable OpenCL before GEGL is even initialized; this way we only
+   * enable if wanted in gimprc, instead of always enabling, and then
+   * disabling again if wanted in gimprc
+   */
+  g_object_set (gegl_config (),
+                "use-opencl", FALSE,
+                NULL);
+
   g_option_context_add_group (context, gegl_get_option_group ());
 
 #ifndef GIMP_CONSOLE_COMPILATION
