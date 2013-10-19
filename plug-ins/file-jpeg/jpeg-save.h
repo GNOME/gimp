@@ -32,6 +32,7 @@ typedef struct
   gboolean         save_exif;
   gboolean         save_thumbnail;
   gboolean         save_xmp;
+  gboolean         save_iptc;
   gboolean         use_orig_quality;
 } JpegSaveVals;
 

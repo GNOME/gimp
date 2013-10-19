@@ -59,7 +59,7 @@ m4_define([pygtk_required_version], [2.10.4])
 m4_define([poppler_required_version], [0.12.4])
 m4_define([libcurl_required_version], [7.15.1])
 m4_define([libgudev_required_version], [167])
-m4_define([exif_required_version], [0.6.15])
+m4_define([gexiv2_required_version], [0.6.1])
 m4_define([lcms_required_version], [2.2])
 m4_define([libpng_required_version], [1.2.37])
 m4_define([liblzma_required_version], [5.0.0])
@@ -123,11 +123,13 @@ GDK_PIXBUF_REQUIRED_VERSION=gdk_pixbuf_required_version
 GTK_REQUIRED_VERSION=gtk_required_version
 CAIRO_REQUIRED_VERSION=cairo_required_version
 GEGL_REQUIRED_VERSION=gegl_required_version
+GEXIV2_REQUIRED_VERSION=gexiv2_required_version
 AC_SUBST(GLIB_REQUIRED_VERSION)
 AC_SUBST(GDK_PIXBUF_REQUIRED_VERSION)
 AC_SUBST(GTK_REQUIRED_VERSION)
 AC_SUBST(CAIRO_REQUIRED_VERSION)
 AC_SUBST(GEGL_REQUIRED_VERSION)
+AC_SUBST(GEXIV2_REQUIRED_VERSION)
 
 # The symbol GIMP_UNSTABLE is defined above for substitution in
 # Makefiles and conditionally defined here as a preprocessor symbol
@@ -607,6 +609,7 @@ if test "x$FREETYPE_CONFIG" != "xno" ; then
 fi
 AC_SUBST(FREETYPE_LIBS)
 
+PKG_CHECK_MODULES(GEXIV2, gexiv2 >= gexiv2_required_version)
 
 ##########################################
 # Check for some special functions we need
@@ -1325,28 +1328,6 @@ fi
 AC_SUBST(FILE_MNG)
 AC_SUBST(MNG_LIBS)
 AC_SUBST(MNG_CFLAGS)
-
-
-############################################################
-# libexif: Library to allow exif tags to be read from, and
-# saved to, jpeg files. Currently, this permits exif data to
-# avoid destruction, but no data modification is performed.
-############################################################
-
-AC_ARG_WITH(libexif,  [  --without-libexif       build without EXIF support])
-
-have_libexif=no
-if test "x$with_libexif" != xno && test -z "$EXIF_LIBS" && test -n "$JPEG_LIBS"; then
-  have_libexif=yes
-  PKG_CHECK_MODULES(EXIF, libexif >= exif_required_version,
-    AC_DEFINE(HAVE_LIBEXIF, 1, [Define to 1 if libexif is available]),
-    have_libexif="no (libexif not found or too old)")
-fi
-
-AC_SUBST(EXIF_CFLAGS)
-AC_SUBST(EXIF_LIBS)
-
-AM_CONDITIONAL(HAVE_LIBEXIF, test "x$have_libexif" = xyes)
 
 
 #################
@@ -2405,9 +2386,6 @@ Optional Plug-Ins:
   WMF:                 $have_libwmf
   X11 Mouse Cursor:    $have_xmc
   XPM:                 $have_libxpm
-
-Plug-In Features:
-  EXIF support:        $have_libexif
 
 Optional Modules:
   ALSA (MIDI Input):   $have_alsa

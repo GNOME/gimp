@@ -21,14 +21,12 @@
 #include <errno.h>
 #include <setjmp.h>
 
+#include <gio/gio.h>
 #include <glib/gstdio.h>
+#include <gexiv2/gexiv2.h>
 
 #include <jpeglib.h>
 #include <jerror.h>
-
-#ifdef HAVE_LIBEXIF
-#include <libexif/exif-data.h>
-#endif /* HAVE_LIBEXIF */
 
 #ifdef HAVE_LCMS
 #include <lcms2.h>
@@ -43,20 +41,10 @@
 #include "jpeg-icc.h"
 #include "jpeg-settings.h"
 #include "jpeg-load.h"
-#ifdef HAVE_LIBEXIF
-#include "jpeg-exif.h"
-#include "gimpexif.h"
-#endif
-
 
 static void  jpeg_load_resolution           (gint32    image_ID,
                                              struct jpeg_decompress_struct
                                                        *cinfo);
-
-#ifdef HAVE_LIBEXIF
-static gboolean  jpeg_load_exif_resolution  (gint32    image_ID,
-                                             ExifData *exif_data);
-#endif
 
 static void      jpeg_load_sanitize_comment (gchar    *comment);
 
@@ -90,9 +78,6 @@ load_image (const gchar  *filename,
   gint             tile_height;
   gint             scanlines;
   gint             i, start, end;
-#ifdef HAVE_LIBEXIF
-  gint             orientation = 0;
-#endif
 #ifdef HAVE_LCMS
   cmsHTRANSFORM    cmyk_transform = NULL;
 #else
@@ -265,9 +250,6 @@ load_image (const gchar  *filename,
       GString  *comment_buffer = NULL;
       guint8   *profile        = NULL;
       guint     profile_size   = 0;
-#ifdef HAVE_LIBEXIF
-      ExifData *exif_data      = NULL;
-#endif
 
       /* Step 5.0: save the original JPEG settings in a parasite */
       jpeg_detect_original_settings (&cinfo, image_ID);
@@ -304,18 +286,9 @@ load_image (const gchar  *filename,
               g_print ("jpeg-load: found EXIF block (%d bytes)\n",
                        (gint) (len - sizeof (JPEG_APP_HEADER_EXIF)));
 #endif
-#ifdef HAVE_LIBEXIF
-              if (! exif_data)
-                exif_data = exif_data_new ();
-              /* if there are multiple blocks, their data will be merged */
-              exif_data_load_data (exif_data, (unsigned char *) data, len);
-#endif
             }
         }
 
-#ifdef HAVE_LIBEXIF
-      if (!jpeg_load_exif_resolution (image_ID, exif_data))
-#endif
         jpeg_load_resolution (image_ID, &cinfo);
 
       /* if we found any comments, then make a parasite for them */
@@ -332,55 +305,6 @@ load_image (const gchar  *filename,
           gimp_parasite_free (parasite);
 
           g_string_free (comment_buffer, TRUE);
-        }
-
-#ifdef HAVE_LIBEXIF
-      /* if we found any EXIF block, then attach the metadata to the image */
-      if (exif_data)
-        {
-          gimp_metadata_store_exif (image_ID, exif_data);
-          orientation = jpeg_exif_get_orientation (exif_data);
-          exif_data_unref (exif_data);
-          exif_data = NULL;
-        }
-#endif
-
-      /* Step 5.2: check for XMP metadata in APP1 markers (after EXIF) */
-      for (marker = cinfo.marker_list; marker; marker = marker->next)
-        {
-          const gchar *data = (const gchar *) marker->data;
-          gsize        len  = marker->data_length;
-
-          if ((marker->marker == JPEG_APP0 + 1)
-              && (len > sizeof (JPEG_APP_HEADER_XMP) + 20)
-              && ! strcmp (JPEG_APP_HEADER_XMP, data))
-            {
-              GimpParam *return_vals;
-              gint       nreturn_vals;
-              gchar     *xmp_packet;
-
-#ifdef GIMP_UNSTABLE
-              g_print ("jpeg-load: found XMP packet (%d bytes)\n",
-                       (gint) (len - sizeof (JPEG_APP_HEADER_XMP)));
-#endif
-              xmp_packet = g_strndup (data + sizeof (JPEG_APP_HEADER_XMP),
-                                      len - sizeof (JPEG_APP_HEADER_XMP));
-
-              /* FIXME: running this through the PDB is not very efficient */
-              return_vals = gimp_run_procedure ("plug-in-metadata-decode-xmp",
-                                                &nreturn_vals,
-                                                GIMP_PDB_IMAGE, image_ID,
-                                                GIMP_PDB_STRING, xmp_packet,
-                                                GIMP_PDB_END);
-
-              if (return_vals[0].data.d_status != GIMP_PDB_SUCCESS)
-                {
-                  g_warning ("JPEG - unable to decode XMP metadata packet");
-                }
-
-              gimp_destroy_params (return_vals, nreturn_vals);
-              g_free (xmp_packet);
-            }
         }
 
       /* Step 5.3: check for an embedded ICC profile in APP2 markers */
@@ -489,10 +413,6 @@ load_image (const gchar  *filename,
 
   gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
 
-#ifdef HAVE_LIBEXIF
-  jpeg_exif_rotate_query (image_ID, orientation);
-#endif
-
   return image_ID;
 }
 
@@ -537,53 +457,6 @@ jpeg_load_resolution (gint32                         image_ID,
     }
 }
 
-#ifdef HAVE_LIBEXIF
-
-static gboolean
-jpeg_load_exif_resolution (gint32        image_ID,
-                           ExifData     *exif_data)
-{
-  gboolean success;
-  gdouble xresolution;
-  gdouble yresolution;
-  gint    unit;
-
-  if (!exif_data)
-    return FALSE;
-
-  if (!jpeg_exif_get_resolution (exif_data,
-                                 &xresolution,
-                                 &yresolution,
-                                 &unit))
-    return FALSE;
-
-  switch (unit)
-    {
-    case 2:
-      success = TRUE;
-      break;
-    case 3: /* dots per cm */
-      xresolution *= 2.54;
-      yresolution *= 2.54;
-      gimp_image_set_unit (image_ID, GIMP_UNIT_MM);
-      success = TRUE;
-      break;
-    default:
-      g_warning ("Unknown EXIF resolution unit %d; skipping EXIF resolution.",
-                 unit);
-      success = FALSE;
-    }
-
-  if (success)
-    {
-      gimp_image_set_resolution (image_ID, xresolution, yresolution);
-    }
-
-  return success;
-}
-
-#endif /* HAVE_LIBEXIF */
-
 /*
  * A number of JPEG files have comments written in a local character set
  * instead of UTF-8.  Some of these files may have been saved by older
@@ -608,9 +481,6 @@ jpeg_load_sanitize_comment (gchar *comment)
     }
 }
 
-
-#ifdef HAVE_LIBEXIF
-
 typedef struct
 {
   struct jpeg_source_mgr pub;   /* public fields */
@@ -626,7 +496,6 @@ static void
 init_source (j_decompress_ptr cinfo)
 {
 }
-
 
 static boolean
 fill_input_buffer (j_decompress_ptr cinfo)
@@ -660,14 +529,16 @@ term_source (j_decompress_ptr cinfo)
 }
 
 gint32
-load_thumbnail_image (const gchar   *filename,
+load_thumbnail_image (GFile         *file,
                       gint          *width,
                       gint          *height,
                       GimpImageType *type,
                       GError       **error)
 {
-  gint32 volatile  image_ID;
-  ExifData        *exif_data;
+  gint32 volatile  image_ID         = -1;
+  GimpMetadata    *metadata         = NULL;
+  guint8          *thumbnail_buffer = NULL;
+  gint             thumbnail_size;
   gint32           layer_ID;
   struct jpeg_decompress_struct cinfo;
   struct my_error_mgr           jerr;
@@ -683,20 +554,25 @@ load_thumbnail_image (const gchar   *filename,
   my_src_ptr       src;
   FILE            *infile;
 
-  image_ID = -1;
-  exif_data = jpeg_exif_data_new_from_file (filename, NULL);
-
-  if (! ((exif_data) && (exif_data->data) && (exif_data->size > 0)))
+  metadata = gimp_metadata_load_from_file (file, error);
+  if (! metadata)
     return -1;
 
-  orientation = jpeg_exif_get_orientation (exif_data);
+  orientation = gexiv2_metadata_get_orientation (metadata);
+
+  if (! gexiv2_metadata_get_exif_thumbnail (metadata,
+                                            &thumbnail_buffer, &thumbnail_size))
+    {
+      g_object_unref (metadata);
+      return -1;
+    }
 
   cinfo.err = jpeg_std_error (&jerr.pub);
   jerr.pub.error_exit     = my_error_exit;
   jerr.pub.output_message = my_output_message;
 
   gimp_progress_init_printf (_("Opening thumbnail for '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             g_file_get_parse_name (file));
 
   /* Establish the setjmp return context for my_error_exit to use. */
   if (setjmp (jerr.setjmp_buffer))
@@ -710,14 +586,14 @@ load_thumbnail_image (const gchar   *filename,
       if (image_ID != -1)
         gimp_image_delete (image_ID);
 
-      if (exif_data)
-        {
-          exif_data_unref (exif_data);
-          exif_data = NULL;
-        }
+      if (metadata)
+        g_object_unref (metadata);
 
       if (buffer)
         g_object_unref (buffer);
+
+      if (thumbnail_buffer)
+        g_free (thumbnail_buffer);
 
       return -1;
     }
@@ -740,11 +616,11 @@ load_thumbnail_image (const gchar   *filename,
   src->pub.resync_to_restart = jpeg_resync_to_restart;
   src->pub.term_source       = term_source;
 
-  src->pub.bytes_in_buffer   = exif_data->size;
-  src->pub.next_input_byte   = exif_data->data;
+  src->pub.bytes_in_buffer   = thumbnail_size;
+  src->pub.next_input_byte   = thumbnail_buffer;
 
-  src->buffer = exif_data->data;
-  src->size = exif_data->size;
+  src->buffer = thumbnail_buffer;
+  src->size   = thumbnail_size;
 
   /* Step 3: read file parameters with jpeg_read_header() */
 
@@ -808,11 +684,11 @@ load_thumbnail_image (const gchar   *filename,
                  cinfo.output_components, cinfo.out_color_space,
                  cinfo.jpeg_color_space);
 
-      if (exif_data)
-        {
-          exif_data_unref (exif_data);
-          exif_data = NULL;
-        }
+      if (metadata)
+        g_object_unref (metadata);
+
+      if (thumbnail_buffer)
+        g_free (thumbnail_buffer);
 
       return -1;
       break;
@@ -822,7 +698,6 @@ load_thumbnail_image (const gchar   *filename,
                              image_type);
 
   gimp_image_undo_disable (image_ID);
-  gimp_image_set_filename (image_ID, filename);
 
   jpeg_load_resolution (image_ID, &cinfo);
 
@@ -877,7 +752,9 @@ load_thumbnail_image (const gchar   *filename,
    */
   jpeg_destroy_decompress (&cinfo);
 
+  g_object_unref (metadata);
   g_object_unref (buffer);
+  g_free (thumbnail_buffer);
 
   /* free up the temporary buffers */
   g_free (rowbuf);
@@ -897,17 +774,14 @@ load_thumbnail_image (const gchar   *filename,
   jerr.pub.error_exit = my_error_exit;
   jerr.pub.output_message = my_output_message;
 
-  if ((infile = g_fopen (filename, "rb")) == NULL)
+  if ((infile = g_fopen (g_file_get_path (file), "rb")) == NULL)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   g_file_get_parse_name (file), g_strerror (errno));
 
-      if (exif_data)
-        {
-          exif_data_unref (exif_data);
-          exif_data = NULL;
-        }
+      if (image_ID != -1)
+        gimp_image_delete (image_ID);
 
       return -1;
     }
@@ -923,12 +797,6 @@ load_thumbnail_image (const gchar   *filename,
 
       if (image_ID != -1)
         gimp_image_delete (image_ID);
-
-      if (exif_data)
-        {
-          exif_data_unref (exif_data);
-          exif_data = NULL;
-        }
 
       return -1;
     }
@@ -958,21 +826,14 @@ load_thumbnail_image (const gchar   *filename,
 
   fclose (infile);
 
-  if (exif_data)
-    {
-      exif_data_unref (exif_data);
-      exif_data = NULL;
-    }
-
+#if 0
   jpeg_exif_rotate (image_ID, orientation);
+#endif
 
   *type = layer_type;
 
   return image_ID;
 }
-
-#endif /* HAVE_LIBEXIF */
-
 
 static gpointer
 jpeg_load_cmyk_transform (guint8 *profile_data,

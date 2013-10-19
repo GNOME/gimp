@@ -68,6 +68,7 @@ AM_CPPFLAGS = \
 	-I$(top_srcdir)			\
 	$(GTK_CFLAGS)			\
 	$(GEGL_CFLAGS)			\
+	$(GEXIV2_CFLAGS)		\
 	-I$(includedir)			\
 	$(xobjective_c)
 
@@ -280,6 +281,8 @@ libgimpui_sources = \
 	gimpitemcombobox.h		\
 	gimpmenu.c			\
 	gimpmenu.h			\
+	gimpmetadata.c			\
+	gimpmetadats.h			\
 	gimppalettemenu.c		\
 	gimppalettemenu.h		\
 	gimppaletteselectbutton.c	\
@@ -354,6 +357,7 @@ gimpinclude_HEADERS = \
 	gimpimagecombobox.h		\
 	gimpitemcombobox.h		\
 	gimpmenu.h			\
+	gimpmetadata.h			\
 	gimppalettemenu.h		\
 	gimppaletteselectbutton.h	\
 	gimppatternmenu.h		\
@@ -399,6 +403,7 @@ libgimpui_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimpbase)		\
 	$(libgimpmodule)	\
 	$(GTK_LIBS)		\
+	$(GEXIV2_LIBS)		\
 	$(RT_LIBS)
 
 libgimpui_@GIMP_API_VERSION@_la_DEPENDENCIES = \

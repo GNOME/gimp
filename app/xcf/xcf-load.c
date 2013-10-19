@@ -41,6 +41,7 @@
 #include "core/gimpimage-colormap.h"
 #include "core/gimpimage-grid.h"
 #include "core/gimpimage-guides.h"
+#include "core/gimpimage-metadata.h"
 #include "core/gimpimage-private.h"
 #include "core/gimpimage-sample-points.h"
 #include "core/gimpimage-undo.h"
@@ -140,6 +141,7 @@ xcf_load_image (Gimp     *gimp,
 {
   GimpImage          *image = NULL;
   const GimpParasite *parasite;
+  gboolean            has_metadata = FALSE;
   guint32             saved_pos;
   guint32             offset;
   gint                width;
@@ -206,6 +208,124 @@ xcf_load_image (Gimp     *gimp,
           gimp_image_set_grid (GIMP_IMAGE (image), grid, FALSE);
           g_object_unref (grid);
         }
+    }
+
+  /* check for a metadata parasite */
+  parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
+                                       "gimp-image-metadata");
+  if (parasite)
+    {
+      GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+      GimpMetadata     *metadata;
+      const gchar      *meta_string;
+
+      meta_string = (gchar *) gimp_parasite_data (parasite);
+      metadata = gimp_metadata_deserialize (meta_string);
+
+      if (metadata)
+        {
+          has_metadata = TRUE;
+
+          gimp_image_set_metadata (image, metadata, FALSE);
+          g_object_unref (metadata);
+        }
+
+      gimp_parasite_list_remove (private->parasites,
+                                 gimp_parasite_name (parasite));
+    }
+
+  /* migrate the old "exif-data" parasite */
+  parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
+                                       "exif-data");
+  if (parasite)
+    {
+      GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+
+      if (has_metadata)
+        {
+          g_printerr ("xcf-load: inconsistent metadata discovered: XCF file "
+                      "has both 'gimp-image-metadata' and 'exif-data' "
+                      "parasites, dropping old 'exif-data'\n");
+        }
+      else
+        {
+          GimpMetadata *metadata = gimp_image_get_metadata (image);
+          GError       *my_error = NULL;
+
+          if (metadata)
+            g_object_ref (metadata);
+          else
+            metadata = gimp_metadata_new ();
+
+          if (! gimp_metadata_set_from_exif (metadata,
+                                             gimp_parasite_data (parasite),
+                                             gimp_parasite_data_size (parasite),
+                                             &my_error))
+            {
+              gimp_message (gimp, G_OBJECT (info->progress),
+                            GIMP_MESSAGE_WARNING,
+                            _("Corrupt 'exif-data' parasite discovered.\n"
+                              "EXIF data could not be migrated: %s"),
+                            my_error->message);
+              g_clear_error (&my_error);
+            }
+          else
+            {
+              gimp_image_set_metadata (image, metadata, FALSE);
+            }
+
+          g_object_unref (metadata);
+        }
+
+      gimp_parasite_list_remove (private->parasites,
+                                 gimp_parasite_name (parasite));
+    }
+
+  /* migrate the old "gimp-metadata" parasite */
+  parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
+                                       "gimp-metadata");
+  if (parasite)
+    {
+      GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+
+      if (has_metadata)
+        {
+          g_printerr ("xcf-load: inconsistent metadata discovered: XCF file "
+                      "has both 'gimp-image-metadata' and 'gimp-metadata' "
+                      "parasites, dropping old 'gimp-metadata'\n");
+        }
+      else
+        {
+          GimpMetadata *metadata = gimp_image_get_metadata (image);
+          GError       *my_error = NULL;
+
+          if (metadata)
+            g_object_ref (metadata);
+          else
+            metadata = gimp_metadata_new ();
+
+          if (! gimp_metadata_set_from_xmp (metadata,
+                                            gimp_parasite_data (parasite),
+                                            gimp_parasite_data_size (parasite),
+                                            &my_error))
+            {
+              gimp_message (gimp, G_OBJECT (info->progress),
+                            GIMP_MESSAGE_WARNING,
+                            _("Corrupt 'gimp-metadata' parasite discovered.\n"
+                              "XMP data could not be migrated: %s"),
+                            my_error->message);
+              g_clear_error (&my_error);
+            }
+          else
+            {
+              gimp_image_set_metadata (image, metadata, FALSE);
+            }
+
+          g_object_unref (metadata);
+        }
+
+      gimp_parasite_list_remove (private->parasites,
+                                 gimp_parasite_name (parasite));
     }
 
   xcf_progress_update (info);

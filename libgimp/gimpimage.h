@@ -41,6 +41,10 @@ guchar       * gimp_image_get_thumbnail_data      (gint32              image_ID,
                                                    gint               *height,
                                                    gint               *bpp);
 
+GimpMetadata * gimp_image_get_metadata            (gint32              image_ID);
+gboolean       gimp_image_set_metadata            (gint32              image_ID,
+                                                   GimpMetadata       *metadata);
+
 GIMP_DEPRECATED_FOR(gimp_image_get_colormap)
 guchar       * gimp_image_get_cmap                (gint32              image_ID,
                                                    gint               *num_colors);

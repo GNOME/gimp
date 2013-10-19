@@ -41,6 +41,7 @@
 #include "core/gimpimage-colormap.h"
 #include "core/gimpimage-grid.h"
 #include "core/gimpimage-guides.h"
+#include "core/gimpimage-metadata.h"
 #include "core/gimpimage-private.h"
 #include "core/gimpimage-sample-points.h"
 #include "core/gimplayer.h"
@@ -390,9 +391,10 @@ xcf_save_image_props (XcfInfo    *info,
                       GimpImage  *image,
                       GError    **error)
 {
-  GimpImagePrivate *private  = GIMP_IMAGE_GET_PRIVATE (image);
-  GimpParasite     *parasite = NULL;
-  GimpUnit          unit     = gimp_image_get_unit (image);
+  GimpImagePrivate *private       = GIMP_IMAGE_GET_PRIVATE (image);
+  GimpParasite     *grid_parasite = NULL;
+  GimpParasite     *meta_parasite = NULL;
+  GimpUnit          unit          = gimp_image_get_unit (image);
   gdouble           xres;
   gdouble           yres;
 
@@ -440,8 +442,26 @@ xcf_save_image_props (XcfInfo    *info,
     {
       GimpGrid *grid = gimp_image_get_grid (image);
 
-      parasite = gimp_grid_to_parasite (grid);
-      gimp_parasite_list_add (private->parasites, parasite);
+      grid_parasite = gimp_grid_to_parasite (grid);
+      gimp_parasite_list_add (private->parasites, grid_parasite);
+    }
+
+  if (gimp_image_get_metadata (image))
+    {
+      GimpMetadata *metadata = gimp_image_get_metadata (image);
+      gchar        *meta_string;
+
+      meta_string = gimp_metadata_serialize (metadata);
+
+      if (meta_string)
+        {
+          meta_parasite = gimp_parasite_new ("gimp-image-metadata",
+                                             GIMP_PARASITE_PERSISTENT,
+                                             strlen (meta_string) + 1,
+                                             meta_string);
+          gimp_parasite_list_add (private->parasites, meta_parasite);
+          g_free (meta_string);
+        }
     }
 
   if (gimp_parasite_list_length (private->parasites) > 0)
@@ -450,11 +470,18 @@ xcf_save_image_props (XcfInfo    *info,
                                       private->parasites));
     }
 
-  if (parasite)
+  if (grid_parasite)
     {
       gimp_parasite_list_remove (private->parasites,
-                                 gimp_parasite_name (parasite));
-      gimp_parasite_free (parasite);
+                                 gimp_parasite_name (grid_parasite));
+      gimp_parasite_free (grid_parasite);
+    }
+
+  if (meta_parasite)
+    {
+      gimp_parasite_list_remove (private->parasites,
+                                 gimp_parasite_name (meta_parasite));
+      gimp_parasite_free (meta_parasite);
     }
 
   xcf_check_error (xcf_save_prop (info, image, PROP_END, error));

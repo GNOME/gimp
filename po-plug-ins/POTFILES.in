@@ -96,6 +96,7 @@ plug-ins/common/lens-apply.c
 plug-ins/common/lens-flare.c
 plug-ins/common/mail.c
 plug-ins/common/max-rgb.c
+plug-ins/common/metadata.c
 plug-ins/common/newsprint.c
 plug-ins/common/nl-filter.c
 plug-ins/common/noise-rgb.c
@@ -141,7 +142,6 @@ plug-ins/file-ico/ico-dialog.c
 plug-ins/file-ico/ico-load.c
 plug-ins/file-ico/ico-save.c
 plug-ins/file-ico/ico.c
-plug-ins/file-jpeg/jpeg-exif.c
 plug-ins/file-jpeg/jpeg-load.c
 plug-ins/file-jpeg/jpeg-save.c
 plug-ins/file-jpeg/jpeg.c
@@ -187,6 +187,8 @@ plug-ins/gimpressionist/sizemap.c
 plug-ins/gimpressionist/utils.c
 [type: gettext/glade]plug-ins/ui/plug-in-file-gif.ui
 [type: gettext/glade]plug-ins/ui/plug-in-file-png.ui
+[type: gettext/glade]plug-ins/ui/plug-in-file-tiff.ui
+[type: gettext/glade]plug-ins/ui/plug-in-metadata.ui
 plug-ins/gradient-flare/gradient-flare.c
 plug-ins/help-browser/dialog.c
 plug-ins/help-browser/help-browser.c

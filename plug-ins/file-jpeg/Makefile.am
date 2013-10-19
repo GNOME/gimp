@@ -22,11 +22,12 @@ AM_LDFLAGS = $(mwindows)
 libexecdir = $(gimpplugindir)/plug-ins
 
 AM_CPPFLAGS = \
-	-I$(top_srcdir)	\
-	$(GTK_CFLAGS)	\
-	$(EXIF_CFLAGS)	\
-	$(LCMS_CFLAGS)	\
-	$(GEGL_CFLAGS) \
+	-I$(top_srcdir)		\
+	$(GTK_CFLAGS)		\
+	$(EXIF_CFLAGS)		\
+	$(LCMS_CFLAGS)		\
+	$(GEGL_CFLAGS)		\
+	$(GEXIV2_CFLAGS)	\
 	-I$(includedir)
 
 libexec_PROGRAMS = file-jpeg
@@ -45,14 +46,6 @@ file_jpeg_SOURCES = \
 	jpeg-settings.c \
 	jpeg-settings.h
 
-if HAVE_LIBEXIF
-file_jpeg_SOURCES += \
-	jpeg-exif.c	\
-	jpeg-exif.h	\
-	gimpexif.c	\
-	gimpexif.h
-endif
-
 file_jpeg_LDADD = \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
@@ -65,14 +58,10 @@ file_jpeg_LDADD = \
 	$(LCMS_LIBS)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
+	$(GEXIV2_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_jpeg_RC)
-
-if HAVE_LIBEXIF
-file_jpeg_LDADD += \
-	$(EXIF_LIBS)
-endif
 
 noinst_PROGRAMS = jpegqual
 

@@ -101,6 +101,66 @@ gimp_image_get_thumbnail_data (gint32  image_ID,
 }
 
 /**
+ * gimp_image_get_metadata:
+ * @image_ID: The image.
+ *
+ * Returns the image's metadata.
+ *
+ * Returns exif/iptc/xmp metadata from the image.
+ *
+ * Returns: The exif/ptc/xmp metadata, or %NULL if there is none.
+ *
+ * Since: GIMP 2.10
+ **/
+GimpMetadata *
+gimp_image_get_metadata (gint32 image_ID)
+{
+  GimpMetadata *metadata = NULL;
+  gchar        *metadata_string;
+
+  metadata_string = _gimp_image_get_metadata (image_ID);
+  if (metadata_string)
+    {
+      metadata = gimp_metadata_deserialize (metadata_string);
+      g_free (metadata_string);
+    }
+
+  return metadata;
+}
+
+/**
+ * gimp_image_set_metadata:
+ * @image_ID: The image.
+ * @metadata: The exif/ptc/xmp metadata.
+ *
+ * Set the image's metadata.
+ *
+ * Sets exif/iptc/xmp metadata on the image, or deletes it if
+ * @metadata is %NULL.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.10
+ **/
+gboolean
+gimp_image_set_metadata (gint32        image_ID,
+                         GimpMetadata *metadata)
+{
+  gchar    *metadata_string = NULL;
+  gboolean  success;
+
+  if (metadata)
+    metadata_string = gimp_metadata_serialize (metadata);
+
+  success = _gimp_image_set_metadata (image_ID, metadata_string);
+
+  if (metadata_string)
+    g_free (metadata_string);
+
+  return success;
+}
+
+/**
  * gimp_image_get_cmap:
  * @image_ID:   The image.
  * @num_colors: Number of colors in the colormap array.

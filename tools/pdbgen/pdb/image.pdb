@@ -1625,6 +1625,61 @@ CODE
     );
 }
 
+sub image_get_metadata {
+    $blurb = "Returns the image's metadata.";
+    $help  = 'Returns exif/iptc/xmp metadata from the image.';
+
+    &std_pdb_misc('2013', '2.10');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' }
+    );
+
+    @outargs = (
+	{ name => 'metadata_string', type => 'string', wrap => 1,
+	  desc => 'The exif/ptc/xmp metadata as a string'}
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpMetadata *metadata = gimp_image_get_metadata (image);
+
+  if (metadata)
+    metadata_string = gimp_metadata_serialize (metadata);
+}
+CODE
+    );
+}
+
+sub image_set_metadata {
+    $blurb = "Set the image's metadata.";
+    $help  = 'Sets exif/iptc/xmp metadata on the image.';
+
+    &std_pdb_misc('2013', '2.10');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+	{ name => 'metadata_string', type => 'string', wrap => 1,
+	  desc => 'The exif/ptc/xmp metadata as a string' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpMetadata *metadata = gimp_metadata_deserialize (metadata_string);
+
+  gimp_image_set_metadata (image, metadata, TRUE);
+
+  if (metadata)
+    g_object_unref (metadata);
+}
+CODE
+    );
+}
+
 sub image_clean_all {
     $blurb = 'Set the image dirty count to 0.';
 
@@ -2988,6 +3043,7 @@ CODE
               "libgimpbase/gimpbase.h"
               "core/gimp.h"
               "core/gimpcontainer.h"
+              "core/gimpimage-metadata.h"
               "core/gimpprogress.h"
               "core/gimptempbuf.h"
               "core/gimpunit.h"
@@ -3029,6 +3085,7 @@ CODE
             image_flatten image_merge_visible_layers image_merge_down
             image_add_layer_mask image_remove_layer_mask
             image_get_colormap image_set_colormap
+            image_get_metadata image_set_metadata
             image_clean_all image_is_dirty
             image_thumbnail
             image_get_active_layer image_set_active_layer
@@ -3060,7 +3117,7 @@ CODE
 # image_add_layer_mask and image_remove_layer_mask.
 # If adding or removing functions, make sure the range below is
 # updated correctly!
-%exports = (app => [@procs], lib => [@procs[0..44,47..85]]);
+%exports = (app => [@procs], lib => [@procs[0..44,47..87]]);
 
 $desc = 'Image';
 $doc_title = 'gimpimage';

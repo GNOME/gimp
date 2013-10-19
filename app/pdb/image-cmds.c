@@ -42,6 +42,7 @@
 #include "core/gimpimage-duplicate.h"
 #include "core/gimpimage-flip.h"
 #include "core/gimpimage-merge.h"
+#include "core/gimpimage-metadata.h"
 #include "core/gimpimage-pick-color.h"
 #include "core/gimpimage-pick-layer.h"
 #include "core/gimpimage-resize.h"
@@ -1700,6 +1701,67 @@ image_set_colormap_invoker (GimpProcedure         *procedure,
   if (success)
     {
       gimp_image_set_colormap (image, colormap, num_bytes / 3, TRUE);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+image_get_metadata_invoker (GimpProcedure         *procedure,
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpImage *image;
+  gchar *metadata_string = NULL;
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+
+  if (success)
+    {
+      GimpMetadata *metadata = gimp_image_get_metadata (image);
+
+      if (metadata)
+        metadata_string = gimp_metadata_serialize (metadata);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_string (gimp_value_array_index (return_vals, 1), metadata_string);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+image_set_metadata_invoker (GimpProcedure         *procedure,
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  const gchar *metadata_string;
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  metadata_string = g_value_get_string (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      GimpMetadata *metadata = gimp_metadata_deserialize (metadata_string);
+
+      gimp_image_set_metadata (image, metadata, TRUE);
+
+      if (metadata)
+        g_object_unref (metadata);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -4550,6 +4612,66 @@ register_image_procs (GimpPDB *pdb)
                                                            "colormap",
                                                            "The new colormap values",
                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-get-metadata
+   */
+  procedure = gimp_procedure_new (image_get_metadata_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-get-metadata");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-get-metadata",
+                                     "Returns the image's metadata.",
+                                     "Returns exif/iptc/xmp metadata from the image.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("metadata-string",
+                                                           "metadata string",
+                                                           "The exif/ptc/xmp metadata as a string",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-set-metadata
+   */
+  procedure = gimp_procedure_new (image_set_metadata_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-set-metadata");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-set-metadata",
+                                     "Set the image's metadata.",
+                                     "Sets exif/iptc/xmp metadata on the image.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("metadata-string",
+                                                       "metadata string",
+                                                       "The exif/ptc/xmp metadata as a string",
+                                                       FALSE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

@@ -110,7 +110,8 @@ test_config_LDADD = \
 	$(PANGOCAIRO_LIBS)			\
 	$(GDK_PIXBUF_LIBS)			\
 	$(GEGL_LIBS)				\
-	$(GLIB_LIBS)
+	$(GIO_LIBS)				\
+	$(GEXIV2_LIBS)
 
 CLEANFILES = $(EXTRA_PROGRAMS) foorc
 

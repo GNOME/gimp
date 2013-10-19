@@ -11,6 +11,7 @@ libgimp/gimpfontselectbutton.c
 libgimp/gimpgradientmenu.c
 libgimp/gimpgradientselectbutton.c
 libgimp/gimpmenu.c
+libgimp/gimpmetadata.c
 libgimp/gimppalettemenu.c
 libgimp/gimppaletteselectbutton.c
 libgimp/gimppatternmenu.c
@@ -22,6 +23,7 @@ libgimp/gimpunitcache.c
 libgimpbase/gimpbaseenums.c
 libgimpbase/gimpcpuaccel.c
 libgimpbase/gimpmemsize.c
+libgimpbase/gimpmetadata.c
 libgimpbase/gimputils.c
 
 libgimpconfig/gimpcolorconfig.c

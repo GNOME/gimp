@@ -280,6 +280,13 @@ run (const gchar      *name,
 
                   if (image != -1)
                     {
+                      GFile *file = g_file_new_for_path (param[1].data.d_string);
+
+                      gimp_image_metadata_load (image, "image/tiff", file,
+                                                run_mode == GIMP_RUN_INTERACTIVE);
+
+                      g_object_unref (file);
+
                       *nreturn_vals = 2;
                       values[1].type         = GIMP_PDB_IMAGE;
                       values[1].data.d_image = image;

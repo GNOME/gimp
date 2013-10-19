@@ -1800,6 +1800,68 @@ _gimp_image_set_colormap (gint32        image_ID,
 }
 
 /**
+ * _gimp_image_get_metadata:
+ * @image_ID: The image.
+ *
+ * Returns the image's metadata.
+ *
+ * Returns exif/iptc/xmp metadata from the image.
+ *
+ * Returns: The exif/ptc/xmp metadata as a string.
+ **/
+gchar *
+_gimp_image_get_metadata (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *metadata_string = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-image-get-metadata",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    metadata_string = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return metadata_string;
+}
+
+/**
+ * _gimp_image_set_metadata:
+ * @image_ID: The image.
+ * @metadata_string: The exif/ptc/xmp metadata as a string.
+ *
+ * Set the image's metadata.
+ *
+ * Sets exif/iptc/xmp metadata on the image.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+_gimp_image_set_metadata (gint32       image_ID,
+                          const gchar *metadata_string)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-set-metadata",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, metadata_string,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_image_clean_all:
  * @image_ID: The image.
  *

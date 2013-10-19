@@ -24,10 +24,6 @@
 #include <jpeglib.h>
 #include <jerror.h>
 
-#ifdef HAVE_LIBEXIF
-#include <libexif/exif-data.h>
-#endif /* HAVE_LIBEXIF */
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -37,11 +33,6 @@
 #include "jpeg-settings.h"
 #include "jpeg-load.h"
 #include "jpeg-save.h"
-#ifdef HAVE_LIBEXIF
-#include "jpeg-exif.h"
-#include "gimpexif.h"
-#endif
-
 
 /* Declare local functions.
  */
@@ -65,10 +56,6 @@ gint             orig_quality;
 JpegSubsampling  orig_subsmp;
 gint             num_quant_tables;
 
-
-#ifdef HAVE_LIBEXIF
-ExifData        *exif_data = NULL;
-#endif
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -96,8 +83,6 @@ query (void)
     { GIMP_PDB_IMAGE,   "image",         "Output image" }
   };
 
-#ifdef HAVE_LIBEXIF
-
   static const GimpParamDef thumb_args[] =
   {
     { GIMP_PDB_STRING, "filename",     "The name of the file to load"  },
@@ -109,8 +94,6 @@ query (void)
     { GIMP_PDB_INT32,  "image-width",  "Width of full-sized image"     },
     { GIMP_PDB_INT32,  "image-height", "Height of full-sized image"    }
   };
-
-#endif /* HAVE_LIBEXIF */
 
   static const GimpParamDef save_args[] =
   {
@@ -149,8 +132,6 @@ query (void)
                                     "",
                                     "6,string,JFIF,6,string,Exif");
 
-#ifdef HAVE_LIBEXIF
-
   gimp_install_procedure (LOAD_THUMB_PROC,
                           "Loads a thumbnail from a JPEG image",
                           "Loads a thumbnail from a JPEG image (only if it exists)",
@@ -165,8 +146,6 @@ query (void)
                           thumb_args, thumb_return_vals);
 
   gimp_register_thumbnail_loader (LOAD_PROC, LOAD_THUMB_PROC);
-
-#endif /* HAVE_LIBEXIF */
 
   gimp_install_procedure (SAVE_PROC,
                           "saves files in the JPEG file format",
@@ -237,6 +216,13 @@ run (const gchar      *name,
 
       if (image_ID != -1)
         {
+          GFile *file = g_file_new_for_path (param[1].data.d_string);
+
+          gimp_image_metadata_load (image_ID, "image/jpeg", file,
+                                    load_interactive);
+
+          g_object_unref (file);
+
           *nreturn_vals = 2;
           values[1].type         = GIMP_PDB_IMAGE;
           values[1].data.d_image = image_ID;
@@ -247,9 +233,6 @@ run (const gchar      *name,
         }
 
     }
-
-#ifdef HAVE_LIBEXIF
-
   else if (strcmp (name, LOAD_THUMB_PROC) == 0)
     {
       if (nparams < 2)
@@ -258,13 +241,15 @@ run (const gchar      *name,
         }
       else
         {
-          const gchar  *filename = param[0].data.d_string;
+          GFile        *file     = g_file_new_for_path (param[0].data.d_string);
           gint          width    = 0;
           gint          height   = 0;
           GimpImageType type     = -1;
 
-          image_ID = load_thumbnail_image (filename, &width, &height, &type,
+          image_ID = load_thumbnail_image (file, &width, &height, &type,
                                            &error);
+
+          g_object_unref (file);
 
           if (image_ID != -1)
             {
@@ -286,9 +271,6 @@ run (const gchar      *name,
             }
         }
     }
-
-#endif /* HAVE_LIBEXIF */
-
   else if (strcmp (name, SAVE_PROC) == 0)
     {
       image_ID = orig_image_ID = param[1].data.d_int32;
@@ -348,14 +330,7 @@ run (const gchar      *name,
           gimp_parasite_free (parasite);
         }
 
-#ifdef HAVE_LIBEXIF
-
-      exif_data = gimp_metadata_generate_exif (orig_image_ID);
-      if (exif_data)
-        jpeg_setup_exif_for_save (exif_data, orig_image_ID);
-
-#endif /* HAVE_LIBEXIF */
-
+      /* load defaults from gimp parasite */
       load_defaults ();
 
       switch (run_mode)
@@ -427,6 +402,7 @@ run (const gchar      *name,
               jsvals.save_exif        = save_vals->save_exif;
               jsvals.save_thumbnail   = save_vals->save_thumbnail;
               jsvals.save_xmp         = save_vals->save_xmp;
+              jsvals.save_iptc        = save_vals->save_iptc;
               jsvals.use_orig_quality = save_vals->use_orig_quality;
 
               gimp_parasite_free (parasite);
@@ -511,9 +487,12 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
+          GimpMetadata *metadata;
+
           /* pw - now we need to change the defaults to be whatever
            * was used to save this image.  Dump the old parasites
-           * and add new ones. */
+           * and add new ones.
+           */
 
           gimp_image_detach_parasite (orig_image_ID, "gimp-comment");
           if (image_comment && strlen (image_comment))
@@ -526,11 +505,36 @@ run (const gchar      *name,
               gimp_parasite_free (parasite);
             }
 
-          gimp_image_detach_parasite (orig_image_ID, "jpeg-save-options");
           parasite = gimp_parasite_new ("jpeg-save-options",
                                         0, sizeof (jsvals), &jsvals);
           gimp_image_attach_parasite (orig_image_ID, parasite);
           gimp_parasite_free (parasite);
+
+          /* write metadata */
+          metadata = gimp_image_metadata_save_prepare (image_ID,
+                                                       "image/jpeg");
+
+          if (metadata)
+            {
+              GFile                 *file;
+              GimpMetadataSaveFlags  flags = 0;
+
+              gimp_metadata_set_bits_per_sample (metadata, 8);
+
+              if (jsvals.save_exif)      flags |= GIMP_METADATA_SAVE_EXIF;
+              if (jsvals.save_xmp)       flags |= GIMP_METADATA_SAVE_XMP;
+              if (jsvals.save_iptc)      flags |= GIMP_METADATA_SAVE_IPTC;
+              if (jsvals.save_thumbnail) flags |= GIMP_METADATA_SAVE_THUMBNAIL;
+
+              file = g_file_new_for_path (param[3].data.d_string);
+              gimp_image_metadata_save_finish (image_ID,
+                                               "image/jpeg",
+                                               metadata, file, flags,
+                                               NULL);
+              g_object_unref (file);
+
+              g_object_unref (metadata);
+            }
         }
     }
   else

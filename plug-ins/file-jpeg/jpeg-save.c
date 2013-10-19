@@ -33,10 +33,6 @@
 #include <jpeglib.h>
 #include <jerror.h>
 
-#ifdef HAVE_LIBEXIF
-#include <libexif/exif-data.h>
-#endif /* HAVE_LIBEXIF */
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -47,10 +43,6 @@
 #include "jpeg-load.h"
 #include "jpeg-save.h"
 #include "jpeg-settings.h"
-#ifdef HAVE_LIBEXIF
-#include "jpeg-exif.h"
-#endif
-
 
 #define SCALE_WIDTH         125
 
@@ -69,6 +61,7 @@
 #define DEFAULT_EXIF             TRUE
 #define DEFAULT_THUMBNAIL        FALSE
 #define DEFAULT_XMP              TRUE
+#define DEFAULT_IPTC             TRUE
 #define DEFAULT_USE_ORIG_QUALITY FALSE
 
 #define JPEG_DEFAULTS_PARASITE  "jpeg-save-defaults"
@@ -111,6 +104,7 @@ typedef struct
   GtkWidget     *save_exif;
   GtkWidget     *save_thumbnail;
   GtkWidget     *save_xmp;
+  GtkWidget     *save_iptc;
   GtkWidget     *use_orig_quality;      /*quant tables toggle*/
 } JpegSaveGui;
 
@@ -126,15 +120,6 @@ static void  use_orig_qual_changed  (GtkWidget     *toggle,
                                      GtkObject     *scale_entry);
 static void  use_orig_qual_changed2 (GtkWidget     *toggle,
                                      GtkWidget     *combo);
-
-#ifdef HAVE_LIBEXIF
-
-static gint  create_thumbnail    (gint32         image_ID,
-                                  gint32         drawable_ID,
-                                  gdouble        quality,
-                                  guchar       **thumbnail_buffer);
-
-#endif /* HAVE_LIBEXIF */
 
 
 static GtkWidget *restart_markers_scale = NULL;
@@ -527,82 +512,6 @@ save_image (const gchar  *filename,
    */
   jpeg_start_compress (&cinfo, TRUE);
 
-#ifdef HAVE_LIBEXIF
-
-  /* Create the thumbnail JPEG in a buffer */
-  if ((jsvals.save_exif && exif_data) || jsvals.save_thumbnail)
-    {
-      ExifData *exif_data_tmp           = NULL;
-      guchar   *exif_buf                = NULL;
-      guchar   *thumbnail_buffer        = NULL;
-      gint      thumbnail_buffer_length = 0;
-      guint     exif_buf_len;
-      gdouble   quality                 = MIN (75.0, jsvals.quality);
-
-      if ( (! jsvals.save_exif) || (! exif_data))
-        exif_data_tmp = exif_data_new ();
-      else
-        exif_data_tmp = exif_data;
-
-      /* avoid saving markers longer than 65533, gradually decrease
-       * quality in steps of 5 until exif_buf_len is lower than that.
-       */
-      for (exif_buf_len = 65535;
-           exif_buf_len > 65533 && quality > 0.0;
-           quality -= 5.0)
-        {
-          if (jsvals.save_thumbnail)
-            thumbnail_buffer_length = create_thumbnail (image_ID, drawable_ID,
-                                                        quality,
-                                                        &thumbnail_buffer);
-
-          exif_data_tmp->data = thumbnail_buffer;
-          exif_data_tmp->size = thumbnail_buffer_length;
-
-          if (exif_buf)
-            free (exif_buf);
-
-          exif_data_save_data (exif_data_tmp, &exif_buf, &exif_buf_len);
-        }
-
-      if (exif_buf_len > 65533)
-        {
-          /* last attempt with quality 0.0 */
-          if (jsvals.save_thumbnail)
-            thumbnail_buffer_length = create_thumbnail (image_ID, drawable_ID,
-                                                        0.0,
-                                                        &thumbnail_buffer);
-          exif_data_tmp->data = thumbnail_buffer;
-          exif_data_tmp->size = thumbnail_buffer_length;
-
-          if (exif_buf)
-            free (exif_buf);
-
-          exif_data_save_data (exif_data_tmp, &exif_buf, &exif_buf_len);
-        }
-
-      if (exif_buf_len > 65533)
-        {
-          /* still no go? save without thumbnail */
-          exif_data_tmp->data = NULL;
-          exif_data_tmp->size = 0;
-
-          if (exif_buf)
-            free (exif_buf);
-
-          exif_data_save_data (exif_data_tmp, &exif_buf, &exif_buf_len);
-        }
-
-#ifdef GIMP_UNSTABLE
-      g_print ("jpeg-save: saving EXIF block (%d bytes)\n", exif_buf_len);
-#endif
-      jpeg_write_marker (&cinfo, JPEG_APP0 + 1, exif_buf, exif_buf_len);
-
-      if (exif_buf)
-        free (exif_buf);
-    }
-#endif /* HAVE_LIBEXIF */
-
   /* Step 4.1: Write the comment out - pw */
   if (image_comment && *image_comment)
     {
@@ -614,36 +523,7 @@ save_image (const gchar  *filename,
                          (guchar *) image_comment, strlen (image_comment));
     }
 
-  /* Step 4.2: Write the XMP packet in an APP1 marker */
-  if (jsvals.save_xmp)
-    {
-      /* FIXME: temporary hack until the right thing is done by a library */
-      parasite = gimp_image_get_parasite (orig_image_ID, "gimp-metadata");
-      if (parasite)
-        {
-          const gchar *xmp_data;
-          glong        xmp_data_size;
-          guchar      *app_block;
-
-          xmp_data = ((const gchar *) gimp_parasite_data (parasite)) + 10;
-          xmp_data_size = gimp_parasite_data_size (parasite) - 10;
-#ifdef GIMP_UNSTABLE
-          g_print ("jpeg-save: saving XMP packet (%d bytes)\n",
-                   (int) xmp_data_size);
-#endif
-          app_block = g_malloc (sizeof (JPEG_APP_HEADER_XMP) + xmp_data_size);
-          memcpy (app_block, JPEG_APP_HEADER_XMP,
-                  sizeof (JPEG_APP_HEADER_XMP));
-          memcpy (app_block + sizeof (JPEG_APP_HEADER_XMP), xmp_data,
-                  xmp_data_size);
-          jpeg_write_marker (&cinfo, JPEG_APP0 + 1, app_block,
-                             sizeof (JPEG_APP_HEADER_XMP) + xmp_data_size);
-          g_free (app_block);
-          gimp_parasite_free (parasite);
-        }
-    }
-
-  /* Step 4.3: store the color profile if there is one */
+  /* Step 4.2: store the color profile if there is one */
   parasite = gimp_image_get_parasite (orig_image_ID, "icc-profile");
   if (parasite)
     {
@@ -913,7 +793,7 @@ save_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (4, 7, FALSE);
+  table = gtk_table_new (4, 8, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_table_set_col_spacing (GTK_TABLE (table), 1, 12);
@@ -1000,9 +880,9 @@ save_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 jsvals.progressive);
 
-#ifdef HAVE_LIBEXIF
   pg.save_exif = toggle =
     gtk_check_button_new_with_mnemonic (_("Save _EXIF data"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.save_exif);
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 2, 3, GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
 
@@ -1013,13 +893,11 @@ save_dialog (void)
                     G_CALLBACK (make_preview),
                     NULL);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                jsvals.save_exif && exif_data);
-
-  gtk_widget_set_sensitive (toggle, exif_data != NULL);
+  gtk_widget_set_sensitive (toggle, TRUE);
 
   pg.save_thumbnail = toggle =
     gtk_check_button_new_with_mnemonic (_("Save _thumbnail"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.save_thumbnail);
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 3, 4, GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
 
@@ -1030,13 +908,10 @@ save_dialog (void)
                     G_CALLBACK (make_preview),
                     NULL);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                jsvals.save_thumbnail);
-#endif /* HAVE_LIBEXIF */
-
   /* XMP metadata */
   pg.save_xmp = toggle =
     gtk_check_button_new_with_mnemonic (_("Save _XMP data"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.save_xmp);
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 4, 5, GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
 
@@ -1047,16 +922,29 @@ save_dialog (void)
                     G_CALLBACK (make_preview),
                     NULL);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                jsvals.save_xmp && has_metadata);
+  gtk_widget_set_sensitive (toggle, TRUE);
 
-  gtk_widget_set_sensitive (toggle, has_metadata);
+  /* IPTC metadata */
+  pg.save_iptc = toggle =
+    gtk_check_button_new_with_mnemonic (_("Save _IPTC data"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.save_iptc);
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 5, 6, GTK_FILL, 0, 0, 0);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &jsvals.save_iptc);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (make_preview),
+                    NULL);
+
+  gtk_widget_set_sensitive (toggle, TRUE);
 
   /* custom quantization tables - now used also for original quality */
   pg.use_orig_quality = toggle =
     gtk_check_button_new_with_mnemonic (_("_Use quality settings from original "
                                           "image"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 4, 5, 6, GTK_FILL, 0, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 4, 6, 7, GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
 
   gimp_help_set_help_data (toggle,
@@ -1266,12 +1154,8 @@ load_defaults (void)
   jsvals.save_exif        = DEFAULT_EXIF;
   jsvals.save_thumbnail   = DEFAULT_THUMBNAIL;
   jsvals.save_xmp         = DEFAULT_XMP;
+  jsvals.save_iptc        = DEFAULT_IPTC;
   jsvals.use_orig_quality = DEFAULT_USE_ORIG_QUALITY;
-
-#ifdef HAVE_LIBEXIF
-  if (exif_data && (exif_data->data))
-    jsvals.save_thumbnail = TRUE;
-#endif /* HAVE_LIBEXIF */
 
   parasite = gimp_get_parasite (JPEG_DEFAULTS_PARASITE);
 
@@ -1283,7 +1167,7 @@ load_defaults (void)
 
   gimp_parasite_free (parasite);
 
-  num_fields = sscanf (def_str, "%lf %lf %d %d %d %d %d %d %d %d %d %d %d",
+  num_fields = sscanf (def_str, "%lf %lf %d %d %d %d %d %d %d %d %d %d %d %d",
                        &tmpvals.quality,
                        &tmpvals.smoothing,
                        &tmpvals.optimize,
@@ -1296,12 +1180,15 @@ load_defaults (void)
                        &tmpvals.save_exif,
                        &tmpvals.save_thumbnail,
                        &tmpvals.save_xmp,
-                       &tmpvals.use_orig_quality);
+                       &tmpvals.use_orig_quality,
+                       &tmpvals.save_iptc);
 
   tmpvals.subsmp = subsampling;
 
-  if (num_fields == 13)
-    memcpy (&jsvals, &tmpvals, sizeof (tmpvals));
+  if (num_fields == 13 || num_fields == 14)
+    {
+      memcpy (&jsvals, &tmpvals, sizeof (tmpvals));
+    }
 
   g_free (def_str);
 }
@@ -1312,7 +1199,7 @@ save_defaults (void)
   GimpParasite *parasite;
   gchar        *def_str;
 
-  def_str = g_strdup_printf ("%lf %lf %d %d %d %d %d %d %d %d %d %d %d",
+  def_str = g_strdup_printf ("%lf %lf %d %d %d %d %d %d %d %d %d %d %d %d",
                              jsvals.quality,
                              jsvals.smoothing,
                              jsvals.optimize,
@@ -1325,7 +1212,8 @@ save_defaults (void)
                              jsvals.save_exif,
                              jsvals.save_thumbnail,
                              jsvals.save_xmp,
-                             jsvals.use_orig_quality);
+                             jsvals.use_orig_quality,
+                             jsvals.save_iptc);
   parasite = gimp_parasite_new (JPEG_DEFAULTS_PARASITE,
                                 GIMP_PARASITE_PERSISTENT,
                                 strlen (def_str), def_str);
@@ -1350,11 +1238,10 @@ load_gui_defaults (JpegSaveGui *pg)
   SET_ACTIVE_BTTN (progressive);
   SET_ACTIVE_BTTN (use_orig_quality);
   SET_ACTIVE_BTTN (preview);
-#ifdef HAVE_LIBEXIF
   SET_ACTIVE_BTTN (save_exif);
   SET_ACTIVE_BTTN (save_thumbnail);
-#endif
   SET_ACTIVE_BTTN (save_xmp);
+  SET_ACTIVE_BTTN (save_iptc);
 
 #undef SET_ACTIVE_BTTN
 
@@ -1447,218 +1334,3 @@ use_orig_qual_changed2 (GtkWidget *toggle,
       gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), orig_subsmp);
     }
 }
-
-#ifdef HAVE_LIBEXIF
-
-static guchar *tbuffer = NULL;
-static guchar *tbuffer2 = NULL;
-
-static gint tbuffer_count = 0;
-
-typedef struct
-{
-  struct jpeg_destination_mgr  pub;   /* public fields */
-  guchar                      *buffer;
-  gint                         size;
-} my_destination_mgr;
-
-typedef my_destination_mgr *my_dest_ptr;
-
-static void
-init_destination (j_compress_ptr cinfo)
-{
-}
-
-static gboolean
-empty_output_buffer (j_compress_ptr cinfo)
-{
-  my_dest_ptr dest = (my_dest_ptr) cinfo->dest;
-
-  tbuffer_count = tbuffer_count + 16384;
-  tbuffer = g_renew (guchar, tbuffer, tbuffer_count);
-  g_memmove (tbuffer + tbuffer_count - 16384, tbuffer2, 16384);
-
-  dest->pub.next_output_byte = tbuffer2;
-  dest->pub.free_in_buffer   = 16384;
-
-  return TRUE;
-}
-
-static void
-term_destination (j_compress_ptr cinfo)
-{
-  my_dest_ptr dest = (my_dest_ptr) cinfo->dest;
-
-  tbuffer_count = (tbuffer_count + 16384) - (dest->pub.free_in_buffer);
-
-  tbuffer = g_renew (guchar, tbuffer, tbuffer_count);
-  g_memmove (tbuffer + tbuffer_count - (16384 - dest->pub.free_in_buffer),
-             tbuffer2, 16384 - dest->pub.free_in_buffer);
-}
-
-static gint
-create_thumbnail (gint32    image_ID,
-                  gint32    drawable_ID,
-                  gdouble   quality,
-                  guchar  **thumbnail_buffer)
-{
-  int                         width, height;
-  gint                        req_width, req_height, bpp, rbpp;
-  guchar                     *thumbnail_data = NULL;
-  struct jpeg_compress_struct cinfo;
-  struct my_error_mgr         jerr;
-  my_dest_ptr                 dest;
-  JSAMPROW                    scanline[1];
-  guchar                     *buf = NULL;
-  gint                        i;
-
-  {
-    GeglBuffer *buffer = gimp_drawable_get_buffer (drawable_ID);
-    width  = gegl_buffer_get_width (buffer);
-    height = gegl_buffer_get_height (buffer);
-    g_object_unref (buffer);
-  }
-
-  req_width  = 196;
-  req_height = 196;
-
-  if (MIN (width, height) < 196)
-    req_width = req_height = MIN(width, height);
-
-  thumbnail_data = gimp_drawable_get_thumbnail_data (drawable_ID,
-                                                     &req_width, &req_height,
-                                                     &bpp);
-
-  if (! thumbnail_data)
-    return 0;
-
-  rbpp = bpp;
-
-  if ((bpp == 2) || (bpp == 4))
-    {
-      rbpp = bpp - 1;
-    }
-
-  buf = g_new (guchar, req_width * bpp);
-  tbuffer2 = g_new (guchar, 16384);
-
-  tbuffer_count = 0;
-
-  cinfo.err = jpeg_std_error (&jerr.pub);
-  jerr.pub.error_exit = my_error_exit;
-
-  /* Establish the setjmp return context for my_error_exit to use. */
-  if (setjmp (jerr.setjmp_buffer))
-    {
-      /* If we get here, the JPEG code has signaled an error.
-       * We need to clean up the JPEG object, free memory, and return.
-       */
-      jpeg_destroy_compress (&cinfo);
-
-      if (thumbnail_data)
-        {
-          g_free (thumbnail_data);
-          thumbnail_data = NULL;
-        }
-
-      if (buf)
-        {
-          g_free (buf);
-          buf = NULL;
-        }
-
-      if (tbuffer2)
-        {
-          g_free (tbuffer2);
-          tbuffer2 = NULL;
-        }
-
-      return 0;
-    }
-
-  /* Now we can initialize the JPEG compression object. */
-  jpeg_create_compress (&cinfo);
-
-  if (cinfo.dest == NULL)
-    cinfo.dest = (struct jpeg_destination_mgr *)
-      (*cinfo.mem->alloc_small) ((j_common_ptr) &cinfo, JPOOL_PERMANENT,
-                                 sizeof(my_destination_mgr));
-
-  dest = (my_dest_ptr) cinfo.dest;
-  dest->pub.init_destination    = init_destination;
-  dest->pub.empty_output_buffer = empty_output_buffer;
-  dest->pub.term_destination    = term_destination;
-
-  dest->pub.next_output_byte = tbuffer2;
-  dest->pub.free_in_buffer   = 16384;
-
-  dest->buffer = tbuffer2;
-  dest->size   = 16384;
-
-  cinfo.input_components = rbpp;
-  cinfo.image_width      = req_width;
-  cinfo.image_height     = req_height;
-
-  /* colorspace of input image */
-  cinfo.in_color_space = (rbpp == 3) ? JCS_RGB : JCS_GRAYSCALE;
-
-  /* Now use the library's routine to set default compression parameters.
-   * (You must set at least cinfo.in_color_space before calling this,
-   * since the defaults depend on the source color space.)
-   */
-  jpeg_set_defaults (&cinfo);
-
-  jpeg_set_quality (&cinfo, (gint) (quality + 0.5), jsvals.baseline);
-
-  /* Step 4: Start compressor */
-
-  /* TRUE ensures that we will write a complete interchange-JPEG file.
-   * Pass TRUE unless you are very sure of what you're doing.
-   */
-  jpeg_start_compress (&cinfo, TRUE);
-
-  while (cinfo.next_scanline < (unsigned int) req_height)
-    {
-      for (i = 0; i < req_width; i++)
-        {
-          buf[(i * rbpp) + 0] = thumbnail_data[(cinfo.next_scanline * req_width * bpp) + (i * bpp) + 0];
-
-          if (rbpp == 3)
-            {
-              buf[(i * rbpp) + 1] = thumbnail_data[(cinfo.next_scanline * req_width * bpp) + (i * bpp) + 1];
-              buf[(i * rbpp) + 2] = thumbnail_data[(cinfo.next_scanline * req_width * bpp) + (i * bpp) + 2];
-            }
-        }
-
-      scanline[0] = buf;
-      jpeg_write_scanlines (&cinfo, scanline, 1);
-  }
-
-  /* Step 6: Finish compression */
-  jpeg_finish_compress (&cinfo);
-
-  /* Step 7: release JPEG compression object */
-
-  /* This is an important step since it will release a good deal of memory. */
-  jpeg_destroy_compress (&cinfo);
-
-  /* And we're done! */
-
-  if (thumbnail_data)
-    {
-      g_free (thumbnail_data);
-      thumbnail_data = NULL;
-    }
-
-  if (buf)
-    {
-      g_free (buf);
-      buf = NULL;
-    }
-
-  *thumbnail_buffer = tbuffer;
-
-  return tbuffer_count;
-}
-
-#endif /* HAVE_LIBEXIF */

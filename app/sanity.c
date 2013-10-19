@@ -22,6 +22,7 @@
 #include <pango/pango.h>
 #include <pango/pangoft2.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gexiv2/gexiv2.h>
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -38,6 +39,7 @@ static gchar * sanity_check_pango             (void);
 static gchar * sanity_check_fontconfig        (void);
 static gchar * sanity_check_freetype          (void);
 static gchar * sanity_check_gdk_pixbuf        (void);
+static gchar * sanity_check_gexiv2            (void);
 static gchar * sanity_check_babl              (void);
 static gchar * sanity_check_gegl              (void);
 static gchar * sanity_check_gegl_ops          (void);
@@ -68,6 +70,9 @@ sanity_check (void)
 
   if (! abort_message)
     abort_message = sanity_check_gdk_pixbuf ();
+
+  if (! abort_message)
+    abort_message = sanity_check_gexiv2 ();
 
   if (! abort_message)
     abort_message = sanity_check_babl ();
@@ -342,6 +347,46 @@ sanity_check_gdk_pixbuf (void)
 #undef GDK_PIXBUF_REQUIRED_MAJOR
 #undef GDK_PIXBUF_REQUIRED_MINOR
 #undef GDK_PIXBUF_REQUIRED_MICRO
+
+  return NULL;
+}
+
+static gchar *
+sanity_check_gexiv2 (void)
+{
+#ifdef GEXIV2_MAJOR_VERSION
+
+#define GEXIV2_REQUIRED_MAJOR 0
+#define GEXIV2_REQUIRED_MINOR 7
+#define GEXIV2_REQUIRED_MICRO 0
+
+  gint gexiv2_version = gexiv2_get_version ();
+
+  if (gexiv2_version < (GEXIV2_REQUIRED_MAJOR * 100 * 100 +
+                        GEXIV2_REQUIRED_MINOR * 100 +
+                        GEXIV2_REQUIRED_MICRO))
+    {
+      const gint gexiv2_major_version = gexiv2_version / 100 / 100;
+      const gint gexiv2_minor_version = gexiv2_version / 100 % 100;
+      const gint gexiv2_micro_version = gexiv2_version % 100;
+
+      return g_strdup_printf
+        ("gexiv2 version too old!\n\n"
+         "GIMP requires gexiv2 version %d.%d.%d or later.\n"
+         "Installed gexiv2 version is %d.%d.%d.\n\n"
+         "Somehow you or your software packager managed\n"
+         "to install GIMP with an older gexiv2 version.\n\n"
+         "Please upgrade to gexiv2 version %d.%d.%d or later.",
+         GEXIV2_REQUIRED_MAJOR, GEXIV2_REQUIRED_MINOR, GEXIV2_REQUIRED_MICRO,
+         gexiv2_major_version, gexiv2_minor_version, gexiv2_micro_version,
+         GEXIV2_REQUIRED_MAJOR, GEXIV2_REQUIRED_MINOR, GEXIV2_REQUIRED_MICRO);
+    }
+
+#undef GEXIV2_REQUIRED_MAJOR
+#undef GEXIV2_REQUIRED_MINOR
+#undef GEXIV2_REQUIRED_MICRO
+
+#endif
 
   return NULL;
 }

@@ -46,7 +46,8 @@
 #include <jasper/jasper.h>
 
 
-#define LOAD_PROC "file-jp2-load"
+#define LOAD_PROC      "file-jp2-load"
+#define PLUG_IN_BINARY "file-jp2-load"
 
 
 static void     query             (void);
@@ -120,9 +121,12 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam   values[2];
+  GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint               image_ID;
   GError            *error = NULL;
+
+  run_mode = param[0].data.d_int32;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
@@ -135,10 +139,31 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
+      gboolean interactive;
+
+      switch (run_mode)
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_ui_init (PLUG_IN_BINARY, FALSE);
+          interactive = TRUE;
+          break;
+        default:
+          interactive = FALSE;
+          break;
+        }
+
       image_ID = load_image (param[1].data.d_string, &error);
 
       if (image_ID != -1)
         {
+          GFile *file = g_file_new_for_path (param[1].data.d_string);
+
+          gimp_image_metadata_load (image_ID, "image/jp2", file,
+                                    interactive);
+
+          g_object_unref (file);
+
           *nreturn_vals = 2;
           values[1].type         = GIMP_PDB_IMAGE;
           values[1].data.d_image = image_ID;

@@ -50,10 +50,6 @@
 
 #include <jpeglib.h>
 
-#ifdef HAVE_LIBEXIF
-#include <libexif/exif-data.h>
-#endif /* HAVE_LIBEXIF */
-
 #include <libgimp/gimp.h>
 
 #include "libgimp/stdplugins-intl.h"

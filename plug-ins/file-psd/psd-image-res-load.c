@@ -94,9 +94,6 @@
 #include <jpeglib.h>
 #include <jerror.h>
 
-#ifdef HAVE_LIBEXIF
-#include <libexif/exif-data.h>
-#endif /* HAVE_LIBEXIF */
 #ifdef HAVE_IPTCDATA
 #include <libiptcdata/iptc-data.h>
 #endif /* HAVE_IPTCDATA */
@@ -192,11 +189,6 @@ static gint     load_resource_1053     (const PSDimageres     *res_a,
                                         GError               **error);
 
 static gint     load_resource_1058     (const PSDimageres     *res_a,
-                                        const gint32           image_id,
-                                        FILE                  *f,
-                                        GError               **error);
-
-static gint     load_resource_1060     (const PSDimageres     *res_a,
                                         const gint32           image_id,
                                         FILE                  *f,
                                         GError               **error);
@@ -353,7 +345,6 @@ load_image_resource (PSDimageres   *res_a,
             break;
 
           case PSD_XMP_DATA:
-            load_resource_1060 (res_a, image_id, f, error);
             break;
 
           default:
@@ -1209,21 +1200,7 @@ load_resource_1058 (const PSDimageres  *res_a,
                     FILE               *f,
                     GError            **error)
 {
-  /* Load EXIF data block */
-
-#ifdef HAVE_LIBEXIF
-  ExifData     *exif_data;
-  ExifEntry    *exif_entry;
-  guchar       *exif_buf;
-  guchar       *tmp_data;
-  guint         exif_buf_len;
-  gint16        jpeg_len;
-  gint16        jpeg_fill = 0;
-  GimpParam    *return_vals;
-  gint          nreturn_vals;
-#else
   gchar        *name;
-#endif /* HAVE_LIBEXIF */
 
   GimpParasite *parasite;
   gchar        *res_data;
@@ -1238,79 +1215,6 @@ load_resource_1058 (const PSDimageres  *res_a,
       return -1;
     }
 
-#ifdef HAVE_LIBEXIF
-  /* Add JPEG header & trailer to the TIFF Exif data held in PSD
-     resource to allow us to use libexif to serialize the data
-     in the same manner as the JPEG load.
-  */
-  jpeg_len = res_a->data_len + 8;
-  tmp_data = g_malloc (res_a->data_len + 12);
-  /* SOI & APP1 markers */
-  memcpy (tmp_data, "\xFF\xD8\xFF\xE1", 4);
-  /* APP1 block len */
-  memcpy (tmp_data + 4, &jpeg_len, 2);
-  /* Exif marker */
-  memcpy (tmp_data + 6, "Exif", 4);
-  /* Filler */
-  memcpy (tmp_data + 10, &jpeg_fill, 2);
-  /* Exif data */
-  memcpy (tmp_data + 12, res_data, res_a->data_len);
-
-  /* Create Exif data structure */
-  exif_data = exif_data_new_from_data (tmp_data, res_a->data_len + 12);
-  g_free (tmp_data);
-  IFDBG (3) exif_data_dump (exif_data);
-
-  /* Check for XMP data block in Exif data - PS7 */
-  if ((exif_entry = exif_content_get_entry (exif_data->ifd[EXIF_IFD_0],
-                                            EXIF_TAG_XML_PACKET)))
-    {
-      IFDBG(3) g_debug ("Processing Exif XMP data block");
-      /*Create NULL terminated EXIF data block */
-      tmp_data = g_malloc (exif_entry->size + 1);
-      memcpy (tmp_data, exif_entry->data, exif_entry->size);
-      tmp_data[exif_entry->size] = 0;
-      /* Merge with existing XMP data block */
-      return_vals = gimp_run_procedure (DECODE_XMP_PROC,
-                                        &nreturn_vals,
-                                        GIMP_PDB_IMAGE,  image_id,
-                                        GIMP_PDB_STRING, tmp_data,
-                                        GIMP_PDB_END);
-      g_free (tmp_data);
-      gimp_destroy_params (return_vals, nreturn_vals);
-      IFDBG(3) g_debug ("Deleting XMP block from Exif data");
-      /* Delete XMP data from Exif block */
-      exif_content_remove_entry (exif_data->ifd[EXIF_IFD_0],
-                                 exif_entry);
-    }
-
-  /* Check for Photoshp Image Resource data block in Exif data - PS7 */
-  if ((exif_entry = exif_content_get_entry (exif_data->ifd[EXIF_IFD_0],
-                                            EXIF_TAG_IMAGE_RESOURCES)))
-    {
-      IFDBG(3) g_debug ("Deleting PS Image Resource block from Exif data");
-      /* Delete PS Image Resource data from Exif block */
-      exif_content_remove_entry (exif_data->ifd[EXIF_IFD_0],
-                                 exif_entry);
-    }
-
-  IFDBG (3) exif_data_dump (exif_data);
-  /* Store resource data as a GIMP Exif parasite */
-  IFDBG (2) g_debug ("Processing exif data as GIMP Exif parasite");
-  /* Serialize exif data */
-  exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
-  if (exif_buf_len > EXIF_HEADER_SIZE)
-    {
-      parasite = gimp_parasite_new (GIMP_PARASITE_EXIF,
-                                    GIMP_PARASITE_PERSISTENT,
-                                    exif_buf_len, exif_buf);
-      gimp_image_attach_parasite (image_id, parasite);
-      gimp_parasite_free (parasite);
-    }
-  exif_data_unref (exif_data);
-  g_free (exif_buf);
-
-#else
   /* Store resource data as a standard psd parasite */
   IFDBG (2) g_debug ("Processing exif data as psd parasite");
   name = g_strdup_printf ("psd-image-resource-%.4s-%.4x",
@@ -1322,42 +1226,7 @@ load_resource_1058 (const PSDimageres  *res_a,
   gimp_parasite_free (parasite);
   g_free (name);
 
-#endif /* HAVE_LIBEXIF */
-
   g_free (res_data);
-  return 0;
-}
-
-static gint
-load_resource_1060 (const PSDimageres  *res_a,
-                    const gint32        image_id,
-                    FILE               *f,
-                    GError            **error)
-{
-  /* Load XMP Metadata block */
-  GimpParam    *return_vals;
-  gint          nreturn_vals;
-  gchar        *res_data;
-
-  IFDBG(2) g_debug ("Process image resource block: 1060: XMP Data");
-
-  res_data = g_malloc (res_a->data_len + 1);
-  if (fread (res_data, res_a->data_len, 1, f) < 1)
-    {
-      psd_set_error (feof (f), errno, error);
-      g_free (res_data);
-      return -1;
-    }
-  /* Null terminate metadata block for decode procedure */
-  res_data[res_a->data_len] = 0;
-
-  return_vals = gimp_run_procedure (DECODE_XMP_PROC,
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE,  image_id,
-                                    GIMP_PDB_STRING, res_data,
-                                    GIMP_PDB_END);
-  g_free (res_data);
-  gimp_destroy_params (return_vals, nreturn_vals);
   return 0;
 }
 

@@ -88,6 +88,10 @@ typedef struct
   gboolean  comment;
   gboolean  save_transp_pixels;
   gint      compression_level;
+  gboolean  save_exif;
+  gboolean  save_xmp;
+  gboolean  save_iptc;
+  gboolean  save_thumbnail;
 }
 PngSaveVals;
 
@@ -104,6 +108,10 @@ typedef struct
   GtkWidget *comment;
   GtkWidget *save_transp_pixels;
   GtkAdjustment *compression_level;
+  GtkWidget *save_exif;
+  GtkWidget *save_xmp;
+  GtkWidget *save_iptc;
+  GtkWidget *save_thumbnail;
 }
 PngSaveGui;
 
@@ -118,6 +126,7 @@ typedef struct
   int        num_palette;
 }
 PngGlobals;
+
 
 /*
  * Local functions...
@@ -164,6 +173,7 @@ static void      load_defaults             (void);
 static void      save_defaults             (void);
 static void      load_gui_defaults         (PngSaveGui       *pg);
 
+
 /*
  * Globals...
  */
@@ -186,11 +196,15 @@ static const PngSaveVals defaults =
   TRUE,
   TRUE,
   TRUE,
-  9
+  9,
+  TRUE,                /* save exif       */
+  TRUE,                /* save xmp        */
+  TRUE,                /* save iptc        */
+  TRUE                 /* save thumbnail  */
 };
 
 static PngSaveVals pngvals;
-static PngGlobals pngg;
+static PngGlobals  pngg;
 
 
 /*
@@ -406,6 +420,8 @@ run (const gchar      *name,
   GimpExportReturn  export = GIMP_EXPORT_CANCEL;
   GError           *error  = NULL;
 
+  run_mode = param[0].data.d_int32;
+
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
@@ -417,13 +433,32 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      run_mode = param[0].data.d_int32;
+      gboolean interactive;
+
+      switch (run_mode)
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_ui_init (PLUG_IN_BINARY, FALSE);
+          interactive = TRUE;
+          break;
+        default:
+          interactive = FALSE;
+          break;
+        }
 
       image_ID = load_image (param[1].data.d_string,
-                             run_mode == GIMP_RUN_INTERACTIVE, &error);
+                             interactive, &error);
 
       if (image_ID != -1)
         {
+          GFile *file = g_file_new_for_path (param[1].data.d_string);
+
+          gimp_image_metadata_load (image_ID, "image/png", file,
+                                    interactive);
+
+          g_object_unref (file);
+
           *nreturn_vals = 2;
           values[1].type = GIMP_PDB_IMAGE;
           values[1].data.d_image = image_ID;
@@ -439,7 +474,6 @@ run (const gchar      *name,
     {
       gboolean alpha;
 
-      run_mode    = param[0].data.d_int32;
       image_ID    = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
@@ -549,6 +583,33 @@ run (const gchar      *name,
           if (save_image (param[3].data.d_string,
                           image_ID, drawable_ID, orig_image_ID, &error))
             {
+              GimpMetadata *metadata;
+
+              metadata = gimp_image_metadata_save_prepare (image_ID,
+                                                           "image/png");
+
+              if (metadata)
+                {
+                  GFile                 *file;
+                  GimpMetadataSaveFlags  flags = 0;
+
+                  gimp_metadata_set_bits_per_sample (metadata, 8);
+
+                  if (pngvals.save_exif)      flags |= GIMP_METADATA_SAVE_EXIF;
+                  if (pngvals.save_xmp)       flags |= GIMP_METADATA_SAVE_XMP;
+                  if (pngvals.save_iptc)      flags |= GIMP_METADATA_SAVE_IPTC;
+                  if (pngvals.save_thumbnail) flags |= GIMP_METADATA_SAVE_THUMBNAIL;
+
+                  file = g_file_new_for_path (param[3].data.d_string);
+                  gimp_image_metadata_save_finish (image_ID,
+                                                   "image/png",
+                                                   metadata, file, flags,
+                                                   NULL);
+                  g_object_unref (file);
+
+                  g_object_unref (metadata);
+                }
+
               gimp_set_data (SAVE_PROC, &pngvals, sizeof (pngvals));
             }
           else
@@ -587,6 +648,8 @@ run (const gchar      *name,
     {
       if (nparams == 9)
         {
+          load_defaults ();
+
           pngvals.interlaced          = param[0].data.d_int32;
           pngvals.compression_level   = param[1].data.d_int32;
           pngvals.bkgd                = param[2].data.d_int32;
@@ -2059,7 +2122,7 @@ save_dialog (gint32    image_ID,
   /* Table */
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
                       GTK_WIDGET (gtk_builder_get_object (builder, "table")),
-                      TRUE, TRUE, 0);
+                      FALSE, FALSE, 0);
 
   /* Toggles */
   pg.interlaced = toggle_button_init (builder, "interlace",
@@ -2080,6 +2143,18 @@ save_dialog (gint32    image_ID,
   pg.time = toggle_button_init (builder, "save-creation-time",
                                 pngvals.time,
                                 &pngvals.time);
+  pg.save_exif = toggle_button_init (builder, "sv_exif",
+                                     pngvals.save_exif,
+                                     &pngvals.save_exif);
+  pg.save_xmp = toggle_button_init (builder, "sv_xmp",
+                                    pngvals.save_xmp,
+                                    &pngvals.save_xmp);
+  pg.save_iptc = toggle_button_init (builder, "sv_iptc",
+                                     pngvals.save_iptc,
+                                     &pngvals.save_iptc);
+  pg.save_thumbnail = toggle_button_init (builder, "sv_thumbnail",
+                                          pngvals.save_thumbnail,
+                                          &pngvals.save_thumbnail);
 
   /* Comment toggle */
   parasite = gimp_image_get_parasite (image_ID, "gimp-comment");
@@ -2150,12 +2225,15 @@ load_defaults (void)
 {
   GimpParasite *parasite;
 
+  /* initialize with hardcoded defaults */
+  pngvals = defaults;
+
   parasite = gimp_get_parasite (PNG_DEFAULTS_PARASITE);
 
   if (parasite)
     {
       gchar        *def_str;
-      PngSaveVals   tmpvals;
+      PngSaveVals   tmpvals = defaults;
       gint          num_fields;
 
       def_str = g_strndup (gimp_parasite_data (parasite),
@@ -2163,7 +2241,7 @@ load_defaults (void)
 
       gimp_parasite_free (parasite);
 
-      num_fields = sscanf (def_str, "%d %d %d %d %d %d %d %d %d",
+      num_fields = sscanf (def_str, "%d %d %d %d %d %d %d %d %d %d %d %d %d",
                            &tmpvals.interlaced,
                            &tmpvals.bkgd,
                            &tmpvals.gama,
@@ -2172,18 +2250,17 @@ load_defaults (void)
                            &tmpvals.time,
                            &tmpvals.comment,
                            &tmpvals.save_transp_pixels,
-                           &tmpvals.compression_level);
+                           &tmpvals.compression_level,
+                           &tmpvals.save_exif,
+                           &tmpvals.save_xmp,
+                           &tmpvals.save_iptc,
+                           &tmpvals.save_thumbnail);
 
       g_free (def_str);
 
-      if (num_fields == 9)
-        {
-          memcpy (&pngvals, &tmpvals, sizeof (tmpvals));
-          return;
-        }
+      if (num_fields == 9 || num_fields == 13)
+        pngvals = tmpvals;
     }
-
-  memcpy (&pngvals, &defaults, sizeof (defaults));
 }
 
 static void
@@ -2192,7 +2269,7 @@ save_defaults (void)
   GimpParasite *parasite;
   gchar        *def_str;
 
-  def_str = g_strdup_printf ("%d %d %d %d %d %d %d %d %d",
+  def_str = g_strdup_printf ("%d %d %d %d %d %d %d %d %d %d %d %d %d",
                              pngvals.interlaced,
                              pngvals.bkgd,
                              pngvals.gama,
@@ -2201,7 +2278,11 @@ save_defaults (void)
                              pngvals.time,
                              pngvals.comment,
                              pngvals.save_transp_pixels,
-                             pngvals.compression_level);
+                             pngvals.compression_level,
+                             pngvals.save_exif,
+                             pngvals.save_xmp,
+                             pngvals.save_iptc,
+                             pngvals.save_thumbnail);
 
   parasite = gimp_parasite_new (PNG_DEFAULTS_PARASITE,
                                 GIMP_PARASITE_PERSISTENT,
@@ -2230,6 +2311,10 @@ load_gui_defaults (PngSaveGui *pg)
   SET_ACTIVE (time);
   SET_ACTIVE (comment);
   SET_ACTIVE (save_transp_pixels);
+  SET_ACTIVE (save_exif);
+  SET_ACTIVE (save_xmp);
+  SET_ACTIVE (save_iptc);
+  SET_ACTIVE (save_thumbnail);
 
 #undef SET_ACTIVE
 
