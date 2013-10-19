@@ -41,6 +41,7 @@
 #include "core/gimpimage-colormap.h"
 #include "core/gimpimage-grid.h"
 #include "core/gimpimage-guides.h"
+#include "core/gimpimage-metadata.h"
 #include "core/gimpimage-private.h"
 #include "core/gimpimage-sample-points.h"
 #include "core/gimpimage-undo.h"
@@ -206,6 +207,28 @@ xcf_load_image (Gimp     *gimp,
           gimp_image_set_grid (GIMP_IMAGE (image), grid, FALSE);
           g_object_unref (grid);
         }
+    }
+
+  /* check for a metadata parasite */
+  parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
+                                       "gimp-image-metadata");
+  if (parasite)
+    {
+      GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+      GimpMetadata     *metadata;
+      const gchar      *meta_string;
+
+      meta_string = (gchar *) gimp_parasite_data (parasite);
+      metadata = gimp_metadata_deserialize (meta_string);
+
+      if (metadata)
+        {
+          gimp_image_set_metadata (image, metadata);
+          g_object_unref (metadata);
+        }
+
+      gimp_parasite_list_remove (private->parasites,
+                                 gimp_parasite_name (parasite));
     }
 
   xcf_progress_update (info);

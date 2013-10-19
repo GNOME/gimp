@@ -29,6 +29,7 @@
 
 #include <libgimp/gimpexport.h>
 #include <libgimp/gimpmenu.h>
+#include <libgimp/gimpmetadata.h>
 #include <libgimp/gimpaspectpreview.h>
 #include <libgimp/gimpdrawablepreview.h>
 #include <libgimp/gimpbrushmenu.h>

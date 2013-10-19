@@ -88,6 +88,7 @@ lens_apply_RC = lens-apply.rc.o
 lens_flare_RC = lens-flare.rc.o
 mail_RC = mail.rc.o
 max_rgb_RC = max-rgb.rc.o
+metadata_RC = metadata.rc.o
 newsprint_RC = newsprint.rc.o
 nl_filter_RC = nl-filter.rc.o
 noise_rgb_RC = noise-rgb.rc.o

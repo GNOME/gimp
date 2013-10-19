@@ -10,6 +10,7 @@ AM_CPPFLAGS = \
 	$(CAIRO_CFLAGS)					\
 	$(GEGL_CFLAGS)					\
 	$(GDK_PIXBUF_CFLAGS)				\
+	$(GEXIV2_CFLAGS)				\
 	-I$(includedir)
 
 noinst_LIBRARIES = libappcore.a
@@ -219,6 +220,8 @@ libappcore_a_sources = \
 	gimpimage-item-list.h			\
 	gimpimage-merge.c			\
 	gimpimage-merge.h			\
+	gimpimage-metadata.c			\
+	gimpimage-metadata.h			\
 	gimpimage-new.c				\
 	gimpimage-new.h				\
 	gimpimage-pick-color.c			\

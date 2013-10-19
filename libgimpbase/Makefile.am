@@ -61,6 +61,7 @@ AM_CPPFLAGS = \
 	-DGIMP_BASE_COMPILATION					\
 	-I$(top_srcdir)						\
 	$(GIO_CFLAGS)						\
+	$(GEXIV2_CFLAGS)					\
 	$(BINRELOC_CFLAGS)					\
 	-I$(includedir)						\
 	$(xobjective_c)
@@ -101,6 +102,8 @@ libgimpbase_sources = \
 	gimpenv.h		\
 	gimpmemsize.c		\
 	gimpmemsize.h		\
+	gimpmetadata.c		\
+	gimpmetadata.h		\
 	gimpparasite.c		\
 	gimpparasite.h		\
 	gimpparasiteio.c	\
@@ -144,6 +147,7 @@ libgimpbaseinclude_HEADERS = \
 	gimpdatafiles.h		\
 	gimpenv.h		\
 	gimpmemsize.h		\
+	gimpmetadata.h		\
 	gimpparasite.h		\
 	gimpparasiteio.h	\
 	gimprectangle.h		\
@@ -151,7 +155,6 @@ libgimpbaseinclude_HEADERS = \
 	gimpunit.h		\
 	gimputils.h		\
 	gimpvaluearray.h
-
 
 libgimpbase_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
@@ -163,8 +166,8 @@ libgimpbase_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpbase_def)
 
 libgimpbase_@GIMP_API_VERSION@_la_LIBADD = \
 	$(GIO_LIBS)	\
+	$(GEXIV2_LIBS)	\
 	$(ole32_lib)
-
 
 install-data-local: install-ms-lib install-libtool-import-lib
 

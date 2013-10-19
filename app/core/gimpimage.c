@@ -23,6 +23,7 @@
 #include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
+#include <gexiv2/gexiv2.h>
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
@@ -47,6 +48,7 @@
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-guides.h"
+#include "gimpimage-metadata.h"
 #include "gimpimage-sample-points.h"
 #include "gimpimage-preview.h"
 #include "gimpimage-private.h"
@@ -130,6 +132,7 @@ enum
   PROP_HEIGHT,
   PROP_BASE_TYPE,
   PROP_PRECISION,
+  PROP_METADATA,
   PROP_BUFFER
 };
 
@@ -610,6 +613,12 @@ gimp_image_class_init (GimpImageClass *klass)
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
+  g_object_class_install_property (object_class, PROP_METADATA,
+                                   g_param_spec_object ("metadata", NULL, NULL,
+                                                        GEXIV2_TYPE_METADATA,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+
   g_object_class_override_property (object_class, PROP_BUFFER, "buffer");
 
   g_type_class_add_private (klass, sizeof (GimpImagePrivate));
@@ -666,6 +675,8 @@ gimp_image_init (GimpImage *image)
   private->colormap            = NULL;
   private->n_colors            = 0;
   private->palette             = NULL;
+
+  private->metadata            = NULL;
 
   private->dirty               = 1;
   private->dirty_time          = 0;
@@ -837,6 +848,9 @@ gimp_image_set_property (GObject      *object,
     case PROP_PRECISION:
       private->precision = g_value_get_enum (value);
       break;
+    case PROP_METADATA:
+      gimp_image_set_metadata (image, g_value_get_object (value));
+      break;
     case PROP_BUFFER:
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -872,6 +886,9 @@ gimp_image_get_property (GObject    *object,
       break;
     case PROP_PRECISION:
       g_value_set_enum (value, private->precision);
+      break;
+    case PROP_METADATA:
+      g_value_set_object (value, gimp_image_get_metadata (image));
       break;
     case PROP_BUFFER:
       g_value_set_object (value, gimp_image_get_buffer (GIMP_PICKABLE (image)));
@@ -947,6 +964,12 @@ gimp_image_finalize (GObject *object)
 
   if (private->colormap)
     gimp_image_colormap_free (image);
+
+  if (private->metadata)
+    {
+      g_object_unref (private->metadata);
+      private->metadata = NULL;
+    }
 
   if (private->layers)
     {
@@ -1128,9 +1151,10 @@ gimp_image_get_size (GimpViewable *viewable,
 static void
 gimp_image_size_changed (GimpViewable *viewable)
 {
-  GimpImage *image = GIMP_IMAGE (viewable);
-  GList     *all_items;
-  GList     *list;
+  GimpImage    *image = GIMP_IMAGE (viewable);
+  GimpMetadata *metadata;
+  GList        *all_items;
+  GList        *list;
 
   if (GIMP_VIEWABLE_CLASS (parent_class)->size_changed)
     GIMP_VIEWABLE_CLASS (parent_class)->size_changed (viewable);
@@ -1154,6 +1178,12 @@ gimp_image_size_changed (GimpViewable *viewable)
   g_list_free_full (all_items, (GDestroyNotify) gimp_viewable_size_changed);
 
   gimp_viewable_size_changed (GIMP_VIEWABLE (gimp_image_get_mask (image)));
+
+  metadata = gimp_image_get_metadata (image);
+  if (metadata)
+    gimp_metadata_set_pixel_size (metadata,
+                                  gimp_image_get_width  (image),
+                                  gimp_image_get_height (image));
 
   gimp_projectable_structure_changed (GIMP_PROJECTABLE (image));
 }
@@ -1181,6 +1211,33 @@ gimp_image_real_mode_changed (GimpImage *image)
 static void
 gimp_image_real_precision_changed (GimpImage *image)
 {
+  GimpMetadata *metadata;
+
+  metadata = gimp_image_get_metadata (image);
+  if (metadata)
+    {
+      gint bps = 8;
+
+      switch (gimp_image_get_component_type (image))
+        {
+        case GIMP_COMPONENT_TYPE_U8:
+          bps = 8;
+          break;
+
+        case GIMP_COMPONENT_TYPE_U16:
+        case GIMP_COMPONENT_TYPE_HALF:
+          bps = 16;
+          break;
+
+        case GIMP_COMPONENT_TYPE_U32:
+        case GIMP_COMPONENT_TYPE_FLOAT:
+          bps = 32;
+          break;
+        }
+
+      gimp_metadata_set_bits_per_sample (metadata, bps);
+    }
+
   gimp_projectable_structure_changed (GIMP_PROJECTABLE (image));
 }
 

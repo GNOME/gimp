@@ -82,6 +82,10 @@ typedef struct
   gint      compression;
   gint      fillorder;
   gboolean  save_transp_pixels;
+  gboolean  save_exif;
+  gboolean  save_xmp;
+  gboolean  save_iptc;
+  gboolean  save_thumbnail;
 } TiffSaveVals;
 
 typedef struct
@@ -110,6 +114,7 @@ static gboolean  save_image             (const gchar  *filename,
                                          gint32        image,
                                          gint32        drawable,
                                          gint32        orig_image,
+                                         gint         *saved_bpp,
                                          GError      **error);
 
 static gboolean  save_dialog            (gboolean      has_alpha,
@@ -143,8 +148,13 @@ const GimpPlugInInfo PLUG_IN_INFO =
 
 static TiffSaveVals tsvals =
 {
-  COMPRESSION_NONE,    /*  compression    */
-  TRUE,                /*  alpha handling */
+  COMPRESSION_NONE,    /*  compression         */
+  TRUE,                /*  alpha handling      */
+  TRUE,                /*  save transp. pixels */
+  TRUE,                /*  save exif           */
+  TRUE,                /*  save xmp            */
+  TRUE,                /*  save iptc           */
+  TRUE                 /*  save thumbnail      */
 };
 
 static gchar       *image_comment = NULL;
@@ -346,9 +356,38 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
+          gint saved_bpp;
+
           if (save_image (param[3].data.d_string, image, drawable, orig_image,
-                          &error))
+                          &saved_bpp, &error))
             {
+              GimpMetadata *metadata;
+
+              metadata = gimp_image_metadata_save_prepare (image,
+                                                           "image/tiff");
+
+              if (metadata)
+                {
+                  GFile                 *file;
+                  GimpMetadataSaveFlags  flags = 0;
+
+                  gimp_metadata_set_bits_per_sample (metadata, saved_bpp);
+
+                  if (tsvals.save_exif)      flags |= GIMP_METADATA_SAVE_EXIF;
+                  if (tsvals.save_xmp)       flags |= GIMP_METADATA_SAVE_XMP;
+                  if (tsvals.save_iptc)      flags |= GIMP_METADATA_SAVE_IPTC;
+                  if (tsvals.save_thumbnail) flags |= GIMP_METADATA_SAVE_THUMBNAIL;
+
+                  file = g_file_new_for_path (param[3].data.d_string);
+                  gimp_image_metadata_save_finish (image,
+                                                   "image/tiff",
+                                                   metadata, file, flags,
+                                                   NULL);
+                  g_object_unref (file);
+
+                  g_object_unref (metadata);
+                }
+
               /*  Store mvals data  */
               gimp_set_data (SAVE_PROC, &tsvals, sizeof (TiffSaveVals));
             }
@@ -657,6 +696,7 @@ save_image (const gchar  *filename,
             gint32        image,
             gint32        layer,
             gint32        orig_image,  /* the export function might have */
+            gint         *saved_bpp,
             GError      **error)       /* created a duplicate            */
 {
   gboolean       status = FALSE;
@@ -724,6 +764,8 @@ save_image (const gchar  *filename,
     bitspersample = 8;
   else
     bitspersample = 16;
+
+  *saved_bpp = bitspersample;
 
   drawable_type = gimp_drawable_type (layer);
   buffer = gimp_drawable_get_buffer (layer);
@@ -1075,25 +1117,44 @@ static gboolean
 save_dialog (gboolean has_alpha,
              gboolean is_monochrome)
 {
-  GtkWidget *dialog;
-  GtkWidget *vbox;
-  GtkWidget *frame;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkWidget *entry;
-  GtkWidget *toggle;
-  GtkWidget *g3;
-  GtkWidget *g4;
-  gboolean   run;
+  GError      *error = NULL;
+  GtkWidget   *dialog;
+  GtkWidget   *vbox;
+  GtkWidget   *frame;
+  GtkWidget   *entry;
+  GtkWidget   *toggle;
+  GtkWidget   *cmp_g3;
+  GtkWidget   *cmp_g4;
+  GtkBuilder  *builder;
+  gchar       *ui_file;
+  gboolean     run;
 
   dialog = gimp_export_dialog_new (_("TIFF"), PLUG_IN_BINARY, SAVE_PROC);
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
-                      vbox, FALSE, TRUE, 0);
+  builder = gtk_builder_new ();
+  ui_file = g_build_filename (gimp_data_directory (),
+                              "ui", "plug-ins", "plug-in-file-tiff.ui",
+                              NULL);
+  if (! gtk_builder_add_from_file (builder, ui_file, &error))
+    {
+      gchar *display_name = g_filename_display_name (ui_file);
 
-  /*  compression  */
+      g_printerr (_("Error loading UI file '%s': %s"),
+                  display_name, error ? error->message : _("Unknown error"));
+
+      g_free (display_name);
+    }
+
+  g_free (ui_file);
+
+  vbox = GTK_WIDGET (gtk_builder_get_object (builder, "tiff_export_vbox"));
+
+  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
+                      vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  vbox = GTK_WIDGET (gtk_builder_get_object (builder, "radio_button_box"));
+
   frame = gimp_int_radio_group_new (TRUE, _("Compression"),
                                     G_CALLBACK (gimp_radio_button_update),
                                     &tsvals.compression, tsvals.compression,
@@ -1103,20 +1164,20 @@ save_dialog (gboolean has_alpha,
                                     _("_Pack Bits"), COMPRESSION_PACKBITS,      NULL,
                                     _("_Deflate"),   COMPRESSION_ADOBE_DEFLATE, NULL,
                                     _("_JPEG"),      COMPRESSION_JPEG,          NULL,
-                                    _("CCITT Group _3 fax"), COMPRESSION_CCITTFAX3, &g3,
-                                    _("CCITT Group _4 fax"), COMPRESSION_CCITTFAX4, &g4,
+                                    _("CCITT Group _3 fax"), COMPRESSION_CCITTFAX3, &cmp_g3,
+                                    _("CCITT Group _4 fax"), COMPRESSION_CCITTFAX4, &cmp_g4,
 
                                     NULL);
 
-  gtk_widget_set_sensitive (g3, is_monochrome);
-  gtk_widget_set_sensitive (g4, is_monochrome);
+  gtk_widget_set_sensitive (cmp_g3, is_monochrome);
+  gtk_widget_set_sensitive (cmp_g4, is_monochrome);
 
   if (! is_monochrome)
     {
       if (tsvals.compression == COMPRESSION_CCITTFAX3 ||
           tsvals.compression ==  COMPRESSION_CCITTFAX4)
         {
-          gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (g3),
+          gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (cmp_g3),
                                            COMPRESSION_NONE);
         }
     }
@@ -1124,40 +1185,49 @@ save_dialog (gboolean has_alpha,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  /* Keep colors behind alpha mask */
-  toggle = gtk_check_button_new_with_mnemonic
-    ( _("Save _color values from transparent pixels"));
+  toggle = GTK_WIDGET (gtk_builder_get_object (builder, "sv_alpha"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 has_alpha && tsvals.save_transp_pixels);
   gtk_widget_set_sensitive (toggle, has_alpha);
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
-
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &tsvals.save_transp_pixels);
 
-  /* comment entry */
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new ( _("Comment:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  entry = gtk_entry_new ();
-  gtk_widget_show (entry);
-  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
+  entry = GTK_WIDGET (gtk_builder_get_object (builder, "commentfield"));
   gtk_entry_set_text (GTK_ENTRY (entry), image_comment ? image_comment : "");
 
   g_signal_connect (entry, "changed",
                     G_CALLBACK (comment_entry_callback),
                     NULL);
 
-  gtk_widget_show (frame);
+  toggle = GTK_WIDGET (gtk_builder_get_object (builder, "sv_exif"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                tsvals.save_exif);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &tsvals.save_exif);
 
-  gtk_widget_show (vbox);
+  toggle = GTK_WIDGET (gtk_builder_get_object (builder, "sv_xmp"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                tsvals.save_xmp);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &tsvals.save_xmp);
+
+  toggle = GTK_WIDGET (gtk_builder_get_object (builder, "sv_iptc"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                tsvals.save_iptc);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &tsvals.save_iptc);
+
+  toggle = GTK_WIDGET (gtk_builder_get_object (builder, "sv_thumbnail"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                tsvals.save_thumbnail);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &tsvals.save_thumbnail);
+
   gtk_widget_show (dialog);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);

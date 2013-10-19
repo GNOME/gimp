@@ -15,18 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __JPEG_LOAD_H__
-#define __JPEG_LOAD_H__
+#ifndef __GIMP_IMAGE_METADATA_H__
+#define __GIMP_IMAGE_METADATA_H__
 
-gint32 load_image           (const gchar  *filename,
-                             GimpRunMode   runmode,
-                             gboolean      preview,
-                             GError      **error);
 
-gint32 load_thumbnail_image (GFile         *file,
-                             gint          *width,
-                             gint          *height,
-                             GimpImageType *type,
-                             GError       **error);
+GimpMetadata * gimp_image_get_metadata (GimpImage    *image);
+void           gimp_image_set_metadata (GimpImage    *image,
+                                        GimpMetadata *metadata);
 
-#endif /* __JPEG_LOAD_H__ */
+
+#endif /* __GIMP_IMAGE_METADATA_H__ */

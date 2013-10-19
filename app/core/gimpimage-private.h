@@ -55,6 +55,8 @@ struct _GimpImagePrivate
   const Babl        *babl_palette_rgb;      /*  palette's RGB Babl format    */
   const Babl        *babl_palette_rgba;     /*  palette's RGBA Babl format   */
 
+  GimpMetadata      *metadata;              /*  image's metadata             */
+
   gint               dirty;                 /*  dirty flag -- # of ops       */
   guint              dirty_time;            /*  time when image became dirty */
   gint               export_dirty;          /*  'dirty' but for export       */

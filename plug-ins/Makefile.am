@@ -51,11 +51,6 @@ else
 file_uri = file-uri
 endif
 
-if HAVE_LIBEXIF
-metadata = metadata
-endif
-
-
 SUBDIRS = \
 	$(script_fu)		\
 	$(pygimp)		\
@@ -83,7 +78,6 @@ SUBDIRS = \
 	lighting		\
 	map-object		\
 	maze			\
-	$(metadata)		\
 	pagecurl		\
 	$(print)		\
 	selection-to-path	\

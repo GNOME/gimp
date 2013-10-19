@@ -134,6 +134,7 @@ libexec_PROGRAMS = \
 	lens-flare \
 	$(MAIL) \
 	max-rgb \
+	metadata \
 	newsprint \
 	nl-filter \
 	noise-rgb \
@@ -1772,6 +1773,26 @@ max_rgb_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(max_rgb_RC)
+
+metadata_CFLAGS = $(GEXIV2_CFLAGS)
+
+metadata_SOURCES = \
+	metadata.c
+
+metadata_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpmodule)	\
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(GEXIV2_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)		\
+	$(metadata_RC)
 
 newsprint_SOURCES = \
 	newsprint.c

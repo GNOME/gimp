@@ -38,6 +38,9 @@ EXPORTS
 	gimp_image_combo_box_get_type
 	gimp_image_combo_box_new
 	gimp_image_menu_new
+	gimp_image_metadata_load
+	gimp_image_metadata_save_prepare
+	gimp_image_metadata_save_finish
 	gimp_layer_combo_box_get_type
 	gimp_layer_combo_box_new
 	gimp_layer_menu_new
