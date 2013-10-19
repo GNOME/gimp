@@ -32,7 +32,7 @@
 
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-mask.h"
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/gimp-gegl-nodes.h"
 
 #include "gimp.h"
 #include "gimp-utils.h"
