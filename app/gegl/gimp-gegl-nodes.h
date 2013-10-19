@@ -39,6 +39,8 @@ void       gimp_gegl_mode_node_set_opacity     (GeglNode             *node,
                                                 gdouble               opacity);
 void       gimp_gegl_node_set_matrix           (GeglNode             *node,
                                                 const GimpMatrix3    *matrix);
+void       gimp_gegl_node_set_color            (GeglNode             *node,
+                                                const GimpRGB        *color);
 
 
 #endif /* __GIMP_GEGL_NODES_H__ */

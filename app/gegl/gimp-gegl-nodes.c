@@ -184,6 +184,9 @@ gimp_gegl_mode_node_set_mode (GeglNode             *node,
                  "opacity", &opacity,
                  NULL);
 
+  /* setting the operation creates a new instance, so we have to set
+   * all its properties
+   */
   gegl_node_set (node,
                  "operation", operation,
                  "linear",    linear,
@@ -218,4 +221,22 @@ gimp_gegl_node_set_matrix (GeglNode          *node,
                  NULL);
 
   g_free (matrix_string);
+}
+
+void
+gimp_gegl_node_set_color (GeglNode      *node,
+                          const GimpRGB *color)
+{
+  GeglColor *gegl_color;
+
+  g_return_if_fail (GEGL_IS_NODE (node));
+  g_return_if_fail (color != NULL);
+
+  gegl_color = gimp_gegl_color_new (color);
+
+  gegl_node_set (node,
+                 "value", gegl_color,
+                 NULL);
+
+  g_object_unref (gegl_color);
 }

@@ -401,15 +401,12 @@ gimp_channel_get_node (GimpFilter *filter)
   GeglNode     *node;
   GeglNode     *source;
   GeglNode     *mode_node;
-  GeglColor    *color;
   const Babl   *color_format;
 
   node = GIMP_FILTER_CLASS (parent_class)->get_node (filter);
 
   source = gimp_drawable_get_source_node (drawable);
   gegl_node_add_child (node, source);
-
-  color = gimp_gegl_color_new (&channel->color);
 
   g_warn_if_fail (channel->color_node == NULL);
 
@@ -420,11 +417,10 @@ gimp_channel_get_node (GimpFilter *filter)
 
   channel->color_node = gegl_node_new_child (node,
                                              "operation", "gegl:color",
-                                             "value",     color,
                                              "format",    color_format,
                                              NULL);
-
-  g_object_unref (color);
+  gimp_gegl_node_set_color (channel->color_node,
+                            &channel->color);
 
   g_warn_if_fail (channel->mask_node == NULL);
 
@@ -1699,13 +1695,8 @@ gimp_channel_set_color (GimpChannel   *channel,
 
       if (gimp_filter_peek_node (GIMP_FILTER (channel)))
         {
-          GeglColor *gegl_color = gimp_gegl_color_new (&channel->color);
-
-          gegl_node_set (channel->color_node,
-                         "value", gegl_color,
-                         NULL);
-
-          g_object_unref (gegl_color);
+          gimp_gegl_node_set_color (channel->color_node,
+                                    &channel->color);
         }
 
       gimp_drawable_update (GIMP_DRAWABLE (channel),
@@ -1758,13 +1749,8 @@ gimp_channel_set_opacity (GimpChannel *channel,
 
       if (gimp_filter_peek_node (GIMP_FILTER (channel)))
         {
-          GeglColor *gegl_color = gimp_gegl_color_new (&channel->color);
-
-          gegl_node_set (channel->color_node,
-                         "value", gegl_color,
-                         NULL);
-
-          g_object_unref (gegl_color);
+          gimp_gegl_node_set_color (channel->color_node,
+                                    &channel->color);
         }
 
       gimp_drawable_update (GIMP_DRAWABLE (channel),
