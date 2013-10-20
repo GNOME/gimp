@@ -60,14 +60,6 @@ gimp_gegl_init (Gimp *gimp)
                 "use-opencl",      config->use_opencl,
                 NULL);
 
-  /* turn down the precision of babl - permitting use of lookup tables for
-   * gamma conversions, this precision is anyways high enough for both 8bit
-   * and 16bit operation
-   */
-  g_object_set (gegl_config (),
-                "babl-tolerance", 0.00015,
-                NULL);
-
   g_signal_connect (config, "notify::tile-cache-size",
                     G_CALLBACK (gimp_gegl_notify_tile_cache_size),
                     NULL);
