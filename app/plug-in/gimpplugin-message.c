@@ -830,7 +830,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
 
   /*  Sanity check menu path  */
 
-  if (proc_install->menu_path)
+  if (proc_install->menu_path && strlen (proc_install->menu_path))
     {
       if (proc_install->menu_path[0] == '<')
         {
