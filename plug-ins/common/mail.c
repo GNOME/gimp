@@ -42,70 +42,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-
-/* GdkPixbuf RGBA C-Source image dump 1-byte-run-length-encoded */
-
-#ifdef __SUNPRO_C
-#pragma align 4 (mail_icon)
-#endif
-#ifdef __GNUC__
-static const guint8 mail_icon[] __attribute__ ((__aligned__ (4))) =
-#else
-static const guint8 mail_icon[] =
-#endif
-{ ""
-  /* Pixbuf magic (0x47646b50) */
-  "GdkP"
-  /* length: header (24) + pixel_data (584) */
-  "\0\0\2`"
-  /* pixdata_type (0x2010002) */
-  "\2\1\0\2"
-  /* rowstride (64) */
-  "\0\0\0@"
-  /* width (16) */
-  "\0\0\0\20"
-  /* height (16) */
-  "\0\0\0\20"
-  /* pixel_data: */
-  "\245\0\0\0\0\1\210\212\2050\205\210\212\205\377\1\210\212\2050\210\0"
-  "\0\0\0\2\210\212\2050\210\212\205\377\205\377\377\377\377\2\210\212\205"
-  "\377\210\212\2050\206\0\0\0\0\13\210\212\2050\210\212\205\377\377\377"
-  "\377\377\331\326\320\377\311\307\301\377\301\277\272\377\257\254\251"
-  "\377\241\240\232\377\377\377\377\377\210\212\205\377\210\212\2050\204"
-  "\0\0\0\0\15\210\212\2050\210\212\205\377\377\377\377\377\331\326\320"
-  "\377\250\247\241\377\276\275\271\377\316\315\312\377\317\316\314\377"
-  "\306\305\305\377\275\275\275\377\377\377\377\377\210\212\205\377\210"
-  "\212\2050\203\0\0\0\0\7\210\212\205\377\344\344\343\377\271\270\263\377"
-  "\225\224\216\377\333\332\331\377\354\354\353\377\365\365\365\377\202"
-  "\377\377\377\377\4\305\305\305\377\261\256\252\377\352\352\351\377\210"
-  "\212\205\377\203\0\0\0\0\4\210\212\205\377\367\367\367\377\257\256\254"
-  "\377\365\365\365\377\204\377\377\377\377\5\353\353\353\377\330\330\330"
-  "\377\315\314\311\377\367\367\367\377\210\212\205\377\203\0\0\0\0\4\210"
-  "\212\205\377\377\377\377\377\346\345\342\377\252\251\247\377\202\353"
-  "\353\353\377\7\341\341\341\377\330\330\330\377\317\317\317\377\246\245"
-  "\241\377\363\363\362\377\377\377\377\377\210\212\205\377\203\0\0\0\0"
-  "\5\210\212\205\377\377\377\377\377\373\373\370\377\342\342\337\377\222"
-  "\221\221\377\202\266\264\263\377\6\274\273\267\377\241\240\240\377\363"
-  "\363\362\377\367\365\363\377\377\377\377\377\210\212\205\377\203\0\0"
-  "\0\0\5\210\212\205\377\377\377\377\377\373\373\370\377\360\357\355\377"
-  "\245\242\235\377\203\373\373\370\377\5\220\215\207\377\371\367\363\377"
-  "\362\360\354\377\377\377\377\377\210\212\205\377\203\0\0\0\0\4\210\212"
-  "\205\377\377\377\377\377\373\372\367\377\262\261\256\377\203\373\373"
-  "\370\377\202\371\370\364\377\4\274\273\267\377\351\347\342\377\377\377"
-  "\377\377\210\212\205\377\203\0\0\0\0\15\210\212\205\377\377\377\377\377"
-  "\311\307\304\377\373\373\370\377\367\365\361\377\372\371\366\377\370"
-  "\366\362\377\372\370\365\377\367\365\362\377\353\350\343\377\317\316"
-  "\312\377\377\377\377\377\210\212\205\377\203\0\0\0\0\2\210\212\205\377"
-  "\360\360\360\377\211\377\377\377\377\2\360\360\360\377\210\212\205\377"
-  "\203\0\0\0\0\1\210\212\205\217\213\210\212\205\377\1\210\212\205\217"
-  "\221\0\0\0\0"
-};
-
-
-#ifndef SENDMAIL
-#define SENDMAIL "/usr/lib/sendmail"
-#endif
-
 #define BUFFER_SIZE 256
 
 #define PLUG_IN_PROC   "plug-in-mail-image"
@@ -129,12 +65,12 @@ static void               run                  (const gchar      *name,
                                                 gint             *nreturn_vals,
                                                 GimpParam       **return_vals);
 
-static GimpPDBStatusType  save_image           (const gchar      *filename,
+static GimpPDBStatusType  send_image           (const gchar      *filename,
                                                 gint32            image_ID,
                                                 gint32            drawable_ID,
                                                 gint32            run_mode);
 
-static gboolean           save_dialog          (void);
+static gboolean           send_dialog          (void);
 static void               mail_entry_callback  (GtkWidget        *widget,
                                                 gchar            *data);
 static void               mesg_body_callback   (GtkTextBuffer    *buffer,
@@ -184,9 +120,14 @@ query (void)
     { GIMP_PDB_INT32,    "encapsulation", "ignored" }
   };
 
+#if defined XDG_EMAIL || defined SENDMAIL
   gimp_install_procedure (PLUG_IN_PROC,
                           N_("Send the image by email"),
-                          "You need to have sendmail installed",
+#ifdef XDG_EMAIL
+                          "The preferred email composer is used to send emails and must be properly configured.",
+#else /* sendmail */
+                          "Sendmail is used to send emails and must be properly configured.",
+#endif
                           "Adrian Likins, Reagan Blundell",
                           "Adrian Likins, Reagan Blundell, Daniel Risacher, "
                           "Spencer Kimball and Peter Mattis",
@@ -196,6 +137,11 @@ query (void)
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/File/Send");
+  gimp_plugin_icon_register (PLUG_IN_PROC, GIMP_ICON_TYPE_ICON_NAME,
+                             (const guint8 *) GTK_STOCK_EDIT);
+#endif
 }
 
 static void
@@ -242,7 +188,7 @@ run (const gchar      *name,
               }
           }
 
-          if (! save_dialog ())
+          if (! send_dialog ())
             status = GIMP_PDB_CANCEL;
           break;
 
@@ -277,7 +223,7 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          status = save_image (mail_info.filename,
+          status = send_image (mail_info.filename,
                                image_ID,
                                drawable_ID,
                                run_mode);
@@ -300,7 +246,7 @@ run (const gchar      *name,
 }
 
 static GimpPDBStatusType
-save_image (const gchar *filename,
+send_image (const gchar *filename,
             gint32       image_ID,
             gint32       drawable_ID,
             gint32       run_mode)
@@ -308,9 +254,16 @@ save_image (const gchar *filename,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gchar             *ext;
   gchar             *tmpname;
+#ifdef XDG_EMAIL
+  gchar             *mailcmd[9];
+  gchar             *filepath = NULL;
+  GFile             *tmp_dir  = NULL;
+  GFileEnumerator   *enumerator;
+#else /* SENDMAIL */
   gchar             *mailcmd[3];
   GPid               mailpid;
   FILE              *mailpipe;
+#endif
   GError            *error = NULL;
 
   ext = find_extension (filename);
@@ -321,6 +274,88 @@ save_image (const gchar *filename,
   /* get a temp name with the right extension and save into it. */
   tmpname = gimp_temp_name (ext + 1);
 
+  if (! (gimp_file_save (run_mode,
+                         image_ID,
+                         drawable_ID,
+                         tmpname,
+                         tmpname) && valid_file (tmpname)))
+    {
+      goto error;
+    }
+
+#ifdef XDG_EMAIL
+  /* From xdg-email doc:
+   * "Some e-mail applications require the file to remain present
+   * after xdg-email returns."
+   * As a consequence, the file cannot be removed at the end of the
+   * function. We actually have no way to ever know *when* the file can
+   * be removed since the caller could leave the email window opened for
+   * hours. Yet we still want to clean sometimes and not have temporary
+   * images piling up.
+   * So I use a known directory that we control under $GIMP_DIRECTORY/tmp/,
+   * and clean it out each time the plugin runs. This means that *if* you
+   * are in the above case (your email client requires the file to stay
+   * alive), * you cannot run twice the plugin at the same time.
+   */
+  tmp_dir = gimp_directory_file ("tmp", PLUG_IN_PROC, NULL);
+
+  if (g_mkdir_with_parents (gimp_file_get_utf8_name (tmp_dir),
+                            S_IRUSR | S_IWUSR | S_IXUSR) == -1)
+    {
+      g_message ("Temporary directory %s could not be created.",
+                 gimp_file_get_utf8_name (tmp_dir));
+      g_error_free (error);
+      goto error;
+    }
+
+  enumerator = g_file_enumerate_children (tmp_dir,
+                                          G_FILE_ATTRIBUTE_STANDARD_TYPE,
+                                          G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
+                                          NULL, NULL);
+  if (enumerator)
+    {
+      GFileInfo *info;
+
+      while ((info = g_file_enumerator_next_file (enumerator,
+                                                  NULL, NULL)))
+        {
+          if (g_file_info_get_file_type (info) == G_FILE_TYPE_REGULAR)
+            {
+              GFile *file = g_file_enumerator_get_child (enumerator, info);
+              g_file_delete (file, NULL, NULL);
+              g_object_unref (file);
+            }
+
+          g_object_unref (info);
+        }
+
+      g_object_unref (enumerator);
+    }
+
+  filepath = g_build_filename (gimp_file_get_utf8_name (tmp_dir),
+                               mail_info.filename, NULL);
+  g_rename (tmpname, filepath);
+
+  mailcmd[0] = XDG_EMAIL;
+  mailcmd[1] = "--attach";
+  mailcmd[2] = filepath;
+  mailcmd[3] = "--subject";
+  mailcmd[4] = mail_info.subject;
+  mailcmd[5] = "--body";
+  mailcmd[6] = mail_info.comment;
+  mailcmd[7] = mail_info.receipt;
+  mailcmd[8] = NULL;
+
+  if (! g_spawn_async (NULL, mailcmd, NULL,
+                       G_SPAWN_DEFAULT,
+                       NULL, NULL, NULL, &error))
+    {
+      g_message ("%s", error->message);
+      g_error_free (error);
+      goto error;
+    }
+
+#else /* SENDMAIL */
   /* construct the "sendmail user@location" line */
   mailcmd[0] = SENDMAIL;
   mailcmd[1] = mail_info.receipt;
@@ -336,15 +371,6 @@ save_image (const gchar *filename,
 
   fflush (mailpipe);
 
-  if (! (gimp_file_save (run_mode,
-                         image_ID,
-                         drawable_ID,
-                         tmpname,
-                         tmpname) && valid_file (tmpname)))
-    {
-      goto error;
-    }
-
   if (! to64 (tmpname, mailpipe, &error))
     {
       g_message ("%s", error->message);
@@ -353,22 +379,33 @@ save_image (const gchar *filename,
     }
 
   fprintf (mailpipe, "\n--GUMP-MIME-boundary--\n");
+#endif
 
   goto cleanup;
 
 error:
   /* stop sendmail from doing anything */
+#ifdef SENDMAIL
   kill (mailpid, SIGINT);
+#endif
   status = GIMP_PDB_EXECUTION_ERROR;
 
 cleanup:
   /* close out the sendmail process */
+#ifdef SENDMAIL
   fclose (mailpipe);
   waitpid (mailpid, NULL, 0);
   g_spawn_close_pid (mailpid);
 
   /* delete the tmpfile that was generated */
   g_unlink (tmpname);
+#else
+  if (tmp_dir)
+    g_object_unref (tmp_dir);
+  if (filepath)
+    g_free (filepath);
+#endif
+
   g_free (tmpname);
 
   return status;
@@ -376,7 +413,7 @@ cleanup:
 
 
 static gboolean
-save_dialog (void)
+send_dialog (void)
 {
   GtkWidget     *dlg;
   GtkWidget     *main_vbox;

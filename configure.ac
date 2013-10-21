@@ -1820,24 +1820,63 @@ if test "x$have_libgudev" = xyes; then
 fi
 
 
-####################
-# Check for sendmail
-####################
+##########################
+# Check for Email Settings
+##########################
 
-AC_ARG_WITH(sendmail,[  --with-sendmail=DIR     set sendmail command location])
+# The default behavior is that xdg-email is searched in the user PATH,
+# and email plugin is enabled if found.
+# Sendmail can be used instead of xdg-email, but must be explicitly
+# enabled with --with-sendmail.
 
-if test "x$with_sendmail" != "x"; then
-  sendmail_path=$with_sendmail
-else
-  sendmail_path=$PATH:/usr/sbin:/usr/lib
+have_email="no (xdg-email not found)"
+
+AC_ARG_WITH(sendmail,[  --with-sendmail[=DIR]   use sendmail instead of xdg-email])
+
+have_sendmail=no
+# Sendmail must be explicitely enabled.
+if test "x$with_sendmail" != "x" && test "x$with_sendmail" != "xno"; then
+  if test "x$with_sendmail" = "xyes"; then
+      sendmail_path=$PATH:/usr/sbin:/usr/lib
+  else
+      sendmail_path=$with_sendmail
+  fi
+
+  AC_PATH_PROG(SENDMAIL, sendmail, , $sendmail_path)
+  if test "x$SENDMAIL" != "x"; then
+    have_email="yes (sendmail)"
+    have_sendmail=yes
+    AC_DEFINE_UNQUOTED(SENDMAIL, "$SENDMAIL",
+                       [The MTA used by the mail plug-in.])
+  else
+    AC_MSG_ERROR([
+*** Check for sendmail failed, though it was explicitly enabled with --with-sendmail.
+*** If you know where it is installed, you may configure --with-sendmail=/path/to/bin/.])
+  fi
 fi
 
-AC_PATH_PROG(SENDMAIL, sendmail, , $sendmail_path)
-if test "x$SENDMAIL" != "x"; then
-  AC_DEFINE_UNQUOTED(SENDMAIL, "$SENDMAIL",
-	             [The MTA used by the mail plug-in.])
-fi
+AC_ARG_WITH(xdg_email,[  --with-xdg-email[=DIR]   set xdg-email command location])
 
+have_xdg_email=no
+if test "x$have_sendmail" = xno && test "x$with_xdg_email" != "xno"; then
+  if test "x$with_xdg_email" != "xyes" && test "x$with_sendmail" != "x"; then
+    xdg_email_path=$with_xdg_email
+  else
+    xdg_email_path=$PATH
+  fi
+
+  AC_PATH_PROG(XDG_EMAIL, xdg-email, , $xdg_email_path)
+  if test "x$XDG_EMAIL" != "x"; then
+    have_email="yes (xdg-email)"
+    have_xdg_email=yes
+    AC_DEFINE_UNQUOTED(XDG_EMAIL, "$XDG_EMAIL",
+                       [The email composer search tool used by the mail plug-in.])
+  elif test "x$with_xdg_email" != "x"; then
+    AC_MSG_ERROR([
+*** Check for xdg-email failed, though it was explicitly enabled with --with-xdg-email.
+*** If you know where it is installed, you may configure --with-xdg-email=/path/to/bin/.])
+  fi
+fi
 
 ################
 # Check for perl
@@ -2505,6 +2544,7 @@ Optional Plug-Ins:
   WMF:                 $have_libwmf
   X11 Mouse Cursor:    $have_xmc
   XPM:                 $have_libxpm
+  Email:               $have_email
 
 Optional Modules:
   ALSA (MIDI Input):   $have_alsa
