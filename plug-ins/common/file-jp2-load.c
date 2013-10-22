@@ -106,8 +106,10 @@ query (void)
                                     "4,string,jP,0,string,\xff\x4f\xff\x51\x00");
 
   gimp_register_file_handler_mime (LOAD_PROC, "image/jp2");
+#if 0
   gimp_register_file_handler_mime (LOAD_PROC, "image/jpeg2000");
   gimp_register_file_handler_mime (LOAD_PROC, "image/jpx");
+#endif
 }
 
 static void
