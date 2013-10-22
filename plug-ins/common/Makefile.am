@@ -1091,13 +1091,15 @@ file_jp2_load_SOURCES = \
 	file-jp2-load.c
 
 file_jp2_load_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpmodule)	\
 	$(libgimp)		\
 	$(libgimpmath)		\
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(CAIRO_LIBS)		\
-	$(GDK_PIXBUF_LIBS)	\
+	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(JP2_LIBS)		\
 	$(RT_LIBS)		\
