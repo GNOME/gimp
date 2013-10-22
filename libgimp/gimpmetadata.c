@@ -32,14 +32,14 @@
 #include "libgimp-intl.h"
 
 
-static void     gimp_image_metadata_rotate        (gint32        image_ID,
-                                                   gint          orientation);
-static void     gimp_image_metadata_rotate_query  (gint32        image_ID,
-                                                   const gchar  *mime_type,
-                                                   GimpMetadata *metadata,
-                                                   gboolean      interactive);
-static gboolean gimp_image_metadata_rotate_dialog (gint32        image_ID,
-                                                   const gchar  *parasite_name);
+static void     gimp_image_metadata_rotate        (gint32             image_ID,
+                                                   GExiv2Orientation  orientation);
+static void     gimp_image_metadata_rotate_query  (gint32             image_ID,
+                                                   const gchar       *mime_type,
+                                                   GimpMetadata      *metadata,
+                                                   gboolean           interactive);
+static gboolean gimp_image_metadata_rotate_dialog (gint32             image_ID,
+                                                   const gchar       *parasite_name);
 
 
 /*  public functions  */
@@ -395,45 +395,46 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
 /*  private functions  */
 
 static void
-gimp_image_metadata_rotate (gint32 image_ID,
-                            gint   orientation)
+gimp_image_metadata_rotate (gint32             image_ID,
+                            GExiv2Orientation  orientation)
 {
   switch (orientation)
     {
-    case 1:  /* standard orientation, do nothing */
+    case GEXIV2_ORIENTATION_UNSPECIFIED:
+    case GEXIV2_ORIENTATION_NORMAL:  /* standard orientation, do nothing */
       break;
 
-    case 2:  /* flipped right-left               */
+    case GEXIV2_ORIENTATION_HFLIP:
       gimp_image_flip (image_ID, GIMP_ORIENTATION_HORIZONTAL);
       break;
 
-    case 3:  /* rotated 180                      */
+    case GEXIV2_ORIENTATION_ROT_180:
       gimp_image_rotate (image_ID, GIMP_ROTATE_180);
       break;
 
-    case 4:  /* flipped top-bottom               */
+    case GEXIV2_ORIENTATION_VFLIP:
       gimp_image_flip (image_ID, GIMP_ORIENTATION_VERTICAL);
       break;
 
-    case 5:  /* flipped diagonally around '\'    */
+    case GEXIV2_ORIENTATION_ROT_90_HFLIP:  /* flipped diagonally around '\' */
       gimp_image_rotate (image_ID, GIMP_ROTATE_90);
       gimp_image_flip (image_ID, GIMP_ORIENTATION_HORIZONTAL);
       break;
 
-    case 6:  /* 90 CW                            */
+    case GEXIV2_ORIENTATION_ROT_90:  /* 90 CW */
       gimp_image_rotate (image_ID, GIMP_ROTATE_90);
       break;
 
-    case 7:  /* flipped diagonally around '/'    */
+    case GEXIV2_ORIENTATION_ROT_90_VFLIP:  /* flipped diagonally around '/' */
       gimp_image_rotate (image_ID, GIMP_ROTATE_90);
       gimp_image_flip (image_ID, GIMP_ORIENTATION_VERTICAL);
       break;
 
-    case 8:  /* 90 CCW                           */
+    case GEXIV2_ORIENTATION_ROT_270:  /* 90 CCW */
       gimp_image_rotate (image_ID, GIMP_ROTATE_270);
       break;
 
-    default: /* shouldn't happen                 */
+    default: /* shouldn't happen */
       break;
     }
 }
@@ -444,14 +445,15 @@ gimp_image_metadata_rotate_query (gint32        image_ID,
                                   GimpMetadata *metadata,
                                   gboolean      interactive)
 {
-  GimpParasite *parasite;
-  gchar        *parasite_name;
-  gint          orientation;
-  gboolean      query = interactive;
+  GimpParasite      *parasite;
+  gchar             *parasite_name;
+  GExiv2Orientation  orientation;
+  gboolean           query = interactive;
 
   orientation = gexiv2_metadata_get_orientation (metadata);
 
-  if (orientation < 2 || orientation > 8)
+  if (orientation <= GEXIV2_ORIENTATION_NORMAL ||
+      orientation >  GEXIV2_ORIENTATION_MAX)
     return;
 
   parasite_name = g_strdup_printf ("gimp-metadata-exif-rotate(%s)", mime_type);
