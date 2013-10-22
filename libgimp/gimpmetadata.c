@@ -95,6 +95,10 @@ gimp_image_metadata_load (gint32       image_ID,
                                         metadata, interactive);
 
       gexiv2_metadata_erase_exif_thumbnail (metadata);
+
+      gimp_image_set_metadata (image_ID, metadata);
+
+      g_object_unref (metadata);
     }
 }
 
