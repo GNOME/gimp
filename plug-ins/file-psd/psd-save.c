@@ -293,6 +293,33 @@ run (const gchar      *name,
 
       if (save_image (param[3].data.d_string, image_id, &error))
         {
+          GimpMetadata *metadata;
+
+          metadata = gimp_image_metadata_save_prepare (image_id,
+                                                       "image/x-psd");
+
+          if (metadata)
+            {
+              GFile                 *file;
+              GimpMetadataSaveFlags  flags = 0;
+
+              gimp_metadata_set_bits_per_sample (metadata, 8);
+
+              if (TRUE) flags |= GIMP_METADATA_SAVE_EXIF;
+              if (TRUE) flags |= GIMP_METADATA_SAVE_XMP;
+              if (TRUE) flags |= GIMP_METADATA_SAVE_IPTC;
+              if (TRUE) flags |= GIMP_METADATA_SAVE_THUMBNAIL;
+
+              file = g_file_new_for_path (param[3].data.d_string);
+              gimp_image_metadata_save_finish (image_id,
+                                               "image/x-psd",
+                                               metadata, file, flags,
+                                               NULL);
+              g_object_unref (file);
+
+              g_object_unref (metadata);
+            }
+
           values[0].data.d_status = GIMP_PDB_SUCCESS;
         }
       else
