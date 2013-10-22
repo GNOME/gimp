@@ -41,6 +41,7 @@ typedef enum
 
 GimpMetadata * gimp_metadata_deserialize         (const gchar   *metadata_string);
 gchar        * gimp_metadata_serialize           (GimpMetadata  *metadata);
+gchar        * gimp_metadata_serialize_to_xml    (GimpMetadata  *metadata);
 
 GimpMetadata * gimp_metadata_load_from_file      (GFile         *file,
                                                   GError       **error);

@@ -274,6 +274,89 @@ gimp_metadata_serialize (GExiv2Metadata *metadata)
   return g_string_free (string, FALSE);
 }
 
+/**
+ * Serializing metadata as a string
+ */
+gchar *
+gimp_metadata_serialize_to_xml (GimpMetadata *metadata)
+{
+  GString  *string;
+  gchar   **exif_data = NULL;
+  gchar   **iptc_data = NULL;
+  gchar   **xmp_data  = NULL;
+  gchar    *value;
+  gchar    *escaped;
+  gint      i;
+
+  g_return_val_if_fail (GEXIV2_IS_METADATA (metadata), NULL);
+
+  string = g_string_new (NULL);
+
+  g_string_append (string, "<?xml version='1.0' encoding='UTF-8'?>\n");
+  g_string_append (string, "<metadata>\n");
+
+  exif_data = gexiv2_metadata_get_exif_tags (metadata);
+
+  if (exif_data)
+    {
+      for (i = 0; exif_data[i] != NULL; i++)
+        {
+          value   = gexiv2_metadata_get_tag_string (metadata, exif_data[i]);
+          escaped = g_markup_escape_text (value, -1);
+
+          g_string_append_printf (string, "  <tag name=\"%s\">%s</tag>\n",
+                                  exif_data[i], escaped);
+
+          g_free (escaped);
+          g_free (value);
+        }
+
+      g_strfreev (exif_data);
+    }
+
+  xmp_data = gexiv2_metadata_get_xmp_tags (metadata);
+
+  if (xmp_data)
+    {
+      for (i = 0; xmp_data[i] != NULL; i++)
+        {
+          value   = gexiv2_metadata_get_tag_string (metadata, xmp_data[i]);
+          escaped = g_markup_escape_text (value, -1);
+
+          g_string_append_printf (string, "  <tag name=\"%s\">%s</tag>\n",
+                                  xmp_data[i], escaped);
+
+          g_free (escaped);
+          g_free (value);
+        }
+
+      g_strfreev (xmp_data);
+    }
+
+  iptc_data = gexiv2_metadata_get_iptc_tags (metadata);
+
+  if (iptc_data)
+    {
+      for (i = 0; iptc_data[i] != NULL; i++)
+        {
+          value   = gexiv2_metadata_get_tag_string (metadata, iptc_data[i]);
+          escaped = g_markup_escape_text (value, -1);
+
+          g_string_append_printf (string, "  <tag name=\"%s\">%s</tag>\n",
+                                  iptc_data[i], escaped);
+
+          g_free (escaped);
+          g_free (value);
+        }
+
+      g_strfreev (iptc_data);
+    }
+
+  g_string_append (string, "</metadata>\n");
+
+  return g_string_free (string, FALSE);
+}
+
 /*
  * reads metadata from a physical file
  */
