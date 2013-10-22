@@ -216,6 +216,13 @@ run (const gchar      *name,
 
       if (image_ID != -1)
         {
+          GFile *file = g_file_new_for_path (param[1].data.d_string);
+
+          gimp_image_metadata_load (image_ID, "image/jpeg", file,
+                                    load_interactive);
+
+          g_object_unref (file);
+
           *nreturn_vals = 2;
           values[1].type         = GIMP_PDB_IMAGE;
           values[1].data.d_image = image_ID;
