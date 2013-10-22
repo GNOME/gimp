@@ -420,6 +420,8 @@ run (const gchar      *name,
   GimpExportReturn  export = GIMP_EXPORT_CANCEL;
   GError           *error  = NULL;
 
+  run_mode = param[0].data.d_int32;
+
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
@@ -431,20 +433,29 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      run_mode = param[0].data.d_int32;
+      gboolean interactive;
 
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_ui_init (PLUG_IN_BINARY, FALSE);
+      switch (run_mode)
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_ui_init (PLUG_IN_BINARY, FALSE);
+          interactive = TRUE;
+          break;
+        default:
+          interactive = FALSE;
+          break;
+        }
 
       image_ID = load_image (param[1].data.d_string,
-                             run_mode == GIMP_RUN_INTERACTIVE, &error);
+                             interactive, &error);
 
       if (image_ID != -1)
         {
           GFile *file = g_file_new_for_path (param[1].data.d_string);
 
           gimp_image_metadata_load (image_ID, "image/png", file,
-                                    run_mode == GIMP_RUN_INTERACTIVE);
+                                    interactive);
 
           g_object_unref (file);
 
@@ -463,7 +474,6 @@ run (const gchar      *name,
     {
       gboolean alpha;
 
-      run_mode    = param[0].data.d_int32;
       image_ID    = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
