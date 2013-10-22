@@ -62,7 +62,36 @@ gimp_image_set_metadata (GimpImage    *image,
       private->metadata = metadata;
 
       if (private->metadata)
-        g_object_ref (private->metadata);
+        {
+          gdouble xres, yres;
+
+          g_object_ref (private->metadata);
+
+          gimp_metadata_set_pixel_size (metadata,
+                                        gimp_image_get_width  (image),
+                                        gimp_image_get_height (image));
+
+          switch (gimp_image_get_component_type (image))
+            {
+            case GIMP_COMPONENT_TYPE_U8:
+              gimp_metadata_set_bits_per_sample (metadata, 8);
+              break;
+
+            case GIMP_COMPONENT_TYPE_U16:
+            case GIMP_COMPONENT_TYPE_HALF:
+              gimp_metadata_set_bits_per_sample (metadata, 16);
+              break;
+
+            case GIMP_COMPONENT_TYPE_U32:
+            case GIMP_COMPONENT_TYPE_FLOAT:
+              gimp_metadata_set_bits_per_sample (metadata, 32);
+              break;
+            }
+
+          gimp_image_get_resolution (image, &xres, &yres);
+          gimp_metadata_set_resolution (metadata, xres, yres,
+                                        gimp_image_get_unit (image));
+        }
 
       g_object_notify (G_OBJECT (image), "metadata");
     }

@@ -168,12 +168,14 @@ static gchar  * gimp_image_get_description       (GimpViewable      *viewable,
 
 static void     gimp_image_real_mode_changed     (GimpImage         *image);
 static void     gimp_image_real_precision_changed(GimpImage         *image);
+static void     gimp_image_real_resolution_changed(GimpImage        *image);
 static void     gimp_image_real_size_changed_detailed
                                                  (GimpImage         *image,
                                                   gint               previous_origin_x,
                                                   gint               previous_origin_y,
                                                   gint               previous_width,
                                                   gint               previous_height);
+static void     gimp_image_real_unit_changed     (GimpImage         *image);
 static void     gimp_image_real_colormap_changed (GimpImage         *image,
                                                   gint               color_index);
 
@@ -555,9 +557,9 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->component_visibility_changed = NULL;
   klass->component_active_changed     = NULL;
   klass->mask_changed                 = NULL;
-  klass->resolution_changed           = NULL;
+  klass->resolution_changed           = gimp_image_real_resolution_changed;
   klass->size_changed_detailed        = gimp_image_real_size_changed_detailed;
-  klass->unit_changed                 = NULL;
+  klass->unit_changed                 = gimp_image_real_unit_changed;
   klass->quick_mask_changed           = NULL;
   klass->selection_invalidate         = NULL;
 
@@ -1216,29 +1218,41 @@ gimp_image_real_precision_changed (GimpImage *image)
   metadata = gimp_image_get_metadata (image);
   if (metadata)
     {
-      gint bps = 8;
-
       switch (gimp_image_get_component_type (image))
         {
         case GIMP_COMPONENT_TYPE_U8:
-          bps = 8;
+          gimp_metadata_set_bits_per_sample (metadata, 8);
           break;
 
         case GIMP_COMPONENT_TYPE_U16:
         case GIMP_COMPONENT_TYPE_HALF:
-          bps = 16;
+          gimp_metadata_set_bits_per_sample (metadata, 16);
           break;
 
         case GIMP_COMPONENT_TYPE_U32:
         case GIMP_COMPONENT_TYPE_FLOAT:
-          bps = 32;
+          gimp_metadata_set_bits_per_sample (metadata, 32);
           break;
         }
-
-      gimp_metadata_set_bits_per_sample (metadata, bps);
     }
 
   gimp_projectable_structure_changed (GIMP_PROJECTABLE (image));
+}
+
+static void
+gimp_image_real_resolution_changed (GimpImage *image)
+{
+  GimpMetadata *metadata;
+
+  metadata = gimp_image_get_metadata (image);
+  if (metadata)
+    {
+      gdouble xres, yres;
+
+      gimp_image_get_resolution (image, &xres, &yres);
+      gimp_metadata_set_resolution (metadata, xres, yres,
+                                    gimp_image_get_unit (image));
+    }
 }
 
 static void
@@ -1253,6 +1267,22 @@ gimp_image_real_size_changed_detailed (GimpImage *image,
    * to depending on how much info they need.
    */
   gimp_viewable_size_changed (GIMP_VIEWABLE (image));
+}
+
+static void
+gimp_image_real_unit_changed (GimpImage *image)
+{
+  GimpMetadata *metadata;
+
+  metadata = gimp_image_get_metadata (image);
+  if (metadata)
+    {
+      gdouble xres, yres;
+
+      gimp_image_get_resolution (image, &xres, &yres);
+      gimp_metadata_set_resolution (metadata, xres, yres,
+                                    gimp_image_get_unit (image));
+    }
 }
 
 static void
