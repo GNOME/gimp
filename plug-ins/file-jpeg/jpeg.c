@@ -489,6 +489,28 @@ run (const gchar      *name,
         {
           GimpMetadata *metadata;
 
+          /* pw - now we need to change the defaults to be whatever
+           * was used to save this image.  Dump the old parasites
+           * and add new ones.
+           */
+
+          gimp_image_detach_parasite (orig_image_ID, "gimp-comment");
+          if (image_comment && strlen (image_comment))
+            {
+              parasite = gimp_parasite_new ("gimp-comment",
+                                            GIMP_PARASITE_PERSISTENT,
+                                            strlen (image_comment) + 1,
+                                            image_comment);
+              gimp_image_attach_parasite (orig_image_ID, parasite);
+              gimp_parasite_free (parasite);
+            }
+
+          parasite = gimp_parasite_new ("jpeg-save-options",
+                                        0, sizeof (jsvals), &jsvals);
+          gimp_image_attach_parasite (orig_image_ID, parasite);
+          gimp_parasite_free (parasite);
+
+          /* write metadata */
           metadata = gimp_image_metadata_save_prepare (image_ID,
                                                        "image/jpeg");
 
@@ -513,27 +535,6 @@ run (const gchar      *name,
 
               g_object_unref (metadata);
             }
-
-          /* pw - now we need to change the defaults to be whatever
-           * was used to save this image.  Dump the old parasites
-           * and add new ones.
-           */
-
-          gimp_image_detach_parasite (orig_image_ID, "gimp-comment");
-          if (image_comment && strlen (image_comment))
-            {
-              parasite = gimp_parasite_new ("gimp-comment",
-                                            GIMP_PARASITE_PERSISTENT,
-                                            strlen (image_comment) + 1,
-                                            image_comment);
-              gimp_image_attach_parasite (orig_image_ID, parasite);
-              gimp_parasite_free (parasite);
-            }
-
-          parasite = gimp_parasite_new ("jpeg-save-options",
-                                        0, sizeof (jsvals), &jsvals);
-          gimp_image_attach_parasite (orig_image_ID, parasite);
-          gimp_parasite_free (parasite);
         }
     }
   else
