@@ -198,6 +198,146 @@ gimp_metadata_deserialize (const gchar *metadata_string)
   return metadata;
 }
 
+typedef struct
+{
+  gchar         name[1024];
+  GimpMetadata *metadata;
+} GimpMetadataParseData;
+
+static const gchar*
+gimp_metadata_attribute_name_to_value (const gchar **attribute_names,
+                                       const gchar **attribute_values,
+                                       const gchar  *name)
+{
+  while (*attribute_names)
+    {
+      if (! strcmp (*attribute_names, name))
+        {
+          return *attribute_values;
+        }
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  return NULL;
+}
+
+static void
+gimp_metadata_deserialize_start_element (GMarkupParseContext *context,
+                                         const gchar         *element_name,
+                                         const gchar        **attribute_names,
+                                         const gchar        **attribute_values,
+                                         gpointer             user_data,
+                                         GError             **error)
+{
+  GimpMetadataParseData *parse_data = user_data;
+
+  if (! strcmp (element_name, "tag"))
+    {
+      const gchar *name;
+
+      name = gimp_metadata_attribute_name_to_value (attribute_names,
+                                                    attribute_values,
+                                                    "name");
+
+      if (! name)
+        {
+          g_set_error (error,
+                       g_quark_from_static_string ("gimp-metadata-error-quark"),
+                       1001,
+                       "Element 'tag' not contain required attribute 'name'.");
+          return;
+        }
+
+      strncpy (parse_data->name, name, sizeof (parse_data->name));
+      parse_data->name[sizeof (parse_data->name) - 1] = 0;
+    }
+}
+
+static void
+gimp_metadata_deserialize_end_element (GMarkupParseContext *context,
+                                       const gchar         *element_name,
+                                       gpointer             user_data,
+                                       GError             **error)
+{
+}
+
+static void
+gimp_metadata_deserialize_text (GMarkupParseContext  *context,
+                                const gchar          *text,
+                                gsize                 text_len,
+                                gpointer              user_data,
+                                GError              **error)
+{
+  GimpMetadataParseData *parse_data = user_data;
+  const gchar           *current_element;
+
+  current_element = g_markup_parse_context_get_element (context);
+
+  if (! g_strcmp0 (current_element, "tag"))
+    {
+      gchar *value = g_strndup (text, text_len);
+
+      gexiv2_metadata_set_tag_string (parse_data->metadata,
+                                      parse_data->name,
+                                      value);
+
+      g_free (value);
+    }
+}
+
+static  void
+gimp_metadata_deserialize_error (GMarkupParseContext *context,
+                                 GError              *error,
+                                 gpointer             user_data)
+{
+  g_printerr ("Metadata parse error: %s\n", error->message);
+}
+
+/**
+ * Deserializes metadata from a string
+ **/
+GExiv2Metadata *
+gimp_metadata_deserialize_xml (const gchar *metadata_string)
+{
+  GExiv2Metadata        *metadata = NULL;
+  GMarkupParser          markup_parser;
+  GimpMetadataParseData  parse_data;
+  GMarkupParseContext   *context;
+
+  g_return_val_if_fail (metadata_string != NULL, NULL);
+
+  if (gexiv2_initialize ())
+    {
+      metadata = gexiv2_metadata_new ();
+
+      if (! gexiv2_metadata_open_buf (metadata, wilber_jpg, wilber_jpg_len,
+                                      NULL))
+        {
+          return NULL;
+        }
+    }
+
+  parse_data.metadata = metadata;
+
+  markup_parser.start_element = gimp_metadata_deserialize_start_element;
+  markup_parser.end_element   = gimp_metadata_deserialize_end_element;
+  markup_parser.text          = gimp_metadata_deserialize_text;
+  markup_parser.passthrough   = NULL;
+  markup_parser.error         = gimp_metadata_deserialize_error;
+
+  context = g_markup_parse_context_new (&markup_parser, 0, &parse_data, NULL);
+
+  g_markup_parse_context_parse (context,
+                                metadata_string, strlen (metadata_string),
+                                NULL);
+
+  g_markup_parse_context_unref (context);
+
+  return metadata;
+}
+
 /**
  * Serializing metadata as a string
  */
