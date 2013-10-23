@@ -141,6 +141,7 @@ xcf_load_image (Gimp     *gimp,
 {
   GimpImage          *image = NULL;
   const GimpParasite *parasite;
+  gboolean            has_metadata = FALSE;
   guint32             saved_pos;
   guint32             offset;
   gint                width;
@@ -223,6 +224,76 @@ xcf_load_image (Gimp     *gimp,
 
       if (metadata)
         {
+          has_metadata = TRUE;
+
+          gimp_image_set_metadata (image, metadata);
+          g_object_unref (metadata);
+        }
+
+      gimp_parasite_list_remove (private->parasites,
+                                 gimp_parasite_name (parasite));
+    }
+
+  /* migrate the old "exif-data" parasite */
+  parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
+                                       "exif-data");
+  if (parasite)
+    {
+      GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+
+      if (has_metadata)
+        {
+          g_printerr ("xcf-load: inconsistent metadata discovered: XCF file "
+                      "has both 'gimp-image-metadata' and 'exif-data' "
+                      "parasites, dropping old 'exif-data'\n");
+        }
+      else
+        {
+          GimpMetadata *metadata = gimp_image_get_metadata (image);
+
+          if (metadata)
+            g_object_ref (metadata);
+          else
+            metadata = gimp_metadata_new ();
+
+          gimp_metadata_set_from_exif (metadata,
+                                       gimp_parasite_data (parasite),
+                                       gimp_parasite_data_size (parasite));
+
+          gimp_image_set_metadata (image, metadata);
+          g_object_unref (metadata);
+        }
+
+      gimp_parasite_list_remove (private->parasites,
+                                 gimp_parasite_name (parasite));
+    }
+
+  /* migrate the old "gimp-metadata" parasite */
+  parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
+                                       "gimp-metadata");
+  if (parasite)
+    {
+      GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+
+      if (has_metadata)
+        {
+          g_printerr ("xcf-load: inconsistent metadata discovered: XCF file "
+                      "has both 'gimp-image-metadata' and 'gimp-metadata' "
+                      "parasites, dropping old 'gimp-metadata'\n");
+        }
+      else
+        {
+          GimpMetadata *metadata = gimp_image_get_metadata (image);
+
+          if (metadata)
+            g_object_ref (metadata);
+          else
+            metadata = gimp_metadata_new ();
+
+          gimp_metadata_set_from_xmp (metadata,
+                                      gimp_parasite_data (parasite),
+                                      gimp_parasite_data_size (parasite));
+
           gimp_image_set_metadata (image, metadata);
           g_object_unref (metadata);
         }
