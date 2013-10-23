@@ -626,20 +626,31 @@ gimp_metadata_get_resolution (GimpMetadata *metadata,
   gchar  *xr;
   gchar  *yr;
   gchar  *un;
-  gint    exif_unit;
-  gchar **xnom   = NULL;
-  gchar **xdenom = NULL;
-  gchar **ynom   = NULL;
-  gchar **ydenom = NULL;
+  gint    exif_unit = 2;
+  gchar **xnom      = NULL;
+  gchar **xdenom    = NULL;
+  gchar **ynom      = NULL;
+  gchar **ydenom    = NULL;
 
   g_return_val_if_fail (GEXIV2_IS_METADATA (metadata), FALSE);
 
   xr = gexiv2_metadata_get_tag_string (metadata, "Exif.Image.XResolution");
   yr = gexiv2_metadata_get_tag_string (metadata, "Exif.Image.YResolution");
 
+  if (! (xr && yr))
+    {
+      g_free (xr);
+      g_free (yr);
+      return FALSE;
+    }
+
   un = gexiv2_metadata_get_tag_string (metadata, "Exif.Image.ResolutionUnit");
-  exif_unit = atoi (un);
-  g_free (un);
+
+  if (un)
+    {
+      exif_unit = atoi (un);
+      g_free (un);
+    }
 
   if (exif_unit == 3)
     *unit = GIMP_UNIT_MM;
