@@ -39,6 +39,8 @@ typedef enum
 } GimpMetadataSaveFlags;
 
 
+GimpMetadata * gimp_metadata_new                 (void);
+
 GimpMetadata * gimp_metadata_deserialize         (const gchar   *metadata_xml);
 gchar        * gimp_metadata_serialize           (GimpMetadata  *metadata);
 
@@ -47,6 +49,13 @@ GimpMetadata * gimp_metadata_load_from_file      (GFile         *file,
 gboolean       gimp_metadata_save_to_file        (GimpMetadata  *metadata,
                                                   GFile         *file,
                                                   GError       **error);
+
+gboolean       gimp_metadata_set_from_exif       (GimpMetadata  *metadata,
+                                                  const guchar  *exif_data,
+                                                  gint           exif_data_length);
+gboolean       gimp_metadata_set_from_xmp        (GimpMetadata  *metadata,
+                                                  const guchar  *xmp_data,
+                                                  gint           xmp_data_length);
 
 void           gimp_metadata_set_pixel_size      (GimpMetadata  *metadata,
                                                   gint           width,

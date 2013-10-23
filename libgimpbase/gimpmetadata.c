@@ -127,6 +127,27 @@ static const guint8 wilber_jpg[] =
 static const guint wilber_jpg_len = G_N_ELEMENTS (wilber_jpg);
 
 
+GimpMetadata *
+gimp_metadata_new (void)
+{
+  GExiv2Metadata *metadata = NULL;
+
+  if (gexiv2_initialize ())
+    {
+      metadata = gexiv2_metadata_new ();
+
+      if (! gexiv2_metadata_open_buf (metadata, wilber_jpg, wilber_jpg_len,
+                                      NULL))
+        {
+          g_object_unref (metadata);
+
+          return NULL;
+        }
+    }
+
+  return metadata;
+}
+
 typedef struct
 {
   gchar         name[1024];
@@ -230,23 +251,14 @@ gimp_metadata_deserialize_error (GMarkupParseContext *context,
 GExiv2Metadata *
 gimp_metadata_deserialize (const gchar *metadata_xml)
 {
-  GExiv2Metadata        *metadata = NULL;
+  GimpMetadata          *metadata;
   GMarkupParser          markup_parser;
   GimpMetadataParseData  parse_data;
   GMarkupParseContext   *context;
 
   g_return_val_if_fail (metadata_xml != NULL, NULL);
 
-  if (gexiv2_initialize ())
-    {
-      metadata = gexiv2_metadata_new ();
-
-      if (! gexiv2_metadata_open_buf (metadata, wilber_jpg, wilber_jpg_len,
-                                      NULL))
-        {
-          return NULL;
-        }
-    }
+  metadata = gimp_metadata_new ();
 
   parse_data.metadata = metadata;
 
@@ -437,6 +449,34 @@ gimp_metadata_save_to_file (GimpMetadata  *metadata,
   g_free (filename);
 
   return success;
+}
+
+gboolean
+gimp_metadata_set_from_exif (GimpMetadata  *metadata,
+                             const guchar  *exif_data,
+                             gint           exif_data_length)
+{
+  g_return_val_if_fail (GEXIV2_IS_METADATA (metadata), FALSE);
+  g_return_val_if_fail (exif_data != NULL, FALSE);
+  g_return_val_if_fail (exif_data_length > 0, FALSE);
+
+  /* TODO */
+
+  return TRUE;
+}
+
+gboolean
+gimp_metadata_set_from_xmp (GimpMetadata  *metadata,
+                            const guchar  *xmp_data,
+                            gint           xmp_data_length)
+{
+  g_return_val_if_fail (GEXIV2_IS_METADATA (metadata), FALSE);
+  g_return_val_if_fail (xmp_data != NULL, FALSE);
+  g_return_val_if_fail (xmp_data_length > 0, FALSE);
+
+  /* TODO */
+
+  return TRUE;
 }
 
 void

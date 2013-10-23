@@ -54,9 +54,12 @@ EXPORTS
 	gimp_metadata_get_resolution
 	gimp_metadata_is_tag_supported
 	gimp_metadata_load_from_file
+	gimp_metadata_new
 	gimp_metadata_save_to_file
 	gimp_metadata_serialize
 	gimp_metadata_set_bits_per_sample
+	gimp_metadata_set_from_exif
+	gimp_metadata_set_from_xmp
 	gimp_metadata_set_pixel_size
 	gimp_metadata_set_resolution
 	gimp_micro_version
