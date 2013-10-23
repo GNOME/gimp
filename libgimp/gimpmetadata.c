@@ -65,6 +65,28 @@ gimp_image_metadata_load (gint32       image_ID,
       gdouble   yres;
       GimpUnit  unit;
 
+#if 0
+      {
+        gchar *xml = gimp_metadata_serialize (metadata);
+        GimpMetadata *new = gimp_metadata_deserialize (xml);
+        gchar *xml2 = gimp_metadata_serialize (new);
+
+        FILE *f = fopen ("/tmp/gimp-test-xml1", "w");
+        fprintf (f, "%s", xml);
+        fclose (f);
+
+        f = fopen ("/tmp/gimp-test-xml2", "w");
+        fprintf (f, "%s", xml2);
+        fclose (f);
+
+        system ("diff -u /tmp/gimp-test-xml1 /tmp/gimp-test-xml2");
+
+        g_free (xml);
+        g_free (xml2);
+        g_object_unref (new);
+      }
+#endif
+
       comment = gexiv2_metadata_get_tag_string (metadata,
                                                 "Exif.Photo.UserComment");
       if (! comment)
