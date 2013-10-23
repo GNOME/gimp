@@ -39,10 +39,8 @@ typedef enum
 } GimpMetadataSaveFlags;
 
 
-GimpMetadata * gimp_metadata_deserialize         (const gchar   *metadata_string);
-GimpMetadata * gimp_metadata_deserialize_xml     (const gchar   *metadata_string);
+GimpMetadata * gimp_metadata_deserialize         (const gchar   *metadata_xml);
 gchar        * gimp_metadata_serialize           (GimpMetadata  *metadata);
-gchar        * gimp_metadata_serialize_to_xml    (GimpMetadata  *metadata);
 
 GimpMetadata * gimp_metadata_load_from_file      (GFile         *file,
                                                   GError       **error);

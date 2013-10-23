@@ -127,77 +127,6 @@ static const guint8 wilber_jpg[] =
 static const guint wilber_jpg_len = G_N_ELEMENTS (wilber_jpg);
 
 
-/**
- * Deserializes metadata from a string
- **/
-GExiv2Metadata *
-gimp_metadata_deserialize (const gchar *metadata_string)
-{
-  GExiv2Metadata  *metadata = NULL;
-  GString         *buffer;
-  gint             i;
-  gint             j;
-  gchar          **meta_info = NULL;
-  gchar          **tag_info  = NULL;
-  gint             num;
-  gchar           *value;
-  GError         **error = NULL;
-
-  g_return_val_if_fail (metadata_string != NULL, NULL);
-
-  if (gexiv2_initialize ())
-    {
-      metadata = gexiv2_metadata_new ();
-
-      if (! gexiv2_metadata_open_buf (metadata, wilber_jpg, wilber_jpg_len,
-                                      error))
-        {
-          return NULL;
-        }
-    }
-
-  if (metadata)
-    {
-      meta_info = g_strsplit (metadata_string, TAG_LINE_DELIMITER, -1);
-
-      if (meta_info)
-        {
-          for (i = 0; meta_info[i] != NULL; i++)
-            {
-              num = gimp_metadata_length (meta_info[i], TAG_TAG_DELIMITER);
-              tag_info = g_strsplit (meta_info[i], TAG_TAG_DELIMITER, -1);
-              if (num > 0)
-                {
-                  if (num > 1)
-                    {
-                      buffer = g_string_new (NULL);
-                      for (j = 1; j < (num + 1); j++)
-                        {
-                          g_string_append_printf (buffer, "%s%s",
-                                                  tag_info[j], TAG_TAG_DELIMITER); /* recreates value */
-                        }
-                      value = g_strndup (buffer->str, buffer->len - 1);  /* to avoid the trailing '#' */
-                      g_string_free (buffer, TRUE);
-                    }
-                  else
-                    {
-                      value = tag_info[1];
-                    }
-
-                  gexiv2_metadata_set_tag_string (metadata, tag_info[0], value);
-                }
-            }
-
-          g_strfreev (meta_info);
-        }
-    }
-
-  if (tag_info)
-    g_strfreev (tag_info);
-
-  return metadata;
-}
-
 typedef struct
 {
   gchar         name[1024];
@@ -299,14 +228,14 @@ gimp_metadata_deserialize_error (GMarkupParseContext *context,
  * Deserializes metadata from a string
  **/
 GExiv2Metadata *
-gimp_metadata_deserialize_xml (const gchar *metadata_string)
+gimp_metadata_deserialize (const gchar *metadata_xml)
 {
   GExiv2Metadata        *metadata = NULL;
   GMarkupParser          markup_parser;
   GimpMetadataParseData  parse_data;
   GMarkupParseContext   *context;
 
-  g_return_val_if_fail (metadata_string != NULL, NULL);
+  g_return_val_if_fail (metadata_xml != NULL, NULL);
 
   if (gexiv2_initialize ())
     {
@@ -330,7 +259,7 @@ gimp_metadata_deserialize_xml (const gchar *metadata_string)
   context = g_markup_parse_context_new (&markup_parser, 0, &parse_data, NULL);
 
   g_markup_parse_context_parse (context,
-                                metadata_string, strlen (metadata_string),
+                                metadata_xml, strlen (metadata_xml),
                                 NULL);
 
   g_markup_parse_context_unref (context);
@@ -342,83 +271,7 @@ gimp_metadata_deserialize_xml (const gchar *metadata_string)
  * Serializing metadata as a string
  */
 gchar *
-gimp_metadata_serialize (GExiv2Metadata *metadata)
-{
-  GString  *string;
-  gchar   **exif_data = NULL;
-  gchar   **iptc_data = NULL;
-  gchar   **xmp_data  = NULL;
-  gchar    *value;
-  gint      i;
-  gint      n;
-
-  g_return_val_if_fail (GEXIV2_IS_METADATA (metadata), NULL);
-
-  n = 0;
-  string = g_string_new (NULL);
-
-  exif_data = gexiv2_metadata_get_exif_tags (metadata);
-
-  if (exif_data)
-    {
-      for (i = 0; exif_data[i] != NULL; i++)
-        {
-          value = gexiv2_metadata_get_tag_string (metadata, exif_data[i]);
-          g_string_append_printf (string, "%s%s%s%s", exif_data[i],
-                                  TAG_TAG_DELIMITER,
-                                  value,
-                                  TAG_LINE_DELIMITER);
-          g_free (value);
-          n++;
-        }
-
-      g_strfreev (exif_data);
-    }
-
-  xmp_data = gexiv2_metadata_get_xmp_tags (metadata);
-
-  if (xmp_data)
-    {
-      for (i = 0; xmp_data[i] != NULL; i++)
-        {
-          value = gexiv2_metadata_get_tag_string (metadata, xmp_data[i]);
-          g_string_append_printf (string, "%s%s%s%s", xmp_data[i],
-                                  TAG_TAG_DELIMITER,
-                                  value,
-                                  TAG_LINE_DELIMITER);
-          g_free (value);
-          n++;
-        }
-
-      g_strfreev (xmp_data);
-    }
-
-  iptc_data = gexiv2_metadata_get_iptc_tags (metadata);
-
-  if (iptc_data)
-    {
-      for (i = 0; iptc_data[i] != NULL; i++)
-        {
-          value = gexiv2_metadata_get_tag_string (metadata, iptc_data[i]);
-          g_string_append_printf (string, "%s%s%s%s", iptc_data[i],
-                                  TAG_TAG_DELIMITER,
-                                  value,
-                                  TAG_LINE_DELIMITER);
-          g_free (value);
-          n++;
-        }
-
-      g_strfreev (iptc_data);
-    }
-
-  return g_string_free (string, FALSE);
-}
-
-/**
- * Serializing metadata as a string
- */
-gchar *
-gimp_metadata_serialize_to_xml (GimpMetadata *metadata)
+gimp_metadata_serialize (GimpMetadata *metadata)
 {
   GString  *string;
   gchar   **exif_data = NULL;
