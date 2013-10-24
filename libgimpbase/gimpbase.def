@@ -51,6 +51,7 @@ EXPORTS
 	gimp_memsize_to_string
 	gimp_message_handler_type_get_type
 	gimp_metadata_deserialize
+	gimp_metadata_duplicate
 	gimp_metadata_get_resolution
 	gimp_metadata_is_tag_supported
 	gimp_metadata_load_from_file

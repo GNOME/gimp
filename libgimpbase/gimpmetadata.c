@@ -148,6 +148,25 @@ gimp_metadata_new (void)
   return metadata;
 }
 
+GimpMetadata *
+gimp_metadata_duplicate (GimpMetadata *metadata)
+{
+  GimpMetadata *new_metadata = NULL;
+
+  g_return_val_if_fail (metadata == NULL || GEXIV2_IS_METADATA (metadata), NULL);
+
+  if (metadata)
+    {
+      gchar *xml;
+
+      xml = gimp_metadata_serialize (metadata);
+      new_metadata = gimp_metadata_deserialize (xml);
+      g_free (xml);
+    }
+
+  return new_metadata;
+}
+
 typedef struct
 {
   gchar         name[1024];

@@ -40,6 +40,7 @@ typedef enum
 
 
 GimpMetadata * gimp_metadata_new                 (void);
+GimpMetadata * gimp_metadata_duplicate           (GimpMetadata  *metadata);
 
 GimpMetadata * gimp_metadata_deserialize         (const gchar   *metadata_xml);
 gchar        * gimp_metadata_serialize           (GimpMetadata  *metadata);
