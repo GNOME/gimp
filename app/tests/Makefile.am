@@ -124,7 +124,8 @@ LDADD = \
 	$(PANGOCAIRO_LIBS)					\
 	$(CAIRO_LIBS)						\
 	$(GEGL_LIBS)						\
-	$(GLIB_LIBS)						\
+	$(GIO_LIBS)						\
+	$(GEXIV2_LIBS)						\
 	$(INTLLIBS)						\
 	$(RT_LIBS)
 
