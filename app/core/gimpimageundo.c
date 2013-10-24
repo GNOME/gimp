@@ -35,6 +35,7 @@
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-grid.h"
+#include "gimpimage-metadata.h"
 #include "gimpimage-private.h"
 #include "gimpimageundo.h"
 #include "gimpparasitelist.h"
@@ -186,6 +187,11 @@ gimp_image_undo_constructed (GObject *object)
                                          GIMP_IMAGE_COLORMAP_SIZE);
       break;
 
+    case GIMP_UNDO_IMAGE_METADATA:
+      image_undo->metadata =
+        gimp_metadata_duplicate (gimp_image_get_metadata (image));
+      break;
+
     case GIMP_UNDO_PARASITE_ATTACH:
     case GIMP_UNDO_PARASITE_REMOVE:
       g_assert (image_undo->parasite_name != NULL);
@@ -283,6 +289,9 @@ gimp_image_undo_get_memsize (GimpObject *object,
 
   if (image_undo->colormap)
     memsize += GIMP_IMAGE_COLORMAP_SIZE;
+
+  if (image_undo->metadata)
+    memsize += gimp_g_object_get_memsize (G_OBJECT (image_undo->metadata));
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (image_undo->grid),
                                       gui_size);
@@ -447,6 +456,20 @@ gimp_image_undo_pop (GimpUndo            *undo,
       }
       break;
 
+    case GIMP_UNDO_IMAGE_METADATA:
+      {
+        GimpMetadata *metadata;
+
+        metadata = gimp_metadata_duplicate (gimp_image_get_metadata (image));
+
+        gimp_image_set_metadata (image, image_undo->metadata, FALSE);
+
+        if (image_undo->metadata)
+          g_object_unref (image_undo->metadata);
+        image_undo->metadata = metadata;
+      }
+      break;
+
     case GIMP_UNDO_PARASITE_ATTACH:
     case GIMP_UNDO_PARASITE_REMOVE:
       {
@@ -493,6 +516,12 @@ gimp_image_undo_free (GimpUndo     *undo,
     {
       g_free (image_undo->colormap);
       image_undo->colormap = NULL;
+    }
+
+  if (image_undo->metadata)
+    {
+      g_free (image_undo->metadata);
+      image_undo->metadata = NULL;
     }
 
   if (image_undo->parasite_name)

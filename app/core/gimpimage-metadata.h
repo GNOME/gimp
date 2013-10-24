@@ -21,7 +21,8 @@
 
 GimpMetadata * gimp_image_get_metadata (GimpImage    *image);
 void           gimp_image_set_metadata (GimpImage    *image,
-                                        GimpMetadata *metadata);
+                                        GimpMetadata *metadata,
+                                        gboolean      push_undo);
 
 
 #endif /* __GIMP_IMAGE_METADATA_H__ */

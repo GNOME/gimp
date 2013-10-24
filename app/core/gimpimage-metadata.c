@@ -27,6 +27,7 @@
 #include "gimpimage.h"
 #include "gimpimage-metadata.h"
 #include "gimpimage-private.h"
+#include "gimpimage-undo-push.h"
 
 
 /* public functions */
@@ -46,7 +47,8 @@ gimp_image_get_metadata (GimpImage *image)
 
 void
 gimp_image_set_metadata (GimpImage    *image,
-                         GimpMetadata *metadata)
+                         GimpMetadata *metadata,
+                         gboolean      push_undo)
 {
   GimpImagePrivate *private;
 
@@ -56,6 +58,9 @@ gimp_image_set_metadata (GimpImage    *image,
 
   if (metadata != private->metadata)
     {
+      if (push_undo)
+        gimp_image_undo_push_image_metadata (image, NULL);
+
       if (private->metadata)
         g_object_unref (private->metadata);
 

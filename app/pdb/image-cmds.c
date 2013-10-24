@@ -1758,7 +1758,7 @@ image_set_metadata_invoker (GimpProcedure         *procedure,
     {
       GimpMetadata *metadata = gimp_metadata_deserialize (metadata_string);
 
-      gimp_image_set_metadata (image, metadata);
+      gimp_image_set_metadata (image, metadata, TRUE);
 
       if (metadata)
         g_object_unref (metadata);

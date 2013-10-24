@@ -226,7 +226,7 @@ xcf_load_image (Gimp     *gimp,
         {
           has_metadata = TRUE;
 
-          gimp_image_set_metadata (image, metadata);
+          gimp_image_set_metadata (image, metadata, FALSE);
           g_object_unref (metadata);
         }
 
@@ -260,7 +260,7 @@ xcf_load_image (Gimp     *gimp,
                                        gimp_parasite_data (parasite),
                                        gimp_parasite_data_size (parasite));
 
-          gimp_image_set_metadata (image, metadata);
+          gimp_image_set_metadata (image, metadata, FALSE);
           g_object_unref (metadata);
         }
 
@@ -294,7 +294,7 @@ xcf_load_image (Gimp     *gimp,
                                       gimp_parasite_data (parasite),
                                       gimp_parasite_data_size (parasite));
 
-          gimp_image_set_metadata (image, metadata);
+          gimp_image_set_metadata (image, metadata, FALSE);
           g_object_unref (metadata);
         }
 

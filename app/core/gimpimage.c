@@ -618,8 +618,7 @@ gimp_image_class_init (GimpImageClass *klass)
   g_object_class_install_property (object_class, PROP_METADATA,
                                    g_param_spec_object ("metadata", NULL, NULL,
                                                         GEXIV2_TYPE_METADATA,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+                                                        GIMP_PARAM_READABLE));
 
   g_object_class_override_property (object_class, PROP_BUFFER, "buffer");
 
@@ -851,8 +850,6 @@ gimp_image_set_property (GObject      *object,
       private->precision = g_value_get_enum (value);
       break;
     case PROP_METADATA:
-      gimp_image_set_metadata (image, g_value_get_object (value));
-      break;
     case PROP_BUFFER:
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
