@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-24 02:18+0200\n"
-"PO-Revision-Date: 2013-08-24 02:19+0200\n"
+"POT-Creation-Date: 2013-10-24 18:41+0200\n"
+"PO-Revision-Date: 2013-10-24 18:42+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -11740,13 +11740,21 @@ msgstr "Przekształcenie warstwy tekstowej"
 msgid "Discard Text Information"
 msgstr "Porzucenie informacji o tekście"
 
-#: ../app/text/gimptextlayer.c:581
+#: ../app/text/gimptextlayer.c:582
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Funkcje tekstowe nie są dostępne z powodu braku czcionek."
 
-#: ../app/text/gimptextlayer.c:634
+#: ../app/text/gimptextlayer.c:640
 msgid "Empty Text Layer"
 msgstr "Pusta warstwa tekstowa"
+
+#: ../app/text/gimptextlayer.c:696
+msgid ""
+"Your text cannot be rendered. It is likely too big. Please make it shorter "
+"or use a smaller font."
+msgstr ""
+"Tekst nie może zostać wyświetlony. Prawdopodobnie jest za duży. Proszę go "
+"skrócić lub użyć mniejszej czcionki."
 
 #: ../app/text/gimptextlayer-xcf.c:76
 #, c-format
@@ -11763,6 +11771,14 @@ msgstr ""
 "\n"
 "Niektóre właściwości tekstu mogą być błędne. Jeśli tekst nie będzie "
 "modyfikowany, to nie ma to większego znaczenia."
+
+#: ../app/text/gimptextlayout.c:577
+msgid ""
+"The new text layout cannot be generated. Most likely the font size is too "
+"big."
+msgstr ""
+"Nie można utworzyć nowego układu tekstu. Prawdopodobnie rozmiar czcionki "
+"jest za duży."
 
 #: ../app/text/text-enums.c:23
 msgctxt "text-box-mode"
@@ -12102,27 +12118,27 @@ msgctxt "command"
 msgid "Select by Color"
 msgstr "Zaznaczenie według koloru"
 
-#: ../app/tools/gimpcagetool.c:152 ../app/tools/gimpcagetool.c:1156
+#: ../app/tools/gimpcagetool.c:158 ../app/tools/gimpcagetool.c:1123
 msgid "Cage Transform"
 msgstr "Przekształcenie klatki"
 
-#: ../app/tools/gimpcagetool.c:153
+#: ../app/tools/gimpcagetool.c:159
 msgid "Cage Transform: Deform a selection with a cage"
 msgstr "Przekształcenie klatki: zniekształca zaznaczenie za pomocą klatki"
 
-#: ../app/tools/gimpcagetool.c:154
+#: ../app/tools/gimpcagetool.c:160
 msgid "_Cage Transform"
 msgstr "Przekształcenie _klatki"
 
-#: ../app/tools/gimpcagetool.c:353
+#: ../app/tools/gimpcagetool.c:356
 msgid "Press ENTER to commit the transform"
 msgstr "Naciśnięcie klawisza Enter zatwierdzi przekształcenie"
 
-#: ../app/tools/gimpcagetool.c:1097
+#: ../app/tools/gimpcagetool.c:1064
 msgid "Computing Cage Coefficients"
 msgstr "Obliczanie współrzędnych klatki"
 
-#: ../app/tools/gimpcagetool.c:1274
+#: ../app/tools/gimpcagetool.c:1241
 msgid "Cage transform"
 msgstr "Przekształcenie klatki"
 
@@ -13801,7 +13817,7 @@ msgstr ""
 
 #: ../app/tools/gimptextoptions.c:153
 msgid "The text language may have an effect on the way the text is rendered."
-msgstr "Język tekstu może mieć wpływ na sposób jego renderowania."
+msgstr "Język tekstu może mieć wpływ na sposób jego wyświetlania."
 
 #: ../app/tools/gimptextoptions.c:164
 msgid "Text alignment"
