@@ -30,8 +30,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-23 11:01+0200\n"
-"PO-Revision-Date: 2013-09-23 11:01+0200\n"
+"POT-Creation-Date: 2013-10-25 16:43+0200\n"
+"PO-Revision-Date: 2013-10-25 17:36+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: \n"
@@ -11728,15 +11728,21 @@ msgstr "Trasforma livello di testo"
 msgid "Discard Text Information"
 msgstr "Abbandona le informazioni sul testo"
 
-#: ../app/text/gimptextlayer.c:581
+#: ../app/text/gimptextlayer.c:582
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr ""
 "A causa della mancanza di qualsiasi carattere, la funzionalità di testo non "
 "è disponibile."
 
-#: ../app/text/gimptextlayer.c:634
+#: ../app/text/gimptextlayer.c:640
 msgid "Empty Text Layer"
 msgstr "Livello testo vuoto"
+
+#: ../app/text/gimptextlayer.c:696
+msgid ""
+"Your text cannot be rendered. It is likely too big. Please make it shorter "
+"or use a smaller font."
+msgstr "Il testo non può essere renderizzato. È probabilmente troppo grande. Accorciarlo o usare un carattere più piccolo."
 
 #: ../app/text/gimptextlayer-xcf.c:76
 #, c-format
@@ -11753,6 +11759,12 @@ msgstr ""
 "Alcune proprietà del testo possono essere errate. A meno\n"
 "che non si voglia modificare il livello del testo, non\n"
 "preoccupatevi di questo."
+
+#: ../app/text/gimptextlayout.c:577
+msgid ""
+"The new text layout cannot be generated. Most likely the font size is too "
+"big."
+msgstr "La nuova disposizione del testo non può essere generata. Molto probabilmente la dimensione dei caratteri è troppo grande."
 
 #: ../app/text/text-enums.c:23
 msgctxt "text-box-mode"
