@@ -520,6 +520,7 @@ gimp_metadata_set_from_exif (GimpMetadata  *metadata,
       g_set_error (error, gimp_metadata_error_quark (), 0,
                    _("Parsing EXIF data failed."));
       g_object_unref (exif_metadata);
+      g_byte_array_free (exif_bytes, TRUE);
       return FALSE;
     }
 
