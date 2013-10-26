@@ -45,6 +45,8 @@ static gboolean   gimp_metadata_get_rational (const gchar  *value,
                                               gint          sections,
                                               gchar      ***numerator,
                                               gchar      ***denominator);
+static void       gimp_metadata_add          (GimpMetadata *src,
+                                              GimpMetadata *dest);
 
 
 static const gchar *tiff_tags[] =
@@ -91,6 +93,12 @@ static const gchar *unsupported_tags[] =
   "Exif.Image.DNGVersion",
   "Exif.Image.DNGBackwardVersion",
   "Exif.Iop"
+};
+
+static const guint8 minimal_exif[] =
+{
+  0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10, 0x4a, 0x46, 0x49, 0x46, 0x00, 0x01,
+  0x01, 0x01, 0x00, 0x5a, 0x00, 0x5a, 0x00, 0x00, 0xff, 0xe1
 };
 
 static const guint8 wilber_jpg[] =
@@ -473,13 +481,45 @@ gimp_metadata_save_to_file (GimpMetadata  *metadata,
 gboolean
 gimp_metadata_set_from_exif (GimpMetadata  *metadata,
                              const guchar  *exif_data,
-                             gint           exif_data_length)
+                             gint           exif_data_length,
+                             GError       **error)
 {
+
+  GByteArray   *exif_bytes;
+  GimpMetadata *exif_metadata;
+  guint8        data_size[2] = { 0, };
+
   g_return_val_if_fail (GEXIV2_IS_METADATA (metadata), FALSE);
   g_return_val_if_fail (exif_data != NULL, FALSE);
   g_return_val_if_fail (exif_data_length > 0, FALSE);
+  g_return_val_if_fail (exif_data_length < 65536, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  /* TODO */
+  data_size[0] = (exif_data_length & 0xFF00) >> 8;
+  data_size[1] = (exif_data_length & 0x00FF);
+
+  exif_bytes = g_byte_array_new ();
+  exif_bytes = g_byte_array_append (exif_bytes,
+                                    minimal_exif, G_N_ELEMENTS (minimal_exif));
+  exif_bytes = g_byte_array_append (exif_bytes,
+                                    data_size, 2);
+  exif_bytes = g_byte_array_append (exif_bytes,
+                                    (guint8 *) exif_data, exif_data_length);
+
+  exif_metadata = gimp_metadata_new ();
+
+  if (! gexiv2_metadata_open_buf (exif_metadata,
+                                  exif_bytes->data, exif_bytes->len, error))
+    {
+      g_object_unref (exif_metadata);
+      g_byte_array_free (exif_bytes, TRUE);
+     return FALSE;
+    }
+
+  gimp_metadata_add (exif_metadata, metadata);
+
+  g_object_unref (exif_metadata);
+  g_byte_array_free (exif_bytes, TRUE);
 
   return TRUE;
 }
@@ -487,13 +527,31 @@ gimp_metadata_set_from_exif (GimpMetadata  *metadata,
 gboolean
 gimp_metadata_set_from_xmp (GimpMetadata  *metadata,
                             const guchar  *xmp_data,
-                            gint           xmp_data_length)
+                            gint           xmp_data_length,
+                            GError       **error)
 {
+  GimpMetadata *xmp_metadata;
+
   g_return_val_if_fail (GEXIV2_IS_METADATA (metadata), FALSE);
   g_return_val_if_fail (xmp_data != NULL, FALSE);
   g_return_val_if_fail (xmp_data_length > 0, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  /* TODO */
+  xmp_data        += 10;
+  xmp_data_length -= 10;
+
+  xmp_metadata = gimp_metadata_new ();
+
+  if (! gexiv2_metadata_open_buf (xmp_metadata,
+                                  xmp_data, xmp_data_length, error))
+    {
+      g_object_unref (xmp_metadata);
+      return FALSE;
+    }
+
+  gimp_metadata_add (xmp_metadata, metadata);
+
+  g_object_unref (xmp_metadata);
 
   return TRUE;
 }
@@ -796,4 +854,67 @@ gimp_metadata_get_rational (const gchar   *value,
   g_strfreev (nom);
 
   return TRUE;
+}
+
+static void
+gimp_metadata_add (GimpMetadata *src,
+                   GimpMetadata *dest)
+{
+  gchar *value;
+  gint   i;
+
+  if (gexiv2_metadata_get_supports_exif (src) &&
+      gexiv2_metadata_get_supports_exif (dest))
+    {
+      gchar **exif_data = gexiv2_metadata_get_exif_tags (src);
+
+      if (exif_data)
+        {
+          for (i = 0; exif_data[i] != NULL; i++)
+            {
+              value = gexiv2_metadata_get_tag_string (src, exif_data[i]);
+              gexiv2_metadata_set_tag_string (dest, exif_data[i], value);
+              g_free (value);
+            }
+
+          g_strfreev (exif_data);
+        }
+    }
+
+
+  if (gexiv2_metadata_get_supports_xmp (src) &&
+      gexiv2_metadata_get_supports_xmp (dest))
+    {
+      gchar **xmp_data = gexiv2_metadata_get_xmp_tags (src);
+
+      if (xmp_data)
+        {
+          for (i = 0; xmp_data[i] != NULL; i++)
+            {
+              value = gexiv2_metadata_get_tag_string (src, xmp_data[i]);
+              gexiv2_metadata_set_tag_string (dest, xmp_data[i], value);
+              g_free (value);
+            }
+
+          g_strfreev (xmp_data);
+        }
+    }
+
+  if (gexiv2_metadata_get_supports_iptc (src) &&
+      gexiv2_metadata_get_supports_iptc (dest))
+    {
+      gchar **iptc_data = gexiv2_metadata_get_iptc_tags (src);
+
+      if (iptc_data)
+        {
+          for (i = 0; iptc_data[i] != NULL; i++)
+            {
+              value = gexiv2_metadata_get_tag_string (src, iptc_data[i]);
+              gexiv2_metadata_set_tag_string (dest, iptc_data[i], value);
+              g_free (value);
+            }
+
+          g_strfreev (iptc_data);
+        }
+    }
 }

@@ -38,7 +38,6 @@ typedef enum
                                   GIMP_METADATA_SAVE_THUMBNAIL)
 } GimpMetadataSaveFlags;
 
-
 GimpMetadata * gimp_metadata_new                 (void);
 GimpMetadata * gimp_metadata_duplicate           (GimpMetadata  *metadata);
 
@@ -53,10 +52,12 @@ gboolean       gimp_metadata_save_to_file        (GimpMetadata  *metadata,
 
 gboolean       gimp_metadata_set_from_exif       (GimpMetadata  *metadata,
                                                   const guchar  *exif_data,
-                                                  gint           exif_data_length);
+                                                  gint           exif_data_length,
+                                                  GError       **error);
 gboolean       gimp_metadata_set_from_xmp        (GimpMetadata  *metadata,
                                                   const guchar  *xmp_data,
-                                                  gint           xmp_data_length);
+                                                  gint           xmp_data_length,
+                                                  GError       **error);
 
 void           gimp_metadata_set_pixel_size      (GimpMetadata  *metadata,
                                                   gint           width,
@@ -75,7 +76,6 @@ void           gimp_metadata_set_resolution      (GimpMetadata  *metadata,
 
 gboolean       gimp_metadata_is_tag_supported    (const gchar   *tag,
                                                   const gchar   *mime_type);
-
 
 G_END_DECLS
 

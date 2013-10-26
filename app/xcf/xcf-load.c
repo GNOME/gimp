@@ -250,17 +250,30 @@ xcf_load_image (Gimp     *gimp,
       else
         {
           GimpMetadata *metadata = gimp_image_get_metadata (image);
+          GError       *my_error = NULL;
 
           if (metadata)
             g_object_ref (metadata);
           else
             metadata = gimp_metadata_new ();
 
-          gimp_metadata_set_from_exif (metadata,
-                                       gimp_parasite_data (parasite),
-                                       gimp_parasite_data_size (parasite));
+          if (! gimp_metadata_set_from_exif (metadata,
+                                             gimp_parasite_data (parasite),
+                                             gimp_parasite_data_size (parasite),
+                                             &my_error))
+            {
+              gimp_message (gimp, G_OBJECT (info->progress),
+                            GIMP_MESSAGE_WARNING,
+                            _("Corrupt 'exif-data' parasite discovered.\n"
+                              "EXIF data could not be migrated: %s"),
+                            my_error->message);
+              g_clear_error (&my_error);
+            }
+          else
+            {
+              gimp_image_set_metadata (image, metadata, FALSE);
+            }
 
-          gimp_image_set_metadata (image, metadata, FALSE);
           g_object_unref (metadata);
         }
 
@@ -284,17 +297,30 @@ xcf_load_image (Gimp     *gimp,
       else
         {
           GimpMetadata *metadata = gimp_image_get_metadata (image);
+          GError       *my_error = NULL;
 
           if (metadata)
             g_object_ref (metadata);
           else
             metadata = gimp_metadata_new ();
 
-          gimp_metadata_set_from_xmp (metadata,
-                                      gimp_parasite_data (parasite),
-                                      gimp_parasite_data_size (parasite));
+          if (! gimp_metadata_set_from_xmp (metadata,
+                                            gimp_parasite_data (parasite),
+                                            gimp_parasite_data_size (parasite),
+                                            &my_error))
+            {
+              gimp_message (gimp, G_OBJECT (info->progress),
+                            GIMP_MESSAGE_WARNING,
+                            _("Corrupt 'gimp-metadata' parasite discovered.\n"
+                              "XMP data could not be migrated: %s"),
+                            my_error->message);
+              g_clear_error (&my_error);
+            }
+          else
+            {
+              gimp_image_set_metadata (image, metadata, FALSE);
+            }
 
-          gimp_image_set_metadata (image, metadata, FALSE);
           g_object_unref (metadata);
         }
 
