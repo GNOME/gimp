@@ -39,6 +39,7 @@
 #define TAG_TAG_DELIMITER  "#"
 
 
+static GQuark     gimp_metadata_error_quark  (void);
 static gint       gimp_metadata_length       (const gchar  *testline,
                                               const gchar  *delim);
 static gboolean   gimp_metadata_get_rational (const gchar  *value,
@@ -220,9 +221,7 @@ gimp_metadata_deserialize_start_element (GMarkupParseContext *context,
 
       if (! name)
         {
-          g_set_error (error,
-                       g_quark_from_static_string ("gimp-metadata-error-quark"),
-                       1001,
+          g_set_error (error, gimp_metadata_error_quark (), 1001,
                        "Element 'tag' not contain required attribute 'name'.");
           return;
         }
@@ -407,7 +406,7 @@ gimp_metadata_load_from_file (GFile   *file,
 
   if (! path)
     {
-      g_set_error (error, G_FILE_ERROR, 0,
+      g_set_error (error, gimp_metadata_error_quark (), 0,
                    _("Can load metadata only from local files"));
       return NULL;
     }
@@ -458,7 +457,7 @@ gimp_metadata_save_to_file (GimpMetadata  *metadata,
 
   if (! path)
     {
-      g_set_error (error, G_FILE_ERROR, 0,
+      g_set_error (error, gimp_metadata_error_quark (), 0,
                    _("Can save metadata only from to files"));
       return FALSE;
     }
@@ -513,11 +512,18 @@ gimp_metadata_set_from_exif (GimpMetadata  *metadata,
     {
       g_object_unref (exif_metadata);
       g_byte_array_free (exif_bytes, TRUE);
-     return FALSE;
+      return FALSE;
+    }
+
+  if (! gexiv2_metadata_has_xmp (exif_metadata))
+    {
+      g_set_error (error, gimp_metadata_error_quark (), 0,
+                   _("Parsing EXIF data failed."));
+      g_object_unref (exif_metadata);
+      return FALSE;
     }
 
   gimp_metadata_add (exif_metadata, metadata);
-
   g_object_unref (exif_metadata);
   g_byte_array_free (exif_bytes, TRUE);
 
@@ -549,8 +555,15 @@ gimp_metadata_set_from_xmp (GimpMetadata  *metadata,
       return FALSE;
     }
 
-  gimp_metadata_add (xmp_metadata, metadata);
+  if (! gexiv2_metadata_has_xmp (xmp_metadata))
+    {
+      g_set_error (error, gimp_metadata_error_quark (), 0,
+                   _("Parsing XMP data failed."));
+      g_object_unref (xmp_metadata);
+      return FALSE;
+    }
 
+  gimp_metadata_add (xmp_metadata, metadata);
   g_object_unref (xmp_metadata);
 
   return TRUE;
@@ -754,6 +767,17 @@ gimp_metadata_is_tag_supported (const gchar *tag,
 
 
 /* private functions */
+
+static GQuark
+gimp_metadata_error_quark (void)
+{
+  static GQuark quark = 0;
+
+  if (G_UNLIKELY (quark == 0))
+    quark = g_quark_from_static_string ("gimp-metadata-error-quark");
+
+  return quark;
+}
 
 /**
  * determines the amount of delimiters in serialized
