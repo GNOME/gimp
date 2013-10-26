@@ -2247,7 +2247,6 @@ plug-ins/lighting/Makefile
 plug-ins/lighting/images/Makefile
 plug-ins/map-object/Makefile
 plug-ins/maze/Makefile
-plug-ins/metadata/Makefile
 plug-ins/pagecurl/Makefile
 plug-ins/print/Makefile
 plug-ins/pygimp/Makefile
