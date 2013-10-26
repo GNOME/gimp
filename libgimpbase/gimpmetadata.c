@@ -515,7 +515,7 @@ gimp_metadata_set_from_exif (GimpMetadata  *metadata,
       return FALSE;
     }
 
-  if (! gexiv2_metadata_has_xmp (exif_metadata))
+  if (! gexiv2_metadata_has_exif (exif_metadata))
     {
       g_set_error (error, gimp_metadata_error_quark (), 0,
                    _("Parsing EXIF data failed."));
