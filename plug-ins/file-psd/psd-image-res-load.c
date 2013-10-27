@@ -242,6 +242,7 @@ load_image_resource (PSDimageres   *res_a,
                      const gint32   image_id,
                      PSDimage      *img_a,
                      FILE          *f,
+                     gboolean      *resolution_loaded,
                      GError       **error)
 {
   gint  pad;
@@ -289,7 +290,8 @@ load_image_resource (PSDimageres   *res_a,
             break;
 
           case PSD_RESN_INFO:
-            load_resource_1005 (res_a, image_id, f, error);
+            if (! load_resource_1005 (res_a, image_id, f, error))
+              *resolution_loaded = TRUE;
             break;
 
           case PSD_ALPHA_NAMES:

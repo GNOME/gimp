@@ -68,6 +68,7 @@ static gint             add_color_map              (const gint32  image_id,
 static gint             add_image_resources        (const gint32  image_id,
                                                     PSDimage     *img_a,
                                                     FILE         *f,
+                                                    gboolean     *resolution_loaded,
                                                     GError      **error);
 
 static gint             add_layers                 (const gint32  image_id,
@@ -109,6 +110,7 @@ static void             convert_1_bit              (const gchar *src,
 /* Main file load function */
 gint32
 load_image (const gchar  *filename,
+            gboolean     *resolution_loaded,
             GError      **load_error)
 {
   FILE                 *f;
@@ -181,7 +183,7 @@ load_image (const gchar  *filename,
 
   /* ----- Add image resources ----- */
   IFDBG(2) g_debug ("Add image resources");
-  if (add_image_resources (image_id, &img_a, f, &error) < 0)
+  if (add_image_resources (image_id, &img_a, f, resolution_loaded, &error) < 0)
     goto load_error;
   gimp_progress_update (0.8);
 
@@ -966,6 +968,7 @@ static gint
 add_image_resources (const gint32  image_id,
                      PSDimage     *img_a,
                      FILE         *f,
+                     gboolean     *resolution_loaded,
                      GError      **error)
 {
   PSDimageres  res_a;
@@ -998,7 +1001,8 @@ add_image_resources (const gint32  image_id,
           return 0;
         }
 
-      if (load_image_resource (&res_a, image_id, img_a, f, error) < 0)
+      if (load_image_resource (&res_a, image_id, img_a, f,
+                               resolution_loaded, error) < 0)
         return -1;
     }
 

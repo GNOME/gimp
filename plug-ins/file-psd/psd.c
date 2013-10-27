@@ -192,6 +192,7 @@ run (const gchar      *name,
   /* File load */
   if (strcmp (name, LOAD_PROC) == 0)
     {
+      gboolean resolution_loaded = FALSE;
       gboolean interactive;
 
       switch (run_mode)
@@ -206,7 +207,8 @@ run (const gchar      *name,
           break;
         }
 
-      image_ID = load_image (param[1].data.d_string, &error);
+      image_ID = load_image (param[1].data.d_string,
+                             &resolution_loaded, &error);
 
       if (image_ID != -1)
         {
@@ -219,6 +221,9 @@ run (const gchar      *name,
           if (metadata)
             {
               GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
+
+              if (resolution_loaded)
+                flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
 
               gimp_image_metadata_load_finish (image_ID, "image/x-psd",
                                                metadata, flags,
