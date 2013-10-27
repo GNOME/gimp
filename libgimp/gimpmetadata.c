@@ -132,11 +132,11 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
     {
       gchar *comment;
 
-      comment = gexiv2_metadata_get_tag_string (metadata,
-                                                "Exif.Photo.UserComment");
+      comment = gexiv2_metadata_get_tag_interpreted_string (metadata,
+                                                            "Exif.Photo.UserComment");
       if (! comment)
-        comment = gexiv2_metadata_get_tag_string (metadata,
-                                                  "Exif.Image.ImageDescription");
+        comment = gexiv2_metadata_get_tag_interpreted_string (metadata,
+                                                              "Exif.Image.ImageDescription");
 
       if (comment)
         {
