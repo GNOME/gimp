@@ -133,6 +133,7 @@ gimp_scanner_parse_string
 gimp_scanner_parse_string_no_validate
 gimp_scanner_parse_data
 gimp_scanner_parse_int
+gimp_scanner_parse_int64
 gimp_scanner_parse_float
 gimp_scanner_parse_boolean
 gimp_scanner_parse_color
