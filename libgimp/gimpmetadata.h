@@ -30,18 +30,24 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-void           gimp_image_metadata_load         (gint32              image_ID,
-                                                 const gchar        *mime_type,
-                                                 GFile              *file,
-                                                 gboolean            interactive);
-GimpMetadata * gimp_image_metadata_save_prepare (gint32              image_ID,
-                                                 const gchar        *mime_type);
-gboolean       gimp_image_metadata_save_finish  (gint32              image_ID,
-                                                 const gchar        *mime_type,
-                                                 GimpMetadata       *metadata,
-                                                 GFile              *file,
-                                                 GimpMetadataSaveFlags flags,
-                                                 GError            **error);
+GimpMetadata * gimp_image_metadata_load_prepare (gint32                 image_ID,
+                                                 const gchar           *mime_type,
+                                                 GFile                 *file,
+                                                 GError               **error);
+void           gimp_image_metadata_load_finish  (gint32                 image_ID,
+                                                 const gchar           *mime_type,
+                                                 GimpMetadata          *metadata,
+                                                 GimpMetadataLoadFlags  flags,
+                                                 gboolean               interactive);
+
+GimpMetadata * gimp_image_metadata_save_prepare (gint32                 image_ID,
+                                                 const gchar           *mime_type);
+gboolean       gimp_image_metadata_save_finish  (gint32                 image_ID,
+                                                 const gchar           *mime_type,
+                                                 GimpMetadata          *metadata,
+                                                 GimpMetadataSaveFlags  flags,
+                                                 GFile                 *file,
+                                                 GError               **error);
 
 G_END_DECLS
 

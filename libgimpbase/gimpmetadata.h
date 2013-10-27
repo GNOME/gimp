@@ -24,6 +24,16 @@
 
 G_BEGIN_DECLS
 
+typedef enum
+{
+  GIMP_METADATA_LOAD_COMMENT     = 1 << 0,
+  GIMP_METADATA_LOAD_RESOLUTION  = 1 << 1,
+  GIMP_METADATA_LOAD_ORIENTATION = 1 << 2,
+
+  GIMP_METADATA_LOAD_ALL         = (GIMP_METADATA_LOAD_COMMENT     |
+                                    GIMP_METADATA_LOAD_RESOLUTION  |
+                                    GIMP_METADATA_LOAD_ORIENTATION)
+} GimpMetadataLoadFlags;
 
 typedef enum
 {
@@ -37,6 +47,7 @@ typedef enum
                                   GIMP_METADATA_SAVE_IPTC     |
                                   GIMP_METADATA_SAVE_THUMBNAIL)
 } GimpMetadataSaveFlags;
+
 
 GimpMetadata * gimp_metadata_new                 (void);
 GimpMetadata * gimp_metadata_duplicate           (GimpMetadata  *metadata);

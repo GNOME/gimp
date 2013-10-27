@@ -381,7 +381,7 @@ run (const gchar      *name,
                   file = g_file_new_for_path (param[3].data.d_string);
                   gimp_image_metadata_save_finish (image,
                                                    "image/tiff",
-                                                   metadata, file, flags,
+                                                   metadata, flags, file,
                                                    NULL);
                   g_object_unref (file);
 

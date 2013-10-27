@@ -51,7 +51,6 @@ gint32           display_ID;
 JpegSaveVals     jsvals;
 gint32           orig_image_ID_global;
 gint32           drawable_ID_global;
-gboolean         has_metadata;
 gint             orig_quality;
 JpegSubsampling  orig_subsmp;
 gint             num_quant_tables;
@@ -193,7 +192,6 @@ run (const gchar      *name,
   preview_image_ID = -1;
   preview_layer_ID = -1;
 
-  has_metadata = FALSE;
   orig_quality = 0;
   orig_subsmp = JPEG_SUBSAMPLING_2x2_1x1_1x1;
   num_quant_tables = 0;
@@ -216,10 +214,22 @@ run (const gchar      *name,
 
       if (image_ID != -1)
         {
-          GFile *file = g_file_new_for_path (param[1].data.d_string);
+          GFile        *file = g_file_new_for_path (param[1].data.d_string);
+          GimpMetadata *metadata;
 
-          gimp_image_metadata_load (image_ID, "image/jpeg", file,
-                                    load_interactive);
+          metadata = gimp_image_metadata_load_prepare (image_ID, "image/jpeg",
+                                                       file, NULL);
+
+          if (metadata)
+            {
+              GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
+
+              gimp_image_metadata_load_finish (image_ID, "image/jpeg",
+                                               metadata, flags,
+                                               load_interactive);
+
+              g_object_unref (metadata);
+            }
 
           g_object_unref (file);
 
@@ -320,13 +330,6 @@ run (const gchar      *name,
         {
           image_comment = g_strndup (gimp_parasite_data (parasite),
                                      gimp_parasite_data_size (parasite));
-          gimp_parasite_free (parasite);
-        }
-
-      parasite = gimp_image_get_parasite (orig_image_ID, "gimp-metadata");
-      if (parasite)
-        {
-          has_metadata = TRUE;
           gimp_parasite_free (parasite);
         }
 
@@ -529,7 +532,7 @@ run (const gchar      *name,
               file = g_file_new_for_path (param[3].data.d_string);
               gimp_image_metadata_save_finish (image_ID,
                                                "image/jpeg",
-                                               metadata, file, flags,
+                                               metadata, flags, file,
                                                NULL);
               g_object_unref (file);
 

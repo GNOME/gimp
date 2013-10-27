@@ -44,27 +44,23 @@ static gboolean gimp_image_metadata_rotate_dialog (gint32             image_ID,
 
 /*  public functions  */
 
-void
-gimp_image_metadata_load (gint32       image_ID,
-                          const gchar *mime_type,
-                          GFile       *file,
-                          gboolean     interactive)
+GimpMetadata *
+gimp_image_metadata_load_prepare (gint32        image_ID,
+                                  const gchar  *mime_type,
+                                  GFile        *file,
+                                  GError      **error)
 {
   GimpMetadata *metadata;
 
-  g_return_if_fail (image_ID > 0);
-  g_return_if_fail (mime_type != NULL);
-  g_return_if_fail (G_IS_FILE (file));
+  g_return_val_if_fail (image_ID > 0, NULL);
+  g_return_val_if_fail (mime_type != NULL, NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  metadata = gimp_metadata_load_from_file (file, NULL);
+  metadata = gimp_metadata_load_from_file (file, error);
 
   if (metadata)
     {
-      gchar    *comment;
-      gdouble   xres;
-      gdouble   yres;
-      GimpUnit  unit;
-
 #if 0
       {
         gchar *xml = gimp_metadata_serialize (metadata);
@@ -87,6 +83,27 @@ gimp_image_metadata_load (gint32       image_ID,
       }
 #endif
 
+      gexiv2_metadata_erase_exif_thumbnail (metadata);
+    }
+
+  return metadata;
+}
+
+void
+gimp_image_metadata_load_finish (gint32                 image_ID,
+                                 const gchar           *mime_type,
+                                 GimpMetadata          *metadata,
+                                 GimpMetadataLoadFlags  flags,
+                                 gboolean               interactive)
+{
+  g_return_if_fail (image_ID > 0);
+  g_return_if_fail (mime_type != NULL);
+  g_return_if_fail (GEXIV2_IS_METADATA (metadata));
+
+  if (flags & GIMP_METADATA_LOAD_COMMENT)
+    {
+      gchar *comment;
+
       comment = gexiv2_metadata_get_tag_string (metadata,
                                                 "Exif.Photo.UserComment");
       if (! comment)
@@ -106,22 +123,28 @@ gimp_image_metadata_load (gint32       image_ID,
           gimp_image_attach_parasite (image_ID, parasite);
           gimp_parasite_free (parasite);
         }
+    }
+
+  if (flags & GIMP_METADATA_LOAD_RESOLUTION)
+    {
+      gdouble   xres;
+      gdouble   yres;
+      GimpUnit  unit;
 
       if (gimp_metadata_get_resolution (metadata, &xres, &yres, &unit))
         {
           gimp_image_set_resolution (image_ID, xres, yres);
           gimp_image_set_unit (image_ID, unit);
         }
+    }
 
+  if (flags & GIMP_METADATA_LOAD_ORIENTATION)
+    {
       gimp_image_metadata_rotate_query (image_ID, mime_type,
                                         metadata, interactive);
-
-      gexiv2_metadata_erase_exif_thumbnail (metadata);
-
-      gimp_image_set_metadata (image_ID, metadata);
-
-      g_object_unref (metadata);
     }
+
+  gimp_image_set_metadata (image_ID, metadata);
 }
 
 GimpMetadata *
@@ -255,8 +278,8 @@ gboolean
 gimp_image_metadata_save_finish (gint32                  image_ID,
                                  const gchar            *mime_type,
                                  GimpMetadata           *metadata,
-                                 GFile                  *file,
                                  GimpMetadataSaveFlags   flags,
+                                 GFile                  *file,
                                  GError                **error)
 {
   GExiv2Metadata *new_metadata;

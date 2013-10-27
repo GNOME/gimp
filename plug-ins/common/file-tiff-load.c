@@ -280,10 +280,23 @@ run (const gchar      *name,
 
                   if (image != -1)
                     {
-                      GFile *file = g_file_new_for_path (param[1].data.d_string);
+                      GFile        *file = g_file_new_for_path (param[1].data.d_string);
+                      GimpMetadata *metadata;
 
-                      gimp_image_metadata_load (image, "image/tiff", file,
-                                                run_mode == GIMP_RUN_INTERACTIVE);
+                      metadata = gimp_image_metadata_load_prepare (image,
+                                                                   "image/tiff",
+                                                                   file, NULL);
+
+                      if (metadata)
+                        {
+                          GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
+
+                          gimp_image_metadata_load_finish (image, "image/tiff",
+                                                           metadata, flags,
+                                                           run_mode == GIMP_RUN_INTERACTIVE);
+
+                          g_object_unref (metadata);
+                        }
 
                       g_object_unref (file);
 

@@ -157,10 +157,22 @@ run (const gchar      *name,
 
       if (image_ID != -1)
         {
-          GFile *file = g_file_new_for_path (param[1].data.d_string);
+          GFile        *file = g_file_new_for_path (param[1].data.d_string);
+          GimpMetadata *metadata;
 
-          gimp_image_metadata_load (image_ID, "image/jp2", file,
-                                    interactive);
+          metadata = gimp_image_metadata_load_prepare (image_ID, "image/jp2",
+                                                       file, NULL);
+
+          if (metadata)
+            {
+              GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
+
+              gimp_image_metadata_load_finish (image_ID, "image/jp2",
+                                               metadata, flags,
+                                               interactive);
+
+              g_object_unref (metadata);
+            }
 
           g_object_unref (file);
 
