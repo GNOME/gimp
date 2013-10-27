@@ -114,6 +114,7 @@ static gboolean  load_dialog      (TIFF               *tif,
 static gint32    load_image       (const gchar        *filename,
                                    TIFF               *tif,
                                    TiffSelectedPages  *pages,
+                                   gboolean           *resolution_loaded,
                                    GError            **error);
 
 static void      load_rgba        (TIFF         *tif,
@@ -271,9 +272,12 @@ run (const gchar      *name,
 
               if (run_it)
                 {
+                  gboolean resolution_loaded = FALSE;
+
                   gimp_set_data (LOAD_PROC, &target, sizeof (target));
 
                   image = load_image (param[1].data.d_string, tif, &pages,
+                                      &resolution_loaded,
                                       &error);
 
                   g_free (pages.pages);
@@ -290,6 +294,9 @@ run (const gchar      *name,
                       if (metadata)
                         {
                           GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
+
+                          if (resolution_loaded)
+                            flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
 
                           gimp_image_metadata_load_finish (image, "image/tiff",
                                                            metadata, flags,
@@ -524,6 +531,7 @@ static gint32
 load_image (const gchar        *filename,
             TIFF               *tif,
             TiffSelectedPages  *pages,
+            gboolean           *resolution_loaded,
             GError            **error)
 {
   gushort       bps, spp, photomet;
@@ -957,6 +965,8 @@ load_image (const gchar        *filename,
                 gimp_image_set_resolution (image, xres, yres);
                 if (unit != GIMP_UNIT_PIXEL)
                   gimp_image_set_unit (image, unit);
+
+                *resolution_loaded = TRUE;
               }
           }
 
