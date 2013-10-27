@@ -603,14 +603,14 @@ run (const gchar      *name,
               if (metadata)
                 {
                   GFile                 *file;
-                  GimpMetadataSaveFlags  flags = 0;
+                  GimpMetadataSaveFlags  flags = GIMP_METADATA_SAVE_ALL;
 
                   gimp_metadata_set_bits_per_sample (metadata, 8);
 
-                  if (pngvals.save_exif)      flags |= GIMP_METADATA_SAVE_EXIF;
-                  if (pngvals.save_xmp)       flags |= GIMP_METADATA_SAVE_XMP;
-                  if (pngvals.save_iptc)      flags |= GIMP_METADATA_SAVE_IPTC;
-                  if (pngvals.save_thumbnail) flags |= GIMP_METADATA_SAVE_THUMBNAIL;
+                  if (! pngvals.save_exif)      flags &= ~GIMP_METADATA_SAVE_EXIF;
+                  if (! pngvals.save_xmp)       flags &= ~GIMP_METADATA_SAVE_XMP;
+                  if (! pngvals.save_iptc)      flags &= ~GIMP_METADATA_SAVE_IPTC;
+                  if (! pngvals.save_thumbnail) flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
 
                   file = g_file_new_for_path (param[3].data.d_string);
                   gimp_image_metadata_save_finish (image_ID,

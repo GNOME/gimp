@@ -30,9 +30,7 @@ typedef enum
   GIMP_METADATA_LOAD_RESOLUTION  = 1 << 1,
   GIMP_METADATA_LOAD_ORIENTATION = 1 << 2,
 
-  GIMP_METADATA_LOAD_ALL         = (GIMP_METADATA_LOAD_COMMENT     |
-                                    GIMP_METADATA_LOAD_RESOLUTION  |
-                                    GIMP_METADATA_LOAD_ORIENTATION)
+  GIMP_METADATA_LOAD_ALL         = 0xffffffff
 } GimpMetadataLoadFlags;
 
 typedef enum
@@ -42,10 +40,7 @@ typedef enum
   GIMP_METADATA_SAVE_IPTC      = 1 << 2,
   GIMP_METADATA_SAVE_THUMBNAIL = 1 << 3,
 
-  GIMP_METADATA_SAVE_ALL       = (GIMP_METADATA_SAVE_EXIF     |
-                                  GIMP_METADATA_SAVE_XMP      |
-                                  GIMP_METADATA_SAVE_IPTC     |
-                                  GIMP_METADATA_SAVE_THUMBNAIL)
+  GIMP_METADATA_SAVE_ALL       = 0xffffffff
 } GimpMetadataSaveFlags;
 
 
