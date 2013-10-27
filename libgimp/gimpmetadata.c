@@ -44,6 +44,20 @@ static gboolean gimp_image_metadata_rotate_dialog (gint32             image_ID,
 
 /*  public functions  */
 
+/**
+ * gimp_image_metadata_load_prepare:
+ * @image_ID:  The image
+ * @mime_type: The loaded file's mime-type
+ * @file:      The file to load the metadata from
+ * @error:     Return location for error
+ *
+ * Loads and returns metadata from @file to be passed into
+ * gimp_image_metadata_load_finish().
+ *
+ * Returns: The file's metadata.
+ *
+ * Since: GIMP 2.10
+ */
 GimpMetadata *
 gimp_image_metadata_load_prepare (gint32        image_ID,
                                   const gchar  *mime_type,
@@ -89,6 +103,20 @@ gimp_image_metadata_load_prepare (gint32        image_ID,
   return metadata;
 }
 
+/**
+ * gimp_image_metadata_load_finish:
+ * @image_ID:    The image
+ * @mime_type:   The loaded file's mime-type
+ * @metadata:    The metadata to set on the image
+ * @flags:       Flags to specify what of the metadata to apply to the image
+ * @interactive: Whether this function is allowed to query info with dialogs
+ *
+ * Applies the @metadata previously loaded with
+ * gimp_image_metadata_load_prepare() to the image, taking into account
+ * the passed @flags.
+ *
+ * Since: GIMP 2.10
+ */
 void
 gimp_image_metadata_load_finish (gint32                 image_ID,
                                  const gchar           *mime_type,
@@ -147,6 +175,18 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
   gimp_image_set_metadata (image_ID, metadata);
 }
 
+/**
+ * gimp_image_metadata_save_prepare:
+ * @image_ID:  The image
+ * @mime_type: The saved file's mime-type
+ *
+ * Gets the image metadata for saving it using
+ * gimp_image_metadata_save_finish().
+ *
+ * Returns: The image's metadata, prepared for saving.
+ *
+ * Since: GIMP 2.10
+ */
 GimpMetadata *
 gimp_image_metadata_save_prepare (gint32       image_ID,
                                   const gchar *mime_type)
@@ -274,6 +314,23 @@ gimp_image_metadata_save_prepare (gint32       image_ID,
   return metadata;
 }
 
+/**
+ * gimp_image_metadata_save_finish:
+ * @image_ID:  The image
+ * @mime_type: The saved file's mime-type
+ * @metadata:  The metadata to set on the image
+ * @flags:     Flags to specify what of the metadata to save
+ * @file:      The file to load the metadata from
+ * @error:     Return location for error message
+ *
+ * Saves the @metadata retrieved from the image with
+ * gimp_image_metadata_save_prepare() to @file, taking into account
+ * the passed @flags.
+ *
+ * Return value: Whether the save was successful.
+ *
+ * Since: GIMP 2.10
+ */
 gboolean
 gimp_image_metadata_save_finish (gint32                  image_ID,
                                  const gchar            *mime_type,
