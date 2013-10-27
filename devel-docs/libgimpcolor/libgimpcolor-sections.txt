@@ -22,11 +22,18 @@ gimp_hsv_set
 gimp_hsv_clamp
 gimp_hsva_set
 gimp_hsl_set
+gimp_hsl_set_alpha
 GIMP_TYPE_HSV
 GIMP_TYPE_HSL
 <SUBSECTION Standard>
 gimp_hsv_get_type
 gimp_hsl_get_type
+</SECTION>
+
+<SECTION>
+<FILE>gimppixbuf</FILE>
+gimp_pixbuf_get_format
+gimp_pixbuf_create_buffer
 </SECTION>
 
 <SECTION>
@@ -36,6 +43,8 @@ GimpRGB
 GimpRGBCompositeMode
 gimp_rgb_set
 gimp_rgb_set_alpha
+gimp_rgb_set_pixel
+gimp_rgb_get_pixel
 gimp_rgb_set_uchar
 gimp_rgb_get_uchar
 gimp_rgb_parse_name
@@ -56,6 +65,8 @@ gimp_rgb_intensity
 gimp_rgb_intensity_uchar
 gimp_rgb_composite
 gimp_rgba_set
+gimp_rgba_set_pixel
+gimp_rgba_get_pixel
 gimp_rgba_set_uchar
 gimp_rgba_get_uchar
 gimp_rgba_parse_css
@@ -148,6 +159,8 @@ gimp_bilinear_pixels_8
 gimp_cairo_set_source_rgb
 gimp_cairo_set_source_rgba
 gimp_cairo_checkerboard_create
+gimp_cairo_surface_get_format
+gimp_cairo_surface_create_buffer
 GIMP_CAIRO_RGB24_SET_PIXEL
 GIMP_CAIRO_RGB24_GET_PIXEL
 GIMP_CAIRO_ARGB32_SET_PIXEL
