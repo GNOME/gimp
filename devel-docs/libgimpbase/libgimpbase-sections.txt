@@ -1,5 +1,8 @@
 <SECTION>
 <FILE>gimpbasetypes</FILE>
+GIMP_DEPRECATED
+GIMP_DEPRECATED_FOR
+GIMP_UNAVAILABLE
 GimpEnumDesc
 GimpFlagsDesc
 gimp_type_set_translation_domain
@@ -145,6 +148,7 @@ gimp_cpu_accel_set_use
 <FILE>gimpenv</FILE>
 gimp_env_init
 gimp_directory
+gimp_installation_directory
 gimp_data_directory
 gimp_locale_directory
 gimp_plug_in_directory
@@ -180,6 +184,26 @@ GIMP_VALUE_HOLDS_MEMSIZE
 <SUBSECTION Standard>
 gimp_memsize_get_type
 gimp_param_memsize_get_type
+</SECTION>
+
+<SECTION>
+<FILE>gimpmetadata</FILE>
+GimpMetadata
+GimpMetadataLoadFlags
+GimpMetadataSaveFlags
+gimp_metadata_new
+gimp_metadata_duplicate
+gimp_metadata_deserialize
+gimp_metadata_serialize
+gimp_metadata_load_from_file
+gimp_metadata_save_to_file
+gimp_metadata_set_from_exif
+gimp_metadata_set_from_xmp
+gimp_metadata_set_pixel_size
+gimp_metadata_set_bits_per_sample
+gimp_metadata_get_resolution
+gimp_metadata_set_resolution
+gimp_metadata_is_tag_supported
 </SECTION>
 
 <SECTION>
@@ -263,6 +287,7 @@ gimp_unit_format_string
 gimp_pixels_to_units
 gimp_units_to_pixels
 gimp_units_to_points
+gimp_unit_is_metric
 GIMP_TYPE_UNIT
 GIMP_TYPE_PARAM_UNIT
 GIMP_IS_PARAM_SPEC_UNIT
@@ -289,6 +314,30 @@ gimp_flags_get_first_desc
 gimp_flags_get_first_value
 gimp_flags_value_get_desc
 gimp_flags_value_get_help
+</SECTION>
+
+<SECTION>
+<FILE>gimpvaluearray</FILE>
+GimpValueArray
+gimp_value_array_new
+gimp_value_array_ref
+gimp_value_array_unref
+gimp_value_array_length
+gimp_value_array_index
+gimp_value_array_prepend
+gimp_value_array_append
+gimp_value_array_insert
+gimp_value_array_remove
+gimp_value_array_truncate
+GimpParamSpecValueArray
+gimp_param_spec_value_array
+<SUBSECTION Standard>
+GIMP_IS_PARAM_SPEC_VALUE_ARRAY
+GIMP_PARAM_SPEC_VALUE_ARRAY
+GIMP_TYPE_PARAM_VALUE_ARRAY
+GIMP_TYPE_VALUE_ARRAY
+gimp_param_value_array_get_type
+gimp_value_array_get_type
 </SECTION>
 
 <SECTION>
