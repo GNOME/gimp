@@ -141,6 +141,7 @@ static void      run                       (const gchar      *name,
 
 static gint32    load_image                (const gchar      *filename,
                                             gboolean          interactive,
+                                            gboolean         *resolution_loaded,
                                             GError          **error);
 static gboolean  save_image                (const gchar      *filename,
                                             gint32            image_ID,
@@ -434,6 +435,7 @@ run (const gchar      *name,
   if (strcmp (name, LOAD_PROC) == 0)
     {
       gboolean interactive;
+      gboolean resolution_loaded = FALSE;
 
       switch (run_mode)
         {
@@ -448,7 +450,9 @@ run (const gchar      *name,
         }
 
       image_ID = load_image (param[1].data.d_string,
-                             interactive, &error);
+                             interactive,
+                             &resolution_loaded,
+                             &error);
 
       if (image_ID != -1)
         {
@@ -461,6 +465,9 @@ run (const gchar      *name,
           if (metadata)
             {
               GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
+
+              if (resolution_loaded)
+                flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
 
               gimp_image_metadata_load_finish (image_ID, "image/png",
                                                metadata, flags,
@@ -763,6 +770,7 @@ get_bit_depth_for_palette (int num_palette)
 static gint32
 load_image (const gchar  *filename,
             gboolean      interactive,
+            gboolean     *resolution_loaded,
             GError      **error)
 {
   int i,                        /* Looping var */
@@ -1052,6 +1060,8 @@ load_image (const gchar  *filename,
                   image_yres = image_xres * (gdouble) yres / (gdouble) xres;
 
                 gimp_image_set_resolution (image, image_xres, image_yres);
+
+                *resolution_loaded = TRUE;
               }
               break;
 
@@ -1059,6 +1069,9 @@ load_image (const gchar  *filename,
               gimp_image_set_resolution (image,
                                          (gdouble) xres * 0.0254,
                                          (gdouble) yres * 0.0254);
+              gimp_image_set_unit (image, GIMP_UNIT_MM);
+
+              *resolution_loaded = TRUE;
               break;
 
             default:
