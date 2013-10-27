@@ -36,8 +36,8 @@ header files installed.
      Intltool can be downloaded from
      http://ftp.gnome.org/pub/gnome/sources/intltool/
 
-  3. You need to have GEGL version 0.2.0 or newer and babl version
-     0.1.10 or newer. You can get them from http://gegl.org/ or clone
+  3. You need to have GEGL version 0.3.0 or newer and babl version
+     0.1.11 or newer. You can get them from http://gegl.org/ or clone
      them from the GNOME git repository:
 
        git://git.gnome.org/babl
@@ -68,24 +68,27 @@ header files installed.
   8. The file-compressor plug-in requires zlib, libbzip2, and liblzma to
      be installed. All these libraries are required dependencies.
 
-  9. You may want to install other third party libraries or programs
+  9. For metadata access GIMP requires the gexiv2 library. It is hosted 
+     at http://redmine.yorba.org/projects/gexiv2/wiki .
+
+ 10. You may want to install other third party libraries or programs
      that are needed for some of the available plug-ins. We recommend to
      check that the following libraries are installed: lcms, libpng,
      libjpeg, libpoppler, libtiff, webkit, libmng, librsvg, libwmf,
      libgs (Ghostscript), libaa and libjasper.
 
- 10. The Python extension requires Python development headers to be
+ 11. The Python extension requires Python development headers to be
      present. You will also need PyGTK and the respective development
      headers.
 
- 11. Configure GIMP by running the `configure' script. You may want
+ 12. Configure GIMP by running the `configure' script. You may want
      to pass some options to it, see below.
 
- 12. Build GIMP by running `make'. The use of GNU make is recommended.
+ 13. Build GIMP by running `make'. The use of GNU make is recommended.
      If you need to tweak the build to make it work with other flavours
      of make, we'd appreciate if you'd send us a patch with the changes.
 
- 13. Install GIMP by running `make install'. In order to avoid clashes
+ 14. Install GIMP by running `make install'. In order to avoid clashes
      with other versions of GIMP, we install a binary called gimp-2.8.
      By default there's also a link created so that you can type 'gimp'
      to start gimp-2.8.
