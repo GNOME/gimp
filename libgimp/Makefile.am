@@ -282,7 +282,7 @@ libgimpui_sources = \
 	gimpmenu.c			\
 	gimpmenu.h			\
 	gimpmetadata.c			\
-	gimpmetadats.h			\
+	gimpmetadata.h			\
 	gimppalettemenu.c		\
 	gimppalettemenu.h		\
 	gimppaletteselectbutton.c	\
