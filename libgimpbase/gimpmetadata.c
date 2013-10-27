@@ -222,7 +222,7 @@ gimp_metadata_deserialize_start_element (GMarkupParseContext *context,
       if (! name)
         {
           g_set_error (error, gimp_metadata_error_quark (), 1001,
-                       "Element 'tag' not contain required attribute 'name'.");
+                       "Element 'tag' does not contain required attribute 'name'.");
           return;
         }
 
@@ -458,7 +458,7 @@ gimp_metadata_save_to_file (GimpMetadata  *metadata,
   if (! path)
     {
       g_set_error (error, gimp_metadata_error_quark (), 0,
-                   _("Can save metadata only from to files"));
+                   _("Can save metadata only to local files"));
       return FALSE;
     }
 
