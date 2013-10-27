@@ -71,6 +71,13 @@ GimpStock
 
 
 
+<!-- ##### MACRO GIMP_STOCK_CONVERT_PRECISION ##### -->
+<para>
+
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_MENU_LEFT ##### -->
 <para xml:base="../gimpstock.xml">
 <inlinegraphic fileref="stock-menu-left-12.png" format="png"></inlinegraphic>
@@ -1395,6 +1402,13 @@ RTL variant
 
 
 
+<!-- ##### MACRO GIMP_STOCK_TOOL_SEAMLESS_CLONE ##### -->
+<para>
+
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_TOOL_SCALE ##### -->
 <para xml:base="../gimpstock.xml">
 <inlinegraphic fileref="stock-tool-scale-22.png" format="png"></inlinegraphic>
@@ -1431,6 +1445,20 @@ RTL variant
 <para xml:base="../gimpstock.xml">
 <inlinegraphic fileref="stock-tool-threshold-22.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-tool-threshold-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_UNIFIED_TRANSFORM ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_WARP ##### -->
+<para>
+
 </para>
 
 
