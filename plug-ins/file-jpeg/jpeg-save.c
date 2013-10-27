@@ -151,7 +151,7 @@ background_error_exit (j_common_ptr cinfo)
 static gboolean
 background_jpeg_save (PreviewPersistent *pp)
 {
-  gint    yend;
+  gint yend;
 
   if (pp->abort_me || (pp->cinfo.next_scanline >= pp->cinfo.image_height))
     {
@@ -206,10 +206,10 @@ background_jpeg_save (PreviewPersistent *pp)
           gtk_label_set_text (GTK_LABEL (preview_size), text);
           g_free (text);
 
-         g_object_unref (file);
+          g_object_unref (file);
 
           /* and load the preview */
-          load_image (pp->file_name, GIMP_RUN_NONINTERACTIVE, TRUE, NULL);
+          load_image (pp->file_name, GIMP_RUN_NONINTERACTIVE, TRUE, NULL, NULL);
         }
 
       /* we cleanup here (load_image doesn't run in the background) */

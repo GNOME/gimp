@@ -42,7 +42,7 @@
 #include "jpeg-settings.h"
 #include "jpeg-load.h"
 
-static void  jpeg_load_resolution           (gint32    image_ID,
+static gboolean  jpeg_load_resolution       (gint32    image_ID,
                                              struct jpeg_decompress_struct
                                                        *cinfo);
 
@@ -61,6 +61,7 @@ gint32
 load_image (const gchar  *filename,
             GimpRunMode   runmode,
             gboolean      preview,
+            gboolean     *resolution_loaded,
             GError      **error)
 {
   gint32 volatile  image_ID;
@@ -289,7 +290,11 @@ load_image (const gchar  *filename,
             }
         }
 
-        jpeg_load_resolution (image_ID, &cinfo);
+      if (jpeg_load_resolution (image_ID, &cinfo))
+        {
+          if (resolution_loaded)
+            *resolution_loaded = TRUE;
+        }
 
       /* if we found any comments, then make a parasite for them */
       if (comment_buffer && comment_buffer->len)
@@ -416,7 +421,7 @@ load_image (const gchar  *filename,
   return image_ID;
 }
 
-static void
+static gboolean
 jpeg_load_resolution (gint32                         image_ID,
                       struct jpeg_decompress_struct *cinfo)
 {

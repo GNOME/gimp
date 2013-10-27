@@ -198,6 +198,8 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
+      gboolean resolution_loaded = FALSE;
+
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
@@ -210,7 +212,8 @@ run (const gchar      *name,
           break;
         }
 
-      image_ID = load_image (param[1].data.d_string, run_mode, FALSE, &error);
+      image_ID = load_image (param[1].data.d_string, run_mode, FALSE,
+                             &resolution_loaded, &error);
 
       if (image_ID != -1)
         {
@@ -223,6 +226,9 @@ run (const gchar      *name,
           if (metadata)
             {
               GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
+
+              if (resolution_loaded)
+                flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
 
               gimp_image_metadata_load_finish (image_ID, "image/jpeg",
                                                metadata, flags,

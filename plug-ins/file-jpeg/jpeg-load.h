@@ -21,6 +21,7 @@
 gint32 load_image           (const gchar  *filename,
                              GimpRunMode   runmode,
                              gboolean      preview,
+                             gboolean     *resolution_loaded,
                              GError      **error);
 
 gint32 load_thumbnail_image (GFile         *file,
