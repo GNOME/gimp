@@ -96,7 +96,7 @@
   PSD_LFX_OUTER_GLW       "oglw"        -       * Effects layer - outer glow (PS5) *
   PSD_LFX_INNER_GLW       "iglw"        -       * Effects layer - inner glow (PS5) *
   PSD_LFX_BEVEL           "bevl"        -       * Effects layer - bevel (PS5) *
-  
+
   * New stuff temporarily until I can get them sorted out *
 
   * Placed Layer *
@@ -173,10 +173,10 @@ static gint     load_resource_lsct    (const PSDlayerres     *res_a,
                                        FILE                  *f,
                                        GError               **error);
 
-static gint     load_resource_lrfx    (const PSDlayerres  *res_a,
-				       PSDlayer           *lyr_a,
-				       FILE               *f,
-				       GError            **error);
+static gint     load_resource_lrfx    (const PSDlayerres     *res_a,
+				       PSDlayer              *lyr_a,
+				       FILE                  *f,
+				       GError               **error);
 
 /* Public Functions */
 gint
