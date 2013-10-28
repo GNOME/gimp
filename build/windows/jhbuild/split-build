@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-if [ "x$BUILD_FLAVOUR" == "xdbg" ]; then
+if [ "x$BUILD_FLAVOUR" = "xdbg" ]; then
 	EXT="-dbg"
 else
 	EXT=""
