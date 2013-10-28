@@ -222,20 +222,12 @@ static gint     load_resource_1058     (const PSDimageres     *res_a,
                                         FILE                  *f,
                                         GError               **error);
 
-<<<<<<< HEAD
-=======
-static gint     load_resource_1060     (const PSDimageres     *res_a,
-                                        const gint32           image_id,
-                                        FILE                  *f,
-                                        GError               **error);
-
 static gint     load_resource_1077     (const PSDimageres     *res_a,
                                         const gint32           image_id,
                                         PSDimage              *img_a,
                                         FILE                  *f,
                                         GError               **error);
 
->>>>>>> file-psd: More cleanup of documentation and formatting of code. Image resource
 static gint     load_resource_2000     (const PSDimageres     *res_a,
                                         const gint32           image_id,
                                         FILE                  *f,
@@ -308,8 +300,6 @@ load_image_resource (PSDimageres   *res_a,
     {
       switch (res_a->id)
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
           case PSD_PS2_IMAGE_INFO:
           case PSD_PS2_COLOR_TAB:
           case PSD_OBSOLETE_01:
@@ -363,121 +353,6 @@ load_image_resource (PSDimageres   *res_a,
             load_resource_2000 (res_a, image_id, f, error);
             break;
 
-          case PSD_IPTC_NAA_DATA:
-            load_resource_1028 (res_a, image_id, f, error);
-            break;
-
-          case PSD_GRID_GUIDE:
-            load_resource_1032 (res_a, image_id, f, error);
-            break;
-
-          case PSD_ICC_PROFILE:
-            load_resource_1039 (res_a, image_id, f, error);
-            break;
-
-          case PSD_ALPHA_NAMES_UNI:
-            load_resource_1045 (res_a, image_id, img_a, f, error);
-            break;
-
-          case PSD_IDX_COL_TAB_CNT:
-            load_resource_1046 (res_a, image_id, f, error);
-            break;
-
-          case PSD_ALPHA_ID:
-            load_resource_1053 (res_a, image_id, img_a, f, error);
-            break;
-
-          case PSD_EXIF_DATA:
-            load_resource_1058 (res_a, image_id, f, error);
-            break;
-
-          case PSD_XMP_DATA:
-            break;
-
-          default:
-            if (res_a->id >= 2000 &&
-                res_a->id <  2999)
-              load_resource_2000 (res_a, image_id, f, error);
-            else
-              load_resource_unknown (res_a, image_id, f, error);
-=======
-	case PSD_PS2_IMAGE_INFO:
-	case PSD_PS2_COLOR_TAB:
-	case PSD_OBSOLETE_01:
-	case PSD_OBSOLETE_02:
-	case PSD_OBSOLETE_03:
-	  /* Drop obsolete image resource blocks */
-	  IFDBG(2) g_debug ("Obsolete image resource block: %d",
-			    res_a->id);
-	  break;
-
-	case PSD_THUMB_RES:
-	case PSD_THUMB_RES2:
-	  /* Drop thumbnails from standard file load */
-	  IFDBG(2) g_debug ("Thumbnail resource block: %d",
-			    res_a->id);
-=======
-  	  case PSD_PS2_IMAGE_INFO:
-	  case PSD_PS2_COLOR_TAB:
-	  case PSD_OBSOLETE_01:
-	  case PSD_OBSOLETE_02:
-	  case PSD_OBSOLETE_03:
-	    /* Drop obsolete image resource blocks */
-	    IFDBG(2) g_debug ("Obsolete image resource block: %d",
-			       res_a->id);
-	    break;
-
-	  case PSD_THUMB_RES:
-	  case PSD_THUMB_RES2:
-	    /* Drop thumbnails from standard file load */
-	    IFDBG(2) g_debug ("Thumbnail resource block: %d",
-			      res_a->id);
->>>>>>> file-psd: More cleanup of documentation and formatting of code. Image resource
-	  break;
-
-	  case PSD_MAC_PRINT_INFO:
-	  case PSD_JPEG_QUAL:
-          case PSD_IMAGEREADY_VARS:
-          case PSD_IMAGEREADY_DATA:
-          case PSD_LIGHTROOM_WORK:
-	    /* Save photoshop resources with no meaning for GIMP
-	     as image parasites */
-	    load_resource_ps_only (res_a, image_id, f, error);
-	    break;
-
-	  case PSD_RESN_INFO:
-	    load_resource_1005 (res_a, image_id, f, error);
-	    break;
-
-	  case PSD_ALPHA_NAMES:
-	    load_resource_1006 (res_a, image_id, img_a, f, error);
-	    break;
-
-	  case PSD_DISPLAY_INFO:
-	    load_resource_1007 (res_a, image_id, img_a, f, error);
-	    break;
-
-	  case PSD_CAPTION:
-	    load_resource_1008 (res_a, image_id, f, error);
-	    break;
-
-	  case PSD_QUICK_MASK:
-	    load_resource_1022 (res_a, image_id, img_a, f, error);
-	    break;
-
-	  case PSD_LAYER_STATE:
-	    load_resource_1024 (res_a, image_id, img_a, f, error);
-	    break;
-
-	  case PSD_WORKING_PATH:
-	    load_resource_2000 (res_a, image_id, f, error);
-<<<<<<< HEAD
-	  else
-	    load_resource_unknown (res_a, image_id, f, error);
->>>>>>> plug-ins: Initial branch creation and updated documentation.
-=======
-	    break;
-
 	  case PSD_IPTC_NAA_DATA:
 	    load_resource_1028 (res_a, image_id, f, error);
 	    break;
@@ -507,7 +382,6 @@ load_image_resource (PSDimageres   *res_a,
 	    break;
 
 	  case PSD_XMP_DATA:
-	    load_resource_1060 (res_a, image_id, f, error);
 	    break;
 
           case PSD_DISPLAY_INFO_NEW:
@@ -520,7 +394,6 @@ load_image_resource (PSDimageres   *res_a,
 	      load_resource_2000 (res_a, image_id, f, error);
 	    else
 	      load_resource_unknown (res_a, image_id, f, error);
->>>>>>> file-psd: More cleanup of documentation and formatting of code. Image resource
         }
     }
 
