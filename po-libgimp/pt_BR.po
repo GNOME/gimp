@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-07-18 21:00+0000\n"
-"PO-Revision-Date: 2013-08-20 19:19-0300\n"
+"POT-Creation-Date: 2013-10-28 18:45+0000\n"
+"PO-Revision-Date: 2013-10-28 20:53-0300\n"
 "Last-Translator: Enrico Nicoletto <liverig@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
@@ -243,6 +243,27 @@ msgstr "Seleção de degradê"
 #: ../libgimp/gimpmenu.c:461 ../libgimpwidgets/gimpintstore.c:258
 msgid "(Empty)"
 msgstr "(Vazio)"
+
+#: ../libgimp/gimpmetadata.c:612
+msgid "Rotate Image?"
+msgstr "Rotacionar imagem?"
+
+#: ../libgimp/gimpmetadata.c:615
+msgid "_Keep Orientation"
+msgstr "Preser_var orientação"
+
+# "É rotacionável" me pareceu uma boa tradução, já que "is rotated" causa confusão em entender se é tempo presente ou passado --Enrico
+#: ../libgimp/gimpmetadata.c:673
+msgid "According to the EXIF data, this image is rotated."
+msgstr "De acordo com os dados EXIF, esta imagem é rotacionável."
+
+#: ../libgimp/gimpmetadata.c:688
+msgid "Would you like GIMP to rotate it into the standard orientation?"
+msgstr "Vocẽ gostaria que o GIMP rotacione isto na orientação padrão?"
+
+#: ../libgimp/gimpmetadata.c:698
+msgid "_Don't ask me again"
+msgstr "_Não me pergunte novamente"
 
 #: ../libgimp/gimppaletteselectbutton.c:138
 msgid "Palette Selection"
@@ -898,6 +919,26 @@ msgctxt "text-justification"
 msgid "Filled"
 msgstr "Preenchido"
 
+#: ../libgimpbase/gimpmetadata.c:467
+#, c-format
+msgid "Can load metadata only from local files"
+msgstr "Só é possível carregar metadados de arquivos locais"
+
+#: ../libgimpbase/gimpmetadata.c:527
+#, c-format
+msgid "Can save metadata only to local files"
+msgstr "Só é possível salvar metadados em arquivos locais"
+
+#: ../libgimpbase/gimpmetadata.c:600
+#, c-format
+msgid "Parsing EXIF data failed."
+msgstr "Ocorreu falha ao analisar dados EXIF."
+
+#: ../libgimpbase/gimpmetadata.c:654
+#, c-format
+msgid "Parsing XMP data failed."
+msgstr "Ocorreu falha ao analisar dados XMP."
+
 #: ../libgimpbase/gimputils.c:178 ../libgimpbase/gimputils.c:183
 #: ../modules/color-selector-cmyk-lcms.c:417
 #: ../modules/color-selector-cmyk-lcms.c:440
@@ -1272,7 +1313,7 @@ msgstr "Gravável"
 msgid "Folder"
 msgstr "Diretório"
 
-#: ../libgimpwidgets/gimppickbutton.c:128
+#: ../libgimpwidgets/gimppickbutton.c:131
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -1349,7 +1390,6 @@ msgid "L_ine Spacing"
 msgstr "Espaçamento das L_inhas"
 
 #: ../libgimpwidgets/gimpstock.c:204
-#| msgid "_Resize"
 msgid "Re_size"
 msgstr "Re_dimensionar"
 
@@ -2018,7 +2058,6 @@ msgstr "Gerenciamento de cores"
 
 #. a color profile without a name
 #: ../modules/display-filter-lcms.c:215
-#| msgid "Image profile:"
 msgid "(unnamed profile)"
 msgstr "(perfil sem nome)"
 
@@ -2031,8 +2070,8 @@ msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr ""
-"Este filtro obtêm sua configuração a partir da sessão \"Gerenciamento de Cores\" "
-"no diálogo de preferências."
+"Este filtro obtêm sua configuração a partir da sessão \"Gerenciamento de "
+"Cores\" no diálogo de preferências."
 
 #: ../modules/display-filter-lcms.c:274
 msgid "Mode of operation:"
