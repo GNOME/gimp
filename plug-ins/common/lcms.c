@@ -128,6 +128,12 @@ static void         lcms_image_transform_rgb     (gint32           image,
                                                   cmsHPROFILE      dest_profile,
                                                   GimpColorRenderingIntent intent,
                                                   gboolean          bpc);
+static void         lcms_layers_transform_rgb    (gint            *layers,
+                                                  gint             num_layers,
+                                                  cmsHPROFILE      src_profile,
+                                                  cmsHPROFILE      dest_profile,
+                                                  GimpColorRenderingIntent intent,
+                                                  gboolean          bpc);
 static void         lcms_image_transform_indexed (gint32           image,
                                                   cmsHPROFILE      src_profile,
                                                   cmsHPROFILE      dest_profile,
@@ -1016,18 +1022,49 @@ lcms_image_transform_rgb (gint32                    image,
                           GimpColorRenderingIntent  intent,
                           gboolean                  bpc)
 {
-  cmsHTRANSFORM    transform   = NULL;
-  cmsUInt32Number  last_format = 0;
-  gint            *layers;
-  gint             num_layers;
-  gint             i;
+  gint *layers;
+  gint  num_layers;
 
   layers = gimp_image_get_layers (image, &num_layers);
+
+  lcms_layers_transform_rgb (layers, num_layers,
+                             src_profile, dest_profile,
+                             intent, bpc);
+
+  g_free (layers);
+}
+
+static void
+lcms_layers_transform_rgb (gint                     *layers,
+                           gint                      num_layers,
+                           cmsHPROFILE               src_profile,
+                           cmsHPROFILE               dest_profile,
+                           GimpColorRenderingIntent  intent,
+                           gboolean                  bpc)
+{
+  cmsHTRANSFORM    transform   = NULL;
+  cmsUInt32Number  last_format = 0;
+  gint             i;
 
   for (i = 0; i < num_layers; i++)
     {
       GimpDrawable    *drawable = gimp_drawable_get (layers[i]);
       cmsUInt32Number  format;
+      gint            *children;
+      gint             num_children;
+
+      children = gimp_item_get_children (layers[i], &num_children);
+
+      if (children)
+        {
+          lcms_layers_transform_rgb (children, num_children,
+                                     src_profile, dest_profile,
+                                     intent, bpc);
+
+          g_free (children);
+
+          continue;
+        }
 
       switch (drawable->bpp)
         {
@@ -1073,8 +1110,6 @@ lcms_image_transform_rgb (gint32                    image,
 
   if (transform)
     cmsDeleteTransform(transform);
-
-  g_free (layers);
 }
 
 static void
