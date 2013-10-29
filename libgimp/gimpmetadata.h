@@ -49,6 +49,12 @@ gboolean       gimp_image_metadata_save_finish  (gint32                 image_ID
                                                  GFile                 *file,
                                                  GError               **error);
 
+
+/* this is experimental API, so be finished for 2.10 */
+
+gint32       gimp_image_metadata_load_thumbnail (GFile                 *file,
+                                                 GError               **error);
+
 G_END_DECLS
 
 #endif /* ___LIBGIMP_GIMP_METADATA_H__ */

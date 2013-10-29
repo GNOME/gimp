@@ -493,6 +493,64 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
   return success;
 }
 
+gint32
+gimp_image_metadata_load_thumbnail (GFile   *file,
+                                    GError **error)
+{
+  GimpMetadata *metadata;
+  GInputStream *input_stream;
+  GdkPixbuf    *pixbuf;
+  guint8       *thumbnail_buffer;
+  gint          thumbnail_size;
+  gint32        image_ID = -1;
+
+  g_return_val_if_fail (G_IS_FILE (file), -1);
+  g_return_val_if_fail (error == NULL || *error == NULL, -1);
+
+  metadata = gimp_metadata_load_from_file (file, error);
+  if (! metadata)
+    return -1;
+
+  if (! gexiv2_metadata_get_exif_thumbnail (metadata,
+                                            &thumbnail_buffer,
+                                            &thumbnail_size))
+    {
+      g_object_unref (metadata);
+      return -1;
+    }
+
+  input_stream = g_memory_input_stream_new_from_data (thumbnail_buffer,
+                                                      thumbnail_size,
+                                                      (GDestroyNotify) g_free);
+  pixbuf = gdk_pixbuf_new_from_stream (input_stream, NULL, error);
+  g_object_unref (input_stream);
+
+  if (pixbuf)
+    {
+      gint32 layer_ID;
+
+      image_ID = gimp_image_new (gdk_pixbuf_get_width  (pixbuf),
+                                 gdk_pixbuf_get_height (pixbuf),
+                                 GIMP_RGB);
+      gimp_image_undo_disable (image_ID);
+
+      layer_ID = gimp_layer_new_from_pixbuf (image_ID, _("Background"),
+                                             pixbuf,
+                                             100.0, GIMP_NORMAL_MODE,
+                                             0.0, 0.0);
+      g_object_unref (pixbuf);
+
+      gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
+
+      gimp_image_metadata_rotate (image_ID,
+                                  gexiv2_metadata_get_orientation (metadata));
+    }
+
+  g_object_unref (metadata);
+
+  return image_ID;
+}
+
 
 /*  private functions  */
 
