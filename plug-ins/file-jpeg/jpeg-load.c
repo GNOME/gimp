@@ -459,7 +459,11 @@ jpeg_load_resolution (gint32                         image_ID,
         }
 
       gimp_image_set_resolution (image_ID, xresolution, yresolution);
+
+      return TRUE;
     }
+
+  return FALSE;
 }
 
 /*
@@ -486,53 +490,6 @@ jpeg_load_sanitize_comment (gchar *comment)
     }
 }
 
-typedef struct
-{
-  struct jpeg_source_mgr pub;   /* public fields */
-
-  guchar  *buffer;
-  gint     size;
-  JOCTET   terminal[2];
-} my_source_mgr;
-
-typedef my_source_mgr * my_src_ptr;
-
-static void
-init_source (j_decompress_ptr cinfo)
-{
-}
-
-static boolean
-fill_input_buffer (j_decompress_ptr cinfo)
-{
-  my_src_ptr src = (my_src_ptr) cinfo->src;
-
-  /* Since we have given all we have got already
-   * we simply fake an end of file
-   */
-
-  src->pub.next_input_byte = src->terminal;
-  src->pub.bytes_in_buffer = 2;
-  src->terminal[0]         = (JOCTET) 0xFF;
-  src->terminal[1]         = (JOCTET) JPEG_EOI;
-
-  return TRUE;
-}
-
-static void
-skip_input_data (j_decompress_ptr cinfo,
-                 long             num_bytes)
-{
-  my_src_ptr src = (my_src_ptr) cinfo->src;
-
-  src->pub.next_input_byte = src->pub.next_input_byte + num_bytes;
-}
-
-static void
-term_source (j_decompress_ptr cinfo)
-{
-}
-
 gint32
 load_thumbnail_image (GFile         *file,
                       gint          *width,
@@ -540,243 +497,20 @@ load_thumbnail_image (GFile         *file,
                       GimpImageType *type,
                       GError       **error)
 {
-  gint32 volatile  image_ID         = -1;
-  GimpMetadata    *metadata         = NULL;
-  guint8          *thumbnail_buffer = NULL;
-  gint             thumbnail_size;
-  gint32           layer_ID;
+  gint32 volatile               image_ID = -1;
   struct jpeg_decompress_struct cinfo;
   struct my_error_mgr           jerr;
-  guchar          *buf;
-  guchar         **rowbuf;
-  GimpImageBaseType image_type;
-  GimpImageType    layer_type;
-  GeglBuffer      *buffer = NULL;
-  gint             tile_height;
-  gint             scanlines;
-  gint             i, start, end;
-  gint             orientation;
-  my_src_ptr       src;
-  FILE            *infile;
-
-  metadata = gimp_metadata_load_from_file (file, error);
-  if (! metadata)
-    return -1;
-
-  orientation = gexiv2_metadata_get_orientation (metadata);
-
-  if (! gexiv2_metadata_get_exif_thumbnail (metadata,
-                                            &thumbnail_buffer, &thumbnail_size))
-    {
-      g_object_unref (metadata);
-      return -1;
-    }
-
-  cinfo.err = jpeg_std_error (&jerr.pub);
-  jerr.pub.error_exit     = my_error_exit;
-  jerr.pub.output_message = my_output_message;
+  FILE                         *infile   = NULL;
 
   gimp_progress_init_printf (_("Opening thumbnail for '%s'"),
                              g_file_get_parse_name (file));
 
-  /* Establish the setjmp return context for my_error_exit to use. */
-  if (setjmp (jerr.setjmp_buffer))
-    {
-      /* If we get here, the JPEG code has signaled an error.  We
-       * need to clean up the JPEG object, close the input file,
-       * and return.
-       */
-      jpeg_destroy_decompress (&cinfo);
+  image_ID = gimp_image_metadata_load_thumbnail (file, error);
+  if (image_ID < 1)
+    return -1;
 
-      if (image_ID != -1)
-        gimp_image_delete (image_ID);
-
-      if (metadata)
-        g_object_unref (metadata);
-
-      if (buffer)
-        g_object_unref (buffer);
-
-      if (thumbnail_buffer)
-        g_free (thumbnail_buffer);
-
-      return -1;
-    }
-
-  /* Now we can initialize the JPEG decompression object. */
-  jpeg_create_decompress (&cinfo);
-
-  /* Step 2: specify data source (eg, a file) */
-
-  if (cinfo.src == NULL)
-    cinfo.src = (struct jpeg_source_mgr *)(*cinfo.mem->alloc_small)
-      ((j_common_ptr) &cinfo, JPOOL_PERMANENT,
-       sizeof (my_source_mgr));
-
-  src = (my_src_ptr) cinfo.src;
-
-  src->pub.init_source       = init_source;
-  src->pub.fill_input_buffer = fill_input_buffer;
-  src->pub.skip_input_data   = skip_input_data;
-  src->pub.resync_to_restart = jpeg_resync_to_restart;
-  src->pub.term_source       = term_source;
-
-  src->pub.bytes_in_buffer   = thumbnail_size;
-  src->pub.next_input_byte   = thumbnail_buffer;
-
-  src->buffer = thumbnail_buffer;
-  src->size   = thumbnail_size;
-
-  /* Step 3: read file parameters with jpeg_read_header() */
-
-  jpeg_read_header (&cinfo, TRUE);
-
-  /* Step 4: set parameters for decompression */
-
-  /* In this example, we don't need to change any of the defaults set by
-   * jpeg_read_header(), so we do nothing here.
-   */
-
-  /* Step 5: Start decompressor */
-
-  jpeg_start_decompress (&cinfo);
-
-  /* We may need to do some setup of our own at this point before
-   * reading the data.  After jpeg_start_decompress() we have the
-   * correct scaled output image dimensions available, as well as
-   * the output colormap if we asked for color quantization.  In
-   * this example, we need to make an output work buffer of the
-   * right size.
-   */
-
-  /* temporary buffer */
-  tile_height = gimp_tile_height ();
-  buf = g_new (guchar,
-               tile_height * cinfo.output_width * cinfo.output_components);
-
-  rowbuf = g_new (guchar *, tile_height);
-
-  for (i = 0; i < tile_height; i++)
-    rowbuf[i] = buf + cinfo.output_width * cinfo.output_components * i;
-
-  /* Create a new image of the proper size and associate the
-   * filename with it.
-   */
-  switch (cinfo.output_components)
-    {
-    case 1:
-      image_type = GIMP_GRAY;
-      layer_type = GIMP_GRAY_IMAGE;
-      break;
-
-    case 3:
-      image_type = GIMP_RGB;
-      layer_type = GIMP_RGB_IMAGE;
-      break;
-
-    case 4:
-      if (cinfo.out_color_space == JCS_CMYK)
-        {
-          image_type = GIMP_RGB;
-          layer_type = GIMP_RGB_IMAGE;
-          break;
-        }
-      /*fallthrough*/
-
-    default:
-      g_message ("Don't know how to load JPEG images "
-                 "with %d color channels, using colorspace %d (%d).",
-                 cinfo.output_components, cinfo.out_color_space,
-                 cinfo.jpeg_color_space);
-
-      if (metadata)
-        g_object_unref (metadata);
-
-      if (thumbnail_buffer)
-        g_free (thumbnail_buffer);
-
-      return -1;
-      break;
-    }
-
-  image_ID = gimp_image_new (cinfo.output_width, cinfo.output_height,
-                             image_type);
-
-  gimp_image_undo_disable (image_ID);
-
-  jpeg_load_resolution (image_ID, &cinfo);
-
-  layer_ID = gimp_layer_new (image_ID, _("Background"),
-                             cinfo.output_width,
-                             cinfo.output_height,
-                             layer_type, 100, GIMP_NORMAL_MODE);
-
-  /* Step 6: while (scan lines remain to be read) */
-  /*           jpeg_read_scanlines(...); */
-
-  /* Here we use the library's state variable cinfo.output_scanline as the
-   * loop counter, so that we don't have to keep track ourselves.
-   */
-  buffer = gimp_drawable_get_buffer (layer_ID);
-
-  while (cinfo.output_scanline < cinfo.output_height)
-    {
-      start = cinfo.output_scanline;
-      end   = cinfo.output_scanline + tile_height;
-      end   = MIN (end, cinfo.output_height);
-      scanlines = end - start;
-
-      for (i = 0; i < scanlines; i++)
-        jpeg_read_scanlines (&cinfo, (JSAMPARRAY) &rowbuf[i], 1);
-
-      if (cinfo.out_color_space == JCS_CMYK)
-        jpeg_load_cmyk_to_rgb (buf, cinfo.output_width * scanlines, NULL);
-
-      gegl_buffer_set (buffer,
-                       GEGL_RECTANGLE (0, start, cinfo.output_width, scanlines),
-                       0,
-                       NULL,
-                       buf,
-                       GEGL_AUTO_ROWSTRIDE);
-
-      gimp_progress_update ((gdouble) cinfo.output_scanline /
-                            (gdouble) cinfo.output_height);
-    }
-
-  /* Step 7: Finish decompression */
-
-  jpeg_finish_decompress (&cinfo);
-  /* We can ignore the return value since suspension is not possible
-   * with the stdio data source.
-   */
-
-  /* Step 8: Release JPEG decompression object */
-
-  /* This is an important step since it will release a good deal
-   * of memory.
-   */
-  jpeg_destroy_decompress (&cinfo);
-
-  g_object_unref (metadata);
-  g_object_unref (buffer);
-  g_free (thumbnail_buffer);
-
-  /* free up the temporary buffers */
-  g_free (rowbuf);
-  g_free (buf);
-
-  /* At this point you may want to check to see whether any
-   * corrupt-data warnings occurred (test whether
-   * jerr.num_warnings is nonzero).
-   */
-  gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
-
-
-  /* NOW to get the dimensions of the actual image to return the
-   * calling app
-   */
   cinfo.err = jpeg_std_error (&jerr.pub);
-  jerr.pub.error_exit = my_error_exit;
+  jerr.pub.error_exit     = my_error_exit;
   jerr.pub.output_message = my_output_message;
 
   if ((infile = g_fopen (g_file_get_path (file), "rb")) == NULL)
@@ -822,6 +556,35 @@ load_thumbnail_image (GFile         *file,
   *width  = cinfo.output_width;
   *height = cinfo.output_height;
 
+  switch (cinfo.output_components)
+    {
+    case 1:
+      *type = GIMP_GRAY_IMAGE;
+      break;
+
+    case 3:
+      *type = GIMP_RGB_IMAGE;
+      break;
+
+    case 4:
+      if (cinfo.out_color_space == JCS_CMYK)
+        {
+          *type = GIMP_RGB_IMAGE;
+          break;
+        }
+      /*fallthrough*/
+
+    default:
+      g_message ("Don't know how to load JPEG images "
+                 "with %d color channels, using colorspace %d (%d).",
+                 cinfo.output_components, cinfo.out_color_space,
+                 cinfo.jpeg_color_space);
+
+      gimp_image_delete (image_ID);
+      image_ID = -1;
+      break;
+    }
+
   /* Step 4: Release JPEG decompression object */
 
   /* This is an important step since it will release a good deal
@@ -830,12 +593,6 @@ load_thumbnail_image (GFile         *file,
   jpeg_destroy_decompress (&cinfo);
 
   fclose (infile);
-
-#if 0
-  jpeg_exif_rotate (image_ID, orientation);
-#endif
-
-  *type = layer_type;
 
   return image_ID;
 }
