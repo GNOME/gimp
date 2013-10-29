@@ -1207,7 +1207,7 @@ load_resource_1058 (const PSDimageres  *res_a,
   GimpParasite *parasite;
   gchar        *res_data;
 
-  IFDBG(2) g_debug ("Process image resource block: 1058: EXIF data");
+  IFDBG(2) g_debug ("Process image resource block: 1058: Exif data");
 
   res_data = g_malloc (res_a->data_len);
   if (fread (res_data, res_a->data_len, 1, f) < 1)

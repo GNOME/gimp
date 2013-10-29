@@ -142,7 +142,7 @@ load_image (const gchar  *filename,
       /* - step 2.1: tell the lib to save the comments */
       jpeg_save_markers (&cinfo, JPEG_COM, 0xffff);
 
-      /* - step 2.2: tell the lib to save APP1 data (EXIF or XMP) */
+      /* - step 2.2: tell the lib to save APP1 data (Exif or XMP) */
       jpeg_save_markers (&cinfo, JPEG_APP0 + 1, 0xffff);
 
       /* - step 2.3: tell the lib to save APP2 data (ICC profiles) */
@@ -255,7 +255,7 @@ load_image (const gchar  *filename,
       /* Step 5.0: save the original JPEG settings in a parasite */
       jpeg_detect_original_settings (&cinfo, image_ID);
 
-      /* Step 5.1: check for comments, or EXIF metadata in APP1 markers */
+      /* Step 5.1: check for comments, or Exif metadata in APP1 markers */
       for (marker = cinfo.marker_list; marker; marker = marker->next)
         {
           const gchar *data = (const gchar *) marker->data;
@@ -284,7 +284,7 @@ load_image (const gchar  *filename,
                    && ! strcmp (JPEG_APP_HEADER_EXIF, data))
             {
 #ifdef GIMP_UNSTABLE
-              g_print ("jpeg-load: found EXIF block (%d bytes)\n",
+              g_print ("jpeg-load: found Exif block (%d bytes)\n",
                        (gint) (len - sizeof (JPEG_APP_HEADER_EXIF)));
 #endif
             }

@@ -546,11 +546,11 @@ gimp_metadata_save_to_file (GimpMetadata  *metadata,
 /**
  * gimp_metadata_set_from_exif:
  * @metadata:         A #GimpMetadata instance.
- * @exif_data:        The blob of EXIF data to set
+ * @exif_data:        The blob of Exif data to set
  * @exif_data_length: Length of @exif_data, in bytes
  * @error:            Return location for error message
  *
- * Sets the tags from a piece of EXIF data on @metadata.
+ * Sets the tags from a piece of Exif data on @metadata.
  *
  * Return value: %TRUE on success, %FALSE otherwise.
  *
@@ -597,7 +597,7 @@ gimp_metadata_set_from_exif (GimpMetadata  *metadata,
   if (! gexiv2_metadata_has_exif (exif_metadata))
     {
       g_set_error (error, gimp_metadata_error_quark (), 0,
-                   _("Parsing EXIF data failed."));
+                   _("Parsing Exif data failed."));
       g_object_unref (exif_metadata);
       g_byte_array_free (exif_bytes, TRUE);
       return FALSE;
@@ -613,7 +613,7 @@ gimp_metadata_set_from_exif (GimpMetadata  *metadata,
 /**
  * gimp_metadata_set_from_xmp:
  * @metadata:        A #GimpMetadata instance.
- * @xmp_data:        The blob of EXIF data to set
+ * @xmp_data:        The blob of Exif data to set
  * @xmp_data_length: Length of @exif_data, in bytes
  * @error:           Return location for error message
  *

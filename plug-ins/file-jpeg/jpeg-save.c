@@ -881,7 +881,7 @@ save_dialog (void)
                                 jsvals.progressive);
 
   pg.save_exif = toggle =
-    gtk_check_button_new_with_mnemonic (_("Save _EXIF data"));
+    gtk_check_button_new_with_mnemonic (_("Save _Exif data"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.save_exif);
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 2, 3, GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);

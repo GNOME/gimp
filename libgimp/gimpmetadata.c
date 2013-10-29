@@ -218,7 +218,7 @@ gimp_image_metadata_save_prepare (gint32       image_ID,
       if (comment_parasite)
         comment = gimp_parasite_data (comment_parasite);
 
-      /* EXIF */
+      /* Exif */
 
       if (comment)
         {
@@ -670,7 +670,7 @@ gimp_image_metadata_rotate_dialog (gint32       image_ID,
   gtk_widget_show (vbox);
 
   label = g_object_new (GTK_TYPE_LABEL,
-                        "label",   _("According to the EXIF data, "
+                        "label",   _("According to the Exif data, "
                                      "this image is rotated."),
                         "wrap",    TRUE,
                         "justify", GTK_JUSTIFY_LEFT,

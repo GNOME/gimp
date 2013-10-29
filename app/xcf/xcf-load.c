@@ -265,7 +265,7 @@ xcf_load_image (Gimp     *gimp,
               gimp_message (gimp, G_OBJECT (info->progress),
                             GIMP_MESSAGE_WARNING,
                             _("Corrupt 'exif-data' parasite discovered.\n"
-                              "EXIF data could not be migrated: %s"),
+                              "Exif data could not be migrated: %s"),
                             my_error->message);
               g_clear_error (&my_error);
             }

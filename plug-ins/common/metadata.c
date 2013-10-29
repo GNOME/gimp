@@ -127,9 +127,9 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("View and edit metadata (EXIF, IPTC, XMP)"),
+                          N_("View and edit metadata (Exif, IPTC, XMP)"),
                           "View and edit metadata information attached to the "
-                          "current image.  This can include EXIF, IPTC and/or "
+                          "current image.  This can include Exif, IPTC and/or "
                           "XMP information.  Some or all of this metadata "
                           "will be saved in the file, depending on the output "
                           "file format.",

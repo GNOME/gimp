@@ -434,7 +434,7 @@ typedef enum {
   PSP_XDATA_TRNS_INDEX = 0,     /* Transparency index field */
   PSP_XDATA_GRID,               /* Image grid information (since PSP7) */
   PSP_XDATA_GUIDE,              /* Image guide information (since PSP7) */
-  PSP_XDATA_EXIF,               /* Image EXIF information (since PSP8) */
+  PSP_XDATA_EXIF,               /* Image Exif information (since PSP8) */
 } PSPExtendedDataID;
 
 /* Creator field types.
