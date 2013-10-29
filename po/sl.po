@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-09-07 06:32+0000\n"
-"PO-Revision-Date: 2013-09-09 22:00+0100\n"
+"POT-Creation-Date: 2013-10-28 22:59+0000\n"
+"PO-Revision-Date: 2013-10-29 13:51+0100\n"
 "Last-Translator: filmsi <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl_SI\n"
@@ -8110,8 +8110,6 @@ msgid "Set Colormap"
 msgstr "Nastavi katalog barv"
 
 #: ../app/core/gimpimage-colormap.c:210
-#| msgctxt "undo-type"
-#| msgid "Set Colormap"
 msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "Prekliči nastavitev katalog barv"
@@ -9069,7 +9067,6 @@ msgstr ""
 "datoteke ali pa ne vnesite nobene končnice."
 
 #: ../app/dialogs/file-save-dialog.c:605
-#| msgid "The given filename does not have any known file extension."
 msgid "The given filename cannot be used for exporting"
 msgstr "Podano ime datoteke ni mogoče uporabiti za izvoz."
 
@@ -9082,13 +9079,10 @@ msgstr ""
 "Datoteka→Shrani za izvoz v zapisu XCF GIMP."
 
 #: ../app/dialogs/file-save-dialog.c:609
-#| msgctxt "dialogs-action"
-#| msgid "Open the layers dialog"
 msgid "Take me to the Save dialog"
 msgstr "Popelji me k pogovornem oknu Shrani"
 
 #: ../app/dialogs/file-save-dialog.c:613
-#| msgid "The given filename does not have any known file extension."
 msgid "The given filename cannot be used for saving"
 msgstr "Podanega imena datoteke ni mogoče uporabiti za shranjevanje."
 
@@ -9101,8 +9095,6 @@ msgstr ""
 "Datoteka→Izvozi za izvoz v druge vrste datotek."
 
 #: ../app/dialogs/file-save-dialog.c:616
-#| msgctxt "dialogs-action"
-#| msgid "Open the paths dialog"
 msgid "Take me to the Export dialog"
 msgstr "Popelji me k pogovornem oknu Izvozi"
 
@@ -11656,13 +11648,21 @@ msgstr "Preoblikuj plast besedila"
 msgid "Discard Text Information"
 msgstr "Zavrži besedilne podatke"
 
-#: ../app/text/gimptextlayer.c:581
+#: ../app/text/gimptextlayer.c:582
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Zaradi odsotnosti vseh pisav funkcionalnost besedila ni na voljo."
 
-#: ../app/text/gimptextlayer.c:634
+#: ../app/text/gimptextlayer.c:640
 msgid "Empty Text Layer"
 msgstr "Sprazni plast besedila"
+
+#: ../app/text/gimptextlayer.c:696
+msgid ""
+"Your text cannot be rendered. It is likely too big. Please make it shorter "
+"or use a smaller font."
+msgstr ""
+"Besedila ni mogoče upodobiti, najverjetneje je preveliko. Skrajšajte ga ali "
+"uporabite manjšo pisavo."
 
 #: ../app/text/gimptextlayer-xcf.c:76
 #, c-format
@@ -11678,6 +11678,14 @@ msgstr ""
 "\n"
 "Nekatere lastnosti besedila so morda napačne. Če plasti z besedilom ne "
 "želite urejati, je skrb odveč."
+
+#: ../app/text/gimptextlayout.c:577
+msgid ""
+"The new text layout cannot be generated. Most likely the font size is too "
+"big."
+msgstr ""
+"Nove postavitve besedila ni mogoče izdelati. Najverjetneje je pisava "
+"prevelika."
 
 #: ../app/text/text-enums.c:23
 msgctxt "text-box-mode"
@@ -12016,27 +12024,27 @@ msgctxt "command"
 msgid "Select by Color"
 msgstr "Izbor po barvi"
 
-#: ../app/tools/gimpcagetool.c:152 ../app/tools/gimpcagetool.c:1156
+#: ../app/tools/gimpcagetool.c:158 ../app/tools/gimpcagetool.c:1123
 msgid "Cage Transform"
 msgstr "Preoblikovanje kletke"
 
-#: ../app/tools/gimpcagetool.c:153
+#: ../app/tools/gimpcagetool.c:159
 msgid "Cage Transform: Deform a selection with a cage"
 msgstr "Preoblikovanje kletke: deformirajte izbor s kletko"
 
-#: ../app/tools/gimpcagetool.c:154
+#: ../app/tools/gimpcagetool.c:160
 msgid "_Cage Transform"
 msgstr "Preo_blikovanje kletke"
 
-#: ../app/tools/gimpcagetool.c:353
+#: ../app/tools/gimpcagetool.c:356
 msgid "Press ENTER to commit the transform"
 msgstr "Pritisnite Enter za potrditev preoblikovanja"
 
-#: ../app/tools/gimpcagetool.c:1097
+#: ../app/tools/gimpcagetool.c:1064
 msgid "Computing Cage Coefficients"
 msgstr "Računanje koeficientov kletke"
 
-#: ../app/tools/gimpcagetool.c:1274
+#: ../app/tools/gimpcagetool.c:1241
 msgid "Cage transform"
 msgstr "Preoblikovanje kletke"
 
