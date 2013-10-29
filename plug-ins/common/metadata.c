@@ -136,13 +136,13 @@ query (void)
                           "Hartmut Kuhse, Michael Natterer",
                           "Hartmut Kuhse, Michael Natterer",
                           "2013",
-                          N_("Show Metadata"),
+                          N_("Image Metadata"),
                           "*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (metadata_args), 0,
                           metadata_args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/File/Info");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Image");
 }
 
 static void
