@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp - libgimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-09-10 10:15+0000\n"
-"PO-Revision-Date: 2013-09-11 14:59+0100\n"
+"POT-Creation-Date: 2013-10-28 23:11+0000\n"
+"PO-Revision-Date: 2013-10-29 14:25+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl_SI\n"
@@ -243,6 +243,27 @@ msgstr "Izbor preliva"
 #: ../libgimp/gimpmenu.c:461 ../libgimpwidgets/gimpintstore.c:258
 msgid "(Empty)"
 msgstr "(prazno)"
+
+#: ../libgimp/gimpmetadata.c:612
+#| msgid "Flatten Image"
+msgid "Rotate Image?"
+msgstr "Želite zasukati sliko?"
+
+#: ../libgimp/gimpmetadata.c:615
+msgid "_Keep Orientation"
+msgstr "_Ohrani usmeritev"
+
+#: ../libgimp/gimpmetadata.c:673
+msgid "According to the EXIF data, this image is rotated."
+msgstr "Po podatkih EXIF je slika zasukana."
+
+#: ../libgimp/gimpmetadata.c:688
+msgid "Would you like GIMP to rotate it into the standard orientation?"
+msgstr "Jo želite z GIMP-om zasukati v običajno usmeritev?"
+
+#: ../libgimp/gimpmetadata.c:698
+msgid "_Don't ask me again"
+msgstr "_Ne vprašaj več"
 
 #: ../libgimp/gimppaletteselectbutton.c:138
 msgid "Palette Selection"
@@ -902,6 +923,26 @@ msgctxt "text-justification"
 msgid "Filled"
 msgstr "Zapolnjeno"
 
+#: ../libgimpbase/gimpmetadata.c:467
+#, c-format
+msgid "Can load metadata only from local files"
+msgstr "Metapodatke je mogoče naložiti le s krajevnih datotek"
+
+#: ../libgimpbase/gimpmetadata.c:527
+#, c-format
+msgid "Can save metadata only to local files"
+msgstr "Metapodatke je mogoče shraniti le v krajevne datoteke"
+
+#: ../libgimpbase/gimpmetadata.c:600
+#, c-format
+msgid "Parsing EXIF data failed."
+msgstr "Razčlenjevanje podatkov EXIF je spodletelo."
+
+#: ../libgimpbase/gimpmetadata.c:654
+#, c-format
+msgid "Parsing XMP data failed."
+msgstr "Razčlenjevanje podatkov XMP je spodletelo."
+
 #: ../libgimpbase/gimputils.c:178 ../libgimpbase/gimputils.c:183
 #: ../modules/color-selector-cmyk-lcms.c:417
 #: ../modules/color-selector-cmyk-lcms.c:440
@@ -1284,7 +1325,7 @@ msgstr "zapisljiva"
 msgid "Folder"
 msgstr "Mapa"
 
-#: ../libgimpwidgets/gimppickbutton.c:128
+#: ../libgimpwidgets/gimppickbutton.c:131
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -1363,7 +1404,6 @@ msgid "L_ine Spacing"
 msgstr "Razmik _vrstic"
 
 #: ../libgimpwidgets/gimpstock.c:204
-#| msgid "_Resize"
 msgid "Re_size"
 msgstr "Spremeni _velikost"
 
