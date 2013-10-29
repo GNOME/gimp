@@ -123,6 +123,12 @@ static void         lcms_image_transform_rgb     (gint32           image,
                                                   cmsHPROFILE      dest_profile,
                                                   GimpColorRenderingIntent intent,
                                                   gboolean          bpc);
+static void         lcms_layers_transform_rgb    (gint            *layers,
+                                                  gint             num_layers,
+                                                  cmsHPROFILE      src_profile,
+                                                  cmsHPROFILE      dest_profile,
+                                                  GimpColorRenderingIntent intent,
+                                                  gboolean          bpc);
 static void         lcms_image_transform_indexed (gint32           image,
                                                   cmsHPROFILE      src_profile,
                                                   cmsHPROFILE      dest_profile,
@@ -977,21 +983,56 @@ lcms_image_transform_rgb (gint32                    image,
                           GimpColorRenderingIntent  intent,
                           gboolean                  bpc)
 {
-  cmsHTRANSFORM    transform   = NULL;
-  cmsUInt32Number  lcms_format = 0;
-  gint            *layers;
-  gint             num_layers;
-  gint             i;
+  gint *layers;
+  gint  num_layers;
 
   layers = gimp_image_get_layers (image, &num_layers);
 
+  lcms_layers_transform_rgb (layers, num_layers,
+                             src_profile, dest_profile,
+                             intent, bpc);
+
+  g_free (layers);
+}
+
+static void
+lcms_layers_transform_rgb (gint                     *layers,
+                           gint                      num_layers,
+                           cmsHPROFILE               src_profile,
+                           cmsHPROFILE               dest_profile,
+                           GimpColorRenderingIntent  intent,
+                           gboolean                  bpc)
+{
+  cmsHTRANSFORM    transform   = NULL;
+  cmsUInt32Number  lcms_format = 0;
+  gint             i;
+
   for (i = 0; i < num_layers; i++)
     {
-      gint32          layer_id     = layers[i];
-      const Babl     *layer_format = gimp_drawable_get_format (layer_id);
-      const gboolean  has_alpha    = babl_format_has_alpha (layer_format);
-      const Babl     *type         = babl_format_get_type (layer_format, 0);
-      const Babl     *iter_format  = NULL;
+      gint32      layer_id = layers[i];
+      const Babl *layer_format;
+      gboolean    has_alpha;
+      const Babl *type;
+      const Babl *iter_format = NULL;
+      gint       *children;
+      gint        num_children;
+
+      children = gimp_item_get_children (layer_id, &num_children);
+
+      if (children)
+        {
+          lcms_layers_transform_rgb (children, num_children,
+                                     src_profile, dest_profile,
+                                     intent, bpc);
+
+          g_free (children);
+
+          continue;
+        }
+
+      layer_format = gimp_drawable_get_format (layer_id);
+      has_alpha    = babl_format_has_alpha (layer_format);
+      type         = babl_format_get_type (layer_format, 0);
 
       if (type == babl_type ("u8"))
         {
@@ -1121,8 +1162,6 @@ lcms_image_transform_rgb (gint32                    image,
             }
         }
     }
-
-  g_free (layers);
 }
 
 static void
