@@ -142,6 +142,7 @@ run (const gchar      *name,
   gint               i;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   run_mode = param[0].data.d_int32;
 
@@ -270,11 +271,11 @@ remap (gint32  image_ID,
   gint      ncols;
   gint      num_layers;
   gint32   *layers;
-  gint      i, j, k;
   glong     pixels    = 0;
   glong     processed = 0;
   guchar    pixel_map[256];
   gboolean  valid[256];
+  gint      i;
 
   cmap = gimp_image_get_colormap (image_ID, &ncols);
 
@@ -315,7 +316,7 @@ remap (gint32  image_ID,
 
   for (i = 0; i < ncols; i++)
     {
-      j = map[i] * 3;
+      gint j = map[i] * 3;
 
       *new_cmap_i++ = cmap[j];
       *new_cmap_i++ = cmap[j + 1];
@@ -331,80 +332,99 @@ remap (gint32  image_ID,
 
   gimp_progress_init (_("Rearranging the colormap"));
 
+  /*  There is no needs to process the layers recursively, because
+   *  indexed images cannot have layer groups.
+   */
   layers = gimp_image_get_layers (image_ID, &num_layers);
 
-  for (k = 0; k < num_layers; k++)
+  for (i = 0; i < num_layers; i++)
     pixels +=
-      gimp_drawable_width (layers[k]) * gimp_drawable_height (layers[k]);
+      gimp_drawable_width (layers[i]) * gimp_drawable_height (layers[i]);
 
-  for (k = 0; k < num_layers; k++)
+  for (i = 0; i < num_layers; i++)
     {
-      GimpDrawable *drawable;
-      GimpPixelRgn  src_rgn, dest_rgn;
-      gint          width, height, bytespp;
-      gint          update;
-      gpointer      pr;
+      GeglBuffer         *buffer;
+      GeglBuffer         *shadow;
+      const Babl         *format;
+      GeglBufferIterator *iter;
+      GeglRectangle      *src_roi;
+      GeglRectangle      *dest_roi;
+      gint                width, height, bpp;
+      gint                update = 0;
 
-      drawable = gimp_drawable_get (layers[k]);
+      buffer = gimp_drawable_get_buffer (layers[i]);
+      shadow = gimp_drawable_get_shadow_buffer (layers[i]);
 
-      width   = drawable->width;
-      height  = drawable->height;
-      bytespp = drawable->bpp;
+      width   = gegl_buffer_get_width  (buffer);
+      height  = gegl_buffer_get_height (buffer);
+      format  = gegl_buffer_get_format (buffer);
+      bpp     = babl_format_get_bytes_per_pixel (format);
 
-      gimp_pixel_rgn_init (&src_rgn,
-                           drawable, 0, 0, width, height, FALSE, FALSE);
-      gimp_pixel_rgn_init (&dest_rgn,
-                           drawable, 0, 0, width, height, TRUE, TRUE);
+      iter = gegl_buffer_iterator_new (buffer,
+                                       GEGL_RECTANGLE (0, 0, width, height), 0,
+                                       format,
+                                       GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+      src_roi = &iter->roi[0];
 
-      for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn), update = 0;
-           pr != NULL;
-           pr = gimp_pixel_rgns_process (pr), update++)
+      gegl_buffer_iterator_add (iter, shadow,
+                                GEGL_RECTANGLE (0, 0, width, height), 0,
+                                format,
+                                GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+      dest_roi = &iter->roi[1];
+
+      while (gegl_buffer_iterator_next (iter))
         {
-          const guchar *src_row = src_rgn.data;
-          guchar       *dest_row = dest_rgn.data;
+          const guchar *src_row  = iter->data[0];
+          guchar       *dest_row = iter->data[1];
+          gint          y;
 
-          for (i = 0; i < src_rgn.h; i++)
+          for (y = 0; y < src_roi->height; y++)
             {
               const guchar *src  = src_row;
               guchar       *dest = dest_row;
+              gint          x;
 
-              if (bytespp == 1)
+              if (bpp == 1)
                 {
-                  for (j = 0; j < src_rgn.w; j++)
+                  for (x = 0; x < src_roi->width; x++)
                     *dest++ = pixel_map[*src++];
                 }
               else
                 {
-                  for (j = 0; j < src_rgn.w; j++)
+                  for (x = 0; x < src_roi->width; x++)
                     {
                       *dest++ = pixel_map[*src++];
                       *dest++ = *src++;
                     }
                 }
 
-              src_row += src_rgn.rowstride;
-              dest_row += dest_rgn.rowstride;
+              src_row  += src_roi->width  * bpp;
+              dest_row += dest_roi->width * bpp;
             }
 
-          processed += src_rgn.w * src_rgn.h;
+          processed += src_roi->width * src_roi->height;
           update %= 16;
 
           if (update == 0)
             gimp_progress_update ((gdouble) processed / pixels);
+
+          update++;
         }
 
-      gimp_drawable_flush (drawable);
-      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id, 0, 0, width, height);
-      gimp_drawable_detach (drawable);
+      g_object_unref (buffer);
+      g_object_unref (shadow);
+
+      gimp_drawable_merge_shadow (layers[i], TRUE);
+      gimp_drawable_update (layers[i], 0, 0, width, height);
     }
+
+  g_free (layers);
 
   gimp_progress_update (1.0);
 
   gimp_image_undo_group_end (image_ID);
 
   return TRUE;
-
 }
 
 

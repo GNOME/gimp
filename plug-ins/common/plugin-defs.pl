@@ -16,7 +16,7 @@
     'color-enhance' => { ui => 1 },
     'color-exchange' => { ui => 1 },
     'colorify' => { ui => 1 },
-    'colormap-remap' => { ui => 1 },
+    'colormap-remap' => { ui => 1, gegl => 1 },
     'compose' => { ui => 1, gegl => 1 },
     'contrast-normalize' => {},
     'contrast-retinex' => { ui => 1 },
