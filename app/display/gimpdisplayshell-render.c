@@ -110,26 +110,62 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   data = cairo_image_surface_get_data (xfer);
   data += src_y * stride + src_x * 4;
 
-  gegl_buffer_get (buffer,
-                   GEGL_RECTANGLE ((x + viewport_offset_x) * window_scale,
-                                   (y + viewport_offset_y) * window_scale,
-                                   w * window_scale,
-                                   h * window_scale),
-                   shell->scale_x * window_scale,
-                   babl_format ("cairo-ARGB32"),
-		   data, stride,
-                   GEGL_ABYSS_NONE);
-
   /*  apply filters to the rendered projection  */
   if (shell->filter_stack)
     {
-      cairo_surface_t *image =
-	cairo_image_surface_create_for_data (data, CAIRO_FORMAT_ARGB32,
-					     w * window_scale,
-					     h * window_scale,
-					     stride);
-      gimp_color_display_stack_convert_surface (shell->filter_stack, image);
-      cairo_surface_destroy (image);
+      const Babl *tmp_format = babl_format ("R'G'B'A float");
+      GeglBuffer *tmp_buffer;
+      guchar     *tmp_data;
+
+      tmp_data = gegl_malloc (w * window_scale *
+                              h * window_scale *
+                              babl_format_get_bytes_per_pixel (tmp_format));
+
+      gegl_buffer_get (buffer,
+                       GEGL_RECTANGLE ((x + viewport_offset_x) * window_scale,
+                                       (y + viewport_offset_y) * window_scale,
+                                       w * window_scale,
+                                       h * window_scale),
+                       shell->scale_x * window_scale,
+                       tmp_format, tmp_data,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+      tmp_buffer =
+        gegl_buffer_linear_new_from_data (tmp_data, tmp_format,
+                                          GEGL_RECTANGLE (0, 0,
+                                                          w * window_scale,
+                                                          h * window_scale),
+                                          GEGL_AUTO_ROWSTRIDE,
+                                          (GDestroyNotify) gegl_free, tmp_data);
+
+      gimp_color_display_stack_convert_buffer (shell->filter_stack,
+                                               tmp_buffer,
+                                               GEGL_RECTANGLE (0, 0,
+                                                               w * window_scale,
+                                                               h * window_scale));
+
+      gegl_buffer_get (tmp_buffer,
+                       GEGL_RECTANGLE (0, 0,
+                                       w * window_scale,
+                                       h * window_scale),
+                       1.0,
+                       babl_format ("cairo-ARGB32"),
+                       data, stride,
+                       GEGL_ABYSS_NONE);
+
+      g_object_unref (tmp_buffer);
+    }
+  else
+    {
+      gegl_buffer_get (buffer,
+                       GEGL_RECTANGLE ((x + viewport_offset_x) * window_scale,
+                                       (y + viewport_offset_y) * window_scale,
+                                       w * window_scale,
+                                       h * window_scale),
+                       shell->scale_x * window_scale,
+                       babl_format ("cairo-ARGB32"),
+                       data, stride,
+                       GEGL_ABYSS_NONE);
     }
 
   if (shell->mask)
