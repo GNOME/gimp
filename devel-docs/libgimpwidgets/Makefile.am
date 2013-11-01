@@ -50,6 +50,7 @@ GTKDOC_CFLAGS = \
 	@CFLAGS@					\
 	-I$(top_srcdir) 				\
 	-I$(top_builddir) 				\
+	@GEGL_CFLAGS@					\
 	@GTK_CFLAGS@					\
 	-DGIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION	\
 	-UGTK_DISABLE_SINGLE_INCLUDES			\
@@ -61,6 +62,7 @@ GTKDOC_LIBS = \
 	$(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la		\
 	$(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la	\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la	\
+	@GEGL_LIBS@								\
 	@GTK_LIBS@
 
 

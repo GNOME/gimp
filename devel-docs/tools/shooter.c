@@ -7,6 +7,7 @@
 #include <unistd.h>
 #endif
 
+#include <gegl.h>
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 
