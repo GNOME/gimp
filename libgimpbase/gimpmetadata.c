@@ -28,6 +28,8 @@
 #include <gio/gio.h>
 #include <gexiv2/gexiv2.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "gimpbasetypes.h"
 
 #include "gimplimits.h"
@@ -821,6 +823,7 @@ gimp_metadata_set_resolution (GimpMetadata *metadata,
 {
   gchar buffer[32];
   gint  exif_unit;
+  gint  factor;
 
   g_return_if_fail (GEXIV2_IS_METADATA (metadata));
 
@@ -836,11 +839,20 @@ gimp_metadata_set_resolution (GimpMetadata *metadata,
       exif_unit = 2;
     }
 
-  g_ascii_formatd (buffer, sizeof (buffer), "%.0f/1", xres);
-  gexiv2_metadata_set_tag_string (metadata, "Exif.Image.XResolution", buffer);
+  for (factor = 1; factor <= 100 /* arbitrary */; factor++)
+    {
+      if (fabs (xres * factor - ROUND (xres * factor)) < 0.01 &&
+          fabs (yres * factor - ROUND (yres * factor)) < 0.01)
+        break;
+    }
 
-  g_ascii_formatd (buffer, sizeof (buffer), "%.0f/1", yres);
-  gexiv2_metadata_set_tag_string (metadata, "Exif.Image.YResolution", buffer);
+  gexiv2_metadata_set_exif_tag_rational (metadata,
+                                         "Exif.Image.XResolution",
+                                         ROUND (xres * factor), factor);
+
+  gexiv2_metadata_set_exif_tag_rational (metadata,
+                                         "Exif.Image.YResolution",
+                                         ROUND (yres * factor), factor);
 
   g_snprintf (buffer, sizeof (buffer), "%d", exif_unit);
   gexiv2_metadata_set_tag_string (metadata, "Exif.Image.ResolutionUnit", buffer);
