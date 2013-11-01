@@ -286,6 +286,34 @@ gimp_color_display_stack_reorder_down (GimpColorDisplayStack *stack,
 }
 
 /**
+ * gimp_color_display_stack_convert_buffer:
+ * @stack:  a #GimpColorDisplayStack
+ * @buffer: a #GeglBuffer
+ * @area:   area of @buffer to convert
+ *
+ * Runs all the stack's filters on all pixels in @area of @buffer.
+ *
+ * Since: GIMP 2.10
+ **/
+void
+gimp_color_display_stack_convert_buffer (GimpColorDisplayStack *stack,
+                                         GeglBuffer            *buffer,
+                                         GeglRectangle         *area)
+{
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_COLOR_DISPLAY_STACK (stack));
+  g_return_if_fail (GEGL_IS_BUFFER (buffer));
+
+  for (list = stack->filters; list; list = g_list_next (list))
+    {
+      GimpColorDisplay *display = list->data;
+
+      gimp_color_display_convert_buffer (display, buffer, area);
+    }
+}
+
+/**
  * gimp_color_display_stack_convert_surface:
  * @stack: a #GimpColorDisplayStack
  * @surface: a #cairo_image_surface_t of type ARGB32
@@ -293,6 +321,8 @@ gimp_color_display_stack_reorder_down (GimpColorDisplayStack *stack,
  * Runs all the stack's filters on all pixels in @surface.
  *
  * Since: GIMP 2.8
+ *
+ * Deprecated: GIMP 2.10: Use gimp_color_display_stack_convert_buffer() instead.
  **/
 void
 gimp_color_display_stack_convert_surface (GimpColorDisplayStack *stack,
@@ -309,7 +339,9 @@ gimp_color_display_stack_convert_surface (GimpColorDisplayStack *stack,
     {
       GimpColorDisplay *display = list->data;
 
+      G_GNUC_BEGIN_IGNORE_DEPRECATIONS
       gimp_color_display_convert_surface (display, surface);
+      G_GNUC_END_IGNORE_DEPRECATIONS
     }
 }
 
@@ -324,7 +356,7 @@ gimp_color_display_stack_convert_surface (GimpColorDisplayStack *stack,
  *
  * Converts all pixels in @buf.
  *
- * Deprecated: GIMP 2.8: Use gimp_color_display_stack_convert_surface() instead.
+ * Deprecated: GIMP 2.8: Use gimp_color_display_stack_convert_buffer() instead.
  **/
 void
 gimp_color_display_stack_convert (GimpColorDisplayStack *stack,

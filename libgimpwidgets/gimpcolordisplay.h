@@ -85,11 +85,15 @@ struct _GimpColorDisplayClass
 
   const gchar  *stock_id;
 
+  /*  implementing the GimpColorDisplay::convert_surface method is deprecated  */
   void               (* convert_surface) (GimpColorDisplay *display,
                                           cairo_surface_t  *surface);
 
+  void               (* convert_buffer)  (GimpColorDisplay *display,
+                                          GeglBuffer       *buffer,
+                                          GeglRectangle    *area);
+
   /* Padding for future expansion */
-  void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
 };
 
@@ -100,9 +104,13 @@ GIMP_DEPRECATED_FOR(g_object_new)
 GimpColorDisplay * gimp_color_display_new         (GType             display_type);
 GimpColorDisplay * gimp_color_display_clone       (GimpColorDisplay *display);
 
+void           gimp_color_display_convert_buffer  (GimpColorDisplay *display,
+                                                   GeglBuffer       *buffer,
+                                                   GeglRectangle    *area);
+GIMP_DEPRECATED_FOR(gimp_color_display_convert_buffer)
 void           gimp_color_display_convert_surface (GimpColorDisplay *display,
                                                    cairo_surface_t  *surface);
-GIMP_DEPRECATED_FOR(gimp_color_display_convert_surface)
+GIMP_DEPRECATED_FOR(gimp_color_display_convert_buffer)
 void           gimp_color_display_convert         (GimpColorDisplay *display,
                                                    guchar           *buf,
                                                    gint              width,
