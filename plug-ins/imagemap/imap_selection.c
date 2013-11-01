@@ -24,9 +24,8 @@
 
 #include <stdio.h>
 
-#include <gtk/gtk.h>
-
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 
 #include "imap_commands.h"
 #include "imap_main.h"

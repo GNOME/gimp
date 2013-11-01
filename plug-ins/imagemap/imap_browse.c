@@ -20,9 +20,10 @@
  *
  */
 
-#include <gtk/gtk.h>
+#include "config.h"
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 
 #include "imap_browse.h"
 

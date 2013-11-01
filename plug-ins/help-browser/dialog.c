@@ -33,8 +33,6 @@
 
 #include <webkit/webkit.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
-
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 
