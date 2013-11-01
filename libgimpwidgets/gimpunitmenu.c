@@ -23,6 +23,7 @@
 
 #undef GSEAL_ENABLE
 
+#include <gegl.h>
 /* FIXME: #undef GTK_DISABLE_DEPRECATED */
 #undef GTK_DISABLE_DEPRECATED
 #include <gtk/gtk.h>
