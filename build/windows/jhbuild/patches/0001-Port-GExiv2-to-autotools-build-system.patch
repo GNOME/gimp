@@ -1,0 +1,512 @@
+From 2176fb05ea3551346763bd22e3f568229835ed98 Mon Sep 17 00:00:00 2001
+From: Jehan <jehan@girinstud.io>
+Date: Thu, 31 Oct 2013 19:05:07 +1300
+Subject: [PATCH] Port GExiv2 to autotools build system.
+
+---
+ .gitignore   |  13 ++++
+ Makefile     | 250 -----------------------------------------------------------
+ Makefile.am  | 127 ++++++++++++++++++++++++++++++
+ autogen.sh   |   3 +
+ configure    | 102 ------------------------
+ configure.ac | 195 ++++++++++++++++++++++++++++++++++++++++++++++
+ gexiv2.m4    |  12 ---
+ gexiv2.pc.in |  11 +++
+ 8 files changed, 349 insertions(+), 364 deletions(-)
+ delete mode 100644 Makefile
+ create mode 100644 Makefile.am
+ create mode 100755 autogen.sh
+ delete mode 100755 configure
+ create mode 100644 configure.ac
+ delete mode 100644 gexiv2.m4
+ create mode 100644 gexiv2.pc.in
+
+diff --git a/Makefile.am b/Makefile.am
+new file mode 100644
+index 0000000..5e67720
+--- /dev/null
++++ b/Makefile.am
+@@ -0,0 +1,127 @@
++# Installation directories.
++pkgconfigdir     = $(libdir)/pkgconfig
++GEXIV2_publicdir = $(includedir)/gexiv2
++vapidir          = $(datadir)/vala/vapi
++girdir           = $(datadir)/gir-1.0
++typelibdir       = `pkg-config gobject-introspection-no-export-1.0 --variable typelibdir`
++py2gidir         = $(PYTHON2_GIDIR)
++py3gidir         = $(PYTHON3_GIDIR)
++
++# Extra package files. #
++EXTRA_DIST =
++	@PACKAGE_NAME@.pc.in	\
++	GExiv2.py				\
++	@PACKAGE_NAME@.vapi		\
++	$(TYPELIB_FILES)
++
++# Installed Files #
++pkgconfig_DATA  = @PACKAGE_NAME@.pc
++lib_LTLIBRARIES = lib@PACKAGE_NAME@.la
++#vapi_DATA       = @PACKAGE_NAME@.vapi
++if ENABLE_INTROSPECTION
++gir_DATA        = GExiv2-$(GIR_VERSION).gir
++typelib_DATA    = GExiv2-$(GIR_VERSION).typelib
++# No introspection, no .gi file for the Python module to call into
++if HAS_PYTHON2
++py2gi_DATA      = GExiv2.py
++endif
++if HAS_PYTHON3
++py3gi_DATA      = GExiv2.py
++endif
++endif
++
++GEXIV2_public_HEADERS = \
++	gexiv2/gexiv2.h \
++	gexiv2/gexiv2-metadata.h \
++	gexiv2/gexiv2-managed-stream.h \
++	gexiv2/gexiv2-preview-properties.h \
++	gexiv2/gexiv2-preview-image.h \
++	gexiv2/gexiv2-log.h \
++	gexiv2/gexiv2-startup.h
++#	gexiv2/gexiv2-version.h
++
++# Non-installed source files. #
++GEXIV2_sources = \
++	gexiv2/gexiv2-metadata.cpp \
++	gexiv2/gexiv2-metadata-exif.cpp \
++	gexiv2/gexiv2-metadata-gps.cpp \
++	gexiv2/gexiv2-metadata-iptc.cpp \
++	gexiv2/gexiv2-metadata-xmp.cpp \
++	gexiv2/gexiv2-stream-io.cpp \
++	gexiv2/gexiv2-preview-properties.cpp \
++	gexiv2/gexiv2-preview-image.cpp \
++	gexiv2/gexiv2-log.cpp \
++	gexiv2/gexiv2-startup.cpp
++	gexiv2/gexiv2-log-private.h \
++	gexiv2/gexiv2-metadata-private.h \
++	gexiv2/gexiv2-stream-io.h \
++	gexiv2/gexiv2-preview-properties-private.h \
++	gexiv2/gexiv2-preview-image-private.h
++
++# compilation setup. #
++
++if PLATFORM_WIN32
++no_undefined = -no-undefined
++endif
++
++# REQUIRED_CFLAGS absolutely get appended to CFLAGS, whatever the
++# the value of CFLAGS in the environment.
++REQUIRED_CXXFLAGS=-Wl,-lstdc++
++
++# Because -fPIC can interfere with compilation on 32-bit platforms but
++# is absolutely necessary for AMD64, we check what the target machine's
++# word size is, and set our required flags based upon that.
++if WORD_64
++REQUIRED_CXXFLAGS += -fPIC -DPIC
++endif
++
++CXXFLAGS += $(REQUIRED_CXXFLAGS)
++
++gexiv2/gexiv2-version.h: gexiv2/gexiv2-version.m4
++	m4 '--define=_VERSION_MAJOR_=$(GEXIV2_MAJOR_VERSION)' '--define=_VERSION_MINOR_=$(GEXIV2_MINOR_VERSION)' '--define=_VERSION_MICRO_=$(GEXIV2_MICRO_VERSION)' $< > $@
++
++lib@PACKAGE_NAME@_la_SOURCES  = $(GEXIV2_sources) $(GEXIV2_public_HEADERS)
++lib@PACKAGE_NAME@_la_LIBADD   = $(EXIV2_LIBS) $(GLIB_LIBS)
++lib@PACKAGE_NAME@_la_CPPFLAGS = $(EXIV2_CFLAGS) $(GLIB_CFLAGS)
++
++lib@PACKAGE_NAME@_la_LDFLAGS  = \
++	$(no_undefined) -export-dynamic -version-info $(GEXIV2_VERSION_INFO)
++
++# Vala #
++
++vapi: @PACKAGE_NAME@.vapi
++
++@PACKAGE_NAME@.vapi: vapi/@PACKAGE_NAME@.gi
++	vapigen --library=@PACKAGE_NAME@ --metadatadir=vapi vapi/@PACKAGE_NAME@.gi
++
++vapi/@PACKAGE_NAME@.gi:
++	@echo NOTE: This version of gexiv2 must be installed to generate a VAPI file.
++	@pkg-config --exact-version=$(VERSION) --print-errors @PACKAGE_NAME@
++	vala-gen-introspect @PACKAGE_NAME@ vapi
++
++# Optional Instrospection #
++
++if ENABLE_INTROSPECTION
++TYPELIB_FILES=GExiv2-$(GIR_VERSION).typelib GExiv2-$(GIR_VERSION).gir
++endif
++
++BUILD_DIR=gexiv2
++
++%.typelib: %.gir
++	g-ir-compiler --includedir=$(BUILD_DIR) -o $@ $<
++
++GExiv2-$(GIR_VERSION).gir: lib@PACKAGE_NAME@.la
++	g-ir-scanner --verbose                          \
++		--namespace=GExiv2                      \
++		--nsversion=$(GIR_VERSION)              \
++		--symbol-prefix=@PACKAGE_NAME@              \
++		--include=GObject-2.0                   \
++		--add-include-path=$(BUILD_DIR)         \
++		--output $@                             \
++		-I @PACKAGE_NAME@                           \
++		$(GEXIV2_public_HEADERS)      \
++		$(GEXIV2_sources)                   \
++		--library lib@PACKAGE_NAME@.la                \
++		$(LIBTOOL)                              \
++		--pkg=gobject-2.0
++
+diff --git a/autogen.sh b/autogen.sh
+new file mode 100755
+index 0000000..54516bc
+--- /dev/null
++++ b/autogen.sh
+@@ -0,0 +1,3 @@
++#!/bin/sh
++
++autoreconf --force --install
+diff --git a/configure b/configure
+deleted file mode 100755
+index e586c80..0000000
+--- a/configure
++++ /dev/null
+@@ -1,102 +0,0 @@
+-#! /bin/bash
+-#
+-# Copyright 2011-2012 Yorba Foundation
+-#
+-# This software is licensed under the GNU LGPL (version 2.1 or later).
+-# See the COPYING file in this distribution. 
+-
+-CONFIG_IN=configure.mk
+-
+-configure_help() {
+-    printf "\nUsage:\n"
+-    printf "\t./configure [OPTIONS]...\n"
+-    printf "\n"
+-    printf "Options:\n"
+-    printf "\t-h, --help\t\tPrint this help and exit.\n"
+-    printf "\t--build=DIR\t\tBuild secondary files in DIR.\n"
+-    printf "\t--debug | --release\tBuild executable for debugging or release.\n"
+-    printf "\t\t\t\t[--release]\n"
+-    printf "\t--prefix=PREFIX\t\tPrepend PREFIX to program installation paths.\n"
+-    printf "\t\t\t\t[/usr/local]\n"
+-    printf "\t--assume-pkgs\t\tTurn off package version checking.\n"
+-    printf "\t--enable-introspection\tEnable GObject introspection.\n"
+-    printf "\t\t\t\t(Also installs Python GExiv2.py module.)\n"
+-    printf "\t--with-libtool=LIBTOOL\tUse LIBTOOL for g-ir-scanner.\n"
+-}
+-
+-abort() {
+-    printf "%s: Invalid argument %s\n" $0 $1
+-    configure_help
+-    exit 1
+-}
+-
+-while [ $# != 0 ]
+-do
+-    option=`echo $1 | sed 's/=.*//'`
+-    if [ `echo $1 | grep '='` ]
+-    then
+-        value=`echo $1 | sed 's/.*=//'`
+-    fi
+-
+-    case $option in
+-        -h | --help)        configure_help
+-                            exit 0
+-                            ;;
+-        
+-        --prefix)           if [ ! $value ]
+-                            then
+-                                abort $1
+-                            fi
+-                            
+-                            variables="${variables}PREFIX=$value\n"
+-                            ;;
+-        
+-        --enable-introspection) variables="${variables}ENABLE_INTROSPECTION=1\n"
+-                                ;;
+-        
+-        --with-libtool)
+-                            if [ ! $value ]
+-                            then
+-                                abort $1
+-                            fi
+-                            
+-                            variables="${variables}LIBTOOL=--libtool=$value\n"
+-                            ;;
+-        
+-        --assume-pkgs)      variables="${variables}ASSUME_PKGS=1\n"
+-                            ;;
+-        
+-        --build)            if [ ! $value ]
+-                            then
+-                                abort $1
+-                            fi
+-                            
+-                            variables="${variables}BUILD_DIR=$value\n"
+-                            ;;
+-        
+-        --debug)            variables="${variables}BUILD_RELEASE=\nBUILD_DEBUG=1\n"
+-                            ;;
+-        
+-        --release)          variables="${variables}BUILD_DEBUG=\nBUILD_RELEASE=1\n"
+-                            ;;
+-        
+-        *)                  if [ ! $value ]
+-                            then
+-                                abort $1
+-                            fi
+-                            
+-                            variables="${variables}${option}=${value}\n"
+-                            ;;
+-    esac
+-    
+-    shift
+-done
+-
+-rm -f $CONFIG_IN
+-if [ $variables ]
+-then
+-    echo -e -n $variables > $CONFIG_IN
+-fi
+-echo "CONFIG_IN=${CONFIG_IN}" >> $CONFIG_IN
+-
+-printf "Configured.  Type 'make' to build, 'make install' to install.\n"
+diff --git a/configure.ac b/configure.ac
+new file mode 100644
+index 0000000..5760523
+--- /dev/null
++++ b/configure.ac
+@@ -0,0 +1,195 @@
++AC_INIT([gexiv2], [0.7], [gexiv2-request@lists.yorba.org.], [gexiv2], [http://redmine.yorba.org/projects/gexiv2/])
++AC_PREREQ(2.54)
++
++AC_CONFIG_MACRO_DIR([m4])
++
++# Will install auxiliary build tools (depcomp, install-sh, missing...) under build-aux/
++AC_CONFIG_AUX_DIR([build-aux])
++AM_INIT_AUTOMAKE([1.11 -Wall no-define foreign dist-xz tar-ustar])
++LT_PREREQ([2.2])
++LT_INIT([disable-static win32-dll])
++
++# This small tricks allows to provide different default compilation flags
++# than autoconf, but still let the user overrides our defaults.
++CXXFLAGS_COPY="$CXXFLAGS"
++AC_PROG_CXX
++CXXFLAGS="$CXXFLAGS_COPY"
++
++PKG_PROG_PKG_CONFIG(0.26)
++
++m4_define([gexiv2_major_version], [0])
++m4_define([gexiv2_minor_version], [7])
++m4_define([gexiv2_micro_version], [0])
++m4_define([gexiv2_real_version],
++          [gexiv2_major_version.gexiv2_minor_version.gexiv2_micro_version+trunk])
++m4_define([gexiv2_version], [gexiv2_real_version])
++
++m4_define([glib_required_version], [2.26.1])
++m4_define([exiv2_required_version], [0.21])
++
++# This number must be edited whenever a change has been made that may affect libgexiv2's
++# external interface.  Please see http://sourceware.org/autobook/autobook/autobook_91.html
++# for the version numbering convention that should be used for this and
++# http://davidz25.blogspot.se/2011/07/writing-c-library-part-5.html#abi-api-versioning for
++# guidelines about when this should change.
++GEXIV2_VERSION_INFO=2:0:0
++AC_SUBST(GEXIV2_VERSION_INFO)
++
++# This was necessary because the typelib files don't seem to load if the
++# version info has more than one period in it.
++GIR_VERSION=0.4
++AC_SUBST(GIR_VERSION)
++
++GEXIV2_MAJOR_VERSION=gexiv2_major_version
++GEXIV2_MINOR_VERSION=gexiv2_minor_version
++GEXIV2_MICRO_VERSION=gexiv2_micro_version
++GEXIV2_VERSION=gexiv2_version
++AC_SUBST(GEXIV2_MAJOR_VERSION)
++AC_SUBST(GEXIV2_MINOR_VERSION)
++AC_SUBST(GEXIV2_MICRO_VERSION)
++AC_SUBST(GEXIV2_VERSION)
++
++###################
++# Check for glib2 #
++###################
++
++GLIB_PKGS="gobject-2.0"
++GLIB_REQUIRED_VERSION=glib_required_version
++AC_SUBST(GLIB_REQUIRED_VERSION)
++
++PKG_CHECK_MODULES(GLIB,
++                  glib-2.0 >= $GLIB_REQUIRED_VERSION $GLIB_PKGS,
++                  ,
++                  AC_MSG_ERROR([GLib is required. Please install it.]))
++
++###################
++# Check for exiv2 #
++###################
++
++EXIV2_REQUIRED_VERSION=exiv2_required_version
++AC_SUBST(EXIV2_REQUIRED_VERSION)
++
++PKG_CHECK_MODULES(EXIV2,
++                  exiv2 >= $EXIV2_REQUIRED_VERSION,
++                  ,
++                  AC_MSG_ERROR([exiv2 is required. Please install it.]))
++
++##############
++# Debug Mode #
++##############
++
++AC_MSG_CHECKING([debugging mode])
++AC_ARG_ENABLE(debug,
++              [  --enable-debug          enable debug mode [[default=no]]],
++              if eval "test x$enable_debug = xyes"; then
++              DEBUG_CFLAGS="-O0"
++              fi)
++
++if test -n "$DEBUG_CFLAGS"; then
++    AC_MSG_RESULT([yes])
++    if test -z "$CXXFLAGS"; then
++        CXXFLAGS="-O0 -g -pipe -nostdlib -shared"
++    else
++        CXXFLAGS="$DEBUG_CFLAGS $CXXFLAGS"
++    fi
++else
++    AC_MSG_RESULT([no])
++    if test -z "$CXXFLAGS"; then
++        CXXFLAGS="-O2 -g -pipe -nostdlib -shared"
++    fi
++fi
++
++#################
++# Introspection #
++#################
++
++AC_MSG_CHECKING([enable instrospection])
++AC_ARG_ENABLE(introspection,
++              [  --enable-introspection  enable instrospection [[default=no]]],
++              if eval "test x$enable_introspection = xyes"; then
++              enable_introspection="yes"
++              fi)
++
++AM_CONDITIONAL(ENABLE_INTROSPECTION, test "x$enable_introspection" = "xyes")
++
++# Used to determine where Python wants the .gi file to be installed ...
++# if Python is not installed, PYTHON2 and PYTHON3 will be empty
++PYTHON="import gi; print(gi._overridesdir)"
++PYTHON2_GIDIR=$(python2 -c $PYTHON 2> /dev/null)
++PYTHON3_GIDIR=$(python3 -c $PYTHON 2> /dev/null)
++AC_SUBST(PYTHON2_GIDIR)
++AM_CONDITIONAL(HAS_PYTHON2, test "x$PYTHON2_GIDIR" != "x")
++AC_SUBST(PYTHON3_GIDIR)
++AM_CONDITIONAL(HAS_PYTHON3, test "x$PYTHON3_GIDIR" != "x")
++
++###################
++# Check Word Size #
++###################
++
++AC_CHECK_SIZEOF([int *])
++AC_SUBST(SIZEOF_INT_P)
++AM_CONDITIONAL(WORD_64, test "x$SIZEOF_INT_P" = "x8" )
++
++###########################
++# Check target architecture
++###########################
++
++AC_MSG_CHECKING([for target architecture])
++case x"$target" in
++    xNONE | x)
++        target_or_host="$host" ;;
++    *)
++        target_or_host="$target" ;;
++esac
++AC_MSG_RESULT([$target_or_host])
++
++case "$target_or_host" in
++    i*86-*-*)
++        have_x86=yes
++        AC_DEFINE(ARCH_X86, 1, [Define to 1 if you are compiling for ix86.])
++    ;;
++    x86_64-*-*)
++        have_x86=yes
++        AC_DEFINE(ARCH_X86, 1, [Define to 1 if you are compiling for ix86.])
++        AC_DEFINE(ARCH_X86_64, 1, [Define to 1 if you are compiling for amd64.])
++    ;;
++    ppc-*-* | powerpc-*)
++        have_ppc=yes
++        AC_DEFINE(ARCH_PPC, 1, [Define to 1 if you are compiling for PowerPC.])
++    ;;
++    ppc64-*-* | powerpc64-*)
++        have_ppc=yes
++        AC_DEFINE(ARCH_PPC, 1, [Define to 1 if you are compiling for PowerPC.])
++        AC_DEFINE(ARCH_PPC64, 1, [Define to 1 if you are compiling for PowerPC64.])
++    ;;
++    *)
++    ;;
++esac
++
++#################
++# Check for Win32
++#################
++
++AC_MSG_CHECKING([Win32 platform])
++case "$target_or_host" in
++    *-*-mingw* | *-*-cygwin*)
++        platform_win32=yes
++    ;;
++    *)
++        platform_win32=no
++    ;;
++esac
++AC_MSG_RESULT([$platform_win32])
++AM_CONDITIONAL(PLATFORM_WIN32, test "$platform_win32" = "yes")
++
++##############
++# Generation #
++##############
++
++AC_CONFIG_FILES([
++Makefile
++gexiv2.pc:gexiv2.pc.in
++])
++
++AC_OUTPUT
++
+diff --git a/gexiv2.m4 b/gexiv2.m4
+deleted file mode 100644
+index 7023f3d..0000000
+--- a/gexiv2.m4
++++ /dev/null
+@@ -1,12 +0,0 @@
+-prefix=_PREFIX_
+-exec_prefix=${prefix}
+-libdir=${exec_prefix}/lib
+-includedir=${prefix}/include
+-
+-Name: GExiv2
+-Description: GObject bindings for exiv2
+-Requires: exiv2 glib-2.0 gobject-2.0
+-Version: _VERSION_
+-Libs: -L${libdir} -lgexiv2
+-Cflags: -I${includedir}/gexiv2 -I${libdir}/gexiv2/include
+-
+diff --git a/gexiv2.pc.in b/gexiv2.pc.in
+new file mode 100644
+index 0000000..a7d3b53
+--- /dev/null
++++ b/gexiv2.pc.in
+@@ -0,0 +1,11 @@
++prefix=@prefix@
++exec_prefix=@exec_prefix@
++libdir=@libdir@
++includedir=@includedir@
++
++Name: GExiv2
++Description: GObject bindings for exiv2
++Requires: exiv2 glib-2.0 gobject-2.0
++Version: @GEXIV2_VERSION@
++Libs: -L${libdir} -l@PACKAGE_NAME@
++Cflags: -I${includedir}
+-- 
+1.8.1.2
+

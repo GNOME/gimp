@@ -8,6 +8,10 @@
 		href="http://pkg-isocodes.alioth.debian.org/downloads/" />
 	<repository type="tarball" name="poppler"
 		href="http://poppler.freedesktop.org/" />
+	<repository type="tarball" name="yorba"
+		href="http://www.yorba.org/download/" />
+	<repository type="tarball" name="exiv2"
+		href="http://www.exiv2.org/" />
 
 	<include href="gtk+.moduleset"/>
 
@@ -113,6 +117,34 @@
 		<dep package="freetype2"/>
 		<dep package="imglibs"/>
 		<dep package="cairo"/>
+	</dependencies>
+</autotools>
+
+<autotools id="exiv2" autogen-sh="configure"
+		makeargs="xmpsdk; make -C po all; make -C src lib"
+		makeinstallargs="-C po install; make -C src install-lib">
+	<branch version="0.23" repo="exiv2"
+			module="exiv2-0.23.tar.gz"
+			hash="md5:dab67c07bb63a4386d4ea607a8e06eaf">
+	</branch>
+	<dependencies>
+		<dep package="zlib"/>
+		<dep package="expat"/>
+		<dep package="iconv"/>
+		<dep package="gettext"/>
+	</dependencies>
+</autotools>
+
+<autotools id="libgexiv2" autogen-sh="|| autoreconf --force --install; ./configure">
+	<branch version="0.7.0" repo="yorba"
+			module="gexiv2/0.7/libgexiv2-0.7.0.tar.xz"
+			hash="sha1:cae01960735e819e17f0c7fe28aca058efe45385">
+		<!-- http://redmine.yorba.org/issues/7660 -->
+		<patch file="0001-Port-GExiv2-to-autotools-build-system.patch" strip="1"/>
+	</branch>
+	<dependencies>
+		<dep package="exiv2"/>
+		<dep package="glib2"/>
 	</dependencies>
 </autotools>
 

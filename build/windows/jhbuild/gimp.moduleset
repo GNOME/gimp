@@ -64,6 +64,7 @@
 	<dependencies>
 		<dep package="gimp-common"/>
 		<dep package="lcms2"/>
+		<dep package="libgexiv2"/>
 		<dep package="gegl"/>
 	</dependencies>
 </autotools>

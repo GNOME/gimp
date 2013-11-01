@@ -185,6 +185,8 @@ module_autogenargs['ghostscript']= autogenargs + """ --without-jasper \
 module_autogenargs['poppler']= autogenargs + """ ac_cv_func_strcpy_s='no'\
                                                  ac_cv_func_strcat_s='no' """
 
+module_autogenargs['libgexiv2']  = autogenargs + "--disable-introspection"
+
 module_autogenargs['webkitgtk']  = autogenargs.replace ("--enable-debug=yes", "") + """ \
                                                      --with-gtk=2.0 \
                                                      --with-target=win32 \
