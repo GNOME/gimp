@@ -35,6 +35,7 @@
 #include <alsa/asoundlib.h>
 #endif
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpconfig/gimpconfig.h"
