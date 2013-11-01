@@ -30,6 +30,7 @@
 
 #include "gimpbasetypes.h"
 
+#include "gimplimits.h"
 #include "gimpmetadata.h"
 #include "gimpunit.h"
 
@@ -49,19 +50,9 @@
  **/
 
 
-#define TAG_LINE_DELIMITER "\v"
-#define TAG_TAG_DELIMITER  "#"
-
-
-static GQuark     gimp_metadata_error_quark  (void);
-static gint       gimp_metadata_length       (const gchar  *testline,
-                                              const gchar  *delim);
-static gboolean   gimp_metadata_get_rational (const gchar  *value,
-                                              gint          sections,
-                                              gchar      ***numerator,
-                                              gchar      ***denominator);
-static void       gimp_metadata_add          (GimpMetadata *src,
-                                              GimpMetadata *dest);
+static GQuark   gimp_metadata_error_quark (void);
+static void     gimp_metadata_add         (GimpMetadata *src,
+                                           GimpMetadata *dest);
 
 
 static const gchar *tiff_tags[] =
@@ -748,83 +739,66 @@ gimp_metadata_get_resolution (GimpMetadata *metadata,
                               gdouble      *yres,
                               GimpUnit     *unit)
 {
-  gchar  *xr;
-  gchar  *yr;
-  gchar  *un;
-  gint    exif_unit = 2;
-  gchar **xnom      = NULL;
-  gchar **xdenom    = NULL;
-  gchar **ynom      = NULL;
-  gchar **ydenom    = NULL;
+  gint xnom, xdenom;
+  gint ynom, ydenom;
 
   g_return_val_if_fail (GEXIV2_IS_METADATA (metadata), FALSE);
 
-  xr = gexiv2_metadata_get_tag_string (metadata, "Exif.Image.XResolution");
-  yr = gexiv2_metadata_get_tag_string (metadata, "Exif.Image.YResolution");
-
-  if (! (xr && yr))
+  if (gexiv2_metadata_get_exif_tag_rational (metadata,
+                                             "Exif.Image.XResolution",
+                                             &xnom, &xdenom) &&
+      gexiv2_metadata_get_exif_tag_rational (metadata,
+                                             "Exif.Image.YResolution",
+                                             &ynom, &ydenom))
     {
-      g_free (xr);
-      g_free (yr);
-      return FALSE;
+      gchar *un;
+      gint   exif_unit = 2;
+
+      un = gexiv2_metadata_get_tag_string (metadata,
+                                           "Exif.Image.ResolutionUnit");
+      if (un)
+        {
+          exif_unit = atoi (un);
+          g_free (un);
+        }
+
+      if (xnom != 0 && xdenom != 0 &&
+          ynom != 0 && ydenom != 0)
+        {
+          gdouble xresolution = (gdouble) xnom / (gdouble) xdenom;
+          gdouble yresolution = (gdouble) ynom / (gdouble) ydenom;
+
+          if (exif_unit == 3)
+            {
+              xresolution *= 2.54;
+              yresolution *= 2.54;
+            }
+
+         if (xresolution >= GIMP_MIN_RESOLUTION &&
+             xresolution <= GIMP_MAX_RESOLUTION &&
+             yresolution >= GIMP_MIN_RESOLUTION &&
+             yresolution <= GIMP_MAX_RESOLUTION)
+           {
+             if (xres)
+               *xres = xresolution;
+
+             if (yres)
+               *yres = yresolution;
+
+             if (unit)
+               {
+                 if (exif_unit == 3)
+                   *unit = GIMP_UNIT_MM;
+                 else
+                   *unit = GIMP_UNIT_INCH;
+               }
+
+             return TRUE;
+           }
+        }
     }
 
-  un = gexiv2_metadata_get_tag_string (metadata, "Exif.Image.ResolutionUnit");
-
-  if (un)
-    {
-      exif_unit = atoi (un);
-      g_free (un);
-    }
-
-  if (exif_unit == 3)
-    *unit = GIMP_UNIT_MM;
-  else
-    *unit = GIMP_UNIT_INCH;
-
-  if (gimp_metadata_get_rational (xr, 1, &xnom, &xdenom))
-    {
-      gdouble x1 = g_ascii_strtod (xnom[0], NULL);
-      gdouble x2 = g_ascii_strtod (xdenom[0], NULL);
-      gdouble xrd;
-
-      if (x2 == 0.0)
-        return FALSE;
-
-      xrd = x1 / x2;
-
-      if (exif_unit == 3)
-        xrd *= 2.54;
-
-      *xres = xrd;
-    }
-
-  if (gimp_metadata_get_rational (yr, 1, &ynom, &ydenom))
-    {
-      gdouble y1 = g_ascii_strtod (ynom[0], NULL);
-      gdouble y2 = g_ascii_strtod (ydenom[0], NULL);
-      gdouble yrd;
-
-      if (y2 == 0.0)
-        return FALSE;
-
-      yrd = y1 / y2;
-
-      if (exif_unit == 3)
-        yrd *= 2.54;
-
-      *yres = yrd;
-    }
-
-  g_free (xr);
-  g_free (yr);
-
-  g_strfreev (xnom);
-  g_strfreev (xdenom);
-  g_strfreev (ynom);
-  g_strfreev (ydenom);
-
-  return TRUE;
+  return FALSE;
 }
 
 /**
@@ -936,107 +910,6 @@ gimp_metadata_error_quark (void)
     quark = g_quark_from_static_string ("gimp-metadata-error-quark");
 
   return quark;
-}
-
-/**
- * determines the amount of delimiters in serialized
- * metadata string
- */
-static gint
-gimp_metadata_length (const gchar *testline,
-                      const gchar *delim)
-{
-  gchar *delim_test;
-  gint   i;
-  gint   sum;
-
-  delim_test = g_strdup (testline);
-
-  sum =0;
-
-  for (i=0; i < strlen (delim_test); i++)
-    {
-      if (delim_test[i] == delim[0])
-        sum++;
-    }
-
-  g_free (delim_test);
-
-  return sum;
-}
-
-/**
- * gets rational values from string
- */
-static gboolean
-gimp_metadata_get_rational (const gchar   *value,
-                            gint           sections,
-                            gchar       ***numerator,
-                            gchar       ***denominator)
-{
-  GSList *nomlist = NULL;
-  GSList *denomlist = NULL;
-
-  GSList *nlist, *dlist;
-
-  gchar   sect[] = " ";
-  gchar   rdel[] = "/";
-  gchar **sects;
-  gchar **nom = NULL;
-  gint    i;
-  gint    n;
-
-  gchar **num;
-  gchar **den;
-
-  if (! value)
-    return FALSE;
-
-  if (gimp_metadata_length (value, sect) == (sections -1))
-    {
-      i = 0;
-      sects = g_strsplit (value, sect, -1);
-      while (sects[i] != NULL)
-        {
-          if(gimp_metadata_length (sects[i], rdel) == 1)
-            {
-              nom = g_strsplit (sects[i], rdel, -1);
-              nomlist = g_slist_prepend (nomlist, g_strdup (nom[0]));
-              denomlist = g_slist_prepend (denomlist, g_strdup (nom[1]));
-            }
-          else
-            {
-              return FALSE;
-            }
-          i++;
-        }
-    }
-  else
-    {
-      return FALSE;
-    }
-
-  n = i;
-
-  num = g_new0 (gchar*, i + 1);
-  den = g_new0 (gchar*, n + 1);
-
-  for (nlist = nomlist; nlist; nlist = nlist->next)
-    num[--i] = nlist->data;
-
-  for (dlist = denomlist; dlist; dlist = dlist->next)
-    den[--n] = dlist->data;
-
-  *numerator = num;
-  *denominator = den;
-
-  g_slist_free (nomlist);
-  g_slist_free (denomlist);
-
-  g_strfreev (sects);
-  g_strfreev (nom);
-
-  return TRUE;
 }
 
 static void
