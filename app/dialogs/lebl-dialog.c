@@ -4,6 +4,7 @@
 #include <math.h>
 #include <unistd.h>
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 

@@ -22,8 +22,8 @@
 
 #include <string.h>
 
+#include <gegl.h>
 #undef GSEAL_ENABLE
-
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
