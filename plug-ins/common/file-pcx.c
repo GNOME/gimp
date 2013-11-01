@@ -350,6 +350,7 @@ load_image (const gchar  *filename,
   GeglBuffer   *buffer;
   guint16       offset_x, offset_y, bytesperline;
   gint32        width, height;
+  guint16       resolution_x, resolution_y;
   gint32        image, layer;
   guchar       *dest, cmap[768];
   guint8        header_buf[128];
@@ -392,6 +393,8 @@ load_image (const gchar  *filename,
   width        = GUINT16_FROM_LE (pcx_header.x2) - offset_x + 1;
   height       = GUINT16_FROM_LE (pcx_header.y2) - offset_y + 1;
   bytesperline = GUINT16_FROM_LE (pcx_header.bytesperline);
+  resolution_x = GUINT16_FROM_LE (pcx_header.hdpi);
+  resolution_y = GUINT16_FROM_LE (pcx_header.vdpi);
 
   if ((width < 0) || (width > GIMP_MAX_IMAGE_SIZE))
     {
@@ -410,6 +413,13 @@ load_image (const gchar  *filename,
       g_message (_("Invalid number of bytes per line in PCX header"));
       fclose (fd);
       return -1;
+    }
+  if ((resolution_x < 1) || (resolution_x > GIMP_MAX_RESOLUTION) ||
+      (resolution_y < 1) || (resolution_y > GIMP_MAX_RESOLUTION))
+    {
+      g_message (_("Resolution out of bounds in XCX header, using 72x72"));
+      resolution_x = 72;
+      resolution_y = 72;
     }
 
   /* Shield against potential buffer overflows in load_*() functions. */
@@ -432,7 +442,10 @@ load_image (const gchar  *filename,
       layer= gimp_layer_new (image, _("Background"), width, height,
                              GIMP_INDEXED_IMAGE, 100, GIMP_NORMAL_MODE);
     }
+
   gimp_image_set_filename (image, filename);
+  gimp_image_set_resolution (image, resolution_x, resolution_y);
+
   gimp_image_insert_layer (image, layer, -1, 0);
   gimp_layer_set_offsets (layer, offset_x, offset_y);
 
@@ -631,6 +644,7 @@ save_image (const gchar  *filename,
   guchar        *pixels;
   gint           offset_x, offset_y;
   guint          width, height;
+  gdouble        resolution_x, resolution_y;
   gint           colors, i;
   guint8         header_buf[128];
 
@@ -726,8 +740,10 @@ save_image (const gchar  *filename,
   pcx_header.x2 = GUINT16_TO_LE ((guint16)(offset_x + width - 1));
   pcx_header.y2 = GUINT16_TO_LE ((guint16)(offset_y + height - 1));
 
-  pcx_header.hdpi = GUINT16_TO_LE (300);
-  pcx_header.vdpi = GUINT16_TO_LE (300);
+  gimp_image_get_resolution (image, &resolution_x, &resolution_y);
+
+  pcx_header.hdpi = GUINT16_TO_LE (RINT (MAX (resolution_x, 1.0)));
+  pcx_header.vdpi = GUINT16_TO_LE (RINT (MAX (resolution_y, 1.0)));
   pcx_header.reserved = 0;
 
   pcx_header_to_buffer (header_buf);
