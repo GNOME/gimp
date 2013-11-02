@@ -82,8 +82,9 @@ static void        cdisplay_proof_set_property    (GObject          *object,
                                                    GParamSpec       *pspec);
 
 
-static void        cdisplay_proof_convert_surface (GimpColorDisplay *display,
-                                                   cairo_surface_t  *surface);
+static void        cdisplay_proof_convert_buffer  (GimpColorDisplay *display,
+                                                   GeglBuffer       *buffer,
+                                                   GeglRectangle    *area);
 static GtkWidget * cdisplay_proof_configure       (GimpColorDisplay *display);
 static void        cdisplay_proof_changed         (GimpColorDisplay *display);
 
@@ -145,7 +146,7 @@ cdisplay_proof_class_init (CdisplayProofClass *klass)
   display_class->help_id         = "gimp-colordisplay-proof";
   display_class->stock_id        = GIMP_STOCK_DISPLAY_FILTER_PROOF;
 
-  display_class->convert_surface = cdisplay_proof_convert_surface;
+  display_class->convert_buffer  = cdisplay_proof_convert_buffer;
   display_class->configure       = cdisplay_proof_configure;
   display_class->changed         = cdisplay_proof_changed;
 }
@@ -236,55 +237,26 @@ cdisplay_proof_set_property (GObject      *object,
 }
 
 static void
-cdisplay_proof_convert_surface (GimpColorDisplay *display,
-                                cairo_surface_t  *surface)
+cdisplay_proof_convert_buffer (GimpColorDisplay *display,
+                               GeglBuffer       *buffer,
+                               GeglRectangle    *area)
 {
-  CdisplayProof  *proof  = CDISPLAY_PROOF (display);
-  gint            width  = cairo_image_surface_get_width (surface);
-  gint            height = cairo_image_surface_get_height (surface);
-  gint            stride = cairo_image_surface_get_stride (surface);
-  guchar         *buf    = cairo_image_surface_get_data (surface);
-  cairo_format_t  fmt    = cairo_image_surface_get_format (surface);
-  guchar         *rowbuf;
-  gint            x, y;
-  guchar          r, g, b, a;
-
-  if (fmt != CAIRO_FORMAT_ARGB32)
-    return;
+  CdisplayProof      *proof = CDISPLAY_PROOF (display);
+  GeglBufferIterator *iter;
 
   if (! proof->transform)
     return;
 
-  rowbuf = g_malloc (stride);
+  iter = gegl_buffer_iterator_new (buffer, area, 0,
+                                   babl_format ("R'G'B'A float"),
+                                   GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
 
-  for (y = 0; y < height; y++, buf += stride)
+  while (gegl_buffer_iterator_next (iter))
     {
-      /* Switch buf from ARGB premul to ARGB non-premul, since lcms ignores the
-       * alpha channel.  The macro takes care of byte order.
-       */
-      for (x = 0; x < width; x++)
-        {
-          GIMP_CAIRO_ARGB32_GET_PIXEL (buf + 4*x, r, g, b, a);
-          rowbuf[4*x+0] = a;
-          rowbuf[4*x+1] = r;
-          rowbuf[4*x+2] = g;
-          rowbuf[4*x+3] = b;
-        }
+      gfloat *data = iter->data[0];
 
-      cmsDoTransform (proof->transform, rowbuf, rowbuf, width);
-
-      /* And back to ARGB premul */
-      for (x = 0; x < width; x++)
-        {
-          a = rowbuf[4*x+0];
-          r = rowbuf[4*x+1];
-          g = rowbuf[4*x+2];
-          b = rowbuf[4*x+3];
-          GIMP_CAIRO_ARGB32_SET_PIXEL (buf + 4*x, r, g, b, a);
-        }
+      cmsDoTransform (proof->transform, data, data, iter->length);
     }
-
-  g_free (rowbuf);
 }
 
 static void
@@ -302,8 +274,8 @@ cdisplay_proof_combo_box_set_active (GimpColorProfileComboBox *combo,
       cmsUInt32Number  descSize;
       gchar           *descData;
 
-      descSize = cmsGetProfileInfoASCII(profile, cmsInfoDescription,
-                                        "en", "US", NULL, 0);
+      descSize = cmsGetProfileInfoASCII (profile, cmsInfoDescription,
+                                         "en", "US", NULL, 0);
       if (descSize > 0)
         {
           descData = g_new (gchar, descSize + 1);
@@ -499,8 +471,8 @@ cdisplay_proof_changed (GimpColorDisplay *display)
       if (proof->bpc)
         flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
 
-      proof->transform = cmsCreateProofingTransform (rgbProfile, TYPE_ARGB_8,
-                                                     rgbProfile, TYPE_ARGB_8,
+      proof->transform = cmsCreateProofingTransform (rgbProfile, TYPE_RGBA_FLT,
+                                                     rgbProfile, TYPE_RGBA_FLT,
                                                      proofProfile,
                                                      proof->intent,
                                                      proof->intent,
