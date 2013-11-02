@@ -47,7 +47,6 @@ struct _CdisplayContrast
   GimpColorDisplay  parent_instance;
 
   gdouble           contrast;
-  guchar            lookup[256];
 };
 
 struct _CdisplayContrastClass
@@ -77,8 +76,6 @@ static void        cdisplay_contrast_get_property    (GObject          *object,
 static void        cdisplay_contrast_convert_buffer  (GimpColorDisplay *display,
                                                       GeglBuffer       *buffer,
                                                       GeglRectangle    *area);
-static void        cdisplay_contrast_convert_surface (GimpColorDisplay *display,
-                                                      cairo_surface_t  *surface);
 static GtkWidget * cdisplay_contrast_configure       (GimpColorDisplay *display);
 static void        cdisplay_contrast_set_contrast    (CdisplayContrast *contrast,
                                                       gdouble           value);
@@ -132,7 +129,6 @@ cdisplay_contrast_class_init (CdisplayContrastClass *klass)
   display_class->stock_id        = GIMP_STOCK_DISPLAY_FILTER_CONTRAST;
 
   display_class->convert_buffer  = cdisplay_contrast_convert_buffer;
-  display_class->convert_surface = cdisplay_contrast_convert_surface;
   display_class->configure       = cdisplay_contrast_configure;
 }
 
@@ -215,52 +211,6 @@ cdisplay_contrast_convert_buffer (GimpColorDisplay *display,
     }
 }
 
-static void
-cdisplay_contrast_convert_surface (GimpColorDisplay *display,
-                                   cairo_surface_t  *surface)
-{
-  CdisplayContrast *contrast = CDISPLAY_CONTRAST (display);
-  gint              width    = cairo_image_surface_get_width (surface);
-  gint              height   = cairo_image_surface_get_height (surface);
-  gint              stride   = cairo_image_surface_get_stride (surface);
-  guchar           *buf      = cairo_image_surface_get_data (surface);
-  cairo_format_t    fmt      = cairo_image_surface_get_format (surface);
-  gint              i, j, skip;
-  gint              r, g, b, a;
-
-  if (fmt != CAIRO_FORMAT_ARGB32)
-    return;
-
-  /* You will not be using the entire buffer most of the time.
-   * Hence, the simplistic code for this is as follows:
-   *
-   * for (j = 0; j < height; j++)
-   *   {
-   *     for (i = 0; i < width * bpp; i++)
-   *       buf[i] = lookup[buf[i]];
-   *     buf += bpl;
-   *   }
-   */
-
-  j = height;
-  skip = stride - 4 * width;
-
-  while (j--)
-    {
-      i = width;
-      while (i--)
-        {
-          GIMP_CAIRO_ARGB32_GET_PIXEL (buf, r, g, b, a);
-          r = contrast->lookup[r];
-          g = contrast->lookup[g];
-          b = contrast->lookup[b];
-          GIMP_CAIRO_ARGB32_SET_PIXEL (buf, r, g, b, a);
-          buf += 4;
-        }
-      buf += skip;
-    }
-}
-
 static GtkWidget *
 cdisplay_contrast_configure (GimpColorDisplay *display)
 {
@@ -294,15 +244,7 @@ cdisplay_contrast_set_contrast (CdisplayContrast *contrast,
 
   if (value != contrast->contrast)
     {
-      gint i;
-
       contrast->contrast = value;
-
-      for (i = 0; i < 256; i++)
-        {
-          contrast->lookup[i] = (guchar) (gint)
-            (255 * .5 * (1 + sin (value * 2 * G_PI * i / 255.0)));
-        }
 
       g_object_notify (G_OBJECT (contrast), "contrast");
       gimp_color_display_changed (GIMP_COLOR_DISPLAY (contrast));
