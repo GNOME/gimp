@@ -96,9 +96,6 @@ struct _CdisplayColorblind
   gfloat                a1, b1, c1;
   gfloat                a2, b2, c2;
   gfloat                inflection;
-
-  guint32               cache[2 * COLOR_CACHE_SIZE];
-  gfloat                gamma_lut[256];
 };
 
 struct _CdisplayColorblindClass
@@ -125,8 +122,9 @@ static void        cdisplay_colorblind_get_property    (GObject               *o
                                                         GValue                *value,
                                                         GParamSpec            *pspec);
 
-static void        cdisplay_colorblind_convert_surface (GimpColorDisplay      *display,
-                                                        cairo_surface_t       *surface);
+static void        cdisplay_colorblind_convert_buffer  (GimpColorDisplay      *display,
+                                                        GeglBuffer            *buffer,
+                                                        GeglRectangle         *area);
 static GtkWidget * cdisplay_colorblind_configure       (GimpColorDisplay      *display);
 static void        cdisplay_colorblind_changed         (GimpColorDisplay      *display);
 
@@ -259,7 +257,7 @@ cdisplay_colorblind_class_init (CdisplayColorblindClass *klass)
   display_class->help_id         = "gimp-colordisplay-colorblind";
   display_class->stock_id        = GIMP_STOCK_DISPLAY_FILTER_COLORBLIND;
 
-  display_class->convert_surface = cdisplay_colorblind_convert_surface;
+  display_class->convert_buffer  = cdisplay_colorblind_convert_buffer;
   display_class->configure       = cdisplay_colorblind_configure;
   display_class->changed         = cdisplay_colorblind_changed;
 }
@@ -272,10 +270,6 @@ cdisplay_colorblind_class_finalize (CdisplayColorblindClass *klass)
 static void
 cdisplay_colorblind_init (CdisplayColorblind *colorblind)
 {
-  gint i;
-
-  for (i = 0; i < 256; i++)
-    colorblind->gamma_lut[i] = pow (i, 1.0 / gammaRGB);
 }
 
 static void
@@ -319,159 +313,95 @@ cdisplay_colorblind_set_property (GObject      *object,
     }
 }
 
-
-/*
- * This function performs a binary search in the gamma LUT.  It
- * assumes a monotone gamma function and it simply clips out of gamut
- * values. It would be better to desaturate instead of clipping.
- */
-static inline guchar
-lut_lookup (gfloat        value,
-            const gfloat *lut)
-{
-  guchar offset = 127;
-  guchar step   = 64;
-
-  while (step)
-    {
-      if (lut[offset] > value)
-        {
-          offset -= step;
-        }
-      else
-        {
-          if (lut[offset + 1] > value)
-            return offset;
-
-          offset += step;
-        }
-
-      step /= 2;
-    }
-
-  /*  the algorithm above can't reach 255  */
-  if (offset == 254 && lut[255] < value)
-    return 255;
-
-  return offset;
-}
-
 static void
-cdisplay_colorblind_convert_surface (GimpColorDisplay *display,
-                                     cairo_surface_t  *surface)
+cdisplay_colorblind_convert_buffer (GimpColorDisplay *display,
+                                    GeglBuffer       *buffer,
+                                    GeglRectangle    *area)
 {
   CdisplayColorblind *colorblind = CDISPLAY_COLORBLIND (display);
-  gint            width  = cairo_image_surface_get_width (surface);
-  gint            height = cairo_image_surface_get_height (surface);
-  gint            stride = cairo_image_surface_get_stride (surface);
-  guchar         *buf    = cairo_image_surface_get_data (surface);
-  cairo_format_t  fmt    = cairo_image_surface_get_format (surface);
-  const gfloat    a1     = colorblind->a1;
-  const gfloat    b1     = colorblind->b1;
-  const gfloat    c1     = colorblind->c1;
-  const gfloat    a2     = colorblind->a2;
-  const gfloat    b2     = colorblind->b2;
-  const gfloat    c2     = colorblind->c2;
-  gfloat          tmp;
-  gfloat          red, green, blue;
-  gfloat          redOld, greenOld;
-  guchar          r, g, b, a;
-  gint            x, y, skip;
+  GeglBufferIterator *iter;
+  const gfloat        a1         = colorblind->a1;
+  const gfloat        b1         = colorblind->b1;
+  const gfloat        c1         = colorblind->c1;
+  const gfloat        a2         = colorblind->a2;
+  const gfloat        b2         = colorblind->b2;
+  const gfloat        c2         = colorblind->c2;
 
-  /* Require ARGB32 pixel format */
-  if (fmt != CAIRO_FORMAT_ARGB32)
-    return;
+  iter = gegl_buffer_iterator_new (buffer, area, 0,
+                                   babl_format ("RGBA float") /* linear! */,
+                                   GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
 
-  skip = stride - 4 * width;
+  while (gegl_buffer_iterator_next (iter))
+    {
+      gfloat *data  = iter->data[0];
+      gint    count = iter->length;
 
-  for (y = 0; y < height; y++, buf += skip)
-    for (x = 0; x < width; x++, buf += 4)
-      {
-        guint32 pixel;
-        guint   index;
+      while (count--)
+        {
+          gfloat tmp;
+          gfloat red, green, blue;
+          gfloat redOld, greenOld;
 
-        /* First check our cache */
-        GIMP_CAIRO_ARGB32_GET_PIXEL (buf, r, g, b, a);
-        pixel = r << 16 | g << 8 | b;
-        index = pixel % COLOR_CACHE_SIZE;
+          red   = data[0];
+          green = data[1];
+          blue  = data[2];
 
-        if (colorblind->cache[2 * index] == pixel)
-          {
-            pixel = colorblind->cache[2 * index + 1];
+          /* Convert to LMS (dot product with transform matrix) */
+          redOld   = red;
+          greenOld = green;
 
-            b = pixel & 0xFF; pixel >>= 8;
-            g = pixel & 0xFF; pixel >>= 8;
-            r = pixel & 0xFF;
+          red   = redOld * rgb2lms[0] + greenOld * rgb2lms[1] + blue * rgb2lms[2];
+          green = redOld * rgb2lms[3] + greenOld * rgb2lms[4] + blue * rgb2lms[5];
+          blue  = redOld * rgb2lms[6] + greenOld * rgb2lms[7] + blue * rgb2lms[8];
 
-            GIMP_CAIRO_ARGB32_SET_PIXEL (buf, r, g, b, a);
+          switch (colorblind->deficiency)
+            {
+            case COLORBLIND_DEFICIENCY_DEUTERANOPIA:
+              tmp = blue / red;
+              /* See which side of the inflection line we fall... */
+              if (tmp < colorblind->inflection)
+                green = -(a1 * red + c1 * blue) / b1;
+              else
+                green = -(a2 * red + c2 * blue) / b2;
+              break;
 
-            continue;
-          }
+            case COLORBLIND_DEFICIENCY_PROTANOPIA:
+              tmp = blue / green;
+              /* See which side of the inflection line we fall... */
+              if (tmp < colorblind->inflection)
+                red = -(b1 * green + c1 * blue) / a1;
+              else
+                red = -(b2 * green + c2 * blue) / a2;
+              break;
 
-        /* Remove gamma to linearize RGB intensities */
-        red   = colorblind->gamma_lut[r];
-        green = colorblind->gamma_lut[g];
-        blue  = colorblind->gamma_lut[b];
+            case COLORBLIND_DEFICIENCY_TRITANOPIA:
+              tmp = green / red;
+              /* See which side of the inflection line we fall... */
+              if (tmp < colorblind->inflection)
+                blue = -(a1 * red + b1 * green) / c1;
+              else
+                blue = -(a2 * red + b2 * green) / c2;
+              break;
 
-        /* Convert to LMS (dot product with transform matrix) */
-        redOld   = red;
-        greenOld = green;
+            default:
+              break;
+            }
 
-        red   = redOld * rgb2lms[0] + greenOld * rgb2lms[1] + blue * rgb2lms[2];
-        green = redOld * rgb2lms[3] + greenOld * rgb2lms[4] + blue * rgb2lms[5];
-        blue  = redOld * rgb2lms[6] + greenOld * rgb2lms[7] + blue * rgb2lms[8];
+          /* Convert back to RGB (cross product with transform matrix) */
+          redOld   = red;
+          greenOld = green;
 
-        switch (colorblind->deficiency)
-          {
-          case COLORBLIND_DEFICIENCY_DEUTERANOPIA:
-            tmp = blue / red;
-            /* See which side of the inflection line we fall... */
-            if (tmp < colorblind->inflection)
-              green = -(a1 * red + c1 * blue) / b1;
-            else
-              green = -(a2 * red + c2 * blue) / b2;
-            break;
+          red   = redOld * lms2rgb[0] + greenOld * lms2rgb[1] + blue * lms2rgb[2];
+          green = redOld * lms2rgb[3] + greenOld * lms2rgb[4] + blue * lms2rgb[5];
+          blue  = redOld * lms2rgb[6] + greenOld * lms2rgb[7] + blue * lms2rgb[8];
 
-          case COLORBLIND_DEFICIENCY_PROTANOPIA:
-            tmp = blue / green;
-            /* See which side of the inflection line we fall... */
-            if (tmp < colorblind->inflection)
-              red = -(b1 * green + c1 * blue) / a1;
-            else
-              red = -(b2 * green + c2 * blue) / a2;
-            break;
+          data[0] = red;
+          data[1] = green;
+          data[2] = blue;
 
-          case COLORBLIND_DEFICIENCY_TRITANOPIA:
-            tmp = green / red;
-            /* See which side of the inflection line we fall... */
-            if (tmp < colorblind->inflection)
-              blue = -(a1 * red + b1 * green) / c1;
-            else
-              blue = -(a2 * red + b2 * green) / c2;
-            break;
-
-          default:
-            break;
-          }
-
-        /* Convert back to RGB (cross product with transform matrix) */
-        redOld   = red;
-        greenOld = green;
-
-        red   = redOld * lms2rgb[0] + greenOld * lms2rgb[1] + blue * lms2rgb[2];
-        green = redOld * lms2rgb[3] + greenOld * lms2rgb[4] + blue * lms2rgb[5];
-        blue  = redOld * lms2rgb[6] + greenOld * lms2rgb[7] + blue * lms2rgb[8];
-
-        /* Apply gamma to go back to non-linear intensities */
-        r = lut_lookup (red,   colorblind->gamma_lut);
-        g = lut_lookup (green, colorblind->gamma_lut);
-        b = lut_lookup (blue,  colorblind->gamma_lut);
-        GIMP_CAIRO_ARGB32_SET_PIXEL (buf, r, g, b, a);
-
-        /* Put the result into our cache */
-        colorblind->cache[2 * index]     = pixel;
-        colorblind->cache[2 * index + 1] = r << 16 | g << 8 | b;
-      }
+          data += 4;
+        }
+    }
 }
 
 static GtkWidget *
@@ -488,8 +418,8 @@ cdisplay_colorblind_configure (GimpColorDisplay *display)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  combo =
-    gimp_prop_enum_combo_box_new (G_OBJECT (colorblind), "deficiency", 0, 0);
+  combo = gimp_prop_enum_combo_box_new (G_OBJECT (colorblind),
+                                        "deficiency", 0, 0);
 
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
@@ -566,9 +496,6 @@ cdisplay_colorblind_changed (GimpColorDisplay *display)
       colorblind->inflection = (anchor_e[1] / anchor_e[0]);
       break;
     }
-
-  /* Invalidate the cache */
-  memset (colorblind->cache, 0, sizeof (colorblind->cache));
 }
 
 static void
