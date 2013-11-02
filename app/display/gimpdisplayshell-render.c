@@ -61,8 +61,8 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   gint             viewport_width;
   gint             viewport_height;
   cairo_surface_t *xfer;
-  gint             src_x;
-  gint             src_y;
+  gint             xfer_src_x;
+  gint             xfer_src_y;
   gint             mask_src_x = 0;
   gint             mask_src_y = 0;
   gint             stride;
@@ -95,20 +95,21 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                                                  w * window_scale,
                                                  h * window_scale);
       cairo_surface_mark_dirty (xfer);
-      src_x = 0;
-      src_y = 0;
+      xfer_src_x = 0;
+      xfer_src_y = 0;
     }
   else
     {
       xfer = gimp_display_xfer_get_surface (shell->xfer,
                                             w * window_scale,
                                             h * window_scale,
-                                            &src_x, &src_y);
+                                            &xfer_src_x,
+                                            &xfer_src_y);
     }
 
   stride = cairo_image_surface_get_stride (xfer);
   data = cairo_image_surface_get_data (xfer);
-  data += src_y * stride + src_x * 4;
+  data += xfer_src_y * stride + xfer_src_x * 4;
 
   /*  apply filters to the rendered projection  */
   if (shell->filter_stack)
@@ -224,8 +225,8 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   cairo_scale (cr, 1.0 / window_scale, 1.0 / window_scale);
 
   cairo_set_source_surface (cr, xfer,
-                            (x - src_x) * window_scale,
-                            (y - src_y) * window_scale);
+                            (x - xfer_src_x) * window_scale,
+                            (y - xfer_src_y) * window_scale);
 
   if (shell->rotate_transform)
     {
