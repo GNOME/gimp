@@ -1120,47 +1120,27 @@ AC_SUBST(TIFF_LIBS)
 # Check for libjpeg
 ###################
 
-AC_ARG_WITH(libjpeg,  [  --without-libjpeg       build without JPEG support])
-
-jpeg_ok=no
-if test "x$with_libjpeg" != xno && test -z "$JPEG_LIBS"; then
-  AC_CHECK_LIB(jpeg, jpeg_destroy_decompress,
-    jpeg_ok=yes,
-    [jpeg_ok="no (JPEG library not found)"])
-  if test "$jpeg_ok" = yes; then
-    AC_MSG_CHECKING([for jpeglib.h])
-    AC_PREPROC_IFELSE(
-      [AC_LANG_SOURCE([[
+if test -z "$JPEG_LIBS"; then
+  AC_CHECK_LIB(jpeg, jpeg_destroy_decompress, ,
+    AC_MSG_ERROR([JPEG library not found]))
+  AC_MSG_CHECKING([for jpeglib.h])
+  AC_PREPROC_IFELSE(
+    [AC_LANG_SOURCE([[
 #include <stdio.h>
 #undef HAVE_STDDEF_H
 #undef HAVE_STDLIB_H
 #undef PACKAGE
 #undef VERSION
 #include <jpeglib.h>]])],
-      [jpeg_ok=yes],
-      [jpeg_ok="no (Can't include jpeglib.h)"])
-    AC_MSG_RESULT($jpeg_ok)
-    if test "$jpeg_ok" = yes; then
-      AC_CHECK_LIB(jpeg, jpeg_save_markers,
-      JPEG='jpeg$(EXEEXT)'; JPEG_LIBS='-ljpeg',
-      jpeg_ok="no (JPEG library is too old)")
-    else
-      jpeg_ok="no (JPEG header file not found)"
-    fi
-  fi
+    AC_MSG_RESULT([yes]),
+    AC_MSG_ERROR([JPEG header file not found]))
+  AC_CHECK_LIB(jpeg, jpeg_save_markers,
+    JPEG_LIBS='-ljpeg',
+    AC_MSG_ERROR([JPEG library is too old]))
 fi
 
-if test "x$with_libjpeg" != xno && test -z "$JPEG_LIBS"; then
-  AC_MSG_ERROR([
-*** Checks for JPEG library failed. You can build without it by passing
-*** --without-libjpeg to configure but you won't be able to use JPEGs then.])
-fi
+MIME_TYPES="$MIME_TYPES;image/jpeg"
 
-if test "x$jpeg_ok" = xyes; then
-  MIME_TYPES="$MIME_TYPES;image/jpeg"
-fi
-
-AM_CONDITIONAL(BUILD_JPEG, test "x$jpeg_ok" = xyes)
 AC_SUBST(JPEG_LIBS)
 
 
@@ -2347,7 +2327,6 @@ Optional Plug-Ins:
   Ghostscript:         $have_gs
   Help Browser:        $have_webkit
   LCMS:                $have_lcms
-  JPEG:                $jpeg_ok
   JPEG 2000:           $have_jp2
   MNG:                 $have_libmng
   OpenEXR:             $have_openexr
