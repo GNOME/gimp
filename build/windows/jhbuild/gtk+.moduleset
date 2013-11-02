@@ -110,9 +110,9 @@
 </autotools>
 
 <autotools id="harfbuzz">
-	<branch version="0.9.19" repo="freedesktop.org"
-			module="harfbuzz/release/harfbuzz-0.9.19.tar.bz2"
-			hash="sha256:d2da0f060d47f6ad9de8c8781bb21fa4b9eae8ea1cd1e956b814095baa002f35">
+	<branch version="0.9.23" repo="freedesktop.org"
+			module="harfbuzz/release/harfbuzz-0.9.23.tar.bz2"
+			hash="sha256:171ab7f58e7243082a4582f4d1f21b3f44462931ea92a6909d303ad3614794c7">
 	</branch>
 	<dependencies>
 		<dep package="cairo"/>
