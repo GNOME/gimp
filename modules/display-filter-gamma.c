@@ -74,6 +74,9 @@ static void        cdisplay_gamma_get_property    (GObject            *object,
                                                    GValue             *value,
                                                    GParamSpec         *pspec);
 
+static void        cdisplay_gamma_convert_buffer  (GimpColorDisplay   *display,
+                                                   GeglBuffer         *buffer,
+                                                   GeglRectangle      *area);
 static void        cdisplay_gamma_convert_surface (GimpColorDisplay   *display,
                                                    cairo_surface_t    *surface);
 static GtkWidget * cdisplay_gamma_configure       (GimpColorDisplay   *display);
@@ -128,6 +131,7 @@ cdisplay_gamma_class_init (CdisplayGammaClass *klass)
   display_class->help_id         = "gimp-colordisplay-gamma";
   display_class->stock_id        = GIMP_STOCK_DISPLAY_FILTER_GAMMA;
 
+  display_class->convert_buffer  = cdisplay_gamma_convert_buffer;
   display_class->convert_surface = cdisplay_gamma_convert_surface;
   display_class->configure       = cdisplay_gamma_configure;
 }
@@ -177,6 +181,37 @@ cdisplay_gamma_set_property (GObject      *object,
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
+    }
+}
+
+static void
+cdisplay_gamma_convert_buffer (GimpColorDisplay *display,
+                               GeglBuffer       *buffer,
+                               GeglRectangle    *area)
+{
+  CdisplayGamma      *gamma = CDISPLAY_GAMMA (display);
+  GeglBufferIterator *iter;
+  gdouble             one_over_gamma;
+
+  one_over_gamma = 1.0 / gamma->gamma;
+
+  iter = gegl_buffer_iterator_new (buffer, area, 0,
+                                   babl_format ("R'G'B'A float"),
+                                   GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+
+  while (gegl_buffer_iterator_next (iter))
+    {
+      gfloat *data  = iter->data[0];
+      gint    count = iter->length;
+
+      while (count--)
+        {
+          *data = pow (*data, one_over_gamma); data++;
+          *data = pow (*data, one_over_gamma); data++;
+          *data = pow (*data, one_over_gamma); data++;
+
+          data++;
+        }
     }
 }
 
