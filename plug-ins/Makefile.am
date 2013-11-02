@@ -37,10 +37,6 @@ endif
 endif
 endif
 
-if HAVE_PNG
-file_ico = file-ico
-endif
-
 if OS_WIN32
 twain = twain
 win_snap = win-snap
@@ -61,7 +57,7 @@ SUBDIRS = \
 	file-faxg3		\
 	file-fits		\
 	file-fli		\
-	$(file_ico)		\
+	file-ico		\
 	$(file_jpeg)		\
 	$(file_psd)		\
 	file-sgi		\

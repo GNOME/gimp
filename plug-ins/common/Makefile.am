@@ -103,7 +103,7 @@ libexec_PROGRAMS = \
 	$(FILE_PDF_LOAD) \
 	$(FILE_PDF_SAVE) \
 	file-pix \
-	$(FILE_PNG) \
+	file-png \
 	file-pnm \
 	$(FILE_PS) \
 	$(FILE_PSP) \
@@ -175,7 +175,6 @@ EXTRA_PROGRAMS = \
 	file-mng \
 	file-pdf-load \
 	file-pdf-save \
-	file-png \
 	file-ps \
 	file-psp \
 	file-svg \

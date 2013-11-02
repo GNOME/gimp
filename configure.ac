@@ -1282,27 +1282,10 @@ AC_SUBST(GS_LIBS)
 # Check for libpng
 ##################
 
-AC_ARG_WITH(libpng,  [  --without-libpng        build without PNG support])
+PKG_CHECK_MODULES(PNG, libpng >= libpng_required_version)
 
-have_libpng=no
-if test "x$with_libpng" != xno; then
-  have_libpng=yes
-  PKG_CHECK_MODULES(PNG, libpng >= libpng_required_version,
-    FILE_PNG='file-png$(EXEEXT)',
-    [have_libpng="no (libpng not found)"
-     AC_MSG_ERROR([
-*** Checks for PNG library failed. You can build without it by passing
-*** --without-libpng to configure but you won't be able to use PNGs then.])])
-fi
-
-if test "x$have_libpng" = xyes; then
-  MIME_TYPES="$MIME_TYPES;image/png;image/x-icon"
-  PNG_CFLAGS="$PNG_CFLAGS -DPNG_PEDANTIC_WARNINGS"
-fi
-
-AC_SUBST(FILE_PNG)
-
-AM_CONDITIONAL(HAVE_PNG, test "x$have_libpng" = xyes)
+MIME_TYPES="$MIME_TYPES;image/png;image/x-icon"
+PNG_CFLAGS="$PNG_CFLAGS -DPNG_PEDANTIC_WARNINGS"
 
 
 ##################
@@ -2370,7 +2353,6 @@ Optional Plug-Ins:
   OpenEXR:             $have_openexr
   PDF (import):        $have_poppler
   PDF (export):        $have_cairo_pdf
-  PNG:                 $have_libpng
   Print:               $enable_print
   PSP:                 $have_zlib
   Python:              $enable_python
