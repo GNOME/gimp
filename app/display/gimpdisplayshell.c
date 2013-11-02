@@ -797,6 +797,14 @@ gimp_display_shell_dispose (GObject *object)
       shell->checkerboard = NULL;
     }
 
+  if (shell->filter_buffer)
+    {
+      g_object_unref (shell->filter_buffer);
+      shell->filter_buffer = NULL;
+      shell->filter_data   = NULL;
+      shell->filter_stride = 0;
+    }
+
   if (shell->mask)
     {
       g_object_unref (shell->mask);

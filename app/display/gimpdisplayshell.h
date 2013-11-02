@@ -108,9 +108,13 @@ struct _GimpDisplayShell
 
   GtkWidget         *statusbar;        /*  statusbar                          */
 
-  GimpDisplayXfer   *xfer;             /*  managers image buffer transfers    */
+  GimpDisplayXfer   *xfer;             /*  manages image buffer transfers     */
   cairo_surface_t   *mask_surface;     /*  buffer for rendering the mask      */
   cairo_pattern_t   *checkerboard;     /*  checkerboard pattern               */
+
+  GeglBuffer        *filter_buffer;    /*  buffer for display filters         */
+  guchar            *filter_data;      /*  filter_buffer's pixels             */
+  gint               filter_stride;    /*  filter_buffer's stride             */
 
   GimpCanvasItem    *canvas_item;      /*  items drawn on the canvas          */
   GimpCanvasItem    *unrotated_item;   /*  unrotated items for e.g. cursor    */
