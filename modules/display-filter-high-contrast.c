@@ -74,6 +74,9 @@ static void        cdisplay_contrast_get_property    (GObject          *object,
                                                       GValue           *value,
                                                       GParamSpec       *pspec);
 
+static void        cdisplay_contrast_convert_buffer  (GimpColorDisplay *display,
+                                                      GeglBuffer       *buffer,
+                                                      GeglRectangle    *area);
 static void        cdisplay_contrast_convert_surface (GimpColorDisplay *display,
                                                       cairo_surface_t  *surface);
 static GtkWidget * cdisplay_contrast_configure       (GimpColorDisplay *display);
@@ -128,6 +131,7 @@ cdisplay_contrast_class_init (CdisplayContrastClass *klass)
   display_class->help_id         = "gimp-colordisplay-contrast";
   display_class->stock_id        = GIMP_STOCK_DISPLAY_FILTER_CONTRAST;
 
+  display_class->convert_buffer  = cdisplay_contrast_convert_buffer;
   display_class->convert_surface = cdisplay_contrast_convert_surface;
   display_class->configure       = cdisplay_contrast_configure;
 }
@@ -177,6 +181,37 @@ cdisplay_contrast_set_property (GObject      *object,
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
+    }
+}
+
+static void
+cdisplay_contrast_convert_buffer (GimpColorDisplay *display,
+                                  GeglBuffer       *buffer,
+                                  GeglRectangle    *area)
+{
+  CdisplayContrast   *contrast = CDISPLAY_CONTRAST (display);
+  GeglBufferIterator *iter;
+  gfloat              c;
+
+  c = contrast->contrast * 2 * G_PI;
+
+  iter = gegl_buffer_iterator_new (buffer, area, 0,
+                                   babl_format ("R'G'B'A float"),
+                                   GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+
+  while (gegl_buffer_iterator_next (iter))
+    {
+      gfloat *data  = iter->data[0];
+      gint    count = iter->length;
+
+      while (count--)
+        {
+          *data = 0.5 * (1.0 + sin (c * *data)); data++;
+          *data = 0.5 * (1.0 + sin (c * *data)); data++;
+          *data = 0.5 * (1.0 + sin (c * *data)); data++;
+
+          data++;
+        }
     }
 }
 
