@@ -76,8 +76,9 @@ GType               cdisplay_lcms_get_type             (void);
 static void         cdisplay_lcms_finalize             (GObject           *object);
 
 static GtkWidget  * cdisplay_lcms_configure            (GimpColorDisplay  *display);
-static void         cdisplay_lcms_convert_surface      (GimpColorDisplay  *display,
-                                                        cairo_surface_t   *surface);
+static void         cdisplay_lcms_convert_buffer       (GimpColorDisplay  *display,
+                                                        GeglBuffer        *buffer,
+                                                        GeglRectangle     *area);
 static void         cdisplay_lcms_changed              (GimpColorDisplay  *display);
 
 static cmsHPROFILE  cdisplay_lcms_get_rgb_profile      (CdisplayLcms      *lcms);
@@ -135,7 +136,7 @@ cdisplay_lcms_class_init (CdisplayLcmsClass *klass)
   display_class->stock_id        = GIMP_STOCK_DISPLAY_FILTER_LCMS;
 
   display_class->configure       = cdisplay_lcms_configure;
-  display_class->convert_surface = cdisplay_lcms_convert_surface;
+  display_class->convert_buffer  = cdisplay_lcms_convert_buffer;
   display_class->changed         = cdisplay_lcms_changed;
 }
 
@@ -306,55 +307,26 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
 }
 
 static void
-cdisplay_lcms_convert_surface (GimpColorDisplay *display,
-                               cairo_surface_t  *surface)
+cdisplay_lcms_convert_buffer (GimpColorDisplay *display,
+                              GeglBuffer       *buffer,
+                              GeglRectangle    *area)
 {
-  CdisplayLcms   *lcms   = CDISPLAY_LCMS (display);
-  gint            width  = cairo_image_surface_get_width (surface);
-  gint            height = cairo_image_surface_get_height (surface);
-  gint            stride = cairo_image_surface_get_stride (surface);
-  guchar         *buf    = cairo_image_surface_get_data (surface);
-  cairo_format_t  fmt    = cairo_image_surface_get_format (surface);
-  guchar         *rowbuf;
-  gint            x, y;
-  guchar          r, g, b, a;
-
-  if (fmt != CAIRO_FORMAT_ARGB32)
-    return;
+  CdisplayLcms       *lcms = CDISPLAY_LCMS (display);
+  GeglBufferIterator *iter;
 
   if (! lcms->transform)
     return;
 
-  rowbuf = g_malloc (stride);
+  iter = gegl_buffer_iterator_new (buffer, area, 0,
+                                   babl_format ("R'G'B'A float"),
+                                   GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
 
-  for (y = 0; y < height; y++, buf += stride)
+  while (gegl_buffer_iterator_next (iter))
     {
-      /* Switch buf from ARGB premul to ARGB non-premul, since lcms ignores the
-       * alpha channel.  The macro takes care of byte order.
-       */
-      for (x = 0; x < width; x++)
-        {
-          GIMP_CAIRO_ARGB32_GET_PIXEL (buf + 4*x, r, g, b, a);
-          rowbuf[4*x+0] = a;
-          rowbuf[4*x+1] = r;
-          rowbuf[4*x+2] = g;
-          rowbuf[4*x+3] = b;
-        }
+      gfloat *data = iter->data[0];
 
-      cmsDoTransform (lcms->transform, rowbuf, rowbuf, width);
-
-      /* And back to ARGB premul */
-      for (x = 0; x < width; x++)
-        {
-          a = rowbuf[4*x+0];
-          r = rowbuf[4*x+1];
-          g = rowbuf[4*x+2];
-          b = rowbuf[4*x+3];
-          GIMP_CAIRO_ARGB32_SET_PIXEL (buf + 4*x, r, g, b, a);
-        }
+      cmsDoTransform (lcms->transform, data, data, iter->length);
     }
-
-  g_free (rowbuf);
 }
 
 static void
@@ -424,8 +396,8 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
           cmsSetAlarmCodes (alarmCodes);
         }
 
-      lcms->transform = cmsCreateProofingTransform (src_profile, TYPE_ARGB_8,
-                                                    dest_profile, TYPE_ARGB_8,
+      lcms->transform = cmsCreateProofingTransform (src_profile,  TYPE_RGBA_FLT,
+                                                    dest_profile, TYPE_RGBA_FLT,
                                                     proof_profile,
                                                     config->simulation_intent,
                                                     config->display_intent,
@@ -440,8 +412,8 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
       if (! dest_profile)
         dest_profile = cmsCreate_sRGBProfile ();
 
-      lcms->transform = cmsCreateTransform (src_profile, TYPE_ARGB_8,
-                                            dest_profile, TYPE_ARGB_8,
+      lcms->transform = cmsCreateTransform (src_profile,  TYPE_RGBA_FLT,
+                                            dest_profile, TYPE_RGBA_FLT,
                                             config->display_intent,
                                             flags);
     }
