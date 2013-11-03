@@ -97,7 +97,7 @@ gimp_canvas_passe_partout_get_extents (GimpCanvasItem   *item,
 
   inner = GIMP_CANVAS_ITEM_CLASS (parent_class)->get_extents (item, shell);
 
-  cairo_region_subtract (outer, inner);
+  cairo_region_xor (outer, inner);
 
   return outer;
 }
