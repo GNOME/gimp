@@ -62,7 +62,6 @@ libgimpwidgets/gimpwidgets.c
 libgimpwidgets/gimpwidgets-private.c
 libgimpwidgets/gimpwidgetsenums.c
 
-modules/color-selector-cmyk-lcms.c
 modules/color-selector-cmyk.c
 modules/color-selector-water.c
 modules/color-selector-wheel.c

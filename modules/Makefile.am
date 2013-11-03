@@ -51,7 +51,7 @@ color_selector_libadd = $(libgimpcolor) $(modules_libadd)
 display_filter_libadd = $(libgimpbase) $(libgimpconfig) $(libgimpcolor) $(modules_libadd) $(GEGL_LIBS)
 controller_libadd = $(modules_libadd)
 
-libcolor_selector_cmyk_la_SOURCES = color-selector-cmyk-lcms.c
+libcolor_selector_cmyk_la_SOURCES = color-selector-cmyk.c
 libcolor_selector_cmyk_la_LDFLAGS = -avoid-version -module $(no_undefined)
 libcolor_selector_cmyk_la_CFLAGS = $(LCMS_CFLAGS)
 libcolor_selector_cmyk_la_LIBADD = $(libgimpconfig) $(color_selector_libadd) $(LCMS_LIBS)
