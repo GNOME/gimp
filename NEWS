@@ -7,6 +7,46 @@ This is the stable branch of GIMP. No new features are being added
 here, just bug-fixes.
 
 
+Overview of Changes from GIMP 2.8.6 to GIMP 2.8.8
+=================================================
+
+
+Core:
+
+ - Make sure indexed images always have a colormap
+ - Fix language selection via preferences on Windows
+ - Don't crash on setting a large text size
+
+
+GUI:
+
+ - Keep the same image active when switching between MWM and SWM
+ - Make sure all dockables are properly resizable (particularly shrinkable)
+ - Add links to jump directly to Save/Export from the Export/Save
+   file extension warning dialogs
+
+
+Libgimp:
+
+ - Fix GimpPickButton on OSX
+
+
+Plug-ins:
+
+ - Properly document plug-in-autocrop-layer's PDB interface
+ - Fix importing of indexed BMPs
+
+
+General:
+
+ - Fix lots of places to use GIO to get proper file sizes and times on windows
+ - Add an AppData file for GIMP
+ - Backport lcms2 support from master, because lcms1 is not getting
+   bug fixes any longer
+ - Lots of bug fixes
+ - Lots of translation updates
+
+
 Overview of Changes from GIMP 2.8.4 to GIMP 2.8.6
 =================================================
 
