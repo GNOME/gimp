@@ -72,14 +72,14 @@ header files installed.
      at http://redmine.yorba.org/projects/gexiv2/wiki .
 
  10. Some other third party libraries or programs are needed for some
-     of the available plug-ins. libpng, libjpeg are hard dependencies
-     that can not be disabled.
+     of the available plug-ins. libpng, libjpeg and lcms are hard
+     dependencies that can not be disabled.
 
  11. You may want to install other third party libraries or programs
      that are needed for some of the available plug-ins. We recommend
-     to check that the following libraries are installed: lcms,
-     libpoppler, libtiff, webkit, libmng, librsvg, libwmf, libgs
-     (Ghostscript), libaa and libjasper.
+     to check that the following libraries are installed: libpoppler,
+     libtiff, webkit, libmng, librsvg, libwmf, libgs (Ghostscript),
+     libaa and libjasper.
 
  12. The Python extension requires Python development headers to be
      present. You will also need PyGTK and the respective development
@@ -183,9 +183,6 @@ These are:
 
   --without-librsvg.  If for some reason you want to build GIMP without
      SVG support, you can build --without-librsvg.
-
-  --without-lcms.  If for some reason you want to build GIMP without
-     using lcms for color support, you can build with --without-lcms.
 
   --without-poppler.  If for some reason you don't want to build the PDF
      Import plug-in that uses libpoppler, you can use --without-poppler.

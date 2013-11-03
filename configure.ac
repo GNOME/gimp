@@ -1573,19 +1573,7 @@ AC_SUBST(JP2_LIBS)
 # Check for lcms
 ################
 
-AC_ARG_WITH(lcms, [  --without-lcms          build without lcms support])
-
-have_lcms="no (lcms support disabled)"
-if test "x$with_lcms" != xno; then
-  have_lcms=yes
-  PKG_CHECK_MODULES(LCMS, lcms2 >= lcms_required_version,
-    AC_DEFINE(HAVE_LCMS, 1, [Define to 1 if lcms is available])
-    LCMS='lcms$(EXEEXT)',
-    have_lcms="no (lcms not found or unusable)")
-fi
-
-AC_SUBST(LCMS)
-AM_CONDITIONAL(HAVE_LCMS, test "x$have_lcms" = xyes)
+PKG_CHECK_MODULES(LCMS, lcms2 >= lcms_required_version)
 
 
 ######################
@@ -2326,7 +2314,6 @@ Optional Plug-Ins:
   Compressor:          $have_compressor
   Ghostscript:         $have_gs
   Help Browser:        $have_webkit
-  LCMS:                $have_lcms
   JPEG 2000:           $have_jp2
   MNG:                 $have_libmng
   OpenEXR:             $have_openexr
@@ -2351,8 +2338,6 @@ Optional Modules:
   ALSA (MIDI Input):   $have_alsa
   Linux Input:         $have_linux_input (GUdev support: $have_libgudev)
   DirectInput (Win32): $have_dx_dinput
-  Color Correction:    $have_lcms
-  Soft Proof:          $have_lcms
 
 Tests:
   Use xvfb-run         $have_xvfb_run

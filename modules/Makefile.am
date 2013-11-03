@@ -18,11 +18,6 @@ AM_CPPFLAGS = \
         $(GTK_CFLAGS)	\
         -I$(includedir)
 
-if HAVE_LCMS
-display_filter_lcms_module = libdisplay-filter-lcms.la
-display_filter_proof_module = libdisplay-filter-proof.la
-endif
-
 if PLATFORM_WIN32
 else
 controller_midi_module = libcontroller-midi.la
@@ -43,8 +38,8 @@ lib_LTLIBRARIES = \
 	libdisplay-filter-color-blind.la	\
 	libdisplay-filter-gamma.la		\
 	libdisplay-filter-high-contrast.la	\
-	$(display_filter_lcms_module)		\
-	$(display_filter_proof_module)		\
+	libdisplay-filter-lcms.la		\
+	libdisplay-filter-proof.la		\
 	$(controller_midi_module)		\
 	$(controller_linux_input_module)	\
 	$(controller_dx_dinput_module)
@@ -56,16 +51,10 @@ color_selector_libadd = $(libgimpcolor) $(modules_libadd)
 display_filter_libadd = $(libgimpbase) $(libgimpconfig) $(libgimpcolor) $(modules_libadd) $(GEGL_LIBS)
 controller_libadd = $(modules_libadd)
 
-if HAVE_LCMS
 libcolor_selector_cmyk_la_SOURCES = color-selector-cmyk-lcms.c
+libcolor_selector_cmyk_la_LDFLAGS = -avoid-version -module $(no_undefined)
 libcolor_selector_cmyk_la_CFLAGS = $(LCMS_CFLAGS)
 libcolor_selector_cmyk_la_LIBADD = $(libgimpconfig) $(color_selector_libadd) $(LCMS_LIBS)
-else
-libcolor_selector_cmyk_la_SOURCES = color-selector-cmyk.c
-libcolor_selector_cmyk_la_LIBADD = $(color_selector_libadd)
-endif
-
-libcolor_selector_cmyk_la_LDFLAGS = -avoid-version -module $(no_undefined)
 
 libcolor_selector_water_la_SOURCES = color-selector-water.c
 libcolor_selector_water_la_LDFLAGS = -avoid-version -module $(no_undefined)

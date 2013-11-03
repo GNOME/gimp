@@ -129,7 +129,7 @@ libexec_PROGRAMS = \
 	illusion \
 	iwarp \
 	jigsaw \
-	$(LCMS) \
+	lcms \
 	lens-apply \
 	lens-flare \
 	$(MAIL) \
@@ -183,7 +183,6 @@ EXTRA_PROGRAMS = \
 	file-wmf \
 	file-xmc \
 	file-xpm \
-	lcms \
 	mail \
 	screenshot \
 	web-page

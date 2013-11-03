@@ -28,9 +28,7 @@
 #include <jpeglib.h>
 #include <jerror.h>
 
-#ifdef HAVE_LCMS
 #include <lcms2.h>
-#endif
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -79,11 +77,7 @@ load_image (const gchar  *filename,
   gint             tile_height;
   gint             scanlines;
   gint             i, start, end;
-#ifdef HAVE_LCMS
   cmsHTRANSFORM    cmyk_transform = NULL;
-#else
-  gpointer         cmyk_transform = NULL;
-#endif
 
   /* We set up the normal JPEG error routines. */
   cinfo.err = jpeg_std_error (&jerr.pub);
@@ -382,10 +376,8 @@ load_image (const gchar  *filename,
    * with the stdio data source.
    */
 
-#ifdef HAVE_LCMS
   if (cmyk_transform)
     cmsDeleteTransform (cmyk_transform);
-#endif
 
   /* Step 8: Release JPEG decompression object */
 
@@ -601,7 +593,6 @@ static gpointer
 jpeg_load_cmyk_transform (guint8 *profile_data,
                           gsize   profile_len)
 {
-#ifdef HAVE_LCMS
   GimpColorConfig *config       = gimp_get_color_configuration ();
   cmsHPROFILE      cmyk_profile = NULL;
   cmsHPROFILE      rgb_profile  = NULL;
@@ -677,9 +668,6 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
   g_object_unref (config);
 
   return transform;
-#else  /* HAVE_LCMS */
-  return NULL;
-#endif
 }
 
 
@@ -691,13 +679,11 @@ jpeg_load_cmyk_to_rgb (guchar   *buf,
   const guchar *src  = buf;
   guchar       *dest = buf;
 
-#ifdef HAVE_LCMS
   if (transform)
     {
       cmsDoTransform (transform, buf, buf, pixels);
       return;
     }
-#endif
 
   while (pixels--)
     {
