@@ -71,24 +71,28 @@ header files installed.
   9. For metadata access GIMP requires the gexiv2 library. It is hosted 
      at http://redmine.yorba.org/projects/gexiv2/wiki .
 
- 10. You may want to install other third party libraries or programs
-     that are needed for some of the available plug-ins. We recommend to
-     check that the following libraries are installed: lcms, libpng,
-     libjpeg, libpoppler, libtiff, webkit, libmng, librsvg, libwmf,
-     libgs (Ghostscript), libaa and libjasper.
+ 10. Some other third party libraries or programs are needed for some
+     of the available plug-ins. libpng, libjpeg are hard dependencies
+     that can not be disabled.
 
- 11. The Python extension requires Python development headers to be
+ 11. You may want to install other third party libraries or programs
+     that are needed for some of the available plug-ins. We recommend
+     to check that the following libraries are installed: lcms,
+     libpoppler, libtiff, webkit, libmng, librsvg, libwmf, libgs
+     (Ghostscript), libaa and libjasper.
+
+ 12. The Python extension requires Python development headers to be
      present. You will also need PyGTK and the respective development
      headers.
 
- 12. Configure GIMP by running the `configure' script. You may want
+ 13. Configure GIMP by running the `configure' script. You may want
      to pass some options to it, see below.
 
- 13. Build GIMP by running `make'. The use of GNU make is recommended.
+ 14. Build GIMP by running `make'. The use of GNU make is recommended.
      If you need to tweak the build to make it work with other flavours
      of make, we'd appreciate if you'd send us a patch with the changes.
 
- 14. Install GIMP by running `make install'. In order to avoid clashes
+ 15. Install GIMP by running `make install'. In order to avoid clashes
      with other versions of GIMP, we install a binary called gimp-2.8.
      By default there's also a link created so that you can type 'gimp'
      to start gimp-2.8.
@@ -151,17 +155,11 @@ These are:
      how image data is transported between the core and plug-ins. Usually
      the best way to do this is detected automatically.
 
-  --without-libtiff, --without-libjpeg, --without-libpng.  configure
-     will bail out if libtiff, libjpeg or libpng can not be found. You
-     better fix the underlying problem and install these libraries with
-     their header files. If you absolutely want to compile GIMP without
-     support for TIFF, JPEG or PNG you need to explicitly disable
-     them using the options given above.
-
-  --without-libexif.  If libexif is available, the JPEG plug-in will use
-     it to keep EXIF data in your JPEG files intact.  If this is
-     causing any trouble at compile-time, you can build --without-libexif.
-     Get libexif from http://www.sourceforge.net/projects/libexif.
+  --without-libtiff.  configure will bail out if libtiff can not be
+     found. You better fix the underlying problem and install these
+     libraries with their header files. If you absolutely want to
+     compile GIMP without support for TIFF you need to explicitly
+     disable them using this option.
 
   --without-aa.  The AA plug-in needs libaa and configure checks for
      its presence. Use --without-aa if you run into problems.
