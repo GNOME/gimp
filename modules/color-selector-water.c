@@ -134,6 +134,8 @@ colorsel_water_init (ColorselWater *water)
   GtkAdjustment *adj;
   GtkWidget     *scale;
 
+  colorsel_water_get_type (); /* useless function call to silence compiler */
+
   water->pressure_adjust = 1.0;
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
