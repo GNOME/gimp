@@ -1481,7 +1481,7 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
   gchar       *history;
   gchar       *label;
   gchar       *name;
-  cmsHPROFILE  profile;
+  cmsHPROFILE  profile = NULL;
 
   dialog = lcms_icc_file_chooser_dialog_new ();
   history = gimp_personal_rc_file ("profilerc");
@@ -1496,7 +1496,8 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
 
   if (config->rgb_profile)
     profile = lcms_load_profile (config->rgb_profile, NULL);
-  else
+
+  if (! profile)
     profile = cmsCreate_sRGBProfile ();
 
   name = lcms_icc_profile_get_desc (profile);
