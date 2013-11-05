@@ -486,7 +486,8 @@ run (const gchar      *name,
       if (export == GIMP_EXPORT_EXPORT)
         {
           /* If the image was exported, delete the new display. */
-          /* This also deletes the image.                       */
+          /* This also deletes the image.
+           */
 
           if (display_ID != -1)
             gimp_display_delete (display_ID);
@@ -520,7 +521,7 @@ run (const gchar      *name,
           gimp_parasite_free (parasite);
 
           /* write metadata */
-          metadata = gimp_image_metadata_save_prepare (image_ID,
+          metadata = gimp_image_metadata_save_prepare (orig_image_ID,
                                                        "image/jpeg");
 
           if (metadata)
@@ -536,7 +537,7 @@ run (const gchar      *name,
               if (! jsvals.save_thumbnail) flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
 
               file = g_file_new_for_path (param[3].data.d_string);
-              gimp_image_metadata_save_finish (image_ID,
+              gimp_image_metadata_save_finish (orig_image_ID,
                                                "image/jpeg",
                                                metadata, flags, file,
                                                NULL);
