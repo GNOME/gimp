@@ -311,7 +311,7 @@
                 <property name="can_focus">False</property>
                 <child>
                   <object class="GtkCheckButton" id="sv_exif">
-                    <property name="label" translatable="yes">save EXIF data</property>
+                    <property name="label" translatable="yes">save Exif data</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
