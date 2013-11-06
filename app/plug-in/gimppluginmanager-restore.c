@@ -232,9 +232,9 @@ gimp_plug_in_manager_search (GimpPlugInManager  *manager,
   /* Give automatic tests a chance to use plug-ins from the build
    * dir
    */
-  path = g_strdup(g_getenv("GIMP_TESTING_PLUGINDIRS"));
+  path = g_strdup (g_getenv ("GIMP_TESTING_PLUGINDIRS"));
 
-  if (! path) 
+  if (! path)
     path = gimp_config_path_expand (manager->gimp->config->plug_in_path,
                                     TRUE, NULL);
 
@@ -517,7 +517,7 @@ gimp_plug_in_manager_ignore_plugin_basename (const gchar *plugin_basename)
   GList       *iter;
   gboolean     ignore = FALSE;
 
-  ignore_basenames_string = g_getenv("GIMP_TESTING_PLUGINDIRS_BASENAME_IGNORES");
+  ignore_basenames_string = g_getenv ("GIMP_TESTING_PLUGINDIRS_BASENAME_IGNORES");
   ignore_basenames        = gimp_path_parse (ignore_basenames_string,
                                              256 /*max_paths*/,
                                              FALSE /*check*/,
@@ -533,7 +533,7 @@ gimp_plug_in_manager_ignore_plugin_basename (const gchar *plugin_basename)
           break;
         }
     }
-  
+
   gimp_path_free (ignore_basenames);
 
   return ignore;
@@ -553,7 +553,7 @@ gimp_plug_in_manager_add_from_file (const GimpDatafileData *file_data,
    * GIMP_TESTING_PLUGINDIRS=plug-ins/common
    */
   if (gimp_plug_in_manager_ignore_plugin_basename (file_data->basename))
-      return;
+    return;
 
   for (list = manager->plug_in_defs; list; list = list->next)
     {
