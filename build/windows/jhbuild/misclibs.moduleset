@@ -108,6 +108,13 @@
 	</dependencies>
 </autotools>
 
+<autotools id="poppler-data" autogen-sh=" || true" makeinstallargs="install prefix=$PREFIX">
+	<branch version="0.4.6" repo="poppler"
+			module="poppler-data-0.4.6.tar.gz"
+			hash="sha1:f030563eed9f93912b1a546e6d87936d07d7f27d">
+	</branch>
+</autotools>
+
 <autotools id="poppler" autogen-sh="configure">
 	<branch version="0.24.3" repo="poppler"
 			module="poppler-0.24.3.tar.xz"
@@ -118,6 +125,9 @@
 		<dep package="imglibs"/>
 		<dep package="cairo"/>
 	</dependencies>
+	<suggests>
+		<dep package="poppler-data"/>
+	</suggests>
 </autotools>
 
 <autotools id="exiv2" autogen-sh="configure"
