@@ -61,17 +61,16 @@
 	</dependencies>
 </metamodule>
 
-<autotools id="libmng"  autogen-sh=" || true" makeargs="-f makefiles/makefile.mingwdll" makeinstallargs="-f makefiles/makefile.mingwdll install">
-	<branch version="1.0.10" repo="sf.net"
-			module="libmng/libmng-devel/1.0.10/libmng-1.0.10.tar.gz"
-			hash="sha1:78ad516a1de79d00de720bf2a7c9afea2c896b09">
-		<patch file="libmng-1.0.10-mingw.patch" strip="1"/>
-		<patch file="libmng-1.0.9-dont-leak-zlib-streams.patch" strip="0"/>
-		<patch file="libmng-change-locations.patch" strip="1"/>
+<autotools id="libmng" autogen-sh="bootstrap.sh; ./configure">
+	<branch version="2.0.2" repo="sf.net"
+			module="libmng/libmng-devel/2.0.2/libmng-2.0.2.tar.xz"
+			hash="sha1:7dd35369ff5916e1823cbacef984ab1b87714b69">
+		<patch file="libmng-no-undefined.diff" strip="1"/>
 	</branch>
 	<dependencies>
 		<dep package="zlib"/>
 		<dep package="libjpeg-turbo"/>
+		<dep package="lcms2"/>
 	</dependencies>
 </autotools>
 

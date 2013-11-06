@@ -220,15 +220,13 @@ module_autogenargs['gimp-gtk3']  = autogenargs + """ --disable-python \
 module_autogenargs['gdb']        = autogenargs.replace ("--disable-static", "")
 
 module_makeargs['mingw32-pthreads']= " CROSS=" + mingw_tool_prefix
-module_makeargs['libmng'] = " CC=" + mingw_tool_prefix + "gcc"
+
 module_extra_env.update (
 {'mingw32-pthreads': 
 	{'PREFIX': prefix, 'INSTALL': 'install'},
  'webkitgtk':
 	{'CFLAGS': os.environ['CFLAGS'].replace ("-g", ""),
 	 'CXXFLAGS': os.environ['CXXFLAGS'].replace ("-g", "") + ' -I' + checkoutroot + 'pthreads-w32-2-9-1-release -w'},
- 'libmng': 
-	{'PREFIX': prefix, 'CFLAGS': os.environ['CFLAGS'] + os.environ['LDFLAGS']},
  'ghostscript':
 	{'CFLAGS': os.environ['CFLAGS'].replace ("-O0", "").replace ("-mms-bitfields", ""), 'ac_cv_lib_pthread_pthread_create': 'no', 'CC': os.environ['CC'] + " -mms-bitfields"},
  'icu-native': {},

@@ -1,0 +1,11 @@
+--- a/Makefile.am	2013-03-05 06:59:27.000000000 -0500
++++ b/Makefile.am	2013-11-06 19:11:28.139007712 -0500
+@@ -9,7 +9,7 @@
+ 
+ # libmng release @VERSION@
+ libmng_la_LDFLAGS = \
+-	-version-number @MNG_MAJOR_NR@:@MNG_MINOR_NR@:@MNG_RELEASE_NR@
++	-version-number @MNG_MAJOR_NR@:@MNG_MINOR_NR@:@MNG_RELEASE_NR@ -no-undefined
+ 
+ lib_LTLIBRARIES = libmng.la
+ 
