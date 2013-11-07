@@ -363,10 +363,12 @@ run (const gchar      *name,
     goto done;
 
   if (proc != PROC_FILE_INFO)
-    config = gimp_get_color_configuration ();
-
-  if (config)
-    intent = config->display_intent;
+    {
+      config = gimp_get_color_configuration ();
+      /* Later code relies on config != NULL if proc != PROC_FILE_INFO */
+      g_return_if_fail (config != NULL);
+      intent = config->display_intent;
+    }
   else
     intent = GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL;
 
@@ -1386,7 +1388,10 @@ lcms_icc_apply_dialog (gint32       image,
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  *dont_ask = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
+  if (dont_ask)
+    {
+      *dont_ask = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
+    }
 
   gtk_widget_destroy (dialog);
 
