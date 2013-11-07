@@ -364,7 +364,7 @@ hsv_to_rgb (gdouble *h,
     {
       *h = *v;
       *s = *v;
-      *v = *v; /* heh */
+   /* *v = *v; -- heh */
     }
   else
     {
