@@ -369,7 +369,7 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
   cmsUInt32Number    descSize = 0;
   cmsHPROFILE        rgb_profile;
   cmsHPROFILE        cmyk_profile;
-  gchar             *descData;
+  gchar             *descData = NULL;
   const gchar       *name     = NULL;
   gchar             *text;
 
