@@ -297,25 +297,36 @@ quit_close_all_dialog_name_cell_func (GtkTreeViewColumn *tree_column,
   if (gimp_image_is_export_dirty (image))
     {
       g_object_set (cell,
-                    "text", name,
+                    "markup", NULL,
+                    "text",   name,
                     NULL);
     }
   else
     {
-      const gchar *exported_uri = gimp_image_get_exported_uri (image);
-      gchar       *text;
+      const gchar *uri;
+      gchar       *escaped_name;
+      gchar       *escaped_uri;
+      gchar       *markup;
 
-      if (! exported_uri)
-        exported_uri = gimp_image_get_imported_uri (image);
+      uri = gimp_image_get_exported_uri (image);
+      if (! uri)
+        uri = gimp_image_get_imported_uri (image);
 
-      text = g_strdup_printf (_("%s\nThe image has been exported to '%s'"),
-                              name, exported_uri);
+      escaped_name = g_markup_escape_text (name, -1);
+      escaped_uri  = g_markup_escape_text (uri, -1);
+
+      markup = g_strdup_printf (_("%s\n<i>Exported to %s</i>"),
+                                escaped_name, escaped_uri);
+
+      g_free (escaped_name);
+      g_free (escaped_uri);
 
       g_object_set (cell,
-                    "text", text,
+                    "text",   NULL,
+                    "markup", markup,
                     NULL);
 
-      g_free (text);
+      g_free (markup);
     }
 
   g_object_unref (renderer);
