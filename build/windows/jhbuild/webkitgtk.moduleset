@@ -32,9 +32,9 @@
 </autotools>
 
 <autotools id="sqlite" autogen-sh="configure">
-	<branch version="3071501" repo="sqlite.org"
-			module="sqlite-autoconf-3071501.tar.gz"
-			hash="sha1:0247b4ff581e7bacaad97663116a029ad1976f1c">
+	<branch version="3.8.1" repo="sqlite.org"
+			module="2013/sqlite-autoconf-3080100.tar.gz"
+			hash="sha1:42464b07df2d6f8aa28f73ce4cc6d48b47be810e">
 	</branch>
 </autotools>
 
