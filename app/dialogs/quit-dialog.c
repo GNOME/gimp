@@ -33,6 +33,8 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
+#include "file/file-utils.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
@@ -305,22 +307,29 @@ quit_close_all_dialog_name_cell_func (GtkTreeViewColumn *tree_column,
   else
     {
       const gchar *uri;
+      gchar       *filename;
       gchar       *escaped_name;
-      gchar       *escaped_uri;
+      gchar       *escaped_filename;
+      gchar       *exported;
       gchar       *markup;
 
       uri = gimp_image_get_exported_uri (image);
       if (! uri)
         uri = gimp_image_get_imported_uri (image);
 
-      escaped_name = g_markup_escape_text (name, -1);
-      escaped_uri  = g_markup_escape_text (uri, -1);
+      filename = file_utils_uri_to_utf8_filename (uri);
 
-      markup = g_strdup_printf (_("%s\n<i>Exported to %s</i>"),
-                                escaped_name, escaped_uri);
+      escaped_name     = g_markup_escape_text (name, -1);
+      escaped_filename = g_markup_escape_text (filename, -1);
+
+      g_free (filename);
+
+      exported = g_strdup_printf (_("Exported to %s"), escaped_filename);
+      markup = g_strdup_printf ("%s\n<i>%s</i>", escaped_name, exported);
+      g_free (exported);
 
       g_free (escaped_name);
-      g_free (escaped_uri);
+      g_free (escaped_filename);
 
       g_object_set (cell,
                     "text",   NULL,
