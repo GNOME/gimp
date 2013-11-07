@@ -445,6 +445,14 @@ gimp_container_tree_view_new (GimpContainer *container,
   return GTK_WIDGET (tree_view);
 }
 
+GtkCellRenderer *
+gimp_container_tree_view_get_name_cell (GimpContainerTreeView *tree_view)
+{
+  g_return_val_if_fail (GIMP_IS_CONTAINER_TREE_VIEW (tree_view), NULL);
+
+  return tree_view->priv->name_cell;
+}
+
 void
 gimp_container_tree_view_set_main_column_title (GimpContainerTreeView *tree_view,
                                                 const gchar           *title)
