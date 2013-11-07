@@ -982,9 +982,9 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
       if (cmyk_profile)
         {
 #ifdef HAVE_LCMS1
-          if (! cmsGetColorSpace (cmyk_profile) == icSigCmykData)
+          if (cmsGetColorSpace (cmyk_profile) != icSigCmykData)
 #else
-          if (! cmsGetColorSpace (cmyk_profile) == cmsSigCmykData)
+          if (cmsGetColorSpace (cmyk_profile) != cmsSigCmykData)
 #endif
             {
               cmsCloseProfile (cmyk_profile);
@@ -999,9 +999,9 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
       cmyk_profile = cmsOpenProfileFromFile (config->cmyk_profile, "r");
 
 #ifdef HAVE_LCMS1
-      if (cmyk_profile && ! cmsGetColorSpace (cmyk_profile) == icSigCmykData)
+      if (cmyk_profile && cmsGetColorSpace (cmyk_profile) != icSigCmykData)
 #else
-      if (cmyk_profile && ! cmsGetColorSpace (cmyk_profile) == cmsSigCmykData)
+      if (cmyk_profile && cmsGetColorSpace (cmyk_profile) != cmsSigCmykData)
 #endif
         {
           cmsCloseProfile (cmyk_profile);
@@ -1022,9 +1022,9 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
       rgb_profile = cmsOpenProfileFromFile (config->rgb_profile, "r");
 
 #ifdef HAVE_LCMS1
-      if (rgb_profile && ! cmsGetColorSpace (rgb_profile) == icSigRgbData)
+      if (rgb_profile && cmsGetColorSpace (rgb_profile) != icSigRgbData)
 #else
-      if (rgb_profile && ! cmsGetColorSpace (rgb_profile) == cmsSigRgbData)
+      if (rgb_profile && cmsGetColorSpace (rgb_profile) != cmsSigRgbData)
 #endif
         {
           cmsCloseProfile (rgb_profile);
