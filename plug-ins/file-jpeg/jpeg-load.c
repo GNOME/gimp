@@ -606,7 +606,7 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
 
       if (cmyk_profile)
         {
-          if (! cmsGetColorSpace (cmyk_profile) == cmsSigCmykData)
+          if (cmsGetColorSpace (cmyk_profile) != cmsSigCmykData)
             {
               cmsCloseProfile (cmyk_profile);
               cmyk_profile = NULL;
@@ -619,7 +619,7 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
     {
       cmyk_profile = cmsOpenProfileFromFile (config->cmyk_profile, "r");
 
-      if (cmyk_profile && ! cmsGetColorSpace (cmyk_profile) == cmsSigCmykData)
+      if (cmyk_profile && cmsGetColorSpace (cmyk_profile) != cmsSigCmykData)
         {
           cmsCloseProfile (cmyk_profile);
           cmyk_profile = NULL;
@@ -638,7 +638,7 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
     {
       rgb_profile = cmsOpenProfileFromFile (config->rgb_profile, "r");
 
-      if (rgb_profile && ! cmsGetColorSpace (rgb_profile) == cmsSigRgbData)
+      if (rgb_profile && cmsGetColorSpace (rgb_profile) != cmsSigRgbData)
         {
           cmsCloseProfile (rgb_profile);
           rgb_profile = NULL;
