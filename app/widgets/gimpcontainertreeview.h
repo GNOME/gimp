@@ -108,6 +108,10 @@ GtkWidget * gimp_container_tree_view_new      (GimpContainer *container,
                                                gint           view_size,
                                                gint           view_border_width);
 
+GtkCellRenderer *
+            gimp_container_tree_view_get_name_cell
+                                              (GimpContainerTreeView *tree_view);
+
 void        gimp_container_tree_view_set_main_column_title
                                               (GimpContainerTreeView *tree_view,
                                                const gchar           *title);
