@@ -77,13 +77,14 @@
 </autotools>
 
 <autotools id="freetype2" autogen-sh="configure">
-	<branch version="2.4.10" repo="savannah.gnu.org"
-			module="freetype/freetype-2.4.10.tar.bz2"
-			hash="sha256:0c8e242c33c45928de560d7d595db06feb41d1b22167e37260ceabe72f9e992f">
+	<branch version="2.5.0.1" repo="savannah.gnu.org"
+			module="freetype/freetype-2.5.0.1.tar.bz2"
+			hash="sha256:57bce5b37989577aa8b4a588426839f6bf39bcc3869748cb18f6827df251f4e5">
 	</branch>
 	<dependencies>
 		<dep package="bzip2"/>
 		<dep package="libxml2"/>
+		<dep package="libpng"/>
 	</dependencies>
 </autotools>
 
