@@ -405,7 +405,7 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
   cmsHPROFILE        rgb_profile;
   cmsHPROFILE        cmyk_profile;
 #ifdef HAVE_LCMS2
-  gchar             *descData;
+  gchar             *descData = NULL;
 #endif
   const gchar       *name     = NULL;
   gchar             *text;
