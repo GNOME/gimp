@@ -302,14 +302,19 @@ gimp_display_shell_close_time_changed (GimpMessageBox *box)
 
   if (! gimp_image_is_export_dirty (image))
     {
-      const gchar *exported_uri = gimp_image_get_exported_uri (image);
+      const gchar *uri;
+      gchar       *filename;
 
-      if (! exported_uri)
-        exported_uri = gimp_image_get_imported_uri (image);
+      uri = gimp_image_get_exported_uri (image);
+      if (! uri)
+        uri = gimp_image_get_imported_uri (image);
 
-      export_text =
-        g_strdup_printf (_("The image has been exported to '%s'."),
-                         exported_uri);
+      filename = file_utils_uri_to_utf8_filename (uri);
+
+      export_text = g_strdup_printf (_("The image has been exported to '%s'."),
+                                     filename);
+
+      g_free (filename);
     }
 
   if (time_text && export_text)
