@@ -30,17 +30,20 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
+#include "core/gimpimage.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
 
+#include "widgets/gimpcontainertreestore.h"
 #include "widgets/gimpcontainertreeview.h"
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdnd.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
+#include "widgets/gimpviewrenderer.h"
 
 #include "quit-dialog.h"
 
@@ -59,6 +62,11 @@ static void        quit_close_all_dialog_image_activated   (GimpContainerView *v
                                                             GimpImage         *image,
                                                             gpointer           insert_data,
                                                             Gimp              *gimp);
+static void        quit_close_all_dialog_name_cell_func    (GtkTreeViewColumn *tree_column,
+                                                            GtkCellRenderer   *cell,
+                                                            GtkTreeModel      *tree_model,
+                                                            GtkTreeIter       *iter,
+                                                            gpointer           data);
 
 
 /*  public functions  */
@@ -79,16 +87,18 @@ static GtkWidget *
 quit_close_all_dialog_new (Gimp     *gimp,
                            gboolean  do_quit)
 {
-  GimpContainer  *images;
-  GimpContext    *context;
-  GimpMessageBox *box;
-  GtkWidget      *dialog;
-  GtkWidget      *label;
-  GtkWidget      *button;
-  GtkWidget      *view;
-  GtkWidget      *dnd_widget;
-  gint            rows;
-  gint            view_size;
+  GimpContainer         *images;
+  GimpContext           *context;
+  GimpMessageBox        *box;
+  GtkWidget             *dialog;
+  GtkWidget             *label;
+  GtkWidget             *button;
+  GtkWidget             *view;
+  GimpContainerTreeView *tree_view;
+  GtkCellRenderer       *renderer;
+  GtkWidget             *dnd_widget;
+  gint                   rows;
+  gint                   view_size;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -144,6 +154,12 @@ quit_close_all_dialog_new (Gimp     *gimp,
   rows      = CLAMP (gimp_container_get_n_children (images), 3, 6);
 
   view = gimp_container_tree_view_new (images, context, view_size, 1);
+  tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+  renderer = gimp_container_tree_view_get_name_cell (tree_view);
+  gtk_tree_view_column_set_cell_data_func (tree_view->main_column,
+                                           renderer,
+                                           quit_close_all_dialog_name_cell_func,
+                                           NULL, NULL);
   gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (view),
                                        -1,
                                        rows * (view_size + 2));
@@ -258,4 +274,50 @@ quit_close_all_dialog_image_activated (GimpContainerView *view,
       if (gimp_display_get_image (display) == image)
         gimp_display_shell_present (gimp_display_get_shell (display));
     }
+}
+
+static void
+quit_close_all_dialog_name_cell_func (GtkTreeViewColumn *tree_column,
+                                      GtkCellRenderer   *cell,
+                                      GtkTreeModel      *tree_model,
+                                      GtkTreeIter       *iter,
+                                      gpointer           data)
+{
+  GimpViewRenderer *renderer;
+  GimpImage        *image;
+  gchar            *name;
+
+  gtk_tree_model_get (tree_model, iter,
+                      GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                      GIMP_CONTAINER_TREE_STORE_COLUMN_NAME,     &name,
+                      -1);
+
+  image = GIMP_IMAGE (renderer->viewable);
+
+  if (gimp_image_is_export_dirty (image))
+    {
+      g_object_set (cell,
+                    "text", name,
+                    NULL);
+    }
+  else
+    {
+      const gchar *exported_uri = gimp_image_get_exported_uri (image);
+      gchar       *text;
+
+      if (! exported_uri)
+        exported_uri = gimp_image_get_imported_uri (image);
+
+      text = g_strdup_printf (_("%s\nThe image has been exported to '%s'"),
+                              name, exported_uri);
+
+      g_object_set (cell,
+                    "text", text,
+                    NULL);
+
+      g_free (text);
+    }
+
+  g_object_unref (renderer);
+  g_free (name);
 }
