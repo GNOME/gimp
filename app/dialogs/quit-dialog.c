@@ -124,7 +124,6 @@ quit_close_all_dialog_new (Gimp     *gimp,
   GimpContainerTreeView *tree_view;
   GtkCellRenderer       *renderer;
   GtkWidget             *dnd_widget;
-  GtkWidget             *tmp_label;
   GtkAccelGroup         *accel_group;
   GClosure              *closure;
   gint                   rows;
@@ -174,13 +173,10 @@ quit_close_all_dialog_new (Gimp     *gimp,
   gtk_window_add_accel_group (GTK_WINDOW (dialog->dialog), accel_group);
   g_object_unref (accel_group);
 
-  tmp_label = gtk_label_new_with_mnemonic (_("_Discard Changes"));
-  dialog->accel_key  = gtk_label_get_mnemonic_keyval (GTK_LABEL (tmp_label));
-  dialog->accel_mods = gimp_get_primary_accelerator_mask ();
-  gtk_widget_destroy (tmp_label);
-
   closure = g_closure_new_object (sizeof (GClosure), G_OBJECT (dialog->dialog));
   g_closure_set_marshal (closure, quit_close_all_dialog_accel_marshal);
+  gtk_accelerator_parse ("<Primary>D",
+                         &dialog->accel_key, &dialog->accel_mods);
   gtk_accel_group_connect (accel_group,
                            dialog->accel_key, dialog->accel_mods,
                            0, closure);
