@@ -39,6 +39,7 @@
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
 #include "widgets/gimpuimanager.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -61,9 +62,15 @@ static gboolean  gimp_display_shell_close_time_changed (GimpMessageBox   *box);
 static void      gimp_display_shell_close_response     (GtkWidget        *widget,
                                                         gboolean          close,
                                                         GimpDisplayShell *shell);
-static void      gimp_time_since                       (guint  then,
-                                                        gint  *hours,
-                                                        gint  *minutes);
+static void      gimp_display_shell_close_accel_marshal(GClosure         *closure,
+                                                        GValue           *return_value,
+                                                        guint             n_param_values,
+                                                        const GValue     *param_values,
+                                                        gpointer          invocation_hint,
+                                                        gpointer          marshal_data);
+static void      gimp_time_since                       (guint             then,
+                                                        gint             *hours,
+                                                        gint             *minutes);
 
 
 /*  public functions  */
@@ -137,12 +144,19 @@ static void
 gimp_display_shell_close_dialog (GimpDisplayShell *shell,
                                  GimpImage        *image)
 {
-  GtkWidget      *dialog;
-  GimpMessageBox *box;
-  GClosure       *closure;
-  GSource        *source;
-  gchar          *title;
-  const gchar    *uri;
+  GtkWidget       *dialog;
+  GimpMessageBox  *box;
+  GtkWidget       *label;
+  GtkAccelGroup   *accel_group;
+  GClosure        *closure;
+  GSource         *source;
+  guint            accel_key;
+  GdkModifierType  accel_mods;
+  gchar           *title;
+  gchar           *accel_string;
+  gchar           *hint;
+  gchar           *markup;
+  const gchar     *uri;
 
   if (shell->close_dialog)
     {
@@ -163,11 +177,11 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
   g_free (title);
 
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                          _("Close _without Saving"), GTK_RESPONSE_CLOSE,
-                          GTK_STOCK_CANCEL,           GTK_RESPONSE_CANCEL,
+                          _("_Discard Changed"), GTK_RESPONSE_CLOSE,
+                          GTK_STOCK_CANCEL,      GTK_RESPONSE_CANCEL,
                           (uri ?
                            GTK_STOCK_SAVE :
-                           GTK_STOCK_SAVE_AS),        RESPONSE_SAVE,
+                           GTK_STOCK_SAVE_AS),   RESPONSE_SAVE,
                           NULL);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
@@ -186,7 +200,34 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
                     G_CALLBACK (gimp_display_shell_close_response),
                     shell);
 
+  /* connect <Primary>D to the quit/close button */
+  accel_group = gtk_accel_group_new ();
+  gtk_window_add_accel_group (GTK_WINDOW (shell->close_dialog), accel_group);
+  g_object_unref (accel_group);
+
+  closure = g_closure_new_object (sizeof (GClosure),
+                                  G_OBJECT (shell->close_dialog));
+  g_closure_set_marshal (closure, gimp_display_shell_close_accel_marshal);
+  gtk_accelerator_parse ("<Primary>D", &accel_key, &accel_mods);
+  gtk_accel_group_connect (accel_group, accel_key, accel_mods, 0, closure);
+
   box = GIMP_MESSAGE_DIALOG (dialog)->box;
+
+  accel_string = gtk_accelerator_get_label (accel_key, accel_mods);
+  hint = g_strdup_printf (_("Press %s to discard all changes and close the image."),
+                          accel_string);
+  markup = g_strdup_printf ("<i><small>%s</small></i>", hint);
+
+  label = gtk_label_new (NULL);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_label_set_markup (GTK_LABEL (label), markup);
+  gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  g_free (markup);
+  g_free (hint);
+  g_free (accel_string);
 
   g_signal_connect_object (image, "name-changed",
                            G_CALLBACK (gimp_display_shell_close_name_changed),
@@ -361,6 +402,20 @@ gimp_display_shell_close_response (GtkWidget        *widget,
     default:
       break;
     }
+}
+
+static void
+gimp_display_shell_close_accel_marshal (GClosure     *closure,
+                                        GValue       *return_value,
+                                        guint         n_param_values,
+                                        const GValue *param_values,
+                                        gpointer      invocation_hint,
+                                        gpointer      marshal_data)
+{
+  gtk_dialog_response (GTK_DIALOG (closure->data), GTK_RESPONSE_CLOSE);
+
+  /* we handled the accelerator */
+  g_value_set_boolean (return_value, TRUE);
 }
 
 static void
