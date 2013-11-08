@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-24 18:41+0200\n"
-"PO-Revision-Date: 2013-10-24 18:42+0200\n"
+"POT-Creation-Date: 2013-11-08 23:02+0100\n"
+"PO-Revision-Date: 2013-11-08 23:03+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -10392,23 +10392,23 @@ msgstr "Rozdzielczość _Y:"
 msgid "pixels/%a"
 msgstr "pikseli/%a"
 
-#: ../app/dialogs/quit-dialog.c:104
+#: ../app/dialogs/quit-dialog.c:116
 msgid "Quit GIMP"
 msgstr "Zakończenie działania programu GIMP"
 
-#: ../app/dialogs/quit-dialog.c:104
+#: ../app/dialogs/quit-dialog.c:116
 msgid "Close All Images"
 msgstr "Zamknij wszystkie obrazy"
 
-#: ../app/dialogs/quit-dialog.c:163
+#: ../app/dialogs/quit-dialog.c:181
 msgid "If you quit GIMP now, these changes will be lost."
 msgstr "Zakończenie działania programu GIMP spowoduje utracenie tych zmian."
 
-#: ../app/dialogs/quit-dialog.c:166
+#: ../app/dialogs/quit-dialog.c:184
 msgid "If you close these images now, changes will be lost."
 msgstr "Jeśli obrazy zostaną teraz zamknięte, to zostaną utracone zmiany."
 
-#: ../app/dialogs/quit-dialog.c:213
+#: ../app/dialogs/quit-dialog.c:231
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
@@ -10416,9 +10416,14 @@ msgstr[0] "Nie zapisano zmian w jednym obrazie:"
 msgstr[1] "Nie zapisano zmian w %d obrazach:"
 msgstr[2] "Nie zapisano zmian w %d obrazach:"
 
-#: ../app/dialogs/quit-dialog.c:235
+#: ../app/dialogs/quit-dialog.c:253
 msgid "_Discard Changes"
 msgstr "_Porzuć zmiany"
+
+#: ../app/dialogs/quit-dialog.c:326
+#, c-format
+msgid "Exported to %s"
+msgstr "Wyeksportowano do %s"
 
 #: ../app/dialogs/resize-dialog.c:119
 msgid "Canvas Size"
@@ -10752,7 +10757,7 @@ msgstr[2] ""
 "Jeśli obraz nie zostanie zapisany, to zmiany z ostatnich %d minut zostaną "
 "utracone."
 
-#: ../app/display/gimpdisplayshell-close.c:311
+#: ../app/display/gimpdisplayshell-close.c:314
 #, c-format
 msgid "The image has been exported to '%s'."
 msgstr "Wyeksportowano obraz do \"%s\"."
