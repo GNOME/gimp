@@ -59,6 +59,7 @@ gchar           * gimp_suggest_modifiers           (const gchar          *messag
                                                     const gchar          *alt_format);
 GimpChannelOps    gimp_modifiers_to_channel_op     (GdkModifierType       modifiers);
 GdkModifierType   gimp_replace_virtual_modifiers   (GdkModifierType       modifiers);
+GdkModifierType   gimp_get_primary_accelerator_mask(void);
 GdkModifierType   gimp_get_extend_selection_mask   (void);
 GdkModifierType   gimp_get_modify_selection_mask   (void);
 GdkModifierType   gimp_get_toggle_behavior_mask    (void);

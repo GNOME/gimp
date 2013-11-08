@@ -663,6 +663,15 @@ gimp_replace_virtual_modifiers (GdkModifierType modifiers)
 }
 
 GdkModifierType
+gimp_get_primary_accelerator_mask (void)
+{
+  GdkDisplay *display = gdk_display_get_default ();
+
+  return gdk_keymap_get_modifier_mask (gdk_keymap_get_for_display (display),
+                                       GDK_MODIFIER_INTENT_PRIMARY_ACCELERATOR);
+}
+
+GdkModifierType
 gimp_get_extend_selection_mask (void)
 {
   GdkDisplay *display = gdk_display_get_default ();
