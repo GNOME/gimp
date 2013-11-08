@@ -920,7 +920,6 @@ ReadImage (FILE                  *fd,
       break;
     }
 
-  fclose (fd);
   if (bpp <= 8)
     for (i = 0, j = 0; i < ncols; i++)
       {
