@@ -1653,13 +1653,14 @@ run (const gchar      *name,
       gint32           drawable_id       = param[2].data.d_int32;
       GimpExportReturn export            = GIMP_EXPORT_IGNORE;
 
-      if ((run_mode == GIMP_RUN_INTERACTIVE)
-          || (run_mode == GIMP_RUN_WITH_LAST_VALS))
+      if (run_mode == GIMP_RUN_INTERACTIVE ||
+          run_mode == GIMP_RUN_WITH_LAST_VALS)
         {
           gimp_procedural_db_get_data (SAVE_PROC, &mng_data);
 
           gimp_ui_init (PLUG_IN_BINARY, FALSE);
-          export = gimp_export_image (&image_id, &drawable_id, NULL,
+
+          export = gimp_export_image (&image_id, &drawable_id, "MNG",
                                       GIMP_EXPORT_CAN_HANDLE_RGB     |
                                       GIMP_EXPORT_CAN_HANDLE_GRAY    |
                                       GIMP_EXPORT_CAN_HANDLE_INDEXED |
