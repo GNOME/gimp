@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-08 23:02+0100\n"
-"PO-Revision-Date: 2013-11-08 23:03+0100\n"
+"POT-Creation-Date: 2013-11-09 19:59+0100\n"
+"PO-Revision-Date: 2013-11-09 20:00+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -10392,23 +10392,23 @@ msgstr "Rozdzielczość _Y:"
 msgid "pixels/%a"
 msgstr "pikseli/%a"
 
-#: ../app/dialogs/quit-dialog.c:116
+#: ../app/dialogs/quit-dialog.c:144
 msgid "Quit GIMP"
 msgstr "Zakończenie działania programu GIMP"
 
-#: ../app/dialogs/quit-dialog.c:116
+#: ../app/dialogs/quit-dialog.c:144
 msgid "Close All Images"
 msgstr "Zamknij wszystkie obrazy"
 
-#: ../app/dialogs/quit-dialog.c:181
+#: ../app/dialogs/quit-dialog.c:212
 msgid "If you quit GIMP now, these changes will be lost."
 msgstr "Zakończenie działania programu GIMP spowoduje utracenie tych zmian."
 
-#: ../app/dialogs/quit-dialog.c:184
+#: ../app/dialogs/quit-dialog.c:215
 msgid "If you close these images now, changes will be lost."
 msgstr "Jeśli obrazy zostaną teraz zamknięte, to zostaną utracone zmiany."
 
-#: ../app/dialogs/quit-dialog.c:231
+#: ../app/dialogs/quit-dialog.c:300
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
@@ -10416,11 +10416,32 @@ msgstr[0] "Nie zapisano zmian w jednym obrazie:"
 msgstr[1] "Nie zapisano zmian w %d obrazach:"
 msgstr[2] "Nie zapisano zmian w %d obrazach:"
 
-#: ../app/dialogs/quit-dialog.c:253
+#: ../app/dialogs/quit-dialog.c:311
+#, c-format
+msgid "Press %s to quit."
+msgstr "Naciśnięcie %s zakończy działanie."
+
+#: ../app/dialogs/quit-dialog.c:314
+#, c-format
+msgid "Press %s to close all images."
+msgstr "Naciśnięcie %s zamknie wszystkie obrazy."
+
+#: ../app/dialogs/quit-dialog.c:330
+#, c-format
+msgid "Press %s to discard all changes and quit."
+msgstr "Naciśnięcie %s porzuci wszystkie zmiany i zakończy działanie."
+
+#: ../app/dialogs/quit-dialog.c:333
+#, c-format
+msgid "Press %s to discard all changes and close all images."
+msgstr "Naciśnięcie %s porzuci wszystkie zmiany i zamknie wszystkie obrazy."
+
+#: ../app/dialogs/quit-dialog.c:341
+#: ../app/display/gimpdisplayshell-close.c:181
 msgid "_Discard Changes"
 msgstr "_Porzuć zmiany"
 
-#: ../app/dialogs/quit-dialog.c:326
+#: ../app/dialogs/quit-dialog.c:423
 #, c-format
 msgid "Exported to %s"
 msgstr "Wyeksportowano do %s"
@@ -10694,22 +10715,23 @@ msgstr "Kontroluje wyświetlanie obrazu"
 msgid "Drop image files here to open them"
 msgstr "Upuszczenie plików obrazów w tym miejscu otworzy je"
 
-#: ../app/display/gimpdisplayshell-close.c:156
-#: ../app/display/gimpdisplayshell-close.c:229
+#: ../app/display/gimpdisplayshell-close.c:170
+#: ../app/display/gimpdisplayshell-close.c:270
 #, c-format
 msgid "Close %s"
 msgstr "Zamknięcie %s"
 
-#: ../app/display/gimpdisplayshell-close.c:167
-msgid "Close _without Saving"
-msgstr "Zamknij bez zapisy_wania"
+#: ../app/display/gimpdisplayshell-close.c:218
+#, c-format
+msgid "Press %s to discard all changes and close the image."
+msgstr "Naciśnięcie %s porzuci wszystkie zmiany i zamknie obraz."
 
-#: ../app/display/gimpdisplayshell-close.c:237
+#: ../app/display/gimpdisplayshell-close.c:278
 #, c-format
 msgid "Save the changes to image '%s' before closing?"
 msgstr "Zapisać zmiany w obrazie \"%s\" przed zamknięciem?"
 
-#: ../app/display/gimpdisplayshell-close.c:270
+#: ../app/display/gimpdisplayshell-close.c:311
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
 msgid_plural ""
@@ -10724,7 +10746,7 @@ msgstr[2] ""
 "Jeśli obraz nie zostanie zapisany, to zmiany z %d ostatnich godzin zostaną "
 "utracone."
 
-#: ../app/display/gimpdisplayshell-close.c:281
+#: ../app/display/gimpdisplayshell-close.c:322
 #, c-format
 msgid ""
 "If you don't save the image, changes from the last hour and %d minute will "
@@ -10742,7 +10764,7 @@ msgstr[2] ""
 "Jeśli obraz nie zostanie zapisany, to zmiany z ostatniej godziny i %d minut "
 "zostaną utracone."
 
-#: ../app/display/gimpdisplayshell-close.c:293
+#: ../app/display/gimpdisplayshell-close.c:334
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
 msgid_plural ""
@@ -10757,7 +10779,7 @@ msgstr[2] ""
 "Jeśli obraz nie zostanie zapisany, to zmiany z ostatnich %d minut zostaną "
 "utracone."
 
-#: ../app/display/gimpdisplayshell-close.c:314
+#: ../app/display/gimpdisplayshell-close.c:355
 #, c-format
 msgid "The image has been exported to '%s'."
 msgstr "Wyeksportowano obraz do \"%s\"."
