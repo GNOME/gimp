@@ -694,6 +694,7 @@ gimp_export_image (gint32                 *image_ID,
   gint32             i;
   gint32             n_layers;
   gint32            *layers;
+  gboolean           interactive          = FALSE;
   gboolean           added_flatten        = FALSE;
   gboolean           has_layer_masks      = FALSE;
   gboolean           background_has_alpha = TRUE;
@@ -714,8 +715,11 @@ gimp_export_image (gint32                 *image_ID,
   if (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS)
     capabilities |= GIMP_EXPORT_CAN_HANDLE_ALPHA;
 
+  if (FALSE /* format_name */)
+    interactive = TRUE;
+
   /* ask for confirmation if the user is not saving a layer (see bug #51114) */
-  if (format_name &&
+  if (interactive &&
       ! gimp_item_is_layer (*drawable_ID) &&
       ! (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
     {
@@ -918,7 +922,7 @@ gimp_export_image (gint32                 *image_ID,
     {
       actions = g_slist_reverse (actions);
 
-      if (format_name)
+      if (interactive)
         retval = export_dialog (actions, format_name);
       else
         retval = GIMP_EXPORT_EXPORT;
