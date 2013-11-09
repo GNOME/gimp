@@ -77,7 +77,7 @@
 #include "splash.h"
 #include "themes.h"
 #ifdef GDK_WINDOWING_QUARTZ
-#include "ige-mac-menu.h"
+#include <gtkosxapplication.h>
 #endif /* GDK_WINDOWING_QUARTZ */
 
 #include "gimp-intl.h"
@@ -427,17 +427,26 @@ gui_restore_callback (Gimp               *gimp,
 
 #ifdef GDK_WINDOWING_QUARTZ
 static void
-gui_add_to_app_menu (GimpUIManager   *ui_manager,
-                     IgeMacMenuGroup *group,
-                     const gchar     *action_path,
-                     const gchar     *label)
+gui_add_to_app_menu (GimpUIManager     *ui_manager,
+                     GtkosxApplication *osx_app,
+                     const gchar       *action_path,
+                     gint               index)
 {
   GtkWidget *item;
 
   item = gtk_ui_manager_get_widget (GTK_UI_MANAGER (ui_manager), action_path);
 
   if (GTK_IS_MENU_ITEM (item))
-    ige_mac_menu_add_app_menu_item (group, GTK_MENU_ITEM (item), label);
+    gtkosx_application_insert_app_menu_item (osx_app, GTK_WIDGET (item), index);
+}
+
+static gboolean
+gui_quartz_quit_callback (GtkosxApplication *osx_app,
+                          GimpUIManager     *ui_manager)
+{
+  gimp_ui_manager_activate_action (ui_manager, "file", "file-quit");
+
+  return TRUE;
 }
 #endif
 
@@ -468,47 +477,50 @@ gui_restore_after_callback (Gimp               *gimp,
 
 #ifdef GDK_WINDOWING_QUARTZ
   {
-    IgeMacMenuGroup *group;
-    GtkWidget       *menu;
-    GtkWidget       *item;
+    GtkosxApplication *osx_app;
+    GtkWidget         *menu;
+    GtkWidget         *item;
+
+    osx_app = gtkosx_application_get ();
 
     menu = gtk_ui_manager_get_widget (GTK_UI_MANAGER (image_ui_manager),
-				      "/dummy-menubar/image-popup");
-
+                                      "/image-menubar");
     if (GTK_IS_MENU_ITEM (menu))
       menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu));
 
-    ige_mac_menu_set_menu_bar (GTK_MENU_SHELL (menu));
+    gtkosx_application_set_menu_bar (osx_app, GTK_MENU_SHELL (menu));
+    gtkosx_application_set_use_quartz_accelerators (osx_app, FALSE);
 
-    item = gtk_ui_manager_get_widget (GTK_UI_MANAGER (image_ui_manager),
-                                      "/dummy-menubar/image-popup/File/file-quit");
-    if (GTK_IS_MENU_ITEM (item))
-      ige_mac_menu_set_quit_menu_item (GTK_MENU_ITEM (item));
+    gui_add_to_app_menu (image_ui_manager, osx_app,
+                         "/image-menubar/Help/dialogs-about", 0);
 
-    /*  the about group  */
-    group = ige_mac_menu_add_app_menu_group ();
+#define PREFERENCES "/image-menubar/Edit/Preferences/"
 
-    gui_add_to_app_menu (image_ui_manager, group,
-                         "/dummy-menubar/image-popup/Help/dialogs-about",
-                         _("About GIMP"));
-
-    /*  the preferences group  */
-    group = ige_mac_menu_add_app_menu_group ();
-
-#define PREFERENCES "/dummy-menubar/image-popup/Edit/Preferences/"
-
-    gui_add_to_app_menu (image_ui_manager, group,
-                         PREFERENCES "dialogs-preferences", NULL);
-    gui_add_to_app_menu (image_ui_manager, group,
-                         PREFERENCES "dialogs-input-devices", NULL);
-    gui_add_to_app_menu (image_ui_manager, group,
-                         PREFERENCES "dialogs-keyboard-shortcuts", NULL);
-    gui_add_to_app_menu (image_ui_manager, group,
-                         PREFERENCES "dialogs-module-dialog", NULL);
-    gui_add_to_app_menu (image_ui_manager, group,
-                         PREFERENCES "plug-in-unit-editor", NULL);
+    gui_add_to_app_menu (image_ui_manager, osx_app,
+                         PREFERENCES "dialogs-preferences", 2);
+    gui_add_to_app_menu (image_ui_manager, osx_app,
+                         PREFERENCES "dialogs-input-devices", 3);
+    gui_add_to_app_menu (image_ui_manager, osx_app,
+                         PREFERENCES "dialogs-keyboard-shortcuts", 4);
+    gui_add_to_app_menu (image_ui_manager, osx_app,
+                         PREFERENCES "dialogs-module-dialog", 5);
+    gui_add_to_app_menu (image_ui_manager, osx_app,
+                         PREFERENCES "plug-in-unit-editor", 6);
 
 #undef PREFERENCES
+
+    item = gtk_separator_menu_item_new ();
+    gtkosx_application_insert_app_menu_item (osx_app, item, 7);
+
+    item = gtk_ui_manager_get_widget (GTK_UI_MANAGER (image_ui_manager),
+                                      "/image-menubar/File/file-quit");
+    gtk_widget_hide (item);
+
+    g_signal_connect (osx_app, "NSApplicationBlockTermination",
+                      G_CALLBACK (gui_quartz_quit_callback),
+                      image_ui_manager);
+
+    gtkosx_application_ready (osx_app);
   }
 #endif /* GDK_WINDOWING_QUARTZ */
 

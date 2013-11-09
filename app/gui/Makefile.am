@@ -1,17 +1,23 @@
 ## Process this file with automake to produce Makefile.in
 
+if PLATFORM_OSX
+xobjective_c = "-xobjective-c"
+endif
+
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-GUI\"	\
 	-DGIMP_COMMAND=\"@GIMP_COMMAND@\"
 
 INCLUDES = \
-	-I$(top_builddir)	\
-	-I$(top_srcdir)		\
-	-I$(top_builddir)/app	\
-	-I$(top_srcdir)/app	\
-	$(GEGL_CFLAGS)		\
-	$(GTK_CFLAGS)		\
-	$(DBUS_GLIB_CFLAGS)	\
+	-I$(top_builddir)		\
+	-I$(top_srcdir)			\
+	-I$(top_builddir)/app		\
+	-I$(top_srcdir)/app		\
+	$(xobjective_c)			\
+	$(GEGL_CFLAGS)			\
+	$(GTK_CFLAGS)			\
+	$(DBUS_GLIB_CFLAGS)		\
+	$(GTK_MAC_INTEGRATION_CFLAGS)	\
 	-I$(includedir)
 
 noinst_LIBRARIES = libappgui.a
@@ -37,9 +43,7 @@ libappgui_a_sources = \
 	splash.c		\
 	splash.h		\
 	themes.c		\
-	themes.h		\
-	ige-mac-menu.c		\
-	ige-mac-menu.h
+	themes.h
 
 libappgui_a_built_sources = gimpdbusservice-glue.h 
 

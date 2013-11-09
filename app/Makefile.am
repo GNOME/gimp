@@ -90,7 +90,7 @@ gimp_2_8_SOURCES = $(libapp_sources) main.c
 
 
 if PLATFORM_OSX
-framework_carbon = -framework Carbon
+framework_cocoa = -framework Cocoa
 endif
 
 if OS_WIN32
@@ -186,7 +186,7 @@ gimpconsoleldadd = \
 gimp_2_8_LDFLAGS = \
 	$(AM_LDFLAGS)		\
 	$(win32_ldflags)	\
-	$(framework_carbon)
+	$(framework_cocoa)
 
 gimp_2_8_LDADD = \
 	gui/libappgui.a		\
