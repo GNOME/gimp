@@ -64,6 +64,7 @@ m4_define([lcms_required_version], [2.2])
 m4_define([libpng_required_version], [1.2.37])
 m4_define([liblzma_required_version], [5.0.0])
 m4_define([openexr_required_version], [1.6.1])
+m4_define([gtk_mac_integration_required_version], [1.0.1])
 
 
 AC_INIT([GIMP], [gimp_version],
@@ -1781,6 +1782,14 @@ if test "x$enable_python" != xno; then
   AC_SUBST(PYGIMP_EXTRA_CFLAGS)
 fi
 AM_CONDITIONAL(BUILD_PYTHON, test "x$enable_python" != xno)
+
+####################################
+# Check for GTK Mac Integration
+####################################
+
+if test "x$platform_osx" != xno; then
+  PKG_CHECK_MODULES(GTK_MAC_INTEGRATION, gtk-mac-integration >= gtk_mac_integration_required_version)
+fi
 
 
 #########################################

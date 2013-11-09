@@ -88,7 +88,7 @@ gimp_@GIMP_APP_VERSION@_SOURCES = $(libapp_sources) main.c
 
 
 if PLATFORM_OSX
-framework_carbon = -framework Carbon
+framework_cocoa = -framework Cocoa
 endif
 
 if OS_WIN32
@@ -184,21 +184,22 @@ gimpconsoleldadd = \
 gimp_@GIMP_APP_VERSION@_LDFLAGS = \
 	$(AM_LDFLAGS)		\
 	$(win32_ldflags)	\
-	$(framework_carbon)	\
+	$(framework_cocoa)	\
 	-Wl,-u,$(SYMPREFIX)gimp_lebl_dialog
 
 gimp_@GIMP_APP_VERSION@_LDADD = \
-	gui/libappgui.a		\
-	menus/libappmenus.a	\
-	actions/libappactions.a	\
-	dialogs/libappdialogs.a	\
-	tools/libapptools.a	\
-	display/libappdisplay.a	\
-	widgets/libappwidgets.a	\
-	$(libgimpwidgets)	\
-	$(GTK_LIBS)		\
-	$(DBUS_GLIB_LIBS)	\
-	$(gimpconsoleldadd)	\
+	gui/libappgui.a			\
+	menus/libappmenus.a		\
+	actions/libappactions.a		\
+	dialogs/libappdialogs.a		\
+	tools/libapptools.a		\
+	display/libappdisplay.a		\
+	widgets/libappwidgets.a		\
+	$(libgimpwidgets)		\
+	$(GTK_LIBS)			\
+	$(GTK_MAC_INTEGRATION_LIBS)	\
+	$(DBUS_GLIB_LIBS)		\
+	$(gimpconsoleldadd)		\
 	$(GIMPRC)
 
 
