@@ -172,9 +172,9 @@ run (const gchar      *name,
 
       gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-      export = gimp_export_image (&image_ID, &drawable_ID, NULL,
-                                  (GIMP_EXPORT_CAN_HANDLE_RGB |
-                                   GIMP_EXPORT_CAN_HANDLE_ALPHA ));
+      export = gimp_export_image (&image_ID, &drawable_ID, "C Source",
+                                  GIMP_EXPORT_CAN_HANDLE_RGB |
+                                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
 
       if (export == GIMP_EXPORT_CANCEL)
         {

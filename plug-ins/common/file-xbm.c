@@ -287,7 +287,8 @@ run (const gchar      *name,
         case GIMP_RUN_INTERACTIVE:
         case GIMP_RUN_WITH_LAST_VALS:
           gimp_ui_init (PLUG_IN_BINARY, FALSE);
-          export = gimp_export_image (&image_ID, &drawable_ID, NULL,
+
+          export = gimp_export_image (&image_ID, &drawable_ID, "XBM",
                                       GIMP_EXPORT_CAN_HANDLE_BITMAP |
                                       GIMP_EXPORT_CAN_HANDLE_ALPHA);
 

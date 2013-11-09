@@ -331,11 +331,12 @@ run (const gchar      *name,
         {
         case GIMP_RUN_INTERACTIVE:
         case GIMP_RUN_WITH_LAST_VALS:
-          export = gimp_export_image (&image_ID, &drawable_ID, NULL,
-                                      (GIMP_EXPORT_CAN_HANDLE_RGB |
-                                       GIMP_EXPORT_CAN_HANDLE_GRAY |
-                                       GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                       GIMP_EXPORT_CAN_HANDLE_ALPHA ));
+          export = gimp_export_image (&image_ID, &drawable_ID, "TGA",
+                                      GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                      GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                      GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                      GIMP_EXPORT_CAN_HANDLE_ALPHA);
+
           if (export == GIMP_EXPORT_CANCEL)
             {
               values[0].data.d_status = GIMP_PDB_CANCEL;

@@ -230,9 +230,11 @@ run (const gchar      *name,
         case GIMP_RUN_INTERACTIVE:
         case GIMP_RUN_WITH_LAST_VALS:
           gimp_ui_init (PLUG_IN_BINARY, FALSE);
-          export = gimp_export_image (&image_ID, &drawable_ID, NULL,
-                                      (GIMP_EXPORT_CAN_HANDLE_RGB |
-                                       GIMP_EXPORT_CAN_HANDLE_GRAY));
+
+          export = gimp_export_image (&image_ID, &drawable_ID, "PIX",
+                                      GIMP_EXPORT_CAN_HANDLE_RGB |
+                                      GIMP_EXPORT_CAN_HANDLE_GRAY);
+
           if (export == GIMP_EXPORT_CANCEL)
             {
               values[0].data.d_status = GIMP_PDB_CANCEL;

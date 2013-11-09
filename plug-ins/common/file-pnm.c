@@ -374,25 +374,25 @@ run (const gchar      *name,
 
           if (strcmp (name, PNM_SAVE_PROC) == 0)
             {
-              export = gimp_export_image (&image_ID, &drawable_ID, NULL,
+              export = gimp_export_image (&image_ID, &drawable_ID, "PNM",
                                           GIMP_EXPORT_CAN_HANDLE_RGB  |
                                           GIMP_EXPORT_CAN_HANDLE_GRAY |
                                           GIMP_EXPORT_CAN_HANDLE_INDEXED);
             }
           else if (strcmp (name, PBM_SAVE_PROC) == 0)
             {
-              export = gimp_export_image (&image_ID, &drawable_ID, NULL,
+              export = gimp_export_image (&image_ID, &drawable_ID, "PBM",
                                           GIMP_EXPORT_CAN_HANDLE_BITMAP);
               pbm = TRUE;  /* gimp has no mono image type so hack it */
             }
           else if (strcmp (name, PGM_SAVE_PROC) == 0)
             {
-              export = gimp_export_image (&image_ID, &drawable_ID, NULL,
+              export = gimp_export_image (&image_ID, &drawable_ID, "PGM",
                                           GIMP_EXPORT_CAN_HANDLE_GRAY);
             }
           else
             {
-              export = gimp_export_image (&image_ID, &drawable_ID, NULL,
+              export = gimp_export_image (&image_ID, &drawable_ID, "PPM",
                                           GIMP_EXPORT_CAN_HANDLE_RGB |
                                           GIMP_EXPORT_CAN_HANDLE_INDEXED);
             }
