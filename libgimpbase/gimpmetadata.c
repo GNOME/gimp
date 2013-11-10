@@ -205,6 +205,7 @@ gimp_metadata_duplicate (GimpMetadata *metadata)
 typedef struct
 {
   gchar         name[1024];
+  gboolean      base64;
   GimpMetadata *metadata;
 } GimpMetadataParseData;
 
@@ -240,10 +241,14 @@ gimp_metadata_deserialize_start_element (GMarkupParseContext *context,
   if (! strcmp (element_name, "tag"))
     {
       const gchar *name;
+      const gchar *encoding;
 
       name = gimp_metadata_attribute_name_to_value (attribute_names,
                                                     attribute_values,
                                                     "name");
+      encoding = gimp_metadata_attribute_name_to_value (attribute_names,
+                                                        attribute_values,
+                                                        "encoding");
 
       if (! name)
         {
@@ -254,6 +259,8 @@ gimp_metadata_deserialize_start_element (GMarkupParseContext *context,
 
       strncpy (parse_data->name, name, sizeof (parse_data->name));
       parse_data->name[sizeof (parse_data->name) - 1] = 0;
+
+      parse_data->base64 = (encoding && ! strcmp (encoding, "base64"));
     }
 }
 
@@ -281,9 +288,26 @@ gimp_metadata_deserialize_text (GMarkupParseContext  *context,
     {
       gchar *value = g_strndup (text, text_len);
 
-      gexiv2_metadata_set_tag_string (parse_data->metadata,
-                                      parse_data->name,
-                                      value);
+      if (parse_data->base64)
+        {
+          guchar *decoded;
+          gsize   len;
+
+          decoded = g_base64_decode (value, &len);
+
+          if (decoded[len - 1] == '\0')
+            gexiv2_metadata_set_tag_string (parse_data->metadata,
+                                            parse_data->name,
+                                            (const gchar *) decoded);
+
+          g_free (decoded);
+        }
+      else
+        {
+          gexiv2_metadata_set_tag_string (parse_data->metadata,
+                                          parse_data->name,
+                                          value);
+        }
 
       g_free (value);
     }
@@ -341,15 +365,49 @@ gimp_metadata_deserialize (const gchar *metadata_xml)
 
 static gchar *
 gimp_metadata_escape (const gchar *name,
-                      const gchar *value)
+                      const gchar *value,
+                      gboolean    *base64)
 {
   if (! g_utf8_validate (value, -1, NULL))
     {
-      g_printerr ("Invalid UTF-8 in metadata value %s: %s\n", name, value);
-      return NULL;
+      gchar *encoded;
+
+      encoded = g_base64_encode ((const guchar *) value, strlen (value) + 1);
+
+      g_printerr ("Invalid UTF-8 in metadata value %s, encoding as base64: %s\n",
+                  name, encoded);
+
+      *base64 = TRUE;
+
+      return encoded;
     }
 
+  *base64 = FALSE;
+
   return g_markup_escape_text (value, -1);
+}
+
+static void
+gimp_metadata_append_tag (GString     *string,
+                          const gchar *name,
+                          gchar       *value,
+                          gboolean     base64)
+{
+  if (value)
+    {
+      if (base64)
+        {
+          g_string_append_printf (string, "  <tag name=\"%s\" encoding=\"base64\">%s</tag>\n",
+                                  name, value);
+        }
+      else
+        {
+          g_string_append_printf (string, "  <tag name=\"%s\">%s</tag>\n",
+                                  name, value);
+        }
+
+      g_free (value);
+    }
 }
 
 /**
@@ -372,6 +430,7 @@ gimp_metadata_serialize (GimpMetadata *metadata)
   gchar   **xmp_data  = NULL;
   gchar    *value;
   gchar    *escaped;
+  gboolean  base64;
   gint      i;
 
   g_return_val_if_fail (GEXIV2_IS_METADATA (metadata), NULL);
@@ -388,15 +447,10 @@ gimp_metadata_serialize (GimpMetadata *metadata)
       for (i = 0; exif_data[i] != NULL; i++)
         {
           value = gexiv2_metadata_get_tag_string (metadata, exif_data[i]);
-          escaped = gimp_metadata_escape (exif_data[i], value);
+          escaped = gimp_metadata_escape (exif_data[i], value, &base64);
           g_free (value);
 
-          if (escaped)
-            {
-              g_string_append_printf (string, "  <tag name=\"%s\">%s</tag>\n",
-                                      exif_data[i], escaped);
-              g_free (escaped);
-            }
+          gimp_metadata_append_tag (string, exif_data[i], escaped, base64);
         }
 
       g_strfreev (exif_data);
@@ -409,15 +463,10 @@ gimp_metadata_serialize (GimpMetadata *metadata)
       for (i = 0; xmp_data[i] != NULL; i++)
         {
           value = gexiv2_metadata_get_tag_string (metadata, xmp_data[i]);
-          escaped = gimp_metadata_escape (xmp_data[i], value);
+          escaped = gimp_metadata_escape (xmp_data[i], value, &base64);
           g_free (value);
 
-          if (escaped)
-            {
-              g_string_append_printf (string, "  <tag name=\"%s\">%s</tag>\n",
-                                      xmp_data[i], escaped);
-              g_free (escaped);
-            }
+          gimp_metadata_append_tag (string, xmp_data[i], escaped, base64);
         }
 
       g_strfreev (xmp_data);
@@ -430,15 +479,10 @@ gimp_metadata_serialize (GimpMetadata *metadata)
       for (i = 0; iptc_data[i] != NULL; i++)
         {
           value = gexiv2_metadata_get_tag_string (metadata, iptc_data[i]);
-          escaped = gimp_metadata_escape (iptc_data[i], value);
+          escaped = gimp_metadata_escape (iptc_data[i], value, &base64);
           g_free (value);
 
-          if (escaped)
-            {
-              g_string_append_printf (string, "  <tag name=\"%s\">%s</tag>\n",
-                                      iptc_data[i], escaped);
-              g_free (escaped);
-            }
+          gimp_metadata_append_tag (string, iptc_data[i], escaped, base64);
         }
 
       g_strfreev (iptc_data);
