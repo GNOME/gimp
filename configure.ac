@@ -1783,14 +1783,6 @@ if test "x$enable_python" != xno; then
 fi
 AM_CONDITIONAL(BUILD_PYTHON, test "x$enable_python" != xno)
 
-####################################
-# Check for GTK Mac Integration
-####################################
-
-if test "x$platform_osx" != xno; then
-  PKG_CHECK_MODULES(GTK_MAC_INTEGRATION, gtk-mac-integration >= gtk_mac_integration_required_version)
-fi
-
 
 #########################################
 # Check whether Script-Fu should be built
@@ -1838,6 +1830,15 @@ case "$target_or_host" in
 esac
 
 AM_CONDITIONAL(PLATFORM_OSX, test "x$platform_osx" = xyes)
+
+
+###############################
+# Check for GTK Mac Integration
+###############################
+
+if test "x$platform_osx" != xno; then
+  PKG_CHECK_MODULES(GTK_MAC_INTEGRATION, gtk-mac-integration >= gtk_mac_integration_required_version)
+fi
 
 
 ####################################
