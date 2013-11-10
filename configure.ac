@@ -1897,7 +1897,8 @@ AM_CONDITIONAL(PLATFORM_OSX, test "x$platform_osx" = xyes)
 # Check for GTK Mac Integration
 ###############################
 
-if test "x$platform_osx" != xno; then
+if test "x$platform_osx" != xno &&
+   test "x`$PKG_CONFIG --variable=target gtk+-2.0`" == "xquartz"; then
   PKG_CHECK_MODULES(GTK_MAC_INTEGRATION, gtk-mac-integration >= gtk_mac_integration_required_version)
 fi
 
