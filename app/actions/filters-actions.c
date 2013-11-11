@@ -105,11 +105,6 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:difference-of-gaussians",
     NULL /* FIXME GIMP_HELP_FILTER_DIFFERENCE_OF_GAUSSIANS */ },
 
-  { "filters-dot", GIMP_STOCK_GEGL,
-    NC_("filters-action", "Dots..."), NULL, NULL,
-    "gegl:dot",
-    NULL /* FIXME GIMP_HELP_FILTER_DOT */ },
-
   { "filters-dropshadow", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Drop Shadow..."), NULL, NULL,
     "gegl:dropshadow",
@@ -364,7 +359,6 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-cubism",                  writable);
   SET_SENSITIVE ("filters-deinterlace",             writable);
   SET_SENSITIVE ("filters-difference-of-gaussians", writable);
-  SET_SENSITIVE ("filters-dot",                     writable);
   SET_SENSITIVE ("filters-dropshadow",              writable && alpha);
   SET_SENSITIVE ("filters-edge-laplace",            writable);
   SET_SENSITIVE ("filters-edge-sobel",              writable);

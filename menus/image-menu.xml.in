@@ -630,7 +630,6 @@
       <separator />
       <menu action="plug-in-blur-menu" name="Blur">
       	<menuitem action="filters-gaussian-blur" />
-      	<menuitem action="filters-dot" />
       	<menuitem action="filters-pixelize" />
 	<placeholder name="Motion">
 	  <menuitem action="filters-motion-blur-circular" />

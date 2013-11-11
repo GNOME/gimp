@@ -486,7 +486,6 @@ sanity_check_gegl_ops (void)
     "gegl:cubism",
     "gegl:deinterlace",
     "gegl:difference-of-gaussians",
-    "gegl:dot",
     "gegl:dropshadow",
     "gegl:edge-laplace",
     "gegl:edge-sobel",
