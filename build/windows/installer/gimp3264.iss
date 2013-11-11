@@ -537,7 +537,7 @@ begin
 		Env := Env + ';${gimp_installation_dir}\32\bin' + #10;
 
 		if IsComponentSelected('gimp32on64\py') then
-			Env := Env + 'PYTHONPATH=${gimp_installation_dir}\32\lib\gimp\2.0\python' + #10; //only needed on 64bit GIMP
+			Env := Env + 'PYTHONPATH=${gimp_installation_dir}\32\lib\gimp\2.0\python' + #10;
 
 	end else
 	begin
@@ -545,7 +545,10 @@ begin
 		Env := Env + #10;
 
 	end;
-	
+
+	if IsComponentSelected('py') then
+		Env := Env + 'PYTHONPATH=${gimp_installation_dir}\lib\gimp\2.0\python' + #10;
+
 	DebugMsg('PrepareGimpPath','Appending ' + Env);
 
 	if not SaveStringToUTF8File(DefaultEnv,Env,True) then
