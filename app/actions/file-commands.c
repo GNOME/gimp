@@ -286,24 +286,24 @@ file_save_cmd_callback (GtkAction *action,
                              FALSE, display);
       break;
 
-    case GIMP_SAVE_MODE_EXPORT:
+    case GIMP_SAVE_MODE_EXPORT_AS:
       file_export_dialog_show (gimp, image, widget);
       break;
 
-    case GIMP_SAVE_MODE_EXPORT_TO:
+    case GIMP_SAVE_MODE_EXPORT:
     case GIMP_SAVE_MODE_OVERWRITE:
       {
         const gchar         *uri = NULL;
         GimpPlugInProcedure *export_proc;
-        gboolean             overwrite;
+        gboolean             overwrite = FALSE;
 
-        if (save_mode == GIMP_SAVE_MODE_EXPORT_TO)
+        if (save_mode == GIMP_SAVE_MODE_EXPORT)
           {
             uri = gimp_image_get_exported_uri (image);
 
             if (! uri)
               {
-                /* Behave as if Export... was invoked */
+                /* Behave as if Export As... was invoked */
                 file_export_dialog_show (gimp, image, widget);
                 break;
               }

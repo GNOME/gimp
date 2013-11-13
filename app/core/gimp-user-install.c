@@ -439,20 +439,21 @@ user_install_mkdir_with_parents (GimpUserInstall *install,
   return TRUE;
 }
 
-/* The regexp pattern of all options changed from previous menurc.
+/* The regexp pattern of all options changed from menurc of GIMP 2.8.
  * Add any pattern that we want to recognize for replacement in the menurc of
  * the next release*/
-#define MENURC_OVER20_UPDATE_PATTERN "NOMATCH^"
+#define MENURC_28_UPDATE_PATTERN "\"<Actions>/file/file-export-to\"|" \
+                                 "\"<Actions>/file/file-export\""
 
 /**
- * callback to use for updating any change value in the menurc.
+ * callback to use for updating a menurc from GIMP 2.8.
  * data is unused (always NULL).
  * The updated value will be matched line by line.
  */
 static gboolean
-user_update_menurc_over20 (const GMatchInfo *matched_value,
-                           GString          *new_value,
-                           gpointer          data)
+user_update_menurc_28 (const GMatchInfo *matched_value,
+                       GString          *new_value,
+                       gpointer          data)
 {
   gchar *match;
   match = g_match_info_fetch (matched_value, 0);
@@ -462,10 +463,21 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
 
   if (strcmp (match, "\"<Actions>/view/view-close\"") == 0)
     g_string_append (new_value, "\"<Actions>/file/file-close\"");
-  else
   */
-  /* Should not happen. Just in case we match something unexpected by mistake. */
-  g_string_append (new_value, match);
+
+  if (strcmp (match, "\"<Actions>/file/file-export\"") == 0)
+    {
+      g_string_append (new_value, "\"<Actions>/file/file-export-as\"");
+    }
+  else if (strcmp (match, "\"<Actions>/file/file-export-to\"") == 0)
+    {
+      g_string_append (new_value, "\"<Actions>/file/file-export\"");
+    }
+  else
+    {
+      /* Should not happen. Just in case we match something unexpected by mistake. */
+      g_string_append (new_value, match);
+    }
 
   g_free (match);
   return FALSE;
@@ -624,11 +636,17 @@ user_install_migrate_files (GimpUserInstall *install)
 
           if (strcmp (basename, "menurc") == 0)
             {
-              /*  skip menurc for gimp 2.0 as the format has changed  */
-              if (install->old_minor == 0)
-                goto next_file;
-              update_pattern = MENURC_OVER20_UPDATE_PATTERN;
-              update_callback = user_update_menurc_over20;
+              switch (install->old_minor)
+                {
+                case 0:
+                  /*  skip menurc for gimp 2.0 as the format has changed  */
+                  goto next_file;
+                  break;
+                case 8:
+                  update_pattern = MENURC_28_UPDATE_PATTERN;
+                  update_callback = user_update_menurc_28;
+                  break;
+                }
             }
 
           g_snprintf (dest, sizeof (dest), "%s%c%s",

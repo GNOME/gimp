@@ -112,7 +112,7 @@ file_save_dialog_new (Gimp     *gimp,
                                      GIMP_FILE_CHOOSER_ACTION_EXPORT,
                                      _("Export Image"), "gimp-file-export",
                                      _("_Export"),
-                                     GIMP_HELP_FILE_EXPORT);
+                                     GIMP_HELP_FILE_EXPORT_AS);
 
       state = g_object_get_data (G_OBJECT (gimp), "gimp-file-export-dialog-state");
     }

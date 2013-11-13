@@ -142,11 +142,11 @@ static const GimpEnumActionEntry file_save_actions[] =
     GIMP_SAVE_MODE_SAVE_AND_CLOSE, FALSE,
     GIMP_HELP_FILE_SAVE },
 
-  { "file-export-to", NULL,
-    NC_("file-action", "Export to"), "<primary>E",
+  { "file-export", NULL,
+    NC_("file-action", "Export"), "<primary>E",
     NC_("file-action", "Export the image again"),
-    GIMP_SAVE_MODE_EXPORT_TO, FALSE,
-    GIMP_HELP_FILE_EXPORT_TO },
+    GIMP_SAVE_MODE_EXPORT, FALSE,
+    GIMP_HELP_FILE_EXPORT },
 
   { "file-overwrite", NULL,
     NC_("file-action", "Over_write"), "",
@@ -154,11 +154,11 @@ static const GimpEnumActionEntry file_save_actions[] =
     GIMP_SAVE_MODE_OVERWRITE, FALSE,
     GIMP_HELP_FILE_OVERWRITE },
 
-  { "file-export", NULL,
-    NC_("file-action", "Export..."), "<primary><shift>E",
+  { "file-export-as", NULL,
+    NC_("file-action", "Export As..."), "<primary><shift>E",
     NC_("file-action", "Export the image to various file formats such as PNG or JPEG"),
-    GIMP_SAVE_MODE_EXPORT, FALSE,
-    GIMP_HELP_FILE_EXPORT }
+    GIMP_SAVE_MODE_EXPORT_AS, FALSE,
+    GIMP_HELP_FILE_EXPORT_AS }
 };
 
 void
@@ -280,17 +280,17 @@ file_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("file-save-as",         drawable);
   SET_SENSITIVE ("file-save-a-copy",     drawable);
   SET_SENSITIVE ("file-revert",          image && (gimp_image_get_uri (image) || source));
-  SET_SENSITIVE ("file-export-to",       drawable);
-  SET_VISIBLE   ("file-export-to",       ! show_overwrite);
+  SET_SENSITIVE ("file-export",          drawable);
+  SET_VISIBLE   ("file-export",          ! show_overwrite);
   SET_SENSITIVE ("file-overwrite",       show_overwrite);
   SET_VISIBLE   ("file-overwrite",       show_overwrite);
-  SET_SENSITIVE ("file-export",          drawable);
+  SET_SENSITIVE ("file-export-as",       drawable);
   SET_SENSITIVE ("file-create-template", image);
 
   if (export)
     {
       gchar *label = file_actions_create_label (_("Export to %s"), export);
-      gimp_action_group_set_action_label (group, "file-export-to", label);
+      gimp_action_group_set_action_label (group, "file-export", label);
       g_free (label);
     }
   else if (show_overwrite)
@@ -298,12 +298,11 @@ file_actions_update (GimpActionGroup *group,
       gchar *label = file_actions_create_label (_("Over_write %s"), source);
       gimp_action_group_set_action_label (group, "file-overwrite", label);
       g_free (label);
-
     }
   else
     {
       gimp_action_group_set_action_label (group,
-                                          "file-export-to", _("Export to"));
+                                          "file-export", _("Export"));
     }
 
   /*  needed for the empty display  */
