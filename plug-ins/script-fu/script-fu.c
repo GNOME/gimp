@@ -89,6 +89,7 @@ script_fu_query (void)
   static const GimpParamDef server_args[] =
   {
     { GIMP_PDB_INT32,  "run-mode", "The run mode { RUN-NONINTERACTIVE (1) }"  },
+    { GIMP_PDB_STRING, "ip",       "The ip on which to listen for requests"   },
     { GIMP_PDB_INT32,  "port",     "The port on which to listen for requests" },
     { GIMP_PDB_STRING, "logfile",  "The file to log server activity to"       }
   };
@@ -138,7 +139,12 @@ script_fu_query (void)
 
   gimp_install_procedure ("plug-in-script-fu-server",
                           N_("Server for remote Script-Fu operation"),
-                          "Provides a server for remote script-fu operation",
+                          "Provides a server for remote script-fu operation. "
+                          "NOTE that for security reasons this procedure's "
+                          "API was changed in an incompatible way since "
+                          "GIMP 2.8.12. You now have to pass the IP to listen "
+                          "on as first parameter. Calling this procedure with "
+                          "the old API will fail on purpose.",
                           "Spencer Kimball & Peter Mattis",
                           "Spencer Kimball & Peter Mattis",
                           "1997",
