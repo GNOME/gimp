@@ -520,7 +520,7 @@ gimp_image_undo_free (GimpUndo     *undo,
 
   if (image_undo->metadata)
     {
-      g_free (image_undo->metadata);
+      g_object_unref (image_undo->metadata);
       image_undo->metadata = NULL;
     }
 
