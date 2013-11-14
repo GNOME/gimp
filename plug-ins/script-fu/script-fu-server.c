@@ -458,13 +458,12 @@ server_start (gint         port,
               const gchar *logfile,
               const gchar *listen_ip)
 {
-  struct addrinfo *ai,
-                  *ai_curr;
+  struct addrinfo *ai;
+  struct addrinfo *ai_curr;
   struct addrinfo  hints;
-  gint             e,
-                   sockno;
+  gint             e;
+  gint             sockno;
   gchar           *port_s;
-
   const gchar     *progress;
 
   memset (&hints, 0, sizeof (hints));
@@ -477,7 +476,7 @@ server_start (gint         port,
 
   if (e != 0)
     {
-      g_printerr ("getaddrinfo: %s", gai_strerror (e));
+      g_printerr ("getaddrinfo: %s\n", gai_strerror (e));
       return;
     }
 
@@ -810,7 +809,11 @@ static gboolean
 server_interface (void)
 {
   GtkWidget *dlg;
+  GtkWidget *main_vbox;
   GtkWidget *table;
+  GtkWidget *hbox;
+  GtkWidget *image;
+  GtkWidget *label;
 
   INIT_I18N();
 
@@ -837,13 +840,18 @@ server_interface (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dlg))),
+                      main_vbox, TRUE, TRUE, 0);
+  gtk_widget_show (main_vbox);
+
   /*  The table to hold port, logfile and listen-to entries  */
   table = gtk_table_new (3, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dlg))),
-                      table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
   /*  The server port  */
   sint.port_entry = gtk_entry_new ();
@@ -865,7 +873,26 @@ server_interface (void)
                              _("Listen on IP:"), 0.0, 0.5,
                              sint.ip_entry, 1, FALSE);
 
-  gtk_widget_show (table);
+  /* Warning */
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  image = gtk_image_new_from_stock (GIMP_STOCK_WARNING, GTK_ICON_SIZE_DIALOG);
+  gtk_box_pack_start (GTK_BOX (hbox), image, TRUE, TRUE, 0);
+  gtk_widget_show (image);
+
+  label = gtk_label_new (_("Listening on an IP address other than "
+                           "127.0.0.1 (especially 0.0.0.0) can allow "
+                           "attackers to remotely execute arbitrary code "
+                           "on this machine."));
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
+  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+  gtk_widget_show (label);
+
   gtk_widget_show (dlg);
 
   gtk_main ();
