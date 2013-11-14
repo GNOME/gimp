@@ -461,6 +461,17 @@ load_image (const gchar  *filename,
   /* Position to start of XWDColor structures */
   fseek (ifp, (long)xwdhdr.l_header_size, SEEK_SET);
 
+  /* Guard against insanely huge color maps -- gimp_image_set_colormap() only
+   * accepts colormaps with 0..256 colors anyway. */
+  if (xwdhdr.l_colormap_entries > 256)
+    {
+      g_message (_("'%s':\nIllegal number of colormap entries: %ld"),
+                 gimp_filename_to_utf8 (filename),
+                 (long)xwdhdr.l_colormap_entries);
+      fclose (ifp);
+      return -1;
+    }
+
   if (xwdhdr.l_colormap_entries > 0)
     {
       xwdcolmap = g_new (L_XWDCOLOR, xwdhdr.l_colormap_entries);
