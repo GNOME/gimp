@@ -134,13 +134,13 @@ typedef struct
 
 typedef struct
 {
+  GtkWidget *ip_entry;
   GtkWidget *port_entry;
   GtkWidget *log_entry;
-  GtkWidget *ip_entry;
 
+  gchar     *listen_ip;
   gint       port;
   gchar     *logfile;
-  gchar     *listen_ip;
 
   gboolean   run;
 } ServerInterface;
@@ -158,9 +158,9 @@ typedef union
  *  Local Functions
  */
 
-static void      server_start       (gint         port,
-                                     const gchar *logfile,
-                                     const gchar *ip);
+static void      server_start       (const gchar *listen_ip,
+                                     gint         port,
+                                     const gchar *logfile);
 static gboolean  execute_command    (SFCommand   *cmd);
 static gint      read_from_client   (gint         filedes);
 static gint      make_socket        (const struct addrinfo
@@ -196,9 +196,9 @@ static ServerInterface sint =
   NULL,  /*  log entry widget     */
   NULL,  /*  ip entry widget      */
 
+  NULL,  /*  ip to bind to        */
   10008, /*  default port number  */
   NULL,  /*  use stdout           */
-  NULL,  /*  ip to bind to        */
 
   FALSE  /*  run                  */
 };
@@ -242,7 +242,7 @@ script_fu_server_run (const gchar      *name,
           server_mode = TRUE;
 
           /*  Start the server  */
-          server_start (sint.port, sint.logfile, sint.listen_ip);
+          server_start (sint.listen_ip, sint.port, sint.logfile);
         }
       break;
 
@@ -251,9 +251,11 @@ script_fu_server_run (const gchar      *name,
       server_mode = TRUE;
 
       /*  Start the server  */
-      server_start (params[1].data.d_int32,
-                    params[2].data.d_string,
-                    nparams > 3 ? params[3].data.d_string : "127.0.0.1");
+      server_start ((params[3].data.d_string &&
+                     strlen (params[3].data.d_string)) ?
+                    params[3].data.d_string : "127.0.0.1",
+                    params[1].data.d_int32,
+                    params[2].data.d_string);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -454,9 +456,9 @@ server_progress_uninstall (const gchar *progress)
 }
 
 static void
-server_start (gint         port,
-              const gchar *logfile,
-              const gchar *listen_ip)
+server_start (const gchar *listen_ip,
+              gint         port,
+              const gchar *logfile)
 {
   struct addrinfo *ai;
   struct addrinfo *ai_curr;
@@ -853,25 +855,25 @@ server_interface (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
+  /* The server ip to listen to */
+  sint.ip_entry = gtk_entry_new ();
+  gtk_entry_set_text (GTK_ENTRY (sint.ip_entry), "127.0.0.1");
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("Listen on IP:"), 0.0, 0.5,
+                             sint.ip_entry, 1, FALSE);
+
   /*  The server port  */
   sint.port_entry = gtk_entry_new ();
   gtk_entry_set_text (GTK_ENTRY (sint.port_entry), "10008");
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("Server port:"), 0.0, 0.5,
                              sint.port_entry, 1, FALSE);
 
   /*  The server logfile  */
   sint.log_entry = gtk_entry_new ();
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("Server logfile:"), 0.0, 0.5,
                              sint.log_entry, 1, FALSE);
-
-  /* The server ip to listen to */
-  sint.ip_entry = gtk_entry_new ();
-  gtk_entry_set_text (GTK_ENTRY (sint.ip_entry), "127.0.0.1");
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Listen on IP:"), 0.0, 0.5,
-                             sint.ip_entry, 1, FALSE);
 
   /* Warning */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
