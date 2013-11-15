@@ -65,7 +65,6 @@ libexec_PROGRAMS = \
 	compose \
 	contrast-normalize \
 	contrast-retinex \
-	contrast-stretch \
 	contrast-stretch-hsv \
 	convolution-matrix \
 	crop-zealous \
@@ -555,21 +554,6 @@ contrast_retinex_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(contrast_retinex_RC)
-
-contrast_stretch_SOURCES = \
-	contrast-stretch.c
-
-contrast_stretch_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(CAIRO_LIBS)		\
-	$(GDK_PIXBUF_LIBS)	\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(contrast_stretch_RC)
 
 contrast_stretch_hsv_SOURCES = \
 	contrast-stretch-hsv.c
