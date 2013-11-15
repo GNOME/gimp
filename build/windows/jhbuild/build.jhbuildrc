@@ -137,8 +137,7 @@ module_autogenargs['cairo']      = autogenargs + """ --enable-xlib=no \
                                                      --enable-pthread=no \
                                                      --enable-win32-font=yes"""
 
-module_autogenargs['pixman']     = autogenargs + """ --enable-gtk=no \
-                                                     --disable-sse2"""
+module_autogenargs['pixman']     = autogenargs + """ --enable-gtk=no"""
 
 module_autogenargs['pango']      = autogenargs + """ --disable-gtk-doc \
                                                      --enable-explicit-deps=no \
