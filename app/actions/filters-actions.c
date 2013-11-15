@@ -255,6 +255,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:softglow",
     NULL /* FIXME GIMP_HELP_FILTER_SOFTGLOW */ },
 
+  { "filters-stretch-contrast", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Stretch Contrast..."), NULL, NULL,
+    "gegl:stretch-contrast",
+    NULL /* FIXME GIMP_HELP_FILTER_STRETCH_CONTRAST */ },
+
   { "filters-threshold-alpha", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Threshold Alpha..."), NULL, NULL,
     "gimp:threshold-alpha",
@@ -389,6 +394,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-semi-flatten",            writable && alpha);
   SET_SENSITIVE ("filters-shift",                   writable);
   SET_SENSITIVE ("filters-softglow",                writable);
+  SET_SENSITIVE ("filters-stretch-contrast",        writable);
   SET_SENSITIVE ("filters-threshold-alpha",         writable && alpha);
   SET_SENSITIVE ("filters-tile-seamless",           writable);
   SET_SENSITIVE ("filters-unsharp-mask",            writable);

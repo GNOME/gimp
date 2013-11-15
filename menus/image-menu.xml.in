@@ -530,6 +530,7 @@
       <menu action="colors-auto-menu" name="Auto">
         <menuitem action="drawable-equalize" />
         <menuitem action="drawable-levels-stretch" />
+	<menuitem action="filters-stretch-contrast" />
       </menu>
       <menu action="colors-components-menu" name="Components">
 	<menuitem action="filters-channel-mixer" />
