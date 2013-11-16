@@ -380,7 +380,7 @@ gimp_pick_button_pick (GdkScreen      *screen,
 
   cairo_surface_destroy (image);
 
-  gimp_rgba_set_uchar (&rgb, color[0], color[1], color[2], 1.0);
+  gimp_rgba_set_uchar (&rgb, color[0], color[1], color[2], 255);
 
 #else /* GDK_WINDOWING_QUARTZ */
 
