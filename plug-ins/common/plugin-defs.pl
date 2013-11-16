@@ -20,7 +20,6 @@
     'compose' => { ui => 1, gegl => 1 },
     'contrast-normalize' => {},
     'contrast-retinex' => { ui => 1 },
-    'contrast-stretch-hsv' => {},
     'convolution-matrix' => { ui => 1 },
     'crop-zealous' => {},
     'curve-bend' => { ui => 1 },
