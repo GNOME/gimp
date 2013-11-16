@@ -550,35 +550,37 @@ gimp_drawable_resize (GimpItem    *item,
   gint          new_offset_y;
   gint          copy_x, copy_y;
   gint          copy_width, copy_height;
+  gboolean      intersect;
 
   /*  if the size doesn't change, this is a nop  */
   if (new_width  == gimp_item_get_width  (item) &&
       new_height == gimp_item_get_height (item) &&
-      offset_x   == 0                       &&
+      offset_x   == 0                           &&
       offset_y   == 0)
     return;
 
   new_offset_x = gimp_item_get_offset_x (item) - offset_x;
   new_offset_y = gimp_item_get_offset_y (item) - offset_y;
 
-  gimp_rectangle_intersect (gimp_item_get_offset_x (item),
-                            gimp_item_get_offset_y (item),
-                            gimp_item_get_width (item),
-                            gimp_item_get_height (item),
-                            new_offset_x,
-                            new_offset_y,
-                            new_width,
-                            new_height,
-                            &copy_x,
-                            &copy_y,
-                            &copy_width,
-                            &copy_height);
+  intersect = gimp_rectangle_intersect (gimp_item_get_offset_x (item),
+                                        gimp_item_get_offset_y (item),
+                                        gimp_item_get_width (item),
+                                        gimp_item_get_height (item),
+                                        new_offset_x,
+                                        new_offset_y,
+                                        new_width,
+                                        new_height,
+                                        &copy_x,
+                                        &copy_y,
+                                        &copy_width,
+                                        &copy_height);
 
   new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                 new_width, new_height),
                                 gimp_drawable_get_format (drawable));
 
-  if (copy_width  != new_width ||
+  if (! intersect              ||
+      copy_width  != new_width ||
       copy_height != new_height)
     {
       /*  Clear the new tiles if needed  */
@@ -597,7 +599,7 @@ gimp_drawable_resize (GimpItem    *item,
       g_object_unref (col);
     }
 
-  if (copy_width && copy_height)
+  if (intersect && copy_width && copy_height)
     {
       /*  Copy the pixels in the intersection  */
       gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
