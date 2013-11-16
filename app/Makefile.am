@@ -189,17 +189,18 @@ gimp_2_8_LDFLAGS = \
 	$(framework_cocoa)
 
 gimp_2_8_LDADD = \
-	gui/libappgui.a		\
-	menus/libappmenus.a	\
-	actions/libappactions.a	\
-	dialogs/libappdialogs.a	\
-	tools/libapptools.a	\
-	display/libappdisplay.a	\
-	widgets/libappwidgets.a	\
-	$(libgimpwidgets)	\
-	$(GTK_LIBS)		\
-	$(DBUS_GLIB_LIBS)	\
-	$(gimpconsoleldadd)	\
+	gui/libappgui.a			\
+	menus/libappmenus.a		\
+	actions/libappactions.a		\
+	dialogs/libappdialogs.a		\
+	tools/libapptools.a		\
+	display/libappdisplay.a		\
+	widgets/libappwidgets.a		\
+	$(libgimpwidgets)		\
+	$(GTK_LIBS)			\
+	$(GTK_MAC_INTEGRATION_LIBS)	\
+	$(DBUS_GLIB_LIBS)		\
+	$(gimpconsoleldadd)		\
 	$(GIMPRC)
 
 
