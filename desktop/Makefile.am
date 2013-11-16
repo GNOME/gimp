@@ -3,12 +3,16 @@
 desktop_in_files = gimp.desktop.in.in
 desktop_files = $(desktop_in_files:.desktop.in.in=.desktop)
 
+appdata_in_files = gimp.appdata.xml.in
+appdata_files = $(appdata_in_files:.appdata.xml.in=.appdata.xml)
 
 if DESKTOP_DATADIR
 
 applicationsdir = $(DESKTOP_DATADIR)/applications
 applications_DATA = $(desktop_files)
 
+appdatadir = $(DESKTOP_DATADIR)/appdata
+appdata_DATA = $(appdata_files)
 
 icons16dir = $(DESKTOP_DATADIR)/icons/hicolor/16x16/apps
 icons16_DATA = 16x16/gimp.png
@@ -35,11 +39,8 @@ install-data-hook:
 
 endif
 
-appdatadir = $(datadir)/appdata
-appdata_files = gimp.appdata.xml
-
 EXTRA_DIST = \
-	$(appdata_files)	\
+	$(appdata_in_files)	\
 	gimp.desktop.in.in	\
 	16x16/gimp.png		\
 	22x22/gimp.png		\
@@ -50,8 +51,9 @@ EXTRA_DIST = \
 	256x256/gimp.png	
 
 
-DISTCLEANFILES = $(desktop_files)
+DISTCLEANFILES = $(desktop_files) $(appdata_files)
 
+@INTLTOOL_XML_RULE@
 
 gimp.desktop: gimp.desktop.in $(wildcard $(top_srcdir)/po/*.po)
 	$(INTLTOOL_MERGE) $(top_srcdir)/po $< $(@) -d -u -c $(top_builddir)/po/.intltool-merge-cache
