@@ -546,35 +546,37 @@ gimp_drawable_resize (GimpItem    *item,
   gint          new_offset_y;
   gint          copy_x, copy_y;
   gint          copy_width, copy_height;
+  gboolean      intersect;
 
   /*  if the size doesn't change, this is a nop  */
   if (new_width  == gimp_item_get_width  (item) &&
       new_height == gimp_item_get_height (item) &&
-      offset_x   == 0                       &&
+      offset_x   == 0                           &&
       offset_y   == 0)
     return;
 
   new_offset_x = gimp_item_get_offset_x (item) - offset_x;
   new_offset_y = gimp_item_get_offset_y (item) - offset_y;
 
-  gimp_rectangle_intersect (gimp_item_get_offset_x (item),
-                            gimp_item_get_offset_y (item),
-                            gimp_item_get_width (item),
-                            gimp_item_get_height (item),
-                            new_offset_x,
-                            new_offset_y,
-                            new_width,
-                            new_height,
-                            &copy_x,
-                            &copy_y,
-                            &copy_width,
-                            &copy_height);
+  intersect = gimp_rectangle_intersect (gimp_item_get_offset_x (item),
+                                        gimp_item_get_offset_y (item),
+                                        gimp_item_get_width (item),
+                                        gimp_item_get_height (item),
+                                        new_offset_x,
+                                        new_offset_y,
+                                        new_width,
+                                        new_height,
+                                        &copy_x,
+                                        &copy_y,
+                                        &copy_width,
+                                        &copy_height);
 
   new_tiles = tile_manager_new (new_width, new_height,
                                 gimp_drawable_bytes (drawable));
 
   /*  Determine whether the new tiles need to be initially cleared  */
-  if (copy_width  != new_width ||
+  if (! intersect              ||
+      copy_width  != new_width ||
       copy_height != new_height)
     {
       guchar bg[MAX_CHANNELS] = { 0, };
@@ -592,7 +594,7 @@ gimp_drawable_resize (GimpItem    *item,
     }
 
   /*  Determine whether anything needs to be copied  */
-  if (copy_width && copy_height)
+  if (intersect && copy_width && copy_height)
     {
       pixel_region_init (&srcPR,
                          gimp_drawable_get_tiles (drawable),
