@@ -510,6 +510,68 @@ gih_load_one_brush (GInputStream  *input,
       return FALSE;
     }
 
+  if (bh.bytes == 1)
+    {
+      PatternHeader ph;
+
+      /* For backwards-compatibility, check if a pattern follows.
+       * The obsolete .gpb format did it this way.
+       */
+
+      if (g_input_stream_read_all (input, &ph, sizeof (ph),
+                                   &bytes_read, NULL, error) &&
+          bytes_read == sizeof (ph))
+        {
+          /*  rearrange the bytes in each unsigned int  */
+          ph.header_size  = g_ntohl (ph.header_size);
+          ph.version      = g_ntohl (ph.version);
+          ph.width        = g_ntohl (ph.width);
+          ph.height       = g_ntohl (ph.height);
+          ph.bytes        = g_ntohl (ph.bytes);
+          ph.magic_number = g_ntohl (ph.magic_number);
+
+          if (ph.magic_number == GPATTERN_MAGIC && ph.version == 1 &&
+              ph.header_size > sizeof (ph) &&
+              ph.bytes == 3 && ph.width == bh.width && ph.height == bh.height &&
+              g_seekable_seek (G_SEEKABLE (input),
+                               ph.header_size - sizeof (ph), G_SEEK_CUR,
+                               NULL, NULL))
+            {
+              guchar *plain_brush = brush_buf;
+              gint    i;
+
+              bh.bytes = 4;
+              brush_buf = g_malloc (4 * bh.width * bh.height);
+
+              for (i = 0; i < ph.width * ph.height; i++)
+                {
+                  if (! g_input_stream_read_all (input, brush_buf + i * 4, 3,
+                                                 &bytes_read, NULL, error) ||
+                      bytes_read != 3)
+                    {
+                      g_free (name);
+                      g_free (plain_brush);
+                      g_free (brush_buf);
+                      return FALSE;
+                    }
+
+                  brush_buf[i * 4 + 3] = plain_brush[i];
+                }
+
+              g_free (plain_brush);
+            }
+          else if (! g_seekable_seek (G_SEEKABLE (input),
+                                      - sizeof (PatternHeader), G_SEEK_CUR,
+                                      NULL, NULL))
+            {
+              g_message (_("GIMP brush file appears to be corrupted."));
+              g_free (name);
+              g_free (brush_buf);
+              return FALSE;
+            }
+        }
+    }
+
   /*
    * Create a new layer of the proper size.
    */
