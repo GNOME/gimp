@@ -501,4 +501,5 @@ app/xcf/xcf.c
 
 data/tags/gimp-tags-default.xml.in
 
+desktop/gimp.appdata.xml.in
 desktop/gimp.desktop.in.in
