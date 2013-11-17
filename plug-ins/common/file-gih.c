@@ -518,9 +518,9 @@ gih_load_one_brush (GInputStream  *input,
        * The obsolete .gpb format did it this way.
        */
 
-      if (g_input_stream_read_all (input, &ph, sizeof (ph),
+      if (g_input_stream_read_all (input, &ph, sizeof (PatternHeader),
                                    &bytes_read, NULL, error) &&
-          bytes_read == sizeof (ph))
+          bytes_read == sizeof (PatternHeader))
         {
           /*  rearrange the bytes in each unsigned int  */
           ph.header_size  = g_ntohl (ph.header_size);
@@ -530,12 +530,16 @@ gih_load_one_brush (GInputStream  *input,
           ph.bytes        = g_ntohl (ph.bytes);
           ph.magic_number = g_ntohl (ph.magic_number);
 
-          if (ph.magic_number == GPATTERN_MAGIC && ph.version == 1 &&
-              ph.header_size > sizeof (ph) &&
-              ph.bytes == 3 && ph.width == bh.width && ph.height == bh.height &&
-              g_seekable_seek (G_SEEKABLE (input),
-                               ph.header_size - sizeof (ph), G_SEEK_CUR,
-                               NULL, NULL))
+          if (ph.magic_number == GPATTERN_MAGIC        &&
+              ph.version      == 1                     &&
+              ph.header_size  > sizeof (PatternHeader) &&
+              ph.bytes        == 3                     &&
+              ph.width        == bh.width              &&
+              ph.height       == bh.height             &&
+              g_input_stream_skip (input,
+                                   ph.header_size - sizeof (PatternHeader),
+                                   NULL, NULL) ==
+              ph.header_size - sizeof (PatternHeader))
             {
               guchar *plain_brush = brush_buf;
               gint    i;
@@ -545,7 +549,8 @@ gih_load_one_brush (GInputStream  *input,
 
               for (i = 0; i < ph.width * ph.height; i++)
                 {
-                  if (! g_input_stream_read_all (input, brush_buf + i * 4, 3,
+                  if (! g_input_stream_read_all (input,
+                                                 brush_buf + i * 4, 3,
                                                  &bytes_read, NULL, error) ||
                       bytes_read != 3)
                     {

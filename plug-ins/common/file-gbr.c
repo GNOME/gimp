@@ -481,12 +481,13 @@ load_image (GFile   *file,
       {
         PatternHeader ph;
 
-        /*  For backwards-compatibility, check if a pattern follows.
-            The obsolete .gpb format did it this way.  */
+        /* For backwards-compatibility, check if a pattern follows.
+         * The obsolete .gpb format did it this way.
+         */
 
         if (g_input_stream_read_all (input, &ph, sizeof (PatternHeader),
                                      &bytes_read, NULL, NULL) &&
-            bytes_read == sizeof(PatternHeader))
+            bytes_read == sizeof (PatternHeader))
           {
             /*  rearrange the bytes in each unsigned int  */
             ph.header_size  = g_ntohl (ph.header_size);
