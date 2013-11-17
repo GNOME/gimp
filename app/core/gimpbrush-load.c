@@ -343,6 +343,23 @@ gimp_brush_load_brush (GimpContext  *context,
       }
       break;
 
+    case 3:
+      /* The obsolete .gbp format had a 3-byte pattern following a
+       * 1-byte brush, when embedded in a brush pipe, the current code
+       * tries to load that pattern as a brush, and encounters the '3'
+       * in the header.
+       */
+      g_object_unref (brush);
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Fatal parse error in brush file '%s': "
+                     "Unsupported brush depth %d\n"
+                     "GIMP brushes must be GRAY or RGBA.\n"
+                     "This might be an obsolete GIMP brush file, try "
+                     "loading it as image and save it again."),
+                   gimp_filename_to_utf8 (filename), header.bytes);
+      return NULL;
+      break;
+
     case 4:
       {
         guchar buf[8 * 1024];
