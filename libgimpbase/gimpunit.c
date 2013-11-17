@@ -715,8 +715,8 @@ gimp_unit_is_metric (GimpUnit unit)
   if (factor == 0.0)
     return FALSE;
 
-  return (factor == 25.4  ||
-          factor == 2.54  ||
-          factor == 0.254 ||
-          factor == 0.0254);
+  return ((ABS (factor -  0.0254) < 1e-7) || /* m  */
+          (ABS (factor -  0.254)  < 1e-6) || /* dm */
+          (ABS (factor -  2.54)   < 1e-5) || /* cm */
+          (ABS (factor - 25.4)    < 1e-4));  /* mm */
 }
