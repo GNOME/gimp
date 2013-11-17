@@ -143,7 +143,7 @@ static const GimpEnumActionEntry file_save_actions[] =
     GIMP_HELP_FILE_SAVE },
 
   { "file-export-to", NULL,
-    NC_("file-action", "Export to"), "<primary>E",
+    NC_("file-action", "Export"), "<primary>E",
     NC_("file-action", "Export the image again"),
     GIMP_SAVE_MODE_EXPORT_TO, FALSE,
     GIMP_HELP_FILE_EXPORT_TO },
@@ -155,7 +155,7 @@ static const GimpEnumActionEntry file_save_actions[] =
     GIMP_HELP_FILE_OVERWRITE },
 
   { "file-export", NULL,
-    NC_("file-action", "Export..."), "<primary><shift>E",
+    NC_("file-action", "Export As..."), "<primary><shift>E",
     NC_("file-action", "Export the image to various file formats such as PNG or JPEG"),
     GIMP_SAVE_MODE_EXPORT, FALSE,
     GIMP_HELP_FILE_EXPORT }
@@ -303,7 +303,7 @@ file_actions_update (GimpActionGroup *group,
   else
     {
       gimp_action_group_set_action_label (group,
-                                          "file-export-to", _("Export to"));
+                                          "file-export-to", _("Export"));
     }
 
   /*  needed for the empty display  */
