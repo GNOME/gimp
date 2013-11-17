@@ -938,19 +938,10 @@ save_image (const gchar  *filename,
     gdouble  xresolution;
     gdouble  yresolution;
     gushort  save_unit = RESUNIT_INCH;
-    GimpUnit unit;
-    gfloat   factor;
 
     gimp_image_get_resolution (orig_image, &xresolution, &yresolution);
-    unit = gimp_image_get_unit (orig_image);
-    factor = gimp_unit_get_factor (unit);
 
-    /*  if we have a metric unit, save the resolution as centimeters
-     */
-    if ((ABS (factor - 0.0254) < 1e-5) ||  /* m  */
-        (ABS (factor - 0.254) < 1e-5) ||   /* dm */
-        (ABS (factor - 2.54) < 1e-5) ||    /* cm */
-        (ABS (factor - 25.4) < 1e-5))      /* mm */
+    if (gimp_unit_is_metric (gimp_image_get_unit (orig_image)))
       {
         save_unit = RESUNIT_CENTIMETER;
         xresolution /= 2.54;
@@ -964,7 +955,8 @@ save_image (const gchar  *filename,
         TIFFSetField (tif, TIFFTAG_RESOLUTIONUNIT, save_unit);
       }
 
-/* TODO: enable in 2.6
+#if 0
+    /* TODO: enable in 2.6 */
 
     gint     offset_x, offset_y;
 
@@ -975,7 +967,7 @@ save_image (const gchar  *filename,
         TIFFSetField (tif, TIFFTAG_XPOSITION, offset_x / xresolution);
         TIFFSetField (tif, TIFFTAG_YPOSITION, offset_y / yresolution);
       }
-*/
+#endif
   }
 
   /* The TIFF spec explicitely says ASCII for the image description. */
