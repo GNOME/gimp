@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-09 19:59+0100\n"
-"PO-Revision-Date: 2013-11-09 20:00+0100\n"
+"POT-Creation-Date: 2013-11-17 19:14+0100\n"
+"PO-Revision-Date: 2013-11-17 19:15+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -4615,7 +4615,7 @@ msgstr "Otwiera plik tekstowy (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:143
 #: ../app/actions/text-tool-commands.c:226 ../app/config/gimpconfig-file.c:58
-#: ../app/core/gimpbrush-load.c:142 ../app/core/gimpbrush-load.c:426
+#: ../app/core/gimpbrush-load.c:142 ../app/core/gimpbrush-load.c:443
 #: ../app/core/gimpbrushgenerated-load.c:73
 #: ../app/core/gimpbrushpipe-load.c:81 ../app/core/gimpcurve-load.c:54
 #: ../app/core/gimpgradient-load.c:63 ../app/core/gimppalette-load.c:77
@@ -7528,8 +7528,8 @@ msgstr ""
 "Krytyczny błąd podczas przetwarzania pliku \"%s\" z pędzlami: nieznana "
 "wersja %d."
 
-#: ../app/core/gimpbrush-load.c:273 ../app/core/gimpbrush-load.c:393
-#: ../app/core/gimpbrush-load.c:727
+#: ../app/core/gimpbrush-load.c:273 ../app/core/gimpbrush-load.c:410
+#: ../app/core/gimpbrush-load.c:744
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr ""
@@ -7548,7 +7548,22 @@ msgstr "Nieprawidłowy ciąg UTF-8 w pliku z pędzlami \"%s\"."
 msgid "Unnamed"
 msgstr "Bez nazwy"
 
-#: ../app/core/gimpbrush-load.c:382
+#: ../app/core/gimpbrush-load.c:354
+#, c-format
+msgid ""
+"Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
+"GIMP brushes must be GRAY or RGBA.\n"
+"This might be an obsolete GIMP brush file, try loading it as image and save "
+"it again."
+msgstr ""
+"Krytyczny błąd podczas przetwarzania pliku \"%s\" z pędzlami: nieobsługiwana "
+"głębia pędzla %d\n"
+"Pędzle programu GIMP muszą być zapisane albo w odcieniach szarości lub w "
+"formacie RGBA.\n"
+"Może to być przestarzały plik z pędzlami programu GIMP, proszę spróbować "
+"wczytać go jako obraz i zapisać ponownie."
+
+#: ../app/core/gimpbrush-load.c:399
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -7559,7 +7574,7 @@ msgstr ""
 "Pędzle programu GIMP muszą być zapisane albo w odcieniach szarości lub w "
 "formacie RGBA."
 
-#: ../app/core/gimpbrush-load.c:454 ../app/core/gimpbrush-load.c:854
+#: ../app/core/gimpbrush-load.c:471 ../app/core/gimpbrush-load.c:871
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': unable to decode abr format version %d."
@@ -7567,7 +7582,7 @@ msgstr ""
 "Krytyczny błąd podczas przetwarzania pliku \"%s\" z pędzlami: nie można "
 "dekodować wersji formatu abr %d."
 
-#: ../app/core/gimpbrush-load.c:621
+#: ../app/core/gimpbrush-load.c:638
 #, c-format
 msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
 msgstr ""
@@ -7641,7 +7656,6 @@ msgid "Brush Angle"
 msgstr "Nachylenie pędzla"
 
 #: ../app/core/gimpbrushpipe-load.c:113 ../app/core/gimpbrushpipe-load.c:133
-#: ../app/core/gimpbrushpipe-load.c:224
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr ""
@@ -8929,7 +8943,7 @@ msgctxt "plural"
 msgid "percent"
 msgstr "procent"
 
-#: ../app/dialogs/about-dialog.c:114 ../app/gui/gui.c:493
+#: ../app/dialogs/about-dialog.c:114
 msgid "About GIMP"
 msgstr "Informacje o programie GIMP"
 
@@ -16131,6 +16145,40 @@ msgstr "zaokrąglony"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "rozmyty"
+
+#: ../desktop/gimp.appdata.xml.in.h:1
+msgid ""
+"GIMP is an acronym for GNU Image Manipulation Program. It is a freely "
+"distributed program for such tasks as photo retouching, image composition "
+"and image authoring."
+msgstr ""
+"GIMP to program do manipulowania obrazami projektu GNU. Jest on wolnym "
+"oprogramowaniem służącym do retuszowania zdjęć i tworzenia obrazów."
+
+#: ../desktop/gimp.appdata.xml.in.h:2
+msgid ""
+"It has many capabilities. It can be used as a simple paint program, an "
+"expert quality photo retouching program, an online batch processing system, "
+"a mass production image renderer, an image format converter, etc."
+msgstr ""
+"Daje on wiele możliwości. Może być używany jako prosty program do rysowania, "
+"narzędzie do retuszowania zdjęć dla ekspertów, system do masowego "
+"przetwarzania plików obrazów przez sieć, program renderujący obrazy, "
+"konwerter formatów obrazów itp."
+
+#: ../desktop/gimp.appdata.xml.in.h:3
+msgid ""
+"GIMP is expandable and extensible. It is designed to be augmented with plug-"
+"ins and extensions to do just about anything. The advanced scripting "
+"interface allows everything from the simplest task to the most complex image "
+"manipulation procedures to be easily scripted. GIMP is also available for "
+"Microsoft Windows and OS X."
+msgstr ""
+"Program GIMP jest wysoce rozszerzalny. Za pomocą wtyczek i rozszerzeń można "
+"osiągnąć niemalże wszystko. Zaawansowany interfejs skryptów umożliwia łatwe "
+"automatyzowanie wszystkich działań, od najprostszych zadań do złożonych "
+"procedur manipulacji obrazami. Program GIMP jest dostępny także dla systemów "
+"Microsoft Windows i OS X."
 
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "Image Editor"
