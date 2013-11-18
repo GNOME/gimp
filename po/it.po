@@ -30,8 +30,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-06 08:41+0100\n"
-"PO-Revision-Date: 2013-11-06 08:48+0100\n"
+"POT-Creation-Date: 2013-11-18 18:50+0100\n"
+"PO-Revision-Date: 2013-11-18 19:12+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -39,6 +39,29 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: ../desktop/gimp.appdata.xml.in.h:1
+msgid ""
+"GIMP is an acronym for GNU Image Manipulation Program. It is a freely "
+"distributed program for such tasks as photo retouching, image composition "
+"and image authoring."
+msgstr "GIMP è un acronimo di GNU Image Manipulation Program. È un programma distribuito liberamente per svolgere compiti come il fotoritocco, la composizione e la creazione di immagini."
+
+#: ../desktop/gimp.appdata.xml.in.h:2
+msgid ""
+"It has many capabilities. It can be used as a simple paint program, an "
+"expert quality photo retouching program, an online batch processing system, "
+"a mass production image renderer, an image format converter, etc."
+msgstr "Ha molte capacità. Può essere usato come semplice programma di disegno, come programma di fotoritocco avanzato, sistema di elaborazione automatica on-line, renderizzatore in serie di immagini, convertitore di formato immagine, ecc."
+
+#: ../desktop/gimp.appdata.xml.in.h:3
+msgid ""
+"GIMP is expandable and extensible. It is designed to be augmented with plug-"
+"ins and extensions to do just about anything. The advanced scripting "
+"interface allows everything from the simplest task to the most complex image "
+"manipulation procedures to be easily scripted. GIMP is also available for "
+"Microsoft Windows and OS X."
+msgstr "GIMP è espandibile ed estensibile. È stato progettato per essere ampliato con plug-in ed estensioni per fare praticamente qualsiasi cosa. L'interfaccia avanzata di scripting semplifica la conversione in procedura dal compito più semplice fino all'elaborazione di immagini più complessa. GIMP è disponibile anche per Microsoft Windows ed OS X."
 
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
 msgid "GNU Image Manipulation Program"
@@ -230,7 +253,7 @@ msgstr ""
 "Messaggi di GIMP. È possibile ridurre a icona questa finestra ma non "
 "chiuderla."
 
-#: ../app/sanity.c:573
+#: ../app/sanity.c:572
 #, c-format
 msgid ""
 "The configured filename encoding cannot be converted to UTF-8: %s\n"
@@ -242,7 +265,7 @@ msgstr ""
 "\n"
 "Controllare il valore della variabile ambiente G_FILENAME_ENCODING."
 
-#: ../app/sanity.c:592
+#: ../app/sanity.c:591
 #, c-format
 msgid ""
 "The name of the directory holding the GIMP user configuration cannot be "
@@ -2389,8 +2412,8 @@ msgstr "Salva quest'immagine e chiudi la sua finestra"
 
 #: ../app/actions/file-actions.c:146
 msgctxt "file-action"
-msgid "Export to"
-msgstr "Esporta su"
+msgid "Export"
+msgstr "Esporta"
 
 #: ../app/actions/file-actions.c:147
 msgctxt "file-action"
@@ -2410,8 +2433,8 @@ msgstr ""
 
 #: ../app/actions/file-actions.c:158
 msgctxt "file-action"
-msgid "Export..."
-msgstr "Esporta..."
+msgid "Export As..."
+msgstr "Esporta come..."
 
 #: ../app/actions/file-actions.c:159
 msgctxt "file-action"
@@ -2428,9 +2451,9 @@ msgstr "Esporta su %s"
 msgid "Over_write %s"
 msgstr "So_vrascrivi %s"
 
-#: ../app/actions/file-actions.c:306
-msgid "Export to"
-msgstr "Esporta su"
+#: ../app/actions/file-actions.c:305
+msgid "Export"
+msgstr "Esporta"
 
 #: ../app/actions/file-commands.c:119 ../app/actions/file-commands.c:496
 #: ../app/dialogs/file-open-dialog.c:75
@@ -2565,185 +2588,190 @@ msgstr "Differenze di gaussiane..."
 
 #: ../app/actions/filters-actions.c:109
 msgctxt "filters-action"
-msgid "Dots..."
-msgstr "Punti..."
-
-#: ../app/actions/filters-actions.c:114
-msgctxt "filters-action"
 msgid "_Drop Shadow..."
 msgstr "Proietta _ombra..."
 
-#: ../app/actions/filters-actions.c:119
+#: ../app/actions/filters-actions.c:114
 msgctxt "filters-action"
 msgid "_Laplace"
 msgstr "_Laplace"
 
-#: ../app/actions/filters-actions.c:124
+#: ../app/actions/filters-actions.c:119
 msgctxt "filters-action"
 msgid "_Sobel..."
 msgstr "_Sobel..."
 
-#: ../app/actions/filters-actions.c:129
+#: ../app/actions/filters-actions.c:124
 msgctxt "filters-action"
 msgid "_Emboss..."
 msgstr "Rili_evo..."
 
-#: ../app/actions/filters-actions.c:134
+#: ../app/actions/filters-actions.c:129
 msgctxt "filters-action"
 msgid "_E_xposure..."
 msgstr "_Esposi_zione..."
 
-#: ../app/actions/filters-actions.c:139
+#: ../app/actions/filters-actions.c:134
 msgctxt "filters-action"
 msgid "_Fractal Trace..."
 msgstr "_Traccia frattale..."
 
-#: ../app/actions/filters-actions.c:144
+#: ../app/actions/filters-actions.c:139
 msgctxt "filters-action"
 msgid "_Gaussian Blur..."
 msgstr "Sfocatura _gaussiana..."
 
-#: ../app/actions/filters-actions.c:149
+#: ../app/actions/filters-actions.c:144
 msgctxt "filters-action"
 msgid "_Grid..."
 msgstr "_Griglia..."
 
-#: ../app/actions/filters-actions.c:154
+#: ../app/actions/filters-actions.c:149
 msgctxt "filters-action"
 msgid "Lens Distortion..."
 msgstr "Distorsione lente..."
 
-#: ../app/actions/filters-actions.c:159
+#: ../app/actions/filters-actions.c:154
 msgctxt "filters-action"
 msgid "Mono Mixer..."
 msgstr "Mixer mono..."
 
-#: ../app/actions/filters-actions.c:164
+#: ../app/actions/filters-actions.c:159
 msgctxt "filters-action"
 msgid "_Mosaic..."
 msgstr "_Mosaico..."
 
-#: ../app/actions/filters-actions.c:169
+#: ../app/actions/filters-actions.c:164
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
 msgstr "_Sfocatura di movimento _circolare..."
 
-#: ../app/actions/filters-actions.c:174
+#: ../app/actions/filters-actions.c:169
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
 msgstr "Sfocatura di movimento _lineare..."
 
-#: ../app/actions/filters-actions.c:179
+#: ../app/actions/filters-actions.c:174
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
 msgstr "Sfocatura di movimento _zoom..."
 
-#: ../app/actions/filters-actions.c:184
+#: ../app/actions/filters-actions.c:179
 msgctxt "filters-action"
 msgid "CIE lch Noise..."
 msgstr "Disturbo CIE lch..."
 
-#: ../app/actions/filters-actions.c:189
+#: ../app/actions/filters-actions.c:184
 msgctxt "filters-action"
 msgid "HSV Noise..."
 msgstr "Disturbo HSV..."
 
-#: ../app/actions/filters-actions.c:194
+#: ../app/actions/filters-actions.c:189
 msgctxt "filters-action"
 msgid "_Hurl..."
 msgstr "_Casuale..."
 
-#: ../app/actions/filters-actions.c:199
+#: ../app/actions/filters-actions.c:194
 msgctxt "filters-action"
 msgid "_Pick..."
 msgstr "_Prelievo..."
 
-#: ../app/actions/filters-actions.c:204
+#: ../app/actions/filters-actions.c:199
 msgctxt "filters-action"
 msgid "_RGB Noise..."
 msgstr "Disturbo _RGB..."
 
-#: ../app/actions/filters-actions.c:209
+#: ../app/actions/filters-actions.c:204
 msgctxt "filters-action"
 msgid "_Slur..."
 msgstr "_Macchia..."
 
-#: ../app/actions/filters-actions.c:214
+#: ../app/actions/filters-actions.c:209
 msgctxt "filters-action"
 msgid "Sp_read..."
 msgstr "Dispe_rsione..."
 
-#: ../app/actions/filters-actions.c:219
+#: ../app/actions/filters-actions.c:214
 msgctxt "filters-action"
 msgid "_Photocopy..."
 msgstr "_Fotocopia..."
 
-#: ../app/actions/filters-actions.c:224
+#: ../app/actions/filters-actions.c:219
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "Effetto _pixel..."
 
-#: ../app/actions/filters-actions.c:229
+#: ../app/actions/filters-actions.c:224
 msgctxt "filters-action"
 msgid "_Plasma..."
 msgstr "_Plasma..."
 
-#: ../app/actions/filters-actions.c:234
+#: ../app/actions/filters-actions.c:229
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
 msgstr "Coordinate p_olari..."
 
-#: ../app/actions/filters-actions.c:239
+#: ../app/actions/filters-actions.c:234
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "_Rimozione occhi rossi..."
 
-#: ../app/actions/filters-actions.c:244
+#: ../app/actions/filters-actions.c:239
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "Inc_respature..."
 
-#: ../app/actions/filters-actions.c:249
+#: ../app/actions/filters-actions.c:244
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "_Semi-appiattisci..."
 
-#: ../app/actions/filters-actions.c:254
+#: ../app/actions/filters-actions.c:249
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "_Spostamento..."
 
-#: ../app/actions/filters-actions.c:259
+#: ../app/actions/filters-actions.c:254
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "_Chiarore sfumato..."
 
+#: ../app/actions/filters-actions.c:259
+msgctxt "filters-action"
+msgid "_Stretch Contrast..."
+msgstr "Ampliamento contra_sto..."
+
 #: ../app/actions/filters-actions.c:264
+msgctxt "filters-action"
+msgid "_Stretch Contrast HSV..."
+msgstr "Ampliamento contra_sto HSV..."
+
+#: ../app/actions/filters-actions.c:269
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "So_glia alfa..."
 
-#: ../app/actions/filters-actions.c:269
+#: ../app/actions/filters-actions.c:274
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "Pias_trella senza giunte..."
 
-#: ../app/actions/filters-actions.c:274
+#: ../app/actions/filters-actions.c:279
 msgctxt "filters-action"
 msgid "_Unsharp Mask..."
 msgstr "Maschera di _contrasto..."
 
-#: ../app/actions/filters-actions.c:279
+#: ../app/actions/filters-actions.c:284
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Vignettatura..."
 
-#: ../app/actions/filters-actions.c:284
+#: ../app/actions/filters-actions.c:289
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Onde..."
 
-#: ../app/actions/filters-actions.c:289
+#: ../app/actions/filters-actions.c:294
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "_Vortice e pizzico..."
@@ -5025,7 +5053,7 @@ msgstr "Apri file di testo (UTF-8)"
 #: ../app/actions/text-editor-commands.c:144
 #: ../app/actions/text-tool-commands.c:227 ../app/config/gimpconfig-file.c:71
 #: ../app/core/gimpbrushgenerated-load.c:72 ../app/core/gimpbrush-load.c:142
-#: ../app/core/gimpbrush-load.c:427 ../app/core/gimpbrushpipe-load.c:80
+#: ../app/core/gimpbrush-load.c:444 ../app/core/gimpbrushpipe-load.c:80
 #: ../app/core/gimpcurve-load.c:55 ../app/core/gimpgradient-load.c:64
 #: ../app/core/gimppalette-import.c:515 ../app/core/gimppalette-load.c:66
 #: ../app/core/gimppattern-load.c:81 ../app/tools/gimpcurvestool.c:609
@@ -8074,8 +8102,8 @@ msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgstr ""
 "Errore fatale di analisi nel file pennello '%s': versione sconosciuta %d."
 
-#: ../app/core/gimpbrush-load.c:273 ../app/core/gimpbrush-load.c:394
-#: ../app/core/gimpbrush-load.c:729
+#: ../app/core/gimpbrush-load.c:273 ../app/core/gimpbrush-load.c:411
+#: ../app/core/gimpbrush-load.c:746
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr ""
@@ -8087,7 +8115,19 @@ msgstr ""
 msgid "Unnamed"
 msgstr "Senza nome"
 
-#: ../app/core/gimpbrush-load.c:383
+#: ../app/core/gimpbrush-load.c:355
+#, c-format
+msgid ""
+"Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
+"GIMP brushes must be GRAY or RGBA.\n"
+"This might be an obsolete GIMP brush file, try loading it as image and save "
+"it again."
+msgstr ""
+"Errore fatale di analisi nel file pennello \"%s\": profondità pennello non supportata %d\n"
+"I pennelli di GIMP devono essere grigi o RGBA.\n"
+"Potrebbe trattarsi di un file pennello obsoleto di GIMP; provare a caricarlo come immagine e salvarlo nuovamente."
+
+#: ../app/core/gimpbrush-load.c:400
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -8097,7 +8137,7 @@ msgstr ""
 "supportata %d\n"
 "I pennelli di GIMP devono essere grigi o RGBA."
 
-#: ../app/core/gimpbrush-load.c:455 ../app/core/gimpbrush-load.c:857
+#: ../app/core/gimpbrush-load.c:472 ../app/core/gimpbrush-load.c:874
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': unable to decode abr format version %d."
@@ -8105,7 +8145,7 @@ msgstr ""
 "Errore fatale di analisi del file pennello '%s': impossibile decodificare "
 "versione formato abr %d."
 
-#: ../app/core/gimpbrush-load.c:622
+#: ../app/core/gimpbrush-load.c:639
 #, c-format
 msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
 msgstr ""
@@ -8113,7 +8153,6 @@ msgstr ""
 "sono supportati."
 
 #: ../app/core/gimpbrushpipe-load.c:112 ../app/core/gimpbrushpipe-load.c:132
-#: ../app/core/gimpbrushpipe-load.c:223
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "Errore fatale di analisi nel file pennello '%s': il file è errato."
@@ -9548,7 +9587,7 @@ msgstr "Creazione cartella '%s'..."
 msgid "Cannot create folder '%s': %s"
 msgstr "Impossibile creare la cartella '%s': %s"
 
-#: ../app/dialogs/about-dialog.c:115 ../app/gui/gui.c:495
+#: ../app/dialogs/about-dialog.c:115
 msgid "About GIMP"
 msgstr "Informazioni su GIMP"
 
@@ -11129,32 +11168,58 @@ msgstr "Risoluzione _Y:"
 msgid "pixels/%a"
 msgstr "pixel/%a"
 
-#: ../app/dialogs/quit-dialog.c:105
+#: ../app/dialogs/quit-dialog.c:145
 msgid "Quit GIMP"
 msgstr "Esci da GIMP"
 
-#: ../app/dialogs/quit-dialog.c:105
+#: ../app/dialogs/quit-dialog.c:145
 msgid "Close All Images"
 msgstr "Chiudi tutte le immagini"
 
-#: ../app/dialogs/quit-dialog.c:164
+#: ../app/dialogs/quit-dialog.c:213
 msgid "If you quit GIMP now, these changes will be lost."
 msgstr "Se si esce da GIMP ora, queste modifiche saranno perse."
 
-#: ../app/dialogs/quit-dialog.c:167
+#: ../app/dialogs/quit-dialog.c:216
 msgid "If you close these images now, changes will be lost."
 msgstr "Se ora si chiudono queste immagini, verranno perse le modifiche."
 
-#: ../app/dialogs/quit-dialog.c:214
+#: ../app/dialogs/quit-dialog.c:301
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
 msgstr[0] "C'è un'immagine con modifiche non salvate:"
 msgstr[1] "Ci sono %d immagini con modifiche non salvate:"
 
-#: ../app/dialogs/quit-dialog.c:236
+#: ../app/dialogs/quit-dialog.c:312
+#, c-format
+msgid "Press %s to quit."
+msgstr "Premere %s per uscire."
+
+#: ../app/dialogs/quit-dialog.c:315
+#, c-format
+msgid "Press %s to close all images."
+msgstr "Premere %s per chiudere tutte le immagini."
+
+#: ../app/dialogs/quit-dialog.c:331
+#, c-format
+msgid "Press %s to discard all changes and quit."
+msgstr "Premere %s per abbandonare tutti i cambiamenti e uscire."
+
+#: ../app/dialogs/quit-dialog.c:334
+#, c-format
+msgid "Press %s to discard all changes and close all images."
+msgstr "Premere %s per abbandonare tutti i cambiamenti e chiudere tutte le immagini."
+
+#: ../app/dialogs/quit-dialog.c:342
+#: ../app/display/gimpdisplayshell-close.c:180
 msgid "_Discard Changes"
 msgstr "Abban_dona le modifiche"
+
+#: ../app/dialogs/quit-dialog.c:424
+#, c-format
+msgid "Exported to %s"
+msgstr "Esportato su %s"
 
 #: ../app/dialogs/resize-dialog.c:120
 msgid "Canvas Size"
@@ -11427,22 +11492,23 @@ msgstr "Naviga nella finestra immagine"
 msgid "Drop image files here to open them"
 msgstr "Trascina e rilascia qui i file immagine per aprirli"
 
-#: ../app/display/gimpdisplayshell-close.c:155
-#: ../app/display/gimpdisplayshell-close.c:228
+#: ../app/display/gimpdisplayshell-close.c:169
+#: ../app/display/gimpdisplayshell-close.c:269
 #, c-format
 msgid "Close %s"
 msgstr "Chiudere %s"
 
-#: ../app/display/gimpdisplayshell-close.c:166
-msgid "Close _without Saving"
-msgstr "Chiudi sen_za salvare"
+#: ../app/display/gimpdisplayshell-close.c:217
+#, c-format
+msgid "Press %s to discard all changes and close the image."
+msgstr "Premere %s per abbandonare tutti i cambiamenti e chiudere l'immagine."
 
-#: ../app/display/gimpdisplayshell-close.c:236
+#: ../app/display/gimpdisplayshell-close.c:277
 #, c-format
 msgid "Save the changes to image '%s' before closing?"
-msgstr "Prima di chiudere, salvare le modifiche all'immagine '%s'?"
+msgstr "Prima di chiudere, salvare le modifiche all'immagine \"%s\"?"
 
-#: ../app/display/gimpdisplayshell-close.c:269
+#: ../app/display/gimpdisplayshell-close.c:310
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
 msgid_plural ""
@@ -11454,7 +11520,7 @@ msgstr[1] ""
 "Se non si salva l'immagine si perderanno le modifiche effettuate nelle "
 "ultime %d ore."
 
-#: ../app/display/gimpdisplayshell-close.c:280
+#: ../app/display/gimpdisplayshell-close.c:321
 #, c-format
 msgid ""
 "If you don't save the image, changes from the last hour and %d minute will "
@@ -11469,7 +11535,7 @@ msgstr[1] ""
 "Se non si salva l'immagine si perderanno le modifiche effettuate nell'ultima "
 "ora e %d minuti."
 
-#: ../app/display/gimpdisplayshell-close.c:292
+#: ../app/display/gimpdisplayshell-close.c:333
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
 msgid_plural ""
@@ -11481,7 +11547,7 @@ msgstr[1] ""
 "Se non si salva l'immagine si perderanno le modifiche effettuate negli "
 "ultimi %d minuti."
 
-#: ../app/display/gimpdisplayshell-close.c:310
+#: ../app/display/gimpdisplayshell-close.c:354
 #, c-format
 msgid "The image has been exported to '%s'."
 msgstr "L'immagine è stata esportata su \"%s\"."
@@ -12418,117 +12484,127 @@ msgstr "Autoritaglio immagine"
 msgid "Autocrop layer"
 msgstr "Autoritaglio livello"
 
-#: ../app/pdb/plug-in-compat-cmds.c:315
+#: ../app/pdb/plug-in-compat-cmds.c:285
+msgctxt "undo-type"
+msgid "Stretch Contrast HSV"
+msgstr "Ampliamento contrasto HSV"
+
+#: ../app/pdb/plug-in-compat-cmds.c:323
+msgctxt "undo-type"
+msgid "Stretch Contrast"
+msgstr "Ampliamento contrasto"
+
+#: ../app/pdb/plug-in-compat-cmds.c:391
 msgctxt "undo-type"
 msgid "Channel Mixer"
 msgstr "Mixer dei canali"
 
-#: ../app/pdb/plug-in-compat-cmds.c:360
+#: ../app/pdb/plug-in-compat-cmds.c:436
 msgctxt "undo-type"
 msgid "Color to Alpha"
 msgstr "Colore a alfa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:423
+#: ../app/pdb/plug-in-compat-cmds.c:499
 msgctxt "undo-type"
 msgid "Cubism"
 msgstr "Cubismo"
 
-#: ../app/pdb/plug-in-compat-cmds.c:477
+#: ../app/pdb/plug-in-compat-cmds.c:553
 msgctxt "undo-type"
 msgid "Noise HSV"
 msgstr "Disturbo HSV"
 
-#: ../app/pdb/plug-in-compat-cmds.c:515
+#: ../app/pdb/plug-in-compat-cmds.c:591
 msgctxt "undo-type"
 msgid "Laplace"
 msgstr "Laplace"
 
-#: ../app/pdb/plug-in-compat-cmds.c:587
+#: ../app/pdb/plug-in-compat-cmds.c:663
 msgctxt "undo-type"
 msgid "Lens Distortion"
 msgstr "Distorsione lente"
 
-#: ../app/pdb/plug-in-compat-cmds.c:626
+#: ../app/pdb/plug-in-compat-cmds.c:702
 msgctxt "undo-type"
 msgid "Tile Seamless"
 msgstr "Piastrella senza giunte"
 
-#: ../app/pdb/plug-in-compat-cmds.c:701 ../app/pdb/plug-in-compat-cmds.c:780
+#: ../app/pdb/plug-in-compat-cmds.c:777 ../app/pdb/plug-in-compat-cmds.c:856
 msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Sfocatura movimento"
 
-#: ../app/pdb/plug-in-compat-cmds.c:882
+#: ../app/pdb/plug-in-compat-cmds.c:958
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "Mosaico"
 
-#: ../app/pdb/plug-in-compat-cmds.c:923 ../app/pdb/plug-in-compat-cmds.c:967
+#: ../app/pdb/plug-in-compat-cmds.c:999 ../app/pdb/plug-in-compat-cmds.c:1043
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Effetto pixel"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1019
+#: ../app/pdb/plug-in-compat-cmds.c:1095
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "Plasma"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1072
+#: ../app/pdb/plug-in-compat-cmds.c:1148
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Coordinate polari"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1113
+#: ../app/pdb/plug-in-compat-cmds.c:1189
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "Rimozione occhi rossi"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1167
+#: ../app/pdb/plug-in-compat-cmds.c:1243
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Casuale"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1221
+#: ../app/pdb/plug-in-compat-cmds.c:1297
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Prelievo casuale"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1275
+#: ../app/pdb/plug-in-compat-cmds.c:1351
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Macchia"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1320
+#: ../app/pdb/plug-in-compat-cmds.c:1396
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Semi-appiattisci"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1364
+#: ../app/pdb/plug-in-compat-cmds.c:1440
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Spostamento"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1409
+#: ../app/pdb/plug-in-compat-cmds.c:1485
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Dispersione"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1451
+#: ../app/pdb/plug-in-compat-cmds.c:1527
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Soglia alfa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1489
+#: ../app/pdb/plug-in-compat-cmds.c:1565
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Inverti valore"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1553
+#: ../app/pdb/plug-in-compat-cmds.c:1629
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Onde"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1600
+#: ../app/pdb/plug-in-compat-cmds.c:1676
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Vortice e pizzico"
@@ -13920,7 +13996,7 @@ msgstr "Strumento GEGL: usa una qualsiasi operazione GEGL"
 msgid "_GEGL Operation..."
 msgstr "Operazione _GEGL... "
 
-#: ../app/tools/gimpgegltool.c:371
+#: ../app/tools/gimpgegltool.c:372
 msgid "Select an operation from the list above"
 msgstr "Seleziona un'operazione dall'elenco sovrastante"
 
