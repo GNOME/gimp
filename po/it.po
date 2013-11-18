@@ -30,8 +30,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-25 16:43+0200\n"
-"PO-Revision-Date: 2013-10-25 17:36+0200\n"
+"POT-Creation-Date: 2013-11-18 18:33+0100\n"
+"PO-Revision-Date: 2013-11-18 18:33+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: \n"
@@ -2387,8 +2387,8 @@ msgstr "Salva quest'immagine e chiudi la sua finestra"
 
 #: ../app/actions/file-actions.c:146
 msgctxt "file-action"
-msgid "Export to"
-msgstr "Esporta su"
+msgid "Export"
+msgstr "Esporta"
 
 #: ../app/actions/file-actions.c:147
 msgctxt "file-action"
@@ -2408,8 +2408,8 @@ msgstr ""
 
 #: ../app/actions/file-actions.c:158
 msgctxt "file-action"
-msgid "Export..."
-msgstr "Esporta..."
+msgid "Export As..."
+msgstr "Esporta come..."
 
 #: ../app/actions/file-actions.c:159
 msgctxt "file-action"
@@ -2427,8 +2427,8 @@ msgid "Over_write %s"
 msgstr "So_vrascrivi %s"
 
 #: ../app/actions/file-actions.c:306
-msgid "Export to"
-msgstr "Esporta su"
+msgid "Export"
+msgstr "Esporta"
 
 #: ../app/actions/file-commands.c:119 ../app/actions/file-commands.c:496
 #: ../app/dialogs/file-open-dialog.c:77
@@ -4618,7 +4618,7 @@ msgstr "Apri file di testo (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:143
 #: ../app/actions/text-tool-commands.c:226 ../app/config/gimpconfig-file.c:58
-#: ../app/core/gimpbrush-load.c:142 ../app/core/gimpbrush-load.c:426
+#: ../app/core/gimpbrush-load.c:142 ../app/core/gimpbrush-load.c:443
 #: ../app/core/gimpbrushgenerated-load.c:73
 #: ../app/core/gimpbrushpipe-load.c:81 ../app/core/gimpcurve-load.c:54
 #: ../app/core/gimpgradient-load.c:63 ../app/core/gimppalette-load.c:77
@@ -7533,8 +7533,8 @@ msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgstr ""
 "Errore fatale di analisi nel file pennello '%s': versione sconosciuta %d."
 
-#: ../app/core/gimpbrush-load.c:273 ../app/core/gimpbrush-load.c:393
-#: ../app/core/gimpbrush-load.c:727
+#: ../app/core/gimpbrush-load.c:273 ../app/core/gimpbrush-load.c:410
+#: ../app/core/gimpbrush-load.c:744
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr ""
@@ -7552,7 +7552,21 @@ msgstr "Stringa UTF-8 non valida nel file pennello '%s'."
 msgid "Unnamed"
 msgstr "Senza nome"
 
-#: ../app/core/gimpbrush-load.c:382
+#: ../app/core/gimpbrush-load.c:354
+#, c-format
+msgid ""
+"Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
+"GIMP brushes must be GRAY or RGBA.\n"
+"This might be an obsolete GIMP brush file, try loading it as image and save "
+"it again."
+msgstr ""
+"Errore fatale di analisi nel file pennello \"%s\": profondità pennello non "
+"supportata %d\n"
+"I pennelli di GIMP devono essere grigi o RGBA.\n"
+"Potrebbe trattarsi di un file pennello obsoleto di GIMP; provare a caricarlo "
+"come immagine e salvarlo nuovamente."
+
+#: ../app/core/gimpbrush-load.c:399
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -7562,7 +7576,7 @@ msgstr ""
 "supportata %d\n"
 "I pennelli di GIMP devono essere grigi o RGBA."
 
-#: ../app/core/gimpbrush-load.c:454 ../app/core/gimpbrush-load.c:854
+#: ../app/core/gimpbrush-load.c:471 ../app/core/gimpbrush-load.c:871
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': unable to decode abr format version %d."
@@ -7570,7 +7584,7 @@ msgstr ""
 "Errore fatale di analisi del file pennello '%s': impossibile decodificare "
 "versione formato abr %d."
 
-#: ../app/core/gimpbrush-load.c:621
+#: ../app/core/gimpbrush-load.c:638
 #, c-format
 msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
 msgstr ""
@@ -7644,7 +7658,6 @@ msgid "Brush Angle"
 msgstr "Angolo pennello"
 
 #: ../app/core/gimpbrushpipe-load.c:113 ../app/core/gimpbrushpipe-load.c:133
-#: ../app/core/gimpbrushpipe-load.c:224
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "Errore fatale di analisi nel file pennello '%s': il file è errato."
@@ -8927,7 +8940,7 @@ msgctxt "plural"
 msgid "percent"
 msgstr "percento"
 
-#: ../app/dialogs/about-dialog.c:114 ../app/gui/gui.c:493
+#: ../app/dialogs/about-dialog.c:114
 msgid "About GIMP"
 msgstr "Informazioni su GIMP"
 
@@ -10390,32 +10403,59 @@ msgstr "Risoluzione _Y:"
 msgid "pixels/%a"
 msgstr "pixel/%a"
 
-#: ../app/dialogs/quit-dialog.c:104
+#: ../app/dialogs/quit-dialog.c:144
 msgid "Quit GIMP"
 msgstr "Esci da GIMP"
 
-#: ../app/dialogs/quit-dialog.c:104
+#: ../app/dialogs/quit-dialog.c:144
 msgid "Close All Images"
 msgstr "Chiudi tutte le immagini"
 
-#: ../app/dialogs/quit-dialog.c:163
+#: ../app/dialogs/quit-dialog.c:212
 msgid "If you quit GIMP now, these changes will be lost."
 msgstr "Se si esce da GIMP ora, queste modifiche saranno perse."
 
-#: ../app/dialogs/quit-dialog.c:166
+#: ../app/dialogs/quit-dialog.c:215
 msgid "If you close these images now, changes will be lost."
 msgstr "Se ora si chiudono queste immagini, verranno perse le modifiche."
 
-#: ../app/dialogs/quit-dialog.c:213
+#: ../app/dialogs/quit-dialog.c:300
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
 msgstr[0] "C'è un'immagine con modifiche non salvate:"
 msgstr[1] "Ci sono %d immagini con modifiche non salvate:"
 
-#: ../app/dialogs/quit-dialog.c:235
+#: ../app/dialogs/quit-dialog.c:311
+#, c-format
+msgid "Press %s to quit."
+msgstr "Premere %s per uscire."
+
+#: ../app/dialogs/quit-dialog.c:314
+#, c-format
+msgid "Press %s to close all images."
+msgstr "Premere %s per chiudere tutte le immagini."
+
+#: ../app/dialogs/quit-dialog.c:330
+#, c-format
+msgid "Press %s to discard all changes and quit."
+msgstr "Premere %s per abbandonare tutti i cambiamenti e uscire."
+
+#: ../app/dialogs/quit-dialog.c:333
+#, c-format
+msgid "Press %s to discard all changes and close all images."
+msgstr ""
+"Premere %s per abbandonare tutti i cambiamenti e chiudere tutte le immagini."
+
+#: ../app/dialogs/quit-dialog.c:341
+#: ../app/display/gimpdisplayshell-close.c:181
 msgid "_Discard Changes"
 msgstr "Abban_dona le modifiche"
+
+#: ../app/dialogs/quit-dialog.c:423
+#, c-format
+msgid "Exported to %s"
+msgstr "Esportato su %s"
 
 #: ../app/dialogs/resize-dialog.c:119
 msgid "Canvas Size"
@@ -10684,22 +10724,23 @@ msgstr "Naviga nella finestra immagine"
 msgid "Drop image files here to open them"
 msgstr "Trascina e rilascia qui i file immagine per aprirli"
 
-#: ../app/display/gimpdisplayshell-close.c:156
-#: ../app/display/gimpdisplayshell-close.c:229
+#: ../app/display/gimpdisplayshell-close.c:170
+#: ../app/display/gimpdisplayshell-close.c:270
 #, c-format
 msgid "Close %s"
 msgstr "Chiudere %s"
 
-#: ../app/display/gimpdisplayshell-close.c:167
-msgid "Close _without Saving"
-msgstr "Chiudi sen_za salvare"
+#: ../app/display/gimpdisplayshell-close.c:218
+#, c-format
+msgid "Press %s to discard all changes and close the image."
+msgstr "Premere %s per abbandonare tutti i cambiamenti e chiudere l'immagine."
 
-#: ../app/display/gimpdisplayshell-close.c:237
+#: ../app/display/gimpdisplayshell-close.c:278
 #, c-format
 msgid "Save the changes to image '%s' before closing?"
 msgstr "Prima di chiudere, salvare le modifiche all'immagine '%s'?"
 
-#: ../app/display/gimpdisplayshell-close.c:270
+#: ../app/display/gimpdisplayshell-close.c:311
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
 msgid_plural ""
@@ -10711,7 +10752,7 @@ msgstr[1] ""
 "Se non si salva l'immagine si perderanno le modifiche effettuate nelle "
 "ultime %d ore."
 
-#: ../app/display/gimpdisplayshell-close.c:281
+#: ../app/display/gimpdisplayshell-close.c:322
 #, c-format
 msgid ""
 "If you don't save the image, changes from the last hour and %d minute will "
@@ -10726,7 +10767,7 @@ msgstr[1] ""
 "Se non si salva l'immagine si perderanno le modifiche effettuate nell'ultima "
 "ora e %d minuti."
 
-#: ../app/display/gimpdisplayshell-close.c:293
+#: ../app/display/gimpdisplayshell-close.c:334
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
 msgid_plural ""
@@ -10738,7 +10779,7 @@ msgstr[1] ""
 "Se non si salva l'immagine si perderanno le modifiche effettuate negli "
 "ultimi %d minuti."
 
-#: ../app/display/gimpdisplayshell-close.c:311
+#: ../app/display/gimpdisplayshell-close.c:355
 #, c-format
 msgid "The image has been exported to '%s'."
 msgstr "L'immagine è stata esportata su \"%s\"."
@@ -11742,7 +11783,9 @@ msgstr "Livello testo vuoto"
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
-msgstr "Il testo non può essere renderizzato. È probabilmente troppo grande. Accorciarlo o usare un carattere più piccolo."
+msgstr ""
+"Il testo non può essere renderizzato. È probabilmente troppo grande. "
+"Accorciarlo o usare un carattere più piccolo."
 
 #: ../app/text/gimptextlayer-xcf.c:76
 #, c-format
@@ -11764,7 +11807,9 @@ msgstr ""
 msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
-msgstr "La nuova disposizione del testo non può essere generata. Molto probabilmente la dimensione dei caratteri è troppo grande."
+msgstr ""
+"La nuova disposizione del testo non può essere generata. Molto probabilmente "
+"la dimensione dei caratteri è troppo grande."
 
 #: ../app/text/text-enums.c:23
 msgctxt "text-box-mode"
@@ -16108,6 +16153,41 @@ msgstr "tondo"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "fuzzy"
+
+#: ../desktop/gimp.appdata.xml.in.h:1
+msgid ""
+"GIMP is an acronym for GNU Image Manipulation Program. It is a freely "
+"distributed program for such tasks as photo retouching, image composition "
+"and image authoring."
+msgstr ""
+"GIMP è un acronimo di GNU Image Manipulation Program. È un programma "
+"distribuito liberamente per svolgere compiti come il fotoritocco, la "
+"composizione e la creazione di immagini."
+
+#: ../desktop/gimp.appdata.xml.in.h:2
+msgid ""
+"It has many capabilities. It can be used as a simple paint program, an "
+"expert quality photo retouching program, an online batch processing system, "
+"a mass production image renderer, an image format converter, etc."
+msgstr ""
+"Ha molte capacità. Può essere usato come semplice programma di disegno, come "
+"programma di fotoritocco avanzato, sistema di elaborazione automatica on-"
+"line, renderizzatore in serie di immagini, convertitore di formato immagine, "
+"ecc."
+
+#: ../desktop/gimp.appdata.xml.in.h:3
+msgid ""
+"GIMP is expandable and extensible. It is designed to be augmented with plug-"
+"ins and extensions to do just about anything. The advanced scripting "
+"interface allows everything from the simplest task to the most complex image "
+"manipulation procedures to be easily scripted. GIMP is also available for "
+"Microsoft Windows and OS X."
+msgstr ""
+"GIMP è espandibile ed estensibile. È stato progettato per essere ampliato "
+"con plug-in ed estensioni per fare praticamente qualsiasi cosa. "
+"L'interfaccia avanzata di scripting semplifica la conversione in procedura "
+"dal compito più semplice fino all'elaborazione di immagini più complessa. "
+"GIMP è disponibile anche per Microsoft Windows ed OS X."
 
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "Image Editor"
