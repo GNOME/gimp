@@ -39,7 +39,6 @@
 		<dep package="xz"/>
 		<dep package="librsvg"/>
 		<dep package="libexif"/>
-		<dep package="libmng"/>
 		<dep package="iso-codes"/>
 		<dep package="libwmf"/>
 		<dep package="ghostscript"/>
@@ -47,6 +46,7 @@
 	</dependencies>
 	<suggests>
 		<dep package="webkitgtk"/>
+		<dep package="libmng"/>
 	</suggests>
 </metamodule>
 
