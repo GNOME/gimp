@@ -15,7 +15,7 @@
   </meta>
 
   <!-- Copy in .plist file -->
-  <plist>${project}/info-2.8-python.plist</plist>
+  <plist>${project}/info-2.8.8-python.plist</plist>
 
   <binary>
     ${prefix}/lib/libgtk-quartz-${gtkversion}.0.dylib
@@ -108,9 +108,14 @@
   <binary>${prefix}/lib/${gtkdir}/${pkg:${gtk}:gtk_binary_version}/printbackends/*.so</binary>
   <binary>${prefix}/lib/${gtkdir}/${pkg:${gtk}:gtk_binary_version}/immodules/*.so</binary>
 
-  <!-- Copy in all gdk-pifbuf modules -->
+  <!-- Copy in gdk-pifbuf modules and loader file-->
   <binary>
-    ${prefix}/lib/gdk-pixbuf-2.0/${pkg:gtk+-2.0:gtk_binary_version}/loaders/*.so
+    ${prefix}/lib/gdk-pixbuf-2.0/${pkg:gdk-pixbuf-2.0:gdk_pixbuf_binary_version}/
+  </binary>
+
+  <!-- Copy in pango modules -->
+  <binary>
+    ${prefix}/lib/pango/${pkg:pango:pango_module_version}/modules/*.so
   </binary>
 
   <!-- Translation filenames-->
@@ -118,15 +123,23 @@
 
   <!-- Copy in mime data -->
   <!-- Used for opening up help in browser -->
-  <data dest="${bundle}/Contents/Resources/share/applications/gimp.desktop">
+  <!--<data dest="${bundle}/Contents/Resources/share/applications/gimp.desktop">
     ${project}/custom/gimp.desktop
-  </data>
-  <data dest="${bundle}/Contents/Resources/share/applications/gimp.desktop">
+  </data>-->
+  <data>${prefix}/share/applications/gimp.desktop</data>
+  <data dest="${bundle}/Contents/Resources/share/applications/open.desktop">
     ${project}/custom/open.desktop
   </data>
-  <data dest="${bundle}/Contents/Resources/share/applications/gimp.desktop">
+  <data dest="${bundle}/Contents/Resources/share/applications/mimeinfo.cache">
     ${project}/custom/mimeinfo.cache
   </data>
+
+  <data>
+    ${prefix}/share/mime/*
+  </data>
+ <!--<data>
+    ${prefix}/share/mime-info/*
+  </data>-->
 
   <!-- Copy in dbus Launch session support -->
   <data>${prefix}/etc/dbus-1/system.conf</data>
@@ -135,7 +148,8 @@
   <data dest="${bundle}/Contents/Resources/etc/dbus-1/session.conf">
     ${project}/custom/session.conf
   </data>
-  <binary>${prefix}/bin/dbus-launch</binary>
+  <!--<binary>${prefix}/bin/dbus-</binary>-->
+  <binary>${prefix}/bin/dbus-*</binary>
 
   <!-- Copy in gvfs file support -->
   <binary>${prefix}/bin/gvfs-*</binary>
@@ -145,6 +159,7 @@
 
   <!-- Copy in fontconfig data -->
   <data>${prefix}/etc/fonts/conf.d/*</data>
+  <data>${prefix}/etc/fonts/fonts.conf</data>
 
   <!-- Gimp data -->
   <data>${prefix}/etc/gimp/2.0/*</data>
@@ -165,14 +180,14 @@
   </data>
 
   <!-- Copy in better defaults -->
-  <data dest="${bundle}/Contents/Resources/etc/gimp/2.0/gimprc">
+  <!--<data dest="${bundle}/Contents/Resources/etc/gimp/2.0/gimprc">
     ${project}/custom/gimprc
-  </data>
+  </data>-->
 
   <!-- Copy in better fontconfig defaults -->
-  <data dest="${bundle}/Contents/Resources/etc/fonts/fonts.conf">
+  <!--<data dest="${bundle}/Contents/Resources/etc/fonts/fonts.conf">
     ${project}/custom/fonts.conf
-  </data>
+  </data>-->
 
   <!-- Copy in icons -->
   <data dest="${bundle}/Contents/Resources">${project}/gimp.icns</data>

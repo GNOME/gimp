@@ -18,6 +18,8 @@
 	      href="http://ftp.gnome.org/pub/gnome/sources/"/>
   <repository type="tarball" name="ftp.gnu.org"
               href="ftp://ftp.gnu.org/gnu/"/>
+  <repository type="tarball" name="gnupg"
+              href="ftp://ftp.gnupg.org/"/>
   <repository type="tarball" name="intltool"
 	       href="http://launchpad.net/intltool/trunk/"/>
   <repository type="tarball" name="fontconfig"
@@ -35,7 +37,7 @@
   <repository type="tarball" name="ftp.gtk.org" 
 	      href="ftp://ftp.gtk.org/pub/"/>
   <repository type="tarball" name="gimp"
-              href="ftp://ftp.gimp.org/pub/gimp/"/>
+              href="ftp://ftp.gimp.org/pub/"/>
   <repository type="tarball" name="umfpack"
               href="http://www.cise.ufl.edu/research/sparse/SuiteSparse/"/>
   <repository type="tarball" name="tango.freedesktop.org"
@@ -65,12 +67,12 @@
               href="http://www.lysator.liu.se/~nisse/archive/"/>
   <repository type="tarball" name="gmp"
               href="http://mirror.anl.gov/pub/gnu/gmp/"/>
-
   <repository type="tarball" name="libproxy"
               href="http://mirrors.vbi.vt.edu/mirrors/linux/slackware/slackware-current/source/l/libproxy/"/>
-
   <repository type="tarball" name="nasm"
               href="http://www.nasm.us/pub/nasm/releasebuilds/"/>
+  <repository type="tarball" name="curl"
+              href="http://curl.haxx.se/download/"/>
 
   <repository type="tarball" name="sqlite"
               href="http://www.sqlite.org/2013/"/>
@@ -192,10 +194,10 @@
 
   <autotools id="fontconfig"
              autogen-sh="configure"
-	     autogenargs="--disable-docs">
+	     autogenargs="--disable-docs --with-add-fonts=~/Library/Fonts,/Library/Fonts,/System/Library/Fonts">
     <branch repo="fontconfig"
-            version="2.10.95"
-            module="fontconfig-2.10.95.tar.bz2"/>
+            version="2.11.0"
+            module="fontconfig-2.11.0.tar.bz2"/>
     <dependencies>
       <dep package="freetype"/>
       <dep package="libxml2"/>
@@ -501,7 +503,11 @@
     </dependencies>
   </autotools>
 
-  <autotools id="gdk-pixbuf" autogen-sh="configure" autogenargs="">
+<!-- with-included-loaders=yes disable-modules enable-gio-sniffing=no -->
+
+  <autotools id="gdk-pixbuf"
+	     autogen-sh="configure"
+	     autogenargs="">
     <branch module="gdk-pixbuf/2.30/gdk-pixbuf-2.30.1.tar.xz"
             version="2.30.1"
             hash="sha256:a3263b1e15668c009313bf04ab67420bec9f2b167c402a71a486307cadee8d30"/>
@@ -558,9 +564,9 @@
   </autotools>
 
   <autotools id="libsecret" autogen-sh="configure" autogenargs="">
-    <branch module="libsecret/0.15/libsecret-0.15.tar.xz"
-            version="0.15.0"
-            hash="sha256:33e728b843efbe099483376ff5a3469260ee4b6ce035c7730909ac3793cb0fb8"/>
+    <branch module="libsecret/0.16/libsecret-0.16.tar.xz"
+            version="0.16.0"
+            hash="sha256:b859406c490a2011b35f5940235304315b343f2efd554800285f24b95e14f218"/>
     <dependencies>
       <dep package="sqlite"/>
       <dep package="gobject-introspection"/>
@@ -584,9 +590,9 @@
 
   <autotools id="gnutls"
              autogen-sh="configure"
-             autogenargs="">
-    <branch module="gnutls/v3.2/gnutls-3.2.2.tar.xz"
-            version="3.2.2"
+             autogenargs="--disable-cxx">
+    <branch module="gnutls/v3.2/gnutls-3.2.6.tar.xz"
+            version="3.2.6"
             repo="gnutls"/>
     <dependencies>
       <dep package="nettle"/>
@@ -594,22 +600,32 @@
     </dependencies>
   </autotools>
 
-  <autotools id="libgcrypt"
+  <autotools id="curl"
              autogen-sh="configure"
-             autogenargs="--disable-asm">
-    <branch module="libgcrypt/libgcrypt-1.5.3.tar.bz2"
-            version="1.5.3"
-            repo="gnutls"/>
+             autogenargs="">
+    <branch module="curl-7.33.0.tar.gz"
+            version="7.33.0"
+            repo="curl"/>
     <dependencies>
-      <dep package="libgpg-error"/>
+      <dep package="gnutls"/>
+    </dependencies>
+  </autotools>
+
+<autotools id="libgcrypt"
+             autogen-sh="configure"
+             autogenargs="">
+    <branch module="gcrypt/libgcrypt/libgcrypt-1.5.3.tar.gz"
+            version="1.5.3"
+            repo="gnupg"/>
+    <dependencies>
     </dependencies>
   </autotools>
 
   <autotools id="libgpg-error"
              autogen-sh="configure"
              autogenargs="">
-    <branch module="libgpg-error/libgpg-error-1.11.tar.bz2"
-            version="1.11"
+    <branch module="libgpg-error/libgpg-error-1.12.tar.bz2"
+            version="1.12"
             repo="gnutls"/>
     <dependencies>
     </dependencies>
@@ -623,6 +639,18 @@
             repo="nettle"/>
     <dependencies>
       <dep package="gmp5"/>
+      <dep package="openssl"/>
+    </dependencies>
+  </autotools>
+
+  <autotools id="openssl"
+             autogen-sh="Configure"
+             autogenargs="--prefix=/Users/claytonwalker/gimp/10.9/inst zlib no-krb5 shared darwin64-x86_64-cc">
+    <branch module="openssl-1.0.1e.tar.gz"
+            version="1.0.1e"
+            repo="openssl"/>
+    <dependencies>
+      <dep package="zlib"/>
     </dependencies>
   </autotools>
 
@@ -804,8 +832,8 @@
   <autotools id="dbus"
              autogen-sh="configure"
              autogenargs="--disable-doxygen-docs --disable-xml-docs --disable-selinux --without-x --disable-tests --enable-verbose-mode --enable-asserts">
-    <branch module="dbus/dbus-1.7.4.tar.gz"
-            version="1.7.4"
+    <branch module="dbus/dbus-1.7.8.tar.gz"
+            version="1.7.8"
             repo="dbus">
     </branch>
     <dependencies>
@@ -866,9 +894,11 @@
 
   <!-- Python enabled gimp -->
 
-  <autotools id="gimp-2.8"
+  <!-- with-dbus -->
+
+<autotools id="gimp-2.8"
              autogen-sh="autogen.sh"
-             autogenargs="--without-x --enable-gtk-doc=no --with-dbus --without-wmf --enable-binreloc --without-gs"
+             autogenargs="--without-x --enable-gtk-doc=no --without-gvfs --without-dbus --without-wmf --enable-binreloc --without-gs"
              skip-autogen="never">
     <branch repo="git.gnome.org"
             module="gimp"
@@ -893,6 +923,38 @@
       <dep package="meta-gtk-osx-python"/>
       <dep package="tango-icon-theme"/>
       <dep package="gvfs"/>
+      <dep package="curl"/>
+      <dep package="gtk-mac-integration-python2"/>
+    </dependencies>
+  </autotools>
+
+  <autotools id="gimp-2.8.8"
+             autogen-sh="configure"
+             autogenargs="--without-x --enable-gtk-doc=no --without-gvfs --without-dbus --without-wmf --enable-binreloc --without-gs">
+    <branch module="gimp/v2.8/gimp-2.8.8.tar.bz2"
+	    repo="gimp"
+	    hash="md5:ef2547c3514a1096931637bd6250635a"
+            version="2.8.8"/>
+    <dependencies>
+      <dep package="libpng"/>
+      <dep package="libjpeg"/>
+      <dep package="libtiff"/>
+      <dep package="exif"/>
+      <dep package="dbus"/>
+      <dep package="dbus-glib"/>
+      <dep package="librsvg"/>
+      <dep package="lcms"/>
+      <dep package="fontconfig"/>
+      <dep package="gegl-0.2"/>
+      <dep package="glib"/>
+      <dep package="gtk+-2.24"/>
+      <dep package="poppler"/>
+      <dep package="iso-codes"/>
+      <dep package="jasper"/>
+      <dep package="meta-gtk-osx-python"/>
+      <dep package="tango-icon-theme"/>
+      <dep package="gvfs"/>
+      <dep package="curl"/>
       <dep package="gtk-mac-integration-python2"/>
     </dependencies>
   </autotools>
