@@ -159,10 +159,7 @@ layer_new_from_drawable_invoker (GimpProcedure      *procedure,
       else
         new_type = GIMP_TYPE_LAYER;
 
-      if (dest_image == gimp_item_get_image (GIMP_ITEM (drawable)))
-        new_item = gimp_item_duplicate (GIMP_ITEM (drawable), new_type);
-      else
-        new_item = gimp_item_convert (GIMP_ITEM (drawable), dest_image, new_type);
+      new_item = gimp_item_convert (GIMP_ITEM (drawable), dest_image, new_type);
 
       if (new_item)
         layer_copy = GIMP_LAYER (new_item);
