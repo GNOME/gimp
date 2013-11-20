@@ -562,6 +562,10 @@ file_open_from_command_line (Gimp        *gimp,
       GimpObject        *display = gimp_get_empty_display (gimp);
       GimpPDBStatusType  status;
 
+      /* show the progress in the last opened display, see bug #704896 */
+      if (! display)
+        display = gimp_context_get_display (gimp_get_user_context (gimp));
+
       if (display)
         g_object_add_weak_pointer (G_OBJECT (display), (gpointer) &display);
 
