@@ -605,7 +605,7 @@ run (const gchar      *name,
             {
               GimpMetadata *metadata;
 
-              metadata = gimp_image_metadata_save_prepare (image_ID,
+              metadata = gimp_image_metadata_save_prepare (orig_image_ID,
                                                            "image/png");
 
               if (metadata)
@@ -621,7 +621,7 @@ run (const gchar      *name,
                   if (! pngvals.save_thumbnail) flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
 
                   file = g_file_new_for_path (param[3].data.d_string);
-                  gimp_image_metadata_save_finish (image_ID,
+                  gimp_image_metadata_save_finish (orig_image_ID,
                                                    "image/png",
                                                    metadata, flags, file,
                                                    NULL);
