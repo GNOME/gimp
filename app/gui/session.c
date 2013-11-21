@@ -312,6 +312,15 @@ session_restore (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   gimp_dialog_factory_restore (gimp_dialog_factory_get_singleton ());
+
+  /* make sure GimpImageWindow acts upon hide-docks at the right time,
+   * see bug #678043.
+   */
+  if (GIMP_GUI_CONFIG (gimp->config)->single_window_mode &&
+      GIMP_GUI_CONFIG (gimp->config)->hide_docks)
+    {
+      g_object_notify (G_OBJECT (gimp->config), "hide-docks");
+    }
 }
 
 void
