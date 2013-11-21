@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-17 19:14+0100\n"
-"PO-Revision-Date: 2013-11-17 19:15+0100\n"
+"POT-Creation-Date: 2013-11-21 01:04+0100\n"
+"PO-Revision-Date: 2013-11-21 01:05+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -2388,8 +2388,8 @@ msgstr "Zapisuje ten obraz i zamyka jego okno"
 
 #: ../app/actions/file-actions.c:146
 msgctxt "file-action"
-msgid "Export to"
-msgstr "Eksportuj do"
+msgid "Export"
+msgstr "Wyeksportuj"
 
 #: ../app/actions/file-actions.c:147
 msgctxt "file-action"
@@ -2409,8 +2409,8 @@ msgstr ""
 
 #: ../app/actions/file-actions.c:158
 msgctxt "file-action"
-msgid "Export..."
-msgstr "Wyeksportuj..."
+msgid "Export As..."
+msgstr "Wyeksportuj jako..."
 
 #: ../app/actions/file-actions.c:159
 msgctxt "file-action"
@@ -2420,7 +2420,7 @@ msgstr "Eksportuje obraz do różnych formatów plików, takich jak PNG i JPEG"
 #: ../app/actions/file-actions.c:292
 #, c-format
 msgid "Export to %s"
-msgstr "Eksportowanie do %s"
+msgstr "Wyeksportuj do %s"
 
 #: ../app/actions/file-actions.c:298
 #, c-format
@@ -2428,8 +2428,8 @@ msgid "Over_write %s"
 msgstr "_Zastąp %s"
 
 #: ../app/actions/file-actions.c:306
-msgid "Export to"
-msgstr "Wyeksportuj do"
+msgid "Export"
+msgstr "Wyeksportuj"
 
 #: ../app/actions/file-commands.c:119 ../app/actions/file-commands.c:496
 #: ../app/dialogs/file-open-dialog.c:77
@@ -3268,7 +3268,7 @@ msgstr "Skalowanie obrazu"
 #: ../app/pdb/drawable-transform-cmds.c:783
 #: ../app/pdb/drawable-transform-cmds.c:872 ../app/pdb/image-cmds.c:406
 #: ../app/pdb/image-cmds.c:442 ../app/pdb/item-transform-cmds.c:524
-#: ../app/pdb/layer-cmds.c:333 ../app/pdb/layer-cmds.c:378
+#: ../app/pdb/layer-cmds.c:330 ../app/pdb/layer-cmds.c:375
 #: ../app/pdb/transform-tools-cmds.c:334 ../app/tools/gimpscaletool.c:118
 msgid "Scaling"
 msgstr "Skalowanie"
@@ -10910,12 +10910,12 @@ msgstr "Wtyczka %s nie może otworzyć obrazu"
 msgid "Image doesn't contain any layers"
 msgstr "Obraz nie zawiera żadnych warstw"
 
-#: ../app/file/file-open.c:586
+#: ../app/file/file-open.c:590
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Otwarcie pliku \"%s\" się nie powiodło: %s"
 
-#: ../app/file/file-open.c:696
+#: ../app/file/file-open.c:700
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -11530,7 +11530,7 @@ msgstr ""
 msgid "Free Select"
 msgstr "Zaznaczenie odręczne"
 
-#: ../app/pdb/layer-cmds.c:478 ../app/pdb/layer-cmds.c:516
+#: ../app/pdb/layer-cmds.c:475 ../app/pdb/layer-cmds.c:513
 msgid "Move Layer"
 msgstr "Przesunięcie warstwy"
 
