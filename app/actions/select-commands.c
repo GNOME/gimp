@@ -206,14 +206,17 @@ select_shrink_cmd_callback (GtkAction *action,
                                 G_OBJECT (image), "disconnect",
                                 select_shrink_callback, image);
 
-  button = gtk_check_button_new_with_mnemonic (_("_Shrink from image border"));
-
+  /* Edge lock button */
+  button = gtk_check_button_new_with_mnemonic (_("_Selected areas continue outside the image"));
+  g_object_set_data (G_OBJECT (dialog), "edge-lock-toggle", button);
+  gimp_help_set_help_data (button,
+                           _("When shrinking, act as if selected areas "
+                             "continued outside the image."),
+                           NULL);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                select_shrink_edge_lock);
   gtk_box_pack_start (GTK_BOX (GIMP_QUERY_BOX_VBOX (dialog)), button,
                       FALSE, FALSE, 0);
-
-  g_object_set_data (G_OBJECT (dialog), "edge-lock-toggle", button);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                ! select_shrink_edge_lock);
   gtk_widget_show (button);
 
   gtk_widget_show (dialog);
@@ -283,25 +286,22 @@ select_border_cmd_callback (GtkAction *action,
                       FALSE, FALSE, 0);
 
   g_object_set_data (G_OBJECT (dialog), "border-feather-toggle", button);
-
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 select_border_feather);
   gtk_widget_show (button);
 
-
   /* Edge lock button */
-  button = gtk_check_button_new_with_mnemonic (_("_Lock selection to image edges"));
-
-  gtk_box_pack_start (GTK_BOX (GIMP_QUERY_BOX_VBOX (dialog)), button,
-                      FALSE, FALSE, 0);
-
+  button = gtk_check_button_new_with_mnemonic (_("_Selected areas continue outside the image"));
   g_object_set_data (G_OBJECT (dialog), "edge-lock-toggle", button);
-
+  gimp_help_set_help_data (button,
+                           _("When bordering, act as if selected areas "
+                             "continued outside the image."),
+                           NULL);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 select_border_edge_lock);
+  gtk_box_pack_start (GTK_BOX (GIMP_QUERY_BOX_VBOX (dialog)), button,
+                      FALSE, FALSE, 0);
   gtk_widget_show (button);
-
-
 
   gtk_widget_show (dialog);
 }
@@ -529,7 +529,7 @@ select_shrink_callback (GtkWidget *widget,
   radius_x = radius_y = select_shrink_pixels = ROUND (size);
 
   select_shrink_edge_lock =
-    ! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
+    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
 
   if (unit != GIMP_UNIT_PIXEL)
     {
