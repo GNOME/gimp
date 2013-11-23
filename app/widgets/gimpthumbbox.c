@@ -667,21 +667,8 @@ gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
                                  gboolean           force,
                                  GimpProgress      *progress)
 {
-  gchar         *filename = file_utils_filename_from_uri (uri);
-  GimpThumbnail *thumb;
+  GimpThumbnail *thumb = gimp_imagefile_get_thumbnail (box->imagefile);
   gchar         *basename;
-
-  if (filename)
-    {
-      gboolean regular = g_file_test (filename, G_FILE_TEST_IS_REGULAR);
-
-      g_free (filename);
-
-      if (! regular)
-        return;
-    }
-
-  thumb = gimp_imagefile_get_thumbnail (box->imagefile);
 
   basename = file_utils_uri_display_basename (uri);
   gtk_label_set_text (GTK_LABEL (box->filename), basename);

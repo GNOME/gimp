@@ -350,6 +350,7 @@ gimp_imagefile_create_thumbnail (GimpImagefile  *imagefile,
   if (image_state == GIMP_THUMB_STATE_REMOTE ||
       image_state >= GIMP_THUMB_STATE_EXISTS)
     {
+      GFile         *file;
       GimpImage     *image;
       gboolean       success;
       gint           width      = 0;
@@ -357,6 +358,36 @@ gimp_imagefile_create_thumbnail (GimpImagefile  *imagefile,
       const gchar   *mime_type  = NULL;
       const Babl    *format     = NULL;
       gint           num_layers = -1;
+
+      file = g_file_new_for_uri (thumbnail->image_uri);
+
+      /*  we only want to attempt thumbnailing on readable, regular files  */
+      if (g_file_is_native (file))
+        {
+          GFileInfo *file_info;
+          gboolean   regular;
+          gboolean   readable;
+
+          file_info = g_file_query_info (file,
+                                         G_FILE_ATTRIBUTE_STANDARD_TYPE ","
+                                         G_FILE_ATTRIBUTE_ACCESS_CAN_READ,
+                                         G_FILE_QUERY_INFO_NONE,
+                                         NULL, NULL);
+
+          regular  = (g_file_info_get_file_type (file_info) == G_FILE_TYPE_REGULAR);
+          readable = g_file_info_get_attribute_boolean (file_info,
+                                                        G_FILE_ATTRIBUTE_ACCESS_CAN_READ);
+
+          g_object_unref (file_info);
+
+          if (! (regular && readable))
+            {
+              g_object_unref (file);
+              return TRUE;
+            }
+        }
+
+      g_object_unref (file);
 
       g_object_ref (imagefile);
 
