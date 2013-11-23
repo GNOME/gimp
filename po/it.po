@@ -30,8 +30,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-18 18:50+0100\n"
-"PO-Revision-Date: 2013-11-18 19:12+0100\n"
+"POT-Creation-Date: 2013-11-23 17:42+0100\n"
+"PO-Revision-Date: 2013-11-23 17:58+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -45,14 +45,21 @@ msgid ""
 "GIMP is an acronym for GNU Image Manipulation Program. It is a freely "
 "distributed program for such tasks as photo retouching, image composition "
 "and image authoring."
-msgstr "GIMP è un acronimo di GNU Image Manipulation Program. È un programma distribuito liberamente per svolgere compiti come il fotoritocco, la composizione e la creazione di immagini."
+msgstr ""
+"GIMP è un acronimo di GNU Image Manipulation Program. È un programma "
+"distribuito liberamente per svolgere compiti come il fotoritocco, la "
+"composizione e la creazione di immagini."
 
 #: ../desktop/gimp.appdata.xml.in.h:2
 msgid ""
 "It has many capabilities. It can be used as a simple paint program, an "
 "expert quality photo retouching program, an online batch processing system, "
 "a mass production image renderer, an image format converter, etc."
-msgstr "Ha molte capacità. Può essere usato come semplice programma di disegno, come programma di fotoritocco avanzato, sistema di elaborazione automatica on-line, renderizzatore in serie di immagini, convertitore di formato immagine, ecc."
+msgstr ""
+"Ha molte capacità. Può essere usato come semplice programma di disegno, come "
+"programma di fotoritocco avanzato, sistema di elaborazione automatica on-"
+"line, renderizzatore in serie di immagini, convertitore di formato immagine, "
+"ecc."
 
 #: ../desktop/gimp.appdata.xml.in.h:3
 msgid ""
@@ -61,7 +68,12 @@ msgid ""
 "interface allows everything from the simplest task to the most complex image "
 "manipulation procedures to be easily scripted. GIMP is also available for "
 "Microsoft Windows and OS X."
-msgstr "GIMP è espandibile ed estensibile. È stato progettato per essere ampliato con plug-in ed estensioni per fare praticamente qualsiasi cosa. L'interfaccia avanzata di scripting semplifica la conversione in procedura dal compito più semplice fino all'elaborazione di immagini più complessa. GIMP è disponibile anche per Microsoft Windows ed OS X."
+msgstr ""
+"GIMP è espandibile ed estensibile. È stato progettato per essere ampliato "
+"con plug-in ed estensioni per fare praticamente qualsiasi cosa. "
+"L'interfaccia avanzata di scripting semplifica la conversione in procedura "
+"dal compito più semplice fino all'elaborazione di immagini più complessa. "
+"GIMP è disponibile anche per Microsoft Windows ed OS X."
 
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
 msgid "GNU Image Manipulation Program"
@@ -3678,7 +3690,7 @@ msgstr "Scala immagine"
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891 ../app/pdb/image-cmds.c:492
 #: ../app/pdb/image-cmds.c:528 ../app/pdb/item-transform-cmds.c:534
-#: ../app/pdb/layer-cmds.c:386 ../app/pdb/layer-cmds.c:433
+#: ../app/pdb/layer-cmds.c:383 ../app/pdb/layer-cmds.c:430
 #: ../app/pdb/transform-tools-cmds.c:346 ../app/tools/gimpscaletool.c:119
 msgid "Scaling"
 msgstr "Scala"
@@ -4886,35 +4898,40 @@ msgstr "Riduci la selezione"
 msgid "Shrink selection by"
 msgstr "Riduci la selezione di"
 
-#: ../app/actions/select-commands.c:209
-msgid "_Shrink from image border"
-msgstr "_Riduci dal bordo immagine"
+#. Edge lock button
+#: ../app/actions/select-commands.c:210 ../app/actions/select-commands.c:294
+msgid "_Selected areas continue outside the image"
+msgstr "Le aree _selezionate continuano fuori dell'immagine"
 
-#: ../app/actions/select-commands.c:237
+#: ../app/actions/select-commands.c:213
+#, fuzzy
+msgid "When shrinking, act as if selected areas continued outside the image."
+msgstr "Durante la riduzione, agire come se le aree selezionate stessero continuando fuori dall'immagine."
+
+#: ../app/actions/select-commands.c:240
 msgid "Grow Selection"
 msgstr "Allarga la selezione"
 
-#: ../app/actions/select-commands.c:241
+#: ../app/actions/select-commands.c:244
 msgid "Grow selection by"
 msgstr "Allarga la selezione di"
 
-#: ../app/actions/select-commands.c:267
+#: ../app/actions/select-commands.c:270
 msgid "Border Selection"
 msgstr "Selezione bordo"
 
-#: ../app/actions/select-commands.c:271
+#: ../app/actions/select-commands.c:274
 msgid "Border selection by"
 msgstr "Selezione bordo di"
 
 #. Feather button
-#: ../app/actions/select-commands.c:280
+#: ../app/actions/select-commands.c:283
 msgid "_Feather border"
 msgstr "Margini s_fumati"
 
-#. Edge lock button
-#: ../app/actions/select-commands.c:293
-msgid "_Lock selection to image edges"
-msgstr "B_locca la selezione sui bordi dell'immagine"
+#: ../app/actions/select-commands.c:297
+msgid "When bordering, act as if selected areas continued outside the image."
+msgstr "Durante la bordatura, agire come se le aree selezionate stessero continuando fuori dall'immagine."
 
 #: ../app/actions/select-commands.c:345 ../app/actions/select-commands.c:378
 #: ../app/actions/vectors-commands.c:389 ../app/actions/vectors-commands.c:423
@@ -8123,9 +8140,11 @@ msgid ""
 "This might be an obsolete GIMP brush file, try loading it as image and save "
 "it again."
 msgstr ""
-"Errore fatale di analisi nel file pennello \"%s\": profondità pennello non supportata %d\n"
+"Errore fatale di analisi nel file pennello \"%s\": profondità pennello non "
+"supportata %d\n"
 "I pennelli di GIMP devono essere grigi o RGBA.\n"
-"Potrebbe trattarsi di un file pennello obsoleto di GIMP; provare a caricarlo come immagine e salvarlo nuovamente."
+"Potrebbe trattarsi di un file pennello obsoleto di GIMP; provare a caricarlo "
+"come immagine e salvarlo nuovamente."
 
 #: ../app/core/gimpbrush-load.c:400
 #, c-format
@@ -8378,7 +8397,7 @@ msgid "Paint Mode"
 msgstr "Modalità disegno"
 
 #: ../app/core/gimp-contexts.c:155 ../app/core/gimptooloptions.c:376
-#: ../app/gui/session.c:420 ../app/menus/menus.c:467
+#: ../app/gui/session.c:429 ../app/menus/menus.c:467
 #: ../app/widgets/gimpdevices.c:209
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
@@ -11209,7 +11228,8 @@ msgstr "Premere %s per abbandonare tutti i cambiamenti e uscire."
 #: ../app/dialogs/quit-dialog.c:334
 #, c-format
 msgid "Press %s to discard all changes and close all images."
-msgstr "Premere %s per abbandonare tutti i cambiamenti e chiudere tutte le immagini."
+msgstr ""
+"Premere %s per abbandonare tutti i cambiamenti e chiudere tutte le immagini."
 
 #: ../app/dialogs/quit-dialog.c:342
 #: ../app/display/gimpdisplayshell-close.c:180
@@ -11695,12 +11715,12 @@ msgstr "Il plug-in %s non può aprire l'immagine"
 msgid "Image doesn't contain any layers"
 msgstr "L'immagine non contiene nessun livello"
 
-#: ../app/file/file-open.c:639
+#: ../app/file/file-open.c:643
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "L'apertura di \"%s\" è fallita: %s"
 
-#: ../app/file/file-open.c:753
+#: ../app/file/file-open.c:757
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -12462,7 +12482,7 @@ msgstr ""
 msgid "Free Select"
 msgstr "Selezione libera"
 
-#: ../app/pdb/layer-cmds.c:540 ../app/pdb/layer-cmds.c:584
+#: ../app/pdb/layer-cmds.c:537 ../app/pdb/layer-cmds.c:581
 msgid "Move Layer"
 msgstr "Sposta livello"
 
