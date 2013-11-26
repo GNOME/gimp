@@ -424,9 +424,9 @@ static gint32
 load_image (const gchar  *filename,
             GError      **error)
 {
-  FILE            *ifp;
+  FILE            *ifp = NULL;
   gint             depth, bpp;
-  gint32           image_ID;
+  gint32           image_ID = -1;
   L_XWDFILEHEADER  xwdhdr;
   L_XWDCOLOR      *xwdcolmap = NULL;
 
@@ -436,7 +436,7 @@ load_image (const gchar  *filename,
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
-      return -1;
+      goto out;
     }
 
   read_xwd_header (ifp, &xwdhdr);
@@ -445,8 +445,7 @@ load_image (const gchar  *filename,
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not read XWD header from '%s'"),
                    gimp_filename_to_utf8 (filename));
-      fclose (ifp);
-      return -1;
+      goto out;
     }
 
 #ifdef XWD_COL_WAIT_DEBUG
@@ -468,12 +467,18 @@ load_image (const gchar  *filename,
       g_message (_("'%s':\nIllegal number of colormap entries: %ld"),
                  gimp_filename_to_utf8 (filename),
                  (long)xwdhdr.l_colormap_entries);
-      fclose (ifp);
-      return -1;
+      goto out;
     }
 
   if (xwdhdr.l_colormap_entries > 0)
     {
+      if (xwdhdr.l_colormap_entries < xwdhdr.l_ncolors)
+        {
+          g_message (_("'%s':\nNumber of colormap entries < number of colors"),
+                     gimp_filename_to_utf8 (filename));
+          goto out;
+        }
+
       xwdcolmap = g_new (L_XWDCOLOR, xwdhdr.l_colormap_entries);
 
       read_xwd_cols (ifp, &xwdhdr, xwdcolmap);
@@ -493,9 +498,7 @@ load_image (const gchar  *filename,
       if (xwdhdr.l_file_version != 7)
         {
           g_message (_("Can't read color entries"));
-          g_free (xwdcolmap);
-          fclose (ifp);
-          return (-1);
+          goto out;
         }
     }
 
@@ -503,9 +506,7 @@ load_image (const gchar  *filename,
     {
       g_message (_("'%s':\nNo image width specified"),
                  gimp_filename_to_utf8 (filename));
-      g_free (xwdcolmap);
-      fclose (ifp);
-      return (-1);
+      goto out;
     }
 
   if (xwdhdr.l_pixmap_width > GIMP_MAX_IMAGE_SIZE
@@ -513,27 +514,21 @@ load_image (const gchar  *filename,
     {
       g_message (_("'%s':\nImage width is larger than GIMP can handle"),
                  gimp_filename_to_utf8 (filename));
-      g_free (xwdcolmap);
-      fclose (ifp);
-      return (-1);
+      goto out;
     }
 
   if (xwdhdr.l_pixmap_height <= 0)
     {
       g_message (_("'%s':\nNo image height specified"),
                  gimp_filename_to_utf8 (filename));
-      g_free (xwdcolmap);
-      fclose (ifp);
-      return (-1);
+      goto out;
     }
 
   if (xwdhdr.l_pixmap_height > GIMP_MAX_IMAGE_SIZE)
     {
       g_message (_("'%s':\nImage height is larger than GIMP can handle"),
                  gimp_filename_to_utf8 (filename));
-      g_free (xwdcolmap);
-      fclose (ifp);
-      return (-1);
+      goto out;
     }
 
   gimp_progress_init_printf (_("Opening '%s'"),
@@ -582,17 +577,23 @@ load_image (const gchar  *filename,
     }
   gimp_progress_update (1.0);
 
-  fclose (ifp);
-
-  if (xwdcolmap)
-    g_free (xwdcolmap);
-
   if (image_ID == -1 && ! (error && *error))
     g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                  _("XWD-file %s has format %d, depth %d and bits per pixel %d. "
                    "Currently this is not supported."),
                  gimp_filename_to_utf8 (filename),
                  (gint) xwdhdr.l_pixmap_format, depth, bpp);
+
+out:
+  if (ifp)
+    {
+      fclose (ifp);
+    }
+
+  if (xwdcolmap)
+    {
+      g_free (xwdcolmap);
+    }
 
   return image_ID;
 }
