@@ -65,6 +65,8 @@ EXPORTS
 	gimp_metadata_set_resolution
 	gimp_micro_version
 	gimp_minor_version
+	gimp_output_stream_printf
+	gimp_output_stream_vprintf
 	gimp_paint_application_mode_get_type
 	gimp_param_memsize_get_type
 	gimp_param_parasite_get_type

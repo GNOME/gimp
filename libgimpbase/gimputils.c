@@ -24,7 +24,7 @@
 #include <string.h>
 #include <stdio.h>
 
-#include <glib-object.h>
+#include <gio/gio.h>
 
 #include "gimpbasetypes.h"
 #include "gimputils.h"
@@ -731,4 +731,48 @@ gimp_flags_value_get_help (GFlagsClass *flags_class,
                      flags_desc->value_help);
 
   return NULL;
+}
+
+gboolean
+gimp_output_stream_printf (GOutputStream  *stream,
+                           gsize          *bytes_written,
+                           GCancellable   *cancellable,
+                           GError        **error,
+                           const gchar    *format,
+                           ...)
+{
+  va_list  args;
+  gboolean success;
+
+  va_start (args, format);
+  success = gimp_output_stream_vprintf (stream, bytes_written, cancellable,
+                                        error, format, args);
+  va_end (args);
+
+  return success;
+}
+
+gboolean
+gimp_output_stream_vprintf (GOutputStream  *stream,
+                            gsize          *bytes_written,
+                            GCancellable   *cancellable,
+                            GError        **error,
+                            const gchar    *format,
+                            va_list         args)
+{
+  gchar    *text;
+  gboolean  success;
+
+  g_return_val_if_fail (G_IS_OUTPUT_STREAM (stream), FALSE);
+  g_return_val_if_fail (cancellable == NULL || G_IS_CANCELLABLE (stream), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+  g_return_val_if_fail (format != NULL, FALSE);
+
+  text = g_strdup_vprintf (format, args);
+  success = g_output_stream_write_all (stream,
+                                       text, strlen (text),
+                                       bytes_written, cancellable, error);
+  g_free (text);
+
+  return success;
 }
