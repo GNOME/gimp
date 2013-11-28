@@ -952,7 +952,7 @@ xcf_save_prop (XcfInfo    *info,
 
         if (gimp_parasite_list_persistent_length (list) > 0)
           {
-            guint32 base, length;
+            guint32 base, length = 0;
             long    pos;
 
             xcf_write_prop_type_check_error (info, prop_type);
@@ -997,7 +997,7 @@ xcf_save_prop (XcfInfo    *info,
 
     case PROP_PATHS:
       {
-        guint32 base, length;
+        guint32 base, length = 0;
         glong   pos;
 
         xcf_write_prop_type_check_error (info, prop_type);
@@ -1063,7 +1063,7 @@ xcf_save_prop (XcfInfo    *info,
 
     case PROP_VECTORS:
       {
-        guint32 base, length;
+        guint32 base, length = 0;
         glong   pos;
 
         xcf_write_prop_type_check_error (info, prop_type);
