@@ -676,8 +676,8 @@ gimp_seamless_clone_tool_render_node_update (GimpSeamlessCloneTool *sc)
   gimp_item_get_offset (GIMP_ITEM (bg), &off_x, &off_y);
 
   gegl_node_set (sc->sc_node,
-                 "xoff", (gint) sc->xoff - off_y,
-                 "yoff", (gint) sc->yoff - off_x,
+                 "xoff", (gint) sc->xoff - off_x,
+                 "yoff", (gint) sc->yoff - off_y,
                  NULL);
 }
 

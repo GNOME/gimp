@@ -345,7 +345,7 @@ do_layer_blend (GeglBuffer  *src_buffer,
 
       for (iy = 0; iy < iter->roi[0].height; iy++)
         {
-          process_roi.x = iter->roi[0].y + iy;
+          process_roi.y = iter->roi[0].y + iy;
 
           (*apply_func) (in_pixel,
                          paint_pixel,
