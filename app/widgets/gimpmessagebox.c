@@ -42,27 +42,36 @@ enum
 };
 
 
-static void   gimp_message_box_constructed   (GObject        *object);
-static void   gimp_message_box_dispose       (GObject        *object);
-static void   gimp_message_box_finalize      (GObject        *object);
-static void   gimp_message_box_set_property  (GObject        *object,
-                                              guint           property_id,
-                                              const GValue   *value,
-                                              GParamSpec     *pspec);
-static void   gimp_message_box_get_property  (GObject        *object,
-                                              guint           property_id,
-                                              GValue         *value,
-                                              GParamSpec     *pspec);
+static void   gimp_message_box_constructed      (GObject        *object);
+static void   gimp_message_box_dispose          (GObject        *object);
+static void   gimp_message_box_finalize         (GObject        *object);
+static void   gimp_message_box_set_property     (GObject        *object,
+                                                 guint           property_id,
+                                                 const GValue   *value,
+                                                 GParamSpec     *pspec);
+static void   gimp_message_box_get_property     (GObject        *object,
+                                                 guint           property_id,
+                                                 GValue         *value,
+                                                 GParamSpec     *pspec);
 
-static void   gimp_message_box_forall        (GtkContainer   *container,
-                                              gboolean        include_internals,
-                                              GtkCallback     callback,
-                                              gpointer        callback_data);
+static void   gimp_message_box_forall           (GtkContainer   *container,
+                                                 gboolean        include_internals,
+                                                 GtkCallback     callback,
+                                                 gpointer        callback_data);
 
-static void   gimp_message_box_size_request  (GtkWidget      *widget,
-                                              GtkRequisition *requisition);
-static void   gimp_message_box_size_allocate (GtkWidget      *widget,
-                                              GtkAllocation  *allocation);
+static void   gimp_message_box_size_request     (GtkWidget      *widget,
+                                                 GtkRequisition *requisition);
+static void   gimp_message_box_size_allocate    (GtkWidget      *widget,
+                                                 GtkAllocation  *allocation);
+
+static void   gimp_message_box_set_label_text   (GimpMessageBox *box,
+                                                 gint            n,
+                                                 const gchar    *format,
+                                                 va_list         args) G_GNUC_PRINTF (3, 0);
+static void   gimp_message_box_set_label_markup (GimpMessageBox *box,
+                                                 gint            n,
+                                                 const gchar    *format,
+                                                 va_list         args) G_GNUC_PRINTF (3, 0);
 
 
 G_DEFINE_TYPE (GimpMessageBox, gimp_message_box, GTK_TYPE_BOX)

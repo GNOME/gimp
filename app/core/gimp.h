@@ -203,12 +203,12 @@ void           gimp_message              (Gimp                *gimp,
                                           GObject             *handler,
                                           GimpMessageSeverity  severity,
                                           const gchar         *format,
-                                          ...) G_GNUC_PRINTF(4,5);
+                                          ...) G_GNUC_PRINTF (4, 5);
 void           gimp_message_valist       (Gimp                *gimp,
                                           GObject             *handler,
                                           GimpMessageSeverity  severity,
                                           const gchar         *format,
-                                          va_list              args);
+                                          va_list              args) G_GNUC_PRINTF (4, 0);
 void           gimp_message_literal      (Gimp                *gimp,
                                           GObject             *handler,
                                           GimpMessageSeverity  severity,

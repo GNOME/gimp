@@ -120,7 +120,7 @@ static gboolean gimp_statusbar_temp_timeout       (GimpStatusbar     *statusbar)
 static void     gimp_statusbar_msg_free           (GimpStatusbarMsg  *msg);
 
 static gchar *  gimp_statusbar_vprintf            (const gchar       *format,
-                                                   va_list            args);
+                                                   va_list            args) G_GNUC_PRINTF (1, 0);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpStatusbar, gimp_statusbar, GTK_TYPE_STATUSBAR,

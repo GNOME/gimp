@@ -91,12 +91,12 @@ void        gimp_statusbar_push                  (GimpStatusbar       *statusbar
                                                   const gchar         *context,
                                                   const gchar         *stock_id,
                                                   const gchar         *format,
-                                                  ...) G_GNUC_PRINTF(4,5);
+                                                  ...) G_GNUC_PRINTF (4, 5);
 void        gimp_statusbar_push_valist           (GimpStatusbar       *statusbar,
                                                   const gchar         *context,
                                                   const gchar         *stock_id,
                                                   const gchar         *format,
-                                                  va_list              args);
+                                                  va_list              args) G_GNUC_PRINTF (4, 0);
 void        gimp_statusbar_push_coords           (GimpStatusbar       *statusbar,
                                                   const gchar         *context,
                                                   const gchar         *stock_id,
@@ -117,12 +117,12 @@ void        gimp_statusbar_replace               (GimpStatusbar       *statusbar
                                                   const gchar         *context,
                                                   const gchar         *stock_id,
                                                   const gchar         *format,
-                                                  ...) G_GNUC_PRINTF(4,5);
+                                                  ...) G_GNUC_PRINTF (4, 5);
 void        gimp_statusbar_replace_valist        (GimpStatusbar       *statusbar,
                                                   const gchar         *context,
                                                   const gchar         *stock_id,
                                                   const gchar         *format,
-                                                  va_list              args);
+                                                  va_list              args) G_GNUC_PRINTF (4, 0);
 const gchar * gimp_statusbar_peek                (GimpStatusbar       *statusbar,
                                                   const gchar         *context);
 void        gimp_statusbar_pop                   (GimpStatusbar       *statusbar,
@@ -132,12 +132,12 @@ void        gimp_statusbar_push_temp             (GimpStatusbar       *statusbar
                                                   GimpMessageSeverity  severity,
                                                   const gchar         *stock_id,
                                                   const gchar         *format,
-                                                  ...) G_GNUC_PRINTF(4,5);
+                                                  ...) G_GNUC_PRINTF (4, 5);
 void        gimp_statusbar_push_temp_valist      (GimpStatusbar       *statusbar,
                                                   GimpMessageSeverity  severity,
                                                   const gchar         *stock_id,
                                                   const gchar         *format,
-                                                  va_list              args);
+                                                  va_list              args) G_GNUC_PRINTF (4, 0);
 void        gimp_statusbar_pop_temp              (GimpStatusbar       *statusbar);
 
 void        gimp_statusbar_update_cursor         (GimpStatusbar       *statusbar,

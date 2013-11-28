@@ -57,7 +57,7 @@ void   gimp_logv     (GimpLogFlags  flags,
                       const gchar  *function,
                       gint          line,
                       const gchar  *format,
-                      va_list       args);
+                      va_list       args) G_GNUC_PRINTF (4, 0);
 
 
 #ifdef G_HAVE_ISO_VARARGS
