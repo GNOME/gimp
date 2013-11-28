@@ -6,6 +6,38 @@
 This is the stable branch of GIMP. No new features are being added
 here, just bug-fixes.
 
+Overview of Changes from GIMP 2.8.8 to GIMP 2.8.10
+==================================================
+
+
+Core:
+
+ - Set manifest as Windows 8 compatible
+
+
+GUI:
+
+ - Indicate if a file was exported in the Quit dialog
+ - Fix keyboard shortcuts on OSX Mavericks
+ - Don't open lots of progress popups when opening many files
+ - Save the hidden state of docks in single window mode
+
+
+Libgimp:
+
+ - Fix exporting an image consisting of a single layer group
+ - Don't attempt to pick transparent colors
+
+
+Plug-ins:
+
+ - Fix crash in LCMS plugin if RGB profile was missing
+
+
+General:
+
+ - Fix compile on NetBSD (missing -lexecinfo)
+
 
 Overview of Changes from GIMP 2.8.6 to GIMP 2.8.8
 =================================================
