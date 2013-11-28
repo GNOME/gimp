@@ -6,6 +6,7 @@
 This is the stable branch of GIMP. No new features are being added
 here, just bug-fixes.
 
+
 Overview of Changes from GIMP 2.8.8 to GIMP 2.8.10
 ==================================================
 
@@ -18,9 +19,12 @@ Core:
 GUI:
 
  - Indicate if a file was exported in the Quit dialog
+ - Add shortcuts and hint labels to the close and quit dialogs
+   that make closing and quitting easier and more consistent
+ - Rename the File->Export menu labels to match Save/Save as
  - Fix keyboard shortcuts on OSX Mavericks
  - Don't open lots of progress popups when opening many files
- - Save the hidden state of docks in single window mode
+ - Correctly restore the hidden state of docks in single window mode
 
 
 Libgimp:
@@ -37,6 +41,8 @@ Plug-ins:
 General:
 
  - Fix compile on NetBSD (missing -lexecinfo)
+ - Bug fixes
+ - Translation updates
 
 
 Overview of Changes from GIMP 2.8.6 to GIMP 2.8.8
