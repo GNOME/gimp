@@ -1,5 +1,5 @@
 //directories to source files from
-#if !Defined(VERSION)
+#if !defined(VERSION)
   #error "VERSION must be defined"
 #endif
 
@@ -23,14 +23,28 @@
 	#define DEPS_DIR "N:\_newdev\deps-mgw\usr"
 #endif
 
-#define GIMP_DIR32 GIMP_DIR + "\" + DIR32
-#define GIMP_DIR64 GIMP_DIR + "\" + DIR64
+//32-bit GIMP base directory (result of make install)
+#ifndef GIMP_DIR32
+	#define GIMP_DIR32 GIMP_DIR + "\" + DIR32
+#endif
+//64-bit GIMP base directory (result of make install)
+#ifndef GIMP_DIR64
+	#define GIMP_DIR64 GIMP_DIR + "\" + DIR64
+#endif
 
 #define DDIR32 DIR32 + "-w64-mingw32\sys-root\mingw"
 #define DDIR64 DIR64 + "-w64-mingw32\sys-root\mingw"
 
-#define DEPS_DIR32 DEPS_DIR + "\" + DDIR32
-#define DEPS_DIR64 DEPS_DIR + "\" + DDIR64
+//32-bit dependencies directory
+#ifndef DEPS_DIR32
+	#define DEPS_DIR32 DEPS_DIR + "\" + DDIR32
+#endif
+//64-bit dependencies directory
+#ifndef DEPS_DIR64
+	#define DEPS_DIR64 DEPS_DIR + "\" + DDIR64
+#endif
 
-//#define PY_DIR DEPS_DIR + "\python"
-#define PY_DIR "N:\_newdev\deps\gimp\python"
+//python source directory
+#ifndef PY_DIR
+	#define PY_DIR "N:\_newdev\deps\gimp\python"
+#endif
