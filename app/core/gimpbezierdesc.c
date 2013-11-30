@@ -110,6 +110,7 @@ gimp_bezier_desc_new_from_bound_segs (GimpBoundSeg *bound_segs,
   gint         n_points;
   gint         seg;
   gint         i;
+  guint        path_data_len;
 
   g_return_val_if_fail (bound_segs != NULL, NULL);
   g_return_val_if_fail (n_bound_segs > 0, NULL);
@@ -158,8 +159,10 @@ gimp_bezier_desc_new_from_bound_segs (GimpBoundSeg *bound_segs,
 
   g_free (points);
 
+  path_data_len = path_data->len;
+
   return gimp_bezier_desc_new ((cairo_path_data_t *) g_array_free (path_data, FALSE),
-                               path_data->len);
+                               path_data_len);
 }
 
 void
