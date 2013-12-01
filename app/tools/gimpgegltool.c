@@ -166,6 +166,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:vignette",
     "gegl:waves",
     "gegl:whirl-pinch",
+    "gegl:wind",
 
     /* these ops are blacklisted for other reasons */
     "gegl:contrast-curve",

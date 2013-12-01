@@ -294,6 +294,11 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "W_hirl and Pinch..."), NULL, NULL,
     "gegl:whirl-pinch",
     NULL /* FIXME GIMP_HELP_FILTER_WHIRL_PINCH */ },
+
+  { "filters-wind", GIMP_STOCK_GEGL,
+    NC_("filters-action", "W_ind..."), NULL, NULL,
+    "gegl:wind",
+    NULL /* FIXME GIMP_HELP_FILTER_WIND */ },
 };
 
 void
@@ -407,6 +412,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-vignette",                writable);
   SET_SENSITIVE ("filters-waves",                   writable);
   SET_SENSITIVE ("filters-whirl-pinch",             writable);
+  SET_SENSITIVE ("filters-wind",                    writable);
 
 #undef SET_SENSITIVE
 }
