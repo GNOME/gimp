@@ -316,7 +316,7 @@ borderaverage (GeglBuffer   *buffer,
     }
 
   /* return the color */
-  gimp_rgb_set_uchar (result, r, g, b);
+  gimp_rgba_set_uchar (result, r, g, b, 255);
 
   g_free (cube);
 }
