@@ -87,6 +87,11 @@ static void   palette_editor_drop_palette          (GtkWidget         *widget,
                                                     gint               y,
                                                     GimpViewable      *viewable,
                                                     gpointer           data);
+static void   palette_editor_drop_color            (GtkWidget         *widget,
+                                                    gint               x,
+                                                    gint               y,
+                                                    const GimpRGB     *color,
+                                                    gpointer           data);
 
 static void   palette_editor_entry_clicked         (GimpPaletteView   *view,
                                                     GimpPaletteEntry  *entry,
@@ -212,9 +217,18 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
                     G_CALLBACK (palette_editor_color_dropped),
                     editor);
 
-  gimp_dnd_viewable_dest_add (editor->view, GIMP_TYPE_PALETTE,
+  gimp_dnd_viewable_dest_add (editor->view,
+                              GIMP_TYPE_PALETTE,
                               palette_editor_drop_palette,
                               editor);
+  gimp_dnd_viewable_dest_add (gtk_widget_get_parent (editor->view),
+                              GIMP_TYPE_PALETTE,
+                              palette_editor_drop_palette,
+                              editor);
+
+  gimp_dnd_color_dest_add (gtk_widget_get_parent (editor->view),
+                           palette_editor_drop_color,
+                           editor);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
@@ -641,6 +655,25 @@ palette_editor_drop_palette (GtkWidget    *widget,
                              gpointer      data)
 {
   gimp_data_editor_set_data (GIMP_DATA_EDITOR (data), GIMP_DATA (viewable));
+}
+
+static void
+palette_editor_drop_color (GtkWidget     *widget,
+                           gint           x,
+                           gint           y,
+                           const GimpRGB *color,
+                           gpointer       data)
+{
+  GimpPaletteEditor *editor = data;
+
+  if (GIMP_DATA_EDITOR (editor)->data_editable)
+    {
+      GimpPalette      *palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
+      GimpPaletteEntry *entry;
+
+      entry = gimp_palette_add_entry (palette, -1, NULL, color);
+      gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (editor->view), entry);
+    }
 }
 
 
