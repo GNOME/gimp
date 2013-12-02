@@ -226,13 +226,11 @@ gimp_n_point_deformation_options_gui (GimpToolOptions *tool_options)
   gtk_widget_set_can_focus (widget, FALSE);
   gtk_widget_show (widget);
 
-  /*widget = gimp_prop_boolean_combo_box_new (config, "ASAP-deformation", _("ASAP"), _("ARAP"));*/
   widget = gimp_prop_boolean_radio_frame_new (config, "ASAP-deformation", _("Deformation mode"), _("scale"), _("rigid (rubber)"));
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
   gtk_widget_set_can_focus (widget, FALSE);
   gtk_widget_show (widget);
 
-  /*widget = gimp_prop_boolean_combo_box_new (config, "MLS-weights", _("Enabled"), _("Disabled"));*/
   widget = gimp_prop_check_button_new (config, "MLS-weights", _("Use weights"));
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
   gtk_widget_set_can_focus (widget, FALSE);

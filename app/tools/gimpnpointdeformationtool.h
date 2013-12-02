@@ -22,6 +22,7 @@
 
 
 #include "gimpdrawtool.h"
+#include "libgimpmath/gimpmath.h"
 #include <npd/npd_common.h>
 
 
@@ -60,6 +61,8 @@ struct _GimpNPointDeformationTool
   NPDControlPoint  *selected_cp;    /* last selected control point */
   GList            *selected_cps;   /* list of selected control points */
   NPDControlPoint  *hovering_cp;
+
+  GimpVector2      *lattice_points;
 
   gdouble           cursor_x;
   gdouble           cursor_y;
