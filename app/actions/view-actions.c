@@ -655,27 +655,41 @@ view_actions_update (GimpActionGroup *group,
                                           _("Re_vert Zoom"));
     }
 
-  SET_SENSITIVE ("view-zoom-out",    image);
-  SET_SENSITIVE ("view-zoom-in",     image);
-  SET_SENSITIVE ("view-zoom-fit-in", image);
-  SET_SENSITIVE ("view-zoom-fill",   image);
+  SET_SENSITIVE ("view-zoom",            image);
+  SET_SENSITIVE ("view-zoom-minimum",    image);
+  SET_SENSITIVE ("view-zoom-maximum",    image);
+  SET_SENSITIVE ("view-zoom-in",         image);
+  SET_SENSITIVE ("view-zoom-in-accel",   image);
+  SET_SENSITIVE ("view-zoom-in-skip",    image);
+  SET_SENSITIVE ("view-zoom-out",        image);
+  SET_SENSITIVE ("view-zoom-out-accel",  image);
+  SET_SENSITIVE ("view-zoom-out-skip",   image);
 
-  SET_SENSITIVE ("view-zoom-16-1",  image);
-  SET_SENSITIVE ("view-zoom-8-1",   image);
-  SET_SENSITIVE ("view-zoom-4-1",   image);
-  SET_SENSITIVE ("view-zoom-2-1",   image);
-  SET_SENSITIVE ("view-zoom-1-1",   image);
-  SET_SENSITIVE ("view-zoom-1-2",   image);
-  SET_SENSITIVE ("view-zoom-1-4",   image);
-  SET_SENSITIVE ("view-zoom-1-8",   image);
-  SET_SENSITIVE ("view-zoom-1-16",  image);
-  SET_SENSITIVE ("view-zoom-other", image);
+  SET_SENSITIVE ("view-zoom-fit-in",     image);
+  SET_SENSITIVE ("view-zoom-fill",       image);
+  SET_SENSITIVE ("view-zoom-revert",     image);
 
-  SET_SENSITIVE ("view-rotate-reset", image);
-  SET_SENSITIVE ("view-rotate-90",    image);
-  SET_SENSITIVE ("view-rotate-180",   image);
-  SET_SENSITIVE ("view-rotate-270",   image);
-  SET_SENSITIVE ("view-rotate-other", image);
+  SET_SENSITIVE ("view-zoom-16-1",       image);
+  SET_SENSITIVE ("view-zoom-16-1-accel", image);
+  SET_SENSITIVE ("view-zoom-8-1",        image);
+  SET_SENSITIVE ("view-zoom-8-1-accel",  image);
+  SET_SENSITIVE ("view-zoom-4-1",        image);
+  SET_SENSITIVE ("view-zoom-4-1-accel",  image);
+  SET_SENSITIVE ("view-zoom-2-1",        image);
+  SET_SENSITIVE ("view-zoom-2-1-accel",  image);
+  SET_SENSITIVE ("view-zoom-1-1",        image);
+  SET_SENSITIVE ("view-zoom-1-1-accel",  image);
+  SET_SENSITIVE ("view-zoom-1-2",        image);
+  SET_SENSITIVE ("view-zoom-1-4",        image);
+  SET_SENSITIVE ("view-zoom-1-8",        image);
+  SET_SENSITIVE ("view-zoom-1-16",       image);
+  SET_SENSITIVE ("view-zoom-other",      image);
+
+  SET_SENSITIVE ("view-rotate-reset",    image);
+  SET_SENSITIVE ("view-rotate-90",       image);
+  SET_SENSITIVE ("view-rotate-180",      image);
+  SET_SENSITIVE ("view-rotate-270",      image);
+  SET_SENSITIVE ("view-rotate-other",    image);
 
   if (image)
     {
