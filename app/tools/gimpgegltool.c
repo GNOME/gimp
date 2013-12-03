@@ -101,6 +101,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "compositors",
     "core",
     "debug",
+    "display",
     "hidden",
     "input",
     "output",
@@ -171,7 +172,6 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     /* these ops are blacklisted for other reasons */
     "gegl:contrast-curve",
     "gegl:convert-format", /* pointless */
-    "gegl:display", /* pointless */
     "gegl:fill-path",
     "gegl:grey", /* we use gimp's op */
     "gegl:hstack", /* pointless */
@@ -181,7 +181,6 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:opacity", /* poinless */
     "gegl:path",
     "gegl:posterize", /* we use gimp's op */
-    "gegl:sdl-display", /* pointless */
     "gegl:seamless-clone", /* used in the seamless clone tool */
     "gegl:text", /* we use gimp's text rendering */
     "gegl:threshold", /* we use gimp's op */
