@@ -20,8 +20,8 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-23 17:11+0100\n"
-"PO-Revision-Date: 2013-11-23 17:17+0100\n"
-"Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
+"PO-Revision-Date: 2013-12-07 21:15+0100\n"
+"Last-Translator: Sven Claussner <sclaussner@src.gnome.org>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -1366,14 +1366,15 @@ msgid "Show some helpful tips on using GIMP"
 msgstr "Zeigt hilfreiche Tipps zur Benutzung von GIMP"
 
 #: ../app/actions/dialogs-actions.c:262
-msgctxt "dialogs-action"
-msgid "_About"
-msgstr "_Info"
-
 #: ../app/actions/dialogs-actions.c:263
 msgctxt "dialogs-action"
 msgid "About GIMP"
-msgstr "Informationen zu GIMP"
+msgstr "Über GIMP"
+
+#: ../app/actions/dialogs-actions.c:265
+msgctxt "dialogs-action"
+msgid "_About"
+msgstr "_Info"
 
 #: ../app/actions/dialogs-actions.c:326
 #: ../app/dialogs/preferences-dialog.c:1771 ../app/widgets/gimptoolbox.c:535
@@ -9717,9 +9718,9 @@ msgstr "Ordner »%s« wird angelegt …"
 msgid "Cannot create folder '%s': %s"
 msgstr "Ordner »%s« konnte nicht angelegt werden: %s"
 
-#: ../app/dialogs/about-dialog.c:115
+#: ../app/dialogs/about-dialog.c:115 
 msgid "About GIMP"
-msgstr "Informationen zu GIMP"
+msgstr "Über GIMP"
 
 #: ../app/dialogs/about-dialog.c:124
 msgid "Visit the GIMP website"
