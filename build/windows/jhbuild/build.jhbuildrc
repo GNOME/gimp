@@ -231,6 +231,8 @@ module_extra_env.update (
  'icu-native': {},
  'poppler-data':
 	{'PREFIX': prefix},
+ 'freetype2':
+    {'LIBPNG_CFLAGS': ' ', 'LIBPNG_LDFLAGS': '-lpng'},
 
 # Ensure that gimp doesn't get the host machine's freetype-config
   'gimp-dev':
