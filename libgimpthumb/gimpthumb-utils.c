@@ -150,7 +150,7 @@ gimp_thumb_init (const gchar *creator,
         {
           gchar *name = g_filename_display_name (g_get_tmp_dir ());
 
-          g_message (_("Cannot determine a valid home directory.\n"
+          g_message (_("Cannot determine a valid thumbnails directory.\n"
                        "Thumbnails will be stored in the folder for "
                        "temporary files (%s) instead."), name);
           g_free (name);
