@@ -58,10 +58,13 @@ main (gint   argc,
 {
   GOptionContext *context;
   GDir           *dir;
-  const gchar    *home;
   gchar          *thumb_folder;
   const gchar    *folder;
   GError         *error = NULL;
+
+  gimp_thumb_init ("gimp-thumbnail-list", NULL);
+
+  thumb_folder = gimp_thumb_get_thumb_base_dir ();
 
   context = g_option_context_new (NULL);
   g_option_context_add_main_entries (context, main_entries, NULL);
@@ -72,13 +75,10 @@ main (gint   argc,
       return -1;
     }
 
-  home = g_get_home_dir ();
-
-  thumb_folder = g_build_filename (home, ".thumbnails", NULL);
   dir = g_dir_open (thumb_folder, 0, &error);
 
   if (! dir)
-    g_error ("Error opening ~/.thumbnails: %s", error->message);
+    g_error ("Error opening %s: %s", thumb_folder, error->message);
 
   while ((folder = g_dir_read_name (dir)))
     {
@@ -93,7 +93,6 @@ main (gint   argc,
     }
 
   g_dir_close (dir);
-  g_free (thumb_folder);
 
   return 0;
 }

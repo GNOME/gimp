@@ -35,6 +35,8 @@ G_BEGIN_DECLS
 gboolean            gimp_thumb_init                   (const gchar    *creator,
                                                        const gchar    *thumb_basedir);
 
+const gchar       * gimp_thumb_get_thumb_base_dir     (void);
+
 gchar             * gimp_thumb_find_thumb             (const gchar    *uri,
                                                        GimpThumbSize  *size) G_GNUC_MALLOC;
 

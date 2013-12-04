@@ -187,6 +187,26 @@ gimp_thumb_init (const gchar *creator,
 }
 
 /**
+ * gimp_thumb_get_thumb_base_dir:
+ *
+ * Returns the base directory of thumbnails cache.
+ * It uses the Freedesktop Thumbnail Managing Standard on UNIX,
+ * "~/Library/Caches/org.freedesktop.thumbnails" on OSX, and a cache
+ * folder determined by glib on Windows (currently the common repository
+ * for temporary Internet files).
+ * The returned string belongs to GIMP and must not be changed nor freed.
+ *
+ * Returns: the thumbnails cache directory.
+ **/
+const gchar *
+gimp_thumb_get_thumb_base_dir (void)
+{
+  g_return_val_if_fail (gimp_thumb_initialized, NULL);
+
+  return thumb_dir;
+}
+
+/**
  * gimp_thumb_get_thumb_dir:
  * @size: a GimpThumbSize
  *
