@@ -34,6 +34,10 @@
 #include <unistd.h>
 #endif
 
+#ifdef PLATFORM_OSX
+#include <AppKit/AppKit.h>
+#endif
+
 #include <gio/gio.h>
 #include <glib/gstdio.h>
 
@@ -147,6 +151,35 @@ gimp_user_install_new (gboolean verbose)
   install->verbose = verbose;
 
   user_install_detect_old (install, gimp_directory ());
+
+#ifdef PLATFORM_OSX
+  /* The config path on OSX has for a very short time frame (2.8.2 only)
+     been "~/Library/GIMP". It changed to "~/Library/Application Support"
+     in 2.8.4 and was in the home folder (as was other UNIX) before. */
+
+  if (! install->old_dir)
+    {
+      gchar             *dir;
+      NSAutoreleasePool *pool;
+      NSArray           *path;
+      NSString          *library_dir;
+
+      pool = [[NSAutoreleasePool alloc] init];
+
+      path = NSSearchPathForDirectoriesInDomains (NSLibraryDirectory,
+                                                  NSUserDomainMask, YES);
+      library_dir = [path objectAtIndex:0];
+
+      dir = g_build_filename ([library_dir UTF8String],
+                              GIMPDIR, GIMP_USER_VERSION, NULL);
+
+      [pool drain];
+
+      user_install_detect_old (install, dir);
+      g_free (dir);
+    }
+
+#endif
 
   if (! install->old_dir)
     {
