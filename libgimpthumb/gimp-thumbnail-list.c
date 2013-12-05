@@ -58,7 +58,7 @@ main (gint   argc,
 {
   GOptionContext *context;
   GDir           *dir;
-  gchar          *thumb_folder;
+  const gchar    *thumb_folder;
   const gchar    *folder;
   GError         *error = NULL;
 
