@@ -1,6 +1,6 @@
 /* GIMP - The GNU Image Manipulation Program
  *
- * gimpnpointdeformationoptions.h
+ * gimpnpointdeformationoptions.c
  * Copyright (C) 2013 Marek Dvoroznak <dvoromar@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -43,8 +43,7 @@ enum
     PROP_ASAP_DEFORMATION,
     PROP_MLS_WEIGHTS,
     PROP_MLS_WEIGHTS_ALPHA,
-    PROP_MESH_VISIBLE,
-    PROP_PAUSE_DEFORMATION
+    PROP_MESH_VISIBLE
 };
 
 
@@ -101,11 +100,6 @@ gimp_n_point_deformation_options_class_init (GimpNPointDeformationOptionsClass *
                                     "mesh-visible", _("Show lattice"),
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
-
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PAUSE_DEFORMATION,
-                                    "pause-deformation", _("Pause deformation"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -149,13 +143,6 @@ gimp_n_point_deformation_options_set_property (GObject      *object,
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->check_mesh_visible),
                                         options->mesh_visible);
         break;
-      case PROP_PAUSE_DEFORMATION:
-        options->deformation_is_paused = g_value_get_boolean (value);
-
-        if (options->check_pause_deformation)
-          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->check_pause_deformation),
-                                        options->deformation_is_paused);
-        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
         break;
@@ -189,9 +176,6 @@ gimp_n_point_deformation_options_get_property (GObject    *object,
         break;
       case PROP_MESH_VISIBLE:
         g_value_set_boolean (value, options->mesh_visible);
-        break;
-      case PROP_PAUSE_DEFORMATION:
-        g_value_set_boolean (value, options->deformation_is_paused);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -244,35 +228,9 @@ gimp_n_point_deformation_options_gui (GimpToolOptions *tool_options)
   gtk_widget_set_sensitive (widget, npd_options->MLS_weights);
   gtk_widget_show (widget);
 
-  widget = gimp_prop_check_button_new (config, "pause-deformation", _("Pause deformation"));
-  npd_options->check_pause_deformation = widget;
-  gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
-  gtk_widget_set_can_focus (widget, FALSE);
-  gtk_widget_show (widget);
-
   gimp_n_point_deformation_options_init_some_widgets (npd_options, FALSE);
 
   return vbox;
-}
-
-gboolean
-gimp_n_point_deformation_options_is_deformation_paused (GimpNPointDeformationOptions *npd_options)
-{
-  return npd_options->deformation_is_paused;
-}
-
-void
-gimp_n_point_deformation_options_set_pause_deformation (GimpNPointDeformationOptions *npd_options,
-                                                        gboolean                      is_active)
-{
-  g_object_set (G_OBJECT (npd_options), "pause-deformation", is_active, NULL);
-}
-
-void
-gimp_n_point_deformation_options_toggle_pause_deformation (GimpNPointDeformationOptions *npd_options)
-{
-  gimp_n_point_deformation_options_set_pause_deformation (npd_options,
-                                                         !npd_options->deformation_is_paused);
 }
 
 void
@@ -281,5 +239,4 @@ gimp_n_point_deformation_options_init_some_widgets (GimpNPointDeformationOptions
 {
   gtk_widget_set_sensitive (npd_options->scale_square_size, !is_tool_active);
   gtk_widget_set_sensitive (npd_options->check_mesh_visible, is_tool_active);
-  gtk_widget_set_sensitive (npd_options->check_pause_deformation, is_tool_active);
 }

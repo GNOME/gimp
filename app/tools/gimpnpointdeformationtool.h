@@ -88,13 +88,15 @@ struct _GimpNPointDeformationTool
 struct _GimpNPointDeformationToolClass
 {
   GimpDrawToolClass parent_class;
-};
 
+  /*  virtual function  */
+
+  void (* perform_deformation) (GimpNPointDeformationTool *npd_tool);
+};
 
 void    gimp_n_point_deformation_tool_register (GimpToolRegisterCallback  callback,
                                                 gpointer                  data);
 
 GType   gimp_n_point_deformation_tool_get_type (void) G_GNUC_CONST;
-
 
 #endif  /*  __GIMP_N_POINT_DEFORMATION_TOOL_H__  */
