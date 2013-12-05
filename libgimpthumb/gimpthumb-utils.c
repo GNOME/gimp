@@ -197,6 +197,8 @@ gimp_thumb_init (const gchar *creator,
  * The returned string belongs to GIMP and must not be changed nor freed.
  *
  * Returns: the thumbnails cache directory.
+ *
+ * Since: GIMP 2.10
  **/
 const gchar *
 gimp_thumb_get_thumb_base_dir (void)
