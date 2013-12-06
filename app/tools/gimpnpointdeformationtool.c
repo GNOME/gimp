@@ -369,9 +369,6 @@ gimp_n_point_deformation_tool_halt (GimpNPointDeformationTool *npd_tool)
   npd_tool->preview_buffer = NULL;
   g_free (npd_tool->lattice_points);
 
-  if (npd_tool->model != NULL)
-    npd_destroy_model (npd_tool->model);
-
   tool->display = npd_tool->display = NULL;
 }
 
@@ -933,6 +930,7 @@ gimp_n_point_deformation_tool_perform_deformation (GimpNPointDeformationTool *np
                 NULL);
   gimp_npd_debug (("gegl_operation_invalidate\n"));
   gegl_operation_invalidate (GEGL_OPERATION (operation), NULL, FALSE);
+  g_object_unref (operation);
 
   gimp_npd_debug (("gegl_node_process\n"));
   gegl_node_process (npd_tool->sink);
