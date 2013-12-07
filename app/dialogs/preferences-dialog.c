@@ -2342,7 +2342,18 @@ prefs_dialog_new (Gimp       *gimp,
                                       "display-rendering-intent", 0, 0,
                                       _("_Display rendering intent:"),
                                       GTK_TABLE (table), row++, NULL);
-            gtk_table_set_row_spacing (GTK_TABLE (table), row - 1, 12);
+
+            button =
+              gimp_prop_check_button_new (color_config,
+                                          "display-use-black-point-compensation",
+                                          _("Use _black point compensation for "
+                                            "the display"));
+
+            gtk_table_attach_defaults (GTK_TABLE (table),
+                                       button, 1, 2, row, row + 1);
+            gtk_widget_show (button);
+            gtk_table_set_row_spacing (GTK_TABLE (table), row, 12);
+            row++;
           }
 
         if (i == 3) /* printer profile */
@@ -2351,6 +2362,17 @@ prefs_dialog_new (Gimp       *gimp,
                                       "simulation-rendering-intent", 0, 0,
                                       _("_Softproof rendering intent:"),
                                       GTK_TABLE (table), row++, NULL);
+
+            button =
+              gimp_prop_check_button_new (color_config,
+                                          "simulation-use-black-point-compensation",
+                                          _("Use black _point compensation "
+                                            "for softproofing"));
+
+            gtk_table_attach_defaults (GTK_TABLE (table),
+                                       button, 1, 2, row, row + 1);
+            gtk_widget_show (button);
+            row++;
           }
       }
 

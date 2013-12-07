@@ -338,7 +338,6 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
   cmsHPROFILE      src_profile   = NULL;
   cmsHPROFILE      dest_profile  = NULL;
   cmsHPROFILE      proof_profile = NULL;
-  cmsUInt32Number  flags         = 0;
   cmsUInt16Number  alarmCodes[cmsMAXCHANNELS] = { 0, };
 
   if (lcms->transform)
@@ -365,27 +364,28 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
       break;
     }
 
-  if (config->display_intent ==
-      GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC)
-    {
-      flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
-    }
-
   if (proof_profile)
     {
+      cmsUInt32Number softproof_flags = 0;
+
       if (! src_profile)
         src_profile = cmsCreate_sRGBProfile ();
 
       if (! dest_profile)
         dest_profile = cmsCreate_sRGBProfile ();
 
-      flags |= cmsFLAGS_SOFTPROOFING;
+      softproof_flags |= cmsFLAGS_SOFTPROOFING;
+
+      if (config->simulation_use_black_point_compensation)
+        {
+          softproof_flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
+        }
 
       if (config->simulation_gamut_check)
         {
           guchar r, g, b;
 
-          flags |= cmsFLAGS_GAMUTCHECK;
+          softproof_flags |= cmsFLAGS_GAMUTCHECK;
 
           gimp_rgb_get_uchar (&config->out_of_gamut_color, &r, &g, &b);
 
@@ -401,21 +401,28 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
                                                     proof_profile,
                                                     config->simulation_intent,
                                                     config->display_intent,
-                                                    flags);
+                                                    softproof_flags);
       cmsCloseProfile (proof_profile);
     }
   else if (src_profile || dest_profile)
     {
+      cmsUInt32Number display_flags = 0;
+
       if (! src_profile)
         src_profile = cmsCreate_sRGBProfile ();
 
       if (! dest_profile)
         dest_profile = cmsCreate_sRGBProfile ();
 
+      if (config->display_use_black_point_compensation)
+        {
+          display_flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
+        }
+
       lcms->transform = cmsCreateTransform (src_profile,  TYPE_RGBA_FLT,
                                             dest_profile, TYPE_RGBA_FLT,
                                             config->display_intent,
-                                            flags);
+                                            display_flags);
     }
 
   if (dest_profile)

@@ -62,17 +62,29 @@
 #define CMYK_PROFILE_BLURB \
   N_("The CMYK color profile used to convert between RGB and CMYK.")
 #define PRINTER_PROFILE_BLURB \
-  N_("The color profile used for simulating a printed version (softproof).")
+  N_("The color profile to use for soft proofing from your image's " \
+     "color space to some other color space, including " \
+     "soft proofing to a printer or other output device profile. ")
 #define DISPLAY_RENDERING_INTENT_BLURB \
-  N_("Sets how colors are mapped for your display.")
+  N_("How colors are converted from your image's color space to your display device. " \
+     "Relative colorimetric is usually the best choice. " \
+     "Unless you use a LUT monitor profile (most monitor profiles are matrix), " \
+     "choosing perceptual intent really gives you relative colorimetric." )
+#define DISPLAY_USE_BPC_BLURB \
+  N_("Do use black point compensation (unless you know you have a reason not to). ")
 #define SIMULATION_RENDERING_INTENT_BLURB \
-  N_("Sets how colors are converted from RGB working space to the " \
-     "print simulation device.")
+  N_("How colors are converted from your image's color space to the " \
+     "output simulation device (usually your monitor). " \
+     "Try them all and choose what looks the best. ")
+#define SIMULATION_USE_BPC_BLURB \
+  N_("Try with and without black point compensation "\
+     "and choose what looks best. ")
 #define SIMULATION_GAMUT_CHECK_BLURB \
-  N_("When enabled, the print simulation will mark colors which can not be " \
-     "represented in the target color space.")
+  N_("When enabled, the print simulation will mark colors " \
+     "which can not be represented in the target color space.")
 #define OUT_OF_GAMUT_COLOR_BLURB \
   N_("The color to use for marking colors which are out of gamut.")
+
 
 
 enum
@@ -85,7 +97,9 @@ enum
   PROP_DISPLAY_PROFILE_FROM_GDK,
   PROP_PRINTER_PROFILE,
   PROP_DISPLAY_RENDERING_INTENT,
+  PROP_DISPLAY_USE_BPC,
   PROP_SIMULATION_RENDERING_INTENT,
+  PROP_SIMULATION_USE_BPC,
   PROP_SIMULATION_GAMUT_CHECK,
   PROP_OUT_OF_GAMUT_COLOR,
   PROP_DISPLAY_MODULE
@@ -153,14 +167,24 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
                                  "display-rendering-intent",
                                  DISPLAY_RENDERING_INTENT_BLURB,
                                  GIMP_TYPE_COLOR_RENDERING_INTENT,
-                                 GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                                 GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                  GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DISPLAY_USE_BPC,
+                                    "display-use-black-point-compensation",
+                                    DISPLAY_USE_BPC_BLURB,
+                                    TRUE,
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_SIMULATION_RENDERING_INTENT,
                                  "simulation-rendering-intent",
                                  SIMULATION_RENDERING_INTENT_BLURB,
                                  GIMP_TYPE_COLOR_RENDERING_INTENT,
                                  GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
                                  GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SIMULATION_USE_BPC,
+                                    "simulation-use-black-point-compensation",
+                                    SIMULATION_USE_BPC_BLURB,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SIMULATION_GAMUT_CHECK,
                                     "simulation-gamut-check",
                                     SIMULATION_GAMUT_CHECK_BLURB,
@@ -171,7 +195,6 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
                                 OUT_OF_GAMUT_COLOR_BLURB,
                                 FALSE, &color,
                                 GIMP_PARAM_STATIC_STRINGS);
-
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DISPLAY_MODULE,
                                    "display-module", NULL,
                                    "CdisplayLcms",
@@ -241,8 +264,14 @@ gimp_color_config_set_property (GObject      *object,
     case PROP_DISPLAY_RENDERING_INTENT:
       color_config->display_intent = g_value_get_enum (value);
       break;
+    case PROP_DISPLAY_USE_BPC:
+      color_config->display_use_black_point_compensation = g_value_get_boolean (value);
+      break;
     case PROP_SIMULATION_RENDERING_INTENT:
       color_config->simulation_intent = g_value_get_enum (value);
+      break;
+    case PROP_SIMULATION_USE_BPC:
+      color_config->simulation_use_black_point_compensation = g_value_get_boolean (value);
       break;
     case PROP_SIMULATION_GAMUT_CHECK:
       color_config->simulation_gamut_check = g_value_get_boolean (value);
@@ -254,7 +283,6 @@ gimp_color_config_set_property (GObject      *object,
       g_free (color_config->display_module);
       color_config->display_module = g_value_dup_string (value);
       break;
-
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -292,8 +320,14 @@ gimp_color_config_get_property (GObject    *object,
     case PROP_DISPLAY_RENDERING_INTENT:
       g_value_set_enum (value, color_config->display_intent);
       break;
+    case PROP_DISPLAY_USE_BPC:
+      g_value_set_boolean (value, color_config->display_use_black_point_compensation);
+      break;
     case PROP_SIMULATION_RENDERING_INTENT:
       g_value_set_enum (value, color_config->simulation_intent);
+      break;
+    case PROP_SIMULATION_USE_BPC:
+      g_value_set_boolean (value, color_config->simulation_use_black_point_compensation);
       break;
     case PROP_SIMULATION_GAMUT_CHECK:
       g_value_set_boolean (value, color_config->simulation_gamut_check);
@@ -304,7 +338,6 @@ gimp_color_config_get_property (GObject    *object,
     case PROP_DISPLAY_MODULE:
       g_value_set_string (value, color_config->display_module);
       break;
-
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;

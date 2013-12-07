@@ -55,10 +55,14 @@ struct _GimpColorConfig
   gboolean                    simulation_gamut_check;
   GimpRGB                     out_of_gamut_color;
 
+  gboolean                    display_use_black_point_compensation;
+  gboolean                    simulation_use_black_point_compensation;
+
   /*< private >*/
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
+#if (GLIB_SIZEOF_VOID_P == 8)
   void (* _gimp_reserved2) (void);
+#endif
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
   void (* _gimp_reserved5) (void);
