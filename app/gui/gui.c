@@ -198,6 +198,17 @@ gui_init (Gimp     *gimp,
 
   the_gui_gimp = gimp;
 
+  /* Normally this should have been taken care of during command line
+   * parsing as a post-parse hook of gtk_get_option_group(), using the
+   * system locales.
+   * But user config may have overriden the language, therefore we must
+   * check the widget directions again.
+   */
+  if (g_strcmp0 (dgettext ("gtk20", "default:LTR"), "default:RTL") == 0)
+    gtk_widget_set_default_direction (GTK_TEXT_DIR_RTL);
+  else
+    gtk_widget_set_default_direction (GTK_TEXT_DIR_LTR);
+
   gui_unique_init (gimp);
 
   gimp_widgets_init (gui_help_func,
