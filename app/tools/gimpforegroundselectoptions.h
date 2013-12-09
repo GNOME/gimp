@@ -59,7 +59,6 @@ GtkWidget * gimp_foreground_select_options_gui            (GimpToolOptions      
 
 void        gimp_foreground_select_options_get_mask_color (GimpForegroundSelectOptions *options,
                                                            GimpRGB                     *color);
-gdouble     gimp_foreground_select_options_get_opacity    (GimpForegroundSelectOptions *options);
 
 
 #endif /* __GIMP_FOREGROUND_SELECT_OPTIONS_H__ */

@@ -52,6 +52,7 @@ struct _GimpForegroundSelectTool
   GeglBuffer         *trimap;
   GeglBuffer         *mask;
   MattingState        state;
+  GimpToolGui        *gui;
 };
 
 struct _GimpForegroundSelectToolClass

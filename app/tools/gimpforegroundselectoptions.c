@@ -84,7 +84,7 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
                                  N_("Paint over areas to mark color values for "
                                  "inclusion or exclusion from selection"),
                                  GIMP_TYPE_MATTING_DRAW_MODE,
-                                 GIMP_MATTING_DRAW_MODE_FOREGROUND,
+                                 GIMP_MATTING_DRAW_MODE_UNKNOWN,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_STROKE_WIDTH,
@@ -155,6 +155,11 @@ gimp_foreground_select_options_set_property (GObject      *object,
 
     case PROP_ENGINE:
       options->engine = g_value_get_enum (value);
+      if ((options->engine == GIMP_MATTING_ENGINE_LEVIN) &&
+          !(gegl_has_operation ("gegl:matting-levin")))
+        {
+          options->engine = GIMP_MATTING_ENGINE_GLOBAL;
+        }
       break;
 
     case PROP_LEVELS:
@@ -251,6 +256,10 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   GtkWidget *scale;
   GtkWidget *combo;
   GtkWidget *inner_vbox;
+  GtkWidget *antialias_toggle;
+
+  antialias_toggle = GIMP_SELECTION_OPTIONS (tool_options)->antialias_toggle;
+  gtk_widget_hide (antialias_toggle);
 
   frame = gimp_prop_enum_radio_frame_new (config, "draw-mode", _("Draw Mode"),
                                           0,0);
@@ -301,6 +310,9 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Engine"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_frame_set_label_widget (GTK_FRAME (frame), combo);
+
+  if (!gegl_has_operation ("gegl:matting-levin"))
+    gtk_widget_set_sensitive (combo, FALSE);
   gtk_widget_show (combo);
 
   inner_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
@@ -348,25 +360,6 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
                                NULL);
 
   return vbox;
-}
-
-gdouble
-gimp_foreground_select_options_get_opacity (GimpForegroundSelectOptions *options)
-{
-  g_return_val_if_fail (GIMP_IS_FOREGROUND_SELECT_OPTIONS (options), 0.0);
-
-  switch (options->draw_mode)
-    {
-    case GIMP_MATTING_DRAW_MODE_FOREGROUND:
-      return 1.0;
-
-    case GIMP_MATTING_DRAW_MODE_BACKGROUND:
-      return 0.0;
-
-    case GIMP_MATTING_DRAW_MODE_UNKNOWN:
-    default:
-      return 0.5;
-  }
 }
 
 void
