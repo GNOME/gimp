@@ -47,6 +47,7 @@
 	<suggests>
 		<dep package="webkitgtk"/>
 		<dep package="libmng"/>
+		<dep package="gdb"/>
 	</suggests>
 </metamodule>
 

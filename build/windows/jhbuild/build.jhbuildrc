@@ -19,15 +19,12 @@ flavour = os.environ.get('BUILD_FLAVOUR', 'rls')
 
 if flavour == 'rls':
         flavour_ext = ''
-        flavour_opt = '--enable-debug=no'
-        flavour_cflags = ""
+        flavour_opt = ''
+        flavour_cflags = " -g "
 else:
         flavour_ext = '-dbg'
         flavour_opt = "--enable-debug=yes"
         flavour_cflags = " -g -O0 "
-        if module == 'gimp-common':
-                modules.append ("gdb")
-
 
 # checkoutroot: path to download packages elsewhere
 # prefix:       target path to install the compiled binaries
