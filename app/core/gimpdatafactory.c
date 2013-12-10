@@ -751,7 +751,7 @@ gimp_data_factory_get_save_dir (GimpDataFactory  *factory,
                                    _("You have a writable data folder "
                                      "configured (%s), but this folder does "
                                      "not exist. Please create the folder or "
-                                     "fix your configuation in the "
+                                     "fix your configuration in the "
                                      "Preferences dialog's 'Folders' section."),
                                    display_name);
 
