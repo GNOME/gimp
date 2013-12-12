@@ -4660,7 +4660,7 @@ msgstr "_Selecionar"
 #: ../app/actions/select-actions.c:50
 msgctxt "select-action"
 msgid "_All"
-msgstr "_Tudo"
+msgstr "Ver _todas"
 
 #: ../app/actions/select-actions.c:51
 msgctxt "select-action"
@@ -14943,7 +14943,7 @@ msgstr "Criação"
 #: ../app/tools/tools-enums.c:245
 msgctxt "vector-mode"
 msgid "Edit"
-msgstr "Edição"
+msgstr "Editação"
 
 #: ../app/tools/tools-enums.c:246
 msgctxt "vector-mode"
