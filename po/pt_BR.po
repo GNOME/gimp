@@ -7,7 +7,7 @@
 # Og Maciel <ogmaciel@gnome.org>, 2009.
 # Rodrigo Padula de Oliveira <contato@rodrigopadula.com>, 2011.
 # Vanessa Gomes de Lima <vane.gomesl@gmail.com>, 2012.
-# Joao S. O. Bueno <gwidion@gmail.com>, 2004, 2006, 2007, 2008, 2012.
+# Joao S. O. Bueno <gwidion@gmail.com>, 2004, 2006, 2007, 2008, 2012, 2013.
 # Keven do Nascimento Carneiro <kevennascimento@ovi.com>, 2012.
 # Rafael Ferreira <rafael.f.f1@gmail.com>, 2013.
 # Enrico Nicoletto <liverig@gmail.com>,  2013.
@@ -19,8 +19,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2013-12-04 23:03+0000\n"
-"PO-Revision-Date: 2013-10-13 11:41-0300\n"
-"Last-Translator: Rodolfo Ribeiro Gomes <rodolforg@gmail.com>\n"
+"PO-Revision-Date: 2013-12-11 01:00-0300\n"
+"Last-Translator: Joao S. O. Bueno <gwidion@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -4328,7 +4328,7 @@ msgstr "_Selecionar"
 #: ../app/actions/select-actions.c:50
 msgctxt "select-action"
 msgid "_All"
-msgstr "Ver _todas"
+msgstr "_Tudo"
 
 #: ../app/actions/select-actions.c:51
 msgctxt "select-action"
@@ -14350,7 +14350,7 @@ msgstr "Criação"
 #: ../app/tools/tools-enums.c:245
 msgctxt "vector-mode"
 msgid "Edit"
-msgstr "Editação"
+msgstr "Edição"
 
 #: ../app/tools/tools-enums.c:246
 msgctxt "vector-mode"
