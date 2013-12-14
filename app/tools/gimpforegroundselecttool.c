@@ -287,8 +287,10 @@ gimp_foreground_select_tool_oper_update (GimpTool         *tool,
                                          gboolean          proximity,
                                          GimpDisplay      *display)
 {
-  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
-  const gchar              *status    = NULL;
+  GimpForegroundSelectTool    *fg_select    = GIMP_FOREGROUND_SELECT_TOOL (tool);
+  GimpForegroundSelectOptions *options      = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (fg_select);
+  const gchar                 *status_stage = NULL;
+  const gchar                 *status_mode  = NULL;
 
   GimpDisplayShell   *shell   = gimp_display_get_shell (display);
   GimpImage          *image   = gimp_display_get_image (display);
@@ -296,7 +298,12 @@ gimp_foreground_select_tool_oper_update (GimpTool         *tool,
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
                                                display);
 
-  if (fg_select->state == MATTING_STATE_PAINT_TRIMAP && display == tool->display)
+  if (fg_select->state == MATTING_STATE_FREE_SELECT)
+    {
+      if (GIMP_SELECTION_TOOL (tool)->function == SELECTION_SELECT)
+        status_stage = _("Roughly outline the object to extract");
+    }
+  else
     {
       GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
 
@@ -305,20 +312,27 @@ gimp_foreground_select_tool_oper_update (GimpTool         *tool,
       fg_select->last_coords = *coords;
 
       gimp_draw_tool_resume (draw_tool);
-      status = _("Paint trimap, (background, foreground and unknown) or press Enter to preview");
-    }
-  else if (fg_select->state == MATTING_STATE_FREE_SELECT)
-    {
-      if (GIMP_SELECTION_TOOL (tool)->function == SELECTION_SELECT)
-        status = _("Roughly outline the object to extract");
-    }
-  else
-    {
-      status = _("Press escape for return to trimap or Enter to apply");
+
+      if (options->draw_mode == GIMP_MATTING_DRAW_MODE_FOREGROUND)
+        status_mode = _("Selecting foreground, ");
+      else if (options->draw_mode == GIMP_MATTING_DRAW_MODE_BACKGROUND)
+        status_mode = _("Selecting background, ");
+      else
+        status_mode = _("Selecting unknown, ");
+
+      if (fg_select->state == MATTING_STATE_PAINT_TRIMAP)
+        status_stage = _("press Enter to preview.");
+      else
+        status_stage = _("press Escape to exit preview or Enter to apply.");
     }
 
-  if (proximity && status)
-    gimp_tool_replace_status (tool, display, "%s", status);
+  if (proximity && status_stage)
+    {
+      if (status_mode)
+        gimp_tool_replace_status (tool, display, "%s%s", status_mode, status_stage);
+      else
+        gimp_tool_replace_status (tool, display, "%s", status_stage);
+    }
 
   gimp_foreground_select_tool_update_gui (fg_select);
 
@@ -439,7 +453,8 @@ gimp_foreground_select_tool_button_press (GimpTool            *tool,
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
   GimpDrawTool             *draw_tool = GIMP_DRAW_TOOL (tool);
 
-  if (fg_select->state == MATTING_STATE_PAINT_TRIMAP)
+  if ((fg_select->state == MATTING_STATE_PAINT_TRIMAP) ||
+      (fg_select->state == MATTING_STATE_PREVIEW_MASK))
     {
       GimpVector2 point = gimp_vector2_new (coords->x, coords->y);
 
@@ -479,7 +494,8 @@ gimp_foreground_select_tool_button_release (GimpTool              *tool,
 {
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
 
-  if (fg_select->state == MATTING_STATE_PAINT_TRIMAP)
+  if ((fg_select->state == MATTING_STATE_PAINT_TRIMAP) ||
+      (fg_select->state == MATTING_STATE_PREVIEW_MASK))
     {
       GimpForegroundSelectOptions *options;
 
@@ -491,7 +507,10 @@ gimp_foreground_select_tool_button_release (GimpTool              *tool,
 
       gimp_foreground_select_tool_stroke_paint (fg_select, display, options);
 
-      gimp_foreground_select_tool_set_trimap (fg_select, display);
+      if (fg_select->state == MATTING_STATE_PREVIEW_MASK)
+        gimp_foreground_select_tool_preview (fg_select, display);
+      else
+        gimp_foreground_select_tool_set_trimap (fg_select, display);
 
       gimp_free_select_tool_select (GIMP_FREE_SELECT_TOOL (tool), display);
 
@@ -589,7 +608,8 @@ gimp_foreground_select_tool_motion (GimpTool         *tool,
 {
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
 
-  if (fg_select->state == MATTING_STATE_PAINT_TRIMAP)
+  if ((fg_select->state == MATTING_STATE_PAINT_TRIMAP) ||
+      (fg_select->state == MATTING_STATE_PREVIEW_MASK))
     {
       GimpVector2 *last = &g_array_index (fg_select->stroke,
                                           GimpVector2,
@@ -657,7 +677,8 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
                               options->stroke_width * shell->scale_y);
     }
 
-  if (fg_select->state == MATTING_STATE_PAINT_TRIMAP)
+  if ((fg_select->state == MATTING_STATE_PAINT_TRIMAP) ||
+      (fg_select->state == MATTING_STATE_PREVIEW_MASK))
     {
       gint    x = fg_select->last_coords.x;
       gint    y = fg_select->last_coords.y;
@@ -777,7 +798,6 @@ gimp_foreground_select_tool_set_preview (GimpForegroundSelectTool *fg_select,
   options = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
 
   gimp_foreground_select_options_get_mask_color (options, &color);
-  gimp_rgb_set_alpha (&color, 1.0);
   gimp_display_shell_set_mask (gimp_display_get_shell (display),
                                fg_select->mask, &color);
 
@@ -1010,14 +1030,9 @@ gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
       if (tool->display)
         {
           if (fg_select->state == MATTING_STATE_PAINT_TRIMAP)
-            {
-              gimp_foreground_select_tool_set_trimap (fg_select, tool->display);
-            }
-
-          if (fg_select->state == MATTING_STATE_PREVIEW_MASK)
-            {
-              gimp_foreground_select_tool_set_preview (fg_select, tool->display);
-            }
+            gimp_foreground_select_tool_set_trimap (fg_select, tool->display);
+          else if (fg_select->state == MATTING_STATE_PREVIEW_MASK)
+            gimp_foreground_select_tool_set_preview (fg_select, tool->display);
         }
     }
 }
