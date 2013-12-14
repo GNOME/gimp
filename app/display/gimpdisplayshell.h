@@ -175,6 +175,8 @@ struct _GimpDisplayShell
   gboolean           keyboard_grabbed;
   guint32            keyboard_grab_time;
 
+  gboolean           inferior_ignore_mode;
+
   gboolean           space_pressed;
   gboolean           space_release_pending;
   const gchar       *space_shaded_tool;

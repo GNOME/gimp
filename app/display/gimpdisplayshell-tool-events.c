@@ -321,7 +321,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             display, gimp_print_event (event));
 
   /*  Find out what device the event occurred upon  */
-  if (! gimp->busy && gimp_devices_check_change (gimp, event))
+  if (! gimp->busy &&
+      ! shell->inferior_ignore_mode &&
+      gimp_devices_check_change (gimp, event))
     {
       gimp_display_shell_check_device_cursor (shell);
       device_changed = TRUE;
@@ -349,6 +351,13 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       {
         GdkEventCrossing *cevent = (GdkEventCrossing *) event;
 
+        if (shell->inferior_ignore_mode)
+          {
+            shell->inferior_ignore_mode = FALSE;
+            gtk_widget_set_extension_events (shell->canvas,
+                                             GDK_EXTENSION_EVENTS_ALL);
+          }
+
         if (cevent->mode != GDK_CROSSING_NORMAL)
           return TRUE;
 
@@ -369,6 +378,13 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
     case GDK_LEAVE_NOTIFY:
       {
         GdkEventCrossing *cevent = (GdkEventCrossing *) event;
+
+        if (cevent->detail == GDK_NOTIFY_INFERIOR)
+          {
+            shell->inferior_ignore_mode = TRUE;
+            gtk_widget_set_extension_events (shell->canvas,
+                                             GDK_EXTENSION_EVENTS_NONE);
+          }
 
         if (cevent->mode != GDK_CROSSING_NORMAL)
           return TRUE;
