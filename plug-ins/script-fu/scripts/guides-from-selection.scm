@@ -30,7 +30,7 @@
 
 (script-fu-register "script-fu-guides-from-selection"
   _"New Guides from _Selection"
-  _"Draw a grid as specified by the lists of X and Y locations using the current brush"
+  _"Create four guides around the bounding box of the current selection"
   "Alan Horkan"
   "Alan Horkan, 2004.  Public Domain."
   "2004-08-13"
