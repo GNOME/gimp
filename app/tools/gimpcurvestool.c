@@ -225,8 +225,8 @@ gimp_curves_tool_initialize (GimpTool     *tool,
     }
   else
     {
-      gimp_curve_view_set_range_x (GIMP_CURVE_VIEW (c_tool->graph), 0.0, 1.0);
-      gimp_curve_view_set_range_y (GIMP_CURVE_VIEW (c_tool->graph), 0.0, 1.0);
+      gimp_curve_view_set_range_x (GIMP_CURVE_VIEW (c_tool->graph), 0, 100);
+      gimp_curve_view_set_range_y (GIMP_CURVE_VIEW (c_tool->graph), 0, 100);
     }
 
   return TRUE;
