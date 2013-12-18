@@ -31,7 +31,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-18 16:33+0100\n"
-"PO-Revision-Date: 2013-12-18 16:34+0100\n"
+"PO-Revision-Date: 2013-12-18 17:48+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: \n"
@@ -10979,7 +10979,7 @@ msgstr "Riempie la posizione di origine della gabbia con tinta unita"
 #.
 #: ../app/gui/gui.c:207
 msgid "default:LTR"
-msgstr "predefinito:LTR"
+msgstr "default:LTR"
 
 #. initialize the document history
 #: ../app/gui/gui.c:432
