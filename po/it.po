@@ -30,8 +30,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-11 17:27+0100\n"
-"PO-Revision-Date: 2013-12-11 17:27+0100\n"
+"POT-Creation-Date: 2013-12-18 16:42+0100\n"
+"PO-Revision-Date: 2013-12-18 16:49+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -305,27 +305,27 @@ msgstr "uso di %s in versione %s (compilato con versione %s)"
 msgid "%s version %s"
 msgstr "%s versione %s"
 
-#: ../app/actions/actions.c:109 ../app/dialogs/dialogs.c:391
+#: ../app/actions/actions.c:109 ../app/dialogs/dialogs.c:392
 #: ../app/widgets/gimpbrusheditor.c:89
 msgid "Brush Editor"
 msgstr "Modifica pennello"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:112 ../app/core/gimp.c:964
-#: ../app/dialogs/dialogs.c:320 ../app/dialogs/preferences-dialog.c:2595
+#: ../app/dialogs/dialogs.c:321 ../app/dialogs/preferences-dialog.c:2595
 msgid "Brushes"
 msgstr "Pennelli"
 
-#: ../app/actions/actions.c:115 ../app/dialogs/dialogs.c:330
+#: ../app/actions/actions.c:115 ../app/dialogs/dialogs.c:331
 msgid "Buffers"
 msgstr "Buffer"
 
-#: ../app/actions/actions.c:118 ../app/dialogs/dialogs.c:349
+#: ../app/actions/actions.c:118 ../app/dialogs/dialogs.c:350
 msgid "Channels"
 msgstr "Canali"
 
 #: ../app/actions/actions.c:121 ../app/dialogs/convert-type-dialog.c:177
-#: ../app/dialogs/dialogs.c:357
+#: ../app/dialogs/dialogs.c:358
 msgid "Colormap"
 msgstr "Mappatura colore"
 
@@ -333,7 +333,7 @@ msgstr "Mappatura colore"
 msgid "Context"
 msgstr "Contesto"
 
-#: ../app/actions/actions.c:127 ../app/dialogs/dialogs.c:313
+#: ../app/actions/actions.c:127 ../app/dialogs/dialogs.c:314
 msgid "Pointer Information"
 msgstr "Informazioni sul puntatore"
 
@@ -354,7 +354,7 @@ msgid "Dockable"
 msgstr "Agganciabile"
 
 #. Document History
-#: ../app/actions/actions.c:142 ../app/dialogs/dialogs.c:332
+#: ../app/actions/actions.c:142 ../app/dialogs/dialogs.c:333
 #: ../app/dialogs/preferences-dialog.c:1404
 msgid "Document History"
 msgstr "Cronologia documenti"
@@ -364,11 +364,11 @@ msgid "Drawable"
 msgstr "Disegnabile"
 
 #. Some things do not have grids, so just list
-#: ../app/actions/actions.c:148 ../app/dialogs/dialogs.c:338
+#: ../app/actions/actions.c:148 ../app/dialogs/dialogs.c:339
 msgid "Paint Dynamics"
 msgstr "Dinamiche di disegno"
 
-#: ../app/actions/actions.c:151 ../app/dialogs/dialogs.c:395
+#: ../app/actions/actions.c:151 ../app/dialogs/dialogs.c:396
 #: ../app/widgets/gimpdynamicseditor.c:93
 msgid "Paint Dynamics Editor"
 msgstr "Modifica delle dinamiche di disegno"
@@ -377,7 +377,7 @@ msgstr "Modifica delle dinamiche di disegno"
 msgid "Edit"
 msgstr "Modifica"
 
-#: ../app/actions/actions.c:157 ../app/dialogs/dialogs.c:309
+#: ../app/actions/actions.c:157 ../app/dialogs/dialogs.c:310
 msgid "Error Console"
 msgstr "Console errori"
 
@@ -389,28 +389,28 @@ msgstr "File"
 msgid "Filters"
 msgstr "Filtri"
 
-#: ../app/actions/actions.c:166 ../app/dialogs/dialogs.c:328
+#: ../app/actions/actions.c:166 ../app/dialogs/dialogs.c:329
 #: ../app/dialogs/preferences-dialog.c:2615
 msgid "Fonts"
 msgstr "Caratteri"
 
-#: ../app/actions/actions.c:169 ../app/dialogs/dialogs.c:399
+#: ../app/actions/actions.c:169 ../app/dialogs/dialogs.c:400
 #: ../app/widgets/gimpgradienteditor.c:270
 msgid "Gradient Editor"
 msgstr "Modifica del gradiente"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:172 ../app/core/gimp.c:984
-#: ../app/dialogs/dialogs.c:324 ../app/dialogs/preferences-dialog.c:2611
+#: ../app/dialogs/dialogs.c:325 ../app/dialogs/preferences-dialog.c:2611
 msgid "Gradients"
 msgstr "Gradienti"
 
 #: ../app/actions/actions.c:175 ../app/core/gimp.c:996
-#: ../app/dialogs/dialogs.c:340 ../app/dialogs/preferences-dialog.c:2619
+#: ../app/dialogs/dialogs.c:341 ../app/dialogs/preferences-dialog.c:2619
 msgid "Tool Presets"
 msgstr "Preimpostazioni strumento"
 
-#: ../app/actions/actions.c:178 ../app/dialogs/dialogs.c:407
+#: ../app/actions/actions.c:178 ../app/dialogs/dialogs.c:408
 #: ../app/widgets/gimptoolpreseteditor.c:93
 msgid "Tool Preset Editor"
 msgstr "Modifica preimpostazione strumento"
@@ -424,29 +424,29 @@ msgid "Image"
 msgstr "Immagine"
 
 #. list & grid views
-#: ../app/actions/actions.c:187 ../app/dialogs/dialogs.c:318
+#: ../app/actions/actions.c:187 ../app/dialogs/dialogs.c:319
 msgid "Images"
 msgstr "Immagini"
 
-#: ../app/actions/actions.c:190 ../app/dialogs/dialogs.c:345
+#: ../app/actions/actions.c:190 ../app/dialogs/dialogs.c:346
 #: ../app/dialogs/resize-dialog.c:289
 msgid "Layers"
 msgstr "Livelli"
 
-#: ../app/actions/actions.c:193 ../app/dialogs/dialogs.c:403
+#: ../app/actions/actions.c:193 ../app/dialogs/dialogs.c:404
 #: ../app/widgets/gimppaletteeditor.c:149
 msgid "Palette Editor"
 msgstr "Modifica tavolozza"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:196 ../app/core/gimp.c:979
-#: ../app/dialogs/dialogs.c:326 ../app/dialogs/preferences-dialog.c:2607
+#: ../app/dialogs/dialogs.c:327 ../app/dialogs/preferences-dialog.c:2607
 msgid "Palettes"
 msgstr "Tavolozze"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:199 ../app/core/gimp.c:974
-#: ../app/dialogs/dialogs.c:322 ../app/dialogs/preferences-dialog.c:2603
+#: ../app/dialogs/dialogs.c:323 ../app/dialogs/preferences-dialog.c:2603
 msgid "Patterns"
 msgstr "Motivi"
 
@@ -460,7 +460,7 @@ msgstr "Plug-in"
 msgid "Quick Mask"
 msgstr "Maschera veloce"
 
-#: ../app/actions/actions.c:208 ../app/dialogs/dialogs.c:373
+#: ../app/actions/actions.c:208 ../app/dialogs/dialogs.c:374
 msgid "Sample Points"
 msgstr "Punti di campionamento"
 
@@ -470,7 +470,7 @@ msgstr "Seleziona"
 
 #. initialize the template list
 #: ../app/actions/actions.c:214 ../app/core/gimp.c:1002
-#: ../app/dialogs/dialogs.c:334
+#: ../app/dialogs/dialogs.c:335
 msgid "Templates"
 msgstr "Modelli"
 
@@ -482,8 +482,8 @@ msgstr "Strumento testo"
 msgid "Text Editor"
 msgstr "Modifica del testo"
 
-#: ../app/actions/actions.c:223 ../app/dialogs/dialogs.c:301
-#: ../app/gui/gui.c:437
+#: ../app/actions/actions.c:223 ../app/dialogs/dialogs.c:302
+#: ../app/gui/gui.c:442
 msgid "Tool Options"
 msgstr "Opzioni strumento"
 
@@ -491,7 +491,7 @@ msgstr "Opzioni strumento"
 msgid "Tools"
 msgstr "Strumenti"
 
-#: ../app/actions/actions.c:229 ../app/dialogs/dialogs.c:353
+#: ../app/actions/actions.c:229 ../app/dialogs/dialogs.c:354
 #: ../app/tools/gimpvectortool.c:160
 msgid "Paths"
 msgstr "Tracciati"
@@ -8515,7 +8515,7 @@ msgid "Foreground Extraction"
 msgstr "Estrazione primo piano"
 
 #: ../app/core/gimpdrawable-levels.c:72
-#: ../app/tools/gimpforegroundselectoptions.c:312
+#: ../app/tools/gimpforegroundselectoptions.c:324
 #: ../app/tools/gimplevelstool.c:136
 msgid "Levels"
 msgstr "Livelli"
@@ -9739,63 +9739,63 @@ msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "Sicuri di voler eliminare \"%s\" dall'elenco e dal disco?"
 
-#: ../app/dialogs/dialogs.c:305
+#: ../app/dialogs/dialogs.c:306
 msgid "Devices"
 msgstr "Dispositivi"
 
-#: ../app/dialogs/dialogs.c:305
+#: ../app/dialogs/dialogs.c:306
 msgid "Device Status"
 msgstr "Stato dei dispositivi"
 
-#: ../app/dialogs/dialogs.c:309
+#: ../app/dialogs/dialogs.c:310
 msgid "Errors"
 msgstr "Errori"
 
-#: ../app/dialogs/dialogs.c:313
+#: ../app/dialogs/dialogs.c:314
 msgid "Pointer"
 msgstr "Puntatore"
 
-#: ../app/dialogs/dialogs.c:332
+#: ../app/dialogs/dialogs.c:333
 msgid "History"
 msgstr "Cronologia"
 
-#: ../app/dialogs/dialogs.c:334
+#: ../app/dialogs/dialogs.c:335
 msgid "Image Templates"
 msgstr "Modelli immagine"
 
-#: ../app/dialogs/dialogs.c:361
+#: ../app/dialogs/dialogs.c:362
 msgid "Histogram"
 msgstr "Istogramma"
 
-#: ../app/dialogs/dialogs.c:365
+#: ../app/dialogs/dialogs.c:366
 msgid "Selection"
 msgstr "Selezione"
 
-#: ../app/dialogs/dialogs.c:365
+#: ../app/dialogs/dialogs.c:366
 msgid "Selection Editor"
 msgstr "Modifica la selezione"
 
-#: ../app/dialogs/dialogs.c:369
+#: ../app/dialogs/dialogs.c:370
 msgid "Undo"
 msgstr "Annulla"
 
-#: ../app/dialogs/dialogs.c:369
+#: ../app/dialogs/dialogs.c:370
 msgid "Undo History"
 msgstr "Cronologia annullamenti"
 
-#: ../app/dialogs/dialogs.c:379
+#: ../app/dialogs/dialogs.c:380
 msgid "Navigation"
 msgstr "Navigazione"
 
-#: ../app/dialogs/dialogs.c:379
+#: ../app/dialogs/dialogs.c:380
 msgid "Display Navigation"
 msgstr "Navigazione vista"
 
-#: ../app/dialogs/dialogs.c:385
+#: ../app/dialogs/dialogs.c:386
 msgid "FG/BG"
 msgstr "PP/SF"
 
-#: ../app/dialogs/dialogs.c:385
+#: ../app/dialogs/dialogs.c:386
 msgid "FG/BG Color"
 msgstr "Colore PP/SF"
 
@@ -10307,6 +10307,7 @@ msgstr "I_ntervallo:"
 
 #. The "Preview" frame
 #: ../app/dialogs/palette-import-dialog.c:361
+#: ../app/tools/gimpforegroundselecttool.c:587
 msgid "Preview"
 msgstr "Anteprima"
 
@@ -11892,18 +11893,17 @@ msgstr ""
 "Rendi la transparenza tutto-o-niente, sottoponendo il canale alfa ad un "
 "valore di soglia "
 
-#. Normally this should have been taken care of during command line
-#. * parsing as a post-parse hook of gtk_get_option_group(), using the
-#. * system locales.
-#. * But user config may have overriden the language, therefore we must
-#. * check the widget directions again.
+#. TRANSLATORS: there is no need to translate this in GIMP. This uses
+#. * "gtk20" domain as a special trick to determine language direction,
+#. * but xgettext extracts it anyway mistakenly into GIMP po files.
+#. * Leave an empty string as translation. It does not matter.
 #.
-#: ../app/gui/gui.c:208
+#: ../app/gui/gui.c:207
 msgid "default:LTR"
-msgstr "predefinito:LTR"
+msgstr "default:LTR"
 
 #. initialize the document history
-#: ../app/gui/gui.c:434
+#: ../app/gui/gui.c:439
 msgid "Documents"
 msgstr "Documenti"
 
@@ -13917,66 +13917,100 @@ msgstr "Parametri per il matting-levin"
 msgid "Parameter for matting-global"
 msgstr "Parametri per il matting-global"
 
-#: ../app/tools/gimpforegroundselectoptions.c:255
+#: ../app/tools/gimpforegroundselectoptions.c:264
 msgid "Draw Mode"
 msgstr "Modalità disegno"
 
-#: ../app/tools/gimpforegroundselectoptions.c:266
+#: ../app/tools/gimpforegroundselectoptions.c:275
 msgid "Stroke width"
 msgstr "Spessore delineatura"
 
-#: ../app/tools/gimpforegroundselectoptions.c:285
+#: ../app/tools/gimpforegroundselectoptions.c:294
 msgid "Reset stroke width native size"
 msgstr "Reimposta spessore delineatura alla dimensione nativa"
 
-#: ../app/tools/gimpforegroundselectoptions.c:290
+#: ../app/tools/gimpforegroundselectoptions.c:299
 msgid "Preview color"
 msgstr "Colore anteprima"
 
-#: ../app/tools/gimpforegroundselectoptions.c:301
+#: ../app/tools/gimpforegroundselectoptions.c:310
 msgid "Engine"
 msgstr "Motore"
 
-#: ../app/tools/gimpforegroundselectoptions.c:325
+#: ../app/tools/gimpforegroundselectoptions.c:337
 msgid "Active levels"
 msgstr "Livelli attivi"
 
-#: ../app/tools/gimpforegroundselectoptions.c:338
+#: ../app/tools/gimpforegroundselectoptions.c:350
 msgid "Iterations"
 msgstr "Iterazioni"
 
-#: ../app/tools/gimpforegroundselecttool.c:149
+#: ../app/tools/gimpforegroundselecttool.c:161
 msgid "Foreground Select"
 msgstr "Selezione primo piano"
 
-#: ../app/tools/gimpforegroundselecttool.c:150
+#: ../app/tools/gimpforegroundselecttool.c:162
 msgid "Foreground Select Tool: Select a region containing foreground objects"
 msgstr ""
 "Strumento selezione primo piano: seleziona una regione contenente soggetti "
 "in primo piano"
 
-#: ../app/tools/gimpforegroundselecttool.c:151
+#: ../app/tools/gimpforegroundselecttool.c:163
 msgid "F_oreground Select"
 msgstr "Prim_o piano"
 
-#: ../app/tools/gimpforegroundselecttool.c:283
-msgid ""
-"Paint trimap, (background, foreground and unknown) or press Enter to preview"
-msgstr ""
-"Trimappa di disegno, (sfondo, primo piano e sconosciuto) o premere Invio per "
-"l'anteprima"
-
-#: ../app/tools/gimpforegroundselecttool.c:288
+#: ../app/tools/gimpforegroundselecttool.c:304
 msgid "Roughly outline the object to extract"
 msgstr "Delinea grossolanamente l'oggetto da estrarre"
 
-#: ../app/tools/gimpforegroundselecttool.c:292
-msgid "Press escape for return to trimap or Enter to apply"
-msgstr "Premere Esc per tornare alla trimappa o Invio per applicare"
+#: ../app/tools/gimpforegroundselecttool.c:317
+msgid "Selecting foreground, "
+msgstr "Selezione primo piano"
 
-#: ../app/tools/gimpforegroundselecttool.c:748
+#: ../app/tools/gimpforegroundselecttool.c:319
+msgid "Selecting background, "
+msgstr "Selezione sfondo"
+
+#: ../app/tools/gimpforegroundselecttool.c:321
+msgid "Selecting unknown, "
+msgstr "Selezione sconosciuta,"
+
+#: ../app/tools/gimpforegroundselecttool.c:324
+msgid "press Enter to preview."
+msgstr "premere invio l'anteprima."
+
+#: ../app/tools/gimpforegroundselecttool.c:326
+msgid "press Escape to exit preview or Enter to apply."
+msgstr "Esc per uscire dall'anteprima o Invio per applicare."
+
+#: ../app/tools/gimpforegroundselecttool.c:565
+msgid "Dialog for foreground select"
+msgstr "Finestra per la selezione primo piano"
+
+#: ../app/tools/gimpforegroundselecttool.c:567
+msgid "Toggle Preview"
+msgstr "Commuta la vista anteprima"
+
+#: ../app/tools/gimpforegroundselecttool.c:568
+msgid "Apply"
+msgstr "Applica"
+
+#: ../app/tools/gimpforegroundselecttool.c:579
+msgid "Select foreground pixels"
+msgstr "Seleziona i pixel in primo piano"
+
+#: ../app/tools/gimpforegroundselecttool.c:583
+msgid "Paint mask"
+msgstr "Maschera di disegno"
+
+#: ../app/tools/gimpforegroundselecttool.c:874
 msgid "Computing alpha of unknown pixels"
 msgstr "Calcolo alfa per i pixel sconosciuti"
+
+#: ../app/tools/gimpforegroundselecttool.c:950
+msgctxt "command"
+msgid "Foreground Select"
+msgstr "Selezione primo piano"
 
 #: ../app/tools/gimpfreeselecttool.c:197
 msgid ""

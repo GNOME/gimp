@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-06 08:44+0100\n"
-"PO-Revision-Date: 2013-11-06 08:58+0100\n"
+"POT-Creation-Date: 2013-12-18 16:49+0100\n"
+"PO-Revision-Date: 2013-12-18 17:46+0100\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -202,7 +202,7 @@ msgstr "Esporta file"
 msgid "_Ignore"
 msgstr "_Ignora"
 
-#: ../libgimp/gimpexport.c:518 ../libgimp/gimpexport.c:988
+#: ../libgimp/gimpexport.c:518 ../libgimp/gimpexport.c:1013
 msgid "_Export"
 msgstr "_Esporta"
 
@@ -221,7 +221,7 @@ msgstr ""
 msgid "The export conversion won't modify your original image."
 msgstr "L'esportazione non modificherà l'immagine originale."
 
-#: ../libgimp/gimpexport.c:725
+#: ../libgimp/gimpexport.c:729
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -230,7 +230,7 @@ msgstr ""
 "Si è in procinto di salvare una maschera di livello come %s.\n"
 "Ciò non salverà i livelli visibili."
 
-#: ../libgimp/gimpexport.c:731
+#: ../libgimp/gimpexport.c:735
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -239,7 +239,7 @@ msgstr ""
 "Si è in procinto di salvare un canale (selezione salvata) come %s.\n"
 "Ciò non salverà i livelli visibili."
 
-#: ../libgimp/gimpexport.c:979
+#: ../libgimp/gimpexport.c:1004
 msgid "Export Image as "
 msgstr "Esporta immagine come "
 
@@ -262,27 +262,27 @@ msgstr "Selezione gradiente"
 msgid "(Empty)"
 msgstr "(Vuoto)"
 
-#: ../libgimp/gimpmetadata.c:537
+#: ../libgimp/gimpmetadata.c:543
 msgid "Background"
 msgstr "Sfondo"
 
-#: ../libgimp/gimpmetadata.c:670
+#: ../libgimp/gimpmetadata.c:676
 msgid "Rotate Image?"
 msgstr "Ruotare l'immagine?"
 
-#: ../libgimp/gimpmetadata.c:673
+#: ../libgimp/gimpmetadata.c:679
 msgid "_Keep Orientation"
 msgstr "_Mantieni l'orientamento"
 
-#: ../libgimp/gimpmetadata.c:731
+#: ../libgimp/gimpmetadata.c:737
 msgid "According to the Exif data, this image is rotated."
 msgstr "Secondo i dati Exif, questa immagine è ruotata."
 
-#: ../libgimp/gimpmetadata.c:746
+#: ../libgimp/gimpmetadata.c:752
 msgid "Would you like GIMP to rotate it into the standard orientation?"
 msgstr "Volete che GIMP la ruoti secondo l'orientamento normale?"
 
-#: ../libgimp/gimpmetadata.c:756
+#: ../libgimp/gimpmetadata.c:762
 msgid "_Don't ask me again"
 msgstr "Non chie_dere più"
 
@@ -953,22 +953,22 @@ msgctxt "text-justification"
 msgid "Filled"
 msgstr "Giustificato"
 
-#: ../libgimpbase/gimpmetadata.c:479
+#: ../libgimpbase/gimpmetadata.c:523
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "È possibile caricare i metadati solo da file locali"
 
-#: ../libgimpbase/gimpmetadata.c:539
+#: ../libgimpbase/gimpmetadata.c:583
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "È possibile salvare i metadati sono su file locali"
 
-#: ../libgimpbase/gimpmetadata.c:612
+#: ../libgimpbase/gimpmetadata.c:656
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Fallita l'analisi dei dati Exif."
 
-#: ../libgimpbase/gimpmetadata.c:666
+#: ../libgimpbase/gimpmetadata.c:710
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Fallita l'analisi dei dati XMP."
@@ -1013,24 +1013,38 @@ msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "Il profilo di colore CMYK usato per convertire tra RGB e CMYK."
 
 #: ../libgimpconfig/gimpcolorconfig.c:65
-msgid "The color profile used for simulating a printed version (softproof)."
-msgstr ""
-"Il profilo di colore usato per la simulazione di una versione stampata "
-"(campione)."
-
-#: ../libgimpconfig/gimpcolorconfig.c:67
-msgid "Sets how colors are mapped for your display."
-msgstr "Imposta come sono mappati i colori per il display."
+msgid ""
+"The color profile to use for soft proofing from your image's color space to "
+"some other color space, including soft proofing to a printer or other output "
+"device profile. "
+msgstr "Il profilo colore da usare per la simulazione, dallo spazio colore dell'immagine verso qualche altro spazio colore, comprese le simulazioni in stampa o verso altro profilo di dispositivo di uscita. "
 
 #: ../libgimpconfig/gimpcolorconfig.c:69
 msgid ""
-"Sets how colors are converted from RGB working space to the print simulation "
-"device."
-msgstr ""
-"Imposta come i colori sono convertiti dallo spazio di lavoro RGB al "
-"dispositivo di simulazione di stampa."
+"How colors are converted from your image's color space to your display "
+"device. Relative colorimetric is usually the best choice. Unless you use a "
+"LUT monitor profile (most monitor profiles are matrix), choosing perceptual "
+"intent really gives you relative colorimetric."
+msgstr "Come vengono convertiti i colori dallo spazio colore dell'immagine al dispositivo di visualizzazione. Colorimetrico relativo di solito è la scelta migliore. A meno che non si stia usando un profilo video LUT (molti profili di monitor sono matrici), scegliendo intento percettivo si ottiene in realtà un colorimetrico relativo."
 
-#: ../libgimpconfig/gimpcolorconfig.c:72
+#: ../libgimpconfig/gimpcolorconfig.c:74
+msgid ""
+"Do use black point compensation (unless you know you have a reason not to). "
+msgstr "Usare la compensazione del punto nero (a meno che non si abbia una buona ragione per non farlo). "
+
+#: ../libgimpconfig/gimpcolorconfig.c:76
+msgid ""
+"How colors are converted from your image's color space to the output "
+"simulation device (usually your monitor). Try them all and choose what looks "
+"the best. "
+msgstr "Come vengono convertiti i colori dallo spazio colore dell'immagine al dispositivo di simulazione (solitamente un monitor). Provarli tutti e scegliere quello che sembra il migliore. "
+
+#: ../libgimpconfig/gimpcolorconfig.c:80
+msgid ""
+"Try with and without black point compensation and choose what looks best. "
+msgstr "Provare con e senza la compensazione del punto nero e scegliere quello che rende meglio. "
+
+#: ../libgimpconfig/gimpcolorconfig.c:83
 msgid ""
 "When enabled, the print simulation will mark colors which can not be "
 "represented in the target color space."
@@ -1038,7 +1052,7 @@ msgstr ""
 "Se abilitata, la simulazione di stampa contrassegna i colori che non "
 "potranno essere rappresentati nello spazio di colore di destinazione."
 
-#: ../libgimpconfig/gimpcolorconfig.c:75
+#: ../libgimpconfig/gimpcolorconfig.c:86
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Il colore da usare per contrassegnare i colori fuori gamma."
 
@@ -1197,14 +1211,13 @@ msgstr "Non caricato"
 #: ../libgimpthumb/gimpthumb-utils.c:153
 #, c-format
 msgid ""
-"Cannot determine a valid home directory.\n"
+"Cannot determine a valid thumbnails directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
-"Impossibile determinare una directory home valida.\n"
-"Le miniature saranno perciò memorizzate nella cartella per i file temporanei "
-"(%s)."
+"Impossibile trovare una cartella miniature valida.\n"
+"Le miniature saranno memorizzate nella cartella per i file temporanei (%s)."
 
-#: ../libgimpthumb/gimpthumb-utils.c:277 ../libgimpthumb/gimpthumb-utils.c:345
+#: ../libgimpthumb/gimpthumb-utils.c:299 ../libgimpthumb/gimpthumb-utils.c:367
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Creazione della cartella \"%s\" per le miniature non riuscita."
