@@ -380,6 +380,7 @@ gimp_text_options_reset (GimpToolOptions *tool_options)
   gimp_config_reset_property (object, "justify");
   gimp_config_reset_property (object, "indent");
   gimp_config_reset_property (object, "line-spacing");
+  gimp_config_reset_property (object, "letter-spacing");
   gimp_config_reset_property (object, "box-mode");
   gimp_config_reset_property (object, "use-editor");
 }
