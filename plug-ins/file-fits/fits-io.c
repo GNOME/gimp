@@ -1134,7 +1134,7 @@ fits_decode_header (FitsRecordList *hdr,
   FITS_TRY_CARD (hdr, hdulist, "GROUPS", groups, FITS_DATA_TYPE_FLONG, fbool);
   random_groups = hdulist->used.groups && hdulist->groups;
 
-  FITS_TRY_CARD (hdr, hdulist, "EXTEND", extend, FITS_DATA_TYPE_FLONG, fbool);
+  FITS_TRY_CARD (hdr, hdulist, "EXTEND", extend, FITS_DATA_TYPE_FBOOL, fbool);
 
   if (hdulist->used.xtension)  /* Extension requires GCOUNT and PCOUNT */
     {
