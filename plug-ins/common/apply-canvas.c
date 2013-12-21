@@ -1424,7 +1424,7 @@ strucpi (GimpDrawable *drawable,
     case 3:
       xm = 128;
       ym = -1;
-      offs = 128;
+      offs = 127;
       break;
 
     default:
