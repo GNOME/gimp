@@ -314,7 +314,7 @@ gimp_imagefile_update (GimpImagefile *imagefile)
     }
 }
 
-void
+gboolean
 gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
                                  GimpContext   *context,
                                  GimpProgress  *progress,
@@ -325,12 +325,12 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
   GimpThumbnail        *thumbnail;
   GimpThumbState        image_state;
 
-  g_return_if_fail (GIMP_IS_IMAGEFILE (imagefile));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_val_if_fail (GIMP_IS_IMAGEFILE (imagefile), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
 
   if (size < 1)
-    return;
+    return TRUE;
 
   private = GET_PRIVATE (imagefile);
 
@@ -402,11 +402,19 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
       if (! success)
         {
           gimp_message_literal (private->gimp,
-				G_OBJECT (progress), GIMP_MESSAGE_ERROR,
-				error->message);
+                                G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+                                error->message);
           g_clear_error (&error);
+
+          g_object_set (thumbnail,
+                        "thumb-state", GIMP_THUMB_STATE_FAILED,
+                        NULL);
         }
+
+      return success;
     }
+
+  return TRUE;
 }
 
 /*  The weak version doesn't ref the imagefile but deals gracefully
@@ -440,7 +448,16 @@ gimp_imagefile_create_thumbnail_weak (GimpImagefile *imagefile,
 
   g_object_add_weak_pointer (G_OBJECT (imagefile), (gpointer) &imagefile);
 
-  gimp_imagefile_create_thumbnail (local, context, progress, size, replace);
+  if (! gimp_imagefile_create_thumbnail (local, context, progress, size, replace))
+    {
+      /* The weak version works on a local copy so the thumbnail status
+       * of the actual image is not properly updated in case of creation
+       * failure, thus it would end up in a generic GIMP_THUMB_STATE_NOT_FOUND,
+       * which is less informative. */
+      g_object_set (private->thumbnail,
+                    "thumb-state", GIMP_THUMB_STATE_FAILED,
+                    NULL);
+    }
 
   if (imagefile)
     {

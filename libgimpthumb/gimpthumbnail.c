@@ -710,14 +710,15 @@ gimp_thumbnail_update_thumb (GimpThumbnail *thumbnail,
 
   filename = gimp_thumb_find_thumb (thumbnail->image_uri, &size);
 
-  if (! filename)
+  /* We don't want to clear the GIMP_THUMB_STATE_FAILED state, because
+   * it is normal to have no filename if thumbnail creation failed. */
+  if (state != GIMP_THUMB_STATE_FAILED && ! filename)
     state = GIMP_THUMB_STATE_NOT_FOUND;
 
   switch (state)
     {
     case GIMP_THUMB_STATE_EXISTS:
     case GIMP_THUMB_STATE_OLD:
-    case GIMP_THUMB_STATE_FAILED:
     case GIMP_THUMB_STATE_OK:
       g_return_if_fail (thumbnail->thumb_filename != NULL);
 

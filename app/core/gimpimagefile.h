@@ -64,7 +64,7 @@ GIcon         * gimp_imagefile_get_gicon             (GimpImagefile *imagefile);
 void            gimp_imagefile_set_mime_type         (GimpImagefile *imagefile,
                                                       const gchar   *mime_type);
 void            gimp_imagefile_update                (GimpImagefile *imagefile);
-void            gimp_imagefile_create_thumbnail      (GimpImagefile *imagefile,
+gboolean        gimp_imagefile_create_thumbnail      (GimpImagefile *imagefile,
                                                       GimpContext   *context,
                                                       GimpProgress  *progress,
                                                       gint           size,
