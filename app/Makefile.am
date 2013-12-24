@@ -112,6 +112,7 @@ AM_CPPFLAGS = \
 	$(GTK_CFLAGS)			\
 	$(PANGOCAIRO_CFLAGS)		\
 	$(GEGL_CFLAGS)			\
+	$(GEXIV2_CFLAGS)		\
 	-I$(includedir)			\
 	-I$(builddir)/gui
 
