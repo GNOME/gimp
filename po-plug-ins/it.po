@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-23 17:59+0100\n"
-"PO-Revision-Date: 2013-11-23 18:00+0100\n"
+"POT-Creation-Date: 2013-12-28 16:55+0100\n"
+"PO-Revision-Date: 2013-12-28 16:57+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -1219,8 +1219,8 @@ msgid "Save CML Explorer Parameters"
 msgstr "Salva parametri Esploratore CML"
 
 #: ../plug-ins/common/cml-explorer.c:2035 ../plug-ins/common/curve-bend.c:839
-#: ../plug-ins/common/file-cel.c:778 ../plug-ins/common/file-csource.c:411
-#: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-gif-save.c:762
+#: ../plug-ins/common/file-cel.c:778 ../plug-ins/common/file-dicom.c:1371
+#: ../plug-ins/common/file-gif-save.c:762
 #: ../plug-ins/common/file-html-table.c:241 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:734
 #: ../plug-ins/common/file-png.c:1458 ../plug-ins/common/file-ps.c:1193
@@ -1228,7 +1228,7 @@ msgstr "Salva parametri Esploratore CML"
 #: ../plug-ins/common/file-raw-data.c:795 ../plug-ins/common/file-sunras.c:567
 #: ../plug-ins/common/file-tga.c:1179 ../plug-ins/common/file-tiff-save.c:754
 #: ../plug-ins/common/file-xbm.c:1031 ../plug-ins/common/file-xmc.c:1449
-#: ../plug-ins/common/file-xwd.c:634 ../plug-ins/common/sphere-designer.c:2121
+#: ../plug-ins/common/file-xwd.c:646 ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:320 ../plug-ins/file-fits/fits.c:478
 #: ../plug-ins/file-fli/fli-gimp.c:748 ../plug-ins/file-ico/ico-save.c:1066
 #: ../plug-ins/file-jpeg/jpeg-save.c:319 ../plug-ins/file-psd/psd-save.c:1681
@@ -2690,7 +2690,7 @@ msgstr ""
 #: ../plug-ins/common/file-tga.c:448 ../plug-ins/common/file-tiff-load.c:584
 #: ../plug-ins/common/file-wmf.c:988 ../plug-ins/common/file-xbm.c:743
 #: ../plug-ins/common/file-xmc.c:669 ../plug-ins/common/file-xpm.c:354
-#: ../plug-ins/common/file-xwd.c:533 ../plug-ins/file-bmp/bmp-read.c:211
+#: ../plug-ins/common/file-xwd.c:539 ../plug-ins/file-bmp/bmp-read.c:211
 #: ../plug-ins/file-exr/file-exr.c:230 ../plug-ins/file-faxg3/faxg3.c:218
 #: ../plug-ins/file-fli/fli-gimp.c:503 ../plug-ins/file-ico/ico-load.c:642
 #: ../plug-ins/file-jpeg/jpeg-load.c:100 ../plug-ins/file-psd/psd-load.c:137
@@ -2773,7 +2773,7 @@ msgstr ""
 #: ../plug-ins/common/file-ps.c:1198 ../plug-ins/common/file-sunras.c:572
 #: ../plug-ins/common/file-tga.c:1184 ../plug-ins/common/file-tiff-save.c:762
 #: ../plug-ins/common/file-xbm.c:1036 ../plug-ins/common/file-xmc.c:1454
-#: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:639
+#: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:651
 #: ../plug-ins/file-bmp/bmp-write.c:336 ../plug-ins/file-fits/fits.c:483
 #: ../plug-ins/file-fli/fli-gimp.c:716 ../plug-ins/file-ico/ico-save.c:1060
 #: ../plug-ins/file-jpeg/jpeg-save.c:276 ../plug-ins/file-psd/psd-save.c:1686
@@ -2782,53 +2782,53 @@ msgstr ""
 msgid "Saving '%s'"
 msgstr "Salvataggio di '%s'"
 
-#: ../plug-ins/common/file-csource.c:112
+#: ../plug-ins/common/file-csource.c:111
 msgid "C source code"
 msgstr "Codice sorgente C"
 
-#: ../plug-ins/common/file-csource.c:710
+#: ../plug-ins/common/file-csource.c:867
 msgid "C-Source"
 msgstr "Sorgente C"
 
-#: ../plug-ins/common/file-csource.c:728
+#: ../plug-ins/common/file-csource.c:885
 msgid "_Prefixed name:"
 msgstr "Nome con _prefisso:"
 
-#: ../plug-ins/common/file-csource.c:737
+#: ../plug-ins/common/file-csource.c:894
 msgid "Co_mment:"
 msgstr "Co_mmento:"
 
 #. Use Comment
 #.
-#: ../plug-ins/common/file-csource.c:744
+#: ../plug-ins/common/file-csource.c:901
 msgid "_Save comment to file"
 msgstr "_Salva commento nel file"
 
 #. GLib types
 #.
-#: ../plug-ins/common/file-csource.c:756
+#: ../plug-ins/common/file-csource.c:913
 msgid "_Use GLib types (guint8*)"
 msgstr "_Usa tipi GLib (guint8*)"
 
-#: ../plug-ins/common/file-csource.c:769
+#: ../plug-ins/common/file-csource.c:926
 msgid "Us_e macros instead of struct"
 msgstr "Us_a le macro invece delle struct"
 
-#: ../plug-ins/common/file-csource.c:782
+#: ../plug-ins/common/file-csource.c:939
 msgid "Use _1 byte Run-Length-Encoding"
 msgstr "Usa codifica run-length a _1 byte"
 
-#: ../plug-ins/common/file-csource.c:795
+#: ../plug-ins/common/file-csource.c:952
 msgid "Sa_ve alpha channel (RGBA/RGB)"
 msgstr "Sal_va canale alfa (RGBA/RGB)"
 
 #. RGB-565
 #.
-#: ../plug-ins/common/file-csource.c:807
+#: ../plug-ins/common/file-csource.c:964
 msgid "Save as _RGB565 (16-bit)"
 msgstr "Salva come _RGB565 (16-bit)"
 
-#: ../plug-ins/common/file-csource.c:830
+#: ../plug-ins/common/file-csource.c:987
 msgid "Op_acity:"
 msgstr "Op_acità:"
 
@@ -2860,7 +2860,7 @@ msgid "Cannot save images with alpha channel."
 msgstr "Impossibile salvare immagini con canali alfa."
 
 #: ../plug-ins/common/file-dicom.c:1355 ../plug-ins/common/file-ps.c:1183
-#: ../plug-ins/common/file-ps.c:1215 ../plug-ins/common/file-xwd.c:624
+#: ../plug-ins/common/file-ps.c:1215 ../plug-ins/common/file-xwd.c:636
 #: ../plug-ins/file-fits/fits.c:468
 msgid "Cannot operate on unknown image types."
 msgstr "Impossibile operare su immagini di tipo sconosciuto."
@@ -4135,7 +4135,7 @@ msgid "Type of colormap not supported"
 msgstr "Tipo di mappa colore non supportata"
 
 #: ../plug-ins/common/file-sunras.c:459 ../plug-ins/common/file-xbm.c:828
-#: ../plug-ins/common/file-xwd.c:498
+#: ../plug-ins/common/file-xwd.c:512
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4145,7 +4145,7 @@ msgstr ""
 "Larghezza immagine non specificata"
 
 #: ../plug-ins/common/file-sunras.c:467 ../plug-ins/common/file-xbm.c:835
-#: ../plug-ins/common/file-xwd.c:508
+#: ../plug-ins/common/file-xwd.c:520
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4155,7 +4155,7 @@ msgstr ""
 "La larghezza immagine è maggiore di quanto GIMP possa gestire"
 
 #: ../plug-ins/common/file-sunras.c:475 ../plug-ins/common/file-xbm.c:842
-#: ../plug-ins/common/file-xwd.c:517
+#: ../plug-ins/common/file-xwd.c:527
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4165,7 +4165,7 @@ msgstr ""
 "Altezza immagine non specificata"
 
 #: ../plug-ins/common/file-sunras.c:483 ../plug-ins/common/file-xbm.c:849
-#: ../plug-ins/common/file-xwd.c:526
+#: ../plug-ins/common/file-xwd.c:534
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4189,9 +4189,9 @@ msgstr "Impossibile gestire immagini di tipo sconosciuto"
 
 #: ../plug-ins/common/file-sunras.c:1086 ../plug-ins/common/file-sunras.c:1177
 #: ../plug-ins/common/file-sunras.c:1258 ../plug-ins/common/file-sunras.c:1353
-#: ../plug-ins/common/file-xwd.c:1354 ../plug-ins/common/file-xwd.c:1457
-#: ../plug-ins/common/file-xwd.c:1616 ../plug-ins/common/file-xwd.c:1831
-#: ../plug-ins/common/file-xwd.c:1989 ../plug-ins/common/file-xwd.c:2252
+#: ../plug-ins/common/file-xwd.c:1366 ../plug-ins/common/file-xwd.c:1469
+#: ../plug-ins/common/file-xwd.c:1628 ../plug-ins/common/file-xwd.c:1843
+#: ../plug-ins/common/file-xwd.c:2001 ../plug-ins/common/file-xwd.c:2264
 #: ../plug-ins/file-fits/fits.c:802
 msgid "EOF encountered on reading"
 msgstr "EOF riscontrato in lettura"
@@ -4822,11 +4822,29 @@ msgstr "Immagine X window"
 msgid "Could not read XWD header from '%s'"
 msgstr "Impossibile leggere intestazione XWD da '%s'"
 
-#: ../plug-ins/common/file-xwd.c:489
+#: ../plug-ins/common/file-xwd.c:472
+#, c-format
+msgid ""
+"'%s':\n"
+"Illegal number of colormap entries: %ld"
+msgstr ""
+"\"%s\":\n"
+"Numero di voci nella mappa colori illegale: %ld"
+
+#: ../plug-ins/common/file-xwd.c:482
+#, c-format
+msgid ""
+"'%s':\n"
+"Number of colormap entries < number of colors"
+msgstr ""
+"\"%s\":\n"
+"Numero di voci nella mappa colori < numero di colori"
+
+#: ../plug-ins/common/file-xwd.c:505
 msgid "Can't read color entries"
 msgstr "Impossibile leggere i colori"
 
-#: ../plug-ins/common/file-xwd.c:590
+#: ../plug-ins/common/file-xwd.c:591
 #, c-format
 msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
@@ -4835,21 +4853,21 @@ msgstr ""
 "Il file XWD %s ha formato %d, profondità %d e bit per pixel %d. Attualmente "
 "non è supportato."
 
-#: ../plug-ins/common/file-xwd.c:613
+#: ../plug-ins/common/file-xwd.c:625
 msgid "Cannot save images with alpha channels."
 msgstr "Impossibile salvare immagini con canali alfa."
 
-#: ../plug-ins/common/file-xwd.c:1687 ../plug-ins/common/file-xwd.c:2085
+#: ../plug-ins/common/file-xwd.c:1699 ../plug-ins/common/file-xwd.c:2097
 #, c-format
 msgid "XWD-file %s is corrupt."
 msgstr "Il file XWD %s è danneggiato."
 
-#: ../plug-ins/common/file-xwd.c:2389
+#: ../plug-ins/common/file-xwd.c:2401
 msgid "Error during writing indexed/gray image"
 msgstr ""
 "Errore durante la scrittura dell'immagine indicizzata/in scala di grigi"
 
-#: ../plug-ins/common/file-xwd.c:2489
+#: ../plug-ins/common/file-xwd.c:2501
 msgid "Error during writing rgb image"
 msgstr "Errore durante la scrittura dell'immagine rgb"
 
