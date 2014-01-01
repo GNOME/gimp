@@ -89,72 +89,112 @@ typedef struct
 
 /* Declare some local functions.
  */
-static void   query      (void);
-static void   run        (const gchar      *name,
-                          gint              nparams,
-                          const GimpParam  *param,
-                          gint             *nreturn_vals,
-                          GimpParam       **return_vals);
+static void      query            (void);
+static void      run              (const gchar       *name,
+                                   gint               nparams,
+                                   const GimpParam   *param,
+                                   gint              *nreturn_vals,
+                                   GimpParam        **return_vals);
 
-static gint32    load_image    (const gchar  *filename,
-                                GError      **error);
-static gboolean  save_image    (const gchar  *filename,
-                                gint32        image_ID,
-                                gint32        drawable_ID,
-                                GError      **error);
+static gint32    load_image       (const gchar       *filename,
+                                   GError           **error);
+static gboolean  save_image       (const gchar       *filename,
+                                   gint32             image_ID,
+                                   gint32             drawable_ID,
+                                   GError           **error);
 
-static void   set_color_table  (gint32, L_SUNFILEHEADER *, const guchar *);
-static gint32 create_new_image (const gchar   *filename,
-                                guint          width,
-                                guint          height,
-                                GimpImageBaseType type,
-                                gint32        *layer_ID,
-                                GimpDrawable **drawable,
-                                GimpPixelRgn  *pixel_rgn);
+static void      set_color_table  (gint32             image_ID,
+                                   L_SUNFILEHEADER   *sunhdr,
+                                   const guchar      *suncolmap);
+static gint32    create_new_image (const gchar       *filename,
+                                   guint              width,
+                                   guint              height,
+                                   GimpImageBaseType  type,
+                                   gint32            *layer_ID,
+                                   GeglBuffer       **buffer);
 
-static gint32 load_sun_d1   (const gchar *,
-                             FILE *, L_SUNFILEHEADER *, unsigned char *);
-static gint32 load_sun_d8   (const gchar *,
-                             FILE *, L_SUNFILEHEADER *, unsigned char *);
-static gint32 load_sun_d24  (const gchar *,
-                             FILE *, L_SUNFILEHEADER *, unsigned char *);
-static gint32 load_sun_d32  (const gchar *,
-                             FILE *, L_SUNFILEHEADER *, unsigned char *);
+static gint32    load_sun_d1      (const gchar       *filename,
+                                   FILE              *ifp,
+                                   L_SUNFILEHEADER   *sunhdr,
+                                   guchar            *suncolmap);
+static gint32    load_sun_d8      (const gchar       *filename,
+                                   FILE              *ifp,
+                                   L_SUNFILEHEADER   *sunhdr,
+                                   guchar            *suncolmap);
+static gint32    load_sun_d24     (const gchar       *filename,
+                                   FILE              *ifp,
+                                   L_SUNFILEHEADER   *sunhdr,
+                                   guchar            *suncolmap);
+static gint32    load_sun_d32     (const gchar       *filename,
+                                   FILE              *ifp,
+                                   L_SUNFILEHEADER   *sunhdr,
+                                   guchar            *suncolmap);
 
-static L_CARD32 read_card32 (FILE *, int *);
+static L_CARD32  read_card32      (FILE              *ifp,
+                                   int               *err);
 
-static void write_card32    (FILE *, L_CARD32);
+static void      write_card32     (FILE              *ofp,
+                                   L_CARD32           c);
 
-static void byte2bit        (unsigned char *, int, unsigned char *, gboolean);
+static void      byte2bit         (guchar            *byteline,
+                                   int                width,
+                                   guchar            *bitline,
+                                   gboolean           invert);
 
-static void rle_startread   (FILE *);
-static int  rle_fread       (char *, int, int, FILE *);
-static int  rle_fgetc       (FILE *);
+static void      rle_startread    (FILE              *ifp);
+static int       rle_fread        (char              *ptr,
+                                   int                sz,
+                                   int                nelem,
+                                   FILE              *ifp);
+static int       rle_fgetc        (FILE              *ifp);
 #define rle_getc(fp) ((rlebuf.n > 0) ? (rlebuf.n)--,rlebuf.val : rle_fgetc (fp))
 
-static void rle_startwrite  (FILE *);
-static int  rle_fwrite      (char *, int, int, FILE *);
-static int  rle_fputc       (int, FILE *);
-static int  rle_putrun      (int, int, FILE *);
-static void rle_endwrite    (FILE *);
+static void      rle_startwrite   (FILE              *ofp);
+static int       rle_fwrite       (char              *ptr,
+                                   int                sz,
+                                   int                nelem,
+                                   FILE              *ofp);
+static int       rle_fputc        (int                val,
+                                   FILE              *ofp);
+static int       rle_putrun       (int                n,
+                                   int                val,
+                                   FILE              *ofp);
+static void      rle_endwrite     (FILE              *ofp);
 #define rle_putc rle_fputc
 
-static void read_sun_header  (FILE *, L_SUNFILEHEADER *);
-static void write_sun_header (FILE *, L_SUNFILEHEADER *);
-static void read_sun_cols    (FILE *, L_SUNFILEHEADER *, unsigned char *);
-static void write_sun_cols   (FILE *, L_SUNFILEHEADER *, unsigned char *);
+static void      read_sun_header  (FILE              *ifp,
+                                   L_SUNFILEHEADER   *sunhdr);
+static void      write_sun_header (FILE              *ofp,
+                                   L_SUNFILEHEADER   *sunhdr);
+static void      read_sun_cols    (FILE              *ifp,
+                                   L_SUNFILEHEADER   *sunhdr,
+                                   guchar            *colormap);
+static void      write_sun_cols   (FILE              *ofp,
+                                   L_SUNFILEHEADER   *sunhdr,
+                                   guchar            *colormap);
 
-static gint save_index       (FILE *, gint32, gint32 , int, int);
-static gint save_rgb         (FILE *, gint32, gint32, int);
+static gint      save_index       (FILE             *ofp,
+                                   gint32            image_ID,
+                                   gint32            drawable_ID,
+                                   gboolean          grey,
+                                   gboolean          rle);
+static gint      save_rgb         (FILE             *ofp,
+                                   gint32            image_ID,
+                                   gint32            drawable_ID,
+                                   gboolean          rle);
 
-static int read_msb_first = 1;
-static RLEBUF rlebuf;
-
-/* Dialog-handling */
-static gboolean  save_dialog (void);
+static gboolean  save_dialog      (void);
 
 /* Portability kludge */
-static int my_fwrite (void *ptr, int size, int nmemb, FILE *stream);
+static int       my_fwrite        (void             *ptr,
+                                   int               size,
+                                   int               nmemb,
+                                   FILE             *stream);
+
+
+static int    read_msb_first = 1;
+static RLEBUF rlebuf;
+
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -178,10 +218,8 @@ static SUNRASSaveVals psvals =
 };
 
 
-/* The run mode */
-static GimpRunMode l_run_mode;
-
 MAIN ()
+
 
 static void
 query (void)
@@ -261,12 +299,14 @@ run (const gchar      *name,
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
   GError            *error  = NULL;
 
-  l_run_mode = run_mode = param[0].data.d_int32;
+  run_mode = param[0].data.d_int32;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
@@ -381,10 +421,10 @@ static gint32
 load_image (const gchar  *filename,
             GError      **error)
 {
-  gint32 image_ID;
-  FILE *ifp;
-  L_SUNFILEHEADER sunhdr;
-  guchar *suncolmap = NULL;
+  gint32           image_ID;
+  FILE            *ifp;
+  L_SUNFILEHEADER  sunhdr;
+  guchar          *suncolmap = NULL;
 
   ifp = g_fopen (filename, "rb");
   if (!ifp)
@@ -404,7 +444,7 @@ load_image (const gchar  *filename,
                    _("Could not open '%s' as SUN-raster-file"),
                    gimp_filename_to_utf8 (filename));
       fclose (ifp);
-      return (-1);
+      return -1;
     }
 
   if ((sunhdr.l_ras_type < 0) || (sunhdr.l_ras_type > 5))
@@ -413,7 +453,7 @@ load_image (const gchar  *filename,
                    "%s",
                    _("The type of this SUN-rasterfile is not supported"));
       fclose (ifp);
-      return (-1);
+      return -1;
     }
 
   if ((sunhdr.l_ras_maplength < 0) || (sunhdr.l_ras_maplength > (256 * 3)))
@@ -444,7 +484,7 @@ load_image (const gchar  *filename,
                      gimp_filename_to_utf8 (filename));
           fclose (ifp);
           g_free (suncolmap);
-          return (-1);
+          return -1;
         }
     }
   else if (sunhdr.l_ras_maplength > 0)
@@ -459,7 +499,7 @@ load_image (const gchar  *filename,
       g_message (_("'%s':\nNo image width specified"),
                  gimp_filename_to_utf8 (filename));
       fclose (ifp);
-      return (-1);
+      return -1;
     }
 
   if (sunhdr.l_ras_width > GIMP_MAX_IMAGE_SIZE)
@@ -467,7 +507,7 @@ load_image (const gchar  *filename,
       g_message (_("'%s':\nImage width is larger than GIMP can handle"),
                  gimp_filename_to_utf8 (filename));
       fclose (ifp);
-      return (-1);
+      return -1;
     }
 
   if (sunhdr.l_ras_height <= 0)
@@ -475,7 +515,7 @@ load_image (const gchar  *filename,
       g_message (_("'%s':\nNo image height specified"),
                  gimp_filename_to_utf8 (filename));
       fclose (ifp);
-      return (-1);
+      return -1;
     }
 
   if (sunhdr.l_ras_height > GIMP_MAX_IMAGE_SIZE)
@@ -483,7 +523,7 @@ load_image (const gchar  *filename,
       g_message (_("'%s':\nImage height is larger than GIMP can handle"),
                  gimp_filename_to_utf8 (filename));
       fclose (ifp);
-      return (-1);
+      return -1;
     }
 
   gimp_progress_init_printf (_("Opening '%s'"),
@@ -520,10 +560,10 @@ load_image (const gchar  *filename,
   if (image_ID == -1)
     {
       g_message (_("This image depth is not supported"));
-      return (-1);
+      return -1;
     }
 
-  return (image_ID);
+  return image_ID;
 }
 
 
@@ -533,9 +573,9 @@ save_image (const gchar  *filename,
             gint32        drawable_ID,
             GError      **error)
 {
-  FILE*         ofp;
-  GimpImageType drawable_type;
-  gboolean      retval;
+  FILE          *ofp;
+  GimpImageType  drawable_type;
+  gboolean       retval;
 
   drawable_type = gimp_drawable_type (drawable_ID);
 
@@ -555,13 +595,13 @@ save_image (const gchar  *filename,
       break;
     default:
       g_message (_("Can't operate on unknown image types"));
-      return (FALSE);
+      return FALSE;
       break;
     }
 
   /* Open the output file. */
   ofp = g_fopen (filename, "wb");
-  if (!ofp)
+  if (! ofp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
@@ -573,17 +613,17 @@ save_image (const gchar  *filename,
                              gimp_filename_to_utf8 (filename));
 
   if (drawable_type == GIMP_INDEXED_IMAGE)
-    retval = save_index (ofp,image_ID, drawable_ID, 0, (int)psvals.rle);
+    retval = save_index (ofp,image_ID, drawable_ID, FALSE, psvals.rle);
   else if (drawable_type == GIMP_GRAY_IMAGE)
-    retval = save_index (ofp,image_ID, drawable_ID, 1, (int)psvals.rle);
+    retval = save_index (ofp,image_ID, drawable_ID, TRUE, psvals.rle);
   else if (drawable_type == GIMP_RGB_IMAGE)
-    retval = save_rgb (ofp,image_ID, drawable_ID, (int)psvals.rle);
+    retval = save_rgb (ofp,image_ID, drawable_ID, psvals.rle);
   else
     retval = FALSE;
 
   fclose (ofp);
 
-  return (retval);
+  return retval;
 }
 
 
@@ -609,7 +649,8 @@ read_card32 (FILE *ifp,
     }
 
   *err = (*err < 0);
-  return (c);
+
+  return c;
 }
 
 
@@ -631,7 +672,7 @@ byte2bit (guchar   *byteline,
           guchar   *bitline,
           gboolean  invert)
 {
-  register guchar bitval;
+  guchar bitval;
   guchar rest[8];
 
   while (width >= 8)
@@ -669,7 +710,8 @@ byte2bit (guchar   *byteline,
 /* Start reading Runlength Encoded Data */
 static void
 rle_startread (FILE *ifp)
-{ /* Clear RLE-buffer */
+{
+  /* Clear RLE-buffer */
   rlebuf.val = rlebuf.n = 0;
 }
 
@@ -688,12 +730,21 @@ rle_fread (gchar *ptr,
       for (cnt = 0; cnt < sz; cnt++)
         {
           val = rle_getc (ifp);
-          if (val < 0) { err = 1; break; }
+
+          if (val < 0)
+            {
+              err = 1;
+              break;
+            }
+
           *(ptr++) = (char)val;
         }
-      if (err) break;
+
+      if (err)
+        break;
     }
-  return (elem_read);
+
+  return elem_read;
 }
 
 
@@ -706,28 +757,30 @@ rle_fgetc (FILE *ifp)
   if (rlebuf.n > 0)    /* Something in the buffer ? */
     {
       (rlebuf.n)--;
-      return (rlebuf.val);
+      return rlebuf.val;
     }
 
   /* Nothing in the buffer. We have to read something */
-  if ((flag = getc (ifp)) < 0) return (-1);
-  if (flag != 0x0080) return (flag);    /* Single byte run ? */
+  if ((flag = getc (ifp)) < 0) return -1;
+  if (flag != 0x0080) return flag;    /* Single byte run ? */
 
-  if ((runcnt = getc (ifp)) < 0) return (-1);
-  if (runcnt == 0) return (0x0080);     /* Single 0x80 ? */
+  if ((runcnt = getc (ifp)) < 0) return -1;
+  if (runcnt == 0) return 0x0080;     /* Single 0x80 ? */
 
   /* The run */
-  if ((runval = getc (ifp)) < 0) return (-1);
+  if ((runval = getc (ifp)) < 0) return -1;
   rlebuf.n = runcnt;
   rlebuf.val = runval;
-  return (runval);
+
+  return runval;
 }
 
 
 /* Start writing Runlength Encoded Data */
 static void
 rle_startwrite (FILE *ofp)
-{ /* Clear RLE-buffer */
+{
+  /* Clear RLE-buffer */
   rlebuf.val = rlebuf.n = 0;
 }
 
@@ -739,7 +792,7 @@ rle_fwrite (gchar *ptr,
             gint   nelem,
             FILE  *ofp)
 {
-  int elem_write, cnt, val, err = 0;
+  int     elem_write, cnt, val, err = 0;
   guchar *pixels = (unsigned char *)ptr;
 
   for (elem_write = 0; elem_write < nelem; elem_write++)
@@ -747,11 +800,18 @@ rle_fwrite (gchar *ptr,
       for (cnt = 0; cnt < sz; cnt++)
         {
           val = rle_fputc (*(pixels++), ofp);
-          if (val < 0) { err = 1; break; }
+          if (val < 0)
+            {
+              err = 1;
+              break;
+            }
         }
-      if (err) break;
+
+      if (err)
+        break;
     }
-  return (elem_write);
+
+  return elem_write;
 }
 
 
@@ -764,8 +824,10 @@ rle_fputc (gint  val,
 
   if (rlebuf.n == 0)    /* Nothing in the buffer ? Save the value */
     {
-      rlebuf.n = 1;
-      return (rlebuf.val = val);
+      rlebuf.n   = 1;
+      rlebuf.val = val;
+
+      return val;
     }
 
   /* Something in the buffer */
@@ -776,20 +838,26 @@ rle_fputc (gint  val,
       if (rlebuf.n == 257) /* Can not be encoded in a single run ? */
         {
           retval = rle_putrun (256, rlebuf.val, ofp);
-          if (retval < 0) return (retval);
+          if (retval < 0)
+            return retval;
+
           rlebuf.n -= 256;
         }
-      return (val);
+
+      return val;
     }
 
   /* Something different in the buffer ? Write out the run */
 
   retval = rle_putrun (rlebuf.n, rlebuf.val, ofp);
-  if (retval < 0) return (retval);
+  if (retval < 0)
+    return retval;
 
   /* Save the new value */
-  rlebuf.n = 1;
-  return (rlebuf.val = val);
+  rlebuf.n   = 1;
+  rlebuf.val = val;
+
+  return val;
 }
 
 
@@ -821,7 +889,7 @@ rle_putrun (gint  n,
         retval = putc (val, ofp);
     }
 
-  return ((retval < 0) ? retval : val);
+  return (retval < 0) ? retval : val;
 }
 
 
@@ -841,19 +909,21 @@ static void
 read_sun_header (FILE            *ifp,
                  L_SUNFILEHEADER *sunhdr)
 {
-  int j, err;
+  int       j, err;
   L_CARD32 *cp;
 
   cp = (L_CARD32 *)sunhdr;
 
   /* Read in all 32-bit values of the header and check for byte order */
-  for (j = 0; j < sizeof (L_SUNFILEHEADER)/sizeof(sunhdr->l_ras_magic); j++)
+  for (j = 0; j < sizeof (L_SUNFILEHEADER) / sizeof(sunhdr->l_ras_magic); j++)
     {
       *(cp++) = read_card32 (ifp, &err);
-      if (err) break;
+      if (err)
+        break;
     }
 
-  if (err) sunhdr->l_ras_magic = 0;  /* Not a valid SUN-raster file */
+  if (err)
+    sunhdr->l_ras_magic = 0;  /* Not a valid SUN-raster file */
 }
 
 
@@ -863,10 +933,10 @@ static void
 write_sun_header (FILE            *ofp,
                   L_SUNFILEHEADER *sunhdr)
 {
-  int j, hdr_entries;
+  int       j, hdr_entries;
   L_CARD32 *cp;
 
-  hdr_entries = sizeof (L_SUNFILEHEADER)/sizeof(sunhdr->l_ras_magic);
+  hdr_entries = sizeof (L_SUNFILEHEADER) / sizeof(sunhdr->l_ras_magic);
 
   cp = (L_CARD32 *)sunhdr;
 
@@ -894,7 +964,8 @@ read_sun_cols (FILE            *ifp,
   else
     err = (fread (colormap, 3, ncols, ifp) != ncols);
 
-  if (err) sunhdr->l_ras_magic = 0;  /* Not a valid SUN-raster file */
+  if (err)
+    sunhdr->l_ras_magic = 0;  /* Not a valid SUN-raster file */
 }
 
 
@@ -951,10 +1022,9 @@ create_new_image (const gchar        *filename,
                   guint               height,
                   GimpImageBaseType   type,
                   gint32             *layer_ID,
-                  GimpDrawable      **drawable,
-                  GimpPixelRgn       *pixel_rgn)
+                  GeglBuffer        **buffer)
 {
-  gint32 image_ID;
+  gint32        image_ID;
   GimpImageType gdtype;
 
   switch (type)
@@ -977,14 +1047,12 @@ create_new_image (const gchar        *filename,
   gimp_image_set_filename (image_ID, filename);
 
   *layer_ID = gimp_layer_new (image_ID, _("Background"), width, height,
-                            gdtype, 100, GIMP_NORMAL_MODE);
+                              gdtype, 100, GIMP_NORMAL_MODE);
   gimp_image_insert_layer (image_ID, *layer_ID, -1, 0);
 
-  *drawable = gimp_drawable_get (*layer_ID);
-  gimp_pixel_rgn_init (pixel_rgn, *drawable, 0, 0, (*drawable)->width,
-                       (*drawable)->height, TRUE, FALSE);
+  *buffer = gimp_drawable_get_buffer (*layer_ID);
 
-  return (image_ID);
+  return image_ID;
 }
 
 
@@ -995,23 +1063,23 @@ load_sun_d1 (const gchar     *filename,
              L_SUNFILEHEADER *sunhdr,
              guchar          *suncolmap)
 {
-  register int pix8;
-  int width, height, linepad, scan_lines, tile_height;
-  int i, j;
-  guchar *dest, *data;
-  gint32 layer_ID, image_ID;
-  GimpPixelRgn pixel_rgn;
-  GimpDrawable *drawable;
-  guchar bit2byte[256*8];
-  L_SUNFILEHEADER sun_bwhdr;
-  guchar sun_bwcolmap[6] = { 255,0,255,0,255,0 };
-  int err = 0, rle = (sunhdr->l_ras_type == RAS_TYPE_RLE);
+  int               pix8;
+  int               width, height, linepad, scan_lines, tile_height;
+  int               i, j;
+  guchar           *dest, *data;
+  gint32            layer_ID, image_ID;
+  GeglBuffer       *buffer;
+  guchar            bit2byte[256 * 8];
+  L_SUNFILEHEADER   sun_bwhdr;
+  guchar            sun_bwcolmap[6] = { 255,0,255,0,255,0 };
+  int               err = 0;
+  gboolean          rle = (sunhdr->l_ras_type == RAS_TYPE_RLE);
 
   width = sunhdr->l_ras_width;
   height = sunhdr->l_ras_height;
 
   image_ID = create_new_image (filename, width, height, GIMP_INDEXED,
-                               &layer_ID, &drawable, &pixel_rgn);
+                               &layer_ID, &buffer);
 
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * width);
@@ -1036,7 +1104,8 @@ load_sun_d1 (const gchar     *filename,
 
   linepad = (((sunhdr->l_ras_width+7)/8) % 2); /* Check for 16bit align */
 
-  if (rle) rle_startread (ifp);
+  if (rle)
+    rle_startread (ifp);
 
   dest = data;
   scan_lines = 0;
@@ -1073,8 +1142,9 @@ load_sun_d1 (const gchar     *filename,
 
       if ((scan_lines == tile_height) || ((i+1) == height))
         {
-          gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
-                                   width, scan_lines);
+          gegl_buffer_set (buffer, GEGL_RECTANGLE (0, i - scan_lines + 1,
+                                                   width, scan_lines), 0,
+                           NULL, data, GEGL_AUTO_ROWSTRIDE);
           scan_lines = 0;
           dest = data;
         }
@@ -1085,9 +1155,9 @@ load_sun_d1 (const gchar     *filename,
   if (err)
     g_message (_("EOF encountered on reading"));
 
-  gimp_drawable_flush (drawable);
+  g_object_unref (buffer);
 
-  return (image_ID);
+  return image_ID;
 }
 
 
@@ -1099,32 +1169,33 @@ load_sun_d8 (const gchar     *filename,
              L_SUNFILEHEADER *sunhdr,
              guchar          *suncolmap)
 {
-  int width, height, linepad, i, j;
-  int grayscale, ncols;
-  int scan_lines, tile_height;
-  guchar *dest, *data;
-  gint32 layer_ID, image_ID;
-  GimpPixelRgn pixel_rgn;
-  GimpDrawable *drawable;
-  int err = 0, rle = (sunhdr->l_ras_type == RAS_TYPE_RLE);
+  int         width, height, linepad, i, j;
+  gboolean    grayscale;
+  gint        ncols;
+  int         scan_lines, tile_height;
+  guchar     *dest, *data;
+  gint32      layer_ID, image_ID;
+  GeglBuffer *buffer;
+  int         err = 0;
+  gboolean    rle = (sunhdr->l_ras_type == RAS_TYPE_RLE);
 
-  width = sunhdr->l_ras_width;
+  width  = sunhdr->l_ras_width;
   height = sunhdr->l_ras_height;
 
   /* This could also be a grayscale image. Check it */
   ncols = sunhdr->l_ras_maplength / 3;
 
-  grayscale = 1;  /* Also grayscale if no colormap present */
+  grayscale = TRUE;  /* Also grayscale if no colormap present */
 
   if ((ncols > 0) && (suncolmap != NULL))
     {
       for (j = 0; j < ncols; j++)
         {
-          if (   (suncolmap[j] != j)
-                 || (suncolmap[j+ncols] != j)
-                 || (suncolmap[j+2*ncols] != j))
+          if ((suncolmap[j]             != j) ||
+              (suncolmap[j + ncols]     != j) ||
+              (suncolmap[j + 2 * ncols] != j))
             {
-              grayscale = 0;
+              grayscale = FALSE;
               break;
             }
         }
@@ -1132,7 +1203,7 @@ load_sun_d8 (const gchar     *filename,
 
   image_ID = create_new_image (filename, width, height,
                                grayscale ? GIMP_GRAY : GIMP_INDEXED,
-                               &layer_ID, &drawable, &pixel_rgn);
+                               &layer_ID, &buffer);
 
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * width);
@@ -1142,7 +1213,8 @@ load_sun_d8 (const gchar     *filename,
 
   linepad = (sunhdr->l_ras_width % 2);
 
-  if (rle) rle_startread (ifp);  /* Initialize RLE-buffer */
+  if (rle)
+    rle_startread (ifp);  /* Initialize RLE-buffer */
 
   dest = data;
   scan_lines = 0;
@@ -1164,8 +1236,9 @@ load_sun_d8 (const gchar     *filename,
 
       if ((scan_lines == tile_height) || ((i+1) == height))
         {
-          gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
-                                   width, scan_lines);
+          gegl_buffer_set (buffer, GEGL_RECTANGLE (0, i - scan_lines + 1,
+                                                   width, scan_lines), 0,
+                           NULL, data, GEGL_AUTO_ROWSTRIDE);
           scan_lines = 0;
           dest = data;
         }
@@ -1176,9 +1249,9 @@ load_sun_d8 (const gchar     *filename,
   if (err)
     g_message (_("EOF encountered on reading"));
 
-  gimp_drawable_flush (drawable);
+  g_object_unref (buffer);
 
-  return (image_ID);
+  return image_ID;
 }
 
 
@@ -1189,27 +1262,28 @@ load_sun_d24 (const gchar      *filename,
               L_SUNFILEHEADER  *sunhdr,
               guchar           *suncolmap)
 {
-  register guchar *dest, blue;
-  guchar *data;
-  int width, height, linepad, tile_height, scan_lines;
-  int i, j;
-  gint32 layer_ID, image_ID;
-  GimpPixelRgn pixel_rgn;
-  GimpDrawable *drawable;
-  int err = 0, rle = (sunhdr->l_ras_type == RAS_TYPE_RLE);
+  guchar     *dest, blue;
+  guchar     *data;
+  int         width, height, linepad, tile_height, scan_lines;
+  int         i, j;
+  gint32      layer_ID, image_ID;
+  GeglBuffer *buffer;
+  int         err = 0;
+  gboolean    rle = (sunhdr->l_ras_type == RAS_TYPE_RLE);
 
-  width = sunhdr->l_ras_width;
+  width  = sunhdr->l_ras_width;
   height = sunhdr->l_ras_height;
 
   image_ID = create_new_image (filename, width, height, GIMP_RGB,
-                               &layer_ID, &drawable, &pixel_rgn);
+                               &layer_ID, &buffer);
 
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * width * 3);
 
   linepad = ((sunhdr->l_ras_width*3) % 2);
 
-  if (rle) rle_startread (ifp);  /* Initialize RLE-buffer */
+  if (rle)
+    rle_startread (ifp);  /* Initialize RLE-buffer */
 
   dest = data;
   scan_lines = 0;
@@ -1225,7 +1299,7 @@ load_sun_d24 (const gchar      *filename,
 
       if (sunhdr->l_ras_type == 3) /* RGB-format ? That is what GIMP wants */
         {
-          dest += width*3;
+          dest += width * 3;
         }
       else                         /* We have BGR format. Correct it */
         {
@@ -1241,12 +1315,13 @@ load_sun_d24 (const gchar      *filename,
       scan_lines++;
 
       if ((i % 20) == 0)
-        gimp_progress_update ((double)(i+1) / (double)height);
+        gimp_progress_update ((double)(i + 1) / (double)height);
 
-      if ((scan_lines == tile_height) || ((i+1) == height))
+      if ((scan_lines == tile_height) || ((i + 1) == height))
         {
-          gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
-                                   width, scan_lines);
+          gegl_buffer_set (buffer, GEGL_RECTANGLE (0, i - scan_lines + 1,
+                                                   width, scan_lines), 0,
+                           NULL, data, GEGL_AUTO_ROWSTRIDE);
           scan_lines = 0;
           dest = data;
         }
@@ -1257,9 +1332,9 @@ load_sun_d24 (const gchar      *filename,
   if (err)
     g_message (_("EOF encountered on reading"));
 
-  gimp_drawable_flush (drawable);
+  g_object_unref (buffer);
 
-  return (image_ID);
+  return image_ID;
 }
 
 
@@ -1271,15 +1346,17 @@ load_sun_d32 (const gchar     *filename,
               L_SUNFILEHEADER *sunhdr,
               guchar          *suncolmap)
 {
-  register guchar *dest, blue;
-  guchar *data;
-  int width, height, tile_height, scan_lines;
-  int i, j;
-  gint32 layer_ID, image_ID;
-  GimpPixelRgn pixel_rgn;
-  GimpDrawable *drawable;
-  int err = 0, cerr, rle = (sunhdr->l_ras_type == RAS_TYPE_RLE);
-  width = sunhdr->l_ras_width;
+  guchar     *dest, blue;
+  guchar     *data;
+  int         width, height, tile_height, scan_lines;
+  int         i, j;
+  gint32      layer_ID, image_ID;
+  GeglBuffer *buffer;
+  int         err = 0;
+  int         cerr;
+  gboolean    rle = (sunhdr->l_ras_type == RAS_TYPE_RLE);
+
+  width  = sunhdr->l_ras_width;
   height = sunhdr->l_ras_height;
 
   /* initialize */
@@ -1287,12 +1364,13 @@ load_sun_d32 (const gchar     *filename,
   cerr = 0;
 
   image_ID = create_new_image (filename, width, height, GIMP_RGB,
-                               &layer_ID, &drawable, &pixel_rgn);
+                               &layer_ID, &buffer);
 
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * width * 3);
 
-  if (rle) rle_startread (ifp);  /* Initialize RLE-buffer */
+  if (rle)
+    rle_startread (ifp);  /* Initialize RLE-buffer */
 
   dest = data;
   scan_lines = 0;
@@ -1336,12 +1414,13 @@ load_sun_d32 (const gchar     *filename,
       scan_lines++;
 
       if ((i % 20) == 0)
-        gimp_progress_update ((double)(i+1) / (double)height);
+        gimp_progress_update ((double)(i + 1) / (double)height);
 
-      if ((scan_lines == tile_height) || ((i+1) == height))
+      if ((scan_lines == tile_height) || ((i + 1) == height))
         {
-          gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
-                                   width, scan_lines);
+          gegl_buffer_set (buffer, GEGL_RECTANGLE (0, i - scan_lines + 1,
+                                                   width, scan_lines), 0,
+                           NULL, data, GEGL_AUTO_ROWSTRIDE);
           scan_lines = 0;
           dest = data;
         }
@@ -1352,42 +1431,49 @@ load_sun_d32 (const gchar     *filename,
   if (err)
     g_message (_("EOF encountered on reading"));
 
-  gimp_drawable_flush (drawable);
+  g_object_unref (buffer);
 
-  return (image_ID);
+  return image_ID;
 }
 
 
 static gint
-save_index (FILE    *ofp,
-            gint32  image_ID,
-            gint32  drawable_ID,
-            gint    grey,
-            gint    rle)
+save_index (FILE     *ofp,
+            gint32    image_ID,
+            gint32    drawable_ID,
+            gboolean  grey,
+            gboolean  rle)
 {
-  int height, width, linepad, i, j;
-  int ncols, bw, is_bw, is_wb, bpl;
-  int tile_height;
-  long tmp = 0;
-  guchar *cmap, *bwline = NULL;
-  guchar *data, *src;
+  int             height, width, linepad, i, j;
+  int             ncols, bw, is_bw, is_wb, bpl;
+  int             tile_height;
+  long            tmp = 0;
+  guchar         *cmap, *bwline = NULL;
+  guchar         *data, *src;
   L_SUNFILEHEADER sunhdr;
-  guchar sun_colormap[256*3];
-  static guchar sun_bwmap[6] = { 0,255,0,255,0,255 };
-  static guchar sun_wbmap[6] = { 255,0,255,0,255,0 };
-  unsigned char *suncolmap = sun_colormap;
-  GimpPixelRgn pixel_rgn;
-  GimpDrawable *drawable;
-  WRITE_FUN *write_fun;
+  guchar          sun_colormap[256*3];
+  static guchar   sun_bwmap[6] = { 0,   255, 0,   255, 0,   255 };
+  static guchar   sun_wbmap[6] = { 255, 0,   255, 0,   255, 0   };
+  unsigned char  *suncolmap = sun_colormap;
+  GeglBuffer     *buffer;
+  const Babl     *format;
+  WRITE_FUN      *write_fun;
 
-  drawable = gimp_drawable_get (drawable_ID);
-  width = drawable->width;
-  height = drawable->height;
+  buffer = gimp_drawable_get_buffer (drawable_ID);
+
+  width  = gegl_buffer_get_width (buffer);
+  height = gegl_buffer_get_height (buffer);
+
   tile_height = gimp_tile_height ();
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, FALSE, FALSE);
 
-  /* allocate a buffer for retrieving information from the pixel region  */
-  src = data = (unsigned char *)g_malloc (tile_height * width * drawable->bpp);
+  if (grey)
+    format = babl_format ("Y' u8");
+  else
+    format = gegl_buffer_get_format (buffer);
+
+  /* allocate a buffer for retrieving information from the buffer  */
+  src = data = g_malloc (tile_height * width *
+                         babl_format_get_bytes_per_pixel (format));
 
   /* Fill SUN-color map */
   if (grey)
@@ -1396,9 +1482,9 @@ save_index (FILE    *ofp,
 
       for (j = 0; j < ncols; j++)
         {
-          suncolmap[j] = j;
-          suncolmap[j+ncols] = j;
-          suncolmap[j+ncols*2] = j;
+          suncolmap[j]             = j;
+          suncolmap[j + ncols]     = j;
+          suncolmap[j + ncols * 2] = j;
         }
     }
   else
@@ -1407,17 +1493,18 @@ save_index (FILE    *ofp,
 
       for (j = 0; j < ncols; j++)
         {
-          suncolmap[j] = *(cmap++);
-          suncolmap[j+ncols] = *(cmap++);
-          suncolmap[j+ncols*2] = *(cmap++);
+          suncolmap[j]             = *(cmap++);
+          suncolmap[j + ncols]     = *(cmap++);
+          suncolmap[j + ncols * 2] = *(cmap++);
         }
     }
 
   bw = (ncols == 2);   /* Maybe this is a two-color image */
   if (bw)
     {
-      bwline = g_malloc ((width+7)/8);
-      if (bwline == NULL) bw = 0;
+      bwline = g_malloc ((width + 7) / 8);
+      if (bwline == NULL)
+        bw = 0;
     }
 
   is_bw = is_wb = 0;
@@ -1432,12 +1519,13 @@ save_index (FILE    *ofp,
   linepad = bpl % 2;
 
   /* Fill in the SUN header */
-  sunhdr.l_ras_magic = RAS_MAGIC;
-  sunhdr.l_ras_width = width;
+  sunhdr.l_ras_magic  = RAS_MAGIC;
+  sunhdr.l_ras_width  = width;
   sunhdr.l_ras_height = height;
-  sunhdr.l_ras_depth = bw ? 1 : 8;
-  sunhdr.l_ras_length = (bpl+linepad) * height;
-  sunhdr.l_ras_type = (rle) ? RAS_TYPE_RLE : RAS_TYPE_STD;
+  sunhdr.l_ras_depth  = bw ? 1 : 8;
+  sunhdr.l_ras_length = (bpl + linepad) * height;
+  sunhdr.l_ras_type   = rle ? RAS_TYPE_RLE : RAS_TYPE_STD;
+
   if (is_bw || is_wb)   /* No colortable for real b/w images */
     {
       sunhdr.l_ras_maptype = 0;   /* No colormap */
@@ -1457,20 +1545,32 @@ save_index (FILE    *ofp,
 #define GET_INDEX_TILE(begin) \
   {int scan_lines; \
     scan_lines = (i+tile_height-1 < height) ? tile_height : (height-i); \
-    gimp_pixel_rgn_get_rect (&pixel_rgn, begin, 0, i, width, scan_lines); \
+    gegl_buffer_get (buffer, GEGL_RECTANGLE (0, i, width, scan_lines), 1.0, \
+                     format, begin, \
+                     GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE); \
     src = begin; }
 
-  if (rle) { write_fun = (WRITE_FUN *)&rle_fwrite; rle_startwrite (ofp); }
-  else write_fun = (WRITE_FUN *)&my_fwrite;
+  if (rle)
+    {
+      write_fun = (WRITE_FUN *) &rle_fwrite;
+      rle_startwrite (ofp);
+    }
+  else
+    {
+      write_fun = (WRITE_FUN *) &my_fwrite;
+    }
 
   if (bw)  /* Two color image */
     {
       for (i = 0; i < height; i++)
         {
-          if ((i % tile_height) == 0) GET_INDEX_TILE (data); /* Get more data */
+          if ((i % tile_height) == 0)
+            GET_INDEX_TILE (data); /* Get more data */
+
           byte2bit (src, width, bwline, is_bw);
           (*write_fun) (bwline, bpl, 1, ofp);
-          if (linepad) (*write_fun) ((char *)&tmp, linepad, 1, ofp);
+          if (linepad)
+            (*write_fun) ((char *)&tmp, linepad, 1, ofp);
           src += width;
 
           if ((i % 20) == 0)
@@ -1481,15 +1581,20 @@ save_index (FILE    *ofp,
     {
       for (i = 0; i < height; i++)
         {
-          if ((i % tile_height) == 0) GET_INDEX_TILE (data); /* Get more data */
+          if ((i % tile_height) == 0)
+            GET_INDEX_TILE (data); /* Get more data */
+
           (*write_fun) ((char *)src, width, 1, ofp);
-          if (linepad) (*write_fun) ((char *)&tmp, linepad, 1, ofp);
+          if (linepad)
+            (*write_fun) ((char *)&tmp, linepad, 1, ofp);
           src += width;
 
           if ((i % 20) == 0)
             gimp_progress_update ((double) i / (double) height);
         }
     }
+
+#undef GET_INDEX_TILE
 
   if (rle)
     rle_endwrite (ofp);
@@ -1499,39 +1604,43 @@ save_index (FILE    *ofp,
   if (bwline)
     g_free (bwline);
 
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
 
   if (ferror (ofp))
     {
       g_message (_("Write error occurred"));
-      return (FALSE);
+      return FALSE;
     }
-  return (TRUE);
-#undef GET_INDEX_TILE
+
+  return TRUE;
 }
 
 
 static gint
-save_rgb (FILE   *ofp,
-          gint32  image_ID,
-          gint32  drawable_ID,
-          gint    rle)
+save_rgb (FILE     *ofp,
+          gint32    image_ID,
+          gint32    drawable_ID,
+          gboolean  rle)
 {
-  int height, width, tile_height, linepad;
-  int i, j, bpp;
-  guchar *data, *src;
-  L_SUNFILEHEADER sunhdr;
-  GimpPixelRgn pixel_rgn;
-  GimpDrawable *drawable;
+  int              height, width, tile_height, linepad;
+  int              i, j, bpp;
+  guchar          *data, *src;
+  L_SUNFILEHEADER  sunhdr;
+  GeglBuffer      *buffer;
+  const Babl      *format;
 
-  drawable = gimp_drawable_get (drawable_ID);
-  width = drawable->width;
-  height = drawable->height;
+  buffer = gimp_drawable_get_buffer (drawable_ID);
+
+  width  = gegl_buffer_get_width  (buffer);
+  height = gegl_buffer_get_height (buffer);
+
   tile_height = gimp_tile_height ();
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, FALSE, FALSE);
+
+  format = babl_format ("R'G'B' u8");
 
   /* allocate a buffer for retrieving information from the pixel region  */
-  src = data = (guchar *) g_malloc (tile_height * width * drawable->bpp);
+  src = data = g_malloc (tile_height * width *
+                         babl_format_get_bytes_per_pixel (format));
 
 /* #define SUNRAS_32 */
 #ifdef SUNRAS_32
@@ -1542,13 +1651,13 @@ save_rgb (FILE   *ofp,
   linepad = (width * bpp) % 2;
 
   /* Fill in the SUN header */
-  sunhdr.l_ras_magic = RAS_MAGIC;
-  sunhdr.l_ras_width = width;
-  sunhdr.l_ras_height = height;
-  sunhdr.l_ras_depth = 8 * bpp;
-  sunhdr.l_ras_length = (width*bpp + linepad)*height;
-  sunhdr.l_ras_type = (rle) ? RAS_TYPE_RLE : RAS_TYPE_STD;
-  sunhdr.l_ras_maptype = 0;   /* No colormap */
+  sunhdr.l_ras_magic     = RAS_MAGIC;
+  sunhdr.l_ras_width     = width;
+  sunhdr.l_ras_height    = height;
+  sunhdr.l_ras_depth     = 8 * bpp;
+  sunhdr.l_ras_length    = (width * bpp + linepad) * height;
+  sunhdr.l_ras_type      = rle ? RAS_TYPE_RLE : RAS_TYPE_STD;
+  sunhdr.l_ras_maptype   = 0;   /* No colormap */
   sunhdr.l_ras_maplength = 0; /* Length of colormap */
 
   write_sun_header (ofp, &sunhdr);
@@ -1556,22 +1665,27 @@ save_rgb (FILE   *ofp,
 #define GET_RGB_TILE(begin) \
   {int scan_lines; \
     scan_lines = (i+tile_height-1 < height) ? tile_height : (height-i); \
-    gimp_pixel_rgn_get_rect (&pixel_rgn, begin, 0, i, width, scan_lines); \
+    gegl_buffer_get (buffer, GEGL_RECTANGLE (0, i, width, scan_lines), 1.0, \
+                     format, begin, \
+                     GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE); \
     src = begin; }
 
-  if (!rle)
+  if (! rle)
     {
       for (i = 0; i < height; i++)
         {
-          if ((i % tile_height) == 0) GET_RGB_TILE (data); /* Get more data */
+          if ((i % tile_height) == 0)
+            GET_RGB_TILE (data); /* Get more data */
+
           for (j = 0; j < width; j++)
             {
               if (bpp == 4) putc (0, ofp);   /* Dummy */
-              putc (*(src+2), ofp);          /* Blue */
-              putc (*(src+1), ofp);          /* Green */
-              putc (*src, ofp);              /* Red */
+              putc (*(src + 2), ofp);        /* Blue */
+              putc (*(src + 1), ofp);        /* Green */
+              putc (*src,       ofp);        /* Red */
               src += 3;
             }
+
           for (j = 0; j < linepad; j++)
             putc (0, ofp);
 
@@ -1585,15 +1699,18 @@ save_rgb (FILE   *ofp,
 
       for (i = 0; i < height; i++)
         {
-          if ((i % tile_height) == 0) GET_RGB_TILE (data); /* Get more data */
+          if ((i % tile_height) == 0)
+            GET_RGB_TILE (data); /* Get more data */
+
           for (j = 0; j < width; j++)
             {
               if (bpp == 4) rle_putc (0, ofp);   /* Dummy */
-              rle_putc (*(src+2), ofp);          /* Blue */
-              rle_putc (*(src+1), ofp);          /* Green */
-              rle_putc (*src, ofp);              /* Red */
+              rle_putc (*(src + 2), ofp);        /* Blue */
+              rle_putc (*(src + 1), ofp);        /* Green */
+              rle_putc (*src,       ofp);        /* Red */
               src += 3;
             }
+
           for (j = 0; j < linepad; j++)
             rle_putc (0, ofp);
 
@@ -1603,17 +1720,20 @@ save_rgb (FILE   *ofp,
 
       rle_endwrite (ofp);
     }
+
+#undef GET_RGB_TILE
+
   g_free (data);
 
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
 
   if (ferror (ofp))
     {
       g_message (_("Write error occurred"));
-      return (FALSE);
+      return FALSE;
     }
-  return (TRUE);
-#undef GET_RGB_TILE
+
+  return TRUE;
 }
 
 
