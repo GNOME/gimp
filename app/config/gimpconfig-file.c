@@ -41,11 +41,11 @@
 
 
 gboolean
-gimp_config_file_copy (const gchar        *source,
-                       const gchar        *dest,
-                       const gchar        *old_options_pattern,
-                       GRegexEvalCallback  update_callback,
-                       GError      **error)
+gimp_config_file_copy (const gchar         *source,
+                       const gchar         *dest,
+                       const gchar         *old_options_pattern,
+                       GRegexEvalCallback   update_callback,
+                       GError             **error)
 {
   gchar        buffer[8192];
   FILE        *sfile;
@@ -106,13 +106,21 @@ gimp_config_file_copy (const gchar        *source,
             }
           else if (! feof (sfile))
             {
+              gchar format[256];
+
               /* We are in unlikely case where a single config line is
                * longer than the buffer!
                */
+
+              g_snprintf (format, sizeof (format),
+                          _("Error parsing '%%s': line longer than %s characters."),
+                          G_GINT64_FORMAT);
+
               g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
-                           _("Error parsing '%s': line longer than %"
-                             G_GINT64_FORMAT" characters."),
-                           gimp_filename_to_utf8 (source), (gint64) sizeof (buffer));
+                           format,
+                           gimp_filename_to_utf8 (source),
+                           (gint64) sizeof (buffer));
+
               fclose (sfile);
               fclose (dfile);
               g_regex_unref (old_options_regexp);
