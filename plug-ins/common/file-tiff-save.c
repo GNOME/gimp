@@ -130,10 +130,10 @@ static void      byte2bit               (const guchar *byteline,
 
 static void      tiff_warning           (const gchar *module,
                                          const gchar *fmt,
-                                         va_list      ap);
+                                         va_list      ap) G_GNUC_PRINTF (2, 0);
 static void      tiff_error             (const gchar *module,
                                          const gchar *fmt,
-                                         va_list      ap);
+                                         va_list      ap) G_GNUC_PRINTF (2, 0);
 static TIFF     *tiff_open              (const gchar *filename,
                                          const gchar *mode,
                                          GError     **error);
