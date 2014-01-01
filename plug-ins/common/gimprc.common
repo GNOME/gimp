@@ -1,7 +1,6 @@
 align_layers_RC = align-layers.rc.o
 animation_optimize_RC = animation-optimize.rc.o
 animation_play_RC = animation-play.rc.o
-apply_canvas_RC = apply-canvas.rc.o
 blinds_RC = blinds.rc.o
 blur_RC = blur.rc.o
 blur_gauss_RC = blur-gauss.rc.o

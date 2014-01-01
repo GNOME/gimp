@@ -159,6 +159,50 @@ plug_in_antialias_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_apply_canvas_invoker (GimpProcedure         *procedure,
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 direction;
+  gint32 depth;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  direction = g_value_get_int (gimp_value_array_index (args, 3));
+  depth = g_value_get_int (gimp_value_array_index (args, 4));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node =
+            gegl_node_new_child (NULL,
+                                 "operation", "gegl:texturize-canvas",
+                                 "direction", direction,
+                                 "depth",     depth,
+                                 NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Apply Canvas"),
+                                         node);
+
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_autocrop_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
@@ -1820,6 +1864,54 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             "Input drawable",
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-apply-canvas
+   */
+  procedure = gimp_procedure_new (plug_in_apply_canvas_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-apply-canvas");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-apply-canvas",
+                                     "Add a canvas texture to the image",
+                                     "This function applies a canvas texture map to the drawable.",
+                                     "Compatibility procedure. Please see 'gegl:texturize-canvas' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:texturize-canvas' for credits.",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("direction",
+                                                      "direction",
+                                                      "Light direction (0 - 3)",
+                                                      0, 3, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("depth",
+                                                      "depth",
+                                                      "Texture depth (1 - 50)",
+                                                      1, 50, 1,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

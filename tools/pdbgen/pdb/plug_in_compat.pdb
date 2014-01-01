@@ -134,6 +134,56 @@ CODE
     );
 }
 
+sub plug_in_apply_canvas {
+    $blurb = 'Add a canvas texture to the image';
+
+    $help = <<'HELP';
+This function applies a canvas texture map to the drawable.
+HELP
+
+    &std_pdb_compat('gegl:texturize-canvas');
+    $date = '2014';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'direction', type => '0 <= int32 <= 3',
+	  desc => 'Light direction (0 - 3)' },
+	{ name => 'depth', type => '1 <= int32 <= 50',
+	  desc => 'Texture depth (1 - 50)' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node =
+        gegl_node_new_child (NULL,
+                             "operation", "gegl:texturize-canvas",
+                             "direction", direction,
+                             "depth",     depth,
+                             NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Apply Canvas"),
+                                     node);
+
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_autocrop {
     $blurb = 'Remove empty borders from the image';
 
@@ -1896,6 +1946,7 @@ CODE
 
 @procs = qw(plug_in_alienmap2
             plug_in_antialias
+            plug_in_apply_canvas
             plug_in_autocrop
             plug_in_autocrop_layer
             plug_in_autostretch_hsv

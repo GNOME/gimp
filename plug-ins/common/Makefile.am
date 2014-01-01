@@ -47,7 +47,6 @@ libexec_PROGRAMS = \
 	align-layers \
 	animation-optimize \
 	animation-play \
-	apply-canvas \
 	blinds \
 	blur \
 	blur-gauss \
@@ -246,23 +245,6 @@ animation_play_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(animation_play_RC)
-
-apply_canvas_SOURCES = \
-	apply-canvas.c
-
-apply_canvas_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(apply_canvas_RC)
 
 blinds_SOURCES = \
 	blinds.c
