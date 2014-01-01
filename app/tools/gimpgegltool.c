@@ -112,7 +112,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
   static const gchar * const name_blacklist[] =
   {
     /* these ops are already added to the menus via
-     * filter-actions ordrawable-actions
+     * filters-actions or drawable-actions
      */
     "gegl:alien-map",
     "gegl:antialias",
@@ -161,6 +161,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:softglow",
     "gegl:stretch-contrast",
     "gegl:stretch-contrast-hsv",
+    "gegl:texturize-canvas",
     "gegl:tile-seamless",
     "gegl:unsharp-mask",
     "gegl:value-invert",

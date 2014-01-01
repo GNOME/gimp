@@ -50,6 +50,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:antialias",
     NULL /* FIXME GIMP_HELP_FILTER_ANTIALIAS */ },
 
+  { "filters-apply-canvas", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Apply Canvas..."), NULL, NULL,
+    "gegl:texturize-canvas",
+    NULL /* FIXME GIMP_HELP_FILTER_APPLY_CANVAS */ },
+
   { "filters-bump-map", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Bump Map..."), NULL, NULL,
     "gegl:bump-map",
@@ -364,6 +369,7 @@ filters_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("filters-alien-map",               writable);
   SET_SENSITIVE ("filters-antialias",               writable);
+  SET_SENSITIVE ("filters-apply-canvas",            writable);
   SET_SENSITIVE ("filters-bump-map",                writable);
   SET_SENSITIVE ("filters-c2g",                     writable && !gray);
   SET_SENSITIVE ("filters-cartoon",                 writable);

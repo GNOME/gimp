@@ -681,6 +681,7 @@
       <menu action="plug-in-generic-menu" name="Generic" />
       <menu action="plug-in-combine-menu" name="Combine" />
       <menu action="plug-in-artistic-menu" name="Artistic">
+	<menuitem action="filters-apply-canvas" />
 	<menuitem action="filters-cartoon" />
 	<menuitem action="filters-cubism" />
 	<menuitem action="filters-photocopy" />
