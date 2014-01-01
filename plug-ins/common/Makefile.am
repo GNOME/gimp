@@ -1412,6 +1412,7 @@ file_xmc_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(XMC_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
