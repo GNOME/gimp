@@ -569,10 +569,7 @@ HELP
       options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
 
       for (list = options; list; list = g_list_next (list))
-        g_object_set (list->data,
-                      "brush-size", (gdouble) MAX (brush->mask->width,
-                                                   brush->mask->height),
-                      NULL);
+        gimp_paint_options_set_default_brush_size (list->data, brush);
 
       g_list_free (options);
     }
@@ -2195,11 +2192,10 @@ CODE
     );
 }
 
-@headers = qw("base/temp-buf.h"
-              "core/gimp.h"
-              "core/gimpbrush.h"
+@headers = qw("core/gimp.h"
               "core/gimpcontainer.h"
               "core/gimpdatafactory.h"
+              "paint/gimppaintoptions.h"
               "libgimpconfig/gimpconfig.h"
               "plug-in/gimpplugin.h"
               "plug-in/gimpplugin-context.h"

@@ -26,6 +26,7 @@
 #include "paint-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpbrush.h"
 #include "core/gimpimage.h"
 #include "core/gimpdynamics.h"
 #include "core/gimpdynamicsoutput.h"
@@ -712,6 +713,29 @@ gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options)
     return GIMP_BRUSH_PRESSURE;
 
   return GIMP_BRUSH_SOFT;
+}
+
+void
+gimp_paint_options_set_default_brush_size (GimpPaintOptions *paint_options,
+                                           GimpBrush        *brush)
+{
+  g_return_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options));
+  g_return_if_fail (brush == NULL || GIMP_IS_BRUSH (brush));
+
+  if (! brush)
+    brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
+
+  if (brush)
+    {
+      gint height;
+      gint width;
+
+      gimp_brush_transform_size (brush, 1.0, 0.0, 0.0, &height, &width);
+
+      g_object_set (paint_options,
+                    "brush-size", (gdouble) MAX (height, width),
+                    NULL);
+    }
 }
 
 void

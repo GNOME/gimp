@@ -28,12 +28,11 @@
 
 #include "pdb-types.h"
 
-#include "base/temp-buf.h"
 #include "core/gimp.h"
-#include "core/gimpbrush.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpparamspecs.h"
+#include "paint/gimppaintoptions.h"
 #include "plug-in/gimpplugin-context.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
@@ -509,10 +508,7 @@ context_set_brush_default_size_invoker (GimpProcedure      *procedure,
       options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
 
       for (list = options; list; list = g_list_next (list))
-        g_object_set (list->data,
-                      "brush-size", (gdouble) MAX (brush->mask->width,
-                                                   brush->mask->height),
-                      NULL);
+        gimp_paint_options_set_default_brush_size (list->data, brush);
 
       g_list_free (options);
     }
