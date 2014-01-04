@@ -30,7 +30,6 @@
 
 #include "pdb-types.h"
 
-#include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
 #include "core/gimppaintinfo.h"
@@ -61,22 +60,15 @@ paint_tools_stroke (Gimp              *gimp,
 {
   GimpPaintCore *core;
   GimpCoords    *coords;
-  GimpBrush     *brush;
   gboolean       retval;
-  gdouble        brush_size;
-  gint           height, width;
   gint           i;
   va_list        args;
 
   n_strokes /= 2;  /* #doubles -> #points */
 
-  brush = gimp_context_get_brush (context);
-  gimp_brush_transform_size (brush, 1.0, 1.0, 0.0, &height, &width);
-  brush_size = MAX (height, width);
-
-  g_object_set (options,
-                "brush-size", brush_size,
-                NULL);
+  /* FIXME: i'm most certain that this is wrong, see bug 721249 --mitch */
+  gimp_paint_options_set_default_brush_size (options,
+                                             gimp_context_get_brush (context));
 
   /*  undefine the paint-relevant context properties and get them
    *  from the current context

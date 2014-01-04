@@ -24,8 +24,6 @@
 
 #include "tools-types.h"
 
-#include "core/gimpbrush.h"
-#include "core/gimptempbuf.h"
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimppaintoptions.h"
@@ -409,13 +407,7 @@ gimp_paint_options_gui_reset_size (GtkWidget        *button,
  GimpBrush *brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
 
  if (brush)
-   {
-     g_object_set (paint_options,
-                   "brush-size",
-                   (gdouble) MAX (gimp_temp_buf_get_width  (brush->mask),
-                                  gimp_temp_buf_get_height (brush->mask)),
-                   NULL);
-   }
+   gimp_paint_options_set_default_brush_size (paint_options, brush);
 }
 
 static void

@@ -32,7 +32,6 @@
 #include "config/gimpcoreconfig.h"
 
 #include "gimp.h"
-#include "gimpbrush.h"
 #include "gimpcontext.h"
 #include "gimpdashpattern.h"
 #include "gimpmarshal.h"
@@ -568,24 +567,10 @@ gimp_stroke_options_prepare (GimpStrokeOptions *options,
 
         if (use_default_values)
           {
-            GimpBrush *brush;
-            gdouble    brush_size;
-            gint       height;
-            gint       width;
-
             paint_options = gimp_paint_options_new (paint_info);
 
-            brush = gimp_context_get_brush (context);
-
-            if (GIMP_IS_BRUSH (brush))
-              {
-                gimp_brush_transform_size (brush, 1.0, 1.0, 0.0, &height, &width);
-                brush_size = MAX (height, width);
-
-                g_object_set (paint_options,
-                              "brush-size", brush_size,
-                              NULL);
-              }
+            gimp_paint_options_set_default_brush_size (paint_options,
+                                                       gimp_context_get_brush (context));
 
             /*  undefine the paint-relevant context properties and get them
              *  from the passed context
