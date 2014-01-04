@@ -8,20 +8,21 @@
 # Jordi Jover, jordijn@softcatala.org, 2002.
 # Joaquim Perez <noguer@gmail.com>, 2008.
 # Quim Perez i Noguer <noguer@gmail.com>, 2008, 2009, 2011.
+# Albert F. <lakonfrariadelavila@gmail.com>, 2012, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-06-10 15:26+0000\n"
-"PO-Revision-Date: 2012-05-06 22:31+0100\n"
-"Last-Translator: Eulalia <eulaliapages@gmail.com>\n"
+"POT-Creation-Date: 2013-12-20 12:15+0000\n"
+"PO-Revision-Date: 2013-12-08 11:18+0100\n"
+"Last-Translator: Konfrare Albert <lakonfrariadelavila@gmail.com>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ca\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Lokalize 1.2\n"
 
@@ -66,13 +67,13 @@ msgstr ""
 "El GIMP es distribueix amb la voluntat què pugui ser útil, però SENSE CAP "
 "GARANTIA, ni tan sols les garanties implícites MERCANTILS o ESPECÍFIQUES PER "
 "A UN PROPÒSIT DETERMINAT. Si voleu més informació, vegeu la llicència GNU "
-"General Public License.\n"
+"General Public License per més detalls.\n"
 "\n"
 "Heu d'haver rebut una còpia de la llicència GNU General Public License "
 "juntament amb el GIMP; si no és així, consulteu <http://www.gnu.org/licenses/"
 "licenses.ca.html>."
 
-#: ../app/app.c:224
+#: ../app/app.c:225
 #, c-format
 msgid ""
 "Unable to open a test swap file.\n"
@@ -215,12 +216,12 @@ msgstr "Ja s'està executant una altra instància del GIMP."
 #: ../app/main.c:496
 msgid "GIMP output. Type any character to close this window."
 msgstr ""
-"Sortida del GIMP. Escriviu qualsevol caràcter per a tancar aquesta finestra."
+"Sortida del GIMP. Escriviu qualsevol caràcter per tancar aquesta finestra."
 
 #: ../app/main.c:497
 #, c-format
 msgid "(Type any character to close this window)\n"
-msgstr "(Escriviu qualsevol caràcter per a tancar aquesta finestra)\n"
+msgstr "(Escriviu qualsevol caràcter per tancar aquesta finestra)\n"
 
 #: ../app/main.c:514
 msgid "GIMP output. You can minimize this window, but don't close it."
@@ -270,7 +271,7 @@ msgstr "%s versió %s"
 #: ../app/actions/actions.c:109 ../app/dialogs/dialogs.c:388
 #: ../app/widgets/gimpbrusheditor.c:88
 msgid "Brush Editor"
-msgstr "Editor dels pinzells"
+msgstr "Editor del pinzell"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:112 ../app/core/gimp.c:951
@@ -397,7 +398,7 @@ msgid "Layers"
 msgstr "Capes"
 
 #: ../app/actions/actions.c:193 ../app/dialogs/dialogs.c:400
-#: ../app/widgets/gimppaletteeditor.c:143
+#: ../app/widgets/gimppaletteeditor.c:148
 msgid "Palette Editor"
 msgstr "Editor de la paleta"
 
@@ -439,18 +440,18 @@ msgstr "Plantilles"
 
 #: ../app/actions/actions.c:217
 msgid "Text Tool"
-msgstr "Eina de text"
+msgstr "Eina Text"
 
 #: ../app/actions/actions.c:220
 msgid "Text Editor"
 msgstr "Editor de text"
 
 #: ../app/actions/actions.c:223 ../app/dialogs/dialogs.c:298
-#: ../app/dialogs/preferences-dialog.c:1854 ../app/gui/gui.c:424
+#: ../app/dialogs/preferences-dialog.c:1854 ../app/gui/gui.c:435
 msgid "Tool Options"
 msgstr "Opcions de l'eina"
 
-#: ../app/actions/actions.c:226 ../app/widgets/gimptoolpalette.c:388
+#: ../app/actions/actions.c:226 ../app/widgets/gimptoolpalette.c:391
 msgid "Tools"
 msgstr "Eines"
 
@@ -579,12 +580,12 @@ msgstr "En_ganxa l'objecte"
 #: ../app/actions/buffers-actions.c:46
 msgctxt "buffers-action"
 msgid "Paste the selected buffer"
-msgstr "Enganxa l'objecte"
+msgstr "Enganxa l'objecte seleccionat"
 
 #: ../app/actions/buffers-actions.c:51
 msgctxt "buffers-action"
 msgid "Paste Buffer _Into"
-msgstr "Enganxa l'objecte _dins"
+msgstr "Enganxa l'objecte d_ins"
 
 #: ../app/actions/buffers-actions.c:52
 msgctxt "buffers-action"
@@ -680,7 +681,7 @@ msgstr "Apuja aquest canal una posició en la pila de canals"
 #: ../app/actions/channels-actions.c:85
 msgctxt "channels-action"
 msgid "Raise Channel to _Top"
-msgstr "Mou el canal al capda_munt"
+msgstr "Mou el canal al capdamun_t"
 
 #: ../app/actions/channels-actions.c:87
 msgctxt "channels-action"
@@ -690,7 +691,7 @@ msgstr "Mou aquest canal al capdamunt de la pila de canals"
 #: ../app/actions/channels-actions.c:92
 msgctxt "channels-action"
 msgid "_Lower Channel"
-msgstr "A_baixa el canal"
+msgstr "Abaixa e_l canal"
 
 #: ../app/actions/channels-actions.c:93
 msgctxt "channels-action"
@@ -785,7 +786,7 @@ msgid "New Channel Color"
 msgstr "Color del canal nou"
 
 #: ../app/actions/channels-commands.c:244 ../app/core/gimpimage-new.c:257
-#: ../app/display/gimpdisplayshell-dnd.c:632
+#: ../app/display/gimpdisplayshell-dnd.c:646
 #: ../app/widgets/gimpchanneltreeview.c:258
 #: ../app/widgets/gimplayertreeview.c:776
 #, c-format
@@ -825,7 +826,7 @@ msgstr "_Afegeix el color del fons"
 #: ../app/actions/colormap-actions.c:64
 msgctxt "colormap-action"
 msgid "Add current background color"
-msgstr "Afegeix el color de fons"
+msgstr "Afegeix el color del fons"
 
 #: ../app/actions/colormap-commands.c:73
 #, c-format
@@ -864,7 +865,7 @@ msgstr "_Opacitat"
 #: ../app/actions/context-actions.c:52
 msgctxt "context-action"
 msgid "Paint _Mode"
-msgstr "_Forma de pintar"
+msgstr "For_ma de pintar"
 
 #: ../app/actions/context-actions.c:54
 msgctxt "context-action"
@@ -874,7 +875,7 @@ msgstr "_Eina"
 #: ../app/actions/context-actions.c:56
 msgctxt "context-action"
 msgid "_Brush"
-msgstr "_Pinzell"
+msgstr "Pin_zell"
 
 #: ../app/actions/context-actions.c:58
 msgctxt "context-action"
@@ -884,7 +885,7 @@ msgstr "_Patró"
 #: ../app/actions/context-actions.c:60
 msgctxt "context-action"
 msgid "_Palette"
-msgstr "_Paleta"
+msgstr "Pa_leta"
 
 #: ../app/actions/context-actions.c:62
 msgctxt "context-action"
@@ -899,7 +900,7 @@ msgstr "Tipus de _lletra"
 #: ../app/actions/context-actions.c:67
 msgctxt "context-action"
 msgid "_Shape"
-msgstr "_Forma"
+msgstr "_Ombra"
 
 #: ../app/actions/context-actions.c:69
 msgctxt "context-action"
@@ -944,7 +945,7 @@ msgstr "_Intercanvia els colors"
 #: ../app/actions/context-actions.c:88
 msgctxt "context-action"
 msgid "Exchange foreground and background colors"
-msgstr "Intercanvia el color de primer pla i el color de fons"
+msgstr "Intercanvia el color del primer pla i el color del fons"
 
 #: ../app/actions/context-commands.c:426
 #, c-format
@@ -979,16 +980,16 @@ msgstr "Mo_stra fusionada"
 #: ../app/actions/cursor-info-actions.c:48
 msgctxt "cursor-info-action"
 msgid "Use the composite color of all visible layers"
-msgstr "_Selecció de regions a totes les capes visibles"
+msgstr "Selecció de regions a totes les capes visibles"
 
 #: ../app/actions/data-commands.c:89 ../app/actions/documents-commands.c:344
-#: ../app/actions/file-commands.c:194 ../app/dialogs/file-open-dialog.c:232
+#: ../app/actions/file-commands.c:201 ../app/dialogs/file-open-dialog.c:232
 #: ../app/dialogs/file-open-dialog.c:277
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
-#: ../app/display/gimpdisplayshell-dnd.c:578
-#: ../app/widgets/gimplayertreeview.c:736 ../app/widgets/gimptoolbox-dnd.c:170
-#: ../app/widgets/gimptoolbox.c:833
+#: ../app/display/gimpdisplayshell-dnd.c:592
+#: ../app/widgets/gimplayertreeview.c:736 ../app/widgets/gimptoolbox-dnd.c:168
+#: ../app/widgets/gimptoolbox.c:818
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1001,7 +1002,7 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:118
 #: ../app/actions/tool-options-commands.c:72
-#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1519
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1529
 #: ../app/core/gimppalette-import.c:211 ../app/core/gimppalette-load.c:224
 #: ../app/core/gimppalette.c:399 ../app/dialogs/palette-import-dialog.c:771
 #: ../app/widgets/gimpdnd-xds.c:94
@@ -1046,7 +1047,7 @@ msgstr "Mostra el diàleg de les capes"
 #: ../app/actions/dialogs-actions.c:73
 msgctxt "dialogs-action"
 msgid "_Channels"
-msgstr "Ca_nals"
+msgstr "_Canals"
 
 #: ../app/actions/dialogs-actions.c:74
 msgctxt "dialogs-action"
@@ -1091,7 +1092,7 @@ msgstr "Editor de _selecció"
 #: ../app/actions/dialogs-actions.c:98
 msgctxt "dialogs-action"
 msgid "Open the selection editor"
-msgstr "Mostra l'editor de la selecció"
+msgstr "Mostra l'editor de selecció"
 
 #: ../app/actions/dialogs-actions.c:103
 msgctxt "dialogs-action"
@@ -1141,12 +1142,13 @@ msgstr "Colo_rs"
 #: ../app/actions/dialogs-actions.c:128
 msgctxt "dialogs-action"
 msgid "Open the FG/BG color dialog"
-msgstr "Mostra el diàleg per a seleccionar el color de primer pla i el de fons"
+msgstr ""
+"Mostra el diàleg per a seleccionar el color del primer pla i el del fons"
 
 #: ../app/actions/dialogs-actions.c:133
 msgctxt "dialogs-action"
 msgid "_Brushes"
-msgstr "_Pinzells"
+msgstr "Pin_zells"
 
 #: ../app/actions/dialogs-actions.c:134
 msgctxt "dialogs-action"
@@ -1161,7 +1163,7 @@ msgstr "Editor del pinzell"
 #: ../app/actions/dialogs-actions.c:140
 msgctxt "dialogs-action"
 msgid "Open the brush editor"
-msgstr "Mostra l'editor de pinzells"
+msgstr "Mostra l'editor del pinzell"
 
 #: ../app/actions/dialogs-actions.c:145
 msgctxt "dialogs-action"
@@ -1206,12 +1208,12 @@ msgstr "Mostra el diàleg dels degradats"
 #: ../app/actions/dialogs-actions.c:169
 msgctxt "dialogs-action"
 msgid "Gradient Editor"
-msgstr "Editor de degradats"
+msgstr "Editor dels degradats"
 
 #: ../app/actions/dialogs-actions.c:170
 msgctxt "dialogs-action"
 msgid "Open the gradient editor"
-msgstr "Mostra l'editor de degradats"
+msgstr "Mostra l'editor dels degradats"
 
 #: ../app/actions/dialogs-actions.c:175
 msgctxt "dialogs-action"
@@ -1231,7 +1233,7 @@ msgstr "Editor de la paleta"
 #: ../app/actions/dialogs-actions.c:182
 msgctxt "dialogs-action"
 msgid "Open the palette editor"
-msgstr "Mostra l'editor de paletes"
+msgstr "Mostra l'editor de les paletes"
 
 #: ../app/actions/dialogs-actions.c:187
 msgctxt "dialogs-action"
@@ -1332,7 +1334,7 @@ msgstr "_Dreceres de teclat"
 #: ../app/actions/dialogs-actions.c:247
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
-msgstr "Mostra l'editor de dreceres de teclat"
+msgstr "Mostra l'editor de les dreceres de teclat"
 
 #: ../app/actions/dialogs-actions.c:252
 msgctxt "dialogs-action"
@@ -1365,7 +1367,7 @@ msgid "About GIMP"
 msgstr "Quant al GIMP"
 
 #: ../app/actions/dialogs-actions.c:328
-#: ../app/dialogs/preferences-dialog.c:1944 ../app/widgets/gimptoolbox.c:555
+#: ../app/dialogs/preferences-dialog.c:1944 ../app/widgets/gimptoolbox.c:540
 msgid "Toolbox"
 msgstr "Caixa d'eines"
 
@@ -1563,7 +1565,7 @@ msgstr "Obre el fitxer seleccionat"
 #: ../app/actions/documents-actions.c:51
 msgctxt "documents-action"
 msgid "_Raise or Open Image"
-msgstr "_Mostra o obre la imatge"
+msgstr "Most_ra o obre la imatge"
 
 #: ../app/actions/documents-actions.c:52
 msgctxt "documents-action"
@@ -1594,7 +1596,7 @@ msgstr "Copia la ubicació de la imatge al porta-retalls"
 #: ../app/actions/documents-actions.c:69
 msgctxt "documents-action"
 msgid "Remove _Entry"
-msgstr "Suprimeix _el fitxer"
+msgstr "Suprim_eix el fitxer"
 
 # Quim: entry fa referència a un fitxe de la llista de fitxers recents
 #: ../app/actions/documents-actions.c:70
@@ -1688,7 +1690,7 @@ msgstr "Balanç de _blanc"
 #: ../app/actions/drawable-actions.c:58
 msgctxt "drawable-action"
 msgid "Automatic white balance correction"
-msgstr "Corregeix el balanç del color blanc automàticament"
+msgstr "Corregeix el balanç de blanc automàticament"
 
 #: ../app/actions/drawable-actions.c:63
 msgctxt "drawable-action"
@@ -2089,7 +2091,7 @@ msgstr "Esborra els píxels seleccionats"
 #: ../app/actions/edit-actions.c:193
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
-msgstr "Omple amb el color de _primer pla"
+msgstr "Omple amb el color del _primer pla"
 
 #: ../app/actions/edit-actions.c:194
 msgctxt "edit-action"
@@ -2099,12 +2101,12 @@ msgstr "Omple la selecció amb el color del primer pla"
 #: ../app/actions/edit-actions.c:199
 msgctxt "edit-action"
 msgid "Fill with B_G Color"
-msgstr "Omple amb el color de _fons"
+msgstr "Omple amb el color del _fons"
 
 #: ../app/actions/edit-actions.c:200
 msgctxt "edit-action"
 msgid "Fill the selection using the background color"
-msgstr "Omple la selecció amb el color de fons"
+msgstr "Omple la selecció amb el color del fons"
 
 #: ../app/actions/edit-actions.c:205
 msgctxt "edit-action"
@@ -2149,7 +2151,7 @@ msgstr "Neteja l'historial de desfer"
 
 #: ../app/actions/edit-commands.c:163
 msgid "Really clear image's undo history?"
-msgstr "Esteu segur que voleu buidiar l'historial de desfer de la imatge?"
+msgstr "Esteu segur que voleu buidar l'historial de desfer de la imatge?"
 
 #: ../app/actions/edit-commands.c:176
 #, c-format
@@ -2224,7 +2226,7 @@ msgstr "Buida la consola d'errors"
 #: ../app/actions/error-console-actions.c:49
 msgctxt "error-console-action"
 msgid "Select _All"
-msgstr "Selecciona'ls _tots"
+msgstr "Seleccion_a'ls tots"
 
 #: ../app/actions/error-console-actions.c:50
 msgctxt "error-console-action"
@@ -2244,7 +2246,7 @@ msgstr "Escriu tots els missatges d'error en un fitxer"
 #: ../app/actions/error-console-actions.c:64
 msgctxt "error-console-action"
 msgid "Save S_election to File..."
-msgstr "Desa la _selecció en un fitxer..."
+msgstr "D_esa la selecció en un fitxer..."
 
 #: ../app/actions/error-console-actions.c:65
 msgctxt "error-console-action"
@@ -2321,7 +2323,7 @@ msgstr "Crea una plantilla..."
 #: ../app/actions/file-actions.c:95
 msgctxt "file-action"
 msgid "Create a new template from this image"
-msgstr "Crea una nova plantilla a partir d'aquesta imatge"
+msgstr "Crea una plantilla nova a partir d'aquesta imatge"
 
 #: ../app/actions/file-actions.c:100
 msgctxt "file-action"
@@ -2356,7 +2358,7 @@ msgstr "Surt del programa de retoc d'imatges de GNU"
 #: ../app/actions/file-actions.c:121
 msgctxt "file-action"
 msgid "_Save"
-msgstr "_Desa"
+msgstr "De_sa"
 
 #: ../app/actions/file-actions.c:122
 msgctxt "file-action"
@@ -2399,8 +2401,8 @@ msgstr "Desa aquesta imatge i tanca'n la finestra"
 
 #: ../app/actions/file-actions.c:146
 msgctxt "file-action"
-msgid "Export to"
-msgstr "Exporta a"
+msgid "Export"
+msgstr "Exporta"
 
 #: ../app/actions/file-actions.c:147
 msgctxt "file-action"
@@ -2421,8 +2423,8 @@ msgstr ""
 
 #: ../app/actions/file-actions.c:158
 msgctxt "file-action"
-msgid "Export..."
-msgstr "Exporta..."
+msgid "Export As..."
+msgstr "Exporta com a..."
 
 #: ../app/actions/file-actions.c:159
 msgctxt "file-action"
@@ -2440,54 +2442,55 @@ msgid "Over_write %s"
 msgstr "_Sobreescriu %s"
 
 #: ../app/actions/file-actions.c:306
-msgid "Export to"
-msgstr "Exporta a"
+msgid "Export"
+msgstr "Exporta"
 
-#: ../app/actions/file-commands.c:112 ../app/actions/file-commands.c:499
+#: ../app/actions/file-commands.c:119 ../app/actions/file-commands.c:496
 #: ../app/dialogs/file-open-dialog.c:77
 msgid "Open Image"
 msgstr "Obre una imatge"
 
-#: ../app/actions/file-commands.c:133
+#: ../app/actions/file-commands.c:140
 msgid "Open Image as Layers"
 msgstr "Obre una imatge com a capes"
 
-#: ../app/actions/file-commands.c:265
+#: ../app/actions/file-commands.c:272
 msgid "No changes need to be saved"
 msgstr "No hi ha cap canvi per desar"
 
-#: ../app/actions/file-commands.c:272 ../app/dialogs/file-save-dialog.c:95
+#: ../app/actions/file-commands.c:279 ../app/actions/file-commands.c:700
+#: ../app/dialogs/file-save-dialog.c:103
 msgid "Save Image"
 msgstr "Desa la imatge"
 
-#: ../app/actions/file-commands.c:278
+#: ../app/actions/file-commands.c:285
 msgid "Save a Copy of the Image"
 msgstr "Desa una còpia de la imatge"
 
-#: ../app/actions/file-commands.c:363
+#: ../app/actions/file-commands.c:370
 msgid "Create New Template"
-msgstr "Crea nova plantilla"
+msgstr "Crea una plantilla nova"
 
-#: ../app/actions/file-commands.c:367
+#: ../app/actions/file-commands.c:374
 msgid "Enter a name for this template"
 msgstr "Anomena aquesta plantilla"
 
-#: ../app/actions/file-commands.c:401
+#: ../app/actions/file-commands.c:404
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
 "No es pot tornar endarrere. No hi ha cap nom de fitxer associat a aquesta "
 "imatge."
 
-#: ../app/actions/file-commands.c:414
+#: ../app/actions/file-commands.c:416
 msgid "Revert Image"
 msgstr "Recupera la imatge"
 
-#: ../app/actions/file-commands.c:445
+#: ../app/actions/file-commands.c:442
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Voleu recuperar «%s» a l'anterior «%s»?"
 
-#: ../app/actions/file-commands.c:451
+#: ../app/actions/file-commands.c:448
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -2495,11 +2498,11 @@ msgstr ""
 "Si torneu la imatge a l'estat desat al disc perdreu tots els canvis, "
 "incloent-hi tota la informació per desfer."
 
-#: ../app/actions/file-commands.c:662
+#: ../app/actions/file-commands.c:730
 msgid "(Unnamed Template)"
 msgstr "(Plantilla sense nom)"
 
-#: ../app/actions/file-commands.c:713
+#: ../app/actions/file-commands.c:781
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -2529,7 +2532,7 @@ msgstr "Actualitza els tipus de lletra instal·lats"
 #: ../app/actions/gradient-editor-actions.c:45
 msgctxt "gradient-editor-action"
 msgid "Gradient Editor Menu"
-msgstr "Menú de l'editor de degradats"
+msgstr "Menú de l'editor dels degradats"
 
 #: ../app/actions/gradient-editor-actions.c:49
 msgctxt "gradient-editor-action"
@@ -2743,7 +2746,7 @@ msgstr "_Duplica el segment..."
 
 #: ../app/actions/gradient-editor-actions.c:785
 msgid "Split Segment at _Midpoint"
-msgstr "Di_videix el segment per la meitat"
+msgstr "Divideix el segment per la _meitat"
 
 #: ../app/actions/gradient-editor-actions.c:787
 msgid "Split Segment _Uniformly..."
@@ -2783,7 +2786,7 @@ msgstr "Di_videix els segments per la meitat"
 
 #: ../app/actions/gradient-editor-actions.c:809
 msgid "Split Segments _Uniformly..."
-msgstr "Divideix el segment _uniformement..."
+msgstr "Divideix els segments _uniformement..."
 
 #: ../app/actions/gradient-editor-actions.c:811
 msgid "_Delete Selection"
@@ -2909,7 +2912,7 @@ msgstr "D_uplica el degradat"
 #: ../app/actions/gradients-actions.c:54
 msgctxt "gradients-action"
 msgid "Duplicate this gradient"
-msgstr "Duplica el degradat"
+msgstr "Duplica aquest degradat"
 
 #: ../app/actions/gradients-actions.c:59
 msgctxt "gradients-action"
@@ -2934,7 +2937,7 @@ msgstr "Desa el degradat com a POV-Ray"
 #: ../app/actions/gradients-actions.c:71
 msgctxt "gradients-action"
 msgid "_Delete Gradient"
-msgstr "_Suprimeix el degradat"
+msgstr "Suprimeix el _degradat"
 
 #: ../app/actions/gradients-actions.c:72
 msgctxt "gradients-action"
@@ -3034,7 +3037,7 @@ msgstr "_Mapa"
 #: ../app/actions/image-actions.c:64
 msgctxt "image-action"
 msgid "C_omponents"
-msgstr "_Components"
+msgstr "C_omponents"
 
 #: ../app/actions/image-actions.c:67
 msgctxt "image-action"
@@ -3099,7 +3102,7 @@ msgstr "Canvia la mida del contingut de la imatge"
 #: ../app/actions/image-actions.c:103
 msgctxt "image-action"
 msgid "_Crop to Selection"
-msgstr "Escapça la selecció"
+msgstr "Es_capça la selecció"
 
 #: ../app/actions/image-actions.c:104
 msgctxt "image-action"
@@ -3242,7 +3245,7 @@ msgstr "Defineix la mida del llenç de la imatge"
 
 # És substantiu, no verb
 #: ../app/actions/image-commands.c:266 ../app/actions/image-commands.c:290
-#: ../app/actions/image-commands.c:583
+#: ../app/actions/image-commands.c:594
 msgid "Resizing"
 msgstr "Canvi de mida"
 
@@ -3259,7 +3262,7 @@ msgstr "S'està capgirant"
 
 #: ../app/actions/image-commands.c:403
 #: ../app/pdb/drawable-transform-cmds.c:602
-#: ../app/pdb/drawable-transform-cmds.c:694 ../app/pdb/image-cmds.c:533
+#: ../app/pdb/drawable-transform-cmds.c:694 ../app/pdb/image-cmds.c:534
 #: ../app/pdb/item-transform-cmds.c:433 ../app/pdb/transform-tools-cmds.c:245
 #: ../app/tools/gimprotatetool.c:125
 msgid "Rotating"
@@ -3269,24 +3272,24 @@ msgstr "S'està girant"
 msgid "Cannot crop because the current selection is empty."
 msgstr "No s'ha pogut escapçar perquè l'àrea seleccionada està buida."
 
-#: ../app/actions/image-commands.c:630
+#: ../app/actions/image-commands.c:641
 msgid "Change Print Size"
 msgstr "Canvia la mida d'impressió"
 
-#: ../app/actions/image-commands.c:671
+#: ../app/actions/image-commands.c:682
 msgid "Scale Image"
 msgstr "Escala la imatge"
 
 #. Scaling
-#: ../app/actions/image-commands.c:682 ../app/actions/layers-commands.c:1145
+#: ../app/actions/image-commands.c:693 ../app/actions/layers-commands.c:1145
 #: ../app/dialogs/preferences-dialog.c:1899
 #: ../app/pdb/drawable-transform-cmds.c:783
-#: ../app/pdb/drawable-transform-cmds.c:872 ../app/pdb/image-cmds.c:405
-#: ../app/pdb/image-cmds.c:441 ../app/pdb/item-transform-cmds.c:524
-#: ../app/pdb/layer-cmds.c:333 ../app/pdb/layer-cmds.c:378
+#: ../app/pdb/drawable-transform-cmds.c:872 ../app/pdb/image-cmds.c:406
+#: ../app/pdb/image-cmds.c:442 ../app/pdb/item-transform-cmds.c:524
+#: ../app/pdb/layer-cmds.c:330 ../app/pdb/layer-cmds.c:375
 #: ../app/pdb/transform-tools-cmds.c:334 ../app/tools/gimpscaletool.c:118
 msgid "Scaling"
-msgstr "Escalat"
+msgstr "S'està escalant"
 
 # Quim: és el menú que surt com a opció en el diàleg 'imatges obertes'
 #: ../app/actions/images-actions.c:43
@@ -3374,12 +3377,12 @@ msgstr "_Mode de capa"
 #: ../app/actions/layers-actions.c:70
 msgctxt "layers-action"
 msgid "Te_xt Tool"
-msgstr "Eina te_xt"
+msgstr "Eina Te_xt"
 
 #: ../app/actions/layers-actions.c:71
 msgctxt "layers-action"
 msgid "Activate the text tool on this text layer"
-msgstr "Activa l'eina de text en aquesta capa de text"
+msgstr "Activa l'eina text en aquesta capa de text"
 
 #: ../app/actions/layers-actions.c:76
 msgctxt "layers-action"
@@ -3409,7 +3412,7 @@ msgstr "Capa _nova"
 #: ../app/actions/layers-actions.c:89
 msgctxt "layers-action"
 msgid "Create a new layer with last used values"
-msgstr "Crea una nova capa amb els valors utilitzats el darrer cop"
+msgstr "Crea una capa nova amb els valors utilitzats el darrer cop"
 
 #: ../app/actions/layers-actions.c:94
 msgctxt "layers-action"
@@ -3464,7 +3467,7 @@ msgstr "Apuja aquesta capa una posició "
 #: ../app/actions/layers-actions.c:126
 msgctxt "layers-action"
 msgid "Layer to _Top"
-msgstr "Mou la capa al capda_munt"
+msgstr "Mou la capa al capdamun_t"
 
 #: ../app/actions/layers-actions.c:127
 msgctxt "layers-action"
@@ -3479,7 +3482,7 @@ msgstr "A_baixa la capa"
 #: ../app/actions/layers-actions.c:133
 msgctxt "layers-action"
 msgid "Lower this layer one step in the layer stack"
-msgstr "Abaixa aquesta capa una posició"
+msgstr "Abaixa aquesta capa una posició a la pila de capes"
 
 #: ../app/actions/layers-actions.c:138
 msgctxt "layers-action"
@@ -3494,7 +3497,7 @@ msgstr "Mou aquesta capa al capdavall de la pila de capes"
 #: ../app/actions/layers-actions.c:144
 msgctxt "layers-action"
 msgid "_Anchor Layer"
-msgstr "_Fixa la capa"
+msgstr "Fix_a la capa"
 
 #: ../app/actions/layers-actions.c:145
 msgctxt "layers-action"
@@ -3564,7 +3567,7 @@ msgstr "Crea un camí a partir d'aquesta capa de text"
 #: ../app/actions/layers-actions.c:186
 msgctxt "layers-action"
 msgid "Text alon_g Path"
-msgstr "Text se_guint el camí"
+msgstr "Text que se_gueix el camí"
 
 #: ../app/actions/layers-actions.c:187
 msgctxt "layers-action"
@@ -3635,7 +3638,7 @@ msgstr "Afegeix informació de transparència a la capa"
 #: ../app/actions/layers-actions.c:229
 msgctxt "layers-action"
 msgid "_Remove Alpha Channel"
-msgstr "_Suprimeix el canal alfa"
+msgstr "Sup_rimeix el canal alfa"
 
 #: ../app/actions/layers-actions.c:230
 msgctxt "layers-action"
@@ -3661,7 +3664,7 @@ msgstr "_Edita la màscara de capa"
 #: ../app/actions/layers-actions.c:247
 msgctxt "layers-action"
 msgid "Work on the layer mask"
-msgstr "Treballa amb la màscara de la capa"
+msgstr "Treballa amb la màscara de capa"
 
 #: ../app/actions/layers-actions.c:253
 msgctxt "layers-action"
@@ -3676,7 +3679,7 @@ msgstr "Inhabilita la màscara _de capa"
 #: ../app/actions/layers-actions.c:260
 msgctxt "layers-action"
 msgid "Dismiss the effect of the layer mask"
-msgstr "Treu l'efecte de la màscara de la capa"
+msgstr "Treu l'efecte de la màscara de capa"
 
 #: ../app/actions/layers-actions.c:269
 msgctxt "layers-action"
@@ -3698,7 +3701,7 @@ msgstr "Elimina la màs_cara de capa"
 #: ../app/actions/layers-actions.c:276
 msgctxt "layers-action"
 msgid "Remove the layer mask and its effect"
-msgstr "Elimina la màscara de la capa i el seu efecte"
+msgstr "Elimina la màscara de capa i el seu efecte"
 
 #: ../app/actions/layers-actions.c:284
 msgctxt "layers-action"
@@ -3718,7 +3721,7 @@ msgstr "_Afegeix a la selecció"
 #: ../app/actions/layers-actions.c:291
 msgctxt "layers-action"
 msgid "Add the layer mask to the current selection"
-msgstr "Afegeix la màscara de la capa a la selecció actual"
+msgstr "Afegeix la màscara de capa a la selecció actual"
 
 #: ../app/actions/layers-actions.c:296 ../app/actions/layers-actions.c:325
 msgctxt "layers-action"
@@ -3728,7 +3731,7 @@ msgstr "_Sostreu de la selecció"
 #: ../app/actions/layers-actions.c:297
 msgctxt "layers-action"
 msgid "Subtract the layer mask from the current selection"
-msgstr "Sostreu la màscara de la capa a la selecció actual"
+msgstr "Sostreu la màscara de capa a la selecció actual"
 
 #: ../app/actions/layers-actions.c:302 ../app/actions/layers-actions.c:332
 msgctxt "layers-action"
@@ -3738,7 +3741,7 @@ msgstr "_Interseca amb la selecció"
 #: ../app/actions/layers-actions.c:303
 msgctxt "layers-action"
 msgid "Intersect the layer mask with the current selection"
-msgstr "Interseca la màscara de la capa amb la selecció actual"
+msgstr "Interseca la màscara de capa amb la selecció actual"
 
 #: ../app/actions/layers-actions.c:311
 msgctxt "layers-action"
@@ -3775,7 +3778,7 @@ msgstr "Interseca el canal alfa de la capa amb la selecció actual"
 #: ../app/actions/layers-actions.c:342
 msgctxt "layers-action"
 msgid "Select _Top Layer"
-msgstr "Selecciona la capa del capda_munt"
+msgstr "Selecciona la capa del capdamun_t"
 
 #: ../app/actions/layers-actions.c:343
 msgctxt "layers-action"
@@ -3795,7 +3798,7 @@ msgstr "Selecciona la capa del capdavall"
 #: ../app/actions/layers-actions.c:354
 msgctxt "layers-action"
 msgid "Select _Previous Layer"
-msgstr "Selecciona la capa de _sobre"
+msgstr "Selecciona la ca_pa anterior"
 
 #: ../app/actions/layers-actions.c:355
 msgctxt "layers-action"
@@ -3805,7 +3808,7 @@ msgstr "Selecciona la capa superior a l'actual"
 #: ../app/actions/layers-actions.c:360
 msgctxt "layers-action"
 msgid "Select _Next Layer"
-msgstr "Selecciona la capa de s_ota"
+msgstr "Seleccio_na la capa de següent"
 
 #: ../app/actions/layers-actions.c:361
 msgctxt "layers-action"
@@ -3938,7 +3941,7 @@ msgstr "_Redueix"
 
 #: ../app/actions/palette-editor-actions.c:100
 msgid "Zoom _All"
-msgstr "Amplia-ho _tot"
+msgstr "_Ajusta"
 
 #: ../app/actions/palette-editor-commands.c:68
 msgid "Edit Palette Color"
@@ -4292,7 +4295,7 @@ msgstr "Commuta la màscara ràpida"
 #: ../app/actions/quick-mask-actions.c:65
 msgctxt "quick-mask-action"
 msgid "Mask _Selected Areas"
-msgstr "Enma_scara les àrees seleccionades"
+msgstr "Emma_scara les àrees seleccionades"
 
 #: ../app/actions/quick-mask-actions.c:70
 msgctxt "quick-mask-action"
@@ -4309,7 +4312,7 @@ msgstr "Edita els atributs de la màscara ràpida"
 
 #: ../app/actions/quick-mask-commands.c:110
 msgid "Edit Quick Mask Color"
-msgstr "Edita color de la màscara ràpida"
+msgstr "Edita el color de la màscara ràpida"
 
 #: ../app/actions/quick-mask-commands.c:111
 msgid "_Mask opacity:"
@@ -4488,7 +4491,7 @@ msgstr "Augmenta la selecció"
 
 #: ../app/actions/select-commands.c:241
 msgid "Grow selection by"
-msgstr "Engrandeix la selecció un"
+msgstr "Engrandeix la selecció uns"
 
 #: ../app/actions/select-commands.c:267
 msgid "Border Selection"
@@ -4645,7 +4648,7 @@ msgstr "Obre fitxer de text (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:143
 #: ../app/actions/text-tool-commands.c:226 ../app/config/gimpconfig-file.c:58
-#: ../app/core/gimpbrush-load.c:140 ../app/core/gimpbrush-load.c:424
+#: ../app/core/gimpbrush-load.c:142 ../app/core/gimpbrush-load.c:443
 #: ../app/core/gimpbrushgenerated-load.c:73
 #: ../app/core/gimpbrushpipe-load.c:81 ../app/core/gimpcurve-load.c:54
 #: ../app/core/gimpgradient-load.c:63 ../app/core/gimppalette-load.c:77
@@ -4716,7 +4719,7 @@ msgstr "Crea un camí que ressegueixi la vora del text"
 #: ../app/actions/text-tool-actions.c:96
 msgctxt "text-tool-action"
 msgid "Text _along Path"
-msgstr "Text _seguint el camí"
+msgstr "Text que _segueix el camí"
 
 #: ../app/actions/text-tool-actions.c:98
 msgctxt "text-tool-action"
@@ -4936,7 +4939,7 @@ msgstr "Edita els atributs del camí"
 #: ../app/actions/vectors-actions.c:59
 msgctxt "vectors-action"
 msgid "_New Path..."
-msgstr "_Nou camí..."
+msgstr "Camí _nou..."
 
 #: ../app/actions/vectors-actions.c:60
 msgctxt "vectors-action"
@@ -4991,7 +4994,7 @@ msgstr "Apuja el camí"
 #: ../app/actions/vectors-actions.c:94
 msgctxt "vectors-action"
 msgid "Raise Path to _Top"
-msgstr "Mou el camí al capda_munt"
+msgstr "Mou el camí al capdamun_t"
 
 #: ../app/actions/vectors-actions.c:95
 msgctxt "vectors-action"
@@ -5207,13 +5210,13 @@ msgstr "Crea una vista nova per a aquesta imatge en una altra finestra"
 
 #: ../app/actions/view-actions.c:82
 msgctxt "view-action"
-msgid "_Close"
-msgstr "_Tanca"
+msgid "_Close View"
+msgstr "Tan_ca la visualització"
 
 #: ../app/actions/view-actions.c:83
 msgctxt "view-action"
-msgid "Close this image window"
-msgstr "Tanca aquesta finestra"
+msgid "Close the active image view"
+msgstr "Tanca la visualització de la imatge activa"
 
 #: ../app/actions/view-actions.c:88
 msgctxt "view-action"
@@ -5644,11 +5647,11 @@ msgstr "Alt_res (%s)..."
 msgid "_Zoom (%s)"
 msgstr "_Ampliació (%s)"
 
-#: ../app/actions/view-commands.c:585
+#: ../app/actions/view-commands.c:603
 msgid "Set Canvas Padding Color"
 msgstr "Defineix el color d'emplenament del llenç"
 
-#: ../app/actions/view-commands.c:587
+#: ../app/actions/view-commands.c:605
 msgid "Set Custom Canvas Padding Color"
 msgstr "Defineix un color d'emplenament personalitzat per al llenç"
 
@@ -5662,47 +5665,47 @@ msgstr "Pantalla %s"
 msgid "Move this window to screen %s"
 msgstr "Mou aquesta finestra a la pantalla %s"
 
-#: ../app/actions/windows-actions.c:95
+#: ../app/actions/windows-actions.c:93
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "_Finestres"
 
-#: ../app/actions/windows-actions.c:97
+#: ../app/actions/windows-actions.c:95
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "_Plafons tancats recentment"
 
-#: ../app/actions/windows-actions.c:99
+#: ../app/actions/windows-actions.c:97
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "_Diàlegs encastables"
 
-#: ../app/actions/windows-actions.c:102
+#: ../app/actions/windows-actions.c:100
 msgctxt "windows-action"
 msgid "Next Image"
 msgstr "Imatge següent"
 
-#: ../app/actions/windows-actions.c:103
+#: ../app/actions/windows-actions.c:101
 msgctxt "windows-action"
 msgid "Switch to the next image"
 msgstr "Commuta a la imatge següent"
 
-#: ../app/actions/windows-actions.c:108
+#: ../app/actions/windows-actions.c:106
 msgctxt "windows-action"
 msgid "Previous Image"
 msgstr "Imatge anterior"
 
-#: ../app/actions/windows-actions.c:109
+#: ../app/actions/windows-actions.c:107
 msgctxt "windows-action"
 msgid "Switch to the previous image"
 msgstr "Commuta a la imatge anterior"
 
-#: ../app/actions/windows-actions.c:117
+#: ../app/actions/windows-actions.c:115
 msgctxt "windows-action"
 msgid "Hide Docks"
 msgstr "Amaga els acobladors"
 
-#: ../app/actions/windows-actions.c:118
+#: ../app/actions/windows-actions.c:116
 msgctxt "windows-action"
 msgid ""
 "When enabled docks and other dialogs are hidden, leaving only image windows."
@@ -5710,12 +5713,12 @@ msgstr ""
 "Deixa la finestra de la imatge només quan els acobladors estan habilitats i "
 "els altres diàlegs estan amagats."
 
-#: ../app/actions/windows-actions.c:124
+#: ../app/actions/windows-actions.c:122
 msgctxt "windows-action"
 msgid "Single-Window Mode"
 msgstr "Mode de finestra única"
 
-#: ../app/actions/windows-actions.c:125
+#: ../app/actions/windows-actions.c:123
 msgctxt "windows-action"
 msgid "When enabled GIMP is in a single-window mode."
 msgstr "Si està activat el GIMP és en el mode de finestra única."
@@ -5956,7 +5959,7 @@ msgstr "Navega per la imatge"
 #: ../app/config/config-enums.c:90
 msgctxt "space-bar-action"
 msgid "Switch to Move tool"
-msgstr "Commuta l'eina de moure"
+msgstr "Commuta l'eina Mou"
 
 #: ../app/config/config-enums.c:118
 msgctxt "zoom-quality"
@@ -6243,9 +6246,9 @@ msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
 "used to be the default behaviour in older versions."
 msgstr ""
-"Si es marca l'opció, l'eina moure canvia la capa o camí que s'estigui "
-"editant com a actiu. Aquest era el comportament per defecte en les versions "
-"més antigues."
+"Si es marca l'opció, l'eina Mou canvia la capa o camí que s'estigui editant "
+"com a actiu. Aquest era el comportament per defecte en les versions més "
+"antigues."
 
 #: ../app/config/gimprc-blurbs.h:245
 msgid ""
@@ -6587,7 +6590,7 @@ msgstr "Defineix la mida de les previsualitzacions de l'historial de desfer."
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Si es marca l'opció, en prémer F1 s'obrirà el navegador de l'ajuda."
 
-#: ../app/config/gimprc-deserialize.c:135 ../app/core/gimp-modules.c:133
+#: ../app/config/gimprc-deserialize.c:135 ../app/core/gimp-modules.c:136
 #: ../app/core/gimp-units.c:167 ../app/gui/session.c:286
 #: ../app/plug-in/plug-in-rc.c:212
 msgid "fatal parse error"
@@ -7077,12 +7080,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Ancora la selecció flotant"
 
-#: ../app/core/core-enums.c:862 ../app/core/gimp-edit.c:261
+#: ../app/core/core-enums.c:862 ../app/core/gimp-edit.c:293
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Enganxa"
 
-#: ../app/core/core-enums.c:863 ../app/core/gimp-edit.c:502
+#: ../app/core/core-enums.c:863 ../app/core/gimp-edit.c:534
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Retalla"
@@ -7258,168 +7261,168 @@ msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "No es pot desfer"
 
-#: ../app/core/core-enums.c:1185
+#: ../app/core/core-enums.c:1187
 msgctxt "select-criterion"
 msgid "Composite"
 msgstr "Composició"
 
-#: ../app/core/core-enums.c:1186
+#: ../app/core/core-enums.c:1188
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Vermell"
 
-#: ../app/core/core-enums.c:1187
+#: ../app/core/core-enums.c:1189
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Verd"
 
-#: ../app/core/core-enums.c:1188
+#: ../app/core/core-enums.c:1190
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Blau"
 
-#: ../app/core/core-enums.c:1189
+#: ../app/core/core-enums.c:1191
 msgctxt "select-criterion"
 msgid "Hue"
 msgstr "To"
 
-#: ../app/core/core-enums.c:1190
+#: ../app/core/core-enums.c:1192
 msgctxt "select-criterion"
 msgid "Saturation"
 msgstr "Saturació"
 
-#: ../app/core/core-enums.c:1191
+#: ../app/core/core-enums.c:1193
 msgctxt "select-criterion"
 msgid "Value"
 msgstr "Valor"
 
-#: ../app/core/core-enums.c:1220
+#: ../app/core/core-enums.c:1222
 msgctxt "message-severity"
 msgid "Message"
 msgstr "Missatge"
 
-#: ../app/core/core-enums.c:1221
+#: ../app/core/core-enums.c:1223
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "Avís"
 
-#: ../app/core/core-enums.c:1222
+#: ../app/core/core-enums.c:1224
 msgctxt "message-severity"
 msgid "Error"
 msgstr "Error"
 
-#: ../app/core/core-enums.c:1251
+#: ../app/core/core-enums.c:1253
 msgctxt "color-profile-policy"
 msgid "Ask what to do"
 msgstr "Pregunta què s'ha de fer"
 
-#: ../app/core/core-enums.c:1252
+#: ../app/core/core-enums.c:1254
 msgctxt "color-profile-policy"
 msgid "Keep embedded profile"
 msgstr "Conserva el perfil "
 
-#: ../app/core/core-enums.c:1253
+#: ../app/core/core-enums.c:1255
 msgctxt "color-profile-policy"
 msgid "Convert to RGB workspace"
 msgstr "Converteix en un format de colors RGB"
 
-#: ../app/core/core-enums.c:1290
+#: ../app/core/core-enums.c:1292
 msgctxt "dynamics-output-type"
 msgid "Opacity"
 msgstr "Opacitat"
 
-#: ../app/core/core-enums.c:1291
+#: ../app/core/core-enums.c:1293
 msgctxt "dynamics-output-type"
 msgid "Size"
 msgstr "Mida"
 
-#: ../app/core/core-enums.c:1292
+#: ../app/core/core-enums.c:1294
 msgctxt "dynamics-output-type"
 msgid "Angle"
 msgstr "Angle"
 
-#: ../app/core/core-enums.c:1293
+#: ../app/core/core-enums.c:1295
 msgctxt "dynamics-output-type"
 msgid "Color"
 msgstr "Color"
 
-#: ../app/core/core-enums.c:1294
+#: ../app/core/core-enums.c:1296
 msgctxt "dynamics-output-type"
 msgid "Hardness"
 msgstr "Duresa"
 
-#: ../app/core/core-enums.c:1295
+#: ../app/core/core-enums.c:1297
 msgctxt "dynamics-output-type"
 msgid "Force"
 msgstr "Força"
 
-#: ../app/core/core-enums.c:1296
+#: ../app/core/core-enums.c:1298
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
 msgstr "Relació d'aspecte"
 
-#: ../app/core/core-enums.c:1297
+#: ../app/core/core-enums.c:1299
 msgctxt "dynamics-output-type"
 msgid "Spacing"
 msgstr "Espaiat"
 
-#: ../app/core/core-enums.c:1298
+#: ../app/core/core-enums.c:1300
 msgctxt "dynamics-output-type"
 msgid "Rate"
 msgstr "Velocitat"
 
-#: ../app/core/core-enums.c:1299
+#: ../app/core/core-enums.c:1301
 msgctxt "dynamics-output-type"
 msgid "Flow"
 msgstr "Flux"
 
-#: ../app/core/core-enums.c:1300
+#: ../app/core/core-enums.c:1302
 msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "Dispersa"
 
 #: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:375
-#: ../app/gui/session.c:399 ../app/menus/menus.c:464
-#: ../app/widgets/gimpdevices.c:206
+#: ../app/gui/session.c:408 ../app/menus/menus.c:466
+#: ../app/widgets/gimpdevices.c:208
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "No s'ha pogut suprimir «%s»: %s"
 
-#: ../app/core/gimp-edit.c:189 ../app/core/gimpimage-new.c:309
+#: ../app/core/gimp-edit.c:190 ../app/core/gimpimage-new.c:309
 msgid "Pasted Layer"
 msgstr "Capa enganxada"
 
-#: ../app/core/gimp-edit.c:388
+#: ../app/core/gimp-edit.c:420
 msgctxt "undo-type"
 msgid "Clear"
 msgstr "Neteja"
 
-#: ../app/core/gimp-edit.c:407
+#: ../app/core/gimp-edit.c:439
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "Omple amb el color de primer pla"
 
-#: ../app/core/gimp-edit.c:411
+#: ../app/core/gimp-edit.c:443
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "Omple amb el color de fons"
 
-#: ../app/core/gimp-edit.c:415
+#: ../app/core/gimp-edit.c:447
 msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "Omple amb el color blanc"
 
-#: ../app/core/gimp-edit.c:419
+#: ../app/core/gimp-edit.c:451
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr "Fes transparent"
 
-#: ../app/core/gimp-edit.c:423
+#: ../app/core/gimp-edit.c:455
 msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "Omple amb el patró"
 
-#: ../app/core/gimp-edit.c:515
+#: ../app/core/gimp-edit.c:547
 msgid "Global Buffer"
 msgstr "Memòria global"
 
@@ -7454,16 +7457,16 @@ msgstr "Fes transparent el color de primer pla"
 msgid "tags-locale:C"
 msgstr "tags-locale:ca"
 
-#: ../app/core/gimp-user-install.c:173
+#: ../app/core/gimp-user-install.c:203
 #, c-format
 msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
 "settings to '%s'."
 msgstr ""
-"Sembla ser que abans utilitzàveu la versió %s del Gimp. El GIMP migrarà les "
+"Sembla ser que abans utilitzàveu la versió %s del GIMP. El GIMP migrarà les "
 "vostres preferències d'usuari a «%s»."
 
-#: ../app/core/gimp-user-install.c:178
+#: ../app/core/gimp-user-install.c:208
 #, c-format
 msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
@@ -7472,17 +7475,17 @@ msgstr ""
 "Sembla ser que esteu utilitzant el GIMP per primera vegada. El GIMP crearà "
 "una carpeta anomenada «%s» on hi copiarà els seus fitxers."
 
-#: ../app/core/gimp-user-install.c:329
+#: ../app/core/gimp-user-install.c:359
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "S'està copiant el fitxer «%s» des de «%s»..."
 
-#: ../app/core/gimp-user-install.c:344 ../app/core/gimp-user-install.c:370
+#: ../app/core/gimp-user-install.c:374 ../app/core/gimp-user-install.c:400
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "S'està creant la carpeta «%s»..."
 
-#: ../app/core/gimp-user-install.c:355 ../app/core/gimp-user-install.c:381
+#: ../app/core/gimp-user-install.c:385 ../app/core/gimp-user-install.c:411
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "No s'ha pogut crear la carpeta «%s»: %s"
@@ -7526,60 +7529,76 @@ msgstr "Mòduls"
 msgid "Updating tag cache"
 msgstr "S'està actualitzant la memòria cau de les etiquetes"
 
-#: ../app/core/gimpbrush-load.c:178
+#: ../app/core/gimpbrush-load.c:180
 #, c-format
 msgid "Could not read %d byte from '%s': %s"
 msgid_plural "Could not read %d bytes from '%s': %s"
 msgstr[0] "No s'ha pogut llegir %d byte des de «%s»: %s"
 msgstr[1] "No s'han pogut llegir %d bytes des de «%s»: %s"
 
-#: ../app/core/gimpbrush-load.c:200
+#: ../app/core/gimpbrush-load.c:202
 #, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
 msgstr ""
 "El fitxer del pinzell «%s» està malmès: té una amplada nul·la (Width = 0)."
 
-#: ../app/core/gimpbrush-load.c:209
+#: ../app/core/gimpbrush-load.c:211
 #, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
 msgstr ""
 "El fitxer del pinzell «%s» està malmès: té una alçada nul·la (Height = 0)."
 
-#: ../app/core/gimpbrush-load.c:218
+#: ../app/core/gimpbrush-load.c:220
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
-msgstr "El fitxer del pinzell «%s» està malmès: té una mida nul·la (Bytes = 0)."
+msgstr ""
+"El fitxer del pinzell «%s» està malmès: té una mida nul·la (Bytes = 0)."
 
-#: ../app/core/gimpbrush-load.c:242
+#: ../app/core/gimpbrush-load.c:244
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
 msgstr ""
 "El fitxer del pinzell «%s» està malmès: Té una profunditat %d desconeguda."
 
-#: ../app/core/gimpbrush-load.c:255
+#: ../app/core/gimpbrush-load.c:257
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
-msgstr "El fitxer del pinzell «%s» està malmès: és d'una versió desconeguda %d."
+msgstr ""
+"El fitxer del pinzell «%s» està malmès: és d'una versió desconeguda %d."
 
-#: ../app/core/gimpbrush-load.c:271 ../app/core/gimpbrush-load.c:391
-#: ../app/core/gimpbrush-load.c:725
+#: ../app/core/gimpbrush-load.c:273 ../app/core/gimpbrush-load.c:410
+#: ../app/core/gimpbrush-load.c:744
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr "El fitxer del pinzell «%s» està malmès: el fitxer està tallat."
 
-#: ../app/core/gimpbrush-load.c:279 ../app/core/gimpbrushgenerated-load.c:128
+#: ../app/core/gimpbrush-load.c:281 ../app/core/gimpbrushgenerated-load.c:128
 #: ../app/core/gimpbrushpipe-load.c:97
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Hi ha una cadena de text UTF-8 no vàlida al fitxer del pinzell «%s»."
 
-#: ../app/core/gimpbrush-load.c:286 ../app/core/gimppattern-load.c:146
+#: ../app/core/gimpbrush-load.c:288 ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:83
 #: ../app/tools/gimpvectortool.c:317
 msgid "Unnamed"
 msgstr "Sense nom"
 
-#: ../app/core/gimpbrush-load.c:380
+#: ../app/core/gimpbrush-load.c:354
+#, c-format
+msgid ""
+"Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
+"GIMP brushes must be GRAY or RGBA.\n"
+"This might be an obsolete GIMP brush file, try loading it as image and save "
+"it again."
+msgstr ""
+"El fitxer del pinzell «%s» està malmès: no es permet una profunditat de "
+"pinzell %d\n"
+"Els pinzells del GIMP han de ser en GRIS o en RGBA.\n"
+"Podria tractar-se d'un fitxer de pinzell del GIMP obsolet, proveu de "
+"carregar-lo com a imatge i deseu-lo altra vegada."
+
+#: ../app/core/gimpbrush-load.c:399
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -7589,7 +7608,7 @@ msgstr ""
 "pinzell %d\n"
 "Els pinzells del GIMP han de ser en GRIS o en RGBA."
 
-#: ../app/core/gimpbrush-load.c:452
+#: ../app/core/gimpbrush-load.c:471 ../app/core/gimpbrush-load.c:871
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': unable to decode abr format version %d."
@@ -7597,10 +7616,11 @@ msgstr ""
 "El fitxer del pinzell «%s» està malmès: no es pot descodificar el format abr "
 "versió %d."
 
-#: ../app/core/gimpbrush-load.c:619
+#: ../app/core/gimpbrush-load.c:638
 #, c-format
 msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
-msgstr "El fitxer del pinzell «%s» està malmès: no es permeten pinzells amples."
+msgstr ""
+"El fitxer del pinzell «%s» està malmès: no es permeten pinzells amples."
 
 #: ../app/core/gimpbrush.c:148
 msgid "Brush Spacing"
@@ -7668,7 +7688,6 @@ msgid "Brush Angle"
 msgstr "Angle del pinzell"
 
 #: ../app/core/gimpbrushpipe-load.c:113 ../app/core/gimpbrushpipe-load.c:133
-#: ../app/core/gimpbrushpipe-load.c:224
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "El fitxer del pinzell «%s» està malmès: El fitxer està malmès."
@@ -7702,7 +7721,7 @@ msgstr "Canal %s a la selecció"
 #: ../app/core/gimpchannel-select.c:493
 msgctxt "undo-type"
 msgid "Fuzzy Select"
-msgstr "Selecció de regió contígua"
+msgstr "Selecció de regió contigua"
 
 #: ../app/core/gimpchannel-select.c:540
 msgctxt "undo-type"
@@ -7854,7 +7873,7 @@ msgstr "Opacitat"
 msgid "Paint Mode"
 msgstr "Forma de pintar"
 
-#: ../app/core/gimpdata.c:670
+#: ../app/core/gimpdata.c:690
 #, c-format
 msgid "Could not delete '%s': %s"
 msgstr "No s'ha pogut esborrar «%s»: %s"
@@ -8002,13 +8021,13 @@ msgid "Posterize"
 msgstr "Redueix el nombre de colors"
 
 #: ../app/core/gimpdrawable-stroke.c:272
-#: ../app/paint/gimppaintcore-stroke.c:333 ../app/vectors/gimpvectors.c:556
+#: ../app/paint/gimppaintcore-stroke.c:330 ../app/vectors/gimpvectors.c:556
 msgid "Not enough points to stroke"
-msgstr "No hi ha prous punts per dibuixar"
+msgstr "No hi ha prou punts per dibuixar"
 
 #: ../app/core/gimpdrawable-stroke.c:273
 msgid "Not enough points to fill"
-msgstr "No hi ha prous punts per omplir"
+msgstr "No hi ha prou punts per omplir"
 
 #: ../app/core/gimpdrawable-stroke.c:404
 msgctxt "undo-type"
@@ -8078,8 +8097,8 @@ msgstr ""
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Corrupt segment %d in line %d."
 msgstr ""
-"El fitxer de degradat «%s» està malmès: el segment %d està malmès a la línia %"
-"d."
+"El fitxer de degradat «%s» està malmès: el segment %d està malmès a la línia "
+"%d."
 
 #: ../app/core/gimpgradient-load.c:242 ../app/core/gimpgradient-load.c:256
 #, c-format
@@ -8188,12 +8207,17 @@ msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Defineix el mapa de color"
 
-#: ../app/core/gimpimage-colormap.c:243
+#: ../app/core/gimpimage-colormap.c:210
+msgctxt "undo-type"
+msgid "Unset Colormap"
+msgstr "Mapa de color no definit"
+
+#: ../app/core/gimpimage-colormap.c:263
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Canvia l'entrada del mapa de color"
 
-#: ../app/core/gimpimage-colormap.c:271
+#: ../app/core/gimpimage-colormap.c:291
 msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Afegeix el color al mapa de color"
@@ -8280,39 +8304,43 @@ msgctxt "undo-type"
 msgid "Merge Visible Layers"
 msgstr "Fusiona les capes visibles"
 
-#: ../app/core/gimpimage-merge.c:178
+#: ../app/core/gimpimage-merge.c:195
 msgctxt "undo-type"
 msgid "Flatten Image"
 msgstr "Aplana la imatge"
 
-#: ../app/core/gimpimage-merge.c:248
+#: ../app/core/gimpimage-merge.c:217
+msgid "Cannot flatten an image without any visible layer."
+msgstr "No es pot aplanar la imatge si no hi ha una capa visible."
+
+#: ../app/core/gimpimage-merge.c:260
 msgid "Cannot merge down to a layer group."
 msgstr "No s'ha pogut fusionar cap avall el grup de capes."
 
-#: ../app/core/gimpimage-merge.c:255
+#: ../app/core/gimpimage-merge.c:267
 msgid "The layer to merge down to is locked."
 msgstr "La capa que es vol fusionar cap avall està bloquejada."
 
-#: ../app/core/gimpimage-merge.c:267
+#: ../app/core/gimpimage-merge.c:279
 msgid "There is no visible layer to merge down to."
 msgstr "No hi ha cap capa visible per fusionar cap avall."
 
-#: ../app/core/gimpimage-merge.c:277
+#: ../app/core/gimpimage-merge.c:289
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Fusiona cap avall"
 
-#: ../app/core/gimpimage-merge.c:305
+#: ../app/core/gimpimage-merge.c:317
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Fusiona el grup de capes"
 
-#: ../app/core/gimpimage-merge.c:358
+#: ../app/core/gimpimage-merge.c:370
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Fusiona els camins visibles"
 
-#: ../app/core/gimpimage-merge.c:394
+#: ../app/core/gimpimage-merge.c:406
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "No hi ha prou camins visibles per a una fusió. Almenys n'hi ha d'haver dos."
@@ -8346,7 +8374,7 @@ msgctxt "undo-type"
 msgid "Move Sample Point"
 msgstr "Mou el punt de mostra"
 
-#: ../app/core/gimpimage-scale.c:87
+#: ../app/core/gimpimage-scale.c:88
 msgctxt "undo-type"
 msgid "Scale Image"
 msgstr "Escala la imatge"
@@ -8356,57 +8384,69 @@ msgstr "Escala la imatge"
 msgid "Can't undo %s"
 msgstr "No es pot desfer %s"
 
-#: ../app/core/gimpimage.c:1804
+#: ../app/core/gimpimage.c:1784
+msgid " (exported)"
+msgstr "(exportat)"
+
+#: ../app/core/gimpimage.c:1788
+msgid " (overwritten)"
+msgstr "(sobreescrit)"
+
+#: ../app/core/gimpimage.c:1797
+msgid " (imported)"
+msgstr "(importat)"
+
+#: ../app/core/gimpimage.c:1922
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Canvia la resolució de la imatge"
 
-#: ../app/core/gimpimage.c:1856
+#: ../app/core/gimpimage.c:1974
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Canvia les unitats de la imatge"
 
-#: ../app/core/gimpimage.c:2869
+#: ../app/core/gimpimage.c:2987
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Adjunta un paràsit a la imatge"
 
-#: ../app/core/gimpimage.c:2910
+#: ../app/core/gimpimage.c:3028
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Suprimeix el paràsit de la imatge"
 
-#: ../app/core/gimpimage.c:3619
+#: ../app/core/gimpimage.c:3737
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Afegeix una capa"
 
-#: ../app/core/gimpimage.c:3669 ../app/core/gimpimage.c:3689
+#: ../app/core/gimpimage.c:3787 ../app/core/gimpimage.c:3807
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Suprimeix la capa"
 
-#: ../app/core/gimpimage.c:3683
+#: ../app/core/gimpimage.c:3801
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Suprimeix la selecció flotant"
 
-#: ../app/core/gimpimage.c:3851
+#: ../app/core/gimpimage.c:3969
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Afegeix un canal"
 
-#: ../app/core/gimpimage.c:3889 ../app/core/gimpimage.c:3902
+#: ../app/core/gimpimage.c:4007 ../app/core/gimpimage.c:4020
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Suprimeix el canal"
 
-#: ../app/core/gimpimage.c:3956
+#: ../app/core/gimpimage.c:4074
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Afegeix un camí"
 
-#: ../app/core/gimpimage.c:3987
+#: ../app/core/gimpimage.c:4105
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Suprimeix el camí"
@@ -8444,7 +8484,7 @@ msgid "(Preview may be out of date)"
 msgstr "(La previsualització pot ser massa antiga)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:774 ../app/widgets/gimpimagepropview.c:441
+#: ../app/core/gimpimagefile.c:774 ../app/widgets/gimpimagepropview.c:440
 #: ../app/widgets/gimpsizebox.c:427 ../app/widgets/gimptemplateeditor.c:565
 #, c-format
 msgid "%d × %d pixel"
@@ -8452,7 +8492,7 @@ msgid_plural "%d × %d pixels"
 msgstr[0] "%d × %d píxel"
 msgstr[1] "%d × %d píxels"
 
-#: ../app/core/gimpimagefile.c:797 ../app/display/gimpdisplayshell-title.c:336
+#: ../app/core/gimpimagefile.c:797 ../app/display/gimpdisplayshell-title.c:317
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -8482,6 +8522,10 @@ msgstr "Suprimeix el paràsit de l'element"
 #: ../app/core/gimpitem-exclusive.c:81
 msgid "Set Item Exclusive Visible"
 msgstr "Element visible exclusivament"
+
+#: ../app/core/gimpitem-exclusive.c:172
+msgid "Set Item Exclusive Linked"
+msgstr "Element cadenat exclusivament"
 
 #: ../app/core/gimplayer-floating-sel.c:95
 msgctxt "undo-type"
@@ -8713,8 +8757,8 @@ msgstr ""
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr ""
-"En el fitxer de la paleta «%s»: el valor RGB està fora de límits a la línia %"
-"d."
+"En el fitxer de la paleta «%s»: el valor RGB està fora de límits a la línia "
+"%d."
 
 #: ../app/core/gimppalette-load.c:478
 #, c-format
@@ -8746,8 +8790,8 @@ msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
-"El fitxer del patró «%s» està malmès: no es permet una profunditat de patró %"
-"d.\n"
+"El fitxer del patró «%s» està malmès: no es permet una profunditat de patró "
+"%d.\n"
 "Els patrons del GIMP han de ser en GRIS o en RGB."
 
 #: ../app/core/gimppattern-load.c:139
@@ -8919,7 +8963,7 @@ msgctxt "plural"
 msgid "percent"
 msgstr "percentatge"
 
-#: ../app/dialogs/about-dialog.c:114 ../app/gui/gui.c:493
+#: ../app/dialogs/about-dialog.c:114
 msgid "About GIMP"
 msgstr "Quant al GIMP"
 
@@ -9080,7 +9124,7 @@ msgstr "Esvaeix %s"
 msgid "_Fade"
 msgstr "_Esvaeix"
 
-#: ../app/dialogs/fade-dialog.c:156 ../app/widgets/gimpdeviceinfoeditor.c:344
+#: ../app/dialogs/fade-dialog.c:156 ../app/widgets/gimpdeviceinfoeditor.c:346
 msgid "_Mode:"
 msgstr "_Mode:"
 
@@ -9100,15 +9144,15 @@ msgstr "Obre una ubicació"
 msgid "Enter location (URI):"
 msgstr "Introduïu una ubicació (URI):"
 
-#: ../app/dialogs/file-save-dialog.c:105
+#: ../app/dialogs/file-save-dialog.c:113
 msgid "Export Image"
 msgstr "Exporta la imatge"
 
-#: ../app/dialogs/file-save-dialog.c:106
+#: ../app/dialogs/file-save-dialog.c:114
 msgid "_Export"
 msgstr "_Exporta"
 
-#: ../app/dialogs/file-save-dialog.c:432
+#: ../app/dialogs/file-save-dialog.c:458
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -9118,23 +9162,43 @@ msgstr ""
 "l'extensió. Introduïu una extensió de fitxer que concordi amb el format de "
 "fitxer seleccionat o no n'introduïu cap."
 
-#: ../app/dialogs/file-save-dialog.c:559
+#: ../app/dialogs/file-save-dialog.c:605
+msgid "The given filename cannot be used for exporting"
+msgstr "No es pot utilitzar el nom de fitxer donat per exportar el fitxer"
+
+#: ../app/dialogs/file-save-dialog.c:606
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
 msgstr ""
 "Podeu utilitzar aquest diàleg per exportar la imatge en diversos formats. Si "
-"voleu desar-la amb el format XFC del GIMP utilitzeu Fitxer→Desa."
+"voleu desar-la amb el format XCF del GIMP utilitzeu Fitxer→Desa."
 
-#: ../app/dialogs/file-save-dialog.c:566
+#: ../app/dialogs/file-save-dialog.c:609
+msgid "Take me to the Save dialog"
+msgstr "Porta'm al diàleg de desar"
+
+#: ../app/dialogs/file-save-dialog.c:613
+msgid "The given filename cannot be used for saving"
+msgstr "No es pot utilitzar el nom de fitxer donat per desar el fitxer"
+
+#: ../app/dialogs/file-save-dialog.c:614
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
 msgstr ""
-"Podeu utilitzar aquest diàleg per desar la imatge amb el format XFC del "
+"Podeu utilitzar aquest diàleg per desar la imatge amb el format XCF del "
 "GIMP. Si voleu desar-la en un altre format utilitzeu Fitxer→Exporta."
 
-#: ../app/dialogs/file-save-dialog.c:572
+#: ../app/dialogs/file-save-dialog.c:616
+msgid "Take me to the Export dialog"
+msgstr "Porta'm al diàleg d'exportar"
+
+#: ../app/dialogs/file-save-dialog.c:619 ../app/dialogs/file-save-dialog.c:694
+msgid "Extension Mismatch"
+msgstr "Extensió incorrecta"
+
+#: ../app/dialogs/file-save-dialog.c:678
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -9142,23 +9206,19 @@ msgstr ""
 "El nom de fitxer no té cap extensió reconeguda. Introduïu una extensió de "
 "fitxer coneguda o seleccioneu un format de fitxer de la llista de formats."
 
-#: ../app/dialogs/file-save-dialog.c:586
-msgid "Extension Mismatch"
-msgstr "Extensió incorrecta"
-
-#: ../app/dialogs/file-save-dialog.c:602
+#: ../app/dialogs/file-save-dialog.c:710
 msgid "The given file extension does not match the chosen file type."
 msgstr "L'extensió de fitxer no concorda amb el tipus de fitxer triat."
 
-#: ../app/dialogs/file-save-dialog.c:606
+#: ../app/dialogs/file-save-dialog.c:714
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Voleu desar la imatge amb aquest nom igualment?"
 
-#: ../app/dialogs/file-save-dialog.c:664
+#: ../app/dialogs/file-save-dialog.c:776
 msgid "Saving canceled"
 msgstr "L'acció desar s'ha cancel·lat"
 
-#: ../app/dialogs/file-save-dialog.c:672 ../app/widgets/gimpdnd-xds.c:186
+#: ../app/dialogs/file-save-dialog.c:784 ../app/widgets/gimpdnd-xds.c:186
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -9359,31 +9419,31 @@ msgstr "Cal que reinicieu el GIMP perquè els canvis tinguin efecte."
 msgid "Module"
 msgstr "Mòdul"
 
-#: ../app/dialogs/module-dialog.c:465
+#: ../app/dialogs/module-dialog.c:468
 msgid "Only in memory"
 msgstr "Només a la memòria"
 
-#: ../app/dialogs/module-dialog.c:470
+#: ../app/dialogs/module-dialog.c:473
 msgid "No longer available"
 msgstr "Ja no es troba disponible"
 
-#: ../app/dialogs/module-dialog.c:495
+#: ../app/dialogs/module-dialog.c:498
 msgid "Author:"
 msgstr "Autor:"
 
-#: ../app/dialogs/module-dialog.c:496
+#: ../app/dialogs/module-dialog.c:499
 msgid "Version:"
 msgstr "Versió:"
 
-#: ../app/dialogs/module-dialog.c:497
+#: ../app/dialogs/module-dialog.c:500
 msgid "Date:"
 msgstr "Data:"
 
-#: ../app/dialogs/module-dialog.c:498
+#: ../app/dialogs/module-dialog.c:501
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: ../app/dialogs/module-dialog.c:499
+#: ../app/dialogs/module-dialog.c:502
 msgid "Location:"
 msgstr "Ubicació:"
 
@@ -9812,7 +9872,7 @@ msgstr "_Recupera els valors per defecte de l'eina"
 #. Snapping Distance
 #: ../app/dialogs/preferences-dialog.c:1890
 msgid "Guide & Grid Snapping"
-msgstr "Ajusta a les guies i a la graella"
+msgstr "Ajust a les guies i a la graella"
 
 #: ../app/dialogs/preferences-dialog.c:1895
 msgid "_Snap distance:"
@@ -10052,7 +10112,7 @@ msgid "Vertical"
 msgstr "Vertical"
 
 #: ../app/dialogs/preferences-dialog.c:2350
-#: ../app/widgets/gimpimagepropview.c:470
+#: ../app/widgets/gimpimagepropview.c:469
 msgid "ppi"
 msgstr "ppi"
 
@@ -10370,32 +10430,58 @@ msgstr "Resolució _Y:"
 msgid "pixels/%a"
 msgstr "píxels/%a"
 
-#: ../app/dialogs/quit-dialog.c:104
+#: ../app/dialogs/quit-dialog.c:144
 msgid "Quit GIMP"
 msgstr "Surt del GIMP"
 
-#: ../app/dialogs/quit-dialog.c:104
+#: ../app/dialogs/quit-dialog.c:144
 msgid "Close All Images"
 msgstr "Tanca totes les imatges"
 
-#: ../app/dialogs/quit-dialog.c:163
+#: ../app/dialogs/quit-dialog.c:212
 msgid "If you quit GIMP now, these changes will be lost."
 msgstr "Si sortiu ara del GIMP, es perdran els canvis."
 
-#: ../app/dialogs/quit-dialog.c:166
+#: ../app/dialogs/quit-dialog.c:215
 msgid "If you close these images now, changes will be lost."
 msgstr "Si tanqueu aquestes imatges ara, es perdran les modificacions."
 
-#: ../app/dialogs/quit-dialog.c:213
+#: ../app/dialogs/quit-dialog.c:300
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
 msgstr[0] "Hi ha una imatge amb modificacions sense desar:"
 msgstr[1] "Hi ha %d imatges amb modificacions sense desar:"
 
-#: ../app/dialogs/quit-dialog.c:235
+#: ../app/dialogs/quit-dialog.c:311
+#, c-format
+msgid "Press %s to quit."
+msgstr "Premeu %s per sortir."
+
+#: ../app/dialogs/quit-dialog.c:314
+#, c-format
+msgid "Press %s to close all images."
+msgstr "Premeu %s per tancar totes les imatges."
+
+#: ../app/dialogs/quit-dialog.c:330
+#, c-format
+msgid "Press %s to discard all changes and quit."
+msgstr "Premeu %s per descartar tots els canvis i sortir."
+
+#: ../app/dialogs/quit-dialog.c:333
+#, c-format
+msgid "Press %s to discard all changes and close all images."
+msgstr "Premeu %s per descartar tots els canvis i tancar totes les imatges."
+
+#: ../app/dialogs/quit-dialog.c:341
+#: ../app/display/gimpdisplayshell-close.c:181
 msgid "_Discard Changes"
 msgstr "No _desis els canvis"
+
+#: ../app/dialogs/quit-dialog.c:423
+#, c-format
+msgid "Exported to %s"
+msgstr "Exporta a %s"
 
 #: ../app/dialogs/resize-dialog.c:119
 msgid "Canvas Size"
@@ -10665,27 +10751,28 @@ msgstr "Commuta màscara ràpida"
 msgid "Navigate the image display"
 msgstr "Navega per la imatge"
 
-#: ../app/display/gimpdisplayshell.c:742
-#: ../app/display/gimpdisplayshell.c:1320 ../app/widgets/gimptoolbox.c:256
+#: ../app/display/gimpdisplayshell.c:746
+#: ../app/display/gimpdisplayshell.c:1327 ../app/widgets/gimptoolbox.c:253
 msgid "Drop image files here to open them"
 msgstr "Arrossega-hi fitxers d'imatges per obrir-los"
 
-#: ../app/display/gimpdisplayshell-close.c:156
-#: ../app/display/gimpdisplayshell-close.c:229
+#: ../app/display/gimpdisplayshell-close.c:170
+#: ../app/display/gimpdisplayshell-close.c:270
 #, c-format
 msgid "Close %s"
 msgstr "Tanca %s"
 
-#: ../app/display/gimpdisplayshell-close.c:167
-msgid "Close _without Saving"
-msgstr "Tanca _sense desar"
+#: ../app/display/gimpdisplayshell-close.c:218
+#, c-format
+msgid "Press %s to discard all changes and close the image."
+msgstr "Premeu %s per descartar tots els canvis i tancar la imatge."
 
-#: ../app/display/gimpdisplayshell-close.c:237
+#: ../app/display/gimpdisplayshell-close.c:278
 #, c-format
 msgid "Save the changes to image '%s' before closing?"
 msgstr "Voleu desar els canvis a la imatge «%s» abans de tancar?"
 
-#: ../app/display/gimpdisplayshell-close.c:270
+#: ../app/display/gimpdisplayshell-close.c:311
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
 msgid_plural ""
@@ -10695,7 +10782,7 @@ msgstr[1] ""
 "Si no deseu la imatge, es perdran els canvis de les últimes %d hores."
 
 # El primer %s és "X hores", el segon és "X minuts"
-#: ../app/display/gimpdisplayshell-close.c:281
+#: ../app/display/gimpdisplayshell-close.c:322
 #, c-format
 msgid ""
 "If you don't save the image, changes from the last hour and %d minute will "
@@ -10708,7 +10795,7 @@ msgstr[0] ""
 msgstr[1] ""
 "Si no deseu la imatge, es perdran els canvis de fa una hora i %d minuts."
 
-#: ../app/display/gimpdisplayshell-close.c:293
+#: ../app/display/gimpdisplayshell-close.c:334
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
 msgid_plural ""
@@ -10716,52 +10803,53 @@ msgid_plural ""
 msgstr[0] "Si no deseu la imatge, es perdran els canvis de l'últim minut."
 msgstr[1] "Si no deseu la imatge, es perdran els canvis dels últims %d minuts."
 
-#: ../app/display/gimpdisplayshell-close.c:305
-#, fuzzy, c-format
-#| msgid "Image exported to '%s'"
+#: ../app/display/gimpdisplayshell-close.c:355
+#, c-format
 msgid "The image has been exported to '%s'."
-msgstr "Imatge exportada a «%s»"
+msgstr "S'ha exportat la imatge a «%s»"
 
-#: ../app/display/gimpdisplayshell-dnd.c:232
-#: ../app/display/gimpdisplayshell-dnd.c:635
-#: ../app/display/gimpdisplayshell-dnd.c:693
+#: ../app/display/gimpdisplayshell-dnd.c:246
+#: ../app/display/gimpdisplayshell-dnd.c:649
+#: ../app/display/gimpdisplayshell-dnd.c:707
 msgid "Drop New Layer"
 msgstr "Elimina la capa nova"
 
-#: ../app/display/gimpdisplayshell-dnd.c:275
+#: ../app/display/gimpdisplayshell-dnd.c:289
 msgid "Drop New Path"
 msgstr "Elimina el camí nou"
 
-#: ../app/display/gimpdisplayshell-dnd.c:347
-#: ../app/display/gimpdisplayshell-dnd.c:449 ../app/tools/gimpblendtool.c:173
-#: ../app/tools/gimpbucketfilltool.c:136 ../app/tools/gimpimagemaptool.c:279
+#: ../app/display/gimpdisplayshell-dnd.c:361
+#: ../app/display/gimpdisplayshell-dnd.c:463 ../app/tools/gimpblendtool.c:173
+#: ../app/tools/gimpbucketfilltool.c:136 ../app/tools/gimpimagemaptool.c:280
+#: ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "No es poden modificar els píxels d'un grup de capes."
 
-#: ../app/display/gimpdisplayshell-dnd.c:355
-#: ../app/display/gimpdisplayshell-dnd.c:457 ../app/tools/gimpblendtool.c:180
+#: ../app/display/gimpdisplayshell-dnd.c:369
+#: ../app/display/gimpdisplayshell-dnd.c:471 ../app/tools/gimpblendtool.c:180
 #: ../app/tools/gimpbucketfilltool.c:143 ../app/tools/gimpcroptool.c:325
-#: ../app/tools/gimpimagemaptool.c:286 ../app/tools/gimppainttool.c:266
-#: ../app/tools/gimptransformtool.c:246 ../app/tools/gimptransformtool.c:1066
+#: ../app/tools/gimpimagemaptool.c:287 ../app/tools/gimppainttool.c:266
+#: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:247
+#: ../app/tools/gimptransformtool.c:1070
 msgid "The active layer's pixels are locked."
 msgstr "Els píxels de la capa activa estan bloquejats."
 
-#: ../app/display/gimpdisplayshell-dnd.c:535
+#: ../app/display/gimpdisplayshell-dnd.c:549
 #: ../app/widgets/gimplayertreeview.c:725
 msgid "Drop layers"
 msgstr "Elimina les capes"
 
-#: ../app/display/gimpdisplayshell-dnd.c:668
-#: ../app/display/gimpdisplayshell-dnd.c:685
-#: ../app/widgets/gimplayertreeview.c:802 ../app/widgets/gimptoolbox-dnd.c:266
+#: ../app/display/gimpdisplayshell-dnd.c:682
+#: ../app/display/gimpdisplayshell-dnd.c:699
+#: ../app/widgets/gimplayertreeview.c:802 ../app/widgets/gimptoolbox-dnd.c:264
 msgid "Dropped Buffer"
 msgstr "Objecte eliminat del porta-retalls del GIMP"
 
-#: ../app/display/gimpdisplayshell-filter-dialog.c:78
+#: ../app/display/gimpdisplayshell-filter-dialog.c:83
 msgid "Color Display Filters"
 msgstr "Filtres de visualització de colors"
 
-#: ../app/display/gimpdisplayshell-filter-dialog.c:81
+#: ../app/display/gimpdisplayshell-filter-dialog.c:86
 msgid "Configure Color Display Filters"
 msgstr "Configura els filtres de visualització de colors"
 
@@ -10795,31 +10883,19 @@ msgstr "Factor d'ampliació:"
 msgid "Zoom:"
 msgstr "Ampliació:"
 
-#: ../app/display/gimpdisplayshell-title.c:301
+#: ../app/display/gimpdisplayshell-title.c:282
 msgid "(modified)"
 msgstr "(modificat)"
 
-#: ../app/display/gimpdisplayshell-title.c:306
+#: ../app/display/gimpdisplayshell-title.c:287
 msgid "(clean)"
 msgstr "(net)"
 
-#: ../app/display/gimpdisplayshell-title.c:357
-#: ../app/display/gimpdisplayshell-title.c:370
+#: ../app/display/gimpdisplayshell-title.c:338
+#: ../app/display/gimpdisplayshell-title.c:351
 #: ../app/widgets/gimpactiongroup.c:860
 msgid "(none)"
 msgstr "(cap)"
-
-#: ../app/display/gimpdisplayshell-title.c:499
-msgid " (exported)"
-msgstr "(exportat)"
-
-#: ../app/display/gimpdisplayshell-title.c:501
-msgid " (overwritten)"
-msgstr "(sobreescrit)"
-
-#: ../app/display/gimpdisplayshell-title.c:507
-msgid " (imported)"
-msgstr "(importat)"
 
 #: ../app/display/gimpstatusbar.c:356
 #, c-format
@@ -10841,16 +10917,16 @@ msgstr ""
 msgid "%s plug-In could not open image"
 msgstr "El connector %s no ha pogut obrir la imatge"
 
-#: ../app/file/file-open.c:526
+#: ../app/file/file-open.c:530
 msgid "Image doesn't contain any layers"
 msgstr "La imatge no conté cap capa"
 
-#: ../app/file/file-open.c:579
+#: ../app/file/file-open.c:590
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "No s'ha pogut obrir «%s»: %s"
 
-#: ../app/file/file-open.c:686
+#: ../app/file/file-open.c:700
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -10862,17 +10938,17 @@ msgstr ""
 msgid "Unknown file type"
 msgstr "Tipus de fitxer desconegut"
 
-#: ../app/file/file-save.c:219
+#: ../app/file/file-save.c:221
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "El connector %s no ha pogut desar la imatge"
 
-#: ../app/file/file-utils.c:74
+#: ../app/file/file-utils.c:72
 #, c-format
 msgid "'%s:' is not a valid URI scheme"
 msgstr "'%s:' no és un format URI vàlid"
 
-#: ../app/file/file-utils.c:90 ../app/file/file-utils.c:126
+#: ../app/file/file-utils.c:88 ../app/file/file-utils.c:124
 msgid "Invalid character sequence in URI"
 msgstr "Seqüència de caràcters no vàlida a l'URI"
 
@@ -10886,15 +10962,15 @@ msgctxt "cage-mode"
 msgid "Deform the cage to deform the image"
 msgstr "Deforma la regió contenidora per deformar la imatge"
 
-#: ../app/gegl/gimpcurvesconfig.c:388
+#: ../app/gegl/gimpcurvesconfig.c:395
 msgid "not a GIMP Curves file"
 msgstr "no és un fitxer de corbes del GIMP"
 
-#: ../app/gegl/gimpcurvesconfig.c:403 ../app/gegl/gimplevelsconfig.c:789
+#: ../app/gegl/gimpcurvesconfig.c:410 ../app/gegl/gimplevelsconfig.c:811
 msgid "parse error"
 msgstr "Error en l'anàlisi del fitxer"
 
-#: ../app/gegl/gimplevelsconfig.c:742
+#: ../app/gegl/gimplevelsconfig.c:764
 msgid "not a GIMP Levels file"
 msgstr "no és un fitxer de nivells del GIMP "
 
@@ -10921,8 +10997,18 @@ msgstr "Omple amb un sol color"
 msgid "Fill the original position of the cage with a plain color"
 msgstr "Omple la posició original de la regió contenidora amb un sol color"
 
+#. Normally this should have been taken care of during command line
+#. * parsing as a post-parse hook of gtk_get_option_group(), using the
+#. * system locales.
+#. * But user config may have overriden the language, therefore we must
+#. * check the widget directions again.
+#.
+#: ../app/gui/gui.c:207
+msgid "default:LTR"
+msgstr ""
+
 #. initialize the document history
-#: ../app/gui/gui.c:421
+#: ../app/gui/gui.c:432
 msgid "Documents"
 msgstr "Documents"
 
@@ -10932,7 +11018,7 @@ msgstr "Inici del GIMP"
 
 #: ../app/paint/gimpairbrush.c:73 ../app/tools/gimpairbrushtool.c:54
 msgid "Airbrush"
-msgstr "Vaporitzador"
+msgstr "Aerògraf"
 
 #: ../app/paint/gimpbrushcore.c:387
 msgid "No brushes available for use with this tool."
@@ -11359,8 +11445,8 @@ msgstr "L'objecte de vectors %d no té cap traça amb l'ID %d"
 #: ../app/pdb/gimppdb.c:410
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong type for argument #%d. Expected %"
-"s, got %s."
+"Procedure '%s' has been called with a wrong type for argument #%d. Expected "
+"%s, got %s."
 msgstr ""
 "La funció «%s» s'ha cridat amb un paràmetre (núm. %d) amb el tipus "
 "incorrecte. S'esperava un %s, però ha arribat un %s."
@@ -11388,8 +11474,8 @@ msgstr ""
 #: ../app/pdb/gimpprocedure.c:654
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#%"
-"d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
 "La funció «%s» s'ha cridat amb un paràmetre «%s» (núm. %d) amb el tipus "
 "incorrecte. S'esperava un %s, però ha arribat un %s."
@@ -11400,8 +11486,8 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"La funció «%s» ha retornat un id no vàlid per al paràmetre «%s». Segurament un "
-"connector està intentant treballar amb una capa que ja no existeix."
+"La funció «%s» ha retornat un id no vàlid per al paràmetre «%s». Segurament "
+"un connector està intentant treballar amb una capa que ja no existeix."
 
 #: ../app/pdb/gimpprocedure.c:700
 #, c-format
@@ -11419,8 +11505,8 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"La funció «%s» ha retornat un id no vàlid per al paràmetre «%s». Segurament un "
-"connector està intentant treballar amb una imatge que ja no existeix."
+"La funció «%s» ha retornat un id no vàlid per al paràmetre «%s». Segurament "
+"un connector està intentant treballar amb una imatge que ja no existeix."
 
 #: ../app/pdb/gimpprocedure.c:730
 #, c-format
@@ -11438,19 +11524,19 @@ msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr ""
-"La funció «%s» ha retornat «%s» com a valor de retorn «%s» (núm. %d, de tipus %"
-"s). Aquest valor no és permès."
+"La funció «%s» ha retornat «%s» com a valor de retorn «%s» (núm. %d, de "
+"tipus %s). Aquest valor no és permès."
 
 #: ../app/pdb/gimpprocedure.c:765
 #, c-format
 msgid ""
-"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
-"s). This value is out of range."
+"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
+"%s). This value is out of range."
 msgstr ""
-"La funció «%s» s'ha cridat amb el valor «%s» per al paràmetre «%s» (núm. %d, de "
-"tipus %s). Aquest valor no és permès."
+"La funció «%s» s'ha cridat amb el valor «%s» per al paràmetre «%s» (núm. %d, "
+"de tipus %s). Aquest valor no és permès."
 
-#: ../app/pdb/image-cmds.c:2360
+#: ../app/pdb/image-cmds.c:2365
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -11462,7 +11548,7 @@ msgstr ""
 msgid "Free Select"
 msgstr "Selecció lliure"
 
-#: ../app/pdb/layer-cmds.c:478 ../app/pdb/layer-cmds.c:516
+#: ../app/pdb/layer-cmds.c:475 ../app/pdb/layer-cmds.c:513
 msgid "Move Layer"
 msgstr "Mou la capa"
 
@@ -11490,29 +11576,29 @@ msgstr "Suprimeix el tram"
 msgid "Close path stroke"
 msgstr "Tanca el tram"
 
-#: ../app/pdb/vectors-cmds.c:399
+#: ../app/pdb/vectors-cmds.c:401
 msgid "Translate path stroke"
 msgstr "Mou el tram"
 
-#: ../app/pdb/vectors-cmds.c:439
+#: ../app/pdb/vectors-cmds.c:443
 msgid "Scale path stroke"
 msgstr "Escala el tram"
 
-#: ../app/pdb/vectors-cmds.c:481
+#: ../app/pdb/vectors-cmds.c:487
 msgid "Rotate path stroke"
 msgstr "Gira el tram"
 
-#: ../app/pdb/vectors-cmds.c:521 ../app/pdb/vectors-cmds.c:565
+#: ../app/pdb/vectors-cmds.c:529 ../app/pdb/vectors-cmds.c:575
 msgid "Flip path stroke"
 msgstr "Capgira el tram"
 
-#: ../app/pdb/vectors-cmds.c:694 ../app/pdb/vectors-cmds.c:817
-#: ../app/pdb/vectors-cmds.c:1037
+#: ../app/pdb/vectors-cmds.c:706 ../app/pdb/vectors-cmds.c:829
+#: ../app/pdb/vectors-cmds.c:1055
 msgid "Add path stroke"
 msgstr "Afegeix un tram"
 
-#: ../app/pdb/vectors-cmds.c:870 ../app/pdb/vectors-cmds.c:923
-#: ../app/pdb/vectors-cmds.c:984
+#: ../app/pdb/vectors-cmds.c:882 ../app/pdb/vectors-cmds.c:937
+#: ../app/pdb/vectors-cmds.c:1000
 msgid "Extend path stroke"
 msgstr "Expandeix el tram"
 
@@ -11558,7 +11644,7 @@ msgstr ""
 msgid "Cancelled"
 msgstr "Cancel·lada"
 
-#: ../app/plug-in/gimpplugin.c:639
+#: ../app/plug-in/gimpplugin.c:643
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -11609,7 +11695,7 @@ msgstr "Intèrprets de connectors"
 msgid "Plug-In Environment"
 msgstr "Entorn de connector"
 
-#: ../app/plug-in/gimppluginprocedure.c:980
+#: ../app/plug-in/gimppluginprocedure.c:978
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -11618,7 +11704,7 @@ msgstr ""
 "Error en la crida a «%s»:\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:992
+#: ../app/plug-in/gimppluginprocedure.c:990
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -11627,16 +11713,22 @@ msgstr ""
 "Error en l'execució de «%s»:\n"
 "%s"
 
-#: ../app/plug-in/plug-in-icc-profile.c:112
-#: ../app/plug-in/plug-in-icc-profile.c:187
-#: ../app/plug-in/plug-in-icc-profile.c:246
+#: ../app/plug-in/plug-in-icc-profile.c:74
+#, c-format
+msgid "Can't apply color profile to grayscale image (%s)"
+msgstr ""
+"No es pot aplicar un perfil de color a una imatge en escala de grisos (%s)"
+
+#: ../app/plug-in/plug-in-icc-profile.c:117
+#: ../app/plug-in/plug-in-icc-profile.c:192
+#: ../app/plug-in/plug-in-icc-profile.c:251
 #, c-format
 msgid "Error running '%s'"
 msgstr "S'ha produït un error executant «%s»"
 
-#: ../app/plug-in/plug-in-icc-profile.c:136
-#: ../app/plug-in/plug-in-icc-profile.c:197
-#: ../app/plug-in/plug-in-icc-profile.c:256
+#: ../app/plug-in/plug-in-icc-profile.c:141
+#: ../app/plug-in/plug-in-icc-profile.c:202
+#: ../app/plug-in/plug-in-icc-profile.c:261
 #, c-format
 msgid "Plug-In missing (%s)"
 msgstr "Falta el connector (%s)"
@@ -11661,7 +11753,7 @@ msgstr "El valor «%ld» no és vàlid per al tipus d'icona"
 #  ALBERT: S'ha canviat el pangram anglès per un pangrama català (curiosament els dos van sobre licors)
 #. This is a so-called pangram; it's supposed to
 #. contain all characters found in the alphabet.
-#: ../app/text/gimpfont.c:43
+#: ../app/text/gimpfont.c:45
 msgid ""
 "Pack my box with\n"
 "five dozen liquor jugs."
@@ -11669,7 +11761,7 @@ msgstr ""
 "Jove xef, porti whisky amb\n"
 "quinze glaçons d'hidrogen, coi!."
 
-#: ../app/text/gimptext-compat.c:105 ../app/tools/gimptexttool.c:1401
+#: ../app/text/gimptext-compat.c:105 ../app/tools/gimptexttool.c:1402
 msgid "Add Text Layer"
 msgstr "Afegeix capa de text"
 
@@ -11709,15 +11801,23 @@ msgstr "Transforma la capa de text"
 msgid "Discard Text Information"
 msgstr "Descarta la informació del text"
 
-#: ../app/text/gimptextlayer.c:581
+#: ../app/text/gimptextlayer.c:582
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr ""
 "A causa de l'absència d'alguns tipus de lletra, la funcionalitat del text no "
 "està disponible."
 
-#: ../app/text/gimptextlayer.c:634
+#: ../app/text/gimptextlayer.c:640
 msgid "Empty Text Layer"
 msgstr "Capa de text buida"
+
+#: ../app/text/gimptextlayer.c:696
+msgid ""
+"Your text cannot be rendered. It is likely too big. Please make it shorter "
+"or use a smaller font."
+msgstr ""
+"No es pot dibuixar el vostre text ja que possiblement és massa gran. Feu-lo "
+"més curt o utilitzeu un tipus de lletra més petit."
 
 #: ../app/text/gimptextlayer-xcf.c:76
 #, c-format
@@ -11733,6 +11833,14 @@ msgstr ""
 "\n"
 "Algunes propietats del text poden estar malament. Llevat que es vulgui "
 "editar la capa del text, no cal preocupar-se."
+
+#: ../app/text/gimptextlayout.c:577
+msgid ""
+"The new text layout cannot be generated. Most likely the font size is too "
+"big."
+msgstr ""
+"No es pot generar la disposició nova del text. Probablement el tipus de "
+"lletra sigui massa gran. "
 
 #: ../app/text/text-enums.c:23
 msgctxt "text-box-mode"
@@ -11754,11 +11862,11 @@ msgstr ""
 
 #: ../app/tools/gimpairbrushtool.c:55
 msgid "Airbrush Tool: Paint using a brush, with variable pressure"
-msgstr "Vaporitzador: permet dibuixar amb un pinzell variant-ne la pressió"
+msgstr "Aerògraf: permet dibuixar amb un pinzell variant-ne la pressió"
 
 #: ../app/tools/gimpairbrushtool.c:56
 msgid "_Airbrush"
-msgstr "V_aporitzador"
+msgstr "_Aerògraf"
 
 #: ../app/tools/gimpairbrushtool.c:86
 msgid "Motion only"
@@ -11921,13 +12029,13 @@ msgstr "_Degradat"
 
 #: ../app/tools/gimpblendtool.c:166
 msgid "Blend does not operate on indexed layers."
-msgstr "L'eina degradat no funciona en capes indexades."
+msgstr "L'eina Degradats no funciona en capes indexades."
 
 #: ../app/tools/gimpblendtool.c:187
 msgid "No gradient available for use with this tool."
 msgstr "No es pot utilitzar cap degradat amb aquesta eina."
 
-#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:623
+#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:624
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s per a angles restringits"
@@ -12072,36 +12180,36 @@ msgctxt "command"
 msgid "Select by Color"
 msgstr "Selecció per color"
 
-#: ../app/tools/gimpcagetool.c:152 ../app/tools/gimpcagetool.c:1154
+#: ../app/tools/gimpcagetool.c:158 ../app/tools/gimpcagetool.c:1123
 msgid "Cage Transform"
 msgstr "Transformació de la regió"
 
-#: ../app/tools/gimpcagetool.c:153
+#: ../app/tools/gimpcagetool.c:159
 msgid "Cage Transform: Deform a selection with a cage"
 msgstr ""
 "Transformació de la regió: deforma la selecció utilitzant una regió "
 "contenidora"
 
-#: ../app/tools/gimpcagetool.c:154
+#: ../app/tools/gimpcagetool.c:160
 msgid "_Cage Transform"
 msgstr "_Transformació de la regió"
 
-#: ../app/tools/gimpcagetool.c:351
+#: ../app/tools/gimpcagetool.c:356
 msgid "Press ENTER to commit the transform"
 msgstr "Premeu la tecla de retorn per finalitzar la transformació"
 
-#: ../app/tools/gimpcagetool.c:1095
+#: ../app/tools/gimpcagetool.c:1064
 msgid "Computing Cage Coefficients"
 msgstr "S'estan calculant els coeficients de la regió"
 
-#: ../app/tools/gimpcagetool.c:1272
+#: ../app/tools/gimpcagetool.c:1241
 msgid "Cage transform"
 msgstr "Transformació de la regió"
 
 #: ../app/tools/gimpclonetool.c:61
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
 msgstr ""
-"Eina clona: copia de forma selectiva una imatge o un patró utilitzant un "
+"Eina Clona: copia de forma selectiva una imatge o un patró utilitzant un "
 "pinzell"
 
 #: ../app/tools/gimpclonetool.c:62
@@ -12138,7 +12246,7 @@ msgstr "Balanç de color"
 
 #: ../app/tools/gimpcolorbalancetool.c:95
 msgid "Color Balance Tool: Adjust color distribution"
-msgstr "Eina balanç de color: ajusta la distribució de colors"
+msgstr "Eina Balanç de color: ajusta la distribució de colors"
 
 #: ../app/tools/gimpcolorbalancetool.c:96
 msgid "Color _Balance..."
@@ -12315,11 +12423,11 @@ msgstr "Capturador de c_olor"
 msgid "Click in any image to view its color"
 msgstr "Feu clic en qualsevol imatge per veure'n els colors"
 
-#: ../app/tools/gimpcolorpickertool.c:238 ../app/tools/gimppainttool.c:477
+#: ../app/tools/gimpcolorpickertool.c:238 ../app/tools/gimppainttool.c:478
 msgid "Click in any image to pick the foreground color"
 msgstr "Feu clic en qualsevol imatge per definir el color del primer pla"
 
-#: ../app/tools/gimpcolorpickertool.c:246 ../app/tools/gimppainttool.c:483
+#: ../app/tools/gimpcolorpickertool.c:246 ../app/tools/gimppainttool.c:484
 msgid "Click in any image to pick the background color"
 msgstr "Feu clic en qualsevol imatge per definir el color de fons"
 
@@ -12485,7 +12593,7 @@ msgstr "Ca_nal:"
 msgid "R_eset Channel"
 msgstr "_Inicialitza el canal"
 
-#: ../app/tools/gimpcurvestool.c:583 ../app/widgets/gimpdeviceinfoeditor.c:458
+#: ../app/tools/gimpcurvestool.c:583 ../app/widgets/gimpdeviceinfoeditor.c:461
 msgid "Curve _type:"
 msgstr "_Tipus de corba:"
 
@@ -12769,20 +12877,20 @@ msgstr ""
 msgid "F_oreground Select"
 msgstr "Selecció del _primer pla"
 
-#: ../app/tools/gimpforegroundselecttool.c:302
+#: ../app/tools/gimpforegroundselecttool.c:304
 msgid "Add more strokes or press Enter to accept the selection"
 msgstr ""
 "Afegiu noves pinzellades o premeu la tecla de retorn per acceptar la selecció"
 
-#: ../app/tools/gimpforegroundselecttool.c:304
+#: ../app/tools/gimpforegroundselecttool.c:306
 msgid "Mark foreground by painting on the object to extract"
 msgstr "Marqueu el primer pla pintant l'objecte que voleu extreure"
 
-#: ../app/tools/gimpforegroundselecttool.c:309
+#: ../app/tools/gimpforegroundselecttool.c:311
 msgid "Roughly outline the object to extract"
 msgstr "Resseguiu a mà alçada l'objecte que voleu extreure"
 
-#: ../app/tools/gimpforegroundselecttool.c:751
+#: ../app/tools/gimpforegroundselecttool.c:753
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "Selecció del primer pla"
@@ -12980,7 +13088,7 @@ msgstr "Predefinit_s:"
 msgid "Settings saved to '%s'"
 msgstr "Configuració desada a «%s»"
 
-#: ../app/tools/gimpimagemaptool.c:362
+#: ../app/tools/gimpimagemaptool.c:363
 msgid "_Preview"
 msgstr "_Previsualitza"
 
@@ -13052,32 +13160,32 @@ msgstr ""
 msgid "Intelligent _Scissors"
 msgstr "Ti_sores intel·ligents"
 
-#: ../app/tools/gimpiscissorstool.c:900 ../app/tools/gimpmeasuretool.c:605
+#: ../app/tools/gimpiscissorstool.c:902 ../app/tools/gimpmeasuretool.c:605
 msgid "Click-Drag to move this point"
 msgstr "Feu clic i arrossegueu per moure aquest punt"
 
-#: ../app/tools/gimpiscissorstool.c:902 ../app/tools/gimpiscissorstool.c:967
+#: ../app/tools/gimpiscissorstool.c:904 ../app/tools/gimpiscissorstool.c:969
 #, c-format
 msgid "%s: disable auto-snap"
 msgstr "%s: inhabilita l'ajustament automàtic"
 
-#: ../app/tools/gimpiscissorstool.c:919
+#: ../app/tools/gimpiscissorstool.c:921
 msgid "Click to close the curve"
 msgstr "Feu clic per tancar la corba"
 
-#: ../app/tools/gimpiscissorstool.c:925
+#: ../app/tools/gimpiscissorstool.c:927
 msgid "Click to add a point on this segment"
 msgstr "Feu clic per afegir un punt en aquest segment"
 
-#: ../app/tools/gimpiscissorstool.c:939
+#: ../app/tools/gimpiscissorstool.c:941
 msgid "Click or press Enter to convert to a selection"
 msgstr "Feu clic o premeu la tecla de retorn per convertir-ho en una selecció"
 
-#: ../app/tools/gimpiscissorstool.c:949
+#: ../app/tools/gimpiscissorstool.c:951
 msgid "Press Enter to convert to a selection"
 msgstr "Premeu la tecla de retorn per convertir-ho en una selecció"
 
-#: ../app/tools/gimpiscissorstool.c:964
+#: ../app/tools/gimpiscissorstool.c:966
 msgid "Click or Click-Drag to add a point"
 msgstr "Feu clic o feu clic i arrossegueu per afegir un punt"
 
@@ -13230,7 +13338,7 @@ msgstr "Feu clic i arrossegueu per moure tots els punts"
 
 #: ../app/tools/gimpmeasuretool.c:939 ../app/tools/gimpmeasuretool.c:1084
 #: ../app/tools/gimpmeasuretool.c:1140 ../app/tools/gimpmeasuretool.c:1168
-#: ../app/tools/gimppainttool.c:632
+#: ../app/tools/gimppainttool.c:633
 msgid "pixels"
 msgstr "píxels"
 
@@ -13401,7 +13509,7 @@ msgstr "%s per capturar un color"
 msgid "Cannot paint on layer groups."
 msgstr "No es pot pintar en un grup de capes."
 
-#: ../app/tools/gimppainttool.c:678
+#: ../app/tools/gimppainttool.c:679
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s per a una línia recta"
@@ -13469,9 +13577,8 @@ msgid "Posterize (Reduce Number of Colors)"
 msgstr "Redueix el nombre de colors"
 
 #: ../app/tools/gimpposterizetool.c:152
-#, fuzzy
 msgid "Posterize does not operate on indexed layers."
-msgstr "L'equalització no funciona en capes indexades."
+msgstr "La reducció de colors no funciona en capes indexades."
 
 #: ../app/tools/gimpposterizetool.c:229
 msgid "Posterize _levels:"
@@ -13556,7 +13663,7 @@ msgstr "Fixat:"
 msgid "Position:"
 msgstr "Posició:"
 
-#: ../app/tools/gimprectangleoptions.c:1020 ../app/tools/gimptextoptions.c:525
+#: ../app/tools/gimprectangleoptions.c:1020 ../app/tools/gimptextoptions.c:526
 msgid "Size:"
 msgstr "Mida:"
 
@@ -13681,7 +13788,7 @@ msgstr "Habilita la difuminació de les vores de selecció"
 msgid "Radius of feathering"
 msgstr "Radi de la difuminació"
 
-#: ../app/tools/gimpselectionoptions.c:264 ../app/tools/gimptextoptions.c:538
+#: ../app/tools/gimpselectionoptions.c:264 ../app/tools/gimptextoptions.c:539
 msgid "Antialiasing"
 msgstr "Suavitzat"
 
@@ -13794,8 +13901,8 @@ msgstr "Mida de la lletra"
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
-"La millora del contorn altera el contorn dels tipus de lletra per tal que "
-"les lletres més petites es puguin llegir bé"
+"Altera el contorn dels tipus de lletra per tal que les lletres més petites "
+"es puguin llegir bé"
 
 #: ../app/tools/gimptextoptions.c:153
 msgid "The text language may have an effect on the way the text is rendered."
@@ -13829,35 +13936,35 @@ msgstr ""
 msgid "Use an external editor window for text entry"
 msgstr "Utilitza una finestra d'un editor extern per escriure el text"
 
-#: ../app/tools/gimptextoptions.c:510
+#: ../app/tools/gimptextoptions.c:511
 msgid "Font"
 msgstr "Tipus de lletra"
 
-#: ../app/tools/gimptextoptions.c:534
+#: ../app/tools/gimptextoptions.c:535
 msgid "Use editor"
 msgstr "Utilitza l'editor"
 
-#: ../app/tools/gimptextoptions.c:554
+#: ../app/tools/gimptextoptions.c:555
 msgid "Hinting:"
 msgstr "Millora del contorn:"
 
-#: ../app/tools/gimptextoptions.c:558
+#: ../app/tools/gimptextoptions.c:559
 msgid "Text Color"
 msgstr "Color del text"
 
-#: ../app/tools/gimptextoptions.c:563
+#: ../app/tools/gimptextoptions.c:564
 msgid "Color:"
 msgstr "Color:"
 
-#: ../app/tools/gimptextoptions.c:569
+#: ../app/tools/gimptextoptions.c:570
 msgid "Justify:"
 msgstr "Justifica:"
 
-#: ../app/tools/gimptextoptions.c:592
+#: ../app/tools/gimptextoptions.c:593
 msgid "Box:"
 msgstr "Capsa:"
 
-#: ../app/tools/gimptextoptions.c:609
+#: ../app/tools/gimptextoptions.c:610
 msgid "Language:"
 msgstr "Idioma:"
 
@@ -13873,19 +13980,19 @@ msgstr "Eina Text: crea o edita una capa de text"
 msgid "Te_xt"
 msgstr "Te_xt"
 
-#: ../app/tools/gimptexttool.c:958
+#: ../app/tools/gimptexttool.c:959
 msgid "Reshape Text Layer"
 msgstr "Canvia la forma de la capa de text"
 
-#: ../app/tools/gimptexttool.c:1512 ../app/tools/gimptexttool.c:1515
+#: ../app/tools/gimptexttool.c:1513 ../app/tools/gimptexttool.c:1516
 msgid "Confirm Text Editing"
 msgstr "Confirma l'edició del text"
 
-#: ../app/tools/gimptexttool.c:1519
+#: ../app/tools/gimptexttool.c:1520
 msgid "Create _New Layer"
 msgstr "Crea una capa _nova"
 
-#: ../app/tools/gimptexttool.c:1543
+#: ../app/tools/gimptexttool.c:1544
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -13899,7 +14006,7 @@ msgstr ""
 "\n"
 "Podeu editar la capa o crear-ne una nova amb els mateixos atributs."
 
-#: ../app/tools/gimptexttool-editor.c:1180
+#: ../app/tools/gimptexttool-editor.c:1199
 msgid "GIMP Text Editor"
 msgstr "Editor de text del GIMP"
 
@@ -14013,19 +14120,19 @@ msgstr "Conserva l'aspecte (%s)"
 msgid "Keep the original aspect ratio"
 msgstr "Mantén la relació d'aspecte original"
 
-#: ../app/tools/gimptransformtool.c:212
+#: ../app/tools/gimptransformtool.c:213
 msgid "Transforming"
 msgstr "S'està transformant"
 
-#: ../app/tools/gimptransformtool.c:1065
+#: ../app/tools/gimptransformtool.c:1069
 msgid "There is no layer to transform."
 msgstr "No hi ha cap capa per transformar."
 
-#: ../app/tools/gimptransformtool.c:1078
+#: ../app/tools/gimptransformtool.c:1082
 msgid "There is no path to transform."
 msgstr "No hi ha cap camí per transformar."
 
-#: ../app/tools/gimptransformtool.c:1079
+#: ../app/tools/gimptransformtool.c:1083
 msgid "The active path's strokes are locked."
 msgstr "Els punts del camí estan bloquejats."
 
@@ -14397,46 +14504,46 @@ msgstr "_Cerca:"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpactionview.c:337
+#: ../app/widgets/gimpactionview.c:338
 #: ../app/widgets/gimpcontrollereditor.c:341
 msgid "Action"
 msgstr "Acció"
 
-#: ../app/widgets/gimpactionview.c:366
+#: ../app/widgets/gimpactionview.c:367
 msgid "Shortcut"
 msgstr "Drecera"
 
-#: ../app/widgets/gimpactionview.c:392
+#: ../app/widgets/gimpactionview.c:393
 msgid "Name"
 msgstr "Nom"
 
-#: ../app/widgets/gimpactionview.c:632 ../app/widgets/gimpactionview.c:832
+#: ../app/widgets/gimpactionview.c:633 ../app/widgets/gimpactionview.c:843
 msgid "Changing shortcut failed."
 msgstr "No s'han pogut canviar les dreceres."
 
-#: ../app/widgets/gimpactionview.c:669
+#: ../app/widgets/gimpactionview.c:670
 msgid "Conflicting Shortcuts"
 msgstr "Dreceres conflictives"
 
-#: ../app/widgets/gimpactionview.c:675
+#: ../app/widgets/gimpactionview.c:676
 msgid "_Reassign shortcut"
 msgstr "_Reassigna dreceres"
 
-#: ../app/widgets/gimpactionview.c:690
+#: ../app/widgets/gimpactionview.c:691
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr "La drecera «%s» ja està assignada a «%s» del grup «%s»."
 
-#: ../app/widgets/gimpactionview.c:694
+#: ../app/widgets/gimpactionview.c:695
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr "En reassignar la drecera se suprimirà de «%s»."
 
-#: ../app/widgets/gimpactionview.c:767
+#: ../app/widgets/gimpactionview.c:778
 msgid "Invalid shortcut."
 msgstr "Drecera no vàlida."
 
-#: ../app/widgets/gimpactionview.c:856
+#: ../app/widgets/gimpactionview.c:867
 msgid "Removing shortcut failed."
 msgstr "No s'ha pogut suprimir la drecera."
 
@@ -14464,7 +14571,7 @@ msgid "Percentage of width of brush"
 msgstr "Percentatge de l'amplada del pinzell"
 
 #: ../app/widgets/gimpbufferview.c:179 ../app/widgets/gimpbufferview.c:264
-#: ../app/widgets/gimpeditor.c:748
+#: ../app/widgets/gimpeditor.c:747
 msgid "(None)"
 msgstr "(Cap)"
 
@@ -14472,37 +14579,37 @@ msgstr "(Cap)"
 msgid "Add the current color to the color history"
 msgstr "Afegeix el color actual a l'historial de color"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:154
+#: ../app/widgets/gimpcolordisplayeditor.c:157
 msgid "Available Filters"
 msgstr "Filtres disponibles"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:216
+#: ../app/widgets/gimpcolordisplayeditor.c:219
 msgid "Move the selected filter up"
 msgstr "Apuja el filtre seleccionat"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:225
+#: ../app/widgets/gimpcolordisplayeditor.c:228
 msgid "Move the selected filter down"
 msgstr "Abaixa el filtre seleccionat"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:271
+#: ../app/widgets/gimpcolordisplayeditor.c:274
 msgid "Active Filters"
 msgstr "Filtres actius"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:322
+#: ../app/widgets/gimpcolordisplayeditor.c:325
 msgid "Reset the selected filter to default values"
 msgstr "Torna el filtre seleccionat als valors predeterminats"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:503
+#: ../app/widgets/gimpcolordisplayeditor.c:527
 #, c-format
 msgid "Add '%s' to the list of active filters"
 msgstr "Afegeix «%s» a la llista de filtres actius"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:540
+#: ../app/widgets/gimpcolordisplayeditor.c:564
 #, c-format
 msgid "Remove '%s' from the list of active filters"
 msgstr "Suprimeix «%s» de la llista de filtres actius"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:571
+#: ../app/widgets/gimpcolordisplayeditor.c:595
 msgid "No filter selected"
 msgstr "No hi ha cap filtre seleccionat"
 
@@ -14783,8 +14890,8 @@ msgstr ""
 "Si se suprimeix aquest controlador de la llista, també se suprimiran tots "
 "els esdeveniments que li hàgiu configurat.\n"
 "\n"
-"Si no voleu perdre tota la informació, és millor que només feu «inhabilita el "
-"controlador»."
+"Si no voleu perdre tota la informació, és millor que només feu «inhabilita "
+"el controlador»."
 
 #: ../app/widgets/gimpcontrollerlist.c:635
 msgid "Configure Input Controller"
@@ -14954,39 +15061,42 @@ msgstr "Inclinació X"
 msgid "Y tilt"
 msgstr "Inclinació Y"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:143
+#. Wheel as in mouse or input device wheel
+#: ../app/widgets/gimpdeviceinfoeditor.c:144
 #: ../app/widgets/gimpdynamicseditor.c:145
 #: ../app/widgets/gimpdynamicsoutputeditor.c:73
 msgid "Wheel"
 msgstr "Roda del ratolí"
 
 #. the axes
-#: ../app/widgets/gimpdeviceinfoeditor.c:193
+#. The axes of an input device
+#: ../app/widgets/gimpdeviceinfoeditor.c:195
 msgid "Axes"
 msgstr "Eixos"
 
 #. the keys
-#: ../app/widgets/gimpdeviceinfoeditor.c:267
+#: ../app/widgets/gimpdeviceinfoeditor.c:269
 msgid "Keys"
 msgstr "Llegenda"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:364
-#: ../app/widgets/gimpdeviceinfoeditor.c:582
+#: ../app/widgets/gimpdeviceinfoeditor.c:366
+#: ../app/widgets/gimpdeviceinfoeditor.c:585
 #, c-format
 msgid "none"
 msgstr "cap"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:412
+#. e.g. "Pressure Curve" for mapping input device axes
+#: ../app/widgets/gimpdeviceinfoeditor.c:415
 #, c-format
 msgid "%s Curve"
 msgstr "Corba %s"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:471
+#: ../app/widgets/gimpdeviceinfoeditor.c:474
 #: ../app/widgets/gimpdynamicsoutputeditor.c:209
 msgid "_Reset Curve"
 msgstr "_Inicialitza la corba"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:484
+#: ../app/widgets/gimpdeviceinfoeditor.c:487
 #, c-format
 msgid "The axis '%s' has no curve"
 msgstr "L'eix '%s' no té cap corba"
@@ -15053,11 +15163,11 @@ msgid "Configure this tab"
 msgstr "Configura aquesta pestanya"
 
 #. Auto button
-#: ../app/widgets/gimpdockwindow.c:382
+#: ../app/widgets/gimpdockwindow.c:386
 msgid "Auto"
 msgstr "Automàtic"
 
-#: ../app/widgets/gimpdockwindow.c:393
+#: ../app/widgets/gimpdockwindow.c:397
 msgid ""
 "When enabled the dialog automatically follows the image you are working on."
 msgstr ""
@@ -15095,28 +15205,40 @@ msgstr "Massa missatges d'error!"
 msgid "Messages are redirected to stderr."
 msgstr "Els missatges són redireccionats a la sortida estàndard."
 
-#: ../app/widgets/gimperrordialog.c:170
+#. %s is a message domain,
+#. * like "GIMP Message" or
+#. * "PNG Message"
+#.
+#: ../app/widgets/gimperrordialog.c:174
 #, c-format
 msgid "%s Message"
 msgstr "Missatge %s"
 
-#: ../app/widgets/gimpfiledialog.c:327
+#: ../app/widgets/gimpfiledialog.c:330
 msgid "Automatically Detected"
 msgstr "Detectat automàticament"
 
-#: ../app/widgets/gimpfiledialog.c:344
+#: ../app/widgets/gimpfiledialog.c:347
 msgid "By Extension"
 msgstr "Per extensió"
 
-#: ../app/widgets/gimpfiledialog.c:793
+#: ../app/widgets/gimpfiledialog.c:801
 msgid "All files"
 msgstr "Tots els fitxers"
 
-#: ../app/widgets/gimpfiledialog.c:798
+#: ../app/widgets/gimpfiledialog.c:806
 msgid "All images"
 msgstr "Totes les imatges"
 
-#: ../app/widgets/gimpfiledialog.c:974
+#: ../app/widgets/gimpfiledialog.c:813
+msgid "All XCF images"
+msgstr "Totes les imatges XCF"
+
+#: ../app/widgets/gimpfiledialog.c:815
+msgid "All export images"
+msgstr "Totes les imatges exportades"
+
+#: ../app/widgets/gimpfiledialog.c:999
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Seleccioneu el _tipus de fitxer (%s)"
@@ -15341,79 +15463,79 @@ msgstr ""
 msgid "Querying..."
 msgstr "S'està consultant..."
 
-#: ../app/widgets/gimpimagepropview.c:120
+#: ../app/widgets/gimpimagepropview.c:113
 msgid "Size in pixels:"
 msgstr "Mida en píxels:"
 
-#: ../app/widgets/gimpimagepropview.c:123
+#: ../app/widgets/gimpimagepropview.c:116
 msgid "Print size:"
 msgstr "Mida d'impressió:"
 
-#: ../app/widgets/gimpimagepropview.c:126
+#: ../app/widgets/gimpimagepropview.c:119
 msgid "Resolution:"
 msgstr "Resolució:"
 
-#: ../app/widgets/gimpimagepropview.c:129
+#: ../app/widgets/gimpimagepropview.c:122
 msgid "Color space:"
 msgstr "Espai de color:"
 
-#: ../app/widgets/gimpimagepropview.c:134
+#: ../app/widgets/gimpimagepropview.c:127
 msgid "File Name:"
 msgstr "Nom del fitxer:"
 
-#: ../app/widgets/gimpimagepropview.c:140
+#: ../app/widgets/gimpimagepropview.c:133
 msgid "File Size:"
 msgstr "Mida del fitxer:"
 
-#: ../app/widgets/gimpimagepropview.c:143
+#: ../app/widgets/gimpimagepropview.c:136
 msgid "File Type:"
 msgstr "Tipus de fitxer:"
 
-#: ../app/widgets/gimpimagepropview.c:148
+#: ../app/widgets/gimpimagepropview.c:141
 msgid "Size in memory:"
 msgstr "Mida en memòria:"
 
-#: ../app/widgets/gimpimagepropview.c:151
+#: ../app/widgets/gimpimagepropview.c:144
 msgid "Undo steps:"
 msgstr "Passos que es poden desfer:"
 
-#: ../app/widgets/gimpimagepropview.c:154
+#: ../app/widgets/gimpimagepropview.c:147
 msgid "Redo steps:"
 msgstr "Passos que es poden refer:"
 
-#: ../app/widgets/gimpimagepropview.c:159
+#: ../app/widgets/gimpimagepropview.c:152
 msgid "Number of pixels:"
 msgstr "Nombre de píxels:"
 
-#: ../app/widgets/gimpimagepropview.c:162
+#: ../app/widgets/gimpimagepropview.c:155
 msgid "Number of layers:"
 msgstr "Nombre de capes:"
 
-#: ../app/widgets/gimpimagepropview.c:165
+#: ../app/widgets/gimpimagepropview.c:158
 msgid "Number of channels:"
 msgstr "Nombre de canals:"
 
-#: ../app/widgets/gimpimagepropview.c:168
+#: ../app/widgets/gimpimagepropview.c:161
 msgid "Number of paths:"
 msgstr "Nombre de camins:"
 
 #. no undo (or redo) steps available
-#: ../app/widgets/gimpimagepropview.c:411
+#: ../app/widgets/gimpimagepropview.c:410
 msgid "None"
 msgstr "Cap"
 
-#: ../app/widgets/gimpimagepropview.c:465
+#: ../app/widgets/gimpimagepropview.c:464
 #: ../app/widgets/gimptemplateeditor.c:331
 #, c-format
 msgid "pixels/%s"
 msgstr "píxels/%s"
 
-#: ../app/widgets/gimpimagepropview.c:467
+#: ../app/widgets/gimpimagepropview.c:466
 #, c-format
 msgid "%g × %g %s"
 msgstr "%g × %g %s"
 
-#: ../app/widgets/gimpimagepropview.c:488
+#: ../app/widgets/gimpimagepropview.c:487
 msgid "colors"
 msgstr "colors"
 
@@ -15432,12 +15554,12 @@ msgid_plural "Message repeated %d times."
 msgstr[0] "Missatge repetit una sola vegada."
 msgstr[1] "Missatge repetit %d vegades."
 
-#: ../app/widgets/gimppaletteeditor.c:226
-#: ../app/widgets/gimppaletteeditor.c:682
+#: ../app/widgets/gimppaletteeditor.c:240
+#: ../app/widgets/gimppaletteeditor.c:715
 msgid "Undefined"
 msgstr "No definit"
 
-#: ../app/widgets/gimppaletteeditor.c:234
+#: ../app/widgets/gimppaletteeditor.c:248
 msgid "Columns:"
 msgstr "Columnes:"
 
@@ -15609,12 +15731,12 @@ msgstr "%d × %d ppi, %s"
 msgid "%d ppi, %s"
 msgstr "%d ppi, %s"
 
-#: ../app/widgets/gimptextbuffer-serialize.c:340
+#: ../app/widgets/gimptextbuffer-serialize.c:344
 #, c-format
 msgid "Attribute \"%s\" is invalid on <%s> element in this context"
 msgstr "En aquest context, l'atribut \"%s\" no és vàlid en l'element <%s>"
 
-#: ../app/widgets/gimptextbuffer-serialize.c:412
+#: ../app/widgets/gimptextbuffer-serialize.c:416
 #, c-format
 msgid "Outermost element in text must be <markup> not <%s>"
 msgstr "El primer element del text ha de ser <markup> en comptes de <%s>"
@@ -15647,7 +15769,7 @@ msgstr "Canvia el color del text seleccionat"
 
 #: ../app/widgets/gimptextstyleeditor.c:272
 msgid "Change kerning of selected text"
-msgstr "Canvia l'interlletrage del text seleccionat"
+msgstr "Canvia l'interlletratge del text seleccionat"
 
 #: ../app/widgets/gimptextstyleeditor.c:288
 msgid "Change baseline of selected text"
@@ -15951,7 +16073,7 @@ msgstr "Afegeix a la paleta"
 #: ../app/widgets/widgets-enums.c:178
 msgctxt "histogram-scale"
 msgid "Linear histogram"
-msgstr "Histograma linial"
+msgstr "Histograma lineal"
 
 #: ../app/widgets/widgets-enums.c:179
 msgctxt "histogram-scale"
@@ -16003,7 +16125,7 @@ msgctxt "tab-style"
 msgid "Undefined"
 msgstr "Indefinit"
 
-#: ../app/xcf/xcf-load.c:336
+#: ../app/xcf/xcf-load.c:339
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -16011,7 +16133,7 @@ msgstr ""
 "Aquest fitxer XCF està malmès! S'ha intentat llegir el màxim que s'ha pogut, "
 "però està incomplet."
 
-#: ../app/xcf/xcf-load.c:347
+#: ../app/xcf/xcf-load.c:350
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -16019,7 +16141,7 @@ msgstr ""
 "Aquest fitxer XCF està malmès! Ni tan sols s'ha pogut salvar cap informació "
 "parcial de la imatge."
 
-#: ../app/xcf/xcf-load.c:420
+#: ../app/xcf/xcf-load.c:423
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -16077,6 +16199,42 @@ msgstr "arrodonit"
 msgid "fuzzy"
 msgstr "esfumat"
 
+#: ../desktop/gimp.appdata.xml.in.h:1
+msgid ""
+"GIMP is an acronym for GNU Image Manipulation Program. It is a freely "
+"distributed program for such tasks as photo retouching, image composition "
+"and image authoring."
+msgstr ""
+"El GIMP és un acrònim de GNU Image Manipulation Program (Programa de "
+"manipulació d'imatges GNU), i és un programa que es distribueix de manera "
+"lliure per algunes tasques com el retoc de fotografies, la composició i la "
+"creació d'imatges."
+
+#: ../desktop/gimp.appdata.xml.in.h:2
+msgid ""
+"It has many capabilities. It can be used as a simple paint program, an "
+"expert quality photo retouching program, an online batch processing system, "
+"a mass production image renderer, an image format converter, etc."
+msgstr ""
+"Té un gran potencial: pot utilitzar-se com a programa només per dibuixar, "
+"com una aplicació professional de retoc fotogràfic, com un sistema en línia "
+"de processament per lots, per renderitzar imatges en massa d'imatges, per "
+"convertir imatges entre formats, etc."
+
+#: ../desktop/gimp.appdata.xml.in.h:3
+msgid ""
+"GIMP is expandable and extensible. It is designed to be augmented with plug-"
+"ins and extensions to do just about anything. The advanced scripting "
+"interface allows everything from the simplest task to the most complex image "
+"manipulation procedures to be easily scripted. GIMP is also available for "
+"Microsoft Windows and OS X."
+msgstr ""
+"El GIMP és ampliable i extensible. Està dissenyat per augmentar-se amb "
+"connectors i extensions, per fer-hi gairebé de tot. La interfície avançada "
+"d'scripts ho permet tot, es poden realitzar fàcilment amb scripts des de la "
+"tasca més simple als processos més complexos de manipulació d'imatges . El "
+"GIMP també està disponible per a Microsoft Windows i per a OS X."
+
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "Image Editor"
 msgstr "Editor d'imatges"
@@ -16084,663 +16242,3 @@ msgstr "Editor d'imatges"
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Create images and edit photographs"
 msgstr "Creeu imatges i editeu fotografies"
-
-#~ msgid "Filters"
-#~ msgstr "Filtres"
-
-#~ msgctxt "drawable-action"
-#~ msgid "_Value Invert"
-#~ msgstr "_Inversió del valor"
-
-#~ msgctxt "drawable-action"
-#~ msgid "Invert the brightness of each pixel"
-#~ msgstr "Inverteix la brillantor de cada píxel"
-
-#, fuzzy
-#~| msgid "Colori_ze..."
-#~ msgctxt "filters-action"
-#~ msgid "Color _Reduction..."
-#~ msgstr "To-Saturació _bàsic..."
-
-#~ msgctxt "filters-action"
-#~ msgid "Color T_emperature..."
-#~ msgstr "_Temperatura de color ..."
-
-#~ msgctxt "filters-action"
-#~ msgid "Change the color temperature of the image"
-#~ msgstr "Canvia la temperatura de color de la imatge"
-
-#~ msgctxt "filters-action"
-#~ msgid "Color to _Alpha..."
-#~ msgstr "El color a _alfa ..."
-
-#~ msgctxt "filters-action"
-#~ msgid "Convert a specified color to transparency"
-#~ msgstr "Converteix un color específic a transparent "
-
-#~ msgctxt "filters-action"
-#~ msgid "_Gaussian Blur..."
-#~ msgstr "_Difuminat Gaussià..."
-
-#~ msgctxt "filters-action"
-#~ msgid "Apply a gaussian blur"
-#~ msgstr "Aplica un desenfocament gaussià"
-
-#, fuzzy
-#~| msgid "_Replace"
-#~ msgctxt "filters-action"
-#~ msgid "_Laplace"
-#~ msgstr "_Reemplaça"
-
-#, fuzzy
-#~| msgctxt "file-action"
-#~| msgid "Open _Location..."
-#~ msgctxt "filters-action"
-#~ msgid "Lens Distortion..."
-#~ msgstr "Obre una _ubicació..."
-
-#~ msgctxt "filters-action"
-#~ msgid "_Pixelize..."
-#~ msgstr "_Pixelitza..."
-
-#~ msgctxt "filters-action"
-#~ msgid "Simplify image into an array of solid-colored squares"
-#~ msgstr "Simplifica la imatge en una mostra de quadrats de colors sòlids"
-
-#~ msgctxt "filters-action"
-#~ msgid "P_olar Coordinates..."
-#~ msgstr "Coordenades p_olars..."
-
-#~ msgctxt "filters-action"
-#~ msgid "Convert image to or from polar coordinates"
-#~ msgstr "Converteix la imatge a unes coordenades polars o des d'aquestes"
-
-#, fuzzy
-#~| msgctxt "file-action"
-#~| msgid "_Open..."
-#~ msgctxt "filters-action"
-#~ msgid "_Ripple..."
-#~ msgstr "_Obre..."
-
-#, fuzzy
-#~| msgctxt "patterns-action"
-#~| msgid "_Edit Pattern..."
-#~ msgctxt "filters-action"
-#~ msgid "_Semi-Flatten..."
-#~ msgstr "_Edita el patró..."
-
-#, fuzzy
-#~| msgid "_Levels..."
-#~ msgctxt "filters-action"
-#~ msgid "_Sobel..."
-#~ msgstr "Nive_lls de color..."
-
-#, fuzzy
-#~| msgid "_Threshold..."
-#~ msgctxt "filters-action"
-#~ msgid "_Threshold Alpha..."
-#~ msgstr "_Llindar blanc i negre..."
-
-#, fuzzy
-#~| msgid "Make _transparent"
-#~ msgctxt "filters-action"
-#~ msgid "Make transparency all-or-nothing"
-#~ msgstr "Fes _transparent"
-
-#~ msgctxt "image-action"
-#~ msgid "_Precision"
-#~ msgstr "_Precisió"
-
-#~ msgctxt "image-convert-action"
-#~ msgid "8 bit integer"
-#~ msgstr "Enter de 8 bits"
-
-#~ msgctxt "image-convert-action"
-#~ msgid "Convert the image to 8 bit integer"
-#~ msgstr "Converteix la imatge a un enter de 8 bits"
-
-#~ msgctxt "image-convert-action"
-#~ msgid "16 bit integer"
-#~ msgstr "Enter de 16 bits"
-
-#~ msgctxt "image-convert-action"
-#~ msgid "Convert the image to 16 bit integer"
-#~ msgstr "Converteix la imatge a un enter de 16 bits"
-
-#~ msgctxt "image-convert-action"
-#~ msgid "32 bit integer"
-#~ msgstr "Enter de 32 bits"
-
-#~ msgctxt "image-convert-action"
-#~ msgid "Convert the image to 32 bit integer"
-#~ msgstr "Converteix la imatge a un enter de 32 bits"
-
-#~ msgctxt "image-convert-action"
-#~ msgid "16 bit floating point"
-#~ msgstr "Punt flotant de 16 bits"
-
-#~ msgctxt "image-convert-action"
-#~ msgid "Convert the image to 16 bit floating point"
-#~ msgstr "Converteix la imatge a un punt flotant de 16 bits"
-
-#~ msgctxt "image-convert-action"
-#~ msgid "32 bit floating point"
-#~ msgstr "Punt flotant de 32 bits"
-
-#~ msgctxt "image-convert-action"
-#~ msgid "Convert the image to 32 bit floating point"
-#~ msgstr "Converteix la imatge a un punt flotant de 32 bits"
-
-#~ msgctxt "precision"
-#~ msgid "8-bit integer"
-#~ msgstr "Enter de 8 bits"
-
-#~ msgctxt "precision"
-#~ msgid "16-bit integer"
-#~ msgstr "Enter de 16 bits"
-
-#~ msgctxt "precision"
-#~ msgid "32-bit integer"
-#~ msgstr "Enter de 32 bits"
-
-#~ msgctxt "precision"
-#~ msgid "16-bit floating point"
-#~ msgstr "Punt flotant de 16 bits"
-
-#~ msgctxt "precision"
-#~ msgid "32-bit floating point"
-#~ msgstr "Punt flotant de 32 bits"
-
-#~ msgctxt "undo-type"
-#~ msgid "Image precision"
-#~ msgstr "Imatge de precisió"
-
-#~ msgid "Calculating distance map"
-#~ msgstr "Mapa de distància de càlcul "
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 8 bit integer"
-#~ msgstr "Converteix la imatge a un enter de 8 bits"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 16 bit integer"
-#~ msgstr "Converteix la imatge a un enter de 16 bits"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 32 bit integer"
-#~ msgstr "Converteix la imatge a un enter de 32 bits"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 16 bit floating point"
-#~ msgstr "Converteix la imatge a un punt flotant de 16 bits"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 32 bit floating point"
-#~ msgstr "Converteix la imatge a un punt flotant de 32 bits"
-
-#, fuzzy
-#~| msgid "Paste"
-#~ msgid "Paused"
-#~ msgstr "Enganxa"
-
-#~ msgctxt "undo-type"
-#~ msgid "Drop pattern to layer"
-#~ msgstr "Arrossega el patró a la capa"
-
-#~ msgctxt "undo-type"
-#~ msgid "Drop color to layer"
-#~ msgstr "Arrossega el color a la capa"
-
-#~ msgid "RGB"
-#~ msgstr "RGB"
-
-#~ msgid "RGB-alpha"
-#~ msgstr "RGB-alfa "
-
-#~ msgid "Grayscale"
-#~ msgstr "Escala de grisos"
-
-#~ msgid "Grayscale-alpha"
-#~ msgstr "Escala de grisos-alfa"
-
-#~ msgid "Red component"
-#~ msgstr "Component vermell"
-
-#~ msgid "Green component"
-#~ msgstr "Component verd"
-
-#~ msgid "Blue component"
-#~ msgstr "Component blau"
-
-#~ msgid "Alpha component"
-#~ msgstr "Component alfa"
-
-#~ msgid "Indexed-alpha"
-#~ msgstr "Indexat-alfa"
-
-#~ msgid "Indexed"
-#~ msgstr "Indexat"
-
-#~ msgctxt "undo-type"
-#~ msgid "Levels"
-#~ msgstr "Nivells "
-
-#~ msgid ""
-#~ "Image '%s' (%d) has precision '%s', but an image of precision '%s' is "
-#~ "expected"
-#~ msgstr ""
-#~ "La imatge «%s» (%d) té precisió «%s» però s'espera una imatge de precisió «%"
-#~ "s»"
-
-#~ msgid "Image '%s' (%d) must not be of precision '%s'"
-#~ msgstr "La imatge «%s» (%d) no té perquè ser de precisió «%s»"
-
-#~ msgctxt "undo-type"
-#~ msgid "Color to Alpha"
-#~ msgstr "Color a alfa"
-
-#~ msgctxt "undo-type"
-#~ msgid "Pixelize"
-#~ msgstr "Pixelitza"
-
-#~ msgctxt "undo-type"
-#~ msgid "Polar Coordinates"
-#~ msgstr "Coordenades polars"
-
-#, fuzzy
-#~| msgid "Threshold"
-#~ msgctxt "undo-type"
-#~ msgid "Threshold Alpha"
-#~ msgstr "Llindar blanc i negre"
-
-#~ msgctxt "undo-type"
-#~ msgid "Value Invert"
-#~ msgstr "Inversió del valor"
-
-#~ msgid "Colorize does not operate on grayscale layers."
-#~ msgstr "No es pot pintar en capes amb escala de grisos"
-
-#~ msgid "Colorize Color"
-#~ msgstr "Pinta el color"
-
-#~ msgid "Pick color from image"
-#~ msgstr "Captura el color de la imatge"
-
-#~ msgid "Operation Tool: Use an arbitrary GEGL operation"
-#~ msgstr "Eina d'operació: utilitzeu una operació arbitrària GEGL"
-
-#~ msgid "Precision:"
-#~ msgstr "Precisió:"
-
-#~ msgid "_Precision:"
-#~ msgstr "_Precisió:"
-
-#~ msgctxt "view-action"
-#~ msgid "Zoom out"
-#~ msgstr "Redueix"
-
-#~ msgctxt "view-action"
-#~ msgid "Zoom in"
-#~ msgstr "Amplia"
-
-#~ msgctxt "windows-action"
-#~ msgid ""
-#~ "When enabled GIMP is in a single-window mode. Far from completely "
-#~ "implemented!"
-#~ msgstr ""
-#~ "El GIMP s'inicia en el mode de finestra única. Mode que encara no està "
-#~ "implementat del tot."
-
-#~ msgctxt "undo-type"
-#~ msgid "Brightness_Contrast"
-#~ msgstr "Brillantor-_contrast"
-
-#~ msgctxt "tool"
-#~ msgid "_Zoom"
-#~ msgstr "_Ampliació"
-
-#~ msgid "Opacity:"
-#~ msgstr "Opacitat:"
-
-#~ msgctxt "tool-preset-action"
-#~ msgid "_Delete Tool Preset"
-#~ msgstr "_Suprimeix el valor predefinit de l'eina"
-
-#~ msgid "Set Item Exclusive Linked"
-#~ msgstr "Element cadenat exclusivament"
-
-#~ msgid "Message repeated %d times."
-#~ msgstr "Missatge repetit %d vegades."
-
-#~ msgctxt "tool-options-action"
-#~ msgid "_Save Options To"
-#~ msgstr "De_sa opcions a"
-
-#~ msgctxt "tool-options-action"
-#~ msgid "_Restore Options From"
-#~ msgstr "_Restaura opcions des de"
-
-#~ msgctxt "tool-options-action"
-#~ msgid "Re_name Saved Options"
-#~ msgstr "Rea_nomena les opcions desades"
-
-#~ msgctxt "tool-options-action"
-#~ msgid "_Delete Saved Options"
-#~ msgstr "Suprimeix les opcions _desades"
-
-#~ msgctxt "tool-options-action"
-#~ msgid "_New Entry..."
-#~ msgstr "_Nova entrada..."
-
-#~ msgid "Save Tool Options"
-#~ msgstr "Desa opcions de l'eina"
-
-#~ msgid "Enter a name for the saved options"
-#~ msgstr "Introduïu un nom per a les opcions desades"
-
-#~ msgid "Rename Saved Tool Options"
-#~ msgstr "Reanomena les opcions d'eina desades"
-
-#~ msgid "Enter a new name for the saved options"
-#~ msgstr "Anomena les opcions desades"
-
-#~ msgid ""
-#~ "Install a private colormap; might be useful on 8-bit (256 colors) "
-#~ "displays."
-#~ msgstr ""
-#~ "Instal·leu un mapa de colors personal; pot ser útil en visualitzacions de "
-#~ "8bits (256 colors)."
-
-#~ msgid ""
-#~ "Generally only a concern for 8-bit displays, this sets the minimum number "
-#~ "of system colors allocated for GIMP."
-#~ msgstr ""
-#~ "Generalment només afecta a visualitzacions de 8 bits. Especifica el "
-#~ "nombre mínim de colors emmagatzemats a memòria pel GIMP."
-
-#, fuzzy
-#~ msgid "Brush Scale"
-#~ msgstr "Carpetes de pinzells"
-
-#~ msgid "Rate:"
-#~ msgstr "Factor:"
-
-#~ msgid "Gradient:"
-#~ msgstr "Degradat:"
-
-#~ msgid "Threshold:"
-#~ msgstr "Llindar:"
-
-#~ msgctxt "command"
-#~ msgid "Flip"
-#~ msgstr "Capgira"
-
-#~ msgid "Tilt:"
-#~ msgstr "Inclinació:"
-
-#~ msgid "Type"
-#~ msgstr "Tipus"
-
-#~ msgid "Brush:"
-#~ msgstr "Pinzell:"
-
-#~ msgid "Scale:"
-#~ msgstr "Escala:"
-
-#~ msgid "Length:"
-#~ msgstr "Longitud:"
-
-#~ msgctxt "command"
-#~ msgid "Perspective"
-#~ msgstr "Perspectiva"
-
-#~ msgctxt "command"
-#~ msgid "Rotate"
-#~ msgstr "Gira"
-
-#~ msgctxt "command"
-#~ msgid "Scale"
-#~ msgstr "Escala"
-
-#~ msgctxt "command"
-#~ msgid "Shear"
-#~ msgstr "Inclina"
-
-#~ msgid "Font:"
-#~ msgstr "Tipus de lletra:"
-
-#~ msgid "Preview:"
-#~ msgstr "Previsualització:"
-
-#~ msgctxt "transform-preview-type"
-#~ msgid "Outline"
-#~ msgstr "Vora"
-
-#~ msgctxt "transform-preview-type"
-#~ msgid "Grid"
-#~ msgstr "Graella"
-
-#~ msgctxt "transform-preview-type"
-#~ msgid "Image"
-#~ msgstr "Imatge"
-
-#~ msgctxt "transform-preview-type"
-#~ msgid "Image + Grid"
-#~ msgstr "Imatge i graella"
-
-#~ msgid "Hardness:"
-#~ msgstr "Duresa:"
-
-#~ msgid "Aspect ratio:"
-#~ msgstr "Relació d'aspecte:"
-
-#~ msgid "Spacing:"
-#~ msgstr "Separació:"
-
-#~ msgid "Instant update"
-#~ msgstr "Actualització immediata"
-
-#~ msgid "Save options to..."
-#~ msgstr "Desa opcions a..."
-
-#~ msgid "Restore options from..."
-#~ msgstr "Restaura opcions des de..."
-
-#~ msgid "Delete saved options..."
-#~ msgstr "Suprimeix opcions desades..."
-
-#~ msgid "Error saving tool options presets: %s"
-#~ msgstr ""
-#~ "S'ha produït un error mentre es desaven les opcions de les eines: %s"
-
-#~ msgid "Use a running GIMP only, never start a new one"
-#~ msgstr "Empra una instància en execució del GIMP. No n'iniciïs cap de nova"
-
-#~ msgid "Only check if GIMP is running, then quit"
-#~ msgstr "Comprova si s'està executant el GIMP i surt"
-
-#~ msgid "Print X window ID of GIMP toolbox window, then quit"
-#~ msgstr ""
-#~ "Mostra l'ID de la finestra X de la caixa d'eines del GIMP, després surt"
-
-#~ msgid "Start GIMP without showing the startup window"
-#~ msgstr "Inicia el GIMP sense mostrar la finestra d'inici"
-
-#~ msgid "Could not connect to GIMP."
-#~ msgstr "No s'ha pogut connectar al GIMP."
-
-#~ msgid "Make sure that the Toolbox is visible!"
-#~ msgstr "Assegureu-vos que la caixa d'eines és visible."
-
-#~ msgid "Couldn't start '%s': %s"
-#~ msgstr "No s'ha pogut iniciar «%s»: %s"
-
-#~ msgctxt "context-action"
-#~ msgid "_Aspect"
-#~ msgstr "_Aspecte"
-
-#~ msgctxt "dialogs-action"
-#~ msgid "T_ools"
-#~ msgstr "_Eines"
-
-#~ msgctxt "dialogs-action"
-#~ msgid "Open the tools dialog"
-#~ msgstr "Mostra el diàleg de les eines"
-
-#~ msgctxt "edit-action"
-#~ msgid "Copy the selected region to a named buffer"
-#~ msgstr "Copia la regió seleccionada al porta-retalls del GIMP"
-
-#~ msgctxt "edit-action"
-#~ msgid "Fill with P_attern"
-#~ msgstr "Omple amb el p_atró"
-
-#~ msgctxt "file-action"
-#~ msgid "Save as _Template..."
-#~ msgstr "Desa co_m a plantilla..."
-
-#~ msgctxt "file-action"
-#~ msgid "Save this image with a different name, but keep its current name"
-#~ msgstr ""
-#~ "Desa aquesta imatge en un lloc diferent, però conserva el mateix nom"
-
-#~ msgctxt "layers-action"
-#~ msgid "Te_xt to Selection"
-#~ msgstr "Selecciona el te_xt"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Text to Selection"
-#~ msgstr "_Text a selecció"
-
-#~ msgctxt "layers-action"
-#~ msgid "Replace the selection with the text layer's outline"
-#~ msgstr "Reemplaça la selecció amb el contorn de la capa de text"
-
-#~ msgctxt "layers-action"
-#~ msgid "Add the text layer's outline to the current selection"
-#~ msgstr "Afegeix el contorn de la capa de text a la selecció"
-
-#~ msgctxt "layers-action"
-#~ msgid "Subtract the text layer's outline from the current selection"
-#~ msgstr "Sostreu el contorn de la capa de text a la selecció"
-
-#~ msgctxt "layers-action"
-#~ msgid "Intersect the text layer's outline with the current selection"
-#~ msgstr "Interseca el contorn de la capa de text amb la selecció"
-
-#~ msgid "Reset Tool Options"
-#~ msgstr "Reinicia opcions d'eina"
-
-#~ msgctxt "tools-action"
-#~ msgid "R_aise Tool"
-#~ msgstr "Apuj_a l'eina"
-
-#~ msgctxt "tools-action"
-#~ msgid "Ra_ise to Top"
-#~ msgstr "Mou-la al capda_munt"
-
-#~ msgctxt "tools-action"
-#~ msgid "L_ower Tool"
-#~ msgstr "A_baixa l'eina"
-
-#~ msgctxt "tools-action"
-#~ msgid "Lo_wer to Bottom"
-#~ msgstr "Mou-la al capda_vall"
-
-#~ msgctxt "tools-action"
-#~ msgid "_Reset Order & Visibility"
-#~ msgstr "_Recupera l'ordre i la visibilitat"
-
-#~ msgctxt "tools-action"
-#~ msgid "_Show in Toolbox"
-#~ msgstr "Mo_stra-la a la caixa d'eines"
-
-#~ msgid "When enabled, GIMP will show mnemonics in menus."
-#~ msgstr ""
-#~ "Si es marca l'opció, el GIMP mostrarà tecles mnemòniques en els menús."
-
-#~ msgid ""
-#~ "When enabled, dock windows (the toolbox and palettes) are set to be "
-#~ "transient to the active image window. Most window managers will keep the "
-#~ "dock windows above the image window then, but it may also have other "
-#~ "effects."
-#~ msgstr ""
-#~ "Quan està marcat, els plafons (el principal amb la caixa d'eines i els "
-#~ "secundaris) es posen per sobre de la finestra de la imatge activa. "
-#~ "Aquesta funció dependrà del tipus de gestor de finestres que tingueu."
-
-#~ msgid ""
-#~ "The window type hint that is set on the toolbox. This may affect how your "
-#~ "window manager decorates and handles the toolbox window."
-#~ msgstr ""
-#~ "Determina el tipus de finestra del plafó principal amb la caixa d'eines. "
-#~ "Això té a veure amb el comportament del vostre gestor de finestres."
-
-#~ msgid ""
-#~ "Sets the external web browser to be used.  This can be an absolute path "
-#~ "or the name of an executable to search for in the user's PATH. If the "
-#~ "command contains '%s' it will be replaced with the URL, else the URL will "
-#~ "be appended to the command with a space separating the two."
-#~ msgstr ""
-#~ "Defineix el navegador web extern a utilitzar. Pot ser un camí absolut o "
-#~ "el nom d'un executable a cercar en el camí d'usuari. Si l'ordre conté «%s» "
-#~ "es reemplaçarà amb l'URL; si no l'URL s'afegirà a l'ordre amb un espai de "
-#~ "separació."
-
-#~ msgctxt "undo-type"
-#~ msgid "Reposition layer"
-#~ msgstr "Capa de reposició"
-
-#~ msgctxt "undo-type"
-#~ msgid "Reposition channel"
-#~ msgstr "Canal de reposició"
-
-#~ msgctxt "undo-type"
-#~ msgid "Reposition path"
-#~ msgstr "Ubica el camí"
-
-#~ msgid "Cut"
-#~ msgstr "Retalla"
-
-#~ msgctxt "command"
-#~ msgid "Rectangle Select"
-#~ msgstr "Selecció rectangular"
-
-#~ msgctxt "command"
-#~ msgid "Ellipse Select"
-#~ msgstr "Selecció el·líptica"
-
-#~ msgctxt "command"
-#~ msgid "Bucket Fill"
-#~ msgstr "Cubell de pintura"
-
-#~ msgid "RGB-empty"
-#~ msgstr "RGB-buit"
-
-#~ msgid "grayscale-empty"
-#~ msgstr "escala de grisos-buida"
-
-#~ msgid "grayscale"
-#~ msgstr "escala de grisos"
-
-#~ msgid "Show menu _mnemonics (access keys)"
-#~ msgstr "_Mostra les dreceres de teclat"
-
-#~ msgid "Web Browser"
-#~ msgstr "Navegador web"
-
-#~ msgid "_Web browser to use:"
-#~ msgstr "Navegador _web a utilitzar:"
-
-#~ msgid "Toolbox and other docks are transient to the active image window"
-#~ msgstr ""
-#~ "La caixa d'eines i els altres plafons es mostren sempre en primer pla"
-
-#~ msgid "Do_n't Save"
-#~ msgstr "_No ho desis"
-
-#~ msgid "tool|_Zoom"
-#~ msgstr "Lu_pa"
-
-#~ msgid "Empty Channel"
-#~ msgstr "Canal buit"
