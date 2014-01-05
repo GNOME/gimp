@@ -728,11 +728,13 @@ def _interact(proc_name, start_params):
 
         table.attach(wid, 2,3, i,i+1, yoptions=0)
 
+        # Remove accelerator markers from tooltips
+        tooltip_text = desc.replace("_", "")
         if pf_type != PF_TEXT:
-            wid.set_tooltip_text(desc)
+            wid.set_tooltip_text(tooltip_text)
         else:
             # Attach tip to TextView, not to ScrolledWindow
-            wid.view.set_tooltip_text(desc)
+            wid.view.set_tooltip_text(tooltip_text)
         wid.show()
 
         wid.desc = desc
