@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,7 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from gimpfu import *
+# little known, colorsys is part of Python's stdlib
 from colorsys import rgb_to_yiq
+from textwrap import dedent
 from random import randint
 
 gettext.install("gimp20-python", gimp.locale_directory, unicode=True)
@@ -75,10 +78,13 @@ channel_getters = [ (noop, 0), (noop, 1), (noop, 2),
 
 try:
     from colormath.color_objects import RGBColor, LabColor, LCHabColor
-    AVAILABLE_CHANNELS = AVAILABLE_CHANNELS + (_("Lightness (LAB)"), _("A-color"), _("B-color"),
-                                               _("Chroma (LCHab)"), _("Hue (LCHab)"))
+    AVAILABLE_CHANNELS = AVAILABLE_CHANNELS + (_("Lightness (LAB)"),
+                                               _("A-color"), _("B-color"),
+                                               _("Chroma (LCHab)"),
+                                               _("Hue (LCHab)"))
     to_lab = lambda v,i: RGBColor(*v[:-1]).convert_to('LAB').get_value_tuple()
-    to_lchab = lambda v,i: RGBColor(*v[:-1]).convert_to('LCHab').get_value_tuple()
+    to_lchab = (lambda v,i:
+                    RGBColor(*v[:-1]).convert_to('LCHab').get_value_tuple())
     channel_getters.extend([(to_lab, 0), (to_lab, 1), (to_lab, 2),
                             (to_lchab, 1), (to_lchab, 2)])
 except ImportError:
@@ -177,10 +183,11 @@ def quantization_grain(channel, g):
     return g
 
 
-def palette_sort (palette, selection, slice_expr, channel, quantize,
-                  ascending, pchannel, pquantize):
+def palette_sort(palette, selection, slice_expr, channel1, ascending1,
+                 channel2, ascending2, quantize, pchannel, pquantize):
 
-    grain = quantization_grain(channel, quantize)
+    grain1 = quantization_grain(channel1, quantize)
+    grain2 = quantization_grain(channel2, quantize)
     pgrain = quantization_grain(pchannel, pquantize)
 
     #If palette is read only, work on a copy:
@@ -234,29 +241,34 @@ def palette_sort (palette, selection, slice_expr, channel, quantize,
     elif selection in (SELECT_SLICE, SELECT_PARTITIONED):
         start, nrows, length = parse_slice(slice_expr, num_colors)
 
-    channels_getter, channel_index = channel_getters[channel]
+    channels_getter_1, channel_index = channel_getters[channel1]
+    channels_getter_2, channel2_index = channel_getters[channel2]
 
-    def get_colors (start, end):
+    def get_colors(start, end):
         result = []
-        for i in range (start, end):
+        for i in range(start, end):
             entry =  (pdb.gimp_palette_entry_get_name (palette, i),
                       pdb.gimp_palette_entry_get_color (palette, i))
-            index = channels_getter(entry[1], i)[channel_index]
-            index = (index - (index % grain))
+            index1 = channels_getter_1(entry[1], i)[channel_index]
+            index2 = channels_getter_2(entry[1], i)[channel2_index]
+            index = ((index1 - (index1 % grain1)) * (1 if ascending1 else -1),
+                     (index2 - (index2 % grain2)) * (1 if ascending2 else -1)
+                    )
             result.append((index, entry))
         return result
 
     if selection == SELECT_ALL:
         entry_list = get_colors(0, num_colors)
-        entry_list.sort(key=lambda v:v[0], reverse=not ascending)
+        entry_list.sort(key=lambda v:v[0])
         for i in range(num_colors):
             pdb.gimp_palette_entry_set_name (palette, i, entry_list[i][1][0])
             pdb.gimp_palette_entry_set_color (palette, i, entry_list[i][1][1])
 
     elif selection == SELECT_PARTITIONED:
         if num_colors < (start + length * nrows) - 1:
-            raise ValueError('Not enough entries in palette to sort complete rows!'
-                             ' Got %d, expected >=%d' % (num_colors, start + length * nrows))
+            raise ValueError('Not enough entries in palette to '
+                             'sort complete rows! Got %d, expected >=%d' %
+                             (num_colors, start + length * nrows))
         pchannels_getter, pchannel_index = channel_getters[pchannel]
         for row in range(nrows):
             partition_spans = [1]
@@ -282,8 +294,9 @@ def palette_sort (palette, selection, slice_expr, channel, quantize,
     else:
         stride = length
         if num_colors < (start + stride * nrows) - 1:
-            raise ValueError('Not enough entries in palette to sort complete rows!'
-                             ' Got %d, expected >=%d' % (num_colors, start + stride * nrows))
+            raise ValueError('Not enough entries in palette to sort '
+                             'complete rows! Got %d, expected >=%d' %
+                             (num_colors, start + stride * nrows))
 
         for row_start in range(start, start + stride * nrows, stride):
             sublist = get_colors(row_start, row_start + stride)
@@ -294,26 +307,42 @@ def palette_sort (palette, selection, slice_expr, channel, quantize,
 
     return palette
 
-
 register(
     "python-fu-palette-sort",
     N_("Sort the colors in a palette"),
-    "palette_sort (palette, selection, slice_expr, channel, quantize,"
-    " ascending, pchannel, pquantize) -> new_palette",
-    "Joao S. O. Bueno Calligaris, Carol Spears, David Gowers",
-    "Joao S. O. Bueno Calligaris",
-    "2006",
+    # FIXME: Write humanly readable help -
+    # (I can't figure out what the plugin does, or how to use the parameters after
+    # David's enhacements even looking at the code -
+    # let alone someone just using GIMP (JS) )
+    dedent("""\
+    palette_sort (palette, selection, slice_expr, channel,
+    channel2, quantize, ascending, pchannel, pquantize) -> new_palette
+    Sorts a palette, or part of a palette, using several options.
+    One can select two color channels over which to sort,
+    and several auxiliary parameters create a 2D sorted
+    palette with sorted rows, among other things.
+    One can optionally install colormath
+    (https://pypi.python.org/pypi/colormath/1.0.8)
+    to GIMP's Python to get even more channels to choose from.
+    """),
+    "João S. O. Bueno, Carol Spears, David Gowers",
+    "João S. O. Bueno, Carol Spears, David Gowers",
+    "2006-2014",
     N_("_Sort Palette..."),
     "",
     [
         (PF_PALETTE, "palette",  _("Palette"), ""),
         (PF_OPTION, "selections", _("Se_lections"), SELECT_ALL,
-                    (_("All"), _("Slice / Array"), _("Autoslice (fg->bg)"), _("Partitioned"))),
+                    (_("All"), _("Slice / Array"), _("Autoslice (fg->bg)"),
+                     _("Partitioned"))),
         (PF_STRING,    "slice-expr", _("Slice _expression"), ''),
-        (PF_OPTION,   "channel",    _("Channel to _sort"), 3,
+        (PF_OPTION,   "channel1",    _("Channel to _sort"), 3,
                                     AVAILABLE_CHANNELS),
+        (PF_BOOL,  "ascending1", _("_Ascending"), True),
+        (PF_OPTION,   "channel2",    _("Secondary Channel to s_ort"), 5,
+                                    AVAILABLE_CHANNELS),
+        (PF_BOOL,   "ascending2", _("_Ascending"), True),
         (PF_FLOAT,  "quantize", _("_Quantization"), 0.0),
-        (PF_BOOL,   "ascending", _("_Ascending"), True),
         (PF_OPTION,   "pchannel",    _("_Partitioning channel"), 3,
                                             AVAILABLE_CHANNELS),
         (PF_FLOAT,  "pquantize", _("Partition q_uantization"), 0.0),
@@ -323,6 +352,5 @@ register(
     menu="<Palettes>",
     domain=("gimp20-python", gimp.locale_directory)
     )
-
 
 main ()
