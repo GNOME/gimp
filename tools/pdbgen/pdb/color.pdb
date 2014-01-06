@@ -734,7 +734,7 @@ Modify hue, lightness, and saturation in the specified drawable.
 BLURB
 
     $help = <<'HELP';
-This procedures allows the hue, lightness, and saturation in the specified
+This procedure allows the hue, lightness, and saturation in the specified
 drawable to be modified. The 'hue-range' parameter provides the capability to
 limit range of affected hues.
 HELP
@@ -771,6 +771,69 @@ HELP
                      "hue",        hue_offset / 180.0,
                      "saturation", saturation / 100.0,
                      "lightness",  lightness  / 100.0,
+                     NULL);
+
+      gimp_drawable_apply_operation_by_name (drawable, progress,
+                                             _("Hue-Saturation"),
+                                             "gimp:hue-saturation",
+                                             config);
+      g_object_unref (config);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub hue_saturation_overlap {
+    $blurb = <<'BLURB';
+Modify hue, lightness, and saturation in the specified drawable.
+BLURB
+
+    $help = <<'HELP';
+This procedure allows the hue, lightness, and saturation in the specified
+drawable to be modified. The 'hue-range' parameter provides the capability to
+limit range of affected hues. The 'overlap' parameter provides blending into
+neighboring hue channels when rendering.
+HELP
+
+    &joao_pdb_misc('2014', '2.10');
+
+    $date = '2014';
+
+    @inargs = (
+        { name => 'drawable', type => 'drawable',
+          desc => 'The drawable' },
+        { name => 'hue_range', type => 'enum GimpHueRange',
+          desc => 'Range of affected hues' },
+        { name => 'hue_offset', type => '-180 <= float <= 180',
+          desc => 'Hue offset in degrees' },
+        { name => 'lightness', type => '-100 <= float <= 100',
+          desc => 'Lightness modification' },
+        { name => 'saturation', type => '-100 <= float <= 100',
+          desc => 'Saturation modification' },
+        { name => 'overlap', type => '0 <= float <= 100',
+          desc => 'Overlap other hue channels' }
+    );
+
+    %invoke = (
+        headers => [ qw("operations/gimphuesaturationconfig.h") ],
+        code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GObject *config = g_object_new (GIMP_TYPE_HUE_SATURATION_CONFIG,
+                                      "range", hue_range,
+                                      NULL);
+
+       g_object_set (config,
+                     "hue",        hue_offset / 180.0,
+                     "saturation", saturation / 100.0,
+                     "lightness",  lightness  / 100.0,
+                     "overlap",    overlap / 100.0,
                      NULL);
 
       gimp_drawable_apply_operation_by_name (drawable, progress,
@@ -853,7 +916,7 @@ CODE
             color_balance
             colorize
             histogram
-            hue_saturation
+            hue_saturation hue_saturation_overlap
             threshold);
 
 %exports = (app => [@procs], lib => [@procs]);
