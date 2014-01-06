@@ -1596,7 +1596,7 @@ msgstr "_Limpar o histórico"
 #: ../app/actions/documents-actions.c:76
 msgctxt "documents-action"
 msgid "Clear the entire document history"
-msgstr "Limpa todo o histórico de desfazer"
+msgstr "Limpa todo o histórico de documentos"
 
 #: ../app/actions/documents-actions.c:81
 msgctxt "documents-action"
