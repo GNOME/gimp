@@ -8,6 +8,7 @@ plug-ins/pygimp/gimpui.py
 
 plug-ins/pygimp/plug-ins/colorxhtml.py
 plug-ins/pygimp/plug-ins/gradients-save-as-css.py
+plug-ins/pygimp/plug-ins/histogram-export.py
 plug-ins/pygimp/plug-ins/foggify.py
 plug-ins/pygimp/plug-ins/palette-offset.py
 plug-ins/pygimp/plug-ins/palette-sort.py
