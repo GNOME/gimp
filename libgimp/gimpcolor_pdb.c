@@ -630,7 +630,7 @@ gimp_histogram (gint32                drawable_ID,
  *
  * Modify hue, lightness, and saturation in the specified drawable.
  *
- * This procedures allows the hue, lightness, and saturation in the
+ * This procedure allows the hue, lightness, and saturation in the
  * specified drawable to be modified. The 'hue-range' parameter
  * provides the capability to limit range of affected hues.
  *
@@ -654,6 +654,56 @@ gimp_hue_saturation (gint32       drawable_ID,
                                     GIMP_PDB_FLOAT, hue_offset,
                                     GIMP_PDB_FLOAT, lightness,
                                     GIMP_PDB_FLOAT, saturation,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_hue_saturation_overlap:
+ * @drawable_ID: The drawable.
+ * @hue_range: Range of affected hues.
+ * @hue_offset: Hue offset in degrees.
+ * @lightness: Lightness modification.
+ * @saturation: Saturation modification.
+ * @overlap: Overlap other hue channels.
+ *
+ * Modify hue, lightness, and saturation in the specified drawable.
+ *
+ * This procedure allows the hue, lightness, and saturation in the
+ * specified drawable to be modified. The 'hue-range' parameter
+ * provides the capability to limit range of affected hues. The
+ * 'overlap' parameter provides blending into neighboring hue channels
+ * when rendering.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.10
+ **/
+gboolean
+gimp_hue_saturation_overlap (gint32       drawable_ID,
+                             GimpHueRange hue_range,
+                             gdouble      hue_offset,
+                             gdouble      lightness,
+                             gdouble      saturation,
+                             gdouble      overlap)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-hue-saturation-overlap",
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_INT32, hue_range,
+                                    GIMP_PDB_FLOAT, hue_offset,
+                                    GIMP_PDB_FLOAT, lightness,
+                                    GIMP_PDB_FLOAT, saturation,
+                                    GIMP_PDB_FLOAT, overlap,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
