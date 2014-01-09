@@ -581,25 +581,61 @@ def _interact(proc_name, start_params):
         def get_value(self):
             return self.get_active()
 
-    def FileSelector(default=""):
+    def FileSelector(default="", title=None):
         # FIXME: should this be os.path.separator?  If not, perhaps explain why?
         if default and default.endswith("/"):
-            selector = DirnameSelector
             if default == "/": default = ""
+            return DirnameSelector(default)
         else:
-            selector = FilenameSelector
-        return selector(default)
+            return FilenameSelector(default, title=title)
 
-    class FilenameSelector(gtk.FileChooserButton):
-        def __init__(self, default="", save_mode=False):
-            gtk.FileChooserButton.__init__(self,
-                                           _("Python-Fu File Selection"))
-            self.set_action(gtk.FILE_CHOOSER_ACTION_OPEN)
+    class FilenameSelector(gtk.HBox):
+        #gimpfu.FileChooserButton
+        def __init__(self, default, save_mode=True, title=None):
+            super(FilenameSelector, self).__init__()
+            if not title:
+                self.title = _("Python-Fu File Selection")
+            else:
+                self.title = title
+            self.save_mode = save_mode
+            box = self
+            self.entry = gtk.Entry()
+            image = gtk.Image()
+            image.set_from_stock(gtk.STOCK_FILE, gtk.ICON_SIZE_BUTTON)
+            self.button = gtk.Button()
+            self.button.set_image(image)
+            box.pack_start(self.entry)
+            box.pack_start(self.button)
+            self.button.connect("clicked", self.pick_file)
             if default:
-                self.set_filename(default)
+                self.entry.set_text(default)
+
+        def show(self):
+            super(FilenameSelector, self).show()
+            self.button.show()
+            self.entry.show()
+
+        def pick_file(self, widget):
+            entry = self.entry
+            dialog = gtk.FileChooserDialog(
+                         title=self.title,
+                         action=(gtk.FILE_CHOOSER_ACTION_SAVE
+                                     if self.save_mode else
+                                 gtk.FILE_CHOOSER_ACTION_OPEN),
+                         buttons=(gtk.STOCK_CANCEL,
+                                gtk.RESPONSE_CANCEL,
+                                gtk.STOCK_OPEN,
+                                gtk.RESPONSE_OK)
+                        )
+            dialog.show_all()
+            response = dialog.run()
+            if response == gtk.RESPONSE_OK:
+                entry.set_text(dialog.get_filename())
+            dialog.destroy()
 
         def get_value(self):
-            return self.get_filename()
+            return self.entry.get_text()
+
 
     class DirnameSelector(gtk.FileChooserButton):
         def __init__(self, default=""):
@@ -719,17 +755,22 @@ def _interact(proc_name, start_params):
         table.attach(label, 1, 2, i, i+1, xoptions=gtk.FILL)
         label.show()
 
+        # Remove accelerator markers from tooltips
+        tooltip_text = desc.replace("_", "")
+
         if pf_type in (PF_SPINNER, PF_SLIDER, PF_RADIO, PF_OPTION):
             wid = _edit_mapping[pf_type](def_val, params[i][4])
+        elif pf_type in (PF_FILE, PF_FILENAME):
+            wid = _edit_mapping[pf_type](def_val, title= "%s - %s" %
+                                          (proc_name, tooltip_text))
         else:
             wid = _edit_mapping[pf_type](def_val)
+
 
         label.set_mnemonic_widget(wid)
 
         table.attach(wid, 2,3, i,i+1, yoptions=0)
 
-        # Remove accelerator markers from tooltips
-        tooltip_text = desc.replace("_", "")
         if pf_type != PF_TEXT:
             wid.set_tooltip_text(tooltip_text)
         else:
