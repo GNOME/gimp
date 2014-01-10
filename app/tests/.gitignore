@@ -17,3 +17,5 @@ test-tools*
 test-ui*
 test-window-management*
 test-xcf*
+/*.trs
+/*.log
