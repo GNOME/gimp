@@ -10,6 +10,7 @@
     convert
     display
     drawable
+    drawable_color
     drawable_transform
     dynamics
     edit

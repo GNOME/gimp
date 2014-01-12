@@ -40,11 +40,7 @@
  * @brightness: Brightness adjustment.
  * @contrast: Contrast adjustment.
  *
- * Modify brightness/contrast in the specified drawable.
- *
- * This procedures allows the brightness and contrast of the specified
- * drawable to be modified. Both 'brightness' and 'contrast' parameters
- * are defined between -127 and 127.
+ * Deprecated: Use gimp_drawable_brightness_contrast() instead.
  *
  * Returns: TRUE on success.
  **/
@@ -81,20 +77,7 @@ gimp_brightness_contrast (gint32 drawable_ID,
  * @low_output: Intensity of lowest output.
  * @high_output: Intensity of highest output.
  *
- * Modifies intensity levels in the specified drawable.
- *
- * This tool allows intensity levels in the specified drawable to be
- * remapped according to a set of parameters. The low/high input levels
- * specify an initial mapping from the source intensities. The gamma
- * value determines how intensities between the low and high input
- * intensities are interpolated. A gamma value of 1.0 results in a
- * linear interpolation. Higher gamma values result in more high-level
- * intensities. Lower gamma values result in more low-level
- * intensities. The low/high output levels constrain the final
- * intensity mapping--that is, no final intensity will be lower than
- * the low output level and no final intensity will be higher than the
- * high output level. This tool is only valid on RGB color and
- * grayscale images.
+ * Deprecated: Use gimp_drawable_levels() instead.
  *
  * Returns: TRUE on success.
  **/
@@ -133,7 +116,7 @@ gimp_levels (gint32               drawable_ID,
  * gimp_levels_auto:
  * @drawable_ID: The drawable.
  *
- * Deprecated: Use gimp_levels_stretch() instead.
+ * Deprecated: Use gimp_drawable_levels_stretch() instead.
  *
  * Returns: TRUE on success.
  **/
@@ -160,11 +143,7 @@ gimp_levels_auto (gint32 drawable_ID)
  * gimp_levels_stretch:
  * @drawable_ID: The drawable.
  *
- * Automatically modifies intensity levels in the specified drawable.
- *
- * This procedure allows intensity levels in the specified drawable to
- * be remapped according to a set of guessed parameters. It is
- * equivalent to clicking the \"Auto\" button in the Levels tool.
+ * Deprecated: Use gimp_drawable_levels_stretch() instead.
  *
  * Returns: TRUE on success.
  **/
@@ -192,10 +171,7 @@ gimp_levels_stretch (gint32 drawable_ID)
  * @drawable_ID: The drawable.
  * @levels: Levels of posterization.
  *
- * Posterize the specified drawable.
- *
- * This procedures reduces the number of shades allows in each
- * intensity channel to the specified 'levels' parameter.
+ * Deprecated: Use gimp_drawable_posterize() instead.
  *
  * Returns: TRUE on success.
  **/
@@ -224,10 +200,7 @@ gimp_posterize (gint32 drawable_ID,
  * gimp_desaturate:
  * @drawable_ID: The drawable.
  *
- * Desaturate the contents of the specified drawable.
- *
- * This procedure desaturates the contents of the specified drawable.
- * This procedure only works on drawables of type RGB color.
+ * Deprecated: Use gimp_drawable_desaturate() instead.
  *
  * Returns: TRUE on success.
  **/
@@ -255,12 +228,7 @@ gimp_desaturate (gint32 drawable_ID)
  * @drawable_ID: The drawable.
  * @desaturate_mode: The formula to use to desaturate.
  *
- * Desaturate the contents of the specified drawable, with the
- * specified formula.
- *
- * This procedure desaturates the contents of the specified drawable,
- * with the specified formula. This procedure only works on drawables
- * of type RGB color.
+ * Deprecated: Use gimp_drawable_desaturate() instead.
  *
  * Returns: TRUE on success.
  *
@@ -292,15 +260,7 @@ gimp_desaturate_full (gint32             drawable_ID,
  * @drawable_ID: The drawable.
  * @mask_only: Equalization option.
  *
- * Equalize the contents of the specified drawable.
- *
- * This procedure equalizes the contents of the specified drawable.
- * Each intensity channel is equalized independently. The equalized
- * intensity is given as inten' = (255 - inten). The 'mask_only' option
- * specifies whether to adjust only the area of the image within the
- * selection bounds, or the entire image based on the histogram of the
- * selected area. If there is no selection, the entire image is
- * adjusted based on the histogram for the entire image.
+ * Deprecated: Use gimp_drawable_equalize() instead.
  *
  * Returns: TRUE on success.
  **/
@@ -502,16 +462,9 @@ gimp_color_balance (gint32           drawable_ID,
  * @saturation: Saturation in percent.
  * @lightness: Lightness in percent.
  *
- * Render the drawable as a grayscale image seen through a colored
- * glass.
- *
- * Desaturates the drawable, then tints it with the specified color.
- * This tool is only valid on RGB color images. It will not operate on
- * grayscale drawables.
+ * Deprecated: Use gimp_drawable_colorize_hsl() instead.
  *
  * Returns: TRUE on success.
- *
- * Since: GIMP 2.2
  **/
 gboolean
 gimp_colorize (gint32  drawable_ID,
@@ -628,11 +581,7 @@ gimp_histogram (gint32                drawable_ID,
  * @lightness: Lightness modification.
  * @saturation: Saturation modification.
  *
- * Modify hue, lightness, and saturation in the specified drawable.
- *
- * This procedure allows the hue, lightness, and saturation in the
- * specified drawable to be modified. The 'hue-range' parameter
- * provides the capability to limit range of affected hues.
+ * Deprecated: Use gimp_drawable_hue_saturation() instead.
  *
  * Returns: TRUE on success.
  **/
@@ -654,56 +603,6 @@ gimp_hue_saturation (gint32       drawable_ID,
                                     GIMP_PDB_FLOAT, hue_offset,
                                     GIMP_PDB_FLOAT, lightness,
                                     GIMP_PDB_FLOAT, saturation,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_hue_saturation_overlap:
- * @drawable_ID: The drawable.
- * @hue_range: Range of affected hues.
- * @hue_offset: Hue offset in degrees.
- * @lightness: Lightness modification.
- * @saturation: Saturation modification.
- * @overlap: Overlap other hue channels.
- *
- * Modify hue, lightness, and saturation in the specified drawable.
- *
- * This procedure allows the hue, lightness, and saturation in the
- * specified drawable to be modified. The 'hue-range' parameter
- * provides the capability to limit range of affected hues. The
- * 'overlap' parameter provides blending into neighboring hue channels
- * when rendering.
- *
- * Returns: TRUE on success.
- *
- * Since: GIMP 2.10
- **/
-gboolean
-gimp_hue_saturation_overlap (gint32       drawable_ID,
-                             GimpHueRange hue_range,
-                             gdouble      hue_offset,
-                             gdouble      lightness,
-                             gdouble      saturation,
-                             gdouble      overlap)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-hue-saturation-overlap",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_INT32, hue_range,
-                                    GIMP_PDB_FLOAT, hue_offset,
-                                    GIMP_PDB_FLOAT, lightness,
-                                    GIMP_PDB_FLOAT, saturation,
-                                    GIMP_PDB_FLOAT, overlap,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

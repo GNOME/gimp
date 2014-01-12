@@ -170,8 +170,15 @@ EXPORTS
 	gimp_dodgeburn_default
 	gimp_drawable_attach_new_parasite
 	gimp_drawable_bpp
+	gimp_drawable_brightness_contrast
+	gimp_drawable_color_balance
+	gimp_drawable_colorize_hsl
+	gimp_drawable_curves_explicit
+	gimp_drawable_curves_spline
 	gimp_drawable_delete
+	gimp_drawable_desaturate
 	gimp_drawable_detach
+	gimp_drawable_equalize
 	gimp_drawable_fill
 	gimp_drawable_flush
 	gimp_drawable_foreground_extract
@@ -195,6 +202,9 @@ EXPORTS
 	gimp_drawable_get_visible
 	gimp_drawable_has_alpha
 	gimp_drawable_height
+	gimp_drawable_historgram
+	gimp_drawable_hue_saturation
+	gimp_drawable_invert
 	gimp_drawable_is_channel
 	gimp_drawable_is_gray
 	gimp_drawable_is_indexed
@@ -203,6 +213,8 @@ EXPORTS
 	gimp_drawable_is_rgb
 	gimp_drawable_is_text_layer
 	gimp_drawable_is_valid
+	gimp_drawable_levels
+	gimp_drawable_levels_stretch
 	gimp_drawable_mask_bounds
 	gimp_drawable_mask_intersect
 	gimp_drawable_merge_shadow
@@ -212,12 +224,14 @@ EXPORTS
 	gimp_drawable_parasite_detach
 	gimp_drawable_parasite_find
 	gimp_drawable_parasite_list
+	gimp_drawable_posterize
 	gimp_drawable_set_image
 	gimp_drawable_set_linked
 	gimp_drawable_set_name
 	gimp_drawable_set_pixel
 	gimp_drawable_set_tattoo
 	gimp_drawable_set_visible
+	gimp_drawable_threshold
 	gimp_drawable_transform_2d
 	gimp_drawable_transform_2d_default
 	gimp_drawable_transform_flip
@@ -356,7 +370,6 @@ EXPORTS
 	gimp_histogram_channel_get_type
 	gimp_hue_range_get_type
 	gimp_hue_saturation
-	gimp_hue_saturation_overlap
 	gimp_image_add_channel
 	gimp_image_add_hguide
 	gimp_image_add_layer

@@ -12,6 +12,7 @@ pdb_sources = \
 	pdb/convert.pdb			\
 	pdb/display.pdb			\
 	pdb/drawable.pdb		\
+	pdb/drawable_color.pdb		\
 	pdb/drawable_transform.pdb	\
 	pdb/dynamics.pdb		\
 	pdb/edit.pdb			\

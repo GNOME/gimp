@@ -86,6 +86,7 @@ PDB_WRAPPERS_C = \
 	gimpconvert_pdb.c		\
 	gimpdisplay_pdb.c		\
 	gimpdrawable_pdb.c		\
+	gimpdrawablecolor_pdb.c		\
 	gimpdrawabletransform_pdb.c	\
 	gimpdynamics_pdb.c		\
 	gimpedit_pdb.c			\
@@ -139,6 +140,7 @@ PDB_WRAPPERS_H = \
 	gimpconvert_pdb.h		\
 	gimpdisplay_pdb.h		\
 	gimpdrawable_pdb.h		\
+	gimpdrawablecolor_pdb.h		\
 	gimpdrawabletransform_pdb.h	\
 	gimpdynamics_pdb.h		\
 	gimpedit_pdb.h			\

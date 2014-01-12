@@ -17,16 +17,7 @@
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
 sub brightness_contrast {
-    $blurb = 'Modify brightness/contrast in the specified drawable.';
-
-    $help = <<'HELP';
-This procedures allows the brightness and contrast of the specified drawable to
-be modified.  Both 'brightness' and 'contrast' parameters are defined between
--127 and 127.
-HELP
-
-    &std_pdb_misc;
-    $date = '1997';
+    &std_pdb_deprecated ('gimp-drawable-brightness-contrast');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -64,22 +55,7 @@ CODE
 }
 
 sub levels {
-    $blurb = 'Modifies intensity levels in the specified drawable.';
-
-    $help = <<'HELP';
-This tool allows intensity levels in the specified drawable to be remapped
-according to a set of parameters. The low/high input levels specify an initial
-mapping from the source intensities. The gamma value determines how intensities
-between the low and high input intensities are interpolated. A gamma value of
-1.0 results in a linear interpolation. Higher gamma values result in more
-high-level intensities. Lower gamma values result in more low-level
-intensities. The low/high output levels constrain the final intensity
-mapping--that is, no final intensity will be lower than the low output level
-and no final intensity will be higher than the high output level. This tool is
-only valid on RGB color and grayscale images.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated ('gimp-drawable-levels');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -135,16 +111,7 @@ CODE
 }
 
 sub levels_stretch {
-    $blurb = 'Automatically modifies intensity levels in the specified drawable.';
-
-    $help = <<'HELP';
-This procedure allows intensity levels in the specified drawable to be
-remapped according to a set of guessed parameters. It is equivalent to
-clicking the "Auto" button in the Levels tool.
-HELP
-
-    $author = $copyright = 'Joao S.O. Bueno, Shawn Willden';
-    $date = '2003';
+    &std_pdb_deprecated ('gimp-drawable-levels-stretch');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -169,7 +136,7 @@ CODE
 }
 
 sub levels_auto {
-    &std_pdb_deprecated ('gimp-levels-stretch');
+    &std_pdb_deprecated ('gimp-drawable-levels-stretch');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -194,15 +161,7 @@ CODE
 }
 
 sub posterize {
-    $blurb = 'Posterize the specified drawable.';
-
-    $help = <<'HELP';
-This procedures reduces the number of shades allows in each intensity channel
-to the specified 'levels' parameter.
-HELP
-
-    &std_pdb_misc;
-    $date = '1997';
+    &std_pdb_deprecated ('gimp-drawable-posterize');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -237,14 +196,7 @@ CODE
 }
 
 sub desaturate {
-    $blurb = 'Desaturate the contents of the specified drawable.';
-
-    $help = <<'HELP';
-This procedure desaturates the contents of the specified drawable. This
-procedure only works on drawables of type RGB color.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated ('gimp-drawable-desaturate');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -278,18 +230,7 @@ CODE
 }
 
 sub desaturate_full {
-    $blurb = <<'BLURB';
-Desaturate the contents of the specified drawable, with the specified formula.
-BLURB
-
-    $help = <<'HELP';
-This procedure desaturates the contents of the specified drawable,
-with the specified formula. This procedure only works on drawables of
-type RGB color.
-HELP
-
-    $author = $copyright = 'Karine Delvare';
-    $date = '2005';
+    &std_pdb_deprecated ('gimp-drawable-desaturate');
     $since = '2.4';
 
     @inargs = (
@@ -326,19 +267,7 @@ CODE
 }
 
 sub equalize {
-    $blurb = 'Equalize the contents of the specified drawable.';
-
-    $help = <<'HELP';
-This procedure equalizes the contents of the specified drawable. Each
-intensity channel is equalized independently. The equalized intensity
-is given as inten' = (255 - inten). The 'mask_only' option specifies
-whether to adjust only the area of the image within the selection
-bounds, or the entire image based on the histogram of the selected
-area. If there is no selection, the entire image is adjusted based on
-the histogram for the entire image.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated ('gimp-drawable-equalize');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -548,7 +477,7 @@ HELP
                                  GIMP_PDB_ITEM_CONTENT, error)  &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
-      GObject *config = g_object_new (GIMP_TYPE_COLORIZE_CONFIG,
+      GObject *config = g_object_new (GIMP_TYPE_COLOR_BALANCE_CONFIG,
                                       "range",               transfer_mode,
                                       "preserve-luminosity", preserve_lum,
                                       NULL);
@@ -573,14 +502,7 @@ CODE
 }
 
 sub colorize {
-    $blurb = 'Render the drawable as a grayscale image seen through a colored glass.';
-
-    $help = <<'HELP';
-Desaturates the drawable, then tints it with the specified color. This tool is
-only valid on RGB color images. It will not operate on grayscale drawables.
-HELP
-
-    &neo_pdb_misc('2004', '2.2');
+    &std_pdb_deprecated ('gimp-drawable-colorize-hsl');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -729,18 +651,7 @@ CODE
 }
 
 sub hue_saturation {
-    $blurb = <<'BLURB';
-Modify hue, lightness, and saturation in the specified drawable.
-BLURB
-
-    $help = <<'HELP';
-This procedure allows the hue, lightness, and saturation in the specified
-drawable to be modified. The 'hue-range' parameter provides the capability to
-limit range of affected hues.
-HELP
-
-    &std_pdb_misc;
-    $date = '1997';
+    &std_pdb_deprecated ('gimp-drawable-hue-saturation');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -771,69 +682,6 @@ HELP
                      "hue",        hue_offset / 180.0,
                      "saturation", saturation / 100.0,
                      "lightness",  lightness  / 100.0,
-                     NULL);
-
-      gimp_drawable_apply_operation_by_name (drawable, progress,
-                                             _("Hue-Saturation"),
-                                             "gimp:hue-saturation",
-                                             config);
-      g_object_unref (config);
-    }
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub hue_saturation_overlap {
-    $blurb = <<'BLURB';
-Modify hue, lightness, and saturation in the specified drawable.
-BLURB
-
-    $help = <<'HELP';
-This procedure allows the hue, lightness, and saturation in the specified
-drawable to be modified. The 'hue-range' parameter provides the capability to
-limit range of affected hues. The 'overlap' parameter provides blending into
-neighboring hue channels when rendering.
-HELP
-
-    &joao_pdb_misc('2014', '2.10');
-
-    $date = '2014';
-
-    @inargs = (
-        { name => 'drawable', type => 'drawable',
-          desc => 'The drawable' },
-        { name => 'hue_range', type => 'enum GimpHueRange',
-          desc => 'Range of affected hues' },
-        { name => 'hue_offset', type => '-180 <= float <= 180',
-          desc => 'Hue offset in degrees' },
-        { name => 'lightness', type => '-100 <= float <= 100',
-          desc => 'Lightness modification' },
-        { name => 'saturation', type => '-100 <= float <= 100',
-          desc => 'Saturation modification' },
-        { name => 'overlap', type => '0 <= float <= 100',
-          desc => 'Overlap other hue channels' }
-    );
-
-    %invoke = (
-        headers => [ qw("operations/gimphuesaturationconfig.h") ],
-        code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
-    {
-      GObject *config = g_object_new (GIMP_TYPE_HUE_SATURATION_CONFIG,
-                                      "range", hue_range,
-                                      NULL);
-
-       g_object_set (config,
-                     "hue",        hue_offset / 180.0,
-                     "saturation", saturation / 100.0,
-                     "lightness",  lightness  / 100.0,
-                     "overlap",    overlap / 100.0,
                      NULL);
 
       gimp_drawable_apply_operation_by_name (drawable, progress,
@@ -916,7 +764,7 @@ CODE
             color_balance
             colorize
             histogram
-            hue_saturation hue_saturation_overlap
+            hue_saturation
             threshold);
 
 %exports = (app => [@procs], lib => [@procs]);

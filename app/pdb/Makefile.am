@@ -44,6 +44,7 @@ libappinternal_procs_a_SOURCES = \
 	convert-cmds.c			\
 	display-cmds.c			\
 	drawable-cmds.c			\
+	drawable-color-cmds.c		\
 	drawable-transform-cmds.c	\
 	dynamics-cmds.c			\
 	edit-cmds.c			\

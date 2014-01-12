@@ -519,7 +519,7 @@ color_balance_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error)  &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          GObject *config = g_object_new (GIMP_TYPE_COLORIZE_CONFIG,
+          GObject *config = g_object_new (GIMP_TYPE_COLOR_BALANCE_CONFIG,
                                           "range",               transfer_mode,
                                           "preserve-luminosity", preserve_lum,
                                           NULL);
@@ -734,60 +734,6 @@ hue_saturation_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-hue_saturation_overlap_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
-                                GError               **error)
-{
-  gboolean success = TRUE;
-  GimpDrawable *drawable;
-  gint32 hue_range;
-  gdouble hue_offset;
-  gdouble lightness;
-  gdouble saturation;
-  gdouble overlap;
-
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
-  hue_range = g_value_get_enum (gimp_value_array_index (args, 1));
-  hue_offset = g_value_get_double (gimp_value_array_index (args, 2));
-  lightness = g_value_get_double (gimp_value_array_index (args, 3));
-  saturation = g_value_get_double (gimp_value_array_index (args, 4));
-  overlap = g_value_get_double (gimp_value_array_index (args, 5));
-
-  if (success)
-    {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
-        {
-          GObject *config = g_object_new (GIMP_TYPE_HUE_SATURATION_CONFIG,
-                                          "range", hue_range,
-                                          NULL);
-
-           g_object_set (config,
-                         "hue",        hue_offset / 180.0,
-                         "saturation", saturation / 100.0,
-                         "lightness",  lightness  / 100.0,
-                         "overlap",    overlap / 100.0,
-                         NULL);
-
-          gimp_drawable_apply_operation_by_name (drawable, progress,
-                                                 _("Hue-Saturation"),
-                                                 "gimp:hue-saturation",
-                                                 config);
-          g_object_unref (config);
-        }
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
 threshold_invoker (GimpProcedure         *procedure,
                    Gimp                  *gimp,
                    GimpContext           *context,
@@ -842,12 +788,12 @@ register_color_procs (GimpPDB *pdb)
                                "gimp-brightness-contrast");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brightness-contrast",
-                                     "Modify brightness/contrast in the specified drawable.",
-                                     "This procedures allows the brightness and contrast of the specified drawable to be modified. Both 'brightness' and 'contrast' parameters are defined between -127 and 127.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1997",
-                                     NULL);
+                                     "Deprecated: Use 'gimp-drawable-brightness-contrast' instead.",
+                                     "Deprecated: Use 'gimp-drawable-brightness-contrast' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-drawable-brightness-contrast");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -877,12 +823,12 @@ register_color_procs (GimpPDB *pdb)
                                "gimp-levels");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-levels",
-                                     "Modifies intensity levels in the specified drawable.",
-                                     "This tool allows intensity levels in the specified drawable to be remapped according to a set of parameters. The low/high input levels specify an initial mapping from the source intensities. The gamma value determines how intensities between the low and high input intensities are interpolated. A gamma value of 1.0 results in a linear interpolation. Higher gamma values result in more high-level intensities. Lower gamma values result in more low-level intensities. The low/high output levels constrain the final intensity mapping--that is, no final intensity will be lower than the low output level and no final intensity will be higher than the high output level. This tool is only valid on RGB color and grayscale images.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "Deprecated: Use 'gimp-drawable-levels' instead.",
+                                     "Deprecated: Use 'gimp-drawable-levels' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-drawable-levels");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -937,12 +883,12 @@ register_color_procs (GimpPDB *pdb)
                                "gimp-levels-auto");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-levels-auto",
-                                     "Deprecated: Use 'gimp-levels-stretch' instead.",
-                                     "Deprecated: Use 'gimp-levels-stretch' instead.",
+                                     "Deprecated: Use 'gimp-drawable-levels-stretch' instead.",
+                                     "Deprecated: Use 'gimp-drawable-levels-stretch' instead.",
                                      "",
                                      "",
                                      "",
-                                     "gimp-levels-stretch");
+                                     "gimp-drawable-levels-stretch");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -960,12 +906,12 @@ register_color_procs (GimpPDB *pdb)
                                "gimp-levels-stretch");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-levels-stretch",
-                                     "Automatically modifies intensity levels in the specified drawable.",
-                                     "This procedure allows intensity levels in the specified drawable to be remapped according to a set of guessed parameters. It is equivalent to clicking the \"Auto\" button in the Levels tool.",
-                                     "Joao S.O. Bueno, Shawn Willden",
-                                     "Joao S.O. Bueno, Shawn Willden",
-                                     "2003",
-                                     NULL);
+                                     "Deprecated: Use 'gimp-drawable-levels-stretch' instead.",
+                                     "Deprecated: Use 'gimp-drawable-levels-stretch' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-drawable-levels-stretch");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -983,12 +929,12 @@ register_color_procs (GimpPDB *pdb)
                                "gimp-posterize");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-posterize",
-                                     "Posterize the specified drawable.",
-                                     "This procedures reduces the number of shades allows in each intensity channel to the specified 'levels' parameter.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1997",
-                                     NULL);
+                                     "Deprecated: Use 'gimp-drawable-posterize' instead.",
+                                     "Deprecated: Use 'gimp-drawable-posterize' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-drawable-posterize");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1012,12 +958,12 @@ register_color_procs (GimpPDB *pdb)
                                "gimp-desaturate");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-desaturate",
-                                     "Desaturate the contents of the specified drawable.",
-                                     "This procedure desaturates the contents of the specified drawable. This procedure only works on drawables of type RGB color.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "Deprecated: Use 'gimp-drawable-desaturate' instead.",
+                                     "Deprecated: Use 'gimp-drawable-desaturate' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-drawable-desaturate");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1035,12 +981,12 @@ register_color_procs (GimpPDB *pdb)
                                "gimp-desaturate-full");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-desaturate-full",
-                                     "Desaturate the contents of the specified drawable, with the specified formula.",
-                                     "This procedure desaturates the contents of the specified drawable, with the specified formula. This procedure only works on drawables of type RGB color.",
-                                     "Karine Delvare",
-                                     "Karine Delvare",
-                                     "2005",
-                                     NULL);
+                                     "Deprecated: Use 'gimp-drawable-desaturate' instead.",
+                                     "Deprecated: Use 'gimp-drawable-desaturate' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-drawable-desaturate");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1065,12 +1011,12 @@ register_color_procs (GimpPDB *pdb)
                                "gimp-equalize");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-equalize",
-                                     "Equalize the contents of the specified drawable.",
-                                     "This procedure equalizes the contents of the specified drawable. Each intensity channel is equalized independently. The equalized intensity is given as inten' = (255 - inten). The 'mask_only' option specifies whether to adjust only the area of the image within the selection bounds, or the entire image based on the histogram of the selected area. If there is no selection, the entire image is adjusted based on the histogram for the entire image.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "Deprecated: Use 'gimp-drawable-equalize' instead.",
+                                     "Deprecated: Use 'gimp-drawable-equalize' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-drawable-equalize");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1253,12 +1199,12 @@ register_color_procs (GimpPDB *pdb)
                                "gimp-colorize");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-colorize",
-                                     "Render the drawable as a grayscale image seen through a colored glass.",
-                                     "Desaturates the drawable, then tints it with the specified color. This tool is only valid on RGB color images. It will not operate on grayscale drawables.",
-                                     "Sven Neumann <sven@gimp.org>",
-                                     "Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "Deprecated: Use 'gimp-drawable-colorize-hsl' instead.",
+                                     "Deprecated: Use 'gimp-drawable-colorize-hsl' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-drawable-colorize-hsl");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1372,12 +1318,12 @@ register_color_procs (GimpPDB *pdb)
                                "gimp-hue-saturation");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-hue-saturation",
-                                     "Modify hue, lightness, and saturation in the specified drawable.",
-                                     "This procedure allows the hue, lightness, and saturation in the specified drawable to be modified. The 'hue-range' parameter provides the capability to limit range of affected hues.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1997",
-                                     NULL);
+                                     "Deprecated: Use 'gimp-drawable-hue-saturation' instead.",
+                                     "Deprecated: Use 'gimp-drawable-hue-saturation' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-drawable-hue-saturation");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1408,60 +1354,6 @@ register_color_procs (GimpPDB *pdb)
                                                     "saturation",
                                                     "Saturation modification",
                                                     -100, 100, -100,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-hue-saturation-overlap
-   */
-  procedure = gimp_procedure_new (hue_saturation_overlap_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-hue-saturation-overlap");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-hue-saturation-overlap",
-                                     "Modify hue, lightness, and saturation in the specified drawable.",
-                                     "This procedure allows the hue, lightness, and saturation in the specified drawable to be modified. The 'hue-range' parameter provides the capability to limit range of affected hues. The 'overlap' parameter provides blending into neighboring hue channels when rendering.",
-                                     "Jo\xc3\xa3o S. O. Bueno",
-                                     "Jo\xc3\xa3o S. O. Bueno",
-                                     "2014",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("hue-range",
-                                                  "hue range",
-                                                  "Range of affected hues",
-                                                  GIMP_TYPE_HUE_RANGE,
-                                                  GIMP_ALL_HUES,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("hue-offset",
-                                                    "hue offset",
-                                                    "Hue offset in degrees",
-                                                    -180, 180, -180,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("lightness",
-                                                    "lightness",
-                                                    "Lightness modification",
-                                                    -100, 100, -100,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("saturation",
-                                                    "saturation",
-                                                    "Saturation modification",
-                                                    -100, 100, -100,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("overlap",
-                                                    "overlap",
-                                                    "Overlap other hue channels",
-                                                    0, 100, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
