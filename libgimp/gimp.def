@@ -202,7 +202,7 @@ EXPORTS
 	gimp_drawable_get_visible
 	gimp_drawable_has_alpha
 	gimp_drawable_height
-	gimp_drawable_historgram
+	gimp_drawable_histogram
 	gimp_drawable_hue_saturation
 	gimp_drawable_invert
 	gimp_drawable_is_channel
