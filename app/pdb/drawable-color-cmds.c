@@ -320,7 +320,7 @@ drawable_desaturate_invoker (GimpProcedure         *procedure,
                                           NULL);
 
           gimp_drawable_apply_operation_by_name (drawable, progress,
-                                                 _("Desaturate"),
+                                                 C_("undo-type", "Desaturate"),
                                                  "gimp:desaturate",
                                                  config);
           g_object_unref (config);
@@ -496,7 +496,7 @@ drawable_hue_saturation_invoker (GimpProcedure         *procedure,
                          NULL);
 
           gimp_drawable_apply_operation_by_name (drawable, progress,
-                                                 _("Hue-Saturation"),
+                                                 C_("undo-type", "Hue-Saturation"),
                                                  "gimp:hue-saturation",
                                                  config);
           g_object_unref (config);
@@ -529,7 +529,7 @@ drawable_invert_invoker (GimpProcedure         *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           gimp_drawable_apply_operation_by_name (drawable, progress,
-                                                 _("Invert"),
+                                                 C_("undo-type", "Invert"),
                                                  "gegl:invert-gamma",
                                                  NULL);
         }
@@ -656,7 +656,7 @@ drawable_posterize_invoker (GimpProcedure         *procedure,
                                           NULL);
 
           gimp_drawable_apply_operation_by_name (drawable, progress,
-                                                 _("Posterize"),
+                                                 C_("undo-type", "Posterize"),
                                                  "gimp:posterize",
                                                  config);
           g_object_unref (config);
@@ -698,7 +698,7 @@ drawable_threshold_invoker (GimpProcedure         *procedure,
                                           NULL);
 
           gimp_drawable_apply_operation_by_name (drawable, progress,
-                                                 _("Threshold"),
+                                                 C_("undo-type", "Threshold"),
                                                  "gimp:threshold",
                                                  config);
           g_object_unref (config);
