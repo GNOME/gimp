@@ -77,9 +77,9 @@
 </autotools>
 
 <autotools id="freetype2" autogen-sh="configure">
-	<branch version="2.5.1" repo="savannah.gnu.org"
-			module="freetype/freetype-2.5.1.tar.bz2"
-			hash="sha256:d715faa92b37980280c857ce9d356fff4361c5a7bd9b5c3f867fc24f598d8f45">
+	<branch version="2.5.2" repo="savannah.gnu.org"
+			module="freetype/freetype-2.5.2.tar.bz2"
+			hash="sha256:4ff4bd393aa01071ec7b849d035508a505a78f88b2bcf25ff11e58e43c0b9def">
 	</branch>
 	<dependencies>
 		<dep package="bzip2"/>
