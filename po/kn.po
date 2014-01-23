@@ -71,8 +71,7 @@ msgstr ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP; if not, write to the Free Software Foundation, Inc., 59 Temple Place - "
-"Suite 330, Boston, MA 02111-1307, USA."
+"GIMP; if not, see <http://www.gnu.org/licenses/>."
 
 #: ../app/app.c:224
 #, c-format
