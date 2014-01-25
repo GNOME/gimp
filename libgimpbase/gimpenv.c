@@ -251,6 +251,10 @@ gimp_directory (void)
             gimp_dir = g_build_filename (gimp_data_directory (), env_gimp_dir, NULL);
         }
     }
+  else if (g_path_is_absolute (GIMPDIR))
+    {
+      gimp_dir = g_strdup (GIMPDIR);
+    }
   else
     {
 #ifdef PLATFORM_OSX
