@@ -153,6 +153,8 @@ gimp_tagged_remove_tag (GimpTagged *tagged,
             }
 
           g_object_unref (tag_ref);
+
+          return;
         }
     }
 }
