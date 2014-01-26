@@ -421,7 +421,7 @@ gimp_data_remove_tag (GimpTagged *tagged,
       if (gimp_tag_equals (tag, this))
         {
           private->tags = g_list_delete_link (private->tags, list);
-          g_object_unref (tag);
+          g_object_unref (this);
           return TRUE;
         }
     }

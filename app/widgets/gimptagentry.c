@@ -227,7 +227,7 @@ gimp_tag_entry_dispose (GObject *object)
 
   if (entry->common_tags)
     {
-      g_list_free (entry->common_tags);
+      g_list_free_full (entry->common_tags, (GDestroyNotify) g_object_unref);
       entry->common_tags = NULL;
     }
 
@@ -761,7 +761,7 @@ gimp_tag_entry_assign_tags (GimpTagEntry *tag_entry)
             }
           else
             {
-              add_list = g_list_prepend (add_list, tag);
+              add_list = g_list_prepend (add_list, g_object_ref (tag));
             }
 
           common_tags = g_list_prepend (common_tags, tag);
@@ -778,7 +778,8 @@ gimp_tag_entry_assign_tags (GimpTagEntry *tag_entry)
       if (! g_list_find_custom (dont_remove_list, tag_iter->data,
                                 gimp_tag_compare_func))
         {
-          remove_list = g_list_prepend (remove_list, tag_iter->data);
+          remove_list = g_list_prepend (remove_list,
+                                        g_object_ref (tag_iter->data));
         }
     }
 
@@ -792,20 +793,20 @@ gimp_tag_entry_assign_tags (GimpTagEntry *tag_entry)
 
       for (tag_iter = remove_list; tag_iter; tag_iter = g_list_next (tag_iter))
         {
-          gimp_tagged_remove_tag (tagged, GIMP_TAG (tag_iter->data));
+          gimp_tagged_remove_tag (tagged, tag_iter->data);
         }
 
       for (tag_iter = add_list; tag_iter; tag_iter = g_list_next (tag_iter))
         {
-          gimp_tagged_add_tag (tagged, GIMP_TAG (tag_iter->data));
+          gimp_tagged_add_tag (tagged, tag_iter->data);
         }
     }
 
-  g_list_free (add_list);
-  g_list_free (remove_list);
+  g_list_free_full (add_list, (GDestroyNotify) g_object_unref);
+  g_list_free_full (remove_list, (GDestroyNotify) g_object_unref);
 
   /* common tags list with changes applied. */
-  g_list_free (tag_entry->common_tags);
+  g_list_free_full (tag_entry->common_tags, (GDestroyNotify) g_object_unref);
   tag_entry->common_tags = common_tags;
 }
 
@@ -903,7 +904,7 @@ gimp_tag_entry_set_selected_items (GimpTagEntry *tag_entry,
 
   if (tag_entry->common_tags)
     {
-      g_list_free (tag_entry->common_tags);
+      g_list_free_full (tag_entry->common_tags, (GDestroyNotify) g_object_unref);
       tag_entry->common_tags = NULL;
     }
 
@@ -956,7 +957,7 @@ gimp_tag_entry_load_selection (GimpTagEntry *tag_entry,
         }
     }
 
-  g_hash_table_foreach (refcounts, gimp_tag_entry_find_common_tags,tag_entry);
+  g_hash_table_foreach (refcounts, gimp_tag_entry_find_common_tags, tag_entry);
 
   g_hash_table_destroy (refcounts);
 
@@ -996,7 +997,8 @@ gimp_tag_entry_find_common_tags (gpointer key,
   /* FIXME: more efficient list length */
   if (ref_count == g_list_length (tag_entry->selected_items))
     {
-      tag_entry->common_tags = g_list_prepend (tag_entry->common_tags, key);
+      tag_entry->common_tags = g_list_prepend (tag_entry->common_tags,
+                                               g_object_ref (key));
     }
 }
 
@@ -1215,7 +1217,7 @@ gimp_tag_entry_container_changed (GimpContainer *container,
         {
           if (gimp_tagged_get_tags (GIMP_TAGGED (list->data)) &&
               gimp_container_have (GIMP_CONTAINER (tag_entry->container),
-                                   GIMP_OBJECT(list->data)))
+                                   GIMP_OBJECT (list->data)))
             {
               break;
             }
