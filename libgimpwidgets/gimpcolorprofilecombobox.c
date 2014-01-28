@@ -130,6 +130,11 @@ gimp_color_profile_combo_box_init (GimpColorProfileComboBox *combo_box)
 {
   GtkCellRenderer *cell = gtk_cell_renderer_text_new ();
 
+  g_object_set (cell,
+                "ellipsize", PANGO_ELLIPSIZE_END,
+                NULL);
+
+
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box), cell, TRUE);
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo_box), cell,
                                   "text", GIMP_COLOR_PROFILE_STORE_LABEL,
