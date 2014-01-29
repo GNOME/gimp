@@ -452,6 +452,21 @@ gimp_canvas_handle_new (GimpDisplayShell *shell,
 }
 
 void
+gimp_canvas_handle_get_position (GimpCanvasItem *handle,
+                                 gdouble        *x,
+                                 gdouble        *y)
+{
+  g_return_if_fail (GIMP_IS_CANVAS_HANDLE (handle));
+  g_return_if_fail (x != NULL);
+  g_return_if_fail (y != NULL);
+
+  g_object_get (handle,
+                "x", x,
+                "y", y,
+                NULL);
+}
+
+void
 gimp_canvas_handle_set_position (GimpCanvasItem *handle,
                                  gdouble         x,
                                  gdouble         y)
