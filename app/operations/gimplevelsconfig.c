@@ -432,6 +432,8 @@ gimp_levels_config_stretch_channel (GimpLevelsConfig     *config,
                                     GimpHistogramChannel  channel)
 {
   gdouble count;
+  gdouble bias = 0.006;
+  gint    n_bins;
   gint    i;
 
   g_return_if_fail (GIMP_IS_LEVELS_CONFIG (config));
@@ -443,7 +445,8 @@ gimp_levels_config_stretch_channel (GimpLevelsConfig     *config,
   config->low_output[channel]  = 0.0;
   config->high_output[channel] = 1.0;
 
-  count = gimp_histogram_get_count (histogram, channel, 0, 255);
+  n_bins = gimp_histogram_n_bins (histogram);
+  count  = gimp_histogram_get_count (histogram, channel, 0, n_bins - 1);
 
   if (count == 0.0)
     {
@@ -459,7 +462,7 @@ gimp_levels_config_stretch_channel (GimpLevelsConfig     *config,
       /*  Set the low input  */
       new_count = 0.0;
 
-      for (i = 0; i < 255; i++)
+      for (i = 0; i < (n_bins - 1); i++)
         {
           new_count += gimp_histogram_get_value (histogram, channel, i);
           percentage = new_count / count;
@@ -468,9 +471,9 @@ gimp_levels_config_stretch_channel (GimpLevelsConfig     *config,
                                                        channel,
                                                        i + 1)) / count;
 
-          if (fabs (percentage - 0.006) < fabs (next_percentage - 0.006))
+          if (fabs (percentage - bias) < fabs (next_percentage - bias))
             {
-              config->low_input[channel] = (gdouble) (i + 1) / 255.0;
+              config->low_input[channel] = (gdouble) (i + 1) / (n_bins - 1);
               break;
             }
         }
@@ -478,7 +481,7 @@ gimp_levels_config_stretch_channel (GimpLevelsConfig     *config,
       /*  Set the high input  */
       new_count = 0.0;
 
-      for (i = 255; i > 0; i--)
+      for (i = (n_bins - 1); i > 0; i--)
         {
           new_count += gimp_histogram_get_value (histogram, channel, i);
           percentage = new_count / count;
@@ -487,9 +490,9 @@ gimp_levels_config_stretch_channel (GimpLevelsConfig     *config,
                                                        channel,
                                                        i - 1)) / count;
 
-          if (fabs (percentage - 0.006) < fabs (next_percentage - 0.006))
+          if (fabs (percentage - bias) < fabs (next_percentage - bias))
             {
-              config->high_input[channel] = (gdouble) (i - 1) / 255.0;
+              config->high_input[channel] = (gdouble) (i - 1) / (n_bins - 1);
               break;
             }
         }
