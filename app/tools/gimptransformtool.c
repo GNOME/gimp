@@ -52,6 +52,7 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpcanvasgroup.h"
+#include "display/gimpcanvashandle.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
@@ -378,6 +379,23 @@ gimp_transform_tool_button_press (GimpTool            *tool,
   tr_tool->lasty = tr_tool->mousey = coords->y;
 
   gimp_tool_control_activate (tool->control);
+
+  if (GIMP_IS_CANVAS_HANDLE (tr_tool->handles[tr_tool->function]))
+    {
+      gdouble x, y;
+
+      gimp_canvas_handle_get_position (tr_tool->handles[tr_tool->function],
+                                       &x, &y);
+
+      gimp_tool_control_set_snap_offsets (tool->control,
+                                          SIGNED_ROUND (x - coords->x),
+                                          SIGNED_ROUND (y - coords->y),
+                                          0, 0);
+    }
+  else
+    {
+      gimp_tool_control_set_snap_offsets (tool->control, 0, 0, 0, 0);
+    }
 }
 
 void
