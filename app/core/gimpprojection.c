@@ -340,7 +340,7 @@ gimp_projection_get_buffer (GimpPickable *pickable)
 
       proj->validate_handler = gimp_tile_handler_projection_new (graph,
                                                                  width, height);
-      gegl_buffer_add_handler (proj->buffer, proj->validate_handler);
+      gimp_tile_handler_projection_assign (proj->validate_handler, proj->buffer);
 
       /*  This used to call gimp_tile_handler_projection_invalidate()
        *  which forced the entire projection to be constructed in one

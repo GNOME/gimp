@@ -305,6 +305,21 @@ gimp_tile_handler_projection_new (GeglNode *graph,
 }
 
 void
+gimp_tile_handler_projection_assign     (GimpTileHandlerProjection *projection,
+                                         GeglBuffer                *buffer)
+{
+  gegl_buffer_add_handler (buffer, projection);
+
+  g_object_get (buffer,
+                "format",      &projection->format,
+                "tile-width",  &projection->tile_width,
+                "tile-height", &projection->tile_height,
+                NULL);
+
+  gimp_tile_handler_projection_update_max_z (projection);
+}
+
+void
 gimp_tile_handler_projection_invalidate (GimpTileHandlerProjection *projection,
                                          gint                       x,
                                          gint                       y,
