@@ -487,7 +487,7 @@ ReadBMP (const gchar  *name,
       goto out;
     }
 
-  if (Bitmap_Head.biClrUsed > 256)
+  if (Bitmap_Head.biClrUsed > 256 && Bitmap_Head.biBitCnt <= 8)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid BMP file"),
