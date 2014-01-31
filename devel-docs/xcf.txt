@@ -956,7 +956,7 @@ PROP_LINKED (editing state)
 PROP_TATTOO (internal Gimp state)
   uint32  20  The type number for PROP_TATTOO is 20
   uint32  4   Four bytes of payload
-  uint32  4   The tattoo, a nonzero unsigned integer
+  uint32  t   The tattoo, a nonzero unsigned integer
 
   Appears in the property list of layers, channels, and entire images.
 
