@@ -17602,7 +17602,12 @@ msgstr "Направите слике и уредите фотографије"
 
 #~ msgid ""
 #~ "You should have received a copy of the GNU General Public License along "
-#~ "with this program; if not, see <http://www.gnu.org/licenses/>."
+#~ "with this program; if not, write to the Free Software Foundation, Inc., "
+#~ "59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
+#~ msgstr ""
+#~ "Требало би да сте добили и примерак ГНУ Опште Јавне Лиценце заједно са "
+#~ "овим програмом; ако нисте, пишите на адресу: Free Software Foundation, "
+#~ "Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
 
 #~ msgid "Migrate User Settings"
 #~ msgstr "Пренеси подешавања корисника"

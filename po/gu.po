@@ -18575,7 +18575,12 @@ msgstr ""
 
 #~ msgid ""
 #~ "You should have received a copy of the GNU General Public License along "
-#~ "with this program; if not, see <http://www.gnu.org/licenses/>."
+#~ "with this program; if not, write to the Free Software Foundation, Inc., "
+#~ "59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
+#~ msgstr ""
+#~ "You should have received a copy of the GNU General Public License along "
+#~ "with this program; if not, write to the Free Software Foundation, Inc., "
+#~ "59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
 
 #~ msgid "Click \"Continue\" to proceed with the user installation."
 #~ msgstr "વપરાશકર્તા સ્થાપન સાથે પ્રક્રિયા કરવા માટે \"ચાલુ રાખો\" ક્લિક કરો."
