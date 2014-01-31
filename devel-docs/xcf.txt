@@ -548,7 +548,7 @@ Layer properties
 
 The following properties are found only in the property list of layer
 structures. In addition to these, the list can also contain the
-properties PROP_OPACITY, PROP_VISIBLE, PROP_LINKED, PROP_TATTOO,
+properties PROP_OPACITY, PROP_VISIBLE, PROP_LINKED, PROP_LOCK_CONTENT, PROP_TATTOO,
 PROP_PARASITES, and PROP_END, defined in section 8 below.
 
 PROP_ACTIVE_LAYER (editing state)
@@ -715,7 +715,7 @@ Channel properties
 
 The following properties are found only in the property list of
 channel structures. In addition to these, the list can also contain
-the properties PROP_OPACITY, PROP_VISIBLE, PROP_LINKED, PROP_TATTOO,
+the properties PROP_OPACITY, PROP_VISIBLE, PROP_LINKED, PROP_LOCK_CONTENT, PROP_TATTOO,
 PROP_PARASITES, and PROP_END, defined in section 8 below.
 
 PROP_ACTIVE_CHANNEL (editing state)
@@ -952,6 +952,13 @@ PROP_LINKED (editing state)
   Appears in the property list for layers and channels.  "Linked" is a
   UI property: if the Move tool is used to move a linked layer, all
   other linked layers will be moved in parallel.
+
+PROP_LOCK_CONTENT
+  uint32  28  The type number for PROP_LOCK_CONTENT is 28
+  uint32  4   Four bytes of payload
+  uint32  b   1 if the layer/channel content is locked; 0 if not
+
+  Appears in the property list for layers and channels.
 
 PROP_TATTOO (internal Gimp state)
   uint32  20  The type number for PROP_TATTOO is 20
