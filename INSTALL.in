@@ -5,7 +5,7 @@ Installation instructions for GIMP @GIMP_APP_VERSION@
 There are some basic steps to building and installing GIMP.
 
 GIMP @GIMP_APP_VERSION@ replaces earlier GIMP 2.x versions. It is advised that you
-uninstall them before installing GIMP @GIMP_APP_VERSION@ If you want to keep your
+uninstall them before installing GIMP @GIMP_APP_VERSION@. If you want to keep your
 older GIMP 2.x installation in parallel to GIMP @GIMP_APP_VERSION@, you have to
 choose a separate prefix which is not in your default library search
 path.
@@ -99,6 +99,7 @@ header files installed.
 
  16. Summary of required packages and what version you need:
 
+     gtk+: @GTK_REQUIRED_VERSION@
      cairo: @CAIRO_REQUIRED_VERSION@
      glib: @GLIB_REQUIRED_VERSION@
      pangocairo: @PANGOCAIRO_REQUIRED_VERSION@
