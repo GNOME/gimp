@@ -156,8 +156,10 @@ These are:
      is intended primarily as a convenience for developers.
 
   --with-gimpdir=DIR.  This option changes the default directory
-     GIMP uses to search for its configuration files from ~/.gimp-@GIMP_APP_VERSION@
-     (the directory .gimp-@GIMP_APP_VERSION@ in the users home directory) to DIR.
+     GIMP uses to search for its configuration files from
+     ~/.config/GIMP/@GIMP_APP_VERSION@ (the directory .config/GIMP/@GIMP_APP_VERSION@
+     in the user's home directory) to ~/.config/DIR/@GIMP_APP_VERSION@.
+     If DIR is an absolute path, the directory will be changed to DIR.
 
   --enable-binreloc.  When compiled for Linux with this option enabled,
      GIMP will be binary relocatable.  Plug-ins and data files will
