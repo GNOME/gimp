@@ -9,7 +9,7 @@
 # Vanessa Gomes de Lima <vane.gomesl@gmail.com>, 2012.
 # Joao S. O. Bueno <gwidion@gmail.com>, 2004, 2006, 2007, 2008, 2012, 2013.
 # Keven do Nascimento Carneiro <kevennascimento@ovi.com>, 2012.
-# Rafael Ferreira <rafael.f.f1@gmail.com>, 2013.
+# Rafael Ferreira <rafael.f.f1@gmail.com>, 2013, 2014.
 # Enrico Nicoletto <liverig@gmail.com>,  2013.
 # Rodolfo Ribeiro Gomes <rodolforg@gmail.com>, 2013.
 #
@@ -18,16 +18,16 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-12-04 23:03+0000\n"
-"PO-Revision-Date: 2013-12-11 01:00-0300\n"
-"Last-Translator: Joao S. O. Bueno <gwidion@gmail.com>\n"
+"POT-Creation-Date: 2014-01-04 22:47+0000\n"
+"PO-Revision-Date: 2014-01-05 01:40-0300\n"
+"Last-Translator: Rafael Ferreira <rafael.f.f1@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Poedit 1.6.3\n"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -441,7 +441,7 @@ msgid "Text Editor"
 msgstr "Editor de texto"
 
 #: ../app/actions/actions.c:223 ../app/dialogs/dialogs.c:298
-#: ../app/dialogs/preferences-dialog.c:1854 ../app/gui/gui.c:424
+#: ../app/dialogs/preferences-dialog.c:1854 ../app/gui/gui.c:435
 msgid "Tool Options"
 msgstr "Opções de ferramentas"
 
@@ -1596,7 +1596,7 @@ msgstr "_Limpar o histórico"
 #: ../app/actions/documents-actions.c:76
 msgctxt "documents-action"
 msgid "Clear the entire document history"
-msgstr "Limpa todo o histórico de documentos"
+msgstr "Limpa todo o histórico de desfazer"
 
 #: ../app/actions/documents-actions.c:81
 msgctxt "documents-action"
@@ -2330,7 +2330,7 @@ msgstr "Sa_ir"
 #: ../app/actions/file-actions.c:113
 msgctxt "file-action"
 msgid "Quit the GNU Image Manipulation Program"
-msgstr "Sai do GNU Image Manipulation Program - GIMP"
+msgstr "Sai do GIMP"
 
 #: ../app/actions/file-actions.c:121
 msgctxt "file-action"
@@ -2377,11 +2377,10 @@ msgid "Save this image and close its window"
 msgstr "Salva esta imagem e fecha a sua janela"
 
 #: ../app/actions/file-actions.c:146
-#, fuzzy
 #| msgid "_Export"
 msgctxt "file-action"
 msgid "Export"
-msgstr "_Exportar"
+msgstr "Exportar"
 
 #: ../app/actions/file-actions.c:147
 msgctxt "file-action"
@@ -2401,12 +2400,11 @@ msgstr ""
 "importada"
 
 #: ../app/actions/file-actions.c:158
-#, fuzzy
 #| msgctxt "file-action"
 #| msgid "Export..."
 msgctxt "file-action"
 msgid "Export As..."
-msgstr "E_xportar..."
+msgstr "Exportar como..."
 
 #: ../app/actions/file-actions.c:159
 msgctxt "file-action"
@@ -2425,10 +2423,9 @@ msgid "Over_write %s"
 msgstr "_Sobrescrever %s"
 
 #: ../app/actions/file-actions.c:306
-#, fuzzy
 #| msgid "_Export"
 msgid "Export"
-msgstr "_Exportar"
+msgstr "Exportação"
 
 #: ../app/actions/file-commands.c:119 ../app/actions/file-commands.c:496
 #: ../app/dialogs/file-open-dialog.c:77
@@ -5266,12 +5263,12 @@ msgstr "Reduz o tamanho da janela para o tamanho da imagem"
 #: ../app/actions/view-actions.c:124
 msgctxt "view-action"
 msgid "_Open Display..."
-msgstr "Ab_rir display..."
+msgstr "Ab_rir tela..."
 
 #: ../app/actions/view-actions.c:125
 msgctxt "view-action"
 msgid "Connect to another display"
-msgstr "Conecta a outro display (X11)"
+msgstr "Conecta a outra tela (display X11)"
 
 #: ../app/actions/view-actions.c:133
 msgctxt "view-action"
@@ -5892,7 +5889,7 @@ msgid ""
 "directory in your Preferences."
 msgstr ""
 "Impossível abrir arquivo de troca. O GIMP ficou sem memória e não pode usar "
-"o arquivo de trocas. Algumas partes das suas imagens podem estar corrompidas."
+"o arquivo de trocas. Algumas partes das suas imagens podem estar corrompidas. "
 "Tente salvar seu arquivo usando nomes de arquivo diferentes, reinicie o GIMP "
 "e verifique a localização do diretório de troca nas suas Preferências."
 
@@ -7503,7 +7500,7 @@ msgstr "Parasitas"
 
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp.c:956 ../app/dialogs/preferences-dialog.c:2743
-#: ../app/tools/gimppaintoptions-gui.c:203
+#: ../app/tools/gimppaintoptions-gui.c:200
 msgid "Dynamics"
 msgstr "Dinâmicas de pintura"
 
@@ -7577,7 +7574,7 @@ msgid "Unnamed"
 msgstr "Sem nome"
 
 #: ../app/core/gimpbrush-load.c:354
-#, fuzzy, c-format
+#, c-format
 #| msgid ""
 #| "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
 #| "GIMP brushes must be GRAY or RGBA."
@@ -7589,7 +7586,9 @@ msgid ""
 msgstr ""
 "Erro fatal de análise no arquivo de pincel \"%s\": Profundidade não "
 "suportada %d\n"
-"Arquivos de pincel do GIMP devem ser em tonalidades de cinza ou RGBA."
+"Pincéis do GIMP devem ser em tonalidades de cinza ou RGBA.\n"
+"Esse pode ser um arquivo de pincel do GIMP obsoleto, tente carregá-lo como "
+"imagem e salvar novamente."
 
 #: ../app/core/gimpbrush-load.c:399
 #, c-format
@@ -7674,11 +7673,11 @@ msgstr "Pontas do pincel"
 msgid "Brush Hardness"
 msgstr "Dureza do pincel"
 
-#: ../app/core/gimpbrushgenerated.c:159 ../app/paint/gimppaintoptions.c:150
+#: ../app/core/gimpbrushgenerated.c:159 ../app/paint/gimppaintoptions.c:151
 msgid "Brush Aspect Ratio"
 msgstr "Proporção do pincel"
 
-#: ../app/core/gimpbrushgenerated.c:166 ../app/paint/gimppaintoptions.c:154
+#: ../app/core/gimpbrushgenerated.c:166 ../app/paint/gimppaintoptions.c:155
 msgid "Brush Angle"
 msgstr "Ângulo do pincel"
 
@@ -7860,7 +7859,7 @@ msgstr "Definir a opacidade do canal"
 msgid "Selection Mask"
 msgstr "Máscara de seleção"
 
-#: ../app/core/gimpcontext.c:639 ../app/tools/gimppaintoptions-gui.c:111
+#: ../app/core/gimpcontext.c:639 ../app/tools/gimppaintoptions-gui.c:108
 #: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:284
 msgid "Opacity"
 msgstr "Opacidade"
@@ -8885,7 +8884,7 @@ msgstr "Flutuar seleção"
 msgid "Floated Layer"
 msgstr "Camada flutuante"
 
-#: ../app/core/gimpstrokeoptions.c:181
+#: ../app/core/gimpstrokeoptions.c:180
 msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
@@ -10463,22 +10462,23 @@ msgstr[1] "Há %d imagens com modificações sem salvar:"
 #: ../app/dialogs/quit-dialog.c:311
 #, c-format
 msgid "Press %s to quit."
-msgstr ""
+msgstr "Pressione %s para sair."
 
 #: ../app/dialogs/quit-dialog.c:314
 #, c-format
 msgid "Press %s to close all images."
-msgstr ""
+msgstr "Pressione %s para fechar todas as imagens"
 
 #: ../app/dialogs/quit-dialog.c:330
 #, c-format
 msgid "Press %s to discard all changes and quit."
-msgstr ""
+msgstr "Pressione %s para descartar todas as alterações e sair."
 
 #: ../app/dialogs/quit-dialog.c:333
 #, c-format
 msgid "Press %s to discard all changes and close all images."
 msgstr ""
+"Pressione %s para descartar todas as alterações e fechar todas as imagens."
 
 #: ../app/dialogs/quit-dialog.c:341
 #: ../app/display/gimpdisplayshell-close.c:181
@@ -10486,10 +10486,10 @@ msgid "_Discard Changes"
 msgstr "_Descartar alterações"
 
 #: ../app/dialogs/quit-dialog.c:423
-#, fuzzy, c-format
+#, c-format
 #| msgid "Export to %s"
 msgid "Exported to %s"
-msgstr "Exportar vetor para %s"
+msgstr "Exportado para %s"
 
 #: ../app/dialogs/resize-dialog.c:119
 msgid "Canvas Size"
@@ -10524,7 +10524,7 @@ msgstr "_Vertical:"
 msgid "Image Size"
 msgstr "Tamanho da imagem"
 
-#: ../app/dialogs/scale-dialog.c:176 ../app/tools/gimppaintoptions-gui.c:393
+#: ../app/dialogs/scale-dialog.c:176 ../app/tools/gimppaintoptions-gui.c:390
 msgid "Quality"
 msgstr "Qualidade"
 
@@ -10771,7 +10771,7 @@ msgstr "Fechar %s"
 #: ../app/display/gimpdisplayshell-close.c:218
 #, c-format
 msgid "Press %s to discard all changes and close the image."
-msgstr ""
+msgstr "Pressione %s para descartar todas as alterações e fechar a imagem."
 
 #: ../app/display/gimpdisplayshell-close.c:278
 #, c-format
@@ -11006,8 +11006,18 @@ msgstr "Preencher com cor sólida"
 msgid "Fill the original position of the cage with a plain color"
 msgstr "Preenche a posição original com uma cor sólida"
 
+#. Normally this should have been taken care of during command line
+#. * parsing as a post-parse hook of gtk_get_option_group(), using the
+#. * system locales.
+#. * But user config may have overriden the language, therefore we must
+#. * check the widget directions again.
+#.
+#: ../app/gui/gui.c:207
+msgid "default:LTR"
+msgstr "default:LTR"
+
 #. initialize the document history
-#: ../app/gui/gui.c:421
+#: ../app/gui/gui.c:432
 msgid "Documents"
 msgstr "Documentos"
 
@@ -11079,47 +11089,47 @@ msgstr "Pincel"
 msgid "Paint"
 msgstr "Pintar"
 
-#: ../app/paint/gimppaintoptions.c:145
+#: ../app/paint/gimppaintoptions.c:146
 msgid "Brush Size"
 msgstr "Tamanho do pincel"
 
-#: ../app/paint/gimppaintoptions.c:159
+#: ../app/paint/gimppaintoptions.c:160
 msgid "Every stamp has its own opacity"
 msgstr "Cada carimbada tem sua própria opacidade"
 
-#: ../app/paint/gimppaintoptions.c:165
+#: ../app/paint/gimppaintoptions.c:166
 msgid "Ignore fuzziness of the current brush"
 msgstr "Ignora suavidade para o pincel atual"
 
-#: ../app/paint/gimppaintoptions.c:170
+#: ../app/paint/gimppaintoptions.c:171
 msgid "Scatter brush as you paint"
 msgstr "Espalha as pinceladas enquanto você pinta"
 
-#: ../app/paint/gimppaintoptions.c:174
+#: ../app/paint/gimppaintoptions.c:175
 msgid "Distance of scattering"
 msgstr "Distância do espalhamento"
 
-#: ../app/paint/gimppaintoptions.c:184
+#: ../app/paint/gimppaintoptions.c:185
 msgid "Distance over which strokes fade out"
 msgstr "Distância na qual as pinceladas esmaecem"
 
-#: ../app/paint/gimppaintoptions.c:192
+#: ../app/paint/gimppaintoptions.c:193
 msgid "Reverse direction of fading"
 msgstr "Reverter direção de esmaecimento"
 
-#: ../app/paint/gimppaintoptions.c:196
+#: ../app/paint/gimppaintoptions.c:197
 msgid "How fade is repeated as you paint"
 msgstr "Como o esmaecimento se repete a medida que você pinta"
 
-#: ../app/paint/gimppaintoptions.c:255
+#: ../app/paint/gimppaintoptions.c:256
 msgid "Paint smoother strokes"
 msgstr "Pintar pinceladas mais suaves"
 
-#: ../app/paint/gimppaintoptions.c:259
+#: ../app/paint/gimppaintoptions.c:260
 msgid "Depth of smoothing"
 msgstr "Profundidade de suavização"
 
-#: ../app/paint/gimppaintoptions.c:263
+#: ../app/paint/gimppaintoptions.c:264
 msgid "Gravity of the pen"
 msgstr "Gravidade do pincel"
 
@@ -11813,6 +11823,8 @@ msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
 msgstr ""
+"Não foi possível renderizar seu texto, provavelmente por ser grande demais. "
+"Por favor, reduza o tamanho do texto ou use uma fonte menor."
 
 #: ../app/text/gimptextlayer-xcf.c:76
 #, c-format
@@ -11834,6 +11846,8 @@ msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
 msgstr ""
+"Não foi possível gerar o novo layout do texto, provavelmente por o tamanho "
+"da fonte ser grande demais."
 
 #: ../app/text/text-enums.c:23
 msgctxt "text-box-mode"
@@ -11988,7 +12002,7 @@ msgstr "Clique para tomar este vetor como primeiro item"
 msgid "Click to add this path to the list"
 msgstr "Clique para adicionar este vetor a lista"
 
-#: ../app/tools/gimpblendoptions.c:211 ../app/tools/gimppaintoptions-gui.c:346
+#: ../app/tools/gimpblendoptions.c:211 ../app/tools/gimppaintoptions-gui.c:343
 msgid "Gradient"
 msgstr "Degradê"
 
@@ -11996,7 +12010,7 @@ msgstr "Degradê"
 msgid "Shape:"
 msgstr "Forma:"
 
-#: ../app/tools/gimpblendoptions.c:238 ../app/tools/gimppaintoptions-gui.c:325
+#: ../app/tools/gimpblendoptions.c:238 ../app/tools/gimppaintoptions-gui.c:322
 msgid "Repeat:"
 msgstr "Repetir:"
 
@@ -13086,12 +13100,12 @@ msgid "Adjustment"
 msgstr "Ajuste"
 
 #: ../app/tools/gimpinkoptions-gui.c:64 ../app/tools/gimpinkoptions-gui.c:87
-#: ../app/tools/gimppaintoptions-gui.c:134
+#: ../app/tools/gimppaintoptions-gui.c:131
 msgid "Size"
 msgstr "Tamanho"
 
 #: ../app/tools/gimpinkoptions-gui.c:71
-#: ../app/tools/gimppaintoptions-gui.c:183
+#: ../app/tools/gimppaintoptions-gui.c:180
 #: ../app/widgets/gimpbrusheditor.c:199
 msgid "Angle"
 msgstr "Ângulo"
@@ -13406,74 +13420,74 @@ msgstr "Ferramenta de Pincel: Desenha com pinceladas suaves usando um pincel"
 msgid "_Paintbrush"
 msgstr "_Pincel"
 
-#: ../app/tools/gimppaintoptions-gui.c:92
+#: ../app/tools/gimppaintoptions-gui.c:89
 #: ../app/tools/gimpselectionoptions.c:217
 #: ../app/widgets/gimpbrushselect.c:190 ../app/widgets/gimplayertreeview.c:268
 msgid "Mode:"
 msgstr "Modo:"
 
-#: ../app/tools/gimppaintoptions-gui.c:123
+#: ../app/tools/gimppaintoptions-gui.c:120
 msgid "Brush"
 msgstr "Pincel"
 
-#: ../app/tools/gimppaintoptions-gui.c:152
+#: ../app/tools/gimppaintoptions-gui.c:149
 msgid "Reset size to brush's native size"
 msgstr "Reiniciar o tamanho do pincel para o tamanho original"
 
-#: ../app/tools/gimppaintoptions-gui.c:159
+#: ../app/tools/gimppaintoptions-gui.c:156
 msgid "Aspect Ratio"
 msgstr "Proporção"
 
-#: ../app/tools/gimppaintoptions-gui.c:176
+#: ../app/tools/gimppaintoptions-gui.c:173
 msgid "Reset aspect ratio to brush's native"
 msgstr "Reiniciar a proporção do pincel para a original"
 
-#: ../app/tools/gimppaintoptions-gui.c:200
+#: ../app/tools/gimppaintoptions-gui.c:197
 msgid "Reset angle to zero"
 msgstr "Reiniciar o ângulo para zero"
 
-#: ../app/tools/gimppaintoptions-gui.c:238
+#: ../app/tools/gimppaintoptions-gui.c:235
 msgid "Incremental"
 msgstr "Incremental"
 
-#: ../app/tools/gimppaintoptions-gui.c:256
+#: ../app/tools/gimppaintoptions-gui.c:253
 msgid "Hard edge"
 msgstr "Borda dura"
 
-#: ../app/tools/gimppaintoptions-gui.c:285
+#: ../app/tools/gimppaintoptions-gui.c:282
 msgid "Dynamics Options"
 msgstr "Opções de dinâmica"
 
-#: ../app/tools/gimppaintoptions-gui.c:291
+#: ../app/tools/gimppaintoptions-gui.c:288
 msgid "Fade Options"
 msgstr "Opções de esmaecer"
 
-#: ../app/tools/gimppaintoptions-gui.c:305
+#: ../app/tools/gimppaintoptions-gui.c:302
 msgid "Fade length"
 msgstr "Distância para esmaecer"
 
-#: ../app/tools/gimppaintoptions-gui.c:334
+#: ../app/tools/gimppaintoptions-gui.c:331
 #: ../app/widgets/gimpviewablebox.c:311
 msgid "Reverse"
 msgstr "Inverter"
 
-#: ../app/tools/gimppaintoptions-gui.c:341
+#: ../app/tools/gimppaintoptions-gui.c:338
 msgid "Color Options"
 msgstr "Opções de cor"
 
-#: ../app/tools/gimppaintoptions-gui.c:367
+#: ../app/tools/gimppaintoptions-gui.c:364
 msgid "Amount"
 msgstr "Intensidade"
 
-#: ../app/tools/gimppaintoptions-gui.c:371
+#: ../app/tools/gimppaintoptions-gui.c:368
 msgid "Apply Jitter"
 msgstr "Aplicar espalhamento"
 
-#: ../app/tools/gimppaintoptions-gui.c:389
+#: ../app/tools/gimppaintoptions-gui.c:386
 msgid "Smooth stroke"
 msgstr "Pincelada suave"
 
-#: ../app/tools/gimppaintoptions-gui.c:399
+#: ../app/tools/gimppaintoptions-gui.c:396
 msgid "Weight"
 msgstr "Peso"
 
@@ -13512,8 +13526,8 @@ msgid ""
 "Perspective Clone Tool: Clone from an image source after applying a "
 "perspective transformation"
 msgstr ""
-"Ferramenta de clonagem em perspectiva: Copia de uma imagem original aplicando "
-"uma transformação de perspectiva"
+"Ferramenta de clonagem em perspectiva: Copia de uma imagem original "
+"aplicando uma transformação de perspectiva"
 
 #: ../app/tools/gimpperspectiveclonetool.c:136
 msgid "_Perspective Clone"
@@ -13644,7 +13658,7 @@ msgstr "Fixa:"
 msgid "Position:"
 msgstr "Posicionada:"
 
-#: ../app/tools/gimprectangleoptions.c:1020 ../app/tools/gimptextoptions.c:525
+#: ../app/tools/gimprectangleoptions.c:1020 ../app/tools/gimptextoptions.c:526
 msgid "Size:"
 msgstr "Tamanho:"
 
@@ -13770,7 +13784,7 @@ msgstr "Habilita suavização das bordas da seleção"
 msgid "Radius of feathering"
 msgstr "Raio da suavização"
 
-#: ../app/tools/gimpselectionoptions.c:264 ../app/tools/gimptextoptions.c:538
+#: ../app/tools/gimpselectionoptions.c:264 ../app/tools/gimptextoptions.c:539
 msgid "Antialiasing"
 msgstr "Anti-serrilhamento "
 
@@ -13918,35 +13932,35 @@ msgstr ""
 msgid "Use an external editor window for text entry"
 msgstr "Usa uma janela de editor externa para digitar o texto"
 
-#: ../app/tools/gimptextoptions.c:510
+#: ../app/tools/gimptextoptions.c:511
 msgid "Font"
 msgstr "Fonte"
 
-#: ../app/tools/gimptextoptions.c:534
+#: ../app/tools/gimptextoptions.c:535
 msgid "Use editor"
 msgstr "Usar editor"
 
-#: ../app/tools/gimptextoptions.c:554
+#: ../app/tools/gimptextoptions.c:555
 msgid "Hinting:"
 msgstr "Hinting:"
 
-#: ../app/tools/gimptextoptions.c:558
+#: ../app/tools/gimptextoptions.c:559
 msgid "Text Color"
 msgstr "Cor do texto"
 
-#: ../app/tools/gimptextoptions.c:563
+#: ../app/tools/gimptextoptions.c:564
 msgid "Color:"
 msgstr "Cor:"
 
-#: ../app/tools/gimptextoptions.c:569
+#: ../app/tools/gimptextoptions.c:570
 msgid "Justify:"
 msgstr "Justificar:"
 
-#: ../app/tools/gimptextoptions.c:592
+#: ../app/tools/gimptextoptions.c:593
 msgid "Box:"
 msgstr "Caixa:"
 
-#: ../app/tools/gimptextoptions.c:609
+#: ../app/tools/gimptextoptions.c:610
 msgid "Language:"
 msgstr "Idioma:"
 
@@ -16189,6 +16203,9 @@ msgid ""
 "distributed program for such tasks as photo retouching, image composition "
 "and image authoring."
 msgstr ""
+"GIMP é o acrônimo para GIMP Image Manipulation Program (Programa de "
+"manipulação de imagem do GNU). É um programa distribuído livremente para "
+"tais tarefas, como retoque de foto, composição de imagem e criação de imagem."
 
 #: ../desktop/gimp.appdata.xml.in.h:2
 msgid ""
@@ -16196,6 +16213,10 @@ msgid ""
 "expert quality photo retouching program, an online batch processing system, "
 "a mass production image renderer, an image format converter, etc."
 msgstr ""
+"Ele possui muitas capacidades. Ele pode ser usado como um simples programa "
+"de pintura, um programa avançado de retoque da qualidade da foto, um sistema "
+"em tempo real de processamento em lote, um renderizador de imagem de "
+"produção em massa, um conversor de formato de imagem, etc."
 
 #: ../desktop/gimp.appdata.xml.in.h:3
 msgid ""
@@ -16205,6 +16226,12 @@ msgid ""
 "manipulation procedures to be easily scripted. GIMP is also available for "
 "Microsoft Windows and OS X."
 msgstr ""
+"GIMP é expansível e extensível. Ele é projetado para ser aumentado com plug-"
+"ins e extensões para fazer quase que qualquer coisa. A interface avançada de "
+"scripting permite tudo desde a tarefa mais simples chegando até poder tornar "
+"os mais complexos procedimentos de manipulação de imagem serem facilmente "
+"inseridos em scripts. GIMP também está disponível para Microsoft Windows e "
+"OS X."
 
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "Image Editor"
