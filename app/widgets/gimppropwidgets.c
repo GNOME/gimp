@@ -531,6 +531,8 @@ gimp_prop_spin_scale_new (GObject     *config,
 void
 gimp_prop_widget_set_factor (GtkWidget *widget,
                              gdouble    factor,
+                             gdouble    step_increment,
+                             gdouble    page_increment,
                              gint       digits)
 {
   GtkAdjustment *adjustment;
@@ -564,12 +566,18 @@ gimp_prop_widget_set_factor (GtkWidget *widget,
 
   f = factor / old_factor;
 
+  if (step_increment <= 0)
+    step_increment = f * gtk_adjustment_get_step_increment (adjustment);
+
+  if (page_increment <= 0)
+    page_increment = f * gtk_adjustment_get_page_increment (adjustment);
+
   gtk_adjustment_configure (adjustment,
                             f * gtk_adjustment_get_value (adjustment),
                             f * gtk_adjustment_get_lower (adjustment),
                             f * gtk_adjustment_get_upper (adjustment),
-                            f * gtk_adjustment_get_step_increment (adjustment),
-                            f * gtk_adjustment_get_page_increment (adjustment),
+                            step_increment,
+                            page_increment,
                             f * gtk_adjustment_get_page_size (adjustment));
 
   gtk_spin_button_set_digits (GTK_SPIN_BUTTON (widget), digits);

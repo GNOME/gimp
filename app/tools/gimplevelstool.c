@@ -194,6 +194,8 @@ gimp_levels_tool_initialize (GimpTool     *tool,
   GimpImage        *image    = gimp_display_get_image (display);
   GimpDrawable     *drawable = gimp_image_get_active_drawable (image);
   gdouble           scale_factor;
+  gdouble           step_increment;
+  gdouble           page_increment;
   gint              digits;
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
@@ -210,23 +212,31 @@ gimp_levels_tool_initialize (GimpTool     *tool,
 
   if (gimp_drawable_get_component_type (drawable) == GIMP_COMPONENT_TYPE_U8)
     {
-      scale_factor = 255.0;
-      digits       = 0;
+      scale_factor   = 255.0;
+      step_increment = 1.0;
+      page_increment = 8.0;
+      digits         = 0;
     }
   else
     {
-      scale_factor = 10000;
-      digits       = 0;
+      scale_factor   = 100;
+      step_increment = 0.01;
+      page_increment = 1.0;
+      digits         = 2;
     }
 
   gimp_prop_widget_set_factor (l_tool->low_input_spinbutton,
-                               scale_factor, digits);
+                               scale_factor, step_increment, page_increment,
+                               digits);
   gimp_prop_widget_set_factor (l_tool->high_input_spinbutton,
-                               scale_factor, digits);
+                               scale_factor, step_increment, page_increment,
+                               digits);
   gimp_prop_widget_set_factor (l_tool->low_output_spinbutton,
-                               scale_factor, digits);
+                               scale_factor, step_increment, page_increment,
+                               digits);
   gimp_prop_widget_set_factor (l_tool->high_output_spinbutton,
-                               scale_factor, digits);
+                               scale_factor, step_increment, page_increment,
+                               digits);
 
   gtk_adjustment_configure (l_tool->gamma_linear,
                             scale_factor / 2.0,
@@ -435,7 +445,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
   tool->low_input_spinbutton = spinbutton =
     gimp_prop_spin_button_new (image_map_tool->config, "low-input",
-                               0.0001, 0.1, 1);
+                               0.01, 0.1, 1);
   gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -472,7 +482,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (button);
 
   spinbutton = gimp_prop_spin_button_new (image_map_tool->config, "high-input",
-                                          0.0001, 0.1, 1);
+                                          0.01, 0.1, 1);
   gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
   tool->high_input_spinbutton = spinbutton;
@@ -521,7 +531,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   /*  low output spin  */
   tool->low_output_spinbutton = spinbutton =
     gimp_prop_spin_button_new (image_map_tool->config, "low-output",
-                               0.0001, 0.1, 1);
+                               0.01, 0.1, 1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -531,7 +541,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   /*  high output spin  */
   tool->high_output_spinbutton = spinbutton =
     gimp_prop_spin_button_new (image_map_tool->config, "high-output",
-                               0.0001, 0.1, 1);
+                               0.01, 0.1, 1);
   gtk_box_pack_end (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 

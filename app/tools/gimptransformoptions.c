@@ -415,7 +415,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   scale = gimp_prop_spin_scale_new (config, "preview-opacity",
                                     _("Image opacity"),
                                     0.01, 0.1, 0);
-  gimp_prop_widget_set_factor (scale, 100.0, 1);
+  gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
   frame = gimp_prop_expanding_frame_new (config, "show-preview",
                                          _("Show image preview"),
                                          scale, NULL);

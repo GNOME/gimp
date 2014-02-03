@@ -62,6 +62,8 @@ GtkWidget * gimp_prop_spin_scale_new        (GObject       *config,
 
 void        gimp_prop_widget_set_factor     (GtkWidget     *widget,
                                              gdouble        factor,
+                                             gdouble        step_increment,
+                                             gdouble        page_increment,
                                              gint           digits);
 
 

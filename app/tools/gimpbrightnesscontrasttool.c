@@ -144,13 +144,17 @@ gimp_brightness_contrast_tool_initialize (GimpTool     *tool,
 
   if (gimp_drawable_get_component_type (drawable) == GIMP_COMPONENT_TYPE_U8)
     {
-      gimp_prop_widget_set_factor (bc_tool->brightness_scale, 127.0, 0);
-      gimp_prop_widget_set_factor (bc_tool->contrast_scale,   127.0, 0);
+      gimp_prop_widget_set_factor (bc_tool->brightness_scale,
+                                   127.0, 1.0, 8.0, 0);
+      gimp_prop_widget_set_factor (bc_tool->contrast_scale,
+                                   127.0, 1.0, 8.0, 0);
     }
   else
     {
-      gimp_prop_widget_set_factor (bc_tool->brightness_scale, 0.5, 3);
-      gimp_prop_widget_set_factor (bc_tool->contrast_scale,   0.5, 3);
+      gimp_prop_widget_set_factor (bc_tool->brightness_scale,
+                                   0.5, 0.01, 0.1, 3);
+      gimp_prop_widget_set_factor (bc_tool->contrast_scale,
+                                   0.5, 0.01, 0.1, 3);
     }
 
   return TRUE;
@@ -249,8 +253,7 @@ gimp_brightness_contrast_tool_dialog (GimpImageMapTool *image_map_tool)
 
   /*  Create the brightness scale widget  */
   scale = gimp_prop_spin_scale_new (image_map_tool->config, "brightness",
-                                    _("_Brightness"), 1.0 / 127.0, 10.0 / 127.0,
-                                    0);
+                                    _("_Brightness"), 0.01, 0.1, 3);
   gtk_box_pack_start (GTK_BOX (main_vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
@@ -258,8 +261,7 @@ gimp_brightness_contrast_tool_dialog (GimpImageMapTool *image_map_tool)
 
   /*  Create the contrast scale widget  */
   scale = gimp_prop_spin_scale_new (image_map_tool->config, "contrast",
-                                    _("_Contrast"), 1.0 / 127.0, 10.0 / 127.0,
-                                    0);
+                                    _("_Contrast"), 0.01, 0.1, 3);
   gtk_box_pack_start (GTK_BOX (main_vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 

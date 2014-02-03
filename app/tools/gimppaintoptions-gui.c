@@ -99,7 +99,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   scale = gimp_prop_spin_scale_new (config, "opacity",
                                     _("Opacity"),
                                     0.01, 0.1, 0);
-  gimp_prop_widget_set_factor (scale, 100.0, 1);
+  gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
