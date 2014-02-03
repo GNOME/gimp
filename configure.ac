@@ -50,6 +50,7 @@ m4_define([cairo_required_version], [1.12.2])
 m4_define([cairo_pdf_required_version], [1.12.2])
 m4_define([pangocairo_required_version], [1.29.4])
 m4_define([fontconfig_required_version], [2.2.0])
+m4_define([freetype2_required_version], [2.1.7])
 m4_define([gtkdoc_required_version], [1.0])
 m4_define([webkit_required_version], [1.6.1])
 m4_define([alsa_required_version], [1.0.0])
@@ -65,7 +66,7 @@ m4_define([libpng_required_version], [1.2.37])
 m4_define([liblzma_required_version], [5.0.0])
 m4_define([openexr_required_version], [1.6.1])
 m4_define([gtk_mac_integration_required_version], [1.0.1])
-
+m4_define([intltool_required_version], [0.40.1])
 
 AC_INIT([GIMP], [gimp_version],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=GIMP],
@@ -125,12 +126,24 @@ GTK_REQUIRED_VERSION=gtk_required_version
 CAIRO_REQUIRED_VERSION=cairo_required_version
 GEGL_REQUIRED_VERSION=gegl_required_version
 GEXIV2_REQUIRED_VERSION=gexiv2_required_version
+PANGOCAIRO_REQUIRED_VERSION=pangocairo_required_version
+BABL_REQUIRED_VERSION=babl_required_version
+FONTCONFIG_REQUIRED_VERSION=fontconfig_required_version
+FREETYPE2_REQUIRED_VERSION=freetype2_required_version
+ATK_REQUIRED_VERSION=atk_required_version
+INTLTOOL_REQUIRED_VERSION=intltool_required_version
 AC_SUBST(GLIB_REQUIRED_VERSION)
 AC_SUBST(GDK_PIXBUF_REQUIRED_VERSION)
 AC_SUBST(GTK_REQUIRED_VERSION)
 AC_SUBST(CAIRO_REQUIRED_VERSION)
 AC_SUBST(GEGL_REQUIRED_VERSION)
 AC_SUBST(GEXIV2_REQUIRED_VERSION)
+AC_SUBST(PANGOCAIRO_REQUIRED_VERSION)
+AC_SUBST(BABL_REQUIRED_VERSION)
+AC_SUBST(FONTCONFIG_REQUIRED_VERSION)
+AC_SUBST(FREETYPE2_REQUIRED_VERSION)
+AC_SUBST(ATK_REQUIRED_VERSION)
+AC_SUBST(INTLTOOL_REQUIRED_VERSION)
 
 # The symbol GIMP_UNSTABLE is defined above for substitution in
 # Makefiles and conditionally defined here as a preprocessor symbol
@@ -457,7 +470,7 @@ fi
 # Internationalisation
 ######################
 
-IT_PROG_INTLTOOL(0.40.1)
+IT_PROG_INTLTOOL(intltool_required_version)
 AM_GLIB_GNU_GETTEXT
 
 
@@ -2130,6 +2143,7 @@ _______EOF
 ])
 
 AC_CONFIG_FILES([
+INSTALL
 tools/Makefile
 tools/pdbgen/Makefile
 libgimp/Makefile
