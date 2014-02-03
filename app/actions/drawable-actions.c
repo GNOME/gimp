@@ -63,7 +63,7 @@ static const GimpActionEntry drawable_actions[] =
     NC_("drawable-action", "_White Balance"), NULL,
     NC_("drawable-action", "Automatic white balance correction"),
     G_CALLBACK (drawable_levels_stretch_cmd_callback),
-    GIMP_HELP_LAYER_WHITE_BALANCE},
+    GIMP_HELP_LAYER_WHITE_BALANCE },
 
   { "drawable-offset", NULL,
     NC_("drawable-action", "_Offset..."), "<primary><shift>O",
