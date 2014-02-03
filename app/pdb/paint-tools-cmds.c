@@ -66,10 +66,6 @@ paint_tools_stroke (Gimp              *gimp,
 
   n_strokes /= 2;  /* #doubles -> #points */
 
-  /* FIXME: i'm most certain that this is wrong, see bug 721249 --mitch */
-  gimp_paint_options_set_default_brush_size (options,
-                                             gimp_context_get_brush (context));
-
   /*  undefine the paint-relevant context properties and get them
    *  from the current context
    */
