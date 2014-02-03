@@ -257,6 +257,7 @@ void
 gimp_tools_restore (Gimp *gimp)
 {
   GimpContainer *gimp_list;
+  GimpObject    *object;
   gchar         *filename;
   GList         *list;
   GError        *error = NULL;
@@ -283,7 +284,6 @@ gimp_tools_restore (Gimp *gimp)
            list = g_list_next (list), i++)
         {
           const gchar *name;
-          GimpObject  *object;
 
           name = gimp_object_get_name (list->data);
 
@@ -304,6 +304,12 @@ gimp_tools_restore (Gimp *gimp)
 
   g_free (filename);
   g_object_unref (gimp_list);
+
+  /* make the generic operation tool invisible by default */
+  object = gimp_container_get_child_by_name (gimp->tool_info_list,
+                                             "gimp-operation-tool");
+  if (object)
+    g_object_set (object, "visible", FALSE, NULL);
 
   for (list = gimp_get_tool_info_iter (gimp);
        list;
