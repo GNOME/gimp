@@ -151,6 +151,12 @@ static void      gimp_transform_tool_response               (GtkWidget          
                                                              gint                   response_id,
                                                              GimpTransformTool     *tr_tool);
 
+static GimpItem *gimp_transform_tool_get_active_item        (GimpTransformTool     *tr_tool,
+                                                             GimpImage             *image);
+static GimpItem *gimp_transform_tool_check_active_item      (GimpTransformTool     *tr_tool,
+                                                             GimpImage             *display,
+                                                             GError               **error);
+
 
 G_DEFINE_TYPE (GimpTransformTool, gimp_transform_tool, GIMP_TYPE_DRAW_TOOL)
 
@@ -236,18 +242,17 @@ gimp_transform_tool_initialize (GimpTool     *tool,
   GimpTransformTool *tr_tool  = GIMP_TRANSFORM_TOOL (tool);
   GimpImage         *image    = gimp_display_get_image (display);
   GimpDrawable      *drawable = gimp_image_get_active_drawable (image);
+  GimpItem          *item;
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
       return FALSE;
     }
 
-  if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
-    {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("The active layer's pixels are locked."));
-      return FALSE;
-    }
+  item = gimp_transform_tool_check_active_item (tr_tool, image, error);
+
+  if (! item)
+    return FALSE;
 
   if (display != tool->display)
     {
@@ -578,13 +583,10 @@ gimp_transform_tool_cursor_update (GimpTool         *tool,
                                    GdkModifierType   state,
                                    GimpDisplay      *display)
 {
-  GimpTransformTool    *tr_tool = GIMP_TRANSFORM_TOOL (tool);
-  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
-  GimpCursorType        cursor;
-  GimpCursorModifier    modifier = GIMP_CURSOR_MODIFIER_NONE;
-  GimpImage            *image    = gimp_display_get_image (display);
-
-  cursor = gimp_tool_control_get_cursor (tool->control);
+  GimpTransformTool  *tr_tool  = GIMP_TRANSFORM_TOOL (tool);
+  GimpImage          *image    = gimp_display_get_image (display);
+  GimpCursorType      cursor   = gimp_tool_control_get_cursor (tool->control);
+  GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_NONE;
 
   if (tr_tool->use_handles)
     {
@@ -633,24 +635,8 @@ gimp_transform_tool_cursor_update (GimpTool         *tool,
       modifier = GIMP_CURSOR_MODIFIER_MOVE;
     }
 
-  switch (options->type)
-    {
-      GimpDrawable *drawable;
-
-    case GIMP_TRANSFORM_TYPE_LAYER:
-      drawable = gimp_image_get_active_drawable (image);
-      if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
-        modifier = GIMP_CURSOR_MODIFIER_BAD;
-      break;
-
-    case GIMP_TRANSFORM_TYPE_SELECTION:
-      break;
-
-    case GIMP_TRANSFORM_TYPE_PATH:
-      if (! gimp_image_get_active_vectors (image))
-        modifier = GIMP_CURSOR_MODIFIER_BAD;
-      break;
-    }
+  if (! gimp_transform_tool_check_active_item (tr_tool, image, NULL))
+    modifier = GIMP_CURSOR_MODIFIER_BAD;
 
   gimp_tool_control_set_cursor          (tool->control, cursor);
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);
@@ -1073,50 +1059,23 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   GimpTransformOptions *options        = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
   GimpContext          *context        = GIMP_CONTEXT (options);
   GimpImage            *image          = gimp_display_get_image (display);
-  GimpItem             *active_item    = NULL;
+  GimpItem             *active_item;
   TileManager          *orig_tiles     = NULL;
-  gint                  orig_offset_x;
-  gint                  orig_offset_y;
+  gint                  orig_offset_x  = 0;
+  gint                  orig_offset_y  = 0;
   TileManager          *new_tiles;
   gint                  new_offset_x;
   gint                  new_offset_y;
-  const gchar          *null_message   = NULL;
-  const gchar          *locked_message = NULL;
   gchar                *undo_desc      = NULL;
-  gboolean              new_layer;
+  gboolean              new_layer      = FALSE;
+  GError               *error          = NULL;
 
-  switch (options->type)
-    {
-    case GIMP_TRANSFORM_TYPE_LAYER:
-      active_item = GIMP_ITEM (gimp_image_get_active_drawable (image));
-      null_message   = _("There is no layer to transform.");
-      locked_message = _("The active layer's pixels are locked.");
-      break;
-
-    case GIMP_TRANSFORM_TYPE_SELECTION:
-      active_item = GIMP_ITEM (gimp_image_get_mask (image));
-      /* cannot happen, so don't translate these messages */
-      null_message   = "There is no selection to transform.";
-      locked_message = "The selection's pixels are locked.";
-      break;
-
-    case GIMP_TRANSFORM_TYPE_PATH:
-      active_item = GIMP_ITEM (gimp_image_get_active_vectors (image));
-      null_message   = _("There is no path to transform.");
-      locked_message = _("The active path's strokes are locked.");
-      break;
-    }
+  active_item = gimp_transform_tool_check_active_item (tr_tool, image, &error);
 
   if (! active_item)
     {
-      gimp_tool_message_literal (tool, display, null_message);
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
-      return;
-    }
-
-  if (gimp_item_is_content_locked (active_item))
-    {
-      gimp_tool_message_literal (tool, display, locked_message);
+      gimp_tool_message_literal (tool, display, error->message);
+      g_clear_error (&error);
       gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
       return;
     }
@@ -1396,10 +1355,12 @@ gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
     {
       GimpTransformOptions *options  = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
       GimpImage            *image    = gimp_display_get_image (display);
-      GimpDrawable         *drawable = gimp_image_get_active_drawable (image);
+      GimpItem             *item;
+
+      item = gimp_transform_tool_get_active_item (tr_tool, image);
 
       gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (tr_tool->dialog),
-                                         GIMP_VIEWABLE (drawable),
+                                         GIMP_VIEWABLE (item),
                                          GIMP_CONTEXT (options));
       gimp_tool_dialog_set_shell (GIMP_TOOL_DIALOG (tr_tool->dialog),
                                   gimp_display_get_shell (display));
@@ -1463,4 +1424,71 @@ gimp_transform_tool_response (GtkWidget         *widget,
       gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
       break;
     }
+}
+
+static GimpItem *
+gimp_transform_tool_get_active_item (GimpTransformTool *tr_tool,
+                                     GimpImage         *image)
+{
+  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+
+  switch (options->type)
+    {
+    case GIMP_TRANSFORM_TYPE_LAYER:
+      return GIMP_ITEM (gimp_image_get_active_drawable (image));
+
+    case GIMP_TRANSFORM_TYPE_SELECTION:
+      return GIMP_ITEM (gimp_image_get_mask (image));
+
+    case GIMP_TRANSFORM_TYPE_PATH:
+      return GIMP_ITEM (gimp_image_get_active_vectors (image));
+    }
+
+  return NULL;
+}
+
+static GimpItem *
+gimp_transform_tool_check_active_item (GimpTransformTool  *tr_tool,
+                                       GimpImage          *image,
+                                       GError            **error)
+{
+  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  GimpItem             *item;
+  const gchar          *null_message   = NULL;
+  const gchar          *locked_message = NULL;
+
+  item = gimp_transform_tool_get_active_item (tr_tool, image);
+
+  switch (options->type)
+    {
+    case GIMP_TRANSFORM_TYPE_LAYER:
+      null_message   = _("There is no layer to transform.");
+      locked_message = _("The active layer's pixels are locked.");
+      break;
+
+    case GIMP_TRANSFORM_TYPE_SELECTION:
+      /* cannot happen, so don't translate these messages */
+      null_message   = "There is no selection to transform.";
+      locked_message = "The selection's pixels are locked.";
+      break;
+
+    case GIMP_TRANSFORM_TYPE_PATH:
+      null_message   = _("There is no path to transform.");
+      locked_message = _("The active path's strokes are locked.");
+      break;
+    }
+
+  if (! item)
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED, null_message);
+      return NULL;
+    }
+
+  if (gimp_item_is_content_locked (item))
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED, locked_message);
+      return NULL;
+    }
+
+  return item;
 }
