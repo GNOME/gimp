@@ -921,12 +921,17 @@ gimp_transform_tool_options_notify (GimpTool         *tool,
 
   GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
 
+  if (! strcmp (pspec->name, "type"))
+    {
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
+      return;
+    }
+
   if (tr_tool->use_grid)
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
 
-      if (! strcmp (pspec->name, "type") ||
-          ! strcmp (pspec->name, "direction"))
+      if (! strcmp (pspec->name, "direction"))
         {
           if (tr_tool->function != TRANSFORM_CREATING)
             {
