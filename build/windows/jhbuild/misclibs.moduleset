@@ -130,12 +130,10 @@
 	</suggests>
 </autotools>
 
-<autotools id="exiv2" autogen-sh="configure"
-		makeargs="xmpsdk; make -C po all; make -C src lib"
-		makeinstallargs="-C po install; make -C src install-lib">
-	<branch version="0.23" repo="exiv2"
-			module="exiv2-0.23.tar.gz"
-			hash="md5:dab67c07bb63a4386d4ea607a8e06eaf">
+<cmake id="exiv2">
+	<branch version="0.24" repo="exiv2"
+			module="exiv2-0.24.tar.gz"
+			hash="md5:b8a23dc56a98ede85c00718a97a8d6fc">
 	</branch>
 	<dependencies>
 		<dep package="zlib"/>
@@ -143,7 +141,7 @@
 		<dep package="iconv"/>
 		<dep package="gettext"/>
 	</dependencies>
-</autotools>
+</cmake>
 
 <autotools id="libgexiv2" autogen-sh="|| autoreconf --force --install; ./configure">
 	<branch version="0.7.0" repo="yorba"
