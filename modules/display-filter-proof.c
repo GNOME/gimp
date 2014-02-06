@@ -460,7 +460,7 @@ cdisplay_proof_changed (GimpColorDisplay *display)
   if (! proof->profile)
     return;
 
-  rgbProfile = cmsCreate_sRGBProfile ();
+  rgbProfile = gimp_lcms_create_srgb_profile ();
 
   proofProfile = cmsOpenProfileFromFile (proof->profile, "r");
 

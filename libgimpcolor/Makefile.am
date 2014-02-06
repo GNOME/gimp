@@ -53,6 +53,7 @@ AM_CPPFLAGS = \
 	$(GEGL_CFLAGS)			\
 	$(CAIRO_CFLAGS)			\
 	$(GDK_PIXBUF_CFLAGS)		\
+	$(LCMS_CFLAGS)			\
 	-I$(includedir)
 
 EXTRA_DIST = \
@@ -79,6 +80,8 @@ libgimpcolor_@GIMP_API_VERSION@_la_SOURCES = \
 	gimphsl.h			\
 	gimphsv.c			\
 	gimphsv.h			\
+	gimplcms.c			\
+	gimplcms.h			\
 	gimppixbuf.c			\
 	gimppixbuf.h			\
 	gimprgb.c			\
@@ -96,6 +99,7 @@ libgimpcolorinclude_HEADERS = \
 	gimpcolorspace.h		\
 	gimphsl.h			\
 	gimphsv.h			\
+	gimplcms.h			\
 	gimppixbuf.h			\
 	gimprgb.h
 
@@ -112,6 +116,7 @@ libgimpcolor_@GIMP_API_VERSION@_la_LIBADD = \
 	$(GEGL_LIBS)		\
 	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
+	$(LCMS_LIBS)		\
 	$(libm)
 
 

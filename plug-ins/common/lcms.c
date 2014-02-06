@@ -644,13 +644,13 @@ lcms_icc_apply (GimpColorConfig          *config,
 
   if (! src_profile)
     {
-      src_profile = cmsCreate_sRGBProfile ();
+      src_profile = gimp_lcms_create_srgb_profile ();
       lcms_sRGB_checksum (src_md5);
     }
 
   if (! dest_profile)
     {
-      dest_profile = cmsCreate_sRGBProfile ();
+      dest_profile = gimp_lcms_create_srgb_profile ();
       lcms_sRGB_checksum (dest_md5);
     }
 
@@ -726,7 +726,7 @@ lcms_icc_info (GimpColorConfig *config,
   else
     {
       if (name) *name = g_strdup ("sRGB");
-      if (desc) *desc = g_strdup ("sRGB built-in");
+      if (desc) *desc = g_strdup ("sRGB made with the correct white point and primaries");
       if (info) *info = g_strdup (_("Default RGB working space"));
     }
 
@@ -1503,7 +1503,7 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
     profile = lcms_load_profile (config->rgb_profile, NULL);
 
   if (! profile)
-    profile = cmsCreate_sRGBProfile ();
+    profile = gimp_lcms_create_srgb_profile ();
 
   name = lcms_icc_profile_get_desc (profile);
   if (! name)
@@ -1556,7 +1556,7 @@ lcms_dialog (GimpColorConfig *config,
     }
 
   if (! src_profile)
-    src_profile = cmsCreate_sRGBProfile ();
+    src_profile = gimp_lcms_create_srgb_profile ();
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
@@ -1666,7 +1666,7 @@ lcms_dialog (GimpColorConfig *config,
         }
       else
         {
-          dest_profile = cmsCreate_sRGBProfile ();
+          dest_profile = gimp_lcms_create_srgb_profile ();
         }
 
       if (dest_profile)

@@ -369,10 +369,10 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
       cmsUInt32Number softproof_flags = 0;
 
       if (! src_profile)
-        src_profile = cmsCreate_sRGBProfile ();
+        src_profile = gimp_lcms_create_srgb_profile ();
 
       if (! dest_profile)
-        dest_profile = cmsCreate_sRGBProfile ();
+        dest_profile = gimp_lcms_create_srgb_profile ();
 
       softproof_flags |= cmsFLAGS_SOFTPROOFING;
 
@@ -409,10 +409,10 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
       cmsUInt32Number display_flags = 0;
 
       if (! src_profile)
-        src_profile = cmsCreate_sRGBProfile ();
+        src_profile = gimp_lcms_create_srgb_profile ();
 
       if (! dest_profile)
-        dest_profile = cmsCreate_sRGBProfile ();
+        dest_profile = gimp_lcms_create_srgb_profile ();
 
       if (config->display_use_black_point_compensation)
         {

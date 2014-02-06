@@ -645,10 +645,10 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
         }
     }
 
-  /*  use the built-in sRGB profile as fallback  */
+  /*  make the real sRGB profile as a fallback  */
   if (! rgb_profile)
     {
-      rgb_profile = cmsCreate_sRGBProfile ();
+      rgb_profile = gimp_lcms_create_srgb_profile ();
     }
 
   if (config->display_intent ==
