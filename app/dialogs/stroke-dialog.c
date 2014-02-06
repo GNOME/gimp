@@ -297,8 +297,8 @@ stroke_dialog_response (GtkWidget  *widget,
                                 saved_options,
                                 (GDestroyNotify) g_object_unref);
 
-        if (! gimp_item_stroke (item, drawable, context, options, FALSE, TRUE,
-                                NULL, &error))
+        if (! gimp_item_stroke (item, drawable, context, options, NULL,
+                                TRUE, NULL, &error))
           {
             gimp_message_literal (context->gimp,
                                   G_OBJECT (widget),

@@ -23,6 +23,8 @@
 
 #include <gegl.h>
 
+#include "libgimpconfig/gimpconfig.h"
+
 #include "pdb-types.h"
 
 #include "core/gimp-edit.h"
@@ -41,6 +43,7 @@
 
 #include "gimppdb.h"
 #include "gimppdb-utils.h"
+#include "gimppdbcontext.h"
 #include "gimpprocedure.h"
 #include "internal-procs.h"
 
@@ -763,18 +766,25 @@ edit_stroke_invoker (GimpProcedure      *procedure,
       if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          GimpImage         *image   = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpImage         *image = gimp_item_get_image (GIMP_ITEM (drawable));
           GimpStrokeOptions *options = gimp_stroke_options_new (gimp, context, TRUE);
+          GimpPaintOptions  *paint_options;
 
+          options = gimp_stroke_options_new (gimp, context, TRUE);
           g_object_set (options,
                         "method", GIMP_STROKE_METHOD_PAINT_CORE,
                         NULL);
 
+          paint_options =
+            gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context), NULL);
+          paint_options = gimp_config_duplicate (GIMP_CONFIG (paint_options));
+
           success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (image)),
-                                      drawable, context, options, TRUE, TRUE,
-                                      progress, error);
+                                      drawable, context, options, paint_options,
+                                      TRUE, progress, error);
 
           g_object_unref (options);
+          g_object_unref (paint_options);
         }
       else
         success = FALSE;
@@ -806,17 +816,24 @@ edit_stroke_vectors_invoker (GimpProcedure      *procedure,
           gimp_pdb_item_is_attached (GIMP_ITEM (vectors),
                                      gimp_item_get_image (GIMP_ITEM (drawable)), FALSE, error))
         {
-          GimpStrokeOptions *options = gimp_stroke_options_new (gimp, context, TRUE);
+          GimpStrokeOptions *options;
+          GimpPaintOptions  *paint_options;
 
+          options = gimp_stroke_options_new (gimp, context, TRUE);
           g_object_set (options,
                         "method", GIMP_STROKE_METHOD_PAINT_CORE,
                         NULL);
 
+          paint_options =
+            gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context), NULL);
+          paint_options = gimp_config_duplicate (GIMP_CONFIG (paint_options));
+
           success = gimp_item_stroke (GIMP_ITEM (vectors),
-                                      drawable, context, options, TRUE, TRUE,
-                                      progress, error);
+                                      drawable, context, options, paint_options,
+                                      TRUE, progress, error);
 
           g_object_unref (options);
+          g_object_unref (paint_options);
         }
       else
         success = FALSE;

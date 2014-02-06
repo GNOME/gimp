@@ -544,12 +544,14 @@ gimp_stroke_options_take_dash_pattern (GimpStrokeOptions *options,
 void
 gimp_stroke_options_prepare (GimpStrokeOptions *options,
                              GimpContext       *context,
-                             gboolean           use_default_values)
+                             GimpPaintOptions  *paint_options)
 {
   GimpStrokeOptionsPrivate *private;
 
   g_return_if_fail (GIMP_IS_STROKE_OPTIONS (options));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (paint_options == NULL ||
+                    GIMP_IS_PAINT_OPTIONS (paint_options));
 
   private = GET_PRIVATE (options);
 
@@ -560,15 +562,11 @@ gimp_stroke_options_prepare (GimpStrokeOptions *options,
 
     case GIMP_STROKE_METHOD_PAINT_CORE:
       {
-        GimpPaintInfo    *paint_info = GIMP_CONTEXT (options)->paint_info;
-        GimpPaintOptions *paint_options;
+        GimpPaintInfo *paint_info = GIMP_CONTEXT (options)->paint_info;
 
-        if (use_default_values)
+        if (paint_options)
           {
-            paint_options = gimp_paint_options_new (paint_info);
-
-            gimp_paint_options_set_default_brush_size (paint_options,
-                                                       gimp_context_get_brush (context));
+            g_return_if_fail (paint_info == paint_options->paint_info);
 
             /*  undefine the paint-relevant context properties and get them
              *  from the passed context
