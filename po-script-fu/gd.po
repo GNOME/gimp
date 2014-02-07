@@ -1,0 +1,286 @@
+# Scottish Gaelic translation for gimp.
+# Copyright (C) 2014 gimp's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gimp package.
+# akerbeltz <fios@akerbeltz.org>, 2014.
+# Michael Bauer <fios@akerbeltz.org>, 2014.
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp gimp-2-8\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
+"eywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2014-02-07 00:36+0000\n"
+"PO-Revision-Date: 2014-02-07 01:11+0100\n"
+"Last-Translator: Michael Bauer <fios@akerbeltz.org>\n"
+"Language-Team: Akerbeltz\n"
+"Language: gd\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : "
+"(n > 2 && n < 20) ? 2 : 3;\n"
+"X-Generator: Virtaal 0.7.1-beta1\n"
+"X-Project-Style: gnome\n"
+
+#: ../plug-ins/script-fu/script-fu.c:110
+msgid "Interactive console for Script-Fu development"
+msgstr "Consoil eadar-ghnìomhach airson leasachadh Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu.c:116
+msgid "_Console"
+msgstr "_Consoil"
+
+#: ../plug-ins/script-fu/script-fu.c:140
+msgid "Server for remote Script-Fu operation"
+msgstr "Frithealaiche airson gnìomh Script-Fu cèin"
+
+#: ../plug-ins/script-fu/script-fu.c:145
+msgid "_Start Server..."
+msgstr "Tòi_sich am frithealaiche..."
+
+#: ../plug-ins/script-fu/script-fu.c:301
+msgid "_GIMP Online"
+msgstr "_GIMP air loidhne"
+
+#: ../plug-ins/script-fu/script-fu.c:302
+msgid "_User Manual"
+msgstr "_Treòir a' chleachdaiche"
+
+#: ../plug-ins/script-fu/script-fu.c:305
+msgid "_Script-Fu"
+msgstr "_Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu.c:307
+msgid "_Test"
+msgstr "_Deuchainn"
+
+#: ../plug-ins/script-fu/script-fu.c:310
+msgid "_Buttons"
+msgstr "_Putanan"
+
+#: ../plug-ins/script-fu/script-fu.c:312
+msgid "_Logos"
+msgstr "S_uaicheantasan"
+
+#: ../plug-ins/script-fu/script-fu.c:314
+msgid "_Patterns"
+msgstr "Pàtra_nan"
+
+#: ../plug-ins/script-fu/script-fu.c:317
+msgid "_Web Page Themes"
+msgstr "Ùrlaran _duilleige-lìn"
+
+#: ../plug-ins/script-fu/script-fu.c:319
+msgid "_Alien Glow"
+msgstr "Riomb_all fànais"
+
+#: ../plug-ins/script-fu/script-fu.c:321
+msgid "_Beveled Pattern"
+msgstr "Pàtran _beibhealaichte"
+
+#: ../plug-ins/script-fu/script-fu.c:323
+msgid "_Classic.Gimp.Org"
+msgstr "_Classic.Gimp.Org"
+
+#: ../plug-ins/script-fu/script-fu.c:326
+msgid "Alpha to _Logo"
+msgstr "A_lpha 'na shuaicheantas"
+
+#: ../plug-ins/script-fu/script-fu.c:329
+msgid "Re-read all available Script-Fu scripts"
+msgstr "Ath-leugh gach sgriobt Script-Fu a tha ri làimh"
+
+#: ../plug-ins/script-fu/script-fu.c:334
+msgid "_Refresh Scripts"
+msgstr "Ath-nuadhaich na sg_riobtaichean"
+
+#: ../plug-ins/script-fu/script-fu.c:357
+msgid ""
+"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
+"Please close all Script-Fu windows and try again."
+msgstr ""
+"Chan urrainn dhut \"Ath-nuadhaich na sgriobtaichean\" a chleachdadh fhad 's a "
+"tha bogsa-còmhraidh Script-Fu fosgailte. Dùin gach uinneag Script-Fu 's "
+"feuch ris a-rithist."
+
+#: ../plug-ins/script-fu/script-fu-console.c:130
+#: ../plug-ins/script-fu/script-fu-console.c:197
+msgid "Script-Fu Console"
+msgstr "Consoil Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-console.c:193
+msgid "Welcome to TinyScheme"
+msgstr "Fàilte gu TinyScheme"
+
+#: ../plug-ins/script-fu/script-fu-console.c:199
+msgid "Interactive Scheme Development"
+msgstr "Leasachadh sgeama eadar-ghnìomhach"
+
+#: ../plug-ins/script-fu/script-fu-console.c:235
+msgid "_Browse..."
+msgstr "_Brabhsaich..."
+
+#: ../plug-ins/script-fu/script-fu-console.c:293
+msgid "Save Script-Fu Console Output"
+msgstr "Sàbhail às-chur na consoil Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-console.c:340
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Cha b' urrainn dhuinn \"%s\" fhosgladh airson sgrìobhadh: %s"
+
+#: ../plug-ins/script-fu/script-fu-console.c:369
+msgid "Script-Fu Procedure Browser"
+msgstr "Brabhsair nam modhan Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-eval.c:60
+msgid "Script-Fu evaluation mode only allows non-interactive invocation"
+msgstr ""
+"Cha cheadaich am modh luachadh Script-Fu ach gairm nach eil eadar-ghnìomhach"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:198
+msgid "Script-Fu cannot process two scripts at the same time."
+msgstr "Chan urrainn dha Script-Fu dà sgriobt a làimhseachadh aig an aon àm."
+
+#: ../plug-ins/script-fu/script-fu-interface.c:200
+#, c-format
+msgid "You are already running the \"%s\" script."
+msgstr "Tha an sgriobt \"%s\" a' ruith mu thràth."
+
+#: ../plug-ins/script-fu/script-fu-interface.c:226
+#, c-format
+msgid "Script-Fu: %s"
+msgstr "Script-Fu: %s"
+
+#. we add a colon after the label;
+#. *  some languages want an extra space here
+#.
+#: ../plug-ins/script-fu/script-fu-interface.c:290
+#, c-format
+msgid "%s:"
+msgstr "%s:"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:337
+msgid "Script-Fu Color Selection"
+msgstr "Taghadh dath Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:446
+msgid "Script-Fu File Selection"
+msgstr "Taghadh faidhle Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:449
+msgid "Script-Fu Folder Selection"
+msgstr "Taghadh pasgan Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:462
+msgid "Script-Fu Font Selection"
+msgstr "Taghadh cruth-clò Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:470
+msgid "Script-Fu Palette Selection"
+msgstr "Taghadh pailead Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:479
+msgid "Script-Fu Pattern Selection"
+msgstr "Taghadh pàtran Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:488
+msgid "Script-Fu Gradient Selection"
+msgstr "Taghadh caisead Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:497
+msgid "Script-Fu Brush Selection"
+msgstr "Taghadh bruis Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:840
+#, c-format
+msgid "Error while executing %s:"
+msgstr "Mearachd rè gnìomhachadh %s:"
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:146
+msgid "Too few arguments to 'script-fu-register' call"
+msgstr "Chan eil argamaidean gu leòr ann airson gairm \"script-fu-register\""
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:605
+#, c-format
+msgid "Error while loading %s:"
+msgstr "Mearachd rè luchdadh %s:"
+
+#: ../plug-ins/script-fu/script-fu-server.c:811
+msgid "Script-Fu Server Options"
+msgstr "Roghainnean frithealaiche Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-server.c:816
+msgid "_Start Server"
+msgstr "Tòi_sich am frithealaiche"
+
+#: ../plug-ins/script-fu/script-fu-server.c:844
+msgid "Server port:"
+msgstr "Port an fhrithealaiche:"
+
+#: ../plug-ins/script-fu/script-fu-server.c:850
+msgid "Server logfile:"
+msgstr "Faidhle loga an fhrithealaiche:"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm:182
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:156
+msgid "Right"
+msgstr "Deas"
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm:136
+#: ../plug-ins/script-fu/scripts/blended-logo.scm:195
+msgid "FG-BG-RGB"
+msgstr "FG-BG-RGB"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
+msgid "Rows"
+msgstr "Ràghan"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
+msgid "Even"
+msgstr "Cothrom"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+msgid "Erase"
+msgstr "Suath às"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:164
+msgid "Black on white"
+msgstr "Dubh air geal"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
+#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+msgid "Horizontal"
+msgstr "Còmhnard"
+
+#: ../plug-ins/script-fu/scripts/rendermap.scm:90
+msgid "Tile"
+msgstr "Leacaich"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+msgid "Wrap"
+msgstr "Paisg"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+msgid "Spyrograph"
+msgstr "Spyrograph"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+msgid "Circle"
+msgstr "Cearcall"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+msgid "Pencil"
+msgstr "Peansail"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+msgid "Solid Color"
+msgstr "Dath soladach"
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm:129
+#: ../plug-ins/script-fu/scripts/textured-logo.scm:171
+msgid "Squares"
+msgstr "Ceàrnagan"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "IIR"
+msgstr "IIR"
