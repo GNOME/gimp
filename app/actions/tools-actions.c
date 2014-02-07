@@ -136,6 +136,14 @@ static const GimpEnumActionEntry tools_paint_brush_size_actions[] =
     "Increase Brush Size More", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     NULL },
+  { "tools-paint-brush-size-decrease-percent", GIMP_STOCK_TOOL_PAINTBRUSH,
+    "Decrease Brush Size Relative", NULL, NULL,
+    GIMP_ACTION_SELECT_PERCENT_PREVIOUS, FALSE,
+    NULL },
+  { "tools-paint-brush-size-increase-percent", GIMP_STOCK_TOOL_PAINTBRUSH,
+    "Increase Brush Size Relative", NULL, NULL,
+    GIMP_ACTION_SELECT_PERCENT_NEXT, FALSE,
+    NULL },
 };
 
 static const GimpEnumActionEntry tools_paint_brush_angle_actions[] =
@@ -172,15 +180,6 @@ static const GimpEnumActionEntry tools_paint_brush_angle_actions[] =
     "Increase Brush Angle More", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     NULL },
-  { "tools-paint-brush-size-decrease-percent", GIMP_STOCK_TOOL_PAINTBRUSH,
-    "Decrease Brush Size Relative", NULL, NULL,
-    GIMP_ACTION_SELECT_PERCENT_PREVIOUS, FALSE,
-    NULL },
-  { "tools-paint-brush-size-increase-percent", GIMP_STOCK_TOOL_PAINTBRUSH,
-    "Increase Brush Size Relative", NULL, NULL,
-    GIMP_ACTION_SELECT_PERCENT_NEXT, FALSE,
-    NULL },
-
 };
 
 static const GimpEnumActionEntry tools_paint_brush_aspect_ratio_actions[] =
