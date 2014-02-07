@@ -2,13 +2,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Michael Bauer <fios@akerbeltz.org>, 2014.
+# Home <fios@akerbeltz.org>, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
 "eywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-02-06 06:47+0000\n"
-"PO-Revision-Date: 2014-02-06 16:32+0100\n"
+"POT-Creation-Date: 2014-02-06 18:47+0000\n"
+"PO-Revision-Date: 2014-02-07 00:32+0100\n"
 "Last-Translator: Michael Bauer <fios@akerbeltz.org>\n"
 "Language-Team: Akerbeltz\n"
 "Language: gd\n"
@@ -83,7 +84,8 @@ msgstr ""
 #: ../app/batch.c:75
 #, c-format
 msgid "No batch interpreter specified, using the default '%s'.\n"
-msgstr "Cha deach eadar-theangaiche batch a shònrachadh, a' cleachdadh na bun-"
+msgstr ""
+"Cha deach eadar-theangaiche batch a shònrachadh, a' cleachdadh na bun-"
 "roghainn \"%s\".\n"
 
 #: ../app/batch.c:93 ../app/batch.c:111
@@ -188,8 +190,7 @@ msgstr "Cuir a-mach faidhle gimprc leis na roghainnean bunaiteach"
 #: ../app/main.c:271
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr ""
-"Cuir a-mach liosta sheòrsaichte sa PDB de mhodhan-obrach nach molar "
-"tuilleadh"
+"Cuir a-mach liosta sheòrsaichte sa PDB de mhodhan-obrach nach molar tuilleadh"
 
 #: ../app/main.c:389
 msgid "[FILE|URI...]"
@@ -1687,8 +1688,7 @@ msgstr "_Offset..."
 msgctxt "drawable-action"
 msgid "Shift the pixels, optionally wrapping them at the borders"
 msgstr ""
-"Sioftaig na piogsailean is paisg iad aig na h-iomallan ma bhios sin "
-"iomchaidh"
+"Sioftaig na piogsailean is paisg iad aig na h-iomallan ma bhios sin iomchaidh"
 
 #: ../app/actions/drawable-actions.c:73
 msgctxt "drawable-action"
@@ -2161,8 +2161,7 @@ msgstr ""
 #: ../app/actions/edit-commands.c:543
 msgid "There is no image data in the clipboard to paste."
 msgstr ""
-"Chan eil dàta deilbh sam bith air an stòr-bhòrd as urrainn dhuinn a chur "
-"ann."
+"Chan eil dàta deilbh sam bith air an stòr-bhòrd as urrainn dhuinn a chur ann."
 
 #: ../app/actions/edit-commands.c:348 ../app/core/gimpbrushclipboard.c:172
 #: ../app/core/gimppatternclipboard.c:172 ../app/widgets/gimpclipboard.c:345
@@ -2412,8 +2411,8 @@ msgstr "_Tar-sgrìobh"
 msgctxt "file-action"
 msgid "Export the image back to the imported file in the import format"
 msgstr ""
-"Às-phortaich an dealbh air ais dhan fhaidhle ion-phortaichte san fhòrmat "
-"ion-phortaidh"
+"Às-phortaich an dealbh air ais dhan fhaidhle ion-phortaichte san fhòrmat ion-"
+"phortaidh"
 
 #: ../app/actions/file-actions.c:158
 msgctxt "file-action"
@@ -2571,12 +2570,12 @@ msgstr "Luchda_ich dath na puinge-deiridh dheas..."
 #: ../app/actions/gradient-editor-actions.c:111
 msgctxt "gradient-editor-action"
 msgid "Ble_nd Endpoints' Colors"
-msgstr "Co-mheasgaich datha_n nam puingean-deiridh"
+msgstr "Datha_n puingean-deiridh an tar-mhùthaidh"
 
 #: ../app/actions/gradient-editor-actions.c:116
 msgctxt "gradient-editor-action"
 msgid "Blend Endpoints' Opacit_y"
-msgstr "Co-m_heasgaich trìd-dhoilleireachd nam puingean-deiridh"
+msgstr "Trìd-dhoilleireachd puingean-deiridh an tar-mhùthaidh"
 
 #: ../app/actions/gradient-editor-actions.c:124
 msgctxt "gradient-editor-action"
@@ -2658,7 +2657,7 @@ msgstr "_Lùbte"
 #: ../app/actions/gradient-editor-actions.c:327
 msgctxt "gradient-editor-blending"
 msgid "_Sinusoidal"
-msgstr ""
+msgstr "_Sìneasach"
 
 #: ../app/actions/gradient-editor-actions.c:332
 msgctxt "gradient-editor-blending"
@@ -2724,7 +2723,7 @@ msgstr "Sùm na h-uile"
 
 #: ../app/actions/gradient-editor-actions.c:776
 msgid "_Blending Function for Segment"
-msgstr "A_m foincsean co-mheasgachaidh airson a' ghearraidh"
+msgstr "A_m foincsean tar-mhùthaidh airson a' ghearraidh"
 
 #: ../app/actions/gradient-editor-actions.c:778
 msgid "Coloring _Type for Segment"
@@ -2760,7 +2759,7 @@ msgstr "Ath-sgaoil na làm_hrachain sa ghearradh"
 
 #: ../app/actions/gradient-editor-actions.c:798
 msgid "_Blending Function for Selection"
-msgstr "A_m foincsean co-mheasgachaidh airson an taghaidh"
+msgstr "A_m foincsean tar-mhùthaidh airson an taghaidh"
 
 #: ../app/actions/gradient-editor-actions.c:800
 msgid "Coloring _Type for Selection"
@@ -3131,8 +3130,8 @@ msgstr "_Leathnaich an dealbh"
 msgctxt "image-action"
 msgid "Merge all layers into one and remove transparency"
 msgstr ""
-"Co-aonaich a h-uile breath san aon bhreath agus thoir air falbh an "
-"trìd-shoilleireachd"
+"Co-aonaich a h-uile breath san aon bhreath agus thoir air falbh an trìd-"
+"shoilleireachd"
 
 #: ../app/actions/image-actions.c:127
 msgctxt "image-action"
@@ -3534,8 +3533,8 @@ msgstr "_Leathnaich an dealbh"
 msgctxt "layers-action"
 msgid "Merge all layers into one and remove transparency"
 msgstr ""
-"Co-aonaich a h-uile breath san aon bhreath agus thoir air falbh an "
-"trìd-shoilleireachd"
+"Co-aonaich a h-uile breath san aon bhreath agus thoir air falbh an trìd-"
+"shoilleireachd"
 
 #: ../app/actions/layers-actions.c:174
 msgctxt "layers-action"
@@ -3817,7 +3816,7 @@ msgstr "Ath-ghoirid: "
 #.
 #: ../app/actions/layers-actions.c:447
 msgid "-Click on thumbnail in Layers dockable"
-msgstr ""
+msgstr "-Briog air dealbhag ann an dockable nam breathan"
 
 #: ../app/actions/layers-actions.c:605 ../app/actions/layers-actions.c:606
 msgctxt "layers-action"
@@ -4592,8 +4591,8 @@ msgstr "Sguab às an teamplaid"
 msgid ""
 "Are you sure you want to delete template '%s' from the list and from disk?"
 msgstr ""
-"A bheil thu cinnteach gu bheil thu airson an teamplaid \"%s\" a sguabadh às an "
-"liosta agus an diosga?"
+"A bheil thu cinnteach gu bheil thu airson an teamplaid \"%s\" a sguabadh às "
+"an liosta agus an diosga?"
 
 #: ../app/actions/text-editor-actions.c:43
 msgctxt "text-editor-action"
@@ -5232,8 +5231,7 @@ msgstr "_Lìon an uinneag"
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the entire window is used"
 msgstr ""
-"Cuir air gleus co-mheas an t-sum ach an dèid an uinneag air fad a "
-"chleachdadh"
+"Cuir air gleus co-mheas an t-sum ach an dèid an uinneag air fad a chleachdadh"
 
 #: ../app/actions/view-actions.c:100
 msgctxt "view-action"
@@ -5843,7 +5841,7 @@ msgstr "Roinn"
 #: ../app/base/base-enums.c:129
 msgctxt "layer-mode-effects"
 msgid "Dodge"
-msgstr ""
+msgstr "Bànaich"
 
 #: ../app/base/base-enums.c:130
 msgctxt "layer-mode-effects"
@@ -5863,12 +5861,12 @@ msgstr "Solas bog"
 #: ../app/base/base-enums.c:133
 msgctxt "layer-mode-effects"
 msgid "Grain extract"
-msgstr ""
+msgstr "Às-tharraing a' ghràin"
 
 #: ../app/base/base-enums.c:134
 msgctxt "layer-mode-effects"
 msgid "Grain merge"
-msgstr ""
+msgstr "Co-aonaich a' ghràin"
 
 #: ../app/base/base-enums.c:135
 msgctxt "layer-mode-effects"
@@ -5888,7 +5886,7 @@ msgstr "Cuir 'na àite"
 #: ../app/base/base-enums.c:138
 msgctxt "layer-mode-effects"
 msgid "Anti erase"
-msgstr ""
+msgstr "Neo-shuath"
 
 #: ../app/base/tile-swap.c:710
 msgid ""
@@ -6039,8 +6037,8 @@ msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
 "backup of your configuration has been created at '%s'."
 msgstr ""
-"Thachair mearachd nuair a' bha sinn a' parsadh an fhaidhle \"%s\" agad. Thèid "
-"na luachan bunaiteach a chleachdadh. Chaidh lethbhreac-glèidhidh dhen "
+"Thachair mearachd nuair a' bha sinn a' parsadh an fhaidhle \"%s\" agad. "
+"Thèid na luachan bunaiteach a chleachdadh. Chaidh lethbhreac-glèidhidh dhen "
 "rèiteachadh agad a chruthachadh dhut aig \"%s\"."
 
 #. Not all strings defined here are used in the user interface
@@ -6077,8 +6075,7 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:43
 msgid "How to handle embedded color profiles when opening a file."
 msgstr ""
-"Mar a làimhsichear pròifilean dhathan leabaichte nuair a dh'fhosglar "
-"faidhle."
+"Mar a làimhsichear pròifilean dhathan leabaichte nuair a dh'fhosglar faidhle."
 
 #: ../app/config/gimprc-blurbs.h:46
 msgid "Sets the pixel format to use for mouse pointers."
@@ -6125,6 +6122,11 @@ msgid ""
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
 msgstr ""
+"Lorgaidh innealan mar \"taghadh neo-phongail\" no \"lìonadh bucaide\" raointean "
+"a-rèir algairim sìol-lìonaidh. Tòisichidh an sìol-lìonadh aig a' phiogsail "
+"tùsail agus leanaidh e air adhart ceithir timcheall air gus am bi an diofar "
+"on phiogsail tùsail nas motha na an stairsneach a chaidh a shònrachadh. 'S e "
+"sin luach an stairsnich."
 
 #: ../app/config/gimprc-blurbs.h:122
 msgid ""
@@ -6134,14 +6136,14 @@ msgid ""
 msgstr ""
 "Oidheam air seòrsa na h-uinneige a thèid a shuidheachadh air uinneagan doca "
 "is uinneag a' bhogsa-innealan. Faodaidh gum bi buaidh air an dòigh air a "
-"làimhsicheas is mar a sgeadaicheas manaidsear nan uinneagan agad na "
-"h-uinneagan seo."
+"làimhsicheas is mar a sgeadaicheas manaidsear nan uinneagan agad na h-"
+"uinneagan seo."
 
 #: ../app/config/gimprc-blurbs.h:154
 msgid "When enabled, the selected brush will be used for all tools."
 msgstr ""
-"Ma bhios seo an comas, thèid a' bhruis a thagh thu a chleachdadh airson a "
-"h-uile inneal."
+"Ma bhios seo an comas, thèid a' bhruis a thagh thu a chleachdadh airson a h-"
+"uile inneal."
 
 #: ../app/config/gimprc-blurbs.h:157
 msgid "When enabled, the selected dynamics will be used for all tools."
@@ -6152,14 +6154,14 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:163
 msgid "When enabled, the selected gradient will be used for all tools."
 msgstr ""
-"Ma bhios seo an comas, thèid an caisead a thagh thu a chleachdadh airson a "
-"h-uile inneal."
+"Ma bhios seo an comas, thèid an caisead a thagh thu a chleachdadh airson a h-"
+"uile inneal."
 
 #: ../app/config/gimprc-blurbs.h:166
 msgid "When enabled, the selected pattern will be used for all tools."
 msgstr ""
-"Ma bhios seo an comas, thèid am pàtran a thagh thu a chleachdadh airson a "
-"h-uile inneal."
+"Ma bhios seo an comas, thèid am pàtran a thagh thu a chleachdadh airson a h-"
+"uile inneal."
 
 #: ../app/config/gimprc-blurbs.h:180
 msgid "Sets the browser used by the help system."
@@ -6199,8 +6201,8 @@ msgstr "Sònraichidh seo an cànan anns am faicear am prògram."
 #: ../app/config/gimprc-blurbs.h:211
 msgid "How many recently opened image filenames to keep on the File menu."
 msgstr ""
-"Co mheud ainm faidhle a bha fosgailte o chionn goirid a chumar sa "
-"chlàr-taice \"Faidhle\"."
+"Co mheud ainm faidhle a bha fosgailte o chionn goirid a chumar sa chlàr-"
+"taice \"Faidhle\"."
 
 #: ../app/config/gimprc-blurbs.h:214
 msgid ""
@@ -6245,8 +6247,8 @@ msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
 "used to be the default behaviour in older versions."
 msgstr ""
-"Ma bhios seo an comas, cuiridh an t-inneal gluasaid a' bhreath no an "
-"t-slighe a tha 'ga dheasachadh an gnìomh. Seo an giùlan bunaiteach a b' "
+"Ma bhios seo an comas, cuiridh an t-inneal gluasaid a' bhreath no an t-"
+"slighe a tha 'ga dheasachadh an gnìomh. Seo an giùlan bunaiteach a b' "
 "àbhaist a bhith aige sna seann-tionndaidhean."
 
 #: ../app/config/gimprc-blurbs.h:242
@@ -6254,8 +6256,8 @@ msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
 msgstr ""
-"Suidhichidh seo meud ro-shealladh na seòladaireachd san oisean deas gu "
-"h-ìosal ann an uinneag an deilbh."
+"Suidhichidh seo meud ro-shealladh na seòladaireachd san oisean deas gu h-"
+"ìosal ann an uinneag an deilbh."
 
 #: ../app/config/gimprc-blurbs.h:246
 msgid "Sets how many processors GIMP should try to use simultaneously."
@@ -6272,9 +6274,9 @@ msgstr ""
 "Ma bhios seo an comas, iarrar ionad làithreach na luchaige air an "
 "fhrithealaiche X ri linn gach gluasaid seach a bhith a' cleachdadh oidheam "
 "an ionaid. 'S ciall dha seo gum bi peantadh le bruisean mòra nas pongaile "
-"ach faodaidh gum bi e nas slaodaiche. Air a chaochladh, gheibh thu "
-"clò-bhualadh nas luaithe air cuid a dh'fhrithealaichean X ma bhios an "
-"roghainn seo an comas."
+"ach faodaidh gum bi e nas slaodaiche. Air a chaochladh, gheibh thu clò-"
+"bhualadh nas luaithe air cuid a dh'fhrithealaichean X ma bhios an roghainn "
+"seo an comas."
 
 #: ../app/config/gimprc-blurbs.h:275
 msgid ""
@@ -6376,8 +6378,8 @@ msgid ""
 "with the \"View->Show Menubar\" command."
 msgstr ""
 "Ma bhios seo an comas, chithear bàr a' chlàir-thaice a ghnàth. 'S urrainn "
-"dhut seo a thoglachadh leis an àithne \"Sealladh » Seall bàr a' chlàir-"
-"thaice\" cuideachd."
+"dhut seo a thoglachadh leis an àithne \"Sealladh » Seall bàr a' chlàir-thaice"
+"\" cuideachd."
 
 #: ../app/config/gimprc-blurbs.h:332
 msgid ""
@@ -6549,7 +6551,8 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:423
 msgid "Show the current foreground and background colors in the toolbox."
-msgstr "Seall dathan làithreach a' bheulaibh is a' chùlaibh sa bhogsa innealan."
+msgstr ""
+"Seall dathan làithreach a' bheulaibh is a' chùlaibh sa bhogsa innealan."
 
 #: ../app/config/gimprc-blurbs.h:426
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
@@ -6570,8 +6573,8 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:438
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr ""
-"Suidhichidh seo meud a' chlàir-thàileisg a chleachdar gus an "
-"trìd-shoilleireachd a thaisbeanadh."
+"Suidhichidh seo meud a' chlàir-thàileisg a chleachdar gus an trìd-"
+"shoilleireachd a thaisbeanadh."
 
 #: ../app/config/gimprc-blurbs.h:441
 msgid ""
@@ -6609,8 +6612,7 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:457
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr ""
-"Ma bhios seo an comas, thèid brabhsair na cobharach fhosgladh ma bhrùthar "
-"F1."
+"Ma bhios seo an comas, thèid brabhsair na cobharach fhosgladh ma bhrùthar F1."
 
 #: ../app/config/gimprc-deserialize.c:135 ../app/core/gimp-modules.c:136
 #: ../app/core/gimp-units.c:167 ../app/gui/session.c:286
@@ -6761,7 +6763,7 @@ msgstr "Beibheal"
 #: ../app/core/core-enums.c:376
 msgctxt "cap-style"
 msgid "Butt"
-msgstr ""
+msgstr "Maol"
 
 #: ../app/core/core-enums.c:377
 msgctxt "cap-style"
@@ -6816,7 +6818,7 @@ msgstr "Dotagan dùmhail"
 #: ../app/core/core-enums.c:423
 msgctxt "dash-preset"
 msgid "Stipples"
-msgstr ""
+msgstr "Ballach"
 
 #: ../app/core/core-enums.c:424
 msgctxt "dash-preset"
@@ -7398,7 +7400,7 @@ msgstr "Sruthadh"
 #: ../app/core/core-enums.c:1302
 msgctxt "dynamics-output-type"
 msgid "Jitter"
-msgstr ""
+msgstr "Crith"
 
 #: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:375
 #: ../app/gui/session.c:408 ../app/menus/menus.c:466
@@ -7553,18 +7555,21 @@ msgid "Could not read %d byte from '%s': %s"
 msgid_plural "Could not read %d bytes from '%s': %s"
 msgstr[0] "Bha %d bhaidht ann an \"%s\" nach b' urrainn dhuinn a leughadh: %s"
 msgstr[1] "Bha %d bhaidht ann an \"%s\" nach b' urrainn dhuinn a leughadh: %s"
-msgstr[2] "Bha %d baidhtichean ann an \"%s\" nach b' urrainn dhuinn a leughadh: %s"
+msgstr[2] ""
+"Bha %d baidhtichean ann an \"%s\" nach b' urrainn dhuinn a leughadh: %s"
 msgstr[3] "Bha %d baidht ann an \"%s\" nach b' urrainn dhuinn a leughadh: %s"
 
 #: ../app/core/gimpbrush-load.c:202
 #, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
-msgstr "Mearachd parsaidh mharbhtach ann am faidhle na bruise \"%s\": Leud = 0."
+msgstr ""
+"Mearachd parsaidh mharbhtach ann am faidhle na bruise \"%s\": Leud = 0."
 
 #: ../app/core/gimpbrush-load.c:211
 #, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
-msgstr "Mearachd parsaidh mharbhtach ann am faidhle na bruise \"%s\": Àirde = 0."
+msgstr ""
+"Mearachd parsaidh mharbhtach ann am faidhle na bruise \"%s\": Àirde = 0."
 
 #: ../app/core/gimpbrush-load.c:220
 #, c-format
@@ -7643,8 +7648,8 @@ msgstr ""
 #, c-format
 msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
 msgstr ""
-"Mearachd parsaidh mharbhtach ann am faidhle na bruise \"%s\": Chan eil taic ri "
-"bruisean leathann."
+"Mearachd parsaidh mharbhtach ann am faidhle na bruise \"%s\": Chan eil taic "
+"ri bruisean leathann."
 
 #: ../app/core/gimpbrush.c:148
 msgid "Brush Spacing"
@@ -7662,16 +7667,16 @@ msgstr ""
 msgid ""
 "Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
 msgstr ""
-"Mearachd parsaidh mharbhtach ann am faidhle na bruise \"%s\": Tionndadh bruis "
-"GIMP nach aithne dhuinn ann an loidhne %d."
+"Mearachd parsaidh mharbhtach ann am faidhle na bruise \"%s\": Tionndadh "
+"bruis GIMP nach aithne dhuinn ann an loidhne %d."
 
 #: ../app/core/gimpbrushgenerated-load.c:150
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
 msgstr ""
-"Mearachd parsaidh mharbhtach ann am faidhle na bruise \"%s\": Cruth bruis GIMP "
-"nach aithne dhuinn ann an loidhne %d."
+"Mearachd parsaidh mharbhtach ann am faidhle na bruise \"%s\": Cruth bruis "
+"GIMP nach aithne dhuinn ann an loidhne %d."
 
 #: ../app/core/gimpbrushgenerated-load.c:226
 #, c-format
@@ -7925,7 +7930,7 @@ msgstr "lethbhreac"
 #: ../app/core/gimpdatafactory.c:549 ../app/core/gimpitem.c:505
 #, c-format
 msgid "%s copy"
-msgstr ""
+msgstr "%s lethbhreac"
 
 #: ../app/core/gimpdatafactory.c:742
 #, c-format
@@ -7934,9 +7939,9 @@ msgid ""
 "exist. Please create the folder or fix your configuation in the Preferences "
 "dialog's 'Folders' section."
 msgstr ""
-"Chaidh pasgan a rèiteachadh airson 's gun gabh sgrìobhadh a dhèanamh ann (%"
-"s) ach chan eil am pasgan seo ann. Cruthaich am pasgan no cuir air gleus an "
-"rèiteachadh ann an còmhradh nan roghainnean san earrann \"Pasganan\"."
+"Chaidh pasgan a rèiteachadh airson 's gun gabh sgrìobhadh a dhèanamh ann "
+"(%s) ach chan eil am pasgan seo ann. Cruthaich am pasgan no cuir air gleus "
+"an rèiteachadh ann an còmhradh nan roghainnean san earrann \"Pasganan\"."
 
 #: ../app/core/gimpdatafactory.c:763
 #, c-format
@@ -7970,7 +7975,7 @@ msgstr ""
 #: ../app/core/gimpdrawable-blend.c:245
 msgctxt "undo-type"
 msgid "Blend"
-msgstr "Co-measgaich"
+msgstr "Tar-mhùth"
 
 #: ../app/core/gimpdrawable-brightness-contrast.c:70
 #: ../app/core/gimpdrawable-brightness-contrast.c:83
@@ -8040,7 +8045,7 @@ msgstr "Leibheilean"
 #: ../app/core/gimpdrawable-offset.c:316
 msgctxt "undo-type"
 msgid "Offset Drawable"
-msgstr ""
+msgstr "Offsetaig an drawable"
 
 #: ../app/core/gimpdrawable-posterize.c:69
 #: ../app/core/gimpdrawable-posterize.c:79 ../app/tools/gimpposterizetool.c:84
@@ -8109,8 +8114,8 @@ msgstr ""
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
 msgstr ""
-"Mearachd parsaidh mharbhtach ann am faidhle a' chaiseid \"%s\": Chan e faidhle "
-"caisead GIMP a tha ann."
+"Mearachd parsaidh mharbhtach ann am faidhle a' chaiseid \"%s\": Chan e "
+"faidhle caisead GIMP a tha ann."
 
 #: ../app/core/gimpgradient-load.c:110
 #, c-format
@@ -8121,8 +8126,8 @@ msgstr "Sreang UTF-8 mhì-dhligheach ann am faidhle a' chaiseid \"%s\"."
 #, c-format
 msgid "Fatal parse error in gradient file '%s': File is corrupt in line %d."
 msgstr ""
-"Mearachd parsaidh mharbhtach ann am faidhle a' chaiseid \"%s\": Tha am faidhle "
-"coirbte ann an loidhne %d."
+"Mearachd parsaidh mharbhtach ann am faidhle a' chaiseid \"%s\": Tha am "
+"faidhle coirbte ann an loidhne %d."
 
 #: ../app/core/gimpgradient-load.c:219 ../app/core/gimpgradient-load.c:230
 #, c-format
@@ -8559,11 +8564,11 @@ msgstr "Thoir air falbh a' pharasait on nì"
 
 #: ../app/core/gimpitem-exclusive.c:81
 msgid "Set Item Exclusive Visible"
-msgstr ""
+msgstr "Na seall ach an nì seo"
 
 #: ../app/core/gimpitem-exclusive.c:172
 msgid "Set Item Exclusive Linked"
-msgstr ""
+msgstr "Na ceangail ach an nì seo"
 
 #: ../app/core/gimplayer-floating-sel.c:95
 msgctxt "undo-type"
@@ -8775,8 +8780,8 @@ msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 msgstr ""
-"A' leughadh faidhle a' phaileid \"%s\": Àireamh mhì-dhligheach de cholbhan ann "
-"an loidhne %d. A' cleachdadh an luach bhunaitich."
+"A' leughadh faidhle a' phaileid \"%s\": Àireamh mhì-dhligheach de cholbhan "
+"ann an loidhne %d. A' cleachdadh an luach bhunaitich."
 
 #: ../app/core/gimppalette-load.c:185
 #, c-format
@@ -8789,27 +8794,28 @@ msgstr ""
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr ""
-"A' leughadh faidhle a' phaileid \"%s\": Tha a' cho-phàirt GREEN a dhìth ann an "
-"loidhne %d."
+"A' leughadh faidhle a' phaileid \"%s\": Tha a' cho-phàirt GREEN a dhìth ann "
+"an loidhne %d."
 
 #: ../app/core/gimppalette-load.c:201
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr ""
-"A' leughadh faidhle a' phaileid \"%s\": Tha a' cho-phàirt BLUE a dhìth ann an "
-"loidhne %d."
+"A' leughadh faidhle a' phaileid \"%s\": Tha a' cho-phàirt BLUE a dhìth ann "
+"an loidhne %d."
 
 #: ../app/core/gimppalette-load.c:211
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr ""
-"A' leughadh faidhle a' phaileid \"%s\": Tha an luach RGB ann an loidhne %d às "
-"a rainse."
+"A' leughadh faidhle a' phaileid \"%s\": Tha an luach RGB ann an loidhne %d "
+"às a rainse."
 
 #: ../app/core/gimppalette-load.c:478
 #, c-format
 msgid "Could not read header from palette file '%s'"
-msgstr "Chan urrainn dhuinn am bann-cinn o fhaidhle a' phaileid \"%s\" a leughadh"
+msgstr ""
+"Chan urrainn dhuinn am bann-cinn o fhaidhle a' phaileid \"%s\" a leughadh"
 
 #: ../app/core/gimppalette-load.c:501 ../app/core/gimppalette-load.c:589
 #, c-format
@@ -8821,8 +8827,8 @@ msgstr "Mearachd parsaidh mharbhtach ann am faidhle a' phaileid \"%s\""
 #, c-format
 msgid "Fatal parse error in pattern file '%s': File appears truncated."
 msgstr ""
-"Mearachd parsaidh mharbhtach ann am faidhle a' phàtrain \"%s\": Tha coltas gu "
-"bheil am faidhle buntach."
+"Mearachd parsaidh mharbhtach ann am faidhle a' phàtrain \"%s\": Tha coltas "
+"gu bheil am faidhle buntach."
 
 #: ../app/core/gimppattern-load.c:104
 #, c-format
@@ -9100,8 +9106,8 @@ msgstr "A bheil thu airson \"%s\" a sguabadh às?"
 msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr ""
-"A bheil thu cinnteach gu bheil thu airson \"%s\" a thoirt air falbh on liosta "
-"agus a sguabadh às on diosg?"
+"A bheil thu cinnteach gu bheil thu airson \"%s\" a thoirt air falbh on "
+"liosta agus a sguabadh às on diosg?"
 
 #: ../app/dialogs/dialogs-constructors.c:203 ../app/gui/gui.c:161
 #: ../app/gui/gui-message.c:149
@@ -9243,8 +9249,8 @@ msgid ""
 "export to other file formats."
 msgstr ""
 "'S urrainn dhut sàbhaladh san fhòrmat GIMP XCF sa chòmhradh seo. Ma tha thu "
-"airson  a shàbhaladh ann am fhòrmat eile, cleachd \"Faidhle\" → \"Sàbhail\" 'na "
-"àite."
+"airson  a shàbhaladh ann am fhòrmat eile, cleachd \"Faidhle\" → \"Sàbhail\" "
+"'na àite."
 
 #: ../app/dialogs/file-save-dialog.c:616
 msgid "Take me to the Export dialog"
@@ -9438,7 +9444,7 @@ msgstr "Cuir masg ris a' bhreath"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:112
 msgid "Initialize Layer Mask to:"
-msgstr ""
+msgstr "Tòisich masg na breatha le:"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:143
 msgid "In_vert mask"
@@ -9509,15 +9515,15 @@ msgstr "Àite:"
 
 #: ../app/dialogs/offset-dialog.c:108
 msgid "Offset Layer"
-msgstr ""
+msgstr "Offsetaig a' bhreath"
 
 #: ../app/dialogs/offset-dialog.c:110
 msgid "Offset Layer Mask"
-msgstr ""
+msgstr "Offsetaig masg na breatha"
 
 #: ../app/dialogs/offset-dialog.c:112
 msgid "Offset Channel"
-msgstr ""
+msgstr "Offsetaig an t-seanail"
 
 #. The offset frame
 #: ../app/dialogs/offset-dialog.c:118 ../app/dialogs/offset-dialog.c:152
@@ -9541,7 +9547,7 @@ msgstr "_Y:"
 
 #: ../app/dialogs/offset-dialog.c:213
 msgid "Offset by  x/_2, y/2"
-msgstr ""
+msgstr "Offsetaig le  x/_2, y/2"
 
 #. The edge behavior frame
 #: ../app/dialogs/offset-dialog.c:222
@@ -10203,7 +10209,7 @@ msgstr "Tagh pròifil dathan na sgrìn"
 
 #: ../app/dialogs/preferences-dialog.c:2446
 msgid "_Print simulation profile:"
-msgstr ""
+msgstr "_Pròifil airson clò-bhualadh mas-fhìor:"
 
 #: ../app/dialogs/preferences-dialog.c:2447
 msgid "Select Printer Color Profile"
@@ -10219,15 +10225,15 @@ msgstr "_Feuch is cleachd pròifil na sgrìn aig an t-siostam"
 
 #: ../app/dialogs/preferences-dialog.c:2498
 msgid "_Display rendering intent:"
-msgstr ""
+msgstr "_Gleusadh dhathan an taisbeanaidh:"
 
 #: ../app/dialogs/preferences-dialog.c:2507
 msgid "_Softproof rendering intent:"
-msgstr ""
+msgstr "_Gleusadh dhathan a' chlò-bhualaidh mas-fhìor:"
 
 #: ../app/dialogs/preferences-dialog.c:2520
 msgid "Mark out of gamut colors"
-msgstr ""
+msgstr "Comharraich dathan a tha gamut a dhìth orra"
 
 #: ../app/dialogs/preferences-dialog.c:2525
 msgid "Select Warning Color"
@@ -10497,10 +10503,14 @@ msgstr ""
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
-msgstr[0] "Tha %d dealbh ann aig a bheil atharraichean nach deach a shàbhaladh:"
-msgstr[1] "Tha %d dhealbh ann aig a bheil atharraichean nach deach a shàbhaladh:"
-msgstr[2] "Tha %d dealbhan ann aig a bheil atharraichean nach deach a shàbhaladh:"
-msgstr[3] "Tha %d dealbh ann aig a bheil atharraichean nach deach a shàbhaladh:"
+msgstr[0] ""
+"Tha %d dealbh ann aig a bheil atharraichean nach deach a shàbhaladh:"
+msgstr[1] ""
+"Tha %d dhealbh ann aig a bheil atharraichean nach deach a shàbhaladh:"
+msgstr[2] ""
+"Tha %d dealbhan ann aig a bheil atharraichean nach deach a shàbhaladh:"
+msgstr[3] ""
+"Tha %d dealbh ann aig a bheil atharraichean nach deach a shàbhaladh:"
 
 #: ../app/dialogs/quit-dialog.c:311
 #, c-format
@@ -10610,8 +10620,8 @@ msgstr "Tha coltas gu bheil faidhle nan gliocasan GIMP a dhìth!"
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
 msgstr ""
-"Bu chòir dha faidhle air a bheil \"%s\" a bhith ann. Thoir sùil air an stàladh "
-"agad."
+"Bu chòir dha faidhle air a bheil \"%s\" a bhith ann. Thoir sùil air an "
+"stàladh agad."
 
 #: ../app/dialogs/tips-dialog.c:100
 msgid "The GIMP tips file could not be parsed!"
@@ -11084,7 +11094,7 @@ msgstr "Lìon ionad tùsail na cèidse le dath lom"
 #.
 #: ../app/gui/gui.c:207
 msgid "default:LTR"
-msgstr ""
+msgstr "default:LTR"
 
 #. initialize the document history
 #: ../app/gui/gui.c:432
@@ -11117,11 +11127,11 @@ msgstr "Chan eil pàtran sam bith ri làimh airson an inneil seo"
 
 #: ../app/paint/gimpconvolve.c:80
 msgid "Convolve"
-msgstr ""
+msgstr "Sgleò no geurachadh"
 
 #: ../app/paint/gimpdodgeburn.c:91
 msgid "Dodge/Burn"
-msgstr ""
+msgstr "Bànachadh no losgadh"
 
 #: ../app/paint/gimperaser.c:63 ../app/tools/gimperasertool.c:65
 msgid "Eraser"
@@ -11201,7 +11211,7 @@ msgstr "Doimhne an rèidheachaidh"
 
 #: ../app/paint/gimppaintoptions.c:264
 msgid "Gravity of the pen"
-msgstr ""
+msgstr "Iom-tharraing a' phinn"
 
 #: ../app/paint/gimppencil.c:41 ../app/tools/gimppenciltool.c:50
 msgid "Pencil"
@@ -11214,7 +11224,7 @@ msgstr "Clòn buaidh-astarach"
 
 #: ../app/paint/gimpperspectiveclone.c:160
 msgid "Perspective Clone does not operate on indexed layers."
-msgstr ""
+msgstr "Chan obraich clònachadh buaidh-astarach ann am breathan inneacsaichte."
 
 #: ../app/paint/gimpsmudge.c:84 ../app/tools/gimpsmudgetool.c:53
 msgid "Smudge"
@@ -11299,7 +11309,7 @@ msgstr "Buaidh-astair"
 #: ../app/pdb/item-transform-cmds.c:611 ../app/pdb/transform-tools-cmds.c:418
 #: ../app/tools/gimpsheartool.c:112
 msgid "Shearing"
-msgstr ""
+msgstr "Fiaradh"
 
 #: ../app/pdb/drawable-transform-cmds.c:1138
 #: ../app/pdb/item-transform-cmds.c:709 ../app/pdb/transform-tools-cmds.c:507
@@ -11315,7 +11325,7 @@ msgstr "Cruth-atharrachadh 2D"
 
 #: ../app/pdb/edit-cmds.c:725 ../app/tools/gimpblendtool.c:249
 msgid "Blending"
-msgstr "'Ga cho-measgachadh"
+msgstr "'Ga thar-mhùthadh"
 
 #: ../app/pdb/floating-sel-cmds.c:65
 msgid "Cannot remove this layer because it is not a floating selection."
@@ -11460,8 +11470,8 @@ msgid ""
 "Item '%s' (%d) cannot be used because it is not a direct child of an item "
 "tree"
 msgstr ""
-"Cha ghabh an nì \"%s\" (%d) a chleachdadh a chionn 's nach e clann dhìreach de "
-"chraobh nithean a tha ann"
+"Cha ghabh an nì \"%s\" (%d) a chleachdadh a chionn 's nach e clann dhìreach "
+"de chraobh nithean a tha ann"
 
 #: ../app/pdb/gimppdb-utils.c:420
 #, c-format
@@ -11469,8 +11479,8 @@ msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
 "the same item tree"
 msgstr ""
-"Cha ghabh an dà nì \"%s\" (%d) agus \"%s\" (%d) a chleachdadh a chionn 's nach "
-"eil iad 'nam pàirtean dhen aon chraobh nithean"
+"Cha ghabh an dà nì \"%s\" (%d) agus \"%s\" (%d) a chleachdadh a chionn 's "
+"nach eil iad 'nam pàirtean dhen aon chraobh nithean"
 
 #: ../app/pdb/gimppdb-utils.c:445
 #, c-format
@@ -11505,8 +11515,8 @@ msgstr ""
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because it is a group item"
 msgstr ""
-"Cha ghabh an nì \"%s\" (%d) atharrachadh a chionn 's gur e ball de bhuidheann "
-"a tha ann"
+"Cha ghabh an nì \"%s\" (%d) atharrachadh a chionn 's gur e ball de "
+"bhuidheann a tha ann"
 
 #: ../app/pdb/gimppdb-utils.c:557
 #, c-format
@@ -11519,8 +11529,8 @@ msgstr ""
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr ""
-"Chan eil an dealbh \"%s\" (%d) dhen t-seòrsa \"%s\" ach tha dùil ri dealbh dhen "
-"t-seòrsa \"%s\""
+"Chan eil an dealbh \"%s\" (%d) dhen t-seòrsa \"%s\" ach tha dùil ri dealbh "
+"dhen t-seòrsa \"%s\""
 
 #: ../app/pdb/gimppdb-utils.c:621
 #, c-format
@@ -11538,8 +11548,8 @@ msgid ""
 "Procedure '%s' has been called with a wrong type for argument #%d. Expected "
 "%s, got %s."
 msgstr ""
-"Chaidh am modh \"%s\" a ghairm le argamaid dhen t-seòrsa chearr, #%d. Bha dùil "
-"ri %s ach fhuaradh %s."
+"Chaidh am modh \"%s\" a ghairm le argamaid dhen t-seòrsa chearr, #%d. Bha "
+"dùil ri %s ach fhuaradh %s."
 
 #: ../app/pdb/gimppdbcontext.c:89
 #: ../app/tools/gimpforegroundselectoptions.c:79
@@ -11558,8 +11568,8 @@ msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
-"Thill am modh \"%s\" luach dhen t-seòrsa chearr airson an luach tillidh \"%s\" "
-"(#%d). Bha dùil ri %s ach fhuaras %s."
+"Thill am modh \"%s\" luach dhen t-seòrsa chearr airson an luach tillidh \"%s"
+"\" (#%d). Bha dùil ri %s ach fhuaras %s."
 
 #: ../app/pdb/gimpprocedure.c:654
 #, c-format
@@ -11567,8 +11577,8 @@ msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#"
 "%d). Expected %s, got %s."
 msgstr ""
-"Chaidh am modh \"%s\" a ghairm le luach dhen t-seòrsa chearr airson na "
-"h-argamaid \"%s\" (#%d). Bha dùil ri %s ach fhuaradh %s."
+"Chaidh am modh \"%s\" a ghairm le luach dhen t-seòrsa chearr airson na h-"
+"argamaid \"%s\" (#%d). Bha dùil ri %s ach fhuaradh %s."
 
 #: ../app/pdb/gimpprocedure.c:687
 #, c-format
@@ -11576,9 +11586,9 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"Thill am modh \"%s\" ID mì-dhligheach airson na h-argamaid \"%s\". Mar is trice, "
-"tachraidh seo ma tha plugan airson rud a dhèanamh ann am breath nach eil "
-"ann tuilleadh."
+"Thill am modh \"%s\" ID mì-dhligheach airson na h-argamaid \"%s\". Mar is "
+"trice, tachraidh seo ma tha plugan airson rud a dhèanamh ann am breath nach "
+"eil ann tuilleadh."
 
 #: ../app/pdb/gimpprocedure.c:700
 #, c-format
@@ -11586,8 +11596,8 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"Chaidh am modh \"%s\"a ghairm le ID mì-dhligheach airson na h-argamaid \"%s\". "
-"Mar is trice, tachraidh seo ma tha plugan airson rud a dhèanamh ann am "
+"Chaidh am modh \"%s\"a ghairm le ID mì-dhligheach airson na h-argamaid \"%s"
+"\". Mar is trice, tachraidh seo ma tha plugan airson rud a dhèanamh ann am "
 "breath nach eil ann tuilleadh."
 
 #: ../app/pdb/gimpprocedure.c:717
@@ -11596,9 +11606,9 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"Thill am modh \"%s\" ID mì-dhligheach airson na h-argamaid \"%s\". Mar is trice, "
-"tachraidh seo ma tha plugan airson rud a dhèanamh ann an dealbh nach eil "
-"ann tuilleadh."
+"Thill am modh \"%s\" ID mì-dhligheach airson na h-argamaid \"%s\". Mar is "
+"trice, tachraidh seo ma tha plugan airson rud a dhèanamh ann an dealbh nach "
+"eil ann tuilleadh."
 
 #: ../app/pdb/gimpprocedure.c:730
 #, c-format
@@ -11606,8 +11616,8 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"Chaidh am modh \"%s\"a ghairm le ID mì-dhligheach airson na h-argamaid \"%s\". "
-"Mar is trice, tachraidh seo ma tha plugan airson rud a dhèanamh ann an "
+"Chaidh am modh \"%s\"a ghairm le ID mì-dhligheach airson na h-argamaid \"%s"
+"\". Mar is trice, tachraidh seo ma tha plugan airson rud a dhèanamh ann an "
 "dealbh nach eil ann tuilleadh."
 
 #: ../app/pdb/gimpprocedure.c:751
@@ -11616,8 +11626,8 @@ msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr ""
-"Thill am modh \"%s\" \"%s\" mar luach tillidh \"%s\" (#%d, seòrsa %s). Chan eil an "
-"luach seo am broinn na rainse."
+"Thill am modh \"%s\" \"%s\" mar luach tillidh \"%s\" (#%d, seòrsa %s). Chan "
+"eil an luach seo am broinn na rainse."
 
 #: ../app/pdb/gimpprocedure.c:765
 #, c-format
@@ -11625,8 +11635,8 @@ msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr ""
-"Chaidh am modh \"%s\" a ghairm leis an luach \"%s\" airson na h-argamaid \"%s\" (#"
-"%d, seòrsa %s). Chan eil an luach seo am broinn na rainse."
+"Chaidh am modh \"%s\" a ghairm leis an luach \"%s\" airson na h-argamaid \"%s"
+"\" (#%d, seòrsa %s). Chan eil an luach seo am broinn na rainse."
 
 #: ../app/pdb/image-cmds.c:2365
 msgid ""
@@ -11715,8 +11725,7 @@ msgstr ""
 #, c-format
 msgid "Bad binary format string in interpreter file %s"
 msgstr ""
-"Sreang ann an droch-fhòrmat bìnearaidh ann am faidhle an eadar-theangadair %"
-"s"
+"Sreang ann an droch-fhòrmat bìnearaidh ann am faidhle an eadar-theangadair %s"
 
 #: ../app/plug-in/gimpplugin-message.c:450
 #, c-format
@@ -11837,12 +11846,14 @@ msgstr ""
 #: ../app/plug-in/plug-in-rc.c:477
 #, c-format
 msgid "invalid value '%s' for icon type"
-msgstr "chan eil an luach \"%s\" dligheach airson a leithid seo a dh'ìomhaigheag"
+msgstr ""
+"chan eil an luach \"%s\" dligheach airson a leithid seo a dh'ìomhaigheag"
 
 #: ../app/plug-in/plug-in-rc.c:492
 #, c-format
 msgid "invalid value '%ld' for icon type"
-msgstr "chan eil an luach \"%ld\" dligheach airson a leithid seo a dh'ìomhaigheag"
+msgstr ""
+"chan eil an luach \"%ld\" dligheach airson a leithid seo a dh'ìomhaigheag"
 
 #. This is a so-called pangram; it's supposed to
 #. contain all characters found in the alphabet.
@@ -12104,7 +12115,7 @@ msgstr "Ath-dhèan:"
 
 #: ../app/tools/gimpblendoptions.c:261
 msgid "Adaptive supersampling"
-msgstr ""
+msgstr "Os-shamplachadh tapaidh"
 
 #: ../app/tools/gimpblendoptions.c:268
 msgid "Max depth"
@@ -12112,22 +12123,20 @@ msgstr "An doimhne as motha"
 
 #: ../app/tools/gimpblendtool.c:109
 msgid "Blend"
-msgstr "Co-measgaich"
+msgstr "Tar-mhùth"
 
 #: ../app/tools/gimpblendtool.c:110
 msgid "Blend Tool: Fill selected area with a color gradient"
 msgstr ""
-"An t-inneal co-measgachaidh: Lìonaidh seo an raon a thagh thu le caisead "
-"datha"
+"An t-inneal tar-mhùthaidh: Lìonaidh seo an raon a thagh thu le caisead datha"
 
 #: ../app/tools/gimpblendtool.c:111
 msgid "Blen_d"
 msgstr "Co-_measgaich"
 
 #: ../app/tools/gimpblendtool.c:166
-#, fuzzy
 msgid "Blend does not operate on indexed layers."
-msgstr "Chan obraich slànachadh ann am breathan inneacsaichte."
+msgstr "Chan obraich tar-mhùthadh ann am breathan inneacsaichte."
 
 #: ../app/tools/gimpblendtool.c:187
 msgid "No gradient available for use with this tool."
@@ -12145,7 +12154,7 @@ msgstr "%s gus an loidhne shlàn a ghluasad"
 
 #: ../app/tools/gimpblendtool.c:457
 msgid "Blend: "
-msgstr "Co-measgaich: "
+msgstr "Tar-mhùth: "
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:111
 msgid "Brightness-Contrast"
@@ -12175,7 +12184,7 @@ msgstr "Às-phortaich roghainnean na soilleireachd is an iomsgaraidh"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:183
 msgid "Brightness-Contrast does not operate on indexed layers."
-msgstr ""
+msgstr "Chan obraich soilleireachd is iomsgaradh ann am breathan inneacsaichte."
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:318
 msgid "_Brightness:"
@@ -12209,8 +12218,7 @@ msgstr "An diofar dhathan as motha"
 #: ../app/tools/gimpbucketfilloptions.c:115
 msgid "Criterion used for determining color similarity"
 msgstr ""
-"An cuspair-deuchainn a thèid a chleachdadh gus coltas nan dathan a "
-"dhearbhadh"
+"An cuspair-deuchainn a thèid a chleachdadh gus coltas nan dathan a dhearbhadh"
 
 #. fill type
 #: ../app/tools/gimpbucketfilloptions.c:229
@@ -12601,7 +12609,7 @@ msgstr "%s gus sgleò a chur air"
 #: ../app/tools/gimpconvolvetool.c:216
 #, c-format
 msgid "Convolve Type  (%s)"
-msgstr ""
+msgstr "Seòrsa an sgleò/gheurachaidh  (%s)"
 
 #: ../app/tools/gimpcropoptions.c:76
 #: ../app/tools/gimprectangleselectoptions.c:77
@@ -12731,23 +12739,24 @@ msgstr "Tagh tuar liath a-rèir:"
 
 #: ../app/tools/gimpdodgeburntool.c:73
 msgid "Dodge / Burn"
-msgstr ""
+msgstr "Bànachadh no losgadh"
 
 #: ../app/tools/gimpdodgeburntool.c:74
 msgid "Dodge / Burn Tool: Selectively lighten or darken using a brush"
 msgstr ""
+"An t-inneal bànachaidh/losgaidh: Dèan soilleir no doilleir raon le bruis"
 
 #: ../app/tools/gimpdodgeburntool.c:75
 msgid "Dod_ge / Burn"
-msgstr ""
+msgstr "Bànachadh / Los_gadh"
 
 #: ../app/tools/gimpdodgeburntool.c:187
 msgid "Click to dodge"
-msgstr ""
+msgstr "Dèan briogadh gus a bhànachadh"
 
 #: ../app/tools/gimpdodgeburntool.c:188
 msgid "Click to dodge the line"
-msgstr ""
+msgstr "Dèan briogadh gus an loidhne a bhànachadh"
 
 #: ../app/tools/gimpdodgeburntool.c:189
 #, c-format
@@ -12765,7 +12774,7 @@ msgstr "Dèan briogadh gus an loidhne a losgadh"
 #: ../app/tools/gimpdodgeburntool.c:195
 #, c-format
 msgid "%s to dodge"
-msgstr ""
+msgstr "%s gus a bhànachadh"
 
 #. the type (dodge or burn)
 #: ../app/tools/gimpdodgeburntool.c:219
@@ -12834,7 +12843,7 @@ msgstr "%s gus dath a' chùlaibh a thaghadh"
 #: ../app/tools/gimperasertool.c:145
 #, c-format
 msgid "Anti erase  (%s)"
-msgstr ""
+msgstr "Neo-shuath  (%s)"
 
 #: ../app/tools/gimpflipoptions.c:66
 msgid "Direction of flipping"
@@ -12904,6 +12913,8 @@ msgid ""
 "Smaller values give a more accurate selection border but may introduce holes "
 "in the selection"
 msgstr ""
+"Bheir luachan nas lugha dhut iomall taghaidh nas pongaile ach dh'fhaoidte "
+"gum bi tuill san taghadh ri linn sin"
 
 #: ../app/tools/gimpforegroundselectoptions.c:112
 msgid "Color of selection preview mask"
@@ -12911,15 +12922,15 @@ msgstr "Dath masg ro-shealladh an taghaidh"
 
 #: ../app/tools/gimpforegroundselectoptions.c:124
 msgid "Sensitivity for brightness component"
-msgstr ""
+msgstr "Mothalachd co-phàirt na soilleireachd"
 
 #: ../app/tools/gimpforegroundselectoptions.c:130
 msgid "Sensitivity for red/green component"
-msgstr ""
+msgstr "Mothalachd na co-phàirt dhearg/uaine"
 
 #: ../app/tools/gimpforegroundselectoptions.c:136
 msgid "Sensitivity for yellow/blue component"
-msgstr ""
+msgstr "Mothalachd na co-phàirt bhuidhe/ghorm"
 
 #. single / multiple objects
 #: ../app/tools/gimpforegroundselectoptions.c:281
@@ -12930,7 +12941,7 @@ msgstr "Coimhearsnachail"
 #: ../app/tools/gimpforegroundselectoptions.c:286
 #, c-format
 msgid "Interactive refinement  (%s)"
-msgstr ""
+msgstr "Fìneachadh eadar-ghnìomhach  (%s)"
 
 #: ../app/tools/gimpforegroundselectoptions.c:290
 msgid "Mark background"
@@ -12967,7 +12978,8 @@ msgstr "Taghadh a' bheulaibh"
 
 #: ../app/tools/gimpforegroundselecttool.c:145
 msgid "Foreground Select Tool: Select a region containing foreground objects"
-msgstr "Inneal taghadh a' bheulaibh: Tagh raon sa bheil oibseactan a' bheulaibh"
+msgstr ""
+"Inneal taghadh a' bheulaibh: Tagh raon sa bheil oibseactan a' bheulaibh"
 
 #: ../app/tools/gimpforegroundselecttool.c:146
 msgid "F_oreground Select"
@@ -12980,8 +12992,8 @@ msgstr "Cuir barrachd stràcan ris no brùth Enter gus gabhail ris an taghadh"
 #: ../app/tools/gimpforegroundselecttool.c:306
 msgid "Mark foreground by painting on the object to extract"
 msgstr ""
-"Comharraich am beulaibh is tu a' peantadh air an oibseact a tha ri "
-"às-tharraing"
+"Comharraich am beulaibh is tu a' peantadh air an oibseact a tha ri às-"
+"tharraing"
 
 #: ../app/tools/gimpforegroundselecttool.c:311
 msgid "Roughly outline the object to extract"
@@ -13577,7 +13589,7 @@ msgstr "Meud"
 
 #: ../app/tools/gimppaintoptions-gui.c:368
 msgid "Apply Jitter"
-msgstr ""
+msgstr "Cuir crith air"
 
 #: ../app/tools/gimppaintoptions-gui.c:386
 msgid "Smooth stroke"
@@ -13769,7 +13781,7 @@ msgstr "Crùb gu fèin-obrachail"
 
 #: ../app/tools/gimprectangleoptions.c:1050
 msgid "Shrink merged"
-msgstr ""
+msgstr "Crùb an co-aonadh"
 
 #: ../app/tools/gimprectangleselectoptions.c:83
 msgid "Round corners of selection"
@@ -13842,11 +13854,11 @@ msgstr "C_eàrn:"
 
 #: ../app/tools/gimprotatetool.c:207
 msgid "Center _X:"
-msgstr ""
+msgstr "_X a' mheadhain:"
 
 #: ../app/tools/gimprotatetool.c:216
 msgid "Center _Y:"
-msgstr ""
+msgstr "_Y a' mheadhain:"
 
 #: ../app/tools/gimprotatetool.c:373
 #, c-format
@@ -13931,47 +13943,46 @@ msgstr "Dèan briogadh gus an taghadh air fleòd acrachadh"
 
 #: ../app/tools/gimpsheartool.c:83
 msgid "Shear"
-msgstr ""
+msgstr "Fiar"
 
 #: ../app/tools/gimpsheartool.c:84
-#, fuzzy
 msgid "Shear Tool: Shear the layer, selection or path"
-msgstr "An t-inneal sgèilidh: Sgèilich a' bhreath, an taghadh no an t-slighe"
+msgstr "An t-inneal fiaraidh: Fiar a' bhreath, an taghadh no an t-slighe"
 
 #: ../app/tools/gimpsheartool.c:85
 msgid "S_hear"
-msgstr ""
+msgstr "_Fiar"
 
 #: ../app/tools/gimpsheartool.c:135
 msgid "Shear magnitude _X:"
-msgstr ""
+msgstr "Meud _X an fhiaraidh:"
 
 #: ../app/tools/gimpsheartool.c:145
 msgid "Shear magnitude _Y:"
-msgstr ""
+msgstr "Meud _Y an fhiaraidh:"
 
 #: ../app/tools/gimpsheartool.c:255
 #, c-format
 msgctxt "undo-type"
 msgid "Shear horizontally by %-3.3g"
-msgstr ""
+msgstr "Fiar air a' chòmhnard le %-3.3g"
 
 #: ../app/tools/gimpsheartool.c:259
 #, c-format
 msgctxt "undo-type"
 msgid "Shear vertically by %-3.3g"
-msgstr ""
+msgstr "Fiar gu h-inghearach le %-3.3g"
 
 #. e.g. user entered numbers but no notification callback
 #: ../app/tools/gimpsheartool.c:264
 #, c-format
 msgctxt "undo-type"
 msgid "Shear horizontally by %-3.3g, vertically by %-3.3g"
-msgstr ""
+msgstr "Fiar air a' chòmhnard le %-3.3g agus gu h-inghearach le %-3.3g"
 
 #: ../app/tools/gimpsmudgetool.c:54
 msgid "Smudge Tool: Smudge selectively using a brush"
-msgstr ""
+msgstr "An t-inneal smalachaidh: Smalaich ionad le bruis"
 
 #: ../app/tools/gimpsmudgetool.c:55
 msgid "_Smudge"
@@ -13997,6 +14008,8 @@ msgstr "Meud a' chrutha-chlò"
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
+"Atharraichidh hinting oir-loidhne a' chrutha-chlò airson bitmap geur de "
+"mheud beag"
 
 #: ../app/tools/gimptextoptions.c:153
 msgid "The text language may have an effect on the way the text is rendered."
@@ -14043,7 +14056,7 @@ msgstr "Cleachd an deasaiche"
 
 #: ../app/tools/gimptextoptions.c:555
 msgid "Hinting:"
-msgstr ""
+msgstr "Hinting:"
 
 #: ../app/tools/gimptextoptions.c:559
 msgid "Text Color"
@@ -14995,8 +15008,8 @@ msgstr ""
 "Ma bheir thu air falbh an t-uidheam-smachd seo o liosta nan uidheaman-smachd "
 "gnìomhach, thèid mapadh tachartais sam bith a rèitich thu a sguabadh às.\n"
 "\n"
-"Ma thaghas tu \"Cuir à comas an t-uidheam-smachd\", thèid a chur à comas gun a "
-"thoirt air falbh."
+"Ma thaghas tu \"Cuir à comas an t-uidheam-smachd\", thèid a chur à comas gun "
+"a thoirt air falbh."
 
 #: ../app/widgets/gimpcontrollerlist.c:635
 msgid "Configure Input Controller"
@@ -15160,11 +15173,11 @@ msgstr "Brùthadh"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:141
 msgid "X tilt"
-msgstr ""
+msgstr "An claonadh X"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:142
 msgid "Y tilt"
-msgstr ""
+msgstr "An claonadh Y"
 
 #. Wheel as in mouse or input device wheel
 #: ../app/widgets/gimpdeviceinfoeditor.c:144
@@ -15845,8 +15858,8 @@ msgstr "%d ppi, %s"
 #, c-format
 msgid "Attribute \"%s\" is invalid on <%s> element in this context"
 msgstr ""
-"Chan eil a' bhuadh \"%s\" dligheach air an eileamaid <%s> anns a' cho-theacsa "
-"seo"
+"Chan eil a' bhuadh \"%s\" dligheach air an eileamaid <%s> anns a' cho-"
+"theacsa seo"
 
 #: ../app/widgets/gimptextbuffer-serialize.c:416
 #, c-format
@@ -16168,7 +16181,7 @@ msgstr "CMYK"
 #: ../app/widgets/widgets-enums.c:118
 msgctxt "color-pick-mode"
 msgid "Pick only"
-msgstr ""
+msgstr "Na dèan ach taghadh"
 
 #: ../app/widgets/widgets-enums.c:119
 msgctxt "color-pick-mode"
@@ -16344,11 +16357,11 @@ msgid ""
 "Microsoft Windows and OS X."
 msgstr ""
 "Gabhaidh GIMP a leudachadh cuideachd. Chaidh a dhealbhadh airson 's gun gabh "
-"plugain is leudachain a chur ris ach an urrainn dhut cha mhòr rud sam bith "
-"a dhèanamh leis. Tha eadar-aghaidh adhartach an sgriobtachaidh a' toirt "
-"comas dhut cha mhòr rud sam bith a dhèanamh, eadar an obair as simplidhe "
-"agus deasachadh fìor-thoinnte. Tha GIMP ri fhaighinn air Microsoft Windows "
-"agus OSX cuideachd."
+"plugain is leudachain a chur ris ach an urrainn dhut cha mhòr rud sam bith a "
+"dhèanamh leis. Tha eadar-aghaidh adhartach an sgriobtachaidh a' toirt comas "
+"dhut cha mhòr rud sam bith a dhèanamh, eadar an obair as simplidhe agus "
+"deasachadh fìor-thoinnte. Tha GIMP ri fhaighinn air Microsoft Windows agus "
+"OSX cuideachd."
 
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "Image Editor"
