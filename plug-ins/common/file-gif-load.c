@@ -732,7 +732,7 @@ LZWReadByte (FILE *fd,
 
   if (just_reset_LZW)
     {
-      if (input_code_size > MAX_LZW_BITS)
+      if (input_code_size > MAX_LZW_BITS || input_code_size <= 1)
         {
           g_message ("Value out of range for code size (corrupted file?)");
           return -1;
