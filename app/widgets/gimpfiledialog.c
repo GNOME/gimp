@@ -1162,6 +1162,17 @@ gimp_file_dialog_get_default_uri (Gimp *gimp)
       uri = g_filename_to_uri (path, NULL, NULL);
       g_free (path);
 
+      /* Paranoia fallback, see bug #722400 */
+      if (! uri)
+        {
+          path = g_build_path (G_DIR_SEPARATOR_S,
+                               g_get_home_dir (),
+                               G_DIR_SEPARATOR_S,
+                               NULL);
+          uri = g_filename_to_uri (path, NULL, NULL);
+          g_free (path);
+        }
+
       return uri;
     }
 }
