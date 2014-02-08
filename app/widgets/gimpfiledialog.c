@@ -1149,12 +1149,23 @@ gimp_file_dialog_get_documents_uri (void)
   gchar *uri;
 
   /* Make sure it ends in '/' */
-  path = g_build_path ("/",
+  path = g_build_path (G_DIR_SEPARATOR_S,
                        g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS),
-                       "/",
+                       G_DIR_SEPARATOR_S,
                        NULL);
   uri = g_filename_to_uri (path, NULL, NULL);
   g_free (path);
+
+  /* Paranoia fallback, see bug #722400 */
+  if (! uri)
+    {
+      path = g_build_path (G_DIR_SEPARATOR_S,
+                           g_get_home_dir (),
+                           G_DIR_SEPARATOR_S,
+                           NULL);
+      uri = g_filename_to_uri (path, NULL, NULL);
+      g_free (path);
+    }
 
   return uri;
 }
