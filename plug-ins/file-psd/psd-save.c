@@ -1689,7 +1689,7 @@ save_image (const gchar  *filename,
   return TRUE;
 }
 
-static const Babl*
+static const Babl *
 get_pixel_format (gint32 drawableID)
 {
   const Babl *format;

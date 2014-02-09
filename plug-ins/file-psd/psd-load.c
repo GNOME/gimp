@@ -62,22 +62,22 @@ static gint             read_merged_image_block    (PSDimage     *img_a,
 static gint32           create_gimp_image          (PSDimage     *img_a,
                                                     const gchar  *filename);
 
-static gint             add_color_map              (const gint32  image_id,
+static gint             add_color_map              (gint32        image_id,
                                                     PSDimage     *img_a);
 
-static gint             add_image_resources        (const gint32  image_id,
+static gint             add_image_resources        (gint32        image_id,
                                                     PSDimage     *img_a,
                                                     FILE         *f,
                                                     gboolean     *resolution_loaded,
                                                     GError      **error);
 
-static gint             add_layers                 (const gint32  image_id,
+static gint             add_layers                 (gint32        image_id,
                                                     PSDimage     *img_a,
                                                     PSDlayer    **lyr_a,
                                                     FILE         *f,
                                                     GError      **error);
 
-static gint             add_merged_image           (const gint32  image_id,
+static gint             add_merged_image           (gint32        image_id,
                                                     PSDimage     *img_a,
                                                     FILE         *f,
                                                     GError      **error);
@@ -87,12 +87,12 @@ static gchar          * get_psd_color_mode_name    (PSDColorMode  mode);
 
 static void             psd_to_gimp_color_map      (guchar       *map256);
 
-static GimpImageType    get_gimp_image_type        (const GimpImageBaseType image_base_type,
-                                                    const gboolean          alpha);
+static GimpImageType    get_gimp_image_type        (GimpImageBaseType image_base_type,
+                                                    gboolean          alpha);
 
 static gint             read_channel_data          (PSDchannel     *channel,
-                                                    const guint16   bps,
-                                                    const guint16   compression,
+                                                    guint16         bps,
+                                                    guint16         compression,
                                                     const guint16  *rle_pack_len,
                                                     FILE           *f,
                                                     GError        **error);
@@ -111,12 +111,12 @@ load_image (const gchar  *filename,
             gboolean     *resolution_loaded,
             GError      **load_error)
 {
-  FILE                 *f;
-  struct stat           st;
-  PSDimage              img_a;
-  PSDlayer            **lyr_a;
-  gint32                image_id = -1;
-  GError               *error = NULL;
+  FILE         *f;
+  struct stat   st;
+  PSDimage      img_a;
+  PSDlayer    **lyr_a;
+  gint32        image_id = -1;
+  GError       *error    = NULL;
 
   /* ----- Open PSD file ----- */
   if (g_stat (filename, &st) == -1)
@@ -358,7 +358,7 @@ read_color_mode_block (PSDimage  *img_a,
                        FILE      *f,
                        GError   **error)
 {
-  static guchar cmap[] = {0, 0, 0, 255, 255, 255};
+  static guchar cmap[] = { 0, 0, 0, 255, 255, 255 };
   guint32       block_len;
 
   img_a->color_map_entries = 0;
@@ -916,47 +916,47 @@ create_gimp_image (PSDimage    *img_a,
 
   switch (img_a->color_mode)
     {
-      case PSD_GRAYSCALE:
-      case PSD_DUOTONE:
-        img_a->base_type = GIMP_GRAY;
-        break;
+    case PSD_GRAYSCALE:
+    case PSD_DUOTONE:
+      img_a->base_type = GIMP_GRAY;
+      break;
 
-      case PSD_BITMAP:
-      case PSD_INDEXED:
-        img_a->base_type = GIMP_INDEXED;
-        break;
+    case PSD_BITMAP:
+    case PSD_INDEXED:
+      img_a->base_type = GIMP_INDEXED;
+      break;
 
-      case PSD_RGB:
-        img_a->base_type = GIMP_RGB;
-        break;
+    case PSD_RGB:
+      img_a->base_type = GIMP_RGB;
+      break;
 
-      default:
-        /* Color mode already validated - should not be here */
-        g_warning ("Invalid color mode");
-        return -1;
-        break;
+    default:
+      /* Color mode already validated - should not be here */
+      g_warning ("Invalid color mode");
+      return -1;
+      break;
     }
 
     switch (img_a->bps)
       {
-        case 32:
-          precision = GIMP_PRECISION_U32_LINEAR;
-	  break;
+      case 32:
+        precision = GIMP_PRECISION_U32_LINEAR;
+        break;
 
-        case 16:
-          precision = GIMP_PRECISION_U16_LINEAR;
-	  break;
+      case 16:
+        precision = GIMP_PRECISION_U16_LINEAR;
+        break;
 
-        case 8:
-        case 1:
-          precision = GIMP_PRECISION_U8_LINEAR;
-	  break;
+      case 8:
+      case 1:
+        precision = GIMP_PRECISION_U8_LINEAR;
+        break;
 
-        default:
-	  /* Precision not supported */
-	  g_warning ("Invalid precision");
-	  return -1;
-	  break;
+      default:
+        /* Precision not supported */
+        g_warning ("Invalid precision");
+        return -1;
+        break;
       }
 
   /* Create gimp image */
@@ -970,8 +970,8 @@ create_gimp_image (PSDimage    *img_a,
 }
 
 static gint
-add_color_map (const gint32  image_id,
-               PSDimage     *img_a)
+add_color_map (gint32    image_id,
+               PSDimage *img_a)
 {
   GimpParasite *parasite;
 
@@ -998,11 +998,11 @@ add_color_map (const gint32  image_id,
 }
 
 static gint
-add_image_resources (const gint32  image_id,
-                     PSDimage     *img_a,
-                     FILE         *f,
-                     gboolean     *resolution_loaded,
-                     GError      **error)
+add_image_resources (gint32     image_id,
+                     PSDimage  *img_a,
+                     FILE      *f,
+                     gboolean  *resolution_loaded,
+                     GError   **error)
 {
   PSDimageres  res_a;
 
@@ -1043,11 +1043,11 @@ add_image_resources (const gint32  image_id,
 }
 
 static gint
-add_layers (const gint32  image_id,
-            PSDimage     *img_a,
-            PSDlayer    **lyr_a,
-            FILE         *f,
-            GError      **error)
+add_layers (gint32     image_id,
+            PSDimage  *img_a,
+            PSDlayer **lyr_a,
+            FILE      *f,
+            GError   **error)
 {
   PSDchannel          **lyr_chn;
   GArray               *parent_group_stack;
@@ -1100,7 +1100,7 @@ add_layers (const gint32  image_id,
     }
 
   /* set the root of the group hierarchy */
-  parent_group_stack = g_array_new (FALSE, FALSE, sizeof(gint32));
+  parent_group_stack = g_array_new (FALSE, FALSE, sizeof (gint32));
   g_array_append_val (parent_group_stack, parent_group_id);
 
   for (lidx = 0; lidx < img_a->num_layers; ++lidx)
@@ -1512,10 +1512,10 @@ add_layers (const gint32  image_id,
 }
 
 static gint
-add_merged_image (const gint32  image_id,
-                  PSDimage     *img_a,
-                  FILE         *f,
-                  GError      **error)
+add_merged_image (gint32     image_id,
+                  PSDimage  *img_a,
+                  FILE      *f,
+                  GError   **error)
 {
   PSDchannel            chn_a[MAX_CHANNELS];
   gchar                *alpha_name;
@@ -1849,28 +1849,28 @@ psd_to_gimp_color_map (guchar *map256)
 }
 
 static GimpImageType
-get_gimp_image_type (const GimpImageBaseType image_base_type,
-                     const gboolean          alpha)
+get_gimp_image_type (GimpImageBaseType image_base_type,
+                     gboolean          alpha)
 {
   GimpImageType image_type;
 
   switch (image_base_type)
     {
-      case GIMP_GRAY:
-        image_type = (alpha) ? GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE;
-        break;
+    case GIMP_GRAY:
+      image_type = (alpha) ? GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE;
+      break;
 
-      case GIMP_INDEXED:
-        image_type = (alpha) ? GIMP_INDEXEDA_IMAGE : GIMP_INDEXED_IMAGE;
-        break;
+    case GIMP_INDEXED:
+      image_type = (alpha) ? GIMP_INDEXEDA_IMAGE : GIMP_INDEXED_IMAGE;
+      break;
 
-      case GIMP_RGB:
-        image_type = (alpha) ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
-        break;
+    case GIMP_RGB:
+      image_type = (alpha) ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
+      break;
 
-      default:
-        image_type = -1;
-        break;
+    default:
+      image_type = -1;
+      break;
     }
 
   return image_type;
@@ -1878,8 +1878,8 @@ get_gimp_image_type (const GimpImageBaseType image_base_type,
 
 static gint
 read_channel_data (PSDchannel     *channel,
-                   const guint16   bps,
-                   const guint16   compression,
+                   guint16         bps,
+                   guint16         compression,
                    const guint16  *rle_pack_len,
                    FILE           *f,
                    GError        **error)

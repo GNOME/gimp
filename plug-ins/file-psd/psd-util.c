@@ -35,14 +35,14 @@
 #define MIN_RUN     3
 
 /*  Local function prototypes  */
-static gchar *          gimp_layer_mode_effects_name    (const GimpLayerModeEffects      mode);
+static gchar * gimp_layer_mode_effects_name (GimpLayerModeEffects mode);
 
 
 /* Utility function */
 void
-psd_set_error (const gboolean   file_eof,
-               const gint       err_no,
-               GError         **error)
+psd_set_error (gboolean   file_eof,
+               gint       err_no,
+               GError   **error)
 {
   if (file_eof)
     {
@@ -59,11 +59,11 @@ psd_set_error (const gboolean   file_eof,
 }
 
 gchar *
-fread_pascal_string (gint32         *bytes_read,
-                     gint32         *bytes_written,
-                     const guint16   mod_len,
-                     FILE           *f,
-                     GError        **error)
+fread_pascal_string (gint32   *bytes_read,
+                     gint32   *bytes_written,
+                     guint16   mod_len,
+                     FILE     *f,
+                     GError  **error)
 {
   /*
    * Reads a pascal string from the file padded to a multiple of mod_len
@@ -134,22 +134,22 @@ fread_pascal_string (gint32         *bytes_read,
 }
 
 gint32
-fwrite_pascal_string (const gchar    *src,
-                      const guint16   mod_len,
-                      FILE           *f,
-                      GError        **error)
+fwrite_pascal_string (const gchar  *src,
+                      guint16       mod_len,
+                      FILE         *f,
+                      GError      **error)
 {
   /*
    *  Converts utf-8 string to current locale and writes as pascal
    *  string with padding to a multiple of mod_len.
    */
 
-  gchar        *str;
-  gchar        *pascal_str;
-  gchar         null_str = 0x0;
-  guchar        pascal_len;
-  gint32        bytes_written = 0;
-  gsize         len;
+  gchar  *str;
+  gchar  *pascal_str;
+  gchar   null_str = 0x0;
+  guchar  pascal_len;
+  gint32  bytes_written = 0;
+  gsize   len;
 
   if (src == NULL)
     {
@@ -203,23 +203,23 @@ fwrite_pascal_string (const gchar    *src,
 }
 
 gchar *
-fread_unicode_string (gint32         *bytes_read,
-                      gint32         *bytes_written,
-                      const guint16   mod_len,
-                      FILE           *f,
-                      GError        **error)
+fread_unicode_string (gint32   *bytes_read,
+                      gint32   *bytes_written,
+                      guint16   mod_len,
+                      FILE     *f,
+                      GError  **error)
 {
   /*
    * Reads a utf-16 string from the file padded to a multiple of mod_len
    * and returns a utf-8 string.
    */
 
-  gchar        *utf8_str;
-  gunichar2    *utf16_str;
-  gint32        len;
-  gint32        i;
-  gint32        padded_len;
-  glong         utf8_str_len;
+  gchar     *utf8_str;
+  gunichar2 *utf16_str;
+  gint32     len;
+  gint32     i;
+  gint32     padded_len;
+  glong      utf8_str_len;
 
   *bytes_read = 0;
   *bytes_written = -1;
@@ -285,22 +285,22 @@ fread_unicode_string (gint32         *bytes_read,
 }
 
 gint32
-fwrite_unicode_string (const gchar    *src,
-                       const guint16   mod_len,
-                       FILE           *f,
-                       GError        **error)
+fwrite_unicode_string (const gchar  *src,
+                       guint16       mod_len,
+                       FILE         *f,
+                       GError      **error)
 {
   /*
    *  Converts utf-8 string to utf-16 and writes 4 byte length
    *  then string padding to multiple of mod_len.
    */
 
-  gunichar2    *utf16_str;
-  gchar         null_str = 0x0;
-  gint32        utf16_len = 0;
-  gint32        bytes_written = 0;
-  gint          i;
-  glong         len;
+  gunichar2 *utf16_str;
+  gchar      null_str = 0x0;
+  gint32     utf16_len = 0;
+  gint32     bytes_written = 0;
+  gint       i;
+  glong      len;
 
   if (src == NULL)
     {
@@ -355,15 +355,16 @@ decode_packbits (const gchar *src,
                  guint16      packed_len,
                  guint32      unpacked_len)
 {
-/*
- *  Decode a PackBits chunk.
- */
-  gint      n;
-  gchar     dat;
-  gint32    unpack_left = unpacked_len;
-  gint32    pack_left = packed_len;
-  gint32    error_code = 0;
-  gint32    return_val = 0;
+  /*
+   *  Decode a PackBits chunk.
+   */
+
+  gint    n;
+  gchar   dat;
+  gint32  unpack_left = unpacked_len;
+  gint32  pack_left = packed_len;
+  gint32  error_code = 0;
+  gint32  return_val = 0;
 
   while (unpack_left > 0 && pack_left > 0)
     {
@@ -464,13 +465,14 @@ decode_packbits (const gchar *src,
 }
 
 gchar *
-encode_packbits (const gchar   *src,
-                 const guint32  unpacked_len,
-                 guint16       *packed_len)
+encode_packbits (const gchar *src,
+                 guint32      unpacked_len,
+                 guint16     *packed_len)
 {
-/*
- *  Encode a PackBits chunk.
- */
+  /*
+   *  Encode a PackBits chunk.
+   */
+
   GString *dst_str;                      /* destination string */
   gint     curr_char;                    /* current character */
   gchar    char_buff[128];               /* buffer of already read characters */
@@ -750,9 +752,9 @@ psd_to_gimp_blend_mode (const gchar *psd_mode)
 }
 
 gchar *
-gimp_to_psd_blend_mode (const GimpLayerModeEffects gimp_layer_mode)
+gimp_to_psd_blend_mode (GimpLayerModeEffects gimp_layer_mode)
 {
-  gchar        *psd_mode;
+  gchar *psd_mode;
 
   switch (gimp_layer_mode)
     {
@@ -870,7 +872,7 @@ gimp_to_psd_blend_mode (const GimpLayerModeEffects gimp_layer_mode)
 }
 
 static gchar *
-gimp_layer_mode_effects_name (const GimpLayerModeEffects mode)
+gimp_layer_mode_effects_name (GimpLayerModeEffects mode)
 {
   static gchar *layer_mode_effects_names[] =
   {

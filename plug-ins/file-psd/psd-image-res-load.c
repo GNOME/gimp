@@ -137,99 +137,99 @@
 
 /*  Local function prototypes  */
 static gint     load_resource_unknown  (const PSDimageres     *res_a,
-                                        const gint32           image_id,
+                                        gint32                 image_id,
                                         FILE                  *f,
                                         GError               **error);
 
 static gint     load_resource_ps_only  (const PSDimageres     *res_a,
-                                        const gint32           image_id,
+                                        gint32                 image_id,
                                         FILE                  *f,
                                         GError               **error);
 
 static gint     load_resource_1005     (const PSDimageres     *res_a,
-                                        const gint32           image_id,
+                                        gint32                 image_id,
                                         FILE                  *f,
                                         GError               **error);
 
 static gint     load_resource_1006     (const PSDimageres     *res_a,
-                                        const gint32           image_id,
+                                        gint32                 image_id,
                                         PSDimage              *img_a,
                                         FILE                  *f,
                                         GError               **error);
 
 static gint     load_resource_1007     (const PSDimageres     *res_a,
-                                        const gint32           image_id,
+                                        gint32                 image_id,
                                         PSDimage              *img_a,
                                         FILE                  *f,
                                         GError               **error);
 
 static gint     load_resource_1008     (const PSDimageres     *res_a,
-                                        const gint32           image_id,
+                                        gint32                 image_id,
                                         FILE                  *f,
                                         GError               **error);
 
 static gint     load_resource_1022     (const PSDimageres     *res_a,
-                                        const gint32           image_id,
+                                        gint32                 image_id,
                                         PSDimage              *img_a,
                                         FILE                  *f,
                                         GError               **error);
 
 static gint     load_resource_1024     (const PSDimageres     *res_a,
-                                        const gint32           image_id,
+                                        gint32                 image_id,
                                         PSDimage              *img_a,
                                         FILE                  *f,
                                         GError               **error);
 
 static gint     load_resource_1028     (const PSDimageres     *res_a,
-                                        const gint32           image_id,
+                                        gint32                 image_id,
                                         FILE                  *f,
                                         GError               **error);
 
 static gint     load_resource_1032     (const PSDimageres     *res_a,
-                                        const gint32           image_id,
+                                        gint32                 image_id,
                                         FILE                  *f,
                                         GError               **error);
 
 static gint     load_resource_1033     (const PSDimageres     *res_a,
-                                        const gint32           image_id,
+                                        gint32                 image_id,
                                         FILE                  *f,
                                         GError               **error);
 
 static gint     load_resource_1039     (const PSDimageres     *res_a,
-                                        const gint32           image_id,
+                                        gint32                 image_id,
                                         FILE                  *f,
                                         GError               **error);
 
 static gint     load_resource_1045     (const PSDimageres     *res_a,
-                                        const gint32           image_id,
+                                        gint32                 image_id,
                                         PSDimage              *img_a,
                                         FILE                  *f,
                                         GError               **error);
 
 static gint     load_resource_1046     (const PSDimageres     *res_a,
-                                        const gint32           image_id,
+                                        gint32                 image_id,
                                         FILE                  *f,
                                         GError               **error);
 
 static gint     load_resource_1053     (const PSDimageres     *res_a,
-                                        const gint32           image_id,
+                                        gint32                 image_id,
                                         PSDimage              *img_a,
                                         FILE                  *f,
                                         GError               **error);
 
 static gint     load_resource_1058     (const PSDimageres     *res_a,
-                                        const gint32           image_id,
+                                        gint32                 image_id,
                                         FILE                  *f,
                                         GError               **error);
 
 static gint     load_resource_1077     (const PSDimageres     *res_a,
-                                        const gint32           image_id,
+                                        gint32                 image_id,
                                         PSDimage              *img_a,
                                         FILE                  *f,
                                         GError               **error);
 
 static gint     load_resource_2000     (const PSDimageres     *res_a,
-                                        const gint32           image_id,
+                                        gint32                 image_id,
                                         FILE                  *f,
                                         GError               **error);
 
@@ -273,12 +273,12 @@ get_image_resource_header (PSDimageres  *res_a,
 }
 
 gint
-load_image_resource (PSDimageres   *res_a,
-                     const gint32   image_id,
-                     PSDimage      *img_a,
-                     FILE          *f,
-                     gboolean      *resolution_loaded,
-                     GError       **error)
+load_image_resource (PSDimageres  *res_a,
+                     gint32        image_id,
+                     PSDimage     *img_a,
+                     FILE         *f,
+                     gboolean     *resolution_loaded,
+                     GError      **error)
 {
   gint  pad;
 
@@ -414,10 +414,10 @@ load_image_resource (PSDimageres   *res_a,
 }
 
 gint
-load_thumbnail_resource (PSDimageres   *res_a,
-                         const gint32   image_id,
-                         FILE          *f,
-                         GError       **error)
+load_thumbnail_resource (PSDimageres  *res_a,
+                         gint32        image_id,
+                         FILE         *f,
+                         GError      **error)
 {
   gint  rtn = 0;
   gint  pad;
@@ -458,7 +458,7 @@ load_thumbnail_resource (PSDimageres   *res_a,
 
 static gint
 load_resource_unknown (const PSDimageres  *res_a,
-                       const gint32        image_id,
+                       gint32              image_id,
                        FILE               *f,
                        GError            **error)
 {
@@ -492,7 +492,7 @@ load_resource_unknown (const PSDimageres  *res_a,
 
 static gint
 load_resource_ps_only (const PSDimageres  *res_a,
-                       const gint32        image_id,
+                       gint32              image_id,
                        FILE               *f,
                        GError            **error)
 {
@@ -527,7 +527,7 @@ load_resource_ps_only (const PSDimageres  *res_a,
 
 static gint
 load_resource_1005 (const PSDimageres  *res_a,
-                    const gint32        image_id,
+                    gint32              image_id,
                     FILE               *f,
                     GError            **error)
 {
@@ -591,7 +591,7 @@ load_resource_1005 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1006 (const PSDimageres  *res_a,
-                    const gint32        image_id,
+                    gint32              image_id,
                     PSDimage           *img_a,
                     FILE               *f,
                     GError            **error)
@@ -633,7 +633,7 @@ load_resource_1006 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1007 (const PSDimageres  *res_a,
-                    const gint32        image_id,
+                    gint32              image_id,
                     PSDimage           *img_a,
                     FILE               *f,
                     GError            **error)
@@ -741,7 +741,7 @@ load_resource_1007 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1008 (const PSDimageres  *res_a,
-                    const gint32        image_id,
+                    gint32              image_id,
                     FILE               *f,
                     GError            **error)
 {
@@ -768,7 +768,7 @@ load_resource_1008 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1022 (const PSDimageres  *res_a,
-                    const gint32        image_id,
+                    gint32              image_id,
                     PSDimage           *img_a,
                     FILE               *f,
                     GError            **error)
@@ -795,7 +795,7 @@ load_resource_1022 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1024 (const PSDimageres  *res_a,
-                    const gint32        image_id,
+                    gint32              image_id,
                     PSDimage           *img_a,
                     FILE               *f,
                     GError            **error)
@@ -815,7 +815,7 @@ load_resource_1024 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1028 (const PSDimageres  *res_a,
-                    const gint32        image_id,
+                    gint32              image_id,
                     FILE               *f,
                     GError            **error)
 {
@@ -883,7 +883,7 @@ load_resource_1028 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1032 (const PSDimageres  *res_a,
-                    const gint32        image_id,
+                    gint32              image_id,
                     FILE               *f,
                     GError            **error)
 {
@@ -942,7 +942,7 @@ load_resource_1032 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1033 (const PSDimageres  *res_a,
-                    const gint32        image_id,
+                    gint32              image_id,
                     FILE               *f,
                     GError            **error)
 {
@@ -1091,7 +1091,7 @@ load_resource_1033 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1039 (const PSDimageres  *res_a,
-                    const gint32        image_id,
+                    gint32              image_id,
                     FILE               *f,
                     GError            **error)
 {
@@ -1121,7 +1121,7 @@ load_resource_1039 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1045 (const PSDimageres  *res_a,
-                    const gint32        image_id,
+                    gint32              image_id,
                     PSDimage           *img_a,
                     FILE               *f,
                     GError            **error)
@@ -1170,7 +1170,7 @@ load_resource_1045 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1046 (const PSDimageres  *res_a,
-                    const gint32        image_id,
+                    gint32              image_id,
                     FILE               *f,
                     GError            **error)
 {
@@ -1202,7 +1202,7 @@ load_resource_1046 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1053 (const PSDimageres  *res_a,
-                    const gint32        image_id,
+                    gint32              image_id,
                     PSDimage           *img_a,
                     FILE               *f,
                     GError            **error)
@@ -1236,7 +1236,7 @@ load_resource_1053 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1058 (const PSDimageres  *res_a,
-                    const gint32        image_id,
+                    gint32              image_id,
                     FILE               *f,
                     GError            **error)
 {
@@ -1272,7 +1272,7 @@ load_resource_1058 (const PSDimageres  *res_a,
 
 static gint
 load_resource_1077 (const PSDimageres  *res_a,
-                    const gint32        image_id,
+                    gint32              image_id,
                     PSDimage           *img_a,
                     FILE               *f,
                     GError            **error)
@@ -1384,7 +1384,7 @@ load_resource_1077 (const PSDimageres  *res_a,
 
 static gint
 load_resource_2000 (const PSDimageres  *res_a,
-                    const gint32        image_id,
+                    gint32              image_id,
                     FILE               *f,
                     GError            **error)
 {
