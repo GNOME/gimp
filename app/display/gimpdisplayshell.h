@@ -187,8 +187,6 @@ struct _GimpDisplayShell
   gboolean           keyboard_grabbed;
   guint32            keyboard_grab_time;
 
-  gboolean           inferior_ignore_mode;
-
   /* Two states are possible when the shell is grabbed: it can be
    * grabbed with space (or space+button1 which is the same state),
    * then if space is released but button1 was still pressed, we wait
