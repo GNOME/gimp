@@ -53,6 +53,22 @@
  * functionally equivalent to the ArgyllCMS sRGB.icm TRC and is the
  * same as the LCMS sRGB built-in profile TRC.
  *
+ * The actual primaries in the sRGB specification are
+ * red xy:   {0.6400, 0.3300, 1.0}
+ * green xy: {0.3000, 0.6000, 1.0}
+ * blue xy:  {0.1500, 0.0600, 1.0}
+ *
+ * The sRGB primaries given below are "pre-quantized" to compensate
+ * for hexadecimal quantization during the profile-making process.
+ * Unless the profile-making code compensates for this quantization,
+ * the resulting profile's red, green, and blue colorants will deviate
+ * slightly from the correct XYZ values.
+ *
+ * LCMS2 doesn't compensate for hexadecimal quantization. The
+ * "pre-quantized" primaries below were back-calculated from the
+ * ArgyllCMS sRGB.icm profile. The resulting sRGB profile's colorants
+ * exactly matches the ArgyllCMS sRGB.icm profile colorants.
+ *
  * Return value: the sRGB cmsHPROFILE.
  *
  * Since: GIMP 2.10
@@ -63,6 +79,7 @@ gimp_lcms_create_srgb_profile (void)
   cmsHPROFILE      srgb_profile;
   cmsMLU          *description;
   cmsCIExyY        d65_srgb_specs = { 0.3127, 0.3290, 1.0 };
+
   cmsCIExyYTRIPLE  srgb_primaries_pre_quantized =
     {
       { 0.639998686, 0.330010138, 1.0 },
@@ -93,7 +110,16 @@ gimp_lcms_create_srgb_profile (void)
   cmsWriteTag (srgb_profile, cmsSigProfileDescriptionTag, description);
   cmsMLUfree (description);
 
-  cmsSetProfileVersion (srgb_profile, 2.1);
+  /**
+   * The following line produces a V2 profile with a point curve TRC.
+   * Profiles with point curve TRCs can't be used in LCMS2 unbounded
+   * mode ICC profile conversions. A V2 profile might be appropriate
+   * for embedding in sRGB images saved to disk, if the image is to be
+   * opened by an image editing application that doesn't understand V4
+   * profiles.
+   *
+   * cmsSetProfileVersion (srgb_profile, 2.1);
+   **/
 
   return srgb_profile;
 }
