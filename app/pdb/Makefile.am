@@ -8,6 +8,7 @@ AM_CPPFLAGS = \
 	-I$(top_builddir)/pdb		\
 	-I$(top_srcdir)/app		\
 	$(CAIRO_CFLAGS)			\
+	$(PANGOCAIRO_CFLAGS)		\
 	$(GEGL_CFLAGS)			\
 	$(GDK_PIXBUF_CFLAGS)		\
 	-I$(includedir)

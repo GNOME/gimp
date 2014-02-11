@@ -78,7 +78,7 @@ libappinternalprocs = static_library('appinternalprocs',
   include_directories: [ rootInclude, rootAppInclude, ],
   c_args: '-DG_LOG_DOMAIN="Gimp-PDB"',
   dependencies: [
-    cairo, gegl, gdk_pixbuf,
+    cairo, gegl, gdk_pixbuf, pangocairo,
   ],
   sources: [
     pdbgen

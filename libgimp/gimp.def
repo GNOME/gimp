@@ -845,6 +845,7 @@ EXPORTS
 	gimp_text_layer_set_language
 	gimp_text_layer_set_letter_spacing
 	gimp_text_layer_set_line_spacing
+	gimp_text_layer_set_markup
 	gimp_text_layer_set_text
 	gimp_thumbnail_procedure_get_type
 	gimp_thumbnail_procedure_new

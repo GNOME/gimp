@@ -173,8 +173,7 @@ gimp_text_layer_set_text (GimpLayer   *layer,
  * This procedure returns the markup of the styles from a text layer.
  * The markup will be in the form of Pango's markup - See
  * https://www.pango.org/ for more information about Pango and its
- * markup. Note: Setting the markup of a text layer using Pango's
- * markup is not supported for now.
+ * markup.
  *
  * Returns: (transfer full):
  *          The markup which represents the style of the specified text layer.
@@ -204,6 +203,46 @@ gimp_text_layer_get_markup (GimpLayer *layer)
   gimp_value_array_unref (return_vals);
 
   return markup;
+}
+
+/**
+ * gimp_text_layer_set_markup:
+ * @layer: The text layer.
+ * @markup: The new markup to set.
+ *
+ * Set the markup for a text layer from a string.
+ *
+ * This procedure sets the markup of the styles for a text layer. The
+ * markup should be in the form of Pango's markup - See
+ * https://docs.gtk.org/Pango/pango_markup.html for a reference.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_text_layer_set_markup (GimpLayer   *layer,
+                            const gchar *markup)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_LAYER, layer,
+                                          G_TYPE_STRING, markup,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-text-layer-set-markup",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
 }
 
 /**

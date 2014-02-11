@@ -159,8 +159,6 @@ sub text_layer_get_markup {
 This procedure returns the markup of the styles from a text layer.
 The markup will be in the form of Pango's markup - See
 https://www.pango.org/ for more information about Pango and its markup.
-Note: Setting the markup of a text layer using Pango's markup is not
-supported for now.
 HELP
 
     barak_pdb_misc('2010', '2.8');
@@ -183,6 +181,64 @@ HELP
       g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                     "markup", &markup,
                     NULL);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+sub text_layer_set_markup {
+    $blurb = 'Set the markup for a text layer from a string.';
+
+    $help = <<'HELP';
+This procedure sets the markup of the styles for a text layer.
+The markup should be in the form of Pango's markup - See
+https://docs.gtk.org/Pango/pango_markup.html for a reference.
+HELP
+
+    $author = 'Ian Munsie <darkstarsword@gmail.com>';
+    $copyright = 'Ian Munsie';
+    $date = '2014';
+    $since = '3.0';
+
+    @inargs = (
+        { name => 'layer', type => 'layer',
+          desc => 'The text layer' },
+        { name => 'markup', type => 'string',
+          desc => 'The new markup to set' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
+    {
+      gchar *markup_cat = NULL;
+      const gchar *markup_ptr = markup;
+
+      if (strstr(markup, "<markup>") == NULL || strstr(markup, "</markup>") == NULL)
+        {
+          markup_cat = g_strconcat("<markup>", markup, "</markup>", NULL);
+          markup_ptr = markup_cat;
+        }
+
+      if (pango_parse_markup (markup_ptr, -1, 0, NULL, NULL, NULL, error))
+        {
+          gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
+                               _("Set text layer markup"),
+                               "markup", markup_ptr,
+                               NULL);
+        }
+      else
+        {
+          success = FALSE;
+        }
+
+      g_free(markup_cat);
     }
   else
     {
@@ -1128,7 +1184,8 @@ CODE
 }
 
 
-@headers = qw("libgimpbase/gimpbase.h"
+@headers = qw(<pango/pango.h>
+              "libgimpbase/gimpbase.h"
               "core/gimpcontext.h"
               "text/gimptext.h"
               "text/gimptextlayer.h"
@@ -1140,6 +1197,7 @@ CODE
             text_layer_get_text
             text_layer_set_text
             text_layer_get_markup
+            text_layer_set_markup
             text_layer_get_font
             text_layer_set_font
             text_layer_get_font_size
