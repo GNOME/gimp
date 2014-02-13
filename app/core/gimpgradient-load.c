@@ -422,7 +422,15 @@ svg_parser_end_element (GMarkupParseContext  *context,
   if (parser->gradient &&
       strcmp (element_name, "linearGradient") == 0)
     {
+      GList *list;
+
       parser->gradient->segments = svg_parser_gradient_segments (parser->stops);
+
+      for (list = parser->stops; list; list = list->next)
+        g_slice_free (SvgStop, list->data);
+
+      g_list_free (parser->stops);
+      parser->stops = NULL;
 
       if (parser->gradient->segments)
         parser->gradients = g_list_prepend (parser->gradients,
