@@ -562,6 +562,11 @@ gimp_imagefile_info_changed (GimpImagefile *imagefile)
 
       private->description = NULL;
     }
+  if (private->icon)
+    {
+      g_object_unref (GET_PRIVATE (imagefile)->icon);
+      private->icon = NULL;
+    }
 
   g_signal_emit (imagefile, gimp_imagefile_signals[INFO_CHANGED], 0);
 }
