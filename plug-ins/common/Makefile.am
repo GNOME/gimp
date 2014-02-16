@@ -103,7 +103,7 @@ libexec_PROGRAMS = \
 	file-png \
 	file-pnm \
 	$(FILE_PS) \
-	$(FILE_PSP) \
+	file-psp \
 	file-raw-data \
 	file-sunras \
 	$(FILE_SVG) \
@@ -173,7 +173,6 @@ EXTRA_PROGRAMS = \
 	file-pdf-load \
 	file-pdf-save \
 	file-ps \
-	file-psp \
 	file-svg \
 	file-tiff-load \
 	file-tiff-save \

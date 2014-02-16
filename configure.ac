@@ -1163,22 +1163,16 @@ AC_SUBST(JPEG_LIBS)
 # Check for libz
 ################
 
-have_zlib=yes
 if test -z "$Z_LIBS"; then
   AC_CHECK_LIB(z, gzsetparams,
     [AC_CHECK_HEADER(zlib.h,
-      FILE_PSP='file-psp$(EXEEXT)'; Z_LIBS='-lz',
-      [have_zlib="no (ZLIB header files not found)"])],
-    [have_zlib="no (ZLIB library not found)"])
+      Z_LIBS='-lz',
+      AC_MSG_ERROR([ZLIB header files not found]))],
+    AC_MSG_ERROR([ZLIB library not found]))
 fi
 
-if test "x$have_zlib" = xyes; then
-  MIME_TYPES="$MIME_TYPES;image/x-psp"
-fi
+MIME_TYPES="$MIME_TYPES;image/x-psp"
 
-AC_SUBST(FILE_PSP)
-
-AM_CONDITIONAL(HAVE_Z, test "x$have_zlib" = xyes)
 AC_SUBST(Z_LIBS)
 
 
@@ -1233,7 +1227,7 @@ AM_CONDITIONAL(HAVE_LIBLZMA, test "x$have_liblzma" = xyes)
 # with fewer libraries.
 #######################################################################
 have_compressor=no
-if test "x$have_zlib" = xyes && test "x$have_libbzip2" = xyes && test "x$have_liblzma" = xyes; then
+if test "x$have_libbzip2" = xyes && test "x$have_liblzma" = xyes; then
    have_compressor=yes
 else
    AC_MSG_ERROR([
