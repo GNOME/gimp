@@ -24,12 +24,6 @@ if HAVE_MAC_TWAIN
 twain = twain
 endif
 
-if HAVE_BZIP2
-if HAVE_LIBLZMA
-file_compressor = file-compressor
-endif
-endif
-
 if OS_WIN32
 twain = twain
 win_snap = win-snap
@@ -45,7 +39,7 @@ SUBDIRS = \
 	$(pygimp)		\
 	color-rotate		\
 	file-bmp		\
-	$(file_compressor)	\
+	file-compressor		\
 	$(file_exr)		\
 	file-faxg3		\
 	file-fits		\

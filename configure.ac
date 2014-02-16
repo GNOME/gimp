@@ -1180,24 +1180,14 @@ AC_SUBST(Z_LIBS)
 # Check for libbzip2
 ####################
 
-AC_ARG_WITH(bzip2,  [  --without-bzip2         build without bzip2 support])
-
-have_libbzip2=no
-if test "x$with_bzip2" != xno; then
-  have_libbzip2=yes
+if test -z "$BZIP2_LIBS"; then
   AC_CHECK_LIB(bz2, BZ2_bzCompress,
     [AC_CHECK_HEADER(bzlib.h,
       BZIP2_LIBS='-lbz2',
-      [have_libbzip2="no (libbzip2 header files not found)"])],
-    [have_libbzip2="no (libbzip2 library not found)"])
-  if test "x$have_libbzip2" != xyes -a "x$with_bzip2" = xyes; then
-    AC_MSG_ERROR([
-*** Checks for bzip2 library failed. You can build without it by passing
-*** --without-bzip2 to configure but you won't be able to use compressed files then.])
-  fi
+      AC_MSG_ERROR([libbzip2 header files not found]))],
+    AC_MSG_ERROR([libbzip2 library not found]))
 fi
 
-AM_CONDITIONAL(HAVE_BZIP2, test "x$have_libbzip2" = xyes)
 AC_SUBST(BZIP2_LIBS)
 
 
@@ -1205,36 +1195,7 @@ AC_SUBST(BZIP2_LIBS)
 # Check for liblzma
 ###################
 
-AC_ARG_WITH(liblzma,  [  --without-liblzma       build without LZMA support])
-
-have_liblzma=no
-if test "x$with_liblzma" != xno; then
-  have_liblzma=yes
-  PKG_CHECK_MODULES(LZMA, liblzma >= liblzma_required_version,
-    AC_DEFINE(HAVE_LIBLZMA, 1, [Define to 1 if liblzma is available]),
-    have_liblzma="no (liblzma not found or too old)")
-fi
-
-AC_SUBST(LZMA_CFLAGS)
-AC_SUBST(LZMA_LIBS)
-
-AM_CONDITIONAL(HAVE_LIBLZMA, test "x$have_liblzma" = xyes)
-
-
-#######################################################################
-# file-compressor is only built when all the compressor libraries are
-# available. We should revisit this at some point to make it build even
-# with fewer libraries.
-#######################################################################
-have_compressor=no
-if test "x$have_libbzip2" = xyes && test "x$have_liblzma" = xyes; then
-   have_compressor=yes
-else
-   AC_MSG_ERROR([
-*** One or more compression libraries are unavailable. zlib, libbzip2
-*** and liblzma are required build dependencies. See the file 'INSTALL'
-*** for help.])
-fi
+PKG_CHECK_MODULES(LZMA, liblzma >= liblzma_required_version)
 
 
 ###############################
@@ -2331,7 +2292,6 @@ Optional Features:
 
 Optional Plug-Ins:
   Ascii Art:           $have_libaa
-  Compressor:          $have_compressor
   Ghostscript:         $have_gs
   Help Browser:        $have_webkit
   JPEG 2000:           $have_jp2
@@ -2340,7 +2300,6 @@ Optional Plug-Ins:
   PDF (import):        $have_poppler
   PDF (export):        $have_cairo_pdf
   Print:               $enable_print
-  PSP:                 $have_zlib
   Python:              $enable_python
   Script-Fu:           $have_script_fu
   SVG:                 $have_librsvg
