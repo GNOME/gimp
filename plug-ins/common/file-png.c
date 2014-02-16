@@ -745,8 +745,10 @@ load_image (const gchar  *filename,
       return image;
     }
 
+#ifdef PNG_BENIGN_ERRORS_SUPPORTED
   /* Change some libpng errors to warnings (e.g. bug 721135) */
   png_set_benign_errors (pp, TRUE);
+#endif
 
   /*
    * Open the file and initialize the PNG read "engine"...
@@ -1351,8 +1353,10 @@ save_image (const gchar  *filename,
       return FALSE;
     }
 
+#ifdef PNG_BENIGN_ERRORS_SUPPORTED
   /* Change some libpng errors to warnings (e.g. bug 721135) */
   png_set_benign_errors (pp, TRUE);
+#endif
 
   /*
    * Open the file and initialize the PNG write "engine"...
