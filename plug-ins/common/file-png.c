@@ -745,6 +745,9 @@ load_image (const gchar  *filename,
       return image;
     }
 
+  /* Change some libpng errors to warnings (e.g. bug 721135) */
+  png_set_benign_errors (pp, TRUE);
+
   /*
    * Open the file and initialize the PNG read "engine"...
    */
@@ -1347,6 +1350,9 @@ save_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename));
       return FALSE;
     }
+
+  /* Change some libpng errors to warnings (e.g. bug 721135) */
+  png_set_benign_errors (pp, TRUE);
 
   /*
    * Open the file and initialize the PNG write "engine"...
