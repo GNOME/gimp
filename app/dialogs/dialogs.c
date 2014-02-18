@@ -264,8 +264,6 @@ static const GimpDialogFactoryEntry entries[] =
             dialogs_file_export_new,        FALSE, TRUE, TRUE),
 
   /*  singleton toplevels  */
-  TOPLEVEL ("gimp-action-search-dialog",
-            dialogs_action_search_get,      TRUE,  TRUE, TRUE),
   TOPLEVEL ("gimp-preferences-dialog",
             dialogs_preferences_get,        TRUE, TRUE,  FALSE),
   TOPLEVEL ("gimp-input-devices-dialog",
@@ -280,6 +278,8 @@ static const GimpDialogFactoryEntry entries[] =
             dialogs_tips_get,               TRUE, FALSE, FALSE),
   TOPLEVEL ("gimp-about-dialog",
             dialogs_about_get,              TRUE, FALSE, FALSE),
+  TOPLEVEL ("gimp-action-search-dialog",
+            dialogs_action_search_get,      TRUE, TRUE,  TRUE),
   TOPLEVEL ("gimp-error-dialog",
             dialogs_error_get,              TRUE, FALSE, FALSE),
   TOPLEVEL ("gimp-close-all-dialog",

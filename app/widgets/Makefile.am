@@ -19,6 +19,8 @@ libappwidgets_a_sources = \
 	widgets-types.h			\
 	gimpaction.c			\
 	gimpaction.h			\
+	gimpaction-history.c		\
+	gimpaction-history.h		\
 	gimpactioneditor.c		\
 	gimpactioneditor.h		\
 	gimpactionfactory.c		\
@@ -223,8 +225,6 @@ libappwidgets_a_sources = \
 	gimplanguagestore.h		\
 	gimplanguagestore-parser.c	\
 	gimplanguagestore-parser.h	\
-	gimpaction-history.c	\
-	gimpaction-history.h	\
 	gimplayertreeview.c		\
 	gimplayertreeview.h		\
 	gimpmenudock.c			\

@@ -46,6 +46,7 @@
 
 #include "tools/gimp-tools.h"
 
+#include "widgets/gimpaction-history.h"
 #include "widgets/gimpclipboard.h"
 #include "widgets/gimpcolorselectorpalette.h"
 #include "widgets/gimpcontrollers.h"
@@ -61,7 +62,6 @@
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 #include "widgets/gimplanguagestore-parser.h"
-#include "widgets/gimpaction-history.h"
 
 #include "actions/actions.h"
 #include "actions/windows-commands.h"
@@ -513,31 +513,29 @@ gui_restore_after_callback (Gimp               *gimp,
 
     gui_add_to_app_menu (image_ui_manager, osx_app,
                          "/image-menubar/Help/dialogs-about", 0);
+    gui_add_to_app_menu (image_ui_manager, osx_app,
+                         "/image-menubar/Help/dialogs-search-action", 1);
 
 #define PREFERENCES "/image-menubar/Edit/Preferences/"
 
     gui_add_to_app_menu (image_ui_manager, osx_app,
-                         PREFERENCES "dialogs-preferences", 2);
+                         PREFERENCES "dialogs-preferences", 3);
     gui_add_to_app_menu (image_ui_manager, osx_app,
-                         PREFERENCES "dialogs-input-devices", 3);
+                         PREFERENCES "dialogs-input-devices", 4);
     gui_add_to_app_menu (image_ui_manager, osx_app,
-                         PREFERENCES "dialogs-keyboard-shortcuts", 4);
+                         PREFERENCES "dialogs-keyboard-shortcuts", 5);
     gui_add_to_app_menu (image_ui_manager, osx_app,
-                         PREFERENCES "dialogs-module-dialog", 5);
+                         PREFERENCES "dialogs-module-dialog", 6);
     gui_add_to_app_menu (image_ui_manager, osx_app,
-                         PREFERENCES "plug-in-unit-editor", 6);
+                         PREFERENCES "plug-in-unit-editor", 7);
 
 #undef PREFERENCES
-
-    gui_add_to_app_menu (image_ui_manager, group,
-                         "/dummy-menubar/image-popup/Help/dialogs-search-action",
-                         _("Search and Run a Command"));
 
     /*  the preferences group  */
     group = ige_mac_menu_add_app_menu_group ();
 
     item = gtk_separator_menu_item_new ();
-    gtkosx_application_insert_app_menu_item (osx_app, item, 7);
+    gtkosx_application_insert_app_menu_item (osx_app, item, 8);
 
     item = gtk_ui_manager_get_widget (GTK_UI_MANAGER (image_ui_manager),
                                       "/image-menubar/File/file-quit");
@@ -663,6 +661,7 @@ gui_exit_after_callback (Gimp     *gimp,
                                         gimp);
 
   gimp_action_history_exit (GIMP_GUI_CONFIG (gimp->config));
+
   g_object_unref (image_ui_manager);
   image_ui_manager = NULL;
 

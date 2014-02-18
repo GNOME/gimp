@@ -41,10 +41,6 @@ GtkWidget * dialogs_file_export_new        (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             GimpUIManager     *ui_manager,
                                             gint               view_size);
-GtkWidget * dialogs_action_search_get      (GimpDialogFactory *factory,
-                                            GimpContext       *context,
-                                            GimpUIManager     *ui_manager,
-                                            gint               view_size);
 GtkWidget * dialogs_preferences_get        (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             GimpUIManager     *ui_manager,
@@ -70,6 +66,10 @@ GtkWidget * dialogs_tips_get               (GimpDialogFactory *factory,
                                             GimpUIManager     *ui_manager,
                                             gint               view_size);
 GtkWidget * dialogs_about_get              (GimpDialogFactory *factory,
+                                            GimpContext       *context,
+                                            GimpUIManager     *ui_manager,
+                                            gint               view_size);
+GtkWidget * dialogs_action_search_get      (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             GimpUIManager     *ui_manager,
                                             gint               view_size);

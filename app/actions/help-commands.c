@@ -26,7 +26,6 @@
 
 #include "core/gimpprogress.h"
 
-#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp.h"
 
 #include "actions.h"
@@ -53,18 +52,4 @@ help_context_help_cmd_callback (GtkAction *action,
   return_if_no_widget (widget, data);
 
   gimp_context_help (widget);
-}
-
-void
-help_search_actions_cmd_callback (GtkAction *action,
-                                  gpointer   data)
-{
-  Gimp        *gimp;
-  GtkWidget *widget;
-  return_if_no_widget (widget, data);
-
-  gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
-                                  gtk_widget_get_screen (widget),
-                                  NULL,
-                                  "gimp-action-search-dialog", -1, TRUE);
 }

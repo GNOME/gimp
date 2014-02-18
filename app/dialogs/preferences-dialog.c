@@ -35,6 +35,7 @@
 #include "core/gimplist.h"
 #include "core/gimptemplate.h"
 
+#include "widgets/gimpaction-history.h"
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpcontainercombobox.h"
 #include "widgets/gimpcontainerview.h"
@@ -53,7 +54,6 @@
 #include "widgets/gimptooleditor.h"
 #include "widgets/gimpwidgets-constructors.h"
 #include "widgets/gimpwidgets-utils.h"
-#include "widgets/gimpaction-history.h"
 
 #include "menus/menus.h"
 
@@ -1700,6 +1700,7 @@ prefs_dialog_new (Gimp       *gimp,
 
   g_object_unref (size_group);
   size_group = NULL;
+
 
   /******************/
   /*  Tool Options  */
