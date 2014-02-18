@@ -1,5 +1,11 @@
 /* GIMP - The GNU Image Manipulation Program
- * Copyright (C) 2012-2013 Srihari Sriraman, Suhas V, Vidyashree K, Zeeshan Ali Ansari
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * action-search-dialog.c
+ * Copyright (C) 2012-2013 Srihari Sriraman
+ *                         Suhas V
+ *                         Vidyashree K
+ *                         Zeeshan Ali Ansari
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -73,7 +79,7 @@ static void         row_activated                          (GtkTreeView       *t
 static gboolean     action_search_view_accel_find_func     (GtkAccelKey       *key,
                                                             GClosure          *closure,
                                                             gpointer           data);
-static gchar*       action_search_find_accel_label         (GtkAction         *action);
+static gchar *      action_search_find_accel_label         (GtkAction         *action);
 static void         action_search_add_to_results_list      (GtkAction         *action,
                                                             SearchDialog      *private,
                                                             gint               section);
@@ -122,7 +128,9 @@ action_search_dialog_create (Gimp *gimp)
   gint                  parent_height, parent_width;
   gint                  parent_x, parent_y;
 
-  gdk_window_get_geometry (par_window, &parent_x, &parent_y, &parent_width, &parent_height, NULL);
+  gdk_window_get_geometry (par_window,
+                           &parent_x, &parent_y, &parent_width, &parent_height,
+                           NULL);
 
   if (! private)
     {
@@ -137,8 +145,10 @@ action_search_dialog_create (Gimp *gimp)
       private->dialog = action_search_dialog;
       private->config = config;
 
-      gtk_window_set_role (GTK_WINDOW (action_search_dialog), "gimp-action-search-dialog");
-      gtk_window_set_title (GTK_WINDOW (action_search_dialog), _("Search Actions"));
+      gtk_window_set_role (GTK_WINDOW (action_search_dialog),
+                           "gimp-action-search-dialog");
+      gtk_window_set_title (GTK_WINDOW (action_search_dialog),
+                            _("Search Actions"));
 
       main_vbox = gtk_vbox_new (FALSE, 2);
       gtk_container_add (GTK_CONTAINER (action_search_dialog), main_vbox);
@@ -149,30 +159,49 @@ action_search_dialog_create (Gimp *gimp)
       gtk_widget_show (main_hbox);
 
       private->keyword_entry = gtk_entry_new ();
-      gtk_entry_set_icon_from_stock (GTK_ENTRY (private->keyword_entry), GTK_ENTRY_ICON_PRIMARY, GTK_STOCK_FIND);
+      gtk_entry_set_icon_from_stock (GTK_ENTRY (private->keyword_entry),
+                                     GTK_ENTRY_ICON_PRIMARY, GTK_STOCK_FIND);
       gtk_widget_show (private->keyword_entry);
-      gtk_box_pack_start (GTK_BOX (main_hbox), private->keyword_entry, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (main_hbox), private->keyword_entry,
+                          TRUE, TRUE, 0);
 
-      action_search_setup_results_list (&private->results_list, &private->list_view);
+      action_search_setup_results_list (&private->results_list,
+                                        &private->list_view);
       gtk_box_pack_start (GTK_BOX (main_vbox), private->list_view, TRUE, TRUE, 0);
 
       gtk_widget_set_events (private->dialog,
                              GDK_KEY_RELEASE_MASK | GDK_KEY_PRESS_MASK |
                              GDK_BUTTON_PRESS_MASK | GDK_SCROLL_MASK);
 
-      g_signal_connect (private->results_list, "row-activated", (GCallback) row_activated, private);
-      g_signal_connect (private->keyword_entry, "key-release-event", G_CALLBACK (key_released), private);
-      g_signal_connect (private->results_list, "key_press_event", G_CALLBACK (result_selected), private);
-      g_signal_connect (private->dialog, "event", G_CALLBACK (window_configured), private);
-      g_signal_connect (private->dialog, "show", G_CALLBACK (window_shown), private);
-      g_signal_connect (private->dialog, "delete_event", G_CALLBACK (gtk_widget_hide_on_delete), NULL);
+      g_signal_connect (private->results_list, "row-activated",
+                        G_CALLBACK (row_activated),
+                        private);
+      g_signal_connect (private->keyword_entry, "key-release-event",
+                        G_CALLBACK (key_released),
+                        private);
+      g_signal_connect (private->results_list, "key_press_event",
+                        G_CALLBACK (result_selected),
+                        private);
+      g_signal_connect (private->dialog, "event",
+                        G_CALLBACK (window_configured),
+                        private);
+      g_signal_connect (private->dialog, "show",
+                        G_CALLBACK (window_shown),
+                        private);
+      g_signal_connect (private->dialog, "delete_event",
+                        G_CALLBACK (gtk_widget_hide_on_delete),
+                        NULL);
     }
 
-  /* Move the window to the previous session's position using session management. */
+  /* Move the window to the previous session's position using session
+   * management.
+   */
   private->x      = -1;
   private->y      = -1;
   private->width  = -1;
-  /* Height is the only value not reused since it is too variable because of the result list. */
+  /* Height is the only value not reused since it is too variable
+   * because of the result list.
+   */
   private->height = parent_height / 2;
 
   session_info =
@@ -217,8 +246,9 @@ key_released (GtkWidget    *widget,
               GdkEventKey  *event,
               SearchDialog *private)
 {
-  gchar         *entry_text;
-  gint           width;
+  GtkTreeView *tree_view = GTK_TREE_VIEW (private->results_list);
+  gchar       *entry_text;
+  gint         width;
 
   gtk_window_get_size (GTK_WINDOW (private->dialog), &width, NULL);
   entry_text = g_strstrip (gtk_editable_get_chars (GTK_EDITABLE (widget), 0, -1));
@@ -241,20 +271,20 @@ key_released (GtkWidget    *widget,
     {
       gtk_window_resize (GTK_WINDOW (private->dialog), width,
                          private->height);
-      gtk_list_store_clear (GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (private->results_list))));
+      gtk_list_store_clear (GTK_LIST_STORE (gtk_tree_view_get_model (tree_view)));
       gtk_widget_show_all (private->list_view);
       action_search_history_and_actions (entry_text, private);
-      gtk_tree_selection_select_path (gtk_tree_view_get_selection (GTK_TREE_VIEW (private->results_list)),
+      gtk_tree_selection_select_path (gtk_tree_view_get_selection (tree_view),
                                       gtk_tree_path_new_from_string ("0"));
     }
   else if (strcmp (entry_text, "") == 0 && (event->keyval == GDK_Down) )
     {
       gtk_window_resize (GTK_WINDOW (private->dialog), width,
                          private->height);
-      gtk_list_store_clear (GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (private->results_list))));
+      gtk_list_store_clear (GTK_LIST_STORE (gtk_tree_view_get_model (tree_view)));
       gtk_widget_show_all (private->list_view);
       action_search_history_and_actions (NULL, private);
-      gtk_tree_selection_select_path (gtk_tree_view_get_selection (GTK_TREE_VIEW (private->results_list)),
+      gtk_tree_selection_select_path (gtk_tree_view_get_selection (tree_view),
                                       gtk_tree_path_new_from_string ("0"));
 
     }
@@ -264,7 +294,7 @@ key_released (GtkWidget    *widget,
       GtkTreeModel     *model;
       GtkTreeIter       iter;
 
-      selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (private->results_list));
+      selection = gtk_tree_view_get_selection (tree_view);
       gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
 
       if (gtk_tree_selection_get_selected (selection, &model, &iter))
@@ -287,12 +317,12 @@ key_released (GtkWidget    *widget,
 
 static gboolean
 result_selected (GtkWidget    *widget,
-                 GdkEventKey  *pKey,
+                 GdkEventKey  *kevent,
                  SearchDialog *private)
 {
-  if (pKey->type == GDK_KEY_PRESS)
+  if (kevent->type == GDK_KEY_PRESS)
     {
-      switch (pKey->keyval)
+      switch (kevent->keyval)
         {
           case GDK_Return:
             {
@@ -324,9 +354,11 @@ result_selected (GtkWidget    *widget,
                       gint start_pos;
                       gint end_pos;
 
-                      gtk_editable_get_selection_bounds (GTK_EDITABLE (private->keyword_entry), &start_pos, &end_pos);
+                      gtk_editable_get_selection_bounds (GTK_EDITABLE (private->keyword_entry),
+                                                         &start_pos, &end_pos);
                       gtk_widget_grab_focus ((GTK_WIDGET (private->keyword_entry)));
-                      gtk_editable_select_region (GTK_EDITABLE (private->keyword_entry), start_pos, end_pos);
+                      gtk_editable_select_region (GTK_EDITABLE (private->keyword_entry),
+                                                  start_pos, end_pos);
 
                       event_processed = TRUE;
                     }
@@ -344,10 +376,13 @@ result_selected (GtkWidget    *widget,
               gint start_pos;
               gint end_pos;
 
-              gtk_editable_get_selection_bounds (GTK_EDITABLE (private->keyword_entry), &start_pos, &end_pos);
+              gtk_editable_get_selection_bounds (GTK_EDITABLE (private->keyword_entry),
+                                                 &start_pos, &end_pos);
               gtk_widget_grab_focus ((GTK_WIDGET (private->keyword_entry)));
-              gtk_editable_select_region (GTK_EDITABLE (private->keyword_entry), start_pos, end_pos);
-              gtk_widget_event (GTK_WIDGET (private->keyword_entry), (GdkEvent*) pKey);
+              gtk_editable_select_region (GTK_EDITABLE (private->keyword_entry),
+                                          start_pos, end_pos);
+              gtk_widget_event (GTK_WIDGET (private->keyword_entry),
+                                (GdkEvent *) kevent);
             }
         }
     }
@@ -372,7 +407,7 @@ action_search_view_accel_find_func (GtkAccelKey *key,
   return (GClosure *) data == closure;
 }
 
-static gchar*
+static gchar *
 action_search_find_accel_label (GtkAction *action)
 {
   guint            accel_key     = 0;
@@ -504,12 +539,12 @@ action_search_add_to_results_list (GtkAction    *action,
     }
 
   gtk_list_store_set (store, &iter,
-                     RESULT_ICON, stock_id,
-                     RESULT_DATA, markuptxt,
-                     RESULT_ACTION, action,
-                     RESULT_SECTION, section,
-                     IS_SENSITIVE, gtk_action_get_sensitive (action),
-                     -1);
+                      RESULT_ICON,    stock_id,
+                      RESULT_DATA,    markuptxt,
+                      RESULT_ACTION,  action,
+                      RESULT_SECTION, section,
+                      IS_SENSITIVE,   gtk_action_is_sensitive (action),
+                      -1);
 
   g_free (accel_string);
   g_free (markuptxt);
@@ -535,7 +570,7 @@ action_search_run_selected (SearchDialog *private)
 
       gtk_tree_model_get (model, &iter, RESULT_ACTION, &action, -1);
 
-      if (! gtk_action_get_sensitive (action))
+      if (! gtk_action_is_sensitive (action))
         return;
 
       action_search_finalizer (private);
@@ -549,9 +584,9 @@ static void
 action_search_history_and_actions (const gchar  *keyword,
                                    SearchDialog *private)
 {
-  GList             *list;
-  GimpUIManager     *manager;
-  GList             *history_actions = NULL;
+  GimpUIManager *manager;
+  GList         *list;
+  GList         *history_actions = NULL;
 
   manager = gimp_ui_managers_from_name ("<Image>")->data;
 
@@ -601,17 +636,21 @@ action_search_history_and_actions (const gchar  *keyword,
               g_strcmp0 (name, "plug-in-reshow") != 0)
             continue;
 
-          if (! gtk_action_get_sensitive (action) && ! private->config->search_show_unavailable)
+          if (! gtk_action_is_sensitive (action) &&
+              ! private->config->search_show_unavailable)
             continue;
 
           if (action_search_match_keyword (action, keyword, &section, TRUE))
             {
               GList *list3;
 
-              /* A matching action. Check if we have not already added it as an history action. */
+              /* A matching action. Check if we have not already added
+               * it as an history action.
+               */
               for (list3 = history_actions; list3; list3 = g_list_next (list3))
                 {
-                  if (strcmp (gtk_action_get_name (GTK_ACTION (list3->data)), name) == 0)
+                  if (strcmp (gtk_action_get_name (GTK_ACTION (list3->data)),
+                              name) == 0)
                     {
                       is_redundant = TRUE;
                       break;
@@ -655,7 +694,8 @@ action_fuzzy_match (gchar *string,
 /*
  * Returns: a newly allocated lowercased string, which replaced any
  * spacing characters into a single space and stripped out any leading
- * and trailing space. */
+ * and trailing space.
+ */
 static gchar *
 action_search_normalize_string (const gchar *str)
 {
@@ -689,8 +729,9 @@ action_search_match_keyword (GtkAction   *action,
 
   if (keyword == NULL)
     {
-      /* As a special exception, a NULL keyword means
-         any action matches. */
+      /* As a special exception, a NULL keyword means any action
+       * matches.
+       */
       if (section)
         {
           *section = 0;
@@ -703,9 +744,10 @@ action_search_match_keyword (GtkAction   *action,
   label = action_search_normalize_string (tmp);
   g_free (tmp);
 
-  /* If keyword is two characters,
-     then match them with first letters of first and second word in the labels.
-     For instance 'gb' will list 'Gaussian Blur...' */
+  /* If keyword is two characters, then match them with first letters
+   * of first and second word in the labels.  For instance 'gb' will
+   * list 'Gaussian Blur...'
+   */
   if (strlen (key) == 2)
     {
       gchar* space_pos;
@@ -738,7 +780,7 @@ action_search_match_keyword (GtkAction   *action,
           if (section)
             {
               /* If the substring is the label start, this is a nicer match. */
-              *section = (substr == label)? 1 : 2;
+              *section = (substr == label) ? 1 : 2;
             }
         }
       else if (strlen (key) > 2)
@@ -773,7 +815,8 @@ action_search_match_keyword (GtkAction   *action,
 
               while ((word = strsep (&words, " ")) != NULL)
                 {
-                  if (! strstr (label, word) && (! tooltip || ! strstr (tooltip, word)))
+                  if (! strstr (label, word) &&
+                      (! tooltip || ! strstr (tooltip, word)))
                     {
                       matched = FALSE;
                       break;
@@ -802,7 +845,7 @@ action_search_match_keyword (GtkAction   *action,
   return matched;
 }
 
-void
+static void
 action_search_finalizer (SearchDialog *private)
 {
   if (GTK_IS_WIDGET (private->dialog))

@@ -1,7 +1,8 @@
 /* GIMP - The GNU Image Manipulation Program
- * Copyright (C) 2013  Jehan <jehan at girinstud.io>
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpaction-history.c
+ * Copyright (C) 2013  Jehan <jehan at girinstud.io>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,18 +35,23 @@
 #include "gimpaction.h"
 #include "gimpaction-history.h"
 
-#define GIMP_ACTION_HISTORY_FILENAME "action_history"
 
-typedef struct {
+#define GIMP_ACTION_HISTORY_FILENAME "action-history"
+
+
+typedef struct
+{
   GtkAction    *action;
   gchar        *name;
   gint          count;
 } GimpActionHistoryItem;
 
-static struct {
+static struct
+{
   GimpGuiConfig *config;
   GList         *items;
 } history;
+
 
 static void gimp_action_history_item_free         (GimpActionHistoryItem *item);
 
@@ -54,8 +60,9 @@ static gint gimp_action_history_init_compare_func (GimpActionHistoryItem *a,
 static gint gimp_action_history_compare_func      (GimpActionHistoryItem *a,
                                                    GimpActionHistoryItem *b);
 
-static void gimp_action_insert                    (const gchar           *action_name,
+static void gimp_action_history_insert            (const gchar           *action_name,
                                                    gint                   count);
+
 
 /*  public functions  */
 
@@ -74,9 +81,8 @@ gimp_action_history_init (GimpGuiConfig *config)
     }
 
   history.config    = config;
-  history_file_path = g_build_filename (gimp_directory (),
-                                        GIMP_ACTION_HISTORY_FILENAME,
-                                        NULL);
+  history_file_path = gimp_personal_rc_file (GIMP_ACTION_HISTORY_FILENAME);
+
   fp = fopen (history_file_path, "r");
   if (fp == NULL)
     /* Probably a first use case. Not necessarily an error. */
@@ -90,7 +96,7 @@ gimp_action_history_init (GimpGuiConfig *config)
       if (fscanf (fp, "%s %d", action_name, &count) == EOF)
         break;
 
-      gimp_action_insert (action_name, count);
+      gimp_action_history_insert (action_name, count);
     }
 
   if (count > 1)
@@ -169,7 +175,8 @@ gimp_action_history_excluded_action (const gchar *action_name)
 }
 
 /* Callback run on the `activate` signal of an action.
-   It allows us to log all used action. */
+ * It allows us to log all used action.
+ */
 void
 gimp_action_history_activate_callback (GtkAction *action,
                                        gpointer   user_data)
@@ -194,12 +201,14 @@ gimp_action_history_activate_callback (GtkAction *action,
           GimpActionHistoryItem *next_history_item = g_list_next (actions) ?
             g_list_next (actions)->data : NULL;
 
-          /* Is there any other item with the same count?
-             We don't want to leave any count gap to always accept new items.
-             This means that if we increment the only item with a given count,
-             we must decrement the next item.
-             Other consequence is that an item with higher count won't be
-             incremented at all if no other items have the same count. */
+          /* Is there any other item with the same count?  We don't
+           * want to leave any count gap to always accept new items.
+           * This means that if we increment the only item with a
+           * given count, we must decrement the next item.  Other
+           * consequence is that an item with higher count won't be
+           * incremented at all if no other items have the same
+           * count.
+           */
           if (previous_count == history_item->count ||
               (next_history_item && next_history_item->count == history_item->count))
             {
@@ -246,16 +255,17 @@ gimp_action_history_activate_callback (GtkAction *action,
 void
 gimp_action_history_empty (void)
 {
-  g_list_free_full (history.items, (GDestroyNotify) gimp_action_history_item_free);
+  g_list_free_full (history.items,
+                    (GDestroyNotify) gimp_action_history_item_free);
   history.items = NULL;
 }
 
-/* Search all history actions which match "keyword"
-   with function match_func(action, keyword).
-
-   @return a list of GtkAction*, to free with:
-   g_list_free_full (result, (GDestroyNotify) g_object_unref);
-  */
+/* Search all history actions which match "keyword" with function
+ * match_func(action, keyword).
+ *
+ * @return a list of GtkAction*, to free with:
+ * g_list_free_full (result, (GDestroyNotify) g_object_unref);
+ */
 GList*
 gimp_action_history_search (const gchar         *keyword,
                             GimpActionMatchFunc  match_func,
@@ -267,12 +277,15 @@ gimp_action_history_search (const gchar         *keyword,
   GList                 *search_result = NULL;
   gint                   i             = config->action_history_size;
 
-  for (actions = history.items; actions && i; actions = g_list_next (actions), i--)
+  for (actions = history.items;
+       actions && i;
+       actions = g_list_next (actions), i--)
     {
       history_item = actions->data;
       action = history_item->action;
 
-      if (! gtk_action_get_sensitive (action) && ! config->search_show_unavailable)
+      if (! gtk_action_is_sensitive (action) &&
+          ! config->search_show_unavailable)
         continue;
 
       if (match_func (action, keyword, NULL, FALSE))
@@ -293,8 +306,9 @@ gimp_action_history_item_free (GimpActionHistoryItem *item)
 }
 
 /* Compare function used at list initialization.
-   We use a slightly different compare function as for runtime insert,
-   because we want to keep history file order for equal values. */
+ * We use a slightly different compare function as for runtime insert,
+ * because we want to keep history file order for equal values.
+ */
 static gint
 gimp_action_history_init_compare_func (GimpActionHistoryItem *a,
                                        GimpActionHistoryItem *b)
@@ -303,8 +317,9 @@ gimp_action_history_init_compare_func (GimpActionHistoryItem *a,
 }
 
 /* Compare function used when updating the list.
-   There is no equality case. If they have the same count,
-   I ensure that the first action (last inserted) will be before. */
+ * There is no equality case. If they have the same count,
+ * I ensure that the first action (last inserted) will be before.
+ */
 static gint
 gimp_action_history_compare_func (GimpActionHistoryItem *a,
                                   GimpActionHistoryItem *b)
@@ -313,8 +328,8 @@ gimp_action_history_compare_func (GimpActionHistoryItem *a,
 }
 
 static void
-gimp_action_insert (const gchar *action_name,
-                    gint         count)
+gimp_action_history_insert (const gchar *action_name,
+                            gint         count)
 {
   GList             *action_groups;
   GimpUIManager     *manager;
@@ -347,25 +362,29 @@ gimp_action_insert (const gchar *action_name,
           if (unavailable_action == 0)
             {
               /* We found our action. */
-              GimpActionHistoryItem *new_action = g_malloc0 (sizeof (GimpActionHistoryItem));
+              GimpActionHistoryItem *new_action = g_new0 (GimpActionHistoryItem, 1);
 
               new_action->action = g_object_ref (action);
-              new_action->name = g_strdup (action_name);
-              new_action->count = count;
-              history.items = g_list_insert_sorted (history.items,
-                                                    new_action,
-                                                    (GCompareFunc) gimp_action_history_init_compare_func);
+              new_action->name   = g_strdup (action_name);
+              new_action->count  = count;
+
+              history.items =
+                g_list_insert_sorted (history.items,
+                                      new_action,
+                                      (GCompareFunc) gimp_action_history_init_compare_func);
               found = TRUE;
               break;
             }
           else if (unavailable_action < 0)
             {
               /* Since the actions list is sorted, it means we passed
-                 all possible actions already and it is not in this group. */
+               * all possible actions already and it is not in this group.
+               */
               break;
             }
 
         }
+
       g_list_free (actions);
 
       if (found)

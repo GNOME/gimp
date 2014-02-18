@@ -1,7 +1,8 @@
 /* GIMP - The GNU Image Manipulation Program
- * Copyright (C) 2013  Jehan <jehan at girinstud.io>
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpaction-history.h
+ * Copyright (C) 2013  Jehan <jehan at girinstud.io>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

@@ -1,5 +1,11 @@
 /* GIMP - The GNU Image Manipulation Program
- * Copyright (C) 2012 Srihari Sriraman, Suhas Bharadwaj, Vidyashree K, Zeeshan Ali Ansari
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * action-search-dialog.c
+ * Copyright (C) 2012-2013 Srihari Sriraman
+ *                         Suhas V
+ *                         Vidyashree K
+ *                         Zeeshan Ali Ansari
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
