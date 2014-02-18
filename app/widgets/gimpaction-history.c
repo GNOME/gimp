@@ -139,9 +139,7 @@ gimp_action_history_exit (GimpGuiConfig *config)
   actions = history.items;
   i       = config->action_history_size;
 
-  history_file_path = g_build_filename (gimp_directory (),
-                                        GIMP_ACTION_HISTORY_FILENAME,
-                                        NULL);
+  history_file_path = gimp_personal_rc_file (GIMP_ACTION_HISTORY_FILENAME);
 
   fp = fopen (history_file_path, "w");
   for (; actions && i; actions = g_list_next (actions), i--)
