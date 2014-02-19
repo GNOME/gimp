@@ -51,6 +51,18 @@
 
 #include "gimp-intl.h"
 
+
+enum
+{
+  COLUMN_ICON,
+  COLUMN_MARKUP,
+  COLUMN_TOOLTIP,
+  COLUMN_ACTION,
+  COLUMN_SENSITIVE,
+  COLUMN_SECTION,
+  N_COL
+};
+
 typedef struct
 {
   GtkWidget     *dialog;
@@ -65,6 +77,7 @@ typedef struct
   gint           width;
   gint           height;
 } SearchDialog;
+
 
 static void         key_released                           (GtkWidget         *widget,
                                                             GdkEventKey       *event,
@@ -105,15 +118,6 @@ static void         action_search_setup_results_list       (GtkWidget        **r
                                                             GtkWidget        **list_view);
 static void         search_dialog_free                     (SearchDialog      *private);
 
-enum ResultColumns {
-  RESULT_ICON,
-  RESULT_DATA,
-  RESULT_ACTION_NAME,
-  RESULT_ACTION,
-  IS_SENSITIVE,
-  RESULT_SECTION,
-  N_COL
-};
 
 /* Public Functions */
 
@@ -125,11 +129,11 @@ action_search_dialog_create (Gimp *gimp)
   GdkScreen            *screen        = gdk_screen_get_default ();
   gint                  screen_width  = gdk_screen_get_width (screen);
   gint                  screen_height = gdk_screen_get_height (screen);
-  GdkWindow            *par_window    = gdk_screen_get_active_window (screen);
+  GdkWindow            *parent        = gdk_screen_get_active_window (screen);
   gint                  parent_height, parent_width;
   gint                  parent_x, parent_y;
 
-  gdk_window_get_geometry (par_window,
+  gdk_window_get_geometry (parent,
                            &parent_x, &parent_y, &parent_width, &parent_height,
                            NULL);
 
@@ -236,7 +240,7 @@ action_search_dialog_create (Gimp *gimp)
     }
 
   gtk_window_set_default_size (GTK_WINDOW (private->dialog), private->width, 1);
-  gtk_widget_show (private->dialog);
+  gtk_window_present (GTK_WINDOW (private->dialog));
 
   return private->dialog;
 }
@@ -340,7 +344,6 @@ result_selected (GtkWidget    *widget,
               gboolean          event_processed = FALSE;
               GtkTreeSelection *selection;
               GtkTreeModel     *model;
-              GtkTreePath      *path;
               GtkTreeIter       iter;
 
               selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (private->results_list));
@@ -348,7 +351,7 @@ result_selected (GtkWidget    *widget,
 
               if (gtk_tree_selection_get_selected (selection, &model, &iter))
                 {
-                  path = gtk_tree_model_get_path (model, &iter);
+                  GtkTreePath *path = gtk_tree_model_get_path (model, &iter);
 
                   if (strcmp (gtk_tree_path_to_string (path), "0") == 0)
                     {
@@ -363,6 +366,7 @@ result_selected (GtkWidget    *widget,
 
                       event_processed = TRUE;
                     }
+
                   gtk_tree_path_free (path);
                 }
 
@@ -459,7 +463,7 @@ action_search_add_to_results_list (GtkAction    *action,
   GtkTreeIter   next_section;
   GtkListStore *store;
   GtkTreeModel *model;
-  gchar        *markuptxt;
+  gchar        *markup;
   gchar        *action_name;
   gchar        *label;
   gchar        *escaped_label = NULL;
@@ -478,6 +482,7 @@ action_search_add_to_results_list (GtkAction    *action,
       g_free (label);
       return;
     }
+
   escaped_label = g_markup_escape_text (label, -1);
 
   if (GTK_IS_TOGGLE_ACTION (action))
@@ -506,12 +511,12 @@ action_search_add_to_results_list (GtkAction    *action,
       has_tooltip = TRUE;
     }
 
-  markuptxt = g_strdup_printf ("%s<small>%s%s%s<span weight='light'>%s</span></small>",
-                               escaped_label,
-                               has_shortcut ? " | " : "",
-                               has_shortcut ? escaped_accel : "",
-                               has_tooltip ? "\n" : "",
-                               has_tooltip ? escaped_tooltip : "");
+  markup = g_strdup_printf ("%s<small>%s%s%s<span weight='light'>%s</span></small>",
+                            escaped_label,
+                            has_shortcut ? " | " : "",
+                            has_shortcut ? escaped_accel : "",
+                            has_tooltip ? "\n" : "",
+                            has_tooltip ? escaped_tooltip : "");
 
   action_name = g_markup_escape_text (gtk_action_get_name (action), -1);
 
@@ -524,7 +529,7 @@ action_search_add_to_results_list (GtkAction    *action,
           gint iter_section;
 
           gtk_tree_model_get (model, &next_section,
-                              RESULT_SECTION, &iter_section, -1);
+                              COLUMN_SECTION, &iter_section, -1);
           if (iter_section > section)
             {
               gtk_list_store_insert_before (store, &iter, &next_section);
@@ -543,16 +548,16 @@ action_search_add_to_results_list (GtkAction    *action,
     }
 
   gtk_list_store_set (store, &iter,
-                      RESULT_ICON,        stock_id,
-                      RESULT_DATA,        markuptxt,
-                      RESULT_ACTION_NAME, action_name,
-                      RESULT_ACTION,      action,
-                      RESULT_SECTION,     section,
-                      IS_SENSITIVE,       gtk_action_is_sensitive (action),
+                      COLUMN_ICON,      stock_id,
+                      COLUMN_MARKUP,    markup,
+                      COLUMN_TOOLTIP,   action_name,
+                      COLUMN_ACTION,    action,
+                      COLUMN_SECTION,   section,
+                      COLUMN_SENSITIVE, gtk_action_is_sensitive (action),
                       -1);
 
   g_free (accel_string);
-  g_free (markuptxt);
+  g_free (markup);
   g_free (action_name);
   g_free (label);
   g_free (escaped_accel);
@@ -574,13 +579,15 @@ action_search_run_selected (SearchDialog *private)
     {
       GtkAction *action;
 
-      gtk_tree_model_get (model, &iter, RESULT_ACTION, &action, -1);
+      gtk_tree_model_get (model, &iter, COLUMN_ACTION, &action, -1);
 
-      if (! gtk_action_is_sensitive (action))
-        return;
+      if (gtk_action_is_sensitive (action))
+        {
+          action_search_finalizer (private);
+          gtk_action_activate (action);
+        }
 
-      action_search_finalizer (private);
-      gtk_action_activate (action);
+      g_object_unref (action);
     }
 
   return;
@@ -914,36 +921,39 @@ action_search_setup_results_list (GtkWidget **results_list,
 {
   gint                wid1 = 100;
   GtkListStore       *store;
-  GtkCellRenderer    *cell_renderer;
+  GtkCellRenderer    *cell;
   GtkTreeViewColumn  *column;
 
   *list_view = GTK_WIDGET (gtk_scrolled_window_new (NULL, NULL));
-  store = gtk_list_store_new (N_COL, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
-                              GTK_TYPE_ACTION, G_TYPE_BOOLEAN, G_TYPE_INT);
+  store = gtk_list_store_new (N_COL,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING,
+                              GTK_TYPE_ACTION,
+                              G_TYPE_BOOLEAN,
+                              G_TYPE_INT);
   *results_list = GTK_WIDGET (gtk_tree_view_new_with_model (GTK_TREE_MODEL (store)));
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (*results_list), FALSE);
+#ifdef GIMP_UNSTABLE
+  gtk_tree_view_set_tooltip_column (GTK_TREE_VIEW (*results_list),
+                                    COLUMN_TOOLTIP);
+#endif
 
-  cell_renderer = gtk_cell_renderer_pixbuf_new ();
-  column = gtk_tree_view_column_new_with_attributes (NULL,
-                                                      cell_renderer,
-                                                      "stock_id", RESULT_ICON,
-                                                      "sensitive", IS_SENSITIVE,
-                                                      NULL);
+  cell = gtk_cell_renderer_pixbuf_new ();
+  column = gtk_tree_view_column_new_with_attributes (NULL, cell,
+                                                     "stock-id",  COLUMN_ICON,
+                                                     "sensitive", COLUMN_SENSITIVE,
+                                                     NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (*results_list), column);
   gtk_tree_view_column_set_min_width (column, 22);
 
-  cell_renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (NULL,
-                                                      cell_renderer,
-                                                      "markup", RESULT_DATA,
-                                                      "sensitive", IS_SENSITIVE,
-                                                      NULL);
+  cell = gtk_cell_renderer_text_new ();
+  column = gtk_tree_view_column_new_with_attributes (NULL, cell,
+                                                     "markup",    COLUMN_MARKUP,
+                                                     "sensitive", COLUMN_SENSITIVE,
+                                                     NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (*results_list), column);
   gtk_tree_view_column_set_max_width (column, wid1);
-
-#ifdef GIMP_UNSTABLE
-  gtk_tree_view_set_tooltip_column (GTK_TREE_VIEW (*results_list), RESULT_ACTION_NAME);
-#endif
 
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (*list_view),
                                   GTK_POLICY_NEVER,
