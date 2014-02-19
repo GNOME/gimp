@@ -161,7 +161,8 @@ gimp_action_history_exit (GimpGuiConfig *config)
 gboolean
 gimp_action_history_excluded_action (const gchar *action_name)
 {
-  return (g_str_has_suffix (action_name, "-menu")           ||
+  return (action_name[0] == '<'                             ||
+          g_str_has_suffix (action_name, "-menu")           ||
           g_str_has_suffix (action_name, "-popup")          ||
           g_str_has_suffix (action_name, "-set")            ||
           g_str_has_suffix (action_name, "-accel")          ||
