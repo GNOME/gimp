@@ -809,9 +809,8 @@ action_search_match_keyword (GtkAction   *action,
 
           if (! matched && strchr (key, ' '))
             {
-              gchar *key_copy  = g_strdup (key);
-              gchar *words = key_copy;
-              gchar *word;
+              gchar **words;
+              gchar **word;
 
               matched = TRUE;
               if (section)
@@ -819,17 +818,18 @@ action_search_match_keyword (GtkAction   *action,
                   *section = 4;
                 }
 
-              while ((word = strsep (&words, " ")) != NULL)
+              words = g_strsplit (key, " ", 0);
+              for (word = &words[0]; *word; ++word)
                 {
-                  if (! strstr (label, word) &&
-                      (! tooltip || ! strstr (tooltip, word)))
+                  if (! strstr (label, *word) &&
+                      (! tooltip || ! strstr (tooltip, *word)))
                     {
                       matched = FALSE;
                       break;
                     }
                 }
 
-              g_free (key_copy);
+              g_strfreev (words);
             }
 
           g_free (tooltip);
