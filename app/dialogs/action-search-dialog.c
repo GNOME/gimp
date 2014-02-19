@@ -108,6 +108,7 @@ static void         search_dialog_free                     (SearchDialog      *p
 enum ResultColumns {
   RESULT_ICON,
   RESULT_DATA,
+  RESULT_ACTION_NAME,
   RESULT_ACTION,
   IS_SENSITIVE,
   RESULT_SECTION,
@@ -459,6 +460,7 @@ action_search_add_to_results_list (GtkAction    *action,
   GtkListStore *store;
   GtkTreeModel *model;
   gchar        *markuptxt;
+  gchar        *action_name;
   gchar        *label;
   gchar        *escaped_label = NULL;
   const gchar  *stock_id;
@@ -511,6 +513,8 @@ action_search_add_to_results_list (GtkAction    *action,
                                has_tooltip ? "\n" : "",
                                has_tooltip ? escaped_tooltip : "");
 
+  action_name = g_markup_escape_text (gtk_action_get_name (action), -1);
+
   model = gtk_tree_view_get_model (GTK_TREE_VIEW (private->results_list));
   store = GTK_LIST_STORE (model);
   if (gtk_tree_model_get_iter_first (model, &next_section))
@@ -539,15 +543,17 @@ action_search_add_to_results_list (GtkAction    *action,
     }
 
   gtk_list_store_set (store, &iter,
-                      RESULT_ICON,    stock_id,
-                      RESULT_DATA,    markuptxt,
-                      RESULT_ACTION,  action,
-                      RESULT_SECTION, section,
-                      IS_SENSITIVE,   gtk_action_is_sensitive (action),
+                      RESULT_ICON,        stock_id,
+                      RESULT_DATA,        markuptxt,
+                      RESULT_ACTION_NAME, action_name,
+                      RESULT_ACTION,      action,
+                      RESULT_SECTION,     section,
+                      IS_SENSITIVE,       gtk_action_is_sensitive (action),
                       -1);
 
   g_free (accel_string);
   g_free (markuptxt);
+  g_free (action_name);
   g_free (label);
   g_free (escaped_accel);
   g_free (escaped_label);
@@ -908,33 +914,36 @@ action_search_setup_results_list (GtkWidget **results_list,
 {
   gint                wid1 = 100;
   GtkListStore       *store;
-  GtkCellRenderer    *cell1;
   GtkCellRenderer    *cell_renderer;
-  GtkTreeViewColumn  *column1, *column2;
+  GtkTreeViewColumn  *column;
 
   *list_view = GTK_WIDGET (gtk_scrolled_window_new (NULL, NULL));
-  store = gtk_list_store_new (N_COL, G_TYPE_STRING, G_TYPE_STRING,
+  store = gtk_list_store_new (N_COL, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
                               GTK_TYPE_ACTION, G_TYPE_BOOLEAN, G_TYPE_INT);
   *results_list = GTK_WIDGET (gtk_tree_view_new_with_model (GTK_TREE_MODEL (store)));
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (*results_list), FALSE);
 
-  cell1 = gtk_cell_renderer_pixbuf_new ();
-  column1 = gtk_tree_view_column_new_with_attributes (NULL,
-                                                      cell1,
+  cell_renderer = gtk_cell_renderer_pixbuf_new ();
+  column = gtk_tree_view_column_new_with_attributes (NULL,
+                                                      cell_renderer,
                                                       "stock_id", RESULT_ICON,
+                                                      "sensitive", IS_SENSITIVE,
                                                       NULL);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (*results_list), column1);
-  gtk_tree_view_column_add_attribute (column1, cell1, "sensitive", IS_SENSITIVE);
-  gtk_tree_view_column_set_min_width (column1, 22);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (*results_list), column);
+  gtk_tree_view_column_set_min_width (column, 22);
 
   cell_renderer = gtk_cell_renderer_text_new ();
-  column2 = gtk_tree_view_column_new_with_attributes (NULL,
+  column = gtk_tree_view_column_new_with_attributes (NULL,
                                                       cell_renderer,
                                                       "markup", RESULT_DATA,
+                                                      "sensitive", IS_SENSITIVE,
                                                       NULL);
-  gtk_tree_view_column_add_attribute (column2, cell_renderer, "sensitive", IS_SENSITIVE);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (*results_list), column2);
-  gtk_tree_view_column_set_max_width (column2, wid1);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (*results_list), column);
+  gtk_tree_view_column_set_max_width (column, wid1);
+
+#ifdef GIMP_UNSTABLE
+  gtk_tree_view_set_tooltip_column (GTK_TREE_VIEW (*results_list), RESULT_ACTION_NAME);
+#endif
 
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (*list_view),
                                   GTK_POLICY_NEVER,
