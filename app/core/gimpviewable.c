@@ -388,22 +388,7 @@ gimp_viewable_real_get_new_pixbuf (GimpViewable *viewable,
 
   if (temp_buf)
     {
-      GeglBuffer *src_buffer;
-      GeglBuffer *dest_buffer;
-
-      pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
-                               babl_format_has_alpha (gimp_temp_buf_get_format (temp_buf)),
-                               8,
-                               gimp_temp_buf_get_width  (temp_buf),
-                               gimp_temp_buf_get_height (temp_buf));
-
-      src_buffer  = gimp_temp_buf_create_buffer (temp_buf);
-      dest_buffer = gimp_pixbuf_create_buffer (pixbuf);
-
-      gegl_buffer_copy (src_buffer, NULL, dest_buffer, NULL);
-
-      g_object_unref (src_buffer);
-      g_object_unref (dest_buffer);
+      pixbuf = gimp_temp_buf_create_pixbuf (temp_buf);
     }
   else if (private->icon_pixbuf)
     {
@@ -930,8 +915,6 @@ gimp_viewable_get_dummy_preview (GimpViewable *viewable,
 {
   GdkPixbuf   *pixbuf;
   GimpTempBuf *buf;
-  GeglBuffer  *src_buffer;
-  GeglBuffer  *dest_buffer;
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (width  > 0, NULL);
@@ -941,15 +924,7 @@ gimp_viewable_get_dummy_preview (GimpViewable *viewable,
   pixbuf = gimp_viewable_get_dummy_pixbuf (viewable, width, height,
                                            babl_format_has_alpha (format));
 
-  buf = gimp_temp_buf_new (width, height, format);
-
-  src_buffer  = gimp_pixbuf_create_buffer (pixbuf);
-  dest_buffer = gimp_temp_buf_create_buffer (buf);
-
-  gegl_buffer_copy (src_buffer, NULL, dest_buffer, NULL);
-
-  g_object_unref (src_buffer);
-  g_object_unref (dest_buffer);
+  buf = gimp_temp_buf_new_from_pixbuf (pixbuf, format);
 
   g_object_unref (pixbuf);
 

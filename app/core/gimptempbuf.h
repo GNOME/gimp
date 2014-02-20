@@ -22,6 +22,8 @@
 GimpTempBuf * gimp_temp_buf_new             (gint               width,
                                              gint               height,
                                              const Babl        *fomat) G_GNUC_WARN_UNUSED_RESULT;
+GimpTempBuf * gimp_temp_buf_new_from_pixbuf (GdkPixbuf         *pixbuf,
+                                             const Babl        *f_or_null) G_GNUC_WARN_UNUSED_RESULT;
 GimpTempBuf * gimp_temp_buf_copy            (const GimpTempBuf *src) G_GNUC_WARN_UNUSED_RESULT;
 
 GimpTempBuf * gimp_temp_buf_ref             (GimpTempBuf       *buf);
@@ -46,6 +48,8 @@ guchar      * gimp_temp_buf_data_clear      (GimpTempBuf       *buf);
 gsize         gimp_temp_buf_get_memsize     (const GimpTempBuf *buf);
 
 GeglBuffer  * gimp_temp_buf_create_buffer   (GimpTempBuf       *temp_buf) G_GNUC_WARN_UNUSED_RESULT;
+GdkPixbuf   * gimp_temp_buf_create_pixbuf   (GimpTempBuf       *temp_buf) G_GNUC_WARN_UNUSED_RESULT;
+
 GimpTempBuf * gimp_gegl_buffer_get_temp_buf (GeglBuffer        *buffer);
 
 

@@ -1290,17 +1290,25 @@ gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
 {
   GeglBuffer *buffer;
   GimpLayer  *layer;
+  gint        width;
+  gint        height;
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
   g_return_val_if_fail (format != NULL, NULL);
 
-  buffer = gimp_pixbuf_create_buffer (pixbuf);
+  width  = gdk_pixbuf_get_width (pixbuf);
+  height = gdk_pixbuf_get_height (pixbuf);
 
-  layer = gimp_layer_new_from_buffer (buffer, dest_image, format,
-                                      name, opacity, mode);
+  layer = gimp_layer_new (dest_image, width, height,
+                          format, name, opacity, mode);
 
-  g_object_unref (buffer);
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+
+  gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
+                   gimp_pixbuf_get_format (pixbuf),
+                   gdk_pixbuf_get_pixels (pixbuf),
+                   gdk_pixbuf_get_rowstride (pixbuf));
 
   return layer;
 }
