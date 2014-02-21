@@ -43,8 +43,6 @@
 #include "widgets/gimpaction-history.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpsessioninfo.h"
-#include "widgets/gimpspinscale.h"
 #include "widgets/gimpuimanager.h"
 
 #include "action-search-dialog.h"
@@ -72,8 +70,7 @@ typedef struct
   GtkWidget     *results_list;
   GtkWidget     *list_view;
 
-  gint           width;
-  gint           height;
+  gint           window_height;
 } SearchDialog;
 
 
@@ -121,9 +118,7 @@ GtkWidget *
 action_search_dialog_create (Gimp *gimp)
 {
   static SearchDialog  *private       = NULL;
-  GimpSessionInfo      *session_info  = NULL;
   GdkScreen            *screen        = gdk_screen_get_default ();
-  gint                  screen_width  = gdk_screen_get_width (screen);
   GdkWindow            *parent        = gdk_screen_get_active_window (screen);
   gint                  parent_height, parent_width;
   gint                  parent_x, parent_y;
@@ -188,34 +183,10 @@ action_search_dialog_create (Gimp *gimp)
                         NULL);
     }
 
-  /* Move the window to the previous session's position using session
-   * management.
-   */
-  private->width  = -1;
   /* Height is the only value not reused since it is too variable
    * because of the result list.
    */
-  private->height = parent_height / 2;
-
-  session_info =
-    gimp_dialog_factory_find_session_info (gimp_dialog_factory_get_singleton(),
-                                           "gimp-action-search-dialog");
-
-  if (session_info)
-    {
-      private->width = gimp_session_info_get_width (session_info);
-    }
-
-  if (private->width < 0)
-    {
-      private->width = parent_width / 2;
-    }
-  else if (private->width > screen_width)
-    {
-      private->width = parent_width;
-    }
-
-  gtk_window_set_default_size (GTK_WINDOW (private->dialog), private->width, 1);
+  private->window_height = parent_height / 2;
 
   return private->dialog;
 }
@@ -231,26 +202,24 @@ action_search_entry_key_released (GtkWidget    *widget,
   gint         width;
 
   gtk_window_get_size (GTK_WINDOW (private->dialog), &width, NULL);
+
   entry_text = g_strstrip (gtk_editable_get_chars (GTK_EDITABLE (widget), 0, -1));
 
   switch (event->keyval)
     {
-      case GDK_Escape:
-        {
-          action_search_hide (private);
-          return;
-        }
-      case GDK_Return:
-        {
-          action_search_run_selected (private);
-          return;
-        }
+    case GDK_Escape:
+      action_search_hide (private);
+      return;
+
+    case GDK_Return:
+      action_search_run_selected (private);
+      return;
     }
 
   if (strcmp (entry_text, "") != 0)
     {
-      gtk_window_resize (GTK_WINDOW (private->dialog), width,
-                         private->height);
+      gtk_window_resize (GTK_WINDOW (private->dialog),
+                         width, private->window_height);
       gtk_list_store_clear (GTK_LIST_STORE (gtk_tree_view_get_model (tree_view)));
       gtk_widget_show_all (private->list_view);
       action_search_history_and_actions (entry_text, private);
@@ -259,7 +228,8 @@ action_search_entry_key_released (GtkWidget    *widget,
     }
   else if (strcmp (entry_text, "") == 0 && (event->keyval == GDK_Down))
     {
-      gtk_window_resize (GTK_WINDOW (private->dialog), width, private->height);
+      gtk_window_resize (GTK_WINDOW (private->dialog),
+                         width, private->window_height);
       gtk_list_store_clear (GTK_LIST_STORE (gtk_tree_view_get_model (tree_view)));
       gtk_widget_show_all (private->list_view);
       action_search_history_and_actions (NULL, private);
@@ -832,10 +802,13 @@ action_search_hide (SearchDialog *private)
 {
   if (GTK_IS_WIDGET (private->dialog))
     {
+      gint width;
+
+      gtk_window_get_size (GTK_WINDOW (private->dialog), &width, NULL);
+
       gtk_entry_set_text (GTK_ENTRY (private->keyword_entry), "");
       gtk_widget_hide (private->list_view);
-      gtk_window_resize (GTK_WINDOW (private->dialog),
-                         private->width, 1);
+      gtk_window_resize (GTK_WINDOW (private->dialog), width, 1);
       gimp_dialog_factory_hide_dialog (private->dialog);
     }
 }
@@ -845,17 +818,11 @@ action_search_window_configured (GtkWindow    *window,
                                  GdkEvent     *event,
                                  SearchDialog *private)
 {
-  if (gtk_widget_get_visible (GTK_WIDGET (window)))
+  if (gtk_widget_get_visible (GTK_WIDGET (window)) &&
+      gtk_widget_get_visible (private->list_view))
     {
-      gint width, height;
-
-      gtk_window_get_size (GTK_WINDOW (private->dialog), &width, &height);
-      private->width = width;
-
-      if (gtk_widget_get_visible (private->list_view))
-        {
-          private->height = height;
-        }
+      gtk_window_get_size (GTK_WINDOW (private->dialog),
+                           NULL, &private->window_height);
     }
 
   return FALSE;
