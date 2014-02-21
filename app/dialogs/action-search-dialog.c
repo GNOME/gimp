@@ -141,7 +141,7 @@ action_search_dialog_create (Gimp *gimp)
     {
       GtkWidget     *action_search_dialog = gtk_window_new (GTK_WINDOW_TOPLEVEL);
       GimpGuiConfig *config               = GIMP_GUI_CONFIG (gimp->config);
-      GtkWidget     *main_vbox, *main_hbox;
+      GtkWidget     *main_vbox;
 
       private = g_slice_new0 (SearchDialog);
       g_object_weak_ref (G_OBJECT (action_search_dialog),
@@ -159,16 +159,12 @@ action_search_dialog_create (Gimp *gimp)
       gtk_container_add (GTK_CONTAINER (action_search_dialog), main_vbox);
       gtk_widget_show (main_vbox);
 
-      main_hbox = gtk_hbox_new (FALSE, 2);
-      gtk_box_pack_start (GTK_BOX (main_vbox), main_hbox, FALSE, TRUE, 0);
-      gtk_widget_show (main_hbox);
-
       private->keyword_entry = gtk_entry_new ();
       gtk_entry_set_icon_from_stock (GTK_ENTRY (private->keyword_entry),
                                      GTK_ENTRY_ICON_PRIMARY, GTK_STOCK_FIND);
+      gtk_box_pack_start (GTK_BOX (main_vbox), private->keyword_entry,
+                          FALSE, FALSE, 0);
       gtk_widget_show (private->keyword_entry);
-      gtk_box_pack_start (GTK_BOX (main_hbox), private->keyword_entry,
-                          TRUE, TRUE, 0);
 
       action_search_setup_results_list (&private->results_list,
                                         &private->list_view);
@@ -240,7 +236,6 @@ action_search_dialog_create (Gimp *gimp)
     }
 
   gtk_window_set_default_size (GTK_WINDOW (private->dialog), private->width, 1);
-  gtk_window_present (GTK_WINDOW (private->dialog));
 
   return private->dialog;
 }
