@@ -77,13 +77,13 @@ typedef struct
 } SearchDialog;
 
 
-static void         key_released                           (GtkWidget         *widget,
+static void         action_search_entry_key_released       (GtkWidget         *widget,
                                                             GdkEventKey       *event,
                                                             SearchDialog      *private);
-static gboolean     result_selected                        (GtkWidget         *widget,
+static gboolean     action_search_list_key_pressed         (GtkWidget         *widget,
                                                             GdkEventKey       *pKey,
                                                             SearchDialog      *private);
-static void         row_activated                          (GtkTreeView       *treeview,
+static void         action_search_list_row_activated       (GtkTreeView       *treeview,
                                                             GtkTreePath       *path,
                                                             GtkTreeViewColumn *col,
                                                             SearchDialog      *private);
@@ -105,9 +105,9 @@ static gboolean     action_search_match_keyword            (GtkAction         *a
                                                             gint              *section,
                                                             gboolean           match_fuzzy);
 
-static void         action_search_finalizer                (SearchDialog      *private);
+static void         action_search_hide                     (SearchDialog      *private);
 
-static gboolean     window_configured                      (GtkWindow         *window,
+static gboolean     action_search_window_configured        (GtkWindow         *window,
                                                             GdkEvent          *event,
                                                             SearchDialog      *private);
 static void         action_search_setup_results_list       (GtkWidget        **results_list,
@@ -169,17 +169,19 @@ action_search_dialog_create (Gimp *gimp)
                              GDK_KEY_RELEASE_MASK | GDK_KEY_PRESS_MASK |
                              GDK_BUTTON_PRESS_MASK | GDK_SCROLL_MASK);
 
-      g_signal_connect (private->results_list, "row-activated",
-                        G_CALLBACK (row_activated),
-                        private);
       g_signal_connect (private->keyword_entry, "key-release-event",
-                        G_CALLBACK (key_released),
+                        G_CALLBACK (action_search_entry_key_released),
                         private);
+
       g_signal_connect (private->results_list, "key-press-event",
-                        G_CALLBACK (result_selected),
+                        G_CALLBACK (action_search_list_key_pressed),
                         private);
+      g_signal_connect (private->results_list, "row-activated",
+                        G_CALLBACK (action_search_list_row_activated),
+                        private);
+
       g_signal_connect (private->dialog, "configure-event",
-                        G_CALLBACK (window_configured),
+                        G_CALLBACK (action_search_window_configured),
                         private);
       g_signal_connect (private->dialog, "delete-event",
                         G_CALLBACK (gtk_widget_hide_on_delete),
@@ -220,9 +222,9 @@ action_search_dialog_create (Gimp *gimp)
 
 /* Private Functions */
 static void
-key_released (GtkWidget    *widget,
-              GdkEventKey  *event,
-              SearchDialog *private)
+action_search_entry_key_released (GtkWidget    *widget,
+                                  GdkEventKey  *event,
+                                  SearchDialog *private)
 {
   GtkTreeView *tree_view = GTK_TREE_VIEW (private->results_list);
   gchar       *entry_text;
@@ -235,7 +237,7 @@ key_released (GtkWidget    *widget,
     {
       case GDK_Escape:
         {
-          action_search_finalizer (private);
+          action_search_hide (private);
           return;
         }
       case GDK_Return:
@@ -255,16 +257,14 @@ key_released (GtkWidget    *widget,
       gtk_tree_selection_select_path (gtk_tree_view_get_selection (tree_view),
                                       gtk_tree_path_new_from_string ("0"));
     }
-  else if (strcmp (entry_text, "") == 0 && (event->keyval == GDK_Down) )
+  else if (strcmp (entry_text, "") == 0 && (event->keyval == GDK_Down))
     {
-      gtk_window_resize (GTK_WINDOW (private->dialog), width,
-                         private->height);
+      gtk_window_resize (GTK_WINDOW (private->dialog), width, private->height);
       gtk_list_store_clear (GTK_LIST_STORE (gtk_tree_view_get_model (tree_view)));
       gtk_widget_show_all (private->list_view);
       action_search_history_and_actions (NULL, private);
       gtk_tree_selection_select_path (gtk_tree_view_get_selection (tree_view),
                                       gtk_tree_path_new_from_string ("0"));
-
     }
   else
     {
@@ -277,7 +277,7 @@ key_released (GtkWidget    *widget,
 
       if (gtk_tree_selection_get_selected (selection, &model, &iter))
         {
-          GtkTreePath      *path;
+          GtkTreePath *path;
 
           path = gtk_tree_model_get_path (model, &iter);
           gtk_tree_selection_unselect_path (selection, path);
@@ -286,93 +286,89 @@ key_released (GtkWidget    *widget,
         }
 
       gtk_widget_hide (private->list_view);
-      gtk_window_resize (GTK_WINDOW (private->dialog),
-                         width, 1);
+      gtk_window_resize (GTK_WINDOW (private->dialog), width, 1);
     }
 
   g_free (entry_text);
 }
 
 static gboolean
-result_selected (GtkWidget    *widget,
-                 GdkEventKey  *kevent,
-                 SearchDialog *private)
+action_search_list_key_pressed (GtkWidget    *widget,
+                                GdkEventKey  *kevent,
+                                SearchDialog *private)
 {
-  if (kevent->type == GDK_KEY_PRESS)
+  switch (kevent->keyval)
     {
-      switch (kevent->keyval)
-        {
-          case GDK_Return:
-            {
-              action_search_run_selected (private);
-              break;
-            }
-          case GDK_Escape:
-            {
-              action_search_finalizer (private);
-              return TRUE;
-            }
-          case GDK_Up:
-            {
-              gboolean          event_processed = FALSE;
-              GtkTreeSelection *selection;
-              GtkTreeModel     *model;
-              GtkTreeIter       iter;
+    case GDK_Return:
+      {
+        action_search_run_selected (private);
+        break;
+      }
+    case GDK_Escape:
+      {
+        action_search_hide (private);
+        return TRUE;
+      }
+    case GDK_Up:
+      {
+        gboolean          event_processed = FALSE;
+        GtkTreeSelection *selection;
+        GtkTreeModel     *model;
+        GtkTreeIter       iter;
 
-              selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (private->results_list));
-              gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
+        selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (private->results_list));
+        gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
 
-              if (gtk_tree_selection_get_selected (selection, &model, &iter))
-                {
-                  GtkTreePath *path = gtk_tree_model_get_path (model, &iter);
+        if (gtk_tree_selection_get_selected (selection, &model, &iter))
+          {
+            GtkTreePath *path = gtk_tree_model_get_path (model, &iter);
 
-                  if (strcmp (gtk_tree_path_to_string (path), "0") == 0)
-                    {
-                      gint start_pos;
-                      gint end_pos;
+            if (strcmp (gtk_tree_path_to_string (path), "0") == 0)
+              {
+                gint start_pos;
+                gint end_pos;
 
-                      gtk_editable_get_selection_bounds (GTK_EDITABLE (private->keyword_entry),
-                                                         &start_pos, &end_pos);
-                      gtk_widget_grab_focus ((GTK_WIDGET (private->keyword_entry)));
-                      gtk_editable_select_region (GTK_EDITABLE (private->keyword_entry),
-                                                  start_pos, end_pos);
+                gtk_editable_get_selection_bounds (GTK_EDITABLE (private->keyword_entry),
+                                                   &start_pos, &end_pos);
+                gtk_widget_grab_focus ((GTK_WIDGET (private->keyword_entry)));
+                gtk_editable_select_region (GTK_EDITABLE (private->keyword_entry),
+                                            start_pos, end_pos);
 
-                      event_processed = TRUE;
-                    }
+                event_processed = TRUE;
+              }
 
-                  gtk_tree_path_free (path);
-                }
+            gtk_tree_path_free (path);
+          }
 
-              return event_processed;
-            }
-          case GDK_Down:
-            {
-              return FALSE;
-            }
-          default:
-            {
-              gint start_pos;
-              gint end_pos;
+        return event_processed;
+      }
+    case GDK_Down:
+      {
+        return FALSE;
+      }
+    default:
+      {
+        gint start_pos;
+        gint end_pos;
 
-              gtk_editable_get_selection_bounds (GTK_EDITABLE (private->keyword_entry),
-                                                 &start_pos, &end_pos);
-              gtk_widget_grab_focus ((GTK_WIDGET (private->keyword_entry)));
-              gtk_editable_select_region (GTK_EDITABLE (private->keyword_entry),
-                                          start_pos, end_pos);
-              gtk_widget_event (GTK_WIDGET (private->keyword_entry),
-                                (GdkEvent *) kevent);
-            }
-        }
+        gtk_editable_get_selection_bounds (GTK_EDITABLE (private->keyword_entry),
+                                           &start_pos, &end_pos);
+        gtk_widget_grab_focus ((GTK_WIDGET (private->keyword_entry)));
+        gtk_editable_select_region (GTK_EDITABLE (private->keyword_entry),
+                                    start_pos, end_pos);
+        gtk_widget_event (GTK_WIDGET (private->keyword_entry),
+                          (GdkEvent *) kevent);
+      }
     }
 
   return FALSE;
 }
 
 static void
-row_activated (GtkTreeView        *treeview,
-               GtkTreePath        *path,
-               GtkTreeViewColumn  *col,
-               SearchDialog       *private)
+action_search_list_row_activated (GtkTreeView        *treeview,
+                                  GtkTreePath        *path,
+                                  GtkTreeViewColumn  *col,
+                                  SearchDialog       *private)
 {
   action_search_run_selected (private);
 }
@@ -556,7 +552,7 @@ action_search_run_selected (SearchDialog *private)
 
       if (gtk_action_is_sensitive (action))
         {
-          action_search_finalizer (private);
+          action_search_hide (private);
           gtk_action_activate (action);
         }
 
@@ -832,7 +828,7 @@ action_search_match_keyword (GtkAction   *action,
 }
 
 static void
-action_search_finalizer (SearchDialog *private)
+action_search_hide (SearchDialog *private)
 {
   if (GTK_IS_WIDGET (private->dialog))
     {
@@ -845,9 +841,9 @@ action_search_finalizer (SearchDialog *private)
 }
 
 static gboolean
-window_configured (GtkWindow    *window,
-                   GdkEvent     *event,
-                   SearchDialog *private)
+action_search_window_configured (GtkWindow    *window,
+                                 GdkEvent     *event,
+                                 SearchDialog *private)
 {
   if (gtk_widget_get_visible (GTK_WIDGET (window)))
     {
