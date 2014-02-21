@@ -117,15 +117,8 @@ static void         search_dialog_free                     (SearchDialog      *p
 GtkWidget *
 action_search_dialog_create (Gimp *gimp)
 {
-  static SearchDialog  *private       = NULL;
-  GdkScreen            *screen        = gdk_screen_get_default ();
-  GdkWindow            *parent        = gdk_screen_get_active_window (screen);
-  gint                  parent_height, parent_width;
-  gint                  parent_x, parent_y;
-
-  gdk_window_get_geometry (parent,
-                           &parent_x, &parent_y, &parent_width, &parent_height,
-                           NULL);
+  static SearchDialog *private = NULL;
+  GdkScreen           *screen  = gdk_screen_get_default ();
 
   if (! private)
     {
@@ -183,10 +176,7 @@ action_search_dialog_create (Gimp *gimp)
                         NULL);
     }
 
-  /* Height is the only value not reused since it is too variable
-   * because of the result list.
-   */
-  private->window_height = parent_height / 2;
+  private->window_height = gdk_screen_get_height (screen) / 2;
 
   return private->dialog;
 }
