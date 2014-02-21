@@ -72,8 +72,6 @@ typedef struct
   GtkWidget     *results_list;
   GtkWidget     *list_view;
 
-  gint           x;
-  gint           y;
   gint           width;
   gint           height;
 } SearchDialog;
@@ -112,8 +110,6 @@ static void         action_search_finalizer                (SearchDialog      *p
 static gboolean     window_configured                      (GtkWindow         *window,
                                                             GdkEvent          *event,
                                                             SearchDialog      *private);
-static void         window_shown                           (GtkWidget        *widget,
-                                                            SearchDialog      *private);
 static void         action_search_setup_results_list       (GtkWidget        **results_list,
                                                             GtkWidget        **list_view);
 static void         search_dialog_free                     (SearchDialog      *private);
@@ -128,7 +124,6 @@ action_search_dialog_create (Gimp *gimp)
   GimpSessionInfo      *session_info  = NULL;
   GdkScreen            *screen        = gdk_screen_get_default ();
   gint                  screen_width  = gdk_screen_get_width (screen);
-  gint                  screen_height = gdk_screen_get_height (screen);
   GdkWindow            *parent        = gdk_screen_get_active_window (screen);
   gint                  parent_height, parent_width;
   gint                  parent_x, parent_y;
@@ -180,16 +175,13 @@ action_search_dialog_create (Gimp *gimp)
       g_signal_connect (private->keyword_entry, "key-release-event",
                         G_CALLBACK (key_released),
                         private);
-      g_signal_connect (private->results_list, "key_press_event",
+      g_signal_connect (private->results_list, "key-press-event",
                         G_CALLBACK (result_selected),
                         private);
-      g_signal_connect (private->dialog, "event",
+      g_signal_connect (private->dialog, "configure-event",
                         G_CALLBACK (window_configured),
                         private);
-      g_signal_connect (private->dialog, "show",
-                        G_CALLBACK (window_shown),
-                        private);
-      g_signal_connect (private->dialog, "delete_event",
+      g_signal_connect (private->dialog, "delete-event",
                         G_CALLBACK (gtk_widget_hide_on_delete),
                         NULL);
     }
@@ -197,8 +189,6 @@ action_search_dialog_create (Gimp *gimp)
   /* Move the window to the previous session's position using session
    * management.
    */
-  private->x      = -1;
-  private->y      = -1;
   private->width  = -1;
   /* Height is the only value not reused since it is too variable
    * because of the result list.
@@ -211,8 +201,6 @@ action_search_dialog_create (Gimp *gimp)
 
   if (session_info)
     {
-      private->x     = gimp_session_info_get_x (session_info);
-      private->y     = gimp_session_info_get_y (session_info);
       private->width = gimp_session_info_get_width (session_info);
     }
 
@@ -223,16 +211,6 @@ action_search_dialog_create (Gimp *gimp)
   else if (private->width > screen_width)
     {
       private->width = parent_width;
-    }
-
-  if (private->x < 0 || private->x + private->width > screen_width)
-    {
-      private->x = parent_x + (parent_width - private->width) / 2;
-    }
-
-  if (private->y < 0 || private->y + private->height > screen_height)
-    {
-      private->y = parent_y + (parent_height - private->height) / 2 ;
     }
 
   gtk_window_set_default_size (GTK_WINDOW (private->dialog), private->width, 1);
@@ -871,43 +849,20 @@ window_configured (GtkWindow    *window,
                    GdkEvent     *event,
                    SearchDialog *private)
 {
-  if (event->type == GDK_CONFIGURE &&
-      gtk_widget_get_visible (GTK_WIDGET (window)))
+  if (gtk_widget_get_visible (GTK_WIDGET (window)))
     {
-      gint           x, y, width, height;
-
-      /* I don't use coordinates of GdkEventConfigure, because they are
-         relative to the parent window. */
-      gtk_window_get_position (window, &x, &y);
-      if (x < 0)
-        {
-          x = 0;
-        }
-      if (y < 0)
-        {
-          y = 0;
-        }
-      private->x = x;
-      private->y = y;
+      gint width, height;
 
       gtk_window_get_size (GTK_WINDOW (private->dialog), &width, &height);
       private->width = width;
 
-      if (gtk_widget_get_visible  (private->list_view))
+      if (gtk_widget_get_visible (private->list_view))
         {
           private->height = height;
         }
     }
 
   return FALSE;
-}
-
-static void
-window_shown (GtkWidget    *widget,
-              SearchDialog *private)
-{
-  gtk_window_move (GTK_WINDOW (widget),
-                   private->x, private->y);
 }
 
 static void
