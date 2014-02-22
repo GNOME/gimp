@@ -105,7 +105,9 @@ static const gchar dversio[] = "v1.17  19-Sep-2004";
 #define PLUG_IN_ROLE         "gimp-file-ps"
 
 
-#define STR_LENGTH 64
+#define STR_LENGTH     64
+#define MIN_RESOLUTION 5
+#define MAX_RESOLUTION 8192
 
 /* Load info */
 typedef struct
@@ -1228,10 +1230,10 @@ save_image (const gchar  *filename,
 static void
 check_load_vals (void)
 {
-  if (plvals.resolution < 5)
-    plvals.resolution = 5;
-  else if (plvals.resolution > 1440)
-    plvals.resolution = 1440;
+  if (plvals.resolution < MIN_RESOLUTION)
+    plvals.resolution = MIN_RESOLUTION;
+  else if (plvals.resolution > MAX_RESOLUTION)
+    plvals.resolution = MAX_RESOLUTION;
 
   if (plvals.width < 2)
     plvals.width = 2;
@@ -3015,7 +3017,8 @@ load_dialog (const gchar *filename,
   gtk_widget_show (table);
 
   spinbutton = gimp_spin_button_new (&adj, plvals.resolution,
-                                     5, 1440, 1, 10, 0, 1, 0);
+                                     MIN_RESOLUTION, MAX_RESOLUTION,
+                                     1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Resolution:"), 0.0, 0.5,
                              spinbutton, 1, FALSE);
@@ -3027,7 +3030,6 @@ load_dialog (const gchar *filename,
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &plvals.resolution);
-
 
 
   ps_width_spinbutton = gimp_spin_button_new (&adj, plvals.width,
