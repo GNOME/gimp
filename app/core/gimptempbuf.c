@@ -97,7 +97,7 @@ gimp_temp_buf_new_from_pixbuf (GdkPixbuf  *pixbuf,
   if (gimp_pixbuf_get_format (pixbuf) != format)
     fish = babl_fish (gimp_pixbuf_get_format (pixbuf), format);
 
-  for (i = 0; i < height; ++i)
+  for (i = 0; i < height; i++)
     {
       if (fish)
         babl_process (fish, pixels, data, width);
@@ -320,7 +320,7 @@ gimp_temp_buf_create_pixbuf (GimpTempBuf *temp_buf)
   if (format != gimp_pixbuf_get_format (pixbuf))
     fish = babl_fish (format, gimp_pixbuf_get_format (pixbuf));
 
-  for (i = 0; i <= height; ++i)
+  for (i = 0; i < height; i++)
     {
       if (fish)
         babl_process (fish, data, pixels, width);
