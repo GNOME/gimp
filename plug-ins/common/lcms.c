@@ -546,12 +546,12 @@ lcms_icc_profile_get_info (cmsHPROFILE profile)
   gchar           *descData;
   gchar           *info = NULL;
 
-  descSize = cmsGetProfileInfoASCII (profile, cmsInfoModel,
+  descSize = cmsGetProfileInfoASCII (profile, cmsInfoCopyright,
                                      "en", "US", NULL, 0);
   if (descSize > 0)
     {
       descData = g_new (gchar, descSize + 1);
-      descSize = cmsGetProfileInfoASCII (profile, cmsInfoModel,
+      descSize = cmsGetProfileInfoASCII (profile, cmsInfoCopyright,
                                          "en", "US", descData, descSize);
       if (descSize > 0)
         info = gimp_any_to_utf8 (descData, -1, NULL);
@@ -726,8 +726,8 @@ lcms_icc_info (GimpColorConfig *config,
   else
     {
       if (name) *name = g_strdup ("sRGB");
-      if (desc) *desc = g_strdup ("sRGB made with the correct white point and primaries");
-      if (info) *info = g_strdup (_("Default RGB working space"));
+      if (desc) *desc = g_strdup ("GIMP built-in sRGB");
+      if (info) *info = g_strdup (_("Default GIMP RGB working space"));
     }
 
   return GIMP_PDB_SUCCESS;
