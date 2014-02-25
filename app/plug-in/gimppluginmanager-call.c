@@ -155,6 +155,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
   if (plug_in)
     {
       GimpCoreConfig    *core_config    = manager->gimp->config;
+      GimpGeglConfig    *gegl_config    = GIMP_GEGL_CONFIG (core_config);
       GimpDisplayConfig *display_config = GIMP_DISPLAY_CONFIG (core_config);
       GimpGuiConfig     *gui_config     = GIMP_GUI_CONFIG (core_config);
       GPConfig           config;
@@ -191,7 +192,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       config.show_help_button = (gui_config->use_help &&
                                  gui_config->show_help_button);
       config.use_cpu_accel    = manager->gimp->use_cpu_accel;
-      config.gimp_reserved_5  = 0;
+      config.use_opencl       = gegl_config->use_opencl;
       config.gimp_reserved_6  = 0;
       config.gimp_reserved_7  = 0;
       config.gimp_reserved_8  = 0;

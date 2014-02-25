@@ -1954,6 +1954,10 @@ gimp_config (GPConfig *config)
 
   gimp_cpu_accel_set_use (config->use_cpu_accel);
 
+  g_object_set (gegl_config (),
+                "use-opencl", config->use_opencl,
+                NULL);
+
   if (_shm_ID != -1)
     {
 #if defined(USE_SYSV_SHM)

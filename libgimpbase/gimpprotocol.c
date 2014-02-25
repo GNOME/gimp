@@ -499,7 +499,7 @@ _gp_config_read (GIOChannel      *channel,
                               user_data))
     goto cleanup;
   if (! _gimp_wire_read_int8 (channel,
-                              (guint8 *) &config->gimp_reserved_5, 1,
+                              (guint8 *) &config->use_opencl, 1,
                               user_data))
     goto cleanup;
   if (! _gimp_wire_read_int8 (channel,
@@ -591,7 +591,7 @@ _gp_config_write (GIOChannel      *channel,
                                user_data))
     return;
   if (! _gimp_wire_write_int8 (channel,
-                               (const guint8 *) &config->gimp_reserved_5, 1,
+                               (const guint8 *) &config->use_opencl, 1,
                                user_data))
     return;
   if (! _gimp_wire_write_int8 (channel,
