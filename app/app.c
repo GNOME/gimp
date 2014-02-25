@@ -90,6 +90,7 @@ app_libs_init (GOptionContext *context,
    */
   g_object_set (gegl_config (),
                 "use-opencl", FALSE,
+                "application-license", "GPL3",
                 NULL);
 
   g_option_context_add_group (context, gegl_get_option_group ());
