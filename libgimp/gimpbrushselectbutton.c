@@ -920,9 +920,9 @@ gimp_brush_select_button_create_inside (GimpBrushSelectButton *brush_button)
                      &target, 1,
                      GDK_ACTION_COPY);
 
-  g_signal_connect (priv->preview, "drag-data-received",
-                    G_CALLBACK (gimp_brush_select_drag_data_received),
-                    hbox);
+  g_signal_connect_swapped (priv->preview, "drag-data-received",
+                            G_CALLBACK (gimp_brush_select_drag_data_received),
+                            brush_button);
 
   button = gtk_button_new_with_mnemonic (_("_Browse..."));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);

@@ -718,9 +718,9 @@ gimp_pattern_select_button_create_inside (GimpPatternSelectButton *pattern_butto
                      &target, 1,
                      GDK_ACTION_COPY);
 
-  g_signal_connect (priv->preview, "drag-data-received",
-                    G_CALLBACK (gimp_pattern_select_drag_data_received),
-                    hbox);
+  g_signal_connect_swapped (priv->preview, "drag-data-received",
+                            G_CALLBACK (gimp_pattern_select_drag_data_received),
+                            pattern_button);
 
   button = gtk_button_new_with_mnemonic (_("_Browse..."));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
