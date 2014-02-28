@@ -51,8 +51,6 @@ static gpointer gimp_tile_handler_projection_command      (GeglTileSource  *sour
                                                            gint             z,
                                                            gpointer         data);
 
-static void     gimp_tile_handler_projection_update_max_z (GimpTileHandlerProjection *projection);
-
 
 G_DEFINE_TYPE (GimpTileHandlerProjection, gimp_tile_handler_projection,
                GEGL_TYPE_TILE_HANDLER)
@@ -128,11 +126,9 @@ gimp_tile_handler_projection_set_property (GObject      *object,
       break;
     case PROP_TILE_WIDTH:
       projection->tile_width = g_value_get_int (value);
-      gimp_tile_handler_projection_update_max_z (projection);
       break;
     case PROP_TILE_HEIGHT:
       projection->tile_height = g_value_get_int (value);
-      gimp_tile_handler_projection_update_max_z (projection);
       break;
 
     default:
@@ -258,7 +254,12 @@ gimp_tile_handler_projection_command (GeglTileSource  *source,
                                       gint             z,
                                       gpointer         data)
 {
-  gpointer retval;
+  GimpTileHandlerProjection *projection;
+  gpointer                   retval;
+
+  projection = GIMP_TILE_HANDLER_PROJECTION (source);
+
+  projection->max_z = MAX (projection->max_z, z);
 
   retval = gegl_tile_handler_source_command (source, command, x, y, z, data);
 
@@ -266,24 +267,6 @@ gimp_tile_handler_projection_command (GeglTileSource  *source,
     retval = gimp_tile_handler_projection_validate (source, retval, x, y);
 
   return retval;
-}
-
-static void
-gimp_tile_handler_projection_update_max_z (GimpTileHandlerProjection *projection)
-{
-  projection->max_z = 0;
-
-  if (projection->proj_width > 0 && projection->proj_height > 0 &&
-      projection->tile_width > 0 && projection->tile_height > 0)
-    {
-      gint n_tiles;
-
-      n_tiles = MAX (projection->proj_width  / projection->tile_width,
-                     projection->proj_height / projection->tile_height) + 1;
-
-      while (n_tiles >>= 1)
-        projection->max_z++;
-    }
 }
 
 GeglTileHandler *
@@ -305,9 +288,12 @@ gimp_tile_handler_projection_new (GeglNode *graph,
 }
 
 void
-gimp_tile_handler_projection_assign     (GimpTileHandlerProjection *projection,
-                                         GeglBuffer                *buffer)
+gimp_tile_handler_projection_assign (GimpTileHandlerProjection *projection,
+                                     GeglBuffer                *buffer)
 {
+  g_return_if_fail (GIMP_IS_TILE_HANDLER_PROJECTION (projection));
+  g_return_if_fail (GEGL_IS_BUFFER (buffer));
+
   gegl_buffer_add_handler (buffer, projection);
 
   g_object_get (buffer,
@@ -315,8 +301,6 @@ gimp_tile_handler_projection_assign     (GimpTileHandlerProjection *projection,
                 "tile-width",  &projection->tile_width,
                 "tile-height", &projection->tile_height,
                 NULL);
-
-  gimp_tile_handler_projection_update_max_z (projection);
 }
 
 void
