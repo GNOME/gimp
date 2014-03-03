@@ -83,6 +83,17 @@ portable to different operating systems.
         Close directory stream. No further calls to read-dir-entry should
         be performed.
 
+(dir-make dirname . mode)
+       dirname: string
+       mode: integer representing permissions
+
+       Create the directory specified, setting the directory permissions based
+       upon the optional mode argument (taking into account the current
+       umask). If no mode is specified then use the default (umask)
+       permissions. Returns #t if the operation succeeds, otherwise #f.
+       Possible reasons for failure are that the directory already exists,
+       the user is not authorized to create it, or the mode is incorrectly
+       specified).
 
 *Time (available if HAVE_TIME is defined in tsx.h)
 

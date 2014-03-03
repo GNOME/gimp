@@ -8,6 +8,7 @@
 
 #include "config.h"
 
+#include <sys/types.h>
 #include <sys/stat.h>
 #if HAVE_UNISTD_H
 #include <unistd.h>
@@ -48,6 +49,7 @@ pointer foreign_diropenstream(scheme *sc, pointer args);
 pointer foreign_dirreadentry(scheme *sc, pointer args);
 pointer foreign_dirrewind(scheme *sc, pointer args);
 pointer foreign_dirclosestream(scheme *sc, pointer args);
+pointer foreign_mkdir(scheme *sc, pointer args);
 
 pointer foreign_getenv(scheme *sc, pointer args);
 pointer foreign_time(scheme *sc, pointer args);
@@ -243,6 +245,41 @@ pointer foreign_dirclosestream(scheme *sc, pointer args)
   return sc->T;
 }
 
+pointer foreign_mkdir(scheme *sc, pointer args)
+{
+  pointer     first_arg;
+  pointer     rest;
+  pointer     second_arg;
+  char       *dirname;
+  mode_t      mode;
+  int         retcode;
+
+  if (args == sc->NIL)
+    return sc->F;
+
+  first_arg = sc->vptr->pair_car(args);
+  if (!sc->vptr->is_string(first_arg))
+    return sc->F;
+  dirname = sc->vptr->string_value(first_arg);
+  dirname = g_filename_from_utf8 (dirname, -1, NULL, NULL, NULL);
+
+  rest = sc->vptr->pair_cdr(args);
+  if (sc->vptr->is_pair(rest)) /* optional mode argument */
+    {
+      second_arg = sc->vptr->pair_car(rest);
+      if (!sc->vptr->is_integer(second_arg))
+        return sc->F;
+      mode = sc->vptr->ivalue(second_arg);
+    }
+  else
+    mode = 0777;
+
+  retcode = mkdir(dirname, (mode_t)mode);
+  if (retcode == 0)
+    return sc->T;
+  else
+    return sc->F;
+}
 
 pointer foreign_getenv(scheme *sc, pointer args)
 {
@@ -365,6 +402,9 @@ void init_ftx (scheme *sc)
   sc->vptr->scheme_define(sc, sc->global_env,
                                sc->vptr->mk_symbol(sc,"dir-close-stream"),
                                sc->vptr->mk_foreign_func(sc, foreign_dirclosestream));
+  sc->vptr->scheme_define(sc, sc->global_env,
+                               sc->vptr->mk_symbol(sc,"dir-make"),
+                               sc->vptr->mk_foreign_func(sc, foreign_mkdir));
 
   for (i = 0; file_type_constants[i].name != NULL; ++i)
   {
