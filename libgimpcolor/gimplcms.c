@@ -106,7 +106,7 @@ gimp_lcms_create_srgb_profile (void)
   description = cmsMLUalloc (NULL, 1);
   cmsMLUsetASCII (description,
                   "en", "US",
-                  "sRGB made with the correct white point and primaries.");
+                  "GIMP built-in sRGB");
   cmsWriteTag (srgb_profile, cmsSigProfileDescriptionTag, description);
   cmsMLUfree (description);
 
